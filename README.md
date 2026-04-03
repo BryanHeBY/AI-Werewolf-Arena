@@ -213,7 +213,7 @@ cp .env.example .env
 
 ```env
 # 服务器配置
-PORT=3000
+PORT=3344
 CORS_ORIGIN=http://localhost:5173
 
 # OpenAI 配置（所有玩家的默认配置）
@@ -255,7 +255,7 @@ cd backend
 npm run dev
 ```
 
-后端将在 `http://localhost:3000` 启动
+后端将在 `http://localhost:3344` 启动
 
 ### 启动前端
 
@@ -457,13 +457,13 @@ npm run test:ui       # UI 模式
 
 #### 1. 后端无法启动
 
-- 检查端口 3000 是否被占用：`lsof -ti :3000`
+- 检查端口 3344 是否被占用：`lsof -ti :3344`
 - 验证 `.env` 文件存在且具有有效的 API 密钥
 - 检查 Node.js 版本：`node --version`（需要 >= 18）
 
 #### 2. 前端无法连接到后端
 
-- 验证后端在端口 3000 上运行
+- 验证后端在端口 3344 上运行
 - 检查 `.env` 中的 `CORS_ORIGIN` 是否与前端 URL 匹配
 - 检查浏览器控制台是否有 WebSocket 错误
 
