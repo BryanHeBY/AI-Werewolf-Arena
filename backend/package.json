@@ -1,0 +1,23 @@
+{
+  "name": "ai-werewolf-arena-backend",
+  "version": "1.0.0",
+  "description": "Backend game engine for AI Werewolf Arena",
+  "main": "./dist/server/index.js",
+  "scripts": {
+    "dev": "tsx watch src/server/index.ts",
+    "build": "tsc",
+    "start": "node dist/server/index.js"
+  },
+  "dependencies": {
+    "@fastify/cors": "^8.5.0",
+    "dotenv": "^16.4.1",
+    "fastify": "^4.26.0",
+    "openai": "^4.28.0",
+    "socket.io": "^4.7.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  }
+}
