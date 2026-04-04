@@ -1,7 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import { appConfig } from "../config";
-import { GameEngine } from "../core/GameEngine";
+import { GameEngineV2 } from "../core/GameEngineV2";
 import { GameFactory } from "../core/GameFactory";
 import { GameLogger } from "../logger/GameLogger";
 import { Broadcaster } from "../broadcaster/Broadcaster";
@@ -30,7 +30,7 @@ fastify.get("/api/start-game", async (request, reply) => {
     );
     const players = factory.createPlayers();
     const logger = new GameLogger(appConfig.gameRecordsDir);
-    const engine = new GameEngine(
+    const engine = new GameEngineV2(
       appConfig.gameConfig,
       players,
       logger,
@@ -45,6 +45,7 @@ fastify.get("/api/start-game", async (request, reply) => {
       success: true,
       gameId: logger.getCurrentFilePath(),
       players: players.map((p) => ({ id: p.id, name: p.name })),
+      engineVersion: "V2",
     };
   } catch (error) {
     console.error("Failed to start game:", error);
