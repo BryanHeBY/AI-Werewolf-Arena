@@ -46,6 +46,14 @@ describe("ViewSanitizer", () => {
         name: "Player 1",
         isAlive: true,
         role: new TestRole(1, RoleType.Wolf, Faction.Wolf),
+        faction: Faction.Wolf,
+        modelConfig: {
+          baseURL: "",
+          apiKey: "",
+          model: "",
+          temperature: 0.7,
+          maxTokens: 1024,
+        },
         isSheriff: false,
       },
       {
@@ -53,6 +61,14 @@ describe("ViewSanitizer", () => {
         name: "Player 2",
         isAlive: true,
         role: new TestRole(2, RoleType.Villager, Faction.Villager),
+        faction: Faction.Villager,
+        modelConfig: {
+          baseURL: "",
+          apiKey: "",
+          model: "",
+          temperature: 0.7,
+          maxTokens: 1024,
+        },
         isSheriff: false,
       },
       {
@@ -60,6 +76,14 @@ describe("ViewSanitizer", () => {
         name: "Player 3",
         isAlive: true,
         role: new TestRole(3, RoleType.Wolf, Faction.Wolf),
+        faction: Faction.Wolf,
+        modelConfig: {
+          baseURL: "",
+          apiKey: "",
+          model: "",
+          temperature: 0.7,
+          maxTokens: 1024,
+        },
         isSheriff: false,
       },
       {
@@ -67,6 +91,14 @@ describe("ViewSanitizer", () => {
         name: "Player 4",
         isAlive: false, // Dead player
         role: new TestRole(4, RoleType.Seer, Faction.Villager),
+        faction: Faction.Villager,
+        modelConfig: {
+          baseURL: "",
+          apiKey: "",
+          model: "",
+          temperature: 0.7,
+          maxTokens: 1024,
+        },
         isSheriff: false,
       },
     ];
@@ -75,6 +107,8 @@ describe("ViewSanitizer", () => {
       phase: GamePhase.NightStart,
       round: 1,
       players: mockPlayers,
+      deadPlayerIds: [4],
+      history: [],
       phaseStack: [],
       nightResult: {
         deadPlayerIds: [4],
@@ -83,6 +117,10 @@ describe("ViewSanitizer", () => {
         poisonedByWitch: undefined,
       },
       votedDeadId: undefined,
+      winner: undefined,
+      witchHasAntidote: true,
+      witchHasPoison: true,
+      currentSpeechIndex: 0,
     };
   });
 
@@ -119,6 +157,14 @@ describe("ViewSanitizer", () => {
         name: "Dead Wolf",
         isAlive: false,
         role: new TestRole(5, RoleType.Wolf, Faction.Wolf),
+        faction: Faction.Wolf,
+        modelConfig: {
+          baseURL: "",
+          apiKey: "",
+          model: "",
+          temperature: 0.7,
+          maxTokens: 1024,
+        },
         isSheriff: false,
       };
 
@@ -165,7 +211,8 @@ describe("ViewSanitizer", () => {
       expect(sanitized.id).toBe(player.id);
       expect(sanitized.name).toBe(player.name);
       expect(sanitized.isAlive).toBe(player.isAlive);
-      expect(sanitized.role).toEqual(player.role);
+      expect(sanitized.roleType).toBe(player.role.roleType);
+      expect(sanitized.faction).toBe(player.role.faction);
     });
 
     test("player gets their own full info", () => {
@@ -177,7 +224,8 @@ describe("ViewSanitizer", () => {
         mockPlayers,
       );
 
-      expect(sanitized.role).toEqual(player.role);
+      expect(sanitized.roleType).toBe(player.role.roleType);
+      expect(sanitized.faction).toBe(player.role.faction);
     });
 
     test("wolf gets other wolf info when both alive", () => {
@@ -190,7 +238,8 @@ describe("ViewSanitizer", () => {
         RoleType.Wolf,
         mockPlayers,
       );
-      expect(sanitized.role).toEqual(wolf2.role);
+      expect(sanitized.roleType).toBe(wolf2.role.roleType);
+      expect(sanitized.faction).toBe(wolf2.role.faction);
     });
 
     test("villager gets sanitized info for wolf", () => {
@@ -205,7 +254,8 @@ describe("ViewSanitizer", () => {
       expect(sanitized.id).toBe(wolf.id);
       expect(sanitized.name).toBe(wolf.name);
       expect(sanitized.isAlive).toBe(wolf.isAlive);
-      expect(sanitized.role).toBeUndefined();
+      expect(sanitized.roleType).toBeUndefined();
+      expect(sanitized.faction).toBeUndefined();
     });
 
     test("dead player info is sanitized for everyone", () => {
@@ -218,7 +268,8 @@ describe("ViewSanitizer", () => {
         RoleType.Wolf,
         mockPlayers,
       );
-      expect(godView.role).toEqual(deadPlayer.role);
+      expect(godView.roleType).toBe(deadPlayer.role.roleType);
+      expect(godView.faction).toBe(deadPlayer.role.faction);
 
       // Other player view
       const playerView = sanitizer.sanitizePlayerInfoForViewer(
@@ -227,7 +278,8 @@ describe("ViewSanitizer", () => {
         RoleType.Wolf,
         mockPlayers,
       );
-      expect(playerView.role).toBeUndefined();
+      expect(playerView.roleType).toBeUndefined();
+      expect(playerView.faction).toBeUndefined();
     });
   });
 
@@ -241,7 +293,8 @@ describe("ViewSanitizer", () => {
 
       // All players should have roles visible
       sanitized.players.forEach((player: any) => {
-        expect(player.role).toBeDefined();
+        expect(player.roleType).toBeDefined();
+        expect(player.faction).toBeDefined();
       });
     });
 
@@ -249,16 +302,20 @@ describe("ViewSanitizer", () => {
       const sanitized = sanitizer.sanitizeGameStateForViewer(mockGameState, 1);
 
       // Player 1 (viewer) should see own role
-      expect(sanitized.players[0].role).toBeDefined();
+      expect(sanitized.players[0].roleType).toBeDefined();
+      expect(sanitized.players[0].faction).toBeDefined();
 
       // Player 2 (villager) should have role hidden
-      expect(sanitized.players[1].role).toBeUndefined();
+      expect(sanitized.players[1].roleType).toBeUndefined();
+      expect(sanitized.players[1].faction).toBeUndefined();
 
       // Player 3 (wolf) should have role visible to fellow wolf
-      expect(sanitized.players[2].role).toBeDefined();
+      expect(sanitized.players[2].roleType).toBeDefined();
+      expect(sanitized.players[2].faction).toBeDefined();
 
       // Player 4 (dead) should have role hidden
-      expect(sanitized.players[3].role).toBeUndefined();
+      expect(sanitized.players[3].roleType).toBeUndefined();
+      expect(sanitized.players[3].faction).toBeUndefined();
     });
 
     test("villager view gets minimal info", () => {
@@ -267,9 +324,11 @@ describe("ViewSanitizer", () => {
       // Only player 2 (viewer) should see own role
       sanitized.players.forEach((player: any, index: number) => {
         if (player.id === 2) {
-          expect(player.role).toBeDefined();
+          expect(player.roleType).toBeDefined();
+          expect(player.faction).toBeDefined();
         } else {
-          expect(player.role).toBeUndefined();
+          expect(player.roleType).toBeUndefined();
+          expect(player.faction).toBeUndefined();
         }
       });
     });

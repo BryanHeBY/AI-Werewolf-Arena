@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "tsx watch src/server/index.ts",
     "build": "tsc",
-    "start": "node dist/server/index.js"
+    "start": "node dist/server/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@fastify/cors": "^8.5.0",

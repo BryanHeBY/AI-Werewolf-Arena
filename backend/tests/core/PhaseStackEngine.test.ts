@@ -1,5 +1,5 @@
-import { PhaseStack } from "../src/core/PhaseStackEngine";
-import { GamePhase } from "../src/core/types";
+import { PhaseStack } from "../../src/core/PhaseStackEngine";
+import { GamePhase } from "../../src/core/types";
 
 describe("PhaseStackEngine", () => {
   let phaseStack: PhaseStack;

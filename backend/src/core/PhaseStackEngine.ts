@@ -13,7 +13,12 @@ export class PhaseStack {
     if (this.stack.length >= this.maxDepth) {
       throw new Error("PhaseStack exceeded maximum depth (50)");
     }
-    this.stack.push({ phase, context });
+    // 深度复制上下文以防止外部突变影响栈内数据
+    const contextCopy =
+      context === null || context === undefined
+        ? context
+        : JSON.parse(JSON.stringify(context));
+    this.stack.push({ phase, context: contextCopy });
   }
 
   pop(): StackNode | null {
