@@ -1,11 +1,11 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
-import { Server } from "socket.io";
 import { appConfig } from "../config";
 import { GameEngine } from "../core/GameEngine";
 import { GameFactory } from "../core/GameFactory";
 import { GameLogger } from "../logger/GameLogger";
 import { Broadcaster } from "../broadcaster/Broadcaster";
+import { setupSocket, setGlobalBroadcaster } from "./socket";
 
 const fastify = Fastify({
   logger: true,
@@ -18,14 +18,9 @@ fastify.register(cors, {
   allowedHeaders: ["Content-Type", "Authorization"],
 });
 
-const io = new Server(fastify.server, {
-  cors: {
-    origin: appConfig.corsOrigin,
-    methods: ["GET", "POST"],
-  },
-});
-
+const io = setupSocket(fastify.server);
 const broadcaster = new Broadcaster(io);
+setGlobalBroadcaster(broadcaster);
 
 fastify.get("/api/start-game", async (request, reply) => {
   try {

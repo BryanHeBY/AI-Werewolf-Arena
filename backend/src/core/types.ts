@@ -1,60 +1,75 @@
 /**
  * 游戏阶段枚举
  * 严格按照状态机流转顺序定义
+ * V2新增：上警、PK、狼人自爆等阶段
  */
 export enum GamePhase {
-  NightStart = 'Night_Start',
-  WolfAction = 'Wolf_Action',
-  SeerAction = 'Seer_Action',
-  WitchAction = 'Witch_Action',
-  DayStart = 'Day_Start',
-  PublishNightResult = 'Publish_Night_Result',
-  SequentialSpeech = 'Sequential_Speech',
-  Vote = 'Vote',
-  CheckWinCondition = 'Check_Win_Condition',
-  GameOver = 'Game_Over'
+  // V1原有阶段
+  NightStart = "Night_Start",
+  WolfAction = "Wolf_Action",
+  SeerAction = "Seer_Action",
+  WitchAction = "Witch_Action",
+  DayStart = "Day_Start",
+  PublishNightResult = "Publish_Night_Result",
+  SequentialSpeech = "Sequential_Speech",
+  Vote = "Vote",
+  CheckWinCondition = "Check_Win_Condition",
+  GameOver = "Game_Over",
+
+  // V2新增阶段
+  Sheriff_Run = "Sheriff_Run", // 决定是否上警
+  Sheriff_Speech = "Sheriff_Speech", // 上警发言
+  Sheriff_Vote = "Sheriff_Vote", // 警长投票
+  PK_Speech = "PK_Speech", // PK发言
+  Self_Destruct = "Self_Destruct", // 狼人自爆
 }
 
 /**
  * 阵营枚举
  */
 export enum Faction {
-  Wolf = 'wolf',
-  Villager = 'villager'
+  Wolf = "wolf",
+  Villager = "villager",
 }
 
 /**
  * 角色身份枚举
  */
 export enum RoleType {
-  Wolf = 'wolf',
-  Villager = 'villager',
-  Seer = 'seer',
-  Witch = 'witch'
+  Wolf = "wolf",
+  Villager = "villager",
+  Seer = "seer",
+  Witch = "witch",
 }
 
 /**
  * 动作类型枚举
+ * V2新增：狼人自爆、上警相关动作
  */
 export enum ActionType {
-  Kill = 'kill',          // 狼人杀人
-  Save = 'save',          // 女巫解药救人
-  Poison = 'poison',      // 女巫毒药杀人
-  Check = 'check',        // 预言家查验
-  Speak = 'speak',        // 公开发言
-  Vote = 'vote',          // 投票放逐
-  NoAction = 'no_action'  // 不行动
+  Kill = "kill", // 狼人杀人
+  Save = "save", // 女巫解药救人
+  Poison = "poison", // 女巫毒药杀人
+  Check = "check", // 预言家查验
+  Speak = "speak", // 公开发言
+  Vote = "vote", // 投票放逐
+  NoAction = "no_action", // 不行动
+
+  // V2新增动作
+  SelfDestruct = "self_destruct", // 狼人自爆
+  SheriffRun = "sheriff_run", // 上警竞选
+  SheriffVote = "sheriff_vote", // 警长投票
 }
 
 /**
  * LLM 输出结构
  */
 export interface AgentOutput {
-  thought: string;      // 内心独白/推理过程（对旁观者可见）
+  thought: string; // 内心独白/推理过程（对旁观者可见）
   action: {
     type: ActionType;
-    targetId?: number;  // 目标玩家ID
-    content?: string;   // 发言内容
+    targetId?: number; // 目标玩家ID
+    content?: string; // 发言内容
   };
 }
 
@@ -67,7 +82,7 @@ export interface PlayerAction {
   actionType: ActionType;
   targetId?: number;
   content?: string;
-  thought: string;      // 思考过程（用于日志和广播）
+  thought: string; // 思考过程（用于日志和广播）
   timestamp: number;
 }
 
@@ -81,6 +96,7 @@ export interface Player {
   isAlive: boolean;
   faction: Faction;
   modelConfig: ModelConfig;
+  isSheriff?: boolean; // V2新增：是否警长
 }
 
 /**
@@ -89,8 +105,8 @@ export interface Player {
 export interface PublicPlayer {
   id: number;
   name: string;
-  roleType: RoleType;
-  faction: Faction;
+  roleType?: RoleType;
+  faction?: Faction;
   isAlive: boolean;
 }
 
@@ -109,8 +125,9 @@ export interface PublicGameState {
   witchHasAntidote: boolean;
   witchHasPoison: boolean;
   currentSpeechIndex: number;
+  // V2新增：Phase Stack信息，用于前端显示阶段流转
+  phaseStack: StackNode[];
 }
-
 
 /**
  * LLM 模型配置
@@ -141,9 +158,9 @@ export interface GameConfig {
  */
 export interface NightResult {
   deadPlayerIds: number[];
-  killedByWolf?: number;      // 狼人刀的人
-  savedByWitch?: number;      // 被女巫救的人
-  poisonedByWitch?: number;    // 被女巫毒的人
+  killedByWolf?: number; // 狼人刀的人
+  savedByWitch?: number; // 被女巫救的人
+  poisonedByWitch?: number; // 被女巫毒的人
 }
 
 /**
@@ -155,20 +172,33 @@ export interface CheckResult {
 }
 
 /**
+ * 聊天消息结构 - 用于前后端通信
+ */
+export interface ChatMessage {
+  id: string;
+  type: "speak" | "action" | "system";
+  playerId?: number;
+  playerName?: string;
+  content: string;
+  privateThought?: string;
+  timestamp: number;
+}
+
+/**
  * 广播事件类型
  */
 export enum BroadcastEventType {
-  GameStarted = 'game_started',
-  PhaseChanged = 'phase_changed',
-  AgentThinking = 'agent_thinking',
-  AgentThoughtComplete = 'agent_thought_complete',
-  PlayerAction = 'player_action',
-  NightResult = 'night_result',
-  PlayerDied = 'player_died',
-  SpeechStart = 'speech_start',
-  VoteResult = 'vote_result',
-  GameOver = 'game_over',
-  WinnerDeclared = 'winner_declared'
+  GameStarted = "game_started",
+  PhaseChanged = "phase_changed",
+  AgentThinking = "agent_thinking",
+  AgentThoughtComplete = "agent_thought_complete",
+  PlayerAction = "player_action",
+  NightResult = "night_result",
+  PlayerDied = "player_died",
+  SpeechStart = "speech_start",
+  VoteResult = "vote_result",
+  GameOver = "game_over",
+  WinnerDeclared = "winner_declared",
 }
 
 /**
@@ -179,6 +209,7 @@ export interface BroadcastEvent {
   type: BroadcastEventType;
   data: unknown;
   timestamp: number;
+  gameStateForView?: GameState;
 }
 
 /**
@@ -187,19 +218,21 @@ export interface BroadcastEvent {
  */
 export interface GameState {
   phase: GamePhase;
-  round: number;  // 第几轮（天数）
+  round: number; // 第几轮（天数）
   players: Player[];
   deadPlayerIds: number[];
   history: PlayerAction[];
   nightResult?: NightResult;
-  lastChecked?: CheckResult;  // 预言家最近一次查验结果
-  votedDeadId?: number;        // 本轮投票出局的人
+  lastChecked?: CheckResult; // 预言家最近一次查验结果
+  votedDeadId?: number; // 本轮投票出局的人
   winner?: Faction;
   // 女巫特殊状态
   witchHasAntidote: boolean;
   witchHasPoison: boolean;
   // 当前要行动的玩家索引（用于顺序发言）
   currentSpeechIndex: number;
+  // V2新增：Phase Stack支持嵌套、并发阶段
+  phaseStack: StackNode[];
 }
 
 /**
@@ -219,7 +252,7 @@ export interface OODACycle {
 /**
  * Environment 公共黑板接口
  */
-import type { Environment } from './Environment';
+import type { Environment } from "./Environment";
 export type EnvironmentInterface = Environment;
 
 /**
@@ -231,4 +264,105 @@ export interface Role extends OODACycle {
   playerId: number;
   canActInPhase(phase: GamePhase): boolean;
   getSystemPrompt(): string;
+}
+
+// ============================================================================
+// V2 新增类型定义 - Event-Driven ECS + Phase Stack 架构
+// ============================================================================
+
+/**
+ * Phase Stack 节点
+ * V2核心数据结构，用于支持嵌套、并发的游戏阶段
+ */
+export interface StackNode {
+  phase: GamePhase;
+  context?: Record<string, any>; // 阶段上下文，如平票PK的参与者
+}
+
+/**
+ * 实体ID类型
+ * ECS架构中的唯一标识符
+ */
+export type EntityId = number;
+
+/**
+ * 实体接口
+ * ECS架构中的基本单位，只包含ID
+ */
+export interface Entity {
+  id: EntityId;
+}
+
+/**
+ * 组件基类接口
+ * ECS架构中的纯数据容器，不包含逻辑
+ */
+export interface Component {
+  entityId: EntityId;
+}
+
+/**
+ * 身份组件
+ * 包含角色的身份信息
+ */
+export interface IdentityComponent extends Component {
+  roleType: RoleType;
+  faction: Faction;
+  name: string;
+}
+
+/**
+ * 状态组件
+ * 包含角色的状态信息
+ */
+export interface StatusComponent extends Component {
+  isAlive: boolean;
+  isSheriff: boolean;
+  isMuted: boolean; // 禁言状态
+  muteUntilRound?: number; // 禁言直到第几轮
+}
+
+/**
+ * 技能接口
+ * 定义可执行的技能
+ */
+export interface Skill {
+  skillId: string;
+  name: string;
+  cooldown: number; // 剩余冷却回合数
+  canUseInPhase: GamePhase[]; // 可在哪些阶段使用
+  execute: (entityId: EntityId, targetId?: EntityId) => void;
+}
+
+/**
+ * 技能组件
+ * 包含实体拥有的技能列表
+ */
+export interface SkillComponent extends Component {
+  skills: Skill[];
+}
+
+/**
+ * 系统接口
+ * ECS架构中的逻辑处理器
+ */
+export interface System {
+  update(phase: GamePhase, entities: Entity[]): void;
+}
+
+/**
+ * 世界接口
+ * 管理所有实体、组件和系统
+ */
+export interface World {
+  createEntity(): EntityId;
+  addComponent<T extends Component>(entityId: EntityId, component: T): void;
+  removeComponent(entityId: EntityId, componentType: string): void;
+  getComponent<T extends Component>(
+    entityId: EntityId,
+    componentType: string,
+  ): T | null;
+  getEntitiesWithComponent(componentType: string): EntityId[];
+  registerSystem(system: System): void;
+  update(phase: GamePhase): void;
 }
