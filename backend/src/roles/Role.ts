@@ -6,6 +6,7 @@ import {
   PlayerAction,
   GamePhase,
   EnvironmentInterface,
+  ActionType,
 } from "../core/types";
 import { ModelConfig } from "../core/types";
 import { OpenAIClient } from "../llm/OpenAIClient";
@@ -21,6 +22,7 @@ export abstract class BaseRole implements RoleInterface, OODACycle {
   protected lastObservation: string = "";
   protected lastThought: string = "";
   protected privateMemory: string[] = [];
+  protected currentPhase?: GamePhase;
 
   constructor(
     playerId: number,
@@ -42,6 +44,9 @@ export abstract class BaseRole implements RoleInterface, OODACycle {
     const history = env.getVisibleHistory(this.playerId);
     const gameState = env.getGameState();
 
+    // 保存当前阶段用于 fast-fail 检查
+    this.currentPhase = gameState.phase;
+
     let observation = this.buildObservationPrompt(history, gameState);
     this.lastObservation = observation;
   }
@@ -53,6 +58,39 @@ export abstract class BaseRole implements RoleInterface, OODACycle {
   }
 
   async act(): Promise<PlayerAction> {
+    // Fast-fail: 如果没有观察环境，直接返回 no_action
+    if (!this.currentPhase) {
+      return {
+        playerId: this.playerId,
+        roleType: this.roleType,
+        actionType: ActionType.NoAction,
+        thought: "未观察环境，系统自动跳过",
+        timestamp: Date.now(),
+      };
+    }
+
+    // Fast-fail: 如果不是当前角色行动阶段，直接返回 no_action
+    if (!this.canActInPhase(this.currentPhase)) {
+      return {
+        playerId: this.playerId,
+        roleType: this.roleType,
+        actionType: ActionType.NoAction,
+        thought: `非当前角色行动阶段（当前阶段: ${this.currentPhase}），系统自动跳过`,
+        timestamp: Date.now(),
+      };
+    }
+
+    // Fast-fail: 如果没有观察内容，直接返回 no_action
+    if (!this.lastObservation || this.lastObservation.trim() === "") {
+      return {
+        playerId: this.playerId,
+        roleType: this.roleType,
+        actionType: ActionType.NoAction,
+        thought: "无可用观察信息，系统自动跳过",
+        timestamp: Date.now(),
+      };
+    }
+
     const output = await this.client.chat(
       this.getSystemPrompt(),
       this.lastObservation,

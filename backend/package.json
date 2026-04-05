@@ -19,7 +19,9 @@
     "socket.io": "^4.7.4"
   },
   "devDependencies": {
+    "@types/nock": "^10.0.3",
     "@types/node": "^20.11.19",
+    "nock": "^14.0.11",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3"
   }

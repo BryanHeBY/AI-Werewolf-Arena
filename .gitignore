@@ -41,6 +41,13 @@ test-server*.js
 # Playwright temporary files
 .playwright-mcp
 
+# Test coverage reports
+coverage
+*/coverage
+**/coverage/*
+*.lcov
+*.lcov.info
+
 # Root temporary setup files
 /index.html
 /src/

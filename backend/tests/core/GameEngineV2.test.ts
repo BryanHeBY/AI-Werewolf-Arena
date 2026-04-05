@@ -1,7 +1,15 @@
 import { GameEngineV2 } from "../../src/core/GameEngineV2";
-import { GameConfig, Player, RoleType, Faction, ModelConfig } from "../../src/core/types";
+import {
+  GameConfig,
+  Player,
+  RoleType,
+  Faction,
+  ModelConfig,
+  GamePhase,
+} from "../../src/core/types";
 import { Broadcaster } from "../../src/broadcaster/Broadcaster";
 import { GameLogger } from "../../src/logger/GameLogger";
+import { PhaseStack } from "../../src/core/PhaseStackEngine";
 
 describe("GameEngineV2", () => {
   let gameEngine: GameEngineV2;
@@ -22,8 +30,8 @@ describe("GameEngineV2", () => {
         apiKey: "test-key",
         model: "test-model",
         temperature: 0.7,
-        maxTokens: 1024
-      }
+        maxTokens: 1024,
+      },
     };
 
     const modelConfig: ModelConfig = {
@@ -31,7 +39,7 @@ describe("GameEngineV2", () => {
       apiKey: "test-key",
       model: "test-model",
       temperature: 0.7,
-      maxTokens: 1024
+      maxTokens: 1024,
     };
 
     players = [
@@ -47,8 +55,8 @@ describe("GameEngineV2", () => {
           faction: Faction.Wolf,
           act: jest.fn(),
           think: jest.fn(),
-          observe: jest.fn()
-        } as any
+          observe: jest.fn(),
+        } as any,
       },
       {
         id: 2,
@@ -62,8 +70,8 @@ describe("GameEngineV2", () => {
           faction: Faction.Villager,
           act: jest.fn(),
           think: jest.fn(),
-          observe: jest.fn()
-        } as any
+          observe: jest.fn(),
+        } as any,
       },
       {
         id: 3,
@@ -77,9 +85,9 @@ describe("GameEngineV2", () => {
           faction: Faction.Villager,
           act: jest.fn(),
           think: jest.fn(),
-          observe: jest.fn()
-        } as any
-      }
+          observe: jest.fn(),
+        } as any,
+      },
     ] as Player[];
 
     logger = {
@@ -90,11 +98,11 @@ describe("GameEngineV2", () => {
       logGameOver: jest.fn(),
       flush: jest.fn(),
       close: jest.fn(),
-      getCurrentFilePath: jest.fn()
+      getCurrentFilePath: jest.fn(),
     } as any;
 
     broadcaster = {
-      broadcast: jest.fn()
+      broadcast: jest.fn(),
     } as any;
 
     gameEngine = new GameEngineV2(config, players, logger, broadcaster);
@@ -133,7 +141,7 @@ describe("GameEngineV2", () => {
     test("不同玩家获取不同视图", () => {
       const view1 = gameEngine.getGameState(1);
       const view2 = gameEngine.getGameState(2);
-      
+
       expect(view1).toBeDefined();
       expect(view2).toBeDefined();
       expect(view1).not.toBe(view2);
@@ -149,7 +157,7 @@ describe("GameEngineV2", () => {
   describe("游戏流程", () => {
     test("开始游戏调用logger方法", async () => {
       await gameEngine.start();
-      
+
       expect(logger.startNewGame).toHaveBeenCalled();
       expect(broadcaster.broadcast).toHaveBeenCalled();
     });
