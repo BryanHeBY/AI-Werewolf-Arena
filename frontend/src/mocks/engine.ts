@@ -1,5 +1,4 @@
 // 导入类型定义和游戏状态管理
-import type { ChatMessage } from "@/types";
 import { GamePhase } from "@/types";
 import { useGameStore } from "@/stores/gameStore";
 
@@ -259,7 +258,7 @@ export class MockEngine {
     this.messageCount++;
     // 记录日志，便于调试和监控
     console.log(
-      `[MockEngine] Message #${this.messageCount} sent by player ${message.senderId}:`,
+      `[MockEngine] Message #${this.messageCount} sent by player ${message.playerId || message.senderId}:`,
       message.content.substring(0, 50) +
         (message.content.length > 50 ? "..." : ""),
     );
@@ -310,14 +309,13 @@ export class MockEngine {
     // 从正常发言内容池中随机选择一条发言内容
     const content = this.getRandomItem(NORMAL_SPEAK_CONTENTS);
 
-    // 构建发言消息对象 - 使用v2-types.ts中的ChatMessage接口
+    // 构建发言消息对象 - 使用index.ts中的ChatMessage接口，确保格式一致
     return {
-      id: `mock-${this.messageCount + 1}`, // string类型
-      type: "speak" as const,
-      playerId: player.id,
-      playerName: player.name,
+      id: this.messageCount + 1, // number类型，与其他消息一致
+      senderId: player.id, // 使用senderId而不是playerId
       content,
       timestamp,
+      isPrivate: false,
       privateThought: undefined,
     };
   }

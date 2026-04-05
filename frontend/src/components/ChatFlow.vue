@@ -168,6 +168,7 @@ import { useVirtualList } from "@vueuse/core";
 import ThoughtAccordion from "@/components/ThoughtAccordion.vue";
 import { useGameStore as useV2GameStore } from "@/stores/gameStore";
 import type { ChatMessage } from "@/types";
+import type { PlayerInfo } from "@/types/v2-types";
 
 const v2Store = useV2GameStore();
 const debug = ref(true);
@@ -209,13 +210,54 @@ const {
 
 const getPlayerName = (playerId: number): string => {
   if (playerId <= 0) return "";
-  const player = v2Store.alivePlayers.find((p) => p.id === playerId);
-  return player?.name || `玩家 ${playerId}`;
+
+  // 优先从gameState.players中查找
+  if (v2Store.gameState?.players) {
+    const player = v2Store.gameState.players.find((p) => p.id === playerId);
+    if (player?.name) return player.name;
+  }
+
+  // 备用方案：从alivePlayers中查找
+  const alivePlayer = v2Store.alivePlayers.find((p) => p.id === playerId);
+  if (alivePlayer?.name) return alivePlayer.name;
+
+  return `玩家 ${playerId}`;
 };
 
 const getPlayerRoleType = (playerId: number): "wolf" | "villager" => {
   if (playerId <= 0) return "villager";
-  const player = v2Store.alivePlayers.find((p) => p.id === playerId);
+
+  // 直接从gameState.players中查找，确保有完整的玩家信息
+  if (v2Store.gameState?.players) {
+    const player = v2Store.gameState.players.find((p) => p.id === playerId);
+
+    if (player) {
+      // 调试信息
+      if (debug.value) {
+        console.log(`[Debug] Found player ${playerId} in gameState:`, player);
+      }
+
+      // 优先检查faction字段，然后检查roleType
+      if (player.faction === "wolf" || player.roleType === "wolf") {
+        return "wolf";
+      }
+      return "villager";
+    }
+  }
+
+  // 备用方案：从alivePlayers中查找
+  const alivePlayer = v2Store.alivePlayers.find((p) => p.id === playerId);
+  if (alivePlayer) {
+    if (alivePlayer.faction === "wolf" || alivePlayer.roleType === "wolf") {
+      return "wolf";
+    }
+    return "villager";
+  }
+
+  // 如果都没有找到，返回默认值
+  if (debug.value) {
+    console.warn(`[Debug] Player ${playerId} not found in store`);
+  }
   return "villager";
 };
 
@@ -364,7 +406,23 @@ watch(
 
 onMounted(() => {
   console.log("ChatFlow mounted");
+  console.log("Initial chatMessages:", chatMessages.value);
+  console.log("Initial gameState:", v2Store.gameState);
 });
+
+// 监听chatMessages变化
+watch(
+  chatMessages,
+  (newMessages) => {
+    if (debug.value) {
+      console.log("chatMessages updated:", newMessages.length, "messages");
+      if (newMessages.length > 0) {
+        console.log("First message:", newMessages[0]);
+      }
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <style scoped>
