@@ -1,46 +1,89 @@
 import { ViewSanitizer } from "../../src/core/ViewSanitizer";
+import { GameWorld } from "../../src/ecs/World";
 import {
   GameState,
   Player,
   RoleType,
   Faction,
   GamePhase,
-  Role,
+  IdentityComponent,
+  StatusComponent,
 } from "../../src/core/types";
-import type { Environment } from "../../src/core/Environment";
-
-// 测试用的简单Role实现
-class TestRole implements Role {
-  constructor(
-    public playerId: number,
-    public roleType: RoleType,
-    public faction: Faction,
-  ) {}
-
-  async observe(env: Environment): Promise<void> {}
-  async think(): Promise<string> {
-    return "test thought";
-  }
-  async act(): Promise<any> {
-    return { actionType: "no_action" };
-  }
-  canActInPhase(phase: GamePhase): boolean {
-    return false;
-  }
-  getSystemPrompt(): string {
-    return "test system prompt";
-  }
-}
 
 describe("ViewSanitizer", () => {
   let sanitizer: ViewSanitizer;
-  let mockPlayers: Player[];
+  let world: GameWorld;
   let mockGameState: GameState;
 
   beforeEach(() => {
-    sanitizer = new ViewSanitizer();
+    world = new GameWorld();
+    sanitizer = new ViewSanitizer(world);
 
-    mockPlayers = [
+    // 创建测试实体和组件
+    const entityIds = [1, 2, 3, 4];
+
+    // 实体1：狼人（存活）
+    world.createEntity(1);
+    world.addComponent(1, "IdentityComponent", {
+      entityId: 1,
+      roleType: RoleType.Wolf,
+      faction: Faction.Wolf,
+      name: "Player 1",
+    } as IdentityComponent);
+    world.addComponent(1, "StatusComponent", {
+      entityId: 1,
+      isAlive: true,
+      isSheriff: false,
+      isMuted: false,
+    } as StatusComponent);
+
+    // 实体2：村民（存活）
+    world.createEntity(2);
+    world.addComponent(2, "IdentityComponent", {
+      entityId: 2,
+      roleType: RoleType.Villager,
+      faction: Faction.Villager,
+      name: "Player 2",
+    } as IdentityComponent);
+    world.addComponent(2, "StatusComponent", {
+      entityId: 2,
+      isAlive: true,
+      isSheriff: false,
+      isMuted: false,
+    } as StatusComponent);
+
+    // 实体3：狼人（存活）
+    world.createEntity(3);
+    world.addComponent(3, "IdentityComponent", {
+      entityId: 3,
+      roleType: RoleType.Wolf,
+      faction: Faction.Wolf,
+      name: "Player 3",
+    } as IdentityComponent);
+    world.addComponent(3, "StatusComponent", {
+      entityId: 3,
+      isAlive: true,
+      isSheriff: false,
+      isMuted: false,
+    } as StatusComponent);
+
+    // 实体4：预言家（死亡）
+    world.createEntity(4);
+    world.addComponent(4, "IdentityComponent", {
+      entityId: 4,
+      roleType: RoleType.Seer,
+      faction: Faction.Villager,
+      name: "Player 4",
+    } as IdentityComponent);
+    world.addComponent(4, "StatusComponent", {
+      entityId: 4,
+      isAlive: false,
+      isSheriff: false,
+      isMuted: false,
+    } as StatusComponent);
+
+    // 创建测试用的Player数组（兼容旧接口，但去掉role字段）
+    const mockPlayers: Player[] = [
       {
         id: 1,
         name: "Player 1",

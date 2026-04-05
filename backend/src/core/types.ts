@@ -92,11 +92,11 @@ export interface PlayerAction {
 export interface Player {
   id: number;
   name: string;
-  role: Role;
   isAlive: boolean;
   faction: Faction;
   modelConfig: ModelConfig;
-  isSheriff?: boolean; // V2新增：是否警长
+  // 注意：role、isSheriff、isMuted、skillsUsed、privateMemory等字段现在从ECS组件中读取
+  // 这些字段已删除，必须通过world.getComponent(entityId, '...')获取
 }
 
 /**
@@ -199,6 +199,7 @@ export enum BroadcastEventType {
   VoteResult = "vote_result",
   GameOver = "game_over",
   WinnerDeclared = "winner_declared",
+  SheriffElected = "sheriff_elected", // V2新增：警长选举完成
 }
 
 /**
@@ -244,7 +245,7 @@ export type EventHandler<T = unknown> = (data: T) => void | Promise<void>;
  * OODA Loop 接口 - 每个 Agent 都必须遵循
  */
 export interface OODACycle {
-  observe(env: Environment): Promise<void>;
+  observe(env: Environment, prompt?: string): Promise<void>;
   think(): Promise<string>;
   act(): Promise<PlayerAction>;
 }
@@ -365,4 +366,22 @@ export interface World {
   getEntitiesWithComponent(componentType: string): EntityId[];
   registerSystem(system: System): void;
   update(phase: GamePhase): void;
+
+  /**
+   * ECS 查询方法：根据组件类型查询所有匹配的实体及其组件数据
+   * 返回格式示例: [{ entityId: 1, identity: IdentityComponent, status: StatusComponent }]
+   */
+  query<T extends Record<string, any>>(
+    ...componentNames: string[]
+  ): Array<{ entityId: EntityId } & T>;
+
+  /**
+   * 根据实体ID获取所有组件
+   */
+  getAllComponents(entityId: EntityId): Map<string, Component> | null;
+
+  /**
+   * 检查实体是否拥有特定组件
+   */
+  hasComponent(entityId: EntityId, componentName: string): boolean;
 }

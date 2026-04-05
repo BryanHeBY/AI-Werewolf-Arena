@@ -3,6 +3,7 @@ import {
   PlayerAction,
   EnvironmentInterface,
   GameConfig,
+  ModelConfig,
   Player,
   BroadcastEvent,
   BroadcastEventType,
@@ -11,6 +12,9 @@ import {
   PublicPlayer,
   Faction,
   RoleType,
+  World,
+  IdentityComponent,
+  StatusComponent,
 } from "./types";
 import { EventBus } from "./EventBus";
 
@@ -18,15 +22,19 @@ export class Environment implements EnvironmentInterface {
   private gameState: GameState;
   private eventBus: EventBus;
   private gameConfig: GameConfig;
+  private world: World | null;
+  private modelDefaults: ModelConfig;
 
-  constructor(config: GameConfig, players: Player[]) {
+  constructor(config: GameConfig, world: World) {
     this.gameConfig = config;
+    this.modelDefaults = config.modelDefaults;
     this.eventBus = new EventBus();
+    this.world = world;
 
     this.gameState = {
       phase: undefined as any,
       round: 0,
-      players,
+      players: [], // 初始为空，getGameState()会动态从World查询
       deadPlayerIds: [],
       history: [],
       witchHasAntidote: true,
@@ -37,22 +45,61 @@ export class Environment implements EnvironmentInterface {
   }
 
   getGameState(): GameState {
-    return { ...this.gameState };
+    // 从ECS World动态查询玩家信息
+    const playersFromECS: Player[] = [];
+
+    if (this.world) {
+      const entities = this.world.query<{
+        IdentityComponent: IdentityComponent;
+        StatusComponent: StatusComponent;
+      }>("IdentityComponent", "StatusComponent");
+
+      entities.forEach((e: any) => {
+        const identity = e.IdentityComponent;
+        const status = e.StatusComponent;
+
+        playersFromECS.push({
+          id: identity.entityId,
+          name: identity.name,
+          isAlive: status.isAlive,
+          faction: identity.faction,
+          modelConfig: this.modelDefaults,
+        });
+      });
+    }
+
+    return {
+      ...this.gameState,
+      players: playersFromECS, // 动态填充玩家信息
+    };
   }
 
   /**
    * Get clean public game state without sensitive data or circular references
    */
   getPublicGameState(): PublicGameState {
-    const publicPlayers: PublicPlayer[] = this.gameState.players.map(
-      (player) => ({
-        id: player.id,
-        name: player.name,
-        roleType: player.role.roleType,
-        faction: player.faction,
-        isAlive: player.isAlive,
-      }),
-    );
+    const publicPlayers: PublicPlayer[] = [];
+
+    // 从ECS World查询所有实体
+    if (this.world) {
+      const entities = this.world.query<{
+        IdentityComponent: IdentityComponent;
+        StatusComponent: StatusComponent;
+      }>("IdentityComponent", "StatusComponent");
+
+      entities.forEach((e: any) => {
+        const identity = e.IdentityComponent;
+        const status = e.StatusComponent;
+
+        publicPlayers.push({
+          id: identity.entityId,
+          name: identity.name,
+          roleType: identity.roleType,
+          faction: identity.faction,
+          isAlive: status.isAlive,
+        });
+      });
+    }
 
     return {
       phase: this.gameState.phase,
@@ -89,17 +136,27 @@ export class Environment implements EnvironmentInterface {
   }
 
   getVisibleHistory(playerId: number): PlayerAction[] {
-    const player = this.gameState.players.find((p) => p.id === playerId);
-    if (!player) return [];
+    // 从ECS World查询玩家信息
+    let faction: Faction | null = null;
+    if (this.world) {
+      const identity = this.world.getComponent<IdentityComponent>(
+        playerId,
+        "IdentityComponent",
+      );
+      if (!identity) {
+        // 玩家不存在于ECS World中
+        return [];
+      }
+      faction = identity.faction;
+    } else {
+      // 没有World，无法确定玩家阵营
+      return [];
+    }
 
     const visibleHistory: PlayerAction[] = [];
 
     for (const action of this.gameState.history) {
-      const shouldShow = this.shouldShowAction(
-        action,
-        playerId,
-        player.role.faction,
-      );
+      const shouldShow = this.shouldShowAction(action, playerId, faction);
       if (shouldShow) {
         visibleHistory.push(action);
       }
@@ -140,17 +197,66 @@ export class Environment implements EnvironmentInterface {
   }
 
   getAlivePlayers(): Player[] {
-    return this.gameState.players.filter((p) => p.isAlive);
+    const alivePlayers: Player[] = [];
+
+    if (this.world) {
+      const entities = this.world.query<{
+        IdentityComponent: IdentityComponent;
+        StatusComponent: StatusComponent;
+      }>("IdentityComponent", "StatusComponent");
+
+      entities.forEach((e: any) => {
+        const identity = e.IdentityComponent;
+        const status = e.StatusComponent;
+
+        if (status.isAlive) {
+          alivePlayers.push({
+            id: identity.entityId,
+            name: identity.name,
+            isAlive: true,
+            faction: identity.faction,
+            modelConfig: this.modelDefaults,
+          });
+        }
+      });
+    }
+
+    return alivePlayers;
   }
 
   getPlayerById(id: number): Player | undefined {
-    return this.gameState.players.find((p) => p.id === id);
+    if (!this.world) return undefined;
+
+    const identity = this.world.getComponent<IdentityComponent>(
+      id,
+      "IdentityComponent",
+    );
+    const status = this.world.getComponent<StatusComponent>(
+      id,
+      "StatusComponent",
+    );
+
+    if (!identity || !status) return undefined;
+
+    return {
+      id: identity.entityId,
+      name: identity.name,
+      isAlive: status.isAlive,
+      faction: identity.faction,
+      modelConfig: this.modelDefaults,
+    };
   }
 
   markPlayerDead(playerId: number): void {
-    const player = this.getPlayerById(playerId);
-    if (player && player.isAlive) {
-      player.isAlive = false;
+    if (!this.world) return;
+
+    const status = this.world.getComponent<StatusComponent>(
+      playerId,
+      "StatusComponent",
+    );
+    if (status && status.isAlive) {
+      status.isAlive = false;
+
       if (!this.gameState.deadPlayerIds.includes(playerId)) {
         this.gameState.deadPlayerIds.push(playerId);
       }

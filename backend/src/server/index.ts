@@ -2,9 +2,11 @@ import Fastify from "fastify";
 import cors from "@fastify/cors";
 import { appConfig } from "../config";
 import { GameEngineV2 } from "../core/GameEngineV2";
-import { GameFactory } from "../core/GameFactory";
+import { GameFactoryV2 } from "../core/GameFactoryV2";
+import { GameWorld } from "../ecs/World";
 import { GameLogger } from "../logger/GameLogger";
 import { Broadcaster } from "../broadcaster/Broadcaster";
+import { IdentityComponent, StatusComponent } from "../core/types";
 import { setupSocket, setGlobalBroadcaster } from "./socket";
 
 const fastify = Fastify({
@@ -24,15 +26,24 @@ setGlobalBroadcaster(broadcaster);
 
 fastify.get("/api/start-game", async (request, reply) => {
   try {
-    const factory = new GameFactory(
+    const world = new GameWorld();
+    const factory = new GameFactoryV2(
       appConfig.gameConfig,
       appConfig.modelDefaults,
+      world,
     );
-    const players = factory.createPlayers();
+    factory.createPlayers(); // 现在返回void
+
+    // 从World查询玩家信息
+    const entities = world.query<{
+      IdentityComponent: IdentityComponent;
+      StatusComponent: StatusComponent;
+    }>("IdentityComponent", "StatusComponent");
+
     const logger = new GameLogger(appConfig.gameRecordsDir);
     const engine = new GameEngineV2(
       appConfig.gameConfig,
-      players,
+      world, // 传入World而不是players数组
       logger,
       broadcaster,
     );
@@ -44,7 +55,10 @@ fastify.get("/api/start-game", async (request, reply) => {
     return {
       success: true,
       gameId: logger.getCurrentFilePath(),
-      players: players.map((p) => ({ id: p.id, name: p.name })),
+      players: entities.map((e: any) => ({
+        id: e.IdentityComponent.entityId,
+        name: e.IdentityComponent.name,
+      })),
       engineVersion: "V2",
     };
   } catch (error) {

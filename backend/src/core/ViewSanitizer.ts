@@ -4,8 +4,12 @@ import {
   PublicPlayer,
   Player,
   RoleType,
+  Faction,
   PlayerAction,
   ChatMessage,
+  BroadcastEvent,
+  World,
+  IdentityComponent,
 } from "./types";
 
 /**
@@ -18,6 +22,11 @@ import {
  * - 其他情况下，roleType 和 faction 必须设为 undefined
  */
 export class ViewSanitizer {
+  private world: World | null;
+
+  constructor(world?: World) {
+    this.world = world || null;
+  }
   /**
    * 判断查看者是否能看到目标玩家的完整信息
    */
@@ -41,8 +50,15 @@ export class ViewSanitizer {
     if (viewerRole === RoleType.Wolf && allPlayers) {
       const viewer = allPlayers.find((p) => p.id === viewerId);
       if (viewer && viewer.isAlive && targetPlayer.isAlive) {
-        if (targetPlayer.role.roleType === RoleType.Wolf) {
-          return true;
+        // 从 ECS World 获取目标玩家的角色信息
+        if (this.world) {
+          const targetIdentity = this.world.getComponent<IdentityComponent>(
+            targetPlayer.id,
+            "IdentityComponent",
+          );
+          if (targetIdentity?.roleType === RoleType.Wolf) {
+            return true;
+          }
         }
       }
     }
@@ -83,11 +99,26 @@ export class ViewSanitizer {
       allPlayers,
     );
 
+    // 从 ECS World 获取角色信息
+    let roleType: RoleType | undefined;
+    let faction: Faction | undefined;
+
+    if (canSee && this.world) {
+      const identity = this.world.getComponent<IdentityComponent>(
+        player.id,
+        "IdentityComponent",
+      );
+      if (identity) {
+        roleType = identity.roleType;
+        faction = identity.faction;
+      }
+    }
+
     return {
       id: player.id,
       name: player.name,
-      roleType: canSee ? player.role.roleType : undefined,
-      faction: canSee ? player.faction : undefined,
+      roleType,
+      faction,
       isAlive: player.isAlive,
     };
   }
@@ -100,7 +131,16 @@ export class ViewSanitizer {
     viewerId: number,
   ): PublicGameState {
     const viewer = gameState.players.find((p) => p.id === viewerId);
-    const viewerRole = viewer?.role.roleType;
+
+    // 从 ECS World 获取查看者的角色信息
+    let viewerRole: RoleType | undefined;
+    if (viewer && this.world) {
+      const identity = this.world.getComponent<IdentityComponent>(
+        viewer.id,
+        "IdentityComponent",
+      );
+      viewerRole = identity?.roleType;
+    }
 
     const sanitizedPlayers: PublicPlayer[] = gameState.players.map((player) =>
       this.sanitizePlayerInfoForViewer(
@@ -176,5 +216,19 @@ export class ViewSanitizer {
     return history.map((action) =>
       this.sanitizeChatMessageForViewer(action, viewerId),
     );
+  }
+
+  /**
+   * 过滤广播事件数据
+   * 根据事件类型和接收者视角过滤敏感信息
+   */
+  sanitizeBroadcastEvent(event: BroadcastEvent): BroadcastEvent {
+    // TODO: 根据事件类型实现具体的过滤逻辑
+    // 目前返回原始事件，需要实现：
+    // 1. 对于 PlayerDied 事件，可能需要过滤 roleType
+    // 2. 对于 RoleReveal 事件，需要根据接收者视角决定是否显示
+    // 3. 对于其他事件，可能需要过滤玩家身份信息
+
+    return event;
   }
 }

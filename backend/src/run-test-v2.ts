@@ -1,8 +1,10 @@
 import { appConfig } from "./config";
-import { GameFactory } from "./core/GameFactory";
-import { GameEngine } from "./core/GameEngine";
+import { GameFactoryV2 } from "./core/GameFactoryV2";
+import { GameWorld } from "./ecs/World";
+import { GameEngineV2 } from "./core/GameEngineV2";
 import { GameLogger } from "./logger/GameLogger";
 import { Broadcaster } from "./broadcaster/Broadcaster";
+import { IdentityComponent, StatusComponent } from "./core/types";
 import { Server } from "socket.io";
 import { createServer } from "http";
 
@@ -65,31 +67,42 @@ class ConsoleBroadcaster extends Broadcaster {
 
 async function runTest() {
   console.log("=".repeat(60));
-  console.log("AI狼人杀竞技场 - 开始6人AI对战测试游戏");
+  console.log("AI狼人杀竞技场 V2 - 开始6人AI对战测试游戏");
+  console.log("使用 GameEngineV2 (Phase Stack + ECS + Prompt Pipeline)");
   console.log("游戏配置:", appConfig.gameConfig);
   console.log("模型配置:", appConfig.modelDefaults.model);
   console.log("=".repeat(60));
   console.log();
 
-  const factory = new GameFactory(
+  const world = new GameWorld();
+  const factory = new GameFactoryV2(
     appConfig.gameConfig,
     appConfig.modelDefaults,
+    world,
   );
-  const players = factory.createPlayers();
+  factory.createPlayers(); // 现在返回void
 
-  console.log("玩家角色分配:");
-  players.forEach((p) => {
-    const roleChinese = getRoleChinese(p.role.roleType);
-    const factionChinese = getFactionChinese(p.faction);
-    console.log(`  玩家 ${p.id}: ${roleChinese} - ${factionChinese}`);
+  // 从World查询玩家信息
+  const entities = world.query<{
+    IdentityComponent: IdentityComponent;
+    StatusComponent: StatusComponent;
+  }>("IdentityComponent", "StatusComponent");
+
+  console.log("玩家角色分配 (从ECS World查询):");
+  entities.forEach((e: any) => {
+    const roleChinese = getRoleChinese(e.IdentityComponent.roleType);
+    const factionChinese = getFactionChinese(e.IdentityComponent.faction);
+    console.log(
+      `  实体 ${e.IdentityComponent.entityId}: ${roleChinese} - ${factionChinese}`,
+    );
   });
   console.log();
 
   const logger = new GameLogger(appConfig.gameRecordsDir);
   const broadcaster = new ConsoleBroadcaster();
-  const engine = new GameEngine(
+  const engine = new GameEngineV2(
     appConfig.gameConfig,
-    players,
+    world, // 传入World而不是players数组
     logger,
     broadcaster,
   );
@@ -100,16 +113,24 @@ async function runTest() {
 
   console.log();
   console.log("游戏结束");
-  const winner = engine.getGameState().winner;
+  const gameState = engine.getGameState();
+  const winner = gameState.winner;
   const winnerChinese = winner === "wolf" ? "狼人阵营" : "好人阵营";
   console.log("最终获胜者:", winnerChinese);
   console.log("游戏时长:", ((Date.now() - startTime) / 1000).toFixed(2) + "秒");
   console.log("游戏完成，日志保存至:", logger.getCurrentFilePath());
+
+  // 演示机械狼示例
+  console.log();
+  console.log("=".repeat(60));
+  console.log("ECS World已创建，包含", entities.length, "个玩家实体");
+  console.log("=".repeat(60));
 
   process.exit(0);
 }
 
 runTest().catch((error) => {
   console.error("Test failed with error:", error);
+  console.error("Error stack:", error.stack);
   process.exit(1);
 });

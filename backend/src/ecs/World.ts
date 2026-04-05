@@ -20,14 +20,18 @@ export class GameWorld implements WorldInterface {
     return entityId;
   }
 
-  addComponent<T extends Component>(entityId: EntityId, component: T): void {
+  addComponent<T extends Component>(
+    entityId: EntityId,
+    component: T,
+    componentType?: string,
+  ): void {
     if (!this.entities.has(entityId)) {
       throw new Error(`Entity ${entityId} does not exist`);
     }
 
-    const componentType = component.constructor.name;
+    const type = componentType || component.constructor.name;
     const entityComponents = this.components.get(entityId) || new Map();
-    entityComponents.set(componentType, component);
+    entityComponents.set(type, component);
     this.components.set(entityId, entityComponents);
   }
 
@@ -67,5 +71,56 @@ export class GameWorld implements WorldInterface {
     for (const system of this.systems) {
       system.update(phase, entities);
     }
+  }
+
+  /**
+   * ECS 查询方法：根据组件类型查询所有匹配的实体及其组件数据
+   * 返回格式示例: [{ entityId: 1, identity: IdentityComponent, status: StatusComponent }]
+   */
+  query<T extends Record<string, any>>(
+    ...componentNames: string[]
+  ): Array<{ entityId: EntityId } & T> {
+    const results: Array<{ entityId: EntityId } & T> = [];
+
+    // 遍历所有实体
+    for (const [entityId, components] of this.components) {
+      // 检查实体是否包含所有请求的组件
+      const hasAllComponents = componentNames.every((componentName) =>
+        components.has(componentName),
+      );
+
+      if (hasAllComponents) {
+        // 创建结果对象
+        const result: any = { entityId };
+
+        // 添加所有请求的组件数据
+        for (const componentName of componentNames) {
+          const component = components.get(componentName);
+          if (component) {
+            // 使用组件类名作为键（例如 "IdentityComponent"）
+            result[componentName] = component;
+          }
+        }
+
+        results.push(result as { entityId: EntityId } & T);
+      }
+    }
+
+    return results;
+  }
+
+  /**
+   * 根据实体ID获取所有组件
+   */
+  getAllComponents(entityId: EntityId): Map<string, Component> | null {
+    return this.components.get(entityId) || null;
+  }
+
+  /**
+   * 检查实体是否拥有特定组件
+   */
+  hasComponent(entityId: EntityId, componentName: string): boolean {
+    const components = this.components.get(entityId);
+    return components ? components.has(componentName) : false;
   }
 }

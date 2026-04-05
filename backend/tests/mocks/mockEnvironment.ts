@@ -63,7 +63,6 @@ export class MockEnvironment {
       (player) => ({
         id: player.id,
         name: player.name,
-        roleType: player.role?.roleType,
         faction: player.faction,
         isAlive: !this.gameState.deadPlayerIds.includes(player.id),
       }),
@@ -119,7 +118,6 @@ export class MockEnvironment {
     return this.gameState.players.map((player) => ({
       id: player.id,
       name: player.name,
-      roleType: player.role?.roleType,
       faction: player.faction,
       isAlive: !this.gameState.deadPlayerIds.includes(player.id),
     }));
@@ -217,31 +215,5 @@ export function createMockPlayers(count: number = 6): Player[] {
 }
 */
 
-import { createSimplePlayer } from "./testData";
-
-export function createMockGameState(
-  overrides: Partial<GameState> = {},
-): GameState {
-  const players = [
-    createSimplePlayer(1, RoleType.Wolf),
-    createSimplePlayer(2, RoleType.Wolf),
-    createSimplePlayer(3, RoleType.Seer),
-    createSimplePlayer(4, RoleType.Witch),
-    createSimplePlayer(5, RoleType.Villager),
-    createSimplePlayer(6, RoleType.Villager),
-  ];
-
-  const baseState: GameState = {
-    phase: GamePhase.NightStart,
-    round: 1,
-    players,
-    deadPlayerIds: [],
-    history: [],
-    witchHasAntidote: true,
-    witchHasPoison: true,
-    currentSpeechIndex: 0,
-    phaseStack: [{ phase: GamePhase.NightStart }],
-  };
-
-  return { ...baseState, ...overrides };
-}
+// Note: createMockGameState function removed because it uses old Player interface with role field
+// Tests should use ECS World and components instead

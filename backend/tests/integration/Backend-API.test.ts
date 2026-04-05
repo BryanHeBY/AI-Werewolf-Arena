@@ -1,7 +1,8 @@
 import { GameEngineV2 } from "../../src/core/GameEngineV2";
 import { GameLogger } from "../../src/logger/GameLogger";
 import { Broadcaster } from "../../src/broadcaster/Broadcaster";
-import { GameFactory } from "../../src/core/GameFactory";
+import { GameFactoryV2 } from "../../src/core/GameFactoryV2";
+import { GameWorld } from "../../src/ecs/World";
 import { appConfig } from "../../src/config";
 import { GamePhase } from "../../src/core/types";
 
@@ -14,9 +15,11 @@ describe("Backend API Integration Tests", () => {
 
     const broadcaster = new Broadcaster(mockIo as any);
     const logger = new GameLogger(appConfig.gameRecordsDir);
-    const factory = new GameFactory(
+    const world = new GameWorld();
+    const factory = new GameFactoryV2(
       appConfig.gameConfig,
       appConfig.modelDefaults,
+      world,
     );
 
     const players = factory.createPlayers();
@@ -49,9 +52,11 @@ describe("Backend API Integration Tests", () => {
 
     const broadcaster = new Broadcaster(mockIo as any);
     const logger = new GameLogger(appConfig.gameRecordsDir);
-    const factory = new GameFactory(
+    const world = new GameWorld();
+    const factory = new GameFactoryV2(
       appConfig.gameConfig,
       appConfig.modelDefaults,
+      world,
     );
 
     const players = factory.createPlayers();
@@ -67,7 +72,7 @@ describe("Backend API Integration Tests", () => {
 
     expect(gameState.players).toHaveLength(players.length);
 
-    players.forEach((player, index) => {
+    players.forEach((player: any, index: number) => {
       expect(gameState.players[index].id).toBe(player.id);
       expect(gameState.players[index].name).toBe(player.name);
     });
@@ -81,9 +86,11 @@ describe("Backend API Integration Tests", () => {
 
     const broadcaster = new Broadcaster(mockIo as any);
     const logger = new GameLogger(appConfig.gameRecordsDir);
-    const factory = new GameFactory(
+    const world = new GameWorld();
+    const factory = new GameFactoryV2(
       appConfig.gameConfig,
       appConfig.modelDefaults,
+      world,
     );
 
     const players = factory.createPlayers();

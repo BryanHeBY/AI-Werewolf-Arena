@@ -1,4 +1,9 @@
-import { PlayerAction, GameState } from "../../src/core/types";
+import {
+  PlayerAction,
+  GameState,
+  ActionType,
+  RoleType,
+} from "../../src/core/types";
 
 export class MockLogger {
   private logs: any[] = [];
@@ -77,15 +82,19 @@ export class MockLogger {
 
 export function createMockPlayerAction(
   playerId: number = 1,
-  actionType: string = "test_action",
-  targetPlayerId?: number,
-  data: any = {},
+  roleType: RoleType = RoleType.Villager,
+  actionType: ActionType = ActionType.Speak,
+  targetId?: number,
+  content?: string,
+  thought: string = "测试思考过程",
 ): PlayerAction {
   return {
     playerId,
+    roleType,
     actionType,
-    targetPlayerId,
-    data,
+    targetId,
+    content,
+    thought,
     timestamp: Date.now(),
   };
 }
