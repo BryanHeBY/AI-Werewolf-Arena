@@ -6,8 +6,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "playwright test",
-    "test:ui": "playwright test --ui"
+    "test": "http_proxy= https_proxy= all_proxy= HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= playwright test",
+    "test:ui": "playwright test --ui",
+    "test:no-proxy": "http_proxy= https_proxy= all_proxy= HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= playwright test",
+    "test:ci": "CI=true http_proxy= https_proxy= all_proxy= HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= playwright test"
   },
   "dependencies": {
     "@vueuse/core": "^10.11.1",

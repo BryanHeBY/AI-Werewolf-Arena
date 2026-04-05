@@ -18,10 +18,9 @@ export default defineConfig({
       use: {
         ...devices["Desktop Chrome"],
         // Arch Linux系统浏览器配置
-        executablePath: process.env.CI ? undefined : "/usr/bin/chromium",
+        // 注意：executablePath 可能需要在 launchOptions 中设置
         // 备选方案
         // channel: 'chrome',
-        // executablePath: '/usr/bin/google-chrome-stable',
       },
     },
   ],
