@@ -1,16 +1,19 @@
 import { defineStore } from "pinia";
-import type {
-  GameStateUpdate,
-  ChatMessage,
-  PlayerInfo,
-} from "@/types/v2-types";
+import type { GameStateUpdate, PlayerInfo } from "@/types/v2-types";
 
 export const useGameStore = defineStore("game", {
   state: () => ({
     myViewId: 0, // Default to god view
     isConnected: false,
     gameState: null as GameStateUpdate | null,
-    chatMessages: [] as ChatMessage[],
+    chatMessages: [] as Array<{
+      id: number;
+      senderId: number;
+      content: string;
+      timestamp: number;
+      isPrivate: boolean;
+      privateThought?: string;
+    }>,
     isMockMode: false,
   }),
 
@@ -27,12 +30,34 @@ export const useGameStore = defineStore("game", {
       this.gameState = state;
       // Extract chat messages from game state history
       if (state.history) {
-        this.chatMessages = state.history;
+        this.chatMessages = state.history.map((msg) => ({
+          id:
+            typeof msg.id === "string"
+              ? parseInt(msg.id.replace("mock-", "").split("-")[0]) || 0
+              : msg.id,
+          senderId: msg.playerId || -1,
+          content: msg.content,
+          timestamp: msg.timestamp,
+          isPrivate: false,
+          privateThought: msg.privateThought,
+        }));
       }
     },
 
-    addChatMessage(message: ChatMessage) {
-      this.chatMessages.push(message);
+    addChatMessage(message: any) {
+      // 转换消息格式：v2格式 -> store格式
+      const convertedMessage = {
+        id:
+          typeof message.id === "string"
+            ? parseInt(message.id.replace("mock-", "").split("-")[0]) || 0
+            : message.id,
+        senderId: message.playerId || message.senderId || -1,
+        content: message.content || "",
+        timestamp: message.timestamp || Date.now(),
+        isPrivate: false,
+        privateThought: message.privateThought,
+      };
+      this.chatMessages.push(convertedMessage);
     },
 
     clearChatMessages() {
@@ -49,7 +74,7 @@ export const useGameStore = defineStore("game", {
       return state.chatMessages.filter((message) => {
         // Show private thoughts only to god view (0) or the player themselves
         if (message.privateThought) {
-          return state.myViewId === 0 || state.myViewId === message.playerId;
+          return state.myViewId === 0 || state.myViewId === message.senderId;
         }
         return true; // Show all other message types
       });

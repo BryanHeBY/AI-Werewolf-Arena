@@ -3,7 +3,7 @@ import { ref, onUnmounted } from "vue";
 // 导入Socket.IO客户端库和类型定义
 import { io, type Socket } from "socket.io-client";
 // 导入游戏广播事件类型定义
-import type { BroadcastEvent } from "@/types";
+// import type { BroadcastEvent } from "@/types";
 
 /**
  * WebSocket连接管理的组合式函数

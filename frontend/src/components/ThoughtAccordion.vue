@@ -3,12 +3,14 @@
 import { ref, computed } from "vue";
 // 导入图标组件
 import { ChevronDown, Eye } from "lucide-vue-next";
-// 导入聊天消息类型定义
-import type { ChatMessage } from "@/types/v2-types";
-
 // 定义组件属性
 const props = defineProps<{
-  msg: ChatMessage; // 聊天消息对象，包含内心独白信息
+  msg: {
+    senderId?: number;
+    playerId?: number;
+    privateThought?: string;
+    [key: string]: any;
+  }; // 聊天消息对象，包含内心独白信息
 }>();
 
 // 控制折叠面板是否展开的状态
@@ -115,7 +117,7 @@ const toggle = () => {
             <span class="text-neon-green/80">PROCESS RUNNING</span>
           </div>
           <div class="text-neon-cyan/60">
-            PID: {{ msg.playerId }} | MEM: 64KB
+            PID: {{ msg.senderId || msg.playerId }} | MEM: 64KB
           </div>
         </div>
       </div>

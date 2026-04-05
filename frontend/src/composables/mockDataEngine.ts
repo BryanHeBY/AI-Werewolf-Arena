@@ -1,23 +1,16 @@
-// 导入游戏相关的类型定义
-import type {
-  PublicGameState,
-  PlayerAction,
-  BroadcastEvent,
-  GamePhase,
-  RoleType,
-  Faction,
-  ActionType,
-} from "@/types";
+// 导入游戏相关的类型定义和值
+import type { PublicGameState, PlayerAction } from "@/types";
+import { GamePhase, RoleType, Faction, ActionType } from "@/types";
 
 // 游戏角色配置：标准的6人狼人杀角色配置
 // 包含：2狼人、1预言家、1女巫、2村民
 const ROLES: RoleType[] = [
-  "wolf",
-  "wolf",
-  "seer",
-  "witch",
-  "villager",
-  "villager",
+  RoleType.Wolf,
+  RoleType.Wolf,
+  RoleType.Seer,
+  RoleType.Witch,
+  RoleType.Villager,
+  RoleType.Villager,
 ];
 // 玩家名称：使用希腊字母命名，便于区分
 const PLAYER_NAMES = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta"];

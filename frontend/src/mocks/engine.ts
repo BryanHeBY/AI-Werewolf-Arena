@@ -1,5 +1,6 @@
 // 导入类型定义和游戏状态管理
-import type { ChatMessage } from "@/types/v2-types";
+import type { ChatMessage } from "@/types";
+import { GamePhase } from "@/types";
 import { useGameStore } from "@/stores/gameStore";
 
 /**
@@ -110,9 +111,9 @@ export class MockEngine {
    */
   private initializeGameState(): void {
     // 创建初始游戏状态对象
-    const initialGameState = {
+    const initialGameState: any = {
       // 当前游戏阶段：夜晚开始
-      phase: "Night_Start" as const,
+      phase: "Night_Start" as GamePhase,
       // 当前游戏轮次：第一轮
       round: 1,
       // 玩家列表：包含6名玩家，分配不同角色
@@ -258,8 +259,9 @@ export class MockEngine {
     this.messageCount++;
     // 记录日志，便于调试和监控
     console.log(
-      `[MockEngine] Message #${this.messageCount} sent:`,
-      message.type,
+      `[MockEngine] Message #${this.messageCount} sent by player ${message.senderId}:`,
+      message.content.substring(0, 50) +
+        (message.content.length > 50 ? "..." : ""),
     );
   }
 
@@ -272,7 +274,7 @@ export class MockEngine {
    * - 行动消息：10% (0.9-1.0)
    * 这种分布模拟真实游戏中的消息频率
    */
-  private createRandomMessage(): ChatMessage {
+  private createRandomMessage(): any {
     // 生成0-1之间的随机数，用于决定消息类型
     const rand = Math.random();
     // 获取当前时间戳，用于消息的时间属性
@@ -297,31 +299,26 @@ export class MockEngine {
   /**
    * 创建正常发言消息 - 模拟玩家的公开发言
    * 消息特点：
-   * 1. 随机选择一个玩家作为发言人
-   * 2. 从正常发言内容池中随机选择内容
-   * 3. 消息类型为"speak"（发言）
-   * 4. 包含完整的发言者信息和时间戳
+   * 1. 随机选择一个模拟玩家作为发言人
+   * 2. 消息类型为"speak"（发言）
+   * 3. 从正常发言内容池中随机选择内容
+   * 4. 用于模拟玩家在游戏中的公开讨论和交流
    */
-  private createNormalSpeakMessage(timestamp: number): ChatMessage {
+  private createNormalSpeakMessage(timestamp: number): any {
     // 随机选择一个模拟玩家作为发言人
     const player = this.getRandomPlayer();
     // 从正常发言内容池中随机选择一条发言内容
     const content = this.getRandomItem(NORMAL_SPEAK_CONTENTS);
 
-    // 构建发言消息对象
+    // 构建发言消息对象 - 使用v2-types.ts中的ChatMessage接口
     return {
-      // 生成唯一的消息ID：mock-时间戳-消息序号
-      id: `mock-${timestamp}-${this.messageCount + 1}`,
-      // 消息类型：发言
-      type: "speak",
-      // 发言者ID
+      id: `mock-${this.messageCount + 1}`, // string类型
+      type: "speak" as const,
       playerId: player.id,
-      // 发言者姓名
       playerName: player.name,
-      // 发言内容
       content,
-      // 消息时间戳
       timestamp,
+      privateThought: undefined,
     };
   }
 
@@ -334,24 +331,17 @@ export class MockEngine {
    * 4. 从系统消息内容池中随机选择内容
    * 5. 用于模拟游戏阶段转换、结果宣布等系统事件
    */
-  private createSystemMessage(timestamp: number): ChatMessage {
+  private createSystemMessage(timestamp: number): any {
     // 从系统消息内容池中随机选择一条内容
     const content = this.getRandomItem(SYSTEM_MESSAGES);
 
-    // 构建系统消息对象
+    // 构建系统消息对象 - 使用index.ts中的ChatMessage接口
     return {
-      // 生成唯一的消息ID：mock-时间戳-消息序号
-      id: `mock-${timestamp}-${this.messageCount + 1}`,
-      // 消息类型：系统消息
-      type: "system",
-      // 系统消息的固定玩家ID：-1
-      playerId: -1,
-      // 系统消息的固定发送者名称：法官
-      playerName: "法官",
-      // 系统消息内容
+      id: this.messageCount + 1, // number类型
+      senderId: -1, // 法官消息
       content,
-      // 消息时间戳
       timestamp,
+      isPrivate: false,
     };
   }
 
@@ -364,7 +354,7 @@ export class MockEngine {
    * 4. 用于展示AI玩家的推理过程和策略思考
    * 这是AI狼人杀竞技场的核心特色功能
    */
-  private createPrivateThoughtMessage(timestamp: number): ChatMessage {
+  private createPrivateThoughtMessage(timestamp: number): any {
     // 随机选择一个模拟玩家作为发言人
     const player = this.getRandomPlayer();
     // 从正常发言内容池中随机选择公开发言内容
@@ -372,22 +362,14 @@ export class MockEngine {
     // 从内心独白内容池中随机选择内心独白内容
     const privateThought = this.getRandomItem(PRIVATE_THOUGHTS);
 
-    // 构建包含内心独白的消息对象
+    // 构建包含内心独白的消息对象 - 使用index.ts中的ChatMessage接口
     return {
-      // 生成唯一的消息ID：mock-时间戳-消息序号
-      id: `mock-${timestamp}-${this.messageCount + 1}`,
-      // 消息类型：发言（包含内心独白）
-      type: "speak",
-      // 发言者ID
-      playerId: player.id,
-      // 发言者姓名
-      playerName: player.name,
-      // 公开的发言内容
+      id: this.messageCount + 1, // number类型
+      senderId: player.id, // 使用senderId而不是playerId
       content,
-      // 私密的内心独白，展示AI的思考过程
-      privateThought,
-      // 消息时间戳
       timestamp,
+      isPrivate: false,
+      privateThought, // 内心独白内容
     };
   }
 
@@ -399,26 +381,19 @@ export class MockEngine {
    * 3. 用于模拟狼人杀人、预言家查验、女巫用药等游戏行动
    * 4. 行动内容从行动描述池中随机选择
    */
-  private createActionMessage(timestamp: number): ChatMessage {
+  private createActionMessage(timestamp: number): any {
     // 随机选择一个模拟玩家作为行动执行者
     const player = this.getRandomPlayer();
     // 从行动描述内容池中随机选择一条行动描述
     const content = this.getRandomItem(ACTION_CONTENTS);
 
-    // 构建行动消息对象
+    // 构建行动消息对象 - 使用index.ts中的ChatMessage接口
     return {
-      // 生成唯一的消息ID：mock-时间戳-消息序号
-      id: `mock-${timestamp}-${this.messageCount + 1}`,
-      // 消息类型：行动
-      type: "action",
-      // 行动执行者ID
-      playerId: player.id,
-      // 行动执行者姓名
-      playerName: player.name,
-      // 行动描述内容
+      id: this.messageCount + 1, // number类型
+      senderId: player.id, // 使用senderId而不是playerId
       content,
-      // 消息时间戳
       timestamp,
+      isPrivate: false,
     };
   }
 
