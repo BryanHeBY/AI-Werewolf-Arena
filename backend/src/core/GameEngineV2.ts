@@ -310,66 +310,6 @@ export class GameEngineV2 {
     this.phaseStack.push(GamePhase.Sheriff_Run);
   }
 
-  /**
-   * 场景3：平票 PK（ARCHITECTURE.md 第135-160行）
-   * 嵌套循环，不改变栈底
-   */
-  private handleTieVote(tiedPlayerIds: number[]): void {
-    // 直接向栈顶 push 新的子阶段（不改变栈底）
-    this.phaseStack.push(GamePhase.Vote, {
-      onlyTargets: tiedPlayerIds,
-      excludeVoters: tiedPlayerIds,
-    });
-    this.phaseStack.push(GamePhase.PK_Speech, {
-      speakers: [...tiedPlayerIds].reverse(), // PK 发言顺序反转
-    });
-  }
-
-  /**
-   * 场景4：狼人白天自爆（ARCHITECTURE.md 第164-180行）
-   * 终极打断，立即清空所有剩余白天阶段
-   */
-  private handleSelfDestruct(playerId: number): void {
-    // 立即清空所有剩余白天阶段
-    this.phaseStack.clearDayPhases();
-
-    // 立即进入天黑
-    this.phaseStack.push(GamePhase.NightStart);
-  }
-
-  /**
-   * 检查是否需要开始警长竞选
-   */
-  private shouldStartSheriffElection(): boolean {
-    const state = this.env.getGameState();
-
-    // 第一轮白天且没有警长时开始竞选
-    if (state.round !== 1) return false;
-
-    // 检查是否有警长（从 ECS World 中检查）
-    if (!this.world) return false;
-
-    // 直接查询World中是否有警长
-    const allPlayers = this.world.query("PlayerComponent", "StatusComponent");
-    for (const playerData of allPlayers) {
-      const status = playerData.StatusComponent as StatusComponent;
-      if (status?.isSheriff) {
-        return false; // 已经有警长了
-      }
-    }
-
-    return true; // 第一轮且没有警长
-  }
-
-  /**
-   * 检查是否需要 PK（平票情况）
-   */
-  private shouldStartPk(voteContext: any): boolean {
-    // 检查投票结果是否有平票
-    // 这里需要实现具体的平票检测逻辑
-    return voteContext?.hasTie === true;
-  }
-
   // ============================================================================
   // 阶段处理函数（需要从 V1 迁移并适配 V2 架构）
   // ============================================================================
@@ -458,93 +398,6 @@ export class GameEngineV2 {
 
     // Phase Stack 模式：处理完成后只弹出当前阶段，下一阶段已在栈中
     // this.phaseStack.pop(); // 弹出 WolfAction，SeerAction自动成为栈顶 - 已移动到第一步
-  }
-
-  private async executeWolfAction(wolfId: number, action: any): Promise<void> {
-    const gameState = this.env.getGameState();
-    const nightResult = gameState.nightResult!;
-
-    // 验证行动
-    const validation = this.actionValidator.validate(
-      {
-        thought: action.thought || "狼人行动",
-        action: {
-          type: action.type,
-          targetId: action.targetId,
-        },
-      },
-      RoleType.Wolf,
-      wolfId,
-      gameState,
-    );
-
-    // 处理验证结果
-    if (!validation.valid) {
-      console.error(`狼人${wolfId}行动验证失败:`, validation.error);
-      return;
-    }
-
-    const playerAction = validation.corrected!;
-
-    // 确保目标有效
-    if (playerAction.targetId === undefined) {
-      console.error(`狼人${wolfId}行动无效: 未指定目标`);
-      return;
-    }
-
-    const targetPlayer = gameState.players.find(
-      (p) => p.id === playerAction.targetId,
-    );
-    if (!targetPlayer) {
-      console.error(
-        `狼人${wolfId}行动无效: 目标玩家${playerAction.targetId}不存在`,
-      );
-      return;
-    }
-
-    if (!targetPlayer.isAlive) {
-      console.error(
-        `狼人${wolfId}行动无效: 目标玩家${targetPlayer.name}已死亡`,
-      );
-      return;
-    }
-
-    // Check if target is a wolf using ECS World
-    if (this.world) {
-      const targetIdentity = this.world.getComponent<IdentityComponent>(
-        playerAction.targetId,
-        "IdentityComponent",
-      );
-      if (targetIdentity?.roleType === RoleType.Wolf) {
-        console.error(`狼人${wolfId}行动无效: 不能选择狼人队友作为目标`);
-        return;
-      }
-    }
-
-    // 添加到历史
-    gameState.history.push(playerAction);
-
-    // 更新夜晚结果
-    nightResult.killedByWolf = playerAction.targetId;
-    if (!nightResult.deadPlayerIds.includes(playerAction.targetId)) {
-      nightResult.deadPlayerIds.push(playerAction.targetId);
-    }
-
-    // 日志记录
-    const wolfPlayer = gameState.players.find((p) => p.id === wolfId)!;
-    console.log(`[狼人行动] ${wolfPlayer.name} 选择杀死 ${targetPlayer.name}`);
-
-    // 广播行动结果
-    this.env.broadcast({
-      type: BroadcastEventType.PlayerAction,
-      data: {
-        playerId: wolfId,
-        actionType: ActionType.Kill,
-        targetId: playerAction.targetId,
-        thought: playerAction.thought,
-      },
-      timestamp: Date.now(),
-    });
   }
 
   private async processSeerAction(): Promise<void> {
@@ -760,11 +613,15 @@ export class GameEngineV2 {
       ) {
         const targetPlayer = players.find((p) => p.id === action.targetId);
         const voterPlayer = players.find((p) => p.id === action.playerId);
-        
-        if (targetPlayer && targetPlayer.isAlive && 
-            voterPlayer && voterPlayer.isAlive &&
-            (!onlyTargets || onlyTargets.includes(action.targetId)) &&
-            (!excludeVoters || !excludeVoters.includes(action.playerId))) {
+
+        if (
+          targetPlayer &&
+          targetPlayer.isAlive &&
+          voterPlayer &&
+          voterPlayer.isAlive &&
+          (!onlyTargets || onlyTargets.includes(action.targetId)) &&
+          (!excludeVoters || !excludeVoters.includes(action.playerId))
+        ) {
           votingPlayerIds.add(action.playerId);
           voteMap.set(action.targetId, (voteMap.get(action.targetId) || 0) + 1);
         }
@@ -772,16 +629,16 @@ export class GameEngineV2 {
     }
 
     const playersToVote = alivePlayers.filter(
-      (player) => 
-        !votingPlayerIds.has(player.id) && 
-        (!excludeVoters || !excludeVoters.includes(player.id))
+      (player) =>
+        !votingPlayerIds.has(player.id) &&
+        (!excludeVoters || !excludeVoters.includes(player.id)),
     );
 
     if (playersToVote.length > 0) {
       await Promise.all(
-        playersToVote.map((player) => 
-          this.agentController.runAgentCycle(player.id)
-        )
+        playersToVote.map((player) =>
+          this.agentController.runAgentCycle(player.id),
+        ),
       );
 
       const newHistory = this.env.getGameState().history.slice(historyBefore);
@@ -793,13 +650,20 @@ export class GameEngineV2 {
         ) {
           const targetPlayer = players.find((p) => p.id === action.targetId);
           const voterPlayer = players.find((p) => p.id === action.playerId);
-          
-          if (targetPlayer && targetPlayer.isAlive && 
-              voterPlayer && voterPlayer.isAlive &&
-              (!onlyTargets || onlyTargets.includes(action.targetId)) &&
-              (!excludeVoters || !excludeVoters.includes(action.playerId))) {
+
+          if (
+            targetPlayer &&
+            targetPlayer.isAlive &&
+            voterPlayer &&
+            voterPlayer.isAlive &&
+            (!onlyTargets || onlyTargets.includes(action.targetId)) &&
+            (!excludeVoters || !excludeVoters.includes(action.playerId))
+          ) {
             votingPlayerIds.add(action.playerId);
-            voteMap.set(action.targetId, (voteMap.get(action.targetId) || 0) + 1);
+            voteMap.set(
+              action.targetId,
+              (voteMap.get(action.targetId) || 0) + 1,
+            );
           }
         }
       }
@@ -827,25 +691,29 @@ export class GameEngineV2 {
     if (votedDeadId !== undefined && !tie) {
       this.env.setGameState({ votedDeadId });
       this.env.markPlayerDead(votedDeadId);
-      
+
       const deadPlayer = players.find((p) => p.id === votedDeadId);
       this.env.broadcast({
         type: BroadcastEventType.PlayerDied,
         data: {
           playerId: votedDeadId,
           playerName: deadPlayer?.name,
-          reason: "voted_out"
+          reason: "voted_out",
         },
         timestamp: Date.now(),
       });
-      
-      console.log(`[投票结果] 玩家 ${deadPlayer?.name} (ID: ${votedDeadId}) 被投票出局，获得 ${maxVotes} 票`);
+
+      console.log(
+        `[投票结果] 玩家 ${deadPlayer?.name} (ID: ${votedDeadId}) 被投票出局，获得 ${maxVotes} 票`,
+      );
     } else if (tie && tiedPlayerIds.length > 1) {
-      console.log(`[投票结果] 平票：玩家 ${tiedPlayerIds.join(', ')} 各获得 ${maxVotes} 票，进入PK阶段`);
-      
+      console.log(
+        `[投票结果] 平票：玩家 ${tiedPlayerIds.join(", ")} 各获得 ${maxVotes} 票，进入PK阶段`,
+      );
+
       this.phaseStack.push(GamePhase.PK_Speech, {
         speakers: [...tiedPlayerIds].reverse(),
-        tiedPlayerIds
+        tiedPlayerIds,
       });
     } else {
       console.log(`[投票结果] 无人被投票出局`);
