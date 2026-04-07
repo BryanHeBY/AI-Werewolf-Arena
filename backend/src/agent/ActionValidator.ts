@@ -436,7 +436,6 @@ export class ActionValidator {
   private requiresTarget(type: ActionType): boolean {
     return [
       ActionType.Kill,
-      ActionType.Save,
       ActionType.Poison,
       ActionType.Check,
       ActionType.Vote,

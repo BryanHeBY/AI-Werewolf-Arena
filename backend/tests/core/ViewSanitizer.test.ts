@@ -10,10 +10,32 @@ import {
   StatusComponent,
 } from "../../src/core/types";
 
+// 辅助函数：从ECS World获取角色信息
+const getRoleInfoFromWorld = (world: GameWorld, playerId: number) => {
+  const identity = world.getComponent<IdentityComponent>(
+    playerId,
+    "IdentityComponent",
+  );
+  return {
+    roleType: identity?.roleType,
+    faction: identity?.faction,
+  };
+};
+
+// 辅助函数：从ECS World获取viewer的角色信息
+const getViewerRoleFromWorld = (world: GameWorld, viewerId: number) => {
+  const identity = world.getComponent<IdentityComponent>(
+    viewerId,
+    "IdentityComponent",
+  );
+  return identity?.roleType;
+};
+
 describe("ViewSanitizer", () => {
   let sanitizer: ViewSanitizer;
   let world: GameWorld;
   let mockGameState: GameState;
+  let mockPlayers: Player[];
 
   beforeEach(() => {
     world = new GameWorld();
@@ -23,72 +45,103 @@ describe("ViewSanitizer", () => {
     const entityIds = [1, 2, 3, 4];
 
     // 实体1：狼人（存活）
-    world.createEntity(1);
-    world.addComponent(1, "IdentityComponent", {
-      entityId: 1,
-      roleType: RoleType.Wolf,
-      faction: Faction.Wolf,
-      name: "Player 1",
-    } as IdentityComponent);
-    world.addComponent(1, "StatusComponent", {
-      entityId: 1,
-      isAlive: true,
-      isSheriff: false,
-      isMuted: false,
-    } as StatusComponent);
+    const entityId1 = world.createEntity();
+    world.addComponent(
+      entityId1,
+      {
+        entityId: entityId1,
+        roleType: RoleType.Wolf,
+        faction: Faction.Wolf,
+        name: "Player 1",
+      } as IdentityComponent,
+      "IdentityComponent",
+    );
+    world.addComponent(
+      entityId1,
+      {
+        entityId: entityId1,
+        isAlive: true,
+        isSheriff: false,
+        isMuted: false,
+      } as StatusComponent,
+      "StatusComponent",
+    );
 
     // 实体2：村民（存活）
-    world.createEntity(2);
-    world.addComponent(2, "IdentityComponent", {
-      entityId: 2,
-      roleType: RoleType.Villager,
-      faction: Faction.Villager,
-      name: "Player 2",
-    } as IdentityComponent);
-    world.addComponent(2, "StatusComponent", {
-      entityId: 2,
-      isAlive: true,
-      isSheriff: false,
-      isMuted: false,
-    } as StatusComponent);
+    const entityId2 = world.createEntity();
+    world.addComponent(
+      entityId2,
+      {
+        entityId: entityId2,
+        roleType: RoleType.Villager,
+        faction: Faction.Villager,
+        name: "Player 2",
+      } as IdentityComponent,
+      "IdentityComponent",
+    );
+    world.addComponent(
+      entityId2,
+      {
+        entityId: entityId2,
+        isAlive: true,
+        isSheriff: false,
+        isMuted: false,
+      } as StatusComponent,
+      "StatusComponent",
+    );
 
     // 实体3：狼人（存活）
-    world.createEntity(3);
-    world.addComponent(3, "IdentityComponent", {
-      entityId: 3,
-      roleType: RoleType.Wolf,
-      faction: Faction.Wolf,
-      name: "Player 3",
-    } as IdentityComponent);
-    world.addComponent(3, "StatusComponent", {
-      entityId: 3,
-      isAlive: true,
-      isSheriff: false,
-      isMuted: false,
-    } as StatusComponent);
+    const entityId3 = world.createEntity();
+    world.addComponent(
+      entityId3,
+      {
+        entityId: entityId3,
+        roleType: RoleType.Wolf,
+        faction: Faction.Wolf,
+        name: "Player 3",
+      } as IdentityComponent,
+      "IdentityComponent",
+    );
+    world.addComponent(
+      entityId3,
+      {
+        entityId: entityId3,
+        isAlive: true,
+        isSheriff: false,
+        isMuted: false,
+      } as StatusComponent,
+      "StatusComponent",
+    );
 
     // 实体4：预言家（死亡）
-    world.createEntity(4);
-    world.addComponent(4, "IdentityComponent", {
-      entityId: 4,
-      roleType: RoleType.Seer,
-      faction: Faction.Villager,
-      name: "Player 4",
-    } as IdentityComponent);
-    world.addComponent(4, "StatusComponent", {
-      entityId: 4,
-      isAlive: false,
-      isSheriff: false,
-      isMuted: false,
-    } as StatusComponent);
-
-    // 创建测试用的Player数组（兼容旧接口，但去掉role字段）
-    const mockPlayers: Player[] = [
+    const entityId4 = world.createEntity();
+    world.addComponent(
+      entityId4,
       {
-        id: 1,
+        entityId: entityId4,
+        roleType: RoleType.Seer,
+        faction: Faction.Villager,
+        name: "Player 4",
+      } as IdentityComponent,
+      "IdentityComponent",
+    );
+    world.addComponent(
+      entityId4,
+      {
+        entityId: entityId4,
+        isAlive: false,
+        isSheriff: false,
+        isMuted: false,
+      } as StatusComponent,
+      "StatusComponent",
+    );
+
+    // 创建测试用的Player数组（去掉role字段，使用ECS World获取角色信息）
+    mockPlayers = [
+      {
+        id: entityId1,
         name: "Player 1",
         isAlive: true,
-        role: new TestRole(1, RoleType.Wolf, Faction.Wolf),
         faction: Faction.Wolf,
         modelConfig: {
           baseURL: "",
@@ -97,13 +150,11 @@ describe("ViewSanitizer", () => {
           temperature: 0.7,
           maxTokens: 1024,
         },
-        isSheriff: false,
       },
       {
-        id: 2,
+        id: entityId2,
         name: "Player 2",
         isAlive: true,
-        role: new TestRole(2, RoleType.Villager, Faction.Villager),
         faction: Faction.Villager,
         modelConfig: {
           baseURL: "",
@@ -112,13 +163,11 @@ describe("ViewSanitizer", () => {
           temperature: 0.7,
           maxTokens: 1024,
         },
-        isSheriff: false,
       },
       {
-        id: 3,
+        id: entityId3,
         name: "Player 3",
         isAlive: true,
-        role: new TestRole(3, RoleType.Wolf, Faction.Wolf),
         faction: Faction.Wolf,
         modelConfig: {
           baseURL: "",
@@ -127,13 +176,11 @@ describe("ViewSanitizer", () => {
           temperature: 0.7,
           maxTokens: 1024,
         },
-        isSheriff: false,
       },
       {
-        id: 4,
+        id: entityId4,
         name: "Player 4",
         isAlive: false, // Dead player
-        role: new TestRole(4, RoleType.Seer, Faction.Villager),
         faction: Faction.Villager,
         modelConfig: {
           baseURL: "",
@@ -142,7 +189,6 @@ describe("ViewSanitizer", () => {
           temperature: 0.7,
           maxTokens: 1024,
         },
-        isSheriff: false,
       },
     ];
 
@@ -177,29 +223,69 @@ describe("ViewSanitizer", () => {
 
     test("player can see their own role", () => {
       const player = mockPlayers[0]; // Player 1 (Wolf)
-      const canSee = sanitizer.canSeePlayerRole(player, 1);
+      const canSee = sanitizer.canSeePlayerRole(player, player.id);
       expect(canSee).toBe(true);
     });
 
     test("alive wolf can see other alive wolf roles", () => {
       const wolf1 = mockPlayers[0]; // Player 1 (Wolf)
       const wolf2 = mockPlayers[2]; // Player 3 (Wolf)
+      const viewerRole = getViewerRoleFromWorld(world, wolf1.id);
+
+      // 确保viewerRole是RoleType.Wolf
+      expect(viewerRole).toBe(RoleType.Wolf);
+
+      // 确保wolf1和wolf2都存活
+      expect(wolf1.isAlive).toBe(true);
+      expect(wolf2.isAlive).toBe(true);
+
+      // 确保World中有正确的组件
+      const wolf2Identity = world.getComponent<IdentityComponent>(
+        wolf2.id,
+        "IdentityComponent",
+      );
+      expect(wolf2Identity).not.toBeNull();
+      expect(wolf2Identity?.roleType).toBe(RoleType.Wolf);
 
       const canSee = sanitizer.canSeePlayerRole(
         wolf2,
-        1,
-        RoleType.Wolf,
+        wolf1.id,
+        viewerRole,
         mockPlayers,
       );
       expect(canSee).toBe(true);
     });
 
     test("alive wolf cannot see dead wolf role", () => {
+      const wolf1 = mockPlayers[0]; // Player 1 (Wolf)
+
+      // 创建死狼实体
+      const deadWolfEntityId = world.createEntity();
+      world.addComponent(
+        deadWolfEntityId,
+        {
+          entityId: deadWolfEntityId,
+          roleType: RoleType.Wolf,
+          faction: Faction.Wolf,
+          name: "Dead Wolf",
+        } as IdentityComponent,
+        "IdentityComponent",
+      );
+      world.addComponent(
+        deadWolfEntityId,
+        {
+          entityId: deadWolfEntityId,
+          isAlive: false,
+          isSheriff: false,
+          isMuted: false,
+        } as StatusComponent,
+        "StatusComponent",
+      );
+
       const deadWolf: Player = {
-        id: 5,
+        id: deadWolfEntityId,
         name: "Dead Wolf",
         isAlive: false,
-        role: new TestRole(5, RoleType.Wolf, Faction.Wolf),
         faction: Faction.Wolf,
         modelConfig: {
           baseURL: "",
@@ -208,33 +294,39 @@ describe("ViewSanitizer", () => {
           temperature: 0.7,
           maxTokens: 1024,
         },
-        isSheriff: false,
       };
 
-      const canSee = sanitizer.canSeePlayerRole(deadWolf, 1, RoleType.Wolf, [
-        ...mockPlayers,
+      const viewerRole = getViewerRoleFromWorld(world, wolf1.id);
+      const canSee = sanitizer.canSeePlayerRole(
         deadWolf,
-      ]);
+        wolf1.id,
+        viewerRole,
+        [...mockPlayers, deadWolf],
+      );
       expect(canSee).toBe(false);
     });
 
     test("villager cannot see wolf role", () => {
       const wolf = mockPlayers[0]; // Player 1 (Wolf)
+      const villager = mockPlayers[1]; // Player 2 (Villager)
+      const viewerRole = getViewerRoleFromWorld(world, villager.id);
       const canSee = sanitizer.canSeePlayerRole(
         wolf,
-        2,
-        RoleType.Villager,
+        villager.id,
+        viewerRole,
         mockPlayers,
       );
       expect(canSee).toBe(false);
     });
 
     test("wolf cannot see villager role", () => {
+      const wolf = mockPlayers[0]; // Player 1 (Wolf)
       const villager = mockPlayers[1]; // Player 2 (Villager)
+      const viewerRole = getViewerRoleFromWorld(world, wolf.id);
       const canSee = sanitizer.canSeePlayerRole(
         villager,
-        1,
-        RoleType.Wolf,
+        wolf.id,
+        viewerRole,
         mockPlayers,
       );
       expect(canSee).toBe(false);
@@ -247,50 +339,57 @@ describe("ViewSanitizer", () => {
       const sanitized = sanitizer.sanitizePlayerInfoForViewer(
         player,
         0,
-        RoleType.Wolf,
+        RoleType.Wolf, // God view可以传递任意viewerRole
         mockPlayers,
       );
 
+      const roleInfo = getRoleInfoFromWorld(world, player.id);
       expect(sanitized.id).toBe(player.id);
       expect(sanitized.name).toBe(player.name);
       expect(sanitized.isAlive).toBe(player.isAlive);
-      expect(sanitized.roleType).toBe(player.role.roleType);
-      expect(sanitized.faction).toBe(player.role.faction);
+      expect(sanitized.roleType).toBe(roleInfo.roleType);
+      expect(sanitized.faction).toBe(roleInfo.faction);
     });
 
     test("player gets their own full info", () => {
       const player = mockPlayers[0];
+      const viewerRole = getViewerRoleFromWorld(world, player.id);
       const sanitized = sanitizer.sanitizePlayerInfoForViewer(
         player,
-        1,
-        RoleType.Wolf,
+        player.id,
+        viewerRole,
         mockPlayers,
       );
 
-      expect(sanitized.roleType).toBe(player.role.roleType);
-      expect(sanitized.faction).toBe(player.role.faction);
+      const roleInfo = getRoleInfoFromWorld(world, player.id);
+      expect(sanitized.roleType).toBe(roleInfo.roleType);
+      expect(sanitized.faction).toBe(roleInfo.faction);
     });
 
     test("wolf gets other wolf info when both alive", () => {
       const wolf1 = mockPlayers[0];
       const wolf2 = mockPlayers[2];
+      const viewerRole = getViewerRoleFromWorld(world, wolf1.id);
 
       const sanitized = sanitizer.sanitizePlayerInfoForViewer(
         wolf2,
-        1,
-        RoleType.Wolf,
+        wolf1.id,
+        viewerRole,
         mockPlayers,
       );
-      expect(sanitized.roleType).toBe(wolf2.role.roleType);
-      expect(sanitized.faction).toBe(wolf2.role.faction);
+      const roleInfo = getRoleInfoFromWorld(world, wolf2.id);
+      expect(sanitized.roleType).toBe(roleInfo.roleType);
+      expect(sanitized.faction).toBe(roleInfo.faction);
     });
 
     test("villager gets sanitized info for wolf", () => {
       const wolf = mockPlayers[0];
+      const villager = mockPlayers[1];
+      const viewerRole = getViewerRoleFromWorld(world, villager.id);
       const sanitized = sanitizer.sanitizePlayerInfoForViewer(
         wolf,
-        2,
-        RoleType.Villager,
+        villager.id,
+        viewerRole,
         mockPlayers,
       );
 
@@ -303,22 +402,25 @@ describe("ViewSanitizer", () => {
 
     test("dead player info is sanitized for everyone", () => {
       const deadPlayer = mockPlayers[3];
+      const wolfViewer = mockPlayers[0];
+      const viewerRole = getViewerRoleFromWorld(world, wolfViewer.id);
 
       // God view
       const godView = sanitizer.sanitizePlayerInfoForViewer(
         deadPlayer,
         0,
-        RoleType.Wolf,
+        RoleType.Wolf, // God view可以传递任意viewerRole
         mockPlayers,
       );
-      expect(godView.roleType).toBe(deadPlayer.role.roleType);
-      expect(godView.faction).toBe(deadPlayer.role.faction);
+      const roleInfo = getRoleInfoFromWorld(world, deadPlayer.id);
+      expect(godView.roleType).toBe(roleInfo.roleType);
+      expect(godView.faction).toBe(roleInfo.faction);
 
       // Other player view
       const playerView = sanitizer.sanitizePlayerInfoForViewer(
         deadPlayer,
-        1,
-        RoleType.Wolf,
+        wolfViewer.id,
+        viewerRole,
         mockPlayers,
       );
       expect(playerView.roleType).toBeUndefined();
@@ -334,7 +436,7 @@ describe("ViewSanitizer", () => {
       expect(sanitized.round).toBe(mockGameState.round);
       expect(sanitized.players).toHaveLength(4);
 
-      // All players should have roles visible
+      // All players should have roles visible in god view
       sanitized.players.forEach((player: any) => {
         expect(player.roleType).toBeDefined();
         expect(player.faction).toBeDefined();
@@ -342,9 +444,14 @@ describe("ViewSanitizer", () => {
     });
 
     test("wolf view gets partial info", () => {
-      const sanitized = sanitizer.sanitizeGameStateForViewer(mockGameState, 1);
+      // 使用第一个玩家（狼人）的ID作为viewerId
+      const wolfViewerId = mockPlayers[0].id;
+      const sanitized = sanitizer.sanitizeGameStateForViewer(
+        mockGameState,
+        wolfViewerId,
+      );
 
-      // Player 1 (viewer) should see own role
+      // Player 1 (wolf viewer) should see own role
       expect(sanitized.players[0].roleType).toBeDefined();
       expect(sanitized.players[0].faction).toBeDefined();
 
@@ -362,11 +469,16 @@ describe("ViewSanitizer", () => {
     });
 
     test("villager view gets minimal info", () => {
-      const sanitized = sanitizer.sanitizeGameStateForViewer(mockGameState, 2);
+      // 使用第二个玩家（村民）的ID作为viewerId
+      const villagerViewerId = mockPlayers[1].id;
+      const sanitized = sanitizer.sanitizeGameStateForViewer(
+        mockGameState,
+        villagerViewerId,
+      );
 
-      // Only player 2 (viewer) should see own role
+      // Only the viewer (villager) should see own role
       sanitized.players.forEach((player: any, index: number) => {
-        if (player.id === 2) {
+        if (player.id === villagerViewerId) {
           expect(player.roleType).toBeDefined();
           expect(player.faction).toBeDefined();
         } else {
@@ -382,21 +494,27 @@ describe("ViewSanitizer", () => {
       const player = mockPlayers[0];
       const canSee = sanitizer.canSeePlayerRole(
         player,
-        1,
+        player.id,
         undefined,
         mockPlayers,
       );
 
       // Without role, can only see own info
-      expect(canSee).toBe(player.id === 1);
+      expect(canSee).toBe(player.id === player.id);
     });
 
     test("handles empty player list", () => {
       const player = mockPlayers[0];
-      const canSee = sanitizer.canSeePlayerRole(player, 1, RoleType.Wolf, []);
+      const viewerRole = getViewerRoleFromWorld(world, player.id);
+      const canSee = sanitizer.canSeePlayerRole(
+        player,
+        player.id,
+        viewerRole,
+        [],
+      );
 
       // Without player list, wolf cannot identify other wolves
-      expect(canSee).toBe(player.id === 1);
+      expect(canSee).toBe(player.id === player.id);
     });
 
     test("handles null/undefined values gracefully", () => {
@@ -404,7 +522,7 @@ describe("ViewSanitizer", () => {
       expect(() => {
         sanitizer.canSeePlayerRole(
           mockPlayers[0],
-          1,
+          mockPlayers[0].id,
           RoleType.Wolf,
           undefined as any,
         );

@@ -379,15 +379,24 @@ ${privateMemory.map((memory, index) => `${index + 1}. ${memory}`).join("\n")}
   private buildWitchContext(gameState: GameState): string {
     const hasAntidote = gameState.witchHasAntidote;
     const hasPoison = gameState.witchHasPoison;
+    const killedByWolf = gameState.nightResult?.killedByWolf;
 
-    return `## 女巫特定信息
+    let context = `## 女巫特定信息
 - 你有一瓶解药和一瓶毒药，每瓶只能用一次
 - 解药可以救活被狼人杀死的玩家
 - 毒药可以杀死一名玩家
 - 解药状态：${hasAntidote ? "可用" : "已使用"}
-- 毒药状态：${hasPoison ? "可用" : "已使用"}
+- 毒药状态：${hasPoison ? "可用" : "已使用"}`;
 
-`;
+    // 告诉女巫今晚狼人是否击杀了玩家
+    if (killedByWolf !== undefined) {
+      context += `\n- 今晚狼人击杀了玩家 ${killedByWolf}，你可以选择使用解药救他`;
+    } else {
+      context += `\n- 今晚狼人没有击杀玩家（平安夜）`;
+    }
+
+    context += `\n\n`;
+    return context;
   }
 
   /**

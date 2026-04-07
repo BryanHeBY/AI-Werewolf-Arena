@@ -54,6 +54,9 @@ export class AgentController {
     if (!status) {
       throw new Error(`StatusComponent not found for entity ${entityId}`);
     }
+    if (!status) {
+      throw new Error(`StatusComponent not found for entity ${entityId}`);
+    }
 
     // 2. 广播Agent开始思考
     this.broadcaster.broadcast({
@@ -85,7 +88,7 @@ export class AgentController {
     );
 
     // 6. 解析JSON响应
-    const { action, thought } = this.parseLLMResponse(response.thought);
+    const { action, thought } = response;
 
     // 7. 验证行动
     const gameState = this.env.getGameState();
@@ -93,7 +96,7 @@ export class AgentController {
       {
         thought,
         action: {
-          type: action.actionType,
+          type: action.type,
           targetId: action.targetId,
           content: action.content,
         },
@@ -107,9 +110,15 @@ export class AgentController {
       console.warn(
         `Invalid action from agent ${entityId}: ${validation.error}`,
       );
+      console.warn(
+        `Validation details: roleType=${identity.roleType}, action.type=${action.type}, targetId=${action.targetId}, gameState.phase=${gameState.phase}`,
+      );
     }
 
     const validatedAction = validation.corrected!;
+    console.log(
+      `AgentController: validatedAction.actionType=${validatedAction.actionType}`,
+    );
     this.applySideEffects(validatedAction, identity);
     this.env.publishAction(validatedAction);
 
@@ -142,34 +151,35 @@ export class AgentController {
   /**
    * 解析LLM响应，提取JSON格式的行动和思考
    */
-  private parseLLMResponse(response: string): { action: any; thought: string } {
-    // 尝试提取JSON部分
-    const jsonMatch = response.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      throw new Error("No JSON found in LLM response");
-    }
-
-    try {
-      const parsed = JSON.parse(jsonMatch[0]);
-
-      // 检查是否包含thought字段
-      if (!parsed.thought) {
-        throw new Error("Missing 'thought' field in LLM response");
-      }
-
-      // 检查是否包含action字段
-      if (!parsed.action) {
-        throw new Error("Missing 'action' field in LLM response");
-      }
-
-      return {
-        thought: parsed.thought,
-        action: parsed.action,
-      };
-    } catch (error) {
-      throw new Error(`Failed to parse LLM response as JSON: ${error}`);
-    }
-  }
+  // 已废弃：OpenAIClient.chat() 现在直接返回解析好的AgentOutput
+  // private parseLLMResponse(response: string): { action: any; thought: string } {
+  //   // 尝试提取JSON部分
+  //   const jsonMatch = response.match(/\{[\s\S]*\}/);
+  //   if (!jsonMatch) {
+  //     throw new Error("No JSON found in LLM response");
+  //   }
+  //
+  //   try {
+  //     const parsed = JSON.parse(jsonMatch[0]);
+  //
+  //     // 检查是否包含thought字段
+  //     if (!parsed.thought) {
+  //       throw new Error("Missing 'thought' field in LLM response");
+  //     }
+  //
+  //     // 检查是否包含action字段
+  //     if (!parsed.action) {
+  //       throw new Error("Missing 'action' field in LLM response");
+  //     }
+  //
+  //     return {
+  //       thought: parsed.thought,
+  //       action: parsed.action,
+  //     };
+  //   } catch (error) {
+  //     throw new Error(`Failed to parse LLM response as JSON: ${error}`);
+  //   }
+  // }
 
   private applySideEffects(
     action: PlayerAction,
@@ -179,6 +189,15 @@ export class AgentController {
 
     switch (action.actionType) {
       case ActionType.Kill: {
+        if (action.targetId !== undefined && state.nightResult) {
+          // 设置狼人击杀目标
+          state.nightResult.killedByWolf = action.targetId;
+          // 将目标添加到死亡列表
+          this.tryAddDeadToNightResult(action.targetId);
+          this.env.setGameState({
+            nightResult: state.nightResult,
+          });
+        }
         break;
       }
 
@@ -191,6 +210,16 @@ export class AgentController {
             state.nightResult.deadPlayerIds.filter(
               (id: number) => id !== killed,
             );
+
+          // 更新ECS组件，将玩家标记为存活
+          const status = this.world.getComponent<StatusComponent>(
+            killed,
+            "StatusComponent",
+          );
+          if (status) {
+            status.isAlive = true;
+          }
+
           this.env.setGameState({
             witchHasAntidote: false,
             nightResult: state.nightResult,

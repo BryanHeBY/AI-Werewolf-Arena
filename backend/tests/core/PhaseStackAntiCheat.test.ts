@@ -157,7 +157,7 @@ describe("Phase Stack Anti-Cheat Tests", () => {
       faction: "Wolf" as Faction,
       name: "Test Player 1",
     };
-    world.addComponent(entity1, identity1);
+    world.addComponent(entity1, identity1, "IdentityComponent");
 
     const entity2 = world.createEntity();
     const identity2: IdentityComponent = {
@@ -166,7 +166,7 @@ describe("Phase Stack Anti-Cheat Tests", () => {
       faction: "Villager" as Faction,
       name: "Test Player 2",
     };
-    world.addComponent(entity2, identity2);
+    world.addComponent(entity2, identity2, "IdentityComponent");
 
     // Verify we can query components from World
     const retrievedIdentity1 = world.getComponent(entity1, "IdentityComponent");
@@ -176,10 +176,10 @@ describe("Phase Stack Anti-Cheat Tests", () => {
     expect(retrievedIdentity2).toBeDefined();
 
     // Safely cast and check faction
-    const identity1 = retrievedIdentity1 as IdentityComponent;
-    const identity2 = retrievedIdentity2 as IdentityComponent;
-    expect(identity1?.faction).toBe("Wolf");
-    expect(identity2?.faction).toBe("Villager");
+    const retrievedIdentity1Component = retrievedIdentity1 as IdentityComponent;
+    const retrievedIdentity2Component = retrievedIdentity2 as IdentityComponent;
+    expect(retrievedIdentity1Component?.faction).toBe("Wolf");
+    expect(retrievedIdentity2Component?.faction).toBe("Villager");
   });
 
   test("No @ts-ignore or as any type suppression in core files", () => {

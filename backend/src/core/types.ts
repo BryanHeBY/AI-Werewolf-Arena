@@ -93,10 +93,11 @@ export interface Player {
   id: number;
   name: string;
   isAlive: boolean;
+  isSheriff?: boolean; // 警长状态，仅在警长选举后设置
   faction: Faction;
   modelConfig: ModelConfig;
-  // 注意：role、isSheriff、isMuted、skillsUsed、privateMemory等字段现在从ECS组件中读取
-  // 这些字段已删除，必须通过world.getComponent(entityId, '...')获取
+  // 注意：role、isMuted、skillsUsed、privateMemory等字段现在从ECS组件中读取
+  // 这些字段必须通过world.getComponent(entityId, '...')获取
 }
 
 /**

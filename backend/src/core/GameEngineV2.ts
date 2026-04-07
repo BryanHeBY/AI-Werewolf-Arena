@@ -76,6 +76,9 @@ export class GameEngineV2 {
       phase: GamePhase.NightStart,
       round: 1,
       phaseStack: [],
+      nightResult: {
+        deadPlayerIds: [],
+      },
     };
     this.env.setGameState(initialState);
 
@@ -186,30 +189,96 @@ export class GameEngineV2 {
    * 4. 更新游戏状态
    */
   private async gameLoop(): Promise<void> {
+    let iteration = 0;
     while (this.isRunning && !this.abortController?.signal.aborted) {
+      iteration++;
+
+      // 安全限制：防止无限循环
+      if (iteration > 100) {
+        console.error(
+          `[gameLoop SAFETY] Exceeded 100 iterations, forcing stop. Stack: ${this.getStackSnapshot()
+            .map((n) => n.phase)
+            .join(" -> ")}`,
+        );
+        this.isRunning = false;
+        break;
+      }
+
       const currentNode = this.phaseStack.peek();
+      // 直接检查栈内部状态
+      const stackInternal = (this.phaseStack as any).stack;
+      console.error(
+        `[gameLoop] Iteration ${iteration}: Current node: ${currentNode?.phase}, Stack depth: ${this.phaseStack.depth}, phaseStack ref: ${this.phaseStack.toString().substring(0, 20)}..., Stack length: ${stackInternal?.length || 0}, Stack: ${stackInternal?.map((n: any) => n.phase).join(" -> ") || "empty"}`,
+      );
       if (!currentNode) {
         // 栈为空，游戏结束
+        console.error("[gameLoop] Stack empty, stopping game");
         this.isRunning = false;
         break;
       }
 
       try {
         // 处理当前阶段
+        console.error(`[gameLoop] Processing phase: ${currentNode.phase}`);
         await this.processPhase(currentNode.phase, currentNode.context);
+        console.error(
+          `[gameLoop] Finished processing phase: ${currentNode.phase}, Stack depth: ${this.phaseStack.depth}, Stack snapshot: ${this.getStackSnapshot()
+            .map((n) => n.phase)
+            .join(" -> ")}`,
+        );
 
         // 注意：processPhase 函数现在负责弹出当前阶段和压入下一阶段
         // 所以这里不需要额外的逻辑
 
         // 更新环境状态（当前阶段在 processPhase 中已更新）
+        const peekResult = this.phaseStack.peek();
+        const nextPhase = peekResult?.phase || GamePhase.GameOver;
+        console.log(
+          `[gameLoop] Next phase: ${nextPhase}, peek result: ${peekResult?.phase}, stack depth: ${this.phaseStack.depth}, stack internal: ${JSON.stringify((this.phaseStack as any).stack?.map((n: any) => n.phase))}`,
+        );
         this.env.setGameState({
-          phase: this.phaseStack.peek()?.phase || GamePhase.GameOver,
+          phase: nextPhase,
           phaseStack: this.getStackSnapshot(),
         });
+
+        // 广播游戏状态变化，包括阶段变更
+        this.env.broadcastGameState();
       } catch (error) {
         console.error("Error in game loop:", error);
-        this.stop();
-        break;
+        console.error("Error stack:", (error as Error).stack);
+
+        // 改进：不立即停止游戏，而是尝试恢复
+        // 弹出当前阶段，尝试继续下一阶段
+        try {
+          this.phaseStack.pop(); // 弹出失败阶段
+          console.warn(
+            `[gameLoop] Recovered from error in phase, moving to next phase`,
+          );
+
+          // 更新游戏状态为下一个阶段
+          const nextPhase = this.phaseStack.peek()?.phase || GamePhase.GameOver;
+          this.env.setGameState({
+            phase: nextPhase,
+            phaseStack: this.getStackSnapshot(),
+          });
+          this.env.broadcastGameState();
+        } catch (recoveryError) {
+          console.error(
+            "[gameLoop] Recovery failed, stopping game:",
+            recoveryError,
+          );
+          this.stop();
+          break;
+        }
+
+        // 恢复成功后，检查栈是否为空
+        if (!this.phaseStack.peek()) {
+          console.error(
+            "[processWitchAction] Stack empty after recovery, stopping game",
+          );
+          this.isRunning = false;
+          break;
+        }
       }
 
       // 短暂延迟，避免 CPU 占用过高
@@ -221,21 +290,28 @@ export class GameEngineV2 {
    * 获取当前栈的快照
    */
   private getStackSnapshot(): StackNode[] {
-    // 这里需要实现从 PhaseStack 获取快照的逻辑
-    // 由于 PhaseStack 目前没有提供获取内部栈的方法，我们需要扩展 PhaseStack 类
-    // 暂时返回空数组
-    return [];
+    return this.phaseStack.getStackSnapshot();
+  }
+
+  private getPhaseStackRefId(): string {
+    // 获取对象的唯一引用ID
+    return `ref_${Math.random().toString(36).substring(2)}`;
   }
 
   /**
    * 处理游戏阶段
    */
   private async processPhase(phase: GamePhase, context?: any): Promise<void> {
+    console.error(
+      `[processPhase] Starting phase: ${phase}, context: ${context ? "yes" : "no"}`,
+    );
     this.logger.logPhaseStart(phase);
 
     switch (phase) {
       case GamePhase.NightStart:
+        console.error(`[processPhase] Calling processNightStart...`);
         await this.processNightStart();
+        console.error(`[processPhase] processNightStart completed`);
         break;
       case GamePhase.WolfAction:
         await this.processWolfAction();
@@ -277,11 +353,15 @@ export class GameEngineV2 {
         await this.processSelfDestruct();
         break;
       case GamePhase.GameOver:
-        // 游戏已结束
+        // 游戏已结束，弹出GameOver节点
+        this.phaseStack.pop();
         break;
       default:
         console.warn(`Unknown phase: ${phase}`);
     }
+
+    // 记录游戏状态更新
+    this.logger.logGameState(this.exportGameState());
   }
 
   /**
@@ -315,8 +395,15 @@ export class GameEngineV2 {
   // ============================================================================
 
   private async processNightStart(): Promise<void> {
+    console.error(
+      `[processNightStart] Starting, Stack depth before: ${this.phaseStack.depth}`,
+    );
+
     // 所有process方法第一步都pop自己
-    this.phaseStack.pop();
+    const popped = this.phaseStack.pop();
+    console.error(
+      `[processNightStart] Popped: ${popped?.phase}, Stack depth after pop: ${this.phaseStack.depth}`,
+    );
 
     const currentState = this.env.getGameState();
 
@@ -333,190 +420,371 @@ export class GameEngineV2 {
 
     // Phase Stack 模式：一次性压入整个夜晚流程
     // 逆序压入整个夜晚阶段！
+    console.error(`[processNightStart] Pushing night phases...`);
+    console.error(
+      `[processNightStart] Before push - Stack depth: ${this.phaseStack.depth}, internal length: ${(this.phaseStack as any).stack?.length || 0}`,
+    );
+
     this.phaseStack.push(GamePhase.DayStart); // 第1个：DayStart（最后执行）
-    this.phaseStack.push(GamePhase.WitchAction); // 第2个：WitchAction
-    this.phaseStack.push(GamePhase.SeerAction); // 第3个：SeerAction
-    this.phaseStack.push(GamePhase.WolfAction); // 第4个：WolfAction（最先执行）
+    console.error(
+      `[processNightStart] After push DayStart - Stack depth: ${this.phaseStack.depth}`,
+    );
+    this.phaseStack.push(GamePhase.CheckWinCondition); // 第2个：CheckWinCondition
+    console.error(
+      `[processNightStart] After push CheckWinCondition - Stack depth: ${this.phaseStack.depth}`,
+    );
+    this.phaseStack.push(GamePhase.PublishNightResult); // 第3个：PublishNightResult
+    console.error(
+      `[processNightStart] After push PublishNightResult - Stack depth: ${this.phaseStack.depth}`,
+    );
+    this.phaseStack.push(GamePhase.WitchAction); // 第4个：WitchAction
+    console.error(
+      `[processNightStart] After push WitchAction - Stack depth: ${this.phaseStack.depth}`,
+    );
+    this.phaseStack.push(GamePhase.SeerAction); // 第5个：SeerAction
+    console.error(
+      `[processNightStart] After push SeerAction - Stack depth: ${this.phaseStack.depth}`,
+    );
+    this.phaseStack.push(GamePhase.WolfAction); // 第6个：WolfAction（最先执行）
+    console.error(
+      `[processNightStart] After push WolfAction - Stack depth: ${this.phaseStack.depth}`,
+    );
+
+    console.error(
+      `[processNightStart] Stack depth after pushing: ${this.phaseStack.depth}, phaseStack ref: ${this.phaseStack.toString().substring(0, 20)}..., actual stack: ${this.phaseStack
+        .getStackSnapshot()
+        .map((n) => n.phase)
+        .join(" -> ")}`,
+    );
+    console.error(
+      `[processNightStart] getStackSnapshot(): ${this.getStackSnapshot()
+        .map((n) => n.phase)
+        .join(" -> ")}`,
+    );
+
+    // 更新游戏状态，phase由gameLoop设置
+    // this.env.setGameState({ phase: currentPhase }); // 已移除，由gameLoop设置
+
+    // 广播游戏状态变化（phase已由gameLoop设置）
+    this.env.broadcastGameState();
+
+    // 调试：检查调用后的栈状态
+    console.error(
+      `[processNightStart] END - Stack depth: ${this.phaseStack.depth}, Stack: ${this.phaseStack
+        .getStackSnapshot()
+        .map((n) => n.phase)
+        .join(" -> ")}`,
+    );
+
+    // 强制更新游戏状态中的phaseStack
+    this.env.setGameState({
+      phaseStack: this.getStackSnapshot(),
+    });
   }
 
   private async processWolfAction(): Promise<void> {
-    // 所有process方法第一步都pop自己
-    this.phaseStack.pop();
-
-    if (!this.world) throw new Error("ECS World not initialized");
-
-    // 真正的 ECS 查询：获取所有同时拥有 Identity 和 Status 组件的实体
-    const entities = this.world.query<{
-      IdentityComponent: IdentityComponent;
-      StatusComponent: StatusComponent;
-    }>("IdentityComponent", "StatusComponent");
-
-    // 过滤出存活的狼人实体
-    const aliveWolfEntities = entities.filter(
-      (e: any) =>
-        e.IdentityComponent.roleType === RoleType.Wolf &&
-        e.StatusComponent.isAlive,
-    );
-
-    const historyBefore = this.env.getGameState().history.length;
-
-    // 驱动 AgentController（使用重构后的 entityId 接口）
-    await Promise.all(
-      aliveWolfEntities.map((entity: any) => {
-        // 通过实体ID查找对应的Player对象
-        const player = this.env.getPlayerById(entity.entityId);
-        if (!player) {
-          console.error(`Player not found for entity ${entity.entityId}`);
-          return Promise.resolve();
-        }
-        return this.agentController.runAgentCycle(player.id);
-      }),
-    );
-
-    const nightResult = this.env.getGameState().nightResult!;
-    const history = this.env.getGameState().history;
-    const killActions = history
-      .slice(historyBefore)
-      .filter(
-        (a) =>
-          a.actionType === ActionType.Kill &&
-          a.roleType === RoleType.Wolf &&
-          a.targetId !== undefined,
+    try {
+      // 在pop之前获取当前阶段用于广播
+      const currentPhase = GamePhase.WolfAction;
+      console.log(
+        `[processWolfAction] Starting, Stack before pop: ${this.getStackSnapshot()
+          .map((n) => n.phase)
+          .join(" -> ")}`,
       );
 
-    nightResult.deadPlayerIds = [];
-    nightResult.killedByWolf = undefined;
+      // 所有process方法第一步都pop自己
+      this.phaseStack.pop();
+      console.log(
+        `[processWolfAction] After pop, Stack depth: ${this.phaseStack.depth}, Stack: ${this.getStackSnapshot()
+          .map((n) => n.phase)
+          .join(" -> ")}`,
+      );
 
-    if (killActions.length > 0) {
-      nightResult.killedByWolf = killActions[0].targetId!;
-      nightResult.deadPlayerIds = [killActions[0].targetId!];
+      if (!this.world) throw new Error("ECS World not initialized");
+
+      // 真正的 ECS 查询：获取所有同时拥有 Identity 和 Status 组件的实体
+      const entities = this.world.query<{
+        IdentityComponent: IdentityComponent;
+        StatusComponent: StatusComponent;
+      }>("IdentityComponent", "StatusComponent");
+
+      // 过滤出存活的狼人实体
+      const aliveWolfEntities = entities.filter(
+        (e: any) =>
+          e.IdentityComponent.roleType === RoleType.Wolf &&
+          e.StatusComponent.isAlive,
+      );
+
+      const historyBefore = this.env.getGameState().history.length;
+
+      // 驱动 AgentController（使用重构后的 entityId 接口）
+      // 使用 Promise.allSettled 而不是 Promise.all，允许部分狼人行动失败
+      const results = await Promise.allSettled(
+        aliveWolfEntities.map((entity: any) => {
+          // 直接使用entity.entityId作为参数传递给runAgentCycle
+          return this.agentController.runAgentCycle(entity.entityId);
+        }),
+      );
+
+      // 记录失败的行动，但不中断整个流程
+      const failedActions = results.filter(
+        (r): r is PromiseRejectedResult => r.status === "rejected",
+      );
+      if (failedActions.length > 0) {
+        console.warn(
+          `[processWolfAction] ${failedActions.length} wolf actions failed:`,
+          failedActions.map((f) => f.reason?.message || "Unknown error"),
+        );
+      }
+
+      const gameState = this.env.getGameState();
+      let nightResult = gameState.nightResult;
+      const history = gameState.history;
+
+      // 如果nightResult未初始化，初始化它
+      if (!nightResult) {
+        nightResult = {
+          deadPlayerIds: [],
+        };
+      }
+      const killActions = history
+        .slice(historyBefore)
+        .filter(
+          (a) =>
+            a.actionType === ActionType.Kill &&
+            a.roleType === RoleType.Wolf &&
+            a.targetId !== undefined,
+        );
+
+      // 注意：nightResult.killedByWolf 和 deadPlayerIds 已经在 AgentController.applySideEffects 中设置
+      // 这里只需要验证和处理狼人行动的最终结果
+
+      // 如果没有狼人击杀行动，确保killedByWolf为undefined
+      if (killActions.length === 0) {
+        nightResult.killedByWolf = undefined;
+      } else {
+        // 确保killedByWolf与第一个kill action一致
+        nightResult.killedByWolf = killActions[0].targetId!;
+      }
+
+      // 更新夜晚结果，phase由gameLoop在processPhase之后设置
+      this.env.setGameState({
+        nightResult,
+        // phase由gameLoop设置：this.phaseStack.peek()?.phase || GamePhase.GameOver
+      });
+
+      // 广播游戏状态变化
+      this.env.broadcastGameState();
+
+      await this.sleep(1000);
+
+      // Phase Stack 模式：处理完成后只弹出当前阶段，下一阶段已在栈中
+      // this.phaseStack.pop(); // 弹出 WolfAction，SeerAction自动成为栈顶 - 已移动到第一步
+    } catch (error) {
+      console.error("[processWolfAction] Error:", error);
+      console.error("[processWolfAction] Error stack:", (error as Error).stack);
+      throw error; // 重新抛出，让gameLoop处理
     }
-
-    this.env.setGameState({ nightResult });
-
-    await this.sleep(1000);
-
-    // Phase Stack 模式：处理完成后只弹出当前阶段，下一阶段已在栈中
-    // this.phaseStack.pop(); // 弹出 WolfAction，SeerAction自动成为栈顶 - 已移动到第一步
   }
 
   private async processSeerAction(): Promise<void> {
-    // 所有process方法第一步都pop自己
-    this.phaseStack.pop();
+    try {
+      // 在pop之前获取当前阶段用于广播
+      const currentPhase = GamePhase.SeerAction;
+      console.log(
+        `[processSeerAction] Starting, Stack before pop: ${this.getStackSnapshot()
+          .map((n) => n.phase)
+          .join(" -> ")}`,
+      );
 
-    if (!this.world) throw new Error("ECS World not initialized");
+      // 所有process方法第一步都pop自己
 
-    // 真正的 ECS 查询：获取所有同时拥有 Identity 和 Status 组件的实体
-    const entities = this.world.query<{
-      IdentityComponent: IdentityComponent;
-      StatusComponent: StatusComponent;
-    }>("IdentityComponent", "StatusComponent");
+      this.phaseStack.pop();
+      console.log(
+        `[processSeerAction] After pop, Stack depth: ${this.phaseStack.depth}`,
+      );
 
-    // 过滤出存活的预言家实体
-    const aliveSeerEntities = entities.filter(
-      (e: any) =>
-        e.IdentityComponent.roleType === RoleType.Seer &&
-        e.StatusComponent.isAlive,
-    );
+      if (!this.world) throw new Error("ECS World not initialized");
 
-    // Sequential just in case (but should only be one seer in MVP)
-    for (const entity of aliveSeerEntities) {
-      if (!entity.StatusComponent.isAlive) continue;
+      // 真正的 ECS 查询：获取所有同时拥有 Identity 和 Status 组件的实体
+      const entities = this.world.query<{
+        IdentityComponent: IdentityComponent;
+        StatusComponent: StatusComponent;
+      }>("IdentityComponent", "StatusComponent");
 
-      // 通过实体ID查找对应的Player对象
-      const player = this.env.getPlayerById(entity.entityId);
-      if (!player) {
-        console.error(`Player not found for entity ${entity.entityId}`);
-        continue;
+      // 过滤出存活的预言家实体
+      const aliveSeerEntities = entities.filter(
+        (e: any) =>
+          e.IdentityComponent.roleType === RoleType.Seer &&
+          e.StatusComponent.isAlive,
+      );
+
+      // Sequential just in case (but should only be one seer in MVP)
+      for (const entity of aliveSeerEntities) {
+        if (!entity.StatusComponent.isAlive) continue;
+
+        // 直接使用entity.entityId作为参数传递给runAgentCycle
+        await this.agentController.runAgentCycle(entity.entityId);
+        await this.sleep(500);
       }
 
-      await this.agentController.runAgentCycle(player.id);
-      await this.sleep(500);
-    }
+      // 更新游戏状态，phase由gameLoop设置
+      // this.env.setGameState({ phase: currentPhase }); // 已移除，由gameLoop设置
 
-    // Phase Stack 模式：处理完成后只弹出当前阶段
-    // this.phaseStack.pop(); // 弹出 SeerAction，WitchAction自动成为栈顶 - 已移动到第一步
+      // 广播游戏状态变化（phase已由gameLoop设置）
+      this.env.broadcastGameState();
+    } catch (error) {
+      console.error("[processSeerAction] Error:", error);
+      console.error("[processSeerAction] Error stack:", (error as Error).stack);
+      throw error; // 重新抛出，让gameLoop处理
+    }
   }
 
   private async processWitchAction(): Promise<void> {
-    // 所有process方法第一步都pop自己
-    this.phaseStack.pop();
+    try {
+      // 在pop之前获取当前阶段用于广播
+      const currentPhase = GamePhase.WitchAction;
+      console.error(
+        `[processWitchAction] Starting, Stack before pop: ${this.getStackSnapshot()
+          .map((n) => n.phase)
+          .join(" -> ")}`,
+      );
 
-    if (!this.world) throw new Error("ECS World not initialized");
+      // 所有process方法第一步都pop自己
+      this.phaseStack.pop();
+      console.error(
+        `[processWitchAction] After pop, Stack depth: ${this.phaseStack.depth}`,
+      );
 
-    const gameState = this.env.getGameState();
-    const nightResult = gameState.nightResult!;
+      if (!this.world) throw new Error("ECS World not initialized");
 
-    // 真正的 ECS 查询：获取所有同时拥有 Identity 和 Status 组件的实体
-    const entities = this.world.query<{
-      IdentityComponent: IdentityComponent;
-      StatusComponent: StatusComponent;
-    }>("IdentityComponent", "StatusComponent");
+      const gameState = this.env.getGameState();
+      let nightResult = gameState.nightResult;
 
-    // 过滤出存活的女巫实体
-    const aliveWitchEntities = entities.filter(
-      (e: any) =>
-        e.IdentityComponent.roleType === RoleType.Witch &&
-        e.StatusComponent.isAlive,
-    );
-
-    for (const entity of aliveWitchEntities) {
-      if (!entity.StatusComponent.isAlive) continue;
-
-      // 通过实体ID查找对应的Player对象
-      const player = this.env.getPlayerById(entity.entityId);
-      if (!player) {
-        console.error(`Player not found for entity ${entity.entityId}`);
-        continue;
+      // 如果nightResult未初始化，初始化它
+      if (!nightResult) {
+        nightResult = {
+          deadPlayerIds: [],
+        };
       }
 
-      const currentGameState = this.env.getGameState();
-      const witchHasAntidote = currentGameState.witchHasAntidote;
-      const witchHasPoison = currentGameState.witchHasPoison;
+      // 真正的 ECS 查询：获取所有同时拥有 Identity 和 Status 组件的实体
+      const entities = this.world.query<{
+        IdentityComponent: IdentityComponent;
+        StatusComponent: StatusComponent;
+      }>("IdentityComponent", "StatusComponent");
 
-      const historyBefore = gameState.history.length;
-      await this.agentController.runAgentCycle(player.id);
+      // 过滤出存活的女巫实体
+      const aliveWitchEntities = entities.filter(
+        (e: any) =>
+          e.IdentityComponent.roleType === RoleType.Witch &&
+          e.StatusComponent.isAlive,
+      );
 
-      const newActions = this.env.getGameState().history.slice(historyBefore);
-      let antidoteUsed = false;
-      let poisonUsed = false;
+      console.log(
+        `[processWitchAction] Found ${aliveWitchEntities.length} alive witch entities`,
+      );
 
-      for (const action of newActions) {
-        if (action.actionType === ActionType.Save && witchHasAntidote) {
-          nightResult.savedByWitch = nightResult.killedByWolf;
-          antidoteUsed = true;
-        } else if (action.actionType === ActionType.Poison && witchHasPoison) {
-          if (action.targetId !== undefined) {
-            nightResult.poisonedByWitch = action.targetId;
-            poisonUsed = true;
+      for (const entity of aliveWitchEntities) {
+        if (!entity.StatusComponent.isAlive) continue;
+
+        // 直接使用entity.entityId作为参数传递给runAgentCycle
+        const currentGameState = this.env.getGameState();
+        const witchHasAntidote = currentGameState.witchHasAntidote;
+        const witchHasPoison = currentGameState.witchHasPoison;
+
+        console.error(
+          `[processWitchAction] Calling agentController.runAgentCycle for witch entity ${entity.entityId}, witchHasAntidote=${witchHasAntidote}, witchHasPoison=${witchHasPoison}`,
+        );
+
+        const historyBefore = gameState.history.length;
+        await this.agentController.runAgentCycle(entity.entityId);
+
+        const newActions = this.env.getGameState().history.slice(historyBefore);
+        console.error(
+          `[processWitchAction] New actions after agentController: ${newActions.length}`,
+        );
+        let antidoteUsed = false;
+        let poisonUsed = false;
+
+        for (const action of newActions) {
+          console.error(
+            `[processWitchAction] Processing action: ${action.actionType}, targetId: ${action.targetId}`,
+          );
+          if (action.actionType === ActionType.Save && witchHasAntidote) {
+            console.error(
+              `[processWitchAction] Witch Save action detected, target: ${action.targetId}`,
+            );
+            nightResult.savedByWitch = nightResult.killedByWolf;
+            antidoteUsed = true;
+            // 女巫救人后，从死亡列表中移除被救的玩家
+            if (nightResult.killedByWolf !== undefined) {
+              console.error(
+                `[processWitchAction] Removing ${nightResult.killedByWolf} from deadPlayerIds`,
+              );
+              nightResult.deadPlayerIds = nightResult.deadPlayerIds.filter(
+                (id) => id !== nightResult.killedByWolf,
+              );
+            }
+          } else if (
+            action.actionType === ActionType.Poison &&
+            witchHasPoison
+          ) {
+            if (action.targetId !== undefined) {
+              nightResult.poisonedByWitch = action.targetId;
+              poisonUsed = true;
+              // 女巫毒人后，添加到死亡列表
+              if (!nightResult.deadPlayerIds.includes(action.targetId)) {
+                nightResult.deadPlayerIds.push(action.targetId);
+              }
+            }
           }
         }
+
+        if (antidoteUsed || poisonUsed) {
+          this.env.setGameState({
+            witchHasAntidote: witchHasAntidote && !antidoteUsed,
+            witchHasPoison: witchHasPoison && !poisonUsed,
+            nightResult, // 保存更新后的nightResult
+          });
+        }
+
+        await this.sleep(500);
       }
 
-      if (antidoteUsed || poisonUsed) {
-        this.env.setGameState({
-          witchHasAntidote: witchHasAntidote && !antidoteUsed,
-          witchHasPoison: witchHasPoison && !poisonUsed,
-        });
-      }
+      await this.sleep(1000);
 
-      await this.sleep(500);
+      // 更新游戏状态，phase由gameLoop设置
+      // this.env.setGameState({ phase: currentPhase }); // 已移除，由gameLoop设置
+
+      // 广播游戏状态变化（phase已由gameLoop设置）
+      this.env.broadcastGameState();
+
+      // Phase Stack 模式：处理完成后弹出当前阶段，栈自动流转
+      // this.phaseStack.pop(); // 弹出 WitchAction，栈顶变为 DayStart - 已移动到第一步
+    } catch (error) {
+      console.error("[processWitchAction] Error:", error);
+      console.error(
+        "[processWitchAction] Error stack:",
+        (error as Error).stack,
+      );
+      throw error; // 重新抛出，让gameLoop处理
     }
-
-    await this.sleep(1000);
-
-    // Phase Stack 模式：处理完成后弹出当前阶段，栈自动流转
-    // this.phaseStack.pop(); // 弹出 WitchAction，栈顶变为 DayStart - 已移动到第一步
   }
 
   private processDayStart(): void {
-    // 第一步：先弹出当前的 DayStart！
+    // 所有process方法第一步都pop自己
     this.phaseStack.pop();
 
-    // 第二步：获取当前轮次并压入白天阶段的栈
+    // 获取当前轮次
     const currentState = this.env.getGameState();
-    const round = currentState.round;
+    const round = currentState.round || 1;
+
+    // 根据ARCHITECTURE.md第93-115行，DayStart之后压入白天阶段栈
     this.pushDayStack(round);
+
+    // 广播游戏状态变化
+    this.env.broadcastGameState();
   }
 
   private async processPublishNightResult(): Promise<void> {
@@ -529,6 +797,13 @@ export class GameEngineV2 {
     for (const deadId of deadIds) {
       this.env.markPlayerDead(deadId);
     }
+
+    // 广播夜晚结果事件
+    this.env.broadcast({
+      type: BroadcastEventType.NightResult,
+      data: nightResult,
+      timestamp: Date.now(),
+    });
 
     await this.sleep(1000);
 
@@ -938,22 +1213,6 @@ export class GameEngineV2 {
     // 这里暂时不实现具体玩家死亡逻辑
   }
 
-  private async handleGameOver(): Promise<void> {
-    const winResult = this.checkWinCondition();
-    this.env.broadcast({
-      type: BroadcastEventType.GameOver,
-      data: {
-        winningFaction: winResult.winningFaction,
-        winners: winResult.winners,
-        reason: winResult.reason,
-      },
-      timestamp: Date.now(),
-    });
-
-    this.isRunning = false;
-    // Game ended - no special logger method needed
-  }
-
   /**
    * 检查胜利条件（从 V1 迁移）
    */
@@ -963,6 +1222,10 @@ export class GameEngineV2 {
     winners?: number[];
     reason?: string;
   } {
+    console.error(
+      `[checkWinCondition] ENTER - called from: ${new Error().stack?.split("\n")[2]?.trim()}`,
+    );
+
     // 必须要有 ECS World
     if (!this.world) {
       throw new Error(
@@ -987,7 +1250,14 @@ export class GameEngineV2 {
       (e: any) => e.IdentityComponent.faction === Faction.Villager,
     );
 
+    console.error(
+      `[checkWinCondition] aliveWolfEntities: ${aliveWolfEntities.length}, aliveVillagerEntities: ${aliveVillagerEntities.length}`,
+    );
+
     if (aliveWolfEntities.length === 0) {
+      console.error(
+        `[checkWinCondition] Game over: villagers win, all wolves dead`,
+      );
       return {
         gameOver: true,
         winningFaction: "villager",
@@ -997,6 +1267,9 @@ export class GameEngineV2 {
     }
 
     if (aliveWolfEntities.length >= aliveVillagerEntities.length) {
+      console.error(
+        `[checkWinCondition] Game over: wolves win (${aliveWolfEntities.length} wolves >= ${aliveVillagerEntities.length} villagers)`,
+      );
       return {
         gameOver: true,
         winningFaction: "wolf",
@@ -1005,6 +1278,9 @@ export class GameEngineV2 {
       };
     }
 
+    console.error(
+      `[checkWinCondition] Game continues: ${aliveWolfEntities.length} wolves, ${aliveVillagerEntities.length} villagers`,
+    );
     return { gameOver: false };
   }
 
@@ -1013,20 +1289,13 @@ export class GameEngineV2 {
    */
 
   /**
-   * Check if there is a sheriff in the ECS World
+   * Check if there is a sheriff in the game
+   * 注意：警长状态存储在 Environment 中，而不是 ECS World
    */
   private hasSheriffInWorld(): boolean {
-    if (!this.world) return false;
-
-    // 直接查询World中是否有警长
-    const allPlayers = this.world.query("PlayerComponent", "StatusComponent");
-    for (const playerData of allPlayers) {
-      const status = playerData.StatusComponent as StatusComponent;
-      if (status?.isSheriff) {
-        return true;
-      }
-    }
-    return false;
+    // 从 Environment 查询警长状态，因为警长选举更新的是 Environment
+    const gameState = this.env.getGameState();
+    return gameState.players?.some((p) => p.isSheriff === true) || false;
   }
 
   private sleep(ms: number): Promise<void> {

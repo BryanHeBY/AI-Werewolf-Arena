@@ -62,6 +62,7 @@ export class Environment implements EnvironmentInterface {
           id: identity.entityId,
           name: identity.name,
           isAlive: status.isAlive,
+          isSheriff: status.isSheriff || false, // 添加警长状态
           faction: identity.faction,
           modelConfig: this.modelDefaults,
         });

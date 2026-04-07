@@ -1,18 +1,20 @@
 import { Environment } from "../../src/core/Environment";
 import {
   GameConfig,
-  Player,
   RoleType,
   Faction,
   ActionType,
   GamePhase,
   PlayerAction,
+  IdentityComponent,
+  StatusComponent,
 } from "../../src/core/types";
 import { EventBus } from "../../src/core/EventBus";
+import { GameWorld } from "../../src/ecs/World";
 
 describe("Environment", () => {
   let config: GameConfig;
-  let players: Player[];
+  let world: GameWorld;
   let environment: Environment;
 
   beforeEach(() => {
@@ -31,112 +33,148 @@ describe("Environment", () => {
       },
     };
 
-    players = [
-      {
-        id: 1,
-        name: "player1",
-        isAlive: true,
-        isSheriff: false,
-        faction: Faction.Wolf,
-        modelConfig: config.modelDefaults,
-        role: {
-          roleType: RoleType.Wolf,
-          faction: Faction.Wolf,
-          act: jest.fn(),
-          think: jest.fn(),
-          observe: jest.fn(),
-          canActInPhase: jest.fn().mockReturnValue(true),
-          getSystemPrompt: jest.fn().mockReturnValue("test prompt"),
-        } as any,
-      },
-      {
-        id: 2,
-        name: "player2",
-        isAlive: true,
-        isSheriff: false,
-        faction: Faction.Villager,
-        modelConfig: config.modelDefaults,
-        role: {
-          roleType: RoleType.Villager,
-          faction: Faction.Villager,
-          act: jest.fn(),
-          think: jest.fn(),
-          observe: jest.fn(),
-          canActInPhase: jest.fn().mockReturnValue(true),
-          getSystemPrompt: jest.fn().mockReturnValue("test prompt"),
-        } as any,
-      },
-      {
-        id: 3,
-        name: "player3",
-        isAlive: true,
-        isSheriff: false,
-        faction: Faction.Villager,
-        modelConfig: config.modelDefaults,
-        role: {
-          roleType: RoleType.Seer,
-          faction: Faction.Villager,
-          act: jest.fn(),
-          think: jest.fn(),
-          observe: jest.fn(),
-          canActInPhase: jest.fn().mockReturnValue(true),
-          getSystemPrompt: jest.fn().mockReturnValue("test prompt"),
-        } as any,
-      },
-      {
-        id: 4,
-        name: "player4",
-        isAlive: true,
-        isSheriff: false,
-        faction: Faction.Villager,
-        modelConfig: config.modelDefaults,
-        role: {
-          roleType: RoleType.Witch,
-          faction: Faction.Villager,
-          act: jest.fn(),
-          think: jest.fn(),
-          observe: jest.fn(),
-          canActInPhase: jest.fn().mockReturnValue(true),
-          getSystemPrompt: jest.fn().mockReturnValue("test prompt"),
-        } as any,
-      },
-      {
-        id: 5,
-        name: "player5",
-        isAlive: true,
-        isSheriff: false,
-        faction: Faction.Wolf,
-        modelConfig: config.modelDefaults,
-        role: {
-          roleType: RoleType.Wolf,
-          faction: Faction.Wolf,
-          act: jest.fn(),
-          think: jest.fn(),
-          observe: jest.fn(),
-          canActInPhase: jest.fn().mockReturnValue(true),
-          getSystemPrompt: jest.fn().mockReturnValue("test prompt"),
-        } as any,
-      },
-      {
-        id: 6,
-        name: "player6",
-        isAlive: true,
-        isSheriff: false,
-        faction: Faction.Villager,
-        modelConfig: config.modelDefaults,
-        role: {
-          roleType: RoleType.Villager,
-          faction: Faction.Villager,
-          act: jest.fn(),
-          think: jest.fn(),
-          observe: jest.fn(),
-          canActInPhase: jest.fn().mockReturnValue(true),
-          getSystemPrompt: jest.fn().mockReturnValue("test prompt"),
-        } as any,
-      },
-    ];
+    // 创建ECS World并添加玩家实体
+    world = new GameWorld();
 
-    environment = new Environment(config, players);
+    // 玩家1: 狼人
+    const player1Id = world.createEntity();
+    world.addComponent<IdentityComponent>(
+      player1Id,
+      {
+        entityId: player1Id,
+        roleType: RoleType.Wolf,
+        faction: Faction.Wolf,
+        name: "player1",
+      },
+      "IdentityComponent",
+    );
+    world.addComponent<StatusComponent>(
+      player1Id,
+      {
+        entityId: player1Id,
+        isAlive: true,
+        isSheriff: false,
+        isMuted: false,
+      },
+      "StatusComponent",
+    );
+
+    // 玩家2: 村民
+    const player2Id = world.createEntity();
+    world.addComponent<IdentityComponent>(
+      player2Id,
+      {
+        entityId: player2Id,
+        roleType: RoleType.Villager,
+        faction: Faction.Villager,
+        name: "player2",
+      },
+      "IdentityComponent",
+    );
+    world.addComponent<StatusComponent>(
+      player2Id,
+      {
+        entityId: player2Id,
+        isAlive: true,
+        isSheriff: false,
+        isMuted: false,
+      },
+      "StatusComponent",
+    );
+
+    // 玩家3: 预言家
+    const player3Id = world.createEntity();
+    world.addComponent<IdentityComponent>(
+      player3Id,
+      {
+        entityId: player3Id,
+        roleType: RoleType.Seer,
+        faction: Faction.Villager,
+        name: "player3",
+      },
+      "IdentityComponent",
+    );
+    world.addComponent<StatusComponent>(
+      player3Id,
+      {
+        entityId: player3Id,
+        isAlive: true,
+        isSheriff: false,
+        isMuted: false,
+      },
+      "StatusComponent",
+    );
+
+    // 玩家4: 女巫
+    const player4Id = world.createEntity();
+    world.addComponent<IdentityComponent>(
+      player4Id,
+      {
+        entityId: player4Id,
+        roleType: RoleType.Witch,
+        faction: Faction.Villager,
+        name: "player4",
+      },
+      "IdentityComponent",
+    );
+    world.addComponent<StatusComponent>(
+      player4Id,
+      {
+        entityId: player4Id,
+        isAlive: true,
+        isSheriff: false,
+        isMuted: false,
+      },
+      "StatusComponent",
+    );
+
+    // 玩家5: 狼人
+    const player5Id = world.createEntity();
+    world.addComponent<IdentityComponent>(
+      player5Id,
+      {
+        entityId: player5Id,
+        roleType: RoleType.Wolf,
+        faction: Faction.Wolf,
+        name: "player5",
+      },
+      "IdentityComponent",
+    );
+    world.addComponent<StatusComponent>(
+      player5Id,
+      {
+        entityId: player5Id,
+        isAlive: true,
+        isSheriff: false,
+        isMuted: false,
+      },
+      "StatusComponent",
+    );
+
+    // 玩家6: 村民
+    const player6Id = world.createEntity();
+    world.addComponent<IdentityComponent>(
+      player6Id,
+      {
+        entityId: player6Id,
+        roleType: RoleType.Villager,
+        faction: Faction.Villager,
+        name: "player6",
+      },
+      "IdentityComponent",
+    );
+    world.addComponent<StatusComponent>(
+      player6Id,
+      {
+        entityId: player6Id,
+        isAlive: true,
+        isSheriff: false,
+        isMuted: false,
+      },
+      "StatusComponent",
+    );
+
+    environment = new Environment(config, world);
   });
 
   describe("constructor", () => {
@@ -472,9 +510,14 @@ describe("Environment", () => {
 
   describe("getAlivePlayers", () => {
     test("returns only alive players", () => {
-      // Mark player 2 as dead
-      players[1].isAlive = false;
-      environment = new Environment(config, players);
+      // Mark player 2 as dead using ECS
+      const player2Status = world.getComponent<StatusComponent>(
+        2,
+        "StatusComponent",
+      );
+      if (player2Status) {
+        player2Status.isAlive = false;
+      }
 
       const alivePlayers = environment.getAlivePlayers();
       expect(alivePlayers).toHaveLength(5);
@@ -482,8 +525,16 @@ describe("Environment", () => {
     });
 
     test("returns empty array when all players dead", () => {
-      players.forEach((p) => (p.isAlive = false));
-      environment = new Environment(config, players);
+      // Mark all players as dead using ECS
+      for (let i = 1; i <= 6; i++) {
+        const status = world.getComponent<StatusComponent>(
+          i,
+          "StatusComponent",
+        );
+        if (status) {
+          status.isAlive = false;
+        }
+      }
 
       const alivePlayers = environment.getAlivePlayers();
       expect(alivePlayers).toHaveLength(0);
@@ -511,7 +562,9 @@ describe("Environment", () => {
 
       environment.markPlayerDead(1);
 
-      expect(player?.isAlive).toBe(false);
+      // 重新获取玩家以检查更新后的状态
+      const updatedPlayer = environment.getPlayerById(1);
+      expect(updatedPlayer?.isAlive).toBe(false);
     });
 
     test("adds player to deadPlayerIds", () => {

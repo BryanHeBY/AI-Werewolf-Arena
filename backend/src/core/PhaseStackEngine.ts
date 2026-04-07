@@ -51,4 +51,18 @@ export class PhaseStack {
       this.stack = [];
     }
   }
+
+  /**
+   * Get a snapshot of the current stack
+   */
+  getStackSnapshot(): StackNode[] {
+    // Return a deep copy to prevent external mutation
+    return this.stack.map((node) => ({
+      phase: node.phase,
+      context:
+        node.context === null || node.context === undefined
+          ? node.context
+          : JSON.parse(JSON.stringify(node.context)),
+    }));
+  }
 }

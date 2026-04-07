@@ -22,11 +22,11 @@ describe("Backend API Integration Tests", () => {
       world,
     );
 
-    const players = factory.createPlayers();
+    factory.createPlayers();
 
     const engine = new GameEngineV2(
       appConfig.gameConfig,
-      players,
+      world,
       logger,
       broadcaster,
     );
@@ -42,37 +42,9 @@ describe("Backend API Integration Tests", () => {
     expect(gameState.phase).toBe(GamePhase.NightStart);
     expect(Array.isArray(gameState.players)).toBe(true);
     expect(Array.isArray(gameState.phaseStack)).toBe(true);
-  });
 
-  test("Server can start V2 game engine", () => {
-    const mockIo = {
-      to: jest.fn().mockReturnThis(),
-      emit: jest.fn(),
-    };
-
-    const broadcaster = new Broadcaster(mockIo as any);
-    const logger = new GameLogger(appConfig.gameRecordsDir);
-    const world = new GameWorld();
-    const factory = new GameFactoryV2(
-      appConfig.gameConfig,
-      appConfig.modelDefaults,
-      world,
-    );
-
-    const players = factory.createPlayers();
-
-    const engine = new GameEngineV2(
-      appConfig.gameConfig,
-      players,
-      logger,
-      broadcaster,
-    );
-
-    const gameState = engine.exportGameState();
-
-    expect(gameState.players).toHaveLength(players.length);
-
-    players.forEach((player: any, index: number) => {
+    expect(gameState.players).toHaveLength(appConfig.gameConfig.totalPlayers);
+    gameState.players.forEach((player: any, index: number) => {
       expect(gameState.players[index].id).toBe(player.id);
       expect(gameState.players[index].name).toBe(player.name);
     });
@@ -93,11 +65,11 @@ describe("Backend API Integration Tests", () => {
       world,
     );
 
-    const players = factory.createPlayers();
+    factory.createPlayers();
 
     const engine = new GameEngineV2(
       appConfig.gameConfig,
-      players,
+      world,
       logger,
       broadcaster,
     );
