@@ -17,7 +17,7 @@
           :style="item.style"
         >
           <!-- 单个聊天气泡容器 -->
-          <div class="flex gap-3 w-full" :class="getBubbleAlignment(item.data)">
+          <div class="flex gap-3" :class="getBubbleAlignment(item.data)">
             <!-- 左侧区域：头像和角色标识（法官和系统消息不显示头像） -->
             <div v-if="showAvatar(item.data)" class="flex-shrink-0">
               <!-- 头像容器：圆形带角色颜色渐变 -->
@@ -63,9 +63,12 @@
             </div>
 
             <!-- 右侧区域：消息内容部分 -->
-            <div class="flex-1 min-w-0">
-              <!-- 消息头部：发送者名称和时间戳 -->
-              <div class="flex items-baseline gap-2 mb-1">
+            <div class="flex-grow flex-shrink">
+              <!-- 消息头部：发送者名称和时间戳 - 根据气泡位置对齐 -->
+              <div
+                class="flex items-baseline gap-2 mb-1"
+                :class="getHeaderAlignmentClass(item.data)"
+              >
                 <!-- 玩家名称：根据角色显示不同颜色 -->
                 <span
                   v-if="item.data.senderId >= 0"
@@ -99,13 +102,26 @@
                 </span>
               </div>
 
-              <!-- 消息内容气泡：包含文本和发光效果 -->
+              <!-- 消息内容气泡：包含文本和发光效果 - 自适应宽度 -->
               <div
                 :data-testid="`message-content-${item.data.id}`"
-                class="rounded-2xl px-4 py-3 max-w-[80%] relative"
+                class="rounded-2xl px-4 py-3 inline-block relative"
                 :class="getMessageBubbleClass(item.data)"
                 :style="getMessageBubbleStyle(item.data)"
               >
+                <!-- 内心独白折叠面板：在消息气泡内部，内容之上 -->
+                <div v-if="shouldShowThought(item.data)">
+                  <ThoughtAccordion
+                    v-if="
+                      item.data.privateThought &&
+                      item.data.privateThought.trim()
+                    "
+                    :msg="item.data"
+                    :data-testid="`thought-panel-${item.data.senderId}`"
+                    class="mb-3"
+                  />
+                </div>
+
                 <!-- 消息文本：支持换行和长单词自动换行 -->
                 <div class="whitespace-pre-wrap break-words font-mono text-sm">
                   {{ item.data.content }}
@@ -122,18 +138,6 @@
                   v-if="isLatestMessage(item.data)"
                   class="absolute right-2 bottom-2 w-2 h-4 bg-neon-cyan animate-blink"
                 ></div>
-              </div>
-
-              <!-- 内心独白折叠面板：按需渲染 -->
-              <div v-if="shouldShowThought(item.data)">
-                <ThoughtAccordion
-                  v-if="
-                    item.data.privateThought && item.data.privateThought.trim()
-                  "
-                  :msg="item.data"
-                  :data-testid="`thought-panel-${item.data.senderId}`"
-                  class="mt-3"
-                />
               </div>
             </div>
           </div>
@@ -332,20 +336,25 @@ const getMessageBubbleStyle = (msg: ChatMessage): Record<string, string> => {
 
   if (msg.senderId === -1) {
     return {
-      "max-width": "90%",
+      "max-width": "fit-content",
       "margin-left": "auto",
       "margin-right": "auto",
+      display: "block",
     };
   }
 
   if (msg.senderId === myViewId) {
     return {
+      "max-width": "fit-content",
       "margin-left": "auto",
+      display: "block", // 确保右对齐气泡独占一行
     };
   }
 
   return {
+    "max-width": "fit-content",
     "margin-right": "auto",
+    display: "block", // 确保左对齐气泡独占一行
   };
 };
 
@@ -390,6 +399,20 @@ const isLatestMessage = (msg: ChatMessage): boolean => {
   if (chatMessages.value.length === 0) return false;
   const lastMessage = chatMessages.value[chatMessages.value.length - 1];
   return msg.id === lastMessage.id;
+};
+
+const getHeaderAlignmentClass = (msg: ChatMessage): string => {
+  const myViewId = v2Store.myViewId;
+
+  if (msg.senderId === -1) {
+    return "justify-center"; // 法官消息居中
+  }
+
+  if (msg.senderId === myViewId) {
+    return "justify-end"; // 自己的消息右对齐，头部右对齐
+  }
+
+  return "justify-start"; // 他人的消息左对齐
 };
 
 watch(
