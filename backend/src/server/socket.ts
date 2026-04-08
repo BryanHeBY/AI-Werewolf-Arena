@@ -1,6 +1,7 @@
 import { Server as HttpServer } from "http";
 import { Server } from "socket.io";
 import { appConfig } from "../config";
+import { Role } from "../domain/model";
 import { Broadcaster } from "../infra/transport/broadcaster";
 
 let globalBroadcaster: Broadcaster | null = null;
@@ -19,10 +20,14 @@ export function setupSocket(server: HttpServer): Server {
   io.on("connection", (socket) => {
     console.log("客户端连接:", socket.id);
 
-    socket.on("register", (data: { playerId: number }) => {
+    socket.on("register", (data: { playerId: number; role?: string }) => {
       if (typeof data?.playerId === "number" && globalBroadcaster) {
+        const role =
+          typeof data?.role === "string" && isValidRole(data.role)
+            ? data.role
+            : undefined;
         // 建立“玩家 -> socket”映射，便于后续点对点推送私有事件。
-        globalBroadcaster.registerPlayer(socket.id, data.playerId);
+        globalBroadcaster.registerPlayer(socket.id, data.playerId, role);
       }
     });
 
@@ -39,4 +44,8 @@ export function setupSocket(server: HttpServer): Server {
 
 export function setGlobalBroadcaster(broadcaster: Broadcaster): void {
   globalBroadcaster = broadcaster;
+}
+
+function isValidRole(role: string): role is Role {
+  return (Object.values(Role) as string[]).includes(role);
 }
