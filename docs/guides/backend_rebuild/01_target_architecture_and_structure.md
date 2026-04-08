@@ -139,12 +139,12 @@ V2 -> V3 对照链接：
 
 ## 2. 开发任务清单
 
-- [ ] `T01` 将 `backend/src/domain/model.ts` 中 MVP 组件定义拆分到 `backend/src/domain/components/*` 并保持 `model.ts` 仅作为聚合导出。
-- [ ] `T02` 将 `backend/src/engine/hooks/*` 从文档蓝图落地为真实代码模块，并由 `backend/src/engine/phase_manager.ts` 统一调度调用。
-- [ ] `T03` 完成 `backend/src/server/*` 与 `backend/src/infra/transport/*` 的职责收敛：server 只做会话/路由，transport 只做消息发送与协议适配。
+- [x] `T01` 将 `backend/src/domain/model.ts` 中 MVP 组件定义拆分到 `backend/src/domain/components/*` 并保持 `model.ts` 仅作为聚合导出。
+- [x] `T02` 将 `backend/src/engine/hooks/*` 从文档蓝图落地为真实代码模块，并由 `backend/src/engine/phase_manager.ts` 统一调度调用。
+- [x] `T03` 完成 `backend/src/server/*` 与 `backend/src/infra/transport/*` 的职责收敛：server 只做会话/路由，transport 只做消息发送与协议适配。
 
 ## 3. 验收标准（任务映射）
 
-- [ ] `A01`（对应: `T01`） `backend/src/domain/components/*` 组件实现与源码注释可直接定位职责。
-- [ ] `A02`（对应: `T02`） `backend/tests/v3/phase_manager_mvp.test.ts` 外新增 hooks 调度断言，覆盖 4 个 hook 调用顺序。
-- [ ] `A03`（对应: `T03`） `backend/tests/v3/session_manager.test.ts` 通过且 `server` 模块不再直接依赖低层 transport 细节实现。
+- [x] `A01`（对应: `T01`） `backend/src/domain/components/*` 组件实现与源码注释可直接定位职责。
+- [x] `A02`（对应: `T02`） `backend/tests/v3/phase_manager_mvp.test.ts` 外新增 hooks 调度断言，覆盖 4 个 hook 调用顺序。
+- [x] `A03`（对应: `T03`） `backend/tests/v3/session_manager.test.ts` 通过且 `server` 模块不再直接依赖低层 transport 细节实现。

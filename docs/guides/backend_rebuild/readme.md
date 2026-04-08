@@ -33,14 +33,14 @@
 
 ## 2. 开发任务清单
 
-- [ ] `T01` 完成 `00_rebuild_charter.md` 的 Action Window、狼队战术环、遗言规则三项核心机制开发。
-- [ ] `T02` 完成 `01_target_architecture_and_structure.md` 的目录拆分与 hooks 落地任务。
-- [ ] `T03` 完成 `04_test_quality_gates.md` 新增测试（night_wolf_tactical_loop / day_interrupt_hooks）并接入测试命令分层。
-- [ ] `T04` 完成 `05_cutover_and_rollback.md` 与 `06_dependency_rules.md` 的开关切换、依赖约束、本地阻断能力。
+- [x] `T01` 完成 `00_rebuild_charter.md` 的 Action Window、狼队战术环、遗言规则三项核心机制开发。
+- [x] `T02` 完成 `01_target_architecture_and_structure.md` 的目录拆分与 hooks 落地任务。
+- [x] `T03` 完成 `04_test_quality_gates.md` 新增测试（night_wolf_tactical_loop / day_interrupt_hooks）并接入测试命令分层。
+- [x] `T04` 完成 `05_cutover_and_rollback.md` 与 `06_dependency_rules.md` 的开关切换、依赖约束、本地阻断能力。
 
 ## 3. 验收标准（任务映射）
 
-- [ ] `A01`（对应: `T01`） 4 类 Action Window 与狼队战术环在自动化测试中可复现。
-- [ ] `A02`（对应: `T02`） domain 拆分、hooks 落地、server/transport 边界重构均有对应代码提交与测试。
-- [ ] `A03`（对应: `T03`） 新增测试通过后，`test:quick` 与 `test:full` 均可稳定运行。
-- [ ] `A04`（对应: `T04`） lint 规则与切换开关可在本地命令中自动阻断违规发布。
+- [x] `A01`（对应: `T01`） 4 类 Action Window 与狼队战术环在自动化测试中可复现。
+- [x] `A02`（对应: `T02`） domain 拆分、hooks 落地、server/transport 边界重构均有对应代码提交与测试。
+- [x] `A03`（对应: `T03`） 新增测试通过后，`test:quick` 与 `test:full` 均可稳定运行。
+- [x] `A04`（对应: `T04`） lint 规则与切换开关可在本地命令中自动阻断违规发布。

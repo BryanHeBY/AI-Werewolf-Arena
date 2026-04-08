@@ -82,12 +82,12 @@
 
 ## 2. 开发任务清单
 
-- [ ] `T01` P5 角色扩展第一批：在 `backend/src/v3/action_providers.ts` 与 `backend/src/domain/world.ts` 补齐女巫/守卫/猎人边界规则（禁自救、双药限制、毒死闷枪）。
-- [ ] `T02` P6 白天流程增强：在 `backend/src/engine/phase_pipeline/day_pipeline.ts` 与 `voting_pipeline.ts` 实现警长竞选、1.5 票权、发言方向选择。
-- [ ] `T03` P7 记忆稳定性增强：在 `backend/src/memory/rolling_summary.ts` 与 `prompt_assembler.ts` 增加按阈值压缩与摘要替换策略。
+- [x] `T01` P5 角色扩展第一批：在 `backend/src/v3/action_providers.ts` 与 `backend/src/domain/world.ts` 补齐女巫/守卫/猎人边界规则（禁自救、双药限制、毒死闷枪）。
+- [x] `T02` P6 白天流程增强：在 `backend/src/engine/phase_pipeline/day_pipeline.ts` 与 `voting_pipeline.ts` 实现警长竞选、1.5 票权、发言方向选择。
+- [x] `T03` P7 记忆稳定性增强：在 `backend/src/memory/rolling_summary.ts` 与 `prompt_assembler.ts` 增加按阈值压缩与摘要替换策略。
 
 ## 3. 验收标准（任务映射）
 
-- [ ] `A01`（对应: `T01`） `backend/tests/v3/tool_gateway_validation.test.ts` 与 `event_registry_hooks.test.ts` 新增边界场景并全部通过。
-- [ ] `A02`（对应: `T02`） `backend/tests/v3/sheriff_pipeline.test.ts` 覆盖竞选、警徽移交、1.5 票结算与发言方向。
-- [ ] `A03`（对应: `T03`） 在 12 人局模拟第 3 天后上下文仍可运行，且摘要替换日志可追踪。
+- [x] `A01`（对应: `T01`） `backend/tests/v3/tool_gateway_validation.test.ts` 与 `event_registry_hooks.test.ts` 新增边界场景并全部通过。
+- [x] `A02`（对应: `T02`） `backend/tests/v3/sheriff_pipeline.test.ts` 覆盖竞选、警徽移交、1.5 票结算与发言方向。
+- [x] `A03`（对应: `T03`） 在 12 人局模拟第 3 天后上下文仍可运行，且摘要替换日志可追踪。

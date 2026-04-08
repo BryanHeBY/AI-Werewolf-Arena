@@ -38,12 +38,12 @@
 
 ## 2. 开发任务清单
 
-- [ ] `T01` 在 `backend` 的 lint 配置中加入 `no-restricted-imports` 规则，显式限制跨层反向依赖。
-- [ ] `T02` 在 `backend/src/{app,domain,engine,gateway,memory,scenarios,v3}/index.ts` 建立分层导出白名单。
-- [ ] `T03` 在 `backend/package.json` 增加 `lint:deps` 前置命令，阻断依赖方向违规代码提交。
+- [x] `T01` 在 `backend` 的 lint 配置中加入 `no-restricted-imports` 规则，显式限制跨层反向依赖。
+- [x] `T02` 在 `backend/src/{app,domain,engine,gateway,memory,scenarios,v3}/index.ts` 建立分层导出白名单。
+- [x] `T03` 在 `backend/package.json` 增加 `lint:deps` 前置命令，阻断依赖方向违规代码提交。
 
 ## 3. 验收标准（任务映射）
 
-- [ ] `A01`（对应: `T01`） 本地执行 lint 时可直接报出违规 import 的文件与行号。
-- [ ] `A02`（对应: `T02`） 新增模块只能通过分层 `index.ts` 导出访问，不再跨目录直连内部实现。
-- [ ] `A03`（对应: `T03`） 本地执行 `npm run lint:deps` 时，依赖逆向引用必须失败并阻止继续测试/构建。
+- [x] `A01`（对应: `T01`） 本地执行 lint 时可直接报出违规 import 的文件与行号。
+- [x] `A02`（对应: `T02`） 新增模块只能通过分层 `index.ts` 导出访问，不再跨目录直连内部实现。
+- [x] `A03`（对应: `T03`） 本地执行 `npm run lint:deps` 时，依赖逆向引用必须失败并阻止继续测试/构建。

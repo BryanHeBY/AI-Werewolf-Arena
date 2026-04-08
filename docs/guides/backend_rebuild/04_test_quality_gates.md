@@ -44,12 +44,12 @@ MVP 必测清单：
 
 ## 2. 开发任务清单
 
-- [ ] `T01` 新增 `backend/tests/v3/night_wolf_tactical_loop.test.ts`，覆盖狼队发言顺序、投票顺序、落刀目标一致性。
-- [ ] `T02` 新增 `backend/tests/v3/day_interrupt_hooks.test.ts`，覆盖 4 类中断窗口与自爆跳夜。
-- [ ] `T03` 在 `backend/package.json` 增加 `test:quick` 与 `test:full`，将关键回归与全量回归分离执行。
+- [x] `T01` 新增 `backend/tests/v3/night_wolf_tactical_loop.test.ts`，覆盖狼队发言顺序、投票顺序、落刀目标一致性。
+- [x] `T02` 新增 `backend/tests/v3/day_interrupt_hooks.test.ts`，覆盖 4 类中断窗口与自爆跳夜。
+- [x] `T03` 在 `backend/package.json` 增加 `test:quick` 与 `test:full`，将关键回归与全量回归分离执行。
 
 ## 3. 验收标准（任务映射）
 
-- [ ] `A01`（对应: `T01`） 新增夜间战术环测试在本地连续运行稳定通过（至少 5 次）。
-- [ ] `A02`（对应: `T02`） 新增白天中断测试可覆盖“打断发言队列并跳夜”的关键链路。
-- [ ] `A03`（对应: `T03`） `npm run test:quick` 30 秒内完成，`npm run test:full` 覆盖全部 V3 测试集。
+- [x] `A01`（对应: `T01`） 新增夜间战术环测试在本地连续运行稳定通过（至少 5 次）。
+- [x] `A02`（对应: `T02`） 新增白天中断测试可覆盖“打断发言队列并跳夜”的关键链路。
+- [x] `A03`（对应: `T03`） `npm run test:quick` 30 秒内完成，`npm run test:full` 覆盖全部 V3 测试集。

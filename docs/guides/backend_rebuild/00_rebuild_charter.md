@@ -25,12 +25,12 @@
 
 ## 2. 开发任务清单
 
-- [ ] `T01` 在 `backend/src/engine/phase_pipeline/day_pipeline.ts` 实现可配置 Action Window（`on_daybreak`、`on_pre_election`、`on_pre_vote`、`on_per_speech_gap`）并接入 `PhaseManager`。
-- [ ] `T02` 在 `backend/src/engine/phase_pipeline/night_pipeline.ts` 实现狼队战术环（随机顺序发言 -> 同序投票 -> 票多落刀）并写入事件日志。
-- [ ] `T03` 在 `backend/src/engine/event_registry.ts` 增加遗言触发规则（仅首夜死亡与白天放逐），并补齐对应测试。
+- [x] `T01` 在 `backend/src/engine/phase_pipeline/day_pipeline.ts` 实现可配置 Action Window（`on_daybreak`、`on_pre_election`、`on_pre_vote`、`on_per_speech_gap`）并接入 `PhaseManager`。
+- [x] `T02` 在 `backend/src/engine/phase_pipeline/night_pipeline.ts` 实现狼队战术环（随机顺序发言 -> 同序投票 -> 票多落刀）并写入事件日志。
+- [x] `T03` 在 `backend/src/engine/event_registry.ts` 增加遗言触发规则（仅首夜死亡与白天放逐），并补齐对应测试。
 
 ## 3. 验收标准（任务映射）
 
-- [ ] `A01`（对应: `T01`） `backend/tests/v3/day_interrupt_hooks.test.ts` 覆盖 4 类窗口触发与中断，且 `npm test -- --runInBand` 通过。
-- [ ] `A02`（对应: `T02`） `backend/tests/v3/night_wolf_tactical_loop.test.ts` 验证“发言顺序=投票顺序=计票结果”并可重复运行通过。
-- [ ] `A03`（对应: `T03`） `backend/tests/v3/last_words_rules.test.ts` 验证遗言边界（首夜死/放逐死有遗言，自爆/连带死无遗言）。
+- [x] `A01`（对应: `T01`） `backend/tests/v3/day_interrupt_hooks.test.ts` 覆盖 4 类窗口触发与中断，且 `npm test -- --runInBand` 通过。
+- [x] `A02`（对应: `T02`） `backend/tests/v3/night_wolf_tactical_loop.test.ts` 验证“发言顺序=投票顺序=计票结果”并可重复运行通过。
+- [x] `A03`（对应: `T03`） `backend/tests/v3/last_words_rules.test.ts` 验证遗言边界（首夜死/放逐死有遗言，自爆/连带死无遗言）。

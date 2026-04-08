@@ -26,12 +26,12 @@
 
 ## 2. 开发任务清单
 
-- [ ] `T01` 在 `backend/src/config/index.ts` 增加 `V3_ENGINE_ENABLED` 开关，并在 `backend/src/server/index.ts` 接入双入口切换能力。
-- [ ] `T02` 在 `backend/src/server/view_mapper.ts` 增加发布观测字段（phase、alive_count、pending_marks、last_action_id）。
-- [ ] `T03` 新增 `backend/tests/v3/cutover_rollback.test.ts`，验证开关切换与失败回退路径。
+- [x] `T01` 在 `backend/src/config/index.ts` 增加 `V3_ENGINE_ENABLED` 开关，并在 `backend/src/server/index.ts` 接入双入口切换能力。
+- [x] `T02` 在 `backend/src/server/view_mapper.ts` 增加发布观测字段（phase、alive_count、pending_marks、last_action_id）。
+- [x] `T03` 新增 `backend/tests/v3/cutover_rollback.test.ts`，验证开关切换与失败回退路径。
 
 ## 3. 验收标准（任务映射）
 
-- [ ] `A01`（对应: `T01`） 通过环境变量可在不改代码的情况下切换 V3 引擎启停。
-- [ ] `A02`（对应: `T02`） `/api/session` 返回观测字段并可用于线上问题定位。
-- [ ] `A03`（对应: `T03`） 回滚测试可自动验证“启用 -> 失败 -> 回退 -> 恢复”全链路。
+- [x] `A01`（对应: `T01`） 通过环境变量可在不改代码的情况下切换 V3 引擎启停。
+- [x] `A02`（对应: `T02`） `/api/session` 返回观测字段并可用于线上问题定位。
+- [x] `A03`（对应: `T03`） 回滚测试可自动验证“启用 -> 失败 -> 回退 -> 恢复”全链路。

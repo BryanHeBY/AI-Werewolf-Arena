@@ -4,41 +4,13 @@
 
 本文是 V3 后端重构执行看板，采用“模块任务 + 验收任务”方式管理。
 
-任务分组 A：目录与基础设施
+历史任务分组（A~E，已落地归档）：
 
-- [ ] A1 新建 V3 目录骨架（app/domain/engine/gateway/memory/infra/scenarios）。
-- [ ] A2 新建统一导出入口 `backend/src/index.ts`。
-- [ ] A3 新建依赖方向约束说明（禁止跨层反向依赖）。
-
-任务分组 B：ECS 与系统
-
-- [ ] B1 `RoleComponent` / `CampComponent` / `AliveComponent` / `VotingRightComponent`。
-- [ ] B2 `StatusMarks`：`GuardMark` / `WolfKillMark` / `HealMark` / `PoisonMark`。
-- [ ] B3 `DamageResolutionSystem`：同守同救规则、毒药致死规则。
-- [ ] B4 `WinConditionSystem`：屠城/屠边判定。
-
-任务分组 C：Phase 与事件拦截
-
-- [ ] C1 `PhaseManager`：`start_night()`、`start_day()`、`start_voting()`。
-- [ ] C2 夜间流水线：狼人交流 -> 守卫 -> 狼刀 -> 女巫 -> 预言家。
-- [ ] C3 `EventRegistry`：白痴被放逐免死 + 剥离投票权。
-- [ ] C4 `EventRegistry`：猎人吃毒闷枪/合法死亡触发 `shoot(target_id)`。
-- [ ] C5 自爆中断：`self_destruct(reason)` 触发 `jump_to("night")`。
-
-任务分组 D：Tool Gateway 与 Prompt
-
-- [ ] D1 Tool schema 注册：`guard`、`check_identity`、`use_potion`、`shoot`、`self_destruct`。
-- [ ] D2 网关鉴权：同守限制、女巫自救拦截、同夜双药拦截。
-- [ ] D3 Prompt 组装：system facts + notebook + summary + active context。
-- [ ] D4 输入清洗：拦截伪造系统前缀（上帝/法官等）。
-
-任务分组 E：场景与联调
-
-- [ ] E1 6 人局基准场景配置与回放脚本。
-- [ ] E2 12 人局基准场景配置与回放脚本。
-- [ ] E3 socket/broadcast 协议对齐与前端联调。
-- [ ] E4 服务入口切换到 V3（`server/index.ts`）。
-- [ ] E5 清理 V2 目录与旧测试，完成单栈运行。
+- `A1~A3` 目录骨架、统一导出入口、依赖方向约束：已落地。
+- `B1~B4` ECS 组件与系统（含结算/胜利判定）：已落地。
+- `C1~C5` 流程与事件拦截（含夜间流水线、自爆中断）：已落地。
+- `D1~D4` Tool Gateway 与 Prompt 链路：已落地。
+- `E1~E5` 场景、联调、服务切换与 V2 清理：已落地。
 
 建议执行序列：
 
@@ -125,17 +97,17 @@ MVP 必选机制覆盖矩阵（对齐 `docs/specs/v3_mvp_requirements.md`）：
 
 发布异常转化记录（用于对齐 `review_release_activity_driver.md`）：
 
-- [ ] R1 `release:check` 缺少标准命令编排，已补 `backend/package.json`：`test:quick` / `test:full` / `smoke:v3` / `release:check`。
-- [ ] R2 缺少依赖方向阻断命令，已补 `backend/eslint.config.cjs` 与 `npm run lint:deps`。
+- `R1` `release:check` 命令编排已补齐（`test:quick` / `test:full` / `smoke:v3` / `release:check`）。
+- `R2` 依赖方向阻断命令已补齐（`backend/eslint.config.cjs` + `npm run lint:deps`）。
 
 ## 2. 开发任务清单
 
-- [ ] `T01` 任务组 F：实现狼队战术环与夜间并行角色结算优先级（守卫 > 狼人 > 女巫 > 预言家）。
-- [ ] `T02` 任务组 G：实现警长系统（竞选、退水、1.5 票、移交/撕毁、定序权）。
-- [ ] `T03` 任务组 H：实现中断钩子全配置（天亮/警上/放逐前/逐发言间隙）与自爆劫持协议。
+- [x] `T01` 任务组 F：实现狼队战术环与夜间并行角色结算优先级（守卫 > 狼人 > 女巫 > 预言家）。
+- [x] `T02` 任务组 G：实现警长系统（竞选、退水、1.5 票、移交/撕毁、定序权）。
+- [x] `T03` 任务组 H：实现中断钩子全配置（天亮/警上/放逐前/逐发言间隙）与自爆劫持协议。
 
 ## 3. 验收标准（任务映射）
 
-- [ ] `A01`（对应: `T01`） `backend/tests/v3/night_wolf_tactical_loop.test.ts` 与结算优先级断言通过。
-- [ ] `A02`（对应: `T02`） `backend/tests/v3/sheriff_pipeline.test.ts` 覆盖竞选与票权链路且通过。
-- [ ] `A03`（对应: `T03`） `backend/tests/v3/day_interrupt_hooks.test.ts` 覆盖 4 类窗口与自爆跳夜行为且通过。
+- [x] `A01`（对应: `T01`） `backend/tests/v3/night_wolf_tactical_loop.test.ts` 与结算优先级断言通过。
+- [x] `A02`（对应: `T02`） `backend/tests/v3/sheriff_pipeline.test.ts` 覆盖竞选与票权链路且通过。
+- [x] `A03`（对应: `T03`） `backend/tests/v3/day_interrupt_hooks.test.ts` 覆盖 4 类窗口与自爆跳夜行为且通过。
