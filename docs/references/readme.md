@@ -9,8 +9,8 @@
 
 与其他目录关系：
 
-- 架构/规则规范：`docs/specs/README.md`
-- 开发执行入口：`docs/guides/README.md`
+- 架构/规则规范：`docs/specs/readme.md`
+- 开发执行入口：`docs/guides/readme.md`
 - 源码镜像细节：`docs/codebase/README.md`
 
 ## 2. 未来目标 TODO

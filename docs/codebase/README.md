@@ -1,19 +1,27 @@
-# codebase 文档根索引
+# codebase 文档索引
 
 ## 1. 当前代码详细文档
 
-- 本目录按源码目录镜像：`docs/codebase/<source_path>.md`
-- 入口导航：
-  - [backend](./backend/README.md)
-  - [frontend](./frontend/README.md)
+- 节点路径：`codebase`
+- 目录职责：项目源码镜像根目录，聚合 backend 与 frontend。
+- 上级节点：无（根节点）
+- 关联规范：`docs/specs/backend_architecture_whitepaper_v3.md`、`docs/specs/v3_mvp_requirements.md`
+
+### 子目录
+- [backend](./backend/README.md)
+- [frontend](./frontend/README.md)
+
+### 子文件
+- 无
 
 ## 2. 未来目标 TODO
 
-- [ ] 在根索引增加“全仓调用图”和“模块成熟度雷达图”。
-- [ ] 生成自动化校验脚本，防止 codebase 文档与源码脱节。
+- [ ] 按目录职责补齐关键流程图与风险说明。
+- [ ] 为目录下每个文件维护“导出项 + 依赖项 + 测试覆盖”状态。
+- [ ] 代码改动后同步更新本目录导航与职责说明。
 
 ## 3. 验收标准
 
-- [ ] backend/src 与 frontend/src 每个源码文件都能在本树中找到对应文档。
-- [ ] 每个父节点 `README.md` 均包含子节点导航。
-- [ ] 每个文档均包含“当前代码详细文档 / TODO / 验收标准”三段。
+- [ ] 子目录/子文件导航与真实源码结构一致。
+- [ ] 目录职责可帮助开发者快速定位改动入口。
+- [ ] 本目录引用的规范链接有效且与当前阶段目标一致。

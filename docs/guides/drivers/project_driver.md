@@ -11,11 +11,17 @@
 3. API 入口：
    - `docs/references/api.md`
 4. 后端索引：
-   - `docs/guides/backend_driver.md`
+   - `docs/guides/drivers/backend_driver.md`
 5. 前端索引：
-   - `docs/guides/frontend_driver.md`
-6. V3 白皮书：
-   - `docs/specs/README.md`
+   - `docs/guides/drivers/frontend_driver.md`
+6. 活动驱动：
+   - `docs/guides/activities/development_activity_driver.md`
+   - `docs/guides/activities/testing_activity_driver.md`
+   - `docs/guides/activities/review_release_activity_driver.md`
+7. 后端重构作战包：
+   - `docs/guides/backend_rebuild/readme.md`
+8. V3 白皮书：
+   - `docs/specs/readme.md`
    - `docs/specs/backend_architecture_whitepaper_v3.md`
    - `docs/specs/v3_mvp_requirements.md`
 
@@ -30,6 +36,7 @@
 - [ ] 增加变更日志模板：每次代码变更同步文档摘要。
 - [ ] 增加按模块的风险/优先级看板。
 - [ ] 增加“白皮书条款 -> 代码文件”映射清单并持续维护。
+- [ ] 为后端重构新增“阶段进度总览面板”（P0~P4）。
 
 ## 3. 验收标准
 
@@ -37,3 +44,4 @@
 - [ ] 所有节点文档包含“当前代码详细文档 / TODO / 验收标准”。
 - [ ] 新增源码文件后，文档镜像路径在同一提交内补齐。
 - [ ] 白皮书更新后，相关索引文档与 codebase 文档在同一提交内同步更新。
+- [ ] 后端重构可从本索引一键定位到“规范、任务、测试、回滚”四类文档。
