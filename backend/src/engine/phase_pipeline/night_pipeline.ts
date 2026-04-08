@@ -42,7 +42,17 @@ export class NightPipeline {
     // 每个夜晚开始前重置“同夜双药”状态，避免跨夜污染。
     this.toolGateway.startNight(this.world);
 
-    const wolfIds = this.getAliveByRole(Role.Wolf);
+    const wolfIds = this.shuffleWolves(this.getAliveByRole(Role.Wolf));
+
+    if (wolfIds.length > 0) {
+      this.events.push({
+        timestamp: Date.now(),
+        type: "wolf_tactical_order",
+        payload: {
+          order: [...wolfIds],
+        },
+      });
+    }
 
     for (const wolfId of wolfIds) {
       const req = this.makeRequest(
@@ -90,6 +100,14 @@ export class NightPipeline {
 
       const targetId = result.sanitizedCall.args.target_id;
       this.ensureMarks(targetId).add(StatusMark.GuardMark);
+      this.events.push({
+        timestamp: Date.now(),
+        type: "guard_applied",
+        payload: {
+          actorId: guardId,
+          targetId,
+        },
+      });
 
       const role = this.world.getComponent<RoleComponent>(guardId, COMPONENT.Role);
       if (role?.guardState) {
@@ -117,6 +135,14 @@ export class NightPipeline {
 
       const targetId = result.sanitizedCall.args.target_id;
       wolfVotes[targetId] = (wolfVotes[targetId] ?? 0) + 1;
+      this.events.push({
+        timestamp: Date.now(),
+        type: "wolf_kill_vote_cast",
+        payload: {
+          actorId: wolfId,
+          targetId,
+        },
+      });
     }
 
     // 狼队目标由票多者决定；平票时按 seat/id 最小值兜底。
@@ -157,12 +183,30 @@ export class NightPipeline {
         this.ensureMarks(targetId).add(StatusMark.HealMark);
         witch.witchState.heal -= 1;
         witch.witchState.healUsedThisNight = true;
+        this.events.push({
+          timestamp: Date.now(),
+          type: "witch_potion_used",
+          payload: {
+            actorId: witchId,
+            targetId,
+            potionType: "heal",
+          },
+        });
       }
 
       if (potion === "poison") {
         this.ensureMarks(targetId).add(StatusMark.PoisonMark);
         witch.witchState.poison -= 1;
         witch.witchState.poisonUsedThisNight = true;
+        this.events.push({
+          timestamp: Date.now(),
+          type: "witch_potion_used",
+          payload: {
+            actorId: witchId,
+            targetId,
+            potionType: "poison",
+          },
+        });
       }
     }
 
@@ -188,11 +232,30 @@ export class NightPipeline {
 
       const targetId = result.sanitizedCall.args.target_id;
       const targetRole = this.world.getComponent<RoleComponent>(targetId, COMPONENT.Role);
+      const isWerewolf = targetRole?.camp === Camp.Wolf;
+      const seerRole = this.world.getComponent<RoleComponent>(seerId, COMPONENT.Role);
+      if (seerRole?.seerState) {
+        seerRole.seerState.lastTarget = targetId;
+        seerRole.seerState.lastIsWerewolf = isWerewolf;
+        seerRole.seerState.history.push({
+          targetId,
+          isWerewolf,
+        });
+      }
 
       seerChecks.push({
         seerId,
         targetId,
-        isWerewolf: targetRole?.camp === Camp.Wolf,
+        isWerewolf,
+      });
+      this.events.push({
+        timestamp: Date.now(),
+        type: "seer_checked",
+        payload: {
+          actorId: seerId,
+          targetId,
+          isWerewolf: targetRole?.camp === Camp.Wolf,
+        },
       });
     }
 
@@ -226,7 +289,10 @@ export class NightPipeline {
       phase: Phase.Night,
       actorId,
       allowedTools,
-      context,
+      context: {
+        must_act: true,
+        ...context,
+      },
     };
   }
 
@@ -263,5 +329,15 @@ export class NightPipeline {
       return Number(a[0]) - Number(b[0]);
     });
     return Number(entries[0][0]);
+  }
+
+  private shuffleWolves(ids: EntityId[]): EntityId[] {
+    // 夜间狼人发言与投票必须共用同一随机顺序，以便回放可追踪。
+    const copied = [...ids];
+    for (let i = copied.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copied[i], copied[j]] = [copied[j], copied[i]];
+    }
+    return copied;
   }
 }

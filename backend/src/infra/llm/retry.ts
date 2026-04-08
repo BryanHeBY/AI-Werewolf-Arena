@@ -23,6 +23,14 @@ export async function withRetry<T>(
     try {
       return await task();
     } catch (error) {
+      const message = String(error);
+      if (
+        message.includes("AbortError") ||
+        message.includes("aborted") ||
+        message.includes("The operation was aborted")
+      ) {
+        throw error;
+      }
       attempt += 1;
       if (attempt > retries) {
         throw error;

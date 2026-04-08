@@ -3,8 +3,9 @@ import { BadgeComponent } from "../domain/components/badge";
 import { COMPONENT } from "../domain/components/names";
 import { RoleComponent } from "../domain/components/role";
 import { VotingRightComponent } from "../domain/components/voting_right";
-import { EntityId, GameEvent, Role, StatusMark } from "../domain/model";
+import { EntityId, GameEvent, Phase, Role, StatusMark } from "../domain/model";
 import { World } from "../domain/world";
+import { transferOrDestroySheriffBadge } from "./sheriff_badge";
 
 export interface VotedOutResult {
   prevented: boolean;
@@ -48,8 +49,7 @@ export class EventRegistry {
 
       const badge = world.getComponent<BadgeComponent>(targetId, COMPONENT.Badge);
       if (badge?.isSheriff) {
-        badge.isSheriff = false;
-        badge.destroyed = true;
+        transferOrDestroySheriffBadge(world, targetId, "idiot_revealed", events);
       }
 
       events.push({
@@ -69,16 +69,7 @@ export class EventRegistry {
 
     const badge = world.getComponent<BadgeComponent>(targetId, COMPONENT.Badge);
     if (badge?.isSheriff) {
-      badge.isSheriff = false;
-      badge.destroyed = true;
-      events.push({
-        timestamp: Date.now(),
-        type: "sheriff_badge_destroyed",
-        payload: {
-          targetId,
-          reason: "voted_out",
-        },
-      });
+      transferOrDestroySheriffBadge(world, targetId, "voted_out", events);
     }
 
     aliveComp.alive = false;
@@ -147,6 +138,45 @@ export class EventRegistry {
     }
 
     return { extraDeaths, extraDeathSources };
+  }
+
+  /**
+   * 遗言规则：
+   * 1) 首夜死亡可遗言（支持多死）；
+   * 2) 白天放逐死亡可遗言；
+   * 3) 其他死亡（自爆、连带死亡）默认无遗言。
+   */
+  recordLastWords(
+    world: World,
+    deadIds: EntityId[],
+    phase: Phase,
+    day: number,
+    events: GameEvent[],
+  ): void {
+    for (const deadId of deadIds) {
+      if (!this.shouldGrantLastWords(phase, day)) {
+        continue;
+      }
+
+      const alive = world.getComponent<AliveComponent>(deadId, COMPONENT.Alive);
+      if (!alive || alive.alive) {
+        continue;
+      }
+
+      events.push({
+        timestamp: Date.now(),
+        type: "last_words_granted",
+        payload: {
+          playerId: deadId,
+          phase,
+          day,
+        },
+      });
+    }
+  }
+
+  shouldGrantLastWords(phase: Phase, day: number): boolean {
+    return (phase === Phase.Night && day === 1) || phase === Phase.Voting;
   }
 
   private isLastGod(world: World, hunterId: EntityId): boolean {

@@ -20,6 +20,15 @@ export interface IdiotState {
   revealed: boolean;
 }
 
+export interface SeerState {
+  lastTarget: EntityId | null;
+  lastIsWerewolf: boolean | null;
+  history: Array<{
+    targetId: EntityId;
+    isWerewolf: boolean;
+  }>;
+}
+
 export interface RoleComponent extends PromptRenderable {
   role: Role;
   camp: Camp;
@@ -27,6 +36,7 @@ export interface RoleComponent extends PromptRenderable {
   guardState?: GuardState;
   hunterState?: HunterState;
   idiotState?: IdiotState;
+  seerState?: SeerState;
 }
 
 /**
@@ -75,6 +85,14 @@ export function createRoleComponent(role: Role): RoleComponent {
     };
   }
 
+  if (role === Role.Seer) {
+    base.seerState = {
+      lastTarget: null,
+      lastIsWerewolf: null,
+      history: [],
+    };
+  }
+
   return {
     ...base,
     renderPrompt(): string {
@@ -86,7 +104,14 @@ export function createRoleComponent(role: Role): RoleComponent {
         return "你的底牌是【守卫】。你每晚可以守护一名玩家，且不可连续同守。";
       }
       if (this.role === Role.Seer) {
-        return "你的底牌是【预言家】。你每晚可以查验一名玩家阵营。";
+        const seerState = this.seerState;
+        const latest =
+          seerState &&
+          seerState.lastTarget !== null &&
+          seerState.lastIsWerewolf !== null
+            ? ` 你上一条查验结果：${seerState.lastTarget}号是${seerState.lastIsWerewolf ? "狼人" : "好人"}。`
+            : "";
+        return `你的底牌是【预言家】。你每晚可以查验一名玩家阵营。${latest}`;
       }
       if (this.role === Role.Hunter) {
         return "你的底牌是【猎人】。满足条件时你可以开枪带走一名玩家。";

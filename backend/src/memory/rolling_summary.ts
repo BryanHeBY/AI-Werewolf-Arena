@@ -14,4 +14,10 @@ export class RollingSummaryStore {
   get(entityId: EntityId): string {
     return this.data.get(entityId) ?? "";
   }
+
+  append(entityId: EntityId, delta: string): void {
+    const current = this.get(entityId);
+    const next = current ? `${current}\n${delta}` : delta;
+    this.data.set(entityId, next);
+  }
 }

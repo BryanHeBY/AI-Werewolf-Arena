@@ -74,7 +74,11 @@ export class VotingPipeline {
         phase: Phase.Voting,
         actorId: voterId,
         allowedTools: ["vote"],
-        context: { phase: "voting" },
+        context: {
+          phase: "voting",
+          must_act: true,
+          public_feed: this.buildPublicFeed(),
+        },
       };
 
       const action = await actionProvider.getAction(req);
@@ -100,6 +104,15 @@ export class VotingPipeline {
       // 警长等角色可通过 weight 调整票权，默认 1 票。
       const weight = voting?.weight ?? 1;
       tally[voteTarget] = (tally[voteTarget] ?? 0) + weight;
+      this.events.push({
+        timestamp: Date.now(),
+        type: "vote_cast",
+        payload: {
+          actorId: voterId,
+          targetId: voteTarget,
+          weight,
+        },
+      });
     }
 
     const target = this.pickMajorityTarget(tally);
@@ -155,7 +168,7 @@ export class VotingPipeline {
         actorId: wolfId,
         actionWindow: window,
         allowedTools: ["self_destruct"],
-        context: { window },
+        context: { window, must_act: false },
       };
 
       const action = await actionProvider.getAction(req);
@@ -212,5 +225,16 @@ export class VotingPipeline {
     });
 
     return Number(entries[0][0]);
+  }
+
+  private buildPublicFeed(): string[] {
+    const lines: string[] = [];
+    const feed = this.events.slice(-50);
+    for (const event of feed) {
+      if (event.type === "day_speech") {
+        lines.push(`[发言][${event.payload.actorId}] ${event.payload.text}`);
+      }
+    }
+    return lines.slice(-16);
   }
 }

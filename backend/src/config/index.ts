@@ -15,6 +15,21 @@ export interface AppConfig {
   defaultBoard: BoardPreset;
   maxDaysPerSession: number;
   cycleDelayMs: number;
+  v3EngineEnabled: boolean;
+}
+
+function parseBooleanFlag(value: string | undefined, fallback: boolean): boolean {
+  if (value === undefined || value === "") {
+    return fallback;
+  }
+  const normalized = value.trim().toLowerCase();
+  if (["1", "true", "yes", "on"].includes(normalized)) {
+    return true;
+  }
+  if (["0", "false", "no", "off"].includes(normalized)) {
+    return false;
+  }
+  return fallback;
 }
 
 export function loadConfig(): AppConfig {
@@ -30,6 +45,7 @@ export function loadConfig(): AppConfig {
     defaultBoard,
     maxDaysPerSession: parseInt(process.env.V3_MAX_DAYS || "20", 10),
     cycleDelayMs: parseInt(process.env.V3_CYCLE_DELAY_MS || "80", 10),
+    v3EngineEnabled: parseBooleanFlag(process.env.V3_ENGINE_ENABLED, true),
   };
 }
 

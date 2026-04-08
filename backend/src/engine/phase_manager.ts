@@ -20,6 +20,7 @@ import { RoleRegistry } from "../domain/registries/role_registry";
 import { COMPONENT } from "../domain/components/names";
 import { BadgeComponent } from "../domain/components/badge";
 import { VotingRightComponent } from "../domain/components/voting_right";
+import { transferOrDestroySheriffBadge } from "./sheriff_badge";
 
 /**
  * PhaseManager 是 V3 引擎的时序中枢。
@@ -170,8 +171,19 @@ export class PhaseManager {
     const seen = new Set<EntityId>(deadIds);
     let pending = [...seen];
     const allSources: Record<number, StatusMark[]> = { ...sources };
+    let firstBatch = true;
 
     while (pending.length > 0) {
+      if (firstBatch) {
+        this.eventRegistry.recordLastWords(
+          this.world,
+          pending,
+          phase,
+          this.state.day,
+          this.events,
+        );
+      }
+
       // 先处理警长死亡带来的警徽逻辑，再执行角色死亡钩子。
       for (const deadId of pending) {
         this.handleSheriffDeath(deadId, phase);
@@ -188,6 +200,7 @@ export class PhaseManager {
             allowedTools: ["shoot"],
             context: {
               trigger: "on_death",
+              must_act: true,
             },
           });
           if (action?.name !== "shoot") {
@@ -216,6 +229,7 @@ export class PhaseManager {
         seen.add(id);
         allSources[id] = result.extraDeathSources[id] ?? [];
       }
+      firstBatch = false;
     }
   }
 
@@ -267,26 +281,11 @@ export class PhaseManager {
       return;
     }
 
-    // 当前实现选择“警长死亡后警徽直接销毁”。
-    // 若后续引入移交流程，可在此扩展“移交候选 -> 确认 -> 广播”逻辑。
-    badge.isSheriff = false;
-    badge.destroyed = true;
-
-    const voting = this.world.getComponent<VotingRightComponent>(
+    transferOrDestroySheriffBadge(
+      this.world,
       entityId,
-      COMPONENT.VotingRight,
+      `${phase}_death`,
+      this.events,
     );
-    if (voting) {
-      voting.weight = 0;
-    }
-
-    this.events.push({
-      timestamp: Date.now(),
-      type: "sheriff_badge_destroyed",
-      payload: {
-        targetId: entityId,
-        reason: `${phase}_death`,
-      },
-    });
   }
 }

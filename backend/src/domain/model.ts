@@ -118,6 +118,8 @@ export interface ActionRequest {
   allowedTools: ToolName[];
   // 按阶段注入的上下文信息（如 wolf_target、window、trigger）。
   context: Record<string, unknown>;
+  // 当前整局运行的绝对截止时间（毫秒时间戳），用于动作级超时预算控制。
+  deadlineAtMs?: number;
 }
 
 export interface ActionProvider {

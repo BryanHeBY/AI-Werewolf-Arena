@@ -1,6 +1,9 @@
 import { AliveComponent } from "../domain/components/alive";
+import { BadgeComponent } from "../domain/components/badge";
 import { COMPONENT } from "../domain/components/names";
 import { RoleComponent } from "../domain/components/role";
+import { StatusMarksComponent } from "../domain/components/status_marks";
+import { VotingRightComponent } from "../domain/components/voting_right";
 import { Camp, Phase, Role, RuntimeSnapshot } from "../domain/model";
 import { World } from "../domain/world";
 
@@ -16,6 +19,8 @@ export interface FrontendPlayerView {
   roleType: string;
   faction: "wolf" | "villager";
   isAlive: boolean;
+  isSheriff: boolean;
+  voteWeight: number;
 }
 
 export interface FrontendGameState {
@@ -28,6 +33,10 @@ export interface FrontendGameState {
   witchHasPoison: boolean;
   currentSpeechIndex: number;
   winner?: "wolf" | "villager";
+  // 观测字段：用于会话状态排障与回放定位。
+  alive_count: number;
+  pending_marks: Array<{ playerId: number; marks: string[] }>;
+  last_action_id: string;
 }
 
 /**
@@ -57,12 +66,16 @@ export function buildFrontendPlayers(world: World): FrontendPlayerView[] {
     const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
     const alive = world.getComponent<AliveComponent>(id, COMPONENT.Alive);
     const identity = world.getComponent<{ name: string }>(id, COMPONENT.Identity);
+    const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge);
+    const voting = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight);
     return {
       id,
       name: identity?.name ?? `玩家${id}`,
       roleType: toFrontendRoleType(role?.role),
       faction: role?.camp === Camp.Wolf ? "wolf" : "villager",
       isAlive: alive?.alive === true,
+      isSheriff: badge?.isSheriff === true && badge.destroyed === false,
+      voteWeight: voting?.weight ?? 1,
     };
   });
 }
@@ -78,6 +91,17 @@ export function buildFrontendGameState(
     .map((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role))
     .find((role) => role?.role === Role.Witch);
 
+  const pending_marks = world
+    .entityIds()
+    .map((id) => {
+      const marks = world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks);
+      return {
+        playerId: id,
+        marks: marks?.values().map((m) => String(m)) ?? [],
+      };
+    })
+    .filter((item) => item.marks.length > 0);
+
   const state: FrontendGameState = {
     phase: toFrontendPhase(snapshot.phase),
     round: snapshot.day,
@@ -87,6 +111,10 @@ export function buildFrontendGameState(
     witchHasAntidote: (witch?.witchState?.heal ?? 0) > 0,
     witchHasPoison: (witch?.witchState?.poison ?? 0) > 0,
     currentSpeechIndex: 0,
+    alive_count: players.filter((p) => p.isAlive).length,
+    pending_marks,
+    // 使用“天数+阶段+待结算印记数量”构造可复现的动作游标。
+    last_action_id: `${snapshot.day}-${snapshot.phase}-${pending_marks.length}`,
   };
 
   if (snapshot.result) {

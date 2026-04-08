@@ -61,6 +61,22 @@ export class DayPipeline {
       }
     }
 
+    if (config.hooks.onPreElection) {
+      const exploded = await this.trySelfDestruct(
+        actionProvider,
+        ActionWindow.OnPreElection,
+      );
+      if (exploded !== null) {
+        return {
+          summary: {
+            speeches,
+            selfDestructBy: exploded,
+          },
+          interrupted: true,
+        };
+      }
+    }
+
     const speakers = this.buildSpeakerOrder(
       this.world.getAliveEntityIds(),
       this.findSheriffId(),
@@ -78,6 +94,8 @@ export class DayPipeline {
         allowedTools: ["speak"],
         context: {
           phase: "day_speech",
+          must_act: true,
+          public_feed: this.buildPublicFeed(),
         },
       };
 
@@ -149,6 +167,7 @@ export class DayPipeline {
         allowedTools: ["self_destruct"],
         context: {
           window,
+          must_act: false,
         },
       };
 
@@ -219,6 +238,7 @@ export class DayPipeline {
       allowedTools: ["choose_direction"],
       context: {
         phase: "sheriff_choose_direction",
+        must_act: true,
       },
     };
     const action = await actionProvider.getAction(req);
@@ -301,5 +321,20 @@ export class DayPipeline {
   private isAlive(entityId: EntityId): boolean {
     const alive = this.world.getComponent<AliveComponent>(entityId, COMPONENT.Alive);
     return alive?.alive === true;
+  }
+
+  private buildPublicFeed(): string[] {
+    const lines: string[] = [];
+    const feed = this.events.slice(-40);
+    for (const event of feed) {
+      if (event.type === "day_speech") {
+        lines.push(`[发言][${event.payload.actorId}] ${event.payload.text}`);
+      } else if (event.type === "voted_out") {
+        lines.push(`[公开事件][放逐] ${event.payload.target}号出局`);
+      } else if (event.type === "wolf_self_destruct") {
+        lines.push(`[公开事件][自爆] ${event.payload.wolfId}号自爆`);
+      }
+    }
+    return lines.slice(-12);
   }
 }
