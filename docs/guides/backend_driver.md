@@ -1,0 +1,37 @@
+# Backend Driver（索引版）
+
+## 1. 当前代码详细文档
+
+后端详细文档已拆分为树形结构（按源码路径镜像）：
+
+1. V3 后端开发最高规范：
+   - `docs/specs/backend_architecture_whitepaper_v3.md`
+2. V3 当前迭代实现要求：
+   - `docs/specs/v3_mvp_requirements.md`
+3. 总入口：
+   - `docs/codebase/backend/README.md`
+4. 核心模块：
+   - `docs/codebase/backend/src/core/README.md`
+   - `docs/codebase/backend/src/core/GameEngineV2.ts.md`
+   - `docs/codebase/backend/src/core/Environment.ts.md`
+   - `docs/codebase/backend/src/core/GameFactoryV2.ts.md`
+5. Agent 与 LLM：
+   - `docs/codebase/backend/src/agent/README.md`
+   - `docs/codebase/backend/src/llm/README.md`
+6. Server 与通信：
+   - `docs/codebase/backend/src/server/README.md`
+   - `docs/codebase/backend/src/broadcaster/README.md`
+
+## 2. 未来目标 TODO
+
+- [ ] 为 `docs/codebase/backend/src/*` 各父级 README 增加依赖图（上游/下游）。
+- [ ] 将后端“模块成熟度”标注到各目录 README（MVP/Beta/Stable）。
+- [ ] 对所有关键文件文档补充“风险等级 + 责任人”字段。
+- [ ] 将白皮书条款按模块拆解为“实现状态矩阵”（未开始/开发中/已完成）。
+
+## 3. 验收标准
+
+- [ ] backend/src 每个源码文件都存在 `docs/codebase/backend/src/<file>.md`。
+- [ ] 每个目录节点都有 `README.md` 且可导航到子节点。
+- [ ] 发生后端代码改动时，对应 codebase 文档同步更新。
+- [ ] 后端开发评审时，能从代码直接追溯到白皮书条款与 MVP 验收项。

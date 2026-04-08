@@ -56,3 +56,6 @@ coverage
 /tsconfig.json
 /tsconfig.node.json
 /vite.config.ts
+
+# Codex local marker file
+.codex
