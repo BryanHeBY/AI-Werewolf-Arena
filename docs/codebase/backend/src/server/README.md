@@ -13,6 +13,8 @@
 ### 子文件
 - [index.ts](./index.ts.md)
 - [socket.ts](./socket.ts.md)
+- [v3_session_manager.ts](./v3_session_manager.ts.md)
+- [view_mapper.ts](./view_mapper.ts.md)
 
 ## 2. 未来目标 TODO
 

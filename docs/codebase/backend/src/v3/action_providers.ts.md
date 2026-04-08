@@ -4,22 +4,25 @@
 
 - 源码路径：`backend/src/v3/action_providers.ts`
 - 文件类型：`ts`
-- 当前行数：`30`
-- 文件定位：源码镜像文档节点。
+- 当前行数：`121`
+- 文件定位：V3 行为提供器与运行工具文件。
 - 上级目录文档：[README.md](./README.md)
 - 关联规范：`docs/specs/backend_architecture_whitepaper_v3.md`、`docs/specs/v3_mvp_requirements.md`
 
 ### 代码内容简介
-- 当前文件参与 V2 现状实现，并将作为 V3 重构映射依据。
-- 重构时优先比对本文件导出项、依赖项与阶段职责。
+- 当前文件属于 V3 主线实现，是后续扩展与联调的直接基线。
+- 迭代时优先比对本文件导出项、依赖项与阶段职责。
 
 ### 对外暴露类型/接口/函数
-- `3:export class NoopActionProvider implements ActionProvider {`
-- `9:export interface ScriptedEntry {`
-- `14:export class ScriptedActionProvider implements ActionProvider {`
+- `14:export class NoopActionProvider implements ActionProvider {`
+- `20:export interface ScriptedEntry {`
+- `25:export class ScriptedActionProvider implements ActionProvider {`
+- `43:export class BaselineBotActionProvider implements ActionProvider {`
 
 ### 关键依赖（import）
-- `../domain/model`
+- `../domain/components/names`
+- `../domain/components/role`
+- `../domain/world`
 
 ## 2. 未来目标 TODO
 

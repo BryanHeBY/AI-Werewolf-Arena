@@ -3,7 +3,7 @@
 ## 1. 当前代码详细文档
 
 - 节点路径：`backend/src/memory`
-- 目录职责：源码目录镜像节点。
+- 目录职责：Prompt 组装与记忆分层存储。
 - 上级节点：[backend/src](../README.md)
 - 关联规范：`docs/specs/backend_architecture_whitepaper_v3.md`、`docs/specs/v3_mvp_requirements.md`
 

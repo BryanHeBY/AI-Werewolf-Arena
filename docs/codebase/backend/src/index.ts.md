@@ -4,14 +4,14 @@
 
 - 源码路径：`backend/src/index.ts`
 - 文件类型：`ts`
-- 当前行数：`33`
+- 当前行数：`38`
 - 文件定位：源码镜像文档节点。
 - 上级目录文档：[README.md](./README.md)
 - 关联规范：`docs/specs/backend_architecture_whitepaper_v3.md`、`docs/specs/v3_mvp_requirements.md`
 
 ### 代码内容简介
-- 当前文件参与 V2 现状实现，并将作为 V3 重构映射依据。
-- 重构时优先比对本文件导出项、依赖项与阶段职责。
+- 当前文件属于 V3 主线实现，是后续扩展与联调的直接基线。
+- 迭代时优先比对本文件导出项、依赖项与阶段职责。
 
 ### 对外暴露类型/接口/函数
 - `1:export { GameContainer } from "./app/container";`
@@ -21,9 +21,10 @@
 - `26:export { World } from "./domain/world";`
 - `27:export { PhaseManager } from "./engine/phase_manager";`
 - `28:export { ToolGateway } from "./gateway/tool_gateway";`
-- `30:export { sixPlayerMvpConfig } from "./scenarios/six_player_mvp";`
-- `31:export { twelvePlayerStandardConfig } from "./scenarios/twelve_player_standard";`
-- `33:export { NoopActionProvider, ScriptedActionProvider } from "./v3/action_providers";`
+- `29:export { V3SessionManager } from "./server/v3_session_manager";`
+- `31:export { sixPlayerMvpConfig } from "./scenarios/six_player_mvp";`
+- `32:export { twelvePlayerStandardConfig } from "./scenarios/twelve_player_standard";`
+- `34:export {`
 
 ### 关键依赖（import）
 - 无显式 import（或由构建工具注入）。

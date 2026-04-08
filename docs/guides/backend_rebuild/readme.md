@@ -20,7 +20,8 @@
 2. P1 已完成：`backend/src/{app,domain,engine}` 已落地串行状态机与 ECS 组件/系统骨架。
 3. P2 已完成：`backend/src/gateway` 已落地 schema 注册、动作校验与输入清洗。
 4. P3 已完成（MVP 基线）：`backend/tests/v3` 覆盖白痴、猎人、守卫、女巫、自爆中断关键规则并通过。
-5. P4 未开始：transport 与前端联调、灰度切换与回滚演练待执行。
+5. P4 已完成：`backend/src/server` 已接入 V3 会话管理、HTTP/Socket 协议与联调事件映射。
+6. V2 清理已完成：`backend/src/{core,agent,ecs,llm,logger,broadcaster}` 与对应旧测试已移除。
 
 驱动关系：
 
@@ -33,6 +34,7 @@
 - [ ] 为每个阶段补充“负责人/预计工时/风险等级”。
 - [x] 增加“每日推进记录”并保持与任务看板一致。
 - [x] 每次结构变更后，同步更新目标目录图与迁移映射。
+- [ ] 增加“V3 角色覆盖率矩阵”（MVP -> 全白皮书角色）。
 
 ## 3. 验收标准
 

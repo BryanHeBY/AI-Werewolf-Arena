@@ -5,13 +5,13 @@
 - 源码路径：`backend/src/domain/registries/phase_registry.ts`
 - 文件类型：`ts`
 - 当前行数：`17`
-- 文件定位：源码镜像文档节点。
+- 文件定位：V3 域模型与基础抽象文件。
 - 上级目录文档：[README.md](./README.md)
 - 关联规范：`docs/specs/backend_architecture_whitepaper_v3.md`、`docs/specs/v3_mvp_requirements.md`
 
 ### 代码内容简介
-- 当前文件参与 V2 现状实现，并将作为 V3 重构映射依据。
-- 重构时优先比对本文件导出项、依赖项与阶段职责。
+- 当前文件属于 V3 主线实现，是后续扩展与联调的直接基线。
+- 迭代时优先比对本文件导出项、依赖项与阶段职责。
 
 ### 对外暴露类型/接口/函数
 - `3:export class PhaseRegistry {`
@@ -21,7 +21,7 @@
 
 ## 2. 未来目标 TODO
 
-- [ ] 按 V3 规范补齐职责边界与输入输出契约。
+- [ ] 扩展 ECS 组件与系统，覆盖白皮书更多角色与印记。
 - [ ] 补齐函数级输入/输出/副作用说明。
 - [ ] 补齐该文件的测试覆盖现状（单测/集成/E2E）。
 - [ ] 源码发生 export 或 import 变更时，同步更新本文档。

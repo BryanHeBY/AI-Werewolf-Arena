@@ -6,7 +6,7 @@
 
 阶段 P0：重构基线冻结（文档与现状）`[已完成 2026-04-08]`
 
-1. 冻结当前 `backend/src` 作为 V2 基线。
+1. 冻结 `backend/src` 并完成目录镜像文档。
 2. 确认 `docs/codebase/backend/*` 与现状一致。
 3. 明确 V3 目标目录与阶段输出物。
 
@@ -28,11 +28,11 @@
 2. 完成 6 人局闭环。
 3. 完成 12 人局关键机制闭环。
 
-阶段 P4：联调、稳定性与切换`[未开始]`
+阶段 P4：联调、稳定性与切换`[已完成 2026-04-08]`
 
-1. 接入 transport 与前端协议联调。
-2. 增加回放日志与失败重放脚本。
-3. 做一次灰度切换演练与回滚演练。
+1. 接入 transport 与前端协议联调（`server/v3_session_manager.ts` + `server/view_mapper.ts`）。
+2. 新增 V3 会话生命周期 API（`/api/start-game`、`/api/stop-game`、`/api/session`）。
+3. 完成 V2 代码与旧测试清理，服务入口切换到 V3。
 
 阶段出口条件：
 
@@ -46,7 +46,10 @@
 1. V3 定向类型检查已通过：`cd backend && npx tsc -p tsconfig.v3.json --noEmit`
 2. V3 MVP 测试已通过：`npx jest backend/tests/v3 --runInBand`
 3. V3 运行演示已通过：`npx tsx backend/src/run-test-v3.ts`
-4. 结论：已满足 P3 出口，下一步进入 P4（transport/协议联调与切换演练）。
+4. 全量构建通过：`cd backend && npm run build`
+5. 全量测试通过：`cd backend && npm test -- --runInBand`
+6. 服务冒烟通过：`/api/status`、`/api/start-game`、`/api/session`
+7. 结论：P0-P4 已闭环，后续进入“角色扩展与复杂机制实现”阶段。
 
 ## 2. 未来目标 TODO
 

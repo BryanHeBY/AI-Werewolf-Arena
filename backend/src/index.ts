@@ -26,8 +26,13 @@ export type {
 export { World } from "./domain/world";
 export { PhaseManager } from "./engine/phase_manager";
 export { ToolGateway } from "./gateway/tool_gateway";
+export { V3SessionManager } from "./server/v3_session_manager";
 
 export { sixPlayerMvpConfig } from "./scenarios/six_player_mvp";
 export { twelvePlayerStandardConfig } from "./scenarios/twelve_player_standard";
 
-export { NoopActionProvider, ScriptedActionProvider } from "./v3/action_providers";
+export {
+  NoopActionProvider,
+  ScriptedActionProvider,
+  BaselineBotActionProvider,
+} from "./v3/action_providers";

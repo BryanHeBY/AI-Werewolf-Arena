@@ -10,8 +10,8 @@
 - 关联规范：`docs/specs/backend_architecture_whitepaper_v3.md`、`docs/specs/v3_mvp_requirements.md`
 
 ### 代码内容简介
-- 当前文件参与 V2 现状实现，并将作为 V3 重构映射依据。
-- 重构时优先比对本文件导出项、依赖项与阶段职责。
+- 当前文件属于 V3 主线实现，是后续扩展与联调的直接基线。
+- 迭代时优先比对本文件导出项、依赖项与阶段职责。
 
 ### 对外暴露类型/接口/函数
 - `3:export { Badge }`

@@ -3,7 +3,7 @@
 ## 1. 当前代码详细文档
 
 - 节点路径：`backend/src/infra/transport`
-- 目录职责：源码目录镜像节点。
+- 目录职责：实时广播与传输适配。
 - 上级节点：[backend/src/infra](../README.md)
 - 关联规范：`docs/specs/backend_architecture_whitepaper_v3.md`、`docs/specs/v3_mvp_requirements.md`
 
@@ -16,7 +16,7 @@
 
 ## 2. 未来目标 TODO
 
-- [ ] 按目录职责补齐关键流程图与风险说明。
+- [ ] 输出统一事件契约表（输入、输出、错误码）。
 - [ ] 为目录下每个文件维护“导出项 + 依赖项 + 测试覆盖”状态。
 - [ ] 代码改动后同步更新本目录导航与职责说明。
 

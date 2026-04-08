@@ -16,17 +16,21 @@ dir_desc() {
   case "$dir" in
     "") echo "项目源码镜像根目录，聚合 backend 与 frontend。" ;;
     backend) echo "后端源码根目录。" ;;
-    backend/src) echo "后端主代码目录，承载引擎、ECS、服务、LLM 与日志模块。" ;;
-    backend/src/core) echo "核心状态机与阶段流转实现，负责游戏主循环与结算。" ;;
-    backend/src/agent) echo "Agent 调度、行为校验与 Prompt 组装。" ;;
-    backend/src/ecs) echo "ECS 基础抽象（实体、组件、系统、世界）。" ;;
-    backend/src/ecs/components) echo "ECS 具体组件实现。" ;;
-    backend/src/ecs/systems) echo "ECS 系统实现与样例系统。" ;;
-    backend/src/llm) echo "LLM 客户端封装与重试策略。" ;;
+    backend/src) echo "后端 V3 主代码目录，承载 ECS 域模型、串行状态机、网关与服务模块。" ;;
+    backend/src/app) echo "应用装配层（bootstrap/container）。" ;;
+    backend/src/domain) echo "V3 ECS 域层（模型、组件、系统、世界）。" ;;
+    backend/src/domain/components) echo "V3 组件定义（Role/Camp/Alive/VotingRight/StatusMarks/Badge）。" ;;
+    backend/src/domain/systems) echo "V3 规则系统（伤害结算、胜负判定）。" ;;
+    backend/src/engine) echo "V3 严格串行流程控制与事件拦截。" ;;
+    backend/src/engine/phase_pipeline) echo "V3 夜间/白天/投票流水线实现。" ;;
+    backend/src/gateway) echo "Tool schema 注册、动作鉴权与输入清洗。" ;;
+    backend/src/memory) echo "Prompt 组装与记忆分层存储。" ;;
+    backend/src/scenarios) echo "V3 板子配置（6 人 MVP / 12 人标准局）。" ;;
+    backend/src/v3) echo "V3 行为提供器与运行适配器。" ;;
     backend/src/server) echo "服务启动与 WebSocket 接入。" ;;
-    backend/src/broadcaster) echo "对外广播层，负责事件消息下发。" ;;
+    backend/src/infra) echo "基础设施适配层（llm/logger/transport）。" ;;
+    backend/src/infra/transport) echo "实时广播与传输适配。" ;;
     backend/src/config) echo "后端运行配置定义与装载入口。" ;;
-    backend/src/logger) echo "游戏日志记录与序列化输出。" ;;
     frontend) echo "前端源码根目录。" ;;
     frontend/src) echo "前端主代码目录，包含状态管理、组件、类型与样式。" ;;
     frontend/src/composables) echo "前端状态与通信组合式逻辑。" ;;
@@ -44,17 +48,21 @@ dir_desc() {
 file_desc() {
   local file="$1"
   case "$file" in
-    backend/src/core/*) echo "后端核心流程文件，参与游戏状态推进或关键结算。" ;;
-    backend/src/agent/*) echo "Agent 行为链路文件，负责意图校验与对话上下文处理。" ;;
-    backend/src/ecs/components/*) echo "ECS 组件文件，定义可挂载到实体的数据结构。" ;;
-    backend/src/ecs/systems/*) echo "ECS 系统文件，处理阶段性逻辑计算。" ;;
-    backend/src/ecs/*) echo "ECS 基础抽象文件。" ;;
-    backend/src/llm/*) echo "LLM 调用与容错策略实现文件。" ;;
+    backend/src/app/*) echo "V3 应用装配文件。" ;;
+    backend/src/domain/components/*) echo "V3 ECS 组件文件，定义可挂载到实体的数据结构。" ;;
+    backend/src/domain/systems/*) echo "V3 ECS 系统文件，处理阶段性规则计算。" ;;
+    backend/src/domain/*) echo "V3 域模型与基础抽象文件。" ;;
+    backend/src/engine/*) echo "V3 串行状态机与阶段流水线实现文件。" ;;
+    backend/src/gateway/*) echo "V3 Tool 网关与鉴权实现文件。" ;;
+    backend/src/memory/*) echo "V3 记忆与 Prompt 组装实现文件。" ;;
+    backend/src/scenarios/*) echo "V3 场景配置文件。" ;;
+    backend/src/v3/*) echo "V3 行为提供器与运行工具文件。" ;;
+    backend/src/infra/llm/*) echo "V3 LLM 客户端封装与重试策略实现文件。" ;;
     backend/src/server/*) echo "后端服务/通信入口文件。" ;;
-    backend/src/broadcaster/*) echo "消息广播实现文件。" ;;
-    backend/src/logger/*) echo "日志记录实现文件。" ;;
+    backend/src/infra/transport/*) echo "V3 消息广播与传输适配实现文件。" ;;
+    backend/src/infra/logger/*) echo "V3 日志记录实现文件。" ;;
     backend/src/config/*) echo "配置装载与导出文件。" ;;
-    backend/src/run-test-v2.ts) echo "本地运行/回归测试入口脚本。" ;;
+    backend/src/run-test-v3.ts) echo "V3 本地运行/回归测试入口脚本。" ;;
     frontend/src/composables/*) echo "前端状态管理或通信逻辑文件。" ;;
     frontend/src/components/ui/*) echo "前端基础 UI 组件文件。" ;;
     frontend/src/components/*) echo "前端业务展示组件文件。" ;;
@@ -70,10 +78,10 @@ file_desc() {
 todo_hint() {
   local file="$1"
   case "$file" in
-    backend/src/core/*) echo "- [ ] 按 V3 白皮书重构为严格串行 PhaseManager + Hooks。" ;;
-    backend/src/ecs/*) echo "- [ ] 对齐 V3 ECS：Role/Camp/Alive/VotingRight/StatusMarks 组件语义。" ;;
-    backend/src/agent/*|backend/src/llm/*) echo "- [ ] 完成 Function Calling 网关鉴权与错误反弹重试策略。" ;;
-    backend/src/server/*|backend/src/broadcaster/*) echo "- [ ] 对齐 V3 事件协议与中断窗口广播契约。" ;;
+    backend/src/domain/*) echo "- [ ] 扩展 ECS 组件与系统，覆盖白皮书更多角色与印记。" ;;
+    backend/src/engine/*) echo "- [ ] 扩展中断钩子与复杂事件递归结算能力。" ;;
+    backend/src/gateway/*|backend/src/infra/llm/*) echo "- [ ] 补齐 Function Calling schema 与错误回弹策略。" ;;
+    backend/src/server/*|backend/src/infra/transport/*) echo "- [ ] 持续对齐前后端事件协议并补齐联调用例。" ;;
     frontend/src/composables/*) echo "- [ ] 对齐 V3 后端事件流，重构状态分发与恢复策略。" ;;
     frontend/src/components/*) echo "- [ ] 对齐 V3 字段变化，补齐状态展示与交互反馈。" ;;
     *) echo "- [ ] 按 V3 规范补齐职责边界与输入输出契约。" ;;
@@ -83,9 +91,9 @@ todo_hint() {
 dir_todo_hint() {
   local dir="$1"
   case "$dir" in
-    backend/src/core) echo "- [ ] 建立完整阶段时序文档并与代码实现逐条对齐。" ;;
-    backend/src/ecs) echo "- [ ] 建立组件/系统矩阵，覆盖 MVP 所有规则印记与结算。" ;;
-    backend/src/server|backend/src/broadcaster) echo "- [ ] 输出统一事件契约表（输入、输出、错误码）。" ;;
+    backend/src/domain) echo "- [ ] 建立组件/系统矩阵，覆盖 MVP 所有规则印记与结算。" ;;
+    backend/src/engine) echo "- [ ] 建立完整阶段时序文档并与代码实现逐条对齐。" ;;
+    backend/src/server|backend/src/infra/transport) echo "- [ ] 输出统一事件契约表（输入、输出、错误码）。" ;;
     frontend/src/composables) echo "- [ ] 建立前后端事件映射表并补齐重连恢复策略。" ;;
     *) echo "- [ ] 按目录职责补齐关键流程图与风险说明。" ;;
   esac
@@ -221,8 +229,8 @@ for f in "${SRC_FILES[@]}"; do
     echo "- 关联规范：\`docs/specs/backend_architecture_whitepaper_v3.md\`、\`docs/specs/v3_mvp_requirements.md\`"
     echo
     echo "### 代码内容简介"
-    echo "- 当前文件参与 V2 现状实现，并将作为 V3 重构映射依据。"
-    echo "- 重构时优先比对本文件导出项、依赖项与阶段职责。"
+    echo "- 当前文件属于 V3 主线实现，是后续扩展与联调的直接基线。"
+    echo "- 迭代时优先比对本文件导出项、依赖项与阶段职责。"
     echo
     echo "### 对外暴露类型/接口/函数"
     if [ ${#exports[@]} -eq 0 ]; then

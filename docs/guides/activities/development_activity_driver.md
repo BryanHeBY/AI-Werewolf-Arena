@@ -35,7 +35,8 @@
    - `cd backend && npx tsc -p tsconfig.v3.json --noEmit`
    - `npx jest backend/tests/v3 --runInBand`
    - `npx tsx backend/src/run-test-v3.ts`
-3. 下一开发焦点：V3 `transport` 协议接入与前后端联调。
+3. 已切换为 V3 单栈：`server/index.ts` 已接管，V2 目录已清理。
+4. 下一开发焦点：扩展白皮书角色库与高级机制（警长流转细化、更多角色技能链）。
 
 ## 2. 未来目标 TODO
 

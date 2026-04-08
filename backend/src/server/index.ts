@@ -1,13 +1,9 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
-import { appConfig } from "../config";
-import { GameEngineV2 } from "../core/GameEngineV2";
-import { GameFactoryV2 } from "../core/GameFactoryV2";
-import { GameWorld } from "../ecs/World";
-import { GameLogger } from "../logger/GameLogger";
-import { Broadcaster } from "../broadcaster/Broadcaster";
-import { IdentityComponent, StatusComponent } from "../core/types";
+import { appConfig, BoardPreset } from "../config";
+import { Broadcaster } from "../infra/transport/broadcaster";
 import { setupSocket, setGlobalBroadcaster } from "./socket";
+import { V3SessionManager } from "./v3_session_manager";
 
 const fastify = Fastify({
   logger: true,
@@ -24,67 +20,74 @@ const io = setupSocket(fastify.server);
 const broadcaster = new Broadcaster(io);
 setGlobalBroadcaster(broadcaster);
 
-fastify.get("/api/start-game", async (request, reply) => {
-  try {
-    const world = new GameWorld();
-    const factory = new GameFactoryV2(
-      appConfig.gameConfig,
-      appConfig.modelDefaults,
-      world,
-    );
-    factory.createPlayers(); // 现在返回void
-
-    // 从World查询玩家信息
-    const entities = world.query<{
-      IdentityComponent: IdentityComponent;
-      StatusComponent: StatusComponent;
-    }>("IdentityComponent", "StatusComponent");
-
-    const logger = new GameLogger(appConfig.gameRecordsDir);
-    const engine = new GameEngineV2(
-      appConfig.gameConfig,
-      world, // 传入World而不是players数组
-      logger,
-      broadcaster,
-    );
-
-    engine.start().catch((error) => {
-      console.error("Game error:", error);
-    });
-
-    return {
-      success: true,
-      gameId: logger.getCurrentFilePath(),
-      players: entities.map((e: any) => ({
-        id: e.IdentityComponent.entityId,
-        name: e.IdentityComponent.name,
-      })),
-      engineVersion: "V2",
-    };
-  } catch (error) {
-    console.error("Failed to start game:", error);
-    return { success: false, error: String(error) };
-  }
+const sessions = new V3SessionManager(broadcaster, {
+  defaultBoard: appConfig.defaultBoard,
+  maxDaysPerSession: appConfig.maxDaysPerSession,
+  cycleDelayMs: appConfig.cycleDelayMs,
 });
 
-fastify.get("/api/status", async (request, reply) => {
+fastify.get("/api/status", async () => {
   return {
     status: "ok",
+    engineVersion: "V3",
     config: {
       port: appConfig.port,
-      model: appConfig.modelDefaults.model,
+      defaultBoard: appConfig.defaultBoard,
+      maxDaysPerSession: appConfig.maxDaysPerSession,
+      cycleDelayMs: appConfig.cycleDelayMs,
     },
+    session: sessions.status(),
   };
 });
+
+fastify.get("/api/start-game", async (request) => {
+  const query = request.query as { board?: BoardPreset; maxDays?: string };
+  return startGame(query.board, query.maxDays ? Number(query.maxDays) : undefined);
+});
+
+fastify.post("/api/start-game", async (request) => {
+  const body = request.body as { board?: BoardPreset; maxDays?: number } | undefined;
+  return startGame(body?.board, body?.maxDays);
+});
+
+fastify.post("/api/stop-game", async () => {
+  const status = sessions.stop();
+  return {
+    success: status !== null,
+    session: status,
+  };
+});
+
+fastify.get("/api/session", async () => {
+  return {
+    session: sessions.status(),
+    gameState: sessions.publicState(),
+  };
+});
+
+function startGame(board: BoardPreset | undefined, maxDays: number | undefined) {
+  const status = sessions.start({
+    board,
+    maxDays,
+  });
+  return {
+    success: true,
+    gameId: status.id,
+    board: status.board,
+    players: sessions.publicState()?.players ?? [],
+    engineVersion: "V3",
+    snapshot: status.snapshot,
+  };
+}
 
 const start = async () => {
   try {
     await fastify.listen({ port: appConfig.port, host: "0.0.0.0" });
-    console.log(`服务器启动成功: http://0.0.0.0:${appConfig.port}`);
-  } catch (err) {
-    fastify.log.error(err);
-    process.exit(1);
+    console.log(`V3 server started: http://0.0.0.0:${appConfig.port}`);
+  } catch (error) {
+    fastify.log.error(error);
+    throw error;
   }
 };
 
-start();
+void start();

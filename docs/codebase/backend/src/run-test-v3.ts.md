@@ -4,23 +4,22 @@
 
 - 源码路径：`backend/src/run-test-v3.ts`
 - 文件类型：`ts`
-- 当前行数：`82`
-- 文件定位：源码镜像文档节点。
+- 当前行数：`20`
+- 文件定位：V3 本地运行/回归测试入口脚本。
 - 上级目录文档：[README.md](./README.md)
 - 关联规范：`docs/specs/backend_architecture_whitepaper_v3.md`、`docs/specs/v3_mvp_requirements.md`
 
 ### 代码内容简介
-- 当前文件参与 V2 现状实现，并将作为 V3 重构映射依据。
-- 重构时优先比对本文件导出项、依赖项与阶段职责。
+- 当前文件属于 V3 主线实现，是后续扩展与联调的直接基线。
+- 迭代时优先比对本文件导出项、依赖项与阶段职责。
 
 ### 对外暴露类型/接口/函数
 - 未扫描到显式 `export`，请结合调用方确认是否为内部模块。
 
 ### 关键依赖（import）
 - `./app/bootstrap`
-- `./domain/components/names`
-- `./domain/components/role`
 - `./scenarios/six_player_mvp`
+- `./v3/action_providers`
 
 ## 2. 未来目标 TODO
 

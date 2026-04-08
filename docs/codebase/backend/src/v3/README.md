@@ -3,7 +3,7 @@
 ## 1. 当前代码详细文档
 
 - 节点路径：`backend/src/v3`
-- 目录职责：源码目录镜像节点。
+- 目录职责：V3 行为提供器与运行适配器。
 - 上级节点：[backend/src](../README.md)
 - 关联规范：`docs/specs/backend_architecture_whitepaper_v3.md`、`docs/specs/v3_mvp_requirements.md`
 

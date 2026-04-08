@@ -3,23 +3,17 @@
 ## 1. 当前代码详细文档
 
 - 节点路径：`backend/src`
-- 目录职责：后端主代码目录，承载引擎、ECS、服务、LLM 与日志模块。
+- 目录职责：后端 V3 主代码目录，承载 ECS 域模型、串行状态机、网关与服务模块。
 - 上级节点：[backend](../README.md)
 - 关联规范：`docs/specs/backend_architecture_whitepaper_v3.md`、`docs/specs/v3_mvp_requirements.md`
 
 ### 子目录
-- [backend/src/agent](./agent/README.md)
 - [backend/src/app](./app/README.md)
-- [backend/src/broadcaster](./broadcaster/README.md)
 - [backend/src/config](./config/README.md)
-- [backend/src/core](./core/README.md)
 - [backend/src/domain](./domain/README.md)
-- [backend/src/ecs](./ecs/README.md)
 - [backend/src/engine](./engine/README.md)
 - [backend/src/gateway](./gateway/README.md)
 - [backend/src/infra](./infra/README.md)
-- [backend/src/llm](./llm/README.md)
-- [backend/src/logger](./logger/README.md)
 - [backend/src/memory](./memory/README.md)
 - [backend/src/scenarios](./scenarios/README.md)
 - [backend/src/server](./server/README.md)
@@ -27,7 +21,6 @@
 
 ### 子文件
 - [index.ts](./index.ts.md)
-- [run-test-v2.ts](./run-test-v2.ts.md)
 - [run-test-v3.ts](./run-test-v3.ts.md)
 
 ## 2. 未来目标 TODO

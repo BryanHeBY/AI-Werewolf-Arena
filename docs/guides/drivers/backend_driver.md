@@ -16,6 +16,7 @@
    - `docs/guides/backend_rebuild/03_task_backlog.md`
    - `docs/guides/backend_rebuild/04_test_quality_gates.md`
    - `docs/guides/backend_rebuild/05_cutover_and_rollback.md`
+   - `docs/guides/backend_rebuild/06_dependency_rules.md`
 4. 总入口：
    - `docs/codebase/backend/README.md`
 5. V3 核心模块：
@@ -26,19 +27,15 @@
    - `docs/codebase/backend/src/memory/README.md`
    - `docs/codebase/backend/src/scenarios/README.md`
    - `docs/codebase/backend/src/v3/README.md`
-6. V2 兼容参考（保留）：
-   - `docs/codebase/backend/src/core/README.md`
-   - `docs/codebase/backend/src/agent/README.md`
-   - `docs/codebase/backend/src/llm/README.md`
-7. 服务与通信（待 V3 联调）：
+6. 服务与通信：
    - `docs/codebase/backend/src/server/README.md`
-   - `docs/codebase/backend/src/broadcaster/README.md`
+   - `docs/codebase/backend/src/infra/transport/README.md`
 
 当前阶段状态（2026-04-08）：
 
-1. V3 P1-P3 已完成（ECS、Phase、Gateway、事件拦截、MVP 场景）。
-2. V3 定向测试已通过：`backend/tests/v3/*`。
-3. 当前主线任务：P4（V3 transport 协议接入 + 前端联调 + 发布回滚演练）。
+1. V3 P0-P4 已完成（ECS、Phase、Gateway、事件拦截、Transport、服务入口）。
+2. 全量后端测试已切换到 V3：`backend/tests/v3/*`。
+3. V2 源码与旧测试已清理，当前为 V3 单栈。
 
 ## 2. 未来目标 TODO
 

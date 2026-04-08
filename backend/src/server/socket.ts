@@ -1,7 +1,7 @@
 import { Server as HttpServer } from "http";
 import { Server } from "socket.io";
 import { appConfig } from "../config";
-import { Broadcaster } from "../broadcaster/Broadcaster";
+import { Broadcaster } from "../infra/transport/broadcaster";
 
 let globalBroadcaster: Broadcaster | null = null;
 
@@ -17,7 +17,7 @@ export function setupSocket(server: HttpServer): Server {
     console.log("客户端连接:", socket.id);
 
     socket.on("register", (data: { playerId: number }) => {
-      if (data.playerId && globalBroadcaster) {
+      if (typeof data?.playerId === "number" && globalBroadcaster) {
         globalBroadcaster.registerPlayer(socket.id, data.playerId);
       }
     });

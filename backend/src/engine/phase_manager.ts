@@ -69,80 +69,89 @@ export class PhaseManager {
   }
 
   jumpTo(phase: Phase): void {
-    this.state.phase = phase;
+    this.setPhase(phase);
+  }
+
+  async runSingleCycle(
+    actionProvider: ActionProvider,
+    maxDays: number = 20,
+  ): Promise<RuntimeSnapshot> {
+    if (this.state.gameOver) {
+      return this.getSnapshot();
+    }
+
+    if (this.state.day > maxDays) {
+      this.state.gameOver = true;
+      this.setPhase(Phase.GameOver);
+      this.state.result = {
+        winner: null,
+        reason: "max_days_reached",
+      };
+      return this.getSnapshot();
+    }
+
+    this.setPhase(Phase.Night);
+    const night = await this.nightPipeline.execute(this.config, actionProvider);
+    await this.processDeaths(
+      night.damage.deaths,
+      night.damage.deathSources,
+      actionProvider,
+      Phase.Night,
+    );
+
+    if (this.checkAndSealResult()) {
+      return this.getSnapshot();
+    }
+
+    this.setPhase(Phase.Day);
+    const dayResult = await this.dayPipeline.execute(this.config, actionProvider);
+    if (dayResult.interrupted) {
+      if (this.checkAndSealResult()) {
+        return this.getSnapshot();
+      }
+      this.state.day += 1;
+      return this.getSnapshot();
+    }
+
+    this.setPhase(Phase.Voting);
+    const votingResult = await this.votingPipeline.execute(this.config, actionProvider);
+
+    if (votingResult.interrupted) {
+      if (this.checkAndSealResult()) {
+        return this.getSnapshot();
+      }
+      this.state.day += 1;
+      return this.getSnapshot();
+    }
+
+    if (votingResult.removed.length > 0) {
+      const sources: Record<number, StatusMark[]> = {};
+      for (const removedId of votingResult.removed) {
+        sources[removedId] = [];
+      }
+      await this.processDeaths(
+        votingResult.removed,
+        sources,
+        actionProvider,
+        Phase.Voting,
+      );
+    }
+
+    if (this.checkAndSealResult()) {
+      return this.getSnapshot();
+    }
+
+    this.state.day += 1;
+    return this.getSnapshot();
   }
 
   async runUntilGameOver(
     actionProvider: ActionProvider,
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
-    while (!this.state.gameOver && this.state.day <= maxDays) {
-      this.state.phase = Phase.Night;
-      const night = await this.nightPipeline.execute(this.config, actionProvider);
-      await this.processDeaths(
-        night.damage.deaths,
-        night.damage.deathSources,
-        actionProvider,
-        Phase.Night,
-      );
-
-      if (this.checkAndSealResult()) {
-        break;
-      }
-
-      this.state.phase = Phase.Day;
-      const dayResult = await this.dayPipeline.execute(this.config, actionProvider);
-      if (dayResult.interrupted) {
-        if (this.checkAndSealResult()) {
-          break;
-        }
-        this.state.day += 1;
-        continue;
-      }
-
-      this.state.phase = Phase.Voting;
-      const votingResult = await this.votingPipeline.execute(
-        this.config,
-        actionProvider,
-      );
-
-      if (votingResult.interrupted) {
-        if (this.checkAndSealResult()) {
-          break;
-        }
-        this.state.day += 1;
-        continue;
-      }
-
-      if (votingResult.removed.length > 0) {
-        const sources: Record<number, StatusMark[]> = {};
-        for (const removedId of votingResult.removed) {
-          sources[removedId] = [];
-        }
-        await this.processDeaths(
-          votingResult.removed,
-          sources,
-          actionProvider,
-          Phase.Voting,
-        );
-      }
-
-      if (this.checkAndSealResult()) {
-        break;
-      }
-
-      this.state.day += 1;
+    while (!this.state.gameOver) {
+      await this.runSingleCycle(actionProvider, maxDays);
     }
-
-    if (!this.state.gameOver) {
-      this.state.gameOver = true;
-      this.state.phase = Phase.GameOver;
-      this.state.result = {
-        winner: null,
-        reason: "max_days_reached",
-      };
-    }
-
     return this.getSnapshot();
   }
 
@@ -210,7 +219,7 @@ export class PhaseManager {
     }
 
     this.state.result = result;
-    this.state.phase = Phase.GameOver;
+    this.setPhase(Phase.GameOver);
     this.state.gameOver = true;
 
     this.events.push({
@@ -227,6 +236,22 @@ export class PhaseManager {
 
   debugResult(): GameResult | null {
     return this.state.result;
+  }
+
+  private setPhase(phase: Phase): void {
+    const previous = this.state.phase;
+    this.state.phase = phase;
+    if (previous === phase) {
+      return;
+    }
+    this.events.push({
+      timestamp: Date.now(),
+      type: "phase_changed",
+      payload: {
+        phase,
+        day: this.state.day,
+      },
+    });
   }
 
   private handleSheriffDeath(entityId: EntityId, phase: Phase): void {

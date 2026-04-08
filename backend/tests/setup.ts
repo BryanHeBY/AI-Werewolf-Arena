@@ -1,4 +1,4 @@
-// Test setup file for AI-Werewolf-Arena V2 backend
+// Test setup file for AI-Werewolf-Arena V3 backend
 // This file runs before each test file
 
 import { jest } from "@jest/globals";

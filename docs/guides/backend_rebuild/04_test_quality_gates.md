@@ -19,6 +19,14 @@
 4. G4 协议闸门：后端广播字段与前端消费字段一致。
 5. G5 文档闸门：变更模块的 `docs/codebase` 文档已同步更新。
 
+当前状态（2026-04-08）：
+
+1. G1 通过：`cd backend && npm run build`
+2. G2 通过：`backend/tests/v3/*` 全通过
+3. G3 通过：`cd backend && npm run run:v3`
+4. G4 通过：`/api/status`、`/api/start-game`、`/api/session` 冒烟成功
+5. G5 通过：`docs/codebase` 已按当前目录重建
+
 MVP 必测清单：
 
 1. `guard(target_id)` 连续同守拦截。

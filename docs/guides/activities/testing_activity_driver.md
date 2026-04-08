@@ -35,7 +35,8 @@
 1. 已通过：`backend/tests/v3/tool_gateway_validation.test.ts`
 2. 已通过：`backend/tests/v3/event_registry_hooks.test.ts`
 3. 已通过：`backend/tests/v3/phase_manager_mvp.test.ts`
-4. 执行命令：`npx jest backend/tests/v3 --runInBand`
+4. 已通过：`backend/tests/v3/session_manager.test.ts`
+5. 执行命令：`cd backend && npm test -- --runInBand`
 
 ## 2. 未来目标 TODO
 
