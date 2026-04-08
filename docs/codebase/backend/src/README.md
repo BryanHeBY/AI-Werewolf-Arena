@@ -9,16 +9,26 @@
 
 ### 子目录
 - [backend/src/agent](./agent/README.md)
+- [backend/src/app](./app/README.md)
 - [backend/src/broadcaster](./broadcaster/README.md)
 - [backend/src/config](./config/README.md)
 - [backend/src/core](./core/README.md)
+- [backend/src/domain](./domain/README.md)
 - [backend/src/ecs](./ecs/README.md)
+- [backend/src/engine](./engine/README.md)
+- [backend/src/gateway](./gateway/README.md)
+- [backend/src/infra](./infra/README.md)
 - [backend/src/llm](./llm/README.md)
 - [backend/src/logger](./logger/README.md)
+- [backend/src/memory](./memory/README.md)
+- [backend/src/scenarios](./scenarios/README.md)
 - [backend/src/server](./server/README.md)
+- [backend/src/v3](./v3/README.md)
 
 ### 子文件
+- [index.ts](./index.ts.md)
 - [run-test-v2.ts](./run-test-v2.ts.md)
+- [run-test-v3.ts](./run-test-v3.ts.md)
 
 ## 2. 未来目标 TODO
 

@@ -18,17 +18,27 @@
    - `docs/guides/backend_rebuild/05_cutover_and_rollback.md`
 4. 总入口：
    - `docs/codebase/backend/README.md`
-5. 核心模块：
+5. V3 核心模块：
+   - `docs/codebase/backend/src/app/README.md`
+   - `docs/codebase/backend/src/domain/README.md`
+   - `docs/codebase/backend/src/engine/README.md`
+   - `docs/codebase/backend/src/gateway/README.md`
+   - `docs/codebase/backend/src/memory/README.md`
+   - `docs/codebase/backend/src/scenarios/README.md`
+   - `docs/codebase/backend/src/v3/README.md`
+6. V2 兼容参考（保留）：
    - `docs/codebase/backend/src/core/README.md`
-   - `docs/codebase/backend/src/core/GameEngineV2.ts.md`
-   - `docs/codebase/backend/src/core/Environment.ts.md`
-   - `docs/codebase/backend/src/core/GameFactoryV2.ts.md`
-6. Agent 与 LLM：
    - `docs/codebase/backend/src/agent/README.md`
    - `docs/codebase/backend/src/llm/README.md`
-7. Server 与通信：
+7. 服务与通信（待 V3 联调）：
    - `docs/codebase/backend/src/server/README.md`
    - `docs/codebase/backend/src/broadcaster/README.md`
+
+当前阶段状态（2026-04-08）：
+
+1. V3 P1-P3 已完成（ECS、Phase、Gateway、事件拦截、MVP 场景）。
+2. V3 定向测试已通过：`backend/tests/v3/*`。
+3. 当前主线任务：P4（V3 transport 协议接入 + 前端联调 + 发布回滚演练）。
 
 ## 2. 未来目标 TODO
 

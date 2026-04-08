@@ -24,6 +24,12 @@
 4. `docs/guides/drivers/project_driver.md`
 5. `docs/codebase/backend/src/README.md` 与 `docs/codebase/frontend/src/README.md`
 
+当前推进状态（2026-04-08）：
+
+1. V3 后端已完成 P1-P3 基线开发与自动化验证。
+2. `docs/codebase` 已重建并覆盖新增 V3 源码目录。
+3. 当前未完成项聚焦 P4：通信协议联调、灰度切换与回滚演练。
+
 ## 2. 未来目标 TODO
 
 - [ ] 为 `guides/` 和 `references/` 增加自动化目录索引生成脚本。

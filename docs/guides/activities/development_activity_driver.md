@@ -28,6 +28,15 @@
 4. 事件总线拦截（白痴、猎人、自爆中断）。
 5. 服务层协议对齐（socket/broadcast）。
 
+当前执行基线（2026-04-08）：
+
+1. 已落地目录：`backend/src/{app,domain,engine,gateway,memory,scenarios,v3}`。
+2. 已验证命令：
+   - `cd backend && npx tsc -p tsconfig.v3.json --noEmit`
+   - `npx jest backend/tests/v3 --runInBand`
+   - `npx tsx backend/src/run-test-v3.ts`
+3. 下一开发焦点：V3 `transport` 协议接入与前后端联调。
+
 ## 2. 未来目标 TODO
 
 - [ ] 将每个 V3 条款映射到具体代码文件（一条条款至少一个责任文件）。

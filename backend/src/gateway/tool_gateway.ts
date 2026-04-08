@@ -1,0 +1,92 @@
+import { COMPONENT } from "../domain/components/names";
+import { RoleComponent } from "../domain/components/role";
+import {
+  ActionWindow,
+  EntityId,
+  Phase,
+  ToolCall,
+  ToolName,
+  ToolValidationResult,
+} from "../domain/model";
+import { World } from "../domain/world";
+import { ActionValidator } from "./action_validator";
+import { guardSchema } from "./schemas/guard.schema";
+import { selfDestructSchema } from "./schemas/self_destruct.schema";
+import { shootSchema } from "./schemas/shoot.schema";
+import { usePotionSchema } from "./schemas/use_potion.schema";
+
+const RESERVED_PREFIX = /^(\s*\[(上帝|法官|系统)\]\s*)+/g;
+
+export class ToolGateway {
+  private readonly validator: ActionValidator;
+  private readonly schemas: Map<ToolName, unknown> = new Map();
+
+  constructor(validator: ActionValidator = new ActionValidator()) {
+    this.validator = validator;
+    this.registerSchema("guard", guardSchema);
+    this.registerSchema("use_potion", usePotionSchema);
+    this.registerSchema("shoot", shootSchema);
+    this.registerSchema("self_destruct", selfDestructSchema);
+  }
+
+  registerSchema(name: ToolName, schema: unknown): void {
+    this.schemas.set(name, schema);
+  }
+
+  getRegisteredSchemas(): Record<string, unknown> {
+    const obj: Record<string, unknown> = {};
+    for (const [name, schema] of this.schemas.entries()) {
+      obj[name] = schema;
+    }
+    return obj;
+  }
+
+  startNight(world: World): void {
+    for (const id of world.getAliveEntityIds()) {
+      const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      if (role?.witchState) {
+        role.witchState.healUsedThisNight = false;
+        role.witchState.poisonUsedThisNight = false;
+      }
+    }
+  }
+
+  validateAndSanitize<T extends ToolCall>(
+    world: World,
+    actorId: EntityId,
+    toolCall: T,
+    context: {
+      phase: Phase;
+      actionWindow?: ActionWindow;
+      allowSelfDestruct?: boolean;
+      allowDeadHunterShoot?: boolean;
+    },
+  ): ToolValidationResult<T> {
+    const sanitizedCall = this.sanitize(toolCall);
+    return this.validator.validate(world, actorId, sanitizedCall, context);
+  }
+
+  private sanitize<T extends ToolCall>(call: T): T {
+    if (call.name === "speak" || call.name === "speak_to_wolves") {
+      const raw = call.args.text;
+      const text = raw.replace(RESERVED_PREFIX, "").trim();
+      if (call.name === "speak") {
+        return {
+          ...call,
+          args: {
+            ...call.args,
+            text,
+          },
+        } as T;
+      }
+      return {
+        ...call,
+        args: {
+          ...call.args,
+          text,
+        },
+      } as T;
+    }
+    return call;
+  }
+}

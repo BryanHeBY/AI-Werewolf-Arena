@@ -1,0 +1,31 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "./dist-v3",
+    "lib": ["ES2022", "DOM"],
+    "noEmit": true
+  },
+  "include": [
+    "src/index.ts",
+    "src/run-test-v3.ts",
+    "src/app/**/*.ts",
+    "src/domain/**/*.ts",
+    "src/engine/**/*.ts",
+    "src/gateway/**/*.ts",
+    "src/memory/**/*.ts",
+    "src/scenarios/**/*.ts",
+    "src/v3/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/server/**",
+    "src/core/**",
+    "src/ecs/**",
+    "src/agent/**",
+    "src/llm/**",
+    "src/logger/**",
+    "src/broadcaster/**"
+  ]
+}

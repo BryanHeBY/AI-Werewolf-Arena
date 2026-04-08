@@ -30,6 +30,13 @@
 2. 再接入真实模型做 tool call 约束验证。
 3. 每次规则修改必须更新对应测试用例与文档条目。
 
+当前自动化结果（2026-04-08）：
+
+1. 已通过：`backend/tests/v3/tool_gateway_validation.test.ts`
+2. 已通过：`backend/tests/v3/event_registry_hooks.test.ts`
+3. 已通过：`backend/tests/v3/phase_manager_mvp.test.ts`
+4. 执行命令：`npx jest backend/tests/v3 --runInBand`
+
 ## 2. 未来目标 TODO
 
 - [ ] 建立 `tests/v3` 目录分层（unit/integration/e2e）。

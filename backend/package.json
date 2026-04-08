@@ -6,8 +6,11 @@
   "scripts": {
     "dev": "tsx watch src/server/index.ts",
     "build": "tsc",
+    "build:v3": "tsc -p tsconfig.v3.json --noEmit",
     "start": "node dist/server/index.js",
     "test": "jest",
+    "test:v3": "jest tests/v3 --runInBand",
+    "run:v3": "tsx src/run-test-v3.ts",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },
