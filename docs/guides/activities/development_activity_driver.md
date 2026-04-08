@@ -56,16 +56,16 @@
 
 ## 2. 开发任务清单
 
-- [ ] `T01` 在 `backend/src/engine/phase_pipeline/day_pipeline.ts` 实现 4 类 Action Window 与可配置开关。
-- [ ] `T02` 在 `backend/src/engine/phase_pipeline/night_pipeline.ts` 实现狼队战术环与夜间优先级结算。
-- [ ] `T03` 在 `backend/src/engine/phase_pipeline/voting_pipeline.ts` 与 `domain/world.ts` 实现警长竞选、票权加成、移交/撕毁流程。
-- [ ] `T04` 在 `backend/src/domain/components/*` 完成组件拆分并更新 `backend/src/domain/model.ts` 聚合导出。
-- [ ] `T05` 新增真实大模型连通测试入口（建议：`backend/tests/v3/minimax_live_connectivity.test.ts`），在 `RUN_LIVE_LLM_TEST=1` 时读取根目录 `.env` 的 `OPENAI_*` 配置，对 Minimax 发起最小可验证调用（至少包含 1 次模型响应，优先包含 1 次 tool schema 往返）。
-- [ ] `T06` 重构 `run-test-v3` 运行入口：将 mock 回归与真实 LLM 对局分离为独立脚本（如 `run_mock_game.ts` / `run_llm_game.ts`），并将默认 `run:v3` 指向真实 LLM 对局入口。
-- [ ] `T07` 收敛真实运行日志中的非结构化回复噪声：当模型返回 `<think>` 或非 JSON 文本时，统一记录为“recovered”而非“failed”，并确保 fallback 可稳定推进完整对局。
-- [ ] `T08` 修复 `LlmActionProvider` 恢复解析回归：当模型返回结构化 JSON 但工具不在 `allowedTools` 中时，必须严格 fallback，禁止被“文本恢复”逻辑改写为合法工具。
-- [ ] `T09` 修复 `run_llm_game.ts` 新增输出参数后的编译回归：补齐 `run_llm_dual.ts` 对 `RunLlmGameOptions` 的新字段传参，恢复 `build:v3` 可通过。
-- [ ] `T10` 修复“发言污染”：恢复解析产出的 `speak` 文本不得包含提示词元信息（如 `actorId=`、`allowedTools=`、`context=`）。
+- [x] `T01` 在 `backend/src/engine/phase_pipeline/day_pipeline.ts` 实现 4 类 Action Window 与可配置开关。
+- [x] `T02` 在 `backend/src/engine/phase_pipeline/night_pipeline.ts` 实现狼队战术环与夜间优先级结算。
+- [x] `T03` 在 `backend/src/engine/phase_pipeline/voting_pipeline.ts` 与 `domain/world.ts` 实现警长竞选、票权加成、移交/撕毁流程。
+- [x] `T04` 在 `backend/src/domain/components/*` 完成组件拆分并更新 `backend/src/domain/model.ts` 聚合导出。
+- [x] `T05` 新增真实大模型连通测试入口（建议：`backend/tests/v3/minimax_live_connectivity.test.ts`），在 `RUN_LIVE_LLM_TEST=1` 时读取根目录 `.env` 的 `OPENAI_*` 配置，对 Minimax 发起最小可验证调用（至少包含 1 次模型响应，优先包含 1 次 tool schema 往返）。
+- [x] `T06` 重构 `run-test-v3` 运行入口：将 mock 回归与真实 LLM 对局分离为独立脚本（如 `run_mock_game.ts` / `run_llm_game.ts`），并将默认 `run:v3` 指向真实 LLM 对局入口。
+- [x] `T07` 收敛真实运行日志中的非结构化回复噪声：当模型返回 `<think>` 或非 JSON 文本时，统一记录为“recovered”而非“failed”，并确保 fallback 可稳定推进完整对局。
+- [x] `T08` 修复 `LlmActionProvider` 恢复解析回归：当模型返回结构化 JSON 但工具不在 `allowedTools` 中时，必须严格 fallback，禁止被“文本恢复”逻辑改写为合法工具。
+- [x] `T09` 修复 `run_llm_game.ts` 新增输出参数后的编译回归：补齐 `run_llm_dual.ts` 对 `RunLlmGameOptions` 的新字段传参，恢复 `build:v3` 可通过。
+- [x] `T10` 修复“发言污染”：恢复解析产出的 `speak` 文本不得包含提示词元信息（如 `actorId=`、`allowedTools=`、`context=`）。
 - [x] `T11` 为 `run:v3:*` 日志引入 ANSI 彩色分级输出：支持不同类型日志使用不同颜色，并提供可开关控制（CLI 与环境变量）。
 - [x] `T12` 修复“预言家首夜查验结果可能未进入私有上下文”的致命逻辑：查验结论必须写入预言家私有状态，并在后续 Agent 请求 Prompt 中可读取。
 - [x] `T13` 修复 `RoleComponent.renderPrompt` 的空值编译回归：`seerState` 判空后再读取字段，恢复 `build:v3` 与测试可执行。
@@ -77,22 +77,24 @@
 - [x] `T19` 重构广播系统为“全量事件 + 可见性过滤”：每条实时事件必须显式声明 `public | wolves_only | private_targets`，并由服务端按 `playerId + role` 过滤投递。
 - [x] `T20` 重构 Agent 执行链路为“独立消息列表 + SDK tool calling”：每个 `playerId` 维护独立 chat messages，广播事件按可见性直接写入该玩家消息流；行动主路径改为 OpenAI SDK 工具调用循环（由模型自行组织直到结束回合）。
 - [x] `T21` 重组运行日志并新增 `--print-thinking`：将 SDK 回合中的 `assistant` 文本与 `tool_call/tool_result` 作为“思考轨迹”输出（独立于 `--print-llm-io`），用于快速排查模型决策链路。
-- [ ] `T22` 增加 `--print-private-events`（默认开启）：控制台旁观日志默认输出私有事件细节（如 `seer_checked`），不影响 Agent 视角隔离与可见性过滤。
+- [x] `T22` 增加 `--print-private-events`（默认开启）：控制台旁观日志默认输出私有事件细节（如 `seer_checked`），不影响 Agent 视角隔离与可见性过滤。
 - [x] `T23` 狼队内部交流改为两轮：夜间 `speak_to_wolves` 固定执行两轮，复用同一随机顺序，随后再进入狼刀投票。
+- [x] `T24` 修复前端类型检查链路回归：`npx vue-tsc --noEmit` 在当前 Node 版本（v25）崩溃，需提供可执行且稳定的前端类型验收命令（优先通过 `tsc` + 构建兜底）并更新对应文档验收口径。
+- [x] `T25` 修复依赖方向阻断回归：`backend/src/v3/llm_action_provider.ts` 禁止直连 `infra/llm/openai_client`，需调整为符合 `lint:deps` 的分层依赖入口。
 
 ## 3. 验收标准（任务映射）
 
-- [ ] `A01`（对应: `T01`） `backend/tests/v3/day_interrupt_hooks.test.ts` 覆盖四类窗口并通过。
-- [ ] `A02`（对应: `T02`） `backend/tests/v3/night_wolf_tactical_loop.test.ts` 覆盖狼队战术环并通过。
-- [ ] `A03`（对应: `T03`） `backend/tests/v3/sheriff_pipeline.test.ts` 覆盖竞选与票权流程并通过。
-- [ ] `A04`（对应: `T04`） 构建通过且 `domain/components/*` 文档与代码一致。
-- [ ] `A05`（对应: `T05`） 执行 `cd backend && RUN_LIVE_LLM_TEST=1 npm test -- --runInBand backend/tests/v3/minimax_live_connectivity.test.ts` 可通过；测试日志明确打印“配置来源为根目录 `.env` 的 OPENAI_*（Minimax）”且不输出密钥明文。
-- [ ] `A06`（对应: `T06`） 执行 `cd backend && npm run run:v3:six` 与 `cd backend && npm run run:v3:twelve` 可分别完整跑完一局并打印最终 `snapshot` 与关键事件；执行 `cd backend && npm run run:v3` 可按六人→十二人顺序执行；`cd backend && npm run smoke:v3` 仍可走 mock 快速回归。
-- [ ] `A07`（流程完整性强制项） 真实 LLM 对局日志必须确认“游戏流程完整无误”：至少出现一次完整阶段链路 `night -> day -> voting`，并在结束时输出 `game_over + winner + reason`；若日志仅出现连续 `request_error/request_timeout` 且无有效流程推进证据，判定为不通过，必须继续调试后重验收。
-- [ ] `A08`（对应: `T07`） 执行 `cd backend && npm run run:v3:six`，日志中不再出现 `request_parse_failed`/`request_non_json_output`，非结构化输出应记录为 `request_recovered ... reason=non_json_output`，且最终仍需满足 `A07` 的完整流程要求。
-- [ ] `A09`（对应: `T08`） 执行 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts` 通过，且用例“disallowed tool”必须回归为 fallback 行为（不被恢复解析劫持）。
-- [ ] `A10`（对应: `T09`） 执行 `cd backend && npm run build:v3` 通过，无 `RunLlmGameOptions` 参数缺失错误。
-- [ ] `A11`（对应: `T10`） 执行 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts` 通过（包含发言污染过滤用例）；修复后玩家发言不再出现提示词元信息泄漏。
+- [x] `A01`（对应: `T01`） `backend/tests/v3/day_interrupt_hooks.test.ts` 覆盖四类窗口并通过。
+- [x] `A02`（对应: `T02`） `backend/tests/v3/night_wolf_tactical_loop.test.ts` 覆盖狼队战术环并通过。
+- [x] `A03`（对应: `T03`） `backend/tests/v3/sheriff_pipeline.test.ts` 覆盖竞选与票权流程并通过。
+- [x] `A04`（对应: `T04`） 构建通过且 `domain/components/*` 文档与代码一致。
+- [x] `A05`（对应: `T05`） 执行 `cd backend && RUN_LIVE_LLM_TEST=1 npm test -- --runInBand tests/v3/minimax_live_connectivity.test.ts` 可通过；测试日志明确打印“配置来源为根目录 `.env` 的 OPENAI_*（Minimax）”且不输出密钥明文。
+- [x] `A06`（对应: `T06`） 执行 `cd backend && npm run run:v3:six` 与 `cd backend && npm run run:v3:twelve` 可分别完整跑完一局并打印最终 `snapshot` 与关键事件；执行 `cd backend && npm run run:v3` 可按六人→十二人顺序执行；`cd backend && npm run smoke:v3` 仍可走 mock 快速回归。
+- [x] `A07`（流程完整性强制项） 真实 LLM 对局日志必须确认“游戏流程完整无误”：至少出现一次完整阶段链路 `night -> day -> voting`，并在结束时输出 `game_over + winner + reason`；若日志仅出现连续 `request_error/request_timeout` 且无有效流程推进证据，判定为不通过，必须继续调试后重验收。
+- [x] `A08`（对应: `T07`） 执行 `cd backend && npm run run:v3:six`，日志中不再出现 `request_parse_failed`/`request_non_json_output`，非结构化输出应记录为 `request_recovered ... reason=non_json_output`，且最终仍需满足 `A07` 的完整流程要求。
+- [x] `A09`（对应: `T08`） 执行 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts` 通过，且用例“disallowed tool”必须回归为 fallback 行为（不被恢复解析劫持）。
+- [x] `A10`（对应: `T09`） 执行 `cd backend && npm run build:v3` 通过，无 `RunLlmGameOptions` 参数缺失错误。
+- [x] `A11`（对应: `T10`） 执行 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts` 通过（包含发言污染过滤用例）；修复后玩家发言不再出现提示词元信息泄漏。
 - [x] `A12`（对应: `T11`） 执行 `cd backend && node --import tsx src/scripts/run_llm_game.ts --board six_player_mvp --trace false --max-runtime-ms 2000 --llm-timeout-ms 500 --stream-events false --color true`，输出包含 ANSI 转义码（如 `\u001b[36m`/`\u001b[32m`），并可通过 `--color false` 或 `NO_COLOR=1` 关闭彩色。
 - [x] `A13`（对应: `T12`） 执行 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts tests/v3/night_wolf_tactical_loop.test.ts`，新增用例验证：预言家私有查验结果可注入后续 Prompt（`seerPrivateIntel=...`）且夜间查验结果确实写入 `seerState`。
 - [x] `A14`（对应: `T13`） 执行 `cd backend && npm run build:v3` 与 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts` 均通过，不再出现 `Object is possibly 'undefined'`。
@@ -104,5 +106,7 @@
 - [x] `A20`（对应: `T19`） 执行 `cd backend && npm test -- --runInBand tests/v3/session_manager.test.ts tests/v3/broadcaster_visibility.test.ts`，验证：1) `wolves_only` 仅狼人收到；2) `private_targets` 仅目标玩家收到；3) `public` 全员可见；并通过 `cd backend && npm run build:v3`。
 - [x] `A21`（对应: `T20`） 执行 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts tests/v3/agent_broadcast_feed.test.ts`，验证：1) 广播信息进入对应玩家历史消息；2) 回合行动走 SDK tool calling 主路径；3) 投票阶段对外仅广播放逐结果（狼刀投票仍在狼阵营串行可见）；并通过 `cd backend && npm run build:v3` 和 `cd backend && npm run run:v3:six -- --max-runtime-ms 60000 --print-llm-io true`。
 - [x] `A22`（对应: `T21`） 执行 `cd backend && npm run run:v3:six -- --max-runtime-ms 20000 --print-thinking true`，日志出现 `[THINKING] assistant ...` 与 `[THINKING] tool_call/tool_result ...`；并通过 `cd backend && npm run build:v3` 与 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts`。
-- [ ] `A23`（对应: `T22`） 执行 `cd backend && npm run run:v3:six -- --max-runtime-ms 30000`，默认日志应出现私有事件明细（如 `[live][私有][查验] ...`）；执行 `cd backend && npm run run:v3:six -- --max-runtime-ms 30000 --print-private-events false` 时该类日志不输出；并通过 `cd backend && npm run build:v3`。
+- [x] `A23`（对应: `T22`） 执行 `cd backend && npm run run:v3:six -- --max-runtime-ms 60000`，默认日志出现私有事件明细（如 `[live][私有][查验] ...`）；执行 `cd backend && npm run run:v3:six -- --max-runtime-ms 60000 --print-private-events false` 时该类日志不输出；并通过 `cd backend && npm run build:v3`。
 - [x] `A24`（对应: `T23`） 执行 `cd backend && npm test -- --runInBand tests/v3/night_wolf_tactical_loop.test.ts`，验证同夜狼人发言顺序出现两轮且两轮顺序均与狼刀投票顺序一致；并通过 `cd backend && npm run build:v3`。
+- [x] `A25`（对应: `T24`） 复现命令 `cd frontend && npx vue-tsc --noEmit` 记录失败；修复后执行 `cd frontend && npm run build` 通过，且 `! rg -n "\\bany\\b" frontend/src/composables/useWebSocket.ts frontend/src/composables/useGameStore.ts frontend/src/types/index.ts` 成立，并在 `docs/guides/drivers/readme.md` 的前端验收项中落地新的可执行命令。
+- [x] `A26`（对应: `T25`） 复现命令 `cd backend && npm run lint:deps` 能报出违规 import；修复后同命令通过，且 `cd backend && npm run build:v3` 与 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts` 通过。

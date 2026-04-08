@@ -27,14 +27,14 @@
 
 ## 2. 开发任务清单
 
-- [ ] `T01` 新增 `docs/guides/release_checklist.md`，固化发布前自检清单（条款、变更文件、测试、回滚）。
-- [ ] `T02` 在 `backend/package.json` 固化发布前命令集合（build、test、smoke）并补充运行说明。
-- [ ] `T03` 新增 `docs/guides/release_report_template.md`，用于记录每次发布结果与异常。
-- [ ] `T04` 将发布异常转化为可执行任务：补测试或修代码，并回写到 `docs/guides/backend_rebuild/03_task_backlog.md`。
+- [x] `T01` 新增 `docs/guides/release_checklist.md`，固化发布前自检清单（条款、变更文件、测试、回滚）。
+- [x] `T02` 在 `backend/package.json` 固化发布前命令集合（build、test、smoke）并补充运行说明。
+- [x] `T03` 新增 `docs/guides/release_report_template.md`，用于记录每次发布结果与异常。
+- [x] `T04` 将发布异常转化为可执行任务：补测试或修代码，并回写到 `docs/guides/backend_rebuild/03_task_backlog.md`。
 
 ## 3. 验收标准（任务映射）
 
-- [ ] `A01`（对应: `T01`） 每次发布前都有可复用的检查清单实例。
-- [ ] `A02`（对应: `T02`） 发布前命令可一键执行并有通过/失败结论。
-- [ ] `A03`（对应: `T03`） 每次发布后都产出结构化发布记录。
-- [ ] `A04`（对应: `T04`） 发布异常至少转化为一条具体开发任务并进入待办。
+- [x] `A01`（对应: `T01`） 每次发布前都有可复用的检查清单实例。
+- [x] `A02`（对应: `T02`） 发布前命令可一键执行并有通过/失败结论。
+- [x] `A03`（对应: `T03`） 每次发布后都产出结构化发布记录。
+- [x] `A04`（对应: `T04`） 发布异常至少转化为一条具体开发任务并进入待办。

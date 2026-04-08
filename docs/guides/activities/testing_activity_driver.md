@@ -40,16 +40,16 @@
 
 ## 2. 开发任务清单
 
-- [ ] `T01` 新增 `backend/tests/v3/night_wolf_tactical_loop.test.ts` 覆盖夜间狼人战术环流程。
-- [ ] `T02` 新增 `backend/tests/v3/day_interrupt_hooks.test.ts` 覆盖白天 4 类中断窗口。
-- [ ] `T03` 新增 `backend/tests/v3/sheriff_pipeline.test.ts` 覆盖警长竞选、票权、移交/撕毁。
-- [ ] `T04` 新增 `backend/tests/v3/memory_compression.test.ts` 覆盖摘要触发与上下文替换行为。
-- [ ] `T05` 新增 `backend/tests/v3/minimax_live_connectivity.test.ts`，验证真实模型连通与最小 tool call 回路（通过 `RUN_LIVE_LLM_TEST=1` 显式启用，默认不在常规回归中执行）。
+- [x] `T01` 新增 `backend/tests/v3/night_wolf_tactical_loop.test.ts` 覆盖夜间狼人战术环流程。
+- [x] `T02` 新增 `backend/tests/v3/day_interrupt_hooks.test.ts` 覆盖白天 4 类中断窗口。
+- [x] `T03` 新增 `backend/tests/v3/sheriff_pipeline.test.ts` 覆盖警长竞选、票权、移交/撕毁。
+- [x] `T04` 新增 `backend/tests/v3/memory_compression.test.ts` 覆盖摘要触发与上下文替换行为。
+- [x] `T05` 新增 `backend/tests/v3/minimax_live_connectivity.test.ts`，验证真实模型连通与最小 tool call 回路（通过 `RUN_LIVE_LLM_TEST=1` 显式启用，默认不在常规回归中执行）。
 
 ## 3. 验收标准（任务映射）
 
-- [ ] `A01`（对应: `T01`） 夜间狼人战术环在随机顺序下仍可稳定重放通过。
-- [ ] `A02`（对应: `T02`） 任一中断窗口触发后，阶段流转与日志断言均正确。
-- [ ] `A03`（对应: `T03`） 警长相关规则测试通过且不影响现有 MVP 用例。
-- [ ] `A04`（对应: `T04`） 第 3 天后上下文压缩逻辑可验证且无流程中断。
-- [ ] `A05`（对应: `T05`） 在配置有效时执行 `cd backend && RUN_LIVE_LLM_TEST=1 npm test -- --runInBand backend/tests/v3/minimax_live_connectivity.test.ts` 通过；配置缺失时测试必须以明确原因 `skip`，且全程不打印 API Key 明文。
+- [x] `A01`（对应: `T01`） 夜间狼人战术环在随机顺序下仍可稳定重放通过。
+- [x] `A02`（对应: `T02`） 任一中断窗口触发后，阶段流转与日志断言均正确。
+- [x] `A03`（对应: `T03`） 警长相关规则测试通过且不影响现有 MVP 用例。
+- [x] `A04`（对应: `T04`） 第 3 天后上下文压缩逻辑可验证且无流程中断。
+- [x] `A05`（对应: `T05`） 在配置有效时执行 `cd backend && RUN_LIVE_LLM_TEST=1 npm test -- --runInBand tests/v3/minimax_live_connectivity.test.ts` 通过；配置缺失时测试必须以明确原因 `skip`，且全程不打印 API Key 明文。
