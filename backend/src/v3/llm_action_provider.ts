@@ -12,14 +12,32 @@ import {
   ToolName,
 } from "../domain/model";
 import { World } from "../domain/world";
-import {
-  ChatMessage,
-  OpenAIClient,
-  ToolLoopStepTrace,
-  ToolSchema,
-} from "../infra/llm/openai_client";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
 import { BaselineBotActionProvider } from "./action_providers";
+
+interface ChatMessage {
+  role: "system" | "user" | "assistant" | "tool";
+  content: string;
+  tool_call_id?: string;
+}
+
+interface ToolSchema {
+  name: string;
+  description: string;
+  parameters: Record<string, unknown>;
+}
+
+interface ToolLoopStepTrace {
+  assistantText: string;
+  toolCalls: Array<{
+    id: string;
+    name: string;
+    rawArgs: string;
+    toolResult: string;
+    stop?: boolean;
+    hasFinalAction?: boolean;
+  }>;
+}
 
 interface ChatLike {
   chat(messages: ChatMessage[], options?: { signal?: AbortSignal }): Promise<string>;
@@ -91,7 +109,7 @@ export class LlmActionProvider implements ActionProvider {
 
   static fromOpenAIClient(
     world: World,
-    client: OpenAIClient,
+    client: ChatLike,
     options: LlmActionProviderOptions = {},
   ): LlmActionProvider {
     return new LlmActionProvider(world, client, options);

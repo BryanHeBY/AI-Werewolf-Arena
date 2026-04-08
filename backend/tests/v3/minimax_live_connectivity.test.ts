@@ -18,6 +18,13 @@ describe("minimax live connectivity", () => {
   const canRunLive = runLive && hasLiveConfig();
   const testFn = canRunLive ? test : test.skip;
 
+  beforeAll(() => {
+    // 仅打印配置来源与是否存在，禁止输出敏感密钥明文。
+    process.stdout.write(
+      `[minimax_live_connectivity] env_source=${rootEnvPath} base_url_set=${Boolean(process.env.OPENAI_BASE_URL)} api_key_set=${Boolean(process.env.OPENAI_API_KEY)} model_set=${Boolean(process.env.OPENAI_MODEL)}\n`,
+    );
+  });
+
   testFn(
     "can call model with .env OPENAI_* settings without leaking key",
     async () => {
