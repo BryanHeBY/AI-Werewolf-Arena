@@ -25,23 +25,26 @@ const io = setupSocket(fastify.server);
 const broadcaster = new Broadcaster(io);
 setGlobalBroadcaster(broadcaster);
 
-const sessions = new V3SessionManager(broadcaster, {
-  defaultBoard: appConfig.defaultBoard,
-  maxDaysPerSession: appConfig.maxDaysPerSession,
-  cycleDelayMs: appConfig.cycleDelayMs,
-});
+const sessions = appConfig.v3EngineEnabled
+  ? new V3SessionManager(broadcaster, {
+      defaultBoard: appConfig.defaultBoard,
+      maxDaysPerSession: appConfig.maxDaysPerSession,
+      cycleDelayMs: appConfig.cycleDelayMs,
+    })
+  : null;
 
 fastify.get("/api/status", async () => {
   return {
     status: "ok",
-    engineVersion: "V3",
+    engineVersion: appConfig.v3EngineEnabled ? "V3" : "V2_ROLLBACK",
     config: {
       port: appConfig.port,
       defaultBoard: appConfig.defaultBoard,
       maxDaysPerSession: appConfig.maxDaysPerSession,
       cycleDelayMs: appConfig.cycleDelayMs,
+      v3EngineEnabled: appConfig.v3EngineEnabled,
     },
-    session: sessions.status(),
+    session: sessions?.status() ?? null,
   };
 });
 
@@ -56,6 +59,13 @@ fastify.post("/api/start-game", async (request) => {
 });
 
 fastify.post("/api/stop-game", async () => {
+  if (!sessions) {
+    return {
+      success: false,
+      error: "V3 engine disabled by V3_ENGINE_ENABLED",
+      session: null,
+    };
+  }
   const status = sessions.stop();
   return {
     success: status !== null,
@@ -65,12 +75,19 @@ fastify.post("/api/stop-game", async () => {
 
 fastify.get("/api/session", async () => {
   return {
-    session: sessions.status(),
-    gameState: sessions.publicState(),
+    session: sessions?.status() ?? null,
+    gameState: sessions?.publicState() ?? null,
   };
 });
 
 function startGame(board: BoardPreset | undefined, maxDays: number | undefined) {
+  if (!sessions) {
+    return {
+      success: false,
+      error: "V3 engine disabled by V3_ENGINE_ENABLED",
+      engineVersion: "V2_ROLLBACK",
+    };
+  }
   const status = sessions.start({
     board,
     maxDays,

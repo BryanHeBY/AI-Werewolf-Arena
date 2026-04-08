@@ -1,21 +1,10 @@
-import { bootstrapGame } from "./app/bootstrap";
-import { sixPlayerMvpConfig } from "./scenarios/six_player_mvp";
-import { BaselineBotActionProvider } from "./v3/action_providers";
+import { runMockGame } from "./scripts/run_mock_game";
 
-// 本地快速回归入口：运行一局 6 人 MVP 并打印末尾事件。
-async function main(): Promise<void> {
-  const context = bootstrapGame(sixPlayerMvpConfig);
-  const actionProvider = new BaselineBotActionProvider(context.world);
-
-  const snapshot = await context.phaseManager.runUntilGameOver(actionProvider, 8);
-  const events = context.phaseManager.getEvents();
-
-  console.log("V3 snapshot:", snapshot);
-  console.log("V3 events:", events.length);
-  console.log(JSON.stringify(events.slice(-8), null, 2));
-}
-
-main().catch((error) => {
+/**
+ * 兼容入口（保留）：
+ * 旧命令仍可调用 mock 回归脚本，新的真实 LLM 入口请使用 `src/scripts/run_llm_game.ts`。
+ */
+runMockGame().catch((error) => {
   console.error("run-test-v3 failed", error);
   throw error;
 });

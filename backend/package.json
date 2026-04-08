@@ -10,7 +10,15 @@
     "start": "node dist/server/index.js",
     "test": "jest",
     "test:v3": "jest tests/v3 --runInBand",
-    "run:v3": "tsx src/run-test-v3.ts",
+    "test:quick": "jest --runInBand tests/v3/tool_gateway_validation.test.ts tests/v3/event_registry_hooks.test.ts tests/v3/phase_manager_mvp.test.ts tests/v3/day_interrupt_hooks.test.ts tests/v3/night_wolf_tactical_loop.test.ts",
+    "test:full": "jest tests/v3 --runInBand",
+    "lint:deps": "eslint \"src/**/*.ts\" --max-warnings=0",
+    "smoke:v3": "node --import tsx src/run-test-v3.ts",
+    "release:check": "npm run build:v3 && npm run test:quick && npm run smoke:v3",
+    "run:v3": "node --import tsx src/scripts/run_llm_dual.ts",
+    "run:v3:six": "node --import tsx src/scripts/run_llm_game.ts --board six_player_mvp --trace true --max-runtime-ms 180000 --llm-timeout-ms 30000",
+    "run:v3:twelve": "node --import tsx src/scripts/run_llm_game.ts --board twelve_player_standard --trace true --max-runtime-ms 240000 --llm-timeout-ms 30000",
+    "run:v3:mock": "node --import tsx src/scripts/run_mock_game.ts",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },
@@ -24,6 +32,8 @@
   "devDependencies": {
     "@types/nock": "^10.0.3",
     "@types/node": "^20.11.19",
+    "@typescript-eslint/parser": "^8.46.2",
+    "eslint": "^9.37.0",
     "nock": "^14.0.11",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3"

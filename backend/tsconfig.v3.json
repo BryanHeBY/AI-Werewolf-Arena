@@ -15,6 +15,7 @@
     "src/gateway/**/*.ts",
     "src/memory/**/*.ts",
     "src/scenarios/**/*.ts",
+    "src/scripts/**/*.ts",
     "src/v3/**/*.ts"
   ],
   "exclude": [
