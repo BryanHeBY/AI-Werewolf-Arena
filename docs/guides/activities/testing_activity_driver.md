@@ -38,16 +38,16 @@
 4. 已通过：`backend/tests/v3/session_manager.test.ts`
 5. 执行命令：`cd backend && npm test -- --runInBand`
 
-## 2. 未来目标 TODO
+## 2. 开发任务清单
 
-- [ ] 建立 `tests/v3` 目录分层（unit/integration/e2e）。
-- [ ] 补齐 MVP 的红线用例矩阵（规则项 -> 用例编号 -> 结果）。
-- [ ] 增加事件快照测试，确保广播 payload 结构稳定。
-- [ ] 增加每日自动回归任务，输出失败场景最小复现日志。
+- [ ] `T01` 新增 `backend/tests/v3/night_wolf_tactical_loop.test.ts` 覆盖夜间狼人战术环流程。
+- [ ] `T02` 新增 `backend/tests/v3/day_interrupt_hooks.test.ts` 覆盖白天 4 类中断窗口。
+- [ ] `T03` 新增 `backend/tests/v3/sheriff_pipeline.test.ts` 覆盖警长竞选、票权、移交/撕毁。
+- [ ] `T04` 新增 `backend/tests/v3/memory_compression.test.ts` 覆盖摘要触发与上下文替换行为。
 
-## 3. 验收标准
+## 3. 验收标准（任务映射）
 
-- [ ] MVP 关键规则场景均有自动化测试覆盖。
-- [ ] 每次代码改动触发最小回归，不出现静默规则回归。
-- [ ] 测试结论可追溯到 specs 条款与代码文件节点。
-- [ ] 测试文档与当前代码行为一致，不存在过期案例描述。
+- [ ] `A01`（对应: `T01`） 夜间狼人战术环在随机顺序下仍可稳定重放通过。
+- [ ] `A02`（对应: `T02`） 任一中断窗口触发后，阶段流转与日志断言均正确。
+- [ ] `A03`（对应: `T03`） 警长相关规则测试通过且不影响现有 MVP 用例。
+- [ ] `A04`（对应: `T04`） 第 3 天后上下文压缩逻辑可验证且无流程中断。

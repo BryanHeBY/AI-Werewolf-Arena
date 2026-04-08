@@ -1,5 +1,6 @@
 import { Phase } from "../model";
 
+// 阶段顺序注册表，支持按板子动态替换默认 phase 顺序。
 export class PhaseRegistry {
   private order: Phase[];
 

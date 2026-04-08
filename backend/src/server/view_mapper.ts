@@ -30,6 +30,10 @@ export interface FrontendGameState {
   winner?: "wolf" | "villager";
 }
 
+/**
+ * 视图映射层：
+ * 把后端领域状态转换成前端消费模型，避免前端直接依赖内部 ECS 结构。
+ */
 export function toFrontendPhase(phase: Phase): FrontendPhase {
   if (phase === Phase.Night) {
     return "Night_Start";
@@ -86,6 +90,7 @@ export function buildFrontendGameState(
   };
 
   if (snapshot.result) {
+    // 仅在游戏结束后附加 winner，保持进行中状态的字段语义稳定。
     state.winner = toFrontendFaction(snapshot.result.winner);
   }
 

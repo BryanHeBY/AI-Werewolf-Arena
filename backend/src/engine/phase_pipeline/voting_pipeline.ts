@@ -23,6 +23,12 @@ export interface VotingPipelineResult {
   removed: EntityId[];
 }
 
+/**
+ * 放逐投票流水线：
+ * 1) 在 onPreVote 窗口可触发狼人自爆中断。
+ * 2) 存活且有投票权玩家依次投票，按权重计票。
+ * 3) 调用 EventRegistry 处理白痴免死、警徽销毁等投后钩子。
+ */
 export class VotingPipeline {
   constructor(
     private readonly world: World,
@@ -91,6 +97,7 @@ export class VotingPipeline {
         voterId,
         COMPONENT.VotingRight,
       );
+      // 警长等角色可通过 weight 调整票权，默认 1 票。
       const weight = voting?.weight ?? 1;
       tally[voteTarget] = (tally[voteTarget] ?? 0) + weight;
     }
@@ -112,6 +119,7 @@ export class VotingPipeline {
     const removed = [...votedOut.removed];
 
     if (!votedOut.prevented) {
+      // 只有真正出局才广播 voted_out；白痴翻牌由事件总线单独广播。
       this.events.push({
         timestamp: Date.now(),
         type: "voted_out",

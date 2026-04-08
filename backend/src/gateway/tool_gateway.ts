@@ -17,6 +17,11 @@ import { usePotionSchema } from "./schemas/use_potion.schema";
 
 const RESERVED_PREFIX = /^(\s*\[(上帝|法官|系统)\]\s*)+/g;
 
+/**
+ * ToolGateway 负责两件事：
+ * 1) 对外维护可用工具 schema；
+ * 2) 在执行前做输入清洗 + 规则校验。
+ */
 export class ToolGateway {
   private readonly validator: ActionValidator;
   private readonly schemas: Map<ToolName, unknown> = new Map();
@@ -42,6 +47,7 @@ export class ToolGateway {
   }
 
   startNight(world: World): void {
+    // 夜晚开始时重置女巫“本夜是否已用药”的瞬时状态。
     for (const id of world.getAliveEntityIds()) {
       const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
       if (role?.witchState) {
@@ -69,6 +75,7 @@ export class ToolGateway {
   private sanitize<T extends ToolCall>(call: T): T {
     if (call.name === "speak" || call.name === "speak_to_wolves") {
       const raw = call.args.text;
+      // 防止模型伪造系统身份前缀，避免污染公共上下文。
       const text = raw.replace(RESERVED_PREFIX, "").trim();
       if (call.name === "speak") {
         return {

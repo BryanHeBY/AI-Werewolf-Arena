@@ -1,5 +1,9 @@
 import { PromptRenderable, StatusMark } from "../model";
 
+/**
+ * 状态印记组件：
+ * 用于承载当回合临时效果（守护、狼刀、解药、毒药），由结算系统统一消费。
+ */
 export class StatusMarksComponent implements PromptRenderable {
   private marks: Set<StatusMark>;
 

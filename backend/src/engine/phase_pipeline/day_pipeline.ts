@@ -22,6 +22,12 @@ export interface DayPipelineResult {
   interrupted: boolean;
 }
 
+/**
+ * 白天阶段流水线：
+ * 1) 先由警长选择发言方向（若启用警长且警徽有效）。
+ * 2) 按顺序串行发言并写入事件流。
+ * 3) 在可配置窗口中允许狼人自爆中断流程。
+ */
 export class DayPipeline {
   constructor(
     private readonly world: World,
@@ -170,6 +176,7 @@ export class DayPipeline {
         continue;
       }
 
+      // 自爆成功后立即标记死亡，调用方会根据 interrupted 直接跳夜。
       alive.alive = false;
       this.events.push({
         timestamp: Date.now(),
@@ -229,6 +236,7 @@ export class DayPipeline {
       return "clockwise";
     }
 
+    // 发言方向作为显式事件广播，便于前端和回放系统复现白天顺序。
     this.events.push({
       timestamp: Date.now(),
       type: "sheriff_direction_chosen",
@@ -278,6 +286,7 @@ export class DayPipeline {
       return clockwiseOrder;
     }
 
+    // 警右（逆时针）从警长前一位开始逆向遍历，最后把警长放到末位。
     const counterClockwise: EntityId[] = [];
     for (let i = sheriffIndex - 1; i >= 0; i--) {
       counterClockwise.push(orderedBySeat[i]);

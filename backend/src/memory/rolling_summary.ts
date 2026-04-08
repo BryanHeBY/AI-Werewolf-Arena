@@ -1,5 +1,9 @@
 import { EntityId } from "../domain/model";
 
+/**
+ * 存放“滚动摘要”文本：
+ * 由外部策略决定何时压缩与更新，这里只负责按玩家读写。
+ */
 export class RollingSummaryStore {
   private readonly data: Map<EntityId, string> = new Map();
 

@@ -21,6 +21,11 @@ import {
 import { World } from "../../domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
 
+/**
+ * 夜间阶段流水线（当前实现）：
+ * 狼人交流 -> 守卫 -> 狼人投票 -> 女巫 -> 预言家 -> 统一伤害结算。
+ * 各步骤按串行执行，保证状态变更在同一时间线上可追踪。
+ */
 export class NightPipeline {
   constructor(
     private readonly world: World,
@@ -34,6 +39,7 @@ export class NightPipeline {
     summary: NightSummary;
     damage: DamageResolutionResult;
   }> {
+    // 每个夜晚开始前重置“同夜双药”状态，避免跨夜污染。
     this.toolGateway.startNight(this.world);
 
     const wolfIds = this.getAliveByRole(Role.Wolf);
@@ -113,6 +119,7 @@ export class NightPipeline {
       wolfVotes[targetId] = (wolfVotes[targetId] ?? 0) + 1;
     }
 
+    // 狼队目标由票多者决定；平票时按 seat/id 最小值兜底。
     const wolfTarget = this.pickMajorityTarget(wolfVotes);
     if (wolfTarget !== null) {
       this.ensureMarks(wolfTarget).add(StatusMark.WolfKillMark);
@@ -236,6 +243,7 @@ export class NightPipeline {
       COMPONENT.StatusMarks,
     );
     if (!marks) {
+      // 标记组件按需创建，避免无状态玩家占用冗余存储。
       marks = new StatusMarksComponent();
       this.world.addComponent(entityId, COMPONENT.StatusMarks, marks);
     }

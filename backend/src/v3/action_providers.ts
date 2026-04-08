@@ -11,6 +11,9 @@ import {
 } from "../domain/model";
 import { World } from "../domain/world";
 
+/**
+ * Noop 行为提供器：用于测试“无人行动”场景。
+ */
 export class NoopActionProvider implements ActionProvider {
   async getAction(_request: ActionRequest): Promise<ToolCall | null> {
     return null;
@@ -22,6 +25,9 @@ export interface ScriptedEntry {
   action: ToolCall | null;
 }
 
+/**
+ * Scripted 行为提供器：按预置脚本回放动作，适合单元测试与复现 bug。
+ */
 export class ScriptedActionProvider implements ActionProvider {
   private readonly entries: ScriptedEntry[];
 
@@ -50,6 +56,7 @@ export class BaselineBotActionProvider implements ActionProvider {
     }
 
     if (request.allowedTools.includes("choose_direction")) {
+      // 基线策略：偶数位顺时针，奇数位逆时针，保证可重复。
       return {
         name: "choose_direction",
         args: {
@@ -116,6 +123,7 @@ export class BaselineBotActionProvider implements ActionProvider {
       const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
       return id !== actorId && role?.camp === camp;
     });
+    // 若指定阵营无可选目标，兜底选任意存活非自己玩家。
     return target ?? this.pickAliveNotSelf(actorId);
   }
 }

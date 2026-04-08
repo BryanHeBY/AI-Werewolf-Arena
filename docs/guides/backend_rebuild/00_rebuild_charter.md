@@ -21,16 +21,16 @@
 1. 先定义目标目录和模块契约，再开始迁移代码。
 2. 任何规则改动必须可被自动化测试覆盖。
 3. 任何高风险改动必须保留回滚路径。
-4. 任何源码变更必须同步更新 `docs/codebase` 文档。
+4. 任何源码变更必须同步更新源码中文注释与对应 `docs/guides` 任务状态。
 
-## 2. 未来目标 TODO
+## 2. 开发任务清单
 
-- [ ] 为每条重构原则补“违反时的处理策略”。
-- [ ] 为 MVP 范围外的条目建立待办池，避免重构过程遗漏。
-- [ ] 增加“重构风险登记表”（状态竞争、规则偏差、协议漂移）。
+- [ ] `T01` 在 `backend/src/engine/phase_pipeline/day_pipeline.ts` 实现可配置 Action Window（`on_daybreak`、`on_pre_election`、`on_pre_vote`、`on_per_speech_gap`）并接入 `PhaseManager`。
+- [ ] `T02` 在 `backend/src/engine/phase_pipeline/night_pipeline.ts` 实现狼队战术环（随机顺序发言 -> 同序投票 -> 票多落刀）并写入事件日志。
+- [ ] `T03` 在 `backend/src/engine/event_registry.ts` 增加遗言触发规则（仅首夜死亡与白天放逐），并补齐对应测试。
 
-## 3. 验收标准
+## 3. 验收标准（任务映射）
 
-- [ ] 团队对重构目标与非目标达成一致，范围不再反复波动。
-- [ ] 所有开发任务均符合本文定义的重构原则。
-- [ ] 每个阶段结束时可明确判定“是否进入下一阶段”。
+- [ ] `A01`（对应: `T01`） `backend/tests/v3/day_interrupt_hooks.test.ts` 覆盖 4 类窗口触发与中断，且 `npm test -- --runInBand` 通过。
+- [ ] `A02`（对应: `T02`） `backend/tests/v3/night_wolf_tactical_loop.test.ts` 验证“发言顺序=投票顺序=计票结果”并可重复运行通过。
+- [ ] `A03`（对应: `T03`） `backend/tests/v3/last_words_rules.test.ts` 验证遗言边界（首夜死/放逐死有遗言，自爆/连带死无遗言）。

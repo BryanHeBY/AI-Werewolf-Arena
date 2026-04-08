@@ -29,6 +29,10 @@ export interface RoleComponent extends PromptRenderable {
   idiotState?: IdiotState;
 }
 
+/**
+ * 角色组件工厂：
+ * 根据底牌初始化角色私有状态（如女巫药量、守卫上轮守护目标等）。
+ */
 export function inferCamp(role: Role): Camp {
   if (role === Role.Wolf) {
     return Camp.Wolf;
@@ -74,6 +78,7 @@ export function createRoleComponent(role: Role): RoleComponent {
   return {
     ...base,
     renderPrompt(): string {
+      // 这里输出给模型的“角色设定片段”，用于 PromptAssembler 拼装系统事实区。
       if (this.role === Role.Witch && this.witchState) {
         return `你的底牌是【女巫】。解药:${this.witchState.heal} 毒药:${this.witchState.poison}`;
       }

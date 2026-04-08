@@ -17,6 +17,11 @@ export interface DeathHookResult {
   extraDeathSources: Record<number, StatusMark[]>;
 }
 
+/**
+ * 事件总线拦截器：
+ * - onVotedOut: 处理白痴翻牌免死与警徽销毁。
+ * - onDeath: 处理猎人是否可开枪、开枪造成的追加死亡。
+ */
 export class EventRegistry {
   onVotedOut(world: World, targetId: EntityId, events: GameEvent[]): VotedOutResult {
     const roleComp = world.getComponent<RoleComponent>(targetId, COMPONENT.Role);
@@ -27,6 +32,7 @@ export class EventRegistry {
     }
 
     if (roleComp.role === Role.Idiot) {
+      // 白痴被放逐时翻牌免死，但立即失去后续投票权。
       roleComp.idiotState = {
         revealed: true,
       };
@@ -101,6 +107,7 @@ export class EventRegistry {
 
       const sources = deathSources[deadId] ?? [];
       if (sources.includes(StatusMark.PoisonMark)) {
+        // 猎人吃毒属于闷枪场景，不触发开枪阶段。
         roleComp.hunterState.canShoot = false;
         events.push({
           timestamp: Date.now(),
@@ -143,6 +150,7 @@ export class EventRegistry {
   }
 
   private isLastGod(world: World, hunterId: EntityId): boolean {
+    // 若猎人是最后存活神职，则开枪不会改变屠边结论，直接不触发。
     const alive = world.getAliveEntityIds();
     for (const id of alive) {
       if (id === hunterId) {

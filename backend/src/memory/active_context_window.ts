@@ -5,6 +5,10 @@ export interface ContextLine {
   text: string;
 }
 
+/**
+ * 活跃上下文窗口：
+ * 保存最近对话原文，当字符总量超阈值时从最早消息开始裁剪。
+ */
 export class ActiveContextWindow {
   private readonly maxChars: number;
   private readonly lines: ContextLine[] = [];
@@ -23,6 +27,7 @@ export class ActiveContextWindow {
   }
 
   private compact(): void {
+    // 采用“滑动窗口”策略，确保上下文长度始终可控。
     while (this.totalChars() > this.maxChars && this.lines.length > 0) {
       this.lines.shift();
     }

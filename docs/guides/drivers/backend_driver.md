@@ -2,7 +2,7 @@
 
 ## 1. 当前代码详细文档
 
-后端详细文档已拆分为树形结构（按源码路径镜像）：
+后端执行入口：
 
 1. V3 后端开发最高规范：
    - `docs/specs/backend_architecture_whitepaper_v3.md`
@@ -18,18 +18,18 @@
    - `docs/guides/backend_rebuild/05_cutover_and_rollback.md`
    - `docs/guides/backend_rebuild/06_dependency_rules.md`
 4. 总入口：
-   - `docs/codebase/backend/README.md`
+   - `backend/src/index.ts`
 5. V3 核心模块：
-   - `docs/codebase/backend/src/app/README.md`
-   - `docs/codebase/backend/src/domain/README.md`
-   - `docs/codebase/backend/src/engine/README.md`
-   - `docs/codebase/backend/src/gateway/README.md`
-   - `docs/codebase/backend/src/memory/README.md`
-   - `docs/codebase/backend/src/scenarios/README.md`
-   - `docs/codebase/backend/src/v3/README.md`
+   - `backend/src/app/*`
+   - `backend/src/domain/*`
+   - `backend/src/engine/*`
+   - `backend/src/gateway/*`
+   - `backend/src/memory/*`
+   - `backend/src/scenarios/*`
+   - `backend/src/v3/*`
 6. 服务与通信：
-   - `docs/codebase/backend/src/server/README.md`
-   - `docs/codebase/backend/src/infra/transport/README.md`
+   - `backend/src/server/*`
+   - `backend/src/infra/transport/*`
 
 当前阶段状态（2026-04-08）：
 
@@ -37,18 +37,18 @@
 2. 全量后端测试已切换到 V3：`backend/tests/v3/*`。
 3. V2 源码与旧测试已清理，当前为 V3 单栈。
 
-## 2. 未来目标 TODO
+## 2. 开发任务清单
 
-- [ ] 为 `docs/codebase/backend/src/*` 各父级 README 增加依赖图（上游/下游）。
-- [ ] 将后端“模块成熟度”标注到各目录 README（MVP/Beta/Stable）。
-- [ ] 对所有关键文件文档补充“风险等级 + 责任人”字段。
-- [ ] 将白皮书条款按模块拆解为“实现状态矩阵”（未开始/开发中/已完成）。
-- [ ] 将重构作战包中的任务状态实时回写到本索引。
+- [ ] `T01` 在 `backend/src/engine/phase_pipeline/day_pipeline.ts` 实现警长定序 + 中断窗口处理并补齐测试。
+- [ ] `T02` 在 `backend/src/engine/phase_pipeline/night_pipeline.ts` 实现狼队战术环（随机顺序发言/投票/落刀）。
+- [ ] `T03` 在 `backend/src/domain` 完成组件拆分（model -> components/systems）并更新导出。
+- [ ] `T04` 在 `backend/src/gateway/action_validator.ts` 完成女巫/守卫/猎人边界校验扩展。
+- [ ] `T05` 在 `backend/src/server/index.ts` 与 `backend/src/config/index.ts` 实现 V3 开关切换与回滚路径。
 
-## 3. 验收标准
+## 3. 验收标准（任务映射）
 
-- [ ] backend/src 每个源码文件都存在 `docs/codebase/backend/src/<file>.md`。
-- [ ] 每个目录节点都有 `README.md` 且可导航到子节点。
-- [ ] 发生后端代码改动时，对应 codebase 文档同步更新。
-- [ ] 后端开发评审时，能从代码直接追溯到白皮书条款与 MVP 验收项。
-- [ ] 重构启动前，团队已按“重构作战包”完成范围、阶段、测试与回滚对齐。
+- [ ] `A01`（对应: `T01`） `backend/tests/v3/day_interrupt_hooks.test.ts` 覆盖警长定序与窗口中断行为。
+- [ ] `A02`（对应: `T02`） `backend/tests/v3/night_wolf_tactical_loop.test.ts` 验证狼队战术环流程正确。
+- [ ] `A03`（对应: `T03`） `backend/src/domain/components/*` 与 `systems/*` 有真实实现且构建通过。
+- [ ] `A04`（对应: `T04`） `backend/tests/v3/tool_gateway_validation.test.ts` 新增边界校验场景并通过。
+- [ ] `A05`（对应: `T05`） 引擎开关可切换并通过 `backend/tests/v3/cutover_rollback.test.ts`。

@@ -11,6 +11,11 @@ const GOD_ROLES = new Set<Role>([
   Role.Idiot,
 ]);
 
+/**
+ * 胜负判定系统：
+ * - 屠城局：好人全灭或狼人全灭
+ * - 屠边局：神民任一边全灭或狼人全灭
+ */
 export class WinConditionSystem {
   evaluate(world: World, condition: WinCondition): GameResult | null {
     const aliveIds = world.getAliveEntityIds();

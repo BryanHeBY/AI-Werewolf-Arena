@@ -15,6 +15,10 @@ import { World } from "../domain/world";
 import { PhaseManager } from "../engine/phase_manager";
 import { ToolGateway } from "../gateway/tool_gateway";
 
+/**
+ * bootstrap 负责把“配置”装配成“可运行对局上下文”。
+ * 这是服务层启动 V3 引擎的唯一入口。
+ */
 export interface BootstrapResult {
   world: World;
   phaseManager: PhaseManager;
@@ -23,6 +27,7 @@ export interface BootstrapResult {
 
 export function bootstrapGame(config: BoardConfig): BootstrapResult {
   const world = new World();
+  // 先完成实体与组件初始化，再创建系统与管理器，避免空引用。
   const playerIds = createPlayers(world, config);
   assignInitialSheriff(world, config, playerIds);
 
@@ -123,6 +128,7 @@ function assignInitialSheriff(
     COMPONENT.VotingRight,
   );
   if (voting && voting.canVote) {
+    // 警长票权固定提升为 1.5，后续放逐投票直接读取该权重。
     voting.weight = 1.5;
   }
 }

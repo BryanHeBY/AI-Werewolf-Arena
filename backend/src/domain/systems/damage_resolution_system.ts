@@ -9,6 +9,12 @@ export interface DamageResolutionResult {
   deathSources: Record<number, StatusMark[]>;
 }
 
+/**
+ * 黎明伤害结算系统：
+ * - 处理“同守同救”特殊规则
+ * - 统一判定狼刀/毒药导致的死亡
+ * - 结算后清空当夜印记
+ */
 export class DamageResolutionSystem {
   resolve(world: World): DamageResolutionResult {
     const deaths: EntityId[] = [];
@@ -31,6 +37,7 @@ export class DamageResolutionSystem {
       const hasPoison = marks.has(StatusMark.PoisonMark);
 
       if (hasGuard && hasHeal) {
+        // 同守同救互相抵消，但若同时被狼刀命中仍会死亡。
         marks.remove(StatusMark.GuardMark);
         marks.remove(StatusMark.HealMark);
         if (hasWolfKill) {

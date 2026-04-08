@@ -1,5 +1,6 @@
 import { Role, ToolName } from "../model";
 
+// 每个角色默认可用工具集合（可被 registerAllowedTools 覆盖）。
 const BASE_ALLOWED_TOOLS: Record<Role, ToolName[]> = {
   [Role.Wolf]: ["speak_to_wolves", "kill_vote", "self_destruct", "speak", "vote"],
   [Role.Villager]: ["speak", "vote"],
@@ -10,6 +11,10 @@ const BASE_ALLOWED_TOOLS: Record<Role, ToolName[]> = {
   [Role.Idiot]: ["speak", "vote"],
 };
 
+/**
+ * 角色工具注册表：
+ * 负责“角色 -> 可调用工具列表”的集中管理。
+ */
 export class RoleRegistry {
   private readonly toolMap: Map<Role, ToolName[]> = new Map();
 

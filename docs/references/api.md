@@ -4,20 +4,20 @@
 
 当前 API 契约已拆分到树形文档，建议从以下入口阅读：
 
-- 后端服务入口与事件发射：`docs/codebase/backend/src/server/index.ts.md`
-- Socket 连接与 register：`docs/codebase/backend/src/server/socket.ts.md`
-- 广播协议类型：`docs/codebase/backend/src/core/types.ts.md`
-- 广播实现：`docs/codebase/backend/src/broadcaster/Broadcaster.ts.md`
-- 前端事件消费：`docs/codebase/frontend/src/composables/useGameStore.ts.md`
-- 前端 WS 封装：`docs/codebase/frontend/src/composables/useWebSocket.ts.md`
+- 后端服务入口与事件发射：`backend/src/server/index.ts`
+- Socket 连接与 register：`backend/src/server/socket.ts`
+- 事件视图映射：`backend/src/server/view_mapper.ts`
+- 会话管理：`backend/src/server/v3_session_manager.ts`
+- 前端事件消费：`frontend/src/composables/useGameStore.ts`
+- 前端 WS 封装：`frontend/src/composables/useWebSocket.ts`
 
-## 2. 未来目标 TODO
+## 2. 开发任务清单
 
-- [ ] 在 API 文档中按事件名建立单独文件（如 `events/game_started.md`）。
-- [ ] 增加示例 payload 与错误场景（字段缺失、重连恢复）。
+- [ ] `T01` 在 `backend/src/server/view_mapper.ts` 与 `frontend/src/types/index.ts` 对齐会话/阶段/投票事件字段定义。
+- [ ] `T02` 在 `backend/src/server/socket.ts` 增加非法消息与重连恢复错误响应字段，并在前端消费层处理。
 
-## 3. 验收标准
+## 3. 验收标准（任务映射）
 
-- [ ] 事件名、字段与代码一致。
-- [ ] 前后端对同一事件的字段定义无冲突。
-- [ ] 任一事件变更后，本文件与对应树形文档同步更新。
+- [ ] `A01`（对应: `T01`） 后端事件 payload 与前端 TypeScript 类型一致，无字段漂移。
+- [ ] `A02`（对应: `T02`） 重连与错误事件在前端可被识别并显示，不出现静默失败。
+- [ ] `A03`（对应: `T02`） `session_manager.test.ts` 与前端联调验证均通过。

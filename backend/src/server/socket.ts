@@ -5,6 +5,9 @@ import { Broadcaster } from "../infra/transport/broadcaster";
 
 let globalBroadcaster: Broadcaster | null = null;
 
+/**
+ * Socket 层仅负责连接管理与玩家注册，不承载游戏规则逻辑。
+ */
 export function setupSocket(server: HttpServer): Server {
   const io = new Server(server, {
     cors: {
@@ -18,6 +21,7 @@ export function setupSocket(server: HttpServer): Server {
 
     socket.on("register", (data: { playerId: number }) => {
       if (typeof data?.playerId === "number" && globalBroadcaster) {
+        // 建立“玩家 -> socket”映射，便于后续点对点推送私有事件。
         globalBroadcaster.registerPlayer(socket.id, data.playerId);
       }
     });

@@ -21,6 +21,10 @@ export interface ValidationContext {
   allowDeadHunterShoot?: boolean;
 }
 
+/**
+ * ActionValidator 是“规则防线”。
+ * 所有模型工具调用在落地前都必须通过这里，非法动作统一返回错误并要求重试。
+ */
 export class ActionValidator {
   validate<T extends ToolCall>(
     world: World,
@@ -80,6 +84,7 @@ export class ActionValidator {
             return { ok: false, error: "非法操作，解药不可用" };
           }
           if (role.witchState.poisonUsedThisNight) {
+            // 与毒药互斥：同一夜最多只能使用一种药。
             return { ok: false, error: "非法操作，同夜不可双药" };
           }
         }

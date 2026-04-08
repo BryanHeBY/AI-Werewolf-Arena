@@ -14,6 +14,10 @@ export interface OpenAIClientOptions {
   maxTokens?: number;
 }
 
+/**
+ * OpenAI SDK 适配器：
+ * 对外暴露最小 chat 能力，并统一接入重试策略。
+ */
 export class OpenAIClient {
   private readonly client: OpenAI;
   private readonly model: string;

@@ -7,6 +7,7 @@
 1. 模块驱动索引：`drivers/readme.md`
 2. 活动驱动索引：`activities/readme.md`
 3. 后端重构作战包：`backend_rebuild/readme.md`
+4. 无人值守循环准则：`unattended_todo_loop.md`
 
 核心文档直达：
 
@@ -21,20 +22,20 @@
 
 - 规范来源：`docs/specs/readme.md`
 - 结构参考：`docs/references/readme.md`
-- 代码细节：`docs/codebase/README.md`
+- 代码细节：`backend/src`、`frontend/src`（以源码注释为准）
 
-## 2. 未来目标 TODO
+## 2. 开发任务清单
 
-- [ ] 为每个 activity driver 增加“执行状态”区块（进行中/阻塞/完成）。
-- [ ] 增加“从需求到代码到测试”的标准执行模板。
-- [ ] 将 driver 文档与 issue/PR 模板进行字段映射。
-- [ ] 将 `backend_rebuild/*` 任务状态同步到 `drivers/backend_driver.md`。
-- [ ] 在 `drivers/readme.md` 与 `activities/readme.md` 增加自动汇总区块。
+- [ ] `T01` 在 `backend/src/engine/phase_pipeline/day_pipeline.ts` 完成白天中断窗口全量实现并补测试。
+- [ ] `T02` 在 `backend/src/engine/phase_pipeline/night_pipeline.ts` 完成狼队战术环与落刀结算实现并补测试。
+- [ ] `T03` 在 `backend/src/engine/phase_pipeline/voting_pipeline.ts` 完成警长票权与放逐链路增强并补测试。
+- [ ] `T04` 在 `backend/src/memory/*` 完成上下文压缩策略并补 `memory_compression.test.ts`。
+- [ ] `T05` 在 `backend/src/config/index.ts` 与 `backend/src/server/index.ts` 完成引擎开关与回滚测试链路。
 
-## 3. 验收标准
+## 3. 验收标准（任务映射）
 
-- [ ] 项目、后端、前端、开发、测试、评审发布六类驱动文档齐全。
-- [ ] 每个驱动文档均能跳转到对应 `docs/codebase` 与 `docs/specs` 节点。
-- [ ] 团队可仅凭本目录完成开发与测试活动的执行与追踪。
-- [ ] 后端重构前可仅凭本目录定位到完整的作战文档包。
-- [ ] guides 结构满足“总览 -> 分索引 -> 具体文档”三级导航。
+- [ ] `A01`（对应: `T01`） `day_interrupt_hooks.test.ts` 通过且事件链路正确。
+- [ ] `A02`（对应: `T02`） `night_wolf_tactical_loop.test.ts` 通过且顺序可复现。
+- [ ] `A03`（对应: `T03`） `sheriff_pipeline.test.ts` 通过且不破坏既有用例。
+- [ ] `A04`（对应: `T04`） `memory_compression.test.ts` 通过且第 3 天后流程不中断。
+- [ ] `A05`（对应: `T05`） `cutover_rollback.test.ts` 通过且开关可切换。

@@ -2,6 +2,7 @@ import { bootstrapGame } from "./app/bootstrap";
 import { sixPlayerMvpConfig } from "./scenarios/six_player_mvp";
 import { BaselineBotActionProvider } from "./v3/action_providers";
 
+// 本地快速回归入口：运行一局 6 人 MVP 并打印末尾事件。
 async function main(): Promise<void> {
   const context = bootstrapGame(sixPlayerMvpConfig);
   const actionProvider = new BaselineBotActionProvider(context.world);

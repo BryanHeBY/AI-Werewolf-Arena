@@ -7,6 +7,10 @@ export interface GameLogLine {
   payload: Record<string, unknown>;
 }
 
+/**
+ * 对局 JSONL 日志写入器：
+ * 每行一条事件，便于离线回放和问题定位。
+ */
 export class GameLogger {
   private readonly logPath: string;
 

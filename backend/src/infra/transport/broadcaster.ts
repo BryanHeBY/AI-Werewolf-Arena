@@ -6,6 +6,9 @@ export interface RealtimeGameEvent {
   timestamp: number;
 }
 
+/**
+ * 广播器：封装 Socket.IO 发送能力，并维护 socket 与玩家 ID 的双向映射。
+ */
 export class Broadcaster {
   private readonly socketToPlayer: Map<string, number> = new Map();
   private readonly playerToSocket: Map<number, string> = new Map();
@@ -26,6 +29,7 @@ export class Broadcaster {
   }
 
   broadcast(event: RealtimeGameEvent): void {
+    // 全局广播给所有在线客户端。
     this.io.emit("gameEvent", event);
   }
 

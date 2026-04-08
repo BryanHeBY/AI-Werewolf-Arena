@@ -4,6 +4,10 @@ export interface RetryOptions {
   factor?: number;
 }
 
+/**
+ * 指数退避重试工具：
+ * 适用于调用 LLM/网络接口时的瞬时失败恢复。
+ */
 export async function withRetry<T>(
   task: () => Promise<T>,
   options: RetryOptions = {},

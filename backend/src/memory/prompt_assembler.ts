@@ -10,6 +10,10 @@ import { ActiveContextWindow } from "./active_context_window";
 import { NotebookStore } from "./notebook_store";
 import { RollingSummaryStore } from "./rolling_summary";
 
+/**
+ * PromptAssembler 负责把多层记忆拼装成最终上下文：
+ * System Fact -> Private Notebook -> Rolling Summary -> Active Context。
+ */
 export class PromptAssembler {
   constructor(
     private readonly world: World,
@@ -42,6 +46,7 @@ export class PromptAssembler {
   }
 
   private renderComponents(entityId: EntityId): string {
+    // 组件渲染顺序固定，确保每次提示词结构稳定可预测。
     const lines: string[] = [];
     const role = this.world.getComponent<RoleComponent>(entityId, COMPONENT.Role);
     const alive = this.world.getComponent<AliveComponent>(entityId, COMPONENT.Alive);

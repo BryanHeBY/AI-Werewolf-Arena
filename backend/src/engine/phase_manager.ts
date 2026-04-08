@@ -21,6 +21,10 @@ import { COMPONENT } from "../domain/components/names";
 import { BadgeComponent } from "../domain/components/badge";
 import { VotingRightComponent } from "../domain/components/voting_right";
 
+/**
+ * PhaseManager 是 V3 引擎的时序中枢。
+ * 负责串行驱动夜晚/白天/投票，并在每个阶段后执行死亡钩子与胜负裁决。
+ */
 export class PhaseManager {
   private readonly events: GameEvent[] = [];
   private readonly eventRegistry: EventRegistry;
@@ -106,6 +110,7 @@ export class PhaseManager {
     this.setPhase(Phase.Day);
     const dayResult = await this.dayPipeline.execute(this.config, actionProvider);
     if (dayResult.interrupted) {
+      // 白天被自爆中断时直接结束当日并切到下一夜。
       if (this.checkAndSealResult()) {
         return this.getSnapshot();
       }
@@ -117,6 +122,7 @@ export class PhaseManager {
     const votingResult = await this.votingPipeline.execute(this.config, actionProvider);
 
     if (votingResult.interrupted) {
+      // 投票前窗口发生自爆，同样跳过当日剩余流程。
       if (this.checkAndSealResult()) {
         return this.getSnapshot();
       }
@@ -166,6 +172,7 @@ export class PhaseManager {
     const allSources: Record<number, StatusMark[]> = { ...sources };
 
     while (pending.length > 0) {
+      // 先处理警长死亡带来的警徽逻辑，再执行角色死亡钩子。
       for (const deadId of pending) {
         this.handleSheriffDeath(deadId, phase);
       }
@@ -260,6 +267,8 @@ export class PhaseManager {
       return;
     }
 
+    // 当前实现选择“警长死亡后警徽直接销毁”。
+    // 若后续引入移交流程，可在此扩展“移交候选 -> 确认 -> 广播”逻辑。
     badge.isSheriff = false;
     badge.destroyed = true;
 

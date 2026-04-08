@@ -5,6 +5,11 @@ import { Broadcaster } from "../infra/transport/broadcaster";
 import { setupSocket, setGlobalBroadcaster } from "./socket";
 import { V3SessionManager } from "./v3_session_manager";
 
+/**
+ * V3 服务入口：
+ * - HTTP: 状态查询、开局、停局、会话快照
+ * - Socket: 实时事件广播
+ */
 const fastify = Fastify({
   logger: true,
 });

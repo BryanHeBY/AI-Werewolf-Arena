@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import * as path from "path";
 
+// 同时兼容“在仓库根目录运行”和“在 backend 目录运行”两种启动方式。
 const cwd = process.cwd();
 const isRunningFromBackend = cwd.endsWith("/backend");
 const rootDir = isRunningFromBackend ? path.resolve(cwd, "..") : path.resolve(cwd);
@@ -17,6 +18,7 @@ export interface AppConfig {
 }
 
 export function loadConfig(): AppConfig {
+  // 默认走 6 人 MVP，避免无配置时直接进入高复杂度板子。
   const defaultBoard =
     process.env.V3_DEFAULT_BOARD === "twelve_player_standard"
       ? "twelve_player_standard"

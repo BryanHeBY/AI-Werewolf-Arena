@@ -6,21 +6,20 @@
 
 - V3 后端架构总规范（Source of Truth）：`docs/specs/backend_architecture_whitepaper_v3.md`
 - V3 MVP 实现要求（当前迭代执行清单）：`docs/specs/v3_mvp_requirements.md`
-- 总索引：`docs/codebase/README.md`
-- 后端架构主线：`docs/codebase/backend/src/core/README.md`
-- 前端架构主线：`docs/codebase/frontend/src/composables/README.md`
-- 引擎核心：`docs/codebase/backend/src/core/GameEngineV2.ts.md`
-- 状态中枢：`docs/codebase/backend/src/core/Environment.ts.md`
-- 前端状态中枢：`docs/codebase/frontend/src/composables/useGameStore.ts.md`
+- 后端架构主线：`backend/src/engine/*`
+- 领域模型主线：`backend/src/domain/*`
+- 引擎核心：`backend/src/engine/phase_manager.ts`
+- 状态中枢：`backend/src/domain/world.ts`
+- 前端状态中枢：`frontend/src/composables/useGameStore.ts`
 
-## 2. 未来目标 TODO
+## 2. 开发任务清单
 
-- [ ] 将后端白皮书条款逐条映射到 `docs/codebase/backend/src/*` 文件级文档。
-- [ ] 在树形文档中补充“模块间时序图”（开局、夜晚、白天、结算）。
-- [ ] 增加“遗留模块清理清单”（frontend 遗留组件、旧 mock 逻辑）。
+- [ ] `T01` 在 `backend/src/engine/phase_manager.ts` 落地白皮书串行时序（夜晚/白天/投票）并补齐 hooks 调度。
+- [ ] `T02` 在 `backend/src/domain/components/*` 与 `backend/src/domain/systems/*` 完成组件/系统拆分与结算归位。
+- [ ] `T03` 在 `frontend/src/composables/mock*.ts` 清理旧 mock 逻辑，统一接入真实事件流。
 
-## 3. 验收标准
+## 3. 验收标准（任务映射）
 
-- [ ] 架构入口文档能指向白皮书与完整树形细节文档。
-- [ ] 核心模块变更后，入口链接与子文档均同步更新。
-- [ ] 新成员可仅凭 docs/codebase 理解系统边界与调用链。
+- [ ] `A01`（对应: `T01`） `backend/tests/v3/phase_manager_mvp.test.ts` 与 hooks 新增断言通过。
+- [ ] `A02`（对应: `T02`） `backend/tests/v3/phase_manager_mvp.test.ts`、`tool_gateway_validation.test.ts` 通过且目录拆分完成。
+- [ ] `A03`（对应: `T03`） 前端运行不再依赖旧 mock 数据链路，联调事件来自后端真实广播。

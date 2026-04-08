@@ -1,3 +1,7 @@
+/**
+ * V3 后端公共导出入口。
+ * 供测试脚本、服务层和外部调用方统一引入核心能力。
+ */
 export { GameContainer } from "./app/container";
 export { bootstrapGame } from "./app/bootstrap";
 

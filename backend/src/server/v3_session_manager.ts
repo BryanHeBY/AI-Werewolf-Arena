@@ -25,6 +25,10 @@ export interface SessionManagerConfig {
   cycleDelayMs: number;
 }
 
+/**
+ * 单局会话封装：
+ * 持有完整对局上下文，负责循环推进 phase 并把内部事件翻译成前端实时事件。
+ */
 class V3GameSession {
   private readonly context: BootstrapResult;
   private readonly actionProvider: BaselineBotActionProvider;
@@ -56,6 +60,7 @@ class V3GameSession {
     }
 
     this.running = true;
+    // 开局先发一帧完整状态，前端可据此初始化全量视图。
     this.broadcaster.broadcast({
       type: "game_started",
       timestamp: Date.now(),
@@ -109,6 +114,7 @@ class V3GameSession {
   }
 
   private flushEvents(): void {
+    // 只增量消费新事件，避免重复广播同一条历史事件。
     const events = this.context.phaseManager.getEvents().slice(this.eventCursor);
     this.eventCursor += events.length;
 
@@ -286,6 +292,7 @@ export class V3SessionManager {
 
   start(options: SessionStartOptions = {}): SessionStatus {
     if (this.current && this.current.status().running) {
+      // 同一时刻只允许一个活跃会话，重复 start 直接返回当前状态。
       return this.current.status();
     }
 

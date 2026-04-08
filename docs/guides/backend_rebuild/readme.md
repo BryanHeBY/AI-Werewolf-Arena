@@ -4,6 +4,8 @@
 
 本目录是 V3 后端“重构前置作战包”，用于在正式改代码前统一目标、分工、顺序与验收口径。
 
+执行纪律：默认遵循 `docs/guides/unattended_todo_loop.md` 的单条 TODO 闭环规则。
+
 建议阅读顺序：
 
 1. `00_rebuild_charter.md`：重构边界、目标、非目标。
@@ -16,7 +18,7 @@
 
 当前进度快照（2026-04-08）：
 
-1. P0 已完成：`docs/codebase` 已按当前源码重建。
+1. P0 已完成：核心模块职责说明已迁移到源码中文注释。
 2. P1 已完成：`backend/src/{app,domain,engine}` 已落地串行状态机与 ECS 组件/系统骨架。
 3. P2 已完成：`backend/src/gateway` 已落地 schema 注册、动作校验与输入清洗。
 4. P3 已完成（MVP 基线）：`backend/tests/v3` 覆盖白痴、猎人、守卫、女巫、自爆中断关键规则并通过。
@@ -27,17 +29,18 @@
 
 - 最高规范：`docs/specs/backend_architecture_whitepaper_v3.md`
 - MVP 范围：`docs/specs/v3_mvp_requirements.md`
-- 当前代码镜像：`docs/codebase/backend/README.md`
+- 当前代码入口：`backend/src/index.ts`
 
-## 2. 未来目标 TODO
+## 2. 开发任务清单
 
-- [ ] 为每个阶段补充“负责人/预计工时/风险等级”。
-- [x] 增加“每日推进记录”并保持与任务看板一致。
-- [x] 每次结构变更后，同步更新目标目录图与迁移映射。
-- [ ] 增加“V3 角色覆盖率矩阵”（MVP -> 全白皮书角色）。
+- [ ] `T01` 完成 `00_rebuild_charter.md` 的 Action Window、狼队战术环、遗言规则三项核心机制开发。
+- [ ] `T02` 完成 `01_target_architecture_and_structure.md` 的目录拆分与 hooks 落地任务。
+- [ ] `T03` 完成 `04_test_quality_gates.md` 新增测试（night_wolf_tactical_loop / day_interrupt_hooks）并接入测试命令分层。
+- [ ] `T04` 完成 `05_cutover_and_rollback.md` 与 `06_dependency_rules.md` 的开关切换、依赖约束、本地阻断能力。
 
-## 3. 验收标准
+## 3. 验收标准（任务映射）
 
-- [ ] 团队可仅依赖本目录启动后端重构，不需额外口头说明。
-- [ ] 每个开发任务能追溯到白皮书条款与代码文件节点。
-- [ ] 执行阶段、测试阶段、切换阶段都有明确入口文档与退出条件。
+- [ ] `A01`（对应: `T01`） 4 类 Action Window 与狼队战术环在自动化测试中可复现。
+- [ ] `A02`（对应: `T02`） domain 拆分、hooks 落地、server/transport 边界重构均有对应代码提交与测试。
+- [ ] `A03`（对应: `T03`） 新增测试通过后，`test:quick` 与 `test:full` 均可稳定运行。
+- [ ] `A04`（对应: `T04`） lint 规则与切换开关可在本地命令中自动阻断违规发布。

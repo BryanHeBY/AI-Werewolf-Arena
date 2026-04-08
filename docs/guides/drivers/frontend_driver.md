@@ -2,28 +2,27 @@
 
 ## 1. 当前代码详细文档
 
-前端详细文档已拆分为树形结构（按源码路径镜像）：
+前端代码主线：
 
 1. 总入口：
-   - `docs/codebase/frontend/README.md`
+   - `frontend/src/App.vue`
 2. 主链路：
-   - `docs/codebase/frontend/src/App.vue.md`
-   - `docs/codebase/frontend/src/composables/useGameStore.ts.md`
-   - `docs/codebase/frontend/src/composables/useWebSocket.ts.md`
+   - `frontend/src/composables/useGameStore.ts`
+   - `frontend/src/composables/useWebSocket.ts`
 3. 组件层：
-   - `docs/codebase/frontend/src/components/README.md`
+   - `frontend/src/components/*`
 4. 类型与工具：
-   - `docs/codebase/frontend/src/types/index.ts.md`
-   - `docs/codebase/frontend/src/lib/utils.ts.md`
+   - `frontend/src/types/index.ts`
+   - `frontend/src/lib/utils.ts`
 
-## 2. 未来目标 TODO
+## 2. 开发任务清单
 
-- [ ] 为 `docs/codebase/frontend/src/*` 目录 README 增加 UI 状态流图。
-- [ ] 在遗留文件文档中增加“是否保留/何时删除”决策字段。
-- [ ] 增加前后端类型对齐检查清单（字段、可选性、枚举值）。
+- [ ] `T01` 在 `frontend/src/composables/useWebSocket.ts` 对齐 V3 新事件字段（阶段、投票权重、中断状态）。
+- [ ] `T02` 在 `frontend/src/composables/useGameStore.ts` 适配警长竞选/警徽流转的状态更新逻辑。
+- [ ] `T03` 在 `frontend/src/types/index.ts` 补齐 V3 事件类型定义并消除 `any` 漏洞。
 
-## 3. 验收标准
+## 3. 验收标准（任务映射）
 
-- [ ] frontend/src 每个源码文件都存在 `docs/codebase/frontend/src/<file>.md`。
-- [ ] 每个目录节点都有 `README.md` 且父子导航无断链。
-- [ ] 前端代码改动时，对应 codebase 文档同提交更新。
+- [ ] `A01`（对应: `T01`） WebSocket 收到新事件后，页面状态可正确渲染阶段与中断信息。
+- [ ] `A02`（对应: `T02`） 警长相关 UI 在竞选、移交、撕毁场景下状态一致。
+- [ ] `A03`（对应: `T03`） TypeScript 前端构建无新增类型错误，事件 payload 全量有类型约束。
