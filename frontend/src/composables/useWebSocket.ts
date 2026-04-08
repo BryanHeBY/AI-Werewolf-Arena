@@ -1,7 +1,5 @@
 import { ref, onUnmounted } from "vue";
 import { io, type Socket } from "socket.io-client";
-import type { BroadcastEvent } from "@/types";
-
 export function useWebSocket(url: string = "http://localhost:3344") {
   const socket = ref<Socket | null>(null);
   const isConnected = ref(false);
@@ -51,11 +49,11 @@ export function useWebSocket(url: string = "http://localhost:3344") {
     }
   };
 
-  const on = (event: string, callback: (data: any) => void) => {
+  const on = <T = unknown>(event: string, callback: (data: T) => void) => {
     socket.value?.on(event, callback);
   };
 
-  const off = (event: string, callback?: (data: any) => void) => {
+  const off = <T = unknown>(event: string, callback?: (data: T) => void) => {
     if (callback) {
       socket.value?.off(event, callback);
     } else {
@@ -63,7 +61,7 @@ export function useWebSocket(url: string = "http://localhost:3344") {
     }
   };
 
-  const emit = (event: string, ...args: any[]) => {
+  const emit = (event: string, ...args: unknown[]) => {
     socket.value?.emit(event, ...args);
   };
 

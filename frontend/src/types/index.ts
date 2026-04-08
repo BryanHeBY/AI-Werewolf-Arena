@@ -30,7 +30,10 @@ export enum RoleType {
   Wolf = 'wolf',
   Villager = 'villager',
   Seer = 'seer',
-  Witch = 'witch'
+  Witch = 'witch',
+  Guard = 'guard',
+  Hunter = 'hunter',
+  Idiot = 'idiot'
 }
 
 /**
@@ -92,6 +95,8 @@ export interface PublicPlayer {
   roleType: RoleType;
   faction: Faction;
   isAlive: boolean;
+  isSheriff?: boolean;
+  voteWeight?: number;
 }
 
 /**
@@ -109,6 +114,18 @@ export interface PublicGameState {
   witchHasAntidote: boolean;
   witchHasPoison: boolean;
   currentSpeechIndex: number;
+  alive_count?: number;
+  pending_marks?: Array<{ playerId: number; marks: string[] }>;
+  last_action_id?: string;
+  interrupt_state?: {
+    interrupted: boolean;
+    window?: string;
+    by?: number | null;
+  };
+  sheriff?: {
+    id: number | null;
+    voteWeight: number;
+  };
 }
 
 
@@ -180,6 +197,83 @@ export interface BroadcastEvent {
   data: unknown;
   timestamp: number;
 }
+
+export interface GameStartedPayload {
+  phase: GamePhase | string;
+  round: number;
+  players: PublicPlayer[];
+  gameState?: PublicGameState;
+}
+
+export interface PhaseChangedPayload {
+  phase: GamePhase | string;
+  round: number;
+  gameState?: PublicGameState;
+  interrupted?: boolean;
+  interruptWindow?: string;
+  interruptedBy?: number | null;
+}
+
+export interface AgentThinkingPayload {
+  playerId: number;
+  thought: string;
+}
+
+export interface PlayerActionPayload {
+  playerId: number;
+  roleType?: RoleType | string;
+  actionType: ActionType | string;
+  targetId?: number;
+  content?: string;
+  thought?: string;
+}
+
+export interface NightResultPayload {
+  deadPlayerIds: number[];
+  killedByWolf?: number;
+  savedByWitch?: number;
+  poisonedByWitch?: number;
+}
+
+export interface PlayerDiedPayload {
+  playerId: number;
+  roleType?: RoleType | string;
+}
+
+export interface SpeechStartPayload {
+  playerId?: number;
+  playerName?: string;
+}
+
+export interface VoteResultPayload {
+  votedDeadId?: number;
+  votedDeadName?: string;
+  votedOutId?: number;
+  votedOutName?: string;
+}
+
+export interface GameOverPayload {
+  winner: Faction | string;
+  gameState?: PublicGameState;
+}
+
+export interface WinnerDeclaredPayload {
+  winner: Faction | string;
+  message?: string;
+}
+
+export type RealtimeGameEvent =
+  | { type: BroadcastEventType.GameStarted; data: GameStartedPayload; timestamp: number }
+  | { type: BroadcastEventType.PhaseChanged; data: PhaseChangedPayload; timestamp: number }
+  | { type: BroadcastEventType.AgentThinking; data: AgentThinkingPayload; timestamp: number }
+  | { type: BroadcastEventType.AgentThoughtComplete; data: AgentThinkingPayload; timestamp: number }
+  | { type: BroadcastEventType.PlayerAction; data: PlayerActionPayload; timestamp: number }
+  | { type: BroadcastEventType.NightResult; data: NightResultPayload; timestamp: number }
+  | { type: BroadcastEventType.PlayerDied; data: PlayerDiedPayload; timestamp: number }
+  | { type: BroadcastEventType.SpeechStart; data: SpeechStartPayload; timestamp: number }
+  | { type: BroadcastEventType.VoteResult; data: VoteResultPayload; timestamp: number }
+  | { type: BroadcastEventType.GameOver; data: GameOverPayload; timestamp: number }
+  | { type: BroadcastEventType.WinnerDeclared; data: WinnerDeclaredPayload; timestamp: number };
 
 /**
  * GameState 结构 - 游戏的核心状态
