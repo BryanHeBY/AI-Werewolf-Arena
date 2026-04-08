@@ -27,7 +27,7 @@
 执行策略：
 
 1. 先用 Mock LLM 覆盖状态流转正确性。
-2. 再接入真实模型做 tool call 约束验证。
+2. 再接入真实模型做 tool call 约束验证（使用项目根目录 `.env` 中 `OPENAI_BASE_URL/OPENAI_API_KEY/OPENAI_MODEL`，当前由 Minimax 配置提供）。
 3. 每次规则修改必须更新对应测试用例与文档条目。
 
 当前自动化结果（2026-04-08）：
@@ -44,6 +44,7 @@
 - [ ] `T02` 新增 `backend/tests/v3/day_interrupt_hooks.test.ts` 覆盖白天 4 类中断窗口。
 - [ ] `T03` 新增 `backend/tests/v3/sheriff_pipeline.test.ts` 覆盖警长竞选、票权、移交/撕毁。
 - [ ] `T04` 新增 `backend/tests/v3/memory_compression.test.ts` 覆盖摘要触发与上下文替换行为。
+- [ ] `T05` 新增 `backend/tests/v3/minimax_live_connectivity.test.ts`，验证真实模型连通与最小 tool call 回路（通过 `RUN_LIVE_LLM_TEST=1` 显式启用，默认不在常规回归中执行）。
 
 ## 3. 验收标准（任务映射）
 
@@ -51,3 +52,4 @@
 - [ ] `A02`（对应: `T02`） 任一中断窗口触发后，阶段流转与日志断言均正确。
 - [ ] `A03`（对应: `T03`） 警长相关规则测试通过且不影响现有 MVP 用例。
 - [ ] `A04`（对应: `T04`） 第 3 天后上下文压缩逻辑可验证且无流程中断。
+- [ ] `A05`（对应: `T05`） 在配置有效时执行 `cd backend && RUN_LIVE_LLM_TEST=1 npm test -- --runInBand backend/tests/v3/minimax_live_connectivity.test.ts` 通过；配置缺失时测试必须以明确原因 `skip`，且全程不打印 API Key 明文。

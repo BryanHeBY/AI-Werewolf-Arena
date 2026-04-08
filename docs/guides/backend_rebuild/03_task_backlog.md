@@ -6,39 +6,39 @@
 
 任务分组 A：目录与基础设施
 
-- [x] A1 新建 V3 目录骨架（app/domain/engine/gateway/memory/infra/scenarios）。
-- [x] A2 新建统一导出入口 `backend/src/index.ts`。
-- [x] A3 新建依赖方向约束说明（禁止跨层反向依赖）。
+- [ ] A1 新建 V3 目录骨架（app/domain/engine/gateway/memory/infra/scenarios）。
+- [ ] A2 新建统一导出入口 `backend/src/index.ts`。
+- [ ] A3 新建依赖方向约束说明（禁止跨层反向依赖）。
 
 任务分组 B：ECS 与系统
 
-- [x] B1 `RoleComponent` / `CampComponent` / `AliveComponent` / `VotingRightComponent`。
-- [x] B2 `StatusMarks`：`GuardMark` / `WolfKillMark` / `HealMark` / `PoisonMark`。
-- [x] B3 `DamageResolutionSystem`：同守同救规则、毒药致死规则。
-- [x] B4 `WinConditionSystem`：屠城/屠边判定。
+- [ ] B1 `RoleComponent` / `CampComponent` / `AliveComponent` / `VotingRightComponent`。
+- [ ] B2 `StatusMarks`：`GuardMark` / `WolfKillMark` / `HealMark` / `PoisonMark`。
+- [ ] B3 `DamageResolutionSystem`：同守同救规则、毒药致死规则。
+- [ ] B4 `WinConditionSystem`：屠城/屠边判定。
 
 任务分组 C：Phase 与事件拦截
 
-- [x] C1 `PhaseManager`：`start_night()`、`start_day()`、`start_voting()`。
-- [x] C2 夜间流水线：狼人交流 -> 守卫 -> 狼刀 -> 女巫 -> 预言家。
-- [x] C3 `EventRegistry`：白痴被放逐免死 + 剥离投票权。
-- [x] C4 `EventRegistry`：猎人吃毒闷枪/合法死亡触发 `shoot(target_id)`。
-- [x] C5 自爆中断：`self_destruct(reason)` 触发 `jump_to("night")`。
+- [ ] C1 `PhaseManager`：`start_night()`、`start_day()`、`start_voting()`。
+- [ ] C2 夜间流水线：狼人交流 -> 守卫 -> 狼刀 -> 女巫 -> 预言家。
+- [ ] C3 `EventRegistry`：白痴被放逐免死 + 剥离投票权。
+- [ ] C4 `EventRegistry`：猎人吃毒闷枪/合法死亡触发 `shoot(target_id)`。
+- [ ] C5 自爆中断：`self_destruct(reason)` 触发 `jump_to("night")`。
 
 任务分组 D：Tool Gateway 与 Prompt
 
-- [x] D1 Tool schema 注册：`guard`、`check_identity`、`use_potion`、`shoot`、`self_destruct`。
-- [x] D2 网关鉴权：同守限制、女巫自救拦截、同夜双药拦截。
-- [x] D3 Prompt 组装：system facts + notebook + summary + active context。
-- [x] D4 输入清洗：拦截伪造系统前缀（上帝/法官等）。
+- [ ] D1 Tool schema 注册：`guard`、`check_identity`、`use_potion`、`shoot`、`self_destruct`。
+- [ ] D2 网关鉴权：同守限制、女巫自救拦截、同夜双药拦截。
+- [ ] D3 Prompt 组装：system facts + notebook + summary + active context。
+- [ ] D4 输入清洗：拦截伪造系统前缀（上帝/法官等）。
 
 任务分组 E：场景与联调
 
-- [x] E1 6 人局基准场景配置与回放脚本。
-- [x] E2 12 人局基准场景配置与回放脚本。
-- [x] E3 socket/broadcast 协议对齐与前端联调。
-- [x] E4 服务入口切换到 V3（`server/index.ts`）。
-- [x] E5 清理 V2 目录与旧测试，完成单栈运行。
+- [ ] E1 6 人局基准场景配置与回放脚本。
+- [ ] E2 12 人局基准场景配置与回放脚本。
+- [ ] E3 socket/broadcast 协议对齐与前端联调。
+- [ ] E4 服务入口切换到 V3（`server/index.ts`）。
+- [ ] E5 清理 V2 目录与旧测试，完成单栈运行。
 
 建议执行序列：
 
@@ -122,6 +122,11 @@ MVP 必选机制覆盖矩阵（对齐 `docs/specs/v3_mvp_requirements.md`）：
 | Tool schema + 鉴权 + 错误回弹 | D1, D2 | TC-GATEWAY-001 |
 | Prompt 与记忆（发言挂载、摘要） | D3 | TC-PHASE-001 |
 | 场景与联调（6人/12人/API） | E1, E2, E3, E4 | TC-SESSION-001 |
+
+发布异常转化记录（用于对齐 `review_release_activity_driver.md`）：
+
+- [ ] R1 `release:check` 缺少标准命令编排，已补 `backend/package.json`：`test:quick` / `test:full` / `smoke:v3` / `release:check`。
+- [ ] R2 缺少依赖方向阻断命令，已补 `backend/eslint.config.cjs` 与 `npm run lint:deps`。
 
 ## 2. 开发任务清单
 
