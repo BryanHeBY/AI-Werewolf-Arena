@@ -25,6 +25,79 @@ class AssertClient {
   }
 }
 
+class ToolLoopClient {
+  public lastMessages: Array<{ role: string; content: string }> = [];
+
+  constructor(
+    private readonly toolName: string,
+    private readonly args: Record<string, unknown>,
+  ) {}
+
+  async chat(): Promise<string> {
+    return "";
+  }
+
+  async runToolLoop<T>(
+    messages: Array<{ role: string; content: string }>,
+    _tools: Array<{ name: string }>,
+    callbacks: {
+      onToolCall: (invocation: {
+        id: string;
+        name: string;
+        args: Record<string, unknown>;
+        rawArgs: string;
+      }) => Promise<{
+        toolResult: Record<string, unknown> | string;
+        finalAction?: T;
+        stop?: boolean;
+      }>;
+    },
+  ): Promise<{ finalAction: T | null; assistantText: string }> {
+    this.lastMessages = messages;
+    const handled = await callbacks.onToolCall({
+      id: "tool_1",
+      name: this.toolName,
+      args: this.args,
+      rawArgs: JSON.stringify(this.args),
+    });
+    return {
+      finalAction: (handled.finalAction ?? null) as T | null,
+      assistantText: "sdk_tool_loop_assistant",
+    };
+  }
+}
+
+class FinishTurnOnlyClient {
+  async chat(): Promise<string> {
+    return "";
+  }
+
+  async runToolLoop<T>(
+    _messages: Array<{ role: string; content: string }>,
+    _tools: Array<{ name: string }>,
+    callbacks: {
+      onToolCall: (invocation: {
+        id: string;
+        name: string;
+        args: Record<string, unknown>;
+        rawArgs: string;
+      }) => Promise<{
+        toolResult: Record<string, unknown> | string;
+        finalAction?: T;
+        stop?: boolean;
+      }>;
+    },
+  ): Promise<{ finalAction: T | null; assistantText: string }> {
+    await callbacks.onToolCall({
+      id: "finish_1",
+      name: "finish_turn",
+      args: {},
+      rawArgs: "{}",
+    });
+    return { finalAction: null, assistantText: "finish_turn_called" };
+  }
+}
+
 class FallbackProvider implements ActionProvider {
   constructor(private readonly action: ToolCall | null) {}
 
@@ -179,7 +252,7 @@ describe("LlmActionProvider", () => {
     expect(text.toLowerCase()).not.toContain("context=");
   });
 
-  test("seer private intel is injected into prompt after check result is written", async () => {
+  test("prompt no longer contains private-intel snapshot line", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const seerId = 5;
     const seerRole = context.world.getComponent<RoleComponent>(seerId, COMPONENT.Role)!;
@@ -190,8 +263,11 @@ describe("LlmActionProvider", () => {
     const provider = new LlmActionProvider(
       context.world,
       new AssertClient('{"name":"speak","args":{"text":"收到查验"}}', (messages) => {
-        const user = messages.find((m) => m.role === "user")?.content ?? "";
-        expect(user).toContain("私有查验情报=你最近一次查验：1号是狼人");
+        const joined = messages
+          .filter((m) => m.role === "user")
+          .map((m) => m.content)
+          .join("\n");
+        expect(joined).not.toContain("私有查验情报=");
       }),
       {
         fallbackProvider: new FallbackProvider(null),
@@ -237,13 +313,18 @@ describe("LlmActionProvider", () => {
     });
   });
 
-  test("injects public feed into prompt for downstream reasoning", async () => {
+  test("injects public feed as broadcast user lines", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
       new AssertClient('{"name":"speak","args":{"text":"收到公开信息"}}', (messages) => {
-        const user = messages.find((m) => m.role === "user")?.content ?? "";
-        expect(user).toContain("公开信息摘要=[发言][1] 我是1号，我是狼人");
+        const joined = messages
+          .filter((m) => m.role === "user")
+          .map((m) => m.content)
+          .join("\n");
+        expect(joined).toContain("【广播】[发言][1] 我是1号，我是狼人");
+        expect(joined).not.toContain("公开信息摘要=");
+        expect(joined).not.toContain("阶段上下文=");
       }),
       {
         fallbackProvider: new FallbackProvider(null),
@@ -263,6 +344,89 @@ describe("LlmActionProvider", () => {
     expect(action).toEqual({
       name: "speak",
       args: { text: "收到公开信息" },
+    });
+  });
+
+  test("uses sdk tool loop as primary path", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const toolClient = new ToolLoopClient("speak", { text: "sdk_action" });
+    const provider = new LlmActionProvider(context.world, toolClient as any, {
+      fallbackProvider: new FallbackProvider(null),
+    });
+
+    const action = await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["speak"],
+      context: { must_act: true },
+    });
+
+    expect(action).toEqual({
+      name: "speak",
+      args: { text: "sdk_action" },
+    });
+  });
+
+  test("appends broadcast lines into per-agent message history", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const toolClient = new ToolLoopClient("speak", { text: "收到广播" });
+    const provider = new LlmActionProvider(context.world, toolClient as any, {
+      fallbackProvider: new FallbackProvider(null),
+    });
+
+    await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["speak"],
+      context: {
+        must_act: true,
+        broadcast_feed: ["[系统][公开] 天亮了（第1天白天）"],
+      },
+    });
+
+    await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["speak"],
+      context: {
+        must_act: true,
+        broadcast_feed: [
+          "[系统][公开] 天亮了（第1天白天）",
+          "[发言][公开][2] 我是2号",
+        ],
+      },
+    });
+
+    const joined = toolClient.lastMessages
+      .map((msg) => `${msg.role}:${msg.content}`)
+      .join("\n");
+    expect(joined).toContain("【广播】[系统][公开] 天亮了（第1天白天）");
+    expect(joined).toContain("【广播】[发言][公开][2] 我是2号");
+  });
+
+  test("sdk loop finish_turn falls back when action is required", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const provider = new LlmActionProvider(
+      context.world,
+      new FinishTurnOnlyClient() as any,
+      {
+        fallbackProvider: new FallbackProvider({
+          name: "speak",
+          args: { text: "fallback_required_action" },
+        }),
+      },
+    );
+
+    const action = await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["speak"],
+      context: { must_act: true, broadcast_feed: [] },
+    });
+
+    expect(action).toEqual({
+      name: "speak",
+      args: { text: "fallback_required_action" },
     });
   });
 });

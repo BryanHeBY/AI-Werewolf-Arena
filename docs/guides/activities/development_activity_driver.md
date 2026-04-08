@@ -71,10 +71,14 @@
 - [x] `T13` 修复 `RoleComponent.renderPrompt` 的空值编译回归：`seerState` 判空后再读取字段，恢复 `build:v3` 与测试可执行。
 - [x] `T14` 将 LLM 相关提示词全面中文化（工具名与工具参数名保持英文）：包括 `LlmActionProvider` 的 system/user prompt、私有情报字段文案，以及 `PromptAssembler` 的分区标题，避免中英混杂造成模型理解偏差。
 - [x] `T15` 为 `run_llm_game` 增加“LLM 对话/思考/工具调用可观测”参数：运行时可选打印每次请求的 system/user prompt、模型原始回复（含 `<think>`）和最终工具调用（含参数）。
-- [ ] `T16` 修复 LLM 行为语义冲突：`actionWindow=none` 在提示词中易被模型误解为“不能行动”；并且“必须行动回合返回 none”需要被识别并按规则降级处理，避免无效动作污染流程。
-- [ ] `T17` 修复“发言上下文断裂”：后位玩家与投票阶段必须能看到当日已发生的公开发言与关键公开事件（如查杀口误、对跳），避免出现“明显聊爆但无人感知”。
+- [x] `T16` 修复 LLM 行为语义冲突：`actionWindow=none` 在提示词中易被模型误解为“不能行动”；并且“必须行动回合返回 none”需要被识别并按规则降级处理，避免无效动作污染流程。
+- [x] `T17` 修复“发言上下文断裂”：后位玩家与投票阶段必须能看到当日已发生的公开发言与关键公开事件（如查杀口误、对跳），避免出现“明显聊爆但无人感知”。
 - [x] `T18` 修复“预言家查验信息泄漏”：`seer_checked` 只能作为预言家私有情报使用，禁止进入公共播报、公共 feed、非预言家 Prompt。
 - [x] `T19` 重构广播系统为“全量事件 + 可见性过滤”：每条实时事件必须显式声明 `public | wolves_only | private_targets`，并由服务端按 `playerId + role` 过滤投递。
+- [x] `T20` 重构 Agent 执行链路为“独立消息列表 + SDK tool calling”：每个 `playerId` 维护独立 chat messages，广播事件按可见性直接写入该玩家消息流；行动主路径改为 OpenAI SDK 工具调用循环（由模型自行组织直到结束回合）。
+- [x] `T21` 重组运行日志并新增 `--print-thinking`：将 SDK 回合中的 `assistant` 文本与 `tool_call/tool_result` 作为“思考轨迹”输出（独立于 `--print-llm-io`），用于快速排查模型决策链路。
+- [ ] `T22` 增加 `--print-private-events`（默认开启）：控制台旁观日志默认输出私有事件细节（如 `seer_checked`），不影响 Agent 视角隔离与可见性过滤。
+- [x] `T23` 狼队内部交流改为两轮：夜间 `speak_to_wolves` 固定执行两轮，复用同一随机顺序，随后再进入狼刀投票。
 
 ## 3. 验收标准（任务映射）
 
@@ -94,7 +98,11 @@
 - [x] `A14`（对应: `T13`） 执行 `cd backend && npm run build:v3` 与 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts` 均通过，不再出现 `Object is possibly 'undefined'`。
 - [x] `A15`（对应: `T14`） 执行 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts tests/v3/memory_compression.test.ts` 与 `cd backend && npm run build:v3` 均通过；提示词关键文本改为中文（工具名如 `check_identity`、`vote` 保持英文）。
 - [x] `A16`（对应: `T15`） 执行 `cd backend && npm run run:v3:six -- --print-llm-io true`，日志中可看到：1) 每轮 LLM 的 system/user prompt；2) 模型原始回复（含 `<think>`）；3) 结构化工具调用结果（工具名+参数）；并且 `cd backend && npm run build:v3` 通过。
-- [ ] `A17`（对应: `T16`） 执行 `cd backend && npm run run:v3:six -- --print-llm-io true`，日志中应出现：1) 提示词明确区分“标准轮次”与“必须行动”；2) 当模型返回 `{\"name\":\"none\"}` 且 `mustAct=true` 时，日志记录为 `model_declined_required_action` 并自动 fallback；3) `cd backend && npm run build:v3` 与 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts` 通过。
-- [ ] `A18`（对应: `T17`） 执行 `cd backend && npm run run:v3:six -- --print-llm-io true`，在后位玩家的 `prompt_user` 中可见“当日公开发言摘要/关键事件”；并通过 `cd backend && npm run build:v3` 与 `cd backend && npm test -- --runInBand tests/v3/day_interrupt_hooks.test.ts tests/v3/llm_action_provider.test.ts`。
+- [x] `A17`（对应: `T16`） 执行：1) `cd backend && npm run run:v3:six -- --max-runtime-ms 45000 --print-llm-io true`，日志确认提示词明确区分“标准轮次（actionWindow=standard_round）”与“必须行动（mustAct=true）”；2) `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts`，新增用例覆盖 SDK `finish_turn` + `mustAct=true` 时自动降级 fallback（`model_declined_required_action` 路径）；3) `cd backend && npm run build:v3` 通过。
+- [x] `A18`（对应: `T17`） 执行 `cd backend && npm run run:v3:six -- --max-runtime-ms 60000 --print-llm-io true`，在后位玩家的 `prompt_user` 中可见“当日公开发言摘要/关键事件”（例如 `player=3 phase=day` 可见 `[发言][公开][1]` 与 `[发言][公开][2]`）；并通过 `cd backend && npm run build:v3` 与 `cd backend && npm test -- --runInBand tests/v3/day_interrupt_hooks.test.ts tests/v3/llm_action_provider.test.ts tests/v3/agent_broadcast_feed.test.ts`。
 - [x] `A19`（对应: `T18`） 执行 `cd backend && npm run run:v3:six -- --max-runtime-ms 90000 --print-all-events true --print-chat true --print-llm-io true`，验证非预言家 `prompt_user` 中不再出现 `[查验记录]` 且 `公开信息摘要` 未含查验结果；实时日志不再播报“预言家已完成查验/查验结果”；并通过 `cd backend && npm run build:v3` 与 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts`。
 - [x] `A20`（对应: `T19`） 执行 `cd backend && npm test -- --runInBand tests/v3/session_manager.test.ts tests/v3/broadcaster_visibility.test.ts`，验证：1) `wolves_only` 仅狼人收到；2) `private_targets` 仅目标玩家收到；3) `public` 全员可见；并通过 `cd backend && npm run build:v3`。
+- [x] `A21`（对应: `T20`） 执行 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts tests/v3/agent_broadcast_feed.test.ts`，验证：1) 广播信息进入对应玩家历史消息；2) 回合行动走 SDK tool calling 主路径；3) 投票阶段对外仅广播放逐结果（狼刀投票仍在狼阵营串行可见）；并通过 `cd backend && npm run build:v3` 和 `cd backend && npm run run:v3:six -- --max-runtime-ms 60000 --print-llm-io true`。
+- [x] `A22`（对应: `T21`） 执行 `cd backend && npm run run:v3:six -- --max-runtime-ms 20000 --print-thinking true`，日志出现 `[THINKING] assistant ...` 与 `[THINKING] tool_call/tool_result ...`；并通过 `cd backend && npm run build:v3` 与 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts`。
+- [ ] `A23`（对应: `T22`） 执行 `cd backend && npm run run:v3:six -- --max-runtime-ms 30000`，默认日志应出现私有事件明细（如 `[live][私有][查验] ...`）；执行 `cd backend && npm run run:v3:six -- --max-runtime-ms 30000 --print-private-events false` 时该类日志不输出；并通过 `cd backend && npm run build:v3`。
+- [x] `A24`（对应: `T23`） 执行 `cd backend && npm test -- --runInBand tests/v3/night_wolf_tactical_loop.test.ts`，验证同夜狼人发言顺序出现两轮且两轮顺序均与狼刀投票顺序一致；并通过 `cd backend && npm run build:v3`。

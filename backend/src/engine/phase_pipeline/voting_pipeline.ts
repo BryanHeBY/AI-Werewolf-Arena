@@ -16,6 +16,7 @@ import {
 import { ToolGateway } from "../../gateway/tool_gateway";
 import { EventRegistry } from "../event_registry";
 import { World } from "../../domain/world";
+import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
 
 export interface VotingPipelineResult {
   summary: VotingSummary;
@@ -77,7 +78,7 @@ export class VotingPipeline {
         context: {
           phase: "voting",
           must_act: true,
-          public_feed: this.buildPublicFeed(),
+          broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, voterId),
         },
       };
 
@@ -168,7 +169,11 @@ export class VotingPipeline {
         actorId: wolfId,
         actionWindow: window,
         allowedTools: ["self_destruct"],
-        context: { window, must_act: false },
+        context: {
+          window,
+          must_act: false,
+          broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, wolfId),
+        },
       };
 
       const action = await actionProvider.getAction(req);
@@ -225,16 +230,5 @@ export class VotingPipeline {
     });
 
     return Number(entries[0][0]);
-  }
-
-  private buildPublicFeed(): string[] {
-    const lines: string[] = [];
-    const feed = this.events.slice(-50);
-    for (const event of feed) {
-      if (event.type === "day_speech") {
-        lines.push(`[发言][${event.payload.actorId}] ${event.payload.text}`);
-      }
-    }
-    return lines.slice(-16);
   }
 }

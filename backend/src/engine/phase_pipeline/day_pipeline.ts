@@ -16,6 +16,7 @@ import {
 } from "../../domain/model";
 import { ToolGateway } from "../../gateway/tool_gateway";
 import { World } from "../../domain/world";
+import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
 
 export interface DayPipelineResult {
   summary: DaySummary;
@@ -95,7 +96,7 @@ export class DayPipeline {
         context: {
           phase: "day_speech",
           must_act: true,
-          public_feed: this.buildPublicFeed(),
+          broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, actorId),
         },
       };
 
@@ -168,6 +169,7 @@ export class DayPipeline {
         context: {
           window,
           must_act: false,
+          broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, wolfId),
         },
       };
 
@@ -239,6 +241,7 @@ export class DayPipeline {
       context: {
         phase: "sheriff_choose_direction",
         must_act: true,
+        broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, sheriffId),
       },
     };
     const action = await actionProvider.getAction(req);
@@ -321,20 +324,5 @@ export class DayPipeline {
   private isAlive(entityId: EntityId): boolean {
     const alive = this.world.getComponent<AliveComponent>(entityId, COMPONENT.Alive);
     return alive?.alive === true;
-  }
-
-  private buildPublicFeed(): string[] {
-    const lines: string[] = [];
-    const feed = this.events.slice(-40);
-    for (const event of feed) {
-      if (event.type === "day_speech") {
-        lines.push(`[发言][${event.payload.actorId}] ${event.payload.text}`);
-      } else if (event.type === "voted_out") {
-        lines.push(`[公开事件][放逐] ${event.payload.target}号出局`);
-      } else if (event.type === "wolf_self_destruct") {
-        lines.push(`[公开事件][自爆] ${event.payload.wolfId}号自爆`);
-      }
-    }
-    return lines.slice(-12);
   }
 }

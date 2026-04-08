@@ -20,6 +20,7 @@ import {
 } from "../../domain/systems/damage_resolution_system";
 import { World } from "../../domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
+import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
 
 /**
  * 夜间阶段流水线（当前实现）：
@@ -27,6 +28,8 @@ import { ToolGateway } from "../../gateway/tool_gateway";
  * 各步骤按串行执行，保证状态变更在同一时间线上可追踪。
  */
 export class NightPipeline {
+  private static readonly WOLF_DISCUSSION_ROUNDS = 2;
+
   constructor(
     private readonly world: World,
     private readonly roleRegistry: RoleRegistry,
@@ -54,29 +57,37 @@ export class NightPipeline {
       });
     }
 
-    for (const wolfId of wolfIds) {
-      const req = this.makeRequest(
-        wolfId,
-        ["speak_to_wolves"],
-        { phase: "wolf_discussion", day: 0 },
-      );
-      const action = await actionProvider.getAction(req);
-      if (action?.name === "speak_to_wolves") {
-        const result = this.toolGateway.validateAndSanitize(
-          this.world,
+    // 狼队夜聊固定两轮，且每轮都复用同一随机顺序，确保战术信息可迭代而不破坏回放一致性。
+    for (
+      let round = 1;
+      round <= NightPipeline.WOLF_DISCUSSION_ROUNDS;
+      round++
+    ) {
+      for (const wolfId of wolfIds) {
+        const req = this.makeRequest(
           wolfId,
-          action,
-          { phase: Phase.Night },
+          ["speak_to_wolves"],
+          { phase: "wolf_discussion", day: 0, round },
         );
-        if (result.ok && result.sanitizedCall) {
-          this.events.push({
-            timestamp: Date.now(),
-            type: "wolf_discussion",
-            payload: {
-              actorId: wolfId,
-              text: result.sanitizedCall.args.text,
-            },
-          });
+        const action = await actionProvider.getAction(req);
+        if (action?.name === "speak_to_wolves") {
+          const result = this.toolGateway.validateAndSanitize(
+            this.world,
+            wolfId,
+            action,
+            { phase: Phase.Night },
+          );
+          if (result.ok && result.sanitizedCall) {
+            this.events.push({
+              timestamp: Date.now(),
+              type: "wolf_discussion",
+              payload: {
+                actorId: wolfId,
+                text: result.sanitizedCall.args.text,
+                round,
+              },
+            });
+          }
         }
       }
     }
@@ -291,6 +302,7 @@ export class NightPipeline {
       allowedTools,
       context: {
         must_act: true,
+        broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, actorId),
         ...context,
       },
     };

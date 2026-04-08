@@ -9,14 +9,41 @@ import {
   PotionType,
   Role,
   ToolCall,
+  ToolName,
 } from "../domain/model";
 import { World } from "../domain/world";
-import { ChatMessage, OpenAIClient } from "../infra/llm/openai_client";
+import {
+  ChatMessage,
+  OpenAIClient,
+  ToolLoopStepTrace,
+  ToolSchema,
+} from "../infra/llm/openai_client";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
 import { BaselineBotActionProvider } from "./action_providers";
 
 interface ChatLike {
   chat(messages: ChatMessage[], options?: { signal?: AbortSignal }): Promise<string>;
+  runToolLoop?<T>(
+    messages: ChatMessage[],
+    tools: ToolSchema[],
+    callbacks: {
+      onToolCall: (invocation: {
+        id: string;
+        name: string;
+        args: Record<string, unknown>;
+        rawArgs: string;
+      }) => Promise<{
+        toolResult: Record<string, unknown> | string;
+        finalAction?: T;
+        stop?: boolean;
+      }>;
+    },
+    options?: { signal?: AbortSignal; maxSteps?: number },
+  ): Promise<{
+    finalAction: T | null;
+    assistantText: string;
+    thinkingTrace?: ToolLoopStepTrace[];
+  }>;
 }
 
 export interface LlmActionProviderOptions {
@@ -26,6 +53,7 @@ export interface LlmActionProviderOptions {
   llmTimeoutMs?: number;
   colorizeLogs?: boolean;
   printLlmIo?: boolean;
+  printThinking?: boolean;
 }
 
 /**
@@ -40,8 +68,11 @@ export class LlmActionProvider implements ActionProvider {
   private readonly llmTimeoutMs: number;
   private readonly colorizeLogs: boolean;
   private readonly printLlmIo: boolean;
+  private readonly printThinking: boolean;
   private readonly fallbackProvider: ActionProvider;
   private readonly recentEvents: string[] = [];
+  private readonly agentHistories = new Map<EntityId, ChatMessage[]>();
+  private readonly agentBroadcastCursor = new Map<EntityId, number>();
 
   constructor(
     private readonly world: World,
@@ -53,6 +84,7 @@ export class LlmActionProvider implements ActionProvider {
     this.llmTimeoutMs = options.llmTimeoutMs ?? 1200;
     this.colorizeLogs = isAnsiEnabled(options.colorizeLogs);
     this.printLlmIo = options.printLlmIo ?? false;
+    this.printThinking = options.printThinking ?? false;
     this.fallbackProvider =
       options.fallbackProvider ?? new BaselineBotActionProvider(world);
   }
@@ -83,16 +115,14 @@ export class LlmActionProvider implements ActionProvider {
         `request_start player=${request.actorId} phase=${request.phase} tools=${request.allowedTools.join(",")} timeout_ms=${effectiveTimeoutMs}`,
       );
       this.dumpLlmPrompt(messages, request);
-      raw = await this.chatWithTimeout(messages, effectiveTimeoutMs);
-      this.dumpLlmRawResponse(raw, request);
-      const parsed = this.parseToolCall(raw, request.allowedTools);
-      if (parsed) {
-        this.appendTrace(
-          `request_ok player=${request.actorId} phase=${request.phase} action=${parsed.name} args=${JSON.stringify(parsed.args)} elapsed_ms=${Date.now() - startedAt}`,
-        );
-        return parsed;
-      }
-      if (this.modelReturnedNone(raw)) {
+      if (this.client.runToolLoop) {
+        const picked = await this.runSdkToolLoop(request, messages, effectiveTimeoutMs);
+        if (picked) {
+          this.appendTrace(
+            `request_ok player=${request.actorId} phase=${request.phase} action=${picked.name} args=${JSON.stringify(picked.args)} elapsed_ms=${Date.now() - startedAt}`,
+          );
+          return picked;
+        }
         if (this.isMustAct(request)) {
           return this.runFallback(request, "model_declined_required_action");
         }
@@ -100,18 +130,38 @@ export class LlmActionProvider implements ActionProvider {
           `request_none player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt}`,
         );
         return null;
-      }
-      // 若模型已返回结构化 JSON（但工具越权或字段非法），必须走 fallback，
-      // 不能被“文本恢复”逻辑改写，否则会绕过 allowedTools 约束。
-      if (this.looksLikeStructuredToolJson(raw)) {
-        return this.runFallback(request, "invalid_tool_json");
-      }
-      const repaired = this.recoverFromReasoningText(raw, request);
-      if (repaired) {
-        this.appendTrace(
-          `request_ok_repaired player=${request.actorId} phase=${request.phase} action=${repaired.name} args=${JSON.stringify((repaired as any).args ?? {})} elapsed_ms=${Date.now() - startedAt}`,
-        );
-        return repaired;
+      } else {
+        raw = await this.chatWithTimeout(messages, effectiveTimeoutMs);
+        this.dumpLlmRawResponse(raw, request);
+        const parsed = this.parseToolCall(raw, request.allowedTools);
+        if (parsed) {
+          this.appendTrace(
+            `request_ok player=${request.actorId} phase=${request.phase} action=${parsed.name} args=${JSON.stringify(parsed.args)} elapsed_ms=${Date.now() - startedAt}`,
+          );
+          return parsed;
+        }
+        if (this.modelReturnedNone(raw)) {
+          if (this.isMustAct(request)) {
+            return this.runFallback(request, "model_declined_required_action");
+          }
+          this.appendTrace(
+            `request_none player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt}`,
+          );
+          return null;
+        }
+        // 若模型已返回结构化 JSON（但工具越权或字段非法），必须走 fallback，
+        // 不能被“文本恢复”逻辑改写，否则会绕过 allowedTools 约束。
+        if (this.looksLikeStructuredToolJson(raw)) {
+          return this.runFallback(request, "invalid_tool_json");
+        }
+        const repaired = this.recoverFromReasoningText(raw, request);
+        if (repaired) {
+          this.appendTrace(
+            `request_ok_repaired player=${request.actorId} phase=${request.phase} action=${repaired.name} args=${JSON.stringify((repaired as any).args ?? {})} elapsed_ms=${Date.now() - startedAt}`,
+          );
+          return repaired;
+        }
+        return this.runFallback(request, "non_json_output");
       }
       return this.runFallback(request, "non_json_output");
     } catch (error) {
@@ -188,7 +238,225 @@ export class LlmActionProvider implements ActionProvider {
     }
   }
 
+  private async runSdkToolLoop(
+    request: ActionRequest,
+    messages: ChatMessage[],
+    timeoutMs: number,
+  ): Promise<ToolCall | null> {
+    if (!this.client.runToolLoop) {
+      return null;
+    }
+    const controller = new AbortController();
+    let timer: NodeJS.Timeout | null = null;
+    try {
+      const tools = this.buildSdkToolSchemas(request.allowedTools);
+      const loop = this.client.runToolLoop<ToolCall>(
+        messages,
+        tools,
+        {
+          onToolCall: async (invocation) => {
+            if (invocation.name === "finish_turn") {
+              return {
+                toolResult: { ok: true, reason: "turn_finished" },
+                stop: true,
+              };
+            }
+
+            if (!request.allowedTools.includes(invocation.name as ToolName)) {
+              return {
+                toolResult: {
+                  ok: false,
+                  error: "tool_not_allowed_in_this_turn",
+                },
+              };
+            }
+
+            const candidate: ToolCall = {
+              name: invocation.name as ToolName,
+              args: invocation.args as any,
+            } as ToolCall;
+            const parsed = this.parseToolCall(
+              JSON.stringify(candidate),
+              request.allowedTools,
+            );
+            if (!parsed) {
+              return {
+                toolResult: {
+                  ok: false,
+                  error: "invalid_tool_arguments",
+                },
+              };
+            }
+
+            return {
+              toolResult: { ok: true, accepted: true },
+              finalAction: parsed,
+            };
+          },
+        },
+        { signal: controller.signal, maxSteps: 8 },
+      );
+
+      const withTimeout = Promise.race([
+        loop,
+        new Promise<never>((_, reject) => {
+          timer = setTimeout(() => {
+            controller.abort();
+            reject(new Error(`llm_request_timeout_${timeoutMs}ms`));
+          }, timeoutMs);
+        }),
+      ]);
+
+      const result = await withTimeout;
+      if (result.assistantText) {
+        this.appendAgentHistory(request.actorId, {
+          role: "assistant",
+          content: result.assistantText,
+        });
+      }
+      this.dumpThinkingTrace(result.thinkingTrace ?? [], request);
+      this.dumpLlmRawResponse(result.assistantText ?? "", request);
+      return result.finalAction ?? null;
+    } finally {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    }
+  }
+
+  private buildSdkToolSchemas(allowedTools: ToolName[]): ToolSchema[] {
+    const tools: ToolSchema[] = allowedTools.map((tool) => this.toolSchema(tool));
+    tools.push({
+      name: "finish_turn",
+      description: "当你决定本回合不再继续行动时调用该工具。",
+      parameters: {
+        type: "object",
+        properties: {},
+        additionalProperties: false,
+      },
+    });
+    return tools;
+  }
+
+  private toolSchema(name: ToolName): ToolSchema {
+    if (name === "speak" || name === "speak_to_wolves") {
+      return {
+        name,
+        description: "发送发言文本。",
+        parameters: {
+          type: "object",
+          properties: {
+            text: { type: "string" },
+          },
+          required: ["text"],
+          additionalProperties: false,
+        },
+      };
+    }
+    if (
+      name === "guard" ||
+      name === "kill_vote" ||
+      name === "check_identity" ||
+      name === "vote" ||
+      name === "shoot"
+    ) {
+      return {
+        name,
+        description: "指定目标玩家执行行动。",
+        parameters: {
+          type: "object",
+          properties: {
+            target_id: { type: "number" },
+          },
+          required: ["target_id"],
+          additionalProperties: false,
+        },
+      };
+    }
+    if (name === "use_potion") {
+      return {
+        name,
+        description: "女巫使用药剂。",
+        parameters: {
+          type: "object",
+          properties: {
+            target_id: { type: "number" },
+            potion_type: {
+              type: "string",
+              enum: [PotionType.Heal, PotionType.Poison, PotionType.None],
+            },
+          },
+          required: ["target_id", "potion_type"],
+          additionalProperties: false,
+        },
+      };
+    }
+    if (name === "self_destruct") {
+      return {
+        name,
+        description: "狼人执行自爆。",
+        parameters: {
+          type: "object",
+          properties: {
+            reason: { type: "string" },
+          },
+          required: ["reason"],
+          additionalProperties: false,
+        },
+      };
+    }
+    return {
+      name,
+      description: "警长选择发言方向。",
+      parameters: {
+        type: "object",
+        properties: {
+          direction: {
+            type: "string",
+            enum: ["clockwise", "counter_clockwise"],
+          },
+        },
+        required: ["direction"],
+        additionalProperties: false,
+      },
+    };
+  }
+
+  private ingestBroadcastFeed(request: ActionRequest): void {
+    const feed = this.extractBroadcastFeed(request.context);
+    if (feed.length === 0) {
+      return;
+    }
+    const cursor = this.agentBroadcastCursor.get(request.actorId) ?? 0;
+    const delta = feed.slice(cursor);
+    for (const line of delta) {
+      this.appendAgentHistory(request.actorId, {
+        role: "user",
+        content: `【广播】${line}`,
+      });
+    }
+    this.agentBroadcastCursor.set(request.actorId, feed.length);
+  }
+
+  private extractBroadcastFeed(context: Record<string, unknown>): string[] {
+    const source = context.broadcast_feed ?? context.public_feed;
+    if (!Array.isArray(source)) {
+      return [];
+    }
+    return source.map((item) => String(item)).filter(Boolean);
+  }
+
+  private appendAgentHistory(actorId: EntityId, message: ChatMessage): void {
+    const history = this.agentHistories.get(actorId) ?? [];
+    history.push(message);
+    if (history.length > this.maxPromptEvents * 6) {
+      history.splice(0, history.length - this.maxPromptEvents * 6);
+    }
+    this.agentHistories.set(actorId, history);
+  }
+
   private buildMessages(request: ActionRequest): ChatMessage[] {
+    this.ingestBroadcastFeed(request);
     const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const mustAct = this.isMustAct(request);
     const aliveIds = this.world.getAliveEntityIds();
@@ -204,57 +472,34 @@ export class LlmActionProvider implements ActionProvider {
     const systemPrompt = [
       "你是狼人杀引擎中的单个玩家智能体。",
       "你必须使用中文进行思考和表达。",
-      "你必须且只能返回 JSON，禁止 Markdown。",
-      "JSON 格式：{\"name\":\"tool_name|none\",\"args\":{...}}",
-      `仅可从可用工具中选择：${request.allowedTools.join(", ")}`,
-      mustAct
-        ? "本轮必须行动（mustAct=true），禁止返回 none。"
-        : "若不行动请返回：{\"name\":\"none\",\"args\":{}}",
-      "禁止输出 <think>、思维链、解释文本、代码块。",
-      "禁止编造额外字段。",
+      "你通过函数工具执行行动，不要手写 JSON。",
+      `仅可调用本轮可用工具：${request.allowedTools.join(", ")}`,
+      mustAct ? "本轮必须完成一次有效行动。" : "本轮可选择结束回合不行动。",
+      "当你不需要继续行动时，请调用 finish_turn 工具结束回合。",
+      "禁止输出思维链与额外元信息。",
     ].join("\n");
 
     const userPrompt = [
       `玩家编号=${request.actorId}`,
-      `当前阶段=${request.phase}`,
       `行动窗口=${request.actionWindow ?? "standard_round"}`,
       `mustAct=${mustAct}`,
       `你的身份=${role?.role ?? "unknown"}`,
       `可用工具=${JSON.stringify(request.allowedTools)}`,
-      `阶段上下文=${JSON.stringify(request.context)}`,
-      this.publicFeedLine(request),
       `存活玩家视图=${knownAlive}`,
-      this.seerPrivateIntelLine(request.actorId),
       "你就是当前玩家，不要把其他玩家的身份当成你自己的身份。",
       this.toolArgHints(request.allowedTools),
-      "现在立刻输出 JSON（单行）：{\"name\":\"...\",\"args\":{...}}",
+      "请调用函数工具执行本回合动作。",
     ].join("\n");
+
+    const history = [...(this.agentHistories.get(request.actorId) ?? [])];
+    const currentTurnUser: ChatMessage = { role: "user", content: userPrompt };
+    this.appendAgentHistory(request.actorId, currentTurnUser);
 
     return [
       { role: "system", content: systemPrompt },
-      { role: "user", content: userPrompt },
+      ...history,
+      currentTurnUser,
     ];
-  }
-
-  private seerPrivateIntelLine(actorId: EntityId): string {
-    const role = this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
-    if (!role || role.role !== Role.Seer || !role.seerState) {
-      return "私有查验情报=无";
-    }
-    const lastTarget = role.seerState.lastTarget;
-    const lastIsWerewolf = role.seerState.lastIsWerewolf;
-    if (lastTarget === null || lastIsWerewolf === null) {
-      return "私有查验情报=无";
-    }
-    return `私有查验情报=你最近一次查验：${lastTarget}号是${lastIsWerewolf ? "狼人" : "好人"}`;
-  }
-
-  private publicFeedLine(request: ActionRequest): string {
-    const feed = request.context.public_feed;
-    if (!Array.isArray(feed) || feed.length === 0) {
-      return "公开信息摘要=无";
-    }
-    return `公开信息摘要=${feed.join(" | ")}`;
   }
 
   private toolArgHints(allowedTools: string[]): string {
@@ -676,5 +921,33 @@ export class LlmActionProvider implements ActionProvider {
     console.log(`${prefix} raw_response_start ${marker}`);
     console.log(`${prefix} raw_response: ${raw}`);
     console.log(`${prefix} raw_response_end ${marker}`);
+  }
+
+  private dumpThinkingTrace(
+    trace: ToolLoopStepTrace[],
+    request: ActionRequest,
+  ): void {
+    if (!this.printThinking || trace.length === 0) {
+      return;
+    }
+    const prefix = colorize("[THINKING]", "muted", this.colorizeLogs);
+    const marker = `player=${request.actorId} phase=${request.phase}`;
+    console.log(`${prefix} start ${marker}`);
+    for (const [stepIndex, step] of trace.entries()) {
+      if (step.assistantText && step.assistantText.trim().length > 0) {
+        console.log(
+          `${prefix} assistant step=${stepIndex + 1}: ${step.assistantText}`,
+        );
+      }
+      for (const call of step.toolCalls) {
+        console.log(
+          `${prefix} tool_call step=${stepIndex + 1} id=${call.id} name=${call.name} args=${call.rawArgs}`,
+        );
+        console.log(
+          `${prefix} tool_result step=${stepIndex + 1} id=${call.id} result=${call.toolResult}`,
+        );
+      }
+    }
+    console.log(`${prefix} end ${marker}`);
   }
 }

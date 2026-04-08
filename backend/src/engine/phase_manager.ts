@@ -21,6 +21,7 @@ import { COMPONENT } from "../domain/components/names";
 import { BadgeComponent } from "../domain/components/badge";
 import { VotingRightComponent } from "../domain/components/voting_right";
 import { transferOrDestroySheriffBadge } from "./sheriff_badge";
+import { buildAgentBroadcastFeed } from "./agent_broadcast_feed";
 
 /**
  * PhaseManager 是 V3 引擎的时序中枢。
@@ -63,6 +64,15 @@ export class PhaseManager {
       this.eventRegistry,
       this.events,
     );
+    // 初始阶段也写入上帝公开广播，确保首轮请求前玩家可见当前阶段。
+    this.events.push({
+      timestamp: Date.now(),
+      type: "phase_changed",
+      payload: {
+        phase: Phase.Night,
+        day: this.state.day,
+      },
+    });
   }
 
   getSnapshot(): RuntimeSnapshot {
@@ -201,6 +211,11 @@ export class PhaseManager {
             context: {
               trigger: "on_death",
               must_act: true,
+              broadcast_feed: buildAgentBroadcastFeed(
+                this.world,
+                this.events,
+                hunterId,
+              ),
             },
           });
           if (action?.name !== "shoot") {

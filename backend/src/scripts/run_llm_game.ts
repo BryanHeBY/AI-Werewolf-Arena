@@ -26,6 +26,8 @@ export interface RunLlmGameOptions {
   streamEvents: boolean;
   color: boolean;
   printLlmIo: boolean;
+  printThinking: boolean;
+  printPrivateEvents: boolean;
 }
 
 function parseArgs(argv: string[]): Partial<RunLlmGameOptions> {
@@ -88,6 +90,20 @@ function parseArgs(argv: string[]): Partial<RunLlmGameOptions> {
         argv[i + 1].toLowerCase(),
       );
       i += 1;
+      continue;
+    }
+    if (token === "--print-thinking" && argv[i + 1]) {
+      out.printThinking = ["1", "true", "yes", "on"].includes(
+        argv[i + 1].toLowerCase(),
+      );
+      i += 1;
+      continue;
+    }
+    if (token === "--print-private-events" && argv[i + 1]) {
+      out.printPrivateEvents = ["1", "true", "yes", "on"].includes(
+        argv[i + 1].toLowerCase(),
+      );
+      i += 1;
     }
   }
   return out;
@@ -145,7 +161,7 @@ function toJudgeLine(event: { type: string; payload: Record<string, any> }): str
     return `昨夜死亡：${deaths.join("、")}号`;
   }
   if (event.type === "guard_applied") {
-    return "守卫已守护一名玩家（目标保密）";
+    return null;
   }
   if (event.type === "voted_out") {
     return `${p.target}号被放逐出局`;
@@ -208,6 +224,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     llmTimeoutMs: options.llmTimeoutMs,
     colorizeLogs: colorEnabled,
     printLlmIo: options.printLlmIo,
+    printThinking: options.printThinking,
   });
 
   log(
@@ -245,6 +262,11 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
         log(
           `[live][行动][守卫] ${event.payload.actorId}号守护${event.payload.targetId}号`,
           "info",
+        );
+      } else if (event.type === "seer_checked" && options.printPrivateEvents) {
+        log(
+          `[live][私有][查验] ${event.payload.actorId}号查验${event.payload.targetId}号 => ${event.payload.isWerewolf ? "狼人" : "好人"}`,
+          "warn",
         );
       } else if (event.type === "wolf_kill_vote_cast") {
         log(
@@ -334,7 +356,7 @@ async function main(): Promise<void> {
   const envMaxRuntimeMs = Number(process.env.V3_LLM_MAX_RUNTIME_MS ?? "30000");
   const envLlmTimeoutMs = Number(process.env.V3_LLM_TIMEOUT_MS ?? "30000");
   const envTrace = ["1", "true", "yes", "on"].includes(
-    String(process.env.V3_LLM_TRACE ?? "true").toLowerCase(),
+    String(process.env.V3_LLM_TRACE ?? "false").toLowerCase(),
   );
   const envPrintAllEvents = ["1", "true", "yes", "on"].includes(
     String(process.env.V3_PRINT_ALL_EVENTS ?? "false").toLowerCase(),
@@ -351,6 +373,12 @@ async function main(): Promise<void> {
   const envPrintLlmIo = ["1", "true", "yes", "on"].includes(
     String(process.env.V3_PRINT_LLM_IO ?? "false").toLowerCase(),
   );
+  const envPrintThinking = ["1", "true", "yes", "on"].includes(
+    String(process.env.V3_PRINT_THINKING ?? "false").toLowerCase(),
+  );
+  const envPrintPrivateEvents = ["1", "true", "yes", "on"].includes(
+    String(process.env.V3_PRINT_PRIVATE_EVENTS ?? "true").toLowerCase(),
+  );
   const argOptions = parseArgs(process.argv.slice(2));
 
   await runLlmGame({
@@ -364,6 +392,9 @@ async function main(): Promise<void> {
     streamEvents: argOptions.streamEvents ?? envStreamEvents,
     color: argOptions.color ?? envColor,
     printLlmIo: argOptions.printLlmIo ?? envPrintLlmIo,
+    printThinking: argOptions.printThinking ?? envPrintThinking,
+    printPrivateEvents:
+      argOptions.printPrivateEvents ?? envPrintPrivateEvents,
   });
 }
 

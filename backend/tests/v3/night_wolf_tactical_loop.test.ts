@@ -103,8 +103,14 @@ describe("night wolf tactical loop", () => {
     const result = await pipeline.execute(twelvePlayerStandardConfig, provider);
     randomSpy.mockRestore();
 
-    expect(provider.discussionOrder.length).toBeGreaterThan(0);
-    expect(provider.voteOrder).toEqual(provider.discussionOrder);
+    expect(provider.voteOrder.length).toBeGreaterThan(0);
+    expect(provider.discussionOrder.length).toBe(provider.voteOrder.length * 2);
+    expect(
+      provider.discussionOrder.slice(0, provider.voteOrder.length),
+    ).toEqual(provider.voteOrder);
+    expect(
+      provider.discussionOrder.slice(provider.voteOrder.length),
+    ).toEqual(provider.voteOrder);
     expect(result.summary.wolfTarget).toBe(wolfTargetId);
   });
 

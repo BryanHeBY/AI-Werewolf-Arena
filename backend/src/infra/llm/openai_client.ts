@@ -2,8 +2,9 @@ import OpenAI from "openai";
 import { withRetry } from "./retry";
 
 export interface ChatMessage {
-  role: "system" | "user" | "assistant";
+  role: "system" | "user" | "assistant" | "tool";
   content: string;
+  tool_call_id?: string;
 }
 
 export interface OpenAIClientOptions {
@@ -17,6 +18,43 @@ export interface OpenAIClientOptions {
 
 export interface ChatOptions {
   signal?: AbortSignal;
+}
+
+export interface ToolSchema {
+  name: string;
+  description: string;
+  parameters: Record<string, unknown>;
+}
+
+export interface ToolInvocation {
+  id: string;
+  name: string;
+  args: Record<string, unknown>;
+  rawArgs: string;
+}
+
+export interface ToolLoopCallbacks<T> {
+  onToolCall: (invocation: ToolInvocation) => Promise<{
+    toolResult: Record<string, unknown> | string;
+    finalAction?: T;
+    stop?: boolean;
+  }>;
+}
+
+export interface ToolLoopOptions extends ChatOptions {
+  maxSteps?: number;
+}
+
+export interface ToolLoopStepTrace {
+  assistantText: string;
+  toolCalls: Array<{
+    id: string;
+    name: string;
+    rawArgs: string;
+    toolResult: string;
+    stop?: boolean;
+    hasFinalAction?: boolean;
+  }>;
 }
 
 /**
@@ -59,6 +97,136 @@ export class OpenAIClient {
       }
       throw error;
     }
+  }
+
+  async runToolLoop<T>(
+    messages: ChatMessage[],
+    tools: ToolSchema[],
+    callbacks: ToolLoopCallbacks<T>,
+    options: ToolLoopOptions = {},
+  ): Promise<{
+    finalAction: T | null;
+    assistantText: string;
+    thinkingTrace: ToolLoopStepTrace[];
+  }> {
+    const maxSteps = options.maxSteps ?? 6;
+    const convo: any[] = messages.map((msg) => {
+      const base: any = {
+        role: msg.role,
+        content: msg.content,
+      };
+      if (msg.role === "tool" && msg.tool_call_id) {
+        base.tool_call_id = msg.tool_call_id;
+      }
+      return base;
+    });
+
+    let lastAssistantText = "";
+    const thinkingTrace: ToolLoopStepTrace[] = [];
+    for (let step = 0; step < maxSteps; step++) {
+      const completion = await withRetry(async () => {
+        const payload: any = {
+          model: this.model,
+          temperature: this.temperature,
+          max_tokens: this.maxTokens,
+          messages: convo,
+          tools: tools.map((tool) => ({
+            type: "function",
+            function: {
+              name: tool.name,
+              description: tool.description,
+              parameters: tool.parameters,
+            },
+          })),
+          tool_choice: "auto",
+        };
+        return this.client.chat.completions.create(payload, {
+          signal: options.signal,
+        });
+      });
+
+      const message: any = completion.choices?.[0]?.message ?? {};
+      lastAssistantText = String(message.content ?? "");
+      const toolCalls: any[] = Array.isArray(message.tool_calls) ? message.tool_calls : [];
+      const stepTrace: ToolLoopStepTrace = {
+        assistantText: lastAssistantText,
+        toolCalls: [],
+      };
+      thinkingTrace.push(stepTrace);
+
+      if (toolCalls.length === 0) {
+        return {
+          finalAction: null,
+          assistantText: lastAssistantText,
+          thinkingTrace,
+        };
+      }
+
+      convo.push({
+        role: "assistant",
+        content: message.content ?? "",
+        tool_calls: toolCalls,
+      });
+
+      for (const toolCall of toolCalls) {
+        const id = String(toolCall.id ?? "");
+        const name = String(toolCall.function?.name ?? "");
+        const rawArgs = String(toolCall.function?.arguments ?? "{}");
+        let args: Record<string, unknown> = {};
+        try {
+          const parsed = JSON.parse(rawArgs);
+          args =
+            parsed && typeof parsed === "object" && !Array.isArray(parsed)
+              ? parsed
+              : {};
+        } catch {
+          args = {};
+        }
+
+        const handled = await callbacks.onToolCall({
+          id,
+          name,
+          rawArgs,
+          args,
+        });
+        stepTrace.toolCalls.push({
+          id,
+          name,
+          rawArgs,
+          toolResult:
+            typeof handled.toolResult === "string"
+              ? handled.toolResult
+              : JSON.stringify(handled.toolResult),
+          stop: handled.stop === true,
+          hasFinalAction: handled.finalAction !== undefined,
+        });
+        convo.push({
+          role: "tool",
+          tool_call_id: id,
+          content:
+            typeof handled.toolResult === "string"
+              ? handled.toolResult
+              : JSON.stringify(handled.toolResult),
+        });
+
+        if (handled.finalAction !== undefined) {
+          return {
+            finalAction: handled.finalAction,
+            assistantText: lastAssistantText,
+            thinkingTrace,
+          };
+        }
+        if (handled.stop) {
+          return {
+            finalAction: null,
+            assistantText: lastAssistantText,
+            thinkingTrace,
+          };
+        }
+      }
+    }
+
+    return { finalAction: null, assistantText: lastAssistantText, thinkingTrace };
   }
 
   private async createCompletion(

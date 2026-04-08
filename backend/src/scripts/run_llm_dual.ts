@@ -10,7 +10,7 @@ async function main(): Promise<void> {
     board: "six_player_mvp",
     maxDays: Number(process.env.V3_LLM_MAX_DAYS_SIX ?? "8"),
     trace: ["1", "true", "yes", "on"].includes(
-      String(process.env.V3_LLM_TRACE ?? "true").toLowerCase(),
+      String(process.env.V3_LLM_TRACE ?? "false").toLowerCase(),
     ),
     maxRuntimeMs: Number(process.env.V3_LLM_MAX_RUNTIME_MS_SIX ?? "30000"),
     llmTimeoutMs: Number(process.env.V3_LLM_TIMEOUT_MS ?? "1200"),
@@ -21,6 +21,8 @@ async function main(): Promise<void> {
       String(process.env.V3_COLOR ?? "true").toLowerCase(),
     ),
     printLlmIo: false,
+    printThinking: false,
+    printPrivateEvents: true,
   });
 
   console.log("[run_llm_dual] step 2/2 twelve_player_standard");
@@ -28,7 +30,7 @@ async function main(): Promise<void> {
     board: "twelve_player_standard",
     maxDays: Number(process.env.V3_LLM_MAX_DAYS_TWELVE ?? "10"),
     trace: ["1", "true", "yes", "on"].includes(
-      String(process.env.V3_LLM_TRACE ?? "true").toLowerCase(),
+      String(process.env.V3_LLM_TRACE ?? "false").toLowerCase(),
     ),
     maxRuntimeMs: Number(process.env.V3_LLM_MAX_RUNTIME_MS_TWELVE ?? "30000"),
     llmTimeoutMs: Number(process.env.V3_LLM_TIMEOUT_MS ?? "1200"),
@@ -39,6 +41,8 @@ async function main(): Promise<void> {
       String(process.env.V3_COLOR ?? "true").toLowerCase(),
     ),
     printLlmIo: false,
+    printThinking: false,
+    printPrivateEvents: true,
   });
 }
 
