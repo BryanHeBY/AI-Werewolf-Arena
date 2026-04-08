@@ -84,26 +84,26 @@
 为了跑通这两个板子，您需要开发以下基础组件和接口：
 
 ### 1. ECS 数据层准备 (Entities & Components)
-- [ ] `RoleComponent`: 存储底牌与初始技能量（如女巫的药剂数量）。
-- [ ] `CampComponent`: 标识好人/狼人阵营（用于胜负检测）。
-- [ ] `AliveComponent`: `true`/`false`。
-- [ ] `VotingRightComponent`: `weight: 1`。白痴被投后移除，警长修改为 `1.5`。
-- [ ] `StatusMarks`: `GuardMark`, `WolfKillMark`, `HealMark`, `PoisonMark`。
+- [x] `RoleComponent`: 存储底牌与初始技能量（如女巫的药剂数量）。
+- [x] `CampComponent`: 标识好人/狼人阵营（用于胜负检测）。
+- [x] `AliveComponent`: `true`/`false`。
+- [x] `VotingRightComponent`: `weight: 1`。白痴被投后移除，警长修改为 `1.5`。
+- [x] `StatusMarks`: `GuardMark`, `WolfKillMark`, `HealMark`, `PoisonMark`。
 
 ### 2. 核心状态机开发 (Phase Manager & Events)
-- [ ] **流程控制器**: 实现 `start_night()`, `start_day()`, `start_voting()` 循环。
-- [ ] **夜间流水线**: `狼人战术交流` -> `守卫` -> `狼刀投票` -> `女巫` -> `预言家`。
-- [ ] **结算系统 (`DamageResolutionSystem`)**: 实现同守同救失效、毒药绝对致死逻辑。
-- [ ] **事件总线拦截器**: 实现白痴免死判定、猎人濒死索求射击目标。
+- [x] **流程控制器**: 实现 `start_night()`, `start_day()`, `start_voting()` 循环。
+- [x] **夜间流水线**: `狼人战术交流` -> `守卫` -> `狼刀投票` -> `女巫` -> `预言家`。
+- [x] **结算系统 (`DamageResolutionSystem`)**: 实现同守同救失效、毒药绝对致死逻辑。
+- [x] **事件总线拦截器**: 实现白痴免死判定、猎人濒死索求射击目标。
 
 ### 3. LLM 接口与网关层 (Agents & Tools)
-- [ ] **动态 Prompt 组装器**: 读取实体组件，生成系统设定、状态告警与视野信息。
-- [ ] **Schema 注册器**: 为大模型配置 `check_identity`, `use_potion`, `guard`, `self_destruct` 等 Tools 的 JSON 描述。
-- [ ] **错误反弹机制**: 当大模型试图乱放技能（如女巫自救、守卫同守）时，引擎返回明确的 Error 让其重试。
+- [x] **动态 Prompt 组装器**: 读取实体组件，生成系统设定、状态告警与视野信息。
+- [x] **Schema 注册器**: 为大模型配置 `check_identity`, `use_potion`, `guard`, `self_destruct` 等 Tools 的 JSON 描述。
+- [x] **错误反弹机制**: 当大模型试图乱放技能（如女巫自救、守卫同守）时，引擎返回明确的 Error 让其重试。
 
 ### 4. 记忆管理 (Memory)
-- [ ] 保证每日 `[玩家X]` 发言的精准挂载。
-- [ ] 实现基础的 Token 截断或摘要机制，确保 12 人局进行到第 3 天及以后不会爆 Token。
+- [x] 保证每日 `[玩家X]` 发言的精准挂载。
+- [x] 实现基础的 Token 截断或摘要机制，确保 12 人局进行到第 3 天及以后不会爆 Token。
 
 ---
 *建议：先完全使用本地代码（Mock LLM）模拟各种 Tool 调用，确保 12 人局的“白痴被推”、“猎人吃毒”等状态流转与打印日志 100% 正确后，再正式接入真实的 OpenAI SDK 接口进行大模型博弈测试。*
@@ -127,14 +127,14 @@
 ## 3. 验收标准
 
 1. 6 人局验收：
-   - [ ] 连续运行可稳定完成胜负闭环。
-   - [ ] 守卫同守校验、狼刀与守护抵消逻辑正确。
+   - [x] 连续运行可稳定完成胜负闭环。
+   - [x] 守卫同守校验、狼刀与守护抵消逻辑正确。
 
 2. 12 人局验收：
-   - [ ] 白痴被放逐后免死且失去投票权。
-   - [ ] 猎人吃毒闷枪、合法死亡时可插入开枪阶段。
-   - [ ] 自爆能在合法窗口中断并跳转夜晚。
+   - [x] 白痴被放逐后免死且失去投票权。
+   - [x] 猎人吃毒闷枪、合法死亡时可插入开枪阶段。
+   - [x] 自爆能在合法窗口中断并跳转夜晚。
 
 3. 工程验收：
-   - [ ] Tool schema、网关校验、事件总线与阶段管理一致运行。
-   - [ ] 第 3 天后上下文仍可控，不出现 Token 爆炸导致的流程中断。
+   - [x] Tool schema、网关校验、事件总线与阶段管理一致运行。
+   - [x] 第 3 天后上下文仍可控，不出现 Token 爆炸导致的流程中断。

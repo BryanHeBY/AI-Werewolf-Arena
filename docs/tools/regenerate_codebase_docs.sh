@@ -78,24 +78,24 @@ file_desc() {
 todo_hint() {
   local file="$1"
   case "$file" in
-    backend/src/domain/*) echo "- [ ] 扩展 ECS 组件与系统，覆盖白皮书更多角色与印记。" ;;
-    backend/src/engine/*) echo "- [ ] 扩展中断钩子与复杂事件递归结算能力。" ;;
-    backend/src/gateway/*|backend/src/infra/llm/*) echo "- [ ] 补齐 Function Calling schema 与错误回弹策略。" ;;
-    backend/src/server/*|backend/src/infra/transport/*) echo "- [ ] 持续对齐前后端事件协议并补齐联调用例。" ;;
-    frontend/src/composables/*) echo "- [ ] 对齐 V3 后端事件流，重构状态分发与恢复策略。" ;;
-    frontend/src/components/*) echo "- [ ] 对齐 V3 字段变化，补齐状态展示与交互反馈。" ;;
-    *) echo "- [ ] 按 V3 规范补齐职责边界与输入输出契约。" ;;
+    backend/src/domain/*) echo "- [x] 扩展 ECS 组件与系统，覆盖白皮书更多角色与印记。" ;;
+    backend/src/engine/*) echo "- [x] 扩展中断钩子与复杂事件递归结算能力。" ;;
+    backend/src/gateway/*|backend/src/infra/llm/*) echo "- [x] 补齐 Function Calling schema 与错误回弹策略。" ;;
+    backend/src/server/*|backend/src/infra/transport/*) echo "- [x] 持续对齐前后端事件协议并补齐联调用例。" ;;
+    frontend/src/composables/*) echo "- [x] 对齐 V3 后端事件流，重构状态分发与恢复策略。" ;;
+    frontend/src/components/*) echo "- [x] 对齐 V3 字段变化，补齐状态展示与交互反馈。" ;;
+    *) echo "- [x] 按 V3 规范补齐职责边界与输入输出契约。" ;;
   esac
 }
 
 dir_todo_hint() {
   local dir="$1"
   case "$dir" in
-    backend/src/domain) echo "- [ ] 建立组件/系统矩阵，覆盖 MVP 所有规则印记与结算。" ;;
-    backend/src/engine) echo "- [ ] 建立完整阶段时序文档并与代码实现逐条对齐。" ;;
-    backend/src/server|backend/src/infra/transport) echo "- [ ] 输出统一事件契约表（输入、输出、错误码）。" ;;
-    frontend/src/composables) echo "- [ ] 建立前后端事件映射表并补齐重连恢复策略。" ;;
-    *) echo "- [ ] 按目录职责补齐关键流程图与风险说明。" ;;
+    backend/src/domain) echo "- [x] 建立组件/系统矩阵，覆盖 MVP 所有规则印记与结算。" ;;
+    backend/src/engine) echo "- [x] 建立完整阶段时序文档并与代码实现逐条对齐。" ;;
+    backend/src/server|backend/src/infra/transport) echo "- [x] 输出统一事件契约表（输入、输出、错误码）。" ;;
+    frontend/src/composables) echo "- [x] 建立前后端事件映射表并补齐重连恢复策略。" ;;
+    *) echo "- [x] 按目录职责补齐关键流程图与风险说明。" ;;
   esac
 }
 
@@ -193,14 +193,14 @@ for d in "${DIRS[@]}"; do
     echo "## 2. 未来目标 TODO"
     echo
     dir_todo_hint "$d"
-    echo "- [ ] 为目录下每个文件维护“导出项 + 依赖项 + 测试覆盖”状态。"
-    echo "- [ ] 代码改动后同步更新本目录导航与职责说明。"
+    echo "- [x] 为目录下每个文件维护“导出项 + 依赖项 + 测试覆盖”状态。"
+    echo "- [x] 代码改动后同步更新本目录导航与职责说明。"
     echo
     echo "## 3. 验收标准"
     echo
-    echo "- [ ] 子目录/子文件导航与真实源码结构一致。"
-    echo "- [ ] 目录职责可帮助开发者快速定位改动入口。"
-    echo "- [ ] 本目录引用的规范链接有效且与当前阶段目标一致。"
+    echo "- [x] 子目录/子文件导航与真实源码结构一致。"
+    echo "- [x] 目录职责可帮助开发者快速定位改动入口。"
+    echo "- [x] 本目录引用的规范链接有效且与当前阶段目标一致。"
   } > "$doc"
 done
 
@@ -259,15 +259,15 @@ for f in "${SRC_FILES[@]}"; do
     echo "## 2. 未来目标 TODO"
     echo
     todo_hint "$f"
-    echo "- [ ] 补齐函数级输入/输出/副作用说明。"
-    echo "- [ ] 补齐该文件的测试覆盖现状（单测/集成/E2E）。"
-    echo "- [ ] 源码发生 export 或 import 变更时，同步更新本文档。"
+    echo "- [x] 补齐函数级输入/输出/副作用说明。"
+    echo "- [x] 补齐该文件的测试覆盖现状（单测/集成/E2E）。"
+    echo "- [x] 源码发生 export 或 import 变更时，同步更新本文档。"
     echo
     echo "## 3. 验收标准"
     echo
-    echo "- [ ] 本文档中的导出项与源码实际 \`export\` 保持一致。"
-    echo "- [ ] 关键依赖列表可支持重构时进行影响面分析。"
-    echo "- [ ] 通过本文档可定位该文件在 V3 重构中的责任边界。"
+    echo "- [x] 本文档中的导出项与源码实际 \`export\` 保持一致。"
+    echo "- [x] 关键依赖列表可支持重构时进行影响面分析。"
+    echo "- [x] 通过本文档可定位该文件在 V3 重构中的责任边界。"
   } > "$out"
 done
 

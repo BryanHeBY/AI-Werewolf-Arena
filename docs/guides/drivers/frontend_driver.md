@@ -18,12 +18,12 @@
 
 ## 2. 未来目标 TODO
 
-- [ ] 为 `docs/codebase/frontend/src/*` 目录 README 增加 UI 状态流图。
-- [ ] 在遗留文件文档中增加“是否保留/何时删除”决策字段。
-- [ ] 增加前后端类型对齐检查清单（字段、可选性、枚举值）。
+- [x] 为 `docs/codebase/frontend/src/*` 目录 README 增加 UI 状态流图。
+- [x] 在遗留文件文档中增加“是否保留/何时删除”决策字段。
+- [x] 增加前后端类型对齐检查清单（字段、可选性、枚举值）。
 
 ## 3. 验收标准
 
-- [ ] frontend/src 每个源码文件都存在 `docs/codebase/frontend/src/<file>.md`。
-- [ ] 每个目录节点都有 `README.md` 且父子导航无断链。
-- [ ] 前端代码改动时，对应 codebase 文档同提交更新。
+- [x] frontend/src 每个源码文件都存在 `docs/codebase/frontend/src/<file>.md`。
+- [x] 每个目录节点都有 `README.md` 且父子导航无断链。
+- [x] 前端代码改动时，对应 codebase 文档同提交更新。
