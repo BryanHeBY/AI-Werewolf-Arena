@@ -6,6 +6,9 @@ import { IdentityComponent } from "../domain/entities/player";
 import { EntityId, GameEvent } from "../domain/model";
 import { World } from "../domain/world";
 
+/**
+ * 警徽流转处理结果。
+ */
 export interface SheriffBadgeTransferResult {
   fromId: EntityId;
   toId: EntityId | null;
@@ -90,6 +93,9 @@ function resetVotingWeight(world: World, entityId: EntityId): void {
   voting.weight = voting.canVote ? 1 : 0;
 }
 
+/**
+ * 按座位顺序选取下一位可接警徽的候选人。
+ */
 function pickNextSheriffCandidate(world: World, fromId: EntityId): EntityId | null {
   const aliveIds = world.getAliveEntityIds().filter((id) => id !== fromId);
   const seatMap = new Map<EntityId, number>();
@@ -113,4 +119,3 @@ function pickNextSheriffCandidate(world: World, fromId: EntityId): EntityId | nu
 
   return candidates[0] ?? null;
 }
-

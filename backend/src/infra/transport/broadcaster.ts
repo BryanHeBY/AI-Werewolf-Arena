@@ -1,10 +1,16 @@
 import { Server } from "socket.io";
 
+/**
+ * 实时事件可见性定义。
+ */
 export type RealtimeVisibility =
   | { scope: "public" }
   | { scope: "wolves_only" }
   | { scope: "private_targets"; targetPlayerIds: number[] };
 
+/**
+ * 实时广播事件结构。
+ */
 export interface RealtimeGameEvent {
   type: string;
   data: Record<string, unknown>;
@@ -26,11 +32,17 @@ export class Broadcaster {
 
   constructor(private readonly io: Server) {}
 
+  /**
+   * 注册玩家与 socket 绑定关系。
+   */
   registerPlayer(socketId: string, playerId: number, role?: string): void {
     this.socketToPlayer.set(socketId, { playerId, role });
     this.playerToSocket.set(playerId, socketId);
   }
 
+  /**
+   * 断开时清理 socket 绑定关系。
+   */
   unregisterSocket(socketId: string): void {
     const session = this.socketToPlayer.get(socketId);
     if (session !== undefined) {
@@ -39,6 +51,9 @@ export class Broadcaster {
     }
   }
 
+  /**
+   * 按可见性策略广播事件。
+   */
   broadcast(event: RealtimeGameEvent): void {
     const visibility = event.visibility ?? { scope: "public" as const };
     if (visibility.scope === "public") {
@@ -69,6 +84,9 @@ export class Broadcaster {
     }
   }
 
+  /**
+   * 定向向单个玩家推送事件。
+   */
   broadcastToPlayer(playerId: number, event: RealtimeGameEvent): boolean {
     const socketId = this.playerToSocket.get(playerId);
     if (!socketId) {

@@ -1,3 +1,7 @@
+
+/**
+ * 守卫工具 schema：约束守卫夜间守护目标参数。
+ */
 export const guardSchema = {
   name: "guard",
   description: "守卫目标，不能连续两晚守同一人",

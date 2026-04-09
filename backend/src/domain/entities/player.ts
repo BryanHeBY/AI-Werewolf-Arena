@@ -1,6 +1,8 @@
 import { EntityId } from "../model";
 
-// 玩家实体的身份组件（座位号、展示名、会话ID）。
+/**
+ * 玩家身份组件：记录实体 ID、座位号、显示名与会话 ID。
+ */
 export interface IdentityComponent {
   id: EntityId;
   seat: number;
@@ -8,6 +10,9 @@ export interface IdentityComponent {
   sessionId: string;
 }
 
+/**
+ * 创建玩家身份组件。
+ */
 export function createIdentityComponent(
   id: EntityId,
   seat: number,

@@ -1,6 +1,9 @@
 import * as fs from "fs";
 import * as path from "path";
 
+/**
+ * JSONL 单行日志结构。
+ */
 export interface GameLogLine {
   timestamp: number;
   type: string;
@@ -20,10 +23,16 @@ export class GameLogger {
     this.logPath = path.join(baseDir, fileName);
   }
 
+  /**
+   * 追加写入一条事件日志。
+   */
   append(line: GameLogLine): void {
     fs.appendFileSync(this.logPath, `${JSON.stringify(line)}\n`, "utf8");
   }
 
+  /**
+   * 返回当前日志文件路径。
+   */
   getPath(): string {
     return this.logPath;
   }

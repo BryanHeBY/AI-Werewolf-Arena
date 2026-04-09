@@ -75,14 +75,23 @@ export class PhaseManager {
     });
   }
 
+  /**
+   * 获取当前运行时快照（浅拷贝）。
+   */
   getSnapshot(): RuntimeSnapshot {
     return { ...this.state };
   }
 
+  /**
+   * 获取当前累计事件列表（浅拷贝）。
+   */
   getEvents(): GameEvent[] {
     return [...this.events];
   }
 
+  /**
+   * 手动跳转阶段（主要用于中断流程控制）。
+   */
   jumpTo(phase: Phase): void {
     this.setPhase(phase);
   }
@@ -248,6 +257,9 @@ export class PhaseManager {
     }
   }
 
+  /**
+   * 检查胜负并在命中时封盘写入 game_over 事件。
+   */
   private checkAndSealResult(): boolean {
     const result = this.conditionRegistry.evaluate(this.world, this.config.winCondition);
     if (!result) {
@@ -270,10 +282,16 @@ export class PhaseManager {
     return true;
   }
 
+  /**
+   * 调试接口：返回当前终局结果。
+   */
   debugResult(): GameResult | null {
     return this.state.result;
   }
 
+  /**
+   * 切换阶段并写入 `phase_changed` 事件。
+   */
   private setPhase(phase: Phase): void {
     const previous = this.state.phase;
     this.state.phase = phase;
@@ -290,6 +308,9 @@ export class PhaseManager {
     });
   }
 
+  /**
+   * 处理警长死亡时的警徽流转或撕毁逻辑。
+   */
   private handleSheriffDeath(entityId: EntityId, phase: Phase): void {
     const badge = this.world.getComponent<BadgeComponent>(entityId, COMPONENT.Badge);
     if (!badge?.isSheriff) {

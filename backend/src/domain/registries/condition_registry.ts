@@ -13,6 +13,9 @@ export class ConditionRegistry {
     this.winSystem = winSystem;
   }
 
+  /**
+   * 按指定胜负模式执行胜负判定。
+   */
   evaluate(world: World, condition: WinCondition): GameResult | null {
     return this.winSystem.evaluate(world, condition);
   }

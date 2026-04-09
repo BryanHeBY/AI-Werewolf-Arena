@@ -15,11 +15,17 @@ import { World } from "../domain/world";
  * Noop 行为提供器：用于测试“无人行动”场景。
  */
 export class NoopActionProvider implements ActionProvider {
+  /**
+   * 恒定返回空动作，用于测试空行动分支。
+   */
   async getAction(_request: ActionRequest): Promise<ToolCall | null> {
     return null;
   }
 }
 
+/**
+ * 脚本动作匹配条目。
+ */
 export interface ScriptedEntry {
   match: (request: ActionRequest) => boolean;
   action: ToolCall | null;
@@ -35,6 +41,9 @@ export class ScriptedActionProvider implements ActionProvider {
     this.entries = [...entries];
   }
 
+  /**
+   * 按首个命中规则返回脚本动作，并移除该规则避免重复触发。
+   */
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
     const index = this.entries.findIndex((entry) => entry.match(request));
     if (index === -1) {
@@ -46,9 +55,15 @@ export class ScriptedActionProvider implements ActionProvider {
   }
 }
 
+/**
+ * 基线机器人：在 LLM 不可用时提供可推进对局的兜底动作。
+ */
 export class BaselineBotActionProvider implements ActionProvider {
   constructor(private readonly world: World) {}
 
+  /**
+   * 根据阶段与角色生成默认动作。
+   */
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
     const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     if (!role) {
@@ -113,11 +128,17 @@ export class BaselineBotActionProvider implements ActionProvider {
     return null;
   }
 
+  /**
+   * 选择任意存活且非自己的目标。
+   */
   private pickAliveNotSelf(actorId: EntityId): EntityId | null {
     const target = this.world.getAliveEntityIds().find((id) => id !== actorId);
     return target ?? null;
   }
 
+  /**
+   * 按阵营选择存活目标，找不到则回退到任意非自己目标。
+   */
   private pickAliveByCamp(actorId: EntityId, camp: Camp): EntityId | null {
     const target = this.world.getAliveEntityIds().find((id) => {
       const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);

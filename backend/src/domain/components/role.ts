@@ -1,5 +1,8 @@
 import { Camp, EntityId, PromptRenderable, Role } from "../model";
 
+/**
+ * 女巫私有状态。
+ */
 export interface WitchState {
   heal: number;
   poison: number;
@@ -8,18 +11,30 @@ export interface WitchState {
   poisonUsedThisNight: boolean;
 }
 
+/**
+ * 守卫私有状态。
+ */
 export interface GuardState {
   lastTarget: EntityId | null;
 }
 
+/**
+ * 猎人私有状态。
+ */
 export interface HunterState {
   canShoot: boolean;
 }
 
+/**
+ * 白痴私有状态。
+ */
 export interface IdiotState {
   revealed: boolean;
 }
 
+/**
+ * 预言家私有状态。
+ */
 export interface SeerState {
   lastTarget: EntityId | null;
   lastIsWerewolf: boolean | null;
@@ -29,6 +44,9 @@ export interface SeerState {
   }>;
 }
 
+/**
+ * 角色组件：统一记录底牌与角色私有状态。
+ */
 export interface RoleComponent extends PromptRenderable {
   role: Role;
   camp: Camp;
@@ -50,6 +68,9 @@ export function inferCamp(role: Role): Camp {
   return Camp.Good;
 }
 
+/**
+ * 创建角色组件并按角色初始化私有状态。
+ */
 export function createRoleComponent(role: Role): RoleComponent {
   const camp = inferCamp(role);
   const base: Omit<RoleComponent, "renderPrompt"> = {

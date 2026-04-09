@@ -18,6 +18,9 @@ import { EventRegistry } from "../event_registry";
 import { World } from "../../domain/world";
 import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
 
+/**
+ * 投票流水线执行结果。
+ */
 export interface VotingPipelineResult {
   summary: VotingSummary;
   interrupted: boolean;
@@ -215,6 +218,9 @@ export class VotingPipeline {
     return null;
   }
 
+  /**
+   * 依据计票结果选出放逐目标，平票按编号最小值决议。
+   */
   private pickMajorityTarget(tally: Record<number, number>): EntityId | null {
     const entries = Object.entries(tally);
     if (entries.length === 0) {

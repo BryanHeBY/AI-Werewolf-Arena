@@ -25,6 +25,9 @@ export interface BootstrapResult {
   playerIds: EntityId[];
 }
 
+/**
+ * 按板子配置完成一次完整引擎装配，返回可直接运行的上下文对象。
+ */
 export function bootstrapGame(config: BoardConfig): BootstrapResult {
   const world = new World();
   // 先完成实体与组件初始化，再创建系统与管理器，避免空引用。

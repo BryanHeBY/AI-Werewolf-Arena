@@ -9,6 +9,9 @@ import { ActiveContextWindow } from "./active_context_window";
 import { NotebookStore } from "./notebook_store";
 import { RollingSummaryStore } from "./rolling_summary";
 
+/**
+ * Prompt 组装器参数配置。
+ */
 export interface PromptAssemblerOptions {
   compressionSoftLimitChars?: number;
   compressionTargetChars?: number;
@@ -36,6 +39,9 @@ export class PromptAssembler {
     this.summaryMaxChars = options.summaryMaxChars ?? 500;
   }
 
+  /**
+   * 为指定玩家组装完整 Prompt 文本。
+   */
   buildPromptFor(entityId: EntityId): string {
     this.compressIfNeeded(entityId);
 
@@ -61,6 +67,9 @@ export class PromptAssembler {
     return sections.join("\n");
   }
 
+  /**
+   * 当上下文超过阈值时执行压缩并写入滚动摘要。
+   */
   private compressIfNeeded(entityId: EntityId): void {
     if (this.context.totalChars() <= this.compressionSoftLimitChars) {
       return;
@@ -84,6 +93,9 @@ export class PromptAssembler {
     this.summaries.append(entityId, summary);
   }
 
+  /**
+   * 按固定顺序渲染玩家组件事实。
+   */
   private renderComponents(entityId: EntityId): string {
     // 组件渲染顺序固定，确保每次提示词结构稳定可预测。
     const lines: string[] = [];

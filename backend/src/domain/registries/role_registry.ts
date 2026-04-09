@@ -1,6 +1,8 @@
 import { Role, ToolName } from "../model";
 
-// 每个角色默认可用工具集合（可被 registerAllowedTools 覆盖）。
+/**
+ * 每个角色默认可用工具集合（可被 `registerAllowedTools` 覆盖）。
+ */
 const BASE_ALLOWED_TOOLS: Record<Role, ToolName[]> = {
   [Role.Wolf]: ["speak_to_wolves", "kill_vote", "self_destruct", "speak", "vote"],
   [Role.Villager]: ["speak", "vote"],
@@ -24,10 +26,16 @@ export class RoleRegistry {
     }
   }
 
+  /**
+   * 获取角色当前可调用工具列表。
+   */
   getAllowedTools(role: Role): ToolName[] {
     return [...(this.toolMap.get(role) ?? [])];
   }
 
+  /**
+   * 覆盖注册角色可调用工具列表。
+   */
   registerAllowedTools(role: Role, tools: ToolName[]): void {
     this.toolMap.set(role, [...tools]);
   }

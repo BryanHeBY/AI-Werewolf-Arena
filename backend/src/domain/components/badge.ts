@@ -1,10 +1,16 @@
 import { PromptRenderable } from "../model";
 
+/**
+ * 警徽组件：记录当前是否持有警徽以及是否已销毁。
+ */
 export interface BadgeComponent extends PromptRenderable {
   isSheriff: boolean;
   destroyed: boolean;
 }
 
+/**
+ * 创建警徽组件。
+ */
 export function createBadgeComponent(
   isSheriff: boolean = false,
   destroyed: boolean = false,

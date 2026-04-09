@@ -64,6 +64,9 @@ interface ChatLike {
   }>;
 }
 
+/**
+ * LLM 行为提供器配置项。
+ */
 export interface LlmActionProviderOptions {
   maxPromptEvents?: number;
   trace?: boolean;
@@ -115,6 +118,9 @@ export class LlmActionProvider implements ActionProvider {
     return new LlmActionProvider(world, client, options);
   }
 
+  /**
+   * 执行一次动作决策：优先 SDK tool loop，失败时回退基线策略。
+   */
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
     const messages = this.buildMessages(request);
     let raw = "";
@@ -198,6 +204,9 @@ export class LlmActionProvider implements ActionProvider {
     return this.runFallback(request, "runtime_error");
   }
 
+  /**
+   * 基于全局截止时间计算当前请求可用超时预算。
+   */
   private computeEffectiveTimeout(deadlineAtMs?: number): number {
     if (!deadlineAtMs) {
       return this.llmTimeoutMs;
@@ -342,6 +351,9 @@ export class LlmActionProvider implements ActionProvider {
     }
   }
 
+  /**
+   * 为本回合可用工具构建 SDK 函数调用 schema。
+   */
   private buildSdkToolSchemas(allowedTools: ToolName[]): ToolSchema[] {
     const tools: ToolSchema[] = allowedTools.map((tool) => this.toolSchema(tool));
     tools.push({
@@ -356,6 +368,9 @@ export class LlmActionProvider implements ActionProvider {
     return tools;
   }
 
+  /**
+   * 生成单个工具的参数 schema 定义。
+   */
   private toolSchema(name: ToolName): ToolSchema {
     if (name === "speak" || name === "speak_to_wolves") {
       return {
@@ -440,6 +455,9 @@ export class LlmActionProvider implements ActionProvider {
     };
   }
 
+  /**
+   * 将可见广播增量写入对应 agent 的消息历史。
+   */
   private ingestBroadcastFeed(request: ActionRequest): void {
     const feed = this.extractBroadcastFeed(request.context);
     if (feed.length === 0) {
@@ -456,6 +474,9 @@ export class LlmActionProvider implements ActionProvider {
     this.agentBroadcastCursor.set(request.actorId, feed.length);
   }
 
+  /**
+   * 从请求上下文提取广播消息列表。
+   */
   private extractBroadcastFeed(context: Record<string, unknown>): string[] {
     const source = context.broadcast_feed ?? context.public_feed;
     if (!Array.isArray(source)) {
@@ -464,6 +485,9 @@ export class LlmActionProvider implements ActionProvider {
     return source.map((item) => String(item)).filter(Boolean);
   }
 
+  /**
+   * 追加 agent 历史消息并控制上限，避免上下文无限增长。
+   */
   private appendAgentHistory(actorId: EntityId, message: ChatMessage): void {
     const history = this.agentHistories.get(actorId) ?? [];
     history.push(message);
@@ -473,6 +497,9 @@ export class LlmActionProvider implements ActionProvider {
     this.agentHistories.set(actorId, history);
   }
 
+  /**
+   * 组装本轮发送给模型的完整消息序列。
+   */
   private buildMessages(request: ActionRequest): ChatMessage[] {
     this.ingestBroadcastFeed(request);
     const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
@@ -520,6 +547,9 @@ export class LlmActionProvider implements ActionProvider {
     ];
   }
 
+  /**
+   * 生成可用工具参数提示文本。
+   */
   private toolArgHints(allowedTools: string[]): string {
     const hints: string[] = [];
     if (allowedTools.includes("speak")) {
@@ -617,6 +647,9 @@ export class LlmActionProvider implements ActionProvider {
     return parsed as ToolCall;
   }
 
+  /**
+   * 从模型原始文本中提取最可能的工具调用 JSON 片段。
+   */
   private extractJson(raw: string): string | null {
     const trimmed = raw.trim();
     if (!trimmed) {
@@ -646,6 +679,9 @@ export class LlmActionProvider implements ActionProvider {
     return null;
   }
 
+  /**
+   * 判断响应是否为结构化工具 JSON（即使内容非法）。
+   */
   private looksLikeStructuredToolJson(raw: string): boolean {
     const json = this.extractJson(raw);
     if (!json) {
@@ -664,6 +700,9 @@ export class LlmActionProvider implements ActionProvider {
     }
   }
 
+  /**
+   * 判断模型是否显式返回 `none`。
+   */
   private modelReturnedNone(raw: string): boolean {
     const json = this.extractJson(raw);
     if (!json) {
@@ -677,10 +716,16 @@ export class LlmActionProvider implements ActionProvider {
     }
   }
 
+  /**
+   * 判断当前请求是否必须行动。
+   */
   private isMustAct(request: ActionRequest): boolean {
     return request.context.must_act === true;
   }
 
+  /**
+   * 收集文本中括号平衡的 JSON 对象候选。
+   */
   private collectBalancedJsonObjects(text: string): string[] {
     const out: string[] = [];
     const stack: number[] = [];
@@ -781,6 +826,9 @@ export class LlmActionProvider implements ActionProvider {
     return null;
   }
 
+  /**
+   * 从自然语言中提取目标玩家编号。
+   */
   private extractTargetId(text: string, actorId: EntityId): EntityId | null {
     const patterns = [
       /target[_\s-]*id[^0-9]*(\d+)/gi,
@@ -800,6 +848,9 @@ export class LlmActionProvider implements ActionProvider {
     return null;
   }
 
+  /**
+   * 清洗并规范化发言文本，过滤提示词回显污染。
+   */
   private toSpeakText(text: string): string {
     const withoutMetaLines = text
       .split(/\r?\n/)
@@ -858,6 +909,9 @@ export class LlmActionProvider implements ActionProvider {
     return cleaned.slice(0, 120);
   }
 
+  /**
+   * 从自然语言中推断女巫药剂类型。
+   */
   private extractPotion(text: string): PotionType {
     const lower = text.toLowerCase();
     if (
@@ -877,12 +931,18 @@ export class LlmActionProvider implements ActionProvider {
     return PotionType.None;
   }
 
+  /**
+   * 选择任意存活且非自己的目标。
+   */
   private pickAliveNotSelf(actorId: EntityId): EntityId | null {
     const alive = this.world.getAliveEntityIds();
     const target = alive.find((id) => id !== actorId);
     return target ?? null;
   }
 
+  /**
+   * 记录并输出 provider 追踪日志。
+   */
   private appendTrace(line: string): void {
     this.recentEvents.push(line);
     if (this.recentEvents.length > 80) {
@@ -893,6 +953,9 @@ export class LlmActionProvider implements ActionProvider {
     }
   }
 
+  /**
+   * 按日志类型为 trace 添加颜色与前缀。
+   */
   private decorateTrace(line: string): string {
     const prefix = "[LLMActionProvider]";
     if (!this.colorizeLogs) {
@@ -916,6 +979,9 @@ export class LlmActionProvider implements ActionProvider {
     return `${colorize(prefix, "muted", true)} ${colorize(line, "muted", true)}`;
   }
 
+  /**
+   * 在 `printLlmIo` 打开时输出提示词内容。
+   */
   private dumpLlmPrompt(messages: ChatMessage[], request: ActionRequest): void {
     if (!this.printLlmIo) {
       return;
@@ -930,6 +996,9 @@ export class LlmActionProvider implements ActionProvider {
     console.log(`${prefix} prompt_end ${marker}`);
   }
 
+  /**
+   * 在 `printLlmIo` 打开时输出模型原始响应。
+   */
   private dumpLlmRawResponse(raw: string, request: ActionRequest): void {
     if (!this.printLlmIo) {
       return;

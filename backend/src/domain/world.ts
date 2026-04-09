@@ -12,16 +12,25 @@ export class World {
   private entities: Set<EntityId> = new Set();
   private stores: Map<ComponentName, Map<EntityId, unknown>> = new Map();
 
+  /**
+   * 创建新实体并返回实体 ID。
+   */
   createEntity(): EntityId {
     const id = this.nextId++;
     this.entities.add(id);
     return id;
   }
 
+  /**
+   * 判断实体是否存在。
+   */
   hasEntity(entityId: EntityId): boolean {
     return this.entities.has(entityId);
   }
 
+  /**
+   * 返回当前所有实体 ID（升序）。
+   */
   entityIds(): EntityId[] {
     return [...this.entities].sort((a, b) => a - b);
   }
@@ -41,11 +50,17 @@ export class World {
     return store?.get(entityId) as T | undefined;
   }
 
+  /**
+   * 从实体上移除指定组件。
+   */
   removeComponent(entityId: EntityId, name: ComponentName): void {
     const store = this.stores.get(name);
     store?.delete(entityId);
   }
 
+  /**
+   * 返回同时拥有给定组件集合的实体列表。
+   */
   entitiesWith(...names: ComponentName[]): EntityId[] {
     // 只有同时拥有所有组件的实体才会被返回，用于系统筛选。
     return this.entityIds().filter((entityId) => {
@@ -56,6 +71,9 @@ export class World {
     });
   }
 
+  /**
+   * 返回当前存活实体 ID 列表。
+   */
   getAliveEntityIds(): EntityId[] {
     return this.entitiesWith(COMPONENT.Alive).filter((id) => {
       const alive = this.getComponent<AliveComponent>(id, COMPONENT.Alive);
@@ -63,6 +81,9 @@ export class World {
     });
   }
 
+  /**
+   * 按角色筛选实体 ID。
+   */
   getEntityIdsByRole(role: Role): EntityId[] {
     return this.entitiesWith(COMPONENT.Role).filter((id) => {
       const roleComp = this.getComponent<RoleComponent>(id, COMPONENT.Role);
@@ -70,6 +91,9 @@ export class World {
     });
   }
 
+  /**
+   * 确保组件存储存在，不存在则懒加载创建。
+   */
   private ensureStore(name: ComponentName): Map<EntityId, unknown> {
     let store = this.stores.get(name);
     if (!store) {

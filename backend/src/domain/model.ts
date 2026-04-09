@@ -4,12 +4,18 @@
  */
 export type EntityId = number;
 
+/**
+ * 玩家阵营定义。
+ */
 export enum Camp {
   Good = "good",
   Wolf = "wolf",
   ThirdParty = "third_party",
 }
 
+/**
+ * 角色底牌定义。
+ */
 export enum Role {
   Wolf = "wolf",
   Villager = "villager",
@@ -20,6 +26,9 @@ export enum Role {
   Idiot = "idiot",
 }
 
+/**
+ * 对局主阶段定义。
+ */
 export enum Phase {
   Night = "night",
   Day = "day",
@@ -27,6 +36,9 @@ export enum Phase {
   GameOver = "game_over",
 }
 
+/**
+ * 白天中断窗口定义。
+ */
 export enum ActionWindow {
   // 天亮后、白天发言前的中断窗口。
   OnDaybreak = "on_daybreak",
@@ -38,6 +50,9 @@ export enum ActionWindow {
   OnPerSpeechGap = "on_per_speech_gap",
 }
 
+/**
+ * 夜间临时状态印记定义。
+ */
 export enum StatusMark {
   GuardMark = "GuardMark",
   WolfKillMark = "WolfKillMark",
@@ -45,17 +60,26 @@ export enum StatusMark {
   PoisonMark = "PoisonMark",
 }
 
+/**
+ * 胜利条件模式定义。
+ */
 export enum WinCondition {
   SlaughterCity = "slaughter_city",
   SlaughterSide = "slaughter_side",
 }
 
+/**
+ * 女巫药剂类型定义。
+ */
 export enum PotionType {
   Heal = "heal",
   Poison = "poison",
   None = "none",
 }
 
+/**
+ * 中断钩子开关配置。
+ */
 export interface HookConfig {
   onDaybreak: boolean;
   onPreElection: boolean;
@@ -63,6 +87,9 @@ export interface HookConfig {
   onPerSpeechGap: boolean;
 }
 
+/**
+ * 板子配置模型。
+ */
 export interface BoardConfig {
   // 板子规模（玩家总数）。
   boardSize: number;
@@ -77,10 +104,16 @@ export interface BoardConfig {
   roleSetups: Array<{ role: Role; count: number }>;
 }
 
+/**
+ * 可渲染到 Prompt 的组件接口。
+ */
 export interface PromptRenderable {
   renderPrompt(): string;
 }
 
+/**
+ * 工具参数映射定义。
+ */
 export interface ToolArgMap {
   speak_to_wolves: { text: string };
   kill_vote: { target_id: EntityId };
@@ -94,20 +127,35 @@ export interface ToolArgMap {
   choose_direction: { direction: "clockwise" | "counter_clockwise" };
 }
 
+/**
+ * 工具名联合类型。
+ */
 export type ToolName = keyof ToolArgMap;
 
+/**
+ * 工具调用联合类型。
+ */
 export type ToolCall = {
   [K in ToolName]: { name: K; args: ToolArgMap[K] };
 }[ToolName];
 
+/**
+ * 按工具名收窄的工具调用类型。
+ */
 export type TypedToolCall<T extends ToolName> = Extract<ToolCall, { name: T }>;
 
+/**
+ * 工具参数校验结果。
+ */
 export interface ToolValidationResult<T extends ToolCall = ToolCall> {
   ok: boolean;
   sanitizedCall?: T;
   error?: string;
 }
 
+/**
+ * 行动请求上下文。
+ */
 export interface ActionRequest {
   // 当前阶段（夜晚/白天/投票）。
   phase: Phase;
@@ -122,27 +170,42 @@ export interface ActionRequest {
   deadlineAtMs?: number;
 }
 
+/**
+ * 行动提供器接口。
+ */
 export interface ActionProvider {
   getAction(request: ActionRequest): Promise<ToolCall | null>;
 }
 
+/**
+ * 对局事件结构。
+ */
 export interface GameEvent {
   timestamp: number;
   type: string;
   payload: Record<string, unknown>;
 }
 
+/**
+ * 终局结果结构。
+ */
 export interface GameResult {
   winner: Camp | null;
   reason: string;
 }
 
+/**
+ * 预言家查验结果结构。
+ */
 export interface SeerCheckResult {
   seerId: EntityId;
   targetId: EntityId;
   isWerewolf: boolean;
 }
 
+/**
+ * 夜间阶段结算摘要。
+ */
 export interface NightSummary {
   wolfTarget: EntityId | null;
   deaths: EntityId[];
@@ -150,17 +213,26 @@ export interface NightSummary {
   interruptedBySelfDestruct: boolean;
 }
 
+/**
+ * 白天阶段摘要。
+ */
 export interface DaySummary {
   speeches: Array<{ actorId: EntityId; text: string }>;
   selfDestructBy: EntityId | null;
 }
 
+/**
+ * 投票阶段摘要。
+ */
 export interface VotingSummary {
   tally: Record<number, number>;
   target: EntityId | null;
   removed: EntityId[];
 }
 
+/**
+ * 运行时快照结构。
+ */
 export interface RuntimeSnapshot {
   day: number;
   phase: Phase;

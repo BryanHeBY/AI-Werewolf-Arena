@@ -17,6 +17,9 @@ const GOD_ROLES = new Set<Role>([
  * - 屠边局：神民任一边全灭或狼人全灭
  */
 export class WinConditionSystem {
+  /**
+   * 根据当前存活结构判断是否触发终局。
+   */
   evaluate(world: World, condition: WinCondition): GameResult | null {
     const aliveIds = world.getAliveEntityIds();
 

@@ -1,4 +1,6 @@
-// ECS 组件名称统一常量，避免字符串硬编码导致拼写错误。
+/**
+ * ECS 组件名称统一常量，避免字符串硬编码导致拼写错误。
+ */
 export const COMPONENT = {
   Identity: "IdentityComponent",
   Role: "RoleComponent",
@@ -9,4 +11,7 @@ export const COMPONENT = {
   Badge: "BadgeComponent",
 } as const;
 
+/**
+ * ECS 组件名联合类型。
+ */
 export type ComponentName = (typeof COMPONENT)[keyof typeof COMPONENT];

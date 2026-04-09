@@ -1,3 +1,7 @@
+
+/**
+ * 真实 LLM 对局运行脚本：用于本地回放与可观测调试。
+ */
 import { bootstrapGame } from "../app/bootstrap";
 import { appConfig } from "../config";
 import {
@@ -13,8 +17,14 @@ import { colorize, isAnsiEnabled } from "../utils/ansi";
 import { BaselineBotActionProvider } from "../v3/action_providers";
 import { LlmActionProvider } from "../v3/llm_action_provider";
 
+/**
+ * 支持的对局板子名称。
+ */
 export type LlmBoard = "six_player_mvp" | "twelve_player_standard";
 
+/**
+ * 对局运行参数。
+ */
 export interface RunLlmGameOptions {
   board: LlmBoard;
   maxDays: number;
@@ -181,6 +191,9 @@ class DeadlineAwareActionProvider implements ActionProvider {
     private readonly deadlineAtMs: number,
   ) {}
 
+  /**
+   * 为请求附加全局截止时间后转发给真实 provider。
+   */
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
     return this.delegate.getAction({
       ...request,
@@ -189,6 +202,9 @@ class DeadlineAwareActionProvider implements ActionProvider {
   }
 }
 
+/**
+ * 运行一局真实 LLM 对局并返回最终快照。
+ */
 export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   snapshot: RuntimeSnapshot;
   eventCount: number;

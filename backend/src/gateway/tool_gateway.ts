@@ -34,10 +34,16 @@ export class ToolGateway {
     this.registerSchema("self_destruct", selfDestructSchema);
   }
 
+  /**
+   * 注册单个工具的 schema。
+   */
   registerSchema(name: ToolName, schema: unknown): void {
     this.schemas.set(name, schema);
   }
 
+  /**
+   * 获取当前已注册 schema 映射。
+   */
   getRegisteredSchemas(): Record<string, unknown> {
     const obj: Record<string, unknown> = {};
     for (const [name, schema] of this.schemas.entries()) {
@@ -46,6 +52,9 @@ export class ToolGateway {
     return obj;
   }
 
+  /**
+   * 夜晚开始前重置女巫“本夜已用药”状态。
+   */
   startNight(world: World): void {
     // 夜晚开始时重置女巫“本夜是否已用药”的瞬时状态。
     for (const id of world.getAliveEntityIds()) {

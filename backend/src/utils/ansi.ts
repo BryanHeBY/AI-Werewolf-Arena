@@ -1,3 +1,7 @@
+
+/**
+ * ANSI 颜色工具：统一日志着色开关与渲染。
+ */
 export type AnsiTone =
   | "muted"
   | "info"
@@ -18,6 +22,9 @@ const ANSI: Record<AnsiTone, string> = {
   god: "\u001b[94m",
 };
 
+/**
+ * 判断当前运行环境是否启用 ANSI 颜色输出。
+ */
 export function isAnsiEnabled(explicit?: boolean): boolean {
   if (explicit !== undefined) {
     return explicit;
@@ -33,6 +40,9 @@ export function isAnsiEnabled(explicit?: boolean): boolean {
   return Boolean(process.stdout.isTTY);
 }
 
+/**
+ * 按指定色调渲染文本。
+ */
 export function colorize(text: string, tone: AnsiTone, enabled: boolean): string {
   if (!enabled) {
     return text;

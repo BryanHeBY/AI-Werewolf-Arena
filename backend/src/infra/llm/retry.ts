@@ -1,3 +1,6 @@
+/**
+ * 重试策略配置。
+ */
 export interface RetryOptions {
   retries?: number;
   delayMs?: number;

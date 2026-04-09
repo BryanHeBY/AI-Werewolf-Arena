@@ -7,8 +7,14 @@ const isRunningFromBackend = cwd.endsWith("/backend");
 const rootDir = isRunningFromBackend ? path.resolve(cwd, "..") : path.resolve(cwd);
 dotenv.config({ path: path.join(rootDir, ".env") });
 
+/**
+ * 预置板子名称。
+ */
 export type BoardPreset = "six_player_mvp" | "twelve_player_standard";
 
+/**
+ * 服务启动配置。
+ */
 export interface AppConfig {
   port: number;
   corsOrigin: string;
@@ -32,6 +38,9 @@ function parseBooleanFlag(value: string | undefined, fallback: boolean): boolean
   return fallback;
 }
 
+/**
+ * 从环境变量装配运行配置。
+ */
 export function loadConfig(): AppConfig {
   // 默认走 6 人 MVP，避免无配置时直接进入高复杂度板子。
   const defaultBoard =
@@ -49,4 +58,7 @@ export function loadConfig(): AppConfig {
   };
 }
 
+/**
+ * 应用全局配置单例。
+ */
 export const appConfig = loadConfig();

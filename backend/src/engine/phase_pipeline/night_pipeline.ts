@@ -38,6 +38,9 @@ export class NightPipeline {
     private readonly events: GameEvent[],
   ) {}
 
+  /**
+   * 执行完整夜间流程并返回结算摘要与伤害结果。
+   */
   async execute(config: BoardConfig, actionProvider: ActionProvider): Promise<{
     summary: NightSummary;
     damage: DamageResolutionResult;
@@ -308,6 +311,9 @@ export class NightPipeline {
     };
   }
 
+  /**
+   * 获取指定角色的存活玩家列表。
+   */
   private getAliveByRole(role: Role): EntityId[] {
     return this.world.getAliveEntityIds().filter((id) => {
       const roleComp = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
@@ -315,6 +321,9 @@ export class NightPipeline {
     });
   }
 
+  /**
+   * 获取或创建目标玩家的状态印记组件。
+   */
   private ensureMarks(entityId: EntityId): StatusMarksComponent {
     let marks = this.world.getComponent<StatusMarksComponent>(
       entityId,
@@ -328,6 +337,9 @@ export class NightPipeline {
     return marks;
   }
 
+  /**
+   * 依据票数选出狼刀目标，平票按编号最小值决议。
+   */
   private pickMajorityTarget(votes: Record<number, number>): EntityId | null {
     const entries = Object.entries(votes);
     if (entries.length === 0) {
@@ -343,6 +355,9 @@ export class NightPipeline {
     return Number(entries[0][0]);
   }
 
+  /**
+   * 生成狼人随机顺序（供夜聊与投票复用）。
+   */
   private shuffleWolves(ids: EntityId[]): EntityId[] {
     // 夜间狼人发言与投票必须共用同一随机顺序，以便回放可追踪。
     const copied = [...ids];

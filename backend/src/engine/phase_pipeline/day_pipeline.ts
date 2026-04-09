@@ -18,6 +18,9 @@ import { ToolGateway } from "../../gateway/tool_gateway";
 import { World } from "../../domain/world";
 import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
 
+/**
+ * 白天流水线执行结果。
+ */
 export interface DayPipelineResult {
   summary: DaySummary;
   interrupted: boolean;
@@ -213,6 +216,9 @@ export class DayPipeline {
     return null;
   }
 
+  /**
+   * 查询当前存活且警徽未销毁的警长。
+   */
   private findSheriffId(): EntityId | null {
     const sheriff = this.world.getAliveEntityIds().find((id) => {
       const badge = this.world.getComponent<BadgeComponent>(id, COMPONENT.Badge);
@@ -321,6 +327,9 @@ export class DayPipeline {
     return counterClockwise;
   }
 
+  /**
+   * 判断目标玩家是否存活。
+   */
   private isAlive(entityId: EntityId): boolean {
     const alive = this.world.getComponent<AliveComponent>(entityId, COMPONENT.Alive);
     return alive?.alive === true;

@@ -7,12 +7,18 @@ import { EntityId, GameEvent, Phase, Role, StatusMark } from "../domain/model";
 import { World } from "../domain/world";
 import { transferOrDestroySheriffBadge } from "./sheriff_badge";
 
+/**
+ * 放逐阶段处理结果。
+ */
 export interface VotedOutResult {
   prevented: boolean;
   removed: EntityId[];
   reason: string;
 }
 
+/**
+ * 死亡钩子处理结果（含追加死亡）。
+ */
 export interface DeathHookResult {
   extraDeaths: EntityId[];
   extraDeathSources: Record<number, StatusMark[]>;
@@ -24,6 +30,9 @@ export interface DeathHookResult {
  * - onDeath: 处理猎人是否可开枪、开枪造成的追加死亡。
  */
 export class EventRegistry {
+  /**
+   * 处理放逐事件：包含白痴翻牌免死与警徽处理分支。
+   */
   onVotedOut(world: World, targetId: EntityId, events: GameEvent[]): VotedOutResult {
     const roleComp = world.getComponent<RoleComponent>(targetId, COMPONENT.Role);
     const aliveComp = world.getComponent<AliveComponent>(targetId, COMPONENT.Alive);
@@ -175,10 +184,16 @@ export class EventRegistry {
     }
   }
 
+  /**
+   * 判定该死亡场景是否允许遗言。
+   */
   shouldGrantLastWords(phase: Phase, day: number): boolean {
     return (phase === Phase.Night && day === 1) || phase === Phase.Voting;
   }
 
+  /**
+   * 判定猎人是否为最后存活神职。
+   */
   private isLastGod(world: World, hunterId: EntityId): boolean {
     // 若猎人是最后存活神职，则开枪不会改变屠边结论，直接不触发。
     const alive = world.getAliveEntityIds();

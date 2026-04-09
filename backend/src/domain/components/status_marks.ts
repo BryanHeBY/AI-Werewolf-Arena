@@ -11,26 +11,44 @@ export class StatusMarksComponent implements PromptRenderable {
     this.marks = new Set(initialMarks);
   }
 
+  /**
+   * 添加指定状态印记。
+   */
   add(mark: StatusMark): void {
     this.marks.add(mark);
   }
 
+  /**
+   * 判断是否存在指定状态印记。
+   */
   has(mark: StatusMark): boolean {
     return this.marks.has(mark);
   }
 
+  /**
+   * 移除指定状态印记。
+   */
   remove(mark: StatusMark): void {
     this.marks.delete(mark);
   }
 
+  /**
+   * 清空当前全部状态印记。
+   */
   clear(): void {
     this.marks.clear();
   }
 
+  /**
+   * 返回当前全部状态印记列表。
+   */
   values(): StatusMark[] {
     return [...this.marks];
   }
 
+  /**
+   * 将状态印记渲染为可读文本片段。
+   */
   renderPrompt(): string {
     if (this.marks.size === 0) {
       return "你当前没有状态印记。";
@@ -49,6 +67,9 @@ export class StatusMarksComponent implements PromptRenderable {
   }
 }
 
+/**
+ * 创建状态印记组件。
+ */
 export function createStatusMarksComponent(): StatusMarksComponent {
   return new StatusMarksComponent();
 }

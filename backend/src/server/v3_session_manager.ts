@@ -7,11 +7,17 @@ import { twelvePlayerStandardConfig } from "../scenarios/twelve_player_standard"
 import { buildFrontendGameState, toFrontendFaction, toFrontendPhase } from "./view_mapper";
 import { BaselineBotActionProvider } from "../v3/action_providers";
 
+/**
+ * 启动会话可选参数。
+ */
 export interface SessionStartOptions {
   board?: BoardPreset;
   maxDays?: number;
 }
 
+/**
+ * 会话状态快照。
+ */
 export interface SessionStatus {
   id: string;
   board: BoardPreset;
@@ -19,6 +25,9 @@ export interface SessionStatus {
   snapshot: RuntimeSnapshot;
 }
 
+/**
+ * 会话管理器运行配置。
+ */
 export interface SessionManagerConfig {
   defaultBoard: BoardPreset;
   maxDaysPerSession: number;
@@ -54,6 +63,9 @@ class V3GameSession {
     this.actionProvider = new BaselineBotActionProvider(this.context.world);
   }
 
+  /**
+   * 启动对局会话循环。
+   */
   start(): void {
     if (this.running) {
       return;
@@ -81,10 +93,16 @@ class V3GameSession {
     void this.runLoop();
   }
 
+  /**
+   * 停止对局会话。
+   */
   stop(): void {
     this.running = false;
   }
 
+  /**
+   * 获取当前会话状态。
+   */
   status(): SessionStatus {
     return {
       id: this.id,
@@ -101,6 +119,9 @@ class V3GameSession {
     );
   }
 
+  /**
+   * 按周期推进对局直到终局或被停止。
+   */
   private async runLoop(): Promise<void> {
     while (this.running && !this.context.phaseManager.getSnapshot().gameOver) {
       await this.context.phaseManager.runSingleCycle(this.actionProvider, this.maxDays);
@@ -114,6 +135,9 @@ class V3GameSession {
     this.running = false;
   }
 
+  /**
+   * 增量翻译并广播新事件。
+   */
   private flushEvents(): void {
     // 只增量消费新事件，避免重复广播同一条历史事件。
     const events = this.context.phaseManager.getEvents().slice(this.eventCursor);
@@ -130,6 +154,9 @@ class V3GameSession {
     }
   }
 
+  /**
+   * 将内部领域事件翻译为前端实时事件。
+   */
   private translateEvent(event: GameEvent): RealtimeGameEvent[] {
     const nowState = buildFrontendGameState(
       this.context.world,
@@ -345,6 +372,9 @@ class V3GameSession {
     return [];
   }
 
+  /**
+   * 构建统一玩家死亡事件。
+   */
   private makePlayerDiedEvent(playerId: number, timestamp: number): RealtimeGameEvent {
     return this.makePublicEvent(
       "player_died",
@@ -399,17 +429,26 @@ class V3GameSession {
     };
   }
 
+  /**
+   * 读取玩家展示名。
+   */
   private getPlayerName(playerId: number): string {
     const player = this.snapshotPublicState().players.find((p) => p.id === playerId);
     return player?.name ?? `玩家${playerId}`;
   }
 
+  /**
+   * 读取玩家角色类型（前端展示用）。
+   */
   private getPlayerRole(playerId: number): string {
     const player = this.snapshotPublicState().players.find((p) => p.id === playerId);
     return player?.roleType ?? "villager";
   }
 }
 
+/**
+ * V3 会话管理器：负责单实例会话生命周期管理。
+ */
 export class V3SessionManager {
   private current: V3GameSession | null = null;
   private seq = 0;
@@ -419,6 +458,9 @@ export class V3SessionManager {
     private readonly config: SessionManagerConfig,
   ) {}
 
+  /**
+   * 启动会话；若已有运行中会话则直接返回其状态。
+   */
   start(options: SessionStartOptions = {}): SessionStatus {
     if (this.current && this.current.status().running) {
       // 同一时刻只允许一个活跃会话，重复 start 直接返回当前状态。
@@ -440,6 +482,9 @@ export class V3SessionManager {
     return this.current.status();
   }
 
+  /**
+   * 停止当前会话。
+   */
   stop(): SessionStatus | null {
     if (!this.current) {
       return null;
@@ -448,6 +493,9 @@ export class V3SessionManager {
     return this.current.status();
   }
 
+  /**
+   * 查询当前会话状态。
+   */
   status(): SessionStatus | null {
     if (!this.current) {
       return null;
@@ -455,6 +503,9 @@ export class V3SessionManager {
     return this.current.status();
   }
 
+  /**
+   * 查询当前会话公开状态。
+   */
   publicState(): ReturnType<V3GameSession["snapshotPublicState"]> | null {
     if (!this.current) {
       return null;
@@ -463,6 +514,9 @@ export class V3SessionManager {
   }
 }
 
+/**
+ * 异步延迟工具：用于会话循环节流，降低广播压力。
+ */
 async function sleep(ms: number): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, ms));
 }

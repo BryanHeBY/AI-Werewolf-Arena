@@ -42,6 +42,9 @@ export function setupSocket(server: HttpServer): Server {
   return io;
 }
 
+/**
+ * 注入全局广播器实例，供连接生命周期回调使用。
+ */
 export function setGlobalBroadcaster(broadcaster: Broadcaster): void {
   globalBroadcaster = broadcaster;
 }

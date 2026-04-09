@@ -4,6 +4,9 @@ import { StatusMarksComponent } from "../components/status_marks";
 import { EntityId, StatusMark } from "../model";
 import { World } from "../world";
 
+/**
+ * 黎明伤害结算结果。
+ */
 export interface DamageResolutionResult {
   deaths: EntityId[];
   deathSources: Record<number, StatusMark[]>;
@@ -16,6 +19,9 @@ export interface DamageResolutionResult {
  * - 结算后清空当夜印记
  */
 export class DamageResolutionSystem {
+  /**
+   * 执行一轮夜间伤害结算并返回死亡与死因信息。
+   */
   resolve(world: World): DamageResolutionResult {
     const deaths: EntityId[] = [];
     const deathSources: Record<number, StatusMark[]> = {};

@@ -14,6 +14,9 @@ import {
 } from "../domain/model";
 import { World } from "../domain/world";
 
+/**
+ * 动作校验上下文。
+ */
 export interface ValidationContext {
   phase: Phase;
   actionWindow?: ActionWindow;
@@ -154,6 +157,9 @@ export class ActionValidator {
     };
   }
 
+  /**
+   * 判断目标玩家是否为存活状态。
+   */
   private isAliveTarget(world: World, targetId: EntityId): boolean {
     const alive = world.getComponent<AliveComponent>(targetId, COMPONENT.Alive);
     return alive?.alive === true;

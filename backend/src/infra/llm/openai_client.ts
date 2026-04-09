@@ -1,12 +1,18 @@
 import OpenAI from "openai";
 import { withRetry } from "./retry";
 
+/**
+ * 聊天消息结构。
+ */
 export interface ChatMessage {
   role: "system" | "user" | "assistant" | "tool";
   content: string;
   tool_call_id?: string;
 }
 
+/**
+ * OpenAI 客户端配置。
+ */
 export interface OpenAIClientOptions {
   apiKey: string;
   baseURL?: string;
@@ -16,16 +22,25 @@ export interface OpenAIClientOptions {
   forceJsonResponse?: boolean;
 }
 
+/**
+ * 聊天调用可选参数。
+ */
 export interface ChatOptions {
   signal?: AbortSignal;
 }
 
+/**
+ * 工具 schema 定义。
+ */
 export interface ToolSchema {
   name: string;
   description: string;
   parameters: Record<string, unknown>;
 }
 
+/**
+ * 工具调用实例。
+ */
 export interface ToolInvocation {
   id: string;
   name: string;
@@ -33,6 +48,9 @@ export interface ToolInvocation {
   rawArgs: string;
 }
 
+/**
+ * 工具循环回调集合。
+ */
 export interface ToolLoopCallbacks<T> {
   onToolCall: (invocation: ToolInvocation) => Promise<{
     toolResult: Record<string, unknown> | string;
@@ -41,10 +59,16 @@ export interface ToolLoopCallbacks<T> {
   }>;
 }
 
+/**
+ * 工具循环可选参数。
+ */
 export interface ToolLoopOptions extends ChatOptions {
   maxSteps?: number;
 }
 
+/**
+ * 单步工具循环追踪信息。
+ */
 export interface ToolLoopStepTrace {
   assistantText: string;
   toolCalls: Array<{
@@ -79,6 +103,9 @@ export class OpenAIClient {
     this.forceJsonResponse = options.forceJsonResponse ?? true;
   }
 
+  /**
+   * 执行单次聊天请求。
+   */
   async chat(messages: ChatMessage[], options: ChatOptions = {}): Promise<string> {
     try {
       const completion = await this.createCompletion(
@@ -249,6 +276,9 @@ export class OpenAIClient {
     });
   }
 
+  /**
+   * 判断错误是否为 response_format 不兼容导致。
+   */
   private isResponseFormatUnsupported(error: unknown): boolean {
     const text = String(error).toLowerCase();
     return (

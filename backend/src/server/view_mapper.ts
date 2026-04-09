@@ -7,12 +7,18 @@ import { VotingRightComponent } from "../domain/components/voting_right";
 import { Camp, Phase, Role, RuntimeSnapshot } from "../domain/model";
 import { World } from "../domain/world";
 
+/**
+ * 前端阶段枚举（映射自后端 Phase）。
+ */
 export type FrontendPhase =
   | "Night_Start"
   | "Sequential_Speech"
   | "Vote"
   | "Game_Over";
 
+/**
+ * 前端玩家视图模型。
+ */
 export interface FrontendPlayerView {
   id: number;
   name: string;
@@ -23,6 +29,9 @@ export interface FrontendPlayerView {
   voteWeight: number;
 }
 
+/**
+ * 前端公开对局状态模型。
+ */
 export interface FrontendGameState {
   phase: FrontendPhase;
   round: number;
@@ -56,10 +65,16 @@ export function toFrontendPhase(phase: Phase): FrontendPhase {
   return "Game_Over";
 }
 
+/**
+ * 将后端阵营值映射为前端阵营值。
+ */
 export function toFrontendFaction(camp: Camp | null): "wolf" | "villager" {
   return camp === Camp.Wolf ? "wolf" : "villager";
 }
 
+/**
+ * 基于 world 构建前端玩家列表。
+ */
 export function buildFrontendPlayers(world: World): FrontendPlayerView[] {
   const ids = world.entityIds();
   return ids.map((id) => {
@@ -80,6 +95,9 @@ export function buildFrontendPlayers(world: World): FrontendPlayerView[] {
   });
 }
 
+/**
+ * 基于运行时快照构建前端公开状态。
+ */
 export function buildFrontendGameState(
   world: World,
   snapshot: RuntimeSnapshot,
