@@ -13,7 +13,10 @@
     "build:backend": "cd backend && npm run build",
     "build:frontend": "cd frontend && npm run build",
     "start": "cd backend && npm start",
-    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "comment:report": "node scripts/comment_coverage_check.js --report",
+    "comment:strict": "node scripts/comment_coverage_check.js --strict",
+    "comment:strict:methods": "node scripts/comment_coverage_check.js --strict --check-methods"
   },
   "keywords": [
     "werewolf",

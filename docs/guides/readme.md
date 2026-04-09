@@ -8,6 +8,7 @@
 2. 活动驱动索引：`activities/readme.md`
 3. 后端重构作战包：`backend_rebuild/readme.md`
 4. 无人值守循环准则：`unattended_todo_loop.md`
+5. 注释覆盖治理看板：`comment_coverage_driver.md`
 
 执行硬约束：TODO 仅允许逐条勾选，且必须先完成对应验收项并记录证据。
 
