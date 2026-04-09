@@ -1,3 +1,7 @@
+
+/**
+ * 历史动作日志组件：按动作类型渲染图标、颜色和文本详情。
+ */
 <script setup lang="ts">
 import { ScrollArea } from 'shadcn-vue'
 import type { PlayerAction } from '@/types'

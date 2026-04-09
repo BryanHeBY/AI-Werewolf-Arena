@@ -1,5 +1,8 @@
 import { ref, onUnmounted } from "vue";
 import { io, type Socket } from "socket.io-client";
+/**
+ * WebSocket 连接封装：统一管理连接状态、事件监听和资源释放。
+ */
 export function useWebSocket(url: string = "http://localhost:3344") {
   const socket = ref<Socket | null>(null);
   const isConnected = ref(false);

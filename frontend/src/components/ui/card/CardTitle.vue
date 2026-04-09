@@ -1,3 +1,7 @@
+
+/**
+ * Card 标题：统一标题字号与字重。
+ */
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@/lib/utils'

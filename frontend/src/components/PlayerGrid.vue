@@ -1,3 +1,7 @@
+
+/**
+ * 玩家网格组件：按身份阵营渲染玩家卡片与生死状态。
+ */
 <script setup lang="ts">
 import { Card, CardContent, CardHeader } from 'shadcn-vue'
 import { Badge } from 'shadcn-vue'

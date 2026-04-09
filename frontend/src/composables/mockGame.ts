@@ -15,6 +15,9 @@ const playerNames = [
   'CRYPTO', 'P1X3L', 'R0GUE', 'PH4NTOM', 'N3RO'
 ]
 
+/**
+ * 原地洗牌：用于打乱 mock 玩家顺序，避免固定座位导致展示单一。
+ */
 function shuffleArray(array: any[]) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -22,6 +25,9 @@ function shuffleArray(array: any[]) {
   }
 }
 
+/**
+ * 构造一局前端演示用的初始状态。
+ */
 export function getMockGame(): PublicGameState {
   // Create players
   const players: PublicPlayer[] = playerNames.map((name, index) => ({
@@ -49,6 +55,9 @@ export function getMockGame(): PublicGameState {
   }
 }
 
+/**
+ * 生成一段可视化历史记录，便于日志组件在 mock 模式下展示。
+ */
 function generateGameHistory(players: PublicPlayer[]): PlayerAction[] {
   const events: PlayerAction[] = []
   const now = Date.now()
@@ -102,6 +111,9 @@ function generateGameHistory(players: PublicPlayer[]): PlayerAction[] {
   return events
 }
 
+/**
+ * 将 mock 状态机推进到下一个阶段，供“下一步”按钮触发。
+ */
 export function simulateGameTick(gameState: PublicGameState): PublicGameState {
   return {
     ...gameState,

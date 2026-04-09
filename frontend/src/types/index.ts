@@ -198,6 +198,9 @@ export interface BroadcastEvent {
   timestamp: number;
 }
 
+/**
+ * `game_started` 事件载荷：用于首屏初始化玩家与回合信息。
+ */
 export interface GameStartedPayload {
   phase: GamePhase | string;
   round: number;
@@ -205,6 +208,9 @@ export interface GameStartedPayload {
   gameState?: PublicGameState;
 }
 
+/**
+ * `phase_changed` 事件载荷：描述阶段流转与可选的中断状态。
+ */
 export interface PhaseChangedPayload {
   phase: GamePhase | string;
   round: number;
@@ -214,11 +220,17 @@ export interface PhaseChangedPayload {
   interruptedBy?: number | null;
 }
 
+/**
+ * `agent_thinking` 事件载荷：展示某玩家的思考文本。
+ */
 export interface AgentThinkingPayload {
   playerId: number;
   thought: string;
 }
 
+/**
+ * `player_action` 事件载荷：统一封装发言/投票/夜间动作。
+ */
 export interface PlayerActionPayload {
   playerId: number;
   roleType?: RoleType | string;
@@ -228,6 +240,9 @@ export interface PlayerActionPayload {
   thought?: string;
 }
 
+/**
+ * `night_result` 事件载荷：汇总夜间死亡与女巫干预结果。
+ */
 export interface NightResultPayload {
   deadPlayerIds: number[];
   killedByWolf?: number;
@@ -235,16 +250,25 @@ export interface NightResultPayload {
   poisonedByWitch?: number;
 }
 
+/**
+ * `player_died` 事件载荷：用于前端标记出局玩家。
+ */
 export interface PlayerDiedPayload {
   playerId: number;
   roleType?: RoleType | string;
 }
 
+/**
+ * `speech_start` 事件载荷：标识当前轮到哪位玩家发言。
+ */
 export interface SpeechStartPayload {
   playerId?: number;
   playerName?: string;
 }
 
+/**
+ * `vote_result` 事件载荷：兼容不同字段名的放逐结果。
+ */
 export interface VoteResultPayload {
   votedDeadId?: number;
   votedDeadName?: string;
@@ -252,16 +276,25 @@ export interface VoteResultPayload {
   votedOutName?: string;
 }
 
+/**
+ * `game_over` 事件载荷：包含胜负阵营与可选最终状态快照。
+ */
 export interface GameOverPayload {
   winner: Faction | string;
   gameState?: PublicGameState;
 }
 
+/**
+ * `winner_declared` 事件载荷：用于展示文案化胜利公告。
+ */
 export interface WinnerDeclaredPayload {
   winner: Faction | string;
   message?: string;
 }
 
+/**
+ * WebSocket 实时事件联合类型，前端消费端按 `type` 分发。
+ */
 export type RealtimeGameEvent =
   | { type: BroadcastEventType.GameStarted; data: GameStartedPayload; timestamp: number }
   | { type: BroadcastEventType.PhaseChanged; data: PhaseChangedPayload; timestamp: number }
@@ -314,6 +347,9 @@ export interface OODACycle {
  * Environment 公共黑板接口
  */
 import type { Environment } from './Environment';
+/**
+ * 环境接口别名：统一前后端共享的 Environment 类型命名。
+ */
 export type EnvironmentInterface = Environment;
 
 /**

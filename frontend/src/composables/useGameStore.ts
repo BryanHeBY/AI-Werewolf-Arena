@@ -22,6 +22,9 @@ import type {
 import { MockDataEngine } from "./mockDataEngine";
 import { useWebSocket } from "./useWebSocket";
 
+/**
+ * 日志面板条目：统一承载系统消息、动作与思考文本。
+ */
 export interface LogEntry {
   type: "thought" | "action" | "system";
   playerId?: number;
@@ -33,6 +36,9 @@ export interface LogEntry {
 
 const USE_REAL_BACKEND = true; // Set to false to use mock data
 
+/**
+ * 游戏状态 Store：负责接收实时事件并维护页面可渲染状态。
+ */
 export function useGameStore() {
   const phase = ref<GamePhase>("Night_Start" as GamePhase);
   const round = ref(1);
