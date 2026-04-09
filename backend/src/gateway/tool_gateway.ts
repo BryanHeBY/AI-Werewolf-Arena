@@ -82,24 +82,27 @@ export class ToolGateway {
   }
 
   private sanitize<T extends ToolCall>(call: T): T {
-    if (call.name === "speak" || call.name === "speak_to_wolves") {
+    if (call.name === "speak") {
       const raw = call.args.text;
       // 防止模型伪造系统身份前缀，避免污染公共上下文。
       const text = raw.replace(RESERVED_PREFIX, "").trim();
-      if (call.name === "speak") {
-        return {
-          ...call,
-          args: {
-            ...call.args,
-            text,
-          },
-        } as T;
-      }
       return {
         ...call,
         args: {
           ...call.args,
           text,
+        },
+      } as T;
+    }
+    if (call.name === "speak_to_wolves") {
+      const raw = call.args.text;
+      const text = raw.replace(RESERVED_PREFIX, "").trim();
+      return {
+        ...call,
+        args: {
+          ...call.args,
+          text,
+          end_chat: Boolean(call.args.end_chat),
         },
       } as T;
     }

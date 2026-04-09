@@ -115,8 +115,8 @@ export interface PromptRenderable {
  * 工具参数映射定义。
  */
 export interface ToolArgMap {
-  speak_to_wolves: { text: string };
-  kill_vote: { target_id: EntityId };
+  speak_to_wolves: { text: string; end_chat: boolean };
+  kill_vote: { target_id: EntityId | null; abstain: boolean };
   guard: { target_id: EntityId };
   check_identity: { target_id: EntityId };
   use_potion: { target_id: EntityId; potion_type: PotionType };

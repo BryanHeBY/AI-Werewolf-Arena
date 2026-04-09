@@ -48,9 +48,22 @@ export class ActionValidator {
 
     switch (toolCall.name) {
       case "speak_to_wolves":
+        if (role.role !== Role.Wolf) {
+          return { ok: false, error: "非法操作，仅狼人可执行该动作" };
+        }
+        break;
       case "kill_vote":
         if (role.role !== Role.Wolf) {
           return { ok: false, error: "非法操作，仅狼人可执行该动作" };
+        }
+        if (toolCall.args.abstain) {
+          break;
+        }
+        if (
+          toolCall.args.target_id === null ||
+          !this.isAliveTarget(world, toolCall.args.target_id)
+        ) {
+          return { ok: false, error: "非法操作，刀人目标必须存活" };
         }
         break;
       case "guard":

@@ -56,7 +56,11 @@ interface ChatLike {
         stop?: boolean;
       }>;
     },
-    options?: { signal?: AbortSignal; maxSteps?: number },
+    options?: {
+      signal?: AbortSignal;
+      maxSteps?: number;
+      toolChoice?: "auto" | "required";
+    },
   ): Promise<{
     finalAction: T | null;
     assistantText: string;
@@ -140,7 +144,11 @@ export class LlmActionProvider implements ActionProvider {
       );
       this.dumpLlmPrompt(messages, request);
       if (this.client.runToolLoop) {
-        const picked = await this.runSdkToolLoop(request, messages, effectiveTimeoutMs);
+        const picked = await this.runSdkToolLoop(
+          request,
+          messages,
+          effectiveTimeoutMs,
+        );
         if (picked) {
           this.appendTrace(
             `request_ok player=${request.actorId} phase=${request.phase} action=${picked.name} args=${JSON.stringify(picked.args)} elapsed_ms=${Date.now() - startedAt}`,
@@ -148,6 +156,33 @@ export class LlmActionProvider implements ActionProvider {
           return picked;
         }
         if (this.isMustAct(request)) {
+          let retryMessages = [...messages];
+          const maxRetries = 3;
+          for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            const retryPrompt = this.buildMustActRetryPrompt(attempt, maxRetries);
+            retryMessages = [
+              ...retryMessages,
+              {
+                role: "user",
+                content: retryPrompt,
+              },
+            ];
+            console.log(
+              `[LLM_RETRY] player=${request.actorId} phase=${request.phase} attempt=${attempt}/${maxRetries} reason=must_act_no_valid_action`,
+            );
+            this.dumpLlmPrompt(retryMessages, request);
+            const retried = await this.runSdkToolLoop(
+              request,
+              retryMessages,
+              effectiveTimeoutMs,
+            );
+            if (retried) {
+              this.appendTrace(
+                `request_ok_retry player=${request.actorId} phase=${request.phase} attempt=${attempt}/${maxRetries} action=${retried.name} args=${JSON.stringify(retried.args)} elapsed_ms=${Date.now() - startedAt}`,
+              );
+              return retried;
+            }
+          }
           return this.runFallback(request, "model_declined_required_action");
         }
         this.appendTrace(
@@ -205,6 +240,19 @@ export class LlmActionProvider implements ActionProvider {
   }
 
   /**
+   * mustAct 回合未产出有效动作时，返回递进式重试提示词。
+   */
+  private buildMustActRetryPrompt(attempt: number, maxRetries: number): string {
+    if (attempt === 1) {
+      return `上轮你没有完成有效工具调用。请立即调用一个可用工具，禁止解释文本。（重试 ${attempt}/${maxRetries}）`;
+    }
+    if (attempt === 2) {
+      return `再次提醒：你必须立刻调用可用工具。不要输出思考、不要输出说明、不要输出自然语言。（重试 ${attempt}/${maxRetries}）`;
+    }
+    return `最后警告：若你本轮仍不调用可用工具，系统将判定失败并强制回退。现在立刻只输出函数调用。（重试 ${attempt}/${maxRetries}）`;
+  }
+
+  /**
    * 基于全局截止时间计算当前请求可用超时预算。
    */
   private computeEffectiveTimeout(deadlineAtMs?: number): number {
@@ -230,6 +278,7 @@ export class LlmActionProvider implements ActionProvider {
   ): Promise<ToolCall | null> {
     // 降级策略：LLM 不可用或输出不合法时，使用基线策略保证对局继续。
     const fallbackAction = await this.fallbackProvider.getAction(request);
+    this.dumpFallbackReason(request, reason, fallbackAction);
     if (fallbackAction) {
       this.appendTrace(
         `request_recovered player=${request.actorId} phase=${request.phase} reason=${reason} fallback=${fallbackAction.name} args=${JSON.stringify((fallbackAction as any).args ?? {})}`,
@@ -240,6 +289,22 @@ export class LlmActionProvider implements ActionProvider {
       );
     }
     return fallbackAction;
+  }
+
+  /**
+   * 输出降级原因日志，便于在非 trace 模式快速定位“为何出现默认兜底动作”。
+   */
+  private dumpFallbackReason(
+    request: ActionRequest,
+    reason: string,
+    fallbackAction: ToolCall | null,
+  ): void {
+    const fallbackText = fallbackAction
+      ? `${fallbackAction.name} ${JSON.stringify((fallbackAction as any).args ?? {})}`
+      : "none";
+    console.log(
+      `[LLM_FALLBACK] player=${request.actorId} phase=${request.phase} reason=${reason} mustAct=${this.isMustAct(request)} allowedTools=${request.allowedTools.join(",")} fallback=${fallbackText}`,
+    );
   }
 
   private async chatWithTimeout(
@@ -276,7 +341,10 @@ export class LlmActionProvider implements ActionProvider {
     const controller = new AbortController();
     let timer: NodeJS.Timeout | null = null;
     try {
-      const tools = this.buildSdkToolSchemas(request.allowedTools);
+      const tools = this.buildSdkToolSchemas(
+        request.allowedTools,
+        this.isMustAct(request),
+      );
       const loop = this.client.runToolLoop<ToolCall>(
         messages,
         tools,
@@ -321,7 +389,11 @@ export class LlmActionProvider implements ActionProvider {
             };
           },
         },
-        { signal: controller.signal, maxSteps: 8 },
+        {
+          signal: controller.signal,
+          maxSteps: 8,
+          toolChoice: this.isMustAct(request) ? "required" : "auto",
+        },
       );
 
       const withTimeout = Promise.race([
@@ -354,17 +426,22 @@ export class LlmActionProvider implements ActionProvider {
   /**
    * 为本回合可用工具构建 SDK 函数调用 schema。
    */
-  private buildSdkToolSchemas(allowedTools: ToolName[]): ToolSchema[] {
+  private buildSdkToolSchemas(
+    allowedTools: ToolName[],
+    mustAct: boolean,
+  ): ToolSchema[] {
     const tools: ToolSchema[] = allowedTools.map((tool) => this.toolSchema(tool));
-    tools.push({
-      name: "finish_turn",
-      description: "当你决定本回合不再继续行动时调用该工具。",
-      parameters: {
-        type: "object",
-        properties: {},
-        additionalProperties: false,
-      },
-    });
+    if (!mustAct) {
+      tools.push({
+        name: "finish_turn",
+        description: "当你决定本回合不再继续行动时调用该工具。",
+        parameters: {
+          type: "object",
+          properties: {},
+          additionalProperties: false,
+        },
+      });
+    }
     return tools;
   }
 
@@ -372,7 +449,7 @@ export class LlmActionProvider implements ActionProvider {
    * 生成单个工具的参数 schema 定义。
    */
   private toolSchema(name: ToolName): ToolSchema {
-    if (name === "speak" || name === "speak_to_wolves") {
+    if (name === "speak") {
       return {
         name,
         description: "发送发言文本。",
@@ -386,9 +463,38 @@ export class LlmActionProvider implements ActionProvider {
         },
       };
     }
+    if (name === "speak_to_wolves") {
+      return {
+        name,
+        description: "狼人夜聊发言；end_chat=true 表示发言后结束本人后续夜聊轮次。",
+        parameters: {
+          type: "object",
+          properties: {
+            text: { type: "string" },
+            end_chat: { type: "boolean" },
+          },
+          required: ["text", "end_chat"],
+          additionalProperties: false,
+        },
+      };
+    }
+    if (name === "kill_vote") {
+      return {
+        name,
+        description: "狼人刀人投票。abstain=true 表示本狼人本轮弃刀（不提交目标）。",
+        parameters: {
+          type: "object",
+          properties: {
+            target_id: { type: ["number", "null"] },
+            abstain: { type: "boolean" },
+          },
+          required: ["target_id", "abstain"],
+          additionalProperties: false,
+        },
+      };
+    }
     if (
       name === "guard" ||
-      name === "kill_vote" ||
       name === "check_identity" ||
       name === "vote" ||
       name === "shoot"
@@ -519,8 +625,11 @@ export class LlmActionProvider implements ActionProvider {
       "你必须使用中文进行思考和表达。",
       "你通过函数工具执行行动，不要手写 JSON。",
       `仅可调用本轮可用工具：${request.allowedTools.join(", ")}`,
+      this.stageDirective(request),
       mustAct ? "本轮必须完成一次有效行动。" : "本轮可选择结束回合不行动。",
-      "当你不需要继续行动时，请调用 finish_turn 工具结束回合。",
+      mustAct
+        ? "本轮禁止调用 finish_turn。"
+        : "当你不需要继续行动时，请调用 finish_turn 工具结束回合。",
       "禁止输出思维链与额外元信息。",
     ].join("\n");
 
@@ -548,6 +657,23 @@ export class LlmActionProvider implements ActionProvider {
   }
 
   /**
+   * 针对关键子阶段给出强约束指令，减少“狼聊阶段误当投票阶段”等误解。
+   */
+  private stageDirective(request: ActionRequest): string {
+    const tools = request.allowedTools;
+    if (tools.includes("speak_to_wolves")) {
+      return "当前是【狼人交流阶段】：只能调用 speak_to_wolves。若你想结束后续夜聊，请在该工具中设置 end_chat=true；本阶段不会完成刀人。";
+    }
+    if (tools.length === 1 && tools[0] === "kill_vote") {
+      return "当前是【狼人刀人投票阶段】：必须调用 kill_vote；若本轮决定不刀，请设置 abstain=true 且 target_id=null。";
+    }
+    if (tools.length === 1 && tools[0] === "use_potion") {
+      return `当前是【女巫行动阶段】：必须调用 use_potion；若本夜不用药，调用 use_potion 并设置 potion_type="${PotionType.None}"。`;
+    }
+    return "请严格区分当前阶段职责，只执行本轮工具对应动作。";
+  }
+
+  /**
    * 生成可用工具参数提示文本。
    */
   private toolArgHints(allowedTools: string[]): string {
@@ -556,10 +682,10 @@ export class LlmActionProvider implements ActionProvider {
       hints.push('speak args: {"text":"..."}');
     }
     if (allowedTools.includes("speak_to_wolves")) {
-      hints.push('speak_to_wolves args: {"text":"..."}');
+      hints.push('speak_to_wolves args: {"text":"...","end_chat":true|false}');
     }
     if (allowedTools.includes("kill_vote")) {
-      hints.push('kill_vote args: {"target_id":number}');
+      hints.push('kill_vote args: {"target_id":number|null,"abstain":true|false}');
     }
     if (allowedTools.includes("guard")) {
       hints.push('guard args: {"target_id":number}');
@@ -620,9 +746,21 @@ export class LlmActionProvider implements ActionProvider {
 
     // 仅做最小字段纠正，详细规则由 ToolGateway 二次校验。
     if (
-      ["guard", "kill_vote", "check_identity", "vote", "shoot"].includes(parsed.name)
+      ["guard", "check_identity", "vote", "shoot"].includes(parsed.name)
     ) {
       parsed.args.target_id = Number(parsed.args.target_id);
+    }
+    if (parsed.name === "kill_vote") {
+      parsed.args.abstain = Boolean(parsed.args.abstain);
+      if (parsed.args.abstain) {
+        parsed.args.target_id = null;
+      } else {
+        const target = Number(parsed.args.target_id);
+        if (!Number.isFinite(target)) {
+          return null;
+        }
+        parsed.args.target_id = target;
+      }
     }
 
     if (parsed.name === "use_potion") {
@@ -642,6 +780,10 @@ export class LlmActionProvider implements ActionProvider {
       ) {
         return null;
       }
+    }
+
+    if (parsed.name === "speak_to_wolves") {
+      parsed.args.end_chat = Boolean(parsed.args.end_chat);
     }
 
     return parsed as ToolCall;
@@ -762,6 +904,21 @@ export class LlmActionProvider implements ActionProvider {
     }
 
     const allowed = request.allowedTools;
+    if (allowed.length === 1 && allowed[0] === "speak_to_wolves") {
+      const lower = cleaned.toLowerCase();
+      const shouldEndChat =
+        lower.includes("结束夜聊") ||
+        lower.includes("结束群聊") ||
+        lower.includes("停止夜聊") ||
+        lower.includes("end_chat");
+      return {
+        name: "speak_to_wolves",
+        args: {
+          text: this.toSpeakText(cleaned),
+          end_chat: shouldEndChat,
+        },
+      };
+    }
     if (allowed.length !== 1) {
       return null;
     }
@@ -769,7 +926,7 @@ export class LlmActionProvider implements ActionProvider {
     const tool = allowed[0];
     const targetId = this.extractTargetId(cleaned, request.actorId);
 
-    if (tool === "speak" || tool === "speak_to_wolves") {
+    if (tool === "speak") {
       return {
         name: tool,
         args: {
@@ -812,7 +969,33 @@ export class LlmActionProvider implements ActionProvider {
       };
     }
 
-    if (["guard", "kill_vote", "check_identity", "vote", "shoot"].includes(tool)) {
+    if (tool === "kill_vote") {
+      const lower = cleaned.toLowerCase();
+      const abstain =
+        lower.includes("不刀") ||
+        lower.includes("弃刀") ||
+        lower.includes("不投刀") ||
+        lower.includes("abstain");
+      if (abstain) {
+        return {
+          name: "kill_vote",
+          args: { target_id: null, abstain: true },
+        };
+      }
+      const resolvedTarget = targetId ?? this.pickAliveNotSelf(request.actorId);
+      if (resolvedTarget === null) {
+        return {
+          name: "kill_vote",
+          args: { target_id: null, abstain: true },
+        };
+      }
+      return {
+        name: "kill_vote",
+        args: { target_id: resolvedTarget, abstain: false },
+      };
+    }
+
+    if (["guard", "check_identity", "vote", "shoot"].includes(tool)) {
       const resolvedTarget = targetId ?? this.pickAliveNotSelf(request.actorId);
       if (resolvedTarget === null) {
         return null;

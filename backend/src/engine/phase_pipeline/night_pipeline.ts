@@ -28,7 +28,7 @@ import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
  * 各步骤按串行执行，保证状态变更在同一时间线上可追踪。
  */
 export class NightPipeline {
-  private static readonly WOLF_DISCUSSION_ROUNDS = 2;
+  private static readonly WOLF_DISCUSSION_MAX_ROUNDS = 3;
 
   constructor(
     private readonly world: World,
@@ -60,17 +60,27 @@ export class NightPipeline {
       });
     }
 
-    // 狼队夜聊固定两轮，且每轮都复用同一随机顺序，确保战术信息可迭代而不破坏回放一致性。
+    // 狼队夜聊最多三轮，且每轮都复用同一随机顺序；
+    // speak_to_wolves(end_chat=true) 表示本狼人结束后续夜聊轮次。
+    const endedWolves = new Set<EntityId>();
     for (
       let round = 1;
-      round <= NightPipeline.WOLF_DISCUSSION_ROUNDS;
+      round <= NightPipeline.WOLF_DISCUSSION_MAX_ROUNDS;
       round++
     ) {
       for (const wolfId of wolfIds) {
+        if (endedWolves.has(wolfId)) {
+          continue;
+        }
         const req = this.makeRequest(
           wolfId,
           ["speak_to_wolves"],
-          { phase: "wolf_discussion", day: 0, round },
+          {
+            phase: "wolf_discussion",
+            day: 0,
+            round,
+            max_rounds: NightPipeline.WOLF_DISCUSSION_MAX_ROUNDS,
+          },
         );
         const action = await actionProvider.getAction(req);
         if (action?.name === "speak_to_wolves") {
@@ -81,17 +91,35 @@ export class NightPipeline {
             { phase: Phase.Night },
           );
           if (result.ok && result.sanitizedCall) {
-            this.events.push({
-              timestamp: Date.now(),
-              type: "wolf_discussion",
-              payload: {
-                actorId: wolfId,
-                text: result.sanitizedCall.args.text,
-                round,
-              },
-            });
+            if (result.sanitizedCall.args.end_chat) {
+              endedWolves.add(wolfId);
+              this.events.push({
+                timestamp: Date.now(),
+                type: "wolf_discussion_ended",
+                payload: {
+                  actorId: wolfId,
+                  reason: result.sanitizedCall.args.text,
+                  round,
+                },
+              });
+            } else {
+              this.events.push({
+                timestamp: Date.now(),
+                type: "wolf_discussion",
+                payload: {
+                  actorId: wolfId,
+                  text: result.sanitizedCall.args.text,
+                  endChat: false,
+                  round,
+                },
+              });
+            }
           }
         }
+      }
+
+      if (endedWolves.size === wolfIds.length) {
+        break;
       }
     }
 
@@ -147,13 +175,17 @@ export class NightPipeline {
         continue;
       }
 
+      const abstain = result.sanitizedCall.args.abstain === true;
       const targetId = result.sanitizedCall.args.target_id;
-      wolfVotes[targetId] = (wolfVotes[targetId] ?? 0) + 1;
+      if (!abstain && targetId !== null) {
+        wolfVotes[targetId] = (wolfVotes[targetId] ?? 0) + 1;
+      }
       this.events.push({
         timestamp: Date.now(),
         type: "wolf_kill_vote_cast",
         payload: {
           actorId: wolfId,
+          abstain,
           targetId,
         },
       });

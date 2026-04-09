@@ -3,6 +3,7 @@ import { COMPONENT } from "../../src/domain/components/names";
 import { RoleComponent } from "../../src/domain/components/role";
 import { ActionProvider, ActionRequest, Phase, ToolCall } from "../../src/domain/model";
 import { sixPlayerMvpConfig } from "../../src/scenarios/six_player_mvp";
+import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
 import { LlmActionProvider } from "../../src/v3/llm_action_provider";
 
 class FakeClient {
@@ -95,6 +96,43 @@ class FinishTurnOnlyClient {
       rawArgs: "{}",
     });
     return { finalAction: null, assistantText: "finish_turn_called" };
+  }
+}
+
+class CaptureToolsClient {
+  public lastToolNames: string[] = [];
+
+  async chat(): Promise<string> {
+    return "";
+  }
+
+  async runToolLoop<T>(
+    _messages: Array<{ role: string; content: string }>,
+    tools: Array<{ name: string }>,
+    callbacks: {
+      onToolCall: (invocation: {
+        id: string;
+        name: string;
+        args: Record<string, unknown>;
+        rawArgs: string;
+      }) => Promise<{
+        toolResult: Record<string, unknown> | string;
+        finalAction?: T;
+        stop?: boolean;
+      }>;
+    },
+  ): Promise<{ finalAction: T | null; assistantText: string }> {
+    this.lastToolNames = tools.map((tool) => tool.name);
+    const handled = await callbacks.onToolCall({
+      id: "tool_1",
+      name: "speak",
+      args: { text: "capture_tools" },
+      rawArgs: '{"text":"capture_tools"}',
+    });
+    return {
+      finalAction: (handled.finalAction ?? null) as T | null,
+      assistantText: "capture_tools_assistant",
+    };
   }
 }
 
@@ -427,6 +465,123 @@ describe("LlmActionProvider", () => {
     expect(action).toEqual({
       name: "speak",
       args: { text: "fallback_required_action" },
+    });
+  });
+
+  test("mustAct=true should not expose finish_turn tool", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const client = new CaptureToolsClient();
+    const provider = new LlmActionProvider(context.world, client as any, {
+      fallbackProvider: new FallbackProvider(null),
+    });
+
+    await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["speak"],
+      context: { must_act: true },
+    });
+
+    expect(client.lastToolNames).toContain("speak");
+    expect(client.lastToolNames).not.toContain("finish_turn");
+  });
+
+  test("mustAct=false should expose finish_turn tool", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const client = new CaptureToolsClient();
+    const provider = new LlmActionProvider(context.world, client as any, {
+      fallbackProvider: new FallbackProvider(null),
+    });
+
+    await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["speak"],
+      context: { must_act: false },
+    });
+
+    expect(client.lastToolNames).toContain("speak");
+    expect(client.lastToolNames).toContain("finish_turn");
+  });
+
+  test("system prompt should explicitly distinguish wolf discussion and wolf vote stages", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const provider = new LlmActionProvider(
+      context.world,
+      new AssertClient(
+        '{"name":"speak_to_wolves","args":{"text":"收到","end_chat":false}}',
+        (messages) => {
+        const system = messages.find((msg) => msg.role === "system")?.content ?? "";
+        const user = messages.find((msg) => msg.role === "user")?.content ?? "";
+        expect(system).toContain("狼人交流阶段");
+        expect(system).toContain("不会在本阶段完成刀人");
+        expect(system).toContain("end_chat=true");
+        expect(user).toContain(
+          'speak_to_wolves args: {"text":"...","end_chat":true|false}',
+        );
+      },
+      ),
+      {
+        fallbackProvider: new FallbackProvider(null),
+      },
+    );
+
+    await provider.getAction({
+      phase: Phase.Night,
+      actorId: 1,
+      allowedTools: ["speak_to_wolves"],
+      context: { must_act: true },
+    });
+  });
+
+  test("witch required action should fall back to use_potion none instead of dropped", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const provider = new LlmActionProvider(
+      context.world,
+      new FinishTurnOnlyClient() as any,
+      // 不传 fallbackProvider，走 BaselineBotActionProvider 默认兜底。
+    );
+
+    const witchId = context.world
+      .entityIds()
+      .find((id) => {
+        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        return role?.role === "witch";
+      })!;
+
+    const action = await provider.getAction({
+      phase: Phase.Night,
+      actorId: witchId,
+      allowedTools: ["use_potion"],
+      context: { must_act: true, broadcast_feed: [] },
+    });
+
+    expect(action).toEqual({
+      name: "use_potion",
+      args: { target_id: witchId, potion_type: "none" },
+    });
+  });
+
+  test("parses wolf kill abstain vote", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const provider = new LlmActionProvider(
+      context.world,
+      new FakeClient('{"name":"kill_vote","args":{"target_id":null,"abstain":true}}'),
+      {
+        fallbackProvider: new FallbackProvider(null),
+      },
+    );
+
+    const action = await provider.getAction({
+      phase: Phase.Night,
+      actorId: 1,
+      allowedTools: ["kill_vote"],
+      context: { must_act: true },
+    });
+
+    expect(action).toEqual({
+      name: "kill_vote",
+      args: { target_id: null, abstain: true },
     });
   });
 });

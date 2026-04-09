@@ -67,11 +67,21 @@ function mapEventToBroadcastLine(
       return `[系统][公开] 胜利阵营：${p.winner}，原因：${p.reason}`;
     case "wolf_discussion":
       return isWolf ? `[夜聊][狼队][${p.actorId}] ${p.text}` : null;
+    case "wolf_discussion_ended":
+      return isWolf
+        ? `[夜聊][结束][狼队][${p.actorId}] ${p.reason ?? "未提供原因"}`
+        : null;
     case "wolf_tactical_order":
       return isWolf ? `[狼队][顺序] ${Array.isArray(p.order) ? p.order.join("->") : ""}` : null;
     case "wolf_kill_vote_cast":
       // 狼刀投票信息按串行过程保留在狼队内部可见。
-      return isWolf ? `[狼刀票][狼队] ${p.actorId}号 -> ${p.targetId}号` : null;
+      if (!isWolf) {
+        return null;
+      }
+      if (p.abstain === true) {
+        return `[狼刀票][狼队] ${p.actorId}号 -> 弃刀`;
+      }
+      return `[狼刀票][狼队] ${p.actorId}号 -> ${p.targetId}号`;
     case "seer_checked":
       if (Number(p.actorId) !== actorId) {
         return null;

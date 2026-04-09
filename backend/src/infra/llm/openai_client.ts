@@ -64,6 +64,7 @@ export interface ToolLoopCallbacks<T> {
  */
 export interface ToolLoopOptions extends ChatOptions {
   maxSteps?: number;
+  toolChoice?: "auto" | "required";
 }
 
 /**
@@ -165,7 +166,7 @@ export class OpenAIClient {
               parameters: tool.parameters,
             },
           })),
-          tool_choice: "auto",
+          tool_choice: options.toolChoice ?? "auto",
         };
         return this.client.chat.completions.create(payload, {
           signal: options.signal,

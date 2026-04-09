@@ -204,12 +204,17 @@ class V3GameSession {
     }
 
     if (event.type === "wolf_kill_vote_cast") {
+      const abstain = Boolean(event.payload.abstain);
       return [
         this.makeWolvesOnlyEvent(
           "wolf_kill_vote_cast",
           {
             actorId: Number(event.payload.actorId),
-            targetId: Number(event.payload.targetId),
+            targetId:
+              event.payload.targetId === null || event.payload.targetId === undefined
+                ? null
+                : Number(event.payload.targetId),
+            abstain,
           },
           event.timestamp,
         ),

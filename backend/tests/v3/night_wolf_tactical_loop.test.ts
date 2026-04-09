@@ -14,6 +14,7 @@ import {
 } from "../../src/domain/model";
 import { RoleRegistry } from "../../src/domain/registries/role_registry";
 import { DamageResolutionSystem } from "../../src/domain/systems/damage_resolution_system";
+import { buildAgentBroadcastFeed } from "../../src/engine/agent_broadcast_feed";
 import { NightPipeline } from "../../src/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../src/gateway/tool_gateway";
 import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
@@ -36,7 +37,7 @@ class TacticalOrderProvider implements ActionProvider {
       this.discussionOrder.push(request.actorId);
       return {
         name: "speak_to_wolves",
-        args: { text: `夜聊_${request.actorId}` },
+        args: { text: `夜聊_${request.actorId}`, end_chat: false },
       };
     }
 
@@ -51,7 +52,7 @@ class TacticalOrderProvider implements ActionProvider {
       this.voteOrder.push(request.actorId);
       return {
         name: "kill_vote",
-        args: { target_id: this.wolfTargetId },
+        args: { target_id: this.wolfTargetId, abstain: false },
       };
     }
 
@@ -79,8 +80,111 @@ class TacticalOrderProvider implements ActionProvider {
   }
 }
 
+class EarlyEndWolfDiscussionProvider implements ActionProvider {
+  public discussionOrder: number[] = [];
+  public voteOrder: number[] = [];
+  public endedActorId: number | null = null;
+
+  constructor(private readonly wolfTargetId: number) {}
+
+  async getAction(request: ActionRequest): Promise<ToolCall | null> {
+    if (request.phase !== Phase.Night) {
+      return null;
+    }
+
+    if (request.allowedTools.includes("speak_to_wolves")) {
+      const round = Number((request.context as Record<string, unknown>).round ?? 1);
+      this.discussionOrder.push(request.actorId);
+      if (round === 1 && this.endedActorId === null) {
+        this.endedActorId = request.actorId;
+        return {
+          name: "speak_to_wolves",
+          args: { text: "测试：已达成一致，提前结束夜聊", end_chat: true },
+        };
+      }
+      return {
+        name: "speak_to_wolves",
+        args: { text: `夜聊_${request.actorId}_r${round}`, end_chat: false },
+      };
+    }
+
+    if (request.allowedTools.includes("kill_vote")) {
+      this.voteOrder.push(request.actorId);
+      return {
+        name: "kill_vote",
+        args: { target_id: this.wolfTargetId, abstain: false },
+      };
+    }
+
+    if (request.allowedTools.includes("guard")) {
+      return {
+        name: "guard",
+        args: { target_id: this.wolfTargetId },
+      };
+    }
+
+    if (request.allowedTools.includes("check_identity")) {
+      return {
+        name: "check_identity",
+        args: { target_id: this.wolfTargetId },
+      };
+    }
+
+    if (request.allowedTools.includes("use_potion")) {
+      return {
+        name: "use_potion",
+        args: {
+          target_id: request.actorId,
+          potion_type: PotionType.None,
+        },
+      };
+    }
+
+    return null;
+  }
+}
+
+class AbstainKillVoteProvider implements ActionProvider {
+  async getAction(request: ActionRequest): Promise<ToolCall | null> {
+    if (request.phase !== Phase.Night) {
+      return null;
+    }
+    if (request.allowedTools.includes("speak_to_wolves")) {
+      return {
+        name: "speak_to_wolves",
+        args: { text: `夜聊_${request.actorId}`, end_chat: true },
+      };
+    }
+    if (request.allowedTools.includes("kill_vote")) {
+      return {
+        name: "kill_vote",
+        args: { target_id: null, abstain: true },
+      };
+    }
+    if (request.allowedTools.includes("guard")) {
+      return {
+        name: "guard",
+        args: { target_id: request.actorId },
+      };
+    }
+    if (request.allowedTools.includes("check_identity")) {
+      return {
+        name: "check_identity",
+        args: { target_id: request.actorId === 1 ? 2 : 1 },
+      };
+    }
+    if (request.allowedTools.includes("use_potion")) {
+      return {
+        name: "use_potion",
+        args: { target_id: request.actorId, potion_type: PotionType.None },
+      };
+    }
+    return null;
+  }
+}
+
 describe("night wolf tactical loop", () => {
-  test("wolf discussion order equals vote order and majority decides kill target", async () => {
+  test("wolf discussion order repeats for three rounds and majority decides kill target", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [];
     const pipeline = new NightPipeline(
@@ -104,14 +208,67 @@ describe("night wolf tactical loop", () => {
     randomSpy.mockRestore();
 
     expect(provider.voteOrder.length).toBeGreaterThan(0);
-    expect(provider.discussionOrder.length).toBe(provider.voteOrder.length * 2);
+    expect(provider.discussionOrder.length).toBe(provider.voteOrder.length * 3);
     expect(
       provider.discussionOrder.slice(0, provider.voteOrder.length),
     ).toEqual(provider.voteOrder);
     expect(
-      provider.discussionOrder.slice(provider.voteOrder.length),
+      provider.discussionOrder.slice(
+        provider.voteOrder.length,
+        provider.voteOrder.length * 2,
+      ),
+    ).toEqual(provider.voteOrder);
+    expect(
+      provider.discussionOrder.slice(provider.voteOrder.length * 2),
     ).toEqual(provider.voteOrder);
     expect(result.summary.wolfTarget).toBe(wolfTargetId);
+  });
+
+  test("wolf can end discussion early and is skipped in later rounds", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const events: any[] = [];
+    const pipeline = new NightPipeline(
+      context.world,
+      new RoleRegistry(),
+      new ToolGateway(),
+      new DamageResolutionSystem(),
+      events,
+    );
+
+    const wolfTargetId = context.world
+      .getAliveEntityIds()
+      .find((id) => {
+        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        return role?.camp === Camp.Good;
+      })!;
+
+    const provider = new EarlyEndWolfDiscussionProvider(wolfTargetId);
+    const randomSpy = jest.spyOn(Math, "random").mockReturnValue(0.11);
+    await pipeline.execute(twelvePlayerStandardConfig, provider);
+    randomSpy.mockRestore();
+
+    expect(provider.endedActorId).not.toBeNull();
+    const endedActorId = provider.endedActorId!;
+    const endedActorDiscussionCount = provider.discussionOrder.filter(
+      (id) => id === endedActorId,
+    ).length;
+    expect(endedActorDiscussionCount).toBe(1);
+
+    for (const voter of provider.voteOrder) {
+      if (voter === endedActorId) {
+        continue;
+      }
+      const count = provider.discussionOrder.filter((id) => id === voter).length;
+      expect(count).toBe(3);
+    }
+
+    const endedEvent = events.find((event) => event.type === "wolf_discussion_ended");
+    expect(endedEvent).toBeTruthy();
+    expect(endedEvent.payload.actorId).toBe(endedActorId);
+
+    const wolfViewer = provider.voteOrder[0];
+    const feed = buildAgentBroadcastFeed(context.world, events, wolfViewer);
+    expect(feed.some((line) => line.includes("[夜聊][结束][狼队]"))).toBe(true);
   });
 
   test("guard mark cancels wolf kill while poison still kills", async () => {
@@ -194,5 +351,28 @@ describe("night wolf tactical loop", () => {
     expect(seerRole.seerState?.lastTarget).toBe(wolfTargetId);
     expect(seerRole.seerState?.lastIsWerewolf).toBe(true);
     expect(seerRole.seerState?.history.length).toBeGreaterThanOrEqual(1);
+  });
+
+  test("wolf abstain kill vote should produce no wolf target and no wolf night death", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const events: any[] = [];
+    const pipeline = new NightPipeline(
+      context.world,
+      new RoleRegistry(),
+      new ToolGateway(),
+      new DamageResolutionSystem(),
+      events,
+    );
+
+    const provider = new AbstainKillVoteProvider();
+    const result = await pipeline.execute(twelvePlayerStandardConfig, provider);
+
+    expect(result.summary.wolfTarget).toBeNull();
+    expect(result.summary.deaths.length).toBe(0);
+    const abstains = events.filter(
+      (event) =>
+        event.type === "wolf_kill_vote_cast" && event.payload.abstain === true,
+    );
+    expect(abstains.length).toBeGreaterThan(0);
   });
 });

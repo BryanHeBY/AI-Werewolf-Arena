@@ -6,6 +6,7 @@ import {
   Camp,
   EntityId,
   Phase,
+  PotionType,
   Role,
   ToolCall,
 } from "../domain/model";
@@ -86,13 +87,19 @@ export class BaselineBotActionProvider implements ActionProvider {
           name: "speak_to_wolves",
           args: {
             text: "今晚优先刀信息位。",
+            end_chat: false,
           },
         };
       }
 
       if (request.allowedTools.includes("kill_vote") && role.role === Role.Wolf) {
         const target = this.pickAliveByCamp(request.actorId, Camp.Good);
-        return target !== null ? { name: "kill_vote", args: { target_id: target } } : null;
+        return target !== null
+          ? { name: "kill_vote", args: { target_id: target, abstain: false } }
+          : {
+              name: "kill_vote",
+              args: { target_id: null, abstain: true },
+            };
       }
 
       if (request.allowedTools.includes("guard") && role.role === Role.Guard) {
@@ -103,6 +110,17 @@ export class BaselineBotActionProvider implements ActionProvider {
       if (request.allowedTools.includes("check_identity") && role.role === Role.Seer) {
         const target = this.pickAliveNotSelf(request.actorId);
         return target !== null ? { name: "check_identity", args: { target_id: target } } : null;
+      }
+
+      if (request.allowedTools.includes("use_potion") && role.role === Role.Witch) {
+        // 兜底行为：女巫回合若模型未给出有效动作，默认“本夜不用药”。
+        return {
+          name: "use_potion",
+          args: {
+            target_id: request.actorId,
+            potion_type: PotionType.None,
+          },
+        };
       }
     }
 
