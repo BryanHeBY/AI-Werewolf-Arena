@@ -72,48 +72,60 @@ export class VotingPipeline {
     });
 
     const tally: Record<number, number> = {};
+    // 投票请求并行发起，降低长轮次等待；事件落库仍按 voter 顺序写入，保证回放稳定。
+    const voteResults = await Promise.all(
+      voters.map(async (voterId) => {
+        const req: ActionRequest = {
+          phase: Phase.Voting,
+          actorId: voterId,
+          allowedTools: ["vote"],
+          context: {
+            phase: "voting",
+            must_act: true,
+            broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, voterId),
+          },
+        };
+
+        const action = await actionProvider.getAction(req);
+        if (action?.name !== "vote") {
+          return null;
+        }
+
+        const result = this.toolGateway.validateAndSanitize(
+          this.world,
+          voterId,
+          action,
+          { phase: Phase.Voting },
+        );
+        if (!result.ok || !result.sanitizedCall) {
+          return null;
+        }
+
+        return {
+          voterId,
+          targetId: result.sanitizedCall.args.target_id,
+        };
+      }),
+    );
 
     for (const voterId of voters) {
-      const req: ActionRequest = {
-        phase: Phase.Voting,
-        actorId: voterId,
-        allowedTools: ["vote"],
-        context: {
-          phase: "voting",
-          must_act: true,
-          broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, voterId),
-        },
-      };
-
-      const action = await actionProvider.getAction(req);
-      if (action?.name !== "vote") {
+      const vote = voteResults.find((item) => item?.voterId === voterId);
+      if (!vote) {
         continue;
       }
-
-      const result = this.toolGateway.validateAndSanitize(
-        this.world,
-        voterId,
-        action,
-        { phase: Phase.Voting },
-      );
-      if (!result.ok || !result.sanitizedCall) {
-        continue;
-      }
-
-      const voteTarget = result.sanitizedCall.args.target_id;
       const voting = this.world.getComponent<VotingRightComponent>(
         voterId,
         COMPONENT.VotingRight,
       );
       // 警长等角色可通过 weight 调整票权，默认 1 票。
       const weight = voting?.weight ?? 1;
-      tally[voteTarget] = (tally[voteTarget] ?? 0) + weight;
+      tally[vote.targetId] = (tally[vote.targetId] ?? 0) + weight;
       this.events.push({
         timestamp: Date.now(),
         type: "vote_cast",
         payload: {
           actorId: voterId,
-          targetId: voteTarget,
+          targetId: vote.targetId,
           weight,
         },
       });
@@ -166,56 +178,66 @@ export class VotingPipeline {
       return role?.role === Role.Wolf;
     });
 
-    for (const wolfId of wolves) {
-      const req: ActionRequest = {
-        phase: Phase.Voting,
-        actorId: wolfId,
-        actionWindow: window,
-        allowedTools: ["self_destruct"],
-        context: {
-          window,
-          must_act: false,
-          broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, wolfId),
-        },
-      };
-
-      const action = await actionProvider.getAction(req);
-      if (action?.name !== "self_destruct") {
-        continue;
-      }
-
-      const result = this.toolGateway.validateAndSanitize(
-        this.world,
-        wolfId,
-        action,
-        {
+    // 并行触发狼人自爆思考，减少 pre-vote 窗口总时延。
+    const candidates = await Promise.all(
+      wolves.map(async (wolfId) => {
+        const req: ActionRequest = {
           phase: Phase.Voting,
+          actorId: wolfId,
           actionWindow: window,
-          allowSelfDestruct: true,
-        },
-      );
-      if (!result.ok) {
-        continue;
-      }
+          allowedTools: ["self_destruct"],
+          context: {
+            window,
+            must_act: false,
+            broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, wolfId),
+          },
+        };
 
-      const alive = this.world.getComponent<AliveComponent>(wolfId, COMPONENT.Alive);
-      if (!alive || !alive.alive) {
-        continue;
-      }
+        const action = await actionProvider.getAction(req);
+        if (action?.name !== "self_destruct") {
+          return null;
+        }
 
-      alive.alive = false;
-      this.events.push({
-        timestamp: Date.now(),
-        type: "wolf_self_destruct",
-        payload: {
+        const result = this.toolGateway.validateAndSanitize(
+          this.world,
           wolfId,
-          window,
-        },
-      });
-      return wolfId;
+          action,
+          {
+            phase: Phase.Voting,
+            actionWindow: window,
+            allowSelfDestruct: true,
+          },
+        );
+        if (!result.ok) {
+          return null;
+        }
+        return wolfId;
+      }),
+    );
+
+    // 多狼同时自爆请求时按座位/ID 最小值决议，保证确定性。
+    const picked = candidates
+      .filter((id): id is EntityId => id !== null)
+      .sort((a, b) => a - b)[0];
+    if (picked === undefined) {
+      return null;
     }
 
-    return null;
+    const alive = this.world.getComponent<AliveComponent>(picked, COMPONENT.Alive);
+    if (!alive || !alive.alive) {
+      return null;
+    }
+
+    alive.alive = false;
+    this.events.push({
+      timestamp: Date.now(),
+      type: "wolf_self_destruct",
+      payload: {
+        wolfId: picked,
+        window,
+      },
+    });
+    return picked;
   }
 
   /**

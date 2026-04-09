@@ -163,57 +163,67 @@ export class DayPipeline {
       return role?.role === Role.Wolf;
     });
 
-    for (const wolfId of wolves) {
-      const req: ActionRequest = {
-        phase: Phase.Day,
-        actionWindow: window,
-        actorId: wolfId,
-        allowedTools: ["self_destruct"],
-        context: {
-          window,
-          must_act: false,
-          broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, wolfId),
-        },
-      };
-
-      const action = await actionProvider.getAction(req);
-      if (action?.name !== "self_destruct") {
-        continue;
-      }
-
-      const result = this.toolGateway.validateAndSanitize(
-        this.world,
-        wolfId,
-        action,
-        {
+    // 并行触发狼人自爆思考，减少窗口轮询耗时。
+    const candidates = await Promise.all(
+      wolves.map(async (wolfId) => {
+        const req: ActionRequest = {
           phase: Phase.Day,
           actionWindow: window,
-          allowSelfDestruct: true,
-        },
-      );
-      if (!result.ok) {
-        continue;
-      }
+          actorId: wolfId,
+          allowedTools: ["self_destruct"],
+          context: {
+            window,
+            must_act: false,
+            broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, wolfId),
+          },
+        };
 
-      const alive = this.world.getComponent<AliveComponent>(wolfId, COMPONENT.Alive);
-      if (!alive || !alive.alive) {
-        continue;
-      }
+        const action = await actionProvider.getAction(req);
+        if (action?.name !== "self_destruct") {
+          return null;
+        }
 
-      // 自爆成功后立即标记死亡，调用方会根据 interrupted 直接跳夜。
-      alive.alive = false;
-      this.events.push({
-        timestamp: Date.now(),
-        type: "wolf_self_destruct",
-        payload: {
+        const result = this.toolGateway.validateAndSanitize(
+          this.world,
           wolfId,
-          window,
-        },
-      });
-      return wolfId;
+          action,
+          {
+            phase: Phase.Day,
+            actionWindow: window,
+            allowSelfDestruct: true,
+          },
+        );
+        if (!result.ok) {
+          return null;
+        }
+        return wolfId;
+      }),
+    );
+
+    // 多人同时选择自爆时，按座位/ID 最小值决议，保证回放确定性。
+    const picked = candidates
+      .filter((id): id is EntityId => id !== null)
+      .sort((a, b) => a - b)[0];
+    if (picked === undefined) {
+      return null;
     }
 
-    return null;
+    const alive = this.world.getComponent<AliveComponent>(picked, COMPONENT.Alive);
+    if (!alive || !alive.alive) {
+      return null;
+    }
+
+    // 自爆成功后立即标记死亡，调用方会根据 interrupted 直接跳夜。
+    alive.alive = false;
+    this.events.push({
+      timestamp: Date.now(),
+      type: "wolf_self_destruct",
+      payload: {
+        wolfId: picked,
+        window,
+      },
+    });
+    return picked;
   }
 
   /**
