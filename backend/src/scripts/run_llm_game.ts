@@ -139,6 +139,9 @@ function toChatLines(events: Array<{ type: string; payload: Record<string, any> 
     if (event.type === "wolf_discussion") {
       lines.push(`[夜聊][${event.payload.actorId}] ${event.payload.text}`);
     }
+    if (event.type === "wolf_discussion_ended") {
+      lines.push(`[夜聊][结束][${event.payload.actorId}] ${event.payload.reason}`);
+    }
     if (event.type === "day_speech") {
       lines.push(`[白天][${event.payload.actorId}] ${event.payload.text}`);
     }
@@ -250,17 +253,8 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   const startedAt = Date.now();
   const deadlineAtMs = startedAt + options.maxRuntimeMs;
   const budgetedProvider = new DeadlineAwareActionProvider(provider, deadlineAtMs);
-  const heartbeat = setInterval(() => {
-    const elapsed = Date.now() - startedAt;
-    const remain = Math.max(0, deadlineAtMs - Date.now());
-    const snap = context.phaseManager.getSnapshot();
-    log(
-      `[run_llm_game] heartbeat day=${snap.day} phase=${snap.phase} gameOver=${snap.gameOver} elapsed_ms=${elapsed} remain_ms=${remain}`,
-      "muted",
-    );
-  }, 5000);
   let streamedEventIndex = 0;
-  const streamTimer = setInterval(() => {
+  const flushStreamEvents = (): void => {
     if (!options.streamEvents) {
       return;
     }
@@ -270,8 +264,23 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     }
     for (let i = streamedEventIndex; i < events.length; i++) {
       const event = events[i];
+      if (event.type === "god_private_game_info") {
+        const players = Array.isArray(event.payload.players)
+          ? event.payload.players
+          : [];
+        const roleView = players
+          .map((item: any) => `${item.seat ?? item.id}:${item.role}`)
+          .join(", ");
+        log(`[live][上帝私有][开局] 角色分布 ${roleView}`, "god");
+        continue;
+      }
       if (event.type === "wolf_discussion") {
         log(`[live][夜聊][${event.payload.actorId}] ${event.payload.text}`, "accent");
+      } else if (event.type === "wolf_discussion_ended") {
+        log(
+          `[live][夜聊][结束][${event.payload.actorId}] ${event.payload.reason}`,
+          "accent",
+        );
       } else if (event.type === "day_speech") {
         log(`[live][白天][${event.payload.actorId}] ${event.payload.text}`, "ok");
       } else if (event.type === "guard_applied") {
@@ -285,10 +294,14 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
           "warn",
         );
       } else if (event.type === "wolf_kill_vote_cast") {
-        log(
-          `[live][行动][狼刀票] ${event.payload.actorId}号投刀${event.payload.targetId}号`,
-          "accent",
-        );
+        if (event.payload.abstain === true) {
+          log(`[live][行动][狼刀票] ${event.payload.actorId}号弃刀`, "accent");
+        } else {
+          log(
+            `[live][行动][狼刀票] ${event.payload.actorId}号投刀${event.payload.targetId}号`,
+            "accent",
+          );
+        }
       } else if (event.type === "witch_potion_used") {
         log(
           `[live][行动][女巫] ${event.payload.actorId}号对${event.payload.targetId}号使用${event.payload.potionType}`,
@@ -311,6 +324,18 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
       }
     }
     streamedEventIndex = events.length;
+  };
+  const heartbeat = setInterval(() => {
+    const elapsed = Date.now() - startedAt;
+    const remain = Math.max(0, deadlineAtMs - Date.now());
+    const snap = context.phaseManager.getSnapshot();
+    log(
+      `[run_llm_game] heartbeat day=${snap.day} phase=${snap.phase} gameOver=${snap.gameOver} elapsed_ms=${elapsed} remain_ms=${remain}`,
+      "muted",
+    );
+  }, 5000);
+  const streamTimer = setInterval(() => {
+    flushStreamEvents();
   }, 1000);
   let timedOut = false;
   try {
@@ -332,6 +357,8 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
       );
     }
   } finally {
+    // 退出前强制刷一次剩余事件，避免 game_over 前最后一批投票/放逐日志丢失。
+    flushStreamEvents();
     clearInterval(heartbeat);
     clearInterval(streamTimer);
   }

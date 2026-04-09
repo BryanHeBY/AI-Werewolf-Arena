@@ -81,6 +81,12 @@
 - [x] `T23` 狼队内部交流改为两轮：夜间 `speak_to_wolves` 固定执行两轮，复用同一随机顺序，随后再进入狼刀投票。
 - [x] `T24` 修复前端类型检查链路回归：`npx vue-tsc --noEmit` 在当前 Node 版本（v25）崩溃，需提供可执行且稳定的前端类型验收命令（优先通过 `tsc` + 构建兜底）并更新对应文档验收口径。
 - [x] `T25` 修复依赖方向阻断回归：`backend/src/v3/llm_action_provider.ts` 禁止直连 `infra/llm/openai_client`，需调整为符合 `lint:deps` 的分层依赖入口。
+- [x] `T26` 将可并行决策场景改为并行 Agent 调度：`voting_pipeline.ts` 的投票请求并行发起；`day_pipeline.ts` 与 `voting_pipeline.ts` 的狼人自爆窗口请求并行发起（并保持结果决议确定性）。
+- [x] `T27` 扩展狼队夜聊控制：新增 `end_wolf_chat(reason)` 行动；夜聊从固定两轮改为“最多三轮”；已结束夜聊的狼人后续轮次直接跳过，并将结束事件仅广播给狼阵营。
+- [x] `T28` 重构狼队夜聊工具协议：移除 `end_wolf_chat` 独立行动，将夜聊统一为 `speak_to_wolves(text, end_chat)`；当 `end_chat=true` 时表示“发言后结束本人后续夜聊轮次”，结束说明直接复用本次发言文本并继续写入狼队可见事件流。
+- [x] `T29` 扩展狼刀投票协议：将 `kill_vote` 扩展为 `kill_vote(target_id, abstain)`，允许狼人明确“弃刀”；`abstain=true` 时不计入刀人票，全部弃刀则当夜无狼刀目标。
+- [x] `T30` 开局洗牌与上帝私有广播：初始化时随机洗牌角色分配；写入 `god_private_game_info` 事件（仅上帝可见，玩家不可见），包含 seat->role/camp 映射等完整开局信息。
+- [x] `T29` 扩展狼刀投票协议：将 `kill_vote` 从仅提交 `target_id` 扩展为 `kill_vote(target_id, abstain)`；允许狼人明确弃刀（`abstain=true`），并在夜间结算中正确处理“全员弃刀 => 本夜无狼刀目标”。
 
 ## 3. 验收标准（任务映射）
 
@@ -110,3 +116,9 @@
 - [x] `A24`（对应: `T23`） 执行 `cd backend && npm test -- --runInBand tests/v3/night_wolf_tactical_loop.test.ts`，验证同夜狼人发言顺序出现两轮且两轮顺序均与狼刀投票顺序一致；并通过 `cd backend && npm run build:v3`。
 - [x] `A25`（对应: `T24`） 复现命令 `cd frontend && npx vue-tsc --noEmit` 记录失败；修复后执行 `cd frontend && npm run build` 通过，且 `! rg -n "\\bany\\b" frontend/src/composables/useWebSocket.ts frontend/src/composables/useGameStore.ts frontend/src/types/index.ts` 成立，并在 `docs/guides/drivers/readme.md` 的前端验收项中落地新的可执行命令。
 - [x] `A26`（对应: `T25`） 复现命令 `cd backend && npm run lint:deps` 能报出违规 import；修复后同命令通过，且 `cd backend && npm run build:v3` 与 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts` 通过。
+- [x] `A27`（对应: `T26`） 执行 `cd backend && npm test -- --runInBand tests/v3/parallel_agent_dispatch.test.ts tests/v3/day_interrupt_hooks.test.ts tests/v3/phase_manager_mvp.test.ts` 通过，且新增用例可证明：1) 投票请求并行发起；2) 狼人自爆窗口请求并行发起；并通过 `cd backend && npm run build:v3`。
+- [x] `A28`（对应: `T27`） 执行 `cd backend && npm test -- --runInBand tests/v3/night_wolf_tactical_loop.test.ts tests/v3/llm_action_provider.test.ts`，验证：1) 狼聊最多三轮；2) 狼人调用 `end_wolf_chat` 后后续轮次被跳过；3) 结束事件写入狼队可见事件流；并通过 `cd backend && npm run build:v3`。
+- [x] `A29`（对应: `T28`） 执行 `cd backend && npm test -- --runInBand tests/v3/night_wolf_tactical_loop.test.ts tests/v3/llm_action_provider.test.ts`，验证：1) 狼聊工具仅 `speak_to_wolves(text,end_chat)`；2) `end_chat=true` 后续轮次被跳过；3) 结束事件仍写入狼队可见事件流；并通过 `cd backend && npm run build:v3`。
+- [x] `A30`（对应: `T29`） 执行 `cd backend && npm test -- --runInBand tests/v3/night_wolf_tactical_loop.test.ts tests/v3/llm_action_provider.test.ts tests/v3/phase_manager_mvp.test.ts`，验证：1) `kill_vote` 支持 `abstain=true`；2) 全部弃刀时 `wolfTarget=null` 且当夜不产生狼刀死亡；3) 广播中可区分“投刀”与“弃刀”；并通过 `cd backend && npm run build:v3`。
+- [x] `A31`（对应: `T30`） 执行 `cd backend && npm test -- --runInBand tests/v3/phase_manager_mvp.test.ts tests/v3/agent_broadcast_feed.test.ts`，验证：1) 初始事件包含 `god_private_game_info` 且含 seat/role/camp；2) 玩家广播 feed 不含该事件；并通过 `cd backend && npm run build:v3`。
+- [x] `A30`（对应: `T29`） 执行 `cd backend && npm test -- --runInBand tests/v3/night_wolf_tactical_loop.test.ts tests/v3/llm_action_provider.test.ts tests/v3/phase_manager_mvp.test.ts`，验证：1) `kill_vote` 支持 `abstain`；2) 全员弃刀时 `wolfTarget=null` 且夜间无狼刀死亡；3) 狼队投票广播可区分“投刀”与“弃刀”；并通过 `cd backend && npm run build:v3`。

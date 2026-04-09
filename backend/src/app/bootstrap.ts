@@ -97,6 +97,12 @@ function buildRoleDeck(config: BoardConfig): Role[] {
     );
   }
 
+  // 开局角色牌堆随机洗牌，避免 seat 与角色配置顺序强绑定。
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+
   return deck;
 }
 

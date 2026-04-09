@@ -30,7 +30,7 @@
   * **ECS**: 目标挂载 `[GuardMark]`。
   * **网关校验**: 记录上一晚守护目标，若 `target_id == last_night_target`，强行驳回 Tool Call。
 * **狼人 (Werewolf)**：
-  * **Tool**: `speak_to_wolves(text)` (队内交流), `kill_vote(target_id)`。
+  * **Tool**: `speak_to_wolves(text, end_chat)` (队内交流), `kill_vote(target_id, abstain)`。
   * **ECS**: 目标挂载 `[WolfKillMark]`。
 * **预言家 (Seer)**：
   * **Tool**: `check_identity(target_id)`。

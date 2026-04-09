@@ -31,11 +31,31 @@ class WolfOnlyNightProvider implements ActionProvider {
       return id !== request.actorId && targetRole?.camp !== Camp.Wolf;
     });
 
-    return target ? { name: "kill_vote", args: { target_id: target } } : null;
+    return target
+      ? { name: "kill_vote", args: { target_id: target, abstain: false } }
+      : { name: "kill_vote", args: { target_id: null, abstain: true } };
   }
 }
 
 describe("V3 PhaseManager MVP", () => {
+  test("bootstrap should emit god_private_game_info as initial event", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const events = context.phaseManager.getEvents();
+    const init = events.find((event) => event.type === "god_private_game_info");
+
+    expect(init).toBeTruthy();
+    const players = Array.isArray(init?.payload.players) ? init?.payload.players : [];
+    expect(players.length).toBe(sixPlayerMvpConfig.boardSize);
+    expect(
+      players.every(
+        (item: any) =>
+          typeof item.seat === "number" &&
+          typeof item.role === "string" &&
+          typeof item.camp === "string",
+      ),
+    ).toBe(true);
+  });
+
   test("6-player scenario reaches wolf win with wolf-only night kills", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const snapshot = await context.phaseManager.runUntilGameOver(

@@ -8,6 +8,16 @@ describe("buildAgentBroadcastFeed", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const events: GameEvent[] = [
       {
+        timestamp: 0,
+        type: "god_private_game_info",
+        payload: {
+          players: [
+            { seat: 1, role: "wolf", camp: "wolf" },
+            { seat: 2, role: "wolf", camp: "wolf" },
+          ],
+        },
+      },
+      {
         timestamp: 1,
         type: "vote_cast",
         payload: { actorId: 4, targetId: 1, weight: 1 },
@@ -34,5 +44,7 @@ describe("buildAgentBroadcastFeed", () => {
     expect(villagerFeed.some((line) => line.includes("狼刀票"))).toBe(false);
     expect(villagerFeed.some((line) => line.includes("放逐结果"))).toBe(true);
     expect(villagerFeed.some((line) => line.includes("vote_cast"))).toBe(false);
+    expect(villagerFeed.some((line) => line.includes("开局"))).toBe(false);
+    expect(villagerFeed.some((line) => line.includes("role"))).toBe(false);
   });
 });

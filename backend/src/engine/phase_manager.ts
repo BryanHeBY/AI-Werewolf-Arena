@@ -20,6 +20,8 @@ import { RoleRegistry } from "../domain/registries/role_registry";
 import { COMPONENT } from "../domain/components/names";
 import { BadgeComponent } from "../domain/components/badge";
 import { VotingRightComponent } from "../domain/components/voting_right";
+import { IdentityComponent } from "../domain/entities/player";
+import { RoleComponent } from "../domain/components/role";
 import { transferOrDestroySheriffBadge } from "./sheriff_badge";
 import { buildAgentBroadcastFeed } from "./agent_broadcast_feed";
 
@@ -64,6 +66,28 @@ export class PhaseManager {
       this.eventRegistry,
       this.events,
     );
+    // 仅上帝可见：开局完整牌面信息（玩家身份与阵营映射）。
+    this.events.push({
+      timestamp: Date.now(),
+      type: "god_private_game_info",
+      payload: {
+        boardSize: this.config.boardSize,
+        players: this.world.getAliveEntityIds().map((id) => {
+          const identity = this.world.getComponent<IdentityComponent>(
+            id,
+            COMPONENT.Identity,
+          );
+          const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+          return {
+            id,
+            seat: identity?.seat ?? id,
+            name: identity?.name ?? `玩家${id}`,
+            role: role?.role ?? "unknown",
+            camp: role?.camp ?? "unknown",
+          };
+        }),
+      },
+    });
     // 初始阶段也写入上帝公开广播，确保首轮请求前玩家可见当前阶段。
     this.events.push({
       timestamp: Date.now(),
