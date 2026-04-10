@@ -19,6 +19,8 @@ import { transferOrDestroySheriffBadge } from "./sheriff_badge";
 export type SpeakerDirection = "clockwise" | "counter_clockwise";
 
 export class SheriffMechanism {
+  private static readonly SHERIFF_VOTE_WEIGHT = 1.5;
+
   assignInitialSheriff(world: World, config: BoardConfig, playerIds: EntityId[]): void {
     if (!config.enableSheriff || config.initialSheriffSeat === undefined) {
       return;
@@ -32,22 +34,7 @@ export class SheriffMechanism {
       return;
     }
 
-    const badge = world.getComponent<{ isSheriff: boolean; destroyed: boolean }>(
-      sheriffId,
-      COMPONENT.Badge,
-    );
-    if (badge) {
-      badge.isSheriff = true;
-      badge.destroyed = false;
-    }
-
-    const voting = world.getComponent<{ weight: number; canVote: boolean }>(
-      sheriffId,
-      COMPONENT.VotingRight,
-    );
-    if (voting && voting.canVote) {
-      voting.weight = 1.5;
-    }
+    this.assignSheriffById(world, sheriffId);
   }
 
   findSheriffId(world: World): EntityId | null {
@@ -56,6 +43,127 @@ export class SheriffMechanism {
       return badge?.isSheriff === true && badge.destroyed === false;
     });
     return sheriff ?? null;
+  }
+
+  async electSheriffIfNeeded(input: {
+    world: World;
+    events: GameEvent[];
+    toolGateway: ToolGateway;
+    actionProvider: ActionProvider;
+    day: number;
+    enableSheriff: boolean;
+  }): Promise<EntityId | null> {
+    const { world, events, toolGateway, actionProvider, day, enableSheriff } = input;
+    if (!enableSheriff || day !== 1) {
+      return this.findSheriffId(world);
+    }
+    if (this.findSheriffId(world) !== null) {
+      return this.findSheriffId(world);
+    }
+
+    const aliveIds = world.getAliveEntityIds();
+    const candidates: EntityId[] = [];
+
+    for (const actorId of aliveIds) {
+      const req: ActionRequest = {
+        phase: Phase.Day,
+        actorId,
+        allowedTools: ["run_for_sheriff"],
+        context: {
+          day,
+          phase: "sheriff_nomination",
+          must_act: true,
+          broadcast_feed: buildAgentBroadcastFeed(world, events, actorId),
+        },
+      };
+      const action = await actionProvider.getAction(req);
+      if (action?.name !== "run_for_sheriff") {
+        continue;
+      }
+      const result = toolGateway.validateAndSanitize(world, actorId, action, {
+        phase: Phase.Day,
+      });
+      if (!result.ok || !result.sanitizedCall) {
+        continue;
+      }
+
+      const run = result.sanitizedCall.args.run === true;
+      events.push({
+        timestamp: Date.now(),
+        type: "sheriff_candidate_declared",
+        payload: { actorId, run },
+      });
+      if (run) {
+        candidates.push(actorId);
+      }
+    }
+
+    const finalizedCandidates = candidates.length > 0 ? candidates : [...aliveIds];
+    events.push({
+      timestamp: Date.now(),
+      type: "sheriff_candidates_finalized",
+      payload: { candidates: finalizedCandidates },
+    });
+
+    const tally = new Map<EntityId, number>();
+    for (const id of finalizedCandidates) {
+      tally.set(id, 0);
+    }
+
+    for (const actorId of aliveIds) {
+      const req: ActionRequest = {
+        phase: Phase.Day,
+        actorId,
+        allowedTools: ["vote_for_sheriff"],
+        context: {
+          day,
+          phase: "sheriff_vote",
+          must_act: true,
+          sheriff_candidates: finalizedCandidates,
+          broadcast_feed: buildAgentBroadcastFeed(world, events, actorId),
+        },
+      };
+      const action = await actionProvider.getAction(req);
+      if (action?.name !== "vote_for_sheriff") {
+        continue;
+      }
+      const result = toolGateway.validateAndSanitize(world, actorId, action, {
+        phase: Phase.Day,
+      });
+      if (!result.ok || !result.sanitizedCall) {
+        continue;
+      }
+
+      const abstain = result.sanitizedCall.args.abstain === true;
+      let targetId = result.sanitizedCall.args.target_id;
+      if (!abstain && (targetId === null || !finalizedCandidates.includes(targetId))) {
+        targetId = finalizedCandidates[0];
+      }
+      events.push({
+        timestamp: Date.now(),
+        type: "sheriff_vote_cast",
+        payload: { actorId, targetId, abstain },
+      });
+
+      if (!abstain && targetId !== null) {
+        tally.set(targetId, (tally.get(targetId) ?? 0) + 1);
+      }
+    }
+
+    const winner = this.pickSheriffWinner(world, finalizedCandidates, tally);
+    if (winner !== null) {
+      this.assignSheriffById(world, winner);
+      events.push({
+        timestamp: Date.now(),
+        type: "sheriff_elected",
+        payload: {
+          winnerId: winner,
+          candidates: finalizedCandidates,
+          tally: Object.fromEntries(tally.entries()),
+        },
+      });
+    }
+    return winner;
   }
 
   async chooseSpeakerDirection(input: {
@@ -164,6 +272,42 @@ export class SheriffMechanism {
       return;
     }
     transferOrDestroySheriffBadge(world, entityId, `${phase}_death`, events);
+  }
+
+  private assignSheriffById(world: World, sheriffId: EntityId): void {
+    for (const id of world.getAliveEntityIds()) {
+      const badge = world.getComponent<{ isSheriff: boolean; destroyed: boolean }>(
+        id,
+        COMPONENT.Badge,
+      );
+      if (badge) {
+        badge.isSheriff = id === sheriffId;
+        badge.destroyed = false;
+      }
+      const voting = world.getComponent<{ weight: number; canVote: boolean }>(
+        id,
+        COMPONENT.VotingRight,
+      );
+      if (voting?.canVote) {
+        voting.weight = id === sheriffId ? SheriffMechanism.SHERIFF_VOTE_WEIGHT : 1;
+      }
+    }
+  }
+
+  private pickSheriffWinner(
+    world: World,
+    candidates: EntityId[],
+    tally: Map<EntityId, number>,
+  ): EntityId | null {
+    if (candidates.length === 0) {
+      return null;
+    }
+    const withSeat = candidates.map((id) => {
+      const identity = world.getComponent<IdentityComponent>(id, COMPONENT.Identity);
+      return { id, seat: identity?.seat ?? id, score: tally.get(id) ?? 0 };
+    });
+    withSeat.sort((a, b) => b.score - a.score || a.seat - b.seat);
+    return withSeat[0]?.id ?? null;
   }
 }
 

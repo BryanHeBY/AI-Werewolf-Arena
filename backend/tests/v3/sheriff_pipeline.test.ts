@@ -4,22 +4,21 @@ import { AliveComponent } from "../../src/domain/components/alive";
 import { BadgeComponent } from "../../src/domain/components/badge";
 import { VotingRightComponent } from "../../src/domain/components/voting_right";
 import { RoleComponent } from "../../src/domain/components/role";
+import { ActionProvider, ActionRequest, ToolCall } from "../../src/domain/model";
 import { EventRegistry } from "../../src/engine/event_registry";
+import { DayPipeline } from "../../src/engine/phase_pipeline/day_pipeline";
+import { RoleRegistry } from "../../src/domain/registries/role_registry";
+import { ToolGateway } from "../../src/gateway/tool_gateway";
 import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
 
 describe("sheriff pipeline", () => {
-  test("initial sheriff has 1.5 vote weight", () => {
+  test("no initial sheriff before election", () => {
     const { world } = bootstrapGame(twelvePlayerStandardConfig);
     const sheriffId = world
       .entityIds()
       .find((id) => world.getComponent<BadgeComponent>(id, COMPONENT.Badge)?.isSheriff);
 
-    expect(sheriffId).toBeDefined();
-    const voting = world.getComponent<VotingRightComponent>(
-      sheriffId!,
-      COMPONENT.VotingRight,
-    );
-    expect(voting?.weight).toBe(1.5);
+    expect(sheriffId).toBeUndefined();
   });
 
   test("sheriff voted out triggers badge transfer to next alive voter", () => {
@@ -29,7 +28,15 @@ describe("sheriff pipeline", () => {
 
     const sheriffId = world
       .entityIds()
-      .find((id) => world.getComponent<BadgeComponent>(id, COMPONENT.Badge)?.isSheriff)!;
+      .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role !== "idiot")!;
+    const sheriffBadge = world.getComponent<BadgeComponent>(sheriffId, COMPONENT.Badge)!;
+    sheriffBadge.isSheriff = true;
+    sheriffBadge.destroyed = false;
+    const sheriffVoting = world.getComponent<VotingRightComponent>(
+      sheriffId,
+      COMPONENT.VotingRight,
+    )!;
+    sheriffVoting.weight = 1.5;
 
     const result = registry.onVotedOut(world, sheriffId, events);
     expect(result.prevented).toBe(false);
@@ -55,7 +62,10 @@ describe("sheriff pipeline", () => {
 
     const sheriffId = world
       .entityIds()
-      .find((id) => world.getComponent<BadgeComponent>(id, COMPONENT.Badge)?.isSheriff)!;
+      .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role !== "idiot")!;
+    const sheriffBadge = world.getComponent<BadgeComponent>(sheriffId, COMPONENT.Badge)!;
+    sheriffBadge.isSheriff = true;
+    sheriffBadge.destroyed = false;
 
     for (const id of world.entityIds()) {
       if (id === sheriffId) {
@@ -104,5 +114,40 @@ describe("sheriff pipeline", () => {
       ),
     ).toBe(true);
   });
-});
 
+  test("day pipeline elects sheriff on day 1", async () => {
+    const { world } = bootstrapGame(twelvePlayerStandardConfig);
+    const events: any[] = [{ timestamp: Date.now(), type: "phase_changed", payload: { phase: "day", day: 1 } }];
+    const pipeline = new DayPipeline(world, new RoleRegistry(), new ToolGateway(), events);
+
+    const actionProvider: ActionProvider = {
+      async getAction(request: ActionRequest): Promise<ToolCall | null> {
+        if (request.allowedTools.includes("run_for_sheriff")) {
+          return {
+            name: "run_for_sheriff",
+            args: { run: request.actorId === 2 || request.actorId === 3 },
+          };
+        }
+        if (request.allowedTools.includes("vote_for_sheriff")) {
+          return { name: "vote_for_sheriff", args: { target_id: 2, abstain: false } };
+        }
+        if (request.allowedTools.includes("choose_direction")) {
+          return { name: "choose_direction", args: { direction: "clockwise" } };
+        }
+        if (request.allowedTools.includes("self_destruct")) {
+          return null;
+        }
+        if (request.allowedTools.includes("speak")) {
+          return { name: "speak", args: { text: "ok" } };
+        }
+        return null;
+      },
+    };
+
+    const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider);
+    expect(result.interrupted).toBe(false);
+    const elected = events.find((event) => event.type === "sheriff_elected");
+    expect(elected).toBeDefined();
+    expect(Number(elected.payload.winnerId)).toBe(2);
+  });
+});

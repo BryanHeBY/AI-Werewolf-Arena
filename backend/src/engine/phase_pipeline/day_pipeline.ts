@@ -65,6 +65,14 @@ export class DayPipeline {
     actionProvider: ActionProvider,
   ): Promise<DayPipelineResult> {
     const speeches: DaySummary["speeches"] = [];
+    await this.sheriffMechanism.electSheriffIfNeeded({
+      world: this.world,
+      events: this.events,
+      toolGateway: this.toolGateway,
+      actionProvider,
+      day: this.currentDay(),
+      enableSheriff: config.enableSheriff,
+    });
     const speakerDirection = await this.sheriffMechanism.chooseSpeakerDirection({
       world: this.world,
       events: this.events,

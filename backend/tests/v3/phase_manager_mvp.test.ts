@@ -134,7 +134,7 @@ describe("V3 PhaseManager MVP", () => {
     expect(order[order.length - 1]).toBe(1);
   });
 
-  test("sheriff vote weight should be 1.5", async () => {
+  test("without elected sheriff, total vote weight remains 12", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const events = [] as any[];
     const pipeline = new VotingPipeline(
@@ -159,7 +159,7 @@ describe("V3 PhaseManager MVP", () => {
     const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider);
 
     expect(result.interrupted).toBe(false);
-    expect(result.summary.tally[2]).toBe(12.5);
+    expect(result.summary.tally[2]).toBe(12);
   });
 
   test("vote abstain should not be counted into tally", async () => {

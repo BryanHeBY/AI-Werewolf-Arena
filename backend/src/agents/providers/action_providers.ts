@@ -87,6 +87,34 @@ export class BaselineBotActionProvider implements ActionProvider {
       };
     }
 
+    if (request.allowedTools.includes("run_for_sheriff")) {
+      // 基线策略：存活玩家默认上警，避免 mustAct 阶段无动作。
+      return {
+        name: "run_for_sheriff",
+        args: { run: true },
+      };
+    }
+
+    if (request.allowedTools.includes("vote_for_sheriff")) {
+      const rawCandidates = request.context.sheriff_candidates;
+      const candidates = Array.isArray(rawCandidates)
+        ? rawCandidates
+            .map((item) => Number(item))
+            .filter((id) => Number.isFinite(id) && id > 0)
+        : [];
+      const preferred = candidates.find((id) => id !== request.actorId) ?? candidates[0];
+      if (preferred !== undefined) {
+        return {
+          name: "vote_for_sheriff",
+          args: { target_id: preferred, abstain: false },
+        };
+      }
+      return {
+        name: "vote_for_sheriff",
+        args: { target_id: null, abstain: true },
+      };
+    }
+
     if (request.phase === Phase.Day && request.allowedTools.includes("speak")) {
       return {
         name: "speak",

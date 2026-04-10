@@ -125,6 +125,8 @@ export interface ToolArgMap {
   vote: { target_id: EntityId | null; abstain: boolean };
   shoot: { target_id: EntityId };
   choose_direction: { direction: "clockwise" | "counter_clockwise" };
+  run_for_sheriff: { run: boolean };
+  vote_for_sheriff: { target_id: EntityId | null; abstain: boolean };
 }
 
 /**
