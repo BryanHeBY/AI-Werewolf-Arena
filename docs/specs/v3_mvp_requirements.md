@@ -26,7 +26,7 @@
 
 ### 1.2 核心业务逻辑与 ECS 映射要求
 * **守卫 (Guard)**：
-  * **Tool**: `guard(target_id)`
+  * **Tool**: `guard(target_id, abstain)`（`abstain=true` 代表空守）
   * **ECS**: 目标挂载 `[GuardMark]`。
   * **网关校验**: 记录上一晚守护目标，若 `target_id == last_night_target`，强行驳回 Tool Call。
 * **狼人 (Werewolf)**：

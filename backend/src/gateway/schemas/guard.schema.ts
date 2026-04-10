@@ -4,12 +4,13 @@
  */
 export const guardSchema = {
   name: "guard",
-  description: "守卫目标，不能连续两晚守同一人",
+  description: "守卫目标；abstain=true 表示本轮空守",
   parameters: {
     type: "object",
     properties: {
-      target_id: { type: "number" },
+      target_id: { type: ["number", "null"] },
+      abstain: { type: "boolean" },
     },
-    required: ["target_id"],
+    required: ["target_id", "abstain"],
   },
 } as const;

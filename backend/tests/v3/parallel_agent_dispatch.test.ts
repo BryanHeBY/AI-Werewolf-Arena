@@ -45,7 +45,7 @@ describe("parallel agent dispatch", () => {
         await sleep(30);
         activeVotes -= 1;
         const target = request.actorId === 1 ? 2 : 1;
-        return { name: "vote", args: { target_id: target } };
+        return { name: "vote", args: { target_id: target, abstain: false } };
       },
     };
 

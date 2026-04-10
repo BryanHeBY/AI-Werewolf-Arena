@@ -150,7 +150,7 @@ describe("V3 PhaseManager MVP", () => {
           return null;
         }
         if (request.allowedTools.includes("vote")) {
-          return { name: "vote", args: { target_id: 2 } };
+          return { name: "vote", args: { target_id: 2, abstain: false } };
         }
         return null;
       },
@@ -160,5 +160,44 @@ describe("V3 PhaseManager MVP", () => {
 
     expect(result.interrupted).toBe(false);
     expect(result.summary.tally[2]).toBe(12.5);
+  });
+
+  test("vote abstain should not be counted into tally", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const events = [] as any[];
+    const pipeline = new VotingPipeline(
+      context.world,
+      new ToolGateway(),
+      new EventRegistry(),
+      events,
+    );
+
+    const actionProvider: ActionProvider = {
+      async getAction(request: ActionRequest): Promise<ToolCall | null> {
+        if (request.allowedTools.includes("self_destruct")) {
+          return null;
+        }
+        if (request.allowedTools.includes("vote")) {
+          if (request.actorId === 1) {
+            return { name: "vote", args: { target_id: null, abstain: true } };
+          }
+          return { name: "vote", args: { target_id: 2, abstain: false } };
+        }
+        return null;
+      },
+    };
+
+    const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider);
+
+    expect(result.interrupted).toBe(false);
+    expect(result.summary.tally[2]).toBe(11);
+    expect(
+      events.some(
+        (event: any) =>
+          event.type === "vote_cast" &&
+          event.payload.actorId === 1 &&
+          event.payload.abstain === true,
+      ),
+    ).toBe(true);
   });
 });

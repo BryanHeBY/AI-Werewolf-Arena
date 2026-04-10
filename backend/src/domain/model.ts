@@ -117,12 +117,12 @@ export interface PromptRenderable {
 export interface ToolArgMap {
   speak_to_wolves: { text: string; end_chat: boolean };
   kill_vote: { target_id: EntityId | null; abstain: boolean };
-  guard: { target_id: EntityId };
+  guard: { target_id: EntityId | null; abstain: boolean };
   check_identity: { target_id: EntityId };
   use_potion: { target_id: EntityId; potion_type: PotionType };
   self_destruct: { reason: string };
   speak: { text: string };
-  vote: { target_id: EntityId };
+  vote: { target_id: EntityId | null; abstain: boolean };
   shoot: { target_id: EntityId };
   choose_direction: { direction: "clockwise" | "counter_clockwise" };
 }

@@ -70,6 +70,12 @@ export class ActionValidator {
         if (role.role !== Role.Guard) {
           return { ok: false, error: "非法操作，仅守卫可守护" };
         }
+        if (toolCall.args.abstain) {
+          break;
+        }
+        if (toolCall.args.target_id === null) {
+          return { ok: false, error: "非法操作，守护目标必须存活" };
+        }
         if (role.guardState?.lastTarget === toolCall.args.target_id) {
           return { ok: false, error: "非法操作，守卫不可连续两晚守同一人" };
         }
@@ -123,6 +129,12 @@ export class ActionValidator {
         );
         if (!voting?.canVote) {
           return { ok: false, error: "非法操作，你当前无投票权" };
+        }
+        if (toolCall.args.abstain) {
+          break;
+        }
+        if (toolCall.args.target_id === null) {
+          return { ok: false, error: "非法操作，投票目标必须存活" };
         }
         if (!this.isAliveTarget(world, toolCall.args.target_id)) {
           return { ok: false, error: "非法操作，投票目标必须存活" };

@@ -104,6 +104,7 @@ export class VotingPipeline {
         return {
           voterId,
           targetId: result.sanitizedCall.args.target_id,
+          abstain: result.sanitizedCall.args.abstain === true,
         };
       }),
     );
@@ -113,19 +114,23 @@ export class VotingPipeline {
       if (!vote) {
         continue;
       }
-      const voting = this.world.getComponent<VotingRightComponent>(
-        voterId,
-        COMPONENT.VotingRight,
-      );
-      // 警长等角色可通过 weight 调整票权，默认 1 票。
-      const weight = voting?.weight ?? 1;
-      tally[vote.targetId] = (tally[vote.targetId] ?? 0) + weight;
+      let weight = 0;
+      if (!vote.abstain && vote.targetId !== null) {
+        const voting = this.world.getComponent<VotingRightComponent>(
+          voterId,
+          COMPONENT.VotingRight,
+        );
+        // 警长等角色可通过 weight 调整票权，默认 1 票。
+        weight = voting?.weight ?? 1;
+        tally[vote.targetId] = (tally[vote.targetId] ?? 0) + weight;
+      }
       this.events.push({
         timestamp: Date.now(),
         type: "vote_cast",
         payload: {
           actorId: voterId,
           targetId: vote.targetId,
+          abstain: vote.abstain,
           weight,
         },
       });

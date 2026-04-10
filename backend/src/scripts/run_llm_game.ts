@@ -308,10 +308,14 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
           "warn",
         );
       } else if (event.type === "vote_cast") {
-        log(
-          `[live][行动][投票] ${event.payload.actorId}号 -> ${event.payload.targetId}号 (weight=${event.payload.weight})`,
-          "warn",
-        );
+        if (event.payload.abstain === true) {
+          log(`[live][行动][投票] ${event.payload.actorId}号弃票`, "warn");
+        } else {
+          log(
+            `[live][行动][投票] ${event.payload.actorId}号 -> ${event.payload.targetId}号 (weight=${event.payload.weight})`,
+            "warn",
+          );
+        }
       } else if (event.type === "game_over") {
         log(
           `[live][终局] winner=${event.payload.winner} reason=${event.payload.reason}`,

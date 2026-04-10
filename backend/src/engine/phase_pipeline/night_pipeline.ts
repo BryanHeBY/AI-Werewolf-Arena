@@ -140,6 +140,10 @@ export class NightPipeline {
         continue;
       }
 
+      if (result.sanitizedCall.args.abstain || result.sanitizedCall.args.target_id === null) {
+        continue;
+      }
+
       const targetId = result.sanitizedCall.args.target_id;
       this.ensureMarks(targetId).add(StatusMark.GuardMark);
       this.events.push({

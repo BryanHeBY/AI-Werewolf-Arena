@@ -104,7 +104,12 @@ export class BaselineBotActionProvider implements ActionProvider {
 
       if (request.allowedTools.includes("guard") && role.role === Role.Guard) {
         const target = this.pickAliveNotSelf(request.actorId);
-        return target !== null ? { name: "guard", args: { target_id: target } } : null;
+        return target !== null
+          ? { name: "guard", args: { target_id: target, abstain: false } }
+          : {
+              name: "guard",
+              args: { target_id: null, abstain: true },
+            };
       }
 
       if (request.allowedTools.includes("check_identity") && role.role === Role.Seer) {
@@ -135,7 +140,9 @@ export class BaselineBotActionProvider implements ActionProvider {
 
     if (request.phase === Phase.Voting && request.allowedTools.includes("vote")) {
       const target = this.pickAliveNotSelf(request.actorId);
-      return target !== null ? { name: "vote", args: { target_id: target } } : null;
+      return target !== null
+        ? { name: "vote", args: { target_id: target, abstain: false } }
+        : { name: "vote", args: { target_id: null, abstain: true } };
     }
 
     if (request.allowedTools.includes("shoot")) {

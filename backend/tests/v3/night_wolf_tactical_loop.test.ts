@@ -44,7 +44,7 @@ class TacticalOrderProvider implements ActionProvider {
     if (request.allowedTools.includes("guard")) {
       return {
         name: "guard",
-        args: { target_id: this.wolfTargetId },
+        args: { target_id: this.wolfTargetId, abstain: false },
       };
     }
 
@@ -119,7 +119,7 @@ class EarlyEndWolfDiscussionProvider implements ActionProvider {
     if (request.allowedTools.includes("guard")) {
       return {
         name: "guard",
-        args: { target_id: this.wolfTargetId },
+        args: { target_id: this.wolfTargetId, abstain: false },
       };
     }
 
@@ -164,7 +164,7 @@ class AbstainKillVoteProvider implements ActionProvider {
     if (request.allowedTools.includes("guard")) {
       return {
         name: "guard",
-        args: { target_id: request.actorId },
+        args: { target_id: request.actorId, abstain: false },
       };
     }
     if (request.allowedTools.includes("check_identity")) {

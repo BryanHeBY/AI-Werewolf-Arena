@@ -23,7 +23,7 @@ describe("V3 ToolGateway validation", () => {
     const result = toolGateway.validateAndSanitize(
       world,
       guardId!,
-      { name: "guard", args: { target_id: 1 } },
+      { name: "guard", args: { target_id: 1, abstain: false } },
       { phase: Phase.Night },
     );
 

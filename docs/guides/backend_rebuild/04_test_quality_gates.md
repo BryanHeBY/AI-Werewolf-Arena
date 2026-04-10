@@ -29,7 +29,7 @@
 
 MVP 必测清单：
 
-1. `guard(target_id)` 连续同守拦截。
+1. `guard(target_id, abstain)` 连续同守拦截（`abstain=true` 为空守）。
 2. `use_potion(..., "heal")` 自救拦截（12 人局）。
 3. 同夜双药使用拦截。
 4. `shoot(target_id)` 触发条件正确（毒死闷枪）。
