@@ -38,10 +38,8 @@ export const WOLF_LLM_REPAIR_PACK: ToolRepairPack = {
         },
       };
     },
-    self_destruct: () => ({
-      name: "self_destruct",
-      args: { reason: "recovered_from_reasoning_text" },
-    }),
+    // 自爆属于高风险低频动作：禁止从自然语言恢复，避免误触发。
+    self_destruct: () => null,
     kill_vote: (text, ctx) => {
       const lower = text.toLowerCase();
       const abstain =
