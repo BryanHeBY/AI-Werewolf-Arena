@@ -9,6 +9,7 @@ export interface SystemPromptInput {
   teammateIds: number[];
   allowedTools: string[];
   stageDirective: string;
+  statusDirective?: string;
   mustAct: boolean;
   boardInfoPrompt?: string;
 }
@@ -51,6 +52,7 @@ export function buildSystemPrompt(input: SystemPromptInput): string {
     `你当前同阵营队友（不含你自己）的编号：${teammateText}。`,
     `你只能引用本局存在的玩家编号，编号范围是1到${input.maxPlayerId}，严禁虚构不存在的玩家编号。`,
     `仅可调用本轮可用工具：${input.allowedTools.join(", ")}。${input.stageDirective} ${actionRule}`,
+    ...(input.statusDirective ? [input.statusDirective] : []),
     ...(input.boardInfoPrompt ? [input.boardInfoPrompt] : []),
     SYSTEM_BASE_LINES[3],
   ].join("\n");

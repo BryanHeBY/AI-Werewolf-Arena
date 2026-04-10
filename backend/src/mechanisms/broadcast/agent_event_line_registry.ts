@@ -7,6 +7,7 @@ import { WITCH_AGENT_EVENT_LINE_HANDLERS } from "../roles/witch/event_presenters
 import { WOLF_AGENT_EVENT_LINE_HANDLERS } from "../roles/wolf/event_presenters";
 import { LAST_WORDS_AGENT_EVENT_LINE_HANDLERS } from "../last_words/event_presenters";
 import { SHERIFF_AGENT_EVENT_LINE_HANDLERS } from "../sheriff/event_presenters";
+import { IDIOT_AGENT_EVENT_LINE_HANDLERS } from "../roles/idiot/event_presenters";
 import { AgentEventLineHandler, AgentLineContext } from "./contracts";
 
 const DEFAULT_HANDLERS: Record<string, AgentEventLineHandler> = {
@@ -50,6 +51,7 @@ const DEFAULT_HANDLERS: Record<string, AgentEventLineHandler> = {
   ...GUARD_AGENT_EVENT_LINE_HANDLERS,
   ...HUNTER_AGENT_EVENT_LINE_HANDLERS,
   ...WITCH_AGENT_EVENT_LINE_HANDLERS,
+  ...IDIOT_AGENT_EVENT_LINE_HANDLERS,
   ...LAST_WORDS_AGENT_EVENT_LINE_HANDLERS,
   ...SHERIFF_AGENT_EVENT_LINE_HANDLERS,
 };

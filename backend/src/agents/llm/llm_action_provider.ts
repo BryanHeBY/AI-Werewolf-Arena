@@ -20,6 +20,7 @@ import {
   ToolCallRepairRegistry,
   ToolSpecRegistry,
 } from "../../mechanisms";
+import { getIdiotState } from "../../mechanisms/roles/private_state";
 import { safeRecordLogicOp, SessionRecordHub } from "../../session_recording";
 import { colorize, isAnsiEnabled } from "../../utils/ansi";
 import { BaselineBotActionProvider } from "../providers/action_providers";
@@ -837,6 +838,7 @@ export class LlmActionProvider implements ActionProvider {
       teammateIds,
       allowedTools: request.allowedTools,
       stageDirective: this.stageDirective(request),
+      statusDirective: this.statusDirective(request.actorId, roleComp),
       mustAct,
       boardInfoPrompt,
     });
@@ -982,6 +984,23 @@ export class LlmActionProvider implements ActionProvider {
       this.toolSpecRegistry.getStageDirective(request.allowedTools) ??
       "请严格区分当前阶段职责，只执行本轮工具对应动作。"
     );
+  }
+
+  /**
+   * 角色运行时状态补充提示：用于减少“已翻牌白痴却自称被投出局”等表述漂移。
+   */
+  private statusDirective(
+    actorId: EntityId,
+    roleComp: RoleComponent | undefined,
+  ): string | undefined {
+    if (!roleComp || roleComp.role !== Role.Idiot) {
+      return undefined;
+    }
+    const idiotState = getIdiotState(roleComp);
+    if (!idiotState?.revealed) {
+      return undefined;
+    }
+    return `状态提醒：你已在先前放逐中翻牌为白痴并存活，当前仍在场上发言；你已失去投票权。`;
   }
 
   /**

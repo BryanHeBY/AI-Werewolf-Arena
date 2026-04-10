@@ -9,6 +9,7 @@ import { WITCH_REALTIME_EVENT_HANDLERS } from "../roles/witch/event_presenters";
 import { WOLF_REALTIME_EVENT_HANDLERS } from "../roles/wolf/event_presenters";
 import { LAST_WORDS_REALTIME_EVENT_HANDLERS } from "../last_words/event_presenters";
 import { SHERIFF_REALTIME_EVENT_HANDLERS } from "../sheriff/event_presenters";
+import { IDIOT_REALTIME_EVENT_HANDLERS } from "../roles/idiot/event_presenters";
 import {
   RealtimeEventHandler,
   RealtimeTranslateContext,
@@ -48,6 +49,7 @@ const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
   ...GUARD_REALTIME_EVENT_HANDLERS,
   ...HUNTER_REALTIME_EVENT_HANDLERS,
   ...WITCH_REALTIME_EVENT_HANDLERS,
+  ...IDIOT_REALTIME_EVENT_HANDLERS,
   ...LAST_WORDS_REALTIME_EVENT_HANDLERS,
   ...SHERIFF_REALTIME_EVENT_HANDLERS,
   phase_changed: (event, ctx) => {

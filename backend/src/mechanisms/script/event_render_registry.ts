@@ -16,6 +16,7 @@ import {
   WOLF_SCRIPT_LIVE_HANDLERS,
 } from "../roles/wolf/event_presenters";
 import { LAST_WORDS_SCRIPT_JUDGE_HANDLERS } from "../last_words/event_presenters";
+import { IDIOT_SCRIPT_JUDGE_HANDLERS } from "../roles/idiot/event_presenters";
 import {
   SHERIFF_SCRIPT_JUDGE_HANDLERS,
   SHERIFF_SCRIPT_LIVE_HANDLERS,
@@ -59,6 +60,7 @@ const JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler> = {
   wolf_self_destruct: (event) => `${event.payload.wolfId}号狼人自爆，流程被中断`,
   game_over: (event) => `胜利阵营：${event.payload.winner}，原因：${event.payload.reason}`,
   ...LAST_WORDS_SCRIPT_JUDGE_HANDLERS,
+  ...IDIOT_SCRIPT_JUDGE_HANDLERS,
   ...HUNTER_SCRIPT_JUDGE_HANDLERS,
   ...SHERIFF_SCRIPT_JUDGE_HANDLERS,
 };
@@ -68,6 +70,7 @@ const REPLAY_STAGE_HANDLERS: Record<string, ScriptReplayStageHandler> = {
   day_speech: () => "day_speech",
   vote_cast: () => "voting",
   voted_out: () => "voting",
+  idiot_revealed: () => "voting",
   wolf_discussion: () => "wolf_discussion",
   wolf_discussion_ended: () => "wolf_discussion",
   wolf_kill_vote_cast: () => "wolf_discussion",
