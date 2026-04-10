@@ -23,6 +23,7 @@ export interface ValidationContext {
   actionWindow?: ActionWindow;
   allowSelfDestruct?: boolean;
   allowDeadHunterShoot?: boolean;
+  allowDeadLastWords?: boolean;
 }
 
 /**
@@ -82,7 +83,10 @@ export class ActionValidator {
       return reject("非法操作，玩家组件不存在");
     }
 
-    if (!alive.alive && !(toolCall.name === "shoot" && context.allowDeadHunterShoot)) {
+    const allowDeadAction =
+      (toolCall.name === "shoot" && context.allowDeadHunterShoot) ||
+      (toolCall.name === "speak" && context.allowDeadLastWords);
+    if (!alive.alive && !allowDeadAction) {
       return reject("非法操作，死亡玩家无法行动");
     }
 

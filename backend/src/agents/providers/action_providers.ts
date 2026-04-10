@@ -115,11 +115,14 @@ export class BaselineBotActionProvider implements ActionProvider {
       };
     }
 
-    if (request.phase === Phase.Day && request.allowedTools.includes("speak")) {
+    if (request.allowedTools.includes("speak")) {
+      const isLastWords = request.context.trigger === "last_words";
       return {
         name: "speak",
         args: {
-          text: `我是${request.actorId}号，先听后位发言再判断。`,
+          text: isLastWords
+            ? `遗言：我是${request.actorId}号，以上是我最后的信息，供大家参考。`
+            : `我是${request.actorId}号，先听后位发言再判断。`,
         },
       };
     }
