@@ -1,4 +1,6 @@
 import { Server } from "socket.io";
+import { Camp } from "../../domain/model";
+import { getDefaultVisibilityRegistry } from "../../mechanisms";
 
 /**
  * 实时事件可见性定义。
@@ -21,6 +23,7 @@ export interface RealtimeGameEvent {
 interface RegisteredPlayer {
   playerId: number;
   role?: string;
+  camp?: Camp | string;
 }
 
 /**
@@ -35,8 +38,13 @@ export class Broadcaster {
   /**
    * 注册玩家与 socket 绑定关系。
    */
-  registerPlayer(socketId: string, playerId: number, role?: string): void {
-    this.socketToPlayer.set(socketId, { playerId, role });
+  registerPlayer(
+    socketId: string,
+    playerId: number,
+    role?: string,
+    camp?: Camp | string,
+  ): void {
+    this.socketToPlayer.set(socketId, { playerId, role, camp });
     this.playerToSocket.set(playerId, socketId);
   }
 
@@ -63,9 +71,9 @@ export class Broadcaster {
     }
 
     if (visibility.scope === "wolves_only") {
-      // 狼人私有频道：仅推送给已注册且身份为狼人的连接。
+      // 狼队私有频道：通过机制层可见性规则判断可见对象。
       for (const [socketId, session] of this.socketToPlayer.entries()) {
-        if (session.role === "wolf") {
+        if (getDefaultVisibilityRegistry().isWolfAudience(session)) {
           this.io.to(socketId).emit("gameEvent", event);
         }
       }

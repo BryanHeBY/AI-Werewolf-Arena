@@ -9,6 +9,7 @@ import {
 } from "../../../domain/model";
 import { World } from "../../../domain/world";
 import { DeathHookResult } from "../../hooks/hook_registry";
+import { getHunterState } from "../private_state";
 
 export async function hunterDeathHook(
   world: World,
@@ -22,13 +23,14 @@ export async function hunterDeathHook(
 
   for (const deadId of deadIds) {
     const roleComp = world.getComponent<RoleComponent>(deadId, COMPONENT.Role);
-    if (!roleComp || roleComp.role !== Role.Hunter || !roleComp.hunterState) {
+    const hunterState = roleComp ? getHunterState(roleComp) : undefined;
+    if (!roleComp || roleComp.role !== Role.Hunter || !hunterState) {
       continue;
     }
 
     const sources = deathSources[deadId] ?? [];
     if (sources.includes(StatusMark.PoisonMark)) {
-      roleComp.hunterState.canShoot = false;
+      hunterState.canShoot = false;
       events.push({
         timestamp: Date.now(),
         type: "hunter_silent_due_to_poison",
@@ -37,13 +39,13 @@ export async function hunterDeathHook(
       continue;
     }
 
-    if (!roleComp.hunterState.canShoot || isLastGod(world, deadId)) {
-      roleComp.hunterState.canShoot = false;
+    if (!hunterState.canShoot || isLastGod(world, deadId)) {
+      hunterState.canShoot = false;
       continue;
     }
 
     const targetId = await onHunterShoot(deadId);
-    roleComp.hunterState.canShoot = false;
+    hunterState.canShoot = false;
     if (targetId === null) {
       continue;
     }
@@ -87,4 +89,3 @@ function isLastGod(world: World, hunterId: EntityId): boolean {
   }
   return true;
 }
-

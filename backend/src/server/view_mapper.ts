@@ -4,8 +4,9 @@ import { COMPONENT } from "../domain/components/names";
 import { RoleComponent } from "../domain/components/role";
 import { StatusMarksComponent } from "../domain/components/status_marks";
 import { VotingRightComponent } from "../domain/components/voting_right";
-import { Camp, Phase, Role, RuntimeSnapshot } from "../domain/model";
+import { Camp, Phase, RuntimeSnapshot } from "../domain/model";
 import { World } from "../domain/world";
+import { getDefaultRoleViewRegistry } from "../mechanisms";
 
 /**
  * 前端阶段枚举（映射自后端 Phase）。
@@ -69,7 +70,7 @@ export function toFrontendPhase(phase: Phase): FrontendPhase {
  * 将后端阵营值映射为前端阵营值。
  */
 export function toFrontendFaction(camp: Camp | null): "wolf" | "villager" {
-  return camp === Camp.Wolf ? "wolf" : "villager";
+  return getDefaultRoleViewRegistry().toFrontendFaction(camp);
 }
 
 /**
@@ -86,8 +87,8 @@ export function buildFrontendPlayers(world: World): FrontendPlayerView[] {
     return {
       id,
       name: identity?.name ?? `玩家${id}`,
-      roleType: toFrontendRoleType(role?.role),
-      faction: role?.camp === Camp.Wolf ? "wolf" : "villager",
+      roleType: getDefaultRoleViewRegistry().toFrontendRoleType(role?.role),
+      faction: getDefaultRoleViewRegistry().toFrontendFaction(role?.camp ?? null),
       isAlive: alive?.alive === true,
       isSheriff: badge?.isSheriff === true && badge.destroyed === false,
       voteWeight: voting?.weight ?? 1,
@@ -104,10 +105,7 @@ export function buildFrontendGameState(
 ): FrontendGameState {
   const players = buildFrontendPlayers(world);
   const deadPlayerIds = players.filter((p) => !p.isAlive).map((p) => p.id);
-  const witch = world
-    .entityIds()
-    .map((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role))
-    .find((role) => role?.role === Role.Witch);
+  const witchResource = getDefaultRoleViewRegistry().getWitchResourceState(world);
 
   const pending_marks = world
     .entityIds()
@@ -126,8 +124,8 @@ export function buildFrontendGameState(
     players,
     deadPlayerIds,
     history: [],
-    witchHasAntidote: (witch?.witchState?.heal ?? 0) > 0,
-    witchHasPoison: (witch?.witchState?.poison ?? 0) > 0,
+    witchHasAntidote: witchResource.hasAntidote,
+    witchHasPoison: witchResource.hasPoison,
     currentSpeechIndex: 0,
     alive_count: players.filter((p) => p.isAlive).length,
     pending_marks,
@@ -141,24 +139,4 @@ export function buildFrontendGameState(
   }
 
   return state;
-}
-
-function toFrontendRoleType(role: Role | undefined): string {
-  switch (role) {
-    case Role.Wolf:
-      return "wolf";
-    case Role.Seer:
-      return "seer";
-    case Role.Witch:
-      return "witch";
-    case Role.Guard:
-      return "guard";
-    case Role.Hunter:
-      return "hunter";
-    case Role.Idiot:
-      return "idiot";
-    case Role.Villager:
-    default:
-      return "villager";
-  }
 }

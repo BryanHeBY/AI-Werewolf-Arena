@@ -1,10 +1,11 @@
 import { bootstrapGame, BootstrapResult } from "../app/bootstrap";
 import { BoardPreset } from "../config";
-import { Camp, GameEvent, Phase, RuntimeSnapshot } from "../domain/model";
+import { GameEvent, RuntimeSnapshot } from "../domain/model";
 import { Broadcaster, RealtimeGameEvent } from "../infra/transport/broadcaster";
+import { getDefaultRealtimeEventRegistry } from "../mechanisms";
 import { sixPlayerMvpConfig } from "../scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../scenarios/twelve_player_standard";
-import { buildFrontendGameState, toFrontendFaction, toFrontendPhase } from "./view_mapper";
+import { buildFrontendGameState, toFrontendPhase } from "./view_mapper";
 import { BaselineBotActionProvider } from "../agents/providers/action_providers";
 
 /**
@@ -41,6 +42,7 @@ export interface SessionManagerConfig {
 class V3GameSession {
   private readonly context: BootstrapResult;
   private readonly actionProvider: BaselineBotActionProvider;
+  private readonly realtimeEventRegistry = getDefaultRealtimeEventRegistry();
   private readonly maxDays: number;
   private readonly cycleDelayMs: number;
   private eventCursor = 0;
@@ -158,298 +160,14 @@ class V3GameSession {
    * 将内部领域事件翻译为前端实时事件。
    */
   private translateEvent(event: GameEvent): RealtimeGameEvent[] {
-    const nowState = buildFrontendGameState(
-      this.context.world,
-      this.context.phaseManager.getSnapshot(),
-    );
-
-    if (event.type === "wolf_tactical_order") {
-      return [
-        this.makeWolvesOnlyEvent(
-          "wolf_tactical_order",
-          {
-            order: Array.isArray(event.payload.order) ? event.payload.order : [],
-          },
-          event.timestamp,
-        ),
-      ];
-    }
-
-    if (event.type === "wolf_discussion") {
-      return [
-        this.makeWolvesOnlyEvent(
-          "wolf_discussion",
-          {
-            actorId: Number(event.payload.actorId),
-            text: String(event.payload.text ?? ""),
-          },
-          event.timestamp,
-        ),
-      ];
-    }
-
-    if (event.type === "guard_applied") {
-      const actorId = Number(event.payload.actorId);
-      return [
-        this.makePrivateTargetsEvent(
-          "guard_applied",
-          {
-            actorId,
-            targetId: Number(event.payload.targetId),
-          },
-          [actorId],
-          event.timestamp,
-        ),
-      ];
-    }
-
-    if (event.type === "wolf_kill_vote_cast") {
-      const abstain = Boolean(event.payload.abstain);
-      return [
-        this.makeWolvesOnlyEvent(
-          "wolf_kill_vote_cast",
-          {
-            actorId: Number(event.payload.actorId),
-            targetId:
-              event.payload.targetId === null || event.payload.targetId === undefined
-                ? null
-                : Number(event.payload.targetId),
-            abstain,
-          },
-          event.timestamp,
-        ),
-      ];
-    }
-
-    if (event.type === "seer_checked") {
-      const actorId = Number(event.payload.actorId);
-      return [
-        this.makePrivateTargetsEvent(
-          "seer_checked",
-          {
-            actorId,
-            targetId: Number(event.payload.targetId),
-            isWerewolf: Boolean(event.payload.isWerewolf),
-          },
-          [actorId],
-          event.timestamp,
-        ),
-      ];
-    }
-
-    if (event.type === "witch_potion_used") {
-      const actorId = Number(event.payload.actorId);
-      return [
-        this.makePrivateTargetsEvent(
-          "witch_potion_used",
-          {
-            actorId,
-            targetId: Number(event.payload.targetId),
-            potionType: String(event.payload.potionType ?? ""),
-          },
-          [actorId],
-          event.timestamp,
-        ),
-      ];
-    }
-
-    if (event.type === "phase_changed") {
-      const phase = String(event.payload.phase ?? Phase.Night) as Phase;
-      const day = Number(event.payload.day ?? nowState.round);
-      return [
-        this.makePublicEvent(
-          "phase_changed",
-          {
-            phase: toFrontendPhase(phase),
-            round: day,
-            gameState: nowState,
-          },
-          event.timestamp,
-        ),
-      ];
-    }
-
-    if (event.type === "day_speech") {
-      const playerId = Number(event.payload.actorId);
-      return [
-        this.makePublicEvent(
-          "speech_start",
-          {
-            playerId,
-            playerName: this.getPlayerName(playerId),
-          },
-          event.timestamp,
-        ),
-        this.makePublicEvent(
-          "player_action",
-          {
-            playerId,
-            actionType: "speak",
-            content: String(event.payload.text ?? ""),
-          },
-          event.timestamp,
-        ),
-      ];
-    }
-
-    if (event.type === "night_resolved") {
-      const deadPlayerIds = Array.isArray(event.payload.deaths)
-        ? event.payload.deaths.map((id) => Number(id))
-        : [];
-      const result: RealtimeGameEvent[] = [
-        this.makePublicEvent(
-          "night_result",
-          {
-            deadPlayerIds,
-            killedByWolf:
-              event.payload.wolfTarget !== undefined
-                ? Number(event.payload.wolfTarget)
-                : undefined,
-          },
-          event.timestamp,
-        ),
-      ];
-      for (const playerId of deadPlayerIds) {
-        result.push(this.makePlayerDiedEvent(playerId, event.timestamp));
-      }
-      return result;
-    }
-
-    if (event.type === "voted_out") {
-      const target = Number(event.payload.target);
-      return [
-        this.makePublicEvent(
-          "vote_result",
-          {
-            votedOutId: target,
-            votedOutName: this.getPlayerName(target),
-          },
-          event.timestamp,
-        ),
-        this.makePlayerDiedEvent(target, event.timestamp),
-      ];
-    }
-
-    if (event.type === "vote_cast") {
-      return [
-        this.makePublicEvent(
-          "vote_cast",
-          {
-            actorId: Number(event.payload.actorId),
-            targetId:
-              event.payload.targetId === null || event.payload.targetId === undefined
-                ? null
-                : Number(event.payload.targetId),
-            abstain: Boolean(event.payload.abstain),
-            weight: Number(event.payload.weight ?? 0),
-          },
-          event.timestamp,
-        ),
-      ];
-    }
-
-    if (event.type === "wolf_self_destruct") {
-      const wolfId = Number(event.payload.wolfId);
-      return [this.makePlayerDiedEvent(wolfId, event.timestamp)];
-    }
-
-    if (event.type === "hunter_shot") {
-      const hunterId = Number(event.payload.hunterId);
-      const targetId = Number(event.payload.targetId);
-      return [
-        this.makePublicEvent(
-          "player_action",
-          {
-            playerId: hunterId,
-            actionType: "kill",
-            targetId,
-          },
-          event.timestamp,
-        ),
-        this.makePlayerDiedEvent(targetId, event.timestamp),
-      ];
-    }
-
-    if (event.type === "game_over") {
-      const winner = toFrontendFaction((event.payload.winner as Camp | null) ?? null);
-      return [
-        this.makePublicEvent(
-          "game_over",
-          {
-            winner,
-            gameState: nowState,
-          },
-          event.timestamp,
-        ),
-        this.makePublicEvent(
-          "winner_declared",
-          {
-            winner,
-            message: winner === "wolf" ? "🐺 狼人阵营获胜" : "👥 好人阵营获胜",
-          },
-          event.timestamp,
-        ),
-      ];
-    }
-
-    return [];
-  }
-
-  /**
-   * 构建统一玩家死亡事件。
-   */
-  private makePlayerDiedEvent(playerId: number, timestamp: number): RealtimeGameEvent {
-    return this.makePublicEvent(
-      "player_died",
-      {
-        playerId,
-        roleType: this.getPlayerRole(playerId),
-      },
-      timestamp,
-    );
-  }
-
-  private makePublicEvent(
-    type: string,
-    data: Record<string, unknown>,
-    timestamp: number,
-  ): RealtimeGameEvent {
-    return {
-      type,
-      timestamp,
-      data,
-      visibility: { scope: "public" },
-    };
-  }
-
-  private makeWolvesOnlyEvent(
-    type: string,
-    data: Record<string, unknown>,
-    timestamp: number,
-  ): RealtimeGameEvent {
-    return {
-      type,
-      timestamp,
-      data,
-      visibility: { scope: "wolves_only" },
-    };
-  }
-
-  private makePrivateTargetsEvent(
-    type: string,
-    data: Record<string, unknown>,
-    targetPlayerIds: number[],
-    timestamp: number,
-  ): RealtimeGameEvent {
-    return {
-      type,
-      timestamp,
-      data,
-      visibility: {
-        scope: "private_targets",
-        targetPlayerIds,
-      },
-    };
+    return this.realtimeEventRegistry.translate(event, {
+      nowState: buildFrontendGameState(
+        this.context.world,
+        this.context.phaseManager.getSnapshot(),
+      ),
+      getPlayerName: (playerId) => this.getPlayerName(playerId),
+      getPlayerRole: (playerId) => this.getPlayerRole(playerId),
+    });
   }
 
   /**

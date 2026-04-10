@@ -1,60 +1,15 @@
 import { Camp, EntityId, PromptRenderable, Role } from "../model";
 
 /**
- * 女巫私有状态。
- */
-export interface WitchState {
-  heal: number;
-  poison: number;
-  canSelfHeal: boolean;
-  healUsedThisNight: boolean;
-  poisonUsedThisNight: boolean;
-}
-
-/**
- * 守卫私有状态。
- */
-export interface GuardState {
-  lastTarget: EntityId | null;
-}
-
-/**
- * 猎人私有状态。
- */
-export interface HunterState {
-  canShoot: boolean;
-}
-
-/**
- * 白痴私有状态。
- */
-export interface IdiotState {
-  revealed: boolean;
-}
-
-/**
- * 预言家私有状态。
- */
-export interface SeerState {
-  lastTarget: EntityId | null;
-  lastIsWerewolf: boolean | null;
-  history: Array<{
-    targetId: EntityId;
-    isWerewolf: boolean;
-  }>;
-}
-
-/**
  * 角色组件：统一记录底牌与角色私有状态。
  */
 export interface RoleComponent extends PromptRenderable {
   role: Role;
   camp: Camp;
-  witchState?: WitchState;
-  guardState?: GuardState;
-  hunterState?: HunterState;
-  idiotState?: IdiotState;
-  seerState?: SeerState;
+  /**
+   * 角色私有机制状态由机制层管理，框架层仅维护通用容器。
+   */
+  privateState: Record<string, unknown>;
 }
 
 /**
@@ -75,6 +30,7 @@ export function createRoleComponent(role: Role): RoleComponent {
   return {
     role,
     camp: inferCamp(role),
+    privateState: {},
     renderPrompt(): string {
       return `你的底牌是【${this.role}】。`;
     },

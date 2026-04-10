@@ -3,6 +3,7 @@ import { COMPONENT } from "../../src/domain/components/names";
 import { RoleComponent } from "../../src/domain/components/role";
 import { Phase, PotionType, Role } from "../../src/domain/model";
 import { ToolGateway } from "../../src/gateway/tool_gateway";
+import { getGuardState, getWitchState } from "../../src/mechanisms/roles/private_state";
 import { sixPlayerMvpConfig } from "../../src/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
 
@@ -18,7 +19,8 @@ describe("V3 ToolGateway validation", () => {
     expect(guardId).toBeDefined();
 
     const guard = world.getComponent<RoleComponent>(guardId!, COMPONENT.Role)!;
-    guard.guardState!.lastTarget = 1;
+    const guardState = getGuardState(guard)!;
+    guardState.lastTarget = 1;
 
     const result = toolGateway.validateAndSanitize(
       world,
@@ -52,7 +54,8 @@ describe("V3 ToolGateway validation", () => {
     expect(selfHeal.error).toContain("不可自救");
 
     const witch = world.getComponent<RoleComponent>(witchId!, COMPONENT.Role)!;
-    witch.witchState!.healUsedThisNight = true;
+    const witchState = getWitchState(witch)!;
+    witchState.healUsedThisNight = true;
 
     const usePoisonAfterHeal = toolGateway.validateAndSanitize(
       world,

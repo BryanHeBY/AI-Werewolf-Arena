@@ -1,43 +1,52 @@
 import { RoleComponent } from "../../domain/components/role";
 import { Role } from "../../domain/model";
+import {
+  getSeerState,
+  getWitchState,
+  setGuardState,
+  setHunterState,
+  setIdiotState,
+  setSeerState,
+  setWitchState,
+} from "./private_state";
 
 type RoleRuntimeInitializer = (roleComp: RoleComponent) => void;
 type RolePromptRenderer = (roleComp: RoleComponent) => string;
 
 const INIT: Partial<Record<Role, RoleRuntimeInitializer>> = {
   [Role.Witch]: (roleComp) => {
-    roleComp.witchState = {
+    setWitchState(roleComp, {
       heal: 1,
       poison: 1,
       canSelfHeal: false,
       healUsedThisNight: false,
       poisonUsedThisNight: false,
-    };
+    });
   },
   [Role.Guard]: (roleComp) => {
-    roleComp.guardState = { lastTarget: null };
+    setGuardState(roleComp, { lastTarget: null });
   },
   [Role.Hunter]: (roleComp) => {
-    roleComp.hunterState = { canShoot: true };
+    setHunterState(roleComp, { canShoot: true });
   },
   [Role.Idiot]: (roleComp) => {
-    roleComp.idiotState = { revealed: false };
+    setIdiotState(roleComp, { revealed: false });
   },
   [Role.Seer]: (roleComp) => {
-    roleComp.seerState = {
+    setSeerState(roleComp, {
       lastTarget: null,
       lastIsWerewolf: null,
       history: [],
-    };
+    });
   },
 };
 
 const PROMPTS: Partial<Record<Role, RolePromptRenderer>> = {
   [Role.Witch]: (roleComp) =>
-    `你的底牌是【女巫】。解药:${roleComp.witchState?.heal ?? 0} 毒药:${roleComp.witchState?.poison ?? 0}`,
+    `你的底牌是【女巫】。解药:${getWitchState(roleComp)?.heal ?? 0} 毒药:${getWitchState(roleComp)?.poison ?? 0}`,
   [Role.Guard]: () => "你的底牌是【守卫】。你每晚可以守护一名玩家，且不可连续同守。",
   [Role.Seer]: (roleComp) => {
-    const seerState = roleComp.seerState;
+    const seerState = getSeerState(roleComp);
     const latest =
       seerState &&
       seerState.lastTarget !== null &&
@@ -76,4 +85,3 @@ export function getDefaultRoleRuntimeRegistry(): RoleRuntimeRegistry {
   }
   return defaultRegistry;
 }
-

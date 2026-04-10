@@ -1,9 +1,10 @@
 import { Role } from "../../../domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
+import { getHunterState } from "../private_state";
 
 export const HUNTER_VALIDATION_RULES: ToolRuleMap = {
   shoot: ({ world, role, toolCall }) => {
-    if (role.role !== Role.Hunter || !role.hunterState?.canShoot) {
+    if (role.role !== Role.Hunter || !getHunterState(role)?.canShoot) {
       return "非法操作，当前不可开枪";
     }
     if (toolCall.name !== "shoot") {
@@ -15,4 +16,3 @@ export const HUNTER_VALIDATION_RULES: ToolRuleMap = {
     return null;
   },
 };
-

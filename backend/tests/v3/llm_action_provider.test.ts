@@ -5,6 +5,7 @@ import { ActionProvider, ActionRequest, Phase, ToolCall } from "../../src/domain
 import { sixPlayerMvpConfig } from "../../src/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
 import { LlmActionProvider } from "../../src/v3/llm_action_provider";
+import { getSeerState } from "../../src/mechanisms/roles/private_state";
 
 class FakeClient {
   constructor(private readonly output: string) {}
@@ -343,9 +344,10 @@ describe("LlmActionProvider", () => {
         return role?.role === "seer";
       })!;
     const seerRole = context.world.getComponent<RoleComponent>(seerId, COMPONENT.Role)!;
-    seerRole.seerState!.lastTarget = 1;
-    seerRole.seerState!.lastIsWerewolf = true;
-    seerRole.seerState!.history.push({ targetId: 1, isWerewolf: true });
+    const seerState = getSeerState(seerRole)!;
+    seerState.lastTarget = 1;
+    seerState.lastIsWerewolf = true;
+    seerState.history.push({ targetId: 1, isWerewolf: true });
 
     const provider = new LlmActionProvider(
       context.world,

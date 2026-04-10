@@ -2,6 +2,7 @@ import { COMPONENT } from "../../../domain/components/names";
 import { RoleComponent } from "../../../domain/components/role";
 import { Camp, Phase, Role } from "../../../domain/model";
 import { NightStageHandler } from "../../stages/night/contracts";
+import { getSeerState } from "../private_state";
 
 const seerCheckStage: NightStageHandler = {
   id: "seer_check",
@@ -27,10 +28,11 @@ const seerCheckStage: NightStageHandler = {
       const targetRole = ctx.world.getComponent<RoleComponent>(targetId, COMPONENT.Role);
       const isWerewolf = targetRole?.camp === Camp.Wolf;
       const seerRole = ctx.world.getComponent<RoleComponent>(seerId, COMPONENT.Role);
-      if (seerRole?.seerState) {
-        seerRole.seerState.lastTarget = targetId;
-        seerRole.seerState.lastIsWerewolf = isWerewolf;
-        seerRole.seerState.history.push({ targetId, isWerewolf });
+      const seerState = seerRole ? getSeerState(seerRole) : undefined;
+      if (seerState) {
+        seerState.lastTarget = targetId;
+        seerState.lastIsWerewolf = isWerewolf;
+        seerState.history.push({ targetId, isWerewolf });
       }
 
       ctx.state.seerChecks.push({ seerId, targetId, isWerewolf });
@@ -44,4 +46,3 @@ const seerCheckStage: NightStageHandler = {
 };
 
 export const SEER_NIGHT_STAGES: NightStageHandler[] = [seerCheckStage];
-

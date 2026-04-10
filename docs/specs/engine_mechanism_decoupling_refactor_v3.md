@@ -201,7 +201,10 @@
 - [x] `D08` 为新注册架构补齐单测与集成回归测试。
 - [x] `D09` 新增 `WinConditionRegistry`，将 `slaughter_city/slaughter_side` 胜利规则注册化，移除框架对 `WinConditionSystem` 的硬编码依赖。
 - [x] `D10` 重组 `backend/src/v3`：行为提供器迁移到 `backend/src/agents/*`，`src/v3/*` 仅保留兼容导出。
-- [ ] `D11` 继续清理框架中残留角色语义分支（`view_mapper`、`agent_broadcast_feed`、`infra/transport/broadcaster`）。
+- [x] `D11` 继续清理框架中残留角色语义分支（`view_mapper`、`agent_broadcast_feed`、`infra/transport/broadcaster`）。
+- [x] `D12` 将角色私有状态从 `domain/components/role.ts` 特化字段迁移为机制层 `privateState` 访问器。
+- [x] `D13` 将 `v3_session_manager` 的事件翻译分支迁移到 `RealtimeEventRegistry`。
+- [x] `D14` 将 `agent_broadcast_feed` 的事件文案分支迁移到 `AgentEventLineRegistry`。
 
 ---
 
@@ -216,10 +219,8 @@
 
 ### 7.2 当前剩余高优先级耦合点
 
-1. `backend/src/server/view_mapper.ts`：前端角色映射与女巫状态字段仍为角色特化逻辑。
-2. `backend/src/engine/agent_broadcast_feed.ts`：事件可见性与文本拼装仍内嵌狼队/预言家/守卫/女巫语义。
-3. `backend/src/infra/transport/broadcaster.ts`：`wolves_only` 投递策略仍基于固定角色判断。
-4. `backend/src/domain/components/role.ts`：角色私有状态结构仍集中定义，后续需进一步向 role pack 迁移。
+1. 暂无阻塞性高优先级耦合点；当前角色/机制语义已迁移到 mechanisms 注册层。
+2. 后续可选优化：把更多前端事件 payload 字段约束提取为 schema registry，进一步收敛 `server` 层类型定义。
 
 ---
 

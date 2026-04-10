@@ -2,6 +2,7 @@ import { COMPONENT } from "../../../domain/components/names";
 import { RoleComponent } from "../../../domain/components/role";
 import { Phase, Role, StatusMark } from "../../../domain/model";
 import { NightStageHandler } from "../../stages/night/contracts";
+import { getWitchState } from "../private_state";
 
 const resetNightRoleStateStage: NightStageHandler = {
   id: "reset_night_role_state",
@@ -9,9 +10,10 @@ const resetNightRoleStateStage: NightStageHandler = {
   async execute(ctx): Promise<void> {
     for (const id of ctx.world.getAliveEntityIds()) {
       const role = ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-      if (role?.witchState) {
-        role.witchState.healUsedThisNight = false;
-        role.witchState.poisonUsedThisNight = false;
+      const witchState = role ? getWitchState(role) : undefined;
+      if (witchState) {
+        witchState.healUsedThisNight = false;
+        witchState.poisonUsedThisNight = false;
       }
     }
   },
@@ -39,7 +41,8 @@ const witchActionStage: NightStageHandler = {
       }
 
       const witch = ctx.world.getComponent<RoleComponent>(witchId, COMPONENT.Role);
-      if (!witch?.witchState) {
+      const witchState = witch ? getWitchState(witch) : undefined;
+      if (!witchState) {
         continue;
       }
       const targetId = result.sanitizedCall.args.target_id;
@@ -47,8 +50,8 @@ const witchActionStage: NightStageHandler = {
 
       if (potion === "heal") {
         ctx.ensureMarks(targetId).add(StatusMark.HealMark);
-        witch.witchState.heal -= 1;
-        witch.witchState.healUsedThisNight = true;
+        witchState.heal -= 1;
+        witchState.healUsedThisNight = true;
         ctx.events.push({
           timestamp: Date.now(),
           type: "witch_potion_used",
@@ -58,8 +61,8 @@ const witchActionStage: NightStageHandler = {
 
       if (potion === "poison") {
         ctx.ensureMarks(targetId).add(StatusMark.PoisonMark);
-        witch.witchState.poison -= 1;
-        witch.witchState.poisonUsedThisNight = true;
+        witchState.poison -= 1;
+        witchState.poisonUsedThisNight = true;
         ctx.events.push({
           timestamp: Date.now(),
           type: "witch_potion_used",
@@ -74,4 +77,3 @@ export const WITCH_NIGHT_STAGES: NightStageHandler[] = [
   resetNightRoleStateStage,
   witchActionStage,
 ];
-

@@ -3,6 +3,7 @@ import { RoleComponent } from "../../../domain/components/role";
 import { Phase, Role, StatusMark } from "../../../domain/model";
 import { safeRecordLogicOp } from "../../../session_recording";
 import { NightStageHandler } from "../../stages/night/contracts";
+import { getGuardState } from "../private_state";
 
 const guardActionStage: NightStageHandler = {
   id: "guard_action",
@@ -49,12 +50,12 @@ const guardActionStage: NightStageHandler = {
       });
 
       const role = ctx.world.getComponent<RoleComponent>(guardId, COMPONENT.Role);
-      if (role?.guardState) {
-        role.guardState.lastTarget = targetId;
+      const guardState = role ? getGuardState(role) : undefined;
+      if (guardState) {
+        guardState.lastTarget = targetId;
       }
     }
   },
 };
 
 export const GUARD_NIGHT_STAGES: NightStageHandler[] = [guardActionStage];
-

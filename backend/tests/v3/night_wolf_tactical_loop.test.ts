@@ -17,6 +17,7 @@ import { DamageResolutionSystem } from "../../src/domain/systems/damage_resoluti
 import { buildAgentBroadcastFeed } from "../../src/engine/agent_broadcast_feed";
 import { NightPipeline } from "../../src/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../src/gateway/tool_gateway";
+import { getSeerState } from "../../src/mechanisms/roles/private_state";
 import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
 
 class TacticalOrderProvider implements ActionProvider {
@@ -347,10 +348,11 @@ describe("night wolf tactical loop", () => {
         return role?.role === Role.Seer;
       })!;
     const seerRole = context.world.getComponent<RoleComponent>(seerId, COMPONENT.Role)!;
+    const seerState = getSeerState(seerRole);
 
-    expect(seerRole.seerState?.lastTarget).toBe(wolfTargetId);
-    expect(seerRole.seerState?.lastIsWerewolf).toBe(true);
-    expect(seerRole.seerState?.history.length).toBeGreaterThanOrEqual(1);
+    expect(seerState?.lastTarget).toBe(wolfTargetId);
+    expect(seerState?.lastIsWerewolf).toBe(true);
+    expect(seerState?.history.length).toBeGreaterThanOrEqual(1);
   });
 
   test("wolf abstain kill vote should produce no wolf target and no wolf night death", async () => {

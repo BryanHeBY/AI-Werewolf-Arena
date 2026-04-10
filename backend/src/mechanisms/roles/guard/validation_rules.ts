@@ -1,8 +1,10 @@
 import { Role } from "../../../domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
+import { getGuardState } from "../private_state";
 
 export const GUARD_VALIDATION_RULES: ToolRuleMap = {
   guard: ({ world, role, toolCall }) => {
+    const guardState = getGuardState(role);
     if (role.role !== Role.Guard) {
       return "非法操作，仅守卫可守护";
     }
@@ -15,7 +17,7 @@ export const GUARD_VALIDATION_RULES: ToolRuleMap = {
     if (toolCall.args.target_id === null) {
       return "非法操作，守护目标必须存活";
     }
-    if (role.guardState?.lastTarget === toolCall.args.target_id) {
+    if (guardState?.lastTarget === toolCall.args.target_id) {
       return "非法操作，守卫不可连续两晚守同一人";
     }
     if (!isAliveTarget(world, toolCall.args.target_id)) {
@@ -24,4 +26,3 @@ export const GUARD_VALIDATION_RULES: ToolRuleMap = {
     return null;
   },
 };
-

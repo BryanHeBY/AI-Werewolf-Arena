@@ -7,6 +7,7 @@ import { EntityId, GameEvent, Role } from "../../../domain/model";
 import { World } from "../../../domain/world";
 import { VotedOutResult } from "../../hooks/hook_registry";
 import { transferOrDestroySheriffBadge } from "../../sheriff/sheriff_badge";
+import { setIdiotState } from "../private_state";
 
 export function idiotVotedOutHook(
   world: World,
@@ -22,9 +23,7 @@ export function idiotVotedOutHook(
     return null;
   }
 
-  roleComp.idiotState = {
-    revealed: true,
-  };
+  setIdiotState(roleComp, { revealed: true });
 
   const voting = world.getComponent<VotingRightComponent>(targetId, COMPONENT.VotingRight);
   if (voting) {
