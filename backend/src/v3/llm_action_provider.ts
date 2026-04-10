@@ -12,6 +12,7 @@ import {
   ToolName,
 } from "../domain/model";
 import { World } from "../domain/world";
+import { safeRecordLogicOp, SessionRecordHub } from "../session_recording";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
 import { BaselineBotActionProvider } from "./action_providers";
 
@@ -43,6 +44,15 @@ interface ToolLoopStepTrace {
     stop?: boolean;
     hasFinalAction?: boolean;
   }>;
+}
+
+interface BuildMessagesResult {
+  messages: ChatMessage[];
+  systemPrompt: string;
+  userPrompt: string;
+  visibleFeedDelta: string[];
+  feedCursorBefore: number;
+  feedCursorAfter: number;
 }
 
 interface ChatLike {
@@ -104,6 +114,8 @@ export class LlmActionProvider implements ActionProvider {
   private readonly recentEvents: string[] = [];
   private readonly agentHistories = new Map<EntityId, ChatMessage[]>();
   private readonly agentBroadcastCursor = new Map<EntityId, number>();
+  private readonly actorRoundCounter = new Map<EntityId, number>();
+  private readonly actorLastAssistantText = new Map<EntityId, string>();
 
   constructor(
     private readonly world: World,
@@ -132,16 +144,45 @@ export class LlmActionProvider implements ActionProvider {
    * 执行一次动作决策：优先 SDK tool loop，失败时回退基线策略。
    */
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
-    const messages = this.buildMessages(request);
+    const built = this.buildMessages(request);
+    const messages = built.messages;
     let raw = "";
     const startedAt = Date.now();
+    const toToolCalls = (action?: ToolCall | null) =>
+      action
+        ? [
+            {
+              name: action.name,
+              args: ((action as any).args ?? {}) as Record<string, unknown>,
+              accepted: true,
+            },
+          ]
+        : [];
+    const toFallbackAction = (action?: ToolCall | null) =>
+      action
+        ? {
+            name: action.name,
+            args: ((action as any).args ?? {}) as Record<string, unknown>,
+          }
+        : undefined;
     const effectiveTimeoutMs = this.computeEffectiveTimeout(request.deadlineAtMs);
 
     if (effectiveTimeoutMs <= 0) {
       this.appendTrace(
         `request_deadline_skip player=${request.actorId} phase=${request.phase}`,
       );
-      return this.runFallback(request, "deadline_skip");
+      const fallback = await this.runFallback(request, "deadline_skip");
+      this.recordPlayerRound(request, built, {
+        actionMode: fallback ? "tool_call" : "none",
+        toolCalls: toToolCalls(fallback),
+        finalAction: fallback,
+        fallback: {
+          used: true,
+          reason: "deadline_skip",
+          action: toFallbackAction(fallback),
+        },
+      });
+      return fallback;
     }
 
     try {
@@ -180,6 +221,12 @@ export class LlmActionProvider implements ActionProvider {
           this.appendTrace(
             `request_ok player=${request.actorId} phase=${request.phase} action=${picked.name} args=${JSON.stringify(picked.args)} elapsed_ms=${Date.now() - startedAt}`,
           );
+          this.recordPlayerRound(request, built, {
+            actionMode: "tool_call",
+            toolCalls: toToolCalls(picked),
+            finalAction: picked,
+            thinkingText: this.actorLastAssistantText.get(request.actorId),
+          });
           return picked;
         }
         if (this.isMustAct(request)) {
@@ -206,20 +253,70 @@ export class LlmActionProvider implements ActionProvider {
               this.appendTrace(
                 `request_ok_retry player=${request.actorId} phase=${request.phase} attempt=${attempt}/${maxRetries} action=${retried.name} args=${JSON.stringify(retried.args)} elapsed_ms=${Date.now() - startedAt}`,
               );
+              this.recordPlayerRound(request, built, {
+                actionMode: "tool_call",
+                toolCalls: toToolCalls(retried),
+                finalAction: retried,
+                thinkingText: this.actorLastAssistantText.get(request.actorId),
+              });
               return retried;
             }
           }
           if (hasRuntimeError) {
-            return this.runFallback(request, "runtime_error");
+            const fallback = await this.runFallback(request, "runtime_error");
+            this.recordPlayerRound(request, built, {
+              actionMode: fallback ? "tool_call" : "none",
+              toolCalls: toToolCalls(fallback),
+              finalAction: fallback,
+              thinkingText: this.actorLastAssistantText.get(request.actorId),
+              fallback: {
+                used: true,
+                reason: "runtime_error",
+                action: toFallbackAction(fallback),
+              },
+            });
+            return fallback;
           }
-          return this.runFallback(request, "model_declined_required_action");
+          const fallback = await this.runFallback(
+            request,
+            "model_declined_required_action",
+          );
+          this.recordPlayerRound(request, built, {
+            actionMode: fallback ? "tool_call" : "none",
+            toolCalls: toToolCalls(fallback),
+            finalAction: fallback,
+            thinkingText: this.actorLastAssistantText.get(request.actorId),
+            fallback: {
+              used: true,
+              reason: "model_declined_required_action",
+              action: toFallbackAction(fallback),
+            },
+          });
+          return fallback;
         }
         if (firstAttempt.failed) {
-          return this.runFallback(request, "runtime_error");
+          const fallback = await this.runFallback(request, "runtime_error");
+          this.recordPlayerRound(request, built, {
+            actionMode: fallback ? "tool_call" : "none",
+            toolCalls: toToolCalls(fallback),
+            finalAction: fallback,
+            thinkingText: this.actorLastAssistantText.get(request.actorId),
+            fallback: {
+              used: true,
+              reason: "runtime_error",
+              action: toFallbackAction(fallback),
+            },
+          });
+          return fallback;
         }
         this.appendTrace(
           `request_none player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt}`,
         );
+        this.recordPlayerRound(request, built, {
+          actionMode: "none",
+          toolCalls: [],
+          thinkingText: this.actorLastAssistantText.get(request.actorId),
+        });
         return null;
       } else {
         raw = await this.chatWithTimeout(messages, effectiveTimeoutMs);
@@ -229,32 +326,106 @@ export class LlmActionProvider implements ActionProvider {
           this.appendTrace(
             `request_ok player=${request.actorId} phase=${request.phase} action=${parsed.name} args=${JSON.stringify(parsed.args)} elapsed_ms=${Date.now() - startedAt}`,
           );
+          this.recordPlayerRound(request, built, {
+            actionMode: "tool_call",
+            toolCalls: toToolCalls(parsed),
+            finalAction: parsed,
+            thinkingText: raw,
+          });
           return parsed;
         }
         if (this.modelReturnedNone(raw)) {
           if (this.isMustAct(request)) {
-            return this.runFallback(request, "model_declined_required_action");
+            const fallback = await this.runFallback(
+              request,
+              "model_declined_required_action",
+            );
+            this.recordPlayerRound(request, built, {
+              actionMode: fallback ? "tool_call" : "none",
+              toolCalls: toToolCalls(fallback),
+              finalAction: fallback,
+              thinkingText: raw,
+              fallback: {
+                used: true,
+                reason: "model_declined_required_action",
+                action: toFallbackAction(fallback),
+              },
+            });
+            return fallback;
           }
           this.appendTrace(
             `request_none player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt}`,
           );
+          this.recordPlayerRound(request, built, {
+            actionMode: "none",
+            toolCalls: [],
+            thinkingText: raw,
+          });
           return null;
         }
         // 若模型已返回结构化 JSON（但工具越权或字段非法），必须走 fallback，
         // 不能被“文本恢复”逻辑改写，否则会绕过 allowedTools 约束。
         if (this.looksLikeStructuredToolJson(raw)) {
-          return this.runFallback(request, "invalid_tool_json");
+          const fallback = await this.runFallback(request, "invalid_tool_json");
+          this.recordPlayerRound(request, built, {
+            actionMode: fallback ? "tool_call" : "none",
+            toolCalls: toToolCalls(fallback),
+            finalAction: fallback,
+            thinkingText: raw,
+            fallback: {
+              used: true,
+              reason: "invalid_tool_json",
+              action: toFallbackAction(fallback),
+            },
+          });
+          return fallback;
         }
         const repaired = this.recoverFromReasoningText(raw, request);
         if (repaired) {
           this.appendTrace(
             `request_ok_repaired player=${request.actorId} phase=${request.phase} action=${repaired.name} args=${JSON.stringify((repaired as any).args ?? {})} elapsed_ms=${Date.now() - startedAt}`,
           );
+          this.recordPlayerRound(request, built, {
+            actionMode: "text_action",
+            toolCalls: toToolCalls(repaired),
+            finalAction: repaired,
+            thinkingText: raw,
+            textAction: {
+              text: raw,
+              parsed_action: {
+                name: repaired.name,
+                args: (repaired as any).args ?? {},
+              },
+            },
+          });
           return repaired;
         }
-        return this.runFallback(request, "non_json_output");
+        const fallback = await this.runFallback(request, "non_json_output");
+        this.recordPlayerRound(request, built, {
+          actionMode: fallback ? "tool_call" : "none",
+          toolCalls: toToolCalls(fallback),
+          finalAction: fallback,
+          thinkingText: raw,
+          fallback: {
+            used: true,
+            reason: "non_json_output",
+            action: toFallbackAction(fallback),
+          },
+        });
+        return fallback;
       }
-      return this.runFallback(request, "non_json_output");
+      const fallback = await this.runFallback(request, "non_json_output");
+      this.recordPlayerRound(request, built, {
+        actionMode: fallback ? "tool_call" : "none",
+        toolCalls: toToolCalls(fallback),
+        finalAction: fallback,
+        fallback: {
+          used: true,
+          reason: "non_json_output",
+          action: toFallbackAction(fallback),
+        },
+      });
+      return fallback;
     } catch (error) {
       const errText = String(error);
       if (errText.includes("llm_request_timeout_")) {
@@ -268,7 +439,18 @@ export class LlmActionProvider implements ActionProvider {
       }
     }
 
-    return this.runFallback(request, "runtime_error");
+    const fallback = await this.runFallback(request, "runtime_error");
+    this.recordPlayerRound(request, built, {
+      actionMode: fallback ? "tool_call" : "none",
+      toolCalls: toToolCalls(fallback),
+      finalAction: fallback,
+      fallback: {
+        used: true,
+        reason: "runtime_error",
+        action: toFallbackAction(fallback),
+      },
+    });
+    return fallback;
   }
 
   /**
@@ -311,6 +493,20 @@ export class LlmActionProvider implements ActionProvider {
     // 降级策略：LLM 不可用或输出不合法时，使用基线策略保证对局继续。
     const fallbackAction = await this.fallbackProvider.getAction(request);
     this.dumpFallbackReason(request, reason, fallbackAction);
+    safeRecordLogicOp({
+      scope: "llm_action_provider",
+      op: "llm_fallback",
+      actorId: request.actorId,
+      phase: request.phase,
+      status: fallbackAction ? "fallback" : "error",
+      reason,
+      output: fallbackAction
+        ? {
+            action: fallbackAction.name,
+            args: (fallbackAction as any).args ?? {},
+          }
+        : undefined,
+    });
     if (fallbackAction) {
       this.appendTrace(
         `request_recovered player=${request.actorId} phase=${request.phase} reason=${reason} fallback=${fallbackAction.name} args=${JSON.stringify((fallbackAction as any).args ?? {})}`,
@@ -445,6 +641,7 @@ export class LlmActionProvider implements ActionProvider {
           content: result.assistantText,
         });
       }
+      this.actorLastAssistantText.set(request.actorId, result.assistantText ?? "");
       this.dumpThinkingTrace(result.thinkingTrace ?? [], request);
       this.dumpLlmRawResponse(result.assistantText ?? "", request);
       return result.finalAction ?? null;
@@ -677,10 +874,19 @@ export class LlmActionProvider implements ActionProvider {
   /**
    * 将可见广播增量写入对应 agent 的消息历史。
    */
-  private ingestBroadcastFeed(request: ActionRequest): void {
+  private ingestBroadcastFeed(request: ActionRequest): {
+    delta: string[];
+    cursorBefore: number;
+    cursorAfter: number;
+  } {
     const feed = this.extractBroadcastFeed(request.context);
     if (feed.length === 0) {
-      return;
+      const cursor = this.agentBroadcastCursor.get(request.actorId) ?? 0;
+      return {
+        delta: [],
+        cursorBefore: cursor,
+        cursorAfter: cursor,
+      };
     }
     const cursor = this.agentBroadcastCursor.get(request.actorId) ?? 0;
     const delta = feed.slice(cursor);
@@ -691,6 +897,11 @@ export class LlmActionProvider implements ActionProvider {
       });
     }
     this.agentBroadcastCursor.set(request.actorId, feed.length);
+    return {
+      delta,
+      cursorBefore: cursor,
+      cursorAfter: feed.length,
+    };
   }
 
   /**
@@ -719,8 +930,8 @@ export class LlmActionProvider implements ActionProvider {
   /**
    * 组装本轮发送给模型的完整消息序列。
    */
-  private buildMessages(request: ActionRequest): ChatMessage[] {
-    this.ingestBroadcastFeed(request);
+  private buildMessages(request: ActionRequest): BuildMessagesResult {
+    const feedDelta = this.ingestBroadcastFeed(request);
     const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const mustAct = this.isMustAct(request);
     const aliveIds = this.world.getAliveEntityIds();
@@ -765,11 +976,81 @@ export class LlmActionProvider implements ActionProvider {
     const currentTurnUser: ChatMessage = { role: "user", content: userPrompt };
     this.appendAgentHistory(request.actorId, currentTurnUser);
 
-    return [
-      { role: "system", content: systemPrompt },
-      ...history,
-      currentTurnUser,
-    ];
+    return {
+      messages: [
+        { role: "system", content: systemPrompt },
+        ...history,
+        currentTurnUser,
+      ],
+      systemPrompt,
+      userPrompt,
+      visibleFeedDelta: feedDelta.delta,
+      feedCursorBefore: feedDelta.cursorBefore,
+      feedCursorAfter: feedDelta.cursorAfter,
+    };
+  }
+
+  private recordPlayerRound(
+    request: ActionRequest,
+    built: BuildMessagesResult,
+    extras: {
+      actionMode: "tool_call" | "text_action" | "none";
+      toolCalls: Array<{
+        id?: string;
+        name: string;
+        args: Record<string, unknown>;
+        accepted?: boolean;
+        result?: Record<string, unknown> | string;
+      }>;
+      thinkingText?: string;
+      textAction?: {
+        text: string;
+        parsed_action?: { name: string; args: Record<string, unknown> };
+      };
+      finalAction?: ToolCall | null;
+      fallback?: {
+        used: boolean;
+        reason?: string;
+        action?: { name: string; args: Record<string, unknown> };
+      };
+    },
+  ): void {
+    const recorder = SessionRecordHub.getActive();
+    if (!recorder) {
+      return;
+    }
+    const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
+    const prev = this.actorRoundCounter.get(request.actorId) ?? 0;
+    const next = prev + 1;
+    this.actorRoundCounter.set(request.actorId, next);
+    const day = Number(request.context.day ?? request.context.current_day ?? 0);
+    const phaseLabel = String(request.phase);
+    const stageLabel = String(
+      request.context.phase ??
+        request.actionWindow ??
+        request.context.window ??
+        request.phase,
+    );
+    recorder.recordPlayerRound({
+      playerId: request.actorId,
+      role: role?.role ?? "unknown",
+      camp: role?.camp ?? "unknown",
+      day,
+      phase: phaseLabel,
+      stage: stageLabel,
+      requestId: `${day}-${phaseLabel}-${request.actorId}-${next}`,
+      visibleFeedDelta: built.visibleFeedDelta,
+      feedCursorBefore: built.feedCursorBefore,
+      feedCursorAfter: built.feedCursorAfter,
+      promptSystem: built.systemPrompt,
+      promptUserDelta: [built.userPrompt],
+      thinkingText: extras.thinkingText,
+      actionMode: extras.actionMode,
+      toolCalls: extras.toolCalls,
+      textAction: extras.textAction,
+      finalAction: extras.finalAction ?? null,
+      fallback: extras.fallback,
+    });
   }
 
   /**

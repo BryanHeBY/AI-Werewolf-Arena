@@ -12,6 +12,7 @@ import {
   ToolCall,
   ToolValidationResult,
 } from "../domain/model";
+import { safeRecordLogicOp } from "../session_recording";
 import { World } from "../domain/world";
 
 /**
@@ -35,26 +36,61 @@ export class ActionValidator {
     toolCall: T,
     context: ValidationContext,
   ): ToolValidationResult<T> {
+    const reject = (message: string): ToolValidationResult<T> => {
+      safeRecordLogicOp({
+        scope: "gateway",
+        op: "validate_tool_call",
+        actorId,
+        phase: context.phase,
+        status: "rejected",
+        reason: message,
+        input: {
+          tool: toolCall.name,
+          args: (toolCall as any).args ?? {},
+          action_window: context.actionWindow,
+        },
+      });
+      return { ok: false, error: message };
+    };
+    const accept = (): ToolValidationResult<T> => {
+      safeRecordLogicOp({
+        scope: "gateway",
+        op: "validate_tool_call",
+        actorId,
+        phase: context.phase,
+        status: "ok",
+        input: {
+          tool: toolCall.name,
+          args: (toolCall as any).args ?? {},
+          action_window: context.actionWindow,
+        },
+      });
+      return {
+        ok: true,
+        sanitizedCall: toolCall,
+      };
+    };
+
     const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
     const alive = world.getComponent<AliveComponent>(actorId, COMPONENT.Alive);
 
     if (!role || !alive) {
-      return { ok: false, error: "非法操作，玩家组件不存在" };
+      return reject("非法操作，玩家组件不存在");
     }
 
     if (!alive.alive && !(toolCall.name === "shoot" && context.allowDeadHunterShoot)) {
-      return { ok: false, error: "非法操作，死亡玩家无法行动" };
+      return reject("非法操作，死亡玩家无法行动");
     }
 
     switch (toolCall.name) {
       case "speak_to_wolves":
         if (role.role !== Role.Wolf) {
-          return { ok: false, error: "非法操作，仅狼人可执行该动作" };
+          return reject("非法操作，仅狼人可执行该动作");
         }
         break;
       case "kill_vote":
         if (role.role !== Role.Wolf) {
-          return { ok: false, error: "非法操作，仅狼人可执行该动作" };
+          return reject("非法操作，仅狼人可执行该动作");
         }
         if (toolCall.args.abstain) {
           break;
@@ -63,62 +99,62 @@ export class ActionValidator {
           toolCall.args.target_id === null ||
           !this.isAliveTarget(world, toolCall.args.target_id)
         ) {
-          return { ok: false, error: "非法操作，刀人目标必须存活" };
+          return reject("非法操作，刀人目标必须存活");
         }
         break;
       case "guard":
         if (role.role !== Role.Guard) {
-          return { ok: false, error: "非法操作，仅守卫可守护" };
+          return reject("非法操作，仅守卫可守护");
         }
         if (toolCall.args.abstain) {
           break;
         }
         if (toolCall.args.target_id === null) {
-          return { ok: false, error: "非法操作，守护目标必须存活" };
+          return reject("非法操作，守护目标必须存活");
         }
         if (role.guardState?.lastTarget === toolCall.args.target_id) {
-          return { ok: false, error: "非法操作，守卫不可连续两晚守同一人" };
+          return reject("非法操作，守卫不可连续两晚守同一人");
         }
         if (!this.isAliveTarget(world, toolCall.args.target_id)) {
-          return { ok: false, error: "非法操作，守护目标必须存活" };
+          return reject("非法操作，守护目标必须存活");
         }
         break;
       case "check_identity":
         if (role.role !== Role.Seer) {
-          return { ok: false, error: "非法操作，仅预言家可查验" };
+          return reject("非法操作，仅预言家可查验");
         }
         if (!this.isAliveTarget(world, toolCall.args.target_id)) {
-          return { ok: false, error: "非法操作，查验目标必须存活" };
+          return reject("非法操作，查验目标必须存活");
         }
         break;
       case "use_potion":
         if (role.role !== Role.Witch || !role.witchState) {
-          return { ok: false, error: "非法操作，仅女巫可用药" };
+          return reject("非法操作，仅女巫可用药");
         }
         if (toolCall.args.potion_type === PotionType.Heal) {
           if (
             !role.witchState.canSelfHeal &&
             toolCall.args.target_id === actorId
           ) {
-            return { ok: false, error: "非法操作，本板子女巫不可自救" };
+            return reject("非法操作，本板子女巫不可自救");
           }
           if (role.witchState.heal <= 0 || role.witchState.healUsedThisNight) {
-            return { ok: false, error: "非法操作，解药不可用" };
+            return reject("非法操作，解药不可用");
           }
           if (role.witchState.poisonUsedThisNight) {
             // 与毒药互斥：同一夜最多只能使用一种药。
-            return { ok: false, error: "非法操作，同夜不可双药" };
+            return reject("非法操作，同夜不可双药");
           }
         }
         if (toolCall.args.potion_type === PotionType.Poison) {
           if (role.witchState.poison <= 0 || role.witchState.poisonUsedThisNight) {
-            return { ok: false, error: "非法操作，毒药不可用" };
+            return reject("非法操作，毒药不可用");
           }
           if (role.witchState.healUsedThisNight) {
-            return { ok: false, error: "非法操作，同夜不可双药" };
+            return reject("非法操作，同夜不可双药");
           }
           if (!this.isAliveTarget(world, toolCall.args.target_id)) {
-            return { ok: false, error: "非法操作，毒药目标必须存活" };
+            return reject("非法操作，毒药目标必须存活");
           }
         }
         break;
@@ -128,58 +164,55 @@ export class ActionValidator {
           COMPONENT.VotingRight,
         );
         if (!voting?.canVote) {
-          return { ok: false, error: "非法操作，你当前无投票权" };
+          return reject("非法操作，你当前无投票权");
         }
         if (toolCall.args.abstain) {
           break;
         }
         if (toolCall.args.target_id === null) {
-          return { ok: false, error: "非法操作，投票目标必须存活" };
+          return reject("非法操作，投票目标必须存活");
         }
         if (!this.isAliveTarget(world, toolCall.args.target_id)) {
-          return { ok: false, error: "非法操作，投票目标必须存活" };
+          return reject("非法操作，投票目标必须存活");
         }
         break;
       }
       case "shoot":
         if (role.role !== Role.Hunter || !role.hunterState?.canShoot) {
-          return { ok: false, error: "非法操作，当前不可开枪" };
+          return reject("非法操作，当前不可开枪");
         }
         if (!this.isAliveTarget(world, toolCall.args.target_id)) {
-          return { ok: false, error: "非法操作，开枪目标必须存活" };
+          return reject("非法操作，开枪目标必须存活");
         }
         break;
       case "self_destruct":
         if (role.role !== Role.Wolf) {
-          return { ok: false, error: "非法操作，仅狼人可自爆" };
+          return reject("非法操作，仅狼人可自爆");
         }
         if (context.phase !== Phase.Day && context.phase !== Phase.Voting) {
-          return { ok: false, error: "非法操作，自爆仅可在白天阶段触发" };
+          return reject("非法操作，自爆仅可在白天阶段触发");
         }
         if (!context.allowSelfDestruct) {
-          return { ok: false, error: "非法操作，当前窗口不允许自爆" };
+          return reject("非法操作，当前窗口不允许自爆");
         }
         break;
       case "choose_direction": {
         const badge = world.getComponent<BadgeComponent>(actorId, COMPONENT.Badge);
         if (!badge?.isSheriff || badge.destroyed) {
-          return { ok: false, error: "非法操作，仅警长可决定发言顺序" };
+          return reject("非法操作，仅警长可决定发言顺序");
         }
         if (context.phase !== Phase.Day) {
-          return { ok: false, error: "非法操作，仅白天可决定发言顺序" };
+          return reject("非法操作，仅白天可决定发言顺序");
         }
         break;
       }
       case "speak":
         break;
       default:
-        return { ok: false, error: "非法操作，未知工具" };
+        return reject("非法操作，未知工具");
     }
 
-    return {
-      ok: true,
-      sanitizedCall: toolCall,
-    };
+    return accept();
   }
 
   /**

@@ -14,6 +14,7 @@ import {
   VotingSummary,
 } from "../../domain/model";
 import { ToolGateway } from "../../gateway/tool_gateway";
+import { safeRecordLogicOp } from "../../session_recording";
 import { EventRegistry } from "../event_registry";
 import { World } from "../../domain/world";
 import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
@@ -45,12 +46,28 @@ export class VotingPipeline {
     config: BoardConfig,
     actionProvider: ActionProvider,
   ): Promise<VotingPipelineResult> {
+    safeRecordLogicOp({
+      scope: "phase_pipeline",
+      op: "voting_pipeline_start",
+      phase: Phase.Voting,
+      status: "ok",
+      input: {
+        on_pre_vote_hook: config.hooks.onPreVote,
+      },
+    });
     if (config.hooks.onPreVote) {
       const exploded = await this.trySelfDestruct(
         actionProvider,
         ActionWindow.OnPreVote,
       );
       if (exploded !== null) {
+        safeRecordLogicOp({
+          scope: "phase_pipeline",
+          op: "voting_interrupted_by_self_destruct",
+          actorId: exploded,
+          phase: Phase.Voting,
+          status: "ok",
+        });
         return {
           summary: {
             tally: {},
@@ -80,6 +97,7 @@ export class VotingPipeline {
           actorId: voterId,
           allowedTools: ["vote"],
           context: {
+            day: this.currentDay(),
             phase: "voting",
             must_act: true,
             broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, voterId),
@@ -98,6 +116,13 @@ export class VotingPipeline {
           { phase: Phase.Voting },
         );
         if (!result.ok || !result.sanitizedCall) {
+          safeRecordLogicOp({
+            scope: "phase_pipeline",
+            op: "vote_rejected",
+            actorId: voterId,
+            phase: Phase.Voting,
+            status: "rejected",
+          });
           return null;
         }
 
@@ -134,9 +159,31 @@ export class VotingPipeline {
           weight,
         },
       });
+      safeRecordLogicOp({
+        scope: "phase_pipeline",
+        op: "vote_cast",
+        actorId: voterId,
+        phase: Phase.Voting,
+        status: "ok",
+        output: {
+          target_id: vote.targetId,
+          abstain: vote.abstain,
+          weight,
+        },
+      });
     }
 
     const target = this.pickMajorityTarget(tally);
+    safeRecordLogicOp({
+      scope: "phase_pipeline",
+      op: "vote_tally_resolved",
+      phase: Phase.Voting,
+      status: "ok",
+      output: {
+        tally,
+        target,
+      },
+    });
     if (target === null) {
       return {
         summary: {
@@ -192,6 +239,7 @@ export class VotingPipeline {
           actionWindow: window,
           allowedTools: ["self_destruct"],
           context: {
+            day: this.currentDay(),
             window,
             must_act: false,
             broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, wolfId),
@@ -263,5 +311,18 @@ export class VotingPipeline {
     });
 
     return Number(entries[0][0]);
+  }
+
+  private currentDay(): number {
+    for (let i = this.events.length - 1; i >= 0; i--) {
+      const event = this.events[i];
+      if (event.type === "phase_changed") {
+        const day = Number(event.payload.day ?? 0);
+        if (Number.isFinite(day) && day > 0) {
+          return day;
+        }
+      }
+    }
+    return 1;
   }
 }

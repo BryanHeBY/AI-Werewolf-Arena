@@ -97,6 +97,7 @@ export class DayPipeline {
         actorId,
         allowedTools: ["speak"],
         context: {
+          day: this.currentDay(),
           phase: "day_speech",
           must_act: true,
           broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, actorId),
@@ -172,6 +173,7 @@ export class DayPipeline {
           actorId: wolfId,
           allowedTools: ["self_destruct"],
           context: {
+            day: this.currentDay(),
             window,
             must_act: false,
             broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, wolfId),
@@ -255,6 +257,7 @@ export class DayPipeline {
       actorId: sheriffId,
       allowedTools: ["choose_direction"],
       context: {
+        day: this.currentDay(),
         phase: "sheriff_choose_direction",
         must_act: true,
         broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, sheriffId),
@@ -335,6 +338,19 @@ export class DayPipeline {
     }
     counterClockwise.push(sheriffId);
     return counterClockwise;
+  }
+
+  private currentDay(): number {
+    for (let i = this.events.length - 1; i >= 0; i--) {
+      const event = this.events[i];
+      if (event.type === "phase_changed") {
+        const day = Number(event.payload.day ?? 0);
+        if (Number.isFinite(day) && day > 0) {
+          return day;
+        }
+      }
+    }
+    return 1;
   }
 
   /**

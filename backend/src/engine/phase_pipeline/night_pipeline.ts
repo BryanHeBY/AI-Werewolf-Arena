@@ -20,6 +20,7 @@ import {
 } from "../../domain/systems/damage_resolution_system";
 import { World } from "../../domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
+import { safeRecordLogicOp } from "../../session_recording";
 import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
 
 /**
@@ -45,6 +46,15 @@ export class NightPipeline {
     summary: NightSummary;
     damage: DamageResolutionResult;
   }> {
+    safeRecordLogicOp({
+      scope: "phase_pipeline",
+      op: "night_pipeline_start",
+      phase: Phase.Night,
+      status: "ok",
+      input: {
+        board_size: config.boardSize,
+      },
+    });
     // 每个夜晚开始前重置“同夜双药”状态，避免跨夜污染。
     this.toolGateway.startNight(this.world);
 
@@ -77,7 +87,7 @@ export class NightPipeline {
           ["speak_to_wolves"],
           {
             phase: "wolf_discussion",
-            day: 0,
+            day: this.currentDay(),
             round,
             max_rounds: NightPipeline.WOLF_DISCUSSION_MAX_ROUNDS,
           },
@@ -137,6 +147,13 @@ export class NightPipeline {
         { phase: Phase.Night },
       );
       if (!result.ok || !result.sanitizedCall) {
+        safeRecordLogicOp({
+          scope: "phase_pipeline",
+          op: "guard_action_rejected",
+          actorId: guardId,
+          phase: Phase.Night,
+          status: "rejected",
+        });
         continue;
       }
 
@@ -152,6 +169,16 @@ export class NightPipeline {
         payload: {
           actorId: guardId,
           targetId,
+        },
+      });
+      safeRecordLogicOp({
+        scope: "phase_pipeline",
+        op: "guard_applied",
+        actorId: guardId,
+        phase: Phase.Night,
+        status: "ok",
+        output: {
+          target_id: targetId,
         },
       });
 
@@ -176,6 +203,13 @@ export class NightPipeline {
         { phase: Phase.Night },
       );
       if (!result.ok || !result.sanitizedCall) {
+        safeRecordLogicOp({
+          scope: "phase_pipeline",
+          op: "wolf_kill_vote_rejected",
+          actorId: wolfId,
+          phase: Phase.Night,
+          status: "rejected",
+        });
         continue;
       }
 
@@ -193,10 +227,31 @@ export class NightPipeline {
           targetId,
         },
       });
+      safeRecordLogicOp({
+        scope: "phase_pipeline",
+        op: "wolf_kill_vote_cast",
+        actorId: wolfId,
+        phase: Phase.Night,
+        status: "ok",
+        output: {
+          abstain,
+          target_id: targetId,
+        },
+      });
     }
 
     // 狼队目标由票多者决定；平票时按 seat/id 最小值兜底。
     const wolfTarget = this.pickMajorityTarget(wolfVotes);
+    safeRecordLogicOp({
+      scope: "phase_pipeline",
+      op: "wolf_kill_vote_resolved",
+      phase: Phase.Night,
+      status: "ok",
+      output: {
+        tally: wolfVotes,
+        wolf_target: wolfTarget,
+      },
+    });
     if (wolfTarget !== null) {
       this.ensureMarks(wolfTarget).add(StatusMark.WolfKillMark);
     }
@@ -310,6 +365,16 @@ export class NightPipeline {
     }
 
     const damage = this.damageResolutionSystem.resolve(this.world);
+    safeRecordLogicOp({
+      scope: "resolution",
+      op: "night_damage_resolved",
+      phase: Phase.Night,
+      status: "ok",
+      output: {
+        deaths: damage.deaths,
+        death_sources: damage.deathSources,
+      },
+    });
 
     const summary: NightSummary = {
       wolfTarget,
@@ -340,6 +405,7 @@ export class NightPipeline {
       actorId,
       allowedTools,
       context: {
+        day: this.currentDay(),
         must_act: true,
         broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, actorId),
         ...context,
@@ -389,6 +455,19 @@ export class NightPipeline {
       return Number(a[0]) - Number(b[0]);
     });
     return Number(entries[0][0]);
+  }
+
+  private currentDay(): number {
+    for (let i = this.events.length - 1; i >= 0; i--) {
+      const event = this.events[i];
+      if (event.type === "phase_changed") {
+        const day = Number(event.payload.day ?? 0);
+        if (Number.isFinite(day) && day > 0) {
+          return day;
+        }
+      }
+    }
+    return 1;
   }
 
   /**

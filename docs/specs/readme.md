@@ -8,6 +8,7 @@
 2. MVP 版型实现要求（首批落地任务清单）：`v3_mvp_requirements.md`
 3. 技术白皮书（通用架构说明）：`technical_whitepaper_v3.md`
 4. 玩法白皮书（全角色规则词典）：`gameplay_whitepaper_v3.md`
+5. Session 复盘记录规范（对局落盘与前端复盘协议）：`session_replay_recording_v3.md`
 
 阅读建议：
 

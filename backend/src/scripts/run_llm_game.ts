@@ -4,6 +4,7 @@
  */
 import { bootstrapGame } from "../app/bootstrap";
 import { appConfig } from "../config";
+import { AliveComponent } from "../domain/components/alive";
 import {
   ActionProvider,
   ActionRequest,
@@ -11,7 +12,15 @@ import {
   ToolCall,
 } from "../domain/model";
 import { OpenAIClient } from "../infra/llm/openai_client";
+import { COMPONENT } from "../domain/components/names";
+import { RoleComponent } from "../domain/components/role";
 import { sixPlayerMvpConfig } from "../scenarios/six_player_mvp";
+import {
+  buildSessionId,
+  resolveDefaultRecordRoot,
+  SessionRecordHub,
+  SessionRecordManager,
+} from "../session_recording";
 import { twelvePlayerStandardConfig } from "../scenarios/twelve_player_standard";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
 import { BaselineBotActionProvider } from "../v3/action_providers";
@@ -38,6 +47,7 @@ export interface RunLlmGameOptions {
   printLlmIo: boolean;
   printThinking: boolean;
   printPrivateEvents: boolean;
+  recordRootDir?: string;
 }
 
 function parseArgs(argv: string[]): Partial<RunLlmGameOptions> {
@@ -114,6 +124,11 @@ function parseArgs(argv: string[]): Partial<RunLlmGameOptions> {
         argv[i + 1].toLowerCase(),
       );
       i += 1;
+      continue;
+    }
+    if (token === "--record-root-dir" && argv[i + 1]) {
+      out.recordRootDir = argv[i + 1];
+      i += 1;
     }
   }
   return out;
@@ -188,6 +203,23 @@ function toJudgeLine(event: { type: string; payload: Record<string, any> }): str
   return null;
 }
 
+function toReplayRenderText(event: { type: string; payload: Record<string, any> }): string | undefined {
+  const judgeLine = toJudgeLine(event);
+  if (judgeLine) {
+    return `[上帝] ${judgeLine}`;
+  }
+  if (event.type === "wolf_discussion") {
+    return `[夜聊][${event.payload.actorId}] ${event.payload.text}`;
+  }
+  if (event.type === "wolf_discussion_ended") {
+    return `[夜聊][结束][${event.payload.actorId}] ${event.payload.reason}`;
+  }
+  if (event.type === "day_speech") {
+    return `[白天][${event.payload.actorId}] ${event.payload.text}`;
+  }
+  return undefined;
+}
+
 class DeadlineAwareActionProvider implements ActionProvider {
   constructor(
     private readonly delegate: ActionProvider,
@@ -227,6 +259,23 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
 
   const boardConfig = pickBoard(options.board);
   const context = bootstrapGame(boardConfig);
+  const replaySessionId = buildSessionId();
+  const replayRecordRoot = options.recordRootDir ?? resolveDefaultRecordRoot();
+  let replayManager: SessionRecordManager | null = null;
+  try {
+    replayManager = await SessionRecordManager.create(
+      {
+        sessionId: replaySessionId,
+        board: options.board,
+        startedAtIso: new Date().toISOString(),
+      },
+      replayRecordRoot,
+    );
+    SessionRecordHub.setActive(replayManager);
+  } catch (error) {
+    log(`[session_recording] init_failed err=${String(error)}`, "warn");
+    SessionRecordHub.setActive(null);
+  }
 
   const client = new OpenAIClient({
     baseURL: openaiBaseUrl,
@@ -250,20 +299,40 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     `[run_llm_game] start board=${options.board} maxDays=${options.maxDays} model=${openaiModel} maxRuntimeMs=${options.maxRuntimeMs} llmTimeoutMs=${options.llmTimeoutMs}`,
     "info",
   );
+  if (replayManager) {
+    log(
+      `[run_llm_game] replay_session_id=${replaySessionId} record_dir=${replayManager.sessionDir}`,
+      "muted",
+    );
+  }
   const startedAt = Date.now();
   const deadlineAtMs = startedAt + options.maxRuntimeMs;
   const budgetedProvider = new DeadlineAwareActionProvider(provider, deadlineAtMs);
   let streamedEventIndex = 0;
   const flushStreamEvents = (): void => {
-    if (!options.streamEvents) {
-      return;
-    }
     const events = context.phaseManager.getEvents();
     if (streamedEventIndex >= events.length) {
       return;
     }
+    let replayDay = 1;
+    let replayPhase = String(context.phaseManager.getSnapshot().phase);
     for (let i = streamedEventIndex; i < events.length; i++) {
       const event = events[i];
+      if (event.type === "phase_changed") {
+        replayDay = Number(event.payload.day ?? replayDay);
+        replayPhase = String(event.payload.phase ?? replayPhase);
+      }
+      replayManager?.recordPublicEvent({
+        type: event.type,
+        timestampMs: event.timestamp,
+        day: replayDay,
+        phase: replayPhase,
+        payload: event.payload,
+        renderText: toReplayRenderText(event as any),
+      });
+      if (!options.streamEvents) {
+        continue;
+      }
       if (event.type === "god_private_game_info") {
         const players = Array.isArray(event.payload.players)
           ? event.payload.players
@@ -386,6 +455,32 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     }
   }
 
+  try {
+    const players = context.world.entityIds().map((id) => {
+      const roleComp = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const aliveComp = context.world.getComponent<AliveComponent>(id, COMPONENT.Alive);
+      return {
+        player_id: id,
+        role: roleComp?.role ?? "unknown",
+        camp: roleComp?.camp ?? "unknown",
+        alive: aliveComp?.alive === true,
+      };
+    });
+    if (replayManager) {
+      await replayManager.finalize({
+        endedAtIso: new Date().toISOString(),
+        winner: snapshot.result?.winner ?? null,
+        finishReason:
+          snapshot.result?.reason ?? (timedOut ? "runtime_timeout" : "completed"),
+        players,
+      });
+    }
+  } catch (error) {
+    log(`[session_recording] finalize_failed err=${String(error)}`, "warn");
+  } finally {
+    SessionRecordHub.setActive(null);
+  }
+
   return {
     snapshot,
     eventCount: events.length,
@@ -426,6 +521,10 @@ async function main(): Promise<void> {
   const envPrintPrivateEvents = ["1", "true", "yes", "on"].includes(
     String(process.env.V3_PRINT_PRIVATE_EVENTS ?? "true").toLowerCase(),
   );
+  const envRecordRootDir =
+    process.env.GAME_RECORDS_DIR ??
+    process.env.V3_RECORD_ROOT_DIR ??
+    process.env.V3_RECORD_DIR;
   const argOptions = parseArgs(process.argv.slice(2));
 
   await runLlmGame({
@@ -442,6 +541,7 @@ async function main(): Promise<void> {
     printThinking: argOptions.printThinking ?? envPrintThinking,
     printPrivateEvents:
       argOptions.printPrivateEvents ?? envPrintPrivateEvents,
+    recordRootDir: argOptions.recordRootDir ?? envRecordRootDir,
   });
 }
 
