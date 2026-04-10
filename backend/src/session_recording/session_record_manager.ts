@@ -2,9 +2,9 @@ import { promises as fs } from "fs";
 import path from "path";
 import {
   ReplayFinalizeMeta,
+  ReplayLlmRequestMessage,
   ReplayLogicOp,
   ReplayManifest,
-  ReplayPlayerActionEntry,
   ReplayPlayerBroadcastEntry,
   ReplayPlayerView,
   ReplayRecordLogicOpInput,
@@ -16,6 +16,7 @@ import {
 
 const THINKING_MAX_CHARS = 4000;
 const PROMPT_USER_MAX_CHARS = 4000;
+const LLM_MESSAGE_MAX_CHARS = 8000;
 
 function toIso(timestampMs: number): string {
   return new Date(timestampMs).toISOString();
@@ -29,6 +30,25 @@ function safeJson(value: unknown): unknown {
   }
 }
 
+function normalizeLlmRequestMessages(
+  messages: ReplayLlmRequestMessage[] | undefined,
+): ReplayLlmRequestMessage[] | undefined {
+  if (!messages || messages.length === 0) {
+    return undefined;
+  }
+  return messages.map((msg) => {
+    const content =
+      msg.content.length > LLM_MESSAGE_MAX_CHARS
+        ? msg.content.slice(0, LLM_MESSAGE_MAX_CHARS)
+        : msg.content;
+    return {
+      role: msg.role,
+      content,
+      ...(msg.tool_call_id ? { tool_call_id: msg.tool_call_id } : {}),
+    };
+  });
+}
+
 /**
  * 对局复盘记录管理器：
  * - 以 session 为单位收集数据；
@@ -40,7 +60,6 @@ export class SessionRecordManager {
   private publicEvents: Array<any> = [];
   private logicOps: ReplayLogicOp[] = [];
   private playerViews = new Map<number, ReplayPlayerView>();
-  private playerPromptSystemCache = new Map<number, string>();
   private closed = false;
 
   private constructor(
@@ -120,90 +139,113 @@ export class SessionRecordManager {
         phase: input.phase,
         stage: input.stage,
         request_id: input.requestId,
-        ...(input.promptSystem ? { prompt_system: input.promptSystem } : {}),
+        timestamp: toIso(input.timestampMs ?? Date.now()),
+        ...(input.initialPromptSystem
+          ? { prompt_system: input.initialPromptSystem }
+          : input.promptSystem
+            ? { prompt_system: input.promptSystem }
+            : {}),
+        ...(input.initialBoardInfo ? { board_info: input.initialBoardInfo } : {}),
         ...(input.promptUserDelta ? { prompt_user: [...input.promptUserDelta] } : {}),
       };
     }
 
-    const nextSeq = (): number => view.timeline.length + 1;
-    const actionSeqHint = nextSeq();
-    const truncated: ReplayPlayerActionEntry["truncated"] = {};
-
-    const thinkingText =
-      input.thinkingText && input.thinkingText.length > THINKING_MAX_CHARS
-        ? input.thinkingText.slice(0, THINKING_MAX_CHARS)
-        : input.thinkingText;
-    if (input.thinkingText && thinkingText !== input.thinkingText) {
-      truncated.thinking_text = true;
+    const llmRequestMessages = normalizeLlmRequestMessages(input.llmRequestMessages);
+    if (llmRequestMessages) {
+      const entries = llmRequestMessages.map((message) => ({
+        seq: 0,
+        kind: "llm_message" as const,
+        day: input.day,
+        phase: input.phase,
+        stage: input.stage,
+        request_id: input.requestId,
+        timestamp: toIso(input.timestampMs ?? Date.now()),
+        role: message.role,
+        content: message.content,
+        ...(message.tool_call_id ? { tool_call_id: message.tool_call_id } : {}),
+      }));
+      const hasLlmMessage = view.timeline.some((entry) => entry.kind === "llm_message");
+      if (!hasLlmMessage) {
+        // 首轮请求的 system/user 提示优先展示，保证 timeline 第一条就是 system prompt。
+        view.timeline = [...entries, ...view.timeline];
+        this.resequenceTimeline(view);
+      } else {
+        for (const entry of entries) {
+          view.timeline.push({
+            ...entry,
+            seq: view.timeline.length + 1,
+          });
+        }
+      }
     }
 
-    const userDelta = input.promptUserDelta?.map((line) =>
-      line.length > PROMPT_USER_MAX_CHARS
-        ? line.slice(0, PROMPT_USER_MAX_CHARS)
-        : line,
-    );
-    if (
-      input.promptUserDelta &&
-      userDelta &&
-      input.promptUserDelta.some((line, idx) => line !== userDelta[idx])
-    ) {
-      truncated.prompt_user_delta = true;
+    if (input.thinkingText) {
+      const thinkingText =
+        input.thinkingText.length > THINKING_MAX_CHARS
+          ? input.thinkingText.slice(0, THINKING_MAX_CHARS)
+          : input.thinkingText;
+      view.timeline.push({
+        seq: view.timeline.length + 1,
+        kind: "llm_message",
+        day: input.day,
+        phase: input.phase,
+        stage: input.stage,
+        request_id: input.requestId,
+        timestamp: toIso(input.timestampMs ?? Date.now()),
+        role: "assistant",
+        content: thinkingText,
+      });
     }
 
-    const lastPromptSystem = this.playerPromptSystemCache.get(input.playerId);
-    const actionEntry: ReplayPlayerActionEntry = {
-      seq: nextSeq(),
-      kind: "action",
-      day: input.day,
-      phase: input.phase,
-      stage: input.stage,
-      request_id: input.requestId,
-      ...(input.feedCursorBefore !== undefined
-        ? { feed_cursor_before: input.feedCursorBefore }
-        : {}),
-      ...(input.feedCursorAfter !== undefined
-        ? { feed_cursor_after: input.feedCursorAfter }
-        : {}),
-      ...(input.promptSystem && input.promptSystem !== lastPromptSystem
-        ? { prompt_system: input.promptSystem }
-        : input.promptSystem
-          ? { prompt_system_ref: `timeline_${Math.max(1, actionSeqHint - 1)}` }
-          : {}),
-      ...(userDelta ? { prompt_user_delta: userDelta } : {}),
-      ...(thinkingText ? { thinking_text: thinkingText } : {}),
-      action_mode: input.actionMode,
-      tool_calls: input.toolCalls.map((call) => ({
-        ...call,
+    for (const call of input.toolCalls) {
+      view.timeline.push({
+        seq: view.timeline.length + 1,
+        kind: "tool_call",
+        day: input.day,
+        phase: input.phase,
+        stage: input.stage,
+        request_id: input.requestId,
+        timestamp: toIso(input.timestampMs ?? Date.now()),
+        role: "assistant",
+        name: call.name,
         args: safeJson(call.args) as Record<string, unknown>,
+        ...(call.accepted !== undefined ? { accepted: call.accepted } : {}),
         ...(call.result !== undefined ? { result: safeJson(call.result) as any } : {}),
-      })),
-      ...(input.textAction
-        ? {
-            text_action: {
-              text: input.textAction.text,
-              ...(input.textAction.parsed_action
-                ? { parsed_action: input.textAction.parsed_action }
-                : {}),
-            },
-          }
-        : {}),
-      ...(input.finalAction
-        ? {
-            final_action: {
-              name: input.finalAction.name,
-              args: safeJson((input.finalAction as any).args) as Record<string, unknown>,
-            },
-          }
-        : {}),
-      ...(input.fallback ? { fallback: safeJson(input.fallback) as any } : {}),
-      ...(Object.keys(truncated).length > 0 ? { truncated } : {}),
-    };
-
-    view.timeline.push(actionEntry);
-    this.playerViews.set(input.playerId, view);
-    if (input.promptSystem) {
-      this.playerPromptSystemCache.set(input.playerId, input.promptSystem);
+      });
     }
+
+    if (input.textAction) {
+      view.timeline.push({
+        seq: view.timeline.length + 1,
+        kind: "text_action",
+        day: input.day,
+        phase: input.phase,
+        stage: input.stage,
+        request_id: input.requestId,
+        timestamp: toIso(input.timestampMs ?? Date.now()),
+        role: "assistant",
+        content: input.textAction.text,
+        ...(input.textAction.parsed_action
+          ? { parsed_action: input.textAction.parsed_action }
+          : {}),
+      });
+    }
+
+    if (input.fallback?.used) {
+      view.timeline.push({
+        seq: view.timeline.length + 1,
+        kind: "fallback",
+        day: input.day,
+        phase: input.phase,
+        stage: input.stage,
+        request_id: input.requestId,
+        timestamp: toIso(input.timestampMs ?? Date.now()),
+        role: "system",
+        fallback: safeJson(input.fallback) as any,
+      });
+    }
+
+    this.playerViews.set(input.playerId, view);
   }
 
   recordPlayerBroadcast(input: ReplayRecordPlayerBroadcastInput): void {
@@ -227,7 +269,9 @@ export class SessionRecordManager {
       phase: input.phase,
       stage: input.stage,
       request_id: input.requestId,
-      text: input.text,
+      timestamp: toIso(input.timestampMs ?? Date.now()),
+      role: "user",
+      content: input.text,
     };
     view.timeline.push(entry);
     this.playerViews.set(input.playerId, view);
@@ -282,20 +326,26 @@ export class SessionRecordManager {
   private deriveInitialPromptFromTimeline(
     view: ReplayPlayerView,
   ): ReplayPlayerView["initial_prompt"] | undefined {
-    const firstAction = view.timeline.find((entry) => entry.kind === "action");
-    if (!firstAction || firstAction.kind !== "action") {
+    const firstSystem = view.timeline.find(
+      (entry) => entry.kind === "llm_message" && entry.role === "system",
+    );
+    if (!firstSystem || firstSystem.kind !== "llm_message") {
       return undefined;
     }
     return {
-      day: firstAction.day,
-      phase: firstAction.phase,
-      stage: firstAction.stage,
-      request_id: firstAction.request_id,
-      ...(firstAction.prompt_system ? { prompt_system: firstAction.prompt_system } : {}),
-      ...(firstAction.prompt_user_delta
-        ? { prompt_user: [...firstAction.prompt_user_delta] }
-        : {}),
+      day: firstSystem.day,
+      phase: firstSystem.phase,
+      stage: firstSystem.stage,
+      request_id: firstSystem.request_id,
+      ...(firstSystem.timestamp ? { timestamp: firstSystem.timestamp } : {}),
+      prompt_system: firstSystem.content,
     };
+  }
+
+  private resequenceTimeline(view: ReplayPlayerView): void {
+    for (let i = 0; i < view.timeline.length; i++) {
+      view.timeline[i].seq = i + 1;
+    }
   }
 
   private async ensureDirs(): Promise<void> {

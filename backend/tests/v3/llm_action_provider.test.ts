@@ -436,19 +436,33 @@ describe("LlmActionProvider", () => {
     });
   });
 
-  test("initial prompt should include board lineup and role skill briefs", async () => {
+  test("user prompt should use compact three-line natural language format", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
       new AssertClient('{"name":"speak","args":{"text":"收到板子信息"}}', (messages) => {
-        const joined = messages
-          .filter((m) => m.role === "user")
+        const systemMessages = messages
+          .filter((m) => m.role === "system")
           .map((m) => m.content)
           .join("\n");
-        expect(joined).toContain("当前板子信息");
-        expect(joined).toContain("总玩家数=6");
-        expect(joined).toContain("角色构成=");
-        expect(joined).toContain("角色技能简介=");
+        expect(systemMessages).toContain("当前板子信息");
+        expect(systemMessages).toContain("总玩家数=6");
+        expect(systemMessages).toContain("角色构成=");
+        expect(systemMessages).toContain("角色技能简介=");
+        expect(systemMessages).toContain("当你看到“[行动提示]”时，说明你可以开始行动了");
+
+        const userMessages = messages
+          .filter((m) => m.role === "user")
+          .map((m) => m.content);
+        const latest = userMessages[userMessages.length - 1] ?? "";
+        const lines = latest.split("\n");
+        expect(lines.length).toBe(3);
+        expect(lines[0]).toContain("[行动提示]");
+        expect(lines[0]).toContain("目前是你的发言轮次");
+        expect(lines[1]).toContain("你本轮必须至少调用一次可用工具完成行动");
+        expect(lines[2]).toContain("工具参数提示：");
+        expect(latest).not.toContain("玩家编号=");
+        expect(latest).not.toContain("当前板子信息");
       }),
       {
         fallbackProvider: new FallbackProvider(null),
@@ -459,7 +473,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true },
+      context: { must_act: true, phase: "day_speech" },
     });
 
     expect(action).toEqual({

@@ -114,10 +114,9 @@ describe("SessionRecordManager", () => {
     expect(Array.isArray(player1.timeline)).toBe(true);
     expect(player1.timeline[0].kind).toBe("broadcast");
     expect(player1.timeline[0].stage).toBe("wolf_discussion");
-    expect(player1.timeline[1].kind).toBe("action");
+    expect(player1.timeline[1].kind).toBe("tool_call");
     expect(player1.timeline[1].stage).toBe("wolf_discussion");
-    expect(player1.timeline[1].action_mode).toBe("tool_call");
-    expect(Array.isArray(player1.timeline[1].tool_calls)).toBe(true);
-    expect(player1.timeline[1].tool_calls.length).toBeGreaterThan(0);
+    expect(player1.timeline[1].name).toBe("speak_to_wolves");
+    expect(player1.timeline[1].accepted).toBe(true);
   });
 });

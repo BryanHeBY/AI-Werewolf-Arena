@@ -426,12 +426,10 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   log(`[run_llm_game] events=${events.length}`, "info");
   if (options.printAllEvents) {
     console.log(JSON.stringify(events, null, 2));
-  } else {
-    console.log(JSON.stringify(events.slice(-12), null, 2));
   }
-  if (options.printChat) {
+  // 当 streamEvents 开启时，聊天已实时输出；避免在结尾重复打印整段聊天记录。
+  if (options.printChat && !options.streamEvents) {
     const chatLines = toChatLines(events as any);
-    console.log(`[run_llm_game] chat_lines=${chatLines.length}`);
     for (const line of chatLines) {
       console.log(line);
     }

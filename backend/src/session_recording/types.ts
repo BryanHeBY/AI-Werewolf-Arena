@@ -56,32 +56,56 @@ export interface ReplayToolCallTrace {
   result?: Record<string, unknown> | string;
 }
 
-export interface ReplayPlayerActionEntry {
+export interface ReplayLlmRequestMessage {
+  role: "system" | "user" | "assistant" | "tool";
+  content: string;
+  tool_call_id?: string;
+}
+
+export interface ReplayLlmRequestPayload {
+  messages: ReplayLlmRequestMessage[];
+}
+
+export interface ReplayPlayerToolCallEntry {
   seq: number;
-  kind: "action";
+  kind: "tool_call";
   day: number;
   phase: string;
   stage: string;
   request_id: string;
-  feed_cursor_before?: number;
-  feed_cursor_after?: number;
-  prompt_system?: string;
-  prompt_system_ref?: string;
-  prompt_user_delta?: string[];
-  thinking_text?: string;
-  action_mode: ReplayActionMode;
-  tool_calls: ReplayToolCallTrace[];
-  text_action?: {
-    text: string;
-    parsed_action?: {
-      name: string;
-      args: Record<string, unknown>;
-    };
-  };
-  final_action?: {
+  timestamp?: string;
+  role: "assistant";
+  name: string;
+  args: Record<string, unknown>;
+  accepted?: boolean;
+  result?: Record<string, unknown> | string;
+}
+
+export interface ReplayPlayerTextActionEntry {
+  seq: number;
+  kind: "text_action";
+  day: number;
+  phase: string;
+  stage: string;
+  request_id: string;
+  timestamp?: string;
+  role: "assistant";
+  content: string;
+  parsed_action?: {
     name: string;
     args: Record<string, unknown>;
   };
+}
+
+export interface ReplayPlayerFallbackEntry {
+  seq: number;
+  kind: "fallback";
+  day: number;
+  phase: string;
+  stage: string;
+  request_id: string;
+  timestamp?: string;
+  role: "system";
   fallback?: {
     used: boolean;
     reason?: string;
@@ -89,10 +113,6 @@ export interface ReplayPlayerActionEntry {
       name: string;
       args: Record<string, unknown>;
     };
-  };
-  truncated?: {
-    thinking_text?: boolean;
-    prompt_user_delta?: boolean;
   };
 }
 
@@ -103,12 +123,30 @@ export interface ReplayPlayerBroadcastEntry {
   phase: string;
   stage: string;
   request_id: string;
-  text: string;
+  timestamp?: string;
+  role: "user";
+  content: string;
+}
+
+export interface ReplayPlayerLlmMessageEntry {
+  seq: number;
+  kind: "llm_message";
+  day: number;
+  phase: string;
+  stage: string;
+  request_id: string;
+  timestamp?: string;
+  role: ReplayLlmRequestMessage["role"];
+  content: string;
+  tool_call_id?: string;
 }
 
 export type ReplayPlayerTimelineEntry =
   | ReplayPlayerBroadcastEntry
-  | ReplayPlayerActionEntry;
+  | ReplayPlayerLlmMessageEntry
+  | ReplayPlayerToolCallEntry
+  | ReplayPlayerTextActionEntry
+  | ReplayPlayerFallbackEntry;
 
 export interface ReplayPlayerView {
   player_id: number;
@@ -119,7 +157,9 @@ export interface ReplayPlayerView {
     phase: string;
     stage: string;
     request_id: string;
+    timestamp?: string;
     prompt_system?: string;
+    board_info?: string;
     prompt_user?: string[];
   };
   timeline: ReplayPlayerTimelineEntry[];
@@ -166,17 +206,34 @@ export interface ReplayRecordPlayerRoundInput {
   phase: string;
   stage: string;
   requestId: string;
+  timestampMs?: number;
   visibleFeedDelta: string[];
   feedCursorBefore?: number;
   feedCursorAfter?: number;
+  llmRequestMessages?: ReplayLlmRequestMessage[];
   promptSystem?: string;
+  initialPromptSystem?: string;
+  initialBoardInfo?: string;
   promptUserDelta?: string[];
   thinkingText?: string;
   actionMode: ReplayActionMode;
   toolCalls: ReplayToolCallTrace[];
-  textAction?: ReplayPlayerActionEntry["text_action"];
+  textAction?: {
+    text: string;
+    parsed_action?: {
+      name: string;
+      args: Record<string, unknown>;
+    };
+  };
   finalAction?: ToolCall | null;
-  fallback?: ReplayPlayerActionEntry["fallback"];
+  fallback?: {
+    used: boolean;
+    reason?: string;
+    action?: {
+      name: string;
+      args: Record<string, unknown>;
+    };
+  };
 }
 
 export interface ReplayRecordPlayerBroadcastInput {
@@ -187,5 +244,6 @@ export interface ReplayRecordPlayerBroadcastInput {
   phase: string;
   stage: string;
   requestId: string;
+  timestampMs?: number;
   text: string;
 }

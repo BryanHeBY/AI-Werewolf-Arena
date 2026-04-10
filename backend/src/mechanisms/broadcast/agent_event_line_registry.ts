@@ -90,6 +90,9 @@ const DEFAULT_HANDLERS: Record<string, AgentEventLineHandler> = {
     if (Number(p.actorId) !== ctx.actorId) {
       return null;
     }
+    if (p.abstain === true || p.targetId === null || p.targetId === undefined) {
+      return `[私有][守卫] 你本轮选择空守`;
+    }
     return `[私有][守卫] 你守护了${p.targetId}号`;
   },
   witch_potion_used: (event, ctx) => {

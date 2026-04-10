@@ -23,6 +23,14 @@ import {
 import { safeRecordLogicOp, SessionRecordHub } from "../../session_recording";
 import { colorize, isAnsiEnabled } from "../../utils/ansi";
 import { BaselineBotActionProvider } from "../providers/action_providers";
+import {
+  buildBoardInfoPrompt,
+  buildMustActRetryPrompt,
+  buildSystemPrompt,
+  buildUserPrompt,
+  DEFAULT_SPEAK_TEXT,
+  SPEAK_TEXT_FILTER_KEYWORDS,
+} from "./prompt_templates";
 
 interface ChatMessage {
   role: "system" | "user" | "assistant" | "tool";
@@ -52,6 +60,8 @@ interface BuildMessagesResult {
   messages: ChatMessage[];
   systemPrompt: string;
   userPrompt: string;
+  boardInfoPrompt?: string;
+  isInitialRound: boolean;
   visibleFeedDelta: string[];
   feedCursorBefore: number;
   feedCursorAfter: number;
@@ -481,13 +491,7 @@ export class LlmActionProvider implements ActionProvider {
    * mustAct 回合未产出有效动作时，返回递进式重试提示词。
    */
   private buildMustActRetryPrompt(attempt: number, maxRetries: number): string {
-    if (attempt === 1) {
-      return `上轮你没有完成有效工具调用。请立即调用一个可用工具，禁止解释文本。（重试 ${attempt}/${maxRetries}）`;
-    }
-    if (attempt === 2) {
-      return `再次提醒：你必须立刻调用可用工具。不要输出思考、不要输出说明、不要输出自然语言。（重试 ${attempt}/${maxRetries}）`;
-    }
-    return `最后警告：若你本轮仍不调用可用工具，系统将判定失败并强制回退。现在立刻只输出函数调用。（重试 ${attempt}/${maxRetries}）`;
+    return buildMustActRetryPrompt(attempt, maxRetries);
   }
 
   /**
@@ -800,48 +804,54 @@ export class LlmActionProvider implements ActionProvider {
    */
   private buildMessages(request: ActionRequest): BuildMessagesResult {
     const feedDelta = this.ingestBroadcastFeed(request);
-    const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
+    const roleComp = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
+    const maxPlayerId = this.world.entityIds().length;
+    const teammateIds =
+      roleComp?.camp !== Camp.Wolf
+        ? []
+        : this.world
+            .getAliveEntityIds()
+            .filter((id) => id !== request.actorId)
+            .filter((id) => {
+              const otherRole = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+              return otherRole?.camp === roleComp.camp;
+            })
+            .sort((a, b) => a - b);
     const mustAct = this.isMustAct(request);
-    const aliveIds = this.world.getAliveEntityIds();
-    const knownAlive = aliveIds
-      .map((id) => {
-        const playerRole = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-        const campHint =
-          role?.role === "wolf" && playerRole?.camp === Camp.Wolf ? "wolf" : "unknown";
-        return `${id}:${campHint}`;
-      })
-      .join(", ");
-
-    const systemPrompt = [
-      "你是狼人杀引擎中的单个玩家智能体。",
-      "你必须使用中文进行思考和表达。",
-      "你通过函数工具执行行动，不要手写 JSON。",
-      `仅可调用本轮可用工具：${request.allowedTools.join(", ")}`,
-      this.stageDirective(request),
-      mustAct ? "本轮必须完成一次有效行动。" : "本轮可选择结束回合不行动。",
-      mustAct
-        ? "本轮禁止调用 finish_turn。"
-        : "当你不需要继续行动时，请调用 finish_turn 工具结束回合。",
-      "禁止输出思维链与额外元信息。",
-    ].join("\n");
+    const stageLabel = String(
+      request.context.phase ??
+        request.actionWindow ??
+        request.context.window ??
+        request.phase,
+    );
 
     const fullHistory = [...(this.agentHistories.get(request.actorId) ?? [])];
     const contextWindow = this.selectHistoryWindow(request.actorId, fullHistory);
     const history = contextWindow.history;
-    const isInitialPrompt = history.length === 0;
+    const isInitialRound = (this.actorRoundCounter.get(request.actorId) ?? 0) === 0;
+    const boardInfoPrompt = isInitialRound ? this.buildBoardInfoPrompt() : undefined;
+    const systemPrompt = buildSystemPrompt({
+      actorId: request.actorId,
+      role: roleComp?.role ?? "unknown",
+      maxPlayerId,
+      teammateIds,
+      allowedTools: request.allowedTools,
+      stageDirective: this.stageDirective(request),
+      mustAct,
+      boardInfoPrompt,
+    });
 
-    const userPrompt = [
-      ...(isInitialPrompt ? [this.buildBoardInfoPrompt()] : []),
-      `玩家编号=${request.actorId}`,
-      `行动窗口=${request.actionWindow ?? "standard_round"}`,
-      `mustAct=${mustAct}`,
-      `你的身份=${role?.role ?? "unknown"}`,
-      `可用工具=${JSON.stringify(request.allowedTools)}`,
-      `存活玩家视图=${knownAlive}`,
-      "你就是当前玩家，不要把其他玩家的身份当成你自己的身份。",
-      this.toolArgHints(request.allowedTools),
-      "请调用函数工具执行本回合动作。",
-    ].join("\n");
+    const userPrompt = buildUserPrompt({
+      actorId: request.actorId,
+      phase: String(request.phase),
+      stage: stageLabel,
+      isSpeechTurn:
+        request.allowedTools.includes("speak") ||
+        request.allowedTools.includes("speak_to_wolves"),
+      mustAct,
+      allowedTools: request.allowedTools,
+      toolArgHints: this.toolArgHints(request.allowedTools),
+    });
 
     const currentTurnUser: ChatMessage = { role: "user", content: userPrompt };
     this.appendAgentHistory(request.actorId, currentTurnUser);
@@ -854,6 +864,8 @@ export class LlmActionProvider implements ActionProvider {
       ],
       systemPrompt,
       userPrompt,
+      ...(boardInfoPrompt ? { boardInfoPrompt } : {}),
+      isInitialRound,
       visibleFeedDelta: feedDelta.delta,
       feedCursorBefore: feedDelta.cursorBefore,
       feedCursorAfter: feedDelta.cursorAfter,
@@ -912,10 +924,22 @@ export class LlmActionProvider implements ActionProvider {
       phase: phaseLabel,
       stage: stageLabel,
       requestId: `${day}-${phaseLabel}-${request.actorId}-${next}`,
+      timestampMs: Date.now(),
       visibleFeedDelta: built.visibleFeedDelta,
       feedCursorBefore: built.feedCursorBefore,
       feedCursorAfter: built.feedCursorAfter,
+      // 复盘时间线仅保留当轮核心送模消息，避免与广播流和历史上下文重复堆叠。
+      llmRequestMessages: [
+        { role: "system", content: built.systemPrompt },
+        { role: "user", content: built.userPrompt },
+      ],
       promptSystem: built.systemPrompt,
+      ...(built.isInitialRound
+        ? {
+            initialPromptSystem: built.systemPrompt,
+            initialBoardInfo: built.boardInfoPrompt,
+          }
+        : {}),
       promptUserDelta: [
         `context_window=${built.contextWindowStart}-${built.contextWindowEnd}/${built.contextWindowTotal}`,
         built.userPrompt,
@@ -942,23 +966,12 @@ export class LlmActionProvider implements ActionProvider {
       counts.set(roleComp.role, (counts.get(roleComp.role) ?? 0) + 1);
     }
 
-    const sortedRoles = Object.values(Role).filter((role) => (counts.get(role) ?? 0) > 0);
-    const lineup = sortedRoles
-      .map((role) => `${this.rolePromptRegistry.label(role)}x${counts.get(role) ?? 0}`)
-      .join("，");
-    const skillBriefs = sortedRoles
-      .map(
-        (role) =>
-          `${this.rolePromptRegistry.label(role)}：${this.rolePromptRegistry.skillBrief(role)}`,
-      )
-      .join("；");
-
-    return [
-      "当前板子信息：",
-      `总玩家数=${this.world.entityIds().length}`,
-      `角色构成=${lineup || "unknown"}`,
-      `角色技能简介=${skillBriefs || "unknown"}`,
-    ].join("\n");
+    return buildBoardInfoPrompt({
+      totalPlayers: this.world.entityIds().length,
+      roleCounts: counts,
+      roleLabel: (role) => this.rolePromptRegistry.label(role),
+      roleSkillBrief: (role) => this.rolePromptRegistry.skillBrief(role),
+    });
   }
 
   /**
@@ -1167,27 +1180,9 @@ export class LlmActionProvider implements ActionProvider {
           return false;
         }
         // 过滤掉模型把提示词原样复述成发言内容的污染行。
-        return ![
-          "actorid=",
-          "玩家编号=",
-          "phase=",
-          "当前阶段=",
-          "actionwindow=",
-          "行动窗口=",
-          "role=",
-          "你的身份=",
-          "allowedtools=",
-          "可用工具=",
-          "context=",
-          "阶段上下文=",
-          "aliveplayers=",
-          "存活玩家视图=",
-          "私有查验情报=",
-          "toolarghints=",
-          "工具参数提示=",
-          "你是狼人杀引擎中的单个玩家智能体",
-          "json 格式",
-        ].some((keyword) => lower.includes(keyword));
+        return !SPEAK_TEXT_FILTER_KEYWORDS.some((keyword) =>
+          lower.includes(keyword),
+        );
       })
       .join(" ");
 
@@ -1211,7 +1206,7 @@ export class LlmActionProvider implements ActionProvider {
       lower.includes("tool");
 
     if (!cleaned || cleaned.length < 4 || seemsPromptEcho) {
-      return "我先听后位发言再判断。";
+      return DEFAULT_SPEAK_TEXT;
     }
     return cleaned.slice(0, 120);
   }

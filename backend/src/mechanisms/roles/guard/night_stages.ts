@@ -29,16 +29,15 @@ const guardActionStage: NightStageHandler = {
         });
         continue;
       }
-      if (result.sanitizedCall.args.abstain || result.sanitizedCall.args.target_id === null) {
-        continue;
-      }
-
+      const abstain = result.sanitizedCall.args.abstain === true;
       const targetId = result.sanitizedCall.args.target_id;
-      ctx.ensureMarks(targetId).add(StatusMark.GuardMark);
+      if (!abstain && targetId !== null) {
+        ctx.ensureMarks(targetId).add(StatusMark.GuardMark);
+      }
       ctx.events.push({
         timestamp: Date.now(),
         type: "guard_applied",
-        payload: { actorId: guardId, targetId },
+        payload: { actorId: guardId, abstain, targetId },
       });
       safeRecordLogicOp({
         scope: "phase_pipeline",
@@ -46,7 +45,7 @@ const guardActionStage: NightStageHandler = {
         actorId: guardId,
         phase: Phase.Night,
         status: "ok",
-        output: { target_id: targetId },
+        output: { abstain, target_id: targetId },
       });
 
       const role = ctx.world.getComponent<RoleComponent>(guardId, COMPONENT.Role);

@@ -93,12 +93,17 @@ const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
   ],
   guard_applied: (event) => {
     const actorId = Number(event.payload.actorId);
+    const abstain = Boolean(event.payload.abstain);
     return [
       makePrivateTargetsEvent(
         "guard_applied",
         {
           actorId,
-          targetId: Number(event.payload.targetId),
+          targetId:
+            event.payload.targetId === null || event.payload.targetId === undefined
+              ? null
+              : Number(event.payload.targetId),
+          abstain,
         },
         [actorId],
         event.timestamp,
