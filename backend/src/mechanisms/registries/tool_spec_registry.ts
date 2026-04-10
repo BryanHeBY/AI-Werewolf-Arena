@@ -1,40 +1,47 @@
 import { ToolName } from "../../domain/model";
 import { COMMON_TOOL_SPECS } from "../common/tool_specs";
 import { StageDirectiveRule, ToolSpec } from "../contracts";
-import { GUARD_TOOL_SPECS } from "../roles/guard/tool_specs";
-import { HUNTER_TOOL_SPECS } from "../roles/hunter/tool_specs";
-import { SEER_TOOL_SPECS } from "../roles/seer/tool_specs";
-import { WITCH_STAGE_DIRECTIVES, WITCH_TOOL_SPECS } from "../roles/witch/tool_specs";
-import { WOLF_STAGE_DIRECTIVES, WOLF_TOOL_SPECS } from "../roles/wolf/tool_specs";
+import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../roles/profile_registry";
 import { SHERIFF_TOOL_SPECS } from "../sheriff/tool_specs";
 
-const DEFAULT_SPECS: ToolSpec[] = [
-  ...COMMON_TOOL_SPECS,
-  ...WOLF_TOOL_SPECS,
-  ...GUARD_TOOL_SPECS,
-  ...SEER_TOOL_SPECS,
-  ...WITCH_TOOL_SPECS,
-  ...HUNTER_TOOL_SPECS,
-  ...SHERIFF_TOOL_SPECS,
-];
+function buildDefaultSpecs(roleProfileRegistry: RoleProfileRegistry): ToolSpec[] {
+  const specs: ToolSpec[] = [...COMMON_TOOL_SPECS, ...SHERIFF_TOOL_SPECS];
+  for (const profile of roleProfileRegistry.all()) {
+    if (profile.toolSpecs) {
+      specs.push(...profile.toolSpecs);
+    }
+  }
+  return specs;
+}
 
-const DEFAULT_STAGE_DIRECTIVES: StageDirectiveRule[] = [
-  ...WOLF_STAGE_DIRECTIVES,
-  ...WITCH_STAGE_DIRECTIVES,
-];
+function buildDefaultStageDirectives(
+  roleProfileRegistry: RoleProfileRegistry,
+): StageDirectiveRule[] {
+  const directives: StageDirectiveRule[] = [];
+  for (const profile of roleProfileRegistry.all()) {
+    if (profile.stageDirectives) {
+      directives.push(...profile.stageDirectives);
+    }
+  }
+  return directives;
+}
 
 export class ToolSpecRegistry {
   private readonly specByName = new Map<ToolName, ToolSpec>();
   private readonly stageDirectives: StageDirectiveRule[];
 
   constructor(
-    specs: ToolSpec[] = DEFAULT_SPECS,
-    stageDirectives: StageDirectiveRule[] = DEFAULT_STAGE_DIRECTIVES,
+    specs?: ToolSpec[],
+    stageDirectives?: StageDirectiveRule[],
+    roleProfileRegistry: RoleProfileRegistry = getDefaultRoleProfileRegistry(),
   ) {
-    for (const spec of specs) {
+    const effectiveSpecs = specs ?? buildDefaultSpecs(roleProfileRegistry);
+    const effectiveDirectives =
+      stageDirectives ?? buildDefaultStageDirectives(roleProfileRegistry);
+    for (const spec of effectiveSpecs) {
       this.specByName.set(spec.name, spec);
     }
-    this.stageDirectives = [...stageDirectives];
+    this.stageDirectives = [...effectiveDirectives];
   }
 
   get(name: ToolName): ToolSpec | undefined {

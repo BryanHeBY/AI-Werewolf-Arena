@@ -8,6 +8,7 @@ import { AliveComponent } from "../domain/components/alive";
 import {
   ActionProvider,
   ActionRequest,
+  GameEvent,
   RuntimeSnapshot,
   ToolCall,
 } from "../domain/model";
@@ -15,6 +16,7 @@ import { OpenAIClient } from "../infra/llm/openai_client";
 import { COMPONENT } from "../domain/components/names";
 import { RoleComponent } from "../domain/components/role";
 import { buildAgentBroadcastFeed } from "../engine/agent_broadcast_feed";
+import { getDefaultScriptEventRenderRegistry } from "../mechanisms";
 import { sixPlayerMvpConfig } from "../scenarios/six_player_mvp";
 import {
   buildSessionId,
@@ -150,104 +152,27 @@ function requiredEnv(name: string): string {
 }
 
 function toChatLines(events: Array<{ type: string; payload: Record<string, any> }>): string[] {
+  const renderRegistry = getDefaultScriptEventRenderRegistry();
   const lines: string[] = [];
   for (const event of events) {
-    if (event.type === "wolf_discussion") {
-      lines.push(`[夜聊][${event.payload.actorId}] ${event.payload.text}`);
-    }
-    if (event.type === "wolf_discussion_ended") {
-      lines.push(`[夜聊][结束][${event.payload.actorId}] ${event.payload.reason}`);
-    }
-    if (event.type === "day_speech") {
-      lines.push(`[白天][${event.payload.actorId}] ${event.payload.text}`);
+    const line = renderRegistry.toChatLine(event as GameEvent);
+    if (line) {
+      lines.push(line);
     }
   }
   return lines;
 }
 
 function toJudgeLine(event: { type: string; payload: Record<string, any> }): string | null {
-  const p = event.payload;
-  if (event.type === "phase_changed") {
-    if (p.phase === "night") {
-      return `天黑请闭眼（第${p.day}天夜晚）`;
-    }
-    if (p.phase === "day") {
-      return `天亮了（第${p.day}天白天）`;
-    }
-    if (p.phase === "voting") {
-      return `现在进入放逐投票阶段`;
-    }
-    if (p.phase === "game_over") {
-      return `对局结束`;
-    }
-  }
-
-  if (event.type === "night_resolved") {
-    const deaths = Array.isArray(p.deaths) ? p.deaths : [];
-    if (deaths.length === 0) {
-      return `昨夜是平安夜`;
-    }
-    return `昨夜死亡：${deaths.join("、")}号`;
-  }
-  if (event.type === "guard_applied") {
-    return null;
-  }
-  if (event.type === "voted_out") {
-    return `${p.target}号被放逐出局`;
-  }
-  if (event.type === "wolf_self_destruct") {
-    return `${p.wolfId}号狼人自爆，流程被中断`;
-  }
-  if (event.type === "game_over") {
-    return `胜利阵营：${p.winner}，原因：${p.reason}`;
-  }
-  return null;
+  return getDefaultScriptEventRenderRegistry().toJudgeLine(event as GameEvent);
 }
 
 function toReplayRenderText(event: { type: string; payload: Record<string, any> }): string | undefined {
-  const judgeLine = toJudgeLine(event);
-  if (judgeLine) {
-    return `[上帝] ${judgeLine}`;
-  }
-  if (event.type === "wolf_discussion") {
-    return `[夜聊][${event.payload.actorId}] ${event.payload.text}`;
-  }
-  if (event.type === "wolf_discussion_ended") {
-    return `[夜聊][结束][${event.payload.actorId}] ${event.payload.reason}`;
-  }
-  if (event.type === "day_speech") {
-    return `[白天][${event.payload.actorId}] ${event.payload.text}`;
-  }
-  return undefined;
+  return getDefaultScriptEventRenderRegistry().toReplayRenderText(event as GameEvent);
 }
 
 function toReplayStage(event: { type: string; payload: Record<string, any> }): string {
-  if (event.type === "phase_changed") {
-    return String(event.payload.phase ?? "phase_changed");
-  }
-  if (event.type === "day_speech") {
-    return "day_speech";
-  }
-  if (event.type === "vote_cast" || event.type === "voted_out") {
-    return "voting";
-  }
-  if (
-    event.type === "wolf_discussion" ||
-    event.type === "wolf_discussion_ended" ||
-    event.type === "wolf_kill_vote_cast"
-  ) {
-    return "wolf_discussion";
-  }
-  if (event.type === "guard_applied") {
-    return "guard";
-  }
-  if (event.type === "seer_checked") {
-    return "seer";
-  }
-  if (event.type === "witch_potion_used") {
-    return "witch";
-  }
-  return event.type;
+  return getDefaultScriptEventRenderRegistry().toReplayStage(event as GameEvent);
 }
 
 class DeadlineAwareActionProvider implements ActionProvider {
@@ -432,58 +357,24 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
       if (!options.streamEvents) {
         continue;
       }
-      if (event.type === "god_private_game_info") {
-        const players = Array.isArray(event.payload.players)
-          ? event.payload.players
-          : [];
-        const roleView = players
-          .map((item: any) => `${item.seat ?? item.id}:${item.role}`)
-          .join(", ");
-        log(`[live][上帝私有][开局] 角色分布 ${roleView}`, "god");
-        continue;
-      }
-      if (event.type === "wolf_discussion") {
-        log(`[live][夜聊][${event.payload.actorId}] ${event.payload.text}`, "accent");
-      } else if (event.type === "wolf_discussion_ended") {
-        log(
-          `[live][夜聊][结束][${event.payload.actorId}] ${event.payload.reason}`,
-          "accent",
-        );
-      } else if (event.type === "day_speech") {
-        log(`[live][白天][${event.payload.actorId}] ${event.payload.text}`, "ok");
-      } else if (event.type === "guard_applied") {
-        log(
-          `[live][行动][守卫] ${event.payload.actorId}号守护${event.payload.targetId}号`,
-          "info",
-        );
-      } else if (event.type === "seer_checked" && options.printPrivateEvents) {
-        log(
-          `[live][私有][查验] ${event.payload.actorId}号查验${event.payload.targetId}号 => ${event.payload.isWerewolf ? "狼人" : "好人"}`,
-          "warn",
-        );
-      } else if (event.type === "wolf_kill_vote_cast") {
-        if (event.payload.abstain === true) {
-          log(`[live][行动][狼刀票] ${event.payload.actorId}号弃刀`, "accent");
+      const liveRenders = getDefaultScriptEventRenderRegistry().toLiveRender(
+        event as GameEvent,
+        options.printPrivateEvents,
+      );
+      for (const render of liveRenders) {
+        if (render.kind === "chat") {
+          log(render.text, "accent");
+        } else if (render.kind === "private") {
+          log(render.text, "warn");
+        } else if (render.kind === "action") {
+          log(render.text, "info");
+        } else if (render.kind === "god") {
+          log(render.text, "god");
+        } else if (render.kind === "end") {
+          log(render.text, "ok");
         } else {
-          log(
-            `[live][行动][狼刀票] ${event.payload.actorId}号投刀${event.payload.targetId}号`,
-            "accent",
-          );
+          log(render.text, "ok");
         }
-      } else if (event.type === "witch_potion_used") {
-        log(
-          `[live][行动][女巫] ${event.payload.actorId}号对${event.payload.targetId}号使用${event.payload.potionType}`,
-          "warn",
-        );
-      } else if (event.type === "game_over") {
-        log(
-          `[live][终局] winner=${event.payload.winner} reason=${event.payload.reason}`,
-          "ok",
-        );
-      }
-      const judgeLine = toJudgeLine(event as any);
-      if (judgeLine) {
-        log(`[live][上帝] ${judgeLine}`, "god");
       }
     }
     flushVoteBatchLive();

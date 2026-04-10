@@ -1,7 +1,6 @@
 import { EntityId, GameEvent, StatusMark } from "../../domain/model";
 import { World } from "../../domain/world";
-import { hunterDeathHook } from "../roles/hunter/death_hook";
-import { idiotVotedOutHook } from "../roles/idiot/voted_out_hook";
+import { getDefaultRoleProfileRegistry } from "../roles/profile_registry";
 
 export interface VotedOutResult {
   prevented: boolean;
@@ -14,13 +13,13 @@ export interface DeathHookResult {
   extraDeathSources: Record<number, StatusMark[]>;
 }
 
-type VotedOutHook = (
+export type VotedOutHook = (
   world: World,
   targetId: EntityId,
   events: GameEvent[],
 ) => VotedOutResult | null;
 
-type DeathHook = (
+export type DeathHook = (
   world: World,
   deadIds: EntityId[],
   deathSources: Record<number, StatusMark[]>,
@@ -28,13 +27,24 @@ type DeathHook = (
   events: GameEvent[],
 ) => Promise<DeathHookResult>;
 
-const defaultVotedOutHooks: VotedOutHook[] = [idiotVotedOutHook];
-const defaultDeathHooks: DeathHook[] = [hunterDeathHook];
+function buildDefaultVotedOutHooks(): VotedOutHook[] {
+  return getDefaultRoleProfileRegistry()
+    .all()
+    .map((profile) => profile.votedOutHook)
+    .filter((hook): hook is VotedOutHook => Boolean(hook));
+}
+
+function buildDefaultDeathHooks(): DeathHook[] {
+  return getDefaultRoleProfileRegistry()
+    .all()
+    .map((profile) => profile.deathHook)
+    .filter((hook): hook is DeathHook => Boolean(hook));
+}
 
 export class HookRegistry {
   constructor(
-    private readonly votedOutHooks: VotedOutHook[] = defaultVotedOutHooks,
-    private readonly deathHooks: DeathHook[] = defaultDeathHooks,
+    private readonly votedOutHooks: VotedOutHook[] = buildDefaultVotedOutHooks(),
+    private readonly deathHooks: DeathHook[] = buildDefaultDeathHooks(),
   ) {}
 
   onVotedOut(
@@ -81,4 +91,3 @@ export function getDefaultHookRegistry(): HookRegistry {
   }
   return defaultRegistry;
 }
-

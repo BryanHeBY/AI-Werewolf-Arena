@@ -205,6 +205,12 @@
 - [x] `D12` 将角色私有状态从 `domain/components/role.ts` 特化字段迁移为机制层 `privateState` 访问器。
 - [x] `D13` 将 `v3_session_manager` 的事件翻译分支迁移到 `RealtimeEventRegistry`。
 - [x] `D14` 将 `agent_broadcast_feed` 的事件文案分支迁移到 `AgentEventLineRegistry`。
+- [x] `D15` 将 `BaselineBotActionProvider` 的角色策略分支迁移到 `roles/*/profile.ts` 的 `baselineAction`。
+- [x] `D16` 将 `NightStageRegistry` 改为从 `RoleProfileRegistry` 自动收集夜间 stage（不再写死 role->stage 映射）。
+- [x] `D17` 将 `ToolSpecRegistry`、`ToolValidationRuleRegistry`、`HookRegistry` 改为从角色 profile 自动聚合规则。
+- [x] `D18` 将胜负判定中的“神/民角色分组”从集中常量迁移到角色 profile 的 `goodSide` 声明。
+- [x] `D19` 将 `run_llm_game.ts` 的事件渲染分支迁移到 `ScriptEventRenderRegistry`。
+- [x] `D20` 将 LLM 工具修复规则改为 `roles/*/llm_repair.ts` 与 `common/sheriff` 分层聚合。
 
 ---
 

@@ -1,28 +1,30 @@
 import { ToolName } from "../../domain/model";
 import { COMMON_VALIDATION_RULES } from "../common/validation_rules";
-import { GUARD_VALIDATION_RULES } from "../roles/guard/validation_rules";
-import { HUNTER_VALIDATION_RULES } from "../roles/hunter/validation_rules";
-import { SEER_VALIDATION_RULES } from "../roles/seer/validation_rules";
-import { WITCH_VALIDATION_RULES } from "../roles/witch/validation_rules";
-import { WOLF_VALIDATION_RULES } from "../roles/wolf/validation_rules";
+import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../roles/profile_registry";
 import { SHERIFF_VALIDATION_RULES } from "../sheriff/validation_rules";
 import { ToolRuleMap, ValidationRuleContext } from "./contracts";
 
-const defaultRules: ToolRuleMap = {
-  ...COMMON_VALIDATION_RULES,
-  ...WOLF_VALIDATION_RULES,
-  ...GUARD_VALIDATION_RULES,
-  ...SEER_VALIDATION_RULES,
-  ...WITCH_VALIDATION_RULES,
-  ...HUNTER_VALIDATION_RULES,
-  ...SHERIFF_VALIDATION_RULES,
-};
+function buildDefaultRules(roleProfileRegistry: RoleProfileRegistry): ToolRuleMap {
+  const rules: ToolRuleMap = {
+    ...COMMON_VALIDATION_RULES,
+    ...SHERIFF_VALIDATION_RULES,
+  };
+  for (const profile of roleProfileRegistry.all()) {
+    if (profile.validationRules) {
+      Object.assign(rules, profile.validationRules);
+    }
+  }
+  return rules;
+}
 
 export class ToolValidationRuleRegistry {
   private readonly rules: ToolRuleMap;
 
-  constructor(rules: ToolRuleMap = defaultRules) {
-    this.rules = { ...rules };
+  constructor(
+    rules?: ToolRuleMap,
+    roleProfileRegistry: RoleProfileRegistry = getDefaultRoleProfileRegistry(),
+  ) {
+    this.rules = { ...(rules ?? buildDefaultRules(roleProfileRegistry)) };
   }
 
   validate(ctx: ValidationRuleContext): string | null {

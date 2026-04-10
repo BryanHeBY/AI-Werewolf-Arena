@@ -1,16 +1,9 @@
 import { COMPONENT } from "../../domain/components/names";
 import { RoleComponent } from "../../domain/components/role";
-import { Camp, GameResult, Role, WinCondition } from "../../domain/model";
+import { Camp, GameResult, WinCondition } from "../../domain/model";
 import { World } from "../../domain/world";
+import { getDefaultRoleProfileRegistry } from "../roles/profile_registry";
 import { WinConditionSpec } from "./contracts";
-
-const GOD_ROLES = new Set<Role>([
-  Role.Seer,
-  Role.Guard,
-  Role.Witch,
-  Role.Hunter,
-  Role.Idiot,
-]);
 
 interface AliveStat {
   wolves: number;
@@ -42,9 +35,10 @@ function statAlive(world: World): AliveStat {
       stat.good += 1;
     }
 
-    if (GOD_ROLES.has(roleComp.role)) {
+    const profile = getDefaultRoleProfileRegistry().get(roleComp.role);
+    if (profile?.goodSide === "god") {
       stat.gods += 1;
-    } else if (roleComp.role === Role.Villager) {
+    } else if (profile?.goodSide === "villager") {
       stat.villagers += 1;
     }
   }

@@ -4,6 +4,7 @@ export * from "./broadcast/visibility_registry";
 export * from "./hooks/hook_registry";
 export * from "./llm/contracts";
 export * from "./llm/tool_call_repair_registry";
+export * from "./script/event_render_registry";
 export * from "./session/realtime_event_registry";
 export * from "./registries/role_spec_registry";
 export * from "./registries/tool_spec_registry";
