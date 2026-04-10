@@ -1,4 +1,6 @@
 /** 文件说明：狼人夜聊与刀人投票阶段处理。 */
+import { COMPONENT } from "../../../domain/components/names";
+import { RoleComponent } from "../../../domain/components/role";
 import { EntityId, Phase, Role, StatusMark } from "../../../domain/model";
 import { safeRecordLogicOp } from "../../../session_recording";
 import { NightStageHandler } from "../../stages/night/contracts";
@@ -92,12 +94,31 @@ const wolfKillVoteStage: NightStageHandler = {
         phase: Phase.Night,
       });
       if (!result.ok || !result.sanitizedCall) {
+        const fallbackTarget = pickFallbackWolfTarget(ctx, wolfId);
+        const fallbackAbstain = fallbackTarget === null;
+        if (!fallbackAbstain) {
+          ctx.state.wolfVotes[fallbackTarget] = (ctx.state.wolfVotes[fallbackTarget] ?? 0) + 1;
+        }
+        ctx.events.push({
+          timestamp: Date.now(),
+          type: "wolf_kill_vote_cast",
+          payload: {
+            actorId: wolfId,
+            abstain: fallbackAbstain,
+            targetId: fallbackTarget,
+            fallback: true,
+          },
+        });
         safeRecordLogicOp({
           scope: "phase_pipeline",
           op: "wolf_kill_vote_rejected",
           actorId: wolfId,
           phase: Phase.Night,
           status: "rejected",
+          output: {
+            fallback_target_id: fallbackTarget,
+            fallback_abstain: fallbackAbstain,
+          },
         });
         continue;
       }
@@ -142,3 +163,22 @@ export const WOLF_NIGHT_STAGES: NightStageHandler[] = [
   wolfDiscussionStage,
   wolfKillVoteStage,
 ];
+
+function pickFallbackWolfTarget(
+  ctx: Parameters<NightStageHandler["execute"]>[0],
+  wolfId: EntityId,
+): EntityId | null {
+  const alive = ctx.world.getAliveEntityIds();
+  const goodTarget = alive.find((id) => {
+    if (id === wolfId) {
+      return false;
+    }
+    const role = ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+    return role?.role !== Role.Wolf;
+  });
+  if (goodTarget !== undefined) {
+    return goodTarget;
+  }
+  const nonSelf = alive.find((id) => id !== wolfId);
+  return nonSelf ?? null;
+}

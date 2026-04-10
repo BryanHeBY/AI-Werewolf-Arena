@@ -31,6 +31,11 @@ const witchActionStage: NightStageHandler = {
       });
       const action = await ctx.actionProvider.getAction(req);
       if (action?.name !== "use_potion") {
+        ctx.events.push({
+          timestamp: Date.now(),
+          type: "witch_potion_skipped",
+          payload: { actorId: witchId, targetId: null, potionType: "none", reason: "no_action" },
+        });
         continue;
       }
 
@@ -38,6 +43,16 @@ const witchActionStage: NightStageHandler = {
         phase: Phase.Night,
       });
       if (!result.ok || !result.sanitizedCall) {
+        ctx.events.push({
+          timestamp: Date.now(),
+          type: "witch_potion_skipped",
+          payload: {
+            actorId: witchId,
+            targetId: action.args.target_id ?? null,
+            potionType: "none",
+            reason: "invalid_action",
+          },
+        });
         continue;
       }
 

@@ -265,13 +265,13 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   const budgetedProvider = new DeadlineAwareActionProvider(provider, deadlineAtMs);
   let streamedEventIndex = 0;
   const replayPlayerFeedCursor = new Map<number, number>();
+  let replayDayCursor = 1;
+  let replayPhaseCursor = String(context.phaseManager.getSnapshot().phase);
   const flushStreamEvents = (): void => {
     const events = context.phaseManager.getEvents();
     if (streamedEventIndex >= events.length) {
       return;
     }
-    let replayDay = 1;
-    let replayPhase = String(context.phaseManager.getSnapshot().phase);
     const voteBatch: Array<{ actorId: number; targetId: number | null; abstain: boolean; weight: number }> = [];
     const flushVoteBatchLive = () => {
       if (voteBatch.length === 0 || !options.streamEvents) {
@@ -294,14 +294,14 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     for (let i = streamedEventIndex; i < events.length; i++) {
       const event = events[i];
       if (event.type === "phase_changed") {
-        replayDay = Number(event.payload.day ?? replayDay);
-        replayPhase = String(event.payload.phase ?? replayPhase);
+        replayDayCursor = Number(event.payload.day ?? replayDayCursor);
+        replayPhaseCursor = String(event.payload.phase ?? replayPhaseCursor);
       }
       replayManager?.recordPublicEvent({
         type: event.type,
         timestampMs: event.timestamp,
-        day: replayDay,
-        phase: replayPhase,
+        day: replayDayCursor,
+        phase: replayPhaseCursor,
         payload: event.payload,
         renderText: toReplayRenderText(event as any),
       });
@@ -327,10 +327,10 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
               playerId,
               role: roleComp?.role ?? "unknown",
               camp: roleComp?.camp ?? "unknown",
-              day: replayDay,
-              phase: replayPhase,
+              day: replayDayCursor,
+              phase: replayPhaseCursor,
               stage: toReplayStage(event as any),
-              requestId: `${replayDay}-${replayPhase}-${playerId}-broadcast-${i}-${d}`,
+              requestId: `${replayDayCursor}-${replayPhaseCursor}-${playerId}-broadcast-${i}-${d}`,
               text: delta[d],
             });
           }
