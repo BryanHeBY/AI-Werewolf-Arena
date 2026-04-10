@@ -33,10 +33,8 @@ export const WOLF_ROLE_PROFILE: RoleProfile = {
       return { name: "kill_vote", args: { target_id: null, abstain: true } };
     }
     if (request.allowedTools.includes("self_destruct")) {
-      return {
-        name: "self_destruct",
-        args: { reason: "baseline_interrupt_choice" },
-      };
+      // 自爆属于高风险动作：fallback 不应在“可选中断窗口”默认触发。
+      return null;
     }
     return null;
   },

@@ -69,6 +69,14 @@ const witchActionStage: NightStageHandler = {
           payload: { actorId: witchId, targetId, potionType: "poison" },
         });
       }
+
+      if (potion === "none") {
+        ctx.events.push({
+          timestamp: Date.now(),
+          type: "witch_potion_skipped",
+          payload: { actorId: witchId, targetId, potionType: "none" },
+        });
+      }
     }
   },
 };
