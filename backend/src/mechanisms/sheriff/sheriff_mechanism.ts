@@ -117,7 +117,115 @@ export class SheriffMechanism {
       }
     }
 
-    const finalizedCandidates = candidates.length > 0 ? candidates : [...aliveIds];
+    const initialCandidates =
+      candidates.length > 0 ? this.sortBySeat(world, candidates) : this.sortBySeat(world, [...aliveIds]);
+    events.push({
+      timestamp: Date.now(),
+      type: "sheriff_nomination_summary",
+      payload: { candidates: initialCandidates },
+    });
+
+    const candidateSet = new Set<EntityId>(initialCandidates);
+    const campaignOrder = this.sortBySeat(world, [...candidateSet]);
+    // 上警发言：候选人按座位顺序发言。
+    for (const candidateId of campaignOrder) {
+      if (!candidateSet.has(candidateId)) {
+        continue;
+      }
+      const speechReq: ActionRequest = {
+        phase: Phase.Day,
+        actorId: candidateId,
+        allowedTools: ["speak"],
+        context: {
+          day,
+          phase: "sheriff_campaign_speech",
+          must_act: true,
+          sheriff_candidates: [...candidateSet],
+          broadcast_feed: buildAgentBroadcastFeed(world, events, candidateId),
+        },
+      };
+      const speechAction = await actionProvider.getAction(speechReq);
+      if (speechAction?.name === "speak") {
+        const speechResult = toolGateway.validateAndSanitize(world, candidateId, speechAction, {
+          phase: Phase.Day,
+        });
+        if (speechResult.ok && speechResult.sanitizedCall) {
+          events.push({
+            timestamp: Date.now(),
+            type: "day_speech",
+            payload: {
+              actorId: candidateId,
+              text: speechResult.sanitizedCall.args.text,
+            },
+          });
+        }
+      }
+    }
+
+    // 发言结束后统一进入退水阶段，再进入警长投票。
+    const withdrawFeedByActor = new Map<EntityId, string[]>();
+    const orderedCandidates = this.sortBySeat(world, [...candidateSet]);
+    for (const actorId of orderedCandidates) {
+      withdrawFeedByActor.set(
+        actorId,
+        buildAgentBroadcastFeed(world, events, actorId),
+      );
+    }
+    const withdrawResults = await Promise.all(
+      orderedCandidates.map(async (candidateId) => {
+        const withdrawReq: ActionRequest = {
+          phase: Phase.Day,
+          actorId: candidateId,
+          allowedTools: ["run_for_sheriff"],
+          context: {
+            day,
+            phase: "sheriff_withdraw",
+            must_act: true,
+            sheriff_candidates: [...candidateSet],
+            broadcast_feed: withdrawFeedByActor.get(candidateId) ?? [],
+          },
+        };
+        const withdrawAction = await actionProvider.getAction(withdrawReq);
+        if (withdrawAction?.name !== "run_for_sheriff") {
+          return null;
+        }
+        const withdrawResult = toolGateway.validateAndSanitize(world, candidateId, withdrawAction, {
+          phase: Phase.Day,
+        });
+        if (!withdrawResult.ok || !withdrawResult.sanitizedCall) {
+          return null;
+        }
+        return {
+          candidateId,
+          keepRunning: withdrawResult.sanitizedCall.args.run === true,
+        };
+      }),
+    );
+    const withdrawn: EntityId[] = [];
+    for (const item of withdrawResults) {
+      if (!item || item.keepRunning) {
+        continue;
+      }
+      candidateSet.delete(item.candidateId);
+      withdrawn.push(item.candidateId);
+      events.push({
+        timestamp: Date.now(),
+        type: "sheriff_candidate_declared",
+        payload: { actorId: item.candidateId, run: false },
+      });
+    }
+    events.push({
+      timestamp: Date.now(),
+      type: "sheriff_withdraw_summary",
+      payload: { withdrawn: this.sortBySeat(world, withdrawn) },
+    });
+
+    if (candidateSet.size === 0) {
+      for (const id of initialCandidates) {
+        candidateSet.add(id);
+      }
+    }
+    const finalizedCandidates = this.sortBySeat(world, [...candidateSet]);
     events.push({
       timestamp: Date.now(),
       type: "sheriff_candidates_finalized",
@@ -189,6 +297,15 @@ export class SheriffMechanism {
     }
 
     const winner = this.pickSheriffWinner(world, finalizedCandidates, tally);
+    events.push({
+      timestamp: Date.now(),
+      type: "sheriff_vote_summary",
+      payload: {
+        votes: sheriffVoteResults.filter((item): item is { actorId: EntityId; targetId: EntityId | null; abstain: boolean } => item !== null),
+        winnerId: winner,
+      },
+    });
+
     if (winner !== null) {
       this.assignSheriffById(world, winner);
       events.push({
@@ -213,15 +330,17 @@ export class SheriffMechanism {
     enableSheriff: boolean;
   }): Promise<SpeakerDirection> {
     const { world, events, toolGateway, actionProvider, day, enableSheriff } = input;
+    const defaultDirection: SpeakerDirection = "clockwise";
     if (!enableSheriff) {
-      return "clockwise";
+      return defaultDirection;
     }
 
     const sheriffId = this.findSheriffId(world);
     if (sheriffId === null) {
-      return "clockwise";
+      return defaultDirection;
     }
 
+    let finalDirection: SpeakerDirection = defaultDirection;
     const req: ActionRequest = {
       phase: Phase.Day,
       actorId: sheriffId,
@@ -234,15 +353,13 @@ export class SheriffMechanism {
       },
     };
     const action = await actionProvider.getAction(req);
-    if (action?.name !== "choose_direction") {
-      return "clockwise";
-    }
-
-    const result = toolGateway.validateAndSanitize(world, sheriffId, action, {
-      phase: Phase.Day,
-    });
-    if (!result.ok || !result.sanitizedCall) {
-      return "clockwise";
+    if (action?.name === "choose_direction") {
+      const result = toolGateway.validateAndSanitize(world, sheriffId, action, {
+        phase: Phase.Day,
+      });
+      if (result.ok && result.sanitizedCall) {
+        finalDirection = result.sanitizedCall.args.direction;
+      }
     }
 
     events.push({
@@ -250,11 +367,11 @@ export class SheriffMechanism {
       type: "sheriff_direction_chosen",
       payload: {
         sheriffId,
-        direction: result.sanitizedCall.args.direction,
+        direction: finalDirection,
       },
     });
 
-    return result.sanitizedCall.args.direction;
+    return finalDirection;
   }
 
   buildSpeakerOrder(
@@ -346,6 +463,14 @@ export class SheriffMechanism {
     });
     withSeat.sort((a, b) => b.score - a.score || a.seat - b.seat);
     return withSeat[0]?.id ?? null;
+  }
+
+  private sortBySeat(world: World, ids: EntityId[]): EntityId[] {
+    return [...ids].sort((a, b) => {
+      const aSeat = world.getComponent<IdentityComponent>(a, COMPONENT.Identity)?.seat ?? a;
+      const bSeat = world.getComponent<IdentityComponent>(b, COMPONENT.Identity)?.seat ?? b;
+      return aSeat - bSeat;
+    });
   }
 }
 
