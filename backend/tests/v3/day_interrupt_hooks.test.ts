@@ -21,7 +21,10 @@ function makeProviderForWindow(
         request.allowedTools.includes("self_destruct") &&
         request.actionWindow === hitWindow
       ) {
-        return { name: "self_destruct", args: { reason: `hit_${hitWindow}` } };
+        return {
+          name: "self_destruct",
+          args: { reason: `hit_${hitWindow}`, confirm: true },
+        };
       }
       return null;
     },
@@ -37,6 +40,14 @@ describe("day interrupt hooks", () => {
         onDaybreak: true,
         onPreElection: true,
         onPerSpeechGap: true,
+      },
+      selfDestruct: {
+        enabledWindows: [
+          ActionWindow.OnDaybreak,
+          ActionWindow.OnPreElection,
+          ActionWindow.OnPerSpeechGap,
+          ActionWindow.OnPreVote,
+        ],
       },
     };
     const context = bootstrapGame(config);
@@ -69,7 +80,7 @@ describe("day interrupt hooks", () => {
     expect(uniqueWindows).toContain(ActionWindow.OnPerSpeechGap);
   });
 
-  test("on_daybreak can interrupt before any speech", async () => {
+  test("on_daybreak no longer accepts self-destruct interrupt", async () => {
     const context = bootstrapGame({
       ...twelvePlayerStandardConfig,
       hooks: {
@@ -87,22 +98,28 @@ describe("day interrupt hooks", () => {
           ...twelvePlayerStandardConfig.hooks,
           onDaybreak: true,
         },
+        selfDestruct: {
+          enabledWindows: [ActionWindow.OnDaybreak],
+        },
       },
       makeProviderForWindow(ActionWindow.OnDaybreak),
     );
 
-    expect(result.interrupted).toBe(true);
-    expect(result.summary.speeches).toHaveLength(0);
-    expect(events.some((event) => event.type === "wolf_self_destruct")).toBe(true);
+    expect(result.interrupted).toBe(false);
+    expect(result.summary.speeches.length).toBeGreaterThan(0);
+    expect(events.some((event) => event.type === "wolf_self_destruct")).toBe(false);
   });
 
-  test("on_pre_election can interrupt daytime pipeline", async () => {
+  test("on_pre_election no longer accepts self-destruct interrupt", async () => {
     const config = {
       ...twelvePlayerStandardConfig,
       hooks: {
         ...twelvePlayerStandardConfig.hooks,
         onDaybreak: false,
         onPreElection: true,
+      },
+      selfDestruct: {
+        enabledWindows: [ActionWindow.OnPreElection],
       },
     };
     const context = bootstrapGame(config);
@@ -114,14 +131,12 @@ describe("day interrupt hooks", () => {
       makeProviderForWindow(ActionWindow.OnPreElection),
     );
 
-    expect(result.interrupted).toBe(true);
-    expect(result.summary.speeches).toHaveLength(0);
-    expect(events.some((event) => event.payload.window === ActionWindow.OnPreElection)).toBe(
-      true,
-    );
+    expect(result.interrupted).toBe(false);
+    expect(result.summary.speeches.length).toBeGreaterThan(0);
+    expect(events.some((event) => event.type === "wolf_self_destruct")).toBe(false);
   });
 
-  test("on_per_speech_gap can interrupt between speeches", async () => {
+  test("on_per_speech_gap no longer accepts self-destruct interrupt", async () => {
     const config = {
       ...twelvePlayerStandardConfig,
       hooks: {
@@ -129,6 +144,9 @@ describe("day interrupt hooks", () => {
         onDaybreak: false,
         onPreElection: false,
         onPerSpeechGap: true,
+      },
+      selfDestruct: {
+        enabledWindows: [ActionWindow.OnPerSpeechGap],
       },
     };
     const context = bootstrapGame(config);
@@ -140,11 +158,9 @@ describe("day interrupt hooks", () => {
       makeProviderForWindow(ActionWindow.OnPerSpeechGap),
     );
 
-    expect(result.interrupted).toBe(true);
+    expect(result.interrupted).toBe(false);
     expect(result.summary.speeches.length).toBeGreaterThanOrEqual(1);
-    expect(
-      events.some((event) => event.payload.window === ActionWindow.OnPerSpeechGap),
-    ).toBe(true);
+    expect(events.some((event) => event.type === "wolf_self_destruct")).toBe(false);
   });
 
   test("on_pre_vote can interrupt voting pipeline and jump night", async () => {

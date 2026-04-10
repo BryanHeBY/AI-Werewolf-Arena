@@ -1,5 +1,6 @@
 import { bootstrapGame } from "../../src/app/bootstrap";
 import {
+  ActionWindow,
   ActionProvider,
   ActionRequest,
   Phase,
@@ -62,6 +63,9 @@ describe("parallel agent dispatch", () => {
         onDaybreak: true,
         onPreElection: false,
         onPerSpeechGap: false,
+      },
+      selfDestruct: {
+        enabledWindows: [ActionWindow.OnDaybreak],
       },
     };
     const context = bootstrapGame(config);

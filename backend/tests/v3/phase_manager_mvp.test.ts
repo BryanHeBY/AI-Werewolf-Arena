@@ -88,7 +88,10 @@ describe("V3 PhaseManager MVP", () => {
           request.actorId === wolfId &&
           request.allowedTools.includes("self_destruct")
         ) {
-          return { name: "self_destruct", args: { reason: "test_interrupt" } };
+          return {
+            name: "self_destruct",
+            args: { reason: "test_interrupt", confirm: true },
+          };
         }
         return null;
       },
