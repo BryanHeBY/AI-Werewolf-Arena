@@ -14,8 +14,10 @@ import {
 import { World } from "../../domain/world";
 import {
   getDefaultRolePromptRegistry,
+  getDefaultToolCallRepairRegistry,
   getDefaultToolSpecRegistry,
   RolePromptRegistry,
+  ToolCallRepairRegistry,
   ToolSpecRegistry,
 } from "../../mechanisms";
 import { safeRecordLogicOp, SessionRecordHub } from "../../session_recording";
@@ -100,6 +102,7 @@ export interface LlmActionProviderOptions {
   printThinking?: boolean;
   toolSpecRegistry?: ToolSpecRegistry;
   rolePromptRegistry?: RolePromptRegistry;
+  toolCallRepairRegistry?: ToolCallRepairRegistry;
 }
 
 /**
@@ -118,6 +121,7 @@ export class LlmActionProvider implements ActionProvider {
   private readonly fallbackProvider: ActionProvider;
   private readonly toolSpecRegistry: ToolSpecRegistry;
   private readonly rolePromptRegistry: RolePromptRegistry;
+  private readonly toolCallRepairRegistry: ToolCallRepairRegistry;
   private readonly recentEvents: string[] = [];
   private readonly agentHistories = new Map<EntityId, ChatMessage[]>();
   private readonly agentBroadcastCursor = new Map<EntityId, number>();
@@ -139,6 +143,8 @@ export class LlmActionProvider implements ActionProvider {
     this.toolSpecRegistry = options.toolSpecRegistry ?? getDefaultToolSpecRegistry();
     this.rolePromptRegistry =
       options.rolePromptRegistry ?? getDefaultRolePromptRegistry();
+    this.toolCallRepairRegistry =
+      options.toolCallRepairRegistry ?? getDefaultToolCallRepairRegistry();
     this.fallbackProvider =
       options.fallbackProvider ?? new BaselineBotActionProvider(world);
   }
@@ -335,7 +341,11 @@ export class LlmActionProvider implements ActionProvider {
       } else {
         raw = await this.chatWithTimeout(messages, effectiveTimeoutMs);
         this.dumpLlmRawResponse(raw, request);
-        const parsed = this.parseToolCall(raw, request.allowedTools);
+        const parsed = this.parseToolCall(
+          raw,
+          request.allowedTools,
+          request.actorId,
+        );
         if (parsed) {
           this.appendTrace(
             `request_ok player=${request.actorId} phase=${request.phase} action=${parsed.name} args=${JSON.stringify(parsed.args)} elapsed_ms=${Date.now() - startedAt}`,
@@ -615,6 +625,7 @@ export class LlmActionProvider implements ActionProvider {
             const parsed = this.parseToolCall(
               JSON.stringify(candidate),
               request.allowedTools,
+              request.actorId,
             );
             if (!parsed) {
               return {
@@ -973,6 +984,7 @@ export class LlmActionProvider implements ActionProvider {
   private parseToolCall(
     raw: string,
     allowedTools: ActionRequest["allowedTools"],
+    actorId: EntityId,
   ): ToolCall | null {
     const json = this.extractJson(raw);
     if (!json) {
@@ -995,63 +1007,22 @@ export class LlmActionProvider implements ActionProvider {
     if (typeof parsed.name !== "string" || !allowedTools.includes(parsed.name)) {
       return null;
     }
-    if (!parsed.args || typeof parsed.args !== "object") {
-      parsed.args = {};
+    const rawArgs =
+      parsed.args && typeof parsed.args === "object"
+        ? (parsed.args as Record<string, unknown>)
+        : {};
+    const coerced = this.toolCallRepairRegistry.coerceArgs(
+      parsed.name as ToolName,
+      rawArgs,
+      { actorId },
+    );
+    if (!coerced) {
+      return null;
     }
-
-    // 仅做最小字段纠正，详细规则由 ToolGateway 二次校验。
-    if (["check_identity", "shoot"].includes(parsed.name)) {
-      parsed.args.target_id = Number(parsed.args.target_id);
-    }
-    if (parsed.name === "guard" || parsed.name === "vote") {
-      parsed.args.abstain = Boolean(parsed.args.abstain);
-      if (parsed.args.abstain) {
-        parsed.args.target_id = null;
-      } else {
-        const target = Number(parsed.args.target_id);
-        if (!Number.isFinite(target)) {
-          return null;
-        }
-        parsed.args.target_id = target;
-      }
-    }
-    if (parsed.name === "kill_vote") {
-      parsed.args.abstain = Boolean(parsed.args.abstain);
-      if (parsed.args.abstain) {
-        parsed.args.target_id = null;
-      } else {
-        const target = Number(parsed.args.target_id);
-        if (!Number.isFinite(target)) {
-          return null;
-        }
-        parsed.args.target_id = target;
-      }
-    }
-
-    if (parsed.name === "use_potion") {
-      parsed.args.target_id = Number(parsed.args.target_id);
-      if (
-        ![PotionType.Heal, PotionType.Poison, PotionType.None].includes(
-          parsed.args.potion_type,
-        )
-      ) {
-        return null;
-      }
-    }
-
-    if (parsed.name === "choose_direction") {
-      if (
-        !["clockwise", "counter_clockwise"].includes(parsed.args.direction)
-      ) {
-        return null;
-      }
-    }
-
-    if (parsed.name === "speak_to_wolves") {
-      parsed.args.end_chat = Boolean(parsed.args.end_chat);
-    }
-
-    return parsed as ToolCall;
+    return {
+      name: parsed.name,
+      args: coerced as any,
+    } as ToolCall;
   }
 
   /**
@@ -1169,158 +1140,19 @@ export class LlmActionProvider implements ActionProvider {
     }
 
     const allowed = request.allowedTools;
-    if (allowed.length === 1 && allowed[0] === "speak_to_wolves") {
-      const lower = cleaned.toLowerCase();
-      const shouldEndChat =
-        lower.includes("结束夜聊") ||
-        lower.includes("结束群聊") ||
-        lower.includes("停止夜聊") ||
-        lower.includes("end_chat");
-      return {
-        name: "speak_to_wolves",
-        args: {
-          text: this.toSpeakText(cleaned),
-          end_chat: shouldEndChat,
-        },
-      };
-    }
     if (allowed.length !== 1) {
       return null;
     }
 
-    const tool = allowed[0];
-    const targetId = this.extractTargetId(cleaned, request.actorId);
-
-    if (tool === "speak") {
-      return {
-        name: tool,
-        args: {
-          text: this.toSpeakText(cleaned),
-        },
-      } as ToolCall;
-    }
-
-    if (tool === "choose_direction") {
-      const lower = cleaned.toLowerCase();
-      const direction =
-        lower.includes("counter_clockwise") ||
-        lower.includes("counterclockwise") ||
-        lower.includes("逆时针") ||
-        lower.includes("警右")
-          ? "counter_clockwise"
-          : "clockwise";
-      return {
-        name: "choose_direction",
-        args: { direction },
-      };
-    }
-
-    if (tool === "self_destruct") {
-      return {
-        name: "self_destruct",
-        args: { reason: "recovered_from_reasoning_text" },
-      };
-    }
-
-    if (tool === "use_potion") {
-      const potion = this.extractPotion(cleaned);
-      const fallbackTarget = this.pickAliveNotSelf(request.actorId);
-      return {
-        name: "use_potion",
-        args: {
-          target_id: targetId ?? fallbackTarget ?? request.actorId,
-          potion_type: potion,
-        },
-      };
-    }
-
-    if (tool === "kill_vote") {
-      const lower = cleaned.toLowerCase();
-      const abstain =
-        lower.includes("不刀") ||
-        lower.includes("弃刀") ||
-        lower.includes("不投刀") ||
-        lower.includes("abstain");
-      if (abstain) {
-        return {
-          name: "kill_vote",
-          args: { target_id: null, abstain: true },
-        };
-      }
-      const resolvedTarget = targetId ?? this.pickAliveNotSelf(request.actorId);
-      if (resolvedTarget === null) {
-        return {
-          name: "kill_vote",
-          args: { target_id: null, abstain: true },
-        };
-      }
-      return {
-        name: "kill_vote",
-        args: { target_id: resolvedTarget, abstain: false },
-      };
-    }
-
-    if (tool === "guard" || tool === "vote") {
-      const lower = cleaned.toLowerCase();
-      const abstain =
-        lower.includes("空守") ||
-        lower.includes("不守") ||
-        lower.includes("弃票") ||
-        lower.includes("不投票") ||
-        lower.includes("abstain");
-      if (abstain) {
-        return {
-          name: tool as any,
-          args: { target_id: null, abstain: true },
-        };
-      }
-      const resolvedTarget = targetId ?? this.pickAliveNotSelf(request.actorId);
-      if (resolvedTarget === null) {
-        return {
-          name: tool as any,
-          args: { target_id: null, abstain: true },
-        };
-      }
-      return {
-        name: tool as any,
-        args: { target_id: resolvedTarget, abstain: false },
-      };
-    }
-
-    if (["check_identity", "shoot"].includes(tool)) {
-      const resolvedTarget = targetId ?? this.pickAliveNotSelf(request.actorId);
-      if (resolvedTarget === null) {
-        return null;
-      }
-      return {
-        name: tool as any,
-        args: { target_id: resolvedTarget },
-      };
-    }
-
-    return null;
-  }
-
-  /**
-   * 从自然语言中提取目标玩家编号。
-   */
-  private extractTargetId(text: string, actorId: EntityId): EntityId | null {
-    const patterns = [
-      /target[_\s-]*id[^0-9]*(\d+)/gi,
-      /目标[^0-9]*(\d+)/gi,
-      /player[^0-9]*(\d+)/gi,
-      /玩家[^0-9]*(\d+)/gi,
-    ];
-    for (const pattern of patterns) {
-      let match: RegExpExecArray | null = null;
-      while ((match = pattern.exec(text)) !== null) {
-        const candidate = Number(match[1]);
-        if (Number.isFinite(candidate) && candidate !== actorId) {
-          return candidate;
-        }
-      }
-    }
-    return null;
+    return this.toolCallRepairRegistry.recover(
+      allowed[0],
+      cleaned,
+      {
+        actorId: request.actorId,
+        world: this.world,
+        toSpeakText: (text) => this.toSpeakText(text),
+      },
+    );
   }
 
   /**
@@ -1384,36 +1216,6 @@ export class LlmActionProvider implements ActionProvider {
     return cleaned.slice(0, 120);
   }
 
-  /**
-   * 从自然语言中推断女巫药剂类型。
-   */
-  private extractPotion(text: string): PotionType {
-    const lower = text.toLowerCase();
-    if (
-      lower.includes(PotionType.Poison) ||
-      lower.includes("毒") ||
-      lower.includes("poison")
-    ) {
-      return PotionType.Poison;
-    }
-    if (
-      lower.includes(PotionType.Heal) ||
-      lower.includes("救") ||
-      lower.includes("heal")
-    ) {
-      return PotionType.Heal;
-    }
-    return PotionType.None;
-  }
-
-  /**
-   * 选择任意存活且非自己的目标。
-   */
-  private pickAliveNotSelf(actorId: EntityId): EntityId | null {
-    const alive = this.world.getAliveEntityIds();
-    const target = alive.find((id) => id !== actorId);
-    return target ?? null;
-  }
 
   /**
    * 记录并输出 provider 追踪日志。
