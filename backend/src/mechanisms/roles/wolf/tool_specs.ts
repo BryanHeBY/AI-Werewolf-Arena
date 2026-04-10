@@ -4,13 +4,14 @@ import { prop } from "../../shared/schema";
 
 const selfDestructSchema = {
   name: "self_destruct",
-  description: "狼人白天自爆，中断流程并跳夜",
+  description: "自爆需谨慎！！！狼人可在允许窗口自爆，中断流程并跳夜",
   parameters: {
     type: "object",
     properties: {
       reason: { type: "string" },
+      confirm: { type: "boolean" },
     },
-    required: ["reason"],
+    required: ["reason", "confirm"],
   },
 } as const;
 
@@ -56,18 +57,19 @@ export const WOLF_TOOL_SPECS: ToolSpec[] = [
     name: "self_destruct",
     llm: {
       name: "self_destruct",
-      description: "狼人执行自爆。",
+      description: "自爆需谨慎！！！狼人执行自爆（高风险低频动作）。",
       parameters: {
         type: "object",
         properties: {
           reason: prop("string", "自爆原因说明，仅用于日志与策略记录。"),
+          confirm: prop("boolean", "确认执行自爆。仅当 confirm=true 时才会通过校验。"),
         },
         description: "狼人自爆参数。",
-        required: ["reason"],
+        required: ["reason", "confirm"],
         additionalProperties: false,
       },
     },
-    argHint: 'self_destruct args: {"reason":"..."}',
+    argHint: 'self_destruct args: {"reason":"...","confirm":true}',
     gatewaySchema: selfDestructSchema,
   },
 ];
@@ -81,5 +83,9 @@ export const WOLF_STAGE_DIRECTIVES: StageDirectiveRule[] = [
   {
     match: (allowedTools) => allowedTools.length === 1 && allowedTools[0] === "kill_vote",
     text: "当前是【狼人刀人投票阶段】：必须调用 kill_vote；若本轮决定不刀，请设置 abstain=true 且 target_id=null。",
+  },
+  {
+    match: (allowedTools) => allowedTools.length === 1 && allowedTools[0] === "self_destruct",
+    text: "自爆需谨慎！！！当前是【狼人自爆窗口】：仅在局势极端不利时使用 self_destruct；必须携带 confirm=true 才会生效。",
   },
 ];

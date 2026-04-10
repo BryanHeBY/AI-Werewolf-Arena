@@ -88,6 +88,14 @@ export interface HookConfig {
 }
 
 /**
+ * 自爆机制配置。
+ */
+export interface SelfDestructConfig {
+  // 允许触发自爆的窗口集合。
+  enabledWindows: ActionWindow[];
+}
+
+/**
  * 板子配置模型。
  */
 export interface BoardConfig {
@@ -100,6 +108,8 @@ export interface BoardConfig {
   initialSheriffSeat?: number;
   winCondition: WinCondition;
   hooks: HookConfig;
+  // 自爆窗口配置（可选，不传时默认仅允许 on_pre_vote）。
+  selfDestruct?: SelfDestructConfig;
   // 每种角色的数量配置，启动时会展开为底牌牌堆。
   roleSetups: Array<{ role: Role; count: number }>;
 }
@@ -120,7 +130,7 @@ export interface ToolArgMap {
   guard: { target_id: EntityId | null; abstain: boolean };
   check_identity: { target_id: EntityId };
   use_potion: { target_id: EntityId; potion_type: PotionType };
-  self_destruct: { reason: string };
+  self_destruct: { reason: string; confirm: boolean };
   speak: { text: string };
   vote: { target_id: EntityId | null; abstain: boolean };
   shoot: { target_id: EntityId };

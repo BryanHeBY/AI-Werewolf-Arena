@@ -1,4 +1,4 @@
-import { BoardConfig, Role, WinCondition } from "../domain/model";
+import { ActionWindow, BoardConfig, Role, WinCondition } from "../domain/model";
 
 /**
  * 12 人标准局：用于验证警长系统、白痴/猎人钩子与白天中断链路。
@@ -13,6 +13,9 @@ export const twelvePlayerStandardConfig: BoardConfig = {
     onPreElection: true,
     onPreVote: true,
     onPerSpeechGap: true,
+  },
+  selfDestruct: {
+    enabledWindows: [ActionWindow.OnPreVote],
   },
   roleSetups: [
     { role: Role.Wolf, count: 4 },

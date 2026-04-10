@@ -73,7 +73,10 @@ export class VotingPipeline {
         on_pre_vote_hook: config.hooks.onPreVote,
       },
     });
-    if (config.hooks.onPreVote) {
+    if (
+      config.hooks.onPreVote &&
+      this.isSelfDestructWindowEnabled(config, ActionWindow.OnPreVote)
+    ) {
       const exploded = await this.trySelfDestruct(
         actionProvider,
         ActionWindow.OnPreVote,
@@ -345,5 +348,16 @@ export class VotingPipeline {
       }
     }
     return 1;
+  }
+
+  private isSelfDestructWindowEnabled(
+    config: BoardConfig,
+    window: ActionWindow,
+  ): boolean {
+    const enabled = config.selfDestruct?.enabledWindows;
+    if (!enabled || enabled.length === 0) {
+      return window === ActionWindow.OnPreVote;
+    }
+    return enabled.includes(window);
   }
 }

@@ -43,7 +43,7 @@ const SYSTEM_BASE_LINES = [
 export function buildSystemPrompt(input: SystemPromptInput): string {
   const actionRule = input.mustAct
     ? "本轮必须完成一次有效行动，且禁止调用 finish_turn。"
-    : "本轮可选择结束回合不行动；当你不需要继续行动时，请调用 finish_turn 工具结束回合。";
+    : "本轮可选择结束回合不行动；当你不需要继续行动时，请直接不调用任何工具。";
   const teammateText =
     input.teammateIds.length > 0 ? input.teammateIds.join(", ") : "无";
   return [

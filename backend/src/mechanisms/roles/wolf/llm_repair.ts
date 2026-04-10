@@ -20,7 +20,10 @@ export const WOLF_LLM_REPAIR_PACK: ToolRepairPack = {
       }
       return { target_id: target, abstain: false };
     },
-    self_destruct: (args) => ({ reason: String(args.reason ?? "self_destruct") }),
+    self_destruct: (args) => ({
+      reason: String(args.reason ?? "self_destruct"),
+      confirm: Boolean(args.confirm),
+    }),
   },
   recover: {
     speak_to_wolves: (text, ctx) => {

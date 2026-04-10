@@ -1,5 +1,5 @@
 /** 文件说明：狼人工具校验规则。 */
-import { Phase, Role } from "../../../domain/model";
+import { ActionWindow, Phase, Role } from "../../../domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 
 /** 狼人工具校验规则集合。 */
@@ -28,15 +28,21 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
     }
     return null;
   },
-  self_destruct: ({ role, phase, allowSelfDestruct }) => {
+  self_destruct: ({ role, phase, actionWindow, allowSelfDestruct, toolCall }) => {
     if (role.role !== Role.Wolf) {
       return "非法操作，仅狼人可自爆";
     }
     if (phase !== Phase.Day && phase !== Phase.Voting) {
       return "非法操作，自爆仅可在白天阶段触发";
     }
+    if (actionWindow !== ActionWindow.OnPreVote) {
+      return "非法操作，自爆仅允许在放逐投票前窗口触发";
+    }
     if (!allowSelfDestruct) {
       return "非法操作，当前窗口不允许自爆";
+    }
+    if (toolCall.name !== "self_destruct" || toolCall.args.confirm !== true) {
+      return "非法操作，自爆需要 confirm=true 明确确认";
     }
     return null;
   },

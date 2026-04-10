@@ -90,7 +90,7 @@ export class DayPipeline {
       enableSheriff: config.enableSheriff,
     });
 
-    if (config.hooks.onDaybreak) {
+    if (config.hooks.onDaybreak && this.isSelfDestructWindowEnabled(config, ActionWindow.OnDaybreak)) {
       const exploded = await this.trySelfDestruct(actionProvider, ActionWindow.OnDaybreak);
       if (exploded !== null) {
         return {
@@ -103,7 +103,7 @@ export class DayPipeline {
       }
     }
 
-    if (config.hooks.onPreElection) {
+    if (config.hooks.onPreElection && this.isSelfDestructWindowEnabled(config, ActionWindow.OnPreElection)) {
       const exploded = await this.trySelfDestruct(actionProvider, ActionWindow.OnPreElection);
       if (exploded !== null) {
         return {
@@ -159,7 +159,10 @@ export class DayPipeline {
         }
       }
 
-      if (config.hooks.onPerSpeechGap) {
+      if (
+        config.hooks.onPerSpeechGap &&
+        this.isSelfDestructWindowEnabled(config, ActionWindow.OnPerSpeechGap)
+      ) {
         const exploded = await this.trySelfDestruct(actionProvider, ActionWindow.OnPerSpeechGap);
         if (exploded !== null) {
           return {
@@ -261,6 +264,17 @@ export class DayPipeline {
       }
     }
     return 1;
+  }
+
+  private isSelfDestructWindowEnabled(
+    config: BoardConfig,
+    window: ActionWindow,
+  ): boolean {
+    const enabled = config.selfDestruct?.enabledWindows;
+    if (!enabled || enabled.length === 0) {
+      return window === ActionWindow.OnPreVote;
+    }
+    return enabled.includes(window);
   }
 
   /**
