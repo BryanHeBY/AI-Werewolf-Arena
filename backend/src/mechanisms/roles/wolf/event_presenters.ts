@@ -49,6 +49,10 @@ export const WOLF_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandle
 
 /** 狼人事件 -> 聊天行渲染映射。 */
 export const WOLF_SCRIPT_CHAT_HANDLERS: Record<string, ScriptChatLineHandler> = {
+  wolf_tactical_order: (event) => {
+    const p = event.payload as Record<string, any>;
+    return `[狼队][顺序] ${Array.isArray(p.order) ? p.order.join("->") : ""}`;
+  },
   wolf_discussion: (event) => {
     const p = event.payload as Record<string, any>;
     return `[夜聊][${p.actorId}] ${p.text}`;
@@ -61,6 +65,12 @@ export const WOLF_SCRIPT_CHAT_HANDLERS: Record<string, ScriptChatLineHandler> = 
 
 /** 狼人事件 -> 终端 live 渲染映射。 */
 export const WOLF_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {
+  wolf_tactical_order: (event) => [
+    {
+      kind: "chat",
+      text: `[live][狼队][顺序] ${Array.isArray(event.payload.order) ? event.payload.order.join("->") : ""}`,
+    },
+  ],
   wolf_discussion: (event) => [
     {
       kind: "chat",
