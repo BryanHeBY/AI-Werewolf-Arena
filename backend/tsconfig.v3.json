@@ -10,6 +10,7 @@
     "src/index.ts",
     "src/run-test-v3.ts",
     "src/app/**/*.ts",
+    "src/agents/**/*.ts",
     "src/domain/**/*.ts",
     "src/engine/**/*.ts",
     "src/gateway/**/*.ts",

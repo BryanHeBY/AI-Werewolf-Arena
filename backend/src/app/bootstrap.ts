@@ -7,10 +7,10 @@ import { createStatusMarksComponent } from "../domain/components/status_marks";
 import { createVotingRightComponent } from "../domain/components/voting_right";
 import { createIdentityComponent } from "../domain/entities/player";
 import { BoardConfig, EntityId, Role } from "../domain/model";
+import { getDefaultRoleRuntimeRegistry, getDefaultSheriffMechanism } from "../mechanisms";
 import { ConditionRegistry } from "../domain/registries/condition_registry";
 import { RoleRegistry } from "../domain/registries/role_registry";
 import { DamageResolutionSystem } from "../domain/systems/damage_resolution_system";
-import { WinConditionSystem } from "../domain/systems/win_condition_system";
 import { World } from "../domain/world";
 import { PhaseManager } from "../engine/phase_manager";
 import { ToolGateway } from "../gateway/tool_gateway";
@@ -32,12 +32,11 @@ export function bootstrapGame(config: BoardConfig): BootstrapResult {
   const world = new World();
   // 先完成实体与组件初始化，再创建系统与管理器，避免空引用。
   const playerIds = createPlayers(world, config);
-  assignInitialSheriff(world, config, playerIds);
+  getDefaultSheriffMechanism().assignInitialSheriff(world, config, playerIds);
 
   const roleRegistry = new RoleRegistry();
   const damageResolutionSystem = new DamageResolutionSystem();
-  const winSystem = new WinConditionSystem();
-  const conditionRegistry = new ConditionRegistry(winSystem);
+  const conditionRegistry = new ConditionRegistry();
   const toolGateway = new ToolGateway();
 
   const phaseManager = new PhaseManager(
@@ -59,11 +58,13 @@ export function bootstrapGame(config: BoardConfig): BootstrapResult {
 function createPlayers(world: World, config: BoardConfig): EntityId[] {
   const roles = buildRoleDeck(config);
   const ids: EntityId[] = [];
+  const roleRuntimeRegistry = getDefaultRoleRuntimeRegistry();
 
   for (let seat = 1; seat <= config.boardSize; seat++) {
     const entityId = world.createEntity();
     const role = roles[seat - 1];
     const roleComp = createRoleComponent(role);
+    roleRuntimeRegistry.apply(roleComp);
 
     world.addComponent(
       entityId,
@@ -104,40 +105,4 @@ function buildRoleDeck(config: BoardConfig): Role[] {
   }
 
   return deck;
-}
-
-function assignInitialSheriff(
-  world: World,
-  config: BoardConfig,
-  playerIds: EntityId[],
-): void {
-  if (!config.enableSheriff || config.initialSheriffSeat === undefined) {
-    return;
-  }
-
-  const sheriffId = playerIds.find((id) => {
-    const identity = world.getComponent<{ seat: number }>(id, COMPONENT.Identity);
-    return identity?.seat === config.initialSheriffSeat;
-  });
-  if (!sheriffId) {
-    return;
-  }
-
-  const badge = world.getComponent<{ isSheriff: boolean; destroyed: boolean }>(
-    sheriffId,
-    COMPONENT.Badge,
-  );
-  if (badge) {
-    badge.isSheriff = true;
-    badge.destroyed = false;
-  }
-
-  const voting = world.getComponent<{ weight: number; canVote: boolean }>(
-    sheriffId,
-    COMPONENT.VotingRight,
-  );
-  if (voting && voting.canVote) {
-    // 警长票权固定提升为 1.5，后续放逐投票直接读取该权重。
-    voting.weight = 1.5;
-  }
 }

@@ -12,17 +12,16 @@ import { ConditionRegistry } from "../domain/registries/condition_registry";
 import { DamageResolutionSystem } from "../domain/systems/damage_resolution_system";
 import { World } from "../domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
+import { getDefaultSheriffMechanism, SheriffMechanism } from "../mechanisms";
 import { EventRegistry } from "./event_registry";
 import { DayPipeline } from "./phase_pipeline/day_pipeline";
 import { NightPipeline } from "./phase_pipeline/night_pipeline";
 import { VotingPipeline } from "./phase_pipeline/voting_pipeline";
 import { RoleRegistry } from "../domain/registries/role_registry";
 import { COMPONENT } from "../domain/components/names";
-import { BadgeComponent } from "../domain/components/badge";
 import { VotingRightComponent } from "../domain/components/voting_right";
 import { IdentityComponent } from "../domain/entities/player";
 import { RoleComponent } from "../domain/components/role";
-import { transferOrDestroySheriffBadge } from "./sheriff_badge";
 import { buildAgentBroadcastFeed } from "./agent_broadcast_feed";
 
 /**
@@ -35,6 +34,7 @@ export class PhaseManager {
   private readonly nightPipeline: NightPipeline;
   private readonly dayPipeline: DayPipeline;
   private readonly votingPipeline: VotingPipeline;
+  private readonly sheriffMechanism: SheriffMechanism;
 
   private state: RuntimeSnapshot = {
     day: 1,
@@ -52,6 +52,7 @@ export class PhaseManager {
     private readonly damageResolutionSystem: DamageResolutionSystem,
   ) {
     this.eventRegistry = new EventRegistry();
+    this.sheriffMechanism = getDefaultSheriffMechanism();
     this.nightPipeline = new NightPipeline(
       world,
       roleRegistry,
@@ -59,9 +60,16 @@ export class PhaseManager {
       damageResolutionSystem,
       this.events,
     );
-    this.dayPipeline = new DayPipeline(world, toolGateway, this.events);
+    this.dayPipeline = new DayPipeline(
+      world,
+      roleRegistry,
+      toolGateway,
+      this.events,
+      this.sheriffMechanism,
+    );
     this.votingPipeline = new VotingPipeline(
       world,
+      roleRegistry,
       toolGateway,
       this.eventRegistry,
       this.events,
@@ -336,15 +344,10 @@ export class PhaseManager {
    * 处理警长死亡时的警徽流转或撕毁逻辑。
    */
   private handleSheriffDeath(entityId: EntityId, phase: Phase): void {
-    const badge = this.world.getComponent<BadgeComponent>(entityId, COMPONENT.Badge);
-    if (!badge?.isSheriff) {
-      return;
-    }
-
-    transferOrDestroySheriffBadge(
+    this.sheriffMechanism.handleSheriffDeath(
       this.world,
       entityId,
-      `${phase}_death`,
+      phase,
       this.events,
     );
   }

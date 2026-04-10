@@ -3,6 +3,7 @@
  * 供测试脚本、服务层和外部调用方统一引入核心能力。
  */
 export * from "./app";
+export * from "./agents";
 export * from "./domain";
 export * from "./engine";
 export * from "./gateway";

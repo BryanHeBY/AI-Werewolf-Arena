@@ -24,8 +24,8 @@ import {
 } from "../session_recording";
 import { twelvePlayerStandardConfig } from "../scenarios/twelve_player_standard";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
-import { BaselineBotActionProvider } from "../v3/action_providers";
-import { LlmActionProvider } from "../v3/llm_action_provider";
+import { BaselineBotActionProvider } from "../agents/providers/action_providers";
+import { LlmActionProvider } from "../agents/llm/llm_action_provider";
 
 /**
  * 支持的对局板子名称。

@@ -5,7 +5,7 @@ import { Broadcaster, RealtimeGameEvent } from "../infra/transport/broadcaster";
 import { sixPlayerMvpConfig } from "../scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../scenarios/twelve_player_standard";
 import { buildFrontendGameState, toFrontendFaction, toFrontendPhase } from "./view_mapper";
-import { BaselineBotActionProvider } from "../v3/action_providers";
+import { BaselineBotActionProvider } from "../agents/providers/action_providers";
 
 /**
  * 启动会话可选参数。

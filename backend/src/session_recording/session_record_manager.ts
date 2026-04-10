@@ -263,8 +263,39 @@ export class SessionRecordManager {
     await this.writeJson("logic_ops.json", { ops: this.logicOps });
 
     for (const [playerId, view] of this.playerViews.entries()) {
-      await this.writeJson(path.join("players", `player_${playerId}.json`), view);
+      const normalized = this.normalizePlayerView(view);
+      await this.writeJson(path.join("players", `player_${playerId}.json`), normalized);
     }
+  }
+
+  private normalizePlayerView(view: ReplayPlayerView): ReplayPlayerView {
+    const initialPrompt = view.initial_prompt ?? this.deriveInitialPromptFromTimeline(view);
+    return {
+      player_id: view.player_id,
+      role: view.role,
+      camp: view.camp,
+      ...(initialPrompt ? { initial_prompt: initialPrompt } : {}),
+      timeline: view.timeline,
+    };
+  }
+
+  private deriveInitialPromptFromTimeline(
+    view: ReplayPlayerView,
+  ): ReplayPlayerView["initial_prompt"] | undefined {
+    const firstAction = view.timeline.find((entry) => entry.kind === "action");
+    if (!firstAction || firstAction.kind !== "action") {
+      return undefined;
+    }
+    return {
+      day: firstAction.day,
+      phase: firstAction.phase,
+      stage: firstAction.stage,
+      request_id: firstAction.request_id,
+      ...(firstAction.prompt_system ? { prompt_system: firstAction.prompt_system } : {}),
+      ...(firstAction.prompt_user_delta
+        ? { prompt_user: [...firstAction.prompt_user_delta] }
+        : {}),
+    };
   }
 
   private async ensureDirs(): Promise<void> {

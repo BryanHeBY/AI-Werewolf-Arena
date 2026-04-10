@@ -1,5 +1,3 @@
-import { COMPONENT } from "../domain/components/names";
-import { RoleComponent } from "../domain/components/role";
 import {
   ActionWindow,
   EntityId,
@@ -8,12 +6,9 @@ import {
   ToolName,
   ToolValidationResult,
 } from "../domain/model";
+import { getDefaultToolSpecRegistry, ToolSpecRegistry } from "../mechanisms";
 import { World } from "../domain/world";
 import { ActionValidator } from "./action_validator";
-import { guardSchema } from "./schemas/guard.schema";
-import { selfDestructSchema } from "./schemas/self_destruct.schema";
-import { shootSchema } from "./schemas/shoot.schema";
-import { usePotionSchema } from "./schemas/use_potion.schema";
 
 const RESERVED_PREFIX = /^(\s*\[(上帝|法官|系统)\]\s*)+/g;
 
@@ -25,13 +20,17 @@ const RESERVED_PREFIX = /^(\s*\[(上帝|法官|系统)\]\s*)+/g;
 export class ToolGateway {
   private readonly validator: ActionValidator;
   private readonly schemas: Map<ToolName, unknown> = new Map();
+  private readonly toolSpecRegistry: ToolSpecRegistry;
 
-  constructor(validator: ActionValidator = new ActionValidator()) {
+  constructor(
+    validator: ActionValidator = new ActionValidator(),
+    toolSpecRegistry: ToolSpecRegistry = getDefaultToolSpecRegistry(),
+  ) {
     this.validator = validator;
-    this.registerSchema("guard", guardSchema);
-    this.registerSchema("use_potion", usePotionSchema);
-    this.registerSchema("shoot", shootSchema);
-    this.registerSchema("self_destruct", selfDestructSchema);
+    this.toolSpecRegistry = toolSpecRegistry;
+    for (const { name, schema } of this.toolSpecRegistry.getGatewaySchemas()) {
+      this.registerSchema(name, schema);
+    }
   }
 
   /**
@@ -50,20 +49,6 @@ export class ToolGateway {
       obj[name] = schema;
     }
     return obj;
-  }
-
-  /**
-   * 夜晚开始前重置女巫“本夜已用药”状态。
-   */
-  startNight(world: World): void {
-    // 夜晚开始时重置女巫“本夜是否已用药”的瞬时状态。
-    for (const id of world.getAliveEntityIds()) {
-      const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
-      if (role?.witchState) {
-        role.witchState.healUsedThisNight = false;
-        role.witchState.poisonUsedThisNight = false;
-      }
-    }
   }
 
   validateAndSanitize<T extends ToolCall>(

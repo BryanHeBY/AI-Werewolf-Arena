@@ -1,22 +1,24 @@
 import { GameResult, WinCondition } from "../model";
-import { WinConditionSystem } from "../systems/win_condition_system";
 import { World } from "../world";
+import {
+  getDefaultWinConditionRegistry,
+  WinConditionRegistry,
+} from "../../mechanisms";
 
 /**
- * 胜负条件注册表：当前作为 WinConditionSystem 的轻量封装入口。
- * 后续若支持更多胜负插件，可在这里扩展动态注册逻辑。
+ * 胜负条件入口：委托机制层 WinConditionRegistry。
  */
 export class ConditionRegistry {
-  private readonly winSystem: WinConditionSystem;
+  private readonly winRegistry: WinConditionRegistry;
 
-  constructor(winSystem: WinConditionSystem) {
-    this.winSystem = winSystem;
+  constructor(winRegistry: WinConditionRegistry = getDefaultWinConditionRegistry()) {
+    this.winRegistry = winRegistry;
   }
 
   /**
    * 按指定胜负模式执行胜负判定。
    */
   evaluate(world: World, condition: WinCondition): GameResult | null {
-    return this.winSystem.evaluate(world, condition);
+    return this.winRegistry.evaluate(world, condition);
   }
 }

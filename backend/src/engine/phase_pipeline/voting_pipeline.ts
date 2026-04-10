@@ -1,6 +1,5 @@
 import { AliveComponent } from "../../domain/components/alive";
 import { COMPONENT } from "../../domain/components/names";
-import { RoleComponent } from "../../domain/components/role";
 import { VotingRightComponent } from "../../domain/components/voting_right";
 import {
   ActionProvider,
@@ -10,9 +9,9 @@ import {
   EntityId,
   GameEvent,
   Phase,
-  Role,
   VotingSummary,
 } from "../../domain/model";
+import { RoleRegistry } from "../../domain/registries/role_registry";
 import { ToolGateway } from "../../gateway/tool_gateway";
 import { safeRecordLogicOp } from "../../session_recording";
 import { EventRegistry } from "../event_registry";
@@ -35,12 +34,31 @@ export interface VotingPipelineResult {
  * 3) 调用 EventRegistry 处理白痴免死、警徽销毁等投后钩子。
  */
 export class VotingPipeline {
+  private readonly roleRegistry: RoleRegistry;
+  private readonly toolGateway: ToolGateway;
+  private readonly eventRegistry: EventRegistry;
+  private readonly events: GameEvent[];
+
   constructor(
     private readonly world: World,
-    private readonly toolGateway: ToolGateway,
-    private readonly eventRegistry: EventRegistry,
-    private readonly events: GameEvent[],
-  ) {}
+    roleRegistryOrToolGateway: RoleRegistry | ToolGateway,
+    toolGatewayOrEventRegistry: ToolGateway | EventRegistry,
+    eventRegistryOrEvents: EventRegistry | GameEvent[],
+    eventsMaybe?: GameEvent[],
+  ) {
+    // 兼容旧签名：(world, toolGateway, eventRegistry, events)
+    if (eventsMaybe === undefined) {
+      this.roleRegistry = new RoleRegistry();
+      this.toolGateway = roleRegistryOrToolGateway as ToolGateway;
+      this.eventRegistry = toolGatewayOrEventRegistry as EventRegistry;
+      this.events = eventRegistryOrEvents as GameEvent[];
+      return;
+    }
+    this.roleRegistry = roleRegistryOrToolGateway as RoleRegistry;
+    this.toolGateway = toolGatewayOrEventRegistry as ToolGateway;
+    this.eventRegistry = eventRegistryOrEvents as EventRegistry;
+    this.events = eventsMaybe;
+  }
 
   async execute(
     config: BoardConfig,
@@ -225,24 +243,27 @@ export class VotingPipeline {
     actionProvider: ActionProvider,
     window: ActionWindow,
   ): Promise<EntityId | null> {
-    const wolves = this.world.getAliveEntityIds().filter((id) => {
-      const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-      return role?.role === Role.Wolf;
+    const actors = this.world.getAliveEntityIds().filter((id) => {
+      const role = this.world.getComponent<{ role: any }>(id, COMPONENT.Role);
+      if (!role) {
+        return false;
+      }
+      return this.roleRegistry.getAllowedTools(role.role).includes("self_destruct");
     });
 
     // 并行触发狼人自爆思考，减少 pre-vote 窗口总时延。
-    const candidates = await Promise.all(
-      wolves.map(async (wolfId) => {
+    const picks = await Promise.all(
+      actors.map(async (actorId) => {
         const req: ActionRequest = {
           phase: Phase.Voting,
-          actorId: wolfId,
+          actorId,
           actionWindow: window,
           allowedTools: ["self_destruct"],
           context: {
             day: this.currentDay(),
             window,
             must_act: false,
-            broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, wolfId),
+            broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, actorId),
           },
         };
 
@@ -253,7 +274,7 @@ export class VotingPipeline {
 
         const result = this.toolGateway.validateAndSanitize(
           this.world,
-          wolfId,
+          actorId,
           action,
           {
             phase: Phase.Voting,
@@ -264,12 +285,12 @@ export class VotingPipeline {
         if (!result.ok) {
           return null;
         }
-        return wolfId;
+        return actorId;
       }),
     );
 
     // 多狼同时自爆请求时按座位/ID 最小值决议，保证确定性。
-    const picked = candidates
+    const picked = picks
       .filter((id): id is EntityId => id !== null)
       .sort((a, b) => a - b)[0];
     if (picked === undefined) {

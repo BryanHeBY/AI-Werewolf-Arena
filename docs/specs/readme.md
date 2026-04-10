@@ -9,6 +9,7 @@
 3. 技术白皮书（通用架构说明）：`technical_whitepaper_v3.md`
 4. 玩法白皮书（全角色规则词典）：`gameplay_whitepaper_v3.md`
 5. Session 复盘记录规范（对局落盘与前端复盘协议）：`session_replay_recording_v3.md`
+6. 引擎与玩法机制解耦重构方案（注册化与插件化路线）：`engine_mechanism_decoupling_refactor_v3.md`
 
 阅读建议：
 

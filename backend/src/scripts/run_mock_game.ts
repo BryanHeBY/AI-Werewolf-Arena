@@ -1,6 +1,6 @@
 import { bootstrapGame } from "../app/bootstrap";
 import { sixPlayerMvpConfig } from "../scenarios/six_player_mvp";
-import { BaselineBotActionProvider } from "../v3/action_providers";
+import { BaselineBotActionProvider } from "../agents/providers/action_providers";
 
 /**
  * 本地 mock 快速回归入口：
