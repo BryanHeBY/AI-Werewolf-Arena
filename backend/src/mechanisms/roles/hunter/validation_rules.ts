@@ -1,7 +1,9 @@
+/** 文件说明：猎人工具校验规则。 */
 import { Role } from "../../../domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 import { getHunterState } from "../private_state";
 
+/** 猎人工具校验规则集合。 */
 export const HUNTER_VALIDATION_RULES: ToolRuleMap = {
   shoot: ({ world, role, toolCall }) => {
     if (role.role !== Role.Hunter || !getHunterState(role)?.canShoot) {

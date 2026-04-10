@@ -1,5 +1,7 @@
+/** 文件说明：集中维护 LLM 初始提示词与行动提示词模板。 */
 import { Role } from "../../domain/model";
 
+/** 系统提示词输入参数。 */
 export interface SystemPromptInput {
   actorId: number;
   role: string;
@@ -11,6 +13,7 @@ export interface SystemPromptInput {
   boardInfoPrompt?: string;
 }
 
+/** 行动提示词输入参数。 */
 export interface UserPromptInput {
   actorId: number;
   phase: string;
@@ -21,6 +24,7 @@ export interface UserPromptInput {
   toolArgHints: string;
 }
 
+/** 板子信息提示词输入参数。 */
 export interface BoardInfoPromptInput {
   totalPlayers: number;
   roleCounts: Map<Role, number>;
@@ -35,6 +39,7 @@ const SYSTEM_BASE_LINES = [
   "禁止输出思维链与额外元信息。",
 ] as const;
 
+/** 构建系统提示词文本。 */
 export function buildSystemPrompt(input: SystemPromptInput): string {
   const actionRule = input.mustAct
     ? "本轮必须完成一次有效行动，且禁止调用 finish_turn。"
@@ -51,6 +56,7 @@ export function buildSystemPrompt(input: SystemPromptInput): string {
   ].join("\n");
 }
 
+/** 构建行动提示词文本。 */
 export function buildUserPrompt(input: UserPromptInput): string {
   const speechTurnText = input.isSpeechTurn
     ? "目前是你的发言轮次"
@@ -65,6 +71,7 @@ export function buildUserPrompt(input: UserPromptInput): string {
   ].join("\n");
 }
 
+/** 构建板子信息提示词文本。 */
 export function buildBoardInfoPrompt(input: BoardInfoPromptInput): string {
   const sortedRoles = Object.values(Role).filter(
     (role) => (input.roleCounts.get(role) ?? 0) > 0,
@@ -84,6 +91,7 @@ export function buildBoardInfoPrompt(input: BoardInfoPromptInput): string {
   ].join("\n");
 }
 
+/** 构建 mustAct 场景下的递进重试提示词。 */
 export function buildMustActRetryPrompt(attempt: number, maxRetries: number): string {
   if (attempt === 1) {
     return `上轮你没有完成有效工具调用。请立即调用一个可用工具，禁止解释文本。（重试 ${attempt}/${maxRetries}）`;
@@ -94,6 +102,7 @@ export function buildMustActRetryPrompt(attempt: number, maxRetries: number): st
   return `最后警告：若你本轮仍不调用可用工具，系统将判定失败并强制回退。现在立刻只输出函数调用。（重试 ${attempt}/${maxRetries}）`;
 }
 
+/** 发言文本过滤关键字列表（用于去除提示注入残留）。 */
 export const SPEAK_TEXT_FILTER_KEYWORDS = [
   "actorid=",
   "玩家编号=",
@@ -116,4 +125,5 @@ export const SPEAK_TEXT_FILTER_KEYWORDS = [
   "json 格式",
 ] as const;
 
+/** 默认发言兜底文本。 */
 export const DEFAULT_SPEAK_TEXT = "我先听后位发言再判断。";

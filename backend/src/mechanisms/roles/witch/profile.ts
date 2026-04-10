@@ -1,3 +1,4 @@
+/** 文件说明：女巫角色 profile。 */
 import { PotionType, Role } from "../../../domain/model";
 import { RoleProfile } from "../contracts";
 import { getWitchState, setWitchState } from "../private_state";
@@ -6,6 +7,7 @@ import { WITCH_NIGHT_STAGES } from "./night_stages";
 import { WITCH_TOOL_SPECS, WITCH_STAGE_DIRECTIVES } from "./tool_specs";
 import { WITCH_VALIDATION_RULES } from "./validation_rules";
 
+/** 女巫角色配置。 */
 export const WITCH_ROLE_PROFILE: RoleProfile = {
   role: Role.Witch,
   label: "女巫",

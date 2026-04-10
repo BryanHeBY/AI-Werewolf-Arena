@@ -1,7 +1,9 @@
+/** 文件说明：女巫工具校验规则。 */
 import { PotionType, Role } from "../../../domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 import { getWitchState } from "../private_state";
 
+/** 女巫工具校验规则集合。 */
 export const WITCH_VALIDATION_RULES: ToolRuleMap = {
   use_potion: ({ world, actorId, role, toolCall }) => {
     const witchState = getWitchState(role);

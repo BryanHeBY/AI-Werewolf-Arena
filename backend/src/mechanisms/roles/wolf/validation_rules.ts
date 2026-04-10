@@ -1,6 +1,8 @@
+/** 文件说明：狼人工具校验规则。 */
 import { Phase, Role } from "../../../domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 
+/** 狼人工具校验规则集合。 */
 export const WOLF_VALIDATION_RULES: ToolRuleMap = {
   speak_to_wolves: ({ role }) => {
     if (role.role !== Role.Wolf) {
@@ -39,4 +41,3 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
     return null;
   },
 };
-

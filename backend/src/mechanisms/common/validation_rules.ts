@@ -1,7 +1,9 @@
+/** 文件说明：定义通用工具的校验规则。 */
 import { COMPONENT } from "../../domain/components/names";
 import { VotingRightComponent } from "../../domain/components/voting_right";
 import { ToolRuleMap, isAliveTarget } from "../validation/contracts";
 
+/** 通用工具校验规则集合。 */
 export const COMMON_VALIDATION_RULES: ToolRuleMap = {
   speak: () => null,
   vote: ({ world, actorId, toolCall }) => {

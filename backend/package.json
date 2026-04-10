@@ -17,7 +17,7 @@
     "release:check": "npm run build:v3 && npm run test:quick && npm run smoke:v3",
     "run:v3": "node --import tsx src/scripts/run_llm_dual.ts",
     "run:v3:six": "node --import tsx src/scripts/run_llm_game.ts --board six_player_mvp --max-runtime-ms 1800000 --llm-timeout-ms 30000",
-    "run:v3:twelve": "node --import tsx src/scripts/run_llm_game.ts --board twelve_player_standard --max-runtime-ms 240000 --llm-timeout-ms 300000",
+    "run:v3:twelve": "node --import tsx src/scripts/run_llm_game.ts --board twelve_player_standard --max-runtime-ms 2400000 --llm-timeout-ms 300000",
     "run:v3:mock": "node --import tsx src/scripts/run_mock_game.ts",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"

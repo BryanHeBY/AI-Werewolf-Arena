@@ -1,3 +1,4 @@
+/** 文件说明：女巫夜间用药阶段处理。 */
 import { COMPONENT } from "../../../domain/components/names";
 import { RoleComponent } from "../../../domain/components/role";
 import { Phase, Role, StatusMark } from "../../../domain/model";
@@ -81,6 +82,7 @@ const witchActionStage: NightStageHandler = {
   },
 };
 
+/** 女巫夜间阶段列表。 */
 export const WITCH_NIGHT_STAGES: NightStageHandler[] = [
   resetNightRoleStateStage,
   witchActionStage,

@@ -1,6 +1,8 @@
+/** 文件说明：预言家工具规格定义。 */
 import { ToolSpec } from "../../contracts";
 import { prop } from "../../shared/schema";
 
+/** 预言家工具规格列表。 */
 export const SEER_TOOL_SPECS: ToolSpec[] = [
   {
     name: "check_identity",
@@ -20,4 +22,3 @@ export const SEER_TOOL_SPECS: ToolSpec[] = [
     argHint: 'check_identity args: {"target_id":number}',
   },
 ];
-

@@ -1,6 +1,8 @@
+/** 文件说明：提供角色名称与技能简介的统一查询接口。 */
 import { Role } from "../../domain/model";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "./profile_registry";
 
+/** 角色提示词信息注册表。 */
 export class RolePromptRegistry {
   private readonly roleProfileRegistry: RoleProfileRegistry;
 
@@ -19,6 +21,7 @@ export class RolePromptRegistry {
 
 let defaultRegistry: RolePromptRegistry | null = null;
 
+/** 获取默认角色提示词信息注册表实例。 */
 export function getDefaultRolePromptRegistry(): RolePromptRegistry {
   if (!defaultRegistry) {
     defaultRegistry = new RolePromptRegistry();

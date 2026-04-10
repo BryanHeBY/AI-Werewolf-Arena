@@ -1,3 +1,4 @@
+/** 文件说明：警长机制主流程（上警、投警、发言顺序）。 */
 import { AliveComponent } from "../../domain/components/alive";
 import { BadgeComponent } from "../../domain/components/badge";
 import { COMPONENT } from "../../domain/components/names";
@@ -16,8 +17,10 @@ import { ToolGateway } from "../../gateway/tool_gateway";
 import { buildAgentBroadcastFeed } from "../../engine/agent_broadcast_feed";
 import { transferOrDestroySheriffBadge } from "./sheriff_badge";
 
+/** 警长发言方向。 */
 export type SpeakerDirection = "clockwise" | "counter_clockwise";
 
+/** 警长机制实现。 */
 export class SheriffMechanism {
   private static readonly SHERIFF_VOTE_WEIGHT = 1.5;
 
@@ -70,6 +73,7 @@ export class SheriffMechanism {
         buildAgentBroadcastFeed(world, events, actorId),
       );
     }
+    // 上警声明并行收集，避免顺序执行导致后手玩家读取前手“上警/退水”结果后被动调整。
     const nominationResults = await Promise.all(
       aliveIds.map(async (actorId) => {
         const req: ActionRequest = {
@@ -132,6 +136,7 @@ export class SheriffMechanism {
         buildAgentBroadcastFeed(world, events, actorId),
       );
     }
+    // 警长投票同样并行收集，所有投票基于同一快照上下文。
     const sheriffVoteResults = await Promise.all(
       aliveIds.map(async (actorId) => {
         const req: ActionRequest = {
@@ -346,6 +351,7 @@ export class SheriffMechanism {
 
 let defaultMechanism: SheriffMechanism | null = null;
 
+/** 获取默认警长机制实例。 */
 export function getDefaultSheriffMechanism(): SheriffMechanism {
   if (!defaultMechanism) {
     defaultMechanism = new SheriffMechanism();

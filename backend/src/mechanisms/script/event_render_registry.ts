@@ -1,3 +1,4 @@
+/** 文件说明：事件 -> 脚本回放文本/终端文本渲染注册表。 */
 import { GameEvent } from "../../domain/model";
 import {
   ScriptChatLineHandler,
@@ -92,6 +93,7 @@ const LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {
   ...SHERIFF_SCRIPT_LIVE_HANDLERS,
 };
 
+/** 脚本渲染注册表。 */
 export class ScriptEventRenderRegistry {
   toChatLine(event: GameEvent): string | null {
     const handler = CHAT_HANDLERS[event.type];
@@ -138,6 +140,7 @@ export class ScriptEventRenderRegistry {
 
 let defaultRegistry: ScriptEventRenderRegistry | null = null;
 
+/** 获取默认脚本渲染注册表实例。 */
 export function getDefaultScriptEventRenderRegistry(): ScriptEventRenderRegistry {
   if (!defaultRegistry) {
     defaultRegistry = new ScriptEventRenderRegistry();

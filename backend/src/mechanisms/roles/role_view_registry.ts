@@ -1,3 +1,4 @@
+/** 文件说明：角色到前端展示视图的转换逻辑。 */
 import { COMPONENT } from "../../domain/components/names";
 import { RoleComponent } from "../../domain/components/role";
 import { Camp, Role } from "../../domain/model";
@@ -14,6 +15,7 @@ const FRONTEND_ROLE_TYPE: Record<Role, string> = {
   [Role.Idiot]: "idiot",
 };
 
+/** 角色视图转换注册表。 */
 export class RoleViewRegistry {
   toFrontendRoleType(role: Role | undefined): string {
     if (!role) {
@@ -44,6 +46,7 @@ export class RoleViewRegistry {
 
 let defaultRegistry: RoleViewRegistry | null = null;
 
+/** 获取默认角色视图转换注册表实例。 */
 export function getDefaultRoleViewRegistry(): RoleViewRegistry {
   if (!defaultRegistry) {
     defaultRegistry = new RoleViewRegistry();

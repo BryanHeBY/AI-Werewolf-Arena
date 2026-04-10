@@ -1,3 +1,4 @@
+/** 文件说明：女巫工具规格与阶段提示规则定义。 */
 import { PotionType } from "../../../domain/model";
 import { StageDirectiveRule, ToolSpec } from "../../contracts";
 import { prop } from "../../shared/schema";
@@ -15,6 +16,7 @@ const usePotionSchema = {
   },
 } as const;
 
+/** 女巫工具规格列表。 */
 export const WITCH_TOOL_SPECS: ToolSpec[] = [
   {
     name: "use_potion",
@@ -41,6 +43,7 @@ export const WITCH_TOOL_SPECS: ToolSpec[] = [
   },
 ];
 
+/** 女巫阶段提示规则。 */
 export const WITCH_STAGE_DIRECTIVES: StageDirectiveRule[] = [
   {
     match: (allowedTools) => allowedTools.length === 1 && allowedTools[0] === "use_potion",

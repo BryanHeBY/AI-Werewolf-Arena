@@ -1,3 +1,4 @@
+/** 文件说明：女巫工具调用的 LLM 修复策略。 */
 import { PotionType } from "../../../domain/model";
 import { ToolRepairPack } from "../../llm/contracts";
 import {
@@ -7,6 +8,7 @@ import {
   pickAliveNotSelf,
 } from "../../llm/helpers";
 
+/** 女巫角色 LLM 修复包。 */
 export const WITCH_LLM_REPAIR_PACK: ToolRepairPack = {
   coerce: {
     use_potion: (args) => {

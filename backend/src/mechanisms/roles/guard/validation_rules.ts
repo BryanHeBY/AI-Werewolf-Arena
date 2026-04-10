@@ -1,7 +1,9 @@
+/** 文件说明：守卫工具校验规则。 */
 import { Role } from "../../../domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 import { getGuardState } from "../private_state";
 
+/** 守卫工具校验规则集合。 */
 export const GUARD_VALIDATION_RULES: ToolRuleMap = {
   guard: ({ world, role, toolCall }) => {
     const guardState = getGuardState(role);

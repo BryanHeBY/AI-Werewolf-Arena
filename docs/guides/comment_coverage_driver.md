@@ -131,3 +131,28 @@
 - [x] `frontend/src/lib/utils.ts`
 - [x] `frontend/src/main.ts`
 - [x] `frontend/src/types/index.ts`
+
+## 5. 手工补注释任务清单（2026-04-11）
+
+约束：
+
+1. 逐文件手工查看并补注释。
+2. 每次仅允许勾选一个 TODO。
+3. 在全部 TODO 勾选完成前不得结束任务。
+
+- [x] `M01` `backend/src/agents/llm/prompt_templates.ts` 手工补齐文件注释与 export 注释。
+- [x] `M02` `backend/src/mechanisms/broadcast/*` 手工补齐注释。
+- [x] `M03` `backend/src/mechanisms/common/*` 手工补齐注释。
+- [x] `M04` `backend/src/mechanisms/contracts.ts`、`index.ts`、`hooks/*`、`llm/*` 手工补齐注释。
+- [x] `M05` `backend/src/mechanisms/registries/*`、`roles/contracts.ts`、`roles/private_state.ts`、`roles/*registry*.ts` 手工补齐注释。
+- [x] `M06` `backend/src/mechanisms/roles/guard/*` 手工补齐注释。
+- [x] `M07` `backend/src/mechanisms/roles/hunter/*` 手工补齐注释。
+- [x] `M08` `backend/src/mechanisms/roles/idiot/*`、`roles/villager/profile.ts` 手工补齐注释。
+- [x] `M09` `backend/src/mechanisms/roles/seer/*` 手工补齐注释。
+- [x] `M10` `backend/src/mechanisms/roles/witch/*` 手工补齐注释。
+- [x] `M11` `backend/src/mechanisms/roles/wolf/*` 手工补齐注释。
+- [x] `M12` `backend/src/mechanisms/sheriff/*` 手工补齐注释。
+- [x] `M13` `backend/src/mechanisms/script/*`、`session/*` 手工补齐注释。
+- [x] `M14` `backend/src/mechanisms/shared/schema.ts`、`stages/night/*`、`validation/*`、`win_conditions/*` 手工补齐注释。
+- [x] `M15` `backend/src/session_recording/index.ts`、`types.ts`、`session_record_manager.ts` 手工补齐注释。
+- [x] `M16` 复核本轮手工补注释文件，确认关键逻辑含目的性注释。

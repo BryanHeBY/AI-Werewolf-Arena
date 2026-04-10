@@ -1,5 +1,7 @@
+/** 文件说明：警长机制工具规格定义。 */
 import { ToolSpec } from "../contracts";
 
+/** 警长机制工具规格列表。 */
 export const SHERIFF_TOOL_SPECS: ToolSpec[] = [
   {
     name: "run_for_sheriff",

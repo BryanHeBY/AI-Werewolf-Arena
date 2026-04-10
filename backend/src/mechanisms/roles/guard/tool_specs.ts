@@ -1,3 +1,4 @@
+/** 文件说明：守卫工具规格定义。 */
 import { ToolSpec } from "../../contracts";
 import { prop } from "../../shared/schema";
 
@@ -14,6 +15,7 @@ const guardSchema = {
   },
 } as const;
 
+/** 守卫工具规格列表。 */
 export const GUARD_TOOL_SPECS: ToolSpec[] = [
   {
     name: "guard",

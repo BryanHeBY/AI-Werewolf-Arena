@@ -1,3 +1,4 @@
+/** 文件说明：会话复盘记录聚合、序列化与落盘管理。 */
 import { promises as fs } from "fs";
 import path from "path";
 import {
@@ -376,6 +377,7 @@ export class SessionRecordHub {
   }
 }
 
+/** 解析默认复盘输出目录。 */
 export function resolveDefaultRecordRoot(cwd: string = process.cwd()): string {
   if (path.basename(cwd) === "backend") {
     return path.resolve(cwd, "..", "record");
@@ -383,11 +385,13 @@ export function resolveDefaultRecordRoot(cwd: string = process.cwd()): string {
   return path.resolve(cwd, "record");
 }
 
+/** 生成会话 ID。 */
 export function buildSessionId(now: number = Date.now()): string {
   const rand = Math.random().toString(36).slice(2, 8);
   return `session_${now}_${rand}`;
 }
 
+/** 安全写入逻辑操作（无 active manager 时静默跳过）。 */
 export function safeRecordLogicOp(input: ReplayRecordLogicOpInput): void {
   const active = SessionRecordHub.getActive();
   if (!active) {

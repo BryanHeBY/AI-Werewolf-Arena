@@ -1,6 +1,8 @@
+/** 文件说明：狼人工具调用的 LLM 修复策略。 */
 import { ToolRepairPack } from "../../llm/contracts";
 import { extractTargetId, numberOrNull, pickAliveNotSelf } from "../../llm/helpers";
 
+/** 狼人角色 LLM 修复包。 */
 export const WOLF_LLM_REPAIR_PACK: ToolRepairPack = {
   coerce: {
     speak_to_wolves: (args) => ({

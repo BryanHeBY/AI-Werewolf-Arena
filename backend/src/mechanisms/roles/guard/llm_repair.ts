@@ -1,6 +1,8 @@
+/** 文件说明：守卫工具调用的 LLM 修复策略。 */
 import { ToolRepairPack } from "../../llm/contracts";
 import { extractTargetId, numberOrNull, pickAliveNotSelf } from "../../llm/helpers";
 
+/** 守卫角色 LLM 修复包。 */
 export const GUARD_LLM_REPAIR_PACK: ToolRepairPack = {
   coerce: {
     guard: (args) => {

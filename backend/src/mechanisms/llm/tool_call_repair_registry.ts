@@ -1,3 +1,4 @@
+/** 文件说明：聚合所有角色与机制的 LLM 修复规则。 */
 import { ToolCall, ToolName } from "../../domain/model";
 import { COMMON_LLM_REPAIR_PACK } from "../common/llm_repair";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../roles/profile_registry";
@@ -14,6 +15,7 @@ function buildDefaultPacks(roleProfileRegistry: RoleProfileRegistry): ToolRepair
   return packs;
 }
 
+/** LLM 工具调用修复注册表。 */
 export class ToolCallRepairRegistry {
   private readonly coerceHandlers = new Map<ToolName, ToolRepairPack["coerce"][ToolName]>();
   private readonly recoverHandlers = new Map<ToolName, ToolRepairPack["recover"][ToolName]>();
@@ -60,6 +62,7 @@ export class ToolCallRepairRegistry {
 
 let defaultRegistry: ToolCallRepairRegistry | null = null;
 
+/** 获取默认 LLM 工具调用修复注册表实例。 */
 export function getDefaultToolCallRepairRegistry(): ToolCallRepairRegistry {
   if (!defaultRegistry) {
     defaultRegistry = new ToolCallRepairRegistry();

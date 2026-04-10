@@ -1,3 +1,4 @@
+/** 文件说明：领域事件到前端实时事件的转换注册表。 */
 import { Camp, GameEvent, Phase } from "../../domain/model";
 import { RealtimeGameEvent } from "../../infra/transport/broadcaster";
 import { toFrontendFaction, toFrontendPhase } from "../../server/view_mapper";
@@ -172,6 +173,7 @@ const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
   },
 };
 
+/** 实时事件转换注册表。 */
 export class RealtimeEventRegistry {
   private readonly handlers: Record<string, RealtimeEventHandler>;
 
@@ -190,6 +192,7 @@ export class RealtimeEventRegistry {
 
 let defaultRegistry: RealtimeEventRegistry | null = null;
 
+/** 获取默认实时事件转换注册表实例。 */
 export function getDefaultRealtimeEventRegistry(): RealtimeEventRegistry {
   if (!defaultRegistry) {
     defaultRegistry = new RealtimeEventRegistry();

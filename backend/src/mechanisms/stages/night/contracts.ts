@@ -1,3 +1,4 @@
+/** 文件说明：夜间阶段处理器契约。 */
 import { StatusMarksComponent } from "../../../domain/components/status_marks";
 import {
   ActionProvider,
@@ -9,6 +10,7 @@ import {
 import { World } from "../../../domain/world";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 
+/** 夜间阶段共享状态。 */
 export interface NightStageState {
   wolfIds: EntityId[];
   endedWolves: Set<EntityId>;
@@ -17,6 +19,7 @@ export interface NightStageState {
   seerChecks: NightSummary["seerChecks"];
 }
 
+/** 夜间阶段执行上下文。 */
 export interface NightStageContext {
   world: World;
   toolGateway: ToolGateway;
@@ -35,6 +38,7 @@ export interface NightStageContext {
   state: NightStageState;
 }
 
+/** 夜间阶段处理器定义。 */
 export interface NightStageHandler {
   id: string;
   priority: number;

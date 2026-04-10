@@ -1,3 +1,4 @@
+/** 文件说明：聚合通用/角色/机制校验规则并提供统一校验入口。 */
 import { ToolName } from "../../domain/model";
 import { COMMON_VALIDATION_RULES } from "../common/validation_rules";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../roles/profile_registry";
@@ -17,6 +18,7 @@ function buildDefaultRules(roleProfileRegistry: RoleProfileRegistry): ToolRuleMa
   return rules;
 }
 
+/** 工具校验规则注册表。 */
 export class ToolValidationRuleRegistry {
   private readonly rules: ToolRuleMap;
 
@@ -38,6 +40,7 @@ export class ToolValidationRuleRegistry {
 
 let defaultRegistry: ToolValidationRuleRegistry | null = null;
 
+/** 获取默认工具校验规则注册表实例。 */
 export function getDefaultToolValidationRuleRegistry(): ToolValidationRuleRegistry {
   if (!defaultRegistry) {
     defaultRegistry = new ToolValidationRuleRegistry();

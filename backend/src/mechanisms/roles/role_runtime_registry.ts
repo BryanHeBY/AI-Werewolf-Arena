@@ -1,6 +1,8 @@
+/** 文件说明：把角色 profile 的初始化与提示渲染能力注入到组件。 */
 import { RoleComponent } from "../../domain/components/role";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "./profile_registry";
 
+/** 角色运行时初始化注册表。 */
 export class RoleRuntimeRegistry {
   private readonly roleProfileRegistry: RoleProfileRegistry;
 
@@ -22,6 +24,7 @@ export class RoleRuntimeRegistry {
 
 let defaultRegistry: RoleRuntimeRegistry | null = null;
 
+/** 获取默认角色运行时初始化注册表实例。 */
 export function getDefaultRoleRuntimeRegistry(): RoleRuntimeRegistry {
   if (!defaultRegistry) {
     defaultRegistry = new RoleRuntimeRegistry();

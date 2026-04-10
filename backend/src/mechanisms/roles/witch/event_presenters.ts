@@ -1,8 +1,10 @@
+/** 文件说明：女巫相关事件在不同输出通道中的渲染实现。 */
 import { AgentEventLineHandler } from "../../broadcast/contracts";
 import { ScriptLiveRenderHandler } from "../../script/contracts";
 import { RealtimeEventHandler } from "../../session/contracts";
 import { RealtimeGameEvent } from "../../../infra/transport/broadcaster";
 
+/** 女巫事件 -> 玩家广播行映射。 */
 export const WITCH_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
   witch_potion_used: (event, ctx) => {
     const p = event.payload as Record<string, any>;
@@ -20,6 +22,7 @@ export const WITCH_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandl
   },
 };
 
+/** 女巫事件 -> 终端 live 渲染映射。 */
 export const WITCH_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {
   witch_potion_used: (event) => [
     {
@@ -52,6 +55,7 @@ function privateTargetsEvent(
   };
 }
 
+/** 女巫事件 -> 实时推送事件映射。 */
 export const WITCH_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> = {
   witch_potion_used: (event) => {
     const actorId = Number(event.payload.actorId);
@@ -87,4 +91,3 @@ export const WITCH_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler>
     ];
   },
 };
-

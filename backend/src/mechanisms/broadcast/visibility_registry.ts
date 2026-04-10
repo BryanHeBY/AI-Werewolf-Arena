@@ -1,14 +1,17 @@
+/** 文件说明：封装广播可见性判定逻辑。 */
 import { COMPONENT } from "../../domain/components/names";
 import { inferCamp } from "../../domain/components/role";
 import { RoleComponent } from "../../domain/components/role";
 import { Camp, EntityId, Role } from "../../domain/model";
 import { World } from "../../domain/world";
 
+/** 广播受众身份视图。 */
 export interface AudienceIdentity {
   role?: string;
   camp?: Camp | string;
 }
 
+/** 广播可见性判定注册器。 */
 export class VisibilityRegistry {
   isWolfPlayer(world: World, actorId: EntityId): boolean {
     const roleComp = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
@@ -35,6 +38,7 @@ export class VisibilityRegistry {
 
 let defaultRegistry: VisibilityRegistry | null = null;
 
+/** 获取默认广播可见性注册器实例。 */
 export function getDefaultVisibilityRegistry(): VisibilityRegistry {
   if (!defaultRegistry) {
     defaultRegistry = new VisibilityRegistry();

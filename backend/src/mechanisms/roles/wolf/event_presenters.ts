@@ -1,3 +1,4 @@
+/** 文件说明：狼人相关事件在不同输出通道中的渲染实现。 */
 import { GameEvent } from "../../../domain/model";
 import {
   AgentEventLineHandler,
@@ -7,6 +8,7 @@ import { ScriptLiveRenderHandler, ScriptChatLineHandler } from "../../script/con
 import { RealtimeEventHandler, RealtimeTranslateContext } from "../../session/contracts";
 import { RealtimeGameEvent } from "../../../infra/transport/broadcaster";
 
+/** 狼人事件 -> 玩家广播行映射。 */
 export const WOLF_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
   wolf_self_destruct: (event) => {
     const p = event.payload as Record<string, any>;
@@ -45,6 +47,7 @@ export const WOLF_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandle
   },
 };
 
+/** 狼人事件 -> 聊天行渲染映射。 */
 export const WOLF_SCRIPT_CHAT_HANDLERS: Record<string, ScriptChatLineHandler> = {
   wolf_discussion: (event) => {
     const p = event.payload as Record<string, any>;
@@ -56,6 +59,7 @@ export const WOLF_SCRIPT_CHAT_HANDLERS: Record<string, ScriptChatLineHandler> = 
   },
 };
 
+/** 狼人事件 -> 终端 live 渲染映射。 */
 export const WOLF_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {
   wolf_discussion: (event) => [
     {
@@ -108,6 +112,7 @@ function publicEvent(
   };
 }
 
+/** 狼人事件 -> 实时推送事件映射。 */
 export const WOLF_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> = {
   wolf_tactical_order: (event) => [
     wolvesOnlyEvent(
@@ -159,4 +164,3 @@ export const WOLF_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> 
     ];
   },
 };
-

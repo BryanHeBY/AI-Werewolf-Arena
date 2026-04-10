@@ -1,3 +1,4 @@
+/** 文件说明：警徽流转与销毁逻辑。 */
 import { AliveComponent } from "../../domain/components/alive";
 import { BadgeComponent } from "../../domain/components/badge";
 import { COMPONENT } from "../../domain/components/names";
@@ -119,4 +120,3 @@ function pickNextSheriffCandidate(world: World, fromId: EntityId): EntityId | nu
 
   return candidates[0] ?? null;
 }
-

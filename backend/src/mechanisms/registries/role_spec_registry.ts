@@ -1,3 +1,4 @@
+/** 文件说明：组装角色规格视图（label/skill/allowedTools）。 */
 import { Role, ToolName } from "../../domain/model";
 import { COMMON_TOOL_SPECS } from "../common/tool_specs";
 import { RoleSpec } from "../contracts";
@@ -7,6 +8,7 @@ import {
 } from "../roles/role_prompt_registry";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../roles/profile_registry";
 
+/** 角色规格注册表。 */
 export class RoleSpecRegistry {
   private readonly specByRole = new Map<Role, RoleSpec>();
 

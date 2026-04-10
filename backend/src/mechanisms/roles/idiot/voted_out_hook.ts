@@ -1,3 +1,4 @@
+/** 文件说明：白痴被放逐时翻牌免死的钩子实现。 */
 import { AliveComponent } from "../../../domain/components/alive";
 import { BadgeComponent } from "../../../domain/components/badge";
 import { COMPONENT } from "../../../domain/components/names";
@@ -9,6 +10,7 @@ import { VotedOutResult } from "../../hooks/hook_registry";
 import { transferOrDestroySheriffBadge } from "../../sheriff/sheriff_badge";
 import { setIdiotState } from "../private_state";
 
+/** 白痴放逐钩子实现。 */
 export function idiotVotedOutHook(
   world: World,
   targetId: EntityId,

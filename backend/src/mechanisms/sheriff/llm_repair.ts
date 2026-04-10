@@ -1,5 +1,7 @@
+/** 文件说明：警长机制工具调用的 LLM 修复策略。 */
 import { ToolRepairPack } from "../llm/contracts";
 
+/** 警长机制 LLM 修复包。 */
 export const SHERIFF_LLM_REPAIR_PACK: ToolRepairPack = {
   coerce: {
     run_for_sheriff: (args) => ({

@@ -1,3 +1,4 @@
+/** 文件说明：猎人死亡时开枪带人相关钩子。 */
 import { AliveComponent } from "../../../domain/components/alive";
 import { COMPONENT } from "../../../domain/components/names";
 import { RoleComponent } from "../../../domain/components/role";
@@ -11,6 +12,7 @@ import { World } from "../../../domain/world";
 import { DeathHookResult } from "../../hooks/hook_registry";
 import { getHunterState } from "../private_state";
 
+/** 猎人死亡钩子实现。 */
 export async function hunterDeathHook(
   world: World,
   deadIds: EntityId[],

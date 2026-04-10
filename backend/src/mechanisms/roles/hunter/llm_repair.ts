@@ -1,6 +1,8 @@
+/** 文件说明：猎人工具调用的 LLM 修复策略。 */
 import { ToolRepairPack } from "../../llm/contracts";
 import { extractTargetId, numberOrNull, pickAliveNotSelf } from "../../llm/helpers";
 
+/** 猎人角色 LLM 修复包。 */
 export const HUNTER_LLM_REPAIR_PACK: ToolRepairPack = {
   coerce: {
     shoot: (args) => {

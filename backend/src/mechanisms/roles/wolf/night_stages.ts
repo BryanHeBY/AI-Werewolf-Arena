@@ -1,3 +1,4 @@
+/** 文件说明：狼人夜聊与刀人投票阶段处理。 */
 import { EntityId, Phase, Role, StatusMark } from "../../../domain/model";
 import { safeRecordLogicOp } from "../../../session_recording";
 import { NightStageHandler } from "../../stages/night/contracts";
@@ -20,6 +21,7 @@ const wolfDiscussionStage: NightStageHandler = {
       });
     }
 
+    // 轮转夜聊：每只狼最多发言 WOLF_DISCUSSION_MAX_ROUNDS 次，end_chat 后跳过后续轮次。
     for (let round = 1; round <= WOLF_DISCUSSION_MAX_ROUNDS; round++) {
       for (const wolfId of wolfIds) {
         if (ctx.state.endedWolves.has(wolfId)) {
@@ -78,6 +80,7 @@ const wolfKillVoteStage: NightStageHandler = {
   priority: 400,
   async execute(ctx): Promise<void> {
     ctx.state.wolfVotes = {};
+    // 顺序收集狼刀票，统一在阶段末做多数决结算，避免中途状态污染。
     for (const wolfId of ctx.state.wolfIds) {
       const req = ctx.makeRequest(wolfId, ["kill_vote"], { phase: "wolf_vote" });
       const action = await ctx.actionProvider.getAction(req);
@@ -134,8 +137,8 @@ const wolfKillVoteStage: NightStageHandler = {
   },
 };
 
+/** 狼人夜间阶段列表。 */
 export const WOLF_NIGHT_STAGES: NightStageHandler[] = [
   wolfDiscussionStage,
   wolfKillVoteStage,
 ];
-

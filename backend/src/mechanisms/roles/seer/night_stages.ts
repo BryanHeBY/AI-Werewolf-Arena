@@ -1,3 +1,4 @@
+/** 文件说明：预言家夜间查验阶段处理。 */
 import { COMPONENT } from "../../../domain/components/names";
 import { RoleComponent } from "../../../domain/components/role";
 import { Camp, Phase, Role } from "../../../domain/model";
@@ -45,4 +46,5 @@ const seerCheckStage: NightStageHandler = {
   },
 };
 
+/** 预言家夜间阶段列表。 */
 export const SEER_NIGHT_STAGES: NightStageHandler[] = [seerCheckStage];

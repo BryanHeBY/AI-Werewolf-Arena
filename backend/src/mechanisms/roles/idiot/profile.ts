@@ -1,8 +1,10 @@
+/** 文件说明：白痴角色 profile。 */
 import { Role } from "../../../domain/model";
 import { RoleProfile } from "../contracts";
 import { setIdiotState } from "../private_state";
 import { idiotVotedOutHook } from "./voted_out_hook";
 
+/** 白痴角色配置。 */
 export const IDIOT_ROLE_PROFILE: RoleProfile = {
   role: Role.Idiot,
   label: "白痴",

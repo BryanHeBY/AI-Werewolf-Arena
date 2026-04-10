@@ -1,7 +1,9 @@
+/** 文件说明：警长机制工具校验规则。 */
 import { Phase } from "../../domain/model";
 import { COMPONENT } from "../../domain/components/names";
 import { ToolRuleMap } from "../validation/contracts";
 
+/** 警长机制工具校验规则集合。 */
 export const SHERIFF_VALIDATION_RULES: ToolRuleMap = {
   run_for_sheriff: ({ phase, toolCall }) => {
     if (phase !== Phase.Day) {

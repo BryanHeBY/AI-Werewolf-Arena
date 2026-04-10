@@ -1,6 +1,8 @@
+/** 文件说明：平民角色 profile。 */
 import { Role } from "../../../domain/model";
 import { RoleProfile } from "../contracts";
 
+/** 平民角色配置。 */
 export const VILLAGER_ROLE_PROFILE: RoleProfile = {
   role: Role.Villager,
   label: "平民",

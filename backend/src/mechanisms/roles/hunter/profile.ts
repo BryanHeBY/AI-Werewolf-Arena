@@ -1,3 +1,4 @@
+/** 文件说明：猎人角色 profile。 */
 import { Role } from "../../../domain/model";
 import { RoleProfile } from "../contracts";
 import { setHunterState } from "../private_state";
@@ -6,6 +7,7 @@ import { HUNTER_LLM_REPAIR_PACK } from "./llm_repair";
 import { HUNTER_TOOL_SPECS } from "./tool_specs";
 import { HUNTER_VALIDATION_RULES } from "./validation_rules";
 
+/** 猎人角色配置。 */
 export const HUNTER_ROLE_PROFILE: RoleProfile = {
   role: Role.Hunter,
   label: "猎人",

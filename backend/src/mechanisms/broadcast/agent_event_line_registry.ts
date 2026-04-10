@@ -1,3 +1,4 @@
+/** 文件说明：将领域事件转换为“单个玩家可见”的广播行。 */
 import { GameEvent } from "../../domain/model";
 import { GUARD_AGENT_EVENT_LINE_HANDLERS } from "../roles/guard/event_presenters";
 import { SEER_AGENT_EVENT_LINE_HANDLERS } from "../roles/seer/event_presenters";
@@ -49,6 +50,7 @@ const DEFAULT_HANDLERS: Record<string, AgentEventLineHandler> = {
   ...SHERIFF_AGENT_EVENT_LINE_HANDLERS,
 };
 
+/** 玩家广播文本行注册表。 */
 export class AgentEventLineRegistry {
   private readonly handlers: Record<string, AgentEventLineHandler>;
 
@@ -67,6 +69,7 @@ export class AgentEventLineRegistry {
 
 let defaultRegistry: AgentEventLineRegistry | null = null;
 
+/** 获取默认玩家广播文本行注册表实例。 */
 export function getDefaultAgentEventLineRegistry(): AgentEventLineRegistry {
   if (!defaultRegistry) {
     defaultRegistry = new AgentEventLineRegistry();

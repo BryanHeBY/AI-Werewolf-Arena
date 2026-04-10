@@ -1,3 +1,4 @@
+/** 文件说明：汇总工具规格与阶段提示规则。 */
 import { ToolName } from "../../domain/model";
 import { COMMON_TOOL_SPECS } from "../common/tool_specs";
 import { StageDirectiveRule, ToolSpec } from "../contracts";
@@ -26,6 +27,7 @@ function buildDefaultStageDirectives(
   return directives;
 }
 
+/** 工具规格注册表。 */
 export class ToolSpecRegistry {
   private readonly specByName = new Map<ToolName, ToolSpec>();
   private readonly stageDirectives: StageDirectiveRule[];
@@ -80,6 +82,7 @@ export class ToolSpecRegistry {
 
 let defaultRegistry: ToolSpecRegistry | null = null;
 
+/** 获取默认工具规格注册表实例。 */
 export function getDefaultToolSpecRegistry(): ToolSpecRegistry {
   if (!defaultRegistry) {
     defaultRegistry = new ToolSpecRegistry();

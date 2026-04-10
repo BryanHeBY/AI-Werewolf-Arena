@@ -1,3 +1,4 @@
+/** 文件说明：狼人工具规格与阶段提示规则定义。 */
 import { StageDirectiveRule, ToolSpec } from "../../contracts";
 import { prop } from "../../shared/schema";
 
@@ -13,6 +14,7 @@ const selfDestructSchema = {
   },
 } as const;
 
+/** 狼人工具规格列表。 */
 export const WOLF_TOOL_SPECS: ToolSpec[] = [
   {
     name: "speak_to_wolves",
@@ -70,6 +72,7 @@ export const WOLF_TOOL_SPECS: ToolSpec[] = [
   },
 ];
 
+/** 狼人阶段提示规则。 */
 export const WOLF_STAGE_DIRECTIVES: StageDirectiveRule[] = [
   {
     match: (allowedTools) => allowedTools.includes("speak_to_wolves"),

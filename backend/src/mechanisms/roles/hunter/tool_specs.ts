@@ -1,3 +1,4 @@
+/** 文件说明：猎人工具规格定义。 */
 import { ToolSpec } from "../../contracts";
 import { prop } from "../../shared/schema";
 
@@ -13,6 +14,7 @@ const shootSchema = {
   },
 } as const;
 
+/** 猎人工具规格列表。 */
 export const HUNTER_TOOL_SPECS: ToolSpec[] = [
   {
     name: "shoot",

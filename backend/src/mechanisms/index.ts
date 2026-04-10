@@ -1,3 +1,4 @@
+/** 文件说明：机制层统一导出入口。 */
 export * from "./contracts";
 export * from "./broadcast/agent_event_line_registry";
 export * from "./broadcast/visibility_registry";

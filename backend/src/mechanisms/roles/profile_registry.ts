@@ -1,3 +1,4 @@
+/** 文件说明：集中注册所有角色 profile。 */
 import { Role } from "../../domain/model";
 import { RoleProfile } from "./contracts";
 import { GUARD_ROLE_PROFILE } from "./guard/profile";
@@ -18,6 +19,7 @@ const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   IDIOT_ROLE_PROFILE,
 ];
 
+/** 角色 profile 注册表。 */
 export class RoleProfileRegistry {
   private readonly profileByRole = new Map<Role, RoleProfile>();
 
@@ -38,6 +40,7 @@ export class RoleProfileRegistry {
 
 let defaultRegistry: RoleProfileRegistry | null = null;
 
+/** 获取默认角色 profile 注册表实例。 */
 export function getDefaultRoleProfileRegistry(): RoleProfileRegistry {
   if (!defaultRegistry) {
     defaultRegistry = new RoleProfileRegistry();

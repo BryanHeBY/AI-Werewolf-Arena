@@ -1,8 +1,10 @@
+/** 文件说明：警长机制相关事件在不同输出通道中的渲染实现。 */
 import { AgentEventLineHandler } from "../broadcast/contracts";
 import { ScriptJudgeLineHandler, ScriptLiveRenderHandler } from "../script/contracts";
 import { RealtimeEventHandler } from "../session/contracts";
 import { RealtimeGameEvent } from "../../infra/transport/broadcaster";
 
+/** 警长事件 -> 玩家广播行映射。 */
 export const SHERIFF_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
   sheriff_candidate_declared: (event) => {
     const p = event.payload as Record<string, any>;
@@ -26,6 +28,7 @@ export const SHERIFF_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHan
   },
 };
 
+/** 警长事件 -> 上帝判词渲染映射。 */
 export const SHERIFF_SCRIPT_JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler> = {
   sheriff_elected: (event) => {
     const p = event.payload as Record<string, any>;
@@ -33,6 +36,7 @@ export const SHERIFF_SCRIPT_JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandle
   },
 };
 
+/** 警长事件 -> 终端 live 渲染映射。 */
 export const SHERIFF_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {
   sheriff_candidate_declared: (event) => [
     {
@@ -82,6 +86,7 @@ function publicEvent(
   };
 }
 
+/** 警长事件 -> 实时推送事件映射。 */
 export const SHERIFF_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> = {
   sheriff_candidate_declared: (event) => [
     publicEvent(
@@ -135,4 +140,3 @@ export const SHERIFF_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandle
     ),
   ],
 };
-

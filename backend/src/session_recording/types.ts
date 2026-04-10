@@ -1,7 +1,10 @@
+/** 文件说明：对局复盘记录结构类型定义。 */
 import { Camp, ToolCall } from "../domain/model";
 
+/** 玩家回合行动模式。 */
 export type ReplayActionMode = "tool_call" | "text_action" | "none";
 
+/** manifest 中的玩家摘要。 */
 export interface ReplayManifestPlayer {
   player_id: number;
   role: string;
@@ -9,6 +12,7 @@ export interface ReplayManifestPlayer {
   alive: boolean;
 }
 
+/** 对局复盘主清单。 */
 export interface ReplayManifest {
   session_id: string;
   board: string;
@@ -25,6 +29,7 @@ export interface ReplayManifest {
   schema_version: "v1";
 }
 
+/** 公共时间线事件记录。 */
 export interface ReplayPublicEvent {
   seq: number;
   timestamp: string;
@@ -35,6 +40,7 @@ export interface ReplayPublicEvent {
   render_text?: string;
 }
 
+/** 逻辑操作审计记录。 */
 export interface ReplayLogicOp {
   seq: number;
   timestamp: string;
@@ -48,6 +54,7 @@ export interface ReplayLogicOp {
   reason?: string;
 }
 
+/** 工具调用追踪记录。 */
 export interface ReplayToolCallTrace {
   id?: string;
   name: string;
@@ -56,16 +63,19 @@ export interface ReplayToolCallTrace {
   result?: Record<string, unknown> | string;
 }
 
+/** LLM 请求消息结构。 */
 export interface ReplayLlmRequestMessage {
   role: "system" | "user" | "assistant" | "tool";
   content: string;
   tool_call_id?: string;
 }
 
+/** LLM 请求载荷结构。 */
 export interface ReplayLlmRequestPayload {
   messages: ReplayLlmRequestMessage[];
 }
 
+/** 玩家工具调用时间线条目。 */
 export interface ReplayPlayerToolCallEntry {
   seq: number;
   kind: "tool_call";
@@ -81,6 +91,7 @@ export interface ReplayPlayerToolCallEntry {
   result?: Record<string, unknown> | string;
 }
 
+/** 玩家文本动作时间线条目。 */
 export interface ReplayPlayerTextActionEntry {
   seq: number;
   kind: "text_action";
@@ -97,6 +108,7 @@ export interface ReplayPlayerTextActionEntry {
   };
 }
 
+/** 玩家 fallback 时间线条目。 */
 export interface ReplayPlayerFallbackEntry {
   seq: number;
   kind: "fallback";
@@ -116,6 +128,7 @@ export interface ReplayPlayerFallbackEntry {
   };
 }
 
+/** 玩家广播时间线条目。 */
 export interface ReplayPlayerBroadcastEntry {
   seq: number;
   kind: "broadcast";
@@ -128,6 +141,7 @@ export interface ReplayPlayerBroadcastEntry {
   content: string;
 }
 
+/** 玩家 LLM 消息时间线条目。 */
 export interface ReplayPlayerLlmMessageEntry {
   seq: number;
   kind: "llm_message";
@@ -141,6 +155,7 @@ export interface ReplayPlayerLlmMessageEntry {
   tool_call_id?: string;
 }
 
+/** 玩家时间线条目联合类型。 */
 export type ReplayPlayerTimelineEntry =
   | ReplayPlayerBroadcastEntry
   | ReplayPlayerLlmMessageEntry
@@ -148,6 +163,7 @@ export type ReplayPlayerTimelineEntry =
   | ReplayPlayerTextActionEntry
   | ReplayPlayerFallbackEntry;
 
+/** 玩家视角复盘结构。 */
 export interface ReplayPlayerView {
   player_id: number;
   role: string;
@@ -165,12 +181,14 @@ export interface ReplayPlayerView {
   timeline: ReplayPlayerTimelineEntry[];
 }
 
+/** 对局会话元信息。 */
 export interface ReplaySessionMeta {
   sessionId: string;
   board: string;
   startedAtIso: string;
 }
 
+/** 结束写盘元信息。 */
 export interface ReplayFinalizeMeta {
   endedAtIso: string;
   winner: Camp | null;
@@ -178,6 +196,7 @@ export interface ReplayFinalizeMeta {
   players: ReplayManifestPlayer[];
 }
 
+/** 记录公共事件输入结构。 */
 export interface ReplayRecordPublicEventInput {
   type: string;
   timestampMs: number;
@@ -187,6 +206,7 @@ export interface ReplayRecordPublicEventInput {
   renderText?: string;
 }
 
+/** 记录逻辑操作输入结构。 */
 export interface ReplayRecordLogicOpInput {
   scope: ReplayLogicOp["scope"];
   op: string;
@@ -198,6 +218,7 @@ export interface ReplayRecordLogicOpInput {
   reason?: string;
 }
 
+/** 记录玩家回合输入结构。 */
 export interface ReplayRecordPlayerRoundInput {
   playerId: number;
   role: string;
@@ -236,6 +257,7 @@ export interface ReplayRecordPlayerRoundInput {
   };
 }
 
+/** 记录玩家广播输入结构。 */
 export interface ReplayRecordPlayerBroadcastInput {
   playerId: number;
   role: string;

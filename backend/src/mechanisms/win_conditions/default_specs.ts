@@ -1,3 +1,4 @@
+/** 文件说明：内置胜利条件规格实现。 */
 import { COMPONENT } from "../../domain/components/names";
 import { RoleComponent } from "../../domain/components/role";
 import { Camp, GameResult, WinCondition } from "../../domain/model";
@@ -68,6 +69,7 @@ function evaluateSlaughterSide(world: World): GameResult | null {
   return null;
 }
 
+/** 默认胜利条件规格集合。 */
 export const DEFAULT_WIN_CONDITION_SPECS: WinConditionSpec[] = [
   {
     id: WinCondition.SlaughterCity,

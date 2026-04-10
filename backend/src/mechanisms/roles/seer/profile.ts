@@ -1,3 +1,4 @@
+/** 文件说明：预言家角色 profile。 */
 import { Role } from "../../../domain/model";
 import { RoleProfile } from "../contracts";
 import { getSeerState, setSeerState } from "../private_state";
@@ -6,6 +7,7 @@ import { SEER_NIGHT_STAGES } from "./night_stages";
 import { SEER_TOOL_SPECS } from "./tool_specs";
 import { SEER_VALIDATION_RULES } from "./validation_rules";
 
+/** 预言家角色配置。 */
 export const SEER_ROLE_PROFILE: RoleProfile = {
   role: Role.Seer,
   label: "预言家",

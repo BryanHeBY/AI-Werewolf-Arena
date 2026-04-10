@@ -1,3 +1,4 @@
+/** 文件说明：管理胜利条件规格与评估入口。 */
 import { GameResult, WinCondition } from "../../domain/model";
 import { World } from "../../domain/world";
 import {
@@ -5,6 +6,7 @@ import {
 } from "../win_conditions/default_specs";
 import { WinConditionSpec } from "../win_conditions/contracts";
 
+/** 胜利条件注册表。 */
 export class WinConditionRegistry {
   private readonly specById = new Map<WinCondition, WinConditionSpec>();
 
@@ -33,6 +35,7 @@ export class WinConditionRegistry {
 
 let defaultRegistry: WinConditionRegistry | null = null;
 
+/** 获取默认胜利条件注册表实例。 */
 export function getDefaultWinConditionRegistry(): WinConditionRegistry {
   if (!defaultRegistry) {
     defaultRegistry = new WinConditionRegistry();

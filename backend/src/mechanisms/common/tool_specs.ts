@@ -1,6 +1,8 @@
+/** 文件说明：定义跨角色通用工具的 schema 与提示信息。 */
 import { ToolSpec } from "../contracts";
 import { prop } from "../shared/schema";
 
+/** 通用工具规格列表。 */
 export const COMMON_TOOL_SPECS: ToolSpec[] = [
   {
     name: "speak",
