@@ -114,6 +114,14 @@ export interface ReplayPlayerView {
   player_id: number;
   role: string;
   camp: string;
+  initial_prompt?: {
+    day: number;
+    phase: string;
+    stage: string;
+    request_id: string;
+    prompt_system?: string;
+    prompt_user?: string[];
+  };
   timeline: ReplayPlayerTimelineEntry[];
 }
 
@@ -169,4 +177,15 @@ export interface ReplayRecordPlayerRoundInput {
   textAction?: ReplayPlayerActionEntry["text_action"];
   finalAction?: ToolCall | null;
   fallback?: ReplayPlayerActionEntry["fallback"];
+}
+
+export interface ReplayRecordPlayerBroadcastInput {
+  playerId: number;
+  role: string;
+  camp: string;
+  day: number;
+  phase: string;
+  stage: string;
+  requestId: string;
+  text: string;
 }

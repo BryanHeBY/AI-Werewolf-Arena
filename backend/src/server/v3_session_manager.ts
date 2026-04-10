@@ -330,6 +330,24 @@ class V3GameSession {
       ];
     }
 
+    if (event.type === "vote_cast") {
+      return [
+        this.makePublicEvent(
+          "vote_cast",
+          {
+            actorId: Number(event.payload.actorId),
+            targetId:
+              event.payload.targetId === null || event.payload.targetId === undefined
+                ? null
+                : Number(event.payload.targetId),
+            abstain: Boolean(event.payload.abstain),
+            weight: Number(event.payload.weight ?? 0),
+          },
+          event.timestamp,
+        ),
+      ];
+    }
+
     if (event.type === "wolf_self_destruct") {
       const wolfId = Number(event.payload.wolfId);
       return [this.makePlayerDiedEvent(wolfId, event.timestamp)];

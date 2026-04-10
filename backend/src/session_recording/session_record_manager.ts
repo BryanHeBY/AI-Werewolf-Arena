@@ -8,6 +8,7 @@ import {
   ReplayPlayerBroadcastEntry,
   ReplayPlayerView,
   ReplayRecordLogicOpInput,
+  ReplayRecordPlayerBroadcastInput,
   ReplayRecordPlayerRoundInput,
   ReplayRecordPublicEventInput,
   ReplaySessionMeta,
@@ -113,8 +114,19 @@ export class SessionRecordManager {
         timeline: [],
       };
 
+    if (!view.initial_prompt) {
+      view.initial_prompt = {
+        day: input.day,
+        phase: input.phase,
+        stage: input.stage,
+        request_id: input.requestId,
+        ...(input.promptSystem ? { prompt_system: input.promptSystem } : {}),
+        ...(input.promptUserDelta ? { prompt_user: [...input.promptUserDelta] } : {}),
+      };
+    }
+
     const nextSeq = (): number => view.timeline.length + 1;
-    const actionSeqHint = nextSeq() + input.visibleFeedDelta.length;
+    const actionSeqHint = nextSeq();
     const truncated: ReplayPlayerActionEntry["truncated"] = {};
 
     const thinkingText =
@@ -139,20 +151,6 @@ export class SessionRecordManager {
     }
 
     const lastPromptSystem = this.playerPromptSystemCache.get(input.playerId);
-    const broadcastEntries: ReplayPlayerBroadcastEntry[] = [];
-    for (const line of input.visibleFeedDelta) {
-      broadcastEntries.push({
-        seq: nextSeq() + broadcastEntries.length,
-        kind: "broadcast",
-        day: input.day,
-        phase: input.phase,
-        stage: input.stage,
-        request_id: input.requestId,
-        text: line,
-      });
-    }
-    view.timeline.push(...broadcastEntries);
-
     const actionEntry: ReplayPlayerActionEntry = {
       seq: nextSeq(),
       kind: "action",
@@ -206,6 +204,33 @@ export class SessionRecordManager {
     if (input.promptSystem) {
       this.playerPromptSystemCache.set(input.playerId, input.promptSystem);
     }
+  }
+
+  recordPlayerBroadcast(input: ReplayRecordPlayerBroadcastInput): void {
+    if (this.closed) {
+      return;
+    }
+    const existing = this.playerViews.get(input.playerId);
+    const view: ReplayPlayerView =
+      existing ??
+      {
+        player_id: input.playerId,
+        role: input.role,
+        camp: input.camp,
+        timeline: [],
+      };
+
+    const entry: ReplayPlayerBroadcastEntry = {
+      seq: view.timeline.length + 1,
+      kind: "broadcast",
+      day: input.day,
+      phase: input.phase,
+      stage: input.stage,
+      request_id: input.requestId,
+      text: input.text,
+    };
+    view.timeline.push(entry);
+    this.playerViews.set(input.playerId, view);
   }
 
   async finalize(meta: ReplayFinalizeMeta): Promise<void> {

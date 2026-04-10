@@ -14,6 +14,7 @@ import {
 import { OpenAIClient } from "../infra/llm/openai_client";
 import { COMPONENT } from "../domain/components/names";
 import { RoleComponent } from "../domain/components/role";
+import { buildAgentBroadcastFeed } from "../engine/agent_broadcast_feed";
 import { sixPlayerMvpConfig } from "../scenarios/six_player_mvp";
 import {
   buildSessionId,
@@ -220,6 +221,35 @@ function toReplayRenderText(event: { type: string; payload: Record<string, any> 
   return undefined;
 }
 
+function toReplayStage(event: { type: string; payload: Record<string, any> }): string {
+  if (event.type === "phase_changed") {
+    return String(event.payload.phase ?? "phase_changed");
+  }
+  if (event.type === "day_speech") {
+    return "day_speech";
+  }
+  if (event.type === "vote_cast" || event.type === "voted_out") {
+    return "voting";
+  }
+  if (
+    event.type === "wolf_discussion" ||
+    event.type === "wolf_discussion_ended" ||
+    event.type === "wolf_kill_vote_cast"
+  ) {
+    return "wolf_discussion";
+  }
+  if (event.type === "guard_applied") {
+    return "guard";
+  }
+  if (event.type === "seer_checked") {
+    return "seer";
+  }
+  if (event.type === "witch_potion_used") {
+    return "witch";
+  }
+  return event.type;
+}
+
 class DeadlineAwareActionProvider implements ActionProvider {
   constructor(
     private readonly delegate: ActionProvider,
@@ -309,6 +339,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   const deadlineAtMs = startedAt + options.maxRuntimeMs;
   const budgetedProvider = new DeadlineAwareActionProvider(provider, deadlineAtMs);
   let streamedEventIndex = 0;
+  const replayPlayerFeedCursor = new Map<number, number>();
   const flushStreamEvents = (): void => {
     const events = context.phaseManager.getEvents();
     if (streamedEventIndex >= events.length) {
@@ -316,6 +347,25 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     }
     let replayDay = 1;
     let replayPhase = String(context.phaseManager.getSnapshot().phase);
+    const voteBatch: Array<{ actorId: number; targetId: number | null; abstain: boolean; weight: number }> = [];
+    const flushVoteBatchLive = () => {
+      if (voteBatch.length === 0 || !options.streamEvents) {
+        voteBatch.length = 0;
+        return;
+      }
+      const parts = voteBatch.map((item) => {
+        if (item.abstain) {
+          return item.weight !== 1
+            ? `${item.actorId}号->弃票(w=${item.weight})`
+            : `${item.actorId}号->弃票`;
+        }
+        return item.weight !== 1
+          ? `${item.actorId}号->${item.targetId}号(w=${item.weight})`
+          : `${item.actorId}号->${item.targetId}号`;
+      });
+      log(`[live][上帝] 放逐票型：${parts.join("，")}`, "god");
+      voteBatch.length = 0;
+    };
     for (let i = streamedEventIndex; i < events.length; i++) {
       const event = events[i];
       if (event.type === "phase_changed") {
@@ -330,6 +380,55 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
         payload: event.payload,
         renderText: toReplayRenderText(event as any),
       });
+      if (!options.streamEvents) {
+        // 即使不打印 live，也要写入“玩家可见广播”到 session 复盘。
+      }
+      if (replayManager) {
+        for (const playerId of context.world.entityIds()) {
+          const feed = buildAgentBroadcastFeed(
+            context.world,
+            events,
+            playerId,
+            10000,
+          );
+          const before = replayPlayerFeedCursor.get(playerId) ?? 0;
+          const delta = feed.slice(before);
+          const roleComp = context.world.getComponent<RoleComponent>(
+            playerId,
+            COMPONENT.Role,
+          );
+          for (let d = 0; d < delta.length; d++) {
+            replayManager.recordPlayerBroadcast({
+              playerId,
+              role: roleComp?.role ?? "unknown",
+              camp: roleComp?.camp ?? "unknown",
+              day: replayDay,
+              phase: replayPhase,
+              stage: toReplayStage(event as any),
+              requestId: `${replayDay}-${replayPhase}-${playerId}-broadcast-${i}-${d}`,
+              text: delta[d],
+            });
+          }
+          replayPlayerFeedCursor.set(playerId, feed.length);
+        }
+      }
+      if (event.type === "vote_cast") {
+        voteBatch.push({
+          actorId: Number(event.payload.actorId),
+          targetId:
+            event.payload.targetId === null || event.payload.targetId === undefined
+              ? null
+              : Number(event.payload.targetId),
+          abstain: event.payload.abstain === true,
+          weight: Number(event.payload.weight ?? 1),
+        });
+        if (!options.streamEvents) {
+          continue;
+        }
+        // live 模式下延迟到 batch flush 再打印，避免逐票刷屏。
+        continue;
+      }
+      flushVoteBatchLive();
       if (!options.streamEvents) {
         continue;
       }
@@ -376,15 +475,6 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
           `[live][行动][女巫] ${event.payload.actorId}号对${event.payload.targetId}号使用${event.payload.potionType}`,
           "warn",
         );
-      } else if (event.type === "vote_cast") {
-        if (event.payload.abstain === true) {
-          log(`[live][行动][投票] ${event.payload.actorId}号弃票`, "warn");
-        } else {
-          log(
-            `[live][行动][投票] ${event.payload.actorId}号 -> ${event.payload.targetId}号 (weight=${event.payload.weight})`,
-            "warn",
-          );
-        }
       } else if (event.type === "game_over") {
         log(
           `[live][终局] winner=${event.payload.winner} reason=${event.payload.reason}`,
@@ -396,6 +486,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
         log(`[live][上帝] ${judgeLine}`, "god");
       }
     }
+    flushVoteBatchLive();
     streamedEventIndex = events.length;
   };
   const heartbeat = setInterval(() => {

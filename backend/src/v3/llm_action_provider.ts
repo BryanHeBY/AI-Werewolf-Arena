@@ -53,6 +53,9 @@ interface BuildMessagesResult {
   visibleFeedDelta: string[];
   feedCursorBefore: number;
   feedCursorAfter: number;
+  contextWindowStart: number;
+  contextWindowEnd: number;
+  contextWindowTotal: number;
 }
 
 interface ChatLike {
@@ -114,6 +117,7 @@ export class LlmActionProvider implements ActionProvider {
   private readonly recentEvents: string[] = [];
   private readonly agentHistories = new Map<EntityId, ChatMessage[]>();
   private readonly agentBroadcastCursor = new Map<EntityId, number>();
+  private readonly agentContextWindowStart = new Map<EntityId, number>();
   private readonly actorRoundCounter = new Map<EntityId, number>();
   private readonly actorLastAssistantText = new Map<EntityId, string>();
 
@@ -146,6 +150,9 @@ export class LlmActionProvider implements ActionProvider {
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
     const built = this.buildMessages(request);
     const messages = built.messages;
+    this.appendTrace(
+      `context_window player=${request.actorId} phase=${request.phase} start=${built.contextWindowStart} end=${built.contextWindowEnd} total=${built.contextWindowTotal}`,
+    );
     let raw = "";
     const startedAt = Date.now();
     const toToolCalls = (action?: ToolCall | null) =>
@@ -921,10 +928,31 @@ export class LlmActionProvider implements ActionProvider {
   private appendAgentHistory(actorId: EntityId, message: ChatMessage): void {
     const history = this.agentHistories.get(actorId) ?? [];
     history.push(message);
-    if (history.length > this.maxPromptEvents * 6) {
-      history.splice(0, history.length - this.maxPromptEvents * 6);
-    }
     this.agentHistories.set(actorId, history);
+  }
+
+  /**
+   * 基于“窗口索引”选择本轮送模上下文：
+   * - 消息历史全量保留；
+   * - 仅窗口切片参与本轮推理。
+   */
+  private selectHistoryWindow(actorId: EntityId, fullHistory: ChatMessage[]): {
+    start: number;
+    end: number;
+    total: number;
+    history: ChatMessage[];
+  } {
+    const total = fullHistory.length;
+    const windowCap = Math.max(1, this.maxPromptEvents * 6);
+    const start = Math.max(0, total - windowCap);
+    const end = total;
+    this.agentContextWindowStart.set(actorId, start);
+    return {
+      start,
+      end,
+      total,
+      history: fullHistory.slice(start, end),
+    };
   }
 
   /**
@@ -957,7 +985,9 @@ export class LlmActionProvider implements ActionProvider {
       "禁止输出思维链与额外元信息。",
     ].join("\n");
 
-    const history = [...(this.agentHistories.get(request.actorId) ?? [])];
+    const fullHistory = [...(this.agentHistories.get(request.actorId) ?? [])];
+    const contextWindow = this.selectHistoryWindow(request.actorId, fullHistory);
+    const history = contextWindow.history;
     const isInitialPrompt = history.length === 0;
 
     const userPrompt = [
@@ -987,6 +1017,9 @@ export class LlmActionProvider implements ActionProvider {
       visibleFeedDelta: feedDelta.delta,
       feedCursorBefore: feedDelta.cursorBefore,
       feedCursorAfter: feedDelta.cursorAfter,
+      contextWindowStart: contextWindow.start,
+      contextWindowEnd: contextWindow.end,
+      contextWindowTotal: contextWindow.total,
     };
   }
 
@@ -1043,7 +1076,10 @@ export class LlmActionProvider implements ActionProvider {
       feedCursorBefore: built.feedCursorBefore,
       feedCursorAfter: built.feedCursorAfter,
       promptSystem: built.systemPrompt,
-      promptUserDelta: [built.userPrompt],
+      promptUserDelta: [
+        `context_window=${built.contextWindowStart}-${built.contextWindowEnd}/${built.contextWindowTotal}`,
+        built.userPrompt,
+      ],
       thinkingText: extras.thinkingText,
       actionMode: extras.actionMode,
       toolCalls: extras.toolCalls,

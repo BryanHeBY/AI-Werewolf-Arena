@@ -32,6 +32,16 @@ describe("SessionRecordManager", () => {
       status: "ok",
       input: { tool: "speak_to_wolves" },
     });
+    manager.recordPlayerBroadcast({
+      playerId: 1,
+      role: "wolf",
+      camp: "wolf",
+      day: 1,
+      phase: "night",
+      stage: "wolf_discussion",
+      requestId: "1-night-1-broadcast-1",
+      text: "[系统][公开] 天黑请闭眼（第1天夜晚）",
+    });
     manager.recordPlayerRound({
       playerId: 1,
       role: "wolf",
@@ -40,7 +50,7 @@ describe("SessionRecordManager", () => {
       phase: "night",
       stage: "wolf_discussion",
       requestId: "1-night-1-1",
-      visibleFeedDelta: ["[系统][公开] 天黑请闭眼（第1天夜晚）"],
+      visibleFeedDelta: [],
       feedCursorBefore: 0,
       feedCursorAfter: 1,
       promptSystem: "仅可调用本轮可用工具：speak_to_wolves",
@@ -98,6 +108,9 @@ describe("SessionRecordManager", () => {
     const player1 = JSON.parse(
       await fs.readFile(path.join(sessionDir, "players", "player_1.json"), "utf-8"),
     );
+    expect(player1.initial_prompt).toBeDefined();
+    expect(player1.initial_prompt.phase).toBe("night");
+    expect(Array.isArray(player1.initial_prompt.prompt_user)).toBe(true);
     expect(Array.isArray(player1.timeline)).toBe(true);
     expect(player1.timeline[0].kind).toBe("broadcast");
     expect(player1.timeline[0].stage).toBe("wolf_discussion");

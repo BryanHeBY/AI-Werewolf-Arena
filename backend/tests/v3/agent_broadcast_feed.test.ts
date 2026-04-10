@@ -1,10 +1,12 @@
 import { bootstrapGame } from "../../src/app/bootstrap";
+import { COMPONENT } from "../../src/domain/components/names";
+import { RoleComponent } from "../../src/domain/components/role";
 import { GameEvent } from "../../src/domain/model";
 import { buildAgentBroadcastFeed } from "../../src/engine/agent_broadcast_feed";
 import { sixPlayerMvpConfig } from "../../src/scenarios/six_player_mvp";
 
 describe("buildAgentBroadcastFeed", () => {
-  test("voting should only expose voted_out publicly while keeping wolf kill votes wolf-only", () => {
+  test("voting should expose merged vote lineup publicly while keeping wolf kill votes wolf-only", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const events: GameEvent[] = [
       {
@@ -34,16 +36,31 @@ describe("buildAgentBroadcastFeed", () => {
       },
     ];
 
-    const wolfFeed = buildAgentBroadcastFeed(context.world, events, 1);
-    const villagerFeed = buildAgentBroadcastFeed(context.world, events, 4);
+    const wolfId = context.world
+      .entityIds()
+      .find((id) => {
+        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        return role?.role === "wolf";
+      })!;
+    const villagerId = context.world
+      .entityIds()
+      .find((id) => {
+        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        return role?.role === "villager";
+      })!;
+
+    const wolfFeed = buildAgentBroadcastFeed(context.world, events, wolfId);
+    const villagerFeed = buildAgentBroadcastFeed(context.world, events, villagerId);
 
     expect(wolfFeed.some((line) => line.includes("狼刀票"))).toBe(true);
     expect(wolfFeed.some((line) => line.includes("放逐结果"))).toBe(true);
-    expect(wolfFeed.some((line) => line.includes("vote_cast"))).toBe(false);
+    expect(wolfFeed.some((line) => line.includes("放逐票型"))).toBe(true);
+    expect(wolfFeed.some((line) => line.includes("4号->1号"))).toBe(true);
 
     expect(villagerFeed.some((line) => line.includes("狼刀票"))).toBe(false);
     expect(villagerFeed.some((line) => line.includes("放逐结果"))).toBe(true);
-    expect(villagerFeed.some((line) => line.includes("vote_cast"))).toBe(false);
+    expect(villagerFeed.some((line) => line.includes("放逐票型"))).toBe(true);
+    expect(villagerFeed.some((line) => line.includes("4号->1号"))).toBe(true);
     expect(villagerFeed.some((line) => line.includes("开局"))).toBe(false);
     expect(villagerFeed.some((line) => line.includes("role"))).toBe(false);
   });
