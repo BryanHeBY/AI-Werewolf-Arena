@@ -1,11 +1,10 @@
-import { EntityId, GameEvent } from "../../domain/model";
-
-export interface AgentLineContext {
-  actorId: EntityId;
-  isWolf: boolean;
-}
-
-type AgentEventLineHandler = (event: GameEvent, ctx: AgentLineContext) => string | null;
+import { GameEvent } from "../../domain/model";
+import { GUARD_AGENT_EVENT_LINE_HANDLERS } from "../roles/guard/event_presenters";
+import { SEER_AGENT_EVENT_LINE_HANDLERS } from "../roles/seer/event_presenters";
+import { WITCH_AGENT_EVENT_LINE_HANDLERS } from "../roles/witch/event_presenters";
+import { WOLF_AGENT_EVENT_LINE_HANDLERS } from "../roles/wolf/event_presenters";
+import { SHERIFF_AGENT_EVENT_LINE_HANDLERS } from "../sheriff/event_presenters";
+import { AgentEventLineHandler, AgentLineContext } from "./contracts";
 
 const DEFAULT_HANDLERS: Record<string, AgentEventLineHandler> = {
   phase_changed: (event) => {
@@ -39,69 +38,15 @@ const DEFAULT_HANDLERS: Record<string, AgentEventLineHandler> = {
     const p = event.payload as Record<string, any>;
     return `[系统][公开] 放逐结果：${p.target}号出局`;
   },
-  wolf_self_destruct: (event) => {
-    const p = event.payload as Record<string, any>;
-    return `[系统][公开] ${p.wolfId}号狼人自爆`;
-  },
   game_over: (event) => {
     const p = event.payload as Record<string, any>;
     return `[系统][公开] 胜利阵营：${p.winner}，原因：${p.reason}`;
   },
-  wolf_discussion: (event, ctx) => {
-    if (!ctx.isWolf) {
-      return null;
-    }
-    const p = event.payload as Record<string, any>;
-    return `[夜聊][狼队][${p.actorId}] ${p.text}`;
-  },
-  wolf_discussion_ended: (event, ctx) => {
-    if (!ctx.isWolf) {
-      return null;
-    }
-    const p = event.payload as Record<string, any>;
-    return `[夜聊][结束][狼队][${p.actorId}] ${p.reason ?? "未提供原因"}`;
-  },
-  wolf_tactical_order: (event, ctx) => {
-    if (!ctx.isWolf) {
-      return null;
-    }
-    const p = event.payload as Record<string, any>;
-    return `[狼队][顺序] ${Array.isArray(p.order) ? p.order.join("->") : ""}`;
-  },
-  wolf_kill_vote_cast: (event, ctx) => {
-    if (!ctx.isWolf) {
-      return null;
-    }
-    const p = event.payload as Record<string, any>;
-    if (p.abstain === true) {
-      return `[狼刀票][狼队] ${p.actorId}号 -> 弃刀`;
-    }
-    return `[狼刀票][狼队] ${p.actorId}号 -> ${p.targetId}号`;
-  },
-  seer_checked: (event, ctx) => {
-    const p = event.payload as Record<string, any>;
-    if (Number(p.actorId) !== ctx.actorId) {
-      return null;
-    }
-    return `[私有][查验] 你查验${p.targetId}号 => ${p.isWerewolf ? "狼人" : "好人"}`;
-  },
-  guard_applied: (event, ctx) => {
-    const p = event.payload as Record<string, any>;
-    if (Number(p.actorId) !== ctx.actorId) {
-      return null;
-    }
-    if (p.abstain === true || p.targetId === null || p.targetId === undefined) {
-      return `[私有][守卫] 你本轮选择空守`;
-    }
-    return `[私有][守卫] 你守护了${p.targetId}号`;
-  },
-  witch_potion_used: (event, ctx) => {
-    const p = event.payload as Record<string, any>;
-    if (Number(p.actorId) !== ctx.actorId) {
-      return null;
-    }
-    return `[私有][女巫] 你对${p.targetId}号使用了${p.potionType}`;
-  },
+  ...WOLF_AGENT_EVENT_LINE_HANDLERS,
+  ...SEER_AGENT_EVENT_LINE_HANDLERS,
+  ...GUARD_AGENT_EVENT_LINE_HANDLERS,
+  ...WITCH_AGENT_EVENT_LINE_HANDLERS,
+  ...SHERIFF_AGENT_EVENT_LINE_HANDLERS,
 };
 
 export class AgentEventLineRegistry {

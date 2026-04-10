@@ -1,17 +1,15 @@
 import { Camp, GameEvent, Phase } from "../../domain/model";
 import { RealtimeGameEvent } from "../../infra/transport/broadcaster";
-import { FrontendGameState, toFrontendFaction, toFrontendPhase } from "../../server/view_mapper";
-
-export interface RealtimeTranslateContext {
-  nowState: FrontendGameState;
-  getPlayerName: (playerId: number) => string;
-  getPlayerRole: (playerId: number) => string;
-}
-
-type RealtimeEventHandler = (
-  event: GameEvent,
-  ctx: RealtimeTranslateContext,
-) => RealtimeGameEvent[];
+import { toFrontendFaction, toFrontendPhase } from "../../server/view_mapper";
+import { GUARD_REALTIME_EVENT_HANDLERS } from "../roles/guard/event_presenters";
+import { SEER_REALTIME_EVENT_HANDLERS } from "../roles/seer/event_presenters";
+import { WITCH_REALTIME_EVENT_HANDLERS } from "../roles/witch/event_presenters";
+import { WOLF_REALTIME_EVENT_HANDLERS } from "../roles/wolf/event_presenters";
+import { SHERIFF_REALTIME_EVENT_HANDLERS } from "../sheriff/event_presenters";
+import {
+  RealtimeEventHandler,
+  RealtimeTranslateContext,
+} from "./contracts";
 
 function makePublicEvent(
   type: string,
@@ -23,36 +21,6 @@ function makePublicEvent(
     timestamp,
     data,
     visibility: { scope: "public" },
-  };
-}
-
-function makeWolvesOnlyEvent(
-  type: string,
-  data: Record<string, unknown>,
-  timestamp: number,
-): RealtimeGameEvent {
-  return {
-    type,
-    timestamp,
-    data,
-    visibility: { scope: "wolves_only" },
-  };
-}
-
-function makePrivateTargetsEvent(
-  type: string,
-  data: Record<string, unknown>,
-  targetPlayerIds: number[],
-  timestamp: number,
-): RealtimeGameEvent {
-  return {
-    type,
-    timestamp,
-    data,
-    visibility: {
-      scope: "private_targets",
-      targetPlayerIds,
-    },
   };
 }
 
@@ -72,91 +40,11 @@ function makePlayerDiedEvent(
 }
 
 const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
-  wolf_tactical_order: (event) => [
-    makeWolvesOnlyEvent(
-      "wolf_tactical_order",
-      {
-        order: Array.isArray(event.payload.order) ? event.payload.order : [],
-      },
-      event.timestamp,
-    ),
-  ],
-  wolf_discussion: (event) => [
-    makeWolvesOnlyEvent(
-      "wolf_discussion",
-      {
-        actorId: Number(event.payload.actorId),
-        text: String(event.payload.text ?? ""),
-      },
-      event.timestamp,
-    ),
-  ],
-  guard_applied: (event) => {
-    const actorId = Number(event.payload.actorId);
-    const abstain = Boolean(event.payload.abstain);
-    return [
-      makePrivateTargetsEvent(
-        "guard_applied",
-        {
-          actorId,
-          targetId:
-            event.payload.targetId === null || event.payload.targetId === undefined
-              ? null
-              : Number(event.payload.targetId),
-          abstain,
-        },
-        [actorId],
-        event.timestamp,
-      ),
-    ];
-  },
-  wolf_kill_vote_cast: (event) => {
-    const abstain = Boolean(event.payload.abstain);
-    return [
-      makeWolvesOnlyEvent(
-        "wolf_kill_vote_cast",
-        {
-          actorId: Number(event.payload.actorId),
-          targetId:
-            event.payload.targetId === null || event.payload.targetId === undefined
-              ? null
-              : Number(event.payload.targetId),
-          abstain,
-        },
-        event.timestamp,
-      ),
-    ];
-  },
-  seer_checked: (event) => {
-    const actorId = Number(event.payload.actorId);
-    return [
-      makePrivateTargetsEvent(
-        "seer_checked",
-        {
-          actorId,
-          targetId: Number(event.payload.targetId),
-          isWerewolf: Boolean(event.payload.isWerewolf),
-        },
-        [actorId],
-        event.timestamp,
-      ),
-    ];
-  },
-  witch_potion_used: (event) => {
-    const actorId = Number(event.payload.actorId);
-    return [
-      makePrivateTargetsEvent(
-        "witch_potion_used",
-        {
-          actorId,
-          targetId: Number(event.payload.targetId),
-          potionType: String(event.payload.potionType ?? ""),
-        },
-        [actorId],
-        event.timestamp,
-      ),
-    ];
-  },
+  ...WOLF_REALTIME_EVENT_HANDLERS,
+  ...SEER_REALTIME_EVENT_HANDLERS,
+  ...GUARD_REALTIME_EVENT_HANDLERS,
+  ...WITCH_REALTIME_EVENT_HANDLERS,
+  ...SHERIFF_REALTIME_EVENT_HANDLERS,
   phase_changed: (event, ctx) => {
     const phase = String(event.payload.phase ?? Phase.Night) as Phase;
     const day = Number(event.payload.day ?? ctx.nowState.round);
@@ -245,10 +133,6 @@ const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
       event.timestamp,
     ),
   ],
-  wolf_self_destruct: (event, ctx) => {
-    const wolfId = Number(event.payload.wolfId);
-    return [makePlayerDiedEvent(wolfId, event.timestamp, ctx)];
-  },
   hunter_shot: (event, ctx) => {
     const hunterId = Number(event.payload.hunterId);
     const targetId = Number(event.payload.targetId);
