@@ -335,6 +335,33 @@ describe("LlmActionProvider", () => {
     expect(text.toLowerCase()).not.toContain("context=");
   });
 
+  test("should not recover self_destruct from think text", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const wolfId = context.world
+      .getAliveEntityIds()
+      .find((id) => {
+        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        return role?.role === "wolf";
+      })!;
+
+    const provider = new LlmActionProvider(
+      context.world,
+      new FakeClient("<think>当前局面不利，我考虑自爆结束这个回合。</think>"),
+      {
+        fallbackProvider: new FallbackProvider(null),
+      },
+    );
+
+    const action = await provider.getAction({
+      phase: Phase.Day,
+      actorId: wolfId,
+      allowedTools: ["self_destruct"],
+      context: { must_act: false },
+    });
+
+    expect(action).toBeNull();
+  });
+
   test("prompt no longer contains private-intel snapshot line", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const seerId = context.world

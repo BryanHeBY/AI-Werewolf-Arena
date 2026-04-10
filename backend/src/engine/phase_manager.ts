@@ -155,19 +155,44 @@ export class PhaseManager {
 
     this.setPhase(Phase.Night);
     const night = await this.nightPipeline.execute(this.config, actionProvider);
-    await this.processDeaths(
-      night.damage.deaths,
-      night.damage.deathSources,
-      actionProvider,
-      Phase.Night,
-    );
-
-    if (this.checkAndSealResult()) {
-      return this.getSnapshot();
-    }
+    const firstDaySheriffBeforeNightInfo =
+      this.state.day === 1 && this.config.enableSheriff === true;
 
     this.setPhase(Phase.Day);
-    const dayResult = await this.dayPipeline.execute(this.config, actionProvider);
+    if (!firstDaySheriffBeforeNightInfo) {
+      this.emitNightResolved(night.summary.wolfTarget, night.summary.deaths);
+      await this.processDeaths(
+        night.damage.deaths,
+        night.damage.deathSources,
+        actionProvider,
+        Phase.Night,
+      );
+      if (this.checkAndSealResult()) {
+        return this.getSnapshot();
+      }
+    }
+
+    const dayResult = await this.dayPipeline.execute(
+      this.config,
+      actionProvider,
+      firstDaySheriffBeforeNightInfo
+        ? {
+            afterSheriffElection: async () => {
+              this.emitNightResolved(night.summary.wolfTarget, night.summary.deaths);
+              await this.processDeaths(
+                night.damage.deaths,
+                night.damage.deathSources,
+                actionProvider,
+                Phase.Night,
+              );
+            },
+          }
+        : undefined,
+    );
+
+    if (firstDaySheriffBeforeNightInfo && this.checkAndSealResult()) {
+      return this.getSnapshot();
+    }
     if (dayResult.interrupted) {
       // 白天被自爆中断时直接结束当日并切到下一夜。
       if (this.checkAndSealResult()) {
@@ -369,6 +394,23 @@ export class PhaseManager {
     });
 
     return true;
+  }
+
+  /**
+   * 写入夜晚结算公开信息（用于“昨夜死亡/平安夜”广播）。
+   */
+  private emitNightResolved(
+    wolfTarget: EntityId | null,
+    deaths: EntityId[],
+  ): void {
+    this.events.push({
+      timestamp: Date.now(),
+      type: "night_resolved",
+      payload: {
+        wolfTarget,
+        deaths: [...deaths],
+      },
+    });
   }
 
   /**

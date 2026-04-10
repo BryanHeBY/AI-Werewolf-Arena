@@ -29,7 +29,8 @@ import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
 /**
  * 夜间阶段流水线：
  * - 通过 NightStageRegistry 串行驱动夜间子阶段；
- * - 最后统一执行伤害结算并生成 night_resolved 事件。
+ * - 最后统一执行伤害结算并返回结果。
+ * night_resolved 事件由 PhaseManager 按白天流程时序写入。
  */
 export class NightPipeline {
   constructor(
@@ -107,15 +108,6 @@ export class NightPipeline {
       seerChecks: stageState.seerChecks,
       interruptedBySelfDestruct: false,
     };
-
-    this.events.push({
-      timestamp: Date.now(),
-      type: "night_resolved",
-      payload: {
-        wolfTarget: summary.wolfTarget,
-        deaths: summary.deaths,
-      },
-    });
 
     return { summary, damage };
   }

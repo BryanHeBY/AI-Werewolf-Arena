@@ -24,6 +24,10 @@ export interface DayPipelineResult {
   interrupted: boolean;
 }
 
+export interface DayPipelineOptions {
+  afterSheriffElection?: () => Promise<void>;
+}
+
 /**
  * 白天阶段流水线：
  * 1) 由警长机制决定发言方向与顺序（若启用警长）。
@@ -63,6 +67,7 @@ export class DayPipeline {
   async execute(
     config: BoardConfig,
     actionProvider: ActionProvider,
+    options?: DayPipelineOptions,
   ): Promise<DayPipelineResult> {
     const speeches: DaySummary["speeches"] = [];
     await this.sheriffMechanism.electSheriffIfNeeded({
@@ -73,6 +78,9 @@ export class DayPipeline {
       day: this.currentDay(),
       enableSheriff: config.enableSheriff,
     });
+    if (options?.afterSheriffElection) {
+      await options.afterSheriffElection();
+    }
     const speakerDirection = await this.sheriffMechanism.chooseSpeakerDirection({
       world: this.world,
       events: this.events,
