@@ -63,38 +63,53 @@ export class SheriffMechanism {
 
     const aliveIds = world.getAliveEntityIds();
     const candidates: EntityId[] = [];
-
+    const nominationFeedByActor = new Map<EntityId, string[]>();
     for (const actorId of aliveIds) {
-      const req: ActionRequest = {
-        phase: Phase.Day,
+      nominationFeedByActor.set(
         actorId,
-        allowedTools: ["run_for_sheriff"],
-        context: {
-          day,
-          phase: "sheriff_nomination",
-          must_act: true,
-          broadcast_feed: buildAgentBroadcastFeed(world, events, actorId),
-        },
-      };
-      const action = await actionProvider.getAction(req);
-      if (action?.name !== "run_for_sheriff") {
+        buildAgentBroadcastFeed(world, events, actorId),
+      );
+    }
+    const nominationResults = await Promise.all(
+      aliveIds.map(async (actorId) => {
+        const req: ActionRequest = {
+          phase: Phase.Day,
+          actorId,
+          allowedTools: ["run_for_sheriff"],
+          context: {
+            day,
+            phase: "sheriff_nomination",
+            must_act: true,
+            broadcast_feed: nominationFeedByActor.get(actorId) ?? [],
+          },
+        };
+        const action = await actionProvider.getAction(req);
+        if (action?.name !== "run_for_sheriff") {
+          return null;
+        }
+        const result = toolGateway.validateAndSanitize(world, actorId, action, {
+          phase: Phase.Day,
+        });
+        if (!result.ok || !result.sanitizedCall) {
+          return null;
+        }
+        return {
+          actorId,
+          run: result.sanitizedCall.args.run === true,
+        };
+      }),
+    );
+    for (const item of nominationResults) {
+      if (!item) {
         continue;
       }
-      const result = toolGateway.validateAndSanitize(world, actorId, action, {
-        phase: Phase.Day,
-      });
-      if (!result.ok || !result.sanitizedCall) {
-        continue;
-      }
-
-      const run = result.sanitizedCall.args.run === true;
       events.push({
         timestamp: Date.now(),
         type: "sheriff_candidate_declared",
-        payload: { actorId, run },
+        payload: { actorId: item.actorId, run: item.run },
       });
-      if (run) {
-        candidates.push(actorId);
+      if (item.run) {
+        candidates.push(item.actorId);
       }
     }
 
@@ -110,43 +125,61 @@ export class SheriffMechanism {
       tally.set(id, 0);
     }
 
+    const sheriffVoteFeedByActor = new Map<EntityId, string[]>();
     for (const actorId of aliveIds) {
-      const req: ActionRequest = {
-        phase: Phase.Day,
+      sheriffVoteFeedByActor.set(
         actorId,
-        allowedTools: ["vote_for_sheriff"],
-        context: {
-          day,
-          phase: "sheriff_vote",
-          must_act: true,
-          sheriff_candidates: finalizedCandidates,
-          broadcast_feed: buildAgentBroadcastFeed(world, events, actorId),
-        },
-      };
-      const action = await actionProvider.getAction(req);
-      if (action?.name !== "vote_for_sheriff") {
-        continue;
-      }
-      const result = toolGateway.validateAndSanitize(world, actorId, action, {
-        phase: Phase.Day,
-      });
-      if (!result.ok || !result.sanitizedCall) {
-        continue;
-      }
+        buildAgentBroadcastFeed(world, events, actorId),
+      );
+    }
+    const sheriffVoteResults = await Promise.all(
+      aliveIds.map(async (actorId) => {
+        const req: ActionRequest = {
+          phase: Phase.Day,
+          actorId,
+          allowedTools: ["vote_for_sheriff"],
+          context: {
+            day,
+            phase: "sheriff_vote",
+            must_act: true,
+            sheriff_candidates: finalizedCandidates,
+            broadcast_feed: sheriffVoteFeedByActor.get(actorId) ?? [],
+          },
+        };
+        const action = await actionProvider.getAction(req);
+        if (action?.name !== "vote_for_sheriff") {
+          return null;
+        }
+        const result = toolGateway.validateAndSanitize(world, actorId, action, {
+          phase: Phase.Day,
+        });
+        if (!result.ok || !result.sanitizedCall) {
+          return null;
+        }
 
-      const abstain = result.sanitizedCall.args.abstain === true;
-      let targetId = result.sanitizedCall.args.target_id;
-      if (!abstain && (targetId === null || !finalizedCandidates.includes(targetId))) {
-        targetId = finalizedCandidates[0];
+        const abstain = result.sanitizedCall.args.abstain === true;
+        let targetId = result.sanitizedCall.args.target_id;
+        if (!abstain && (targetId === null || !finalizedCandidates.includes(targetId))) {
+          targetId = finalizedCandidates[0];
+        }
+        return { actorId, targetId, abstain };
+      }),
+    );
+    for (const item of sheriffVoteResults) {
+      if (!item) {
+        continue;
       }
       events.push({
         timestamp: Date.now(),
         type: "sheriff_vote_cast",
-        payload: { actorId, targetId, abstain },
+        payload: {
+          actorId: item.actorId,
+          targetId: item.targetId,
+          abstain: item.abstain,
+        },
       });
-
-      if (!abstain && targetId !== null) {
-        tally.set(targetId, (tally.get(targetId) ?? 0) + 1);
+      if (!item.abstain && item.targetId !== null) {
+        tally.set(item.targetId, (tally.get(item.targetId) ?? 0) + 1);
       }
     }
 
