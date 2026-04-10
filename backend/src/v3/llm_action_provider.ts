@@ -27,6 +27,12 @@ interface ToolSchema {
   parameters: Record<string, unknown>;
 }
 
+type JsonSchemaObjectProperty = {
+  type: string | string[];
+  description: string;
+  enum?: string[];
+};
+
 interface ToolLoopStepTrace {
   assistantText: string;
   toolCalls: Array<{
@@ -144,11 +150,32 @@ export class LlmActionProvider implements ActionProvider {
       );
       this.dumpLlmPrompt(messages, request);
       if (this.client.runToolLoop) {
-        const picked = await this.runSdkToolLoop(
-          request,
-          messages,
-          effectiveTimeoutMs,
-        );
+        const runSdkAttempt = async (
+          attempt: number,
+          attemptMessages: ChatMessage[],
+        ): Promise<{
+          picked: ToolCall | null;
+          failed: boolean;
+          errorText?: string;
+        }> => {
+          try {
+            const picked = await this.runSdkToolLoop(
+              request,
+              attemptMessages,
+              effectiveTimeoutMs,
+            );
+            return { picked, failed: false };
+          } catch (error) {
+            const errorText = String(error);
+            this.appendTrace(
+              `request_sdk_attempt_fail player=${request.actorId} phase=${request.phase} attempt=${attempt} err=${errorText}`,
+            );
+            return { picked: null, failed: true, errorText };
+          }
+        };
+
+        const firstAttempt = await runSdkAttempt(0, messages);
+        const picked = firstAttempt.picked;
         if (picked) {
           this.appendTrace(
             `request_ok player=${request.actorId} phase=${request.phase} action=${picked.name} args=${JSON.stringify(picked.args)} elapsed_ms=${Date.now() - startedAt}`,
@@ -156,6 +183,7 @@ export class LlmActionProvider implements ActionProvider {
           return picked;
         }
         if (this.isMustAct(request)) {
+          let hasRuntimeError = firstAttempt.failed;
           let retryMessages = [...messages];
           const maxRetries = 3;
           for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -171,11 +199,9 @@ export class LlmActionProvider implements ActionProvider {
               `[LLM_RETRY] player=${request.actorId} phase=${request.phase} attempt=${attempt}/${maxRetries} reason=must_act_no_valid_action`,
             );
             this.dumpLlmPrompt(retryMessages, request);
-            const retried = await this.runSdkToolLoop(
-              request,
-              retryMessages,
-              effectiveTimeoutMs,
-            );
+            const retryResult = await runSdkAttempt(attempt, retryMessages);
+            const retried = retryResult.picked;
+            hasRuntimeError = hasRuntimeError || retryResult.failed;
             if (retried) {
               this.appendTrace(
                 `request_ok_retry player=${request.actorId} phase=${request.phase} attempt=${attempt}/${maxRetries} action=${retried.name} args=${JSON.stringify(retried.args)} elapsed_ms=${Date.now() - startedAt}`,
@@ -183,7 +209,13 @@ export class LlmActionProvider implements ActionProvider {
               return retried;
             }
           }
+          if (hasRuntimeError) {
+            return this.runFallback(request, "runtime_error");
+          }
           return this.runFallback(request, "model_declined_required_action");
+        }
+        if (firstAttempt.failed) {
+          return this.runFallback(request, "runtime_error");
         }
         this.appendTrace(
           `request_none player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt}`,
@@ -438,6 +470,7 @@ export class LlmActionProvider implements ActionProvider {
         parameters: {
           type: "object",
           properties: {},
+          description: "空参数对象；调用后表示主动结束本回合。",
           additionalProperties: false,
         },
       });
@@ -456,8 +489,9 @@ export class LlmActionProvider implements ActionProvider {
         parameters: {
           type: "object",
           properties: {
-            text: { type: "string" },
+            text: this.createProperty("string", "公开发言内容。"),
           },
+          description: "白天公开发言参数。",
           required: ["text"],
           additionalProperties: false,
         },
@@ -470,9 +504,13 @@ export class LlmActionProvider implements ActionProvider {
         parameters: {
           type: "object",
           properties: {
-            text: { type: "string" },
-            end_chat: { type: "boolean" },
+            text: this.createProperty("string", "狼人夜聊发言内容。"),
+            end_chat: this.createProperty(
+              "boolean",
+              "是否在本次发言后结束本人后续夜聊轮次。",
+            ),
           },
+          description: "狼人夜聊发言参数。",
           required: ["text", "end_chat"],
           additionalProperties: false,
         },
@@ -485,18 +523,67 @@ export class LlmActionProvider implements ActionProvider {
         parameters: {
           type: "object",
           properties: {
-            target_id: { type: ["number", "null"] },
-            abstain: { type: "boolean" },
+            target_id: this.createProperty(
+              ["number", "null"],
+              "刀人目标玩家编号；弃刀时必须为 null。",
+            ),
+            abstain: this.createProperty(
+              "boolean",
+              "是否弃刀；true 时不提交目标且本票不计入刀人结算。",
+            ),
           },
+          description: "狼人刀人投票参数。",
+          required: ["target_id", "abstain"],
+          additionalProperties: false,
+        },
+      };
+    }
+    if (name === "guard") {
+      return {
+        name,
+        description: "守卫守护目标。abstain=true 表示本轮空守。",
+        parameters: {
+          type: "object",
+          properties: {
+            target_id: this.createProperty(
+              ["number", "null"],
+              "守护目标玩家编号；空守时必须为 null。",
+            ),
+            abstain: this.createProperty(
+              "boolean",
+              "是否空守；true 时本轮不守护任何玩家。",
+            ),
+          },
+          description: "守卫行动参数。",
+          required: ["target_id", "abstain"],
+          additionalProperties: false,
+        },
+      };
+    }
+    if (name === "vote") {
+      return {
+        name,
+        description: "白天放逐投票。abstain=true 表示本轮弃票。",
+        parameters: {
+          type: "object",
+          properties: {
+            target_id: this.createProperty(
+              ["number", "null"],
+              "放逐目标玩家编号；弃票时必须为 null。",
+            ),
+            abstain: this.createProperty(
+              "boolean",
+              "是否弃票；true 时本票不参与放逐计票。",
+            ),
+          },
+          description: "白天放逐投票参数。",
           required: ["target_id", "abstain"],
           additionalProperties: false,
         },
       };
     }
     if (
-      name === "guard" ||
       name === "check_identity" ||
-      name === "vote" ||
       name === "shoot"
     ) {
       return {
@@ -505,8 +592,9 @@ export class LlmActionProvider implements ActionProvider {
         parameters: {
           type: "object",
           properties: {
-            target_id: { type: "number" },
+            target_id: this.createProperty("number", "目标玩家编号。"),
           },
+          description: "目标玩家参数。",
           required: ["target_id"],
           additionalProperties: false,
         },
@@ -519,12 +607,15 @@ export class LlmActionProvider implements ActionProvider {
         parameters: {
           type: "object",
           properties: {
-            target_id: { type: "number" },
+            target_id: this.createProperty("number", "药剂目标玩家编号。"),
             potion_type: {
               type: "string",
               enum: [PotionType.Heal, PotionType.Poison, PotionType.None],
+              description:
+                "药剂类型：heal=解药，poison=毒药，none=本轮不使用药剂。",
             },
           },
+          description: "女巫用药参数。",
           required: ["target_id", "potion_type"],
           additionalProperties: false,
         },
@@ -537,8 +628,12 @@ export class LlmActionProvider implements ActionProvider {
         parameters: {
           type: "object",
           properties: {
-            reason: { type: "string" },
+            reason: this.createProperty(
+              "string",
+              "自爆原因说明，仅用于日志与策略记录。",
+            ),
           },
+          description: "狼人自爆参数。",
           required: ["reason"],
           additionalProperties: false,
         },
@@ -553,12 +648,30 @@ export class LlmActionProvider implements ActionProvider {
           direction: {
             type: "string",
             enum: ["clockwise", "counter_clockwise"],
+            description:
+              "发言方向：clockwise=顺时针，counter_clockwise=逆时针。",
           },
         },
+        description: "警长定序参数。",
         required: ["direction"],
         additionalProperties: false,
       },
     };
+  }
+
+  private createProperty(
+    type: string | string[],
+    description: string,
+    enumValues?: string[],
+  ): JsonSchemaObjectProperty {
+    const base: JsonSchemaObjectProperty = {
+      type,
+      description,
+    };
+    if (enumValues) {
+      base.enum = enumValues;
+    }
+    return base;
   }
 
   /**
@@ -633,7 +746,11 @@ export class LlmActionProvider implements ActionProvider {
       "禁止输出思维链与额外元信息。",
     ].join("\n");
 
+    const history = [...(this.agentHistories.get(request.actorId) ?? [])];
+    const isInitialPrompt = history.length === 0;
+
     const userPrompt = [
+      ...(isInitialPrompt ? [this.buildBoardInfoPrompt()] : []),
       `玩家编号=${request.actorId}`,
       `行动窗口=${request.actionWindow ?? "standard_round"}`,
       `mustAct=${mustAct}`,
@@ -645,7 +762,6 @@ export class LlmActionProvider implements ActionProvider {
       "请调用函数工具执行本回合动作。",
     ].join("\n");
 
-    const history = [...(this.agentHistories.get(request.actorId) ?? [])];
     const currentTurnUser: ChatMessage = { role: "user", content: userPrompt };
     this.appendAgentHistory(request.actorId, currentTurnUser);
 
@@ -654,6 +770,88 @@ export class LlmActionProvider implements ActionProvider {
       ...history,
       currentTurnUser,
     ];
+  }
+
+  /**
+   * 首轮提示词中的板子信息：角色构成 + 技能简介。
+   */
+  private buildBoardInfoPrompt(): string {
+    const counts = new Map<Role, number>();
+    for (const id of this.world.entityIds()) {
+      const roleComp = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      if (!roleComp) {
+        continue;
+      }
+      counts.set(roleComp.role, (counts.get(roleComp.role) ?? 0) + 1);
+    }
+
+    const sortedRoles = Object.values(Role).filter((role) => (counts.get(role) ?? 0) > 0);
+    const lineup = sortedRoles
+      .map((role) => `${this.roleLabel(role)}x${counts.get(role) ?? 0}`)
+      .join("，");
+    const skillBriefs = sortedRoles
+      .map(
+        (role) =>
+          `${this.roleLabel(role)}：${this.roleSkillBrief(role)}`,
+      )
+      .join("；");
+
+    return [
+      "当前板子信息：",
+      `总玩家数=${this.world.entityIds().length}`,
+      `角色构成=${lineup || "unknown"}`,
+      `角色技能简介=${skillBriefs || "unknown"}`,
+    ].join("\n");
+  }
+
+  private roleLabel(role: Role): string {
+    if (role === Role.Wolf) {
+      return "狼人";
+    }
+    if (role === Role.Villager) {
+      return "平民";
+    }
+    if (role === Role.Seer) {
+      return "预言家";
+    }
+    if (role === Role.Guard) {
+      return "守卫";
+    }
+    if (role === Role.Witch) {
+      return "女巫";
+    }
+    if (role === Role.Hunter) {
+      return "猎人";
+    }
+    if (role === Role.Idiot) {
+      return "白痴";
+    }
+    return role;
+  }
+
+  private roleSkillBrief(role: Role): string {
+    if (role === Role.Wolf) {
+      return "夜间可狼队夜聊并参与刀人投票";
+    }
+    if (role === Role.Villager) {
+      return "无夜间技能，白天通过发言和投票推进局势";
+    }
+    if (role === Role.Seer) {
+      return "每晚可查验一名玩家阵营";
+    }
+    if (role === Role.Guard) {
+      return "每晚可守护一名玩家，通常不可连续同守";
+    }
+    if (role === Role.Witch) {
+      return "拥有解药与毒药，可在夜间选择使用";
+    }
+    if (role === Role.Hunter) {
+      return "满足条件时可开枪带走一名玩家";
+    }
+    if (role === Role.Idiot) {
+      return "白天被放逐可翻牌免死并失去投票权";
+    }
+    return "请按当前规则解释该角色技能";
   }
 
   /**
@@ -688,13 +886,13 @@ export class LlmActionProvider implements ActionProvider {
       hints.push('kill_vote args: {"target_id":number|null,"abstain":true|false}');
     }
     if (allowedTools.includes("guard")) {
-      hints.push('guard args: {"target_id":number}');
+      hints.push('guard args: {"target_id":number|null,"abstain":true|false}');
     }
     if (allowedTools.includes("check_identity")) {
       hints.push('check_identity args: {"target_id":number}');
     }
     if (allowedTools.includes("vote")) {
-      hints.push('vote args: {"target_id":number}');
+      hints.push('vote args: {"target_id":number|null,"abstain":true|false}');
     }
     if (allowedTools.includes("shoot")) {
       hints.push('shoot args: {"target_id":number}');
@@ -745,10 +943,20 @@ export class LlmActionProvider implements ActionProvider {
     }
 
     // 仅做最小字段纠正，详细规则由 ToolGateway 二次校验。
-    if (
-      ["guard", "check_identity", "vote", "shoot"].includes(parsed.name)
-    ) {
+    if (["check_identity", "shoot"].includes(parsed.name)) {
       parsed.args.target_id = Number(parsed.args.target_id);
+    }
+    if (parsed.name === "guard" || parsed.name === "vote") {
+      parsed.args.abstain = Boolean(parsed.args.abstain);
+      if (parsed.args.abstain) {
+        parsed.args.target_id = null;
+      } else {
+        const target = Number(parsed.args.target_id);
+        if (!Number.isFinite(target)) {
+          return null;
+        }
+        parsed.args.target_id = target;
+      }
     }
     if (parsed.name === "kill_vote") {
       parsed.args.abstain = Boolean(parsed.args.abstain);
@@ -995,7 +1203,34 @@ export class LlmActionProvider implements ActionProvider {
       };
     }
 
-    if (["guard", "check_identity", "vote", "shoot"].includes(tool)) {
+    if (tool === "guard" || tool === "vote") {
+      const lower = cleaned.toLowerCase();
+      const abstain =
+        lower.includes("空守") ||
+        lower.includes("不守") ||
+        lower.includes("弃票") ||
+        lower.includes("不投票") ||
+        lower.includes("abstain");
+      if (abstain) {
+        return {
+          name: tool as any,
+          args: { target_id: null, abstain: true },
+        };
+      }
+      const resolvedTarget = targetId ?? this.pickAliveNotSelf(request.actorId);
+      if (resolvedTarget === null) {
+        return {
+          name: tool as any,
+          args: { target_id: null, abstain: true },
+        };
+      }
+      return {
+        name: tool as any,
+        args: { target_id: resolvedTarget, abstain: false },
+      };
+    }
+
+    if (["check_identity", "shoot"].includes(tool)) {
       const resolvedTarget = targetId ?? this.pickAliveNotSelf(request.actorId);
       if (resolvedTarget === null) {
         return null;

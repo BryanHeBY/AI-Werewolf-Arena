@@ -101,6 +101,7 @@ class FinishTurnOnlyClient {
 
 class CaptureToolsClient {
   public lastToolNames: string[] = [];
+  public lastTools: Array<{ name: string; description?: string; parameters?: any }> = [];
 
   async chat(): Promise<string> {
     return "";
@@ -108,7 +109,7 @@ class CaptureToolsClient {
 
   async runToolLoop<T>(
     _messages: Array<{ role: string; content: string }>,
-    tools: Array<{ name: string }>,
+    tools: Array<{ name: string; description?: string; parameters?: any }>,
     callbacks: {
       onToolCall: (invocation: {
         id: string;
@@ -122,6 +123,7 @@ class CaptureToolsClient {
       }>;
     },
   ): Promise<{ finalAction: T | null; assistantText: string }> {
+    this.lastTools = tools;
     this.lastToolNames = tools.map((tool) => tool.name);
     const handled = await callbacks.onToolCall({
       id: "tool_1",
@@ -132,6 +134,46 @@ class CaptureToolsClient {
     return {
       finalAction: (handled.finalAction ?? null) as T | null,
       assistantText: "capture_tools_assistant",
+    };
+  }
+}
+
+class FailOnceThenSpeakToolLoopClient {
+  private failed = false;
+
+  async chat(): Promise<string> {
+    return "";
+  }
+
+  async runToolLoop<T>(
+    _messages: Array<{ role: string; content: string }>,
+    _tools: Array<{ name: string }>,
+    callbacks: {
+      onToolCall: (invocation: {
+        id: string;
+        name: string;
+        args: Record<string, unknown>;
+        rawArgs: string;
+      }) => Promise<{
+        toolResult: Record<string, unknown> | string;
+        finalAction?: T;
+        stop?: boolean;
+      }>;
+    },
+  ): Promise<{ finalAction: T | null; assistantText: string }> {
+    if (!this.failed) {
+      this.failed = true;
+      throw new Error("simulated_runtime_error_once");
+    }
+    const handled = await callbacks.onToolCall({
+      id: "tool_retry_1",
+      name: "speak",
+      args: { text: "retry_success" },
+      rawArgs: '{"text":"retry_success"}',
+    });
+    return {
+      finalAction: (handled.finalAction ?? null) as T | null,
+      assistantText: "retry_assistant",
     };
   }
 }
@@ -172,7 +214,9 @@ describe("LlmActionProvider", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
-      new FakeClient("```json\n{\"name\":\"vote\",\"args\":{\"target_id\":2}}\n```"),
+      new FakeClient(
+        "```json\n{\"name\":\"vote\",\"args\":{\"target_id\":2,\"abstain\":false}}\n```",
+      ),
       {
         fallbackProvider: new FallbackProvider(null),
       },
@@ -187,7 +231,7 @@ describe("LlmActionProvider", () => {
 
     expect(action).toEqual({
       name: "vote",
-      args: { target_id: 2 },
+      args: { target_id: 2, abstain: false },
     });
   });
 
@@ -292,7 +336,12 @@ describe("LlmActionProvider", () => {
 
   test("prompt no longer contains private-intel snapshot line", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
-    const seerId = 5;
+    const seerId = context.world
+      .entityIds()
+      .find((id) => {
+        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        return role?.role === "seer";
+      })!;
     const seerRole = context.world.getComponent<RoleComponent>(seerId, COMPONENT.Role)!;
     seerRole.seerState!.lastTarget = 1;
     seerRole.seerState!.lastIsWerewolf = true;
@@ -382,6 +431,38 @@ describe("LlmActionProvider", () => {
     expect(action).toEqual({
       name: "speak",
       args: { text: "收到公开信息" },
+    });
+  });
+
+  test("initial prompt should include board lineup and role skill briefs", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const provider = new LlmActionProvider(
+      context.world,
+      new AssertClient('{"name":"speak","args":{"text":"收到板子信息"}}', (messages) => {
+        const joined = messages
+          .filter((m) => m.role === "user")
+          .map((m) => m.content)
+          .join("\n");
+        expect(joined).toContain("当前板子信息");
+        expect(joined).toContain("总玩家数=6");
+        expect(joined).toContain("角色构成=");
+        expect(joined).toContain("角色技能简介=");
+      }),
+      {
+        fallbackProvider: new FallbackProvider(null),
+      },
+    );
+
+    const action = await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["speak"],
+      context: { must_act: true },
+    });
+
+    expect(action).toEqual({
+      name: "speak",
+      args: { text: "收到板子信息" },
     });
   });
 
@@ -504,6 +585,32 @@ describe("LlmActionProvider", () => {
     expect(client.lastToolNames).toContain("finish_turn");
   });
 
+  test("sdk tools should include function and parameter descriptions", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const client = new CaptureToolsClient();
+    const provider = new LlmActionProvider(context.world, client as any, {
+      fallbackProvider: new FallbackProvider(null),
+    });
+
+    await provider.getAction({
+      phase: Phase.Voting,
+      actorId: 1,
+      allowedTools: ["vote"],
+      context: { must_act: false },
+    });
+
+    const voteTool = client.lastTools.find((tool) => tool.name === "vote");
+    expect(voteTool?.description).toContain("放逐投票");
+    expect(voteTool?.parameters?.description).toContain("放逐投票参数");
+    expect(voteTool?.parameters?.required).toEqual(["target_id", "abstain"]);
+    expect(voteTool?.parameters?.properties?.target_id?.description).toContain("弃票时必须为 null");
+    expect(voteTool?.parameters?.properties?.abstain?.description).toContain("是否弃票");
+
+    const finishTurnTool = client.lastTools.find((tool) => tool.name === "finish_turn");
+    expect(finishTurnTool?.description).toContain("不再继续行动");
+    expect(finishTurnTool?.parameters?.description).toContain("空参数对象");
+  });
+
   test("system prompt should explicitly distinguish wolf discussion and wolf vote stages", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
@@ -582,6 +689,32 @@ describe("LlmActionProvider", () => {
     expect(action).toEqual({
       name: "kill_vote",
       args: { target_id: null, abstain: true },
+    });
+  });
+
+  test("mustAct should retry when sdk tool loop throws runtime error", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const provider = new LlmActionProvider(
+      context.world,
+      new FailOnceThenSpeakToolLoopClient() as any,
+      {
+        fallbackProvider: new FallbackProvider({
+          name: "speak",
+          args: { text: "fallback_should_not_be_used" },
+        }),
+      },
+    );
+
+    const action = await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["speak"],
+      context: { must_act: true, broadcast_feed: [] },
+    });
+
+    expect(action).toEqual({
+      name: "speak",
+      args: { text: "retry_success" },
     });
   });
 });

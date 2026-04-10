@@ -157,6 +157,7 @@
 
 2. 建立 Function Calling 工具规范：
    - 工具命名、参数 schema、幂等语义、失败重试策略。
+   - OpenAI SDK 下发工具时必须补全工具说明与参数说明（`description`），并用 `required`/`additionalProperties=false` 固化输入边界。
 
 3. 建立统一冲突结算流水线：
    - 印记写入

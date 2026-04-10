@@ -86,6 +86,8 @@
 - [x] `T28` 重构狼队夜聊工具协议：移除 `end_wolf_chat` 独立行动，将夜聊统一为 `speak_to_wolves(text, end_chat)`；当 `end_chat=true` 时表示“发言后结束本人后续夜聊轮次”，结束说明直接复用本次发言文本并继续写入狼队可见事件流。
 - [x] `T29` 扩展狼刀投票协议：将 `kill_vote` 扩展为 `kill_vote(target_id, abstain)`，允许狼人明确“弃刀”；`abstain=true` 时不计入刀人票，全部弃刀则当夜无狼刀目标。
 - [x] `T30` 开局洗牌与上帝私有广播：初始化时随机洗牌角色分配；写入 `god_private_game_info` 事件（仅上帝可见，玩家不可见），包含 seat->role/camp 映射等完整开局信息。
+- [x] `T31` 扩展守卫与放逐投票协议：保持“必须使用工具行动”前提下，新增 `guard(target_id, abstain)` 的空守能力与 `vote(target_id, abstain)` 的弃票能力；`abstain=true` 时不落目标，不计入对应结算。
+- [x] `T32` 升级 OpenAI SDK 工具调用层描述协议：参考 `backend/src/gateway/schemas/*` 的约束表达方式，在 `LlmActionProvider` 传入 SDK 的每个工具定义中补全“工具说明 + 参数说明（description）+ 参数必填约束”，避免模型因参数语义缺失导致无效调用。
 - [x] `T29` 扩展狼刀投票协议：将 `kill_vote` 从仅提交 `target_id` 扩展为 `kill_vote(target_id, abstain)`；允许狼人明确弃刀（`abstain=true`），并在夜间结算中正确处理“全员弃刀 => 本夜无狼刀目标”。
 
 ## 3. 验收标准（任务映射）
@@ -121,4 +123,6 @@
 - [x] `A29`（对应: `T28`） 执行 `cd backend && npm test -- --runInBand tests/v3/night_wolf_tactical_loop.test.ts tests/v3/llm_action_provider.test.ts`，验证：1) 狼聊工具仅 `speak_to_wolves(text,end_chat)`；2) `end_chat=true` 后续轮次被跳过；3) 结束事件仍写入狼队可见事件流；并通过 `cd backend && npm run build:v3`。
 - [x] `A30`（对应: `T29`） 执行 `cd backend && npm test -- --runInBand tests/v3/night_wolf_tactical_loop.test.ts tests/v3/llm_action_provider.test.ts tests/v3/phase_manager_mvp.test.ts`，验证：1) `kill_vote` 支持 `abstain=true`；2) 全部弃刀时 `wolfTarget=null` 且当夜不产生狼刀死亡；3) 广播中可区分“投刀”与“弃刀”；并通过 `cd backend && npm run build:v3`。
 - [x] `A31`（对应: `T30`） 执行 `cd backend && npm test -- --runInBand tests/v3/phase_manager_mvp.test.ts tests/v3/agent_broadcast_feed.test.ts`，验证：1) 初始事件包含 `god_private_game_info` 且含 seat/role/camp；2) 玩家广播 feed 不含该事件；并通过 `cd backend && npm run build:v3`。
+- [x] `A32`（对应: `T31`） 执行 `cd backend && npm test -- --runInBand tests/v3/night_wolf_tactical_loop.test.ts tests/v3/phase_manager_mvp.test.ts tests/v3/llm_action_provider.test.ts`，验证：1) `guard` 支持空守（`abstain=true`）；2) `vote` 支持弃票（`abstain=true`）；3) 空守/弃票不影响结算稳定性；并通过 `cd backend && npm run build:v3`。
+- [x] `A33`（对应: `T32`） 执行 `cd backend && npm test -- --runInBand tests/v3/llm_action_provider.test.ts`，验证：1) SDK `tools` 中每个启用工具都带有完整 `description`；2) 参数字段具备逐项 `description` 与 `required`；3) `mustAct=false` 下附加工具 `finish_turn` 也带描述并可被模型正确识别；并通过 `cd backend && npm run build:v3`。
 - [x] `A30`（对应: `T29`） 执行 `cd backend && npm test -- --runInBand tests/v3/night_wolf_tactical_loop.test.ts tests/v3/llm_action_provider.test.ts tests/v3/phase_manager_mvp.test.ts`，验证：1) `kill_vote` 支持 `abstain`；2) 全员弃刀时 `wolfTarget=null` 且夜间无狼刀死亡；3) 狼队投票广播可区分“投刀”与“弃刀”；并通过 `cd backend && npm run build:v3`。

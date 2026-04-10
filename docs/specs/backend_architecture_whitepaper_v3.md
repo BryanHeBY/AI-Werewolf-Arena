@@ -57,7 +57,7 @@ ECS 架构是 V3 引擎能够兼容无限变种板子的基石。
 1. **警长定序**：若存在警长，系统优先调用警长的 `choose_direction()` 工具，设定本轮遍历顺序为顺时针或逆时针。
 2. **依次发言**：依据计算出的列表，逐个唤醒 Agent 调用 `speak()`。
 3. **公开广播**：引擎将内容以 `[玩家X] 我是...` 的剧本格式写入全局 Message Bus。
-4. **放逐投票**：全员发言完毕后，并行发起存活玩家 `vote(target)` 请求；引擎在全部结果返回后按固定顺序落库并结算。
+4. **放逐投票**：全员发言完毕后，并行发起存活玩家 `vote(target_id, abstain)` 请求；`abstain=true` 表示该玩家弃票；引擎在全部结果返回后按固定顺序落库并结算。
 
 ### 2.3 深度定制的黑夜流水线 (Strict Night Pipeline)
 黑夜不再使用并发队列，而是**完全照搬桌游物理唤醒顺序**。状态即改即生效。
@@ -254,9 +254,10 @@ V3 的事件总线保持“全量事件”能力，但在对外广播时必须�
    - 服务端回填每个 tool 的执行结果；
    - 模型继续下一步，直到产出可接受行动或主动结束回合。
 2. 工具参数仍经过服务端约束校验（name/args 白名单、枚举值与数字字段纠正）。
-3. 若 SDK 工具调用不可用或请求异常，才走文本解析/恢复 + fallback 兜底路径。
-4. 可观测性：`run_llm_game --print-thinking true` 时，运行日志输出 SDK 回合“思考轨迹”（`assistant` 文本 + `tool_call/tool_result`），用于排查模型决策链路；该输出与 `--print-llm-io` 解耦，可单独开启。
-5. 旁观私有事件日志：`--print-private-events` 控制控制台是否输出私有事件明细（如 `seer_checked`）；默认开启，仅影响旁观日志，不改变 Agent 视角隔离。
+3. 下发给 SDK 的每个工具定义必须包含完整语义说明：`tool.description` 与各参数字段 `properties.<param>.description` 均为必填；并通过 `required`/`additionalProperties=false` 显式约束输入边界，避免模型在参数语义不明确时产生无效调用。
+4. 若 SDK 工具调用不可用或请求异常，才走文本解析/恢复 + fallback 兜底路径。
+5. 可观测性：`run_llm_game --print-thinking true` 时，运行日志输出 SDK 回合“思考轨迹”（`assistant` 文本 + `tool_call/tool_result`），用于排查模型决策链路；该输出与 `--print-llm-io` 解耦，可单独开启。
+6. 旁观私有事件日志：`--print-private-events` 控制控制台是否输出私有事件明细（如 `seer_checked`）；默认开启，仅影响旁观日志，不改变 Agent 视角隔离。
 
 #### 3.6.5 行动落地层（Validation & State Mutation）
 1. `LlmActionProvider` 返回 `ToolCall` 给 phase pipeline。
