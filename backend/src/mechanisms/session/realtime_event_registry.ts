@@ -3,9 +3,11 @@ import { Camp, GameEvent, Phase } from "../../domain/model";
 import { RealtimeGameEvent } from "../../infra/transport/broadcaster";
 import { toFrontendFaction, toFrontendPhase } from "../../server/view_mapper";
 import { GUARD_REALTIME_EVENT_HANDLERS } from "../roles/guard/event_presenters";
+import { HUNTER_REALTIME_EVENT_HANDLERS } from "../roles/hunter/event_presenters";
 import { SEER_REALTIME_EVENT_HANDLERS } from "../roles/seer/event_presenters";
 import { WITCH_REALTIME_EVENT_HANDLERS } from "../roles/witch/event_presenters";
 import { WOLF_REALTIME_EVENT_HANDLERS } from "../roles/wolf/event_presenters";
+import { LAST_WORDS_REALTIME_EVENT_HANDLERS } from "../last_words/event_presenters";
 import { SHERIFF_REALTIME_EVENT_HANDLERS } from "../sheriff/event_presenters";
 import {
   RealtimeEventHandler,
@@ -44,7 +46,9 @@ const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
   ...WOLF_REALTIME_EVENT_HANDLERS,
   ...SEER_REALTIME_EVENT_HANDLERS,
   ...GUARD_REALTIME_EVENT_HANDLERS,
+  ...HUNTER_REALTIME_EVENT_HANDLERS,
   ...WITCH_REALTIME_EVENT_HANDLERS,
+  ...LAST_WORDS_REALTIME_EVENT_HANDLERS,
   ...SHERIFF_REALTIME_EVENT_HANDLERS,
   phase_changed: (event, ctx) => {
     const phase = String(event.payload.phase ?? Phase.Night) as Phase;
@@ -134,22 +138,28 @@ const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
       event.timestamp,
     ),
   ],
-  hunter_shot: (event, ctx) => {
-    const hunterId = Number(event.payload.hunterId);
-    const targetId = Number(event.payload.targetId);
-    return [
-      makePublicEvent(
-        "player_action",
-        {
-          playerId: hunterId,
-          actionType: "kill",
-          targetId,
-        },
-        event.timestamp,
-      ),
-      makePlayerDiedEvent(targetId, event.timestamp, ctx),
-    ];
-  },
+  sheriff_badge_transferred: (event) => [
+    makePublicEvent(
+      "sheriff_badge_transferred",
+      {
+        fromId: Number(event.payload.fromId),
+        toId:
+          event.payload.toId === null || event.payload.toId === undefined
+            ? null
+            : Number(event.payload.toId),
+      },
+      event.timestamp,
+    ),
+  ],
+  sheriff_badge_destroyed: (event) => [
+    makePublicEvent(
+      "sheriff_badge_destroyed",
+      {
+        targetId: Number(event.payload.targetId),
+      },
+      event.timestamp,
+    ),
+  ],
   game_over: (event, ctx) => {
     const winner = toFrontendFaction((event.payload.winner as Camp | null) ?? null);
     return [

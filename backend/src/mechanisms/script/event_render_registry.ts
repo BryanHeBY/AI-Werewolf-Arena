@@ -8,12 +8,14 @@ import {
   ScriptReplayStageHandler,
 } from "./contracts";
 import { GUARD_SCRIPT_LIVE_HANDLERS } from "../roles/guard/event_presenters";
+import { HUNTER_SCRIPT_JUDGE_HANDLERS } from "../roles/hunter/event_presenters";
 import { SEER_SCRIPT_LIVE_HANDLERS } from "../roles/seer/event_presenters";
 import { WITCH_SCRIPT_LIVE_HANDLERS } from "../roles/witch/event_presenters";
 import {
   WOLF_SCRIPT_CHAT_HANDLERS,
   WOLF_SCRIPT_LIVE_HANDLERS,
 } from "../roles/wolf/event_presenters";
+import { LAST_WORDS_SCRIPT_JUDGE_HANDLERS } from "../last_words/event_presenters";
 import {
   SHERIFF_SCRIPT_JUDGE_HANDLERS,
   SHERIFF_SCRIPT_LIVE_HANDLERS,
@@ -50,8 +52,14 @@ const JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler> = {
     return `昨夜死亡：${deaths.join("、")}号`;
   },
   voted_out: (event) => `${event.payload.target}号被放逐出局`,
+  sheriff_badge_transferred: (event) =>
+    `警徽移交：${event.payload.fromId}号 -> ${event.payload.toId}号`,
+  sheriff_badge_destroyed: (event) =>
+    `警徽被撕毁（原持有者${event.payload.targetId}号）`,
   wolf_self_destruct: (event) => `${event.payload.wolfId}号狼人自爆，流程被中断`,
   game_over: (event) => `胜利阵营：${event.payload.winner}，原因：${event.payload.reason}`,
+  ...LAST_WORDS_SCRIPT_JUDGE_HANDLERS,
+  ...HUNTER_SCRIPT_JUDGE_HANDLERS,
   ...SHERIFF_SCRIPT_JUDGE_HANDLERS,
 };
 

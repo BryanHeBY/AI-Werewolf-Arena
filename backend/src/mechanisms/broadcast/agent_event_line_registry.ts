@@ -1,9 +1,11 @@
 /** 文件说明：将领域事件转换为“单个玩家可见”的广播行。 */
 import { GameEvent } from "../../domain/model";
 import { GUARD_AGENT_EVENT_LINE_HANDLERS } from "../roles/guard/event_presenters";
+import { HUNTER_AGENT_EVENT_LINE_HANDLERS } from "../roles/hunter/event_presenters";
 import { SEER_AGENT_EVENT_LINE_HANDLERS } from "../roles/seer/event_presenters";
 import { WITCH_AGENT_EVENT_LINE_HANDLERS } from "../roles/witch/event_presenters";
 import { WOLF_AGENT_EVENT_LINE_HANDLERS } from "../roles/wolf/event_presenters";
+import { LAST_WORDS_AGENT_EVENT_LINE_HANDLERS } from "../last_words/event_presenters";
 import { SHERIFF_AGENT_EVENT_LINE_HANDLERS } from "../sheriff/event_presenters";
 import { AgentEventLineHandler, AgentLineContext } from "./contracts";
 
@@ -46,7 +48,9 @@ const DEFAULT_HANDLERS: Record<string, AgentEventLineHandler> = {
   ...WOLF_AGENT_EVENT_LINE_HANDLERS,
   ...SEER_AGENT_EVENT_LINE_HANDLERS,
   ...GUARD_AGENT_EVENT_LINE_HANDLERS,
+  ...HUNTER_AGENT_EVENT_LINE_HANDLERS,
   ...WITCH_AGENT_EVENT_LINE_HANDLERS,
+  ...LAST_WORDS_AGENT_EVENT_LINE_HANDLERS,
   ...SHERIFF_AGENT_EVENT_LINE_HANDLERS,
 };
 

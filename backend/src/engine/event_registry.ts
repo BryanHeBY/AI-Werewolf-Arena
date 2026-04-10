@@ -1,8 +1,8 @@
-import { AliveComponent } from "../domain/components/alive";
 import { BadgeComponent } from "../domain/components/badge";
+import { AliveComponent } from "../domain/components/alive";
 import { COMPONENT } from "../domain/components/names";
 import { RoleComponent } from "../domain/components/role";
-import { EntityId, GameEvent, Phase, StatusMark } from "../domain/model";
+import { EntityId, GameEvent, StatusMark } from "../domain/model";
 import { getDefaultHookRegistry, HookRegistry } from "../mechanisms";
 import { World } from "../domain/world";
 import { transferOrDestroySheriffBadge } from "./sheriff_badge";
@@ -71,47 +71,4 @@ export class EventRegistry {
       events,
     );
   }
-
-  /**
-   * 遗言规则：
-   * 1) 首夜死亡可遗言（支持多死）；
-   * 2) 白天放逐死亡可遗言；
-   * 3) 其他死亡（自爆、连带死亡）默认无遗言。
-   */
-  recordLastWords(
-    world: World,
-    deadIds: EntityId[],
-    phase: Phase,
-    day: number,
-    events: GameEvent[],
-  ): void {
-    for (const deadId of deadIds) {
-      if (!this.shouldGrantLastWords(phase, day)) {
-        continue;
-      }
-
-      const alive = world.getComponent<AliveComponent>(deadId, COMPONENT.Alive);
-      if (!alive || alive.alive) {
-        continue;
-      }
-
-      events.push({
-        timestamp: Date.now(),
-        type: "last_words_granted",
-        payload: {
-          playerId: deadId,
-          phase,
-          day,
-        },
-      });
-    }
-  }
-
-  /**
-   * 判定该死亡场景是否允许遗言。
-   */
-  shouldGrantLastWords(phase: Phase, day: number): boolean {
-    return (phase === Phase.Night && day === 1) || phase === Phase.Voting;
-  }
-
 }

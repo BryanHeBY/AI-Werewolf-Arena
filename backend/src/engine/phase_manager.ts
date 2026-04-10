@@ -12,7 +12,12 @@ import { ConditionRegistry } from "../domain/registries/condition_registry";
 import { DamageResolutionSystem } from "../domain/systems/damage_resolution_system";
 import { World } from "../domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
-import { getDefaultSheriffMechanism, SheriffMechanism } from "../mechanisms";
+import {
+  getDefaultLastWordsMechanism,
+  getDefaultSheriffMechanism,
+  LastWordsMechanism,
+  SheriffMechanism,
+} from "../mechanisms";
 import { EventRegistry } from "./event_registry";
 import { DayPipeline } from "./phase_pipeline/day_pipeline";
 import { NightPipeline } from "./phase_pipeline/night_pipeline";
@@ -35,6 +40,7 @@ export class PhaseManager {
   private readonly dayPipeline: DayPipeline;
   private readonly votingPipeline: VotingPipeline;
   private readonly sheriffMechanism: SheriffMechanism;
+  private readonly lastWordsMechanism: LastWordsMechanism;
 
   private state: RuntimeSnapshot = {
     day: 1,
@@ -53,6 +59,7 @@ export class PhaseManager {
   ) {
     this.eventRegistry = new EventRegistry();
     this.sheriffMechanism = getDefaultSheriffMechanism();
+    this.lastWordsMechanism = getDefaultLastWordsMechanism();
     this.nightPipeline = new NightPipeline(
       world,
       roleRegistry,
@@ -226,13 +233,14 @@ export class PhaseManager {
 
     while (pending.length > 0) {
       if (firstBatch) {
-        this.eventRegistry.recordLastWords(
+        this.lastWordsMechanism.recordLastWordsGranted(
           this.world,
           pending,
           phase,
           this.state.day,
           this.events,
         );
+        await this.collectLastWords(pending, phase, actionProvider);
       }
 
       // 先处理警长死亡带来的警徽逻辑，再执行角色死亡钩子。
@@ -286,6 +294,55 @@ export class PhaseManager {
         allSources[id] = result.extraDeathSources[id] ?? [];
       }
       firstBatch = false;
+    }
+  }
+
+  private async collectLastWords(
+    deadIds: EntityId[],
+    phase: Phase,
+    actionProvider: ActionProvider,
+  ): Promise<void> {
+    if (!this.lastWordsMechanism.shouldGrantLastWords(phase, this.state.day)) {
+      return;
+    }
+    for (const deadId of deadIds) {
+      const action = await actionProvider.getAction({
+        phase,
+        actorId: deadId,
+        allowedTools: ["speak"],
+        context: {
+          trigger: "last_words",
+          must_act: true,
+          day: this.state.day,
+          death_phase: phase,
+          broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, deadId),
+        },
+      });
+      if (action?.name !== "speak") {
+        continue;
+      }
+      const validated = this.toolGateway.validateAndSanitize(
+        this.world,
+        deadId,
+        action,
+        {
+          phase,
+          allowDeadLastWords: true,
+        },
+      );
+      if (!validated.ok || !validated.sanitizedCall) {
+        continue;
+      }
+      this.events.push({
+        timestamp: Date.now(),
+        type: "last_words_spoken",
+        payload: {
+          playerId: deadId,
+          phase,
+          day: this.state.day,
+          text: validated.sanitizedCall.args.text,
+        },
+      });
     }
   }
 
