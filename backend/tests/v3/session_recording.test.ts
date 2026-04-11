@@ -149,4 +149,30 @@ describe("SessionRecordManager", () => {
     expect(debugSummary).toContain("## Session");
     expect(debugSummary).toContain("## TODO");
   });
+
+  test("should not emit TODO section when there are no debug reports", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-replay-no-bug-"));
+    const manager = await SessionRecordManager.create(
+      {
+        sessionId: "session_test_no_bug",
+        board: "six_player_mvp",
+        startedAtIso: new Date("2026-04-10T00:00:00.000Z").toISOString(),
+      },
+      root,
+    );
+
+    await manager.finalize({
+      endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
+      winner: Camp.Wolf,
+      finishReason: "all_good_eliminated",
+      players: [],
+    });
+
+    const summary = await fs.readFile(
+      path.join(root, "session_test_no_bug", "debug_summary.md"),
+      "utf-8",
+    );
+    expect(summary).toContain("## Conclusion");
+    expect(summary).not.toContain("## TODO");
+  });
 });

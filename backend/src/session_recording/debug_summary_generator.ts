@@ -58,9 +58,7 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
   }
 
   lines.push("", "## TODO");
-  if (reports.length === 0) {
-    lines.push("- [ ] 无玩家上报问题，建议结合 public_timeline 抽样复核。");
-  } else {
+  if (reports.length > 0) {
     reports
       .slice()
       .sort((a, b) => {
@@ -72,6 +70,10 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
           `- [ ] [P${idx + 1}] 排查 ${report.category} 问题：${report.message}（actor=${report.actor_id}, day=${report.day}, phase=${report.phase}）`,
         );
       });
+  } else {
+    // 批量运行场景：无问题时避免输出待办噪声，给出明确“无需处理”结论。
+    lines.pop(); // remove "## TODO"
+    lines.push("", "## Conclusion", "- 本局未发现可执行问题，无需新增调试任务。");
   }
 
   return lines.join("\n");
@@ -81,6 +83,10 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
   const apiKey = process.env.OPENAI_API_KEY;
   const model = process.env.OPENAI_MODEL;
   if (!apiKey || !model) {
+    return null;
+  }
+  if (input.reports.length === 0) {
+    // 无上报时直接走静默模板，避免大模型生成冗余 TODO。
     return null;
   }
 
@@ -136,4 +142,3 @@ export async function buildDebugSummaryMarkdown(
   }
   return buildFallbackSummary(input);
 }
-
