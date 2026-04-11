@@ -1,15 +1,24 @@
-# Deprecated Configs
+# Runtime Board Configs
 
-该目录已弃用，当前后端运行链路不会读取这里的配置文件。
+当前目录用于存放运行时板子配置，读取路径由 `.env` 的 `GAME_CONFIGS_DIR` 指定。
 
-当前状态：
-- `configs/game-config.json`：未接入运行时；
-- `configs/system-prompts/*.json`：未被 `backend/src` 读取。
+已接入的配置文件（统一放在 `boards/` 下）：
+- `boards/six_player_mvp.json`
+- `boards/twelve_player_standard.json`
+- `boards/game-config.json`（可选聚合格式，支持 `boards.<board_name>`）
 
-现行配置来源：
-- 运行参数与环境变量：`.env` + `backend/src/scripts/run_llm_game.ts`
-- 机制与 Prompt：`backend/src/mechanisms/*`、`backend/src/agents/llm/prompt_templates.ts`
+推荐配置结构：
 
-后续处理建议：
-1. 先保留目录用于迁移观察期（当前阶段）。
-2. 确认无引用后可直接删除本目录及 README 文档中的历史描述。
+1. `board`：板子规模与角色构成（`size`、`roleSetups`）
+2. `rules`：通用规则（`revealOnDeath`、`winConditions`、`hooks`）
+3. `mechanisms`：机制配置（`sheriff`、`selfDestruct`、`tieBreaker`）
+4. `roles`：角色定制配置（如 `roles.witch.selfHeal`）
+
+运行时读取优先级（按顺序）：
+1. `${GAME_CONFIGS_DIR}/boards/${boardConfigName}.json`（当传入 `--board-config-name` 或 API 的 `boardConfigName` 时）
+2. `${GAME_CONFIGS_DIR}/boards/${board}.json`
+3. `${GAME_CONFIGS_DIR}/boards/game-config.json`
+4. 兼容兜底：`${GAME_CONFIGS_DIR}/*.json`（历史路径）
+
+说明：
+- `configs/system-prompts/*.json` 仍处于弃用状态，不参与当前后端运行链路。

@@ -1,7 +1,6 @@
 import { bootstrapGame, BootstrapResult } from "./bootstrap";
 import { BoardConfig } from "../domain/model";
-import { sixPlayerMvpConfig } from "../scenarios/six_player_mvp";
-import { twelvePlayerStandardConfig } from "../scenarios/twelve_player_standard";
+import { resolveBoardConfig } from "../scenarios/board_config_resolver";
 
 /**
  * 轻量容器：对外提供常用板子的一键装配入口。
@@ -11,14 +10,14 @@ export class GameContainer {
    * 生成 6 人 MVP 对局上下文。
    */
   createSixPlayerMvp(): BootstrapResult {
-    return bootstrapGame(sixPlayerMvpConfig);
+    return bootstrapGame(resolveBoardConfig("six_player_mvp"));
   }
 
   /**
    * 生成 12 人标准局对局上下文。
    */
   createTwelvePlayerStandard(): BootstrapResult {
-    return bootstrapGame(twelvePlayerStandardConfig);
+    return bootstrapGame(resolveBoardConfig("twelve_player_standard"));
   }
 
   /**

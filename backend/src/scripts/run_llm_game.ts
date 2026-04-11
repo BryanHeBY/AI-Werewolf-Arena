@@ -17,14 +17,13 @@ import { COMPONENT } from "../domain/components/names";
 import { RoleComponent } from "../domain/components/role";
 import { buildAgentBroadcastFeed } from "../engine/agent_broadcast_feed";
 import { getDefaultScriptEventRenderRegistry } from "../mechanisms";
-import { sixPlayerMvpConfig } from "../scenarios/six_player_mvp";
+import { resolveBoardConfig } from "../scenarios/board_config_resolver";
 import {
   buildSessionId,
   resolveDefaultRecordRoot,
   SessionRecordHub,
   SessionRecordManager,
 } from "../session_recording";
-import { twelvePlayerStandardConfig } from "../scenarios/twelve_player_standard";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
 import { BaselineBotActionProvider } from "../agents/providers/action_providers";
 import { LlmActionProvider } from "../agents/llm/llm_action_provider";
@@ -39,6 +38,7 @@ export type LlmBoard = "six_player_mvp" | "twelve_player_standard";
  */
 export interface RunLlmGameOptions {
   board: LlmBoard;
+  boardConfigName?: string;
   maxDays: number;
   trace: boolean;
   maxRuntimeMs: number;
@@ -59,6 +59,11 @@ function parseArgs(argv: string[]): Partial<RunLlmGameOptions> {
     const token = argv[i];
     if (token === "--board" && argv[i + 1]) {
       out.board = argv[i + 1] as LlmBoard;
+      i += 1;
+      continue;
+    }
+    if (token === "--board-config-name" && argv[i + 1]) {
+      out.boardConfigName = argv[i + 1];
       i += 1;
       continue;
     }
@@ -137,10 +142,12 @@ function parseArgs(argv: string[]): Partial<RunLlmGameOptions> {
   return out;
 }
 
-function pickBoard(board: LlmBoard) {
-  return board === "twelve_player_standard"
-    ? twelvePlayerStandardConfig
-    : sixPlayerMvpConfig;
+function pickBoard(
+  board: LlmBoard,
+  boardConfigName?: string,
+  log?: (text: string) => void,
+) {
+  return resolveBoardConfig(board, { boardConfigName }, log);
 }
 
 function requiredEnv(name: string): string {
@@ -212,7 +219,11 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     String(process.env.OPENAI_FORCE_JSON ?? "true").toLowerCase(),
   );
 
-  const boardConfig = pickBoard(options.board);
+  const boardConfig = pickBoard(
+    options.board,
+    options.boardConfigName,
+    (line) => log(line, "muted"),
+  );
   const context = bootstrapGame(boardConfig);
   const replaySessionId = buildSessionId();
   const replayRecordRoot = options.recordRootDir ?? resolveDefaultRecordRoot();
@@ -248,10 +259,11 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     colorizeLogs: colorEnabled,
     printLlmIo: options.printLlmIo,
     printThinking: options.printThinking,
+    boardConfig,
   });
 
   log(
-    `[run_llm_game] start board=${options.board} maxDays=${options.maxDays} model=${openaiModel} maxRuntimeMs=${options.maxRuntimeMs} llmTimeoutMs=${options.llmTimeoutMs}`,
+    `[run_llm_game] start board=${options.board} boardConfigName=${options.boardConfigName ?? options.board} maxDays=${options.maxDays} model=${openaiModel} maxRuntimeMs=${options.maxRuntimeMs} llmTimeoutMs=${options.llmTimeoutMs}`,
     "info",
   );
   if (replayManager) {
@@ -475,6 +487,7 @@ async function main(): Promise<void> {
         ? "six_player_mvp"
         : appConfig.defaultBoard;
   const envMaxDays = Number(process.env.V3_LLM_MAX_DAYS ?? "10");
+  const envBoardConfigName = process.env.V3_LLM_BOARD_CONFIG_NAME;
   const envMaxRuntimeMs = Number(process.env.V3_LLM_MAX_RUNTIME_MS ?? "30000");
   const envLlmTimeoutMs = Number(process.env.V3_LLM_TIMEOUT_MS ?? "30000");
   const envTrace = ["1", "true", "yes", "on"].includes(
@@ -509,6 +522,7 @@ async function main(): Promise<void> {
 
   await runLlmGame({
     board: argOptions.board ?? envBoard,
+    boardConfigName: argOptions.boardConfigName ?? envBoardConfigName,
     maxDays: argOptions.maxDays ?? envMaxDays,
     trace: argOptions.trace ?? envTrace,
     maxRuntimeMs: argOptions.maxRuntimeMs ?? envMaxRuntimeMs,

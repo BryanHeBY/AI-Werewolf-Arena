@@ -3,8 +3,7 @@ import { BoardPreset } from "../config";
 import { GameEvent, RuntimeSnapshot } from "../domain/model";
 import { Broadcaster, RealtimeGameEvent } from "../infra/transport/broadcaster";
 import { getDefaultRealtimeEventRegistry } from "../mechanisms";
-import { sixPlayerMvpConfig } from "../scenarios/six_player_mvp";
-import { twelvePlayerStandardConfig } from "../scenarios/twelve_player_standard";
+import { resolveBoardConfig } from "../scenarios/board_config_resolver";
 import { buildFrontendGameState, toFrontendPhase } from "./view_mapper";
 import { BaselineBotActionProvider } from "../agents/providers/action_providers";
 
@@ -13,6 +12,7 @@ import { BaselineBotActionProvider } from "../agents/providers/action_providers"
  */
 export interface SessionStartOptions {
   board?: BoardPreset;
+  boardConfigName?: string;
   maxDays?: number;
 }
 
@@ -22,6 +22,7 @@ export interface SessionStartOptions {
 export interface SessionStatus {
   id: string;
   board: BoardPreset;
+  boardConfigName?: string;
   running: boolean;
   snapshot: RuntimeSnapshot;
 }
@@ -51,6 +52,7 @@ class V3GameSession {
   constructor(
     readonly id: string,
     readonly board: BoardPreset,
+    readonly boardConfigName: string | undefined,
     private readonly broadcaster: Broadcaster,
     maxDays: number,
     cycleDelayMs: number,
@@ -58,9 +60,7 @@ class V3GameSession {
     this.maxDays = maxDays;
     this.cycleDelayMs = cycleDelayMs;
     this.context = bootstrapGame(
-      board === "twelve_player_standard"
-        ? twelvePlayerStandardConfig
-        : sixPlayerMvpConfig,
+      resolveBoardConfig(board, { boardConfigName }),
     );
     this.actionProvider = new BaselineBotActionProvider(this.context.world);
   }
@@ -109,6 +109,7 @@ class V3GameSession {
     return {
       id: this.id,
       board: this.board,
+      boardConfigName: this.boardConfigName,
       running: this.running,
       snapshot: this.context.phaseManager.getSnapshot(),
     };
@@ -209,12 +210,14 @@ export class V3SessionManager {
     }
 
     const board = options.board ?? this.config.defaultBoard;
+    const boardConfigName = options.boardConfigName;
     const maxDays = options.maxDays ?? this.config.maxDaysPerSession;
 
     this.seq += 1;
     this.current = new V3GameSession(
       `v3-${this.seq}`,
       board,
+      boardConfigName,
       this.broadcaster,
       maxDays,
       this.config.cycleDelayMs,

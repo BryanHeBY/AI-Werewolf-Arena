@@ -49,13 +49,23 @@ fastify.get("/api/status", async () => {
 });
 
 fastify.get("/api/start-game", async (request) => {
-  const query = request.query as { board?: BoardPreset; maxDays?: string };
-  return startGame(query.board, query.maxDays ? Number(query.maxDays) : undefined);
+  const query = request.query as {
+    board?: BoardPreset;
+    boardConfigName?: string;
+    maxDays?: string;
+  };
+  return startGame(
+    query.board,
+    query.boardConfigName,
+    query.maxDays ? Number(query.maxDays) : undefined,
+  );
 });
 
 fastify.post("/api/start-game", async (request) => {
-  const body = request.body as { board?: BoardPreset; maxDays?: number } | undefined;
-  return startGame(body?.board, body?.maxDays);
+  const body = request.body as
+    | { board?: BoardPreset; boardConfigName?: string; maxDays?: number }
+    | undefined;
+  return startGame(body?.board, body?.boardConfigName, body?.maxDays);
 });
 
 fastify.post("/api/stop-game", async () => {
@@ -80,7 +90,11 @@ fastify.get("/api/session", async () => {
   };
 });
 
-function startGame(board: BoardPreset | undefined, maxDays: number | undefined) {
+function startGame(
+  board: BoardPreset | undefined,
+  boardConfigName: string | undefined,
+  maxDays: number | undefined,
+) {
   if (!sessions) {
     return {
       success: false,
@@ -90,12 +104,14 @@ function startGame(board: BoardPreset | undefined, maxDays: number | undefined) 
   }
   const status = sessions.start({
     board,
+    boardConfigName,
     maxDays,
   });
   return {
     success: true,
     gameId: status.id,
     board: status.board,
+    boardConfigName: status.boardConfigName,
     players: sessions.publicState()?.players ?? [],
     engineVersion: "V3",
     snapshot: status.snapshot,
