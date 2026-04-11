@@ -20,4 +20,4 @@
 ## Notes
 
 - 仓库根目录仅保留结构总览与 docs 入口。
-- 后续新增文档统一放在 `docs/` 下，不再在 `backend/`、`frontend/`、`configs/` 分散维护 README 文档。
+- 后续新增文档统一放在 `docs/` 下，不再在 `backend/`、`frontend/`、`configs.example/` 分散维护 README 文档。

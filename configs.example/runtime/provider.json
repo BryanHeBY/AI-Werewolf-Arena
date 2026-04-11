@@ -1,0 +1,6 @@
+{
+  "type": "openai",
+  "apiKey": "YOUR_API_KEY",
+  "baseURL": "https://api.openai.com/v1",
+  "userAgent": "AWA-Werewolf/1.0"
+}

@@ -12,8 +12,9 @@
 6. 引擎与玩法机制解耦重构方案（注册化与插件化路线）：`engine_mechanism_decoupling_refactor_v3.md`
 7. LLM 自动调试一期规范：`llm_auto_debug_phase1_spec.md`
 8. LLM 自动调试二期规范：`llm_auto_debug_phase2_spec.md`
-9. Session 实时复盘记录规范：`realtime_session_records_spec.md`
-10. LLM 行动提示三行高密度规范：`llm_user_prompt_three_line_spec.md`
+9. 运行时配置文件规范：`runtime_config_spec.md`
+10. Session 实时复盘记录规范：`realtime_session_records_spec.md`
+11. LLM 行动提示三行高密度规范：`llm_user_prompt_three_line_spec.md`
 
 阅读建议：
 

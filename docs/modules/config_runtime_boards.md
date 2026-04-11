@@ -15,10 +15,10 @@
 4. `roles`：角色定制配置（如 `roles.witch.selfHeal`）
 
 运行时读取优先级（按顺序）：
-1. `${GAME_CONFIGS_DIR}/boards/${boardConfigName}.json`（当传入 `--board-config-name` 或 API 的 `boardConfigName` 时）
+1. `${GAME_CONFIGS_DIR}/boards/${board}.json`（当传入 `--board` 或 API 的 `board` 时）
 2. `${GAME_CONFIGS_DIR}/boards/${board}.json`
 3. `${GAME_CONFIGS_DIR}/boards/game-config.json`
 4. 兼容兜底：`${GAME_CONFIGS_DIR}/*.json`（历史路径）
 
 说明：
-- `configs/system-prompts/*.json` 仍处于弃用状态，不参与当前后端运行链路。
+- 原 `configs/system-prompts/*.json` 已弃用且目录已移除。

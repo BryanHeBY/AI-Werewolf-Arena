@@ -63,3 +63,6 @@ coverage
 
 # Codex local marker file
 .codex
+
+# local runtime configs (ignored)
+configs/

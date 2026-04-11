@@ -97,6 +97,6 @@
 
 1. `board_config_resolver` 中无角色特化判断（如 `Role.Witch`）；
 2. 角色/机制裁剪逻辑迁移到对应模块 normalizer；
-3. `configs/boards/*.json` 迁移为新结构；
+3. `configs.example/boards/*.json` 迁移为新结构；
 4. 6 人局配置无自爆配置，且不会渲染自爆机制；
 5. 编译通过，关键回归测试通过。

@@ -1,0 +1,55 @@
+{
+  "default": {
+    "model": "gpt-4o-mini",
+    "temperature": 0.2,
+    "maxTokens": 512,
+    "forceJsonResponse": true,
+    "reasoningEnabled": true,
+    "reasoningEffort": "medium",
+    "personalityPrompt": ""
+  },
+  "roles": {
+    "wolf": {
+      "model": "gpt-4o-mini",
+      "temperature": 0.2,
+      "personalityPrompt": ""
+    },
+    "seer": {
+      "model": "gpt-4o-mini",
+      "temperature": 0.2,
+      "personalityPrompt": ""
+    },
+    "witch": {
+      "model": "gpt-4o-mini",
+      "temperature": 0.2,
+      "personalityPrompt": ""
+    },
+    "guard": {
+      "model": "gpt-4o-mini",
+      "temperature": 0.2,
+      "personalityPrompt": ""
+    },
+    "hunter": {
+      "model": "gpt-4o-mini",
+      "temperature": 0.2,
+      "personalityPrompt": ""
+    },
+    "idiot": {
+      "model": "gpt-4o-mini",
+      "temperature": 0.2,
+      "personalityPrompt": ""
+    },
+    "villager": {
+      "model": "gpt-4o-mini",
+      "temperature": 0.2,
+      "personalityPrompt": ""
+    }
+  },
+  "players": {
+    "1": {
+      "model": "gpt-4o-mini",
+      "temperature": 0.3,
+      "personalityPrompt": "更激进，优先带节奏"
+    }
+  }
+}

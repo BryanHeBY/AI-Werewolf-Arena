@@ -1,0 +1,15 @@
+{
+  "board": "twelve_player_standard",
+  "maxDays": 10,
+  "maxRuntimeMs": 1800000,
+  "llmTimeoutMs": 30000,
+  "trace": false,
+  "printAllEvents": false,
+  "printChat": false,
+  "streamEvents": true,
+  "color": true,
+  "printLlmIo": false,
+  "printThinking": false,
+  "printPrivateEvents": true,
+  "recordRootDir": "/home/hby/dev/AWA/be_workdir/backend/data/records"
+}

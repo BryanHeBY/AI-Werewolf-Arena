@@ -8,7 +8,7 @@
 .
 ├── backend/      # 后端服务与游戏引擎代码
 ├── frontend/     # 前端界面代码
-├── configs/      # 运行时配置（板子等）
+├── configs.example/  # 示例运行时配置
 ├── data/         # 本地数据目录
 ├── docs/         # 项目文档（唯一文档入口）
 ├── scripts/      # 脚本目录
