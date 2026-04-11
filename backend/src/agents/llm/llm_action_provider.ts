@@ -3,6 +3,7 @@ import { RoleComponent } from "../../domain/components/role";
 import {
   ActionProvider,
   ActionRequest,
+  BoardConfig,
   Camp,
   EntityId,
   Phase,
@@ -15,8 +16,10 @@ import { World } from "../../domain/world";
 import {
   getDefaultTargetHintRegistry,
   getDefaultRolePromptRegistry,
+  getDefaultConfigRenderRegistry,
   getDefaultToolCallRepairRegistry,
   getDefaultToolSpecRegistry,
+  ConfigRenderRegistry,
   RolePromptRegistry,
   TargetHintRegistry,
   ToolCallRepairRegistry,
@@ -67,6 +70,7 @@ interface BuildMessagesResult {
   systemPrompt: string;
   userPrompt: string;
   boardInfoPrompt?: string;
+  configPrompt?: string;
   isInitialRound: boolean;
   visibleFeedDelta: string[];
   feedCursorBefore: number;
@@ -120,6 +124,8 @@ export interface LlmActionProviderOptions {
   rolePromptRegistry?: RolePromptRegistry;
   toolCallRepairRegistry?: ToolCallRepairRegistry;
   targetHintRegistry?: TargetHintRegistry;
+  boardConfig?: BoardConfig;
+  configRenderRegistry?: ConfigRenderRegistry;
 }
 
 /**
@@ -141,6 +147,8 @@ export class LlmActionProvider implements ActionProvider {
   private readonly rolePromptRegistry: RolePromptRegistry;
   private readonly toolCallRepairRegistry: ToolCallRepairRegistry;
   private readonly targetHintRegistry: TargetHintRegistry;
+  private readonly boardConfig?: BoardConfig;
+  private readonly configRenderRegistry: ConfigRenderRegistry;
   private readonly recentEvents: string[] = [];
   private readonly agentHistories = new Map<EntityId, ChatMessage[]>();
   private readonly agentBroadcastCursor = new Map<EntityId, number>();
@@ -170,6 +178,9 @@ export class LlmActionProvider implements ActionProvider {
       options.toolCallRepairRegistry ?? getDefaultToolCallRepairRegistry();
     this.targetHintRegistry =
       options.targetHintRegistry ?? getDefaultTargetHintRegistry();
+    this.boardConfig = options.boardConfig;
+    this.configRenderRegistry =
+      options.configRenderRegistry ?? getDefaultConfigRenderRegistry();
     this.fallbackProvider =
       options.fallbackProvider ?? new BaselineBotActionProvider(world);
   }
@@ -852,6 +863,10 @@ export class LlmActionProvider implements ActionProvider {
     const history = contextWindow.history;
     const isInitialRound = (this.actorRoundCounter.get(request.actorId) ?? 0) === 0;
     const boardInfoPrompt = isInitialRound ? this.buildBoardInfoPrompt() : undefined;
+    const configPrompt =
+      isInitialRound && this.boardConfig
+        ? this.configRenderRegistry.renderBoardConfigPrompt(this.boardConfig)
+        : undefined;
     const llmAllowedTools = this.buildLlmAllowedTools(request.allowedTools);
     const systemPrompt = buildSystemPrompt({
       actorId: request.actorId,
@@ -863,6 +878,7 @@ export class LlmActionProvider implements ActionProvider {
       statusDirective: this.statusDirective(request.actorId, roleComp),
       mustAct,
       boardInfoPrompt,
+      configPrompt,
     });
 
     const userPrompt = buildUserPrompt({
@@ -895,6 +911,7 @@ export class LlmActionProvider implements ActionProvider {
       systemPrompt,
       userPrompt,
       ...(boardInfoPrompt ? { boardInfoPrompt } : {}),
+      ...(configPrompt ? { configPrompt } : {}),
       isInitialRound,
       visibleFeedDelta: feedDelta.delta,
       feedCursorBefore: feedDelta.cursorBefore,

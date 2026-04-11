@@ -67,10 +67,10 @@
 
 ### A. 女巫首夜自救
 - 当前状态：
-  - `canSelfHeal` 在 `backend/src/mechanisms/roles/witch/profile.ts` 初始化为 `false`。
+  - `canSelfHeal` 在 `backend/src/mechanisms/roles/witch/profile.ts` 初始化为 `disabled`。
   - 校验在 `backend/src/mechanisms/roles/witch/validation_rules.ts`。
 - 建议：
-  - 新增板子配置，例如 `witch.canSelfHealFirstNight`（或 `witch.canSelfHeal`）。
+  - 新增板子配置，例如 `witch.canSelfHeal` 枚举（`disabled` / `first_night_only` / `always`）。
   - 初始化私有状态时按板子配置注入。
 
 ### B. 平票处理策略
@@ -141,7 +141,7 @@ interface ExtendedBoardConfig {
   };
 
   witch?: {
-    canSelfHeal?: boolean; // default false
+    canSelfHeal?: "disabled" | "first_night_only" | "always"; // default disabled
   };
 
   tieBreaker?: {

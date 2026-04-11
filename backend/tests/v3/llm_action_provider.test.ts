@@ -1036,4 +1036,28 @@ describe("LlmActionProvider", () => {
       args: { text: "retry_success" },
     });
   });
+
+  test("initial system prompt should include rendered board config summary", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const provider = new LlmActionProvider(
+      context.world,
+      new AssertClient('{"name":"speak","args":{"text":"ok"}}', (messages) => {
+        const system = messages.find((msg) => msg.role === "system")?.content ?? "";
+        expect(system).toContain("本局规则配置");
+        expect(system).toContain("胜利条件");
+        expect(system).toContain("警长机制");
+      }),
+      {
+        fallbackProvider: new FallbackProvider(null),
+        boardConfig: twelvePlayerStandardConfig,
+      },
+    );
+
+    await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["speak"],
+      context: { must_act: true, broadcast_feed: [] },
+    });
+  });
 });

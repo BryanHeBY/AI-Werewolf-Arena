@@ -12,6 +12,7 @@ export interface SystemPromptInput {
   statusDirective?: string;
   mustAct: boolean;
   boardInfoPrompt?: string;
+  configPrompt?: string;
 }
 
 /** 行动提示词输入参数。 */
@@ -55,6 +56,7 @@ export function buildSystemPrompt(input: SystemPromptInput): string {
     `仅可调用本轮可用工具：${input.allowedTools.join(", ")}。${input.stageDirective} ${actionRule}`,
     ...(input.statusDirective ? [input.statusDirective] : []),
     ...(input.boardInfoPrompt ? [input.boardInfoPrompt] : []),
+    ...(input.configPrompt ? [input.configPrompt] : []),
     SYSTEM_BASE_LINES[3],
   ].join("\n");
 }
