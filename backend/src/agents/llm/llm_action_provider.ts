@@ -120,6 +120,8 @@ export interface LlmActionProviderOptions {
   colorizeLogs?: boolean;
   printLlmIo?: boolean;
   printThinking?: boolean;
+  clientResolver?: (request: ActionRequest, role?: RoleComponent) => ChatLike;
+  personalityPromptResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
   toolSpecRegistry?: ToolSpecRegistry;
   rolePromptRegistry?: RolePromptRegistry;
   toolCallRepairRegistry?: ToolCallRepairRegistry;
@@ -143,6 +145,8 @@ export class LlmActionProvider implements ActionProvider {
   private readonly printLlmIo: boolean;
   private readonly printThinking: boolean;
   private readonly fallbackProvider: ActionProvider;
+  private readonly clientResolver?: (request: ActionRequest, role?: RoleComponent) => ChatLike;
+  private readonly personalityPromptResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
   private readonly toolSpecRegistry: ToolSpecRegistry;
   private readonly rolePromptRegistry: RolePromptRegistry;
   private readonly toolCallRepairRegistry: ToolCallRepairRegistry;
@@ -171,6 +175,8 @@ export class LlmActionProvider implements ActionProvider {
     this.colorizeLogs = isAnsiEnabled(options.colorizeLogs);
     this.printLlmIo = options.printLlmIo ?? false;
     this.printThinking = options.printThinking ?? false;
+    this.clientResolver = options.clientResolver;
+    this.personalityPromptResolver = options.personalityPromptResolver;
     this.toolSpecRegistry = options.toolSpecRegistry ?? getDefaultToolSpecRegistry();
     this.rolePromptRegistry =
       options.rolePromptRegistry ?? getDefaultRolePromptRegistry();
@@ -197,6 +203,8 @@ export class LlmActionProvider implements ActionProvider {
    * 执行一次动作决策：优先 SDK tool loop，失败时回退基线策略。
    */
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
+    const roleComp = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
+    const client = this.clientResolver?.(request, roleComp) ?? this.client;
     const built = this.buildMessages(request);
     const messages = built.messages;
     this.appendTrace(
@@ -246,7 +254,7 @@ export class LlmActionProvider implements ActionProvider {
         `request_start player=${request.actorId} phase=${request.phase} tools=${request.allowedTools.join(",")} timeout_ms=${effectiveTimeoutMs}`,
       );
       this.dumpLlmPrompt(messages, request);
-      if (this.client.runToolLoop) {
+      if (client.runToolLoop) {
         const runSdkAttempt = async (
           attempt: number,
           attemptMessages: ChatMessage[],
@@ -257,6 +265,7 @@ export class LlmActionProvider implements ActionProvider {
         }> => {
           try {
             const picked = await this.runSdkToolLoop(
+              client,
               request,
               attemptMessages,
               effectiveTimeoutMs,
@@ -375,7 +384,7 @@ export class LlmActionProvider implements ActionProvider {
         });
         return null;
       } else {
-        raw = await this.chatWithTimeout(messages, effectiveTimeoutMs);
+        raw = await this.chatWithTimeout(client, messages, effectiveTimeoutMs);
         this.dumpLlmRawResponse(raw, request);
         const parsed = this.parseToolCall(
           raw,
@@ -590,6 +599,7 @@ export class LlmActionProvider implements ActionProvider {
   }
 
   private async chatWithTimeout(
+    client: ChatLike,
     messages: ChatMessage[],
     timeoutMs: number,
   ): Promise<string> {
@@ -597,7 +607,7 @@ export class LlmActionProvider implements ActionProvider {
     let timer: NodeJS.Timeout | null = null;
     try {
       return await Promise.race<string>([
-        this.client.chat(messages, { signal: controller.signal }),
+        client.chat(messages, { signal: controller.signal }),
         new Promise<string>((_, reject) => {
           timer = setTimeout(() => {
             controller.abort();
@@ -613,11 +623,12 @@ export class LlmActionProvider implements ActionProvider {
   }
 
   private async runSdkToolLoop(
+    client: ChatLike,
     request: ActionRequest,
     messages: ChatMessage[],
     timeoutMs: number,
   ): Promise<ToolCall | null> {
-    if (!this.client.runToolLoop) {
+    if (!client.runToolLoop) {
       return null;
     }
     const controller = new AbortController();
@@ -628,7 +639,7 @@ export class LlmActionProvider implements ActionProvider {
         llmAllowedTools,
         this.isMustAct(request),
       );
-      const loop = this.client.runToolLoop<ToolCall>(
+      const loop = client.runToolLoop<ToolCall>(
         messages,
         tools,
         {
@@ -879,6 +890,7 @@ export class LlmActionProvider implements ActionProvider {
       mustAct,
       boardInfoPrompt,
       configPrompt,
+      personalityPrompt: this.personalityPromptResolver?.(request, roleComp),
     });
 
     const userPrompt = buildUserPrompt({

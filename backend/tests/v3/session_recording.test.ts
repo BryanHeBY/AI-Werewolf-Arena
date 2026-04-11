@@ -3,6 +3,7 @@ import os from "os";
 import path from "path";
 import { Camp } from "../../src/domain/model";
 import { SessionRecordManager } from "../../src/session_recording";
+import { setRuntimeConfigOverride } from "../../src/config/runtime_config";
 
 jest.mock("../../src/infra/llm/openai_client", () => {
   class OpenAIClient {
@@ -62,14 +63,16 @@ jest.mock("../../src/infra/llm/openai_client", () => {
 });
 
 describe("SessionRecordManager", () => {
-  const originalAgentEnabled = process.env.DEBUG_SUMMARY_AGENT_ENABLED;
-
   beforeAll(() => {
-    process.env.DEBUG_SUMMARY_AGENT_ENABLED = "false";
+    setRuntimeConfigOverride({
+      provider: { type: "openai", apiKey: "test-key" },
+      agent: { default: { model: "test-model" } },
+      debugSummary: { agent: { enabled: false } },
+    });
   });
 
   afterAll(() => {
-    process.env.DEBUG_SUMMARY_AGENT_ENABLED = originalAgentEnabled;
+    setRuntimeConfigOverride(null);
   });
 
   test("should persist timeline and player files during game before finalize", async () => {
@@ -336,22 +339,19 @@ describe("SessionRecordManager", () => {
       root,
     );
 
-    const prevEnv = {
-      OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-      OPENAI_MODEL: process.env.OPENAI_MODEL,
-      DEBUG_SUMMARY_AGENT_ENABLED: process.env.DEBUG_SUMMARY_AGENT_ENABLED,
-      DEBUG_SUMMARY_AGENT_MAX_ATTEMPTS: process.env.DEBUG_SUMMARY_AGENT_MAX_ATTEMPTS,
-      DEBUG_SUMMARY_AGENT_TIMEOUT_MS: process.env.DEBUG_SUMMARY_AGENT_TIMEOUT_MS,
-      DEBUG_SUMMARY_AGENT_CONCURRENCY: process.env.DEBUG_SUMMARY_AGENT_CONCURRENCY,
-    };
-
     try {
-      process.env.OPENAI_API_KEY = "test-key";
-      process.env.OPENAI_MODEL = "test-model";
-      process.env.DEBUG_SUMMARY_AGENT_ENABLED = "true";
-      process.env.DEBUG_SUMMARY_AGENT_MAX_ATTEMPTS = "1";
-      process.env.DEBUG_SUMMARY_AGENT_TIMEOUT_MS = "1000";
-      process.env.DEBUG_SUMMARY_AGENT_CONCURRENCY = "2";
+      setRuntimeConfigOverride({
+        provider: { type: "openai", apiKey: "test-key" },
+        agent: { default: { model: "test-model" } },
+        debugSummary: {
+          agent: {
+            enabled: true,
+            maxAttempts: 1,
+            timeoutMs: 1000,
+            concurrency: 2,
+          },
+        },
+      });
 
       manager.recordPublicEvent({
         type: "phase_changed",
@@ -410,12 +410,11 @@ describe("SessionRecordManager", () => {
         players: [{ player_id: 1, role: "villager", camp: "villager", alive: true }],
       });
     } finally {
-      process.env.OPENAI_API_KEY = prevEnv.OPENAI_API_KEY;
-      process.env.OPENAI_MODEL = prevEnv.OPENAI_MODEL;
-      process.env.DEBUG_SUMMARY_AGENT_ENABLED = prevEnv.DEBUG_SUMMARY_AGENT_ENABLED;
-      process.env.DEBUG_SUMMARY_AGENT_MAX_ATTEMPTS = prevEnv.DEBUG_SUMMARY_AGENT_MAX_ATTEMPTS;
-      process.env.DEBUG_SUMMARY_AGENT_TIMEOUT_MS = prevEnv.DEBUG_SUMMARY_AGENT_TIMEOUT_MS;
-      process.env.DEBUG_SUMMARY_AGENT_CONCURRENCY = prevEnv.DEBUG_SUMMARY_AGENT_CONCURRENCY;
+      setRuntimeConfigOverride({
+        provider: { type: "openai", apiKey: "test-key" },
+        agent: { default: { model: "test-model" } },
+        debugSummary: { agent: { enabled: false } },
+      });
     }
 
     const agentsDir = path.join(root, "session_debug_agents", "debug_summary_agents");

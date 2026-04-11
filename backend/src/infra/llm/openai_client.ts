@@ -17,6 +17,7 @@ export interface OpenAIClientOptions {
   apiKey: string;
   baseURL?: string;
   model: string;
+  userAgent?: string;
   temperature?: number;
   maxTokens?: number;
   forceJsonResponse?: boolean;
@@ -110,7 +111,9 @@ export class OpenAIClient {
     // 兼容部分网关对 OpenAI SDK 默认 UA 的误拦截：
     // 若不覆写，可能返回 403 "Your request was blocked."。
     const userAgent =
-      process.env.OPENAI_USER_AGENT?.trim() || "AWA-Werewolf/1.0";
+      options.userAgent?.trim() ||
+      process.env.OPENAI_USER_AGENT?.trim() ||
+      "AWA-Werewolf/1.0";
     this.client = new OpenAI({
       apiKey: options.apiKey,
       baseURL: options.baseURL,

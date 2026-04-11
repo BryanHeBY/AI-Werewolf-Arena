@@ -13,6 +13,7 @@ export interface SystemPromptInput {
   mustAct: boolean;
   boardInfoPrompt?: string;
   configPrompt?: string;
+  personalityPrompt?: string;
 }
 
 /** 行动提示词输入参数。 */
@@ -50,12 +51,16 @@ export function buildSystemPrompt(input: SystemPromptInput): string {
     : "本轮可选择结束回合不行动；当你不需要继续行动时，请直接不调用任何工具。";
   const teammateText =
     input.teammateIds.length > 0 ? input.teammateIds.join(", ") : "无";
+  const personalityLine = input.personalityPrompt?.trim()
+    ? `你的性格与发言风格要求：${input.personalityPrompt.trim()}`
+    : undefined;
   return [
     `${SYSTEM_BASE_LINES[0]} 你的编号是${input.actorId}号，真实身份是${input.role}。当你看到“[行动提示]”时，说明你可以开始行动了。${SYSTEM_BASE_LINES[1]} ${SYSTEM_BASE_LINES[2]}`,
     `你当前同阵营队友（不含你自己）的编号：${teammateText}。`,
     `你只能引用本局存在的玩家编号，编号范围是1到${input.maxPlayerId}，严禁虚构不存在的玩家编号。`,
     `仅可调用本轮可用工具：${input.allowedTools.join(", ")}。${input.stageDirective} ${actionRule}`,
     ...(input.statusDirective ? [input.statusDirective] : []),
+    ...(personalityLine ? [personalityLine] : []),
     ...(input.boardInfoPrompt ? [input.boardInfoPrompt] : []),
     ...(input.configPrompt ? [input.configPrompt] : []),
     SYSTEM_BASE_LINES[3],
