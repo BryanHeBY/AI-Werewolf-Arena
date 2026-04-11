@@ -33,6 +33,7 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
     input.publicEvents ?? [],
   );
   const autoFindings = scanEventsForPotentialIssues(input);
+  const metadataFindings = scanPlayerTimelineMetadataIssues(input.playerViews ?? []);
   const allFindings = [
     ...actionableReports.map((r) => ({
       severity: r.severity,
@@ -44,6 +45,7 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
       evidence: Array.isArray(r.evidence_event_seq) ? r.evidence_event_seq : [],
     })),
     ...autoFindings,
+    ...metadataFindings,
   ];
   const counts = countBySeverity(reports);
   const lines: string[] = [
@@ -168,6 +170,11 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
     input.publicEvents ?? [],
   );
   const autoFindings = scanEventsForPotentialIssues(input);
+  const metadataFindings = scanPlayerTimelineMetadataIssues(input.playerViews ?? []);
+  const candidateFindings = [...actionableReports, ...autoFindings, ...metadataFindings];
+  if (candidateFindings.length === 0) {
+    return null;
+  }
   const allowedSeqs = new Set<number>();
   for (const report of actionableReports) {
     if (Array.isArray(report.evidence_event_seq)) {
@@ -179,6 +186,13 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
     }
   }
   for (const finding of autoFindings) {
+    for (const seq of finding.evidence ?? []) {
+      if (typeof seq === "number") {
+        allowedSeqs.add(seq);
+      }
+    }
+  }
+  for (const finding of metadataFindings) {
     for (const seq of finding.evidence ?? []) {
       if (typeof seq === "number") {
         allowedSeqs.add(seq);
@@ -217,6 +231,7 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
               `finish_reason: ${input.manifest.finish_reason}`,
               `reports_json: ${JSON.stringify(actionableReports)}`,
               `auto_scan_findings_json: ${JSON.stringify(autoFindings)}`,
+              `metadata_findings_json: ${JSON.stringify(metadataFindings)}`,
               `event_digest_json: ${JSON.stringify(buildEventDigest(input.publicEvents ?? []))}`,
             ].join("\n"),
           },
@@ -257,6 +272,11 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
 export async function buildDebugSummaryMarkdown(
   input: BuildDebugSummaryInput,
 ): Promise<string> {
+  // 无结构化 report 时走确定性汇总，避免 LLM 在低证据条件下产生误报。
+  if (input.reports.length === 0) {
+    return buildFallbackSummary(input);
+  }
+
   if (input.sessionDir && input.logicOps && input.playerViews) {
     try {
       const pipeline = await buildDebugSummaryWithAgents({
@@ -523,6 +543,85 @@ function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): Array<{
         actorId: witchId,
         message: "女巫发言声称已用药，但事件流无用药记录，建议核查模型发言约束与私有信息同步。",
         evidence: witchSpeechClaims.slice(0, 6).map((e) => e.seq),
+      });
+    }
+  }
+
+  return findings;
+}
+
+function scanPlayerTimelineMetadataIssues(
+  views: ReplayPlayerView[],
+): Array<{
+  severity: "low" | "medium" | "high" | "critical";
+  category: "flow" | "rule" | "state" | "logging" | "other";
+  day: number;
+  phase: string;
+  actorId: number;
+  message: string;
+  evidence: number[];
+}> {
+  const findings: Array<{
+    severity: "low" | "medium" | "high" | "critical";
+    category: "flow" | "rule" | "state" | "logging" | "other";
+    day: number;
+    phase: string;
+    actorId: number;
+    message: string;
+    evidence: number[];
+  }> = [];
+
+  for (const view of views) {
+    const invalidDaySeqs: number[] = [];
+    const inconsistentReqSeqs: number[] = [];
+
+    for (const entry of view.timeline) {
+      if (
+        entry.kind !== "llm_message" &&
+        entry.kind !== "tool_call" &&
+        entry.kind !== "text_action" &&
+        entry.kind !== "fallback"
+      ) {
+        continue;
+      }
+
+      if (typeof entry.day !== "number" || entry.day <= 0) {
+        invalidDaySeqs.push(entry.seq);
+      }
+
+      const requestId = String(entry.request_id ?? "");
+      const match = requestId.match(/^(\d+)-([a-z_]+)-/i);
+      if (!match) {
+        continue;
+      }
+      const reqDay = Number(match[1]);
+      const reqPhase = match[2];
+      if (reqDay !== entry.day || reqPhase !== entry.phase) {
+        inconsistentReqSeqs.push(entry.seq);
+      }
+    }
+
+    if (invalidDaySeqs.length > 0) {
+      findings.push({
+        severity: "high",
+        category: "logging",
+        day: 0,
+        phase: "unknown",
+        actorId: view.player_id,
+        message: "玩家时间线出现 day<=0 的行动记录，疑似动作上下文写入错误。",
+        evidence: invalidDaySeqs.slice(0, 8),
+      });
+    }
+
+    if (inconsistentReqSeqs.length > 0) {
+      findings.push({
+        severity: "medium",
+        category: "logging",
+        day: 0,
+        phase: "unknown",
+        actorId: view.player_id,
+        message: "玩家时间线 request_id 与 day/phase 不一致，疑似请求元数据错位。",
+        evidence: inconsistentReqSeqs.slice(0, 8),
       });
     }
   }

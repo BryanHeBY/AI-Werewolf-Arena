@@ -643,6 +643,11 @@ async function renderSummaryWithLlm(
 export async function buildDebugSummaryWithAgents(
   input: DebugSummaryPipelineInput,
 ): Promise<PipelineResult | null> {
+  // 没有结构化上报时不启用并行子 agent，避免在低证据条件下放大误报。
+  if (input.reports.length === 0) {
+    return null;
+  }
+
   const runtime = await loadRuntimeConfig();
   const provider = runtime.provider;
   const agentDefaults = runtime.agent?.default;

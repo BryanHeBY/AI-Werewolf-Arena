@@ -632,4 +632,49 @@ describe("SessionRecordManager", () => {
     expect(summary).not.toContain("## TODO");
     expect(summary).toContain("## Conclusion");
   });
+
+  test("should detect timeline metadata mismatch in deterministic summary when reports are empty", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-replay-metadata-mismatch-"));
+    const manager = await SessionRecordManager.create(
+      {
+        sessionId: "session_test_metadata_mismatch",
+        board: "six_player_mvp",
+        startedAtIso: new Date("2026-04-10T00:00:00.000Z").toISOString(),
+      },
+      root,
+    );
+
+    manager.recordPlayerRound({
+      playerId: 1,
+      role: "hunter",
+      camp: "good",
+      day: 0,
+      phase: "night",
+      stage: "night",
+      requestId: "0-night-1-1",
+      visibleFeedDelta: [],
+      actionMode: "tool_call",
+      toolCalls: [
+        {
+          name: "shoot",
+          args: { target_id: 2 },
+          accepted: true,
+        },
+      ],
+    });
+
+    await manager.finalize({
+      endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
+      winner: Camp.Good,
+      finishReason: "all_wolves_eliminated",
+      players: [],
+    });
+
+    const summary = await fs.readFile(
+      path.join(root, "session_test_metadata_mismatch", "debug_summary.md"),
+      "utf-8",
+    );
+    expect(summary).toContain("## TODO");
+    expect(summary).toContain("day<=0");
+  });
 });
