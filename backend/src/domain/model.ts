@@ -129,7 +129,6 @@ export interface ToolArgMap {
     category: "flow" | "rule" | "state" | "logging" | "other";
     severity: "low" | "medium" | "high" | "critical";
     message: string;
-    evidence_event_seq?: number[];
   };
   speak_to_wolves: { text: string; end_chat: boolean };
   kill_vote: { target_id: EntityId | null; abstain: boolean };

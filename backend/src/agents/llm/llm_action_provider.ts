@@ -1052,7 +1052,6 @@ export class LlmActionProvider implements ActionProvider {
         category: parsed.value.category,
         severity: parsed.value.severity,
         message: parsed.value.message,
-        evidenceEventSeq: parsed.value.evidence_event_seq,
       }) ?? "rb-no-recorder";
 
     safeRecordLogicOp({
@@ -1077,7 +1076,6 @@ export class LlmActionProvider implements ActionProvider {
           category: DebugBugCategory;
           severity: DebugBugSeverity;
           message: string;
-          evidence_event_seq: number[];
         };
       }
     | { ok: false; error: string } {
@@ -1109,28 +1107,12 @@ export class LlmActionProvider implements ActionProvider {
     if (message.length > 300) {
       return { ok: false, error: "invalid_report_bug_message_too_long" };
     }
-    const evidence_event_seq: number[] = [];
-    if (args.evidence_event_seq !== undefined) {
-      if (!Array.isArray(args.evidence_event_seq)) {
-        return { ok: false, error: "invalid_report_bug_evidence_not_array" };
-      }
-      if (args.evidence_event_seq.length > 20) {
-        return { ok: false, error: "invalid_report_bug_evidence_too_many" };
-      }
-      for (const item of args.evidence_event_seq) {
-        if (typeof item !== "number" || !Number.isFinite(item) || item <= 0) {
-          return { ok: false, error: "invalid_report_bug_evidence_item" };
-        }
-        evidence_event_seq.push(Math.floor(item));
-      }
-    }
     return {
       ok: true,
       value: {
         category: category as DebugBugCategory,
         severity: severity as DebugBugSeverity,
         message,
-        evidence_event_seq,
       },
     };
   }

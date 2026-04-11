@@ -211,10 +211,9 @@ class ReportThenSpeakToolLoopClient {
         category: "flow",
         severity: "high",
         message: "测试：白痴翻牌日志未显示",
-        evidence_event_seq: [10, 11],
       },
       rawArgs:
-        '{"category":"flow","severity":"high","message":"测试：白痴翻牌日志未显示","evidence_event_seq":[10,11]}',
+        '{"category":"flow","severity":"high","message":"测试：白痴翻牌日志未显示"}',
     });
     const handled = await callbacks.onToolCall({
       id: "tool_speak_1",

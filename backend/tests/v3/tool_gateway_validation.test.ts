@@ -81,7 +81,6 @@ describe("V3 ToolGateway validation", () => {
           category: "flow",
           severity: "medium",
           message: "测试上报",
-          evidence_event_seq: [1, 2],
         },
       },
       { phase: Phase.Day },

@@ -23,11 +23,6 @@ export const COMMON_TOOL_SPECS: ToolSpec[] = [
             description: "问题严重等级。",
           },
           message: prop("string", "问题描述，建议包含具体异常现象。"),
-          evidence_event_seq: {
-            type: "array",
-            items: { type: "number" },
-            description: "可选：证据事件序号列表。",
-          },
         },
         description: "调试上报参数。",
         required: ["category", "severity", "message"],
@@ -35,7 +30,7 @@ export const COMMON_TOOL_SPECS: ToolSpec[] = [
       },
     },
     argHint:
-      'report_bug args: {"category":"flow|rule|state|logging|other","severity":"low|medium|high|critical","message":"...","evidence_event_seq":[number,...]}',
+      'report_bug args: {"category":"flow|rule|state|logging|other","severity":"low|medium|high|critical","message":"..."}',
     gatewaySchema: {
       name: "report_bug",
       description: "上报疑似游戏逻辑问题",
@@ -51,10 +46,6 @@ export const COMMON_TOOL_SPECS: ToolSpec[] = [
             enum: ["low", "medium", "high", "critical"],
           },
           message: { type: "string" },
-          evidence_event_seq: {
-            type: "array",
-            items: { type: "number" },
-          },
         },
         required: ["category", "severity", "message"],
       },

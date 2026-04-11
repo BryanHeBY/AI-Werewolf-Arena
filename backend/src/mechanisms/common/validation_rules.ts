@@ -9,7 +9,7 @@ export const COMMON_VALIDATION_RULES: ToolRuleMap = {
     if (toolCall.name !== "report_bug") {
       return "非法操作，工具不匹配";
     }
-    const { category, severity, message, evidence_event_seq } = toolCall.args;
+    const { category, severity, message } = toolCall.args;
     const categorySet = new Set(["flow", "rule", "state", "logging", "other"]);
     const severitySet = new Set(["low", "medium", "high", "critical"]);
     if (!categorySet.has(String(category))) {
@@ -23,19 +23,6 @@ export const COMMON_VALIDATION_RULES: ToolRuleMap = {
     }
     if (message.length > 300) {
       return "非法操作，report_bug.message 长度不能超过 300";
-    }
-    if (evidence_event_seq !== undefined) {
-      if (!Array.isArray(evidence_event_seq)) {
-        return "非法操作，report_bug.evidence_event_seq 必须为数组";
-      }
-      if (evidence_event_seq.length > 20) {
-        return "非法操作，report_bug.evidence_event_seq 最多 20 项";
-      }
-      for (const item of evidence_event_seq) {
-        if (typeof item !== "number" || !Number.isFinite(item) || item <= 0) {
-          return "非法操作，report_bug.evidence_event_seq 必须为正整数数组";
-        }
-      }
     }
     return null;
   },
