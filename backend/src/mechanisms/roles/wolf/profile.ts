@@ -1,5 +1,5 @@
 /** 文件说明：狼人角色 profile。 */
-import { Role } from "../../../domain/model";
+import { Camp, Role } from "../../../domain/model";
 import { RoleProfile } from "../contracts";
 import { WOLF_LLM_REPAIR_PACK } from "./llm_repair";
 import { WOLF_NIGHT_STAGES } from "./night_stages";
@@ -9,6 +9,7 @@ import { WOLF_VALIDATION_RULES } from "./validation_rules";
 /** 狼人角色配置。 */
 export const WOLF_ROLE_PROFILE: RoleProfile = {
   role: Role.Wolf,
+  camp: Camp.Wolf,
   label: "狼人",
   skillBrief: "夜间可狼队夜聊并参与刀人投票",
   renderPrompt: () => "你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。",

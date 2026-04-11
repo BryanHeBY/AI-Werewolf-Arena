@@ -13,6 +13,7 @@ import {
 import { RoleRegistry } from "../../domain/registries/role_registry";
 import { ToolGateway } from "../../gateway/tool_gateway";
 import { getDefaultSheriffMechanism, SheriffMechanism } from "../../mechanisms";
+import { RoleSpecRegistry } from "../../mechanisms/registries/role_spec_registry";
 import { World } from "../../domain/world";
 import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
 
@@ -50,6 +51,9 @@ export class DayPipeline {
     // 兼容旧签名：(world, toolGateway, events)
     if (Array.isArray(toolGatewayOrEvents)) {
       this.roleRegistry = new RoleRegistry();
+      for (const spec of new RoleSpecRegistry().all()) {
+        this.roleRegistry.registerAllowedTools(spec.role, spec.allowedTools);
+      }
       this.toolGateway = roleRegistryOrToolGateway as ToolGateway;
       this.events = toolGatewayOrEvents;
       this.sheriffMechanism =
@@ -77,6 +81,7 @@ export class DayPipeline {
       actionProvider,
       day: this.currentDay(),
       enableSheriff: config.enableSheriff,
+      config,
     });
     if (options?.afterSheriffElection) {
       await options.afterSheriffElection();

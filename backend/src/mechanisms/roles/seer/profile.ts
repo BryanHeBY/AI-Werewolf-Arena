@@ -1,5 +1,5 @@
 /** 文件说明：预言家角色 profile。 */
-import { Role } from "../../../domain/model";
+import { Camp, Role } from "../../../domain/model";
 import { RoleProfile } from "../contracts";
 import { getSeerState, setSeerState } from "../private_state";
 import { SEER_LLM_REPAIR_PACK } from "./llm_repair";
@@ -10,6 +10,7 @@ import { SEER_VALIDATION_RULES } from "./validation_rules";
 /** 预言家角色配置。 */
 export const SEER_ROLE_PROFILE: RoleProfile = {
   role: Role.Seer,
+  camp: Camp.Good,
   label: "预言家",
   skillBrief: "每晚可查验一名玩家阵营",
   goodSide: "god",

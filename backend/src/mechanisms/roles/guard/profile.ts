@@ -1,5 +1,5 @@
 /** 文件说明：守卫角色 profile。 */
-import { Role } from "../../../domain/model";
+import { Camp, Role } from "../../../domain/model";
 import { RoleProfile } from "../contracts";
 import { setGuardState } from "../private_state";
 import { GUARD_LLM_REPAIR_PACK } from "./llm_repair";
@@ -10,6 +10,7 @@ import { GUARD_VALIDATION_RULES } from "./validation_rules";
 /** 守卫角色配置。 */
 export const GUARD_ROLE_PROFILE: RoleProfile = {
   role: Role.Guard,
+  camp: Camp.Good,
   label: "守卫",
   skillBrief: "每晚可守护一名玩家，通常不可连续同守",
   goodSide: "god",

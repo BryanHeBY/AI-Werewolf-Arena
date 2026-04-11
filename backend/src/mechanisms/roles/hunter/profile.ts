@@ -1,5 +1,5 @@
 /** 文件说明：猎人角色 profile。 */
-import { Role } from "../../../domain/model";
+import { Camp, Role } from "../../../domain/model";
 import { RoleProfile } from "../contracts";
 import { setHunterState } from "../private_state";
 import { hunterDeathHook } from "./death_hook";
@@ -10,6 +10,7 @@ import { HUNTER_VALIDATION_RULES } from "./validation_rules";
 /** 猎人角色配置。 */
 export const HUNTER_ROLE_PROFILE: RoleProfile = {
   role: Role.Hunter,
+  camp: Camp.Good,
   label: "猎人",
   skillBrief: "满足条件时可开枪带走一名玩家",
   goodSide: "god",

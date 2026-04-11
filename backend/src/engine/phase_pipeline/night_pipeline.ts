@@ -10,6 +10,7 @@ import {
   NightSummary,
   Phase,
   Role,
+  TieBreakerStrategy,
 } from "../../domain/model";
 import { RoleRegistry } from "../../domain/registries/role_registry";
 import {
@@ -81,7 +82,10 @@ export class NightPipeline {
       getAliveByRole: (role: Role) => this.getAliveByRole(role),
       ensureMarks: (entityId: EntityId) => this.ensureMarks(entityId),
       pickMajorityTarget: (votes: Record<number, number>) =>
-        this.pickMajorityTarget(votes),
+        this.pickMajorityTarget(
+          votes,
+          config.tieBreaker?.wolfKillVote ?? "min_id",
+        ),
       shuffleWolves: (ids: EntityId[]) => this.shuffleWolves(ids),
       state: stageState,
     };
@@ -159,7 +163,10 @@ export class NightPipeline {
   /**
    * 依据票数选出狼刀目标，平票按编号最小值决议。
    */
-  private pickMajorityTarget(votes: Record<number, number>): EntityId | null {
+  private pickMajorityTarget(
+    votes: Record<number, number>,
+    strategy: TieBreakerStrategy,
+  ): EntityId | null {
     const entries = Object.entries(votes);
     if (entries.length === 0) {
       return null;
@@ -171,6 +178,11 @@ export class NightPipeline {
       }
       return Number(a[0]) - Number(b[0]);
     });
+    if (entries.length >= 2 && entries[0][1] === entries[1][1]) {
+      if (strategy === "no_kill") {
+        return null;
+      }
+    }
     return Number(entries[0][0]);
   }
 

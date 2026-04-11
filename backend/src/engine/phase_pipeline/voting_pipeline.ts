@@ -1,5 +1,6 @@
 import { AliveComponent } from "../../domain/components/alive";
 import { COMPONENT } from "../../domain/components/names";
+import { IdentityComponent } from "../../domain/entities/player";
 import { VotingRightComponent } from "../../domain/components/voting_right";
 import {
   ActionProvider,
@@ -9,10 +10,12 @@ import {
   EntityId,
   GameEvent,
   Phase,
+  TieBreakerStrategy,
   VotingSummary,
 } from "../../domain/model";
 import { RoleRegistry } from "../../domain/registries/role_registry";
 import { ToolGateway } from "../../gateway/tool_gateway";
+import { RoleSpecRegistry } from "../../mechanisms/registries/role_spec_registry";
 import { safeRecordLogicOp } from "../../session_recording";
 import { EventRegistry } from "../event_registry";
 import { World } from "../../domain/world";
@@ -50,6 +53,9 @@ export class VotingPipeline {
     // 兼容旧签名：(world, toolGateway, eventRegistry, events)
     if (eventsMaybe === undefined) {
       this.roleRegistry = new RoleRegistry();
+      for (const spec of new RoleSpecRegistry().all()) {
+        this.roleRegistry.registerAllowedTools(spec.role, spec.allowedTools);
+      }
       this.toolGateway = roleRegistryOrToolGateway as ToolGateway;
       this.eventRegistry = toolGatewayOrEventRegistry as EventRegistry;
       this.events = eventRegistryOrEvents as GameEvent[];
@@ -279,7 +285,10 @@ export class VotingPipeline {
       });
     }
 
-    const target = this.pickMajorityTarget(tally);
+    const target = this.pickMajorityTarget(
+      tally,
+      config.tieBreaker?.exileVote ?? "min_id",
+    );
     safeRecordLogicOp({
       scope: "phase_pipeline",
       op: "vote_tally_resolved",
@@ -405,7 +414,10 @@ export class VotingPipeline {
   /**
    * 依据计票结果选出放逐目标，平票按编号最小值决议。
    */
-  private pickMajorityTarget(tally: Record<number, number>): EntityId | null {
+  private pickMajorityTarget(
+    tally: Record<number, number>,
+    strategy: TieBreakerStrategy,
+  ): EntityId | null {
     const entries = Object.entries(tally);
     if (entries.length === 0) {
       return null;
@@ -416,8 +428,25 @@ export class VotingPipeline {
       if (voteDiff !== 0) {
         return voteDiff;
       }
+      if (strategy === "min_seat") {
+        const aId = Number(a[0]);
+        const bId = Number(b[0]);
+        const aSeat =
+          this.world.getComponent<IdentityComponent>(aId, COMPONENT.Identity)?.seat ??
+          aId;
+        const bSeat =
+          this.world.getComponent<IdentityComponent>(bId, COMPONENT.Identity)?.seat ??
+          bId;
+        return aSeat - bSeat;
+      }
       return Number(a[0]) - Number(b[0]);
     });
+
+    if (entries.length >= 2 && entries[0][1] === entries[1][1]) {
+      if (strategy === "no_elimination") {
+        return null;
+      }
+    }
 
     return Number(entries[0][0]);
   }

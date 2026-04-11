@@ -13,23 +13,12 @@ export interface RoleComponent extends PromptRenderable {
 }
 
 /**
- * 角色组件工厂：
- * 根据底牌初始化角色私有状态（如女巫药量、守卫上轮守护目标等）。
- */
-export function inferCamp(role: Role): Camp {
-  if (role === Role.Wolf) {
-    return Camp.Wolf;
-  }
-  return Camp.Good;
-}
-
-/**
  * 创建角色组件并按角色初始化私有状态。
  */
-export function createRoleComponent(role: Role): RoleComponent {
+export function createRoleComponent(role: Role, camp: Camp): RoleComponent {
   return {
     role,
-    camp: inferCamp(role),
+    camp,
     privateState: {},
     renderPrompt(): string {
       return `你的底牌是【${this.role}】。`;

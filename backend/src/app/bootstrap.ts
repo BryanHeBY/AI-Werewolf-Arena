@@ -7,7 +7,12 @@ import { createStatusMarksComponent } from "../domain/components/status_marks";
 import { createVotingRightComponent } from "../domain/components/voting_right";
 import { createIdentityComponent } from "../domain/entities/player";
 import { BoardConfig, EntityId, Role } from "../domain/model";
-import { getDefaultRoleRuntimeRegistry, getDefaultSheriffMechanism } from "../mechanisms";
+import {
+  getDefaultRoleCampRegistry,
+  getDefaultRoleRuntimeRegistry,
+  getDefaultSheriffMechanism,
+  RoleSpecRegistry,
+} from "../mechanisms";
 import { ConditionRegistry } from "../domain/registries/condition_registry";
 import { RoleRegistry } from "../domain/registries/role_registry";
 import { DamageResolutionSystem } from "../domain/systems/damage_resolution_system";
@@ -35,6 +40,10 @@ export function bootstrapGame(config: BoardConfig): BootstrapResult {
   getDefaultSheriffMechanism().assignInitialSheriff(world, config, playerIds);
 
   const roleRegistry = new RoleRegistry();
+  const roleSpecRegistry = new RoleSpecRegistry();
+  for (const spec of roleSpecRegistry.all()) {
+    roleRegistry.registerAllowedTools(spec.role, spec.allowedTools);
+  }
   const damageResolutionSystem = new DamageResolutionSystem();
   const conditionRegistry = new ConditionRegistry();
   const toolGateway = new ToolGateway();
@@ -59,12 +68,13 @@ function createPlayers(world: World, config: BoardConfig): EntityId[] {
   const roles = buildRoleDeck(config);
   const ids: EntityId[] = [];
   const roleRuntimeRegistry = getDefaultRoleRuntimeRegistry();
+  const roleCampRegistry = getDefaultRoleCampRegistry();
 
   for (let seat = 1; seat <= config.boardSize; seat++) {
     const entityId = world.createEntity();
     const role = roles[seat - 1];
-    const roleComp = createRoleComponent(role);
-    roleRuntimeRegistry.apply(roleComp);
+    const roleComp = createRoleComponent(role, roleCampRegistry.get(role));
+    roleRuntimeRegistry.apply(roleComp, { boardConfig: config });
 
     world.addComponent(
       entityId,

@@ -1,6 +1,7 @@
 /** 文件说明：把角色 profile 的初始化与提示渲染能力注入到组件。 */
 import { RoleComponent } from "../../domain/components/role";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "./profile_registry";
+import { RoleInitContext } from "./contracts";
 
 /** 角色运行时初始化注册表。 */
 export class RoleRuntimeRegistry {
@@ -10,8 +11,8 @@ export class RoleRuntimeRegistry {
     this.roleProfileRegistry = roleProfileRegistry;
   }
 
-  apply(roleComp: RoleComponent): void {
-    this.roleProfileRegistry.get(roleComp.role)?.init?.(roleComp);
+  apply(roleComp: RoleComponent, ctx: RoleInitContext = {}): void {
+    this.roleProfileRegistry.get(roleComp.role)?.init?.(roleComp, ctx);
     roleComp.renderPrompt = () => {
       const render = this.roleProfileRegistry.get(roleComp.role)?.renderPrompt;
       if (render) {

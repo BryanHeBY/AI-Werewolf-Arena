@@ -1,5 +1,5 @@
 /** 文件说明：女巫角色 profile。 */
-import { PotionType, Role } from "../../../domain/model";
+import { Camp, PotionType, Role, WitchSelfHealRule } from "../../../domain/model";
 import { RoleProfile } from "../contracts";
 import { getWitchState, setWitchState } from "../private_state";
 import { WITCH_LLM_REPAIR_PACK } from "./llm_repair";
@@ -10,14 +10,20 @@ import { WITCH_VALIDATION_RULES } from "./validation_rules";
 /** 女巫角色配置。 */
 export const WITCH_ROLE_PROFILE: RoleProfile = {
   role: Role.Witch,
+  camp: Camp.Good,
   label: "女巫",
   skillBrief: "拥有解药与毒药，可在夜间选择使用",
   goodSide: "god",
-  init: (roleComp) => {
+  init: (roleComp, ctx) => {
+    const selfHealRule =
+      ctx.boardConfig?.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled;
     setWitchState(roleComp, {
       heal: 1,
       poison: 1,
-      canSelfHeal: false,
+      selfHealRule,
+      canSelfHeal:
+        selfHealRule === WitchSelfHealRule.Always ||
+        selfHealRule === WitchSelfHealRule.FirstNightOnly,
       healUsedThisNight: false,
       poisonUsedThisNight: false,
     });

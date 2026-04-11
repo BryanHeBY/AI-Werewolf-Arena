@@ -96,6 +96,42 @@ export interface SelfDestructConfig {
   enabledWindows: ActionWindow[];
 }
 
+/** 平票处理策略。 */
+export type TieBreakerStrategy =
+  | "min_id"
+  | "min_seat"
+  | "no_elimination"
+  | "no_kill";
+
+/** 警长机制配置。 */
+export interface SheriffConfig {
+  // 警长票权倍率，默认 1.5。
+  voteWeight?: number;
+}
+
+/** 女巫机制配置。 */
+export enum WitchSelfHealRule {
+  Disabled = "disabled",
+  FirstNightOnly = "first_night_only",
+  Always = "always",
+}
+
+/** 女巫机制配置。 */
+export interface WitchConfig {
+  // 女巫自救规则：不允许 / 仅首夜允许 / 一直允许。默认 disabled。
+  canSelfHeal?: WitchSelfHealRule;
+}
+
+/** 平票策略配置。 */
+export interface TieBreakerConfig {
+  // 放逐投票平票策略，默认 min_id。
+  exileVote?: TieBreakerStrategy;
+  // 狼刀平票策略，默认 min_id。
+  wolfKillVote?: TieBreakerStrategy;
+  // 警长投票平票策略，默认 min_seat。
+  sheriffVote?: TieBreakerStrategy;
+}
+
 /**
  * 板子配置模型。
  */
@@ -120,6 +156,12 @@ export interface BoardConfig {
   hooks: HookConfig;
   // 自爆窗口配置（可选，不传时默认仅允许 on_pre_vote）。
   selfDestruct?: SelfDestructConfig;
+  // 警长机制额外配置。
+  sheriff?: SheriffConfig;
+  // 女巫机制额外配置。
+  witch?: WitchConfig;
+  // 平票处理机制配置。
+  tieBreaker?: TieBreakerConfig;
   // 每种角色的数量配置，启动时会展开为底牌牌堆。
   roleSetups: Array<{ role: Role; count: number }>;
 }

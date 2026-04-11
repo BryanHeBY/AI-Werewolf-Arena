@@ -1,5 +1,5 @@
 /** 文件说明：角色私有状态的统一读写封装。 */
-import { EntityId } from "../../domain/model";
+import { EntityId, WitchSelfHealRule } from "../../domain/model";
 import { RoleComponent } from "../../domain/components/role";
 
 const PRIVATE_STATE_KEYS = {
@@ -14,6 +14,7 @@ const PRIVATE_STATE_KEYS = {
 export interface WitchState {
   heal: number;
   poison: number;
+  selfHealRule: WitchSelfHealRule;
   canSelfHeal: boolean;
   healUsedThisNight: boolean;
   poisonUsedThisNight: boolean;

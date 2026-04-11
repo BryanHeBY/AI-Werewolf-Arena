@@ -11,6 +11,7 @@ import {
   EntityId,
   GameEvent,
   Phase,
+  TieBreakerStrategy,
 } from "../../domain/model";
 import { World } from "../../domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
@@ -37,7 +38,7 @@ export class SheriffMechanism {
       return;
     }
 
-    this.assignSheriffById(world, sheriffId);
+    this.assignSheriffById(world, sheriffId, config);
   }
 
   findSheriffId(world: World): EntityId | null {
@@ -55,8 +56,9 @@ export class SheriffMechanism {
     actionProvider: ActionProvider;
     day: number;
     enableSheriff: boolean;
+    config?: BoardConfig;
   }): Promise<EntityId | null> {
-    const { world, events, toolGateway, actionProvider, day, enableSheriff } = input;
+    const { world, events, toolGateway, actionProvider, day, enableSheriff, config } = input;
     if (!enableSheriff || day !== 1) {
       return this.findSheriffId(world);
     }
@@ -298,7 +300,12 @@ export class SheriffMechanism {
       }
     }
 
-    const winner = this.pickSheriffWinner(world, finalizedCandidates, tally);
+    const winner = this.pickSheriffWinner(
+      world,
+      finalizedCandidates,
+      tally,
+      config?.tieBreaker?.sheriffVote ?? "min_seat",
+    );
     events.push({
       timestamp: Date.now(),
       type: "sheriff_vote_summary",
@@ -309,7 +316,7 @@ export class SheriffMechanism {
     });
 
     if (winner !== null) {
-      this.assignSheriffById(world, winner);
+      this.assignSheriffById(world, winner, config);
       events.push({
         timestamp: Date.now(),
         type: "sheriff_elected",
@@ -431,7 +438,12 @@ export class SheriffMechanism {
     transferOrDestroySheriffBadge(world, entityId, `${phase}_death`, events);
   }
 
-  private assignSheriffById(world: World, sheriffId: EntityId): void {
+  private assignSheriffById(
+    world: World,
+    sheriffId: EntityId,
+    config?: BoardConfig,
+  ): void {
+    const sheriffWeight = config?.sheriff?.voteWeight ?? SheriffMechanism.SHERIFF_VOTE_WEIGHT;
     for (const id of world.getAliveEntityIds()) {
       const badge = world.getComponent<{ isSheriff: boolean; destroyed: boolean }>(
         id,
@@ -446,7 +458,7 @@ export class SheriffMechanism {
         COMPONENT.VotingRight,
       );
       if (voting?.canVote) {
-        voting.weight = id === sheriffId ? SheriffMechanism.SHERIFF_VOTE_WEIGHT : 1;
+        voting.weight = id === sheriffId ? sheriffWeight : 1;
       }
     }
   }
@@ -455,6 +467,7 @@ export class SheriffMechanism {
     world: World,
     candidates: EntityId[],
     tally: Map<EntityId, number>,
+    strategy: TieBreakerStrategy,
   ): EntityId | null {
     if (candidates.length === 0) {
       return null;
@@ -463,7 +476,21 @@ export class SheriffMechanism {
       const identity = world.getComponent<IdentityComponent>(id, COMPONENT.Identity);
       return { id, seat: identity?.seat ?? id, score: tally.get(id) ?? 0 };
     });
-    withSeat.sort((a, b) => b.score - a.score || a.seat - b.seat);
+    withSeat.sort((a, b) => {
+      const diff = b.score - a.score;
+      if (diff !== 0) {
+        return diff;
+      }
+      if (strategy === "min_id") {
+        return a.id - b.id;
+      }
+      return a.seat - b.seat;
+    });
+    if (withSeat.length >= 2 && withSeat[0].score === withSeat[1].score) {
+      if (strategy === "no_elimination" || strategy === "no_kill") {
+        return null;
+      }
+    }
     return withSeat[0]?.id ?? null;
   }
 

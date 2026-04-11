@@ -1,11 +1,12 @@
 import { Server as HttpServer } from "http";
 import { Server } from "socket.io";
 import { appConfig } from "../config";
-import { inferCamp } from "../domain/components/role";
-import { Camp, Role } from "../domain/model";
+import { Role } from "../domain/model";
 import { Broadcaster } from "../infra/transport/broadcaster";
+import { getDefaultRoleCampRegistry } from "../mechanisms";
 
 let globalBroadcaster: Broadcaster | null = null;
+const roleCampRegistry = getDefaultRoleCampRegistry();
 
 /**
  * Socket 层仅负责连接管理与玩家注册，不承载游戏规则逻辑。
@@ -31,7 +32,7 @@ export function setupSocket(server: HttpServer): Server {
           typeof data?.camp === "string"
             ? data.camp
             : role
-              ? inferCamp(role)
+              ? roleCampRegistry.get(role)
               : undefined;
         // 建立“玩家 -> socket”映射，便于后续点对点推送私有事件。
         globalBroadcaster.registerPlayer(socket.id, data.playerId, role, camp);

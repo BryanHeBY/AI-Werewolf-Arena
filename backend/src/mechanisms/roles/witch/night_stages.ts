@@ -1,7 +1,7 @@
 /** 文件说明：女巫夜间用药阶段处理。 */
 import { COMPONENT } from "../../../domain/components/names";
 import { RoleComponent } from "../../../domain/components/role";
-import { Phase, Role, StatusMark } from "../../../domain/model";
+import { Phase, Role, StatusMark, WitchSelfHealRule } from "../../../domain/model";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { getWitchState } from "../private_state";
 
@@ -15,6 +15,10 @@ const resetNightRoleStateStage: NightStageHandler = {
       if (witchState) {
         witchState.healUsedThisNight = false;
         witchState.poisonUsedThisNight = false;
+        witchState.canSelfHeal =
+          witchState.selfHealRule === WitchSelfHealRule.Always ||
+          (witchState.selfHealRule === WitchSelfHealRule.FirstNightOnly &&
+            ctx.currentDay() === 1);
       }
     }
   },
