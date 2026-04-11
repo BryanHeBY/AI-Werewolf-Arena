@@ -13,6 +13,12 @@ interface BuildDebugSummaryInput {
   sessionDir?: string;
 }
 
+interface SummaryObservation {
+  title: string;
+  detail: string;
+  evidence?: number[];
+}
+
 function countBySeverity(reports: ReplayDebugReport[]): Record<string, number> {
   const out: Record<string, number> = {
     critical: 0,
@@ -24,6 +30,92 @@ function countBySeverity(reports: ReplayDebugReport[]): Record<string, number> {
     out[report.severity] = (out[report.severity] ?? 0) + 1;
   }
   return out;
+}
+
+function collectObservations(input: BuildDebugSummaryInput): SummaryObservation[] {
+  const events = input.publicEvents ?? [];
+  const ops = input.logicOps ?? [];
+  const views = input.playerViews ?? [];
+  const observations: SummaryObservation[] = [];
+
+  const timelineEntries = views.reduce((acc, view) => acc + view.timeline.length, 0);
+  const selfDestructCount = events.filter((e) => e.type === "wolf_self_destruct").length;
+  const hunterShotCount = events.filter((e) => e.type === "hunter_shot").length;
+  const nightResolvedCount = events.filter((e) => e.type === "night_resolved").length;
+
+  const mismatchSeqs: number[] = [];
+  const invalidDaySeqs: number[] = [];
+  let fallbackCount = 0;
+  let toolRejectedCount = 0;
+  for (const view of views) {
+    for (const entry of view.timeline) {
+      if (
+        entry.kind === "llm_message" ||
+        entry.kind === "tool_call" ||
+        entry.kind === "text_action" ||
+        entry.kind === "fallback"
+      ) {
+        if (typeof entry.day !== "number" || entry.day <= 0) {
+          invalidDaySeqs.push(entry.seq);
+        }
+        const requestId = String(entry.request_id ?? "");
+        const match = requestId.match(/^(\d+)-([a-z_]+)-/i);
+        if (match) {
+          const reqDay = Number(match[1]);
+          const reqPhase = match[2];
+          if (reqDay !== entry.day || reqPhase !== entry.phase) {
+            mismatchSeqs.push(entry.seq);
+          }
+        }
+      }
+      if (entry.kind === "fallback") {
+        fallbackCount += 1;
+      }
+      if (
+        entry.kind === "llm_message" &&
+        entry.role === "assistant" &&
+        /tool_not_allowed_in_this_turn|invalid_tool_arguments/.test(entry.content)
+      ) {
+        toolRejectedCount += 1;
+      }
+      if (
+        entry.kind === "tool_call" &&
+        entry.accepted === false
+      ) {
+        toolRejectedCount += 1;
+      }
+    }
+  }
+
+  observations.push({
+    title: "对局事件规模",
+    detail: `public_events=${events.length}, logic_ops=${ops.length}, player_views=${views.length}, timeline_entries=${timelineEntries}`,
+  });
+  observations.push({
+    title: "关键流程计数",
+    detail: `night_resolved=${nightResolvedCount}, wolf_self_destruct=${selfDestructCount}, hunter_shot=${hunterShotCount}`,
+  });
+  observations.push({
+    title: "动作稳定性",
+    detail: `tool_rejected=${toolRejectedCount}, fallback=${fallbackCount}`,
+  });
+
+  if (invalidDaySeqs.length > 0) {
+    observations.push({
+      title: "元数据异常",
+      detail: `发现 day<=0 的行动条目 ${invalidDaySeqs.length} 条`,
+      evidence: invalidDaySeqs.slice(0, 10),
+    });
+  }
+  if (mismatchSeqs.length > 0) {
+    observations.push({
+      title: "请求编号异常",
+      detail: `发现 request_id 与 day/phase 不一致条目 ${mismatchSeqs.length} 条`,
+      evidence: mismatchSeqs.slice(0, 10),
+    });
+  }
+
+  return observations;
 }
 
 function buildFallbackSummary(input: BuildDebugSummaryInput): string {
@@ -47,6 +139,7 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
     ...autoFindings,
     ...metadataFindings,
   ];
+  const observations = collectObservations(input);
   const counts = countBySeverity(reports);
   const lines: string[] = [
     `# Debug Summary (${manifest.session_id})`,
@@ -80,6 +173,19 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
       lines.push(
         `- [${report.severity.toUpperCase()}][${report.category}] day=${report.day} phase=${report.phase} actor=${report.actorId}: ${report.message}${evidence}`,
       );
+    }
+  }
+
+  lines.push("", "## Observations");
+  if (observations.length === 0) {
+    lines.push("- none");
+  } else {
+    for (const obs of observations) {
+      const evidence =
+        obs.evidence && obs.evidence.length > 0
+          ? ` evidence=${obs.evidence.join(",")}`
+          : "";
+      lines.push(`- ${obs.title}: ${obs.detail}${evidence}`);
     }
   }
 

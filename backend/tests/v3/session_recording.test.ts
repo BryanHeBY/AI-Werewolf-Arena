@@ -396,6 +396,8 @@ describe("SessionRecordManager", () => {
       path.join(root, "session_test_no_bug", "debug_summary.md"),
       "utf-8",
     );
+    expect(summary).toContain("## Observations");
+    expect(summary).toContain("对局事件规模");
     expect(summary).toContain("## Conclusion");
     expect(summary).not.toContain("## TODO");
   });
