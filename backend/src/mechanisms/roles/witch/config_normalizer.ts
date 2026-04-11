@@ -2,6 +2,7 @@
 import { BoardConfig, Role } from "../../../domain/model";
 import { ConfigNormalizer } from "../../config/contracts";
 
+/** 女巫配置规范化：仅当板子存在女巫时保留 `config.witch`。 */
 export const WITCH_CONFIG_NORMALIZER: ConfigNormalizer = {
   id: "witch_config_normalizer",
   normalize(config: BoardConfig): BoardConfig {

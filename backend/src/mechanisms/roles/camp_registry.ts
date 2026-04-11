@@ -13,6 +13,7 @@ export class RoleCampRegistry {
     }
   }
 
+  /** 获取角色对应阵营，未配置时默认 good。 */
   get(role: Role): Camp {
     return this.campByRole.get(role) ?? Camp.Good;
   }

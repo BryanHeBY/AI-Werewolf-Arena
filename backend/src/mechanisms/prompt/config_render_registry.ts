@@ -27,6 +27,7 @@ const WINDOW_TEXT: Record<ActionWindow, string> = {
 
 /** 默认配置渲染实现。 */
 export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
+  /** 把归一化后的配置渲染为可直接注入 system prompt 的文本。 */
   renderBoardConfigPrompt(config: BoardConfig): string {
     const winConditions = this.resolveWinConditions(config)
       .map((item) => WIN_CONDITION_TEXT[item] ?? item)
@@ -63,6 +64,7 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
     return promptLines.join("\n");
   }
 
+  /** 兼容旧字段 `winCondition`，统一生成胜利条件数组。 */
   private resolveWinConditions(config: BoardConfig): WinCondition[] {
     if (Array.isArray(config.winConditions) && config.winConditions.length > 0) {
       return config.winConditions;

@@ -2,6 +2,7 @@
 import { BoardConfig } from "../../domain/model";
 import { ConfigNormalizer } from "../config/contracts";
 
+/** 警长配置规范化：警长关闭时移除 sheriff 相关扩展配置。 */
 export const SHERIFF_CONFIG_NORMALIZER: ConfigNormalizer = {
   id: "sheriff_config_normalizer",
   normalize(config: BoardConfig): BoardConfig {

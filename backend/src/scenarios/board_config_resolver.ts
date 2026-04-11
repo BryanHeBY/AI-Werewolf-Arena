@@ -1,3 +1,4 @@
+/** 文件说明：按板子名解析配置文件，并输出规范化后的 BoardConfig。 */
 import fs from "fs";
 import path from "path";
 import { BoardConfig, HookConfig } from "../domain/model";
@@ -5,7 +6,9 @@ import { getDefaultConfigNormalizerRegistry } from "../mechanisms";
 import { sixPlayerMvpConfig } from "./six_player_mvp";
 import { twelvePlayerStandardConfig } from "./twelve_player_standard";
 
+/** 已支持的板子标识。 */
 export type BoardName = "six_player_mvp" | "twelve_player_standard";
+/** 解析配置时的可选参数。 */
 export interface ResolveBoardConfigOptions {
   boardConfigName?: string;
 }
@@ -59,6 +62,7 @@ function isJsonObject(value: unknown): value is JsonObject {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
+/** 克隆基础板子配置，避免后续 merge 污染静态场景常量。 */
 function cloneBoardConfig(config: BoardConfig): BoardConfig {
   return {
     ...config,
@@ -78,6 +82,7 @@ function cloneBoardConfig(config: BoardConfig): BoardConfig {
   };
 }
 
+/** 以 BoardConfig 语义合并覆盖项（保留数组/对象的显式拷贝）。 */
 function mergeBoardConfig(base: BoardConfig, override: BoardOverride): BoardConfig {
   return {
     ...base,
@@ -106,6 +111,7 @@ function mergeBoardConfig(base: BoardConfig, override: BoardOverride): BoardConf
   };
 }
 
+/** 以“覆盖层”语义合并 default + board 专属配置。 */
 function mergeBoardOverride(
   base: BoardOverride,
   override: BoardOverride,
@@ -179,12 +185,14 @@ function mergeBoardOverride(
   };
 }
 
+/** 读取对应板子的内置默认配置。 */
 function baseBoard(board: BoardName): BoardConfig {
   return board === "twelve_player_standard"
     ? cloneBoardConfig(twelvePlayerStandardConfig)
     : cloneBoardConfig(sixPlayerMvpConfig);
 }
 
+/** 判断对象是否为旧版平铺结构。 */
 function isBoardOverrideShape(value: unknown): value is BoardOverride {
   if (!isJsonObject(value)) {
     return false;
@@ -207,6 +215,7 @@ function isBoardOverrideShape(value: unknown): value is BoardOverride {
   return keys.some((key) => supported.has(key));
 }
 
+/** 判断对象是否为新版结构化配置。 */
 function isStructuredBoardOverrideShape(value: unknown): value is StructuredBoardConfig {
   if (!isJsonObject(value)) {
     return false;
@@ -214,6 +223,7 @@ function isStructuredBoardOverrideShape(value: unknown): value is StructuredBoar
   return ["board", "rules", "mechanisms", "roles"].some((key) => key in value);
 }
 
+/** 把新版 `board/rules/mechanisms/roles` 结构映射到 BoardConfig 覆盖层。 */
 function parseStructuredBoardOverride(raw: StructuredBoardConfig): BoardOverride {
   const out: BoardOverride = {};
 
@@ -269,6 +279,7 @@ function parseStructuredBoardOverride(raw: StructuredBoardConfig): BoardOverride
         };
       }
       if (typeof raw.mechanisms.sheriff.tieBreaker === "string") {
+        // sheriff.tieBreaker 在新结构里归一到 tieBreaker.sheriffVote。
         out.tieBreaker = {
           ...(out.tieBreaker ?? {}),
           sheriffVote: raw.mechanisms.sheriff.tieBreaker as NonNullable<
@@ -320,6 +331,7 @@ function parseStructuredBoardOverride(raw: StructuredBoardConfig): BoardOverride
   return out;
 }
 
+/** 统一解析“单个配置块”成覆盖层（兼容新旧两种结构）。 */
 function toBoardOverride(value: unknown): BoardOverride | null {
   if (isBoardOverrideShape(value)) {
     return value as BoardOverride;
@@ -330,6 +342,7 @@ function toBoardOverride(value: unknown): BoardOverride | null {
   return null;
 }
 
+/** 从 json 根对象提取目标板子的覆盖配置（含 boards/default 合并）。 */
 function extractOverride(raw: unknown, board: BoardName): BoardOverride | null {
   const direct = toBoardOverride(raw);
   if (direct) {
@@ -356,6 +369,7 @@ function extractOverride(raw: unknown, board: BoardName): BoardOverride | null {
   return null;
 }
 
+/** 按优先级扫描配置目录，读取首个可用覆盖项。 */
 function readOverrideFromDir(
   board: BoardName,
   options?: ResolveBoardConfigOptions,
@@ -396,6 +410,7 @@ function readOverrideFromDir(
   return null;
 }
 
+/** 解析并规范化板子配置（含兼容旧结构与机制级 normalizer）。 */
 export function resolveBoardConfig(
   board: BoardName,
   optionsOrLog?: ResolveBoardConfigOptions | ((text: string) => void),
