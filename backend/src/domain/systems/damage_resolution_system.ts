@@ -1,4 +1,3 @@
-import { AliveComponent } from "../components/alive";
 import { COMPONENT } from "../components/names";
 import { StatusMarksComponent } from "../components/status_marks";
 import { EntityId, StatusMark } from "../model";
@@ -17,6 +16,7 @@ export interface DamageResolutionResult {
  * - 处理“同守同救”特殊规则
  * - 统一判定狼刀/毒药导致的死亡
  * - 结算后清空当夜印记
+ * - 仅返回“待结算死亡名单”，不在此处直接改写存活状态
  */
 export class DamageResolutionSystem {
   /**
@@ -31,8 +31,7 @@ export class DamageResolutionSystem {
         entityId,
         COMPONENT.StatusMarks,
       );
-      const alive = world.getComponent<AliveComponent>(entityId, COMPONENT.Alive);
-      if (!marks || !alive) {
+      if (!marks) {
         continue;
       }
 
@@ -59,7 +58,6 @@ export class DamageResolutionSystem {
       }
 
       if (sources.length > 0) {
-        alive.alive = false;
         deaths.push(entityId);
         deathSources[entityId] = sources;
       }

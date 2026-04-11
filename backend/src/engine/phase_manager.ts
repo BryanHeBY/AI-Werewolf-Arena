@@ -27,6 +27,7 @@ import { COMPONENT } from "../domain/components/names";
 import { VotingRightComponent } from "../domain/components/voting_right";
 import { IdentityComponent } from "../domain/entities/player";
 import { RoleComponent } from "../domain/components/role";
+import { AliveComponent } from "../domain/components/alive";
 import { buildAgentBroadcastFeed } from "./agent_broadcast_feed";
 
 /**
@@ -257,6 +258,7 @@ export class PhaseManager {
     let firstBatch = true;
 
     while (pending.length > 0) {
+      this.markPlayersDead(pending);
       if (firstBatch) {
         this.lastWordsMechanism.recordLastWordsGranted(
           this.world,
@@ -449,5 +451,18 @@ export class PhaseManager {
       phase,
       this.events,
     );
+  }
+
+  /**
+   * 将待结算死亡名单真正写入存活状态。
+   */
+  private markPlayersDead(playerIds: EntityId[]): void {
+    for (const id of playerIds) {
+      const alive = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive);
+      if (!alive) {
+        continue;
+      }
+      alive.alive = false;
+    }
   }
 }

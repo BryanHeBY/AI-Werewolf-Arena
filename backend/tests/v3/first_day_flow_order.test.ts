@@ -5,20 +5,25 @@ import { ActionProvider, ActionRequest, Phase, PotionType, ToolCall } from "../.
 import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
 
 class DeterministicFlowProvider implements ActionProvider {
+  private readonly firstNightKillTargetId: number | null;
+
   constructor(
     private readonly world: ReturnType<typeof bootstrapGame>["world"],
     private readonly sheriffCandidateId: number,
-  ) {}
-
-  async getAction(request: ActionRequest): Promise<ToolCall | null> {
-    if (request.allowedTools.includes("kill_vote")) {
-      const target = this.world.getAliveEntityIds().find((id) => {
+  ) {
+    this.firstNightKillTargetId =
+      this.world.getAliveEntityIds().find((id) => {
         if (id === this.sheriffCandidateId) {
           return false;
         }
         const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
         return role?.camp !== "wolf";
-      });
+      }) ?? null;
+  }
+
+  async getAction(request: ActionRequest): Promise<ToolCall | null> {
+    if (request.allowedTools.includes("kill_vote")) {
+      const target = this.firstNightKillTargetId;
       return target
         ? { name: "kill_vote", args: { target_id: target, abstain: false } }
         : { name: "kill_vote", args: { target_id: null, abstain: true } };
@@ -104,5 +109,38 @@ describe("first day flow order", () => {
     expect(sheriffElectedIndex).toBeLessThan(nightResolvedIndex);
     expect(nightResolvedIndex).toBeLessThan(lastWordsGrantedIndex);
     expect(lastWordsGrantedIndex).toBeLessThan(sheriffDirectionIndex);
+  });
+
+  test("day1 night deaths should still join sheriff vote before death announcement", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const sheriffCandidateId = 1;
+    const provider = new DeterministicFlowProvider(context.world, sheriffCandidateId);
+
+    await context.phaseManager.runSingleCycle(provider, 10);
+
+    const events = context.phaseManager.getEvents();
+    const nightResolved = events.find((event) => event.type === "night_resolved");
+    expect(nightResolved).toBeTruthy();
+    const deaths = (nightResolved?.payload.deaths as number[]) ?? [];
+    expect(deaths.length).toBeGreaterThan(0);
+
+    const firstNightDeadId = deaths[0];
+    const sheriffVoteSummary = events.find(
+      (event) => event.type === "sheriff_vote_summary",
+    );
+    expect(sheriffVoteSummary).toBeTruthy();
+    const sheriffVoters = (
+      (sheriffVoteSummary?.payload.votes as { actorId: number }[]) ?? []
+    ).map((vote) => vote.actorId);
+    expect(sheriffVoters).toContain(firstNightDeadId);
+
+    const daySpeechActors = events
+      .filter((event) => event.type === "day_speech")
+      .map((event) => Number(event.payload.actorId));
+    const voteActors = events
+      .filter((event) => event.type === "vote_cast")
+      .map((event) => Number(event.payload.actorId));
+    expect(daySpeechActors).not.toContain(firstNightDeadId);
+    expect(voteActors).not.toContain(firstNightDeadId);
   });
 });
