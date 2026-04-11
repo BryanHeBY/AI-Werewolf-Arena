@@ -228,6 +228,60 @@ class ReportThenSpeakToolLoopClient {
   }
 }
 
+class DuplicateReportThenSpeakToolLoopClient {
+  async chat(): Promise<string> {
+    return "";
+  }
+
+  async runToolLoop<T>(
+    _messages: Array<{ role: string; content: string }>,
+    _tools: Array<{ name: string }>,
+    callbacks: {
+      onToolCall: (invocation: {
+        id: string;
+        name: string;
+        args: Record<string, unknown>;
+        rawArgs: string;
+      }) => Promise<{
+        toolResult: Record<string, unknown> | string;
+        finalAction?: T;
+        stop?: boolean;
+      }>;
+    },
+  ): Promise<{ finalAction: T | null; assistantText: string }> {
+    await callbacks.onToolCall({
+      id: "tool_bug_1",
+      name: "report_bug",
+      args: {
+        category: "flow",
+        severity: "high",
+        message: "测试：白天流程异常",
+      },
+      rawArgs: '{"category":"flow","severity":"high","message":"测试：白天流程异常"}',
+    });
+    await callbacks.onToolCall({
+      id: "tool_bug_2",
+      name: "report_bug",
+      args: {
+        category: "flow",
+        severity: "high",
+        message: "测试：白天流程异常",
+      },
+      rawArgs: '{"category":"flow","severity":"high","message":"测试：白天流程异常"}',
+    });
+    const handled = await callbacks.onToolCall({
+      id: "tool_speak_1",
+      name: "speak",
+      args: { text: "继续发言" },
+      rawArgs: '{"text":"继续发言"}',
+    });
+    return {
+      finalAction: (handled.finalAction ?? null) as T | null,
+      assistantText: "duplicate_report_then_speak",
+    };
+  }
+}
+
 class FallbackProvider implements ActionProvider {
   constructor(private readonly action: ToolCall | null) {}
 
@@ -470,6 +524,79 @@ describe("LlmActionProvider", () => {
     expect(reports.reports.length).toBe(1);
     expect(reports.reports[0].category).toBe("flow");
     expect(reports.reports[0].severity).toBe("high");
+  });
+
+  test("should rate-limit duplicated report_bug in same stage", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-report-bug-dup-"));
+    const recorder = await SessionRecordManager.create(
+      {
+        sessionId: "session_report_bug_dedupe_test",
+        board: "six_player_mvp",
+        startedAtIso: new Date("2026-04-11T00:00:00.000Z").toISOString(),
+      },
+      root,
+    );
+    SessionRecordHub.setActive(recorder);
+
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const provider = new LlmActionProvider(
+      context.world,
+      new DuplicateReportThenSpeakToolLoopClient(),
+      {
+        fallbackProvider: new FallbackProvider(null),
+      },
+    );
+
+    const action = await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["speak"],
+      context: { day: 1, phase: "day_speech", must_act: true },
+    });
+
+    expect(action).toEqual({
+      name: "speak",
+      args: { text: "继续发言" },
+    });
+
+    await recorder.finalize({
+      endedAtIso: new Date("2026-04-11T00:00:01.000Z").toISOString(),
+      winner: null,
+      finishReason: "test_done",
+      players: context.world.entityIds().map((id) => ({
+        player_id: id,
+        role:
+          context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role ??
+          "unknown",
+        camp:
+          context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp ??
+          "unknown",
+        alive: true,
+      })),
+    });
+    SessionRecordHub.setActive(null);
+
+    const reports = JSON.parse(
+      await fs.readFile(
+        path.join(root, "session_report_bug_dedupe_test", "debug_reports.json"),
+        "utf-8",
+      ),
+    );
+    expect(reports.reports.length).toBe(1);
+
+    const logicOps = JSON.parse(
+      await fs.readFile(
+        path.join(root, "session_report_bug_dedupe_test", "logic_ops.json"),
+        "utf-8",
+      ),
+    );
+    expect(
+      logicOps.ops.some(
+        (op: any) =>
+          op.op === "report_bug_dropped" &&
+          op.reason === "report_bug_scope_rate_limited",
+      ),
+    ).toBe(true);
   });
 
   test("prompt no longer contains private-intel snapshot line", async () => {

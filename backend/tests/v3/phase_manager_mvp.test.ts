@@ -203,4 +203,41 @@ describe("V3 PhaseManager MVP", () => {
       ),
     ).toBe(true);
   });
+
+  test("vote should retry up to three times before accepting a valid vote", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const events = [] as any[];
+    const pipeline = new VotingPipeline(
+      context.world,
+      new ToolGateway(),
+      new EventRegistry(),
+      events,
+    );
+    const attempts = new Map<number, number>();
+
+    const actionProvider: ActionProvider = {
+      async getAction(request: ActionRequest): Promise<ToolCall | null> {
+        if (request.allowedTools.includes("self_destruct")) {
+          return null;
+        }
+        if (request.allowedTools.includes("vote")) {
+          const current = (attempts.get(request.actorId) ?? 0) + 1;
+          attempts.set(request.actorId, current);
+          if (current <= 3) {
+            return null;
+          }
+          return { name: "vote", args: { target_id: 2, abstain: false } };
+        }
+        return null;
+      },
+    };
+
+    const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider);
+
+    expect(result.interrupted).toBe(false);
+    expect(result.summary.tally[2]).toBe(12);
+    for (const voter of context.world.getAliveEntityIds()) {
+      expect(attempts.get(voter)).toBe(4);
+    }
+  });
 });

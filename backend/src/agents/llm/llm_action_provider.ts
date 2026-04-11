@@ -126,6 +126,7 @@ export interface LlmActionProviderOptions {
  * - 解析失败或越权时自动降级到 fallback，确保对局可推进。
  */
 export class LlmActionProvider implements ActionProvider {
+  private static readonly REPORT_BUG_MAX_PER_ACTOR_PER_DAY = 3;
   private readonly maxPromptEvents: number;
   private readonly trace: boolean;
   private readonly llmTimeoutMs: number;
@@ -142,6 +143,9 @@ export class LlmActionProvider implements ActionProvider {
   private readonly agentContextWindowStart = new Map<EntityId, number>();
   private readonly actorRoundCounter = new Map<EntityId, number>();
   private readonly actorLastAssistantText = new Map<EntityId, string>();
+  private readonly reportBugAcceptedScope = new Set<string>();
+  private readonly reportBugAcceptedMessage = new Set<string>();
+  private readonly reportBugAcceptedCountByActorDay = new Map<string, number>();
   private static readonly REPORT_BUG_TOOL: ToolName = "report_bug";
 
   constructor(
@@ -1033,19 +1037,89 @@ export class LlmActionProvider implements ActionProvider {
       return { ok: false, error: parsed.error };
     }
 
+    const day = Number(request.context.day ?? request.context.current_day ?? 0);
+    const stage = String(
+      request.context.phase ??
+        request.actionWindow ??
+        request.context.window ??
+        request.phase,
+    );
+    const actorDayKey = `${request.actorId}|${day}`;
+    const scopeKey = `${request.actorId}|${day}|${request.phase}|${stage}`;
+    const normalizedMessage = this.normalizeReportBugMessage(parsed.value.message);
+    const duplicateKey = `${actorDayKey}|${parsed.value.category}|${parsed.value.severity}|${normalizedMessage}`;
+    const acceptedCount = this.reportBugAcceptedCountByActorDay.get(actorDayKey) ?? 0;
+
+    if (acceptedCount >= LlmActionProvider.REPORT_BUG_MAX_PER_ACTOR_PER_DAY) {
+      safeRecordLogicOp({
+        scope: "llm_action_provider",
+        op: "report_bug_dropped",
+        actorId: request.actorId,
+        phase: request.phase,
+        status: "fallback",
+        reason: "report_bug_actor_day_rate_limited",
+        input: {
+          day,
+          stage,
+          limit: LlmActionProvider.REPORT_BUG_MAX_PER_ACTOR_PER_DAY,
+        },
+      });
+      return {
+        ok: true,
+        accepted: false,
+        dropped: true,
+        reason: "report_bug_actor_day_rate_limited",
+      };
+    }
+    if (this.reportBugAcceptedScope.has(scopeKey)) {
+      safeRecordLogicOp({
+        scope: "llm_action_provider",
+        op: "report_bug_dropped",
+        actorId: request.actorId,
+        phase: request.phase,
+        status: "fallback",
+        reason: "report_bug_scope_rate_limited",
+        input: {
+          day,
+          stage,
+        },
+      });
+      return {
+        ok: true,
+        accepted: false,
+        dropped: true,
+        reason: "report_bug_scope_rate_limited",
+      };
+    }
+    if (this.reportBugAcceptedMessage.has(duplicateKey)) {
+      safeRecordLogicOp({
+        scope: "llm_action_provider",
+        op: "report_bug_dropped",
+        actorId: request.actorId,
+        phase: request.phase,
+        status: "fallback",
+        reason: "report_bug_duplicate_message",
+        input: {
+          day,
+          stage,
+        },
+      });
+      return {
+        ok: true,
+        accepted: false,
+        dropped: true,
+        reason: "report_bug_duplicate_message",
+      };
+    }
+
     const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const recorder = SessionRecordHub.getActive();
     const reportId =
       recorder?.recordDebugReport({
         timestampMs: Date.now(),
-        day: Number(request.context.day ?? request.context.current_day ?? 0),
+        day,
         phase: String(request.phase),
-        stage: String(
-          request.context.phase ??
-            request.actionWindow ??
-            request.context.window ??
-            request.phase,
-        ),
+        stage,
         actorId: request.actorId,
         actorRole: role?.role ?? "unknown",
         actorCamp: role?.camp ?? "unknown",
@@ -1053,6 +1127,9 @@ export class LlmActionProvider implements ActionProvider {
         severity: parsed.value.severity,
         message: parsed.value.message,
       }) ?? "rb-no-recorder";
+    this.reportBugAcceptedScope.add(scopeKey);
+    this.reportBugAcceptedMessage.add(duplicateKey);
+    this.reportBugAcceptedCountByActorDay.set(actorDayKey, acceptedCount + 1);
 
     safeRecordLogicOp({
       scope: "llm_action_provider",
@@ -1066,7 +1143,20 @@ export class LlmActionProvider implements ActionProvider {
         severity: parsed.value.severity,
       },
     });
+    const compactMsg =
+      parsed.value.message.length > 120
+        ? `${parsed.value.message.slice(0, 120)}...`
+        : parsed.value.message;
+    console.log(
+      `[LLM_BUG] player=${request.actorId} phase=${request.phase} stage=${String(
+        request.context.phase ?? request.actionWindow ?? request.context.window ?? request.phase,
+      )} severity=${parsed.value.severity} category=${parsed.value.category} report_id=${reportId} message=${compactMsg}`,
+    );
     return { ok: true, accepted: true, report_id: reportId };
+  }
+
+  private normalizeReportBugMessage(message: string): string {
+    return message.toLowerCase().replace(/\s+/g, " ").trim();
   }
 
   private parseDebugReportArgs(args: Record<string, unknown>):

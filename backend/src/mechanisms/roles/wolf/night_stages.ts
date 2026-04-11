@@ -1,11 +1,10 @@
 /** 文件说明：狼人夜聊与刀人投票阶段处理。 */
-import { COMPONENT } from "../../../domain/components/names";
-import { RoleComponent } from "../../../domain/components/role";
 import { EntityId, Phase, Role, StatusMark } from "../../../domain/model";
 import { safeRecordLogicOp } from "../../../session_recording";
 import { NightStageHandler } from "../../stages/night/contracts";
 
 const WOLF_DISCUSSION_MAX_ROUNDS = 3;
+const WOLF_KILL_VOTE_MAX_RETRIES = 3;
 
 const wolfDiscussionStage: NightStageHandler = {
   id: "wolf_discussion",
@@ -84,54 +83,110 @@ const wolfKillVoteStage: NightStageHandler = {
     ctx.state.wolfVotes = {};
     // 顺序收集狼刀票，统一在阶段末做多数决结算，避免中途状态污染。
     for (const wolfId of ctx.state.wolfIds) {
-      const req = ctx.makeRequest(wolfId, ["kill_vote"], { phase: "wolf_vote" });
-      const action = await ctx.actionProvider.getAction(req);
-      if (action?.name !== "kill_vote") {
-        continue;
-      }
-
-      const result = ctx.toolGateway.validateAndSanitize(ctx.world, wolfId, action, {
-        phase: Phase.Night,
-      });
-      if (!result.ok || !result.sanitizedCall) {
-        const fallbackTarget = pickFallbackWolfTarget(ctx, wolfId);
-        const fallbackAbstain = fallbackTarget === null;
-        if (!fallbackAbstain) {
-          ctx.state.wolfVotes[fallbackTarget] = (ctx.state.wolfVotes[fallbackTarget] ?? 0) + 1;
+      let voteResolved:
+        | {
+            abstain: boolean;
+            targetId: EntityId | null;
+            fallback: boolean;
+          }
+        | null = null;
+      let retryReason = "";
+      for (let attempt = 1; attempt <= WOLF_KILL_VOTE_MAX_RETRIES + 1; attempt++) {
+        const req =
+          attempt === 1
+            ? ctx.makeRequest(wolfId, ["kill_vote"], { phase: "wolf_vote" })
+            : ctx.makeRequest(wolfId, ["kill_vote"], {
+                phase: "wolf_vote",
+                retry_attempt: attempt - 1,
+                retry_max: WOLF_KILL_VOTE_MAX_RETRIES,
+                retry_reason: retryReason,
+                retry_notice:
+                  "你的狼刀动作无效，请严格调用 kill_vote 工具重新行动。",
+              });
+        const action = await ctx.actionProvider.getAction(req);
+        if (action?.name !== "kill_vote") {
+          retryReason = "no_valid_kill_vote_tool_call";
+          if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {
+            safeRecordLogicOp({
+              scope: "phase_pipeline",
+              op: "wolf_kill_vote_retry_requested",
+              actorId: wolfId,
+              phase: Phase.Night,
+              status: "fallback",
+              reason: retryReason,
+              output: {
+                attempt,
+                max_retries: WOLF_KILL_VOTE_MAX_RETRIES,
+              },
+            });
+            continue;
+          }
+          break;
         }
-        ctx.events.push({
-          timestamp: Date.now(),
-          type: "wolf_kill_vote_cast",
-          payload: {
-            actorId: wolfId,
-            abstain: fallbackAbstain,
-            targetId: fallbackTarget,
-            fallback: true,
-          },
+
+        const result = ctx.toolGateway.validateAndSanitize(ctx.world, wolfId, action, {
+          phase: Phase.Night,
         });
+        if (!result.ok || !result.sanitizedCall) {
+          retryReason = "invalid_kill_vote_arguments";
+          if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {
+            safeRecordLogicOp({
+              scope: "phase_pipeline",
+              op: "wolf_kill_vote_retry_requested",
+              actorId: wolfId,
+              phase: Phase.Night,
+              status: "fallback",
+              reason: retryReason,
+              output: {
+                attempt,
+                max_retries: WOLF_KILL_VOTE_MAX_RETRIES,
+              },
+            });
+            continue;
+          }
+          break;
+        }
+
+        voteResolved = {
+          abstain: result.sanitizedCall.args.abstain === true,
+          targetId: result.sanitizedCall.args.target_id,
+          fallback: attempt > 1,
+        };
+        break;
+      }
+      if (!voteResolved) {
+        voteResolved = {
+          abstain: true,
+          targetId: null,
+          fallback: true,
+        };
         safeRecordLogicOp({
           scope: "phase_pipeline",
-          op: "wolf_kill_vote_rejected",
+          op: "wolf_kill_vote_repaired_to_abstain",
           actorId: wolfId,
           phase: Phase.Night,
-          status: "rejected",
+          status: "ok",
+          reason: retryReason || "wolf_kill_vote_retry_exhausted",
           output: {
-            fallback_target_id: fallbackTarget,
-            fallback_abstain: fallbackAbstain,
+            fallback_abstain: true,
           },
         });
-        continue;
       }
 
-      const abstain = result.sanitizedCall.args.abstain === true;
-      const targetId = result.sanitizedCall.args.target_id;
+      const abstain = voteResolved.abstain;
+      const targetId = voteResolved.targetId;
       if (!abstain && targetId !== null) {
         ctx.state.wolfVotes[targetId] = (ctx.state.wolfVotes[targetId] ?? 0) + 1;
       }
       ctx.events.push({
         timestamp: Date.now(),
         type: "wolf_kill_vote_cast",
-        payload: { actorId: wolfId, abstain, targetId },
+        payload: {
+          actorId: wolfId,
+          abstain,
+          targetId,
+          ...(voteResolved.fallback ? { fallback: true } : {}),
+        },
       });
       safeRecordLogicOp({
         scope: "phase_pipeline",
@@ -163,22 +218,3 @@ export const WOLF_NIGHT_STAGES: NightStageHandler[] = [
   wolfDiscussionStage,
   wolfKillVoteStage,
 ];
-
-function pickFallbackWolfTarget(
-  ctx: Parameters<NightStageHandler["execute"]>[0],
-  wolfId: EntityId,
-): EntityId | null {
-  const alive = ctx.world.getAliveEntityIds();
-  const goodTarget = alive.find((id) => {
-    if (id === wolfId) {
-      return false;
-    }
-    const role = ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-    return role?.role !== Role.Wolf;
-  });
-  if (goodTarget !== undefined) {
-    return goodTarget;
-  }
-  const nonSelf = alive.find((id) => id !== wolfId);
-  return nonSelf ?? null;
-}

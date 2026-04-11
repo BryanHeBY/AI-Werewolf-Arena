@@ -184,6 +184,54 @@ class AbstainKillVoteProvider implements ActionProvider {
   }
 }
 
+class RetryThenKillVoteProvider implements ActionProvider {
+  public killVoteAttempts = new Map<number, number>();
+
+  constructor(private readonly targetId: number) {}
+
+  async getAction(request: ActionRequest): Promise<ToolCall | null> {
+    if (request.phase !== Phase.Night) {
+      return null;
+    }
+    if (request.allowedTools.includes("speak_to_wolves")) {
+      return {
+        name: "speak_to_wolves",
+        args: { text: `夜聊_${request.actorId}`, end_chat: true },
+      };
+    }
+    if (request.allowedTools.includes("kill_vote")) {
+      const current = (this.killVoteAttempts.get(request.actorId) ?? 0) + 1;
+      this.killVoteAttempts.set(request.actorId, current);
+      if (current <= 3) {
+        return null;
+      }
+      return {
+        name: "kill_vote",
+        args: { target_id: this.targetId, abstain: false },
+      };
+    }
+    if (request.allowedTools.includes("guard")) {
+      return {
+        name: "guard",
+        args: { target_id: request.actorId, abstain: false },
+      };
+    }
+    if (request.allowedTools.includes("check_identity")) {
+      return {
+        name: "check_identity",
+        args: { target_id: this.targetId },
+      };
+    }
+    if (request.allowedTools.includes("use_potion")) {
+      return {
+        name: "use_potion",
+        args: { target_id: request.actorId, potion_type: PotionType.None },
+      };
+    }
+    return null;
+  }
+}
+
 describe("night wolf tactical loop", () => {
   test("wolf discussion order repeats for three rounds and majority decides kill target", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
@@ -376,5 +424,37 @@ describe("night wolf tactical loop", () => {
         event.type === "wolf_kill_vote_cast" && event.payload.abstain === true,
     );
     expect(abstains.length).toBeGreaterThan(0);
+  });
+
+  test("wolf kill vote should retry up to three times before accepting valid action", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const events: any[] = [];
+    const pipeline = new NightPipeline(
+      context.world,
+      new RoleRegistry(),
+      new ToolGateway(),
+      new DamageResolutionSystem(),
+      events,
+    );
+    const targetId = context.world
+      .getAliveEntityIds()
+      .find((id) => {
+        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        return role?.camp === Camp.Good;
+      })!;
+    const provider = new RetryThenKillVoteProvider(targetId);
+
+    const result = await pipeline.execute(twelvePlayerStandardConfig, provider);
+
+    expect(result.summary.wolfTarget).toBe(targetId);
+    const wolfIds = context.world
+      .getAliveEntityIds()
+      .filter(
+        (id) =>
+          context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf,
+      );
+    for (const wolfId of wolfIds) {
+      expect(provider.killVoteAttempts.get(wolfId)).toBe(4);
+    }
   });
 });

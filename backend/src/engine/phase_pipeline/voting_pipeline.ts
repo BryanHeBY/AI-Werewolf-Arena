@@ -34,6 +34,7 @@ export interface VotingPipelineResult {
  * 3) 调用 EventRegistry 处理白痴免死、警徽销毁等投后钩子。
  */
 export class VotingPipeline {
+  private static readonly MAX_VOTE_RETRIES = 3;
   private readonly roleRegistry: RoleRegistry;
   private readonly toolGateway: ToolGateway;
   private readonly eventRegistry: EventRegistry;
@@ -113,7 +114,8 @@ export class VotingPipeline {
     // 投票请求并行发起，降低长轮次等待；事件落库仍按 voter 顺序写入，保证回放稳定。
     const voteResults = await Promise.all(
       voters.map(async (voterId) => {
-        const req: ActionRequest = {
+        const maxRetries = VotingPipeline.MAX_VOTE_RETRIES;
+        const baseRequest = (): ActionRequest => ({
           phase: Phase.Voting,
           actorId: voterId,
           allowedTools: ["vote"],
@@ -123,35 +125,117 @@ export class VotingPipeline {
             must_act: true,
             broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, voterId),
           },
-        };
+        });
 
-        const action = await actionProvider.getAction(req);
-        if (action?.name !== "vote") {
-          return null;
+        let retryReason = "";
+        for (let attempt = 1; attempt <= maxRetries + 1; attempt++) {
+          const req =
+            attempt === 1
+              ? baseRequest()
+              : {
+                  ...baseRequest(),
+                  context: {
+                    ...baseRequest().context,
+                    retry_attempt: attempt - 1,
+                    retry_max: maxRetries,
+                    retry_reason: retryReason,
+                    retry_notice:
+                      "你的投票动作无效，请严格调用 vote 工具重新行动。",
+                  },
+                };
+          const action = await actionProvider.getAction(req);
+          if (action?.name !== "vote") {
+            retryReason = "no_valid_vote_tool_call";
+            if (attempt <= maxRetries) {
+              safeRecordLogicOp({
+                scope: "phase_pipeline",
+                op: "vote_retry_requested",
+                actorId: voterId,
+                phase: Phase.Voting,
+                status: "fallback",
+                reason: retryReason,
+                output: {
+                  attempt,
+                  max_retries: maxRetries,
+                },
+              });
+              continue;
+            }
+            break;
+          }
+
+          const result = this.toolGateway.validateAndSanitize(
+            this.world,
+            voterId,
+            action,
+            { phase: Phase.Voting },
+          );
+          if (!result.ok || !result.sanitizedCall) {
+            retryReason = "invalid_vote_arguments";
+            if (attempt <= maxRetries) {
+              safeRecordLogicOp({
+                scope: "phase_pipeline",
+                op: "vote_retry_requested",
+                actorId: voterId,
+                phase: Phase.Voting,
+                status: "fallback",
+                reason: retryReason,
+                output: {
+                  attempt,
+                  max_retries: maxRetries,
+                },
+              });
+              continue;
+            }
+            break;
+          }
+
+          return {
+            voterId,
+            targetId: result.sanitizedCall.args.target_id,
+            abstain: result.sanitizedCall.args.abstain === true,
+            fallback: attempt > 1,
+          };
         }
 
-        const result = this.toolGateway.validateAndSanitize(
+        // 重试耗尽后降级为弃票，避免该玩家整轮无票导致流程信息断层。
+        const repaired = this.toolGateway.validateAndSanitize(
           this.world,
           voterId,
-          action,
+          {
+            name: "vote",
+            args: {
+              target_id: null,
+              abstain: true,
+            },
+          },
           { phase: Phase.Voting },
         );
-        if (!result.ok || !result.sanitizedCall) {
+        if (repaired.ok && repaired.sanitizedCall) {
           safeRecordLogicOp({
             scope: "phase_pipeline",
-            op: "vote_rejected",
+            op: "vote_repaired_to_abstain",
             actorId: voterId,
             phase: Phase.Voting,
-            status: "rejected",
+            status: "ok",
+            reason: retryReason || "vote_retry_exhausted",
           });
-          return null;
+          return {
+            voterId,
+            targetId: null as EntityId | null,
+            abstain: true,
+            fallback: true,
+          };
         }
-
-        return {
-          voterId,
-          targetId: result.sanitizedCall.args.target_id,
-          abstain: result.sanitizedCall.args.abstain === true,
-        };
+        safeRecordLogicOp({
+          scope: "phase_pipeline",
+          op: "vote_rejected",
+          actorId: voterId,
+          phase: Phase.Voting,
+          status: "rejected",
+          reason: retryReason || "vote_retry_exhausted",
+        });
+        return null;
       }),
     );
 
@@ -178,6 +262,7 @@ export class VotingPipeline {
           targetId: vote.targetId,
           abstain: vote.abstain,
           weight,
+          ...(vote.fallback ? { fallback: true } : {}),
         },
       });
       safeRecordLogicOp({
