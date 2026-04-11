@@ -237,8 +237,10 @@ export class SheriffMechanism {
       tally.set(id, 0);
     }
 
+    // 规则：警长投票仅允许警下玩家（未在最终警上名单内）参与。
+    const sheriffVoterIds = aliveIds.filter((id) => !candidateSet.has(id));
     const sheriffVoteFeedByActor = new Map<EntityId, string[]>();
-    for (const actorId of aliveIds) {
+    for (const actorId of sheriffVoterIds) {
       sheriffVoteFeedByActor.set(
         actorId,
         buildAgentBroadcastFeed(world, events, actorId),
@@ -246,7 +248,7 @@ export class SheriffMechanism {
     }
     // 警长投票同样并行收集，所有投票基于同一快照上下文。
     const sheriffVoteResults = await Promise.all(
-      aliveIds.map(async (actorId) => {
+      sheriffVoterIds.map(async (actorId) => {
         const req: ActionRequest = {
           phase: Phase.Day,
           actorId,
