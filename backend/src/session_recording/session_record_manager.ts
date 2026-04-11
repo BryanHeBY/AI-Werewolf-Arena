@@ -21,6 +21,7 @@ import { buildDebugSummaryMarkdown } from "./debug_summary_generator";
 const THINKING_MAX_CHARS = 4000;
 const PROMPT_USER_MAX_CHARS = 4000;
 const LLM_MESSAGE_MAX_CHARS = 8000;
+const FLUSH_DEBOUNCE_MS = 100;
 
 function toIso(timestampMs: number): string {
   return new Date(timestampMs).toISOString();
@@ -66,6 +67,13 @@ export class SessionRecordManager {
   private debugReports: ReplayDebugReport[] = [];
   private playerViews = new Map<number, ReplayPlayerView>();
   private closed = false;
+  private dirtyPublicTimeline = false;
+  private dirtyLogicOps = false;
+  private dirtyDebugReports = false;
+  private dirtyPlayers = new Set<number>();
+  private flushTimer: NodeJS.Timeout | null = null;
+  private flushChain: Promise<void> = Promise.resolve();
+  private finalMeta: ReplayFinalizeMeta | null = null;
 
   private constructor(
     private readonly sessionMeta: ReplaySessionMeta,
@@ -78,6 +86,7 @@ export class SessionRecordManager {
   ): Promise<SessionRecordManager> {
     const manager = new SessionRecordManager(sessionMeta, recordRootDir);
     await manager.ensureDirs();
+    await manager.writeInitialFiles();
     return manager;
   }
 
@@ -103,6 +112,8 @@ export class SessionRecordManager {
       payload: safeJson(input.payload),
       ...(input.renderText ? { render_text: input.renderText } : {}),
     });
+    this.dirtyPublicTimeline = true;
+    this.scheduleFlush();
   }
 
   recordLogicOp(input: ReplayRecordLogicOpInput): void {
@@ -122,6 +133,8 @@ export class SessionRecordManager {
       status: input.status,
       ...(input.reason ? { reason: input.reason } : {}),
     });
+    this.dirtyLogicOps = true;
+    this.scheduleFlush();
   }
 
   recordPlayerRound(input: ReplayRecordPlayerRoundInput): void {
@@ -251,6 +264,8 @@ export class SessionRecordManager {
     }
 
     this.playerViews.set(input.playerId, view);
+    this.dirtyPlayers.add(input.playerId);
+    this.scheduleFlush();
   }
 
   recordPlayerBroadcast(input: ReplayRecordPlayerBroadcastInput): void {
@@ -280,6 +295,8 @@ export class SessionRecordManager {
     };
     view.timeline.push(entry);
     this.playerViews.set(input.playerId, view);
+    this.dirtyPlayers.add(input.playerId);
+    this.scheduleFlush();
   }
 
   recordDebugReport(input: ReplayRecordDebugReportInput): string {
@@ -302,47 +319,55 @@ export class SessionRecordManager {
       evidence_event_seq: [...(input.evidenceEventSeq ?? [])],
       status: "open",
     });
+    this.dirtyDebugReports = true;
+    this.scheduleFlush();
     return reportId;
+  }
+
+  /**
+   * 强制立即落盘当前脏数据（用于 finalize 与测试）。
+   */
+  async flushNow(): Promise<void> {
+    if (this.flushTimer) {
+      clearTimeout(this.flushTimer);
+      this.flushTimer = null;
+    }
+    await this.enqueueFlush();
   }
 
   async finalize(meta: ReplayFinalizeMeta): Promise<void> {
     if (this.closed) {
       return;
     }
+    this.finalMeta = meta;
+    await this.flushNow();
     this.closed = true;
     const playerFiles = Array.from(this.playerViews.keys())
       .sort((a, b) => a - b)
       .map((id) => `players/player_${id}.json`);
 
-    const manifest: ReplayManifest = {
-      session_id: this.sessionMeta.sessionId,
-      board: this.sessionMeta.board,
-      started_at: this.sessionMeta.startedAtIso,
-      ended_at: meta.endedAtIso,
+    const manifest: ReplayManifest = this.buildManifest({
+      endedAtIso: meta.endedAtIso,
       winner: meta.winner,
-      finish_reason: meta.finishReason,
+      finishReason: meta.finishReason,
       players: meta.players,
-      files: {
-        public_timeline: "public_timeline.json",
-        logic_ops: "logic_ops.json",
-        debug_reports: "debug_reports.json",
-        debug_summary: "debug_summary.md",
-        player_views: playerFiles,
-      },
-      schema_version: "v1",
-    };
+      playerFiles,
+    });
 
     await this.writeJson("manifest.json", manifest);
     await this.writeJson("public_timeline.json", { events: this.publicEvents });
     await this.writeJson("logic_ops.json", { ops: this.logicOps });
-    await this.writeJson("debug_reports.json", {
-      session_id: this.sessionMeta.sessionId,
-      generated_at: new Date().toISOString(),
-      reports: this.debugReports,
-    });
+    await this.writeJson("debug_reports.json", this.buildDebugReportsPayload());
     const debugSummary = await buildDebugSummaryMarkdown({
       manifest,
       reports: this.debugReports,
+      publicEvents: this.publicEvents.map((e) => ({
+        seq: Number(e.seq ?? 0),
+        day: Number(e.day ?? 0),
+        phase: String(e.phase ?? ""),
+        type: String(e.type ?? ""),
+        payload: (e.payload ?? {}) as Record<string, unknown>,
+      })),
     });
     await this.writeText("debug_summary.md", debugSummary);
 
@@ -390,6 +415,114 @@ export class SessionRecordManager {
 
   private async ensureDirs(): Promise<void> {
     await fs.mkdir(path.join(this.sessionDir, "players"), { recursive: true });
+  }
+
+  private async writeInitialFiles(): Promise<void> {
+    const manifest = this.buildManifest({
+      endedAtIso: this.sessionMeta.startedAtIso,
+      winner: null,
+      finishReason: "in_progress",
+      players: [],
+      playerFiles: [],
+    });
+    await this.writeJson("manifest.json", manifest);
+    await this.writeJson("public_timeline.json", { events: this.publicEvents });
+    await this.writeJson("logic_ops.json", { ops: this.logicOps });
+    await this.writeJson("debug_reports.json", this.buildDebugReportsPayload());
+  }
+
+  private buildManifest(input: {
+    endedAtIso: string;
+    winner: ReplayManifest["winner"];
+    finishReason: string;
+    players: ReplayManifest["players"];
+    playerFiles: string[];
+  }): ReplayManifest {
+    return {
+      session_id: this.sessionMeta.sessionId,
+      board: this.sessionMeta.board,
+      started_at: this.sessionMeta.startedAtIso,
+      ended_at: input.endedAtIso,
+      winner: input.winner,
+      finish_reason: input.finishReason,
+      players: input.players,
+      files: {
+        public_timeline: "public_timeline.json",
+        logic_ops: "logic_ops.json",
+        debug_reports: "debug_reports.json",
+        debug_summary: "debug_summary.md",
+        player_views: input.playerFiles,
+      },
+      schema_version: "v1",
+    };
+  }
+
+  private buildDebugReportsPayload(): Record<string, unknown> {
+    return {
+      session_id: this.sessionMeta.sessionId,
+      generated_at: new Date().toISOString(),
+      reports: this.debugReports,
+    };
+  }
+
+  private scheduleFlush(): void {
+    if (this.closed || this.flushTimer) {
+      return;
+    }
+    this.flushTimer = setTimeout(() => {
+      this.flushTimer = null;
+      void this.enqueueFlush();
+    }, FLUSH_DEBOUNCE_MS);
+  }
+
+  private enqueueFlush(): Promise<void> {
+    this.flushChain = this.flushChain
+      .then(async () => {
+        await this.flushDirtyFiles();
+      })
+      .catch((error) => {
+        console.warn(`[session_recording] realtime_flush_failed err=${String(error)}`);
+      });
+    return this.flushChain;
+  }
+
+  private async flushDirtyFiles(): Promise<void> {
+    if (this.dirtyPublicTimeline) {
+      this.dirtyPublicTimeline = false;
+      await this.writeJson("public_timeline.json", { events: this.publicEvents });
+    }
+    if (this.dirtyLogicOps) {
+      this.dirtyLogicOps = false;
+      await this.writeJson("logic_ops.json", { ops: this.logicOps });
+    }
+    if (this.dirtyDebugReports) {
+      this.dirtyDebugReports = false;
+      await this.writeJson("debug_reports.json", this.buildDebugReportsPayload());
+    }
+    if (this.dirtyPlayers.size > 0) {
+      const dirtyPlayerIds = [...this.dirtyPlayers];
+      this.dirtyPlayers.clear();
+      for (const playerId of dirtyPlayerIds) {
+        const view = this.playerViews.get(playerId);
+        if (!view) {
+          continue;
+        }
+        const normalized = this.normalizePlayerView(view);
+        await this.writeJson(path.join("players", `player_${playerId}.json`), normalized);
+      }
+      // 会话进行中 manifest 也实时更新 player_views 列表。
+      const playerFiles = Array.from(this.playerViews.keys())
+        .sort((a, b) => a - b)
+        .map((id) => `players/player_${id}.json`);
+      const manifest = this.buildManifest({
+        endedAtIso: this.finalMeta?.endedAtIso ?? this.sessionMeta.startedAtIso,
+        winner: this.finalMeta?.winner ?? null,
+        finishReason: this.finalMeta?.finishReason ?? "in_progress",
+        players: this.finalMeta?.players ?? [],
+        playerFiles,
+      });
+      await this.writeJson("manifest.json", manifest);
+    }
   }
 
   private async writeJson(relativeFilePath: string, data: unknown): Promise<void> {

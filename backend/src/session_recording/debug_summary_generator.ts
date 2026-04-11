@@ -5,6 +5,13 @@ import { OpenAIClient } from "../infra/llm/openai_client";
 interface BuildDebugSummaryInput {
   manifest: ReplayManifest;
   reports: ReplayDebugReport[];
+  publicEvents?: Array<{
+    seq: number;
+    day: number;
+    phase: string;
+    type: string;
+    payload: Record<string, unknown>;
+  }>;
 }
 
 function countBySeverity(reports: ReplayDebugReport[]): Record<string, number> {
@@ -22,6 +29,19 @@ function countBySeverity(reports: ReplayDebugReport[]): Record<string, number> {
 
 function buildFallbackSummary(input: BuildDebugSummaryInput): string {
   const { manifest, reports } = input;
+  const autoFindings = scanEventsForPotentialIssues(input);
+  const allFindings = [
+    ...reports.map((r) => ({
+      severity: r.severity,
+      category: r.category,
+      day: r.day,
+      phase: r.phase,
+      actorId: r.actor_id,
+      message: r.message,
+      evidence: r.evidence_event_seq,
+    })),
+    ...autoFindings,
+  ];
   const counts = countBySeverity(reports);
   const lines: string[] = [
     `# Debug Summary (${manifest.session_id})`,
@@ -43,23 +63,23 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
     "## Findings",
   ];
 
-  if (reports.length === 0) {
+  if (allFindings.length === 0) {
     lines.push("- none");
   } else {
-    for (const report of reports) {
+    for (const report of allFindings) {
       const evidence =
-        report.evidence_event_seq.length > 0
-          ? ` evidence=${report.evidence_event_seq.join(",")}`
+        report.evidence.length > 0
+          ? ` evidence=${report.evidence.join(",")}`
           : "";
       lines.push(
-        `- [${report.severity.toUpperCase()}][${report.category}] day=${report.day} phase=${report.phase} actor=${report.actor_id}: ${report.message}${evidence}`,
+        `- [${report.severity.toUpperCase()}][${report.category}] day=${report.day} phase=${report.phase} actor=${report.actorId}: ${report.message}${evidence}`,
       );
     }
   }
 
   lines.push("", "## TODO");
-  if (reports.length > 0) {
-    reports
+  if (allFindings.length > 0) {
+    allFindings
       .slice()
       .sort((a, b) => {
         const rank = { critical: 4, high: 3, medium: 2, low: 1 } as const;
@@ -67,7 +87,7 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
       })
       .forEach((report, idx) => {
         lines.push(
-          `- [ ] [P${idx + 1}] 排查 ${report.category} 问题：${report.message}（actor=${report.actor_id}, day=${report.day}, phase=${report.phase}）`,
+          `- [ ] [P${idx + 1}] 排查 ${report.category} 问题：${report.message}（actor=${report.actorId}, day=${report.day}, phase=${report.phase}）`,
         );
       });
   } else {
@@ -85,13 +105,10 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
   if (!apiKey || !model) {
     return null;
   }
-  if (input.reports.length === 0) {
-    // 无上报时直接走静默模板，避免大模型生成冗余 TODO。
-    return null;
-  }
 
   const baseURL = process.env.OPENAI_BASE_URL;
   const timeoutMs = Number(process.env.OPENAI_TIMEOUT_MS ?? "30000");
+  const autoFindings = scanEventsForPotentialIssues(input);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -108,7 +125,7 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
         {
           role: "system",
           content:
-            "你是狼人杀后端调试助手。请输出 Markdown，必须包含：Session、Bug Report Stats、Findings、TODO 四个章节。TODO 必须是可执行排查项。",
+            "你是狼人杀后端调试助手。请输出 Markdown，必须包含：Session、Bug Report Stats、Findings，以及在确有问题时输出 TODO。若未发现明确问题，请输出 Conclusion 章节并说明无需处理。",
         },
         {
           role: "user",
@@ -118,6 +135,8 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
             `winner: ${input.manifest.winner ?? "none"}`,
             `finish_reason: ${input.manifest.finish_reason}`,
             `reports_json: ${JSON.stringify(input.reports)}`,
+            `auto_scan_findings_json: ${JSON.stringify(autoFindings)}`,
+            `event_digest_json: ${JSON.stringify(buildEventDigest(input.publicEvents ?? []))}`,
           ].join("\n"),
         },
       ],
@@ -141,4 +160,137 @@ export async function buildDebugSummaryMarkdown(
     return llm;
   }
   return buildFallbackSummary(input);
+}
+
+function buildEventDigest(
+  events: Array<{
+    seq: number;
+    day: number;
+    phase: string;
+    type: string;
+    payload: Record<string, unknown>;
+  }>,
+): Array<Record<string, unknown>> {
+  const keepTypes = new Set([
+    "phase_changed",
+    "night_resolved",
+    "wolf_self_destruct",
+    "sheriff_nomination_summary",
+    "sheriff_vote_summary",
+    "sheriff_elected",
+    "voted_out",
+    "idiot_revealed",
+    "last_words_spoken",
+    "witch_potion_used",
+    "witch_potion_skipped",
+    "day_speech",
+  ]);
+  const out: Array<Record<string, unknown>> = [];
+  for (const e of events) {
+    if (!keepTypes.has(e.type)) {
+      continue;
+    }
+    if (e.type === "day_speech") {
+      const text = String((e.payload as any).text ?? "");
+      out.push({
+        seq: e.seq,
+        day: e.day,
+        phase: e.phase,
+        type: e.type,
+        actorId: (e.payload as any).actorId,
+        text: text.slice(0, 160),
+      });
+      continue;
+    }
+    out.push({
+      seq: e.seq,
+      day: e.day,
+      phase: e.phase,
+      type: e.type,
+      payload: e.payload,
+    });
+  }
+  return out.slice(-120);
+}
+
+function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): Array<{
+  severity: "low" | "medium" | "high" | "critical";
+  category: "flow" | "rule" | "state" | "logging" | "other";
+  day: number;
+  phase: string;
+  actorId: number;
+  message: string;
+  evidence: number[];
+}> {
+  const events = input.publicEvents ?? [];
+  const findings: Array<{
+    severity: "low" | "medium" | "high" | "critical";
+    category: "flow" | "rule" | "state" | "logging" | "other";
+    day: number;
+    phase: string;
+    actorId: number;
+    message: string;
+    evidence: number[];
+  }> = [];
+
+  const selfDestruct = events.filter((e) => e.type === "wolf_self_destruct");
+  for (const e of selfDestruct) {
+    if (e.day === 1) {
+      findings.push({
+        severity: "medium",
+        category: "rule",
+        day: e.day,
+        phase: e.phase,
+        actorId: Number((e.payload as any).wolfId ?? 0),
+        message: "首日出现狼人自爆，建议核查自爆窗口策略配置是否符合预期。",
+        evidence: [e.seq],
+      });
+    }
+  }
+
+  const hasGuardRole = input.manifest.players.some((p) => p.role === "guard");
+  if (!hasGuardRole) {
+    const guardMentions = events.filter(
+      (e) =>
+        (e.type === "day_speech" || e.type === "last_words_spoken") &&
+        /守卫/.test(String((e.payload as any).text ?? "")),
+    );
+    if (guardMentions.length > 0) {
+      findings.push({
+        severity: "low",
+        category: "state",
+        day: guardMentions[0].day,
+        phase: guardMentions[0].phase,
+        actorId: Number((guardMentions[0].payload as any).actorId ?? (guardMentions[0].payload as any).playerId ?? 0),
+        message: "本局板子无守卫，但发言中出现守卫相关断言，疑似模型幻觉或信息污染。",
+        evidence: guardMentions.slice(0, 6).map((e) => e.seq),
+      });
+    }
+  }
+
+  const witchId = input.manifest.players.find((p) => p.role === "witch")?.player_id ?? 0;
+  if (witchId > 0) {
+    const usedPotion = events.some((e) => e.type === "witch_potion_used");
+    const witchSpeechClaims = events.filter(
+      (e) =>
+        (e.type === "day_speech" || e.type === "last_words_spoken") &&
+        Number((e.payload as any).actorId ?? (e.payload as any).playerId ?? -1) === witchId &&
+        /(用了救药|用了毒药|使用了?解药|使用了?毒药)/.test(
+          String((e.payload as any).text ?? ""),
+        ),
+    );
+    if (!usedPotion && witchSpeechClaims.length > 0) {
+      findings.push({
+        severity: "medium",
+        category: "logging",
+        day: witchSpeechClaims[0].day,
+        phase: witchSpeechClaims[0].phase,
+        actorId: witchId,
+        message: "女巫发言声称已用药，但事件流无用药记录，建议核查模型发言约束与私有信息同步。",
+        evidence: witchSpeechClaims.slice(0, 6).map((e) => e.seq),
+      });
+    }
+  }
+
+  return findings;
 }

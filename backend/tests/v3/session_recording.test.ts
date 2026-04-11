@@ -5,6 +5,88 @@ import { Camp } from "../../src/domain/model";
 import { SessionRecordManager } from "../../src/session_recording";
 
 describe("SessionRecordManager", () => {
+  test("should persist timeline and player files during game before finalize", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-realtime-"));
+    const manager = await SessionRecordManager.create(
+      {
+        sessionId: "session_realtime_1",
+        board: "six_player_mvp",
+        startedAtIso: new Date("2026-04-11T00:00:00.000Z").toISOString(),
+      },
+      root,
+    );
+
+    manager.recordPublicEvent({
+      type: "phase_changed",
+      timestampMs: Date.now(),
+      phase: "night",
+      day: 1,
+      payload: { phase: "night", day: 1 },
+    });
+    manager.recordLogicOp({
+      scope: "phase_pipeline",
+      op: "night_pipeline_start",
+      phase: "night",
+      status: "ok",
+    });
+    manager.recordPlayerBroadcast({
+      playerId: 1,
+      role: "wolf",
+      camp: "wolf",
+      day: 1,
+      phase: "night",
+      stage: "wolf_discussion",
+      requestId: "1-night-1-broadcast-0",
+      text: "[系统][公开] 天黑请闭眼（第1天夜晚）",
+    });
+    manager.recordPlayerRound({
+      playerId: 1,
+      role: "wolf",
+      camp: "wolf",
+      day: 1,
+      phase: "night",
+      stage: "wolf_discussion",
+      requestId: "1-night-1-1",
+      visibleFeedDelta: [],
+      actionMode: "none",
+      toolCalls: [],
+    });
+    manager.recordDebugReport({
+      day: 1,
+      phase: "night",
+      stage: "wolf_discussion",
+      actorId: 1,
+      actorRole: "wolf",
+      actorCamp: "wolf",
+      category: "flow",
+      severity: "low",
+      message: "realtime test",
+      evidenceEventSeq: [1],
+    });
+
+    await manager.flushNow();
+
+    const sessionDir = path.join(root, "session_realtime_1");
+    const timeline = JSON.parse(
+      await fs.readFile(path.join(sessionDir, "public_timeline.json"), "utf-8"),
+    );
+    const logic = JSON.parse(
+      await fs.readFile(path.join(sessionDir, "logic_ops.json"), "utf-8"),
+    );
+    const player1 = JSON.parse(
+      await fs.readFile(path.join(sessionDir, "players", "player_1.json"), "utf-8"),
+    );
+    const reports = JSON.parse(
+      await fs.readFile(path.join(sessionDir, "debug_reports.json"), "utf-8"),
+    );
+
+    expect(timeline.events.length).toBe(1);
+    expect(logic.ops.length).toBe(1);
+    expect(Array.isArray(player1.timeline)).toBe(true);
+    expect(player1.timeline.length).toBeGreaterThanOrEqual(1);
+    expect(reports.reports.length).toBe(1);
+  });
+
   test("should create session folder and persist replay json files", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-replay-"));
     const manager = await SessionRecordManager.create(
@@ -174,5 +256,51 @@ describe("SessionRecordManager", () => {
     );
     expect(summary).toContain("## Conclusion");
     expect(summary).not.toContain("## TODO");
+  });
+
+  test("should emit TODO from auto scan even when report_bug is empty", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-replay-auto-scan-"));
+    const manager = await SessionRecordManager.create(
+      {
+        sessionId: "session_test_auto_scan",
+        board: "twelve_player_standard",
+        startedAtIso: new Date("2026-04-10T00:00:00.000Z").toISOString(),
+      },
+      root,
+    );
+
+    manager.recordPublicEvent({
+      type: "phase_changed",
+      timestampMs: Date.now(),
+      phase: "voting",
+      day: 1,
+      payload: { phase: "voting", day: 1 },
+    });
+    manager.recordPublicEvent({
+      type: "wolf_self_destruct",
+      timestampMs: Date.now(),
+      phase: "voting",
+      day: 1,
+      payload: { wolfId: 9, window: "on_pre_vote" },
+    });
+
+    await manager.finalize({
+      endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
+      winner: Camp.Wolf,
+      finishReason: "all_good_eliminated",
+      players: [
+        { player_id: 1, role: "wolf", camp: "wolf", alive: true },
+        { player_id: 2, role: "idiot", camp: "good", alive: true },
+        { player_id: 3, role: "seer", camp: "good", alive: true },
+        { player_id: 4, role: "witch", camp: "good", alive: true },
+      ],
+    });
+
+    const summary = await fs.readFile(
+      path.join(root, "session_test_auto_scan", "debug_summary.md"),
+      "utf-8",
+    );
+    expect(summary).toContain("## TODO");
+    expect(summary).toContain("首日出现狼人自爆");
   });
 });
