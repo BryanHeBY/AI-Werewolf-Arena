@@ -11,6 +11,7 @@ import {
   ReplayPublicEvent,
 } from "./types";
 import { OpenAIClient } from "../infra/llm/openai_client";
+import { loadRuntimeConfig } from "../config/runtime_config";
 
 export interface DebugSummaryPipelineInput {
   manifest: ReplayManifest;
@@ -73,7 +74,10 @@ function safeJsonString(value: unknown, maxChars: number): string {
   return truncate(text, maxChars);
 }
 
-function summarizePublicEvents(events: ReplayPublicEvent[]): Record<string, unknown>[] {
+function summarizePublicEvents(
+  events: ReplayPublicEvent[],
+  maxItems: number,
+): Record<string, unknown>[] {
   const keepTypes = new Set([
     "phase_changed",
     "night_resolved",
@@ -112,12 +116,14 @@ function summarizePublicEvents(events: ReplayPublicEvent[]): Record<string, unkn
       type: e.type,
       payload: e.payload,
     });
+    if (out.length >= maxItems) {
+      break;
+    }
   }
   return out;
 }
 
-function summarizeLogicOps(ops: ReplayLogicOp[]): Record<string, unknown>[] {
-  const maxItems = Math.max(50, Number(process.env.DEBUG_SUMMARY_AGENT_MAX_ITEMS ?? "300"));
+function summarizeLogicOps(ops: ReplayLogicOp[], maxItems: number): Record<string, unknown>[] {
   return ops.slice(-maxItems).map((op) => ({
     seq: op.seq,
     scope: op.scope,
@@ -131,8 +137,10 @@ function summarizeLogicOps(ops: ReplayLogicOp[]): Record<string, unknown>[] {
   }));
 }
 
-function summarizePlayerView(view: ReplayPlayerView): Record<string, unknown> {
-  const maxItems = Math.max(60, Number(process.env.DEBUG_SUMMARY_AGENT_PLAYER_MAX_ITEMS ?? "200"));
+function summarizePlayerView(
+  view: ReplayPlayerView,
+  maxItems: number,
+): Record<string, unknown> {
   const timeline = view.timeline.slice(-maxItems).map((entry) => {
     const base: Record<string, unknown> = {
       seq: entry.seq,
@@ -189,6 +197,8 @@ function buildAgentSystemPrompt(): string {
     "JSON 必须包含字段：agent, findings, notes, missing_info。",
     "findings 为数组，元素包含 severity/category/message/evidence/source。",
     "severity: low|medium|high|critical；category: flow|rule|state|logging|other。",
+    "输出要求：最多 5 条 findings，notes 最多 3 条，missing_info 最多 3 条。",
+    "仅输出一个 JSON 对象，不要输出数组或多段文本。",
   ].join("\n");
 }
 
@@ -224,12 +234,51 @@ function normalizeAgentOutput(raw: any, agentName: string, source: string): Agen
 
   return {
     agent: String(raw?.agent ?? agentName),
-    findings,
-    notes: Array.isArray(raw?.notes) ? raw.notes.map((v: any) => String(v)) : [],
+    findings: findings.slice(0, 5),
+    notes: Array.isArray(raw?.notes) ? raw.notes.map((v: any) => String(v)).slice(0, 3) : [],
     missing_info: Array.isArray(raw?.missing_info)
-      ? raw.missing_info.map((v: any) => String(v))
+      ? raw.missing_info.map((v: any) => String(v)).slice(0, 3)
       : [],
   };
+}
+
+function shrinkPayload(payload: Record<string, unknown>): Record<string, unknown> {
+  const clone: Record<string, unknown> = Array.isArray(payload)
+    ? { items: payload }
+    : { ...payload };
+
+  if (Array.isArray(clone.events)) {
+    const events = clone.events as unknown[];
+    const next = events.slice(-Math.max(20, Math.floor(events.length / 2)));
+    clone.events = next;
+  }
+  if (Array.isArray(clone.ops)) {
+    const ops = clone.ops as unknown[];
+    const next = ops.slice(-Math.max(20, Math.floor(ops.length / 2)));
+    clone.ops = next;
+  }
+  if (Array.isArray(clone.reports)) {
+    const reports = clone.reports as unknown[];
+    const next = reports.slice(-Math.max(20, Math.floor(reports.length / 2)));
+    clone.reports = next;
+  }
+  if (clone.player_view && typeof clone.player_view === "object") {
+    const view: any = { ...(clone.player_view as Record<string, unknown>) };
+    if (Array.isArray(view.timeline)) {
+      const timeline = view.timeline as unknown[];
+      view.timeline = timeline.slice(-Math.max(30, Math.floor(timeline.length / 2)));
+    }
+    if (view.initial_prompt && typeof view.initial_prompt === "object") {
+      const prompt = { ...(view.initial_prompt as Record<string, unknown>) };
+      if (typeof prompt.prompt_system === "string") {
+        prompt.prompt_system = truncate(prompt.prompt_system, 120);
+      }
+      view.initial_prompt = prompt;
+    }
+    clone.player_view = view;
+  }
+
+  return clone;
 }
 
 async function runAgentTask(
@@ -239,6 +288,7 @@ async function runAgentTask(
   timeoutMs: number,
   maxAttempts: number,
 ): Promise<AgentOutput> {
+  let payload = task.payload;
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -246,7 +296,7 @@ async function runAgentTask(
       const result = await client.chatWithMeta(
         [
           { role: "system", content: buildAgentSystemPrompt() },
-          { role: "user", content: buildAgentUserPrompt(task.name, task.payload) },
+          { role: "user", content: buildAgentUserPrompt(task.name, payload) },
         ],
         { signal: controller.signal },
       );
@@ -254,6 +304,9 @@ async function runAgentTask(
         console.warn(
           `[debug_summary] llm_rejected_reason=finish_reason=${result.finishReason || "unknown"} session_id=${sessionId} agent=${task.name} attempt=${attempt}/${maxAttempts}`,
         );
+        if (result.finishReason === "length") {
+          payload = shrinkPayload(payload);
+        }
         continue;
       }
       const text = stripJsonFences(result.content);
@@ -475,42 +528,53 @@ async function renderSummaryWithLlm(
 export async function buildDebugSummaryWithAgents(
   input: DebugSummaryPipelineInput,
 ): Promise<PipelineResult | null> {
-  const apiKey = process.env.OPENAI_API_KEY;
-  const model = process.env.OPENAI_MODEL;
-  if (!apiKey || !model) {
+  const runtime = await loadRuntimeConfig();
+  const provider = runtime.provider;
+  const agentDefaults = runtime.agent?.default;
+  if (!provider?.apiKey || !agentDefaults?.model) {
     return null;
   }
 
-  if (String(process.env.DEBUG_SUMMARY_AGENT_ENABLED ?? "true") === "false") {
+  if (runtime.debugSummary?.agent?.enabled === false) {
     return null;
   }
 
   const agentsDir = path.join(input.sessionDir, "debug_summary_agents");
   await fs.mkdir(agentsDir, { recursive: true });
 
-  const timeoutMs = Number(process.env.DEBUG_SUMMARY_AGENT_TIMEOUT_MS ?? "15000");
-  const maxAttempts = Math.max(1, Number(process.env.DEBUG_SUMMARY_AGENT_MAX_ATTEMPTS ?? "2"));
-  const concurrency = Math.max(1, Number(process.env.DEBUG_SUMMARY_AGENT_CONCURRENCY ?? "4"));
+  const timeoutMs = runtime.debugSummary?.agent?.timeoutMs ?? 15000;
+  const maxAttempts = Math.max(1, runtime.debugSummary?.agent?.maxAttempts ?? 2);
+  const concurrency = Math.max(1, runtime.debugSummary?.agent?.concurrency ?? 4);
+  const publicMaxItems = Math.max(60, runtime.debugSummary?.agent?.publicMaxItems ?? 200);
+  const maxItems = Math.max(50, runtime.debugSummary?.agent?.maxItems ?? 200);
+  const playerMaxItems = Math.max(60, runtime.debugSummary?.agent?.playerMaxItems ?? 120);
+  const profileOverride = runtime.debugSummary?.agent?.profile ?? {};
 
   const client = new OpenAIClient({
-    apiKey,
-    model,
-    baseURL: process.env.OPENAI_BASE_URL,
-    temperature: 0.1,
-    maxTokens: 1200,
-    forceJsonResponse: false,
+    apiKey: provider.apiKey,
+    model: profileOverride.model ?? agentDefaults.model,
+    baseURL: provider.baseURL,
+    userAgent: provider.userAgent,
+    temperature: profileOverride.temperature ?? agentDefaults.temperature ?? 0.1,
+    maxTokens: profileOverride.maxTokens ?? agentDefaults.maxTokens ?? 1200,
+    forceJsonResponse:
+      profileOverride.forceJsonResponse ?? agentDefaults.forceJsonResponse ?? false,
+    reasoningEnabled:
+      profileOverride.reasoningEnabled ?? agentDefaults.reasoningEnabled ?? true,
+    reasoningEffort:
+      profileOverride.reasoningEffort ?? agentDefaults.reasoningEffort ?? "medium",
   });
 
   const tasks: AgentTask[] = [];
   tasks.push({
     name: "agent_public",
     source: "public_timeline.json",
-    payload: { events: summarizePublicEvents(input.publicEvents) },
+    payload: { events: summarizePublicEvents(input.publicEvents, publicMaxItems) },
   });
   tasks.push({
     name: "agent_logic",
     source: "logic_ops.json",
-    payload: { ops: summarizeLogicOps(input.logicOps) },
+    payload: { ops: summarizeLogicOps(input.logicOps, maxItems) },
   });
   tasks.push({
     name: "agent_reports",
@@ -521,7 +585,7 @@ export async function buildDebugSummaryWithAgents(
     tasks.push({
       name: `agent_player_${view.player_id}`,
       source: `players/player_${view.player_id}.json`,
-      payload: { player_view: summarizePlayerView(view) },
+      payload: { player_view: summarizePlayerView(view, playerMaxItems) },
     });
   }
 

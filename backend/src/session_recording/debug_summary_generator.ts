@@ -1,6 +1,7 @@
 /** 文件说明：根据调试上报生成 session 级调试总结 Markdown。 */
 import { ReplayDebugReport, ReplayLogicOp, ReplayManifest, ReplayPlayerView, ReplayPublicEvent } from "./types";
 import { OpenAIClient } from "../infra/llm/openai_client";
+import { loadRuntimeConfig } from "../config/runtime_config";
 import { buildDebugSummaryWithAgents } from "./debug_summary_pipeline";
 
 interface BuildDebugSummaryInput {
@@ -103,30 +104,31 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
 }
 
 async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | null> {
-  const apiKey = process.env.OPENAI_API_KEY;
-  const model = process.env.OPENAI_MODEL;
-  if (!apiKey || !model) {
+  const runtime = await loadRuntimeConfig();
+  const provider = runtime.provider;
+  const agentDefaults = runtime.agent?.default;
+  if (!provider?.apiKey || !agentDefaults?.model) {
     return null;
   }
 
-  const baseURL = process.env.OPENAI_BASE_URL;
-  const timeoutMs = Number(process.env.OPENAI_TIMEOUT_MS ?? "30000");
-  const maxAttempts = Math.max(
-    1,
-    Number(process.env.DEBUG_SUMMARY_LLM_MAX_ATTEMPTS ?? "3"),
-  );
+  const baseURL = provider.baseURL;
+  const timeoutMs = runtime.debugSummary?.llmTimeoutMs ?? 30000;
+  const maxAttempts = Math.max(1, runtime.debugSummary?.llmMaxAttempts ?? 3);
   const actionableReports = filterActionableReports(
     input.reports,
     input.publicEvents ?? [],
   );
   const autoFindings = scanEventsForPotentialIssues(input);
   const client = new OpenAIClient({
-    apiKey,
+    apiKey: provider.apiKey,
     baseURL,
-    model,
-    temperature: 0.1,
-    maxTokens: 1800,
-    forceJsonResponse: false,
+    model: agentDefaults.model,
+    userAgent: provider.userAgent,
+    temperature: agentDefaults.temperature ?? 0.1,
+    maxTokens: agentDefaults.maxTokens ?? 1800,
+    forceJsonResponse: agentDefaults.forceJsonResponse ?? false,
+    reasoningEnabled: agentDefaults.reasoningEnabled ?? true,
+    reasoningEffort: agentDefaults.reasoningEffort ?? "medium",
   });
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
@@ -177,7 +179,7 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
   return null;
 }
 
-/** 生成调试总结，优先使用 .env 中 OPENAI_* 配置；失败时回退模板。 */
+/** 生成调试总结，优先使用 runtime_config.json；失败时回退模板。 */
 export async function buildDebugSummaryMarkdown(
   input: BuildDebugSummaryInput,
 ): Promise<string> {
