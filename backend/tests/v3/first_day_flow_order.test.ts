@@ -94,7 +94,9 @@ describe("first day flow order", () => {
     );
     const sheriffElectedIndex = events.findIndex((event) => event.type === "sheriff_elected");
     const nightResolvedIndex = events.findIndex((event) => event.type === "night_resolved");
-    const lastWordsGrantedIndex = events.findIndex((event) => event.type === "last_words_granted");
+    const lastWordsGrantedIndex = events.findIndex(
+      (event) => event.type === "last_words_granted" && event.payload.phase === Phase.Day,
+    );
     const sheriffDirectionIndex = events.findIndex(
       (event) => event.type === "sheriff_direction_chosen",
     );
@@ -142,5 +144,22 @@ describe("first day flow order", () => {
       .map((event) => Number(event.payload.actorId));
     expect(daySpeechActors).not.toContain(firstNightDeadId);
     expect(voteActors).not.toContain(firstNightDeadId);
+  });
+
+  test("night deaths should write last_words events with day phase", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const provider = new DeterministicFlowProvider(context.world, 1);
+
+    await context.phaseManager.runSingleCycle(provider, 10);
+
+    const events = context.phaseManager.getEvents();
+    const lastWordsGranted = events.filter((event) => event.type === "last_words_granted");
+    const lastWordsSpoken = events.filter((event) => event.type === "last_words_spoken");
+
+    expect(lastWordsGranted.length).toBeGreaterThan(0);
+    expect(lastWordsGranted.some((event) => event.payload.phase === Phase.Day)).toBe(true);
+    expect(lastWordsSpoken.some((event) => event.payload.phase === Phase.Day)).toBe(true);
+    expect(lastWordsGranted.some((event) => event.payload.phase === Phase.Night)).toBe(false);
+    expect(lastWordsSpoken.some((event) => event.payload.phase === Phase.Night)).toBe(false);
   });
 });

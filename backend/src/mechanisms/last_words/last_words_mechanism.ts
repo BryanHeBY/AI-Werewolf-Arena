@@ -6,19 +6,20 @@ import { World } from "../../domain/world";
 
 /** 遗言机制：判定是否可遗言并写入遗言授权事件。 */
 export class LastWordsMechanism {
-  shouldGrantLastWords(phase: Phase, day: number): boolean {
-    return (phase === Phase.Night && day === 1) || phase === Phase.Voting;
+  shouldGrantLastWords(deathPhase: Phase, day: number): boolean {
+    return (deathPhase === Phase.Night && day === 1) || deathPhase === Phase.Voting;
   }
 
   recordLastWordsGranted(
     world: World,
     deadIds: EntityId[],
-    phase: Phase,
+    deathPhase: Phase,
+    lastWordsPhase: Phase,
     day: number,
     events: GameEvent[],
   ): void {
     for (const deadId of deadIds) {
-      if (!this.shouldGrantLastWords(phase, day)) {
+      if (!this.shouldGrantLastWords(deathPhase, day)) {
         continue;
       }
       const alive = world.getComponent<AliveComponent>(deadId, COMPONENT.Alive);
@@ -30,7 +31,7 @@ export class LastWordsMechanism {
         type: "last_words_granted",
         payload: {
           playerId: deadId,
-          phase,
+          phase: lastWordsPhase,
           day,
         },
       });

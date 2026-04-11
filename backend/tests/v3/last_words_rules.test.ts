@@ -6,7 +6,7 @@ import { LastWordsMechanism } from "../../src/mechanisms/last_words/last_words_m
 import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
 
 describe("last words rules", () => {
-  test("only first night deaths can receive last words at night", () => {
+  test("only first night deaths can receive last words", () => {
     const { world, playerIds } = bootstrapGame(twelvePlayerStandardConfig);
     const mechanism = new LastWordsMechanism();
     const events: any[] = [];
@@ -14,11 +14,11 @@ describe("last words rules", () => {
     const alive = world.getComponent<AliveComponent>(deadId, COMPONENT.Alive)!;
     alive.alive = false;
 
-    mechanism.recordLastWordsGranted(world, [deadId], Phase.Night, 1, events);
+    mechanism.recordLastWordsGranted(world, [deadId], Phase.Night, Phase.Day, 1, events);
     expect(events.some((event) => event.type === "last_words_granted")).toBe(true);
 
     events.length = 0;
-    mechanism.recordLastWordsGranted(world, [deadId], Phase.Night, 2, events);
+    mechanism.recordLastWordsGranted(world, [deadId], Phase.Night, Phase.Day, 2, events);
     expect(events.some((event) => event.type === "last_words_granted")).toBe(false);
   });
 
@@ -30,11 +30,11 @@ describe("last words rules", () => {
     const alive = world.getComponent<AliveComponent>(deadId, COMPONENT.Alive)!;
     alive.alive = false;
 
-    mechanism.recordLastWordsGranted(world, [deadId], Phase.Voting, 3, events);
+    mechanism.recordLastWordsGranted(world, [deadId], Phase.Voting, Phase.Voting, 3, events);
     expect(events.some((event) => event.type === "last_words_granted")).toBe(true);
 
     events.length = 0;
-    mechanism.recordLastWordsGranted(world, [deadId], Phase.Day, 3, events);
+    mechanism.recordLastWordsGranted(world, [deadId], Phase.Day, Phase.Day, 3, events);
     expect(events.some((event) => event.type === "last_words_granted")).toBe(false);
   });
 

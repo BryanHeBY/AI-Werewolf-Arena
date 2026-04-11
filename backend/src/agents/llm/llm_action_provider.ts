@@ -708,13 +708,20 @@ export class LlmActionProvider implements ActionProvider {
       ]);
 
       const result = await withTimeout;
+      const derivedThinkingText = this.buildThinkingTraceText(
+        result.assistantText ?? "",
+        result.thinkingTrace ?? [],
+      );
       if (result.assistantText) {
         this.appendAgentHistory(request.actorId, {
           role: "assistant",
           content: result.assistantText,
         });
       }
-      this.actorLastAssistantText.set(request.actorId, result.assistantText ?? "");
+      this.actorLastAssistantText.set(
+        request.actorId,
+        derivedThinkingText ?? result.assistantText ?? "",
+      );
       this.dumpThinkingTrace(result.thinkingTrace ?? [], request);
       this.dumpLlmRawResponse(result.assistantText ?? "", request);
       return result.finalAction ?? null;
@@ -1608,5 +1615,34 @@ export class LlmActionProvider implements ActionProvider {
       }
     }
     console.log(`${prefix} end ${marker}`);
+  }
+
+  private buildThinkingTraceText(
+    assistantText: string,
+    trace: ToolLoopStepTrace[],
+  ): string | null {
+    const parts: string[] = [];
+    const trimmed = assistantText.trim();
+    if (trimmed.length > 0) {
+      parts.push(`assistant: ${trimmed}`);
+    }
+    for (const [stepIndex, step] of trace.entries()) {
+      if (step.assistantText && step.assistantText.trim().length > 0) {
+        parts.push(`step ${stepIndex + 1} assistant: ${step.assistantText.trim()}`);
+      }
+      for (const call of step.toolCalls) {
+        parts.push(
+          `step ${stepIndex + 1} tool_call: ${call.name} args=${call.rawArgs}`,
+        );
+        if (call.toolResult) {
+          parts.push(`step ${stepIndex + 1} tool_result: ${call.toolResult}`);
+        }
+      }
+    }
+    if (parts.length === 0) {
+      return null;
+    }
+    const joined = parts.join("\n");
+    return joined.length > 1200 ? `${joined.slice(0, 1200)}…` : joined;
   }
 }

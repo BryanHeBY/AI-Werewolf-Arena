@@ -168,6 +168,7 @@ export class PhaseManager {
         night.damage.deathSources,
         actionProvider,
         Phase.Night,
+        Phase.Day,
       );
       if (this.checkAndSealResult()) {
         return this.getSnapshot();
@@ -186,6 +187,7 @@ export class PhaseManager {
                 night.damage.deathSources,
                 actionProvider,
                 Phase.Night,
+                Phase.Day,
               );
             },
           }
@@ -226,6 +228,7 @@ export class PhaseManager {
         sources,
         actionProvider,
         Phase.Voting,
+        Phase.Voting,
       );
     }
 
@@ -252,6 +255,7 @@ export class PhaseManager {
     sources: Record<number, StatusMark[]>,
     actionProvider: ActionProvider,
     phase: Phase,
+    lastWordsPhase: Phase,
   ): Promise<void> {
     const seen = new Set<EntityId>(deadIds);
     let pending = [...seen];
@@ -265,10 +269,11 @@ export class PhaseManager {
           this.world,
           pending,
           phase,
+          lastWordsPhase,
           this.state.day,
           this.events,
         );
-        await this.collectLastWords(pending, phase, actionProvider);
+        await this.collectLastWords(pending, lastWordsPhase, phase, actionProvider);
       }
 
       // 先处理警长死亡带来的警徽逻辑，再执行角色死亡钩子。
@@ -328,9 +333,10 @@ export class PhaseManager {
   private async collectLastWords(
     deadIds: EntityId[],
     phase: Phase,
+    deathPhase: Phase,
     actionProvider: ActionProvider,
   ): Promise<void> {
-    if (!this.lastWordsMechanism.shouldGrantLastWords(phase, this.state.day)) {
+    if (!this.lastWordsMechanism.shouldGrantLastWords(deathPhase, this.state.day)) {
       return;
     }
     for (const deadId of deadIds) {
