@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/server/index.ts",
     "build": "tsc",
-    "build:v3": "tsc -p tsconfig.v3.json --noEmit",
+    "build:v3": "tsc -p tsconfig.json --noEmit",
     "start": "node dist/server/index.js",
     "test": "jest",
     "test:v3": "jest tests/v3 --runInBand",
