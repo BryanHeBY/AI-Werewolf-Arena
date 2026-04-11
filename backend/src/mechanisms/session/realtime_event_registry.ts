@@ -98,10 +98,6 @@ const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
         "night_result",
         {
           deadPlayerIds,
-          killedByWolf:
-            event.payload.wolfTarget !== undefined
-              ? Number(event.payload.wolfTarget)
-              : undefined,
         },
         event.timestamp,
       ),

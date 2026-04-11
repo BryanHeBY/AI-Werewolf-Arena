@@ -162,7 +162,7 @@ export class PhaseManager {
 
     this.setPhase(Phase.Day);
     if (!firstDaySheriffBeforeNightInfo) {
-      this.emitNightResolved(night.summary.wolfTarget, night.summary.deaths);
+      this.emitNightResolved(night.summary.deaths);
       await this.processDeaths(
         night.damage.deaths,
         night.damage.deathSources,
@@ -181,7 +181,7 @@ export class PhaseManager {
       firstDaySheriffBeforeNightInfo
         ? {
             afterSheriffElection: async () => {
-              this.emitNightResolved(night.summary.wolfTarget, night.summary.deaths);
+              this.emitNightResolved(night.summary.deaths);
               await this.processDeaths(
                 night.damage.deaths,
                 night.damage.deathSources,
@@ -425,15 +425,11 @@ export class PhaseManager {
   /**
    * 写入夜晚结算公开信息（用于“昨夜死亡/平安夜”广播）。
    */
-  private emitNightResolved(
-    wolfTarget: EntityId | null,
-    deaths: EntityId[],
-  ): void {
+  private emitNightResolved(deaths: EntityId[]): void {
     this.events.push({
       timestamp: Date.now(),
       type: "night_resolved",
       payload: {
-        wolfTarget,
         deaths: [...deaths],
       },
     });

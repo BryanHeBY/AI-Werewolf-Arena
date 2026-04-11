@@ -162,4 +162,16 @@ describe("first day flow order", () => {
     expect(lastWordsGranted.some((event) => event.payload.phase === Phase.Night)).toBe(false);
     expect(lastWordsSpoken.some((event) => event.payload.phase === Phase.Night)).toBe(false);
   });
+
+  test("night_resolved should not expose wolf target in public payload", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const provider = new DeterministicFlowProvider(context.world, 1);
+
+    await context.phaseManager.runSingleCycle(provider, 10);
+
+    const events = context.phaseManager.getEvents();
+    const nightResolved = events.find((event) => event.type === "night_resolved");
+    expect(nightResolved).toBeTruthy();
+    expect((nightResolved?.payload as Record<string, unknown>).wolfTarget).toBeUndefined();
+  });
 });
