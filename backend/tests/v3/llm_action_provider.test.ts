@@ -1072,6 +1072,42 @@ describe("LlmActionProvider", () => {
     });
   });
 
+  test("on_pre_vote self_destruct window should include strict tool boundary hint", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const wolfId = context.world
+      .entityIds()
+      .find((id) => {
+        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        return role?.role === "wolf";
+      })!;
+    const provider = new LlmActionProvider(
+      context.world,
+      new AssertClient(
+        '{"name":"self_destruct","args":{"reason":"test","confirm":true}}',
+        (messages) => {
+          const user = messages.find((msg) => msg.role === "user")?.content ?? "";
+          expect(user).toContain("仅可使用 self_destruct（或 report_bug）");
+          expect(user).toContain("禁止发言、投票和其他工具");
+        },
+      ),
+      {
+        fallbackProvider: new FallbackProvider(null),
+      },
+    );
+
+    const action = await provider.getAction({
+      phase: Phase.Voting,
+      actorId: wolfId,
+      allowedTools: ["self_destruct"],
+      context: { must_act: false, phase: "on_pre_vote" },
+    });
+
+    expect(action).toEqual({
+      name: "self_destruct",
+      args: { reason: "test", confirm: true },
+    });
+  });
+
   test("initial system prompt should include rendered board config summary", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const provider = new LlmActionProvider(

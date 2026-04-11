@@ -1045,8 +1045,19 @@ export class LlmActionProvider implements ActionProvider {
    * 构建阶段上下文提示（如女巫可见刀口），减少关键行动前的信息缺失。
    */
   private stageContextHint(request: ActionRequest): string | undefined {
-    const stage = String(request.context.phase ?? "");
+    const stage = String(
+      request.context.phase ?? request.actionWindow ?? request.context.window ?? "",
+    );
     if (stage !== "witch") {
+      const onlySelfDestructWindow =
+        stage === "on_pre_vote" &&
+        request.allowedTools.every(
+          (tool) =>
+            tool === "self_destruct" || tool === LlmActionProvider.REPORT_BUG_TOOL,
+        );
+      if (onlySelfDestructWindow) {
+        return "当前为放逐前自爆窗口：仅可使用 self_destruct（或 report_bug），禁止发言、投票和其他工具。";
+      }
       return undefined;
     }
     const wolfTargetRaw = request.context.wolf_target;
