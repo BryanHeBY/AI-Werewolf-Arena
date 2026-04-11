@@ -2,6 +2,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import {
+  ReplayDebugReport,
   ReplayFinalizeMeta,
   ReplayLlmRequestMessage,
   ReplayLogicOp,
@@ -10,10 +11,12 @@ import {
   ReplayPlayerView,
   ReplayRecordLogicOpInput,
   ReplayRecordPlayerBroadcastInput,
+  ReplayRecordDebugReportInput,
   ReplayRecordPlayerRoundInput,
   ReplayRecordPublicEventInput,
   ReplaySessionMeta,
 } from "./types";
+import { buildDebugSummaryMarkdown } from "./debug_summary_generator";
 
 const THINKING_MAX_CHARS = 4000;
 const PROMPT_USER_MAX_CHARS = 4000;
@@ -60,6 +63,7 @@ export class SessionRecordManager {
   private logicSeq = 0;
   private publicEvents: Array<any> = [];
   private logicOps: ReplayLogicOp[] = [];
+  private debugReports: ReplayDebugReport[] = [];
   private playerViews = new Map<number, ReplayPlayerView>();
   private closed = false;
 
@@ -278,6 +282,29 @@ export class SessionRecordManager {
     this.playerViews.set(input.playerId, view);
   }
 
+  recordDebugReport(input: ReplayRecordDebugReportInput): string {
+    if (this.closed) {
+      return "rb-closed";
+    }
+    const reportId = `rb-${this.sessionMeta.sessionId}-${this.debugReports.length + 1}`;
+    this.debugReports.push({
+      report_id: reportId,
+      timestamp: toIso(input.timestampMs ?? Date.now()),
+      day: input.day,
+      phase: input.phase,
+      stage: input.stage,
+      actor_id: input.actorId,
+      actor_role: input.actorRole,
+      actor_camp: input.actorCamp,
+      category: input.category,
+      severity: input.severity,
+      message: input.message,
+      evidence_event_seq: [...(input.evidenceEventSeq ?? [])],
+      status: "open",
+    });
+    return reportId;
+  }
+
   async finalize(meta: ReplayFinalizeMeta): Promise<void> {
     if (this.closed) {
       return;
@@ -298,6 +325,8 @@ export class SessionRecordManager {
       files: {
         public_timeline: "public_timeline.json",
         logic_ops: "logic_ops.json",
+        debug_reports: "debug_reports.json",
+        debug_summary: "debug_summary.md",
         player_views: playerFiles,
       },
       schema_version: "v1",
@@ -306,6 +335,16 @@ export class SessionRecordManager {
     await this.writeJson("manifest.json", manifest);
     await this.writeJson("public_timeline.json", { events: this.publicEvents });
     await this.writeJson("logic_ops.json", { ops: this.logicOps });
+    await this.writeJson("debug_reports.json", {
+      session_id: this.sessionMeta.sessionId,
+      generated_at: new Date().toISOString(),
+      reports: this.debugReports,
+    });
+    const debugSummary = await buildDebugSummaryMarkdown({
+      manifest,
+      reports: this.debugReports,
+    });
+    await this.writeText("debug_summary.md", debugSummary);
 
     for (const [playerId, view] of this.playerViews.entries()) {
       const normalized = this.normalizePlayerView(view);
@@ -358,6 +397,13 @@ export class SessionRecordManager {
     const tmpPath = `${filePath}.tmp`;
     const content = JSON.stringify(data, null, 2);
     await fs.writeFile(tmpPath, content, "utf-8");
+    await fs.rename(tmpPath, filePath);
+  }
+
+  private async writeText(relativeFilePath: string, data: string): Promise<void> {
+    const filePath = path.join(this.sessionDir, relativeFilePath);
+    const tmpPath = `${filePath}.tmp`;
+    await fs.writeFile(tmpPath, data, "utf-8");
     await fs.rename(tmpPath, filePath);
   }
 }

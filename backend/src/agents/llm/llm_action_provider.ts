@@ -45,6 +45,9 @@ interface ToolSchema {
   parameters: Record<string, unknown>;
 }
 
+type DebugBugCategory = "flow" | "rule" | "state" | "logging" | "other";
+type DebugBugSeverity = "low" | "medium" | "high" | "critical";
+
 interface ToolLoopStepTrace {
   assistantText: string;
   toolCalls: Array<{
@@ -139,6 +142,7 @@ export class LlmActionProvider implements ActionProvider {
   private readonly agentContextWindowStart = new Map<EntityId, number>();
   private readonly actorRoundCounter = new Map<EntityId, number>();
   private readonly actorLastAssistantText = new Map<EntityId, string>();
+  private static readonly REPORT_BUG_TOOL: ToolName = "report_bug";
 
   constructor(
     private readonly world: World,
@@ -598,8 +602,9 @@ export class LlmActionProvider implements ActionProvider {
     const controller = new AbortController();
     let timer: NodeJS.Timeout | null = null;
     try {
+      const llmAllowedTools = this.buildLlmAllowedTools(request.allowedTools);
       const tools = this.buildSdkToolSchemas(
-        request.allowedTools,
+        llmAllowedTools,
         this.isMustAct(request),
       );
       const loop = this.client.runToolLoop<ToolCall>(
@@ -614,7 +619,13 @@ export class LlmActionProvider implements ActionProvider {
               };
             }
 
-            if (!request.allowedTools.includes(invocation.name as ToolName)) {
+            if (invocation.name === LlmActionProvider.REPORT_BUG_TOOL) {
+              return {
+                toolResult: this.handleReportBugToolCall(request, invocation.args),
+              };
+            }
+
+            if (!llmAllowedTools.includes(invocation.name as ToolName)) {
               return {
                 toolResult: {
                   ok: false,
@@ -629,7 +640,7 @@ export class LlmActionProvider implements ActionProvider {
             } as ToolCall;
             const parsed = this.parseToolCall(
               JSON.stringify(candidate),
-              request.allowedTools,
+              llmAllowedTools,
               request.actorId,
             );
             if (!parsed) {
@@ -831,12 +842,13 @@ export class LlmActionProvider implements ActionProvider {
     const history = contextWindow.history;
     const isInitialRound = (this.actorRoundCounter.get(request.actorId) ?? 0) === 0;
     const boardInfoPrompt = isInitialRound ? this.buildBoardInfoPrompt() : undefined;
+    const llmAllowedTools = this.buildLlmAllowedTools(request.allowedTools);
     const systemPrompt = buildSystemPrompt({
       actorId: request.actorId,
       role: roleComp?.role ?? "unknown",
       maxPlayerId,
       teammateIds,
-      allowedTools: request.allowedTools,
+      allowedTools: llmAllowedTools,
       stageDirective: this.stageDirective(request),
       statusDirective: this.statusDirective(request.actorId, roleComp),
       mustAct,
@@ -848,11 +860,11 @@ export class LlmActionProvider implements ActionProvider {
       phase: String(request.phase),
       stage: stageLabel,
       isSpeechTurn:
-        request.allowedTools.includes("speak") ||
-        request.allowedTools.includes("speak_to_wolves"),
+        llmAllowedTools.includes("speak") ||
+        llmAllowedTools.includes("speak_to_wolves"),
       mustAct,
-      allowedTools: request.allowedTools,
-      toolArgHints: this.toolArgHints(request.allowedTools),
+      allowedTools: llmAllowedTools,
+      toolArgHints: this.toolArgHints(llmAllowedTools),
     });
 
     const currentTurnUser: ChatMessage = { role: "user", content: userPrompt };
@@ -984,6 +996,143 @@ export class LlmActionProvider implements ActionProvider {
       this.toolSpecRegistry.getStageDirective(request.allowedTools) ??
       "请严格区分当前阶段职责，只执行本轮工具对应动作。"
     );
+  }
+
+  /**
+   * 构建 LLM 可见工具列表：在当前阶段工具之外追加可选调试上报工具。
+   */
+  private buildLlmAllowedTools(allowedTools: ToolName[]): ToolName[] {
+    const out = [...allowedTools];
+    if (
+      this.client.runToolLoop &&
+      !out.includes(LlmActionProvider.REPORT_BUG_TOOL)
+    ) {
+      out.push(LlmActionProvider.REPORT_BUG_TOOL);
+    }
+    return out;
+  }
+
+  /**
+   * report_bug 仅做记录，不改变主行动。
+   */
+  private handleReportBugToolCall(
+    request: ActionRequest,
+    args: Record<string, unknown>,
+  ): Record<string, unknown> {
+    const parsed = this.parseDebugReportArgs(args);
+    if (!parsed.ok) {
+      safeRecordLogicOp({
+        scope: "llm_action_provider",
+        op: "report_bug_rejected",
+        actorId: request.actorId,
+        phase: request.phase,
+        status: "rejected",
+        reason: parsed.error,
+        input: { args },
+      });
+      return { ok: false, error: parsed.error };
+    }
+
+    const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
+    const recorder = SessionRecordHub.getActive();
+    const reportId =
+      recorder?.recordDebugReport({
+        timestampMs: Date.now(),
+        day: Number(request.context.day ?? request.context.current_day ?? 0),
+        phase: String(request.phase),
+        stage: String(
+          request.context.phase ??
+            request.actionWindow ??
+            request.context.window ??
+            request.phase,
+        ),
+        actorId: request.actorId,
+        actorRole: role?.role ?? "unknown",
+        actorCamp: role?.camp ?? "unknown",
+        category: parsed.value.category,
+        severity: parsed.value.severity,
+        message: parsed.value.message,
+        evidenceEventSeq: parsed.value.evidence_event_seq,
+      }) ?? "rb-no-recorder";
+
+    safeRecordLogicOp({
+      scope: "llm_action_provider",
+      op: "report_bug_recorded",
+      actorId: request.actorId,
+      phase: request.phase,
+      status: "ok",
+      output: {
+        report_id: reportId,
+        category: parsed.value.category,
+        severity: parsed.value.severity,
+      },
+    });
+    return { ok: true, accepted: true, report_id: reportId };
+  }
+
+  private parseDebugReportArgs(args: Record<string, unknown>):
+    | {
+        ok: true;
+        value: {
+          category: DebugBugCategory;
+          severity: DebugBugSeverity;
+          message: string;
+          evidence_event_seq: number[];
+        };
+      }
+    | { ok: false; error: string } {
+    const category = String(args.category ?? "");
+    const severity = String(args.severity ?? "");
+    const message = typeof args.message === "string" ? args.message.trim() : "";
+    const validCategories: DebugBugCategory[] = [
+      "flow",
+      "rule",
+      "state",
+      "logging",
+      "other",
+    ];
+    const validSeverities: DebugBugSeverity[] = [
+      "low",
+      "medium",
+      "high",
+      "critical",
+    ];
+    if (!validCategories.includes(category as DebugBugCategory)) {
+      return { ok: false, error: "invalid_report_bug_category" };
+    }
+    if (!validSeverities.includes(severity as DebugBugSeverity)) {
+      return { ok: false, error: "invalid_report_bug_severity" };
+    }
+    if (!message) {
+      return { ok: false, error: "invalid_report_bug_message_empty" };
+    }
+    if (message.length > 300) {
+      return { ok: false, error: "invalid_report_bug_message_too_long" };
+    }
+    const evidence_event_seq: number[] = [];
+    if (args.evidence_event_seq !== undefined) {
+      if (!Array.isArray(args.evidence_event_seq)) {
+        return { ok: false, error: "invalid_report_bug_evidence_not_array" };
+      }
+      if (args.evidence_event_seq.length > 20) {
+        return { ok: false, error: "invalid_report_bug_evidence_too_many" };
+      }
+      for (const item of args.evidence_event_seq) {
+        if (typeof item !== "number" || !Number.isFinite(item) || item <= 0) {
+          return { ok: false, error: "invalid_report_bug_evidence_item" };
+        }
+        evidence_event_seq.push(Math.floor(item));
+      }
+    }
+    return {
+      ok: true,
+      value: {
+        category: category as DebugBugCategory,
+        severity: severity as DebugBugSeverity,
+        message,
+        evidence_event_seq,
+      },
+    };
   }
 
   /**

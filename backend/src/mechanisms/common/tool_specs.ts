@@ -5,6 +5,62 @@ import { prop } from "../shared/schema";
 /** 通用工具规格列表。 */
 export const COMMON_TOOL_SPECS: ToolSpec[] = [
   {
+    name: "report_bug",
+    llm: {
+      name: "report_bug",
+      description: "上报疑似游戏逻辑问题（仅用于调试记录，不会改变对局状态）。",
+      parameters: {
+        type: "object",
+        properties: {
+          category: {
+            type: "string",
+            enum: ["flow", "rule", "state", "logging", "other"],
+            description: "问题分类。",
+          },
+          severity: {
+            type: "string",
+            enum: ["low", "medium", "high", "critical"],
+            description: "问题严重等级。",
+          },
+          message: prop("string", "问题描述，建议包含具体异常现象。"),
+          evidence_event_seq: {
+            type: "array",
+            items: { type: "number" },
+            description: "可选：证据事件序号列表。",
+          },
+        },
+        description: "调试上报参数。",
+        required: ["category", "severity", "message"],
+        additionalProperties: false,
+      },
+    },
+    argHint:
+      'report_bug args: {"category":"flow|rule|state|logging|other","severity":"low|medium|high|critical","message":"...","evidence_event_seq":[number,...]}',
+    gatewaySchema: {
+      name: "report_bug",
+      description: "上报疑似游戏逻辑问题",
+      parameters: {
+        type: "object",
+        properties: {
+          category: {
+            type: "string",
+            enum: ["flow", "rule", "state", "logging", "other"],
+          },
+          severity: {
+            type: "string",
+            enum: ["low", "medium", "high", "critical"],
+          },
+          message: { type: "string" },
+          evidence_event_seq: {
+            type: "array",
+            items: { type: "number" },
+          },
+        },
+        required: ["category", "severity", "message"],
+      },
+    },
+  },
+  {
     name: "speak",
     llm: {
       name: "speak",

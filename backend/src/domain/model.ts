@@ -125,6 +125,12 @@ export interface PromptRenderable {
  * 工具参数映射定义。
  */
 export interface ToolArgMap {
+  report_bug: {
+    category: "flow" | "rule" | "state" | "logging" | "other";
+    severity: "low" | "medium" | "high" | "critical";
+    message: string;
+    evidence_event_seq?: number[];
+  };
   speak_to_wolves: { text: string; end_chat: boolean };
   kill_vote: { target_id: EntityId | null; abstain: boolean };
   guard: { target_id: EntityId | null; abstain: boolean };

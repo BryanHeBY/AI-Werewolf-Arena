@@ -24,6 +24,8 @@ export interface ReplayManifest {
   files: {
     public_timeline: string;
     logic_ops: string;
+    debug_reports: string;
+    debug_summary: string;
     player_views: string[];
   };
   schema_version: "v1";
@@ -268,4 +270,36 @@ export interface ReplayRecordPlayerBroadcastInput {
   requestId: string;
   timestampMs?: number;
   text: string;
+}
+
+/** 调试上报记录。 */
+export interface ReplayDebugReport {
+  report_id: string;
+  timestamp: string;
+  day: number;
+  phase: string;
+  stage: string;
+  actor_id: number;
+  actor_role: string;
+  actor_camp: string;
+  category: "flow" | "rule" | "state" | "logging" | "other";
+  severity: "low" | "medium" | "high" | "critical";
+  message: string;
+  evidence_event_seq: number[];
+  status: "open";
+}
+
+/** 调试上报写入输入。 */
+export interface ReplayRecordDebugReportInput {
+  timestampMs?: number;
+  day: number;
+  phase: string;
+  stage: string;
+  actorId: number;
+  actorRole: string;
+  actorCamp: string;
+  category: "flow" | "rule" | "state" | "logging" | "other";
+  severity: "low" | "medium" | "high" | "critical";
+  message: string;
+  evidenceEventSeq?: number[];
 }

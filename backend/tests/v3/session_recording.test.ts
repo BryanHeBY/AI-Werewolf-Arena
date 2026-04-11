@@ -69,6 +69,18 @@ describe("SessionRecordManager", () => {
         args: { text: "test", end_chat: false },
       },
     });
+    manager.recordDebugReport({
+      day: 1,
+      phase: "day",
+      stage: "day_speech",
+      actorId: 1,
+      actorRole: "wolf",
+      actorCamp: "wolf",
+      category: "flow",
+      severity: "high",
+      message: "测试上报：放逐后仍发言",
+      evidenceEventSeq: [12, 13],
+    });
 
     await manager.finalize({
       endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
@@ -85,6 +97,8 @@ describe("SessionRecordManager", () => {
     expect(files).toContain("manifest.json");
     expect(files).toContain("public_timeline.json");
     expect(files).toContain("logic_ops.json");
+    expect(files).toContain("debug_reports.json");
+    expect(files).toContain("debug_summary.md");
     expect(files).toContain("players");
 
     const manifest = JSON.parse(
@@ -92,6 +106,8 @@ describe("SessionRecordManager", () => {
     );
     expect(manifest.session_id).toBe("session_test_1");
     expect(manifest.files.public_timeline).toBe("public_timeline.json");
+    expect(manifest.files.debug_reports).toBe("debug_reports.json");
+    expect(manifest.files.debug_summary).toBe("debug_summary.md");
 
     const publicTimeline = JSON.parse(
       await fs.readFile(path.join(sessionDir, "public_timeline.json"), "utf-8"),
@@ -118,5 +134,19 @@ describe("SessionRecordManager", () => {
     expect(player1.timeline[1].stage).toBe("wolf_discussion");
     expect(player1.timeline[1].name).toBe("speak_to_wolves");
     expect(player1.timeline[1].accepted).toBe(true);
+
+    const debugReports = JSON.parse(
+      await fs.readFile(path.join(sessionDir, "debug_reports.json"), "utf-8"),
+    );
+    expect(Array.isArray(debugReports.reports)).toBe(true);
+    expect(debugReports.reports.length).toBe(1);
+    expect(debugReports.reports[0].category).toBe("flow");
+
+    const debugSummary = await fs.readFile(
+      path.join(sessionDir, "debug_summary.md"),
+      "utf-8",
+    );
+    expect(debugSummary).toContain("## Session");
+    expect(debugSummary).toContain("## TODO");
   });
 });

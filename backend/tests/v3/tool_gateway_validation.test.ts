@@ -67,4 +67,41 @@ describe("V3 ToolGateway validation", () => {
     expect(usePoisonAfterHeal.ok).toBe(false);
     expect(usePoisonAfterHeal.error).toContain("同夜不可双药");
   });
+
+  test("report_bug should validate category/severity/message constraints", () => {
+    const { world } = bootstrapGame(sixPlayerMvpConfig);
+    const toolGateway = new ToolGateway();
+
+    const ok = toolGateway.validateAndSanitize(
+      world,
+      1,
+      {
+        name: "report_bug",
+        args: {
+          category: "flow",
+          severity: "medium",
+          message: "测试上报",
+          evidence_event_seq: [1, 2],
+        },
+      },
+      { phase: Phase.Day },
+    );
+    expect(ok.ok).toBe(true);
+
+    const bad = toolGateway.validateAndSanitize(
+      world,
+      1,
+      {
+        name: "report_bug",
+        args: {
+          category: "invalid",
+          severity: "medium",
+          message: "测试上报",
+        },
+      } as any,
+      { phase: Phase.Day },
+    );
+    expect(bad.ok).toBe(false);
+    expect(bad.error).toContain("category");
+  });
 });
