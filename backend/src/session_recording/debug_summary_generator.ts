@@ -29,9 +29,13 @@ function countBySeverity(reports: ReplayDebugReport[]): Record<string, number> {
 
 function buildFallbackSummary(input: BuildDebugSummaryInput): string {
   const { manifest, reports } = input;
+  const actionableReports = filterActionableReports(
+    reports,
+    input.publicEvents ?? [],
+  );
   const autoFindings = scanEventsForPotentialIssues(input);
   const allFindings = [
-    ...reports.map((r) => ({
+    ...actionableReports.map((r) => ({
       severity: r.severity,
       category: r.category,
       day: r.day,
@@ -55,6 +59,7 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
     "",
     "## Bug Report Stats",
     `- total: ${reports.length}`,
+    `- actionable: ${actionableReports.length}`,
     `- critical: ${counts.critical}`,
     `- high: ${counts.high}`,
     `- medium: ${counts.medium}`,
@@ -108,6 +113,10 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
 
   const baseURL = process.env.OPENAI_BASE_URL;
   const timeoutMs = Number(process.env.OPENAI_TIMEOUT_MS ?? "30000");
+  const actionableReports = filterActionableReports(
+    input.reports,
+    input.publicEvents ?? [],
+  );
   const autoFindings = scanEventsForPotentialIssues(input);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -134,7 +143,7 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
             `board: ${input.manifest.board}`,
             `winner: ${input.manifest.winner ?? "none"}`,
             `finish_reason: ${input.manifest.finish_reason}`,
-            `reports_json: ${JSON.stringify(input.reports)}`,
+            `reports_json: ${JSON.stringify(actionableReports)}`,
             `auto_scan_findings_json: ${JSON.stringify(autoFindings)}`,
             `event_digest_json: ${JSON.stringify(buildEventDigest(input.publicEvents ?? []))}`,
           ].join("\n"),
@@ -160,6 +169,120 @@ export async function buildDebugSummaryMarkdown(
     return llm;
   }
   return buildFallbackSummary(input);
+}
+
+function filterActionableReports(
+  reports: ReplayDebugReport[],
+  publicEvents: Array<{
+    seq: number;
+    day: number;
+    phase: string;
+    type: string;
+    payload: Record<string, unknown>;
+  }>,
+): ReplayDebugReport[] {
+  return reports.filter((report) =>
+    isActionableReport(report, publicEvents),
+  );
+}
+
+function isActionableReport(
+  report: ReplayDebugReport,
+  publicEvents: Array<{
+    seq: number;
+    day: number;
+    phase: string;
+    type: string;
+    payload: Record<string, unknown>;
+  }>,
+): boolean {
+  const message = report.message;
+  const category = report.category;
+  const text = String(message ?? "").trim();
+  if (!text) {
+    return false;
+  }
+  const hasEvidenceSeq = Array.isArray(report.evidence_event_seq) && report.evidence_event_seq.length > 0;
+
+  const hardBugSignal =
+    /(日志|广播|顺序|重复|缺失|未(触发|执行|生效|公布|记录|结算)|跳过|死后|出局后|仍然发言|工具.*调用|调用.*失败|报错|error|timeout|fallback|不一致|越权|空守|弃票|没(有)?(公布|记录|触发|执行|生效))/i;
+  if (hardBugSignal.test(text) && (hasEvidenceSeq || detectFlowAnomaly(publicEvents))) {
+    return true;
+  }
+
+  const strategyNoise =
+    /(狼队|队友|悍跳|金水|查验|站边|刀口|带队|配合|盘逻辑|好人阵营|狼人阵营|局势对.*(有利|不利)|报假查验)/i;
+  if (strategyNoise.test(text)) {
+    return false;
+  }
+
+  const softActionableSignal =
+    /(流程|阶段|票型|投票|放逐|遗言|警长|上警|退水)/i;
+  if (softActionableSignal.test(text)) {
+    return (
+      hasEvidenceSeq ||
+      ((category === "flow" || category === "rule" || category === "logging") &&
+        detectFlowAnomaly(publicEvents))
+    );
+  }
+
+  // 规则/流程类分类在无明显噪声时默认保留，避免漏掉简短上报。
+  return (
+    hasEvidenceSeq &&
+    (category === "flow" || category === "rule" || category === "logging")
+  );
+}
+
+function detectFlowAnomaly(
+  events: Array<{
+    seq: number;
+    day: number;
+    phase: string;
+    type: string;
+    payload: Record<string, unknown>;
+  }>,
+): boolean {
+  if (events.length === 0) {
+    return false;
+  }
+  const phaseChanged = events.filter((e) => e.type === "phase_changed");
+  const allowed = new Set([
+    "night->day:0",
+    "day->voting:0",
+    "day->night:1",
+    "voting->night:1",
+    "night->game_over:0",
+    "day->game_over:0",
+    "voting->game_over:0",
+  ]);
+  for (let i = 1; i < phaseChanged.length; i++) {
+    const prev = phaseChanged[i - 1];
+    const curr = phaseChanged[i];
+    const key = `${String(prev.payload.phase ?? prev.phase)}->${String(curr.payload.phase ?? curr.phase)}:${Number(curr.day) - Number(prev.day)}`;
+    if (!allowed.has(key)) {
+      return true;
+    }
+  }
+
+  const firstDaySpeechByDay = new Map<number, number>();
+  const nightResolvedByDay = new Set<number>();
+  for (const e of events) {
+    if (e.type === "night_resolved") {
+      nightResolvedByDay.add(Number(e.day));
+    }
+    if (e.type === "day_speech" && !firstDaySpeechByDay.has(Number(e.day))) {
+      firstDaySpeechByDay.set(Number(e.day), Number(e.seq));
+    }
+  }
+  for (const [day] of firstDaySpeechByDay.entries()) {
+    if (day <= 1) {
+      continue;
+    }
+    if (!nightResolvedByDay.has(day)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function buildEventDigest(

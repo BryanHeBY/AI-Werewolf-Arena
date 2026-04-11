@@ -303,4 +303,107 @@ describe("SessionRecordManager", () => {
     expect(summary).toContain("## TODO");
     expect(summary).toContain("首日出现狼人自爆");
   });
+
+  test("should ignore strategy-only report_bug messages in debug summary", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-replay-noise-report-"));
+    const manager = await SessionRecordManager.create(
+      {
+        sessionId: "session_test_noise_report",
+        board: "twelve_player_standard",
+        startedAtIso: new Date("2026-04-10T00:00:00.000Z").toISOString(),
+      },
+      root,
+    );
+
+    manager.recordDebugReport({
+      day: 2,
+      phase: "voting",
+      stage: "on_pre_vote",
+      actorId: 3,
+      actorRole: "wolf",
+      actorCamp: "wolf",
+      category: "state",
+      severity: "high",
+      message:
+        "3号狼人仍在带队，当前狼队：3、2、5、12。局势对狼队不利。3号报假查验继续悍跳，本轮投票是关键时刻。",
+    });
+
+    await manager.finalize({
+      endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
+      winner: Camp.Wolf,
+      finishReason: "all_good_eliminated",
+      players: [],
+    });
+
+    const summary = await fs.readFile(
+      path.join(root, "session_test_noise_report", "debug_summary.md"),
+      "utf-8",
+    );
+    expect(summary).toContain("- total: 1");
+    expect(summary).toContain("- actionable: 0");
+    expect(summary).not.toContain("## TODO");
+    expect(summary).toContain("## Conclusion");
+  });
+
+  test("should not promote unverified flow reports without timeline anomalies", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-replay-unverified-flow-"));
+    const manager = await SessionRecordManager.create(
+      {
+        sessionId: "session_test_unverified_flow",
+        board: "six_player_mvp",
+        startedAtIso: new Date("2026-04-10T00:00:00.000Z").toISOString(),
+      },
+      root,
+    );
+
+    manager.recordPublicEvent({
+      type: "phase_changed",
+      timestampMs: Date.now(),
+      phase: "night",
+      day: 1,
+      payload: { phase: "night", day: 1 },
+    });
+    manager.recordPublicEvent({
+      type: "phase_changed",
+      timestampMs: Date.now() + 1000,
+      phase: "day",
+      day: 1,
+      payload: { phase: "day", day: 1 },
+    });
+    manager.recordPublicEvent({
+      type: "night_resolved",
+      timestampMs: Date.now() + 1200,
+      phase: "day",
+      day: 1,
+      payload: { wolfTarget: null, deaths: [] },
+    });
+
+    manager.recordDebugReport({
+      day: 1,
+      phase: "day",
+      stage: "day_speech",
+      actorId: 1,
+      actorRole: "villager",
+      actorCamp: "good",
+      category: "flow",
+      severity: "critical",
+      message: "流程异常：阶段切换错乱，白天夜晚混杂且广播缺失。",
+    });
+
+    await manager.finalize({
+      endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
+      winner: Camp.Wolf,
+      finishReason: "all_good_eliminated",
+      players: [],
+    });
+
+    const summary = await fs.readFile(
+      path.join(root, "session_test_unverified_flow", "debug_summary.md"),
+      "utf-8",
+    );
+    expect(summary).toContain("- total: 1");
+    expect(summary).toContain("- actionable: 0");
+    expect(summary).not.toContain("## TODO");
+    expect(summary).toContain("## Conclusion");
+  });
 });
