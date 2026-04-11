@@ -113,51 +113,70 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
 
   const baseURL = process.env.OPENAI_BASE_URL;
   const timeoutMs = Number(process.env.OPENAI_TIMEOUT_MS ?? "30000");
+  const maxAttempts = Math.max(
+    1,
+    Number(process.env.DEBUG_SUMMARY_LLM_MAX_ATTEMPTS ?? "3"),
+  );
   const actionableReports = filterActionableReports(
     input.reports,
     input.publicEvents ?? [],
   );
   const autoFindings = scanEventsForPotentialIssues(input);
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const client = new OpenAIClient({
-      apiKey,
-      baseURL,
-      model,
-      temperature: 0.1,
-      maxTokens: 1800,
-      forceJsonResponse: false,
-    });
-    const summary = await client.chat(
-      [
-        {
-          role: "system",
-          content:
-            "你是狼人杀后端调试助手。请输出 Markdown，必须包含：Session、Bug Report Stats、Findings，以及在确有问题时输出 TODO。若未发现明确问题，请输出 Conclusion 章节并说明无需处理。",
-        },
-        {
-          role: "user",
-          content: [
-            `session_id: ${input.manifest.session_id}`,
-            `board: ${input.manifest.board}`,
-            `winner: ${input.manifest.winner ?? "none"}`,
-            `finish_reason: ${input.manifest.finish_reason}`,
-            `reports_json: ${JSON.stringify(actionableReports)}`,
-            `auto_scan_findings_json: ${JSON.stringify(autoFindings)}`,
-            `event_digest_json: ${JSON.stringify(buildEventDigest(input.publicEvents ?? []))}`,
-          ].join("\n"),
-        },
-      ],
-      { signal: controller.signal },
-    );
-    const trimmed = summary.trim();
-    return trimmed.length > 0 ? trimmed : null;
-  } catch {
-    return null;
-  } finally {
-    clearTimeout(timer);
+  const client = new OpenAIClient({
+    apiKey,
+    baseURL,
+    model,
+    temperature: 0.1,
+    maxTokens: 1800,
+    forceJsonResponse: false,
+  });
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const result = await client.chatWithMeta(
+        [
+          {
+            role: "system",
+            content:
+              "你是狼人杀后端调试助手。请输出 Markdown，必须包含：Session、Bug Report Stats、Findings，以及在确有问题时输出 TODO。若未发现明确问题，请输出 Conclusion 章节并说明无需处理。",
+          },
+          {
+            role: "user",
+            content: [
+              `session_id: ${input.manifest.session_id}`,
+              `board: ${input.manifest.board}`,
+              `winner: ${input.manifest.winner ?? "none"}`,
+              `finish_reason: ${input.manifest.finish_reason}`,
+              `reports_json: ${JSON.stringify(actionableReports)}`,
+              `auto_scan_findings_json: ${JSON.stringify(autoFindings)}`,
+              `event_digest_json: ${JSON.stringify(buildEventDigest(input.publicEvents ?? []))}`,
+            ].join("\n"),
+          },
+        ],
+        { signal: controller.signal },
+      );
+      const trimmed = result.content.trim();
+      if (result.finishReason === "stop" && trimmed.length > 0) {
+        return trimmed;
+      }
+      const rejectedReason =
+        result.finishReason !== "stop"
+          ? `finish_reason=${result.finishReason || "unknown"}`
+          : "empty_content";
+      console.warn(
+        `[debug_summary] llm_rejected_reason=${rejectedReason} session_id=${input.manifest.session_id} attempt=${attempt}/${maxAttempts}`,
+      );
+    } catch (error) {
+      console.warn(
+        `[debug_summary] llm_rejected_reason=request_error session_id=${input.manifest.session_id} attempt=${attempt}/${maxAttempts} error=${String(error)}`,
+      );
+    } finally {
+      clearTimeout(timer);
+    }
   }
+  return null;
 }
 
 /** 生成调试总结，优先使用 .env 中 OPENAI_* 配置；失败时回退模板。 */

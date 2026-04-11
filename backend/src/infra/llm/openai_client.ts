@@ -32,6 +32,14 @@ export interface ChatOptions {
 }
 
 /**
+ * 聊天返回结构（包含 finish_reason 便于上层判断是否正常结束）。
+ */
+export interface ChatResult {
+  content: string;
+  finishReason: string;
+}
+
+/**
  * 工具 schema 定义。
  */
 export interface ToolSchema {
@@ -123,20 +131,37 @@ export class OpenAIClient {
    * 执行单次聊天请求。
    */
   async chat(messages: ChatMessage[], options: ChatOptions = {}): Promise<string> {
+    const result = await this.chatWithMeta(messages, options);
+    return result.content;
+  }
+
+  /**
+   * 执行单次聊天请求并返回 finish_reason 元信息。
+   */
+  async chatWithMeta(
+    messages: ChatMessage[],
+    options: ChatOptions = {},
+  ): Promise<ChatResult> {
     try {
       const completion = await this.createCompletion(
         messages,
         options.signal,
         this.forceJsonResponse,
       );
-      return completion.choices[0]?.message?.content ?? "";
+      return {
+        content: completion.choices[0]?.message?.content ?? "",
+        finishReason: String(completion.choices[0]?.finish_reason ?? ""),
+      };
     } catch (error) {
       if (
         this.forceJsonResponse &&
         this.isResponseFormatUnsupported(error)
       ) {
         const completion = await this.createCompletion(messages, options.signal, false);
-        return completion.choices[0]?.message?.content ?? "";
+        return {
+          content: completion.choices[0]?.message?.content ?? "",
+          finishReason: String(completion.choices[0]?.finish_reason ?? ""),
+        };
       }
       throw error;
     }
