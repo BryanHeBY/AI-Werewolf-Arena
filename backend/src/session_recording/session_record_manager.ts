@@ -358,6 +358,14 @@ export class SessionRecordManager {
     await this.writeJson("public_timeline.json", { events: this.publicEvents });
     await this.writeJson("logic_ops.json", { ops: this.logicOps });
     await this.writeJson("debug_reports.json", this.buildDebugReportsPayload());
+
+    const normalizedPlayers: ReplayPlayerView[] = [];
+    for (const [playerId, view] of this.playerViews.entries()) {
+      const normalized = this.normalizePlayerView(view);
+      normalizedPlayers.push(normalized);
+      await this.writeJson(path.join("players", `player_${playerId}.json`), normalized);
+    }
+
     const debugSummary = await buildDebugSummaryMarkdown({
       manifest,
       reports: this.debugReports,
@@ -367,14 +375,14 @@ export class SessionRecordManager {
         phase: String(e.phase ?? ""),
         type: String(e.type ?? ""),
         payload: (e.payload ?? {}) as Record<string, unknown>,
+        ...(e.render_text ? { render_text: e.render_text } : {}),
+        timestamp: String(e.timestamp ?? ""),
       })),
+      logicOps: this.logicOps,
+      playerViews: normalizedPlayers,
+      sessionDir: this.sessionDir,
     });
     await this.writeText("debug_summary.md", debugSummary);
-
-    for (const [playerId, view] of this.playerViews.entries()) {
-      const normalized = this.normalizePlayerView(view);
-      await this.writeJson(path.join("players", `player_${playerId}.json`), normalized);
-    }
   }
 
   private normalizePlayerView(view: ReplayPlayerView): ReplayPlayerView {

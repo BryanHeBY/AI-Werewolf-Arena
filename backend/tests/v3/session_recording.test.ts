@@ -4,7 +4,74 @@ import path from "path";
 import { Camp } from "../../src/domain/model";
 import { SessionRecordManager } from "../../src/session_recording";
 
+jest.mock("../../src/infra/llm/openai_client", () => {
+  class OpenAIClient {
+    async chatWithMeta(messages: Array<{ role: string; content: string }>) {
+      const system = messages[0]?.content ?? "";
+      const user = messages[1]?.content ?? "";
+      if (system.includes("调试子代理")) {
+        const match = /agent:\\s*([^\\n]+)/.exec(user);
+        const agent = match ? match[1].trim() : "agent";
+        return {
+          content: JSON.stringify({
+            agent,
+            findings: [
+              {
+                severity: "low",
+                category: "flow",
+                message: `${agent} ok`,
+                evidence: [1],
+                source: "mock",
+              },
+            ],
+            notes: [],
+            missing_info: [],
+          }),
+          finishReason: "stop",
+        };
+      }
+      if (system.includes("调试汇总助手")) {
+        return {
+          content: [
+            "# Debug Summary (mock)",
+            "",
+            "## Session",
+            "- board: test",
+            "",
+            "## Bug Report Stats",
+            "- total: 1",
+            "",
+            "## Findings",
+            "- none",
+            "",
+            "## Conclusion",
+            "- ok",
+            "",
+            "## Debug Pipeline",
+            "- agents_total: 1",
+            "- agents_failed: 0",
+          ].join("\\n"),
+          finishReason: "stop",
+        };
+      }
+      return { content: "", finishReason: "stop" };
+    }
+  }
+
+  return { OpenAIClient };
+});
+
 describe("SessionRecordManager", () => {
+  const originalAgentEnabled = process.env.DEBUG_SUMMARY_AGENT_ENABLED;
+
+  beforeAll(() => {
+    process.env.DEBUG_SUMMARY_AGENT_ENABLED = "false";
+  });
+
+  afterAll(() => {
+    process.env.DEBUG_SUMMARY_AGENT_ENABLED = originalAgentEnabled;
+  });
+
   test("should persist timeline and player files during game before finalize", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-realtime-"));
     const manager = await SessionRecordManager.create(
@@ -256,6 +323,113 @@ describe("SessionRecordManager", () => {
     );
     expect(summary).toContain("## Conclusion");
     expect(summary).not.toContain("## TODO");
+  });
+
+  test("should write debug_summary_agents and pipeline section", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-debug-agents-"));
+    const manager = await SessionRecordManager.create(
+      {
+        sessionId: "session_debug_agents",
+        board: "six_player_mvp",
+        startedAtIso: new Date("2026-04-11T00:00:00.000Z").toISOString(),
+      },
+      root,
+    );
+
+    const prevEnv = {
+      OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+      OPENAI_MODEL: process.env.OPENAI_MODEL,
+      DEBUG_SUMMARY_AGENT_ENABLED: process.env.DEBUG_SUMMARY_AGENT_ENABLED,
+      DEBUG_SUMMARY_AGENT_MAX_ATTEMPTS: process.env.DEBUG_SUMMARY_AGENT_MAX_ATTEMPTS,
+      DEBUG_SUMMARY_AGENT_TIMEOUT_MS: process.env.DEBUG_SUMMARY_AGENT_TIMEOUT_MS,
+      DEBUG_SUMMARY_AGENT_CONCURRENCY: process.env.DEBUG_SUMMARY_AGENT_CONCURRENCY,
+    };
+
+    try {
+      process.env.OPENAI_API_KEY = "test-key";
+      process.env.OPENAI_MODEL = "test-model";
+      process.env.DEBUG_SUMMARY_AGENT_ENABLED = "true";
+      process.env.DEBUG_SUMMARY_AGENT_MAX_ATTEMPTS = "1";
+      process.env.DEBUG_SUMMARY_AGENT_TIMEOUT_MS = "1000";
+      process.env.DEBUG_SUMMARY_AGENT_CONCURRENCY = "2";
+
+      manager.recordPublicEvent({
+        type: "phase_changed",
+        timestampMs: Date.now(),
+        phase: "night",
+        day: 1,
+        payload: { phase: "night", day: 1 },
+      });
+      manager.recordLogicOp({
+        scope: "gateway",
+        op: "validate_tool_call",
+        actorId: 1,
+        phase: "night",
+        status: "ok",
+        input: { tool: "speak" },
+      });
+      manager.recordPlayerBroadcast({
+        playerId: 1,
+        role: "villager",
+        camp: "villager",
+        day: 1,
+        phase: "night",
+        stage: "night",
+        requestId: "1-night-1-broadcast",
+        text: "[系统][公开] 天黑请闭眼（第1天夜晚）",
+      });
+      manager.recordPlayerRound({
+        playerId: 1,
+        role: "villager",
+        camp: "villager",
+        day: 1,
+        phase: "night",
+        stage: "night",
+        requestId: "1-night-1",
+        visibleFeedDelta: [],
+        actionMode: "none",
+        toolCalls: [],
+      });
+      manager.recordDebugReport({
+        day: 1,
+        phase: "night",
+        stage: "night",
+        actorId: 1,
+        actorRole: "villager",
+        actorCamp: "villager",
+        category: "flow",
+        severity: "low",
+        message: "test report",
+        evidenceEventSeq: [1],
+      });
+
+      await manager.finalize({
+        endedAtIso: new Date("2026-04-11T00:00:10.000Z").toISOString(),
+        winner: Camp.Good,
+        finishReason: "all_wolves_eliminated",
+        players: [{ player_id: 1, role: "villager", camp: "villager", alive: true }],
+      });
+    } finally {
+      process.env.OPENAI_API_KEY = prevEnv.OPENAI_API_KEY;
+      process.env.OPENAI_MODEL = prevEnv.OPENAI_MODEL;
+      process.env.DEBUG_SUMMARY_AGENT_ENABLED = prevEnv.DEBUG_SUMMARY_AGENT_ENABLED;
+      process.env.DEBUG_SUMMARY_AGENT_MAX_ATTEMPTS = prevEnv.DEBUG_SUMMARY_AGENT_MAX_ATTEMPTS;
+      process.env.DEBUG_SUMMARY_AGENT_TIMEOUT_MS = prevEnv.DEBUG_SUMMARY_AGENT_TIMEOUT_MS;
+      process.env.DEBUG_SUMMARY_AGENT_CONCURRENCY = prevEnv.DEBUG_SUMMARY_AGENT_CONCURRENCY;
+    }
+
+    const agentsDir = path.join(root, "session_debug_agents", "debug_summary_agents");
+    const agentFiles = await fs.readdir(agentsDir);
+    expect(agentFiles).toContain("agent_public.json");
+    expect(agentFiles).toContain("agent_logic.json");
+    expect(agentFiles).toContain("agent_reports.json");
+    expect(agentFiles).toContain("agent_player_1.json");
+
+    const summary = await fs.readFile(
+      path.join(root, "session_debug_agents", "debug_summary.md"),
+      "utf-8",
+    );
+    expect(summary).toContain("## Debug Pipeline");
   });
 
   test("should emit TODO from auto scan even when report_bug is empty", async () => {

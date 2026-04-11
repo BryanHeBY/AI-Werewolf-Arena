@@ -1,17 +1,15 @@
 /** 文件说明：根据调试上报生成 session 级调试总结 Markdown。 */
-import { ReplayDebugReport, ReplayManifest } from "./types";
+import { ReplayDebugReport, ReplayLogicOp, ReplayManifest, ReplayPlayerView, ReplayPublicEvent } from "./types";
 import { OpenAIClient } from "../infra/llm/openai_client";
+import { buildDebugSummaryWithAgents } from "./debug_summary_pipeline";
 
 interface BuildDebugSummaryInput {
   manifest: ReplayManifest;
   reports: ReplayDebugReport[];
-  publicEvents?: Array<{
-    seq: number;
-    day: number;
-    phase: string;
-    type: string;
-    payload: Record<string, unknown>;
-  }>;
+  publicEvents?: ReplayPublicEvent[];
+  logicOps?: ReplayLogicOp[];
+  playerViews?: ReplayPlayerView[];
+  sessionDir?: string;
 }
 
 function countBySeverity(reports: ReplayDebugReport[]): Record<string, number> {
@@ -183,6 +181,19 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
 export async function buildDebugSummaryMarkdown(
   input: BuildDebugSummaryInput,
 ): Promise<string> {
+  if (input.sessionDir && input.logicOps && input.playerViews) {
+    const pipeline = await buildDebugSummaryWithAgents({
+      manifest: input.manifest,
+      reports: input.reports,
+      publicEvents: input.publicEvents ?? [],
+      logicOps: input.logicOps,
+      playerViews: input.playerViews,
+      sessionDir: input.sessionDir,
+    });
+    if (pipeline?.markdown) {
+      return pipeline.markdown;
+    }
+  }
   const llm = await tryBuildByLlm(input);
   if (llm) {
     return llm;
