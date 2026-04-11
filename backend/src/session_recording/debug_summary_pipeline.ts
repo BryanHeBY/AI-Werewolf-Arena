@@ -1,8 +1,6 @@
 /**
  * 文件说明：debug_summary 并行子 agent 汇总流水线。
  */
-import { promises as fs } from "fs";
-import path from "path";
 import {
   ReplayDebugReport,
   ReplayLogicOp,
@@ -67,7 +65,8 @@ function truncate(text: string, maxChars: number): string {
 function safeJsonString(value: unknown, maxChars: number): string {
   let text = "";
   try {
-    text = JSON.stringify(value);
+    const raw = JSON.stringify(value);
+    text = typeof raw === "string" ? raw : "";
   } catch {
     text = "{}";
   }
@@ -132,8 +131,8 @@ function summarizeLogicOps(ops: ReplayLogicOp[], maxItems: number): Record<strin
     phase: op.phase,
     status: op.status,
     reason: op.reason,
-    input: op.input,
-    output: op.output,
+    input: safeJsonString(op.input, 200),
+    output: safeJsonString(op.output, 200),
   }));
 }
 
@@ -197,7 +196,10 @@ function buildAgentSystemPrompt(): string {
     "JSON 必须包含字段：agent, findings, notes, missing_info。",
     "findings 为数组，元素包含 severity/category/message/evidence/source。",
     "severity: low|medium|high|critical；category: flow|rule|state|logging|other。",
+    "evidence 必须是 payload 中存在的 seq 列表，严禁杜撰。",
     "输出要求：最多 5 条 findings，notes 最多 3 条，missing_info 最多 3 条。",
+    "不要复述 payload_json 原文，不要输出长段落。",
+    "总输出控制在 800 字以内。",
     "仅输出一个 JSON 对象，不要输出数组或多段文本。",
   ].join("\n");
 }
@@ -282,36 +284,63 @@ function shrinkPayload(payload: Record<string, unknown>): Record<string, unknown
 }
 
 async function runAgentTask(
-  client: OpenAIClient,
+  primaryClient: OpenAIClient,
+  fallbackClient: OpenAIClient,
+  primaryMeta: {
+    model: string;
+    maxTokens: number;
+    forceJsonResponse: boolean;
+    reasoningEnabled: boolean;
+    reasoningEffort: string;
+  },
+  fallbackMeta: {
+    model: string;
+    maxTokens: number;
+    forceJsonResponse: boolean;
+    reasoningEnabled: boolean;
+    reasoningEffort: string;
+  },
   sessionId: string,
   task: AgentTask,
   timeoutMs: number,
   maxAttempts: number,
 ): Promise<AgentOutput> {
   let payload = task.payload;
+  let useFallback = false;
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
+      const client = useFallback ? fallbackClient : primaryClient;
+      const meta = useFallback ? fallbackMeta : primaryMeta;
+      const systemPrompt = buildAgentSystemPrompt();
+      const userPrompt = buildAgentUserPrompt(task.name, payload);
       const result = await client.chatWithMeta(
         [
-          { role: "system", content: buildAgentSystemPrompt() },
-          { role: "user", content: buildAgentUserPrompt(task.name, payload) },
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userPrompt },
         ],
         { signal: controller.signal },
       );
-      if (result.finishReason !== "stop") {
-        console.warn(
-          `[debug_summary] llm_rejected_reason=finish_reason=${result.finishReason || "unknown"} session_id=${sessionId} agent=${task.name} attempt=${attempt}/${maxAttempts}`,
-        );
-        if (result.finishReason === "length") {
-          payload = shrinkPayload(payload);
-        }
-        continue;
-      }
       const text = stripJsonFences(result.content);
-      const parsed = JSON.parse(text);
-      return normalizeAgentOutput(parsed, task.name, task.source);
+      let parsed: any = null;
+      try {
+        parsed = JSON.parse(text);
+      } catch {
+        parsed = null;
+      }
+      if (parsed) {
+        const normalized = normalizeAgentOutput(parsed, task.name, task.source);
+        return normalized;
+      }
+      console.warn(
+        `[debug_summary] llm_rejected_reason=finish_reason=${result.finishReason || "unknown"} session_id=${sessionId} agent=${task.name} attempt=${attempt}/${maxAttempts}`,
+      );
+      if (result.finishReason === "length") {
+        payload = shrinkPayload(payload);
+        useFallback = true;
+      }
+      continue;
     } catch (error) {
       console.warn(
         `[debug_summary] llm_rejected_reason=request_error session_id=${sessionId} agent=${task.name} attempt=${attempt}/${maxAttempts} error=${String(error)}`,
@@ -467,6 +496,85 @@ function buildMergedFallbackSummary(
   return lines.join("\n");
 }
 
+function collectEvidenceSeqs(input: DebugSummaryPipelineInput): Set<number> {
+  const seqs = new Set<number>();
+  for (const event of input.publicEvents) {
+    if (typeof event.seq === "number") {
+      seqs.add(event.seq);
+    }
+  }
+  for (const op of input.logicOps) {
+    if (typeof op.seq === "number") {
+      seqs.add(op.seq);
+    }
+  }
+  for (const view of input.playerViews) {
+    for (const entry of view.timeline) {
+      if (typeof entry.seq === "number") {
+        seqs.add(entry.seq);
+      }
+    }
+  }
+  return seqs;
+}
+
+function filterFindingsByEvidence(
+  findings: AgentFinding[],
+  allowedSeqs: Set<number>,
+): { findings: AgentFinding[]; dropped: string[] } {
+  const kept: AgentFinding[] = [];
+  const dropped: string[] = [];
+  for (const item of findings) {
+    if (!Array.isArray(item.evidence) || item.evidence.length === 0) {
+      dropped.push(`[no_evidence] ${item.message}`);
+      continue;
+    }
+    const invalid = item.evidence.filter((seq) => !allowedSeqs.has(seq));
+    if (invalid.length > 0) {
+      dropped.push(`[invalid_evidence] ${item.message} evidence=${invalid.join(",")}`);
+      continue;
+    }
+    kept.push(item);
+  }
+  return { findings: kept, dropped };
+}
+
+function validateSummaryEvidence(text: string, allowedSeqs: Set<number>): boolean {
+  const lines = text.split("\n");
+  const findingsStart = lines.findIndex((line) => /^##\s+Findings\b/.test(line));
+  if (findingsStart < 0) {
+    return false;
+  }
+  let idx = findingsStart + 1;
+  while (idx < lines.length && !/^##\s+/.test(lines[idx])) {
+    const line = lines[idx].trim();
+    if (line.startsWith("-")) {
+      if (/^-+\s*(none|无)\b/i.test(line)) {
+        idx += 1;
+        continue;
+      }
+      const match = line.match(/evidence=([0-9, ]+)/i);
+      if (!match) {
+        return false;
+      }
+      const seqs = match[1]
+        .split(",")
+        .map((v) => Number(v.trim()))
+        .filter((v) => !Number.isNaN(v));
+      if (seqs.length === 0) {
+        return false;
+      }
+      for (const seq of seqs) {
+        if (!allowedSeqs.has(seq)) {
+          return false;
+        }
+      }
+    }
+    idx += 1;
+  }
+  return true;
+}
+
 async function renderSummaryWithLlm(
   client: OpenAIClient,
   manifest: ReplayManifest,
@@ -475,6 +583,7 @@ async function renderSummaryWithLlm(
   failedAgents: string[],
   missingInfo: string[],
   timeoutMs: number,
+  allowedSeqs: Set<number>,
 ): Promise<string | null> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -507,7 +616,7 @@ async function renderSummaryWithLlm(
         {
           role: "system",
           content:
-            "你是狼人杀对局调试汇总助手。请输出 Markdown，包含 Session、Bug Report Stats、Findings、TODO/Conclusion、Debug Pipeline 五个章节。禁止输出 JSON。",
+            "你是狼人杀对局调试汇总助手。请输出 Markdown，包含 Session、Bug Report Stats、Findings、TODO/Conclusion、Debug Pipeline 五个章节。Findings 每条必须包含 evidence=1,2 这样的证据序号列表，且 evidence 只能来自提供的 findings.evidence。禁止输出 JSON。",
         },
         { role: "user", content: JSON.stringify(payload) },
       ],
@@ -517,7 +626,13 @@ async function renderSummaryWithLlm(
       return null;
     }
     const trimmed = result.content.trim();
-    return trimmed.length > 0 ? trimmed : null;
+    if (!trimmed.length) {
+      return null;
+    }
+    if (!validateSummaryEvidence(trimmed, allowedSeqs)) {
+      return null;
+    }
+    return trimmed;
   } catch {
     return null;
   } finally {
@@ -539,9 +654,6 @@ export async function buildDebugSummaryWithAgents(
     return null;
   }
 
-  const agentsDir = path.join(input.sessionDir, "debug_summary_agents");
-  await fs.mkdir(agentsDir, { recursive: true });
-
   const timeoutMs = runtime.debugSummary?.agent?.timeoutMs ?? 15000;
   const maxAttempts = Math.max(1, runtime.debugSummary?.agent?.maxAttempts ?? 2);
   const concurrency = Math.max(1, runtime.debugSummary?.agent?.concurrency ?? 4);
@@ -558,12 +670,46 @@ export async function buildDebugSummaryWithAgents(
     temperature: profileOverride.temperature ?? agentDefaults.temperature ?? 0.1,
     maxTokens: profileOverride.maxTokens ?? agentDefaults.maxTokens ?? 1200,
     forceJsonResponse:
-      profileOverride.forceJsonResponse ?? agentDefaults.forceJsonResponse ?? false,
+      profileOverride.forceJsonResponse ?? agentDefaults.forceJsonResponse ?? true,
     reasoningEnabled:
       profileOverride.reasoningEnabled ?? agentDefaults.reasoningEnabled ?? true,
     reasoningEffort:
       profileOverride.reasoningEffort ?? agentDefaults.reasoningEffort ?? "medium",
   });
+  const fallbackClient = new OpenAIClient({
+    apiKey: provider.apiKey,
+    model: profileOverride.model ?? agentDefaults.model,
+    baseURL: provider.baseURL,
+    userAgent: provider.userAgent,
+    temperature: profileOverride.temperature ?? agentDefaults.temperature ?? 0.1,
+    maxTokens: profileOverride.maxTokens ?? agentDefaults.maxTokens ?? 1200,
+    forceJsonResponse:
+      profileOverride.forceJsonResponse ?? agentDefaults.forceJsonResponse ?? true,
+    reasoningEnabled:
+      profileOverride.reasoningEnabled ?? agentDefaults.reasoningEnabled ?? true,
+    reasoningEffort:
+      profileOverride.reasoningEffort ?? agentDefaults.reasoningEffort ?? "medium",
+  });
+  const primaryMeta = {
+    model: profileOverride.model ?? agentDefaults.model,
+    maxTokens: profileOverride.maxTokens ?? agentDefaults.maxTokens ?? 1200,
+    forceJsonResponse:
+      profileOverride.forceJsonResponse ?? agentDefaults.forceJsonResponse ?? true,
+    reasoningEnabled:
+      profileOverride.reasoningEnabled ?? agentDefaults.reasoningEnabled ?? true,
+    reasoningEffort:
+      profileOverride.reasoningEffort ?? agentDefaults.reasoningEffort ?? "medium",
+  };
+  const fallbackMeta = {
+    model: profileOverride.model ?? agentDefaults.model,
+    maxTokens: profileOverride.maxTokens ?? agentDefaults.maxTokens ?? 1200,
+    forceJsonResponse:
+      profileOverride.forceJsonResponse ?? agentDefaults.forceJsonResponse ?? true,
+    reasoningEnabled:
+      profileOverride.reasoningEnabled ?? agentDefaults.reasoningEnabled ?? true,
+    reasoningEffort:
+      profileOverride.reasoningEffort ?? agentDefaults.reasoningEffort ?? "medium",
+  };
 
   const tasks: AgentTask[] = [];
   tasks.push({
@@ -593,38 +739,41 @@ export async function buildDebugSummaryWithAgents(
     tasks.map((task) => async () => {
       const output = await runAgentTask(
         client,
+        fallbackClient,
+        primaryMeta,
+        fallbackMeta,
         input.manifest.session_id,
         task,
         timeoutMs,
         maxAttempts,
       );
-      const outputWithMeta = {
-        ...output,
-        source: task.source,
-      };
-      const filePath = path.join(agentsDir, `${task.name}.json`);
-      await fs.writeFile(filePath, JSON.stringify(outputWithMeta, null, 2), "utf-8");
       return output;
     }),
     concurrency,
   );
 
   const merged = mergeFindings(results);
+  const allowedSeqs = collectEvidenceSeqs(input);
+  const filtered = filterFindingsByEvidence(merged.findings, allowedSeqs);
+  if (filtered.dropped.length > 0) {
+    merged.missingInfo.push(...filtered.dropped.map((note) => `dropped: ${note}`));
+  }
   const summaryLlm = await renderSummaryWithLlm(
     client,
     input.manifest,
     input.reports,
-    merged.findings,
+    filtered.findings,
     merged.failedAgents,
     merged.missingInfo,
     timeoutMs,
+    allowedSeqs,
   );
   const markdown = summaryLlm
     ? summaryLlm
     : buildMergedFallbackSummary(
         input.manifest,
         input.reports,
-        merged.findings,
+        filtered.findings,
         merged.failedAgents,
         merged.missingInfo,
         merged.totalAgents,

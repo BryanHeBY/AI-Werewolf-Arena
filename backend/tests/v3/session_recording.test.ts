@@ -328,7 +328,7 @@ describe("SessionRecordManager", () => {
     expect(summary).not.toContain("## TODO");
   });
 
-  test("should write debug_summary_agents and pipeline section", async () => {
+  test("should omit debug_summary_agents and keep pipeline section", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-debug-agents-"));
     const manager = await SessionRecordManager.create(
       {
@@ -418,11 +418,7 @@ describe("SessionRecordManager", () => {
     }
 
     const agentsDir = path.join(root, "session_debug_agents", "debug_summary_agents");
-    const agentFiles = await fs.readdir(agentsDir);
-    expect(agentFiles).toContain("agent_public.json");
-    expect(agentFiles).toContain("agent_logic.json");
-    expect(agentFiles).toContain("agent_reports.json");
-    expect(agentFiles).toContain("agent_player_1.json");
+    await expect(fs.readdir(agentsDir)).rejects.toThrow();
 
     const summary = await fs.readFile(
       path.join(root, "session_debug_agents", "debug_summary.md"),

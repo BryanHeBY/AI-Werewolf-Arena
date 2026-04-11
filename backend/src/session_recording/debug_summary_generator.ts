@@ -41,7 +41,7 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
       phase: r.phase,
       actorId: r.actor_id,
       message: r.message,
-      evidence: r.evidence_event_seq,
+      evidence: Array.isArray(r.evidence_event_seq) ? r.evidence_event_seq : [],
     })),
     ...autoFindings,
   ];
@@ -103,8 +103,57 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
   return lines.join("\n");
 }
 
+function isExpectedDebugSummaryFormat(text: string): boolean {
+  const hasHeader = /^# Debug Summary \(/m.test(text);
+  const hasSession = /^## Session/m.test(text);
+  const hasStats = /^## Bug Report Stats/m.test(text);
+  const hasFindings = /^## Findings/m.test(text);
+  return hasHeader && hasSession && hasStats && hasFindings;
+}
+
+function validateSummaryEvidence(text: string, allowedSeqs: Set<number>): boolean {
+  const lines = text.split("\n");
+  const findingsStart = lines.findIndex((line) => /^##\s+Findings\b/.test(line));
+  if (findingsStart < 0) {
+    return false;
+  }
+  let idx = findingsStart + 1;
+  while (idx < lines.length && !/^##\s+/.test(lines[idx])) {
+    const line = lines[idx].trim();
+    if (line.startsWith("-")) {
+      if (/^-+\s*(none|无)\b/i.test(line)) {
+        idx += 1;
+        continue;
+      }
+      const match = line.match(/evidence=([0-9, ]+)/i);
+      if (!match) {
+        return false;
+      }
+      const seqs = match[1]
+        .split(",")
+        .map((v) => Number(v.trim()))
+        .filter((v) => !Number.isNaN(v));
+      if (seqs.length === 0) {
+        return false;
+      }
+      for (const seq of seqs) {
+        if (!allowedSeqs.has(seq)) {
+          return false;
+        }
+      }
+    }
+    idx += 1;
+  }
+  return true;
+}
+
 async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | null> {
-  const runtime = await loadRuntimeConfig();
+  let runtime: Awaited<ReturnType<typeof loadRuntimeConfig>>;
+  try {
+    runtime = await loadRuntimeConfig();
+  } catch {
+    return null;
+  }
   const provider = runtime.provider;
   const agentDefaults = runtime.agent?.default;
   if (!provider?.apiKey || !agentDefaults?.model) {
@@ -119,6 +168,23 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
     input.publicEvents ?? [],
   );
   const autoFindings = scanEventsForPotentialIssues(input);
+  const allowedSeqs = new Set<number>();
+  for (const report of actionableReports) {
+    if (Array.isArray(report.evidence_event_seq)) {
+      for (const seq of report.evidence_event_seq) {
+        if (typeof seq === "number") {
+          allowedSeqs.add(seq);
+        }
+      }
+    }
+  }
+  for (const finding of autoFindings) {
+    for (const seq of finding.evidence ?? []) {
+      if (typeof seq === "number") {
+        allowedSeqs.add(seq);
+      }
+    }
+  }
   const client = new OpenAIClient({
     apiKey: provider.apiKey,
     baseURL,
@@ -140,7 +206,7 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
           {
             role: "system",
             content:
-              "你是狼人杀后端调试助手。请输出 Markdown，必须包含：Session、Bug Report Stats、Findings，以及在确有问题时输出 TODO。若未发现明确问题，请输出 Conclusion 章节并说明无需处理。",
+              "你是狼人杀后端调试助手。请输出 Markdown，必须包含：Session、Bug Report Stats、Findings，以及在确有问题时输出 TODO。若未发现明确问题，请输出 Conclusion 章节并说明无需处理。Findings 每条必须包含 evidence=1,2 这样的证据序号列表，且 evidence 只能来自报告或自动扫描提供的 evidence。",
           },
           {
             role: "user",
@@ -159,7 +225,15 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
       );
       const trimmed = result.content.trim();
       if (result.finishReason === "stop" && trimmed.length > 0) {
-        return trimmed;
+        if (
+          isExpectedDebugSummaryFormat(trimmed) &&
+          validateSummaryEvidence(trimmed, allowedSeqs)
+        ) {
+          return trimmed;
+        }
+        console.warn(
+          `[debug_summary] llm_rejected_reason=format_mismatch session_id=${input.manifest.session_id} attempt=${attempt}/${maxAttempts}`,
+        );
       }
       const rejectedReason =
         result.finishReason !== "stop"
@@ -184,16 +258,22 @@ export async function buildDebugSummaryMarkdown(
   input: BuildDebugSummaryInput,
 ): Promise<string> {
   if (input.sessionDir && input.logicOps && input.playerViews) {
-    const pipeline = await buildDebugSummaryWithAgents({
-      manifest: input.manifest,
-      reports: input.reports,
-      publicEvents: input.publicEvents ?? [],
-      logicOps: input.logicOps,
-      playerViews: input.playerViews,
-      sessionDir: input.sessionDir,
-    });
-    if (pipeline?.markdown) {
-      return pipeline.markdown;
+    try {
+      const pipeline = await buildDebugSummaryWithAgents({
+        manifest: input.manifest,
+        reports: input.reports,
+        publicEvents: input.publicEvents ?? [],
+        logicOps: input.logicOps,
+        playerViews: input.playerViews,
+        sessionDir: input.sessionDir,
+      });
+      if (pipeline?.markdown) {
+        return pipeline.markdown;
+      }
+    } catch (error) {
+      console.warn(
+        `[debug_summary] pipeline_failed session_id=${input.manifest.session_id} error=${String(error)}`,
+      );
     }
   }
   const llm = await tryBuildByLlm(input);
