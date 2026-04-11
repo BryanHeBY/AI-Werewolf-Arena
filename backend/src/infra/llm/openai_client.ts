@@ -20,6 +20,8 @@ export interface OpenAIClientOptions {
   temperature?: number;
   maxTokens?: number;
   forceJsonResponse?: boolean;
+  reasoningEnabled?: boolean;
+  reasoningEffort?: "low" | "medium" | "high";
 }
 
 /**
@@ -92,6 +94,9 @@ export class OpenAIClient {
   private readonly temperature: number;
   private readonly maxTokens: number;
   private readonly forceJsonResponse: boolean;
+  private readonly reasoningEnabled: boolean;
+  private readonly reasoningEffort: "low" | "medium" | "high";
+  private reasoningSupported: boolean;
 
   constructor(options: OpenAIClientOptions) {
     // 兼容部分网关对 OpenAI SDK 默认 UA 的误拦截：
@@ -109,6 +114,9 @@ export class OpenAIClient {
     this.temperature = options.temperature ?? 0.7;
     this.maxTokens = options.maxTokens ?? 1024;
     this.forceJsonResponse = options.forceJsonResponse ?? true;
+    this.reasoningEnabled = options.reasoningEnabled ?? true;
+    this.reasoningEffort = options.reasoningEffort ?? "medium";
+    this.reasoningSupported = this.reasoningEnabled;
   }
 
   /**
@@ -175,7 +183,8 @@ export class OpenAIClient {
           })),
           tool_choice: options.toolChoice ?? "auto",
         };
-        return this.client.chat.completions.create(payload, {
+        this.attachReasoningPayload(payload);
+        return this.createChatCompletionWithReasoningFallback(payload, {
           signal: options.signal,
         });
       });
@@ -279,9 +288,40 @@ export class OpenAIClient {
       if (forceJsonResponse) {
         payload.response_format = { type: "json_object" };
       }
-
-      return this.client.chat.completions.create(payload, { signal });
+      this.attachReasoningPayload(payload);
+      return this.createChatCompletionWithReasoningFallback(payload, { signal });
     });
+  }
+
+  private attachReasoningPayload(payload: Record<string, unknown>): void {
+    if (!this.reasoningEnabled || !this.reasoningSupported) {
+      return;
+    }
+    payload.reasoning = { effort: this.reasoningEffort };
+  }
+
+  private async createChatCompletionWithReasoningFallback(
+    payload: any,
+    options: { signal?: AbortSignal },
+  ) {
+    try {
+      return await this.client.chat.completions.create(payload, options);
+    } catch (error) {
+      if (
+        this.reasoningSupported &&
+        payload.reasoning &&
+        this.isReasoningUnsupported(error)
+      ) {
+        this.reasoningSupported = false;
+        console.warn(
+          `[openai_client] reasoning parameter unsupported by current gateway/model; fallback to non-reasoning requests (model=${this.model}, effort=${this.reasoningEffort})`,
+        );
+        const downgradedPayload = { ...payload };
+        delete downgradedPayload.reasoning;
+        return this.client.chat.completions.create(downgradedPayload, options);
+      }
+      throw error;
+    }
   }
 
   /**
@@ -291,6 +331,20 @@ export class OpenAIClient {
     const text = String(error).toLowerCase();
     return (
       text.includes("response_format") &&
+      (text.includes("unsupported") ||
+        text.includes("unknown") ||
+        text.includes("not support") ||
+        text.includes("invalid"))
+    );
+  }
+
+  /**
+   * 判断错误是否由网关/模型不支持 reasoning 参数导致。
+   */
+  private isReasoningUnsupported(error: unknown): boolean {
+    const text = String(error).toLowerCase();
+    return (
+      text.includes("reasoning") &&
       (text.includes("unsupported") ||
         text.includes("unknown") ||
         text.includes("not support") ||

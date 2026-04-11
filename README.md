@@ -363,7 +363,8 @@ Observe (观察) → Orient (定位) → Decide (决策) → Act (行动)
 | 女巫   | `WitchRole.ts`    | 一瓶解药、一瓶毒药 |
 | 村民   | `VillagerRole.ts` | 无特殊能力         |
 
-角色系统提示词存储在 `configs/system-prompts/` 目录。
+角色系统提示词历史上存储在 `configs/system-prompts/` 目录。  
+注意：该目录已弃用，当前运行时不会读取；实际提示词由 `backend/src/agents/llm/prompt_templates.ts` 与机制注册器动态生成。
 
 ### 3. 单一数据源
 

@@ -1,13 +1,15 @@
 import { bootstrapGame } from "../../src/app/bootstrap";
 import { COMPONENT } from "../../src/domain/components/names";
+import { AliveComponent } from "../../src/domain/components/alive";
 import { RoleComponent } from "../../src/domain/components/role";
-import { ActionProvider, ActionRequest, Camp, Phase, ToolCall, Role } from "../../src/domain/model";
+import { ActionProvider, ActionRequest, Camp, Phase, ToolCall, Role, WinCondition } from "../../src/domain/model";
 import { VotingPipeline } from "../../src/engine/phase_pipeline/voting_pipeline";
 import { DayPipeline } from "../../src/engine/phase_pipeline/day_pipeline";
 import { ToolGateway } from "../../src/gateway/tool_gateway";
 import { EventRegistry } from "../../src/engine/event_registry";
 import { sixPlayerMvpConfig } from "../../src/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
+import { ConditionRegistry } from "../../src/domain/registries/condition_registry";
 
 class WolfOnlyNightProvider implements ActionProvider {
   constructor(private readonly world: ReturnType<typeof bootstrapGame>["world"]) {}
@@ -239,5 +241,25 @@ describe("V3 PhaseManager MVP", () => {
     for (const voter of context.world.getAliveEntityIds()) {
       expect(attempts.get(voter)).toBe(4);
     }
+  });
+
+  test("wolf_reach_half condition should trigger wolf win when wolves equal good", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const aliveIds = context.world.getAliveEntityIds();
+    const goodIds = aliveIds.filter((id) => {
+      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      return role?.camp === Camp.Good;
+    });
+    // 6人局初始 2狼4好，击杀两名好人后达到 2狼2好，满足“狼人达半”。
+    for (let i = 0; i < 2; i++) {
+      const alive = context.world.getComponent<AliveComponent>(goodIds[i], COMPONENT.Alive);
+      if (alive) {
+        alive.alive = false;
+      }
+    }
+    const registry = new ConditionRegistry();
+    const result = registry.evaluateMany(context.world, [WinCondition.WolfReachHalf]);
+    expect(result?.winner).toBe(Camp.Wolf);
+    expect(result?.reason).toBe("wolves_reach_half");
   });
 });

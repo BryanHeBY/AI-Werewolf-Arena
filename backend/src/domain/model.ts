@@ -66,6 +66,7 @@ export enum StatusMark {
 export enum WinCondition {
   SlaughterCity = "slaughter_city",
   SlaughterSide = "slaughter_side",
+  WolfReachHalf = "wolf_reach_half",
 }
 
 /**
@@ -106,7 +107,16 @@ export interface BoardConfig {
   // 是否启用警长系统。
   enableSheriff: boolean;
   initialSheriffSeat?: number;
-  winCondition: WinCondition;
+  /**
+   * 胜利条件数组（按顺序评估，命中即结束）。
+   * 例如：["slaughter_side", "wolf_reach_half"]。
+   */
+  winConditions?: WinCondition[];
+  /**
+   * 旧版单值胜利条件（兼容字段）。
+   * 新配置请改用 winConditions。
+   */
+  winCondition?: WinCondition;
   hooks: HookConfig;
   // 自爆窗口配置（可选，不传时默认仅允许 on_pre_vote）。
   selfDestruct?: SelfDestructConfig;

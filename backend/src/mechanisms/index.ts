@@ -4,6 +4,7 @@ export * from "./broadcast/agent_event_line_registry";
 export * from "./broadcast/visibility_registry";
 export * from "./hooks/hook_registry";
 export * from "./llm/contracts";
+export * from "./llm/target_hint_registry";
 export * from "./llm/tool_call_repair_registry";
 export * from "./last_words/last_words_mechanism";
 export * from "./script/event_render_registry";

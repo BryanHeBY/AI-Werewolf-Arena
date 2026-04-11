@@ -69,6 +69,17 @@ function evaluateSlaughterSide(world: World): GameResult | null {
   return null;
 }
 
+function evaluateWolfReachHalf(world: World): GameResult | null {
+  const stat = statAlive(world);
+  if (stat.wolves === 0) {
+    return { winner: Camp.Good, reason: "all_wolves_eliminated" };
+  }
+  if (stat.wolves >= stat.good && stat.good > 0) {
+    return { winner: Camp.Wolf, reason: "wolves_reach_half" };
+  }
+  return null;
+}
+
 /** 默认胜利条件规格集合。 */
 export const DEFAULT_WIN_CONDITION_SPECS: WinConditionSpec[] = [
   {
@@ -80,5 +91,10 @@ export const DEFAULT_WIN_CONDITION_SPECS: WinConditionSpec[] = [
     id: WinCondition.SlaughterSide,
     description: "屠边局：神民任一边全灭或狼人全灭。",
     evaluate: evaluateSlaughterSide,
+  },
+  {
+    id: WinCondition.WolfReachHalf,
+    description: "狼人达半：存活狼人数量大于等于存活好人数量时，狼人胜利。",
+    evaluate: evaluateWolfReachHalf,
   },
 ];

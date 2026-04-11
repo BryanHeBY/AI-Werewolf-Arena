@@ -7,7 +7,7 @@ export const sixPlayerMvpConfig: BoardConfig = {
   boardSize: 6,
   revealOnDeath: false,
   enableSheriff: false,
-  winCondition: WinCondition.SlaughterCity,
+  winConditions: [WinCondition.SlaughterCity, WinCondition.WolfReachHalf],
   hooks: {
     onDaybreak: false,
     onPreElection: false,

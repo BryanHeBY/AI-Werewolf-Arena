@@ -13,10 +13,12 @@ import {
 } from "../../domain/model";
 import { World } from "../../domain/world";
 import {
+  getDefaultTargetHintRegistry,
   getDefaultRolePromptRegistry,
   getDefaultToolCallRepairRegistry,
   getDefaultToolSpecRegistry,
   RolePromptRegistry,
+  TargetHintRegistry,
   ToolCallRepairRegistry,
   ToolSpecRegistry,
 } from "../../mechanisms";
@@ -117,6 +119,7 @@ export interface LlmActionProviderOptions {
   toolSpecRegistry?: ToolSpecRegistry;
   rolePromptRegistry?: RolePromptRegistry;
   toolCallRepairRegistry?: ToolCallRepairRegistry;
+  targetHintRegistry?: TargetHintRegistry;
 }
 
 /**
@@ -137,6 +140,7 @@ export class LlmActionProvider implements ActionProvider {
   private readonly toolSpecRegistry: ToolSpecRegistry;
   private readonly rolePromptRegistry: RolePromptRegistry;
   private readonly toolCallRepairRegistry: ToolCallRepairRegistry;
+  private readonly targetHintRegistry: TargetHintRegistry;
   private readonly recentEvents: string[] = [];
   private readonly agentHistories = new Map<EntityId, ChatMessage[]>();
   private readonly agentBroadcastCursor = new Map<EntityId, number>();
@@ -164,6 +168,8 @@ export class LlmActionProvider implements ActionProvider {
       options.rolePromptRegistry ?? getDefaultRolePromptRegistry();
     this.toolCallRepairRegistry =
       options.toolCallRepairRegistry ?? getDefaultToolCallRepairRegistry();
+    this.targetHintRegistry =
+      options.targetHintRegistry ?? getDefaultTargetHintRegistry();
     this.fallbackProvider =
       options.fallbackProvider ?? new BaselineBotActionProvider(world);
   }
@@ -869,6 +875,12 @@ export class LlmActionProvider implements ActionProvider {
       mustAct,
       allowedTools: llmAllowedTools,
       toolArgHints: this.toolArgHints(llmAllowedTools),
+      actionableIdsHint: this.targetHintRegistry.buildActionableIdsHint({
+        actorId: request.actorId,
+        actorRole: roleComp?.role,
+        allowedTools: llmAllowedTools,
+        world: this.world,
+      }),
     });
 
     const currentTurnUser: ChatMessage = { role: "user", content: userPrompt };

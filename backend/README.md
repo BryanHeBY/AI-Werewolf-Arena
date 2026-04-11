@@ -188,4 +188,4 @@ bun test
 
 ---
 
-_相关文件：`../configs/system-prompts/`（角色系统提示词）_
+_相关文件（弃用）：`../configs/system-prompts/`（当前运行时不读取）_

@@ -325,7 +325,7 @@ describe("night wolf tactical loop", () => {
       boardSize: 6,
       revealOnDeath: true,
       enableSheriff: false,
-      winCondition: WinCondition.SlaughterCity,
+      winConditions: [WinCondition.SlaughterCity, WinCondition.WolfReachHalf],
       hooks: {
         onDaybreak: false,
         onPreElection: false,

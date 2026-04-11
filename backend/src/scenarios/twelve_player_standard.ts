@@ -7,7 +7,7 @@ export const twelvePlayerStandardConfig: BoardConfig = {
   boardSize: 12,
   revealOnDeath: true,
   enableSheriff: true,
-  winCondition: WinCondition.SlaughterSide,
+  winConditions: [WinCondition.SlaughterSide, WinCondition.WolfReachHalf],
   hooks: {
     onDaybreak: true,
     onPreElection: true,

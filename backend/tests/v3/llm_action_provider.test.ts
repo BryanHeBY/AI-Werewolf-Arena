@@ -746,6 +746,45 @@ describe("LlmActionProvider", () => {
     });
   });
 
+  test("target_id tools should include actionable ids hint with role-specific self override", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const wolfId = context.world
+      .entityIds()
+      .find((id) => {
+        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        return role?.role === "wolf";
+      })!;
+    const provider = new LlmActionProvider(
+      context.world,
+      new AssertClient(
+        '{"name":"kill_vote","args":{"target_id":null,"abstain":true}}',
+        (messages) => {
+          const user = messages
+            .filter((m) => m.role === "user")
+            .map((m) => m.content)
+            .join("\n");
+          expect(user).toContain("可行动ID（含你自己）：");
+          expect(user).toContain(String(wolfId));
+        },
+      ),
+      {
+        fallbackProvider: new FallbackProvider(null),
+      },
+    );
+
+    const action = await provider.getAction({
+      phase: Phase.Night,
+      actorId: wolfId,
+      allowedTools: ["kill_vote"],
+      context: { must_act: true, phase: "wolf_vote" },
+    });
+
+    expect(action).toEqual({
+      name: "kill_vote",
+      args: { target_id: null, abstain: true },
+    });
+  });
+
   test("uses sdk tool loop as primary path", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const toolClient = new ToolLoopClient("speak", { text: "sdk_action" });

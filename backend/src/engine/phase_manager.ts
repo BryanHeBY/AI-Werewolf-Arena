@@ -7,6 +7,7 @@ import {
   Phase,
   RuntimeSnapshot,
   StatusMark,
+  WinCondition,
 } from "../domain/model";
 import { ConditionRegistry } from "../domain/registries/condition_registry";
 import { DamageResolutionSystem } from "../domain/systems/damage_resolution_system";
@@ -377,7 +378,10 @@ export class PhaseManager {
    * 检查胜负并在命中时封盘写入 game_over 事件。
    */
   private checkAndSealResult(): boolean {
-    const result = this.conditionRegistry.evaluate(this.world, this.config.winCondition);
+    const result = this.conditionRegistry.evaluateMany(
+      this.world,
+      this.resolveWinConditions(),
+    );
     if (!result) {
       return false;
     }
@@ -396,6 +400,20 @@ export class PhaseManager {
     });
 
     return true;
+  }
+
+  /**
+   * 解析板子胜利条件配置，兼容旧字段 winCondition。
+   */
+  private resolveWinConditions(): WinCondition[] {
+    if (Array.isArray(this.config.winConditions) && this.config.winConditions.length > 0) {
+      return this.config.winConditions;
+    }
+    if (this.config.winCondition) {
+      return [this.config.winCondition];
+    }
+    // 兜底：未配置时退回屠城，避免对局无法结束。
+    return [WinCondition.SlaughterCity];
   }
 
   /**
