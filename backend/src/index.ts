@@ -9,5 +9,4 @@ export * from "./engine";
 export * from "./gateway";
 export * from "./memory";
 export * from "./scenarios";
-export * from "./v3";
 export { V3SessionManager } from "./server/v3_session_manager";

@@ -4,7 +4,7 @@ import { RoleComponent } from "../../src/domain/components/role";
 import { ActionProvider, ActionRequest, Phase, ToolCall } from "../../src/domain/model";
 import { sixPlayerMvpConfig } from "../../src/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
-import { LlmActionProvider } from "../../src/v3/llm_action_provider";
+import { LlmActionProvider } from "../../src/agents/llm/llm_action_provider";
 import { getSeerState } from "../../src/mechanisms/roles/private_state";
 import { SessionRecordHub, SessionRecordManager } from "../../src/session_recording";
 import os from "os";
