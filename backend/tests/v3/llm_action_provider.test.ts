@@ -1037,6 +1037,41 @@ describe("LlmActionProvider", () => {
     });
   });
 
+  test("witch prompt should include wolf target hint before potion action", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const witchId = context.world
+      .entityIds()
+      .find((id) => {
+        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        return role?.role === "witch";
+      })!;
+    const provider = new LlmActionProvider(
+      context.world,
+      new AssertClient(
+        `{"name":"use_potion","args":{"target_id":${witchId},"potion_type":"none"}}`,
+        (messages) => {
+          const user = messages.find((msg) => msg.role === "user")?.content ?? "";
+          expect(user).toContain("当前已知昨夜刀口是3号");
+        },
+      ),
+      {
+        fallbackProvider: new FallbackProvider(null),
+      },
+    );
+
+    const action = await provider.getAction({
+      phase: Phase.Night,
+      actorId: witchId,
+      allowedTools: ["use_potion"],
+      context: { must_act: true, phase: "witch", wolf_target: 3, broadcast_feed: [] },
+    });
+
+    expect(action).toEqual({
+      name: "use_potion",
+      args: { target_id: witchId, potion_type: "none" },
+    });
+  });
+
   test("initial system prompt should include rendered board config summary", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const provider = new LlmActionProvider(

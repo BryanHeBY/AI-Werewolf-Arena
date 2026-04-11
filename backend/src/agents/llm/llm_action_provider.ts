@@ -891,6 +891,7 @@ export class LlmActionProvider implements ActionProvider {
       mustAct,
       allowedTools: llmAllowedTools,
       toolArgHints: this.toolArgHints(llmAllowedTools),
+      stageContextHint: this.stageContextHint(request),
       actionableIdsHint: this.targetHintRegistry.buildActionableIdsHint({
         actorId: request.actorId,
         actorRole: roleComp?.role,
@@ -1019,6 +1020,24 @@ export class LlmActionProvider implements ActionProvider {
       roleLabel: (role) => this.rolePromptRegistry.label(role),
       roleSkillBrief: (role) => this.rolePromptRegistry.skillBrief(role),
     });
+  }
+
+  /**
+   * 构建阶段上下文提示（如女巫可见刀口），减少关键行动前的信息缺失。
+   */
+  private stageContextHint(request: ActionRequest): string | undefined {
+    const stage = String(request.context.phase ?? "");
+    if (stage !== "witch") {
+      return undefined;
+    }
+    const wolfTargetRaw = request.context.wolf_target;
+    if (typeof wolfTargetRaw === "number") {
+      return `当前已知昨夜刀口是${wolfTargetRaw}号。`;
+    }
+    if (wolfTargetRaw === null) {
+      return "当前已知昨夜刀口为空（可能空刀或平票）。";
+    }
+    return "当前未获得明确刀口信息。";
   }
 
   /**

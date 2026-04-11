@@ -25,6 +25,7 @@ export interface UserPromptInput {
   allowedTools: string[];
   toolArgHints: string;
   actionableIdsHint?: string;
+  stageContextHint?: string;
 }
 
 /** 板子信息提示词输入参数。 */
@@ -70,7 +71,7 @@ export function buildUserPrompt(input: UserPromptInput): string {
     ? "你本轮必须至少调用一次可用工具完成行动。"
     : "你本轮可以选择结束回合不行动。";
   return [
-    `[行动提示] ${input.actorId}号玩家，现在轮到你行动，当前处于${input.phase}阶段，子阶段是${input.stage}，${speechTurnText}。`,
+    `[行动提示] ${input.actorId}号玩家，现在轮到你行动，当前处于${input.phase}阶段，子阶段是${input.stage}，${speechTurnText}。${input.stageContextHint ? ` ${input.stageContextHint}` : ""}`,
     `${mustActText} 你当前可以使用的工具有：${input.allowedTools.join(", ") || "无"}。`,
     `工具参数提示：${input.toolArgHints}${input.actionableIdsHint ? `；${input.actionableIdsHint}` : ""}。请直接调用工具完成本轮行动。`,
   ].join("\n");
