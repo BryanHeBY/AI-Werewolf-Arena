@@ -262,4 +262,63 @@ describe("V3 PhaseManager MVP", () => {
     expect(result?.winner).toBe(Camp.Wolf);
     expect(result?.reason).toBe("wolves_reach_half");
   });
+
+  test("hunter death shoot request should carry current day and hunter_shot stage", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const hunterId = context.world
+      .getAliveEntityIds()
+      .find((id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Hunter)!;
+    const wolfIds = context.world
+      .getAliveEntityIds()
+      .filter((id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf);
+    const shootTarget = context.world
+      .getAliveEntityIds()
+      .find((id) => id !== hunterId && !wolfIds.includes(id))!;
+
+    const captured: { request?: ActionRequest } = {};
+
+    const actionProvider: ActionProvider = {
+      async getAction(request: ActionRequest): Promise<ToolCall | null> {
+        if (request.allowedTools.includes("run_for_sheriff")) {
+          return { name: "run_for_sheriff", args: { run: false } };
+        }
+        if (request.allowedTools.includes("vote_for_sheriff")) {
+          return { name: "vote_for_sheriff", args: { target_id: null, abstain: true } };
+        }
+        if (request.allowedTools.includes("choose_direction")) {
+          return { name: "choose_direction", args: { direction: "clockwise" } };
+        }
+        if (request.allowedTools.includes("speak")) {
+          return { name: "speak", args: { text: "过" } };
+        }
+        if (request.allowedTools.includes("use_potion")) {
+          return null;
+        }
+        if (request.allowedTools.includes("shoot")) {
+          captured.request = request;
+          return { name: "shoot", args: { target_id: shootTarget } };
+        }
+        if (request.allowedTools.includes("kill_vote")) {
+          if (wolfIds.includes(request.actorId)) {
+            return { name: "kill_vote", args: { target_id: hunterId, abstain: false } };
+          }
+          return null;
+        }
+        if (request.allowedTools.includes("vote")) {
+          return { name: "vote", args: { target_id: null, abstain: true } };
+        }
+        return null;
+      },
+    };
+
+    await context.phaseManager.runSingleCycle(actionProvider, 3);
+
+    const shootRequest = captured.request;
+    if (!shootRequest) {
+      throw new Error("expected hunter shoot request to be captured");
+    }
+    expect(shootRequest.phase).toBe(Phase.Day);
+    expect(shootRequest.context.day).toBe(1);
+    expect(shootRequest.context.phase).toBe("hunter_shot");
+  });
 });

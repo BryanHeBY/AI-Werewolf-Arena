@@ -286,13 +286,18 @@ export class PhaseManager {
         pending,
         allSources,
         async (hunterId) => {
+          const actionPhase = this.state.phase;
+          const actionDay = this.state.day;
           const action = await actionProvider.getAction({
-            phase,
+            phase: actionPhase,
             actorId: hunterId,
             allowedTools: ["shoot"],
             context: {
               trigger: "on_death",
               must_act: true,
+              day: actionDay,
+              current_day: actionDay,
+              phase: "hunter_shot",
               broadcast_feed: buildAgentBroadcastFeed(
                 this.world,
                 this.events,
@@ -309,7 +314,7 @@ export class PhaseManager {
             hunterId,
             action,
             {
-              phase,
+              phase: actionPhase,
               allowDeadHunterShoot: true,
             },
           );
