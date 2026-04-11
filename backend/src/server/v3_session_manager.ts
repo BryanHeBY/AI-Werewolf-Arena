@@ -59,9 +59,8 @@ class V3GameSession {
   ) {
     this.maxDays = maxDays;
     this.cycleDelayMs = cycleDelayMs;
-    this.context = bootstrapGame(
-      resolveBoardConfig(board, { boardConfigName }),
-    );
+    const overrideName = boardConfigName ?? board;
+    this.context = bootstrapGame(resolveBoardConfig(board, { board: overrideName }));
     this.actionProvider = new BaselineBotActionProvider(this.context.world);
   }
 

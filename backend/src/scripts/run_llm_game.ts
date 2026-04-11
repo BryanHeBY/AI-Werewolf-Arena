@@ -4,6 +4,7 @@
  */
 import { bootstrapGame } from "../app/bootstrap";
 import { appConfig } from "../config";
+import { loadRuntimeConfig } from "../config/runtime_config";
 import { AliveComponent } from "../domain/components/alive";
 import {
   ActionProvider,
@@ -38,7 +39,7 @@ export type LlmBoard = "six_player_mvp" | "twelve_player_standard";
  */
 export interface RunLlmGameOptions {
   board: LlmBoard;
-  boardConfigName?: string;
+  gameConfigName?: string;
   maxDays: number;
   trace: boolean;
   maxRuntimeMs: number;
@@ -51,19 +52,30 @@ export interface RunLlmGameOptions {
   printThinking: boolean;
   printPrivateEvents: boolean;
   recordRootDir?: string;
+  configsDir?: string;
 }
 
 function parseArgs(argv: string[]): Partial<RunLlmGameOptions> {
   const out: Partial<RunLlmGameOptions> = {};
   for (let i = 0; i < argv.length; i++) {
     const token = argv[i];
-    if (token === "--board" && argv[i + 1]) {
+    if (token === "--configs-dir" && argv[i + 1]) {
+      out.configsDir = argv[i + 1];
+      i += 1;
+      continue;
+    }
+    if (token === "--game" && argv[i + 1]) {
       out.board = argv[i + 1] as LlmBoard;
       i += 1;
       continue;
     }
-    if (token === "--board-config-name" && argv[i + 1]) {
-      out.boardConfigName = argv[i + 1];
+    if (token === "--game-config-name" && argv[i + 1]) {
+      out.gameConfigName = argv[i + 1];
+      i += 1;
+      continue;
+    }
+    if (token === "--board" && argv[i + 1]) {
+      out.board = argv[i + 1] as LlmBoard;
       i += 1;
       continue;
     }
@@ -144,18 +156,10 @@ function parseArgs(argv: string[]): Partial<RunLlmGameOptions> {
 
 function pickBoard(
   board: LlmBoard,
-  boardConfigName?: string,
+  boardName?: string,
   log?: (text: string) => void,
 ) {
-  return resolveBoardConfig(board, { boardConfigName }, log);
-}
-
-function requiredEnv(name: string): string {
-  const value = process.env[name];
-  if (!value) {
-    throw new Error(`missing required env: ${name}`);
-  }
-  return value;
+  return resolveBoardConfig(board, { board: boardName }, log);
 }
 
 function toChatLines(events: Array<{ type: string; payload: Record<string, any> }>): string[] {
@@ -210,18 +214,20 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   const log = (text: string, tone: "muted" | "info" | "ok" | "warn" | "error" | "accent" | "god" = "info") =>
     console.log(colorize(text, tone, colorEnabled));
 
-  const openaiBaseUrl = requiredEnv("OPENAI_BASE_URL");
-  const openaiApiKey = requiredEnv("OPENAI_API_KEY");
-  const openaiModel = requiredEnv("OPENAI_MODEL");
-  const temperature = Number(process.env.OPENAI_TEMPERATURE ?? "0.2");
-  const maxTokens = Number(process.env.OPENAI_MAX_TOKENS ?? "512");
-  const forceJsonResponse = ["1", "true", "yes", "on"].includes(
-    String(process.env.OPENAI_FORCE_JSON ?? "true").toLowerCase(),
-  );
+  const runtime = await loadRuntimeConfig();
+  const providerConfig = runtime.provider;
+  const agentConfig = runtime.agent;
+  const gameConfig = runtime.game ?? {};
+
+  if (!providerConfig?.apiKey || !agentConfig?.default?.model) {
+    throw new Error("runtime_config_missing_provider_or_agent_defaults");
+  }
+
+  const forceJsonResponse = agentConfig.default.forceJsonResponse ?? true;
 
   const boardConfig = pickBoard(
     options.board,
-    options.boardConfigName,
+    options.board,
     (line) => log(line, "muted"),
   );
   const context = bootstrapGame(boardConfig);
@@ -243,27 +249,65 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     SessionRecordHub.setActive(null);
   }
 
-  const client = new OpenAIClient({
-    baseURL: openaiBaseUrl,
-    apiKey: openaiApiKey,
-    model: openaiModel,
-    temperature,
-    maxTokens,
-    forceJsonResponse,
-  });
-  const provider = LlmActionProvider.fromOpenAIClient(context.world, client, {
-    trace: options.trace,
-    fallbackProvider: new BaselineBotActionProvider(context.world),
-    maxPromptEvents: 20,
-    llmTimeoutMs: options.llmTimeoutMs,
-    colorizeLogs: colorEnabled,
-    printLlmIo: options.printLlmIo,
-    printThinking: options.printThinking,
-    boardConfig,
-  });
+  const resolveProfile = (role?: string, actorId?: number) => {
+    const merged = { ...agentConfig.default } as any;
+    if (role && agentConfig.roles?.[role]) {
+      Object.assign(merged, agentConfig.roles[role]);
+    }
+    if (actorId !== undefined && agentConfig.players?.[String(actorId)]) {
+      Object.assign(merged, agentConfig.players[String(actorId)]);
+    }
+    if (role && gameConfig.roleAgents?.[role]) {
+      Object.assign(merged, gameConfig.roleAgents[role]);
+    }
+    if (actorId !== undefined && gameConfig.playerAgents?.[String(actorId)]) {
+      Object.assign(merged, gameConfig.playerAgents[String(actorId)]);
+    }
+    return merged as typeof agentConfig.default;
+  };
+
+  const clientByActor = new Map<number, OpenAIClient>();
+  for (const id of context.world.entityIds()) {
+    const roleComp = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+    const profile = resolveProfile(roleComp?.role, id);
+    clientByActor.set(
+      id,
+      new OpenAIClient({
+        baseURL: providerConfig.baseURL,
+        apiKey: providerConfig.apiKey,
+        model: profile.model,
+        userAgent: providerConfig.userAgent,
+        temperature: profile.temperature ?? 0.2,
+        maxTokens: profile.maxTokens ?? 512,
+        forceJsonResponse: profile.forceJsonResponse ?? forceJsonResponse,
+        reasoningEnabled: profile.reasoningEnabled ?? true,
+        reasoningEffort: profile.reasoningEffort ?? "medium",
+      }),
+    );
+  }
+
+  const actionProvider = LlmActionProvider.fromOpenAIClient(
+    context.world,
+    clientByActor.get(context.world.entityIds()[0])!,
+    {
+      clientResolver: (request, role) =>
+        clientByActor.get(request.actorId) ??
+        clientByActor.get(context.world.entityIds()[0])!,
+      personalityPromptResolver: (request, role) =>
+        resolveProfile(role?.role, request.actorId).personalityPrompt,
+      trace: options.trace,
+      fallbackProvider: new BaselineBotActionProvider(context.world),
+      maxPromptEvents: 20,
+      llmTimeoutMs: options.llmTimeoutMs,
+      colorizeLogs: colorEnabled,
+      printLlmIo: options.printLlmIo,
+      printThinking: options.printThinking,
+      boardConfig,
+    },
+  );
 
   log(
-    `[run_llm_game] start board=${options.board} boardConfigName=${options.boardConfigName ?? options.board} maxDays=${options.maxDays} model=${openaiModel} maxRuntimeMs=${options.maxRuntimeMs} llmTimeoutMs=${options.llmTimeoutMs}`,
+    `[run_llm_game] start board=${options.board} maxDays=${options.maxDays} model=${agentConfig.default.model} maxRuntimeMs=${options.maxRuntimeMs} llmTimeoutMs=${options.llmTimeoutMs}`,
     "info",
   );
   if (replayManager) {
@@ -274,7 +318,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   }
   const startedAt = Date.now();
   const deadlineAtMs = startedAt + options.maxRuntimeMs;
-  const budgetedProvider = new DeadlineAwareActionProvider(provider, deadlineAtMs);
+  const budgetedProvider = new DeadlineAwareActionProvider(actionProvider, deadlineAtMs);
   let streamedEventIndex = 0;
   const replayPlayerFeedCursor = new Map<number, number>();
   let replayDayCursor = 1;
@@ -480,49 +524,30 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
 }
 
 async function main(): Promise<void> {
-  const envBoard =
-    process.env.V3_LLM_BOARD === "twelve_player_standard"
-      ? "twelve_player_standard"
-      : process.env.V3_LLM_BOARD === "six_player_mvp"
-        ? "six_player_mvp"
-        : appConfig.defaultBoard;
-  const envMaxDays = Number(process.env.V3_LLM_MAX_DAYS ?? "10");
-  const envBoardConfigName = process.env.V3_LLM_BOARD_CONFIG_NAME;
-  const envMaxRuntimeMs = Number(process.env.V3_LLM_MAX_RUNTIME_MS ?? "30000");
-  const envLlmTimeoutMs = Number(process.env.V3_LLM_TIMEOUT_MS ?? "30000");
-  const envTrace = ["1", "true", "yes", "on"].includes(
-    String(process.env.V3_LLM_TRACE ?? "false").toLowerCase(),
-  );
-  const envPrintAllEvents = ["1", "true", "yes", "on"].includes(
-    String(process.env.V3_PRINT_ALL_EVENTS ?? "false").toLowerCase(),
-  );
-  const envPrintChat = ["1", "true", "yes", "on"].includes(
-    String(process.env.V3_PRINT_CHAT ?? "false").toLowerCase(),
-  );
-  const envStreamEvents = ["1", "true", "yes", "on"].includes(
-    String(process.env.V3_STREAM_EVENTS ?? "true").toLowerCase(),
-  );
-  const envColor = ["1", "true", "yes", "on"].includes(
-    String(process.env.V3_COLOR ?? "true").toLowerCase(),
-  );
-  const envPrintLlmIo = ["1", "true", "yes", "on"].includes(
-    String(process.env.V3_PRINT_LLM_IO ?? "false").toLowerCase(),
-  );
-  const envPrintThinking = ["1", "true", "yes", "on"].includes(
-    String(process.env.V3_PRINT_THINKING ?? "false").toLowerCase(),
-  );
-  const envPrintPrivateEvents = ["1", "true", "yes", "on"].includes(
-    String(process.env.V3_PRINT_PRIVATE_EVENTS ?? "true").toLowerCase(),
-  );
-  const envRecordRootDir =
-    process.env.GAME_RECORDS_DIR ??
-    process.env.V3_RECORD_ROOT_DIR ??
-    process.env.V3_RECORD_DIR;
   const argOptions = parseArgs(process.argv.slice(2));
-
+  if (argOptions.configsDir) {
+    process.env.GAME_CONFIGS_DIR = argOptions.configsDir;
+  }
+  if (argOptions.gameConfigName) {
+    process.env.GAME_CONFIG_NAME = argOptions.gameConfigName;
+  }
+  const runtime = await loadRuntimeConfig();
+  const game = runtime.game ?? {};
+  const envBoard = game.board ?? appConfig.defaultBoard;
+  const envMaxDays = game.maxDays ?? 10;
+  const envMaxRuntimeMs = game.maxRuntimeMs ?? 30000;
+  const envLlmTimeoutMs = game.llmTimeoutMs ?? 30000;
+  const envTrace = game.trace ?? false;
+  const envPrintAllEvents = game.printAllEvents ?? false;
+  const envPrintChat = game.printChat ?? false;
+  const envStreamEvents = game.streamEvents ?? true;
+  const envColor = game.color ?? true;
+  const envPrintLlmIo = game.printLlmIo ?? false;
+  const envPrintThinking = game.printThinking ?? false;
+  const envPrintPrivateEvents = game.printPrivateEvents ?? true;
+  const envRecordRootDir = game.recordRootDir;
   await runLlmGame({
     board: argOptions.board ?? envBoard,
-    boardConfigName: argOptions.boardConfigName ?? envBoardConfigName,
     maxDays: argOptions.maxDays ?? envMaxDays,
     trace: argOptions.trace ?? envTrace,
     maxRuntimeMs: argOptions.maxRuntimeMs ?? envMaxRuntimeMs,

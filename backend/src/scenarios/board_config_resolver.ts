@@ -10,7 +10,7 @@ import { twelvePlayerStandardConfig } from "./twelve_player_standard";
 export type BoardName = "six_player_mvp" | "twelve_player_standard";
 /** 解析配置时的可选参数。 */
 export interface ResolveBoardConfigOptions {
-  boardConfigName?: string;
+  board?: string;
 }
 
 type JsonObject = Record<string, unknown>;
@@ -375,13 +375,23 @@ function readOverrideFromDir(
   options?: ResolveBoardConfigOptions,
   log?: (text: string) => void,
 ): BoardOverride | null {
-  const configDir = process.env.GAME_CONFIGS_DIR?.trim();
-  if (!configDir) {
+  const cwd = process.cwd();
+  const rootDir = cwd.endsWith("/backend") ? path.resolve(cwd, "..") : path.resolve(cwd);
+  const envConfig = process.env.GAME_CONFIGS_DIR?.trim();
+  if (!envConfig) {
+    log?.("[board_config] config dir missing: set GAME_CONFIGS_DIR");
+    return null;
+  }
+  const configDir = path.isAbsolute(envConfig)
+    ? envConfig
+    : path.resolve(rootDir, envConfig);
+  if (!fs.existsSync(configDir)) {
+    log?.(`[board_config] config dir missing: ${configDir}`);
     return null;
   }
   const candidates: string[] = [];
   const boardsDir = path.resolve(configDir, "boards");
-  const customName = options?.boardConfigName?.trim();
+  const customName = options?.board?.trim();
   if (customName) {
     candidates.push(path.resolve(boardsDir, `${customName}.json`));
     candidates.push(path.resolve(configDir, `${customName}.json`));
