@@ -1,0 +1,17 @@
+{
+  "default": "openai_official",
+  "items": {
+    "openai_official": {
+      "type": "openai",
+      "apiKey": "YOUR_OPENAI_KEY",
+      "baseURL": "https://api.openai.com/v1",
+      "userAgent": "AWA-Werewolf/1.0"
+    },
+    "openai_relay": {
+      "type": "openai",
+      "apiKey": "YOUR_RELAY_KEY",
+      "baseURL": "https://your-relay.example.com/v1",
+      "userAgent": "AWA-Werewolf/1.0"
+    }
+  }
+}

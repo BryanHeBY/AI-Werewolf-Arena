@@ -68,12 +68,27 @@ jest.mock("../../src/infra/llm/openai_client", () => {
 });
 
 describe("SessionRecordManager", () => {
+  const buildRuntimeOverride = (agentModel: string, debugAgentEnabled: boolean) => ({
+    providers: {
+      default: "p",
+      items: {
+        p: { type: "openai" as const, apiKey: "test-key" },
+      },
+    },
+    agents: {
+      default: "a",
+      items: {
+        a: { provider: "p", model: agentModel },
+      },
+    },
+    // 兼容字段
+    provider: { type: "openai" as const, apiKey: "test-key" },
+    agent: { default: { model: agentModel } },
+    debugSummary: { agent: { enabled: debugAgentEnabled } },
+  });
+
   beforeAll(() => {
-    setRuntimeConfigOverride({
-      provider: { type: "openai", apiKey: "test-key" },
-      agent: { default: { model: "test-model" } },
-      debugSummary: { agent: { enabled: false } },
-    });
+    setRuntimeConfigOverride(buildRuntimeOverride("test-model", false));
   });
 
   afterAll(() => {
@@ -398,8 +413,7 @@ describe("SessionRecordManager", () => {
 
     try {
       setRuntimeConfigOverride({
-        provider: { type: "openai", apiKey: "test-key" },
-        agent: { default: { model: "test-model" } },
+        ...buildRuntimeOverride("test-model", true),
         debugSummary: {
           agent: {
             enabled: true,
@@ -467,11 +481,7 @@ describe("SessionRecordManager", () => {
         players: [{ player_id: 1, role: "villager", camp: "villager", alive: true }],
       });
     } finally {
-      setRuntimeConfigOverride({
-        provider: { type: "openai", apiKey: "test-key" },
-        agent: { default: { model: "test-model" } },
-        debugSummary: { agent: { enabled: false } },
-      });
+      setRuntimeConfigOverride(buildRuntimeOverride("test-model", false));
     }
 
     const agentsDir = path.join(root, "session_debug_agents", "debug_summary_agents");

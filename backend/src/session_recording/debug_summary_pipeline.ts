@@ -9,7 +9,7 @@ import {
   ReplayPublicEvent,
 } from "./types";
 import { OpenAIClient } from "../infra/llm/openai_client";
-import { loadRuntimeConfig } from "../config/runtime_config";
+import { loadRuntimeConfig, resolveAgentProfileByName } from "../config/runtime_config";
 
 export interface DebugSummaryPipelineInput {
   manifest: ReplayManifest;
@@ -649,9 +649,11 @@ export async function buildDebugSummaryWithAgents(
   }
 
   const runtime = await loadRuntimeConfig();
-  const provider = runtime.provider;
-  const agentDefaults = runtime.agent?.default;
-  if (!provider?.apiKey || !agentDefaults?.model) {
+  const debugAgentProfile = resolveAgentProfileByName(
+    runtime,
+    runtime.debugSummary?.agent?.agentName ?? runtime.game?.debugSummaryAgent ?? runtime.game?.agent,
+  );
+  if (!debugAgentProfile?.provider?.apiKey || !debugAgentProfile?.model) {
     return null;
   }
 
@@ -668,52 +670,52 @@ export async function buildDebugSummaryWithAgents(
   const profileOverride = runtime.debugSummary?.agent?.profile ?? {};
 
   const client = new OpenAIClient({
-    apiKey: provider.apiKey,
-    model: profileOverride.model ?? agentDefaults.model,
-    baseURL: provider.baseURL,
-    userAgent: provider.userAgent,
-    temperature: profileOverride.temperature ?? agentDefaults.temperature ?? 0.1,
-    maxTokens: profileOverride.maxTokens ?? agentDefaults.maxTokens ?? 1200,
+    apiKey: debugAgentProfile.provider.apiKey,
+    model: profileOverride.model ?? debugAgentProfile.model,
+    baseURL: debugAgentProfile.provider.baseURL,
+    userAgent: debugAgentProfile.provider.userAgent,
+    temperature: profileOverride.temperature ?? debugAgentProfile.temperature ?? 0.1,
+    maxTokens: profileOverride.maxTokens ?? debugAgentProfile.maxTokens ?? 1200,
     forceJsonResponse:
-      profileOverride.forceJsonResponse ?? agentDefaults.forceJsonResponse ?? true,
+      profileOverride.forceJsonResponse ?? debugAgentProfile.forceJsonResponse ?? true,
     reasoningEnabled:
-      profileOverride.reasoningEnabled ?? agentDefaults.reasoningEnabled ?? true,
+      profileOverride.reasoningEnabled ?? debugAgentProfile.reasoningEnabled ?? true,
     reasoningEffort:
-      profileOverride.reasoningEffort ?? agentDefaults.reasoningEffort ?? "medium",
+      profileOverride.reasoningEffort ?? debugAgentProfile.reasoningEffort ?? "medium",
   });
   const fallbackClient = new OpenAIClient({
-    apiKey: provider.apiKey,
-    model: profileOverride.model ?? agentDefaults.model,
-    baseURL: provider.baseURL,
-    userAgent: provider.userAgent,
-    temperature: profileOverride.temperature ?? agentDefaults.temperature ?? 0.1,
-    maxTokens: profileOverride.maxTokens ?? agentDefaults.maxTokens ?? 1200,
+    apiKey: debugAgentProfile.provider.apiKey,
+    model: profileOverride.model ?? debugAgentProfile.model,
+    baseURL: debugAgentProfile.provider.baseURL,
+    userAgent: debugAgentProfile.provider.userAgent,
+    temperature: profileOverride.temperature ?? debugAgentProfile.temperature ?? 0.1,
+    maxTokens: profileOverride.maxTokens ?? debugAgentProfile.maxTokens ?? 1200,
     forceJsonResponse:
-      profileOverride.forceJsonResponse ?? agentDefaults.forceJsonResponse ?? true,
+      profileOverride.forceJsonResponse ?? debugAgentProfile.forceJsonResponse ?? true,
     reasoningEnabled:
-      profileOverride.reasoningEnabled ?? agentDefaults.reasoningEnabled ?? true,
+      profileOverride.reasoningEnabled ?? debugAgentProfile.reasoningEnabled ?? true,
     reasoningEffort:
-      profileOverride.reasoningEffort ?? agentDefaults.reasoningEffort ?? "medium",
+      profileOverride.reasoningEffort ?? debugAgentProfile.reasoningEffort ?? "medium",
   });
   const primaryMeta = {
-    model: profileOverride.model ?? agentDefaults.model,
-    maxTokens: profileOverride.maxTokens ?? agentDefaults.maxTokens ?? 1200,
+    model: profileOverride.model ?? debugAgentProfile.model,
+    maxTokens: profileOverride.maxTokens ?? debugAgentProfile.maxTokens ?? 1200,
     forceJsonResponse:
-      profileOverride.forceJsonResponse ?? agentDefaults.forceJsonResponse ?? true,
+      profileOverride.forceJsonResponse ?? debugAgentProfile.forceJsonResponse ?? true,
     reasoningEnabled:
-      profileOverride.reasoningEnabled ?? agentDefaults.reasoningEnabled ?? true,
+      profileOverride.reasoningEnabled ?? debugAgentProfile.reasoningEnabled ?? true,
     reasoningEffort:
-      profileOverride.reasoningEffort ?? agentDefaults.reasoningEffort ?? "medium",
+      profileOverride.reasoningEffort ?? debugAgentProfile.reasoningEffort ?? "medium",
   };
   const fallbackMeta = {
-    model: profileOverride.model ?? agentDefaults.model,
-    maxTokens: profileOverride.maxTokens ?? agentDefaults.maxTokens ?? 1200,
+    model: profileOverride.model ?? debugAgentProfile.model,
+    maxTokens: profileOverride.maxTokens ?? debugAgentProfile.maxTokens ?? 1200,
     forceJsonResponse:
-      profileOverride.forceJsonResponse ?? agentDefaults.forceJsonResponse ?? true,
+      profileOverride.forceJsonResponse ?? debugAgentProfile.forceJsonResponse ?? true,
     reasoningEnabled:
-      profileOverride.reasoningEnabled ?? agentDefaults.reasoningEnabled ?? true,
+      profileOverride.reasoningEnabled ?? debugAgentProfile.reasoningEnabled ?? true,
     reasoningEffort:
-      profileOverride.reasoningEffort ?? agentDefaults.reasoningEffort ?? "medium",
+      profileOverride.reasoningEffort ?? debugAgentProfile.reasoningEffort ?? "medium",
   };
 
   const tasks: AgentTask[] = [];

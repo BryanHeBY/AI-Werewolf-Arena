@@ -1,5 +1,6 @@
 {
   "board": "six_player_mvp",
+  "agent": "gpt4o_balanced",
   "maxDays": 10,
   "maxRuntimeMs": 1800000,
   "llmTimeoutMs": 30000,

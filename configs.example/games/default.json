@@ -1,5 +1,6 @@
 {
   "board": "six_player_mvp",
+  "agent": "gpt4o_balanced",
   "maxDays": 10,
   "maxRuntimeMs": 1800000,
   "llmTimeoutMs": 30000,
@@ -13,17 +14,10 @@
   "printPrivateEvents": true,
   "recordRootDir": "/home/hby/dev/AWA/be_workdir/backend/data/records",
   "roleAgents": {
-    "wolf": {
-      "model": "gpt-4o-mini",
-      "temperature": 0.3,
-      "personalityPrompt": "更强势、更主动带节奏"
-    }
+    "wolf": "gpt4o_aggressive"
   },
   "playerAgents": {
-    "2": {
-      "model": "gpt-4o-mini",
-      "temperature": 0.4,
-      "personalityPrompt": "更激进，偏好强推"
-    }
-  }
+    "2": "relay_flash"
+  },
+  "debugSummaryAgent": "relay_flash"
 }

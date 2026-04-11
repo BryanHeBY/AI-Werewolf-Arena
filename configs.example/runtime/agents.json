@@ -1,0 +1,35 @@
+{
+  "default": "gpt4o_balanced",
+  "items": {
+    "gpt4o_balanced": {
+      "provider": "openai_official",
+      "model": "gpt-4o-mini",
+      "temperature": 0.2,
+      "maxTokens": 1024,
+      "forceJsonResponse": true,
+      "reasoningEnabled": true,
+      "reasoningEffort": "medium",
+      "personalityPrompt": ""
+    },
+    "gpt4o_aggressive": {
+      "provider": "openai_official",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "maxTokens": 1024,
+      "forceJsonResponse": true,
+      "reasoningEnabled": true,
+      "reasoningEffort": "medium",
+      "personalityPrompt": "发言更主动，偏强势推进。"
+    },
+    "relay_flash": {
+      "provider": "openai_relay",
+      "model": "gemini-3-flash-preview",
+      "temperature": 0.7,
+      "maxTokens": 65536,
+      "forceJsonResponse": true,
+      "reasoningEnabled": true,
+      "reasoningEffort": "medium",
+      "personalityPrompt": ""
+    }
+  }
+}

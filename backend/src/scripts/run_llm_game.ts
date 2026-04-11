@@ -4,7 +4,11 @@
  */
 import { bootstrapGame } from "../app/bootstrap";
 import { appConfig } from "../config";
-import { loadRuntimeConfig } from "../config/runtime_config";
+import {
+  loadRuntimeConfig,
+  resolveAgentProfileByName,
+  ResolvedAgentRuntimeProfile,
+} from "../config/runtime_config";
 import { AliveComponent } from "../domain/components/alive";
 import {
   ActionProvider,
@@ -215,15 +219,16 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     console.log(colorize(text, tone, colorEnabled));
 
   const runtime = await loadRuntimeConfig();
-  const providerConfig = runtime.provider;
-  const agentConfig = runtime.agent;
+  const providersConfig = runtime.providers;
+  const agentsConfig = runtime.agents;
   const gameConfig = runtime.game ?? {};
 
-  if (!providerConfig?.apiKey || !agentConfig?.default?.model) {
+  if (!providersConfig?.items?.[providersConfig.default] || !agentsConfig?.items?.[agentsConfig.default]) {
     throw new Error("runtime_config_missing_provider_or_agent_defaults");
   }
 
-  const forceJsonResponse = agentConfig.default.forceJsonResponse ?? true;
+  const defaultAgentProfile = resolveAgentProfileByName(runtime, gameConfig.agent);
+  const forceJsonResponse = defaultAgentProfile.forceJsonResponse ?? true;
 
   const boardConfig = pickBoard(
     options.board,
@@ -249,21 +254,12 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     SessionRecordHub.setActive(null);
   }
 
-  const resolveProfile = (role?: string, actorId?: number) => {
-    const merged = { ...agentConfig.default } as any;
-    if (role && agentConfig.roles?.[role]) {
-      Object.assign(merged, agentConfig.roles[role]);
-    }
-    if (actorId !== undefined && agentConfig.players?.[String(actorId)]) {
-      Object.assign(merged, agentConfig.players[String(actorId)]);
-    }
-    if (role && gameConfig.roleAgents?.[role]) {
-      Object.assign(merged, gameConfig.roleAgents[role]);
-    }
-    if (actorId !== undefined && gameConfig.playerAgents?.[String(actorId)]) {
-      Object.assign(merged, gameConfig.playerAgents[String(actorId)]);
-    }
-    return merged as typeof agentConfig.default;
+  const resolveProfile = (role?: string, actorId?: number): ResolvedAgentRuntimeProfile => {
+    const playerAgentName =
+      actorId !== undefined ? gameConfig.playerAgents?.[String(actorId)] : undefined;
+    const roleAgentName = role ? gameConfig.roleAgents?.[role] : undefined;
+    const selectedAgentName = playerAgentName ?? roleAgentName ?? gameConfig.agent;
+    return resolveAgentProfileByName(runtime, selectedAgentName);
   };
 
   const clientByActor = new Map<number, OpenAIClient>();
@@ -273,10 +269,10 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     clientByActor.set(
       id,
       new OpenAIClient({
-        baseURL: providerConfig.baseURL,
-        apiKey: providerConfig.apiKey,
+        baseURL: profile.provider.baseURL,
+        apiKey: profile.provider.apiKey,
         model: profile.model,
-        userAgent: providerConfig.userAgent,
+        userAgent: profile.provider.userAgent,
         temperature: profile.temperature ?? 0.2,
         maxTokens: profile.maxTokens ?? 512,
         forceJsonResponse: profile.forceJsonResponse ?? forceJsonResponse,
@@ -307,7 +303,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   );
 
   log(
-    `[run_llm_game] start board=${options.board} maxDays=${options.maxDays} model=${agentConfig.default.model} maxRuntimeMs=${options.maxRuntimeMs} llmTimeoutMs=${options.llmTimeoutMs}`,
+    `[run_llm_game] start board=${options.board} maxDays=${options.maxDays} agent=${defaultAgentProfile.name} model=${defaultAgentProfile.model} provider=${defaultAgentProfile.providerName} maxRuntimeMs=${options.maxRuntimeMs} llmTimeoutMs=${options.llmTimeoutMs}`,
     "info",
   );
   if (replayManager) {

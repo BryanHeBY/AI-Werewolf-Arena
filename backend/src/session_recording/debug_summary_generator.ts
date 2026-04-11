@@ -1,7 +1,7 @@
 /** 文件说明：根据调试上报生成 session 级调试总结 Markdown。 */
 import { ReplayDebugReport, ReplayLogicOp, ReplayManifest, ReplayPlayerView, ReplayPublicEvent } from "./types";
 import { OpenAIClient } from "../infra/llm/openai_client";
-import { loadRuntimeConfig } from "../config/runtime_config";
+import { loadRuntimeConfig, resolveAgentProfileByName } from "../config/runtime_config";
 import { buildDebugSummaryWithAgents } from "./debug_summary_pipeline";
 
 interface BuildDebugSummaryInput {
@@ -156,13 +156,14 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
   } catch {
     return null;
   }
-  const provider = runtime.provider;
-  const agentDefaults = runtime.agent?.default;
-  if (!provider?.apiKey || !agentDefaults?.model) {
+  const debugAgentProfile = resolveAgentProfileByName(
+    runtime,
+    runtime.debugSummary?.agent?.agentName ?? runtime.game?.debugSummaryAgent ?? runtime.game?.agent,
+  );
+  if (!debugAgentProfile?.provider?.apiKey || !debugAgentProfile?.model) {
     return null;
   }
 
-  const baseURL = provider.baseURL;
   const timeoutMs = runtime.debugSummary?.llmTimeoutMs ?? 30000;
   const maxAttempts = Math.max(1, runtime.debugSummary?.llmMaxAttempts ?? 3);
   const actionableReports = filterActionableReports(
@@ -200,15 +201,15 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
     }
   }
   const client = new OpenAIClient({
-    apiKey: provider.apiKey,
-    baseURL,
-    model: agentDefaults.model,
-    userAgent: provider.userAgent,
-    temperature: agentDefaults.temperature ?? 0.1,
-    maxTokens: agentDefaults.maxTokens ?? 1800,
-    forceJsonResponse: agentDefaults.forceJsonResponse ?? false,
-    reasoningEnabled: agentDefaults.reasoningEnabled ?? true,
-    reasoningEffort: agentDefaults.reasoningEffort ?? "medium",
+    apiKey: debugAgentProfile.provider.apiKey,
+    baseURL: debugAgentProfile.provider.baseURL,
+    model: debugAgentProfile.model,
+    userAgent: debugAgentProfile.provider.userAgent,
+    temperature: debugAgentProfile.temperature ?? 0.1,
+    maxTokens: debugAgentProfile.maxTokens ?? 1800,
+    forceJsonResponse: debugAgentProfile.forceJsonResponse ?? false,
+    reasoningEnabled: debugAgentProfile.reasoningEnabled ?? true,
+    reasoningEffort: debugAgentProfile.reasoningEffort ?? "medium",
   });
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {

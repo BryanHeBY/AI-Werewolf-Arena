@@ -3,8 +3,8 @@
   "llmMaxAttempts": 3,
   "agent": {
     "enabled": true,
+    "agentName": "relay_flash",
     "profile": {
-      "model": "gpt-4o-mini",
       "temperature": 0.1,
       "maxTokens": 1200,
       "forceJsonResponse": false,
