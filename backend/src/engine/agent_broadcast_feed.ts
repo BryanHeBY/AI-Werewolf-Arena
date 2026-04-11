@@ -51,7 +51,23 @@ export function buildAgentBroadcastFeed(
   return lines.slice(-limit);
 }
 
-function renderMergedVoteBatch(voteEvents: GameEvent[]): string | null {
+/**
+ * 将单条事件渲染为“单个玩家可见”的广播行。
+ */
+export function buildAgentBroadcastLine(
+  world: World,
+  event: GameEvent,
+  actorId: EntityId,
+): string | null {
+  const isWolf = getDefaultVisibilityRegistry().isWolfPlayer(world, actorId);
+  const lineRegistry = getDefaultAgentEventLineRegistry();
+  return lineRegistry.toLine(event, { actorId, isWolf });
+}
+
+/**
+ * 合并放逐投票批次为广播行。
+ */
+export function renderMergedVoteBatch(voteEvents: GameEvent[]): string | null {
   if (voteEvents.length === 0) {
     return null;
   }

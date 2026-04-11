@@ -162,6 +162,7 @@ record/
 1. 不做数据库落地，仅文件系统存储。
 2. 不做前端 UI 实现，仅提供可消费 JSON 协议。
 3. 不做历史索引服务（如全局 session 列表 API），后续单独需求再补。
+4. 不实现“对局结束后复盘聊天”实时功能（仅记录设计意图）。
 
 约束：
 
@@ -189,3 +190,26 @@ record/
 - [ ] `SA03` 每个 `players/player_<id>.json` 使用单一 `timeline`，且满足“broadcast 在前、action 在后”的时间顺序；`tool_calls` 字段固定存在（可为空数组）；并在 `action` 条目中包含 `action_mode`（若该玩家确实行动过，至少有 1 条含 `thinking_text` 或有效行动信息）。
 - [ ] `SA04` `logic_ops.json` 包含动作校验与至少一种结算操作（如狼刀结算/放逐计票）。
 - [ ] `SA05` 模拟写盘失败时，对局仍可结束，日志出现 recording warning，主流程不崩溃。
+
+---
+
+## 7. 规划：终局复盘聊天（仅文档，不落地）
+
+目标：对局结束后允许全部玩家进入复盘聊天，便于复盘和训练。
+
+设计约束：
+
+1. 仅在 `game_over` 后开启，不影响对局公平性。
+2. 可配置是否公开全部信息（例如狼队夜聊、查验结果、守卫守护）。
+3. 复盘聊天应写入 `public_timeline` 与 `players` 视角，方便复盘检索。
+
+建议配置（不影响现有对局逻辑）：
+
+- `postGameChat.enabled: boolean` 默认 false。
+- `postGameChat.revealAll: boolean` 默认 false。
+- `postGameChat.rounds: number` 默认 1。
+
+建议事件（仅规划，不实现）：
+
+- `post_game_chat_started`：触发复盘聊天窗口。
+- `post_game_speech`：玩家复盘发言。

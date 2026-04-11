@@ -1,7 +1,12 @@
 import { promises as fs } from "fs";
 import os from "os";
 import path from "path";
-import { Camp } from "../../src/domain/model";
+import { Camp, Phase } from "../../src/domain/model";
+import { bootstrapGame } from "../../src/app/bootstrap";
+import { sixPlayerMvpConfig } from "../../src/scenarios/six_player_mvp";
+import { buildAgentBroadcastLine } from "../../src/engine/agent_broadcast_feed";
+import { getDefaultScriptEventRenderRegistry } from "../../src/mechanisms/script/event_render_registry";
+import { COMPONENT } from "../../src/domain/components/names";
 import { SessionRecordManager } from "../../src/session_recording";
 import { setRuntimeConfigOverride } from "../../src/config/runtime_config";
 
@@ -155,6 +160,58 @@ describe("SessionRecordManager", () => {
     expect(Array.isArray(player1.timeline)).toBe(true);
     expect(player1.timeline.length).toBeGreaterThanOrEqual(1);
     expect(reports.reports.length).toBe(1);
+  });
+
+  test("should record broadcast stage per event without mixing", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-replay-stage-"));
+    const manager = await SessionRecordManager.create(
+      {
+        sessionId: "session_stage_1",
+        board: "six_player_mvp",
+        startedAtIso: new Date("2026-04-11T00:00:00.000Z").toISOString(),
+      },
+      root,
+    );
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const registry = getDefaultScriptEventRenderRegistry();
+    const events = [
+      {
+        timestamp: Date.now(),
+        type: "phase_changed",
+        payload: { phase: Phase.Night, day: 1 },
+      },
+      {
+        timestamp: Date.now(),
+        type: "night_resolved",
+        payload: { wolfTarget: 1, deaths: [] },
+      },
+    ];
+    const playerId = 1;
+    const role = context.world.getComponent<any>(playerId, COMPONENT.Role);
+    for (const event of events) {
+      const line = buildAgentBroadcastLine(context.world, event as any, playerId);
+      expect(line).toBeTruthy();
+      manager.recordPlayerBroadcast({
+        playerId,
+        role: role?.role ?? "unknown",
+        camp: role?.camp ?? "unknown",
+        day: 1,
+        phase: Phase.Night,
+        stage: registry.toReplayStage(event as any),
+        requestId: `1-night-${playerId}-broadcast-${event.type}`,
+        text: String(line),
+      });
+    }
+    await manager.flushNow();
+    const view = JSON.parse(
+      await fs.readFile(
+        path.join(root, "session_stage_1", "players", "player_1.json"),
+        "utf-8",
+      ),
+    );
+    const stages = view.timeline.map((entry: any) => entry.stage);
+    expect(stages).toContain("night");
+    expect(stages).toContain("night_resolved");
   });
 
   test("should create session folder and persist replay json files", async () => {

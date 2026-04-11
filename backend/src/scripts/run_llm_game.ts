@@ -16,7 +16,7 @@ import {
 import { OpenAIClient } from "../infra/llm/openai_client";
 import { COMPONENT } from "../domain/components/names";
 import { RoleComponent } from "../domain/components/role";
-import { buildAgentBroadcastFeed } from "../engine/agent_broadcast_feed";
+import { buildAgentBroadcastLine, renderMergedVoteBatch } from "../engine/agent_broadcast_feed";
 import { getDefaultScriptEventRenderRegistry } from "../mechanisms";
 import { resolveBoardConfig } from "../scenarios/board_config_resolver";
 import {
@@ -320,7 +320,6 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   const deadlineAtMs = startedAt + options.maxRuntimeMs;
   const budgetedProvider = new DeadlineAwareActionProvider(actionProvider, deadlineAtMs);
   let streamedEventIndex = 0;
-  const replayPlayerFeedCursor = new Map<number, number>();
   let replayDayCursor = 1;
   let replayPhaseCursor = String(context.phaseManager.getSnapshot().phase);
   const flushStreamEvents = (): void => {
@@ -329,6 +328,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
       return;
     }
     const voteBatch: Array<{ actorId: number; targetId: number | null; abstain: boolean; weight: number }> = [];
+    const replayVoteBatch: GameEvent[] = [];
     const flushVoteBatchLive = () => {
       if (voteBatch.length === 0 || !options.streamEvents) {
         voteBatch.length = 0;
@@ -365,20 +365,44 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
         // 即使不打印 live，也要写入“玩家可见广播”到 session 复盘。
       }
       if (replayManager) {
-        for (const playerId of context.world.entityIds()) {
-          const feed = buildAgentBroadcastFeed(
-            context.world,
-            events,
-            playerId,
-            10000,
-          );
-          const before = replayPlayerFeedCursor.get(playerId) ?? 0;
-          const delta = feed.slice(before);
-          const roleComp = context.world.getComponent<RoleComponent>(
-            playerId,
-            COMPONENT.Role,
-          );
-          for (let d = 0; d < delta.length; d++) {
+        if (event.type === "vote_cast") {
+          replayVoteBatch.push(event as GameEvent);
+        } else if (replayVoteBatch.length > 0) {
+          const merged = renderMergedVoteBatch(replayVoteBatch);
+          if (merged) {
+            for (const playerId of context.world.entityIds()) {
+              const roleComp = context.world.getComponent<RoleComponent>(
+                playerId,
+                COMPONENT.Role,
+              );
+              replayManager.recordPlayerBroadcast({
+                playerId,
+                role: roleComp?.role ?? "unknown",
+                camp: roleComp?.camp ?? "unknown",
+                day: replayDayCursor,
+                phase: "voting",
+                stage: "voting",
+                requestId: `${replayDayCursor}-voting-${playerId}-broadcast-${i}-batch`,
+                text: merged,
+              });
+            }
+          }
+          replayVoteBatch.length = 0;
+        }
+        if (event.type !== "vote_cast") {
+          for (const playerId of context.world.entityIds()) {
+            const line = buildAgentBroadcastLine(
+              context.world,
+              event as GameEvent,
+              playerId,
+            );
+            if (!line) {
+              continue;
+            }
+            const roleComp = context.world.getComponent<RoleComponent>(
+              playerId,
+              COMPONENT.Role,
+            );
             replayManager.recordPlayerBroadcast({
               playerId,
               role: roleComp?.role ?? "unknown",
@@ -386,11 +410,10 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
               day: replayDayCursor,
               phase: replayPhaseCursor,
               stage: toReplayStage(event as any),
-              requestId: `${replayDayCursor}-${replayPhaseCursor}-${playerId}-broadcast-${i}-${d}`,
-              text: delta[d],
+              requestId: `${replayDayCursor}-${replayPhaseCursor}-${playerId}-broadcast-${i}`,
+              text: line,
             });
           }
-          replayPlayerFeedCursor.set(playerId, feed.length);
         }
       }
       if (event.type === "vote_cast") {
