@@ -148,11 +148,11 @@ export class PhaseManager {
 
     if (this.state.day > maxDays) {
       this.state.gameOver = true;
-      this.setPhase(Phase.GameOver);
       this.state.result = {
         winner: null,
         reason: "max_days_reached",
       };
+      this.setPhase(Phase.GameOver);
       return this.getSnapshot();
     }
 
@@ -465,12 +465,20 @@ export class PhaseManager {
     if (previous === phase) {
       return;
     }
+    const gameOverPayload =
+      phase === Phase.GameOver && this.state.result
+        ? {
+            winner: this.state.result.winner,
+            reason: this.state.result.reason,
+          }
+        : {};
     this.events.push({
       timestamp: Date.now(),
       type: "phase_changed",
       payload: {
         phase,
         day: this.state.day,
+        ...gameOverPayload,
       },
     });
   }

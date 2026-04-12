@@ -21,6 +21,7 @@ import {
   SHERIFF_SCRIPT_JUDGE_HANDLERS,
   SHERIFF_SCRIPT_LIVE_HANDLERS,
 } from "../sheriff/event_presenters";
+import { getDefaultTextLocalizationRegistry } from "../shared/text_localization_registry";
 
 const CHAT_HANDLERS: Record<string, ScriptChatLineHandler> = {
   day_speech: (event) => `[白天][${event.payload.actorId}] ${event.payload.text}`,
@@ -40,6 +41,18 @@ const JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler> = {
       return `现在进入放逐投票阶段`;
     }
     if (p.phase === "game_over") {
+      const i18n = getDefaultTextLocalizationRegistry();
+      const winnerText =
+        p.winner !== undefined && p.winner !== null
+          ? i18n.winnerName(String(p.winner))
+          : null;
+      const reasonText =
+        p.reason !== undefined && p.reason !== null
+          ? i18n.gameOverReason(String(p.reason))
+          : null;
+      if (winnerText && reasonText) {
+        return `对局结束，胜利阵营：${winnerText}，原因：${reasonText}`;
+      }
       return `对局结束`;
     }
     return null;
@@ -58,7 +71,10 @@ const JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler> = {
   sheriff_badge_destroyed: (event) =>
     `警徽被撕毁（原持有者${event.payload.targetId}号）`,
   wolf_self_destruct: (event) => `${event.payload.wolfId}号狼人自爆，流程被中断`,
-  game_over: (event) => `胜利阵营：${event.payload.winner}，原因：${event.payload.reason}`,
+  game_over: (event) => {
+    const i18n = getDefaultTextLocalizationRegistry();
+    return `胜利阵营：${i18n.winnerName(String(event.payload.winner ?? ""))}，原因：${i18n.gameOverReason(String(event.payload.reason ?? ""))}`;
+  },
   ...LAST_WORDS_SCRIPT_JUDGE_HANDLERS,
   ...IDIOT_SCRIPT_JUDGE_HANDLERS,
   ...HUNTER_SCRIPT_JUDGE_HANDLERS,
@@ -87,14 +103,17 @@ const REPLAY_STAGE_HANDLERS: Record<string, ScriptReplayStageHandler> = {
 const LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {
   god_private_game_info: (event) => {
     const players = Array.isArray(event.payload.players) ? event.payload.players : [];
-    const roleView = players.map((item: any) => `${item.seat ?? item.id}:${item.role}`).join(", ");
+    const i18n = getDefaultTextLocalizationRegistry();
+    const roleView = players
+      .map((item: any) => `${item.seat ?? item.id}:${i18n.roleName(String(item.role ?? ""))}`)
+      .join(", ");
     return [{ kind: "god", text: `[live][上帝私有][开局] 角色分布 ${roleView}` }];
   },
   day_speech: (event) => [{ kind: "system", text: `[live][白天][${event.payload.actorId}] ${event.payload.text}` }],
   game_over: (event) => [
     {
       kind: "end",
-      text: `[live][终局] winner=${event.payload.winner} reason=${event.payload.reason}`,
+      text: `[live][终局] 胜利阵营=${getDefaultTextLocalizationRegistry().winnerName(String(event.payload.winner ?? ""))} 原因=${getDefaultTextLocalizationRegistry().gameOverReason(String(event.payload.reason ?? ""))}`,
     },
   ],
   ...WOLF_SCRIPT_LIVE_HANDLERS,

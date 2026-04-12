@@ -9,6 +9,7 @@ import { LAST_WORDS_AGENT_EVENT_LINE_HANDLERS } from "../last_words/event_presen
 import { SHERIFF_AGENT_EVENT_LINE_HANDLERS } from "../sheriff/event_presenters";
 import { IDIOT_AGENT_EVENT_LINE_HANDLERS } from "../roles/idiot/event_presenters";
 import { AgentEventLineHandler, AgentLineContext } from "./contracts";
+import { getDefaultTextLocalizationRegistry } from "../shared/text_localization_registry";
 
 const DEFAULT_HANDLERS: Record<string, AgentEventLineHandler> = {
   phase_changed: (event) => {
@@ -44,7 +45,8 @@ const DEFAULT_HANDLERS: Record<string, AgentEventLineHandler> = {
   },
   game_over: (event) => {
     const p = event.payload as Record<string, any>;
-    return `[系统][公开] 胜利阵营：${p.winner}，原因：${p.reason}`;
+    const i18n = getDefaultTextLocalizationRegistry();
+    return `[系统][公开] 胜利阵营：${i18n.winnerName(String(p.winner ?? ""))}，原因：${i18n.gameOverReason(String(p.reason ?? ""))}`;
   },
   ...WOLF_AGENT_EVENT_LINE_HANDLERS,
   ...SEER_AGENT_EVENT_LINE_HANDLERS,
