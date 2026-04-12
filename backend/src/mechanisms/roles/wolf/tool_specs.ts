@@ -34,6 +34,7 @@ export const WOLF_TOOL_SPECS: ToolSpec[] = [
       },
     },
     argHint: 'speak_to_wolves args: {"text":"...","end_chat":true|false}',
+    userPromptHint: "若使用 speak_to_wolves，end_chat=true 表示结束整晚夜聊。",
   },
   {
     name: "kill_vote",

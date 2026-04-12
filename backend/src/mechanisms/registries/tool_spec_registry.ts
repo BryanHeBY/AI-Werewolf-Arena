@@ -60,6 +60,10 @@ export class ToolSpecRegistry {
     return this.specByName.get(name)?.argHint ?? null;
   }
 
+  getUserPromptHint(name: ToolName): string | null {
+    return this.specByName.get(name)?.userPromptHint ?? null;
+  }
+
   getLlmSchema(name: ToolName): ToolSpec["llm"] | null {
     return this.specByName.get(name)?.llm ?? null;
   }
@@ -77,6 +81,12 @@ export class ToolSpecRegistry {
   getStageDirective(allowedTools: ToolName[]): string | null {
     const matched = this.stageDirectives.find((rule) => rule.match(allowedTools));
     return matched?.text ?? null;
+  }
+
+  getApplicableUserPromptHints(allowedTools: ToolName[]): string[] {
+    return allowedTools
+      .map((name) => this.getUserPromptHint(name))
+      .filter((item): item is string => Boolean(item));
   }
 }
 

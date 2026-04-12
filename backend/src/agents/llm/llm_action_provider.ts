@@ -1147,6 +1147,7 @@ export class LlmActionProvider implements ActionProvider {
       allowedTools: llmAllowedTools,
       effectiveActionTools,
       toolArgHints: this.toolArgHints(llmAllowedTools),
+      toolUsageHints: this.toolUsageHints(llmAllowedTools),
       stageContextHint: this.stageContextHint(request),
       actionableIdsHint: this.targetHintRegistry.buildActionableIdsHint({
         actorId: request.actorId,
@@ -1553,6 +1554,12 @@ export class LlmActionProvider implements ActionProvider {
       .map((name) => this.toolSpecRegistry.getArgHint(name as ToolName))
       .filter((item): item is string => Boolean(item));
     return `工具参数提示=${hints.join("; ")}`;
+  }
+
+  private toolUsageHints(allowedTools: string[]): string[] {
+    return this.toolSpecRegistry.getApplicableUserPromptHints(
+      allowedTools as ToolName[],
+    );
   }
 
   private parseToolCall(

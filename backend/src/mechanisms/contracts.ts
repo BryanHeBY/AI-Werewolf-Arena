@@ -14,6 +14,7 @@ export interface ToolSpec {
   name: ToolName;
   llm: MechanismToolSchema;
   argHint: string;
+  userPromptHint?: string;
   gatewaySchema?: unknown;
 }
 
