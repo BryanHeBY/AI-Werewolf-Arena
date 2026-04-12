@@ -13,7 +13,7 @@
    - `目前不是你的发言轮次。`
 3. 保留最小可执行信息：
    - 当前阶段与子阶段
-   - `mustAct` 强制行动要求
+   - 回合约束要求（`turn_constraints`）
    - 可用工具列表
    - 工具参数提示
 
@@ -30,11 +30,16 @@
 1. 发言轮次判定：
    - 若本轮可用工具包含 `speak` 或 `speak_to_wolves`，判定为“是你的发言轮次”。
    - 其他情况判定为“不是你的发言轮次”。
-2. `mustAct` 文案：
-   - `mustAct=true`：必须至少调用一次工具。
-   - `mustAct=false`：可结束回合不行动（系统约束仍由 system prompt 决定）。
-3. 保持 system prompt 现有硬约束不变（工具调用、禁止思维链、阶段职责等）。
-4. 当可用工具为 `self_destruct` 时，system prompt 必须包含醒目警告：`自爆需谨慎！！！`。
+2. 回合约束文案：
+   - 优先渲染结构化 `turn_constraints`（最少/最多动作次数、必需工具命中要求）。
+   - 若未提供 `turn_constraints`，兼容旧字段 `must_act`：
+     - `mustAct=true` -> 至少一次有效行动；
+     - `mustAct=false` -> 可零行动结束。
+3. `finish_turn`：
+   - 可在任意阶段暴露给模型；
+   - 是否允许真正结束由约束判定层决定，不满足约束时必须返回结构化拒绝并继续当前回合。
+4. 保持 system prompt 现有硬约束不变（工具调用、禁止思维链、阶段职责等）。
+5. 当可用工具为 `self_destruct` 时，system prompt 必须包含醒目警告：`自爆需谨慎！！！`。
 
 ## 验收标准
 

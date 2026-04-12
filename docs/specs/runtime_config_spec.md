@@ -59,6 +59,7 @@
       "forceJsonResponse": true,
       "reasoningEnabled": true,
       "reasoningEffort": "medium",
+      "thinkingEnabled": false,
       "personalityPrompt": ""
     },
     "relay_flash": {
@@ -69,6 +70,7 @@
       "forceJsonResponse": true,
       "reasoningEnabled": true,
       "reasoningEffort": "medium",
+      "thinkingEnabled": true,
       "personalityPrompt": ""
     }
   }
@@ -135,6 +137,7 @@
 说明：
 - `agent.agentName` 直接引用 `agents.items` 中已有 agent
 - `agent.profile` 为可选临时覆盖（只覆盖本次 debug_summary）
+- `thinkingEnabled` 控制是否向兼容网关下发 `extra_body.thinking={type:\"enabled\"}`。
 
 ## 4. 兼容与迁移
 
@@ -149,4 +152,3 @@
 - provider `type` 当前仅支持 `openai`
 - `agents.items.<name>.provider` 必须存在于 `providers.items`
 - `games.*.agent / roleAgents / playerAgents / debugSummaryAgent` 必须引用已定义 agent 名称
-

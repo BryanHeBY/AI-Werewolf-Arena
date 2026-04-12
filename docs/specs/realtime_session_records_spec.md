@@ -61,3 +61,11 @@
 - [x] 终局写入最终 manifest + debug_summary
 - [x] 增加实时写盘测试（中途可见文件内容）
 - [x] 通过 build 与相关测试
+
+## 7. 回合内多工具记录约定（新增）
+
+1. 单个请求轮次内允许多次 `tool_call` 交互。
+2. 玩家视角时间线中：
+   - 保留最终可追溯的 `tool_call` 序列；
+   - 不再把 `step N tool_call/tool_result` 文本拼接进 `llm_message` 内容。
+3. 回合结束由 `finish_turn` 触发时，若约束未满足，需在日志中保留结构化拒绝结果（而非静默丢弃）。

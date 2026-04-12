@@ -171,7 +171,7 @@ V3 的事件总线保持“全量事件”能力，但在对外广播时必须�
 1. `LlmActionProvider` 维护 `Map<playerId, ChatMessage[]>` 独立历史。
 2. 每轮请求前直接消费 3.6.2 产出的“玩家可见信息渲染层”结果（`broadcast_feed`），按增量注入广播行（写入 `user` 消息，前缀 `【广播】`）。
 3. 再拼接当前回合 `user` 指令块，得到本轮 `messages`：
-   - `system`：工具调用规则、mustAct 约束、禁止输出要求。
+   - `system`：工具调用规则、turn constraints 约束、禁止输出要求。
    - `history`：该玩家历史消息（含广播与先前 assistant 回复）。
    - `current_user`：本轮阶段上下文与参数提示。
 
@@ -181,7 +181,7 @@ V3 的事件总线保持“全量事件”能力，但在对外广播时必须�
 2. 当前回合指令块（1 条）：单条 `user` message，多行键值文本，字段顺序如下：
    - `玩家编号={number}`
    - `行动窗口={standard_round|...}`
-   - `mustAct={true|false}`
+   - `turn_constraints={json_object}`
    - `你的身份={wolf|seer|...}`
    - `可用工具={json_array}`
    - `阶段上下文={json_object}`
@@ -258,6 +258,32 @@ V3 的事件总线保持“全量事件”能力，但在对外广播时必须�
 4. 若 SDK 工具调用不可用或请求异常，才走文本解析/恢复 + fallback 兜底路径。
 5. 可观测性：`run_llm_game --print-thinking true` 时，运行日志输出 SDK 回合“思考轨迹”（`assistant` 文本 + `tool_call/tool_result`），用于排查模型决策链路；该输出与 `--print-llm-io` 解耦，可单独开启。
 6. 旁观私有事件日志：`--print-private-events` 控制控制台是否输出私有事件明细（如 `seer_checked`）；默认开启，仅影响旁观日志，不改变 Agent 视角隔离。
+
+#### 3.6.5 回合约束与多工具会话（目标架构补充）
+为支持“单回合多次工具交互 + Agent 主动结束回合”的体验，V3 执行链路新增以下目标约束模型：
+
+1. **多工具回合**
+   - 单个回合内允许多次工具调用；
+   - 每次工具调用后服务端立即回填结果（如狼刀投票受理、预言家查验结果、女巫用药受理）；
+   - 是否结束回合由 Agent 显式调用 `finish_turn` 决定。
+
+2. **Turn Constraints（回合约束）**
+   - 以结构化约束替代单一 `mustAct` 布尔值；
+   - 约束字段包括：
+     - `required_actions`：本轮必须完成的动作集合；
+     - `selection_rules`：目标选择规则（如必须从候选列表中选且不可空）；
+     - `cardinality`：动作次数上下界（如 `min=1,max=1`）；
+     - `end_condition`：允许 `finish_turn` 的前置条件；
+     - `retry_policy`：不满足约束时的重试提示策略。
+
+3. **结束前校验**
+   - Agent 请求结束回合时，先执行约束校验；
+   - 若仍缺少必需动作，系统向同一消息流追加“必须行动”提示并继续当前回合，不切换阶段。
+
+4. **行动校验解耦**
+   - 将“工具参数/阶段窗口/约束满足性”从 loop 主流程中抽离到独立校验服务；
+   - loop 层仅负责消息往返与工具调度；
+   - 校验服务输出统一判定结果，供事件落库、重试提示和 fallback 共用。
 
 #### 3.6.5 行动落地层（Validation & State Mutation）
 1. `LlmActionProvider` 返回 `ToolCall` 给 phase pipeline。
