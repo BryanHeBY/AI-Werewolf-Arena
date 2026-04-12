@@ -199,6 +199,7 @@ export class OpenAIClient {
     const thinkingTrace: ToolLoopStepTrace[] = [];
     for (let step = 0; step < maxSteps; step++) {
       const completion = await withRetry(async () => {
+        const preferredToolChoice = options.toolChoice ?? "auto";
         const payload: any = {
           model: this.model,
           temperature: this.temperature,
@@ -212,13 +213,15 @@ export class OpenAIClient {
               parameters: tool.parameters,
             },
           })),
-          tool_choice: options.toolChoice ?? "auto",
+          tool_choice: preferredToolChoice,
         };
         this.attachReasoningPayload(payload);
         this.attachThinkingPayload(payload);
-        return this.createChatCompletionWithReasoningFallback(payload, {
-          signal: options.signal,
-        });
+        return this.createChatCompletionWithToolChoiceFallback(
+          payload,
+          { signal: options.signal },
+          preferredToolChoice,
+        );
       });
 
       const message: any = completion.choices?.[0]?.message ?? {};
@@ -373,6 +376,35 @@ export class OpenAIClient {
   }
 
   /**
+   * 某些网关在“thinking 模式”下不接受 tool_choice=required。
+   * 这里做一次自动降级，避免上层必须按 provider 写分支。
+   */
+  private async createChatCompletionWithToolChoiceFallback(
+    payload: any,
+    options: { signal?: AbortSignal },
+    preferredToolChoice: "auto" | "required",
+  ) {
+    try {
+      return await this.createChatCompletionWithReasoningFallback(payload, options);
+    } catch (error) {
+      if (
+        preferredToolChoice === "required" &&
+        this.isToolChoiceRequiredUnsupported(error)
+      ) {
+        console.warn(
+          `[openai_client] tool_choice=required unsupported by current gateway/model; fallback to tool_choice=auto (model=${this.model})`,
+        );
+        const downgradedPayload = { ...payload, tool_choice: "auto" };
+        return this.createChatCompletionWithReasoningFallback(
+          downgradedPayload,
+          options,
+        );
+      }
+      throw error;
+    }
+  }
+
+  /**
    * 判断错误是否为 response_format 不兼容导致。
    */
   private isResponseFormatUnsupported(error: unknown): boolean {
@@ -396,6 +428,22 @@ export class OpenAIClient {
       (text.includes("unsupported") ||
         text.includes("unknown") ||
         text.includes("not support") ||
+        text.includes("invalid"))
+    );
+  }
+
+  /**
+   * 判断错误是否由 tool_choice=required 不兼容导致。
+   */
+  private isToolChoiceRequiredUnsupported(error: unknown): boolean {
+    const text = String(error).toLowerCase();
+    return (
+      text.includes("tool_choice") &&
+      text.includes("required") &&
+      (text.includes("not support") ||
+        text.includes("does not support") ||
+        text.includes("invalidparameter") ||
+        text.includes("invalid parameter") ||
         text.includes("invalid"))
     );
   }

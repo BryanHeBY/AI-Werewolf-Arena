@@ -773,8 +773,8 @@ export class LlmActionProvider implements ActionProvider {
         {
           signal: controller.signal,
           maxSteps: 8,
-          toolChoice:
-            turnConstraints.minValidActions > 0 ? "required" : "auto",
+          // 统一使用 auto：是否允许结束与是否满足必需动作，交由回合约束层校验。
+          toolChoice: "auto",
         },
       );
 
