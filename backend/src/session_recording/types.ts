@@ -77,59 +77,6 @@ export interface ReplayLlmRequestPayload {
   messages: ReplayLlmRequestMessage[];
 }
 
-/** 玩家工具调用时间线条目。 */
-export interface ReplayPlayerToolCallEntry {
-  seq: number;
-  kind: "tool_call";
-  day: number;
-  phase: string;
-  stage: string;
-  request_id: string;
-  timestamp?: string;
-  role: "assistant";
-  name: string;
-  args: Record<string, unknown>;
-  accepted?: boolean;
-  result?: Record<string, unknown> | string;
-}
-
-/** 玩家文本动作时间线条目。 */
-export interface ReplayPlayerTextActionEntry {
-  seq: number;
-  kind: "text_action";
-  day: number;
-  phase: string;
-  stage: string;
-  request_id: string;
-  timestamp?: string;
-  role: "assistant";
-  content: string;
-  parsed_action?: {
-    name: string;
-    args: Record<string, unknown>;
-  };
-}
-
-/** 玩家 fallback 时间线条目。 */
-export interface ReplayPlayerFallbackEntry {
-  seq: number;
-  kind: "fallback";
-  day: number;
-  phase: string;
-  stage: string;
-  request_id: string;
-  timestamp?: string;
-  role: "system";
-  fallback?: {
-    used: boolean;
-    reason?: string;
-    action?: {
-      name: string;
-      args: Record<string, unknown>;
-    };
-  };
-}
-
 /** 玩家广播时间线条目。 */
 export interface ReplayPlayerBroadcastEntry {
   seq: number;
@@ -143,27 +90,57 @@ export interface ReplayPlayerBroadcastEntry {
   content: string;
 }
 
-/** 玩家 LLM 消息时间线条目。 */
-export interface ReplayPlayerLlmMessageEntry {
+/** 玩家单回合增量结构。 */
+export interface ReplayPlayerTurnDelta {
+  llm_request_messages?: ReplayLlmRequestMessage[];
+  prompt_user_delta?: string[];
+  retry_trace?: Array<{
+    attempt: number;
+    status: "request_error" | "no_valid_action";
+    reason?: string;
+    retry_prompt?: string;
+  }>;
+  thinking_text?: string;
+  action_mode: ReplayActionMode;
+  tool_calls: ReplayToolCallTrace[];
+  text_action?: {
+    text: string;
+    parsed_action?: {
+      name: string;
+      args: Record<string, unknown>;
+    };
+  };
+  final_action?: ToolCall | null;
+  fallback?: {
+    used: boolean;
+    reason?: string;
+    action?: {
+      name: string;
+      args: Record<string, unknown>;
+    };
+  };
+}
+
+/** 玩家回合时间线条目。 */
+export interface ReplayPlayerTurnEntry {
   seq: number;
-  kind: "llm_message";
+  kind: "turn";
   day: number;
   phase: string;
   stage: string;
   request_id: string;
   timestamp?: string;
-  role: ReplayLlmRequestMessage["role"];
-  content: string;
-  tool_call_id?: string;
+  turn_seq: number;
+  visible_feed_delta: string[];
+  feed_cursor_before?: number;
+  feed_cursor_after?: number;
+  delta: ReplayPlayerTurnDelta;
 }
 
 /** 玩家时间线条目联合类型。 */
 export type ReplayPlayerTimelineEntry =
   | ReplayPlayerBroadcastEntry
-  | ReplayPlayerLlmMessageEntry
-  | ReplayPlayerToolCallEntry
-  | ReplayPlayerTextActionEntry
-  | ReplayPlayerFallbackEntry;
+  | ReplayPlayerTurnEntry;
 
 /** 玩家视角复盘结构。 */
 export interface ReplayPlayerView {
@@ -238,6 +215,12 @@ export interface ReplayRecordPlayerRoundInput {
   initialPromptSystem?: string;
   initialBoardInfo?: string;
   promptUserDelta?: string[];
+  retryTrace?: Array<{
+    attempt: number;
+    status: "request_error" | "no_valid_action";
+    reason?: string;
+    retryPrompt?: string;
+  }>;
   thinkingText?: string;
   actionMode: ReplayActionMode;
   toolCalls: ReplayToolCallTrace[];

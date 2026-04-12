@@ -49,38 +49,33 @@ function collectObservations(input: BuildDebugSummaryInput): SummaryObservation[
   let toolRejectedCount = 0;
   for (const view of views) {
     for (const entry of view.timeline) {
-      if (
-        entry.kind === "llm_message" ||
-        entry.kind === "tool_call" ||
-        entry.kind === "text_action" ||
-        entry.kind === "fallback"
-      ) {
-        if (typeof entry.day !== "number" || entry.day <= 0) {
-          invalidDaySeqs.push(entry.seq);
-        }
-        const requestId = String(entry.request_id ?? "");
-        const match = requestId.match(/^(\d+)-([a-z_]+)-/i);
-        if (match) {
-          const reqDay = Number(match[1]);
-          const reqPhase = match[2];
-          if (reqDay !== entry.day || reqPhase !== entry.phase) {
-            mismatchSeqs.push(entry.seq);
-          }
+      if (entry.kind !== "turn") {
+        continue;
+      }
+      if (typeof entry.day !== "number" || entry.day <= 0) {
+        invalidDaySeqs.push(entry.seq);
+      }
+      const requestId = String(entry.request_id ?? "");
+      const match = requestId.match(/^(\d+)-([a-z_]+)-/i);
+      if (match) {
+        const reqDay = Number(match[1]);
+        const reqPhase = match[2];
+        if (reqDay !== entry.day || reqPhase !== entry.phase) {
+          mismatchSeqs.push(entry.seq);
         }
       }
-      if (entry.kind === "fallback") {
+      if (entry.delta.fallback?.used) {
         fallbackCount += 1;
       }
       if (
-        entry.kind === "llm_message" &&
-        entry.role === "assistant" &&
-        /tool_not_allowed_in_this_turn|invalid_tool_arguments/.test(entry.content)
+        entry.delta.retry_trace?.some(
+          (item) => item.status === "no_valid_action",
+        )
       ) {
         toolRejectedCount += 1;
       }
       if (
-        entry.kind === "tool_call" &&
-        entry.accepted === false
+        entry.delta.tool_calls.some((call) => call.accepted === false)
       ) {
         toolRejectedCount += 1;
       }
@@ -684,12 +679,7 @@ function scanPlayerTimelineMetadataIssues(
     const inconsistentReqSeqs: number[] = [];
 
     for (const entry of view.timeline) {
-      if (
-        entry.kind !== "llm_message" &&
-        entry.kind !== "tool_call" &&
-        entry.kind !== "text_action" &&
-        entry.kind !== "fallback"
-      ) {
+      if (entry.kind !== "turn") {
         continue;
       }
 

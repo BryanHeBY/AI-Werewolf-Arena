@@ -149,6 +149,23 @@ function summarizePlayerView(
       stage: entry.stage,
       request_id: entry.request_id,
     };
+    if (entry.kind === "turn") {
+      base.turn_seq = entry.turn_seq;
+      base.visible_feed_delta = entry.visible_feed_delta.slice(-3);
+      base.action_mode = entry.delta.action_mode;
+      base.tool_calls = entry.delta.tool_calls.map((call) => ({
+        name: call.name,
+        accepted: call.accepted,
+      }));
+      base.retry_trace = entry.delta.retry_trace?.map((item) => ({
+        attempt: item.attempt,
+        status: item.status,
+      }));
+      if (entry.delta.fallback?.used) {
+        base.fallback_reason = entry.delta.fallback.reason;
+      }
+      return base;
+    }
     if ((entry as any).role) {
       base.role = (entry as any).role;
     }

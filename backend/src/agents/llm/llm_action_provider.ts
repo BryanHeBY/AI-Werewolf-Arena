@@ -220,6 +220,12 @@ export class LlmActionProvider implements ActionProvider {
     );
     let raw = "";
     const startedAt = Date.now();
+    const retryTrace: Array<{
+      attempt: number;
+      status: "request_error" | "no_valid_action";
+      reason?: string;
+      retryPrompt?: string;
+    }> = [];
     const toToolCalls = (action?: ToolCall | null) =>
       action
         ? [
@@ -289,6 +295,13 @@ export class LlmActionProvider implements ActionProvider {
         };
 
         const firstAttempt = await runSdkAttempt(0, messages);
+        if (firstAttempt.failed) {
+          retryTrace.push({
+            attempt: 0,
+            status: "request_error",
+            reason: firstAttempt.errorText,
+          });
+        }
         const picked = firstAttempt.picked;
         if (picked) {
           this.appendTrace(
@@ -325,6 +338,21 @@ export class LlmActionProvider implements ActionProvider {
             const retryResult = await runSdkAttempt(attempt, retryMessages);
             const retried = retryResult.picked;
             hasRuntimeError = hasRuntimeError || retryResult.failed;
+            if (retryResult.failed) {
+              retryTrace.push({
+                attempt,
+                status: "request_error",
+                reason: retryResult.errorText,
+                retryPrompt,
+              });
+            } else if (!retried) {
+              retryTrace.push({
+                attempt,
+                status: "no_valid_action",
+                reason: "turn_constraints_no_valid_action",
+                retryPrompt,
+              });
+            }
             if (retried) {
               this.appendTrace(
                 `request_ok_retry player=${request.actorId} phase=${request.phase} attempt=${attempt}/${maxRetries} action=${retried.name} args=${JSON.stringify(retried.args)} elapsed_ms=${Date.now() - startedAt}`,
@@ -334,6 +362,7 @@ export class LlmActionProvider implements ActionProvider {
                 toolCalls: toToolCalls(retried),
                 finalAction: retried,
                 thinkingText: this.actorLastAssistantText.get(request.actorId),
+                ...(retryTrace.length > 0 ? { retryTrace: [...retryTrace] } : {}),
               });
               return retried;
             }
@@ -345,6 +374,7 @@ export class LlmActionProvider implements ActionProvider {
               toolCalls: toToolCalls(fallback),
               finalAction: fallback,
               thinkingText: this.actorLastAssistantText.get(request.actorId),
+              ...(retryTrace.length > 0 ? { retryTrace: [...retryTrace] } : {}),
               fallback: {
                 used: true,
                 reason: "runtime_error",
@@ -362,6 +392,7 @@ export class LlmActionProvider implements ActionProvider {
             toolCalls: toToolCalls(fallback),
             finalAction: fallback,
             thinkingText: this.actorLastAssistantText.get(request.actorId),
+            ...(retryTrace.length > 0 ? { retryTrace: [...retryTrace] } : {}),
             fallback: {
               used: true,
               reason: "model_declined_required_action",
@@ -377,6 +408,7 @@ export class LlmActionProvider implements ActionProvider {
             toolCalls: toToolCalls(fallback),
             finalAction: fallback,
             thinkingText: this.actorLastAssistantText.get(request.actorId),
+            ...(retryTrace.length > 0 ? { retryTrace: [...retryTrace] } : {}),
             fallback: {
               used: true,
               reason: "runtime_error",
