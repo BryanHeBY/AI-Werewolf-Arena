@@ -127,6 +127,14 @@ export interface LlmActionProviderOptions {
   printLlmIo?: boolean;
   printThinking?: boolean;
   clientResolver?: (request: ActionRequest, role?: RoleComponent) => ChatLike;
+  requestConcurrencyScopeResolver?: (
+    request: ActionRequest,
+    role?: RoleComponent,
+  ) => string | undefined;
+  maxConcurrentRequestsResolver?: (
+    request: ActionRequest,
+    role?: RoleComponent,
+  ) => number | undefined;
   personalityPromptResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
   toolSpecRegistry?: ToolSpecRegistry;
   rolePromptRegistry?: RolePromptRegistry;
@@ -134,6 +142,7 @@ export interface LlmActionProviderOptions {
   targetHintRegistry?: TargetHintRegistry;
   boardConfig?: BoardConfig;
   configRenderRegistry?: ConfigRenderRegistry;
+  maxConcurrentRequests?: number;
 }
 
 /**
@@ -152,6 +161,14 @@ export class LlmActionProvider implements ActionProvider {
   private readonly printThinking: boolean;
   private readonly fallbackProvider: ActionProvider;
   private readonly clientResolver?: (request: ActionRequest, role?: RoleComponent) => ChatLike;
+  private readonly requestConcurrencyScopeResolver?: (
+    request: ActionRequest,
+    role?: RoleComponent,
+  ) => string | undefined;
+  private readonly maxConcurrentRequestsResolver?: (
+    request: ActionRequest,
+    role?: RoleComponent,
+  ) => number | undefined;
   private readonly personalityPromptResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
   private readonly toolSpecRegistry: ToolSpecRegistry;
   private readonly rolePromptRegistry: RolePromptRegistry;
@@ -159,6 +176,9 @@ export class LlmActionProvider implements ActionProvider {
   private readonly targetHintRegistry: TargetHintRegistry;
   private readonly boardConfig?: BoardConfig;
   private readonly configRenderRegistry: ConfigRenderRegistry;
+  private readonly maxConcurrentRequests: number;
+  private readonly activeRequestCountByScope = new Map<string, number>();
+  private readonly requestWaitQueueByScope = new Map<string, Array<() => void>>();
   private readonly recentEvents: string[] = [];
   private readonly agentHistories = new Map<EntityId, ChatMessage[]>();
   private readonly agentBroadcastCursor = new Map<EntityId, number>();
@@ -184,6 +204,8 @@ export class LlmActionProvider implements ActionProvider {
     this.printLlmIo = options.printLlmIo ?? false;
     this.printThinking = options.printThinking ?? false;
     this.clientResolver = options.clientResolver;
+    this.requestConcurrencyScopeResolver = options.requestConcurrencyScopeResolver;
+    this.maxConcurrentRequestsResolver = options.maxConcurrentRequestsResolver;
     this.personalityPromptResolver = options.personalityPromptResolver;
     this.toolSpecRegistry = options.toolSpecRegistry ?? getDefaultToolSpecRegistry();
     this.rolePromptRegistry =
@@ -195,6 +217,18 @@ export class LlmActionProvider implements ActionProvider {
     this.boardConfig = options.boardConfig;
     this.configRenderRegistry =
       options.configRenderRegistry ?? getDefaultConfigRenderRegistry();
+    const envMaxConcurrent = Number(process.env.LLM_MAX_CONCURRENT_REQUESTS ?? "");
+    const configuredMaxConcurrent =
+      options.maxConcurrentRequests ??
+      (Number.isFinite(envMaxConcurrent) && envMaxConcurrent > 0
+        ? envMaxConcurrent
+        : undefined);
+    this.maxConcurrentRequests =
+      typeof configuredMaxConcurrent === "number" &&
+      Number.isFinite(configuredMaxConcurrent) &&
+      configuredMaxConcurrent > 0
+        ? Math.max(1, Math.floor(configuredMaxConcurrent))
+        : Number.POSITIVE_INFINITY;
     this.fallbackProvider =
       options.fallbackProvider ?? new BaselineBotActionProvider(world);
   }
@@ -264,7 +298,21 @@ export class LlmActionProvider implements ActionProvider {
       return fallback;
     }
 
+    const requestConcurrencyScope = this.resolveRequestConcurrencyScope(
+      request,
+      roleComp,
+    );
+    const requestMaxConcurrent = this.resolveMaxConcurrentRequests(
+      request,
+      roleComp,
+    );
+    await this.acquireRequestSlot(
+      request,
+      requestConcurrencyScope,
+      requestMaxConcurrent,
+    );
     try {
+      try {
       this.appendTrace(
         `request_start player=${request.actorId} phase=${request.phase} tools=${request.allowedTools.join(",")} timeout_ms=${effectiveTimeoutMs}`,
       );
@@ -556,31 +604,102 @@ export class LlmActionProvider implements ActionProvider {
         },
       });
       return fallback;
-    } catch (error) {
-      const errText = String(error);
-      if (errText.includes("llm_request_timeout_")) {
-        this.appendTrace(
-          `request_timeout player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt} err=${errText}`,
-        );
-      } else {
-        this.appendTrace(
-          `request_transport_fail player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt} err=${errText}`,
-        );
+      } catch (error) {
+        const errText = String(error);
+        if (errText.includes("llm_request_timeout_")) {
+          this.appendTrace(
+            `request_timeout player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt} err=${errText}`,
+          );
+        } else {
+          this.appendTrace(
+            `request_transport_fail player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt} err=${errText}`,
+          );
+        }
       }
+
+      const fallback = await this.runFallback(request, "runtime_error");
+      this.recordPlayerRound(request, built, {
+        actionMode: fallback ? "tool_call" : "none",
+        toolCalls: toToolCalls(fallback),
+        finalAction: fallback,
+        fallback: {
+          used: true,
+          reason: "runtime_error",
+          action: toFallbackAction(fallback),
+        },
+      });
+      return fallback;
+    } finally {
+      this.releaseRequestSlot(requestConcurrencyScope);
+    }
+  }
+
+  private resolveRequestConcurrencyScope(
+    request: ActionRequest,
+    role?: RoleComponent,
+  ): string {
+    const fromResolver = this.requestConcurrencyScopeResolver?.(request, role)?.trim();
+    if (fromResolver) {
+      return fromResolver;
+    }
+    return "default";
+  }
+
+  private async acquireRequestSlot(
+    request: ActionRequest,
+    scope: string,
+    maxConcurrentRequests: number,
+  ): Promise<void> {
+    if (!Number.isFinite(maxConcurrentRequests) || maxConcurrentRequests <= 0) {
+      const active = this.activeRequestCountByScope.get(scope) ?? 0;
+      this.activeRequestCountByScope.set(scope, active + 1);
+      return;
+    }
+    const active = this.activeRequestCountByScope.get(scope) ?? 0;
+    if (active < maxConcurrentRequests) {
+      this.activeRequestCountByScope.set(scope, active + 1);
+      return;
+    }
+    const queue = this.requestWaitQueueByScope.get(scope) ?? [];
+    this.requestWaitQueueByScope.set(scope, queue);
+    const queueDepth = queue.length + 1;
+    this.appendTrace(
+      `request_queue_wait player=${request.actorId} phase=${request.phase} scope=${scope} queue_depth=${queueDepth} active=${active}/${maxConcurrentRequests}`,
+    );
+    await new Promise<void>((resolve) => {
+      queue.push(resolve);
+    });
+    const resumedActive = this.activeRequestCountByScope.get(scope) ?? 0;
+    this.activeRequestCountByScope.set(scope, resumedActive + 1);
+  }
+
+  private resolveMaxConcurrentRequests(
+    request: ActionRequest,
+    role?: RoleComponent,
+  ): number {
+    const fromResolver = this.maxConcurrentRequestsResolver?.(request, role);
+    if (typeof fromResolver === "number" && Number.isFinite(fromResolver)) {
+      return Math.max(1, Math.floor(fromResolver));
+    }
+    return this.maxConcurrentRequests;
+  }
+
+  private releaseRequestSlot(scope: string): void {
+    const active = this.activeRequestCountByScope.get(scope) ?? 0;
+    if (active <= 1) {
+      this.activeRequestCountByScope.delete(scope);
+    } else {
+      this.activeRequestCountByScope.set(scope, active - 1);
     }
 
-    const fallback = await this.runFallback(request, "runtime_error");
-    this.recordPlayerRound(request, built, {
-      actionMode: fallback ? "tool_call" : "none",
-      toolCalls: toToolCalls(fallback),
-      finalAction: fallback,
-      fallback: {
-        used: true,
-        reason: "runtime_error",
-        action: toFallbackAction(fallback),
-      },
-    });
-    return fallback;
+    const queue = this.requestWaitQueueByScope.get(scope);
+    const next = queue?.shift();
+    if (queue && queue.length === 0) {
+      this.requestWaitQueueByScope.delete(scope);
+    }
+    if (next) {
+      next();
+    }
   }
 
   /**

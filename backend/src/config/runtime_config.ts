@@ -8,6 +8,7 @@ export interface ProviderConfig {
   apiKey: string;
   baseURL?: string;
   userAgent?: string;
+  maxConcurrentRequests?: number;
 }
 
 export interface AgentProfileConfig {

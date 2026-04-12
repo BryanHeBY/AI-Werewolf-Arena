@@ -182,7 +182,31 @@ function toJudgeLine(event: { type: string; payload: Record<string, any> }): str
   return getDefaultScriptEventRenderRegistry().toJudgeLine(event as GameEvent);
 }
 
-function toReplayRenderText(event: { type: string; payload: Record<string, any> }): string | undefined {
+function toReplayRenderText(
+  event: { type: string; payload: Record<string, any> },
+  printPrivateEvents: boolean,
+): string | undefined {
+  if (event.type === "vote_cast") {
+    const actorId = Number(event.payload.actorId);
+    const weight = Number(event.payload.weight ?? 1);
+    const abstain = event.payload.abstain === true;
+    if (abstain) {
+      return weight !== 1
+        ? `[live][行动][投票] ${actorId}号弃票(w=${weight})`
+        : `[live][行动][投票] ${actorId}号弃票`;
+    }
+    const targetId = Number(event.payload.targetId);
+    return weight !== 1
+      ? `[live][行动][投票] ${actorId}号投给${targetId}号(w=${weight})`
+      : `[live][行动][投票] ${actorId}号投给${targetId}号`;
+  }
+  const live = getDefaultScriptEventRenderRegistry().toLiveRender(
+    event as GameEvent,
+    printPrivateEvents,
+  );
+  if (live.length > 0) {
+    return live.map((item) => item.text).join("\n");
+  }
   return getDefaultScriptEventRenderRegistry().toReplayRenderText(event as GameEvent);
 }
 
@@ -290,6 +314,10 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
       clientResolver: (request, role) =>
         clientByActor.get(request.actorId) ??
         clientByActor.get(context.world.entityIds()[0])!,
+      requestConcurrencyScopeResolver: (request, role) =>
+        resolveProfile(role?.role, request.actorId).providerName,
+      maxConcurrentRequestsResolver: (request, role) =>
+        resolveProfile(role?.role, request.actorId).provider.maxConcurrentRequests,
       personalityPromptResolver: (request, role) =>
         resolveProfile(role?.role, request.actorId).personalityPrompt,
       trace: options.trace,
@@ -356,7 +384,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
         day: replayDayCursor,
         phase: replayPhaseCursor,
         payload: event.payload,
-        renderText: toReplayRenderText(event as any),
+        renderText: toReplayRenderText(event as any, options.printPrivateEvents),
       });
       if (!options.streamEvents) {
         // 即使不打印 live，也要写入“玩家可见广播”到 session 复盘。
