@@ -151,18 +151,50 @@ function summarizePlayerView(
     };
     if (entry.kind === "turn") {
       base.turn_seq = entry.turn_seq;
-      base.visible_feed_delta = entry.visible_feed_delta.slice(-3);
-      base.action_mode = entry.delta.action_mode;
-      base.tool_calls = entry.delta.tool_calls.map((call) => ({
-        name: call.name,
-        accepted: call.accepted,
-      }));
-      base.retry_trace = entry.delta.retry_trace?.map((item) => ({
-        attempt: item.attempt,
-        status: item.status,
-      }));
-      if (entry.delta.fallback?.used) {
-        base.fallback_reason = entry.delta.fallback.reason;
+      const actionSummary = entry.delta_messages.find(
+        (item) => item.kind === "action_summary" && item.content,
+      );
+      if (actionSummary?.content) {
+        try {
+          const parsed = JSON.parse(actionSummary.content) as {
+            action_mode?: string;
+          };
+          if (parsed.action_mode) {
+            base.action_mode = parsed.action_mode;
+          }
+        } catch {
+          // ignore malformed summary payloads
+        }
+      }
+      base.tool_calls = entry.delta_messages
+        .filter((item) => item.kind === "tool_call")
+        .map((item) => ({
+          name: item.name,
+          accepted: item.accepted,
+        }));
+      base.retry_trace = entry.delta_messages
+        .filter(
+          (item) =>
+            item.kind === "retry_prompt" ||
+            item.kind === "constraint_warning" ||
+            item.kind === "request_error",
+        )
+        .map((item) => ({
+          attempt: item.attempt ?? 0,
+          status: item.kind === "request_error" ? "request_error" : "no_valid_action",
+        }));
+      const fallbackMessage = entry.delta_messages.find(
+        (item) => item.kind === "fallback" && item.content,
+      );
+      if (fallbackMessage?.content) {
+        try {
+          const parsed = JSON.parse(fallbackMessage.content) as { reason?: string };
+          if (parsed.reason) {
+            base.fallback_reason = parsed.reason;
+          }
+        } catch {
+          // ignore malformed fallback payloads
+        }
       }
       return base;
     }

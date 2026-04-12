@@ -77,6 +77,27 @@ export interface ReplayLlmRequestPayload {
   messages: ReplayLlmRequestMessage[];
 }
 
+/** 玩家单回合增量消息。 */
+export interface ReplayPlayerDeltaMessage {
+  role: "system" | "user" | "assistant" | "tool" | "meta";
+  kind:
+    | "prompt"
+    | "retry_prompt"
+    | "assistant_output"
+    | "request_error"
+    | "constraint_warning"
+    | "tool_call"
+    | "tool_result"
+    | "action_summary"
+    | "fallback";
+  attempt?: number;
+  content?: string;
+  name?: string;
+  args?: Record<string, unknown>;
+  accepted?: boolean;
+  result?: Record<string, unknown> | string;
+}
+
 /** 玩家广播时间线条目。 */
 export interface ReplayPlayerBroadcastEntry {
   seq: number;
@@ -90,37 +111,6 @@ export interface ReplayPlayerBroadcastEntry {
   content: string;
 }
 
-/** 玩家单回合增量结构。 */
-export interface ReplayPlayerTurnDelta {
-  llm_request_messages?: ReplayLlmRequestMessage[];
-  prompt_user_delta?: string[];
-  retry_trace?: Array<{
-    attempt: number;
-    status: "request_error" | "no_valid_action";
-    reason?: string;
-    retry_prompt?: string;
-  }>;
-  thinking_text?: string;
-  action_mode: ReplayActionMode;
-  tool_calls: ReplayToolCallTrace[];
-  text_action?: {
-    text: string;
-    parsed_action?: {
-      name: string;
-      args: Record<string, unknown>;
-    };
-  };
-  final_action?: ToolCall | null;
-  fallback?: {
-    used: boolean;
-    reason?: string;
-    action?: {
-      name: string;
-      args: Record<string, unknown>;
-    };
-  };
-}
-
 /** 玩家回合时间线条目。 */
 export interface ReplayPlayerTurnEntry {
   seq: number;
@@ -131,10 +121,7 @@ export interface ReplayPlayerTurnEntry {
   request_id: string;
   timestamp?: string;
   turn_seq: number;
-  visible_feed_delta: string[];
-  feed_cursor_before?: number;
-  feed_cursor_after?: number;
-  delta: ReplayPlayerTurnDelta;
+  delta_messages: ReplayPlayerDeltaMessage[];
 }
 
 /** 玩家时间线条目联合类型。 */
@@ -211,6 +198,7 @@ export interface ReplayRecordPlayerRoundInput {
   feedCursorBefore?: number;
   feedCursorAfter?: number;
   llmRequestMessages?: ReplayLlmRequestMessage[];
+  deltaMessages?: ReplayPlayerDeltaMessage[];
   promptSystem?: string;
   initialPromptSystem?: string;
   initialBoardInfo?: string;
@@ -220,6 +208,7 @@ export interface ReplayRecordPlayerRoundInput {
     status: "request_error" | "no_valid_action";
     reason?: string;
     retryPrompt?: string;
+    assistantText?: string;
   }>;
   thinkingText?: string;
   actionMode: ReplayActionMode;

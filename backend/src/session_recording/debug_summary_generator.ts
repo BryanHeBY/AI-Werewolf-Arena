@@ -64,18 +64,20 @@ function collectObservations(input: BuildDebugSummaryInput): SummaryObservation[
           mismatchSeqs.push(entry.seq);
         }
       }
-      if (entry.delta.fallback?.used) {
+      if (entry.delta_messages.some((item) => item.kind === "fallback")) {
         fallbackCount += 1;
       }
       if (
-        entry.delta.retry_trace?.some(
-          (item) => item.status === "no_valid_action",
+        entry.delta_messages.some(
+          (item) => item.kind === "constraint_warning" || item.kind === "retry_prompt",
         )
       ) {
         toolRejectedCount += 1;
       }
       if (
-        entry.delta.tool_calls.some((call) => call.accepted === false)
+        entry.delta_messages.some(
+          (item) => item.kind === "tool_call" && item.accepted === false,
+        )
       ) {
         toolRejectedCount += 1;
       }

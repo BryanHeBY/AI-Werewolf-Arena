@@ -225,6 +225,7 @@ export class LlmActionProvider implements ActionProvider {
       status: "request_error" | "no_valid_action";
       reason?: string;
       retryPrompt?: string;
+      assistantText?: string;
     }> = [];
     const toToolCalls = (action?: ToolCall | null) =>
       action
@@ -276,6 +277,7 @@ export class LlmActionProvider implements ActionProvider {
           picked: ToolCall | null;
           failed: boolean;
           errorText?: string;
+          assistantText?: string;
         }> => {
           try {
             const picked = await this.runSdkToolLoop(
@@ -284,7 +286,11 @@ export class LlmActionProvider implements ActionProvider {
               attemptMessages,
               effectiveTimeoutMs,
             );
-            return { picked, failed: false };
+            return {
+              picked,
+              failed: false,
+              assistantText: this.actorLastAssistantText.get(request.actorId),
+            };
           } catch (error) {
             const errorText = String(error);
             this.appendTrace(
@@ -300,6 +306,7 @@ export class LlmActionProvider implements ActionProvider {
             attempt: 0,
             status: "request_error",
             reason: firstAttempt.errorText,
+            assistantText: firstAttempt.assistantText,
           });
         }
         const picked = firstAttempt.picked;
@@ -319,6 +326,14 @@ export class LlmActionProvider implements ActionProvider {
           let hasRuntimeError = firstAttempt.failed;
           let retryMessages = [...messages];
           const maxRetries = 3;
+          if (!firstAttempt.failed) {
+            retryTrace.push({
+              attempt: 0,
+              status: "no_valid_action",
+              reason: "turn_constraints_no_valid_action",
+              assistantText: firstAttempt.assistantText,
+            });
+          }
           for (let attempt = 1; attempt <= maxRetries; attempt++) {
             const retryPrompt = this.buildConstraintRetryPrompt(
               attempt,
@@ -334,24 +349,27 @@ export class LlmActionProvider implements ActionProvider {
             console.log(
               `[LLM_RETRY] player=${request.actorId} phase=${request.phase} attempt=${attempt}/${maxRetries} reason=turn_constraints_no_valid_action`,
             );
+            const retryTraceEntry: {
+              attempt: number;
+              status: "request_error" | "no_valid_action";
+              reason?: string;
+              retryPrompt?: string;
+              assistantText?: string;
+            } = {
+              attempt,
+              status: "no_valid_action",
+              reason: "turn_constraints_no_valid_action",
+              retryPrompt,
+            };
+            retryTrace.push(retryTraceEntry);
             this.dumpLlmPrompt(retryMessages, request);
             const retryResult = await runSdkAttempt(attempt, retryMessages);
             const retried = retryResult.picked;
             hasRuntimeError = hasRuntimeError || retryResult.failed;
+            retryTraceEntry.assistantText = retryResult.assistantText;
             if (retryResult.failed) {
-              retryTrace.push({
-                attempt,
-                status: "request_error",
-                reason: retryResult.errorText,
-                retryPrompt,
-              });
-            } else if (!retried) {
-              retryTrace.push({
-                attempt,
-                status: "no_valid_action",
-                reason: "turn_constraints_no_valid_action",
-                retryPrompt,
-              });
+              retryTraceEntry.status = "request_error";
+              retryTraceEntry.reason = retryResult.errorText;
             }
             if (retried) {
               this.appendTrace(
@@ -1065,6 +1083,13 @@ export class LlmActionProvider implements ActionProvider {
         reason?: string;
         action?: { name: string; args: Record<string, unknown> };
       };
+      retryTrace?: Array<{
+        attempt: number;
+        status: "request_error" | "no_valid_action";
+        reason?: string;
+        retryPrompt?: string;
+        assistantText?: string;
+      }>;
     },
   ): void {
     const recorder = SessionRecordHub.getActive();
@@ -1108,8 +1133,8 @@ export class LlmActionProvider implements ActionProvider {
         : {}),
       promptUserDelta: [
         `context_window=${built.contextWindowStart}-${built.contextWindowEnd}/${built.contextWindowTotal}`,
-        built.userPrompt,
       ],
+      retryTrace: extras.retryTrace,
       thinkingText: extras.thinkingText,
       actionMode: extras.actionMode,
       toolCalls: extras.toolCalls,

@@ -3,6 +3,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import {
   ReplayDebugReport,
+  ReplayPlayerDeltaMessage,
   ReplayFinalizeMeta,
   ReplayLlmRequestMessage,
   ReplayLogicOp,
@@ -19,7 +20,6 @@ import {
 import { buildDebugSummaryMarkdown } from "./debug_summary_generator";
 
 const THINKING_MAX_CHARS = 4000;
-const PROMPT_USER_MAX_CHARS = 4000;
 const LLM_MESSAGE_MAX_CHARS = 8000;
 const FLUSH_DEBOUNCE_MS = 100;
 
@@ -52,6 +52,31 @@ function normalizeLlmRequestMessages(
       ...(msg.tool_call_id ? { tool_call_id: msg.tool_call_id } : {}),
     };
   });
+}
+
+function normalizeDeltaMessages(
+  messages: ReplayPlayerDeltaMessage[] | undefined,
+): ReplayPlayerDeltaMessage[] {
+  if (!messages || messages.length === 0) {
+    return [];
+  }
+  return messages.map((msg) => ({
+    ...msg,
+    ...(msg.content
+      ? {
+          content:
+            msg.content.length > LLM_MESSAGE_MAX_CHARS
+              ? msg.content.slice(0, LLM_MESSAGE_MAX_CHARS)
+              : msg.content,
+        }
+      : {}),
+    ...(msg.args !== undefined
+      ? { args: safeJson(msg.args) as Record<string, unknown> }
+      : {}),
+    ...(msg.result !== undefined
+      ? { result: safeJson(msg.result) as Record<string, unknown> | string }
+      : {}),
+  }));
 }
 
 /**
@@ -173,6 +198,98 @@ export class SessionRecordManager {
       input.thinkingText && input.thinkingText.length > THINKING_MAX_CHARS
         ? input.thinkingText.slice(0, THINKING_MAX_CHARS)
         : input.thinkingText;
+    const deltaMessages = normalizeDeltaMessages(input.deltaMessages);
+    if (deltaMessages.length === 0) {
+      if (llmRequestMessages) {
+        for (const message of llmRequestMessages) {
+          deltaMessages.push({
+            role: message.role,
+            kind: "prompt",
+            content: message.content,
+          });
+        }
+      }
+      if (input.retryTrace) {
+        for (const item of input.retryTrace) {
+          if (item.retryPrompt) {
+            deltaMessages.push({
+              role: "user",
+              kind: "retry_prompt",
+              attempt: item.attempt,
+              content: item.retryPrompt,
+            });
+          }
+          if (item.assistantText) {
+            deltaMessages.push({
+              role: "assistant",
+              kind: "assistant_output",
+              attempt: item.attempt,
+              content: item.assistantText,
+            });
+          }
+          if (item.status === "request_error" && item.reason) {
+            deltaMessages.push({
+              role: "meta",
+              kind: "request_error",
+              attempt: item.attempt,
+              content: item.reason,
+            });
+          } else if (item.status === "no_valid_action" && item.reason) {
+            deltaMessages.push({
+              role: "meta",
+              kind: "constraint_warning",
+              attempt: item.attempt,
+              content: item.reason,
+            });
+          }
+        }
+      }
+      if (thinkingText) {
+        deltaMessages.push({
+          role: "assistant",
+          kind: "assistant_output",
+          content: thinkingText,
+        });
+      }
+      for (const call of input.toolCalls) {
+        deltaMessages.push({
+          role: "assistant",
+          kind: "tool_call",
+          name: call.name,
+          ...(call.args !== undefined
+            ? { args: safeJson(call.args) as Record<string, unknown> }
+            : {}),
+          ...(call.accepted !== undefined ? { accepted: call.accepted } : {}),
+        });
+        if (call.result !== undefined) {
+          deltaMessages.push({
+            role: "tool",
+            kind: "tool_result",
+            name: call.name,
+            result: safeJson(call.result) as Record<string, unknown> | string,
+          });
+        }
+      }
+      deltaMessages.push({
+        role: "meta",
+        kind: "action_summary",
+        content: JSON.stringify({
+          action_mode: input.actionMode,
+          final_action:
+            input.finalAction !== undefined ? safeJson(input.finalAction) : null,
+          ...(input.textAction
+            ? { text_action: safeJson(input.textAction) }
+            : {}),
+        }),
+      });
+      if (input.fallback?.used) {
+        deltaMessages.push({
+          role: "meta",
+          kind: "fallback",
+          content: JSON.stringify(safeJson(input.fallback)),
+        });
+      }
+    }
 
     const turnSeq =
       view.timeline.filter((entry) => entry.kind === "turn").length + 1;
@@ -185,60 +302,7 @@ export class SessionRecordManager {
       request_id: input.requestId,
       timestamp: toIso(input.timestampMs ?? Date.now()),
       turn_seq: turnSeq,
-      visible_feed_delta: [...input.visibleFeedDelta],
-      ...(input.feedCursorBefore !== undefined
-        ? { feed_cursor_before: input.feedCursorBefore }
-        : {}),
-      ...(input.feedCursorAfter !== undefined
-        ? { feed_cursor_after: input.feedCursorAfter }
-        : {}),
-      delta: {
-        ...(llmRequestMessages ? { llm_request_messages: llmRequestMessages } : {}),
-        ...(input.promptUserDelta
-          ? {
-              prompt_user_delta: input.promptUserDelta.map((line) =>
-                line.length > PROMPT_USER_MAX_CHARS
-                  ? line.slice(0, PROMPT_USER_MAX_CHARS)
-                  : line,
-              ),
-            }
-          : {}),
-        ...(input.retryTrace
-          ? {
-              retry_trace: input.retryTrace.map((item) => ({
-                attempt: item.attempt,
-                status: item.status,
-                ...(item.reason ? { reason: item.reason } : {}),
-                ...(item.retryPrompt ? { retry_prompt: item.retryPrompt } : {}),
-              })),
-            }
-          : {}),
-        ...(thinkingText ? { thinking_text: thinkingText } : {}),
-        action_mode: input.actionMode,
-        tool_calls: input.toolCalls.map((call) => ({
-          name: call.name,
-          args: safeJson(call.args) as Record<string, unknown>,
-          ...(call.id ? { id: call.id } : {}),
-          ...(call.accepted !== undefined ? { accepted: call.accepted } : {}),
-          ...(call.result !== undefined
-            ? { result: safeJson(call.result) as Record<string, unknown> | string }
-            : {}),
-        })),
-        ...(input.textAction
-          ? {
-              text_action: {
-                text: input.textAction.text,
-                ...(input.textAction.parsed_action
-                  ? { parsed_action: input.textAction.parsed_action }
-                  : {}),
-              },
-            }
-          : {}),
-        ...(input.finalAction !== undefined
-          ? { final_action: safeJson(input.finalAction) as any }
-          : {}),
-        ...(input.fallback ? { fallback: safeJson(input.fallback) as any } : {}),
-      },
+      delta_messages: deltaMessages,
     });
 
     this.playerViews.set(input.playerId, view);
@@ -381,8 +445,8 @@ export class SessionRecordManager {
     if (!firstTurn || firstTurn.kind !== "turn") {
       return undefined;
     }
-    const firstSystem = firstTurn.delta.llm_request_messages?.find(
-      (message) => message.role === "system",
+    const firstSystem = firstTurn.delta_messages.find(
+      (message) => message.role === "system" && message.content,
     );
     if (!firstSystem) {
       return undefined;

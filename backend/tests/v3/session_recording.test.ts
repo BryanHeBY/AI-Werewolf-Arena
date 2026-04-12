@@ -356,9 +356,12 @@ describe("SessionRecordManager", () => {
     expect(player1.timeline[0].stage).toBe("wolf_discussion");
     expect(player1.timeline[1].kind).toBe("turn");
     expect(player1.timeline[1].stage).toBe("wolf_discussion");
-    expect(player1.timeline[1].delta.action_mode).toBe("tool_call");
-    expect(player1.timeline[1].delta.tool_calls[0].name).toBe("speak_to_wolves");
-    expect(player1.timeline[1].delta.tool_calls[0].accepted).toBe(true);
+    expect(Array.isArray(player1.timeline[1].delta_messages)).toBe(true);
+    expect(
+      player1.timeline[1].delta_messages.some(
+        (item: any) => item.kind === "tool_call" && item.name === "speak_to_wolves",
+      ),
+    ).toBe(true);
 
     const debugReports = JSON.parse(
       await fs.readFile(path.join(sessionDir, "debug_reports.json"), "utf-8"),

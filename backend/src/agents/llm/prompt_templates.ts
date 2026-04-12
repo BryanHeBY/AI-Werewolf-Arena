@@ -81,7 +81,7 @@ export function buildUserPrompt(input: UserPromptInput): string {
     `[行动提示] ${input.actorId}号玩家，现在轮到你行动，当前处于${input.phase}阶段，子阶段是${input.stage}，${speechTurnText}。${input.stageContextHint ? ` ${input.stageContextHint}` : ""}`,
     `阶段规则：${input.stageDirective}${input.statusDirective ? ` ${input.statusDirective}` : ""}`,
     `${constraintText} 你当前可以使用的工具有：${input.allowedTools.join(", ") || "无"}，其中有效行动工具有：${effectiveActionToolsText}。`,
-    `工具参数提示：${input.toolArgHints}${input.actionableIdsHint ? `；${input.actionableIdsHint}` : ""}。请直接调用工具完成本轮行动。`,
+    `工具参数提示：${input.toolArgHints}${input.actionableIdsHint ? `；${input.actionableIdsHint}` : ""}。若使用 speak_to_wolves，end_chat=true 表示结束整轮夜聊。请直接调用工具完成本轮行动。`,
   ].join("\n");
 }
 
