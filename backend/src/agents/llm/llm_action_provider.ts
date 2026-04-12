@@ -39,7 +39,6 @@ import {
 } from "./prompt_templates";
 import {
   evaluateTurnConstraints,
-  renderTurnConstraintSystemRule,
   renderTurnConstraintUserHint,
   resolveTurnConstraints,
 } from "./turn_constraints";
@@ -166,6 +165,7 @@ export class LlmActionProvider implements ActionProvider {
   private readonly agentContextWindowStart = new Map<EntityId, number>();
   private readonly actorRoundCounter = new Map<EntityId, number>();
   private readonly actorLastAssistantText = new Map<EntityId, string>();
+  private readonly actorSystemPrompt = new Map<EntityId, string>();
   private readonly reportBugAcceptedScope = new Set<string>();
   private readonly reportBugAcceptedMessage = new Set<string>();
   private readonly reportBugAcceptedCountByActorDay = new Map<string, number>();
@@ -980,20 +980,21 @@ export class LlmActionProvider implements ActionProvider {
     const effectiveActionTools = llmAllowedTools.filter(
       (tool) => tool !== LlmActionProvider.REPORT_BUG_TOOL,
     );
-    const systemPrompt = buildSystemPrompt({
-      actorId: request.actorId,
-      role: roleComp?.role ?? "unknown",
-      maxPlayerId,
-      teammateIds,
-      allowedTools: llmAllowedTools,
-      stageDirective: this.stageDirective(request),
-      statusDirective: this.statusDirective(request.actorId, roleComp),
-      requiresAction,
-      turnConstraintRule: renderTurnConstraintSystemRule(turnConstraints),
-      boardInfoPrompt,
-      configPrompt,
-      personalityPrompt: this.personalityPromptResolver?.(request, roleComp),
-    });
+    const cachedSystemPrompt = this.actorSystemPrompt.get(request.actorId);
+    const systemPrompt =
+      cachedSystemPrompt ??
+      buildSystemPrompt({
+        actorId: request.actorId,
+        role: roleComp?.role ?? "unknown",
+        maxPlayerId,
+        teammateIds,
+        boardInfoPrompt,
+        configPrompt,
+        personalityPrompt: this.personalityPromptResolver?.(request, roleComp),
+      });
+    if (!cachedSystemPrompt) {
+      this.actorSystemPrompt.set(request.actorId, systemPrompt);
+    }
 
     const userPrompt = buildUserPrompt({
       actorId: request.actorId,
@@ -1002,6 +1003,8 @@ export class LlmActionProvider implements ActionProvider {
       isSpeechTurn:
         llmAllowedTools.includes("speak") ||
         llmAllowedTools.includes("speak_to_wolves"),
+      stageDirective: this.stageDirective(request),
+      statusDirective: this.statusDirective(request.actorId, roleComp),
       requiresAction,
       turnConstraintHint: renderTurnConstraintUserHint(turnConstraints),
       allowedTools: llmAllowedTools,
@@ -1094,7 +1097,6 @@ export class LlmActionProvider implements ActionProvider {
       feedCursorAfter: built.feedCursorAfter,
       // 复盘时间线仅保留当轮核心送模消息，避免与广播流和历史上下文重复堆叠。
       llmRequestMessages: [
-        { role: "system", content: built.systemPrompt },
         { role: "user", content: built.userPrompt },
       ],
       promptSystem: built.systemPrompt,

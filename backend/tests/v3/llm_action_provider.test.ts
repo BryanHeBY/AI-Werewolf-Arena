@@ -766,11 +766,12 @@ describe("LlmActionProvider", () => {
           .map((m) => m.content);
         const latest = userMessages[userMessages.length - 1] ?? "";
         const lines = latest.split("\n");
-        expect(lines.length).toBe(3);
+        expect(lines.length).toBe(4);
         expect(lines[0]).toContain("[行动提示]");
         expect(lines[0]).toContain("目前是你的发言轮次");
-        expect(lines[1]).toContain("你本轮可多次调用工具");
-        expect(lines[2]).toContain("工具参数提示：");
+        expect(lines[1]).toContain("阶段规则：");
+        expect(lines[2]).toContain("你本轮可多次调用工具");
+        expect(lines[3]).toContain("工具参数提示：");
         expect(latest).not.toContain("玩家编号=");
         expect(latest).not.toContain("当前板子信息");
       }),

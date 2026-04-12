@@ -7,11 +7,6 @@ export interface SystemPromptInput {
   role: string;
   maxPlayerId: number;
   teammateIds: number[];
-  allowedTools: string[];
-  stageDirective: string;
-  statusDirective?: string;
-  requiresAction: boolean;
-  turnConstraintRule?: string;
   boardInfoPrompt?: string;
   configPrompt?: string;
   personalityPrompt?: string;
@@ -23,6 +18,8 @@ export interface UserPromptInput {
   phase: string;
   stage: string;
   isSpeechTurn: boolean;
+  stageDirective: string;
+  statusDirective?: string;
   requiresAction: boolean;
   turnConstraintHint?: string;
   allowedTools: string[];
@@ -49,11 +46,6 @@ const SYSTEM_BASE_LINES = [
 
 /** 构建系统提示词文本。 */
 export function buildSystemPrompt(input: SystemPromptInput): string {
-  const actionRule = input.turnConstraintRule
-    ? input.turnConstraintRule
-    : input.requiresAction
-    ? "本轮必须完成一次有效行动，且禁止调用 finish_turn。"
-    : "本轮可选择结束回合不行动；当你不需要继续行动时，请直接不调用任何工具。";
   const teammateText =
     input.teammateIds.length > 0 ? input.teammateIds.join(", ") : "无";
   const personalityLine = input.personalityPrompt?.trim()
@@ -63,8 +55,7 @@ export function buildSystemPrompt(input: SystemPromptInput): string {
     `${SYSTEM_BASE_LINES[0]} 你的编号是${input.actorId}号，真实身份是${input.role}。当你看到“[行动提示]”时，说明你可以开始行动了。${SYSTEM_BASE_LINES[1]} ${SYSTEM_BASE_LINES[2]}`,
     `你当前同阵营队友（不含你自己）的编号：${teammateText}。`,
     `你只能引用本局存在的玩家编号，编号范围是1到${input.maxPlayerId}，严禁虚构不存在的玩家编号。`,
-    `仅可调用本轮可用工具：${input.allowedTools.join(", ")}。${input.stageDirective} ${actionRule}`,
-    ...(input.statusDirective ? [input.statusDirective] : []),
+    "每轮请严格遵循用户提示中的阶段规则、可用工具与回合约束。",
     ...(personalityLine ? [personalityLine] : []),
     ...(input.boardInfoPrompt ? [input.boardInfoPrompt] : []),
     ...(input.configPrompt ? [input.configPrompt] : []),
@@ -88,6 +79,7 @@ export function buildUserPrompt(input: UserPromptInput): string {
       : "无";
   return [
     `[行动提示] ${input.actorId}号玩家，现在轮到你行动，当前处于${input.phase}阶段，子阶段是${input.stage}，${speechTurnText}。${input.stageContextHint ? ` ${input.stageContextHint}` : ""}`,
+    `阶段规则：${input.stageDirective}${input.statusDirective ? ` ${input.statusDirective}` : ""}`,
     `${constraintText} 你当前可以使用的工具有：${input.allowedTools.join(", ") || "无"}，其中有效行动工具有：${effectiveActionToolsText}。`,
     `工具参数提示：${input.toolArgHints}${input.actionableIdsHint ? `；${input.actionableIdsHint}` : ""}。请直接调用工具完成本轮行动。`,
   ].join("\n");
