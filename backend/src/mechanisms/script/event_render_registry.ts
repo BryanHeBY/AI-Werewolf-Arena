@@ -16,6 +16,7 @@ import {
   WOLF_SCRIPT_LIVE_HANDLERS,
 } from "../roles/wolf/event_presenters";
 import { LAST_WORDS_SCRIPT_JUDGE_HANDLERS } from "../last_words/event_presenters";
+import { LAST_WORDS_SCRIPT_LIVE_HANDLERS } from "../last_words/event_presenters";
 import { IDIOT_SCRIPT_JUDGE_HANDLERS } from "../roles/idiot/event_presenters";
 import {
   SHERIFF_SCRIPT_JUDGE_HANDLERS,
@@ -112,14 +113,15 @@ const LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {
   day_speech: (event) => [{ kind: "system", text: `[live][白天][${event.payload.actorId}] ${event.payload.text}` }],
   game_over: (event) => [
     {
-      kind: "end",
-      text: `[live][终局] 胜利阵营=${getDefaultTextLocalizationRegistry().winnerName(String(event.payload.winner ?? ""))} 原因=${getDefaultTextLocalizationRegistry().gameOverReason(String(event.payload.reason ?? ""))}`,
+      kind: "god",
+      text: `[live][上帝][终局] 胜利阵营=${getDefaultTextLocalizationRegistry().winnerName(String(event.payload.winner ?? ""))} 原因=${getDefaultTextLocalizationRegistry().gameOverReason(String(event.payload.reason ?? ""))}`,
     },
   ],
   ...WOLF_SCRIPT_LIVE_HANDLERS,
   ...SEER_SCRIPT_LIVE_HANDLERS,
   ...GUARD_SCRIPT_LIVE_HANDLERS,
   ...WITCH_SCRIPT_LIVE_HANDLERS,
+  ...LAST_WORDS_SCRIPT_LIVE_HANDLERS,
   ...SHERIFF_SCRIPT_LIVE_HANDLERS,
 };
 

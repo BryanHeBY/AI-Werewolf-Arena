@@ -67,8 +67,8 @@ export const WOLF_SCRIPT_CHAT_HANDLERS: Record<string, ScriptChatLineHandler> = 
 export const WOLF_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {
   wolf_tactical_order: (event) => [
     {
-      kind: "chat",
-      text: `[live][狼队][顺序] ${Array.isArray(event.payload.order) ? event.payload.order.join("->") : ""}`,
+      kind: "god",
+      text: `[live][上帝] 狼人开始夜聊讨论，顺序：${Array.isArray(event.payload.order) ? event.payload.order.join("->") : ""}`,
     },
   ],
   wolf_discussion: (event) => [

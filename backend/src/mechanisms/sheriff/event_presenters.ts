@@ -117,8 +117,8 @@ export const SHERIFF_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandle
   sheriff_candidate_declared: () => [],
   sheriff_nomination_summary: (event) => [
     {
-      kind: "action",
-      text: `[live][行动][上警] 现在开始竞选警长，上警玩家：${Array.isArray(event.payload.candidates) ? event.payload.candidates.join("、") : ""}号`,
+      kind: "god",
+      text: `[live][上帝][上警] 现在开始竞选警长，上警玩家：${Array.isArray(event.payload.candidates) ? event.payload.candidates.join("、") : ""}号`,
     },
   ],
   sheriff_withdraw_summary: (event) => {
@@ -127,11 +127,11 @@ export const SHERIFF_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandle
       : [];
     return [
       {
-        kind: "action",
+        kind: "god",
         text:
           withdrawn.length === 0
-            ? `[live][行动][上警] 退水玩家：无`
-            : `[live][行动][上警] 退水玩家：${withdrawn.join("、")}号`,
+            ? `[live][上帝][上警] 退水玩家：无`
+            : `[live][上帝][上警] 退水玩家：${withdrawn.join("、")}号`,
       },
     ];
   },
@@ -159,11 +159,11 @@ export const SHERIFF_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandle
     const winnerId = event.payload.winnerId;
     return [
       {
-        kind: "action",
+        kind: "god",
         text:
           winnerId === null || winnerId === undefined
-            ? `[live][行动][警长投票] 警长投票票型：${lineup}。无人当选警长`
-            : `[live][行动][警长投票] 警长投票票型：${lineup}。${winnerId}号玩家当选警长`,
+            ? `[live][上帝][警长投票] 警长投票票型：${lineup}。无人当选警长`
+            : `[live][上帝][警长投票] 警长投票票型：${lineup}。${winnerId}号玩家当选警长`,
       },
     ];
   },

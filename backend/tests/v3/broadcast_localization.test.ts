@@ -82,4 +82,45 @@ describe("broadcast localization", () => {
     const live = getDefaultScriptEventRenderRegistry().toLiveRender(event, true);
     expect(live.some((item) => item.text.includes("[live][上帝] 对局结束，胜利阵营：狼人，原因：狼人达半"))).toBe(true);
   });
+
+  test("wolf_tactical_order should render as god guidance line", () => {
+    const event: GameEvent = {
+      timestamp: Date.now(),
+      type: "wolf_tactical_order",
+      payload: {
+        order: [5, 3],
+      },
+    };
+    const live = getDefaultScriptEventRenderRegistry().toLiveRender(event, true);
+    expect(live.some((item) => item.text.includes("[live][上帝] 狼人开始夜聊讨论，顺序：5->3"))).toBe(true);
+  });
+
+  test("last_words_spoken should render dedicated last-words channel line", () => {
+    const event: GameEvent = {
+      timestamp: Date.now(),
+      type: "last_words_spoken",
+      payload: {
+        playerId: 6,
+        text: "我是预言家，昨晚验1金水。",
+      },
+    };
+    const live = getDefaultScriptEventRenderRegistry().toLiveRender(event, true);
+    expect(live.some((item) => item.text.includes("[live][遗言][6] 我是预言家"))).toBe(true);
+  });
+
+  test("sheriff summary should use god channel instead of action channel", () => {
+    const event: GameEvent = {
+      timestamp: Date.now(),
+      type: "sheriff_vote_summary",
+      payload: {
+        votes: [
+          { actorId: 1, targetId: 2, abstain: false },
+          { actorId: 2, targetId: null, abstain: true },
+        ],
+        winnerId: 2,
+      },
+    };
+    const live = getDefaultScriptEventRenderRegistry().toLiveRender(event, true);
+    expect(live.some((item) => item.text.includes("[live][上帝][警长投票]"))).toBe(true);
+  });
 });

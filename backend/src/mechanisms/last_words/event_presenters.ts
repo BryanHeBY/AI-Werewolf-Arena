@@ -1,6 +1,6 @@
 /** 文件说明：遗言相关事件在不同输出通道中的渲染实现。 */
 import { AgentEventLineHandler } from "../broadcast/contracts";
-import { ScriptJudgeLineHandler } from "../script/contracts";
+import { ScriptJudgeLineHandler, ScriptLiveRenderHandler } from "../script/contracts";
 import { RealtimeEventHandler } from "../session/contracts";
 
 /** 遗言事件 -> 玩家广播行映射。 */
@@ -21,6 +21,16 @@ export const LAST_WORDS_SCRIPT_JUDGE_HANDLERS: Record<string, ScriptJudgeLineHan
   last_words_spoken: (event) => `${event.payload.playerId}号遗言：${event.payload.text}`,
 };
 
+/** 遗言事件 -> 终端 live 渲染映射。 */
+export const LAST_WORDS_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {
+  last_words_spoken: (event) => [
+    {
+      kind: "system",
+      text: `[live][遗言][${event.payload.playerId}] ${event.payload.text}`,
+    },
+  ],
+};
+
 /** 遗言事件 -> 实时推送事件映射。 */
 export const LAST_WORDS_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> = {
   last_words_spoken: (event) => [
@@ -35,4 +45,3 @@ export const LAST_WORDS_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHan
     },
   ],
 };
-
