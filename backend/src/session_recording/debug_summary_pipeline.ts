@@ -292,6 +292,7 @@ async function runAgentTask(
     forceJsonResponse: boolean;
     reasoningEnabled: boolean;
     reasoningEffort: string;
+    thinkingEnabled: boolean;
   },
   fallbackMeta: {
     model: string;
@@ -299,6 +300,7 @@ async function runAgentTask(
     forceJsonResponse: boolean;
     reasoningEnabled: boolean;
     reasoningEffort: string;
+    thinkingEnabled: boolean;
   },
   sessionId: string,
   task: AgentTask,
@@ -682,6 +684,8 @@ export async function buildDebugSummaryWithAgents(
       profileOverride.reasoningEnabled ?? debugAgentProfile.reasoningEnabled ?? true,
     reasoningEffort:
       profileOverride.reasoningEffort ?? debugAgentProfile.reasoningEffort ?? "medium",
+    thinkingEnabled:
+      profileOverride.thinkingEnabled ?? debugAgentProfile.thinkingEnabled ?? false,
   });
   const fallbackClient = new OpenAIClient({
     apiKey: debugAgentProfile.provider.apiKey,
@@ -696,6 +700,8 @@ export async function buildDebugSummaryWithAgents(
       profileOverride.reasoningEnabled ?? debugAgentProfile.reasoningEnabled ?? true,
     reasoningEffort:
       profileOverride.reasoningEffort ?? debugAgentProfile.reasoningEffort ?? "medium",
+    thinkingEnabled:
+      profileOverride.thinkingEnabled ?? debugAgentProfile.thinkingEnabled ?? false,
   });
   const primaryMeta = {
     model: profileOverride.model ?? debugAgentProfile.model,
@@ -706,6 +712,8 @@ export async function buildDebugSummaryWithAgents(
       profileOverride.reasoningEnabled ?? debugAgentProfile.reasoningEnabled ?? true,
     reasoningEffort:
       profileOverride.reasoningEffort ?? debugAgentProfile.reasoningEffort ?? "medium",
+    thinkingEnabled:
+      profileOverride.thinkingEnabled ?? debugAgentProfile.thinkingEnabled ?? false,
   };
   const fallbackMeta = {
     model: profileOverride.model ?? debugAgentProfile.model,
@@ -716,6 +724,8 @@ export async function buildDebugSummaryWithAgents(
       profileOverride.reasoningEnabled ?? debugAgentProfile.reasoningEnabled ?? true,
     reasoningEffort:
       profileOverride.reasoningEffort ?? debugAgentProfile.reasoningEffort ?? "medium",
+    thinkingEnabled:
+      profileOverride.thinkingEnabled ?? debugAgentProfile.thinkingEnabled ?? false,
   };
 
   const tasks: AgentTask[] = [];

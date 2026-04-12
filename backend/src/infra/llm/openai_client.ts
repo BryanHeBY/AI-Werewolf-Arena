@@ -23,6 +23,7 @@ export interface OpenAIClientOptions {
   forceJsonResponse?: boolean;
   reasoningEnabled?: boolean;
   reasoningEffort?: "low" | "medium" | "high";
+  thinkingEnabled?: boolean;
 }
 
 /**
@@ -105,6 +106,7 @@ export class OpenAIClient {
   private readonly forceJsonResponse: boolean;
   private readonly reasoningEnabled: boolean;
   private readonly reasoningEffort: "low" | "medium" | "high";
+  private readonly thinkingEnabled: boolean;
   private reasoningSupported: boolean;
 
   constructor(options: OpenAIClientOptions) {
@@ -127,6 +129,7 @@ export class OpenAIClient {
     this.forceJsonResponse = options.forceJsonResponse ?? true;
     this.reasoningEnabled = options.reasoningEnabled ?? true;
     this.reasoningEffort = options.reasoningEffort ?? "medium";
+    this.thinkingEnabled = options.thinkingEnabled ?? false;
     this.reasoningSupported = this.reasoningEnabled;
   }
 
@@ -212,6 +215,7 @@ export class OpenAIClient {
           tool_choice: options.toolChoice ?? "auto",
         };
         this.attachReasoningPayload(payload);
+        this.attachThinkingPayload(payload);
         return this.createChatCompletionWithReasoningFallback(payload, {
           signal: options.signal,
         });
@@ -317,6 +321,7 @@ export class OpenAIClient {
         payload.response_format = { type: "json_object" };
       }
       this.attachReasoningPayload(payload);
+      this.attachThinkingPayload(payload);
       return this.createChatCompletionWithReasoningFallback(payload, { signal });
     });
   }
@@ -326,6 +331,21 @@ export class OpenAIClient {
       return;
     }
     payload.reasoning = { effort: this.reasoningEffort };
+  }
+
+  private attachThinkingPayload(payload: Record<string, unknown>): void {
+    if (!this.thinkingEnabled) {
+      return;
+    }
+    const rawExtraBody = payload.extra_body;
+    const extraBody =
+      rawExtraBody && typeof rawExtraBody === "object"
+        ? (rawExtraBody as Record<string, unknown>)
+        : {};
+    payload.extra_body = {
+      ...extraBody,
+      thinking: { type: "enabled" },
+    };
   }
 
   private async createChatCompletionWithReasoningFallback(

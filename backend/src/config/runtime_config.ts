@@ -17,6 +17,7 @@ export interface AgentProfileConfig {
   forceJsonResponse?: boolean;
   reasoningEnabled?: boolean;
   reasoningEffort?: "low" | "medium" | "high";
+  thinkingEnabled?: boolean;
   personalityPrompt?: string;
 }
 
@@ -260,6 +261,7 @@ function toLegacyAgentConfig(agents: AgentsConfig): LegacyAgentConfig {
       forceJsonResponse: def.forceJsonResponse,
       reasoningEnabled: def.reasoningEnabled,
       reasoningEffort: def.reasoningEffort,
+      thinkingEnabled: def.thinkingEnabled,
       personalityPrompt: def.personalityPrompt,
     },
   };
@@ -290,6 +292,7 @@ export function resolveAgentProfileByName(
     forceJsonResponse: entry.forceJsonResponse,
     reasoningEnabled: entry.reasoningEnabled,
     reasoningEffort: entry.reasoningEffort,
+    thinkingEnabled: entry.thinkingEnabled,
     personalityPrompt: entry.personalityPrompt,
   };
 }
@@ -366,4 +369,3 @@ export function setRuntimeConfigOverride(config: RuntimeConfig | null): void {
 export function clearRuntimeConfigCache(): void {
   cachedConfig = null;
 }
-

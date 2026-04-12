@@ -9,7 +9,8 @@
       "maxTokens": 1200,
       "forceJsonResponse": false,
       "reasoningEnabled": true,
-      "reasoningEffort": "medium"
+      "reasoningEffort": "medium",
+      "thinkingEnabled": false
     },
     "timeoutMs": 15000,
     "maxAttempts": 2,

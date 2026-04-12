@@ -1632,28 +1632,23 @@ export class LlmActionProvider implements ActionProvider {
     assistantText: string,
     trace: ToolLoopStepTrace[],
   ): string | null {
-    const parts: string[] = [];
-    const trimmed = assistantText.trim();
-    if (trimmed.length > 0) {
-      parts.push(`assistant: ${trimmed}`);
+    const primary = assistantText.trim();
+    if (primary.length > 0) {
+      return primary.length > 1200 ? `${primary.slice(0, 1200)}…` : primary;
     }
-    for (const [stepIndex, step] of trace.entries()) {
-      if (step.assistantText && step.assistantText.trim().length > 0) {
-        parts.push(`step ${stepIndex + 1} assistant: ${step.assistantText.trim()}`);
-      }
-      for (const call of step.toolCalls) {
-        parts.push(
-          `step ${stepIndex + 1} tool_call: ${call.name} args=${call.rawArgs}`,
-        );
-        if (call.toolResult) {
-          parts.push(`step ${stepIndex + 1} tool_result: ${call.toolResult}`);
-        }
+
+    // 回退到最后一条 assistant 文本，不再拼接 tool_call/tool_result 细节，
+    // 避免玩家视角被工具执行日志噪声污染。
+    for (let i = trace.length - 1; i >= 0; i--) {
+      const text = trace[i]?.assistantText?.trim();
+      if (text) {
+        return text.length > 1200 ? `${text.slice(0, 1200)}…` : text;
       }
     }
-    if (parts.length === 0) {
+
+    if (!primary) {
       return null;
     }
-    const joined = parts.join("\n");
-    return joined.length > 1200 ? `${joined.slice(0, 1200)}…` : joined;
+    return null;
   }
 }

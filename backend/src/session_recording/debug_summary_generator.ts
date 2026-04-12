@@ -316,6 +316,7 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
     forceJsonResponse: debugAgentProfile.forceJsonResponse ?? false,
     reasoningEnabled: debugAgentProfile.reasoningEnabled ?? true,
     reasoningEffort: debugAgentProfile.reasoningEffort ?? "medium",
+    thinkingEnabled: debugAgentProfile.thinkingEnabled ?? false,
   });
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {

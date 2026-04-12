@@ -9,6 +9,7 @@
       "forceJsonResponse": true,
       "reasoningEnabled": true,
       "reasoningEffort": "medium",
+      "thinkingEnabled": false,
       "personalityPrompt": ""
     },
     "gpt4o_aggressive": {
@@ -19,6 +20,7 @@
       "forceJsonResponse": true,
       "reasoningEnabled": true,
       "reasoningEffort": "medium",
+      "thinkingEnabled": false,
       "personalityPrompt": "发言更主动，偏强势推进。"
     },
     "relay_flash": {
@@ -29,6 +31,7 @@
       "forceJsonResponse": true,
       "reasoningEnabled": true,
       "reasoningEffort": "medium",
+      "thinkingEnabled": true,
       "personalityPrompt": ""
     }
   }

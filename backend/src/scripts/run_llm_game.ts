@@ -278,6 +278,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
         forceJsonResponse: profile.forceJsonResponse ?? forceJsonResponse,
         reasoningEnabled: profile.reasoningEnabled ?? true,
         reasoningEffort: profile.reasoningEffort ?? "medium",
+        thinkingEnabled: profile.thinkingEnabled ?? false,
       }),
     );
   }
