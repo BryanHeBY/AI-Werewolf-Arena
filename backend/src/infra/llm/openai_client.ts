@@ -234,11 +234,13 @@ export class OpenAIClient {
       thinkingTrace.push(stepTrace);
 
       if (toolCalls.length === 0) {
-        return {
-          finalAction: null,
-          assistantText: lastAssistantText,
-          thinkingTrace,
-        };
+        // 仅“当前一步无工具调用”不应直接判定业务回合结束；
+        // 继续在同一轮工具循环中推进，等待后续步骤给出结构化调用。
+        convo.push({
+          role: "assistant",
+          content: message.content ?? "",
+        });
+        continue;
       }
 
       convo.push({
