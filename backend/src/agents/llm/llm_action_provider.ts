@@ -24,6 +24,8 @@ import {
   TargetHintRegistry,
   ToolCallRepairRegistry,
   ToolSpecRegistry,
+  PhaseStageLocalizationRegistry,
+  getDefaultPhaseStageLocalizationRegistry,
 } from "../../mechanisms";
 import { getIdiotState } from "../../mechanisms/roles/private_state";
 import { safeRecordLogicOp, SessionRecordHub } from "../../session_recording";
@@ -140,6 +142,7 @@ export interface LlmActionProviderOptions {
   rolePromptRegistry?: RolePromptRegistry;
   toolCallRepairRegistry?: ToolCallRepairRegistry;
   targetHintRegistry?: TargetHintRegistry;
+  phaseStageLocalizationRegistry?: PhaseStageLocalizationRegistry;
   boardConfig?: BoardConfig;
   configRenderRegistry?: ConfigRenderRegistry;
   maxConcurrentRequests?: number;
@@ -174,6 +177,7 @@ export class LlmActionProvider implements ActionProvider {
   private readonly rolePromptRegistry: RolePromptRegistry;
   private readonly toolCallRepairRegistry: ToolCallRepairRegistry;
   private readonly targetHintRegistry: TargetHintRegistry;
+  private readonly phaseStageLocalizationRegistry: PhaseStageLocalizationRegistry;
   private readonly boardConfig?: BoardConfig;
   private readonly configRenderRegistry: ConfigRenderRegistry;
   private readonly maxConcurrentRequests: number;
@@ -214,6 +218,9 @@ export class LlmActionProvider implements ActionProvider {
       options.toolCallRepairRegistry ?? getDefaultToolCallRepairRegistry();
     this.targetHintRegistry =
       options.targetHintRegistry ?? getDefaultTargetHintRegistry();
+    this.phaseStageLocalizationRegistry =
+      options.phaseStageLocalizationRegistry ??
+      getDefaultPhaseStageLocalizationRegistry();
     this.boardConfig = options.boardConfig;
     this.configRenderRegistry =
       options.configRenderRegistry ?? getDefaultConfigRenderRegistry();
@@ -1103,6 +1110,12 @@ export class LlmActionProvider implements ActionProvider {
         request.context.window ??
         request.phase,
     );
+    const localizedPhaseLabel = this.phaseStageLocalizationRegistry.phaseName(
+      String(request.phase),
+    );
+    const localizedStageLabel = this.phaseStageLocalizationRegistry.stageName(
+      stageLabel,
+    );
 
     const fullHistory = [...(this.agentHistories.get(request.actorId) ?? [])];
     const contextWindow = this.selectHistoryWindow(request.actorId, fullHistory);
@@ -1135,8 +1148,8 @@ export class LlmActionProvider implements ActionProvider {
 
     const userPrompt = buildUserPrompt({
       actorId: request.actorId,
-      phase: String(request.phase),
-      stage: stageLabel,
+      phase: localizedPhaseLabel,
+      stage: localizedStageLabel,
       isSpeechTurn:
         llmAllowedTools.includes("speak") ||
         llmAllowedTools.includes("speak_to_wolves"),
@@ -1228,13 +1241,19 @@ export class LlmActionProvider implements ActionProvider {
         request.context.window ??
         request.phase,
     );
+    const localizedPhaseLabel = this.phaseStageLocalizationRegistry.phaseName(
+      phaseLabel,
+    );
+    const localizedStageLabel = this.phaseStageLocalizationRegistry.stageName(
+      stageLabel,
+    );
     recorder.recordPlayerRound({
       playerId: request.actorId,
       role: role?.role ?? "unknown",
       camp: role?.camp ?? "unknown",
       day,
-      phase: phaseLabel,
-      stage: stageLabel,
+      phase: localizedPhaseLabel,
+      stage: localizedStageLabel,
       requestId: `${day}-${phaseLabel}-${request.actorId}-${next}`,
       timestampMs: Date.now(),
       visibleFeedDelta: built.visibleFeedDelta,

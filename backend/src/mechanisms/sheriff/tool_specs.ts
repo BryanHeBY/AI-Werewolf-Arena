@@ -22,6 +22,7 @@ export const SHERIFF_TOOL_SPECS: ToolSpec[] = [
       },
     },
     argHint: 'run_for_sheriff args: {"run":true|false}',
+    userPromptHint: "如果选择退水，请将 run 设置为 false；如果选择继续上警，请将 run 设置为 true。",
   },
   {
     name: "vote_for_sheriff",

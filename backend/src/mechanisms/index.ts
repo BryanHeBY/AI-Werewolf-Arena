@@ -12,6 +12,7 @@ export * from "./last_words/last_words_mechanism";
 export * from "./prompt/config_render_registry";
 export * from "./script/event_render_registry";
 export * from "./session/realtime_event_registry";
+export * from "./shared/phase_stage_localization_registry";
 export * from "./registries/role_spec_registry";
 export * from "./registries/tool_spec_registry";
 export * from "./registries/win_condition_registry";
