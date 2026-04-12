@@ -64,4 +64,62 @@ describe("buildAgentBroadcastFeed", () => {
     expect(villagerFeed.some((line) => line.includes("开局"))).toBe(false);
     expect(villagerFeed.some((line) => line.includes("role"))).toBe(false);
   });
+
+  test("vote/sheriff actions should be private to actor while summaries stay public", () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const events: GameEvent[] = [
+      {
+        timestamp: 1,
+        type: "vote_cast",
+        payload: { actorId: 4, targetId: 1, abstain: false, weight: 1 },
+      },
+      {
+        timestamp: 2,
+        type: "sheriff_candidate_declared",
+        payload: { actorId: 4, run: true },
+      },
+      {
+        timestamp: 3,
+        type: "sheriff_vote_cast",
+        payload: { actorId: 4, targetId: 2, abstain: false },
+      },
+      {
+        timestamp: 4,
+        type: "sheriff_nomination_summary",
+        payload: { candidates: [4, 2] },
+      },
+      {
+        timestamp: 5,
+        type: "sheriff_vote_summary",
+        payload: {
+          votes: [
+            { actorId: 4, targetId: 2, abstain: false },
+            { actorId: 2, targetId: null, abstain: true },
+          ],
+          winnerId: 2,
+        },
+      },
+      {
+        timestamp: 6,
+        type: "voted_out",
+        payload: { target: 1 },
+      },
+    ];
+
+    const actorFeed = buildAgentBroadcastFeed(context.world, events, 4);
+    const otherFeed = buildAgentBroadcastFeed(context.world, events, 5);
+
+    expect(actorFeed.some((line) => line.includes("[行动][投票] 4号投给1号"))).toBe(true);
+    expect(actorFeed.some((line) => line.includes("[行动][上警]"))).toBe(true);
+    expect(actorFeed.some((line) => line.includes("[行动][警长投票]"))).toBe(true);
+
+    expect(otherFeed.some((line) => line.includes("[行动][投票]"))).toBe(false);
+    expect(otherFeed.some((line) => line.includes("[行动][上警]"))).toBe(false);
+    expect(otherFeed.some((line) => line.includes("[行动][警长投票]"))).toBe(false);
+
+    expect(actorFeed.some((line) => line.includes("放逐票型"))).toBe(true);
+    expect(otherFeed.some((line) => line.includes("放逐票型"))).toBe(true);
+    expect(actorFeed.some((line) => line.includes("警长投票票型"))).toBe(true);
+    expect(otherFeed.some((line) => line.includes("警长投票票型"))).toBe(true);
+  });
 });

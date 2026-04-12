@@ -12,14 +12,14 @@ export const WITCH_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandl
     if (Number(p.actorId) !== ctx.actorId) {
       return null;
     }
-    return `[私有][女巫] 你对${p.targetId}号使用了${getDefaultTextLocalizationRegistry().potionType(String(p.potionType ?? ""))}`;
+    return `[行动][女巫] ${p.actorId}号对${p.targetId}号使用${getDefaultTextLocalizationRegistry().potionType(String(p.potionType ?? ""))}`;
   },
   witch_potion_skipped: (event, ctx) => {
     const p = event.payload as Record<string, any>;
     if (Number(p.actorId) !== ctx.actorId) {
       return null;
     }
-    return `[私有][女巫] 你本夜未用药`;
+    return `[行动][女巫] ${p.actorId}号本夜未用药`;
   },
 };
 

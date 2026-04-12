@@ -12,9 +12,9 @@ export const GUARD_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandl
       return null;
     }
     if (p.abstain === true || p.targetId === null || p.targetId === undefined) {
-      return `[私有][守卫] 你本轮选择空守`;
+      return `[行动][守卫] ${p.actorId}号本轮选择空守`;
     }
-    return `[私有][守卫] 你守护了${p.targetId}号`;
+    return `[行动][守卫] ${p.actorId}号守护${p.targetId}号`;
   },
 };
 

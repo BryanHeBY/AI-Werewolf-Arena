@@ -16,6 +16,7 @@
 10. Session 实时复盘记录规范：`realtime_session_records_spec.md`
 11. LLM 行动提示三行高密度规范：`llm_user_prompt_three_line_spec.md`
 12. Multi-Tool 回合与 Turn Constraints 重构 TODO：`multi_tool_turn_constraints_refactor_todo_v3.md`
+13. 广播信息结构规范：`broadcast_message_structure_spec.md`
 
 阅读建议：
 

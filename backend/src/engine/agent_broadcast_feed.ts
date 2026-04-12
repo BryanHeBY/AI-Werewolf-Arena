@@ -11,7 +11,8 @@ import {
  * - 公开事件：全体可见；
  * - 狼队事件：仅狼人可见；
  * - 私有行动：仅行动发起者可见；
- * - 放逐阶段逐票公开（vote_cast）与最终放逐结果（voted_out）均可见。
+ * - 放逐逐票（vote_cast）为投票者私有，票型汇总公开；
+ * - 最终放逐结果（voted_out）公开可见。
  */
 export function buildAgentBroadcastFeed(
   world: World,
@@ -37,6 +38,10 @@ export function buildAgentBroadcastFeed(
 
   for (const event of events) {
     if (event.type === "vote_cast") {
+      const privateVoteLine = lineRegistry.toLine(event, { actorId, isWolf });
+      if (privateVoteLine) {
+        lines.push(privateVoteLine);
+      }
       voteBatch.push(event);
       continue;
     }

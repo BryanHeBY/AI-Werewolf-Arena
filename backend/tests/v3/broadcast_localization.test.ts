@@ -123,4 +123,18 @@ describe("broadcast localization", () => {
     const live = getDefaultScriptEventRenderRegistry().toLiveRender(event, true);
     expect(live.some((item) => item.text.includes("[live][上帝][警长投票]"))).toBe(true);
   });
+
+  test("sheriff_vote_cast should render per-action live line", () => {
+    const event: GameEvent = {
+      timestamp: Date.now(),
+      type: "sheriff_vote_cast",
+      payload: {
+        actorId: 3,
+        targetId: 1,
+        abstain: false,
+      },
+    };
+    const live = getDefaultScriptEventRenderRegistry().toLiveRender(event, true);
+    expect(live.some((item) => item.text.includes("[live][行动][警长投票] 3号投给1号"))).toBe(true);
+  });
 });

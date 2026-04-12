@@ -364,6 +364,30 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
       if (replayManager) {
         if (event.type === "vote_cast") {
           replayVoteBatch.push(event as GameEvent);
+          for (const playerId of context.world.entityIds()) {
+            const line = buildAgentBroadcastLine(
+              context.world,
+              event as GameEvent,
+              playerId,
+            );
+            if (!line) {
+              continue;
+            }
+            const roleComp = context.world.getComponent<RoleComponent>(
+              playerId,
+              COMPONENT.Role,
+            );
+            replayManager.recordPlayerBroadcast({
+              playerId,
+              role: roleComp?.role ?? "unknown",
+              camp: roleComp?.camp ?? "unknown",
+              day: replayDayCursor,
+              phase: "voting",
+              stage: "voting",
+              requestId: `${replayDayCursor}-voting-${playerId}-broadcast-${i}-private`,
+              text: line,
+            });
+          }
         } else if (replayVoteBatch.length > 0) {
           const merged = renderMergedVoteBatch(replayVoteBatch);
           if (merged) {
@@ -414,6 +438,27 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
         }
       }
       if (event.type === "vote_cast") {
+        if (options.streamEvents) {
+          const actorId = Number(event.payload.actorId);
+          const weight = Number(event.payload.weight ?? 1);
+          const abstain = event.payload.abstain === true;
+          if (abstain) {
+            log(
+              weight !== 1
+                ? `[live][行动][投票] ${actorId}号弃票(w=${weight})`
+                : `[live][行动][投票] ${actorId}号弃票`,
+              "info",
+            );
+          } else {
+            const targetId = Number(event.payload.targetId);
+            log(
+              weight !== 1
+                ? `[live][行动][投票] ${actorId}号投给${targetId}号(w=${weight})`
+                : `[live][行动][投票] ${actorId}号投给${targetId}号`,
+              "info",
+            );
+          }
+        }
         voteBatch.push({
           actorId: Number(event.payload.actorId),
           targetId:

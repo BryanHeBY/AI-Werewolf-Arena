@@ -43,6 +43,23 @@ const DEFAULT_HANDLERS: Record<string, AgentEventLineHandler> = {
     const p = event.payload as Record<string, any>;
     return `[系统][公开] 放逐结果：${p.target}号出局`;
   },
+  vote_cast: (event, ctx) => {
+    const p = event.payload as Record<string, any>;
+    const actorId = Number(p.actorId);
+    if (actorId !== ctx.actorId) {
+      return null;
+    }
+    const weight = Number(p.weight ?? 1);
+    if (p.abstain === true || p.targetId === null || p.targetId === undefined) {
+      return weight !== 1
+        ? `[行动][投票] ${actorId}号弃票（权重=${weight}）`
+        : `[行动][投票] ${actorId}号弃票`;
+    }
+    const targetId = Number(p.targetId);
+    return weight !== 1
+      ? `[行动][投票] ${actorId}号投给${targetId}号（权重=${weight}）`
+      : `[行动][投票] ${actorId}号投给${targetId}号`;
+  },
   game_over: (event) => {
     const p = event.payload as Record<string, any>;
     const i18n = getDefaultTextLocalizationRegistry();

@@ -11,7 +11,7 @@ export const SEER_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandle
     if (Number(p.actorId) !== ctx.actorId) {
       return null;
     }
-    return `[私有][查验] 你查验${p.targetId}号 => ${p.isWerewolf ? "狼人" : "好人"}`;
+    return `[查验结果] ${p.actorId}号查验${p.targetId}号 => ${p.isWerewolf ? "狼人" : "好人"}`;
   },
 };
 
@@ -24,7 +24,7 @@ export const SEER_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> 
     return [
       {
         kind: "private",
-        text: `[live][私有][查验] ${event.payload.actorId}号查验${event.payload.targetId}号 => ${event.payload.isWerewolf ? "狼人" : "好人"}`,
+        text: `[live][查验结果] ${event.payload.actorId}号查验${event.payload.targetId}号 => ${event.payload.isWerewolf ? "狼人" : "好人"}`,
       },
     ];
   },

@@ -6,9 +6,14 @@ import { RealtimeGameEvent } from "../../infra/transport/broadcaster";
 
 /** 警长事件 -> 玩家广播行映射。 */
 export const SHERIFF_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
-  sheriff_candidate_declared: () => {
-    // 逐条上警/退水事件不直接广播，统一由汇总事件输出。
-    return null;
+  sheriff_candidate_declared: (event, ctx) => {
+    const p = event.payload as Record<string, any>;
+    if (Number(p.actorId) !== ctx.actorId) {
+      return null;
+    }
+    return p.run === true
+      ? `[行动][上警] ${p.actorId}号选择上警`
+      : `[行动][上警] ${p.actorId}号选择退水`;
   },
   sheriff_nomination_summary: (event) => {
     const p = event.payload as Record<string, any>;
@@ -28,7 +33,16 @@ export const SHERIFF_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHan
     const candidates = Array.isArray(p.candidates) ? p.candidates : [];
     return `[系统][公开] 目前警上名单：${candidates.join("、")}号，请开始投票`;
   },
-  sheriff_vote_cast: () => null,
+  sheriff_vote_cast: (event, ctx) => {
+    const p = event.payload as Record<string, any>;
+    if (Number(p.actorId) !== ctx.actorId) {
+      return null;
+    }
+    if (p.abstain === true || p.targetId === null || p.targetId === undefined) {
+      return `[行动][警长投票] ${p.actorId}号本轮选择弃票`;
+    }
+    return `[行动][警长投票] ${p.actorId}号本轮投给${p.targetId}号`;
+  },
   sheriff_vote_summary: (event) => {
     const p = event.payload as Record<string, any>;
     const votes = Array.isArray(p.votes) ? p.votes : [];
@@ -146,7 +160,23 @@ export const SHERIFF_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandle
       },
     ];
   },
-  sheriff_vote_cast: () => [],
+  sheriff_vote_cast: (event) => {
+    const actorId = Number(event.payload.actorId);
+    const abstain = event.payload.abstain === true;
+    const targetId =
+      event.payload.targetId === null || event.payload.targetId === undefined
+        ? null
+        : Number(event.payload.targetId);
+    return [
+      {
+        kind: "action",
+        text:
+          abstain || targetId === null
+            ? `[live][行动][警长投票] ${actorId}号弃票`
+            : `[live][行动][警长投票] ${actorId}号投给${targetId}号`,
+      },
+    ];
+  },
   sheriff_vote_summary: (event) => {
     const votes = Array.isArray(event.payload.votes) ? event.payload.votes : [];
     const lineup = votes
