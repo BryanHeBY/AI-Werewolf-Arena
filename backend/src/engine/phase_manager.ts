@@ -30,6 +30,7 @@ import { IdentityComponent } from "../domain/entities/player";
 import { RoleComponent } from "../domain/components/role";
 import { AliveComponent } from "../domain/components/alive";
 import { buildAgentBroadcastFeed } from "./agent_broadcast_feed";
+import { buildTurnConstraintContext } from "./turn_constraints_context";
 
 /**
  * PhaseManager 是 V3 引擎的时序中枢。
@@ -294,7 +295,11 @@ export class PhaseManager {
             allowedTools: ["shoot"],
             context: {
               trigger: "on_death",
-              must_act: true,
+              turn_constraints: buildTurnConstraintContext({
+                requiresAction: true,
+                allowedTools: ["shoot"],
+                summary: "死亡开枪阶段必须完成一次开枪动作。",
+              }),
               day: actionDay,
               current_day: actionDay,
               phase: "hunter_shot",
@@ -351,7 +356,11 @@ export class PhaseManager {
         allowedTools: ["speak"],
         context: {
           trigger: "last_words",
-          must_act: true,
+          turn_constraints: buildTurnConstraintContext({
+            requiresAction: true,
+            allowedTools: ["speak"],
+            summary: "遗言阶段必须完成一次发言动作。",
+          }),
           day: this.state.day,
           death_phase: phase,
           broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, deadId),

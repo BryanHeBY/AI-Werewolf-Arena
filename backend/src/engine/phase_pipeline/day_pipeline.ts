@@ -16,6 +16,7 @@ import { getDefaultSheriffMechanism, SheriffMechanism } from "../../mechanisms";
 import { RoleSpecRegistry } from "../../mechanisms/registries/role_spec_registry";
 import { World } from "../../domain/world";
 import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
+import { buildTurnConstraintContext } from "../turn_constraints_context";
 
 /**
  * 白天流水线执行结果。
@@ -140,7 +141,11 @@ export class DayPipeline {
         context: {
           day: this.currentDay(),
           phase: "day_speech",
-          must_act: true,
+          turn_constraints: buildTurnConstraintContext({
+            requiresAction: true,
+            allowedTools: ["speak"],
+            summary: "白天发言阶段必须完成一次发言动作。",
+          }),
           broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, actorId),
         },
       };
@@ -212,7 +217,11 @@ export class DayPipeline {
           context: {
             day: this.currentDay(),
             window,
-            must_act: false,
+            turn_constraints: buildTurnConstraintContext({
+              requiresAction: false,
+              allowedTools: ["self_destruct"],
+              summary: "自爆窗口可选择执行自爆，也可直接结束回合。",
+            }),
             broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, actorId),
           },
         };

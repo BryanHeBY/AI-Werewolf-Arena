@@ -240,6 +240,21 @@ export interface ActionRequest {
 }
 
 /**
+ * 回合约束：用于描述“本轮可否结束、至少需完成几次动作”等规则。
+ * 说明：该结构通过 ActionRequest.context.turn_constraints 透传。
+ */
+export interface TurnConstraints {
+  // 本轮最少有效动作数（默认 0）。
+  min_valid_actions?: number;
+  // 本轮最多有效动作数（默认 1）。
+  max_valid_actions?: number;
+  // 若存在，表示结束前必须至少执行一次这些工具中的某一个。
+  required_any_tools?: ToolName[];
+  // 人类可读约束说明（用于提示词渲染）。
+  summary?: string;
+}
+
+/**
  * 行动提供器接口。
  */
 export interface ActionProvider {

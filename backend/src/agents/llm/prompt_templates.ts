@@ -10,7 +10,8 @@ export interface SystemPromptInput {
   allowedTools: string[];
   stageDirective: string;
   statusDirective?: string;
-  mustAct: boolean;
+  requiresAction: boolean;
+  turnConstraintRule?: string;
   boardInfoPrompt?: string;
   configPrompt?: string;
   personalityPrompt?: string;
@@ -22,8 +23,10 @@ export interface UserPromptInput {
   phase: string;
   stage: string;
   isSpeechTurn: boolean;
-  mustAct: boolean;
+  requiresAction: boolean;
+  turnConstraintHint?: string;
   allowedTools: string[];
+  effectiveActionTools?: string[];
   toolArgHints: string;
   actionableIdsHint?: string;
   stageContextHint?: string;
@@ -46,7 +49,9 @@ const SYSTEM_BASE_LINES = [
 
 /** 构建系统提示词文本。 */
 export function buildSystemPrompt(input: SystemPromptInput): string {
-  const actionRule = input.mustAct
+  const actionRule = input.turnConstraintRule
+    ? input.turnConstraintRule
+    : input.requiresAction
     ? "本轮必须完成一次有效行动，且禁止调用 finish_turn。"
     : "本轮可选择结束回合不行动；当你不需要继续行动时，请直接不调用任何工具。";
   const teammateText =
@@ -72,12 +77,18 @@ export function buildUserPrompt(input: UserPromptInput): string {
   const speechTurnText = input.isSpeechTurn
     ? "目前是你的发言轮次"
     : "目前不是你的发言轮次";
-  const mustActText = input.mustAct
+  const constraintText = input.turnConstraintHint
+    ? input.turnConstraintHint
+    : input.requiresAction
     ? "你本轮必须至少调用一次可用工具完成行动。"
     : "你本轮可以选择结束回合不行动。";
+  const effectiveActionToolsText =
+    input.effectiveActionTools && input.effectiveActionTools.length > 0
+      ? input.effectiveActionTools.join(", ")
+      : "无";
   return [
     `[行动提示] ${input.actorId}号玩家，现在轮到你行动，当前处于${input.phase}阶段，子阶段是${input.stage}，${speechTurnText}。${input.stageContextHint ? ` ${input.stageContextHint}` : ""}`,
-    `${mustActText} 你当前可以使用的工具有：${input.allowedTools.join(", ") || "无"}。`,
+    `${constraintText} 你当前可以使用的工具有：${input.allowedTools.join(", ") || "无"}，其中有效行动工具有：${effectiveActionToolsText}。`,
     `工具参数提示：${input.toolArgHints}${input.actionableIdsHint ? `；${input.actionableIdsHint}` : ""}。请直接调用工具完成本轮行动。`,
   ].join("\n");
 }
@@ -102,8 +113,8 @@ export function buildBoardInfoPrompt(input: BoardInfoPromptInput): string {
   ].join("\n");
 }
 
-/** 构建 mustAct 场景下的递进重试提示词。 */
-export function buildMustActRetryPrompt(attempt: number, maxRetries: number): string {
+/** 构建“回合约束未满足”场景下的递进重试提示词。 */
+export function buildConstraintRetryPrompt(attempt: number, maxRetries: number): string {
   if (attempt === 1) {
     return `上轮你没有完成有效工具调用。请立即调用一个可用工具，禁止解释文本。（重试 ${attempt}/${maxRetries}）`;
   }

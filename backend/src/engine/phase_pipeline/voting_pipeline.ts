@@ -20,6 +20,7 @@ import { safeRecordLogicOp } from "../../session_recording";
 import { EventRegistry } from "../event_registry";
 import { World } from "../../domain/world";
 import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
+import { buildTurnConstraintContext } from "../turn_constraints_context";
 
 /**
  * 投票流水线执行结果。
@@ -128,7 +129,11 @@ export class VotingPipeline {
           context: {
             day: this.currentDay(),
             phase: "voting",
-            must_act: true,
+            turn_constraints: buildTurnConstraintContext({
+              requiresAction: true,
+              allowedTools: ["vote"],
+              summary: "放逐投票阶段必须完成一次投票动作（可弃票）。",
+            }),
             broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, voterId),
           },
         });
@@ -359,7 +364,11 @@ export class VotingPipeline {
           context: {
             day: this.currentDay(),
             window,
-            must_act: false,
+            turn_constraints: buildTurnConstraintContext({
+              requiresAction: false,
+              allowedTools: ["self_destruct"],
+              summary: "放逐前自爆窗口可选择执行自爆，也可结束回合。",
+            }),
             broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, actorId),
           },
         };

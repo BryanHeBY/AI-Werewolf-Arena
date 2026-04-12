@@ -26,6 +26,7 @@ import {
 } from "../../mechanisms";
 import { safeRecordLogicOp } from "../../session_recording";
 import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
+import { buildTurnConstraintContext } from "../turn_constraints_context";
 
 /**
  * 夜间阶段流水线：
@@ -127,7 +128,11 @@ export class NightPipeline {
       allowedTools,
       context: {
         day: this.currentDay(),
-        must_act: true,
+        turn_constraints: buildTurnConstraintContext({
+          requiresAction: true,
+          allowedTools,
+          summary: "夜间行动阶段需完成一次有效动作。",
+        }),
         broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, actorId),
         ...context,
       },

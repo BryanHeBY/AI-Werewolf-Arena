@@ -31,12 +31,19 @@ import { colorize, isAnsiEnabled } from "../../utils/ansi";
 import { BaselineBotActionProvider } from "../providers/action_providers";
 import {
   buildBoardInfoPrompt,
-  buildMustActRetryPrompt,
+  buildConstraintRetryPrompt,
   buildSystemPrompt,
   buildUserPrompt,
   DEFAULT_SPEAK_TEXT,
   SPEAK_TEXT_FILTER_KEYWORDS,
 } from "./prompt_templates";
+import {
+  evaluateTurnConstraints,
+  renderTurnConstraintSystemRule,
+  renderTurnConstraintUserHint,
+  resolveTurnConstraints,
+} from "./turn_constraints";
+import { ActionValidationService } from "./action_validation_service";
 
 interface ChatMessage {
   role: "system" | "user" | "assistant" | "tool";
@@ -163,6 +170,7 @@ export class LlmActionProvider implements ActionProvider {
   private readonly reportBugAcceptedMessage = new Set<string>();
   private readonly reportBugAcceptedCountByActorDay = new Map<string, number>();
   private static readonly REPORT_BUG_TOOL: ToolName = "report_bug";
+  private readonly actionValidationService = new ActionValidationService();
 
   constructor(
     private readonly world: World,
@@ -294,12 +302,15 @@ export class LlmActionProvider implements ActionProvider {
           });
           return picked;
         }
-        if (this.isMustAct(request)) {
+        if (this.requiresAction(request)) {
           let hasRuntimeError = firstAttempt.failed;
           let retryMessages = [...messages];
           const maxRetries = 3;
           for (let attempt = 1; attempt <= maxRetries; attempt++) {
-            const retryPrompt = this.buildMustActRetryPrompt(attempt, maxRetries);
+            const retryPrompt = this.buildConstraintRetryPrompt(
+              attempt,
+              maxRetries,
+            );
             retryMessages = [
               ...retryMessages,
               {
@@ -308,7 +319,7 @@ export class LlmActionProvider implements ActionProvider {
               },
             ];
             console.log(
-              `[LLM_RETRY] player=${request.actorId} phase=${request.phase} attempt=${attempt}/${maxRetries} reason=must_act_no_valid_action`,
+              `[LLM_RETRY] player=${request.actorId} phase=${request.phase} attempt=${attempt}/${maxRetries} reason=turn_constraints_no_valid_action`,
             );
             this.dumpLlmPrompt(retryMessages, request);
             const retryResult = await runSdkAttempt(attempt, retryMessages);
@@ -404,7 +415,7 @@ export class LlmActionProvider implements ActionProvider {
           return parsed;
         }
         if (this.modelReturnedNone(raw)) {
-          if (this.isMustAct(request)) {
+        if (this.requiresAction(request)) {
             const fallback = await this.runFallback(
               request,
               "model_declined_required_action",
@@ -523,10 +534,10 @@ export class LlmActionProvider implements ActionProvider {
   }
 
   /**
-   * mustAct 回合未产出有效动作时，返回递进式重试提示词。
+   * 回合约束未满足且未产出有效动作时，返回递进式重试提示词。
    */
-  private buildMustActRetryPrompt(attempt: number, maxRetries: number): string {
-    return buildMustActRetryPrompt(attempt, maxRetries);
+  private buildConstraintRetryPrompt(attempt: number, maxRetries: number): string {
+    return buildConstraintRetryPrompt(attempt, maxRetries);
   }
 
   /**
@@ -594,7 +605,7 @@ export class LlmActionProvider implements ActionProvider {
       ? `${fallbackAction.name} ${JSON.stringify((fallbackAction as any).args ?? {})}`
       : "none";
     console.log(
-      `[LLM_FALLBACK] player=${request.actorId} phase=${request.phase} reason=${reason} mustAct=${this.isMustAct(request)} allowedTools=${request.allowedTools.join(",")} fallback=${fallbackText}`,
+      `[LLM_FALLBACK] player=${request.actorId} phase=${request.phase} reason=${reason} min_valid_actions=${resolveTurnConstraints(request).minValidActions} allowedTools=${request.allowedTools.join(",")} fallback=${fallbackText}`,
     );
   }
 
@@ -635,16 +646,40 @@ export class LlmActionProvider implements ActionProvider {
     let timer: NodeJS.Timeout | null = null;
     try {
       const llmAllowedTools = this.buildLlmAllowedTools(request.allowedTools);
-      const tools = this.buildSdkToolSchemas(
-        llmAllowedTools,
-        this.isMustAct(request),
-      );
+      const turnConstraints = resolveTurnConstraints(request);
+      const tools = this.buildSdkToolSchemas(llmAllowedTools);
+      // 同回合多工具交互：先缓冲有效动作，finish_turn 时统一做约束校验并决定是否落地。
+      const validActions: ToolCall[] = [];
+      let selectedAction: ToolCall | null = null;
       const loop = client.runToolLoop<ToolCall>(
         messages,
         tools,
         {
           onToolCall: async (invocation) => {
             if (invocation.name === "finish_turn") {
+              // 结束回合由约束判定层把关，不满足则继续留在当前 tool loop。
+              const evaluation = evaluateTurnConstraints(
+                { validActions },
+                turnConstraints,
+              );
+              if (!evaluation.ok) {
+                return {
+                  toolResult: {
+                    ok: false,
+                    error: "turn_constraints_not_satisfied",
+                    details: evaluation.errors,
+                  },
+                };
+              }
+              if (selectedAction) {
+                return {
+                  toolResult: {
+                    ok: true,
+                    reason: "turn_finished_with_action",
+                  },
+                  finalAction: selectedAction,
+                };
+              }
               return {
                 toolResult: { ok: true, reason: "turn_finished" },
                 stop: true,
@@ -657,43 +692,57 @@ export class LlmActionProvider implements ActionProvider {
               };
             }
 
-            if (!llmAllowedTools.includes(invocation.name as ToolName)) {
+            const validatedInvocation =
+              this.actionValidationService.validateToolInvocation(
+                request,
+                llmAllowedTools,
+                {
+                  name: invocation.name,
+                  args: invocation.args,
+                },
+                (raw, allowedTools, actorId) =>
+                  this.parseToolCall(raw, allowedTools, actorId),
+              );
+            if (!validatedInvocation.ok) {
               return {
                 toolResult: {
                   ok: false,
-                  error: "tool_not_allowed_in_this_turn",
+                  error: validatedInvocation.error,
+                },
+              };
+            }
+            const parsed = validatedInvocation.action;
+
+            if (validActions.length >= turnConstraints.maxValidActions) {
+              return {
+                toolResult: {
+                  ok: false,
+                  error: "turn_constraints_max_actions_exceeded",
+                  details: [
+                    `本轮最多允许${turnConstraints.maxValidActions}次有效行动。`,
+                  ],
                 },
               };
             }
 
-            const candidate: ToolCall = {
-              name: invocation.name as ToolName,
-              args: invocation.args as any,
-            } as ToolCall;
-            const parsed = this.parseToolCall(
-              JSON.stringify(candidate),
-              llmAllowedTools,
-              request.actorId,
-            );
-            if (!parsed) {
-              return {
-                toolResult: {
-                  ok: false,
-                  error: "invalid_tool_arguments",
-                },
-              };
-            }
+            validActions.push(parsed);
+            selectedAction = parsed;
 
             return {
-              toolResult: { ok: true, accepted: true },
-              finalAction: parsed,
+              toolResult: {
+                ok: true,
+                accepted: true,
+                buffered_action: parsed.name,
+                buffered_count: validActions.length,
+              },
             };
           },
         },
         {
           signal: controller.signal,
           maxSteps: 8,
-          toolChoice: this.isMustAct(request) ? "required" : "auto",
+          toolChoice:
+            turnConstraints.minValidActions > 0 ? "required" : "auto",
         },
       );
 
@@ -724,7 +773,19 @@ export class LlmActionProvider implements ActionProvider {
       );
       this.dumpThinkingTrace(result.thinkingTrace ?? [], request);
       this.dumpLlmRawResponse(result.assistantText ?? "", request);
-      return result.finalAction ?? null;
+      if (result.finalAction) {
+        return result.finalAction;
+      }
+      if (selectedAction) {
+        const evaluation = evaluateTurnConstraints(
+          { validActions },
+          turnConstraints,
+        );
+        if (evaluation.ok) {
+          return selectedAction;
+        }
+      }
+      return null;
     } finally {
       if (timer) {
         clearTimeout(timer);
@@ -737,7 +798,6 @@ export class LlmActionProvider implements ActionProvider {
    */
   private buildSdkToolSchemas(
     allowedTools: ToolName[],
-    mustAct: boolean,
   ): ToolSchema[] {
     const tools: ToolSchema[] = allowedTools.map((tool) => {
       const schema = this.toolSpecRegistry.getLlmSchema(tool);
@@ -758,18 +818,16 @@ export class LlmActionProvider implements ActionProvider {
         },
       };
     });
-    if (!mustAct) {
-      tools.push({
-        name: "finish_turn",
-        description: "当你决定本回合不再继续行动时调用该工具。",
-        parameters: {
-          type: "object",
-          properties: {},
-          description: "空参数对象；调用后表示主动结束本回合。",
-          additionalProperties: false,
-        },
-      });
-    }
+    tools.push({
+      name: "finish_turn",
+      description: "申请结束当前回合。系统会先校验回合约束，满足后才真正结束。",
+      parameters: {
+        type: "object",
+        properties: {},
+        description: "空参数对象；调用后表示主动结束本回合。",
+        additionalProperties: false,
+      },
+    });
     return tools;
   }
 
@@ -868,7 +926,8 @@ export class LlmActionProvider implements ActionProvider {
               return otherRole?.camp === roleComp.camp;
             })
             .sort((a, b) => a - b);
-    const mustAct = this.isMustAct(request);
+    const turnConstraints = resolveTurnConstraints(request);
+    const requiresAction = turnConstraints.minValidActions > 0;
     const stageLabel = String(
       request.context.phase ??
         request.actionWindow ??
@@ -886,6 +945,9 @@ export class LlmActionProvider implements ActionProvider {
         ? this.configRenderRegistry.renderBoardConfigPrompt(this.boardConfig)
         : undefined;
     const llmAllowedTools = this.buildLlmAllowedTools(request.allowedTools);
+    const effectiveActionTools = llmAllowedTools.filter(
+      (tool) => tool !== LlmActionProvider.REPORT_BUG_TOOL,
+    );
     const systemPrompt = buildSystemPrompt({
       actorId: request.actorId,
       role: roleComp?.role ?? "unknown",
@@ -894,7 +956,8 @@ export class LlmActionProvider implements ActionProvider {
       allowedTools: llmAllowedTools,
       stageDirective: this.stageDirective(request),
       statusDirective: this.statusDirective(request.actorId, roleComp),
-      mustAct,
+      requiresAction,
+      turnConstraintRule: renderTurnConstraintSystemRule(turnConstraints),
       boardInfoPrompt,
       configPrompt,
       personalityPrompt: this.personalityPromptResolver?.(request, roleComp),
@@ -907,8 +970,10 @@ export class LlmActionProvider implements ActionProvider {
       isSpeechTurn:
         llmAllowedTools.includes("speak") ||
         llmAllowedTools.includes("speak_to_wolves"),
-      mustAct,
+      requiresAction,
+      turnConstraintHint: renderTurnConstraintUserHint(turnConstraints),
       allowedTools: llmAllowedTools,
+      effectiveActionTools,
       toolArgHints: this.toolArgHints(llmAllowedTools),
       stageContextHint: this.stageContextHint(request),
       actionableIdsHint: this.targetHintRegistry.buildActionableIdsHint({
@@ -1428,8 +1493,8 @@ export class LlmActionProvider implements ActionProvider {
   /**
    * 判断当前请求是否必须行动。
    */
-  private isMustAct(request: ActionRequest): boolean {
-    return request.context.must_act === true;
+  private requiresAction(request: ActionRequest): boolean {
+    return resolveTurnConstraints(request).minValidActions > 0;
   }
 
   /**

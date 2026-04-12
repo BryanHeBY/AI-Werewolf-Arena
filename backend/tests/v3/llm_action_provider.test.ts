@@ -104,6 +104,52 @@ class FinishTurnOnlyClient {
   }
 }
 
+class FinishThenSpeakThenFinishClient {
+  async chat(): Promise<string> {
+    return "";
+  }
+
+  async runToolLoop<T>(
+    _messages: Array<{ role: string; content: string }>,
+    _tools: Array<{ name: string }>,
+    callbacks: {
+      onToolCall: (invocation: {
+        id: string;
+        name: string;
+        args: Record<string, unknown>;
+        rawArgs: string;
+      }) => Promise<{
+        toolResult: Record<string, unknown> | string;
+        finalAction?: T;
+        stop?: boolean;
+      }>;
+    },
+  ): Promise<{ finalAction: T | null; assistantText: string }> {
+    await callbacks.onToolCall({
+      id: "finish_1",
+      name: "finish_turn",
+      args: {},
+      rawArgs: "{}",
+    });
+    await callbacks.onToolCall({
+      id: "speak_1",
+      name: "speak",
+      args: { text: "补一次有效动作" },
+      rawArgs: '{"text":"补一次有效动作"}',
+    });
+    const done = await callbacks.onToolCall({
+      id: "finish_2",
+      name: "finish_turn",
+      args: {},
+      rawArgs: "{}",
+    });
+    return {
+      finalAction: (done.finalAction ?? null) as T | null,
+      assistantText: "finish_then_speak_then_finish",
+    };
+  }
+}
+
 class CaptureToolsClient {
   public lastToolNames: string[] = [];
   public lastTools: Array<{ name: string; description?: string; parameters?: any }> = [];
@@ -723,7 +769,7 @@ describe("LlmActionProvider", () => {
         expect(lines.length).toBe(3);
         expect(lines[0]).toContain("[行动提示]");
         expect(lines[0]).toContain("目前是你的发言轮次");
-        expect(lines[1]).toContain("你本轮必须至少调用一次可用工具完成行动");
+        expect(lines[1]).toContain("你本轮可多次调用工具");
         expect(lines[2]).toContain("工具参数提示：");
         expect(latest).not.toContain("玩家编号=");
         expect(latest).not.toContain("当前板子信息");
@@ -868,7 +914,30 @@ describe("LlmActionProvider", () => {
     });
   });
 
-  test("mustAct=true should not expose finish_turn tool", async () => {
+  test("finish_turn should pass after constraints are satisfied in same turn", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const provider = new LlmActionProvider(
+      context.world,
+      new FinishThenSpeakThenFinishClient() as any,
+      {
+        fallbackProvider: new FallbackProvider(null),
+      },
+    );
+
+    const action = await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["speak"],
+      context: { must_act: true, broadcast_feed: [] },
+    });
+
+    expect(action).toEqual({
+      name: "speak",
+      args: { text: "补一次有效动作" },
+    });
+  });
+
+  test("mustAct=true should expose finish_turn tool and rely on constraint checks", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const client = new CaptureToolsClient();
     const provider = new LlmActionProvider(context.world, client as any, {
@@ -883,7 +952,7 @@ describe("LlmActionProvider", () => {
     });
 
     expect(client.lastToolNames).toContain("speak");
-    expect(client.lastToolNames).not.toContain("finish_turn");
+    expect(client.lastToolNames).toContain("finish_turn");
   });
 
   test("mustAct=false should expose finish_turn tool", async () => {
@@ -926,7 +995,7 @@ describe("LlmActionProvider", () => {
     expect(voteTool?.parameters?.properties?.abstain?.description).toContain("是否弃票");
 
     const finishTurnTool = client.lastTools.find((tool) => tool.name === "finish_turn");
-    expect(finishTurnTool?.description).toContain("不再继续行动");
+    expect(finishTurnTool?.description).toContain("申请结束当前回合");
     expect(finishTurnTool?.parameters?.description).toContain("空参数对象");
   });
 

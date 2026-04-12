@@ -88,7 +88,7 @@ export class BaselineBotActionProvider implements ActionProvider {
     }
 
     if (request.allowedTools.includes("run_for_sheriff")) {
-      // 基线策略：存活玩家默认上警，避免 mustAct 阶段无动作。
+      // 基线策略：存活玩家默认上警，避免“需至少一次行动”的回合无动作。
       return {
         name: "run_for_sheriff",
         args: { run: true },

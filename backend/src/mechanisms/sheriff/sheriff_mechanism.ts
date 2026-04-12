@@ -16,6 +16,7 @@ import {
 import { World } from "../../domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
 import { buildAgentBroadcastFeed } from "../../engine/agent_broadcast_feed";
+import { buildTurnConstraintContext } from "../../engine/turn_constraints_context";
 import { transferOrDestroySheriffBadge } from "./sheriff_badge";
 
 /** 警长发言方向。 */
@@ -85,7 +86,11 @@ export class SheriffMechanism {
           context: {
             day,
             phase: "sheriff_nomination",
-            must_act: true,
+            turn_constraints: buildTurnConstraintContext({
+              requiresAction: true,
+              allowedTools: ["run_for_sheriff"],
+              summary: "上警声明阶段必须选择上警或退警。",
+            }),
             broadcast_feed: nominationFeedByActor.get(actorId) ?? [],
           },
         };
@@ -141,7 +146,11 @@ export class SheriffMechanism {
         context: {
           day,
           phase: "sheriff_campaign_speech",
-          must_act: true,
+          turn_constraints: buildTurnConstraintContext({
+            requiresAction: true,
+            allowedTools: ["speak"],
+            summary: "警上竞选发言阶段必须完成一次发言。",
+          }),
           sheriff_candidates: [...candidateSet],
           broadcast_feed: buildAgentBroadcastFeed(world, events, candidateId),
         },
@@ -182,7 +191,11 @@ export class SheriffMechanism {
           context: {
             day,
             phase: "sheriff_withdraw",
-            must_act: true,
+            turn_constraints: buildTurnConstraintContext({
+              requiresAction: true,
+              allowedTools: ["run_for_sheriff"],
+              summary: "退水阶段必须明确是否继续竞选。",
+            }),
             sheriff_candidates: [...candidateSet],
             broadcast_feed: withdrawFeedByActor.get(candidateId) ?? [],
           },
@@ -258,7 +271,11 @@ export class SheriffMechanism {
           context: {
             day,
             phase: "sheriff_vote",
-            must_act: true,
+            turn_constraints: buildTurnConstraintContext({
+              requiresAction: true,
+              allowedTools: ["vote_for_sheriff"],
+              summary: "警长投票阶段必须完成一次投票（可弃票）。",
+            }),
             sheriff_candidates: finalizedCandidates,
             broadcast_feed: sheriffVoteFeedByActor.get(actorId) ?? [],
           },
@@ -357,7 +374,11 @@ export class SheriffMechanism {
       context: {
         day,
         phase: "sheriff_choose_direction",
-        must_act: true,
+        turn_constraints: buildTurnConstraintContext({
+          requiresAction: true,
+          allowedTools: ["choose_direction"],
+          summary: "警长定序阶段必须选择发言方向。",
+        }),
         broadcast_feed: buildAgentBroadcastFeed(world, events, sheriffId),
       },
     };
