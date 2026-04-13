@@ -28,6 +28,9 @@
 7. Phase 7
    - 物理迁移 `config + scenarios` 到 `runtime/*`
    - 统一运行入口相关目录到 runtime 域
+8. Phase 8
+   - 物理迁移 `infra/llm` 到 `ai/integrations/llm`
+   - 收敛 AI 适配层到 ai 域
 
 ## 验收基线（每阶段）
 - `npm -C backend run build:v3`

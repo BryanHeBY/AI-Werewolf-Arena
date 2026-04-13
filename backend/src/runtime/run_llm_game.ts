@@ -19,7 +19,7 @@ import {
   COMPONENT,
   RoleComponent,
 } from "../core";
-import { OpenAIClient } from "../infra/llm/openai_client";
+import { OpenAIClient } from "../ai/integrations/llm/openai_client";
 import { buildAgentBroadcastLine, renderMergedVoteBatch } from "../game/engine/agent_broadcast_feed";
 import { getDefaultScriptEventRenderRegistry } from "../game";
 import { resolveBoardConfig } from "./scenarios/board_config_resolver";

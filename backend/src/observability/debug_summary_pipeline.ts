@@ -8,7 +8,7 @@ import {
   ReplayPlayerView,
   ReplayPublicEvent,
 } from "./types";
-import { OpenAIClient } from "../infra/llm/openai_client";
+import { OpenAIClient } from "../ai/integrations/llm/openai_client";
 import { loadRuntimeConfig, resolveAgentProfileByName } from "../runtime/config/runtime_config";
 
 export interface DebugSummaryPipelineInput {
