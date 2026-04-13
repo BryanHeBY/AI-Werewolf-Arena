@@ -1,6 +1,6 @@
 /** 文件说明：狼人夜聊与刀人投票阶段处理。 */
 import { EntityId, Phase, Role, StatusMark } from "../../../domain/model";
-import { safeRecordLogicOp } from "../../../session_recording";
+import { safeRecordLogicOp } from "../../../observability";
 import { NightStageHandler } from "../../stages/night/contracts";
 
 const WOLF_DISCUSSION_MAX_ROUNDS = 3;

@@ -28,7 +28,7 @@ import {
   resolveDefaultRecordRoot,
   SessionRecordHub,
   SessionRecordManager,
-} from "../session_recording";
+} from "../observability";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
 import { BaselineBotActionProvider } from "../agents/providers/action_providers";
 import { LlmActionProvider } from "../agents/llm/llm_action_provider";
@@ -274,7 +274,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     );
     SessionRecordHub.setActive(replayManager);
   } catch (error) {
-    log(`[session_recording] init_failed err=${String(error)}`, "warn");
+    log(`[observability] init_failed err=${String(error)}`, "warn");
     SessionRecordHub.setActive(null);
   }
 
@@ -605,7 +605,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
       });
     }
   } catch (error) {
-    log(`[session_recording] finalize_failed err=${String(error)}`, "warn");
+    log(`[observability] finalize_failed err=${String(error)}`, "warn");
   } finally {
     SessionRecordHub.setActive(null);
   }

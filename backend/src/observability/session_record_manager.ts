@@ -535,7 +535,7 @@ export class SessionRecordManager {
         await this.flushDirtyFiles();
       })
       .catch((error) => {
-        console.warn(`[session_recording] realtime_flush_failed err=${String(error)}`);
+        console.warn(`[observability] realtime_flush_failed err=${String(error)}`);
       });
     return this.flushChain;
   }
@@ -634,7 +634,7 @@ export function safeRecordLogicOp(input: ReplayRecordLogicOpInput): void {
     active.recordLogicOp(input);
   } catch (error) {
     console.warn(
-      `[session_recording] logic_op_record_failed op=${input.op} err=${String(error)}`,
+      `[observability] logic_op_record_failed op=${input.op} err=${String(error)}`,
     );
   }
 }

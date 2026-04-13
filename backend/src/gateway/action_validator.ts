@@ -12,7 +12,7 @@ import {
   getDefaultToolValidationRuleRegistry,
   ToolValidationRuleRegistry,
 } from "../mechanisms";
-import { safeRecordLogicOp } from "../session_recording";
+import { safeRecordLogicOp } from "../observability";
 import { World } from "../domain/world";
 
 /**

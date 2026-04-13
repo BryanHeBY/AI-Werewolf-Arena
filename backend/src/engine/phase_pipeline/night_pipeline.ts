@@ -24,7 +24,7 @@ import {
   NightStageRegistry,
   NightStageState,
 } from "../../mechanisms";
-import { safeRecordLogicOp } from "../../session_recording";
+import { safeRecordLogicOp } from "../../observability";
 import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
 import { buildTurnConstraintContext } from "../turn_constraints_context";
 
