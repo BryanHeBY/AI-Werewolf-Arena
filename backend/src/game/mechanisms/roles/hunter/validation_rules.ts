@@ -1,5 +1,5 @@
 /** 文件说明：猎人工具校验规则。 */
-import { Role } from "../../../domain/model";
+import { Role } from "../../../../domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 import { getHunterState } from "../private_state";
 

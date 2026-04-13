@@ -1,5 +1,5 @@
 /** 文件说明：聚合所有角色与机制的 LLM 修复规则。 */
-import { ToolCall, ToolName } from "../../domain/model";
+import { ToolCall, ToolName } from "../../../domain/model";
 import { COMMON_LLM_REPAIR_PACK } from "../common/llm_repair";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../roles/profile_registry";
 import { SHERIFF_LLM_REPAIR_PACK } from "../sheriff/llm_repair";

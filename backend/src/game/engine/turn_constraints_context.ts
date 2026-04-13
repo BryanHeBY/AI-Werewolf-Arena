@@ -1,4 +1,4 @@
-import { ToolName } from "../domain/model";
+import { ToolName } from "../../domain/model";
 
 /**
  * 构造统一的 turn_constraints 上下文字段。

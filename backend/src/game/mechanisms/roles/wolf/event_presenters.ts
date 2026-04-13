@@ -1,12 +1,12 @@
 /** 文件说明：狼人相关事件在不同输出通道中的渲染实现。 */
-import { GameEvent } from "../../../domain/model";
+import { GameEvent } from "../../../../domain/model";
 import {
   AgentEventLineHandler,
   AgentLineContext,
 } from "../../broadcast/contracts";
 import { ScriptLiveRenderHandler, ScriptChatLineHandler } from "../../script/contracts";
 import { RealtimeEventHandler, RealtimeTranslateContext } from "../../session/contracts";
-import { RealtimeGameEvent } from "../../../infra/transport/broadcaster";
+import { RealtimeGameEvent } from "../../../../infra/transport/broadcaster";
 
 /** 狼人事件 -> 玩家广播行映射。 */
 export const WOLF_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {

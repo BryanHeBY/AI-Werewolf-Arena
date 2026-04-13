@@ -1,7 +1,7 @@
-import { AliveComponent } from "../../domain/components/alive";
-import { COMPONENT } from "../../domain/components/names";
-import { IdentityComponent } from "../../domain/entities/player";
-import { VotingRightComponent } from "../../domain/components/voting_right";
+import { AliveComponent } from "../../../domain/components/alive";
+import { COMPONENT } from "../../../domain/components/names";
+import { IdentityComponent } from "../../../domain/entities/player";
+import { VotingRightComponent } from "../../../domain/components/voting_right";
 import {
   ActionProvider,
   ActionRequest,
@@ -12,13 +12,13 @@ import {
   Phase,
   TieBreakerStrategy,
   VotingSummary,
-} from "../../domain/model";
-import { RoleRegistry } from "../../domain/registries/role_registry";
+} from "../../../domain/model";
+import { RoleRegistry } from "../../../domain/registries/role_registry";
 import { ToolGateway } from "../../gateway/tool_gateway";
 import { RoleSpecRegistry } from "../../mechanisms/registries/role_spec_registry";
-import { safeRecordLogicOp } from "../../observability";
+import { safeRecordLogicOp } from "../../../observability";
 import { EventRegistry } from "../event_registry";
-import { World } from "../../domain/world";
+import { World } from "../../../domain/world";
 import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
 import { buildTurnConstraintContext } from "../turn_constraints_context";
 

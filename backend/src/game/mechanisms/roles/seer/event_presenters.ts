@@ -2,7 +2,7 @@
 import { AgentEventLineHandler } from "../../broadcast/contracts";
 import { ScriptLiveRenderHandler } from "../../script/contracts";
 import { RealtimeEventHandler } from "../../session/contracts";
-import { RealtimeGameEvent } from "../../../infra/transport/broadcaster";
+import { RealtimeGameEvent } from "../../../../infra/transport/broadcaster";
 
 /** 预言家事件 -> 玩家广播行映射。 */
 export const SEER_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {

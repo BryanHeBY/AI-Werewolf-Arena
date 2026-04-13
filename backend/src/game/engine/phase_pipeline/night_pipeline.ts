@@ -1,6 +1,6 @@
-import { COMPONENT } from "../../domain/components/names";
-import { RoleComponent } from "../../domain/components/role";
-import { StatusMarksComponent } from "../../domain/components/status_marks";
+import { COMPONENT } from "../../../domain/components/names";
+import { RoleComponent } from "../../../domain/components/role";
+import { StatusMarksComponent } from "../../../domain/components/status_marks";
 import {
   ActionProvider,
   ActionRequest,
@@ -11,20 +11,20 @@ import {
   Phase,
   Role,
   TieBreakerStrategy,
-} from "../../domain/model";
-import { RoleRegistry } from "../../domain/registries/role_registry";
+} from "../../../domain/model";
+import { RoleRegistry } from "../../../domain/registries/role_registry";
 import {
   DamageResolutionResult,
   DamageResolutionSystem,
-} from "../../domain/systems/damage_resolution_system";
-import { World } from "../../domain/world";
+} from "../../../domain/systems/damage_resolution_system";
+import { World } from "../../../domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
 import {
   getDefaultNightStageRegistry,
   NightStageRegistry,
   NightStageState,
 } from "../../mechanisms";
-import { safeRecordLogicOp } from "../../observability";
+import { safeRecordLogicOp } from "../../../observability";
 import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
 import { buildTurnConstraintContext } from "../turn_constraints_context";
 

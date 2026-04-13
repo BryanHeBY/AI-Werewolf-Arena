@@ -1,8 +1,8 @@
 /** 文件说明：封装广播可见性判定逻辑。 */
-import { COMPONENT } from "../../domain/components/names";
-import { RoleComponent } from "../../domain/components/role";
-import { Camp, EntityId, Role } from "../../domain/model";
-import { World } from "../../domain/world";
+import { COMPONENT } from "../../../domain/components/names";
+import { RoleComponent } from "../../../domain/components/role";
+import { Camp, EntityId, Role } from "../../../domain/model";
+import { World } from "../../../domain/world";
 import { getDefaultRoleCampRegistry } from "../roles/camp_registry";
 
 /** 广播受众身份视图。 */

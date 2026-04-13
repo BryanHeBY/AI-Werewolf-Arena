@@ -1,5 +1,5 @@
 /** 文件说明：按工具与角色策略生成 target_id 可行动编号提示。 */
-import { Role, ToolName } from "../../domain/model";
+import { Role, ToolName } from "../../../domain/model";
 import { TargetHintContext, TargetHintRegistry } from "./contracts";
 
 interface TargetRule {

@@ -1,7 +1,7 @@
 /** 文件说明：实时事件转换相关契约。 */
-import { GameEvent } from "../../domain/model";
-import { RealtimeGameEvent } from "../../infra/transport/broadcaster";
-import { FrontendGameState } from "../../server/view_mapper";
+import { GameEvent } from "../../../domain/model";
+import { RealtimeGameEvent } from "../../../infra/transport/broadcaster";
+import { FrontendGameState } from "../../../server/view_mapper";
 
 /** 实时事件转换上下文。 */
 export interface RealtimeTranslateContext {

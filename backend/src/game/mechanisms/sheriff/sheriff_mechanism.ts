@@ -1,9 +1,9 @@
 /** 文件说明：警长机制主流程（上警、投警、发言顺序）。 */
-import { AliveComponent } from "../../domain/components/alive";
-import { BadgeComponent } from "../../domain/components/badge";
-import { COMPONENT } from "../../domain/components/names";
-import { VotingRightComponent } from "../../domain/components/voting_right";
-import { IdentityComponent } from "../../domain/entities/player";
+import { AliveComponent } from "../../../domain/components/alive";
+import { BadgeComponent } from "../../../domain/components/badge";
+import { COMPONENT } from "../../../domain/components/names";
+import { VotingRightComponent } from "../../../domain/components/voting_right";
+import { IdentityComponent } from "../../../domain/entities/player";
 import {
   ActionProvider,
   ActionRequest,
@@ -12,8 +12,8 @@ import {
   GameEvent,
   Phase,
   TieBreakerStrategy,
-} from "../../domain/model";
-import { World } from "../../domain/world";
+} from "../../../domain/model";
+import { World } from "../../../domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
 import { buildAgentBroadcastFeed } from "../../engine/agent_broadcast_feed";
 import { buildTurnConstraintContext } from "../../engine/turn_constraints_context";

@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 import { Camp } from "../../domain/model";
-import { getDefaultVisibilityRegistry } from "../../mechanisms";
+import { getDefaultVisibilityRegistry } from "../../game/mechanisms";
 
 /**
  * 实时事件可见性定义。

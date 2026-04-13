@@ -1,5 +1,5 @@
 /** 文件说明：聚合通用/角色/机制校验规则并提供统一校验入口。 */
-import { ToolName } from "../../domain/model";
+import { ToolName } from "../../../domain/model";
 import { COMMON_VALIDATION_RULES } from "../common/validation_rules";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../roles/profile_registry";
 import { SHERIFF_VALIDATION_RULES } from "../sheriff/validation_rules";

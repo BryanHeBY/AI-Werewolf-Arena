@@ -6,22 +6,22 @@ import { bootstrapGame } from "../app/bootstrap";
 import { appConfig } from "../config";
 import {
   loadRuntimeConfig,
-  resolveAgentProfileByName,
   ResolvedAgentRuntimeProfile,
+  resolveAgentProfileByName,
 } from "../config/runtime_config";
-import { AliveComponent } from "../domain/components/alive";
 import {
   ActionProvider,
   ActionRequest,
   GameEvent,
   RuntimeSnapshot,
   ToolCall,
-} from "../domain/model";
+  AliveComponent,
+  COMPONENT,
+  RoleComponent,
+} from "../core";
 import { OpenAIClient } from "../infra/llm/openai_client";
-import { COMPONENT } from "../domain/components/names";
-import { RoleComponent } from "../domain/components/role";
-import { buildAgentBroadcastLine, renderMergedVoteBatch } from "../engine/agent_broadcast_feed";
-import { getDefaultScriptEventRenderRegistry } from "../mechanisms";
+import { buildAgentBroadcastLine, renderMergedVoteBatch } from "../game/engine/agent_broadcast_feed";
+import { getDefaultScriptEventRenderRegistry } from "../game";
 import { resolveBoardConfig } from "../scenarios/board_config_resolver";
 import {
   buildSessionId,
@@ -30,8 +30,7 @@ import {
   SessionRecordManager,
 } from "../observability";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
-import { BaselineBotActionProvider } from "../agents/providers/action_providers";
-import { LlmActionProvider } from "../agents/llm/llm_action_provider";
+import { BaselineBotActionProvider, LlmActionProvider } from "../ai";
 
 /**
  * 支持的对局板子名称。

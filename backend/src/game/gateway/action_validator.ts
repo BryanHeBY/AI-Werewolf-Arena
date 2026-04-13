@@ -1,19 +1,19 @@
-import { AliveComponent } from "../domain/components/alive";
-import { COMPONENT } from "../domain/components/names";
-import { RoleComponent } from "../domain/components/role";
+import { AliveComponent } from "../../domain/components/alive";
+import { COMPONENT } from "../../domain/components/names";
+import { RoleComponent } from "../../domain/components/role";
 import {
   ActionWindow,
   EntityId,
   Phase,
   ToolCall,
   ToolValidationResult,
-} from "../domain/model";
+} from "../../domain/model";
 import {
   getDefaultToolValidationRuleRegistry,
   ToolValidationRuleRegistry,
 } from "../mechanisms";
-import { safeRecordLogicOp } from "../observability";
-import { World } from "../domain/world";
+import { safeRecordLogicOp } from "../../observability";
+import { World } from "../../domain/world";
 
 /**
  * 动作校验上下文。

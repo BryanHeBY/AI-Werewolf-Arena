@@ -1,11 +1,11 @@
 /** 文件说明：警徽流转与销毁逻辑。 */
-import { AliveComponent } from "../../domain/components/alive";
-import { BadgeComponent } from "../../domain/components/badge";
-import { COMPONENT } from "../../domain/components/names";
-import { VotingRightComponent } from "../../domain/components/voting_right";
-import { IdentityComponent } from "../../domain/entities/player";
-import { EntityId, GameEvent } from "../../domain/model";
-import { World } from "../../domain/world";
+import { AliveComponent } from "../../../domain/components/alive";
+import { BadgeComponent } from "../../../domain/components/badge";
+import { COMPONENT } from "../../../domain/components/names";
+import { VotingRightComponent } from "../../../domain/components/voting_right";
+import { IdentityComponent } from "../../../domain/entities/player";
+import { EntityId, GameEvent } from "../../../domain/model";
+import { World } from "../../../domain/world";
 
 /**
  * 警徽流转处理结果。

@@ -1,5 +1,5 @@
 /** 文件说明：根据板子角色集合构建夜间阶段列表。 */
-import { BoardConfig, Role } from "../../../domain/model";
+import { BoardConfig, Role } from "../../../../domain/model";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../../roles/profile_registry";
 import { NightStageHandler } from "./contracts";
 

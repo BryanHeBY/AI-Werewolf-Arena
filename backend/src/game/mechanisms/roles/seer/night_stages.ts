@@ -1,7 +1,7 @@
 /** 文件说明：预言家夜间查验阶段处理。 */
-import { COMPONENT } from "../../../domain/components/names";
-import { RoleComponent } from "../../../domain/components/role";
-import { Camp, Phase, Role } from "../../../domain/model";
+import { COMPONENT } from "../../../../domain/components/names";
+import { RoleComponent } from "../../../../domain/components/role";
+import { Camp, Phase, Role } from "../../../../domain/model";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { getSeerState } from "../private_state";
 

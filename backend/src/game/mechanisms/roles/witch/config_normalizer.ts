@@ -1,5 +1,5 @@
 /** 文件说明：女巫配置规范化器（仅当板子包含女巫时保留角色配置）。 */
-import { BoardConfig, Role } from "../../../domain/model";
+import { BoardConfig, Role } from "../../../../domain/model";
 import { ConfigNormalizer } from "../../config/contracts";
 
 /** 女巫配置规范化：仅当板子存在女巫时保留 `config.witch`。 */

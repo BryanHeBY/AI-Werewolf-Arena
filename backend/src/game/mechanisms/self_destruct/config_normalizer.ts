@@ -1,5 +1,5 @@
 /** 文件说明：自爆机制配置规范化器。 */
-import { BoardConfig } from "../../domain/model";
+import { BoardConfig } from "../../../domain/model";
 import { ConfigNormalizer } from "../config/contracts";
 
 /** 自爆配置规范化：无窗口时移除 `selfDestruct` 配置节点。 */

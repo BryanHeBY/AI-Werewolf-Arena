@@ -1,5 +1,5 @@
 /** 文件说明：提供角色名称与技能简介的统一查询接口。 */
-import { Role } from "../../domain/model";
+import { Role } from "../../../domain/model";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "./profile_registry";
 
 /** 角色提示词信息注册表。 */

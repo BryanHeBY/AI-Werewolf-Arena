@@ -1,5 +1,5 @@
 /** 文件说明：板子配置规范化注册表。 */
-import { BoardConfig } from "../../domain/model";
+import { BoardConfig } from "../../../domain/model";
 import { ConfigNormalizer } from "./contracts";
 import { SHERIFF_CONFIG_NORMALIZER } from "../sheriff/config_normalizer";
 import { WITCH_CONFIG_NORMALIZER } from "../roles/witch/config_normalizer";

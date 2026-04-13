@@ -6,7 +6,7 @@ import { StatusMarksComponent } from "../domain/components/status_marks";
 import { VotingRightComponent } from "../domain/components/voting_right";
 import { Camp, Phase, RuntimeSnapshot } from "../domain/model";
 import { World } from "../domain/world";
-import { getDefaultRoleViewRegistry } from "../mechanisms";
+import { getDefaultRoleViewRegistry } from "../game/mechanisms";
 
 /**
  * 前端阶段枚举（映射自后端 Phase）。

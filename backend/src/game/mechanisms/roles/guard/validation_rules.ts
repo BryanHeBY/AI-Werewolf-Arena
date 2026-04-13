@@ -1,5 +1,5 @@
 /** 文件说明：守卫工具校验规则。 */
-import { Role } from "../../../domain/model";
+import { Role } from "../../../../domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 import { getGuardState } from "../private_state";
 

@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 import { BoardConfig, HookConfig } from "../domain/model";
-import { getDefaultConfigNormalizerRegistry } from "../mechanisms";
+import { getDefaultConfigNormalizerRegistry } from "../game/mechanisms";
 import { sixPlayerMvpConfig } from "./six_player_mvp";
 import { twelvePlayerStandardConfig } from "./twelve_player_standard";
 

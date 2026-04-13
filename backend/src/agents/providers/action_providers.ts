@@ -9,7 +9,7 @@ import {
   ToolCall,
 } from "../../domain/model";
 import { World } from "../../domain/world";
-import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../../mechanisms";
+import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../../game/mechanisms";
 
 /**
  * Noop 行为提供器：用于测试“无人行动”场景。

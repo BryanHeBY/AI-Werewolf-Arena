@@ -1,5 +1,5 @@
 /** 文件说明：角色阵营注册表（从角色 profile 派生），用于解耦框架层角色特化判断。 */
-import { Camp, Role } from "../../domain/model";
+import { Camp, Role } from "../../../domain/model";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "./profile_registry";
 
 /** 角色阵营注册表。 */

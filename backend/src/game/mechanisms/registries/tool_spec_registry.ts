@@ -1,5 +1,5 @@
 /** 文件说明：汇总工具规格与阶段提示规则。 */
-import { ToolName } from "../../domain/model";
+import { ToolName } from "../../../domain/model";
 import { COMMON_TOOL_SPECS } from "../common/tool_specs";
 import { StageDirectiveRule, ToolSpec } from "../contracts";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../roles/profile_registry";

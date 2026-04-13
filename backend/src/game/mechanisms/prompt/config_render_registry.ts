@@ -4,7 +4,7 @@ import {
   BoardConfig,
   WinCondition,
   WitchSelfHealRule,
-} from "../../domain/model";
+} from "../../../domain/model";
 
 /** 配置渲染注册器契约。 */
 export interface ConfigRenderRegistry {

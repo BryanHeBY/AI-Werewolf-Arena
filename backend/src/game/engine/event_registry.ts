@@ -1,10 +1,10 @@
-import { BadgeComponent } from "../domain/components/badge";
-import { AliveComponent } from "../domain/components/alive";
-import { COMPONENT } from "../domain/components/names";
-import { RoleComponent } from "../domain/components/role";
-import { EntityId, GameEvent, StatusMark } from "../domain/model";
+import { BadgeComponent } from "../../domain/components/badge";
+import { AliveComponent } from "../../domain/components/alive";
+import { COMPONENT } from "../../domain/components/names";
+import { RoleComponent } from "../../domain/components/role";
+import { EntityId, GameEvent, StatusMark } from "../../domain/model";
 import { getDefaultHookRegistry, HookRegistry } from "../mechanisms";
-import { World } from "../domain/world";
+import { World } from "../../domain/world";
 import { transferOrDestroySheriffBadge } from "../mechanisms/sheriff/sheriff_badge";
 
 /**

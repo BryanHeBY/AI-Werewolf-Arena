@@ -1,5 +1,5 @@
 /** 文件说明：女巫角色 profile。 */
-import { Camp, PotionType, Role, WitchSelfHealRule } from "../../../domain/model";
+import { Camp, PotionType, Role, WitchSelfHealRule } from "../../../../domain/model";
 import { RoleProfile } from "../contracts";
 import { getWitchState, setWitchState } from "../private_state";
 import { WITCH_LLM_REPAIR_PACK } from "./llm_repair";

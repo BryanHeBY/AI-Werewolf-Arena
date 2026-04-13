@@ -26,8 +26,8 @@ import {
   ToolSpecRegistry,
   PhaseStageLocalizationRegistry,
   getDefaultPhaseStageLocalizationRegistry,
-} from "../../mechanisms";
-import { getIdiotState } from "../../mechanisms/roles/private_state";
+} from "../../game/mechanisms";
+import { getIdiotState } from "../../game/mechanisms/roles/private_state";
 import { safeRecordLogicOp, SessionRecordHub } from "../../observability";
 import { colorize, isAnsiEnabled } from "../../utils/ansi";
 import { BaselineBotActionProvider } from "../providers/action_providers";

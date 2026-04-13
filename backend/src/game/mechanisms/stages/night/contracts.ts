@@ -1,13 +1,13 @@
 /** 文件说明：夜间阶段处理器契约。 */
-import { StatusMarksComponent } from "../../../domain/components/status_marks";
+import { StatusMarksComponent } from "../../../../domain/components/status_marks";
 import {
   ActionProvider,
   ActionRequest,
   EntityId,
   NightSummary,
   Role,
-} from "../../../domain/model";
-import { World } from "../../../domain/world";
+} from "../../../../domain/model";
+import { World } from "../../../../domain/world";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 
 /** 夜间阶段共享状态。 */

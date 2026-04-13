@@ -12,13 +12,13 @@ import {
   getDefaultRoleRuntimeRegistry,
   getDefaultSheriffMechanism,
   RoleSpecRegistry,
-} from "../mechanisms";
+} from "../game/mechanisms";
 import { ConditionRegistry } from "../domain/registries/condition_registry";
 import { RoleRegistry } from "../domain/registries/role_registry";
 import { DamageResolutionSystem } from "../domain/systems/damage_resolution_system";
 import { World } from "../domain/world";
-import { PhaseManager } from "../engine/phase_manager";
-import { ToolGateway } from "../gateway/tool_gateway";
+import { PhaseManager } from "../game/engine/phase_manager";
+import { ToolGateway } from "../game/gateway/tool_gateway";
 
 /**
  * bootstrap 负责把“配置”装配成“可运行对局上下文”。

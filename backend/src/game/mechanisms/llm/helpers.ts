@@ -1,6 +1,6 @@
 /** 文件说明：LLM 修复流程共用工具函数。 */
-import { EntityId, PotionType } from "../../domain/model";
-import { World } from "../../domain/world";
+import { EntityId, PotionType } from "../../../domain/model";
+import { World } from "../../../domain/world";
 
 /** 将任意输入安全转换为 number 或 null。 */
 export function numberOrNull(value: unknown): number | null {

@@ -2,7 +2,7 @@
 import { AgentEventLineHandler } from "../../broadcast/contracts";
 import { ScriptLiveRenderHandler } from "../../script/contracts";
 import { RealtimeEventHandler } from "../../session/contracts";
-import { RealtimeGameEvent } from "../../../infra/transport/broadcaster";
+import { RealtimeGameEvent } from "../../../../infra/transport/broadcaster";
 import { getDefaultTextLocalizationRegistry } from "../../shared/text_localization_registry";
 
 /** 女巫事件 -> 玩家广播行映射。 */

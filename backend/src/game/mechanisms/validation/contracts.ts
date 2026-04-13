@@ -1,14 +1,14 @@
 /** 文件说明：工具校验规则契约定义。 */
-import { COMPONENT } from "../../domain/components/names";
-import { RoleComponent } from "../../domain/components/role";
+import { COMPONENT } from "../../../domain/components/names";
+import { RoleComponent } from "../../../domain/components/role";
 import {
   ActionWindow,
   EntityId,
   Phase,
   ToolCall,
   ToolName,
-} from "../../domain/model";
-import { World } from "../../domain/world";
+} from "../../../domain/model";
+import { World } from "../../../domain/world";
 
 /** 单次工具校验上下文。 */
 export interface ValidationRuleContext {

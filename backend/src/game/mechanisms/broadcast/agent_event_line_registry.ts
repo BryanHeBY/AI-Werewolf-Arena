@@ -1,5 +1,5 @@
 /** 文件说明：将领域事件转换为“单个玩家可见”的广播行。 */
-import { GameEvent } from "../../domain/model";
+import { GameEvent } from "../../../domain/model";
 import { GUARD_AGENT_EVENT_LINE_HANDLERS } from "../roles/guard/event_presenters";
 import { HUNTER_AGENT_EVENT_LINE_HANDLERS } from "../roles/hunter/event_presenters";
 import { SEER_AGENT_EVENT_LINE_HANDLERS } from "../roles/seer/event_presenters";

@@ -3,7 +3,7 @@ import { Server } from "socket.io";
 import { appConfig } from "../config";
 import { Role } from "../domain/model";
 import { Broadcaster } from "../infra/transport/broadcaster";
-import { getDefaultRoleCampRegistry } from "../mechanisms";
+import { getDefaultRoleCampRegistry } from "../game/mechanisms";
 
 let globalBroadcaster: Broadcaster | null = null;
 const roleCampRegistry = getDefaultRoleCampRegistry();

@@ -1,11 +1,11 @@
 import { bootstrapGame, BootstrapResult } from "../app/bootstrap";
 import { BoardPreset } from "../config";
-import { GameEvent, RuntimeSnapshot } from "../domain/model";
+import { GameEvent, RuntimeSnapshot } from "../core";
 import { Broadcaster, RealtimeGameEvent } from "../infra/transport/broadcaster";
-import { getDefaultRealtimeEventRegistry } from "../mechanisms";
+import { getDefaultRealtimeEventRegistry } from "../game";
 import { resolveBoardConfig } from "../scenarios/board_config_resolver";
 import { buildFrontendGameState, toFrontendPhase } from "./view_mapper";
-import { BaselineBotActionProvider } from "../agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../ai";
 
 /**
  * 启动会话可选参数。
