@@ -9,11 +9,11 @@
 3. 技术白皮书（通用架构说明）：`technical_whitepaper_v3.md`
 4. 玩法白皮书（全角色规则词典）：`gameplay_whitepaper_v3.md`
 5. Session 复盘记录规范（对局落盘与前端复盘协议）：`session_replay_recording_v3.md`
-6. 引擎与玩法机制解耦重构方案（注册化与插件化路线）：`engine_mechanism_decoupling_refactor_v3.md`
-7. LLM 自动调试一期规范：`llm_auto_debug_phase1_spec.md`
+6. 引擎与玩法机制解耦重构方案（已归档）：`archive/completed_todos/engine_mechanism_decoupling_refactor_v3.md`
+7. LLM 自动调试一期规范（已归档）：`archive/completed_todos/llm_auto_debug_phase1_spec.md`
 8. LLM 自动调试二期规范：`llm_auto_debug_phase2_spec.md`
 9. 运行时配置文件规范：`runtime_config_spec.md`
-10. Session 实时复盘记录规范：`realtime_session_records_spec.md`
+10. Session 实时复盘记录规范（已归档）：`archive/completed_todos/realtime_session_records_spec.md`
 11. LLM 行动提示三行高密度规范：`llm_user_prompt_three_line_spec.md`
 12. Multi-Tool 回合与 Turn Constraints 重构 TODO（已归档）：`archive/multi_tool_turn_constraints_refactor_todo_v3.md`
 13. 广播信息结构规范：`broadcast_message_structure_spec.md`
