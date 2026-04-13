@@ -8,4 +8,5 @@
 - [`backend_refactor_phase4.md`](./backend_refactor_phase4.md)
 - [`backend_refactor_phase5.md`](./backend_refactor_phase5.md)
 - [`backend_refactor_phase6.md`](./backend_refactor_phase6.md)
+- [`backend_refactor_phase7.md`](./backend_refactor_phase7.md)
 - [`backend_architecture_constraints.md`](./backend_architecture_constraints.md)

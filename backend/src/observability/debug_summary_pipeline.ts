@@ -9,7 +9,7 @@ import {
   ReplayPublicEvent,
 } from "./types";
 import { OpenAIClient } from "../infra/llm/openai_client";
-import { loadRuntimeConfig, resolveAgentProfileByName } from "../config/runtime_config";
+import { loadRuntimeConfig, resolveAgentProfileByName } from "../runtime/config/runtime_config";
 
 export interface DebugSummaryPipelineInput {
   manifest: ReplayManifest;

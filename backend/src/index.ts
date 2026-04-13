@@ -6,5 +6,5 @@ export * from "./app";
 export * from "./ai";
 export * from "./core";
 export * from "./game";
-export * from "./scenarios";
+export * from "./runtime/scenarios";
 export { V3SessionManager } from "./server/v3_session_manager";

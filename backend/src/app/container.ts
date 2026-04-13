@@ -1,6 +1,6 @@
 import { bootstrapGame, BootstrapResult } from "./bootstrap";
 import { BoardConfig } from "../core/domain/model";
-import { resolveBoardConfig } from "../scenarios/board_config_resolver";
+import { resolveBoardConfig } from "../runtime/scenarios/board_config_resolver";
 
 /**
  * 轻量容器：对外提供常用板子的一键装配入口。

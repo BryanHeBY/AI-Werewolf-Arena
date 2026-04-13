@@ -3,12 +3,12 @@
  * 真实 LLM 对局运行脚本：用于本地回放与可观测调试。
  */
 import { bootstrapGame } from "../app/bootstrap";
-import { appConfig } from "../config";
+import { appConfig } from "./config";
 import {
   loadRuntimeConfig,
   ResolvedAgentRuntimeProfile,
   resolveAgentProfileByName,
-} from "../config/runtime_config";
+} from "./config/runtime_config";
 import {
   ActionProvider,
   ActionRequest,
@@ -22,7 +22,7 @@ import {
 import { OpenAIClient } from "../infra/llm/openai_client";
 import { buildAgentBroadcastLine, renderMergedVoteBatch } from "../game/engine/agent_broadcast_feed";
 import { getDefaultScriptEventRenderRegistry } from "../game";
-import { resolveBoardConfig } from "../scenarios/board_config_resolver";
+import { resolveBoardConfig } from "./scenarios/board_config_resolver";
 import {
   buildSessionId,
   resolveDefaultRecordRoot,

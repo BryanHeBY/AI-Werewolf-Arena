@@ -1,4 +1,4 @@
-import { ActionWindow, BoardConfig, Role, WinCondition } from "../core/domain/model";
+import { ActionWindow, BoardConfig, Role, WinCondition } from "../../core/domain/model";
 
 /**
  * 12 人标准局：用于验证警长系统、白痴/猎人钩子与白天中断链路。

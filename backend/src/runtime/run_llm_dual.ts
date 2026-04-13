@@ -1,5 +1,5 @@
 import { runLlmGame } from "./run_llm_game";
-import { loadRuntimeConfig } from "../config/runtime_config";
+import { loadRuntimeConfig } from "./config/runtime_config";
 
 /**
  * 双板顺序验证入口：

@@ -1,6 +1,6 @@
 import { Server as HttpServer } from "http";
 import { Server } from "socket.io";
-import { appConfig } from "../config";
+import { appConfig } from "../runtime/config";
 import { Role } from "../core/domain/model";
 import { Broadcaster } from "../infra/transport/broadcaster";
 import { getDefaultRoleCampRegistry } from "../game/mechanisms";

@@ -25,6 +25,9 @@
 6. Phase 6
    - 物理迁移 `agents + memory` 到 `ai/*`
    - 收敛 AI 目录，减少根目录分散模块
+7. Phase 7
+   - 物理迁移 `config + scenarios` 到 `runtime/*`
+   - 统一运行入口相关目录到 runtime 域
 
 ## 验收基线（每阶段）
 - `npm -C backend run build:v3`

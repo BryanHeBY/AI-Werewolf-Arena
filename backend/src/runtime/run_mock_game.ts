@@ -1,5 +1,5 @@
 import { bootstrapGame } from "../app/bootstrap";
-import { sixPlayerMvpConfig } from "../scenarios/six_player_mvp";
+import { sixPlayerMvpConfig } from "./scenarios/six_player_mvp";
 import { BaselineBotActionProvider } from "../ai/agents/providers/action_providers";
 
 /**
