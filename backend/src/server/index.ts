@@ -1,7 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import { appConfig, BoardPreset } from "../runtime/config";
-import { Broadcaster } from "../infra/transport/broadcaster";
+import { Broadcaster } from "./transport/broadcaster";
 import { setupSocket, setGlobalBroadcaster } from "./socket";
 import { V3SessionManager } from "./v3_session_manager";
 

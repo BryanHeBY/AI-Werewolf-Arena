@@ -1,6 +1,6 @@
 /** 文件说明：实时事件转换相关契约。 */
 import { GameEvent } from "../../../core/domain/model";
-import { RealtimeGameEvent } from "../../../infra/transport/broadcaster";
+import { RealtimeGameEvent } from "./realtime_event_types";
 import { FrontendGameState } from "../../../server/view_mapper";
 
 /** 实时事件转换上下文。 */

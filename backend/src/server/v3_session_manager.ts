@@ -1,8 +1,9 @@
 import { bootstrapGame, BootstrapResult } from "../app/bootstrap";
 import { BoardPreset } from "../runtime/config";
 import { GameEvent, RuntimeSnapshot } from "../core";
-import { Broadcaster, RealtimeGameEvent } from "../infra/transport/broadcaster";
+import { Broadcaster } from "./transport/broadcaster";
 import { getDefaultRealtimeEventRegistry } from "../game";
+import { RealtimeGameEvent } from "../game/mechanisms/session/realtime_event_types";
 import { resolveBoardConfig } from "../runtime/scenarios/board_config_resolver";
 import { buildFrontendGameState, toFrontendPhase } from "./view_mapper";
 import { BaselineBotActionProvider } from "../ai";

@@ -2,7 +2,7 @@ import { Server as HttpServer } from "http";
 import { Server } from "socket.io";
 import { appConfig } from "../runtime/config";
 import { Role } from "../core/domain/model";
-import { Broadcaster } from "../infra/transport/broadcaster";
+import { Broadcaster } from "./transport/broadcaster";
 import { getDefaultRoleCampRegistry } from "../game/mechanisms";
 
 let globalBroadcaster: Broadcaster | null = null;

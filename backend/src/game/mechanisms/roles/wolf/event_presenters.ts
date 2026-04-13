@@ -6,7 +6,7 @@ import {
 } from "../../broadcast/contracts";
 import { ScriptLiveRenderHandler, ScriptChatLineHandler } from "../../script/contracts";
 import { RealtimeEventHandler, RealtimeTranslateContext } from "../../session/contracts";
-import { RealtimeGameEvent } from "../../../../infra/transport/broadcaster";
+import { RealtimeGameEvent } from "../../session/realtime_event_types";
 
 /** 狼人事件 -> 玩家广播行映射。 */
 export const WOLF_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {

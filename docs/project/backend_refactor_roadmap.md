@@ -31,6 +31,10 @@
 8. Phase 8
    - 物理迁移 `infra/llm` 到 `ai/integrations/llm`
    - 收敛 AI 适配层到 ai 域
+9. Phase 9
+   - 迁移 `infra/transport` 到 `server/transport`
+   - 迁移 `infra/logger` 到 `observability/logger`
+   - 抽离 RealtimeEvent 类型，解耦 game 与 broadcaster 实现
 
 ## 验收基线（每阶段）
 - `npm -C backend run build:v3`

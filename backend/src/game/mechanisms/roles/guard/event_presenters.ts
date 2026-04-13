@@ -2,7 +2,7 @@
 import { AgentEventLineHandler } from "../../broadcast/contracts";
 import { ScriptLiveRenderHandler } from "../../script/contracts";
 import { RealtimeEventHandler } from "../../session/contracts";
-import { RealtimeGameEvent } from "../../../../infra/transport/broadcaster";
+import { RealtimeGameEvent } from "../../session/realtime_event_types";
 
 /** 守卫事件 -> 玩家广播行映射。 */
 export const GUARD_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
