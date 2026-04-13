@@ -1,5 +1,5 @@
 import { Server } from "socket.io";
-import { Camp } from "../../domain/model";
+import { Camp } from "../../core/domain/model";
 import { getDefaultVisibilityRegistry } from "../../game/mechanisms";
 
 /**

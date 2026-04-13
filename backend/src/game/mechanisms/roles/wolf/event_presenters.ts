@@ -1,5 +1,5 @@
 /** 文件说明：狼人相关事件在不同输出通道中的渲染实现。 */
-import { GameEvent } from "../../../../domain/model";
+import { GameEvent } from "../../../../core/domain/model";
 import {
   AgentEventLineHandler,
   AgentLineContext,

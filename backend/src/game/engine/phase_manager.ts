@@ -8,10 +8,10 @@ import {
   RuntimeSnapshot,
   StatusMark,
   WinCondition,
-} from "../../domain/model";
-import { ConditionRegistry } from "../../domain/registries/condition_registry";
-import { DamageResolutionSystem } from "../../domain/systems/damage_resolution_system";
-import { World } from "../../domain/world";
+} from "../../core/domain/model";
+import { ConditionRegistry } from "../../core/domain/registries/condition_registry";
+import { DamageResolutionSystem } from "../../core/domain/systems/damage_resolution_system";
+import { World } from "../../core/domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
 import {
   getDefaultLastWordsMechanism,
@@ -23,12 +23,12 @@ import { EventRegistry } from "./event_registry";
 import { DayPipeline } from "./phase_pipeline/day_pipeline";
 import { NightPipeline } from "./phase_pipeline/night_pipeline";
 import { VotingPipeline } from "./phase_pipeline/voting_pipeline";
-import { RoleRegistry } from "../../domain/registries/role_registry";
-import { COMPONENT } from "../../domain/components/names";
-import { VotingRightComponent } from "../../domain/components/voting_right";
-import { IdentityComponent } from "../../domain/entities/player";
-import { RoleComponent } from "../../domain/components/role";
-import { AliveComponent } from "../../domain/components/alive";
+import { RoleRegistry } from "../../core/domain/registries/role_registry";
+import { COMPONENT } from "../../core/domain/components/names";
+import { VotingRightComponent } from "../../core/domain/components/voting_right";
+import { IdentityComponent } from "../../core/domain/entities/player";
+import { RoleComponent } from "../../core/domain/components/role";
+import { AliveComponent } from "../../core/domain/components/alive";
 import { buildAgentBroadcastFeed } from "./agent_broadcast_feed";
 import { buildTurnConstraintContext } from "./turn_constraints_context";
 

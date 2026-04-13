@@ -1,5 +1,5 @@
 /** 文件说明：狼人夜聊与刀人投票阶段处理。 */
-import { EntityId, Phase, Role, StatusMark } from "../../../../domain/model";
+import { EntityId, Phase, Role, StatusMark } from "../../../../core/domain/model";
 import { safeRecordLogicOp } from "../../../../observability";
 import { NightStageHandler } from "../../stages/night/contracts";
 

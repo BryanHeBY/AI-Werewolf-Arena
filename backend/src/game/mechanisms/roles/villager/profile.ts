@@ -1,5 +1,5 @@
 /** 文件说明：平民角色 profile。 */
-import { Camp, Role } from "../../../../domain/model";
+import { Camp, Role } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
 
 /** 平民角色配置。 */

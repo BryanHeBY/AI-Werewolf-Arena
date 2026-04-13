@@ -1,22 +1,22 @@
-import { createAliveComponent } from "../domain/components/alive";
-import { createBadgeComponent } from "../domain/components/badge";
-import { createCampComponent } from "../domain/components/camp";
-import { COMPONENT } from "../domain/components/names";
-import { createRoleComponent } from "../domain/components/role";
-import { createStatusMarksComponent } from "../domain/components/status_marks";
-import { createVotingRightComponent } from "../domain/components/voting_right";
-import { createIdentityComponent } from "../domain/entities/player";
-import { BoardConfig, EntityId, Role } from "../domain/model";
+import { createAliveComponent } from "../core/domain/components/alive";
+import { createBadgeComponent } from "../core/domain/components/badge";
+import { createCampComponent } from "../core/domain/components/camp";
+import { COMPONENT } from "../core/domain/components/names";
+import { createRoleComponent } from "../core/domain/components/role";
+import { createStatusMarksComponent } from "../core/domain/components/status_marks";
+import { createVotingRightComponent } from "../core/domain/components/voting_right";
+import { createIdentityComponent } from "../core/domain/entities/player";
+import { BoardConfig, EntityId, Role } from "../core/domain/model";
 import {
   getDefaultRoleCampRegistry,
   getDefaultRoleRuntimeRegistry,
   getDefaultSheriffMechanism,
   RoleSpecRegistry,
 } from "../game/mechanisms";
-import { ConditionRegistry } from "../domain/registries/condition_registry";
-import { RoleRegistry } from "../domain/registries/role_registry";
-import { DamageResolutionSystem } from "../domain/systems/damage_resolution_system";
-import { World } from "../domain/world";
+import { ConditionRegistry } from "../core/domain/registries/condition_registry";
+import { RoleRegistry } from "../core/domain/registries/role_registry";
+import { DamageResolutionSystem } from "../core/domain/systems/damage_resolution_system";
+import { World } from "../core/domain/world";
 import { PhaseManager } from "../game/engine/phase_manager";
 import { ToolGateway } from "../game/gateway/tool_gateway";
 

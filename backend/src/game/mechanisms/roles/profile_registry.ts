@@ -1,5 +1,5 @@
 /** 文件说明：集中注册所有角色 profile。 */
-import { Role } from "../../../domain/model";
+import { Role } from "../../../core/domain/model";
 import { RoleProfile } from "./contracts";
 import { GUARD_ROLE_PROFILE } from "./guard/profile";
 import { HUNTER_ROLE_PROFILE } from "./hunter/profile";

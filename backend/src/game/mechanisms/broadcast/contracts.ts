@@ -1,5 +1,5 @@
 /** 文件说明：定义玩家可见广播行渲染契约。 */
-import { EntityId, GameEvent } from "../../../domain/model";
+import { EntityId, GameEvent } from "../../../core/domain/model";
 
 /** 广播渲染上下文。 */
 export interface AgentLineContext {

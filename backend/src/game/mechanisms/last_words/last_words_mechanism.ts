@@ -1,8 +1,8 @@
 /** 文件说明：遗言规则与事件写入机制。 */
-import { AliveComponent } from "../../../domain/components/alive";
-import { COMPONENT } from "../../../domain/components/names";
-import { EntityId, GameEvent, Phase } from "../../../domain/model";
-import { World } from "../../../domain/world";
+import { AliveComponent } from "../../../core/domain/components/alive";
+import { COMPONENT } from "../../../core/domain/components/names";
+import { EntityId, GameEvent, Phase } from "../../../core/domain/model";
+import { World } from "../../../core/domain/world";
 
 /** 遗言机制：判定是否可遗言并写入遗言授权事件。 */
 export class LastWordsMechanism {

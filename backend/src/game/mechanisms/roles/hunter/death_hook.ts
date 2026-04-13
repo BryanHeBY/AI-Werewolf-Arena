@@ -1,14 +1,14 @@
 /** 文件说明：猎人死亡时开枪带人相关钩子。 */
-import { AliveComponent } from "../../../../domain/components/alive";
-import { COMPONENT } from "../../../../domain/components/names";
-import { RoleComponent } from "../../../../domain/components/role";
+import { AliveComponent } from "../../../../core/domain/components/alive";
+import { COMPONENT } from "../../../../core/domain/components/names";
+import { RoleComponent } from "../../../../core/domain/components/role";
 import {
   EntityId,
   GameEvent,
   Role,
   StatusMark,
-} from "../../../../domain/model";
-import { World } from "../../../../domain/world";
+} from "../../../../core/domain/model";
+import { World } from "../../../../core/domain/world";
 import { DeathHookResult } from "../../hooks/hook_registry";
 import { getHunterState } from "../private_state";
 

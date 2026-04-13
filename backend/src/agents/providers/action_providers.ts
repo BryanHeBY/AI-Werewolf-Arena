@@ -1,5 +1,5 @@
-import { COMPONENT } from "../../domain/components/names";
-import { RoleComponent } from "../../domain/components/role";
+import { COMPONENT } from "../../core/domain/components/names";
+import { RoleComponent } from "../../core/domain/components/role";
 import {
   ActionProvider,
   ActionRequest,
@@ -7,8 +7,8 @@ import {
   EntityId,
   Phase,
   ToolCall,
-} from "../../domain/model";
-import { World } from "../../domain/world";
+} from "../../core/domain/model";
+import { World } from "../../core/domain/world";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../../game/mechanisms";
 
 /**

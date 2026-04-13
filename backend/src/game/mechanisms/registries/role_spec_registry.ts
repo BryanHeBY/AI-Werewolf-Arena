@@ -1,5 +1,5 @@
 /** 文件说明：组装角色规格视图（label/skill/allowedTools）。 */
-import { Role, ToolName } from "../../../domain/model";
+import { Role, ToolName } from "../../../core/domain/model";
 import { COMMON_TOOL_SPECS } from "../common/tool_specs";
 import { RoleSpec } from "../contracts";
 import {

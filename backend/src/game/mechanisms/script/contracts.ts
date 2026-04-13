@@ -1,5 +1,5 @@
 /** 文件说明：脚本回放与终端渲染相关契约。 */
-import { GameEvent } from "../../../domain/model";
+import { GameEvent } from "../../../core/domain/model";
 
 /** 终端 live 输出类型。 */
 export type ScriptLiveKind =

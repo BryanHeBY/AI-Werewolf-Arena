@@ -1,6 +1,6 @@
 /** 文件说明：定义通用工具的校验规则。 */
-import { COMPONENT } from "../../../domain/components/names";
-import { VotingRightComponent } from "../../../domain/components/voting_right";
+import { COMPONENT } from "../../../core/domain/components/names";
+import { VotingRightComponent } from "../../../core/domain/components/voting_right";
 import { ToolRuleMap, isAliveTarget } from "../validation/contracts";
 
 /** 通用工具校验规则集合。 */

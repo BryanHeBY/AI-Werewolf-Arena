@@ -1,10 +1,10 @@
-import { AliveComponent } from "../domain/components/alive";
-import { BadgeComponent } from "../domain/components/badge";
-import { COMPONENT } from "../domain/components/names";
-import { RoleComponent } from "../domain/components/role";
-import { VotingRightComponent } from "../domain/components/voting_right";
-import { EntityId } from "../domain/model";
-import { World } from "../domain/world";
+import { AliveComponent } from "../core/domain/components/alive";
+import { BadgeComponent } from "../core/domain/components/badge";
+import { COMPONENT } from "../core/domain/components/names";
+import { RoleComponent } from "../core/domain/components/role";
+import { VotingRightComponent } from "../core/domain/components/voting_right";
+import { EntityId } from "../core/domain/model";
+import { World } from "../core/domain/world";
 import { ActiveContextWindow } from "./active_context_window";
 import { NotebookStore } from "./notebook_store";
 import { RollingSummaryStore } from "./rolling_summary";

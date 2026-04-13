@@ -1,5 +1,5 @@
-import { EntityId, GameEvent } from "../../domain/model";
-import { World } from "../../domain/world";
+import { EntityId, GameEvent } from "../../core/domain/model";
+import { World } from "../../core/domain/world";
 import {
   getDefaultAgentEventLineRegistry,
   getDefaultVisibilityRegistry,

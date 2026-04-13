@@ -1,5 +1,5 @@
 /** 文件说明：狼人角色 profile。 */
-import { Camp, Role } from "../../../../domain/model";
+import { Camp, Role } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
 import { WOLF_LLM_REPAIR_PACK } from "./llm_repair";
 import { WOLF_NIGHT_STAGES } from "./night_stages";

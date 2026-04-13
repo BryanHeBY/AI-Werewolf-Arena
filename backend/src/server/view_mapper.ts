@@ -1,11 +1,11 @@
-import { AliveComponent } from "../domain/components/alive";
-import { BadgeComponent } from "../domain/components/badge";
-import { COMPONENT } from "../domain/components/names";
-import { RoleComponent } from "../domain/components/role";
-import { StatusMarksComponent } from "../domain/components/status_marks";
-import { VotingRightComponent } from "../domain/components/voting_right";
-import { Camp, Phase, RuntimeSnapshot } from "../domain/model";
-import { World } from "../domain/world";
+import { AliveComponent } from "../core/domain/components/alive";
+import { BadgeComponent } from "../core/domain/components/badge";
+import { COMPONENT } from "../core/domain/components/names";
+import { RoleComponent } from "../core/domain/components/role";
+import { StatusMarksComponent } from "../core/domain/components/status_marks";
+import { VotingRightComponent } from "../core/domain/components/voting_right";
+import { Camp, Phase, RuntimeSnapshot } from "../core/domain/model";
+import { World } from "../core/domain/world";
 import { getDefaultRoleViewRegistry } from "../game/mechanisms";
 
 /**

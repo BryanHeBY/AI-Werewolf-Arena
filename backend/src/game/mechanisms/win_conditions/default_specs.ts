@@ -1,8 +1,8 @@
 /** 文件说明：内置胜利条件规格实现。 */
-import { COMPONENT } from "../../../domain/components/names";
-import { RoleComponent } from "../../../domain/components/role";
-import { Camp, GameResult, WinCondition } from "../../../domain/model";
-import { World } from "../../../domain/world";
+import { COMPONENT } from "../../../core/domain/components/names";
+import { RoleComponent } from "../../../core/domain/components/role";
+import { Camp, GameResult, WinCondition } from "../../../core/domain/model";
+import { World } from "../../../core/domain/world";
 import { getDefaultRoleProfileRegistry } from "../roles/profile_registry";
 import { WinConditionSpec } from "./contracts";
 

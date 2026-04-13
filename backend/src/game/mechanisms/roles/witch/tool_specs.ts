@@ -1,5 +1,5 @@
 /** 文件说明：女巫工具规格与阶段提示规则定义。 */
-import { PotionType } from "../../../../domain/model";
+import { PotionType } from "../../../../core/domain/model";
 import { StageDirectiveRule, ToolSpec } from "../../contracts";
 import { prop } from "../../shared/schema";
 

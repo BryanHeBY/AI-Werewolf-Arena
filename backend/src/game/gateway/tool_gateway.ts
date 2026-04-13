@@ -5,9 +5,9 @@ import {
   ToolCall,
   ToolName,
   ToolValidationResult,
-} from "../../domain/model";
+} from "../../core/domain/model";
 import { getDefaultToolSpecRegistry, ToolSpecRegistry } from "../mechanisms";
-import { World } from "../../domain/world";
+import { World } from "../../core/domain/world";
 import { ActionValidator } from "./action_validator";
 
 const RESERVED_PREFIX = /^(\s*\[(上帝|法官|系统)\]\s*)+/g;

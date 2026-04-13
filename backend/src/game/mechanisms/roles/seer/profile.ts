@@ -1,5 +1,5 @@
 /** 文件说明：预言家角色 profile。 */
-import { Camp, Role } from "../../../../domain/model";
+import { Camp, Role } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
 import { getSeerState, setSeerState } from "../private_state";
 import { SEER_LLM_REPAIR_PACK } from "./llm_repair";

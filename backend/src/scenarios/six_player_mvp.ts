@@ -1,4 +1,4 @@
-import { BoardConfig, Role, WinCondition } from "../domain/model";
+import { BoardConfig, Role, WinCondition } from "../core/domain/model";
 
 /**
  * 6 人 MVP：最小闭环板子，用于验证基础夜昼流转与守卫/预言家核心规则。

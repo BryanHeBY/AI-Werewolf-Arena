@@ -1,4 +1,4 @@
-import { ActionWindow } from "../../../domain/model";
+import { ActionWindow } from "../../../core/domain/model";
 
 /**
  * 每位玩家发言结束后的中断窗口标识（高压配置）。

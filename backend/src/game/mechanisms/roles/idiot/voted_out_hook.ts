@@ -1,11 +1,11 @@
 /** 文件说明：白痴被放逐时翻牌免死的钩子实现。 */
-import { AliveComponent } from "../../../../domain/components/alive";
-import { BadgeComponent } from "../../../../domain/components/badge";
-import { COMPONENT } from "../../../../domain/components/names";
-import { RoleComponent } from "../../../../domain/components/role";
-import { VotingRightComponent } from "../../../../domain/components/voting_right";
-import { EntityId, GameEvent, Role } from "../../../../domain/model";
-import { World } from "../../../../domain/world";
+import { AliveComponent } from "../../../../core/domain/components/alive";
+import { BadgeComponent } from "../../../../core/domain/components/badge";
+import { COMPONENT } from "../../../../core/domain/components/names";
+import { RoleComponent } from "../../../../core/domain/components/role";
+import { VotingRightComponent } from "../../../../core/domain/components/voting_right";
+import { EntityId, GameEvent, Role } from "../../../../core/domain/model";
+import { World } from "../../../../core/domain/world";
 import { VotedOutResult } from "../../hooks/hook_registry";
 import { transferOrDestroySheriffBadge } from "../../sheriff/sheriff_badge";
 import { setIdiotState } from "../private_state";

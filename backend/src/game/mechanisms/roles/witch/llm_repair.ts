@@ -1,5 +1,5 @@
 /** 文件说明：女巫工具调用的 LLM 修复策略。 */
-import { PotionType } from "../../../../domain/model";
+import { PotionType } from "../../../../core/domain/model";
 import { ToolRepairPack } from "../../llm/contracts";
 import {
   extractPotion,

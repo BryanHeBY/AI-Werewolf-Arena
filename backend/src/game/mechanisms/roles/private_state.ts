@@ -1,6 +1,6 @@
 /** 文件说明：角色私有状态的统一读写封装。 */
-import { EntityId, WitchSelfHealRule } from "../../../domain/model";
-import { RoleComponent } from "../../../domain/components/role";
+import { EntityId, WitchSelfHealRule } from "../../../core/domain/model";
+import { RoleComponent } from "../../../core/domain/components/role";
 
 const PRIVATE_STATE_KEYS = {
   witch: "witch",

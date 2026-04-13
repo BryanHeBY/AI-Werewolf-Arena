@@ -1,5 +1,5 @@
-import { COMPONENT } from "../../domain/components/names";
-import { RoleComponent } from "../../domain/components/role";
+import { COMPONENT } from "../../core/domain/components/names";
+import { RoleComponent } from "../../core/domain/components/role";
 import {
   ActionProvider,
   ActionRequest,
@@ -11,8 +11,8 @@ import {
   Role,
   ToolCall,
   ToolName,
-} from "../../domain/model";
-import { World } from "../../domain/world";
+} from "../../core/domain/model";
+import { World } from "../../core/domain/world";
 import {
   getDefaultTargetHintRegistry,
   getDefaultRolePromptRegistry,

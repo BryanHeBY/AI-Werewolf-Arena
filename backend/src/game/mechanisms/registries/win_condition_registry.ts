@@ -1,6 +1,6 @@
 /** 文件说明：管理胜利条件规格与评估入口。 */
-import { GameResult, WinCondition } from "../../../domain/model";
-import { World } from "../../../domain/world";
+import { GameResult, WinCondition } from "../../../core/domain/model";
+import { World } from "../../../core/domain/world";
 import {
   DEFAULT_WIN_CONDITION_SPECS,
 } from "../win_conditions/default_specs";

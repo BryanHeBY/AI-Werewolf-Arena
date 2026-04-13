@@ -1,5 +1,5 @@
 /** 文件说明：白痴角色 profile。 */
-import { Camp, Role } from "../../../../domain/model";
+import { Camp, Role } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
 import { setIdiotState } from "../private_state";
 import { idiotVotedOutHook } from "./voted_out_hook";

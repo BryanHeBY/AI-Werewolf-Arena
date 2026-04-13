@@ -1,5 +1,5 @@
 import { bootstrapGame, BootstrapResult } from "./bootstrap";
-import { BoardConfig } from "../domain/model";
+import { BoardConfig } from "../core/domain/model";
 import { resolveBoardConfig } from "../scenarios/board_config_resolver";
 
 /**

@@ -1,6 +1,6 @@
 /** 文件说明：LLM 工具修复的上下文与处理器契约。 */
-import { EntityId, Role, ToolCall, ToolName } from "../../../domain/model";
-import { World } from "../../../domain/world";
+import { EntityId, Role, ToolCall, ToolName } from "../../../core/domain/model";
+import { World } from "../../../core/domain/world";
 
 /** 文本恢复阶段上下文。 */
 export interface RecoverContext {

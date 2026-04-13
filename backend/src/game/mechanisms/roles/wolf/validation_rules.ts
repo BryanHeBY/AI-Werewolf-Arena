@@ -1,5 +1,5 @@
 /** 文件说明：狼人工具校验规则。 */
-import { ActionWindow, Phase, Role } from "../../../../domain/model";
+import { ActionWindow, Phase, Role } from "../../../../core/domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 
 /** 狼人工具校验规则集合。 */

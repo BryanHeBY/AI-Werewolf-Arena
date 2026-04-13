@@ -1,7 +1,7 @@
 /** 文件说明：按板子名解析配置文件，并输出规范化后的 BoardConfig。 */
 import fs from "fs";
 import path from "path";
-import { BoardConfig, HookConfig } from "../domain/model";
+import { BoardConfig, HookConfig } from "../core/domain/model";
 import { getDefaultConfigNormalizerRegistry } from "../game/mechanisms";
 import { sixPlayerMvpConfig } from "./six_player_mvp";
 import { twelvePlayerStandardConfig } from "./twelve_player_standard";

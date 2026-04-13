@@ -1,5 +1,5 @@
-import { AliveComponent } from "../../../domain/components/alive";
-import { COMPONENT } from "../../../domain/components/names";
+import { AliveComponent } from "../../../core/domain/components/alive";
+import { COMPONENT } from "../../../core/domain/components/names";
 import {
   ActionProvider,
   ActionRequest,
@@ -9,12 +9,12 @@ import {
   EntityId,
   GameEvent,
   Phase,
-} from "../../../domain/model";
-import { RoleRegistry } from "../../../domain/registries/role_registry";
+} from "../../../core/domain/model";
+import { RoleRegistry } from "../../../core/domain/registries/role_registry";
 import { ToolGateway } from "../../gateway/tool_gateway";
 import { getDefaultSheriffMechanism, SheriffMechanism } from "../../mechanisms";
 import { RoleSpecRegistry } from "../../mechanisms/registries/role_spec_registry";
-import { World } from "../../../domain/world";
+import { World } from "../../../core/domain/world";
 import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
 import { buildTurnConstraintContext } from "../turn_constraints_context";
 

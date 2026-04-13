@@ -1,6 +1,6 @@
 /** 文件说明：统一注册与执行投票/死亡相关机制钩子。 */
-import { EntityId, GameEvent, StatusMark } from "../../../domain/model";
-import { World } from "../../../domain/world";
+import { EntityId, GameEvent, StatusMark } from "../../../core/domain/model";
+import { World } from "../../../core/domain/world";
 import { getDefaultRoleProfileRegistry } from "../roles/profile_registry";
 
 /** 放逐钩子返回结果。 */

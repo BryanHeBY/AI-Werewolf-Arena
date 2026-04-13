@@ -1,5 +1,5 @@
 /** 文件说明：把角色 profile 的初始化与提示渲染能力注入到组件。 */
-import { RoleComponent } from "../../../domain/components/role";
+import { RoleComponent } from "../../../core/domain/components/role";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "./profile_registry";
 import { RoleInitContext } from "./contracts";
 

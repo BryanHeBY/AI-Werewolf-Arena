@@ -1,5 +1,5 @@
 /** 文件说明：女巫工具校验规则。 */
-import { PotionType, Role } from "../../../../domain/model";
+import { PotionType, Role } from "../../../../core/domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 import { getWitchState } from "../private_state";
 

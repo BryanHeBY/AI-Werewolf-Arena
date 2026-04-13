@@ -1,6 +1,6 @@
 /** 文件说明：角色 profile 的统一契约定义。 */
-import { RoleComponent } from "../../../domain/components/role";
-import { ActionRequest, BoardConfig, Camp, Role, ToolCall } from "../../../domain/model";
+import { RoleComponent } from "../../../core/domain/components/role";
+import { ActionRequest, BoardConfig, Camp, Role, ToolCall } from "../../../core/domain/model";
 import type { ToolSpec, StageDirectiveRule } from "../contracts";
 import type { ToolRepairPack } from "../llm/contracts";
 import type { NightStageHandler } from "../stages/night/contracts";

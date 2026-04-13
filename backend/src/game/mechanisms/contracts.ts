@@ -1,6 +1,6 @@
 /** 文件说明：机制层公共规格类型定义。 */
-import { ToolName } from "../../domain/model";
-import { Role } from "../../domain/model";
+import { ToolName } from "../../core/domain/model";
+import { Role } from "../../core/domain/model";
 
 /** 工具 schema 描述结构。 */
 export interface MechanismToolSchema {

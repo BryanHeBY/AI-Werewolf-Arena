@@ -1,5 +1,5 @@
 /** 文件说明：预言家工具校验规则。 */
-import { Role } from "../../../../domain/model";
+import { Role } from "../../../../core/domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 
 /** 预言家工具校验规则集合。 */

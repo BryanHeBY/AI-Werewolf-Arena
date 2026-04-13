@@ -1,6 +1,6 @@
 /** 文件说明：警长机制工具校验规则。 */
-import { Phase } from "../../../domain/model";
-import { COMPONENT } from "../../../domain/components/names";
+import { Phase } from "../../../core/domain/model";
+import { COMPONENT } from "../../../core/domain/components/names";
 import { ToolRuleMap } from "../validation/contracts";
 
 /** 警长机制工具校验规则集合。 */

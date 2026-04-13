@@ -1,8 +1,8 @@
 /** 文件说明：角色到前端展示视图的转换逻辑。 */
-import { COMPONENT } from "../../../domain/components/names";
-import { RoleComponent } from "../../../domain/components/role";
-import { Camp, Role } from "../../../domain/model";
-import { World } from "../../../domain/world";
+import { COMPONENT } from "../../../core/domain/components/names";
+import { RoleComponent } from "../../../core/domain/components/role";
+import { Camp, Role } from "../../../core/domain/model";
+import { World } from "../../../core/domain/world";
 import { getWitchState } from "./private_state";
 
 const FRONTEND_ROLE_TYPE: Record<Role, string> = {

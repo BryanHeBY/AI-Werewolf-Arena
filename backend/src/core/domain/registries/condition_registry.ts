@@ -3,7 +3,7 @@ import { World } from "../world";
 import {
   getDefaultWinConditionRegistry,
   WinConditionRegistry,
-} from "../../game/mechanisms";
+} from "../../../game/mechanisms";
 
 /**
  * 胜负条件入口：委托机制层 WinConditionRegistry。

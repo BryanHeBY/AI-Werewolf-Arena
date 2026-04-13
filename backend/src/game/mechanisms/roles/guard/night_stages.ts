@@ -1,7 +1,7 @@
 /** 文件说明：守卫夜间阶段处理。 */
-import { COMPONENT } from "../../../../domain/components/names";
-import { RoleComponent } from "../../../../domain/components/role";
-import { Phase, Role, StatusMark } from "../../../../domain/model";
+import { COMPONENT } from "../../../../core/domain/components/names";
+import { RoleComponent } from "../../../../core/domain/components/role";
+import { Phase, Role, StatusMark } from "../../../../core/domain/model";
 import { safeRecordLogicOp } from "../../../../observability";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { getGuardState } from "../private_state";

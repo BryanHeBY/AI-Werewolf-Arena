@@ -1,5 +1,5 @@
 /** 文件说明：领域事件到前端实时事件的转换注册表。 */
-import { Camp, GameEvent, Phase } from "../../../domain/model";
+import { Camp, GameEvent, Phase } from "../../../core/domain/model";
 import { RealtimeGameEvent } from "../../../infra/transport/broadcaster";
 import { toFrontendFaction, toFrontendPhase } from "../../../server/view_mapper";
 import { GUARD_REALTIME_EVENT_HANDLERS } from "../roles/guard/event_presenters";

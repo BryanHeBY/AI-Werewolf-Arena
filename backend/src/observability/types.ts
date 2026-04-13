@@ -1,5 +1,5 @@
 /** 文件说明：对局复盘记录结构类型定义。 */
-import { Camp, ToolCall } from "../domain/model";
+import { Camp, ToolCall } from "../core/domain/model";
 
 /** 玩家回合行动模式。 */
 export type ReplayActionMode = "tool_call" | "text_action" | "none";
