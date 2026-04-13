@@ -8,6 +8,7 @@ import { createVotingRightComponent } from "../core/domain/components/voting_rig
 import { createIdentityComponent } from "../core/domain/entities/player";
 import { BoardConfig, EntityId, Role } from "../core/domain/model";
 import {
+  getDefaultWinConditionRegistry,
   getDefaultRoleCampRegistry,
   getDefaultRoleRuntimeRegistry,
   getDefaultSheriffMechanism,
@@ -45,7 +46,7 @@ export function bootstrapGame(config: BoardConfig): BootstrapResult {
     roleRegistry.registerAllowedTools(spec.role, spec.allowedTools);
   }
   const damageResolutionSystem = new DamageResolutionSystem();
-  const conditionRegistry = new ConditionRegistry();
+  const conditionRegistry = new ConditionRegistry(getDefaultWinConditionRegistry());
   const toolGateway = new ToolGateway();
 
   const phaseManager = new PhaseManager(

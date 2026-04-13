@@ -1,17 +1,20 @@
 import { GameResult, WinCondition } from "../model";
 import { World } from "../world";
-import {
-  getDefaultWinConditionRegistry,
-  WinConditionRegistry,
-} from "../../../game/mechanisms";
+
+/**
+ * 胜负判定注册中心抽象：由机制层实现并在装配期注入。
+ */
+export interface WinConditionEvaluator {
+  evaluate(world: World, condition: WinCondition): GameResult | null;
+}
 
 /**
  * 胜负条件入口：委托机制层 WinConditionRegistry。
  */
 export class ConditionRegistry {
-  private readonly winRegistry: WinConditionRegistry;
+  private readonly winRegistry: WinConditionEvaluator;
 
-  constructor(winRegistry: WinConditionRegistry = getDefaultWinConditionRegistry()) {
+  constructor(winRegistry: WinConditionEvaluator) {
     this.winRegistry = winRegistry;
   }
 

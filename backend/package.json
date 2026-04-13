@@ -13,6 +13,7 @@
     "test:quick": "jest --runInBand tests/v3/tool_gateway_validation.test.ts tests/v3/event_registry_hooks.test.ts tests/v3/phase_manager_mvp.test.ts tests/v3/day_interrupt_hooks.test.ts tests/v3/night_wolf_tactical_loop.test.ts",
     "test:full": "jest tests/v3 --runInBand",
     "lint:deps": "eslint \"src/**/*.ts\" --max-warnings=0",
+    "lint:boundaries": "node scripts/check_import_boundaries.mjs",
     "smoke:v3": "node --import tsx src/run-test-v3.ts",
     "release:check": "npm run build:v3 && npm run test:quick && npm run smoke:v3",
     "run:v3": "node --import tsx src/runtime/run_llm_game.ts",
