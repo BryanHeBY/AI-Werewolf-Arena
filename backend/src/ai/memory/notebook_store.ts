@@ -1,4 +1,4 @@
-import { EntityId } from "../core/domain/model";
+import { EntityId } from "../../core/domain/model";
 
 /**
  * 私密笔记本存储：

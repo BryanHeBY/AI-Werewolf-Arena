@@ -1,4 +1,4 @@
-import { EntityId } from "../core/domain/model";
+import { EntityId } from "../../core/domain/model";
 
 /**
  * 存放“滚动摘要”文本：

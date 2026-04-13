@@ -1,4 +1,4 @@
-import { EntityId } from "../core/domain/model";
+import { EntityId } from "../../core/domain/model";
 
 /**
  * 上下文窗口中的单条发言记录。

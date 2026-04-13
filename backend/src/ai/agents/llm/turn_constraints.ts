@@ -1,4 +1,4 @@
-import { ActionRequest, ToolCall, ToolName, TurnConstraints } from "../../core/domain/model";
+import { ActionRequest, ToolCall, ToolName, TurnConstraints } from "../../../core/domain/model";
 
 export interface ResolvedTurnConstraints {
   minValidActions: number;

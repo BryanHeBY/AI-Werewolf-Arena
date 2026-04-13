@@ -1,5 +1,5 @@
-import { COMPONENT } from "../../core/domain/components/names";
-import { RoleComponent } from "../../core/domain/components/role";
+import { COMPONENT } from "../../../core/domain/components/names";
+import { RoleComponent } from "../../../core/domain/components/role";
 import {
   ActionProvider,
   ActionRequest,
@@ -7,9 +7,9 @@ import {
   EntityId,
   Phase,
   ToolCall,
-} from "../../core/domain/model";
-import { World } from "../../core/domain/world";
-import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../../game/mechanisms";
+} from "../../../core/domain/model";
+import { World } from "../../../core/domain/world";
+import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../../../game/mechanisms";
 
 /**
  * Noop 行为提供器：用于测试“无人行动”场景。

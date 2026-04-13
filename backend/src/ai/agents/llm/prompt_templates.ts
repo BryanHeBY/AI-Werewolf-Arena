@@ -1,5 +1,5 @@
 /** 文件说明：集中维护 LLM 初始提示词与行动提示词模板。 */
-import { Role } from "../../core/domain/model";
+import { Role } from "../../../core/domain/model";
 
 /** 系统提示词输入参数。 */
 export interface SystemPromptInput {

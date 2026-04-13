@@ -22,6 +22,9 @@
 5. Phase 5
    - 清理兼容层与废弃导出
    - 补充架构文档与开发约束（导入边界、目录规范）
+6. Phase 6
+   - 物理迁移 `agents + memory` 到 `ai/*`
+   - 收敛 AI 目录，减少根目录分散模块
 
 ## 验收基线（每阶段）
 - `npm -C backend run build:v3`

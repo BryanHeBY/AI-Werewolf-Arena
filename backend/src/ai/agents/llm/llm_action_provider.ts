@@ -1,5 +1,5 @@
-import { COMPONENT } from "../../core/domain/components/names";
-import { RoleComponent } from "../../core/domain/components/role";
+import { COMPONENT } from "../../../core/domain/components/names";
+import { RoleComponent } from "../../../core/domain/components/role";
 import {
   ActionProvider,
   ActionRequest,
@@ -11,8 +11,8 @@ import {
   Role,
   ToolCall,
   ToolName,
-} from "../../core/domain/model";
-import { World } from "../../core/domain/world";
+} from "../../../core/domain/model";
+import { World } from "../../../core/domain/world";
 import {
   getDefaultTargetHintRegistry,
   getDefaultRolePromptRegistry,
@@ -26,10 +26,10 @@ import {
   ToolSpecRegistry,
   PhaseStageLocalizationRegistry,
   getDefaultPhaseStageLocalizationRegistry,
-} from "../../game/mechanisms";
-import { getIdiotState } from "../../game/mechanisms/roles/private_state";
-import { safeRecordLogicOp, SessionRecordHub } from "../../observability";
-import { colorize, isAnsiEnabled } from "../../utils/ansi";
+} from "../../../game/mechanisms";
+import { getIdiotState } from "../../../game/mechanisms/roles/private_state";
+import { safeRecordLogicOp, SessionRecordHub } from "../../../observability";
+import { colorize, isAnsiEnabled } from "../../../utils/ansi";
 import { BaselineBotActionProvider } from "../providers/action_providers";
 import {
   buildBoardInfoPrompt,
