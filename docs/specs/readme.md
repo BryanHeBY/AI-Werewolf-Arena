@@ -27,9 +27,9 @@
 
 ## 2. 开发任务清单
 
-- [ ] `T01` 在 `backend/src/config/index.ts` 与 `backend/src/scenarios/*.ts` 落地可执行配置结构（角色、阶段、钩子、胜负条件）。
-- [ ] `T02` 在 `backend/src/v3/action_providers.ts` 落地技能接口标准化（触发-目标-冲突-结算）。
-- [ ] `T03` 在 `backend/src/domain/components/*` 建立角色到 ECS 组件映射并补齐导出。
+- [ ] `T01` 在 `backend/src/runtime/config/index.ts` 与 `backend/src/runtime/scenarios/*.ts` 落地可执行配置结构（角色、阶段、钩子、胜负条件）。
+- [ ] `T02` 在 `backend/src/ai/agents/providers/action_providers.ts` 落地技能接口标准化（触发-目标-冲突-结算）。
+- [ ] `T03` 在 `backend/src/core/domain/components/*` 建立角色到 ECS 组件映射并补齐导出。
 - [ ] `T04` 将 MVP Checklist 落地为 `backend/tests/v3/*` 的可执行回归用例。
 
 ## 3. 验收标准（任务映射）

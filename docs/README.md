@@ -8,6 +8,15 @@
 - Module Docs: [`docs/modules/`](./modules)
 - Project-level Docs: [`docs/project/`](./project)
 
+## Archive Conventions
+
+- 各子目录内统一使用 `archive/` 存放“阶段性、已完成 TODO、历史复盘”文档。
+- 当前活跃文档保留在子目录根层，避免索引被历史材料淹没。
+- 归档入口：
+  - guides: [`docs/guides/archive/`](./guides/archive)
+  - specs: [`docs/specs/archive/`](./specs/archive)
+  - project: [`docs/project/archive/`](./project/archive)
+
 ## Migrated Documents
 
 - 原 `backend/README.md` -> [`docs/modules/backend_overview.md`](./modules/backend_overview.md)
