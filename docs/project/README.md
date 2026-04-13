@@ -1,3 +1,9 @@
 # Project Docs
 
 - [`legacy_root_readme.md`](./legacy_root_readme.md)
+- [`backend_refactor_roadmap.md`](./backend_refactor_roadmap.md)
+- [`backend_refactor_phase1.md`](./backend_refactor_phase1.md)
+- [`backend_refactor_phase2.md`](./backend_refactor_phase2.md)
+- [`backend_refactor_phase3.md`](./backend_refactor_phase3.md)
+- [`backend_refactor_phase4.md`](./backend_refactor_phase4.md)
+- [`backend_refactor_phase5.md`](./backend_refactor_phase5.md)

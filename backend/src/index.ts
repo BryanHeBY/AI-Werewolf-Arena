@@ -3,10 +3,8 @@
  * 供测试脚本、服务层和外部调用方统一引入核心能力。
  */
 export * from "./app";
-export * from "./agents";
-export * from "./domain";
-export * from "./engine";
-export * from "./gateway";
-export * from "./memory";
+export * from "./ai";
+export * from "./core";
+export * from "./game";
 export * from "./scenarios";
 export { V3SessionManager } from "./server/v3_session_manager";
