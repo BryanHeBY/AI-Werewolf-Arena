@@ -29,11 +29,10 @@
 2. 根因定位：
 3. 修复动作（代码/测试）：
 4. 是否回滚：
-5. 回写任务 ID（`docs/guides/backend_rebuild/03_task_backlog.md`）：
+5. 回写任务 ID（`docs/drivers/*.md`）：
 
 ## 5. 验收结论
 
 - 是否满足本阶段验收标准：
 - 遗留风险：
 - 下一步任务：
-

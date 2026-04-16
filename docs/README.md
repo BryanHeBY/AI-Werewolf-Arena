@@ -2,31 +2,28 @@
 
 ## Main Entrypoints
 
-- Guides: [`docs/guides/readme.md`](./guides/readme.md)
-- References: [`docs/references/readme.md`](./references/readme.md)
+- APIs: [`docs/apis/readme.md`](./apis/readme.md)
 - Specs: [`docs/specs/readme.md`](./specs/readme.md)
-- Module Docs: [`docs/modules/`](./modules)
-- Project-level Docs: [`docs/project/`](./project)
+- Drivers: [`docs/drivers/readme.md`](./drivers/readme.md)
+- Guides: [`docs/guides/readme.md`](./guides/readme.md)
+- Handbook: [`docs/handbook/readme.md`](./handbook/readme.md)
+- Project: [`docs/project/README.md`](./project/README.md)
+
+## Directory Responsibilities
+
+- `apis/`: 接口协议（独立，不做前后端二分）。
+- `specs/`: 规则与实现规范（按 backend/frontend/shared 拆分）。
+- `drivers/`: 可执行任务驱动（按 backend/frontend/shared 拆分）。
+- `guides/`: 协作与执行流程规则（共享）。
+- `handbook/`: 解释型总览（按 backend/frontend/shared 拆分）。
+- `project/`: 项目治理、路线图、遗留材料。
 
 ## Archive Conventions
 
-- 各子目录内统一使用 `archive/` 存放“阶段性、已完成 TODO、历史复盘”文档。
-- 当前活跃文档保留在子目录根层，避免索引被历史材料淹没。
-- 归档入口：
-  - guides: [`docs/guides/archive/`](./guides/archive)
-  - specs: [`docs/specs/archive/`](./specs/archive)
-  - project: [`docs/project/archive/`](./project/archive)
+- 历史/阶段性/已完成材料统一放入各目录 `archive/`。
+- 当前活跃文档保留在目录根层。
 
-## Migrated Documents
-
-- 原 `backend/README.md` -> [`docs/modules/backend_overview.md`](./modules/backend_overview.md)
-- 原 `frontend/README.md` -> [`docs/modules/frontend_overview.md`](./modules/frontend_overview.md)
-- 原 `configs/README.md` -> [`docs/modules/config_runtime_boards.md`](./modules/config_runtime_boards.md)
-- 原 `configs/system-prompts/README.md` -> [`docs/modules/config_system_prompts_deprecated.md`](./modules/config_system_prompts_deprecated.md)
-- 原 `backend/docs/llm_user_prompt_three_line_spec.md` -> [`docs/specs/llm_user_prompt_three_line_spec.md`](./specs/llm_user_prompt_three_line_spec.md)
-- 原根目录 `README.md` -> [`docs/project/legacy_root_readme.md`](./project/legacy_root_readme.md)
-
-## Notes
-
-- 仓库根目录仅保留结构总览与 docs 入口。
-- 后续新增文档统一放在 `docs/` 下，不再在 `backend/`、`frontend/`、`configs.example/` 分散维护 README 文档。
+归档入口：
+- guides: [`docs/guides/archive/`](./guides/archive)
+- specs: [`docs/specs/archive/`](./specs/archive)
+- project: [`docs/project/archive/`](./project/archive)

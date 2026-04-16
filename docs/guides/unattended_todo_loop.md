@@ -6,16 +6,15 @@
 
 目标：
 
-1. 所有开发任务必须显式写入 `docs`（优先写入 `docs/guides/**` 对应入口）。
+1. 所有开发任务必须显式写入 `docs`（优先写入 `docs/drivers/**` 对应入口）。
 2. 每个任务必须有对应验收项，且验收项可由命令或测试结果直接判定。
 3. 进入无人值守模式后，按固定循环自动推进，直到 TODO 清零或遇到严重阻塞。
 
 任务存放位置约定：
 
-1. 架构与分阶段任务：`docs/guides/backend_rebuild/*.md`
-2. 模块开发任务：`docs/guides/drivers/*.md`
-3. 活动执行任务（开发/测试/发布）：`docs/guides/activities/*.md`
-4. 规则与白皮书约束：`docs/specs/*.md`
+1. 模块/主题开发任务：`docs/drivers/*.md`
+2. 通用执行规则：`docs/guides/*.md`
+3. 规则与白皮书约束：`docs/specs/**/*.md`
 
 ## 2. 运行约束（长期生效）
 
@@ -35,7 +34,7 @@
 - `R14` 每条勾选必须附带证据：代码检查结论 + 测试命令结果。
 - `R15` 涉及可执行流程（如 `run:v3:*`）的条目，必须额外核对“流程完整性”：日志中需有阶段推进证据（如 `night -> day -> voting`）和终局证据（`game_over`、`winner`、`reason`），否则禁止勾选完成。
 - `R16` 每次测试运行后必须人工检查完整输出；禁止只看退出码。
-- `R17` 一旦在测试/运行输出中发现 `error`，必须先在 `docs/guides/activities/development_activity_driver.md` 新增对应 TODO（含复现命令与验收命令），再进入修复流程。
+- `R17` 一旦在测试/运行输出中发现 `error`，必须先在 `docs/drivers/` 新增或更新对应驱动 TODO（含复现命令与验收命令），再进入修复流程。
 - `R18` 注释治理为长期硬约束：前后端源码文件必须具备有效注释；至少满足“每个文件有注释、每个 `export` 类型/函数/类/接口/枚举/常量有就近注释、类内关键方法与复杂逻辑有注释”。
 - `R19` 涉及注释治理的 TODO，必须执行可复现校验命令（如 `npm run comment:report`、`npm run comment:strict -- --scope ...` 或等价命令）并记录结果后方可勾选。
 

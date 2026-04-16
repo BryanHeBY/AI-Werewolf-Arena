@@ -1,14 +1,8 @@
-# Project Docs
+# project 索引
 
-- [`legacy_root_readme.md`](./legacy_root_readme.md)
-- [`backend_refactor_roadmap.md`](./backend_refactor_roadmap.md)
-- [`backend_refactor_phase1.md`](./archive/refactor_phases/backend_refactor_phase1.md)
-- [`backend_refactor_phase2.md`](./archive/refactor_phases/backend_refactor_phase2.md)
-- [`backend_refactor_phase3.md`](./archive/refactor_phases/backend_refactor_phase3.md)
-- [`backend_refactor_phase4.md`](./archive/refactor_phases/backend_refactor_phase4.md)
-- [`backend_refactor_phase5.md`](./archive/refactor_phases/backend_refactor_phase5.md)
-- [`backend_refactor_phase6.md`](./archive/refactor_phases/backend_refactor_phase6.md)
-- [`backend_refactor_phase7.md`](./archive/refactor_phases/backend_refactor_phase7.md)
-- [`backend_refactor_phase8.md`](./archive/refactor_phases/backend_refactor_phase8.md)
-- [`backend_refactor_phase9.md`](./archive/refactor_phases/backend_refactor_phase9.md)
-- [`backend_architecture_constraints.md`](./backend_architecture_constraints.md)
+本目录是“项目治理/路线图/遗留材料”集合。
+
+1. 治理约束：`governance/backend_architecture_constraints.md`
+2. 重构路线：`roadmap/backend_refactor_roadmap.md`
+3. 历史根 README：`legacy/legacy_root_readme.md`
+4. 历史阶段归档：`archive/refactor_phases/`
