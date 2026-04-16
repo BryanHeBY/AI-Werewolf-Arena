@@ -1,11 +1,11 @@
 import { bootstrapGame } from "../../src/app/bootstrap";
-import { COMPONENT } from "../../src/domain/components/names";
-import { RoleComponent } from "../../src/domain/components/role";
-import { Phase, PotionType, Role } from "../../src/domain/model";
-import { ToolGateway } from "../../src/gateway/tool_gateway";
-import { getGuardState, getWitchState } from "../../src/mechanisms/roles/private_state";
-import { sixPlayerMvpConfig } from "../../src/scenarios/six_player_mvp";
-import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
+import { COMPONENT } from "../../src/core/domain/components/names";
+import { RoleComponent } from "../../src/core/domain/components/role";
+import { Phase, PotionType, Role } from "../../src/core/domain/model";
+import { ToolGateway } from "../../src/game/gateway/tool_gateway";
+import { getGuardState, getWitchState } from "../../src/game/mechanisms/roles/private_state";
+import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
+import { twelvePlayerStandardConfig } from "../../src/runtime/scenarios/twelve_player_standard";
 
 describe("V3 ToolGateway validation", () => {
   test("guard cannot protect same target in consecutive nights", () => {
