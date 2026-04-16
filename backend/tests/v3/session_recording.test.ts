@@ -1,16 +1,16 @@
 import { promises as fs } from "fs";
 import os from "os";
 import path from "path";
-import { Camp, Phase } from "../../src/domain/model";
+import { Camp, Phase } from "../../src/core/domain/model";
 import { bootstrapGame } from "../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../src/scenarios/six_player_mvp";
-import { buildAgentBroadcastLine } from "../../src/engine/agent_broadcast_feed";
-import { getDefaultScriptEventRenderRegistry } from "../../src/mechanisms/script/event_render_registry";
-import { COMPONENT } from "../../src/domain/components/names";
-import { SessionRecordManager } from "../../src/session_recording";
-import { setRuntimeConfigOverride } from "../../src/config/runtime_config";
+import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
+import { buildAgentBroadcastLine } from "../../src/game/engine/agent_broadcast_feed";
+import { getDefaultScriptEventRenderRegistry } from "../../src/game/mechanisms/script/event_render_registry";
+import { COMPONENT } from "../../src/core/domain/components/names";
+import { SessionRecordManager } from "../../src/observability";
+import { setRuntimeConfigOverride } from "../../src/runtime/config/runtime_config";
 
-jest.mock("../../src/infra/llm/openai_client", () => {
+jest.mock("../../src/ai/integrations/llm/openai_client", () => {
   class OpenAIClient {
     async chatWithMeta(messages: Array<{ role: string; content: string }>) {
       const system = messages[0]?.content ?? "";
@@ -320,6 +320,8 @@ describe("SessionRecordManager", () => {
     const files = await fs.readdir(sessionDir);
     expect(files).toContain("manifest.json");
     expect(files).toContain("public_timeline.json");
+    expect(files).toContain("phase_windows.json");
+    expect(files).toContain("timeline_index.json");
     expect(files).toContain("logic_ops.json");
     expect(files).toContain("debug_reports.json");
     expect(files).toContain("debug_summary.md");
@@ -330,6 +332,8 @@ describe("SessionRecordManager", () => {
     );
     expect(manifest.session_id).toBe("session_test_1");
     expect(manifest.files.public_timeline).toBe("public_timeline.json");
+    expect(manifest.files.phase_windows).toBe("phase_windows.json");
+    expect(manifest.files.timeline_index).toBe("timeline_index.json");
     expect(manifest.files.debug_reports).toBe("debug_reports.json");
     expect(manifest.files.debug_summary).toBe("debug_summary.md");
 
@@ -338,6 +342,21 @@ describe("SessionRecordManager", () => {
     );
     expect(Array.isArray(publicTimeline.events)).toBe(true);
     expect(publicTimeline.events[0].type).toBe("phase_changed");
+
+    const phaseWindows = JSON.parse(
+      await fs.readFile(path.join(sessionDir, "phase_windows.json"), "utf-8"),
+    );
+    expect(Array.isArray(phaseWindows.windows)).toBe(true);
+    expect(phaseWindows.windows.length).toBeGreaterThan(0);
+    expect(phaseWindows.windows[0].phase_id).toBe("d1-night");
+
+    const timelineIndex = JSON.parse(
+      await fs.readFile(path.join(sessionDir, "timeline_index.json"), "utf-8"),
+    );
+    expect(timelineIndex.public.count).toBe(1);
+    expect(timelineIndex.public.min_seq).toBe(1);
+    expect(timelineIndex.public.max_seq).toBe(1);
+    expect(timelineIndex.players["1"].count).toBe(2);
 
     const logicOps = JSON.parse(
       await fs.readFile(path.join(sessionDir, "logic_ops.json"), "utf-8"),
@@ -692,5 +711,47 @@ describe("SessionRecordManager", () => {
     );
     expect(summary).toContain("## TODO");
     expect(summary).toContain("day<=0");
+  });
+
+  test("should keep main flow when write fails and only warn", async () => {
+    const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-replay-write-fail-"));
+    const manager = await SessionRecordManager.create(
+      {
+        sessionId: "session_test_write_fail",
+        board: "six_player_mvp",
+        startedAtIso: new Date("2026-04-10T00:00:00.000Z").toISOString(),
+      },
+      root,
+    );
+
+    const warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+    const writeSpy = jest.spyOn(fs, "writeFile");
+    writeSpy.mockRejectedValueOnce(new Error("disk full"));
+
+    manager.recordPublicEvent({
+      type: "phase_changed",
+      timestampMs: Date.now(),
+      phase: "night",
+      day: 1,
+      payload: { phase: "night", day: 1 },
+    });
+
+    await expect(manager.flushNow()).resolves.toBeUndefined();
+    await expect(
+      manager.finalize({
+        endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
+        winner: Camp.Good,
+        finishReason: "all_wolves_eliminated",
+        players: [],
+      }),
+    ).resolves.toBeUndefined();
+    expect(
+      warnSpy.mock.calls.some((args) =>
+        String(args[0]).includes("[observability] write_json_failed"),
+      ),
+    ).toBe(true);
+
+    warnSpy.mockRestore();
+    writeSpy.mockRestore();
   });
 });

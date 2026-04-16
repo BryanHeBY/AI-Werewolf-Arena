@@ -382,6 +382,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
         timestampMs: event.timestamp,
         day: replayDayCursor,
         phase: replayPhaseCursor,
+        stage: toReplayStage(event as any),
         payload: event.payload,
         renderText: toReplayRenderText(event as any, options.printPrivateEvents),
       });

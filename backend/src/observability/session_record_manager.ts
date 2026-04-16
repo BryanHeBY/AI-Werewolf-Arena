@@ -8,6 +8,8 @@ import {
   ReplayLlmRequestMessage,
   ReplayLogicOp,
   ReplayManifest,
+  ReplayPhaseWindow,
+  ReplayPhaseWindowsFile,
   ReplayPlayerBroadcastEntry,
   ReplayPlayerView,
   ReplayRecordLogicOpInput,
@@ -15,6 +17,8 @@ import {
   ReplayRecordDebugReportInput,
   ReplayRecordPlayerRoundInput,
   ReplayRecordPublicEventInput,
+  ReplayTimelineIndexFile,
+  ReplayPublicEvent,
   ReplaySessionMeta,
 } from "./types";
 import { buildDebugSummaryMarkdown } from "./debug_summary_generator";
@@ -87,7 +91,7 @@ function normalizeDeltaMessages(
 export class SessionRecordManager {
   private publicSeq = 0;
   private logicSeq = 0;
-  private publicEvents: Array<any> = [];
+  private publicEvents: ReplayPublicEvent[] = [];
   private logicOps: ReplayLogicOp[] = [];
   private debugReports: ReplayDebugReport[] = [];
   private playerViews = new Map<number, ReplayPlayerView>();
@@ -133,8 +137,9 @@ export class SessionRecordManager {
       timestamp: toIso(input.timestampMs),
       phase: input.phase,
       day: input.day,
+      ...(input.stage ? { stage: input.stage } : {}),
       type: input.type,
-      payload: safeJson(input.payload),
+      payload: safeJson(input.payload) as Record<string, unknown>,
       ...(input.renderText ? { render_text: input.renderText } : {}),
     });
     this.dirtyPublicTimeline = true;
@@ -398,6 +403,8 @@ export class SessionRecordManager {
 
     await this.writeJson("manifest.json", manifest);
     await this.writeJson("public_timeline.json", { events: this.publicEvents });
+    await this.writeJson("phase_windows.json", this.buildPhaseWindowsPayload());
+    await this.writeJson("timeline_index.json", this.buildTimelineIndexPayload());
     await this.writeJson("logic_ops.json", { ops: this.logicOps });
     await this.writeJson("debug_reports.json", this.buildDebugReportsPayload());
 
@@ -481,6 +488,8 @@ export class SessionRecordManager {
     });
     await this.writeJson("manifest.json", manifest);
     await this.writeJson("public_timeline.json", { events: this.publicEvents });
+    await this.writeJson("phase_windows.json", this.buildPhaseWindowsPayload());
+    await this.writeJson("timeline_index.json", this.buildTimelineIndexPayload());
     await this.writeJson("logic_ops.json", { ops: this.logicOps });
     await this.writeJson("debug_reports.json", this.buildDebugReportsPayload());
   }
@@ -502,6 +511,8 @@ export class SessionRecordManager {
       players: input.players,
       files: {
         public_timeline: "public_timeline.json",
+        phase_windows: "phase_windows.json",
+        timeline_index: "timeline_index.json",
         logic_ops: "logic_ops.json",
         debug_reports: "debug_reports.json",
         debug_summary: "debug_summary.md",
@@ -544,6 +555,8 @@ export class SessionRecordManager {
     if (this.dirtyPublicTimeline) {
       this.dirtyPublicTimeline = false;
       await this.writeJson("public_timeline.json", { events: this.publicEvents });
+      await this.writeJson("phase_windows.json", this.buildPhaseWindowsPayload());
+      await this.writeJson("timeline_index.json", this.buildTimelineIndexPayload());
     }
     if (this.dirtyLogicOps) {
       this.dirtyLogicOps = false;
@@ -576,22 +589,99 @@ export class SessionRecordManager {
         playerFiles,
       });
       await this.writeJson("manifest.json", manifest);
+      await this.writeJson("timeline_index.json", this.buildTimelineIndexPayload());
     }
+  }
+
+  private buildPhaseWindowsPayload(): ReplayPhaseWindowsFile {
+    const windows: ReplayPhaseWindow[] = [];
+    let current: ReplayPhaseWindow | null = null;
+
+    for (const event of this.publicEvents) {
+      const day = Number(event.day);
+      const phase = String(event.phase);
+      const seq = Number(event.seq);
+      const phaseId = `d${day}-${phase}`;
+      const stage = String(event.stage ?? event.type ?? "unknown");
+      if (!current || current.day !== day || current.phase !== phase) {
+        if (current) {
+          windows.push(current);
+        }
+        current = {
+          phase_id: phaseId,
+          day,
+          phase,
+          start_seq: seq,
+          end_seq: seq,
+          stages: [{ stage, start_seq: seq, end_seq: seq }],
+        };
+        continue;
+      }
+      current.end_seq = seq;
+      const lastStage = current.stages[current.stages.length - 1];
+      if (lastStage && lastStage.stage === stage) {
+        lastStage.end_seq = seq;
+      } else {
+        current.stages.push({ stage, start_seq: seq, end_seq: seq });
+      }
+    }
+    if (current) {
+      windows.push(current);
+    }
+
+    return {
+      session_id: this.sessionMeta.sessionId,
+      windows,
+    };
+  }
+
+  private buildTimelineIndexPayload(): ReplayTimelineIndexFile {
+    const publicCount = this.publicEvents.length;
+    const minSeq = publicCount > 0 ? this.publicEvents[0].seq : 0;
+    const maxSeq = publicCount > 0 ? this.publicEvents[publicCount - 1].seq : 0;
+    const players: ReplayTimelineIndexFile["players"] = {};
+    for (const [playerId, view] of this.playerViews.entries()) {
+      players[String(playerId)] = { count: view.timeline.length };
+    }
+    return {
+      session_id: this.sessionMeta.sessionId,
+      public: {
+        min_seq: minSeq,
+        max_seq: maxSeq,
+        count: publicCount,
+      },
+      players,
+      phases: {
+        count: this.buildPhaseWindowsPayload().windows.length,
+      },
+    };
   }
 
   private async writeJson(relativeFilePath: string, data: unknown): Promise<void> {
     const filePath = path.join(this.sessionDir, relativeFilePath);
     const tmpPath = `${filePath}.tmp`;
-    const content = JSON.stringify(data, null, 2);
-    await fs.writeFile(tmpPath, content, "utf-8");
-    await fs.rename(tmpPath, filePath);
+    try {
+      const content = JSON.stringify(data, null, 2);
+      await fs.writeFile(tmpPath, content, "utf-8");
+      await fs.rename(tmpPath, filePath);
+    } catch (error) {
+      console.warn(
+        `[observability] write_json_failed file=${relativeFilePath} err=${String(error)}`,
+      );
+    }
   }
 
   private async writeText(relativeFilePath: string, data: string): Promise<void> {
     const filePath = path.join(this.sessionDir, relativeFilePath);
     const tmpPath = `${filePath}.tmp`;
-    await fs.writeFile(tmpPath, data, "utf-8");
-    await fs.rename(tmpPath, filePath);
+    try {
+      await fs.writeFile(tmpPath, data, "utf-8");
+      await fs.rename(tmpPath, filePath);
+    } catch (error) {
+      console.warn(
+        `[observability] write_text_failed file=${relativeFilePath} err=${String(error)}`,
+      );
+    }
   }
 }
 

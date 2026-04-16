@@ -23,6 +23,8 @@ export interface ReplayManifest {
   players: ReplayManifestPlayer[];
   files: {
     public_timeline: string;
+    phase_windows?: string;
+    timeline_index?: string;
     logic_ops: string;
     debug_reports: string;
     debug_summary: string;
@@ -37,9 +39,52 @@ export interface ReplayPublicEvent {
   timestamp: string;
   phase: string;
   day: number;
+  stage?: string;
   type: string;
   payload: Record<string, unknown>;
   render_text?: string;
+}
+
+/** 阶段内子阶段窗口。 */
+export interface ReplayPhaseStageWindow {
+  stage: string;
+  start_seq: number;
+  end_seq: number;
+}
+
+/** 阶段窗口。 */
+export interface ReplayPhaseWindow {
+  phase_id: string;
+  day: number;
+  phase: string;
+  start_seq: number;
+  end_seq: number;
+  stages: ReplayPhaseStageWindow[];
+}
+
+/** phase_windows.json 结构。 */
+export interface ReplayPhaseWindowsFile {
+  session_id: string;
+  windows: ReplayPhaseWindow[];
+}
+
+/** timeline_index.json 结构。 */
+export interface ReplayTimelineIndexFile {
+  session_id: string;
+  public: {
+    min_seq: number;
+    max_seq: number;
+    count: number;
+  };
+  players: Record<
+    string,
+    {
+      count: number;
+    }
+  >;
+  phases: {
+    count: number;
+  };
 }
 
 /** 逻辑操作审计记录。 */
@@ -168,6 +213,7 @@ export interface ReplayRecordPublicEventInput {
   timestampMs: number;
   phase: string;
   day: number;
+  stage?: string;
   payload: Record<string, unknown>;
   renderText?: string;
 }
