@@ -1,10 +1,10 @@
 import { bootstrapGame } from "../../src/app/bootstrap";
-import { COMPONENT } from "../../src/domain/components/names";
-import { AliveComponent } from "../../src/domain/components/alive";
-import { RoleComponent } from "../../src/domain/components/role";
-import { Role, StatusMark } from "../../src/domain/model";
-import { EventRegistry } from "../../src/engine/event_registry";
-import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
+import { COMPONENT } from "../../src/core/domain/components/names";
+import { AliveComponent } from "../../src/core/domain/components/alive";
+import { RoleComponent } from "../../src/core/domain/components/role";
+import { Role, StatusMark } from "../../src/core/domain/model";
+import { EventRegistry } from "../../src/game/engine/event_registry";
+import { twelvePlayerStandardConfig } from "../../src/runtime/scenarios/twelve_player_standard";
 
 describe("V3 EventRegistry hooks", () => {
   test("idiot voted out survives and loses voting right", () => {
