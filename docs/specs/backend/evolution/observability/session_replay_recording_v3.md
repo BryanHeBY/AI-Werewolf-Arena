@@ -203,26 +203,26 @@ backend/data/records/
 
 ---
 
-## 5. TODO（实现分解）
+## 5. 实施要求（实现分解）
 
-- [ ] `SR01` 新增 `session_recording` 模块与 JSON 类型定义，支持按 `session_id` 创建目录与文件。
-- [ ] `SR02` 接入 `run_llm_game.ts`：落地 `manifest/public_timeline`。
-- [ ] `SR03` 接入 `llm_action_provider.ts`：落地 `players/player_<id>.json`（含 thinking 与工具调用）。
-- [ ] `SR04` 接入 `phase_pipeline + action_validator`：落地 `logic_ops.json`。
-- [ ] `SR05` 增加容错：写盘异常仅告警，不中断对局。
-- [ ] `SR06` 补充测试：目录创建、文件结构、关键字段完整性、异常降级。
-- [ ] `SR07` 新增严格阶段索引：落地 `phase_windows.json` 与 `timeline_index.json`。
+1. `SR01` 新增 `session_recording` 模块与 JSON 类型定义，支持按 `session_id` 创建目录与文件。
+2. `SR02` 接入 `run_llm_game.ts`：落地 `manifest/public_timeline`。
+3. `SR03` 接入 `llm_action_provider.ts`：落地 `players/player_<id>.json`（含 thinking 与工具调用）。
+4. `SR04` 接入 `phase_pipeline + action_validator`：落地 `logic_ops.json`。
+5. `SR05` 增加容错：写盘异常仅告警，不中断对局。
+6. `SR06` 补充测试：目录创建、文件结构、关键字段完整性、异常降级。
+7. `SR07` 新增严格阶段索引：落地 `phase_windows.json` 与 `timeline_index.json`。
 
 ---
 
 ## 6. 验收标准
 
-- [ ] `SA01` 执行一局 `run:v3:six` 后，生成 `record/<session_id>/` 目录，且包含 `manifest.json/public_timeline.json/logic_ops.json/players/`。
-- [ ] `SA02` `public_timeline.json` 可覆盖公开时间线（至少包含：天黑、天亮、发言、投票、结果）。
-- [ ] `SA03` 每个 `players/player_<id>.json` 使用单一 `timeline`，且满足“broadcast 在前、action 在后”的时间顺序；`tool_calls` 字段固定存在（可为空数组）；并在 `action` 条目中包含 `action_mode`（若该玩家确实行动过，至少有 1 条含 `thinking_text` 或有效行动信息）。
-- [ ] `SA04` `logic_ops.json` 包含动作校验与至少一种结算操作（如狼刀结算/放逐计票）。
-- [ ] `SA05` 模拟写盘失败时，对局仍可结束，日志出现 recording warning，主流程不崩溃。
-- [ ] `SA06` `phase_windows` 的 `start_seq/end_seq` 与 `public_timeline.events.seq` 对齐且单调无重叠。
+1. `SA01` 执行一局 `run:v3:six` 后，生成 `record/<session_id>/` 目录，且包含 `manifest.json/public_timeline.json/logic_ops.json/players/`。
+2. `SA02` `public_timeline.json` 可覆盖公开时间线（至少包含：天黑、天亮、发言、投票、结果）。
+3. `SA03` 每个 `players/player_<id>.json` 使用单一 `timeline`，且满足“broadcast 在前、action 在后”的时间顺序；`tool_calls` 字段固定存在（可为空数组）；并在 `action` 条目中包含 `action_mode`（若该玩家确实行动过，至少有 1 条含 `thinking_text` 或有效行动信息）。
+4. `SA04` `logic_ops.json` 包含动作校验与至少一种结算操作（如狼刀结算/放逐计票）。
+5. `SA05` 模拟写盘失败时，对局仍可结束，日志出现 recording warning，主流程不崩溃。
+6. `SA06` `phase_windows` 的 `start_seq/end_seq` 与 `public_timeline.events.seq` 对齐且单调无重叠。
 
 ---
 
