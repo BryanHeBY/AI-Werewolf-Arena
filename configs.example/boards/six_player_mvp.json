@@ -1,0 +1,27 @@
+{
+  "board": {
+    "size": 6,
+    "roleSetups": [
+      { "role": "wolf", "count": 2 },
+      { "role": "villager", "count": 2 },
+      { "role": "seer", "count": 1 },
+      { "role": "guard", "count": 1 }
+    ]
+  },
+  "rules": {
+    "revealOnDeath": false,
+    "winConditions": ["slaughter_city", "wolf_reach_half"],
+    "hooks": {
+      "onDaybreak": false,
+      "onPreElection": false,
+      "onPreVote": false,
+      "onPerSpeechGap": false
+    }
+  },
+  "mechanisms": {
+    "tieBreaker": {
+      "exileVote": "min_id",
+      "wolfKillVote": "min_id"
+    }
+  }
+}

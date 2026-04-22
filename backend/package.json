@@ -6,7 +6,23 @@
   "scripts": {
     "dev": "tsx watch src/server/index.ts",
     "build": "tsc",
-    "start": "node dist/server/index.js"
+    "build:v3": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/server/index.js",
+    "test": "jest",
+    "test:v3": "jest tests/v3 --runInBand",
+    "test:quick": "jest --runInBand tests/v3/tool_gateway_validation.test.ts tests/v3/event_registry_hooks.test.ts tests/v3/phase_manager_mvp.test.ts tests/v3/day_interrupt_hooks.test.ts tests/v3/night_wolf_tactical_loop.test.ts",
+    "test:full": "jest tests/v3 --runInBand",
+    "lint:deps": "eslint \"src/**/*.ts\" --max-warnings=0",
+    "lint:boundaries": "node scripts/check_import_boundaries.mjs",
+    "smoke:v3": "node --import tsx src/run-test-v3.ts",
+    "release:check": "npm run build:v3 && npm run test:quick && npm run smoke:v3",
+    "run:v3": "node --import tsx src/runtime/run_llm_game.ts",
+    "run:v3:dual": "node --import tsx src/runtime/run_llm_dual.ts",
+    "run:v3:six": "node --import tsx src/runtime/run_llm_game.ts --game-config-name six_minimax",
+    "run:v3:twelve": "node --import tsx src/runtime/run_llm_game.ts --game-config-name twelve_minimax",
+    "run:v3:mock": "node --import tsx src/runtime/run_mock_game.ts",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@fastify/cors": "^8.5.0",
@@ -16,7 +32,11 @@
     "socket.io": "^4.7.4"
   },
   "devDependencies": {
+    "@types/nock": "^10.0.3",
     "@types/node": "^20.11.19",
+    "@typescript-eslint/parser": "^8.46.2",
+    "eslint": "^9.37.0",
+    "nock": "^14.0.11",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3"
   }

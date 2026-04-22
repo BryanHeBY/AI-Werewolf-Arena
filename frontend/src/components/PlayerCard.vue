@@ -1,3 +1,6 @@
+/**
+ * 玩家卡片组件：展示单个玩家的身份、阵营、生死状态与思考指示灯。
+ */
 <script setup lang="ts">
 import { computed } from "vue";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
@@ -24,6 +27,7 @@ const roleIcon = computed(() => {
   }
 });
 
+// 根据玩家阵营决定卡片发光与边框样式，方便一眼区分阵营态势。
 const glowClass = computed(() => {
   if (!props.player?.isAlive) return "";
   const faction = String(props.player?.faction || "villager") as Faction;
@@ -82,7 +86,7 @@ const playerId = computed(() => props.player?.id ?? 0);
 const roleType = computed(() => String(props.player?.roleType || "villager"));
 const faction = computed(() => String(props.player?.faction || "villager"));
 
-// 获取角色中文名称
+// 把角色英文标识映射为中文展示文案。
 const getRoleChinese = (roleType: string): string => {
   switch (roleType.toLowerCase()) {
     case "wolf":
@@ -98,7 +102,7 @@ const getRoleChinese = (roleType: string): string => {
   }
 };
 
-// 获取阵营中文名称
+// 把阵营英文标识映射为中文展示文案。
 const getFactionChinese = (faction: string): string => {
   switch (faction.toLowerCase()) {
     case "wolf":
@@ -110,7 +114,7 @@ const getFactionChinese = (faction: string): string => {
   }
 };
 
-// 获取阵营中文大写缩写（用于显示）
+// 用于头像旁边的阵营简写标识。
 const factionChineseAbbr = computed(() => {
   switch (faction.value.toLowerCase()) {
     case "wolf":

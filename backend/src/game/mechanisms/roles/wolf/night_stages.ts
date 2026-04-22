@@ -1,0 +1,220 @@
+/** 文件说明：狼人夜聊与刀人投票阶段处理。 */
+import { EntityId, Phase, Role, StatusMark } from "../../../../core/domain/model";
+import { safeRecordLogicOp } from "../../../../observability";
+import { NightStageHandler } from "../../stages/night/contracts";
+
+const WOLF_DISCUSSION_MAX_ROUNDS = 3;
+const WOLF_KILL_VOTE_MAX_RETRIES = 3;
+
+const wolfDiscussionStage: NightStageHandler = {
+  id: "wolf_discussion",
+  priority: 200,
+  async execute(ctx): Promise<void> {
+    const wolfIds = ctx.shuffleWolves(ctx.getAliveByRole(Role.Wolf));
+    ctx.state.wolfIds = wolfIds;
+    ctx.state.endedWolves = new Set<EntityId>();
+
+    if (wolfIds.length > 0) {
+      ctx.events.push({
+        timestamp: Date.now(),
+        type: "wolf_tactical_order",
+        payload: { order: [...wolfIds] },
+      });
+    }
+
+    // 轮转夜聊：每只狼最多发言 WOLF_DISCUSSION_MAX_ROUNDS 次，end_chat 后跳过后续轮次。
+    for (let round = 1; round <= WOLF_DISCUSSION_MAX_ROUNDS; round++) {
+      for (const wolfId of wolfIds) {
+        if (ctx.state.endedWolves.has(wolfId)) {
+          continue;
+        }
+        const req = ctx.makeRequest(wolfId, ["speak_to_wolves"], {
+          phase: "wolf_discussion",
+          day: ctx.currentDay(),
+          round,
+          max_rounds: WOLF_DISCUSSION_MAX_ROUNDS,
+        });
+        const action = await ctx.actionProvider.getAction(req);
+        if (action?.name !== "speak_to_wolves") {
+          continue;
+        }
+
+        const result = ctx.toolGateway.validateAndSanitize(ctx.world, wolfId, action, {
+          phase: req.phase,
+        });
+        if (!result.ok || !result.sanitizedCall) {
+          continue;
+        }
+        if (result.sanitizedCall.args.end_chat) {
+          ctx.state.endedWolves.add(wolfId);
+          ctx.events.push({
+            timestamp: Date.now(),
+            type: "wolf_discussion_ended",
+            payload: {
+              actorId: wolfId,
+              reason: result.sanitizedCall.args.text,
+              round,
+            },
+          });
+        } else {
+          ctx.events.push({
+            timestamp: Date.now(),
+            type: "wolf_discussion",
+            payload: {
+              actorId: wolfId,
+              text: result.sanitizedCall.args.text,
+              endChat: false,
+              round,
+            },
+          });
+        }
+      }
+      if (ctx.state.endedWolves.size === wolfIds.length) {
+        break;
+      }
+    }
+  },
+};
+
+const wolfKillVoteStage: NightStageHandler = {
+  id: "wolf_kill_vote",
+  priority: 400,
+  async execute(ctx): Promise<void> {
+    ctx.state.wolfVotes = {};
+    // 顺序收集狼刀票，统一在阶段末做多数决结算，避免中途状态污染。
+    for (const wolfId of ctx.state.wolfIds) {
+      let voteResolved:
+        | {
+            abstain: boolean;
+            targetId: EntityId | null;
+            fallback: boolean;
+          }
+        | null = null;
+      let retryReason = "";
+      for (let attempt = 1; attempt <= WOLF_KILL_VOTE_MAX_RETRIES + 1; attempt++) {
+        const req =
+          attempt === 1
+            ? ctx.makeRequest(wolfId, ["kill_vote"], { phase: "wolf_vote" })
+            : ctx.makeRequest(wolfId, ["kill_vote"], {
+                phase: "wolf_vote",
+                retry_attempt: attempt - 1,
+                retry_max: WOLF_KILL_VOTE_MAX_RETRIES,
+                retry_reason: retryReason,
+                retry_notice:
+                  "你的狼刀动作无效，请严格调用 kill_vote 工具重新行动。",
+              });
+        const action = await ctx.actionProvider.getAction(req);
+        if (action?.name !== "kill_vote") {
+          retryReason = "no_valid_kill_vote_tool_call";
+          if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {
+            safeRecordLogicOp({
+              scope: "phase_pipeline",
+              op: "wolf_kill_vote_retry_requested",
+              actorId: wolfId,
+              phase: Phase.Night,
+              status: "fallback",
+              reason: retryReason,
+              output: {
+                attempt,
+                max_retries: WOLF_KILL_VOTE_MAX_RETRIES,
+              },
+            });
+            continue;
+          }
+          break;
+        }
+
+        const result = ctx.toolGateway.validateAndSanitize(ctx.world, wolfId, action, {
+          phase: Phase.Night,
+        });
+        if (!result.ok || !result.sanitizedCall) {
+          retryReason = "invalid_kill_vote_arguments";
+          if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {
+            safeRecordLogicOp({
+              scope: "phase_pipeline",
+              op: "wolf_kill_vote_retry_requested",
+              actorId: wolfId,
+              phase: Phase.Night,
+              status: "fallback",
+              reason: retryReason,
+              output: {
+                attempt,
+                max_retries: WOLF_KILL_VOTE_MAX_RETRIES,
+              },
+            });
+            continue;
+          }
+          break;
+        }
+
+        voteResolved = {
+          abstain: result.sanitizedCall.args.abstain === true,
+          targetId: result.sanitizedCall.args.target_id,
+          fallback: attempt > 1,
+        };
+        break;
+      }
+      if (!voteResolved) {
+        voteResolved = {
+          abstain: true,
+          targetId: null,
+          fallback: true,
+        };
+        safeRecordLogicOp({
+          scope: "phase_pipeline",
+          op: "wolf_kill_vote_repaired_to_abstain",
+          actorId: wolfId,
+          phase: Phase.Night,
+          status: "ok",
+          reason: retryReason || "wolf_kill_vote_retry_exhausted",
+          output: {
+            fallback_abstain: true,
+          },
+        });
+      }
+
+      const abstain = voteResolved.abstain;
+      const targetId = voteResolved.targetId;
+      if (!abstain && targetId !== null) {
+        ctx.state.wolfVotes[targetId] = (ctx.state.wolfVotes[targetId] ?? 0) + 1;
+      }
+      ctx.events.push({
+        timestamp: Date.now(),
+        type: "wolf_kill_vote_cast",
+        payload: {
+          actorId: wolfId,
+          abstain,
+          targetId,
+          ...(voteResolved.fallback ? { fallback: true } : {}),
+        },
+      });
+      safeRecordLogicOp({
+        scope: "phase_pipeline",
+        op: "wolf_kill_vote_cast",
+        actorId: wolfId,
+        phase: Phase.Night,
+        status: "ok",
+        output: { abstain, target_id: targetId },
+      });
+    }
+
+    const wolfTarget = ctx.pickMajorityTarget(ctx.state.wolfVotes);
+    ctx.state.wolfTarget = wolfTarget;
+    safeRecordLogicOp({
+      scope: "phase_pipeline",
+      op: "wolf_kill_vote_resolved",
+      phase: Phase.Night,
+      status: "ok",
+      output: { tally: ctx.state.wolfVotes, wolf_target: wolfTarget },
+    });
+    if (wolfTarget !== null) {
+      ctx.ensureMarks(wolfTarget).add(StatusMark.WolfKillMark);
+    }
+  },
+};
+
+/** 狼人夜间阶段列表。 */
+export const WOLF_NIGHT_STAGES: NightStageHandler[] = [
+  wolfDiscussionStage,
+  wolfKillVoteStage,
+];

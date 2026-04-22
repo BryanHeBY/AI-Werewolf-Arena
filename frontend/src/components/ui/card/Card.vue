@@ -1,3 +1,7 @@
+
+/**
+ * Card 根容器：提供统一边框、背景和阴影样式。
+ */
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@/lib/utils'

@@ -1,3 +1,7 @@
+
+/**
+ * 主页面布局：顶部控制栏 + 玩家卡片区 + 日志终端。
+ */
 <script setup lang="ts">
 import { useGameStore } from "@/composables/useGameStore";
 import TopBar from "@/components/TopBar.vue";

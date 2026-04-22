@@ -1,3 +1,7 @@
+
+/**
+ * 顶部状态栏：展示回合/阶段统计并提供控制按钮。
+ */
 <script setup lang="ts">
 import { Play, Pause, SkipForward, RotateCcw } from "lucide-vue-next";
 import { Badge } from "@/components/ui/badge";

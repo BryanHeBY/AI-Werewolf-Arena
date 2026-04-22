@@ -9,12 +9,16 @@ dist
 # Environment variables
 .env
 .env.local
+.env.*
+!.env.example
 
 # Logs and game records
 data/records/*
 !data/records/.gitkeep
 backend/data/records/*
 !backend/data/records/.gitkeep
+record/*
+!record/.gitkeep
 *.log
 
 # IDE
@@ -41,6 +45,13 @@ test-server*.js
 # Playwright temporary files
 .playwright-mcp
 
+# Test coverage reports
+coverage
+*/coverage
+**/coverage/*
+*.lcov
+*.lcov.info
+
 # Root temporary setup files
 /index.html
 /src/
@@ -49,3 +60,9 @@ test-server*.js
 /tsconfig.json
 /tsconfig.node.json
 /vite.config.ts
+
+# Codex local marker file
+.codex
+
+# local runtime configs (ignored)
+configs/

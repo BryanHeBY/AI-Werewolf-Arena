@@ -7,10 +7,24 @@ import type {
   Faction,
   PlayerAction,
   ActionType,
+  RealtimeGameEvent,
+  GameStartedPayload,
+  PhaseChangedPayload,
+  AgentThinkingPayload,
+  PlayerActionPayload,
+  NightResultPayload,
+  PlayerDiedPayload,
+  SpeechStartPayload,
+  VoteResultPayload,
+  GameOverPayload,
+  WinnerDeclaredPayload,
 } from "@/types";
 import { MockDataEngine } from "./mockDataEngine";
 import { useWebSocket } from "./useWebSocket";
 
+/**
+ * 日志面板条目：统一承载系统消息、动作与思考文本。
+ */
 export interface LogEntry {
   type: "thought" | "action" | "system";
   playerId?: number;
@@ -22,6 +36,9 @@ export interface LogEntry {
 
 const USE_REAL_BACKEND = true; // Set to false to use mock data
 
+/**
+ * 游戏状态 Store：负责接收实时事件并维护页面可渲染状态。
+ */
 export function useGameStore() {
   const phase = ref<GamePhase>("Night_Start" as GamePhase);
   const round = ref(1);
@@ -96,7 +113,7 @@ export function useGameStore() {
     return faction === "wolf" ? "狼人阵营" : "好人阵营";
   };
 
-  const handleGameStarted = (data: any) => {
+  const handleGameStarted = (data: GameStartedPayload) => {
     if (data.players) {
       phase.value = data.phase;
       round.value = data.round;
@@ -109,7 +126,7 @@ export function useGameStore() {
     });
   };
 
-  const handlePhaseChanged = (data: any) => {
+  const handlePhaseChanged = (data: PhaseChangedPayload) => {
     phase.value = data.phase;
     if (data.round) {
       round.value = data.round;
@@ -131,7 +148,7 @@ export function useGameStore() {
     });
   };
 
-  const handleAgentThinking = (data: any) => {
+  const handleAgentThinking = (data: AgentThinkingPayload) => {
     const { playerId, thought } = data;
     if (!playerId || !thought) return;
 
@@ -155,12 +172,12 @@ export function useGameStore() {
     }, 2000);
   };
 
-  const handleAgentThoughtComplete = (data: any) => {
+  const handleAgentThoughtComplete = (data: AgentThinkingPayload) => {
     const { playerId, thought } = data;
     if (!playerId) return;
   };
 
-  const handlePlayerAction = (data: any) => {
+  const handlePlayerAction = (data: PlayerActionPayload) => {
     const { playerId, roleType, actionType, targetId, content, thought } = data;
     const player = getPlayer(playerId);
     const target = targetId ? getPlayer(targetId) : null;
@@ -224,7 +241,7 @@ export function useGameStore() {
     }
   };
 
-  const handleNightResult = (data: any) => {
+  const handleNightResult = (data: NightResultPayload) => {
     const {
       deadPlayerIds: deadIds,
       killedByWolf,
@@ -256,7 +273,7 @@ export function useGameStore() {
     }
   };
 
-  const handlePlayerDied = (data: any) => {
+  const handlePlayerDied = (data: PlayerDiedPayload) => {
     const { playerId, roleType } = data;
     const player = getPlayer(playerId);
 
@@ -271,7 +288,7 @@ export function useGameStore() {
     });
   };
 
-  const handleSpeechStart = (data: any) => {
+  const handleSpeechStart = (data: SpeechStartPayload) => {
     const { playerId, playerName } = data;
 
     // 如果提供了playerName，直接使用
@@ -300,7 +317,7 @@ export function useGameStore() {
     }
   };
 
-  const handleVoteResult = (data: any) => {
+  const handleVoteResult = (data: VoteResultPayload) => {
     const { votedDeadId, votedDeadName, votedOutId, votedOutName } = data;
 
     const playerName = votedDeadName || votedOutName;
@@ -329,7 +346,7 @@ export function useGameStore() {
     }
   };
 
-  const handleGameOver = (data: any) => {
+  const handleGameOver = (data: GameOverPayload) => {
     const { winner: gameWinner } = data;
     winner.value = gameWinner;
 
@@ -339,7 +356,7 @@ export function useGameStore() {
     });
   };
 
-  const handleWinnerDeclared = (data: any) => {
+  const handleWinnerDeclared = (data: WinnerDeclaredPayload) => {
     const { winner: gameWinner, message } = data;
     winner.value = gameWinner;
 
@@ -363,7 +380,7 @@ export function useGameStore() {
   };
 
   const setupWebSocket = () => {
-    ws.on("gameEvent", (event: any) => {
+    ws.on<RealtimeGameEvent>("gameEvent", (event) => {
       const { type, data, timestamp } = event;
       console.log("Received game event:", type, data);
 

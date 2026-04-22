@@ -1,3 +1,7 @@
+
+/**
+ * Mock 事件引擎：按时间序列回放一局示例狼人杀事件流。
+ */
 import type { PublicGameState, PlayerAction, BroadcastEvent, GamePhase, RoleType, Faction, ActionType } from '@/types'
 
 const ROLES: RoleType[] = ['wolf', 'wolf', 'seer', 'witch', 'villager', 'villager']
@@ -11,6 +15,9 @@ interface MockEvent {
   delay: number
 }
 
+/**
+ * 前端本地演示引擎，模拟后端广播并驱动 UI 变化。
+ */
 export class MockDataEngine {
   private events: MockEvent[] = []
   private currentIndex = 0
@@ -414,6 +421,9 @@ export class MockDataEngine {
     }))
   }
 
+  /**
+   * 为指定玩家返回一条示例“思考”文案。
+   */
   private generateThought(playerId: number): string {
     const thoughts = [
       "Hmm, I need to be careful about what I reveal.",
@@ -426,6 +436,9 @@ export class MockDataEngine {
     return thoughts[(playerId - 1) % thoughts.length]
   }
 
+  /**
+   * 为指定玩家返回一条示例发言文本。
+   */
   private generateSpeech(playerId: number): string {
     const speeches = [
       "I think we need to be careful today. Not everyone is who they claim to be.",
@@ -505,14 +518,23 @@ export class MockDataEngine {
     this.isPaused = false
   }
 
+  /**
+   * 判断事件流是否已回放结束。
+   */
   isComplete(): boolean {
     return this.currentIndex >= this.events.length
   }
 
+  /**
+   * 返回当前回放游标位置。
+   */
   getCurrentIndex(): number {
     return this.currentIndex
   }
 
+  /**
+   * 返回事件总数，便于计算回放进度。
+   */
   getTotalEvents(): number {
     return this.events.length
   }

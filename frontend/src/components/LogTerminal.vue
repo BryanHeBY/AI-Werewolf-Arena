@@ -1,3 +1,7 @@
+
+/**
+ * 日志终端组件：实时展示系统消息、玩家动作和思考流。
+ */
 <script setup lang="ts">
 import { ref, watch, nextTick } from "vue";
 import { ScrollArea } from "@/components/ui/scroll-area";
