@@ -1,6 +1,6 @@
 import { bootstrapGame } from "../../src/app/bootstrap";
-import { COMPONENT } from "../../src/domain/components/names";
-import { RoleComponent } from "../../src/domain/components/role";
+import { COMPONENT } from "../../src/core/domain/components/names";
+import { RoleComponent } from "../../src/core/domain/components/role";
 import {
   ActionProvider,
   ActionRequest,
@@ -11,14 +11,14 @@ import {
   Role,
   ToolCall,
   WinCondition,
-} from "../../src/domain/model";
-import { RoleRegistry } from "../../src/domain/registries/role_registry";
-import { DamageResolutionSystem } from "../../src/domain/systems/damage_resolution_system";
-import { buildAgentBroadcastFeed } from "../../src/engine/agent_broadcast_feed";
-import { NightPipeline } from "../../src/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../src/gateway/tool_gateway";
-import { getSeerState } from "../../src/mechanisms/roles/private_state";
-import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
+} from "../../src/core/domain/model";
+import { RoleRegistry } from "../../src/core/domain/registries/role_registry";
+import { DamageResolutionSystem } from "../../src/core/domain/systems/damage_resolution_system";
+import { buildAgentBroadcastFeed } from "../../src/game/engine/agent_broadcast_feed";
+import { NightPipeline } from "../../src/game/engine/phase_pipeline/night_pipeline";
+import { ToolGateway } from "../../src/game/gateway/tool_gateway";
+import { getSeerState } from "../../src/game/mechanisms/roles/private_state";
+import { twelvePlayerStandardConfig } from "../../src/runtime/scenarios/twelve_player_standard";
 
 class TacticalOrderProvider implements ActionProvider {
   public discussionOrder: number[] = [];
@@ -317,7 +317,9 @@ describe("night wolf tactical loop", () => {
 
     const wolfViewer = provider.voteOrder[0];
     const feed = buildAgentBroadcastFeed(context.world, events, wolfViewer);
-    expect(feed.some((line) => line.includes("[夜聊][结束][狼队]"))).toBe(true);
+    expect(
+      feed.some((line: string) => line.includes("[夜聊][结束][狼队]")),
+    ).toBe(true);
   });
 
   test("guard mark cancels wolf kill while poison still kills", async () => {

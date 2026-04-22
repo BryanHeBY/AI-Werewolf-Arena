@@ -1,10 +1,10 @@
 import { bootstrapGame } from "../../src/app/bootstrap";
-import { ActionProvider, ActionRequest, ActionWindow, Phase, ToolCall } from "../../src/domain/model";
-import { DayPipeline } from "../../src/engine/phase_pipeline/day_pipeline";
-import { VotingPipeline } from "../../src/engine/phase_pipeline/voting_pipeline";
-import { EventRegistry } from "../../src/engine/event_registry";
-import { ToolGateway } from "../../src/gateway/tool_gateway";
-import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
+import { ActionProvider, ActionRequest, ActionWindow, Phase, ToolCall } from "../../src/core/domain/model";
+import { DayPipeline } from "../../src/game/engine/phase_pipeline/day_pipeline";
+import { VotingPipeline } from "../../src/game/engine/phase_pipeline/voting_pipeline";
+import { EventRegistry } from "../../src/game/engine/event_registry";
+import { ToolGateway } from "../../src/game/gateway/tool_gateway";
+import { twelvePlayerStandardConfig } from "../../src/runtime/scenarios/twelve_player_standard";
 
 function makeProviderForWindow(
   hitWindow: ActionWindow,
