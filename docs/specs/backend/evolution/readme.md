@@ -6,3 +6,6 @@
 3. `runtime/`
 4. `ai/`
 5. `observability/`
+
+当前活跃文档补充：
+1. `architecture/game_event_protocol_refactor_spec_v3.md`

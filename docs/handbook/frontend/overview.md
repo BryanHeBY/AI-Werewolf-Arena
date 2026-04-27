@@ -1,196 +1,84 @@
-# 狼人杀竞技场 - 前端
+# 狼人杀竞技场 - 前端（当前）
 
-前端是 AI 狼人杀竞技场的用户界面，提供游戏大厅、游戏界面和完整的玩家交互体验。
+## 1. 文档优先级
 
-## 技术栈
+1. 实时协议：`docs/apis/game_event_socket_v1_spec.md`
+2. 会话生命周期：`docs/apis/session_rest_api_v1_spec.md`
+3. 前端接入规范：`docs/specs/frontend/game_event_consumption_spec_v3.md`
 
-- **框架**: Vue 3.5.13
-- **构建工具**: Vite 7.0.0
-- **UI 组件库**: shadcn-vue (Tailwind CSS)
-- **WebSocket**: Socket.IO v4.8.1
-- **语言**: TypeScript
+说明：
+1. 本文档只提供“当前结构解释与阅读入口”。
+2. 协议与迁移约束以上述文档为准。
 
-## 项目结构
+## 2. 当前技术栈
 
-```
-frontend/
-├── src/
-│   ├── components/       # 组件
-│   │   └── ui/           # shadcn-vue 组件
-│   ├── composables/      # 组合式函数
-│   │   ├── useGameStore.ts      # 游戏状态管理
-│   │   ├── useWebSocket.ts       # WebSocket 连接管理
-│   │   └── mockDataEngine.ts     # 模拟数据（开发用）
-│   ├── types/            # 类型定义
-│   │   └── index.ts
-│   ├── App.vue           # 主应用
-│   ├── main.ts           # 入口文件
-│   └── style.css         # 全局样式
-├── public/               # 静态资源
-├── dist/                 # 编译输出
-├── components.json       # shadcn-vue 配置
-├── tailwind.config.js    # Tailwind 配置
-└── package.json
-```
+1. 运行时：Vue 3 + TypeScript
+2. 构建：Vite
+3. 实时通信：Socket.IO client
+4. 状态管理：当前并存 composable store 与 Pinia store
+5. UI：shadcn-vue 风格组件 + 自定义赛博朋克样式
 
-## 核心组件
+## 3. 当前目录结构（frontend/src）
 
-### App.vue
-
-主应用组件，包含四个主要视图：
-
-1. **HomeView** - 首页（选择加入/创建游戏）
-2. **WaitRoomView** - 等待房间（房主配置游戏，等待玩家加入）
-3. **GameView** - 游戏界面（完整的游戏流程）
-4. **EndGameView** - 游戏结束（显示结果）
-
-### useGameStore.ts
-
-游戏状态管理的核心，使用 Vue 3 的响应式系统：
-
-**主要状态**:
-
-- `currentView`: 当前视图
-- `gamePhase`: 当前游戏阶段
-- `currentPlayers`: 玩家列表
-- `currentPlayerId`: 当前玩家 ID
-- `gameLog`: 游戏日志
-- `nightResult`: 夜晚行动结果
-- `voteResult`: 投票结果
-
-**主要方法**:
-
-- `setCurrentView()` - 切换视图
-- `handleServerEvent()` - 处理服务器事件
-- `handlePlayerAction()` - 提交玩家行动
-- `speak()` - 玩家发言
-- `vote()` - 玩家投票
-
-### useWebSocket.ts
-
-WebSocket 连接管理：
-
-- 自动重连
-- 事件监听器管理
-- 消息发送和接收
-
-**主要方法**:
-
-- `connect()` - 连接服务器
-- `disconnect()` - 断开连接
-- `send()` - 发送消息
-- `on()` / `off()` - 事件监听
-
-## UI 组件 (shadcn-vue)
-
-项目使用 shadcn-vue 组件库，已安装的组件：
-
-- **Button** - 按钮
-- **Card** - 卡片
-- **Input** - 输入框
-- **Select** - 选择框
-- **Checkbox** - 复选框
-- **Avatar** - 头像
-- **Badge** - 徽章
-- **Dialog** - 对话框
-- **Label** - 标签
-- **Separator** - 分隔线
-- **Skeleton** - 骨架屏
-
-## WebSocket 事件处理
-
-### 接收事件 (Server → Client)
-
-| 事件名            | 处理函数              | 说明       |
-| ----------------- | --------------------- | ---------- |
-| `gameStarted`     | `onGameStarted()`     | 游戏开始   |
-| `phaseChanged`    | `onPhaseChanged()`    | 阶段变更   |
-| `gameStateUpdate` | `onGameStateUpdate()` | 状态更新   |
-| `actionReceived`  | `onActionReceived()`  | 行动已接收 |
-| `playerJoined`    | `onPlayerJoined()`    | 玩家加入   |
-| `playerLeft`      | `onPlayerLeft()`      | 玩家离开   |
-| `gameOver`        | `onGameOver()`        | 游戏结束   |
-
-### 发送事件 (Client → Server)
-
-| 事件名         | 触发时机     |
-| -------------- | ------------ |
-| `hostGame`     | 房主创建游戏 |
-| `joinGame`     | 玩家加入游戏 |
-| `playerAction` | 玩家提交行动 |
-
-## 游戏流程
-
-### 1. 首页
-
-- 选择"创建游戏"或"加入游戏"
-
-### 2. 等待房间
-
-- 房主配置游戏人数和规则
-- 等待其他玩家加入
-- 房主点击"开始游戏"
-
-### 3. 游戏界面
-
-- 显示当前阶段
-- 显示玩家列表（头像、身份、存活状态）
-- 游戏日志区域
-- 根据阶段显示不同的行动界面：
-  - **夜晚阶段**: 狼人选择击杀目标、预言家查验、女巫用药
-  - **白天阶段**: 玩家依次发言、投票
-
-### 4. 游戏结束
-
-- 显示获胜阵营
-- 显示所有玩家的真实身份
-- 可返回首页
-
-## 开发指南
-
-### 安装依赖
-
-```bash
-cd frontend
-bun install
+```text
+components/     # 页面组件与 UI 原子组件
+composables/    # 旧 V3 store / mock / websocket 组合式逻辑
+mocks/          # V2 mock engine
+network/        # V2 socket 适配层
+stores/         # Pinia store（当前 V2 chatflow 主要使用）
+types/          # 前端共享类型
+App.vue         # 顶层页面装配
+main.ts         # 应用入口
+style.css       # 全局视觉样式
 ```
 
-### 开发模式
+## 4. 当前实现状态
 
-```bash
-bun run dev
-```
+当前前端同时存在两条主线：
 
-默认地址：`http://localhost:5173`
+### 4.1 V3 兼容主线（旧）
 
-### 编译
+1. `composables/useGameStore.ts`
+2. `composables/useWebSocket.ts`
 
-```bash
-bun run build
-```
+特点：
+1. 已能消费后端 `gameEvent`
+2. 更贴近当前 V3 后端的实时广播协议
+3. 但页面主入口未完全围绕它组织
 
-### 预览生产构建
+### 4.2 V2 chatflow 主线（新引入）
 
-```bash
-bun run preview
-```
+1. `stores/gameStore.ts`
+2. `network/socket.ts`
+3. `components/ChatFlow*.vue`
 
-### 添加 shadcn-vue 组件
+特点：
+1. 强依赖聊天流与视角切换体验
+2. 当前主要服务于 mock / 本地演示
+3. 仍带有 V2 风格协议假设（如 `gameStateUpdate`、`chatMessage`）
 
-```bash
-bunx shadcn-vue@latest add [component-name]
-```
+## 5. 当前迁移方向
 
-## 类型定义
+目标不是继续扩展 V2 专用协议，而是：
 
-主要类型定义在 `src/types/index.ts`：
+1. 保留 V2 chatflow 的 UI 体验与组件资产
+2. 将前端正式联机路径统一切到增强版 V3 `gameEvent`
+3. 会话创建/停止/恢复统一走 `/api/v1/sessions*`
 
-- `PlayerInfo` - 玩家信息
-- `GameState` - 游戏状态
-- `PlayerAction` - 玩家行动
-- `BroadcastEvent` - 广播事件
-- `GameConfig` - 游戏配置
+换句话说：
+1. UI 资产可以继续使用 V2 chatflow
+2. 但真实后端协议必须升级为增强版 V3 `gameEvent`
 
----
+## 6. 推荐阅读主线
 
-_相关文件：`../backend/`（后端服务）_
+1. 顶层页面：`frontend/src/App.vue`
+2. 旧 V3 store：`frontend/src/composables/useGameStore.ts`
+3. V2 chatflow store：`frontend/src/stores/gameStore.ts`
+4. V2 chatflow 视图：`frontend/src/components/ChatFlow.vue`
+5. 前端正式迁移规范：`docs/specs/frontend/game_event_consumption_spec_v3.md`
+
+## 7. 当前结论
+
+1. 前端页面、类型检查、构建与 Playwright 已可稳定运行
+2. 但“正式联机协议”尚未完全统一到增强版 V3 `gameEvent`
+3. 后续实现应以增强版 `gameEvent` 为唯一正式实时协议，逐步压缩 V2 协议假设
