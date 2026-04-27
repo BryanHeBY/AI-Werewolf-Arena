@@ -1,30 +1,14 @@
-import { ref, computed, onUnmounted } from "vue";
+import { ref, computed } from "vue";
 import type {
-  PublicGameState,
   PublicPlayer,
   GamePhase,
-  RoleType,
   Faction,
   PlayerAction,
   ActionType,
-  RealtimeGameEvent,
-  GameStartedPayload,
-  PhaseChangedPayload,
-  AgentThinkingPayload,
-  PlayerActionPayload,
-  NightResultPayload,
-  PlayerDiedPayload,
-  SpeechStartPayload,
-  VoteResultPayload,
-  GameOverPayload,
-  WinnerDeclaredPayload,
 } from "@/types";
 import { MockDataEngine } from "./mockDataEngine";
 import { useWebSocket } from "./useWebSocket";
 
-/**
- * 日志面板条目：统一承载系统消息、动作与思考文本。
- */
 export interface LogEntry {
   type: "thought" | "action" | "system";
   playerId?: number;
@@ -36,9 +20,6 @@ export interface LogEntry {
 
 const USE_REAL_BACKEND = true; // Set to false to use mock data
 
-/**
- * 游戏状态 Store：负责接收实时事件并维护页面可渲染状态。
- */
 export function useGameStore() {
   const phase = ref<GamePhase>("Night_Start" as GamePhase);
   const round = ref(1);
@@ -113,7 +94,7 @@ export function useGameStore() {
     return faction === "wolf" ? "狼人阵营" : "好人阵营";
   };
 
-  const handleGameStarted = (data: GameStartedPayload) => {
+  const handleGameStarted = (data: any) => {
     if (data.players) {
       phase.value = data.phase;
       round.value = data.round;
@@ -126,7 +107,7 @@ export function useGameStore() {
     });
   };
 
-  const handlePhaseChanged = (data: PhaseChangedPayload) => {
+  const handlePhaseChanged = (data: any) => {
     phase.value = data.phase;
     if (data.round) {
       round.value = data.round;
@@ -148,7 +129,7 @@ export function useGameStore() {
     });
   };
 
-  const handleAgentThinking = (data: AgentThinkingPayload) => {
+  const handleAgentThinking = (data: any) => {
     const { playerId, thought } = data;
     if (!playerId || !thought) return;
 
@@ -172,13 +153,13 @@ export function useGameStore() {
     }, 2000);
   };
 
-  const handleAgentThoughtComplete = (data: AgentThinkingPayload) => {
-    const { playerId, thought } = data;
+  const handleAgentThoughtComplete = (data: any) => {
+    const { playerId } = data;
     if (!playerId) return;
   };
 
-  const handlePlayerAction = (data: PlayerActionPayload) => {
-    const { playerId, roleType, actionType, targetId, content, thought } = data;
+  const handlePlayerAction = (data: any) => {
+    const { playerId, actionType, targetId, content } = data;
     const player = getPlayer(playerId);
     const target = targetId ? getPlayer(targetId) : null;
 
@@ -241,10 +222,9 @@ export function useGameStore() {
     }
   };
 
-  const handleNightResult = (data: NightResultPayload) => {
+  const handleNightResult = (data: any) => {
     const {
       deadPlayerIds: deadIds,
-      killedByWolf,
       savedByWitch,
       poisonedByWitch,
     } = data;
@@ -273,7 +253,7 @@ export function useGameStore() {
     }
   };
 
-  const handlePlayerDied = (data: PlayerDiedPayload) => {
+  const handlePlayerDied = (data: any) => {
     const { playerId, roleType } = data;
     const player = getPlayer(playerId);
 
@@ -288,7 +268,7 @@ export function useGameStore() {
     });
   };
 
-  const handleSpeechStart = (data: SpeechStartPayload) => {
+  const handleSpeechStart = (data: any) => {
     const { playerId, playerName } = data;
 
     // 如果提供了playerName，直接使用
@@ -317,7 +297,7 @@ export function useGameStore() {
     }
   };
 
-  const handleVoteResult = (data: VoteResultPayload) => {
+  const handleVoteResult = (data: any) => {
     const { votedDeadId, votedDeadName, votedOutId, votedOutName } = data;
 
     const playerName = votedDeadName || votedOutName;
@@ -346,7 +326,7 @@ export function useGameStore() {
     }
   };
 
-  const handleGameOver = (data: GameOverPayload) => {
+  const handleGameOver = (data: any) => {
     const { winner: gameWinner } = data;
     winner.value = gameWinner;
 
@@ -356,7 +336,7 @@ export function useGameStore() {
     });
   };
 
-  const handleWinnerDeclared = (data: WinnerDeclaredPayload) => {
+  const handleWinnerDeclared = (data: any) => {
     const { winner: gameWinner, message } = data;
     winner.value = gameWinner;
 
@@ -380,8 +360,8 @@ export function useGameStore() {
   };
 
   const setupWebSocket = () => {
-    ws.on<RealtimeGameEvent>("gameEvent", (event) => {
-      const { type, data, timestamp } = event;
+    ws.on("gameEvent", (event: any) => {
+      const { type, data } = event;
       console.log("Received game event:", type, data);
 
       switch (type) {

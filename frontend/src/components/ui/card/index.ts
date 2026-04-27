@@ -1,7 +1,3 @@
-
-/**
- * Card 组件族导出入口。
- */
 import Card from './Card.vue'
 import CardHeader from './CardHeader.vue'
 import CardTitle from './CardTitle.vue'

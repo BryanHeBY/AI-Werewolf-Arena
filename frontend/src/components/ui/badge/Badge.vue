@@ -1,7 +1,3 @@
-
-/**
- * 通用徽标组件：提供阵营与状态颜色变体。
- */
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from 'vue'
 import { Primitive } from 'radix-vue'

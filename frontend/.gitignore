@@ -37,3 +37,26 @@ node_modules/
 /playwright-report
 /playwright/.cache
 /test-results
+
+# Development and testing files
+/test-results/**
+/playwright-report/**
+*.local.html
+*.test.html
+*.debug.*
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
