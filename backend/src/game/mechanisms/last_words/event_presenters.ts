@@ -2,6 +2,7 @@
 import { AgentEventLineHandler } from "../broadcast/contracts";
 import { ScriptJudgeLineHandler, ScriptLiveRenderHandler } from "../script/contracts";
 import { RealtimeEventHandler } from "../session/contracts";
+import { makePublicEvent } from "../session/realtime_event_types";
 
 /** 遗言事件 -> 玩家广播行映射。 */
 export const LAST_WORDS_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
@@ -34,14 +35,16 @@ export const LAST_WORDS_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHan
 /** 遗言事件 -> 实时推送事件映射。 */
 export const LAST_WORDS_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> = {
   last_words_spoken: (event) => [
-    {
-      type: "last_words_spoken",
+    makePublicEvent({
+      category: "system",
+      type: "player.last_words_spoken",
       timestamp: event.timestamp,
+      actorId: Number(event.payload.playerId),
+      targetIds: [Number(event.payload.playerId)],
       data: {
         playerId: Number(event.payload.playerId),
         content: String(event.payload.text ?? ""),
       },
-      visibility: { scope: "public" },
-    },
+    }),
   ],
 };

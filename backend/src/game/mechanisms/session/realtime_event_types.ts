@@ -1,3 +1,5 @@
+import { FrontendGameState, FrontendPhase } from "../../../server/view_mapper";
+
 /**
  * 实时事件可见性定义。
  */
@@ -7,11 +9,102 @@ export type RealtimeVisibility =
   | { scope: "private_targets"; targetPlayerIds: number[] };
 
 /**
- * 实时广播事件结构。
+ * 实时事件大类。
  */
-export interface RealtimeGameEvent {
+export type RealtimeEventCategory =
+  | "session"
+  | "phase"
+  | "agent"
+  | "player_action"
+  | "player_state"
+  | "vote"
+  | "night"
+  | "system"
+  | "result";
+
+/**
+ * registry/presenter 阶段输出的“半成品事件”。
+ * session manager 会为其补齐 session 级上下文。
+ */
+export interface RealtimeGameEventDraft {
+  category: RealtimeEventCategory;
   type: string;
   data: Record<string, unknown>;
-  timestamp: number;
+  timestamp?: number;
   visibility?: RealtimeVisibility;
+  stage?: string;
+  actorId?: number | null;
+  targetIds?: number[];
+  day?: number;
+  phase?: FrontendPhase;
+  phaseId?: string;
+  publicState?: FrontendGameState;
+}
+
+/**
+ * 对外广播的完整实时事件结构。
+ */
+export interface RealtimeGameEvent extends RealtimeGameEventDraft {
+  id: string;
+  seq: number;
+  schemaVersion: number;
+  sessionId: string;
+  category: RealtimeEventCategory;
+  timestamp: number;
+  day: number;
+  phase: FrontendPhase;
+}
+
+interface RealtimeEventBuilderInput {
+  category: RealtimeEventCategory;
+  type: string;
+  data: Record<string, unknown>;
+  timestamp?: number;
+  stage?: string;
+  actorId?: number | null;
+  targetIds?: number[];
+  day?: number;
+  phase?: FrontendPhase;
+  phaseId?: string;
+  publicState?: FrontendGameState;
+}
+
+/**
+ * 公开事件草稿构造器。
+ */
+export function makePublicEvent(
+  input: RealtimeEventBuilderInput,
+): RealtimeGameEventDraft {
+  return {
+    ...input,
+    visibility: { scope: "public" },
+  };
+}
+
+/**
+ * 狼队私有事件草稿构造器。
+ */
+export function makeWolvesOnlyEvent(
+  input: RealtimeEventBuilderInput,
+): RealtimeGameEventDraft {
+  return {
+    ...input,
+    visibility: { scope: "wolves_only" },
+  };
+}
+
+/**
+ * 指定玩家私有事件草稿构造器。
+ */
+export function makePrivateTargetsEvent(
+  input: RealtimeEventBuilderInput & { targetPlayerIds: number[] },
+): RealtimeGameEventDraft {
+  const { targetPlayerIds, ...rest } = input;
+  return {
+    ...rest,
+    visibility: {
+      scope: "private_targets",
+      targetPlayerIds,
+    },
+  };
 }

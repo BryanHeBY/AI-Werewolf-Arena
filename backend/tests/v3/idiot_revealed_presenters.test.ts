@@ -2,8 +2,8 @@ import {
   getDefaultAgentEventLineRegistry,
   getDefaultRealtimeEventRegistry,
   getDefaultScriptEventRenderRegistry,
-} from "../../src/mechanisms";
-import { GameEvent } from "../../src/domain/model";
+} from "../../src/game/mechanisms";
+import { GameEvent } from "../../src/core/domain/model";
 
 describe("idiot_revealed event presenters", () => {
   test("should render in agent/script/realtime outputs", () => {
@@ -40,7 +40,7 @@ describe("idiot_revealed event presenters", () => {
       getPlayerName: (id) => `玩家${id}`,
       getPlayerRole: () => "idiot",
     });
-    expect(realtime.some((item) => item.type === "idiot_revealed")).toBe(true);
+    expect(realtime.some((item) => item.type === "player.idiot_revealed")).toBe(true);
   });
 
   test("live render should include explicit idiot reveal line", () => {

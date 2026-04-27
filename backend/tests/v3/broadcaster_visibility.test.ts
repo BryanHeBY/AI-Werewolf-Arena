@@ -1,4 +1,5 @@
-import { Broadcaster, RealtimeGameEvent } from "../../src/infra/transport/broadcaster";
+import { Broadcaster } from "../../src/server/transport/broadcaster";
+import { RealtimeGameEvent } from "../../src/game/mechanisms/session/realtime_event_types";
 
 describe("Broadcaster visibility routing", () => {
   test("public visibility should broadcast to all sockets", () => {
@@ -17,7 +18,14 @@ describe("Broadcaster visibility routing", () => {
     broadcaster.registerPlayer("socket-2", 2, "villager");
 
     const event: RealtimeGameEvent = {
-      type: "phase_changed",
+      id: "v3-1:evt:1",
+      seq: 1,
+      schemaVersion: 1,
+      sessionId: "v3-1",
+      category: "phase",
+      type: "phase.changed",
+      day: 1,
+      phase: "Sequential_Speech",
       timestamp: Date.now(),
       data: { phase: "day" },
       visibility: { scope: "public" },
@@ -45,7 +53,14 @@ describe("Broadcaster visibility routing", () => {
     broadcaster.registerPlayer("socket-3", 3, "wolf");
 
     const event: RealtimeGameEvent = {
-      type: "wolf_discussion",
+      id: "v3-1:evt:2",
+      seq: 2,
+      schemaVersion: 1,
+      sessionId: "v3-1",
+      category: "agent",
+      type: "agent.thinking",
+      day: 1,
+      phase: "Night_Start",
       timestamp: Date.now(),
       data: { actorId: 1, text: "test" },
       visibility: { scope: "wolves_only" },
@@ -75,7 +90,14 @@ describe("Broadcaster visibility routing", () => {
     broadcaster.registerPlayer("socket-3", 3, "seer");
 
     const event: RealtimeGameEvent = {
-      type: "seer_checked",
+      id: "v3-1:evt:3",
+      seq: 3,
+      schemaVersion: 1,
+      sessionId: "v3-1",
+      category: "player_action",
+      type: "player.action.check",
+      day: 1,
+      phase: "Night_Start",
       timestamp: Date.now(),
       data: { actorId: 3, targetId: 1, isWerewolf: true },
       visibility: { scope: "private_targets", targetPlayerIds: [2, 3, 99] },

@@ -2,6 +2,7 @@
 import { AgentEventLineHandler } from "../../broadcast/contracts";
 import { ScriptJudgeLineHandler } from "../../script/contracts";
 import { RealtimeEventHandler } from "../../session/contracts";
+import { makePublicEvent } from "../../session/realtime_event_types";
 
 /** 白痴事件 -> 玩家广播行映射。 */
 export const IDIOT_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
@@ -20,16 +21,16 @@ export const IDIOT_SCRIPT_JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler>
 /** 白痴事件 -> 实时推送事件映射。 */
 export const IDIOT_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> = {
   idiot_revealed: (event) => [
-    {
-      type: "idiot_revealed",
+    makePublicEvent({
+      category: "player_state",
+      type: "player.idiot_revealed",
       timestamp: event.timestamp,
+      targetIds: [Number(event.payload.targetId)],
       data: {
         targetId: Number(event.payload.targetId),
         survived: true,
         canVote: false,
       },
-      visibility: { scope: "public" },
-    },
+    }),
   ],
 };
-

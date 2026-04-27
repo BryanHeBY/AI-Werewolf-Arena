@@ -2,7 +2,7 @@
 import { AgentEventLineHandler } from "../broadcast/contracts";
 import { ScriptJudgeLineHandler, ScriptLiveRenderHandler } from "../script/contracts";
 import { RealtimeEventHandler } from "../session/contracts";
-import { RealtimeGameEvent } from "../session/realtime_event_types";
+import { makePublicEvent } from "../session/realtime_event_types";
 
 /** 警长事件 -> 玩家广播行映射。 */
 export const SHERIFF_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
@@ -212,68 +212,68 @@ export const SHERIFF_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandle
   },
 };
 
-function publicEvent(
-  type: string,
-  data: Record<string, unknown>,
-  timestamp: number,
-): RealtimeGameEvent {
-  return {
-    type,
-    timestamp,
-    data,
-    visibility: { scope: "public" },
-  };
-}
-
 /** 警长事件 -> 实时推送事件映射。 */
 export const SHERIFF_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> = {
   sheriff_nomination_summary: (event) => [
-    publicEvent(
-      "sheriff_nomination_summary",
-      {
+    makePublicEvent({
+      category: "system",
+      type: "player.sheriff_nomination_summary",
+      timestamp: event.timestamp,
+      data: {
         candidates: Array.isArray(event.payload.candidates)
           ? event.payload.candidates.map((id) => Number(id))
           : [],
       },
-      event.timestamp,
-    ),
+    }),
   ],
   sheriff_withdraw_summary: (event) => [
-    publicEvent(
-      "sheriff_withdraw_summary",
-      {
+    makePublicEvent({
+      category: "system",
+      type: "player.sheriff_withdraw_summary",
+      timestamp: event.timestamp,
+      data: {
         withdrawn: Array.isArray(event.payload.withdrawn)
           ? event.payload.withdrawn.map((id) => Number(id))
           : [],
       },
-      event.timestamp,
-    ),
+    }),
   ],
   sheriff_candidate_declared: (event) => [
-    publicEvent(
-      "sheriff_candidate_declared",
-      {
+    makePublicEvent({
+      category: "player_action",
+      type: "player.action.run_for_sheriff",
+      timestamp: event.timestamp,
+      actorId: Number(event.payload.actorId),
+      targetIds: [Number(event.payload.actorId)],
+      data: {
         actorId: Number(event.payload.actorId),
         run: Boolean(event.payload.run),
       },
-      event.timestamp,
-    ),
+    }),
   ],
   sheriff_candidates_finalized: (event) => [
-    publicEvent(
-      "sheriff_candidates_finalized",
-      {
+    makePublicEvent({
+      category: "system",
+      type: "player.sheriff_candidates_finalized",
+      timestamp: event.timestamp,
+      data: {
         candidates: Array.isArray(event.payload.candidates)
           ? event.payload.candidates.map((id) => Number(id))
           : [],
       },
-      event.timestamp,
-    ),
+    }),
   ],
   sheriff_vote_cast: (event) => [
-    publicEvent(
-      "sheriff_vote_cast",
-      {
+    makePublicEvent({
+      category: "player_action",
+      type: "player.action.sheriff_vote",
+      timestamp: event.timestamp,
+      actorId: Number(event.payload.actorId),
+      targetIds:
+        event.payload.targetId === null || event.payload.targetId === undefined
+          ? []
+          : [Number(event.payload.targetId)],
+      data: {
         actorId: Number(event.payload.actorId),
         targetId:
           event.payload.targetId === null || event.payload.targetId === undefined
@@ -281,13 +281,15 @@ export const SHERIFF_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandle
             : Number(event.payload.targetId),
         abstain: Boolean(event.payload.abstain),
       },
-      event.timestamp,
-    ),
+    }),
   ],
   sheriff_elected: (event) => [
-    publicEvent(
-      "sheriff_elected",
-      {
+    makePublicEvent({
+      category: "player_state",
+      type: "player.sheriff_elected",
+      timestamp: event.timestamp,
+      targetIds: [Number(event.payload.winnerId)],
+      data: {
         winnerId: Number(event.payload.winnerId),
         candidates: Array.isArray(event.payload.candidates)
           ? event.payload.candidates.map((id) => Number(id))
@@ -297,30 +299,34 @@ export const SHERIFF_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandle
             ? event.payload.tally
             : {},
       },
-      event.timestamp,
-    ),
+    }),
   ],
   sheriff_direction_chosen: (event) => [
-    publicEvent(
-      "sheriff_direction_chosen",
-      {
+    makePublicEvent({
+      category: "system",
+      type: "player.sheriff_direction_chosen",
+      timestamp: event.timestamp,
+      actorId: Number(event.payload.sheriffId),
+      targetIds: [Number(event.payload.sheriffId)],
+      data: {
         sheriffId: Number(event.payload.sheriffId),
         direction: String(event.payload.direction ?? "clockwise"),
       },
-      event.timestamp,
-    ),
+    }),
   ],
   sheriff_vote_summary: (event) => [
-    publicEvent(
-      "sheriff_vote_summary",
-      {
+    makePublicEvent({
+      category: "vote",
+      type: "vote.sheriff_resolved",
+      timestamp: event.timestamp,
+      stage: "resolved",
+      data: {
         votes: Array.isArray(event.payload.votes) ? event.payload.votes : [],
         winnerId:
           event.payload.winnerId === null || event.payload.winnerId === undefined
             ? null
             : Number(event.payload.winnerId),
       },
-      event.timestamp,
-    ),
+    }),
   ],
 };

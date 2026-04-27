@@ -3,9 +3,17 @@ import { BoardPreset } from "../runtime/config";
 import { GameEvent, RuntimeSnapshot } from "../core";
 import { Broadcaster } from "./transport/broadcaster";
 import { getDefaultRealtimeEventRegistry } from "../game";
-import { RealtimeGameEvent } from "../game/mechanisms/session/realtime_event_types";
+import {
+  RealtimeGameEvent,
+  RealtimeGameEventDraft,
+  makePublicEvent,
+} from "../game/mechanisms/session/realtime_event_types";
 import { resolveBoardConfig } from "../runtime/scenarios/board_config_resolver";
-import { buildFrontendGameState, toFrontendPhase } from "./view_mapper";
+import {
+  FrontendGameState,
+  buildFrontendGameState,
+  toFrontendPhase,
+} from "./view_mapper";
 import { BaselineBotActionProvider } from "../ai";
 
 /**
@@ -48,6 +56,7 @@ class V3GameSession {
   private readonly maxDays: number;
   private readonly cycleDelayMs: number;
   private eventCursor = 0;
+  private realtimeSeq = 0;
   private running = false;
 
   constructor(
@@ -74,24 +83,18 @@ class V3GameSession {
     }
 
     this.running = true;
-    // 开局先发一帧完整状态，前端可据此初始化全量视图。
-    this.broadcaster.broadcast({
-      type: "game_started",
-      timestamp: Date.now(),
-      data: {
-        phase: toFrontendPhase(this.context.phaseManager.getSnapshot().phase),
-        round: this.context.phaseManager.getSnapshot().day,
-        players: buildFrontendGameState(
-          this.context.world,
-          this.context.phaseManager.getSnapshot(),
-        ).players,
-        gameState: buildFrontendGameState(
-          this.context.world,
-          this.context.phaseManager.getSnapshot(),
-        ),
-      },
-      visibility: { scope: "public" },
-    });
+    this.broadcastDraft(
+      makePublicEvent({
+        category: "session",
+        type: "session.game_started",
+        timestamp: Date.now(),
+        stage: "started",
+        data: {
+          players: this.snapshotPublicState().players,
+        },
+        publicState: this.snapshotPublicState(),
+      }),
+    );
     void this.runLoop();
   }
 
@@ -115,7 +118,7 @@ class V3GameSession {
     };
   }
 
-  snapshotPublicState() {
+  snapshotPublicState(): FrontendGameState {
     return buildFrontendGameState(
       this.context.world,
       this.context.phaseManager.getSnapshot(),
@@ -142,30 +145,23 @@ class V3GameSession {
    * 增量翻译并广播新事件。
    */
   private flushEvents(): void {
-    // 只增量消费新事件，避免重复广播同一条历史事件。
     const events = this.context.phaseManager.getEvents().slice(this.eventCursor);
     this.eventCursor += events.length;
 
     for (const event of events) {
       const outgoing = this.translateEvent(event);
-      if (outgoing.length === 0) {
-        continue;
-      }
       for (const item of outgoing) {
-        this.broadcaster.broadcast(item);
+        this.broadcastDraft(item);
       }
     }
   }
 
   /**
-   * 将内部领域事件翻译为前端实时事件。
+   * 将内部领域事件翻译为前端实时事件草稿。
    */
-  private translateEvent(event: GameEvent): RealtimeGameEvent[] {
+  private translateEvent(event: GameEvent): RealtimeGameEventDraft[] {
     return this.realtimeEventRegistry.translate(event, {
-      nowState: buildFrontendGameState(
-        this.context.world,
-        this.context.phaseManager.getSnapshot(),
-      ),
+      nowState: this.snapshotPublicState(),
       getPlayerName: (playerId) => this.getPlayerName(playerId),
       getPlayerRole: (playerId) => this.getPlayerRole(playerId),
     });
@@ -186,6 +182,37 @@ class V3GameSession {
     const player = this.snapshotPublicState().players.find((p) => p.id === playerId);
     return player?.roleType ?? "villager";
   }
+
+  /**
+   * 给草稿事件补齐会话级上下文并广播。
+   */
+  private broadcastDraft(draft: RealtimeGameEventDraft): void {
+    this.broadcaster.broadcast(this.finalizeEvent(draft));
+  }
+
+  /**
+   * 补齐完整 realtime 事件。
+   */
+  private finalizeEvent(draft: RealtimeGameEventDraft): RealtimeGameEvent {
+    this.realtimeSeq += 1;
+    const snapshot = this.snapshotPublicState();
+    const timestamp = draft.timestamp ?? Date.now();
+    const publicState = draft.publicState;
+    const effectiveState = publicState ?? snapshot;
+    const day = draft.day ?? effectiveState.round;
+    const phase = draft.phase ?? effectiveState.phase;
+
+    return {
+      ...draft,
+      id: `${this.id}:evt:${this.realtimeSeq}`,
+      seq: this.realtimeSeq,
+      schemaVersion: 1,
+      sessionId: this.id,
+      timestamp,
+      day,
+      phase,
+    };
+  }
 }
 
 /**
@@ -205,7 +232,6 @@ export class V3SessionManager {
    */
   start(options: SessionStartOptions = {}): SessionStatus {
     if (this.current && this.current.status().running) {
-      // 同一时刻只允许一个活跃会话，重复 start 直接返回当前状态。
       return this.current.status();
     }
 

@@ -2,6 +2,7 @@
 import { AgentEventLineHandler } from "../../broadcast/contracts";
 import { ScriptJudgeLineHandler } from "../../script/contracts";
 import { RealtimeEventHandler } from "../../session/contracts";
+import { makePublicEvent } from "../../session/realtime_event_types";
 
 /** 猎人事件 -> 玩家广播行映射。 */
 export const HUNTER_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
@@ -18,30 +19,20 @@ export const HUNTER_SCRIPT_JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler
 
 /** 猎人事件 -> 实时推送事件映射。 */
 export const HUNTER_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> = {
-  hunter_shot: (event, ctx) => {
+  hunter_shot: (event) => {
     const hunterId = Number(event.payload.hunterId);
     const targetId = Number(event.payload.targetId);
     return [
-      {
-        type: "player_action",
+      makePublicEvent({
+        category: "player_action",
+        type: "player.action.kill",
         timestamp: event.timestamp,
+        actorId: hunterId,
+        targetIds: [targetId],
         data: {
-          playerId: hunterId,
-          actionType: "kill",
           targetId,
         },
-        visibility: { scope: "public" },
-      },
-      {
-        type: "player_died",
-        timestamp: event.timestamp,
-        data: {
-          playerId: targetId,
-          roleType: ctx.getPlayerRole(targetId),
-        },
-        visibility: { scope: "public" },
-      },
+      }),
     ];
   },
 };
-
