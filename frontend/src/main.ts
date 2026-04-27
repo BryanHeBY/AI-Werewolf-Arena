@@ -1,9 +1,10 @@
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import "./style.css";
+import App from "@/App.vue";
 
-/**
- * 前端入口：初始化 Vue 应用并挂载根组件。
- */
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+const app = createApp(App);
+const pinia = createPinia();
 
-createApp(App).mount('#app')
+app.use(pinia);
+app.mount("#app");

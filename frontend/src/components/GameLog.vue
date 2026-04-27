@@ -1,10 +1,7 @@
-
-/**
- * 历史动作日志组件：按动作类型渲染图标、颜色和文本详情。
- */
 <script setup lang="ts">
-import { ScrollArea } from 'shadcn-vue'
-import type { PlayerAction } from '@/types'
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { ActionType } from "@/types";
+import type { PlayerAction } from "@/types";
 
 defineProps<{
   events: PlayerAction[]
@@ -48,8 +45,8 @@ const actionColor = (actionType: ActionType) => {
               <span v-if="event.targetId"> on Player {{ event.targetId }}</span>
             </div>
             
-            <div class="text-cyberwolf-light text-sm my-1 italic">
-              {{ event.thought }}
+            <div v-if="event.thought || event.privateThought" class="text-cyberwolf-light text-sm my-1 italic">
+              {{ event.thought || event.privateThought }}
             </div>
             
             <div v-if="event.content" class="bg-cyberwolf-dark/50 p-2 rounded mt-1 border border-cyberwolf-blue/30">

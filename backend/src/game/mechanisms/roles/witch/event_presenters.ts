@@ -2,7 +2,7 @@
 import { AgentEventLineHandler } from "../../broadcast/contracts";
 import { ScriptLiveRenderHandler } from "../../script/contracts";
 import { RealtimeEventHandler } from "../../session/contracts";
-import { RealtimeGameEvent } from "../../session/realtime_event_types";
+import { makePrivateTargetsEvent } from "../../session/realtime_event_types";
 import { getDefaultTextLocalizationRegistry } from "../../shared/text_localization_registry";
 
 /** 女巫事件 -> 玩家广播行映射。 */
@@ -39,46 +39,39 @@ export const WITCH_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler>
   ],
 };
 
-function privateTargetsEvent(
-  type: string,
-  data: Record<string, unknown>,
-  targetPlayerIds: number[],
-  timestamp: number,
-): RealtimeGameEvent {
-  return {
-    type,
-    timestamp,
-    data,
-    visibility: {
-      scope: "private_targets",
-      targetPlayerIds,
-    },
-  };
-}
-
 /** 女巫事件 -> 实时推送事件映射。 */
 export const WITCH_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> = {
   witch_potion_used: (event) => {
     const actorId = Number(event.payload.actorId);
     return [
-      privateTargetsEvent(
-        "witch_potion_used",
-        {
+      makePrivateTargetsEvent({
+        category: "player_action",
+        type:
+          String(event.payload.potionType ?? "") === "poison"
+            ? "player.action.poison"
+            : "player.action.heal",
+        timestamp: event.timestamp,
+        actorId,
+        targetIds: [Number(event.payload.targetId)],
+        data: {
           actorId,
           targetId: Number(event.payload.targetId),
           potionType: String(event.payload.potionType ?? ""),
         },
-        [actorId],
-        event.timestamp,
-      ),
+        targetPlayerIds: [actorId],
+      }),
     ];
   },
   witch_potion_skipped: (event) => {
     const actorId = Number(event.payload.actorId);
     return [
-      privateTargetsEvent(
-        "witch_potion_skipped",
-        {
+      makePrivateTargetsEvent({
+        category: "player_action",
+        type: "player.action.heal",
+        timestamp: event.timestamp,
+        actorId,
+        targetIds: [],
+        data: {
           actorId,
           targetId:
             event.payload.targetId === null || event.payload.targetId === undefined
@@ -86,9 +79,8 @@ export const WITCH_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler>
               : Number(event.payload.targetId),
           potionType: "none",
         },
-        [actorId],
-        event.timestamp,
-      ),
+        targetPlayerIds: [actorId],
+      }),
     ];
   },
 };

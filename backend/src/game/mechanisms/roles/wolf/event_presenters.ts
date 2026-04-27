@@ -6,7 +6,10 @@ import {
 } from "../../broadcast/contracts";
 import { ScriptLiveRenderHandler, ScriptChatLineHandler } from "../../script/contracts";
 import { RealtimeEventHandler, RealtimeTranslateContext } from "../../session/contracts";
-import { RealtimeGameEvent } from "../../session/realtime_event_types";
+import {
+  makePublicEvent,
+  makeWolvesOnlyEvent,
+} from "../../session/realtime_event_types";
 
 /** 狼人事件 -> 玩家广播行映射。 */
 export const WOLF_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
@@ -96,59 +99,44 @@ export const WOLF_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> 
   },
 };
 
-function wolvesOnlyEvent(
-  type: string,
-  data: Record<string, unknown>,
-  timestamp: number,
-): RealtimeGameEvent {
-  return {
-    type,
-    timestamp,
-    data,
-    visibility: { scope: "wolves_only" },
-  };
-}
-
-function publicEvent(
-  type: string,
-  data: Record<string, unknown>,
-  timestamp: number,
-): RealtimeGameEvent {
-  return {
-    type,
-    timestamp,
-    data,
-    visibility: { scope: "public" },
-  };
-}
-
 /** 狼人事件 -> 实时推送事件映射。 */
 export const WOLF_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> = {
   wolf_tactical_order: (event) => [
-    wolvesOnlyEvent(
-      "wolf_tactical_order",
-      {
+    makeWolvesOnlyEvent({
+      category: "agent",
+      type: "agent.wolf_tactical_order",
+      timestamp: event.timestamp,
+      stage: "started",
+      data: {
         order: Array.isArray(event.payload.order) ? event.payload.order : [],
       },
-      event.timestamp,
-    ),
+    }),
   ],
   wolf_discussion: (event) => [
-    wolvesOnlyEvent(
-      "wolf_discussion",
-      {
+    makeWolvesOnlyEvent({
+      category: "agent",
+      type: "agent.thinking",
+      timestamp: event.timestamp,
+      actorId: Number(event.payload.actorId),
+      data: {
         actorId: Number(event.payload.actorId),
         text: String(event.payload.text ?? ""),
       },
-      event.timestamp,
-    ),
+    }),
   ],
   wolf_kill_vote_cast: (event) => {
     const abstain = Boolean(event.payload.abstain);
     return [
-      wolvesOnlyEvent(
-        "wolf_kill_vote_cast",
-        {
+      makeWolvesOnlyEvent({
+        category: "player_action",
+        type: "player.action.kill",
+        timestamp: event.timestamp,
+        actorId: Number(event.payload.actorId),
+        targetIds:
+          event.payload.targetId === null || event.payload.targetId === undefined
+            ? []
+            : [Number(event.payload.targetId)],
+        data: {
           actorId: Number(event.payload.actorId),
           targetId:
             event.payload.targetId === null || event.payload.targetId === undefined
@@ -156,21 +144,24 @@ export const WOLF_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> 
               : Number(event.payload.targetId),
           abstain,
         },
-        event.timestamp,
-      ),
+      }),
     ];
   },
-  wolf_self_destruct: (event, ctx) => {
+  wolf_self_destruct: (event) => {
     const wolfId = Number(event.payload.wolfId);
     return [
-      publicEvent(
-        "player_died",
-        {
+      makePublicEvent({
+        category: "player_state",
+        type: "player.self_destructed",
+        timestamp: event.timestamp,
+        actorId: wolfId,
+        targetIds: [wolfId],
+        stage: "resolved",
+        data: {
           playerId: wolfId,
-          roleType: ctx.getPlayerRole(wolfId),
+          cause: "self_destruct",
         },
-        event.timestamp,
-      ),
+      }),
     ];
   },
 };

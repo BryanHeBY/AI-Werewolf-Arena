@@ -2,7 +2,7 @@
 import { AgentEventLineHandler } from "../../broadcast/contracts";
 import { ScriptLiveRenderHandler } from "../../script/contracts";
 import { RealtimeEventHandler } from "../../session/contracts";
-import { RealtimeGameEvent } from "../../session/realtime_event_types";
+import { makePrivateTargetsEvent } from "../../session/realtime_event_types";
 
 /** 守卫事件 -> 玩家广播行映射。 */
 export const GUARD_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
@@ -33,32 +33,22 @@ export const GUARD_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler>
   },
 };
 
-function privateTargetsEvent(
-  type: string,
-  data: Record<string, unknown>,
-  targetPlayerIds: number[],
-  timestamp: number,
-): RealtimeGameEvent {
-  return {
-    type,
-    timestamp,
-    data,
-    visibility: {
-      scope: "private_targets",
-      targetPlayerIds,
-    },
-  };
-}
-
 /** 守卫事件 -> 实时推送事件映射。 */
 export const GUARD_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> = {
   guard_applied: (event) => {
     const actorId = Number(event.payload.actorId);
     const abstain = Boolean(event.payload.abstain);
     return [
-      privateTargetsEvent(
-        "guard_applied",
-        {
+      makePrivateTargetsEvent({
+        category: "player_action",
+        type: "player.action.guard",
+        timestamp: event.timestamp,
+        actorId,
+        targetIds:
+          event.payload.targetId === null || event.payload.targetId === undefined
+            ? []
+            : [Number(event.payload.targetId)],
+        data: {
           actorId,
           targetId:
             event.payload.targetId === null || event.payload.targetId === undefined
@@ -66,9 +56,8 @@ export const GUARD_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler>
               : Number(event.payload.targetId),
           abstain,
         },
-        [actorId],
-        event.timestamp,
-      ),
+        targetPlayerIds: [actorId],
+      }),
     ];
   },
 };

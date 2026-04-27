@@ -1,7 +1,3 @@
-
-/**
- * Card 底部容器：用于按钮区或补充状态。
- */
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@/lib/utils'

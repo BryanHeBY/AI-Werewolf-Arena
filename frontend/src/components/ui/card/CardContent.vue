@@ -1,7 +1,3 @@
-
-/**
- * Card 内容容器：承载主体信息区。
- */
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@/lib/utils'

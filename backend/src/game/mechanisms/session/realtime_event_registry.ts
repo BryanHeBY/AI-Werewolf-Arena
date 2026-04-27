@@ -1,6 +1,9 @@
-/** 文件说明：领域事件到前端实时事件的转换注册表。 */
+/** 文件说明：领域事件到前端实时事件草稿的转换注册表。 */
 import { Camp, GameEvent, Phase } from "../../../core/domain/model";
-import { RealtimeGameEvent } from "./realtime_event_types";
+import {
+  RealtimeGameEventDraft,
+  makePublicEvent,
+} from "./realtime_event_types";
 import { toFrontendFaction, toFrontendPhase } from "../../../server/view_mapper";
 import { GUARD_REALTIME_EVENT_HANDLERS } from "../roles/guard/event_presenters";
 import { HUNTER_REALTIME_EVENT_HANDLERS } from "../roles/hunter/event_presenters";
@@ -15,31 +18,42 @@ import {
   RealtimeTranslateContext,
 } from "./contracts";
 
-function makePublicEvent(
+function makeStateEvent(
   type: string,
-  data: Record<string, unknown>,
   timestamp: number,
-): RealtimeGameEvent {
-  return {
+  ctx: RealtimeTranslateContext,
+  data: Record<string, unknown> = {},
+  actorId?: number | null,
+  targetIds?: number[],
+): RealtimeGameEventDraft {
+  return makePublicEvent({
+    category: "player_state",
     type,
     timestamp,
     data,
-    visibility: { scope: "public" },
-  };
+    actorId,
+    targetIds,
+    publicState: ctx.nowState,
+  });
 }
 
 function makePlayerDiedEvent(
   playerId: number,
   timestamp: number,
   ctx: RealtimeTranslateContext,
-): RealtimeGameEvent {
-  return makePublicEvent(
-    "player_died",
+  cause: string,
+): RealtimeGameEventDraft {
+  return makeStateEvent(
+    "player.died",
+    timestamp,
+    ctx,
     {
       playerId,
+      cause,
       roleType: ctx.getPlayerRole(playerId),
     },
-    timestamp,
+    playerId,
+    [playerId],
   );
 }
 
@@ -56,76 +70,99 @@ const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
     const phase = String(event.payload.phase ?? Phase.Night) as Phase;
     const day = Number(event.payload.day ?? ctx.nowState.round);
     return [
-      makePublicEvent(
-        "phase_changed",
-        {
-          phase: toFrontendPhase(phase),
-          round: day,
-          gameState: ctx.nowState,
+      makePublicEvent({
+        category: "phase",
+        type: "phase.changed",
+        timestamp: event.timestamp,
+        day,
+        phase: toFrontendPhase(phase),
+        stage: "started",
+        data: {
+          fromPhase: null,
+          toPhase: toFrontendPhase(phase),
         },
-        event.timestamp,
-      ),
+        publicState: ctx.nowState,
+      }),
     ];
   },
   day_speech: (event, ctx) => {
     const playerId = Number(event.payload.actorId);
     return [
-      makePublicEvent(
-        "speech_start",
-        {
+      makePublicEvent({
+        category: "system",
+        type: "speech.start",
+        timestamp: event.timestamp,
+        actorId: playerId,
+        targetIds: [playerId],
+        stage: "started",
+        data: {
           playerId,
           playerName: ctx.getPlayerName(playerId),
         },
-        event.timestamp,
-      ),
-      makePublicEvent(
-        "player_action",
-        {
-          playerId,
-          actionType: "speak",
+      }),
+      makePublicEvent({
+        category: "player_action",
+        type: "player.action.speak",
+        timestamp: event.timestamp,
+        actorId: playerId,
+        data: {
           content: String(event.payload.text ?? ""),
         },
-        event.timestamp,
-      ),
+      }),
     ];
   },
   night_resolved: (event, ctx) => {
     const deadPlayerIds = Array.isArray(event.payload.deaths)
       ? event.payload.deaths.map((id) => Number(id))
       : [];
-    const result: RealtimeGameEvent[] = [
-      makePublicEvent(
-        "night_result",
-        {
+    const result: RealtimeGameEventDraft[] = [
+      makePublicEvent({
+        category: "night",
+        type: "night.resolved",
+        timestamp: event.timestamp,
+        stage: "resolved",
+        targetIds: deadPlayerIds,
+        data: {
           deadPlayerIds,
+          peacefulNight: deadPlayerIds.length === 0,
         },
-        event.timestamp,
-      ),
+        publicState: ctx.nowState,
+      }),
     ];
     for (const playerId of deadPlayerIds) {
-      result.push(makePlayerDiedEvent(playerId, event.timestamp, ctx));
+      result.push(makePlayerDiedEvent(playerId, event.timestamp, ctx, "night_kill"));
     }
     return result;
   },
   voted_out: (event, ctx) => {
     const target = Number(event.payload.target);
     return [
-      makePublicEvent(
-        "vote_result",
-        {
-          votedOutId: target,
-          votedOutName: ctx.getPlayerName(target),
+      makePublicEvent({
+        category: "vote",
+        type: "vote.resolved",
+        timestamp: event.timestamp,
+        stage: "resolved",
+        targetIds: [target],
+        data: {
+          eliminatedPlayerId: target,
+          eliminatedPlayerName: ctx.getPlayerName(target),
         },
-        event.timestamp,
-      ),
-      makePlayerDiedEvent(target, event.timestamp, ctx),
+        publicState: ctx.nowState,
+      }),
+      makePlayerDiedEvent(target, event.timestamp, ctx, "vote_out"),
     ];
   },
   vote_cast: (event) => [
-    makePublicEvent(
-      "vote_cast",
-      {
-        actorId: Number(event.payload.actorId),
+    makePublicEvent({
+      category: "player_action",
+      type: "player.action.vote",
+      timestamp: event.timestamp,
+      actorId: Number(event.payload.actorId),
+      targetIds:
+        event.payload.targetId === null || event.payload.targetId === undefined
+          ? []
+          : [Number(event.payload.targetId)],
+      data: {
         targetId:
           event.payload.targetId === null || event.payload.targetId === undefined
             ? null
@@ -133,12 +170,13 @@ const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
         abstain: Boolean(event.payload.abstain),
         weight: Number(event.payload.weight ?? 0),
       },
-      event.timestamp,
-    ),
+    }),
   ],
-  sheriff_badge_transferred: (event) => [
-    makePublicEvent(
-      "sheriff_badge_transferred",
+  sheriff_badge_transferred: (event, ctx) => [
+    makeStateEvent(
+      "player.badge_transferred",
+      event.timestamp,
+      ctx,
       {
         fromId: Number(event.payload.fromId),
         toId:
@@ -146,37 +184,47 @@ const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
             ? null
             : Number(event.payload.toId),
       },
-      event.timestamp,
+      Number(event.payload.fromId),
+      event.payload.toId === null || event.payload.toId === undefined
+        ? [Number(event.payload.fromId)]
+        : [Number(event.payload.fromId), Number(event.payload.toId)],
     ),
   ],
-  sheriff_badge_destroyed: (event) => [
-    makePublicEvent(
-      "sheriff_badge_destroyed",
+  sheriff_badge_destroyed: (event, ctx) => [
+    makeStateEvent(
+      "player.badge_destroyed",
+      event.timestamp,
+      ctx,
       {
         targetId: Number(event.payload.targetId),
       },
-      event.timestamp,
+      Number(event.payload.targetId),
+      [Number(event.payload.targetId)],
     ),
   ],
   game_over: (event, ctx) => {
     const winner = toFrontendFaction((event.payload.winner as Camp | null) ?? null);
     return [
-      makePublicEvent(
-        "game_over",
-        {
+      makePublicEvent({
+        category: "result",
+        type: "game.over",
+        timestamp: event.timestamp,
+        stage: "completed",
+        data: {
           winner,
-          gameState: ctx.nowState,
+          reason: String(event.payload.reason ?? ""),
         },
-        event.timestamp,
-      ),
-      makePublicEvent(
-        "winner_declared",
-        {
+        publicState: ctx.nowState,
+      }),
+      makePublicEvent({
+        category: "result",
+        type: "winner.declared",
+        timestamp: event.timestamp,
+        data: {
           winner,
           message: winner === "wolf" ? "🐺 狼人阵营获胜" : "👥 好人阵营获胜",
         },
-        event.timestamp,
-      ),
+      }),
     ];
   },
 };
@@ -189,7 +237,7 @@ export class RealtimeEventRegistry {
     this.handlers = { ...handlers };
   }
 
-  translate(event: GameEvent, ctx: RealtimeTranslateContext): RealtimeGameEvent[] {
+  translate(event: GameEvent, ctx: RealtimeTranslateContext): RealtimeGameEventDraft[] {
     const handler = this.handlers[event.type];
     if (!handler) {
       return [];

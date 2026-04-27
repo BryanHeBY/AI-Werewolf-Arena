@@ -1,7 +1,3 @@
-
-/**
- * Card 描述文本：用于次级说明文案。
- */
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@/lib/utils'

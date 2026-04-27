@@ -1,4 +1,4 @@
-import { Broadcaster } from "../../src/infra/transport/broadcaster";
+import { Broadcaster } from "../../src/server/transport/broadcaster";
 import { V3SessionManager } from "../../src/server/v3_session_manager";
 
 function wait(ms: number): Promise<void> {
@@ -28,9 +28,16 @@ describe("V3SessionManager", () => {
       .filter((call: any[]) => call[0] === "gameEvent")
       .map((call: any[]) => call[1]);
 
-    expect(calls.some((event: any) => event.type === "game_started")).toBe(true);
-    expect(calls.some((event: any) => event.type === "phase_changed")).toBe(true);
-    expect(calls.some((event: any) => event.type === "game_over")).toBe(true);
+    expect(calls.some((event: any) => event.type === "session.game_started")).toBe(true);
+    expect(calls.some((event: any) => event.type === "phase.changed")).toBe(true);
+    expect(calls.some((event: any) => event.type === "game.over")).toBe(true);
+
+    const firstEvent = calls[0];
+    expect(firstEvent.id).toBeDefined();
+    expect(firstEvent.seq).toBe(1);
+    expect(firstEvent.sessionId).toBe(started.id);
+    expect(firstEvent.schemaVersion).toBe(1);
+    expect(firstEvent.publicState).toBeDefined();
 
     sessions.stop();
   });
