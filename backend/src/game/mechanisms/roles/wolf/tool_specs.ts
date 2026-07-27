@@ -87,6 +87,6 @@ export const WOLF_STAGE_DIRECTIVES: StageDirectiveRule[] = [
   },
   {
     match: (allowedTools) => allowedTools.length === 1 && allowedTools[0] === "self_destruct",
-    text: "自爆需谨慎！！！当前是【狼人自爆窗口】：仅在局势极端不利时使用 self_destruct；必须携带 confirm=true 才会生效。",
+    text: "自爆需谨慎！！！当前是【狼人自爆窗口】：self_destruct 是唯一会改变局面的动作，仅在局势极端不利时使用，且必须携带 confirm=true 才会生效。",
   },
 ];

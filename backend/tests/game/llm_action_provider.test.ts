@@ -5,7 +5,7 @@ import { ActionProvider, ActionRequest, Phase, ToolCall } from "../../src/domain
 import { sixPlayerMvpConfig } from "../../src/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
 import { LlmActionProvider } from "../../src/agents/llm/llm_action_provider";
-import { getSeerState } from "../../src/mechanisms/roles/private_state";
+import { getSeerState, getWitchState } from "../../src/mechanisms/roles/private_state";
 import { SessionRecordHub, SessionRecordManager } from "../../src/session_recording";
 import os from "os";
 import path from "path";
@@ -146,6 +146,51 @@ class FinishThenSpeakThenFinishClient {
     return {
       finalAction: (done.finalAction ?? null) as T | null,
       assistantText: "finish_then_speak_then_finish",
+    };
+  }
+}
+
+class InvalidPotionThenNoneToolLoopClient {
+  public lastMessages: Array<{ role: string; content: string }> = [];
+  public invalidPotionResult: Record<string, unknown> | string | undefined;
+
+  async chat(): Promise<string> {
+    return "";
+  }
+
+  async runToolLoop<T>(
+    messages: Array<{ role: string; content: string }>,
+    _tools: Array<{ name: string }>,
+    callbacks: {
+      onToolCall: (invocation: {
+        id: string;
+        name: string;
+        args: Record<string, unknown>;
+        rawArgs: string;
+      }) => Promise<{
+        toolResult: Record<string, unknown> | string;
+        finalAction?: T;
+        stop?: boolean;
+      }>;
+    },
+  ): Promise<{ finalAction: T | null; assistantText: string }> {
+    this.lastMessages = messages;
+    const invalid = await callbacks.onToolCall({
+      id: "tool_heal_1",
+      name: "use_potion",
+      args: { target_id: 2, potion_type: "heal" },
+      rawArgs: '{"target_id":2,"potion_type":"heal"}',
+    });
+    this.invalidPotionResult = invalid.toolResult;
+    const valid = await callbacks.onToolCall({
+      id: "tool_none_1",
+      name: "use_potion",
+      args: { target_id: 2, potion_type: "none" },
+      rawArgs: '{"target_id":2,"potion_type":"none"}',
+    });
+    return {
+      finalAction: (valid.finalAction ?? null) as T | null,
+      assistantText: "invalid_potion_then_none",
     };
   }
 }
@@ -1028,6 +1073,13 @@ describe("LlmActionProvider", () => {
     const finishTurnTool = client.lastTools.find((tool) => tool.name === "finish_turn");
     expect(finishTurnTool?.description).toContain("申请结束当前回合");
     expect(finishTurnTool?.parameters?.description).toContain("空参数对象");
+
+    const reportBugTool = client.lastTools.find((tool) => tool.name === "report_bug");
+    expect(reportBugTool?.description).toContain("明确规则、状态、流程、日志或可见信息矛盾");
+    expect(reportBugTool?.description).toContain("正常的策略分歧、身份声称、诈身份或信息不足");
+    expect(reportBugTool?.parameters?.properties?.message?.description).toContain(
+      "观察到什么、按什么规则或状态本应如何、两者为何矛盾",
+    );
   });
 
   test("system prompt should explicitly distinguish wolf discussion and wolf vote stages", async () => {
@@ -1111,7 +1163,7 @@ describe("LlmActionProvider", () => {
     });
   });
 
-  test("mustAct should retry when sdk tool loop throws runtime error", async () => {
+  test("mustAct should fall back immediately when sdk tool loop throws runtime error", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
@@ -1133,7 +1185,7 @@ describe("LlmActionProvider", () => {
 
     expect(action).toEqual({
       name: "speak",
-      args: { text: "retry_success" },
+      args: { text: "fallback_should_not_be_used" },
     });
   });
 
@@ -1172,6 +1224,34 @@ describe("LlmActionProvider", () => {
     });
   });
 
+  test("witch prompt should expose remaining potions and reject unavailable heal in tool loop", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const witchId = context.world
+      .entityIds()
+      .find((id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "witch")!;
+    const witch = context.world.getComponent<RoleComponent>(witchId, COMPONENT.Role)!;
+    getWitchState(witch)!.heal = 0;
+    const client = new InvalidPotionThenNoneToolLoopClient();
+    const provider = new LlmActionProvider(context.world, client as any, {
+      fallbackProvider: new FallbackProvider(null),
+    });
+
+    const action = await provider.getAction({
+      phase: Phase.Night,
+      actorId: witchId,
+      allowedTools: ["use_potion"],
+      context: { must_act: true, phase: "witch", wolf_target: 2 },
+    });
+
+    expect(action).toEqual({
+      name: "use_potion",
+      args: { target_id: 2, potion_type: "none" },
+    });
+    expect(client.invalidPotionResult).toEqual({ ok: false, error: "非法操作，解药不可用" });
+    const user = client.lastMessages.find((message) => message.role === "user")?.content ?? "";
+    expect(user).toContain("你的私有状态：你的底牌是【女巫】。解药:0 毒药:1");
+  });
+
   test("on_pre_vote self_destruct window should include strict tool boundary hint", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const wolfId = context.world
@@ -1186,8 +1266,8 @@ describe("LlmActionProvider", () => {
         '{"name":"self_destruct","args":{"reason":"test","confirm":true}}',
         (messages) => {
           const user = messages.find((msg) => msg.role === "user")?.content ?? "";
-          expect(user).toContain("仅可使用 self_destruct（或 report_bug）");
-          expect(user).toContain("禁止发言、投票和其他工具");
+          expect(user).toContain("唯一会改变局面的动作是 self_destruct");
+          expect(user).not.toContain("finish_turn");
         },
       ),
       {
@@ -1206,6 +1286,29 @@ describe("LlmActionProvider", () => {
       name: "self_destruct",
       args: { reason: "test", confirm: true },
     });
+  });
+
+  test("sdk self-destruct window should expose finish_turn as the no-action path", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const wolfId = context.world
+      .entityIds()
+      .find((id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf")!;
+    const client = new ToolLoopClient("finish_turn", {});
+    const provider = new LlmActionProvider(context.world, client as any, {
+      fallbackProvider: new FallbackProvider(null),
+    });
+
+    const action = await provider.getAction({
+      phase: Phase.Voting,
+      actorId: wolfId,
+      allowedTools: ["self_destruct"],
+      context: { must_act: false, phase: "on_pre_vote" },
+    });
+
+    expect(action).toBeNull();
+    const user = client.lastMessages.find((message) => message.role === "user")?.content ?? "";
+    expect(user).toContain("若选择不自爆，请调用 finish_turn");
+    expect(user).toContain("你当前可以使用的工具有：self_destruct, report_bug, finish_turn");
   });
 
   test("initial system prompt should include rendered board config summary", async () => {
@@ -1234,16 +1337,7 @@ describe("LlmActionProvider", () => {
 
   test("system prompt should require tools for every effective game action", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
-    const client = new AssertClient(
-      '{"name":"speak","args":{"text":"通过工具发言"}}',
-      (messages) => {
-        const system = messages.find((message) => message.role === "system")?.content ?? "";
-        expect(system).toContain("所有能起效的行动都必须通过函数工具调用提交");
-        expect(system).toContain("普通 assistant 文本只会被当作本地思考");
-        expect(system).toContain("发言请把内容写入 speak.text 或 speak_to_wolves.text");
-        expect(system).toContain("必须调用 finish_turn");
-      },
-    );
+    const client = new ToolLoopClient("speak", { text: "通过工具发言" });
     const provider = new LlmActionProvider(context.world, client as any);
 
     await provider.getAction({
@@ -1252,5 +1346,15 @@ describe("LlmActionProvider", () => {
       allowedTools: ["speak"],
       context: { must_act: true, broadcast_feed: [] },
     });
+
+    const system = client.lastMessages.find((message) => message.role === "system")?.content ?? "";
+    expect(system).toContain("所有能起效的行动都必须通过函数工具调用提交");
+    expect(system).toContain("普通 assistant 文本只会被当作本地思考");
+    expect(system).toContain("发言请把内容写入 speak.text 或 speak_to_wolves.text");
+    expect(system).toContain("必须调用 finish_turn");
+    expect(system).toContain("可以先调用 report_bug 上报，再继续本轮正常行动");
+    const user = client.lastMessages.find((message) => message.role === "user")?.content ?? "";
+    expect(user).toContain("finish_turn");
+    expect(user).toContain("正常策略分歧、身份声称、诈身份或信息不足不是 bug");
   });
 });

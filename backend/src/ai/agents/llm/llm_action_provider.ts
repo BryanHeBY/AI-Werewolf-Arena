@@ -24,8 +24,10 @@ import {
   TargetHintRegistry,
   ToolCallRepairRegistry,
   ToolSpecRegistry,
+  ToolValidationRuleRegistry,
   PhaseStageLocalizationRegistry,
   getDefaultPhaseStageLocalizationRegistry,
+  getDefaultToolValidationRuleRegistry,
 } from "../../../game/mechanisms";
 import { getIdiotState } from "../../../game/mechanisms/roles/private_state";
 import { safeRecordLogicOp, SessionRecordHub } from "../../../observability";
@@ -176,6 +178,7 @@ export class LlmActionProvider implements ActionProvider {
   private readonly toolSpecRegistry: ToolSpecRegistry;
   private readonly rolePromptRegistry: RolePromptRegistry;
   private readonly toolCallRepairRegistry: ToolCallRepairRegistry;
+  private readonly toolValidationRuleRegistry: ToolValidationRuleRegistry;
   private readonly targetHintRegistry: TargetHintRegistry;
   private readonly phaseStageLocalizationRegistry: PhaseStageLocalizationRegistry;
   private readonly boardConfig?: BoardConfig;
@@ -216,6 +219,7 @@ export class LlmActionProvider implements ActionProvider {
       options.rolePromptRegistry ?? getDefaultRolePromptRegistry();
     this.toolCallRepairRegistry =
       options.toolCallRepairRegistry ?? getDefaultToolCallRepairRegistry();
+    this.toolValidationRuleRegistry = getDefaultToolValidationRuleRegistry();
     this.targetHintRegistry =
       options.targetHintRegistry ?? getDefaultTargetHintRegistry();
     this.phaseStageLocalizationRegistry =
@@ -254,7 +258,7 @@ export class LlmActionProvider implements ActionProvider {
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
     const roleComp = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const client = this.clientResolver?.(request, roleComp) ?? this.client;
-    const built = this.buildMessages(request);
+    const built = this.buildMessages(request, Boolean(client.runToolLoop));
     const messages = built.messages;
     this.appendTrace(
       `context_window player=${request.actorId} phase=${request.phase} start=${built.contextWindowStart} end=${built.contextWindowEnd} total=${built.contextWindowTotal}`,
@@ -285,7 +289,7 @@ export class LlmActionProvider implements ActionProvider {
             args: ((action as any).args ?? {}) as Record<string, unknown>,
           }
         : undefined;
-    const effectiveTimeoutMs = this.computeEffectiveTimeout(request.deadlineAtMs);
+    let effectiveTimeoutMs = this.computeEffectiveTimeout(request.deadlineAtMs);
 
     if (effectiveTimeoutMs <= 0) {
       this.appendTrace(
@@ -319,6 +323,22 @@ export class LlmActionProvider implements ActionProvider {
       requestMaxConcurrent,
     );
     try {
+      // 排队期间全局预算仍会流逝；进入实际请求前必须重新计算，避免用过期预算启动调用。
+      effectiveTimeoutMs = this.computeEffectiveTimeout(request.deadlineAtMs);
+      if (effectiveTimeoutMs <= 0) {
+        const fallback = await this.runFallback(request, "deadline_skip");
+        this.recordPlayerRound(request, built, {
+          actionMode: fallback ? "tool_call" : "none",
+          toolCalls: toToolCalls(fallback),
+          finalAction: fallback,
+          fallback: {
+            used: true,
+            reason: "deadline_skip",
+            action: toFallbackAction(fallback),
+          },
+        });
+        return fallback;
+      }
       try {
       this.appendTrace(
         `request_start player=${request.actorId} phase=${request.phase} tools=${request.allowedTools.join(",")} timeout_ms=${effectiveTimeoutMs}`,
@@ -331,15 +351,25 @@ export class LlmActionProvider implements ActionProvider {
         ): Promise<{
           picked: ToolCall | null;
           failed: boolean;
+          deadlineExceeded?: boolean;
           errorText?: string;
           assistantText?: string;
         }> => {
+          const attemptTimeoutMs = this.computeEffectiveTimeout(request.deadlineAtMs);
+          if (attemptTimeoutMs <= 0) {
+            return {
+              picked: null,
+              failed: false,
+              deadlineExceeded: true,
+              errorText: "request_deadline_elapsed",
+            };
+          }
           try {
             const picked = await this.runSdkToolLoop(
               client,
               request,
               attemptMessages,
-              effectiveTimeoutMs,
+              attemptTimeoutMs,
             );
             return {
               picked,
@@ -356,6 +386,20 @@ export class LlmActionProvider implements ActionProvider {
         };
 
         const firstAttempt = await runSdkAttempt(0, messages);
+        if (firstAttempt.deadlineExceeded) {
+          const fallback = await this.runFallback(request, "deadline_skip");
+          this.recordPlayerRound(request, built, {
+            actionMode: fallback ? "tool_call" : "none",
+            toolCalls: toToolCalls(fallback),
+            finalAction: fallback,
+            fallback: {
+              used: true,
+              reason: "deadline_skip",
+              action: toFallbackAction(fallback),
+            },
+          });
+          return fallback;
+        }
         if (firstAttempt.failed) {
           retryTrace.push({
             attempt: 0,
@@ -363,6 +407,22 @@ export class LlmActionProvider implements ActionProvider {
             reason: firstAttempt.errorText,
             assistantText: firstAttempt.assistantText,
           });
+          // 传输/超时错误与“模型未调用工具”不同；后者可用提示词纠正，前者
+          // 重复等待只会线性放大一名玩家的阻塞时间。
+          const fallback = await this.runFallback(request, "runtime_error");
+          this.recordPlayerRound(request, built, {
+            actionMode: fallback ? "tool_call" : "none",
+            toolCalls: toToolCalls(fallback),
+            finalAction: fallback,
+            thinkingText: this.actorLastAssistantText.get(request.actorId),
+            retryTrace: [...retryTrace],
+            fallback: {
+              used: true,
+              reason: "runtime_error",
+              action: toFallbackAction(fallback),
+            },
+          });
+          return fallback;
         }
         const picked = firstAttempt.picked;
         if (picked) {
@@ -378,7 +438,7 @@ export class LlmActionProvider implements ActionProvider {
           return picked;
         }
         if (this.requiresAction(request)) {
-          let hasRuntimeError = firstAttempt.failed;
+          let deadlineExceeded = false;
           let retryMessages = [...messages];
           const maxRetries = 3;
           if (!firstAttempt.failed) {
@@ -420,11 +480,29 @@ export class LlmActionProvider implements ActionProvider {
             this.dumpLlmPrompt(retryMessages, request);
             const retryResult = await runSdkAttempt(attempt, retryMessages);
             const retried = retryResult.picked;
-            hasRuntimeError = hasRuntimeError || retryResult.failed;
+            if (retryResult.deadlineExceeded) {
+              deadlineExceeded = true;
+              retryTraceEntry.reason = retryResult.errorText;
+              break;
+            }
             retryTraceEntry.assistantText = retryResult.assistantText;
             if (retryResult.failed) {
               retryTraceEntry.status = "request_error";
               retryTraceEntry.reason = retryResult.errorText;
+              const fallback = await this.runFallback(request, "runtime_error");
+              this.recordPlayerRound(request, built, {
+                actionMode: fallback ? "tool_call" : "none",
+                toolCalls: toToolCalls(fallback),
+                finalAction: fallback,
+                thinkingText: this.actorLastAssistantText.get(request.actorId),
+                retryTrace: [...retryTrace],
+                fallback: {
+                  used: true,
+                  reason: "runtime_error",
+                  action: toFallbackAction(fallback),
+                },
+              });
+              return fallback;
             }
             if (retried) {
               this.appendTrace(
@@ -440,8 +518,8 @@ export class LlmActionProvider implements ActionProvider {
               return retried;
             }
           }
-          if (hasRuntimeError) {
-            const fallback = await this.runFallback(request, "runtime_error");
+          if (deadlineExceeded) {
+            const fallback = await this.runFallback(request, "deadline_skip");
             this.recordPlayerRound(request, built, {
               actionMode: fallback ? "tool_call" : "none",
               toolCalls: toToolCalls(fallback),
@@ -450,7 +528,7 @@ export class LlmActionProvider implements ActionProvider {
               ...(retryTrace.length > 0 ? { retryTrace: [...retryTrace] } : {}),
               fallback: {
                 used: true,
-                reason: "runtime_error",
+                reason: "deadline_skip",
                 action: toFallbackAction(fallback),
               },
             });
@@ -889,6 +967,31 @@ export class LlmActionProvider implements ActionProvider {
             }
             const parsed = validatedInvocation.action;
 
+            // `use_potion` 的资源余量会直接影响动作是否合法。提前在 tool loop
+            // 中校验，可将“解药已用”等结果反馈给模型，避免把会被夜间流水线拒绝的
+            // 动作记录为本回合最终行动。
+            if (parsed.name === "use_potion") {
+              const role = this.world.getComponent<RoleComponent>(
+                request.actorId,
+                COMPONENT.Role,
+              );
+              const stateError = role
+                ? this.toolValidationRuleRegistry.validate({
+                    world: this.world,
+                    actorId: request.actorId,
+                    role,
+                    toolCall: parsed,
+                    phase: request.phase,
+                    actionWindow: request.actionWindow,
+                  })
+                : "非法操作，玩家角色不存在";
+              if (stateError) {
+                return {
+                  toolResult: { ok: false, error: stateError },
+                };
+              }
+            }
+
             if (validActions.length >= turnConstraints.maxValidActions) {
               return {
                 toolResult: {
@@ -1090,7 +1193,10 @@ export class LlmActionProvider implements ActionProvider {
   /**
    * 组装本轮发送给模型的完整消息序列。
    */
-  private buildMessages(request: ActionRequest): BuildMessagesResult {
+  private buildMessages(
+    request: ActionRequest,
+    supportsFinishTurn: boolean = Boolean(this.client.runToolLoop),
+  ): BuildMessagesResult {
     const feedDelta = this.ingestBroadcastFeed(request);
     const roleComp = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const maxPlayerId = this.world.entityIds().length;
@@ -1130,6 +1236,9 @@ export class LlmActionProvider implements ActionProvider {
         ? this.configRenderRegistry.renderBoardConfigPrompt(this.boardConfig)
         : undefined;
     const llmAllowedTools = this.buildLlmAllowedTools(request.allowedTools);
+    const promptAllowedTools = supportsFinishTurn
+      ? [...llmAllowedTools, "finish_turn"]
+      : llmAllowedTools;
     const effectiveActionTools = llmAllowedTools.filter(
       (tool) => tool !== LlmActionProvider.REPORT_BUG_TOOL,
     );
@@ -1144,6 +1253,10 @@ export class LlmActionProvider implements ActionProvider {
         boardInfoPrompt,
         configPrompt,
         personalityPrompt: this.personalityPromptResolver?.(request, roleComp),
+        supportsFinishTurn,
+        supportsDebugReporting: llmAllowedTools.includes(
+          LlmActionProvider.REPORT_BUG_TOOL,
+        ),
       });
     if (!cachedSystemPrompt) {
       this.actorSystemPrompt.set(request.actorId, systemPrompt);
@@ -1156,15 +1269,20 @@ export class LlmActionProvider implements ActionProvider {
       isSpeechTurn:
         llmAllowedTools.includes("speak") ||
         llmAllowedTools.includes("speak_to_wolves"),
-      stageDirective: this.stageDirective(request),
+      stageDirective: this.stageDirective(request, supportsFinishTurn),
       statusDirective: this.statusDirective(request.actorId, roleComp),
       requiresAction,
       turnConstraintHint: renderTurnConstraintUserHint(turnConstraints),
-      allowedTools: llmAllowedTools,
+      allowedTools: promptAllowedTools,
       effectiveActionTools,
-      toolArgHints: this.toolArgHints(llmAllowedTools),
+      toolArgHints: [
+        this.toolArgHints(llmAllowedTools),
+        ...(supportsFinishTurn ? ["finish_turn args: {}"] : []),
+      ]
+        .filter(Boolean)
+        .join("; "),
       toolUsageHints: this.toolUsageHints(llmAllowedTools),
-      stageContextHint: this.stageContextHint(request),
+      stageContextHint: this.stageContextHint(request, supportsFinishTurn),
       actionableIdsHint: this.targetHintRegistry.buildActionableIdsHint({
         actorId: request.actorId,
         actorRole: roleComp?.role,
@@ -1310,7 +1428,10 @@ export class LlmActionProvider implements ActionProvider {
   /**
    * 构建阶段上下文提示（如女巫可见刀口），减少关键行动前的信息缺失。
    */
-  private stageContextHint(request: ActionRequest): string | undefined {
+  private stageContextHint(
+    request: ActionRequest,
+    supportsFinishTurn: boolean = Boolean(this.client.runToolLoop),
+  ): string | undefined {
     const stage = String(
       request.context.phase ?? request.actionWindow ?? request.context.window ?? "",
     );
@@ -1322,7 +1443,9 @@ export class LlmActionProvider implements ActionProvider {
             tool === "self_destruct" || tool === LlmActionProvider.REPORT_BUG_TOOL,
         );
       if (onlySelfDestructWindow) {
-        return "当前为放逐前自爆窗口：仅可使用 self_destruct（或 report_bug），禁止发言、投票和其他工具。";
+        return supportsFinishTurn
+          ? "当前为放逐前自爆窗口：唯一会改变局面的动作是 self_destruct；禁止发言、投票和其他行动。若选择不自爆，请调用 finish_turn 结束本回合；report_bug 仅用于上报问题。"
+          : "当前为放逐前自爆窗口：唯一会改变局面的动作是 self_destruct；禁止发言、投票和其他行动。report_bug 仅用于上报问题。";
       }
       return undefined;
     }
@@ -1339,11 +1462,16 @@ export class LlmActionProvider implements ActionProvider {
   /**
    * 针对关键子阶段给出强约束指令，减少“狼聊阶段误当投票阶段”等误解。
    */
-  private stageDirective(request: ActionRequest): string {
-    return (
+  private stageDirective(
+    request: ActionRequest,
+    supportsFinishTurn: boolean = Boolean(this.client.runToolLoop),
+  ): string {
+    const directive =
       this.toolSpecRegistry.getStageDirective(request.allowedTools) ??
-      "请严格区分当前阶段职责，只执行本轮工具对应动作。"
-    );
+      "请严格区分当前阶段职责，只执行本轮工具对应动作。";
+    return supportsFinishTurn
+      ? directive
+      : directive.replace("；若选择不自爆，请调用 finish_turn 结束回合。", "");
   }
 
   /**
@@ -1558,14 +1686,18 @@ export class LlmActionProvider implements ActionProvider {
     actorId: EntityId,
     roleComp: RoleComponent | undefined,
   ): string | undefined {
-    if (!roleComp || roleComp.role !== Role.Idiot) {
-      return undefined;
+    const lines: string[] = [];
+    const privateState = roleComp?.renderPrompt?.().trim();
+    if (privateState) {
+      lines.push(`你的私有状态：${privateState}`);
     }
-    const idiotState = getIdiotState(roleComp);
-    if (!idiotState?.revealed) {
-      return undefined;
+    if (roleComp?.role === Role.Idiot) {
+      const idiotState = getIdiotState(roleComp);
+      if (idiotState?.revealed) {
+        lines.push("状态提醒：你已在先前放逐中翻牌为白痴并存活，当前仍在场上发言；你已失去投票权。");
+      }
     }
-    return `状态提醒：你已在先前放逐中翻牌为白痴并存活，当前仍在场上发言；你已失去投票权。`;
+    return lines.length > 0 ? lines.join(" ") : undefined;
   }
 
   /**
