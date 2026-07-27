@@ -19,6 +19,21 @@ interface SummaryObservation {
   evidence?: number[];
 }
 
+/** request_id 使用机器 phase 名，玩家时间线展示本地化 phase 名。 */
+const REQUEST_PHASE_DISPLAY_NAME: Record<string, string> = {
+  night: "夜晚",
+  day: "白天",
+  voting: "投票",
+  game_over: "终局",
+};
+
+function requestPhaseMatchesTimelinePhase(requestPhase: string, timelinePhase: string): boolean {
+  return (
+    requestPhase === timelinePhase ||
+    REQUEST_PHASE_DISPLAY_NAME[requestPhase] === timelinePhase
+  );
+}
+
 function countBySeverity(reports: ReplayDebugReport[]): Record<string, number> {
   const out: Record<string, number> = {
     critical: 0,
@@ -60,7 +75,7 @@ function collectObservations(input: BuildDebugSummaryInput): SummaryObservation[
       if (match) {
         const reqDay = Number(match[1]);
         const reqPhase = match[2];
-        if (reqDay !== entry.day || reqPhase !== entry.phase) {
+        if (reqDay !== entry.day || !requestPhaseMatchesTimelinePhase(reqPhase, entry.phase)) {
           mismatchSeqs.push(entry.seq);
         }
       }
@@ -698,7 +713,7 @@ function scanPlayerTimelineMetadataIssues(
       }
       const reqDay = Number(match[1]);
       const reqPhase = match[2];
-      if (reqDay !== entry.day || reqPhase !== entry.phase) {
+      if (reqDay !== entry.day || !requestPhaseMatchesTimelinePhase(reqPhase, entry.phase)) {
         inconsistentReqSeqs.push(entry.seq);
       }
     }
