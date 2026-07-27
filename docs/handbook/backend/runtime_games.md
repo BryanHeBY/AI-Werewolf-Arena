@@ -9,8 +9,15 @@
 
 示例：
 
-1. `configs/games/six_qwen.json`
-2. `configs/games/twelve_minimax.json`
+1. `configs.example/games/six_player_mvp.json`
+2. `configs.example/games/twelve_player_standard.json`
+
+默认模板使用 OpenRouter 的 OpenAI 兼容端点与 `qwen/qwen3.5-flash-02-23`。通过环境变量提供 Key：
+
+```bash
+export OPENROUTER_API_KEY=...
+bun run --cwd backend run:v3:six
+```
 
 ## 设计原则
 

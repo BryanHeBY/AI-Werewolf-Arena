@@ -1,38 +1,15 @@
 {
-  "default": "gpt4o_balanced",
+  "default": "qwen35_flash",
   "items": {
-    "gpt4o_balanced": {
-      "provider": "openai_official",
-      "model": "gpt-4o-mini",
+    "qwen35_flash": {
+      "provider": "openrouter",
+      "model": "qwen/qwen3.5-flash-02-23",
       "temperature": 0.2,
-      "maxTokens": 1024,
+      "maxTokens": 512,
       "forceJsonResponse": true,
-      "reasoningEnabled": true,
-      "reasoningEffort": "medium",
+      "reasoningEnabled": false,
       "thinkingEnabled": false,
-      "personalityPrompt": ""
-    },
-    "gpt4o_aggressive": {
-      "provider": "openai_official",
-      "model": "gpt-4o-mini",
-      "temperature": 0.4,
-      "maxTokens": 1024,
-      "forceJsonResponse": true,
-      "reasoningEnabled": true,
-      "reasoningEffort": "medium",
-      "thinkingEnabled": false,
-      "personalityPrompt": "发言更主动，偏强势推进。"
-    },
-    "relay_flash": {
-      "provider": "openai_relay",
-      "model": "gemini-3-flash-preview",
-      "temperature": 0.7,
-      "maxTokens": 65536,
-      "forceJsonResponse": true,
-      "reasoningEnabled": true,
-      "reasoningEffort": "medium",
-      "thinkingEnabled": true,
-      "personalityPrompt": ""
+      "personalityPrompt": "以规则约束为最高优先级，简洁地完成本回合工具调用。"
     }
   }
 }

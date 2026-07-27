@@ -105,6 +105,25 @@ export interface ResolvedAgentRuntimeProfile extends AgentProfileConfig {
 let cachedConfig: RuntimeConfig | null = null;
 let overrideConfig: RuntimeConfig | null = null;
 
+function resolveEnvironmentValue(value: string, field: string): string {
+  const match = /^\$\{([A-Z][A-Z0-9_]*)\}$/.exec(value.trim());
+  if (!match) {
+    return value;
+  }
+  const resolved = process.env[match[1]]?.trim();
+  if (!resolved) {
+    throw new Error(`runtime_config_missing_environment_value: ${field} -> ${match[1]}`);
+  }
+  return resolved;
+}
+
+function normalizeProviderConfig(name: string, value: ProviderConfig): ProviderConfig {
+  return {
+    ...value,
+    apiKey: resolveEnvironmentValue(value.apiKey, `providers.items.${name}.apiKey`),
+  };
+}
+
 function resolveRepoRoot(): string {
   const cwd = process.cwd();
   if (cwd.endsWith("/backend")) {
@@ -147,15 +166,21 @@ function normalizeProviders(raw: any): ProvidersConfig {
   }
   // 兼容旧版 provider.json（单 provider）。
   if (typeof raw.type === "string" && typeof raw.apiKey === "string") {
+    const provider = normalizeProviderConfig("default", raw as ProviderConfig);
     return {
       default: "default",
-      items: { default: raw as ProviderConfig },
+      items: { default: provider },
     };
   }
 
   // 新版：{ default, items }。
   if (raw.items && typeof raw.items === "object") {
-    const items = raw.items as Record<string, ProviderConfig>;
+    const items = Object.fromEntries(
+      Object.entries(raw.items as Record<string, ProviderConfig>).map(([name, provider]) => [
+        name,
+        normalizeProviderConfig(name, provider),
+      ]),
+    ) as Record<string, ProviderConfig>;
     const names = Object.keys(items);
     if (names.length === 0) {
       throw new Error("runtime_config_empty_providers_items");
@@ -172,7 +197,9 @@ function normalizeProviders(raw: any): ProvidersConfig {
     ([key, value]) => key !== "default" && value && typeof value === "object",
   ) as Array<[string, ProviderConfig]>;
   if (entries.length > 0) {
-    const items = Object.fromEntries(entries);
+    const items = Object.fromEntries(
+      entries.map(([name, provider]) => [name, normalizeProviderConfig(name, provider)]),
+    ) as Record<string, ProviderConfig>;
     const defaultName =
       typeof raw.default === "string" && raw.default ? raw.default : entries[0][0];
     if (!items[defaultName]) {

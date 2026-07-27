@@ -27,18 +27,12 @@
 
 ```json
 {
-  "default": "openai_official",
+  "default": "openrouter",
   "items": {
-    "openai_official": {
+    "openrouter": {
       "type": "openai",
-      "apiKey": "YOUR_OPENAI_KEY",
-      "baseURL": "https://api.openai.com/v1",
-      "userAgent": "AWA-Werewolf/1.0"
-    },
-    "openai_relay": {
-      "type": "openai",
-      "apiKey": "YOUR_RELAY_KEY",
-      "baseURL": "https://your-relay.example.com/v1",
+      "apiKey": "${OPENROUTER_API_KEY}",
+      "baseURL": "https://openrouter.ai/api/v1",
       "userAgent": "AWA-Werewolf/1.0"
     }
   }
@@ -49,29 +43,17 @@
 
 ```json
 {
-  "default": "gpt4o_balanced",
+  "default": "qwen35_flash",
   "items": {
-    "gpt4o_balanced": {
-      "provider": "openai_official",
-      "model": "gpt-4o-mini",
+    "qwen35_flash": {
+      "provider": "openrouter",
+      "model": "qwen/qwen3.5-flash-02-23",
       "temperature": 0.2,
-      "maxTokens": 1024,
+      "maxTokens": 512,
       "forceJsonResponse": true,
-      "reasoningEnabled": true,
-      "reasoningEffort": "medium",
+      "reasoningEnabled": false,
       "thinkingEnabled": false,
-      "personalityPrompt": ""
-    },
-    "relay_flash": {
-      "provider": "openai_relay",
-      "model": "gemini-3-flash-preview",
-      "temperature": 0.7,
-      "maxTokens": 65536,
-      "forceJsonResponse": true,
-      "reasoningEnabled": true,
-      "reasoningEffort": "medium",
-      "thinkingEnabled": true,
-      "personalityPrompt": ""
+      "personalityPrompt": "以规则约束为最高优先级，简洁地完成本回合工具调用。"
     }
   }
 }
@@ -82,16 +64,9 @@
 ```json
 {
   "board": "six_player_mvp",
-  "agent": "gpt4o_balanced",
-  "roleAgents": {
-    "wolf": "relay_flash"
-  },
-  "playerAgents": {
-    "2": "relay_flash"
-  },
-  "debugSummaryAgent": "relay_flash",
-  "maxDays": 10,
-  "maxRuntimeMs": 1800000,
+  "agent": "qwen35_flash",
+  "maxDays": 2,
+  "maxRuntimeMs": 240000,
   "llmTimeoutMs": 30000,
   "trace": false,
   "printAllEvents": false,
@@ -100,8 +75,7 @@
   "color": true,
   "printLlmIo": false,
   "printThinking": false,
-  "printPrivateEvents": true,
-  "recordRootDir": "./backend/data/records"
+  "printPrivateEvents": true
 }
 ```
 
@@ -118,8 +92,8 @@
   "llmTimeoutMs": 30000,
   "llmMaxAttempts": 3,
   "agent": {
-    "enabled": true,
-    "agentName": "relay_flash",
+    "enabled": false,
+    "agentName": "qwen35_flash",
     "profile": {
       "temperature": 0.1,
       "maxTokens": 1200
@@ -150,5 +124,6 @@
 ## 5. 字段约束
 
 - provider `type` 当前仅支持 `openai`
+- `apiKey` 支持完整环境变量占位符（例如 `${OPENROUTER_API_KEY}`）；缺少该环境变量时加载会失败
 - `agents.items.<name>.provider` 必须存在于 `providers.items`
 - `games.*.agent / roleAgents / playerAgents / debugSummaryAgent` 必须引用已定义 agent 名称

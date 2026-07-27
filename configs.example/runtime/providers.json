@@ -1,19 +1,12 @@
 {
-  "default": "openai_official",
+  "default": "openrouter",
   "items": {
-    "openai_official": {
+    "openrouter": {
       "type": "openai",
-      "apiKey": "YOUR_OPENAI_KEY",
-      "baseURL": "https://api.openai.com/v1",
+      "apiKey": "${OPENROUTER_API_KEY}",
+      "baseURL": "https://openrouter.ai/api/v1",
       "userAgent": "AWA-Werewolf/1.0",
-      "maxConcurrentRequests": 3
-    },
-    "openai_relay": {
-      "type": "openai",
-      "apiKey": "YOUR_RELAY_KEY",
-      "baseURL": "https://your-relay.example.com/v1",
-      "userAgent": "AWA-Werewolf/1.0",
-      "maxConcurrentRequests": 3
+      "maxConcurrentRequests": 8
     }
   }
 }

@@ -1,8 +1,8 @@
 {
   "board": "six_player_mvp",
-  "agent": "gpt4o_balanced",
-  "maxDays": 10,
-  "maxRuntimeMs": 1800000,
+  "agent": "qwen35_flash",
+  "maxDays": 2,
+  "maxRuntimeMs": 240000,
   "llmTimeoutMs": 30000,
   "trace": false,
   "printAllEvents": false,
@@ -11,13 +11,5 @@
   "color": true,
   "printLlmIo": false,
   "printThinking": false,
-  "printPrivateEvents": true,
-  "recordRootDir": "/home/hby/dev/AWA/be_workdir/backend/data/records",
-  "roleAgents": {
-    "wolf": "gpt4o_aggressive"
-  },
-  "playerAgents": {
-    "2": "relay_flash"
-  },
-  "debugSummaryAgent": "relay_flash"
+  "printPrivateEvents": true
 }
