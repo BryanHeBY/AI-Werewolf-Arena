@@ -55,14 +55,14 @@ AI Werewolf Arena 是一个面向“可观战 AI 多智能体狼人杀博弈”�
 
 这部分的一个关键亮点是：角色能力并不是简单 `if/else` 分支，而是通过注册式机制层来接入运行时初始化、prompt 渲染、工具定义、广播呈现和规则行为，因此整体结构更接近一个“可演化的规则引擎”。
 
-### 2. Realtime Spectator Experience
+### 2. Realtime Game Service
 
-项目通过 REST + Socket.IO 提供实时观战能力，支持：
+后端通过 REST + Socket.IO 提供会话和实时事件能力，支持：
 
 1. 创建和管理一局对局会话
 2. 通过统一 `gameEvent` 协议向前端广播实时事件
 3. 区分公开事件、狼队私有事件和玩家私有事件
-4. 前端按阶段、玩家、动作和终局状态进行可视化展示
+4. 为后续在线观战客户端保留稳定协议边界
 
 ### 3. Replay And Observability
 
@@ -91,11 +91,11 @@ AI Werewolf Arena 是一个面向“可观战 AI 多智能体狼人杀博弈”�
 ### Backend
 
 1. `TypeScript`
-2. `Node.js`
+2. `Bun`
 3. `Fastify`
 4. `Socket.IO`
 5. `OpenAI SDK`
-6. `Jest`
+6. `bun test`
 
 后端侧包含：
 
@@ -108,25 +108,24 @@ AI Werewolf Arena 是一个面向“可观战 AI 多智能体狼人杀博弈”�
 
 ### Frontend
 
-1. `Vue 3`
+1. `React 19`
 2. `TypeScript`
 3. `Vite`
-4. `Pinia`
-5. `Socket.IO Client`
-6. `Playwright`
+4. `Remotion Player`
+5. `Playwright`
 
 前端侧包含：
 
-1. 实时观战界面
-2. 玩家状态面板与聊天流式展示
-3. Socket 接入与前端状态归一化
-4. 端到端联调测试
+1. 离线复盘播放器
+2. Remotion 预览组件
+3. 后端导出文件解析
+4. 单元与浏览器冒烟测试
 
 ### Tooling
 
-1. `npm workspaces`
-2. `ts-jest`
-3. `vue-tsc`
+1. `Bun workspaces`
+2. `bun test`
+3. `tsc`
 4. `Playwright`
 5. `ESLint`
 
@@ -180,33 +179,24 @@ AI Werewolf Arena 是一个面向“可观战 AI 多智能体狼人杀博弈”�
 
 要求：
 
-1. Node.js `>= 18`
-2. npm workspace 环境可用
+1. Bun `>= 1.3.14`
 
 安装依赖：
 
 ```bash
-npm install
-cd backend && npm install
-cd ../frontend && npm install
-```
-
-或直接使用：
-
-```bash
-npm run install:all
+bun install
 ```
 
 启动后端：
 
 ```bash
-npm run dev:backend
+bun run dev:backend
 ```
 
 启动前端：
 
 ```bash
-npm run dev:frontend
+bun run dev:frontend
 ```
 
 ## Useful Commands
@@ -214,18 +204,16 @@ npm run dev:frontend
 后端：
 
 ```bash
-cd backend
-npm run build:v3
-npm run test:v3
-npm run smoke:v3
+bun run --cwd backend build:v3
+bun run --cwd backend test:v3
+bun run --cwd backend smoke:v3
 ```
 
 前端：
 
 ```bash
-cd frontend
-npm run build
-npm run test
+bun run --cwd frontend build
+bun run --cwd frontend test
 ```
 
 ## Project Entry Points
@@ -240,7 +228,7 @@ npm run test
 6. 工具规格注册：`backend/src/game/mechanisms/registries/tool_spec_registry.ts`
 7. 会话记录与复盘：`backend/src/observability/session_record_manager.ts`
 8. 领域模型：`backend/src/core/domain/model.ts`
-9. 前端顶层入口：`frontend/src/App.vue`
+9. 前端顶层入口：`frontend/src/App.tsx`
 10. 项目文档首页：[`docs/README.md`](./docs/README.md)
 
 ## Notes

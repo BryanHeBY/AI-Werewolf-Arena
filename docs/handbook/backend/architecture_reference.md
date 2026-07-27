@@ -14,7 +14,7 @@
 2. 领域主线：`backend/src/core/domain/*`
 3. 机制主线：`backend/src/game/mechanisms/*`
 4. 会话与服务：`backend/src/server/*`
-5. 前端状态主线：`frontend/src/composables/useGameStore.ts`
+5. 前端复盘主线：`frontend/src/replay/*` 与 `packages/replay-contract/*`
 
 ## 开发驱动
 

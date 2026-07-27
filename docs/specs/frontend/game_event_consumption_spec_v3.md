@@ -2,6 +2,8 @@
 
 开发驱动：`docs/drivers/frontend/game_event_consumption_driver_v3.md`
 
+> 状态：未来在线观战规范。当前已移除 Vue/Socket 实现，前端仅提供离线 React 复盘播放器；下文的 `App.vue` 表述是历史方案，不是现行代码结构。
+
 ## 1. 目标
 
 将当前前端从“V2 mock/chatflow 主导”迁移为“正式消费增强版 V3 `gameEvent` 协议”的实现。
