@@ -1,9 +1,9 @@
 {
-  "default": "qwen35_flash",
+  "default": "deepseek_v4_flash",
   "items": {
-    "qwen35_flash": {
+    "deepseek_v4_flash": {
       "provider": "openrouter",
-      "model": "qwen/qwen3.5-flash-02-23",
+      "model": "deepseek/deepseek-v4-flash",
       "temperature": 0.2,
       "maxTokens": 512,
       "forceJsonResponse": true,

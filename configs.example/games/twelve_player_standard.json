@@ -1,9 +1,9 @@
 {
   "board": "twelve_player_standard",
-  "agent": "qwen35_flash",
+  "agent": "deepseek_v4_flash",
   "maxDays": 2,
-  "maxRuntimeMs": 240000,
-  "llmTimeoutMs": 30000,
+  "maxRuntimeMs": 900000,
+  "llmTimeoutMs": 45000,
   "trace": false,
   "printAllEvents": false,
   "printChat": false,

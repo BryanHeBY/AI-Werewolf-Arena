@@ -1,6 +1,6 @@
 {
   "board": "six_player_mvp",
-  "agent": "qwen35_flash",
+  "agent": "deepseek_v4_flash",
   "maxDays": 2,
   "maxRuntimeMs": 240000,
   "llmTimeoutMs": 30000,

@@ -4,6 +4,7 @@ import { RoleComponent } from "../../src/domain/components/role";
 import { GameEvent } from "../../src/domain/model";
 import { buildAgentBroadcastFeed } from "../../src/engine/agent_broadcast_feed";
 import { sixPlayerMvpConfig } from "../../src/scenarios/six_player_mvp";
+import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
 
 describe("buildAgentBroadcastFeed", () => {
   test("voting should expose merged vote lineup publicly while keeping wolf kill votes wolf-only", () => {
@@ -121,5 +122,65 @@ describe("buildAgentBroadcastFeed", () => {
     expect(otherFeed.some((line) => line.includes("放逐票型"))).toBe(true);
     expect(actorFeed.some((line) => line.includes("警长投票票型"))).toBe(true);
     expect(otherFeed.some((line) => line.includes("警长投票票型"))).toBe(true);
+  });
+
+  test("projects the same event log into stable player-specific views", () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const findRole = (roleName: string) =>
+      context.world.entityIds().find(
+        (id) =>
+          context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === roleName,
+      )!;
+    const wolfId = findRole("wolf");
+    const witchId = findRole("witch");
+    const seerId = findRole("seer");
+    const villagerId = findRole("villager");
+    const events: GameEvent[] = [
+      {
+        timestamp: 0,
+        type: "god_private_game_info",
+        payload: { players: [{ seat: witchId, role: "witch" }] },
+      },
+      {
+        timestamp: 1,
+        type: "wolf_discussion",
+        payload: { actorId: wolfId, text: "今晚先听队友意见" },
+      },
+      {
+        timestamp: 2,
+        type: "witch_potion_used",
+        payload: { actorId: witchId, targetId: seerId, potionType: "heal" },
+      },
+      {
+        timestamp: 3,
+        type: "seer_checked",
+        payload: { actorId: seerId, targetId: wolfId, isWerewolf: true },
+      },
+      {
+        timestamp: 4,
+        type: "night_resolved",
+        payload: { deaths: [] },
+      },
+    ];
+
+    const wolfFeed = buildAgentBroadcastFeed(context.world, events, wolfId);
+    const witchFeed = buildAgentBroadcastFeed(context.world, events, witchId);
+    const seerFeed = buildAgentBroadcastFeed(context.world, events, seerId);
+    const villagerFeed = buildAgentBroadcastFeed(context.world, events, villagerId);
+
+    expect(buildAgentBroadcastFeed(context.world, events, wolfId)).toEqual(wolfFeed);
+    expect(wolfFeed.join("\n")).toContain("今晚先听队友意见");
+    expect(wolfFeed.join("\n")).not.toContain("女巫");
+    expect(wolfFeed.join("\n")).not.toContain("查验");
+    expect(witchFeed.join("\n")).toContain(`${witchId}号对${seerId}号使用`);
+    expect(witchFeed.join("\n")).not.toContain("查验");
+    expect(seerFeed.join("\n")).toContain(`${seerId}号查验${wolfId}号`);
+    expect(villagerFeed.join("\n")).not.toContain("今晚先听队友意见");
+
+    for (const feed of [wolfFeed, witchFeed, seerFeed, villagerFeed]) {
+      expect(feed.join("\n")).not.toContain("god_private_game_info");
+      expect(feed.join("\n")).not.toContain(`seat: ${witchId}`);
+      expect(feed.join("\n")).toContain("昨夜平安夜");
+    }
   });
 });
