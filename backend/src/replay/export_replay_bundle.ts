@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { resolveDefaultRecordRoot } from "../observability";
 import { ReplayRecordRepository } from "../server/replay_record_repository";
 import {
   ReplaySourceDocument,
@@ -42,7 +43,7 @@ function readFlag(args: string[], name: string): string | undefined {
 async function runCli(): Promise<void> {
   const args = process.argv.slice(2);
   const sessionId = readFlag(args, "--session");
-  const recordRoot = readFlag(args, "--record-root") ?? path.resolve("record");
+  const recordRoot = readFlag(args, "--record-root") ?? resolveDefaultRecordRoot();
   const outputFile = readFlag(args, "--out");
   if (!sessionId || !outputFile) {
     throw new Error(
