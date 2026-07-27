@@ -17,6 +17,7 @@
     "smoke:v3": "bun src/run-test-v3.ts",
     "release:check": "bun run build:v3 && bun run test:quick && bun run smoke:v3",
     "run:v3": "bun src/runtime/run_llm_game.ts",
+    "export:replay": "bun src/replay/export_replay_bundle.ts",
     "run:v3:dual": "bun src/runtime/run_llm_dual.ts",
     "run:v3:six": "bun src/runtime/run_llm_game.ts --game-config-name six_minimax",
     "run:v3:twelve": "bun src/runtime/run_llm_game.ts --game-config-name twelve_minimax",
