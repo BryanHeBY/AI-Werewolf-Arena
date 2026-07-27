@@ -518,7 +518,6 @@ export class SessionRecordManager {
         debug_summary: "debug_summary.md",
         player_views: input.playerFiles,
       },
-      schema_version: "v1",
     };
   }
 

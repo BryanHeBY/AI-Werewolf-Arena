@@ -33,7 +33,7 @@ import { buildAgentBroadcastFeed } from "./agent_broadcast_feed";
 import { buildTurnConstraintContext } from "./turn_constraints_context";
 
 /**
- * PhaseManager 是 V3 引擎的时序中枢。
+ * PhaseManager 是游戏引擎的时序中枢。
  * 负责串行驱动夜晚/白天/投票，并在每个阶段后执行死亡钩子与胜负裁决。
  */
 export class PhaseManager {

@@ -5,14 +5,13 @@ import {
 } from "../observability/types";
 
 /**
- * V1 integration document for the React player and Remotion renderer.
+ * Integration document for the React player and Remotion renderer.
  *
  * It is intentionally unredacted during the framework migration. Perspective
  * projection belongs behind this factory once the product's replay permissions
  * are specified; until then callers must treat the endpoint as trusted-only.
  */
 export interface ReplaySourceDocument {
-  schemaVersion: "v1";
   perspective: "unredacted";
   sessionId: string;
   meta: {
@@ -36,7 +35,6 @@ export function createReplaySourceDocument(input: {
 }): ReplaySourceDocument {
   const { manifest, events, phaseWindows } = input;
   return {
-    schemaVersion: "v1",
     perspective: "unredacted",
     sessionId: manifest.session_id,
     meta: {

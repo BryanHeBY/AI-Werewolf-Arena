@@ -6,7 +6,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 export function parseOfflineReplayJson(raw: string): ReplayDocument {
   const value: unknown = JSON.parse(raw);
-  if (!isRecord(value) || value.schemaVersion !== "v1" || !Array.isArray(value.events)) {
+  if (!isRecord(value) || typeof value.sessionId !== "string" || !Array.isArray(value.events)) {
     throw new Error("这不是 AI Werewolf Arena 导出的 .replay.json 文件。");
   }
   if (!isRecord(value.meta) || !isRecord(value.result) || !Array.isArray(value.phaseWindows)) {

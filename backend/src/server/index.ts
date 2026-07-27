@@ -4,7 +4,7 @@ import path from "path";
 import { appConfig, BoardPreset } from "../runtime/config";
 import { Broadcaster } from "./transport/broadcaster";
 import { setupSocket, setGlobalBroadcaster } from "./socket";
-import { V3SessionManager } from "./v3_session_manager";
+import { SessionManager } from "./session_manager";
 import { ReplayRecordRepository, ReplayRepositoryError } from "./replay_record_repository";
 import { createReplaySourceDocument } from "./replay_source_document";
 import { loadRuntimeConfig } from "../runtime/config/runtime_config";
@@ -28,8 +28,8 @@ function toBoard(game?: string): BoardPreset {
 }
 
 function mapSessionData(
-  session: ReturnType<V3SessionManager["status"]>,
-  gameState: ReturnType<V3SessionManager["publicState"]>,
+  session: ReturnType<SessionManager["status"]>,
+  gameState: ReturnType<SessionManager["publicState"]>,
 ) {
   if (!session) {
     return null;
@@ -82,7 +82,7 @@ async function resolveRecordRepository(
 }
 
 /**
- * V3 服务入口：
+ * 游戏服务入口：
  * - HTTP: 状态查询、会话生命周期、复盘查询
  * - Socket: 实时事件广播
  */
@@ -103,103 +103,25 @@ export async function createServer(
   const broadcaster = new Broadcaster(io);
   setGlobalBroadcaster(broadcaster);
 
-  const sessions = appConfig.v3EngineEnabled
-    ? new V3SessionManager(broadcaster, {
-        defaultBoard: appConfig.defaultBoard,
-        maxDaysPerSession: appConfig.maxDaysPerSession,
-        cycleDelayMs: appConfig.cycleDelayMs,
-      })
-    : null;
+  const sessions = new SessionManager(broadcaster, {
+    defaultBoard: appConfig.defaultBoard,
+    maxDaysPerSession: appConfig.maxDaysPerSession,
+    cycleDelayMs: appConfig.cycleDelayMs,
+  });
   const replayRepository = await resolveRecordRepository(options.recordRepository);
-
-  function startGame(
-    board: BoardPreset | undefined,
-    boardConfigName: string | undefined,
-    maxDays: number | undefined,
-  ) {
-    if (!sessions) {
-      return {
-        success: false,
-        error: "V3 engine disabled by V3_ENGINE_ENABLED",
-        engineVersion: "V2_ROLLBACK",
-      };
-    }
-    const status = sessions.start({
-      board,
-      boardConfigName,
-      maxDays,
-    });
-    return {
-      success: true,
-      gameId: status.id,
-      board: status.board,
-      boardConfigName: status.boardConfigName,
-      players: sessions.publicState()?.players ?? [],
-      engineVersion: "V3",
-      snapshot: status.snapshot,
-    };
-  }
 
   fastify.get("/api/status", async () => ({
     status: "ok",
-    engineVersion: appConfig.v3EngineEnabled ? "V3" : "V2_ROLLBACK",
     config: {
       port: appConfig.port,
       defaultBoard: appConfig.defaultBoard,
       maxDaysPerSession: appConfig.maxDaysPerSession,
       cycleDelayMs: appConfig.cycleDelayMs,
-      v3EngineEnabled: appConfig.v3EngineEnabled,
       recordRootDir: replayRepository.recordRoot,
     },
-    session: sessions?.status() ?? null,
+    session: sessions.status(),
   }));
-
-  // legacy endpoints
-  fastify.get("/api/start-game", async (request) => {
-    const query = request.query as {
-      board?: BoardPreset;
-      boardConfigName?: string;
-      maxDays?: string;
-    };
-    return startGame(
-      query.board,
-      query.boardConfigName,
-      query.maxDays ? Number(query.maxDays) : undefined,
-    );
-  });
-
-  fastify.post("/api/start-game", async (request) => {
-    const body = request.body as
-      | { board?: BoardPreset; boardConfigName?: string; maxDays?: number }
-      | undefined;
-    return startGame(body?.board, body?.boardConfigName, body?.maxDays);
-  });
-
-  fastify.post("/api/stop-game", async () => {
-    if (!sessions) {
-      return {
-        success: false,
-        error: "V3 engine disabled by V3_ENGINE_ENABLED",
-        session: null,
-      };
-    }
-    const status = sessions.stop();
-    return {
-      success: status !== null,
-      session: status,
-    };
-  });
-
-  fastify.get("/api/session", async () => ({
-    session: sessions?.status() ?? null,
-    gameState: sessions?.publicState() ?? null,
-  }));
-
-  // v1 lifecycle endpoints
-  fastify.post("/api/v1/sessions", async (request, reply) => {
-    if (!sessions) {
-      return apiError(reply, 503, "ENGINE_DISABLED", "V3 engine disabled");
-    }
+  fastify.post("/api/sessions", async (request) => {
     const body = (request.body ?? {}) as { game?: string; maxDays?: number };
     const board = toBoard(body.game);
     const started = sessions.start({
@@ -213,29 +135,29 @@ export async function createServer(
     };
   });
 
-  fastify.get("/api/v1/sessions", async () => {
-    const current = mapSessionData(sessions?.status() ?? null, sessions?.publicState() ?? null);
+  fastify.get("/api/sessions", async () => {
+    const current = mapSessionData(sessions.status(), sessions.publicState());
     return {
       success: true,
       data: current ? [current] : [],
     };
   });
 
-  fastify.get("/api/v1/sessions/current", async (request, reply) => {
-    const current = mapSessionData(sessions?.status() ?? null, sessions?.publicState() ?? null);
+  fastify.get("/api/sessions/current", async (request, reply) => {
+    const current = mapSessionData(sessions.status(), sessions.publicState());
     if (!current) {
       return apiError(reply, 404, "SESSION_NOT_FOUND", "session not found");
     }
     return { success: true, data: current };
   });
 
-  fastify.get("/api/v1/sessions/:sessionId", async (request, reply) => {
+  fastify.get("/api/sessions/:sessionId", async (request, reply) => {
     const { sessionId } = request.params as { sessionId: string };
-    const current = sessions?.status() ?? null;
+    const current = sessions.status();
     if (current && current.id === sessionId) {
       return {
         success: true,
-        data: mapSessionData(current, sessions?.publicState() ?? null),
+        data: mapSessionData(current, sessions.publicState()),
       };
     }
     try {
@@ -268,10 +190,7 @@ export async function createServer(
     }
   });
 
-  fastify.post("/api/v1/sessions/:sessionId/stop", async (request, reply) => {
-    if (!sessions) {
-      return apiError(reply, 503, "ENGINE_DISABLED", "V3 engine disabled");
-    }
+  fastify.post("/api/sessions/:sessionId/stop", async (request, reply) => {
     const { sessionId } = request.params as { sessionId: string };
     const current = sessions.status();
     if (!current || current.id !== sessionId) {
@@ -284,9 +203,9 @@ export async function createServer(
     };
   });
 
-  fastify.get("/api/v1/sessions/:sessionId/result", async (request, reply) => {
+  fastify.get("/api/sessions/:sessionId/result", async (request, reply) => {
     const { sessionId } = request.params as { sessionId: string };
-    const current = sessions?.status() ?? null;
+    const current = sessions.status();
     if (current && current.id === sessionId) {
       return {
         success: true,
@@ -309,8 +228,7 @@ export async function createServer(
     }
   });
 
-  // v1 timeline endpoints
-  fastify.get("/api/v1/sessions/:sessionId/timeline", async (request, reply) => {
+  fastify.get("/api/sessions/:sessionId/timeline", async (request, reply) => {
     const { sessionId } = request.params as { sessionId: string };
     const query = request.query as {
       fromSeq?: string;
@@ -330,7 +248,7 @@ export async function createServer(
     }
   });
 
-  fastify.get("/api/v1/sessions/:sessionId/phases", async (request, reply) => {
+  fastify.get("/api/sessions/:sessionId/phases", async (request, reply) => {
     const { sessionId } = request.params as { sessionId: string };
     try {
       const phaseWindows = await replayRepository.getPhaseWindows(sessionId);
@@ -351,7 +269,7 @@ export async function createServer(
    * Development-stage browser and renderer entry point. It deliberately
    * returns the complete record until perspective projection is designed.
    */
-  fastify.get("/api/v1/sessions/:sessionId/replay", async (request, reply) => {
+  fastify.get("/api/sessions/:sessionId/replay", async (request, reply) => {
     const { sessionId } = request.params as { sessionId: string };
     try {
       const [manifest, timeline, phaseWindows] = await Promise.all([
@@ -374,7 +292,7 @@ export async function createServer(
   });
 
   fastify.get(
-    "/api/v1/sessions/:sessionId/players/:playerId/timeline",
+    "/api/sessions/:sessionId/players/:playerId/timeline",
     async (request, reply) => {
       const { sessionId, playerId } = request.params as {
         sessionId: string;
@@ -409,7 +327,7 @@ export async function startServer(): Promise<FastifyInstance> {
   try {
     await fastify.listen({ port: appConfig.port, host: "0.0.0.0" });
     // eslint-disable-next-line no-console
-    console.log(`V3 server started: http://0.0.0.0:${appConfig.port}`);
+    console.log(`Game server started: http://0.0.0.0:${appConfig.port}`);
     return fastify;
   } catch (error) {
     fastify.log.error(error);

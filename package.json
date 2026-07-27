@@ -14,7 +14,7 @@
     "dev:frontend": "bun --filter ai-werewolf-arena-frontend dev",
     "build:backend": "bun --filter ai-werewolf-arena-backend build",
     "build:frontend": "bun --filter ai-werewolf-arena-frontend build",
-    "check:backend": "bun --filter ai-werewolf-arena-backend build:v3",
+    "check:backend": "bun --filter ai-werewolf-arena-backend check",
     "check:frontend": "bun --filter ai-werewolf-arena-frontend typecheck",
     "test:backend": "bun --filter ai-werewolf-arena-backend test:quick",
     "test:frontend": "bun --filter ai-werewolf-arena-frontend test",

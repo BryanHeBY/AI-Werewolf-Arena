@@ -1,13 +1,9 @@
 /**
  * The replay data shape consumed by browser and video clients.
  *
- * V1 deliberately mirrors the complete session record so that the React
- * player and Remotion renderer can be wired before perspective isolation is
- * designed. Do not expose this document to untrusted users: it may contain
- * god and player-private information.
+ * The document mirrors the complete session record so that the React player
+ * and Remotion renderer can be wired before perspective isolation is designed.
  */
-export const REPLAY_DOCUMENT_SCHEMA_VERSION = "v1" as const;
-
 export type ReplayPerspective = "unredacted";
 
 export interface ReplayEvent {
@@ -37,7 +33,6 @@ export interface ReplayPhaseWindow {
 }
 
 export interface ReplayDocument {
-  schemaVersion: typeof REPLAY_DOCUMENT_SCHEMA_VERSION;
   sessionId: string;
   perspective: ReplayPerspective;
   meta: {

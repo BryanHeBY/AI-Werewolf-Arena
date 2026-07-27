@@ -3,7 +3,7 @@ import { eventLabel, parseOfflineReplayJson } from "../../src/replay/offline-rep
 
 test("parses an exported offline replay bundle", () => {
   const replay = parseOfflineReplayJson(JSON.stringify({
-    schemaVersion: "v1", perspective: "unredacted", sessionId: "session_1",
+    perspective: "unredacted", sessionId: "session_1",
     meta: { board: "six_player_mvp", startedAt: "t1", endedAt: "t2" },
     result: { winner: "good", reason: "wolves_eliminated" }, players: [], phaseWindows: [],
     events: [{ seq: 1, timestamp: "t1", day: 1, phase: "day", type: "day_speech", payload: { text: "大家好" } }],

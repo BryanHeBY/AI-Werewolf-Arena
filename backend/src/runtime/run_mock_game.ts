@@ -13,8 +13,8 @@ export async function runMockGame(): Promise<void> {
   const snapshot = await context.phaseManager.runUntilGameOver(actionProvider, 8);
   const events = context.phaseManager.getEvents();
 
-  console.log("V3 snapshot:", snapshot);
-  console.log("V3 events:", events.length);
+  console.log("Game snapshot:", snapshot);
+  console.log("Game events:", events.length);
   console.log(JSON.stringify(events.slice(-8), null, 2));
 }
 

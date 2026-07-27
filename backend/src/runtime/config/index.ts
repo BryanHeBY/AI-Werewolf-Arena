@@ -21,21 +21,6 @@ export interface AppConfig {
   defaultBoard: BoardPreset;
   maxDaysPerSession: number;
   cycleDelayMs: number;
-  v3EngineEnabled: boolean;
-}
-
-function parseBooleanFlag(value: string | undefined, fallback: boolean): boolean {
-  if (value === undefined || value === "") {
-    return fallback;
-  }
-  const normalized = value.trim().toLowerCase();
-  if (["1", "true", "yes", "on"].includes(normalized)) {
-    return true;
-  }
-  if (["0", "false", "no", "off"].includes(normalized)) {
-    return false;
-  }
-  return fallback;
 }
 
 /**
@@ -44,7 +29,7 @@ function parseBooleanFlag(value: string | undefined, fallback: boolean): boolean
 export function loadConfig(): AppConfig {
   // 默认走 6 人 MVP，避免无配置时直接进入高复杂度板子。
   const defaultBoard =
-    process.env.V3_DEFAULT_BOARD === "twelve_player_standard"
+    process.env.GAME_DEFAULT_BOARD === "twelve_player_standard"
       ? "twelve_player_standard"
       : "six_player_mvp";
 
@@ -52,9 +37,8 @@ export function loadConfig(): AppConfig {
     port: parseInt(process.env.PORT || "3344", 10),
     corsOrigin: process.env.CORS_ORIGIN || "http://localhost:5173",
     defaultBoard,
-    maxDaysPerSession: parseInt(process.env.V3_MAX_DAYS || "20", 10),
-    cycleDelayMs: parseInt(process.env.V3_CYCLE_DELAY_MS || "80", 10),
-    v3EngineEnabled: parseBooleanFlag(process.env.V3_ENGINE_ENABLED, true),
+    maxDaysPerSession: parseInt(process.env.GAME_MAX_DAYS || "20", 10),
+    cycleDelayMs: parseInt(process.env.GAME_CYCLE_DELAY_MS || "80", 10),
   };
 }
 

@@ -19,7 +19,7 @@ export class GameLogger {
 
   constructor(baseDir: string) {
     fs.mkdirSync(baseDir, { recursive: true });
-    const fileName = `v3-${Date.now()}.jsonl`;
+    const fileName = `game-${Date.now()}.jsonl`;
     this.logPath = path.join(baseDir, fileName);
   }
 

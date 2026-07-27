@@ -23,7 +23,7 @@ import { ToolGateway } from "../game/gateway/tool_gateway";
 
 /**
  * bootstrap 负责把“配置”装配成“可运行对局上下文”。
- * 这是服务层启动 V3 引擎的唯一入口。
+ * 这是服务层启动游戏引擎的唯一入口。
  */
 export interface BootstrapResult {
   world: World;

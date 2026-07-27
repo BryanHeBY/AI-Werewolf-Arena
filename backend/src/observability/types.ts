@@ -30,7 +30,6 @@ export interface ReplayManifest {
     debug_summary: string;
     player_views: string[];
   };
-  schema_version: "v1";
 }
 
 /** 公共时间线事件记录。 */

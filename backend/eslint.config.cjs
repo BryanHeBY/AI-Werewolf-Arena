@@ -22,7 +22,7 @@ module.exports = [
       "no-restricted-imports": [
         "error",
         {
-          patterns: ["../app/*", "../engine/*", "../gateway/*", "../server/*", "../infra/*", "../v3/*"],
+          patterns: ["../app/*", "../engine/*", "../gateway/*", "../server/*", "../infra/*"],
         },
       ],
     },
@@ -33,7 +33,7 @@ module.exports = [
       "no-restricted-imports": [
         "error",
         {
-          patterns: ["../app/*", "../engine/*", "../gateway/*", "../server/*", "../infra/*", "../v3/*"],
+          patterns: ["../app/*", "../engine/*", "../gateway/*", "../server/*", "../infra/*"],
         },
       ],
     },
@@ -44,7 +44,7 @@ module.exports = [
       "no-restricted-imports": [
         "error",
         {
-          patterns: ["../app/*", "../server/*", "../infra/*", "../v3/*"],
+          patterns: ["../app/*", "../server/*", "../infra/*"],
         },
       ],
     },
@@ -66,21 +66,9 @@ module.exports = [
       "no-restricted-imports": [
         "error",
         {
-          patterns: ["../app/*", "../engine/*", "../gateway/*", "../memory/*", "../server/*", "../infra/*", "../v3/*"],
-        },
-      ],
-    },
-  },
-  {
-    files: ["src/v3/**/*.ts"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          patterns: ["../app/*", "../engine/*", "../gateway/*", "../server/*", "../infra/*"],
+          patterns: ["../app/*", "../engine/*", "../gateway/*", "../memory/*", "../server/*", "../infra/*"],
         },
       ],
     },
   },
 ];
-

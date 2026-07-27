@@ -4,7 +4,7 @@ import { AliveComponent } from "./components/alive";
 import { RoleComponent } from "./components/role";
 
 /**
- * World 是 V3 的 ECS 内存状态容器。
+ * World 是 ECS 内存状态容器。
  * 设计目标：保持结构简单、读写明确，所有系统都基于该容器进行组件查询与变更。
  */
 export class World {

@@ -47,7 +47,6 @@ export interface RealtimeGameEventDraft {
 export interface RealtimeGameEvent extends RealtimeGameEventDraft {
   id: string;
   seq: number;
-  schemaVersion: number;
   sessionId: string;
   category: RealtimeEventCategory;
   timestamp: number;
