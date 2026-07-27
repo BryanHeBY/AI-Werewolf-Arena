@@ -1,6 +1,6 @@
 /** 文件说明：根据调试上报生成 session 级调试总结 Markdown。 */
 import { ReplayDebugReport, ReplayLogicOp, ReplayManifest, ReplayPlayerView, ReplayPublicEvent } from "./types";
-import { OpenAIClient } from "../ai/integrations/llm/openai_client";
+import { AiSdkClient } from "../ai/integrations/llm/ai_sdk_client";
 import { loadRuntimeConfig, resolveAgentProfileByName } from "../runtime/config/runtime_config";
 import { buildDebugSummaryWithAgents } from "./debug_summary_pipeline";
 
@@ -303,7 +303,9 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
       }
     }
   }
-  const client = new OpenAIClient({
+  const client = new AiSdkClient({
+    providerType: debugAgentProfile.provider.type,
+    providerName: debugAgentProfile.providerName,
     apiKey: debugAgentProfile.provider.apiKey,
     baseURL: debugAgentProfile.provider.baseURL,
     model: debugAgentProfile.model,

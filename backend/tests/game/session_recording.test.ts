@@ -10,8 +10,8 @@ import { COMPONENT } from "../../src/core/domain/components/names";
 import { SessionRecordManager } from "../../src/observability";
 import { setRuntimeConfigOverride } from "../../src/runtime/config/runtime_config";
 
-jest.mock("../../src/ai/integrations/llm/openai_client", () => {
-  class OpenAIClient {
+jest.mock("../../src/ai/integrations/llm/ai_sdk_client", () => {
+  class AiSdkClient {
     async chatWithMeta(messages: Array<{ role: string; content: string }>) {
       const system = messages[0]?.content ?? "";
       const user = messages[1]?.content ?? "";
@@ -64,7 +64,7 @@ jest.mock("../../src/ai/integrations/llm/openai_client", () => {
     }
   }
 
-  return { OpenAIClient };
+  return { AiSdkClient };
 });
 
 describe("SessionRecordManager", () => {

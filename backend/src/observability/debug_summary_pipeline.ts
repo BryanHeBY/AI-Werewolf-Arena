@@ -8,7 +8,7 @@ import {
   ReplayPlayerView,
   ReplayPublicEvent,
 } from "./types";
-import { OpenAIClient } from "../ai/integrations/llm/openai_client";
+import { AiSdkClient } from "../ai/integrations/llm/ai_sdk_client";
 import { loadRuntimeConfig, resolveAgentProfileByName } from "../runtime/config/runtime_config";
 
 export interface DebugSummaryPipelineInput {
@@ -333,8 +333,8 @@ function shrinkPayload(payload: Record<string, unknown>): Record<string, unknown
 }
 
 async function runAgentTask(
-  primaryClient: OpenAIClient,
-  fallbackClient: OpenAIClient,
+  primaryClient: AiSdkClient,
+  fallbackClient: AiSdkClient,
   primaryMeta: {
     model: string;
     maxTokens: number;
@@ -627,7 +627,7 @@ function validateSummaryEvidence(text: string, allowedSeqs: Set<number>): boolea
 }
 
 async function renderSummaryWithLlm(
-  client: OpenAIClient,
+  client: AiSdkClient,
   manifest: ReplayManifest,
   reports: ReplayDebugReport[],
   findings: AgentFinding[],
@@ -720,7 +720,9 @@ export async function buildDebugSummaryWithAgents(
   const playerMaxItems = Math.max(60, runtime.debugSummary?.agent?.playerMaxItems ?? 120);
   const profileOverride = runtime.debugSummary?.agent?.profile ?? {};
 
-  const client = new OpenAIClient({
+  const client = new AiSdkClient({
+    providerType: debugAgentProfile.provider.type,
+    providerName: debugAgentProfile.providerName,
     apiKey: debugAgentProfile.provider.apiKey,
     model: profileOverride.model ?? debugAgentProfile.model,
     baseURL: debugAgentProfile.provider.baseURL,
@@ -736,7 +738,9 @@ export async function buildDebugSummaryWithAgents(
     thinkingEnabled:
       profileOverride.thinkingEnabled ?? debugAgentProfile.thinkingEnabled ?? false,
   });
-  const fallbackClient = new OpenAIClient({
+  const fallbackClient = new AiSdkClient({
+    providerType: debugAgentProfile.provider.type,
+    providerName: debugAgentProfile.providerName,
     apiKey: debugAgentProfile.provider.apiKey,
     model: profileOverride.model ?? debugAgentProfile.model,
     baseURL: debugAgentProfile.provider.baseURL,

@@ -240,7 +240,7 @@ export class LlmActionProvider implements ActionProvider {
       options.fallbackProvider ?? new BaselineBotActionProvider(world);
   }
 
-  static fromOpenAIClient(
+  static fromModelClient(
     world: World,
     client: ChatLike,
     options: LlmActionProviderOptions = {},

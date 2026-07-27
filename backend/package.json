@@ -26,11 +26,14 @@
     "test:coverage": "bun test --coverage"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^4.0.21",
+    "@ai-sdk/openai-compatible": "^3.0.14",
     "@fastify/cors": "^8.5.0",
+    "ai": "^7.0.37",
     "dotenv": "^16.4.1",
     "fastify": "^4.26.0",
-    "openai": "^4.28.0",
-    "socket.io": "^4.7.4"
+    "socket.io": "^4.7.4",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/nock": "^10.0.3",

@@ -1,7 +1,8 @@
 import { promises as fs } from "fs";
 import * as path from "path";
 
-export type ProviderType = "openai";
+/** `openai` covers OpenRouter and other Chat Completions-compatible gateways. */
+export type ProviderType = "openai" | "anthropic";
 
 export interface ProviderConfig {
   type: ProviderType;
@@ -118,6 +119,9 @@ function resolveEnvironmentValue(value: string, field: string): string {
 }
 
 function normalizeProviderConfig(name: string, value: ProviderConfig): ProviderConfig {
+  if (value.type !== "openai" && value.type !== "anthropic") {
+    throw new Error(`runtime_config_provider_type_unsupported: ${name}`);
+  }
   return {
     ...value,
     apiKey: resolveEnvironmentValue(value.apiKey, `providers.items.${name}.apiKey`),

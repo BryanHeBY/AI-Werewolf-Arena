@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import path from "path";
-import { OpenAIClient } from "../../src/infra/llm/openai_client";
+import { AiSdkClient } from "../../src/infra/llm/ai_sdk_client";
 
 const rootEnvPath = path.resolve(__dirname, "../../..", ".env");
 dotenv.config({ path: rootEnvPath });
@@ -28,7 +28,7 @@ describe("minimax live connectivity", () => {
   testFn(
     "can call model with .env OPENAI_* settings without leaking key",
     async () => {
-      const client = new OpenAIClient({
+      const client = new AiSdkClient({
         baseURL: process.env.OPENAI_BASE_URL!,
         apiKey: process.env.OPENAI_API_KEY!,
         model: process.env.OPENAI_MODEL!,

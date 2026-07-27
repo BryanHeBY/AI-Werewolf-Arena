@@ -19,7 +19,7 @@ import {
   COMPONENT,
   RoleComponent,
 } from "../core";
-import { OpenAIClient } from "../ai/integrations/llm/openai_client";
+import { AiSdkClient } from "../ai/integrations/llm/ai_sdk_client";
 import { buildAgentBroadcastLine, renderMergedVoteBatch } from "../game/engine/agent_broadcast_feed";
 import { getDefaultScriptEventRenderRegistry } from "../game";
 import { resolveBoardConfig } from "./scenarios/board_config_resolver";
@@ -285,13 +285,15 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     return resolveAgentProfileByName(runtime, selectedAgentName);
   };
 
-  const clientByActor = new Map<number, OpenAIClient>();
+  const clientByActor = new Map<number, AiSdkClient>();
   for (const id of context.world.entityIds()) {
     const roleComp = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
     const profile = resolveProfile(roleComp?.role, id);
     clientByActor.set(
       id,
-      new OpenAIClient({
+      new AiSdkClient({
+        providerType: profile.provider.type,
+        providerName: profile.providerName,
         baseURL: profile.provider.baseURL,
         apiKey: profile.provider.apiKey,
         model: profile.model,
@@ -306,7 +308,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     );
   }
 
-  const actionProvider = LlmActionProvider.fromOpenAIClient(
+  const actionProvider = LlmActionProvider.fromModelClient(
     context.world,
     clientByActor.get(context.world.entityIds()[0])!,
     {
