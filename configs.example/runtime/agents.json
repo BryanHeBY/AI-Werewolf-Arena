@@ -8,8 +8,7 @@
       "maxTokens": 512,
       "forceJsonResponse": true,
       "reasoningEnabled": false,
-      "thinkingEnabled": false,
-      "personalityPrompt": "以规则约束为最高优先级，简洁地完成本回合工具调用。"
+      "thinkingEnabled": false
     }
   }
 }
