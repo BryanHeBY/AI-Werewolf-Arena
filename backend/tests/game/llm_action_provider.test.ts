@@ -974,6 +974,31 @@ describe("LlmActionProvider", () => {
     expect(client.lastToolNames).toContain("finish_turn");
   });
 
+  test("optional self-destruct window should allow finish_turn without self_destruct", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const wolfId = context.playerIds.find(
+      (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf",
+    )!;
+    const provider = new LlmActionProvider(context.world, new FinishTurnOnlyClient() as any);
+
+    const action = await provider.getAction({
+      phase: Phase.Voting,
+      actorId: wolfId,
+      allowedTools: ["self_destruct"],
+      context: {
+        day: 1,
+        window: "on_pre_vote",
+        turn_constraints: {
+          min_valid_actions: 0,
+          max_valid_actions: 1,
+          required_any_tools: [],
+        },
+      },
+    });
+
+    expect(action).toBeNull();
+  });
+
   test("sdk tools should include function and parameter descriptions", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const client = new CaptureToolsClient();
