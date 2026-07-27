@@ -1226,4 +1226,26 @@ describe("LlmActionProvider", () => {
       context: { must_act: true, broadcast_feed: [] },
     });
   });
+
+  test("system prompt should require tools for every effective game action", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const client = new AssertClient(
+      '{"name":"speak","args":{"text":"通过工具发言"}}',
+      (messages) => {
+        const system = messages.find((message) => message.role === "system")?.content ?? "";
+        expect(system).toContain("所有能起效的行动都必须通过函数工具调用提交");
+        expect(system).toContain("普通 assistant 文本只会被当作本地思考");
+        expect(system).toContain("发言请把内容写入 speak.text 或 speak_to_wolves.text");
+        expect(system).toContain("必须调用 finish_turn");
+      },
+    );
+    const provider = new LlmActionProvider(context.world, client as any);
+
+    await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["speak"],
+      context: { must_act: true, broadcast_feed: [] },
+    });
+  });
 });
