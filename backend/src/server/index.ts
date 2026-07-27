@@ -6,6 +6,7 @@ import { Broadcaster } from "./transport/broadcaster";
 import { setupSocket, setGlobalBroadcaster } from "./socket";
 import { V3SessionManager } from "./v3_session_manager";
 import { ReplayRecordRepository, ReplayRepositoryError } from "./replay_record_repository";
+import { createReplaySourceDocument } from "./replay_source_document";
 import { loadRuntimeConfig } from "../runtime/config/runtime_config";
 
 interface CreateServerOptions {
@@ -339,6 +340,32 @@ export async function createServer(
           sessionId,
           windows: phaseWindows.windows,
         },
+      };
+    } catch (error) {
+      const mapped = mapReplayError(error);
+      return apiError(reply, mapped.status, mapped.code, mapped.message);
+    }
+  });
+
+  /**
+   * Development-stage browser and renderer entry point. It deliberately
+   * returns the complete record until perspective projection is designed.
+   */
+  fastify.get("/api/v1/sessions/:sessionId/replay", async (request, reply) => {
+    const { sessionId } = request.params as { sessionId: string };
+    try {
+      const [manifest, timeline, phaseWindows] = await Promise.all([
+        replayRepository.getManifest(sessionId),
+        replayRepository.getPublicTimeline(sessionId, {}),
+        replayRepository.getPhaseWindows(sessionId),
+      ]);
+      return {
+        success: true,
+        data: createReplaySourceDocument({
+          manifest,
+          events: timeline.events,
+          phaseWindows: phaseWindows.windows,
+        }),
       };
     } catch (error) {
       const mapped = mapReplayError(error);

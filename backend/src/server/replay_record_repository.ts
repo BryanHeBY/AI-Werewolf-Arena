@@ -117,12 +117,7 @@ export class ReplayRecordRepository {
     page: { fromSeq: number; toSeq: number; hasMore: boolean };
   }> {
     this.validateTimelineQuery(query);
-    const payload = await this.readJsonFile<{ events: ReplayPublicEvent[] }>(
-      sessionId,
-      "public_timeline.json",
-      "SESSION_NOT_FOUND",
-    );
-    const events = Array.isArray(payload.events) ? payload.events : [];
+    const events = await this.readRecordedTimeline(sessionId);
     const phaseRange = query.phaseId
       ? await this.resolvePhaseRange(sessionId, query.phaseId)
       : null;
@@ -195,6 +190,15 @@ export class ReplayRecordRepository {
       return null;
     }
     return { startSeq: found.start_seq, endSeq: found.end_seq };
+  }
+
+  private async readRecordedTimeline(sessionId: string): Promise<ReplayPublicEvent[]> {
+    const payload = await this.readJsonFile<{ events: ReplayPublicEvent[] }>(
+      sessionId,
+      "public_timeline.json",
+      "SESSION_NOT_FOUND",
+    );
+    return Array.isArray(payload.events) ? payload.events : [];
   }
 
   private validateTimelineQuery(query: TimelineQuery): void {

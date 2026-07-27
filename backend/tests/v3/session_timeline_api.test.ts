@@ -4,6 +4,15 @@ import path from "path";
 import { createServer } from "../../src/server/index";
 import { ReplayRecordRepository, ReplayRepositoryError } from "../../src/server/replay_record_repository";
 
+async function createTestClient(app: Awaited<ReturnType<typeof createServer>>) {
+  await app.listen({ port: 0, host: "127.0.0.1" });
+  const address = app.server.address();
+  if (!address || typeof address === "string") {
+    throw new Error("test server did not expose a TCP address");
+  }
+  return async (url: string) => fetch(`http://127.0.0.1:${address.port}${url}`);
+}
+
 async function seedSession(root: string, sessionId: string): Promise<void> {
   const sessionDir = path.join(root, sessionId);
   await fs.mkdir(path.join(sessionDir, "players"), { recursive: true });
@@ -41,7 +50,9 @@ async function seedSession(root: string, sessionId: string): Promise<void> {
         events: [
           { seq: 1, timestamp: "t1", phase: "night", day: 1, stage: "night", type: "phase_changed", payload: {} },
           { seq: 2, timestamp: "t2", phase: "night", day: 1, stage: "wolf_discussion", type: "wolf_chat", payload: {} },
-          { seq: 3, timestamp: "t3", phase: "day", day: 1, stage: "day_speech", type: "phase_changed", payload: {} },
+          { seq: 3, timestamp: "t3", phase: "night", day: 1, stage: "seer", type: "seer_checked", payload: { targetId: 2, isWerewolf: false } },
+          { seq: 4, timestamp: "t4", phase: "night", day: 1, stage: "bootstrap", type: "god_private_game_info", payload: { players: [{ seat: 1, role: "wolf" }] } },
+          { seq: 5, timestamp: "t5", phase: "day", day: 1, stage: "day_speech", type: "phase_changed", payload: {} },
         ],
       },
       null,
@@ -60,16 +71,16 @@ async function seedSession(root: string, sessionId: string): Promise<void> {
             day: 1,
             phase: "night",
             start_seq: 1,
-            end_seq: 2,
+            end_seq: 4,
             stages: [{ stage: "night", start_seq: 1, end_seq: 1 }],
           },
           {
             phase_id: "d1-day",
             day: 1,
             phase: "day",
-            start_seq: 3,
-            end_seq: 3,
-            stages: [{ stage: "day_speech", start_seq: 3, end_seq: 3 }],
+            start_seq: 5,
+            end_seq: 5,
+            stages: [{ stage: "day_speech", start_seq: 5, end_seq: 5 }],
           },
         ],
       },
@@ -113,35 +124,37 @@ describe("session timeline api", () => {
     const repository = new ReplayRecordRepository(root);
     const app = await createServer({ recordRepository: repository, logger: false });
     try {
-      const timelineResp = await app.inject({
-        method: "GET",
-        url: "/api/v1/sessions/session_api_1/timeline?phaseId=d1-night",
-      });
-      expect(timelineResp.statusCode).toBe(200);
-      const timeline = timelineResp.json();
+      const request = await createTestClient(app);
+      const timelineResp = await request("/api/v1/sessions/session_api_1/timeline?phaseId=d1-night");
+      expect(timelineResp.status).toBe(200);
+      const timeline = await timelineResp.json();
       expect(timeline.success).toBe(true);
-      expect(timeline.data.events.length).toBe(2);
+      expect(timeline.data.events).toHaveLength(4);
 
-      const phasesResp = await app.inject({
-        method: "GET",
-        url: "/api/v1/sessions/session_api_1/phases",
-      });
-      expect(phasesResp.statusCode).toBe(200);
-      expect(phasesResp.json().data.windows.length).toBe(2);
+      const phasesResp = await request("/api/v1/sessions/session_api_1/phases");
+      expect(phasesResp.status).toBe(200);
+      expect((await phasesResp.json()).data.windows.length).toBe(2);
 
-      const playerResp = await app.inject({
-        method: "GET",
-        url: "/api/v1/sessions/session_api_1/players/1/timeline?kind=turn",
-      });
-      expect(playerResp.statusCode).toBe(200);
-      expect(playerResp.json().data.timeline.length).toBe(1);
+      const playerResp = await request("/api/v1/sessions/session_api_1/players/1/timeline?kind=turn");
+      expect(playerResp.status).toBe(200);
+      expect((await playerResp.json()).data.timeline.length).toBe(1);
 
-      const resultResp = await app.inject({
-        method: "GET",
-        url: "/api/v1/sessions/session_api_1/result",
-      });
-      expect(resultResp.statusCode).toBe(200);
-      expect(resultResp.json().data.result.winner).toBe("wolf");
+      const resultResp = await request("/api/v1/sessions/session_api_1/result");
+      expect(resultResp.status).toBe(200);
+      expect((await resultResp.json()).data.result.winner).toBe("wolf");
+
+      const replayResp = await request("/api/v1/sessions/session_api_1/replay");
+      expect(replayResp.status).toBe(200);
+      const replay = await replayResp.json();
+      expect(replay.data.schemaVersion).toBe("v1");
+      expect(replay.data.perspective).toBe("unredacted");
+      expect(replay.data.events.map((event: { type: string }) => event.type)).toEqual([
+        "phase_changed",
+        "wolf_chat",
+        "seer_checked",
+        "god_private_game_info",
+        "phase_changed",
+      ]);
     } finally {
       await app.close();
     }
@@ -153,19 +166,14 @@ describe("session timeline api", () => {
     const repository = new ReplayRecordRepository(root);
     const app = await createServer({ recordRepository: repository, logger: false });
     try {
-      const invalid = await app.inject({
-        method: "GET",
-        url: "/api/v1/sessions/session_api_2/timeline?fromSeq=10&toSeq=1",
-      });
-      expect(invalid.statusCode).toBe(422);
-      expect(invalid.json().error.code).toBe("INVALID_QUERY");
+      const request = await createTestClient(app);
+      const invalid = await request("/api/v1/sessions/session_api_2/timeline?fromSeq=10&toSeq=1");
+      expect(invalid.status).toBe(422);
+      expect((await invalid.json()).error.code).toBe("INVALID_QUERY");
 
-      const missing = await app.inject({
-        method: "GET",
-        url: "/api/v1/sessions/session_not_found/phases",
-      });
-      expect(missing.statusCode).toBe(404);
-      expect(missing.json().error.code).toBe("SESSION_NOT_FOUND");
+      const missing = await request("/api/v1/sessions/session_not_found/phases");
+      expect(missing.status).toBe(404);
+      expect((await missing.json()).error.code).toBe("SESSION_NOT_FOUND");
     } finally {
       await app.close();
     }
@@ -182,12 +190,10 @@ describe("session timeline api", () => {
       );
     const app = await createServer({ recordRepository: repository, logger: false });
     try {
-      const resp = await app.inject({
-        method: "GET",
-        url: "/api/v1/sessions/session_api_3/timeline",
-      });
-      expect(resp.statusCode).toBe(503);
-      expect(resp.json().error.code).toBe("RECORD_UNAVAILABLE");
+      const request = await createTestClient(app);
+      const resp = await request("/api/v1/sessions/session_api_3/timeline");
+      expect(resp.status).toBe(503);
+      expect((await resp.json()).error.code).toBe("RECORD_UNAVAILABLE");
     } finally {
       await app.close();
     }
