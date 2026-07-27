@@ -153,6 +153,7 @@ class FinishThenSpeakThenFinishClient {
 class CaptureToolsClient {
   public lastToolNames: string[] = [];
   public lastTools: Array<{ name: string; description?: string; parameters?: any }> = [];
+  public lastOptions: { toolChoice?: "auto" | "required" } | undefined;
 
   async chat(): Promise<string> {
     return "";
@@ -173,9 +174,11 @@ class CaptureToolsClient {
         stop?: boolean;
       }>;
     },
+    options?: { toolChoice?: "auto" | "required" },
   ): Promise<{ finalAction: T | null; assistantText: string }> {
     this.lastTools = tools;
     this.lastToolNames = tools.map((tool) => tool.name);
+    this.lastOptions = options;
     const handled = await callbacks.onToolCall({
       id: "tool_1",
       name: "speak",
@@ -954,6 +957,7 @@ describe("LlmActionProvider", () => {
 
     expect(client.lastToolNames).toContain("speak");
     expect(client.lastToolNames).toContain("finish_turn");
+    expect(client.lastOptions?.toolChoice).toBe("required");
   });
 
   test("mustAct=false should expose finish_turn tool", async () => {
@@ -972,6 +976,7 @@ describe("LlmActionProvider", () => {
 
     expect(client.lastToolNames).toContain("speak");
     expect(client.lastToolNames).toContain("finish_turn");
+    expect(client.lastOptions?.toolChoice).toBe("auto");
   });
 
   test("optional self-destruct window should allow finish_turn without self_destruct", async () => {

@@ -917,8 +917,11 @@ export class LlmActionProvider implements ActionProvider {
         {
           signal: controller.signal,
           maxSteps: 8,
-          // 统一使用 auto：是否允许结束与是否满足必需动作，交由回合约束层校验。
-          toolChoice: "auto",
+          // 必须行动的窗口强制模型先提交一个工具调用，避免模型仅输出
+          // assistant 思考文本后结束生成，再触发无意义的整轮重试。
+          // 可选窗口继续使用 auto，以允许 finish_turn / 无动作结束。
+          toolChoice:
+            turnConstraints.minValidActions > 0 ? "required" : "auto",
         },
       );
 
