@@ -138,8 +138,6 @@ export interface TieBreakerConfig {
 export interface BoardConfig {
   // 板子规模（玩家总数）。
   boardSize: number;
-  // 是否在死亡时公开身份。
-  revealOnDeath: boolean;
   // 是否启用警长系统。
   enableSheriff: boolean;
   initialSheriffSeat?: number;

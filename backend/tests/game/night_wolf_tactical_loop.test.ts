@@ -325,7 +325,6 @@ describe("night wolf tactical loop", () => {
   test("guard mark cancels wolf kill while poison still kills", async () => {
     const customConfig: BoardConfig = {
       boardSize: 6,
-      revealOnDeath: true,
       enableSheriff: false,
       winConditions: [WinCondition.SlaughterCity, WinCondition.WolfReachHalf],
       hooks: {

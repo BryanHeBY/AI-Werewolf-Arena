@@ -5,7 +5,6 @@ import { BoardConfig, Role, WinCondition } from "../../core/domain/model";
  */
 export const sixPlayerMvpConfig: BoardConfig = {
   boardSize: 6,
-  revealOnDeath: false,
   enableSheriff: false,
   winConditions: [WinCondition.SlaughterCity, WinCondition.WolfReachHalf],
   hooks: {

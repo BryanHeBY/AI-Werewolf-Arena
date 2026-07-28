@@ -5,7 +5,6 @@ import { ActionWindow, BoardConfig, Role, WinCondition } from "../../core/domain
  */
 export const twelvePlayerStandardConfig: BoardConfig = {
   boardSize: 12,
-  revealOnDeath: true,
   enableSheriff: true,
   winConditions: [WinCondition.SlaughterSide, WinCondition.WolfReachHalf],
   hooks: {

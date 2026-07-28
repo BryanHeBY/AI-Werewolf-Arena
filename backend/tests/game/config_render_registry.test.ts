@@ -45,7 +45,6 @@ describe("ConfigRenderRegistry", () => {
     const config: BoardConfig = {
       boardSize: 6,
       roleSetups: [...sixPlayerMvpConfig.roleSetups],
-      revealOnDeath: false,
       hooks: {
         onDaybreak: false,
         onPreElection: false,

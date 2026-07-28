@@ -31,7 +31,6 @@ type StructuredBoardConfig = {
     roleSetups?: unknown;
   };
   rules?: {
-    revealOnDeath?: boolean;
     winCondition?: unknown;
     winConditions?: unknown;
     hooks?: Partial<HookConfig>;
@@ -200,7 +199,6 @@ function isBoardOverrideShape(value: unknown): value is BoardOverride {
   const keys = Object.keys(value);
   const supported = new Set([
     "boardSize",
-    "revealOnDeath",
     "enableSheriff",
     "initialSheriffSeat",
     "winCondition",
@@ -237,9 +235,6 @@ function parseStructuredBoardOverride(raw: StructuredBoardConfig): BoardOverride
   }
 
   if (isJsonObject(raw.rules)) {
-    if (typeof raw.rules.revealOnDeath === "boolean") {
-      out.revealOnDeath = raw.rules.revealOnDeath;
-    }
     if (typeof raw.rules.winCondition === "string") {
       out.winCondition = raw.rules.winCondition as BoardConfig["winCondition"];
     }

@@ -9,7 +9,6 @@
     ]
   },
   "rules": {
-    "revealOnDeath": false,
     "winConditions": ["slaughter_city", "wolf_reach_half"],
     "hooks": {
       "onDaybreak": false,
