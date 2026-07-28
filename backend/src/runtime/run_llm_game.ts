@@ -3,9 +3,12 @@
  * 真实 LLM 对局运行脚本：用于本地回放与可观测调试。
  */
 import { bootstrapGame } from "../app/bootstrap";
+import { promises as fs } from "node:fs";
+import * as path from "node:path";
 import { appConfig } from "./config";
 import {
   loadRuntimeConfig,
+  GameAgentSelection,
   ResolvedAgentRuntimeProfile,
   resolveAgentProfileByName,
 } from "./config/runtime_config";
@@ -30,7 +33,12 @@ import {
   SessionRecordManager,
 } from "../observability";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
-import { BaselineBotActionProvider, LlmActionProvider } from "../ai";
+import {
+  AcpActionProvider,
+  AcpProcessClient,
+  BaselineBotActionProvider,
+  LlmActionProvider,
+} from "../ai";
 
 /**
  * 支持的对局板子名称。
@@ -56,6 +64,16 @@ export interface RunLlmGameOptions {
   printPrivateEvents: boolean;
   recordRootDir?: string;
   configsDir?: string;
+}
+
+function selectionName(selection: GameAgentSelection | undefined): string | undefined {
+  return typeof selection === "string" ? selection : selection?.agent;
+}
+
+function selectionSpawnArgs(selection: GameAgentSelection | undefined): string[] {
+  return typeof selection === "object" && selection?.spawnArgs
+    ? [...selection.spawnArgs]
+    : [];
 }
 
 function parseArgs(argv: string[]): Partial<RunLlmGameOptions> {
@@ -213,6 +231,88 @@ function toReplayStage(event: { type: string; payload: Record<string, any> }): s
   return getDefaultScriptEventRenderRegistry().toReplayStage(event as GameEvent);
 }
 
+type AcpUpdateRecord = Record<string, unknown>;
+
+function asAcpUpdateRecord(value: unknown): AcpUpdateRecord | null {
+  return value && typeof value === "object" ? value as AcpUpdateRecord : null;
+}
+
+function acpUpdateText(value: unknown): string {
+  if (typeof value === "string") return value;
+  const record = asAcpUpdateRecord(value);
+  return typeof record?.text === "string" ? record.text : "";
+}
+
+function compactAcpText(value: string, maxLength = 500): string {
+  const normalized = value.replace(/\s+/g, " ").trim();
+  return normalized.length > maxLength ? `${normalized.slice(0, maxLength)}…` : normalized;
+}
+
+/**
+ * ACP adapter emits token chunks, command snapshots, usage counters and status
+ * pulses. The console should expose decisions and tool boundaries, while the
+ * complete protocol trace remains in each player's .acp-logs directory.
+ */
+function createAcpConsoleLogger(
+  actorId: number,
+  log: (text: string, tone?: "muted" | "info" | "ok" | "warn" | "error" | "accent" | "god") => void,
+): (update: unknown) => void {
+  let pendingMessage: { id: string; text: string } | null = null;
+  const toolLabels = new Map<string, string>();
+  const flushMessage = () => {
+    if (!pendingMessage) return;
+    const text = compactAcpText(pendingMessage.text);
+    // Codex emits this stock final answer after a normal turn interrupt. It
+    // carries no game information and would otherwise dominate ACP logs.
+    if (text && !/^\*?conversation interrupted\*?$/i.test(text)) {
+      log(`[acp][${actorId}][message] ${text}`, "muted");
+    }
+    pendingMessage = null;
+  };
+
+  return (update: unknown) => {
+    const event = asAcpUpdateRecord(update);
+    if (!event || typeof event.sessionUpdate !== "string") return;
+    const type = event.sessionUpdate;
+    if (type === "agent_message_chunk") {
+      const messageId = typeof event.messageId === "string" ? event.messageId : "unknown";
+      if (pendingMessage && pendingMessage.id !== messageId) flushMessage();
+      if (!pendingMessage) pendingMessage = { id: messageId, text: "" };
+      pendingMessage.text += acpUpdateText(event.content);
+      return;
+    }
+    flushMessage();
+
+    if (type === "agent_thought_chunk") {
+      const text = compactAcpText(acpUpdateText(event.content), 240);
+      if (text) log(`[acp][${actorId}][thought] ${text}`, "muted");
+      return;
+    }
+    if (type === "tool_call") {
+      const rawInput = asAcpUpdateRecord(event.rawInput);
+      const server = typeof rawInput?.server === "string" ? rawInput.server : undefined;
+      const tool = typeof rawInput?.tool === "string" ? rawInput.tool : undefined;
+      const title = typeof event.title === "string" ? compactAcpText(event.title, 180) : "tool";
+      const label = server && tool ? `${server}.${tool}` : title;
+      const toolCallId = typeof event.toolCallId === "string" ? event.toolCallId : undefined;
+      if (toolCallId) toolLabels.set(toolCallId, label);
+      log(`[acp][${actorId}][tool] start ${label}`, "muted");
+      return;
+    }
+    if (type === "tool_call_update") {
+      const toolCallId = typeof event.toolCallId === "string" ? event.toolCallId : undefined;
+      const label = toolCallId ? toolLabels.get(toolCallId) ?? "tool" : "tool";
+      const status = typeof event.status === "string" ? event.status : "updated";
+      const error = compactAcpText(acpUpdateText(event.error), 240);
+      log(
+        `[acp][${actorId}][tool] ${status} ${label}${error ? ` error=${error}` : ""}`,
+        error || status === "failed" ? "warn" : "muted",
+      );
+      if (toolCallId && (status === "completed" || status === "failed")) toolLabels.delete(toolCallId);
+    }
+  };
+}
+
 class DeadlineAwareActionProvider implements ActionProvider {
   constructor(
     private readonly delegate: ActionProvider,
@@ -278,62 +378,113 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   }
 
   const resolveProfile = (role?: string, actorId?: number): ResolvedAgentRuntimeProfile => {
-    const playerAgentName =
+    const playerSelection =
       actorId !== undefined ? gameConfig.playerAgents?.[String(actorId)] : undefined;
-    const roleAgentName = role ? gameConfig.roleAgents?.[role] : undefined;
-    const selectedAgentName = playerAgentName ?? roleAgentName ?? gameConfig.agent;
-    return resolveAgentProfileByName(runtime, selectedAgentName);
+    const roleSelection = role ? gameConfig.roleAgents?.[role] : undefined;
+    const selection = playerSelection ?? roleSelection ?? gameConfig.agent;
+    const selectedAgentName = selectionName(selection);
+    const profile = resolveAgentProfileByName(runtime, selectedAgentName);
+    const spawnArgs = selectionSpawnArgs(selection);
+    return profile.kind === "acp" && spawnArgs.length
+      ? { ...profile, spawnArgs: [...(profile.spawnArgs ?? []), ...spawnArgs] }
+      : profile;
   };
 
-  const clientByActor = new Map<number, AiSdkClient>();
+  const profilesByActor = new Map<number, ResolvedAgentRuntimeProfile>();
   for (const id of context.world.entityIds()) {
     const roleComp = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-    const profile = resolveProfile(roleComp?.role, id);
-    clientByActor.set(
-      id,
-      new AiSdkClient({
-        providerType: profile.provider.type,
-        providerName: profile.providerName,
-        baseURL: profile.provider.baseURL,
-        apiKey: profile.provider.apiKey,
-        model: profile.model,
-        userAgent: profile.provider.userAgent,
-        temperature: profile.temperature ?? 0.2,
-        maxTokens: profile.maxTokens ?? 512,
-        forceJsonResponse: profile.forceJsonResponse ?? forceJsonResponse,
-        reasoningEnabled: profile.reasoningEnabled ?? true,
-        reasoningEffort: profile.reasoningEffort ?? "medium",
-        thinkingEnabled: profile.thinkingEnabled ?? false,
-      }),
+    profilesByActor.set(id, resolveProfile(roleComp?.role, id));
+  }
+  const profiles = [...profilesByActor.values()];
+  const usesAcp = profiles.some((profile) => profile.kind === "acp");
+  if (usesAcp && profiles.some((profile) => profile.kind !== "acp")) {
+    throw new Error("runtime_config_mixed_llm_and_acp_agents_not_supported_yet");
+  }
+
+  let acpActionProvider: AcpActionProvider | null = null;
+  let actionProvider: ActionProvider;
+  if (usesAcp) {
+    const acpWorkspaceRoot = path.join(replayRecordRoot, replaySessionId, "acp-workspaces");
+    await fs.mkdir(acpWorkspaceRoot, { recursive: true });
+    acpActionProvider = new AcpActionProvider(context.world, {
+      sessionFactoryResolver: (actorId) => {
+        const profile = profilesByActor.get(actorId);
+        if (!profile || profile.kind !== "acp" || profile.provider.type !== "acp") {
+          throw new Error(`runtime_config_acp_profile_missing_for_actor:${actorId}`);
+        }
+        const logAcpUpdate = options.printThinking ? createAcpConsoleLogger(actorId, log) : undefined;
+        return new AcpProcessClient({
+          command: profile.provider.command,
+          args: [...(profile.provider.args ?? []), ...(profile.spawnArgs ?? [])],
+          env: profile.provider.env,
+          cwd: profile.provider.cwd ?? path.join(acpWorkspaceRoot, `player-${actorId}`),
+          onUpdate: ({ update }) => {
+            logAcpUpdate?.(update);
+          },
+        });
+      },
+      personalityPromptResolver: (request, role) => {
+        const profile = resolveProfile(role?.role, request.actorId);
+        return profile.kind === "acp" ? profile.personalityPrompt : undefined;
+      },
+      boardConfig,
+      turnTimeoutMs: options.llmTimeoutMs,
+      fallbackProvider: new BaselineBotActionProvider(context.world),
+    });
+    actionProvider = acpActionProvider;
+  } else {
+    const clientByActor = new Map<number, AiSdkClient>();
+    for (const [id, profile] of profilesByActor) {
+      if (profile.kind !== "llm" || profile.provider.type === "acp" || !profile.model) {
+        throw new Error(`runtime_config_llm_profile_missing_for_actor:${id}`);
+      }
+      clientByActor.set(
+        id,
+        new AiSdkClient({
+          providerType: profile.provider.type,
+          providerName: profile.providerName,
+          baseURL: profile.provider.baseURL,
+          apiKey: profile.provider.apiKey,
+          model: profile.model,
+          userAgent: profile.provider.userAgent,
+          temperature: profile.temperature ?? 0.2,
+          maxTokens: profile.maxTokens ?? 512,
+          forceJsonResponse: profile.forceJsonResponse ?? forceJsonResponse,
+          reasoningEnabled: profile.reasoningEnabled ?? true,
+          reasoningEffort: profile.reasoningEffort ?? "medium",
+          thinkingEnabled: profile.thinkingEnabled ?? false,
+        }),
+      );
+    }
+    actionProvider = LlmActionProvider.fromModelClient(
+      context.world,
+      clientByActor.get(context.world.entityIds()[0])!,
+      {
+        clientResolver: (request) =>
+          clientByActor.get(request.actorId) ??
+          clientByActor.get(context.world.entityIds()[0])!,
+        requestConcurrencyScopeResolver: (request, role) =>
+          resolveProfile(role?.role, request.actorId).providerName,
+        maxConcurrentRequestsResolver: (request, role) => {
+          const profile = resolveProfile(role?.role, request.actorId);
+          return profile.provider.type === "acp" ? undefined : profile.provider.maxConcurrentRequests;
+        },
+        personalityPromptResolver: (request, role) =>
+          resolveProfile(role?.role, request.actorId).personalityPrompt,
+        trace: options.trace,
+        fallbackProvider: new BaselineBotActionProvider(context.world),
+        maxPromptEvents: 20,
+        llmTimeoutMs: options.llmTimeoutMs,
+        colorizeLogs: colorEnabled,
+        printLlmIo: options.printLlmIo,
+        printThinking: options.printThinking,
+        boardConfig,
+      },
     );
   }
 
-  const actionProvider = LlmActionProvider.fromModelClient(
-    context.world,
-    clientByActor.get(context.world.entityIds()[0])!,
-    {
-      clientResolver: (request, role) =>
-        clientByActor.get(request.actorId) ??
-        clientByActor.get(context.world.entityIds()[0])!,
-      requestConcurrencyScopeResolver: (request, role) =>
-        resolveProfile(role?.role, request.actorId).providerName,
-      maxConcurrentRequestsResolver: (request, role) =>
-        resolveProfile(role?.role, request.actorId).provider.maxConcurrentRequests,
-      personalityPromptResolver: (request, role) =>
-        resolveProfile(role?.role, request.actorId).personalityPrompt,
-      trace: options.trace,
-      fallbackProvider: new BaselineBotActionProvider(context.world),
-      maxPromptEvents: 20,
-      llmTimeoutMs: options.llmTimeoutMs,
-      colorizeLogs: colorEnabled,
-      printLlmIo: options.printLlmIo,
-      printThinking: options.printThinking,
-      boardConfig,
-    },
-  );
-
   log(
-    `[run_llm_game] start board=${options.board} maxDays=${options.maxDays} agent=${defaultAgentProfile.name} model=${defaultAgentProfile.model} provider=${defaultAgentProfile.providerName} maxRuntimeMs=${options.maxRuntimeMs} llmTimeoutMs=${options.llmTimeoutMs}`,
+    `[run_llm_game] start board=${options.board} maxDays=${options.maxDays} agent=${defaultAgentProfile.name} kind=${defaultAgentProfile.kind} model=${defaultAgentProfile.model ?? "n/a"} provider=${defaultAgentProfile.providerName} maxRuntimeMs=${options.maxRuntimeMs} llmTimeoutMs=${options.llmTimeoutMs}`,
     "info",
   );
   if (replayManager) {
@@ -567,6 +718,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     flushStreamEvents();
     clearInterval(heartbeat);
     clearInterval(streamTimer);
+    await acpActionProvider?.close();
   }
   const snapshot = context.phaseManager.getSnapshot();
   const events = context.phaseManager.getEvents();

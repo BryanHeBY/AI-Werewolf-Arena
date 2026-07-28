@@ -3,3 +3,4 @@
  */
 export * from "./providers/action_providers";
 export * from "./llm/llm_action_provider";
+export * from "./acp/acp_action_provider";

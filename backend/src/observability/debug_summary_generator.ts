@@ -278,7 +278,12 @@ async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | nu
     runtime,
     runtime.debugSummary?.agent?.agentName ?? runtime.game?.debugSummaryAgent ?? runtime.game?.agent,
   );
-  if (!debugAgentProfile?.provider?.apiKey || !debugAgentProfile?.model) {
+  if (
+    debugAgentProfile.kind !== "llm" ||
+    debugAgentProfile.provider.type === "acp" ||
+    !debugAgentProfile.provider.apiKey ||
+    !debugAgentProfile.model
+  ) {
     return null;
   }
 

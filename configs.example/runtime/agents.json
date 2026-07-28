@@ -9,6 +9,12 @@
       "forceJsonResponse": true,
       "reasoningEnabled": false,
       "thinkingEnabled": false
+    },
+    "acp_default": {
+      "kind": "acp",
+      "provider": "acp_local",
+      "sessionReuse": "per_player",
+      "actionTransport": "mcp"
     }
   }
 }

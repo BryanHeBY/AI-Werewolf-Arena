@@ -1,0 +1,19 @@
+{
+  "board": "twelve_player_standard",
+  "agent": "acp_default",
+  "playerAgents": {
+    "1": {
+      "agent": "acp_default",
+      "spawnArgs": ["--model", "fast-model"]
+    },
+    "6": {
+      "agent": "acp_default",
+      "spawnArgs": ["--model", "strong-model"]
+    }
+  },
+  "maxDays": 2,
+  "maxRuntimeMs": 1800000,
+  "llmTimeoutMs": 45000,
+  "streamEvents": true,
+  "printPrivateEvents": true
+}

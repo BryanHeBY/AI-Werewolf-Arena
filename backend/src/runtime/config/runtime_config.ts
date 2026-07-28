@@ -2,15 +2,29 @@ import { promises as fs } from "fs";
 import * as path from "path";
 
 /** `openai` covers OpenRouter and other Chat Completions-compatible gateways. */
-export type ProviderType = "openai" | "anthropic";
+export type ProviderType = "openai" | "anthropic" | "acp";
 
-export interface ProviderConfig {
-  type: ProviderType;
+export interface LlmProviderConfig {
+  type: "openai" | "anthropic";
   apiKey: string;
   baseURL?: string;
   userAgent?: string;
   maxConcurrentRequests?: number;
 }
+
+/** ACP 是 Agent 进程传输，不是模型 API Provider。 */
+export interface AcpProviderConfig {
+  type: "acp";
+  transport?: "stdio";
+  command: string;
+  args?: string[];
+  env?: Record<string, string>;
+  cwd?: string;
+  maxConcurrentSessions?: number;
+  initializeTimeoutMs?: number;
+}
+
+export type ProviderConfig = LlmProviderConfig | AcpProviderConfig;
 
 export interface AgentProfileConfig {
   model: string;
@@ -23,9 +37,21 @@ export interface AgentProfileConfig {
   personalityPrompt?: string;
 }
 
-export interface AgentEntryConfig extends AgentProfileConfig {
+export interface LlmAgentEntryConfig extends AgentProfileConfig {
+  kind?: "llm";
   provider: string;
 }
+
+export interface AcpAgentEntryConfig {
+  kind: "acp";
+  provider: string;
+  /** 静态 Agent 启动参数，可被 playerAgents 覆盖；不允许存放身份或游戏状态。 */
+  spawnArgs?: string[];
+  sessionReuse?: "per_player";
+  actionTransport?: "mcp";
+}
+
+export type AgentEntryConfig = LlmAgentEntryConfig | AcpAgentEntryConfig;
 
 export interface ProvidersConfig {
   default: string;
@@ -36,6 +62,14 @@ export interface AgentsConfig {
   default: string;
   items: Record<string, AgentEntryConfig>;
 }
+
+/** 对局中按位置/角色选择 Agent；对象形式仅允许覆写静态启动参数。 */
+export type GameAgentSelection =
+  | string
+  | {
+      agent: string;
+      spawnArgs?: string[];
+    };
 
 // 兼容旧版 agent.json 结构。
 export interface LegacyAgentConfig {
@@ -60,8 +94,8 @@ export interface GameConfig {
   recordRootDir?: string;
   // 新结构：对局引用已定义 agent 名称，不再内联定义模型参数。
   agent?: string;
-  roleAgents?: Record<string, string>;
-  playerAgents?: Record<string, string>;
+  roleAgents?: Record<string, GameAgentSelection>;
+  playerAgents?: Record<string, GameAgentSelection>;
   debugSummaryAgent?: string;
   // 兼容旧结构（将逐步弃用）。
   roleAgentProfiles?: Record<string, Partial<AgentProfileConfig>>;
@@ -97,10 +131,22 @@ export interface RuntimeConfig {
   debugSummary?: DebugSummaryConfig;
 }
 
-export interface ResolvedAgentRuntimeProfile extends AgentProfileConfig {
+export interface ResolvedAgentRuntimeProfile {
   name: string;
   providerName: string;
   provider: ProviderConfig;
+  kind: "llm" | "acp";
+  model?: string;
+  temperature?: number;
+  maxTokens?: number;
+  forceJsonResponse?: boolean;
+  reasoningEnabled?: boolean;
+  reasoningEffort?: "low" | "medium" | "high";
+  thinkingEnabled?: boolean;
+  personalityPrompt?: string;
+  spawnArgs?: string[];
+  sessionReuse?: "per_player";
+  actionTransport?: "mcp";
 }
 
 let cachedConfig: RuntimeConfig | null = null;
@@ -119,6 +165,25 @@ function resolveEnvironmentValue(value: string, field: string): string {
 }
 
 function normalizeProviderConfig(name: string, value: ProviderConfig): ProviderConfig {
+  if (value.type === "acp") {
+    if (!value.command?.trim()) {
+      throw new Error(`runtime_config_acp_command_missing: ${name}`);
+    }
+    if (value.transport && value.transport !== "stdio") {
+      throw new Error(`runtime_config_acp_transport_unsupported: ${name}`);
+    }
+    return {
+      ...value,
+      transport: "stdio",
+      args: value.args ?? [],
+      env: Object.fromEntries(
+        Object.entries(value.env ?? {}).map(([key, envValue]) => [
+          key,
+          resolveEnvironmentValue(String(envValue), `providers.items.${name}.env.${key}`),
+        ]),
+      ),
+    };
+  }
   if (value.type !== "openai" && value.type !== "anthropic") {
     throw new Error(`runtime_config_provider_type_unsupported: ${name}`);
   }
@@ -169,7 +234,7 @@ function normalizeProviders(raw: any): ProvidersConfig {
     throw new Error("runtime_config_invalid_providers");
   }
   // 兼容旧版 provider.json（单 provider）。
-  if (typeof raw.type === "string" && typeof raw.apiKey === "string") {
+  if (typeof raw.type === "string" && (typeof raw.apiKey === "string" || raw.type === "acp")) {
     const provider = normalizeProviderConfig("default", raw as ProviderConfig);
     return {
       default: "default",
@@ -243,16 +308,7 @@ function normalizeAgents(raw: any, providers: ProvidersConfig): AgentsConfig {
     if (!items[defaultName]) {
       throw new Error(`runtime_config_agent_default_not_found: ${defaultName}`);
     }
-    for (const [name, agent] of Object.entries(items)) {
-      if (!agent.provider || !providers.items[agent.provider]) {
-        throw new Error(
-          `runtime_config_agent_provider_not_found: agent=${name} provider=${String(agent.provider)}`,
-        );
-      }
-      if (!agent.model) {
-        throw new Error(`runtime_config_agent_model_missing: ${name}`);
-      }
-    }
+    validateAgentEntries(items, providers);
     return { default: defaultName, items };
   }
 
@@ -267,16 +323,7 @@ function normalizeAgents(raw: any, providers: ProvidersConfig): AgentsConfig {
     if (!items[defaultName]) {
       throw new Error(`runtime_config_agent_default_not_found: ${defaultName}`);
     }
-    for (const [name, agent] of Object.entries(items)) {
-      if (!agent.provider || !providers.items[agent.provider]) {
-        throw new Error(
-          `runtime_config_agent_provider_not_found: agent=${name} provider=${String(agent.provider)}`,
-        );
-      }
-      if (!agent.model) {
-        throw new Error(`runtime_config_agent_model_missing: ${name}`);
-      }
-    }
+    validateAgentEntries(items, providers);
     return { default: defaultName, items };
   }
 
@@ -285,6 +332,10 @@ function normalizeAgents(raw: any, providers: ProvidersConfig): AgentsConfig {
 
 function toLegacyAgentConfig(agents: AgentsConfig): LegacyAgentConfig {
   const def = agents.items[agents.default];
+  if (def.kind === "acp") {
+    // 兼容层不能承载 ACP；不让旧调用点误把 ACP 当作模型 API。
+    return { default: { model: "" } };
+  }
   return {
     default: {
       model: def.model,
@@ -318,15 +369,47 @@ export function resolveAgentProfileByName(
     name: selected,
     providerName: entry.provider,
     provider,
-    model: entry.model,
-    temperature: entry.temperature,
-    maxTokens: entry.maxTokens,
-    forceJsonResponse: entry.forceJsonResponse,
-    reasoningEnabled: entry.reasoningEnabled,
-    reasoningEffort: entry.reasoningEffort,
-    thinkingEnabled: entry.thinkingEnabled,
-    personalityPrompt: entry.personalityPrompt,
+    kind: entry.kind ?? "llm",
+    ...(entry.kind === "acp"
+      ? {
+          spawnArgs: entry.spawnArgs,
+          sessionReuse: entry.sessionReuse,
+          actionTransport: entry.actionTransport ?? "mcp",
+        }
+      : {
+          model: entry.model,
+          temperature: entry.temperature,
+          maxTokens: entry.maxTokens,
+          forceJsonResponse: entry.forceJsonResponse,
+          reasoningEnabled: entry.reasoningEnabled,
+          reasoningEffort: entry.reasoningEffort,
+          thinkingEnabled: entry.thinkingEnabled,
+          personalityPrompt: entry.personalityPrompt,
+        }),
   };
+}
+
+function validateAgentEntries(items: Record<string, AgentEntryConfig>, providers: ProvidersConfig): void {
+  for (const [name, agent] of Object.entries(items)) {
+    if (!agent.provider || !providers.items[agent.provider]) {
+      throw new Error(
+        `runtime_config_agent_provider_not_found: agent=${name} provider=${String(agent.provider)}`,
+      );
+    }
+    const provider = providers.items[agent.provider];
+    if (agent.kind === "acp") {
+      if (provider.type !== "acp") {
+        throw new Error(`runtime_config_acp_agent_requires_acp_provider: ${name}`);
+      }
+      continue;
+    }
+    if (provider.type === "acp") {
+      throw new Error(`runtime_config_llm_agent_requires_llm_provider: ${name}`);
+    }
+    if (!agent.model) {
+      throw new Error(`runtime_config_agent_model_missing: ${name}`);
+    }
+  }
 }
 
 export async function loadRuntimeConfig(): Promise<RuntimeConfig> {

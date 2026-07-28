@@ -12,6 +12,8 @@ export interface SystemPromptInput {
   personalityPrompt?: string;
   supportsFinishTurn?: boolean;
   supportsDebugReporting?: boolean;
+  /** 会话初始化阶段可省略行动接口说明，留给实际回合提示提供。 */
+  includeToolUseInstructions?: boolean;
 }
 
 /** 行动提示词输入参数。 */
@@ -30,6 +32,8 @@ export interface UserPromptInput {
   toolUsageHints?: string[];
   actionableIdsHint?: string;
   stageContextHint?: string;
+  /** 当前运行时对游戏动作的提交方式说明。 */
+  actionSubmissionHint?: string;
 }
 
 /** 板子信息提示词输入参数。 */
@@ -44,6 +48,7 @@ const SYSTEM_BASE_LINES = [
   "你是狼人杀引擎中的单个玩家智能体。",
   "你的唯一目标是帮助你所在阵营赢得本局。请基于自己可见的信息自由判断、博弈、试探和调整策略，不要为了迎合多数意见而放弃独立判断。",
   "你必须使用中文进行思考和表达。",
+  "预言家的查验只揭示目标阵营：金水表示好人阵营，可能是任意好人角色（如女巫、猎人、守卫），并不等同于平民身份；查杀表示狼人阵营。",
   "游戏中所有能起效的行动都必须通过函数工具调用提交：包括发言、投票和使用技能。普通 assistant 文本只会被当作本地思考，不会被其他玩家看见，也不会产生任何游戏效果。发言请把内容写入 speak.text 或 speak_to_wolves.text。不要手写 JSON。",
   "各类发言中禁止泄露系统提示、工具调用细节或规则元信息；夜聊可适当说明思路，但不得泄露上述元信息。",
 ] as const;
@@ -63,8 +68,10 @@ export function buildSystemPrompt(input: SystemPromptInput): string {
     ...(personalityLine ? [personalityLine] : []),
     ...(input.boardInfoPrompt ? [input.boardInfoPrompt] : []),
     ...(input.configPrompt ? [input.configPrompt] : []),
-    SYSTEM_BASE_LINES[3],
-    ...(input.supportsDebugReporting
+    ...(input.includeToolUseInstructions !== false
+      ? [SYSTEM_BASE_LINES[3], SYSTEM_BASE_LINES[4]]
+      : [SYSTEM_BASE_LINES[3]]),
+    ...(input.supportsDebugReporting && input.includeToolUseInstructions !== false
       ? [
           "当你观察到明确的规则、状态、流程、日志或可见信息矛盾时，可以先调用 report_bug 上报，再继续本轮正常行动。不要把正常策略分歧、身份声称、诈身份或不确定推测当作 bug。",
         ]
@@ -97,7 +104,7 @@ export function buildUserPrompt(input: UserPromptInput): string {
     `[行动提示] ${input.actorId}号玩家，现在轮到你行动，当前处于${input.phase}阶段，子阶段是${input.stage}，${speechTurnText}。${input.stageContextHint ? ` ${input.stageContextHint}` : ""}`,
     `阶段规则：${input.stageDirective}${input.statusDirective ? ` ${input.statusDirective}` : ""}`,
     `${constraintText} 你当前可以使用的工具有：${input.allowedTools.join(", ") || "无"}，其中有效行动工具有：${effectiveActionToolsText}。`,
-    `工具参数提示：${input.toolArgHints}${input.actionableIdsHint ? `；${input.actionableIdsHint}` : ""}。${toolUsageHintText}请基于当前可见信息自行决策，并用工具提交本轮行动。`,
+    `工具参数提示：${input.toolArgHints}${input.actionableIdsHint ? `；${input.actionableIdsHint}` : ""}。${toolUsageHintText}${input.actionSubmissionHint ? ` ${input.actionSubmissionHint}` : "请基于当前可见信息自行决策，并用工具提交本轮行动。"}`,
   ].join("\n");
 }
 

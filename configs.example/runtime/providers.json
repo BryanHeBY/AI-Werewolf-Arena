@@ -7,6 +7,14 @@
       "baseURL": "https://openrouter.ai/api/v1",
       "userAgent": "AWA-Werewolf/1.0",
       "maxConcurrentRequests": 8
+    },
+    "acp_local": {
+      "type": "acp",
+      "transport": "stdio",
+      "command": "your-acp-agent",
+      "args": ["--acp"],
+      "env": {},
+      "maxConcurrentSessions": 12
     }
   }
 }
