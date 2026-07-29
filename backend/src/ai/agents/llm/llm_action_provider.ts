@@ -258,7 +258,7 @@ export class LlmActionProvider implements ActionProvider {
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
     const roleComp = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const client = this.clientResolver?.(request, roleComp) ?? this.client;
-    const built = this.buildMessages(request, Boolean(client.runToolLoop));
+    const built = this.buildMessages(request);
     const messages = built.messages;
     this.appendTrace(
       `context_window player=${request.actorId} phase=${request.phase} start=${built.contextWindowStart} end=${built.contextWindowEnd} total=${built.contextWindowTotal}`,
@@ -902,47 +902,27 @@ export class LlmActionProvider implements ActionProvider {
       const llmAllowedTools = this.buildLlmAllowedTools(request.allowedTools);
       const turnConstraints = resolveTurnConstraints(request);
       const tools = this.buildSdkToolSchemas(llmAllowedTools);
-      // 同回合多工具交互：先缓冲有效动作，finish_turn 时统一做约束校验并决定是否落地。
-      const validActions: ToolCall[] = [];
       let selectedAction: ToolCall | null = null;
       const loop = client.runToolLoop<ToolCall>(
         messages,
         tools,
         {
           onToolCall: async (invocation) => {
-            if (invocation.name === "finish_turn") {
-              // 结束回合由约束判定层把关，不满足则继续留在当前 tool loop。
-              const evaluation = evaluateTurnConstraints(
-                { validActions },
-                turnConstraints,
-              );
-              if (!evaluation.ok) {
-                return {
-                  toolResult: {
-                    ok: false,
-                    error: "turn_constraints_not_satisfied",
-                    details: evaluation.errors,
-                  },
-                };
-              }
-              if (selectedAction) {
-                return {
-                  toolResult: {
-                    ok: true,
-                    reason: "turn_finished_with_action",
-                  },
-                  finalAction: selectedAction,
-                };
-              }
-              return {
-                toolResult: { ok: true, reason: "turn_finished" },
-                stop: true,
-              };
-            }
-
             if (invocation.name === LlmActionProvider.REPORT_BUG_TOOL) {
               return {
                 toolResult: this.handleReportBugToolCall(request, invocation.args),
+              };
+            }
+
+            if (selectedAction) {
+              return {
+                toolResult: {
+                  ok: false,
+                  error: "turn_constraints_max_actions_exceeded",
+                  details: [
+                    `本轮最多允许${turnConstraints.maxValidActions}次有效行动。`,
+                  ],
+                },
               };
             }
 
@@ -992,28 +972,28 @@ export class LlmActionProvider implements ActionProvider {
               }
             }
 
-            if (validActions.length >= turnConstraints.maxValidActions) {
+            const evaluation = evaluateTurnConstraints(
+              { validActions: [parsed] },
+              turnConstraints,
+            );
+            if (!evaluation.ok) {
               return {
                 toolResult: {
                   ok: false,
-                  error: "turn_constraints_max_actions_exceeded",
-                  details: [
-                    `本轮最多允许${turnConstraints.maxValidActions}次有效行动。`,
-                  ],
+                  error: "turn_constraints_not_satisfied",
+                  details: evaluation.errors,
                 },
               };
             }
-
-            validActions.push(parsed);
             selectedAction = parsed;
 
             return {
               toolResult: {
                 ok: true,
                 accepted: true,
-                buffered_action: parsed.name,
-                buffered_count: validActions.length,
+                action: parsed.name,
               },
+              finalAction: parsed,
             };
           },
         },
@@ -1022,7 +1002,7 @@ export class LlmActionProvider implements ActionProvider {
           maxSteps: 8,
           // 必须行动的窗口强制模型先提交一个工具调用，避免模型仅输出
           // assistant 思考文本后结束生成，再触发无意义的整轮重试。
-          // 可选窗口继续使用 auto，以允许 finish_turn / 无动作结束。
+          // 可选窗口允许模型自然结束；这等价于选择不行动。
           toolChoice:
             turnConstraints.minValidActions > 0 ? "required" : "auto",
         },
@@ -1058,15 +1038,6 @@ export class LlmActionProvider implements ActionProvider {
       if (result.finalAction) {
         return result.finalAction;
       }
-      if (selectedAction) {
-        const evaluation = evaluateTurnConstraints(
-          { validActions },
-          turnConstraints,
-        );
-        if (evaluation.ok) {
-          return selectedAction;
-        }
-      }
       return null;
     } finally {
       if (timer) {
@@ -1099,16 +1070,6 @@ export class LlmActionProvider implements ActionProvider {
           additionalProperties: true,
         },
       };
-    });
-    tools.push({
-      name: "finish_turn",
-      description: "申请结束当前回合。系统会先校验回合约束，满足后才真正结束。",
-      parameters: {
-        type: "object",
-        properties: {},
-        description: "空参数对象；调用后表示主动结束本回合。",
-        additionalProperties: false,
-      },
     });
     return tools;
   }
@@ -1193,10 +1154,7 @@ export class LlmActionProvider implements ActionProvider {
   /**
    * 组装本轮发送给模型的完整消息序列。
    */
-  private buildMessages(
-    request: ActionRequest,
-    supportsFinishTurn: boolean = Boolean(this.client.runToolLoop),
-  ): BuildMessagesResult {
+  private buildMessages(request: ActionRequest): BuildMessagesResult {
     const feedDelta = this.ingestBroadcastFeed(request);
     const roleComp = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const maxPlayerId = this.world.entityIds().length;
@@ -1236,9 +1194,6 @@ export class LlmActionProvider implements ActionProvider {
         ? this.configRenderRegistry.renderBoardConfigPrompt(this.boardConfig)
         : undefined;
     const llmAllowedTools = this.buildLlmAllowedTools(request.allowedTools);
-    const promptAllowedTools = supportsFinishTurn
-      ? [...llmAllowedTools, "finish_turn"]
-      : llmAllowedTools;
     const effectiveActionTools = llmAllowedTools.filter(
       (tool) => tool !== LlmActionProvider.REPORT_BUG_TOOL,
     );
@@ -1253,7 +1208,6 @@ export class LlmActionProvider implements ActionProvider {
         boardInfoPrompt,
         configPrompt,
         personalityPrompt: this.personalityPromptResolver?.(request, roleComp),
-        supportsFinishTurn,
         supportsDebugReporting: llmAllowedTools.includes(
           LlmActionProvider.REPORT_BUG_TOOL,
         ),
@@ -1269,20 +1223,19 @@ export class LlmActionProvider implements ActionProvider {
       isSpeechTurn:
         llmAllowedTools.includes("speak") ||
         llmAllowedTools.includes("speak_to_wolves"),
-      stageDirective: this.stageDirective(request, supportsFinishTurn),
+      stageDirective: this.stageDirective(request),
       statusDirective: this.statusDirective(request.actorId, roleComp),
       requiresAction,
       turnConstraintHint: renderTurnConstraintUserHint(turnConstraints),
-      allowedTools: promptAllowedTools,
+      allowedTools: llmAllowedTools,
       effectiveActionTools,
       toolArgHints: [
         this.toolArgHints(llmAllowedTools),
-        ...(supportsFinishTurn ? ["finish_turn args: {}"] : []),
       ]
         .filter(Boolean)
         .join("; "),
       toolUsageHints: this.toolUsageHints(llmAllowedTools),
-      stageContextHint: this.stageContextHint(request, supportsFinishTurn),
+      stageContextHint: this.stageContextHint(request),
       actionableIdsHint: this.targetHintRegistry.buildActionableIdsHint({
         actorId: request.actorId,
         actorRole: roleComp?.role,
@@ -1428,10 +1381,7 @@ export class LlmActionProvider implements ActionProvider {
   /**
    * 构建阶段上下文提示（如女巫可见刀口），减少关键行动前的信息缺失。
    */
-  private stageContextHint(
-    request: ActionRequest,
-    supportsFinishTurn: boolean = Boolean(this.client.runToolLoop),
-  ): string | undefined {
+  private stageContextHint(request: ActionRequest): string | undefined {
     const stage = String(
       request.context.phase ?? request.actionWindow ?? request.context.window ?? "",
     );
@@ -1443,9 +1393,7 @@ export class LlmActionProvider implements ActionProvider {
             tool === "self_destruct" || tool === LlmActionProvider.REPORT_BUG_TOOL,
         );
       if (onlySelfDestructWindow) {
-        return supportsFinishTurn
-          ? "当前为放逐前自爆窗口：唯一会改变局面的动作是 self_destruct；禁止发言、投票和其他行动。若选择不自爆，请调用 finish_turn 结束本回合；report_bug 仅用于上报问题。"
-          : "当前为放逐前自爆窗口：唯一会改变局面的动作是 self_destruct；禁止发言、投票和其他行动。report_bug 仅用于上报问题。";
+        return "当前为放逐前自爆窗口：唯一会改变局面的动作是 self_destruct；禁止发言、投票和其他行动。若选择不自爆，直接结束本次回复即可。report_bug 仅用于上报问题。";
       }
       return undefined;
     }
@@ -1462,16 +1410,9 @@ export class LlmActionProvider implements ActionProvider {
   /**
    * 针对关键子阶段给出强约束指令，减少“狼聊阶段误当投票阶段”等误解。
    */
-  private stageDirective(
-    request: ActionRequest,
-    supportsFinishTurn: boolean = Boolean(this.client.runToolLoop),
-  ): string {
-    const directive =
-      this.toolSpecRegistry.getStageDirective(request.allowedTools) ??
+  private stageDirective(request: ActionRequest): string {
+    return this.toolSpecRegistry.getStageDirective(request.allowedTools) ??
       "请严格区分当前阶段职责，只执行本轮工具对应动作。";
-    return supportsFinishTurn
-      ? directive
-      : directive.replace("；若选择不自爆，请调用 finish_turn 结束回合。", "");
   }
 
   /**

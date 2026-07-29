@@ -73,15 +73,17 @@ class ToolLoopClient {
   }
 }
 
-class FinishTurnOnlyClient {
+class NoActionToolLoopClient {
+  public lastMessages: Array<{ role: string; content: string }> = [];
+
   async chat(): Promise<string> {
     return "";
   }
 
   async runToolLoop<T>(
-    _messages: Array<{ role: string; content: string }>,
+    messages: Array<{ role: string; content: string }>,
     _tools: Array<{ name: string }>,
-    callbacks: {
+    _callbacks: {
       onToolCall: (invocation: {
         id: string;
         name: string;
@@ -94,59 +96,8 @@ class FinishTurnOnlyClient {
       }>;
     },
   ): Promise<{ finalAction: T | null; assistantText: string }> {
-    await callbacks.onToolCall({
-      id: "finish_1",
-      name: "finish_turn",
-      args: {},
-      rawArgs: "{}",
-    });
-    return { finalAction: null, assistantText: "finish_turn_called" };
-  }
-}
-
-class FinishThenSpeakThenFinishClient {
-  async chat(): Promise<string> {
-    return "";
-  }
-
-  async runToolLoop<T>(
-    _messages: Array<{ role: string; content: string }>,
-    _tools: Array<{ name: string }>,
-    callbacks: {
-      onToolCall: (invocation: {
-        id: string;
-        name: string;
-        args: Record<string, unknown>;
-        rawArgs: string;
-      }) => Promise<{
-        toolResult: Record<string, unknown> | string;
-        finalAction?: T;
-        stop?: boolean;
-      }>;
-    },
-  ): Promise<{ finalAction: T | null; assistantText: string }> {
-    await callbacks.onToolCall({
-      id: "finish_1",
-      name: "finish_turn",
-      args: {},
-      rawArgs: "{}",
-    });
-    await callbacks.onToolCall({
-      id: "speak_1",
-      name: "speak",
-      args: { text: "补一次有效动作" },
-      rawArgs: '{"text":"补一次有效动作"}',
-    });
-    const done = await callbacks.onToolCall({
-      id: "finish_2",
-      name: "finish_turn",
-      args: {},
-      rawArgs: "{}",
-    });
-    return {
-      finalAction: (done.finalAction ?? null) as T | null,
-      assistantText: "finish_then_speak_then_finish",
-    };
+    this.lastMessages = messages;
+    return { finalAction: null, assistantText: "tool_loop_finished_without_action" };
   }
 }
 
@@ -818,7 +769,7 @@ describe("LlmActionProvider", () => {
         expect(lines[0]).toContain("[行动提示]");
         expect(lines[0]).toContain("目前是你的发言轮次");
         expect(lines[1]).toContain("阶段规则：");
-        expect(lines[2]).toContain("你本轮可多次调用工具");
+        expect(lines[2]).toContain("本轮结束前需满足");
         expect(lines[3]).toContain("工具参数提示：");
         expect(latest).not.toContain("玩家编号=");
         expect(latest).not.toContain("当前板子信息");
@@ -937,11 +888,11 @@ describe("LlmActionProvider", () => {
     expect(joined).toContain("【广播】[发言][公开][2] 我是2号");
   });
 
-  test("sdk loop finish_turn falls back when action is required", async () => {
+  test("sdk loop falls back when it completes without a required action", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
-      new FinishTurnOnlyClient() as any,
+      new NoActionToolLoopClient() as any,
       {
         fallbackProvider: new FallbackProvider({
           name: "speak",
@@ -963,30 +914,7 @@ describe("LlmActionProvider", () => {
     });
   });
 
-  test("finish_turn should pass after constraints are satisfied in same turn", async () => {
-    const context = bootstrapGame(sixPlayerMvpConfig);
-    const provider = new LlmActionProvider(
-      context.world,
-      new FinishThenSpeakThenFinishClient() as any,
-      {
-        fallbackProvider: new FallbackProvider(null),
-      },
-    );
-
-    const action = await provider.getAction({
-      phase: Phase.Day,
-      actorId: 1,
-      allowedTools: ["speak"],
-      context: { must_act: true, broadcast_feed: [] },
-    });
-
-    expect(action).toEqual({
-      name: "speak",
-      args: { text: "补一次有效动作" },
-    });
-  });
-
-  test("mustAct=true should expose finish_turn tool and rely on constraint checks", async () => {
+  test("mustAct=true should require a game action tool", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const client = new CaptureToolsClient();
     const provider = new LlmActionProvider(context.world, client as any, {
@@ -1001,11 +929,10 @@ describe("LlmActionProvider", () => {
     });
 
     expect(client.lastToolNames).toContain("speak");
-    expect(client.lastToolNames).toContain("finish_turn");
     expect(client.lastOptions?.toolChoice).toBe("required");
   });
 
-  test("mustAct=false should expose finish_turn tool", async () => {
+  test("mustAct=false should permit a tool-less response", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const client = new CaptureToolsClient();
     const provider = new LlmActionProvider(context.world, client as any, {
@@ -1020,16 +947,15 @@ describe("LlmActionProvider", () => {
     });
 
     expect(client.lastToolNames).toContain("speak");
-    expect(client.lastToolNames).toContain("finish_turn");
     expect(client.lastOptions?.toolChoice).toBe("auto");
   });
 
-  test("optional self-destruct window should allow finish_turn without self_destruct", async () => {
+  test("optional self-destruct window should allow completion without self_destruct", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const wolfId = context.playerIds.find(
       (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf",
     )!;
-    const provider = new LlmActionProvider(context.world, new FinishTurnOnlyClient() as any);
+    const provider = new LlmActionProvider(context.world, new NoActionToolLoopClient() as any);
 
     const action = await provider.getAction({
       phase: Phase.Voting,
@@ -1069,10 +995,6 @@ describe("LlmActionProvider", () => {
     expect(voteTool?.parameters?.required).toEqual(["target_id", "abstain"]);
     expect(voteTool?.parameters?.properties?.target_id?.description).toContain("弃票时必须为 null");
     expect(voteTool?.parameters?.properties?.abstain?.description).toContain("是否弃票");
-
-    const finishTurnTool = client.lastTools.find((tool) => tool.name === "finish_turn");
-    expect(finishTurnTool?.description).toContain("申请结束当前回合");
-    expect(finishTurnTool?.parameters?.description).toContain("空参数对象");
 
     const reportBugTool = client.lastTools.find((tool) => tool.name === "report_bug");
     expect(reportBugTool?.description).toContain("明确规则、状态、流程、日志或可见信息矛盾");
@@ -1116,7 +1038,7 @@ describe("LlmActionProvider", () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const provider = new LlmActionProvider(
       context.world,
-      new FinishTurnOnlyClient() as any,
+      new NoActionToolLoopClient() as any,
       // 不传 fallbackProvider，走 BaselineBotActionProvider 默认兜底。
     );
 
@@ -1267,7 +1189,6 @@ describe("LlmActionProvider", () => {
         (messages) => {
           const user = messages.find((msg) => msg.role === "user")?.content ?? "";
           expect(user).toContain("唯一会改变局面的动作是 self_destruct");
-          expect(user).not.toContain("finish_turn");
         },
       ),
       {
@@ -1288,12 +1209,12 @@ describe("LlmActionProvider", () => {
     });
   });
 
-  test("sdk self-destruct window should expose finish_turn as the no-action path", async () => {
+  test("sdk self-destruct window should allow a tool-less no-action response", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const wolfId = context.world
       .entityIds()
       .find((id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf")!;
-    const client = new ToolLoopClient("finish_turn", {});
+    const client = new NoActionToolLoopClient();
     const provider = new LlmActionProvider(context.world, client as any, {
       fallbackProvider: new FallbackProvider(null),
     });
@@ -1307,8 +1228,8 @@ describe("LlmActionProvider", () => {
 
     expect(action).toBeNull();
     const user = client.lastMessages.find((message) => message.role === "user")?.content ?? "";
-    expect(user).toContain("若选择不自爆，请调用 finish_turn");
-    expect(user).toContain("你当前可以使用的工具有：self_destruct, report_bug, finish_turn");
+    expect(user).toContain("若选择不自爆，直接结束本次回复即可");
+    expect(user).toContain("你当前可以使用的工具有：self_destruct, report_bug");
   });
 
   test("initial system prompt should include rendered board config summary", async () => {
@@ -1351,10 +1272,8 @@ describe("LlmActionProvider", () => {
     expect(system).toContain("所有能起效的行动都必须通过函数工具调用提交");
     expect(system).toContain("普通 assistant 文本只会被当作本地思考");
     expect(system).toContain("发言请把内容写入 speak.text 或 speak_to_wolves.text");
-    expect(system).toContain("必须调用 finish_turn");
     expect(system).toContain("可以先调用 report_bug 上报，再继续本轮正常行动");
     const user = client.lastMessages.find((message) => message.role === "user")?.content ?? "";
-    expect(user).toContain("finish_turn");
     expect(user).toContain("正常策略分歧、身份声称、诈身份或信息不足不是 bug");
   });
 });

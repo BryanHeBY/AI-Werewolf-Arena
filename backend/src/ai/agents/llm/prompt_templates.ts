@@ -10,7 +10,6 @@ export interface SystemPromptInput {
   boardInfoPrompt?: string;
   configPrompt?: string;
   personalityPrompt?: string;
-  supportsFinishTurn?: boolean;
   supportsDebugReporting?: boolean;
   /** 会话初始化阶段可省略行动接口说明，留给实际回合提示提供。 */
   includeToolUseInstructions?: boolean;
@@ -75,9 +74,6 @@ export function buildSystemPrompt(input: SystemPromptInput): string {
       ? [
           "当你观察到明确的规则、状态、流程、日志或可见信息矛盾时，可以先调用 report_bug 上报，再继续本轮正常行动。不要把正常策略分歧、身份声称、诈身份或不确定推测当作 bug。",
         ]
-      : []),
-    ...(input.supportsFinishTurn
-      ? ["若要在不行动的窗口结束回合，也必须调用 finish_turn 工具。"]
       : []),
   ].join("\n");
 }

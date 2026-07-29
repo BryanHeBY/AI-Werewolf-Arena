@@ -96,7 +96,7 @@ export function renderTurnConstraintSystemRule(
       ? ` 结束前至少执行以下工具之一：${constraints.requiredAnyTools.join(", ")}。`
       : "";
   const summary = constraints.summary ? ` ${constraints.summary}` : "";
-  return `${base}${requiredTools}${summary} 你可在任意时机调用 finish_turn 申请结束回合，系统将按上述约束校验。`;
+  return `${base}${requiredTools}${summary}`;
 }
 
 /**
@@ -109,6 +109,5 @@ export function renderTurnConstraintUserHint(
     constraints.requiredAnyTools.length > 0
       ? ` 且需命中工具：${constraints.requiredAnyTools.join(", ")}`
       : "";
-  return `你本轮可多次调用工具；结束前需满足：最少${constraints.minValidActions}次、最多${constraints.maxValidActions}次有效行动${requiredTools}。`;
+  return `本轮结束前需满足：最少${constraints.minValidActions}次、最多${constraints.maxValidActions}次有效行动${requiredTools}。`;
 }
-
