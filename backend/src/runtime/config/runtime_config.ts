@@ -211,13 +211,15 @@ async function readJsonIfExists(filePath: string): Promise<any | null> {
 }
 
 async function readGameOverride(configRoot: string): Promise<GameConfig | null> {
-  const name = process.env.GAME_CONFIG_NAME?.trim() || "default";
-  if (!name) {
-    return null;
-  }
+  const requestedName = process.env.GAME_CONFIG_NAME?.trim();
+  const name = requestedName || "default";
   const gamesDir = path.join(configRoot, "games");
   const overridePath = path.join(gamesDir, `${name}.json`);
-  return readJsonIfExists(overridePath);
+  const game = await readJsonIfExists(overridePath);
+  if (!game && requestedName) {
+    throw new Error(`runtime_config_game_not_found: ${overridePath}`);
+  }
+  return game;
 }
 
 function resolveConfigRoot(): string {

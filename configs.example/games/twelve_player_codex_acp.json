@@ -1,0 +1,15 @@
+{
+  "board": "twelve_player_standard",
+  "agent": "acp_default",
+  "maxDays": 10,
+  "maxRuntimeMs": 1800000,
+  "llmTimeoutMs": 120000,
+  "trace": false,
+  "printAllEvents": false,
+  "printChat": false,
+  "streamEvents": true,
+  "color": true,
+  "printLlmIo": false,
+  "printThinking": true,
+  "printPrivateEvents": true
+}

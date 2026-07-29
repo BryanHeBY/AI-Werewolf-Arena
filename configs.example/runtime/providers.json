@@ -3,7 +3,7 @@
   "items": {
     "openrouter": {
       "type": "openai",
-      "apiKey": "${OPENROUTER_API_KEY}",
+      "apiKey": "YOUR_OPENROUTER_API_KEY",
       "baseURL": "https://openrouter.ai/api/v1",
       "userAgent": "AWA-Werewolf/1.0",
       "maxConcurrentRequests": 8
