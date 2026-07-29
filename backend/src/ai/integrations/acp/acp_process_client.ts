@@ -6,6 +6,60 @@ import * as acp from "@agentclientprotocol/sdk";
 import { AcpTurnRegistry } from "./acp_turn_registry";
 import { WerewolfMcpControlServer } from "./werewolf_mcp_control";
 
+const ACP_CANCEL_TIMEOUT_MS = 300;
+const ACP_SESSION_CLOSE_TIMEOUT_MS = 1_000;
+// codex-acp notices stdin closure and gives its nested Codex process two seconds
+// to stop before killing it. Leave a small margin for that intentional teardown.
+const ACP_PROCESS_GRACEFUL_EXIT_TIMEOUT_MS = 2_500;
+const ACP_PROCESS_TERMINATE_TIMEOUT_MS = 750;
+const ACP_PROCESS_KILL_TIMEOUT_MS = 750;
+
+async function settleWithin(promise: Promise<unknown>, timeoutMs: number): Promise<boolean> {
+  let timer: NodeJS.Timeout | undefined;
+  try {
+    return await Promise.race([
+      promise.then(
+        () => true,
+        () => false,
+      ),
+      new Promise<boolean>((resolve) => {
+        timer = setTimeout(() => resolve(false), timeoutMs);
+      }),
+    ]);
+  } finally {
+    if (timer) {
+      clearTimeout(timer);
+    }
+  }
+}
+
+async function waitForProcessExit(process: ChildProcess, timeoutMs: number): Promise<boolean> {
+  if (process.exitCode !== null || process.signalCode !== null) {
+    return true;
+  }
+  return new Promise((resolve) => {
+    const onExit = () => finish(true);
+    const timer = setTimeout(() => finish(false), timeoutMs);
+    const finish = (exited: boolean) => {
+      clearTimeout(timer);
+      process.off("exit", onExit);
+      resolve(exited);
+    };
+    process.once("exit", onExit);
+  });
+}
+
+function signalProcess(process: ChildProcess, signal: NodeJS.Signals): void {
+  if (process.exitCode !== null || process.signalCode !== null) {
+    return;
+  }
+  try {
+    process.kill(signal);
+  } catch {
+    // The process can exit between the state check and signal delivery.
+  }
+}
+
 export interface AcpSessionUpdate {
   actorId: number;
   update: unknown;
@@ -105,7 +159,7 @@ export class AcpProcessClient implements AcpSessionFactory {
       if (childError) {
         throw childError;
       }
-      await connection.agent.request(acp.methods.agent.initialize, {
+      const initializeResponse = await connection.agent.request(acp.methods.agent.initialize, {
         protocolVersion: acp.PROTOCOL_VERSION,
         clientCapabilities: {},
       });
@@ -123,6 +177,8 @@ export class AcpProcessClient implements AcpSessionFactory {
         this.options.onUpdate,
         mcpControl,
         approvedWerewolfMcpToolCallIds,
+        connection,
+        initializeResponse.agentCapabilities?.sessionCapabilities?.close != null,
       );
       if (input.initialPrompt?.trim()) {
         await processSession.prompt(input.initialPrompt);
@@ -153,6 +209,8 @@ class AcpProcessSession implements AcpSession {
     private readonly onUpdate?: (update: AcpSessionUpdate) => void,
     private readonly mcpControl?: WerewolfMcpControlServer,
     private readonly approvedWerewolfMcpToolCallIds?: Set<string>,
+    private readonly connection?: acp.ClientConnection,
+    private readonly supportsSessionClose = false,
   ) {}
 
   get sessionId(): string {
@@ -177,14 +235,43 @@ class AcpProcessSession implements AcpSession {
     }
     this.closed = true;
     try {
-      await this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId });
-      await this.client.request(acp.methods.agent.session.close, { sessionId: this.session.sessionId });
-    } catch {
-      // 某些 ACP Agent 未声明 session/close；进程终止仍能释放局部能力。
+      await settleWithin(
+        this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId }),
+        ACP_CANCEL_TIMEOUT_MS,
+      );
+      if (this.supportsSessionClose) {
+        await settleWithin(
+          this.client.request(acp.methods.agent.session.close, { sessionId: this.session.sessionId }),
+          ACP_SESSION_CLOSE_TIMEOUT_MS,
+        );
+      }
     } finally {
       this.session.dispose();
-      this.process.kill();
-      await this.mcpControl?.close();
+      // Closing the transport closes stdin. codex-acp treats that as shutdown and
+      // gives its nested Codex process a short graceful window before terminating it.
+      this.connection?.close();
+      this.process.stdin?.end();
+
+      let exited = await waitForProcessExit(
+        this.process,
+        ACP_PROCESS_GRACEFUL_EXIT_TIMEOUT_MS,
+      );
+      if (!exited) {
+        signalProcess(this.process, "SIGTERM");
+        exited = await waitForProcessExit(this.process, ACP_PROCESS_TERMINATE_TIMEOUT_MS);
+      }
+      if (!exited) {
+        signalProcess(this.process, "SIGKILL");
+        exited = await waitForProcessExit(this.process, ACP_PROCESS_KILL_TIMEOUT_MS);
+      }
+      if (!exited) {
+        // Do not let a non-cooperative external agent retain this game's event loop.
+        this.process.stdin?.destroy();
+        this.process.stdout?.destroy();
+        this.process.stderr?.destroy();
+        this.process.unref();
+      }
+      await this.mcpControl?.close({ force: true });
     }
   }
 

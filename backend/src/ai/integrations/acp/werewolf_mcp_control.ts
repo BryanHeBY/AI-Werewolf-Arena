@@ -57,10 +57,13 @@ export class WerewolfMcpControlServer {
     this.sessionId = sessionId;
   }
 
-  async close(): Promise<void> {
+  async close(options: { force?: boolean } = {}): Promise<void> {
     this.sessionId = null;
     if (!this.endpoint) return;
     this.endpoint = null;
+    if (options.force) {
+      this.server.closeAllConnections();
+    }
     await new Promise<void>((resolve) => this.server.close(() => resolve()));
   }
 
