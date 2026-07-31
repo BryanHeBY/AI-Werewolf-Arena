@@ -12,6 +12,7 @@
   "scripts": {
     "dev:backend": "bun --filter ai-werewolf-arena-backend dev",
     "dev:frontend": "bun --filter ai-werewolf-arena-frontend dev",
+    "replay:dev": "bun --cwd frontend run replay:dev",
     "build:backend": "bun --filter ai-werewolf-arena-backend build",
     "build:frontend": "bun --filter ai-werewolf-arena-frontend build",
     "check:backend": "bun --filter ai-werewolf-arena-backend check",

@@ -8,11 +8,11 @@
 # 先运行一盘已启用记录的对局；然后导出该 session
 bun run --cwd backend export:replay --session <session_id> --out /tmp/game.replay.json
 
-# 启动播放器并在浏览器中选择该文件
-bun run --cwd frontend dev
+# 以只读方式启动播放器；不会复制或改写复盘文件
+bun run replay:dev -- --input /tmp/game.replay.json
 ```
 
-默认播放器地址为 `http://localhost:5173`。播放器使用 `@remotion/player`，因此相同的 `ReplayDocument` 可在下一阶段直接复用为 Remotion 的服务端渲染输入。
+默认播放器地址为 `http://localhost:5173`。该命令只在 Vite 开发服务中把指定文件提供为 `/api/replay`，前端没有上传、首页或文件选择流程。播放器使用 `@remotion/player`，因此相同的 `ReplayDocument` 可在下一阶段直接复用为 Remotion 的服务端渲染输入。
 
 ## 验证
 
