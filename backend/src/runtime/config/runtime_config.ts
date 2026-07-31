@@ -103,8 +103,6 @@ export interface GameConfig {
 }
 
 export interface DebugSummaryConfig {
-  llmTimeoutMs?: number;
-  llmMaxAttempts?: number;
   agent?: {
     enabled?: boolean;
     // 新结构：可直接指定调试汇总 agent 名称（引用 agents.items）。

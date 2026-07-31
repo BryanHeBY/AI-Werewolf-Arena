@@ -52,6 +52,14 @@ import {
   resolveTurnConstraints,
 } from "./turn_constraints";
 import { ActionValidationService } from "./action_validation_service";
+import {
+  WEREWOLF_GAME_TOOL_SCHEMA,
+  WEREWOLF_GAME_TOOL_SPECS,
+} from "../game_tool_protocol";
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
 
 interface ChatMessage {
   role: "system" | "user" | "assistant" | "tool";
@@ -92,6 +100,7 @@ interface BuildMessagesResult {
   contextWindowStart: number;
   contextWindowEnd: number;
   contextWindowTotal: number;
+  turnId: string;
 }
 
 interface ChatLike {
@@ -195,6 +204,7 @@ export class LlmActionProvider implements ActionProvider {
   private readonly agentEventCursor = new Map<EntityId, number>();
   private readonly agentContextWindowStart = new Map<EntityId, number>();
   private readonly actorRoundCounter = new Map<EntityId, number>();
+  private readonly actorToolTurnCounter = new Map<EntityId, number>();
   private readonly actorLastAssistantText = new Map<EntityId, string>();
   private readonly actorSystemPrompt = new Map<EntityId, string>();
   private readonly reportBugAcceptedScope = new Set<string>();
@@ -374,6 +384,7 @@ export class LlmActionProvider implements ActionProvider {
               request,
               attemptMessages,
               attemptTimeoutMs,
+              built.turnId,
             );
             return {
               picked,
@@ -896,6 +907,7 @@ export class LlmActionProvider implements ActionProvider {
     request: ActionRequest,
     messages: ChatMessage[],
     timeoutMs: number,
+    turnId: string,
   ): Promise<ToolCall | null> {
     if (!client.runToolLoop) {
       return null;
@@ -903,19 +915,40 @@ export class LlmActionProvider implements ActionProvider {
     const controller = new AbortController();
     let timer: NodeJS.Timeout | null = null;
     try {
-      const llmAllowedTools = this.buildLlmAllowedTools(request.allowedTools);
       const turnConstraints = resolveTurnConstraints(request);
-      const tools = this.buildSdkToolSchemas(llmAllowedTools);
+      const tools = this.buildSdkToolSchemas();
       let selectedAction: ToolCall | null = null;
       const loop = client.runToolLoop<ToolCall>(
         messages,
         tools,
         {
           onToolCall: async (invocation) => {
+            if (invocation.name === "get_game_schema") {
+              return { toolResult: WEREWOLF_GAME_TOOL_SCHEMA };
+            }
+
             if (invocation.name === LlmActionProvider.REPORT_BUG_TOOL) {
+              if (typeof invocation.args.turn_id === "string" && invocation.args.turn_id !== turnId) {
+                return { toolResult: { ok: false, error: "turn_not_open_or_session_invalid" } };
+              }
               return {
                 toolResult: this.handleReportBugToolCall(request, invocation.args),
               };
+            }
+
+            let actionName = invocation.name;
+            let actionArgs = invocation.args;
+            if (invocation.name === "submit_action") {
+              if (invocation.args.turn_id !== turnId) {
+                return { toolResult: { ok: false, error: "turn_not_open_or_session_invalid" } };
+              }
+              if (typeof invocation.args.action !== "string") {
+                return { toolResult: { ok: false, error: "invalid_submit_action_arguments" } };
+              }
+              actionName = invocation.args.action;
+              actionArgs = isRecord(invocation.args.arguments)
+                ? invocation.args.arguments
+                : {};
             }
 
             if (selectedAction) {
@@ -933,10 +966,10 @@ export class LlmActionProvider implements ActionProvider {
             const validatedInvocation =
               this.actionValidationService.validateToolInvocation(
                 request,
-                llmAllowedTools,
+                request.allowedTools,
                 {
-                  name: invocation.name,
-                  args: invocation.args,
+                  name: actionName,
+                  args: actionArgs,
                 },
                 (raw, allowedTools, actorId) =>
                   this.parseToolCall(raw, allowedTools, actorId),
@@ -1053,29 +1086,8 @@ export class LlmActionProvider implements ActionProvider {
   /**
    * 为本回合可用工具构建 SDK 函数调用 schema。
    */
-  private buildSdkToolSchemas(
-    allowedTools: ToolName[],
-  ): ToolSchema[] {
-    const tools: ToolSchema[] = allowedTools.map((tool) => {
-      const schema = this.toolSpecRegistry.getLlmSchema(tool);
-      if (schema) {
-        return {
-          name: schema.name,
-          description: schema.description,
-          parameters: schema.parameters,
-        };
-      }
-      return {
-        name: tool,
-        description: "执行该工具动作。",
-        parameters: {
-          type: "object",
-          properties: {},
-          additionalProperties: true,
-        },
-      };
-    });
-    return tools;
+  private buildSdkToolSchemas(): ToolSchema[] {
+    return WEREWOLF_GAME_TOOL_SPECS;
   }
 
   /**
@@ -1197,6 +1209,8 @@ export class LlmActionProvider implements ActionProvider {
         ? this.configRenderRegistry.renderBoardConfigPrompt(this.boardConfig)
         : undefined;
     const llmAllowedTools = this.buildLlmAllowedTools(request.allowedTools);
+    const turnId = `t${(this.actorToolTurnCounter.get(request.actorId) ?? 0) + 1}`;
+    this.actorToolTurnCounter.set(request.actorId, Number(turnId.slice(1)));
     const effectiveActionTools = llmAllowedTools.filter(
       (tool) => tool !== LlmActionProvider.REPORT_BUG_TOOL,
     );
@@ -1245,6 +1259,11 @@ export class LlmActionProvider implements ActionProvider {
         allowedTools: llmAllowedTools,
         world: this.world,
       }),
+      actionSubmissionHint: [
+        "请通过 submit_action 提交游戏行动，",
+        `turn_id 必须为 ${turnId}，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。`,
+        `可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 ${turnId}；无需调用 get_game_schema。`,
+      ].join(""),
     });
 
     const currentTurnUser: ChatMessage = { role: "user", content: userPrompt };
@@ -1266,6 +1285,7 @@ export class LlmActionProvider implements ActionProvider {
       contextWindowStart: contextWindow.start,
       contextWindowEnd: contextWindow.end,
       contextWindowTotal: contextWindow.total,
+      turnId,
     };
   }
 

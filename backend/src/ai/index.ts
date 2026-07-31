@@ -4,3 +4,5 @@
 export * from "./agents";
 export * from "./memory";
 export * from "./integrations";
+export * from "./audit";
+export * from "./runtime";

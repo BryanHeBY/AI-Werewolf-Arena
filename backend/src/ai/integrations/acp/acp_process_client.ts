@@ -5,6 +5,7 @@ import { Readable, Writable } from "node:stream";
 import * as acp from "@agentclientprotocol/sdk";
 import { AcpTurnRegistry } from "./acp_turn_registry";
 import { WerewolfMcpControlServer } from "./werewolf_mcp_control";
+import { AcpMcpBridgeFactory, AcpMcpControlServer } from "./acp_mcp_bridge";
 
 const ACP_CANCEL_TIMEOUT_MS = 300;
 const ACP_SESSION_CLOSE_TIMEOUT_MS = 1_000;
@@ -81,37 +82,40 @@ export interface AcpSession {
   takeAuditTrace?(): AcpSessionAuditTrace;
 }
 
-export interface AcpSessionFactory {
+export interface AcpSessionFactory<TRegistry = AcpTurnRegistry> {
   createSession(input: {
     actorId: number;
-    registry: AcpTurnRegistry;
+    registry: TRegistry;
     /** 仅在 session 创建后注入一次的固定协议/身份提示。 */
     initialPrompt?: string;
   }): Promise<AcpSession>;
 }
 
-export interface AcpProcessClientOptions {
+export interface AcpProcessClientOptions<TRegistry = AcpTurnRegistry> {
   command: string;
   args?: string[];
   env?: Record<string, string>;
   cwd: string;
   onUpdate?: (update: AcpSessionUpdate) => void;
+  mcpBridge?: AcpMcpBridgeFactory<TRegistry>;
 }
 
 /** ACP stdio client. One instance/session is intentionally created per player. */
-export class AcpProcessClient implements AcpSessionFactory {
-  constructor(private readonly options: AcpProcessClientOptions) {}
+export class AcpProcessClient<TRegistry = AcpTurnRegistry>
+  implements AcpSessionFactory<TRegistry> {
+  constructor(private readonly options: AcpProcessClientOptions<TRegistry>) {}
 
   async createSession(input: {
     actorId: number;
-    registry: AcpTurnRegistry;
+    registry: TRegistry;
     initialPrompt?: string;
   }): Promise<AcpSession> {
     await fs.mkdir(this.options.cwd, { recursive: true });
-    const mcpControl = new WerewolfMcpControlServer(input.registry);
+    const bridge = this.options.mcpBridge ?? this.defaultWerewolfBridge();
+    const mcpControl = bridge.createControl(input.registry);
     const mcpServer = await mcpControl.start(
       process.execPath,
-      [this.werewolfMcpEntrypoint()],
+      [bridge.serverEntrypoint(__filename)],
     );
     const child = spawn(this.options.command, this.options.args ?? [], {
       cwd: this.options.cwd,
@@ -142,7 +146,7 @@ export class AcpProcessClient implements AcpSessionFactory {
     // before invoking an MCP tool. Remember only tool calls announced by our
     // injected server, so an adapter cannot turn a generic MCP approval into
     // approval for some other configured server.
-    const approvedWerewolfMcpToolCallIds = new Set<string>();
+    const approvedInjectedMcpToolCallIds = new Set<string>();
     const connection = acp
       .client({ name: "ai-werewolf-arena" })
       .onRequest(acp.methods.client.session.requestPermission, async ({ params: request }) => {
@@ -150,7 +154,7 @@ export class AcpProcessClient implements AcpSessionFactory {
         // 已注入 MCP 工具的调用；终端、文件修改和额外权限请求仍一律取消。
         if (
           request._meta?.is_mcp_tool_approval === true
-          && approvedWerewolfMcpToolCallIds.has(request.toolCall.toolCallId)
+          && approvedInjectedMcpToolCallIds.has(request.toolCall.toolCallId)
         ) {
           const option = request.options.find((item) => item.optionId === "allow_session")
             ?? request.options.find((item) => item.kind === "allow_once");
@@ -185,7 +189,8 @@ export class AcpProcessClient implements AcpSessionFactory {
         input.actorId,
         this.options.onUpdate,
         mcpControl,
-        approvedWerewolfMcpToolCallIds,
+        approvedInjectedMcpToolCallIds,
+        bridge.serverName,
         connection,
         initializeResponse.agentCapabilities?.sessionCapabilities?.close != null,
       );
@@ -203,9 +208,16 @@ export class AcpProcessClient implements AcpSessionFactory {
     }
   }
 
-  private werewolfMcpEntrypoint(): string {
-    const extension = path.extname(__filename) === ".ts" ? ".ts" : ".js";
-    return path.join(__dirname, `werewolf_mcp_server${extension}`);
+  private defaultWerewolfBridge(): AcpMcpBridgeFactory<TRegistry> {
+    return {
+      serverName: "werewolf-game",
+      createControl: (registry) =>
+        new WerewolfMcpControlServer(registry as unknown as AcpTurnRegistry),
+      serverEntrypoint: (currentFilename) => {
+        const extension = path.extname(currentFilename) === ".ts" ? ".ts" : ".js";
+        return path.join(path.dirname(currentFilename), `werewolf_mcp_server${extension}`);
+      },
+    };
   }
 }
 
@@ -222,8 +234,9 @@ class AcpProcessSession implements AcpSession {
     private readonly process: ChildProcess,
     private readonly actorId: number,
     private readonly onUpdate?: (update: AcpSessionUpdate) => void,
-    private readonly mcpControl?: WerewolfMcpControlServer,
-    private readonly approvedWerewolfMcpToolCallIds?: Set<string>,
+    private readonly mcpControl?: AcpMcpControlServer,
+    private readonly approvedInjectedMcpToolCallIds?: Set<string>,
+    private readonly approvedMcpServerName = "werewolf-game",
     private readonly connection?: acp.ClientConnection,
     private readonly supportsSessionClose = false,
   ) {}
@@ -375,7 +388,7 @@ class AcpProcessSession implements AcpSession {
   }
 
   private trackInjectedMcpToolCall(update: unknown): void {
-    if (!this.approvedWerewolfMcpToolCallIds || !update || typeof update !== "object") {
+    if (!this.approvedInjectedMcpToolCallIds || !update || typeof update !== "object") {
       return;
     }
     const event = update as {
@@ -386,10 +399,10 @@ class AcpProcessSession implements AcpSession {
     };
     if (
       event.sessionUpdate === "tool_call"
-      && event.rawInput?.server === "werewolf-game"
+      && event.rawInput?.server === this.approvedMcpServerName
       && typeof event.toolCallId === "string"
     ) {
-      this.approvedWerewolfMcpToolCallIds.add(event.toolCallId);
+      this.approvedInjectedMcpToolCallIds.add(event.toolCallId);
       return;
     }
     if (
@@ -397,7 +410,7 @@ class AcpProcessSession implements AcpSession {
       && typeof event.toolCallId === "string"
       && (event.status === "completed" || event.status === "failed")
     ) {
-      this.approvedWerewolfMcpToolCallIds.delete(event.toolCallId);
+      this.approvedInjectedMcpToolCallIds.delete(event.toolCallId);
     }
   }
 }

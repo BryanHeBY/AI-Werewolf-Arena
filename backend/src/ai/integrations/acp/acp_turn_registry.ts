@@ -1,26 +1,10 @@
 import { ActionRequest, ToolCall, ToolName } from "../../../core/domain/model";
-
-export const WEREWOLF_MCP_SCHEMA = {
-  protocol_version: "1",
-  tools: {
-    get_game_schema: "查询固定 MCP 工具与参数协议；不返回局内状态。",
-    submit_action: "{ turn_id, action, arguments }；action 必须属于当前回合允许动作。",
-    report_bug: "{ turn_id, category, severity, message }；只上报明确的引擎矛盾。",
-  },
-} as const;
-
-export interface McpSubmitActionParams {
-  turn_id: string;
-  action: string;
-  arguments: Record<string, unknown>;
-}
-
-export interface McpReportBugParams {
-  turn_id: string;
-  category: "flow" | "rule" | "state" | "logging" | "other";
-  severity: "low" | "medium" | "high" | "critical";
-  message: string;
-}
+import {
+  GameReportBugInput as McpReportBugParams,
+  GameSubmitActionInput as McpSubmitActionParams,
+  WEREWOLF_GAME_TOOL_SCHEMA,
+} from "../../agents/game_tool_protocol";
+export type { GameReportBugInput as McpReportBugParams, GameSubmitActionInput as McpSubmitActionParams } from "../../agents/game_tool_protocol";
 
 export type McpBridgeResult =
   | { ok: true; accepted: true }
@@ -96,8 +80,8 @@ export class AcpTurnRegistry {
     pending.resolve(null);
   }
 
-  getSchema(): typeof WEREWOLF_MCP_SCHEMA {
-    return WEREWOLF_MCP_SCHEMA;
+  getSchema(): typeof WEREWOLF_GAME_TOOL_SCHEMA {
+    return WEREWOLF_GAME_TOOL_SCHEMA;
   }
 
   submitAction(sessionId: string, input: McpSubmitActionParams): McpBridgeResult {

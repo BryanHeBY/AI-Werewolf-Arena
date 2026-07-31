@@ -1,6 +1,9 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { z } from "zod";
+import {
+  reportGameBugInput,
+  submitGameActionInput,
+} from "../../agents/game_tool_protocol";
 
 const endpoint = process.env.WEREWOLF_MCP_CONTROL_URL;
 const token = process.env.WEREWOLF_MCP_TOKEN;
@@ -30,20 +33,11 @@ async function main(): Promise<void> {
   }, async () => result(await invoke("get_game_schema")));
   server.registerTool("submit_action", {
     description: "提交当前回合唯一会生效的游戏行动。普通文本不会产生游戏效果。",
-    inputSchema: {
-      turn_id: z.string().min(1),
-      action: z.string().min(1),
-      arguments: z.record(z.string(), z.unknown()),
-    },
+    inputSchema: submitGameActionInput.shape,
   }, async (args) => result(await invoke("submit_action", args)));
   server.registerTool("report_bug", {
     description: "仅上报明确的规则、流程、状态、日志或可见性矛盾；不会替代本回合必须提交的游戏行动。",
-    inputSchema: {
-      turn_id: z.string().min(1),
-      category: z.enum(["flow", "rule", "state", "logging", "other"]),
-      severity: z.enum(["low", "medium", "high", "critical"]),
-      message: z.string().min(1).max(300),
-    },
+    inputSchema: reportGameBugInput.shape,
   }, async (args) => result(await invoke("report_bug", args)));
   await server.connect(new StdioServerTransport());
 }

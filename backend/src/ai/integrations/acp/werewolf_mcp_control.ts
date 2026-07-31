@@ -7,13 +7,9 @@ import {
   McpReportBugParams,
   McpSubmitActionParams,
 } from "./acp_turn_registry";
+import { AcpMcpServerConfig } from "./acp_mcp_bridge";
 
-export interface WerewolfMcpServerConfig {
-  name: string;
-  command: string;
-  args: string[];
-  env: Array<{ name: string; value: string }>;
-}
+export type WerewolfMcpServerConfig = AcpMcpServerConfig;
 
 /**
  * 仅供同一 ACP session 拉起的 stdio MCP sidecar 调用的 loopback 控制面。
@@ -90,7 +86,7 @@ export class WerewolfMcpControlServer {
     }
   }
 
-  private dispatch(sessionId: string, body: unknown): McpBridgeResult | typeof import("./acp_turn_registry").WEREWOLF_MCP_SCHEMA {
+  private dispatch(sessionId: string, body: unknown): McpBridgeResult | ReturnType<AcpTurnRegistry["getSchema"]> {
     if (!body || typeof body !== "object") {
       return { ok: false, error: "request_body_must_be_object" };
     }

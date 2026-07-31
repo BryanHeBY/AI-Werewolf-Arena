@@ -101,6 +101,40 @@ class NoActionToolLoopClient {
   }
 }
 
+class GenericSubmitActionClient {
+  async chat(): Promise<string> {
+    return "";
+  }
+
+  async runToolLoop<T>(
+    messages: Array<{ role: string; content: string }>,
+    tools: Array<{ name: string }>,
+    callbacks: any,
+  ): Promise<{ finalAction: T | null; assistantText: string }> {
+    expect(tools.map((tool) => tool.name)).toEqual([
+      "get_game_schema",
+      "submit_action",
+      "report_bug",
+    ]);
+    const turnId = messages.at(-1)?.content.match(/turn_id 必须为 (t\d+)/)?.[1];
+    expect(turnId).toBeTruthy();
+    const handled = await callbacks.onToolCall({
+      id: "generic-submit",
+      name: "submit_action",
+      args: {
+        turn_id: turnId,
+        action: "speak",
+        arguments: { text: "通过统一协议发言" },
+      },
+      rawArgs: "{}",
+    });
+    return {
+      finalAction: (handled.finalAction ?? null) as T | null,
+      assistantText: "",
+    };
+  }
+}
+
 class InvalidPotionThenNoneToolLoopClient {
   public lastMessages: Array<{ role: string; content: string }> = [];
   public invalidPotionResult: Record<string, unknown> | string | undefined;
@@ -772,7 +806,8 @@ describe("LlmActionProvider", () => {
         expect(lines[0]).toContain("目前是你的发言轮次");
         expect(lines[1]).toContain("阶段规则：");
         expect(lines[2]).toContain("本轮结束前需满足");
-        expect(lines[3]).toContain("工具参数提示：");
+        expect(lines[3]).toContain("行动参数提示：");
+        expect(lines[3]).toContain("submit_action");
         expect(latest).not.toContain("玩家编号=");
         expect(latest).not.toContain("当前板子信息");
       }),
@@ -853,6 +888,25 @@ describe("LlmActionProvider", () => {
     });
   });
 
+  test("accepts game actions through the shared submit_action contract", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const provider = new LlmActionProvider(
+      context.world,
+      new GenericSubmitActionClient() as any,
+      { fallbackProvider: new FallbackProvider(null) },
+    );
+
+    await expect(provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["speak"],
+      context: { must_act: true },
+    })).resolves.toEqual({
+      name: "speak",
+      args: { text: "通过统一协议发言" },
+    });
+  });
+
   test("appends structured events once using seq cursors", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const toolClient = new ToolLoopClient("speak", { text: "收到广播" });
@@ -930,7 +984,11 @@ describe("LlmActionProvider", () => {
       context: { must_act: true },
     });
 
-    expect(client.lastToolNames).toContain("speak");
+    expect(client.lastToolNames).toEqual([
+      "get_game_schema",
+      "submit_action",
+      "report_bug",
+    ]);
     expect(client.lastOptions?.toolChoice).toBe("required");
   });
 
@@ -948,7 +1006,11 @@ describe("LlmActionProvider", () => {
       context: { must_act: false },
     });
 
-    expect(client.lastToolNames).toContain("speak");
+    expect(client.lastToolNames).toEqual([
+      "get_game_schema",
+      "submit_action",
+      "report_bug",
+    ]);
     expect(client.lastOptions?.toolChoice).toBe("auto");
   });
 
@@ -977,7 +1039,7 @@ describe("LlmActionProvider", () => {
     expect(action).toBeNull();
   });
 
-  test("sdk tools should include function and parameter descriptions", async () => {
+  test("sdk and ACP should expose the same generic game tool contract", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const client = new CaptureToolsClient();
     const provider = new LlmActionProvider(context.world, client as any, {
@@ -991,19 +1053,25 @@ describe("LlmActionProvider", () => {
       context: { must_act: false },
     });
 
-    const voteTool = client.lastTools.find((tool) => tool.name === "vote");
-    expect(voteTool?.description).toContain("放逐投票");
-    expect(voteTool?.parameters?.description).toContain("放逐投票参数");
-    expect(voteTool?.parameters?.required).toEqual(["target_id", "abstain"]);
-    expect(voteTool?.parameters?.properties?.target_id?.description).toContain("弃票时必须为 null");
-    expect(voteTool?.parameters?.properties?.abstain?.description).toContain("是否弃票");
+    expect(client.lastToolNames).toEqual([
+      "get_game_schema",
+      "submit_action",
+      "report_bug",
+    ]);
+    const submitTool = client.lastTools.find((tool) => tool.name === "submit_action");
+    expect(submitTool?.description).toContain("唯一会生效");
+    expect(submitTool?.parameters?.required).toEqual(["turn_id", "action", "arguments"]);
+    expect(submitTool?.parameters?.properties?.turn_id?.type).toBe("string");
+    expect(submitTool?.parameters?.properties?.action?.type).toBe("string");
 
     const reportBugTool = client.lastTools.find((tool) => tool.name === "report_bug");
-    expect(reportBugTool?.description).toContain("明确规则、状态、流程、日志或可见信息矛盾");
-    expect(reportBugTool?.description).toContain("正常的策略分歧、身份声称、诈身份或信息不足");
-    expect(reportBugTool?.parameters?.properties?.message?.description).toContain(
-      "观察到什么、按什么规则或状态本应如何、两者为何矛盾",
-    );
+    expect(reportBugTool?.description).toContain("明确的规则、流程、状态、日志或可见性矛盾");
+    expect(reportBugTool?.parameters?.required).toEqual([
+      "turn_id",
+      "category",
+      "severity",
+      "message",
+    ]);
   });
 
   test("system prompt should explicitly distinguish wolf discussion and wolf vote stages", async () => {
@@ -1232,7 +1300,7 @@ describe("LlmActionProvider", () => {
     expect(action).toBeNull();
     const user = client.lastMessages.find((message) => message.role === "user")?.content ?? "";
     expect(user).toContain("若选择不自爆，直接结束本次回复即可");
-    expect(user).toContain("你当前可以使用的工具有：self_destruct, report_bug");
+    expect(user).toContain("你当前可以提交的行动有：self_destruct, report_bug");
   });
 
   test("initial system prompt should include rendered board config summary", async () => {
@@ -1272,9 +1340,9 @@ describe("LlmActionProvider", () => {
     });
 
     const system = client.lastMessages.find((message) => message.role === "system")?.content ?? "";
-    expect(system).toContain("所有能起效的行动都必须通过函数工具调用提交");
+    expect(system).toContain("所有能起效的行动都必须调用 submit_action 提交");
     expect(system).toContain("普通 assistant 文本只会被当作本地思考");
-    expect(system).toContain("发言请把内容写入 speak.text 或 speak_to_wolves.text");
+    expect(system).toContain("内容写入 arguments.text");
     expect(system).toContain("可以先调用 report_bug 上报，再继续本轮正常行动");
     const user = client.lastMessages.find((message) => message.role === "user")?.content ?? "";
     expect(user).toContain("正常策略分歧、身份声称、诈身份或信息不足不是 bug");

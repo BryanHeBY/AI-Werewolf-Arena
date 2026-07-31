@@ -1,7 +1,5 @@
 /** 文件说明：根据调试上报生成 session 级调试总结 Markdown。 */
 import { ReplayDebugReport, ReplayLogicOp, ReplayManifest, ReplayPlayerView, ReplayPublicEvent } from "./types";
-import { AiSdkClient } from "../ai/integrations/llm/ai_sdk_client";
-import { loadRuntimeConfig, resolveAgentProfileByName } from "../runtime/config/runtime_config";
 import { buildDebugSummaryWithAgents } from "./debug_summary_pipeline";
 
 interface BuildDebugSummaryInput {
@@ -223,178 +221,6 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
   return lines.join("\n");
 }
 
-function isExpectedDebugSummaryFormat(text: string): boolean {
-  const hasHeader = /^# Debug Summary \(/m.test(text);
-  const hasSession = /^## Session/m.test(text);
-  const hasStats = /^## Bug Report Stats/m.test(text);
-  const hasFindings = /^## Findings/m.test(text);
-  return hasHeader && hasSession && hasStats && hasFindings;
-}
-
-function validateSummaryEvidence(text: string, allowedSeqs: Set<number>): boolean {
-  const lines = text.split("\n");
-  const findingsStart = lines.findIndex((line) => /^##\s+Findings\b/.test(line));
-  if (findingsStart < 0) {
-    return false;
-  }
-  let idx = findingsStart + 1;
-  while (idx < lines.length && !/^##\s+/.test(lines[idx])) {
-    const line = lines[idx].trim();
-    if (line.startsWith("-")) {
-      if (/^-+\s*(none|无)\b/i.test(line)) {
-        idx += 1;
-        continue;
-      }
-      const match = line.match(/evidence=([0-9, ]+)/i);
-      if (!match) {
-        return false;
-      }
-      const seqs = match[1]
-        .split(",")
-        .map((v) => Number(v.trim()))
-        .filter((v) => !Number.isNaN(v));
-      if (seqs.length === 0) {
-        return false;
-      }
-      for (const seq of seqs) {
-        if (!allowedSeqs.has(seq)) {
-          return false;
-        }
-      }
-    }
-    idx += 1;
-  }
-  return true;
-}
-
-async function tryBuildByLlm(input: BuildDebugSummaryInput): Promise<string | null> {
-  let runtime: Awaited<ReturnType<typeof loadRuntimeConfig>>;
-  try {
-    runtime = await loadRuntimeConfig();
-  } catch {
-    return null;
-  }
-  const debugAgentProfile = resolveAgentProfileByName(
-    runtime,
-    runtime.debugSummary?.agent?.agentName ?? runtime.game?.debugSummaryAgent ?? runtime.game?.agent,
-  );
-  if (
-    debugAgentProfile.kind !== "llm" ||
-    debugAgentProfile.provider.type === "acp" ||
-    !debugAgentProfile.provider.apiKey ||
-    !debugAgentProfile.model
-  ) {
-    return null;
-  }
-
-  const timeoutMs = runtime.debugSummary?.llmTimeoutMs ?? 30000;
-  const maxAttempts = Math.max(1, runtime.debugSummary?.llmMaxAttempts ?? 3);
-  const actionableReports = filterActionableReports(
-    input.reports,
-    input.publicEvents ?? [],
-  );
-  const autoFindings = scanEventsForPotentialIssues(input);
-  const metadataFindings = scanPlayerTimelineMetadataIssues(input.playerViews ?? []);
-  const candidateFindings = [...actionableReports, ...autoFindings, ...metadataFindings];
-  if (candidateFindings.length === 0) {
-    return null;
-  }
-  const allowedSeqs = new Set<number>();
-  for (const report of actionableReports) {
-    if (Array.isArray(report.evidence_event_seq)) {
-      for (const seq of report.evidence_event_seq) {
-        if (typeof seq === "number") {
-          allowedSeqs.add(seq);
-        }
-      }
-    }
-  }
-  for (const finding of autoFindings) {
-    for (const seq of finding.evidence ?? []) {
-      if (typeof seq === "number") {
-        allowedSeqs.add(seq);
-      }
-    }
-  }
-  for (const finding of metadataFindings) {
-    for (const seq of finding.evidence ?? []) {
-      if (typeof seq === "number") {
-        allowedSeqs.add(seq);
-      }
-    }
-  }
-  const client = new AiSdkClient({
-    providerType: debugAgentProfile.provider.type,
-    providerName: debugAgentProfile.providerName,
-    apiKey: debugAgentProfile.provider.apiKey,
-    baseURL: debugAgentProfile.provider.baseURL,
-    model: debugAgentProfile.model,
-    userAgent: debugAgentProfile.provider.userAgent,
-    temperature: debugAgentProfile.temperature ?? 0.1,
-    maxTokens: debugAgentProfile.maxTokens ?? 1800,
-    forceJsonResponse: debugAgentProfile.forceJsonResponse ?? false,
-    reasoningEnabled: debugAgentProfile.reasoningEnabled ?? true,
-    reasoningEffort: debugAgentProfile.reasoningEffort ?? "medium",
-    thinkingEnabled: debugAgentProfile.thinkingEnabled ?? false,
-  });
-
-  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeoutMs);
-    try {
-      const result = await client.chatWithMeta(
-        [
-          {
-            role: "system",
-            content:
-              "你是狼人杀后端调试助手。请输出 Markdown，必须包含：Session、Bug Report Stats、Findings，以及在确有问题时输出 TODO。若未发现明确问题，请输出 Conclusion 章节并说明无需处理。Findings 每条必须包含 evidence=1,2 这样的证据序号列表，且 evidence 只能来自报告或自动扫描提供的 evidence。",
-          },
-          {
-            role: "user",
-            content: [
-              `session_id: ${input.manifest.session_id}`,
-              `board: ${input.manifest.board}`,
-              `winner: ${input.manifest.winner ?? "none"}`,
-              `finish_reason: ${input.manifest.finish_reason}`,
-              `reports_json: ${JSON.stringify(actionableReports)}`,
-              `auto_scan_findings_json: ${JSON.stringify(autoFindings)}`,
-              `metadata_findings_json: ${JSON.stringify(metadataFindings)}`,
-              `event_digest_json: ${JSON.stringify(buildEventDigest(input.publicEvents ?? []))}`,
-            ].join("\n"),
-          },
-        ],
-        { signal: controller.signal },
-      );
-      const trimmed = result.content.trim();
-      if (result.finishReason === "stop" && trimmed.length > 0) {
-        if (
-          isExpectedDebugSummaryFormat(trimmed) &&
-          validateSummaryEvidence(trimmed, allowedSeqs)
-        ) {
-          return trimmed;
-        }
-        console.warn(
-          `[debug_summary] llm_rejected_reason=format_mismatch session_id=${input.manifest.session_id} attempt=${attempt}/${maxAttempts}`,
-        );
-      }
-      const rejectedReason =
-        result.finishReason !== "stop"
-          ? `finish_reason=${result.finishReason || "unknown"}`
-          : "empty_content";
-      console.warn(
-        `[debug_summary] llm_rejected_reason=${rejectedReason} session_id=${input.manifest.session_id} attempt=${attempt}/${maxAttempts}`,
-      );
-    } catch (error) {
-      console.warn(
-        `[debug_summary] llm_rejected_reason=request_error session_id=${input.manifest.session_id} attempt=${attempt}/${maxAttempts} error=${String(error)}`,
-      );
-    } finally {
-      clearTimeout(timer);
-    }
-  }
-  return null;
-}
-
 /** 生成调试总结，优先使用 runtime_config.json；失败时回退模板。 */
 export async function buildDebugSummaryMarkdown(
   input: BuildDebugSummaryInput,
@@ -422,10 +248,6 @@ export async function buildDebugSummaryMarkdown(
         `[debug_summary] pipeline_failed session_id=${input.manifest.session_id} error=${String(error)}`,
       );
     }
-  }
-  const llm = await tryBuildByLlm(input);
-  if (llm) {
-    return llm;
   }
   return buildFallbackSummary(input);
 }
@@ -542,57 +364,6 @@ function detectFlowAnomaly(
     }
   }
   return false;
-}
-
-function buildEventDigest(
-  events: Array<{
-    seq: number;
-    day: number;
-    phase: string;
-    type: string;
-    payload: Record<string, unknown>;
-  }>,
-): Array<Record<string, unknown>> {
-  const keepTypes = new Set([
-    "phase_changed",
-    "night_resolved",
-    "wolf_self_destruct",
-    "sheriff_nomination_summary",
-    "sheriff_vote_summary",
-    "sheriff_elected",
-    "voted_out",
-    "idiot_revealed",
-    "last_words_spoken",
-    "witch_potion_used",
-    "witch_potion_skipped",
-    "day_speech",
-  ]);
-  const out: Array<Record<string, unknown>> = [];
-  for (const e of events) {
-    if (!keepTypes.has(e.type)) {
-      continue;
-    }
-    if (e.type === "day_speech") {
-      const text = String((e.payload as any).text ?? "");
-      out.push({
-        seq: e.seq,
-        day: e.day,
-        phase: e.phase,
-        type: e.type,
-        actorId: (e.payload as any).actorId,
-        text: text.slice(0, 160),
-      });
-      continue;
-    }
-    out.push({
-      seq: e.seq,
-      day: e.day,
-      phase: e.phase,
-      type: e.type,
-      payload: e.payload,
-    });
-  }
-  return out.slice(-120);
 }
 
 function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): Array<{
