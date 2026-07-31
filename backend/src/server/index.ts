@@ -326,7 +326,6 @@ export async function startServer(): Promise<FastifyInstance> {
   const fastify = await createServer();
   try {
     await fastify.listen({ port: appConfig.port, host: "0.0.0.0" });
-    // eslint-disable-next-line no-console
     console.log(`Game server started: http://0.0.0.0:${appConfig.port}`);
     return fastify;
   } catch (error) {

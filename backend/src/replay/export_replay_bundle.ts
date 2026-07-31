@@ -51,7 +51,6 @@ async function runCli(): Promise<void> {
     );
   }
   const bundle = await exportReplayBundle({ recordRoot, sessionId, outputFile });
-  // eslint-disable-next-line no-console
   console.log(`Exported ${bundle.events.length} events to ${outputFile}`);
 }
 
