@@ -11,11 +11,12 @@ import {
   EntityId,
   GameEvent,
   Phase,
+  PlayerVisibleEvent,
   TieBreakerStrategy,
 } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
-import { buildAgentBroadcastFeed } from "../../engine/agent_broadcast_feed";
+import { buildAgentVisibleEventFeed } from "../../engine/agent_visible_event_feed";
 import { buildTurnConstraintContext } from "../../engine/turn_constraints_context";
 import { transferOrDestroySheriffBadge } from "./sheriff_badge";
 
@@ -69,11 +70,11 @@ export class SheriffMechanism {
 
     const aliveIds = world.getAliveEntityIds();
     const candidates: EntityId[] = [];
-    const nominationFeedByActor = new Map<EntityId, string[]>();
+    const nominationFeedByActor = new Map<EntityId, PlayerVisibleEvent[]>();
     for (const actorId of aliveIds) {
       nominationFeedByActor.set(
         actorId,
-        buildAgentBroadcastFeed(world, events, actorId),
+        buildAgentVisibleEventFeed(world, events, actorId),
       );
     }
     // 上警声明并行收集，避免顺序执行导致后手玩家读取前手“上警/退水”结果后被动调整。
@@ -91,7 +92,7 @@ export class SheriffMechanism {
               allowedTools: ["run_for_sheriff"],
               summary: "上警声明阶段必须选择上警或退警。",
             }),
-            broadcast_feed: nominationFeedByActor.get(actorId) ?? [],
+            visible_events: nominationFeedByActor.get(actorId) ?? [],
           },
         };
         const action = await actionProvider.getAction(req);
@@ -152,7 +153,7 @@ export class SheriffMechanism {
             summary: "警上竞选发言阶段必须完成一次发言。",
           }),
           sheriff_candidates: [...candidateSet],
-          broadcast_feed: buildAgentBroadcastFeed(world, events, candidateId),
+          visible_events: buildAgentVisibleEventFeed(world, events, candidateId),
         },
       };
       const speechAction = await actionProvider.getAction(speechReq);
@@ -174,12 +175,12 @@ export class SheriffMechanism {
     }
 
     // 发言结束后统一进入退水阶段，再进入警长投票。
-    const withdrawFeedByActor = new Map<EntityId, string[]>();
+    const withdrawFeedByActor = new Map<EntityId, PlayerVisibleEvent[]>();
     const orderedCandidates = this.sortBySeat(world, [...candidateSet]);
     for (const actorId of orderedCandidates) {
       withdrawFeedByActor.set(
         actorId,
-        buildAgentBroadcastFeed(world, events, actorId),
+        buildAgentVisibleEventFeed(world, events, actorId),
       );
     }
     const withdrawResults = await Promise.all(
@@ -197,7 +198,7 @@ export class SheriffMechanism {
               summary: "退水阶段必须明确是否继续竞选。",
             }),
             sheriff_candidates: [...candidateSet],
-            broadcast_feed: withdrawFeedByActor.get(candidateId) ?? [],
+            visible_events: withdrawFeedByActor.get(candidateId) ?? [],
           },
         };
         const withdrawAction = await actionProvider.getAction(withdrawReq);
@@ -254,11 +255,11 @@ export class SheriffMechanism {
 
     // 规则：警长投票仅允许警下玩家（未在最终警上名单内）参与。
     const sheriffVoterIds = aliveIds.filter((id) => !candidateSet.has(id));
-    const sheriffVoteFeedByActor = new Map<EntityId, string[]>();
+    const sheriffVoteFeedByActor = new Map<EntityId, PlayerVisibleEvent[]>();
     for (const actorId of sheriffVoterIds) {
       sheriffVoteFeedByActor.set(
         actorId,
-        buildAgentBroadcastFeed(world, events, actorId),
+        buildAgentVisibleEventFeed(world, events, actorId),
       );
     }
     // 警长投票同样并行收集，所有投票基于同一快照上下文。
@@ -277,7 +278,7 @@ export class SheriffMechanism {
               summary: "警长投票阶段必须完成一次投票（可弃票）。",
             }),
             sheriff_candidates: finalizedCandidates,
-            broadcast_feed: sheriffVoteFeedByActor.get(actorId) ?? [],
+            visible_events: sheriffVoteFeedByActor.get(actorId) ?? [],
           },
         };
         const action = await actionProvider.getAction(req);
@@ -379,7 +380,7 @@ export class SheriffMechanism {
           allowedTools: ["choose_direction"],
           summary: "警长定序阶段必须选择发言方向。",
         }),
-        broadcast_feed: buildAgentBroadcastFeed(world, events, sheriffId),
+        visible_events: buildAgentVisibleEventFeed(world, events, sheriffId),
       },
     };
     const action = await actionProvider.getAction(req);

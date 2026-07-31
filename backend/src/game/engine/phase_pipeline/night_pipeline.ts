@@ -25,7 +25,7 @@ import {
   NightStageState,
 } from "../../mechanisms";
 import { safeRecordLogicOp } from "../../../observability";
-import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
+import { buildAgentVisibleEventFeed } from "../agent_visible_event_feed";
 import { buildTurnConstraintContext } from "../turn_constraints_context";
 
 /**
@@ -133,7 +133,7 @@ export class NightPipeline {
           allowedTools,
           summary: "夜间行动阶段需完成一次有效动作。",
         }),
-        broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, actorId),
+        visible_events: buildAgentVisibleEventFeed(this.world, this.events, actorId),
         ...context,
       },
     };

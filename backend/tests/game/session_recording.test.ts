@@ -4,7 +4,7 @@ import path from "path";
 import { Camp, Phase } from "../../src/core/domain/model";
 import { bootstrapGame } from "../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
-import { buildAgentBroadcastLine } from "../../src/game/engine/agent_broadcast_feed";
+import { buildAgentVisibleEvent } from "../../src/game/engine/agent_visible_event_feed";
 import { getDefaultScriptEventRenderRegistry } from "../../src/game/mechanisms/script/event_render_registry";
 import { COMPONENT } from "../../src/core/domain/components/names";
 import { SessionRecordManager } from "../../src/observability";
@@ -119,15 +119,15 @@ describe("SessionRecordManager", () => {
       phase: "night",
       status: "ok",
     });
-    manager.recordPlayerBroadcast({
+    manager.recordPlayerEvent({
       playerId: 1,
       role: "wolf",
       camp: "wolf",
       day: 1,
       phase: "night",
       stage: "wolf_discussion",
-      requestId: "1-night-1-broadcast-0",
-      text: "[系统][公开] 天黑请闭眼（第1天夜晚）",
+      requestId: "1-night-1-event-1",
+      event: { seq: 1, type: "phase_changed", payload: { phase: "night", day: 1 } },
     });
     manager.recordPlayerRound({
       playerId: 1,
@@ -137,7 +137,6 @@ describe("SessionRecordManager", () => {
       phase: "night",
       stage: "wolf_discussion",
       requestId: "1-night-1-1",
-      visibleFeedDelta: [],
       actionMode: "none",
       toolCalls: [],
     });
@@ -177,7 +176,7 @@ describe("SessionRecordManager", () => {
     expect(reports.reports.length).toBe(1);
   });
 
-  test("should record broadcast stage per event without mixing", async () => {
+  test("should record structured player event stage without mixing", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "awa-replay-stage-"));
     const manager = await SessionRecordManager.create(
       {
@@ -203,18 +202,19 @@ describe("SessionRecordManager", () => {
     ];
     const playerId = 1;
     const role = context.world.getComponent<any>(playerId, COMPONENT.Role);
-    for (const event of events) {
-      const line = buildAgentBroadcastLine(context.world, event as any, playerId);
-      expect(line).toBeTruthy();
-      manager.recordPlayerBroadcast({
+    for (let index = 0; index < events.length; index += 1) {
+      const event = events[index];
+      const visibleEvent = buildAgentVisibleEvent(context.world, event as any, playerId, index + 1);
+      expect(visibleEvent).toBeTruthy();
+      manager.recordPlayerEvent({
         playerId,
         role: role?.role ?? "unknown",
         camp: role?.camp ?? "unknown",
         day: 1,
         phase: Phase.Night,
         stage: registry.toReplayStage(event as any),
-        requestId: `1-night-${playerId}-broadcast-${event.type}`,
-        text: String(line),
+        requestId: `1-night-${playerId}-event-${event.type}`,
+        event: visibleEvent!,
       });
     }
     await manager.flushNow();
@@ -246,7 +246,6 @@ describe("SessionRecordManager", () => {
       phase: "night",
       day: 1,
       payload: { phase: "night", day: 1 },
-      renderText: "[上帝] 天黑请闭眼（第1天夜晚）",
     });
     manager.recordLogicOp({
       scope: "gateway",
@@ -256,15 +255,15 @@ describe("SessionRecordManager", () => {
       status: "ok",
       input: { tool: "speak_to_wolves" },
     });
-    manager.recordPlayerBroadcast({
+    manager.recordPlayerEvent({
       playerId: 1,
       role: "wolf",
       camp: "wolf",
       day: 1,
       phase: "night",
       stage: "wolf_discussion",
-      requestId: "1-night-1-broadcast-1",
-      text: "[系统][公开] 天黑请闭眼（第1天夜晚）",
+      requestId: "1-night-1-event-1",
+      event: { seq: 1, type: "phase_changed", payload: { phase: "night", day: 1 } },
     });
     manager.recordPlayerRound({
       playerId: 1,
@@ -274,9 +273,6 @@ describe("SessionRecordManager", () => {
       phase: "night",
       stage: "wolf_discussion",
       requestId: "1-night-1-1",
-      visibleFeedDelta: [],
-      feedCursorBefore: 0,
-      feedCursorAfter: 1,
       promptSystem: "仅可调用本轮可用工具：speak_to_wolves",
       promptUserDelta: ["玩家编号=1"],
       actionMode: "tool_call",
@@ -371,7 +367,8 @@ describe("SessionRecordManager", () => {
     expect(player1.initial_prompt.phase).toBe("night");
     expect(Array.isArray(player1.initial_prompt.prompt_user)).toBe(true);
     expect(Array.isArray(player1.timeline)).toBe(true);
-    expect(player1.timeline[0].kind).toBe("broadcast");
+    expect(player1.timeline[0].kind).toBe("event");
+    expect(player1.timeline[0].event.type).toBe("phase_changed");
     expect(player1.timeline[0].stage).toBe("wolf_discussion");
     expect(player1.timeline[1].kind).toBe("turn");
     expect(player1.timeline[1].stage).toBe("wolf_discussion");
@@ -464,15 +461,15 @@ describe("SessionRecordManager", () => {
         status: "ok",
         input: { tool: "speak" },
       });
-      manager.recordPlayerBroadcast({
+      manager.recordPlayerEvent({
         playerId: 1,
         role: "villager",
         camp: "villager",
         day: 1,
         phase: "night",
         stage: "night",
-        requestId: "1-night-1-broadcast",
-        text: "[系统][公开] 天黑请闭眼（第1天夜晚）",
+        requestId: "1-night-1-event-1",
+        event: { seq: 1, type: "phase_changed", payload: { phase: "night", day: 1 } },
       });
       manager.recordPlayerRound({
         playerId: 1,
@@ -482,7 +479,6 @@ describe("SessionRecordManager", () => {
         phase: "night",
         stage: "night",
         requestId: "1-night-1",
-        visibleFeedDelta: [],
         actionMode: "none",
         toolCalls: [],
       });
@@ -687,7 +683,6 @@ describe("SessionRecordManager", () => {
       phase: "night",
       stage: "night",
       requestId: "0-night-1-1",
-      visibleFeedDelta: [],
       actionMode: "tool_call",
       toolCalls: [
         {

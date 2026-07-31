@@ -15,7 +15,7 @@ import { ToolGateway } from "../../gateway/tool_gateway";
 import { getDefaultSheriffMechanism, SheriffMechanism } from "../../mechanisms";
 import { RoleSpecRegistry } from "../../mechanisms/registries/role_spec_registry";
 import { World } from "../../../core/domain/world";
-import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
+import { buildAgentVisibleEventFeed } from "../agent_visible_event_feed";
 import { buildTurnConstraintContext } from "../turn_constraints_context";
 
 /**
@@ -146,7 +146,7 @@ export class DayPipeline {
             allowedTools: ["speak"],
             summary: "白天发言阶段必须完成一次发言动作。",
           }),
-          broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, actorId),
+          visible_events: buildAgentVisibleEventFeed(this.world, this.events, actorId),
         },
       };
 
@@ -222,7 +222,7 @@ export class DayPipeline {
               allowedTools: ["self_destruct"],
               summary: "自爆窗口可选择执行自爆，也可直接结束回合。",
             }),
-            broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, actorId),
+              visible_events: buildAgentVisibleEventFeed(this.world, this.events, actorId),
           },
         };
 

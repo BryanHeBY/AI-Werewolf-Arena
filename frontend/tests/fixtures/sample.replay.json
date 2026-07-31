@@ -15,8 +15,8 @@
     { "player_id": 2, "role": "wolf", "camp": "wolf", "alive": false }
   ],
   "events": [
-    { "seq": 1, "timestamp": "2026-07-29T00:00:00.000Z", "day": 1, "phase": "night", "type": "phase_changed", "payload": { "phase": "night" }, "render_text": "天黑请闭眼" },
-    { "seq": 2, "timestamp": "2026-07-29T00:01:00.000Z", "day": 1, "phase": "day", "type": "voted_out", "payload": { "target": 2 }, "render_text": "2号被放逐出局" }
+    { "seq": 1, "timestamp": "2026-07-29T00:00:00.000Z", "day": 1, "phase": "night", "type": "phase_changed", "payload": { "phase": "night" } },
+    { "seq": 2, "timestamp": "2026-07-29T00:01:00.000Z", "day": 1, "phase": "day", "type": "voted_out", "payload": { "target": 2 } }
   ],
   "phaseWindows": []
 }

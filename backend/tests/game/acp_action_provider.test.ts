@@ -18,7 +18,11 @@ function speakRequest(actorId = 1): ActionRequest {
     actorId,
     phase: Phase.Day,
     allowedTools: ["speak"],
-    context: { day: 1, phase: "day_speech", broadcast_feed: ["[上帝] 天亮了"] },
+    context: {
+      day: 1,
+      phase: "day_speech",
+      visible_events: [{ seq: 1, type: "phase_changed", payload: { day: 1, phase: "day" } }],
+    },
   };
 }
 
@@ -114,6 +118,7 @@ describe("AcpActionProvider", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     let cancelled = 0;
     let sessionsCreated = 0;
+    const prompts: string[] = [];
     const factory: AcpSessionFactory = {
       async createSession(input): Promise<AcpSession> {
         sessionsCreated += 1;
@@ -124,6 +129,7 @@ describe("AcpActionProvider", () => {
         return {
           sessionId: "fake-session-1",
           async prompt(prompt: string): Promise<void> {
+            prompts.push(prompt);
             const turnId = /当前回合 ID：(\S+)/.exec(prompt)?.[1];
             expect(turnId).toBeDefined();
             expect(prompt).toContain("MCP 服务 werewolf-game 的 submit_action");
@@ -158,6 +164,8 @@ describe("AcpActionProvider", () => {
     });
     expect(sessionsCreated).toBe(1);
     expect(cancelled).toBe(2);
+    expect(prompts[0]).toContain('{"events":[[1,"phase_changed",{"day":1,"phase":"day"}]]}');
+    expect(prompts[1]).not.toContain('"phase_changed"');
     await provider.close();
   });
 

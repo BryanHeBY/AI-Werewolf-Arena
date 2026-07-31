@@ -1,5 +1,5 @@
 /** 文件说明：对局复盘记录结构类型定义。 */
-import { Camp, ToolCall } from "../core/domain/model";
+import { Camp, PlayerVisibleEvent, ToolCall } from "../core/domain/model";
 
 /** 玩家回合行动模式。 */
 export type ReplayActionMode = "tool_call" | "text_action" | "none";
@@ -41,7 +41,6 @@ export interface ReplayPublicEvent {
   stage?: string;
   type: string;
   payload: Record<string, unknown>;
-  render_text?: string;
 }
 
 /** 阶段内子阶段窗口。 */
@@ -142,17 +141,16 @@ export interface ReplayPlayerDeltaMessage {
   result?: Record<string, unknown> | string;
 }
 
-/** 玩家广播时间线条目。 */
-export interface ReplayPlayerBroadcastEntry {
+/** 玩家视角下的结构化事件时间线条目。 */
+export interface ReplayPlayerEventEntry {
   seq: number;
-  kind: "broadcast";
+  kind: "event";
   day: number;
   phase: string;
   stage: string;
   request_id: string;
   timestamp?: string;
-  role: "user";
-  content: string;
+  event: PlayerVisibleEvent;
 }
 
 /** 玩家回合时间线条目。 */
@@ -170,7 +168,7 @@ export interface ReplayPlayerTurnEntry {
 
 /** 玩家时间线条目联合类型。 */
 export type ReplayPlayerTimelineEntry =
-  | ReplayPlayerBroadcastEntry
+  | ReplayPlayerEventEntry
   | ReplayPlayerTurnEntry;
 
 /** 玩家视角复盘结构。 */
@@ -214,7 +212,6 @@ export interface ReplayRecordPublicEventInput {
   day: number;
   stage?: string;
   payload: Record<string, unknown>;
-  renderText?: string;
 }
 
 /** 记录逻辑操作输入结构。 */
@@ -239,9 +236,6 @@ export interface ReplayRecordPlayerRoundInput {
   stage: string;
   requestId: string;
   timestampMs?: number;
-  visibleFeedDelta: string[];
-  feedCursorBefore?: number;
-  feedCursorAfter?: number;
   llmRequestMessages?: ReplayLlmRequestMessage[];
   deltaMessages?: ReplayPlayerDeltaMessage[];
   promptSystem?: string;
@@ -276,8 +270,8 @@ export interface ReplayRecordPlayerRoundInput {
   };
 }
 
-/** 记录玩家广播输入结构。 */
-export interface ReplayRecordPlayerBroadcastInput {
+/** 记录玩家可见结构化事件输入。 */
+export interface ReplayRecordPlayerEventInput {
   playerId: number;
   role: string;
   camp: string;
@@ -286,7 +280,7 @@ export interface ReplayRecordPlayerBroadcastInput {
   stage: string;
   requestId: string;
   timestampMs?: number;
-  text: string;
+  event: PlayerVisibleEvent;
 }
 
 /** 调试上报记录。 */

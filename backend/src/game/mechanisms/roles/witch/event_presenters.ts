@@ -1,27 +1,8 @@
 /** 文件说明：女巫相关事件在不同输出通道中的渲染实现。 */
-import { AgentEventLineHandler } from "../../broadcast/contracts";
 import { ScriptLiveRenderHandler } from "../../script/contracts";
 import { RealtimeEventHandler } from "../../session/contracts";
 import { makePrivateTargetsEvent } from "../../session/realtime_event_types";
 import { getDefaultTextLocalizationRegistry } from "../../shared/text_localization_registry";
-
-/** 女巫事件 -> 玩家广播行映射。 */
-export const WITCH_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
-  witch_potion_used: (event, ctx) => {
-    const p = event.payload as Record<string, any>;
-    if (Number(p.actorId) !== ctx.actorId) {
-      return null;
-    }
-    return `[行动][女巫] ${p.actorId}号对${p.targetId}号使用${getDefaultTextLocalizationRegistry().potionType(String(p.potionType ?? ""))}`;
-  },
-  witch_potion_skipped: (event, ctx) => {
-    const p = event.payload as Record<string, any>;
-    if (Number(p.actorId) !== ctx.actorId) {
-      return null;
-    }
-    return `[行动][女巫] ${p.actorId}号本夜未用药`;
-  },
-};
 
 /** 女巫事件 -> 终端 live 渲染映射。 */
 export const WITCH_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {

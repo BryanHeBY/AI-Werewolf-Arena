@@ -14,7 +14,6 @@ export interface ReplayEvent {
   stage?: string;
   type: string;
   payload: Record<string, unknown>;
-  render_text?: string;
 }
 
 export interface ReplayPhaseStageWindow {

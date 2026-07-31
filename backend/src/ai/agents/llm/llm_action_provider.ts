@@ -7,6 +7,7 @@ import {
   Camp,
   EntityId,
   Phase,
+  PlayerVisibleEvent,
   PotionType,
   Role,
   ToolCall,
@@ -33,6 +34,10 @@ import { getIdiotState } from "../../../game/mechanisms/roles/private_state";
 import { safeRecordLogicOp, SessionRecordHub } from "../../../observability";
 import { colorize, isAnsiEnabled } from "../../../utils/ansi";
 import { BaselineBotActionProvider } from "../providers/action_providers";
+import {
+  encodePlayerVisibleEvent,
+  parsePlayerVisibleEvents,
+} from "../visible_event_protocol";
 import {
   buildBoardInfoPrompt,
   buildConstraintRetryPrompt,
@@ -82,9 +87,8 @@ interface BuildMessagesResult {
   boardInfoPrompt?: string;
   configPrompt?: string;
   isInitialRound: boolean;
-  visibleFeedDelta: string[];
-  feedCursorBefore: number;
-  feedCursorAfter: number;
+  eventCursorBefore: number;
+  eventCursorAfter: number;
   contextWindowStart: number;
   contextWindowEnd: number;
   contextWindowTotal: number;
@@ -188,7 +192,7 @@ export class LlmActionProvider implements ActionProvider {
   private readonly requestWaitQueueByScope = new Map<string, Array<() => void>>();
   private readonly recentEvents: string[] = [];
   private readonly agentHistories = new Map<EntityId, ChatMessage[]>();
-  private readonly agentBroadcastCursor = new Map<EntityId, number>();
+  private readonly agentEventCursor = new Map<EntityId, number>();
   private readonly agentContextWindowStart = new Map<EntityId, number>();
   private readonly actorRoundCounter = new Map<EntityId, number>();
   private readonly actorLastAssistantText = new Map<EntityId, string>();
@@ -1077,45 +1081,44 @@ export class LlmActionProvider implements ActionProvider {
   /**
    * 将可见广播增量写入对应 agent 的消息历史。
    */
-  private ingestBroadcastFeed(request: ActionRequest): {
-    delta: string[];
+  private ingestVisibleEvents(request: ActionRequest): {
+    delta: PlayerVisibleEvent[];
     cursorBefore: number;
     cursorAfter: number;
   } {
-    const feed = this.extractBroadcastFeed(request.context);
-    if (feed.length === 0) {
-      const cursor = this.agentBroadcastCursor.get(request.actorId) ?? 0;
+    const events = this.extractVisibleEvents(request.context);
+    const cursor = this.agentEventCursor.get(request.actorId) ?? 0;
+    if (events.length === 0) {
       return {
         delta: [],
         cursorBefore: cursor,
         cursorAfter: cursor,
       };
     }
-    const cursor = this.agentBroadcastCursor.get(request.actorId) ?? 0;
-    const delta = feed.slice(cursor);
-    for (const line of delta) {
+    const delta = events.filter((event) => event.seq > cursor);
+    for (const event of delta) {
       this.appendAgentHistory(request.actorId, {
         role: "user",
-        content: `【广播】${line}`,
+        content: encodePlayerVisibleEvent(event),
       });
     }
-    this.agentBroadcastCursor.set(request.actorId, feed.length);
+    const nextCursor = events.reduce(
+      (maxSeq, event) => Math.max(maxSeq, event.seq),
+      cursor,
+    );
+    this.agentEventCursor.set(request.actorId, nextCursor);
     return {
       delta,
       cursorBefore: cursor,
-      cursorAfter: feed.length,
+      cursorAfter: nextCursor,
     };
   }
 
   /**
-   * 从请求上下文提取广播消息列表。
+   * 从请求上下文提取已完成可见性过滤的结构化事件。
    */
-  private extractBroadcastFeed(context: Record<string, unknown>): string[] {
-    const source = context.broadcast_feed ?? context.public_feed;
-    if (!Array.isArray(source)) {
-      return [];
-    }
-    return source.map((item) => String(item)).filter(Boolean);
+  private extractVisibleEvents(context: Record<string, unknown>): PlayerVisibleEvent[] {
+    return parsePlayerVisibleEvents(context.visible_events);
   }
 
   /**
@@ -1155,7 +1158,7 @@ export class LlmActionProvider implements ActionProvider {
    * 组装本轮发送给模型的完整消息序列。
    */
   private buildMessages(request: ActionRequest): BuildMessagesResult {
-    const feedDelta = this.ingestBroadcastFeed(request);
+    const eventDelta = this.ingestVisibleEvents(request);
     const roleComp = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const maxPlayerId = this.world.entityIds().length;
     const teammateIds =
@@ -1258,9 +1261,8 @@ export class LlmActionProvider implements ActionProvider {
       ...(boardInfoPrompt ? { boardInfoPrompt } : {}),
       ...(configPrompt ? { configPrompt } : {}),
       isInitialRound,
-      visibleFeedDelta: feedDelta.delta,
-      feedCursorBefore: feedDelta.cursorBefore,
-      feedCursorAfter: feedDelta.cursorAfter,
+      eventCursorBefore: eventDelta.cursorBefore,
+      eventCursorAfter: eventDelta.cursorAfter,
       contextWindowStart: contextWindow.start,
       contextWindowEnd: contextWindow.end,
       contextWindowTotal: contextWindow.total,
@@ -1330,9 +1332,6 @@ export class LlmActionProvider implements ActionProvider {
       stage: localizedStageLabel,
       requestId: `${day}-${phaseLabel}-${request.actorId}-${next}`,
       timestampMs: Date.now(),
-      visibleFeedDelta: built.visibleFeedDelta,
-      feedCursorBefore: built.feedCursorBefore,
-      feedCursorAfter: built.feedCursorAfter,
       // 复盘时间线仅保留当轮核心送模消息，避免与广播流和历史上下文重复堆叠。
       llmRequestMessages: [
         { role: "user", content: built.userPrompt },
@@ -1345,7 +1344,7 @@ export class LlmActionProvider implements ActionProvider {
           }
         : {}),
       promptUserDelta: [
-        `context_window=${built.contextWindowStart}-${built.contextWindowEnd}/${built.contextWindowTotal}`,
+        `context_window=${built.contextWindowStart}-${built.contextWindowEnd}/${built.contextWindowTotal};event_cursor=${built.eventCursorBefore}->${built.eventCursorAfter}`,
       ],
       retryTrace: extras.retryTrace,
       thinkingText: extras.thinkingText,

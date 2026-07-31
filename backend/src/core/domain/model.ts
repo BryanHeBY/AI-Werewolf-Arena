@@ -269,6 +269,16 @@ export interface GameEvent {
 }
 
 /**
+ * 经过玩家可见性投影后的紧凑事件协议。
+ * seq 对应领域事件流中的全局单调序号；仅携带决策所需字段。
+ */
+export interface PlayerVisibleEvent {
+  seq: number;
+  type: string;
+  payload: Record<string, unknown>;
+}
+
+/**
  * 终局结果结构。
  */
 export interface GameResult {

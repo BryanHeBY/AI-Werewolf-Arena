@@ -14,7 +14,7 @@ import {
 } from "../../src/core/domain/model";
 import { RoleRegistry } from "../../src/core/domain/registries/role_registry";
 import { DamageResolutionSystem } from "../../src/core/domain/systems/damage_resolution_system";
-import { buildAgentBroadcastFeed } from "../../src/game/engine/agent_broadcast_feed";
+import { buildAgentVisibleEventFeed } from "../../src/game/engine/agent_visible_event_feed";
 import { NightPipeline } from "../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../src/game/gateway/tool_gateway";
 import { getSeerState } from "../../src/game/mechanisms/roles/private_state";
@@ -316,10 +316,8 @@ describe("night wolf tactical loop", () => {
     expect(endedEvent.payload.actorId).toBe(endedActorId);
 
     const wolfViewer = provider.voteOrder[0];
-    const feed = buildAgentBroadcastFeed(context.world, events, wolfViewer);
-    expect(
-      feed.some((line: string) => line.includes("[夜聊][结束][狼队]")),
-    ).toBe(true);
+    const feed = buildAgentVisibleEventFeed(context.world, events, wolfViewer);
+    expect(feed.some((event) => event.type === "wolf_discussion_ended")).toBe(true);
   });
 
   test("guard mark cancels wolf kill while poison still kills", async () => {

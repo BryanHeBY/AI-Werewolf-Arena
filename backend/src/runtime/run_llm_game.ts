@@ -23,7 +23,7 @@ import {
   RoleComponent,
 } from "../core";
 import { AiSdkClient } from "../ai/integrations/llm/ai_sdk_client";
-import { buildAgentBroadcastLine, renderMergedVoteBatch } from "../game/engine/agent_broadcast_feed";
+import { buildAgentVisibleEvent } from "../game/engine/agent_visible_event_feed";
 import { getDefaultScriptEventRenderRegistry } from "../game";
 import { resolveBoardConfig } from "./scenarios/board_config_resolver";
 import {
@@ -193,38 +193,6 @@ function toChatLines(events: Array<{ type: string; payload: Record<string, any> 
     }
   }
   return lines;
-}
-
-function toJudgeLine(event: { type: string; payload: Record<string, any> }): string | null {
-  return getDefaultScriptEventRenderRegistry().toJudgeLine(event as GameEvent);
-}
-
-function toReplayRenderText(
-  event: { type: string; payload: Record<string, any> },
-  printPrivateEvents: boolean,
-): string | undefined {
-  if (event.type === "vote_cast") {
-    const actorId = Number(event.payload.actorId);
-    const weight = Number(event.payload.weight ?? 1);
-    const abstain = event.payload.abstain === true;
-    if (abstain) {
-      return weight !== 1
-        ? `[live][行动][投票] ${actorId}号弃票(w=${weight})`
-        : `[live][行动][投票] ${actorId}号弃票`;
-    }
-    const targetId = Number(event.payload.targetId);
-    return weight !== 1
-      ? `[live][行动][投票] ${actorId}号投给${targetId}号(w=${weight})`
-      : `[live][行动][投票] ${actorId}号投给${targetId}号`;
-  }
-  const live = getDefaultScriptEventRenderRegistry().toLiveRender(
-    event as GameEvent,
-    printPrivateEvents,
-  );
-  if (live.length > 0) {
-    return live.map((item) => item.text).join("\n");
-  }
-  return getDefaultScriptEventRenderRegistry().toReplayRenderText(event as GameEvent);
 }
 
 function toReplayStage(event: { type: string; payload: Record<string, any> }): string {
@@ -504,26 +472,6 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     if (streamedEventIndex >= events.length) {
       return;
     }
-    const voteBatch: Array<{ actorId: number; targetId: number | null; abstain: boolean; weight: number }> = [];
-    const replayVoteBatch: GameEvent[] = [];
-    const flushVoteBatchLive = () => {
-      if (voteBatch.length === 0 || !options.streamEvents) {
-        voteBatch.length = 0;
-        return;
-      }
-      const parts = voteBatch.map((item) => {
-        if (item.abstain) {
-          return item.weight !== 1
-            ? `${item.actorId}号->弃票(w=${item.weight})`
-            : `${item.actorId}号->弃票`;
-        }
-        return item.weight !== 1
-          ? `${item.actorId}号->${item.targetId}号(w=${item.weight})`
-          : `${item.actorId}号->${item.targetId}号`;
-      });
-      log(`[live][上帝] 放逐票型：${parts.join("，")}`, "god");
-      voteBatch.length = 0;
-    };
     for (let i = streamedEventIndex; i < events.length; i++) {
       const event = events[i];
       if (event.type === "phase_changed") {
@@ -537,125 +485,33 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
         phase: replayPhaseCursor,
         stage: toReplayStage(event as any),
         payload: event.payload,
-        renderText: toReplayRenderText(event as any, options.printPrivateEvents),
       });
-      if (!options.streamEvents) {
-        // 即使不打印 live，也要写入“玩家可见广播”到 session 复盘。
-      }
       if (replayManager) {
-        if (event.type === "vote_cast") {
-          replayVoteBatch.push(event as GameEvent);
-          for (const playerId of context.world.entityIds()) {
-            const line = buildAgentBroadcastLine(
-              context.world,
-              event as GameEvent,
-              playerId,
-            );
-            if (!line) {
-              continue;
-            }
-            const roleComp = context.world.getComponent<RoleComponent>(
-              playerId,
-              COMPONENT.Role,
-            );
-            replayManager.recordPlayerBroadcast({
-              playerId,
-              role: roleComp?.role ?? "unknown",
-              camp: roleComp?.camp ?? "unknown",
-              day: replayDayCursor,
-              phase: "voting",
-              stage: "voting",
-              requestId: `${replayDayCursor}-voting-${playerId}-broadcast-${i}-private`,
-              text: line,
-            });
-          }
-        } else if (replayVoteBatch.length > 0) {
-          const merged = renderMergedVoteBatch(replayVoteBatch);
-          if (merged) {
-            for (const playerId of context.world.entityIds()) {
-              const roleComp = context.world.getComponent<RoleComponent>(
-                playerId,
-                COMPONENT.Role,
-              );
-              replayManager.recordPlayerBroadcast({
-                playerId,
-                role: roleComp?.role ?? "unknown",
-                camp: roleComp?.camp ?? "unknown",
-                day: replayDayCursor,
-                phase: "voting",
-                stage: "voting",
-                requestId: `${replayDayCursor}-voting-${playerId}-broadcast-${i}-batch`,
-                text: merged,
-              });
-            }
-          }
-          replayVoteBatch.length = 0;
-        }
-        if (event.type !== "vote_cast") {
-          for (const playerId of context.world.entityIds()) {
-            const line = buildAgentBroadcastLine(
-              context.world,
-              event as GameEvent,
-              playerId,
-            );
-            if (!line) {
-              continue;
-            }
-            const roleComp = context.world.getComponent<RoleComponent>(
-              playerId,
-              COMPONENT.Role,
-            );
-            replayManager.recordPlayerBroadcast({
-              playerId,
-              role: roleComp?.role ?? "unknown",
-              camp: roleComp?.camp ?? "unknown",
-              day: replayDayCursor,
-              phase: replayPhaseCursor,
-              stage: toReplayStage(event as any),
-              requestId: `${replayDayCursor}-${replayPhaseCursor}-${playerId}-broadcast-${i}`,
-              text: line,
-            });
-          }
+        for (const playerId of context.world.entityIds()) {
+          const visibleEvent = buildAgentVisibleEvent(
+            context.world,
+            event as GameEvent,
+            playerId,
+            i + 1,
+          );
+          if (!visibleEvent) continue;
+          const roleComp = context.world.getComponent<RoleComponent>(
+            playerId,
+            COMPONENT.Role,
+          );
+          replayManager.recordPlayerEvent({
+            playerId,
+            role: roleComp?.role ?? "unknown",
+            camp: roleComp?.camp ?? "unknown",
+            day: replayDayCursor,
+            phase: replayPhaseCursor,
+            stage: toReplayStage(event as any),
+            requestId: `${replayDayCursor}-${replayPhaseCursor}-${playerId}-event-${i + 1}`,
+            timestampMs: event.timestamp,
+            event: visibleEvent,
+          });
         }
       }
-      if (event.type === "vote_cast") {
-        if (options.streamEvents) {
-          const actorId = Number(event.payload.actorId);
-          const weight = Number(event.payload.weight ?? 1);
-          const abstain = event.payload.abstain === true;
-          if (abstain) {
-            log(
-              weight !== 1
-                ? `[live][行动][投票] ${actorId}号弃票(w=${weight})`
-                : `[live][行动][投票] ${actorId}号弃票`,
-              "info",
-            );
-          } else {
-            const targetId = Number(event.payload.targetId);
-            log(
-              weight !== 1
-                ? `[live][行动][投票] ${actorId}号投给${targetId}号(w=${weight})`
-                : `[live][行动][投票] ${actorId}号投给${targetId}号`,
-              "info",
-            );
-          }
-        }
-        voteBatch.push({
-          actorId: Number(event.payload.actorId),
-          targetId:
-            event.payload.targetId === null || event.payload.targetId === undefined
-              ? null
-              : Number(event.payload.targetId),
-          abstain: event.payload.abstain === true,
-          weight: Number(event.payload.weight ?? 1),
-        });
-        if (!options.streamEvents) {
-          continue;
-        }
-        // live 模式下延迟到 batch flush 再打印，避免逐票刷屏。
-        continue;
-      }
-      flushVoteBatchLive();
       if (!options.streamEvents) {
         continue;
       }
@@ -679,7 +535,6 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
         }
       }
     }
-    flushVoteBatchLive();
     streamedEventIndex = events.length;
   };
   const heartbeat = setInterval(() => {

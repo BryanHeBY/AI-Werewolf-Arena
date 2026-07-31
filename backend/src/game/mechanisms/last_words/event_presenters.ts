@@ -1,20 +1,7 @@
 /** 文件说明：遗言相关事件在不同输出通道中的渲染实现。 */
-import { AgentEventLineHandler } from "../broadcast/contracts";
 import { ScriptJudgeLineHandler, ScriptLiveRenderHandler } from "../script/contracts";
 import { RealtimeEventHandler } from "../session/contracts";
 import { makePublicEvent } from "../session/realtime_event_types";
-
-/** 遗言事件 -> 玩家广播行映射。 */
-export const LAST_WORDS_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
-  last_words_granted: (event) => {
-    const p = event.payload as Record<string, any>;
-    return `[系统][公开] ${p.playerId}号可以发表遗言`;
-  },
-  last_words_spoken: (event) => {
-    const p = event.payload as Record<string, any>;
-    return `[遗言][公开][${p.playerId}] ${p.text}`;
-  },
-};
 
 /** 遗言事件 -> 上帝判词渲染映射。 */
 export const LAST_WORDS_SCRIPT_JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler> = {

@@ -66,6 +66,19 @@ const JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler> = {
     }
     return `昨夜死亡：${deaths.join("、")}号`;
   },
+  vote_summary: (event) => {
+    const votes = Array.isArray(event.payload.votes) ? event.payload.votes : [];
+    const lineup = votes.map((item: any) => {
+      const weight = Number(item.weight ?? 1);
+      if (item.abstain === true || item.targetId === null || item.targetId === undefined) {
+        return weight !== 1 ? `${item.actorId}号->弃票(w=${weight})` : `${item.actorId}号->弃票`;
+      }
+      return weight !== 1
+        ? `${item.actorId}号->${item.targetId}号(w=${weight})`
+        : `${item.actorId}号->${item.targetId}号`;
+    }).join("，");
+    return `放逐票型：${lineup}`;
+  },
   voted_out: (event) => `${event.payload.target}号被放逐出局`,
   sheriff_badge_transferred: (event) =>
     `警徽移交：${event.payload.fromId}号 -> ${event.payload.toId}号`,
@@ -86,6 +99,7 @@ const REPLAY_STAGE_HANDLERS: Record<string, ScriptReplayStageHandler> = {
   phase_changed: (event) => String(event.payload.phase ?? "phase_changed"),
   day_speech: () => "day_speech",
   vote_cast: () => "voting",
+  vote_summary: () => "voting",
   voted_out: () => "voting",
   idiot_revealed: () => "voting",
   wolf_discussion: () => "wolf_discussion",
@@ -135,15 +149,6 @@ export class ScriptEventRenderRegistry {
   toJudgeLine(event: GameEvent): string | null {
     const handler = JUDGE_HANDLERS[event.type];
     return handler ? handler(event) : null;
-  }
-
-  toReplayRenderText(event: GameEvent): string | undefined {
-    const judge = this.toJudgeLine(event);
-    if (judge) {
-      return `[上帝] ${judge}`;
-    }
-    const chat = this.toChatLine(event);
-    return chat ?? undefined;
   }
 
   toReplayStage(event: GameEvent): string {

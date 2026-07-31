@@ -96,7 +96,19 @@ async function seedSession(root: string, sessionId: string): Promise<void> {
         role: "villager",
         camp: "good",
         timeline: [
-          { seq: 1, kind: "broadcast", day: 1, phase: "night", stage: "night", request_id: "a", role: "user", content: "x" },
+          {
+            seq: 1,
+            kind: "event",
+            day: 1,
+            phase: "night",
+            stage: "night",
+            request_id: "a",
+            event: {
+              seq: 1,
+              type: "phase_changed",
+              payload: { day: 1, phase: "night" },
+            },
+          },
           {
             seq: 2,
             kind: "turn",

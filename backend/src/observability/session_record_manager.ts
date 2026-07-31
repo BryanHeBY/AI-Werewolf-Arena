@@ -1,6 +1,7 @@
 /** 文件说明：会话复盘记录聚合、序列化与落盘管理。 */
 import { promises as fs } from "fs";
 import path from "path";
+import { PlayerVisibleEvent } from "../core/domain/model";
 import {
   ReplayDebugReport,
   ReplayPlayerDeltaMessage,
@@ -10,10 +11,10 @@ import {
   ReplayManifest,
   ReplayPhaseWindow,
   ReplayPhaseWindowsFile,
-  ReplayPlayerBroadcastEntry,
+  ReplayPlayerEventEntry,
   ReplayPlayerView,
   ReplayRecordLogicOpInput,
-  ReplayRecordPlayerBroadcastInput,
+  ReplayRecordPlayerEventInput,
   ReplayRecordDebugReportInput,
   ReplayRecordPlayerRoundInput,
   ReplayRecordPublicEventInput,
@@ -140,7 +141,6 @@ export class SessionRecordManager {
       ...(input.stage ? { stage: input.stage } : {}),
       type: input.type,
       payload: safeJson(input.payload) as Record<string, unknown>,
-      ...(input.renderText ? { render_text: input.renderText } : {}),
     });
     this.dirtyPublicTimeline = true;
     this.scheduleFlush();
@@ -315,7 +315,7 @@ export class SessionRecordManager {
     this.scheduleFlush();
   }
 
-  recordPlayerBroadcast(input: ReplayRecordPlayerBroadcastInput): void {
+  recordPlayerEvent(input: ReplayRecordPlayerEventInput): void {
     if (this.closed) {
       return;
     }
@@ -329,16 +329,15 @@ export class SessionRecordManager {
         timeline: [],
       };
 
-    const entry: ReplayPlayerBroadcastEntry = {
+    const entry: ReplayPlayerEventEntry = {
       seq: view.timeline.length + 1,
-      kind: "broadcast",
+      kind: "event",
       day: input.day,
       phase: input.phase,
       stage: input.stage,
       request_id: input.requestId,
       timestamp: toIso(input.timestampMs ?? Date.now()),
-      role: "user",
-      content: input.text,
+      event: safeJson(input.event) as unknown as PlayerVisibleEvent,
     };
     view.timeline.push(entry);
     this.playerViews.set(input.playerId, view);
@@ -424,7 +423,6 @@ export class SessionRecordManager {
         phase: String(e.phase ?? ""),
         type: String(e.type ?? ""),
         payload: (e.payload ?? {}) as Record<string, unknown>,
-        ...(e.render_text ? { render_text: e.render_text } : {}),
         timestamp: String(e.timestamp ?? ""),
       })),
       logicOps: this.logicOps,

@@ -711,7 +711,7 @@ describe("LlmActionProvider", () => {
     });
   });
 
-  test("injects public feed as broadcast user lines", async () => {
+  test("injects structured visible events as compact JSON user messages", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
@@ -720,7 +720,7 @@ describe("LlmActionProvider", () => {
           .filter((m) => m.role === "user")
           .map((m) => m.content)
           .join("\n");
-        expect(joined).toContain("【广播】[发言][1] 我是1号，我是狼人");
+        expect(joined).toContain('{"event":[1,"day_speech",{"actorId":1,"text":"我是1号，我是狼人"}]}');
         expect(joined).not.toContain("公开信息摘要=");
         expect(joined).not.toContain("阶段上下文=");
       }),
@@ -735,7 +735,7 @@ describe("LlmActionProvider", () => {
       allowedTools: ["speak"],
       context: {
         must_act: true,
-        public_feed: ["[发言][1] 我是1号，我是狼人"],
+        visible_events: [{ seq: 1, type: "day_speech", payload: { actorId: 1, text: "我是1号，我是狼人" } }],
       },
     });
 
@@ -851,7 +851,7 @@ describe("LlmActionProvider", () => {
     });
   });
 
-  test("appends broadcast lines into per-agent message history", async () => {
+  test("appends structured events once using seq cursors", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const toolClient = new ToolLoopClient("speak", { text: "收到广播" });
     const provider = new LlmActionProvider(context.world, toolClient as any, {
@@ -864,7 +864,7 @@ describe("LlmActionProvider", () => {
       allowedTools: ["speak"],
       context: {
         must_act: true,
-        broadcast_feed: ["[系统][公开] 天亮了（第1天白天）"],
+        visible_events: [{ seq: 1, type: "phase_changed", payload: { day: 1, phase: "day" } }],
       },
     });
 
@@ -874,9 +874,9 @@ describe("LlmActionProvider", () => {
       allowedTools: ["speak"],
       context: {
         must_act: true,
-        broadcast_feed: [
-          "[系统][公开] 天亮了（第1天白天）",
-          "[发言][公开][2] 我是2号",
+        visible_events: [
+          { seq: 1, type: "phase_changed", payload: { day: 1, phase: "day" } },
+          { seq: 2, type: "day_speech", payload: { actorId: 2, text: "我是2号" } },
         ],
       },
     });
@@ -884,8 +884,8 @@ describe("LlmActionProvider", () => {
     const joined = toolClient.lastMessages
       .map((msg) => `${msg.role}:${msg.content}`)
       .join("\n");
-    expect(joined).toContain("【广播】[系统][公开] 天亮了（第1天白天）");
-    expect(joined).toContain("【广播】[发言][公开][2] 我是2号");
+    expect(joined).toContain('{"event":[1,"phase_changed"');
+    expect(joined).toContain('{"event":[2,"day_speech"');
   });
 
   test("sdk loop falls back when it completes without a required action", async () => {
@@ -905,7 +905,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true, broadcast_feed: [] },
+      context: { must_act: true, visible_events: [] },
     });
 
     expect(action).toEqual({
@@ -1053,7 +1053,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: witchId,
       allowedTools: ["use_potion"],
-      context: { must_act: true, broadcast_feed: [] },
+      context: { must_act: true, visible_events: [] },
     });
 
     expect(action).toEqual({
@@ -1102,7 +1102,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true, broadcast_feed: [] },
+      context: { must_act: true, visible_events: [] },
     });
 
     expect(action).toEqual({
@@ -1137,7 +1137,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: witchId,
       allowedTools: ["use_potion"],
-      context: { must_act: true, phase: "witch", wolf_target: 3, broadcast_feed: [] },
+      context: { must_act: true, phase: "witch", wolf_target: 3, visible_events: [] },
     });
 
     expect(action).toEqual({
@@ -1252,7 +1252,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true, broadcast_feed: [] },
+      context: { must_act: true, visible_events: [] },
     });
   });
 
@@ -1265,7 +1265,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true, broadcast_feed: [] },
+      context: { must_act: true, visible_events: [] },
     });
 
     const system = client.lastMessages.find((message) => message.role === "system")?.content ?? "";

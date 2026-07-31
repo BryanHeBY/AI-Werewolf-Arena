@@ -1,16 +1,7 @@
 /** 文件说明：白痴翻牌相关事件在不同输出通道中的渲染实现。 */
-import { AgentEventLineHandler } from "../../broadcast/contracts";
 import { ScriptJudgeLineHandler } from "../../script/contracts";
 import { RealtimeEventHandler } from "../../session/contracts";
 import { makePublicEvent } from "../../session/realtime_event_types";
-
-/** 白痴事件 -> 玩家广播行映射。 */
-export const IDIOT_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
-  idiot_revealed: (event) => {
-    const p = event.payload as Record<string, any>;
-    return `[系统][公开] ${p.targetId}号翻牌为白痴，免于放逐并失去投票权`;
-  },
-};
 
 /** 白痴事件 -> 上帝判词渲染映射。 */
 export const IDIOT_SCRIPT_JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler> = {

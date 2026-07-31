@@ -1,11 +1,10 @@
 import {
-  getDefaultAgentEventLineRegistry,
   getDefaultScriptEventRenderRegistry,
 } from "../../src/mechanisms";
 import { GameEvent } from "../../src/domain/model";
 
 describe("broadcast localization", () => {
-  test("game_over should render localized winner/reason in agent and live channels", () => {
+  test("game_over should render localized winner/reason in the live observation channel", () => {
     const event: GameEvent = {
       timestamp: Date.now(),
       type: "game_over",
@@ -14,13 +13,6 @@ describe("broadcast localization", () => {
         reason: "wolves_reach_half",
       },
     };
-
-    const agentLine = getDefaultAgentEventLineRegistry().toLine(event, {
-      actorId: 1,
-      isWolf: false,
-    });
-    expect(agentLine).toContain("胜利阵营：狼人");
-    expect(agentLine).toContain("原因：狼人达半");
 
     const live = getDefaultScriptEventRenderRegistry().toLiveRender(event, true);
     expect(live.some((item) => item.text.includes("胜利阵营=狼人"))).toBe(true);

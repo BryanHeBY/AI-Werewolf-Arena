@@ -14,6 +14,10 @@ import { safeRecordLogicOp } from "../../../observability";
 import { AcpSession, AcpSessionFactory } from "../../integrations/acp/acp_process_client";
 import { AcpBugReport, AcpTurnRegistry } from "../../integrations/acp/acp_turn_registry";
 import { BaselineBotActionProvider } from "../providers/action_providers";
+import {
+  encodePlayerVisibleEventBatch,
+  parsePlayerVisibleEvents,
+} from "../visible_event_protocol";
 import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "../llm/prompt_templates";
 import { renderTurnConstraintUserHint, resolveTurnConstraints } from "../llm/turn_constraints";
 
@@ -37,7 +41,7 @@ export class AcpActionProvider implements ActionProvider {
   private readonly registry: AcpTurnRegistry;
   private readonly sessions = new Map<number, Promise<AcpSession>>();
   private readonly fallbackProvider: ActionProvider;
-  private readonly feedCursor = new Map<number, number>();
+  private readonly eventCursor = new Map<number, number>();
   private readonly toolSpecRegistry = getDefaultToolSpecRegistry();
   private readonly rolePromptRegistry = getDefaultRolePromptRegistry();
   private readonly targetHintRegistry = getDefaultTargetHintRegistry();
@@ -184,14 +188,16 @@ export class AcpActionProvider implements ActionProvider {
   private buildTurnPrompt(request: ActionRequest, turnId: string): string {
     const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const lines: string[] = [];
-    const feed = Array.isArray(request.context.broadcast_feed)
-      ? request.context.broadcast_feed.map(String)
-      : [];
-    const cursor = this.feedCursor.get(request.actorId) ?? 0;
-    const delta = feed.slice(cursor);
-    this.feedCursor.set(request.actorId, feed.length);
+    const events = parsePlayerVisibleEvents(request.context.visible_events);
+    const cursor = this.eventCursor.get(request.actorId) ?? 0;
+    const delta = events.filter((event) => event.seq > cursor);
+    const nextCursor = events.reduce(
+      (maxSeq, event) => Math.max(maxSeq, event.seq),
+      cursor,
+    );
+    this.eventCursor.set(request.actorId, nextCursor);
     if (delta.length) {
-      lines.push("自上次回合后你可见的事件：", ...delta);
+      lines.push(`新增可见事件：${encodePlayerVisibleEventBatch(delta)}`);
     }
     const constraints = resolveTurnConstraints(request);
     const stage = String(request.context.phase ?? request.actionWindow ?? request.context.window ?? request.phase);

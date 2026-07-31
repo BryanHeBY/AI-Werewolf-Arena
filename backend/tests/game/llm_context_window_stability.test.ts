@@ -49,7 +49,11 @@ describe("llm context window stability", () => {
     });
 
     for (let i = 1; i <= 18; i++) {
-      const feed = Array.from({ length: i }, (_, idx) => `marker-${idx + 1}`);
+      const events = Array.from({ length: i }, (_, idx) => ({
+        seq: idx + 1,
+        type: "day_speech",
+        payload: { actorId: 2, text: `marker-${idx + 1}` },
+      }));
       const action = await provider.getAction({
         phase: Phase.Day,
         actorId: 1,
@@ -58,7 +62,7 @@ describe("llm context window stability", () => {
           day: Math.floor((i - 1) / 6) + 1,
           phase: "day_speech",
           must_act: true,
-          broadcast_feed: feed,
+          visible_events: events,
         },
       });
       expect(action).toEqual({
@@ -69,7 +73,7 @@ describe("llm context window stability", () => {
 
     expect(client.lastMessages.length).toBeLessThanOrEqual(14);
     const merged = client.lastMessages.map((item) => item.content).join("\n");
-    expect(merged).toContain("【广播】marker-18");
-    expect(merged).not.toMatch(/【广播】marker-1(\n|$)/);
+    expect(merged).toContain('"text":"marker-18"');
+    expect(merged).not.toContain('"text":"marker-1"}');
   });
 });

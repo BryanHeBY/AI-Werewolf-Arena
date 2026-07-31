@@ -300,7 +300,7 @@ export async function createServer(
       };
       const query = request.query as {
         phaseId?: string;
-        kind?: "broadcast" | "turn";
+        kind?: "event" | "turn";
       };
       try {
         const data = await replayRepository.getPlayerTimeline(

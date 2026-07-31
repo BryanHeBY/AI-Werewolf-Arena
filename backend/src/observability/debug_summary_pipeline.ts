@@ -198,24 +198,9 @@ function summarizePlayerView(
       }
       return base;
     }
-    if ((entry as any).role) {
-      base.role = (entry as any).role;
-    }
-    if ((entry as any).content) {
-      base.content = truncate(String((entry as any).content), 200);
-    }
-    if ((entry as any).name) {
-      base.name = String((entry as any).name);
-    }
-    if ((entry as any).args) {
-      base.args = safeJsonString((entry as any).args, 200);
-    }
-    if ((entry as any).accepted !== undefined) {
-      base.accepted = (entry as any).accepted;
-    }
-    if ((entry as any).result !== undefined) {
-      base.result = safeJsonString((entry as any).result, 200);
-    }
+    base.event_seq = entry.event.seq;
+    base.event_type = entry.event.type;
+    base.payload = safeJsonString(entry.event.payload, 240);
     return base;
   });
 

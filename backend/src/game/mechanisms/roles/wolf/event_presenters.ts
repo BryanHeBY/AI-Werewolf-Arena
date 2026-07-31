@@ -1,54 +1,11 @@
 /** 文件说明：狼人相关事件在不同输出通道中的渲染实现。 */
 import { GameEvent } from "../../../../core/domain/model";
-import {
-  AgentEventLineHandler,
-  AgentLineContext,
-} from "../../broadcast/contracts";
 import { ScriptLiveRenderHandler, ScriptChatLineHandler } from "../../script/contracts";
 import { RealtimeEventHandler, RealtimeTranslateContext } from "../../session/contracts";
 import {
   makePublicEvent,
   makeWolvesOnlyEvent,
 } from "../../session/realtime_event_types";
-
-/** 狼人事件 -> 玩家广播行映射。 */
-export const WOLF_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
-  wolf_self_destruct: (event) => {
-    const p = event.payload as Record<string, any>;
-    return `[系统][公开] ${p.wolfId}号狼人自爆`;
-  },
-  wolf_discussion: (event, ctx) => {
-    if (!ctx.isWolf) {
-      return null;
-    }
-    const p = event.payload as Record<string, any>;
-    return `[夜聊][狼队][${p.actorId}] ${p.text}`;
-  },
-  wolf_discussion_ended: (event, ctx) => {
-    if (!ctx.isWolf) {
-      return null;
-    }
-    const p = event.payload as Record<string, any>;
-    return `[夜聊][结束][狼队][${p.actorId}] ${p.reason ?? "未提供原因"}`;
-  },
-  wolf_tactical_order: (event, ctx) => {
-    if (!ctx.isWolf) {
-      return null;
-    }
-    const p = event.payload as Record<string, any>;
-    return `[狼队][顺序] ${Array.isArray(p.order) ? p.order.join("->") : ""}`;
-  },
-  wolf_kill_vote_cast: (event, ctx) => {
-    if (!ctx.isWolf) {
-      return null;
-    }
-    const p = event.payload as Record<string, any>;
-    if (p.abstain === true) {
-      return `[狼刀票][狼队] ${p.actorId}号 -> 弃刀`;
-    }
-    return `[狼刀票][狼队] ${p.actorId}号 -> ${p.targetId}号`;
-  },
-};
 
 /** 狼人事件 -> 聊天行渲染映射。 */
 export const WOLF_SCRIPT_CHAT_HANDLERS: Record<string, ScriptChatLineHandler> = {

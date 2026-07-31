@@ -29,7 +29,7 @@ import { VotingRightComponent } from "../../core/domain/components/voting_right"
 import { IdentityComponent } from "../../core/domain/entities/player";
 import { RoleComponent } from "../../core/domain/components/role";
 import { AliveComponent } from "../../core/domain/components/alive";
-import { buildAgentBroadcastFeed } from "./agent_broadcast_feed";
+import { buildAgentVisibleEventFeed } from "./agent_visible_event_feed";
 import { buildTurnConstraintContext } from "./turn_constraints_context";
 
 /**
@@ -303,7 +303,7 @@ export class PhaseManager {
               day: actionDay,
               current_day: actionDay,
               phase: "hunter_shot",
-              broadcast_feed: buildAgentBroadcastFeed(
+              visible_events: buildAgentVisibleEventFeed(
                 this.world,
                 this.events,
                 hunterId,
@@ -363,7 +363,7 @@ export class PhaseManager {
           }),
           day: this.state.day,
           death_phase: phase,
-          broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, deadId),
+          visible_events: buildAgentVisibleEventFeed(this.world, this.events, deadId),
         },
       });
       if (action?.name !== "speak") {

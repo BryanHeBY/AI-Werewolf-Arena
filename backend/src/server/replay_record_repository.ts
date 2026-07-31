@@ -28,7 +28,7 @@ export interface TimelineQuery {
 
 export interface PlayerTimelineQuery {
   phaseId?: string;
-  kind?: "broadcast" | "turn";
+  kind?: "event" | "turn";
 }
 
 function parsePhaseId(phaseId: string): { day: number; phase: string } | null {

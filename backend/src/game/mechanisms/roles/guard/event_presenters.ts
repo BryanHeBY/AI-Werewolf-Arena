@@ -1,22 +1,7 @@
 /** 文件说明：守卫相关事件在不同输出通道中的渲染实现。 */
-import { AgentEventLineHandler } from "../../broadcast/contracts";
 import { ScriptLiveRenderHandler } from "../../script/contracts";
 import { RealtimeEventHandler } from "../../session/contracts";
 import { makePrivateTargetsEvent } from "../../session/realtime_event_types";
-
-/** 守卫事件 -> 玩家广播行映射。 */
-export const GUARD_AGENT_EVENT_LINE_HANDLERS: Record<string, AgentEventLineHandler> = {
-  guard_applied: (event, ctx) => {
-    const p = event.payload as Record<string, any>;
-    if (Number(p.actorId) !== ctx.actorId) {
-      return null;
-    }
-    if (p.abstain === true || p.targetId === null || p.targetId === undefined) {
-      return `[行动][守卫] ${p.actorId}号本轮选择空守`;
-    }
-    return `[行动][守卫] ${p.actorId}号守护${p.targetId}号`;
-  },
-};
 
 /** 守卫事件 -> 终端 live 渲染映射。 */
 export const GUARD_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {

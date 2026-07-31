@@ -119,7 +119,7 @@ describe("sheriff pipeline", () => {
     const { world } = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [{ timestamp: Date.now(), type: "phase_changed", payload: { phase: "day", day: 1 } }];
     const pipeline = new DayPipeline(world, new RoleRegistry(), new ToolGateway(), events);
-    const voteStageFeeds: string[][] = [];
+    const voteStageFeeds: Array<Array<{ type: string }>> = [];
     const sheriffVoteActors: number[] = [];
 
     const actionProvider: ActionProvider = {
@@ -131,8 +131,8 @@ describe("sheriff pipeline", () => {
           };
         }
         if (request.allowedTools.includes("vote_for_sheriff")) {
-          const feed = Array.isArray(request.context.broadcast_feed)
-            ? request.context.broadcast_feed.map((line) => String(line))
+          const feed = Array.isArray(request.context.visible_events)
+            ? request.context.visible_events as Array<{ type: string }>
             : [];
           sheriffVoteActors.push(request.actorId);
           voteStageFeeds.push(feed);
@@ -160,7 +160,7 @@ describe("sheriff pipeline", () => {
     expect(sheriffVoteActors).not.toContain(2);
     expect(sheriffVoteActors).not.toContain(3);
     for (const feed of voteStageFeeds) {
-      expect(feed.some((line) => line.includes("[警长投票]"))).toBe(false);
+      expect(feed.some((event) => event.type === "sheriff_vote_cast")).toBe(false);
     }
   });
 });

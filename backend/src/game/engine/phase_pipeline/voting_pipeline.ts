@@ -19,7 +19,7 @@ import { RoleSpecRegistry } from "../../mechanisms/registries/role_spec_registry
 import { safeRecordLogicOp } from "../../../observability";
 import { EventRegistry } from "../event_registry";
 import { World } from "../../../core/domain/world";
-import { buildAgentBroadcastFeed } from "../agent_broadcast_feed";
+import { buildAgentVisibleEventFeed } from "../agent_visible_event_feed";
 import { buildTurnConstraintContext } from "../turn_constraints_context";
 
 /**
@@ -134,7 +134,7 @@ export class VotingPipeline {
               allowedTools: ["vote"],
               summary: "放逐投票阶段必须完成一次投票动作（可弃票）。",
             }),
-            broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, voterId),
+            visible_events: buildAgentVisibleEventFeed(this.world, this.events, voterId),
           },
         });
 
@@ -250,6 +250,12 @@ export class VotingPipeline {
       }),
     );
 
+    const publicVotes: Array<{
+      actorId: EntityId;
+      targetId: EntityId | null;
+      abstain: boolean;
+      weight: number;
+    }> = [];
     for (const voterId of voters) {
       const vote = voteResults.find((item) => item?.voterId === voterId);
       if (!vote) {
@@ -276,6 +282,12 @@ export class VotingPipeline {
           ...(vote.fallback ? { fallback: true } : {}),
         },
       });
+      publicVotes.push({
+        actorId: voterId,
+        targetId: vote.targetId,
+        abstain: vote.abstain,
+        weight,
+      });
       safeRecordLogicOp({
         scope: "phase_pipeline",
         op: "vote_cast",
@@ -294,6 +306,15 @@ export class VotingPipeline {
       tally,
       config.tieBreaker?.exileVote ?? "min_id",
     );
+    this.events.push({
+      timestamp: Date.now(),
+      type: "vote_summary",
+      payload: {
+        votes: publicVotes,
+        tally,
+        target,
+      },
+    });
     safeRecordLogicOp({
       scope: "phase_pipeline",
       op: "vote_tally_resolved",
@@ -369,7 +390,7 @@ export class VotingPipeline {
               allowedTools: ["self_destruct"],
               summary: "放逐前自爆窗口可选择执行自爆，也可结束回合。",
             }),
-            broadcast_feed: buildAgentBroadcastFeed(this.world, this.events, actorId),
+            visible_events: buildAgentVisibleEventFeed(this.world, this.events, actorId),
           },
         };
 
