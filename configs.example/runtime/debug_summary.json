@@ -2,7 +2,7 @@
   "llmTimeoutMs": 30000,
   "llmMaxAttempts": 3,
   "agent": {
-    "enabled": false,
+    "enabled": true,
     "agentName": "deepseek_v4_flash",
     "profile": {
       "temperature": 0.1,

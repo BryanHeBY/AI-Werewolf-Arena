@@ -13,6 +13,7 @@ const ACP_SESSION_CLOSE_TIMEOUT_MS = 1_000;
 const ACP_PROCESS_GRACEFUL_EXIT_TIMEOUT_MS = 2_500;
 const ACP_PROCESS_TERMINATE_TIMEOUT_MS = 750;
 const ACP_PROCESS_KILL_TIMEOUT_MS = 750;
+const ACP_AUDIT_TEXT_MAX_CHARS = 4_000;
 
 async function settleWithin(promise: Promise<unknown>, timeoutMs: number): Promise<boolean> {
   let timer: NodeJS.Timeout | undefined;
@@ -65,11 +66,19 @@ export interface AcpSessionUpdate {
   update: unknown;
 }
 
+/** ACP 回合结束后供复盘记录器读取的限长语义轨迹。 */
+export interface AcpSessionAuditTrace {
+  messages: string[];
+  thoughts: string[];
+}
+
 export interface AcpSession {
   readonly sessionId: string;
   prompt(text: string): Promise<void>;
   cancel(): Promise<void>;
   close(): Promise<void>;
+  /** 返回并清空最近一次 prompt 的语义轨迹；适配器可不实现。 */
+  takeAuditTrace?(): AcpSessionAuditTrace;
 }
 
 export interface AcpSessionFactory {
@@ -182,6 +191,8 @@ export class AcpProcessClient implements AcpSessionFactory {
       );
       if (input.initialPrompt?.trim()) {
         await processSession.prompt(input.initialPrompt);
+        // 初始化回复不属于任何游戏回合，不混入首回合审计。
+        processSession.takeAuditTrace();
       }
       return processSession;
     } catch (error) {
@@ -200,6 +211,10 @@ export class AcpProcessClient implements AcpSessionFactory {
 
 class AcpProcessSession implements AcpSession {
   private closed = false;
+  private auditMessages: string[] = [];
+  private auditThoughtText = "";
+  private auditMessageId: string | null = null;
+  private auditMessageText = "";
 
   constructor(
     private readonly session: acp.ActiveSession,
@@ -218,6 +233,7 @@ class AcpProcessSession implements AcpSession {
   }
 
   async prompt(text: string): Promise<void> {
+    this.resetAuditTrace();
     const prompt = this.session.prompt(text);
     void this.consumeUpdates();
     await prompt;
@@ -275,15 +291,87 @@ class AcpProcessSession implements AcpSession {
     }
   }
 
+  takeAuditTrace(): AcpSessionAuditTrace {
+    this.flushAuditMessage();
+    const trace = {
+      messages: [...this.auditMessages],
+      thoughts: this.auditThoughtText ? [this.normalizeAuditText(this.auditThoughtText)] : [],
+    };
+    this.resetAuditTrace();
+    return trace;
+  }
+
   private async consumeUpdates(): Promise<void> {
     for (;;) {
       const message = await this.session.nextUpdate();
       if (message.kind === "stop") {
+        this.flushAuditMessage();
         return;
       }
       this.trackInjectedMcpToolCall(message.update);
+      this.captureAuditUpdate(message.update);
       this.onUpdate?.({ actorId: this.actorId, update: message.update });
     }
+  }
+
+  private captureAuditUpdate(update: unknown): void {
+    if (!update || typeof update !== "object") return;
+    const event = update as Record<string, unknown>;
+    if (event.sessionUpdate === "agent_message_chunk") {
+      const messageId = typeof event.messageId === "string" ? event.messageId : "unknown";
+      if (this.auditMessageId !== null && this.auditMessageId !== messageId) {
+        this.flushAuditMessage();
+      }
+      this.auditMessageId = messageId;
+      this.auditMessageText = this.appendAuditText(
+        this.auditMessageText,
+        this.readAuditText(event.content),
+      );
+      return;
+    }
+    if (event.sessionUpdate === "agent_thought_chunk") {
+      this.auditThoughtText = this.appendAuditText(
+        this.auditThoughtText,
+        this.readAuditText(event.content),
+      );
+    }
+  }
+
+  private flushAuditMessage(): void {
+    const text = this.normalizeAuditText(this.auditMessageText);
+    if (text && !/^\*?conversation interrupted\*?$/i.test(text)) {
+      const used = this.auditMessages.reduce((total, item) => total + item.length, 0);
+      const remaining = ACP_AUDIT_TEXT_MAX_CHARS - used;
+      if (remaining > 0) this.auditMessages.push(text.slice(0, remaining));
+    }
+    this.auditMessageId = null;
+    this.auditMessageText = "";
+  }
+
+  private resetAuditTrace(): void {
+    this.auditMessages = [];
+    this.auditThoughtText = "";
+    this.auditMessageId = null;
+    this.auditMessageText = "";
+  }
+
+  private appendAuditText(current: string, chunk: string): string {
+    if (!chunk || current.length >= ACP_AUDIT_TEXT_MAX_CHARS) return current;
+    return `${current}${chunk}`.slice(0, ACP_AUDIT_TEXT_MAX_CHARS);
+  }
+
+  private normalizeAuditText(value: string): string {
+    return value.replace(/\s+/g, " ").trim().slice(0, ACP_AUDIT_TEXT_MAX_CHARS);
+  }
+
+  private readAuditText(value: unknown): string {
+    if (typeof value === "string") return value;
+    if (Array.isArray(value)) return value.map((item) => this.readAuditText(item)).join("");
+    if (!value || typeof value !== "object") return "";
+    const record = value as Record<string, unknown>;
+    if (typeof record.text === "string") return record.text;
+    if (typeof record.content === "string") return record.content;
+    return "";
   }
 
   private trackInjectedMcpToolCall(update: unknown): void {

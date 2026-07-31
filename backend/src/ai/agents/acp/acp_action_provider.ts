@@ -10,9 +10,17 @@ import {
   getDefaultToolSpecRegistry,
 } from "../../../game/mechanisms";
 import { getIdiotState } from "../../../game/mechanisms/roles/private_state";
-import { safeRecordLogicOp } from "../../../observability";
-import { AcpSession, AcpSessionFactory } from "../../integrations/acp/acp_process_client";
-import { AcpBugReport, AcpTurnRegistry } from "../../integrations/acp/acp_turn_registry";
+import { safeRecordLogicOp, SessionRecordHub } from "../../../observability";
+import {
+  AcpSession,
+  AcpSessionAuditTrace,
+  AcpSessionFactory,
+} from "../../integrations/acp/acp_process_client";
+import {
+  AcpBugReport,
+  AcpTurnRegistry,
+  McpBridgeResult,
+} from "../../integrations/acp/acp_turn_registry";
 import { BaselineBotActionProvider } from "../providers/action_providers";
 import {
   encodePlayerVisibleEventBatch,
@@ -31,6 +39,20 @@ export interface AcpActionProviderOptions {
   onBugReport?: (report: AcpBugReport) => void;
 }
 
+interface AcpTurnPromptBuild {
+  prompt: string;
+  userPrompt: string;
+  turnId: string;
+  eventCursorBefore: number;
+  eventCursorAfter: number;
+}
+
+interface AcpTurnOutcome {
+  action: ToolCall | null;
+  reason?: string;
+  requestError?: string;
+}
+
 /**
  * 将 ACP Agent 适配为游戏 ActionProvider。
  *
@@ -42,37 +64,40 @@ export class AcpActionProvider implements ActionProvider {
   private readonly sessions = new Map<number, Promise<AcpSession>>();
   private readonly fallbackProvider: ActionProvider;
   private readonly eventCursor = new Map<number, number>();
+  private readonly actorRoundCounter = new Map<number, number>();
+  private readonly sessionPromptByActor = new Map<number, string>();
+  private readonly reportBugAcceptedScope = new Set<string>();
+  private readonly reportBugAcceptedMessage = new Set<string>();
+  private readonly reportBugAcceptedCountByActorDay = new Map<string, number>();
   private readonly toolSpecRegistry = getDefaultToolSpecRegistry();
   private readonly rolePromptRegistry = getDefaultRolePromptRegistry();
   private readonly targetHintRegistry = getDefaultTargetHintRegistry();
   private readonly phaseStageLocalizationRegistry = getDefaultPhaseStageLocalizationRegistry();
   private readonly configRenderRegistry = getDefaultConfigRenderRegistry();
+  private static readonly REPORT_BUG_MAX_PER_ACTOR_PER_DAY = 3;
 
   constructor(
     private readonly world: World,
     private readonly options: AcpActionProviderOptions,
   ) {
     this.fallbackProvider = options.fallbackProvider ?? new BaselineBotActionProvider(world);
-    this.registry = new AcpTurnRegistry((report) => {
-      safeRecordLogicOp({
-        scope: "llm_action_provider",
-        op: "report_bug_recorded",
-        actorId: report.actorId,
-        status: "ok",
-        input: { ...report },
-      });
-      options.onBugReport?.(report);
-    });
+    this.registry = new AcpTurnRegistry((report) => this.handleBugReport(report));
   }
 
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
+    const startedAt = Date.now();
     let session: AcpSession | undefined;
     let turn: ReturnType<AcpTurnRegistry["openTurn"]> | undefined;
+    let built: AcpTurnPromptBuild | undefined;
+    let auditTrace: AcpSessionAuditTrace | undefined;
+    let fallbackReason = "model_declined_required_action";
+    let requestError: string | undefined;
     try {
       session = await this.getOrCreateSession(request);
       turn = this.registry.openTurn(request, session.sessionId);
-      const promptTask = session.prompt(this.buildTurnPrompt(request, turn.turnId));
-      const action = await this.waitForAction(turn.action, promptTask, request);
+      built = this.buildTurnPrompt(request, turn.turnId, true);
+      const promptTask = session.prompt(built.prompt);
+      const outcome = await this.waitForAction(turn.action, promptTask, request);
       this.registry.closeTurn(turn.sessionId);
       await session.cancel().catch(() => undefined);
       // ACP Agent 理论上应在 cancel 后结束 prompt；不让失效 Agent 的违反协议
@@ -81,24 +106,44 @@ export class AcpActionProvider implements ActionProvider {
         promptTask.catch(() => undefined),
         new Promise<void>((resolve) => setTimeout(resolve, 1000)),
       ]);
-      if (action) {
-        return action;
+      auditTrace = session.takeAuditTrace?.();
+      if (outcome.action) {
+        this.recordPlayerRound(request, built, {
+          action: outcome.action,
+          auditTrace,
+          elapsedMs: Date.now() - startedAt,
+        });
+        return outcome.action;
       }
+      fallbackReason = outcome.reason ?? fallbackReason;
+      requestError = outcome.requestError;
     } catch (error) {
+      fallbackReason = "runtime_error";
+      requestError = String(error);
       safeRecordLogicOp({
         scope: "llm_action_provider",
         op: "action_provider_error",
         actorId: request.actorId,
         phase: request.phase,
         status: "fallback",
-        reason: String(error),
+        reason: requestError,
       });
     } finally {
       if (turn) {
         this.registry.closeTurn(turn.sessionId);
       }
     }
-    return this.fallbackProvider.getAction(request);
+    built ??= this.buildTurnPrompt(request, turn?.turnId ?? "unopened", false);
+    auditTrace ??= session?.takeAuditTrace?.();
+    const fallback = await this.fallbackProvider.getAction(request);
+    this.recordPlayerRound(request, built, {
+      action: fallback,
+      auditTrace,
+      elapsedMs: Date.now() - startedAt,
+      fallbackReason,
+      requestError,
+    });
+    return fallback;
   }
 
   async close(): Promise<void> {
@@ -117,10 +162,12 @@ export class AcpActionProvider implements ActionProvider {
     if (!factory) {
       throw new Error("acp_session_factory_missing");
     }
+    const initialPrompt = this.buildSessionPrompt(request);
+    this.sessionPromptByActor.set(request.actorId, initialPrompt);
     const created = factory.createSession({
       actorId: request.actorId,
       registry: this.registry,
-      initialPrompt: this.buildSessionPrompt(request),
+      initialPrompt,
     });
     this.sessions.set(request.actorId, created);
     try {
@@ -135,18 +182,27 @@ export class AcpActionProvider implements ActionProvider {
     action: Promise<ToolCall | null>,
     promptTask: Promise<void>,
     request: ActionRequest,
-  ): Promise<ToolCall | null> {
+  ): Promise<AcpTurnOutcome> {
     const timeoutMs = this.resolveTimeoutMs(request);
     if (timeoutMs <= 0) {
-      return null;
+      return { action: null, reason: "deadline_skip" };
     }
     return Promise.race([
-      action,
+      action.then((value) => ({ action: value })),
       // A completed Agent turn that did not invoke submit_action cannot still
       // produce a valid action. Fall back now instead of waiting for the full
       // LLM timeout (often minutes for ACP agents).
-      promptTask.then(() => null, () => null),
-      new Promise<null>((resolve) => setTimeout(() => resolve(null), timeoutMs)),
+      promptTask.then(
+        (): AcpTurnOutcome => ({ action: null, reason: "model_declined_required_action" }),
+        (error): AcpTurnOutcome => ({
+          action: null,
+          reason: "runtime_error",
+          requestError: String(error),
+        }),
+      ),
+      new Promise<AcpTurnOutcome>((resolve) =>
+        setTimeout(() => resolve({ action: null, reason: "request_timeout" }), timeoutMs),
+      ),
     ]);
   }
 
@@ -185,7 +241,11 @@ export class AcpActionProvider implements ActionProvider {
   }
 
   /** 回合提示遵循既有阶段规则、目标提示与可见事件增量结构。 */
-  private buildTurnPrompt(request: ActionRequest, turnId: string): string {
+  private buildTurnPrompt(
+    request: ActionRequest,
+    turnId: string,
+    advanceCursor: boolean,
+  ): AcpTurnPromptBuild {
     const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const lines: string[] = [];
     const events = parsePlayerVisibleEvents(request.context.visible_events);
@@ -195,7 +255,7 @@ export class AcpActionProvider implements ActionProvider {
       (maxSeq, event) => Math.max(maxSeq, event.seq),
       cursor,
     );
-    this.eventCursor.set(request.actorId, nextCursor);
+    if (advanceCursor) this.eventCursor.set(request.actorId, nextCursor);
     if (delta.length) {
       lines.push(`新增可见事件：${encodePlayerVisibleEventBatch(delta)}`);
     }
@@ -203,7 +263,7 @@ export class AcpActionProvider implements ActionProvider {
     const stage = String(request.context.phase ?? request.actionWindow ?? request.context.window ?? request.phase);
     const allowedTools = request.allowedTools as ToolName[];
     lines.push(`当前回合 ID：${turnId}`);
-    lines.push(buildUserPrompt({
+    const userPrompt = buildUserPrompt({
       actorId: request.actorId,
       phase: this.phaseStageLocalizationRegistry.phaseName(String(request.phase)),
       stage: this.phaseStageLocalizationRegistry.stageName(stage),
@@ -230,8 +290,186 @@ export class AcpActionProvider implements ActionProvider {
         "若发现明确的规则、状态、流程、日志或可见性矛盾，可先调用 report_bug，再正常提交行动。",
         "无需查询 get_game_schema；普通文本不会产生游戏效果。",
       ].join(""),
-    }));
-    return lines.filter(Boolean).join("\n");
+    });
+    lines.push(userPrompt);
+    return {
+      prompt: lines.filter(Boolean).join("\n"),
+      userPrompt,
+      turnId,
+      eventCursorBefore: cursor,
+      eventCursorAfter: advanceCursor ? nextCursor : cursor,
+    };
+  }
+
+  /** 将 ACP 回合映射到与直接 LLM 路径相同的玩家审计结构。 */
+  private recordPlayerRound(
+    request: ActionRequest,
+    built: AcpTurnPromptBuild,
+    input: {
+      action: ToolCall | null;
+      auditTrace?: AcpSessionAuditTrace;
+      elapsedMs: number;
+      fallbackReason?: string;
+      requestError?: string;
+    },
+  ): void {
+    const recorder = SessionRecordHub.getActive();
+    if (!recorder) return;
+    const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
+    const previousRound = this.actorRoundCounter.get(request.actorId) ?? 0;
+    const round = previousRound + 1;
+    this.actorRoundCounter.set(request.actorId, round);
+    const day = Number(request.context.day ?? request.context.current_day ?? 0);
+    const phase = String(request.phase);
+    const stage = String(
+      request.context.phase ??
+        request.actionWindow ??
+        request.context.window ??
+        request.phase,
+    );
+    const systemPrompt =
+      this.sessionPromptByActor.get(request.actorId) ?? this.buildSessionPrompt(request);
+    const thinkingText = this.formatAuditTrace(input.auditTrace);
+    const actionArgs = input.action
+      ? ((input.action.args ?? {}) as Record<string, unknown>)
+      : undefined;
+    recorder.recordPlayerRound({
+      playerId: request.actorId,
+      role: role?.role ?? "unknown",
+      camp: role?.camp ?? "unknown",
+      day,
+      phase: this.phaseStageLocalizationRegistry.phaseName(phase),
+      stage: this.phaseStageLocalizationRegistry.stageName(stage),
+      requestId: `${day}-${phase}-${request.actorId}-${round}`,
+      timestampMs: Date.now(),
+      llmRequestMessages: [{ role: "user", content: built.userPrompt }],
+      promptSystem: systemPrompt,
+      ...(previousRound === 0
+        ? {
+            initialPromptSystem: systemPrompt,
+            initialBoardInfo: this.buildBoardInfoPrompt(),
+          }
+        : {}),
+      promptUserDelta: [
+        `transport=acp_mcp;turn_id=${built.turnId};event_cursor=${built.eventCursorBefore}->${built.eventCursorAfter};elapsed_ms=${input.elapsedMs}`,
+      ],
+      ...(input.requestError
+        ? {
+            retryTrace: [
+              {
+                attempt: 0,
+                status: "request_error" as const,
+                reason: input.requestError,
+              },
+            ],
+          }
+        : {}),
+      ...(thinkingText ? { thinkingText } : {}),
+      actionMode: input.action ? "tool_call" : "none",
+      toolCalls: input.action
+        ? [
+            {
+              name: input.action.name,
+              args: actionArgs ?? {},
+              accepted: true,
+              result: {
+                transport: "acp_mcp",
+                turn_id: built.turnId,
+              },
+            },
+          ]
+        : [],
+      finalAction: input.action,
+      ...(input.fallbackReason
+        ? {
+            fallback: {
+              used: true,
+              reason: input.fallbackReason,
+              ...(input.action
+                ? { action: { name: input.action.name, args: actionArgs ?? {} } }
+                : {}),
+            },
+          }
+        : {}),
+    });
+  }
+
+  private formatAuditTrace(trace?: AcpSessionAuditTrace): string | undefined {
+    if (!trace) return undefined;
+    const thoughts = trace.thoughts.join(" ").trim().slice(0, 2_000);
+    const messages = trace.messages.join(" ").trim().slice(0, 2_000);
+    const lines = [
+      ...(thoughts ? [`thought: ${thoughts}`] : []),
+      ...(messages ? [`message: ${messages}`] : []),
+    ];
+    return lines.length ? lines.join("\n") : undefined;
+  }
+
+  /** ACP report_bug 与直接 LLM 路径共享落盘语义及限流规则。 */
+  private handleBugReport(report: AcpBugReport): McpBridgeResult {
+    const message = report.message.trim();
+    if (!message) return { ok: false, error: "invalid_report_bug_message_empty" };
+    if (message.length > 300) {
+      return { ok: false, error: "invalid_report_bug_message_too_long" };
+    }
+    const actorDayKey = `${report.actorId}|${report.day}`;
+    const scopeKey = `${report.actorId}|${report.day}|${report.phase}|${report.stage}`;
+    const duplicateKey = `${actorDayKey}|${report.category}|${report.severity}|${message
+      .replace(/\s+/g, " ")
+      .toLowerCase()}`;
+    const acceptedCount = this.reportBugAcceptedCountByActorDay.get(actorDayKey) ?? 0;
+    let droppedReason: string | undefined;
+    if (acceptedCount >= AcpActionProvider.REPORT_BUG_MAX_PER_ACTOR_PER_DAY) {
+      droppedReason = "report_bug_actor_day_rate_limited";
+    } else if (this.reportBugAcceptedScope.has(scopeKey)) {
+      droppedReason = "report_bug_scope_rate_limited";
+    } else if (this.reportBugAcceptedMessage.has(duplicateKey)) {
+      droppedReason = "report_bug_duplicate_message";
+    }
+    if (droppedReason) {
+      safeRecordLogicOp({
+        scope: "llm_action_provider",
+        op: "report_bug_dropped",
+        actorId: report.actorId,
+        phase: report.phase,
+        status: "fallback",
+        reason: droppedReason,
+        input: { day: report.day, stage: report.stage },
+      });
+      return { ok: true, accepted: false, dropped: true, reason: droppedReason };
+    }
+
+    const role = this.world.getComponent<RoleComponent>(report.actorId, COMPONENT.Role);
+    const reportId =
+      SessionRecordHub.getActive()?.recordDebugReport({
+        timestampMs: Date.now(),
+        day: report.day,
+        phase: report.phase,
+        stage: report.stage,
+        actorId: report.actorId,
+        actorRole: role?.role ?? "unknown",
+        actorCamp: role?.camp ?? "unknown",
+        category: report.category,
+        severity: report.severity,
+        message,
+      }) ?? "rb-no-recorder";
+    this.reportBugAcceptedScope.add(scopeKey);
+    this.reportBugAcceptedMessage.add(duplicateKey);
+    this.reportBugAcceptedCountByActorDay.set(actorDayKey, acceptedCount + 1);
+    safeRecordLogicOp({
+      scope: "llm_action_provider",
+      op: "report_bug_recorded",
+      actorId: report.actorId,
+      phase: report.phase,
+      status: "ok",
+      output: {
+        report_id: reportId,
+        category: report.category,
+        severity: report.severity,
+      },
+    });
+    this.options.onBugReport?.(report);
+    return { ok: true, accepted: true };
   }
 
   private buildBoardInfoPrompt(): string {

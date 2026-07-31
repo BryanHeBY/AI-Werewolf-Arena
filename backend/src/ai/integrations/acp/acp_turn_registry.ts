@@ -24,11 +24,15 @@ export interface McpReportBugParams {
 
 export type McpBridgeResult =
   | { ok: true; accepted: true }
+  | { ok: true; accepted: false; dropped: true; reason: string }
   | { ok: false; error: string };
 
 export interface AcpBugReport {
   actorId: number;
   turnId: string;
+  day: number;
+  phase: string;
+  stage: string;
   category: "flow" | "rule" | "state" | "logging" | "other";
   severity: "low" | "medium" | "high" | "critical";
   message: string;
@@ -55,7 +59,9 @@ export class AcpTurnRegistry {
   private readonly pendingBySession = new Map<string, PendingTurn>();
   private readonly nextTurnNumberBySession = new Map<string, number>();
 
-  constructor(private readonly onBugReport?: (report: AcpBugReport) => void) {}
+  constructor(
+    private readonly onBugReport?: (report: AcpBugReport) => McpBridgeResult | void,
+  ) {}
 
   openTurn(request: ActionRequest, sessionId: string): AcpPendingTurn {
     if (this.pendingBySession.has(sessionId)) {
@@ -117,14 +123,22 @@ export class AcpTurnRegistry {
     if (!pending) {
       return { ok: false, error: "turn_not_open_or_session_invalid" };
     }
-    this.onBugReport?.({
+    const result = this.onBugReport?.({
       actorId: pending.request.actorId,
       turnId: pending.turnId,
+      day: Number(pending.request.context.day ?? pending.request.context.current_day ?? 0),
+      phase: String(pending.request.phase),
+      stage: String(
+        pending.request.context.phase ??
+          pending.request.actionWindow ??
+          pending.request.context.window ??
+          pending.request.phase,
+      ),
       category: input.category,
       severity: input.severity,
       message: input.message.trim(),
     });
-    return { ok: true, accepted: true };
+    return result ?? { ok: true, accepted: true };
   }
 
   close(): void {
