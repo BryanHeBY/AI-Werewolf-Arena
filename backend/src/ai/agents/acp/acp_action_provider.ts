@@ -22,6 +22,7 @@ import {
   McpBridgeResult,
 } from "../../integrations/acp/acp_turn_registry";
 import { BaselineBotActionProvider } from "../providers/action_providers";
+import { AgentBugReportService } from "../reporting/bug_report_service";
 import {
   encodePlayerVisibleEventBatch,
   parsePlayerVisibleEvents,
@@ -66,21 +67,19 @@ export class AcpActionProvider implements ActionProvider {
   private readonly eventCursor = new Map<number, number>();
   private readonly actorRoundCounter = new Map<number, number>();
   private readonly sessionPromptByActor = new Map<number, string>();
-  private readonly reportBugAcceptedScope = new Set<string>();
-  private readonly reportBugAcceptedMessage = new Set<string>();
-  private readonly reportBugAcceptedCountByActorDay = new Map<string, number>();
+  private readonly bugReportService: AgentBugReportService;
   private readonly toolSpecRegistry = getDefaultToolSpecRegistry();
   private readonly rolePromptRegistry = getDefaultRolePromptRegistry();
   private readonly targetHintRegistry = getDefaultTargetHintRegistry();
   private readonly phaseStageLocalizationRegistry = getDefaultPhaseStageLocalizationRegistry();
   private readonly configRenderRegistry = getDefaultConfigRenderRegistry();
-  private static readonly REPORT_BUG_MAX_PER_ACTOR_PER_DAY = 3;
 
   constructor(
     private readonly world: World,
     private readonly options: AcpActionProviderOptions,
   ) {
     this.fallbackProvider = options.fallbackProvider ?? new BaselineBotActionProvider(world);
+    this.bugReportService = new AgentBugReportService(world);
     this.registry = new AcpTurnRegistry((report) => this.handleBugReport(report));
   }
 
@@ -407,69 +406,12 @@ export class AcpActionProvider implements ActionProvider {
 
   /** ACP report_bug 与直接 LLM 路径共享落盘语义及限流规则。 */
   private handleBugReport(report: AcpBugReport): McpBridgeResult {
-    const message = report.message.trim();
-    if (!message) return { ok: false, error: "invalid_report_bug_message_empty" };
-    if (message.length > 300) {
-      return { ok: false, error: "invalid_report_bug_message_too_long" };
+    const result = this.bugReportService.report(report);
+    if (result.ok && result.accepted) {
+      this.options.onBugReport?.(report);
+      return { ok: true, accepted: true };
     }
-    const actorDayKey = `${report.actorId}|${report.day}`;
-    const scopeKey = `${report.actorId}|${report.day}|${report.phase}|${report.stage}`;
-    const duplicateKey = `${actorDayKey}|${report.category}|${report.severity}|${message
-      .replace(/\s+/g, " ")
-      .toLowerCase()}`;
-    const acceptedCount = this.reportBugAcceptedCountByActorDay.get(actorDayKey) ?? 0;
-    let droppedReason: string | undefined;
-    if (acceptedCount >= AcpActionProvider.REPORT_BUG_MAX_PER_ACTOR_PER_DAY) {
-      droppedReason = "report_bug_actor_day_rate_limited";
-    } else if (this.reportBugAcceptedScope.has(scopeKey)) {
-      droppedReason = "report_bug_scope_rate_limited";
-    } else if (this.reportBugAcceptedMessage.has(duplicateKey)) {
-      droppedReason = "report_bug_duplicate_message";
-    }
-    if (droppedReason) {
-      safeRecordLogicOp({
-        scope: "llm_action_provider",
-        op: "report_bug_dropped",
-        actorId: report.actorId,
-        phase: report.phase,
-        status: "fallback",
-        reason: droppedReason,
-        input: { day: report.day, stage: report.stage },
-      });
-      return { ok: true, accepted: false, dropped: true, reason: droppedReason };
-    }
-
-    const role = this.world.getComponent<RoleComponent>(report.actorId, COMPONENT.Role);
-    const reportId =
-      SessionRecordHub.getActive()?.recordDebugReport({
-        timestampMs: Date.now(),
-        day: report.day,
-        phase: report.phase,
-        stage: report.stage,
-        actorId: report.actorId,
-        actorRole: role?.role ?? "unknown",
-        actorCamp: role?.camp ?? "unknown",
-        category: report.category,
-        severity: report.severity,
-        message,
-      }) ?? "rb-no-recorder";
-    this.reportBugAcceptedScope.add(scopeKey);
-    this.reportBugAcceptedMessage.add(duplicateKey);
-    this.reportBugAcceptedCountByActorDay.set(actorDayKey, acceptedCount + 1);
-    safeRecordLogicOp({
-      scope: "llm_action_provider",
-      op: "report_bug_recorded",
-      actorId: report.actorId,
-      phase: report.phase,
-      status: "ok",
-      output: {
-        report_id: reportId,
-        category: report.category,
-        severity: report.severity,
-      },
-    });
-    this.options.onBugReport?.(report);
-    return { ok: true, accepted: true };
+    return result;
   }
 
   private buildBoardInfoPrompt(): string {

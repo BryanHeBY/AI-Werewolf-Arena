@@ -56,6 +56,7 @@ import {
   WEREWOLF_GAME_TOOL_SCHEMA,
   WEREWOLF_GAME_TOOL_SPECS,
 } from "../game_tool_protocol";
+import { AgentBugReportService } from "../reporting/bug_report_service";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -72,9 +73,6 @@ interface ToolSchema {
   description: string;
   parameters: Record<string, unknown>;
 }
-
-type DebugBugCategory = "flow" | "rule" | "state" | "logging" | "other";
-type DebugBugSeverity = "low" | "medium" | "high" | "critical";
 
 interface ToolLoopStepTrace {
   assistantText: string;
@@ -170,7 +168,6 @@ export interface LlmActionProviderOptions {
  * - 解析失败或越权时自动降级到 fallback，确保对局可推进。
  */
 export class LlmActionProvider implements ActionProvider {
-  private static readonly REPORT_BUG_MAX_PER_ACTOR_PER_DAY = 3;
   private readonly maxPromptEvents: number;
   private readonly trace: boolean;
   private readonly llmTimeoutMs: number;
@@ -207,11 +204,9 @@ export class LlmActionProvider implements ActionProvider {
   private readonly actorToolTurnCounter = new Map<EntityId, number>();
   private readonly actorLastAssistantText = new Map<EntityId, string>();
   private readonly actorSystemPrompt = new Map<EntityId, string>();
-  private readonly reportBugAcceptedScope = new Set<string>();
-  private readonly reportBugAcceptedMessage = new Set<string>();
-  private readonly reportBugAcceptedCountByActorDay = new Map<string, number>();
   private static readonly REPORT_BUG_TOOL: ToolName = "report_bug";
   private readonly actionValidationService = new ActionValidationService();
+  private readonly bugReportService: AgentBugReportService;
 
   constructor(
     private readonly world: World,
@@ -256,6 +251,16 @@ export class LlmActionProvider implements ActionProvider {
         : Number.POSITIVE_INFINITY;
     this.fallbackProvider =
       options.fallbackProvider ?? new BaselineBotActionProvider(world);
+    this.bugReportService = new AgentBugReportService(world, {
+      onAccepted: (report, reportId) => {
+        const compactMessage = report.message.length > 120
+          ? `${report.message.slice(0, 120)}...`
+          : report.message;
+        console.log(
+          `[LLM_BUG] player=${report.actorId} phase=${report.phase} stage=${report.stage} severity=${report.severity} category=${report.category} report_id=${reportId} message=${compactMessage}`,
+        );
+      },
+    });
   }
 
   static fromModelClient(
@@ -1455,20 +1460,6 @@ export class LlmActionProvider implements ActionProvider {
     request: ActionRequest,
     args: Record<string, unknown>,
   ): Record<string, unknown> {
-    const parsed = this.parseDebugReportArgs(args);
-    if (!parsed.ok) {
-      safeRecordLogicOp({
-        scope: "llm_action_provider",
-        op: "report_bug_rejected",
-        actorId: request.actorId,
-        phase: request.phase,
-        status: "rejected",
-        reason: parsed.error,
-        input: { args },
-      });
-      return { ok: false, error: parsed.error };
-    }
-
     const day = Number(request.context.day ?? request.context.current_day ?? 0);
     const stage = String(
       request.context.phase ??
@@ -1476,167 +1467,15 @@ export class LlmActionProvider implements ActionProvider {
         request.context.window ??
         request.phase,
     );
-    const actorDayKey = `${request.actorId}|${day}`;
-    const scopeKey = `${request.actorId}|${day}|${request.phase}|${stage}`;
-    const normalizedMessage = this.normalizeReportBugMessage(parsed.value.message);
-    const duplicateKey = `${actorDayKey}|${parsed.value.category}|${parsed.value.severity}|${normalizedMessage}`;
-    const acceptedCount = this.reportBugAcceptedCountByActorDay.get(actorDayKey) ?? 0;
-
-    if (acceptedCount >= LlmActionProvider.REPORT_BUG_MAX_PER_ACTOR_PER_DAY) {
-      safeRecordLogicOp({
-        scope: "llm_action_provider",
-        op: "report_bug_dropped",
-        actorId: request.actorId,
-        phase: request.phase,
-        status: "fallback",
-        reason: "report_bug_actor_day_rate_limited",
-        input: {
-          day,
-          stage,
-          limit: LlmActionProvider.REPORT_BUG_MAX_PER_ACTOR_PER_DAY,
-        },
-      });
-      return {
-        ok: true,
-        accepted: false,
-        dropped: true,
-        reason: "report_bug_actor_day_rate_limited",
-      };
-    }
-    if (this.reportBugAcceptedScope.has(scopeKey)) {
-      safeRecordLogicOp({
-        scope: "llm_action_provider",
-        op: "report_bug_dropped",
-        actorId: request.actorId,
-        phase: request.phase,
-        status: "fallback",
-        reason: "report_bug_scope_rate_limited",
-        input: {
-          day,
-          stage,
-        },
-      });
-      return {
-        ok: true,
-        accepted: false,
-        dropped: true,
-        reason: "report_bug_scope_rate_limited",
-      };
-    }
-    if (this.reportBugAcceptedMessage.has(duplicateKey)) {
-      safeRecordLogicOp({
-        scope: "llm_action_provider",
-        op: "report_bug_dropped",
-        actorId: request.actorId,
-        phase: request.phase,
-        status: "fallback",
-        reason: "report_bug_duplicate_message",
-        input: {
-          day,
-          stage,
-        },
-      });
-      return {
-        ok: true,
-        accepted: false,
-        dropped: true,
-        reason: "report_bug_duplicate_message",
-      };
-    }
-
-    const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
-    const recorder = SessionRecordHub.getActive();
-    const reportId =
-      recorder?.recordDebugReport({
-        timestampMs: Date.now(),
-        day,
-        phase: String(request.phase),
-        stage,
-        actorId: request.actorId,
-        actorRole: role?.role ?? "unknown",
-        actorCamp: role?.camp ?? "unknown",
-        category: parsed.value.category,
-        severity: parsed.value.severity,
-        message: parsed.value.message,
-      }) ?? "rb-no-recorder";
-    this.reportBugAcceptedScope.add(scopeKey);
-    this.reportBugAcceptedMessage.add(duplicateKey);
-    this.reportBugAcceptedCountByActorDay.set(actorDayKey, acceptedCount + 1);
-
-    safeRecordLogicOp({
-      scope: "llm_action_provider",
-      op: "report_bug_recorded",
+    return this.bugReportService.report({
       actorId: request.actorId,
-      phase: request.phase,
-      status: "ok",
-      output: {
-        report_id: reportId,
-        category: parsed.value.category,
-        severity: parsed.value.severity,
-      },
+      day,
+      phase: String(request.phase),
+      stage,
+      category: args.category,
+      severity: args.severity,
+      message: args.message,
     });
-    const compactMsg =
-      parsed.value.message.length > 120
-        ? `${parsed.value.message.slice(0, 120)}...`
-        : parsed.value.message;
-    console.log(
-      `[LLM_BUG] player=${request.actorId} phase=${request.phase} stage=${String(
-        request.context.phase ?? request.actionWindow ?? request.context.window ?? request.phase,
-      )} severity=${parsed.value.severity} category=${parsed.value.category} report_id=${reportId} message=${compactMsg}`,
-    );
-    return { ok: true, accepted: true, report_id: reportId };
-  }
-
-  private normalizeReportBugMessage(message: string): string {
-    return message.toLowerCase().replace(/\s+/g, " ").trim();
-  }
-
-  private parseDebugReportArgs(args: Record<string, unknown>):
-    | {
-        ok: true;
-        value: {
-          category: DebugBugCategory;
-          severity: DebugBugSeverity;
-          message: string;
-        };
-      }
-    | { ok: false; error: string } {
-    const category = String(args.category ?? "");
-    const severity = String(args.severity ?? "");
-    const message = typeof args.message === "string" ? args.message.trim() : "";
-    const validCategories: DebugBugCategory[] = [
-      "flow",
-      "rule",
-      "state",
-      "logging",
-      "other",
-    ];
-    const validSeverities: DebugBugSeverity[] = [
-      "low",
-      "medium",
-      "high",
-      "critical",
-    ];
-    if (!validCategories.includes(category as DebugBugCategory)) {
-      return { ok: false, error: "invalid_report_bug_category" };
-    }
-    if (!validSeverities.includes(severity as DebugBugSeverity)) {
-      return { ok: false, error: "invalid_report_bug_severity" };
-    }
-    if (!message) {
-      return { ok: false, error: "invalid_report_bug_message_empty" };
-    }
-    if (message.length > 300) {
-      return { ok: false, error: "invalid_report_bug_message_too_long" };
-    }
-    return {
-      ok: true,
-      value: {
-        category: category as DebugBugCategory,
-        severity: severity as DebugBugSeverity,
-        message,
-      },
-    };
   }
 
   /**
