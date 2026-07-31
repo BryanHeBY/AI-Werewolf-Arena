@@ -105,6 +105,8 @@ class InvalidPotionThenNoneToolLoopClient {
   public lastMessages: Array<{ role: string; content: string }> = [];
   public invalidPotionResult: Record<string, unknown> | string | undefined;
 
+  constructor(private readonly targetId: number = 2) {}
+
   async chat(): Promise<string> {
     return "";
   }
@@ -129,15 +131,15 @@ class InvalidPotionThenNoneToolLoopClient {
     const invalid = await callbacks.onToolCall({
       id: "tool_heal_1",
       name: "use_potion",
-      args: { target_id: 2, potion_type: "heal" },
-      rawArgs: '{"target_id":2,"potion_type":"heal"}',
+      args: { target_id: this.targetId, potion_type: "heal" },
+      rawArgs: JSON.stringify({ target_id: this.targetId, potion_type: "heal" }),
     });
     this.invalidPotionResult = invalid.toolResult;
     const valid = await callbacks.onToolCall({
       id: "tool_none_1",
       name: "use_potion",
-      args: { target_id: 2, potion_type: "none" },
-      rawArgs: '{"target_id":2,"potion_type":"none"}',
+      args: { target_id: this.targetId, potion_type: "none" },
+      rawArgs: JSON.stringify({ target_id: this.targetId, potion_type: "none" }),
     });
     return {
       finalAction: (valid.finalAction ?? null) as T | null,
@@ -1153,7 +1155,8 @@ describe("LlmActionProvider", () => {
       .find((id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "witch")!;
     const witch = context.world.getComponent<RoleComponent>(witchId, COMPONENT.Role)!;
     getWitchState(witch)!.heal = 0;
-    const client = new InvalidPotionThenNoneToolLoopClient();
+    const targetId = context.world.entityIds().find((id) => id !== witchId)!;
+    const client = new InvalidPotionThenNoneToolLoopClient(targetId);
     const provider = new LlmActionProvider(context.world, client as any, {
       fallbackProvider: new FallbackProvider(null),
     });
@@ -1162,12 +1165,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: witchId,
       allowedTools: ["use_potion"],
-      context: { must_act: true, phase: "witch", wolf_target: 2 },
+      context: { must_act: true, phase: "witch", wolf_target: targetId },
     });
 
     expect(action).toEqual({
       name: "use_potion",
-      args: { target_id: 2, potion_type: "none" },
+      args: { target_id: targetId, potion_type: "none" },
     });
     expect(client.invalidPotionResult).toEqual({ ok: false, error: "非法操作，解药不可用" });
     const user = client.lastMessages.find((message) => message.role === "user")?.content ?? "";
