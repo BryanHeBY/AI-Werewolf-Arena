@@ -1,7 +1,7 @@
 import {
   getDefaultScriptEventRenderRegistry,
-} from "../../src/mechanisms";
-import { GameEvent } from "../../src/domain/model";
+} from "../../src/game/mechanisms";
+import { GameEvent } from "../../src/core/domain/model";
 
 describe("broadcast localization", () => {
   test("game_over should render localized winner/reason in the live observation channel", () => {

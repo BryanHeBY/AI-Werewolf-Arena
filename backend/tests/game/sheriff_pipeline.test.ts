@@ -1,15 +1,15 @@
 import { bootstrapGame } from "../../src/app/bootstrap";
-import { COMPONENT } from "../../src/domain/components/names";
-import { AliveComponent } from "../../src/domain/components/alive";
-import { BadgeComponent } from "../../src/domain/components/badge";
-import { VotingRightComponent } from "../../src/domain/components/voting_right";
-import { RoleComponent } from "../../src/domain/components/role";
-import { ActionProvider, ActionRequest, ToolCall } from "../../src/domain/model";
-import { EventRegistry } from "../../src/engine/event_registry";
-import { DayPipeline } from "../../src/engine/phase_pipeline/day_pipeline";
-import { RoleRegistry } from "../../src/domain/registries/role_registry";
-import { ToolGateway } from "../../src/gateway/tool_gateway";
-import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
+import { COMPONENT } from "../../src/core/domain/components/names";
+import { AliveComponent } from "../../src/core/domain/components/alive";
+import { BadgeComponent } from "../../src/core/domain/components/badge";
+import { VotingRightComponent } from "../../src/core/domain/components/voting_right";
+import { RoleComponent } from "../../src/core/domain/components/role";
+import { ActionProvider, ActionRequest, ToolCall } from "../../src/core/domain/model";
+import { EventRegistry } from "../../src/game/engine/event_registry";
+import { DayPipeline } from "../../src/game/engine/phase_pipeline/day_pipeline";
+import { RoleRegistry } from "../../src/core/domain/registries/role_registry";
+import { ToolGateway } from "../../src/game/gateway/tool_gateway";
+import { twelvePlayerStandardConfig } from "../../src/runtime/scenarios/twelve_player_standard";
 
 describe("sheriff pipeline", () => {
   test("no initial sheriff before election", () => {

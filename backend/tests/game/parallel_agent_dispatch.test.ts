@@ -5,12 +5,12 @@ import {
   ActionRequest,
   Phase,
   ToolCall,
-} from "../../src/domain/model";
-import { EventRegistry } from "../../src/engine/event_registry";
-import { DayPipeline } from "../../src/engine/phase_pipeline/day_pipeline";
-import { VotingPipeline } from "../../src/engine/phase_pipeline/voting_pipeline";
-import { ToolGateway } from "../../src/gateway/tool_gateway";
-import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
+} from "../../src/core/domain/model";
+import { EventRegistry } from "../../src/game/engine/event_registry";
+import { DayPipeline } from "../../src/game/engine/phase_pipeline/day_pipeline";
+import { VotingPipeline } from "../../src/game/engine/phase_pipeline/voting_pipeline";
+import { ToolGateway } from "../../src/game/gateway/tool_gateway";
+import { twelvePlayerStandardConfig } from "../../src/runtime/scenarios/twelve_player_standard";
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));

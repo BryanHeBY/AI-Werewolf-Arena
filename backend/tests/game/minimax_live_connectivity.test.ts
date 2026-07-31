@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import path from "path";
-import { AiSdkClient } from "../../src/infra/llm/ai_sdk_client";
+import { AiSdkClient } from "../../src/ai/integrations/llm/ai_sdk_client";
 
 const rootEnvPath = path.resolve(__dirname, "../../..", ".env");
 dotenv.config({ path: rootEnvPath });

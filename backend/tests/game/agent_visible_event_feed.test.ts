@@ -1,10 +1,10 @@
 import { bootstrapGame } from "../../src/app/bootstrap";
-import { COMPONENT } from "../../src/domain/components/names";
-import { RoleComponent } from "../../src/domain/components/role";
-import { GameEvent } from "../../src/domain/model";
+import { COMPONENT } from "../../src/core/domain/components/names";
+import { RoleComponent } from "../../src/core/domain/components/role";
+import { GameEvent } from "../../src/core/domain/model";
 import { buildAgentVisibleEventFeed } from "../../src/game/engine/agent_visible_event_feed";
-import { sixPlayerMvpConfig } from "../../src/scenarios/six_player_mvp";
-import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
+import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
+import { twelvePlayerStandardConfig } from "../../src/runtime/scenarios/twelve_player_standard";
 
 describe("buildAgentVisibleEventFeed", () => {
   test("keeps wolf and role actions private while public results stay visible", () => {

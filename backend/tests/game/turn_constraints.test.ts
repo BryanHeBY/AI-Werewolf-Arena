@@ -1,8 +1,8 @@
-import { ActionRequest, Phase } from "../../src/domain/model";
+import { ActionRequest, Phase } from "../../src/core/domain/model";
 import {
   evaluateTurnConstraints,
   resolveTurnConstraints,
-} from "../../src/agents/llm/turn_constraints";
+} from "../../src/ai/agents/llm/turn_constraints";
 
 describe("turn_constraints", () => {
   test("falls back to legacy must_act when turn_constraints is absent", () => {
@@ -54,4 +54,3 @@ describe("turn_constraints", () => {
     expect(evaluation.errors.join(" ")).toContain("结束前必须至少执行以下工具之一");
   });
 });
-

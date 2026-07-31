@@ -1,9 +1,9 @@
 import { bootstrapGame } from "../../src/app/bootstrap";
-import { ActiveContextWindow } from "../../src/memory/active_context_window";
-import { NotebookStore } from "../../src/memory/notebook_store";
-import { PromptAssembler } from "../../src/memory/prompt_assembler";
-import { RollingSummaryStore } from "../../src/memory/rolling_summary";
-import { sixPlayerMvpConfig } from "../../src/scenarios/six_player_mvp";
+import { ActiveContextWindow } from "../../src/ai/memory/active_context_window";
+import { NotebookStore } from "../../src/ai/memory/notebook_store";
+import { PromptAssembler } from "../../src/ai/memory/prompt_assembler";
+import { RollingSummaryStore } from "../../src/ai/memory/rolling_summary";
+import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
 
 describe("memory compression", () => {
   test("buildPromptFor triggers rolling summary when active context exceeds limit", () => {

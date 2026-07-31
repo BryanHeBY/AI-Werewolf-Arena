@@ -1,8 +1,8 @@
 import { bootstrapGame } from "../../src/app/bootstrap";
-import { COMPONENT } from "../../src/domain/components/names";
-import { RoleComponent } from "../../src/domain/components/role";
-import { ActionProvider, ActionRequest, Phase, PotionType, ToolCall } from "../../src/domain/model";
-import { twelvePlayerStandardConfig } from "../../src/scenarios/twelve_player_standard";
+import { COMPONENT } from "../../src/core/domain/components/names";
+import { RoleComponent } from "../../src/core/domain/components/role";
+import { ActionProvider, ActionRequest, Phase, PotionType, ToolCall } from "../../src/core/domain/model";
+import { twelvePlayerStandardConfig } from "../../src/runtime/scenarios/twelve_player_standard";
 
 class DeterministicFlowProvider implements ActionProvider {
   private readonly firstNightKillTargetId: number | null;
