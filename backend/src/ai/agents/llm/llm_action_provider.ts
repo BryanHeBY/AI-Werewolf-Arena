@@ -26,6 +26,7 @@ import { LegacyResponseInterpreter } from "./legacy_response_interpreter";
 import { LlmObserver } from "./llm_observer";
 import { ChatModelClient } from "./model_client";
 import { PlayerPromptSession } from "./player_prompt_session";
+import { PlayerPromptPolicy } from "./player_prompt_policy";
 import { PlayerRoundRecorder } from "./player_round_recorder";
 import { ScopedRequestScheduler } from "./request_scheduler";
 import { SdkGameToolLoop } from "./sdk_game_tool_loop";
@@ -96,9 +97,7 @@ export class LlmActionProvider implements ActionProvider {
       },
     });
     const interpreter = new LegacyResponseInterpreter(world, repairRegistry);
-    const promptSession = new PlayerPromptSession(world, {
-      maxPromptEvents: options.maxPromptEvents ?? 16,
-      supportsNativeTools: Boolean(client.runToolLoop),
+    const promptPolicy = new PlayerPromptPolicy(world, {
       personalityPromptResolver: options.personalityPromptResolver,
       toolSpecRegistry,
       rolePromptRegistry,
@@ -106,6 +105,11 @@ export class LlmActionProvider implements ActionProvider {
       phaseStageLocalizationRegistry: localization,
       configRenderRegistry: configRenderer,
       boardConfig: options.boardConfig,
+    });
+    const promptSession = new PlayerPromptSession({
+      maxPromptEvents: options.maxPromptEvents ?? 16,
+      supportsNativeTools: Boolean(client.runToolLoop),
+      promptPolicy,
     });
     const fallback = new FallbackActionPolicy(
       options.fallbackProvider ?? new BaselineBotActionProvider(world),

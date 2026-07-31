@@ -41,13 +41,13 @@ export class PlayerRoundRecorder {
       timestampMs: Date.now(),
       llmRequestMessages: [{ role: "user", content: prompt.userPrompt }],
       promptSystem: prompt.systemPrompt,
-      ...(prompt.isInitialRound
+      ...(round === 1
         ? {
             initialPromptSystem: prompt.systemPrompt,
             initialBoardInfo: prompt.boardInfoPrompt,
           }
         : {}),
-      promptUserDelta: [
+      promptUserDelta: prompt.auditMetadata ?? [
         `context_window=${prompt.contextWindowStart}-${prompt.contextWindowEnd}/${prompt.contextWindowTotal};event_cursor=${prompt.eventCursorBefore}->${prompt.eventCursorAfter}`,
       ],
       retryTrace: outcome.retryTrace,

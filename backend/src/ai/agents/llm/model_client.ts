@@ -67,6 +67,7 @@ export interface BuiltPlayerPrompt {
   contextWindowEnd: number;
   contextWindowTotal: number;
   turnId: string;
+  auditMetadata?: string[];
 }
 
 export interface LlmRetryTraceEntry {

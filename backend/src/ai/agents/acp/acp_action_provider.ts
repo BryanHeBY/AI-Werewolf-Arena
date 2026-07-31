@@ -1,6 +1,5 @@
-import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionProvider, ActionRequest, BoardConfig, Camp, Role, ToolCall, ToolName } from "../../../core/domain/model";
+import { ActionProvider, ActionRequest, BoardConfig, ToolCall } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 import {
   getDefaultConfigRenderRegistry,
@@ -9,8 +8,7 @@ import {
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
 } from "../../../game/mechanisms";
-import { getIdiotState } from "../../../game/mechanisms/roles/private_state";
-import { safeRecordLogicOp, SessionRecordHub } from "../../../observability";
+import { safeRecordLogicOp } from "../../../observability";
 import {
   AcpSession,
   AcpSessionAuditTrace,
@@ -27,8 +25,9 @@ import {
   encodePlayerVisibleEventBatch,
   parsePlayerVisibleEvents,
 } from "../visible_event_protocol";
-import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "../llm/prompt_templates";
-import { renderTurnConstraintUserHint, resolveTurnConstraints } from "../llm/turn_constraints";
+import { BuiltPlayerPrompt, PlayerRoundOutcome } from "../llm/model_client";
+import { PlayerPromptPolicy } from "../llm/player_prompt_policy";
+import { PlayerRoundRecorder } from "../llm/player_round_recorder";
 
 export interface AcpActionProviderOptions {
   fallbackProvider?: ActionProvider;
@@ -65,22 +64,29 @@ export class AcpActionProvider implements ActionProvider {
   private readonly sessions = new Map<number, Promise<AcpSession>>();
   private readonly fallbackProvider: ActionProvider;
   private readonly eventCursor = new Map<number, number>();
-  private readonly actorRoundCounter = new Map<number, number>();
   private readonly sessionPromptByActor = new Map<number, string>();
   private readonly bugReportService: AgentBugReportService;
-  private readonly toolSpecRegistry = getDefaultToolSpecRegistry();
-  private readonly rolePromptRegistry = getDefaultRolePromptRegistry();
-  private readonly targetHintRegistry = getDefaultTargetHintRegistry();
-  private readonly phaseStageLocalizationRegistry = getDefaultPhaseStageLocalizationRegistry();
-  private readonly configRenderRegistry = getDefaultConfigRenderRegistry();
+  private readonly promptPolicy: PlayerPromptPolicy;
+  private readonly roundRecorder: PlayerRoundRecorder;
 
   constructor(
-    private readonly world: World,
+    world: World,
     private readonly options: AcpActionProviderOptions,
   ) {
     this.fallbackProvider = options.fallbackProvider ?? new BaselineBotActionProvider(world);
     this.bugReportService = new AgentBugReportService(world);
     this.registry = new AcpTurnRegistry((report) => this.handleBugReport(report));
+    const localization = getDefaultPhaseStageLocalizationRegistry();
+    this.promptPolicy = new PlayerPromptPolicy(world, {
+      personalityPromptResolver: options.personalityPromptResolver,
+      toolSpecRegistry: getDefaultToolSpecRegistry(),
+      rolePromptRegistry: getDefaultRolePromptRegistry(),
+      targetHintRegistry: getDefaultTargetHintRegistry(),
+      phaseStageLocalizationRegistry: localization,
+      configRenderRegistry: getDefaultConfigRenderRegistry(),
+      boardConfig: options.boardConfig,
+    });
+    this.roundRecorder = new PlayerRoundRecorder(world, localization);
   }
 
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
@@ -215,28 +221,10 @@ export class AcpActionProvider implements ActionProvider {
 
   /** 创建 session 时复用 LLM provider 的既有身份、规则和板子系统提示。 */
   private buildSessionPrompt(request: ActionRequest): string {
-    const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
-    const teammateIds = role?.camp === Camp.Wolf
-      ? this.world.getAliveEntityIds().filter((id) => {
-          const other = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-          return id !== request.actorId && other?.camp === Camp.Wolf;
-        }).sort((a, b) => a - b)
-      : [];
-    return buildSystemPrompt({
-      actorId: request.actorId,
-      role: role?.role ?? "unknown",
-      maxPlayerId: this.world.entityIds().length,
-      teammateIds,
-      boardInfoPrompt: this.buildBoardInfoPrompt(),
-      configPrompt: this.options.boardConfig
-        ? this.configRenderRegistry.renderBoardConfigPrompt(this.options.boardConfig)
-        : undefined,
-      personalityPrompt: this.options.personalityPromptResolver?.(request, role),
+    return this.promptPolicy.buildSystem(request, {
       supportsDebugReporting: true,
-      // ACP 的实际工具仅在每个回合打开后才有 turn_id；初始化时不让 Agent
-      // 为不存在的直接函数工具做无谓搜索。
       includeToolUseInstructions: false,
-    });
+    }).systemPrompt;
   }
 
   /** 回合提示遵循既有阶段规则、目标提示与可见事件增量结构。 */
@@ -245,7 +233,6 @@ export class AcpActionProvider implements ActionProvider {
     turnId: string,
     advanceCursor: boolean,
   ): AcpTurnPromptBuild {
-    const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const lines: string[] = [];
     const events = parsePlayerVisibleEvents(request.context.visible_events);
     const cursor = this.eventCursor.get(request.actorId) ?? 0;
@@ -258,30 +245,10 @@ export class AcpActionProvider implements ActionProvider {
     if (delta.length) {
       lines.push(`新增可见事件：${encodePlayerVisibleEventBatch(delta)}`);
     }
-    const constraints = resolveTurnConstraints(request);
-    const stage = String(request.context.phase ?? request.actionWindow ?? request.context.window ?? request.phase);
-    const allowedTools = request.allowedTools as ToolName[];
     lines.push(`当前回合 ID：${turnId}`);
-    const userPrompt = buildUserPrompt({
-      actorId: request.actorId,
-      phase: this.phaseStageLocalizationRegistry.phaseName(String(request.phase)),
-      stage: this.phaseStageLocalizationRegistry.stageName(stage),
-      isSpeechTurn: allowedTools.includes("speak") || allowedTools.includes("speak_to_wolves"),
-      stageDirective: this.toolSpecRegistry.getStageDirective(allowedTools) ?? "请严格区分当前阶段职责，只执行本轮工具对应动作。",
-      statusDirective: this.statusDirective(request.actorId, role),
-      requiresAction: constraints.minValidActions > 0,
-      turnConstraintHint: renderTurnConstraintUserHint(constraints),
-      allowedTools,
-      effectiveActionTools: allowedTools,
-      toolArgHints: `工具参数提示=${allowedTools.map((tool) => this.toolSpecRegistry.getArgHint(tool)).filter(Boolean).join("; ")}`,
-      toolUsageHints: this.toolSpecRegistry.getApplicableUserPromptHints(allowedTools),
-      actionableIdsHint: this.targetHintRegistry.buildActionableIdsHint({
-        actorId: request.actorId,
-        actorRole: role?.role,
-        allowedTools,
-        world: this.world,
-      }),
-      stageContextHint: this.stageContextHint(request),
+    const userPrompt = this.promptPolicy.buildUser(request, {
+      turnId,
+      allowedTools: request.allowedTools,
       actionSubmissionHint: [
         "本运行环境中不要直接调用上面列出的动作名。",
         "请调用 MCP 服务 werewolf-game 的 submit_action，",
@@ -312,57 +279,29 @@ export class AcpActionProvider implements ActionProvider {
       requestError?: string;
     },
   ): void {
-    const recorder = SessionRecordHub.getActive();
-    if (!recorder) return;
-    const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
-    const previousRound = this.actorRoundCounter.get(request.actorId) ?? 0;
-    const round = previousRound + 1;
-    this.actorRoundCounter.set(request.actorId, round);
-    const day = Number(request.context.day ?? request.context.current_day ?? 0);
-    const phase = String(request.phase);
-    const stage = String(
-      request.context.phase ??
-        request.actionWindow ??
-        request.context.window ??
-        request.phase,
-    );
     const systemPrompt =
       this.sessionPromptByActor.get(request.actorId) ?? this.buildSessionPrompt(request);
     const thinkingText = this.formatAuditTrace(input.auditTrace);
     const actionArgs = input.action
       ? ((input.action.args ?? {}) as Record<string, unknown>)
       : undefined;
-    recorder.recordPlayerRound({
-      playerId: request.actorId,
-      role: role?.role ?? "unknown",
-      camp: role?.camp ?? "unknown",
-      day,
-      phase: this.phaseStageLocalizationRegistry.phaseName(phase),
-      stage: this.phaseStageLocalizationRegistry.stageName(stage),
-      requestId: `${day}-${phase}-${request.actorId}-${round}`,
-      timestampMs: Date.now(),
-      llmRequestMessages: [{ role: "user", content: built.userPrompt }],
-      promptSystem: systemPrompt,
-      ...(previousRound === 0
-        ? {
-            initialPromptSystem: systemPrompt,
-            initialBoardInfo: this.buildBoardInfoPrompt(),
-          }
-        : {}),
-      promptUserDelta: [
+    const prompt: BuiltPlayerPrompt = {
+      messages: [{ role: "system", content: systemPrompt }, { role: "user", content: built.userPrompt }],
+      systemPrompt,
+      userPrompt: built.userPrompt,
+      boardInfoPrompt: this.promptPolicy.buildBoardInfo(),
+      isInitialRound: false,
+      eventCursorBefore: built.eventCursorBefore,
+      eventCursorAfter: built.eventCursorAfter,
+      contextWindowStart: 0,
+      contextWindowEnd: 0,
+      contextWindowTotal: 0,
+      turnId: built.turnId,
+      auditMetadata: [
         `transport=acp_mcp;turn_id=${built.turnId};event_cursor=${built.eventCursorBefore}->${built.eventCursorAfter};elapsed_ms=${input.elapsedMs}`,
       ],
-      ...(input.requestError
-        ? {
-            retryTrace: [
-              {
-                attempt: 0,
-                status: "request_error" as const,
-                reason: input.requestError,
-              },
-            ],
-          }
-        : {}),
+    };
+    const outcome: PlayerRoundOutcome = {
       ...(thinkingText ? { thinkingText } : {}),
       actionMode: input.action ? "tool_call" : "none",
       toolCalls: input.action
@@ -379,6 +318,9 @@ export class AcpActionProvider implements ActionProvider {
           ]
         : [],
       finalAction: input.action,
+      ...(input.requestError
+        ? { retryTrace: [{ attempt: 0, status: "request_error", reason: input.requestError }] }
+        : {}),
       ...(input.fallbackReason
         ? {
             fallback: {
@@ -390,7 +332,8 @@ export class AcpActionProvider implements ActionProvider {
             },
           }
         : {}),
-    });
+    };
+    this.roundRecorder.record(request, prompt, outcome);
   }
 
   private formatAuditTrace(trace?: AcpSessionAuditTrace): string | undefined {
@@ -414,33 +357,4 @@ export class AcpActionProvider implements ActionProvider {
     return result;
   }
 
-  private buildBoardInfoPrompt(): string {
-    const roleCounts = new Map<Role, number>();
-    for (const id of this.world.entityIds()) {
-      const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role;
-      if (role) roleCounts.set(role, (roleCounts.get(role) ?? 0) + 1);
-    }
-    return buildBoardInfoPrompt({
-      totalPlayers: this.world.entityIds().length,
-      roleCounts,
-      roleLabel: (role) => this.rolePromptRegistry.label(role),
-      roleSkillBrief: (role) => this.rolePromptRegistry.skillBrief(role),
-    });
-  }
-
-  private stageContextHint(request: ActionRequest): string | undefined {
-    const stage = String(request.context.phase ?? request.actionWindow ?? request.context.window ?? "");
-    if (stage !== "witch") return undefined;
-    if (typeof request.context.wolf_target === "number") return `当前已知昨夜刀口是${request.context.wolf_target}号。`;
-    if (request.context.wolf_target === null) return "当前已知昨夜刀口为空（可能空刀或平票）。";
-    return "当前未获得明确刀口信息。";
-  }
-
-  private statusDirective(actorId: number, role?: RoleComponent): string | undefined {
-    const lines = role?.renderPrompt?.().trim() ? [`你的私有状态：${role.renderPrompt().trim()}`] : [];
-    if (role?.role === Role.Idiot && getIdiotState(role)?.revealed) {
-      lines.push("状态提醒：你已在先前放逐中翻牌为白痴并存活，当前仍在场上发言；你已失去投票权。");
-    }
-    return lines.length ? lines.join(" ") : undefined;
-  }
 }
