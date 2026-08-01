@@ -1,7 +1,9 @@
 // Test setup file for AI-Werewolf-Arena backend
 // This file runs before each test file
 
-import { jest } from "@jest/globals";
+import { jest } from "bun:test";
+import { SessionRecordHub } from "../src/observability";
+import { cleanupTestTempDirectories } from "./support/temp_directory";
 
 // Global test timeout
 jest.setTimeout(10000);
@@ -19,6 +21,11 @@ global.console = {
 // Reset all mocks before each test
 beforeEach(() => {
   jest.clearAllMocks();
+});
+
+afterEach(async () => {
+  SessionRecordHub.setActive(null);
+  await cleanupTestTempDirectories();
 });
 
 // Clean up after all tests

@@ -9,7 +9,7 @@
     "build": "bunx vite build",
     "preview": "bunx vite preview",
     "typecheck": "bunx tsc -p tsconfig.json --noEmit",
-    "test": "bun test tests/replay/*.test.ts",
+    "test": "bun test tests/unit",
     "test:e2e": "http_proxy= https_proxy= all_proxy= HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= bunx playwright test",
     "test:ui": "bunx playwright test --ui"
   },

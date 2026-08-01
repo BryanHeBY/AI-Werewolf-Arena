@@ -8,14 +8,11 @@
     "build": "tsc",
     "check": "tsc -p tsconfig.json --noEmit",
     "start": "bun dist/server/index.js",
-    "test": "bun test",
-    "test:game": "bun test tests/game",
-    "test:quick": "bun test tests/game/tool_gateway_validation.test.ts tests/game/event_registry_hooks.test.ts tests/game/phase_manager_mvp.test.ts tests/game/day_interrupt_hooks.test.ts tests/game/night_wolf_tactical_loop.test.ts",
-    "test:full": "bun test tests/game",
+    "test": "bun test tests",
     "lint:deps": "eslint \"src/**/*.ts\" --max-warnings=0",
     "lint:boundaries": "bun scripts/check_import_boundaries.mjs",
     "smoke": "bun src/run-game-smoke.ts",
-    "release:check": "bun run check && bun run test:quick && bun run smoke",
+    "release:check": "bun run check && bun run test && bun run smoke",
     "run": "bun src/runtime/run_llm_game.ts",
     "export:replay": "bun src/replay/export_replay_bundle.ts",
     "run:dual": "bun src/runtime/run_llm_dual.ts",
@@ -23,8 +20,8 @@
     "run:twelve": "bun src/runtime/run_llm_game.ts --game-config-name twelve_player_standard",
     "run:twelve:acp": "bun src/runtime/run_llm_game.ts --game-config-name twelve_player_codex_acp",
     "run:mock": "bun src/runtime/run_mock_game.ts",
-    "test:watch": "bun test --watch",
-    "test:coverage": "bun test --coverage"
+    "test:watch": "bun test tests --watch",
+    "test:coverage": "bun test tests --coverage"
   },
   "dependencies": {
     "@agentclientprotocol/sdk": "^1.3.0",

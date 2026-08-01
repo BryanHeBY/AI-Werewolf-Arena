@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: "./tests/replay-e2e",
+  testDir: "./tests/e2e",
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -17,10 +17,6 @@ export default defineConfig({
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        // Arch Linux系统浏览器配置
-        // 注意：executablePath 可能需要在 launchOptions 中设置
-        // 备选方案
-        // channel: 'chrome',
       },
     },
   ],
