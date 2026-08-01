@@ -107,10 +107,7 @@ export class AcpActionProvider implements ActionProvider {
       await session.cancel().catch(() => undefined);
       // ACP Agent 理论上应在 cancel 后结束 prompt；不让失效 Agent 的违反协议
       // 响应无限阻塞游戏阶段，下一回合仍由独立 turn_id 防止旧动作生效。
-      await Promise.race([
-        promptTask.catch(() => undefined),
-        new Promise<void>((resolve) => setTimeout(resolve, 1000)),
-      ]);
+      await this.waitForPromptSettlement(promptTask);
       auditTrace = session.takeAuditTrace?.();
       if (outcome.action) {
         this.recordPlayerRound(request, built, {
@@ -192,23 +189,45 @@ export class AcpActionProvider implements ActionProvider {
     if (timeoutMs <= 0) {
       return { action: null, reason: "deadline_skip" };
     }
-    return Promise.race([
-      action.then((value) => ({ action: value })),
-      // A completed Agent turn that did not invoke submit_action cannot still
-      // produce a valid action. Fall back now instead of waiting for the full
-      // LLM timeout (often minutes for ACP agents).
-      promptTask.then(
-        (): AcpTurnOutcome => ({ action: null, reason: "model_declined_required_action" }),
-        (error): AcpTurnOutcome => ({
-          action: null,
-          reason: "runtime_error",
-          requestError: String(error),
+    let timer: NodeJS.Timeout | undefined;
+    try {
+      return await Promise.race([
+        action.then((value) => ({ action: value })),
+        // A completed Agent turn that did not invoke submit_action cannot still
+        // produce a valid action. Fall back now instead of waiting for the full
+        // LLM timeout (often minutes for ACP agents).
+        promptTask.then(
+          (): AcpTurnOutcome => ({ action: null, reason: "model_declined_required_action" }),
+          (error): AcpTurnOutcome => ({
+            action: null,
+            reason: "runtime_error",
+            requestError: String(error),
+          }),
+        ),
+        new Promise<AcpTurnOutcome>((resolve) => {
+          timer = setTimeout(
+            () => resolve({ action: null, reason: "request_timeout" }),
+            timeoutMs,
+          );
         }),
-      ),
-      new Promise<AcpTurnOutcome>((resolve) =>
-        setTimeout(() => resolve({ action: null, reason: "request_timeout" }), timeoutMs),
-      ),
-    ]);
+      ]);
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
+  }
+
+  private async waitForPromptSettlement(promptTask: Promise<void>): Promise<void> {
+    let timer: NodeJS.Timeout | undefined;
+    try {
+      await Promise.race([
+        promptTask.catch(() => undefined),
+        new Promise<void>((resolve) => {
+          timer = setTimeout(resolve, 1_000);
+        }),
+      ]);
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
   }
 
   private resolveTimeoutMs(request: ActionRequest): number {
