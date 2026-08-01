@@ -153,8 +153,8 @@ describe("SessionRecordManager", () => {
     await manager.flushNow();
 
     const sessionDir = path.join(root, "session_realtime_1");
-    const timeline = JSON.parse(
-      await fs.readFile(path.join(sessionDir, "public_timeline.json"), "utf-8"),
+    const replay = JSON.parse(
+      await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8"),
     );
     const logic = JSON.parse(
       await fs.readFile(path.join(sessionDir, "logic_ops.json"), "utf-8"),
@@ -166,7 +166,7 @@ describe("SessionRecordManager", () => {
       await fs.readFile(path.join(sessionDir, "debug_reports.json"), "utf-8"),
     );
 
-    expect(timeline.events.length).toBe(1);
+    expect(replay.events.length).toBe(1);
     expect(logic.ops.length).toBe(1);
     expect(Array.isArray(player1.timeline)).toBe(true);
     expect(player1.timeline.length).toBeGreaterThanOrEqual(1);
@@ -312,7 +312,8 @@ describe("SessionRecordManager", () => {
     const sessionDir = path.join(root, "session_test_1");
     const files = await fs.readdir(sessionDir);
     expect(files).toContain("manifest.json");
-    expect(files).toContain("public_timeline.json");
+    expect(files).toContain("replay.json");
+    expect(files).not.toContain("public_timeline.json");
     expect(files).toContain("phase_windows.json");
     expect(files).toContain("timeline_index.json");
     expect(files).toContain("logic_ops.json");
@@ -324,17 +325,28 @@ describe("SessionRecordManager", () => {
       await fs.readFile(path.join(sessionDir, "manifest.json"), "utf-8"),
     );
     expect(manifest.session_id).toBe("session_test_1");
-    expect(manifest.files.public_timeline).toBe("public_timeline.json");
+    expect(manifest.files.replay).toBe("replay.json");
     expect(manifest.files.phase_windows).toBe("phase_windows.json");
     expect(manifest.files.timeline_index).toBe("timeline_index.json");
     expect(manifest.files.debug_reports).toBe("debug_reports.json");
     expect(manifest.files.debug_summary).toBe("debug_summary.md");
 
-    const publicTimeline = JSON.parse(
-      await fs.readFile(path.join(sessionDir, "public_timeline.json"), "utf-8"),
+    const replay = JSON.parse(
+      await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8"),
     );
-    expect(Array.isArray(publicTimeline.events)).toBe(true);
-    expect(publicTimeline.events[0].type).toBe("phase_changed");
+    expect(replay.sessionId).toBe("session_test_1");
+    expect(Array.isArray(replay.events)).toBe(true);
+    expect(replay.events[0].type).toBe("phase_changed");
+    expect(new Set(replay.events.map((event: any) => event.seq)).size).toBe(
+      replay.events.length,
+    );
+    expect(replay.players).toEqual([
+      { player_id: 1, role: "wolf", camp: "wolf" },
+      { player_id: 2, role: "wolf", camp: "wolf" },
+    ]);
+    expect(replay).not.toHaveProperty("phaseWindows");
+    expect(replay).not.toHaveProperty("logicOps");
+    expect(replay).not.toHaveProperty("playerViews");
 
     const phaseWindows = JSON.parse(
       await fs.readFile(path.join(sessionDir, "phase_windows.json"), "utf-8"),

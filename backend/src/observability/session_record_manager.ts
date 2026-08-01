@@ -10,6 +10,7 @@ import {
   ReplaySessionMeta,
 } from "./types";
 import { buildDebugSummaryMarkdown } from "./debug_summary_generator";
+import { createReplayDocument } from "./replay_document";
 import { ReplayFileStore } from "./replay_file_store";
 import { ReplaySessionAggregate } from "./replay_session_aggregate";
 
@@ -102,9 +103,9 @@ export class SessionRecordManager {
     this.closed = true;
 
     const manifest = this.aggregate.buildManifest(meta);
+    const replayDocument = this.buildReplayDocument(meta);
     await Promise.all([
       this.store.writeJson("manifest.json", manifest),
-      this.store.writeJson("public_timeline.json", this.aggregate.publicTimelinePayload()),
       this.store.writeJson("phase_windows.json", this.aggregate.phaseWindowsPayload()),
       this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
       this.store.writeJson("logic_ops.json", this.aggregate.logicOpsPayload()),
@@ -115,6 +116,9 @@ export class SessionRecordManager {
     await Promise.all(playerViews.map((view) =>
       this.store.writeJson(`players/player_${view.player_id}.json`, view),
     ));
+
+    // replay.json 是产品消费入口；与尽力而为的观测文件不同，写入失败必须上抛。
+    await this.store.writeJsonStrict("replay.json", replayDocument);
 
     const snapshot = this.aggregate.debugSummaryInput();
     const debugSummary = await buildDebugSummaryMarkdown({
@@ -128,7 +132,7 @@ export class SessionRecordManager {
   private async writeInitialFiles(): Promise<void> {
     await Promise.all([
       this.store.writeJson("manifest.json", this.aggregate.buildManifest()),
-      this.store.writeJson("public_timeline.json", this.aggregate.publicTimelinePayload()),
+      this.store.writeJson("replay.json", this.buildReplayDocument()),
       this.store.writeJson("phase_windows.json", this.aggregate.phaseWindowsPayload()),
       this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
       this.store.writeJson("logic_ops.json", this.aggregate.logicOpsPayload()),
@@ -157,7 +161,7 @@ export class SessionRecordManager {
     if (this.dirtyPublicTimeline) {
       this.dirtyPublicTimeline = false;
       await Promise.all([
-        this.store.writeJson("public_timeline.json", this.aggregate.publicTimelinePayload()),
+        this.store.writeJson("replay.json", this.buildReplayDocument(this.finalMeta ?? undefined)),
         this.store.writeJson("phase_windows.json", this.aggregate.phaseWindowsPayload()),
         this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
       ]);
@@ -182,6 +186,13 @@ export class SessionRecordManager {
         this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
       ]);
     }
+  }
+
+  private buildReplayDocument(meta?: ReplayFinalizeMeta) {
+    return createReplayDocument({
+      manifest: this.aggregate.buildManifest(meta),
+      events: this.aggregate.publicTimelinePayload().events,
+    });
   }
 }
 

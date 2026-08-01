@@ -18,7 +18,7 @@ test("exports one offline replay bundle from a recorded session", async () => {
       winner: "good",
       finish_reason: "wolves_eliminated",
       players: [{ player_id: 1, role: "seer", camp: "good", alive: true }],
-      files: { public_timeline: "public_timeline.json", logic_ops: "logic_ops.json", debug_reports: "debug_reports.json", debug_summary: "debug_summary.md", player_views: [] },
+      files: { replay: "replay.json", logic_ops: "logic_ops.json", debug_reports: "debug_reports.json", debug_summary: "debug_summary.md", player_views: [] },
     }),
     "utf-8",
   );

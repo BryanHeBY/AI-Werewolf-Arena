@@ -12,7 +12,7 @@ describe("debug summary metadata checks", () => {
       finish_reason: "test",
       players: [],
       files: {
-        public_timeline: "public_timeline.json",
+        replay: "replay.json",
         logic_ops: "logic_ops.json",
         debug_reports: "debug_reports.json",
         debug_summary: "debug_summary.md",

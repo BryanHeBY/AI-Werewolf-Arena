@@ -1,18 +1,15 @@
 # AI Werewolf Arena · Replay Studio
 
-当前前端是一个 React + Remotion 的离线复盘工作台。它不连接游戏服务器、不参与在线观战，只读取后端从 `record/session_*` 导出的单个 `.replay.json` 文件。
+当前前端是一个 React + Remotion 的离线复盘工作台。它不连接游戏服务器、不参与在线观战，直接只读后端 `record/session_*/replay.json`。
 
 ## 本地流程
 
 ```bash
-# 先运行一盘已启用记录的对局；然后导出该 session
-bun run --cwd backend export:replay --session <session_id> --out /tmp/game.replay.json
-
-# 以只读方式启动播放器；不会复制或改写复盘文件
-bun run replay:dev -- --input /tmp/game.replay.json
+# 先运行一盘对局，再把 session 目录直接交给播放器
+bun run replay:dev -- --input ../record/session_<id>
 ```
 
-默认播放器地址为 `http://localhost:5173`。该命令只在 Vite 开发服务中把指定文件提供为 `/api/replay`，前端没有上传、首页或文件选择流程。播放器使用 `@remotion/player`，因此相同的 `ReplayDocument` 可在下一阶段直接复用为 Remotion 的服务端渲染输入。
+也可以直接传入 `../record/session_<id>/replay.json`。命令只读取该文件并由 Vite 提供为 `/api/replay`，不会复制或改写 record。默认播放器地址为 `http://localhost:5173`。播放器使用 `@remotion/player`，因此相同的 `ReplayDocument` 可在下一阶段直接复用为 Remotion 的服务端渲染输入。
 
 ## 验证
 

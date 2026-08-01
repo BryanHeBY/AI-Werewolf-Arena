@@ -22,7 +22,7 @@ export interface ReplayManifest {
   finish_reason: string;
   players: ReplayManifestPlayer[];
   files: {
-    public_timeline: string;
+    replay: string;
     phase_windows?: string;
     timeline_index?: string;
     logic_ops: string;

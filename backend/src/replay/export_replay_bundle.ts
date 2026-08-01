@@ -2,26 +2,14 @@ import { promises as fs } from "fs";
 import path from "path";
 import { resolveDefaultRecordRoot } from "../observability";
 import { ReplayRecordRepository } from "../server/replay_record_repository";
-import {
-  ReplaySourceDocument,
-  createReplaySourceDocument,
-} from "../server/replay_source_document";
+import { ReplaySourceDocument } from "../server/replay_source_document";
 
 export async function readReplayBundle(
   recordRoot: string,
   sessionId: string,
 ): Promise<ReplaySourceDocument> {
   const repository = new ReplayRecordRepository(recordRoot);
-  const [manifest, timeline, phaseWindows] = await Promise.all([
-    repository.getManifest(sessionId),
-    repository.getPublicTimeline(sessionId, {}),
-    repository.getPhaseWindows(sessionId),
-  ]);
-  return createReplaySourceDocument({
-    manifest,
-    events: timeline.events,
-    phaseWindows: phaseWindows.windows,
-  });
+  return repository.getReplay(sessionId);
 }
 
 export async function exportReplayBundle(options: {

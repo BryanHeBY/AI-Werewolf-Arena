@@ -6,6 +6,10 @@ import {
   ReplayPlayerView,
   ReplayPublicEvent,
 } from "../observability/types";
+import {
+  ReplayDocument,
+  createReplayDocument,
+} from "../observability/replay_document";
 
 export class ReplayRepositoryError extends Error {
   constructor(
@@ -67,6 +71,27 @@ export class ReplayRecordRepository {
 
   async getManifest(sessionId: string): Promise<ReplayManifest> {
     return this.readJsonFile<ReplayManifest>(sessionId, "manifest.json", "SESSION_NOT_FOUND");
+  }
+
+  /** 读取后端直接生成的前端复盘；旧 session 仍可由规范记录无损构造。 */
+  async getReplay(sessionId: string): Promise<ReplayDocument> {
+    try {
+      return await this.readJsonFile<ReplayDocument>(
+        sessionId,
+        "replay.json",
+        "SESSION_NOT_FOUND",
+      );
+    } catch (error) {
+      if (!(error instanceof ReplayRepositoryError) || error.code !== "SESSION_NOT_FOUND") {
+        throw error;
+      }
+    }
+
+    const [manifest, timeline] = await Promise.all([
+      this.getManifest(sessionId),
+      this.getPublicTimeline(sessionId, {}),
+    ]);
+    return createReplayDocument({ manifest, events: timeline.events });
   }
 
   async getResult(sessionId: string): Promise<{
@@ -193,12 +218,26 @@ export class ReplayRecordRepository {
   }
 
   private async readRecordedTimeline(sessionId: string): Promise<ReplayPublicEvent[]> {
-    const payload = await this.readJsonFile<{ events: ReplayPublicEvent[] }>(
+    try {
+      const replay = await this.readJsonFile<ReplayDocument>(
+        sessionId,
+        "replay.json",
+        "SESSION_NOT_FOUND",
+      );
+      return Array.isArray(replay.events) ? replay.events : [];
+    } catch (error) {
+      if (!(error instanceof ReplayRepositoryError) || error.code !== "SESSION_NOT_FOUND") {
+        throw error;
+      }
+    }
+
+    // 旧 session 兼容读取；新记录只以 replay.json 保存事件正文。
+    const legacy = await this.readJsonFile<{ events: ReplayPublicEvent[] }>(
       sessionId,
       "public_timeline.json",
       "SESSION_NOT_FOUND",
     );
-    return Array.isArray(payload.events) ? payload.events : [];
+    return Array.isArray(legacy.events) ? legacy.events : [];
   }
 
   private validateTimelineQuery(query: TimelineQuery): void {

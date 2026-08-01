@@ -155,7 +155,7 @@ export function buildAuditTasks(
   return [
     {
       name: "agent_public",
-      source: "public_timeline.json",
+      source: "replay.json",
       payload: { events: summarizePublicEvents(input.publicEvents, limits.publicMaxItems) },
     },
     {

@@ -211,7 +211,7 @@ export class ReplaySessionAggregate {
       finish_reason: meta?.finishReason ?? "in_progress",
       players: meta?.players ?? [],
       files: {
-        public_timeline: "public_timeline.json",
+        replay: "replay.json",
         phase_windows: "phase_windows.json",
         timeline_index: "timeline_index.json",
         logic_ops: "logic_ops.json",

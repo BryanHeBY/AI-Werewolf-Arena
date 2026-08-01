@@ -16,21 +16,6 @@ export interface ReplayEvent {
   payload: Record<string, unknown>;
 }
 
-export interface ReplayPhaseStageWindow {
-  stage: string;
-  start_seq: number;
-  end_seq: number;
-}
-
-export interface ReplayPhaseWindow {
-  phase_id: string;
-  day: number;
-  phase: string;
-  start_seq: number;
-  end_seq: number;
-  stages: ReplayPhaseStageWindow[];
-}
-
 export interface ReplayDocument {
   sessionId: string;
   perspective: ReplayPerspective;
@@ -47,8 +32,6 @@ export interface ReplayDocument {
     player_id: number;
     role: string;
     camp: string;
-    alive: boolean;
   }>;
   events: ReplayEvent[];
-  phaseWindows: ReplayPhaseWindow[];
 }

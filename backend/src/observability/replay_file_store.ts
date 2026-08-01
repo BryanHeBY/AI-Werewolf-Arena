@@ -17,16 +17,25 @@ export class ReplayFileStore {
     await this.write(relativePath, data, "text");
   }
 
+  /** 产品消费文件使用严格写入，失败由调用方感知，避免生成残缺复盘。 */
+  async writeJsonStrict(relativePath: string, data: unknown): Promise<void> {
+    await this.writeAtomic(relativePath, JSON.stringify(data, null, 2));
+  }
+
   private async write(relativePath: string, content: string, kind: string): Promise<void> {
-    const target = path.join(this.sessionDir, relativePath);
-    const temporary = `${target}.tmp`;
     try {
-      await fs.writeFile(temporary, content, "utf-8");
-      await fs.rename(temporary, target);
+      await this.writeAtomic(relativePath, content);
     } catch (error) {
       console.warn(
         `[observability] write_${kind}_failed file=${relativePath} err=${String(error)}`,
       );
     }
+  }
+
+  private async writeAtomic(relativePath: string, content: string): Promise<void> {
+    const target = path.join(this.sessionDir, relativePath);
+    const temporary = `${target}.tmp`;
+    await fs.writeFile(temporary, content, "utf-8");
+    await fs.rename(temporary, target);
   }
 }

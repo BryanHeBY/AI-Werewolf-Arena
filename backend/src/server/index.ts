@@ -6,7 +6,6 @@ import { Broadcaster } from "./transport/broadcaster";
 import { setupSocket, setGlobalBroadcaster } from "./socket";
 import { SessionManager } from "./session_manager";
 import { ReplayRecordRepository, ReplayRepositoryError } from "./replay_record_repository";
-import { createReplaySourceDocument } from "./replay_source_document";
 import { loadRuntimeConfig } from "../runtime/config/runtime_config";
 
 interface CreateServerOptions {
@@ -272,18 +271,10 @@ export async function createServer(
   fastify.get("/api/sessions/:sessionId/replay", async (request, reply) => {
     const { sessionId } = request.params as { sessionId: string };
     try {
-      const [manifest, timeline, phaseWindows] = await Promise.all([
-        replayRepository.getManifest(sessionId),
-        replayRepository.getPublicTimeline(sessionId, {}),
-        replayRepository.getPhaseWindows(sessionId),
-      ]);
+      const replay = await replayRepository.getReplay(sessionId);
       return {
         success: true,
-        data: createReplaySourceDocument({
-          manifest,
-          events: timeline.events,
-          phaseWindows: phaseWindows.windows,
-        }),
+        data: replay,
       };
     } catch (error) {
       const mapped = mapReplayError(error);

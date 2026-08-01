@@ -28,7 +28,7 @@ async function seedSession(root: string, sessionId: string): Promise<void> {
         finish_reason: "wolves_reach_half",
         players: [],
         files: {
-          public_timeline: "public_timeline.json",
+          replay: "replay.json",
           phase_windows: "phase_windows.json",
           timeline_index: "timeline_index.json",
           logic_ops: "logic_ops.json",
