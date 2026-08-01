@@ -62,6 +62,7 @@ async function createAcpRuntime(
         command: profile.provider.command,
         args: [...(profile.provider.args ?? []), ...(profile.spawnArgs ?? [])],
         env: profile.provider.env,
+        sessionConfigOptions: profile.provider.sessionConfigOptions,
         cwd: profile.provider.cwd ?? path.join(options.acpWorkspaceRoot, `player-${actorId}`),
         onUpdate: ({ update }) => observers.get(actorId)?.(update),
       });
@@ -130,4 +131,3 @@ function createLlmRuntime(options: PlayerAgentFactoryOptions): PlayerAgentRuntim
     close: async () => undefined,
   };
 }
-

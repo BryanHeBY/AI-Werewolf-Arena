@@ -22,6 +22,8 @@ export interface AcpProviderConfig {
   cwd?: string;
   maxConcurrentSessions?: number;
   initializeTimeoutMs?: number;
+  /** 标准 ACP session 配置项，例如 { "fast-mode": true }。 */
+  sessionConfigOptions?: Record<string, string | boolean>;
 }
 
 export type ProviderConfig = LlmProviderConfig | AcpProviderConfig;
@@ -170,6 +172,16 @@ function normalizeProviderConfig(name: string, value: ProviderConfig): ProviderC
     if (value.transport && value.transport !== "stdio") {
       throw new Error(`runtime_config_acp_transport_unsupported: ${name}`);
     }
+    const sessionConfigOptions = Object.fromEntries(
+      Object.entries(value.sessionConfigOptions ?? {}).map(([configId, optionValue]) => {
+        if (!configId.trim() || (typeof optionValue !== "string" && typeof optionValue !== "boolean")) {
+          throw new Error(
+            `runtime_config_acp_session_config_option_invalid: ${name}.${configId}`,
+          );
+        }
+        return [configId, optionValue];
+      }),
+    );
     return {
       ...value,
       transport: "stdio",
@@ -180,6 +192,7 @@ function normalizeProviderConfig(name: string, value: ProviderConfig): ProviderC
           resolveEnvironmentValue(String(envValue), `providers.items.${name}.env.${key}`),
         ]),
       ),
+      sessionConfigOptions,
     };
   }
   if (value.type !== "openai" && value.type !== "anthropic") {

@@ -6,6 +6,10 @@ import * as acp from "@agentclientprotocol/sdk";
 import { AcpTurnRegistry } from "./acp_turn_registry";
 import { WerewolfMcpControlServer } from "./werewolf_mcp_control";
 import { AcpMcpBridgeFactory, AcpMcpControlServer } from "./acp_mcp_bridge";
+import {
+  AcpSessionConfigOptionValue,
+  applyAcpSessionConfigOptions,
+} from "./acp_session_config";
 
 const ACP_CANCEL_TIMEOUT_MS = 300;
 const ACP_SESSION_CLOSE_TIMEOUT_MS = 1_000;
@@ -98,6 +102,8 @@ export interface AcpProcessClientOptions<TRegistry = AcpTurnRegistry> {
   cwd: string;
   onUpdate?: (update: AcpSessionUpdate) => void;
   mcpBridge?: AcpMcpBridgeFactory<TRegistry>;
+  /** session/new 后通过标准 ACP session/set_config_option 应用。 */
+  sessionConfigOptions?: Record<string, AcpSessionConfigOptionValue>;
 }
 
 /** ACP stdio client. One instance/session is intentionally created per player. */
@@ -174,13 +180,20 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
       }
       const initializeResponse = await connection.agent.request(acp.methods.agent.initialize, {
         protocolVersion: acp.PROTOCOL_VERSION,
-        clientCapabilities: {},
+        clientCapabilities: {
+          session: { configOptions: { boolean: {} } },
+        },
       });
       const session = await connection.agent.buildSession({
         cwd: this.options.cwd,
         mcpServers: [mcpServer],
       }).start();
       activeSessionId = session.sessionId;
+      await applyAcpSessionConfigOptions(
+        connection.agent,
+        session,
+        this.options.sessionConfigOptions ?? {},
+      );
       mcpControl.bindSession(activeSessionId);
       const processSession = new AcpProcessSession(
         session,

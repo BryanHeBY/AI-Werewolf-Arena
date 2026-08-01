@@ -227,6 +227,7 @@ export class AcpAuditAgentExecutor implements AuditAgentExecutor {
       command: profile.provider.command,
       args: [...(profile.provider.args ?? []), ...(profile.spawnArgs ?? [])],
       env: profile.provider.env,
+      sessionConfigOptions: profile.provider.sessionConfigOptions,
       cwd: workspace,
       mcpBridge: bridge,
     });
