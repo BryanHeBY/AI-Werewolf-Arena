@@ -463,15 +463,19 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     }
     streamedEventIndex = events.length;
   };
-  const heartbeat = setInterval(() => {
-    const elapsed = Date.now() - startedAt;
-    const remain = Math.max(0, deadlineAtMs - Date.now());
-    const snap = context.phaseManager.getSnapshot();
-    log(
-      `[run_llm_game] heartbeat day=${snap.day} phase=${snap.phase} gameOver=${snap.gameOver} elapsed_ms=${elapsed} remain_ms=${remain}`,
-      "muted",
-    );
-  }, 5000);
+  // 心跳仅用于显式 trace 调试，默认 stdio 保持安静；对局 deadline 由
+  // DeadlineAwareActionProvider 和主循环独立维护，不依赖该定时器。
+  const heartbeat = options.trace
+    ? setInterval(() => {
+        const elapsed = Date.now() - startedAt;
+        const remain = Math.max(0, deadlineAtMs - Date.now());
+        const snap = context.phaseManager.getSnapshot();
+        log(
+          `[run_llm_game] heartbeat day=${snap.day} phase=${snap.phase} gameOver=${snap.gameOver} elapsed_ms=${elapsed} remain_ms=${remain}`,
+          "muted",
+        );
+      }, 5000)
+    : undefined;
   const streamTimer = setInterval(() => {
     flushStreamEvents();
   }, 1000);
@@ -497,7 +501,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   } finally {
     // 退出前强制刷一次剩余事件，避免 game_over 前最后一批投票/放逐日志丢失。
     flushStreamEvents();
-    clearInterval(heartbeat);
+    if (heartbeat) clearInterval(heartbeat);
     clearInterval(streamTimer);
     await playerAgentRuntime.close();
   }
