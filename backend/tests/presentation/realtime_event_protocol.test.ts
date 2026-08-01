@@ -142,6 +142,41 @@ describe("RealtimeEventRegistry protocol", () => {
     });
   });
 
+  test("self-destruct and hunter shot should also emit player.died", () => {
+    const state = makeState();
+    const context = {
+      nowState: state,
+      getPlayerName: (id: number) => `玩家${id}`,
+      getPlayerRole: (id: number) => id === 1 ? "wolf" : "villager",
+    };
+
+    const selfDestruct = registry.translate({
+      timestamp: 350,
+      type: "wolf_self_destruct",
+      payload: { wolfId: 1, window: "on_pre_vote" },
+    }, context);
+    expect(selfDestruct).toHaveLength(2);
+    expect(selfDestruct[1]).toMatchObject({
+      category: "player_state",
+      type: "player.died",
+      data: { playerId: 1, cause: "self_destruct", roleType: "wolf" },
+      publicState: state,
+    });
+
+    const hunterShot = registry.translate({
+      timestamp: 360,
+      type: "hunter_shot",
+      payload: { hunterId: 1, targetId: 2 },
+    }, context);
+    expect(hunterShot).toHaveLength(2);
+    expect(hunterShot[1]).toMatchObject({
+      category: "player_state",
+      type: "player.died",
+      data: { playerId: 2, cause: "hunter_shot", roleType: "villager" },
+      publicState: state,
+    });
+  });
+
   test("game_over should emit game.over with publicState and winner.declared", () => {
     const state = makeState({
       phase: "Game_Over",

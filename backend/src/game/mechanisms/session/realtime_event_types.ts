@@ -80,6 +80,29 @@ export function makePublicEvent(
   };
 }
 
+/** 为所有致死机制生成一致的公开死亡语义，供实时客户端统一更新席位状态。 */
+export function makePlayerDiedEvent(input: {
+  playerId: number;
+  cause: string;
+  roleType: string;
+  timestamp: number;
+  publicState: FrontendGameState;
+}): RealtimeGameEventDraft {
+  return makePublicEvent({
+    category: "player_state",
+    type: "player.died",
+    timestamp: input.timestamp,
+    actorId: input.playerId,
+    targetIds: [input.playerId],
+    data: {
+      playerId: input.playerId,
+      cause: input.cause,
+      roleType: input.roleType,
+    },
+    publicState: input.publicState,
+  });
+}
+
 /**
  * 狼队私有事件草稿构造器。
  */

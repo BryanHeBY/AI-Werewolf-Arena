@@ -1,6 +1,7 @@
 /** 文件说明：领域事件到前端实时事件草稿的转换注册表。 */
 import { Camp, GameEvent, Phase } from "../../../core/domain/model";
 import {
+  makePlayerDiedEvent,
   RealtimeGameEventDraft,
   makePublicEvent,
 } from "./realtime_event_types";
@@ -37,24 +38,19 @@ function makeStateEvent(
   });
 }
 
-function makePlayerDiedEvent(
+function makeDeathEvent(
   playerId: number,
   timestamp: number,
   ctx: RealtimeTranslateContext,
   cause: string,
 ): RealtimeGameEventDraft {
-  return makeStateEvent(
-    "player.died",
-    timestamp,
-    ctx,
-    {
-      playerId,
-      cause,
-      roleType: ctx.getPlayerRole(playerId),
-    },
+  return makePlayerDiedEvent({
     playerId,
-    [playerId],
-  );
+    cause,
+    timestamp,
+    roleType: ctx.getPlayerRole(playerId),
+    publicState: ctx.nowState,
+  });
 }
 
 const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
@@ -130,7 +126,7 @@ const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
       }),
     ];
     for (const playerId of deadPlayerIds) {
-      result.push(makePlayerDiedEvent(playerId, event.timestamp, ctx, "night_kill"));
+      result.push(makeDeathEvent(playerId, event.timestamp, ctx, "night_kill"));
     }
     return result;
   },
@@ -149,7 +145,7 @@ const DEFAULT_HANDLERS: Record<string, RealtimeEventHandler> = {
         },
         publicState: ctx.nowState,
       }),
-      makePlayerDiedEvent(target, event.timestamp, ctx, "vote_out"),
+      makeDeathEvent(target, event.timestamp, ctx, "vote_out"),
     ];
   },
   vote_cast: (event) => [

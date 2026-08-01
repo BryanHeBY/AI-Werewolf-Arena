@@ -1,7 +1,7 @@
 /** 文件说明：猎人相关事件在不同输出通道中的渲染实现。 */
 import { ScriptJudgeLineHandler } from "../../script/contracts";
 import { RealtimeEventHandler } from "../../session/contracts";
-import { makePublicEvent } from "../../session/realtime_event_types";
+import { makePlayerDiedEvent, makePublicEvent } from "../../session/realtime_event_types";
 
 /** 猎人事件 -> 上帝判词渲染映射。 */
 export const HUNTER_SCRIPT_JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler> = {
@@ -10,7 +10,7 @@ export const HUNTER_SCRIPT_JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler
 
 /** 猎人事件 -> 实时推送事件映射。 */
 export const HUNTER_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> = {
-  hunter_shot: (event) => {
+  hunter_shot: (event, ctx) => {
     const hunterId = Number(event.payload.hunterId);
     const targetId = Number(event.payload.targetId);
     return [
@@ -23,6 +23,13 @@ export const HUNTER_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler
         data: {
           targetId,
         },
+      }),
+      makePlayerDiedEvent({
+        playerId: targetId,
+        cause: "hunter_shot",
+        roleType: ctx.getPlayerRole(targetId),
+        timestamp: event.timestamp,
+        publicState: ctx.nowState,
       }),
     ];
   },

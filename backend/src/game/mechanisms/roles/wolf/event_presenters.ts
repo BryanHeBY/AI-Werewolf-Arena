@@ -3,6 +3,7 @@ import { GameEvent } from "../../../../core/domain/model";
 import { ScriptLiveRenderHandler, ScriptChatLineHandler } from "../../script/contracts";
 import { RealtimeEventHandler, RealtimeTranslateContext } from "../../session/contracts";
 import {
+  makePlayerDiedEvent,
   makePublicEvent,
   makeWolvesOnlyEvent,
 } from "../../session/realtime_event_types";
@@ -104,7 +105,7 @@ export const WOLF_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> 
       }),
     ];
   },
-  wolf_self_destruct: (event) => {
+  wolf_self_destruct: (event, ctx) => {
     const wolfId = Number(event.payload.wolfId);
     return [
       makePublicEvent({
@@ -118,6 +119,13 @@ export const WOLF_REALTIME_EVENT_HANDLERS: Record<string, RealtimeEventHandler> 
           playerId: wolfId,
           cause: "self_destruct",
         },
+      }),
+      makePlayerDiedEvent({
+        playerId: wolfId,
+        cause: "self_destruct",
+        roleType: ctx.getPlayerRole(wolfId),
+        timestamp: event.timestamp,
+        publicState: ctx.nowState,
       }),
     ];
   },
