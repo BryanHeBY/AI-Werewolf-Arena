@@ -91,6 +91,9 @@ function summarizePlayerView(view: ReplayPlayerView, maxItems: number) {
     if (entry.kind === "event") {
       return {
         ...base,
+        ...(entry.source_event_seq === undefined
+          ? {}
+          : { source_event_seq: entry.source_event_seq }),
         event_seq: entry.event.seq,
         event_type: entry.event.type,
         payload: safeJsonString(entry.event.payload, 240),

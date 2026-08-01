@@ -150,6 +150,8 @@ export interface ReplayPlayerEventEntry {
   stage: string;
   request_id: string;
   timestamp?: string;
+  /** 仅供复盘与审计关联领域事件；不会进入玩家 Agent 协议。 */
+  source_event_seq?: number;
   event: PlayerVisibleEvent;
 }
 
@@ -280,6 +282,8 @@ export interface ReplayRecordPlayerEventInput {
   stage: string;
   requestId: string;
   timestampMs?: number;
+  /** 领域事件流中的全局序号，仅写入复盘，不得发送给玩家 Agent。 */
+  sourceEventSeq?: number;
   event: PlayerVisibleEvent;
 }
 

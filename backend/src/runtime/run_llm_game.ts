@@ -387,6 +387,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   const deadlineAtMs = startedAt + options.maxRuntimeMs;
   const budgetedProvider = new DeadlineAwareActionProvider(actionProvider, deadlineAtMs);
   let streamedEventIndex = 0;
+  const playerVisibleEventSeq = new Map<number, number>();
   let replayDayCursor = 1;
   let replayPhaseCursor = String(context.phaseManager.getSnapshot().phase);
   const flushStreamEvents = (): void => {
@@ -410,13 +411,15 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
       });
       if (replayManager) {
         for (const playerId of context.world.entityIds()) {
+          const nextVisibleSeq = (playerVisibleEventSeq.get(playerId) ?? 0) + 1;
           const visibleEvent = buildAgentVisibleEvent(
             context.world,
             event as GameEvent,
             playerId,
-            i + 1,
+            nextVisibleSeq,
           );
           if (!visibleEvent) continue;
+          playerVisibleEventSeq.set(playerId, nextVisibleSeq);
           const roleComp = context.world.getComponent<RoleComponent>(
             playerId,
             COMPONENT.Role,
@@ -430,6 +433,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
             stage: toReplayStage(event as any),
             requestId: `${replayDayCursor}-${replayPhaseCursor}-${playerId}-event-${i + 1}`,
             timestampMs: event.timestamp,
+            sourceEventSeq: i + 1,
             event: visibleEvent,
           });
         }

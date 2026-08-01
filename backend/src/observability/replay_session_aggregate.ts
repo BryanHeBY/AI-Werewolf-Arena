@@ -146,6 +146,9 @@ export class ReplaySessionAggregate {
       stage: input.stage,
       request_id: input.requestId,
       timestamp: toIso(input.timestampMs ?? Date.now()),
+      ...(input.sourceEventSeq === undefined
+        ? {}
+        : { source_event_seq: input.sourceEventSeq }),
       event: safeReplayJson(input.event) as unknown as PlayerVisibleEvent,
     };
     view.timeline.push(entry);

@@ -270,7 +270,8 @@ export interface GameEvent {
 
 /**
  * 经过玩家可见性投影后的紧凑事件协议。
- * seq 对应领域事件流中的全局单调序号；仅携带决策所需字段。
+ * seq 是指定玩家可见事件流中的连续单调序号；隐藏事件不占号，避免泄露
+ * 私有行动的数量与时序。仅携带决策所需字段。
  */
 export interface PlayerVisibleEvent {
   seq: number;

@@ -1,6 +1,6 @@
 import { PlayerVisibleEvent } from "../../core/domain/model";
 
-/** 解析、去重并按全局 seq 排序玩家可见事件。 */
+/** 解析、去重并按玩家本地连续 seq 排序可见事件。 */
 export function parsePlayerVisibleEvents(value: unknown): PlayerVisibleEvent[] {
   if (!Array.isArray(value)) return [];
   const bySeq = new Map<number, PlayerVisibleEvent>();
