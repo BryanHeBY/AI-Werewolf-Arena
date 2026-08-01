@@ -1,4 +1,5 @@
 import type { ReplayDocument, ReplayEvent } from "@ai-werewolf-arena/replay-contract";
+import { campName, resultReasonName, roleName } from "./replay-localization";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -7,10 +8,10 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 export function parseOfflineReplayJson(raw: string): ReplayDocument {
   const value: unknown = JSON.parse(raw);
   if (!isRecord(value) || typeof value.sessionId !== "string" || !Array.isArray(value.events)) {
-    throw new Error("这不是 AI Werewolf Arena 导出的 .replay.json 文件。");
+    throw new Error("这不是 AI Werewolf Arena 的 replay.json 文件。");
   }
-  if (!isRecord(value.meta) || !isRecord(value.result) || !Array.isArray(value.phaseWindows)) {
-    throw new Error("复盘文件缺少 meta、result 或 phaseWindows 字段。");
+  if (!isRecord(value.meta) || !isRecord(value.result) || !Array.isArray(value.players)) {
+    throw new Error("复盘文件缺少 meta、result 或 players 字段。");
   }
   return value as unknown as ReplayDocument;
 }
@@ -48,6 +49,8 @@ export function eventLabel(event: ReplayEvent): string {
       return `${numberValue(payload.actorId)}号女巫未使用药剂`;
     case "sheriff_nomination_summary":
       return `上警玩家：${numberList(payload.candidates)}号`;
+    case "sheriff_candidate_declared":
+      return `${numberValue(payload.actorId)}号声明${payload.run === true ? "参加" : "不参加"}警长竞选`;
     case "sheriff_withdraw_summary":
       return `退水玩家：${numberList(payload.withdrawn) || "无"}`;
     case "sheriff_candidates_finalized":
@@ -88,8 +91,11 @@ export function eventLabel(event: ReplayEvent): string {
       return `${numberValue(payload.playerId)}号获得遗言`;
     case "last_words_spoken":
       return `${numberValue(payload.playerId)}号遗言：${stringValue(payload.text)}`;
-    case "game_over":
-      return `对局结束：${stringValue(payload.winner) || "未知阵营"}获胜（${stringValue(payload.reason) || "未注明原因"}）`;
+    case "game_over": {
+      const winner = stringValue(payload.winner);
+      const reason = stringValue(payload.reason);
+      return `对局结束：${winner ? campName(winner) : "未知阵营"}获胜（${reason ? resultReasonName(reason) : "未注明原因"}）`;
+    }
     default:
       return typeof payload.text === "string" ? payload.text : event.type;
   }
@@ -126,7 +132,7 @@ function voteLineup(value: unknown): string {
     const actor = numberValue(vote.actorId);
     if (vote.abstain === true || vote.targetId == null) return `${actor}号→弃票`;
     const weight = typeof vote.weight === "number" && vote.weight !== 1
-      ? `(w=${vote.weight})`
+      ? `（票权${vote.weight}）`
       : "";
     return `${actor}号→${numberValue(vote.targetId)}号${weight}`;
   }).join("，");
@@ -152,6 +158,6 @@ function formatRoleLineup(value: unknown): string {
   return value.map((item) => {
     if (!item || typeof item !== "object") return "?";
     const player = item as Record<string, unknown>;
-    return `${numberValue(player.seat ?? player.id)}号=${stringValue(player.role) || "unknown"}`;
+    return `${numberValue(player.seat ?? player.id)}号：${roleName(stringValue(player.role) || "unknown")}`;
   }).join("，");
 }

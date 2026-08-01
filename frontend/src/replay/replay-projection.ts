@@ -15,28 +15,6 @@ export interface ReplaySnapshot {
   phase: string;
 }
 
-const ROLE_NAMES: Record<string, string> = {
-  wolf: "狼人",
-  seer: "预言家",
-  witch: "女巫",
-  hunter: "猎人",
-  idiot: "白痴",
-  guard: "守卫",
-  villager: "平民",
-};
-
-const CAMP_NAMES: Record<string, string> = {
-  wolf: "狼人阵营",
-  good: "好人阵营",
-};
-
-const PHASE_NAMES: Record<string, string> = {
-  night: "夜晚",
-  day: "白天",
-  voting: "放逐投票",
-  game_over: "对局结束",
-};
-
 function numberValue(value: unknown): number | null {
   return typeof value === "number" && Number.isInteger(value) ? value : null;
 }
@@ -46,18 +24,6 @@ function numberArray(value: unknown): number[] {
     const number = numberValue(item);
     return number === null ? [] : [number];
   }) : [];
-}
-
-export function roleName(role: string): string {
-  return ROLE_NAMES[role] ?? role;
-}
-
-export function campName(camp: string): string {
-  return CAMP_NAMES[camp] ?? camp;
-}
-
-export function phaseName(phase: string): string {
-  return PHASE_NAMES[phase] ?? phase;
 }
 
 export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number): ReplaySnapshot {
@@ -70,17 +36,25 @@ export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number):
   }]));
   const lastIndex = Math.min(Math.max(eventIndex, 0), replay.events.length - 1);
 
+  const markDead = (playerId: number | null) => {
+    if (playerId !== null && states.has(playerId)) states.get(playerId)!.alive = false;
+  };
+
   for (const event of replay.events.slice(0, lastIndex + 1)) {
     const payload = event.payload;
     if (event.type === "night_resolved") {
       for (const playerId of numberArray(payload.deaths)) {
-        const player = states.get(playerId);
-        if (player) player.alive = false;
+        markDead(playerId);
       }
     }
     if (event.type === "voted_out") {
-      const playerId = numberValue(payload.target);
-      if (playerId !== null && states.has(playerId)) states.get(playerId)!.alive = false;
+      markDead(numberValue(payload.target));
+    }
+    if (event.type === "wolf_self_destruct") {
+      markDead(numberValue(payload.wolfId));
+    }
+    if (event.type === "hunter_shot") {
+      markDead(numberValue(payload.targetId));
     }
     if (event.type === "sheriff_elected") {
       const playerId = numberValue(payload.winnerId);

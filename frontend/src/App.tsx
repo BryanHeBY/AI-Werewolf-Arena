@@ -1,14 +1,19 @@
 import { Player, type PlayerRef } from "@remotion/player";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ReplayDocument, ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { FRAMES_PER_EVENT, ReplayComposition } from "./replay/ReplayComposition";
 import { eventLabel, parseOfflineReplayJson } from "./replay/offline-replay";
 import {
   buildReplaySnapshot,
+} from "./replay/replay-projection";
+import {
   campName,
   phaseName,
+  resultReasonName,
   roleName,
-} from "./replay/replay-projection";
+  stageName,
+} from "./replay/replay-localization";
+import { buildPresentationReplay } from "./replay/replay-presentation";
 
 type ReplayLoadState =
   | { status: "loading" }
@@ -52,47 +57,48 @@ function EmptyState() {
 }
 
 function ReplayWorkspace({ replay }: { replay: ReplayDocument }) {
+  const presentationReplay = useMemo(() => buildPresentationReplay(replay), [replay]);
   const playerRef = useRef<PlayerRef>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [focusedPlayerId, setFocusedPlayerId] = useState<number | null>(null);
-  const snapshot = buildReplaySnapshot(replay, activeIndex);
-  const activeEvent = replay.events[activeIndex] ?? null;
+  const snapshot = buildReplaySnapshot(presentationReplay, activeIndex);
+  const activeEvent = presentationReplay.events[activeIndex] ?? null;
 
   useEffect(() => {
     const player = playerRef.current;
     if (!player) return;
     const onFrame = ({ detail }: { detail: { frame: number } }) => {
-      const nextIndex = Math.min(Math.floor(detail.frame / FRAMES_PER_EVENT), replay.events.length - 1);
+      const nextIndex = Math.min(Math.floor(detail.frame / FRAMES_PER_EVENT), presentationReplay.events.length - 1);
       setActiveIndex((current) => current === nextIndex ? current : nextIndex);
     };
     player.addEventListener("frameupdate", onFrame);
     return () => player.removeEventListener("frameupdate", onFrame);
-  }, [replay.events.length]);
+  }, [presentationReplay.events.length]);
 
   const jumpTo = useCallback((index: number) => {
-    const boundedIndex = Math.max(0, Math.min(index, replay.events.length - 1));
+    const boundedIndex = Math.max(0, Math.min(index, presentationReplay.events.length - 1));
     playerRef.current?.seekTo(boundedIndex * FRAMES_PER_EVENT);
     setActiveIndex(boundedIndex);
-  }, [replay.events.length]);
+  }, [presentationReplay.events.length]);
 
   const visibleEvents = focusedPlayerId === null
-    ? replay.events
-    : replay.events.filter((event) => mentionsPlayer(event, focusedPlayerId));
+    ? presentationReplay.events
+    : presentationReplay.events.filter((event) => mentionsPlayer(event, focusedPlayerId));
 
   return <main className="shell">
     <header className="topbar">
-      <div><p className="eyebrow">AI Werewolf Arena · single game replay</p><h1>{replay.meta.board}</h1><p className="subtitle">{replay.sessionId} · 共 {replay.events.length} 个事件</p></div>
-      <div className="result-chip"><span>最终结果</span><strong>{replay.result.winner ?? "未结束"}</strong><small>{replay.result.reason ?? "—"}</small></div>
+      <div><p className="eyebrow">AI Werewolf Arena · single game replay</p><h1>{replay.meta.board}</h1><p className="subtitle">{replay.sessionId} · {presentationReplay.events.length} 个叙事节点 / {replay.events.length} 个原始事件</p></div>
+      <div className="result-chip"><span>最终结果</span><strong>{replay.result.winner ? campName(replay.result.winner) : "未结束"}</strong><small>{resultReasonName(replay.result.reason)}</small></div>
     </header>
 
     <section className="workspace">
       <article className="stage panel">
-        <div className="panel-heading"><div><p className="section-kicker">REPLAY</p><h2>对局舞台</h2></div><span className="progress">{replay.events.length === 0 ? "0 / 0" : `${activeIndex + 1} / ${replay.events.length}`}</span></div>
-        <div className="player-wrap"><Player ref={playerRef} component={ReplayComposition} inputProps={{ replay }} durationInFrames={Math.max(replay.events.length * FRAMES_PER_EVENT, 1)} compositionWidth={1280} compositionHeight={720} fps={30} controls acknowledgeRemotionLicense /></div>
+        <div className="panel-heading"><div><p className="section-kicker">REPLAY</p><h2>对局舞台</h2></div><span className="progress">{presentationReplay.events.length === 0 ? "0 / 0" : `${activeIndex + 1} / ${presentationReplay.events.length}`}</span></div>
+        <div className="player-wrap"><Player ref={playerRef} component={ReplayComposition} inputProps={{ replay: presentationReplay }} durationInFrames={Math.max(presentationReplay.events.length * FRAMES_PER_EVENT, 1)} compositionWidth={1280} compositionHeight={720} fps={30} controls acknowledgeRemotionLicense /></div>
         <nav className="transport" aria-label="复盘跳转">
           <button type="button" onClick={() => jumpTo(activeIndex - 1)} disabled={activeIndex === 0}>上一事件</button>
           <button type="button" className="primary" onClick={() => playerRef.current?.toggle()}>播放 / 暂停</button>
-          <button type="button" onClick={() => jumpTo(activeIndex + 1)} disabled={activeIndex >= replay.events.length - 1}>下一事件</button>
+          <button type="button" onClick={() => jumpTo(activeIndex + 1)} disabled={activeIndex >= presentationReplay.events.length - 1}>下一事件</button>
         </nav>
       </article>
 
@@ -100,7 +106,7 @@ function ReplayWorkspace({ replay }: { replay: ReplayDocument }) {
         <section className="panel current-event">
           <div className="panel-heading compact"><span className="phase-pill">第 {snapshot.day} 天 · {phaseName(snapshot.phase)}</span><span>#{activeEvent?.seq ?? "—"}</span></div>
           <p>{activeEvent ? eventLabel(activeEvent) : "暂无事件"}</p>
-          <div className="event-meta"><span>{activeEvent?.stage ?? activeEvent?.type ?? "—"}</span><time>{formatTime(activeEvent?.timestamp)}</time></div>
+          <div className="event-meta"><span>{activeEvent ? stageName(activeEvent.stage ?? activeEvent.type) : "—"}</span><time>{formatTime(activeEvent?.timestamp)}</time></div>
         </section>
         <section className="panel player-panel">
           <div className="panel-heading compact"><div><p className="section-kicker">TABLE</p><h2>席位状态</h2></div><span>{snapshot.players.filter((player) => player.alive).length} 人存活</span></div>
@@ -116,9 +122,9 @@ function ReplayWorkspace({ replay }: { replay: ReplayDocument }) {
     <section className="panel timeline">
       <div className="panel-heading"><div><p className="section-kicker">TIMELINE</p><h2>{focusedPlayerId === null ? "全局对局时间线" : `与 ${focusedPlayerId} 号相关的事件`}</h2></div>{focusedPlayerId !== null && <button type="button" className="text-button" onClick={() => setFocusedPlayerId(null)}>清除席位筛选</button>}</div>
       <div className="timeline-list">{visibleEvents.map((event) => {
-        const originalIndex = replay.events.indexOf(event);
+        const originalIndex = presentationReplay.events.indexOf(event);
         return <button type="button" className={`event ${originalIndex === activeIndex ? "active" : ""}`} key={event.seq} onClick={() => jumpTo(originalIndex)}>
-          <span className="event-marker">D{event.day}</span><div><div className="event-head"><span>#{event.seq} · {phaseName(event.phase)}</span><span>{event.stage ?? event.type}</span></div><p>{eventLabel(event)}</p></div>
+          <span className="event-marker">D{event.day}</span><div><div className="event-head"><span>#{event.seq} · {phaseName(event.phase)}</span><span>{stageName(event.stage ?? event.type)}</span></div><p>{eventLabel(event)}</p></div>
         </button>;
       })}</div>
     </section>

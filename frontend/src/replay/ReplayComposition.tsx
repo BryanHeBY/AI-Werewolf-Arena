@@ -1,7 +1,8 @@
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { eventLabel } from "./offline-replay";
-import { buildReplaySnapshot, phaseName, roleName } from "./replay-projection";
+import { buildReplaySnapshot } from "./replay-projection";
+import { phaseName, roleName, stageName } from "./replay-localization";
 
 export const FRAMES_PER_EVENT = 90;
 
@@ -30,7 +31,7 @@ export function ReplayComposition({ replay }: { replay: ReplayDocument }) {
       </div>;
     })}
     <div style={{ position: "absolute", left: 92, right: 92, bottom: 62, padding: "20px 24px", borderRadius: 16, background: "rgba(6,10,17,.82)", border: "1px solid rgba(231,216,179,.14)", opacity: fade }}>
-      <div style={{ color: "#e4c67d", fontSize: 14, letterSpacing: 2, marginBottom: 8 }}>{event?.stage ?? event?.type ?? "对局开始"}</div>
+      <div style={{ color: "#e4c67d", fontSize: 14, letterSpacing: 2, marginBottom: 8 }}>{event ? stageName(event.stage ?? event.type) : "对局开始"}</div>
       <div style={{ fontSize: 27, lineHeight: 1.35, fontWeight: 650 }}>{event ? eventLabel(event) : "暂无事件"}</div>
     </div>
   </AbsoluteFill>;
