@@ -19,6 +19,7 @@ describe("ConfigRenderRegistry", () => {
 
     expect(prompt).toContain("警长机制：未启用");
     expect(prompt).not.toContain("上警、竞选发言、退水、警下投票");
+    expect(prompt).not.toContain("首日特殊时序");
   });
 
   test("renders multiple win conditions in configured order", () => {
@@ -63,6 +64,21 @@ describe("ConfigRenderRegistry", () => {
     const prompt = registry.renderBoardConfigPrompt(config);
 
     expect(prompt).toContain("胜利条件：屠城");
-    expect(prompt).toContain("平票处理：放逐=min_id，狼刀=min_id");
+    expect(prompt).toContain("平票处理：放逐=最低编号者，狼刀=最低编号者");
+  });
+
+  test("explains the first-day sheriff flow before night results are announced", () => {
+    const registry = new DefaultConfigRenderRegistry();
+    const prompt = registry.renderBoardConfigPrompt({
+      ...sixPlayerMvpConfig,
+      enableSheriff: true,
+    });
+
+    expect(prompt).toContain("首日特殊时序");
+    expect(prompt).toContain("警长投票结束后，才由 night_resolved 公布昨夜死亡或平安夜");
+    expect(prompt).toContain("昨夜实际死亡的玩家在公开结算前仍会参与上警流程");
+    expect(prompt).toContain("普通夜间死亡和放逐出局均不公开底牌");
+    expect(prompt).toContain("仅首夜死亡者和真正被放逐出局者获得遗言");
+    expect(prompt).toContain("不提供原警长自行选择移交目标");
   });
 });

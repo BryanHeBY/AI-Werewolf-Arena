@@ -795,6 +795,10 @@ describe("LlmActionProvider", () => {
         expect(systemMessages).toContain("角色构成=");
         expect(systemMessages).toContain("角色技能简介=");
         expect(systemMessages).toContain("当你看到“[行动提示]”时，说明你可以开始行动了");
+        expect(systemMessages).toContain("结构化事件是引擎确认的事实");
+        expect(systemMessages).toContain("只有收到 night_resolved 才能确认昨夜公开结果");
+        expect(systemMessages).toContain("空数组表示平安夜");
+        expect(systemMessages).toContain("狼人刀人投票只表示刀口选择");
 
         const userMessages = messages
           .filter((m) => m.role === "user")
@@ -1287,6 +1291,7 @@ describe("LlmActionProvider", () => {
         expect(system).toContain("本局规则配置");
         expect(system).toContain("胜利条件");
         expect(system).toContain("警长机制");
+        expect(system).toContain("首日特殊时序");
       }),
       {
         fallbackProvider: new FallbackProvider(null),
@@ -1300,6 +1305,42 @@ describe("LlmActionProvider", () => {
       allowedTools: ["speak"],
       context: { must_act: true, visible_events: [] },
     });
+  });
+
+  test("first-day sheriff prompts distinguish pending night results and run semantics", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const observedPrompts: string[] = [];
+    const provider = new LlmActionProvider(
+      context.world,
+      new AssertClient('{"name":"run_for_sheriff","args":{"run":true}}', (messages) => {
+        observedPrompts.push(
+          messages.filter((message) => message.role === "user").at(-1)?.content ?? "",
+        );
+      }),
+      {
+        fallbackProvider: new FallbackProvider(null),
+        boardConfig: twelvePlayerStandardConfig,
+      },
+    );
+
+    await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["run_for_sheriff"],
+      context: { day: 1, phase: "sheriff_nomination", visible_events: [] },
+    });
+    await provider.getAction({
+      phase: Phase.Day,
+      actorId: 1,
+      allowedTools: ["run_for_sheriff"],
+      context: { day: 1, phase: "sheriff_withdraw", visible_events: [] },
+    });
+
+    expect(observedPrompts[0]).toContain("这是上警报名阶段，不是退水阶段");
+    expect(observedPrompts[0]).toContain("run=false 表示不上警");
+    expect(observedPrompts[0]).toContain("尚未通过 night_resolved 公布死亡或平安夜");
+    expect(observedPrompts[1]).toContain("这是警上发言结束后的退水阶段");
+    expect(observedPrompts[1]).toContain("run=false 表示退水");
   });
 
   test("system prompt should require tools for every effective game action", async () => {

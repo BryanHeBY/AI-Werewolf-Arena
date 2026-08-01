@@ -12,12 +12,12 @@ export const HUNTER_ROLE_PROFILE: RoleProfile = {
   role: Role.Hunter,
   camp: Camp.Good,
   label: "猎人",
-  skillBrief: "满足条件时可开枪带走一名玩家",
+  skillBrief: "死亡时通常可开枪带走一名玩家；被毒死或成为最后一神时禁枪",
   goodSide: "god",
   init: (roleComp) => {
     setHunterState(roleComp, { canShoot: true });
   },
-  renderPrompt: () => "你的底牌是【猎人】。满足条件时你可以开枪带走一名玩家。",
+  renderPrompt: () => "你的底牌是【猎人】。死亡时通常可以开枪带走一名玩家；被女巫毒死或成为最后一名存活神职时不能开枪。",
   toolSpecs: HUNTER_TOOL_SPECS,
   validationRules: HUNTER_VALIDATION_RULES,
   llmRepair: HUNTER_LLM_REPAIR_PACK,

@@ -9,11 +9,11 @@ export const IDIOT_ROLE_PROFILE: RoleProfile = {
   role: Role.Idiot,
   camp: Camp.Good,
   label: "白痴",
-  skillBrief: "白天被放逐可翻牌免死并失去投票权",
+  skillBrief: "白天被放逐时自动翻牌免死并失去投票权",
   goodSide: "god",
   init: (roleComp) => {
     setIdiotState(roleComp, { revealed: false });
   },
-  renderPrompt: () => "你的底牌是【白痴】。白天被放逐后可翻牌免死并失去投票权。",
+  renderPrompt: () => "你的底牌是【白痴】。白天被放逐时会自动翻牌免死并失去投票权。",
   votedOutHook: idiotVotedOutHook,
 };

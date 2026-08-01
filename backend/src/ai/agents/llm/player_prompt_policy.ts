@@ -42,7 +42,7 @@ export class PlayerPromptPolicy {
     return {
       systemPrompt: buildSystemPrompt({
         actorId: request.actorId,
-        role: role?.role ?? "unknown",
+        role: role ? this.options.rolePromptRegistry.label(role.role) : "unknown",
         maxPlayerId: this.world.entityIds().length,
         teammateIds: this.wolfTeammates(request.actorId, role),
         boardInfoPrompt,
@@ -132,6 +132,39 @@ export class PlayerPromptPolicy {
 
   private stageContextHint(request: ActionRequest): string | undefined {
     const stage = String(request.context.phase ?? request.actionWindow ?? request.context.window ?? "");
+    const day = Number(request.context.day ?? request.context.current_day ?? 0);
+    const firstDaySheriffTiming =
+      day === 1 &&
+      this.options.boardConfig?.enableSheriff === true &&
+      [
+        "sheriff_nomination",
+        "sheriff_campaign_speech",
+        "sheriff_withdraw",
+        "sheriff_vote",
+      ].includes(stage)
+        ? "首日警长流程发生在昨夜结果公开之前：此时尚未通过 night_resolved 公布死亡或平安夜，任何玩家仍能参与上警都不能证明其最终存活。不要根据狼人刀口、进入白天、结果尚未播报或其他玩家的说法，擅自断定昨夜结果。"
+        : undefined;
+    if (stage === "sheriff_nomination") {
+      return [
+        "这是上警报名阶段，不是退水阶段：run=true 表示报名上警，run=false 表示不上警；所有玩家的报名基于同一信息快照并行收集。",
+        firstDaySheriffTiming,
+      ].filter(Boolean).join(" ");
+    }
+    if (stage === "sheriff_campaign_speech") {
+      return firstDaySheriffTiming;
+    }
+    if (stage === "sheriff_withdraw") {
+      return [
+        "这是警上发言结束后的退水阶段：run=true 表示继续竞选，run=false 表示退水；候选人的决定基于同一信息快照并行收集。",
+        firstDaySheriffTiming,
+      ].filter(Boolean).join(" ");
+    }
+    if (stage === "sheriff_vote") {
+      return [
+        "这是警长投票阶段，只有最终警下玩家参与投票，只能投给当前最终候选人或弃票；所有警长票基于同一信息快照并行收集。",
+        firstDaySheriffTiming,
+      ].filter(Boolean).join(" ");
+    }
     if (stage !== "witch") {
       const onlySelfDestruct = stage === "on_pre_vote" && request.allowedTools.every(
         (tool) => tool === "self_destruct" || tool === "report_bug",
@@ -152,6 +185,6 @@ export class PlayerPromptPolicy {
     const hints = allowedTools
       .map((tool) => this.options.toolSpecRegistry.getArgHint(tool))
       .filter((hint): hint is string => Boolean(hint));
-    return `工具参数提示=${hints.join("; ")}`;
+    return hints.join("; ") || "无";
   }
 }

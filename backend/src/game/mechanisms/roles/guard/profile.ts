@@ -12,7 +12,7 @@ export const GUARD_ROLE_PROFILE: RoleProfile = {
   role: Role.Guard,
   camp: Camp.Good,
   label: "守卫",
-  skillBrief: "每晚可守护一名玩家，通常不可连续同守",
+  skillBrief: "每晚可守护一名玩家，不可连续两晚守护同一人",
   goodSide: "god",
   init: (roleComp) => {
     setGuardState(roleComp, { lastTarget: null });

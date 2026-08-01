@@ -21,12 +21,12 @@ export const WOLF_TOOL_SPECS: ToolSpec[] = [
     name: "speak_to_wolves",
     llm: {
       name: "speak_to_wolves",
-      description: "狼人夜聊发言；end_chat=true 表示发言后结束本人后续夜聊轮次。",
+      description: "狼人夜聊发言；end_chat=true 表示发言后结束本人本夜的后续夜聊轮次，不会结束其他狼人的发言。",
       parameters: {
         type: "object",
         properties: {
           text: prop("string", "狼人夜聊发言内容。"),
-          end_chat: prop("boolean", "是否在本次发言后结束本人后续夜聊轮次。"),
+          end_chat: prop("boolean", "是否在本次发言后结束本人本夜的后续夜聊轮次；不会结束其他狼人的发言。"),
         },
         description: "狼人夜聊发言参数。",
         required: ["text", "end_chat"],
@@ -34,7 +34,7 @@ export const WOLF_TOOL_SPECS: ToolSpec[] = [
       },
     },
     argHint: 'speak_to_wolves args: {"text":"...","end_chat":true|false}',
-    userPromptHint: "若使用 speak_to_wolves，end_chat=true 表示结束整晚夜聊。",
+    userPromptHint: "若使用 speak_to_wolves，end_chat=true 只表示你本人不再参加本夜后续夜聊，不会强制结束其他狼人的发言；全员结束后夜聊才会提前结束。",
   },
   {
     name: "kill_vote",
@@ -79,7 +79,7 @@ export const WOLF_TOOL_SPECS: ToolSpec[] = [
 export const WOLF_STAGE_DIRECTIVES: StageDirectiveRule[] = [
   {
     match: (allowedTools) => allowedTools.includes("speak_to_wolves"),
-    text: "当前是【狼人交流阶段】：只能调用 speak_to_wolves。若你想结束后续夜聊，请在该工具中设置 end_chat=true；本阶段不会完成刀人。",
+    text: "当前是【狼人交流阶段】：只能调用 speak_to_wolves。若你本人不再参加本夜后续夜聊，请设置 end_chat=true；这不会结束其他狼人的发言。本阶段不会完成刀人。",
   },
   {
     match: (allowedTools) => allowedTools.length === 1 && allowedTools[0] === "kill_vote",

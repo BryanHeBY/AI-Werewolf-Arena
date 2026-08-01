@@ -5,7 +5,7 @@ import { prop } from "../../shared/schema";
 
 const usePotionSchema = {
   name: "use_potion",
-  description: "女巫使用解药或毒药，不能同夜双药，MVP 不可自救",
+  description: "女巫使用解药或毒药，不能同夜双药；是否允许自救以本局规则配置为准",
   parameters: {
     type: "object",
     properties: {
