@@ -7,4 +7,3 @@ export * from "./ai";
 export * from "./core";
 export * from "./game";
 export * from "./runtime/scenarios";
-export { SessionManager } from "./server/session_manager";

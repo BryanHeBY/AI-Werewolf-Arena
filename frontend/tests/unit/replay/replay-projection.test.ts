@@ -3,7 +3,7 @@ import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { buildReplaySnapshot } from "../../../src/replay/replay-projection";
 
 const replay: ReplayDocument = {
-  perspective: "unredacted",
+  perspective: "god",
   sessionId: "session_projection",
   meta: { board: "six_player_mvp", startedAt: "t1", endedAt: "t2" },
   result: { winner: null, reason: null },

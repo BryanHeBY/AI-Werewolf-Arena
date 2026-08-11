@@ -1,4 +1,4 @@
-/** Session replay recording orchestration and realtime persistence. */
+/** Session replay recording orchestration and incremental file persistence. */
 import path from "path";
 import {
   ReplayFinalizeMeta,
@@ -152,7 +152,7 @@ export class SessionRecordManager {
     this.flushChain = this.flushChain
       .then(() => this.flushDirtyFiles())
       .catch((error) => {
-        console.warn(`[observability] realtime_flush_failed err=${String(error)}`);
+        console.warn(`[observability] replay_flush_failed err=${String(error)}`);
       });
     return this.flushChain;
   }

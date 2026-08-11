@@ -3,7 +3,7 @@ import { eventLabel, parseOfflineReplayJson } from "../../../src/replay/offline-
 
 test("parses a backend replay document", () => {
   const replay = parseOfflineReplayJson(JSON.stringify({
-    perspective: "unredacted", sessionId: "session_1",
+    perspective: "god", sessionId: "session_1",
     meta: { board: "six_player_mvp", startedAt: "t1", endedAt: "t2" },
     result: { winner: "good", reason: "wolves_eliminated" }, players: [],
     events: [{ seq: 1, timestamp: "t1", day: 1, phase: "day", type: "day_speech", payload: { actorId: 1, text: "大家好" } }],
@@ -14,6 +14,17 @@ test("parses a backend replay document", () => {
 
 test("rejects a legacy timeline instead of guessing its schema", () => {
   expect(() => parseOfflineReplayJson(JSON.stringify({ events: [] }))).toThrow("replay.json");
+});
+
+test("rejects a replay whose perspective is not the complete god view", () => {
+  expect(() => parseOfflineReplayJson(JSON.stringify({
+    perspective: "unredacted",
+    sessionId: "session_legacy",
+    meta: { board: "six_player_mvp", startedAt: "t1", endedAt: "t2" },
+    result: { winner: null, reason: null },
+    players: [],
+    events: [],
+  }))).toThrow("replay.json");
 });
 
 test("localizes the initial role lineup without machine separators", () => {

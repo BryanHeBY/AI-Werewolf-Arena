@@ -10,7 +10,6 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:backend": "bun --filter ai-werewolf-arena-backend dev",
     "dev:frontend": "bun --filter ai-werewolf-arena-frontend dev",
     "replay:dev": "bun --cwd frontend run replay:dev",
     "build:backend": "bun --filter ai-werewolf-arena-backend build",
@@ -19,8 +18,7 @@
     "check:frontend": "bun --filter ai-werewolf-arena-frontend typecheck",
     "test": "bun run test:backend && bun run test:frontend",
     "test:backend": "bun --filter ai-werewolf-arena-backend test",
-    "test:frontend": "bun --filter ai-werewolf-arena-frontend test",
-    "start": "bun --filter ai-werewolf-arena-backend start"
+    "test:frontend": "bun --filter ai-werewolf-arena-frontend test"
   },
   "engines": {
     "bun": ">=1.3.14"

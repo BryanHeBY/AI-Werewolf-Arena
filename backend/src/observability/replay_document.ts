@@ -1,28 +1,11 @@
+import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import {
   ReplayManifest,
   ReplayPublicEvent,
 } from "./types";
 
 /** 浏览器播放器与视频渲染器直接消费的离线复盘文件。 */
-export interface ReplayDocument {
-  perspective: "unredacted";
-  sessionId: string;
-  meta: {
-    board: string;
-    startedAt: string;
-    endedAt: string;
-  };
-  result: {
-    winner: string | null;
-    reason: string | null;
-  };
-  players: Array<{
-    player_id: number;
-    role: string;
-    camp: string;
-  }>;
-  events: ReplayPublicEvent[];
-}
+export type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 
 /**
  * 从 record 的规范数据构造前端投影。
@@ -38,7 +21,7 @@ export function createReplayDocument(input: {
   assertUniquePlayers(input.manifest.players);
 
   return {
-    perspective: "unredacted",
+    perspective: "god",
     sessionId: input.manifest.session_id,
     meta: {
       board: input.manifest.board,

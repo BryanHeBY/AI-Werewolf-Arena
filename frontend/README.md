@@ -22,6 +22,6 @@ bun run --cwd frontend build
 ## 迁移状态
 
 - 当前入口：`src/main.tsx` → `src/App.tsx`。
-- 当前数据源：`@ai-werewolf-arena/replay-contract` 的 `ReplayDocument`，第一版为完整的 `unredacted` 离线记录。
+- 当前数据源：`@ai-werewolf-arena/replay-contract` 的 `ReplayDocument`，当前为完整的 `god`（上帝）离线复盘视角。
 - 已删除旧 Vue、Pinia、Socket 和 mock 实现；后续如恢复在线观战，应从 React 入口与后端正式协议重新设计。
 - 角色视角、公开脱敏、在线观战和 MP4 任务队列均不属于这一版范围。

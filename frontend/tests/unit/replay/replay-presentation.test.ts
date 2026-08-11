@@ -4,7 +4,7 @@ import { buildPresentationReplay } from "../../../src/replay/replay-presentation
 
 test("collapses concurrent declarations and votes into their summary events", () => {
   const replay: ReplayDocument = {
-    perspective: "unredacted",
+    perspective: "god",
     sessionId: "session_presentation",
     meta: { board: "twelve_player_standard", startedAt: "t1", endedAt: "t2" },
     result: { winner: null, reason: null },

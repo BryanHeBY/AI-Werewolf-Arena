@@ -1,22 +1,41 @@
 import { promises as fs } from "fs";
 import path from "path";
+import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { resolveDefaultRecordRoot } from "../observability";
-import { ReplayRecordRepository } from "../server/replay_record_repository";
-import { ReplaySourceDocument } from "../server/replay_source_document";
 
 export async function readReplayBundle(
   recordRoot: string,
   sessionId: string,
-): Promise<ReplaySourceDocument> {
-  const repository = new ReplayRecordRepository(recordRoot);
-  return repository.getReplay(sessionId);
+): Promise<ReplayDocument> {
+  const filePath = path.join(recordRoot, sessionId, "replay.json");
+  let raw: string;
+  try {
+    raw = await fs.readFile(filePath, "utf-8");
+  } catch (error) {
+    throw new Error(`replay_bundle_file_unreadable: ${filePath} -> ${(error as Error).message}`);
+  }
+  let bundle: unknown;
+  try {
+    bundle = JSON.parse(raw);
+  } catch (error) {
+    throw new Error(`replay_bundle_json_invalid: ${filePath} -> ${(error as Error).message}`);
+  }
+  if (
+    !bundle || typeof bundle !== "object" ||
+    (bundle as { perspective?: unknown }).perspective !== "god" ||
+    typeof (bundle as { sessionId?: unknown }).sessionId !== "string" ||
+    !Array.isArray((bundle as { events?: unknown }).events)
+  ) {
+    throw new Error(`replay_bundle_invalid: ${filePath}`);
+  }
+  return bundle as ReplayDocument;
 }
 
 export async function exportReplayBundle(options: {
   recordRoot: string;
   sessionId: string;
   outputFile: string;
-}): Promise<ReplaySourceDocument> {
+}): Promise<ReplayDocument> {
   const bundle = await readReplayBundle(options.recordRoot, options.sessionId);
   await fs.mkdir(path.dirname(options.outputFile), { recursive: true });
   await fs.writeFile(options.outputFile, `${JSON.stringify(bundle, null, 2)}\n`, "utf-8");

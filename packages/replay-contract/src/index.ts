@@ -1,10 +1,10 @@
 /**
  * The replay data shape consumed by browser and video clients.
  *
- * The document mirrors the complete session record so that the React player
- * and Remotion renderer can be wired before perspective isolation is designed.
+ * `god` means the complete referee view: it contains every role and public
+ * event needed to reconstruct a finished game. It is not a player projection.
  */
-export type ReplayPerspective = "unredacted";
+export type ReplayPerspective = "god";
 
 export interface ReplayEvent {
   seq: number;
