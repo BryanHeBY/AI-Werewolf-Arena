@@ -3,7 +3,6 @@ import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, ToolCall } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 import { FallbackActionPolicy, FallbackReason } from "./fallback_action_policy";
-import { LegacyResponseInterpreter } from "./legacy_response_interpreter";
 import { LlmObserver } from "./llm_observer";
 import {
   BuiltPlayerPrompt,
@@ -27,7 +26,6 @@ interface LlmTurnOrchestratorOptions {
   promptSession: PlayerPromptSession;
   scheduler: ScopedRequestScheduler;
   sdkToolLoop: SdkGameToolLoop;
-  interpreter: LegacyResponseInterpreter;
   fallbackPolicy: FallbackActionPolicy;
   recorder: PlayerRoundRecorder;
   observer: LlmObserver;
@@ -41,7 +39,7 @@ interface NativeAttempt {
   assistantText?: string;
 }
 
-/** Application service coordinating one complete SDK or legacy LLM turn. */
+/** Application service coordinating one native-tool LLM turn. */
 export class LlmTurnOrchestrator {
   constructor(private readonly options: LlmTurnOrchestratorOptions) {}
 
@@ -66,9 +64,7 @@ export class LlmTurnOrchestrator {
         `request_start player=${request.actorId} phase=${request.phase} tools=${request.allowedTools.join(",")} timeout_ms=${timeoutMs}`,
       );
       this.options.observer.prompt(prompt.messages, request);
-      return client.runToolLoop
-        ? await this.runNative(client, request, prompt, startedAt)
-        : await this.runLegacy(client, request, prompt, timeoutMs, startedAt);
+      return this.runNative(client, request, prompt, startedAt);
     } catch (error) {
       const text = String(error);
       this.options.observer.trace(
@@ -191,54 +187,6 @@ export class LlmTurnOrchestrator {
     });
   }
 
-  private async runLegacy(
-    client: ChatModelClient,
-    request: ActionRequest,
-    prompt: BuiltPlayerPrompt,
-    timeoutMs: number,
-    startedAt: number,
-  ): Promise<ToolCall | null> {
-    const raw = await this.chatWithTimeout(client, prompt.messages, timeoutMs);
-    this.options.observer.rawResponse(raw, request);
-    const parsed = this.options.interpreter.parse(raw, request.allowedTools, request.actorId);
-    if (parsed) return this.finishWithAction(request, prompt, parsed, startedAt, { thinkingText: raw });
-    if (this.options.interpreter.returnedNone(raw)) {
-      if (this.requiresAction(request)) {
-        return this.finishWithFallback(request, prompt, "model_declined_required_action", { thinkingText: raw });
-      }
-      this.options.observer.trace(
-        `request_none player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt}`,
-      );
-      this.options.recorder.record(request, prompt, {
-        actionMode: "none",
-        toolCalls: [],
-        thinkingText: raw,
-      });
-      return null;
-    }
-    if (this.options.interpreter.isStructuredToolJson(raw)) {
-      return this.finishWithFallback(request, prompt, "invalid_tool_json", { thinkingText: raw });
-    }
-    const repaired = this.options.interpreter.recover(raw, request.allowedTools, request.actorId);
-    if (repaired) {
-      this.options.observer.trace(
-        `request_ok_repaired player=${request.actorId} phase=${request.phase} action=${repaired.name} args=${JSON.stringify((repaired as any).args ?? {})} elapsed_ms=${Date.now() - startedAt}`,
-      );
-      this.options.recorder.record(request, prompt, {
-        actionMode: "text_action",
-        toolCalls: this.toToolCalls(repaired),
-        finalAction: repaired,
-        thinkingText: raw,
-        textAction: {
-          text: raw,
-          parsed_action: { name: repaired.name, args: (repaired as any).args ?? {} },
-        },
-      });
-      return repaired;
-    }
-    return this.finishWithFallback(request, prompt, "non_json_output", { thinkingText: raw });
-  }
-
   private async finishWithAction(
     request: ActionRequest,
     prompt: BuiltPlayerPrompt,
@@ -296,25 +244,4 @@ export class LlmTurnOrchestrator {
     return remaining <= 0 ? 0 : Math.max(1, Math.min(this.options.timeoutMs, remaining));
   }
 
-  private async chatWithTimeout(
-    client: ChatModelClient,
-    messages: ChatMessage[],
-    timeoutMs: number,
-  ): Promise<string> {
-    const controller = new AbortController();
-    let timer: NodeJS.Timeout | null = null;
-    try {
-      return await Promise.race([
-        client.chat(messages, { signal: controller.signal }),
-        new Promise<string>((_, reject) => {
-          timer = setTimeout(() => {
-            controller.abort();
-            reject(new Error(`llm_request_timeout_${timeoutMs}ms`));
-          }, timeoutMs);
-        }),
-      ]);
-    } finally {
-      if (timer) clearTimeout(timer);
-    }
-  }
 }

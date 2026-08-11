@@ -27,7 +27,7 @@ export interface ToolLoopStepTrace {
 /** LLM transport port shared by the provider and concrete SDK adapters. */
 export interface ChatModelClient {
   chat(messages: ChatMessage[], options?: { signal?: AbortSignal }): Promise<string>;
-  runToolLoop?<T>(
+  runToolLoop<T>(
     messages: ChatMessage[],
     tools: ToolSchema[],
     callbacks: {
@@ -84,7 +84,7 @@ export interface ToolLoopActionResult {
 }
 
 export interface PlayerRoundOutcome {
-  actionMode: "tool_call" | "text_action" | "none";
+  actionMode: "tool_call" | "none";
   toolCalls: Array<{
     id?: string;
     name: string;
@@ -93,10 +93,6 @@ export interface PlayerRoundOutcome {
     result?: Record<string, unknown> | string;
   }>;
   thinkingText?: string;
-  textAction?: {
-    text: string;
-    parsed_action?: { name: string; args: Record<string, unknown> };
-  };
   finalAction?: ToolCall | null;
   fallback?: {
     used: boolean;

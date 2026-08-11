@@ -4,7 +4,6 @@
  */
 import { bootstrapGame } from "../app/bootstrap";
 import * as path from "node:path";
-import { appConfig } from "./config";
 import {
   loadRuntimeConfig,
   GameAgentSelection,
@@ -305,7 +304,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   const runtime = await loadRuntimeConfig();
   const providersConfig = runtime.providers;
   const agentsConfig = runtime.agents;
-  const gameConfig = runtime.game ?? {};
+  const gameConfig = runtime.game;
 
   if (!providersConfig?.items?.[providersConfig.default] || !agentsConfig?.items?.[agentsConfig.default]) {
     throw new Error("runtime_config_missing_provider_or_agent_defaults");
@@ -564,8 +563,8 @@ async function main(): Promise<void> {
     process.env.GAME_CONFIG_NAME = argOptions.gameConfigName;
   }
   const runtime = await loadRuntimeConfig();
-  const game = runtime.game ?? {};
-  const envBoard = game.board ?? appConfig.defaultBoard;
+  const game = runtime.game;
+  const envBoard = game.board ?? "six_player_mvp";
   const envMaxDays = game.maxDays ?? 10;
   const envMaxRuntimeMs = game.maxRuntimeMs ?? 30000;
   const envLlmTimeoutMs = game.llmTimeoutMs ?? 30000;

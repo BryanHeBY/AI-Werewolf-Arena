@@ -254,13 +254,6 @@ export interface ReplayRecordPlayerRoundInput {
   thinkingText?: string;
   actionMode: ReplayActionMode;
   toolCalls: ReplayToolCallTrace[];
-  textAction?: {
-    text: string;
-    parsed_action?: {
-      name: string;
-      args: Record<string, unknown>;
-    };
-  };
   finalAction?: ToolCall | null;
   fallback?: {
     used: boolean;

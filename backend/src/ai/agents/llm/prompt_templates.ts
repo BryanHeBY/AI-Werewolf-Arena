@@ -140,29 +140,3 @@ export function buildConstraintRetryPrompt(attempt: number, maxRetries: number):
   }
   return `最后提醒：若本轮仍没有有效 submit_action，系统将判定失败并强制回退。请立即提交行动；不要只返回普通 assistant 文本。（重试 ${attempt}/${maxRetries}）`;
 }
-
-/** 发言文本过滤关键字列表（用于去除提示注入残留）。 */
-export const SPEAK_TEXT_FILTER_KEYWORDS = [
-  "actorid=",
-  "玩家编号=",
-  "phase=",
-  "当前阶段=",
-  "actionwindow=",
-  "行动窗口=",
-  "role=",
-  "你的身份=",
-  "allowedtools=",
-  "可用工具=",
-  "context=",
-  "阶段上下文=",
-  "aliveplayers=",
-  "存活玩家视图=",
-  "私有查验情报=",
-  "toolarghints=",
-  "工具参数提示=",
-  "你是狼人杀引擎中的单个玩家智能体",
-  "json 格式",
-] as const;
-
-/** 默认发言兜底文本。 */
-export const DEFAULT_SPEAK_TEXT = "我先听后位发言再判断。";

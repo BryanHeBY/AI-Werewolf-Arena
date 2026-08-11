@@ -2,6 +2,7 @@
   "default": "deepseek_v4_flash",
   "items": {
     "deepseek_v4_flash": {
+      "kind": "llm",
       "provider": "openrouter",
       "model": "deepseek/deepseek-v4-flash",
       "temperature": 0.2,

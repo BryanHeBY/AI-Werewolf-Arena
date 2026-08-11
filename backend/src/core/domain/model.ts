@@ -239,23 +239,13 @@ export interface TurnConstraints {
  * 传给 Agent 的回合上下文。
  *
  * `phase` 是 ActionRequest 的主阶段（night/day/voting）；细粒度流程必须使用
- * `stage`，避免历史上 `context.phase` 同时表示两种层级而产生歧义。
- * `current_day`、`context.phase` 和 `window` 仅为读取旧记录/旧调用方保留，新的
- * 引擎请求不应再写入这些字段。
+ * `stage`，两者不再承载重叠语义。
  */
 export interface ActionRequestContext {
   day?: number;
   stage?: string;
   visible_events?: PlayerVisibleEvent[];
   turn_constraints?: TurnConstraints;
-  /** @deprecated Use `day`. */
-  current_day?: number;
-  /** @deprecated Use `stage`. */
-  phase?: string;
-  /** @deprecated Use ActionRequest.actionWindow or `stage`. */
-  window?: string;
-  /** @deprecated Use turn_constraints.min_valid_actions. */
-  must_act?: boolean;
   [key: string]: unknown;
 }
 

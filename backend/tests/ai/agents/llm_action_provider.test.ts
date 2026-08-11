@@ -11,13 +11,10 @@ import path from "path";
 import { promises as fs } from "fs";
 import { createTestTempDirectory } from "../../support/temp_directory";
 
-class FakeClient {
-  constructor(private readonly output: string) {}
-
-  async chat(): Promise<string> {
-    return this.output;
-  }
-}
+const REQUIRED_ACTION_CONSTRAINTS = {
+  min_valid_actions: 1,
+  max_valid_actions: 1,
+};
 
 class AssertClient {
   constructor(
@@ -28,6 +25,33 @@ class AssertClient {
   async chat(messages: Array<{ role: string; content: string }>): Promise<string> {
     this.assertFn(messages);
     return this.output;
+  }
+
+  async runToolLoop<T>(
+    messages: Array<{ role: string; content: string }>,
+    _tools: Array<{ name: string }>,
+    callbacks: {
+      onToolCall: (invocation: {
+        id: string;
+        name: string;
+        args: Record<string, unknown>;
+        rawArgs: string;
+      }) => Promise<{
+        toolResult: Record<string, unknown> | string;
+        finalAction?: T;
+        stop?: boolean;
+      }>;
+    },
+  ): Promise<{ finalAction: T | null; assistantText: string }> {
+    this.assertFn(messages);
+    const invocation = JSON.parse(this.output) as { name: string; args: Record<string, unknown> };
+    const handled = await callbacks.onToolCall({
+      id: "assert_tool",
+      name: invocation.name,
+      args: invocation.args,
+      rawArgs: this.output,
+    });
+    return { finalAction: (handled.finalAction ?? null) as T | null, assistantText: "assert_tool" };
   }
 }
 
@@ -372,11 +396,11 @@ class FallbackProvider implements ActionProvider {
 }
 
 describe("LlmActionProvider", () => {
-  test("parses valid json tool call", async () => {
+  test("accepts a native tool callback", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
-      new FakeClient('{"name":"speak","args":{"text":"我是1号"}}'),
+      new ToolLoopClient("speak", { text: "我是1号" }),
       {
         fallbackProvider: new FallbackProvider(null),
       },
@@ -386,7 +410,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {},
+      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -395,13 +419,11 @@ describe("LlmActionProvider", () => {
     });
   });
 
-  test("supports fenced json response", async () => {
+  test("accepts a native vote callback", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
-      new FakeClient(
-        "```json\n{\"name\":\"vote\",\"args\":{\"target_id\":2,\"abstain\":false}}\n```",
-      ),
+      new ToolLoopClient("vote", { target_id: 2, abstain: false }),
       {
         fallbackProvider: new FallbackProvider(null),
       },
@@ -420,13 +442,11 @@ describe("LlmActionProvider", () => {
     });
   });
 
-  test("parses tool call when model includes <think> wrapper", async () => {
+  test("accepts a native role-action callback", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
-      new FakeClient(
-        "<think>先分析一下局势</think>\n{\"name\":\"check_identity\",\"args\":{\"target_id\":2}}",
-      ),
+      new ToolLoopClient("check_identity", { target_id: 2 }),
       {
         fallbackProvider: new FallbackProvider(null),
       },
@@ -453,7 +473,7 @@ describe("LlmActionProvider", () => {
     });
     const provider = new LlmActionProvider(
       context.world,
-      new FakeClient('{"name":"vote","args":{"target_id":2}}'),
+      new ToolLoopClient("vote", { target_id: 2 }),
       {
         fallbackProvider: fallback,
       },
@@ -463,7 +483,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {},
+      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -472,11 +492,11 @@ describe("LlmActionProvider", () => {
     });
   });
 
-  test("recovers speak action from think-only output", async () => {
+  test("accepts a native speak callback without text recovery", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
-      new FakeClient("<think>我应该谨慎发言，先保留态度，观察局势。</think>"),
+      new ToolLoopClient("speak", { text: "我应该谨慎发言，先保留态度，观察局势。" }),
       {
         fallbackProvider: new FallbackProvider(null),
       },
@@ -493,13 +513,11 @@ describe("LlmActionProvider", () => {
     expect((action as any)?.args?.text?.length).toBeGreaterThan(0);
   });
 
-  test("recovered speak should not echo prompt metadata", async () => {
+  test("passes the callback arguments through the native protocol", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
-      new FakeClient(
-        "<think>actorId=6 phase=day allowedTools=[\"speak\"] context={\"phase\":\"day_speech\"} 我应该谨慎发言。</think>",
-      ),
+      new ToolLoopClient("speak", { text: "我应该谨慎发言。" }),
       {
         fallbackProvider: new FallbackProvider(null),
       },
@@ -513,13 +531,10 @@ describe("LlmActionProvider", () => {
     });
 
     expect(action?.name).toBe("speak");
-    const text = (action as any)?.args?.text ?? "";
-    expect(text.toLowerCase()).not.toContain("actorid=");
-    expect(text.toLowerCase()).not.toContain("allowedtools=");
-    expect(text.toLowerCase()).not.toContain("context=");
+    expect((action as any)?.args?.text).toBe("我应该谨慎发言。");
   });
 
-  test("should not recover self_destruct from think text", async () => {
+  test("does not invent an action when the native loop returns none", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const wolfId = context.world
       .getAliveEntityIds()
@@ -530,7 +545,7 @@ describe("LlmActionProvider", () => {
 
     const provider = new LlmActionProvider(
       context.world,
-      new FakeClient("<think>当前局面不利，我考虑自爆结束这个回合。</think>"),
+      new NoActionToolLoopClient(),
       {
         fallbackProvider: new FallbackProvider(null),
       },
@@ -540,7 +555,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: wolfId,
       allowedTools: ["self_destruct"],
-      context: { must_act: false },
+      context: {},
     });
 
     expect(action).toBeNull();
@@ -571,7 +586,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { day: 1, phase: "day_speech", must_act: true },
+      context: { day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -632,7 +647,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { day: 1, phase: "day_speech", must_act: true },
+      context: { day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -725,7 +740,7 @@ describe("LlmActionProvider", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
-      new FakeClient('{"name":"none","args":{}}'),
+      new NoActionToolLoopClient(),
       {
         fallbackProvider: new FallbackProvider({
           name: "speak",
@@ -738,7 +753,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true },
+      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -770,7 +785,7 @@ describe("LlmActionProvider", () => {
       actorId: 2,
       allowedTools: ["speak"],
       context: {
-        must_act: true,
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
         visible_events: [{ seq: 1, type: "day_speech", payload: { actorId: 1, text: "我是1号，我是狼人" } }],
       },
     });
@@ -824,7 +839,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true, phase: "day_speech" },
+      context: { stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -863,7 +878,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: wolfId,
       allowedTools: ["kill_vote"],
-      context: { must_act: true, phase: "wolf_vote" },
+      context: { stage: "wolf_vote", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -883,7 +898,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true },
+      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -904,7 +919,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true },
+      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     })).resolves.toEqual({
       name: "speak",
       args: { text: "通过统一协议发言" },
@@ -923,7 +938,7 @@ describe("LlmActionProvider", () => {
       actorId: 1,
       allowedTools: ["speak"],
       context: {
-        must_act: true,
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
         visible_events: [{ seq: 1, type: "phase_changed", payload: { day: 1, phase: "day" } }],
       },
     });
@@ -933,7 +948,7 @@ describe("LlmActionProvider", () => {
       actorId: 1,
       allowedTools: ["speak"],
       context: {
-        must_act: true,
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
         visible_events: [
           { seq: 1, type: "phase_changed", payload: { day: 1, phase: "day" } },
           { seq: 2, type: "day_speech", payload: { actorId: 2, text: "我是2号" } },
@@ -965,7 +980,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true, visible_events: [] },
+      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
     });
 
     expect(action).toEqual({
@@ -985,7 +1000,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true },
+      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(client.lastToolNames).toEqual([
@@ -1007,7 +1022,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: false },
+      context: {},
     });
 
     expect(client.lastToolNames).toEqual([
@@ -1029,7 +1044,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Voting,
       actorId: 1,
       allowedTools: ["vote"],
-      context: { must_act: false },
+      context: {},
     });
 
     expect(client.lastToolNames).toEqual([
@@ -1079,7 +1094,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: 1,
       allowedTools: ["speak_to_wolves"],
-      context: { must_act: true },
+      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
   });
 
@@ -1102,7 +1117,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: witchId,
       allowedTools: ["use_potion"],
-      context: { must_act: true, visible_events: [] },
+      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
     });
 
     expect(action).toEqual({
@@ -1115,7 +1130,7 @@ describe("LlmActionProvider", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
-      new FakeClient('{"name":"kill_vote","args":{"target_id":null,"abstain":true}}'),
+      new ToolLoopClient("kill_vote", { target_id: null, abstain: true }),
       {
         fallbackProvider: new FallbackProvider(null),
       },
@@ -1125,7 +1140,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: 1,
       allowedTools: ["kill_vote"],
-      context: { must_act: true },
+      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -1151,7 +1166,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true, visible_events: [] },
+      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
     });
 
     expect(action).toEqual({
@@ -1186,7 +1201,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: witchId,
       allowedTools: ["use_potion"],
-      context: { must_act: true, phase: "witch", wolf_target: 3, visible_events: [] },
+      context: { stage: "witch", wolf_target: 3, visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -1212,7 +1227,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: witchId,
       allowedTools: ["use_potion"],
-      context: { must_act: true, phase: "witch", wolf_target: targetId },
+      context: { stage: "witch", wolf_target: targetId, turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -1250,7 +1265,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Voting,
       actorId: wolfId,
       allowedTools: ["self_destruct"],
-      context: { must_act: false, phase: "on_pre_vote" },
+      context: { stage: "on_pre_vote" },
     });
 
     expect(action).toEqual({
@@ -1273,7 +1288,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Voting,
       actorId: wolfId,
       allowedTools: ["self_destruct"],
-      context: { must_act: false, phase: "on_pre_vote" },
+      context: { stage: "on_pre_vote" },
     });
 
     expect(action).toBeNull();
@@ -1303,7 +1318,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true, visible_events: [] },
+      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
     });
   });
 
@@ -1327,13 +1342,13 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["run_for_sheriff"],
-      context: { day: 1, phase: "sheriff_nomination", visible_events: [] },
+      context: { day: 1, stage: "sheriff_nomination", visible_events: [] },
     });
     await provider.getAction({
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["run_for_sheriff"],
-      context: { day: 1, phase: "sheriff_withdraw", visible_events: [] },
+      context: { day: 1, stage: "sheriff_withdraw", visible_events: [] },
     });
 
     expect(observedPrompts[0]).toContain("这是上警报名阶段，不是退水阶段");
@@ -1352,7 +1367,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true, visible_events: [] },
+      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
     });
 
     const system = client.lastMessages.find((message) => message.role === "system")?.content ?? "";

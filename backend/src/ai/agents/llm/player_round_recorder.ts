@@ -56,7 +56,6 @@ export class PlayerRoundRecorder {
       thinkingText: outcome.thinkingText,
       actionMode: outcome.actionMode,
       toolCalls: outcome.toolCalls,
-      textAction: outcome.textAction,
       finalAction: outcome.finalAction ?? null,
       fallback: outcome.fallback,
     });

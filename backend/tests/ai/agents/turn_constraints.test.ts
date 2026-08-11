@@ -5,15 +5,15 @@ import {
 } from "../../../src/ai/agents/llm/turn_constraints";
 
 describe("turn_constraints", () => {
-  test("falls back to legacy must_act when turn_constraints is absent", () => {
+  test("permits no action when turn_constraints is absent", () => {
     const request: ActionRequest = {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { must_act: true },
+      context: {},
     };
     const resolved = resolveTurnConstraints(request);
-    expect(resolved.minValidActions).toBe(1);
+    expect(resolved.minValidActions).toBe(0);
     expect(resolved.maxValidActions).toBe(1);
   });
 
@@ -23,7 +23,6 @@ describe("turn_constraints", () => {
       actorId: 1,
       allowedTools: ["speak", "vote"],
       context: {
-        must_act: false,
         turn_constraints: {
           min_valid_actions: 1,
           max_valid_actions: 2,

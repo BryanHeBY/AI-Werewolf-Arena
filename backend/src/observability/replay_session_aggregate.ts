@@ -351,7 +351,6 @@ export class ReplaySessionAggregate {
       content: JSON.stringify({
         action_mode: input.actionMode,
         final_action: input.finalAction !== undefined ? safeReplayJson(input.finalAction) : null,
-        ...(input.textAction ? { text_action: safeReplayJson(input.textAction) } : {}),
       }),
     });
     if (input.fallback?.used) target.push({

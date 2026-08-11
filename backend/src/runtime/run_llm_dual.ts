@@ -31,7 +31,7 @@ async function main(): Promise<void> {
     process.env.GAME_CONFIG_NAME = args.gameConfigName;
   }
   const runtime = await loadRuntimeConfig();
-  const game = runtime.game ?? {};
+  const game = runtime.game;
   const baseOptions = {
     maxDays: game.maxDays ?? 10,
     trace: game.trace ?? false,

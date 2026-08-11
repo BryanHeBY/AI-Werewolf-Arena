@@ -60,8 +60,8 @@ describe("llm context window stability", () => {
         allowedTools: ["speak"],
         context: {
           day: Math.floor((i - 1) / 6) + 1,
-          phase: "day_speech",
-          must_act: true,
+          stage: "day_speech",
+          turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },
           visible_events: events,
         },
       });

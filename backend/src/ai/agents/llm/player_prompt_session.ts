@@ -5,7 +5,6 @@ import { PlayerPromptPolicy } from "./player_prompt_policy";
 
 export interface PlayerPromptSessionOptions {
   maxPromptEvents: number;
-  supportsNativeTools: boolean;
   promptPolicy: PlayerPromptPolicy;
 }
 
@@ -98,7 +97,7 @@ export class PlayerPromptSession {
 
   private buildAllowedTools(allowedTools: ToolName[]): ToolName[] {
     const tools = [...allowedTools];
-    if (this.options.supportsNativeTools && !tools.includes(PlayerPromptSession.REPORT_BUG_TOOL)) {
+    if (!tools.includes(PlayerPromptSession.REPORT_BUG_TOOL)) {
       tools.push(PlayerPromptSession.REPORT_BUG_TOOL);
     }
     return tools;

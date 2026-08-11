@@ -21,7 +21,7 @@ function isToolNameArray(input: unknown): input is ToolName[] {
 }
 
 /**
- * 解析回合约束：优先读取结构化 turn_constraints，若缺失则兼容旧 must_act。
+ * 解析回合约束。缺失约束表示当前回合可以无动作结束。
  */
 export function resolveTurnConstraints(request: ActionRequest): ResolvedTurnConstraints {
   const raw = request.context.turn_constraints;
@@ -30,11 +30,10 @@ export function resolveTurnConstraints(request: ActionRequest): ResolvedTurnCons
       ? (raw as TurnConstraints)
       : undefined;
 
-  const minFromLegacy = request.context.must_act === true ? 1 : 0;
   const minValidActions =
     typeof fromContext?.min_valid_actions === "number"
       ? Math.max(0, Math.floor(fromContext.min_valid_actions))
-      : minFromLegacy;
+      : 0;
   const maxValidActions =
     typeof fromContext?.max_valid_actions === "number"
       ? Math.max(minValidActions, Math.floor(fromContext.max_valid_actions))

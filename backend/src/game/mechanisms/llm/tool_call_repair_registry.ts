@@ -1,9 +1,9 @@
 /** 文件说明：聚合所有角色与机制的 LLM 修复规则。 */
-import { ToolCall, ToolName } from "../../../core/domain/model";
+import { ToolName } from "../../../core/domain/model";
 import { COMMON_LLM_REPAIR_PACK } from "../common/llm_repair";
 import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../roles/profile_registry";
 import { SHERIFF_LLM_REPAIR_PACK } from "../sheriff/llm_repair";
-import { CoerceContext, RecoverContext, ToolRepairPack } from "./contracts";
+import { CoerceContext, ToolRepairPack } from "./contracts";
 
 function buildDefaultPacks(roleProfileRegistry: RoleProfileRegistry): ToolRepairPack[] {
   const packs: ToolRepairPack[] = [COMMON_LLM_REPAIR_PACK, SHERIFF_LLM_REPAIR_PACK];
@@ -18,7 +18,6 @@ function buildDefaultPacks(roleProfileRegistry: RoleProfileRegistry): ToolRepair
 /** LLM 工具调用修复注册表。 */
 export class ToolCallRepairRegistry {
   private readonly coerceHandlers = new Map<ToolName, ToolRepairPack["coerce"][ToolName]>();
-  private readonly recoverHandlers = new Map<ToolName, ToolRepairPack["recover"][ToolName]>();
 
   constructor(
     packs?: ToolRepairPack[],
@@ -28,9 +27,6 @@ export class ToolCallRepairRegistry {
     for (const pack of effectivePacks) {
       for (const [name, handler] of Object.entries(pack.coerce)) {
         this.coerceHandlers.set(name as ToolName, handler);
-      }
-      for (const [name, handler] of Object.entries(pack.recover)) {
-        this.recoverHandlers.set(name as ToolName, handler);
       }
     }
   }
@@ -45,18 +41,6 @@ export class ToolCallRepairRegistry {
       return { ...rawArgs };
     }
     return handler(rawArgs, ctx);
-  }
-
-  recover(
-    tool: ToolName,
-    text: string,
-    ctx: RecoverContext,
-  ): ToolCall | null {
-    const handler = this.recoverHandlers.get(tool);
-    if (!handler) {
-      return null;
-    }
-    return handler(text, ctx);
   }
 }
 

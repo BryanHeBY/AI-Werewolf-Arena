@@ -19,30 +19,21 @@ export class ActionValidationService {
     request: ActionRequest,
     llmAllowedTools: ToolName[],
     invocation: ToolInvocationInput,
-    parseToolCall: (
-      raw: string,
-      allowedTools: ActionRequest["allowedTools"],
+    coerceArgs: (
+      tool: ToolName,
+      rawArgs: Record<string, unknown>,
       actorId: number,
-    ) => ToolCall | null,
+    ) => Record<string, unknown> | null,
   ): InvocationValidationResult {
     if (!llmAllowedTools.includes(invocation.name as ToolName)) {
       return { ok: false, error: "tool_not_allowed_in_this_turn" };
     }
 
-    const candidate: ToolCall = {
-      name: invocation.name as ToolName,
-      args: invocation.args as any,
-    } as ToolCall;
-    const parsed = parseToolCall(
-      JSON.stringify(candidate),
-      llmAllowedTools,
-      request.actorId,
-    );
-    if (!parsed) {
+    const name = invocation.name as ToolName;
+    const args = coerceArgs(name, invocation.args, request.actorId);
+    if (!args) {
       return { ok: false, error: "invalid_tool_arguments" };
     }
-
-    return { ok: true, action: parsed };
+    return { ok: true, action: { name, args } as ToolCall };
   }
 }
-

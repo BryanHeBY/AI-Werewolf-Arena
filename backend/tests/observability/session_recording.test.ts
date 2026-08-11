@@ -78,9 +78,10 @@ describe("SessionRecordManager", () => {
     agents: {
       default: "a",
       items: {
-        a: { provider: "p", model: agentModel },
+        a: { kind: "llm" as const, provider: "p", model: agentModel },
       },
     },
+    game: {},
     debugSummary: { agent: { enabled: debugAgentEnabled } },
   });
 

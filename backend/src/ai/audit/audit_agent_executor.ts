@@ -5,10 +5,7 @@ import {
   AcpSessionFactory,
 } from "../integrations/acp/acp_process_client";
 import { AcpMcpBridgeFactory } from "../integrations/acp/acp_mcp_bridge";
-import {
-  AgentProfileConfig,
-  ResolvedAgentRuntimeProfile,
-} from "../../runtime/config/runtime_config";
+import { ResolvedAgentRuntimeProfile } from "../../runtime/config/runtime_config";
 import { AgentTurnExecutor, AgentTurnOptions } from "../runtime/agent_turn_executor";
 import { AuditMcpControlServer } from "./audit_mcp_control";
 import {
@@ -242,7 +239,6 @@ export function createSdkAuditAgentExecutor(client: AiSdkClient): AuditAgentExec
 export function createAuditAgentExecutor(options: {
   profile: ResolvedAgentRuntimeProfile;
   workspaceRoot: string;
-  llmOverride?: Partial<AgentProfileConfig>;
 }): AuditAgentExecutor | null {
   const { profile } = options;
   if (profile.kind === "acp" && profile.provider.type === "acp") {
@@ -259,19 +255,18 @@ export function createAuditAgentExecutor(options: {
   ) {
     return null;
   }
-  const override = options.llmOverride ?? {};
   return new SdkAuditAgentExecutor(new AiSdkClient({
     providerType: profile.provider.type,
     providerName: profile.providerName,
     apiKey: profile.provider.apiKey,
-    model: override.model ?? profile.model,
+    model: profile.model,
     baseURL: profile.provider.baseURL,
     userAgent: profile.provider.userAgent,
-    temperature: override.temperature ?? profile.temperature ?? 0.1,
-    maxTokens: override.maxTokens ?? profile.maxTokens ?? 1200,
-    forceJsonResponse: override.forceJsonResponse ?? profile.forceJsonResponse ?? false,
-    reasoningEnabled: override.reasoningEnabled ?? profile.reasoningEnabled ?? true,
-    reasoningEffort: override.reasoningEffort ?? profile.reasoningEffort ?? "medium",
-    thinkingEnabled: override.thinkingEnabled ?? profile.thinkingEnabled ?? false,
+    temperature: profile.temperature ?? 0.1,
+    maxTokens: profile.maxTokens ?? 1200,
+    forceJsonResponse: profile.forceJsonResponse ?? false,
+    reasoningEnabled: profile.reasoningEnabled ?? true,
+    reasoningEffort: profile.reasoningEffort ?? "medium",
+    thinkingEnabled: profile.thinkingEnabled ?? false,
   }));
 }

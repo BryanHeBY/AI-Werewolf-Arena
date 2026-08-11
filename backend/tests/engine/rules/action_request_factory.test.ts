@@ -25,9 +25,6 @@ describe("GameActionRequestFactory", () => {
         trigger: "test",
         day: 99,
         stage: "forged_stage",
-        current_day: 99,
-        phase: "legacy_stage",
-        window: "legacy_window",
         visible_events: [],
         turn_constraints: { min_valid_actions: 0 },
       },
@@ -36,9 +33,6 @@ describe("GameActionRequestFactory", () => {
     expect(request.context.day).toBe(3);
     expect(request.context.stage).toBe("day_speech");
     expect(request.context.trigger).toBe("test");
-    expect(request.context.current_day).toBeUndefined();
-    expect(request.context.phase).toBeUndefined();
-    expect(request.context.window).toBeUndefined();
     expect(request.context.turn_constraints).toEqual({
       min_valid_actions: 1,
       max_valid_actions: 1,
@@ -50,12 +44,12 @@ describe("GameActionRequestFactory", () => {
     expect(getActionRequestStage(request)).toBe("day_speech");
   });
 
-  test("reads a legacy context without changing its historical meaning", () => {
+  test("uses stage as the sole fine-grained action label", () => {
     const stage = getActionRequestStage({
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { current_day: 2, phase: "hunter_shot" },
+      context: { day: 2, stage: "hunter_shot" },
     });
 
     expect(stage).toBe("hunter_shot");

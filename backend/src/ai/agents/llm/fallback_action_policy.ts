@@ -4,10 +4,8 @@ import { LlmObserver } from "./llm_observer";
 import { resolveTurnConstraints } from "./turn_constraints";
 
 export type FallbackReason =
-  | "non_json_output"
   | "runtime_error"
   | "deadline_skip"
-  | "invalid_tool_json"
   | "model_declined_required_action";
 
 /** Strategy that keeps the game moving when the model path cannot produce a valid action. */

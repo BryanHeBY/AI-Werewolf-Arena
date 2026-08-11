@@ -23,7 +23,7 @@ function speakRequest(actorId = 1): ActionRequest {
     allowedTools: ["speak"],
     context: {
       day: 1,
-      phase: "day_speech",
+      stage: "day_speech",
       visible_events: [{ seq: 1, type: "phase_changed", payload: { day: 1, phase: "day" } }],
     },
   };

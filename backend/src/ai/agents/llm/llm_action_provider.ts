@@ -22,7 +22,6 @@ import {
 } from "../../../game/mechanisms";
 import { BaselineBotActionProvider } from "../providers/action_providers";
 import { FallbackActionPolicy } from "./fallback_action_policy";
-import { LegacyResponseInterpreter } from "./legacy_response_interpreter";
 import { LlmObserver } from "./llm_observer";
 import { ChatModelClient } from "./model_client";
 import { PlayerPromptSession } from "./player_prompt_session";
@@ -96,7 +95,6 @@ export class LlmActionProvider implements ActionProvider {
         );
       },
     });
-    const interpreter = new LegacyResponseInterpreter(world, repairRegistry);
     const promptPolicy = new PlayerPromptPolicy(world, {
       personalityPromptResolver: options.personalityPromptResolver,
       toolSpecRegistry,
@@ -108,7 +106,6 @@ export class LlmActionProvider implements ActionProvider {
     });
     const promptSession = new PlayerPromptSession({
       maxPromptEvents: options.maxPromptEvents ?? 16,
-      supportsNativeTools: Boolean(client.runToolLoop),
       promptPolicy,
     });
     const fallback = new FallbackActionPolicy(
@@ -116,7 +113,7 @@ export class LlmActionProvider implements ActionProvider {
       observer,
     );
     const recorder = new PlayerRoundRecorder(world, localization);
-    const sdkToolLoop = new SdkGameToolLoop(world, interpreter, promptSession, observer);
+    const sdkToolLoop = new SdkGameToolLoop(world, repairRegistry, promptSession, observer);
     this.orchestrator = new LlmTurnOrchestrator({
       world,
       defaultClient: client,
@@ -125,7 +122,6 @@ export class LlmActionProvider implements ActionProvider {
       promptSession,
       scheduler,
       sdkToolLoop,
-      interpreter,
       fallbackPolicy: fallback,
       recorder,
       observer,

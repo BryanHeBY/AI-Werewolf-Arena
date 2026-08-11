@@ -13,7 +13,7 @@ import {
 import { AgentBugReportService } from "../reporting/bug_report_service";
 import { WEREWOLF_GAME_TOOL_SCHEMA, WEREWOLF_GAME_TOOL_SPECS } from "../game_tool_protocol";
 import { ActionValidationService } from "./action_validation_service";
-import { LegacyResponseInterpreter } from "./legacy_response_interpreter";
+import { ToolCallRepairRegistry } from "../../../game/mechanisms";
 import { LlmObserver } from "./llm_observer";
 import { ChatMessage, ChatModelClient, ToolLoopActionResult } from "./model_client";
 import { PlayerPromptSession } from "./player_prompt_session";
@@ -31,7 +31,7 @@ export class SdkGameToolLoop {
 
   constructor(
     private readonly world: World,
-    private readonly interpreter: LegacyResponseInterpreter,
+    private readonly repairRegistry: ToolCallRepairRegistry,
     private readonly promptSession: PlayerPromptSession,
     private readonly observer: LlmObserver,
   ) {
@@ -55,7 +55,6 @@ export class SdkGameToolLoop {
     timeoutMs: number,
     turnId: string,
   ): Promise<ToolLoopActionResult> {
-    if (!client.runToolLoop) return { action: null };
     const controller = new AbortController();
     let timer: NodeJS.Timeout | null = null;
     try {
@@ -101,7 +100,7 @@ export class SdkGameToolLoop {
               request,
               request.allowedTools,
               { name: actionName, args: actionArgs },
-              (raw, allowedTools, actorId) => this.interpreter.parse(raw, allowedTools, actorId),
+              (tool, rawArgs, actorId) => this.repairRegistry.coerceArgs(tool, rawArgs, { actorId }),
             );
             if (!validated.ok) {
               return { toolResult: { ok: false, error: validated.error } };

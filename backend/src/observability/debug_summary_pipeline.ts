@@ -40,9 +40,7 @@ export async function buildDebugSummaryWithAgents(
   if (runtime.debugSummary?.agent?.enabled === false) return null;
   const profile = resolveAgentProfileByName(
     runtime,
-    runtime.debugSummary?.agent?.agentName ??
-      runtime.game?.debugSummaryAgent ??
-      runtime.game?.agent,
+    runtime.debugSummary?.agent?.agentName ?? runtime.game.agent,
   );
   const settings = {
     timeoutMs: runtime.debugSummary?.agent?.timeoutMs ?? 15000,
@@ -55,7 +53,6 @@ export async function buildDebugSummaryWithAgents(
   const executor = createAuditAgentExecutor({
     profile,
     workspaceRoot: `${input.sessionDir}/audit-workspaces`,
-    llmOverride: runtime.debugSummary?.agent?.profile ?? {},
   });
   if (!executor) return null;
 

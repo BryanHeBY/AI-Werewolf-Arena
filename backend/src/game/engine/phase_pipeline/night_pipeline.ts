@@ -139,12 +139,12 @@ export class NightPipeline {
     allowedTools: ActionRequest["allowedTools"],
     context: ActionRequest["context"],
   ): ActionRequest {
-    const { stage, phase: legacyStage, ...extraContext } = context;
+    const { stage, ...extraContext } = context;
     return requests.create({
       phase: Phase.Night,
       actorId,
       allowedTools,
-      stage: String(stage ?? legacyStage ?? "night_action"),
+      stage: String(stage ?? "night_action"),
       requiresAction: true,
       summary: "夜间行动阶段需完成一次有效动作。",
       context: {

@@ -35,7 +35,14 @@ const acpProfile: ResolvedAgentRuntimeProfile = {
   name: "test-acp",
   providerName: "test-acp-provider",
   kind: "acp",
-  provider: { type: "acp", command: "/bin/false" },
+  provider: {
+    type: "acp",
+    transport: "stdio",
+    command: "/bin/false",
+    args: [],
+    env: {},
+    sessionConfigOptions: {},
+  },
 };
 
 describe("createPlayerAgentRuntime", () => {

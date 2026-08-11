@@ -35,15 +35,12 @@ export class GameActionRequestFactory {
     context?: ActionRequestContext;
   }): ActionRequest {
     // 日次、阶段层级、可见事件与行动约束由引擎拥有；调用方不能借由 extra
-    // context 写入旧字段或伪造这些公共事实。
+    // context 伪造这些公共事实。
     const {
       day: _ignoredDay,
       stage: _ignoredStage,
       visible_events: _ignoredVisibleEvents,
       turn_constraints: _ignoredConstraints,
-      current_day: _ignoredLegacyDay,
-      phase: _ignoredLegacyStage,
-      window: _ignoredLegacyWindow,
       ...extraContext
     } = input.context ?? {};
     return {
