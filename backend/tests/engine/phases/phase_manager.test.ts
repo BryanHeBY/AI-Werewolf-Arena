@@ -11,6 +11,7 @@ import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mv
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { ConditionRegistry } from "../../../src/core/domain/registries/condition_registry";
 import { getDefaultWinConditionRegistry } from "../../../src/game/mechanisms/registries/win_condition_registry";
+import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
 
 class WolfOnlyNightProvider implements ActionProvider {
   constructor(private readonly world: ReturnType<typeof bootstrapGame>["world"]) {}
@@ -73,7 +74,12 @@ describe("PhaseManager", () => {
   test("sheriff can choose counter-clockwise speech order", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const events = [] as any[];
-    const pipeline = new DayPipeline(context.world, new ToolGateway(), events);
+    const pipeline = new DayPipeline({
+      world: context.world,
+      roleRegistry: createDefaultRoleRegistry(),
+      toolGateway: new ToolGateway(),
+      events,
+    });
 
     const actionProvider: ActionProvider = {
       async getAction(request: ActionRequest): Promise<ToolCall | null> {
@@ -96,7 +102,9 @@ describe("PhaseManager", () => {
       },
     };
 
-    const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider);
+    const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider, {
+      day: 1,
+    });
     const order = result.summary.speeches.map((speech: any) => speech.actorId);
 
     expect(result.interrupted).toBe(false);
@@ -107,12 +115,13 @@ describe("PhaseManager", () => {
   test("without elected sheriff, total vote weight remains 12", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const events = [] as any[];
-    const pipeline = new VotingPipeline(
-      context.world,
-      new ToolGateway(),
-      new EventRegistry(),
+    const pipeline = new VotingPipeline({
+      world: context.world,
+      roleRegistry: createDefaultRoleRegistry(),
+      toolGateway: new ToolGateway(),
+      eventRegistry: new EventRegistry(),
       events,
-    );
+    });
 
     const actionProvider: ActionProvider = {
       async getAction(request: ActionRequest): Promise<ToolCall | null> {
@@ -126,7 +135,9 @@ describe("PhaseManager", () => {
       },
     };
 
-    const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider);
+    const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider, {
+      day: 1,
+    });
 
     expect(result.interrupted).toBe(false);
     expect(result.summary.tally[2]).toBe(12);
@@ -135,12 +146,13 @@ describe("PhaseManager", () => {
   test("vote abstain should not be counted into tally", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const events = [] as any[];
-    const pipeline = new VotingPipeline(
-      context.world,
-      new ToolGateway(),
-      new EventRegistry(),
+    const pipeline = new VotingPipeline({
+      world: context.world,
+      roleRegistry: createDefaultRoleRegistry(),
+      toolGateway: new ToolGateway(),
+      eventRegistry: new EventRegistry(),
       events,
-    );
+    });
 
     const actionProvider: ActionProvider = {
       async getAction(request: ActionRequest): Promise<ToolCall | null> {
@@ -157,7 +169,9 @@ describe("PhaseManager", () => {
       },
     };
 
-    const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider);
+    const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider, {
+      day: 1,
+    });
 
     expect(result.interrupted).toBe(false);
     expect(result.summary.tally[2]).toBe(11);
@@ -174,12 +188,13 @@ describe("PhaseManager", () => {
   test("vote should retry up to three times before accepting a valid vote", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const events = [] as any[];
-    const pipeline = new VotingPipeline(
-      context.world,
-      new ToolGateway(),
-      new EventRegistry(),
+    const pipeline = new VotingPipeline({
+      world: context.world,
+      roleRegistry: createDefaultRoleRegistry(),
+      toolGateway: new ToolGateway(),
+      eventRegistry: new EventRegistry(),
       events,
-    );
+    });
     const attempts = new Map<number, number>();
 
     const actionProvider: ActionProvider = {
@@ -199,7 +214,9 @@ describe("PhaseManager", () => {
       },
     };
 
-    const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider);
+    const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider, {
+      day: 1,
+    });
 
     expect(result.interrupted).toBe(false);
     expect(result.summary.tally[2]).toBe(12);
@@ -284,6 +301,6 @@ describe("PhaseManager", () => {
     }
     expect(shootRequest.phase).toBe(Phase.Day);
     expect(shootRequest.context.day).toBe(1);
-    expect(shootRequest.context.phase).toBe("hunter_shot");
+    expect(shootRequest.context.stage).toBe("hunter_shot");
   });
 });

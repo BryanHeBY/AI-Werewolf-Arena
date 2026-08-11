@@ -4,6 +4,7 @@ import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipelin
 import { VotingPipeline } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 
 function makeProviderForWindow(
@@ -52,7 +53,12 @@ describe("day interrupt hooks", () => {
     };
     const context = bootstrapGame(config);
     const events: any[] = [];
-    const pipeline = new DayPipeline(context.world, new ToolGateway(), events);
+    const pipeline = new DayPipeline({
+      world: context.world,
+      roleRegistry: createDefaultRoleRegistry(),
+      toolGateway: new ToolGateway(),
+      events,
+    });
     const windows: ActionWindow[] = [];
 
     const provider: ActionProvider = {
@@ -70,7 +76,7 @@ describe("day interrupt hooks", () => {
       },
     };
 
-    const result = await pipeline.execute(config, provider);
+    const result = await pipeline.execute(config, provider, { day: 1 });
     const uniqueWindows = windows.filter((window, index) => {
       return index === 0 || window !== windows[index - 1];
     });
@@ -89,7 +95,12 @@ describe("day interrupt hooks", () => {
       },
     });
     const events: any[] = [];
-    const pipeline = new DayPipeline(context.world, new ToolGateway(), events);
+    const pipeline = new DayPipeline({
+      world: context.world,
+      roleRegistry: createDefaultRoleRegistry(),
+      toolGateway: new ToolGateway(),
+      events,
+    });
 
     const result = await pipeline.execute(
       {
@@ -103,6 +114,7 @@ describe("day interrupt hooks", () => {
         },
       },
       makeProviderForWindow(ActionWindow.OnDaybreak),
+      { day: 1 },
     );
 
     expect(result.interrupted).toBe(false);
@@ -124,11 +136,17 @@ describe("day interrupt hooks", () => {
     };
     const context = bootstrapGame(config);
     const events: any[] = [];
-    const pipeline = new DayPipeline(context.world, new ToolGateway(), events);
+    const pipeline = new DayPipeline({
+      world: context.world,
+      roleRegistry: createDefaultRoleRegistry(),
+      toolGateway: new ToolGateway(),
+      events,
+    });
 
     const result = await pipeline.execute(
       config,
       makeProviderForWindow(ActionWindow.OnPreElection),
+      { day: 1 },
     );
 
     expect(result.interrupted).toBe(false);
@@ -151,11 +169,17 @@ describe("day interrupt hooks", () => {
     };
     const context = bootstrapGame(config);
     const events: any[] = [];
-    const pipeline = new DayPipeline(context.world, new ToolGateway(), events);
+    const pipeline = new DayPipeline({
+      world: context.world,
+      roleRegistry: createDefaultRoleRegistry(),
+      toolGateway: new ToolGateway(),
+      events,
+    });
 
     const result = await pipeline.execute(
       config,
       makeProviderForWindow(ActionWindow.OnPerSpeechGap),
+      { day: 1 },
     );
 
     expect(result.interrupted).toBe(false);
@@ -166,12 +190,13 @@ describe("day interrupt hooks", () => {
   test("on_pre_vote can interrupt voting pipeline and jump night", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [];
-    const votingPipeline = new VotingPipeline(
-      context.world,
-      new ToolGateway(),
-      new EventRegistry(),
+    const votingPipeline = new VotingPipeline({
+      world: context.world,
+      roleRegistry: createDefaultRoleRegistry(),
+      toolGateway: new ToolGateway(),
+      eventRegistry: new EventRegistry(),
       events,
-    );
+    });
 
     const result = await votingPipeline.execute(
       {
@@ -182,6 +207,7 @@ describe("day interrupt hooks", () => {
         },
       },
       makeProviderForWindow(ActionWindow.OnPreVote),
+      { day: 1 },
     );
 
     expect(result.interrupted).toBe(true);

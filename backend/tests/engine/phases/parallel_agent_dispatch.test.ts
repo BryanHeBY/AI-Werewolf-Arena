@@ -10,6 +10,7 @@ import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
 import { VotingPipeline } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 
 function sleep(ms: number): Promise<void> {
@@ -27,12 +28,13 @@ describe("parallel agent dispatch", () => {
     };
     const context = bootstrapGame(config);
     const events: any[] = [];
-    const votingPipeline = new VotingPipeline(
-      context.world,
-      new ToolGateway(),
-      new EventRegistry(),
+    const votingPipeline = new VotingPipeline({
+      world: context.world,
+      roleRegistry: createDefaultRoleRegistry(),
+      toolGateway: new ToolGateway(),
+      eventRegistry: new EventRegistry(),
       events,
-    );
+    });
 
     let activeVotes = 0;
     let maxConcurrentVotes = 0;
@@ -50,7 +52,7 @@ describe("parallel agent dispatch", () => {
       },
     };
 
-    const result = await votingPipeline.execute(config, provider);
+    const result = await votingPipeline.execute(config, provider, { day: 1 });
     expect(result.interrupted).toBe(false);
     expect(maxConcurrentVotes).toBeGreaterThan(1);
   });
@@ -70,7 +72,12 @@ describe("parallel agent dispatch", () => {
     };
     const context = bootstrapGame(config);
     const events: any[] = [];
-    const dayPipeline = new DayPipeline(context.world, new ToolGateway(), events);
+    const dayPipeline = new DayPipeline({
+      world: context.world,
+      roleRegistry: createDefaultRoleRegistry(),
+      toolGateway: new ToolGateway(),
+      events,
+    });
 
     let activeSelfDestruct = 0;
     let maxConcurrentSelfDestruct = 0;
@@ -96,7 +103,7 @@ describe("parallel agent dispatch", () => {
       },
     };
 
-    const result = await dayPipeline.execute(config, provider);
+    const result = await dayPipeline.execute(config, provider, { day: 1 });
     expect(result.interrupted).toBe(false);
     expect(maxConcurrentSelfDestruct).toBeGreaterThan(1);
   });

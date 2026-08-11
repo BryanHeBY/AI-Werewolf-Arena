@@ -12,7 +12,6 @@ import {
   ToolCall,
   WinCondition,
 } from "../../../src/core/domain/model";
-import { RoleRegistry } from "../../../src/core/domain/registries/role_registry";
 import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
 import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
 import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
@@ -236,13 +235,12 @@ describe("night wolf tactical loop", () => {
   test("wolf discussion order repeats for three rounds and majority decides kill target", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [];
-    const pipeline = new NightPipeline(
-      context.world,
-      new RoleRegistry(),
-      new ToolGateway(),
-      new DamageResolutionSystem(),
+    const pipeline = new NightPipeline({
+      world: context.world,
+      toolGateway: new ToolGateway(),
+      damageResolutionSystem: new DamageResolutionSystem(),
       events,
-    );
+    });
 
     const wolfTargetId = context.world
       .getAliveEntityIds()
@@ -253,7 +251,7 @@ describe("night wolf tactical loop", () => {
 
     const provider = new TacticalOrderProvider(wolfTargetId);
     const randomSpy = jest.spyOn(Math, "random").mockReturnValue(0.42);
-    const result = await pipeline.execute(twelvePlayerStandardConfig, provider);
+    const result = await pipeline.execute(twelvePlayerStandardConfig, provider, 1);
     randomSpy.mockRestore();
 
     expect(provider.voteOrder.length).toBeGreaterThan(0);
@@ -276,13 +274,12 @@ describe("night wolf tactical loop", () => {
   test("wolf can end discussion early and is skipped in later rounds", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [];
-    const pipeline = new NightPipeline(
-      context.world,
-      new RoleRegistry(),
-      new ToolGateway(),
-      new DamageResolutionSystem(),
+    const pipeline = new NightPipeline({
+      world: context.world,
+      toolGateway: new ToolGateway(),
+      damageResolutionSystem: new DamageResolutionSystem(),
       events,
-    );
+    });
 
     const wolfTargetId = context.world
       .getAliveEntityIds()
@@ -293,7 +290,7 @@ describe("night wolf tactical loop", () => {
 
     const provider = new EarlyEndWolfDiscussionProvider(wolfTargetId);
     const randomSpy = jest.spyOn(Math, "random").mockReturnValue(0.11);
-    await pipeline.execute(twelvePlayerStandardConfig, provider);
+    await pipeline.execute(twelvePlayerStandardConfig, provider, 1);
     randomSpy.mockRestore();
 
     expect(provider.endedActorId).not.toBeNull();
@@ -342,13 +339,12 @@ describe("night wolf tactical loop", () => {
 
     const context = bootstrapGame(customConfig);
     const events: any[] = [];
-    const pipeline = new NightPipeline(
-      context.world,
-      new RoleRegistry(),
-      new ToolGateway(),
-      new DamageResolutionSystem(),
+    const pipeline = new NightPipeline({
+      world: context.world,
+      toolGateway: new ToolGateway(),
+      damageResolutionSystem: new DamageResolutionSystem(),
       events,
-    );
+    });
 
     const aliveGood = context.world
       .getAliveEntityIds()
@@ -361,7 +357,7 @@ describe("night wolf tactical loop", () => {
     const poisonTargetId = aliveGood[1];
     const provider = new TacticalOrderProvider(wolfTargetId, poisonTargetId);
 
-    const result = await pipeline.execute(customConfig, provider);
+    const result = await pipeline.execute(customConfig, provider, 1);
     expect(result.summary.wolfTarget).toBe(wolfTargetId);
     expect(result.summary.deaths).not.toContain(wolfTargetId);
     expect(result.summary.deaths).toContain(poisonTargetId);
@@ -370,13 +366,12 @@ describe("night wolf tactical loop", () => {
   test("seer check result is persisted into seer private state", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [];
-    const pipeline = new NightPipeline(
-      context.world,
-      new RoleRegistry(),
-      new ToolGateway(),
-      new DamageResolutionSystem(),
+    const pipeline = new NightPipeline({
+      world: context.world,
+      toolGateway: new ToolGateway(),
+      damageResolutionSystem: new DamageResolutionSystem(),
       events,
-    );
+    });
 
     const wolfTargetId = context.world
       .getAliveEntityIds()
@@ -386,7 +381,7 @@ describe("night wolf tactical loop", () => {
       })!;
 
     const provider = new TacticalOrderProvider(wolfTargetId);
-    await pipeline.execute(twelvePlayerStandardConfig, provider);
+    await pipeline.execute(twelvePlayerStandardConfig, provider, 1);
 
     const seerId = context.world
       .getAliveEntityIds()
@@ -405,16 +400,15 @@ describe("night wolf tactical loop", () => {
   test("wolf abstain kill vote should produce no wolf target and no wolf night death", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [];
-    const pipeline = new NightPipeline(
-      context.world,
-      new RoleRegistry(),
-      new ToolGateway(),
-      new DamageResolutionSystem(),
+    const pipeline = new NightPipeline({
+      world: context.world,
+      toolGateway: new ToolGateway(),
+      damageResolutionSystem: new DamageResolutionSystem(),
       events,
-    );
+    });
 
     const provider = new AbstainKillVoteProvider();
-    const result = await pipeline.execute(twelvePlayerStandardConfig, provider);
+    const result = await pipeline.execute(twelvePlayerStandardConfig, provider, 1);
 
     expect(result.summary.wolfTarget).toBeNull();
     expect(result.summary.deaths.length).toBe(0);
@@ -428,13 +422,12 @@ describe("night wolf tactical loop", () => {
   test("wolf kill vote should retry up to three times before accepting valid action", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [];
-    const pipeline = new NightPipeline(
-      context.world,
-      new RoleRegistry(),
-      new ToolGateway(),
-      new DamageResolutionSystem(),
+    const pipeline = new NightPipeline({
+      world: context.world,
+      toolGateway: new ToolGateway(),
+      damageResolutionSystem: new DamageResolutionSystem(),
       events,
-    );
+    });
     const targetId = context.world
       .getAliveEntityIds()
       .find((id) => {
@@ -443,7 +436,7 @@ describe("night wolf tactical loop", () => {
       })!;
     const provider = new RetryThenKillVoteProvider(targetId);
 
-    const result = await pipeline.execute(twelvePlayerStandardConfig, provider);
+    const result = await pipeline.execute(twelvePlayerStandardConfig, provider, 1);
 
     expect(result.summary.wolfTarget).toBe(targetId);
     const wolfIds = context.world

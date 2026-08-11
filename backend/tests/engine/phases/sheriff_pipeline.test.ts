@@ -7,8 +7,8 @@ import { RoleComponent } from "../../../src/core/domain/components/role";
 import { ActionProvider, ActionRequest, ToolCall } from "../../../src/core/domain/model";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
-import { RoleRegistry } from "../../../src/core/domain/registries/role_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 
 describe("sheriff pipeline", () => {
@@ -118,7 +118,12 @@ describe("sheriff pipeline", () => {
   test("day pipeline elects sheriff on day 1", async () => {
     const { world } = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [{ timestamp: Date.now(), type: "phase_changed", payload: { phase: "day", day: 1 } }];
-    const pipeline = new DayPipeline(world, new RoleRegistry(), new ToolGateway(), events);
+    const pipeline = new DayPipeline({
+      world,
+      roleRegistry: createDefaultRoleRegistry(),
+      toolGateway: new ToolGateway(),
+      events,
+    });
     const voteStageFeeds: Array<Array<{ type: string }>> = [];
     const sheriffVoteActors: number[] = [];
 
@@ -151,7 +156,9 @@ describe("sheriff pipeline", () => {
       },
     };
 
-    const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider);
+    const result = await pipeline.execute(twelvePlayerStandardConfig, actionProvider, {
+      day: 1,
+    });
     expect(result.interrupted).toBe(false);
     const elected = events.find((event) => event.type === "sheriff_elected");
     expect(elected).toBeDefined();
