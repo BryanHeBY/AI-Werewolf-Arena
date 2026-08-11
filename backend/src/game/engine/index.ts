@@ -4,6 +4,7 @@
  */
 export { EventRegistry } from "./event_registry";
 export { PhaseManager } from "./phase_manager";
+export { GameActionRequestFactory } from "./action_request_factory";
 export { transferOrDestroySheriffBadge } from "../mechanisms/sheriff/sheriff_badge";
 
 export * from "./hooks/on_daybreak";

@@ -2,6 +2,7 @@
  * domain 层统一导出入口。
  */
 export * from "./model";
+export * from "./action_request_context";
 export { World } from "./world";
 
 export * from "./components/alive";

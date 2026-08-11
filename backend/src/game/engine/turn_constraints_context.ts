@@ -1,4 +1,4 @@
-import { ToolName } from "../../core/domain/model";
+import { ToolName, TurnConstraints } from "../../core/domain/model";
 
 /**
  * 构造统一的 turn_constraints 上下文字段。
@@ -11,7 +11,7 @@ export function buildTurnConstraintContext(input: {
   allowedTools: ToolName[];
   summary?: string;
   maxValidActions?: number;
-}): Record<string, unknown> {
+}): TurnConstraints {
   const min = input.requiresAction ? 1 : 0;
   return {
     min_valid_actions: min,

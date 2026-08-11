@@ -29,8 +29,7 @@ import { VotingRightComponent } from "../../core/domain/components/voting_right"
 import { IdentityComponent } from "../../core/domain/entities/player";
 import { RoleComponent } from "../../core/domain/components/role";
 import { AliveComponent } from "../../core/domain/components/alive";
-import { buildAgentVisibleEventFeed } from "./agent_visible_event_feed";
-import { buildTurnConstraintContext } from "./turn_constraints_context";
+import { GameActionRequestFactory } from "./action_request_factory";
 
 /**
  * PhaseManager 是游戏引擎的时序中枢。
@@ -63,27 +62,26 @@ export class PhaseManager {
     this.eventRegistry = new EventRegistry();
     this.sheriffMechanism = getDefaultSheriffMechanism();
     this.lastWordsMechanism = getDefaultLastWordsMechanism();
-    this.nightPipeline = new NightPipeline(
+    this.nightPipeline = new NightPipeline({
       world,
-      roleRegistry,
       toolGateway,
       damageResolutionSystem,
-      this.events,
-    );
-    this.dayPipeline = new DayPipeline(
+      events: this.events,
+    });
+    this.dayPipeline = new DayPipeline({
       world,
       roleRegistry,
       toolGateway,
-      this.events,
-      this.sheriffMechanism,
-    );
-    this.votingPipeline = new VotingPipeline(
+      events: this.events,
+      sheriffMechanism: this.sheriffMechanism,
+    });
+    this.votingPipeline = new VotingPipeline({
       world,
       roleRegistry,
       toolGateway,
-      this.eventRegistry,
-      this.events,
-    );
+      eventRegistry: this.eventRegistry,
+      events: this.events,
+    });
     // 仅上帝可见：开局完整牌面信息（玩家身份与阵营映射）。
     this.events.push({
       timestamp: Date.now(),
@@ -157,7 +155,11 @@ export class PhaseManager {
     }
 
     this.setPhase(Phase.Night);
-    const night = await this.nightPipeline.execute(this.config, actionProvider);
+    const night = await this.nightPipeline.execute(
+      this.config,
+      actionProvider,
+      this.state.day,
+    );
     const firstDaySheriffBeforeNightInfo =
       this.state.day === 1 && this.config.enableSheriff === true;
 
@@ -181,6 +183,7 @@ export class PhaseManager {
       actionProvider,
       firstDaySheriffBeforeNightInfo
         ? {
+            day: this.state.day,
             afterSheriffElection: async () => {
               this.emitNightResolved(night.summary.deaths);
               await this.processDeaths(
@@ -192,7 +195,7 @@ export class PhaseManager {
               );
             },
           }
-        : undefined,
+        : { day: this.state.day },
     );
 
     if (firstDaySheriffBeforeNightInfo && this.checkAndSealResult()) {
@@ -208,7 +211,11 @@ export class PhaseManager {
     }
 
     this.setPhase(Phase.Voting);
-    const votingResult = await this.votingPipeline.execute(this.config, actionProvider);
+    const votingResult = await this.votingPipeline.execute(
+      this.config,
+      actionProvider,
+      { day: this.state.day },
+    );
 
     if (votingResult.interrupted) {
       // 投票前窗口发生自爆，同样跳过当日剩余流程。
@@ -262,6 +269,11 @@ export class PhaseManager {
     let pending = [...seen];
     const allSources: Record<number, StatusMark[]> = { ...sources };
     let firstBatch = true;
+    const requests = new GameActionRequestFactory(
+      this.world,
+      this.events,
+      this.state.day,
+    );
 
     while (pending.length > 0) {
       this.markPlayersDead(pending);
@@ -288,28 +300,17 @@ export class PhaseManager {
         allSources,
         async (hunterId) => {
           const actionPhase = this.state.phase;
-          const actionDay = this.state.day;
-          const action = await actionProvider.getAction({
+          const action = await actionProvider.getAction(requests.create({
             phase: actionPhase,
             actorId: hunterId,
             allowedTools: ["shoot"],
+            stage: "hunter_shot",
+            requiresAction: true,
+            summary: "死亡开枪阶段必须完成一次开枪动作。",
             context: {
               trigger: "on_death",
-              turn_constraints: buildTurnConstraintContext({
-                requiresAction: true,
-                allowedTools: ["shoot"],
-                summary: "死亡开枪阶段必须完成一次开枪动作。",
-              }),
-              day: actionDay,
-              current_day: actionDay,
-              phase: "hunter_shot",
-              visible_events: buildAgentVisibleEventFeed(
-                this.world,
-                this.events,
-                hunterId,
-              ),
             },
-          });
+          }));
           if (action?.name !== "shoot") {
             return null;
           }
@@ -349,23 +350,24 @@ export class PhaseManager {
     if (!this.lastWordsMechanism.shouldGrantLastWords(deathPhase, this.state.day)) {
       return;
     }
+    const requests = new GameActionRequestFactory(
+      this.world,
+      this.events,
+      this.state.day,
+    );
     for (const deadId of deadIds) {
-      const action = await actionProvider.getAction({
+      const action = await actionProvider.getAction(requests.create({
         phase,
         actorId: deadId,
         allowedTools: ["speak"],
+        stage: "last_words",
+        requiresAction: true,
+        summary: "遗言阶段必须完成一次发言动作。",
         context: {
           trigger: "last_words",
-          turn_constraints: buildTurnConstraintContext({
-            requiresAction: true,
-            allowedTools: ["speak"],
-            summary: "遗言阶段必须完成一次发言动作。",
-          }),
-          day: this.state.day,
           death_phase: phase,
-          visible_events: buildAgentVisibleEventFeed(this.world, this.events, deadId),
         },
-      });
+      }));
       if (action?.name !== "speak") {
         continue;
       }

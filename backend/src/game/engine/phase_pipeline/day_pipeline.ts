@@ -2,7 +2,6 @@ import { AliveComponent } from "../../../core/domain/components/alive";
 import { COMPONENT } from "../../../core/domain/components/names";
 import {
   ActionProvider,
-  ActionRequest,
   ActionWindow,
   BoardConfig,
   DaySummary,
@@ -13,10 +12,8 @@ import {
 import { RoleRegistry } from "../../../core/domain/registries/role_registry";
 import { ToolGateway } from "../../gateway/tool_gateway";
 import { getDefaultSheriffMechanism, SheriffMechanism } from "../../mechanisms";
-import { RoleSpecRegistry } from "../../mechanisms/registries/role_spec_registry";
 import { World } from "../../../core/domain/world";
-import { buildAgentVisibleEventFeed } from "../agent_visible_event_feed";
-import { buildTurnConstraintContext } from "../turn_constraints_context";
+import { GameActionRequestFactory } from "../action_request_factory";
 
 /**
  * 白天流水线执行结果。
@@ -27,7 +24,17 @@ export interface DayPipelineResult {
 }
 
 export interface DayPipelineOptions {
+  /** 当前日次由 PhaseManager 显式传入，不能从事件历史反推。 */
+  day: number;
   afterSheriffElection?: () => Promise<void>;
+}
+
+export interface DayPipelineDependencies {
+  world: World;
+  roleRegistry: RoleRegistry;
+  toolGateway: ToolGateway;
+  events: GameEvent[];
+  sheriffMechanism?: SheriffMechanism;
 }
 
 /**
@@ -37,50 +44,38 @@ export interface DayPipelineOptions {
  * 3) 在可配置窗口中允许自爆中断流程。
  */
 export class DayPipeline {
+  private readonly world: World;
   private readonly roleRegistry: RoleRegistry;
   private readonly toolGateway: ToolGateway;
   private readonly events: GameEvent[];
   private readonly sheriffMechanism: SheriffMechanism;
 
-  constructor(
-    private readonly world: World,
-    roleRegistryOrToolGateway: RoleRegistry | ToolGateway,
-    toolGatewayOrEvents: ToolGateway | GameEvent[],
-    eventsOrSheriff?: GameEvent[] | SheriffMechanism,
-    sheriffMaybe?: SheriffMechanism,
-  ) {
-    // 兼容旧签名：(world, toolGateway, events)
-    if (Array.isArray(toolGatewayOrEvents)) {
-      this.roleRegistry = new RoleRegistry();
-      for (const spec of new RoleSpecRegistry().all()) {
-        this.roleRegistry.registerAllowedTools(spec.role, spec.allowedTools);
-      }
-      this.toolGateway = roleRegistryOrToolGateway as ToolGateway;
-      this.events = toolGatewayOrEvents;
-      this.sheriffMechanism =
-        (eventsOrSheriff as SheriffMechanism | undefined) ??
-        getDefaultSheriffMechanism();
-      return;
-    }
-
-    this.roleRegistry = roleRegistryOrToolGateway as RoleRegistry;
-    this.toolGateway = toolGatewayOrEvents;
-    this.events = (eventsOrSheriff as GameEvent[] | undefined) ?? [];
-    this.sheriffMechanism = sheriffMaybe ?? getDefaultSheriffMechanism();
+  constructor(dependencies: DayPipelineDependencies) {
+    this.world = dependencies.world;
+    this.roleRegistry = dependencies.roleRegistry;
+    this.toolGateway = dependencies.toolGateway;
+    this.events = dependencies.events;
+    this.sheriffMechanism =
+      dependencies.sheriffMechanism ?? getDefaultSheriffMechanism();
   }
 
   async execute(
     config: BoardConfig,
     actionProvider: ActionProvider,
-    options?: DayPipelineOptions,
+    options: DayPipelineOptions,
   ): Promise<DayPipelineResult> {
     const speeches: DaySummary["speeches"] = [];
+    const requests = new GameActionRequestFactory(
+      this.world,
+      this.events,
+      options.day,
+    );
     await this.sheriffMechanism.electSheriffIfNeeded({
       world: this.world,
       events: this.events,
       toolGateway: this.toolGateway,
       actionProvider,
-      day: this.currentDay(),
+      day: options.day,
       enableSheriff: config.enableSheriff,
       config,
     });
@@ -92,12 +87,16 @@ export class DayPipeline {
       events: this.events,
       toolGateway: this.toolGateway,
       actionProvider,
-      day: this.currentDay(),
+      day: options.day,
       enableSheriff: config.enableSheriff,
     });
 
     if (config.hooks.onDaybreak && this.isSelfDestructWindowEnabled(config, ActionWindow.OnDaybreak)) {
-      const exploded = await this.trySelfDestruct(actionProvider, ActionWindow.OnDaybreak);
+      const exploded = await this.trySelfDestruct(
+        requests,
+        actionProvider,
+        ActionWindow.OnDaybreak,
+      );
       if (exploded !== null) {
         return {
           summary: {
@@ -110,7 +109,11 @@ export class DayPipeline {
     }
 
     if (config.hooks.onPreElection && this.isSelfDestructWindowEnabled(config, ActionWindow.OnPreElection)) {
-      const exploded = await this.trySelfDestruct(actionProvider, ActionWindow.OnPreElection);
+      const exploded = await this.trySelfDestruct(
+        requests,
+        actionProvider,
+        ActionWindow.OnPreElection,
+      );
       if (exploded !== null) {
         return {
           summary: {
@@ -134,21 +137,16 @@ export class DayPipeline {
         continue;
       }
 
-      const req: ActionRequest = {
+      const req = requests.create({
         phase: Phase.Day,
         actorId,
         allowedTools: ["speak"],
+        stage: "day_speech",
+        requiresAction: true,
+        summary: "白天发言阶段必须完成一次发言动作。",
         context: {
-          day: this.currentDay(),
-          phase: "day_speech",
-          turn_constraints: buildTurnConstraintContext({
-            requiresAction: true,
-            allowedTools: ["speak"],
-            summary: "白天发言阶段必须完成一次发言动作。",
-          }),
-          visible_events: buildAgentVisibleEventFeed(this.world, this.events, actorId),
         },
-      };
+      });
 
       const action = await actionProvider.getAction(req);
       if (action?.name === "speak") {
@@ -173,7 +171,11 @@ export class DayPipeline {
         config.hooks.onPerSpeechGap &&
         this.isSelfDestructWindowEnabled(config, ActionWindow.OnPerSpeechGap)
       ) {
-        const exploded = await this.trySelfDestruct(actionProvider, ActionWindow.OnPerSpeechGap);
+        const exploded = await this.trySelfDestruct(
+          requests,
+          actionProvider,
+          ActionWindow.OnPerSpeechGap,
+        );
         if (exploded !== null) {
           return {
             summary: {
@@ -196,6 +198,7 @@ export class DayPipeline {
   }
 
   private async trySelfDestruct(
+    requests: GameActionRequestFactory,
     actionProvider: ActionProvider,
     window: ActionWindow,
   ): Promise<EntityId | null> {
@@ -209,22 +212,17 @@ export class DayPipeline {
 
     const picks = await Promise.all(
       actors.map(async (actorId) => {
-        const req: ActionRequest = {
+        const req = requests.create({
           phase: Phase.Day,
           actionWindow: window,
           actorId,
           allowedTools: ["self_destruct"],
+          stage: window,
+          requiresAction: false,
+          summary: "自爆窗口可选择执行自爆，也可直接结束回合。",
           context: {
-            day: this.currentDay(),
-            window,
-            turn_constraints: buildTurnConstraintContext({
-              requiresAction: false,
-              allowedTools: ["self_destruct"],
-              summary: "自爆窗口可选择执行自爆，也可直接结束回合。",
-            }),
-              visible_events: buildAgentVisibleEventFeed(this.world, this.events, actorId),
           },
-        };
+        });
 
         const action = await actionProvider.getAction(req);
         if (action?.name !== "self_destruct") {
@@ -265,19 +263,6 @@ export class DayPipeline {
       },
     });
     return picked;
-  }
-
-  private currentDay(): number {
-    for (let i = this.events.length - 1; i >= 0; i--) {
-      const event = this.events[i];
-      if (event.type === "phase_changed") {
-        const day = Number(event.payload.day ?? 0);
-        if (Number.isFinite(day) && day > 0) {
-          return day;
-        }
-      }
-    }
-    return 1;
   }
 
   private isSelfDestructWindowEnabled(

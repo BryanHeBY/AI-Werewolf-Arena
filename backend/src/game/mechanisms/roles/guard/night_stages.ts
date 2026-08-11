@@ -11,7 +11,7 @@ const guardActionStage: NightStageHandler = {
   priority: 300,
   async execute(ctx): Promise<void> {
     for (const guardId of ctx.getAliveByRole(Role.Guard)) {
-      const req = ctx.makeRequest(guardId, ["guard"], { phase: "guard" });
+      const req = ctx.makeRequest(guardId, ["guard"], { stage: "guard" });
       const action = await ctx.actionProvider.getAction(req);
       if (action?.name !== "guard") {
         continue;

@@ -11,7 +11,7 @@ const seerCheckStage: NightStageHandler = {
   async execute(ctx): Promise<void> {
     for (const seerId of ctx.getAliveByRole(Role.Seer)) {
       const req = ctx.makeRequest(seerId, ["check_identity"], {
-        phase: "seer",
+        stage: "seer",
       });
       const action = await ctx.actionProvider.getAction(req);
       if (action?.name !== "check_identity") {

@@ -1,6 +1,10 @@
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, BoardConfig, Camp, EntityId, Role, ToolName } from "../../../core/domain/model";
+import {
+  getActionRequestDay,
+  getActionRequestStage,
+} from "../../../core/domain/action_request_context";
 import { World } from "../../../core/domain/world";
 import {
   ConfigRenderRegistry,
@@ -67,9 +71,7 @@ export class PlayerPromptPolicy {
   ): string {
     const role = this.role(request.actorId);
     const constraints = resolveTurnConstraints(request);
-    const stage = String(
-      request.context.phase ?? request.actionWindow ?? request.context.window ?? request.phase,
-    );
+    const stage = getActionRequestStage(request);
     return buildUserPrompt({
       actorId: request.actorId,
       phase: this.options.phaseStageLocalizationRegistry.phaseName(String(request.phase)),
@@ -131,8 +133,8 @@ export class PlayerPromptPolicy {
   }
 
   private stageContextHint(request: ActionRequest): string | undefined {
-    const stage = String(request.context.phase ?? request.actionWindow ?? request.context.window ?? "");
-    const day = Number(request.context.day ?? request.context.current_day ?? 0);
+    const stage = getActionRequestStage(request);
+    const day = getActionRequestDay(request);
     const firstDaySheriffTiming =
       day === 1 &&
       this.options.boardConfig?.enableSheriff === true &&

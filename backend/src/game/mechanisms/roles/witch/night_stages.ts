@@ -30,7 +30,7 @@ const witchActionStage: NightStageHandler = {
   async execute(ctx): Promise<void> {
     for (const witchId of ctx.getAliveByRole(Role.Witch)) {
       const req = ctx.makeRequest(witchId, ["use_potion"], {
-        phase: "witch",
+        stage: "witch",
         wolf_target: ctx.state.wolfTarget,
       });
       const action = await ctx.actionProvider.getAction(req);

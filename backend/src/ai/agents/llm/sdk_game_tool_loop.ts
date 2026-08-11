@@ -1,6 +1,10 @@
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, ToolCall } from "../../../core/domain/model";
+import {
+  getActionRequestDay,
+  getActionRequestStage,
+} from "../../../core/domain/action_request_context";
 import { World } from "../../../core/domain/world";
 import {
   getDefaultToolValidationRuleRegistry,
@@ -175,11 +179,9 @@ export class SdkGameToolLoop {
   private reportBug(request: ActionRequest, args: Record<string, unknown>): Record<string, unknown> {
     return this.bugReports.report({
       actorId: request.actorId,
-      day: Number(request.context.day ?? request.context.current_day ?? 0),
+      day: getActionRequestDay(request),
       phase: String(request.phase),
-      stage: String(
-        request.context.phase ?? request.actionWindow ?? request.context.window ?? request.phase,
-      ),
+      stage: getActionRequestStage(request),
       category: args.category,
       severity: args.severity,
       message: args.message,

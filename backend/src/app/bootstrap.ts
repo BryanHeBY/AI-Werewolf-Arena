@@ -12,10 +12,9 @@ import {
   getDefaultRoleCampRegistry,
   getDefaultRoleRuntimeRegistry,
   getDefaultSheriffMechanism,
-  RoleSpecRegistry,
+  createDefaultRoleRegistry,
 } from "../game/mechanisms";
 import { ConditionRegistry } from "../core/domain/registries/condition_registry";
-import { RoleRegistry } from "../core/domain/registries/role_registry";
 import { DamageResolutionSystem } from "../core/domain/systems/damage_resolution_system";
 import { World } from "../core/domain/world";
 import { PhaseManager } from "../game/engine/phase_manager";
@@ -40,11 +39,7 @@ export function bootstrapGame(config: BoardConfig): BootstrapResult {
   const playerIds = createPlayers(world, config);
   getDefaultSheriffMechanism().assignInitialSheriff(world, config, playerIds);
 
-  const roleRegistry = new RoleRegistry();
-  const roleSpecRegistry = new RoleSpecRegistry();
-  for (const spec of roleSpecRegistry.all()) {
-    roleRegistry.registerAllowedTools(spec.role, spec.allowedTools);
-  }
+  const roleRegistry = createDefaultRoleRegistry();
   const damageResolutionSystem = new DamageResolutionSystem();
   const conditionRegistry = new ConditionRegistry(getDefaultWinConditionRegistry());
   const toolGateway = new ToolGateway();

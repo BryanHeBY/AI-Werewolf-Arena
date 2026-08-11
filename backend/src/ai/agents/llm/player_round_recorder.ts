@@ -1,6 +1,10 @@
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, EntityId } from "../../../core/domain/model";
+import {
+  getActionRequestDay,
+  getActionRequestStage,
+} from "../../../core/domain/action_request_context";
 import { World } from "../../../core/domain/world";
 import { PhaseStageLocalizationRegistry } from "../../../game/mechanisms";
 import { SessionRecordHub } from "../../../observability";
@@ -25,11 +29,9 @@ export class PlayerRoundRecorder {
     const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const round = (this.roundCounters.get(request.actorId) ?? 0) + 1;
     this.roundCounters.set(request.actorId, round);
-    const day = Number(request.context.day ?? request.context.current_day ?? 0);
+    const day = getActionRequestDay(request);
     const phase = String(request.phase);
-    const stage = String(
-      request.context.phase ?? request.actionWindow ?? request.context.window ?? request.phase,
-    );
+    const stage = getActionRequestStage(request);
     recorder.recordPlayerRound({
       playerId: request.actorId,
       role: role?.role ?? "unknown",

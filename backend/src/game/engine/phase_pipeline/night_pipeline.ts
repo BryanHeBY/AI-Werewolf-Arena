@@ -12,7 +12,6 @@ import {
   Role,
   TieBreakerStrategy,
 } from "../../../core/domain/model";
-import { RoleRegistry } from "../../../core/domain/registries/role_registry";
 import {
   DamageResolutionResult,
   DamageResolutionSystem,
@@ -25,8 +24,15 @@ import {
   NightStageState,
 } from "../../mechanisms";
 import { safeRecordLogicOp } from "../../../observability";
-import { buildAgentVisibleEventFeed } from "../agent_visible_event_feed";
-import { buildTurnConstraintContext } from "../turn_constraints_context";
+import { GameActionRequestFactory } from "../action_request_factory";
+
+export interface NightPipelineDependencies {
+  world: World;
+  toolGateway: ToolGateway;
+  damageResolutionSystem: DamageResolutionSystem;
+  events: GameEvent[];
+  stageRegistry?: NightStageRegistry;
+}
 
 /**
  * 夜间阶段流水线：
@@ -35,19 +41,28 @@ import { buildTurnConstraintContext } from "../turn_constraints_context";
  * night_resolved 事件由 PhaseManager 按白天流程时序写入。
  */
 export class NightPipeline {
-  constructor(
-    private readonly world: World,
-    private readonly _roleRegistry: RoleRegistry,
-    private readonly toolGateway: ToolGateway,
-    private readonly damageResolutionSystem: DamageResolutionSystem,
-    private readonly events: GameEvent[],
-    private readonly stageRegistry: NightStageRegistry = getDefaultNightStageRegistry(),
-  ) {}
+  private readonly world: World;
+  private readonly toolGateway: ToolGateway;
+  private readonly damageResolutionSystem: DamageResolutionSystem;
+  private readonly events: GameEvent[];
+  private readonly stageRegistry: NightStageRegistry;
+
+  constructor(dependencies: NightPipelineDependencies) {
+    this.world = dependencies.world;
+    this.toolGateway = dependencies.toolGateway;
+    this.damageResolutionSystem = dependencies.damageResolutionSystem;
+    this.events = dependencies.events;
+    this.stageRegistry = dependencies.stageRegistry ?? getDefaultNightStageRegistry();
+  }
 
   /**
    * 执行完整夜间流程并返回结算摘要与伤害结果。
    */
-  async execute(config: BoardConfig, actionProvider: ActionProvider): Promise<{
+  async execute(
+    config: BoardConfig,
+    actionProvider: ActionProvider,
+    day: number,
+  ): Promise<{
     summary: NightSummary;
     damage: DamageResolutionResult;
   }> {
@@ -69,17 +84,18 @@ export class NightPipeline {
       seerChecks: [],
     };
 
+    const requests = new GameActionRequestFactory(this.world, this.events, day);
     const stageCtx = {
       world: this.world,
       toolGateway: this.toolGateway,
       events: this.events,
       actionProvider,
-      currentDay: () => this.currentDay(),
+      currentDay: () => day,
       makeRequest: (
         actorId: EntityId,
         allowedTools: ActionRequest["allowedTools"],
         context: ActionRequest["context"],
-      ) => this.makeRequest(actorId, allowedTools, context),
+      ) => this.makeRequest(requests, actorId, allowedTools, context),
       getAliveByRole: (role: Role) => this.getAliveByRole(role),
       ensureMarks: (entityId: EntityId) => this.ensureMarks(entityId),
       pickMajorityTarget: (votes: Record<number, number>) =>
@@ -118,25 +134,23 @@ export class NightPipeline {
   }
 
   private makeRequest(
+    requests: GameActionRequestFactory,
     actorId: EntityId,
     allowedTools: ActionRequest["allowedTools"],
     context: ActionRequest["context"],
   ): ActionRequest {
-    return {
+    const { stage, phase: legacyStage, ...extraContext } = context;
+    return requests.create({
       phase: Phase.Night,
       actorId,
       allowedTools,
+      stage: String(stage ?? legacyStage ?? "night_action"),
+      requiresAction: true,
+      summary: "夜间行动阶段需完成一次有效动作。",
       context: {
-        day: this.currentDay(),
-        turn_constraints: buildTurnConstraintContext({
-          requiresAction: true,
-          allowedTools,
-          summary: "夜间行动阶段需完成一次有效动作。",
-        }),
-        visible_events: buildAgentVisibleEventFeed(this.world, this.events, actorId),
-        ...context,
+        ...extraContext,
       },
-    };
+    });
   }
 
   /**
@@ -189,19 +203,6 @@ export class NightPipeline {
       }
     }
     return Number(entries[0][0]);
-  }
-
-  private currentDay(): number {
-    for (let i = this.events.length - 1; i >= 0; i--) {
-      const event = this.events[i];
-      if (event.type === "phase_changed") {
-        const day = Number(event.payload.day ?? 0);
-        if (Number.isFinite(day) && day > 0) {
-          return day;
-        }
-      }
-    }
-    return 1;
   }
 
   /**

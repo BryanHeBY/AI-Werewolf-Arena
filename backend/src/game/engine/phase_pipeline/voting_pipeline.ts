@@ -4,7 +4,6 @@ import { IdentityComponent } from "../../../core/domain/entities/player";
 import { VotingRightComponent } from "../../../core/domain/components/voting_right";
 import {
   ActionProvider,
-  ActionRequest,
   ActionWindow,
   BoardConfig,
   EntityId,
@@ -15,12 +14,10 @@ import {
 } from "../../../core/domain/model";
 import { RoleRegistry } from "../../../core/domain/registries/role_registry";
 import { ToolGateway } from "../../gateway/tool_gateway";
-import { RoleSpecRegistry } from "../../mechanisms/registries/role_spec_registry";
 import { safeRecordLogicOp } from "../../../observability";
 import { EventRegistry } from "../event_registry";
 import { World } from "../../../core/domain/world";
-import { buildAgentVisibleEventFeed } from "../agent_visible_event_feed";
-import { buildTurnConstraintContext } from "../turn_constraints_context";
+import { GameActionRequestFactory } from "../action_request_factory";
 
 /**
  * 投票流水线执行结果。
@@ -31,6 +28,19 @@ export interface VotingPipelineResult {
   removed: EntityId[];
 }
 
+export interface VotingPipelineOptions {
+  /** 当前日次由 PhaseManager 显式传入，不能从事件历史反推。 */
+  day: number;
+}
+
+export interface VotingPipelineDependencies {
+  world: World;
+  roleRegistry: RoleRegistry;
+  toolGateway: ToolGateway;
+  eventRegistry: EventRegistry;
+  events: GameEvent[];
+}
+
 /**
  * 放逐投票流水线：
  * 1) 在 onPreVote 窗口可触发狼人自爆中断。
@@ -39,39 +49,30 @@ export interface VotingPipelineResult {
  */
 export class VotingPipeline {
   private static readonly MAX_VOTE_RETRIES = 3;
+  private readonly world: World;
   private readonly roleRegistry: RoleRegistry;
   private readonly toolGateway: ToolGateway;
   private readonly eventRegistry: EventRegistry;
   private readonly events: GameEvent[];
 
-  constructor(
-    private readonly world: World,
-    roleRegistryOrToolGateway: RoleRegistry | ToolGateway,
-    toolGatewayOrEventRegistry: ToolGateway | EventRegistry,
-    eventRegistryOrEvents: EventRegistry | GameEvent[],
-    eventsMaybe?: GameEvent[],
-  ) {
-    // 兼容旧签名：(world, toolGateway, eventRegistry, events)
-    if (eventsMaybe === undefined) {
-      this.roleRegistry = new RoleRegistry();
-      for (const spec of new RoleSpecRegistry().all()) {
-        this.roleRegistry.registerAllowedTools(spec.role, spec.allowedTools);
-      }
-      this.toolGateway = roleRegistryOrToolGateway as ToolGateway;
-      this.eventRegistry = toolGatewayOrEventRegistry as EventRegistry;
-      this.events = eventRegistryOrEvents as GameEvent[];
-      return;
-    }
-    this.roleRegistry = roleRegistryOrToolGateway as RoleRegistry;
-    this.toolGateway = toolGatewayOrEventRegistry as ToolGateway;
-    this.eventRegistry = eventRegistryOrEvents as EventRegistry;
-    this.events = eventsMaybe;
+  constructor(dependencies: VotingPipelineDependencies) {
+    this.world = dependencies.world;
+    this.roleRegistry = dependencies.roleRegistry;
+    this.toolGateway = dependencies.toolGateway;
+    this.eventRegistry = dependencies.eventRegistry;
+    this.events = dependencies.events;
   }
 
   async execute(
     config: BoardConfig,
     actionProvider: ActionProvider,
+    options: VotingPipelineOptions,
   ): Promise<VotingPipelineResult> {
+    const requests = new GameActionRequestFactory(
+      this.world,
+      this.events,
+      options.day,
+    );
     safeRecordLogicOp({
       scope: "phase_pipeline",
       op: "voting_pipeline_start",
@@ -86,6 +87,7 @@ export class VotingPipeline {
       this.isSelfDestructWindowEnabled(config, ActionWindow.OnPreVote)
     ) {
       const exploded = await this.trySelfDestruct(
+        requests,
         actionProvider,
         ActionWindow.OnPreVote,
       );
@@ -122,19 +124,14 @@ export class VotingPipeline {
     const voteResults = await Promise.all(
       voters.map(async (voterId) => {
         const maxRetries = VotingPipeline.MAX_VOTE_RETRIES;
-        const baseRequest = (): ActionRequest => ({
+        const baseRequest = () => requests.create({
           phase: Phase.Voting,
           actorId: voterId,
           allowedTools: ["vote"],
+          stage: "voting",
+          requiresAction: true,
+          summary: "放逐投票阶段必须完成一次投票动作（可弃票）。",
           context: {
-            day: this.currentDay(),
-            phase: "voting",
-            turn_constraints: buildTurnConstraintContext({
-              requiresAction: true,
-              allowedTools: ["vote"],
-              summary: "放逐投票阶段必须完成一次投票动作（可弃票）。",
-            }),
-            visible_events: buildAgentVisibleEventFeed(this.world, this.events, voterId),
           },
         });
 
@@ -363,6 +360,7 @@ export class VotingPipeline {
   }
 
   private async trySelfDestruct(
+    requests: GameActionRequestFactory,
     actionProvider: ActionProvider,
     window: ActionWindow,
   ): Promise<EntityId | null> {
@@ -377,22 +375,17 @@ export class VotingPipeline {
     // 并行触发狼人自爆思考，减少 pre-vote 窗口总时延。
     const picks = await Promise.all(
       actors.map(async (actorId) => {
-        const req: ActionRequest = {
+        const req = requests.create({
           phase: Phase.Voting,
           actorId,
           actionWindow: window,
           allowedTools: ["self_destruct"],
+          stage: window,
+          requiresAction: false,
+          summary: "放逐前自爆窗口可选择执行自爆，也可结束回合。",
           context: {
-            day: this.currentDay(),
-            window,
-            turn_constraints: buildTurnConstraintContext({
-              requiresAction: false,
-              allowedTools: ["self_destruct"],
-              summary: "放逐前自爆窗口可选择执行自爆，也可结束回合。",
-            }),
-            visible_events: buildAgentVisibleEventFeed(this.world, this.events, actorId),
           },
-        };
+        });
 
         const action = await actionProvider.getAction(req);
         if (action?.name !== "self_destruct") {
@@ -479,19 +472,6 @@ export class VotingPipeline {
     }
 
     return Number(entries[0][0]);
-  }
-
-  private currentDay(): number {
-    for (let i = this.events.length - 1; i >= 0; i--) {
-      const event = this.events[i];
-      if (event.type === "phase_changed") {
-        const day = Number(event.payload.day ?? 0);
-        if (Number.isFinite(day) && day > 0) {
-          return day;
-        }
-      }
-    }
-    return 1;
   }
 
   private isSelfDestructWindowEnabled(

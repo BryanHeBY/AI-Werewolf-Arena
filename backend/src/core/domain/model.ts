@@ -221,23 +221,6 @@ export interface ToolValidationResult<T extends ToolCall = ToolCall> {
 }
 
 /**
- * 行动请求上下文。
- */
-export interface ActionRequest {
-  // 当前阶段（夜晚/白天/投票）。
-  phase: Phase;
-  // 可选动作窗口，用于限制如自爆等中断行为。
-  actionWindow?: ActionWindow;
-  actorId: EntityId;
-  // 当前回合允许调用的工具集合，防止模型越权行动。
-  allowedTools: ToolName[];
-  // 按阶段注入的上下文信息（如 wolf_target、window、trigger）。
-  context: Record<string, unknown>;
-  // 当前整局运行的绝对截止时间（毫秒时间戳），用于动作级超时预算控制。
-  deadlineAtMs?: number;
-}
-
-/**
  * 回合约束：用于描述“本轮可否结束、至少需完成几次动作”等规则。
  * 说明：该结构通过 ActionRequest.context.turn_constraints 透传。
  */
@@ -250,6 +233,47 @@ export interface TurnConstraints {
   required_any_tools?: ToolName[];
   // 人类可读约束说明（用于提示词渲染）。
   summary?: string;
+}
+
+/**
+ * 传给 Agent 的回合上下文。
+ *
+ * `phase` 是 ActionRequest 的主阶段（night/day/voting）；细粒度流程必须使用
+ * `stage`，避免历史上 `context.phase` 同时表示两种层级而产生歧义。
+ * `current_day`、`context.phase` 和 `window` 仅为读取旧记录/旧调用方保留，新的
+ * 引擎请求不应再写入这些字段。
+ */
+export interface ActionRequestContext {
+  day?: number;
+  stage?: string;
+  visible_events?: PlayerVisibleEvent[];
+  turn_constraints?: TurnConstraints;
+  /** @deprecated Use `day`. */
+  current_day?: number;
+  /** @deprecated Use `stage`. */
+  phase?: string;
+  /** @deprecated Use ActionRequest.actionWindow or `stage`. */
+  window?: string;
+  /** @deprecated Use turn_constraints.min_valid_actions. */
+  must_act?: boolean;
+  [key: string]: unknown;
+}
+
+/**
+ * 行动请求上下文。
+ */
+export interface ActionRequest {
+  // 当前阶段（夜晚/白天/投票）。
+  phase: Phase;
+  // 可选动作窗口，用于限制如自爆等中断行为。
+  actionWindow?: ActionWindow;
+  actorId: EntityId;
+  // 当前回合允许调用的工具集合，防止模型越权行动。
+  allowedTools: ToolName[];
+  // 按阶段注入的上下文信息（如 wolf_target、stage、trigger）。
+  context: ActionRequestContext;
+  // 当前整局运行的绝对截止时间（毫秒时间戳），用于动作级超时预算控制。
+  deadlineAtMs?: number;
 }
 
 /**

@@ -29,8 +29,7 @@ const wolfDiscussionStage: NightStageHandler = {
           continue;
         }
         const req = ctx.makeRequest(wolfId, ["speak_to_wolves"], {
-          phase: "wolf_discussion",
-          day: ctx.currentDay(),
+          stage: "wolf_discussion",
           round,
           max_rounds: WOLF_DISCUSSION_MAX_ROUNDS,
         });
@@ -94,9 +93,9 @@ const wolfKillVoteStage: NightStageHandler = {
       for (let attempt = 1; attempt <= WOLF_KILL_VOTE_MAX_RETRIES + 1; attempt++) {
         const req =
           attempt === 1
-            ? ctx.makeRequest(wolfId, ["kill_vote"], { phase: "wolf_vote" })
+            ? ctx.makeRequest(wolfId, ["kill_vote"], { stage: "wolf_vote" })
             : ctx.makeRequest(wolfId, ["kill_vote"], {
-                phase: "wolf_vote",
+                stage: "wolf_vote",
                 retry_attempt: attempt - 1,
                 retry_max: WOLF_KILL_VOTE_MAX_RETRIES,
                 retry_reason: retryReason,

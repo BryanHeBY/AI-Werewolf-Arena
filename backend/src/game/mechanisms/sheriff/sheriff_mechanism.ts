@@ -6,18 +6,15 @@ import { VotingRightComponent } from "../../../core/domain/components/voting_rig
 import { IdentityComponent } from "../../../core/domain/entities/player";
 import {
   ActionProvider,
-  ActionRequest,
   BoardConfig,
   EntityId,
   GameEvent,
   Phase,
-  PlayerVisibleEvent,
   TieBreakerStrategy,
 } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
-import { buildAgentVisibleEventFeed } from "../../engine/agent_visible_event_feed";
-import { buildTurnConstraintContext } from "../../engine/turn_constraints_context";
+import { GameActionRequestFactory } from "../../engine/action_request_factory";
 import { transferOrDestroySheriffBadge } from "./sheriff_badge";
 
 /** 警长发言方向。 */
@@ -70,32 +67,24 @@ export class SheriffMechanism {
 
     const aliveIds = world.getAliveEntityIds();
     const candidates: EntityId[] = [];
-    const nominationFeedByActor = new Map<EntityId, PlayerVisibleEvent[]>();
-    for (const actorId of aliveIds) {
-      nominationFeedByActor.set(
-        actorId,
-        buildAgentVisibleEventFeed(world, events, actorId),
-      );
-    }
+    const requests = new GameActionRequestFactory(world, events, day);
     // 上警声明并行收集，避免顺序执行导致后手玩家读取前手“上警/退水”结果后被动调整。
+    // 先建立全部请求，确保每位玩家读取同一批事件快照，再启动并行 Agent 调用。
+    const nominationRequests = aliveIds.map((actorId) => ({
+      actorId,
+      request: requests.create({
+        phase: Phase.Day,
+        actorId,
+        allowedTools: ["run_for_sheriff"],
+        stage: "sheriff_nomination",
+        requiresAction: true,
+        summary: "上警声明阶段必须选择上警或退警。",
+        context: {},
+      }),
+    }));
     const nominationResults = await Promise.all(
-      aliveIds.map(async (actorId) => {
-        const req: ActionRequest = {
-          phase: Phase.Day,
-          actorId,
-          allowedTools: ["run_for_sheriff"],
-          context: {
-            day,
-            phase: "sheriff_nomination",
-            turn_constraints: buildTurnConstraintContext({
-              requiresAction: true,
-              allowedTools: ["run_for_sheriff"],
-              summary: "上警声明阶段必须选择上警或退警。",
-            }),
-            visible_events: nominationFeedByActor.get(actorId) ?? [],
-          },
-        };
-        const action = await actionProvider.getAction(req);
+      nominationRequests.map(async ({ actorId, request }) => {
+        const action = await actionProvider.getAction(request);
         if (action?.name !== "run_for_sheriff") {
           return null;
         }
@@ -140,22 +129,17 @@ export class SheriffMechanism {
       if (!candidateSet.has(candidateId)) {
         continue;
       }
-      const speechReq: ActionRequest = {
+      const speechReq = requests.create({
         phase: Phase.Day,
         actorId: candidateId,
         allowedTools: ["speak"],
+        stage: "sheriff_campaign_speech",
+        requiresAction: true,
+        summary: "警上竞选发言阶段必须完成一次发言。",
         context: {
-          day,
-          phase: "sheriff_campaign_speech",
-          turn_constraints: buildTurnConstraintContext({
-            requiresAction: true,
-            allowedTools: ["speak"],
-            summary: "警上竞选发言阶段必须完成一次发言。",
-          }),
           sheriff_candidates: [...candidateSet],
-          visible_events: buildAgentVisibleEventFeed(world, events, candidateId),
         },
-      };
+      });
       const speechAction = await actionProvider.getAction(speechReq);
       if (speechAction?.name === "speak") {
         const speechResult = toolGateway.validateAndSanitize(world, candidateId, speechAction, {
@@ -175,33 +159,24 @@ export class SheriffMechanism {
     }
 
     // 发言结束后统一进入退水阶段，再进入警长投票。
-    const withdrawFeedByActor = new Map<EntityId, PlayerVisibleEvent[]>();
     const orderedCandidates = this.sortBySeat(world, [...candidateSet]);
-    for (const actorId of orderedCandidates) {
-      withdrawFeedByActor.set(
-        actorId,
-        buildAgentVisibleEventFeed(world, events, actorId),
-      );
-    }
+    const withdrawRequests = orderedCandidates.map((candidateId) => ({
+      candidateId,
+      request: requests.create({
+        phase: Phase.Day,
+        actorId: candidateId,
+        allowedTools: ["run_for_sheriff"],
+        stage: "sheriff_withdraw",
+        requiresAction: true,
+        summary: "退水阶段必须明确是否继续竞选。",
+        context: {
+          sheriff_candidates: [...candidateSet],
+        },
+      }),
+    }));
     const withdrawResults = await Promise.all(
-      orderedCandidates.map(async (candidateId) => {
-        const withdrawReq: ActionRequest = {
-          phase: Phase.Day,
-          actorId: candidateId,
-          allowedTools: ["run_for_sheriff"],
-          context: {
-            day,
-            phase: "sheriff_withdraw",
-            turn_constraints: buildTurnConstraintContext({
-              requiresAction: true,
-              allowedTools: ["run_for_sheriff"],
-              summary: "退水阶段必须明确是否继续竞选。",
-            }),
-            sheriff_candidates: [...candidateSet],
-            visible_events: withdrawFeedByActor.get(candidateId) ?? [],
-          },
-        };
-        const withdrawAction = await actionProvider.getAction(withdrawReq);
+      withdrawRequests.map(async ({ candidateId, request }) => {
+        const withdrawAction = await actionProvider.getAction(request);
         if (withdrawAction?.name !== "run_for_sheriff") {
           return null;
         }
@@ -255,33 +230,24 @@ export class SheriffMechanism {
 
     // 规则：警长投票仅允许警下玩家（未在最终警上名单内）参与。
     const sheriffVoterIds = aliveIds.filter((id) => !candidateSet.has(id));
-    const sheriffVoteFeedByActor = new Map<EntityId, PlayerVisibleEvent[]>();
-    for (const actorId of sheriffVoterIds) {
-      sheriffVoteFeedByActor.set(
-        actorId,
-        buildAgentVisibleEventFeed(world, events, actorId),
-      );
-    }
     // 警长投票同样并行收集，所有投票基于同一快照上下文。
+    const sheriffVoteRequests = sheriffVoterIds.map((actorId) => ({
+      actorId,
+      request: requests.create({
+        phase: Phase.Day,
+        actorId,
+        allowedTools: ["vote_for_sheriff"],
+        stage: "sheriff_vote",
+        requiresAction: true,
+        summary: "警长投票阶段必须完成一次投票（可弃票）。",
+        context: {
+          sheriff_candidates: finalizedCandidates,
+        },
+      }),
+    }));
     const sheriffVoteResults = await Promise.all(
-      sheriffVoterIds.map(async (actorId) => {
-        const req: ActionRequest = {
-          phase: Phase.Day,
-          actorId,
-          allowedTools: ["vote_for_sheriff"],
-          context: {
-            day,
-            phase: "sheriff_vote",
-            turn_constraints: buildTurnConstraintContext({
-              requiresAction: true,
-              allowedTools: ["vote_for_sheriff"],
-              summary: "警长投票阶段必须完成一次投票（可弃票）。",
-            }),
-            sheriff_candidates: finalizedCandidates,
-            visible_events: sheriffVoteFeedByActor.get(actorId) ?? [],
-          },
-        };
-        const action = await actionProvider.getAction(req);
+      sheriffVoteRequests.map(async ({ actorId, request }) => {
+        const action = await actionProvider.getAction(request);
         if (action?.name !== "vote_for_sheriff") {
           return null;
         }
@@ -368,21 +334,17 @@ export class SheriffMechanism {
     }
 
     let finalDirection: SpeakerDirection = defaultDirection;
-    const req: ActionRequest = {
+    const requests = new GameActionRequestFactory(world, events, day);
+    const req = requests.create({
       phase: Phase.Day,
       actorId: sheriffId,
       allowedTools: ["choose_direction"],
+      stage: "sheriff_choose_direction",
+      requiresAction: true,
+      summary: "警长定序阶段必须选择发言方向。",
       context: {
-        day,
-        phase: "sheriff_choose_direction",
-        turn_constraints: buildTurnConstraintContext({
-          requiresAction: true,
-          allowedTools: ["choose_direction"],
-          summary: "警长定序阶段必须选择发言方向。",
-        }),
-        visible_events: buildAgentVisibleEventFeed(world, events, sheriffId),
       },
-    };
+    });
     const action = await actionProvider.getAction(req);
     if (action?.name === "choose_direction") {
       const result = toolGateway.validateAndSanitize(world, sheriffId, action, {

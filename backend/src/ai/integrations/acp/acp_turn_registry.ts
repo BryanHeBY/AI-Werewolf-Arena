@@ -4,6 +4,10 @@ import {
   GameSubmitActionInput as McpSubmitActionParams,
   WEREWOLF_GAME_TOOL_SCHEMA,
 } from "../../agents/game_tool_protocol";
+import {
+  getActionRequestDay,
+  getActionRequestStage,
+} from "../../../core/domain/action_request_context";
 export type { GameReportBugInput as McpReportBugParams, GameSubmitActionInput as McpSubmitActionParams } from "../../agents/game_tool_protocol";
 
 export type McpBridgeResult =
@@ -110,14 +114,9 @@ export class AcpTurnRegistry {
     const result = this.onBugReport?.({
       actorId: pending.request.actorId,
       turnId: pending.turnId,
-      day: Number(pending.request.context.day ?? pending.request.context.current_day ?? 0),
+      day: getActionRequestDay(pending.request),
       phase: String(pending.request.phase),
-      stage: String(
-        pending.request.context.phase ??
-          pending.request.actionWindow ??
-          pending.request.context.window ??
-          pending.request.phase,
-      ),
+      stage: getActionRequestStage(pending.request),
       category: input.category,
       severity: input.severity,
       message: input.message.trim(),
