@@ -1,74 +1,44 @@
+const path = require("node:path");
 const tsParser = require("@typescript-eslint/parser");
+const { importBoundaryViolation } = require("./scripts/import_boundaries.cjs");
 
-/**
- * 依赖方向守卫：
- * 通过 no-restricted-imports 阻断跨层反向依赖。
- */
 module.exports = [
   {
     files: ["src/**/*.ts"],
     ignores: ["dist/**"],
     languageOptions: {
       parser: tsParser,
-      parserOptions: {
-        ecmaVersion: 2022,
-        sourceType: "module",
+      parserOptions: { ecmaVersion: 2022, sourceType: "module" },
+    },
+    plugins: {
+      boundaries: {
+        rules: {
+          imports: {
+            meta: { type: "problem", schema: [], messages: { forbidden: "{{violation}}" } },
+            create(context) {
+              function check(node, source) {
+                const specifier = source?.value ?? (source?.type === "TemplateLiteral" && source.expressions.length === 0
+                  ? source.quasis[0].value.cooked : null);
+                if (typeof specifier !== "string") return;
+                const violation = importBoundaryViolation(path.join(__dirname, "src"), context.filename, specifier);
+                if (violation) context.report({ node, messageId: "forbidden", data: { violation } });
+              }
+              return {
+                ImportDeclaration: (node) => check(node, node.source),
+                ExportNamedDeclaration: (node) => check(node, node.source),
+                ExportAllDeclaration: (node) => check(node, node.source),
+                ImportExpression: (node) => check(node, node.source),
+                TSImportType: (node) => check(node, node.argument),
+                TSExternalModuleReference: (node) => check(node, node.expression),
+                CallExpression(node) {
+                  if (node.callee.type === "Identifier" && node.callee.name === "require") check(node, node.arguments[0]);
+                },
+              };
+            },
+          },
+        },
       },
     },
-  },
-  {
-    files: ["src/domain/**/*.ts"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          patterns: ["../app/*", "../engine/*", "../gateway/*", "../server/*", "../infra/*"],
-        },
-      ],
-    },
-  },
-  {
-    files: ["src/memory/**/*.ts"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          patterns: ["../app/*", "../engine/*", "../gateway/*", "../server/*", "../infra/*"],
-        },
-      ],
-    },
-  },
-  {
-    files: ["src/gateway/**/*.ts"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          patterns: ["../app/*", "../server/*", "../infra/*"],
-        },
-      ],
-    },
-  },
-  {
-    files: ["src/engine/**/*.ts"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          patterns: ["../app/*", "../server/*"],
-        },
-      ],
-    },
-  },
-  {
-    files: ["src/scenarios/**/*.ts"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          patterns: ["../app/*", "../engine/*", "../gateway/*", "../memory/*", "../server/*", "../infra/*"],
-        },
-      ],
-    },
+    rules: { "boundaries/imports": "error" },
   },
 ];
