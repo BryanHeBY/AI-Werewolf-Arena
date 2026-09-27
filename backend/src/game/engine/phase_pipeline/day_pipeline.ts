@@ -26,7 +26,8 @@ export interface DayPipelineResult {
 export interface DayPipelineOptions {
   /** 当前日次由 PhaseManager 显式传入，不能从事件历史反推。 */
   day: number;
-  afterSheriffElection?: () => Promise<void>;
+  /** 返回 true 表示已终局，不再请求白天行动。 */
+  afterSheriffElection?: () => Promise<boolean>;
 }
 
 export interface DayPipelineDependencies {
@@ -79,8 +80,11 @@ export class DayPipeline {
       enableSheriff: config.enableSheriff,
       config,
     });
-    if (options?.afterSheriffElection) {
-      await options.afterSheriffElection();
+    if (await options.afterSheriffElection?.()) {
+      return {
+        summary: { speeches, selfDestructBy: null },
+        interrupted: false,
+      };
     }
     const speakerDirection = await this.sheriffMechanism.chooseSpeakerDirection({
       world: this.world,

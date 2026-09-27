@@ -1,7 +1,7 @@
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { RoleComponent } from "../../../src/core/domain/components/role";
-import { ActionProvider, ActionRequest, Phase, PotionType, ToolCall } from "../../../src/core/domain/model";
+import { ActionProvider, ActionRequest, Camp, Phase, PotionType, Role, ToolCall } from "../../../src/core/domain/model";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 
 class DeterministicFlowProvider implements ActionProvider {
@@ -78,6 +78,78 @@ class DeterministicFlowProvider implements ActionProvider {
 }
 
 describe("first day flow order", () => {
+  test("terminal first-night deaths stop day actions after sheriff election and last words", async () => {
+    const context = bootstrapGame({
+      ...twelvePlayerStandardConfig,
+      boardSize: 4,
+      roleSetups: [
+        { role: Role.Wolf, count: 1 },
+        { role: Role.Witch, count: 1 },
+        { role: Role.Villager, count: 2 },
+      ],
+    });
+    const wolfId = context.playerIds.find(
+      (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf,
+    )!;
+    const sheriffId = context.playerIds.find(
+      (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Villager,
+    )!;
+    const requests: ActionRequest[] = [];
+    const provider: ActionProvider = {
+      async getAction(request): Promise<ToolCall | null> {
+        requests.push(request);
+        if (request.allowedTools.includes("kill_vote")) {
+          return { name: "kill_vote", args: { target_id: null, abstain: true } };
+        }
+        if (request.allowedTools.includes("use_potion")) {
+          return { name: "use_potion", args: { target_id: wolfId, potion_type: PotionType.Poison } };
+        }
+        if (request.allowedTools.includes("run_for_sheriff")) {
+          return { name: "run_for_sheriff", args: { run: request.actorId === sheriffId } };
+        }
+        if (request.allowedTools.includes("vote_for_sheriff")) {
+          return { name: "vote_for_sheriff", args: { target_id: sheriffId, abstain: false } };
+        }
+        if (request.allowedTools.includes("choose_direction")) {
+          return { name: "choose_direction", args: { direction: "clockwise" } };
+        }
+        if (request.allowedTools.includes("speak")) {
+          return { name: "speak", args: { text: `发言_${request.actorId}` } };
+        }
+        return null;
+      },
+    };
+
+    const snapshot = await context.phaseManager.runSingleCycle(provider, 10);
+    expect(snapshot).toMatchObject({ day: 1, phase: Phase.GameOver, gameOver: true, result: { winner: Camp.Good } });
+    expect(context.world.getAliveEntityIds()).toEqual(context.playerIds.filter((id) => id !== wolfId));
+
+    const events = context.phaseManager.getEvents();
+    const sheriffIndex = events.findIndex((event) => event.type === "sheriff_elected");
+    const nightIndex = events.findIndex((event) => event.type === "night_resolved");
+    const lastWordsIndex = events.findIndex((event) => event.type === "last_words_spoken");
+    const gameOverIndex = events.findIndex(
+      (event) => event.type === "phase_changed" && event.payload.phase === Phase.GameOver,
+    );
+    expect(sheriffIndex).toBeGreaterThanOrEqual(0);
+    expect(events[sheriffIndex].payload.winnerId).toBe(sheriffId);
+    expect(sheriffIndex).toBeLessThan(nightIndex);
+    expect(events[nightIndex].payload.deaths).toEqual([wolfId]);
+    expect(nightIndex).toBeLessThan(lastWordsIndex);
+    expect(events[lastWordsIndex].payload.playerId).toBe(wolfId);
+    expect(lastWordsIndex).toBeLessThan(gameOverIndex);
+    expect(events.slice(gameOverIndex + 1)).toEqual([
+      expect.objectContaining({ type: "game_over", payload: expect.objectContaining({ winner: Camp.Good }) }),
+    ]);
+    expect(events.slice(nightIndex).filter((event) => ["sheriff_direction_chosen", "day_speech", "vote_cast"].includes(event.type))).toEqual([]);
+    expect(requests.filter((request) =>
+      request.allowedTools.includes("choose_direction") ||
+      request.context.stage === "day_speech" ||
+      request.phase === Phase.Voting,
+    )).toEqual([]);
+    expect(requests.filter((request) => request.context.stage === "last_words").map((request) => request.actorId)).toEqual([wolfId]);
+  });
+
   test("day1 should elect sheriff before announcing previous night deaths", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const sheriffCandidateId = 1;

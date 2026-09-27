@@ -113,6 +113,17 @@ export class PhaseManager {
         day: this.state.day,
       },
     });
+    const initialSheriffId = this.sheriffMechanism.findSheriffId(this.world);
+    if (initialSheriffId !== null) {
+      this.events.push({
+        timestamp: Date.now(),
+        type: "sheriff_elected",
+        payload: {
+          winnerId: initialSheriffId,
+          source: "initial_configuration",
+        },
+      });
+    }
   }
 
   /**
@@ -193,12 +204,13 @@ export class PhaseManager {
                 Phase.Night,
                 Phase.Day,
               );
+              return this.checkAndSealResult();
             },
           }
         : { day: this.state.day },
     );
 
-    if (firstDaySheriffBeforeNightInfo && this.checkAndSealResult()) {
+    if (this.state.gameOver) {
       return this.getSnapshot();
     }
     if (dayResult.interrupted) {
