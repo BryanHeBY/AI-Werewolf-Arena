@@ -1,9 +1,9 @@
-import { AuditAgentExecutor } from "../ai/audit/audit_agent_executor";
+import type { AuditAgentExecutor } from "../ai/audit/contracts";
 import {
   AuditAgentOutput,
   AuditAgentTask,
   shrinkAuditPayload,
-} from "./audit_payload_builder";
+} from "./payload_builder";
 
 export interface AuditTaskRunnerOptions {
   timeoutMs: number;

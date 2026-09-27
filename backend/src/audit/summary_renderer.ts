@@ -1,7 +1,7 @@
-import { AuditAgentExecutor } from "../ai/audit/audit_agent_executor";
-import { AuditAgentFinding } from "./audit_payload_builder";
-import { AuditEvidencePolicy, MergedAuditFindings } from "./audit_evidence_policy";
-import { ReplayDebugReport, ReplayManifest } from "./types";
+import type { AuditAgentExecutor } from "../ai/audit/contracts";
+import { AuditAgentFinding } from "./payload_builder";
+import { AuditEvidencePolicy, MergedAuditFindings } from "./evidence_policy";
+import { ReplayDebugReport, ReplayManifest } from "../recording/contracts";
 
 export class AuditSummaryRenderer {
   constructor(

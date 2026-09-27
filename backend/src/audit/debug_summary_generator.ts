@@ -1,6 +1,7 @@
 /** 文件说明：根据调试上报生成 session 级调试总结 Markdown。 */
-import { ReplayDebugReport, ReplayLogicOp, ReplayManifest, ReplayPlayerView, ReplayPublicEvent } from "./types";
-import { buildDebugSummaryWithAgents } from "./debug_summary_pipeline";
+import { ReplayDebugReport, ReplayLogicOp, ReplayManifest, ReplayPlayerView, ReplayPublicEvent } from "../recording/contracts";
+import type { ResolvedAuditConfig } from "../runtime/config/contracts";
+import { buildDebugSummaryWithAgents } from "./pipeline";
 
 interface BuildDebugSummaryInput {
   manifest: ReplayManifest;
@@ -224,6 +225,7 @@ function buildFallbackSummary(input: BuildDebugSummaryInput): string {
 /** 生成调试总结，优先使用 runtime_config.json；失败时回退模板。 */
 export async function buildDebugSummaryMarkdown(
   input: BuildDebugSummaryInput,
+  audit: ResolvedAuditConfig | null,
 ): Promise<string> {
   // 无结构化 report 时走确定性汇总，避免 LLM 在低证据条件下产生误报。
   if (input.reports.length === 0) {
@@ -239,7 +241,7 @@ export async function buildDebugSummaryMarkdown(
         logicOps: input.logicOps,
         playerViews: input.playerViews,
         sessionDir: input.sessionDir,
-      });
+      }, audit);
       if (pipeline?.markdown) {
         return pipeline.markdown;
       }

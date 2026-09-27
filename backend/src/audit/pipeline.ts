@@ -1,17 +1,17 @@
 /** Agent-assisted replay audit pipeline orchestration. */
-import { createAuditAgentExecutor } from "../ai/audit/audit_agent_executor";
-import { loadRuntimeConfig, resolveAgentProfileByName } from "../runtime/config/runtime_config";
-import { AuditEvidencePolicy } from "./audit_evidence_policy";
-import { buildAuditTasks } from "./audit_payload_builder";
-import { AuditSummaryRenderer } from "./audit_summary_renderer";
-import { AuditTaskRunner } from "./audit_task_runner";
+import { createAuditAgentExecutor } from "../ai/audit/executor_factory";
+import type { ResolvedAuditConfig } from "../runtime/config/contracts";
+import { AuditEvidencePolicy } from "./evidence_policy";
+import { buildAuditTasks } from "./payload_builder";
+import { AuditSummaryRenderer } from "./summary_renderer";
+import { AuditTaskRunner } from "./task_runner";
 import {
   ReplayDebugReport,
   ReplayLogicOp,
   ReplayManifest,
   ReplayPlayerView,
   ReplayPublicEvent,
-} from "./types";
+} from "../recording/contracts";
 
 export interface DebugSummaryPipelineInput {
   manifest: ReplayManifest;
@@ -33,25 +33,19 @@ interface PipelineResult {
  */
 export async function buildDebugSummaryWithAgents(
   input: DebugSummaryPipelineInput,
+  audit: ResolvedAuditConfig | null,
 ): Promise<PipelineResult | null> {
-  if (input.reports.length === 0) return null;
-
-  const runtime = await loadRuntimeConfig();
-  if (runtime.debugSummary?.agent?.enabled === false) return null;
-  const profile = resolveAgentProfileByName(
-    runtime,
-    runtime.debugSummary?.agent?.agentName ?? runtime.game.agent,
-  );
+  if (input.reports.length === 0 || !audit) return null;
   const settings = {
-    timeoutMs: runtime.debugSummary?.agent?.timeoutMs ?? 15000,
-    maxAttempts: Math.max(1, runtime.debugSummary?.agent?.maxAttempts ?? 2),
-    concurrency: Math.max(1, runtime.debugSummary?.agent?.concurrency ?? 4),
-    publicMaxItems: Math.max(60, runtime.debugSummary?.agent?.publicMaxItems ?? 200),
-    maxItems: Math.max(50, runtime.debugSummary?.agent?.maxItems ?? 200),
-    playerMaxItems: Math.max(60, runtime.debugSummary?.agent?.playerMaxItems ?? 120),
+    timeoutMs: audit.timeoutMs,
+    maxAttempts: audit.maxAttempts,
+    concurrency: audit.concurrency,
+    publicMaxItems: audit.publicMaxItems,
+    maxItems: audit.maxItems,
+    playerMaxItems: audit.playerMaxItems,
   };
   const executor = createAuditAgentExecutor({
-    profile,
+    profile: audit.profile,
     workspaceRoot: `${input.sessionDir}/audit-workspaces`,
   });
   if (!executor) return null;

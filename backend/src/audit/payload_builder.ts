@@ -1,6 +1,6 @@
 import { AuditFinding, AuditInspectionResult } from "../ai/audit/audit_tool_protocol";
-import type { DebugSummaryPipelineInput } from "./debug_summary_pipeline";
-import { ReplayLogicOp, ReplayPlayerView, ReplayPublicEvent } from "./types";
+import type { DebugSummaryPipelineInput } from "./pipeline";
+import { ReplayLogicOp, ReplayPlayerView, ReplayPublicEvent } from "../recording/contracts";
 
 export interface AuditAgentTask {
   name: string;

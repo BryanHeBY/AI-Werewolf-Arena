@@ -1,5 +1,5 @@
-import { AuditAgentFinding, AuditAgentOutput } from "./audit_payload_builder";
-import type { DebugSummaryPipelineInput } from "./debug_summary_pipeline";
+import { AuditAgentFinding, AuditAgentOutput } from "./payload_builder";
+import type { DebugSummaryPipelineInput } from "./pipeline";
 
 const SEVERITY_RANK: Record<AuditAgentFinding["severity"], number> = {
   critical: 4,

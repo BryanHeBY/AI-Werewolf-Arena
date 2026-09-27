@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { AuditEvidencePolicy } from "../../../src/observability/audit_evidence_policy";
+import { AuditEvidencePolicy } from "../../src/audit/evidence_policy";
 
 describe("AuditEvidencePolicy", () => {
   test("deduplicates and orders findings before rejecting unsupported evidence", () => {

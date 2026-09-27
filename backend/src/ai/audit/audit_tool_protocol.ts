@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ToolSchema } from "../integrations/llm/ai_sdk_client";
+import { ToolSchema } from "../integrations/llm/transport";
 
 export type AuditSeverity = "low" | "medium" | "high" | "critical";
 export type AuditCategory = "flow" | "rule" | "state" | "logging" | "other";

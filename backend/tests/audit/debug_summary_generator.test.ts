@@ -1,5 +1,5 @@
-import { buildDebugSummaryMarkdown } from "../../src/observability/debug_summary_generator";
-import { ReplayManifest, ReplayPlayerView } from "../../src/observability/types";
+import { buildDebugSummaryMarkdown } from "../../src/audit/debug_summary_generator";
+import { ReplayManifest, ReplayPlayerView } from "../../src/recording/contracts";
 
 describe("debug summary metadata checks", () => {
   test("treats localized timeline phases as matching machine request ids", async () => {
@@ -43,7 +43,7 @@ describe("debug summary metadata checks", () => {
       manifest,
       reports: [],
       playerViews,
-    });
+    }, null);
 
     expect(markdown).not.toContain("request_id 与 day/phase 不一致");
     expect(markdown).not.toContain("请求编号异常");

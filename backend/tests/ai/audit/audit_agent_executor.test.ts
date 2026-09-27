@@ -4,7 +4,7 @@ import {
   AuditSubmission,
   AuditToolTurnRegistry,
 } from "../../../src/ai/audit/audit_tool_protocol";
-import { SdkAuditAgentExecutor } from "../../../src/ai/audit/audit_agent_executor";
+import { SdkAuditAgentExecutor } from "../../../src/ai/audit/sdk_audit_runner";
 import { AuditMcpControlServer } from "../../../src/ai/audit/audit_mcp_control";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
