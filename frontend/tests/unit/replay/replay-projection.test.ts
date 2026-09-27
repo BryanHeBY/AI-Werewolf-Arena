@@ -28,6 +28,18 @@ test("projects live seats from the event history instead of final manifest state
   expect(afterTransfer.players.find((player) => player.playerId === 2)?.isSheriff).toBe(true);
 });
 
+test("projects an initially configured sheriff from the canonical bootstrap event", () => {
+  const initialSheriffReplay: ReplayDocument = {
+    ...replay,
+    events: [
+      { seq: 1, timestamp: "t1", day: 1, phase: "night", type: "phase_changed", payload: { phase: "night", day: 1 } },
+      { seq: 2, timestamp: "t1", day: 1, phase: "night", type: "sheriff_elected", payload: { winnerId: 1, source: "initial_configuration" } },
+    ],
+  };
+  const snapshot = buildReplaySnapshot(initialSheriffReplay, 1);
+  expect(snapshot.players.find((player) => player.playerId === 1)?.isSheriff).toBe(true);
+});
+
 test("projects self-destruct and hunter-shot targets as dead", () => {
   const deathReplay: ReplayDocument = {
     ...replay,

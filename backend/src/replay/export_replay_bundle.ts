@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { assertReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { resolveDefaultRecordRoot } from "../observability";
 
 export async function readReplayBundle(
@@ -20,15 +21,12 @@ export async function readReplayBundle(
   } catch (error) {
     throw new Error(`replay_bundle_json_invalid: ${filePath} -> ${(error as Error).message}`);
   }
-  if (
-    !bundle || typeof bundle !== "object" ||
-    (bundle as { perspective?: unknown }).perspective !== "god" ||
-    typeof (bundle as { sessionId?: unknown }).sessionId !== "string" ||
-    !Array.isArray((bundle as { events?: unknown }).events)
-  ) {
-    throw new Error(`replay_bundle_invalid: ${filePath}`);
+  try {
+    assertReplayDocument(bundle);
+  } catch (error) {
+    throw new Error(`replay_bundle_invalid: ${filePath} -> ${(error as Error).message}`);
   }
-  return bundle as ReplayDocument;
+  return bundle;
 }
 
 export async function exportReplayBundle(options: {

@@ -27,6 +27,78 @@ test("rejects a replay whose perspective is not the complete god view", () => {
   }))).toThrow("replay.json");
 });
 
+test("rejects malformed nested event payloads", () => {
+  expect(() => parseOfflineReplayJson(JSON.stringify({
+    perspective: "god",
+    sessionId: "session_nested_invalid",
+    meta: { board: "six_player_mvp", startedAt: "t1", endedAt: "t1" },
+    result: { winner: null, reason: null },
+    players: [{ player_id: 1, role: "villager", camp: "good" }],
+    events: [{ seq: 1, timestamp: "t1", phase: "night", day: 1, type: "day_speech", payload: [] }],
+  }))).toThrow("replay.json");
+});
+
+test.each([
+  ["meta.board", { meta: { board: 7, startedAt: "t1", endedAt: "t1" } }],
+  ["meta.startedAt", { meta: { board: "test", startedAt: null, endedAt: "t1" } }],
+  ["meta.endedAt", { meta: { board: "test", startedAt: "t1", endedAt: false } }],
+  ["result.winner", { result: { winner: {}, reason: null } }],
+  ["result.reason", { result: { winner: null, reason: [] } }],
+  ["player record", { players: [null] }],
+  ["player identifier", { players: [{ player_id: 1.5, role: "wolf", camp: "wolf" }] }],
+  ["player role", { players: [{ player_id: 1, role: [], camp: "wolf" }] }],
+  ["player camp", { players: [{ player_id: 1, role: "wolf", camp: false }] }],
+  ["duplicate players", { players: [
+    { player_id: 1, role: "wolf", camp: "wolf" },
+    { player_id: 1, role: "seer", camp: "good" },
+  ] }],
+] as const)("rejects invalid %s before opening the replay", (_field, fields) => {
+  expect(() => parseOfflineReplayJson(JSON.stringify({
+    perspective: "god", sessionId: "invalid_nested",
+    meta: { board: "test", startedAt: "t1", endedAt: "t1" },
+    result: { winner: null, reason: null }, players: [], events: [],
+    ...fields,
+  }))).toThrow("replay.json");
+});
+
+test.each([
+  ["timestamp", { timestamp: 123 }],
+  ["phase", { phase: null }],
+  ["day", { day: 1.5 }],
+  ["stage", { stage: [] }],
+  ["type", { type: {} }],
+  ["payload", { payload: null }],
+  ["sequence", { seq: 2 }],
+] as const)("rejects invalid event %s", (_field, fields) => {
+  expect(() => parseOfflineReplayJson(JSON.stringify({
+    perspective: "god", sessionId: "invalid_event",
+    meta: { board: "test", startedAt: "t1", endedAt: "t1" },
+    result: { winner: null, reason: null }, players: [],
+    events: [{ seq: 1, timestamp: "t1", phase: "night", day: 1, type: "phase_changed", payload: {}, ...fields }],
+  }))).toThrow("replay.json");
+});
+
+test("accepts an in-progress document without players or terminal events", () => {
+  const document = {
+    perspective: "god", sessionId: "in_progress",
+    meta: { board: "test", startedAt: "t1", endedAt: "t1" },
+    result: { winner: null, reason: "in_progress" }, players: [],
+    events: [{ seq: 1, timestamp: "t1", phase: "night", day: 1, type: "phase_changed", payload: {} }],
+  };
+  expect(parseOfflineReplayJson(JSON.stringify(document))).toEqual(document);
+});
+
+test("rejects duplicate and out-of-order canonical event sequences", () => {
+  for (const sequences of [[1, 1], [2, 1], [1, 3]]) {
+    expect(() => parseOfflineReplayJson(JSON.stringify({
+      perspective: "god", sessionId: "invalid_sequence",
+      meta: { board: "test", startedAt: "t1", endedAt: "t1" },
+      result: { winner: null, reason: null }, players: [],
+      events: sequences.map((seq) => ({ seq, timestamp: "t1", day: 1, phase: "night", type: "phase_changed", payload: {} })),
+    }))).toThrow("replay.json");
+  }
+});
+
 test("localizes the initial role lineup without machine separators", () => {
   expect(eventLabel({
     seq: 1,

@@ -21,6 +21,16 @@ describe("sheriff pipeline", () => {
     expect(sheriffId).toBeUndefined();
   });
 
+  test("initial sheriff assignment emits a canonical replay election event", () => {
+    const config = { ...twelvePlayerStandardConfig, initialSheriffSeat: 1 };
+    const context = bootstrapGame(config);
+    const sheriffId = context.playerIds.find((id) => context.world.getComponent<{ seat: number }>(id, COMPONENT.Identity)?.seat === 1);
+    const event = context.phaseManager.getEvents().find((item) => item.type === "sheriff_elected");
+
+    expect(sheriffId).toBeDefined();
+    expect(event?.payload).toEqual({ winnerId: sheriffId, source: "initial_configuration" });
+  });
+
   test("sheriff voted out triggers badge transfer to next alive voter", () => {
     const { world } = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [];

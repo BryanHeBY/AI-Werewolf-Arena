@@ -1,22 +1,23 @@
 import type { ReplayDocument, ReplayEvent } from "@ai-werewolf-arena/replay-contract";
+import { assertReplayDocument, ReplayDocumentValidationError } from "@ai-werewolf-arena/replay-contract";
 import { campName, resultReasonName, roleName } from "./replay-localization";
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
-
 export function parseOfflineReplayJson(raw: string): ReplayDocument {
-  const value: unknown = JSON.parse(raw);
-  if (
-    !isRecord(value) || value.perspective !== "god" ||
-    typeof value.sessionId !== "string" || !Array.isArray(value.events)
-  ) {
+  let value: unknown;
+  try {
+    value = JSON.parse(raw);
+  } catch {
     throw new Error("这不是 AI Werewolf Arena 的 replay.json 文件。");
   }
-  if (!isRecord(value.meta) || !isRecord(value.result) || !Array.isArray(value.players)) {
-    throw new Error("复盘文件缺少 meta、result 或 players 字段。");
+  try {
+    assertReplayDocument(value);
+  } catch (error) {
+    if (error instanceof ReplayDocumentValidationError && error.kind === "missing_fields") {
+      throw new Error("复盘文件缺少 meta、result 或 players 字段。");
+    }
+    throw new Error("这不是 AI Werewolf Arena 的 replay.json 文件。");
   }
-  return value as unknown as ReplayDocument;
+  return value;
 }
 
 export async function readOfflineReplay(file: File): Promise<ReplayDocument> {
