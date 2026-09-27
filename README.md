@@ -9,7 +9,7 @@
 - `packages/replay-contract/`：前端播放器与后端导出器共享的复盘数据类型。
 - `configs.example/`：本地运行配置模板，默认经 OpenRouter 使用 DeepSeek V4 Flash。
 
-对局由 `run_llm_game` 或 `run_mock_game` 启动，游戏引擎将事件和最终结果写入 `record/<session>/replay.json`；前端直接加载这一唯一产品文件进行播放。当前没有在线观战、权限隔离或兼容层。
+真实 Agent 对局由 `runtime/cli/run_game.ts` 启动，并将事件和最终结果写入 `record/<session>/replay.json`；`runtime/run_mock_game.ts` 只运行本地基线机器人对局并打印结果。前端直接加载 `replay.json` 进行播放。当前没有在线观战、权限隔离或兼容层。
 
 运行配置只接受固定文件结构：`runtime/providers.json`、`runtime/agents.json`、`games/<name>.json`，以及可选的 `runtime/debug_summary.json`。每个 Agent 都必须显式声明 `kind: "llm"` 或 `kind: "acp"`；调试汇总通过 `agentName` 引用一个 Agent，不能内联覆盖模型参数。
 
@@ -26,7 +26,6 @@ ACP 的初始化受 provider 的 `initializeTimeoutMs`（默认 45 秒）、当�
 ```bash
 bun install
 cp -R configs.example configs
-cp .env.example .env
 # 在 configs/runtime/providers.json 中填入 OpenRouter API key。
 
 # 使用 DeepSeek V4 Flash 跑六人或十二人对局
