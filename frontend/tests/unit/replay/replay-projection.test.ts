@@ -40,6 +40,19 @@ test("projects an initially configured sheriff from the canonical bootstrap even
   expect(snapshot.players.find((player) => player.playerId === 1)?.isSheriff).toBe(true);
 });
 
+test("removes the sheriff badge when the canonical destroy event names targetId", () => {
+  const destroyedReplay: ReplayDocument = {
+    ...replay,
+    events: [
+      { seq: 1, timestamp: "t1", day: 1, phase: "day", type: "sheriff_elected", payload: { winnerId: 1 } },
+      { seq: 2, timestamp: "t2", day: 1, phase: "voting", type: "sheriff_badge_destroyed", payload: { targetId: 1, reason: "voted_out" } },
+    ],
+  };
+
+  const snapshot = buildReplaySnapshot(destroyedReplay, 1);
+  expect(snapshot.players.find((player) => player.playerId === 1)?.isSheriff).toBe(false);
+});
+
 test("projects self-destruct and hunter-shot targets as dead", () => {
   const deathReplay: ReplayDocument = {
     ...replay,

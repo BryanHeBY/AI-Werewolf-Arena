@@ -1,6 +1,6 @@
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { eventLabel } from "./offline-replay";
+import { eventLabel } from "./event-labels";
 import { buildReplaySnapshot } from "./replay-projection";
 import { phaseName, roleName, stageName } from "./replay-localization";
 

@@ -1,5 +1,6 @@
 import { expect, test } from "bun:test";
-import { eventLabel, parseOfflineReplayJson } from "../../../src/replay/offline-replay";
+import { eventLabel } from "../../../src/replay/event-labels";
+import { parseOfflineReplayJson } from "../../../src/replay/offline-replay";
 
 test("parses a backend replay document", () => {
   const replay = parseOfflineReplayJson(JSON.stringify({

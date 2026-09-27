@@ -67,7 +67,7 @@ export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number):
       if (toId !== null && states.has(toId)) states.get(toId)!.isSheriff = true;
     }
     if (event.type === "sheriff_badge_destroyed") {
-      const playerId = numberValue(payload.fromId);
+      const playerId = numberValue(payload.targetId);
       if (playerId !== null && states.has(playerId)) states.get(playerId)!.isSheriff = false;
     }
   }
