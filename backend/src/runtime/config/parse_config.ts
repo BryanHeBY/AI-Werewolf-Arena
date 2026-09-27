@@ -1,147 +1,8 @@
-import dotenv from "dotenv";
-import { promises as fs } from "fs";
-import * as path from "path";
-
-/** `openai` 同时覆盖 OpenRouter 等 Chat Completions 兼容网关。 */
-export type ProviderType = "openai" | "anthropic" | "acp";
-export type GameBoard = "six_player_mvp" | "twelve_player_standard";
-
-export interface LlmProviderConfig {
-  type: "openai" | "anthropic";
-  apiKey: string;
-  baseURL?: string;
-  userAgent?: string;
-  maxConcurrentRequests?: number;
-}
-
-/** ACP 是 Agent 进程传输，不是模型 API Provider。 */
-export interface AcpProviderConfig {
-  type: "acp";
-  transport: "stdio";
-  command: string;
-  args: string[];
-  env: Record<string, string>;
-  cwd?: string;
-  initializeTimeoutMs?: number;
-  sessionConfigOptions: Record<string, string | boolean>;
-}
-
-export type ProviderConfig = LlmProviderConfig | AcpProviderConfig;
-
-export interface AgentProfileConfig {
-  model: string;
-  temperature?: number;
-  maxTokens?: number;
-  forceJsonResponse?: boolean;
-  reasoningEnabled?: boolean;
-  reasoningEffort?: "low" | "medium" | "high";
-  thinkingEnabled?: boolean;
-  personalityPrompt?: string;
-}
-
-export interface LlmAgentEntryConfig extends AgentProfileConfig {
-  kind: "llm";
-  provider: string;
-}
-
-export interface AcpAgentEntryConfig {
-  kind: "acp";
-  provider: string;
-  /** 静态启动参数；不得包含身份或对局状态。 */
-  spawnArgs?: string[];
-  sessionReuse?: "per_player";
-  actionTransport?: "mcp";
-}
-
-export type AgentEntryConfig = LlmAgentEntryConfig | AcpAgentEntryConfig;
-
-export interface ProvidersConfig {
-  default: string;
-  items: Record<string, ProviderConfig>;
-}
-
-export interface AgentsConfig {
-  default: string;
-  items: Record<string, AgentEntryConfig>;
-}
-
-/** 对局仅引用已定义的 Agent；对象形式用于覆盖 ACP 启动参数。 */
-export type GameAgentSelection =
-  | string
-  | {
-      agent: string;
-      spawnArgs?: string[];
-    };
-
-export interface GameConfig {
-  board?: GameBoard;
-  maxDays?: number;
-  maxRuntimeMs?: number;
-  llmTimeoutMs?: number;
-  trace?: boolean;
-  printAllEvents?: boolean;
-  printChat?: boolean;
-  streamEvents?: boolean;
-  color?: boolean;
-  printLlmIo?: boolean;
-  printThinking?: boolean;
-  printPrivateEvents?: boolean;
-  recordRootDir?: string;
-  agent?: string;
-  roleAgents?: Record<string, GameAgentSelection>;
-  playerAgents?: Record<string, GameAgentSelection>;
-}
-
-export interface DebugSummaryAgentConfig {
-  enabled?: boolean;
-  agentName?: string;
-  timeoutMs?: number;
-  maxAttempts?: number;
-  concurrency?: number;
-  publicMaxItems?: number;
-  maxItems?: number;
-  playerMaxItems?: number;
-}
-
-export interface DebugSummaryConfig {
-  agent?: DebugSummaryAgentConfig;
-}
-
-/** 唯一支持的运行时配置：providers、agents、一个具名 game 和可选 audit 配置。 */
-export interface RuntimeConfig {
-  providers: ProvidersConfig;
-  agents: AgentsConfig;
-  game: GameConfig;
-  debugSummary?: DebugSummaryConfig;
-}
-
-export interface ResolvedAgentRuntimeProfile {
-  name: string;
-  providerName: string;
-  provider: ProviderConfig;
-  kind: "llm" | "acp";
-  model?: string;
-  temperature?: number;
-  maxTokens?: number;
-  forceJsonResponse?: boolean;
-  reasoningEnabled?: boolean;
-  reasoningEffort?: "low" | "medium" | "high";
-  thinkingEnabled?: boolean;
-  personalityPrompt?: string;
-  spawnArgs?: string[];
-  sessionReuse?: "per_player";
-  actionTransport?: "mcp";
-}
-
-let cachedConfig: RuntimeConfig | null = null;
-let overrideConfig: RuntimeConfig | null = null;
-
-function resolveRepoRoot(): string {
-  const cwd = process.cwd();
-  return cwd.endsWith("/backend") ? path.resolve(cwd, "..") : path.resolve(cwd);
-}
-
-dotenv.config({ path: path.join(resolveRepoRoot(), ".env") });
+import type {
+  AcpAgentEntryConfig, AgentEntryConfig, AgentsConfig, DebugSummaryConfig,
+  GameAgentSelection, GameConfig, GameBoard, LlmAgentEntryConfig, ProviderConfig,
+  ProvidersConfig, RuntimeConfig,
+} from "./contracts";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -192,17 +53,17 @@ function readStringArray(value: unknown, field: string): string[] {
   return value.map((item) => item.trim());
 }
 
-function resolveEnvironmentValue(value: string, field: string): string {
+function resolveEnvironmentValue(value: string, field: string, environment: NodeJS.ProcessEnv): string {
   const match = /^\$\{([A-Z][A-Z0-9_]*)\}$/.exec(value.trim());
   if (!match) return value;
-  const resolved = process.env[match[1]]?.trim();
+  const resolved = environment[match[1]]?.trim();
   if (!resolved) {
     throw new Error(`runtime_config_missing_environment_value: ${field} -> ${match[1]}`);
   }
   return resolved;
 }
 
-function readEnvironment(value: unknown, field: string): Record<string, string> {
+function readEnvironment(value: unknown, field: string, environment: NodeJS.ProcessEnv): Record<string, string> {
   if (value === undefined) return {};
   if (!isRecord(value)) {
     throw new Error(`runtime_config_environment_invalid: ${field}`);
@@ -210,7 +71,7 @@ function readEnvironment(value: unknown, field: string): Record<string, string> 
   return Object.fromEntries(
     Object.entries(value).map(([key, raw]) => [
       readRequiredString(key, `${field}.key`),
-      resolveEnvironmentValue(readRequiredString(raw, `${field}.${key}`), `${field}.${key}`),
+      resolveEnvironmentValue(readRequiredString(raw, `${field}.${key}`), `${field}.${key}`, environment),
     ]),
   );
 }
@@ -230,7 +91,7 @@ function readSessionConfigOptions(value: unknown, field: string): Record<string,
   );
 }
 
-function normalizeProviderConfig(name: string, raw: unknown): ProviderConfig {
+function normalizeProviderConfig(name: string, raw: unknown, environment: NodeJS.ProcessEnv): ProviderConfig {
   if (!isRecord(raw)) {
     throw new Error(`runtime_config_provider_invalid: ${name}`);
   }
@@ -251,7 +112,7 @@ function normalizeProviderConfig(name: string, raw: unknown): ProviderConfig {
       transport,
       command: readRequiredString(raw.command, `providers.items.${name}.command`),
       args: readStringArray(raw.args, `providers.items.${name}.args`),
-      env: readEnvironment(raw.env, `providers.items.${name}.env`),
+      env: readEnvironment(raw.env, `providers.items.${name}.env`, environment),
       cwd: readOptionalString(raw.cwd, `providers.items.${name}.cwd`),
       initializeTimeoutMs: readOptionalNumber(
         raw.initializeTimeoutMs,
@@ -272,6 +133,7 @@ function normalizeProviderConfig(name: string, raw: unknown): ProviderConfig {
     apiKey: resolveEnvironmentValue(
       readRequiredString(raw.apiKey, `providers.items.${name}.apiKey`),
       `providers.items.${name}.apiKey`,
+      environment,
     ),
     baseURL: readOptionalString(raw.baseURL, `providers.items.${name}.baseURL`),
     userAgent: readOptionalString(raw.userAgent, `providers.items.${name}.userAgent`),
@@ -282,14 +144,14 @@ function normalizeProviderConfig(name: string, raw: unknown): ProviderConfig {
   };
 }
 
-function normalizeProviders(raw: unknown): ProvidersConfig {
+function normalizeProviders(raw: unknown, environment: NodeJS.ProcessEnv): ProvidersConfig {
   if (!isRecord(raw)) throw new Error("runtime_config_invalid_providers");
   assertKnownKeys(raw, ["default", "items"], "providers");
   if (!isRecord(raw.items)) throw new Error("runtime_config_invalid_providers_items");
   const items = Object.fromEntries(
     Object.entries(raw.items).map(([name, provider]) => [
       readRequiredString(name, "providers.items.key"),
-      normalizeProviderConfig(name, provider),
+      normalizeProviderConfig(name, provider, environment),
     ]),
   ) as Record<string, ProviderConfig>;
   if (Object.keys(items).length === 0) throw new Error("runtime_config_empty_providers_items");
@@ -477,120 +339,24 @@ function normalizeDebugSummaryConfig(raw: unknown, agents: AgentsConfig): DebugS
   };
 }
 
-function resolveConfigRoot(): string {
-  const envConfig = process.env.GAME_CONFIGS_DIR?.trim();
-  if (!envConfig) throw new Error("runtime_config_missing_configs_dir: set GAME_CONFIGS_DIR");
-  return path.isAbsolute(envConfig) ? envConfig : path.resolve(resolveRepoRoot(), envConfig);
-}
 
-function resolveGameConfigName(): string {
-  const name = process.env.GAME_CONFIG_NAME?.trim() || "default";
-  if (!/^[a-z][a-z0-9_-]*$/.test(name)) {
-    throw new Error(`runtime_config_game_name_invalid: ${name}`);
-  }
-  return name;
-}
-
-async function readJsonFile(filePath: string, label: string): Promise<unknown> {
-  let raw: string;
-  try {
-    raw = await fs.readFile(filePath, "utf-8");
-  } catch (error) {
-    const code = (error as NodeJS.ErrnoException).code;
-    if (code === "ENOENT") throw new Error(`runtime_config_file_missing: ${label} -> ${filePath}`);
-    throw error;
-  }
-  try {
-    return JSON.parse(raw);
-  } catch (error) {
-    throw new Error(`runtime_config_json_invalid: ${label} -> ${(error as Error).message}`);
-  }
-}
-
-async function readOptionalJsonFile(filePath: string, label: string): Promise<unknown | undefined> {
-  try {
-    return await readJsonFile(filePath, label);
-  } catch (error) {
-    if ((error as Error).message.startsWith("runtime_config_file_missing:")) return undefined;
-    throw error;
-  }
-}
-
-export function resolveAgentProfileByName(
-  runtime: RuntimeConfig,
-  agentName?: string,
-): ResolvedAgentRuntimeProfile {
-  const selected = agentName ?? runtime.agents.default;
-  const entry = runtime.agents.items[selected];
-  if (!entry) throw new Error(`runtime_config_agent_not_found: ${selected}`);
-  const provider = runtime.providers.items[entry.provider];
-  if (!provider) {
-    throw new Error(`runtime_config_agent_provider_not_found: agent=${selected} provider=${entry.provider}`);
-  }
-  if (entry.kind === "acp") {
-    return {
-      name: selected,
-      providerName: entry.provider,
-      provider,
-      kind: "acp",
-      spawnArgs: entry.spawnArgs,
-      sessionReuse: entry.sessionReuse,
-      actionTransport: entry.actionTransport ?? "mcp",
-    };
-  }
+export function parseRuntimeConfig(input: {
+  providers: unknown;
+  agents: unknown;
+  game: unknown;
+  debugSummary?: unknown;
+  environment?: NodeJS.ProcessEnv;
+}): RuntimeConfig {
+  const environment = input.environment ?? process.env;
+  const providers = normalizeProviders(input.providers, environment);
+  const agents = normalizeAgents(input.agents, providers);
+  const game = normalizeGameConfig(input.game, agents);
   return {
-    name: selected,
-    providerName: entry.provider,
-    provider,
-    kind: "llm",
-    model: entry.model,
-    temperature: entry.temperature,
-    maxTokens: entry.maxTokens,
-    forceJsonResponse: entry.forceJsonResponse,
-    reasoningEnabled: entry.reasoningEnabled,
-    reasoningEffort: entry.reasoningEffort,
-    thinkingEnabled: entry.thinkingEnabled,
-    personalityPrompt: entry.personalityPrompt,
-  };
-}
-
-export async function loadRuntimeConfig(): Promise<RuntimeConfig> {
-  if (overrideConfig) return overrideConfig;
-  if (cachedConfig) return cachedConfig;
-
-  const configRoot = resolveConfigRoot();
-  const runtimeDir = path.join(configRoot, "runtime");
-  const providers = normalizeProviders(
-    await readJsonFile(path.join(runtimeDir, "providers.json"), "providers"),
-  );
-  const agents = normalizeAgents(
-    await readJsonFile(path.join(runtimeDir, "agents.json"), "agents"),
-    providers,
-  );
-  const gameName = resolveGameConfigName();
-  const game = normalizeGameConfig(
-    await readJsonFile(path.join(configRoot, "games", `${gameName}.json`), `games.${gameName}`),
-    agents,
-  );
-  const debugSummaryRaw = await readOptionalJsonFile(
-    path.join(runtimeDir, "debug_summary.json"),
-    "debugSummary",
-  );
-  cachedConfig = {
     providers,
     agents,
     game,
-    ...(debugSummaryRaw === undefined
+    ...(input.debugSummary === undefined
       ? {}
-      : { debugSummary: normalizeDebugSummaryConfig(debugSummaryRaw, agents) }),
+      : { debugSummary: normalizeDebugSummaryConfig(input.debugSummary, agents) }),
   };
-  return cachedConfig;
-}
-
-export function setRuntimeConfigOverride(config: RuntimeConfig | null): void {
-  overrideConfig = config;
-}
-
-export function clearRuntimeConfigCache(): void {
-  cachedConfig = null;
 }

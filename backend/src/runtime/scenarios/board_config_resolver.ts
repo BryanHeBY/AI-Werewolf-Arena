@@ -11,8 +11,8 @@ export type BoardName = "six_player_mvp" | "twelve_player_standard";
 /** 解析配置时的可选参数。 */
 export interface ResolveBoardConfigOptions {
   board?: string;
+  configDir?: string;
 }
-
 type JsonObject = Record<string, unknown>;
 type BoardOverride = Omit<
   Partial<BoardConfig>,
@@ -372,14 +372,14 @@ function readOverrideFromDir(
 ): BoardOverride | null {
   const cwd = process.cwd();
   const rootDir = cwd.endsWith("/backend") ? path.resolve(cwd, "..") : path.resolve(cwd);
-  const envConfig = process.env.GAME_CONFIGS_DIR?.trim();
-  if (!envConfig) {
+  const configuredDir = options?.configDir?.trim() || process.env.GAME_CONFIGS_DIR?.trim();
+  if (!configuredDir) {
     log?.("[board_config] config dir missing: set GAME_CONFIGS_DIR");
     return null;
   }
-  const configDir = path.isAbsolute(envConfig)
-    ? envConfig
-    : path.resolve(rootDir, envConfig);
+  const configDir = path.isAbsolute(configuredDir)
+    ? configuredDir
+    : path.resolve(rootDir, configuredDir);
   if (!fs.existsSync(configDir)) {
     log?.(`[board_config] config dir missing: ${configDir}`);
     return null;

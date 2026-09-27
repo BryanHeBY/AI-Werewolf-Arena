@@ -9,7 +9,7 @@ import {
   LlmActionProvider,
 } from "../ai";
 import { AiSdkClient } from "../ai/integrations/llm/ai_sdk_client";
-import { ResolvedAgentRuntimeProfile } from "./config/runtime_config";
+import type { ResolvedAgentRuntimeProfile } from "./config/contracts";
 
 export interface PlayerAgentRuntime {
   kind: "llm" | "acp";
