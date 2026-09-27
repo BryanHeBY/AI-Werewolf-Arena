@@ -13,6 +13,8 @@
 
 运行配置只接受固定文件结构：`runtime/providers.json`、`runtime/agents.json`、`games/<name>.json`，以及可选的 `runtime/debug_summary.json`。每个 Agent 都必须显式声明 `kind: "llm"` 或 `kind: "acp"`；调试汇总通过 `agentName` 引用一个 Agent，不能内联覆盖模型参数。
 
+对局异常时仍会关闭 Agent 并保存带有 `runtime_error` 结束原因的部分复盘；初始化或最终 `replay.json` 写入失败会使运行命令失败，而不是仅打印警告。若对局和收尾同时失败，调用方会收到包含两者的 `AggregateError`。
+
 ## 本地运行
 
 ```bash

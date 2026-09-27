@@ -30,7 +30,7 @@ import {
   SessionRecordManager,
 } from "../observability";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
-import { createPlayerAgentRuntime } from "./player_agent_factory";
+import { createPlayerAgentRuntime, type PlayerAgentRuntime } from "./player_agent_factory";
 
 /**
  * 支持的对局板子名称。
@@ -321,21 +321,6 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
   const context = bootstrapGame(boardConfig);
   const replaySessionId = buildSessionId();
   const replayRecordRoot = options.recordRootDir ?? resolveDefaultRecordRoot();
-  let replayManager: SessionRecordManager | null = null;
-  try {
-    replayManager = await SessionRecordManager.create(
-      {
-        sessionId: replaySessionId,
-        board: options.board,
-        startedAtIso: new Date().toISOString(),
-      },
-      replayRecordRoot,
-    );
-    SessionRecordHub.setActive(replayManager);
-  } catch (error) {
-    log(`[observability] init_failed err=${String(error)}`, "warn");
-    SessionRecordHub.setActive(null);
-  }
 
   const resolveProfile = (role?: string, actorId?: number): ResolvedAgentRuntimeProfile => {
     const playerSelection =
@@ -355,36 +340,18 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     const roleComp = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
     profilesByActor.set(id, resolveProfile(roleComp?.role, id));
   }
-  const playerAgentRuntime = await createPlayerAgentRuntime({
-    world: context.world,
-    boardConfig,
-    profilesByActor,
-    acpWorkspaceRoot: path.join(replayRecordRoot, replaySessionId, "acp-workspaces"),
-    llmTimeoutMs: options.llmTimeoutMs,
-    trace: options.trace,
-    colorizeLogs: colorEnabled,
-    printLlmIo: options.printLlmIo,
-    printThinking: options.printThinking,
-    defaultForceJsonResponse: forceJsonResponse,
-    createAcpUpdateObserver: options.printThinking
-      ? (actorId) => createAcpConsoleLogger(actorId, log)
-      : undefined,
-  });
-  const actionProvider = playerAgentRuntime.provider;
-
-  log(
-    `[run_llm_game] start board=${options.board} maxDays=${options.maxDays} agent=${defaultAgentProfile.name} kind=${defaultAgentProfile.kind} model=${defaultAgentProfile.model ?? "n/a"} provider=${defaultAgentProfile.providerName} maxRuntimeMs=${options.maxRuntimeMs} llmTimeoutMs=${options.llmTimeoutMs}`,
-    "info",
-  );
-  if (replayManager) {
-    log(
-      `[run_llm_game] replay_session_id=${replaySessionId} record_dir=${replayManager.sessionDir}`,
-      "muted",
-    );
-  }
+  const replayManager = await SessionRecordManager.create({
+    sessionId: replaySessionId,
+    board: options.board,
+    startedAtIso: new Date().toISOString(),
+  }, replayRecordRoot);
+  SessionRecordHub.setActive(replayManager);
+  let playerAgentRuntime: PlayerAgentRuntime | undefined;
+  let heartbeat: NodeJS.Timeout | undefined;
+  let streamTimer: NodeJS.Timeout | undefined;
+  const failures: unknown[] = [];
   const startedAt = Date.now();
   const deadlineAtMs = startedAt + options.maxRuntimeMs;
-  const budgetedProvider = new DeadlineAwareActionProvider(actionProvider, deadlineAtMs);
   let streamedEventIndex = 0;
   const playerVisibleEventSeq = new Map<number, number>();
   let replayDayCursor = 1;
@@ -462,25 +429,41 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     }
     streamedEventIndex = events.length;
   };
-  // 心跳仅用于显式 trace 调试，默认 stdio 保持安静；对局 deadline 由
-  // DeadlineAwareActionProvider 和主循环独立维护，不依赖该定时器。
-  const heartbeat = options.trace
-    ? setInterval(() => {
-        const elapsed = Date.now() - startedAt;
-        const remain = Math.max(0, deadlineAtMs - Date.now());
-        const snap = context.phaseManager.getSnapshot();
-        log(
-          `[run_llm_game] heartbeat day=${snap.day} phase=${snap.phase} gameOver=${snap.gameOver} elapsed_ms=${elapsed} remain_ms=${remain}`,
-          "muted",
-        );
-      }, 5000)
-    : undefined;
-  const streamTimer = setInterval(() => {
-    flushStreamEvents();
-  }, 1000);
   let timedOut = false;
   try {
+    playerAgentRuntime = await createPlayerAgentRuntime({
+      world: context.world,
+      boardConfig,
+      profilesByActor,
+      acpWorkspaceRoot: path.join(replayRecordRoot, replaySessionId, "acp-workspaces"),
+      llmTimeoutMs: options.llmTimeoutMs,
+      trace: options.trace,
+      colorizeLogs: colorEnabled,
+      printLlmIo: options.printLlmIo,
+      printThinking: options.printThinking,
+      defaultForceJsonResponse: forceJsonResponse,
+      createAcpUpdateObserver: options.printThinking
+        ? (actorId) => createAcpConsoleLogger(actorId, log)
+        : undefined,
+    });
+    const budgetedProvider = new DeadlineAwareActionProvider(playerAgentRuntime.provider, deadlineAtMs);
+    log(`[run_llm_game] start board=${options.board} replay_session_id=${replaySessionId} record_dir=${replayManager.sessionDir}`, "info");
+    if (options.trace) {
+      heartbeat = setInterval(() => {
+        const snap = context.phaseManager.getSnapshot();
+        log(`[run_llm_game] heartbeat day=${snap.day} phase=${snap.phase} gameOver=${snap.gameOver} elapsed_ms=${Date.now() - startedAt}`, "muted");
+      }, 5000);
+    }
+    streamTimer = setInterval(() => {
+      try {
+        flushStreamEvents();
+      } catch (error) {
+        failures.push(error);
+        clearInterval(streamTimer);
+      }
+    }, 1000);
     while (!context.phaseManager.getSnapshot().gameOver) {
+      if (failures.length) break;
       const elapsed = Date.now() - startedAt;
       if (elapsed >= options.maxRuntimeMs) {
         timedOut = true;
@@ -497,13 +480,46 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
         "info",
       );
     }
+  } catch (error) {
+    failures.push(error);
   } finally {
-    // 退出前强制刷一次剩余事件，避免 game_over 前最后一批投票/放逐日志丢失。
-    flushStreamEvents();
     if (heartbeat) clearInterval(heartbeat);
-    clearInterval(streamTimer);
-    await playerAgentRuntime.close();
+    if (streamTimer) clearInterval(streamTimer);
+    try {
+      flushStreamEvents();
+    } catch (error) {
+      failures.push(error);
+    }
+    try {
+      await playerAgentRuntime?.close();
+    } catch (error) {
+      failures.push(error);
+    }
+    try {
+      const snapshot = context.phaseManager.getSnapshot();
+      await replayManager.finalize({
+        endedAtIso: new Date().toISOString(),
+        winner: snapshot.result?.winner ?? null,
+        finishReason: failures.length ? "runtime_error"
+          : snapshot.result?.reason ?? (timedOut ? "runtime_timeout" : "completed"),
+        players: context.world.entityIds().map((id) => {
+          const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+          return {
+            player_id: id,
+            role: role?.role ?? "unknown",
+            camp: role?.camp ?? "unknown",
+            alive: context.world.getComponent<AliveComponent>(id, COMPONENT.Alive)?.alive === true,
+          };
+        }),
+      });
+    } catch (error) {
+      failures.push(error);
+    } finally {
+      SessionRecordHub.setActive(null);
+    }
   }
+  if (failures.length === 1) throw failures[0];
+  if (failures.length > 1) throw new AggregateError(failures, "game_run_failed");
   const snapshot = context.phaseManager.getSnapshot();
   const events = context.phaseManager.getEvents();
   log(
@@ -520,32 +536,6 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     for (const line of chatLines) {
       console.log(line);
     }
-  }
-
-  try {
-    const players = context.world.entityIds().map((id) => {
-      const roleComp = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-      const aliveComp = context.world.getComponent<AliveComponent>(id, COMPONENT.Alive);
-      return {
-        player_id: id,
-        role: roleComp?.role ?? "unknown",
-        camp: roleComp?.camp ?? "unknown",
-        alive: aliveComp?.alive === true,
-      };
-    });
-    if (replayManager) {
-      await replayManager.finalize({
-        endedAtIso: new Date().toISOString(),
-        winner: snapshot.result?.winner ?? null,
-        finishReason:
-          snapshot.result?.reason ?? (timedOut ? "runtime_timeout" : "completed"),
-        players,
-      });
-    }
-  } catch (error) {
-    log(`[observability] finalize_failed err=${String(error)}`, "warn");
-  } finally {
-    SessionRecordHub.setActive(null);
   }
 
   return {

@@ -132,7 +132,7 @@ export class SessionRecordManager {
   private async writeInitialFiles(): Promise<void> {
     await Promise.all([
       this.store.writeJson("manifest.json", this.aggregate.buildManifest()),
-      this.store.writeJson("replay.json", this.buildReplayDocument()),
+      this.store.writeJsonStrict("replay.json", this.buildReplayDocument()),
       this.store.writeJson("phase_windows.json", this.aggregate.phaseWindowsPayload()),
       this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
       this.store.writeJson("logic_ops.json", this.aggregate.logicOpsPayload()),
