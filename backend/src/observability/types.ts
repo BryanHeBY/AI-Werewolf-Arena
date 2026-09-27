@@ -311,3 +311,13 @@ export interface ReplayRecordDebugReportInput {
   message: string;
   evidenceEventSeq?: number[];
 }
+
+/** Finalized recording snapshot consumed by optional debug-summary builders. */
+export interface DebugSummaryInput {
+  manifest: ReplayManifest;
+  reports: ReplayDebugReport[];
+  publicEvents: ReplayPublicEvent[];
+  logicOps: ReplayLogicOp[];
+  playerViews: ReplayPlayerView[];
+  sessionDir: string;
+}

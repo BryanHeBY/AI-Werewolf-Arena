@@ -1,7 +1,7 @@
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { World } from "../../../core/domain/world";
-import { safeRecordLogicOp, SessionRecordHub } from "../../../observability";
+import { safeRecordLogicOp, getSessionRecorder } from "../../../observability";
 
 export type AgentBugCategory = "flow" | "rule" | "state" | "logging" | "other";
 export type AgentBugSeverity = "low" | "medium" | "high" | "critical";
@@ -85,7 +85,7 @@ export class AgentBugReportService {
     }
 
     const role = this.world.getComponent<RoleComponent>(report.actorId, COMPONENT.Role);
-    const reportId = SessionRecordHub.getActive()?.recordDebugReport({
+    const reportId = getSessionRecorder()?.recordDebugReport({
       timestampMs: Date.now(),
       day: report.day,
       phase: report.phase,

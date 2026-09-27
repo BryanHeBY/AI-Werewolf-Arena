@@ -6,7 +6,7 @@ import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mv
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
 import { getSeerState, getWitchState } from "../../../src/game/mechanisms/roles/private_state";
-import { SessionRecordHub, SessionRecordManager } from "../../../src/observability";
+import { SessionRecordManager, runWithSessionRecorder } from "../../../src/observability";
 import path from "path";
 import { promises as fs } from "fs";
 import { createTestTempDirectory } from "../../support/temp_directory";
@@ -571,8 +571,6 @@ describe("LlmActionProvider", () => {
       },
       root,
     );
-    SessionRecordHub.setActive(recorder);
-
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
@@ -582,12 +580,12 @@ describe("LlmActionProvider", () => {
       },
     );
 
-    const action = await provider.getAction({
+    const action = await runWithSessionRecorder(recorder, async () => provider.getAction({
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
       context: { day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
-    });
+    }));
 
     expect(action).toEqual({
       name: "speak",
@@ -609,7 +607,7 @@ describe("LlmActionProvider", () => {
         alive: true,
       })),
     });
-    SessionRecordHub.setActive(null);
+
 
     const reports = JSON.parse(
       await fs.readFile(
@@ -632,8 +630,6 @@ describe("LlmActionProvider", () => {
       },
       root,
     );
-    SessionRecordHub.setActive(recorder);
-
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(
       context.world,
@@ -643,13 +639,12 @@ describe("LlmActionProvider", () => {
       },
     );
 
-    const action = await provider.getAction({
+    const action = await runWithSessionRecorder(recorder, async () => provider.getAction({
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
       context: { day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
-    });
-
+    }));
     expect(action).toEqual({
       name: "speak",
       args: { text: "继续发言" },
@@ -670,7 +665,6 @@ describe("LlmActionProvider", () => {
         alive: true,
       })),
     });
-    SessionRecordHub.setActive(null);
 
     const reports = JSON.parse(
       await fs.readFile(

@@ -1,6 +1,7 @@
 /** Session replay recording orchestration and incremental file persistence. */
 import path from "path";
-import {
+import type {
+  DebugSummaryInput,
   ReplayFinalizeMeta,
   ReplayRecordDebugReportInput,
   ReplayRecordLogicOpInput,
@@ -9,10 +10,10 @@ import {
   ReplayRecordPublicEventInput,
   ReplaySessionMeta,
 } from "./types";
-import { buildDebugSummaryMarkdown } from "./debug_summary_generator";
 import { createReplayDocument } from "./replay_document";
 import { ReplayFileStore } from "./replay_file_store";
 import { ReplaySessionAggregate } from "./replay_session_aggregate";
+import { getSessionRecorder } from "./recording_context";
 
 const FLUSH_DEBOUNCE_MS = 100;
 
@@ -29,6 +30,7 @@ export class SessionRecordManager {
   private flushTimer: NodeJS.Timeout | null = null;
   private flushChain: Promise<void> = Promise.resolve();
   private finalMeta: ReplayFinalizeMeta | null = null;
+  private finalization: Promise<DebugSummaryInput> | null = null;
 
   private constructor(
     private readonly aggregate: ReplaySessionAggregate,
@@ -96,8 +98,16 @@ export class SessionRecordManager {
     await this.enqueueFlush();
   }
 
-  async finalize(meta: ReplayFinalizeMeta): Promise<void> {
-    if (this.closed) return;
+  finalize(meta: ReplayFinalizeMeta): Promise<DebugSummaryInput> {
+    this.finalization ??= this.persistFinalRecord(meta);
+    return this.finalization;
+  }
+
+  writeDebugSummary(markdown: string): Promise<void> {
+    return this.store.writeText("debug_summary.md", markdown);
+  }
+
+  private async persistFinalRecord(meta: ReplayFinalizeMeta): Promise<DebugSummaryInput> {
     this.finalMeta = meta;
     await this.flushNow();
     this.closed = true;
@@ -120,13 +130,11 @@ export class SessionRecordManager {
     // replay.json 是产品消费入口；与尽力而为的观测文件不同，写入失败必须上抛。
     await this.store.writeJsonStrict("replay.json", replayDocument);
 
-    const snapshot = this.aggregate.debugSummaryInput();
-    const debugSummary = await buildDebugSummaryMarkdown({
+    return {
       manifest,
-      ...snapshot,
+      ...this.aggregate.debugSummaryInput(),
       sessionDir: this.sessionDir,
-    });
-    await this.store.writeText("debug_summary.md", debugSummary);
+    };
   }
 
   private async writeInitialFiles(): Promise<void> {
@@ -196,13 +204,6 @@ export class SessionRecordManager {
   }
 }
 
-/** Current-process replay recorder registry. */
-export class SessionRecordHub {
-  private static active: SessionRecordManager | null = null;
-
-  static setActive(manager: SessionRecordManager | null): void { this.active = manager; }
-  static getActive(): SessionRecordManager | null { return this.active; }
-}
 
 export function resolveDefaultRecordRoot(cwd: string = process.cwd()): string {
   return path.basename(cwd) === "backend"
@@ -215,7 +216,7 @@ export function buildSessionId(now: number = Date.now()): string {
 }
 
 export function safeRecordLogicOp(input: ReplayRecordLogicOpInput): void {
-  const active = SessionRecordHub.getActive();
+  const active = getSessionRecorder();
   if (!active) return;
   try {
     active.recordLogicOp(input);

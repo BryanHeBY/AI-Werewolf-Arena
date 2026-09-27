@@ -7,7 +7,7 @@ import {
 } from "../../../core/domain/action_request_context";
 import { World } from "../../../core/domain/world";
 import { PhaseStageLocalizationRegistry } from "../../../game/mechanisms";
-import { SessionRecordHub } from "../../../observability";
+import { getSessionRecorder } from "../../../observability";
 import { BuiltPlayerPrompt, PlayerRoundOutcome } from "./model_client";
 
 /** Adapter that projects one completed agent turn into the replay protocol. */
@@ -24,7 +24,7 @@ export class PlayerRoundRecorder {
     prompt: BuiltPlayerPrompt,
     outcome: PlayerRoundOutcome,
   ): void {
-    const recorder = SessionRecordHub.getActive();
+    const recorder = getSessionRecorder();
     if (!recorder) return;
     const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const round = (this.roundCounters.get(request.actorId) ?? 0) + 1;

@@ -6,66 +6,18 @@ import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
 import { buildAgentVisibleEvent } from "../../src/game/engine/agent_visible_event_feed";
 import { getDefaultScriptEventRenderRegistry } from "../../src/game/mechanisms/script/event_render_registry";
 import { COMPONENT } from "../../src/core/domain/components/names";
-import { SessionRecordManager } from "../../src/observability";
+import { SessionRecordManager, runWithSessionRecorder, safeRecordLogicOp } from "../../src/observability";
+import { buildDebugSummaryMarkdown } from "../../src/observability/debug_summary_generator";
 import { setRuntimeConfigOverride } from "../../src/runtime/config/runtime_config";
 import { createTestTempDirectory } from "../support/temp_directory";
 
-jest.mock("../../src/ai/integrations/llm/ai_sdk_client", () => {
-  class AiSdkClient {
-    async chatWithMeta(messages: Array<{ role: string; content: string }>) {
-      const system = messages[0]?.content ?? "";
-      const user = messages[1]?.content ?? "";
-      if (system.includes("调试子代理")) {
-        const match = /agent:\\s*([^\\n]+)/.exec(user);
-        const agent = match ? match[1].trim() : "agent";
-        return {
-          content: JSON.stringify({
-            agent,
-            findings: [
-              {
-                severity: "low",
-                category: "flow",
-                message: `${agent} ok`,
-                evidence: [1],
-                source: "mock",
-              },
-            ],
-            notes: [],
-            missing_info: [],
-          }),
-          finishReason: "stop",
-        };
-      }
-      if (system.includes("调试汇总助手")) {
-        return {
-          content: [
-            "# Debug Summary (mock)",
-            "",
-            "## Session",
-            "- board: test",
-            "",
-            "## Bug Report Stats",
-            "- total: 1",
-            "",
-            "## Findings",
-            "- none",
-            "",
-            "## Conclusion",
-            "- ok",
-            "",
-            "## Debug Pipeline",
-            "- agents_total: 1",
-            "- agents_failed: 0",
-          ].join("\\n"),
-          finishReason: "stop",
-        };
-      }
-      return { content: "", finishReason: "stop" };
-    }
-  }
-
-  return { AiSdkClient };
-});
+async function finalizeManager(
+  manager: SessionRecordManager,
+  meta: Parameters<SessionRecordManager["finalize"]>[0],
+): Promise<void> {
+  const summaryInput = await manager.finalize(meta);
+  await manager.writeDebugSummary(await buildDebugSummaryMarkdown(summaryInput));
+}
 
 describe("SessionRecordManager", () => {
   const buildRuntimeOverride = (agentModel: string, debugAgentEnabled: boolean) => ({
@@ -300,7 +252,7 @@ describe("SessionRecordManager", () => {
       evidenceEventSeq: [12, 13],
     });
 
-    await manager.finalize({
+    await finalizeManager(manager, {
       endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
       winner: Camp.Wolf,
       finishReason: "all_good_eliminated",
@@ -415,7 +367,7 @@ describe("SessionRecordManager", () => {
       root,
     );
 
-    await manager.finalize({
+    await finalizeManager(manager, {
       endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
       winner: Camp.Wolf,
       finishReason: "all_good_eliminated",
@@ -458,7 +410,7 @@ describe("SessionRecordManager", () => {
       payload: { wolfId: 9, window: "on_pre_vote" },
     });
 
-    await manager.finalize({
+    await finalizeManager(manager, {
       endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
       winner: Camp.Wolf,
       finishReason: "all_good_eliminated",
@@ -502,7 +454,7 @@ describe("SessionRecordManager", () => {
         "3号狼人仍在带队，当前狼队：3、2、5、12。局势对狼队不利。3号报假查验继续悍跳，本轮投票是关键时刻。",
     });
 
-    await manager.finalize({
+    await finalizeManager(manager, {
       endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
       winner: Camp.Wolf,
       finishReason: "all_good_eliminated",
@@ -564,7 +516,7 @@ describe("SessionRecordManager", () => {
       message: "流程异常：阶段切换错乱，白天夜晚混杂且广播缺失。",
     });
 
-    await manager.finalize({
+    await finalizeManager(manager, {
       endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
       winner: Camp.Wolf,
       finishReason: "all_good_eliminated",
@@ -610,7 +562,7 @@ describe("SessionRecordManager", () => {
       ],
     });
 
-    await manager.finalize({
+    await finalizeManager(manager, {
       endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
       winner: Camp.Good,
       finishReason: "all_wolves_eliminated",
@@ -650,7 +602,7 @@ describe("SessionRecordManager", () => {
 
     await expect(manager.flushNow()).resolves.toBeUndefined();
     await expect(
-      manager.finalize({
+      finalizeManager(manager, {
         endedAtIso: new Date("2026-04-10T00:00:10.000Z").toISOString(),
         winner: Camp.Good,
         finishReason: "all_wolves_eliminated",
@@ -665,5 +617,36 @@ describe("SessionRecordManager", () => {
 
     warnSpy.mockRestore();
     writeSpy.mockRestore();
+  });
+
+  test("isolates concurrent scoped recorders without cross-talk", async () => {
+    const firstRoot = await createTestTempDirectory("awa-record-scope-a-");
+    const secondRoot = await createTestTempDirectory("awa-record-scope-b-");
+    const first = await SessionRecordManager.create(
+      { sessionId: "session_scope_a", board: "six_player_mvp", startedAtIso: new Date().toISOString() },
+      firstRoot,
+    );
+    const second = await SessionRecordManager.create(
+      { sessionId: "session_scope_b", board: "six_player_mvp", startedAtIso: new Date().toISOString() },
+      secondRoot,
+    );
+    const { promise: secondStarted, resolve: releaseSecond } = Promise.withResolvers<void>();
+    const secondRun = runWithSessionRecorder(second, async () => {
+      safeRecordLogicOp({ scope: "test", op: "second_before", status: "ok" });
+      releaseSecond();
+      await Promise.resolve();
+      safeRecordLogicOp({ scope: "test", op: "second_after", status: "ok" });
+    });
+    const firstRun = runWithSessionRecorder(first, async () => {
+      await secondStarted;
+      safeRecordLogicOp({ scope: "test", op: "first_only", status: "ok" });
+    });
+    await Promise.all([firstRun, secondRun]);
+    await first.finalize({ endedAtIso: new Date().toISOString(), winner: null, finishReason: "test_done", players: [] });
+    await second.finalize({ endedAtIso: new Date().toISOString(), winner: null, finishReason: "test_done", players: [] });
+    const firstOps = JSON.parse(await fs.readFile(path.join(firstRoot, "session_scope_a", "logic_ops.json"), "utf-8"));
+    const secondOps = JSON.parse(await fs.readFile(path.join(secondRoot, "session_scope_b", "logic_ops.json"), "utf-8"));
+    expect(firstOps.ops.map((op: { op: string }) => op.op)).toEqual(["first_only"]);
+    expect(secondOps.ops.map((op: { op: string }) => op.op)).toEqual(["second_before", "second_after"]);
   });
 });

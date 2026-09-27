@@ -1,8 +1,7 @@
 // Test setup file for AI-Werewolf-Arena backend
 // This file runs before each test file
 
-import { jest } from "bun:test";
-import { SessionRecordHub } from "../src/observability";
+import { afterAll, afterEach, beforeEach, jest } from "bun:test";
 import { cleanupTestTempDirectories } from "./support/temp_directory";
 
 // Global test timeout
@@ -24,7 +23,6 @@ beforeEach(() => {
 });
 
 afterEach(async () => {
-  SessionRecordHub.setActive(null);
   await cleanupTestTempDirectories();
 });
 

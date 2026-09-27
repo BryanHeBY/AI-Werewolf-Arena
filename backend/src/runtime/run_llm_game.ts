@@ -26,9 +26,10 @@ import { resolveBoardConfig } from "./scenarios/board_config_resolver";
 import {
   buildSessionId,
   resolveDefaultRecordRoot,
-  SessionRecordHub,
+  runWithSessionRecorder,
   SessionRecordManager,
 } from "../observability";
+import { buildDebugSummaryMarkdown } from "../observability/debug_summary_generator";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
 import { createPlayerAgentRuntime, type PlayerAgentRuntime } from "./player_agent_factory";
 
@@ -345,7 +346,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     board: options.board,
     startedAtIso: new Date().toISOString(),
   }, replayRecordRoot);
-  SessionRecordHub.setActive(replayManager);
+  return runWithSessionRecorder(replayManager, async () => {
   let playerAgentRuntime: PlayerAgentRuntime | undefined;
   let heartbeat: NodeJS.Timeout | undefined;
   let streamTimer: NodeJS.Timeout | undefined;
@@ -497,7 +498,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     }
     try {
       const snapshot = context.phaseManager.getSnapshot();
-      await replayManager.finalize({
+      const summaryInput = await replayManager.finalize({
         endedAtIso: new Date().toISOString(),
         winner: snapshot.result?.winner ?? null,
         finishReason: failures.length ? "runtime_error"
@@ -512,10 +513,15 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
           };
         }),
       });
+      if (summaryInput) {
+        try {
+          await replayManager.writeDebugSummary(await buildDebugSummaryMarkdown(summaryInput));
+        } catch (error) {
+          log(`[observability] debug_summary_failed err=${String(error)}`, "warn");
+        }
+      }
     } catch (error) {
       failures.push(error);
-    } finally {
-      SessionRecordHub.setActive(null);
     }
   }
   if (failures.length === 1) throw failures[0];
@@ -542,6 +548,7 @@ export async function runLlmGame(options: RunLlmGameOptions): Promise<{
     snapshot,
     eventCount: events.length,
   };
+  });
 }
 
 async function main(): Promise<void> {

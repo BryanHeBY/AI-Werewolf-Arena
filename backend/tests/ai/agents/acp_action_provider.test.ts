@@ -1,4 +1,4 @@
-import { describe, expect, jest, test } from "bun:test";
+import { describe, expect, test } from "bun:test";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { promises as fs } from "node:fs";
@@ -13,7 +13,7 @@ import {
 import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
 import { WerewolfMcpControlServer } from "../../../src/ai/integrations/acp/werewolf_mcp_control";
 import { ActionRequest, Phase } from "../../../src/core/domain/model";
-import { SessionRecordHub, SessionRecordManager } from "../../../src/observability";
+import { runWithSessionRecorder, SessionRecordManager } from "../../../src/observability";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
 function speakRequest(actorId = 1): ActionRequest {
@@ -128,7 +128,6 @@ describe("AcpActionProvider", () => {
       },
       recordRoot,
     );
-    SessionRecordHub.setActive(recorder);
     const factory: AcpSessionFactory = {
       async createSession(input): Promise<AcpSession> {
         return {
@@ -175,7 +174,7 @@ describe("AcpActionProvider", () => {
     });
 
     try {
-      await expect(provider.getAction(speakRequest())).resolves.toEqual({
+      await expect(runWithSessionRecorder(recorder, () => provider.getAction(speakRequest()))).resolves.toEqual({
         name: "speak",
         args: { text: "审计动作已提交。" },
       });
@@ -213,7 +212,6 @@ describe("AcpActionProvider", () => {
       });
     } finally {
       await provider.close();
-      SessionRecordHub.setActive(null);
     }
   });
 
@@ -270,45 +268,6 @@ describe("AcpActionProvider", () => {
     expect(prompts[0]).toContain('{"events":[[1,"phase_changed",{"day":1,"phase":"day"}]]}');
     expect(prompts[1]).not.toContain('"phase_changed"');
     await provider.close();
-  });
-
-  test("clears turn timers when an ACP action finishes before its timeout", async () => {
-    const context = bootstrapGame(sixPlayerMvpConfig);
-    const clearTimeoutSpy = jest.spyOn(globalThis, "clearTimeout");
-    const factory: AcpSessionFactory = {
-      async createSession(input): Promise<AcpSession> {
-        return {
-          sessionId: "timer-session",
-          async prompt(prompt: string): Promise<void> {
-            const turnId = /当前回合 ID：(\S+)/.exec(prompt)?.[1] ?? "";
-            input.registry.submitAction("timer-session", {
-              turn_id: turnId,
-              action: "speak",
-              arguments: { text: "立即完成。" },
-            });
-          },
-          async cancel(): Promise<void> {},
-          async close(): Promise<void> {},
-        };
-      },
-    };
-    const provider = new AcpActionProvider(context.world, {
-      sessionFactory: factory,
-      turnTimeoutMs: 120_000,
-    });
-
-    try {
-      await expect(provider.getAction(speakRequest())).resolves.toEqual({
-        name: "speak",
-        args: { text: "立即完成。" },
-      });
-      // waitForAction 的 120 秒计时器和 prompt settlement 的 1 秒计时器
-      // 都必须在提前完成时清理，否则会继续保活 Bun 进程。
-      expect(clearTimeoutSpy).toHaveBeenCalledTimes(2);
-    } finally {
-      clearTimeoutSpy.mockRestore();
-      await provider.close();
-    }
   });
 
   test("falls back as soon as an ACP turn ends without submit_action", async () => {

@@ -3,7 +3,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { PhaseManager } from "../../src/game/engine/phase_manager";
 import { ReplayFileStore } from "../../src/observability/replay_file_store";
-import { SessionRecordHub } from "../../src/observability/session_record_manager";
+import { getSessionRecorder } from "../../src/observability/recording_context";
 import { setRuntimeConfigOverride } from "../../src/runtime/config/runtime_config";
 import { runLlmGame, type RunLlmGameOptions } from "../../src/runtime/run_llm_game";
 import { cleanupTestTempDirectories, createTestTempDirectory } from "../support/temp_directory";
@@ -12,7 +12,6 @@ const restores: Array<() => void> = [];
 afterEach(async () => {
   for (const restore of restores.splice(0)) restore();
   setRuntimeConfigOverride(null);
-  SessionRecordHub.setActive(null);
   await cleanupTestTempDirectories();
 });
 
@@ -46,7 +45,7 @@ test("a failed game seals its partial replay and releases the active recorder", 
   expect(document.result).toEqual({ winner: null, reason: "runtime_error" });
   expect(document.players.map((player: { player_id: number }) => player.player_id)).toEqual([1, 2, 3, 4, 5, 6]);
   expect(document.events.map((event: { type: string }) => event.type)).toEqual(["god_private_game_info", "phase_changed"]);
-  expect(SessionRecordHub.getActive()).toBeNull();
+  expect(getSessionRecorder()).toBeNull();
 });
 
 test("failure to persist the final replay rejects the game result", async () => {
@@ -60,7 +59,7 @@ test("failure to persist the final replay rejects the game result", async () => 
   });
   restores.push(() => strictWrite.mockRestore());
   await expect(runLlmGame({ ...config, maxRuntimeMs: 0 })).rejects.toBe(failure);
-  expect(SessionRecordHub.getActive()).toBeNull();
+  expect(getSessionRecorder()).toBeNull();
 });
 
 test("a finalization failure does not hide the original game error", async () => {
@@ -79,5 +78,5 @@ test("a finalization failure does not hide the original game error", async () =>
   try { await runLlmGame(config); } catch (error) { caught = error; }
   expect(caught).toBeInstanceOf(AggregateError);
   expect((caught as AggregateError).errors).toEqual([primary, secondary]);
-  expect(SessionRecordHub.getActive()).toBeNull();
+  expect(getSessionRecorder()).toBeNull();
 });

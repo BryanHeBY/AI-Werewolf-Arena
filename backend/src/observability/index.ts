@@ -2,3 +2,4 @@
 export * from "./types";
 export * from "./replay_document";
 export * from "./session_record_manager";
+export * from "./recording_context";
