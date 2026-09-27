@@ -1,20 +1,14 @@
-/** 文件说明：按板子名解析配置文件，并输出规范化后的 BoardConfig。 */
-import fs from "fs";
-import path from "path";
-import { BoardConfig, HookConfig } from "../../core/domain/model";
+/** 将已读取的板子覆盖配置合并为规范化的 BoardConfig。 */
+import { z } from "zod";
+import { ActionWindow, BoardConfig, HookConfig, Role, WinCondition, WitchSelfHealRule } from "../../core/domain/model";
 import { getDefaultConfigNormalizerRegistry } from "../../game/mechanisms";
 import { sixPlayerMvpConfig } from "./six_player_mvp";
 import { twelvePlayerStandardConfig } from "./twelve_player_standard";
 
 /** 已支持的板子标识。 */
 export type BoardName = "six_player_mvp" | "twelve_player_standard";
-/** 解析配置时的可选参数。 */
-export interface ResolveBoardConfigOptions {
-  board?: string;
-  configDir?: string;
-}
 type JsonObject = Record<string, unknown>;
-type BoardOverride = Omit<
+export type BoardOverride = Omit<
   Partial<BoardConfig>,
   "hooks" | "sheriff" | "witch" | "tieBreaker" | "selfDestruct"
 > & {
@@ -56,6 +50,59 @@ type StructuredBoardConfig = {
     };
   };
 };
+
+const tieBreaker = z.enum(["min_id", "min_seat", "no_elimination", "no_kill"]);
+const hooks = z.object({
+  onDaybreak: z.boolean().optional(),
+  onPreElection: z.boolean().optional(),
+  onPreVote: z.boolean().optional(),
+  onPerSpeechGap: z.boolean().optional(),
+});
+const flatOverride = z.object({
+  boardSize: z.number().int().positive().optional(),
+  enableSheriff: z.boolean().optional(),
+  initialSheriffSeat: z.number().int().positive().optional(),
+  winCondition: z.enum(WinCondition).optional(),
+  winConditions: z.array(z.enum(WinCondition)).optional(),
+  hooks: hooks.optional(),
+  selfDestruct: z.object({ enabledWindows: z.array(z.enum(ActionWindow)) }).optional(),
+  sheriff: z.object({ voteWeight: z.number().positive().optional() }).optional(),
+  witch: z.object({ canSelfHeal: z.enum(WitchSelfHealRule).optional() }).optional(),
+  tieBreaker: z.object({
+    exileVote: tieBreaker.optional(), wolfKillVote: tieBreaker.optional(), sheriffVote: tieBreaker.optional(),
+  }).optional(),
+  roleSetups: z.array(z.object({ role: z.enum(Role), count: z.number().int().nonnegative() })).optional(),
+});
+const structuredOverride = z.object({
+  board: z.object({
+    size: z.number().int().positive().optional(),
+    roleSetups: flatOverride.shape.roleSetups,
+  }).optional(),
+  rules: z.object({
+    winCondition: flatOverride.shape.winCondition,
+    winConditions: flatOverride.shape.winConditions,
+    hooks: hooks.optional(),
+  }).optional(),
+  mechanisms: z.object({
+    sheriff: z.object({
+      enabled: z.boolean().optional(),
+      initialSeat: z.number().int().positive().optional(),
+      voteWeight: z.number().positive().optional(),
+      tieBreaker: tieBreaker.optional(),
+    }).optional(),
+    selfDestruct: z.object({ enabledWindows: z.array(z.enum(ActionWindow)).optional() }).optional(),
+    tieBreaker: z.object({ exileVote: tieBreaker.optional(), wolfKillVote: tieBreaker.optional() }).optional(),
+  }).optional(),
+  roles: z.object({ witch: z.object({ selfHeal: z.enum(WitchSelfHealRule).optional() }).optional() }).optional(),
+});
+
+function validateOverride(schema: z.ZodType, value: unknown): void {
+  const result = schema.safeParse(value);
+  if (!result.success) {
+    const field = result.error.issues[0]?.path.join(".") || "document";
+    throw new Error(`board_config_invalid_override_field: ${field}`);
+  }
+}
 
 function isJsonObject(value: unknown): value is JsonObject {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -329,16 +376,18 @@ function parseStructuredBoardOverride(raw: StructuredBoardConfig): BoardOverride
 /** 统一解析“单个配置块”成覆盖层（兼容新旧两种结构）。 */
 function toBoardOverride(value: unknown): BoardOverride | null {
   if (isBoardOverrideShape(value)) {
+    validateOverride(flatOverride, value);
     return value as BoardOverride;
   }
   if (isStructuredBoardOverrideShape(value)) {
+    validateOverride(structuredOverride, value);
     return parseStructuredBoardOverride(value);
   }
   return null;
 }
 
 /** 从 json 根对象提取目标板子的覆盖配置（含 boards/default 合并）。 */
-function extractOverride(raw: unknown, board: BoardName): BoardOverride | null {
+export function parseBoardOverride(raw: unknown, board: BoardName): BoardOverride | null {
   const direct = toBoardOverride(raw);
   if (direct) {
     return direct;
@@ -364,70 +413,12 @@ function extractOverride(raw: unknown, board: BoardName): BoardOverride | null {
   return null;
 }
 
-/** 按优先级扫描配置目录，读取首个可用覆盖项。 */
-function readOverrideFromDir(
-  board: BoardName,
-  options?: ResolveBoardConfigOptions,
-  log?: (text: string) => void,
-): BoardOverride | null {
-  const cwd = process.cwd();
-  const rootDir = cwd.endsWith("/backend") ? path.resolve(cwd, "..") : path.resolve(cwd);
-  const configuredDir = options?.configDir?.trim() || process.env.GAME_CONFIGS_DIR?.trim();
-  if (!configuredDir) {
-    log?.("[board_config] config dir missing: set GAME_CONFIGS_DIR");
-    return null;
-  }
-  const configDir = path.isAbsolute(configuredDir)
-    ? configuredDir
-    : path.resolve(rootDir, configuredDir);
-  if (!fs.existsSync(configDir)) {
-    log?.(`[board_config] config dir missing: ${configDir}`);
-    return null;
-  }
-  const candidates: string[] = [];
-  const boardsDir = path.resolve(configDir, "boards");
-  const customName = options?.board?.trim();
-  if (customName) {
-    candidates.push(path.resolve(boardsDir, `${customName}.json`));
-    candidates.push(path.resolve(configDir, `${customName}.json`));
-  }
-  candidates.push(path.resolve(boardsDir, `${board}.json`));
-  candidates.push(path.resolve(configDir, `${board}.json`));
-  candidates.push(path.resolve(boardsDir, "game-config.json"));
-  candidates.push(path.resolve(configDir, "game-config.json"));
-  for (const file of candidates) {
-    if (!fs.existsSync(file)) {
-      continue;
-    }
-    try {
-      const text = fs.readFileSync(file, "utf-8");
-      const json = JSON.parse(text) as unknown;
-      const override = extractOverride(json, board);
-      if (override) {
-        log?.(`[board_config] using override file=${file}`);
-        return override;
-      }
-      log?.(`[board_config] skip invalid override shape file=${file}`);
-    } catch (error) {
-      log?.(`[board_config] read failed file=${file} err=${String(error)}`);
-    }
-  }
-  return null;
-}
-
-/** 解析并规范化板子配置（含兼容旧结构与机制级 normalizer）。 */
+/** 合并并规范化板子配置；文件查找由加载层负责。 */
 export function resolveBoardConfig(
   board: BoardName,
-  optionsOrLog?: ResolveBoardConfigOptions | ((text: string) => void),
-  logMaybe?: (text: string) => void,
+  override: BoardOverride | null = null,
 ): BoardConfig {
-  const options =
-    typeof optionsOrLog === "function" || optionsOrLog === undefined
-      ? undefined
-      : optionsOrLog;
-  const log = typeof optionsOrLog === "function" ? optionsOrLog : logMaybe;
   const base = baseBoard(board);
-  const override = readOverrideFromDir(board, options, log);
   const merged = override ? mergeBoardConfig(base, override) : base;
   return getDefaultConfigNormalizerRegistry().normalize(merged);
 }

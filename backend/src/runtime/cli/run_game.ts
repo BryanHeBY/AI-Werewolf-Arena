@@ -1,5 +1,6 @@
 import { loadRuntimeConfig } from "../config/load_config";
-import { resolveGameSetup } from "../config/resolve_game_setup";
+import { loadBoardOverride } from "../config/load_board_override";
+import { resolveGameBoard, resolveGameSetup } from "../config/resolve_game_setup";
 import { runGame } from "../game_runner";
 import type { RunGameOptions } from "../config/resolve_game_setup";
 import type { GameBoard } from "../config/contracts";
@@ -39,7 +40,9 @@ function parseArgs(argv: string[]): { configDir: string; gameName: string; overr
 export async function main(argv = process.argv.slice(2)): Promise<void> {
   const args = parseArgs(argv);
   const runtime = await loadRuntimeConfig({ configDir: args.configDir, gameName: args.gameName });
-  const setup = resolveGameSetup(runtime, args.overrides, { configDir: args.configDir, log: (line) => console.log(line) });
+  const board = resolveGameBoard(runtime, args.overrides);
+  const boardOverride = await loadBoardOverride(args.configDir, board, (line) => console.log(line));
+  const setup = resolveGameSetup(runtime, args.overrides, boardOverride);
   await runGame(setup);
 }
 

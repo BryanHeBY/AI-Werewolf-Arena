@@ -1,6 +1,6 @@
 import type { BoardConfig } from "../../core";
 import type { GameConfig, GameAgentSelection, ResolvedAgentRuntimeProfile, ResolvedAuditConfig, RuntimeConfig } from "./contracts";
-import { resolveBoardConfig } from "../scenarios/board_config_resolver";
+import { resolveBoardConfig, type BoardName, type BoardOverride } from "../scenarios/board_config_resolver";
 
 export type RunGameOptions = Required<Omit<GameConfig, "agent" | "roleAgents" | "playerAgents" | "recordRootDir">> & {
   recordRootDir?: string;
@@ -13,6 +13,14 @@ export interface ResolvedGameSetup {
   playerProfiles: Readonly<Record<string, ResolvedAgentRuntimeProfile>>;
   roleProfiles: Readonly<Record<string, ResolvedAgentRuntimeProfile>>;
   audit: ResolvedAuditConfig | null;
+}
+
+export function resolveGameBoard(runtime: RuntimeConfig, overrides: Partial<RunGameOptions> = {}): BoardName {
+  const board = overrides.board ?? runtime.game.board ?? "six_player_mvp";
+  if (board !== "six_player_mvp" && board !== "twelve_player_standard") {
+    throw new Error(`runtime_config_board_invalid: ${board}`);
+  }
+  return board;
 }
 
 export function resolveAgentProfileByName(runtime: RuntimeConfig, agentName?: string): ResolvedAgentRuntimeProfile {
@@ -65,14 +73,14 @@ function resolveSelections(
 export function resolveGameSetup(
   runtime: RuntimeConfig,
   overrides: Partial<RunGameOptions> = {},
-  boardSource: { configDir?: string; log?: (text: string) => void } = {},
+  boardOverride: BoardOverride | null = null,
 ): ResolvedGameSetup {
   if (!runtime.providers.items[runtime.providers.default] || !runtime.agents.items[runtime.agents.default]) {
     throw new Error("runtime_config_missing_provider_or_agent_defaults");
   }
   const game = runtime.game;
   const options: RunGameOptions = {
-    board: overrides.board ?? game.board ?? "six_player_mvp",
+    board: resolveGameBoard(runtime, overrides),
     maxDays: overrides.maxDays ?? game.maxDays ?? 10,
     maxRuntimeMs: overrides.maxRuntimeMs ?? game.maxRuntimeMs ?? 30000,
     llmTimeoutMs: overrides.llmTimeoutMs ?? game.llmTimeoutMs ?? 30000,
@@ -89,10 +97,7 @@ export function resolveGameSetup(
   const auditConfig = runtime.debugSummary?.agent;
   return {
     options,
-    boardConfig: resolveBoardConfig(options.board, {
-      board: options.board,
-      ...(boardSource.configDir ? { configDir: boardSource.configDir } : {}),
-    }, boardSource.log),
+    boardConfig: resolveBoardConfig(options.board, boardOverride),
     defaultProfile: resolveAgentProfileByName(runtime, game.agent),
     playerProfiles: resolveSelections(runtime, game.playerAgents),
     roleProfiles: resolveSelections(runtime, game.roleAgents),
