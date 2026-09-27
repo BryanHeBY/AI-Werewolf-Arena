@@ -2,10 +2,10 @@
 import { ToolName } from "../../../core/domain/model";
 import { COMMON_TOOL_SPECS } from "../common/tool_specs";
 import { StageDirectiveRule, ToolSpec } from "../contracts";
-import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../roles/profile_registry";
+import { RoleCatalog, getDefaultRoleCatalog } from "../roles/catalog";
 import { SHERIFF_TOOL_SPECS } from "../sheriff/tool_specs";
 
-function buildDefaultSpecs(roleProfileRegistry: RoleProfileRegistry): ToolSpec[] {
+function buildDefaultSpecs(roleProfileRegistry: RoleCatalog): ToolSpec[] {
   const specs: ToolSpec[] = [...COMMON_TOOL_SPECS, ...SHERIFF_TOOL_SPECS];
   for (const profile of roleProfileRegistry.all()) {
     if (profile.toolSpecs) {
@@ -16,7 +16,7 @@ function buildDefaultSpecs(roleProfileRegistry: RoleProfileRegistry): ToolSpec[]
 }
 
 function buildDefaultStageDirectives(
-  roleProfileRegistry: RoleProfileRegistry,
+  roleProfileRegistry: RoleCatalog,
 ): StageDirectiveRule[] {
   const directives: StageDirectiveRule[] = [];
   for (const profile of roleProfileRegistry.all()) {
@@ -35,7 +35,7 @@ export class ToolSpecRegistry {
   constructor(
     specs?: ToolSpec[],
     stageDirectives?: StageDirectiveRule[],
-    roleProfileRegistry: RoleProfileRegistry = getDefaultRoleProfileRegistry(),
+    roleProfileRegistry: RoleCatalog = getDefaultRoleCatalog(),
   ) {
     const effectiveSpecs = specs ?? buildDefaultSpecs(roleProfileRegistry);
     const effectiveDirectives =

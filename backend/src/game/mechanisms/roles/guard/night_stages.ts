@@ -2,7 +2,7 @@
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, Role, StatusMark } from "../../../../core/domain/model";
-import { safeRecordLogicOp } from "../../../../observability";
+import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { getGuardState } from "../private_state";
 

@@ -1,7 +1,7 @@
 /** 文件说明：统一注册与执行投票/死亡相关机制钩子。 */
 import { EntityId, GameEvent, StatusMark } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
-import { getDefaultRoleProfileRegistry } from "../roles/profile_registry";
+import { getDefaultRoleCatalog } from "../roles/catalog";
 
 /** 放逐钩子返回结果。 */
 export interface VotedOutResult {
@@ -33,14 +33,14 @@ export type DeathHook = (
 ) => Promise<DeathHookResult>;
 
 function buildDefaultVotedOutHooks(): VotedOutHook[] {
-  return getDefaultRoleProfileRegistry()
+  return getDefaultRoleCatalog()
     .all()
     .map((profile) => profile.votedOutHook)
     .filter((hook): hook is VotedOutHook => Boolean(hook));
 }
 
 function buildDefaultDeathHooks(): DeathHook[] {
-  return getDefaultRoleProfileRegistry()
+  return getDefaultRoleCatalog()
     .all()
     .map((profile) => profile.deathHook)
     .filter((hook): hook is DeathHook => Boolean(hook));

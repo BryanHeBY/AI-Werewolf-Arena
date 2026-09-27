@@ -4,6 +4,8 @@ import { StatusMarksComponent } from "../../../core/domain/components/status_mar
 import {
   ActionProvider,
   ActionRequest,
+  ActionRequestExtras,
+  ActionStage,
   BoardConfig,
   EntityId,
   GameEvent,
@@ -23,7 +25,7 @@ import {
   NightStageRegistry,
   NightStageState,
 } from "../../mechanisms";
-import { safeRecordLogicOp } from "../../../observability";
+import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { GameActionRequestFactory } from "../action_request_factory";
 
 export interface NightPipelineDependencies {
@@ -94,7 +96,7 @@ export class NightPipeline {
       makeRequest: (
         actorId: EntityId,
         allowedTools: ActionRequest["allowedTools"],
-        context: ActionRequest["context"],
+        context: ActionRequestExtras & { stage: ActionStage },
       ) => this.makeRequest(requests, actorId, allowedTools, context),
       getAliveByRole: (role: Role) => this.getAliveByRole(role),
       ensureMarks: (entityId: EntityId) => this.ensureMarks(entityId),
@@ -137,14 +139,14 @@ export class NightPipeline {
     requests: GameActionRequestFactory,
     actorId: EntityId,
     allowedTools: ActionRequest["allowedTools"],
-    context: ActionRequest["context"],
+    context: ActionRequestExtras & { stage: ActionStage },
   ): ActionRequest {
     const { stage, ...extraContext } = context;
     return requests.create({
       phase: Phase.Night,
       actorId,
       allowedTools,
-      stage: String(stage ?? "night_action"),
+      stage,
       requiresAction: true,
       summary: "夜间行动阶段需完成一次有效动作。",
       context: {

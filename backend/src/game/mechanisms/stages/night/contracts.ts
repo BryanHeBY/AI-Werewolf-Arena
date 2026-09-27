@@ -3,7 +3,10 @@ import { StatusMarksComponent } from "../../../../core/domain/components/status_
 import {
   ActionProvider,
   ActionRequest,
+  ActionRequestExtras,
+  ActionStage,
   EntityId,
+  GameEvent,
   NightSummary,
   Role,
 } from "../../../../core/domain/model";
@@ -23,13 +26,13 @@ export interface NightStageState {
 export interface NightStageContext {
   world: World;
   toolGateway: ToolGateway;
-  events: Array<{ timestamp: number; type: string; payload: Record<string, unknown> }>;
+  events: GameEvent[];
   actionProvider: ActionProvider;
   currentDay(): number;
   makeRequest(
     actorId: EntityId,
     allowedTools: ActionRequest["allowedTools"],
-    context: ActionRequest["context"],
+    context: ActionRequestExtras & { stage: ActionStage },
   ): ActionRequest;
   getAliveByRole(role: Role): EntityId[];
   ensureMarks(entityId: EntityId): StatusMarksComponent;

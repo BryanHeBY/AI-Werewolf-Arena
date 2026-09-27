@@ -1,6 +1,7 @@
 import {
   ActionRequest,
-  ActionRequestContext,
+  ActionRequestExtras,
+  ActionStage,
   ActionWindow,
   EntityId,
   GameEvent,
@@ -28,28 +29,20 @@ export class GameActionRequestFactory {
     phase: Phase;
     actorId: EntityId;
     allowedTools: ToolName[];
-    stage: string;
+    stage: ActionStage;
     requiresAction: boolean;
     summary: string;
     actionWindow?: ActionWindow;
-    context?: ActionRequestContext;
+    context?: ActionRequestExtras;
   }): ActionRequest {
-    // 日次、阶段层级、可见事件与行动约束由引擎拥有；调用方不能借由 extra
-    // context 伪造这些公共事实。
-    const {
-      day: _ignoredDay,
-      stage: _ignoredStage,
-      visible_events: _ignoredVisibleEvents,
-      turn_constraints: _ignoredConstraints,
-      ...extraContext
-    } = input.context ?? {};
+    // 公共事实由工厂生成；调用方只能提供机制特有的信息。
     return {
       phase: input.phase,
       actorId: input.actorId,
       allowedTools: [...input.allowedTools],
       ...(input.actionWindow ? { actionWindow: input.actionWindow } : {}),
       context: {
-        ...extraContext,
+        ...input.context,
         day: this.day,
         stage: input.stage,
         turn_constraints: buildTurnConstraintContext({

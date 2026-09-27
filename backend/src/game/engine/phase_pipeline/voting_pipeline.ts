@@ -1,4 +1,3 @@
-import { AliveComponent } from "../../../core/domain/components/alive";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { IdentityComponent } from "../../../core/domain/entities/player";
 import { VotingRightComponent } from "../../../core/domain/components/voting_right";
@@ -14,10 +13,11 @@ import {
 } from "../../../core/domain/model";
 import { RoleRegistry } from "../../../core/domain/registries/role_registry";
 import { ToolGateway } from "../../gateway/tool_gateway";
-import { safeRecordLogicOp } from "../../../observability";
+import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { EventRegistry } from "../event_registry";
 import { World } from "../../../core/domain/world";
 import { GameActionRequestFactory } from "../action_request_factory";
+import { SelfDestructWindow, isSelfDestructWindowEnabled } from "../self_destruct_window";
 
 /**
  * 投票流水线执行结果。
@@ -50,17 +50,17 @@ export interface VotingPipelineDependencies {
 export class VotingPipeline {
   private static readonly MAX_VOTE_RETRIES = 3;
   private readonly world: World;
-  private readonly roleRegistry: RoleRegistry;
+  private readonly selfDestructWindow: SelfDestructWindow;
   private readonly toolGateway: ToolGateway;
   private readonly eventRegistry: EventRegistry;
   private readonly events: GameEvent[];
 
   constructor(dependencies: VotingPipelineDependencies) {
     this.world = dependencies.world;
-    this.roleRegistry = dependencies.roleRegistry;
     this.toolGateway = dependencies.toolGateway;
     this.eventRegistry = dependencies.eventRegistry;
     this.events = dependencies.events;
+    this.selfDestructWindow = new SelfDestructWindow(this.world, dependencies.roleRegistry, this.toolGateway, this.events);
   }
 
   async execute(
@@ -84,13 +84,9 @@ export class VotingPipeline {
     });
     if (
       config.hooks.onPreVote &&
-      this.isSelfDestructWindowEnabled(config, ActionWindow.OnPreVote)
+      isSelfDestructWindowEnabled(config, ActionWindow.OnPreVote)
     ) {
-      const exploded = await this.trySelfDestruct(
-        requests,
-        actionProvider,
-        ActionWindow.OnPreVote,
-      );
+      const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnPreVote, Phase.Voting);
       if (exploded !== null) {
         safeRecordLogicOp({
           scope: "phase_pipeline",
@@ -359,80 +355,6 @@ export class VotingPipeline {
     };
   }
 
-  private async trySelfDestruct(
-    requests: GameActionRequestFactory,
-    actionProvider: ActionProvider,
-    window: ActionWindow,
-  ): Promise<EntityId | null> {
-    const actors = this.world.getAliveEntityIds().filter((id) => {
-      const role = this.world.getComponent<{ role: any }>(id, COMPONENT.Role);
-      if (!role) {
-        return false;
-      }
-      return this.roleRegistry.getAllowedTools(role.role).includes("self_destruct");
-    });
-
-    // 并行触发狼人自爆思考，减少 pre-vote 窗口总时延。
-    const picks = await Promise.all(
-      actors.map(async (actorId) => {
-        const req = requests.create({
-          phase: Phase.Voting,
-          actorId,
-          actionWindow: window,
-          allowedTools: ["self_destruct"],
-          stage: window,
-          requiresAction: false,
-          summary: "放逐前自爆窗口可选择执行自爆，也可结束回合。",
-          context: {
-          },
-        });
-
-        const action = await actionProvider.getAction(req);
-        if (action?.name !== "self_destruct") {
-          return null;
-        }
-
-        const result = this.toolGateway.validateAndSanitize(
-          this.world,
-          actorId,
-          action,
-          {
-            phase: Phase.Voting,
-            actionWindow: window,
-            allowSelfDestruct: true,
-          },
-        );
-        if (!result.ok) {
-          return null;
-        }
-        return actorId;
-      }),
-    );
-
-    // 多狼同时自爆请求时按座位/ID 最小值决议，保证确定性。
-    const picked = picks
-      .filter((id): id is EntityId => id !== null)
-      .sort((a, b) => a - b)[0];
-    if (picked === undefined) {
-      return null;
-    }
-
-    const alive = this.world.getComponent<AliveComponent>(picked, COMPONENT.Alive);
-    if (!alive || !alive.alive) {
-      return null;
-    }
-
-    alive.alive = false;
-    this.events.push({
-      timestamp: Date.now(),
-      type: "wolf_self_destruct",
-      payload: {
-        wolfId: picked,
-        window,
-      },
-    });
-    return picked;
-  }
 
   /**
    * 依据计票结果选出放逐目标，平票按编号最小值决议。
@@ -474,14 +396,4 @@ export class VotingPipeline {
     return Number(entries[0][0]);
   }
 
-  private isSelfDestructWindowEnabled(
-    config: BoardConfig,
-    window: ActionWindow,
-  ): boolean {
-    const enabled = config.selfDestruct?.enabledWindows;
-    if (!enabled || enabled.length === 0) {
-      return window === ActionWindow.OnPreVote;
-    }
-    return enabled.includes(window);
-  }
 }

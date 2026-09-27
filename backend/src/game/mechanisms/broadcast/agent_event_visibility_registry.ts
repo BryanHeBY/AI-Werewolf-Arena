@@ -63,8 +63,8 @@ export class AgentEventVisibilityRegistry {
     if (WOLVES_ONLY_EVENT_TYPES.has(event.type)) {
       return getDefaultVisibilityRegistry().isWolfPlayer(world, actorId);
     }
-    if (ACTOR_ONLY_EVENT_TYPES.has(event.type)) {
-      return Number(event.payload.actorId) === actorId;
+    if (ACTOR_ONLY_EVENT_TYPES.has(event.type) && "actorId" in event.payload) {
+      return event.payload.actorId === actorId;
     }
     return false;
   }

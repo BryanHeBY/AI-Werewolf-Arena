@@ -1,10 +1,11 @@
 const path = require("node:path");
 
 const boundaries = [
-  { layer: "core", forbidden: ["app", "game", "ai", "runtime", "server", "infra", "observability", "replay"] },
-  { layer: "game/engine", forbidden: ["app", "ai", "runtime", "server", "infra", "replay"] },
-  { layer: "game/gateway", forbidden: ["app", "ai", "runtime", "server", "infra", "replay"] },
-  { layer: "runtime/scenarios", forbidden: ["app", "ai", "game/engine", "game/gateway", "runtime", "server", "infra", "observability", "replay"] },
+  { layer: "core", forbidden: ["app", "game", "ai", "runtime", "server", "infra", "recording", "audit", "replay"] },
+  { layer: "game/engine", forbidden: ["app", "ai", "runtime", "server", "infra", "audit", "replay"] },
+  { layer: "game/gateway", forbidden: ["app", "ai", "runtime", "server", "infra", "audit", "replay"] },
+  { layer: "runtime/scenarios", forbidden: ["app", "ai", "game/engine", "game/gateway", "runtime", "server", "infra", "recording", "audit", "replay"] },
+  { layer: "recording", forbidden: ["app", "ai", "runtime", "game", "audit", "replay"] },
 ];
 
 function within(file, directory) {

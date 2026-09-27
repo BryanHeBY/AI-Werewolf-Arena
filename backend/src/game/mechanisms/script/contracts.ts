@@ -1,5 +1,5 @@
 /** 文件说明：脚本回放与终端渲染相关契约。 */
-import { GameEvent } from "../../../core/domain/model";
+import type { GameEvent } from "../../../core/domain/model";
 
 /** 终端 live 输出类型。 */
 export type ScriptLiveKind =
@@ -16,14 +16,17 @@ export interface ScriptLiveRender {
   text: string;
 }
 
-/** 事件 -> 聊天行处理器签名。 */
-export type ScriptChatLineHandler = (event: GameEvent) => string | null;
-/** 事件 -> 判词处理器签名。 */
-export type ScriptJudgeLineHandler = (event: GameEvent) => string | null;
-/** 事件 -> 回放阶段处理器签名。 */
-export type ScriptReplayStageHandler = (event: GameEvent) => string | null;
-/** 事件 -> live 渲染处理器签名。 */
-export type ScriptLiveRenderHandler = (
-  event: GameEvent,
-  printPrivateEvents: boolean,
-) => ScriptLiveRender[] | null;
+/** A handler receives the payload belonging to its registered event type. */
+type ScriptEventHandlers<T> = {
+  [K in GameEvent["type"]]?: (event: Extract<GameEvent, { type: K }>) => T;
+};
+
+export type ScriptChatLineHandlers = ScriptEventHandlers<string | null>;
+export type ScriptJudgeLineHandlers = ScriptEventHandlers<string | null>;
+export type ScriptReplayStageHandlers = ScriptEventHandlers<string | null>;
+export type ScriptLiveRenderHandlers = {
+  [K in GameEvent["type"]]?: (
+    event: Extract<GameEvent, { type: K }>,
+    printPrivateEvents: boolean,
+  ) => ScriptLiveRender[] | null;
+};

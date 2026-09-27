@@ -7,7 +7,7 @@ import { VotingRightComponent } from "../../../../core/domain/components/voting_
 import { EntityId, GameEvent, Role } from "../../../../core/domain/model";
 import { World } from "../../../../core/domain/world";
 import { VotedOutResult } from "../../hooks/hook_registry";
-import { transferOrDestroySheriffBadge } from "../../sheriff/sheriff_badge";
+import { transferOrDestroySheriffBadge } from "../../sheriff/badge";
 import { setIdiotState } from "../private_state";
 
 /** 白痴放逐钩子实现。 */

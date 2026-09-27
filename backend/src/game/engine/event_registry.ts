@@ -5,7 +5,7 @@ import { RoleComponent } from "../../core/domain/components/role";
 import { EntityId, GameEvent, StatusMark } from "../../core/domain/model";
 import { getDefaultHookRegistry, HookRegistry } from "../mechanisms";
 import { World } from "../../core/domain/world";
-import { transferOrDestroySheriffBadge } from "../mechanisms/sheriff/sheriff_badge";
+import { transferOrDestroySheriffBadge } from "../mechanisms/sheriff/badge";
 
 /**
  * 放逐阶段处理结果。

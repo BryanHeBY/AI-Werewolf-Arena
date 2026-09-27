@@ -1,7 +1,7 @@
 /** 文件说明：女巫夜间用药阶段处理。 */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
-import { Phase, Role, StatusMark, WitchSelfHealRule } from "../../../../core/domain/model";
+import { Phase, PotionType, Role, StatusMark, WitchSelfHealRule } from "../../../../core/domain/model";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { getWitchState } from "../private_state";
 
@@ -38,7 +38,7 @@ const witchActionStage: NightStageHandler = {
         ctx.events.push({
           timestamp: Date.now(),
           type: "witch_potion_skipped",
-          payload: { actorId: witchId, targetId: null, potionType: "none", reason: "no_action" },
+          payload: { actorId: witchId, targetId: null, potionType: PotionType.None, reason: "no_action" },
         });
         continue;
       }
@@ -53,7 +53,7 @@ const witchActionStage: NightStageHandler = {
           payload: {
             actorId: witchId,
             targetId: action.args.target_id ?? null,
-            potionType: "none",
+            potionType: PotionType.None,
             reason: "invalid_action",
           },
         });
@@ -75,7 +75,7 @@ const witchActionStage: NightStageHandler = {
         ctx.events.push({
           timestamp: Date.now(),
           type: "witch_potion_used",
-          payload: { actorId: witchId, targetId, potionType: "heal" },
+          payload: { actorId: witchId, targetId, potionType: PotionType.Heal },
         });
       }
 
@@ -86,7 +86,7 @@ const witchActionStage: NightStageHandler = {
         ctx.events.push({
           timestamp: Date.now(),
           type: "witch_potion_used",
-          payload: { actorId: witchId, targetId, potionType: "poison" },
+          payload: { actorId: witchId, targetId, potionType: PotionType.Poison },
         });
       }
 
@@ -94,7 +94,7 @@ const witchActionStage: NightStageHandler = {
         ctx.events.push({
           timestamp: Date.now(),
           type: "witch_potion_skipped",
-          payload: { actorId: witchId, targetId, potionType: "none" },
+          payload: { actorId: witchId, targetId, potionType: PotionType.None },
         });
       }
     }

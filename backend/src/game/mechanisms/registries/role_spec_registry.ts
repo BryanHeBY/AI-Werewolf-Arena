@@ -3,30 +3,23 @@ import { Role, ToolName } from "../../../core/domain/model";
 import { RoleRegistry } from "../../../core/domain/registries/role_registry";
 import { COMMON_TOOL_SPECS } from "../common/tool_specs";
 import { RoleSpec } from "../contracts";
-import {
-  getDefaultRolePromptRegistry,
-  RolePromptRegistry,
-} from "../roles/role_prompt_registry";
-import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../roles/profile_registry";
+import { RoleCatalog, getDefaultRoleCatalog } from "../roles/catalog";
 
 /** 角色规格注册表。 */
 export class RoleSpecRegistry {
   private readonly specByRole = new Map<Role, RoleSpec>();
 
   constructor(
-    roleProfileRegistry: RoleProfileRegistry = getDefaultRoleProfileRegistry(),
-    promptRegistry: RolePromptRegistry = getDefaultRolePromptRegistry(),
+    roleCatalog: RoleCatalog = getDefaultRoleCatalog(),
   ) {
     const commonTools = COMMON_TOOL_SPECS.map((spec) => spec.name);
     for (const role of Object.values(Role)) {
-      const roleTools = roleProfileRegistry
-        .get(role)
-        ?.toolSpecs?.map((spec) => spec.name) ?? [];
+      const roleTools = roleCatalog.get(role)?.toolSpecs?.map((spec) => spec.name) ?? [];
       const allowedTools = Array.from(new Set([...commonTools, ...roleTools])) as ToolName[];
       this.specByRole.set(role, {
         role,
-        label: promptRegistry.label(role),
-        skillBrief: promptRegistry.skillBrief(role),
+        label: roleCatalog.label(role),
+        skillBrief: roleCatalog.skillBrief(role),
         allowedTools,
       });
     }

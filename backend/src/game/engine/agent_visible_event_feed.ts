@@ -34,7 +34,7 @@ function projectPayload(event: GameEvent): Record<string, unknown> {
     const { tally: _derivedTally, ...payload } = event.payload;
     return payload;
   }
-  return event.payload;
+  return { ...event.payload };
 }
 
 /**

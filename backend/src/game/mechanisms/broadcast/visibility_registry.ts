@@ -3,7 +3,7 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { Camp, EntityId, Role } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
-import { getDefaultRoleCampRegistry } from "../roles/camp_registry";
+import { getDefaultRoleCatalog } from "../roles/catalog";
 
 /** 广播受众身份视图。 */
 export interface AudienceIdentity {
@@ -13,7 +13,7 @@ export interface AudienceIdentity {
 
 /** 广播可见性判定注册器。 */
 export class VisibilityRegistry {
-  private readonly roleCampRegistry = getDefaultRoleCampRegistry();
+  private readonly roleCatalog = getDefaultRoleCatalog();
 
   isWolfPlayer(world: World, actorId: EntityId): boolean {
     const roleComp = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
@@ -30,7 +30,7 @@ export class VisibilityRegistry {
     if (!this.isRole(identity.role)) {
       return false;
     }
-    return this.roleCampRegistry.get(identity.role) === Camp.Wolf;
+    return this.roleCatalog.getCamp(identity.role) === Camp.Wolf;
   }
 
   private isRole(role: string): role is Role {

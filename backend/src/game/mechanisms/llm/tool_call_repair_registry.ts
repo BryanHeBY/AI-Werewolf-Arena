@@ -1,11 +1,11 @@
 /** 文件说明：聚合所有角色与机制的 LLM 修复规则。 */
 import { ToolName } from "../../../core/domain/model";
 import { COMMON_LLM_REPAIR_PACK } from "../common/llm_repair";
-import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../roles/profile_registry";
+import { RoleCatalog, getDefaultRoleCatalog } from "../roles/catalog";
 import { SHERIFF_LLM_REPAIR_PACK } from "../sheriff/llm_repair";
 import { CoerceContext, ToolRepairPack } from "./contracts";
 
-function buildDefaultPacks(roleProfileRegistry: RoleProfileRegistry): ToolRepairPack[] {
+function buildDefaultPacks(roleProfileRegistry: RoleCatalog): ToolRepairPack[] {
   const packs: ToolRepairPack[] = [COMMON_LLM_REPAIR_PACK, SHERIFF_LLM_REPAIR_PACK];
   for (const profile of roleProfileRegistry.all()) {
     if (profile.llmRepair) {
@@ -21,7 +21,7 @@ export class ToolCallRepairRegistry {
 
   constructor(
     packs?: ToolRepairPack[],
-    roleProfileRegistry: RoleProfileRegistry = getDefaultRoleProfileRegistry(),
+    roleProfileRegistry: RoleCatalog = getDefaultRoleCatalog(),
   ) {
     const effectivePacks = packs ?? buildDefaultPacks(roleProfileRegistry);
     for (const pack of effectivePacks) {

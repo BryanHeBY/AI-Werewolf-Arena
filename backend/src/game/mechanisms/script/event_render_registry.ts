@@ -1,11 +1,11 @@
 /** 文件说明：事件 -> 脚本回放文本/终端文本渲染注册表。 */
 import { GameEvent } from "../../../core/domain/model";
 import {
-  ScriptChatLineHandler,
-  ScriptJudgeLineHandler,
+  ScriptChatLineHandlers,
+  ScriptJudgeLineHandlers,
   ScriptLiveRender,
-  ScriptLiveRenderHandler,
-  ScriptReplayStageHandler,
+  ScriptLiveRenderHandlers,
+  ScriptReplayStageHandlers,
 } from "./contracts";
 import { GUARD_SCRIPT_LIVE_HANDLERS } from "../roles/guard/event_presenters";
 import { HUNTER_SCRIPT_JUDGE_HANDLERS } from "../roles/hunter/event_presenters";
@@ -24,12 +24,12 @@ import {
 } from "../sheriff/event_presenters";
 import { getDefaultTextLocalizationRegistry } from "../shared/text_localization_registry";
 
-const CHAT_HANDLERS: Record<string, ScriptChatLineHandler> = {
+const CHAT_HANDLERS: ScriptChatLineHandlers = {
   day_speech: (event) => `[白天][${event.payload.actorId}] ${event.payload.text}`,
   ...WOLF_SCRIPT_CHAT_HANDLERS,
 };
 
-const JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler> = {
+const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
   phase_changed: (event) => {
     const p = event.payload;
     if (p.phase === "night") {
@@ -60,16 +60,15 @@ const JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler> = {
   },
   night_resolved: (event) => {
     const p = event.payload;
-    const deaths = Array.isArray(p.deaths) ? p.deaths : [];
+    const deaths = p.deaths;
     if (deaths.length === 0) {
       return `昨夜是平安夜`;
     }
     return `昨夜死亡：${deaths.join("、")}号`;
   },
   vote_summary: (event) => {
-    const votes = Array.isArray(event.payload.votes) ? event.payload.votes : [];
-    const lineup = votes.map((item: any) => {
-      const weight = Number(item.weight ?? 1);
+    const lineup = event.payload.votes.map((item) => {
+      const weight = item.weight;
       if (item.abstain === true || item.targetId === null || item.targetId === undefined) {
         return weight !== 1 ? `${item.actorId}号->弃票(w=${weight})` : `${item.actorId}号->弃票`;
       }
@@ -95,7 +94,7 @@ const JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler> = {
   ...SHERIFF_SCRIPT_JUDGE_HANDLERS,
 };
 
-const REPLAY_STAGE_HANDLERS: Record<string, ScriptReplayStageHandler> = {
+const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
   phase_changed: (event) => String(event.payload.phase ?? "phase_changed"),
   day_speech: () => "day_speech",
   vote_cast: () => "voting",
@@ -115,12 +114,11 @@ const REPLAY_STAGE_HANDLERS: Record<string, ScriptReplayStageHandler> = {
   sheriff_elected: () => "sheriff",
 };
 
-const LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {
+const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
   god_private_game_info: (event) => {
-    const players = Array.isArray(event.payload.players) ? event.payload.players : [];
     const i18n = getDefaultTextLocalizationRegistry();
-    const roleView = players
-      .map((item: any) => `${item.seat ?? item.id}:${i18n.roleName(String(item.role ?? ""))}`)
+    const roleView = event.payload.players
+      .map((item) => `${item.seat}:${i18n.roleName(item.role)}`)
       .join(", ");
     return [{ kind: "god", text: `[live][上帝私有][开局] 角色分布 ${roleView}` }];
   },
@@ -143,18 +141,18 @@ const LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {
 export class ScriptEventRenderRegistry {
   toChatLine(event: GameEvent): string | null {
     const handler = CHAT_HANDLERS[event.type];
-    return handler ? handler(event) : null;
+    return handler ? (handler as (event: GameEvent) => string | null)(event) : null;
   }
 
   toJudgeLine(event: GameEvent): string | null {
     const handler = JUDGE_HANDLERS[event.type];
-    return handler ? handler(event) : null;
+    return handler ? (handler as (event: GameEvent) => string | null)(event) : null;
   }
 
   toReplayStage(event: GameEvent): string {
     const handler = REPLAY_STAGE_HANDLERS[event.type];
     if (handler) {
-      return handler(event) ?? event.type;
+      return (handler as (event: GameEvent) => string | null)(event) ?? event.type;
     }
     return event.type;
   }
@@ -162,7 +160,7 @@ export class ScriptEventRenderRegistry {
   toLiveRender(event: GameEvent, printPrivateEvents: boolean): ScriptLiveRender[] {
     const handler = LIVE_HANDLERS[event.type];
     if (handler) {
-      const rendered = handler(event, printPrivateEvents);
+      const rendered = (handler as (event: GameEvent, printPrivateEvents: boolean) => ScriptLiveRender[] | null)(event, printPrivateEvents);
       if (rendered) {
         return rendered;
       }

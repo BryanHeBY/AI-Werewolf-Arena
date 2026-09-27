@@ -1,7 +1,7 @@
 /** 文件说明：预言家事件的终端渲染。 */
-import { ScriptLiveRenderHandler } from "../../script/contracts";
+import { ScriptLiveRenderHandlers } from "../../script/contracts";
 
-export const SEER_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {
+export const SEER_SCRIPT_LIVE_HANDLERS: ScriptLiveRenderHandlers = {
   seer_checked: (event, printPrivateEvents) => {
     if (!printPrivateEvents) return [];
     return [

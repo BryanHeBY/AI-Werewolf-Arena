@@ -1,11 +1,11 @@
 /** 文件说明：聚合通用/角色/机制校验规则并提供统一校验入口。 */
 import { ToolName } from "../../../core/domain/model";
 import { COMMON_VALIDATION_RULES } from "../common/validation_rules";
-import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../roles/profile_registry";
+import { RoleCatalog, getDefaultRoleCatalog } from "../roles/catalog";
 import { SHERIFF_VALIDATION_RULES } from "../sheriff/validation_rules";
 import { ToolRuleMap, ValidationRuleContext } from "./contracts";
 
-function buildDefaultRules(roleProfileRegistry: RoleProfileRegistry): ToolRuleMap {
+function buildDefaultRules(roleProfileRegistry: RoleCatalog): ToolRuleMap {
   const rules: ToolRuleMap = {
     ...COMMON_VALIDATION_RULES,
     ...SHERIFF_VALIDATION_RULES,
@@ -24,7 +24,7 @@ export class ToolValidationRuleRegistry {
 
   constructor(
     rules?: ToolRuleMap,
-    roleProfileRegistry: RoleProfileRegistry = getDefaultRoleProfileRegistry(),
+    roleProfileRegistry: RoleCatalog = getDefaultRoleCatalog(),
   ) {
     this.rules = { ...(rules ?? buildDefaultRules(roleProfileRegistry)) };
   }

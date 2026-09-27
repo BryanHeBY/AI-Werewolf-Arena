@@ -1,26 +1,24 @@
 /** 文件说明：警长机制事件的裁判与终端渲染。 */
-import { ScriptJudgeLineHandler, ScriptLiveRenderHandler } from "../script/contracts";
+import { ScriptJudgeLineHandlers, ScriptLiveRenderHandlers } from "../script/contracts";
 
-export const SHERIFF_SCRIPT_JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandler> = {
+export const SHERIFF_SCRIPT_JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
   sheriff_nomination_summary: (event) => {
-    const candidates = Array.isArray(event.payload.candidates) ? event.payload.candidates : [];
+    const candidates = event.payload.candidates;
     return `现在开始竞选警长，上警玩家：${candidates.join("、")}号`;
   },
   sheriff_withdraw_summary: (event) => {
-    const withdrawn = Array.isArray(event.payload.withdrawn) ? event.payload.withdrawn : [];
+    const withdrawn = event.payload.withdrawn;
     return withdrawn.length === 0 ? "退水玩家：无" : `退水玩家：${withdrawn.join("、")}号`;
   },
   sheriff_candidates_finalized: (event) => {
-    const candidates = Array.isArray(event.payload.candidates) ? event.payload.candidates : [];
+    const candidates = event.payload.candidates;
     return `目前警上名单：${candidates.join("、")}号，请开始投票`;
   },
   sheriff_vote_summary: (event) => {
-    const votes = Array.isArray(event.payload.votes) ? event.payload.votes : [];
-    const lineup = votes.map((item) => {
-      const vote = item as Record<string, unknown>;
-      return vote.abstain === true || vote.targetId == null
-        ? `${vote.actorId}号->弃票`
-        : `${vote.actorId}号->${vote.targetId}号`;
+    const lineup = event.payload.votes.map((item) => {
+      return item.abstain || item.targetId === null
+        ? `${item.actorId}号->弃票`
+        : `${item.actorId}号->${item.targetId}号`;
     }).join("，");
     const winnerId = event.payload.winnerId;
     return winnerId == null
@@ -36,16 +34,16 @@ export const SHERIFF_SCRIPT_JUDGE_HANDLERS: Record<string, ScriptJudgeLineHandle
   },
 };
 
-export const SHERIFF_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandler> = {
+export const SHERIFF_SCRIPT_LIVE_HANDLERS: ScriptLiveRenderHandlers = {
   sheriff_candidate_declared: () => [],
   sheriff_nomination_summary: (event) => [
     {
       kind: "god",
-      text: `[live][上帝][上警] 现在开始竞选警长，上警玩家：${Array.isArray(event.payload.candidates) ? event.payload.candidates.join("、") : ""}号`,
+      text: `[live][上帝][上警] 现在开始竞选警长，上警玩家：${event.payload.candidates.join("、")}号`,
     },
   ],
   sheriff_withdraw_summary: (event) => {
-    const withdrawn = Array.isArray(event.payload.withdrawn) ? event.payload.withdrawn : [];
+    const withdrawn = event.payload.withdrawn;
     return [{
       kind: "god",
       text: withdrawn.length === 0
@@ -54,16 +52,14 @@ export const SHERIFF_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandle
     }];
   },
   sheriff_candidates_finalized: (event) => {
-    const candidates = Array.isArray(event.payload.candidates) ? event.payload.candidates : [];
+    const candidates = event.payload.candidates;
     return [{
       kind: "god",
       text: `[live][上帝] 目前警上名单：${candidates.join("、")}号，请开始投票`,
     }];
   },
   sheriff_vote_cast: (event) => {
-    const actorId = Number(event.payload.actorId);
-    const abstain = event.payload.abstain === true;
-    const targetId = event.payload.targetId == null ? null : Number(event.payload.targetId);
+    const { actorId, abstain, targetId } = event.payload;
     return [{
       kind: "action",
       text: abstain || targetId === null
@@ -72,12 +68,10 @@ export const SHERIFF_SCRIPT_LIVE_HANDLERS: Record<string, ScriptLiveRenderHandle
     }];
   },
   sheriff_vote_summary: (event) => {
-    const votes = Array.isArray(event.payload.votes) ? event.payload.votes : [];
-    const lineup = votes.map((item) => {
-      const vote = item as Record<string, unknown>;
-      return vote.abstain === true || vote.targetId == null
-        ? `${vote.actorId}号->弃票`
-        : `${vote.actorId}号->${vote.targetId}号`;
+    const lineup = event.payload.votes.map((item) => {
+      return item.abstain || item.targetId === null
+        ? `${item.actorId}号->弃票`
+        : `${item.actorId}号->${item.targetId}号`;
     }).join("，");
     const winnerId = event.payload.winnerId;
     return [{

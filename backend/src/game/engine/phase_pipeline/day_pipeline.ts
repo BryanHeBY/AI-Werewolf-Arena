@@ -11,9 +11,12 @@ import {
 } from "../../../core/domain/model";
 import { RoleRegistry } from "../../../core/domain/registries/role_registry";
 import { ToolGateway } from "../../gateway/tool_gateway";
-import { getDefaultSheriffMechanism, SheriffMechanism } from "../../mechanisms";
+import { electSheriffIfNeeded } from "../../mechanisms/sheriff/election";
+import { buildSpeakerOrder, chooseSpeakerDirection } from "../../mechanisms/sheriff/speaking_order";
+import { findSheriffId } from "../../mechanisms/sheriff/badge";
 import { World } from "../../../core/domain/world";
 import { GameActionRequestFactory } from "../action_request_factory";
+import { SelfDestructWindow, isSelfDestructWindowEnabled } from "../self_destruct_window";
 
 /**
  * 白天流水线执行结果。
@@ -35,7 +38,6 @@ export interface DayPipelineDependencies {
   roleRegistry: RoleRegistry;
   toolGateway: ToolGateway;
   events: GameEvent[];
-  sheriffMechanism?: SheriffMechanism;
 }
 
 /**
@@ -49,15 +51,13 @@ export class DayPipeline {
   private readonly roleRegistry: RoleRegistry;
   private readonly toolGateway: ToolGateway;
   private readonly events: GameEvent[];
-  private readonly sheriffMechanism: SheriffMechanism;
-
+  private readonly selfDestructWindow: SelfDestructWindow;
   constructor(dependencies: DayPipelineDependencies) {
     this.world = dependencies.world;
     this.roleRegistry = dependencies.roleRegistry;
     this.toolGateway = dependencies.toolGateway;
     this.events = dependencies.events;
-    this.sheriffMechanism =
-      dependencies.sheriffMechanism ?? getDefaultSheriffMechanism();
+    this.selfDestructWindow = new SelfDestructWindow(this.world, this.roleRegistry, this.toolGateway, this.events);
   }
 
   async execute(
@@ -71,7 +71,7 @@ export class DayPipeline {
       this.events,
       options.day,
     );
-    await this.sheriffMechanism.electSheriffIfNeeded({
+    await electSheriffIfNeeded({
       world: this.world,
       events: this.events,
       toolGateway: this.toolGateway,
@@ -86,7 +86,7 @@ export class DayPipeline {
         interrupted: false,
       };
     }
-    const speakerDirection = await this.sheriffMechanism.chooseSpeakerDirection({
+    const speakerDirection = await chooseSpeakerDirection({
       world: this.world,
       events: this.events,
       toolGateway: this.toolGateway,
@@ -95,12 +95,8 @@ export class DayPipeline {
       enableSheriff: config.enableSheriff,
     });
 
-    if (config.hooks.onDaybreak && this.isSelfDestructWindowEnabled(config, ActionWindow.OnDaybreak)) {
-      const exploded = await this.trySelfDestruct(
-        requests,
-        actionProvider,
-        ActionWindow.OnDaybreak,
-      );
+    if (config.hooks.onDaybreak && isSelfDestructWindowEnabled(config, ActionWindow.OnDaybreak)) {
+      const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnDaybreak, Phase.Day);
       if (exploded !== null) {
         return {
           summary: {
@@ -112,12 +108,8 @@ export class DayPipeline {
       }
     }
 
-    if (config.hooks.onPreElection && this.isSelfDestructWindowEnabled(config, ActionWindow.OnPreElection)) {
-      const exploded = await this.trySelfDestruct(
-        requests,
-        actionProvider,
-        ActionWindow.OnPreElection,
-      );
+    if (config.hooks.onPreElection && isSelfDestructWindowEnabled(config, ActionWindow.OnPreElection)) {
+      const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnPreElection, Phase.Day);
       if (exploded !== null) {
         return {
           summary: {
@@ -129,10 +121,10 @@ export class DayPipeline {
       }
     }
 
-    const speakers = this.sheriffMechanism.buildSpeakerOrder(
+    const speakers = buildSpeakerOrder(
       this.world,
       this.world.getAliveEntityIds(),
-      this.sheriffMechanism.findSheriffId(this.world),
+      findSheriffId(this.world),
       speakerDirection,
     );
 
@@ -171,15 +163,8 @@ export class DayPipeline {
         }
       }
 
-      if (
-        config.hooks.onPerSpeechGap &&
-        this.isSelfDestructWindowEnabled(config, ActionWindow.OnPerSpeechGap)
-      ) {
-        const exploded = await this.trySelfDestruct(
-          requests,
-          actionProvider,
-          ActionWindow.OnPerSpeechGap,
-        );
+      if (config.hooks.onPerSpeechGap && isSelfDestructWindowEnabled(config, ActionWindow.OnPerSpeechGap)) {
+        const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnPerSpeechGap, Phase.Day);
         if (exploded !== null) {
           return {
             summary: {
@@ -201,84 +186,6 @@ export class DayPipeline {
     };
   }
 
-  private async trySelfDestruct(
-    requests: GameActionRequestFactory,
-    actionProvider: ActionProvider,
-    window: ActionWindow,
-  ): Promise<EntityId | null> {
-    const actors = this.world.getAliveEntityIds().filter((id) => {
-      const role = this.world.getComponent<{ role: any }>(id, COMPONENT.Role);
-      if (!role) {
-        return false;
-      }
-      return this.roleRegistry.getAllowedTools(role.role).includes("self_destruct");
-    });
-
-    const picks = await Promise.all(
-      actors.map(async (actorId) => {
-        const req = requests.create({
-          phase: Phase.Day,
-          actionWindow: window,
-          actorId,
-          allowedTools: ["self_destruct"],
-          stage: window,
-          requiresAction: false,
-          summary: "自爆窗口可选择执行自爆，也可直接结束回合。",
-          context: {
-          },
-        });
-
-        const action = await actionProvider.getAction(req);
-        if (action?.name !== "self_destruct") {
-          return null;
-        }
-
-        const result = this.toolGateway.validateAndSanitize(this.world, actorId, action, {
-          phase: Phase.Day,
-          actionWindow: window,
-          allowSelfDestruct: true,
-        });
-        if (!result.ok) {
-          return null;
-        }
-        return actorId;
-      }),
-    );
-
-    const picked = picks
-      .filter((id): id is EntityId => id !== null)
-      .sort((a, b) => a - b)[0];
-    if (picked === undefined) {
-      return null;
-    }
-
-    const alive = this.world.getComponent<AliveComponent>(picked, COMPONENT.Alive);
-    if (!alive || !alive.alive) {
-      return null;
-    }
-
-    alive.alive = false;
-    this.events.push({
-      timestamp: Date.now(),
-      type: "wolf_self_destruct",
-      payload: {
-        wolfId: picked,
-        window,
-      },
-    });
-    return picked;
-  }
-
-  private isSelfDestructWindowEnabled(
-    config: BoardConfig,
-    window: ActionWindow,
-  ): boolean {
-    const enabled = config.selfDestruct?.enabledWindows;
-    if (!enabled || enabled.length === 0) {
-      return window === ActionWindow.OnPreVote;
-    }
-    return enabled.includes(window);
-  }
 
   /**
    * 判断目标玩家是否存活。

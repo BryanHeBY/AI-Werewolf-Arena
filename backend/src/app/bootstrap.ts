@@ -9,9 +9,8 @@ import { createIdentityComponent } from "../core/domain/entities/player";
 import { BoardConfig, EntityId, Role } from "../core/domain/model";
 import {
   getDefaultWinConditionRegistry,
-  getDefaultRoleCampRegistry,
-  getDefaultRoleRuntimeRegistry,
-  getDefaultSheriffMechanism,
+  getDefaultRoleCatalog,
+  assignInitialSheriff,
   createDefaultRoleRegistry,
 } from "../game/mechanisms";
 import { ConditionRegistry } from "../core/domain/registries/condition_registry";
@@ -37,7 +36,7 @@ export function bootstrapGame(config: BoardConfig): BootstrapResult {
   const world = new World();
   // 先完成实体与组件初始化，再创建系统与管理器，避免空引用。
   const playerIds = createPlayers(world, config);
-  getDefaultSheriffMechanism().assignInitialSheriff(world, config, playerIds);
+  assignInitialSheriff(world, config, playerIds);
 
   const roleRegistry = createDefaultRoleRegistry();
   const damageResolutionSystem = new DamageResolutionSystem();
@@ -63,14 +62,13 @@ export function bootstrapGame(config: BoardConfig): BootstrapResult {
 function createPlayers(world: World, config: BoardConfig): EntityId[] {
   const roles = buildRoleDeck(config);
   const ids: EntityId[] = [];
-  const roleRuntimeRegistry = getDefaultRoleRuntimeRegistry();
-  const roleCampRegistry = getDefaultRoleCampRegistry();
+  const roleCatalog = getDefaultRoleCatalog();
 
   for (let seat = 1; seat <= config.boardSize; seat++) {
     const entityId = world.createEntity();
     const role = roles[seat - 1];
-    const roleComp = createRoleComponent(role, roleCampRegistry.get(role));
-    roleRuntimeRegistry.apply(roleComp, { boardConfig: config });
+    const roleComp = createRoleComponent(role, roleCatalog.getCamp(role));
+    roleCatalog.applyRuntime(roleComp, { boardConfig: config });
 
     world.addComponent(
       entityId,
@@ -83,7 +81,6 @@ function createPlayers(world: World, config: BoardConfig): EntityId[] {
     world.addComponent(entityId, COMPONENT.StatusMarks, createStatusMarksComponent());
     world.addComponent(entityId, COMPONENT.VotingRight, createVotingRightComponent(1, true));
     world.addComponent(entityId, COMPONENT.Badge, createBadgeComponent(false, false));
-
     ids.push(entityId);
   }
 

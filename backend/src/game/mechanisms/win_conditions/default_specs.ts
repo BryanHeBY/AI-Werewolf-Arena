@@ -3,7 +3,7 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { Camp, GameResult, WinCondition } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
-import { getDefaultRoleProfileRegistry } from "../roles/profile_registry";
+import { getDefaultRoleCatalog } from "../roles/catalog";
 import { WinConditionSpec } from "./contracts";
 
 interface AliveStat {
@@ -36,7 +36,7 @@ function statAlive(world: World): AliveStat {
       stat.good += 1;
     }
 
-    const profile = getDefaultRoleProfileRegistry().get(roleComp.role);
+    const profile = getDefaultRoleCatalog().get(roleComp.role);
     if (profile?.goodSide === "god") {
       stat.gods += 1;
     } else if (profile?.goodSide === "villager") {

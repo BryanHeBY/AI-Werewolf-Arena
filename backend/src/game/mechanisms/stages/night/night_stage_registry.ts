@@ -1,13 +1,13 @@
 /** 文件说明：根据板子角色集合构建夜间阶段列表。 */
 import { BoardConfig, Role } from "../../../../core/domain/model";
-import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../../roles/profile_registry";
+import { RoleCatalog, getDefaultRoleCatalog } from "../../roles/catalog";
 import { NightStageHandler } from "./contracts";
 
 /** 夜间阶段注册表。 */
 export class NightStageRegistry {
-  private readonly roleProfileRegistry: RoleProfileRegistry;
+  private readonly roleProfileRegistry: RoleCatalog;
 
-  constructor(roleProfileRegistry: RoleProfileRegistry = getDefaultRoleProfileRegistry()) {
+  constructor(roleProfileRegistry: RoleCatalog = getDefaultRoleCatalog()) {
     this.roleProfileRegistry = roleProfileRegistry;
   }
 

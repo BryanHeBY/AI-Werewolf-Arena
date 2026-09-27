@@ -13,12 +13,8 @@ import { ConditionRegistry } from "../../core/domain/registries/condition_regist
 import { DamageResolutionSystem } from "../../core/domain/systems/damage_resolution_system";
 import { World } from "../../core/domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
-import {
-  getDefaultLastWordsMechanism,
-  getDefaultSheriffMechanism,
-  LastWordsMechanism,
-  SheriffMechanism,
-} from "../mechanisms";
+import { findSheriffId } from "../mechanisms/sheriff/badge";
+import { DeathResolution } from "./death_resolution";
 import { EventRegistry } from "./event_registry";
 import { DayPipeline } from "./phase_pipeline/day_pipeline";
 import { NightPipeline } from "./phase_pipeline/night_pipeline";
@@ -28,8 +24,6 @@ import { COMPONENT } from "../../core/domain/components/names";
 import { VotingRightComponent } from "../../core/domain/components/voting_right";
 import { IdentityComponent } from "../../core/domain/entities/player";
 import { RoleComponent } from "../../core/domain/components/role";
-import { AliveComponent } from "../../core/domain/components/alive";
-import { GameActionRequestFactory } from "./action_request_factory";
 
 /**
  * PhaseManager 是游戏引擎的时序中枢。
@@ -41,8 +35,7 @@ export class PhaseManager {
   private readonly nightPipeline: NightPipeline;
   private readonly dayPipeline: DayPipeline;
   private readonly votingPipeline: VotingPipeline;
-  private readonly sheriffMechanism: SheriffMechanism;
-  private readonly lastWordsMechanism: LastWordsMechanism;
+  private readonly deathResolution: DeathResolution;
 
   private state: RuntimeSnapshot = {
     day: 1,
@@ -60,8 +53,7 @@ export class PhaseManager {
     private readonly damageResolutionSystem: DamageResolutionSystem,
   ) {
     this.eventRegistry = new EventRegistry();
-    this.sheriffMechanism = getDefaultSheriffMechanism();
-    this.lastWordsMechanism = getDefaultLastWordsMechanism();
+    this.deathResolution = new DeathResolution(world, this.events, toolGateway, this.eventRegistry, this.state);
     this.nightPipeline = new NightPipeline({
       world,
       toolGateway,
@@ -73,7 +65,6 @@ export class PhaseManager {
       roleRegistry,
       toolGateway,
       events: this.events,
-      sheriffMechanism: this.sheriffMechanism,
     });
     this.votingPipeline = new VotingPipeline({
       world,
@@ -113,7 +104,7 @@ export class PhaseManager {
         day: this.state.day,
       },
     });
-    const initialSheriffId = this.sheriffMechanism.findSheriffId(this.world);
+    const initialSheriffId = findSheriffId(this.world);
     if (initialSheriffId !== null) {
       this.events.push({
         timestamp: Date.now(),
@@ -177,7 +168,7 @@ export class PhaseManager {
     this.setPhase(Phase.Day);
     if (!firstDaySheriffBeforeNightInfo) {
       this.emitNightResolved(night.summary.deaths);
-      await this.processDeaths(
+      await this.deathResolution.resolve(
         night.damage.deaths,
         night.damage.deathSources,
         actionProvider,
@@ -197,7 +188,7 @@ export class PhaseManager {
             day: this.state.day,
             afterSheriffElection: async () => {
               this.emitNightResolved(night.summary.deaths);
-              await this.processDeaths(
+              await this.deathResolution.resolve(
                 night.damage.deaths,
                 night.damage.deathSources,
                 actionProvider,
@@ -243,7 +234,7 @@ export class PhaseManager {
       for (const removedId of votingResult.removed) {
         sources[removedId] = [];
       }
-      await this.processDeaths(
+      await this.deathResolution.resolve(
         votingResult.removed,
         sources,
         actionProvider,
@@ -270,143 +261,6 @@ export class PhaseManager {
     return this.getSnapshot();
   }
 
-  private async processDeaths(
-    deadIds: EntityId[],
-    sources: Record<number, StatusMark[]>,
-    actionProvider: ActionProvider,
-    phase: Phase,
-    lastWordsPhase: Phase,
-  ): Promise<void> {
-    const seen = new Set<EntityId>(deadIds);
-    let pending = [...seen];
-    const allSources: Record<number, StatusMark[]> = { ...sources };
-    let firstBatch = true;
-    const requests = new GameActionRequestFactory(
-      this.world,
-      this.events,
-      this.state.day,
-    );
-
-    while (pending.length > 0) {
-      this.markPlayersDead(pending);
-      if (firstBatch) {
-        this.lastWordsMechanism.recordLastWordsGranted(
-          this.world,
-          pending,
-          phase,
-          lastWordsPhase,
-          this.state.day,
-          this.events,
-        );
-        await this.collectLastWords(pending, lastWordsPhase, phase, actionProvider);
-      }
-
-      // 先处理警长死亡带来的警徽逻辑，再执行角色死亡钩子。
-      for (const deadId of pending) {
-        this.handleSheriffDeath(deadId, phase);
-      }
-
-      const result = await this.eventRegistry.onDeath(
-        this.world,
-        pending,
-        allSources,
-        async (hunterId) => {
-          const actionPhase = this.state.phase;
-          const action = await actionProvider.getAction(requests.create({
-            phase: actionPhase,
-            actorId: hunterId,
-            allowedTools: ["shoot"],
-            stage: "hunter_shot",
-            requiresAction: true,
-            summary: "死亡开枪阶段必须完成一次开枪动作。",
-            context: {
-              trigger: "on_death",
-            },
-          }));
-          if (action?.name !== "shoot") {
-            return null;
-          }
-
-          const validated = this.toolGateway.validateAndSanitize(
-            this.world,
-            hunterId,
-            action,
-            {
-              phase: actionPhase,
-              allowDeadHunterShoot: true,
-            },
-          );
-          if (!validated.ok || !validated.sanitizedCall) {
-            return null;
-          }
-          return validated.sanitizedCall.args.target_id;
-        },
-        this.events,
-      );
-
-      pending = result.extraDeaths.filter((id) => !seen.has(id));
-      for (const id of result.extraDeaths) {
-        seen.add(id);
-        allSources[id] = result.extraDeathSources[id] ?? [];
-      }
-      firstBatch = false;
-    }
-  }
-
-  private async collectLastWords(
-    deadIds: EntityId[],
-    phase: Phase,
-    deathPhase: Phase,
-    actionProvider: ActionProvider,
-  ): Promise<void> {
-    if (!this.lastWordsMechanism.shouldGrantLastWords(deathPhase, this.state.day)) {
-      return;
-    }
-    const requests = new GameActionRequestFactory(
-      this.world,
-      this.events,
-      this.state.day,
-    );
-    for (const deadId of deadIds) {
-      const action = await actionProvider.getAction(requests.create({
-        phase,
-        actorId: deadId,
-        allowedTools: ["speak"],
-        stage: "last_words",
-        requiresAction: true,
-        summary: "遗言阶段必须完成一次发言动作。",
-        context: {
-          trigger: "last_words",
-          death_phase: phase,
-        },
-      }));
-      if (action?.name !== "speak") {
-        continue;
-      }
-      const validated = this.toolGateway.validateAndSanitize(
-        this.world,
-        deadId,
-        action,
-        {
-          phase,
-          allowDeadLastWords: true,
-        },
-      );
-      if (!validated.ok || !validated.sanitizedCall) {
-        continue;
-      }
-      this.events.push({
-        timestamp: Date.now(),
-        type: "last_words_spoken",
-        payload: {
-          playerId: deadId,
-          phase,
-          day: this.state.day,
-          text: validated.sanitizedCall.args.text,
-        },
-      });
-    }
-  }
 
   /**
    * 检查胜负并在命中时封盘写入 game_over 事件。
@@ -497,28 +351,4 @@ export class PhaseManager {
     });
   }
 
-  /**
-   * 处理警长死亡时的警徽流转或撕毁逻辑。
-   */
-  private handleSheriffDeath(entityId: EntityId, phase: Phase): void {
-    this.sheriffMechanism.handleSheriffDeath(
-      this.world,
-      entityId,
-      phase,
-      this.events,
-    );
-  }
-
-  /**
-   * 将待结算死亡名单真正写入存活状态。
-   */
-  private markPlayersDead(playerIds: EntityId[]): void {
-    for (const id of playerIds) {
-      const alive = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive);
-      if (!alive) {
-        continue;
-      }
-      alive.alive = false;
-    }
-  }
 }
