@@ -18,7 +18,7 @@ function sleep(ms: number): Promise<void> {
 }
 
 describe("parallel agent dispatch", () => {
-  test("voting requests are dispatched in parallel", async () => {
+  test("voting requests run in parallel while cast events retain voter order", async () => {
     const config = {
       ...twelvePlayerStandardConfig,
       hooks: {
@@ -35,6 +35,7 @@ describe("parallel agent dispatch", () => {
       eventRegistry: new EventRegistry(),
       events,
     });
+    const voterIds = context.world.getAliveEntityIds();
 
     let activeVotes = 0;
     let maxConcurrentVotes = 0;
@@ -45,7 +46,7 @@ describe("parallel agent dispatch", () => {
         }
         activeVotes += 1;
         maxConcurrentVotes = Math.max(maxConcurrentVotes, activeVotes);
-        await sleep(30);
+        await sleep(request.actorId === 1 ? 45 : 5);
         activeVotes -= 1;
         const target = request.actorId === 1 ? 2 : 1;
         return { name: "vote", args: { target_id: target, abstain: false } };
@@ -55,6 +56,8 @@ describe("parallel agent dispatch", () => {
     const result = await votingPipeline.execute(config, provider, { day: 1 });
     expect(result.interrupted).toBe(false);
     expect(maxConcurrentVotes).toBeGreaterThan(1);
+    expect(events.filter((event) => event.type === "vote_cast").map((event) => event.payload.actorId))
+      .toEqual(voterIds);
   });
 
   test("wolf self-destruct window requests are dispatched in parallel", async () => {
