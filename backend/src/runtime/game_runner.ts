@@ -13,7 +13,7 @@ import {
 } from "../core";
 import type { ResolvedAgentRuntimeProfile } from "./config/contracts";
 import type { ResolvedGameSetup } from "./config/resolve_game_setup";
-import { createAcpConsoleLogger, createConsoleLog, presentGameResult } from "./console_presenter";
+import { createAcpConsoleLogger, createConsoleLog, presentGameResult, presentStreamEvents } from "./console_presenter";
 import { GameEventRecorder } from "./game_event_recorder";
 import {
   buildSessionId,
@@ -61,10 +61,11 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
     const eventRecorder = new GameEventRecorder({
       world: context.world,
       replayManager,
-      streamEvents: options.streamEvents,
-      printPrivateEvents: options.printPrivateEvents,
-      log,
     }, context.phaseManager.getSnapshot().phase);
+    const flushEvents = () => {
+      const delta = eventRecorder.flush(context.phaseManager.getEvents());
+      if (options.streamEvents) presentStreamEvents(delta, options.printPrivateEvents, log);
+    };
     let agentRuntime: PlayerAgentRuntime | undefined;
     let heartbeat: NodeJS.Timeout | undefined;
     let streamTimer: NodeJS.Timeout | undefined;
@@ -97,7 +98,7 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
       }
       streamTimer = setInterval(() => {
         try {
-          eventRecorder.flush(context.phaseManager.getEvents());
+          flushEvents();
         } catch (error) {
           failures.push(error);
           if (streamTimer) clearInterval(streamTimer);
@@ -121,7 +122,7 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
       if (heartbeat) clearInterval(heartbeat);
       if (streamTimer) clearInterval(streamTimer);
       try {
-        eventRecorder.flush(context.phaseManager.getEvents());
+        flushEvents();
       } catch (error) {
         failures.push(error);
       }

@@ -13,13 +13,24 @@ export function toChatLines(events: readonly GameEvent[]): string[] {
   });
 }
 
-export function toReplayStage(event: GameEvent): string {
-  return getDefaultScriptEventRenderRegistry().toReplayStage(event);
-}
-
 export function createConsoleLog(color: boolean): ConsoleLog {
   const enabled = isAnsiEnabled(color);
   return (text, tone = "info") => console.log(colorize(text, tone, enabled));
+}
+
+export function presentStreamEvents(
+  events: readonly GameEvent[],
+  printPrivateEvents: boolean,
+  log: ConsoleLog,
+): void {
+  const registry = getDefaultScriptEventRenderRegistry();
+  for (const event of events) {
+    for (const render of registry.toLiveRender(event, printPrivateEvents)) {
+      const tone = render.kind === "chat" ? "accent" : render.kind === "private" ? "warn"
+        : render.kind === "action" ? "info" : render.kind === "god" ? "god" : "ok";
+      log(render.text, tone);
+    }
+  }
 }
 
 export function presentGameResult(input: {

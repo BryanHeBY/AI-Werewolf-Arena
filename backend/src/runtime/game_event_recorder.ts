@@ -3,19 +3,15 @@ import type { GameEvent } from "../core";
 import { COMPONENT, RoleComponent } from "../core";
 import { buildAgentVisibleEvent } from "../game/engine/agent_visible_event_feed";
 import { getDefaultScriptEventRenderRegistry } from "../game";
-import { toReplayStage, type ConsoleLog } from "./console_presenter";
 import type { SessionRecordManager } from "../recording/session_recorder";
 
 export interface GameEventRecorderOptions {
   world: World;
   replayManager: SessionRecordManager;
-  streamEvents: boolean;
-  printPrivateEvents: boolean;
-  log: ConsoleLog;
 }
 
 export class GameEventRecorder {
-  private streamedEventIndex = 0;
+  private recordedEventIndex = 0;
   private readonly playerVisibleEventSeq = new Map<number, number>();
   private replayDayCursor = 1;
   private replayPhaseCursor: string;
@@ -24,10 +20,13 @@ export class GameEventRecorder {
     this.replayPhaseCursor = initialPhase;
   }
 
-  flush(events: readonly GameEvent[]): void {
-    if (this.streamedEventIndex >= events.length) return;
-    for (let i = this.streamedEventIndex; i < events.length; i += 1) {
+  /** Record each new event once and return the delta for presentation. */
+  flush(events: readonly GameEvent[]): GameEvent[] {
+    const delta: GameEvent[] = [];
+    const stageRegistry = getDefaultScriptEventRenderRegistry();
+    for (let i = this.recordedEventIndex; i < events.length; i += 1) {
       const event = events[i];
+      const stage = stageRegistry.toReplayStage(event);
       if (event.type === "phase_changed") {
         this.replayDayCursor = Number(event.payload.day ?? this.replayDayCursor);
         this.replayPhaseCursor = String(event.payload.phase ?? this.replayPhaseCursor);
@@ -37,7 +36,7 @@ export class GameEventRecorder {
         timestampMs: event.timestamp,
         day: this.replayDayCursor,
         phase: this.replayPhaseCursor,
-        stage: toReplayStage(event),
+        stage,
         payload: { ...event.payload },
       });
       for (const playerId of this.options.world.entityIds()) {
@@ -52,20 +51,16 @@ export class GameEventRecorder {
           camp: roleComp?.camp ?? "unknown",
           day: this.replayDayCursor,
           phase: this.replayPhaseCursor,
-          stage: toReplayStage(event),
+          stage,
           requestId: `${this.replayDayCursor}-${this.replayPhaseCursor}-${playerId}-event-${i + 1}`,
           timestampMs: event.timestamp,
           sourceEventSeq: i + 1,
           event: visibleEvent,
         });
       }
-      if (!this.options.streamEvents) continue;
-      const renders = getDefaultScriptEventRenderRegistry().toLiveRender(event, this.options.printPrivateEvents);
-      for (const render of renders) {
-        const tone = render.kind === "chat" ? "accent" : render.kind === "private" ? "warn" : render.kind === "action" ? "info" : render.kind === "god" ? "god" : "ok";
-        this.options.log(render.text, tone);
-      }
+      this.recordedEventIndex = i + 1;
+      delta.push(event);
     }
-    this.streamedEventIndex = events.length;
+    return delta;
   }
 }
