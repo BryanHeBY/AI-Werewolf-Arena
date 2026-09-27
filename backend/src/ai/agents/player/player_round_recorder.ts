@@ -1,14 +1,14 @@
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionRequest, EntityId } from "../../../core/domain/model";
+import { ActionRequest, EntityId } from "../../../core/domain"
 import {
   getActionRequestDay,
   getActionRequestStage,
 } from "../../../core/domain/action_request_context";
 import { World } from "../../../core/domain/world";
 import { PhaseStageLocalizationRegistry } from "../../../game/mechanisms";
-import { getSessionRecorder } from "../../../observability";
-import { BuiltPlayerPrompt, PlayerRoundOutcome } from "./model_client";
+import { getSessionRecorder } from "../../../recording/recording_context";
+import { BuiltPlayerPrompt, PlayerRoundOutcome } from "./contracts";
 
 /** Adapter that projects one completed agent turn into the replay protocol. */
 export class PlayerRoundRecorder {

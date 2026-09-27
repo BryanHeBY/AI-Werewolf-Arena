@@ -1,15 +1,13 @@
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
-import {
-  ActionProvider,
-  ActionRequest,
-  Camp,
-  EntityId,
-  Phase,
-  ToolCall,
-} from "../../../core/domain/model";
+import { ActionProvider,
+ActionRequest,
+Camp,
+EntityId,
+Phase,
+ToolCall, } from "../../../core/domain"
 import { World } from "../../../core/domain/world";
-import { getDefaultRoleProfileRegistry, RoleProfileRegistry } from "../../../game/mechanisms";
+import { RoleCatalog, getDefaultRoleCatalog } from "../../../game/mechanisms";
 
 /**
  * Noop 行为提供器：用于测试“无人行动”场景。
@@ -59,13 +57,13 @@ export class ScriptedActionProvider implements ActionProvider {
  * 基线机器人：在 LLM 不可用时提供可推进对局的兜底动作。
  */
 export class BaselineBotActionProvider implements ActionProvider {
-  private readonly roleProfileRegistry: RoleProfileRegistry;
+  private readonly roleCatalog: RoleCatalog;
 
   constructor(
     private readonly world: World,
-    roleProfileRegistry: RoleProfileRegistry = getDefaultRoleProfileRegistry(),
+    roleCatalog: RoleCatalog = getDefaultRoleCatalog(),
   ) {
-    this.roleProfileRegistry = roleProfileRegistry;
+    this.roleCatalog = roleCatalog;
   }
 
   /**
@@ -134,7 +132,7 @@ export class BaselineBotActionProvider implements ActionProvider {
         : { name: "vote", args: { target_id: null, abstain: true } };
     }
 
-    const roleProfile = this.roleProfileRegistry.get(role.role);
+    const roleProfile = this.roleCatalog.get(role.role);
     if (roleProfile?.baselineAction) {
       return roleProfile.baselineAction(
         role,

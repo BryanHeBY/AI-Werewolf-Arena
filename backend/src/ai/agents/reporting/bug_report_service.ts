@@ -1,7 +1,8 @@
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { World } from "../../../core/domain/world";
-import { safeRecordLogicOp, getSessionRecorder } from "../../../observability";
+import { safeRecordLogicOp } from "../../../recording/session_recorder";
+import { getSessionRecorder } from "../../../recording/recording_context";
 
 export type AgentBugCategory = "flow" | "rule" | "state" | "logging" | "other";
 export type AgentBugSeverity = "low" | "medium" | "high" | "critical";

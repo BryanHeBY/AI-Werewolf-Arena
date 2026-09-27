@@ -1,6 +1,6 @@
-import { ActionRequest } from "../../../core/domain/model";
+import { ActionRequest } from "../../../core/domain"
 import { colorize, isAnsiEnabled } from "../../../utils/ansi";
-import { ChatMessage, ToolLoopStepTrace } from "./model_client";
+import { ChatMessage, ToolLoopStepTrace } from "../../integrations/llm/transport";
 
 export interface LlmObserverOptions {
   trace: boolean;

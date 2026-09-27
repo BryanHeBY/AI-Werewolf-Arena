@@ -1,7 +1,7 @@
-import { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain/model";
-import { safeRecordLogicOp } from "../../../observability";
+import { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain"
+import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { LlmObserver } from "./llm_observer";
-import { resolveTurnConstraints } from "./turn_constraints";
+import { resolveTurnConstraints } from "../player/turn_constraints";
 
 export type FallbackReason =
   | "runtime_error"

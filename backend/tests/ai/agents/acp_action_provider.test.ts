@@ -6,14 +6,12 @@ import * as path from "node:path";
 import { createTestTempDirectory } from "../../support/temp_directory";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import {
-  AcpSession,
-  AcpSessionFactory,
-} from "../../../src/ai/integrations/acp/acp_process_client";
+import { AcpSession, AcpSessionFactory } from "../../../src/ai/integrations/acp/session";
 import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
 import { WerewolfMcpControlServer } from "../../../src/ai/integrations/acp/werewolf_mcp_control";
 import { ActionRequest, Phase } from "../../../src/core/domain/model";
-import { runWithSessionRecorder, SessionRecordManager } from "../../../src/observability";
+import { runWithSessionRecorder } from "../../../src/recording/recording_context";
+import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
 function speakRequest(actorId = 1): ActionRequest {

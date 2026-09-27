@@ -1,7 +1,8 @@
-import { ActionRequest, EntityId, PlayerVisibleEvent, ToolName } from "../../../core/domain/model";
+import { ActionRequest, EntityId, PlayerVisibleEvent, ToolName } from "../../../core/domain"
 import { encodePlayerVisibleEvent, parsePlayerVisibleEvents } from "../visible_event_protocol";
-import { BuiltPlayerPrompt, ChatMessage } from "./model_client";
-import { PlayerPromptPolicy } from "./player_prompt_policy";
+import { BuiltPlayerPrompt } from "../player/contracts";
+import { ChatMessage } from "../../integrations/llm/transport";
+import { PlayerPromptPolicy } from "../player/player_prompt_policy";
 
 export interface PlayerPromptSessionOptions {
   maxPromptEvents: number;

@@ -1,22 +1,17 @@
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionRequest, ToolCall } from "../../../core/domain/model";
+import { ActionRequest, ToolCall } from "../../../core/domain"
 import { World } from "../../../core/domain/world";
 import { FallbackActionPolicy, FallbackReason } from "./fallback_action_policy";
 import { LlmObserver } from "./llm_observer";
-import {
-  BuiltPlayerPrompt,
-  ChatMessage,
-  ChatModelClient,
-  LlmRetryTraceEntry,
-  PlayerRoundOutcome,
-} from "./model_client";
+import { BuiltPlayerPrompt, PlayerRoundOutcome, PlayerRetryTraceEntry } from "../player/contracts";
+import { ChatMessage, ChatModelClient } from "../../integrations/llm/transport";
 import { PlayerPromptSession } from "./player_prompt_session";
-import { PlayerRoundRecorder } from "./player_round_recorder";
-import { buildConstraintRetryPrompt } from "./prompt_templates";
+import { PlayerRoundRecorder } from "../player/player_round_recorder";
+import { buildConstraintRetryPrompt } from "../player/prompt_templates";
 import { ScopedRequestScheduler } from "./request_scheduler";
 import { SdkGameToolLoop } from "./sdk_game_tool_loop";
-import { resolveTurnConstraints } from "./turn_constraints";
+import { resolveTurnConstraints } from "../player/turn_constraints";
 
 interface LlmTurnOrchestratorOptions {
   world: World;
@@ -82,7 +77,7 @@ export class LlmTurnOrchestrator {
     prompt: BuiltPlayerPrompt,
     startedAt: number,
   ): Promise<ToolCall | null> {
-    const retryTrace: LlmRetryTraceEntry[] = [];
+    const retryTrace: PlayerRetryTraceEntry[] = [];
     const attempt = async (messages: ChatMessage[]): Promise<NativeAttempt> => {
       const timeoutMs = this.effectiveTimeout(request.deadlineAtMs);
       if (timeoutMs <= 0) {
@@ -148,7 +143,7 @@ export class LlmTurnOrchestrator {
       console.log(
         `[LLM_RETRY] player=${request.actorId} phase=${request.phase} attempt=${attemptNumber}/3 reason=turn_constraints_no_valid_action`,
       );
-      const trace: LlmRetryTraceEntry = {
+      const trace: PlayerRetryTraceEntry = {
         attempt: attemptNumber,
         status: "no_valid_action",
         reason: "turn_constraints_no_valid_action",
@@ -192,7 +187,7 @@ export class LlmTurnOrchestrator {
     prompt: BuiltPlayerPrompt,
     action: ToolCall,
     startedAt: number,
-    extras: { thinkingText?: string; retryTrace?: LlmRetryTraceEntry[]; retryAttempt?: number } = {},
+    extras: { thinkingText?: string; retryTrace?: PlayerRetryTraceEntry[]; retryAttempt?: number } = {},
   ): Promise<ToolCall> {
     this.options.observer.trace(
       `${extras.retryAttempt ? "request_ok_retry" : "request_ok"} player=${request.actorId} phase=${request.phase}${extras.retryAttempt ? ` attempt=${extras.retryAttempt}/3` : ""} action=${action.name} args=${JSON.stringify((action as any).args ?? {})} elapsed_ms=${Date.now() - startedAt}`,

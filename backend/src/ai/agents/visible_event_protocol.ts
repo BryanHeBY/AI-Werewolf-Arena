@@ -1,4 +1,4 @@
-import { PlayerVisibleEvent } from "../../core/domain/model";
+import { PlayerVisibleEvent } from "../../core/domain"
 
 /** 解析、去重并按玩家本地连续 seq 排序可见事件。 */
 export function parsePlayerVisibleEvents(value: unknown): PlayerVisibleEvent[] {

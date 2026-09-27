@@ -1,4 +1,4 @@
-import { ActionRequest, ToolCall, ToolName } from "../../../core/domain/model";
+import { ActionRequest, ToolCall, ToolName } from "../../../core/domain"
 
 export type ToolInvocationInput = {
   name: string;

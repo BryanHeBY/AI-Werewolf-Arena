@@ -1,32 +1,30 @@
 import { RoleComponent } from "../../../core/domain/components/role";
-import {
-  ActionProvider,
-  ActionRequest,
-  BoardConfig,
-  ToolCall,
-} from "../../../core/domain/model";
+import { ActionProvider,
+ActionRequest,
+BoardConfig,
+ToolCall, } from "../../../core/domain"
 import { World } from "../../../core/domain/world";
 import {
   ConfigRenderRegistry,
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
-  getDefaultRolePromptRegistry,
+  getDefaultRoleCatalog,
   getDefaultTargetHintRegistry,
   getDefaultToolCallRepairRegistry,
   getDefaultToolSpecRegistry,
   PhaseStageLocalizationRegistry,
-  RolePromptRegistry,
+  RoleCatalog,
   TargetHintRegistry,
   ToolCallRepairRegistry,
   ToolSpecRegistry,
 } from "../../../game/mechanisms";
 import { BaselineBotActionProvider } from "../providers/action_providers";
+import { ChatModelClient } from "../../integrations/llm/transport";
 import { FallbackActionPolicy } from "./fallback_action_policy";
 import { LlmObserver } from "./llm_observer";
-import { ChatModelClient } from "./model_client";
 import { PlayerPromptSession } from "./player_prompt_session";
-import { PlayerPromptPolicy } from "./player_prompt_policy";
-import { PlayerRoundRecorder } from "./player_round_recorder";
+import { PlayerPromptPolicy } from "../player/player_prompt_policy";
+import { PlayerRoundRecorder } from "../player/player_round_recorder";
 import { ScopedRequestScheduler } from "./request_scheduler";
 import { SdkGameToolLoop } from "./sdk_game_tool_loop";
 import { LlmTurnOrchestrator } from "./llm_turn_orchestrator";
@@ -50,7 +48,7 @@ export interface LlmActionProviderOptions {
   ) => number | undefined;
   personalityPromptResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
   toolSpecRegistry?: ToolSpecRegistry;
-  rolePromptRegistry?: RolePromptRegistry;
+  roleCatalog?: RoleCatalog;
   toolCallRepairRegistry?: ToolCallRepairRegistry;
   targetHintRegistry?: TargetHintRegistry;
   phaseStageLocalizationRegistry?: PhaseStageLocalizationRegistry;
@@ -72,7 +70,7 @@ export class LlmActionProvider implements ActionProvider {
     options: LlmActionProviderOptions = {},
   ) {
     const toolSpecRegistry = options.toolSpecRegistry ?? getDefaultToolSpecRegistry();
-    const rolePromptRegistry = options.rolePromptRegistry ?? getDefaultRolePromptRegistry();
+    const roleCatalog = options.roleCatalog ?? getDefaultRoleCatalog();
     const repairRegistry = options.toolCallRepairRegistry ?? getDefaultToolCallRepairRegistry();
     const targetHintRegistry = options.targetHintRegistry ?? getDefaultTargetHintRegistry();
     const localization = options.phaseStageLocalizationRegistry ??
@@ -98,7 +96,7 @@ export class LlmActionProvider implements ActionProvider {
     const promptPolicy = new PlayerPromptPolicy(world, {
       personalityPromptResolver: options.personalityPromptResolver,
       toolSpecRegistry,
-      rolePromptRegistry,
+      roleCatalog,
       targetHintRegistry,
       phaseStageLocalizationRegistry: localization,
       configRenderRegistry: configRenderer,

@@ -2,7 +2,7 @@ import { ActionRequest, Phase } from "../../../src/core/domain/model";
 import {
   evaluateTurnConstraints,
   resolveTurnConstraints,
-} from "../../../src/ai/agents/llm/turn_constraints";
+} from "../../../src/ai/agents/player/turn_constraints";
 
 describe("turn_constraints", () => {
   test("permits no action when turn_constraints is absent", () => {

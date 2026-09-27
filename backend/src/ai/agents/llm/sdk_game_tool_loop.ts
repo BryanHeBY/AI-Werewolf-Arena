@@ -1,6 +1,6 @@
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionRequest, ToolCall } from "../../../core/domain/model";
+import { ActionRequest, ToolCall } from "../../../core/domain"
 import {
   getActionRequestDay,
   getActionRequestStage,
@@ -15,9 +15,14 @@ import { WEREWOLF_GAME_TOOL_SCHEMA, WEREWOLF_GAME_TOOL_SPECS } from "../game_too
 import { ActionValidationService } from "./action_validation_service";
 import { ToolCallRepairRegistry } from "../../../game/mechanisms";
 import { LlmObserver } from "./llm_observer";
-import { ChatMessage, ChatModelClient, ToolLoopActionResult } from "./model_client";
+import { ChatMessage, ChatModelClient } from "../../integrations/llm/transport";
 import { PlayerPromptSession } from "./player_prompt_session";
-import { evaluateTurnConstraints, resolveTurnConstraints } from "./turn_constraints";
+import { evaluateTurnConstraints, resolveTurnConstraints } from "../player/turn_constraints";
+
+interface ToolLoopActionResult {
+  action: ToolCall | null;
+  thinkingText?: string;
+}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value);

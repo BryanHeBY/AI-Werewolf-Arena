@@ -6,10 +6,17 @@ import * as acp from "@agentclientprotocol/sdk";
 import { AcpTurnRegistry } from "./acp_turn_registry";
 import { WerewolfMcpControlServer } from "./werewolf_mcp_control";
 import { AcpMcpBridgeFactory, AcpMcpControlServer } from "./acp_mcp_bridge";
+import { applyAcpSessionConfigOptions } from "./acp_session_config";
 import {
-  AcpSessionConfigOptionValue,
-  applyAcpSessionConfigOptions,
-} from "./acp_session_config";
+  AcpSession,
+  AcpSessionAuditTrace,
+  AcpSessionCreateInput,
+  AcpSessionFactory,
+  AcpProcessClientOptions,
+  AcpSessionUpdate,
+} from "./session";
+import { closeAcpSession } from "./session_lifecycle";
+import { awaitWithAbort, settleWithin } from "../../runtime/turn_deadline";
 
 const ACP_CANCEL_TIMEOUT_MS = 300;
 const ACP_SESSION_CLOSE_TIMEOUT_MS = 1_000;
@@ -20,38 +27,6 @@ const ACP_PROCESS_TERMINATE_TIMEOUT_MS = 750;
 const ACP_PROCESS_KILL_TIMEOUT_MS = 750;
 const ACP_AUDIT_TEXT_MAX_CHARS = 4_000;
 const ACP_INITIALIZE_TIMEOUT_MS = 45_000;
-export const ACP_CLOSE_TIMEOUT_MS = 6_000;
-
-
-export function awaitAcpOperation<T>(task: Promise<T>, signal: AbortSignal): Promise<T> {
-  return new Promise<T>((resolve, reject) => {
-    const abort = () => reject(signal.reason ?? new Error("acp_operation_aborted"));
-    if (signal.aborted) {
-      void task.catch(() => undefined);
-      abort();
-      return;
-    }
-    signal.addEventListener("abort", abort, { once: true });
-    void task.then(resolve, reject).finally(() => signal.removeEventListener("abort", abort));
-  });
-}
-
-export async function closeAcpSession(session: AcpSession, force = false): Promise<void> {
-  await settleAcpWithin(Promise.resolve().then(() => session.close({ force })), ACP_CLOSE_TIMEOUT_MS);
-}
-
-export async function settleAcpWithin(promise: Promise<unknown>, timeoutMs: number): Promise<boolean> {
-  let timer: NodeJS.Timeout | undefined;
-  try {
-    return await Promise.race([
-      promise.then(() => true, () => false),
-      new Promise<boolean>((resolve) => { timer = setTimeout(() => resolve(false), timeoutMs); }),
-    ]);
-  } finally {
-    if (timer) clearTimeout(timer);
-  }
-}
-
 async function waitForProcessExit(process: ChildProcess, timeoutMs: number): Promise<boolean> {
   if (process.exitCode !== null || process.signalCode !== null) {
     return true;
@@ -78,51 +53,6 @@ function signalProcess(child: ChildProcess, signal: NodeJS.Signals): void {
   } catch {
     // The process group can exit between the state check and signal delivery.
   }
-}
-
-export interface AcpSessionUpdate {
-  actorId: number;
-  update: unknown;
-}
-
-/** ACP 回合结束后供复盘记录器读取的限长语义轨迹。 */
-export interface AcpSessionAuditTrace {
-  messages: string[];
-  thoughts: string[];
-}
-
-export interface AcpSession {
-  readonly sessionId: string;
-  prompt(text: string): Promise<void>;
-  cancel(): Promise<void>;
-  close(options?: { force?: boolean }): Promise<void>;
-  /** 返回并清空最近一次 prompt 的语义轨迹；适配器可不实现。 */
-  takeAuditTrace?(): AcpSessionAuditTrace;
-}
-
-export interface AcpSessionCreateInput<TRegistry = AcpTurnRegistry> {
-  actorId: number;
-  registry: TRegistry;
-  /** Fixed identity/protocol prompt; part of initialization's deadline. */
-  initialPrompt?: string;
-  deadlineAtMs?: number;
-  signal?: AbortSignal;
-}
-
-export interface AcpSessionFactory<TRegistry = AcpTurnRegistry> {
-  createSession(input: AcpSessionCreateInput<TRegistry>): Promise<AcpSession>;
-}
-
-export interface AcpProcessClientOptions<TRegistry = AcpTurnRegistry> {
-  command: string;
-  args?: string[];
-  env?: Record<string, string>;
-  cwd: string;
-  initializeTimeoutMs?: number;
-  onUpdate?: (update: AcpSessionUpdate) => void;
-  mcpBridge?: AcpMcpBridgeFactory<TRegistry>;
-  /** session/new 后通过标准 ACP session/set_config_option 应用。 */
-  sessionConfigOptions?: Record<string, AcpSessionConfigOptionValue>;
 }
 
 /** ACP stdio client. One instance/session is intentionally created per player. */
@@ -156,7 +86,7 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
         await waitForProcessExit(child, ACP_PROCESS_KILL_TIMEOUT_MS);
         child.unref();
       }
-      if (mcpControl) await settleAcpWithin(mcpControl.close({ force: true }), ACP_SESSION_CLOSE_TIMEOUT_MS);
+      if (mcpControl) await settleWithin(mcpControl.close({ force: true }), ACP_SESSION_CLOSE_TIMEOUT_MS);
     };
     const initialize = async (): Promise<AcpSession> => {
       controller.signal.throwIfAborted();
@@ -261,7 +191,7 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
       void task.then((session) => {
         if (controller.signal.aborted) void closeAcpSession(session, true);
       }, () => undefined);
-      return await awaitAcpOperation(task, controller.signal);
+      return await awaitWithAbort(task, controller.signal);
     } catch (error) {
       controller.abort(error);
       await cleanup();
@@ -319,7 +249,7 @@ class AcpProcessSession implements AcpSession {
 
   async cancel(): Promise<void> {
     if (!this.closed) {
-      await settleAcpWithin(this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId }), ACP_CANCEL_TIMEOUT_MS);
+      await settleWithin(this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId }), ACP_CANCEL_TIMEOUT_MS);
     }
   }
 
@@ -331,12 +261,12 @@ class AcpProcessSession implements AcpSession {
     if (options.force) signalProcess(this.process, "SIGKILL");
     try {
       if (!options.force) {
-        await settleAcpWithin(
+        await settleWithin(
           this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId }),
           ACP_CANCEL_TIMEOUT_MS,
         );
         if (this.supportsSessionClose) {
-          await settleAcpWithin(
+          await settleWithin(
             this.client.request(acp.methods.agent.session.close, { sessionId: this.session.sessionId }),
             ACP_SESSION_CLOSE_TIMEOUT_MS,
           );
@@ -370,7 +300,7 @@ class AcpProcessSession implements AcpSession {
       }
       // The ACP root can exit before MCP descendants release their process group.
       signalProcess(this.process, "SIGKILL");
-      if (this.mcpControl) await settleAcpWithin(this.mcpControl.close({ force: true }), ACP_SESSION_CLOSE_TIMEOUT_MS);
+      if (this.mcpControl) await settleWithin(this.mcpControl.close({ force: true }), ACP_SESSION_CLOSE_TIMEOUT_MS);
     }
   }
 

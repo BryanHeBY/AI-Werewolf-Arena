@@ -1,4 +1,4 @@
-import { ActionRequest, ToolCall, ToolName, TurnConstraints } from "../../../core/domain/model";
+import { ActionRequest, ToolCall, ToolName } from "../../../core/domain";
 
 export interface ResolvedTurnConstraints {
   minValidActions: number;
@@ -16,40 +16,16 @@ export interface TurnConstraintEvaluation {
   errors: string[];
 }
 
-function isToolNameArray(input: unknown): input is ToolName[] {
-  return Array.isArray(input) && input.every((item) => typeof item === "string");
-}
-
-/**
- * 解析回合约束。缺失约束表示当前回合可以无动作结束。
- */
+/** Projects typed engine constraints into player prompt and tool-loop rules. */
 export function resolveTurnConstraints(request: ActionRequest): ResolvedTurnConstraints {
-  const raw = request.context.turn_constraints;
-  const fromContext =
-    raw && typeof raw === "object"
-      ? (raw as TurnConstraints)
-      : undefined;
-
-  const minValidActions =
-    typeof fromContext?.min_valid_actions === "number"
-      ? Math.max(0, Math.floor(fromContext.min_valid_actions))
-      : 0;
-  const maxValidActions =
-    typeof fromContext?.max_valid_actions === "number"
-      ? Math.max(minValidActions, Math.floor(fromContext.max_valid_actions))
-      : 1;
-  const requiredAnyTools = isToolNameArray(fromContext?.required_any_tools)
-    ? fromContext.required_any_tools
-    : [];
-  const summary =
-    typeof fromContext?.summary === "string" && fromContext.summary.trim().length > 0
-      ? fromContext.summary.trim()
-      : undefined;
-
+  const constraints = request.context.turn_constraints;
+  const minValidActions = Math.max(0, Math.floor(constraints?.min_valid_actions ?? 0));
+  const maxValidActions = Math.max(minValidActions, Math.floor(constraints?.max_valid_actions ?? 1));
+  const summary = constraints?.summary?.trim();
   return {
     minValidActions,
     maxValidActions,
-    requiredAnyTools,
+    requiredAnyTools: constraints?.required_any_tools ?? [],
     ...(summary ? { summary } : {}),
   };
 }

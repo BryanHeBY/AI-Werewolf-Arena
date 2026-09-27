@@ -6,7 +6,8 @@ import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mv
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
 import { getSeerState, getWitchState } from "../../../src/game/mechanisms/roles/private_state";
-import { SessionRecordManager, runWithSessionRecorder } from "../../../src/observability";
+import { runWithSessionRecorder } from "../../../src/recording/recording_context";
+import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import path from "path";
 import { promises as fs } from "fs";
 import { createTestTempDirectory } from "../../support/temp_directory";

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ToolSchema } from "../integrations/llm/ai_sdk_client";
+import { ToolSchema } from "../integrations/llm/transport";
 
 export const getGameSchemaInput = z.object({});
 export const submitGameActionInput = z.object({

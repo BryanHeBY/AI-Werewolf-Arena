@@ -1,6 +1,6 @@
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionRequest, BoardConfig, Camp, EntityId, Role, ToolName } from "../../../core/domain/model";
+import { ActionRequest, BoardConfig, Camp, EntityId, Role, ToolName } from "../../../core/domain"
 import {
   getActionRequestDay,
   getActionRequestStage,
@@ -9,7 +9,7 @@ import { World } from "../../../core/domain/world";
 import {
   ConfigRenderRegistry,
   PhaseStageLocalizationRegistry,
-  RolePromptRegistry,
+  RoleCatalog,
   TargetHintRegistry,
   ToolSpecRegistry,
 } from "../../../game/mechanisms";
@@ -20,7 +20,7 @@ import { renderTurnConstraintUserHint, resolveTurnConstraints } from "./turn_con
 export interface PlayerPromptPolicyOptions {
   personalityPromptResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
   toolSpecRegistry: ToolSpecRegistry;
-  rolePromptRegistry: RolePromptRegistry;
+  roleCatalog: RoleCatalog;
   targetHintRegistry: TargetHintRegistry;
   phaseStageLocalizationRegistry: PhaseStageLocalizationRegistry;
   configRenderRegistry: ConfigRenderRegistry;
@@ -46,7 +46,7 @@ export class PlayerPromptPolicy {
     return {
       systemPrompt: buildSystemPrompt({
         actorId: request.actorId,
-        role: role ? this.options.rolePromptRegistry.label(role.role) : "unknown",
+        role: role ? this.options.roleCatalog.label(role.role) : "unknown",
         maxPlayerId: this.world.entityIds().length,
         teammateIds: this.wolfTeammates(request.actorId, role),
         boardInfoPrompt,
@@ -106,8 +106,8 @@ export class PlayerPromptPolicy {
     return buildBoardInfoPrompt({
       totalPlayers: this.world.entityIds().length,
       roleCounts: counts,
-      roleLabel: (role) => this.options.rolePromptRegistry.label(role),
-      roleSkillBrief: (role) => this.options.rolePromptRegistry.skillBrief(role),
+      roleLabel: (role) => this.options.roleCatalog.label(role),
+      roleSkillBrief: (role) => this.options.roleCatalog.skillBrief(role),
     });
   }
 

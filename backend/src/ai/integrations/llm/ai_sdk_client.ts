@@ -3,12 +3,15 @@ import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { generateText, jsonSchema, type ModelMessage } from "ai";
 import { withRetry } from "./retry";
 
-/** 运行时所需的最小消息协议，避免领域层依赖某个 SDK 的消息类型。 */
-export interface ChatMessage {
-  role: "system" | "user" | "assistant" | "tool";
-  content: string;
-  tool_call_id?: string;
-}
+import {
+  ChatMessage,
+  ChatModelClient,
+  ChatOptions,
+  ToolSchema,
+  ToolLoopCallbacks,
+  ToolLoopOptions,
+  ToolLoopStepTrace,
+} from "./transport";
 
 export type LlmProviderType = "openai" | "anthropic";
 
@@ -28,61 +31,19 @@ export interface AiSdkClientOptions {
   thinkingEnabled?: boolean;
 }
 
-export interface ChatOptions {
-  signal?: AbortSignal;
-}
-
 export interface ChatResult {
   content: string;
   finishReason: string;
 }
 
-export interface ToolSchema {
-  name: string;
-  description: string;
-  parameters: Record<string, unknown>;
-}
-
-export interface ToolInvocation {
-  id: string;
-  name: string;
-  args: Record<string, unknown>;
-  rawArgs: string;
-}
-
-export interface ToolLoopCallbacks<T> {
-  onToolCall: (invocation: ToolInvocation) => Promise<{
-    toolResult: Record<string, unknown> | string;
-    finalAction?: T;
-    stop?: boolean;
-  }>;
-}
-
-export interface ToolLoopOptions extends ChatOptions {
-  maxSteps?: number;
-  toolChoice?: "auto" | "required";
-}
-
-export interface ToolLoopStepTrace {
-  assistantText: string;
-  toolCalls: Array<{
-    id: string;
-    name: string;
-    rawArgs: string;
-    toolResult: string;
-    stop?: boolean;
-    hasFinalAction?: boolean;
-  }>;
-}
-
 /**
  * AI SDK Core 适配器。
  *
- * 领域层仍只依赖上述最小协议；OpenRouter 等兼容网关走 openai-compatible，
+ * 领域层依赖 transport 中的最小协议；OpenRouter 等兼容网关走 openai-compatible，
  * Claude 可直接走 Anthropic Messages provider。工具执行仍由领域层回调完成，
  * 因此不会绕过现有的合法性校验、回退和审计记录。
  */
-export class AiSdkClient {
+export class AiSdkClient implements ChatModelClient {
   private readonly model: any;
   private readonly temperature: number;
   private readonly maxTokens: number;
