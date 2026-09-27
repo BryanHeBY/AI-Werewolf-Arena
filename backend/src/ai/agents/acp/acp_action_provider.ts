@@ -13,6 +13,9 @@ import {
   AcpSession,
   AcpSessionAuditTrace,
   AcpSessionFactory,
+  awaitAcpOperation,
+  closeAcpSession,
+  settleAcpWithin,
 } from "../../integrations/acp/acp_process_client";
 import {
   AcpBugReport,
@@ -53,6 +56,12 @@ interface AcpTurnOutcome {
   requestError?: string;
 }
 
+interface PlayerAcpSession {
+  promise: Promise<AcpSession>;
+  controller: AbortController;
+  session?: AcpSession;
+}
+
 /**
  * 将 ACP Agent 适配为游戏 ActionProvider。
  *
@@ -61,7 +70,8 @@ interface AcpTurnOutcome {
  */
 export class AcpActionProvider implements ActionProvider {
   private readonly registry: AcpTurnRegistry;
-  private readonly sessions = new Map<number, Promise<AcpSession>>();
+  private readonly sessions = new Map<number, PlayerAcpSession>();
+  private closed = false;
   private readonly fallbackProvider: ActionProvider;
   private readonly eventCursor = new Map<number, number>();
   private readonly sessionPromptByActor = new Map<number, string>();
@@ -91,6 +101,11 @@ export class AcpActionProvider implements ActionProvider {
 
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
     const startedAt = Date.now();
+    const configuredTimeoutMs = this.options.turnTimeoutMs ?? 45_000;
+    const deadlineAtMs = Math.min(
+      request.deadlineAtMs ?? Infinity,
+      startedAt + configuredTimeoutMs,
+    );
     let session: AcpSession | undefined;
     let turn: ReturnType<AcpTurnRegistry["openTurn"]> | undefined;
     let built: AcpTurnPromptBuild | undefined;
@@ -98,16 +113,22 @@ export class AcpActionProvider implements ActionProvider {
     let fallbackReason = "model_declined_required_action";
     let requestError: string | undefined;
     try {
-      session = await this.getOrCreateSession(request);
+      if (this.closed || deadlineAtMs <= Date.now()) throw new Error("acp_deadline_elapsed");
+      session = await this.getOrCreateSession(request, deadlineAtMs);
+      if (this.closed || deadlineAtMs <= Date.now()) throw new Error("acp_deadline_elapsed");
       turn = this.registry.openTurn(request, session.sessionId);
       built = this.buildTurnPrompt(request, turn.turnId, true);
       const promptTask = session.prompt(built.prompt);
-      const outcome = await this.waitForAction(turn.action, promptTask, request);
+      const outcome = await this.waitForAction(turn.action, promptTask, { ...request, deadlineAtMs });
       this.registry.closeTurn(turn.sessionId);
-      await session.cancel().catch(() => undefined);
-      // ACP Agent 理论上应在 cancel 后结束 prompt；不让失效 Agent 的违反协议
-      // 响应无限阻塞游戏阶段，下一回合仍由独立 turn_id 防止旧动作生效。
-      await this.waitForPromptSettlement(promptTask);
+      if (outcome.reason === "request_timeout" || outcome.reason === "deadline_skip") {
+        this.discardSession(request.actorId);
+      } else {
+        await settleAcpWithin(Promise.resolve().then(() => session!.cancel()), Math.min(300, Math.max(0, deadlineAtMs - Date.now())));
+        if (!await settleAcpWithin(promptTask, Math.min(1_000, Math.max(0, deadlineAtMs - Date.now())))) {
+          this.discardSession(request.actorId);
+        }
+      }
       auditTrace = session.takeAuditTrace?.();
       if (outcome.action) {
         this.recordPlayerRound(request, built, {
@@ -120,6 +141,7 @@ export class AcpActionProvider implements ActionProvider {
       fallbackReason = outcome.reason ?? fallbackReason;
       requestError = outcome.requestError;
     } catch (error) {
+      this.discardSession(request.actorId);
       fallbackReason = "runtime_error";
       requestError = String(error);
       safeRecordLogicOp({
@@ -149,34 +171,56 @@ export class AcpActionProvider implements ActionProvider {
   }
 
   async close(): Promise<void> {
-    const sessions = [...this.sessions.values()];
-    this.sessions.clear();
-    await Promise.allSettled(sessions.map(async (promise) => (await promise).close()));
+    this.closed = true;
     this.registry.close();
+    const closing: Promise<void>[] = [];
+    for (const entry of this.sessions.values()) {
+      entry.controller.abort(new Error("acp_provider_closed"));
+      if (entry.session) closing.push(closeAcpSession(entry.session));
+    }
+    this.sessions.clear();
+    await Promise.all(closing);
   }
 
-  private async getOrCreateSession(request: ActionRequest): Promise<AcpSession> {
+  private discardSession(actorId: number): void {
+    const entry = this.sessions.get(actorId);
+    if (!entry) return;
+    this.sessions.delete(actorId);
+    this.eventCursor.delete(actorId);
+    this.sessionPromptByActor.delete(actorId);
+    entry.controller.abort(new Error("acp_session_discarded"));
+    if (entry.session) void closeAcpSession(entry.session, true);
+  }
+
+  private async getOrCreateSession(request: ActionRequest, deadlineAtMs: number): Promise<AcpSession> {
     const existing = this.sessions.get(request.actorId);
-    if (existing) {
-      return existing;
-    }
+    if (existing) return existing.promise;
     const factory = this.options.sessionFactoryResolver?.(request.actorId) ?? this.options.sessionFactory;
-    if (!factory) {
-      throw new Error("acp_session_factory_missing");
-    }
+    if (!factory) throw new Error("acp_session_factory_missing");
     const initialPrompt = this.buildSessionPrompt(request);
     this.sessionPromptByActor.set(request.actorId, initialPrompt);
-    const created = factory.createSession({
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(new Error("acp_initialize_timeout")), Math.max(0, deadlineAtMs - Date.now()));
+    const created = Promise.resolve().then(() => factory.createSession({
       actorId: request.actorId,
       registry: this.registry,
       initialPrompt,
-    });
-    this.sessions.set(request.actorId, created);
+      deadlineAtMs,
+      signal: controller.signal,
+    }));
+    const entry: PlayerAcpSession = { promise: awaitAcpOperation(created, controller.signal), controller };
+    this.sessions.set(request.actorId, entry);
+    void created.then((session) => {
+      entry.session = session;
+      if (controller.signal.aborted || this.closed) void closeAcpSession(session, true);
+    }, () => undefined);
     try {
-      return await created;
+      return await entry.promise;
     } catch (error) {
-      this.sessions.delete(request.actorId);
+      this.discardSession(request.actorId);
       throw error;
+    } finally {
+      clearTimeout(timer);
     }
   }
 
@@ -216,19 +260,6 @@ export class AcpActionProvider implements ActionProvider {
     }
   }
 
-  private async waitForPromptSettlement(promptTask: Promise<void>): Promise<void> {
-    let timer: NodeJS.Timeout | undefined;
-    try {
-      await Promise.race([
-        promptTask.catch(() => undefined),
-        new Promise<void>((resolve) => {
-          timer = setTimeout(resolve, 1_000);
-        }),
-      ]);
-    } finally {
-      if (timer) clearTimeout(timer);
-    }
-  }
 
   private resolveTimeoutMs(request: ActionRequest): number {
     const configured = this.options.turnTimeoutMs ?? 45_000;

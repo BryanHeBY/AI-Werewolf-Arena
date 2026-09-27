@@ -22,7 +22,6 @@ export interface AcpProviderConfig {
   args: string[];
   env: Record<string, string>;
   cwd?: string;
-  maxConcurrentSessions?: number;
   initializeTimeoutMs?: number;
   sessionConfigOptions: Record<string, string | boolean>;
 }
@@ -238,7 +237,7 @@ function normalizeProviderConfig(name: string, raw: unknown): ProviderConfig {
   const type = readRequiredString(raw.type, `providers.items.${name}.type`);
   if (type === "acp") {
     assertKnownKeys(raw, [
-      "type", "transport", "command", "args", "env", "cwd", "maxConcurrentSessions",
+      "type", "transport", "command", "args", "env", "cwd",
       "initializeTimeoutMs", "sessionConfigOptions",
     ], `providers.items.${name}`);
     const transport = raw.transport === undefined
@@ -254,10 +253,6 @@ function normalizeProviderConfig(name: string, raw: unknown): ProviderConfig {
       args: readStringArray(raw.args, `providers.items.${name}.args`),
       env: readEnvironment(raw.env, `providers.items.${name}.env`),
       cwd: readOptionalString(raw.cwd, `providers.items.${name}.cwd`),
-      maxConcurrentSessions: readOptionalNumber(
-        raw.maxConcurrentSessions,
-        `providers.items.${name}.maxConcurrentSessions`,
-      ),
       initializeTimeoutMs: readOptionalNumber(
         raw.initializeTimeoutMs,
         `providers.items.${name}.initializeTimeoutMs`,

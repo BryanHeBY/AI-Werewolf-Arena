@@ -63,6 +63,7 @@ async function createAcpRuntime(
         args: [...(profile.provider.args ?? []), ...(profile.spawnArgs ?? [])],
         env: profile.provider.env,
         sessionConfigOptions: profile.provider.sessionConfigOptions,
+        initializeTimeoutMs: profile.provider.initializeTimeoutMs,
         cwd: profile.provider.cwd ?? path.join(options.acpWorkspaceRoot, `player-${actorId}`),
         onUpdate: ({ update }) => observers.get(actorId)?.(update),
       });

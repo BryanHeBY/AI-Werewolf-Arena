@@ -19,6 +19,8 @@
 
 记录器仅负责持久化，调试摘要由运行入口在核心复盘写入后单独生成；摘要失败不影响已完成的复盘。记录作用域使用 `runWithSessionRecorder` 隔离异步对局，不再共享进程级活动记录器；单独装配规则引擎不会加载 AI SDK。
 
+ACP 的初始化受 provider 的 `initializeTimeoutMs`（默认 45 秒）、当前回合超时和对局截止时间共同约束；超时会取消初始化并回收 Agent/MCP 资源，迟到建立的会话也会关闭。`maxConcurrentSessions` 过去未生效，现已移除并拒绝该配置字段；ACP 仍为每个玩家保留独立会话。
+
 ## 本地运行
 
 ```bash

@@ -19,23 +19,36 @@ const ACP_PROCESS_GRACEFUL_EXIT_TIMEOUT_MS = 2_500;
 const ACP_PROCESS_TERMINATE_TIMEOUT_MS = 750;
 const ACP_PROCESS_KILL_TIMEOUT_MS = 750;
 const ACP_AUDIT_TEXT_MAX_CHARS = 4_000;
+const ACP_INITIALIZE_TIMEOUT_MS = 45_000;
+export const ACP_CLOSE_TIMEOUT_MS = 6_000;
 
-async function settleWithin(promise: Promise<unknown>, timeoutMs: number): Promise<boolean> {
+
+export function awaitAcpOperation<T>(task: Promise<T>, signal: AbortSignal): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const abort = () => reject(signal.reason ?? new Error("acp_operation_aborted"));
+    if (signal.aborted) {
+      void task.catch(() => undefined);
+      abort();
+      return;
+    }
+    signal.addEventListener("abort", abort, { once: true });
+    void task.then(resolve, reject).finally(() => signal.removeEventListener("abort", abort));
+  });
+}
+
+export async function closeAcpSession(session: AcpSession, force = false): Promise<void> {
+  await settleAcpWithin(Promise.resolve().then(() => session.close({ force })), ACP_CLOSE_TIMEOUT_MS);
+}
+
+export async function settleAcpWithin(promise: Promise<unknown>, timeoutMs: number): Promise<boolean> {
   let timer: NodeJS.Timeout | undefined;
   try {
     return await Promise.race([
-      promise.then(
-        () => true,
-        () => false,
-      ),
-      new Promise<boolean>((resolve) => {
-        timer = setTimeout(() => resolve(false), timeoutMs);
-      }),
+      promise.then(() => true, () => false),
+      new Promise<boolean>((resolve) => { timer = setTimeout(() => resolve(false), timeoutMs); }),
     ]);
   } finally {
-    if (timer) {
-      clearTimeout(timer);
-    }
+    if (timer) clearTimeout(timer);
   }
 }
 
@@ -55,14 +68,15 @@ async function waitForProcessExit(process: ChildProcess, timeoutMs: number): Pro
   });
 }
 
-function signalProcess(process: ChildProcess, signal: NodeJS.Signals): void {
-  if (process.exitCode !== null || process.signalCode !== null) {
-    return;
-  }
+function signalProcess(child: ChildProcess, signal: NodeJS.Signals): void {
   try {
-    process.kill(signal);
+    if (process.platform !== "win32" && child.pid !== undefined) {
+      process.kill(-child.pid, signal);
+    } else if (child.exitCode === null && child.signalCode === null) {
+      child.kill(signal);
+    }
   } catch {
-    // The process can exit between the state check and signal delivery.
+    // The process group can exit between the state check and signal delivery.
   }
 }
 
@@ -81,18 +95,22 @@ export interface AcpSession {
   readonly sessionId: string;
   prompt(text: string): Promise<void>;
   cancel(): Promise<void>;
-  close(): Promise<void>;
+  close(options?: { force?: boolean }): Promise<void>;
   /** 返回并清空最近一次 prompt 的语义轨迹；适配器可不实现。 */
   takeAuditTrace?(): AcpSessionAuditTrace;
 }
 
+export interface AcpSessionCreateInput<TRegistry = AcpTurnRegistry> {
+  actorId: number;
+  registry: TRegistry;
+  /** Fixed identity/protocol prompt; part of initialization's deadline. */
+  initialPrompt?: string;
+  deadlineAtMs?: number;
+  signal?: AbortSignal;
+}
+
 export interface AcpSessionFactory<TRegistry = AcpTurnRegistry> {
-  createSession(input: {
-    actorId: number;
-    registry: TRegistry;
-    /** 仅在 session 创建后注入一次的固定协议/身份提示。 */
-    initialPrompt?: string;
-  }): Promise<AcpSession>;
+  createSession(input: AcpSessionCreateInput<TRegistry>): Promise<AcpSession>;
 }
 
 export interface AcpProcessClientOptions<TRegistry = AcpTurnRegistry> {
@@ -100,6 +118,7 @@ export interface AcpProcessClientOptions<TRegistry = AcpTurnRegistry> {
   args?: string[];
   env?: Record<string, string>;
   cwd: string;
+  initializeTimeoutMs?: number;
   onUpdate?: (update: AcpSessionUpdate) => void;
   mcpBridge?: AcpMcpBridgeFactory<TRegistry>;
   /** session/new 后通过标准 ACP session/set_config_option 应用。 */
@@ -111,113 +130,145 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
   implements AcpSessionFactory<TRegistry> {
   constructor(private readonly options: AcpProcessClientOptions<TRegistry>) {}
 
-  async createSession(input: {
-    actorId: number;
-    registry: TRegistry;
-    initialPrompt?: string;
-  }): Promise<AcpSession> {
-    await fs.mkdir(this.options.cwd, { recursive: true });
-    const bridge = this.options.mcpBridge ?? this.defaultWerewolfBridge();
-    const mcpControl = bridge.createControl(input.registry);
-    const mcpServer = await mcpControl.start(
-      process.execPath,
-      [bridge.serverEntrypoint(__filename)],
+  async createSession(input: AcpSessionCreateInput<TRegistry>): Promise<AcpSession> {
+    const controller = new AbortController();
+    const deadlineAt = Math.min(
+      input.deadlineAtMs ?? Infinity,
+      Date.now() + (this.options.initializeTimeoutMs ?? ACP_INITIALIZE_TIMEOUT_MS),
     );
-    const child = spawn(this.options.command, this.options.args ?? [], {
-      cwd: this.options.cwd,
-      // 游戏 MCP sidecar 由当前 Bun/Node runtime 执行。外层 bwrap runner 据此只读
-      // 挂载真实可执行文件目录，避免假定用户的 Bun 固定安装在某一路径。
-      env: {
-        ...process.env,
-        ...this.options.env,
-        ACP_MCP_RUNTIME_EXECUTABLE: process.execPath,
-      },
-      stdio: ["pipe", "pipe", "pipe"],
-    });
-    let childError: Error | null = null;
-    child.on("error", (error) => {
-      childError = error;
-    });
-    if (!child.stdin || !child.stdout) {
-      child.kill();
-      throw new Error("acp_agent_stdio_unavailable");
-    }
-
-    const stream = acp.ndJsonStream(
-      Writable.toWeb(child.stdin),
-      Readable.toWeb(child.stdout) as ReadableStream<Uint8Array>,
-    );
-    let activeSessionId: string | null = null;
-    // ACP adapters such as codex-acp ask for an explicit permission immediately
-    // before invoking an MCP tool. Remember only tool calls announced by our
-    // injected server, so an adapter cannot turn a generic MCP approval into
-    // approval for some other configured server.
-    const approvedInjectedMcpToolCallIds = new Set<string>();
-    const connection = acp
-      .client({ name: "ai-werewolf-arena" })
-      .onRequest(acp.methods.client.session.requestPermission, async ({ params: request }) => {
-        // Codex 将 MCP tool approval 也转为 ACP permission request。游戏只允许
-        // 已注入 MCP 工具的调用；终端、文件修改和额外权限请求仍一律取消。
-        if (
-          request._meta?.is_mcp_tool_approval === true
-          && approvedInjectedMcpToolCallIds.has(request.toolCall.toolCallId)
-        ) {
-          const option = request.options.find((item) => item.optionId === "allow_session")
-            ?? request.options.find((item) => item.kind === "allow_once");
-          if (option) {
-            return {
-              outcome: { outcome: "selected" as const, optionId: option.optionId },
-            };
-          }
-        }
-        return { outcome: { outcome: "cancelled" as const } };
-      })
-      .connect(stream);
-
-    try {
-      if (childError) {
-        throw childError;
+    const abort = () => controller.abort(input.signal?.reason ?? new Error("acp_initialization_aborted"));
+    input.signal?.addEventListener("abort", abort, { once: true });
+    if (input.signal?.aborted) abort();
+    const timeout = setTimeout(() => controller.abort(new Error("acp_initialize_timeout")), Math.max(0, deadlineAt - Date.now()));
+    if (deadlineAt <= Date.now()) controller.abort(new Error("acp_initialize_timeout"));
+    let child: ChildProcess | undefined;
+    let mcpControl: AcpMcpControlServer | undefined;
+    let connection: acp.ClientConnection | undefined;
+    let processSession: AcpProcessSession | undefined;
+    const cleanup = async () => {
+      if (processSession) return processSession.close({ force: true });
+      connection?.close();
+      if (child) {
+        signalProcess(child, "SIGKILL");
+        child.stdin?.destroy();
+        child.stdout?.destroy();
+        child.stderr?.destroy();
+        await waitForProcessExit(child, ACP_PROCESS_KILL_TIMEOUT_MS);
+        child.unref();
       }
-      const initializeResponse = await connection.agent.request(acp.methods.agent.initialize, {
+      if (mcpControl) await settleAcpWithin(mcpControl.close({ force: true }), ACP_SESSION_CLOSE_TIMEOUT_MS);
+    };
+    const initialize = async (): Promise<AcpSession> => {
+      controller.signal.throwIfAborted();
+      await fs.mkdir(this.options.cwd, { recursive: true });
+      controller.signal.throwIfAborted();
+      const bridge = this.options.mcpBridge ?? this.defaultWerewolfBridge();
+      const control = bridge.createControl(input.registry);
+      mcpControl = control;
+      const mcpServer = await control.start(
+        process.execPath,
+        [bridge.serverEntrypoint(__filename)],
+      );
+      if (controller.signal.aborted) {
+        await control.close({ force: true });
+        controller.signal.throwIfAborted();
+      }
+      child = spawn(this.options.command, this.options.args ?? [], {
+        cwd: this.options.cwd,
+        env: { ...process.env, ...this.options.env, ACP_MCP_RUNTIME_EXECUTABLE: process.execPath },
+        detached: process.platform !== "win32",
+        stdio: ["pipe", "pipe", "pipe"],
+      });
+      child.on("error", (error) => controller.abort(error));
+      child.stderr?.resume();
+      if (!child.stdin || !child.stdout) throw new Error("acp_agent_stdio_unavailable");
+
+      const spawnedChild = child;
+      if (!spawnedChild.stdin || !spawnedChild.stdout) throw new Error("acp_agent_stdio_unavailable");
+
+      const stream = acp.ndJsonStream(
+        Writable.toWeb(spawnedChild.stdin),
+        Readable.toWeb(spawnedChild.stdout) as ReadableStream<Uint8Array>,
+      );
+      // ACP adapters such as codex-acp ask for an explicit permission immediately
+      // before invoking an MCP tool. Remember only tool calls announced by our
+      // injected server, so an adapter cannot turn a generic MCP approval into
+      // approval for some other configured server.
+      const approvedInjectedMcpToolCallIds = new Set<string>();
+      const protocolConnection = acp
+        .client({ name: "ai-werewolf-arena" })
+        .onRequest(acp.methods.client.session.requestPermission, async ({ params: request }) => {
+          if (
+            request._meta?.is_mcp_tool_approval === true
+            && approvedInjectedMcpToolCallIds.has(request.toolCall.toolCallId)
+          ) {
+            const option = request.options.find((item) => item.optionId === "allow_session")
+              ?? request.options.find((item) => item.kind === "allow_once");
+            if (option) {
+              return {
+                outcome: { outcome: "selected" as const, optionId: option.optionId },
+              };
+            }
+          }
+          return { outcome: { outcome: "cancelled" as const } };
+        })
+        .connect(stream);
+      connection = protocolConnection;
+
+      controller.signal.throwIfAborted();
+      const initializeResponse = await protocolConnection.agent.request(acp.methods.agent.initialize, {
         protocolVersion: acp.PROTOCOL_VERSION,
         clientCapabilities: {
           session: { configOptions: { boolean: {} } },
         },
       });
-      const session = await connection.agent.buildSession({
+      controller.signal.throwIfAborted();
+      const session = await protocolConnection.agent.buildSession({
         cwd: this.options.cwd,
         mcpServers: [mcpServer],
       }).start();
-      activeSessionId = session.sessionId;
+      controller.signal.throwIfAborted();
+      const activeSessionId = session.sessionId;
       await applyAcpSessionConfigOptions(
-        connection.agent,
+        protocolConnection.agent,
         session,
         this.options.sessionConfigOptions ?? {},
       );
-      mcpControl.bindSession(activeSessionId);
-      const processSession = new AcpProcessSession(
+      control.bindSession(activeSessionId);
+      const createdSession = new AcpProcessSession(
         session,
-        connection.agent,
-        child,
+        protocolConnection.agent,
+        spawnedChild,
         input.actorId,
         this.options.onUpdate,
-        mcpControl,
+        control,
         approvedInjectedMcpToolCallIds,
         bridge.serverName,
-        connection,
+        protocolConnection,
         initializeResponse.agentCapabilities?.sessionCapabilities?.close != null,
       );
+      processSession = createdSession;
+      controller.signal.throwIfAborted();
       if (input.initialPrompt?.trim()) {
-        await processSession.prompt(input.initialPrompt);
+        await createdSession.prompt(input.initialPrompt);
         // 初始化回复不属于任何游戏回合，不混入首回合审计。
-        processSession.takeAuditTrace();
+        createdSession.takeAuditTrace();
       }
-      return processSession;
+      return createdSession;
+    };
+    try {
+      const task = initialize();
+      void task.then((session) => {
+        if (controller.signal.aborted) void closeAcpSession(session, true);
+      }, () => undefined);
+      return await awaitAcpOperation(task, controller.signal);
     } catch (error) {
-      connection.close(error);
-      child.kill();
-      await mcpControl.close();
+      controller.abort(error);
+      await cleanup();
       throw error;
+    } finally {
+      clearTimeout(timeout);
+      input.signal?.removeEventListener("abort", abort);
     }
   }
 
@@ -259,33 +310,37 @@ class AcpProcessSession implements AcpSession {
   }
 
   async prompt(text: string): Promise<void> {
+    if (this.closed) throw new Error("acp_session_closed");
     this.resetAuditTrace();
     const prompt = this.session.prompt(text);
-    void this.consumeUpdates();
+    void this.consumeUpdates().catch(() => undefined);
     await prompt;
   }
 
   async cancel(): Promise<void> {
     if (!this.closed) {
-      await this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId });
+      await settleAcpWithin(this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId }), ACP_CANCEL_TIMEOUT_MS);
     }
   }
 
-  async close(): Promise<void> {
+  async close(options: { force?: boolean } = {}): Promise<void> {
     if (this.closed) {
       return;
     }
     this.closed = true;
+    if (options.force) signalProcess(this.process, "SIGKILL");
     try {
-      await settleWithin(
-        this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId }),
-        ACP_CANCEL_TIMEOUT_MS,
-      );
-      if (this.supportsSessionClose) {
-        await settleWithin(
-          this.client.request(acp.methods.agent.session.close, { sessionId: this.session.sessionId }),
-          ACP_SESSION_CLOSE_TIMEOUT_MS,
+      if (!options.force) {
+        await settleAcpWithin(
+          this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId }),
+          ACP_CANCEL_TIMEOUT_MS,
         );
+        if (this.supportsSessionClose) {
+          await settleAcpWithin(
+            this.client.request(acp.methods.agent.session.close, { sessionId: this.session.sessionId }),
+            ACP_SESSION_CLOSE_TIMEOUT_MS,
+          );
+        }
       }
     } finally {
       this.session.dispose();
@@ -313,7 +368,9 @@ class AcpProcessSession implements AcpSession {
         this.process.stderr?.destroy();
         this.process.unref();
       }
-      await this.mcpControl?.close({ force: true });
+      // The ACP root can exit before MCP descendants release their process group.
+      signalProcess(this.process, "SIGKILL");
+      if (this.mcpControl) await settleAcpWithin(this.mcpControl.close({ force: true }), ACP_SESSION_CLOSE_TIMEOUT_MS);
     }
   }
 

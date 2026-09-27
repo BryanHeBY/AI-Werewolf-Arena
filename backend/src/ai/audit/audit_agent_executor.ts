@@ -2,7 +2,10 @@ import * as path from "node:path";
 import { AiSdkClient, ChatMessage, ToolInvocation } from "../integrations/llm/ai_sdk_client";
 import {
   AcpProcessClient,
+  AcpSession,
   AcpSessionFactory,
+  awaitAcpOperation,
+  closeAcpSession,
 } from "../integrations/acp/acp_process_client";
 import { AcpMcpBridgeFactory } from "../integrations/acp/acp_mcp_bridge";
 import { ResolvedAgentRuntimeProfile } from "../../runtime/config/runtime_config";
@@ -142,6 +145,9 @@ export interface AcpAuditAgentExecutorOptions {
 /** ACP + MCP 适配器；每个并行审计任务使用独立进程和独立 registry。 */
 export class AcpAuditAgentExecutor implements AuditAgentExecutor {
   private nextSession = 0;
+  private readonly pending = new Set<AbortController>();
+  private readonly sessions = new Set<AcpSession>();
+  private closed = false;
 
   constructor(private readonly options: AcpAuditAgentExecutorOptions) {}
 
@@ -149,6 +155,7 @@ export class AcpAuditAgentExecutor implements AuditAgentExecutor {
     context: AuditToolContext,
     options: AgentTurnOptions,
   ): Promise<AuditSubmission | null> {
+    if (this.closed || options.timeoutMs <= 0) return null;
     const registry = new AuditToolTurnRegistry();
     const workspace = path.join(
       this.options.workspaceRoot,
@@ -156,55 +163,57 @@ export class AcpAuditAgentExecutor implements AuditAgentExecutor {
     );
     const factory = this.options.sessionFactoryResolver?.(registry, workspace)
       ?? this.createProcessFactory(registry, workspace);
-    let session: Awaited<ReturnType<AcpSessionFactory<AuditToolTurnRegistry>["createSession"]>> | null = null;
-    let turn: ReturnType<AuditToolTurnRegistry["openTurn"]> | null = null;
-    let timer: NodeJS.Timeout | undefined;
-    const deadlineAt = Date.now() + options.timeoutMs;
+    let session: AcpSession | undefined;
+    const controller = new AbortController();
+    this.pending.add(controller);
+    const deadlineAtMs = Date.now() + options.timeoutMs;
+    const timer = setTimeout(
+      () => controller.abort(new Error("audit_acp_timeout")),
+      options.timeoutMs,
+    );
     try {
-      const sessionTask = factory.createSession({
+      const sessionTask = Promise.resolve().then(() => factory.createSession({
         actorId: 0,
         registry,
         initialPrompt: auditSessionPrompt(),
-      });
-      const creation = await Promise.race([
-        sessionTask.then((value) => ({ kind: "session" as const, value })),
-        new Promise<{ kind: "timeout" }>((resolve) => {
-          timer = setTimeout(() => resolve({ kind: "timeout" }), options.timeoutMs);
-        }),
-      ]);
-      if (timer) {
-        clearTimeout(timer);
-        timer = undefined;
-      }
-      if (creation.kind === "timeout") {
-        // 初始化可能仍在底层结束；完成后立即关闭，避免超时任务遗留进程。
-        void sessionTask.then((lateSession) => lateSession.close()).catch(() => undefined);
-        return null;
-      }
-      session = creation.value;
-      turn = registry.openTurn(context, session.sessionId);
-      const prompt = session.prompt(auditTurnPrompt(turn.turnId, context.mode));
-      const remainingMs = Math.max(1, deadlineAt - Date.now());
-      const timeout = new Promise<null>((resolve) => {
-        timer = setTimeout(() => resolve(null), remainingMs);
-      });
-      const result = await Promise.race([
+        deadlineAtMs,
+        signal: controller.signal,
+      }));
+      void sessionTask.then((lateSession) => {
+        if (controller.signal.aborted) void closeAcpSession(lateSession, true);
+      }, () => undefined);
+      session = await awaitAcpOperation(sessionTask, controller.signal);
+      this.sessions.add(session);
+      controller.signal.throwIfAborted();
+      const turn = registry.openTurn(context, session.sessionId);
+      const promptTask = session.prompt(auditTurnPrompt(turn.turnId, context.mode));
+      return await awaitAcpOperation(Promise.race([
         turn.result,
-        prompt.then(() => null, () => null),
-        timeout,
-      ]);
-      if (result) await session.cancel().catch(() => undefined);
-      return result;
+        promptTask.then(() => null, () => null),
+      ]), controller.signal);
     } catch {
       return null;
     } finally {
-      if (timer) clearTimeout(timer);
+      clearTimeout(timer);
       registry.closeTurn();
-      await session?.close().catch(() => undefined);
+      this.pending.delete(controller);
+      const force = controller.signal.aborted;
+      controller.abort(new Error("audit_acp_turn_closed"));
+      if (session) {
+        this.sessions.delete(session);
+        await closeAcpSession(session, force);
+      }
     }
   }
 
-  async close(): Promise<void> {}
+  async close(): Promise<void> {
+    this.closed = true;
+    for (const controller of this.pending) {
+      controller.abort(new Error("audit_acp_executor_closed"));
+    }
+    await Promise.all([...this.sessions].map((session) => closeAcpSession(session, true)));
+    this.sessions.clear();
+  }
 
   private createProcessFactory(
     registry: AuditToolTurnRegistry,
@@ -224,6 +233,7 @@ export class AcpAuditAgentExecutor implements AuditAgentExecutor {
       command: profile.provider.command,
       args: [...(profile.provider.args ?? []), ...(profile.spawnArgs ?? [])],
       env: profile.provider.env,
+      initializeTimeoutMs: profile.provider.initializeTimeoutMs,
       sessionConfigOptions: profile.provider.sessionConfigOptions,
       cwd: workspace,
       mcpBridge: bridge,

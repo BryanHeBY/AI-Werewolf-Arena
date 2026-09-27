@@ -1,0 +1,48 @@
+import { describe, expect, test } from "bun:test";
+import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
+import { AcpSessionFactory } from "../../../src/ai/integrations/acp/acp_process_client";
+import { bootstrapGame } from "../../../src/app/bootstrap";
+import { ActionRequest, Phase } from "../../../src/core/domain/model";
+import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+
+function request(deadlineAtMs: number): ActionRequest {
+  return {
+    actorId: 1,
+    phase: Phase.Day,
+    allowedTools: ["speak"],
+    deadlineAtMs,
+    context: {
+      day: 1,
+      stage: "day_speech",
+      visible_events: [],
+    },
+  };
+}
+
+describe("AcpActionProvider session lifecycle", () => {
+  test("falls back when session initialization never resolves", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const factory: AcpSessionFactory = {
+      createSession(): Promise<never> {
+        return new Promise(() => undefined);
+      },
+    };
+    const provider = new AcpActionProvider(context.world, {
+      sessionFactory: factory,
+      fallbackProvider: {
+        async getAction() {
+          return { name: "speak", args: { text: "超时回退" } };
+        },
+      },
+      turnTimeoutMs: 50,
+    });
+
+    const startedAt = Date.now();
+    await expect(provider.getAction(request(Date.now() + 50))).resolves.toEqual({
+      name: "speak",
+      args: { text: "超时回退" },
+    });
+    expect(Date.now() - startedAt).toBeLessThan(1_000);
+    await provider.close();
+  });
+});
