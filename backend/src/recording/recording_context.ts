@@ -1,5 +1,5 @@
 import { AsyncLocalStorage } from "node:async_hooks";
-import type { SessionRecordManager } from "./session_record_manager";
+import type { SessionRecordManager } from "./session_recorder";
 
 const sessionRecorders = new AsyncLocalStorage<SessionRecordManager>();
 

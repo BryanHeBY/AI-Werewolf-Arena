@@ -6,9 +6,9 @@ import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
 import { buildAgentVisibleEvent } from "../../src/game/engine/agent_visible_event_feed";
 import { getDefaultScriptEventRenderRegistry } from "../../src/game/mechanisms/script/event_render_registry";
 import { COMPONENT } from "../../src/core/domain/components/names";
-import { SessionRecordManager, runWithSessionRecorder, safeRecordLogicOp } from "../../src/observability";
-import { buildDebugSummaryMarkdown } from "../../src/observability/debug_summary_generator";
-import { setRuntimeConfigOverride } from "../../src/runtime/config/runtime_config";
+import { SessionRecordManager, safeRecordLogicOp } from "../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../src/recording/recording_context";
+import { buildDebugSummaryMarkdown } from "../../src/audit/debug_summary_generator";
 import { createTestTempDirectory } from "../support/temp_directory";
 
 async function finalizeManager(
@@ -16,34 +16,11 @@ async function finalizeManager(
   meta: Parameters<SessionRecordManager["finalize"]>[0],
 ): Promise<void> {
   const summaryInput = await manager.finalize(meta);
-  await manager.writeDebugSummary(await buildDebugSummaryMarkdown(summaryInput));
+  await manager.writeDebugSummary(await buildDebugSummaryMarkdown(summaryInput, null));
 }
 
 describe("SessionRecordManager", () => {
-  const buildRuntimeOverride = (agentModel: string, debugAgentEnabled: boolean) => ({
-    providers: {
-      default: "p",
-      items: {
-        p: { type: "openai" as const, apiKey: "test-key" },
-      },
-    },
-    agents: {
-      default: "a",
-      items: {
-        a: { kind: "llm" as const, provider: "p", model: agentModel },
-      },
-    },
-    game: {},
-    debugSummary: { agent: { enabled: debugAgentEnabled } },
-  });
 
-  beforeAll(() => {
-    setRuntimeConfigOverride(buildRuntimeOverride("test-model", false));
-  });
-
-  afterAll(() => {
-    setRuntimeConfigOverride(null);
-  });
 
   test("should persist timeline and player files during game before finalize", async () => {
     const root = await createTestTempDirectory("awa-realtime-");

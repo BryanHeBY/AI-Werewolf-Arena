@@ -2,7 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { assertReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { resolveDefaultRecordRoot } from "../observability";
+import { resolveDefaultRecordRoot } from "../recording/session_recorder";
 
 export async function readReplayBundle(
   recordRoot: string,

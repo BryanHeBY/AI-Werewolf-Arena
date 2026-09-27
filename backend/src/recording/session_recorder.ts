@@ -9,10 +9,10 @@ import type {
   ReplayRecordPlayerRoundInput,
   ReplayRecordPublicEventInput,
   ReplaySessionMeta,
-} from "./types";
+} from "./contracts";
 import { createReplayDocument } from "./replay_document";
-import { ReplayFileStore } from "./replay_file_store";
-import { ReplaySessionAggregate } from "./replay_session_aggregate";
+import { ReplayFileStore } from "./file_store";
+import { ReplaySessionAggregate } from "./session_aggregate";
 import { getSessionRecorder } from "./recording_context";
 
 const FLUSH_DEBOUNCE_MS = 100;

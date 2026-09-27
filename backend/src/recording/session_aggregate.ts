@@ -18,7 +18,7 @@ import {
   ReplayRecordPublicEventInput,
   ReplaySessionMeta,
   ReplayTimelineIndexFile,
-} from "./types";
+} from "./contracts";
 
 const THINKING_MAX_CHARS = 4000;
 const LLM_MESSAGE_MAX_CHARS = 8000;

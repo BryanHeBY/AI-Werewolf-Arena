@@ -2,7 +2,7 @@ import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import {
   ReplayManifest,
   ReplayPublicEvent,
-} from "./types";
+} from "./contracts";
 
 /** 浏览器播放器与视频渲染器直接消费的离线复盘文件。 */
 export type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";

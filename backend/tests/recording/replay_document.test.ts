@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
-import { createReplayDocument } from "../../src/observability/replay_document";
-import { ReplayManifest } from "../../src/observability/types";
+import { createReplayDocument } from "../../src/recording/replay_document";
+import { ReplayManifest } from "../../src/recording/contracts";
 
 function manifest(players: ReplayManifest["players"] = []): ReplayManifest {
   return {
