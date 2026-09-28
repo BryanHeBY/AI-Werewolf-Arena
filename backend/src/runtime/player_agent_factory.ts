@@ -27,7 +27,6 @@ export interface PlayerAgentFactoryOptions {
   colorizeLogs: boolean;
   printLlmIo: boolean;
   printThinking: boolean;
-  defaultForceJsonResponse?: boolean;
   createAcpUpdateObserver?: (actorId: number) => ((update: unknown) => void) | undefined;
 }
 
@@ -94,11 +93,9 @@ function createLlmRuntime(options: PlayerAgentFactoryOptions): PlayerAgentRuntim
       apiKey: profile.provider.apiKey,
       model: profile.model,
       userAgent: profile.provider.userAgent,
-      temperature: profile.temperature ?? 0.2,
+      temperature: profile.temperature ?? (profile.reasoningEffort || profile.thinkingEnabled ? undefined : 0.2),
       maxTokens: profile.maxTokens ?? 512,
-      forceJsonResponse: profile.forceJsonResponse ?? options.defaultForceJsonResponse ?? true,
-      reasoningEnabled: profile.reasoningEnabled ?? true,
-      reasoningEffort: profile.reasoningEffort ?? "medium",
+      reasoningEffort: profile.reasoningEffort,
       thinkingEnabled: profile.thinkingEnabled ?? false,
     }));
   }

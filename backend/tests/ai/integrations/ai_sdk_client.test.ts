@@ -4,10 +4,12 @@ import { AiSdkClient } from "../../../src/ai/integrations/llm/ai_sdk_client";
 describe("AiSdkClient with the installed AI SDK", () => {
   test("sends chat messages through an OpenAI-compatible provider", async () => {
     const requests: Record<string, unknown>[] = [];
+    const userAgents: string[] = [];
     const server = Bun.serve({
       hostname: "127.0.0.1",
       port: 0,
       async fetch(request) {
+        userAgents.push(request.headers.get("user-agent") ?? "");
         requests.push(await request.json() as Record<string, unknown>);
         return completion({ role: "assistant", content: "收到" }, "stop");
       },
@@ -16,10 +18,12 @@ describe("AiSdkClient with the installed AI SDK", () => {
     try {
       const client = new AiSdkClient({
         apiKey: "test-key",
+        providerName: "open-router",
         baseURL: `${server.url.origin}/v1`,
         model: "test-model",
-        reasoningEnabled: true,
+        userAgent: "AWA-Config-Test",
         reasoningEffort: "high",
+        thinkingEnabled: true,
       });
       const result = await client.chatWithMeta([
         { role: "system", content: "你是玩家" },
@@ -32,7 +36,46 @@ describe("AiSdkClient with the installed AI SDK", () => {
         { role: "system", content: "你是玩家" },
         { role: "user", content: "轮到你了" },
       ]);
-      expect(requests[0]?.reasoning).toEqual({ effort: "high" });
+      expect(requests[0]?.reasoning_effort).toBe("high");
+      expect(requests[0]?.extra_body).toEqual({ thinking: { type: "enabled" } });
+      expect(userAgents[0]).toContain("AWA-Config-Test");
+    } finally {
+      server.stop(true);
+    }
+  });
+
+  test("uses native Anthropic thinking options when requested", async () => {
+    const requests: Record<string, unknown>[] = [];
+    const server = Bun.serve({
+      hostname: "127.0.0.1",
+      port: 0,
+      async fetch(request) {
+        requests.push(await request.json() as Record<string, unknown>);
+        return Response.json({
+          id: "msg-test",
+          type: "message",
+          role: "assistant",
+          model: "claude-test",
+          content: [{ type: "text", text: "收到" }],
+          stop_reason: "end_turn",
+          usage: { input_tokens: 1, output_tokens: 1 },
+        });
+      },
+    });
+
+    try {
+      const client = new AiSdkClient({
+        providerType: "anthropic",
+        providerName: "custom_claude",
+        apiKey: "test-key",
+        baseURL: `${server.url.origin}/v1`,
+        model: "claude-test",
+        thinkingEnabled: true,
+        reasoningEffort: "high",
+      });
+      expect(await client.chat([{ role: "user", content: "轮到你了" }])).toBe("收到");
+      expect(requests[0]?.thinking).toEqual({ type: "adaptive" });
+      expect(requests[0]?.output_config).toMatchObject({ effort: "high" });
     } finally {
       server.stop(true);
     }
@@ -62,7 +105,6 @@ describe("AiSdkClient with the installed AI SDK", () => {
         apiKey: "test-key",
         baseURL: `${server.url.origin}/v1`,
         model: "test-model",
-        reasoningEnabled: false,
       });
       const result = await client.runToolLoop(
         [{ role: "user", content: "投票" }],
@@ -92,9 +134,34 @@ describe("AiSdkClient with the installed AI SDK", () => {
         { id: "call-1", name: "submit_action", stop: true, hasFinalAction: true },
       ]);
       expect(requests).toHaveLength(1);
+      expect(requests[0]).not.toHaveProperty("reasoning_effort");
       expect(requests[0]?.tools).toMatchObject([
         { type: "function", function: { name: "submit_action" } },
       ]);
+    } finally {
+      server.stop(true);
+    }
+  });
+
+  test("does not retry a rejected request that the SDK marks non-retryable", async () => {
+    let requests = 0;
+    const server = Bun.serve({
+      hostname: "127.0.0.1",
+      port: 0,
+      fetch() {
+        requests += 1;
+        return Response.json({ error: { message: "invalid model" } }, { status: 400 });
+      },
+    });
+
+    try {
+      const client = new AiSdkClient({
+        apiKey: "test-key",
+        baseURL: `${server.url.origin}/v1`,
+        model: "invalid-model",
+      });
+      await expect(client.chat([{ role: "user", content: "测试" }])).rejects.toThrow("invalid model");
+      expect(requests).toBe(1);
     } finally {
       server.stop(true);
     }

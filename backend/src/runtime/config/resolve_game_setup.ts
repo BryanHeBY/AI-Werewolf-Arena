@@ -48,8 +48,6 @@ export function resolveAgentProfileByName(runtime: RuntimeConfig, agentName?: st
     model: entry.model,
     temperature: entry.temperature,
     maxTokens: entry.maxTokens,
-    forceJsonResponse: entry.forceJsonResponse,
-    reasoningEnabled: entry.reasoningEnabled,
     reasoningEffort: entry.reasoningEffort,
     thinkingEnabled: entry.thinkingEnabled,
     personalityPrompt: entry.personalityPrompt,

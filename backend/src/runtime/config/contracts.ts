@@ -1,6 +1,7 @@
 /** `openai` 同时覆盖 OpenRouter 等 Chat Completions 兼容网关。 */
 export type ProviderType = "openai" | "anthropic" | "acp";
 export type GameBoard = "six_player_mvp" | "twelve_player_standard";
+export type ReasoningEffort = "none" | "minimal" | "low" | "medium" | "high" | "xhigh";
 
 export interface LlmProviderConfig {
   type: "openai" | "anthropic";
@@ -28,9 +29,7 @@ export interface AgentProfileConfig {
   model: string;
   temperature?: number;
   maxTokens?: number;
-  forceJsonResponse?: boolean;
-  reasoningEnabled?: boolean;
-  reasoningEffort?: "low" | "medium" | "high";
+  reasoningEffort?: ReasoningEffort;
   thinkingEnabled?: boolean;
   personalityPrompt?: string;
 }
@@ -130,9 +129,7 @@ export interface ResolvedAgentRuntimeProfile {
   model?: string;
   temperature?: number;
   maxTokens?: number;
-  forceJsonResponse?: boolean;
-  reasoningEnabled?: boolean;
-  reasoningEffort?: "low" | "medium" | "high";
+  reasoningEffort?: ReasoningEffort;
   thinkingEnabled?: boolean;
   personalityPrompt?: string;
   spawnArgs?: string[];

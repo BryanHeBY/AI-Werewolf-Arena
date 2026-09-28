@@ -3,6 +3,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { loadBoardOverride } from "../../src/runtime/config/load_board_override";
 import { loadRuntimeConfig } from "../../src/runtime/config/load_config";
+import { resolveAgentProfileByName } from "../../src/runtime/config/resolve_game_setup";
 import { resolveBoardConfig } from "../../src/runtime/scenarios/board_config_resolver";
 import { createTestTempDirectory } from "../support/temp_directory";
 
@@ -33,6 +34,77 @@ test("rejects inline audit model overrides", async () => {
   const root = await createTestTempDirectory("awa-runtime-config-debug-");
   await writeRuntimeFiles(root, { debugSummary: { agent: { profile: { model: "different-model" } } } });
   await expect(loadRuntimeConfig({ configDir: root, gameName: "strict" })).rejects.toThrow("runtime_config_unknown_field: debugSummary.agent.profile");
+});
+
+test("requires an explicit reasoning effort and rejects removed AI flags", async () => {
+  const root = await createTestTempDirectory("awa-runtime-config-reasoning-");
+  await writeRuntimeFiles(root, { agents: {
+    default: "test_agent",
+    items: { test_agent: { kind: "llm", provider: "test_openai", model: "test-model" } },
+  } });
+  const runtime = await loadRuntimeConfig({ configDir: root, gameName: "strict" });
+  expect(resolveAgentProfileByName(runtime).reasoningEffort).toBeUndefined();
+
+  await writeRuntimeFiles(root, { agents: {
+    default: "test_agent",
+    items: { test_agent: { kind: "llm", provider: "test_openai", model: "test-model", reasoningEffort: "xhigh" } },
+  } });
+  expect(resolveAgentProfileByName(await loadRuntimeConfig({ configDir: root, gameName: "strict" })).reasoningEffort).toBe("xhigh");
+
+  await writeRuntimeFiles(root, { agents: {
+    default: "test_agent",
+    items: { test_agent: { kind: "llm", provider: "test_openai", model: "test-model", forceJsonResponse: true } },
+  } });
+  await expect(loadRuntimeConfig({ configDir: root, gameName: "strict" })).rejects.toThrow("runtime_config_unknown_field: agents.items.test_agent.forceJsonResponse");
+
+  await writeRuntimeFiles(root, { agents: {
+    default: "test_agent",
+    items: { test_agent: { kind: "llm", provider: "test_openai", model: "test-model", reasoningEnabled: true } },
+  } });
+  await expect(loadRuntimeConfig({ configDir: root, gameName: "strict" })).rejects.toThrow("runtime_config_unknown_field: agents.items.test_agent.reasoningEnabled");
+});
+
+test("rejects invalid AI limits and Anthropic thinking with temperature", async () => {
+  const root = await createTestTempDirectory("awa-runtime-config-ai-limits-");
+  await writeRuntimeFiles(root, { agents: {
+    default: "test_agent",
+    items: { test_agent: { kind: "llm", provider: "test_openai", model: "test-model", maxTokens: 0 } },
+  } });
+  await expect(loadRuntimeConfig({ configDir: root, gameName: "strict" })).rejects.toThrow("runtime_config_positive_integer_invalid: agents.items.test_agent.maxTokens");
+
+  await writeRuntimeFiles(root, { providers: {
+    default: "test_openai",
+    items: { test_openai: { type: "openai", apiKey: "test-key", maxConcurrentRequests: 1.5 } },
+  } });
+  await expect(loadRuntimeConfig({ configDir: root, gameName: "strict" })).rejects.toThrow("runtime_config_positive_integer_invalid: providers.items.test_openai.maxConcurrentRequests");
+
+  await writeRuntimeFiles(root, {
+    providers: { default: "claude", items: { claude: { type: "anthropic", apiKey: "test-key" } } },
+    agents: { default: "test_agent", items: { test_agent: {
+      kind: "llm", provider: "claude", model: "claude-test", thinkingEnabled: true, temperature: 0.2,
+    } } },
+  });
+  await expect(loadRuntimeConfig({ configDir: root, gameName: "strict" })).rejects.toThrow("runtime_config_anthropic_thinking_temperature_unsupported: test_agent");
+
+  await writeRuntimeFiles(root, {
+    providers: { default: "claude", items: { claude: { type: "anthropic", apiKey: "test-key" } } },
+    agents: { default: "test_agent", items: { test_agent: {
+      kind: "llm", provider: "claude", model: "claude-test", reasoningEffort: "xhigh",
+    } } },
+  });
+  await expect(loadRuntimeConfig({ configDir: root, gameName: "strict" })).rejects.toThrow("runtime_config_anthropic_reasoning_effort_invalid: test_agent");
+});
+
+test("rejects zero game deadlines and audit limits below their effective minimum", async () => {
+  const root = await createTestTempDirectory("awa-runtime-config-limits-");
+  await writeRuntimeFiles(root, { game: { board: "six_player_mvp", llmTimeoutMs: 0 } });
+  await expect(loadRuntimeConfig({ configDir: root, gameName: "strict" })).rejects.toThrow("runtime_config_positive_integer_invalid: game.llmTimeoutMs");
+
+  await writeRuntimeFiles(root, { debugSummary: { agent: { maxAttempts: 0 } } });
+  await expect(loadRuntimeConfig({ configDir: root, gameName: "strict" })).rejects.toThrow("runtime_config_positive_integer_invalid: debugSummary.agent.maxAttempts");
+
+  await writeRuntimeFiles(root, { debugSummary: { agent: { publicMaxItems: 59 } } });
+  await expect(loadRuntimeConfig({ configDir: root, gameName: "strict" })).rejects.toThrow("runtime_config_minimum_integer_invalid: debugSummary.agent.publicMaxItems >= 60");
 });
 
 test("loads a board override before pure board resolution", async () => {

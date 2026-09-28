@@ -82,7 +82,6 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
         colorizeLogs: options.color,
         printLlmIo: options.printLlmIo,
         printThinking: options.printThinking,
-        defaultForceJsonResponse: setup.defaultProfile.forceJsonResponse ?? true,
         createAcpUpdateObserver: options.printThinking
           ? (actorId) => createAcpConsoleLogger(actorId, log)
           : undefined,

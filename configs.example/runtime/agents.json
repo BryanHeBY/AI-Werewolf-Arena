@@ -6,10 +6,7 @@
       "provider": "openrouter",
       "model": "deepseek/deepseek-v4-flash",
       "temperature": 0.2,
-      "maxTokens": 512,
-      "forceJsonResponse": true,
-      "reasoningEnabled": false,
-      "thinkingEnabled": false
+      "maxTokens": 512
     },
     "acp_default": {
       "kind": "acp",

@@ -30,11 +30,9 @@ export function createAuditAgentExecutor(options: {
     model: profile.model,
     baseURL: profile.provider.baseURL,
     userAgent: profile.provider.userAgent,
-    temperature: profile.temperature ?? 0.1,
+    temperature: profile.temperature ?? (profile.reasoningEffort || profile.thinkingEnabled ? undefined : 0.1),
     maxTokens: profile.maxTokens ?? 1200,
-    forceJsonResponse: profile.forceJsonResponse ?? false,
-    reasoningEnabled: profile.reasoningEnabled ?? true,
-    reasoningEffort: profile.reasoningEffort ?? "medium",
+    reasoningEffort: profile.reasoningEffort,
     thinkingEnabled: profile.thinkingEnabled ?? false,
   }));
 }

@@ -1,7 +1,7 @@
 import type {
   AcpAgentEntryConfig, AgentEntryConfig, AgentsConfig, DebugSummaryConfig,
   GameAgentSelection, GameConfig, GameBoard, LlmAgentEntryConfig, ProviderConfig,
-  ProvidersConfig, RuntimeConfig,
+  ProvidersConfig, ReasoningEffort, RuntimeConfig,
 } from "./contracts";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -43,6 +43,22 @@ function readOptionalNumber(value: unknown, field: string): number | undefined {
     throw new Error(`runtime_config_optional_number_invalid: ${field}`);
   }
   return value;
+}
+
+function readOptionalPositiveInteger(value: unknown, field: string): number | undefined {
+  if (value === undefined) return undefined;
+  if (typeof value !== "number" || !Number.isSafeInteger(value) || value <= 0) {
+    throw new Error(`runtime_config_positive_integer_invalid: ${field}`);
+  }
+  return value;
+}
+
+function readOptionalMinimumInteger(value: unknown, field: string, minimum: number): number | undefined {
+  const parsed = readOptionalPositiveInteger(value, field);
+  if (parsed !== undefined && parsed < minimum) {
+    throw new Error(`runtime_config_minimum_integer_invalid: ${field} >= ${minimum}`);
+  }
+  return parsed;
 }
 
 function readStringArray(value: unknown, field: string): string[] {
@@ -114,7 +130,7 @@ function normalizeProviderConfig(name: string, raw: unknown, environment: NodeJS
       args: readStringArray(raw.args, `providers.items.${name}.args`),
       env: readEnvironment(raw.env, `providers.items.${name}.env`, environment),
       cwd: readOptionalString(raw.cwd, `providers.items.${name}.cwd`),
-      initializeTimeoutMs: readOptionalNumber(
+      initializeTimeoutMs: readOptionalPositiveInteger(
         raw.initializeTimeoutMs,
         `providers.items.${name}.initializeTimeoutMs`,
       ),
@@ -137,7 +153,7 @@ function normalizeProviderConfig(name: string, raw: unknown, environment: NodeJS
     ),
     baseURL: readOptionalString(raw.baseURL, `providers.items.${name}.baseURL`),
     userAgent: readOptionalString(raw.userAgent, `providers.items.${name}.userAgent`),
-    maxConcurrentRequests: readOptionalNumber(
+    maxConcurrentRequests: readOptionalPositiveInteger(
       raw.maxConcurrentRequests,
       `providers.items.${name}.maxConcurrentRequests`,
     ),
@@ -162,13 +178,13 @@ function normalizeProviders(raw: unknown, environment: NodeJS.ProcessEnv): Provi
 
 function normalizeAgentProfile(raw: Record<string, unknown>, name: string): LlmAgentEntryConfig {
   assertKnownKeys(raw, [
-    "kind", "provider", "model", "temperature", "maxTokens", "forceJsonResponse",
-    "reasoningEnabled", "reasoningEffort", "thinkingEnabled", "personalityPrompt",
+    "kind", "provider", "model", "temperature", "maxTokens",
+    "reasoningEffort", "thinkingEnabled", "personalityPrompt",
   ], `agents.items.${name}`);
   const reasoningEffort = raw.reasoningEffort === undefined
     ? undefined
     : readRequiredString(raw.reasoningEffort, `agents.items.${name}.reasoningEffort`);
-  if (reasoningEffort !== undefined && !["low", "medium", "high"].includes(reasoningEffort)) {
+  if (reasoningEffort !== undefined && !["none", "minimal", "low", "medium", "high", "xhigh"].includes(reasoningEffort)) {
     throw new Error(`runtime_config_reasoning_effort_invalid: ${name}`);
   }
   return {
@@ -176,10 +192,8 @@ function normalizeAgentProfile(raw: Record<string, unknown>, name: string): LlmA
     provider: readRequiredString(raw.provider, `agents.items.${name}.provider`),
     model: readRequiredString(raw.model, `agents.items.${name}.model`),
     temperature: readOptionalNumber(raw.temperature, `agents.items.${name}.temperature`),
-    maxTokens: readOptionalNumber(raw.maxTokens, `agents.items.${name}.maxTokens`),
-    forceJsonResponse: readOptionalBoolean(raw.forceJsonResponse, `agents.items.${name}.forceJsonResponse`),
-    reasoningEnabled: readOptionalBoolean(raw.reasoningEnabled, `agents.items.${name}.reasoningEnabled`),
-    reasoningEffort: reasoningEffort as LlmAgentEntryConfig["reasoningEffort"],
+    maxTokens: readOptionalPositiveInteger(raw.maxTokens, `agents.items.${name}.maxTokens`),
+    reasoningEffort: reasoningEffort as ReasoningEffort | undefined,
     thinkingEnabled: readOptionalBoolean(raw.thinkingEnabled, `agents.items.${name}.thinkingEnabled`),
     personalityPrompt: readOptionalString(raw.personalityPrompt, `agents.items.${name}.personalityPrompt`),
   };
@@ -229,6 +243,13 @@ function normalizeAgents(raw: unknown, providers: ProvidersConfig): AgentsConfig
     }
     if (agent.kind === "llm" && provider.type === "acp") {
       throw new Error(`runtime_config_llm_agent_requires_llm_provider: ${name}`);
+    }
+    if (agent.kind === "llm" && provider.type === "anthropic" && agent.thinkingEnabled && agent.temperature !== undefined) {
+      throw new Error(`runtime_config_anthropic_thinking_temperature_unsupported: ${name}`);
+    }
+    if (agent.kind === "llm" && provider.type === "anthropic" && agent.reasoningEffort
+      && !["low", "medium", "high"].includes(agent.reasoningEffort)) {
+      throw new Error(`runtime_config_anthropic_reasoning_effort_invalid: ${name}`);
     }
     return [readRequiredString(name, "agents.items.key"), agent];
   })) as Record<string, AgentEntryConfig>;
@@ -294,9 +315,9 @@ function normalizeGameConfig(raw: unknown, agents: AgentsConfig): GameConfig {
   }
   return {
     board: board as GameBoard | undefined,
-    maxDays: readOptionalNumber(raw.maxDays, "game.maxDays"),
-    maxRuntimeMs: readOptionalNumber(raw.maxRuntimeMs, "game.maxRuntimeMs"),
-    llmTimeoutMs: readOptionalNumber(raw.llmTimeoutMs, "game.llmTimeoutMs"),
+    maxDays: readOptionalPositiveInteger(raw.maxDays, "game.maxDays"),
+    maxRuntimeMs: readOptionalPositiveInteger(raw.maxRuntimeMs, "game.maxRuntimeMs"),
+    llmTimeoutMs: readOptionalPositiveInteger(raw.llmTimeoutMs, "game.llmTimeoutMs"),
     trace: readOptionalBoolean(raw.trace, "game.trace"),
     printAllEvents: readOptionalBoolean(raw.printAllEvents, "game.printAllEvents"),
     printChat: readOptionalBoolean(raw.printChat, "game.printChat"),
@@ -329,12 +350,12 @@ function normalizeDebugSummaryConfig(raw: unknown, agents: AgentsConfig): DebugS
     agent: {
       enabled: readOptionalBoolean(raw.agent.enabled, "debugSummary.agent.enabled"),
       agentName,
-      timeoutMs: readOptionalNumber(raw.agent.timeoutMs, "debugSummary.agent.timeoutMs"),
-      maxAttempts: readOptionalNumber(raw.agent.maxAttempts, "debugSummary.agent.maxAttempts"),
-      concurrency: readOptionalNumber(raw.agent.concurrency, "debugSummary.agent.concurrency"),
-      publicMaxItems: readOptionalNumber(raw.agent.publicMaxItems, "debugSummary.agent.publicMaxItems"),
-      maxItems: readOptionalNumber(raw.agent.maxItems, "debugSummary.agent.maxItems"),
-      playerMaxItems: readOptionalNumber(raw.agent.playerMaxItems, "debugSummary.agent.playerMaxItems"),
+      timeoutMs: readOptionalPositiveInteger(raw.agent.timeoutMs, "debugSummary.agent.timeoutMs"),
+      maxAttempts: readOptionalPositiveInteger(raw.agent.maxAttempts, "debugSummary.agent.maxAttempts"),
+      concurrency: readOptionalPositiveInteger(raw.agent.concurrency, "debugSummary.agent.concurrency"),
+      publicMaxItems: readOptionalMinimumInteger(raw.agent.publicMaxItems, "debugSummary.agent.publicMaxItems", 60),
+      maxItems: readOptionalMinimumInteger(raw.agent.maxItems, "debugSummary.agent.maxItems", 50),
+      playerMaxItems: readOptionalMinimumInteger(raw.agent.playerMaxItems, "debugSummary.agent.playerMaxItems", 60),
     },
   };
 }

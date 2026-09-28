@@ -13,6 +13,14 @@
 
 运行配置只接受固定文件结构：`runtime/providers.json`、`runtime/agents.json`、`games/<name>.json`，以及可选的 `runtime/debug_summary.json`。每个 Agent 都必须显式声明 `kind: "llm"` 或 `kind: "acp"`；调试汇总通过 `agentName` 引用一个 Agent，不能内联覆盖模型参数。
 
+LLM Agent 的 `reasoningEffort` 可选，通过 AI SDK 的 `providerOptions` 发送；OpenAI 兼容接口可选 `none`、`minimal`、`low`、`medium`、`high`、`xhigh`，Anthropic 只接受 `low`、`medium`、`high`，具体档位仍取决于模型。不填则不主动指定推理档位。`thinkingEnabled` 仅在显式设为 `true` 时生效：支持该能力的 Anthropic 模型使用 SDK 的自适应 thinking，OpenAI 兼容网关沿用 `extra_body.thinking` 扩展。Anthropic 自适应 thinking 不支持同时指定 `temperature`。`maxTokens` 与 provider 的 `maxConcurrentRequests` 必须是正整数。
+
+请求头的 `userAgent` 只从对应 provider 配置读取；未配置时使用 `AWA-Werewolf/1.0`。指定推理或 thinking 时不再自动补 `temperature`，如模型支持，可在 Agent 上显式设置。模型调用使用 AI SDK 自带的最多 3 次重试。
+
+对局天数、超时、审计次数和并发数必须是正整数。审计的 `publicMaxItems` 与 `playerMaxItems` 至少为 60，`maxItems` 至少为 50；低于下限会在加载配置时明确报错。
+
+旧配置中的 `forceJsonResponse` 从未控制实际请求，`reasoningEnabled` 曾对所有 OpenAI 兼容接口默认启用推理参数；这两个字段现已移除。升级已有配置时删除它们，并在需要指定推理档位的 Agent 上填写 `reasoningEffort`。
+
 对局异常时仍会关闭 Agent 并保存带有 `runtime_error` 结束原因的部分复盘；初始化或最终 `replay.json` 写入失败会使运行命令失败，而不是仅打印警告。若对局和收尾同时失败，调用方会收到包含两者的 `AggregateError`。
 
 首日警长选举后的夜间死亡链结算一旦满足胜利条件，会立即终局，不再请求白天发言或投票。配置的初始警长也会写入复盘事件。导出器和播放器共用运行时校验，拒绝损坏的玩家、事件结构及非连续事件序号；未结束的部分复盘仍可加载。
