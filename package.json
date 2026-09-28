@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "AI multi-agent Werewolf game arena, replay studio, and video generator",
-  "packageManager": "bun@1.3.14",
+  "packageManager": "bun@1.4.2",
   "workspaces": [
     "backend",
     "frontend",
@@ -21,6 +21,6 @@
     "test:frontend": "bun --filter ai-werewolf-arena-frontend test"
   },
   "engines": {
-    "bun": ">=1.3.14"
+    "bun": ">=1.4.2"
   }
 }
