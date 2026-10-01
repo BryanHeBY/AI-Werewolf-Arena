@@ -166,6 +166,29 @@ describe("AiSdkClient with the installed AI SDK", () => {
       server.stop(true);
     }
   });
+
+  test("returns a required-tool non-action to the game retry policy", async () => {
+    const server = Bun.serve({
+      hostname: "127.0.0.1", port: 0,
+      fetch() { return completion({ role: "assistant", content: "我还没有提交行动" }, "stop"); },
+    });
+    try {
+      const client = new AiSdkClient({
+        apiKey: "test-key", baseURL: `${server.url.origin}/v1`, model: "test-model",
+      });
+      const result = await client.runToolLoop(
+        [{ role: "user", content: "请提交行动" }],
+        [{ name: "submit_action", description: "提交行动", parameters: { type: "object", properties: {} } }],
+        { onToolCall: async () => { throw new Error("No tool should execute"); } },
+        { toolChoice: "required" },
+      );
+      expect(result.finalAction).toBeNull();
+      expect(result.assistantText).toBe("我还没有提交行动");
+      expect(result.thinkingTrace.at(-1)?.assistantText).toBe("我还没有提交行动");
+    } finally {
+      server.stop(true);
+    }
+  });
 });
 
 function completion(message: Record<string, unknown>, finishReason: string): Response {

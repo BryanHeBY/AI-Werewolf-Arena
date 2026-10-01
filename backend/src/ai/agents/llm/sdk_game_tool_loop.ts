@@ -6,6 +6,7 @@ import {
   getActionRequestStage,
 } from "../../../core/domain/action_request_context";
 import { World } from "../../../core/domain/world";
+import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import {
   getDefaultToolValidationRuleRegistry,
   ToolValidationRuleRegistry,
@@ -75,7 +76,7 @@ export class SdkGameToolLoop {
             }
             if (invocation.name === PlayerPromptSession.REPORT_BUG_TOOL) {
               if (typeof invocation.args.turn_id === "string" && invocation.args.turn_id !== turnId) {
-                return { toolResult: { ok: false, error: "turn_not_open_or_session_invalid" } };
+                return { toolResult: this.rejectTurnId(request, invocation.name, invocation.args, turnId) };
               }
               return { toolResult: this.reportBug(request, invocation.args) };
             }
@@ -84,7 +85,7 @@ export class SdkGameToolLoop {
             let actionArgs = invocation.args;
             if (invocation.name === "submit_action") {
               if (invocation.args.turn_id !== turnId) {
-                return { toolResult: { ok: false, error: "turn_not_open_or_session_invalid" } };
+                return { toolResult: this.rejectTurnId(request, invocation.name, invocation.args, turnId) };
               }
               if (typeof invocation.args.action !== "string") {
                 return { toolResult: { ok: false, error: "invalid_submit_action_arguments" } };
@@ -164,6 +165,33 @@ export class SdkGameToolLoop {
     } finally {
       if (timer) clearTimeout(timer);
     }
+  }
+
+  private rejectTurnId(
+    request: ActionRequest,
+    tool: string,
+    args: Record<string, unknown>,
+    expectedTurnId: string,
+  ): Record<string, unknown> {
+    const result = {
+      ok: false,
+      error: "turn_id_mismatch",
+      expected_turn_id: expectedTurnId,
+      received_turn_id: args.turn_id ?? null,
+      message: `当前回合仍开放。请将 turn_id 改为 ${expectedTurnId}，重新调用 ${tool}。`,
+    };
+    safeRecordLogicOp({
+      scope: "llm_action_provider",
+      op: "tool_call_rejected",
+      actorId: request.actorId,
+      phase: String(request.phase),
+      status: "rejected",
+      reason: result.error,
+      input: { day: getActionRequestDay(request), stage: getActionRequestStage(request), tool, args },
+      output: result,
+    });
+    this.observer.trace(`tool_call_rejected player=${request.actorId} tool=${tool} expected_turn_id=${expectedTurnId} received_turn_id=${JSON.stringify(args.turn_id ?? null)}`);
+    return result;
   }
 
   private validateStatefulAction(request: ActionRequest, action: ToolCall): string | null {

@@ -17,6 +17,8 @@ LLM Agent 的 `reasoningEffort` 可选，通过 AI SDK 的 `providerOptions` 发
 
 请求头的 `userAgent` 只从对应 provider 配置读取；未配置时使用 `AWA-Werewolf/1.0`。指定推理或 thinking 时不再自动补 `temperature`，如模型支持，可在 Agent 上显式设置。模型调用使用 AI SDK 自带的最多 3 次重试。
 
+provider 的 `maxConcurrentRequests` 约束单局内同时执行的玩家回合，名额在整个工具调用与行动重试结束后才释放；多个进程使用同一密钥时，请求数仍会叠加。模型未遵守必须调用工具的要求时，会进入最多 3 次行动重试；API 错误和超时仍按异常回退。LLM 的 `turn_id` 不匹配会返回期望值与收到值，并写入 `logic_ops.json`，便于核查被拒绝的调用。
+
 对局天数、超时、审计次数和并发数必须是正整数。审计的 `publicMaxItems` 与 `playerMaxItems` 至少为 60，`maxItems` 至少为 50；低于下限会在加载配置时明确报错。
 
 旧配置中的 `forceJsonResponse` 从未控制实际请求，`reasoningEnabled` 曾对所有 OpenAI 兼容接口默认启用推理参数；这两个字段现已移除。升级已有配置时删除它们，并在需要指定推理档位的 Agent 上填写 `reasoningEffort`。

@@ -1,6 +1,6 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
-import { generateText, jsonSchema, type LanguageModel, type ModelMessage } from "ai";
+import { generateText, jsonSchema, ToolChoiceViolationError, type LanguageModel, type ModelMessage } from "ai";
 
 import {
   ChatMessage,
@@ -190,11 +190,23 @@ export class AiSdkClient implements ChatModelClient {
           current.assistantText = step.text;
         }
       },
+    }).catch((error: unknown) => {
+      // AI SDK 7 rejects text-only responses to required tool choice. They are
+      // model non-actions, so preserve the output and let the game retry policy
+      // handle them. Transport and other SDK errors still propagate.
+      if (!ToolChoiceViolationError.isInstance(error)) throw error;
+      const text = error.content
+        .filter((part) => part.type === "text")
+        .map((part) => part.text)
+        .join("");
+      const current = traces.at(-1);
+      if (current) current.assistantText = text;
+      return null;
     });
 
     return {
       finalAction,
-      assistantText: result.steps.at(-1)?.text ?? result.text,
+      assistantText: result?.steps.at(-1)?.text ?? result?.text ?? traces.at(-1)?.assistantText ?? "",
       thinkingTrace: traces,
     };
   }

@@ -5,6 +5,7 @@ import { ActionProvider, ActionRequest, Phase, ToolCall } from "../../../src/cor
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
+import { AiSdkClient } from "../../../src/ai/integrations/llm/ai_sdk_client";
 import { getSeerState, getWitchState } from "../../../src/game/mechanisms/roles/private_state";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
@@ -919,6 +920,89 @@ describe("LlmActionProvider", () => {
       name: "speak",
       args: { text: "通过统一协议发言" },
     });
+  });
+
+  test("returns actionable turn-id feedback and accepts a corrected witch action", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const root = await createTestTempDirectory("turn-id-feedback-");
+    const recorder = await SessionRecordManager.create({
+      sessionId: "session_turn_id_feedback", board: "twelve_player_standard",
+      startedAtIso: new Date().toISOString(),
+    }, root);
+    const witchId = context.world.entityIds().find(id =>
+      context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "witch")!;
+    const client = {
+      chat: async () => "",
+      async runToolLoop<T>(_messages: unknown, _tools: unknown, callbacks: any) {
+        const submit = (turnId: string) => callbacks.onToolCall({
+          id: `call-${turnId}`, name: "submit_action", rawArgs: "{}",
+          args: { turn_id: turnId, action: "use_potion", arguments: { target_id: witchId, potion_type: "none" } },
+        });
+        const rejected = await submit("t2");
+        expect(rejected.toolResult).toMatchObject({
+          ok: false, error: "turn_id_mismatch", expected_turn_id: "t1", received_turn_id: "t2",
+        });
+        expect(rejected.finalAction).toBeUndefined();
+        const accepted = await submit(rejected.toolResult.expected_turn_id);
+        expect(accepted.toolResult.ok).toBe(true);
+        return { finalAction: accepted.finalAction as T, assistantText: "" };
+      },
+    };
+    const provider = new LlmActionProvider(context.world, client, { fallbackProvider: new FallbackProvider(null) });
+    await expect(runWithSessionRecorder(recorder, () => provider.getAction({
+      phase: Phase.Night, actorId: witchId, allowedTools: ["use_potion"],
+      context: { day: 1, stage: "witch", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+    }))).resolves.toEqual({ name: "use_potion", args: { target_id: witchId, potion_type: "none" } });
+    await recorder.flushNow();
+    const logic = JSON.parse(await fs.readFile(path.join(recorder.sessionDir, "logic_ops.json"), "utf8"));
+    expect(logic.ops).toContainEqual(expect.objectContaining({
+      op: "tool_call_rejected", status: "rejected", reason: "turn_id_mismatch",
+      input: expect.objectContaining({ args: expect.objectContaining({ turn_id: "t2" }) }),
+      output: expect.objectContaining({ expected_turn_id: "t1", received_turn_id: "t2" }),
+    }));
+  });
+
+  test("retries a text-only required-tool response and completes the witch turn", async () => {
+    const context = bootstrapGame(twelvePlayerStandardConfig);
+    const witchId = context.world.entityIds().find(id =>
+      context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "witch")!;
+    let requests = 0;
+    const server = Bun.serve({
+      hostname: "127.0.0.1", port: 0,
+      async fetch(request) {
+        const body = await request.json() as any;
+        requests++;
+        expect(body.tool_choice).toBe("required");
+        let message: Record<string, unknown> = { role: "assistant", content: "我未能提交行动" };
+        if (requests > 1) {
+          const prompt = body.messages.findLast((item: any) => item.content?.includes("turn_id 必须为"));
+          const turnId = prompt.content.match(/turn_id 必须为 (t\d+)/)[1];
+          expect(body.messages.at(-1).content).toContain("重试 1/3");
+          message = { role: "assistant", content: null, tool_calls: [{
+            id: "corrected-action", type: "function", function: {
+              name: "submit_action", arguments: JSON.stringify({
+                turn_id: turnId, action: "use_potion", arguments: { target_id: witchId, potion_type: "none" },
+              }),
+            },
+          }] };
+        }
+        return Response.json({
+          id: "chatcmpl-witch", object: "chat.completion", created: 1, model: "test-model",
+          choices: [{ index: 0, message, finish_reason: requests === 1 ? "stop" : "tool_calls" }],
+          usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
+        });
+      },
+    });
+    try {
+      const provider = new LlmActionProvider(context.world, new AiSdkClient({
+        apiKey: "test-key", baseURL: `${server.url.origin}/v1`, model: "test-model",
+      }), { llmTimeoutMs: 5000, fallbackProvider: new FallbackProvider(null) });
+      await expect(provider.getAction({
+        phase: Phase.Night, actorId: witchId, allowedTools: ["use_potion"],
+        context: { day: 1, stage: "witch", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      })).resolves.toEqual({ name: "use_potion", args: { target_id: witchId, potion_type: "none" } });
+      expect(requests).toBe(2);
+    } finally { server.stop(true); }
   });
 
   test("appends structured events once using seq cursors", async () => {
