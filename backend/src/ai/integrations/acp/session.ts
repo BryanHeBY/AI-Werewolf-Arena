@@ -42,6 +42,8 @@ export interface AcpProcessClientOptions<TRegistry = AcpTurnRegistry> {
   cwd: string;
   initializeTimeoutMs?: number;
   onUpdate?: (update: AcpSessionUpdate) => void;
+  /** Called after a prompt's update stream ends, including errors/cancellation. */
+  onPromptEnd?: (actorId: number) => void;
   mcpBridge?: AcpMcpBridgeFactory<TRegistry>;
   /** session/new 后通过标准 ACP session/set_config_option 应用。 */
   sessionConfigOptions?: Record<string, AcpSessionConfigOptionValue>;

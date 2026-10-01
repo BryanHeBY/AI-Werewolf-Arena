@@ -176,6 +176,7 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
         bridge.serverName,
         protocolConnection,
         initializeResponse.agentCapabilities?.sessionCapabilities?.close != null,
+        this.options.onPromptEnd,
       );
       processSession = createdSession;
       controller.signal.throwIfAborted();
@@ -233,6 +234,7 @@ class AcpProcessSession implements AcpSession {
     private readonly approvedMcpServerName = "werewolf-game",
     private readonly connection?: acp.ClientConnection,
     private readonly supportsSessionClose = false,
+    private readonly onPromptEnd?: (actorId: number) => void,
   ) {}
 
   get sessionId(): string {
@@ -243,8 +245,12 @@ class AcpProcessSession implements AcpSession {
     if (this.closed) throw new Error("acp_session_closed");
     this.resetAuditTrace();
     const prompt = this.session.prompt(text);
-    void this.consumeUpdates().catch(() => undefined);
-    await prompt;
+    const updates = this.consumeUpdates().catch(() => undefined);
+    try {
+      await prompt;
+    } finally {
+      await updates;
+    }
   }
 
   async cancel(): Promise<void> {
@@ -315,15 +321,17 @@ class AcpProcessSession implements AcpSession {
   }
 
   private async consumeUpdates(): Promise<void> {
-    for (;;) {
-      const message = await this.session.nextUpdate();
-      if (message.kind === "stop") {
-        this.flushAuditMessage();
-        return;
+    try {
+      for (;;) {
+        const message = await this.session.nextUpdate();
+        if (message.kind === "stop") return;
+        this.trackInjectedMcpToolCall(message.update);
+        this.captureAuditUpdate(message.update);
+        this.onUpdate?.({ actorId: this.actorId, update: message.update });
       }
-      this.trackInjectedMcpToolCall(message.update);
-      this.captureAuditUpdate(message.update);
-      this.onUpdate?.({ actorId: this.actorId, update: message.update });
+    } finally {
+      this.flushAuditMessage();
+      this.onPromptEnd?.(this.actorId);
     }
   }
 

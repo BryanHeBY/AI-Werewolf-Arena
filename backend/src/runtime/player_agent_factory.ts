@@ -27,7 +27,12 @@ export interface PlayerAgentFactoryOptions {
   colorizeLogs: boolean;
   printLlmIo: boolean;
   printThinking: boolean;
-  createAcpUpdateObserver?: (actorId: number) => ((update: unknown) => void) | undefined;
+  createAcpUpdateObserver?: (actorId: number) => AcpUpdateObserver | undefined;
+}
+
+interface AcpUpdateObserver {
+  (update: unknown): void;
+  flush?(): void;
 }
 
 /** 根据统一 profile 创建玩家运行时；调用方无需感知 SDK/ACP 构造细节。 */
@@ -47,7 +52,7 @@ async function createAcpRuntime(
   options: PlayerAgentFactoryOptions,
 ): Promise<PlayerAgentRuntime> {
   await fs.mkdir(options.acpWorkspaceRoot, { recursive: true });
-  const observers = new Map<number, ((update: unknown) => void) | undefined>();
+  const observers = new Map<number, AcpUpdateObserver | undefined>();
   const provider = new AcpActionProvider(options.world, {
     sessionFactoryResolver: (actorId) => {
       const profile = options.profilesByActor.get(actorId);
@@ -65,6 +70,7 @@ async function createAcpRuntime(
         initializeTimeoutMs: profile.provider.initializeTimeoutMs,
         cwd: profile.provider.cwd ?? path.join(options.acpWorkspaceRoot, `player-${actorId}`),
         onUpdate: ({ update }) => observers.get(actorId)?.(update),
+        onPromptEnd: (actorId) => observers.get(actorId)?.flush?.(),
       });
     },
     personalityPromptResolver: (request) =>
@@ -76,7 +82,13 @@ async function createAcpRuntime(
   return {
     kind: "acp",
     provider,
-    close: () => provider.close(),
+    close: async () => {
+      try {
+        await provider.close();
+      } finally {
+        for (const observer of observers.values()) observer?.flush?.();
+      }
+    },
   };
 }
 

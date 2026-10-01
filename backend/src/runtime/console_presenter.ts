@@ -69,32 +69,50 @@ function compact(value: string, maxLength = 500): string {
   return normalized.length > maxLength ? `${normalized.slice(0, maxLength)}…` : normalized;
 }
 
-export function createAcpConsoleLogger(actorId: number, log: ConsoleLog): (update: unknown) => void {
-  let pendingMessage: { id: string; text: string } | null = null;
+export interface AcpConsoleLogger {
+  (update: unknown): void;
+  flush(): void;
+}
+
+export function createAcpConsoleLogger(actorId: number, log: ConsoleLog): AcpConsoleLogger {
+  let pending: { kind: "message" | "thought"; id: string; text: string } | null = null;
   const toolLabels = new Map<string, string>();
-  const flushMessage = () => {
-    if (!pendingMessage) return;
-    const text = compact(pendingMessage.text);
-    if (text && !/^\*?conversation interrupted\*?$/i.test(text)) log(`[acp][${actorId}][message] ${text}`, "muted");
-    pendingMessage = null;
+  const emitText = (kind: "message" | "thought", value: string) => {
+    const text = compact(value, Infinity);
+    if (text && !/^\*?conversation interrupted\*?$/i.test(text)) {
+      log(`[acp][${actorId}][${kind}] ${text}`, "muted");
+    }
   };
-  return (update: unknown) => {
+  const flush = () => {
+    const previous = pending;
+    pending = null;
+    if (previous) emitText(previous.kind, previous.text);
+  };
+  const observer = (update: unknown) => {
     const event = asRecord(update);
     if (!event || typeof event.sessionUpdate !== "string") return;
     const type = event.sessionUpdate;
-    if (type === "agent_message_chunk") {
+    if (type === "agent_message_chunk" || type === "agent_thought_chunk") {
+      const kind = type === "agent_message_chunk" ? "message" : "thought";
       const messageId = typeof event.messageId === "string" ? event.messageId : "unknown";
-      if (pendingMessage && pendingMessage.id !== messageId) flushMessage();
-      if (!pendingMessage) pendingMessage = { id: messageId, text: "" };
-      pendingMessage.text += updateText(event.content);
+      if (pending && (pending.kind !== kind || pending.id !== messageId)) flush();
+      if (!pending) pending = { kind, id: messageId, text: "" };
+      pending.text += updateText(event.content);
+      // ACP chunks are deltas, not log lines. Bound the buffer without dropping
+      // text, and emit complete lines even while a long prompt is still running.
+      while (pending.text.length) {
+        const newline = pending.text.search(/[\r\n]/);
+        let end = newline >= 0 && newline <= 500 ? newline : 500;
+        if (newline < 0 && pending.text.length <= 500) break;
+        const hasNewline = end === newline;
+        // Do not split a UTF-16 surrogate pair at the segment boundary.
+        if (!hasNewline && /[\uD800-\uDBFF]/.test(pending.text[end - 1])) end--;
+        emitText(kind, pending.text.slice(0, end));
+        pending.text = pending.text.slice(end + (hasNewline ? 1 : 0));
+      }
       return;
     }
-    flushMessage();
-    if (type === "agent_thought_chunk") {
-      const text = compact(updateText(event.content), 240);
-      if (text) log(`[acp][${actorId}][thought] ${text}`, "muted");
-      return;
-    }
+    flush();
     if (type === "tool_call") {
       const rawInput = asRecord(event.rawInput);
       const server = typeof rawInput?.server === "string" ? rawInput.server : undefined;
@@ -115,4 +133,5 @@ export function createAcpConsoleLogger(actorId: number, log: ConsoleLog): (updat
       if (toolCallId && (status === "completed" || status === "failed")) toolLabels.delete(toolCallId);
     }
   };
+  return Object.assign(observer, { flush });
 }
