@@ -38,6 +38,7 @@ export function resolveAgentProfileByName(runtime: RuntimeConfig, agentName?: st
       spawnArgs: entry.spawnArgs,
       sessionReuse: entry.sessionReuse,
       actionTransport: entry.actionTransport ?? "mcp",
+      personalityPrompt: entry.personalityPrompt,
     };
   }
   return {
@@ -62,9 +63,14 @@ function resolveSelections(
     const name = typeof selection === "string" ? selection : selection.agent;
     const profile = resolveAgentProfileByName(runtime, name);
     const spawnArgs = typeof selection === "object" ? selection.spawnArgs : undefined;
-    return [key, profile.kind === "acp" && spawnArgs?.length
-      ? { ...profile, spawnArgs: [...(profile.spawnArgs ?? []), ...spawnArgs] }
-      : profile];
+    const personalityPrompt = typeof selection === "object" ? selection.personalityPrompt : undefined;
+    return [key, {
+      ...profile,
+      ...(profile.kind === "acp" && spawnArgs?.length
+        ? { spawnArgs: [...(profile.spawnArgs ?? []), ...spawnArgs] }
+        : {}),
+      ...(personalityPrompt !== undefined ? { personalityPrompt } : {}),
+    }];
   }));
 }
 

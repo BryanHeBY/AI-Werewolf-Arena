@@ -1,6 +1,12 @@
 {
   "board": "twelve_player_standard",
   "agent": "acp_default",
+  "roleAgents": {
+    "wolf": {
+      "agent": "acp_default",
+      "personalityPrompt": "发言简洁，基于公开事实分析，注意团队配合。"
+    }
+  },
   "playerAgents": {
     "1": {
       "agent": "acp_default",
@@ -8,7 +14,8 @@
     },
     "6": {
       "agent": "acp_default",
-      "spawnArgs": ["--model", "strong-model"]
+      "spawnArgs": ["--model", "strong-model"],
+      "personalityPrompt": "语气温和，先总结事实，再提出问题。"
     }
   },
   "maxDays": 2,

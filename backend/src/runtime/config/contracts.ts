@@ -25,13 +25,16 @@ export interface AcpProviderConfig {
 
 export type ProviderConfig = LlmProviderConfig | AcpProviderConfig;
 
-export interface AgentProfileConfig {
+export interface AgentPromptConfig {
+  personalityPrompt?: string;
+}
+
+export interface AgentProfileConfig extends AgentPromptConfig {
   model: string;
   temperature?: number;
   maxTokens?: number;
   reasoningEffort?: ReasoningEffort;
   thinkingEnabled?: boolean;
-  personalityPrompt?: string;
 }
 
 export interface LlmAgentEntryConfig extends AgentProfileConfig {
@@ -39,7 +42,7 @@ export interface LlmAgentEntryConfig extends AgentProfileConfig {
   provider: string;
 }
 
-export interface AcpAgentEntryConfig {
+export interface AcpAgentEntryConfig extends AgentPromptConfig {
   kind: "acp";
   provider: string;
   /** 静态启动参数；不得包含身份或对局状态。 */
@@ -60,12 +63,13 @@ export interface AgentsConfig {
   items: Record<string, AgentEntryConfig>;
 }
 
-/** 对局仅引用已定义的 Agent；对象形式用于覆盖 ACP 启动参数。 */
+/** 对局引用已定义的 Agent；对象形式可覆盖提示词及 ACP 启动参数。 */
 export type GameAgentSelection =
   | string
   | {
       agent: string;
       spawnArgs?: string[];
+      personalityPrompt?: string;
     };
 
 export interface GameConfig {
@@ -121,7 +125,7 @@ export interface ResolvedAuditConfig {
   playerMaxItems: number;
 }
 
-export interface ResolvedAgentRuntimeProfile {
+export interface ResolvedAgentRuntimeProfile extends AgentPromptConfig {
   name: string;
   providerName: string;
   provider: ProviderConfig;
@@ -131,7 +135,6 @@ export interface ResolvedAgentRuntimeProfile {
   maxTokens?: number;
   reasoningEffort?: ReasoningEffort;
   thinkingEnabled?: boolean;
-  personalityPrompt?: string;
   spawnArgs?: string[];
   sessionReuse?: "per_player";
   actionTransport?: "mcp";

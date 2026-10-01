@@ -13,6 +13,29 @@
 
 运行配置只接受固定文件结构：`runtime/providers.json`、`runtime/agents.json`、`games/<name>.json`，以及可选的 `runtime/debug_summary.json`。每个 Agent 都必须显式声明 `kind: "llm"` 或 `kind: "acp"`；调试汇总通过 `agentName` 引用一个 Agent，不能内联覆盖模型参数。
 
+LLM 和 ACP Agent 均支持 `personalityPrompt`，统一追加到玩家的身份与规则提示中。可以在 `runtime/agents.json` 中设置默认风格，也可在对局的 `roleAgents`、`playerAgents` 对象中覆盖，无需重复定义模型或进程配置。例如：
+
+```json
+{
+  "board": "twelve_player_standard",
+  "agent": "acp_default",
+  "roleAgents": {
+    "wolf": {
+      "agent": "acp_default",
+      "personalityPrompt": "善于分析公开信息，发言简洁，注意团队配合。"
+    }
+  },
+  "playerAgents": {
+    "11": {
+      "agent": "acp_default",
+      "personalityPrompt": "语气温和，每次发言先总结事实，再提出问题。"
+    }
+  }
+}
+```
+
+选择优先级为序号配置 → 角色配置 → 对局默认 Agent。选中的配置没有填写 `personalityPrompt` 时，继承其引用 Agent 的提示词；填写时整体覆盖，不与角色或其他 Agent 的提示词拼接。身份、规则和工具约束仍由引擎生成，提示词通过共享的 `PlayerPromptPolicy` 注入，不放入 ACP 进程参数。
+
 LLM Agent 的 `reasoningEffort` 可选，通过 AI SDK 的 `providerOptions` 发送；OpenAI 兼容接口可选 `none`、`minimal`、`low`、`medium`、`high`、`xhigh`，Anthropic 只接受 `low`、`medium`、`high`，具体档位仍取决于模型。不填则不主动指定推理档位。`thinkingEnabled` 仅在显式设为 `true` 时生效：支持该能力的 Anthropic 模型使用 SDK 的自适应 thinking，OpenAI 兼容网关沿用 `extra_body.thinking` 扩展。Anthropic 自适应 thinking 不支持同时指定 `temperature`。`maxTokens` 与 provider 的 `maxConcurrentRequests` 必须是正整数。
 
 请求头的 `userAgent` 只从对应 provider 配置读取；未配置时使用 `AWA-Werewolf/1.0`。指定推理或 thinking 时不再自动补 `temperature`，如模型支持，可在 Agent 上显式设置。模型调用使用 AI SDK 自带的最多 3 次重试。

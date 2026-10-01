@@ -200,7 +200,7 @@ function normalizeAgentProfile(raw: Record<string, unknown>, name: string): LlmA
 }
 
 function normalizeAcpAgent(raw: Record<string, unknown>, name: string): AcpAgentEntryConfig {
-  assertKnownKeys(raw, ["kind", "provider", "spawnArgs", "sessionReuse", "actionTransport"], `agents.items.${name}`);
+  assertKnownKeys(raw, ["kind", "provider", "spawnArgs", "sessionReuse", "actionTransport", "personalityPrompt"], `agents.items.${name}`);
   const sessionReuse = raw.sessionReuse === undefined
     ? undefined
     : readRequiredString(raw.sessionReuse, `agents.items.${name}.sessionReuse`);
@@ -219,6 +219,7 @@ function normalizeAcpAgent(raw: Record<string, unknown>, name: string): AcpAgent
     spawnArgs: raw.spawnArgs === undefined ? undefined : readStringArray(raw.spawnArgs, `agents.items.${name}.spawnArgs`),
     sessionReuse: sessionReuse as AcpAgentEntryConfig["sessionReuse"],
     actionTransport: actionTransport as AcpAgentEntryConfig["actionTransport"],
+    personalityPrompt: readOptionalString(raw.personalityPrompt, `agents.items.${name}.personalityPrompt`),
   };
 }
 
@@ -270,7 +271,7 @@ function normalizeGameAgentSelection(
     return agent;
   }
   if (!isRecord(value)) throw new Error(`runtime_config_agent_selection_invalid: ${field}`);
-  assertKnownKeys(value, ["agent", "spawnArgs"], field);
+  assertKnownKeys(value, ["agent", "spawnArgs", "personalityPrompt"], field);
   const agent = readRequiredString(value.agent, `${field}.agent`);
   const profile = agents.items[agent];
   if (!profile) throw new Error(`runtime_config_agent_not_found: ${agent}`);
@@ -278,7 +279,12 @@ function normalizeGameAgentSelection(
   if (spawnArgs && profile.kind !== "acp") {
     throw new Error(`runtime_config_spawn_args_require_acp_agent: ${field}`);
   }
-  return { agent, ...(spawnArgs ? { spawnArgs } : {}) };
+  const personalityPrompt = readOptionalString(value.personalityPrompt, `${field}.personalityPrompt`);
+  return {
+    agent,
+    ...(spawnArgs ? { spawnArgs } : {}),
+    ...(personalityPrompt !== undefined ? { personalityPrompt } : {}),
+  };
 }
 
 function normalizeGameAgentSelections(

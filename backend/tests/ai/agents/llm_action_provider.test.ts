@@ -1401,6 +1401,21 @@ describe("LlmActionProvider", () => {
     });
   });
 
+  test("injects the player personality in the shared system prompt", async () => {
+    const context = bootstrapGame(sixPlayerMvpConfig);
+    const client = new ToolLoopClient("speak", { text: "简洁发言" });
+    const provider = new LlmActionProvider(context.world, client, {
+      personalityPromptResolver: () => "先总结事实，再提出问题。",
+    });
+    await provider.getAction({
+      actorId: 1, phase: Phase.Day, allowedTools: ["speak"],
+      context: { day: 1, stage: "day_speech", visible_events: [] },
+    });
+    const system = client.lastMessages.find(message => message.role === "system")?.content;
+    expect(system).toContain("你的性格与发言风格要求：先总结事实，再提出问题。");
+    expect(system).toContain("你的唯一目标是帮助你所在阵营赢得本局");
+  });
+
   test("first-day sheriff prompts distinguish pending night results and run semantics", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const observedPrompts: string[] = [];

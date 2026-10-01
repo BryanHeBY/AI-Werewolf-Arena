@@ -222,6 +222,7 @@ describe("AcpActionProvider", () => {
       async createSession(input): Promise<AcpSession> {
         sessionsCreated += 1;
         expect(input.initialPrompt).toContain("你的唯一目标是帮助你所在阵营赢得本局");
+        expect(input.initialPrompt).toContain("你的性格与发言风格要求：先总结事实，再提出问题。");
         expect(input.initialPrompt).not.toContain("MCP 协议");
         expect(input.initialPrompt).not.toContain("werewolf-game");
         expect(input.initialPrompt).not.toContain("speak_to_wolves.text");
@@ -250,6 +251,7 @@ describe("AcpActionProvider", () => {
     const provider = new AcpActionProvider(context.world, {
       sessionFactory: factory,
       turnTimeoutMs: 1000,
+      personalityPromptResolver: () => "先总结事实，再提出问题。",
     });
 
     await expect(provider.getAction(speakRequest())).resolves.toEqual({
