@@ -76,7 +76,7 @@ export interface AcpConsoleLogger {
 
 export function createAcpConsoleLogger(actorId: number, log: ConsoleLog): AcpConsoleLogger {
   let pending: { kind: "message" | "thought"; id: string; text: string } | null = null;
-  const toolLabels = new Map<string, string>();
+  const toolStates = new Map<string, { label: string; status?: string; error: string }>();
   const emitText = (kind: "message" | "thought", value: string) => {
     const text = compact(value, Infinity);
     if (text && !/^\*?conversation interrupted\*?$/i.test(text)) {
@@ -120,18 +120,32 @@ export function createAcpConsoleLogger(actorId: number, log: ConsoleLog): AcpCon
       const title = typeof event.title === "string" ? compact(event.title, 180) : "tool";
       const label = server && tool ? `${server}.${tool}` : title;
       const toolCallId = typeof event.toolCallId === "string" ? event.toolCallId : undefined;
-      if (toolCallId) toolLabels.set(toolCallId, label);
+      if (toolCallId) toolStates.set(toolCallId, {
+        label, status: typeof event.status === "string" ? event.status : undefined, error: "",
+      });
       log(`[acp][${actorId}][tool] start ${label}`, "muted");
       return;
     }
     if (type === "tool_call_update") {
       const toolCallId = typeof event.toolCallId === "string" ? event.toolCallId : undefined;
-      const label = toolCallId ? toolLabels.get(toolCallId) ?? "tool" : "tool";
-      const status = typeof event.status === "string" ? event.status : "updated";
+      const previous = toolCallId ? toolStates.get(toolCallId) : undefined;
+      const label = typeof event.title === "string" ? compact(event.title, 180) : previous?.label ?? "tool";
+      const status = typeof event.status === "string" ? event.status : undefined;
       const error = compact(updateText(event.error), 240);
-      log(`[acp][${actorId}][tool] ${status} ${label}${error ? ` error=${error}` : ""}`, error || status === "failed" ? "warn" : "muted");
-      if (toolCallId && (status === "completed" || status === "failed")) toolLabels.delete(toolCallId);
+      // Partial updates can refine input/content without changing tool status.
+      // Keep their metadata, but only print lifecycle changes or new errors.
+      const changed = (status !== undefined && status !== previous?.status)
+        || (error !== "" && error !== previous?.error);
+      if (toolCallId) toolStates.set(toolCallId, {
+        label, status: status ?? previous?.status, error: error || previous?.error || "",
+      });
+      if (!changed) return;
+      const displayStatus = status ?? previous?.status ?? "error";
+      log(`[acp][${actorId}][tool] ${displayStatus} ${label}${error ? ` error=${error}` : ""}`, error || status === "failed" ? "warn" : "muted");
     }
   };
-  return Object.assign(observer, { flush });
+  return Object.assign(observer, { flush: () => {
+    flush();
+    toolStates.clear();
+  } });
 }

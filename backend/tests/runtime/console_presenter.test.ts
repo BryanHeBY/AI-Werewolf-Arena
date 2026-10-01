@@ -58,6 +58,52 @@ describe("ACP console text", () => {
     }
   });
 
+  test("prints tool state changes once and suppresses content refinements", () => {
+    const lines: string[] = [];
+    const logger = createAcpConsoleLogger(10, line => lines.push(line));
+    const update = (fields: Record<string, unknown>) => logger({
+      sessionUpdate: "tool_call_update", toolCallId: "call1", ...fields,
+    });
+    logger({ sessionUpdate: "tool_call", toolCallId: "call1", title: "mcp__werewolf-game__submit_action", status: "pending" });
+    update({ rawInput: { action: "speak" } });
+    update({ content: [{ type: "text", text: "input changed" }] });
+    update({ status: "pending" });
+    update({ status: "in_progress" });
+    update({ status: "in_progress" });
+    update({ rawOutput: { accepted: true } });
+    update({ status: "completed" });
+    update({ status: "completed" });
+    expect(lines).toEqual([
+      "[acp][10][tool] start mcp__werewolf-game__submit_action",
+      "[acp][10][tool] in_progress mcp__werewolf-game__submit_action",
+      "[acp][10][tool] completed mcp__werewolf-game__submit_action",
+    ]);
+  });
+
+  test("preserves errors and distinguishes separate calls to the same tool", () => {
+    const lines: string[] = [];
+    const logger = createAcpConsoleLogger(10, line => lines.push(line));
+    logger({ sessionUpdate: "tool_call", toolCallId: "call1", title: "submit_action" });
+    logger({ sessionUpdate: "tool_call_update", toolCallId: "call1", error: { text: "permission denied" } });
+    logger({ sessionUpdate: "tool_call_update", toolCallId: "call1", error: { text: "permission denied" } });
+    logger({ sessionUpdate: "tool_call_update", toolCallId: "call1", status: "failed" });
+    logger({ sessionUpdate: "tool_call", toolCallId: "call2", title: "submit_action" });
+    logger({ sessionUpdate: "tool_call_update", toolCallId: "call2", status: "completed" });
+    logger.flush();
+    // Session reuse must not suppress a new prompt that reuses a tool call id.
+    logger({ sessionUpdate: "tool_call", toolCallId: "call1", title: "submit_action" });
+    logger({ sessionUpdate: "tool_call_update", toolCallId: "call1", status: "completed" });
+    expect(lines).toEqual([
+      "[acp][10][tool] start submit_action",
+      "[acp][10][tool] error submit_action error=permission denied",
+      "[acp][10][tool] failed submit_action",
+      "[acp][10][tool] start submit_action",
+      "[acp][10][tool] completed submit_action",
+      "[acp][10][tool] start submit_action",
+      "[acp][10][tool] completed submit_action",
+    ]);
+  });
+
   test("keeps players and prompt tails separate", () => {
     const lines: string[] = [];
     const first = createAcpConsoleLogger(1, line => lines.push(line));
