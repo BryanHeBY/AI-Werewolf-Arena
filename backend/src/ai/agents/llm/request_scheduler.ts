@@ -40,9 +40,10 @@ export class ScopedRequestScheduler {
         limit,
       });
       await new Promise<void>((resolve) => queue.push(resolve));
+    } else {
+      this.activeByScope.set(scope, active + 1);
     }
 
-    this.activeByScope.set(scope, (this.activeByScope.get(scope) ?? 0) + 1);
     let released = false;
     return () => {
       if (released) return;
@@ -65,13 +66,17 @@ export class ScopedRequestScheduler {
   }
 
   private release(scope: string): void {
-    const active = this.activeByScope.get(scope) ?? 0;
-    if (active <= 1) this.activeByScope.delete(scope);
-    else this.activeByScope.set(scope, active - 1);
-
     const queue = this.waitersByScope.get(scope);
     const next = queue?.shift();
     if (queue?.length === 0) this.waitersByScope.delete(scope);
-    next?.();
+    if (next) {
+      // Transfer the occupied slot directly to the queued request. A new
+      // acquire must not steal it before that request resumes its await.
+      next();
+      return;
+    }
+    const active = this.activeByScope.get(scope) ?? 0;
+    if (active <= 1) this.activeByScope.delete(scope);
+    else this.activeByScope.set(scope, active - 1);
   }
 }

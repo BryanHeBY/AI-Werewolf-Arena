@@ -59,7 +59,8 @@ export class LlmTurnOrchestrator {
         `request_start player=${request.actorId} phase=${request.phase} tools=${request.allowedTools.join(",")} timeout_ms=${timeoutMs}`,
       );
       this.options.observer.prompt(prompt.messages, request);
-      return this.runNative(client, request, prompt, startedAt);
+      // Await before finally releases the provider's concurrency slot.
+      return await this.runNative(client, request, prompt, startedAt);
     } catch (error) {
       const text = String(error);
       this.options.observer.trace(
