@@ -37,8 +37,7 @@ export const COMMON_TOOL_SPECS: ToolSpec[] = [
     },
     argHint:
       'report_bug args: {"category":"flow|rule|state|logging|other","severity":"low|medium|high|critical","message":"..."}',
-    userPromptHint:
-      "若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。",
+    userPromptHintKey: "action.report_bug.hint",
     gatewaySchema: {
       name: "report_bug",
       description: "上报已观察到的明确游戏逻辑或可见信息矛盾（仅调试记录，不改变对局状态）",

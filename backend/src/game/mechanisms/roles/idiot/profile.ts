@@ -1,3 +1,4 @@
+import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：白痴角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
@@ -8,12 +9,12 @@ import { idiotVotedOutHook } from "./voted_out_hook";
 export const IDIOT_ROLE_PROFILE: RoleProfile = {
   role: Role.Idiot,
   camp: Camp.Good,
-  label: "白痴",
-  skillBrief: "白天被放逐时自动翻牌免死并失去投票权",
+  label: roleName("idiot"),
+  skillBrief: text("zh-CN", "role.idiot.brief"),
   goodSide: "god",
   init: (roleComp) => {
     setIdiotState(roleComp, { revealed: false });
   },
-  renderPrompt: () => "你的底牌是【白痴】。白天被放逐时会自动翻牌免死并失去投票权。",
+  renderPrompt: (_roleComp, locale = "zh-CN") => text(locale, "role.idiot.state"),
   votedOutHook: idiotVotedOutHook,
 };

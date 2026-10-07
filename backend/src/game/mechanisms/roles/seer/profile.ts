@@ -1,3 +1,4 @@
+import { roleName, text, term } from "@ai-werewolf-arena/game-text";
 /** 文件说明：预言家角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
@@ -11,8 +12,8 @@ import { isAliveTarget } from "../../validation/contracts";
 export const SEER_ROLE_PROFILE: RoleProfile = {
   role: Role.Seer,
   camp: Camp.Good,
-  label: "预言家",
-  skillBrief: "每晚可查验一名玩家阵营",
+  label: roleName("seer"),
+  skillBrief: text("zh-CN", "role.seer.brief"),
   goodSide: "god",
   init: (roleComp) => {
     setSeerState(roleComp, {
@@ -21,15 +22,11 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
       history: [],
     });
   },
-  renderPrompt: (roleComp) => {
-    const seerState = getSeerState(roleComp);
-    const latest =
-      seerState &&
-      seerState.lastTarget !== null &&
-      seerState.lastIsWerewolf !== null
-        ? ` 你上一条查验结果：${seerState.lastTarget}号是${seerState.lastIsWerewolf ? "狼人" : "好人"}。`
-        : "";
-    return `你的底牌是【预言家】。你每晚可以查验一名玩家阵营。${latest}`;
+  renderPrompt: (roleComp, locale = "zh-CN") => {
+    const state = getSeerState(roleComp);
+    const latest = state && state.lastTarget !== null && state.lastIsWerewolf !== null
+      ? ` ${text(locale, "role.seer.latest", { target: state.lastTarget, camp: term("camp", state.lastIsWerewolf ? "wolf" : "good", locale) })}` : "";
+    return text(locale, "role.seer.state") + latest;
   },
   toolSpecs: SEER_TOOL_SPECS,
   validationRules: {

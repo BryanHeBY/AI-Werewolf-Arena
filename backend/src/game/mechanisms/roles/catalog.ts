@@ -64,9 +64,10 @@ export class RoleCatalog {
   applyRuntime(roleComp: RoleComponent, ctx: RoleInitContext = {}): void {
     const profile = this.require(roleComp.role);
     profile.init?.(roleComp, ctx);
-    roleComp.renderPrompt = () => {
+    const defaultLocale = ctx.locale ?? "zh-CN";
+    roleComp.renderPrompt = (locale = defaultLocale) => {
       const active = this.require(roleComp.role);
-      return active.renderPrompt ? active.renderPrompt(roleComp) : `你的底牌是【${active.label}】。请遵循本板规则。`;
+      return active.renderPrompt ? active.renderPrompt(roleComp, locale) : text(locale, "role.generic.state", { role: this.label(active.role, locale) });
     };
   }
 

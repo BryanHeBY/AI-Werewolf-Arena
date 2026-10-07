@@ -1,3 +1,4 @@
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, ToolCall, ToolName } from "../../../core/domain";
 
 export interface ResolvedTurnConstraints {
@@ -36,20 +37,21 @@ export function resolveTurnConstraints(request: ActionRequest): ResolvedTurnCons
 export function evaluateTurnConstraints(
   state: TurnConstraintState,
   constraints: ResolvedTurnConstraints,
+  locale: Locale = "zh-CN",
 ): TurnConstraintEvaluation {
   const errors: string[] = [];
   if (state.validActions.length < constraints.minValidActions) {
-    errors.push(`本轮至少需要完成${constraints.minValidActions}次有效行动。`);
+    errors.push(text(locale, "turn.minimum", { count: constraints.minValidActions }));
   }
   if (state.validActions.length > constraints.maxValidActions) {
-    errors.push(`本轮最多允许${constraints.maxValidActions}次有效行动。`);
+    errors.push(text(locale, "turn.maximum", { count: constraints.maxValidActions }));
   }
   if (constraints.requiredAnyTools.length > 0) {
     const used = new Set(state.validActions.map((action) => action.name));
     const hit = constraints.requiredAnyTools.some((tool) => used.has(tool));
     if (!hit) {
       errors.push(
-        `结束前必须至少执行以下工具之一：${constraints.requiredAnyTools.join(", ")}`,
+        text(locale, "turn.required_tools", { tools: constraints.requiredAnyTools.join(", ") }),
       );
     }
   }
@@ -59,30 +61,15 @@ export function evaluateTurnConstraints(
   };
 }
 
-/**
- * 构建系统层规则文案。
- */
-export function renderTurnConstraintSystemRule(
-  constraints: ResolvedTurnConstraints,
-): string {
-  const base = `本轮行动约束：至少${constraints.minValidActions}次、至多${constraints.maxValidActions}次有效行动。`;
-  const requiredTools =
-    constraints.requiredAnyTools.length > 0
-      ? ` 结束前至少执行以下工具之一：${constraints.requiredAnyTools.join(", ")}。`
-      : "";
-  const summary = constraints.summary ? ` ${constraints.summary}` : "";
-  return `${base}${requiredTools}${summary}`;
+/** Human text uses the same immutable locale as this player's prompt. */
+export function renderTurnConstraintSystemRule(constraints: ResolvedTurnConstraints, locale: Locale = "zh-CN"): string {
+  return [text(locale, "turn.system", { min: constraints.minValidActions, max: constraints.maxValidActions }),
+    ...(constraints.requiredAnyTools.length ? [text(locale, "turn.required_tools", { tools: constraints.requiredAnyTools.join(", ") })] : []),
+    ...(constraints.summary ? [constraints.summary] : []),
+  ].join(" ");
 }
 
-/**
- * 构建用户层约束提示文案。
- */
-export function renderTurnConstraintUserHint(
-  constraints: ResolvedTurnConstraints,
-): string {
-  const requiredTools =
-    constraints.requiredAnyTools.length > 0
-      ? ` 且需命中工具：${constraints.requiredAnyTools.join(", ")}`
-      : "";
-  return `本轮结束前需满足：最少${constraints.minValidActions}次、最多${constraints.maxValidActions}次有效行动${requiredTools}。`;
+export function renderTurnConstraintUserHint(constraints: ResolvedTurnConstraints, locale: Locale = "zh-CN"): string {
+  return text(locale, "turn.user", { min: constraints.minValidActions, max: constraints.maxValidActions,
+    required: constraints.requiredAnyTools.length ? text(locale, "turn.required_suffix", { tools: constraints.requiredAnyTools.join(", ") }) : "" });
 }

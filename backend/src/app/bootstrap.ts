@@ -1,3 +1,4 @@
+import { text } from "@ai-werewolf-arena/game-text";
 import { createAliveComponent } from "../core/domain/components/alive";
 import { createBadgeComponent } from "../core/domain/components/badge";
 import { createCampComponent } from "../core/domain/components/camp";
@@ -84,12 +85,12 @@ function createPlayers(world: World, config: BoardConfig, options: BootstrapOpti
     const entityId = world.createEntity();
     const role = roles[seat - 1];
     const roleComp = createRoleComponent(role, roleCatalog.getCamp(role));
-    roleCatalog.applyRuntime(roleComp, { boardConfig: config });
+    roleCatalog.applyRuntime(roleComp, { boardConfig: config, locale: world.locale });
 
     world.addComponent(
       entityId,
       COMPONENT.Identity,
-      createIdentityComponent(entityId, seat, options.playerNames?.[String(seat)] ?? `玩家${seat}`),
+      createIdentityComponent(entityId, seat, options.playerNames?.[String(seat)] ?? text(world.locale, "common.player_name", { id: seat })),
     );
     world.addComponent(entityId, COMPONENT.Role, roleComp);
     world.addComponent(entityId, COMPONENT.Camp, createCampComponent(roleComp.camp));

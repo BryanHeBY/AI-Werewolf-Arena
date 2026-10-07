@@ -1,3 +1,4 @@
+import type { MessageKey } from "@ai-werewolf-arena/game-text";
 /** 文件说明：机制层公共规格类型定义。 */
 import { ToolName } from "../../core/domain/model";
 import { Role } from "../../core/domain/model";
@@ -15,6 +16,7 @@ export interface ToolSpec {
   llm: MechanismToolSchema;
   argHint: string;
   userPromptHint?: string;
+  userPromptHintKey?: MessageKey;
   gatewaySchema?: unknown;
 }
 
@@ -22,6 +24,7 @@ export interface ToolSpec {
 export interface StageDirectiveRule {
   match: (allowedTools: ToolName[]) => boolean;
   text: string;
+  messageKey?: MessageKey;
 }
 
 /** 角色规格定义。 */

@@ -1,3 +1,4 @@
+import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：守卫角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
@@ -11,13 +12,13 @@ import { isAliveTarget } from "../../validation/contracts";
 export const GUARD_ROLE_PROFILE: RoleProfile = {
   role: Role.Guard,
   camp: Camp.Good,
-  label: "守卫",
-  skillBrief: "每晚可守护一名玩家，不可连续两晚守护同一人",
+  label: roleName("guard"),
+  skillBrief: text("zh-CN", "role.guard.brief"),
   goodSide: "god",
   init: (roleComp) => {
     setGuardState(roleComp, { lastTarget: null });
   },
-  renderPrompt: () => "你的底牌是【守卫】。你每晚可以守护一名玩家，且不可连续同守。",
+  renderPrompt: (_roleComp, locale = "zh-CN") => text(locale, "role.guard.state"),
   toolSpecs: GUARD_TOOL_SPECS,
   validationRules: {
     guard: ({ world, role, toolCall }) => {

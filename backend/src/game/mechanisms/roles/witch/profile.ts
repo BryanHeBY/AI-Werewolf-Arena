@@ -1,3 +1,4 @@
+import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：女巫角色 profile。 */
 import { Camp, PotionType, Role, WitchSelfHealRule } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
@@ -14,8 +15,8 @@ const witchParameters = z.strictObject({ selfHeal: z.enum(WitchSelfHealRule).def
 export const WITCH_ROLE_PROFILE: RoleProfile = {
   role: Role.Witch,
   camp: Camp.Good,
-  label: "女巫",
-  skillBrief: "拥有解药与毒药，可在夜间选择使用",
+  label: roleName("witch"),
+  skillBrief: text("zh-CN", "role.witch.brief"),
   goodSide: "god",
   configuration: {
     schema: witchParameters,
@@ -36,8 +37,7 @@ export const WITCH_ROLE_PROFILE: RoleProfile = {
       poisonUsedThisNight: false,
     });
   },
-  renderPrompt: (roleComp) =>
-    `你的底牌是【女巫】。解药:${getWitchState(roleComp)?.heal ?? 0} 毒药:${getWitchState(roleComp)?.poison ?? 0}`,
+  renderPrompt: (roleComp, locale = "zh-CN") => text(locale, "role.witch.state", { heal: getWitchState(roleComp)?.heal ?? 0, poison: getWitchState(roleComp)?.poison ?? 0 }),
   toolSpecs: WITCH_TOOL_SPECS,
   stageDirectives: WITCH_STAGE_DIRECTIVES,
   validationRules: WITCH_VALIDATION_RULES,

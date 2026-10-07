@@ -1,3 +1,4 @@
+import { text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：按工具与角色策略生成 target_id 可行动编号提示。 */
 import { Role, ToolName } from "../../../core/domain/model";
 import { TargetHintContext, TargetHintRegistry } from "./contracts";
@@ -50,12 +51,12 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       .filter((id) => allowSelf || id !== ctx.actorId)
       .sort((a, b) => a - b);
     if (ids.length === 0) {
-      return "可行动ID：无";
+      return text(ctx.world.locale, "prompt.targets.none");
     }
     if (allowSelf) {
-      return `可行动ID（含你自己）：${ids.join(", ")}`;
+      return text(ctx.world.locale, "prompt.targets.self", { ids: ids.join(", ") });
     }
-    return `可行动ID（存活且不含你自己）：${ids.join(", ")}`;
+    return text(ctx.world.locale, "prompt.targets.others", { ids: ids.join(", ") });
   }
 
   private getRule(

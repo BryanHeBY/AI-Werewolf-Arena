@@ -1,3 +1,4 @@
+import { text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：女巫工具规格与阶段提示规则定义。 */
 import { PotionType } from "../../../../core/domain/model";
 import { StageDirectiveRule, ToolSpec } from "../../contracts";
@@ -47,6 +48,7 @@ export const WITCH_TOOL_SPECS: ToolSpec[] = [
 export const WITCH_STAGE_DIRECTIVES: StageDirectiveRule[] = [
   {
     match: (allowedTools) => allowedTools.length === 1 && allowedTools[0] === "use_potion",
-    text: `当前是【女巫行动阶段】：必须调用 use_potion；若本夜不用药，调用 use_potion 并设置 potion_type="${PotionType.None}"。`,
+    messageKey: "action.witch.directive",
+    text: text("zh-CN", "action.witch.directive"),
   },
 ];

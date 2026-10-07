@@ -1,3 +1,4 @@
+import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：狼人角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
@@ -10,9 +11,9 @@ import { WOLF_VALIDATION_RULES } from "./validation_rules";
 export const WOLF_ROLE_PROFILE: RoleProfile = {
   role: Role.Wolf,
   camp: Camp.Wolf,
-  label: "狼人",
-  skillBrief: "夜间可狼队夜聊并参与刀人投票",
-  renderPrompt: () => "你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。",
+  label: roleName("wolf"),
+  skillBrief: text("zh-CN", "role.wolf.brief"),
+  renderPrompt: (_roleComp, locale = "zh-CN") => text(locale, "role.wolf.state"),
   toolSpecs: WOLF_TOOL_SPECS,
   stageDirectives: WOLF_STAGE_DIRECTIVES,
   validationRules: WOLF_VALIDATION_RULES,

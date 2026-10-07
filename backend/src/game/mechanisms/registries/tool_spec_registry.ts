@@ -1,3 +1,4 @@
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
 /** 文件说明：汇总工具规格与阶段提示规则。 */
 import { ToolName } from "../../../core/domain/model";
 import { COMMON_TOOL_SPECS } from "../common/tool_specs";
@@ -60,8 +61,9 @@ export class ToolSpecRegistry {
     return this.specByName.get(name)?.argHint ?? null;
   }
 
-  getUserPromptHint(name: ToolName): string | null {
-    return this.specByName.get(name)?.userPromptHint ?? null;
+  getUserPromptHint(name: ToolName, locale: Locale = "zh-CN"): string | null {
+    const spec = this.specByName.get(name);
+    return spec?.userPromptHint ?? (spec?.userPromptHintKey ? text(locale, spec.userPromptHintKey) : null);
   }
 
   getLlmSchema(name: ToolName): ToolSpec["llm"] | null {
@@ -78,14 +80,17 @@ export class ToolSpecRegistry {
     return out;
   }
 
-  getStageDirective(allowedTools: ToolName[]): string | null {
+  getStageDirective(allowedTools: ToolName[], locale: Locale = "zh-CN"): string | null {
     const matched = this.stageDirectives.find((rule) => rule.match(allowedTools));
-    return matched?.text ?? null;
+    if (!matched) return null;
+    // A caller may spread a built-in rule and replace its text; preserve that override.
+    return matched.messageKey && matched.text === text("zh-CN", matched.messageKey)
+      ? text(locale, matched.messageKey) : matched.text;
   }
 
-  getApplicableUserPromptHints(allowedTools: ToolName[]): string[] {
+  getApplicableUserPromptHints(allowedTools: ToolName[], locale: Locale = "zh-CN"): string[] {
     return allowedTools
-      .map((name) => this.getUserPromptHint(name))
+      .map((name) => this.getUserPromptHint(name, locale))
       .filter((item): item is string => Boolean(item));
   }
 }

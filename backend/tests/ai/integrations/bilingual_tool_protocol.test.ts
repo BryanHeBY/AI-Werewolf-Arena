@@ -103,7 +103,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       try {
         if (kind === "game") {
           const { world } = bootstrapGame(sixPlayerMvpConfig, { locale });
-          const provider = new LlmActionProvider(world, client);
+          const provider = new LlmActionProvider(world, client, { boardConfig: sixPlayerMvpConfig });
           expect(await provider.getAction(request)).toEqual({ name: "speak", args: { text: "Original 中文" } });
         } else {
           const executor = new SdkAuditAgentExecutor(client);
@@ -111,6 +111,10 @@ for (const locale of ["zh-CN", "en"] as const) {
           await executor.close();
         }
         expect(requests.length).toBe(1);
+        if (kind === "game") {
+          expect(requests[0].messages[0].content).toContain(locale === "en" ? "Use English" : "你必须使用中文");
+          if (locale === "en") expect(JSON.stringify(requests[0].messages)).not.toMatch(/[\u4e00-\u9fff]/);
+        }
         const tools = requests[0].tools.map((tool: any) => tool.function);
         const protocol = kind === "game" ? gameToolProtocol(locale) : auditToolProtocol(locale);
         for (const spec of protocol.specs) {

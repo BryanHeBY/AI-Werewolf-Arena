@@ -1,3 +1,4 @@
+import { text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：狼人工具规格与阶段提示规则定义。 */
 import { StageDirectiveRule, ToolSpec } from "../../contracts";
 import { prop } from "../../shared/schema";
@@ -34,7 +35,7 @@ export const WOLF_TOOL_SPECS: ToolSpec[] = [
       },
     },
     argHint: 'speak_to_wolves args: {"text":"...","end_chat":true|false}',
-    userPromptHint: "若使用 speak_to_wolves，end_chat=true 只表示你本人不再参加本夜后续夜聊，不会强制结束其他狼人的发言；全员结束后夜聊才会提前结束。",
+    userPromptHintKey: "action.speak_to_wolves.hint",
   },
   {
     name: "kill_vote",
@@ -79,14 +80,17 @@ export const WOLF_TOOL_SPECS: ToolSpec[] = [
 export const WOLF_STAGE_DIRECTIVES: StageDirectiveRule[] = [
   {
     match: (allowedTools) => allowedTools.includes("speak_to_wolves"),
-    text: "当前是【狼人交流阶段】：只能调用 speak_to_wolves。若你本人不再参加本夜后续夜聊，请设置 end_chat=true；这不会结束其他狼人的发言。本阶段不会完成刀人。",
+    messageKey: "action.wolf_discussion.directive",
+    text: text("zh-CN", "action.wolf_discussion.directive"),
   },
   {
     match: (allowedTools) => allowedTools.length === 1 && allowedTools[0] === "kill_vote",
-    text: "当前是【狼人刀人投票阶段】：必须调用 kill_vote；若本轮决定不刀，请设置 abstain=true 且 target_id=null。",
+    messageKey: "action.wolf_vote.directive",
+    text: text("zh-CN", "action.wolf_vote.directive"),
   },
   {
     match: (allowedTools) => allowedTools.length === 1 && allowedTools[0] === "self_destruct",
-    text: "自爆需谨慎！！！当前是【狼人自爆窗口】：self_destruct 是唯一会改变局面的动作，仅在局势极端不利时使用，且必须携带 confirm=true 才会生效。",
+    messageKey: "action.self_destruct.directive",
+    text: text("zh-CN", "action.self_destruct.directive"),
   },
 ];

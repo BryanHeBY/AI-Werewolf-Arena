@@ -139,7 +139,7 @@ export class LlmTurnOrchestrator {
     });
     let messages = [...prompt.messages];
     for (let attemptNumber = 1; attemptNumber <= 3; attemptNumber++) {
-      const retryPrompt = buildConstraintRetryPrompt(attemptNumber, 3);
+      const retryPrompt = buildConstraintRetryPrompt(attemptNumber, 3, this.options.world.locale);
       messages = [...messages, { role: "user", content: retryPrompt }];
       console.log(
         `[LLM_RETRY] player=${request.actorId} phase=${request.phase} attempt=${attemptNumber}/3 reason=turn_constraints_no_valid_action`,

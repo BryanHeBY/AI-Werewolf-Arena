@@ -1,3 +1,4 @@
+import type { Locale } from "@ai-werewolf-arena/game-catalog";
 /** Stable identity and phase enums shared by core domain consumers. */
 export type EntityId = number;
 
@@ -59,5 +60,5 @@ export enum WitchSelfHealRule {
 export type TieBreakerStrategy = "min_id" | "min_seat" | "no_elimination" | "no_kill";
 
 export interface PromptRenderable {
-  renderPrompt(): string;
+  renderPrompt(locale?: Locale): string;
 }

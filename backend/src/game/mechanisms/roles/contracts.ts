@@ -1,3 +1,4 @@
+import type { Locale } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：角色 profile 的统一契约定义。 */
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, BoardConfig, Camp, Role, ToolCall } from "../../../core/domain/model";
@@ -10,6 +11,7 @@ import type { z } from "zod";
 
 /** 角色初始化上下文。 */
 export interface RoleInitContext {
+  locale?: Locale;
   boardConfig?: BoardConfig;
 }
 
@@ -26,7 +28,7 @@ export interface RoleProfile {
     apply: (config: BoardConfig, value: unknown) => BoardConfig;
   };
   init?: (roleComp: RoleComponent, ctx: RoleInitContext) => void;
-  renderPrompt?: (roleComp: RoleComponent) => string;
+  renderPrompt?: (roleComp: RoleComponent, locale?: Locale) => string;
   toolSpecs?: ToolSpec[];
   stageDirectives?: StageDirectiveRule[];
   validationRules?: ToolRuleMap;

@@ -1,3 +1,4 @@
+import { term, type Locale } from "@ai-werewolf-arena/game-text";
 /** 文件说明：行动提示中 phase/stage 的可注册翻译注册表。 */
 import { GUARD_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR } from "../roles/guard/phase_stage_localization";
 import { HUNTER_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR } from "../roles/hunter/phase_stage_localization";
@@ -31,12 +32,14 @@ export class PhaseStageLocalizationRegistry {
     }
   }
 
-  phaseName(phase: string): string {
-    return this.phaseNames.get(String(phase)) ?? String(phase);
+  phaseName(phase: string, locale: Locale = "zh-CN"): string {
+    const value = this.phaseNames.get(String(phase));
+    return value && value !== term("phase", phase, "zh-CN") ? value : term("phase", phase, locale);
   }
 
-  stageName(stage: string): string {
-    return this.stageNames.get(String(stage)) ?? String(stage);
+  stageName(stage: string, locale: Locale = "zh-CN"): string {
+    const value = this.stageNames.get(String(stage));
+    return value && value !== term("stage", stage, "zh-CN") ? value : term("stage", stage, locale);
   }
 }
 

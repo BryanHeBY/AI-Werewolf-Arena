@@ -1,3 +1,4 @@
+import { text } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, EntityId, PlayerVisibleEvent, ToolName } from "../../../core/domain"
 import { encodePlayerVisibleEvent, parsePlayerVisibleEvents } from "../visible_event_protocol";
 import { BuiltPlayerPrompt } from "../player/contracts";
@@ -39,11 +40,7 @@ export class PlayerPromptSession {
       turnId,
       allowedTools,
       effectiveActionTools: allowedTools.filter((tool) => tool !== PlayerPromptSession.REPORT_BUG_TOOL),
-      actionSubmissionHint: [
-        "请通过 submit_action 提交游戏行动，",
-        `turn_id 必须为 ${turnId}，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。`,
-        `可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 ${turnId}；无需调用 get_game_schema。`,
-      ].join(""),
+      actionSubmissionHint: text(this.options.promptPolicy.locale, "prompt.sdk.submit", { turn: turnId }),
     });
     const currentTurnUser: ChatMessage = { role: "user", content: userPrompt };
     this.append(request.actorId, currentTurnUser);

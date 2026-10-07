@@ -1,3 +1,7 @@
+import type { Locale } from "@ai-werewolf-arena/game-text";
+import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
+import { PlayerPromptSession } from "../../../src/ai/agents/llm/player_prompt_session";
+import { getDefaultRoleCatalog, getDefaultToolSpecRegistry, getDefaultTargetHintRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms";
 import { expect, spyOn, test } from "bun:test";
 import { assertReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import path from "node:path";
@@ -30,22 +34,36 @@ function plan() {
   return { steps, add, wolves, speech, vote, lastWords };
 }
 
-async function runRecorded(config: BoardConfig, fixedRoles: Role[], steps: ScriptStep[]) {
+async function runRecorded(config: BoardConfig, fixedRoles: Role[], steps: ScriptStep[], locale: Locale = "zh-CN") {
   const root = await createTestTempDirectory("awa-scripted-game-");
-  const context = bootstrapGame(config, { fixedRoles, random: createRandom("foundation") });
+  const context = bootstrapGame(config, { fixedRoles, random: createRandom("foundation"), locale, playerNames: Object.fromEntries(fixedRoles.map((_, index) => [index + 1, `Seat ${index + 1}`])) });
   const provider = new StrictScriptedPlayers(steps);
+  const promptSession = new PlayerPromptSession({ maxPromptEvents: 8, promptPolicy: new PlayerPromptPolicy(context.world, {
+    boardConfig: config, roleCatalog: getDefaultRoleCatalog(), toolSpecRegistry: getDefaultToolSpecRegistry(), targetHintRegistry: getDefaultTargetHintRegistry(),
+    phaseStageLocalizationRegistry: getDefaultPhaseStageLocalizationRegistry(), configRenderRegistry: getDefaultConfigRenderRegistry(),
+  }) });
+  const promptedProvider = { async getAction(request: ActionRequest) {
+    const prompt = promptSession.build(request);
+    expect(prompt.systemPrompt).toContain(locale === "en" ? "Use English" : "你必须使用中文");
+    if (locale === "en") {
+      expect(prompt.systemPrompt).not.toMatch(/[\u4e00-\u9fff]/);
+      expect(prompt.userPrompt).not.toMatch(/[\u4e00-\u9fff]/);
+    }
+    return provider.getAction(request);
+  } };
+
   const manager = await SessionRecordManager.create({ sessionId: "scripted", board: "scripted", startedAtIso: "2026-10-07T00:00:00.000Z", random: context.random.metadata }, root);
   const recorder = new GameEventRecorder({ world: context.world, replayManager: manager }, Phase.Night);
   await runWithSessionRecorder(manager, async () => {
     const failures: unknown[] = [];
     try {
       while (!context.phaseManager.getSnapshot().gameOver) {
-        await context.phaseManager.runSingleCycle(provider, 8);
+        await context.phaseManager.runSingleCycle(promptedProvider, 8);
         recorder.flush(context.phaseManager.getEvents());
       }
       provider.assertConsumed();
       const before = provider.trace.length;
-      await context.phaseManager.runSingleCycle(provider, 8);
+      await context.phaseManager.runSingleCycle(promptedProvider, 8);
       expect(provider.trace.length).toBe(before);
       expect(context.phaseManager.getSnapshot().result?.reason).not.toBe("max_days_reached");
     } catch (error) { failures.push(error); }
@@ -92,7 +110,7 @@ async function runRecorded(config: BoardConfig, fixedRoles: Role[], steps: Scrip
   return { ...context, provider, replay, manifest, playerViews };
 }
 
-for (const blocked of [false, true]) test(`six-player strict game covers ${blocked ? "successful guard" : "guard skip"}, private checks and last words`, async () => {
+for (const locale of ["zh-CN", "en"] as const) for (const blocked of [false, true]) test(`${locale} six-player strict game covers ${blocked ? "successful guard" : "guard skip"}, private checks and last words`, async () => {
   const p = plan();
   p.wolves(1, [1, 4], 3);
   p.add(1, [5], "guard", { name: "guard", args: { target_id: blocked ? 3 : 6, abstain: false } });
@@ -103,7 +121,7 @@ for (const blocked of [false, true]) test(`six-player strict game covers ${block
   p.add(2, [5], "guard", { name: "guard", args: { target_id: blocked ? 6 : null, abstain: !blocked } });
   p.add(2, [2], "seer", { name: "check_identity", args: { target_id: 4 } });
   p.speech(2, blocked ? [2, 3, 4, 6] : [2, 4, 6]); p.vote(2, blocked ? [2, 3, 4, 6] : [2, 4, 6], 4); p.lastWords(2, 4);
-  const game = await runRecorded(sixPlayerMvpConfig, [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager], p.steps);
+  const game = await runRecorded(sixPlayerMvpConfig, [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager], p.steps, locale);
   expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
   expect(game.world.getAliveEntityIds()).toEqual(blocked ? [2, 3, 6] : [2, 6]);
   expect(game.manifest.players.filter((player: { alive: boolean }) => player.alive).map((player: { player_id: number }) => player.player_id)).toEqual(blocked ? [2, 3, 6] : [2, 6]);
@@ -120,8 +138,8 @@ for (const blocked of [false, true]) test(`six-player strict game covers ${block
 
 const twelveRoles = [Role.Wolf, Role.Wolf, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Idiot, Role.Villager, Role.Villager, Role.Villager, Role.Villager];
 
-for (const flipIdiot of [false, true]) {
-  test(`twelve-player strict game: heal, poison, gun, sheriff ${flipIdiot ? "idiot reveal" : "election"} and final explosion`, async () => {
+for (const locale of ["zh-CN", "en"] as const) for (const flipIdiot of [false, true]) {
+  test(`${locale} twelve-player strict game: heal, poison, gun, sheriff ${flipIdiot ? "idiot reveal" : "election"} and final explosion`, async () => {
     const p = plan();
     p.wolves(1, [1, 2, 3, 4], 9);
     p.add(1, [6], "witch", { name: "use_potion", args: { target_id: 9, potion_type: PotionType.Heal } }, request => expect(request.context.wolf_target).toBe(9));
@@ -150,7 +168,7 @@ for (const flipIdiot of [false, true]) {
       p.speech(3, [2, 6, 8, 9, 10, 11, 12]);
     }
     p.add(flipIdiot ? 3 : 2, [2], "on_pre_vote", { name: "self_destruct", args: { reason: "Final wolf", confirm: true } });
-    const game = await runRecorded(twelvePlayerStandardConfig, twelveRoles, p.steps);
+    const game = await runRecorded(twelvePlayerStandardConfig, twelveRoles, p.steps, locale);
     expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
     expect(game.world.getAliveEntityIds()).toEqual(flipIdiot ? [6, 8, 9, 10, 11, 12] : [5, 6, 8, 9, 10, 11, 12]);
     expect(game.manifest.players.filter((player: { alive: boolean }) => player.alive).map((player: { player_id: number }) => player.player_id)).toEqual(flipIdiot ? [6, 8, 9, 10, 11, 12] : [5, 6, 8, 9, 10, 11, 12]);

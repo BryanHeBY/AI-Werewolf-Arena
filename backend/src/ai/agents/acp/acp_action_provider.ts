@@ -1,3 +1,4 @@
+import { text } from "@ai-werewolf-arena/game-text";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionProvider, ActionRequest, BoardConfig, ToolCall } from "../../../core/domain"
 import { World } from "../../../core/domain/world";
@@ -241,19 +242,13 @@ export class AcpActionProvider implements ActionProvider {
     );
     if (advanceCursor) this.eventCursor.set(request.actorId, nextCursor);
     if (delta.length) {
-      lines.push(`新增可见事件：${encodePlayerVisibleEventBatch(delta)}`);
+      lines.push(text(this.promptPolicy.locale, "prompt.acp.events", { events: encodePlayerVisibleEventBatch(delta) }));
     }
-    lines.push(`当前回合 ID：${turnId}`);
+    lines.push(text(this.promptPolicy.locale, "prompt.acp.turn", { turn: turnId }));
     const userPrompt = this.promptPolicy.buildUser(request, {
       turnId,
       allowedTools: request.allowedTools,
-      actionSubmissionHint: [
-        "本运行环境中不要直接调用上面列出的动作名。",
-        "请调用 MCP 服务 werewolf-game 的 submit_action，",
-        `参数 turn_id 必须为 ${turnId}，action 必须是本轮列出的动作名，arguments 填该动作的参数。`,
-        "若发现明确的规则、状态、流程、日志或可见性矛盾，可先调用 report_bug，再正常提交行动。",
-        "无需查询 get_game_schema；普通文本不会产生游戏效果。",
-      ].join(""),
+      actionSubmissionHint: text(this.promptPolicy.locale, "prompt.acp.submit", { turn: turnId }),
     });
     lines.push(userPrompt);
     return {

@@ -1,3 +1,4 @@
+import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：猎人角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
@@ -11,13 +12,13 @@ import { isAliveTarget } from "../../validation/contracts";
 export const HUNTER_ROLE_PROFILE: RoleProfile = {
   role: Role.Hunter,
   camp: Camp.Good,
-  label: "猎人",
-  skillBrief: "死亡时通常可开枪带走一名玩家；被毒死或成为最后一神时禁枪",
+  label: roleName("hunter"),
+  skillBrief: text("zh-CN", "role.hunter.brief"),
   goodSide: "god",
   init: (roleComp) => {
     setHunterState(roleComp, { canShoot: true });
   },
-  renderPrompt: () => "你的底牌是【猎人】。死亡时通常可以开枪带走一名玩家；被女巫毒死或成为最后一名存活神职时不能开枪。",
+  renderPrompt: (_roleComp, locale = "zh-CN") => text(locale, "role.hunter.state"),
   toolSpecs: HUNTER_TOOL_SPECS,
   validationRules: {
     shoot: ({ world, role, toolCall }) => {

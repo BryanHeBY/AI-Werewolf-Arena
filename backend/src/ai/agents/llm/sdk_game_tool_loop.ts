@@ -1,3 +1,4 @@
+import { text } from "@ai-werewolf-arena/game-text";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, ToolCall } from "../../../core/domain"
@@ -99,7 +100,7 @@ export class SdkGameToolLoop {
                 toolResult: {
                   ok: false,
                   error: "turn_constraints_max_actions_exceeded",
-                  details: [`本轮最多允许${constraints.maxValidActions}次有效行动。`],
+                  details: [text(this.world.locale, "turn.maximum", { count: constraints.maxValidActions })],
                 },
               };
             }
@@ -118,7 +119,7 @@ export class SdkGameToolLoop {
               : null;
             if (stateError) return { toolResult: { ok: false, error: stateError } };
 
-            const evaluation = evaluateTurnConstraints({ validActions: [action] }, constraints);
+            const evaluation = evaluateTurnConstraints({ validActions: [action] }, constraints, this.world.locale);
             if (!evaluation.ok) {
               return {
                 toolResult: {
