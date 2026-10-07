@@ -110,3 +110,7 @@ ACP合法pass已独立修正commit `e498014`。runner显式World.locale，英文
 ## P4 A01：共同动作接收
 
 SDK 与 ACP 共用 schema/归一化/原有业务规则/回合约束及一次选择负责人；无效动作保留重试窗口，成功 receipt 区分接受和生效，SDK 不信任传输伪造的 finalAction。候选名单/存活及过期报告缺口已修，最终[三路审查](reviews/p4-a01.md)0 阻断。后端 release338 测试/12845 断言、真实双语 SDK/MCP 反馈与既有18整局/Tape均通过；[动作接收契约](action-reception.md)说明兼容与旧规则待修边界。下一批 A02 处理混合装配、排队/初始化/重试 deadline 和取消关闭；G01–G04/角色扩展仍待交付。
+
+## P4 A02：SDK 队列与整轮预算
+
+排队/初始化提示/模型循环/required retry 共用一次 absolute deadline；队列撤销、公平交接、关闭拒新任务与幂等 lease 完成。SDK/fallback 等待可取消，迟到结果无动作/日志；外来异常按原实例传播一次，成功收尾关闭竞态已修。最终 release352 测试/12908 断言、专项21/103与实际 HTTP cancel 通过；[资源契约](runtime-resources.md)说明总预算 API 变化、逻辑 owner 计数和即时 Baseline 边界，[交叉审查](reviews/p4-a02-sdk.md)记录修正。ACP、混合装配、runner 完整清理继续下一批，未把 A02/P4 标完成。

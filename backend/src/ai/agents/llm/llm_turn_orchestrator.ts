@@ -5,7 +5,7 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, ToolCall } from "../../../core/domain"
 import { World } from "../../../core/domain/world";
-import { FallbackActionPolicy, FallbackReason } from "./fallback_action_policy";
+import { FallbackActionPolicy, FallbackDeadlineElapsed, FallbackReason } from "./fallback_action_policy";
 import { LlmObserver } from "./llm_observer";
 import { BuiltPlayerPrompt, PlayerRoundOutcome, PlayerRetryTraceEntry } from "../player/contracts";
 import { ChatMessage, ChatModelClient } from "../../integrations/llm/transport";
@@ -41,38 +41,60 @@ interface NativeAttempt {
 export class LlmTurnOrchestrator {
   constructor(private readonly options: LlmTurnOrchestratorOptions) {}
 
-  async run(request: ActionRequest): Promise<ToolCall | null> {
+  private readonly controllers = new Set<AbortController>();
+  private readonly pending = new Set<Promise<ToolCall | null>>();
+  private readonly closeController = new AbortController();
+  private closed = false;
+
+  get runtimeState() { return { closed: this.closed, turns: this.pending.size, scheduler: this.options.scheduler.snapshot }; }
+
+  run(request: ActionRequest): Promise<ToolCall | null> {
+    if (this.closed) return Promise.reject(new DOMException("llm_provider_closed", "AbortError"));
+    const startedAt = Date.now();
+    const bounded = { ...request, deadlineAtMs: Math.min(request.deadlineAtMs ?? Infinity, startedAt + this.options.timeoutMs) };
+    const controller = new AbortController(); this.controllers.add(controller);
+    const timer = setTimeout(() => controller.abort(new Error("request_deadline_elapsed")), Math.max(0, bounded.deadlineAtMs - Date.now()));
+    const task = this.runTurn(bounded, controller.signal, startedAt);
+    this.pending.add(task);
+    const cleanup = () => { clearTimeout(timer); this.controllers.delete(controller); this.pending.delete(task); };
+    return task.then(action => { cleanup(); return this.closed ? null : action; }, error => { cleanup(); throw error; });
+  }
+
+  async close(): Promise<void> {
+    this.closed = true;
+    this.closeController.abort(new DOMException("llm_provider_closed", "AbortError"));
+    this.options.scheduler.close(this.closeController.signal.reason);
+    for (const controller of this.controllers) controller.abort(this.closeController.signal.reason);
+    const settled = await Promise.allSettled([...this.pending]);
+    const failures = settled.flatMap(result => result.status === "rejected" ? [result.reason] : []);
+    if (failures.length) throw new AggregateError(failures, "llm_turns_failed_during_close");
+  }
+
+  private async runTurn(request: ActionRequest, signal: AbortSignal, startedAt: number): Promise<ToolCall | null> {
     const role = this.options.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     const client = this.options.clientResolver?.(request, role) ?? this.options.defaultClient;
     const prompt = this.options.promptSession.build(request);
-    const startedAt = Date.now();
-    this.options.observer.trace(
-      `context_window player=${request.actorId} phase=${request.phase} start=${prompt.contextWindowStart} end=${prompt.contextWindowEnd} total=${prompt.contextWindowTotal}`,
-    );
-    if (this.effectiveTimeout(request.deadlineAtMs) <= 0) {
-      this.options.observer.trace(`request_deadline_skip player=${request.actorId} phase=${request.phase}`);
-      return this.finishWithFallback(request, prompt, "deadline_skip");
-    }
-
-    const release = await this.options.scheduler.acquire(request, role);
+    this.options.observer.trace(`context_window player=${request.actorId} phase=${request.phase} start=${prompt.contextWindowStart} end=${prompt.contextWindowEnd} total=${prompt.contextWindowTotal}`);
+    let release: (() => void) | undefined;
     try {
-      const timeoutMs = this.effectiveTimeout(request.deadlineAtMs);
-      if (timeoutMs <= 0) return this.finishWithFallback(request, prompt, "deadline_skip");
-      this.options.observer.trace(
-        `request_start player=${request.actorId} phase=${request.phase} tools=${request.allowedTools.join(",")} timeout_ms=${timeoutMs}`,
-      );
+      release = await this.options.scheduler.acquire(request, role, signal);
+      if (this.closed) return null;
+      if (signal.aborted || this.effectiveTimeout(request.deadlineAtMs) <= 0) {
+        return this.finishWithFallback(request, prompt, "deadline_skip");
+      }
+      this.options.observer.trace(`request_start player=${request.actorId} phase=${request.phase} tools=${request.allowedTools.join(",")} timeout_ms=${this.effectiveTimeout(request.deadlineAtMs)}`);
       this.options.observer.prompt(prompt.messages, request);
-      // Await before finally releases the provider's concurrency slot.
-      return await this.runNative(client, request, prompt, startedAt);
+      const action = await this.runNative(client, request, prompt, startedAt, signal);
+      return this.closed ? null : action;
     } catch (error) {
       const diagnostic = describeError(error);
-      this.options.observer.trace(
-        `${diagnostic.code === "request_timeout" ? "request_timeout" : "request_transport_fail"} player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt} err=${formatErrorDiagnostic(error, this.options.observer.locale)}`,
-      );
-      return this.finishWithFallback(request, prompt, "runtime_error");
-    } finally {
-      release();
-    }
+      if (this.closed && (error === this.closeController.signal.reason || error === signal.reason)) return null;
+      // Native transport failures are already handled in runNative. A fallback
+      // or recording failure must propagate once, never invoke fallback twice.
+      if (release) throw error;
+      this.options.observer.trace(`${diagnostic.code === "request_timeout" ? "request_timeout" : "request_transport_fail"} player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt} err=${formatErrorDiagnostic(error, this.options.observer.locale)}`);
+      return this.finishWithFallback(request, prompt, diagnostic.code === "request_timeout" ? "deadline_skip" : "runtime_error");
+    } finally { release?.(); }
   }
 
   private async runNative(
@@ -80,11 +102,12 @@ export class LlmTurnOrchestrator {
     request: ActionRequest,
     prompt: BuiltPlayerPrompt,
     startedAt: number,
+    signal: AbortSignal,
   ): Promise<ToolCall | null> {
     const retryTrace: PlayerRetryTraceEntry[] = [];
     const attempt = async (messages: ChatMessage[]): Promise<NativeAttempt> => {
       const timeoutMs = this.effectiveTimeout(request.deadlineAtMs);
-      if (timeoutMs <= 0) {
+      if (signal.aborted || timeoutMs <= 0) {
         return { action: null, failed: false, deadlineExceeded: true, diagnostic: { code: "request_timeout" } };
       }
       try {
@@ -94,6 +117,7 @@ export class LlmTurnOrchestrator {
           messages,
           timeoutMs,
           prompt.turnId,
+          signal,
         );
         return { action: result.action, failed: false, assistantText: result.thinkingText };
       } catch (error) {
@@ -106,6 +130,7 @@ export class LlmTurnOrchestrator {
     };
 
     const first = await attempt(prompt.messages);
+    if (this.closed) return null;
     if (first.deadlineExceeded) return this.finishWithFallback(request, prompt, "deadline_skip");
     if (first.failed) {
       retryTrace.push({
@@ -157,6 +182,7 @@ export class LlmTurnOrchestrator {
       retryTrace.push(trace);
       this.options.observer.prompt(messages, request);
       const result = await attempt(messages);
+      if (this.closed) return null;
       trace.assistantText = result.assistantText;
       if (result.deadlineExceeded) {
         trace.reason = result.diagnostic?.code;
@@ -195,10 +221,12 @@ export class LlmTurnOrchestrator {
     action: ToolCall,
     startedAt: number,
     extras: { thinkingText?: string; retryTrace?: PlayerRetryTraceEntry[]; retryAttempt?: number } = {},
-  ): Promise<ToolCall> {
+  ): Promise<ToolCall | null> {
+    if (this.closed) return null;
     this.options.observer.trace(
       `${extras.retryAttempt ? "request_ok_retry" : "request_ok"} player=${request.actorId} phase=${request.phase}${extras.retryAttempt ? ` attempt=${extras.retryAttempt}/3` : ""} action=${action.name} args=${JSON.stringify((action as any).args ?? {})} elapsed_ms=${Date.now() - startedAt}`,
     );
+    if (this.closed) return null;
     this.options.recorder.record(request, prompt, {
       actionMode: "tool_call",
       toolCalls: this.toToolCalls(action),
@@ -206,7 +234,7 @@ export class LlmTurnOrchestrator {
       thinkingText: extras.thinkingText,
       ...(extras.retryTrace?.length ? { retryTrace: [...extras.retryTrace] } : {}),
     });
-    return action;
+    return this.closed ? null : action;
   }
 
   private async finishWithFallback(
@@ -215,7 +243,15 @@ export class LlmTurnOrchestrator {
     reason: FallbackReason,
     extras: Pick<PlayerRoundOutcome, "thinkingText" | "retryTrace"> = {},
   ): Promise<ToolCall | null> {
-    const action = await this.options.fallbackPolicy.resolve(request, reason);
+    if (this.closed) return null;
+    let action: ToolCall | null;
+    try { action = await this.options.fallbackPolicy.resolve(request, reason, this.closeController.signal); }
+    catch (error) {
+      if (error === this.closeController.signal.reason) return null;
+      if (!(error instanceof FallbackDeadlineElapsed)) throw error;
+      action = null; reason = "deadline_skip";
+    }
+    if (this.closed) return null;
     this.options.recorder.record(request, prompt, {
       actionMode: action ? "tool_call" : "none",
       toolCalls: this.toToolCalls(action),
@@ -227,7 +263,7 @@ export class LlmTurnOrchestrator {
         ...(action ? { action: { name: action.name, args: (action as any).args ?? {} } } : {}),
       },
     });
-    return action;
+    return this.closed ? null : action;
   }
 
   private toToolCalls(action?: ToolCall | null) {
@@ -242,7 +278,7 @@ export class LlmTurnOrchestrator {
 
   private effectiveTimeout(deadlineAtMs?: number): number {
     if (!deadlineAtMs) return this.options.timeoutMs;
-    const remaining = deadlineAtMs - Date.now() - 40;
+    const remaining = deadlineAtMs - Date.now();
     return remaining <= 0 ? 0 : Math.max(1, Math.min(this.options.timeoutMs, remaining));
   }
 

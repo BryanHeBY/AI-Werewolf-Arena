@@ -112,3 +112,44 @@ describe("ScopedRequestScheduler", () => {
   });
 
 });
+
+test("queued cancellation removes its waiter; expired requests never receive a released lease", async () => {
+  const scheduler = new ScopedRequestScheduler({ defaultMaxConcurrentRequests: 1 });
+  const first = await scheduler.acquire(request);
+  const cancelled = new AbortController();
+  const aborted = scheduler.acquire(request, undefined, cancelled.signal);
+  cancelled.abort(new Error("cancelled-by-owner"));
+  await expect(aborted).rejects.toThrow("cancelled-by-owner");
+  expect(scheduler.snapshot).toEqual({ closed: false, active: 1, queued: 0 });
+  const elapsed = scheduler.acquire({ ...request, deadlineAtMs: Date.now() + 30 });
+  await expect(elapsed).rejects.toThrow("request_deadline_elapsed");
+  expect(scheduler.snapshot).toEqual({ closed: false, active: 1, queued: 0 });
+  first(); expect(scheduler.snapshot).toEqual({ closed: false, active: 0, queued: 0 });
+  const next = await scheduler.acquire(request); next();
+  expect(scheduler.snapshot.active).toBe(0);
+});
+
+test("closed scheduler rejects queued and future work, retaining active lease ownership until release", async () => {
+  const scheduler = new ScopedRequestScheduler({ defaultMaxConcurrentRequests: 1 });
+  const first = await scheduler.acquire(request);
+  const queued = scheduler.acquire(request);
+  scheduler.close(); await expect(queued).rejects.toThrow("request_scheduler_closed");
+  expect(scheduler.snapshot).toEqual({ closed: true, active: 1, queued: 0 });
+  await expect(scheduler.acquire(request)).rejects.toThrow("request_scheduler_closed");
+  first(); first(); scheduler.close();
+  expect(scheduler.snapshot).toEqual({ closed: true, active: 0, queued: 0 });
+});
+
+test("abort after grant cannot free another lease, and a throwing queue observer leaves no orphan waiter", async () => {
+  const scheduler = new ScopedRequestScheduler({ defaultMaxConcurrentRequests: 1 });
+  const first = await scheduler.acquire(request), control = new AbortController();
+  const pending = scheduler.acquire(request, undefined, control.signal);
+  first(); const granted = await pending; control.abort();
+  expect(scheduler.snapshot).toEqual({ closed: false, active: 1, queued: 0 });
+  granted(); expect(scheduler.snapshot.active).toBe(0);
+  const failure = new Error("observer-error");
+  const other = new ScopedRequestScheduler({ defaultMaxConcurrentRequests: 1, onWait() { throw failure; } });
+  const held = await other.acquire(request);
+  await expect(other.acquire(request)).rejects.toBe(failure);
+  expect(other.snapshot.queued).toBe(0); held(); expect(other.snapshot.active).toBe(0);
+});

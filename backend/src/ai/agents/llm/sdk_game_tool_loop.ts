@@ -14,6 +14,7 @@ import { LlmObserver } from "./llm_observer";
 import { ChatMessage, ChatModelClient } from "../../integrations/llm/transport";
 import { PlayerPromptSession } from "./player_prompt_session";
 import { resolveTurnConstraints } from "../player/turn_constraints";
+import { awaitWithAbort } from "../../runtime/turn_deadline";
 
 interface ToolLoopActionResult {
   action: ToolCall | null;
@@ -55,11 +56,16 @@ export class SdkGameToolLoop {
     messages: ChatMessage[],
     timeoutMs: number,
     turnId: string,
+    signal?: AbortSignal,
   ): Promise<ToolLoopActionResult> {
     const controller = new AbortController();
     let timer: NodeJS.Timeout | null = null;
     const turn = new ActionTurn(this.reception, request, turnId);
+    const abort = () => { turn.close(); controller.abort(signal?.reason); };
+    if (signal?.aborted) abort();
+    else signal?.addEventListener("abort", abort, { once: true });
     try {
+      if (controller.signal.aborted) throw controller.signal.reason;
       const constraints = resolveTurnConstraints(request);
       const protocol = gameToolProtocol(this.world.locale);
       const loop = client.runToolLoop<ToolCall>(
@@ -107,16 +113,17 @@ export class SdkGameToolLoop {
           toolChoice: constraints.minValidActions > 0 ? "required" : "auto",
         },
       );
-      const result = await Promise.race([
+      const result = await awaitWithAbort(Promise.race([
         loop,
         new Promise<never>((_, reject) => {
           timer = setTimeout(() => {
             turn.close();
-            controller.abort();
-            reject(new Error(`llm_request_timeout_${timeoutMs}ms`));
+            const error = new Error(`llm_request_timeout_${timeoutMs}ms`);
+            controller.abort(error);
+            reject(error);
           }, timeoutMs);
         }),
-      ]);
+      ]), controller.signal);
       const thinkingText = this.observer.thinkingText(
         result.assistantText ?? "",
         result.thinkingTrace ?? [],
@@ -132,6 +139,7 @@ export class SdkGameToolLoop {
       };
     } finally {
       turn.close();
+      signal?.removeEventListener("abort", abort);
       if (timer) clearTimeout(timer);
     }
   }

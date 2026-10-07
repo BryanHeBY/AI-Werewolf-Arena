@@ -141,6 +141,6 @@ function createLlmRuntime(options: PlayerAgentFactoryOptions): PlayerAgentRuntim
   return {
     kind: "llm",
     provider,
-    close: async () => undefined,
+    close: () => provider.close(),
   };
 }

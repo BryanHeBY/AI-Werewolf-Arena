@@ -141,6 +141,10 @@ export class LlmActionProvider implements ActionProvider {
     return this.orchestrator.run(request);
   }
 
+  close(): Promise<void> { return this.orchestrator.close(); }
+
+  get runtimeState() { return this.orchestrator.runtimeState; }
+
   private readConcurrencyFromEnvironment(): number {
     const value = Number(process.env.LLM_MAX_CONCURRENT_REQUESTS ?? "");
     return Number.isFinite(value) && value > 0
