@@ -1,4 +1,4 @@
-import type { Locale } from "@ai-werewolf-arena/game-text";
+import { text, dictionaries, type MessageKey, type Locale } from "@ai-werewolf-arena/game-text";
 import { ActionRequest } from "../../../core/domain"
 import { colorize, isAnsiEnabled } from "../../../utils/ansi";
 import { ChatMessage, ToolLoopStepTrace } from "../../integrations/llm/transport";
@@ -32,38 +32,40 @@ export class LlmObserver {
     if (!this.options.printLlmIo) return;
     const prefix = colorize("[LLM_IO]", "accent", this.colorizeLogs);
     const marker = `player=${request.actorId} phase=${request.phase}`;
-    console.log(`${prefix} prompt_start ${marker}`);
+    console.log(`${prefix} prompt_start ${marker} · ${text(this.locale, "runtime.prompt_start")}`);
     for (const msg of messages) {
-      const roleTag = msg.role === "system" ? "system" : msg.role === "user" ? "user" : "assistant";
-      console.log(`${prefix} prompt_${roleTag}: ${msg.content}`);
+      const roleTag = typeof msg.role === "string" ? msg.role : "unknown";
+      const roleKey = `runtime.prompt_${roleTag}` as MessageKey;
+      const roleLabel = Object.hasOwn(dictionaries[this.locale], roleKey) ? text(this.locale, roleKey) : roleTag;
+      console.log(`${prefix} prompt_${roleTag} · ${roleLabel}: ${msg.content}`);
     }
-    console.log(`${prefix} prompt_end ${marker}`);
+    console.log(`${prefix} prompt_end ${marker} · ${text(this.locale, "runtime.prompt_end")}`);
   }
 
   rawResponse(raw: string, request: ActionRequest): void {
     if (!this.options.printLlmIo) return;
     const prefix = colorize("[LLM_IO]", "accent", this.colorizeLogs);
     const marker = `player=${request.actorId} phase=${request.phase}`;
-    console.log(`${prefix} raw_response_start ${marker}`);
-    console.log(`${prefix} raw_response: ${raw}`);
-    console.log(`${prefix} raw_response_end ${marker}`);
+    console.log(`${prefix} raw_response_start ${marker} · ${text(this.locale, "runtime.raw_response_start")}`);
+    console.log(`${prefix} raw_response · ${text(this.locale, "runtime.raw_response")}: ${raw}`);
+    console.log(`${prefix} raw_response_end ${marker} · ${text(this.locale, "runtime.raw_response_end")}`);
   }
 
   thinking(trace: ToolLoopStepTrace[], request: ActionRequest): void {
     if (!this.options.printThinking || trace.length === 0) return;
     const prefix = colorize("[THINKING]", "muted", this.colorizeLogs);
     const marker = `player=${request.actorId} phase=${request.phase}`;
-    console.log(`${prefix} start ${marker}`);
+    console.log(`${prefix} start ${marker} · ${text(this.locale, "runtime.thinking_start")}`);
     for (const [stepIndex, step] of trace.entries()) {
       if (step.assistantText?.trim()) {
-        console.log(`${prefix} assistant step=${stepIndex + 1}: ${step.assistantText}`);
+        console.log(`${prefix} assistant step=${stepIndex + 1} · ${text(this.locale, "runtime.assistant_output")}: ${step.assistantText}`);
       }
       for (const call of step.toolCalls) {
-        console.log(`${prefix} tool_call step=${stepIndex + 1} id=${call.id} name=${call.name} args=${call.rawArgs}`);
-        console.log(`${prefix} tool_result step=${stepIndex + 1} id=${call.id} result=${call.toolResult}`);
+        console.log(`${prefix} ${text(this.locale, "runtime.tool_call")} | tool_call step=${stepIndex + 1} id=${call.id} name=${call.name} args=${call.rawArgs}`);
+        console.log(`${prefix} ${text(this.locale, "runtime.tool_result")} | tool_result step=${stepIndex + 1} id=${call.id} result=${call.toolResult}`);
       }
     }
-    console.log(`${prefix} end ${marker}`);
+    console.log(`${prefix} end ${marker} · ${text(this.locale, "runtime.thinking_end")}`);
   }
 
   thinkingText(assistantText: string, trace: ToolLoopStepTrace[]): string | null {
@@ -78,6 +80,8 @@ export class LlmObserver {
 
   private decorate(line: string): string {
     const prefix = "[LLMActionProvider]";
+    const key = `runtime.trace.${line.split(" ", 1)[0]}` as MessageKey;
+    if (Object.hasOwn(dictionaries[this.locale], key)) line = `${text(this.locale, key)} | ${line}`;
     if (!this.colorizeLogs) return `${prefix} ${line}`;
     if (line.includes("request_ok")) return `${colorize(prefix, "ok", true)} ${colorize(line, "ok", true)}`;
     if (line.includes("request_recovered") || line.includes("request_timeout")) {

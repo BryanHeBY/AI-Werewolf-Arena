@@ -3,6 +3,8 @@ import { openBrowser, renderMedia, renderStill, selectComposition } from "@remot
 import { parseArgs } from "node:util";
 import { mkdtemp, mkdir, readFile, rm, lstat, link } from "node:fs/promises";
 import path from "node:path";
+import type { Locale } from "@ai-werewolf-arena/game-text";
+import { replayCommandFailure } from "./cli_error";
 import { isLocale } from "@ai-werewolf-arena/game-catalog";
 import { resolveReplayInput } from "./replay-dev";
 import { parseOfflineReplayJson } from "../src/replay/offline-replay";
@@ -10,11 +12,12 @@ import { createReplayRenderInput, FRAMES_PER_EVENT } from "../src/replay/replay-
 import { DEFAULT_REPLAY_TIME_ZONE } from "../src/replay/replay-display";
 
 const defaultRendering = { bundle, openBrowser, selectComposition, renderStill, renderMedia };
-export async function renderReplay(args: string[], rendering = defaultRendering) {
+export async function renderReplay(args: string[], rendering = defaultRendering, display?: { locale: Locale }) {
   const { values } = parseArgs({ args: args[0] === "--" ? args.slice(1) : args, options: {
     input: { type: "string" }, output: { type: "string" }, locale: { type: "string" },
     "time-zone": { type: "string" }, frame: { type: "string" }, browser: { type: "string" },
   }, strict: true, allowPositionals: false });
+  if (display && isLocale(values.locale)) display.locale = values.locale;
   if (!values.input || !values.output) throw new Error("replay_render_input_output_required");
   const source = resolveReplayInput(values.input);
   const output = path.resolve(values.output);
@@ -25,6 +28,7 @@ export async function renderReplay(args: string[], rendering = defaultRendering)
   const replay = parseOfflineReplayJson(await readFile(source, "utf8"));
   const locale = values.locale ?? replay.meta.locale ?? "zh-CN";
   if (!isLocale(locale)) throw new Error("replay_display_locale_invalid");
+  if (display) display.locale = locale;
   const inputProps = { ...createReplayRenderInput(replay, { locale, timeZone: values["time-zone"] ?? DEFAULT_REPLAY_TIME_ZONE }) };
   const still = values.frame !== undefined;
   const frame = still ? Number(values.frame) : undefined;
@@ -60,6 +64,7 @@ export async function renderReplay(args: string[], rendering = defaultRendering)
 
 }
 if (import.meta.main) {
-  try { await renderReplay(process.argv.slice(2)); }
-  catch (error) { console.error(error instanceof Error && /^replay_[a-z_]+$/.test(error.message) ? error.message : "replay_render_failed"); process.exitCode = 1; }
+  const display: { locale: Locale } = { locale: "zh-CN" };
+  try { await renderReplay(process.argv.slice(2), defaultRendering, display); }
+  catch (error) { console.error(JSON.stringify(replayCommandFailure(error, display.locale))); process.exitCode = 1; }
 }

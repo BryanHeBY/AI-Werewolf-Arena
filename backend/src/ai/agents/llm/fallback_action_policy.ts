@@ -1,3 +1,4 @@
+import { text } from "@ai-werewolf-arena/game-text";
 import { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain"
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { LlmObserver } from "./llm_observer";
@@ -17,11 +18,11 @@ export class FallbackActionPolicy {
 
   async resolve(request: ActionRequest, reason: FallbackReason): Promise<ToolCall | null> {
     const action = await this.provider.getAction(request);
-    const text = action
+    const actionText = action
       ? `${action.name} ${JSON.stringify((action as any).args ?? {})}`
       : "none";
     console.log(
-      `[LLM_FALLBACK] player=${request.actorId} phase=${request.phase} reason=${reason} min_valid_actions=${resolveTurnConstraints(request).minValidActions} allowedTools=${request.allowedTools.join(",")} fallback=${text}`,
+      `[LLM_FALLBACK] player=${request.actorId} phase=${request.phase} reason=${reason} min_valid_actions=${resolveTurnConstraints(request).minValidActions} allowedTools=${request.allowedTools.join(",")} fallback=${actionText} · ${text(this.observer.locale, "runtime.fallback")}`,
     );
     safeRecordLogicOp({
       scope: "llm_action_provider",

@@ -41,5 +41,6 @@ export interface RoleProfile {
     request: ActionRequest,
     pickAliveNotSelf: () => number | null,
     pickAliveByCamp: (camp: "good" | "wolf" | "third_party") => number | null,
+    locale?: Locale,
   ) => ToolCall | null;
 }

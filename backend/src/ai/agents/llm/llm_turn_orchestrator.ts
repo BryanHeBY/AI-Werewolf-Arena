@@ -1,3 +1,4 @@
+import { text } from "@ai-werewolf-arena/game-text";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../../utils/error_diagnostic";
 import { COMPONENT } from "../../../core/domain/components/names";
@@ -145,7 +146,7 @@ export class LlmTurnOrchestrator {
       const retryPrompt = buildConstraintRetryPrompt(attemptNumber, 3, this.options.world.locale);
       messages = [...messages, { role: "user", content: retryPrompt }];
       console.log(
-        `[LLM_RETRY] player=${request.actorId} phase=${request.phase} attempt=${attemptNumber}/3 reason=turn_constraints_no_valid_action`,
+        `[LLM_RETRY] player=${request.actorId} phase=${request.phase} attempt=${attemptNumber}/3 reason=turn_constraints_no_valid_action · ${text(this.options.observer.locale, "runtime.retry")}`,
       );
       const trace: PlayerRetryTraceEntry = {
         attempt: attemptNumber,

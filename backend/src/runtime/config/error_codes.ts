@@ -1,3 +1,4 @@
+import { BoardConfigurationError } from "./board_definition";
 /** Only known machine IDs may cross configuration CLI error boundaries. */
 export const CONFIG_ERROR_CODES = [
   "board_config_disabled_mechanism_parameters", "board_config_duplicate_role",
@@ -49,3 +50,15 @@ export const CONFIG_ERROR_CODES = [
   "runtime_config_unknown_field",
 ] as const;
 export type ConfigErrorCode = typeof CONFIG_ERROR_CODES[number];
+
+export function configDiagnostic(error: unknown): { code: string; path?: string } {
+  let message: unknown; let fieldPath: unknown;
+  try {
+    message = error instanceof Error ? Object.getOwnPropertyDescriptor(error, "message")?.value : undefined;
+    fieldPath = error instanceof BoardConfigurationError ? Object.getOwnPropertyDescriptor(error, "fieldPath")?.value : undefined;
+  } catch { /* Foreign proxies must not break the error-output boundary. */ }
+  const candidate = typeof message === "string" ? message.split(":", 1)[0] : "config_check_failed";
+  const code = CONFIG_ERROR_CODES.includes(candidate as ConfigErrorCode) ? candidate : "config_check_failed";
+  const safePath = typeof fieldPath === "string" && fieldPath.length <= 160 && /^(version|id|ruleset|board|rules|mechanisms|roles)(\.[a-z][a-zA-Z0-9_-]{0,31}|\.\d+)*$/.test(fieldPath);
+  return { code, ...(safePath && typeof fieldPath === "string" ? { path: fieldPath } : {}) };
+}

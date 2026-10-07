@@ -19,12 +19,12 @@ export const WOLF_ROLE_PROFILE: RoleProfile = {
   validationRules: WOLF_VALIDATION_RULES,
   nightStages: WOLF_NIGHT_STAGES,
   llmRepair: WOLF_LLM_REPAIR_PACK,
-  baselineAction: (_roleComp, request, _pickAliveNotSelf, pickAliveByCamp) => {
+  baselineAction: (_roleComp, request, _pickAliveNotSelf, pickAliveByCamp, locale = "zh-CN") => {
     if (request.allowedTools.includes("speak_to_wolves")) {
       return {
         name: "speak_to_wolves",
         args: {
-          text: "今晚优先刀信息位。",
+          text: text(locale, "fallback.wolf_chat"),
           end_chat: false,
         },
       };

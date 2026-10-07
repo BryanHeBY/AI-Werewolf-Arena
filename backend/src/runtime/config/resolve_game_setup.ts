@@ -22,6 +22,8 @@ export interface RunGameOptions {
   recordRootDir?: string;
 }
 
+export interface GameSetupWarning { code: "locale_prompt_fallback"; path: string; requestedLocale: Locale; fallbackLocale: Locale }
+
 export interface ResolvedPlayerConfig { name?: string; profile?: ResolvedAgentRuntimeProfile; personalityPrompt?: string | null }
 
 export interface ResolvedGameSetup {
@@ -34,7 +36,7 @@ export interface ResolvedGameSetup {
   boardDefinition?: ResolvedBoardDefinition;
   context: { locale: Locale; displayLocale: Locale; seed?: string };
   players: Readonly<Record<string, ResolvedPlayerConfig>>;
-  warnings: readonly string[];
+  warnings: readonly GameSetupWarning[];
 }
 
 /** Select after seats/roles are assigned; names never influence model selection. */
@@ -141,7 +143,7 @@ export function resolveGameSetup(
   const boardConfig = boardDefinition?.config ?? resolveBoardConfig(options.board as BoardName, boardOverride as BoardOverride | null);
   validateGameBindings(game, boardConfig);
   const locale = game.locale ?? "zh-CN";
-  const warnings: string[] = [];
+  const warnings: GameSetupWarning[] = [];
   const players = resolvePlayers(runtime, game.players, locale, warnings);
   return {
     options,
@@ -182,7 +184,7 @@ export function validateGameBindings(game: GameConfig, board: BoardConfig): void
   }
 }
 
-function resolvePlayers(runtime: RuntimeConfig, entries: Record<string, PlayerConfig> | undefined, locale: Locale, warnings: string[]): Record<string, ResolvedPlayerConfig> {
+function resolvePlayers(runtime: RuntimeConfig, entries: Record<string, PlayerConfig> | undefined, locale: Locale, warnings: GameSetupWarning[]): Record<string, ResolvedPlayerConfig> {
   return Object.fromEntries(Object.entries(entries ?? {}).map(([seat, entry]) => {
     let profile = entry.agent ? resolveAgentProfileByName(runtime, entry.agent) : undefined;
     if (profile?.kind === "acp" && entry.spawnArgs?.length) profile = { ...profile, spawnArgs: [...(profile.spawnArgs ?? []), ...entry.spawnArgs] };
@@ -193,7 +195,7 @@ function resolvePlayers(runtime: RuntimeConfig, entries: Record<string, PlayerCo
       else {
         const fallback = entry.personalityPrompt["zh-CN"] ? "zh-CN" : "en";
         personalityPrompt = entry.personalityPrompt[fallback];
-        warnings.push(`locale_prompt_fallback: players.${seat}.personalityPrompt -> ${fallback}`);
+        warnings.push({ code: "locale_prompt_fallback", path: `players.${seat}.personalityPrompt`, requestedLocale: locale, fallbackLocale: fallback });
       }
     }
     return [seat, { ...(entry.name !== undefined ? { name: entry.name } : {}), ...(profile ? { profile } : {}),

@@ -1,3 +1,5 @@
+import { text } from "@ai-werewolf-arena/game-text";
+import { runCli, takeDisplayArguments, type CliDisplayContext } from "../runtime/cli/display";
 import { promises as fs } from "fs";
 import path from "path";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -53,20 +55,19 @@ function readFlag(args: string[], name: string): string | undefined {
   return index >= 0 ? args[index + 1] : undefined;
 }
 
-async function runCli(): Promise<void> {
-  const args = process.argv.slice(2);
+async function main(argv: string[], display: CliDisplayContext): Promise<void> {
+  const args = takeDisplayArguments(argv, display);
   const sessionId = readFlag(args, "--session");
   const recordRoot = readFlag(args, "--record-root") ?? resolveDefaultRecordRoot();
   const outputFile = readFlag(args, "--out");
   if (!sessionId || !outputFile) {
-    throw new Error(
-      "Usage: bun src/replay/export_replay_bundle.ts --session <session_id> --out <file> [--record-root <dir>]",
-    );
+    throw new Error("replay_export_usage");
   }
   const bundle = await exportReplayBundle({ recordRoot, sessionId, outputFile });
-  console.log(`Exported ${bundle.events.length} events to ${outputFile}`);
+  if (!display.explicit) display.locale = bundle.meta.locale ?? "zh-CN";
+  console.log(text(display.locale, "cli.exported", { count: bundle.events.length, file: outputFile }));
 }
 
 if (require.main === module) {
-  void runCli();
+  void runCli(main);
 }

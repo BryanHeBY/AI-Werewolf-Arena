@@ -27,7 +27,7 @@ test("player names and personalities are independent of model selection", () => 
   expect(setup.players["1"].personalityPrompt).toBe("  private seat style\n");
   expect(setup.players["2"].personalityPrompt).toBeNull();
   expect(setup.players["3"].personalityPrompt).toBe("private English style");
-  expect(setup.warnings).toContain("locale_prompt_fallback: players.3.personalityPrompt -> en");
+  expect(setup.warnings).toContainEqual({ code: "locale_prompt_fallback", path: "players.3.personalityPrompt", requestedLocale: "zh-CN", fallbackLocale: "en" });
   const { world } = bootstrapGame(setup.boardConfig, { playerNames: { "1": setup.players["1"].name! } });
   expect(world.getComponent<IdentityComponent>(1, COMPONENT.Identity)?.name).toBe(" 苏茶茶 ");
   const output = JSON.stringify(describeResolvedSetup(setup));

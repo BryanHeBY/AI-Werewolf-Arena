@@ -1,5 +1,5 @@
 import { formatErrorDiagnostic } from "../utils/error_diagnostic";
-import type { Locale } from "@ai-werewolf-arena/game-text";
+import { text, dictionaries, type MessageKey, type Locale } from "@ai-werewolf-arena/game-text";
 import { getDefaultScriptEventRenderRegistry } from "../game";
 import type { GameEvent, RuntimeSnapshot } from "../core";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
@@ -49,10 +49,10 @@ export function presentGameResult(input: {
 }): void {
   const { board, snapshot, events, timedOut, log } = input;
   log(
-    `[run_game] done board=${board} gameOver=${snapshot.gameOver} day=${snapshot.day} winner=${snapshot.result?.winner ?? "none"} timedOut=${timedOut}`,
+    `[run_game] done board=${board} gameOver=${snapshot.gameOver} day=${snapshot.day} winner=${snapshot.result?.winner ?? "none"} timedOut=${timedOut} · ${text(input.locale ?? "zh-CN", "runtime.done")}`,
     "ok",
   );
-  log(`[run_game] events=${events.length}`, "info");
+  log(`[run_game] events=${events.length} · ${text(input.locale ?? "zh-CN", "runtime.event_count")}`, "info");
   if (input.printAllEvents) console.log(JSON.stringify(events, null, 2));
   if (input.printChat && !input.streamEvents) {
     for (const line of toChatLines(events, input.locale)) console.log(line);
@@ -79,12 +79,13 @@ export interface AcpConsoleLogger {
 }
 
 export function createAcpConsoleLogger(actorId: number, log: ConsoleLog, locale: Locale = "zh-CN"): AcpConsoleLogger {
+  const textLabel = (key: MessageKey) => text(locale, key);
   let pending: { kind: "message" | "thought"; id: string; text: string } | null = null;
   const toolStates = new Map<string, { label: string; status?: string; error: string }>();
   const emitText = (kind: "message" | "thought", value: string) => {
     const text = compact(value, Infinity);
     if (text && !/^\*?conversation interrupted\*?$/i.test(text)) {
-      log(`[acp][${actorId}][${kind}] ${text}`, "muted");
+      log(`[acp][${actorId}][${kind}] ${kind === "thought" ? textLabel("runtime.acp.thought") : textLabel("runtime.acp.message")}: ${text}`, "muted");
     }
   };
   const flush = () => {
@@ -127,7 +128,7 @@ export function createAcpConsoleLogger(actorId: number, log: ConsoleLog, locale:
       if (toolCallId) toolStates.set(toolCallId, {
         label, status: typeof event.status === "string" ? event.status : undefined, error: "",
       });
-      log(`[acp][${actorId}][tool] start ${label}`, "muted");
+      log(`[acp][${actorId}][tool] start ${label} · ${textLabel("runtime.acp.start")}`, "muted");
       return;
     }
     if (type === "tool_call_update") {
@@ -145,7 +146,9 @@ export function createAcpConsoleLogger(actorId: number, log: ConsoleLog, locale:
       });
       if (!changed) return;
       const displayStatus = status ?? previous?.status ?? "error";
-      log(`[acp][${actorId}][tool] ${displayStatus} ${label}${error ? ` error=${error}` : ""}`, error || status === "failed" ? "warn" : "muted");
+      const statusKey = `runtime.acp.${displayStatus}` as MessageKey;
+      const explanation = Object.hasOwn(dictionaries[locale], statusKey) ? textLabel(statusKey) : displayStatus;
+      log(`[acp][${actorId}][tool] ${displayStatus} ${label} · ${explanation}${error ? ` error=${error}` : ""}`, error || status === "failed" ? "warn" : "muted");
     }
   };
   return Object.assign(observer, { flush: () => {

@@ -1,5 +1,5 @@
-import { formatErrorDiagnostic } from "../../utils/error_diagnostic";
-import { configDiagnostic } from "./check_config";
+import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
+import { runCli, takeDisplayArguments, type CliDisplayContext } from "./display";
 import { loadRuntimeConfig } from "../config/load_config";
 import { loadBoardDefinition } from "../config/load_board_definition";
 import { resolveGameBoard, resolveGameSetup } from "../config/resolve_game_setup";
@@ -12,8 +12,9 @@ function parseBoolean(value: string): boolean {
   throw new Error("runtime_cli_boolean_invalid");
 }
 
-function parseArgs(argv: string[]): { configDir: string; gameName: string; overrides: Partial<RunGameOptions> } {
+function parseArgs(argv: string[]): { configDir: string; gameName: string; overrides: Partial<RunGameOptions>; locale?: Locale } {
   const overrides: Partial<RunGameOptions> = {};
+  let locale: Locale | undefined;
   let configDir = process.env.GAME_CONFIGS_DIR ?? "configs";
   let gameName = process.env.GAME_CONFIG_NAME ?? "default";
   for (let i = 0; i < argv.length; i += 1) {
@@ -23,6 +24,7 @@ function parseArgs(argv: string[]): { configDir: string; gameName: string; overr
     if (token === "--configs-dir") configDir = value;
     else if (token === "--game-config-name") gameName = value;
     else if (token === "--game" || token === "--board") overrides.board = value as GameBoard;
+    else if (token === "--locale") { if (!isLocale(value)) throw new Error("runtime_cli_locale_invalid"); locale = value; }
     else if (token === "--max-days") overrides.maxDays = Number(value);
     else if (token === "--trace") overrides.trace = parseBoolean(value);
     else if (token === "--max-runtime-ms") overrides.maxRuntimeMs = Number(value);
@@ -38,21 +40,21 @@ function parseArgs(argv: string[]): { configDir: string; gameName: string; overr
     else throw new Error("runtime_cli_option_unknown");
     i += 1;
   }
-  return { configDir, gameName, overrides };
+  return { configDir, gameName, overrides, locale };
 }
 
-export async function main(argv = process.argv.slice(2)): Promise<void> {
-  const args = parseArgs(argv);
+export async function main(argv = process.argv.slice(2), display: CliDisplayContext = { locale: "zh-CN", explicit: false }): Promise<void> {
+  const args = parseArgs(takeDisplayArguments(argv, display));
+  if (!display.explicit && args.locale) display.locale = args.locale;
   const runtime = await loadRuntimeConfig({ configDir: args.configDir, gameName: args.gameName });
   const board = resolveGameBoard(runtime, args.overrides);
   const boardOverride = await loadBoardDefinition(args.configDir, board);
-  const setup = resolveGameSetup(runtime, args.overrides, boardOverride);
+  const setup = resolveGameSetup({ ...runtime, game: { ...runtime.game,
+    ...(args.locale ? { locale: args.locale } : {}),
+    ...(display.explicit ? { displayLocale: display.locale } : {}),
+  } }, args.overrides, boardOverride);
+  display.locale = setup.context.displayLocale;
   await runGame(setup);
 }
 
-if (require.main === module) {
-  main().catch((error) => {
-    console.error(JSON.stringify({ ...configDiagnostic(error), diagnostic: JSON.parse(formatErrorDiagnostic(error)) }));
-    process.exitCode = 1;
-  });
-}
+if (require.main === module) void runCli(main);

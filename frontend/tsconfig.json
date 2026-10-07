@@ -30,6 +30,7 @@
     "scripts/render-replay.ts",
     "tests/unit/replay/replay-display.test.tsx",
     "tests/unit/replay/render-replay.test.ts",
+    "tests/unit/replay/replay-cli.test.ts",
     "tests/e2e/offline-replay.spec.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]

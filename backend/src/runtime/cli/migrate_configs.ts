@@ -1,8 +1,9 @@
-import { formatErrorDiagnostic } from "../../utils/error_diagnostic";
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import { runCli, takeDisplayArguments, type CliDisplayContext } from "./display";
 import { readFile, writeFile, readdir, access, mkdir, unlink, rename, link, stat, open, type FileHandle } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import path from "node:path";
-import { convertLegacyBoard } from "../config/migrate_board";
+import { convertLegacyBoard, type MigrationWarningCode } from "../config/migrate_board";
 import { CONFIG_ID_PATTERN } from "../config/board_definition";
 import type { BoardName } from "../scenarios/board_config_resolver";
 
@@ -47,7 +48,7 @@ async function publishBoard(file: string, content: string, exclusive = false): P
   if (failure) throw failure;
 }
 
-export async function migrateBoardSource(configDir: string, boardId: string, source: string, legacyBase: BoardName | undefined, apply: boolean): Promise<void> {
+export async function migrateBoardSource(configDir: string, boardId: string, source: string, legacyBase: BoardName | undefined, apply: boolean, displayLocale: Locale = "zh-CN"): Promise<void> {
   if (!CONFIG_ID_PATTERN.test(boardId)) throw new Error("board_config_id_invalid");
   const sourceFile = path.resolve(source);
   const target = path.resolve(configDir, "boards", `${boardId}.json`);
@@ -60,6 +61,7 @@ export async function migrateBoardSource(configDir: string, boardId: string, sou
   let raw: unknown;
   try { raw = JSON.parse(original); } catch { throw new Error("board_config_json_invalid"); }
   const result = convertLegacyBoard(raw, boardId, legacyBase);
+  const report = JSON.stringify({ mode: apply ? "apply" : "preview", boardId, sourceFile, target, warnings: result.warnings, message: text(displayLocale, "cli.migrated"), warningMessages: migrationWarningMessages(result.warnings, displayLocale) }, null, 2);
   if (apply) {
     await ensureBackup(sourceFile, original);
     await mkdir(path.dirname(target), { recursive: true });
@@ -72,12 +74,12 @@ export async function migrateBoardSource(configDir: string, boardId: string, sou
       throw error;
     }
   }
-  console.log(JSON.stringify({ mode: apply ? "apply" : "preview", boardId, sourceFile, target, warnings: result.warnings }, null, 2));
+  console.log(report);
 }
 
-export async function migrateBoards(configDir: string, apply: boolean): Promise<void> {
+export async function migrateBoards(configDir: string, apply: boolean, displayLocale: Locale = "zh-CN"): Promise<void> {
   const root = path.resolve(configDir, "boards");
-  const changes: Array<{ file: string; original: string; converted: string; id: string; warnings: string[] }> = [];
+  const changes: Array<{ file: string; original: string; converted: string; id: string; warnings: MigrationWarningCode[] }> = [];
   for (const filename of (await readdir(root)).filter(name => name.endsWith(".json")).sort()) {
     const id = filename.slice(0, -5);
     const file = path.join(root, filename);
@@ -88,6 +90,7 @@ export async function migrateBoards(configDir: string, apply: boolean): Promise<
     if (raw && typeof raw === "object" && "version" in raw) continue;
     changes.push({ file, original, converted: JSON.stringify(converted.definition, null, 2) + "\n", id, warnings: converted.warnings });
   }
+  const report = JSON.stringify({ mode: apply ? "apply" : "preview", changes: changes.map(({ id, warnings }) => ({ id, warnings, warningMessages: migrationWarningMessages(warnings, displayLocale) })), untouched: ["runtime/providers.json", "runtime/agents.json", "games/*"], message: text(displayLocale, "cli.migrated") }, null, 2);
   // Validate every conversion before creating backups or replacing any board.
   if (apply) {
     for (const change of changes) await ensureBackup(change.file, change.original);
@@ -106,11 +109,11 @@ export async function migrateBoards(configDir: string, apply: boolean): Promise<
       throw error;
     }
   }
-  console.log(JSON.stringify({ mode: apply ? "apply" : "preview", changes: changes.map(({ id, warnings }) => ({ id, warnings })), untouched: ["runtime/providers.json", "runtime/agents.json", "games/*"] }, null, 2));
+  console.log(report);
 }
 
-if (require.main === module) {
-  const args = process.argv.slice(2);
+export async function main(argv = process.argv.slice(2), display: CliDisplayContext = { locale: "zh-CN", explicit: false }): Promise<void> {
+  const args = takeDisplayArguments(argv, display);
   const values: Record<string, string> = {};
   let apply = false;
   for (let i = 0; i < args.length; i++) {
@@ -122,11 +125,13 @@ if (require.main === module) {
   if (values["--base"] && !["six_player_mvp", "twelve_player_standard"].includes(values["--base"])) throw new Error("board_config_legacy_base_unknown");
   if (Boolean(values["--source"]) !== Boolean(values["--board"]) || (values["--base"] && !values["--source"])) throw new Error("config_migration_usage");
   const task = values["--source"]
-    ? migrateBoardSource(configDir, values["--board"], values["--source"], values["--base"] as BoardName | undefined, apply)
-    : migrateBoards(configDir, apply);
-  task.catch(error => {
-    // Provider/authentication files are never read by this command.
-    console.error(formatErrorDiagnostic(error));
-    process.exitCode = 1;
-  });
+    ? migrateBoardSource(configDir, values["--board"], values["--source"], values["--base"] as BoardName | undefined, apply, display.locale)
+    : migrateBoards(configDir, apply, display.locale);
+  await task;
+}
+
+if (require.main === module) void runCli(main);
+
+function migrationWarningMessages(warnings: readonly MigrationWarningCode[], locale: Locale): string[] {
+  return warnings.map(code => text(locale, `config.warning.${code}`));
 }

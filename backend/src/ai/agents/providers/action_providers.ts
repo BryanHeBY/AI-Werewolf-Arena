@@ -1,3 +1,4 @@
+import { text } from "@ai-werewolf-arena/game-text";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionProvider,
@@ -118,9 +119,7 @@ export class BaselineBotActionProvider implements ActionProvider {
       return {
         name: "speak",
         args: {
-          text: isLastWords
-            ? `遗言：我是${request.actorId}号，以上是我最后的信息，供大家参考。`
-            : `我是${request.actorId}号，先听后位发言再判断。`,
+          text: text(this.world.locale, isLastWords ? "fallback.last_words" : "fallback.speech", { actor: request.actorId }),
         },
       };
     }
@@ -139,6 +138,7 @@ export class BaselineBotActionProvider implements ActionProvider {
         request,
         () => this.pickAliveNotSelf(request.actorId),
         (camp) => this.pickAliveByCamp(request.actorId, this.parseCamp(camp)),
+        this.world.locale,
       );
     }
 

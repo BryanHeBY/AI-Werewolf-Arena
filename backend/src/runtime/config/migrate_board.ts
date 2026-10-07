@@ -3,7 +3,13 @@ import { boardDefinitionFromConfig, parseBoardDefinition, type BoardDefinition }
 import { ActionWindow } from "../../core/domain/model";
 import { parseBoardOverride, resolveBoardConfig, type BoardName } from "../scenarios/board_config_resolver";
 
-export interface BoardMigration { definition: BoardDefinition; warnings: string[] }
+export const MIGRATION_WARNING_CODES = [
+  "legacy_defaults_resolved_explicitly", "legacy_single_win_condition_shadowed_by_effective_win_conditions",
+  "legacy_empty_windows_used_default_pre_vote_window", "legacy_windows_with_disabled_hooks_removed_explicitly",
+  "legacy_unused_witch_parameters_removed_explicitly",
+] as const;
+export type MigrationWarningCode = typeof MIGRATION_WARNING_CODES[number];
+export interface BoardMigration { definition: BoardDefinition; warnings: MigrationWarningCode[] }
 
 export function convertLegacyBoard(raw: unknown, boardId: string, legacyBase?: BoardName): BoardMigration {
   if (raw && typeof raw === "object" && "version" in raw) {
@@ -16,7 +22,7 @@ export function convertLegacyBoard(raw: unknown, boardId: string, legacyBase?: B
   const override = parseBoardOverride(raw, (legacyBase ?? boardId) as BoardName);
   if (!override) throw new Error("board_config_legacy_shape_invalid");
   const effective = resolveBoardConfig(base as BoardName, override);
-  const warnings = ["legacy_defaults_resolved_explicitly"];
+  const warnings: MigrationWarningCode[] = ["legacy_defaults_resolved_explicitly"];
   if (override.winCondition && effective.winConditions?.length) warnings.push("legacy_single_win_condition_shadowed_by_effective_win_conditions");
   if (override.selfDestruct?.enabledWindows.length === 0 && effective.hooks.onPreVote) warnings.push("legacy_empty_windows_used_default_pre_vote_window");
   const windowHooks = { [ActionWindow.OnPreVote]: effective.hooks.onPreVote, [ActionWindow.OnDaybreak]: effective.hooks.onDaybreak,

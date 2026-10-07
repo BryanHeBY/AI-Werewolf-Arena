@@ -1,6 +1,4 @@
-import { runMockGame } from "./runtime/run_mock_game";
+import { main } from "./runtime/run_mock_game";
+import { runCli } from "./runtime/cli/display";
 
-runMockGame().catch((error) => {
-  console.error("run-game-smoke failed", error);
-  throw error;
-});
+void runCli(main);

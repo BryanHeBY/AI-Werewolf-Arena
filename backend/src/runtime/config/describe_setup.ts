@@ -1,3 +1,4 @@
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
 import type { ResolvedGameSetup } from "./resolve_game_setup";
 import type { ResolvedAgentRuntimeProfile } from "./contracts";
@@ -10,7 +11,7 @@ function agentSummary(profile: ResolvedAgentRuntimeProfile) {
 }
 
 /** Whitelist only: no provider object, env, command arguments, URL or prompt text. */
-export function describeResolvedSetup(setup: ResolvedGameSetup) {
+export function describeResolvedSetup(setup: ResolvedGameSetup, displayLocale: Locale = setup.context.displayLocale) {
   return {
     board: setup.options.board,
     definitionVersion: setup.boardDefinition?.definition.version ?? null,
@@ -31,6 +32,9 @@ export function describeResolvedSetup(setup: ResolvedGameSetup) {
     context: setup.context,
     executionSupport: { locales: ["zh-CN"], reproducibleSeed: true, mixedTransports: false },
     warnings: setup.warnings,
+    warningMessages: setup.warnings.map(warning => text(displayLocale, "config.warning.locale_prompt_fallback", {
+      path: warning.path, requested: warning.requestedLocale, fallback: warning.fallbackLocale,
+    })),
     audit: setup.audit ? { agent: agentSummary(setup.audit.profile), timeoutMs: setup.audit.timeoutMs, concurrency: setup.audit.concurrency } : null,
     limits: { maxDays: setup.options.maxDays, maxRuntimeMs: setup.options.maxRuntimeMs, turnTimeoutMs: setup.options.llmTimeoutMs },
     catalog: { total: ROLE_DEFINITIONS.length, planned: ROLE_DEFINITIONS.filter(item => item.status === "planned").length },

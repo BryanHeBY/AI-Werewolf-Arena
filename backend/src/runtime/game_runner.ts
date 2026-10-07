@@ -1,3 +1,4 @@
+import { text } from "@ai-werewolf-arena/game-text";
 import { formatErrorDiagnostic } from "../utils/error_diagnostic";
 /** Owns one game's resources, deadline, failure policy, and final replay. */
 import path from "node:path";
@@ -103,12 +104,12 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
       });
       const decisionProvider: ActionProvider = { getAction: request => reproduction.decide(request, agentRuntime!.provider) };
       const provider = new DeadlineAwareActionProvider(decisionProvider, deadlineAtMs);
-      log(`[run_game] start board=${options.board} replay_session_id=${sessionId} record_dir=${replayManager.sessionDir}`, "info");
+      log(`[run_game] start board=${options.board} replay_session_id=${sessionId} record_dir=${replayManager.sessionDir} · ${text(setup.context.displayLocale, "runtime.start")}`, "info");
 
       if (options.trace) {
         heartbeat = setInterval(() => {
           const snapshot = context.phaseManager.getSnapshot();
-          log(`[run_game] heartbeat day=${snapshot.day} phase=${snapshot.phase} gameOver=${snapshot.gameOver} elapsed_ms=${Date.now() - startedAt}`, "muted");
+          log(`[run_game] heartbeat day=${snapshot.day} phase=${snapshot.phase} gameOver=${snapshot.gameOver} elapsed_ms=${Date.now() - startedAt} · ${text(setup.context.displayLocale, "runtime.heartbeat")}`, "muted");
         }, 5000);
       }
       streamTimer = setInterval(() => {
@@ -126,7 +127,7 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
         const elapsed = Date.now() - startedAt;
         if (elapsed >= options.maxRuntimeMs) {
           timedOut = true;
-          log(`[run_game] runtime_timeout elapsed_ms=${elapsed}, stop current run and output partial state`, "warn");
+          log(`[run_game] runtime_timeout elapsed_ms=${elapsed} · ${text(setup.context.displayLocale, "runtime.timeout")}`, "warn");
           break;
         }
         cycle++;
@@ -138,7 +139,7 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
         catch (error) { failures.push(error); reproduction.invalidate(); replayManager.noteReproductionFailure("recording", error); }
         if (failures.length) break;
         const snapshot = context.phaseManager.getSnapshot();
-        log(`[run_game] cycle day=${snapshot.day} phase=${snapshot.phase} gameOver=${snapshot.gameOver} elapsed_ms=${Date.now() - startedAt}`, "info");
+        log(`[run_game] cycle day=${snapshot.day} phase=${snapshot.phase} gameOver=${snapshot.gameOver} elapsed_ms=${Date.now() - startedAt} · ${text(setup.context.displayLocale, "runtime.cycle")}`, "info");
       }
     } catch (error) {
       failures.push(error);

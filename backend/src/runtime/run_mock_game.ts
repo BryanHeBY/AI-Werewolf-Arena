@@ -1,4 +1,5 @@
-import { formatErrorDiagnostic } from "../utils/error_diagnostic";
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import { runCli, takeDisplayArguments, type CliDisplayContext } from "./cli/display";
 import { bootstrapGame } from "../app/bootstrap";
 import { sixPlayerMvpConfig } from "./scenarios/six_player_mvp";
 import { BaselineBotActionProvider } from "../ai/agents/providers/action_providers";
@@ -7,25 +8,21 @@ import { BaselineBotActionProvider } from "../ai/agents/providers/action_provide
  * 本地 mock 快速回归入口：
  * 固定 6 人局 + Baseline 行为，适合作为 smoke 验证。
  */
-export async function runMockGame(): Promise<void> {
+export async function runMockGame(displayLocale: Locale = "zh-CN"): Promise<void> {
   const context = bootstrapGame(sixPlayerMvpConfig);
   const actionProvider = new BaselineBotActionProvider(context.world);
 
   const snapshot = await context.phaseManager.runUntilGameOver(actionProvider, 8);
   const events = context.phaseManager.getEvents();
 
-  console.log("Game snapshot:", snapshot);
-  console.log("Game events:", events.length);
+  console.log(text(displayLocale, "runtime.snapshot"), snapshot);
+  console.log(text(displayLocale, "runtime.mock_events"), events.length);
   console.log(JSON.stringify(events.slice(-8), null, 2));
 }
 
-async function main(): Promise<void> {
-  await runMockGame();
+export async function main(argv: string[], display: CliDisplayContext): Promise<void> {
+  if (takeDisplayArguments(argv, display).length) throw new Error("runtime_cli_option_unknown");
+  await runMockGame(display.locale);
 }
 
-if (require.main === module) {
-  main().catch((error) => {
-    console.error(`run_mock_game failed ${formatErrorDiagnostic(error)}`);
-    process.exitCode = 1;
-  });
-}
+if (require.main === module) void runCli(main);
