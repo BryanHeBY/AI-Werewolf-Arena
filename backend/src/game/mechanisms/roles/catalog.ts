@@ -26,6 +26,7 @@ export class RoleCatalog {
 
   constructor(profiles: RoleProfile[] = DEFAULT_ROLE_PROFILES) {
     for (const profile of profiles) {
+      if (this.profileByRole.has(profile.role)) throw new Error(`role_profile_duplicate: ${profile.role}`);
       this.profileByRole.set(profile.role, profile);
     }
   }
@@ -39,7 +40,8 @@ export class RoleCatalog {
   }
 
   getCamp(role: Role): Camp {
-    return this.get(role)?.camp ?? Camp.Good;
+    const profile = this.require(role);
+    return profile.camp ?? Camp.Good;
   }
 
   label(role: Role): string {
@@ -51,11 +53,18 @@ export class RoleCatalog {
   }
 
   applyRuntime(roleComp: RoleComponent, ctx: RoleInitContext = {}): void {
-    this.get(roleComp.role)?.init?.(roleComp, ctx);
+    const profile = this.require(roleComp.role);
+    profile.init?.(roleComp, ctx);
     roleComp.renderPrompt = () => {
-      const render = this.get(roleComp.role)?.renderPrompt;
-      return render ? render(roleComp) : "你的底牌是【平民】。你没有夜间技能。";
+      const active = this.require(roleComp.role);
+      return active.renderPrompt ? active.renderPrompt(roleComp) : `你的底牌是【${active.label}】。请遵循本板规则。`;
     };
+  }
+
+  require(role: Role): RoleProfile {
+    const profile = this.get(role);
+    if (!profile) throw new Error(`role_profile_not_registered: ${role}`);
+    return profile;
   }
 }
 

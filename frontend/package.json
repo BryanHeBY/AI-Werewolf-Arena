@@ -18,7 +18,8 @@
     "@remotion/player": "^4.0.529",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "remotion": "^4.0.529"
+    "remotion": "^4.0.529",
+    "@ai-werewolf-arena/game-catalog": "workspace:*"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",

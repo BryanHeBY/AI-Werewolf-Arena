@@ -12,6 +12,7 @@
         "@agentclientprotocol/sdk": "^1.5.1",
         "@ai-sdk/anthropic": "^4.0.65",
         "@ai-sdk/openai-compatible": "^3.0.57",
+        "@ai-werewolf-arena/game-catalog": "workspace:*",
         "@ai-werewolf-arena/replay-contract": "workspace:*",
         "@modelcontextprotocol/sdk": "^1.30.1",
         "ai": "^7.0.118",
@@ -28,6 +29,7 @@
       "name": "ai-werewolf-arena-frontend",
       "version": "1.0.0",
       "dependencies": {
+        "@ai-werewolf-arena/game-catalog": "workspace:*",
         "@ai-werewolf-arena/replay-contract": "workspace:*",
         "@remotion/player": "^4.0.529",
         "react": "^19.3.0",
@@ -43,6 +45,10 @@
         "typescript": "^5.9.3",
         "vite": "^8.3.1",
       },
+    },
+    "packages/game-catalog": {
+      "name": "@ai-werewolf-arena/game-catalog",
+      "version": "0.1.0",
     },
     "packages/replay-contract": {
       "name": "@ai-werewolf-arena/replay-contract",
@@ -61,6 +67,8 @@
     "@ai-sdk/provider": ["@ai-sdk/provider@4.0.18", "", { "dependencies": { "json-schema": "^0.4.0" } }, "sha512-+GZJIgz1jk86pwEbb3f1BD2bdoSKyWE4Jg4YUc7NMnMozbWemSKYZcw2F4nMaO5qwsL5A8RmioAKW81YktRpIQ=="],
 
     "@ai-sdk/provider-utils": ["@ai-sdk/provider-utils@5.0.49", "", { "dependencies": { "@ai-sdk/provider": "4.0.18", "@standard-schema/spec": "^1.1.0", "@workflow/serde": "4.1.0", "eventsource-parser": "^3.0.8", "undici": "^7.29.0" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-T+/H8DCvqJoCqLhltVatS7ffA779Iyk/ZZrgNXkrgv51E0n2Cd6eIdCmtwhCGIKqtbTtwCvTmQdAMv5Z8rOGHQ=="],
+
+    "@ai-werewolf-arena/game-catalog": ["@ai-werewolf-arena/game-catalog@workspace:packages/game-catalog"],
 
     "@ai-werewolf-arena/replay-contract": ["@ai-werewolf-arena/replay-contract@workspace:packages/replay-contract"],
 

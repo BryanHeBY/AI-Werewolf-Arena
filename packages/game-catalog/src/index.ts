@@ -1,0 +1,97 @@
+/** Stable catalog shared by configuration, engine metadata and presentation.
+ * Catalog inclusion is not execution permission: the engine requires a registered profile.
+ */
+export const LOCALES = ["zh-CN", "en"] as const;
+export type Locale = typeof LOCALES[number];
+export function isLocale(value: unknown): value is Locale {
+  return typeof value === "string" && (LOCALES as readonly string[]).includes(value);
+}
+export type RoleStatus = "planned" | "rules_frozen" | "implemented" | "verified";
+export interface RoleDefinition {
+  readonly id: string;
+  readonly names: Readonly<Record<Locale, string>>;
+  readonly status: RoleStatus;
+  readonly targetPhase: string;
+  readonly ruleCardRef: string | null;
+  readonly mechanismSummary: string;
+}
+
+export const ROLE_DEFINITIONS = [
+  {"id": "wolf", "names": {"zh-CN": "狼人", "en": "Werewolf"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#wolf", "mechanismSummary": "夜聊、狼刀、自爆"},
+  {"id": "villager", "names": {"zh-CN": "平民", "en": "Villager"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#villager", "mechanismSummary": "发言、投票"},
+  {"id": "seer", "names": {"zh-CN": "预言家", "en": "Seer"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#seer", "mechanismSummary": "阵营查验"},
+  {"id": "witch", "names": {"zh-CN": "女巫", "en": "Witch"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#witch", "mechanismSummary": "解药、毒药"},
+  {"id": "hunter", "names": {"zh-CN": "猎人", "en": "Hunter"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#hunter", "mechanismSummary": "死亡开枪"},
+  {"id": "guard", "names": {"zh-CN": "守卫", "en": "Guard"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#guard", "mechanismSummary": "狼刀保护"},
+  {"id": "idiot", "names": {"zh-CN": "白痴", "en": "Village Idiot"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#idiot", "mechanismSummary": "放逐豁免、投票权"},
+  {"id": "wolf_king", "names": {"zh-CN": "狼王", "en": "Wolf King"}, "status": "planned", "targetPhase": "P5", "ruleCardRef": null, "mechanismSummary": "死亡带人、死因限制"},
+  {"id": "white_wolf_king", "names": {"zh-CN": "白狼王", "en": "White Wolf King"}, "status": "planned", "targetPhase": "P5", "ruleCardRef": null, "mechanismSummary": "自爆带人、流程中断"},
+  {"id": "knight", "names": {"zh-CN": "骑士", "en": "Knight"}, "status": "planned", "targetPhase": "P5", "ruleCardRef": null, "mechanismSummary": "白天决斗"},
+  {"id": "gravekeeper", "names": {"zh-CN": "守墓人", "en": "Gravekeeper"}, "status": "planned", "targetPhase": "P5", "ruleCardRef": null, "mechanismSummary": "放逐后的信息反馈"},
+  {"id": "dreamer", "names": {"zh-CN": "摄梦人", "en": "Dreamer"}, "status": "planned", "targetPhase": "P6", "ruleCardRef": null, "mechanismSummary": "持续关系、保护/伤害"},
+  {"id": "wolf_beauty", "names": {"zh-CN": "狼美人", "en": "Wolf Beauty"}, "status": "planned", "targetPhase": "P6", "ruleCardRef": null, "mechanismSummary": "魅惑、死亡牵连"},
+  {"id": "bear", "names": {"zh-CN": "熊", "en": "Bear"}, "status": "planned", "targetPhase": "P6", "ruleCardRef": null, "mechanismSummary": "邻接的公开反馈"},
+  {"id": "hidden_wolf", "names": {"zh-CN": "隐狼", "en": "Hidden Wolf"}, "status": "planned", "targetPhase": "P6", "ruleCardRef": null, "mechanismSummary": "特殊互认、查验和接刀"},
+  {"id": "gargoyle", "names": {"zh-CN": "石像鬼", "en": "Gargoyle"}, "status": "planned", "targetPhase": "P6", "ruleCardRef": null, "mechanismSummary": "独立狼、身份查验"},
+  {"id": "psychic", "names": {"zh-CN": "通灵师", "en": "Spirit Seer"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "具体身份查验"},
+  {"id": "mirror_girl", "names": {"zh-CN": "魔镜少女", "en": "Mirror Girl"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "具体身份、查验限制"},
+  {"id": "mechanical_wolf", "names": {"zh-CN": "机械狼", "en": "Mechanical Wolf"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "复制技能、资源和接刀"},
+  {"id": "miracle_merchant", "names": {"zh-CN": "奇迹商人", "en": "Miracle Merchant"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "授予限次能力"},
+  {"id": "black_market_merchant", "names": {"zh-CN": "黑市商人", "en": "Black Market Merchant"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "技能交易、反噬"},
+  {"id": "hybrid", "names": {"zh-CN": "混血儿", "en": "Hybrid"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "榜样、独立胜利归属"},
+  {"id": "thief", "names": {"zh-CN": "盗贼", "en": "Thief"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "额外底牌、初始身份选择"},
+  {"id": "shapeshifter", "names": {"zh-CN": "千面人", "en": "Many-Faced One"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "初始身份选择变体"},
+  {"id": "lonely_girl", "names": {"zh-CN": "孤独少女", "en": "Lonely Girl"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "崇拜对象、胜利归属"},
+  {"id": "wild_child", "names": {"zh-CN": "野孩子", "en": "Wild Child"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "榜样死亡、阵营变化"},
+  {"id": "ghost_bride", "names": {"zh-CN": "鬼魂新娘", "en": "Ghost Bride"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "伴侣、第三方目标"},
+  {"id": "cupid", "names": {"zh-CN": "丘比特", "en": "Cupid"}, "status": "planned", "targetPhase": "P8", "ruleCardRef": null, "mechanismSummary": "情侣、殉情和目标变化"},
+  {"id": "cursed_fox", "names": {"zh-CN": "咒狐", "en": "Cursed Fox"}, "status": "planned", "targetPhase": "P8", "ruleCardRef": null, "mechanismSummary": "特殊生存、查验和胜利"},
+  {"id": "demon_hunter", "names": {"zh-CN": "猎魔人", "en": "Demon Hunter"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "夜间对决、伤害资格"},
+  {"id": "pure_white_girl", "names": {"zh-CN": "纯白之女", "en": "Pure White Girl"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "查验与伤害"},
+  {"id": "wolf_witch", "names": {"zh-CN": "狼巫", "en": "Wolf Witch"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "狼队身份查验"},
+  {"id": "evil_knight", "names": {"zh-CN": "恶夜骑士", "en": "Dark Knight"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "夜间免疫、反伤"},
+  {"id": "red_moon_apostle", "names": {"zh-CN": "赤月使徒", "en": "Red Moon Apostle"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "自爆、封夜、特殊死亡"},
+  {"id": "alchemist", "names": {"zh-CN": "炼金魔女", "en": "Alchemist"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "刀口约束、特殊救人流程"},
+  {"id": "raven_claw_wolf", "names": {"zh-CN": "狼鸦之爪", "en": "Raven-Claw Wolf"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "解封、特殊攻击"},
+  {"id": "radiant_count", "names": {"zh-CN": "流光伯爵", "en": "Radiant Count"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "保护范围和限制"},
+  {"id": "eclipse_maid", "names": {"zh-CN": "蚀日侍女", "en": "Eclipse Maid"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "技能吞噬与临时失效"},
+  {"id": "night_noble", "names": {"zh-CN": "夜之贵族", "en": "Night Noble"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "持续夜间状态"},
+  {"id": "fragrant_phantom", "names": {"zh-CN": "寻香魅影", "en": "Fragrant Phantom"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "绑定、牵连、接刀"},
+  {"id": "nightmare", "names": {"zh-CN": "噩梦之影", "en": "Nightmare"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "恐惧、行动封锁"},
+  {"id": "magician", "names": {"zh-CN": "魔术师", "en": "Magician"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "夜间技能目标映射"},
+  {"id": "trickster", "names": {"zh-CN": "诡术师", "en": "Trickster"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "号码映射及公开结果"},
+  {"id": "wolf_sorcerer", "names": {"zh-CN": "狼术师", "en": "Wolf Sorcerer"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "狼队目标/座位映射"},
+  {"id": "order_prince", "names": {"zh-CN": "定序王子", "en": "Order Prince"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "限次重投与发言"},
+  {"id": "time_wolf_consort", "names": {"zh-CN": "蚀时狼妃", "en": "Time-Wolf Consort"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "反弹与封锁"},
+  {"id": "day_scholar", "names": {"zh-CN": "白昼学者", "en": "Day Scholar"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "技能增幅/削弱"},
+  {"id": "night_mentor", "names": {"zh-CN": "寂夜导师", "en": "Night Mentor"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "技能增幅/削弱"},
+  {"id": "debater", "names": {"zh-CN": "杠精", "en": "Debater"}, "status": "planned", "targetPhase": "P8", "ruleCardRef": null, "mechanismSummary": "挑战、辩论、投票资格"},
+  {"id": "silence_elder", "names": {"zh-CN": "禁言长老", "en": "Silencing Elder"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "表达权限与翻译"},
+  {"id": "crow", "names": {"zh-CN": "乌鸦", "en": "Crow"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "额外放逐票"},
+  {"id": "white_cat", "names": {"zh-CN": "白猫", "en": "White Cat"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "延迟死亡"},
+  {"id": "fox_cub", "names": {"zh-CN": "子狐", "en": "Fox Cub"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "迷惑及目标交互"},
+  {"id": "pufferfish", "names": {"zh-CN": "河豚", "en": "Pufferfish"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "投票反击、特殊死亡"},
+  {"id": "warden", "names": {"zh-CN": "典狱长", "en": "Warden"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "秘密交易/背叛决策"},
+  {"id": "awakened_idiot", "names": {"zh-CN": "觉醒愚者", "en": "Awakened Village Idiot"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "秘密之身/伤害替代"},
+  {"id": "awakened_seer", "names": {"zh-CN": "觉醒预言家", "en": "Awakened Seer"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "双目标信息"},
+  {"id": "awakened_wolf_king", "names": {"zh-CN": "觉醒狼王", "en": "Awakened Wolf King"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "多次死亡技能、能力转移"},
+  {"id": "awakened_hidden_wolf", "names": {"zh-CN": "觉醒隐狼", "en": "Awakened Hidden Wolf"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "复制、生效时机、独立狼"},
+  {"id": "awakened_wolf_beauty", "names": {"zh-CN": "觉醒狼美人", "en": "Awakened Wolf Beauty"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "替死/关系结算"},
+  {"id": "awakened_witch", "names": {"zh-CN": "觉醒女巫", "en": "Awakened Witch"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "多次调配、协助者秘密决策"},
+  {"id": "awakened_hunter", "names": {"zh-CN": "觉醒猎人", "en": "Awakened Hunter"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "巡猎及死亡动作"},
+  {"id": "awakened_guard", "names": {"zh-CN": "觉醒守卫", "en": "Awakened Guard"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "特殊保护"},
+  {"id": "awakened_knight", "names": {"zh-CN": "觉醒骑士", "en": "Awakened Knight"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "连续决斗及特殊误中结算"},
+ ] as const satisfies readonly RoleDefinition[];
+
+export type RoleId = typeof ROLE_DEFINITIONS[number]["id"];
+export const ROLE_IDS = ROLE_DEFINITIONS.map(item => item.id);
+export function isRoleId(value: unknown): value is RoleId {
+  return typeof value === "string" && ROLE_DEFINITIONS.some(item => item.id === value);
+}
+export function roleDefinition(id: string): RoleDefinition | undefined {
+  return ROLE_DEFINITIONS.find(item => item.id === id);
+}
+export function roleName(id: string, locale: Locale): string {
+  return roleDefinition(id)?.names[locale] ?? id;
+}
+export const RULESET = { id: "awa_classic", version: "1.0.0" } as const;
