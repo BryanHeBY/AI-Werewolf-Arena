@@ -2,8 +2,10 @@ import { ActionRequest, ToolCall, ToolName } from "../../../core/domain"
 import {
   GameReportBugInput as McpReportBugParams,
   GameSubmitActionInput as McpSubmitActionParams,
-  WEREWOLF_GAME_TOOL_SCHEMA,
+  WEREWOLF_GAME_TOOL_SCHEMA, gameToolProtocol,
 } from "../../agents/game_tool_protocol";
+import type { Locale } from "@ai-werewolf-arena/game-text";
+import { isLocale } from "@ai-werewolf-arena/game-catalog";
 import {
   getActionRequestDay,
   getActionRequestStage,
@@ -49,7 +51,8 @@ export class AcpTurnRegistry {
 
   constructor(
     private readonly onBugReport?: (report: AcpBugReport) => McpBridgeResult | void,
-  ) {}
+    readonly locale: Locale = "zh-CN",
+  ) { if (!isLocale(locale)) throw new Error("acp_task_locale_invalid"); }
 
   openTurn(request: ActionRequest, sessionId: string): AcpPendingTurn {
     if (this.pendingBySession.has(sessionId)) {
@@ -85,7 +88,7 @@ export class AcpTurnRegistry {
   }
 
   getSchema(): typeof WEREWOLF_GAME_TOOL_SCHEMA {
-    return WEREWOLF_GAME_TOOL_SCHEMA;
+    return gameToolProtocol(this.locale).schema;
   }
 
   submitAction(sessionId: string, input: McpSubmitActionParams): McpBridgeResult {

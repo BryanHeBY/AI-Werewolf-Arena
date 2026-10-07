@@ -12,7 +12,7 @@ import {
   ToolValidationRuleRegistry,
 } from "../../../game/mechanisms";
 import { AgentBugReportService } from "../reporting/bug_report_service";
-import { WEREWOLF_GAME_TOOL_SCHEMA, WEREWOLF_GAME_TOOL_SPECS } from "../game_tool_protocol";
+import { gameToolProtocol } from "../game_tool_protocol";
 import { ActionValidationService } from "./action_validation_service";
 import { ToolCallRepairRegistry } from "../../../game/mechanisms";
 import { LlmObserver } from "./llm_observer";
@@ -65,14 +65,15 @@ export class SdkGameToolLoop {
     let timer: NodeJS.Timeout | null = null;
     try {
       const constraints = resolveTurnConstraints(request);
+      const protocol = gameToolProtocol(this.world.locale);
       let selectedAction: ToolCall | null = null;
       const loop = client.runToolLoop<ToolCall>(
         messages,
-        WEREWOLF_GAME_TOOL_SPECS,
+        protocol.specs,
         {
           onToolCall: async (invocation) => {
             if (invocation.name === "get_game_schema") {
-              return { toolResult: WEREWOLF_GAME_TOOL_SCHEMA };
+              return { toolResult: protocol.schema };
             }
             if (invocation.name === PlayerPromptSession.REPORT_BUG_TOOL) {
               if (typeof invocation.args.turn_id === "string" && invocation.args.turn_id !== turnId) {

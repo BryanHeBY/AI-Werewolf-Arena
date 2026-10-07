@@ -1,9 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import {
-  reportGameBugInput,
-  submitGameActionInput,
-} from "../../agents/game_tool_protocol";
+import { gameToolProtocol } from "../../agents/game_tool_protocol";
+import { taskLocale } from "./task_locale";
 
 const endpoint = process.env.WEREWOLF_MCP_CONTROL_URL;
 const token = process.env.WEREWOLF_MCP_TOKEN;
@@ -27,17 +25,19 @@ function result(value: Record<string, unknown>) {
 }
 
 async function main(): Promise<void> {
+  const protocol = gameToolProtocol(taskLocale(process.env));
   const server = new McpServer({ name: "werewolf-game", version: "1.0.0" });
   server.registerTool("get_game_schema", {
-    description: "查询固定的狼人杀 MCP 工具协议。不会返回局内状态；当前回合信息以用户消息为准。",
+    description: protocol.descriptions.get_game_schema,
+    inputSchema: protocol.inputs.get_game_schema.shape,
   }, async () => result(await invoke("get_game_schema")));
   server.registerTool("submit_action", {
-    description: "提交当前回合唯一会生效的游戏行动。普通文本不会产生游戏效果。",
-    inputSchema: submitGameActionInput.shape,
+    description: protocol.descriptions.submit_action,
+    inputSchema: protocol.inputs.submit_action.shape,
   }, async (args) => result(await invoke("submit_action", args)));
   server.registerTool("report_bug", {
-    description: "仅上报明确的规则、流程、状态、日志或可见性矛盾；不会替代本回合必须提交的游戏行动。",
-    inputSchema: reportGameBugInput.shape,
+    description: protocol.descriptions.report_bug,
+    inputSchema: protocol.inputs.report_bug.shape,
   }, async (args) => result(await invoke("report_bug", args)));
   await server.connect(new StdioServerTransport());
 }

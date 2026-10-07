@@ -1,51 +1,45 @@
 import { z } from "zod";
-import { ToolSchema } from "../integrations/llm/transport";
+import type { ToolSchema } from "../integrations/llm/transport";
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
 
-export const getGameSchemaInput = z.object({});
-export const submitGameActionInput = z.object({
-  turn_id: z.string().min(1),
-  action: z.string().min(1),
-  arguments: z.record(z.string(), z.unknown()),
-});
-export const reportGameBugInput = z.object({
-  turn_id: z.string().min(1),
-  category: z.enum(["flow", "rule", "state", "logging", "other"]),
-  severity: z.enum(["low", "medium", "high", "critical"]),
-  message: z.string().min(1).max(300),
-});
-
-export type GameSubmitActionInput = z.infer<typeof submitGameActionInput>;
-export type GameReportBugInput = z.infer<typeof reportGameBugInput>;
-
-export const WEREWOLF_GAME_TOOL_SCHEMA = {
-  protocol_version: "1",
-  tools: {
-    get_game_schema: "{}；查询固定工具协议，不返回局内状态。",
-    submit_action: "{ turn_id, action, arguments }；提交当前回合唯一会生效的行动。",
-    report_bug: "{ turn_id, category, severity, message }；上报明确的引擎矛盾。",
-  },
-} as const;
-
-function parameters(schema: z.ZodType): Record<string, unknown> {
-  return z.toJSONSchema(schema) as Record<string, unknown>;
+/** SDK and MCP derive the same descriptions, parameter schemas and static protocol. */
+export function gameToolProtocol(locale: Locale = "zh-CN") {
+  const inputs = {
+    get_game_schema: z.object({}),
+    submit_action: z.object({
+      turn_id: z.string().min(1).describe(text(locale, "schema.turn_id")),
+      action: z.string().min(1).describe(text(locale, "schema.action")),
+      arguments: z.record(z.string(), z.unknown()).describe(text(locale, "schema.arguments")),
+    }),
+    report_bug: z.object({
+      turn_id: z.string().min(1).describe(text(locale, "schema.turn_id")),
+      category: z.enum(["flow", "rule", "state", "logging", "other"]).describe(text(locale, "schema.category")),
+      severity: z.enum(["low", "medium", "high", "critical"]).describe(text(locale, "schema.severity")),
+      message: z.string().min(1).max(300).describe(text(locale, "schema.report_message")),
+    }),
+  };
+  const schema = { protocol_version: "1", tools: {
+    get_game_schema: text(locale, "schema.game.static_query"),
+    submit_action: text(locale, "schema.game.static_submit"),
+    report_bug: text(locale, "schema.game.static_report"),
+  } };
+  const descriptions = {
+    get_game_schema: text(locale, "schema.game.query"),
+    submit_action: text(locale, "schema.game.submit"),
+    report_bug: text(locale, "schema.game.report"),
+  };
+  const specs: ToolSchema[] = (Object.keys(inputs) as Array<keyof typeof inputs>).map(name => ({
+    name, description: descriptions[name], parameters: z.toJSONSchema(inputs[name], { io: "input", target: "draft-7" }) as Record<string, unknown>,
+  }));
+  return { inputs, descriptions, schema, specs };
 }
 
-/** SDK function-tools 与 ACP MCP 共同使用的玩家工具契约。 */
-export const WEREWOLF_GAME_TOOL_SPECS: ToolSchema[] = [
-  {
-    name: "get_game_schema",
-    description: "查询固定的狼人杀工具协议；不返回局内状态。",
-    parameters: parameters(getGameSchemaInput),
-  },
-  {
-    name: "submit_action",
-    description: "提交当前回合唯一会生效的游戏行动；普通文本不会产生游戏效果。",
-    parameters: parameters(submitGameActionInput),
-  },
-  {
-    name: "report_bug",
-    description: "上报明确的规则、流程、状态、日志或可见性矛盾；不替代必须行动。",
-    parameters: parameters(reportGameBugInput),
-  },
-];
-
+// Compatibility exports retain the original default language and machine contracts.
+const defaultProtocol = gameToolProtocol();
+export const getGameSchemaInput = defaultProtocol.inputs.get_game_schema;
+export const submitGameActionInput = defaultProtocol.inputs.submit_action;
+export const reportGameBugInput = defaultProtocol.inputs.report_bug;
+export type GameSubmitActionInput = z.infer<typeof submitGameActionInput>;
+export type GameReportBugInput = z.infer<typeof reportGameBugInput>;
+export const WEREWOLF_GAME_TOOL_SCHEMA = defaultProtocol.schema;
+export const WEREWOLF_GAME_TOOL_SPECS = defaultProtocol.specs;

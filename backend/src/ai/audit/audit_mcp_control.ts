@@ -13,6 +13,7 @@ export class AuditMcpControlServer {
       tokenEnvironmentName: "AUDIT_MCP_TOKEN",
       sessionNotReadyError: "session_not_ready",
       invalidRequestPrefix: "invalid_audit_mcp_request",
+      locale: registry.locale,
       dispatch: (sessionId, tool, args) => this.dispatch(sessionId, tool, args),
     });
   }

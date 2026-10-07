@@ -41,7 +41,7 @@ export class AcpAuditAgentExecutor implements AuditAgentExecutor {
     options: AgentTurnOptions,
   ): Promise<AuditSubmission | null> {
     if (this.closed || options.timeoutMs <= 0) return null;
-    const registry = new AuditToolTurnRegistry();
+    const registry = new AuditToolTurnRegistry(context.locale);
     const workspace = path.join(
       this.options.workspaceRoot,
       `${String(context.taskName).replace(/[^a-zA-Z0-9_-]/g, "_")}-${++this.nextSession}`,

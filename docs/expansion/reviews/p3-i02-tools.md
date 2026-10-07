@@ -1,0 +1,20 @@
+# P3 I02 工具协议交叉审查
+
+日期：2026-10-08。范围：游戏/审计SDK与MCP共享逐任务语言协议、参数描述、sidecar语言传递、源码fingerprint。
+
+| 代理 | 首轮发现 | 修正及复查 |
+| --- | --- | --- |
+| `review_scope_rules` R/T | 工具约束、会话和证据隔离没有行为变化 | 独立运行6测试130断言；原文、并发locale及固定code一致，0阻断 |
+| `review_arch_tests` A/T | schema比较不应过滤约束差异 | 删除旧过滤helper，MCP输入schema与SDK参数完整toEqual；独立6测试130断言，0阻断 |
+| `review_i18n_delivery` L/D | home遮蔽后workspace共享包symlink不可达 | 本地provider仅追加game-catalog/game-text只读目录，原件0600备份；四条真实bwrap MCP验证及私有路径不可达探针复查通过，0阻断 |
+
+## 验证
+
+- 后端release237测试0失败；类型、依赖、边界和烟测通过。
+- 四个并发MCP子进程：游戏/审计×zh-CN/en；检查完整tool schema/所有参数说明、静态查询、过期turn和未授权证据拒绝。
+- 四项实际安装SDK的本地HTTP请求：游戏/审计×两语言；实际发送描述/参数与共用builder一致。
+- 额外四条实际bwrap内MCP通路：合成认证{}、0600；仅公共源码/依赖/三个公共包/pkg.json最小只读挂载。公共包不可写，运行配置、记录、实际存在的其他玩家canary与宿主认证不可读。临时玩家workspace和合成认证已清理。
+- 输入schema使用draft-7/input语义；notes/missing_info默认空数组仍可省略；没有改变机器字段、参数限制或游戏规则。
+- 无外部模型调用，未提交本地认证/配置。暂未开放英文整局，提示/拒绝、终端、审计文案继续实施。
+
+三路复查剩余阻断：0。

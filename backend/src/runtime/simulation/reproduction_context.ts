@@ -22,7 +22,7 @@ export async function currentEngineVersion(): Promise<EngineVersion> {
       else if (entry.name.endsWith(".ts")) { hash.update(path.relative(root, file).replaceAll(path.sep, "/")); hash.update("\0"); hash.update(await readFile(file)); hash.update("\0"); }
     }
   };
-  for (const directory of ["backend/src/core", "backend/src/game", "backend/src/app", "packages/game-catalog/src"]) await walk(path.join(root, directory));
+  for (const directory of ["backend/src/core", "backend/src/game", "backend/src/app", "packages/game-catalog/src", "packages/game-text/src"]) await walk(path.join(root, directory));
   const lockHash = createHash("sha256").update(await readFile(path.join(root, "bun.lock"))).digest("hex");
   let commit: string | undefined;
   try {

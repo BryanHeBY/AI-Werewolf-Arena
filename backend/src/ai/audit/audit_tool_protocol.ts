@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import { isLocale } from "@ai-werewolf-arena/game-catalog";
 import { ToolSchema } from "../integrations/llm/transport";
 
 export type AuditSeverity = "low" | "medium" | "high" | "critical";
@@ -28,75 +30,57 @@ export interface AuditSummaryResult {
 export type AuditSubmission = AuditInspectionResult | AuditSummaryResult;
 
 export interface AuditToolContext {
+  locale?: Locale;
   mode: "inspect" | "summarize";
   taskName: string;
   source: string;
   payload: Record<string, unknown>;
 }
 
-export const getAuditContextInput = z.object({
-  turn_id: z.string().min(1),
-});
-
-export const getAuditSchemaInput = z.object({});
-
-const findingInput = z.object({
-  severity: z.enum(["low", "medium", "high", "critical"]),
-  category: z.enum(["flow", "rule", "state", "logging", "other"]),
-  message: z.string().min(1).max(300),
-  evidence: z.array(z.number().int().positive()).max(20),
-});
-
-export const submitAuditFindingsInput = z.object({
-  turn_id: z.string().min(1),
-  findings: z.array(findingInput).max(5),
-  notes: z.array(z.string().min(1).max(240)).max(3).default([]),
-  missing_info: z.array(z.string().min(1).max(240)).max(3).default([]),
-});
-
-export const submitAuditSummaryInput = z.object({
-  turn_id: z.string().min(1),
-  markdown: z.string().min(1).max(12_000),
-});
-
-export const AUDIT_TOOL_SCHEMA = {
-  protocol_version: "1",
-  tools: {
-    get_audit_schema: "{}；查询固定审计工具协议，不返回任何复盘内容。",
-    get_audit_context: "{ turn_id }；读取当前任务唯一可见的结构化审计上下文。",
-    submit_audit_findings:
-      "{ turn_id, findings, notes, missing_info }；inspect 模式提交结构化发现。",
-    submit_audit_summary: "{ turn_id, markdown }；summarize 模式提交最终 Markdown。",
-  },
-} as const;
-
-function jsonParameters(schema: z.ZodType): Record<string, unknown> {
-  return z.toJSONSchema(schema) as Record<string, unknown>;
+export function auditToolProtocol(locale: Locale = "zh-CN") {
+  const turnId = z.string().min(1).describe(text(locale, "schema.turn_id"));
+  const findingInput = z.object({
+    severity: z.enum(["low", "medium", "high", "critical"]).describe(text(locale, "schema.severity")),
+    category: z.enum(["flow", "rule", "state", "logging", "other"]).describe(text(locale, "schema.category")),
+    message: z.string().min(1).max(300).describe(text(locale, "schema.audit.finding_message")),
+    evidence: z.array(z.number().int().positive()).max(20).describe(text(locale, "schema.audit.evidence")),
+  });
+  const inputs = {
+    get_audit_schema: z.object({}),
+    get_audit_context: z.object({ turn_id: turnId }),
+    submit_audit_findings: z.object({
+      turn_id: turnId,
+      findings: z.array(findingInput).max(5).describe(text(locale, "schema.audit.finding_list")),
+      notes: z.array(z.string().min(1).max(240).describe(text(locale, "schema.audit.note_item"))).max(3).default([]).describe(text(locale, "schema.audit.notes")),
+      missing_info: z.array(z.string().min(1).max(240).describe(text(locale, "schema.audit.missing_item"))).max(3).default([]).describe(text(locale, "schema.audit.missing_info")),
+    }),
+    submit_audit_summary: z.object({ turn_id: turnId, markdown: z.string().min(1).max(12_000).describe(text(locale, "schema.audit.markdown")) }),
+  };
+  const descriptions = {
+    get_audit_schema: text(locale, "schema.audit.query"),
+    get_audit_context: text(locale, "schema.audit.context"),
+    submit_audit_findings: text(locale, "schema.audit.findings"),
+    submit_audit_summary: text(locale, "schema.audit.summary"),
+  };
+  const schema = { protocol_version: "1", tools: {
+    get_audit_schema: text(locale, "schema.audit.static_query"),
+    get_audit_context: text(locale, "schema.audit.static_context"),
+    submit_audit_findings: text(locale, "schema.audit.static_findings"),
+    submit_audit_summary: text(locale, "schema.audit.static_summary"),
+  } };
+  const specs: ToolSchema[] = (Object.keys(inputs) as Array<keyof typeof inputs>).map(name => ({ name,
+    description: descriptions[name], parameters: z.toJSONSchema(inputs[name], { io: "input", target: "draft-7" }) as Record<string, unknown>,
+  }));
+  return { inputs, descriptions, schema, specs };
 }
 
-/** SDK function tools 与 ACP MCP server 共用这些名字、说明和参数约束。 */
-export const AUDIT_TOOL_SPECS: ToolSchema[] = [
-  {
-    name: "get_audit_schema",
-    description: "查询固定审计工具协议，不返回任何复盘内容。",
-    parameters: jsonParameters(getAuditSchemaInput),
-  },
-  {
-    name: "get_audit_context",
-    description: "读取当前审计 turn 被授权看到的结构化上下文，不返回其他玩家或任务的数据。",
-    parameters: jsonParameters(getAuditContextInput),
-  },
-  {
-    name: "submit_audit_findings",
-    description: "提交本审计任务的结构化 findings；只能在 inspect 模式调用一次。",
-    parameters: jsonParameters(submitAuditFindingsInput),
-  },
-  {
-    name: "submit_audit_summary",
-    description: "提交最终 Markdown 审计报告；只能在 summarize 模式调用一次。",
-    parameters: jsonParameters(submitAuditSummaryInput),
-  },
-];
+const defaultProtocol = auditToolProtocol();
+export const getAuditContextInput = defaultProtocol.inputs.get_audit_context;
+export const getAuditSchemaInput = defaultProtocol.inputs.get_audit_schema;
+export const submitAuditFindingsInput = defaultProtocol.inputs.submit_audit_findings;
+export const submitAuditSummaryInput = defaultProtocol.inputs.submit_audit_summary;
+export const AUDIT_TOOL_SCHEMA = defaultProtocol.schema;
+export const AUDIT_TOOL_SPECS = defaultProtocol.specs;
 
 export type AuditToolResult =
   | { ok: true; accepted?: true; context?: Record<string, unknown> }
@@ -115,6 +99,8 @@ export class AuditToolTurnRegistry {
   private pending: PendingAuditTurn | null = null;
   private nextTurn = 0;
 
+  constructor(readonly locale: Locale = "zh-CN") { if (!isLocale(locale)) throw new Error("audit_task_locale_invalid"); }
+
   openTurn(context: AuditToolContext, sessionId: string): {
     turnId: string;
     result: Promise<AuditSubmission | null>;
@@ -130,7 +116,7 @@ export class AuditToolTurnRegistry {
   }
 
   getSchema(): typeof AUDIT_TOOL_SCHEMA {
-    return AUDIT_TOOL_SCHEMA;
+    return auditToolProtocol(this.locale).schema;
   }
 
   getContext(sessionId: string, input: unknown): AuditToolResult {

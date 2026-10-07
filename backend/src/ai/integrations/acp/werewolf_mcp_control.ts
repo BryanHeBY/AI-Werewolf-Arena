@@ -22,6 +22,7 @@ export class WerewolfMcpControlServer {
       tokenEnvironmentName: "WEREWOLF_MCP_TOKEN",
       sessionNotReadyError: "session_not_ready",
       invalidRequestPrefix: "invalid_mcp_control_request",
+      locale: registry.locale,
       dispatch: (sessionId, tool, args) => this.dispatch(sessionId, tool, args),
     });
   }

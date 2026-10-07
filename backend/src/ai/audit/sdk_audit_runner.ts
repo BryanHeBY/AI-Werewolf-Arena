@@ -2,7 +2,7 @@ import { ToolLoopClient } from "../integrations/llm/transport";
 import { AgentTurnOptions } from "../runtime/agent_turn_executor";
 import { AuditAgentExecutor } from "./contracts";
 import { auditTurnPrompt } from "./prompts";
-import { AUDIT_TOOL_SPECS, AuditSubmission, AuditToolContext, AuditToolResult, AuditToolTurnRegistry } from "./audit_tool_protocol";
+import { auditToolProtocol, AuditSubmission, AuditToolContext, AuditToolResult, AuditToolTurnRegistry } from "./audit_tool_protocol";
 function auditSystemPrompt(): string {
   return [
     "你是狼人杀复盘审计智能体。唯一职责是从被授权的结构化上下文中发现可验证的问题。",
@@ -25,7 +25,8 @@ export class SdkAuditAgentExecutor implements AuditAgentExecutor {
     context: AuditToolContext,
     options: AgentTurnOptions,
   ): Promise<AuditSubmission | null> {
-    const registry = new AuditToolTurnRegistry();
+    const registry = new AuditToolTurnRegistry(context.locale);
+    const protocol = auditToolProtocol(registry.locale);
     const sessionId = `sdk-audit-${++this.nextSession}`;
     const turn = registry.openTurn(context, sessionId);
     const controller = new AbortController();
@@ -36,7 +37,7 @@ export class SdkAuditAgentExecutor implements AuditAgentExecutor {
           { role: "system", content: auditSystemPrompt() },
           { role: "user", content: auditTurnPrompt(turn.turnId, context.mode) },
         ],
-        AUDIT_TOOL_SPECS,
+        protocol.specs,
         {
           onToolCall: async (invocation) => {
             if (invocation.name === "get_audit_schema") {

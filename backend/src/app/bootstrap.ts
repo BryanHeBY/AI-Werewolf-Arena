@@ -19,6 +19,7 @@ import { World } from "../core/domain/world";
 import { PhaseManager } from "../game/engine/phase_manager";
 import { ToolGateway } from "../game/gateway/tool_gateway";
 import { createRandom, shuffled, type RandomSource } from "../core/domain/random";
+import type { Locale } from "@ai-werewolf-arena/game-catalog";
 
 /**
  * bootstrap 负责把“配置”装配成“可运行对局上下文”。
@@ -33,6 +34,7 @@ export interface BootstrapResult {
 }
 
 export interface BootstrapOptions {
+  locale?: Locale;
   playerNames?: Readonly<Record<string, string>>;
   random?: RandomSource;
   /** Controller fixture only: exact deck multiplicities are still validated. */
@@ -43,7 +45,7 @@ export interface BootstrapOptions {
  * 按板子配置完成一次完整引擎装配，返回可直接运行的上下文对象。
  */
 export function bootstrapGame(config: BoardConfig, options: BootstrapOptions = {}): BootstrapResult {
-  const world = new World();
+  const world = new World(options.locale);
   const random = options.random ?? createRandom();
   // 先完成实体与组件初始化，再创建系统与管理器，避免空引用。
   const playerIds = createPlayers(world, config, options, random);

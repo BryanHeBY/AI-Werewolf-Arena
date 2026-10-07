@@ -1,10 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import {
-  getAuditContextInput,
-  submitAuditFindingsInput,
-  submitAuditSummaryInput,
-} from "./audit_tool_protocol";
+import { auditToolProtocol } from "./audit_tool_protocol";
+import { taskLocale } from "../integrations/acp/task_locale";
 
 const endpoint = process.env.AUDIT_MCP_CONTROL_URL;
 const token = process.env.AUDIT_MCP_TOKEN;
@@ -28,21 +25,23 @@ function result(value: Record<string, unknown>) {
 }
 
 async function main(): Promise<void> {
+  const protocol = auditToolProtocol(taskLocale(process.env));
   const server = new McpServer({ name: "werewolf-audit", version: "1.0.0" });
   server.registerTool("get_audit_schema", {
-    description: "查询固定审计工具协议，不返回任何复盘内容。",
+    description: protocol.descriptions.get_audit_schema,
+    inputSchema: protocol.inputs.get_audit_schema.shape,
   }, async () => result(await invoke("get_audit_schema")));
   server.registerTool("get_audit_context", {
-    description: "读取当前审计 turn 唯一被授权看到的结构化上下文。",
-    inputSchema: getAuditContextInput.shape,
+    description: protocol.descriptions.get_audit_context,
+    inputSchema: protocol.inputs.get_audit_context.shape,
   }, async (args) => result(await invoke("get_audit_context", args)));
   server.registerTool("submit_audit_findings", {
-    description: "inspect 模式提交结构化 findings、notes 与 missing_info。",
-    inputSchema: submitAuditFindingsInput.shape,
+    description: protocol.descriptions.submit_audit_findings,
+    inputSchema: protocol.inputs.submit_audit_findings.shape,
   }, async (args) => result(await invoke("submit_audit_findings", args)));
   server.registerTool("submit_audit_summary", {
-    description: "summarize 模式提交最终 Markdown 审计报告。",
-    inputSchema: submitAuditSummaryInput.shape,
+    description: protocol.descriptions.submit_audit_summary,
+    inputSchema: protocol.inputs.submit_audit_summary.shape,
   }, async (args) => result(await invoke("submit_audit_summary", args)));
   await server.connect(new StdioServerTransport());
 }

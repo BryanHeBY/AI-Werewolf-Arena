@@ -2,6 +2,7 @@ import { randomBytes } from "node:crypto";
 import { createServer, IncomingMessage, ServerResponse } from "node:http";
 import { AddressInfo } from "node:net";
 import { AcpMcpControlServer, AcpMcpServerConfig } from "./acp_mcp_bridge";
+import type { Locale } from "@ai-werewolf-arena/game-catalog";
 
 export interface LoopbackMcpControlOptions {
   serverName: string;
@@ -9,6 +10,7 @@ export interface LoopbackMcpControlOptions {
   tokenEnvironmentName: string;
   sessionNotReadyError: string;
   invalidRequestPrefix: string;
+  locale?: Locale;
   dispatch(sessionId: string, tool: unknown, args: unknown): unknown | Promise<unknown>;
 }
 
@@ -44,6 +46,7 @@ export class LoopbackMcpControlServer implements AcpMcpControlServer {
       env: [
         { name: this.options.controlUrlEnvironmentName, value: this.endpoint },
         { name: this.options.tokenEnvironmentName, value: this.token },
+        { name: "AWA_TASK_LOCALE", value: this.options.locale ?? "zh-CN" },
       ],
     };
   }
@@ -104,4 +107,3 @@ export class LoopbackMcpControlServer implements AcpMcpControlServer {
 function isFailure(result: unknown): boolean {
   return !!result && typeof result === "object" && (result as { ok?: unknown }).ok === false;
 }
-

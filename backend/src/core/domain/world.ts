@@ -2,12 +2,16 @@ import { EntityId, Role } from "./model";
 import { COMPONENT, ComponentName } from "./components/names";
 import { AliveComponent } from "./components/alive";
 import { RoleComponent } from "./components/role";
+import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
 
 /**
  * World 是 ECS 内存状态容器。
  * 设计目标：保持结构简单、读写明确，所有系统都基于该容器进行组件查询与变更。
  */
 export class World {
+  constructor(readonly locale: Locale = "zh-CN") {
+    if (!isLocale(locale)) throw new Error("game_locale_invalid");
+  }
   private nextId: EntityId = 1;
   private entities: Set<EntityId> = new Set();
   private stores: Map<ComponentName, Map<EntityId, unknown>> = new Map();
