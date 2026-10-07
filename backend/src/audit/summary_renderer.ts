@@ -1,3 +1,5 @@
+import { auditHeadings, text, type MessageKey } from "@ai-werewolf-arena/game-text";
+import { auditInline, auditReportStats, auditSummaryHeader } from "./summary_format";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
 import type { AuditAgentExecutor } from "../ai/audit/contracts";
 import { AuditAgentFinding } from "./payload_builder";
@@ -44,7 +46,7 @@ export class AuditSummaryRenderer {
               started_at: manifest.started_at,
               ended_at: manifest.ended_at,
             },
-            report_stats: this.reportStats(reports),
+            report_stats: auditReportStats(reports),
             findings: merged.findings,
             pipeline: {
               failed_agents: merged.failedAgents,
@@ -55,7 +57,8 @@ export class AuditSummaryRenderer {
         { timeoutMs: this.timeoutMs },
       );
       const markdown = result?.kind === "summary" ? result.markdown.trim() : "";
-      return markdown && this.evidencePolicy.validatesMarkdown(markdown, allowed)
+      const visible = new Set(merged.findings.flatMap(finding => finding.evidence).filter(sequence => allowed.has(sequence)));
+      return markdown && this.evidencePolicy.validatesMarkdown(markdown, visible, this.locale)
         ? markdown
         : null;
     } catch {
@@ -68,54 +71,32 @@ export class AuditSummaryRenderer {
     reports: ReplayDebugReport[],
     merged: MergedAuditFindings,
   ): string {
-    const stats = this.reportStats(reports);
-    const lines = [
-      `# Debug Summary (${manifest.session_id})`, "", "## Session",
-      `- board: ${manifest.board}`,
-      `- winner: ${manifest.winner ?? "none"}`,
-      `- finish_reason: ${manifest.finish_reason}`,
-      `- started_at: ${manifest.started_at}`,
-      `- ended_at: ${manifest.ended_at}`, "", "## Bug Report Stats",
-      `- total: ${stats.total}`,
-      `- critical: ${stats.critical}`,
-      `- high: ${stats.high}`,
-      `- medium: ${stats.medium}`,
-      `- low: ${stats.low}`, "", "## Findings",
-    ];
-    if (!merged.findings.length) lines.push("- none");
+    const headings = auditHeadings(this.locale);
+    const lines = auditSummaryHeader(manifest, reports, this.locale);
+    if (!merged.findings.length) lines.push(`- ${text(this.locale, "common.none")}`);
     else for (const finding of merged.findings) lines.push(this.findingLine(finding));
     lines.push("");
     if (merged.findings.length) {
-      lines.push("## TODO");
+      lines.push(`## ${headings.todo}`);
       merged.findings.forEach((finding, index) => {
-        lines.push(`- [ ] [P${index + 1}] 排查 ${finding.category} 问题：${finding.message}`);
+        lines.push(`- [ ] [P${index + 1}] ${text(this.locale, "audit.todo", { category: text(this.locale, `audit.category.${finding.category}` as MessageKey), message: auditInline(finding.message) })}`);
       });
     } else {
-      lines.push("## Conclusion", "- 本局未发现可执行问题，无需新增调试任务。");
+      lines.push(`## ${headings.conclusion}`, `- ${text(this.locale, "audit.conclusion")}`);
     }
-    lines.push("", "## Debug Pipeline");
-    lines.push(`- agents_total: ${merged.totalAgents}`);
-    lines.push(`- agents_failed: ${merged.failedAgents.length}`);
-    if (merged.failedAgents.length) lines.push(`- failed_list: ${merged.failedAgents.join(", ")}`);
+    lines.push("", `## ${headings.pipeline}`);
+    lines.push(`- ${text(this.locale, "audit.field.agents_total")}: ${merged.totalAgents}`);
+    lines.push(`- ${text(this.locale, "audit.field.agents_failed")}: ${merged.failedAgents.length}`);
+    if (merged.failedAgents.length) lines.push(`- ${text(this.locale, "audit.field.failed_list")}: ${auditInline(merged.failedAgents.join(", "))}`);
     if (merged.missingInfo.length) {
-      lines.push("- missing_info:");
-      for (const note of merged.missingInfo) lines.push(`- ${note}`);
+      lines.push(`- ${text(this.locale, "audit.field.missing")}:`);
+      for (const note of merged.missingInfo) lines.push(`- ${auditInline(note)}`);
     }
     return lines.join("\n");
   }
 
-  private reportStats(reports: ReplayDebugReport[]) {
-    return {
-      total: reports.length,
-      critical: reports.filter((report) => report.severity === "critical").length,
-      high: reports.filter((report) => report.severity === "high").length,
-      medium: reports.filter((report) => report.severity === "medium").length,
-      low: reports.filter((report) => report.severity === "low").length,
-    };
-  }
-
   private findingLine(finding: AuditAgentFinding): string {
     const evidence = finding.evidence.length ? ` evidence=${finding.evidence.join(",")}` : "";
-    return `- [${finding.severity.toUpperCase()}][${finding.category}] ${finding.message}${evidence} (source=${finding.source})`;
+    return `- [${finding.severity.toUpperCase()}][${auditInline(finding.category)}] ${auditInline(finding.message)}${evidence} (source=${auditInline(finding.source)})`;
   }
 }

@@ -329,8 +329,8 @@ describe("SessionRecordManager", () => {
       path.join(sessionDir, "debug_summary.md"),
       "utf-8",
     );
-    expect(debugSummary).toContain("## Session");
-    expect(debugSummary).toContain("## TODO");
+    expect(debugSummary).toContain("## 对局");
+    expect(debugSummary).toContain("## 待办");
   });
 
   test("should not emit TODO section when there are no debug reports", async () => {
@@ -355,10 +355,10 @@ describe("SessionRecordManager", () => {
       path.join(root, "session_test_no_bug", "debug_summary.md"),
       "utf-8",
     );
-    expect(summary).toContain("## Observations");
+    expect(summary).toContain("## 观察记录");
     expect(summary).toContain("对局事件规模");
-    expect(summary).toContain("## Conclusion");
-    expect(summary).not.toContain("## TODO");
+    expect(summary).toContain("## 结论");
+    expect(summary).not.toContain("## 待办");
   });
 
   test("should emit TODO from auto scan even when report_bug is empty", async () => {
@@ -403,7 +403,7 @@ describe("SessionRecordManager", () => {
       path.join(root, "session_test_auto_scan", "debug_summary.md"),
       "utf-8",
     );
-    expect(summary).toContain("## TODO");
+    expect(summary).toContain("## 待办");
     expect(summary).toContain("首日出现狼人自爆");
   });
 
@@ -442,10 +442,10 @@ describe("SessionRecordManager", () => {
       path.join(root, "session_test_noise_report", "debug_summary.md"),
       "utf-8",
     );
-    expect(summary).toContain("- total: 1");
-    expect(summary).toContain("- actionable: 0");
-    expect(summary).not.toContain("## TODO");
-    expect(summary).toContain("## Conclusion");
+    expect(summary).toContain("- 总数: 1");
+    expect(summary).toContain("- 待核查上报: 0");
+    expect(summary).not.toContain("## 待办");
+    expect(summary).toContain("## 结论");
   });
 
   test("should not promote unverified flow reports without timeline anomalies", async () => {
@@ -504,10 +504,10 @@ describe("SessionRecordManager", () => {
       path.join(root, "session_test_unverified_flow", "debug_summary.md"),
       "utf-8",
     );
-    expect(summary).toContain("- total: 1");
-    expect(summary).toContain("- actionable: 0");
-    expect(summary).not.toContain("## TODO");
-    expect(summary).toContain("## Conclusion");
+    expect(summary).toContain("- 总数: 1");
+    expect(summary).toContain("- 待核查上报: 0");
+    expect(summary).not.toContain("## 待办");
+    expect(summary).toContain("## 结论");
   });
 
   test("should detect timeline metadata mismatch in deterministic summary when reports are empty", async () => {
@@ -550,7 +550,7 @@ describe("SessionRecordManager", () => {
       path.join(root, "session_test_metadata_mismatch", "debug_summary.md"),
       "utf-8",
     );
-    expect(summary).toContain("## TODO");
+    expect(summary).toContain("## 待办");
     expect(summary).toContain("day<=0");
   });
 

@@ -1,23 +1,14 @@
+import { auditHeadings, renderMessage, text, type MessageKey } from "@ai-werewolf-arena/game-text";
+import { auditInline, auditSummaryHeader } from "./summary_format";
 /** Render a deterministic summary when AI audit is unavailable or unnecessary. */
 import type { ReplayDebugReport } from "../recording/contracts";
 import type { BuildDebugSummaryInput } from "./contracts";
 import { collectObservations, filterActionableReports, scanEventsForPotentialIssues, scanPlayerTimelineMetadataIssues } from "./deterministic_checks";
 
-function countBySeverity(reports: ReplayDebugReport[]): Record<string, number> {
-  const out: Record<string, number> = {
-    critical: 0,
-    high: 0,
-    medium: 0,
-    low: 0,
-  };
-  for (const report of reports) {
-    out[report.severity] = (out[report.severity] ?? 0) + 1;
-  }
-  return out;
-}
-
 export function buildFallbackSummary(input: BuildDebugSummaryInput): string {
   const { manifest, reports } = input;
+  const locale = input.displayLocale ?? input.locale ?? "zh-CN";
+  const headings = auditHeadings(locale);
   const actionableReports = filterActionableReports(
     reports,
     input.publicEvents ?? [],
@@ -34,34 +25,13 @@ export function buildFallbackSummary(input: BuildDebugSummaryInput): string {
       message: r.message,
       evidence: Array.isArray(r.evidence_event_seq) ? r.evidence_event_seq : [],
     })),
-    ...autoFindings,
-    ...metadataFindings,
+    ...[...autoFindings, ...metadataFindings].map(item => ({ ...item, message: renderMessage(locale, item.message) })),
   ];
   const observations = collectObservations(input);
-  const counts = countBySeverity(reports);
-  const lines: string[] = [
-    `# Debug Summary (${manifest.session_id})`,
-    "",
-    "## Session",
-    `- board: ${manifest.board}`,
-    `- winner: ${manifest.winner ?? "none"}`,
-    `- finish_reason: ${manifest.finish_reason}`,
-    `- started_at: ${manifest.started_at}`,
-    `- ended_at: ${manifest.ended_at}`,
-    "",
-    "## Bug Report Stats",
-    `- total: ${reports.length}`,
-    `- actionable: ${actionableReports.length}`,
-    `- critical: ${counts.critical}`,
-    `- high: ${counts.high}`,
-    `- medium: ${counts.medium}`,
-    `- low: ${counts.low}`,
-    "",
-    "## Findings",
-  ];
+  const lines = auditSummaryHeader(manifest, reports, locale, actionableReports.length);
 
   if (allFindings.length === 0) {
-    lines.push("- none");
+    lines.push(`- ${text(locale, "common.none")}`);
   } else {
     for (const report of allFindings) {
       const evidence =
@@ -69,25 +39,25 @@ export function buildFallbackSummary(input: BuildDebugSummaryInput): string {
           ? ` evidence=${report.evidence.join(",")}`
           : "";
       lines.push(
-        `- [${report.severity.toUpperCase()}][${report.category}] day=${report.day} phase=${report.phase} actor=${report.actorId}: ${report.message}${evidence}`,
+        `- [${report.severity.toUpperCase()}][${auditInline(report.category)}] day=${report.day} phase=${auditInline(report.phase)} actor=${report.actorId}: ${auditInline(report.message)}${evidence}`,
       );
     }
   }
 
-  lines.push("", "## Observations");
+  lines.push("", `## ${headings.observations}`);
   if (observations.length === 0) {
-    lines.push("- none");
+    lines.push(`- ${text(locale, "common.none")}`);
   } else {
     for (const obs of observations) {
       const evidence =
         obs.evidence && obs.evidence.length > 0
           ? ` evidence=${obs.evidence.join(",")}`
           : "";
-      lines.push(`- ${obs.title}: ${obs.detail}${evidence}`);
+      lines.push(`- ${text(locale, obs.title)}: ${renderMessage(locale, obs.detail)}${evidence}`);
     }
   }
 
-  lines.push("", "## TODO");
+  lines.push("", `## ${headings.todo}`);
   if (allFindings.length > 0) {
     allFindings
       .slice()
@@ -97,14 +67,15 @@ export function buildFallbackSummary(input: BuildDebugSummaryInput): string {
       })
       .forEach((report, idx) => {
         lines.push(
-          `- [ ] [P${idx + 1}] 排查 ${report.category} 问题：${report.message}（actor=${report.actorId}, day=${report.day}, phase=${report.phase}）`,
+          `- [ ] [P${idx + 1}] ${text(locale, "audit.todo", { category: text(locale, `audit.category.${report.category}` as MessageKey), message: auditInline(report.message) })} (actor=${report.actorId}, day=${report.day}, phase=${auditInline(report.phase)})`,
         );
       });
   } else {
     // 批量运行场景：无问题时避免输出待办噪声，给出明确“无需处理”结论。
     lines.pop(); // remove "## TODO"
-    lines.push("", "## Conclusion", "- 本局未发现可执行问题，无需新增调试任务。");
+    lines.push("", `## ${headings.conclusion}`, `- ${text(locale, "audit.conclusion")}`);
   }
 
+  lines.push("", `## ${headings.pipeline}`, `- ${text(locale, "audit.pipeline.fallback")}`);
   return lines.join("\n");
 }

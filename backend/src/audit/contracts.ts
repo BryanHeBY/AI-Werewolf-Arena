@@ -1,3 +1,4 @@
+import type { MessageKey, MessageRef } from "@ai-werewolf-arena/game-text";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
 import type { ReplayDebugReport, ReplayLogicOp, ReplayManifest, ReplayPlayerView, ReplayPublicEvent } from "../recording/contracts";
 
@@ -15,17 +16,19 @@ export interface BuildDebugSummaryInput {
 }
 
 export interface SummaryObservation {
-  title: string;
-  detail: string;
+  code: "event_counts" | "process_counts" | "actions" | "invalid_day" | "request_mismatch";
+  title: MessageKey;
+  detail: MessageRef;
   evidence?: number[];
 }
 
 export interface DeterministicFinding {
+  code: "first_day_blast" | "guard_mention" | "potion_claim" | "invalid_day" | "request_mismatch";
   severity: ReplayDebugReport["severity"];
   category: ReplayDebugReport["category"];
   day: number;
   phase: string;
   actorId: number;
-  message: string;
+  message: MessageRef;
   evidence: number[];
 }

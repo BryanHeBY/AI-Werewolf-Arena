@@ -1,3 +1,4 @@
+import { auditSummaryFixture } from "../support/audit_summary_fixture";
 import { describe, expect, test } from "bun:test";
 import { AuditEvidencePolicy } from "../../src/audit/evidence_policy";
 
@@ -35,11 +36,11 @@ describe("AuditEvidencePolicy", () => {
   test("requires every generated finding line to cite an existing sequence", () => {
     const policy = new AuditEvidencePolicy();
     expect(policy.validatesMarkdown(
-      "## Findings\n- [HIGH][flow] issue evidence=2\n\n## TODO",
+      auditSummaryFixture("en", "- [HIGH][flow] issue evidence=2"),
       new Set([2]),
     )).toBe(true);
     expect(policy.validatesMarkdown(
-      "## Findings\n- [HIGH][flow] unsupported\n\n## TODO",
+      auditSummaryFixture("en", "- [HIGH][flow] unsupported"),
       new Set([2]),
     )).toBe(false);
   });

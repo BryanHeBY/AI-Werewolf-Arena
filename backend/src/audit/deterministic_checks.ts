@@ -2,19 +2,12 @@
 import type { ReplayDebugReport, ReplayPlayerView, ReplayPublicEvent } from "../recording/contracts";
 import type { BuildDebugSummaryInput, DeterministicFinding, SummaryObservation } from "./contracts";
 
-/** request_id 使用机器 phase 名，玩家时间线展示本地化 phase 名。 */
-const REQUEST_PHASE_DISPLAY_NAME: Record<string, string> = {
-  night: "夜晚",
-  day: "白天",
-  voting: "投票",
-  game_over: "终局",
+/** Exact historic labels; do not infer IDs from arbitrary player text. */
+const REQUEST_PHASE_ALIASES: Record<string, readonly string[]> = {
+  night: ["夜晚", "Night"], day: ["白天", "Day"], voting: ["投票", "Voting"], game_over: ["终局", "Game over"],
 };
-
 function requestPhaseMatchesTimelinePhase(requestPhase: string, timelinePhase: string): boolean {
-  return (
-    requestPhase === timelinePhase ||
-    REQUEST_PHASE_DISPLAY_NAME[requestPhase] === timelinePhase
-  );
+  return Object.hasOwn(REQUEST_PHASE_ALIASES, requestPhase) && (requestPhase === timelinePhase || REQUEST_PHASE_ALIASES[requestPhase].includes(timelinePhase));
 }
 
 export function collectObservations(input: BuildDebugSummaryInput): SummaryObservation[] {
@@ -70,29 +63,29 @@ export function collectObservations(input: BuildDebugSummaryInput): SummaryObser
   }
 
   observations.push({
-    title: "对局事件规模",
-    detail: `public_events=${events.length}, logic_ops=${ops.length}, player_views=${views.length}, timeline_entries=${timelineEntries}`,
+    code: "event_counts", title: "audit.observation.event_counts.title",
+    detail: { key: "audit.observation.event_counts.detail", parameters: { events: events.length, ops: ops.length, players: views.length, timeline: timelineEntries } },
   });
   observations.push({
-    title: "关键流程计数",
-    detail: `night_resolved=${nightResolvedCount}, wolf_self_destruct=${selfDestructCount}, hunter_shot=${hunterShotCount}`,
+    code: "process_counts", title: "audit.observation.process_counts.title",
+    detail: { key: "audit.observation.process_counts.detail", parameters: { night: nightResolvedCount, blast: selfDestructCount, shot: hunterShotCount } },
   });
   observations.push({
-    title: "动作稳定性",
-    detail: `tool_rejected=${toolRejectedCount}, fallback=${fallbackCount}`,
+    code: "actions", title: "audit.observation.actions.title",
+    detail: { key: "audit.observation.actions.detail", parameters: { rejected: toolRejectedCount, fallback: fallbackCount } },
   });
 
   if (invalidDaySeqs.length > 0) {
     observations.push({
-      title: "元数据异常",
-      detail: `发现 day<=0 的行动条目 ${invalidDaySeqs.length} 条`,
+      code: "invalid_day", title: "audit.observation.invalid_day.title",
+      detail: { key: "audit.observation.invalid_day.detail", parameters: { count: invalidDaySeqs.length } },
       evidence: invalidDaySeqs.slice(0, 10),
     });
   }
   if (mismatchSeqs.length > 0) {
     observations.push({
-      title: "请求编号异常",
-      detail: `发现 request_id 与 day/phase 不一致条目 ${mismatchSeqs.length} 条`,
+      code: "request_mismatch", title: "audit.observation.request_mismatch.title",
+      detail: { key: "audit.observation.request_mismatch.detail", parameters: { count: mismatchSeqs.length } },
       evidence: mismatchSeqs.slice(0, 10),
     });
   }
@@ -121,19 +114,19 @@ function isActionableReport(
   const hasEvidenceSeq = Array.isArray(report.evidence_event_seq) && report.evidence_event_seq.length > 0;
 
   const hardBugSignal =
-    /(日志|广播|顺序|重复|缺失|未(触发|执行|生效|公布|记录|结算)|跳过|死后|出局后|仍然发言|工具.*调用|调用.*失败|报错|error|timeout|fallback|不一致|越权|空守|弃票|没(有)?(公布|记录|触发|执行|生效))/i;
+    /(日志|广播|顺序|重复|缺失|未(触发|执行|生效|公布|记录|结算)|跳过|死后|出局后|仍然发言|工具.*调用|调用.*失败|报错|error|timeout|fallback|不一致|矛盾|\bcontradict(?:ion|s|ory)?\b|越权|空守|弃票|\blogs?\b|\bbroadcast\b|\border\b|\bduplicate\b|\bmissing\b|\bskipped\b|\bafter death\b|\bafter elimination\b|\btool.*call\b|\bcall.*failed\b|\binconsistent\b|\bunauthorized\b|\babstain\b|没(有)?(公布|记录|触发|执行|生效))/i;
   if (hardBugSignal.test(text) && (hasEvidenceSeq || detectFlowAnomaly(publicEvents))) {
     return true;
   }
 
   const strategyNoise =
-    /(狼队|队友|悍跳|金水|查验|站边|刀口|带队|配合|盘逻辑|好人阵营|狼人阵营|局势对.*(有利|不利)|报假查验)/i;
+    /(狼队|队友|悍跳|金水|查验|站边|刀口|带队|配合|盘逻辑|好人阵营|狼人阵营|局势对.*(有利|不利)|报假查验|\b(?:wolf team|teammates?|bluff|role claim|inspection|alignment|good team|werewolf team|kill target|favorable|unfavorable)\b)/i;
   if (strategyNoise.test(text)) {
     return false;
   }
 
   const softActionableSignal =
-    /(流程|阶段|票型|投票|放逐|遗言|警长|上警|退水)/i;
+    /(流程|阶段|票型|投票|放逐|遗言|警长|上警|退水|\b(?:flow|phase|stage|votes?|voting|exile|last words|sheriff|nomination|withdrawal)\b)/i;
   if (softActionableSignal.test(text)) {
     return (
       hasEvidenceSeq ||
@@ -206,7 +199,7 @@ export function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): Det
         day: e.day,
         phase: e.phase,
         actorId: Number((e.payload as any).wolfId ?? 0),
-        message: "首日出现狼人自爆，建议核查自爆窗口策略配置是否符合预期。",
+        code: "first_day_blast", message: { key: "audit.check.first_day_blast" },
         evidence: [e.seq],
       });
     }
@@ -217,7 +210,7 @@ export function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): Det
     const guardMentions = events.filter(
       (e) =>
         (e.type === "day_speech" || e.type === "last_words_spoken") &&
-        /守卫/.test(String((e.payload as any).text ?? "")),
+        /(守卫|\bguard\b)/i.test(String((e.payload as any).text ?? "")),
     );
     if (guardMentions.length > 0) {
       findings.push({
@@ -226,7 +219,7 @@ export function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): Det
         day: guardMentions[0].day,
         phase: guardMentions[0].phase,
         actorId: Number((guardMentions[0].payload as any).actorId ?? (guardMentions[0].payload as any).playerId ?? 0),
-        message: "本局板子无守卫，但发言中出现守卫相关断言，疑似模型幻觉或信息污染。",
+        code: "guard_mention", message: { key: "audit.check.guard_mention" },
         evidence: guardMentions.slice(0, 6).map((e) => e.seq),
       });
     }
@@ -239,7 +232,7 @@ export function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): Det
       (e) =>
         (e.type === "day_speech" || e.type === "last_words_spoken") &&
         Number((e.payload as any).actorId ?? (e.payload as any).playerId ?? -1) === witchId &&
-        /(用了救药|用了毒药|使用了?解药|使用了?毒药)/.test(
+        /(用了救药|用了毒药|使用了?解药|使用了?毒药|\b(?:used|have used|administered)\s+(?:the\s+|my\s+|an?\s+)?(?:antidote|poison|healing potion|poison potion)\b)/i.test(
           String((e.payload as any).text ?? ""),
         ),
     );
@@ -250,7 +243,7 @@ export function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): Det
         day: witchSpeechClaims[0].day,
         phase: witchSpeechClaims[0].phase,
         actorId: witchId,
-        message: "女巫发言声称已用药，但事件流无用药记录，建议核查模型发言约束与私有信息同步。",
+        code: "potion_claim", message: { key: "audit.check.potion_claim" },
         evidence: witchSpeechClaims.slice(0, 6).map((e) => e.seq),
       });
     }
@@ -296,7 +289,7 @@ export function scanPlayerTimelineMetadataIssues(
         day: 0,
         phase: "unknown",
         actorId: view.player_id,
-        message: "玩家时间线出现 day<=0 的行动记录，疑似动作上下文写入错误。",
+        code: "invalid_day", message: { key: "audit.check.invalid_day" },
         evidence: invalidDaySeqs.slice(0, 8),
       });
     }
@@ -308,7 +301,7 @@ export function scanPlayerTimelineMetadataIssues(
         day: 0,
         phase: "unknown",
         actorId: view.player_id,
-        message: "玩家时间线 request_id 与 day/phase 不一致，疑似请求元数据错位。",
+        code: "request_mismatch", message: { key: "audit.check.request_mismatch" },
         evidence: inconsistentReqSeqs.slice(0, 8),
       });
     }

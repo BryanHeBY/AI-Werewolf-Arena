@@ -52,3 +52,17 @@ export function errorMessage(locale: Locale, code: string): string {
 export function toolFailure(locale: Locale, error: string, originalMessage?: string) {
   return { ok: false as const, error, message: originalMessage ?? errorMessage(locale, error) };
 }
+
+export interface MessageRef {
+  key: MessageKey;
+  parameters?: Readonly<Record<string, string | number>>;
+}
+export function renderMessage(locale: Locale, message: MessageRef): string {
+  return text(locale, message.key, message.parameters);
+}
+
+export const AUDIT_SECTIONS = ["session", "stats", "findings", "observations", "todo", "conclusion", "pipeline"] as const;
+export type AuditSection = typeof AUDIT_SECTIONS[number];
+export function auditHeadings(locale: Locale): Record<AuditSection, string> {
+  return Object.fromEntries(AUDIT_SECTIONS.map(section => [section, text(locale, `audit.heading.${section}` as MessageKey)])) as Record<AuditSection, string>;
+}

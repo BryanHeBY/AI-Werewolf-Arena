@@ -1,3 +1,4 @@
+import { auditSummaryFixture } from "../support/audit_summary_fixture";
 /** Synthetic ACP agent: reads only the injected audit MCP and records test prompts. */
 import { createInterface } from "node:readline";
 import { writeFile } from "node:fs/promises";
@@ -37,7 +38,7 @@ try {
         const context = reply.structuredContent?.context as { mode: string };
         trace.submission = (await client!.callTool(context.mode === "inspect"
           ? { name: "submit_audit_findings", arguments: { turn_id: turn, findings: [], notes: ["Original 模型说明"] } }
-          : { name: "submit_audit_summary", arguments: { turn_id: turn, markdown: "## Findings\n- none\n\nOriginal 模型报告" } })).structuredContent;
+          : { name: "submit_audit_summary", arguments: { turn_id: turn, markdown: auditSummaryFixture(trace.locale === "en" ? "en" : "zh-CN", undefined, "Original 模型报告") } })).structuredContent;
       }
       await save();
       send({ jsonrpc: "2.0", id: request.id, result: { stopReason: "end_turn" } });

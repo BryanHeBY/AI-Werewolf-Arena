@@ -1,3 +1,4 @@
+import { auditSummaryFixture } from "../support/audit_summary_fixture";
 import { buildDebugSummaryMarkdown } from "../../src/audit/debug_summary_generator";
 import { expect, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
@@ -35,7 +36,7 @@ test("inspection task locales survive parallel retries while final summary has i
   const executor = { async close() {}, async runTurn(context: AuditToolContext) {
     contexts.push(structuredClone(context)); const attempt = (counts.get(context.taskName) ?? 0) + 1; counts.set(context.taskName, attempt);
     if (context.mode === "inspect") return attempt === 1 ? null : { kind: "findings" as const, agent: context.taskName, findings: [], notes: [], missing_info: [] };
-    return { kind: "summary" as const, markdown: "## Findings\n- none\n\nOriginal 模型报告" };
+    return { kind: "summary" as const, markdown: auditSummaryFixture(context.locale ?? "zh-CN", undefined, "Original 模型报告") };
   } };
   const input: DebugSummaryPipelineInput = { locale: "en", displayLocale: "zh-CN", manifest, reports: [], publicEvents: [], logicOps: [], playerViews: [{ player_id: 1, role: "wolf", camp: "wolf", timeline: [] }], sessionDir: "/tmp/synthetic" };
   const before = structuredClone(input);
@@ -109,7 +110,7 @@ test("complete synthetic generator and pipeline preserve separate inspection and
     const sessionDir = await createTestTempDirectory("awa-audit-pipeline-locale-");
     const profile = { kind: "acp" as const, name: "synthetic", providerName: "synthetic", provider: { type: "acp" as const, transport: "stdio" as const, command: process.execPath, args: [path.resolve(process.cwd(), "tests/fixtures/acp_audit_agent.ts")] } };
     const markdown = await buildDebugSummaryMarkdown({ locale, displayLocale, manifest, sessionDir, publicEvents: [], logicOps: [], playerViews: [], reports: [{ report_id: "synthetic", timestamp: "2026-10-08T00:00:00.000Z", day: 1, phase: "day", stage: "day_speech", actor_id: 1, actor_role: "wolf", actor_camp: "wolf", category: "flow", severity: "high", message: "Original 报告", evidence_event_seq: [], status: "open" }] }, { profile, timeoutMs: 4000, maxAttempts: 1, concurrency: 2, publicMaxItems: 10, maxItems: 10, playerMaxItems: 10 });
-    expect(markdown).toBe("## Findings\n- none\n\nOriginal 模型报告");
+    expect(markdown).toBe(auditSummaryFixture(displayLocale, undefined, "Original 模型报告"));
     const root = path.join(sessionDir, "audit-workspaces");
     const tasks = await readdir(root); expect(tasks.length).toBe(4);
     for (const task of tasks) {
