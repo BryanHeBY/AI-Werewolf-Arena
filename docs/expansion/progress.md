@@ -101,3 +101,7 @@ T01实现commit `47bca25`；阶段证据：[三路审查](reviews/p2-t01.md)，�
 ## P3 最终英文激活
 
 ACP合法pass已独立修正commit `e498014`。runner显式World.locale，英文执行/Tape重放开放，模拟locale与metadata同步；公开组件renderPrompt接两语、SDK历史中性标记与源码AST scan交付。[english-execution.md](english-execution.md)说明18真实本机通路对局、原人工oracle/机器等价/权限/资源与兼容边界。[最终审查](reviews/p3-activation.md)三路0阻断；后端release329、前端48/type/build、当前6E2E回归及I04真实视频证据闭环。P3完成，完整持续目标转P4；57计划角色/混合接入/新机制仍未被提前启用。
+
+## P3 展示语言补充
+
+模拟与动作复现 CLI 将临时 displayLocale 继续传给记录器，录制告警与所选终端语言一致；对局 World、manifest 与 Tape locale 保持不变。真实模拟→录制→复现回归 1 项、3 个断言及后端类型检查通过，L 只读审查 0 阻断。

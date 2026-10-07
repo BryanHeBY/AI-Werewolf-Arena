@@ -14,7 +14,7 @@ export async function main(argv = process.argv.slice(2), display: CliDisplayCont
   if (!values["--record"]) throw new Error("reproduction_cli_usage");
   const record = await readReproduction(path.resolve(values["--record"]));
   if (!display.explicit) display.locale = record.metadata.locale;
-  const result = await replayReproduction(record, values["--record-root"] ?? resolveDefaultRecordRoot());
+  const result = await replayReproduction(record, values["--record-root"] ?? resolveDefaultRecordRoot(), display.locale);
   console.log(JSON.stringify({ ...result, message: text(display.locale, "cli.reproduced") }, null, 2));
 }
 

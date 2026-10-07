@@ -21,7 +21,7 @@ export async function main(argv = process.argv.slice(2), display: CliDisplayCont
   const board = await loadBoardDefinition(values["--configs-dir"] ?? "configs", values["--board"] ?? "six_player_mvp");
   const prefix = values["--seed-prefix"] ?? "regression";
   const recordRoot = values["--record-root"] ?? path.join(resolveDefaultRecordRoot(), `simulation-${crypto.randomUUID()}`);
-  const report = await simulateGames(board, { locale, seeds: Array.from({ length: count }, (_, index) => `${prefix}:${index}`), recordRoot });
+  const report = await simulateGames(board, { locale, displayLocale: display.locale, seeds: Array.from({ length: count }, (_, index) => `${prefix}:${index}`), recordRoot });
   console.log(JSON.stringify({ ...report, recordRoot, message: text(display.locale, "cli.simulated") }, null, 2));
   if (report.rejects || report.fallbacks || report.naturallyFinished !== count) process.exitCode = 1;
 }

@@ -1,3 +1,4 @@
+import type { Locale } from "@ai-werewolf-arena/game-catalog";
 import { readFile } from "node:fs/promises";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { bootstrapGame } from "../../app/bootstrap";
@@ -115,7 +116,7 @@ export async function readReproduction(file: string) {
 }
 
 /** Replays recorded decisions through the real engine, without model transports or auth. */
-export async function replayReproduction(input: unknown, recordRoot: string) {
+export async function replayReproduction(input: unknown, recordRoot: string, displayLocale?: Locale) {
   const record = parseReproductionRecord(input);
   requireMatch(record.finalized && record.termination !== null && record.decisions.every(item => item.outcome.kind !== "pending"), "reproduction_not_finalized");
   const version = await currentEngineVersion();
@@ -145,7 +146,7 @@ export async function replayReproduction(input: unknown, recordRoot: string) {
   const initial = captureCheckpoint(context.world, context.phaseManager.getSnapshot(), 0, true, context.phaseManager.getEvents().length);
   requireMatch(stableJson(initial) === stableJson(record.checkpoints[0]), "reproduction_initial_state_mismatch");
   requireMatch(stableJson(initial.players.map(player => ({ id: player.id, role: player.role, camp: player.camp, name: player.name }))) === stableJson(record.metadata.players.map(({ agent: _agent, ...player }) => player)), "reproduction_identity_mismatch");
-  const manager = await SessionRecordManager.create({ sessionId: `reproduction-${crypto.randomUUID()}`, board: board.definition.id, locale: context.world.locale, startedAtIso: new Date().toISOString(), random: context.random.metadata }, recordRoot);
+  const manager = await SessionRecordManager.create({ sessionId: `reproduction-${crypto.randomUUID()}`, board: board.definition.id, locale: context.world.locale, startedAtIso: new Date().toISOString(), random: context.random.metadata }, recordRoot, displayLocale ?? record.metadata.locale);
   const recorder = new GameEventRecorder({ world: context.world, replayManager: manager }, context.phaseManager.getSnapshot().phase);
   let summary: Awaited<ReturnType<SessionRecordManager["finalize"]>> | undefined;
   await runWithSessionRecorder(manager, async () => {

@@ -12,7 +12,7 @@ import { COMPONENT, type RoleComponent } from "../../core";
 import { getWitchState } from "../../game/mechanisms/roles/private_state";
 import { beginGameReproduction, captureCheckpoint, currentEngineVersion } from "./reproduction_context";
 
-export interface SimulationOptions { locale?: Locale; seeds: readonly string[]; recordRoot: string; maxDays?: number; styles?: readonly BotStyle[] }
+export interface SimulationOptions { locale?: Locale; displayLocale?: Locale; seeds: readonly string[]; recordRoot: string; maxDays?: number; styles?: readonly BotStyle[] }
 
 export interface SimulationReport {
   board: string;
@@ -56,7 +56,7 @@ export async function simulateGames(board: ResolvedBoardDefinition, options: Sim
       if (!context.world.getAliveEntityIds().includes(request.actorId) && !["last_words", "hunter_shot"].includes(request.context.stage)) throw new Error("simulation_unauthorized_dead_action");
       return observed.getAction(request);
     } };
-    const manager = await SessionRecordManager.create({ sessionId: `simulation-${batchId}-${index}`, board: board.definition.id, locale: context.world.locale, startedAtIso: new Date().toISOString(), random: random.metadata }, options.recordRoot);
+    const manager = await SessionRecordManager.create({ sessionId: `simulation-${batchId}-${index}`, board: board.definition.id, locale: context.world.locale, startedAtIso: new Date().toISOString(), random: random.metadata }, options.recordRoot, options.displayLocale ?? locale);
     const recorder = new GameEventRecorder({ world: context.world, replayManager: manager }, context.phaseManager.getSnapshot().phase);
     const summary = await runWithSessionRecorder(manager, async () => {
       const failures: unknown[] = [];
