@@ -2,16 +2,8 @@ import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { ToolLoopClient } from "../integrations/llm/transport";
 import { AgentTurnOptions } from "../runtime/agent_turn_executor";
 import { AuditAgentExecutor } from "./contracts";
-import { auditTurnPrompt } from "./prompts";
+import { auditSystemPrompt, auditTurnPrompt } from "./prompts";
 import { auditToolProtocol, AuditSubmission, AuditToolContext, AuditToolResult, AuditToolTurnRegistry } from "./audit_tool_protocol";
-function auditSystemPrompt(): string {
-  return [
-    "你是狼人杀复盘审计智能体。唯一职责是从被授权的结构化上下文中发现可验证的问题。",
-    "先调用 get_audit_context 读取当前任务；不要猜测或读取本地文件、终端和其他任务。",
-    "inspect 模式必须以 submit_audit_findings 结束；summarize 模式必须以 submit_audit_summary 结束。",
-    "普通 assistant 文本仅视为思考，不会成为审计结果。证据序号必须来自当前上下文。",
-  ].join("\n");
-}
 function asToolRecord(result: AuditToolResult | object): Record<string, unknown> {
   return result as Record<string, unknown>;
 }
@@ -35,8 +27,8 @@ export class SdkAuditAgentExecutor implements AuditAgentExecutor {
     try {
       const result = await this.client.runToolLoop<AuditSubmission>(
         [
-          { role: "system", content: auditSystemPrompt() },
-          { role: "user", content: auditTurnPrompt(turn.turnId, context.mode) },
+          { role: "system", content: auditSystemPrompt(registry.locale) },
+          { role: "user", content: auditTurnPrompt(turn.turnId, context.mode, registry.locale) },
         ],
         protocol.specs,
         {

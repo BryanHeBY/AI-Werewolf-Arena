@@ -1,3 +1,4 @@
+import type { Locale } from "@ai-werewolf-arena/game-catalog";
 import type { AuditAgentExecutor } from "../ai/audit/contracts";
 import { AuditAgentFinding } from "./payload_builder";
 import { AuditEvidencePolicy, MergedAuditFindings } from "./evidence_policy";
@@ -8,6 +9,7 @@ export class AuditSummaryRenderer {
     private readonly executor: AuditAgentExecutor,
     private readonly evidencePolicy: AuditEvidencePolicy,
     private readonly timeoutMs: number,
+    private readonly locale: Locale = "zh-CN",
   ) {}
 
   async render(
@@ -30,6 +32,7 @@ export class AuditSummaryRenderer {
       const result = await this.executor.runTurn(
         {
           mode: "summarize",
+          locale: this.locale,
           taskName: "agent_summary",
           source: "merged_findings",
           payload: {

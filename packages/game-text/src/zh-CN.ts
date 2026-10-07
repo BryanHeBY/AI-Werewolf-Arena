@@ -198,6 +198,19 @@ export const zhCN = Object.freeze({
   "error.invalid_audit_mcp_request": "审计工具控制请求无效。",
   "error.not_found": "工具控制路径不存在。",
   "error.turn_id_mismatch": "所提供的turn_id不匹配；本回合仍开放，请使用最新行动提示中的turn_id重新提交。",
+  "audit.prompt.identity": "你是狼人杀复盘审计智能体。唯一职责是从被授权的结构化上下文中发现可验证的问题。",
+  "audit.prompt.language": "请使用中文提交审计说明；玩家和模型原文、机器字段及证据序号保持原样。",
+  "audit.prompt.read": "先调用 get_audit_context 读取当前任务；不要猜测或读取本地文件、终端和其他任务。",
+  "audit.prompt.submit": "inspect 模式必须以 submit_audit_findings 结束；summarize 模式必须以 submit_audit_summary 结束。",
+  "audit.prompt.evidence": "普通 assistant 文本仅视为思考，不会成为审计结果。证据序号必须来自当前上下文。",
+  "audit.prompt.acp.init": "每个实际审计回合会提供 turn_id；届时先调用 get_audit_context，再使用与模式对应的 submit 工具。当前仅初始化会话，尚无有效 turn_id，请不要调用任何工具。",
+  "audit.prompt.turn": "当前审计回合 ID：{turn}",
+  "audit.prompt.mode": "当前模式：{mode}",
+  "audit.prompt.use_tools": "请通过审计工具读取上下文并提交结果。不要在普通文本中复制上下文或最终结果。",
+  "audit.prompt.inspect": "最多提交 5 条 findings；每条 evidence 必须是上下文中存在的 seq。",
+  "audit.prompt.summary": "Markdown 必须包含 Session、Bug Report Stats、Findings、TODO/Conclusion、Debug Pipeline；Findings 每条写 evidence=1,2，且只能引用上下文 findings.evidence。",
+  "audit.prompt.claims": "玩家的身份声称、诈身份、策略分歧和不确定推测本身不是引擎故障。区分已确认的引擎事实、玩家原话和待核查迹象；没有足够证据时说明缺失信息。",
+  "audit.prompt.boundaries": "仅使用本任务授权的审计工具上下文；不要读取本地文件、终端或其他任务。",
 } as const);
 
 export type MessageKey = keyof typeof zhCN;

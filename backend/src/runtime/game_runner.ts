@@ -165,7 +165,7 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
           players: replayPlayers(context.world),
         });
         try {
-          await replayManager.writeDebugSummary(await buildDebugSummaryMarkdown(summaryInput, setup.audit));
+          await replayManager.writeDebugSummary(await buildDebugSummaryMarkdown({ ...summaryInput, locale: setup.context.locale, displayLocale: setup.context.displayLocale }, setup.audit));
         } catch (error) {
           log(`[audit] debug_summary_failed err=${String(error)}`, "warn");
         }

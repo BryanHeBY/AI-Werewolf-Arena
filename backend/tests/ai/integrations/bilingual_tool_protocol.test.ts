@@ -93,14 +93,14 @@ test("real game/audit MCP subprocesses preserve simultaneous task locales and au
 });
 
 for (const locale of ["zh-CN", "en"] as const) {
-  for (const kind of ["game", "audit"] as const) {
-    test(`${kind} actual SDK HTTP request carries ${locale} descriptions and stable submission fields`, async () => {
+  for (const kind of ["game", "audit"] as const) for (const mode of kind === "game" ? ["game"] : ["inspect", "summarize"]) {
+    test(`${kind}/${mode} actual SDK HTTP request carries ${locale} descriptions and stable submission fields`, async () => {
       const requests: any[] = [];
       const server = Bun.serve({ hostname: "127.0.0.1", port: 0, async fetch(input) {
         requests.push(await input.json());
         return Response.json({ id: "bilingual", object: "chat.completion", created: 1, model: "test", choices: [{ index: 0, finish_reason: "tool_calls", message: { role: "assistant", content: null, tool_calls: [{ id: "call", type: "function", function: {
-          name: kind === "game" ? "submit_action" : "submit_audit_findings",
-          arguments: JSON.stringify(kind === "game" ? { turn_id: "t1", action: "speak", arguments: { text: "Original 中文" } } : { turn_id: "a1", findings: [] }),
+          name: kind === "game" ? "submit_action" : mode === "summarize" ? "submit_audit_summary" : "submit_audit_findings",
+          arguments: JSON.stringify(kind === "game" ? { turn_id: "t1", action: "speak", arguments: { text: "Original 中文" } } : mode === "summarize" ? { turn_id: "a1", markdown: "## Findings\n- none\nOriginal 中文" } : { turn_id: "a1", findings: [] }),
         } }] } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
       } });
       const client = new AiSdkClient({ apiKey: "test-only", baseURL: `${server.url.origin}/v1`, model: "test" });
@@ -111,12 +111,12 @@ for (const locale of ["zh-CN", "en"] as const) {
           expect(await provider.getAction(request)).toEqual({ name: "speak", args: { text: "Original 中文" } });
         } else {
           const executor = new SdkAuditAgentExecutor(client);
-          expect(await executor.runTurn({ mode: "inspect", locale, taskName: "audit", source: "synthetic", payload: {} }, { timeoutMs: 1000 })).toMatchObject({ kind: "findings", findings: [] });
+          expect(await executor.runTurn({ mode: mode === "summarize" ? "summarize" : "inspect", locale, taskName: "audit", source: "synthetic", payload: {} }, { timeoutMs: 1000 })).toMatchObject(mode === "summarize" ? { kind: "summary", markdown: "## Findings\n- none\nOriginal 中文" } : { kind: "findings", findings: [] });
           await executor.close();
         }
         expect(requests.length).toBe(1);
-        if (kind === "game") {
-          expect(requests[0].messages[0].content).toContain(locale === "en" ? "Use English" : "你必须使用中文");
+        {
+          expect(requests[0].messages[0].content).toContain(locale === "en" ? (kind === "game" ? "Use English" : "audit explanations in English") : (kind === "game" ? "你必须使用中文" : "请使用中文提交审计说明"));
           if (locale === "en") expect(JSON.stringify(requests[0].messages)).not.toMatch(/[\u4e00-\u9fff]/);
         }
         const tools = requests[0].tools.map((tool: any) => tool.function);

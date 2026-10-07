@@ -1,12 +1,17 @@
-import { AuditToolContext } from "./audit_tool_protocol";
-export function auditTurnPrompt(turnId: string, mode: AuditToolContext["mode"]): string {
-  const modeDirective = mode === "inspect"
-    ? "最多提交 5 条 findings；每条 evidence 必须是上下文中存在的 seq。"
-    : "Markdown 必须包含 Session、Bug Report Stats、Findings、TODO/Conclusion、Debug Pipeline；Findings 每条写 evidence=1,2，且只能引用上下文 findings.evidence。";
-  return [
-    `当前审计回合 ID：${turnId}`,
-    `当前模式：${mode}`,
-    "请通过审计工具读取上下文并提交结果。不要在普通文本中复制上下文或最终结果。",
-    modeDirective,
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import type { AuditToolContext } from "./audit_tool_protocol";
+
+/** One semantic audit policy; transports only choose whether initialization may use tools. */
+export function auditSystemPrompt(locale: Locale = "zh-CN", initializing = false): string {
+  return [text(locale, "audit.prompt.identity"), text(locale, "audit.prompt.language"),
+    text(locale, "audit.prompt.claims"), text(locale, "audit.prompt.boundaries"),
+    ...(initializing ? [text(locale, "audit.prompt.acp.init")] : [text(locale, "audit.prompt.read"), text(locale, "audit.prompt.submit")]),
+    text(locale, "audit.prompt.evidence"),
+  ].join("\n");
+}
+
+export function auditTurnPrompt(turnId: string, mode: AuditToolContext["mode"], locale: Locale = "zh-CN"): string {
+  return [text(locale, "audit.prompt.turn", { turn: turnId }), text(locale, "audit.prompt.mode", { mode }),
+    text(locale, "audit.prompt.use_tools"), text(locale, mode === "inspect" ? "audit.prompt.inspect" : "audit.prompt.summary"),
   ].join("\n");
 }

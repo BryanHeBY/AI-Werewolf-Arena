@@ -60,4 +60,8 @@ T01实现commit `47bca25`；阶段证据：[三路审查](reviews/p2-t01.md)，�
 
 ## P3 I02：结构化拒绝
 
-内置校验返回明确RuleViolation和共享稳定code；SDK/ACP游戏/审计入口提供逐任务语言解释，局部schema诊断与控制面错误也接通。资源/校验条件未变，自定原文和旧callback兼容；error/message API变化及旧记录政策已说明。后端release254测试0失败，三路[复查](reviews/p3-i02-rejections.md)0阻断。审计、终端及I03/I04继续推进，英文runner仍未开放。
+实现commit `0705807`。内置校验返回明确RuleViolation和共享稳定code；SDK/ACP游戏/审计入口提供逐任务语言解释，局部schema诊断与控制面错误也接通。资源/校验条件未变，自定原文和旧callback兼容；error/message API变化及旧记录政策已说明。后端release254测试0失败，三路[复查](reviews/p3-i02-rejections.md)0阻断。审计、终端及I03/I04继续推进，英文runner仍未开放。
+
+## P3 I02：审计任务
+
+SDK/ACP共享中英审计提示，检查locale与总结displayLocale经完整入口独立传递；真实ACP/session/注入MCP、SDK两种审计模式及子进程回收已验证。审计输入只接收安全传输诊断事实，保留领域参数和原话；合成秘密标记不可达。后端release264测试0失败，三路[复查](reviews/p3-i02-audit-tasks.md)0阻断。摘要模板/fallback/启发式、终端及I03/I04继续推进，不把任务语言接通当成完整audit交付。

@@ -35,11 +35,12 @@ export class AuditTaskRunner {
   }
 
   private async runOne(task: AuditAgentTask): Promise<AuditAgentOutput> {
+    const locale = task.locale ?? "zh-CN";
     let payload = task.payload;
     for (let attempt = 1; attempt <= this.options.maxAttempts; attempt++) {
       try {
         const result = await this.executor.runTurn(
-          { mode: "inspect", taskName: task.name, source: task.source, payload },
+          { mode: "inspect", locale, taskName: task.name, source: task.source, payload },
           { timeoutMs: this.options.timeoutMs },
         );
         if (result?.kind === "findings") return result;

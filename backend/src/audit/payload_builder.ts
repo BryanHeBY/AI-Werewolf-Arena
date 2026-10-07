@@ -1,8 +1,10 @@
+import { RuleError, type Locale } from "@ai-werewolf-arena/game-catalog";
 import { AuditFinding, AuditInspectionResult } from "../ai/audit/audit_tool_protocol";
 import type { DebugSummaryPipelineInput } from "./pipeline";
 import { ReplayLogicOp, ReplayPlayerView, ReplayPublicEvent } from "../recording/contracts";
 
 export interface AuditAgentTask {
+  locale?: Locale;
   name: string;
   source: string;
   payload: Record<string, unknown>;
@@ -47,7 +49,7 @@ function summarizePublicEvents(events: ReplayPublicEvent[], maxItems: number) {
         day: event.day,
         phase: event.phase,
         type: event.type,
-        actorId: (event.payload as any).actorId,
+        actorId: (event.payload as any).actorId ?? (event.payload as any).playerId,
         text: truncate(String((event.payload as any).text ?? ""), 160),
       });
     } else {
@@ -64,18 +66,30 @@ function summarizePublicEvents(events: ReplayPublicEvent[], maxItems: number) {
   return output;
 }
 
+// Transport exception text and arbitrary transport input/output may contain credentials.
+// Audit tasks receive diagnostic facts, while original records stay unchanged.
+const transportOperations = new Set(["action_provider_error", "tool_call_rejected", "llm_fallback", "report_bug_dropped", "report_bug_recorded", "report_bug_rejected"]);
+const transportReasons = new Set<string>([...Object.values(RuleError), "runtime_error", "deadline_skip", "request_timeout", "model_declined_required_action", "turn_constraints_no_valid_action", "turn_id_mismatch", "report_bug_actor_day_rate_limited", "report_bug_scope_rate_limited", "report_bug_duplicate_message"]);
+function transportReason(value: unknown): string | undefined {
+  return value === undefined ? undefined : typeof value === "string" && transportReasons.has(value) ? value : "transport_diagnostic_omitted";
+}
+
 function summarizeLogicOps(ops: ReplayLogicOp[], maxItems: number) {
-  return ops.slice(-maxItems).map((op) => ({
-    seq: op.seq,
-    scope: op.scope,
-    op: op.op,
-    actor_id: op.actor_id,
-    phase: op.phase,
-    status: op.status,
-    reason: op.reason,
-    input: safeJsonString(op.input, 200),
-    output: safeJsonString(op.output, 200),
-  }));
+  return ops.slice(-maxItems).map((op) => {
+    if (op.scope === "llm_action_provider") return {
+      seq: Number.isSafeInteger(op.seq) ? op.seq : 0,
+      scope: "llm_action_provider",
+      op: transportOperations.has(op.op) ? op.op : "transport_diagnostic",
+      actor_id: typeof op.actor_id === "number" && Number.isSafeInteger(op.actor_id) ? op.actor_id : undefined,
+      phase: ["night", "day", "voting", "game_over"].includes(op.phase ?? "") ? op.phase : undefined,
+      status: ["ok", "rejected", "fallback", "error"].includes(op.status) ? op.status : "error",
+      reason: op.op === "action_provider_error" ? "runtime_error" : transportReason(op.reason),
+    };
+    return {
+      seq: op.seq, scope: op.scope, op: op.op, actor_id: op.actor_id, phase: op.phase,
+      status: op.status, reason: op.reason, input: safeJsonString(op.input, 200), output: safeJsonString(op.output, 200),
+    };
+  });
 }
 
 function summarizePlayerView(view: ReplayPlayerView, maxItems: number) {
@@ -124,7 +138,7 @@ function summarizePlayerView(view: ReplayPlayerView, maxItems: number) {
     if (fallback?.content) {
       try {
         const reason = JSON.parse(fallback.content)?.reason;
-        if (reason) base.fallback_reason = reason;
+        if (reason) base.fallback_reason = transportReason(reason);
       } catch { /* ignore malformed optional metadata */ }
     }
     return base;
@@ -152,18 +166,22 @@ export function buildAuditTasks(
   input: DebugSummaryPipelineInput,
   limits: AuditPayloadLimits,
 ): AuditAgentTask[] {
+  const locale = input.locale ?? "zh-CN";
   return [
     {
+      locale,
       name: "agent_public",
       source: "replay.json",
       payload: { events: summarizePublicEvents(input.publicEvents, limits.publicMaxItems) },
     },
     {
+      locale,
       name: "agent_logic",
       source: "logic_ops.json",
       payload: { ops: summarizeLogicOps(input.logicOps, limits.maxItems) },
     },
     {
+      locale,
       name: "agent_reports",
       source: "debug_reports.json",
       payload: { reports: input.reports },
@@ -171,6 +189,7 @@ export function buildAuditTasks(
     ...[...input.playerViews]
       .sort((a, b) => a.player_id - b.player_id)
       .map((view) => ({
+        locale,
         name: `agent_player_${view.player_id}`,
         source: `players/player_${view.player_id}.json`,
         payload: { player_view: summarizePlayerView(view, limits.playerMaxItems) },

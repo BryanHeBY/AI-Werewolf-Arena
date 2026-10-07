@@ -1,3 +1,4 @@
+import type { Locale } from "@ai-werewolf-arena/game-catalog";
 /** Agent-assisted replay audit pipeline orchestration. */
 import { createAuditAgentExecutor } from "../ai/audit/executor_factory";
 import type { ResolvedAuditConfig } from "../runtime/config/contracts";
@@ -14,6 +15,8 @@ import {
 } from "../recording/contracts";
 
 export interface DebugSummaryPipelineInput {
+  locale?: Locale;
+  displayLocale?: Locale;
   manifest: ReplayManifest;
   reports: ReplayDebugReport[];
   publicEvents: ReplayPublicEvent[];
@@ -66,6 +69,7 @@ export async function buildDebugSummaryWithAgents(
       executor,
       evidencePolicy,
       settings.timeoutMs,
+      input.displayLocale ?? input.locale ?? "zh-CN",
     );
     return {
       markdown: await renderer.render(

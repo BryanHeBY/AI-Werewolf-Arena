@@ -17,6 +17,8 @@ export async function buildDebugSummaryMarkdown(
   if (input.sessionDir && input.logicOps && input.playerViews) {
     try {
       const pipeline = await buildDebugSummaryWithAgents({
+        locale: input.locale,
+        displayLocale: input.displayLocale,
         manifest: input.manifest,
         reports: input.reports,
         publicEvents: input.publicEvents ?? [],

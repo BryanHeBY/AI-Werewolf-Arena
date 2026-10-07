@@ -7,17 +7,9 @@ import { AcpMcpBridgeFactory } from "../integrations/acp/acp_mcp_bridge";
 import { ResolvedAgentRuntimeProfile } from "../../runtime/config/contracts";
 import { AgentTurnOptions } from "../runtime/agent_turn_executor";
 import { AuditAgentExecutor } from "./contracts";
-import { auditTurnPrompt } from "./prompts";
+import { auditSystemPrompt, auditTurnPrompt } from "./prompts";
 import { AuditMcpControlServer } from "./audit_mcp_control";
 import { AuditSubmission, AuditToolContext, AuditToolTurnRegistry } from "./audit_tool_protocol";
-function auditSessionPrompt(): string {
-  return [
-    "你是狼人杀复盘审计智能体。唯一职责是从随后被授权的结构化上下文中发现可验证的问题。",
-    "每个实际审计回合会提供 turn_id；届时先调用 get_audit_context，再使用与模式对应的 submit 工具。",
-    "普通 assistant 文本仅视为思考，不会成为审计结果。不要读取本地文件、终端或其他任务。",
-    "当前仅初始化会话，尚无有效 turn_id，请不要调用任何工具。",
-  ].join("\n");
-}
 export interface AcpAuditAgentExecutorOptions {
   profile: ResolvedAgentRuntimeProfile;
   workspaceRoot: string;
@@ -60,7 +52,7 @@ export class AcpAuditAgentExecutor implements AuditAgentExecutor {
       const sessionTask = Promise.resolve().then(() => factory.createSession({
         actorId: 0,
         registry,
-        initialPrompt: auditSessionPrompt(),
+        initialPrompt: auditSystemPrompt(registry.locale, true),
         deadlineAtMs,
         signal: controller.signal,
       }));
@@ -71,7 +63,7 @@ export class AcpAuditAgentExecutor implements AuditAgentExecutor {
       this.sessions.add(session);
       controller.signal.throwIfAborted();
       const turn = registry.openTurn(context, session.sessionId);
-      const promptTask = session.prompt(auditTurnPrompt(turn.turnId, context.mode));
+      const promptTask = session.prompt(auditTurnPrompt(turn.turnId, context.mode, registry.locale));
       return await awaitWithAbort(Promise.race([
         turn.result,
         promptTask.then(() => null, () => null),

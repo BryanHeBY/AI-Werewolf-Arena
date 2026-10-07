@@ -1,6 +1,11 @@
+import type { Locale } from "@ai-werewolf-arena/game-catalog";
 import type { ReplayDebugReport, ReplayLogicOp, ReplayManifest, ReplayPlayerView, ReplayPublicEvent } from "../recording/contracts";
 
 export interface BuildDebugSummaryInput {
+  /** Inspection language; source text stays original. */
+  locale?: Locale;
+  /** Final summary language, independent of audit availability. */
+  displayLocale?: Locale;
   manifest: ReplayManifest;
   reports: ReplayDebugReport[];
   publicEvents?: ReplayPublicEvent[];
