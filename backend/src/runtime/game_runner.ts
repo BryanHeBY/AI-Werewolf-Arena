@@ -57,6 +57,7 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
   const recordRoot = setup.options.recordRootDir ?? resolveDefaultRecordRoot();
   const replayManager = await SessionRecordManager.create({
     sessionId,
+    locale: setup.context.locale,
     board: setup.options.board,
     startedAtIso: new Date().toISOString(),
     random: context.random.metadata,

@@ -32,6 +32,7 @@ for (const boardId of ["six_player_mvp", "twelve_player_standard"]) {
       const manifest = JSON.parse(await readFile(path.join(game.recordDir, "manifest.json"), "utf8"));
       expect(manifest.files.reproduction).toBe("reproduction.json");
       const publicReplay = JSON.parse(await readFile(path.join(game.recordDir, "replay.json"), "utf8"));
+      expect(publicReplay.schemaVersion).toBe(2); expect(publicReplay.meta.locale).toBe(record.metadata.locale);
       expect(publicReplay.reproduction).toBeUndefined();
       expect(publicReplay.metadata?.engine).toBeUndefined();
     }
@@ -236,3 +237,18 @@ for (const simultaneous of [false, true]) {
     } finally { create.mockRestore(); }
   });
 }
+
+
+test("offline reconstruction carries the explicit recorded language into the new public export", async () => {
+  const root = await createTestTempDirectory("awa-reproduction-locale-"); const output = await createTestTempDirectory("awa-reproduction-locale-out-");
+  const board = await loadBoardDefinition(fixtures, "six_player_mvp");
+  const simulated = await simulateGames(board, { seeds: ["locale-metadata"], recordRoot: root });
+  const record = await readReproduction(path.join(simulated.games[0].recordDir, "reproduction.json"));
+  const localized = structuredClone(record); localized.metadata.locale = "en";
+  await expect(replayReproduction(localized, output)).rejects.toThrow("reproduction_locale_not_enabled"); // Full English execution remains gated until P3 completes.
+  const reconstructed = await replayReproduction(record, output);
+  expect(reconstructed.snapshot.result).toEqual(simulated.games[0].result);
+  const dirs = await readdir(output); expect(dirs.length).toBe(1);
+  const replay = JSON.parse(await readFile(path.join(output, dirs[0], "replay.json"), "utf8"));
+  expect(replay.schemaVersion).toBe(2); expect(replay.meta.locale).toBe(record.metadata.locale);
+});

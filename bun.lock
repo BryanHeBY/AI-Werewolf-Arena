@@ -62,6 +62,9 @@
     "packages/replay-contract": {
       "name": "@ai-werewolf-arena/replay-contract",
       "version": "0.1.0",
+      "dependencies": {
+        "@ai-werewolf-arena/game-catalog": "workspace:*",
+      },
     },
   },
   "packages": {

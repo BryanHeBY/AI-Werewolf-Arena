@@ -53,7 +53,7 @@ export async function simulateGames(board: ResolvedBoardDefinition, options: Sim
       if (!context.world.getAliveEntityIds().includes(request.actorId) && !["last_words", "hunter_shot"].includes(request.context.stage)) throw new Error("simulation_unauthorized_dead_action");
       return observed.getAction(request);
     } };
-    const manager = await SessionRecordManager.create({ sessionId: `simulation-${batchId}-${index}`, board: board.definition.id, startedAtIso: new Date().toISOString(), random: random.metadata }, options.recordRoot);
+    const manager = await SessionRecordManager.create({ sessionId: `simulation-${batchId}-${index}`, board: board.definition.id, locale: context.world.locale, startedAtIso: new Date().toISOString(), random: random.metadata }, options.recordRoot);
     const recorder = new GameEventRecorder({ world: context.world, replayManager: manager }, context.phaseManager.getSnapshot().phase);
     const summary = await runWithSessionRecorder(manager, async () => {
       const failures: unknown[] = [];

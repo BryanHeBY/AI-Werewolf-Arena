@@ -1,3 +1,4 @@
+import { assertReplayDocument, REPLAY_SCHEMA_VERSION } from "@ai-werewolf-arena/replay-contract";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import {
   ReplayManifest,
@@ -20,11 +21,13 @@ export function createReplayDocument(input: {
   assertCanonicalEventSequence(input.events);
   assertUniquePlayers(input.manifest.players);
 
-  return {
+  const document: ReplayDocument = {
+    schemaVersion: REPLAY_SCHEMA_VERSION,
     perspective: "god",
     sessionId: input.manifest.session_id,
     meta: {
       board: input.manifest.board,
+      ...(input.manifest.locale === undefined ? {} : { locale: input.manifest.locale }),
       startedAt: input.manifest.started_at,
       endedAt: input.manifest.ended_at,
     },
@@ -40,6 +43,8 @@ export function createReplayDocument(input: {
     })),
     events: input.events,
   };
+  assertReplayDocument(document);
+  return document;
 }
 
 function assertCanonicalEventSequence(events: ReplayPublicEvent[]): void {

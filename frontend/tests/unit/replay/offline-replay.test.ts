@@ -86,7 +86,7 @@ test("accepts an in-progress document without players or terminal events", () =>
     result: { winner: null, reason: "in_progress" }, players: [],
     events: [{ seq: 1, timestamp: "t1", phase: "night", day: 1, type: "phase_changed", payload: {} }],
   };
-  expect(parseOfflineReplayJson(JSON.stringify(document))).toEqual(document);
+  expect(parseOfflineReplayJson(JSON.stringify(document))).toEqual({ ...document, schemaVersion: 2 });
 });
 
 test("rejects duplicate and out-of-order canonical event sequences", () => {
@@ -138,4 +138,13 @@ test("localizes the final winner and reason", () => {
     type: "game_over",
     payload: { winner: "good", reason: "all_wolves_eliminated" },
   })).toBe("对局结束：好人阵营获胜（所有狼人出局）");
+});
+
+test("browser loader converts legacy metadata and keeps unknown fields and player prose", async () => {
+  const raw = await Bun.file(new URL("../../../../packages/replay-contract/fixtures/legacy-localized.json", import.meta.url)).text();
+  const replay = parseOfflineReplayJson(raw);
+  expect(replay.schemaVersion).toBe(2); expect(replay.events[0].phase).toBe("night");
+  expect(replay.players[0].name).toBe("玩家1"); expect(replay.events[0].payload.reason).toBe("狼人全部出局");
+  expect(replay.events[2].phase).toBe("未知阶段"); expect(replay.events[2].payload.role).toBe("狼人");
+  expect(() => parseOfflineReplayJson(JSON.stringify({ ...replay, schemaVersion: 3 }))).toThrow("replay.json");
 });

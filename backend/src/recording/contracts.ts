@@ -1,3 +1,4 @@
+import type { Locale } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：对局复盘记录结构类型定义。 */
 import { Camp, PlayerVisibleEvent, ToolCall } from "../core/domain/model";
 import type { RandomMetadata } from "../core/domain/random";
@@ -16,6 +17,7 @@ export interface ReplayManifestPlayer {
 
 /** 对局复盘主清单。 */
 export interface ReplayManifest {
+  locale?: Locale;
   session_id: string;
   board: string;
   started_at: string;
@@ -197,6 +199,7 @@ export interface ReplayPlayerView {
 
 /** 对局会话元信息。 */
 export interface ReplaySessionMeta {
+  locale?: Locale;
   random?: RandomMetadata;
   sessionId: string;
   board: string;

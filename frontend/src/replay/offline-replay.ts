@@ -1,5 +1,5 @@
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { assertReplayDocument, ReplayDocumentValidationError } from "@ai-werewolf-arena/replay-contract";
+import { readReplayDocument, ReplayDocumentValidationError } from "@ai-werewolf-arena/replay-contract";
 
 export type ReplayLoadState =
   | { status: "loading" }
@@ -15,14 +15,13 @@ export function parseOfflineReplayJson(raw: string): ReplayDocument {
     throw new Error("这不是 AI Werewolf Arena 的 replay.json 文件。");
   }
   try {
-    assertReplayDocument(value);
+    return readReplayDocument(value);
   } catch (error) {
     if (error instanceof ReplayDocumentValidationError && error.kind === "missing_fields") {
       throw new Error("复盘文件缺少 meta、result 或 players 字段。");
     }
     throw new Error("这不是 AI Werewolf Arena 的 replay.json 文件。");
   }
-  return value;
 }
 
 export async function readOfflineReplay(file: File): Promise<ReplayDocument> {

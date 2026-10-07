@@ -40,6 +40,7 @@ for (const seed of ["recorded-seed", undefined]) {
       const recreated = bootstrapGame(setup.boardConfig, { random: createRandom(manifest.random.seed), playerNames: { "1": "Player One" } });
       expect(replay.events[0].payload).toEqual(recreated.phaseManager.getEvents()[0].payload);
       expect(replay.players[0].name).toBe("Player One");
+      expect(manifest.locale).toBe("zh-CN"); expect(replay.meta.locale).toBe("zh-CN"); expect(replay.schemaVersion).toBe(2);
       expect(replay.random).toBeUndefined();
       expect(replay.meta.random).toBeUndefined();
       expect(JSON.stringify(manifest)).not.toContain("PRIVATE_AUTH_VALUE");

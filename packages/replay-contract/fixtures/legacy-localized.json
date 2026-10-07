@@ -1,0 +1,13 @@
+{
+  "perspective": "god",
+  "sessionId": "legacy-localized",
+  "meta": {"board": "synthetic", "startedAt": "2025-01-01T00:00:00.000Z", "endedAt": "2025-01-01T00:01:00.000Z"},
+  "result": {"winner": "好人阵营", "reason": "狼人全部出局"},
+  "players": [{"player_id": 1, "name": "玩家1", "role": "狼人", "camp": "狼人"}, {"player_id": 2, "name": "古风小生", "role": "old_role", "camp": "旧阵营"}],
+  "events": [
+    {"seq": 1, "timestamp": "2025-01-01T00:00:00.000Z", "day": 1, "phase": "夜晚", "stage": "狼人交流", "type": "wolf_discussion_ended", "payload": {"actorId": 1, "reason": "狼人全部出局", "round": 1}},
+    {"seq": 2, "timestamp": "2025-01-01T00:00:01.000Z", "day": 1, "phase": "白天", "stage": "白天发言", "type": "day_speech", "payload": {"actorId": 1, "text": "夜晚，我是狼人，狼人全部出局只是台词。{role}", "name": "玩家1"}},
+    {"seq": 3, "timestamp": "2025-01-01T00:00:02.000Z", "day": 1, "phase": "未知阶段", "stage": "未知技能", "type": "archived_event", "payload": {"role": "狼人", "reason": "狼人全部出局", "nested": {"phase": "夜晚"}}},
+    {"seq": 4, "timestamp": "2025-01-01T00:01:00.000Z", "day": 1, "phase": "终局", "stage": "终局", "type": "game_over", "payload": {"winner": "好人阵营", "reason": "狼人全部出局"}}
+  ]
+}
