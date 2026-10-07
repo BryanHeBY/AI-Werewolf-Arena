@@ -26,6 +26,7 @@ import {
 import { runWithSessionRecorder } from "../recording/recording_context";
 import { buildDebugSummaryMarkdown } from "../audit/debug_summary_generator";
 import { createPlayerAgentRuntime, type PlayerAgentRuntime } from "./player_agent_factory";
+import { beginGameReproduction, captureCheckpoint, currentEngineVersion } from "./simulation/reproduction_context";
 
 export interface GameRunResult {
   snapshot: RuntimeSnapshot;
@@ -81,6 +82,8 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
     let timedOut = false;
 
     try {
+      const reproduction = beginGameReproduction(replayManager, context, { engine: await currentEngineVersion(),
+        boardId: options.board, boardConfig: setup.boardConfig, locale: setup.context.locale, maxDays: options.maxDays, profiles: profilesByActor });
       agentRuntime = await createPlayerAgentRuntime({
         world: context.world,
         boardConfig: setup.boardConfig,
@@ -95,7 +98,8 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
           ? (actorId) => createAcpConsoleLogger(actorId, log)
           : undefined,
       });
-      const provider = new DeadlineAwareActionProvider(agentRuntime.provider, deadlineAtMs);
+      const decisionProvider: ActionProvider = { getAction: request => reproduction.decide(request, agentRuntime!.provider) };
+      const provider = new DeadlineAwareActionProvider(decisionProvider, deadlineAtMs);
       log(`[run_game] start board=${options.board} replay_session_id=${sessionId} record_dir=${replayManager.sessionDir}`, "info");
 
       if (options.trace) {
@@ -109,10 +113,12 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
           flushEvents();
         } catch (error) {
           failures.push(error);
+          replayManager.noteReproductionFailure("recording", error);
           if (streamTimer) clearInterval(streamTimer);
         }
       }, 1000);
 
+      let cycle = 0;
       while (!context.phaseManager.getSnapshot().gameOver && failures.length === 0) {
         const elapsed = Date.now() - startedAt;
         if (elapsed >= options.maxRuntimeMs) {
@@ -120,12 +126,20 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
           log(`[run_game] runtime_timeout elapsed_ms=${elapsed}, stop current run and output partial state`, "warn");
           break;
         }
-        await context.phaseManager.runSingleCycle(provider, options.maxDays);
+        cycle++;
+        let complete = false;
+        let cycleFailure: unknown;
+        try { await context.phaseManager.runSingleCycle(provider, options.maxDays); complete = true; }
+        catch (error) { cycleFailure = error; failures.push(error); replayManager.noteReproductionFailure("cycle", error); }
+        try { reproduction.checkpoint(captureCheckpoint(context.world, context.phaseManager.getSnapshot(), cycle, complete, context.phaseManager.getEvents().length, cycleFailure), context.phaseManager.getEvents()); }
+        catch (error) { failures.push(error); reproduction.invalidate(); replayManager.noteReproductionFailure("recording", error); }
+        if (failures.length) break;
         const snapshot = context.phaseManager.getSnapshot();
         log(`[run_game] cycle day=${snapshot.day} phase=${snapshot.phase} gameOver=${snapshot.gameOver} elapsed_ms=${Date.now() - startedAt}`, "info");
       }
     } catch (error) {
       failures.push(error);
+      replayManager.noteReproductionFailure("initialization", error);
     } finally {
       if (heartbeat) clearInterval(heartbeat);
       if (streamTimer) clearInterval(streamTimer);
@@ -133,11 +147,13 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
         flushEvents();
       } catch (error) {
         failures.push(error);
+        replayManager.noteReproductionFailure("recording", error);
       }
       try {
         await agentRuntime?.close();
       } catch (error) {
         failures.push(error);
+        replayManager.noteReproductionFailure("cleanup", error);
       }
       try {
         const snapshot = context.phaseManager.getSnapshot();

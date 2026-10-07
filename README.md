@@ -73,6 +73,11 @@ bun run --cwd backend config:migrate --configs-dir ../configs
 # 脱敏检查配置，不调用模型
 bun run --cwd backend config:check --configs-dir ../configs --game-config-name twelve_player_standard
 
+# 只读取板子、使用受限观察机器人跑固定seed回归
+bun run --cwd backend simulate --configs-dir ../configs.example --board twelve_player_standard --count 25
+# 通过实际动作离线复现一盘对局，不调用模型
+bun run --cwd backend replay:actions --record ../record/<session-id>/reproduction.json
+
 # 使用 configs 中配置的 Codex ACP agent 跑十二人局
 bun run --cwd backend run:twelve:acp
 

@@ -26,6 +26,7 @@ export interface ReplayManifest {
   random?: RandomMetadata;
   files: {
     replay: string;
+    reproduction?: string;
     phase_windows?: string;
     timeline_index?: string;
     logic_ops: string;

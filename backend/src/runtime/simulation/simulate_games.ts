@@ -9,6 +9,7 @@ import { runWithSessionRecorder } from "../../recording/recording_context";
 import { GameEventRecorder } from "../game_event_recorder";
 import { COMPONENT, type RoleComponent } from "../../core";
 import { getWitchState } from "../../game/mechanisms/roles/private_state";
+import { beginGameReproduction, captureCheckpoint, currentEngineVersion } from "./reproduction_context";
 
 export interface SimulationOptions { seeds: readonly string[]; recordRoot: string; maxDays?: number; styles?: readonly BotStyle[] }
 
@@ -41,6 +42,7 @@ export async function simulateGames(board: ResolvedBoardDefinition, options: Sim
   if (!styles.length || styles.some(style => !["active", "conservative", "competitive", "random"].includes(style))) throw new Error("simulation_styles_invalid");
   const report: SimulationReport = { board: board.definition.id, games: [], branches: {}, naturallyFinished: 0, rejects: 0, fallbacks: 0 };
   const batchId = crypto.randomUUID();
+  const engine = await currentEngineVersion();
   for (const [index, seed] of options.seeds.entries()) {
     const random = createRandom(seed);
     const context = bootstrapGame(board.config, { random });
@@ -55,11 +57,21 @@ export async function simulateGames(board: ResolvedBoardDefinition, options: Sim
     const recorder = new GameEventRecorder({ world: context.world, replayManager: manager }, context.phaseManager.getSnapshot().phase);
     const summary = await runWithSessionRecorder(manager, async () => {
       const failures: unknown[] = [];
+      const reproduction = beginGameReproduction(manager, context, { engine, boardId: board.definition.id, boardConfig: board.config, locale: "zh-CN", maxDays });
+      const recordedProvider: ActionProvider = { getAction: request => reproduction.decide(request, provider) };
+      let cycle = 0;
       let priorAlive = context.world.getAliveEntityIds();
       const priorResources = new Map<number, { heal: number; poison: number }>();
       try {
         while (!context.phaseManager.getSnapshot().gameOver) {
-          await context.phaseManager.runSingleCycle(provider, maxDays);
+          cycle++;
+          let complete = false;
+          let cycleFailure: unknown;
+          try { await context.phaseManager.runSingleCycle(recordedProvider, maxDays); complete = true; }
+          catch (error) { cycleFailure = error; failures.push(error); manager.noteReproductionFailure("cycle", error); }
+          try { reproduction.checkpoint(captureCheckpoint(context.world, context.phaseManager.getSnapshot(), cycle, complete, context.phaseManager.getEvents().length, cycleFailure), context.phaseManager.getEvents()); }
+          catch (error) { failures.push(error); reproduction.invalidate(); manager.noteReproductionFailure("recording", error); }
+          if (failures.length) break;
           recorder.flush(context.phaseManager.getEvents());
           // Public controller invariants do not feed hidden truth back into decisions.
           const alive = context.world.getAliveEntityIds();
@@ -76,7 +88,7 @@ export async function simulateGames(board: ResolvedBoardDefinition, options: Sim
             }
           }
         }
-      } catch (error) { failures.push(error); }
+      } catch (error) { failures.push(error); manager.noteReproductionFailure("controller", error); }
       finally {
         try { recorder.flush(context.phaseManager.getEvents()); } catch (error) { failures.push(error); }
         try {

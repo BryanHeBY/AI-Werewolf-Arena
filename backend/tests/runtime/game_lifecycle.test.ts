@@ -62,9 +62,9 @@ test("failure to persist the final replay rejects the game result", async () => 
   const config = await options();
   const write = ReplayFileStore.prototype.writeJsonStrict;
   const failure = new Error("disk full at finalize");
-  let writes = 0;
   const strictWrite = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(async function (file, data) {
-    if (++writes > 1) throw failure;
+    const reason = (data as { result?: { reason?: string | null } }).result?.reason;
+    if (file === "replay.json" && reason && reason !== "in_progress") throw failure;
     await write.call(this, file, data);
   });
   restores.push(() => strictWrite.mockRestore());
@@ -78,9 +78,9 @@ test("a finalization failure does not hide the original game error", async () =>
   const secondary = new Error("disk full");
   const cycle = spyOn(PhaseManager.prototype, "runSingleCycle").mockRejectedValue(primary);
   const write = ReplayFileStore.prototype.writeJsonStrict;
-  let writes = 0;
   const strictWrite = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(async function (file, data) {
-    if (++writes > 1) throw secondary;
+    const reason = (data as { result?: { reason?: string | null } }).result?.reason;
+    if (file === "replay.json" && reason && reason !== "in_progress") throw secondary;
     await write.call(this, file, data);
   });
   restores.push(() => cycle.mockRestore(), () => strictWrite.mockRestore());

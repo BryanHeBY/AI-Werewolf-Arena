@@ -14,6 +14,7 @@ import { createReplayDocument } from "./replay_document";
 import { ReplayFileStore } from "./file_store";
 import { ReplaySessionAggregate } from "./session_aggregate";
 import { getSessionRecorder } from "./recording_context";
+import { ReproductionTrace, type ReproductionFailureScope, type ReproductionMetadata } from "./reproduction";
 
 const FLUSH_DEBOUNCE_MS = 100;
 
@@ -23,6 +24,7 @@ const FLUSH_DEBOUNCE_MS = 100;
  */
 export class SessionRecordManager {
   private closed = false;
+  private closing = false;
   private dirtyPublicTimeline = false;
   private dirtyLogicOps = false;
   private dirtyDebugReports = false;
@@ -31,6 +33,9 @@ export class SessionRecordManager {
   private flushChain: Promise<void> = Promise.resolve();
   private finalMeta: ReplayFinalizeMeta | null = null;
   private finalization: Promise<DebugSummaryInput> | null = null;
+  private reproduction?: ReproductionTrace;
+  private dirtyReproduction = false;
+  private readonly mandatoryFlushFailures: unknown[] = [];
 
   private constructor(
     private readonly aggregate: ReplaySessionAggregate,
@@ -53,6 +58,19 @@ export class SessionRecordManager {
 
   get sessionId(): string { return this.aggregate.sessionMeta.sessionId; }
   get sessionDir(): string { return this.store.sessionDir; }
+
+  beginReproduction(metadata: ReproductionMetadata): ReproductionTrace {
+    if (this.closed || this.reproduction) throw new Error("reproduction_scope_already_started_or_closed");
+    this.aggregate.enableReproduction();
+    this.reproduction = new ReproductionTrace(metadata, () => {
+      if (this.closed) return;
+      this.dirtyReproduction = true;
+      this.scheduleFlush();
+    });
+    return this.reproduction;
+  }
+
+  noteReproductionFailure(scope: ReproductionFailureScope, error: unknown): void { this.reproduction?.noteFailure(scope, error); }
 
   recordPublicEvent(input: ReplayRecordPublicEventInput): void {
     if (this.closed) return;
@@ -91,6 +109,8 @@ export class SessionRecordManager {
   }
 
   async flushNow(): Promise<void> {
+    if (this.closed) return;
+    if (this.closing) { await this.flushChain; return; }
     if (this.flushTimer) {
       clearTimeout(this.flushTimer);
       this.flushTimer = null;
@@ -108,14 +128,25 @@ export class SessionRecordManager {
   }
 
   private async persistFinalRecord(meta: ReplayFinalizeMeta): Promise<DebugSummaryInput> {
+    this.closing = true; // Prevent new timers before the first await.
     this.finalMeta = meta;
-    await this.flushNow();
+    if (this.flushTimer) { clearTimeout(this.flushTimer); this.flushTimer = null; }
+    await this.enqueueFlush();
     this.closed = true;
 
     const manifest = this.aggregate.buildManifest(meta);
     const replayDocument = this.buildReplayDocument(meta);
+    const reproducible = () => {
+      const input = this.aggregate.debugSummaryInput();
+      const operations = (input.logicOps ?? []).filter(op => op.scope !== "llm_action_provider").map(({ seq: _seq, timestamp: _timestamp, ...op }) => op);
+      return this.reproduction!.build({ operations, termination: { reason: meta.finishReason, winner: meta.winner } });
+    };
+    const required = await Promise.allSettled([
+      this.store.writeJsonStrict("manifest.json", manifest),
+      this.store.writeJsonStrict("replay.json", replayDocument),
+      ...(this.reproduction ? [Promise.resolve().then(() => this.store.writeJsonStrict("reproduction.json", reproducible()))] : []),
+    ]);
     await Promise.all([
-      this.store.writeJson("manifest.json", manifest),
       this.store.writeJson("phase_windows.json", this.aggregate.phaseWindowsPayload()),
       this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
       this.store.writeJson("logic_ops.json", this.aggregate.logicOpsPayload()),
@@ -127,8 +158,9 @@ export class SessionRecordManager {
       this.store.writeJson(`players/player_${view.player_id}.json`, view),
     ));
 
-    // replay.json 是产品消费入口；与尽力而为的观测文件不同，写入失败必须上抛。
-    await this.store.writeJsonStrict("replay.json", replayDocument);
+    const failures = [...this.mandatoryFlushFailures, ...required.filter((result): result is PromiseRejectedResult => result.status === "rejected").map(result => result.reason)];
+    if (failures.length === 1) throw failures[0];
+    if (failures.length) throw new AggregateError(failures, "session_record_finalization_failed");
 
     return {
       manifest,
@@ -138,20 +170,24 @@ export class SessionRecordManager {
   }
 
   private async writeInitialFiles(): Promise<void> {
-    await Promise.all([
-      this.store.writeJson("manifest.json", this.aggregate.buildManifest()),
+    const results = await Promise.allSettled([
+      this.store.writeJsonStrict("manifest.json", this.aggregate.buildManifest()),
       this.store.writeJsonStrict("replay.json", this.buildReplayDocument()),
       this.store.writeJson("phase_windows.json", this.aggregate.phaseWindowsPayload()),
       this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
       this.store.writeJson("logic_ops.json", this.aggregate.logicOpsPayload()),
       this.store.writeJson("debug_reports.json", this.aggregate.debugReportsPayload()),
     ]);
+    const failures = results.filter((result): result is PromiseRejectedResult => result.status === "rejected").map(result => result.reason);
+    if (failures.length === 1) throw failures[0];
+    if (failures.length) throw new AggregateError(failures, "session_record_initialization_failed");
   }
 
   private scheduleFlush(): void {
-    if (this.closed || this.flushTimer) return;
+    if (this.closing || this.closed || this.flushTimer) return;
     this.flushTimer = setTimeout(() => {
       this.flushTimer = null;
+      if (this.closing || this.closed) return;
       void this.enqueueFlush();
     }, FLUSH_DEBOUNCE_MS);
   }
@@ -166,6 +202,12 @@ export class SessionRecordManager {
   }
 
   private async flushDirtyFiles(): Promise<void> {
+    if (this.closed) return;
+    if (this.dirtyReproduction && this.reproduction) {
+      this.dirtyReproduction = false;
+      try { await this.store.writeJsonStrict("reproduction.json", this.reproduction.build()); }
+      catch (error) { this.mandatoryFlushFailures.push(error); this.reproduction.noteFailure("recording", error); throw error; }
+    }
     if (this.dirtyPublicTimeline) {
       this.dirtyPublicTimeline = false;
       await Promise.all([

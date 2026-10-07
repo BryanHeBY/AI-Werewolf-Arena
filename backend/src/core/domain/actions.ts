@@ -1,4 +1,4 @@
-import type { ActionWindow, EntityId, Phase, PotionType } from "./identity";
+import { ActionWindow, type EntityId, type Phase, type PotionType } from "./identity";
 import type { PlayerVisibleEvent } from "./events";
 
 export interface ToolArgMap {
@@ -22,6 +22,7 @@ export interface ToolArgMap {
 }
 
 export type ToolName = keyof ToolArgMap;
+export const TOOL_NAMES = ["report_bug", "speak_to_wolves", "kill_vote", "guard", "check_identity", "use_potion", "self_destruct", "speak", "vote", "shoot", "choose_direction", "run_for_sheriff", "vote_for_sheriff"] as const satisfies readonly ToolName[];
 export type ToolCall = { [K in ToolName]: { name: K; args: ToolArgMap[K] } }[ToolName];
 export type TypedToolCall<T extends ToolName> = Extract<ToolCall, { name: T }>;
 
@@ -38,11 +39,8 @@ export interface TurnConstraints {
   summary?: string;
 }
 
-export type ActionStage = ActionWindow
-  | "wolf_discussion" | "wolf_vote" | "guard" | "seer" | "witch"
-  | "day_speech" | "voting" | "hunter_shot" | "last_words"
-  | "sheriff_nomination" | "sheriff_campaign_speech" | "sheriff_withdraw"
-  | "sheriff_vote" | "sheriff_choose_direction";
+export const ACTION_STAGES = [...Object.values(ActionWindow), "wolf_discussion", "wolf_vote", "guard", "seer", "witch", "day_speech", "voting", "hunter_shot", "last_words", "sheriff_nomination", "sheriff_campaign_speech", "sheriff_withdraw", "sheriff_vote", "sheriff_choose_direction"] as const;
+export type ActionStage = typeof ACTION_STAGES[number];
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */
 export interface ActionRequestExtras {

@@ -65,6 +65,9 @@ function normalizeDeltaMessages(
 
 /** In-memory aggregate and projection boundary for one replay session. */
 export class ReplaySessionAggregate {
+  private reproductionEnabled = false;
+
+  enableReproduction(): void { this.reproductionEnabled = true; }
   private publicSeq = 0;
   private logicSeq = 0;
   private readonly publicEvents: ReplayPublicEvent[] = [];
@@ -212,6 +215,7 @@ export class ReplaySessionAggregate {
       finish_reason: meta?.finishReason ?? "in_progress",
       players: meta?.players ?? [],
       files: {
+        ...(this.reproductionEnabled ? { reproduction: "reproduction.json" } : {}),
         replay: "replay.json",
         phase_windows: "phase_windows.json",
         timeline_index: "timeline_index.json",

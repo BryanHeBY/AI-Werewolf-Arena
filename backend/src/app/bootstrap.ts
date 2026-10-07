@@ -29,6 +29,7 @@ export interface BootstrapResult {
   phaseManager: PhaseManager;
   playerIds: EntityId[];
   random: RandomSource;
+  dealMode: "random" | "fixed";
 }
 
 export interface BootstrapOptions {
@@ -68,6 +69,7 @@ export function bootstrapGame(config: BoardConfig, options: BootstrapOptions = {
     phaseManager,
     playerIds,
     random,
+    dealMode: options.fixedRoles ? "fixed" : "random",
   };
 }
 
