@@ -1,6 +1,5 @@
-/** 文件说明：猎人事件的裁判渲染。 */
-import { ScriptJudgeLineHandlers } from "../../script/contracts";
-
+import { text } from "@ai-werewolf-arena/game-text";
+import type { ScriptJudgeLineHandlers } from "../../script/contracts";
 export const HUNTER_SCRIPT_JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
-  hunter_shot: (event) => `${event.payload.hunterId}号猎人开枪带走${event.payload.targetId}号`,
+  hunter_shot: (event, locale = "zh-CN") => text(locale, "console.judge.hunter", { actor: event.payload.hunterId, target: event.payload.targetId }),
 };

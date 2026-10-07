@@ -1,3 +1,4 @@
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
 /** 文件说明：事件 -> 脚本回放文本/终端文本渲染注册表。 */
 import { GameEvent } from "../../../core/domain/model";
 import {
@@ -25,73 +26,33 @@ import {
 import { getDefaultTextLocalizationRegistry } from "../shared/text_localization_registry";
 
 const CHAT_HANDLERS: ScriptChatLineHandlers = {
-  day_speech: (event) => `[白天][${event.payload.actorId}] ${event.payload.text}`,
+  day_speech: (event, locale = "zh-CN") => text(locale, "console.chat.day", { actor: event.payload.actorId, speech: event.payload.text }),
   ...WOLF_SCRIPT_CHAT_HANDLERS,
 };
 
 const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
-  phase_changed: (event) => {
+  phase_changed: (event, locale = "zh-CN") => {
     const p = event.payload;
-    if (p.phase === "night") {
-      return `天黑请闭眼（第${p.day}天夜晚）`;
-    }
-    if (p.phase === "day") {
-      return `天亮了（第${p.day}天白天）`;
-    }
-    if (p.phase === "voting") {
-      return `现在进入放逐投票阶段`;
-    }
+    if (p.phase === "night") return text(locale, "console.judge.night", { day: p.day });
+    if (p.phase === "day") return text(locale, "console.judge.day", { day: p.day });
+    if (p.phase === "voting") return text(locale, "console.judge.voting");
     if (p.phase === "game_over") {
       const i18n = getDefaultTextLocalizationRegistry();
-      const winnerText =
-        p.winner !== undefined && p.winner !== null
-          ? i18n.winnerName(String(p.winner))
-          : null;
-      const reasonText =
-        p.reason !== undefined && p.reason !== null
-          ? i18n.gameOverReason(String(p.reason))
-          : null;
-      if (winnerText && reasonText) {
-        return `对局结束，胜利阵营：${winnerText}，原因：${reasonText}`;
-      }
-      return `对局结束`;
+      return p.winner != null && p.reason != null ? text(locale, "console.judge.over", { winner: i18n.winnerName(p.winner, locale), reason: i18n.gameOverReason(p.reason, locale) }) : text(locale, "console.judge.over_short");
     }
     return null;
   },
-  night_resolved: (event) => {
-    const p = event.payload;
-    const deaths = p.deaths;
-    if (deaths.length === 0) {
-      return `昨夜是平安夜`;
-    }
-    return `昨夜死亡：${deaths.join("、")}号`;
-  },
-  vote_summary: (event) => {
-    const lineup = event.payload.votes.map((item) => {
-      const weight = item.weight;
-      if (item.abstain === true || item.targetId === null || item.targetId === undefined) {
-        return weight !== 1 ? `${item.actorId}号->弃票(w=${weight})` : `${item.actorId}号->弃票`;
-      }
-      return weight !== 1
-        ? `${item.actorId}号->${item.targetId}号(w=${weight})`
-        : `${item.actorId}号->${item.targetId}号`;
-    }).join("，");
-    return `放逐票型：${lineup}`;
-  },
-  voted_out: (event) => `${event.payload.target}号被放逐出局`,
-  sheriff_badge_transferred: (event) =>
-    `警徽移交：${event.payload.fromId}号 -> ${event.payload.toId}号`,
-  sheriff_badge_destroyed: (event) =>
-    `警徽被撕毁（原持有者${event.payload.targetId}号）`,
-  wolf_self_destruct: (event) => `${event.payload.wolfId}号狼人自爆，流程被中断`,
-  game_over: (event) => {
-    const i18n = getDefaultTextLocalizationRegistry();
-    return `胜利阵营：${i18n.winnerName(String(event.payload.winner ?? ""))}，原因：${i18n.gameOverReason(String(event.payload.reason ?? ""))}`;
-  },
-  ...LAST_WORDS_SCRIPT_JUDGE_HANDLERS,
-  ...IDIOT_SCRIPT_JUDGE_HANDLERS,
-  ...HUNTER_SCRIPT_JUDGE_HANDLERS,
-  ...SHERIFF_SCRIPT_JUDGE_HANDLERS,
+  night_resolved: (event, locale = "zh-CN") => event.payload.deaths.length ? text(locale, "console.judge.deaths", { deaths: event.payload.deaths.join(", ") }) : text(locale, "console.judge.peace"),
+  vote_summary: (event, locale = "zh-CN") => text(locale, "console.judge.votes", { votes: event.payload.votes.map(item => {
+    const vote = item.abstain || item.targetId == null ? text(locale, "console.vote.abstain", { actor: item.actorId }) : text(locale, "console.vote.target", { actor: item.actorId, target: item.targetId });
+    return item.weight !== 1 ? `${vote}(w=${item.weight})` : vote;
+  }).join(", ") }),
+  voted_out: (event, locale = "zh-CN") => text(locale, "console.judge.exile", { target: event.payload.target }),
+  sheriff_badge_transferred: (event, locale = "zh-CN") => text(locale, "console.judge.badge_transfer", { from: event.payload.fromId, to: event.payload.toId }),
+  sheriff_badge_destroyed: (event, locale = "zh-CN") => text(locale, "console.judge.badge_destroy", { target: event.payload.targetId }),
+  wolf_self_destruct: (event, locale = "zh-CN") => text(locale, "console.judge.blast", { actor: event.payload.wolfId }),
+  game_over: (event, locale = "zh-CN") => text(locale, "console.judge.result", { winner: getDefaultTextLocalizationRegistry().winnerName(event.payload.winner ?? "", locale), reason: getDefaultTextLocalizationRegistry().gameOverReason(event.payload.reason ?? "", locale) }),
+  ...LAST_WORDS_SCRIPT_JUDGE_HANDLERS, ...IDIOT_SCRIPT_JUDGE_HANDLERS, ...HUNTER_SCRIPT_JUDGE_HANDLERS, ...SHERIFF_SCRIPT_JUDGE_HANDLERS,
 };
 
 const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
@@ -115,38 +76,22 @@ const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
 };
 
 const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
-  god_private_game_info: (event) => {
-    const i18n = getDefaultTextLocalizationRegistry();
-    const roleView = event.payload.players
-      .map((item) => `${item.seat}:${i18n.roleName(item.role)}`)
-      .join(", ");
-    return [{ kind: "god", text: `[live][上帝私有][开局] 角色分布 ${roleView}` }];
-  },
-  day_speech: (event) => [{ kind: "system", text: `[live][白天][${event.payload.actorId}] ${event.payload.text}` }],
-  game_over: (event) => [
-    {
-      kind: "god",
-      text: `[live][上帝][终局] 胜利阵营=${getDefaultTextLocalizationRegistry().winnerName(String(event.payload.winner ?? ""))} 原因=${getDefaultTextLocalizationRegistry().gameOverReason(String(event.payload.reason ?? ""))}`,
-    },
-  ],
-  ...WOLF_SCRIPT_LIVE_HANDLERS,
-  ...SEER_SCRIPT_LIVE_HANDLERS,
-  ...GUARD_SCRIPT_LIVE_HANDLERS,
-  ...WITCH_SCRIPT_LIVE_HANDLERS,
-  ...LAST_WORDS_SCRIPT_LIVE_HANDLERS,
-  ...SHERIFF_SCRIPT_LIVE_HANDLERS,
+  god_private_game_info: (event, _private, locale = "zh-CN") => [{ kind: "god", text: text(locale, "console.live.initial", { roles: event.payload.players.map(item => `${item.seat}:${getDefaultTextLocalizationRegistry().roleName(item.role, locale)}`).join(", ") }) }],
+  day_speech: (event, _private, locale = "zh-CN") => [{ kind: "system", text: text(locale, "console.live.day", { actor: event.payload.actorId, speech: event.payload.text }) }],
+  game_over: (event, _private, locale = "zh-CN") => [{ kind: "god", text: text(locale, "console.live.result", { winner: getDefaultTextLocalizationRegistry().winnerName(event.payload.winner ?? "", locale), reason: getDefaultTextLocalizationRegistry().gameOverReason(event.payload.reason ?? "", locale) }) }],
+  ...WOLF_SCRIPT_LIVE_HANDLERS, ...SEER_SCRIPT_LIVE_HANDLERS, ...GUARD_SCRIPT_LIVE_HANDLERS, ...WITCH_SCRIPT_LIVE_HANDLERS, ...LAST_WORDS_SCRIPT_LIVE_HANDLERS, ...SHERIFF_SCRIPT_LIVE_HANDLERS,
 };
 
 /** 脚本渲染注册表。 */
 export class ScriptEventRenderRegistry {
-  toChatLine(event: GameEvent): string | null {
+  toChatLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
     const handler = CHAT_HANDLERS[event.type];
-    return handler ? (handler as (event: GameEvent) => string | null)(event) : null;
+    return handler ? (handler as (event: GameEvent, locale: Locale) => string | null)(event, locale) : null;
   }
 
-  toJudgeLine(event: GameEvent): string | null {
+  toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
     const handler = JUDGE_HANDLERS[event.type];
-    return handler ? (handler as (event: GameEvent) => string | null)(event) : null;
+    return handler ? (handler as (event: GameEvent, locale: Locale) => string | null)(event, locale) : null;
   }
 
   toReplayStage(event: GameEvent): string {
@@ -157,17 +102,17 @@ export class ScriptEventRenderRegistry {
     return event.type;
   }
 
-  toLiveRender(event: GameEvent, printPrivateEvents: boolean): ScriptLiveRender[] {
+  toLiveRender(event: GameEvent, printPrivateEvents: boolean, locale: Locale = "zh-CN"): ScriptLiveRender[] {
     const handler = LIVE_HANDLERS[event.type];
     if (handler) {
-      const rendered = (handler as (event: GameEvent, printPrivateEvents: boolean) => ScriptLiveRender[] | null)(event, printPrivateEvents);
+      const rendered = (handler as (event: GameEvent, printPrivateEvents: boolean, locale: Locale) => ScriptLiveRender[] | null)(event, printPrivateEvents, locale);
       if (rendered) {
         return rendered;
       }
     }
-    const judge = this.toJudgeLine(event);
+    const judge = this.toJudgeLine(event, locale);
     if (judge) {
-      return [{ kind: "god", text: `[live][上帝] ${judge}` }];
+      return [{ kind: "god", text: text(locale, "console.live.god", { line: judge }) }];
     }
     return [];
   }

@@ -74,7 +74,7 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
     }, context.phaseManager.getSnapshot().phase);
     const flushEvents = () => {
       const delta = eventRecorder.flush(context.phaseManager.getEvents());
-      if (options.streamEvents) presentStreamEvents(delta, options.printPrivateEvents, log);
+      if (options.streamEvents) presentStreamEvents(delta, options.printPrivateEvents, log, setup.context.displayLocale);
     };
     let agentRuntime: PlayerAgentRuntime | undefined;
     let heartbeat: NodeJS.Timeout | undefined;
@@ -179,6 +179,7 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
     const snapshot = context.phaseManager.getSnapshot();
     const events = context.phaseManager.getEvents();
     presentGameResult({
+      locale: setup.context.displayLocale,
       board: options.board,
       snapshot,
       events,

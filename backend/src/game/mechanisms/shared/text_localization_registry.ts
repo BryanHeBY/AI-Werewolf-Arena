@@ -1,13 +1,5 @@
 /** 文件说明：广播文案的可注册翻译注册表。 */
-import {
-  ROLE_TEXT_LOCALIZATION_CONTRIBUTOR,
-} from "../roles/text_localization";
-import {
-  WITCH_TEXT_LOCALIZATION_CONTRIBUTOR,
-} from "../roles/witch/text_localization";
-import {
-  WIN_CONDITION_TEXT_LOCALIZATION_CONTRIBUTOR,
-} from "../win_conditions/text_localization";
+import { roleName, term, text, type Locale } from "@ai-werewolf-arena/game-text";
 
 export interface TextLocalizationContributor {
   roleNames?: Record<string, string>;
@@ -44,20 +36,20 @@ export class TextLocalizationRegistry {
     }
   }
 
-  roleName(role: string): string {
-    return this.roleNames.get(String(role)) ?? String(role);
+  roleName(role: string, locale: Locale = "zh-CN"): string {
+    return this.roleNames.get(String(role)) ?? roleName(role, locale);
   }
 
-  winnerName(winner: string): string {
-    return this.winnerNames.get(String(winner)) ?? String(winner);
+  winnerName(winner: string, locale: Locale = "zh-CN"): string {
+    return this.winnerNames.get(String(winner)) ?? (winner ? term("camp", winner, locale) : text(locale, "common.none"));
   }
 
-  gameOverReason(reason: string): string {
-    return this.gameOverReasons.get(String(reason)) ?? String(reason);
+  gameOverReason(reason: string, locale: Locale = "zh-CN"): string {
+    return this.gameOverReasons.get(String(reason)) ?? term("reason", reason, locale);
   }
 
-  potionType(potionType: string): string {
-    return this.potionTypes.get(String(potionType)) ?? String(potionType);
+  potionType(potionType: string, locale: Locale = "zh-CN"): string {
+    return this.potionTypes.get(String(potionType)) ?? (potionType === "none" ? text(locale, "console.potion_none") : term("potion", potionType, locale));
   }
 }
 
@@ -66,11 +58,7 @@ let defaultRegistry: TextLocalizationRegistry | null = null;
 /** 获取默认翻译注册表实例。 */
 export function getDefaultTextLocalizationRegistry(): TextLocalizationRegistry {
   if (!defaultRegistry) {
-    defaultRegistry = new TextLocalizationRegistry([
-      ROLE_TEXT_LOCALIZATION_CONTRIBUTOR,
-      WITCH_TEXT_LOCALIZATION_CONTRIBUTOR,
-      WIN_CONDITION_TEXT_LOCALIZATION_CONTRIBUTOR,
-    ]);
+    defaultRegistry = new TextLocalizationRegistry();
   }
   return defaultRegistry;
 }

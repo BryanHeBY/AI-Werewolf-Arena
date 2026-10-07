@@ -1,3 +1,4 @@
+import type { Locale } from "@ai-werewolf-arena/game-text";
 import { getDefaultScriptEventRenderRegistry } from "../game";
 import type { GameEvent, RuntimeSnapshot } from "../core";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
@@ -5,10 +6,10 @@ import { colorize, isAnsiEnabled } from "../utils/ansi";
 export type ConsoleTone = "muted" | "info" | "ok" | "warn" | "error" | "accent" | "god";
 export type ConsoleLog = (text: string, tone?: ConsoleTone) => void;
 
-export function toChatLines(events: readonly GameEvent[]): string[] {
+export function toChatLines(events: readonly GameEvent[], locale: Locale = "zh-CN"): string[] {
   const registry = getDefaultScriptEventRenderRegistry();
   return events.flatMap((event) => {
-    const line = registry.toChatLine(event);
+    const line = registry.toChatLine(event, locale);
     return line ? [line] : [];
   });
 }
@@ -22,10 +23,11 @@ export function presentStreamEvents(
   events: readonly GameEvent[],
   printPrivateEvents: boolean,
   log: ConsoleLog,
+  locale: Locale = "zh-CN",
 ): void {
   const registry = getDefaultScriptEventRenderRegistry();
   for (const event of events) {
-    for (const render of registry.toLiveRender(event, printPrivateEvents)) {
+    for (const render of registry.toLiveRender(event, printPrivateEvents, locale)) {
       const tone = render.kind === "chat" ? "accent" : render.kind === "private" ? "warn"
         : render.kind === "action" ? "info" : render.kind === "god" ? "god" : "ok";
       log(render.text, tone);
@@ -34,6 +36,7 @@ export function presentStreamEvents(
 }
 
 export function presentGameResult(input: {
+  locale?: Locale;
   board: string;
   snapshot: RuntimeSnapshot;
   events: readonly GameEvent[];
@@ -51,7 +54,7 @@ export function presentGameResult(input: {
   log(`[run_game] events=${events.length}`, "info");
   if (input.printAllEvents) console.log(JSON.stringify(events, null, 2));
   if (input.printChat && !input.streamEvents) {
-    for (const line of toChatLines(events)) console.log(line);
+    for (const line of toChatLines(events, input.locale)) console.log(line);
   }
 }
 

@@ -1,18 +1,9 @@
-/** 文件说明：遗言事件的裁判与终端渲染。 */
-import { ScriptJudgeLineHandlers, ScriptLiveRenderHandlers } from "../script/contracts";
-
-/** 遗言事件 -> 上帝判词渲染映射。 */
+import { text } from "@ai-werewolf-arena/game-text";
+import type { ScriptJudgeLineHandlers, ScriptLiveRenderHandlers } from "../script/contracts";
 export const LAST_WORDS_SCRIPT_JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
-  last_words_granted: (event) => `${event.payload.playerId}号获得遗言`,
-  last_words_spoken: (event) => `${event.payload.playerId}号遗言：${event.payload.text}`,
+  last_words_granted: (event, locale = "zh-CN") => text(locale, "console.judge.last_granted", { actor: event.payload.playerId }),
+  last_words_spoken: (event, locale = "zh-CN") => text(locale, "console.judge.last_spoken", { actor: event.payload.playerId, speech: event.payload.text }),
 };
-
-/** 遗言事件 -> 终端 live 渲染映射。 */
 export const LAST_WORDS_SCRIPT_LIVE_HANDLERS: ScriptLiveRenderHandlers = {
-  last_words_spoken: (event) => [
-    {
-      kind: "system",
-      text: `[live][遗言][${event.payload.playerId}] ${event.payload.text}`,
-    },
-  ],
+  last_words_spoken: (event, _private, locale = "zh-CN") => [{ kind: "system", text: text(locale, "console.live.last_words", { actor: event.payload.playerId, speech: event.payload.text }) }],
 };

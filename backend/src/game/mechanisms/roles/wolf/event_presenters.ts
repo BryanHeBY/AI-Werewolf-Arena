@@ -1,46 +1,16 @@
-/** 文件说明：狼人事件的聊天与终端渲染。 */
-import { ScriptLiveRenderHandlers, ScriptChatLineHandlers } from "../../script/contracts";
+import { text } from "@ai-werewolf-arena/game-text";
+import type { ScriptLiveRenderHandlers, ScriptChatLineHandlers } from "../../script/contracts";
 
 export const WOLF_SCRIPT_CHAT_HANDLERS: ScriptChatLineHandlers = {
-  wolf_tactical_order: (event) => {
-    return `[狼队][顺序] ${event.payload.order.join("->")}`;
-  },
-  wolf_discussion: (event) => {
-    return `[夜聊][${event.payload.actorId}] ${event.payload.text}`;
-  },
-  wolf_discussion_ended: (event) => {
-    return `[夜聊][结束][${event.payload.actorId}] ${event.payload.reason}`;
-  },
+  wolf_tactical_order: (event, locale = "zh-CN") => text(locale, "console.chat.wolf_order", { order: event.payload.order.join("->") }),
+  wolf_discussion: (event, locale = "zh-CN") => text(locale, "console.chat.wolf", { actor: event.payload.actorId, speech: event.payload.text }),
+  wolf_discussion_ended: (event, locale = "zh-CN") => text(locale, "console.chat.wolf_end", { actor: event.payload.actorId, reason: event.payload.reason }),
 };
-
 export const WOLF_SCRIPT_LIVE_HANDLERS: ScriptLiveRenderHandlers = {
-  wolf_tactical_order: (event) => [
-    {
-      kind: "god",
-      text: `[live][上帝] 狼人开始夜聊讨论，顺序：${event.payload.order.join("->")}`,
-    },
-  ],
-  wolf_discussion: (event) => [
-    {
-      kind: "chat",
-      text: `[live][夜聊][${event.payload.actorId}] ${event.payload.text}`,
-    },
-  ],
-  wolf_discussion_ended: (event) => [
-    {
-      kind: "chat",
-      text: `[live][夜聊][结束][${event.payload.actorId}] ${event.payload.reason}`,
-    },
-  ],
-  wolf_kill_vote_cast: (event) => {
-    if (event.payload.abstain === true) {
-      return [{ kind: "chat", text: `[live][行动][狼刀票] ${event.payload.actorId}号弃刀` }];
-    }
-    return [
-      {
-        kind: "chat",
-        text: `[live][行动][狼刀票] ${event.payload.actorId}号投刀${event.payload.targetId}号`,
-      },
-    ];
-  },
+  wolf_tactical_order: (event, _private, locale = "zh-CN") => [{ kind: "god", text: text(locale, "console.live.wolf_order", { order: event.payload.order.join("->") }) }],
+  wolf_discussion: (event, _private, locale = "zh-CN") => [{ kind: "chat", text: text(locale, "console.live.wolf", { actor: event.payload.actorId, speech: event.payload.text }) }],
+  wolf_discussion_ended: (event, _private, locale = "zh-CN") => [{ kind: "chat", text: text(locale, "console.live.wolf_end", { actor: event.payload.actorId, reason: event.payload.reason }) }],
+  wolf_kill_vote_cast: (event, _private, locale = "zh-CN") => [{ kind: "chat", text: event.payload.abstain
+    ? text(locale, "console.live.kill_abstain", { actor: event.payload.actorId })
+    : text(locale, "console.live.kill_vote", { actor: event.payload.actorId, target: String(event.payload.targetId) }) }],
 };

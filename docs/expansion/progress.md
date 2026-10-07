@@ -68,4 +68,8 @@ T01实现commit `47bca25`；阶段证据：[三路审查](reviews/p2-t01.md)，�
 
 ## P3 I02：审计摘要
 
-确定性checks/观察使用稳定code与MessageRef，两个writer共享中英标题/metadata/统计，无AI与失败fallback也按displayLocale。严格摘要协议与当前任务证据交集已验证，历史原文不改译；换行/HTML/marker展示编码防伪结构。后端release272测试0失败，三路[复查](reviews/p3-i02-audit-summary.md)0阻断。终端、I03/I04及阶段总验收继续推进，英文runner仍未开放。
+实现commit `ab09564`。确定性checks/观察使用稳定code与MessageRef，两个writer共享中英标题/metadata/统计，无AI与失败fallback也按displayLocale。严格摘要协议与当前任务证据交集已验证，历史原文不改译；换行/HTML/marker展示编码防伪结构。后端release272测试0失败，三路[复查](reviews/p3-i02-audit-summary.md)0阻断。终端、I03/I04及阶段总验收继续推进，英文runner仍未开放。
+
+## P3 I02：终端事件
+
+chat/judge/live与ConsolePresenter/runner逐调用展示语言接通，共享目录及legacy兼容贡献有唯一文本来源。原始发言/遗言/夜聊结束理由保留，unknown和null历史边界可显示；事件/kind/stage/受众不改。后端release275测试0失败，三路[复查](reviews/p3-i02-console.md)0阻断。I03/I04、剩余日志与阶段总验收继续推进，英文runner仍未开放。

@@ -1,89 +1,37 @@
-/** 文件说明：警长机制事件的裁判与终端渲染。 */
-import { ScriptJudgeLineHandlers, ScriptLiveRenderHandlers } from "../script/contracts";
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import type { ScriptJudgeLineHandlers, ScriptLiveRenderHandlers } from "../script/contracts";
 
+function seats(ids: number[], locale: Locale): string {
+  return ids.map(id => text(locale, "common.player", { id })).join(", ") || text(locale, "common.none");
+}
+function votes(items: Array<{ actorId: number; targetId: number | null; abstain: boolean }>, locale: Locale): string {
+  return items.map(item => item.abstain || item.targetId === null ? text(locale, "console.vote.abstain", { actor: item.actorId }) : text(locale, "console.vote.target", { actor: item.actorId, target: item.targetId })).join(", ");
+}
+function direction(value: string, locale: Locale): string {
+  return value === "counter_clockwise" ? text(locale, "console.direction.counter_clockwise") : value === "clockwise" ? text(locale, "console.direction.clockwise") : value;
+}
 export const SHERIFF_SCRIPT_JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
-  sheriff_nomination_summary: (event) => {
-    const candidates = event.payload.candidates;
-    return `现在开始竞选警长，上警玩家：${candidates.join("、")}号`;
-  },
-  sheriff_withdraw_summary: (event) => {
-    const withdrawn = event.payload.withdrawn;
-    return withdrawn.length === 0 ? "退水玩家：无" : `退水玩家：${withdrawn.join("、")}号`;
-  },
-  sheriff_candidates_finalized: (event) => {
-    const candidates = event.payload.candidates;
-    return `目前警上名单：${candidates.join("、")}号，请开始投票`;
-  },
-  sheriff_vote_summary: (event) => {
-    const lineup = event.payload.votes.map((item) => {
-      return item.abstain || item.targetId === null
-        ? `${item.actorId}号->弃票`
-        : `${item.actorId}号->${item.targetId}号`;
-    }).join("，");
-    const winnerId = event.payload.winnerId;
-    return winnerId == null
-      ? `警长投票票型：${lineup}。无人当选警长`
-      : `警长投票票型：${lineup}。${winnerId}号玩家当选警长`;
-  },
+  sheriff_nomination_summary: (event, locale = "zh-CN") => text(locale, "console.judge.sheriff_nomination", { players: seats(event.payload.candidates, locale) }),
+  sheriff_withdraw_summary: (event, locale = "zh-CN") => text(locale, "console.judge.sheriff_withdraw", { players: seats(event.payload.withdrawn, locale) }),
+  sheriff_candidates_finalized: (event, locale = "zh-CN") => text(locale, "console.judge.sheriff_candidates", { players: seats(event.payload.candidates, locale) }),
+  sheriff_vote_summary: (event, locale = "zh-CN") => event.payload.winnerId == null
+    ? text(locale, "console.judge.sheriff_votes_none", { votes: votes(event.payload.votes, locale) })
+    : text(locale, "console.judge.sheriff_votes", { votes: votes(event.payload.votes, locale), winner: event.payload.winnerId }),
   sheriff_elected: () => null,
-  sheriff_badge_transferred: (event) => `警徽移交：${event.payload.fromId}号 -> ${event.payload.toId}号`,
-  sheriff_badge_destroyed: (event) => `警徽被撕毁（原持有者${event.payload.targetId}号）`,
-  sheriff_direction_chosen: (event) => {
-    const direction = event.payload.direction === "counter_clockwise" ? "逆时针（警右）" : "顺时针（警左）";
-    return `${event.payload.sheriffId}号警长选择发言顺序：${direction}`;
-  },
+  sheriff_badge_transferred: (event, locale = "zh-CN") => text(locale, "console.judge.badge_transfer", { from: event.payload.fromId, to: event.payload.toId }),
+  sheriff_badge_destroyed: (event, locale = "zh-CN") => text(locale, "console.judge.badge_destroy", { target: event.payload.targetId }),
+  sheriff_direction_chosen: (event, locale = "zh-CN") => text(locale, "console.judge.direction", { actor: event.payload.sheriffId, direction: direction(event.payload.direction, locale) }),
 };
-
+const god = (line: string, locale: Locale, key: "console.live.god" | "console.live.sheriff_nomination" | "console.live.sheriff_votes" = "console.live.god") => [{ kind: "god" as const, text: text(locale, key, { line }) }];
 export const SHERIFF_SCRIPT_LIVE_HANDLERS: ScriptLiveRenderHandlers = {
   sheriff_candidate_declared: () => [],
-  sheriff_nomination_summary: (event) => [
-    {
-      kind: "god",
-      text: `[live][上帝][上警] 现在开始竞选警长，上警玩家：${event.payload.candidates.join("、")}号`,
-    },
-  ],
-  sheriff_withdraw_summary: (event) => {
-    const withdrawn = event.payload.withdrawn;
-    return [{
-      kind: "god",
-      text: withdrawn.length === 0
-        ? "[live][上帝][上警] 退水玩家：无"
-        : `[live][上帝][上警] 退水玩家：${withdrawn.join("、")}号`,
-    }];
-  },
-  sheriff_candidates_finalized: (event) => {
-    const candidates = event.payload.candidates;
-    return [{
-      kind: "god",
-      text: `[live][上帝] 目前警上名单：${candidates.join("、")}号，请开始投票`,
-    }];
-  },
-  sheriff_vote_cast: (event) => {
-    const { actorId, abstain, targetId } = event.payload;
-    return [{
-      kind: "action",
-      text: abstain || targetId === null
-        ? `[live][行动][警长投票] ${actorId}号弃票`
-        : `[live][行动][警长投票] ${actorId}号投给${targetId}号`,
-    }];
-  },
-  sheriff_vote_summary: (event) => {
-    const lineup = event.payload.votes.map((item) => {
-      return item.abstain || item.targetId === null
-        ? `${item.actorId}号->弃票`
-        : `${item.actorId}号->${item.targetId}号`;
-    }).join("，");
-    const winnerId = event.payload.winnerId;
-    return [{
-      kind: "god",
-      text: winnerId == null
-        ? `[live][上帝][警长投票] 警长投票票型：${lineup}。无人当选警长`
-        : `[live][上帝][警长投票] 警长投票票型：${lineup}。${winnerId}号当选警长`,
-    }];
-  },
+  sheriff_nomination_summary: (event, _private, locale = "zh-CN") => god(SHERIFF_SCRIPT_JUDGE_HANDLERS.sheriff_nomination_summary!(event, locale)!, locale, "console.live.sheriff_nomination"),
+  sheriff_withdraw_summary: (event, _private, locale = "zh-CN") => god(SHERIFF_SCRIPT_JUDGE_HANDLERS.sheriff_withdraw_summary!(event, locale)!, locale, "console.live.sheriff_nomination"),
+  sheriff_candidates_finalized: (event, _private, locale = "zh-CN") => god(SHERIFF_SCRIPT_JUDGE_HANDLERS.sheriff_candidates_finalized!(event, locale)!, locale),
+  sheriff_vote_cast: (event, _private, locale = "zh-CN") => [{ kind: "action", text: event.payload.abstain || event.payload.targetId === null
+    ? text(locale, "console.live.sheriff_vote_skip", { actor: event.payload.actorId })
+    : text(locale, "console.live.sheriff_vote", { actor: event.payload.actorId, target: event.payload.targetId }) }],
+  sheriff_vote_summary: (event, _private, locale = "zh-CN") => god(SHERIFF_SCRIPT_JUDGE_HANDLERS.sheriff_vote_summary!(event, locale)!, locale, "console.live.sheriff_votes"),
   sheriff_elected: () => [],
-  sheriff_direction_chosen: (event) => {
-    const direction = event.payload.direction === "counter_clockwise" ? "逆时针（警右）" : "顺时针（警左）";
-    return [{ kind: "god", text: `[live][上帝] ${event.payload.sheriffId}号警长选择发言顺序：${direction}` }];
-  },
+  sheriff_direction_chosen: (event, _private, locale = "zh-CN") => god(SHERIFF_SCRIPT_JUDGE_HANDLERS.sheriff_direction_chosen!(event, locale)!, locale),
 };
