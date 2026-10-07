@@ -22,6 +22,7 @@ export function assignSheriff(world: World, sheriffId: EntityId, config?: BoardC
     if (badge) {
       badge.isSheriff = id === sheriffId;
       badge.destroyed = false;
+      badge.voteWeight = weight;
     }
     const voting = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight);
     if (voting?.canVote) voting.weight = id === sheriffId ? weight : 1;
@@ -31,6 +32,7 @@ export function assignSheriff(world: World, sheriffId: EntityId, config?: BoardC
 export function transferOrDestroySheriffBadge(world: World, fromId: EntityId, reason: string, events: GameEvent[]): SheriffBadgeTransferResult | null {
   const badge = world.getComponent<BadgeComponent>(fromId, COMPONENT.Badge);
   if (!badge?.isSheriff) return null;
+  const weight = badge.voteWeight ?? SHERIFF_VOTE_WEIGHT;
   badge.isSheriff = false;
   badge.destroyed = true;
   resetVotingWeight(world, fromId);
@@ -43,9 +45,10 @@ export function transferOrDestroySheriffBadge(world: World, fromId: EntityId, re
   if (nextBadge) {
     nextBadge.isSheriff = true;
     nextBadge.destroyed = false;
+    nextBadge.voteWeight = weight;
   }
   const nextVoting = world.getComponent<VotingRightComponent>(nextSheriffId, COMPONENT.VotingRight);
-  if (nextVoting) nextVoting.weight = SHERIFF_VOTE_WEIGHT;
+  if (nextVoting) nextVoting.weight = weight;
   events.push({ timestamp: Date.now(), type: "sheriff_badge_transferred", payload: { fromId, toId: nextSheriffId, reason } });
   return { fromId, toId: nextSheriffId, destroyed: false };
 }

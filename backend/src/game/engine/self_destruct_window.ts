@@ -93,7 +93,7 @@ export function isSelfDestructWindowEnabled(
   window: ActionWindow,
 ): boolean {
   const enabled = config.selfDestruct?.enabledWindows;
-  if (!enabled || enabled.length === 0) {
+  if (enabled === undefined) {
     return window === ActionWindow.OnPreVote;
   }
   return enabled.includes(window);

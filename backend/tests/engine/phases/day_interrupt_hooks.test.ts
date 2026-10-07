@@ -216,4 +216,24 @@ describe("day interrupt hooks", () => {
       true,
     );
   });
+
+  test("an explicitly empty self-destruct window performs voting without requesting self-destruct", async () => {
+    const config = { ...twelvePlayerStandardConfig, selfDestruct: { enabledWindows: [] } };
+    const { world } = bootstrapGame(config);
+    const events: any[] = [];
+    const requests: ActionRequest[] = [];
+    const pipeline = new VotingPipeline({ world, roleRegistry: createDefaultRoleRegistry(), toolGateway: new ToolGateway(), eventRegistry: new EventRegistry(), events });
+    const result = await pipeline.execute(config, {
+      async getAction(request) {
+        requests.push(request);
+        if (request.allowedTools.includes("self_destruct")) return { name: "self_destruct", args: { confirm: true } };
+        return { name: "vote", args: { target_id: null, abstain: true } };
+      },
+    }, { day: 1 });
+    expect(result.interrupted).toBe(false);
+    expect(requests.length).toBe(12);
+    expect(requests.every(request => request.allowedTools[0] === "vote")).toBe(true);
+    expect(events.some(event => event.type === "wolf_self_destruct")).toBe(false);
+    expect(world.getAliveEntityIds().length).toBe(12);
+  });
 });
