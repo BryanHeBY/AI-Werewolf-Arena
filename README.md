@@ -84,4 +84,4 @@ bun run check:frontend
 bun run test:frontend
 ```
 
-复盘格式与开发方向以代码和测试为准；不维护独立的详细规格文档。
+已实现行为以代码和测试为准。玩法扩充的目标、64 项角色、中英双语支持、阶段验收、交叉审查和提交要求见 [扩充路线](docs/expansion/roadmap.md)；计划功能在实现并验证后才登记为支持。
