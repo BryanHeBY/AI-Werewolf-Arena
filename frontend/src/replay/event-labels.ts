@@ -1,144 +1,85 @@
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
-import { campName, resultReasonName, roleName } from "./replay-localization";
+import { text, term, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
+import { campName, phaseName, resultReasonName, roleName } from "./replay-localization";
 
-export function eventLabel(event: ReplayEvent): string {
-  const payload = event.payload;
+export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN"): string {
+  const p = event.payload;
+  const t = (key: MessageKey, params?: Record<string, string | number>) => text(locale, key, params);
+  const actor = numberValue(p.actorId);
+  const target = numberValue(p.targetId);
+  const players = (value: unknown) => numberList(value, locale) || t("replay.none");
   switch (event.type) {
-    case "god_private_game_info":
-      return `角色分布：${formatRoleLineup(payload.players)}`;
-    case "phase_changed":
-      return phaseChangeLabel(payload, event.day, event.phase);
-    case "wolf_tactical_order":
-      return `狼人开始夜聊，顺序：${numberList(payload.order, " → ")}`;
-    case "wolf_discussion":
-      return `${numberValue(payload.actorId)}号夜聊：${stringValue(payload.text)}`;
-    case "wolf_discussion_ended":
-      return `${numberValue(payload.actorId)}号结束夜聊：${stringValue(payload.reason)}`;
-    case "wolf_kill_vote_cast":
-      return payload.abstain === true
-        ? `${numberValue(payload.actorId)}号弃刀`
-        : `${numberValue(payload.actorId)}号投刀${numberValue(payload.targetId)}号`;
-    case "guard_applied":
-      return payload.abstain === true || payload.targetId === null
-        ? `${numberValue(payload.actorId)}号守卫选择空守`
-        : `${numberValue(payload.actorId)}号守护${numberValue(payload.targetId)}号`;
-    case "seer_checked":
-      return `${numberValue(payload.actorId)}号查验${numberValue(payload.targetId)}号：${payload.isWerewolf === true ? "狼人" : "好人"}`;
-    case "witch_potion_used":
-      return `${numberValue(payload.actorId)}号对${numberValue(payload.targetId)}号使用${potionName(payload.potionType)}`;
-    case "witch_potion_skipped":
-      return `${numberValue(payload.actorId)}号女巫未使用药剂`;
-    case "sheriff_nomination_summary":
-      return `上警玩家：${numberList(payload.candidates)}号`;
-    case "sheriff_candidate_declared":
-      return `${numberValue(payload.actorId)}号声明${payload.run === true ? "参加" : "不参加"}警长竞选`;
-    case "sheriff_withdraw_summary":
-      return `退水玩家：${numberList(payload.withdrawn) || "无"}`;
-    case "sheriff_candidates_finalized":
-      return `警上候选：${numberList(payload.candidates)}号`;
-    case "sheriff_vote_cast":
-      return voteLabel(payload, "警长票");
-    case "sheriff_vote_summary":
-      return `警长票型：${voteLineup(payload.votes)}；${payload.winnerId == null ? "无人当选" : `${numberValue(payload.winnerId)}号当选警长`}`;
-    case "sheriff_elected":
-      return `${numberValue(payload.winnerId)}号当选警长`;
-    case "sheriff_direction_chosen":
-      return `${numberValue(payload.sheriffId)}号选择${payload.direction === "counter_clockwise" ? "逆时针（警右）" : "顺时针（警左）"}发言`;
-    case "sheriff_badge_transferred":
-      return `警徽移交：${numberValue(payload.fromId)}号 → ${numberValue(payload.toId)}号`;
-    case "sheriff_badge_destroyed":
-      return `警徽被撕毁（原持有者${numberValue(payload.targetId)}号）`;
-    case "day_speech":
-      return `${numberValue(payload.actorId)}号发言：${stringValue(payload.text)}`;
-    case "night_resolved": {
-      const deaths = numberList(payload.deaths);
-      return deaths ? `昨夜死亡：${deaths}号` : "昨夜是平安夜";
+    case "god_private_game_info": return t("replay.lineup", { players: formatRoleLineup(p.players, locale) });
+    case "phase_changed": {
+      const phase = stringValue(p.phase) || event.phase;
+      if (phase === "night" || phase === "day") return t(`replay.${phase}`, { day: event.day });
+      if (phase === "voting") return t("replay.voting");
+      if (phase === "game_over") return t("replay.finished");
+      return t("replay.enter_phase", { phase: phaseName(phase, locale) });
     }
-    case "vote_cast":
-      return voteLabel(payload, "放逐票");
-    case "vote_summary":
-      return `放逐票型：${voteLineup(payload.votes)}`;
-    case "voted_out":
-      return `${numberValue(payload.target)}号被放逐出局`;
-    case "idiot_revealed":
-      return `${numberValue(payload.targetId)}号翻牌为白痴，免于放逐并失去投票权`;
-    case "wolf_self_destruct":
-      return `${numberValue(payload.wolfId)}号狼人自爆`;
-    case "hunter_shot":
-      return `${numberValue(payload.hunterId)}号猎人开枪带走${numberValue(payload.targetId)}号`;
-    case "hunter_silent_due_to_poison":
-      return `${numberValue(payload.hunterId)}号猎人因中毒无法开枪`;
-    case "last_words_granted":
-      return `${numberValue(payload.playerId)}号获得遗言`;
-    case "last_words_spoken":
-      return `${numberValue(payload.playerId)}号遗言：${stringValue(payload.text)}`;
+    case "wolf_tactical_order": return t("replay.wolf_order", { order: numberList(p.order, locale, " → ") });
+    case "wolf_discussion": return t("replay.wolf_speech", { actor, speech: stringValue(p.text) });
+    case "wolf_discussion_ended": return t("replay.wolf_end", { actor, reason: stringValue(p.reason) });
+    case "wolf_kill_vote_cast": return p.abstain === true ? t("replay.kill_skip", { actor }) : t("replay.kill_vote", { actor, target });
+    case "guard_applied": return p.abstain === true || p.targetId === null ? t("replay.guard_skip", { actor }) : t("replay.guard", { actor, target });
+    case "seer_checked": return t("replay.check", { actor, target, camp: term("camp", p.isWerewolf === true ? "wolf" : "good", locale) });
+    case "witch_potion_used": return t("replay.potion", { actor, target, potion: p.potionType === "heal" || p.potionType === "poison" ? term("potion", p.potionType, locale) : stringValue(p.potionType) || t("replay.potion_generic") });
+    case "witch_potion_skipped": return t("replay.potion_skip", { actor });
+    case "sheriff_nomination_summary": return t("replay.nomination", { players: players(p.candidates) });
+    case "sheriff_candidate_declared": return t(p.run === true ? "replay.run" : "replay.not_run", { actor });
+    case "sheriff_withdraw_summary": return t("replay.withdraw", { players: players(p.withdrawn) });
+    case "sheriff_candidates_finalized": return t("replay.candidates", { players: players(p.candidates) });
+    case "sheriff_vote_cast": return voteLabel(p, t("replay.sheriff_vote_label"), locale);
+    case "sheriff_vote_summary": return t("replay.sheriff_votes", { votes: voteLineup(p.votes, locale), result: p.winnerId == null ? t("replay.no_sheriff") : t("replay.elected", { actor: numberValue(p.winnerId) }) });
+    case "sheriff_elected": return t("replay.elected", { actor: numberValue(p.winnerId) });
+    case "sheriff_direction_chosen": return t("replay.direction", { actor: numberValue(p.sheriffId), direction: p.direction === "clockwise" || p.direction === "counter_clockwise" ? t(`console.direction.${p.direction}`) : stringValue(p.direction) || "?" });
+    case "sheriff_badge_transferred": return t("replay.badge_transfer", { from: numberValue(p.fromId), to: numberValue(p.toId) });
+    case "sheriff_badge_destroyed": return t("replay.badge_destroy", { actor: numberValue(p.targetId) });
+    case "day_speech": return t("replay.day_speech", { actor, speech: stringValue(p.text) });
+    case "night_resolved": return numberList(p.deaths, locale) ? t("replay.deaths", { players: players(p.deaths) }) : t("replay.peace");
+    case "vote_cast": return voteLabel(p, t("replay.exile_vote_label"), locale);
+    case "vote_summary": return t("replay.votes", { votes: voteLineup(p.votes, locale) });
+    case "voted_out": return t("replay.exile", { actor: numberValue(p.target) });
+    case "idiot_revealed": return t("replay.idiot", { actor: target });
+    case "wolf_self_destruct": return t("replay.blast", { actor: numberValue(p.wolfId) });
+    case "hunter_shot": return t("replay.shot", { actor: numberValue(p.hunterId), target });
+    case "hunter_silent_due_to_poison": return t("replay.poisoned_hunter", { actor: numberValue(p.hunterId) });
+    case "last_words_granted": return t("replay.last_granted", { actor: numberValue(p.playerId) });
+    case "last_words_spoken": return t("replay.last_spoken", { actor: numberValue(p.playerId), speech: stringValue(p.text) });
     case "game_over": {
-      const winner = stringValue(payload.winner);
-      const reason = stringValue(payload.reason);
-      return `对局结束：${winner ? campName(winner) : "未知阵营"}获胜（${reason ? resultReasonName(reason) : "未注明原因"}）`;
+      const reason = stringValue(p.reason) ? resultReasonName(stringValue(p.reason), locale) : t("replay.no_reason");
+      return stringValue(p.winner) ? t("replay.over", { winner: campName(stringValue(p.winner), locale), reason }) : t("replay.over_no_winner", { reason });
     }
-    default:
-      return typeof payload.text === "string" ? payload.text : event.type;
+    default: return typeof p.text === "string" ? p.text : event.type;
   }
 }
-
-function stringValue(value: unknown): string {
-  return typeof value === "string" ? value : "";
+function stringValue(value: unknown): string { return typeof value === "string" ? value : ""; }
+function numberValue(value: unknown): string { return typeof value === "number" && Number.isFinite(value) ? String(value) : "?"; }
+function numberList(value: unknown, locale: Locale, separator = locale === "zh-CN" ? "、" : ", "): string {
+  return Array.isArray(value) ? value.filter(item => typeof item === "number" && Number.isFinite(item)).map(id => text(locale, "replay.player", { id })).join(separator) : "";
 }
-
-function numberValue(value: unknown): string {
-  return typeof value === "number" && Number.isFinite(value) ? String(value) : "?";
+function voteLabel(p: Record<string, unknown>, label: string, locale: Locale): string {
+  const actor = numberValue(p.actorId);
+  if (p.abstain === true || p.targetId == null) return text(locale, "replay.vote_skip", { actor, label });
+  const weight = typeof p.weight === "number" && Number.isFinite(p.weight) && p.weight !== 1 ? text(locale, "replay.weight", { weight: p.weight }) : "";
+  return text(locale, "replay.vote", { actor, label, target: numberValue(p.targetId), weight });
 }
-
-function numberList(value: unknown, separator = "、"): string {
-  return Array.isArray(value)
-    ? value.filter((item): item is number => typeof item === "number").join(separator)
-    : "";
-}
-
-function voteLabel(payload: Record<string, unknown>, label: string): string {
-  const actor = numberValue(payload.actorId);
-  if (payload.abstain === true || payload.targetId == null) return `${actor}号${label}弃票`;
-  const weight = typeof payload.weight === "number" && payload.weight !== 1
-    ? `（权重${payload.weight}）`
-    : "";
-  return `${actor}号${label}投给${numberValue(payload.targetId)}号${weight}`;
-}
-
-function voteLineup(value: unknown): string {
-  if (!Array.isArray(value)) return "无";
-  return value.map((item) => {
+function voteLineup(value: unknown, locale: Locale): string {
+  if (!Array.isArray(value) || !value.length) return text(locale, "replay.none");
+  return value.map(item => {
     if (!item || typeof item !== "object") return "?";
-    const vote = item as Record<string, unknown>;
-    const actor = numberValue(vote.actorId);
-    if (vote.abstain === true || vote.targetId == null) return `${actor}号→弃票`;
-    const weight = typeof vote.weight === "number" && vote.weight !== 1
-      ? `（票权${vote.weight}）`
-      : "";
-    return `${actor}号→${numberValue(vote.targetId)}号${weight}`;
-  }).join("，");
+    const p = item as Record<string, unknown>;
+    const actor = numberValue(p.actorId);
+    if (p.abstain === true || p.targetId == null) return text(locale, "replay.vote_abstain", { actor });
+    const weight = typeof p.weight === "number" && Number.isFinite(p.weight) && p.weight !== 1 ? text(locale, "replay.vote_weight", { weight: p.weight }) : "";
+    return text(locale, "replay.vote_arrow", { actor, target: numberValue(p.targetId), weight });
+  }).join(locale === "zh-CN" ? "，" : ", ");
 }
-
-function potionName(value: unknown): string {
-  if (value === "heal") return "解药";
-  if (value === "poison") return "毒药";
-  return "药剂";
-}
-
-function phaseChangeLabel(payload: Record<string, unknown>, day: number, fallback: string): string {
-  const phase = stringValue(payload.phase) || fallback;
-  if (phase === "night") return `第${day}天夜晚，天黑请闭眼`;
-  if (phase === "day") return `第${day}天白天，天亮了`;
-  if (phase === "voting") return "进入放逐投票阶段";
-  if (phase === "game_over") return "对局结束";
-  return `进入${phase}`;
-}
-
-function formatRoleLineup(value: unknown): string {
-  if (!Array.isArray(value)) return "未知";
-  return value.map((item) => {
+function formatRoleLineup(value: unknown, locale: Locale): string {
+  if (!Array.isArray(value)) return text(locale, "replay.unknown");
+  return value.map(item => {
     if (!item || typeof item !== "object") return "?";
-    const player = item as Record<string, unknown>;
-    return `${numberValue(player.seat ?? player.id)}号：${roleName(stringValue(player.role) || "unknown")}`;
-  }).join("，");
+    const p = item as Record<string, unknown>;
+    return text(locale, "replay.lineup_player", { id: numberValue(p.seat ?? p.id), role: roleName(stringValue(p.role) || "unknown", locale) });
+  }).join(locale === "zh-CN" ? "，" : ", ");
 }

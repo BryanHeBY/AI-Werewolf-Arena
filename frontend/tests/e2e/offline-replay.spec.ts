@@ -1,9 +1,90 @@
 import { expect, test } from "@playwright/test";
+import { readFileSync } from "node:fs";
+const original = JSON.parse(readFileSync(new URL("../fixtures/sample.replay.json", import.meta.url), "utf8"));
 
-test("renders the configured single replay", async ({ page }) => {
+test("switches display locale and time zone while keeping playback and seat focus", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "six_player_mvp" })).toBeVisible();
-  await expect(page.getByText("session_frontend_fixture")).toBeVisible();
-  await expect(page.getByText("天黑请闭眼").first()).toBeVisible();
-  await expect(page.getByRole("button", { name: "下一事件" })).toBeVisible();
+  await expect(page.getByText("session_frontend_fixture", { exact: false })).toBeVisible();
+  await expect(page.getByText("天黑请闭眼", { exact: false }).first()).toBeVisible();
+  await page.getByRole("button", { name: "下一事件", exact: true }).click();
+  await expect(page.getByTestId("composition-event")).toHaveAttribute("data-event-seq", "2");
+  await page.getByRole("button", { name: "1号", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "与 1 号相关的事件" })).toBeVisible();
+  await page.getByLabel("显示语言", { exact: true }).selectOption("en");
+  await expect(page.getByRole("heading", { name: "Events involving player 1" })).toBeVisible();
+  await expect(page.getByTestId("composition-event")).toHaveAttribute("data-event-seq", "2");
+  await expect(page.locator(".current-event p")).toHaveText("Player 2 is exiled");
+  await expect(page.getByRole("button", { name: "Player 2", exact: true })).toHaveClass(/dead/);
+  await expect(page.locator(".current-event time")).toHaveText("2026-07-29 00:01:00 [UTC]");
+  await page.getByLabel("Display time zone", { exact: true }).selectOption("Asia/Shanghai");
+  await expect(page.locator(".current-event time")).toHaveText("2026-07-29 08:01:00 [Asia/Shanghai]");
+  await expect(page.getByTestId("composition-event")).toHaveAttribute("data-event-seq", "2");
+  await page.getByRole("button", { name: "Clear seat filter", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Game timeline", exact: true })).toBeVisible();
+  await page.getByLabel("Display language", { exact: true }).selectOption("zh-CN");
+  await expect(page.locator(".current-event p")).toHaveText("2号被放逐出局");
+  await expect(page.getByRole("heading", { name: "全局对局时间线" })).toBeVisible();
+});
+
+test("new replay locale is the default and raw names and speech remain unchanged", async ({ page }) => {
+  const replay = { ...original, schemaVersion: 2, meta: { ...original.meta, locale: "en" },
+    players: [{ ...original.players[0], name: "茶茶 {role}" }, original.players[1]],
+    events: [{ ...original.events[0], type: "day_speech", payload: { actorId: 1, text: "我是绿茶 <b>raw</b> {actor}" } }],
+  };
+  await page.route("**/api/replay", route => route.fulfill({ json: replay }));
+  await page.goto("/");
+  await expect(page.getByLabel("Display language", { exact: true })).toHaveValue("en");
+  await expect(page.locator(".current-event p")).toHaveText("Player 1 says: 我是绿茶 <b>raw</b> {actor}");
+  await expect(page.getByRole("button", { name: "Player 1 · 茶茶 {role}", exact: true })).toBeVisible();
+  await page.getByLabel("Display language", { exact: true }).selectOption("zh-CN");
+  await expect(page.locator(".current-event p")).toHaveText("1号发言：我是绿茶 <b>raw</b> {actor}");
+  await expect(page.getByRole("button", { name: "1号 · 茶茶 {role}", exact: true })).toBeVisible();
+  expect(await page.locator(".current-event b").count()).toBe(0);
+});
+
+test("load errors and empty state can change language", async ({ page }) => {
+  await page.route("**/api/replay", route => route.fulfill({ json: { ...original, schemaVersion: 99 } }));
+  await page.goto("/");
+  await expect(page.getByRole("heading", { name: "无法打开复盘" })).toBeVisible();
+  await page.getByLabel("显示语言", { exact: true }).selectOption("en");
+  await expect(page.getByText("This replay format version is not supported.", { exact: true })).toBeVisible();
+  await page.unroute("**/api/replay");
+  await page.route("**/api/replay", route => route.fulfill({ status: 404 }));
+  await page.reload();
+  await page.getByLabel("显示语言", { exact: true }).selectOption("en");
+  await expect(page.getByRole("heading", { name: "Werewolf replay player" })).toBeVisible();
+});
+
+test("choosing only a time zone during load does not override the incoming replay locale", async ({ page }) => {
+  let release!: () => void;
+  const loaded = new Promise<void>(resolve => { release = resolve; });
+  await page.route("**/api/replay", async route => {
+    await loaded;
+    await route.fulfill({ json: { ...original, schemaVersion: 2, meta: { ...original.meta, locale: "en" } } });
+  });
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  await page.getByLabel("显示时区", { exact: true }).selectOption("Asia/Shanghai");
+  release();
+  await expect(page.getByLabel("Display language", { exact: true })).toHaveValue("en");
+  await expect(page.getByLabel("Display time zone", { exact: true })).toHaveValue("Asia/Shanghai");
+});
+
+test("playing video keeps advancing while display language changes", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "播放", exact: true }).click();
+  await expect(page.getByRole("button", { name: "暂停", exact: true })).toBeVisible();
+  await page.getByLabel("显示语言", { exact: true }).selectOption("en");
+  await expect(page.getByRole("button", { name: "Pause", exact: true })).toBeVisible();
+  await expect(page.getByTestId("composition-event")).toHaveAttribute("data-event-seq", "2", { timeout: 5000 });
+  await page.getByRole("button", { name: "Pause", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Play", exact: true })).toBeVisible();
+});
+
+test("a completed replay with no winner differs from an in-progress replay", async ({ page }) => {
+  await page.route("**/api/replay", route => route.fulfill({ json: { ...original, result: { winner: null, reason: "max_days_reached" } } }));
+  await page.goto("/");
+  await expect(page.locator(".result-chip strong")).toHaveText("无胜者");
+  await page.getByLabel("显示语言", { exact: true }).selectOption("en");
+  await expect(page.locator(".result-chip strong")).toHaveText("No winner");
 });

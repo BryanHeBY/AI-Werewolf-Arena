@@ -81,3 +81,11 @@ h2 { margin-bottom: 0; font-size: 17px; letter-spacing: -.02em; }
   .transport { flex-wrap: wrap; }
   .event-head { align-items: flex-start; flex-direction: column; gap: 3px; }
 }
+
+.display-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.display-controls label { display: grid; gap: 5px; font-size: .8rem; color: #b5c3d5; }
+.display-controls select { color: #f6f0df; background: #101b2a; border: 1px solid #526174; border-radius: 6px; padding: 6px 9px; }
+.seat-name { overflow-wrap: anywhere; font-size: .8rem; }
+.frame-control { padding: 0 18px 14px; }
+.frame-control label { display: grid; gap: 8px; color: #b5c3d5; font-size: .8rem; }
+.frame-control input { width: 100%; accent-color: #e4c67d; }

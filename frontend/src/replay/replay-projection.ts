@@ -2,6 +2,7 @@ import type { ReplayDocument, ReplayEvent } from "@ai-werewolf-arena/replay-cont
 
 export interface ReplayPlayerState {
   playerId: number;
+  name?: string;
   role: string;
   camp: string;
   alive: boolean;
@@ -29,6 +30,7 @@ function numberArray(value: unknown): number[] {
 export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number): ReplaySnapshot {
   const states = new Map(replay.players.map((player) => [player.player_id, {
     playerId: player.player_id,
+    ...(player.name === undefined ? {} : { name: player.name }),
     role: player.role,
     camp: player.camp,
     alive: true,

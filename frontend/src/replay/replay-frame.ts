@@ -1,0 +1,33 @@
+import { readReplayDocument, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { text } from "@ai-werewolf-arena/game-text";
+import { formatReplayTime, validateReplayDisplay, DEFAULT_REPLAY_TIME_ZONE, type ReplayDisplayOptions } from "./replay-display";
+import { buildPresentationReplay } from "./replay-presentation";
+import { buildReplaySnapshot } from "./replay-projection";
+import { eventLabel } from "./event-labels";
+import { phaseName, roleName, stageName } from "./replay-localization";
+
+export const FRAMES_PER_EVENT = 90;
+export type ReplayRenderInput = ReplayDisplayOptions & { replay: ReplayDocument };
+/** Offline rendering input: no workspace focus, playback state, clock, or host time zone. */
+export function createReplayRenderInput(replay: ReplayDocument, display: ReplayDisplayOptions = {
+  locale: replay.meta.locale ?? "zh-CN", timeZone: DEFAULT_REPLAY_TIME_ZONE,
+}): ReplayRenderInput {
+  validateReplayDisplay(display);
+  return { replay: buildPresentationReplay(readReplayDocument(replay)), locale: display.locale, timeZone: display.timeZone };
+}
+export function buildReplayFrame(input: ReplayRenderInput, frame: number) {
+  validateReplayDisplay(input);
+  if (!Number.isSafeInteger(frame) || frame < 0) throw new Error("replay_frame_invalid");
+  const { replay, locale } = input;
+  const eventIndex = Math.min(Math.floor(frame / FRAMES_PER_EVENT), replay.events.length - 1);
+  const snapshot = buildReplaySnapshot(replay, eventIndex);
+  const event = snapshot.event;
+  return {
+    eventIndex, eventSeq: event?.seq ?? null, snapshot,
+    dayPhase: text(locale, "replay.day_phase", { day: snapshot.day, phase: phaseName(snapshot.phase, locale) }),
+    stage: event ? stageName(event.stage ?? event.type, locale) : text(locale, "replay.start"),
+    label: event ? eventLabel(event, locale) : text(locale, "replay.no_events"),
+    time: formatReplayTime(event?.timestamp, input),
+    players: snapshot.players.map(player => ({ ...player, roleLabel: roleName(player.role, locale), sheriffLabel: player.isSheriff ? text(locale, "replay.sheriff") : "" })),
+  };
+}

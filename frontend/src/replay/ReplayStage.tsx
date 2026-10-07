@@ -1,3 +1,5 @@
+import { text } from "@ai-werewolf-arena/game-text";
+import type { ReplayDisplayOptions } from "./replay-display";
 import { Player, type PlayerRef } from "@remotion/player";
 import type { RefObject } from "react";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -5,7 +7,13 @@ import { FRAMES_PER_EVENT, ReplayComposition } from "./ReplayComposition";
 
 interface ReplayStageProps {
   replay: ReplayDocument;
+  display: ReplayDisplayOptions;
   activeIndex: number;
+  currentFrame: number;
+  durationInFrames: number;
+  playing: boolean;
+  onSeekToFrame: (frame: number) => void;
+  onToggleFullscreen: () => void;
   playerRef: RefObject<PlayerRef | null>;
   onJumpTo: (index: number) => void;
   onTogglePlayback: () => void;
@@ -14,6 +22,12 @@ interface ReplayStageProps {
 export function ReplayStage({
   replay,
   activeIndex,
+  currentFrame,
+  durationInFrames,
+  playing,
+  onSeekToFrame,
+  onToggleFullscreen,
+  display,
   playerRef,
   onJumpTo,
   onTogglePlayback,
@@ -24,8 +38,8 @@ export function ReplayStage({
     <article className="stage panel">
       <div className="panel-heading">
         <div>
-          <p className="section-kicker">REPLAY</p>
-          <h2>对局舞台</h2>
+          <p className="section-kicker">{text(display.locale, "replay.kicker.stage")}</p>
+          <h2>{text(display.locale, "replay.stage_title")}</h2>
         </div>
         <span className="progress">
           {eventCount === 0 ? "0 / 0" : `${activeIndex + 1} / ${eventCount}`}
@@ -35,33 +49,41 @@ export function ReplayStage({
         <Player
           ref={playerRef}
           component={ReplayComposition}
-          inputProps={{ replay }}
+          inputProps={{ replay, ...display }}
           durationInFrames={Math.max(eventCount * FRAMES_PER_EVENT, 1)}
           compositionWidth={1280}
           compositionHeight={720}
           fps={30}
-          controls
+          controls={false}
           acknowledgeRemotionLicense
         />
       </div>
-      <nav className="transport" aria-label="复盘跳转">
+      <div className="frame-control">
+        <label>
+          <span>{text(display.locale, "replay.frame_position", { frame: currentFrame + 1, total: durationInFrames })}</span>
+          <input type="range" aria-label={text(display.locale, "replay.seek")} min={0} max={durationInFrames - 1}
+            value={currentFrame} disabled={eventCount === 0} onChange={event => onSeekToFrame(Number(event.target.value))} />
+        </label>
+      </div>
+      <nav className="transport" aria-label={text(display.locale, "replay.navigation")}>
         <button
           type="button"
           onClick={() => onJumpTo(activeIndex - 1)}
           disabled={activeIndex === 0}
         >
-          上一事件
+          {text(display.locale, "replay.previous")}
         </button>
-        <button type="button" className="primary" onClick={onTogglePlayback}>
-          播放 / 暂停
+        <button type="button" className="primary" onClick={onTogglePlayback} disabled={eventCount === 0}>
+          {text(display.locale, playing ? "replay.pause" : "replay.play")}
         </button>
         <button
           type="button"
           onClick={() => onJumpTo(activeIndex + 1)}
           disabled={activeIndex >= eventCount - 1}
         >
-          下一事件
+          {text(display.locale, "replay.next")}
         </button>
+        <button type="button" onClick={onToggleFullscreen}>{text(display.locale, "replay.fullscreen")}</button>
       </nav>
     </article>
   );

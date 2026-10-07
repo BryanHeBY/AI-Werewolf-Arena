@@ -137,7 +137,7 @@ test("localizes the final winner and reason", () => {
     phase: "game_over",
     type: "game_over",
     payload: { winner: "good", reason: "all_wolves_eliminated" },
-  })).toBe("对局结束：好人阵营获胜（所有狼人出局）");
+  })).toBe("对局结束：好人阵营获胜（狼人全部出局）");
 });
 
 test("browser loader converts legacy metadata and keeps unknown fields and player prose", async () => {
@@ -146,5 +146,5 @@ test("browser loader converts legacy metadata and keeps unknown fields and playe
   expect(replay.schemaVersion).toBe(2); expect(replay.events[0].phase).toBe("night");
   expect(replay.players[0].name).toBe("玩家1"); expect(replay.events[0].payload.reason).toBe("狼人全部出局");
   expect(replay.events[2].phase).toBe("未知阶段"); expect(replay.events[2].payload.role).toBe("狼人");
-  expect(() => parseOfflineReplayJson(JSON.stringify({ ...replay, schemaVersion: 3 }))).toThrow("replay.json");
+  expect(() => parseOfflineReplayJson(JSON.stringify({ ...replay, schemaVersion: 3 }))).toThrow("不支持此复盘格式版本");
 });

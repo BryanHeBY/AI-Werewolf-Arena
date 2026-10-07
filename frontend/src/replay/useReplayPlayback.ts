@@ -1,37 +1,44 @@
 import type { PlayerRef } from "@remotion/player";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { FRAMES_PER_EVENT } from "./ReplayComposition";
+import { FRAMES_PER_EVENT } from "./replay-frame";
 
 export function useReplayPlayback(eventCount: number) {
   const playerRef = useRef<PlayerRef>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [currentFrame, setCurrentFrame] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const durationInFrames = Math.max(eventCount * FRAMES_PER_EVENT, 1);
+  const activeIndex = Math.min(Math.floor(currentFrame / FRAMES_PER_EVENT), Math.max(eventCount - 1, 0));
 
   useEffect(() => {
     const player = playerRef.current;
-    if (!player || eventCount === 0) return;
-
-    const onFrame = ({ detail }: { detail: { frame: number } }) => {
-      const nextIndex = Math.min(Math.floor(detail.frame / FRAMES_PER_EVENT), eventCount - 1);
-      setActiveIndex((current) => current === nextIndex ? current : nextIndex);
-    };
-
+    if (!player) return;
+    const onFrame = ({ detail }: { detail: { frame: number } }) => setCurrentFrame(detail.frame);
+    const onPlay = () => setPlaying(true);
+    const onPause = () => setPlaying(false);
     player.addEventListener("frameupdate", onFrame);
-    return () => player.removeEventListener("frameupdate", onFrame);
+    player.addEventListener("play", onPlay);
+    player.addEventListener("pause", onPause);
+    player.addEventListener("ended", onPause);
+    return () => {
+      player.removeEventListener("frameupdate", onFrame);
+      player.removeEventListener("play", onPlay);
+      player.removeEventListener("pause", onPause);
+      player.removeEventListener("ended", onPause);
+    };
   }, [eventCount]);
 
-  const jumpTo = useCallback((index: number) => {
-    if (eventCount === 0) {
-      setActiveIndex(0);
-      return;
-    }
-    const boundedIndex = Math.max(0, Math.min(index, eventCount - 1));
-    playerRef.current?.seekTo(boundedIndex * FRAMES_PER_EVENT);
-    setActiveIndex(boundedIndex);
-  }, [eventCount]);
-
-  const togglePlayback = useCallback(() => {
-    playerRef.current?.toggle();
+  const seekToFrame = useCallback((frame: number) => {
+    if (!Number.isFinite(frame)) return;
+    const boundedFrame = Math.max(0, Math.min(Math.floor(frame), durationInFrames - 1));
+    playerRef.current?.seekTo(boundedFrame);
+    setCurrentFrame(boundedFrame);
+  }, [durationInFrames]);
+  const jumpTo = useCallback((index: number) => seekToFrame(index * FRAMES_PER_EVENT), [seekToFrame]);
+  const togglePlayback = useCallback(() => { playerRef.current?.toggle(); }, []);
+  const toggleFullscreen = useCallback(() => {
+    const player = playerRef.current;
+    if (!player) return;
+    if (player.isFullscreen()) player.exitFullscreen(); else player.requestFullscreen();
   }, []);
-  return { playerRef, activeIndex, jumpTo, togglePlayback };
-
+  return { playerRef, activeIndex, currentFrame, durationInFrames, playing, jumpTo, seekToFrame, togglePlayback, toggleFullscreen };
 }

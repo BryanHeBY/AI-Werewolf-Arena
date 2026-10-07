@@ -66,3 +66,7 @@ coverage
 
 # local runtime configs (ignored)
 configs/
+
+# Browser test artifacts
+frontend/test-results/
+frontend/playwright-report/

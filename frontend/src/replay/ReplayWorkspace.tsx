@@ -1,17 +1,23 @@
 import type { ReplayDocument, ReplayEvent } from "@ai-werewolf-arena/replay-contract";
+import { text } from "@ai-werewolf-arena/game-text";
+import { formatReplayTime, type ReplayDisplayOptions } from "./replay-display";
+import { ReplayDisplayControls } from "./ReplayDisplayControls";
 import { useMemo, useState } from "react";
 import { buildReplaySnapshot } from "./replay-projection";
 import { buildPresentationReplay } from "./replay-presentation";
-import { campName, phaseName, resultReasonName, stageName } from "./replay-localization";
+import { replayResultLabel, phaseName, resultReasonName, stageName } from "./replay-localization";
 import { eventLabel } from "./event-labels";
 import { ReplayStage } from "./ReplayStage";
 import { PlayerSeats } from "./PlayerSeats";
 import { EventTimeline } from "./EventTimeline";
 import { useReplayPlayback } from "./useReplayPlayback";
 
-export function ReplayWorkspace({ replay }: { replay: ReplayDocument }) {
+export function ReplayWorkspace({ replay, display, onDisplayChange }: {
+  replay: ReplayDocument; display: ReplayDisplayOptions; onDisplayChange: (next: Partial<ReplayDisplayOptions>) => void;
+}) {
+  const { locale } = display;
   const presentationReplay = useMemo(() => buildPresentationReplay(replay), [replay]);
-  const { playerRef, activeIndex, jumpTo, togglePlayback } = useReplayPlayback(presentationReplay.events.length);
+  const { playerRef, activeIndex, currentFrame, durationInFrames, playing, jumpTo, seekToFrame, togglePlayback, toggleFullscreen } = useReplayPlayback(presentationReplay.events.length);
   const [focusedPlayerId, setFocusedPlayerId] = useState<number | null>(null);
   const snapshot = buildReplaySnapshot(presentationReplay, activeIndex);
   const activeEvent = presentationReplay.events[activeIndex] ?? null;
@@ -23,23 +29,30 @@ export function ReplayWorkspace({ replay }: { replay: ReplayDocument }) {
     <main className="shell">
       <header className="topbar">
         <div>
-          <p className="eyebrow">AI Werewolf Arena · single game replay</p>
+          <p className="eyebrow">AI Werewolf Arena · {text(locale, "replay.single_game")}</p>
           <h1>{replay.meta.board}</h1>
           <p className="subtitle">
-            {replay.sessionId} · {presentationReplay.events.length} 个叙事节点 / {replay.events.length} 个原始事件
+            {text(locale, "replay.nodes", { session: replay.sessionId, nodes: presentationReplay.events.length, events: replay.events.length })}
           </p>
         </div>
+        <ReplayDisplayControls display={display} onChange={onDisplayChange} />
         <div className="result-chip">
-          <span>最终结果</span>
-          <strong>{replay.result.winner ? campName(replay.result.winner) : "未结束"}</strong>
-          <small>{resultReasonName(replay.result.reason)}</small>
+          <span>{text(locale, "replay.final_result")}</span>
+          <strong>{replayResultLabel(replay, locale)}</strong>
+          <small>{resultReasonName(replay.result.reason, locale)}</small>
         </div>
       </header>
 
       <section className="workspace">
         <ReplayStage
           replay={presentationReplay}
+          display={display}
           activeIndex={activeIndex}
+          currentFrame={currentFrame}
+          durationInFrames={durationInFrames}
+          playing={playing}
+          onSeekToFrame={seekToFrame}
+          onToggleFullscreen={toggleFullscreen}
           playerRef={playerRef}
           onJumpTo={jumpTo}
           onTogglePlayback={togglePlayback}
@@ -48,17 +61,18 @@ export function ReplayWorkspace({ replay }: { replay: ReplayDocument }) {
         <aside className="side-stack">
           <section className="panel current-event">
             <div className="panel-heading compact">
-              <span className="phase-pill">第 {snapshot.day} 天 · {phaseName(snapshot.phase)}</span>
+              <span className="phase-pill">{text(locale, "replay.day_phase", { day: snapshot.day, phase: phaseName(snapshot.phase, locale) })}</span>
               <span>#{activeEvent?.seq ?? "—"}</span>
             </div>
-            <p>{activeEvent ? eventLabel(activeEvent) : "暂无事件"}</p>
+            <p>{activeEvent ? eventLabel(activeEvent, locale) : text(locale, "replay.no_events")}</p>
             <div className="event-meta">
-              <span>{activeEvent ? stageName(activeEvent.stage ?? activeEvent.type) : "—"}</span>
-              <time>{formatTime(activeEvent?.timestamp)}</time>
+              <span>{activeEvent ? stageName(activeEvent.stage ?? activeEvent.type, locale) : "—"}</span>
+              <time>{formatReplayTime(activeEvent?.timestamp, display)}</time>
             </div>
           </section>
           <PlayerSeats
             players={snapshot.players}
+            locale={locale}
             focusedPlayerId={focusedPlayerId}
             onToggleFocus={(playerId) => setFocusedPlayerId((current) => current === playerId ? null : playerId)}
           />
@@ -67,6 +81,7 @@ export function ReplayWorkspace({ replay }: { replay: ReplayDocument }) {
 
       <EventTimeline
         events={visibleEvents}
+        locale={locale}
         activeEventSeq={activeEvent?.seq ?? null}
         focusedPlayerId={focusedPlayerId}
         onJumpTo={(index) => {
@@ -85,12 +100,4 @@ function mentionsPlayer(event: ReplayEvent, playerId: number): boolean {
   return [payload.actorId, payload.target, payload.targetId, payload.playerId, payload.winnerId, payload.sheriffId, payload.fromId, payload.toId, payload.wolfId, payload.hunterId]
     .some((value) => value === playerId)
     || Object.values(payload).some((value) => Array.isArray(value) && value.includes(playerId));
-}
-
-function formatTime(timestamp: string | undefined): string {
-  if (!timestamp) return "—";
-  const date = new Date(timestamp);
-  return Number.isNaN(date.valueOf())
-    ? timestamp
-    : date.toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
 }

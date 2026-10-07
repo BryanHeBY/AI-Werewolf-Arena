@@ -1,66 +1,26 @@
-import { roleName as sharedRoleName, type Locale } from "@ai-werewolf-arena/game-text";
+import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { roleName as sharedRoleName, term, text, dictionaries, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 
-const CAMP_NAMES: Record<string, string> = {
-  wolf: "狼人阵营",
-  good: "好人阵营",
-};
-
-const PHASE_NAMES: Record<string, string> = {
-  night: "夜晚",
-  day: "白天",
-  voting: "放逐投票",
-  game_over: "对局结束",
-};
-
-const STAGE_NAMES: Record<string, string> = {
-  god_private_game_info: "初始角色",
-  night: "夜晚",
-  wolf_tactical_order: "狼人行动顺序",
-  wolf_discussion: "狼人夜聊",
-  witch: "女巫行动",
-  seer: "预言家查验",
-  guard: "守卫行动",
-  sheriff: "警长竞选",
-  sheriff_nomination_summary: "上警结果",
-  sheriff_withdraw_summary: "退水结果",
-  sheriff_vote_summary: "警长票型",
-  sheriff_direction_chosen: "警长定序",
-  sheriff_badge_transferred: "警徽移交",
-  sheriff_badge_destroyed: "警徽销毁",
-  day_speech: "白天发言",
-  night_resolved: "夜晚结算",
-  voting: "放逐投票",
-  wolf_self_destruct: "狼人自爆",
-  last_words_granted: "遗言资格",
-  last_words_spoken: "遗言",
-  game_over: "对局结束",
-};
-
-const RESULT_REASONS: Record<string, string> = {
-  all_wolves_eliminated: "所有狼人出局",
-  slaughter_side: "屠边条件达成",
-  slaughter_city: "屠城条件达成",
-  wolf_reach_half: "存活狼人达到半数",
-  max_days_reached: "达到最大天数",
-};
-
-export function roleName(role: string, locale: Locale = "zh-CN"): string {
-  return sharedRoleName(role, locale);
+export { type Locale };
+export function roleName(role: string, locale: Locale = "zh-CN"): string { return sharedRoleName(role, locale); }
+export function campName(camp: string, locale: Locale = "zh-CN"): string { return term("camp_team", camp, locale); }
+export function phaseName(phase: string, locale: Locale = "zh-CN"): string { return term("phase", phase, locale); }
+export function stageName(stage: string, locale: Locale = "zh-CN"): string {
+  const key = `replay.stage.${stage}` as MessageKey;
+  return Object.hasOwn(dictionaries[locale], key) ? text(locale, key) : term("stage", stage, locale);
+}
+// These are archived reason IDs; current records already use the canonical IDs.
+const historicalReasons: Readonly<Record<string, string>> = Object.freeze({
+  wolves_eliminated: "all_wolves_eliminated", slaughter_side: "slaughter_side_completed",
+  slaughter_city: "all_good_eliminated", wolf_reach_half: "wolves_reach_half",
+});
+export function resultReasonName(reason: string | null, locale: Locale = "zh-CN"): string {
+  return reason ? term("reason", Object.hasOwn(historicalReasons, reason) ? historicalReasons[reason] : reason, locale) : "—";
 }
 
-export function campName(camp: string): string {
-  return CAMP_NAMES[camp] ?? camp;
-}
-
-export function phaseName(phase: string): string {
-  return PHASE_NAMES[phase] ?? phase;
-}
-
-export function stageName(stage: string): string {
-  return STAGE_NAMES[stage] ?? stage;
-}
-
-export function resultReasonName(reason: string | null): string {
-  if (!reason) return "—";
-  return RESULT_REASONS[reason] ?? reason;
+export function replayResultLabel(replay: ReplayDocument, locale: Locale): string {
+  if (replay.result.winner) return campName(replay.result.winner, locale);
+  const ended = ["max_days_reached", "runtime_timeout", "runtime_error", "completed"].includes(replay.result.reason ?? "")
+    || replay.events.some(event => event.type === "game_over" || event.type === "phase_changed" && event.payload.phase === "game_over");
+  return text(locale, ended ? "replay.no_winner" : "replay.unfinished");
 }
