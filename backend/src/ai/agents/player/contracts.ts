@@ -1,3 +1,4 @@
+import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { ToolCall } from "../../../core/domain"
 import { ChatMessage } from "../../integrations/llm/transport";
 
@@ -21,6 +22,7 @@ export interface PlayerRetryTraceEntry {
   attempt: number;
   status: "request_error" | "no_valid_action";
   reason?: string;
+  diagnostic?: ErrorDiagnostic;
   retryPrompt?: string;
   assistantText?: string;
 }

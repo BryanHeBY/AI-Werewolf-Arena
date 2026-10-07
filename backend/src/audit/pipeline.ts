@@ -55,7 +55,7 @@ export async function buildDebugSummaryWithAgents(
 
   try {
     const tasks = buildAuditTasks(input, settings);
-    const runner = new AuditTaskRunner(executor, input.manifest.session_id, settings);
+    const runner = new AuditTaskRunner(executor, input.manifest.session_id, { ...settings, displayLocale: input.displayLocale ?? input.locale });
     const outputs = await runner.run(tasks);
     const evidencePolicy = new AuditEvidencePolicy();
     const merged = evidencePolicy.merge(outputs);

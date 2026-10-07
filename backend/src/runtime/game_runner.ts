@@ -1,3 +1,4 @@
+import { formatErrorDiagnostic } from "../utils/error_diagnostic";
 /** Owns one game's resources, deadline, failure policy, and final replay. */
 import path from "node:path";
 import { bootstrapGame } from "../app/bootstrap";
@@ -61,7 +62,7 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
     board: setup.options.board,
     startedAtIso: new Date().toISOString(),
     random: context.random.metadata,
-  }, recordRoot);
+  }, recordRoot, setup.context.displayLocale);
 
   return runWithSessionRecorder(replayManager, async () => {
     const { options } = setup;
@@ -92,11 +93,12 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
         acpWorkspaceRoot: path.join(recordRoot, sessionId, "acp-workspaces"),
         llmTimeoutMs: options.llmTimeoutMs,
         trace: options.trace,
+        displayLocale: setup.context.displayLocale,
         colorizeLogs: options.color,
         printLlmIo: options.printLlmIo,
         printThinking: options.printThinking,
         createAcpUpdateObserver: options.printThinking
-          ? (actorId) => createAcpConsoleLogger(actorId, log)
+          ? (actorId) => createAcpConsoleLogger(actorId, log, setup.context.displayLocale)
           : undefined,
       });
       const decisionProvider: ActionProvider = { getAction: request => reproduction.decide(request, agentRuntime!.provider) };
@@ -168,7 +170,7 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
         try {
           await replayManager.writeDebugSummary(await buildDebugSummaryMarkdown({ ...summaryInput, locale: setup.context.locale, displayLocale: setup.context.displayLocale }, setup.audit));
         } catch (error) {
-          log(`[audit] debug_summary_failed err=${String(error)}`, "warn");
+          log(`[audit] debug_summary_failed err=${formatErrorDiagnostic(error, setup.context.displayLocale)}`, "warn");
         }
       } catch (error) {
         failures.push(error);

@@ -1,3 +1,5 @@
+import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
+import { describeError } from "../../../utils/error_diagnostic";
 import { text } from "@ai-werewolf-arena/game-text";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionProvider, ActionRequest, BoardConfig, ToolCall } from "../../../core/domain"
@@ -49,7 +51,7 @@ interface AcpTurnPromptBuild {
 interface AcpTurnOutcome {
   action: ToolCall | null;
   reason?: string;
-  requestError?: string;
+  requestError?: ErrorDiagnostic;
 }
 
 /**
@@ -103,7 +105,7 @@ export class AcpActionProvider implements ActionProvider {
     let built: AcpTurnPromptBuild | undefined;
     let auditTrace: AcpSessionAuditTrace | undefined;
     let fallbackReason = "model_declined_required_action";
-    let requestError: string | undefined;
+    let requestError: ErrorDiagnostic | undefined;
     try {
       if (this.sessions.isClosed || deadlineAtMs <= Date.now()) throw new Error("acp_deadline_elapsed");
       session = await this.sessions.getOrCreate(request.actorId, deadlineAtMs, () => {
@@ -141,14 +143,15 @@ export class AcpActionProvider implements ActionProvider {
     } catch (error) {
       this.sessions.discard(request.actorId);
       fallbackReason = "runtime_error";
-      requestError = String(error);
+      requestError = describeError(error);
       safeRecordLogicOp({
         scope: "llm_action_provider",
         op: "action_provider_error",
         actorId: request.actorId,
         phase: request.phase,
         status: "fallback",
-        reason: requestError,
+        reason: requestError.code,
+        output: { diagnostic: requestError },
       });
     } finally {
       if (turn) {
@@ -194,7 +197,7 @@ export class AcpActionProvider implements ActionProvider {
           (error): AcpTurnOutcome => ({
             action: null,
             reason: "runtime_error",
-            requestError: String(error),
+            requestError: describeError(error),
           }),
         ),
         new Promise<AcpTurnOutcome>((resolve) => {
@@ -269,7 +272,7 @@ export class AcpActionProvider implements ActionProvider {
       auditTrace?: AcpSessionAuditTrace;
       elapsedMs: number;
       fallbackReason?: string;
-      requestError?: string;
+      requestError?: ErrorDiagnostic;
     },
   ): void {
     const systemPrompt =
@@ -312,7 +315,7 @@ export class AcpActionProvider implements ActionProvider {
         : [],
       finalAction: input.action,
       ...(input.requestError
-        ? { retryTrace: [{ attempt: 0, status: "request_error", reason: input.requestError }] }
+        ? { retryTrace: [{ attempt: 0, status: "request_error", reason: input.requestError.code, diagnostic: input.requestError }] }
         : {}),
       ...(input.fallbackReason
         ? {

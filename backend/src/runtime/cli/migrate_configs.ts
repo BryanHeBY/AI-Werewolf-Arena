@@ -1,3 +1,4 @@
+import { formatErrorDiagnostic } from "../../utils/error_diagnostic";
 import { readFile, writeFile, readdir, access, mkdir, unlink, rename, link, stat, open, type FileHandle } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import path from "node:path";
@@ -125,7 +126,7 @@ if (require.main === module) {
     : migrateBoards(configDir, apply);
   task.catch(error => {
     // Provider/authentication files are never read by this command.
-    console.error(error instanceof Error ? error.message : "config_migration_failed");
+    console.error(formatErrorDiagnostic(error));
     process.exitCode = 1;
   });
 }

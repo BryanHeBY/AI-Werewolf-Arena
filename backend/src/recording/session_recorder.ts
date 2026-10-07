@@ -1,3 +1,5 @@
+import type { Locale } from "@ai-werewolf-arena/game-text";
+import { formatErrorDiagnostic } from "../utils/error_diagnostic";
 /** Session replay recording orchestration and incremental file persistence. */
 import path from "path";
 import type {
@@ -40,16 +42,19 @@ export class SessionRecordManager {
   private constructor(
     private readonly aggregate: ReplaySessionAggregate,
     private readonly store: ReplayFileStore,
+    readonly displayLocale: Locale,
   ) {}
 
   static async create(
     sessionMeta: ReplaySessionMeta,
     recordRootDir: string,
+    displayLocale: Locale = sessionMeta.locale ?? "zh-CN",
   ): Promise<SessionRecordManager> {
-    const store = new ReplayFileStore(path.join(recordRootDir, sessionMeta.sessionId));
+    const store = new ReplayFileStore(path.join(recordRootDir, sessionMeta.sessionId), displayLocale);
     const manager = new SessionRecordManager(
       new ReplaySessionAggregate(sessionMeta),
       store,
+      displayLocale,
     );
     await store.initialize();
     await manager.writeInitialFiles();
@@ -196,7 +201,7 @@ export class SessionRecordManager {
     this.flushChain = this.flushChain
       .then(() => this.flushDirtyFiles())
       .catch((error) => {
-        console.warn(`[observability] replay_flush_failed err=${String(error)}`);
+        console.warn(`[observability] replay_flush_failed err=${formatErrorDiagnostic(error, this.displayLocale)}`);
       });
     return this.flushChain;
   }
@@ -263,6 +268,6 @@ export function safeRecordLogicOp(input: ReplayRecordLogicOpInput): void {
   try {
     active.recordLogicOp(input);
   } catch (error) {
-    console.warn(`[observability] logic_op_record_failed op=${input.op} err=${String(error)}`);
+    console.warn(`[observability] logic_op_record_failed op=${input.op} err=${formatErrorDiagnostic(error, active.displayLocale)}`);
   }
 }

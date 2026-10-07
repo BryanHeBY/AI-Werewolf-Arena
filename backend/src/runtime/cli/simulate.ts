@@ -1,3 +1,4 @@
+import { formatErrorDiagnostic } from "../../utils/error_diagnostic";
 import { loadBoardDefinition } from "../config/load_board_definition";
 import { simulateGames } from "../simulation/simulate_games";
 import path from "node:path";
@@ -19,4 +20,4 @@ async function main(args = process.argv.slice(2)) {
   if (report.rejects || report.fallbacks || report.naturallyFinished !== count) process.exitCode = 1;
 }
 
-if (require.main === module) main().catch(error => { console.error(error instanceof Error ? error.message : "simulation_failed"); process.exitCode = 1; });
+if (require.main === module) main().catch(error => { console.error(formatErrorDiagnostic(error)); process.exitCode = 1; });

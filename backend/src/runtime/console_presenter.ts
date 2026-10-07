@@ -1,3 +1,4 @@
+import { formatErrorDiagnostic } from "../utils/error_diagnostic";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { getDefaultScriptEventRenderRegistry } from "../game";
 import type { GameEvent, RuntimeSnapshot } from "../core";
@@ -77,7 +78,7 @@ export interface AcpConsoleLogger {
   flush(): void;
 }
 
-export function createAcpConsoleLogger(actorId: number, log: ConsoleLog): AcpConsoleLogger {
+export function createAcpConsoleLogger(actorId: number, log: ConsoleLog, locale: Locale = "zh-CN"): AcpConsoleLogger {
   let pending: { kind: "message" | "thought"; id: string; text: string } | null = null;
   const toolStates = new Map<string, { label: string; status?: string; error: string }>();
   const emitText = (kind: "message" | "thought", value: string) => {
@@ -134,7 +135,7 @@ export function createAcpConsoleLogger(actorId: number, log: ConsoleLog): AcpCon
       const previous = toolCallId ? toolStates.get(toolCallId) : undefined;
       const label = typeof event.title === "string" ? compact(event.title, 180) : previous?.label ?? "tool";
       const status = typeof event.status === "string" ? event.status : undefined;
-      const error = compact(updateText(event.error), 240);
+      const error = event.error === undefined || event.error === null || event.error === "" ? "" : formatErrorDiagnostic(event.error, locale);
       // Partial updates can refine input/content without changing tool status.
       // Keep their metadata, but only print lifecycle changes or new errors.
       const changed = (status !== undefined && status !== previous?.status)

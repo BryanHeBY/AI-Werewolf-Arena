@@ -1,3 +1,4 @@
+import { CONFIG_ERROR_CODES, type ConfigErrorCode } from "../config/error_codes";
 import { loadRuntimeConfig } from "../config/load_config";
 import { loadBoardDefinition } from "../config/load_board_definition";
 import { resolveGameSetup, resolveGameBoard } from "../config/resolve_game_setup";
@@ -11,12 +12,15 @@ export async function checkConfig(configDir: string, gameName: string) {
 }
 
 export function configDiagnostic(error: unknown): { code: string; path?: string } {
-  const candidate = error instanceof Error ? error.message.split(":", 1)[0] : "config_check_failed";
-  const code = /^(board_config|runtime_config|config_check)_[a-z_]+$/.test(candidate) ? candidate : "config_check_failed";
-  // Only typed board field paths are safe: arbitrary error messages may contain secrets.
-  const fieldPath = error instanceof BoardConfigurationError ? error.fieldPath : undefined;
-  const safePath = fieldPath && fieldPath.length <= 160 && /^(version|id|ruleset|board|rules|mechanisms|roles)(\.[a-z][a-zA-Z0-9_-]{0,31}|\.\d+)*$/.test(fieldPath);
-  return { code, ...(safePath ? { path: fieldPath } : {}) };
+  let message: unknown; let fieldPath: unknown;
+  try {
+    message = error instanceof Error ? Object.getOwnPropertyDescriptor(error, "message")?.value : undefined;
+    fieldPath = error instanceof BoardConfigurationError ? Object.getOwnPropertyDescriptor(error, "fieldPath")?.value : undefined;
+  } catch { /* Foreign proxies must not break the error-output boundary. */ }
+  const candidate = typeof message === "string" ? message.split(":", 1)[0] : "config_check_failed";
+  const code = CONFIG_ERROR_CODES.includes(candidate as ConfigErrorCode) ? candidate : "config_check_failed";
+  const safePath = typeof fieldPath === "string" && fieldPath.length <= 160 && /^(version|id|ruleset|board|rules|mechanisms|roles)(\.[a-z][a-zA-Z0-9_-]{0,31}|\.\d+)*$/.test(fieldPath);
+  return { code, ...(safePath && typeof fieldPath === "string" ? { path: fieldPath } : {}) };
 }
 
 export async function main(args = process.argv.slice(2)): Promise<void> {

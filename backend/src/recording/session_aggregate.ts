@@ -338,6 +338,7 @@ export class ReplaySessionAggregate {
         kind: item.status === "request_error" ? "request_error" : "constraint_warning",
         attempt: item.attempt,
         content: item.reason,
+        ...(item.diagnostic ? { diagnostic: structuredClone(item.diagnostic) } : {}),
       });
     }
     if (thinkingText) target.push({ role: "assistant", kind: "assistant_output", content: thinkingText });

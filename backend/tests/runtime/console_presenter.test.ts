@@ -80,7 +80,7 @@ describe("ACP console text", () => {
     ]);
   });
 
-  test("preserves errors and distinguishes separate calls to the same tool", () => {
+  test("reports safe error metadata and distinguishes separate calls to the same tool", () => {
     const lines: string[] = [];
     const logger = createAcpConsoleLogger(10, line => lines.push(line));
     logger({ sessionUpdate: "tool_call", toolCallId: "call1", title: "submit_action" });
@@ -95,7 +95,7 @@ describe("ACP console text", () => {
     logger({ sessionUpdate: "tool_call_update", toolCallId: "call1", status: "completed" });
     expect(lines).toEqual([
       "[acp][10][tool] start submit_action",
-      "[acp][10][tool] error submit_action error=permission denied",
+      '[acp][10][tool] error submit_action error={"code":"transport_error","message":"请求或运行操作失败。"}',
       "[acp][10][tool] failed submit_action",
       "[acp][10][tool] start submit_action",
       "[acp][10][tool] completed submit_action",

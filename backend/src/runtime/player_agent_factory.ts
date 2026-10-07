@@ -1,3 +1,4 @@
+import type { Locale } from "@ai-werewolf-arena/game-text";
 import { promises as fs } from "node:fs";
 import * as path from "node:path";
 import { World } from "../core/domain/world";
@@ -24,6 +25,7 @@ export interface PlayerAgentFactoryOptions {
   acpWorkspaceRoot: string;
   llmTimeoutMs: number;
   trace: boolean;
+  displayLocale?: Locale;
   colorizeLogs: boolean;
   printLlmIo: boolean;
   printThinking: boolean;
@@ -127,6 +129,7 @@ function createLlmRuntime(options: PlayerAgentFactoryOptions): PlayerAgentRuntim
     },
     personalityPromptResolver: (request) => profileFor(request.actorId).personalityPrompt,
     trace: options.trace,
+    displayLocale: options.displayLocale,
     fallbackProvider: new BaselineBotActionProvider(options.world),
     maxPromptEvents: 20,
     llmTimeoutMs: options.llmTimeoutMs,

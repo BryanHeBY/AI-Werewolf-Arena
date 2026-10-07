@@ -1,3 +1,5 @@
+import { formatErrorDiagnostic } from "../../utils/error_diagnostic";
+import { configDiagnostic } from "./check_config";
 import { loadRuntimeConfig } from "../config/load_config";
 import { loadBoardDefinition } from "../config/load_board_definition";
 import { resolveGameBoard, resolveGameSetup } from "../config/resolve_game_setup";
@@ -50,7 +52,7 @@ export async function main(argv = process.argv.slice(2)): Promise<void> {
 
 if (require.main === module) {
   main().catch((error) => {
-    console.error("run_game failed", error);
-    throw error;
+    console.error(JSON.stringify({ ...configDiagnostic(error), diagnostic: JSON.parse(formatErrorDiagnostic(error)) }));
+    process.exitCode = 1;
   });
 }

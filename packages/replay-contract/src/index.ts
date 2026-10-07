@@ -132,3 +132,5 @@ export function readReplayDocument(value: unknown): ReplayDocument {
 }
 
 export * from "./player_record";
+
+export * from "./error_diagnostic";

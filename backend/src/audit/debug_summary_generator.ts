@@ -1,3 +1,4 @@
+import { formatErrorDiagnostic } from "../utils/error_diagnostic";
 /** Choose agent audit when available, otherwise render deterministic findings. */
 import type { ResolvedAuditConfig } from "../runtime/config/contracts";
 import type { BuildDebugSummaryInput } from "./contracts";
@@ -31,7 +32,7 @@ export async function buildDebugSummaryMarkdown(
       }
     } catch (error) {
       console.warn(
-        `[debug_summary] pipeline_failed session_id=${input.manifest.session_id} error=${String(error)}`,
+        `[debug_summary] pipeline_failed session_id=${input.manifest.session_id} error=${formatErrorDiagnostic(error, input.displayLocale ?? input.locale ?? "zh-CN")}`,
       );
     }
   }

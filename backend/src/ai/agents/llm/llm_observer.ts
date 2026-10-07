@@ -1,9 +1,11 @@
+import type { Locale } from "@ai-werewolf-arena/game-text";
 import { ActionRequest } from "../../../core/domain"
 import { colorize, isAnsiEnabled } from "../../../utils/ansi";
 import { ChatMessage, ToolLoopStepTrace } from "../../integrations/llm/transport";
 
 export interface LlmObserverOptions {
   trace: boolean;
+  locale?: Locale;
   colorizeLogs?: boolean;
   printLlmIo: boolean;
   printThinking: boolean;
@@ -17,6 +19,8 @@ export class LlmObserver {
   constructor(private readonly options: LlmObserverOptions) {
     this.colorizeLogs = isAnsiEnabled(options.colorizeLogs);
   }
+
+  get locale(): Locale { return this.options.locale ?? "zh-CN"; }
 
   trace(line: string): void {
     this.recentEvents.push(line);

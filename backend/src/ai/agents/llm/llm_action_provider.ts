@@ -1,3 +1,4 @@
+import type { Locale } from "@ai-werewolf-arena/game-text";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionProvider,
 ActionRequest,
@@ -31,6 +32,7 @@ import { LlmTurnOrchestrator } from "./llm_turn_orchestrator";
 
 export interface LlmActionProviderOptions {
   maxPromptEvents?: number;
+  displayLocale?: Locale;
   trace?: boolean;
   fallbackProvider?: ActionProvider;
   llmTimeoutMs?: number;
@@ -79,6 +81,7 @@ export class LlmActionProvider implements ActionProvider {
     const configuredConcurrency = options.maxConcurrentRequests ?? this.readConcurrencyFromEnvironment();
     const observer = new LlmObserver({
       trace: options.trace ?? false,
+      locale: options.displayLocale ?? world.locale,
       colorizeLogs: options.colorizeLogs,
       printLlmIo: options.printLlmIo ?? false,
       printThinking: options.printThinking ?? false,

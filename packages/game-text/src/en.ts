@@ -442,4 +442,13 @@ export const en = Object.freeze({
   "replay.seek": "Playback position",
   "replay.fullscreen": "Fullscreen",
   "replay.frame_position": "Frame {frame} / {total}",
+  "error.transport_error": "The request or runtime operation failed.",
+  "error.request_timeout": "The request timed out.",
+  "error.request_aborted": "The request was cancelled or its session was closed.",
+  "error.rate_limited": "The model service rate limited the request; check usage limits or concurrency.",
+  "error.authentication_failed": "The model service rejected authentication; check the connection credentials.",
+  "error.permission_denied": "The model service denied access; check model permissions.",
+  "error.model_unavailable": "The model service returned a server error.",
+  "error.network_error": "The network connection failed.",
+  "error.filesystem_error": "A filesystem operation failed.",
 } satisfies Record<MessageKey, string>);

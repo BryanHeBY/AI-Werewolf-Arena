@@ -1,3 +1,5 @@
+import type { Locale } from "@ai-werewolf-arena/game-text";
+import { formatErrorDiagnostic } from "../utils/error_diagnostic";
 import type { AuditAgentExecutor } from "../ai/audit/contracts";
 import {
   AuditAgentOutput,
@@ -9,6 +11,7 @@ export interface AuditTaskRunnerOptions {
   timeoutMs: number;
   maxAttempts: number;
   concurrency: number;
+  displayLocale?: Locale;
 }
 
 /** Runs independent audit tasks with bounded concurrency and adaptive payload retries. */
@@ -50,7 +53,7 @@ export class AuditTaskRunner {
         payload = shrinkAuditPayload(payload);
       } catch (error) {
         console.warn(
-          `[debug_summary] agent_rejected_reason=request_error session_id=${this.sessionId} agent=${task.name} attempt=${attempt}/${this.options.maxAttempts} error=${String(error)}`,
+          `[debug_summary] agent_rejected_reason=request_error session_id=${this.sessionId} agent=${task.name} attempt=${attempt}/${this.options.maxAttempts} error=${formatErrorDiagnostic(error, this.options.displayLocale ?? locale)}`,
         );
       }
     }

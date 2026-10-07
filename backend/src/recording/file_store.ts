@@ -1,9 +1,11 @@
+import type { Locale } from "@ai-werewolf-arena/game-text";
+import { formatErrorDiagnostic } from "../utils/error_diagnostic";
 import { promises as fs } from "fs";
 import path from "path";
 
 /** Atomic filesystem adapter for one replay session directory. */
 export class ReplayFileStore {
-  constructor(readonly sessionDir: string) {}
+  constructor(readonly sessionDir: string, private readonly locale: Locale = "zh-CN") {}
 
   async initialize(): Promise<void> {
     await fs.mkdir(path.join(this.sessionDir, "players"), { recursive: true });
@@ -27,7 +29,7 @@ export class ReplayFileStore {
       await this.writeAtomic(relativePath, content);
     } catch (error) {
       console.warn(
-        `[observability] write_${kind}_failed file=${relativePath} err=${String(error)}`,
+        `[observability] write_${kind}_failed file=${relativePath} err=${formatErrorDiagnostic(error, this.locale)}`,
       );
     }
   }

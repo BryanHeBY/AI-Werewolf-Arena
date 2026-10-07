@@ -1,3 +1,4 @@
+import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：对局复盘记录结构类型定义。 */
 import { Camp, PlayerVisibleEvent, ToolCall } from "../core/domain/model";
@@ -188,6 +189,7 @@ export interface ReplayRecordPlayerRoundInput {
     attempt: number;
     status: "request_error" | "no_valid_action";
     reason?: string;
+    diagnostic?: ErrorDiagnostic;
     retryPrompt?: string;
     assistantText?: string;
   }>;

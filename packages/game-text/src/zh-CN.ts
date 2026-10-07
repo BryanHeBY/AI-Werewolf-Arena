@@ -441,6 +441,15 @@ export const zhCN = Object.freeze({
   "replay.seek": "播放位置",
   "replay.fullscreen": "全屏",
   "replay.frame_position": "第 {frame} 帧 / 共 {total} 帧",
+  "error.transport_error": "请求或运行操作失败。",
+  "error.request_timeout": "请求超过等待期限。",
+  "error.request_aborted": "请求已取消或会话已关闭。",
+  "error.rate_limited": "模型服务返回限流；请检查调用额度或并发限制。",
+  "error.authentication_failed": "模型服务未接受认证；请检查接入认证配置。",
+  "error.permission_denied": "模型服务拒绝访问；请检查模型访问权限。",
+  "error.model_unavailable": "模型服务返回服务端错误。",
+  "error.network_error": "网络连接失败。",
+  "error.filesystem_error": "文件系统操作失败。",
 } as const);
 
 export type MessageKey = keyof typeof zhCN;

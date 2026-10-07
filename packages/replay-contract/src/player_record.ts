@@ -1,3 +1,4 @@
+import { assertErrorDiagnostic, type ErrorDiagnostic } from "./error_diagnostic";
 import { assertField, isRecord, ReplayDocumentValidationError } from "./validation";
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
 import { legacyPhaseId, legacyStageId, legacyRoleId, legacyCampId } from "./legacy_aliases";
@@ -16,6 +17,7 @@ export interface ReplayPlayerDeltaMessage {
     | "action_summary"
     | "fallback";
   attempt?: number;
+  diagnostic?: ErrorDiagnostic;
   content?: string;
   name?: string;
   args?: Record<string, unknown>;
@@ -111,6 +113,7 @@ function assertPlayerShape(value: unknown): asserts value is ReplayPlayerView {
         assertField(typeof message.role === "string" && ["system", "user", "assistant", "tool", "meta"].includes(message.role), `${messagePath}.role`);
         assertField(typeof message.kind === "string" && ["prompt", "retry_prompt", "assistant_output", "request_error", "constraint_warning", "tool_call", "tool_result", "action_summary", "fallback"].includes(message.kind), `${messagePath}.kind`);
         for (const field of ["content", "name"]) assertField(message[field] === undefined || typeof message[field] === "string", `${messagePath}.${field}`);
+        if (message.diagnostic !== undefined) assertErrorDiagnostic(message.diagnostic, `${messagePath}.diagnostic`);
         assertField(message.attempt === undefined || typeof message.attempt === "number" && Number.isSafeInteger(message.attempt) && message.attempt >= 0, `${messagePath}.attempt`);
         assertField(message.args === undefined || isRecord(message.args), `${messagePath}.args`);
         assertField(message.accepted === undefined || typeof message.accepted === "boolean", `${messagePath}.accepted`);
@@ -128,10 +131,13 @@ export function assertReplayPlayerView(value: unknown): asserts value is Canonic
 export function readReplayPlayerView(value: unknown): CanonicalReplayPlayerView {
   if (!isRecord(value)) throw new ReplayDocumentValidationError("invalid_document", "player.document");
   if (value.schemaVersion !== undefined && value.schemaVersion !== 1 && value.schemaVersion !== 2) throw new ReplayDocumentValidationError("unsupported_version", "player.schemaVersion");
-  assertPlayerShape(value);
-  const result = structuredClone(value) as CanonicalReplayPlayerView;
+  const snapshot = structuredClone(value);
+  if (snapshot.schemaVersion !== undefined && snapshot.schemaVersion !== 1 && snapshot.schemaVersion !== 2) throw new ReplayDocumentValidationError("unsupported_version", "player.schemaVersion");
+  const alreadyCurrent = snapshot.schemaVersion === 2;
+  assertPlayerShape(snapshot);
+  const result = snapshot as CanonicalReplayPlayerView;
   result.schemaVersion = 2;
-  if (value.schemaVersion === 2) return result;
+  if (alreadyCurrent) return result;
   result.role = legacyRoleId(result.role); result.camp = legacyCampId(result.camp);
   const normalize = <T extends { phase: string; stage: string }>(entry: T): T => ({ ...entry, phase: legacyPhaseId(entry.phase), stage: legacyStageId(entry.stage) });
   if (result.initial_prompt) result.initial_prompt = normalize(result.initial_prompt);

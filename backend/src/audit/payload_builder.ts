@@ -1,3 +1,4 @@
+import { readErrorDiagnostic, type ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { RuleError, type Locale } from "@ai-werewolf-arena/game-catalog";
 import { AuditFinding, AuditInspectionResult } from "../ai/audit/audit_tool_protocol";
 import type { DebugSummaryPipelineInput } from "./pipeline";
@@ -74,9 +75,15 @@ function transportReason(value: unknown): string | undefined {
   return value === undefined ? undefined : typeof value === "string" && transportReasons.has(value) ? value : "transport_diagnostic_omitted";
 }
 
+function diagnosticFacts(value: unknown): ErrorDiagnostic | undefined {
+  try { return readErrorDiagnostic(value); } catch { return undefined; }
+}
+
 function summarizeLogicOps(ops: ReplayLogicOp[], maxItems: number) {
   return ops.slice(-maxItems).map((op) => {
-    if (op.scope === "llm_action_provider") return {
+    if (op.scope === "llm_action_provider") {
+      const diagnostic = diagnosticFacts(op.output?.diagnostic);
+      return {
       seq: Number.isSafeInteger(op.seq) ? op.seq : 0,
       scope: "llm_action_provider",
       op: transportOperations.has(op.op) ? op.op : "transport_diagnostic",
@@ -84,7 +91,9 @@ function summarizeLogicOps(ops: ReplayLogicOp[], maxItems: number) {
       phase: ["night", "day", "voting", "game_over"].includes(op.phase ?? "") ? op.phase : undefined,
       status: ["ok", "rejected", "fallback", "error"].includes(op.status) ? op.status : "error",
       reason: op.op === "action_provider_error" ? "runtime_error" : transportReason(op.reason),
-    };
+      ...(diagnostic ? { diagnostic } : {}),
+      };
+    }
     return {
       seq: op.seq, scope: op.scope, op: op.op, actor_id: op.actor_id, phase: op.phase,
       status: op.status, reason: op.reason, input: safeJsonString(op.input, 200), output: safeJsonString(op.output, 200),
@@ -128,10 +137,14 @@ function summarizePlayerView(view: ReplayPlayerView, maxItems: number) {
       .map((item) => ({ name: item.name, accepted: item.accepted }));
     base.retry_trace = entry.delta_messages
       .filter((item) => ["retry_prompt", "constraint_warning", "request_error"].includes(item.kind))
-      .map((item) => ({
-        attempt: item.attempt ?? 0,
-        status: item.kind === "request_error" ? "request_error" : "no_valid_action",
-      }));
+      .map((item) => {
+        const diagnostic = diagnosticFacts(item.diagnostic);
+        return {
+          attempt: item.attempt ?? 0,
+          status: item.kind === "request_error" ? "request_error" : "no_valid_action",
+          ...(diagnostic ? { diagnostic } : {}),
+        };
+      });
     const fallback = entry.delta_messages.find(
       (item) => item.kind === "fallback" && item.content,
     );

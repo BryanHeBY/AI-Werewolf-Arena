@@ -1,3 +1,5 @@
+import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
+import { describeError, formatErrorDiagnostic } from "../../../utils/error_diagnostic";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, ToolCall } from "../../../core/domain"
@@ -30,7 +32,7 @@ interface NativeAttempt {
   action: ToolCall | null;
   failed: boolean;
   deadlineExceeded?: boolean;
-  errorText?: string;
+  diagnostic?: ErrorDiagnostic;
   assistantText?: string;
 }
 
@@ -62,9 +64,9 @@ export class LlmTurnOrchestrator {
       // Await before finally releases the provider's concurrency slot.
       return await this.runNative(client, request, prompt, startedAt);
     } catch (error) {
-      const text = String(error);
+      const diagnostic = describeError(error);
       this.options.observer.trace(
-        `${text.includes("llm_request_timeout_") ? "request_timeout" : "request_transport_fail"} player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt} err=${text}`,
+        `${diagnostic.code === "request_timeout" ? "request_timeout" : "request_transport_fail"} player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt} err=${formatErrorDiagnostic(error, this.options.observer.locale)}`,
       );
       return this.finishWithFallback(request, prompt, "runtime_error");
     } finally {
@@ -82,7 +84,7 @@ export class LlmTurnOrchestrator {
     const attempt = async (messages: ChatMessage[]): Promise<NativeAttempt> => {
       const timeoutMs = this.effectiveTimeout(request.deadlineAtMs);
       if (timeoutMs <= 0) {
-        return { action: null, failed: false, deadlineExceeded: true, errorText: "request_deadline_elapsed" };
+        return { action: null, failed: false, deadlineExceeded: true, diagnostic: { code: "request_timeout" } };
       }
       try {
         const result = await this.options.sdkToolLoop.run(
@@ -94,11 +96,11 @@ export class LlmTurnOrchestrator {
         );
         return { action: result.action, failed: false, assistantText: result.thinkingText };
       } catch (error) {
-        const errorText = String(error);
+        const diagnostic = describeError(error);
         this.options.observer.trace(
-          `request_sdk_attempt_fail player=${request.actorId} phase=${request.phase} err=${errorText}`,
+          `request_sdk_attempt_fail player=${request.actorId} phase=${request.phase} err=${formatErrorDiagnostic(error, this.options.observer.locale)}`,
         );
-        return { action: null, failed: true, errorText };
+        return { action: null, failed: true, diagnostic };
       }
     };
 
@@ -108,7 +110,8 @@ export class LlmTurnOrchestrator {
       retryTrace.push({
         attempt: 0,
         status: "request_error",
-        reason: first.errorText,
+        reason: first.diagnostic?.code,
+        diagnostic: first.diagnostic,
         assistantText: first.assistantText,
       });
       return this.finishWithFallback(request, prompt, "runtime_error", {
@@ -155,7 +158,8 @@ export class LlmTurnOrchestrator {
       const result = await attempt(messages);
       trace.assistantText = result.assistantText;
       if (result.deadlineExceeded) {
-        trace.reason = result.errorText;
+        trace.reason = result.diagnostic?.code;
+        trace.diagnostic = result.diagnostic;
         return this.finishWithFallback(request, prompt, "deadline_skip", {
           thinkingText: result.assistantText,
           retryTrace,
@@ -163,7 +167,8 @@ export class LlmTurnOrchestrator {
       }
       if (result.failed) {
         trace.status = "request_error";
-        trace.reason = result.errorText;
+        trace.reason = result.diagnostic?.code;
+        trace.diagnostic = result.diagnostic;
         return this.finishWithFallback(request, prompt, "runtime_error", {
           thinkingText: result.assistantText,
           retryTrace,

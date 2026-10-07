@@ -1,3 +1,4 @@
+import { formatErrorDiagnostic } from "../utils/error_diagnostic";
 import { bootstrapGame } from "../app/bootstrap";
 import { sixPlayerMvpConfig } from "./scenarios/six_player_mvp";
 import { BaselineBotActionProvider } from "../ai/agents/providers/action_providers";
@@ -24,7 +25,7 @@ async function main(): Promise<void> {
 
 if (require.main === module) {
   main().catch((error) => {
-    console.error("run_mock_game failed", error);
-    throw error;
+    console.error(`run_mock_game failed ${formatErrorDiagnostic(error)}`);
+    process.exitCode = 1;
   });
 }
