@@ -1,3 +1,5 @@
+import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { bootstrapGame } from "../../../src/app/bootstrap";
 import { describe, expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import * as path from "node:path";
@@ -22,7 +24,7 @@ describe("AcpProcessClient initialization deadlines", () => {
     const startedAt = Date.now();
     await expect(client.createSession({
       actorId: 1,
-      registry: new AcpTurnRegistry(),
+      registry: new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig).world),
     })).rejects.toBeDefined();
     expect(Date.now() - startedAt).toBeLessThan(5_000);
 
@@ -70,7 +72,7 @@ test("drains final ACP chunks on success, failure and forced closure", async () 
     },
     onPromptEnd: actorId => updates.push(`end:${actorId}`),
   });
-  const session = await client.createSession({ actorId: 11, registry: new AcpTurnRegistry() });
+  const session = await client.createSession({ actorId: 11, registry: new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig).world) });
   try {
     await session.prompt("ok");
     expect(updates).toEqual(["最", "后", "片段", "end:11"]);

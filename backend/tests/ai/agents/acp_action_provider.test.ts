@@ -29,7 +29,7 @@ function speakRequest(actorId = 1): ActionRequest {
 
 describe("AcpTurnRegistry", () => {
   test("rejects stale sessions and tools outside the current turn", async () => {
-    const registry = new AcpTurnRegistry();
+    const registry = new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig).world);
     expect(registry.getSchema().tools.submit_action).toContain("turn_id");
     const pending = registry.openTurn(speakRequest(), "session-a");
     expect(pending.turnId).toBe("t1");
@@ -54,7 +54,7 @@ describe("AcpTurnRegistry", () => {
         action: "speak",
         arguments: { text: "我通过 MCP 工具发言。" },
       }),
-    ).toEqual({ ok: true, accepted: true });
+    ).toEqual({ ok: true, accepted: true, applied: false, action: "speak" });
     await expect(pending.action).resolves.toEqual({
       name: "speak",
       args: { text: "我通过 MCP 工具发言。" },
@@ -72,7 +72,7 @@ describe("AcpTurnRegistry", () => {
 
 describe("WerewolfMcpControlServer", () => {
   test("exposes only the current turn through the injected MCP sidecar capability", async () => {
-    const registry = new AcpTurnRegistry();
+    const registry = new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig).world);
     const control = new WerewolfMcpControlServer(registry);
     const config = await control.start(process.execPath, []);
     const env = Object.fromEntries(config.env.map((entry) => [entry.name, entry.value]));
@@ -239,7 +239,7 @@ describe("AcpActionProvider", () => {
               action: "speak",
               arguments: { text: "这是 MCP 工具提交的行动。" },
             });
-            expect(response).toEqual({ ok: true, accepted: true });
+            expect(response).toEqual({ ok: true, accepted: true, applied: false, action: "speak" });
           },
           async cancel(): Promise<void> {
             cancelled += 1;

@@ -131,9 +131,9 @@ export class AiSdkClient implements ChatModelClient {
         inputSchema: jsonSchema(schema.parameters as any),
         execute: async (args: unknown, execution: { toolCallId: string }) => {
           const safeArgs = isRecord(args) ? args : {};
-          // AI SDK may finish a step with several calls. Once the domain accepted
-          // an action, ignore later calls rather than allowing another mutation.
-          if (finalAction !== null || stopped) {
+          // Domain turn owners reject duplicates consistently across transports.
+          // Explicit stop still belongs to the caller's transport loop policy.
+          if (stopped) {
             return { ignored: true, reason: "domain_turn_already_finished" };
           }
           const handled = await callbacks.onToolCall({
@@ -152,7 +152,7 @@ export class AiSdkClient implements ChatModelClient {
             stop: handled.stop === true,
             hasFinalAction: handled.finalAction !== undefined,
           });
-          if (handled.finalAction !== undefined) {
+          if (handled.finalAction !== undefined && finalAction === null) {
             finalAction = handled.finalAction;
           }
           if (handled.stop) {

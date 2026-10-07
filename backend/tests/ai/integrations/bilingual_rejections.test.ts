@@ -35,7 +35,7 @@ test("generic failure builders need no turn context and old error-only ACP callb
     expect(generic).toMatchObject({ ok: false, error: "turn_id_mismatch" });
     expect(generic.message).toContain("turn_id"); if (lang === "en") expect(generic.message).not.toMatch(han);
     expect(toolFailure(lang, "unknown").message).toContain("unknown");
-    const registry = new AcpTurnRegistry(() => ({ ok: false, error: "invalid_report_bug_category" }), lang);
+    const registry = new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig, { locale: lang }).world, () => ({ ok: false, error: "invalid_report_bug_category" }));
     const turn = registry.openTurn({ actorId: 1, phase: Phase.Day, allowedTools: ["speak"], context: { day: 1, stage: "day_speech", visible_events: [] } }, "own-session");
     const report = registry.reportBug("own-session", { turn_id: turn.turnId, category: "flow", severity: "high", message: "Original report" });
     expect(report).toEqual({ ok: false, error: "invalid_report_bug_category", message: lang === "en" ? "Invalid report_bug.category. Use a category declared in the tool schema." : "report_bug.category无效；请使用工具schema声明的类别。" });
@@ -115,7 +115,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`actual SDK ${locale} correc
 });
 
 for (const locale of ["zh-CN", "en"] as const) test(`loopback ${locale} rejects unauthorized and malformed requests without returning internal exceptions`, async () => {
-  const registry = new AcpTurnRegistry(undefined, locale); const control = new WerewolfMcpControlServer(registry);
+  const registry = new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig, { locale }).world); const control = new WerewolfMcpControlServer(registry);
   const config = await control.start(process.execPath, []); const env = Object.fromEntries(config.env.map(entry => [entry.name, entry.value]));
   try {
     const unauth = await fetch(`${env.WEREWOLF_MCP_CONTROL_URL}/invoke`, { method: "POST", body: "{}" });

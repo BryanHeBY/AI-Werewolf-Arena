@@ -41,7 +41,7 @@ test("locale changes every protocol and nested parameter description without cha
   expect(taskLocale({})).toBe("zh-CN");
   expect(taskLocale({ AWA_TASK_LOCALE: "en" })).toBe("en");
   expect(() => taskLocale({ AWA_TASK_LOCALE: "en-US" })).toThrow("acp_task_locale_invalid");
-  expect(() => new AcpTurnRegistry(undefined, "en-US" as Locale)).toThrow("acp_task_locale_invalid");
+  expect(() => new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig, { locale: "en-US" as Locale }).world)).toThrow("game_locale_invalid");
   expect(() => new AuditToolTurnRegistry("en-US" as Locale)).toThrow("audit_task_locale_invalid");
 });
 
@@ -49,7 +49,7 @@ const request: ActionRequest = { actorId: 1, phase: Phase.Day, allowedTools: ["s
 
 test("real game/audit MCP subprocesses preserve simultaneous task locales and authorization", async () => {
   await Promise.all((["zh-CN", "en"] as const).flatMap(locale => ["game", "audit"].map(async kind => {
-    const gameRegistry = new AcpTurnRegistry(undefined, locale);
+    const gameRegistry = new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig, { locale }).world);
     const auditRegistry = new AuditToolTurnRegistry(locale);
     const control = kind === "game" ? new WerewolfMcpControlServer(gameRegistry) : new AuditMcpControlServer(auditRegistry);
     const entrypoint = kind === "game" ? "src/ai/integrations/acp/werewolf_mcp_server.ts" : "src/ai/audit/audit_mcp_server.ts";
@@ -78,8 +78,8 @@ test("real game/audit MCP subprocesses preserve simultaneous task locales and au
         const malformed = await client.callTool({ name: "submit_action", arguments: { turn_id: "", action: "speak", arguments: { text: "raw 中文" } } });
         expect(malformed.isError).toBe(true);
         expect(JSON.stringify(malformed.content)).toContain(locale === "en" ? "Tool arguments do not match this task" : "工具参数不符合本任务");
-        expect((await client.callTool({ name: "submit_action", arguments: { turn_id: "old", action: "speak", arguments: { text: "raw 中文" } } })).structuredContent).toEqual({ ok: false, error: "turn_not_open_or_session_invalid", message: errorMessage(locale, "turn_not_open_or_session_invalid") });
-        expect((await client.callTool({ name: "submit_action", arguments: { turn_id: turn.turnId, action: "speak", arguments: { text: "raw 中文" } } })).structuredContent).toEqual({ ok: true, accepted: true });
+        expect((await client.callTool({ name: "submit_action", arguments: { turn_id: "old", action: "speak", arguments: { text: "raw 中文" } } })).structuredContent).toMatchObject({ ok: false, error: "turn_id_mismatch", expected_turn_id: "t1", received_turn_id: "old" });
+        expect((await client.callTool({ name: "submit_action", arguments: { turn_id: turn.turnId, action: "speak", arguments: { text: "raw 中文" } } })).structuredContent).toEqual({ ok: true, accepted: true, applied: false, action: "speak" });
         expect(await turn.action).toEqual({ name: "speak", args: { text: "raw 中文" } });
       } else {
         const turn = auditRegistry.openTurn({ mode: "inspect", locale, taskName: "test", source: "synthetic", payload: { events: [{ seq: 7 }] } }, session);

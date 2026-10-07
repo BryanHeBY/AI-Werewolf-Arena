@@ -80,7 +80,7 @@ export class AcpActionProvider implements ActionProvider {
   ) {
     this.fallbackProvider = options.fallbackProvider ?? new BaselineBotActionProvider(world);
     this.bugReportService = new AgentBugReportService(world);
-    this.registry = new AcpTurnRegistry((report) => this.handleBugReport(report), world.locale);
+    this.registry = new AcpTurnRegistry(world, (report) => this.handleBugReport(report));
     const localization = getDefaultPhaseStageLocalizationRegistry();
     this.promptPolicy = new PlayerPromptPolicy(world, {
       personalityPromptResolver: options.personalityPromptResolver,

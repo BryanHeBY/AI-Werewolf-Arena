@@ -35,6 +35,7 @@ export interface ValidationContext {
 export class ActionValidator {
   constructor(
     private readonly ruleRegistry: ToolValidationRuleRegistry = getDefaultToolValidationRuleRegistry(),
+    private readonly recordOperations = true,
   ) {}
 
   validate<T extends ToolCall>(
@@ -44,7 +45,7 @@ export class ActionValidator {
     context: ValidationContext,
   ): ToolValidationResult<T> {
     const reject = (violation: RuleViolation): ToolValidationResult<T> => {
-      safeRecordLogicOp({
+      if (this.recordOperations) safeRecordLogicOp({
         scope: "gateway",
         op: "validate_tool_call",
         actorId,
@@ -60,7 +61,7 @@ export class ActionValidator {
       return toolFailure(world.locale, violation.code, violation.message);
     };
     const accept = (): ToolValidationResult<T> => {
-      safeRecordLogicOp({
+      if (this.recordOperations) safeRecordLogicOp({
         scope: "gateway",
         op: "validate_tool_call",
         actorId,

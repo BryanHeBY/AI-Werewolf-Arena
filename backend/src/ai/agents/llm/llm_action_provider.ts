@@ -114,7 +114,7 @@ export class LlmActionProvider implements ActionProvider {
       observer,
     );
     const recorder = new PlayerRoundRecorder(world);
-    const sdkToolLoop = new SdkGameToolLoop(world, repairRegistry, promptSession, observer);
+    const sdkToolLoop = new SdkGameToolLoop(world, repairRegistry, promptSession, observer, toolSpecRegistry);
     this.orchestrator = new LlmTurnOrchestrator({
       world,
       defaultClient: client,

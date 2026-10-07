@@ -1,7 +1,7 @@
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { RoleComponent } from "../../../src/core/domain/components/role";
-import { ActionProvider, ActionRequest, Phase, ToolCall } from "../../../src/core/domain/model";
+import { ActionProvider, ActionRequest, ActionWindow, Phase, ToolCall } from "../../../src/core/domain/model";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
@@ -446,6 +446,7 @@ describe("LlmActionProvider", () => {
 
   test("accepts a native role-action callback", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
+    const seerId = context.world.entityIds().find(id => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "seer")!;
     const provider = new LlmActionProvider(
       context.world,
       new ToolLoopClient("check_identity", { target_id: 2 }),
@@ -456,7 +457,7 @@ describe("LlmActionProvider", () => {
 
     const action = await provider.getAction({
       phase: Phase.Night,
-      actorId: 5,
+      actorId: seerId,
       allowedTools: ["check_identity"],
       context: {},
     });
@@ -1132,7 +1133,7 @@ describe("LlmActionProvider", () => {
       "report_bug",
     ]);
     const submitTool = client.lastTools.find((tool) => tool.name === "submit_action");
-    expect(submitTool?.description).toContain("唯一会生效");
+    expect(submitTool?.description).toContain("accepted=true、applied=false");
     expect(submitTool?.parameters?.required).toEqual(["turn_id", "action", "arguments"]);
     expect(submitTool?.parameters?.properties?.turn_id?.type).toBe("string");
     expect(submitTool?.parameters?.properties?.action?.type).toBe("string");
@@ -1207,6 +1208,7 @@ describe("LlmActionProvider", () => {
 
   test("parses wolf kill abstain vote", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
+    const wolfId = context.world.entityIds().find(id => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf")!;
     const provider = new LlmActionProvider(
       context.world,
       new ToolLoopClient("kill_vote", { target_id: null, abstain: true }),
@@ -1217,7 +1219,7 @@ describe("LlmActionProvider", () => {
 
     const action = await provider.getAction({
       phase: Phase.Night,
-      actorId: 1,
+      actorId: wolfId,
       allowedTools: ["kill_vote"],
       context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
@@ -1342,6 +1344,7 @@ describe("LlmActionProvider", () => {
 
     const action = await provider.getAction({
       phase: Phase.Voting,
+      actionWindow: ActionWindow.OnPreVote,
       actorId: wolfId,
       allowedTools: ["self_destruct"],
       context: { stage: "on_pre_vote" },

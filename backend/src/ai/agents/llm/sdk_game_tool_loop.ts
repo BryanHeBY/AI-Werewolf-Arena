@@ -1,7 +1,4 @@
-import { RuleError, type RuleViolation } from "@ai-werewolf-arena/game-catalog";
-import { text, toolFailure } from "@ai-werewolf-arena/game-text";
-import { COMPONENT } from "../../../core/domain/components/names";
-import { RoleComponent } from "../../../core/domain/components/role";
+import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, ToolCall } from "../../../core/domain"
 import {
   getActionRequestDay,
@@ -9,18 +6,14 @@ import {
 } from "../../../core/domain/action_request_context";
 import { World } from "../../../core/domain/world";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
-import {
-  getDefaultToolValidationRuleRegistry,
-  ToolValidationRuleRegistry,
-} from "../../../game/mechanisms";
 import { AgentBugReportService } from "../reporting/bug_report_service";
 import { gameToolProtocol } from "../game_tool_protocol";
-import { ActionValidationService } from "./action_validation_service";
-import { ToolCallRepairRegistry } from "../../../game/mechanisms";
+import { ActionReception, ActionTurn } from "../player/action_reception";
+import { ToolCallRepairRegistry, type ToolSpecRegistry, getDefaultToolSpecRegistry } from "../../../game/mechanisms";
 import { LlmObserver } from "./llm_observer";
 import { ChatMessage, ChatModelClient } from "../../integrations/llm/transport";
 import { PlayerPromptSession } from "./player_prompt_session";
-import { evaluateTurnConstraints, resolveTurnConstraints } from "../player/turn_constraints";
+import { resolveTurnConstraints } from "../player/turn_constraints";
 
 interface ToolLoopActionResult {
   action: ToolCall | null;
@@ -33,17 +26,17 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 /** Native SDK implementation of the shared werewolf game tool protocol. */
 export class SdkGameToolLoop {
-  private readonly actionValidation = new ActionValidationService();
-  private readonly stateValidation: ToolValidationRuleRegistry;
+  private readonly reception: ActionReception;
   private readonly bugReports: AgentBugReportService;
 
   constructor(
     private readonly world: World,
-    private readonly repairRegistry: ToolCallRepairRegistry,
+    repairRegistry: ToolCallRepairRegistry,
     private readonly promptSession: PlayerPromptSession,
     private readonly observer: LlmObserver,
+    toolSpecRegistry: ToolSpecRegistry = getDefaultToolSpecRegistry(),
   ) {
-    this.stateValidation = getDefaultToolValidationRuleRegistry();
+    this.reception = new ActionReception(world, repairRegistry, toolSpecRegistry);
     this.bugReports = new AgentBugReportService(world, {
       onAccepted: (report, reportId) => {
         const message = report.message.length > 120
@@ -65,22 +58,24 @@ export class SdkGameToolLoop {
   ): Promise<ToolLoopActionResult> {
     const controller = new AbortController();
     let timer: NodeJS.Timeout | null = null;
+    const turn = new ActionTurn(this.reception, request, turnId);
     try {
       const constraints = resolveTurnConstraints(request);
       const protocol = gameToolProtocol(this.world.locale);
-      let selectedAction: ToolCall | null = null;
       const loop = client.runToolLoop<ToolCall>(
         messages,
         protocol.specs,
         {
           onToolCall: async (invocation) => {
+            if (controller.signal.aborted) {
+              return { toolResult: toolFailure(this.world.locale, "turn_not_open_or_session_invalid") };
+            }
             if (invocation.name === "get_game_schema") {
               return { toolResult: protocol.schema };
             }
             if (invocation.name === PlayerPromptSession.REPORT_BUG_TOOL) {
-              if (typeof invocation.args.turn_id === "string" && invocation.args.turn_id !== turnId) {
-                return { toolResult: this.rejectTurnId(request, invocation.name, invocation.args, turnId) };
-              }
+              const refusal = turn.authorize(invocation.args.turn_id ?? turnId, "report_bug");
+              if (refusal) return { toolResult: this.recordRefusal(request, invocation.name, invocation.args, refusal) };
               return { toolResult: this.reportBug(request, invocation.args) };
             }
 
@@ -88,51 +83,22 @@ export class SdkGameToolLoop {
             let actionArgs = invocation.args;
             if (invocation.name === "submit_action") {
               if (invocation.args.turn_id !== turnId) {
-                return { toolResult: this.rejectTurnId(request, invocation.name, invocation.args, turnId) };
+                return { toolResult: this.recordRefusal(request, invocation.name, invocation.args, turn.authorize(invocation.args.turn_id)!) };
               }
               if (typeof invocation.args.action !== "string") {
                 return { toolResult: toolFailure(this.world.locale, "invalid_submit_action_arguments") };
               }
               actionName = invocation.args.action;
-              actionArgs = isRecord(invocation.args.arguments) ? invocation.args.arguments : {};
+              if (!isRecord(invocation.args.arguments)) {
+                return { toolResult: toolFailure(this.world.locale, "invalid_submit_action_arguments") };
+              }
+              actionArgs = invocation.args.arguments;
             }
-            if (selectedAction) {
-              return {
-                toolResult: {
-                  ...toolFailure(this.world.locale, "turn_constraints_max_actions_exceeded"),
-                  details: [text(this.world.locale, "turn.maximum", { count: constraints.maxValidActions })],
-                },
-              };
+            const receipt = turn.submit(turnId, actionName, actionArgs);
+            if (!receipt.ok) {
+              return { toolResult: this.recordRefusal(request, invocation.name, invocation.args, receipt) };
             }
-            const validated = this.actionValidation.validateToolInvocation(
-              request,
-              request.allowedTools,
-              { name: actionName, args: actionArgs },
-              (tool, rawArgs, actorId) => this.repairRegistry.coerceArgs(tool, rawArgs, { actorId }),
-            );
-            if (!validated.ok) {
-              return { toolResult: toolFailure(this.world.locale, validated.error) };
-            }
-            const action = validated.action;
-            const stateError = action.name === "use_potion"
-              ? this.validateStatefulAction(request, action)
-              : null;
-            if (stateError) return { toolResult: toolFailure(this.world.locale, stateError.code, stateError.message) };
-
-            const evaluation = evaluateTurnConstraints({ validActions: [action] }, constraints, this.world.locale);
-            if (!evaluation.ok) {
-              return {
-                toolResult: {
-                  ...toolFailure(this.world.locale, "turn_constraints_not_satisfied"),
-                  details: evaluation.errors,
-                },
-              };
-            }
-            selectedAction = action;
-            return {
-              toolResult: { ok: true, accepted: true, action: action.name },
-              finalAction: action,
-            };
+            return { toolResult: receipt, finalAction: turn.action! };
           },
         },
         {
@@ -145,6 +111,7 @@ export class SdkGameToolLoop {
         loop,
         new Promise<never>((_, reject) => {
           timer = setTimeout(() => {
+            turn.close();
             controller.abort();
             reject(new Error(`llm_request_timeout_${timeoutMs}ms`));
           }, timeoutMs);
@@ -160,27 +127,21 @@ export class SdkGameToolLoop {
       this.observer.thinking(result.thinkingTrace ?? [], request);
       this.observer.rawResponse(result.assistantText ?? "", request);
       return {
-        action: result.finalAction ?? null,
+        action: turn.action,
         ...(thinkingText ? { thinkingText } : {}),
       };
     } finally {
+      turn.close();
       if (timer) clearTimeout(timer);
     }
   }
 
-  private rejectTurnId(
+  private recordRefusal(
     request: ActionRequest,
     tool: string,
     args: Record<string, unknown>,
-    expectedTurnId: string,
+    result: { ok: false; error: string; message: string },
   ): Record<string, unknown> {
-    const result = {
-      ok: false,
-      error: "turn_id_mismatch",
-      expected_turn_id: expectedTurnId,
-      received_turn_id: args.turn_id ?? null,
-      message: text(this.world.locale, "tool.turn_id_mismatch_context", { turn: expectedTurnId, tool }),
-    };
     safeRecordLogicOp({
       scope: "llm_action_provider",
       op: "tool_call_rejected",
@@ -191,22 +152,8 @@ export class SdkGameToolLoop {
       input: { day: getActionRequestDay(request), stage: getActionRequestStage(request), tool, args },
       output: result,
     });
-    this.observer.trace(`tool_call_rejected player=${request.actorId} tool=${tool} expected_turn_id=${expectedTurnId} received_turn_id=${JSON.stringify(args.turn_id ?? null)}`);
+    this.observer.trace(`tool_call_rejected player=${request.actorId} tool=${tool} code=${result.error}`);
     return result;
-  }
-
-  private validateStatefulAction(request: ActionRequest, action: ToolCall): RuleViolation | null {
-    const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
-    return role
-      ? this.stateValidation.validate({
-          world: this.world,
-          actorId: request.actorId,
-          role,
-          toolCall: action,
-          phase: request.phase,
-          actionWindow: request.actionWindow,
-        })
-      : { code: RuleError.ActorRoleMissing };
   }
 
   private reportBug(request: ActionRequest, args: Record<string, unknown>): Record<string, unknown> {

@@ -1,0 +1,125 @@
+import { z, type ZodType } from "zod";
+import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { text, toolFailure } from "@ai-werewolf-arena/game-text";
+import { type ActionRequest, type ToolCall, type ToolName } from "../../../core/domain";
+import { World } from "../../../core/domain/world";
+import { ActionValidator } from "../../../game/gateway/action_validator";
+import { ToolGateway } from "../../../game/gateway/tool_gateway";
+import { isAliveTarget } from "../../../game/mechanisms/validation/contracts";
+import {
+  getDefaultToolCallRepairRegistry, getDefaultToolSpecRegistry,
+  getDefaultToolValidationRuleRegistry, type ToolCallRepairRegistry,
+  type ToolSpecRegistry, type ToolValidationRuleRegistry,
+} from "../../../game/mechanisms";
+import { evaluateTurnConstraints, resolveTurnConstraints } from "./turn_constraints";
+
+export type ActionReceipt =
+  | { ok: true; accepted: true; applied: false; action: ToolName }
+  | { ok: false; error: string; message: string; details?: string[]; expected_turn_id?: string; received_turn_id?: unknown };
+type Validation = { ok: true; action: ToolCall } | Extract<ActionReceipt, { ok: false }>;
+
+/** Read-only preflight. The engine still owns application and resource consumption. */
+export class ActionReception {
+  private readonly schemas = new Map<ToolName, ZodType>();
+  private readonly gateway: ToolGateway;
+
+  constructor(
+    readonly world: World,
+    private readonly repair: ToolCallRepairRegistry = getDefaultToolCallRepairRegistry(),
+    private readonly specs: ToolSpecRegistry = getDefaultToolSpecRegistry(),
+    rules: ToolValidationRuleRegistry = getDefaultToolValidationRuleRegistry(),
+  ) {
+    // Preflight must not create a second domain validation operation in the Tape.
+    this.gateway = new ToolGateway(new ActionValidator(rules, false), specs);
+  }
+
+  validate(request: ActionRequest, name: string, rawArgs: unknown): Validation {
+    const fail = (code: string) => toolFailure(this.world.locale, code);
+    if (!request.allowedTools.includes(name as ToolName) || name === "report_bug") {
+      return fail("tool_not_allowed_in_this_turn");
+    }
+    const tool = name as ToolName;
+    const spec = this.specs.get(tool);
+    if (!spec || rawArgs === null || typeof rawArgs !== "object" || Array.isArray(rawArgs)) {
+      return fail("invalid_tool_arguments");
+    }
+    let schema = this.schemas.get(tool);
+    if (!schema) {
+      schema = z.fromJSONSchema(spec.llm.parameters);
+      this.schemas.set(tool, schema);
+    }
+    // Preserve the existing numeric-string repair, but never coerce booleans or
+    // text by truthiness/String(), and never invent missing required arguments.
+    const input = { ...rawArgs } as Record<string, unknown>;
+    const properties = spec.llm.parameters.properties as Record<string, { type?: string | string[] }> | undefined;
+    for (const [key, value] of Object.entries(input)) {
+      const type = properties?.[key]?.type;
+      const numeric = type === "number" || (Array.isArray(type) && type.includes("number"));
+      if (numeric && typeof value === "string" && /^\d+$/.test(value)) input[key] = Number(value);
+    }
+    const parsed = schema.safeParse(input);
+    if (!parsed.success) return fail("invalid_tool_arguments");
+    const args = this.repair.coerceArgs(tool, parsed.data as Record<string, unknown>, { actorId: request.actorId });
+    if (!args || !schema.safeParse(args).success) return fail("invalid_tool_arguments");
+    const call = { name: tool, args } as ToolCall;
+    if (call.name === "vote_for_sheriff" && !call.args.abstain &&
+        (call.args.target_id === null || !request.context.sheriff_candidates?.includes(call.args.target_id) || !isAliveTarget(this.world, call.args.target_id))) {
+      return fail(RuleError.SheriffVoteTarget);
+    }
+    const checked = this.gateway.validateAndSanitize(this.world, request.actorId, call, {
+      phase: request.phase,
+      actionWindow: request.actionWindow,
+      allowSelfDestruct: request.allowedTools.includes("self_destruct"),
+      allowDeadHunterShoot: request.context.stage === "hunter_shot" && request.context.trigger === "on_death",
+      allowDeadLastWords: request.context.stage === "last_words" && request.context.trigger === "last_words",
+    });
+    if (!checked.ok || !checked.sanitizedCall) {
+      return toolFailure(this.world.locale, checked.error ?? "invalid_tool_arguments", checked.message);
+    }
+    const evaluation = evaluateTurnConstraints({ validActions: [checked.sanitizedCall] }, resolveTurnConstraints(request), this.world.locale);
+    if (!evaluation.ok) {
+      return { ...fail("turn_constraints_not_satisfied"), details: evaluation.errors };
+    }
+    return { ok: true, action: structuredClone(checked.sanitizedCall) };
+  }
+}
+
+/** One owner per open turn. Rejection keeps it open; selection seals it once. */
+export class ActionTurn {
+  private selected: ToolCall | null = null;
+  private closed = false;
+  constructor(
+    private readonly reception: ActionReception,
+    readonly request: ActionRequest,
+    readonly turnId: string,
+  ) {}
+
+  get action(): ToolCall | null { return this.selected ? structuredClone(this.selected) : null; }
+
+  authorize(turnId: unknown, tool = "submit_action"): Extract<ActionReceipt, { ok: false }> | null {
+    const locale = this.reception.world.locale;
+    if (this.closed || this.selected || (this.request.deadlineAtMs ?? Infinity) <= Date.now()) {
+      return toolFailure(locale, "turn_not_open_or_session_invalid");
+    }
+    if (turnId !== this.turnId) {
+      return { ...toolFailure(locale, "turn_id_mismatch"), expected_turn_id: this.turnId,
+        received_turn_id: typeof turnId === "string" ? turnId : null,
+        message: text(locale, "tool.turn_id_mismatch_context", { turn: this.turnId, tool }) };
+    }
+    return null;
+  }
+
+  submit(turnId: unknown, name: unknown, args: unknown): ActionReceipt {
+    const refusal = this.authorize(turnId);
+    if (refusal) return refusal;
+    if (typeof name !== "string" || args === null || typeof args !== "object" || Array.isArray(args)) {
+      return toolFailure(this.reception.world.locale, "invalid_submit_action_arguments");
+    }
+    const result = this.reception.validate(this.request, name, args);
+    if (!result.ok) return result;
+    this.selected = result.action;
+    return { ok: true, accepted: true, applied: false, action: result.action.name };
+  }
+
+  close(): void { this.closed = true; }
+}

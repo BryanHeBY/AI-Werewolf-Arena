@@ -1,5 +1,7 @@
 import { toolFailure } from "@ai-werewolf-arena/game-text";
-import { ActionRequest, ToolCall, ToolName } from "../../../core/domain"
+import { ActionRequest, ToolCall } from "../../../core/domain"
+import { World } from "../../../core/domain/world";
+import { ActionReception, ActionTurn, type ActionReceipt } from "../../agents/player/action_reception";
 import {
   GameReportBugInput as McpReportBugParams,
   GameSubmitActionInput as McpSubmitActionParams,
@@ -13,7 +15,7 @@ import {
 } from "../../../core/domain/action_request_context";
 export type { GameReportBugInput as McpReportBugParams, GameSubmitActionInput as McpSubmitActionParams } from "../../agents/game_tool_protocol";
 
-export type McpBridgeResult =
+export type McpBridgeResult = ActionReceipt
   | { ok: true; accepted: true }
   | { ok: true; accepted: false; dropped: true; reason: string }
   | { ok: false; error: string; message?: string };
@@ -37,6 +39,7 @@ export interface AcpPendingTurn {
 
 interface PendingTurn extends AcpPendingTurn {
   request: ActionRequest;
+  owner: ActionTurn;
   resolve: (action: ToolCall | null) => void;
 }
 
@@ -49,11 +52,17 @@ interface PendingTurn extends AcpPendingTurn {
 export class AcpTurnRegistry {
   private readonly pendingBySession = new Map<string, PendingTurn>();
   private readonly nextTurnNumberBySession = new Map<string, number>();
+  private readonly reception: ActionReception;
+  readonly locale: Locale;
 
   constructor(
+    world: World,
     private readonly onBugReport?: (report: AcpBugReport) => McpBridgeResult | void,
-    readonly locale: Locale = "zh-CN",
-  ) { if (!isLocale(locale)) throw new Error("acp_task_locale_invalid"); }
+  ) {
+    this.locale = world.locale;
+    if (!isLocale(this.locale)) throw new Error("acp_task_locale_invalid");
+    this.reception = new ActionReception(world);
+  }
 
   openTurn(request: ActionRequest, sessionId: string): AcpPendingTurn {
     if (this.pendingBySession.has(sessionId)) {
@@ -73,6 +82,7 @@ export class AcpTurnRegistry {
       sessionId,
       turnId,
       request,
+      owner: new ActionTurn(this.reception, request, turnId),
       action,
       resolve,
     });
@@ -85,6 +95,7 @@ export class AcpTurnRegistry {
       return;
     }
     this.pendingBySession.delete(sessionId);
+    pending.owner.close();
     pending.resolve(null);
   }
 
@@ -93,28 +104,26 @@ export class AcpTurnRegistry {
   }
 
   submitAction(sessionId: string, input: McpSubmitActionParams): McpBridgeResult {
-    const pending = this.getPending(sessionId, input.turn_id);
+    const pending = this.pendingBySession.get(sessionId);
     if (!pending) {
       return toolFailure(this.locale, "turn_not_open_or_session_invalid");
     }
-    if (!pending.request.allowedTools.includes(input.action as ToolName)) {
-      return toolFailure(this.locale, "tool_not_allowed_in_this_turn");
-    }
+    const result = pending.owner.submit(input.turn_id, input.action, input.arguments);
+    if (!result.ok) return result;
 
     // 接受一次即关闭当前窗口；后续请求只能拿到明确拒绝，不能污染下一阶段。
     this.pendingBySession.delete(sessionId);
-    pending.resolve({
-      name: input.action as ToolName,
-      args: input.arguments as ToolCall["args"],
-    } as ToolCall);
-    return { ok: true, accepted: true };
+    pending.resolve(pending.owner.action);
+    return result;
   }
 
   reportBug(sessionId: string, input: McpReportBugParams): McpBridgeResult {
-    const pending = this.getPending(sessionId, input.turn_id);
+    const pending = this.pendingBySession.get(sessionId);
     if (!pending) {
       return toolFailure(this.locale, "turn_not_open_or_session_invalid");
     }
+    const refusal = pending.owner.authorize(input.turn_id, "report_bug");
+    if (refusal) return refusal;
     const result = this.onBugReport?.({
       actorId: pending.request.actorId,
       turnId: pending.turnId,
@@ -131,14 +140,11 @@ export class AcpTurnRegistry {
 
   close(): void {
     for (const pending of this.pendingBySession.values()) {
+      pending.owner.close();
       pending.resolve(null);
     }
     this.pendingBySession.clear();
     this.nextTurnNumberBySession.clear();
   }
 
-  private getPending(sessionId: string, turnId: string): PendingTurn | null {
-    const pending = this.pendingBySession.get(sessionId);
-    return pending?.turnId === turnId ? pending : null;
-  }
 }

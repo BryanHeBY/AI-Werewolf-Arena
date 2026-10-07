@@ -10,7 +10,7 @@ import { getDefaultToolSpecRegistry, ToolSpecRegistry } from "../mechanisms";
 import { World } from "../../core/domain/world";
 import { ActionValidator } from "./action_validator";
 
-const RESERVED_PREFIX = /^(\s*\[(上帝|法官|系统)\]\s*)+/g;
+const RESERVED_PREFIX = /^(\s*\[(上帝|法官|系统|God|Judge|System)\]\s*)+/gi;
 
 /**
  * ToolGateway 负责两件事：
