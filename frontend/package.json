@@ -19,7 +19,8 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "remotion": "^4.0.529",
-    "@ai-werewolf-arena/game-catalog": "workspace:*"
+    "@ai-werewolf-arena/game-catalog": "workspace:*",
+    "@ai-werewolf-arena/game-text": "workspace:*"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",

@@ -5,6 +5,7 @@ import { RoleInitContext, RoleProfile } from "./contracts";
 import { GUARD_ROLE_PROFILE } from "./guard/profile";
 import { HUNTER_ROLE_PROFILE } from "./hunter/profile";
 import { IDIOT_ROLE_PROFILE } from "./idiot/profile";
+import { roleName, text, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { SEER_ROLE_PROFILE } from "./seer/profile";
 import { VILLAGER_ROLE_PROFILE } from "./villager/profile";
 import { WITCH_ROLE_PROFILE } from "./witch/profile";
@@ -44,12 +45,20 @@ export class RoleCatalog {
     return profile.camp ?? Camp.Good;
   }
 
-  label(role: Role): string {
-    return this.get(role)?.label ?? role;
+  label(role: Role, locale: Locale = "zh-CN"): string {
+    const profile = this.get(role);
+    const builtIn = DEFAULT_ROLE_PROFILES.find(entry => entry.role === role);
+    // Explicit injected text is user content, not a built-in translation key.
+    if (profile && (!builtIn || profile.label !== builtIn.label)) return profile.label;
+    return roleName(role, locale);
   }
 
-  skillBrief(role: Role): string {
-    return this.get(role)?.skillBrief ?? "请按当前规则解释该角色技能";
+  skillBrief(role: Role, locale: Locale = "zh-CN"): string {
+    const profile = this.get(role);
+    if (!profile) return role;
+    const builtIn = DEFAULT_ROLE_PROFILES.find(entry => entry.role === role);
+    if (!builtIn || profile.skillBrief !== builtIn.skillBrief) return profile.skillBrief;
+    return text(locale, `role.${role}.brief` as MessageKey);
   }
 
   applyRuntime(roleComp: RoleComponent, ctx: RoleInitContext = {}): void {

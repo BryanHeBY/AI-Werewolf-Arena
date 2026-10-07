@@ -1,12 +1,4 @@
-const ROLE_NAMES: Record<string, string> = {
-  wolf: "狼人",
-  seer: "预言家",
-  witch: "女巫",
-  hunter: "猎人",
-  idiot: "白痴",
-  guard: "守卫",
-  villager: "平民",
-};
+import { roleName as sharedRoleName, type Locale } from "@ai-werewolf-arena/game-text";
 
 const CAMP_NAMES: Record<string, string> = {
   wolf: "狼人阵营",
@@ -52,8 +44,8 @@ const RESULT_REASONS: Record<string, string> = {
   max_days_reached: "达到最大天数",
 };
 
-export function roleName(role: string): string {
-  return ROLE_NAMES[role] ?? role;
+export function roleName(role: string, locale: Locale = "zh-CN"): string {
+  return sharedRoleName(role, locale);
 }
 
 export function campName(camp: string): string {
