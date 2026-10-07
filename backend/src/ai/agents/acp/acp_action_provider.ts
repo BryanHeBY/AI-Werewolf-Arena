@@ -1,3 +1,4 @@
+import { resolveTurnConstraints } from "../player/turn_constraints";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError } from "../../../utils/error_diagnostic";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -137,6 +138,10 @@ export class AcpActionProvider implements ActionProvider {
           elapsedMs: Date.now() - startedAt,
         });
         return outcome.action;
+      }
+      if (outcome.reason === "model_declined_required_action" && resolveTurnConstraints(request).minValidActions === 0) {
+        this.recordPlayerRound(request, built, { action: null, auditTrace, elapsedMs: Date.now() - startedAt });
+        return null;
       }
       fallbackReason = outcome.reason ?? fallbackReason;
       requestError = outcome.requestError;

@@ -270,7 +270,7 @@ describe("AcpActionProvider", () => {
     await provider.close();
   });
 
-  test("falls back as soon as an ACP turn ends without submit_action", async () => {
+  test("falls back as soon as a required ACP turn ends without submit_action", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const factory: AcpSessionFactory = {
       async createSession(): Promise<AcpSession> {
@@ -293,7 +293,8 @@ describe("AcpActionProvider", () => {
     });
 
     const startedAt = Date.now();
-    await expect(provider.getAction(speakRequest())).resolves.toEqual({
+    const required = speakRequest(); required.context.turn_constraints = { min_valid_actions: 1, max_valid_actions: 1 };
+    await expect(provider.getAction(required)).resolves.toEqual({
       name: "speak",
       args: { text: "立即回退。" },
     });
