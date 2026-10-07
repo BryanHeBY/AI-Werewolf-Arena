@@ -1,3 +1,4 @@
+import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：猎人角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
@@ -22,9 +23,9 @@ export const HUNTER_ROLE_PROFILE: RoleProfile = {
   toolSpecs: HUNTER_TOOL_SPECS,
   validationRules: {
     shoot: ({ world, role, toolCall }) => {
-      if (role.role !== Role.Hunter || !getHunterState(role)?.canShoot) return "非法操作，当前不可开枪";
-      if (toolCall.name !== "shoot") return "非法操作，工具不匹配";
-      if (!isAliveTarget(world, toolCall.args.target_id)) return "非法操作，开枪目标必须存活";
+      if (role.role !== Role.Hunter || !getHunterState(role)?.canShoot) return { code: RuleError.ShootUnavailable };
+      if (toolCall.name !== "shoot") return { code: RuleError.ToolMismatch };
+      if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.ShootTarget };
       return null;
     },
   },

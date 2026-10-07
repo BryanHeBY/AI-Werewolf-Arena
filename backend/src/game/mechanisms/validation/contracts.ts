@@ -1,3 +1,4 @@
+import type { RuleViolation } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：工具校验规则契约定义。 */
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
@@ -22,7 +23,7 @@ export interface ValidationRuleContext {
 }
 
 /** 工具校验规则函数签名。 */
-export type ToolRule = (ctx: ValidationRuleContext) => string | null;
+export type ToolRule = (ctx: ValidationRuleContext) => RuleViolation | string | null;
 
 /** 判断目标玩家是否存活。 */
 export function isAliveTarget(world: World, targetId: EntityId): boolean {

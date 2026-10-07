@@ -1,3 +1,4 @@
+import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：女巫工具校验规则。 */
 import { PotionType, Role } from "../../../../core/domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
@@ -8,32 +9,32 @@ export const WITCH_VALIDATION_RULES: ToolRuleMap = {
   use_potion: ({ world, actorId, role, toolCall }) => {
     const witchState = getWitchState(role);
     if (role.role !== Role.Witch || !witchState) {
-      return "非法操作，仅女巫可用药";
+      return { code: RuleError.WitchOnly };
     }
     if (toolCall.name !== "use_potion") {
-      return "非法操作，工具不匹配";
+      return { code: RuleError.ToolMismatch };
     }
     if (toolCall.args.potion_type === PotionType.Heal) {
       if (!witchState.canSelfHeal && toolCall.args.target_id === actorId) {
-        return "非法操作，本板子女巫不可自救";
+        return { code: RuleError.SelfHeal };
       }
       if (witchState.heal <= 0 || witchState.healUsedThisNight) {
-        return "非法操作，解药不可用";
+        return { code: RuleError.HealUnavailable };
       }
       if (witchState.poisonUsedThisNight) {
-        return "非法操作，同夜不可双药";
+        return { code: RuleError.TwoPotions };
       }
       return null;
     }
     if (toolCall.args.potion_type === PotionType.Poison) {
       if (witchState.poison <= 0 || witchState.poisonUsedThisNight) {
-        return "非法操作，毒药不可用";
+        return { code: RuleError.PoisonUnavailable };
       }
       if (witchState.healUsedThisNight) {
-        return "非法操作，同夜不可双药";
+        return { code: RuleError.TwoPotions };
       }
       if (!isAliveTarget(world, toolCall.args.target_id)) {
-        return "非法操作，毒药目标必须存活";
+        return { code: RuleError.PoisonTarget };
       }
       return null;
     }

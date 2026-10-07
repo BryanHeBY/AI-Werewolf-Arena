@@ -21,10 +21,7 @@ describe("AgentBugReportService", () => {
       message: "流程异常",
     };
 
-    expect(service.report({ ...base, category: "strategy" })).toEqual({
-      ok: false,
-      error: "invalid_report_bug_category",
-    });
+    expect(service.report({ ...base, category: "strategy" })).toEqual({ ok: false, error: "invalid_report_bug_category", message: "report_bug.category无效；请使用工具schema声明的类别。" });
     expect(service.report(base)).toEqual({
       ok: true,
       accepted: true,

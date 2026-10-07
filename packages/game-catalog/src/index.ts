@@ -95,3 +95,5 @@ export function roleName(id: string, locale: Locale): string {
   return roleDefinition(id)?.names[locale] ?? id;
 }
 export const RULESET = { id: "awa_classic", version: "1.0.0" } as const;
+
+export * from "./errors";

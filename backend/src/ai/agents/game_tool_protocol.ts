@@ -4,19 +4,20 @@ import { text, type Locale } from "@ai-werewolf-arena/game-text";
 
 /** SDK and MCP derive the same descriptions, parameter schemas and static protocol. */
 export function gameToolProtocol(locale: Locale = "zh-CN") {
+  const schemaError = text(locale, "error.schema_input");
   const inputs = {
-    get_game_schema: z.object({}),
+    get_game_schema: z.object({}, { error: schemaError }),
     submit_action: z.object({
-      turn_id: z.string().min(1).describe(text(locale, "schema.turn_id")),
-      action: z.string().min(1).describe(text(locale, "schema.action")),
-      arguments: z.record(z.string(), z.unknown()).describe(text(locale, "schema.arguments")),
-    }),
+      turn_id: z.string({ error: schemaError }).min(1, { error: schemaError }).describe(text(locale, "schema.turn_id")),
+      action: z.string({ error: schemaError }).min(1, { error: schemaError }).describe(text(locale, "schema.action")),
+      arguments: z.record(z.string({ error: schemaError }), z.unknown(), { error: schemaError }).describe(text(locale, "schema.arguments")),
+    }, { error: schemaError }),
     report_bug: z.object({
-      turn_id: z.string().min(1).describe(text(locale, "schema.turn_id")),
-      category: z.enum(["flow", "rule", "state", "logging", "other"]).describe(text(locale, "schema.category")),
-      severity: z.enum(["low", "medium", "high", "critical"]).describe(text(locale, "schema.severity")),
-      message: z.string().min(1).max(300).describe(text(locale, "schema.report_message")),
-    }),
+      turn_id: z.string({ error: schemaError }).min(1, { error: schemaError }).describe(text(locale, "schema.turn_id")),
+      category: z.enum(["flow", "rule", "state", "logging", "other"], { error: schemaError }).describe(text(locale, "schema.category")),
+      severity: z.enum(["low", "medium", "high", "critical"], { error: schemaError }).describe(text(locale, "schema.severity")),
+      message: z.string({ error: schemaError }).min(1, { error: schemaError }).max(300, { error: schemaError }).describe(text(locale, "schema.report_message")),
+    }, { error: schemaError }),
   };
   const schema = { protocol_version: "1", tools: {
     get_game_schema: text(locale, "schema.game.static_query"),

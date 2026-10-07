@@ -1,3 +1,4 @@
+import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { World } from "../../../core/domain/world";
@@ -18,7 +19,7 @@ export interface AgentBugReportInput {
 }
 
 export type AgentBugReportResult =
-  | { ok: false; error: string }
+  | { ok: false; error: string; message: string }
   | { ok: true; accepted: false; dropped: true; reason: string }
   | { ok: true; accepted: true; report_id: string };
 
@@ -57,7 +58,7 @@ export class AgentBugReportService {
     const parsed = this.normalize(input);
     if (!parsed.ok) {
       this.recordRejected(input, parsed.error);
-      return parsed;
+      return toolFailure(this.world.locale, parsed.error);
     }
     const report = parsed.value;
     const actorDayKey = `${report.actorId}|${report.day}`;

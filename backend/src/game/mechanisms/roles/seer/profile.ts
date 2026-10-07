@@ -1,3 +1,4 @@
+import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text, term } from "@ai-werewolf-arena/game-text";
 /** 文件说明：预言家角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
@@ -31,9 +32,9 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
   toolSpecs: SEER_TOOL_SPECS,
   validationRules: {
     check_identity: ({ world, role, toolCall }) => {
-      if (role.role !== Role.Seer) return "非法操作，仅预言家可查验";
-      if (toolCall.name !== "check_identity") return "非法操作，工具不匹配";
-      if (!isAliveTarget(world, toolCall.args.target_id)) return "非法操作，查验目标必须存活";
+      if (role.role !== Role.Seer) return { code: RuleError.SeerOnly };
+      if (toolCall.name !== "check_identity") return { code: RuleError.ToolMismatch };
+      if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.CheckTarget };
       return null;
     },
   },

@@ -1,3 +1,4 @@
+import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { AcpMcpServerConfig } from "../integrations/acp/acp_mcp_bridge";
 import { LoopbackMcpControlServer } from "../integrations/acp/loopback_mcp_control_server";
 import { AuditToolTurnRegistry } from "./audit_tool_protocol";
@@ -35,6 +36,6 @@ export class AuditMcpControlServer {
     if (tool === "get_audit_context") return this.registry.getContext(sessionId, args);
     if (tool === "submit_audit_findings") return this.registry.submitFindings(sessionId, args);
     if (tool === "submit_audit_summary") return this.registry.submitSummary(sessionId, args);
-    return { ok: false, error: "unknown_mcp_tool" };
+    return toolFailure(this.registry.locale, "unknown_mcp_tool");
   }
 }

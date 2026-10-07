@@ -1,3 +1,4 @@
+import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：定义通用工具的校验规则。 */
 import { COMPONENT } from "../../../core/domain/components/names";
 import { VotingRightComponent } from "../../../core/domain/components/voting_right";
@@ -7,42 +8,42 @@ import { ToolRuleMap, isAliveTarget } from "../validation/contracts";
 export const COMMON_VALIDATION_RULES: ToolRuleMap = {
   report_bug: ({ toolCall }) => {
     if (toolCall.name !== "report_bug") {
-      return "非法操作，工具不匹配";
+      return { code: RuleError.ToolMismatch };
     }
     const { category, severity, message } = toolCall.args;
     const categorySet = new Set(["flow", "rule", "state", "logging", "other"]);
     const severitySet = new Set(["low", "medium", "high", "critical"]);
     if (!categorySet.has(String(category))) {
-      return "非法操作，report_bug.category 非法";
+      return { code: RuleError.ReportCategory };
     }
     if (!severitySet.has(String(severity))) {
-      return "非法操作，report_bug.severity 非法";
+      return { code: RuleError.ReportSeverity };
     }
     if (typeof message !== "string" || message.trim().length === 0) {
-      return "非法操作，report_bug.message 不能为空";
+      return { code: RuleError.ReportMessageEmpty };
     }
     if (message.length > 300) {
-      return "非法操作，report_bug.message 长度不能超过 300";
+      return { code: RuleError.ReportMessageLong };
     }
     return null;
   },
   speak: () => null,
   vote: ({ world, actorId, toolCall }) => {
     if (toolCall.name !== "vote") {
-      return "非法操作，工具不匹配";
+      return { code: RuleError.ToolMismatch };
     }
     const voting = world.getComponent<VotingRightComponent>(actorId, COMPONENT.VotingRight);
     if (!voting?.canVote) {
-      return "非法操作，你当前无投票权";
+      return { code: RuleError.VoteRight };
     }
     if (toolCall.args.abstain) {
       return null;
     }
     if (toolCall.args.target_id === null) {
-      return "非法操作，投票目标必须存活";
+      return { code: RuleError.VoteTarget };
     }
     if (!isAliveTarget(world, toolCall.args.target_id)) {
-      return "非法操作，投票目标必须存活";
+      return { code: RuleError.VoteTarget };
     }
     return null;
   },

@@ -1,4 +1,5 @@
-import { text } from "@ai-werewolf-arena/game-text";
+import { RuleError, type RuleViolation } from "@ai-werewolf-arena/game-catalog";
+import { text, toolFailure } from "@ai-werewolf-arena/game-text";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, ToolCall } from "../../../core/domain"
@@ -90,7 +91,7 @@ export class SdkGameToolLoop {
                 return { toolResult: this.rejectTurnId(request, invocation.name, invocation.args, turnId) };
               }
               if (typeof invocation.args.action !== "string") {
-                return { toolResult: { ok: false, error: "invalid_submit_action_arguments" } };
+                return { toolResult: toolFailure(this.world.locale, "invalid_submit_action_arguments") };
               }
               actionName = invocation.args.action;
               actionArgs = isRecord(invocation.args.arguments) ? invocation.args.arguments : {};
@@ -98,8 +99,7 @@ export class SdkGameToolLoop {
             if (selectedAction) {
               return {
                 toolResult: {
-                  ok: false,
-                  error: "turn_constraints_max_actions_exceeded",
+                  ...toolFailure(this.world.locale, "turn_constraints_max_actions_exceeded"),
                   details: [text(this.world.locale, "turn.maximum", { count: constraints.maxValidActions })],
                 },
               };
@@ -111,20 +111,19 @@ export class SdkGameToolLoop {
               (tool, rawArgs, actorId) => this.repairRegistry.coerceArgs(tool, rawArgs, { actorId }),
             );
             if (!validated.ok) {
-              return { toolResult: { ok: false, error: validated.error } };
+              return { toolResult: toolFailure(this.world.locale, validated.error) };
             }
             const action = validated.action;
             const stateError = action.name === "use_potion"
               ? this.validateStatefulAction(request, action)
               : null;
-            if (stateError) return { toolResult: { ok: false, error: stateError } };
+            if (stateError) return { toolResult: toolFailure(this.world.locale, stateError.code, stateError.message) };
 
             const evaluation = evaluateTurnConstraints({ validActions: [action] }, constraints, this.world.locale);
             if (!evaluation.ok) {
               return {
                 toolResult: {
-                  ok: false,
-                  error: "turn_constraints_not_satisfied",
+                  ...toolFailure(this.world.locale, "turn_constraints_not_satisfied"),
                   details: evaluation.errors,
                 },
               };
@@ -180,7 +179,7 @@ export class SdkGameToolLoop {
       error: "turn_id_mismatch",
       expected_turn_id: expectedTurnId,
       received_turn_id: args.turn_id ?? null,
-      message: `当前回合仍开放。请将 turn_id 改为 ${expectedTurnId}，重新调用 ${tool}。`,
+      message: text(this.world.locale, "tool.turn_id_mismatch_context", { turn: expectedTurnId, tool }),
     };
     safeRecordLogicOp({
       scope: "llm_action_provider",
@@ -196,7 +195,7 @@ export class SdkGameToolLoop {
     return result;
   }
 
-  private validateStatefulAction(request: ActionRequest, action: ToolCall): string | null {
+  private validateStatefulAction(request: ActionRequest, action: ToolCall): RuleViolation | null {
     const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     return role
       ? this.stateValidation.validate({
@@ -207,7 +206,7 @@ export class SdkGameToolLoop {
           phase: request.phase,
           actionWindow: request.actionWindow,
         })
-      : "非法操作，玩家角色不存在";
+      : { code: RuleError.ActorRoleMissing };
   }
 
   private reportBug(request: ActionRequest, args: Record<string, unknown>): Record<string, unknown> {

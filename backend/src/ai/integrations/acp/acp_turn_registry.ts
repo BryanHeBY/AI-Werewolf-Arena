@@ -1,3 +1,4 @@
+import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, ToolCall, ToolName } from "../../../core/domain"
 import {
   GameReportBugInput as McpReportBugParams,
@@ -15,7 +16,7 @@ export type { GameReportBugInput as McpReportBugParams, GameSubmitActionInput as
 export type McpBridgeResult =
   | { ok: true; accepted: true }
   | { ok: true; accepted: false; dropped: true; reason: string }
-  | { ok: false; error: string };
+  | { ok: false; error: string; message?: string };
 
 export interface AcpBugReport {
   actorId: number;
@@ -94,10 +95,10 @@ export class AcpTurnRegistry {
   submitAction(sessionId: string, input: McpSubmitActionParams): McpBridgeResult {
     const pending = this.getPending(sessionId, input.turn_id);
     if (!pending) {
-      return { ok: false, error: "turn_not_open_or_session_invalid" };
+      return toolFailure(this.locale, "turn_not_open_or_session_invalid");
     }
     if (!pending.request.allowedTools.includes(input.action as ToolName)) {
-      return { ok: false, error: "tool_not_allowed_in_this_turn" };
+      return toolFailure(this.locale, "tool_not_allowed_in_this_turn");
     }
 
     // 接受一次即关闭当前窗口；后续请求只能拿到明确拒绝，不能污染下一阶段。
@@ -112,7 +113,7 @@ export class AcpTurnRegistry {
   reportBug(sessionId: string, input: McpReportBugParams): McpBridgeResult {
     const pending = this.getPending(sessionId, input.turn_id);
     if (!pending) {
-      return { ok: false, error: "turn_not_open_or_session_invalid" };
+      return toolFailure(this.locale, "turn_not_open_or_session_invalid");
     }
     const result = this.onBugReport?.({
       actorId: pending.request.actorId,
@@ -124,6 +125,7 @@ export class AcpTurnRegistry {
       severity: input.severity,
       message: input.message.trim(),
     });
+    if (result?.ok === false) return toolFailure(this.locale, result.error, result.message);
     return result ?? { ok: true, accepted: true };
   }
 

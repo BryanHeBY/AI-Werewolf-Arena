@@ -29,7 +29,9 @@ export type TypedToolCall<T extends ToolName> = Extract<ToolCall, { name: T }>;
 export interface ToolValidationResult<T extends ToolCall = ToolCall> {
   ok: boolean;
   sanitizedCall?: T;
+  /** Stable machine code, independent of locale. */
   error?: string;
+  message?: string;
 }
 
 export interface TurnConstraints {

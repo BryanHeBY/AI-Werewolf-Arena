@@ -1,3 +1,4 @@
+import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：守卫角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
@@ -23,12 +24,12 @@ export const GUARD_ROLE_PROFILE: RoleProfile = {
   validationRules: {
     guard: ({ world, role, toolCall }) => {
       const guardState = getGuardState(role);
-      if (role.role !== Role.Guard) return "非法操作，仅守卫可守护";
-      if (toolCall.name !== "guard") return "非法操作，工具不匹配";
+      if (role.role !== Role.Guard) return { code: RuleError.GuardOnly };
+      if (toolCall.name !== "guard") return { code: RuleError.ToolMismatch };
       if (toolCall.args.abstain) return null;
-      if (toolCall.args.target_id === null) return "非法操作，守护目标必须存活";
-      if (guardState?.lastTarget === toolCall.args.target_id) return "非法操作，守卫不可连续两晚守同一人";
-      if (!isAliveTarget(world, toolCall.args.target_id)) return "非法操作，守护目标必须存活";
+      if (toolCall.args.target_id === null) return { code: RuleError.GuardTarget };
+      if (guardState?.lastTarget === toolCall.args.target_id) return { code: RuleError.GuardRepeat };
+      if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.GuardTarget };
       return null;
     },
   },

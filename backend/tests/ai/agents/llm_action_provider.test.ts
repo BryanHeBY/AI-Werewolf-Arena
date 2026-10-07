@@ -1313,7 +1313,7 @@ describe("LlmActionProvider", () => {
       name: "use_potion",
       args: { target_id: targetId, potion_type: "none" },
     });
-    expect(client.invalidPotionResult).toEqual({ ok: false, error: "非法操作，解药不可用" });
+    expect(client.invalidPotionResult).toEqual({ ok: false, error: "heal_unavailable", message: "非法操作，解药不可用" });
     const user = client.lastMessages.find((message) => message.role === "user")?.content ?? "";
     expect(user).toContain("你的私有状态：你的底牌是【女巫】。解药:0 毒药:1");
   });

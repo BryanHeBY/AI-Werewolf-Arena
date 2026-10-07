@@ -14,6 +14,7 @@ import { SdkAuditAgentExecutor } from "../../../src/ai/audit/sdk_audit_runner";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { Phase, type ActionRequest } from "../../../src/core";
+import { errorMessage } from "@ai-werewolf-arena/game-text";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 
 function withoutDescriptions(value: unknown): unknown {
@@ -74,13 +75,16 @@ test("real game/audit MCP subprocesses preserve simultaneous task locales and au
       expect(schema.structuredContent).toEqual(protocol.schema);
       if (kind === "game") {
         const turn = gameRegistry.openTurn(request, session);
-        expect((await client.callTool({ name: "submit_action", arguments: { turn_id: "old", action: "speak", arguments: { text: "raw 中文" } } })).structuredContent).toEqual({ ok: false, error: "turn_not_open_or_session_invalid" });
+        const malformed = await client.callTool({ name: "submit_action", arguments: { turn_id: "", action: "speak", arguments: { text: "raw 中文" } } });
+        expect(malformed.isError).toBe(true);
+        expect(JSON.stringify(malformed.content)).toContain(locale === "en" ? "Tool arguments do not match this task" : "工具参数不符合本任务");
+        expect((await client.callTool({ name: "submit_action", arguments: { turn_id: "old", action: "speak", arguments: { text: "raw 中文" } } })).structuredContent).toEqual({ ok: false, error: "turn_not_open_or_session_invalid", message: errorMessage(locale, "turn_not_open_or_session_invalid") });
         expect((await client.callTool({ name: "submit_action", arguments: { turn_id: turn.turnId, action: "speak", arguments: { text: "raw 中文" } } })).structuredContent).toEqual({ ok: true, accepted: true });
         expect(await turn.action).toEqual({ name: "speak", args: { text: "raw 中文" } });
       } else {
         const turn = auditRegistry.openTurn({ mode: "inspect", locale, taskName: "test", source: "synthetic", payload: { events: [{ seq: 7 }] } }, session);
-        expect((await client.callTool({ name: "get_audit_context", arguments: { turn_id: "old" } })).structuredContent).toEqual({ ok: false, error: "audit_turn_not_open_or_session_invalid" });
-        expect((await client.callTool({ name: "submit_audit_findings", arguments: { turn_id: turn.turnId, findings: [{ severity: "high", category: "state", message: "raw 中文", evidence: [999] }] } })).structuredContent).toEqual({ ok: false, error: "audit_evidence_not_visible_in_current_context" });
+        expect((await client.callTool({ name: "get_audit_context", arguments: { turn_id: "old" } })).structuredContent).toEqual({ ok: false, error: "audit_turn_not_open_or_session_invalid", message: errorMessage(locale, "audit_turn_not_open_or_session_invalid") });
+        expect((await client.callTool({ name: "submit_audit_findings", arguments: { turn_id: turn.turnId, findings: [{ severity: "high", category: "state", message: "raw 中文", evidence: [999] }] } })).structuredContent).toEqual({ ok: false, error: "audit_evidence_not_visible_in_current_context", message: errorMessage(locale, "audit_evidence_not_visible_in_current_context") });
         expect((await client.callTool({ name: "submit_audit_findings", arguments: { turn_id: turn.turnId, findings: [] } })).structuredContent).toEqual({ ok: true, accepted: true });
         expect(await turn.result).toMatchObject({ kind: "findings", findings: [] });
       }

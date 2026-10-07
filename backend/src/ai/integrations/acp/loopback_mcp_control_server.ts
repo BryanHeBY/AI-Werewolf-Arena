@@ -1,3 +1,4 @@
+import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { randomBytes } from "node:crypto";
 import { createServer, IncomingMessage, ServerResponse } from "node:http";
 import { AddressInfo } from "node:net";
@@ -65,16 +66,13 @@ export class LoopbackMcpControlServer implements AcpMcpControlServer {
 
   private async handle(request: IncomingMessage, response: ServerResponse): Promise<void> {
     if (request.method !== "POST" || request.url !== "/invoke") {
-      return this.respond(response, 404, { ok: false, error: "not_found" });
+      return this.respond(response, 404, toolFailure(this.options.locale ?? "zh-CN", "not_found"));
     }
     if (request.headers.authorization !== `Bearer ${this.token}`) {
-      return this.respond(response, 401, { ok: false, error: "unauthorized" });
+      return this.respond(response, 401, toolFailure(this.options.locale ?? "zh-CN", "unauthorized"));
     }
     if (!this.sessionId) {
-      return this.respond(response, 409, {
-        ok: false,
-        error: this.options.sessionNotReadyError,
-      });
+      return this.respond(response, 409, toolFailure(this.options.locale ?? "zh-CN", this.options.sessionNotReadyError));
     }
     try {
       const body = await this.readJson(request);
@@ -82,11 +80,8 @@ export class LoopbackMcpControlServer implements AcpMcpControlServer {
       const input = body as { tool?: unknown; arguments?: unknown };
       const result = await this.options.dispatch(this.sessionId, input.tool, input.arguments);
       this.respond(response, isFailure(result) ? 400 : 200, result);
-    } catch (error) {
-      this.respond(response, 400, {
-        ok: false,
-        error: `${this.options.invalidRequestPrefix}:${String(error)}`,
-      });
+    } catch {
+      this.respond(response, 400, toolFailure(this.options.locale ?? "zh-CN", this.options.invalidRequestPrefix));
     }
   }
 

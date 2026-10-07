@@ -1,3 +1,4 @@
+import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { z } from "zod";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { isLocale } from "@ai-werewolf-arena/game-catalog";
@@ -38,23 +39,24 @@ export interface AuditToolContext {
 }
 
 export function auditToolProtocol(locale: Locale = "zh-CN") {
-  const turnId = z.string().min(1).describe(text(locale, "schema.turn_id"));
+  const schemaError = text(locale, "error.schema_input");
+  const turnId = z.string({ error: schemaError }).min(1, { error: schemaError }).describe(text(locale, "schema.turn_id"));
   const findingInput = z.object({
-    severity: z.enum(["low", "medium", "high", "critical"]).describe(text(locale, "schema.severity")),
-    category: z.enum(["flow", "rule", "state", "logging", "other"]).describe(text(locale, "schema.category")),
-    message: z.string().min(1).max(300).describe(text(locale, "schema.audit.finding_message")),
-    evidence: z.array(z.number().int().positive()).max(20).describe(text(locale, "schema.audit.evidence")),
-  });
+    severity: z.enum(["low", "medium", "high", "critical"], { error: schemaError }).describe(text(locale, "schema.severity")),
+    category: z.enum(["flow", "rule", "state", "logging", "other"], { error: schemaError }).describe(text(locale, "schema.category")),
+    message: z.string({ error: schemaError }).min(1, { error: schemaError }).max(300, { error: schemaError }).describe(text(locale, "schema.audit.finding_message")),
+    evidence: z.array(z.number({ error: schemaError }).int({ error: schemaError }).positive({ error: schemaError }), { error: schemaError }).max(20, { error: schemaError }).describe(text(locale, "schema.audit.evidence")),
+  }, { error: schemaError });
   const inputs = {
-    get_audit_schema: z.object({}),
-    get_audit_context: z.object({ turn_id: turnId }),
+    get_audit_schema: z.object({}, { error: schemaError }),
+    get_audit_context: z.object({ turn_id: turnId }, { error: schemaError }),
     submit_audit_findings: z.object({
       turn_id: turnId,
-      findings: z.array(findingInput).max(5).describe(text(locale, "schema.audit.finding_list")),
-      notes: z.array(z.string().min(1).max(240).describe(text(locale, "schema.audit.note_item"))).max(3).default([]).describe(text(locale, "schema.audit.notes")),
-      missing_info: z.array(z.string().min(1).max(240).describe(text(locale, "schema.audit.missing_item"))).max(3).default([]).describe(text(locale, "schema.audit.missing_info")),
-    }),
-    submit_audit_summary: z.object({ turn_id: turnId, markdown: z.string().min(1).max(12_000).describe(text(locale, "schema.audit.markdown")) }),
+      findings: z.array(findingInput, { error: schemaError }).max(5, { error: schemaError }).describe(text(locale, "schema.audit.finding_list")),
+      notes: z.array(z.string({ error: schemaError }).min(1, { error: schemaError }).max(240, { error: schemaError }).describe(text(locale, "schema.audit.note_item")), { error: schemaError }).max(3, { error: schemaError }).default([]).describe(text(locale, "schema.audit.notes")),
+      missing_info: z.array(z.string({ error: schemaError }).min(1, { error: schemaError }).max(240, { error: schemaError }).describe(text(locale, "schema.audit.missing_item")), { error: schemaError }).max(3, { error: schemaError }).default([]).describe(text(locale, "schema.audit.missing_info")),
+    }, { error: schemaError }),
+    submit_audit_summary: z.object({ turn_id: turnId, markdown: z.string({ error: schemaError }).min(1, { error: schemaError }).max(12_000, { error: schemaError }).describe(text(locale, "schema.audit.markdown")) }, { error: schemaError }),
   };
   const descriptions = {
     get_audit_schema: text(locale, "schema.audit.query"),
@@ -84,7 +86,7 @@ export const AUDIT_TOOL_SPECS = defaultProtocol.specs;
 
 export type AuditToolResult =
   | { ok: true; accepted?: true; context?: Record<string, unknown> }
-  | { ok: false; error: string };
+  | { ok: false; error: string; message: string };
 
 interface PendingAuditTurn {
   sessionId: string;
@@ -121,9 +123,9 @@ export class AuditToolTurnRegistry {
 
   getContext(sessionId: string, input: unknown): AuditToolResult {
     const parsed = getAuditContextInput.safeParse(input);
-    if (!parsed.success) return { ok: false, error: "invalid_get_audit_context_arguments" };
+    if (!parsed.success) return toolFailure(this.locale, "invalid_get_audit_context_arguments");
     const pending = this.getPending(sessionId, parsed.data.turn_id);
-    if (!pending) return { ok: false, error: "audit_turn_not_open_or_session_invalid" };
+    if (!pending) return toolFailure(this.locale, "audit_turn_not_open_or_session_invalid");
     return {
       ok: true,
       context: {
@@ -137,18 +139,18 @@ export class AuditToolTurnRegistry {
 
   submitFindings(sessionId: string, input: unknown): AuditToolResult {
     const parsed = submitAuditFindingsInput.safeParse(input);
-    if (!parsed.success) return { ok: false, error: "invalid_submit_audit_findings_arguments" };
+    if (!parsed.success) return toolFailure(this.locale, "invalid_submit_audit_findings_arguments");
     const pending = this.getPending(sessionId, parsed.data.turn_id);
-    if (!pending) return { ok: false, error: "audit_turn_not_open_or_session_invalid" };
+    if (!pending) return toolFailure(this.locale, "audit_turn_not_open_or_session_invalid");
     if (pending.context.mode !== "inspect") {
-      return { ok: false, error: "audit_tool_not_allowed_in_this_mode" };
+      return toolFailure(this.locale, "audit_tool_not_allowed_in_this_mode");
     }
     const visibleEvidence = collectVisibleEvidenceSeqs(pending.context.payload);
     if (
       parsed.data.findings.some((finding) =>
         finding.evidence.some((seq) => !visibleEvidence.has(seq)))
     ) {
-      return { ok: false, error: "audit_evidence_not_visible_in_current_context" };
+      return toolFailure(this.locale, "audit_evidence_not_visible_in_current_context");
     }
     this.pending = null;
     pending.resolve({
@@ -166,11 +168,11 @@ export class AuditToolTurnRegistry {
 
   submitSummary(sessionId: string, input: unknown): AuditToolResult {
     const parsed = submitAuditSummaryInput.safeParse(input);
-    if (!parsed.success) return { ok: false, error: "invalid_submit_audit_summary_arguments" };
+    if (!parsed.success) return toolFailure(this.locale, "invalid_submit_audit_summary_arguments");
     const pending = this.getPending(sessionId, parsed.data.turn_id);
-    if (!pending) return { ok: false, error: "audit_turn_not_open_or_session_invalid" };
+    if (!pending) return toolFailure(this.locale, "audit_turn_not_open_or_session_invalid");
     if (pending.context.mode !== "summarize") {
-      return { ok: false, error: "audit_tool_not_allowed_in_this_mode" };
+      return toolFailure(this.locale, "audit_tool_not_allowed_in_this_mode");
     }
     this.pending = null;
     pending.resolve({ kind: "summary", markdown: parsed.data.markdown.trim() });

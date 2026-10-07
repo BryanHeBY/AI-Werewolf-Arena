@@ -1,3 +1,4 @@
+import { toolFailure } from "@ai-werewolf-arena/game-text";
 import {
   AcpTurnRegistry,
   McpReportBugParams,
@@ -42,13 +43,13 @@ export class WerewolfMcpControlServer {
   private dispatch(sessionId: string, tool: unknown, args: unknown): unknown {
     if (tool === "get_game_schema") return this.registry.getSchema();
     if (tool === "submit_action") {
-      if (!args || typeof args !== "object") return { ok: false, error: "invalid_submit_action_arguments" };
+      if (!args || typeof args !== "object") return toolFailure(this.registry.locale, "invalid_submit_action_arguments");
       return this.registry.submitAction(sessionId, args as McpSubmitActionParams);
     }
     if (tool === "report_bug") {
-      if (!args || typeof args !== "object") return { ok: false, error: "invalid_report_bug_arguments" };
+      if (!args || typeof args !== "object") return toolFailure(this.registry.locale, "invalid_report_bug_arguments");
       return this.registry.reportBug(sessionId, args as McpReportBugParams);
     }
-    return { ok: false, error: "unknown_mcp_tool" };
+    return toolFailure(this.registry.locale, "unknown_mcp_tool");
   }
 }

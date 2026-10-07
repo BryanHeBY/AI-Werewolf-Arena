@@ -20,14 +20,11 @@ describe("AuditToolTurnRegistry", () => {
       payload: { events: [{ seq: 7 }] },
     }, "session-a");
 
-    expect(registry.getContext("session-b", { turn_id: turn.turnId })).toEqual({
-      ok: false,
-      error: "audit_turn_not_open_or_session_invalid",
-    });
+    expect(registry.getContext("session-b", { turn_id: turn.turnId })).toEqual({ ok: false, error: "audit_turn_not_open_or_session_invalid", message: "审计回合未开放或会话不匹配；请使用本任务当前turn_id。" });
     expect(registry.submitSummary("session-a", {
       turn_id: turn.turnId,
       markdown: "# invalid mode",
-    })).toEqual({ ok: false, error: "audit_tool_not_allowed_in_this_mode" });
+    })).toEqual({ ok: false, error: "audit_tool_not_allowed_in_this_mode", message: "该工具不适用于当前审计模式；请使用当前模式对应的submit工具。" });
     expect(registry.submitFindings("session-a", {
       turn_id: turn.turnId,
       findings: [{
@@ -38,7 +35,7 @@ describe("AuditToolTurnRegistry", () => {
       }],
       notes: [],
       missing_info: [],
-    })).toEqual({ ok: false, error: "audit_evidence_not_visible_in_current_context" });
+    })).toEqual({ ok: false, error: "audit_evidence_not_visible_in_current_context", message: "证据序号不在本任务授权上下文中；请仅引用当前上下文中可见的证据。" });
     expect(registry.submitFindings("session-a", {
       turn_id: turn.turnId,
       findings: [{

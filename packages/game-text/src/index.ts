@@ -43,3 +43,12 @@ export function validateDictionaries(): void {
     }
   }
 }
+
+/** Machine error IDs stay stable; render only their human explanation. */
+export function errorMessage(locale: Locale, code: string): string {
+  const key = `error.${code}` as MessageKey;
+  return Object.hasOwn(zhCN, key) ? text(locale, key) : text(locale, "tool.unknown_error", { code });
+}
+export function toolFailure(locale: Locale, error: string, originalMessage?: string) {
+  return { ok: false as const, error, message: originalMessage ?? errorMessage(locale, error) };
+}

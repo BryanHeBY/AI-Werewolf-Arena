@@ -1,3 +1,5 @@
+import { RuleError, type RuleViolation } from "@ai-werewolf-arena/game-catalog";
+import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { AliveComponent } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
 import { RoleComponent } from "../../core/domain/components/role";
@@ -41,21 +43,21 @@ export class ActionValidator {
     toolCall: T,
     context: ValidationContext,
   ): ToolValidationResult<T> {
-    const reject = (message: string): ToolValidationResult<T> => {
+    const reject = (violation: RuleViolation): ToolValidationResult<T> => {
       safeRecordLogicOp({
         scope: "gateway",
         op: "validate_tool_call",
         actorId,
         phase: context.phase,
         status: "rejected",
-        reason: message,
+        reason: violation.code,
         input: {
           tool: toolCall.name,
           args: (toolCall as any).args ?? {},
           action_window: context.actionWindow,
         },
       });
-      return { ok: false, error: message };
+      return toolFailure(world.locale, violation.code, violation.message);
     };
     const accept = (): ToolValidationResult<T> => {
       safeRecordLogicOp({
@@ -80,14 +82,14 @@ export class ActionValidator {
     const alive = world.getComponent<AliveComponent>(actorId, COMPONENT.Alive);
 
     if (!role || !alive) {
-      return reject("非法操作，玩家组件不存在");
+      return reject({ code: RuleError.ActorMissing });
     }
 
     const allowDeadAction =
       (toolCall.name === "shoot" && context.allowDeadHunterShoot) ||
       (toolCall.name === "speak" && context.allowDeadLastWords);
     if (!alive.alive && !allowDeadAction) {
-      return reject("非法操作，死亡玩家无法行动");
+      return reject({ code: RuleError.ActorDead });
     }
 
     const error = this.ruleRegistry.validate({

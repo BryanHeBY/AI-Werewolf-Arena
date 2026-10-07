@@ -1,3 +1,4 @@
+import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：狼人工具校验规则。 */
 import { ActionWindow, Phase, Role } from "../../../../core/domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
@@ -6,16 +7,16 @@ import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 export const WOLF_VALIDATION_RULES: ToolRuleMap = {
   speak_to_wolves: ({ role }) => {
     if (role.role !== Role.Wolf) {
-      return "非法操作，仅狼人可执行该动作";
+      return { code: RuleError.WolfOnly };
     }
     return null;
   },
   kill_vote: ({ world, role, toolCall }) => {
     if (role.role !== Role.Wolf) {
-      return "非法操作，仅狼人可执行该动作";
+      return { code: RuleError.WolfOnly };
     }
     if (toolCall.name !== "kill_vote") {
-      return "非法操作，工具不匹配";
+      return { code: RuleError.ToolMismatch };
     }
     if (toolCall.args.abstain) {
       return null;
@@ -24,25 +25,25 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
       toolCall.args.target_id === null ||
       !isAliveTarget(world, toolCall.args.target_id)
     ) {
-      return "非法操作，刀人目标必须存活";
+      return { code: RuleError.KillTarget };
     }
     return null;
   },
   self_destruct: ({ role, phase, actionWindow, allowSelfDestruct, toolCall }) => {
     if (role.role !== Role.Wolf) {
-      return "非法操作，仅狼人可自爆";
+      return { code: RuleError.WolfBlastOnly };
     }
     if (phase !== Phase.Day && phase !== Phase.Voting) {
-      return "非法操作，自爆仅可在白天阶段触发";
+      return { code: RuleError.BlastPhase };
     }
     if (actionWindow !== ActionWindow.OnPreVote) {
-      return "非法操作，自爆仅允许在放逐投票前窗口触发";
+      return { code: RuleError.BlastWindow };
     }
     if (!allowSelfDestruct) {
-      return "非法操作，当前窗口不允许自爆";
+      return { code: RuleError.BlastDisabled };
     }
     if (toolCall.name !== "self_destruct" || toolCall.args.confirm !== true) {
-      return "非法操作，自爆需要 confirm=true 明确确认";
+      return { code: RuleError.BlastConfirm };
     }
     return null;
   },

@@ -30,7 +30,8 @@ describe("ToolGateway validation", () => {
     );
 
     expect(result.ok).toBe(false);
-    expect(result.error).toContain("不可连续两晚守同一人");
+    expect(result.error).toBe("guard_repeat");
+    expect(result.message).toContain("不可连续两晚守同一人");
   });
 
   test("witch cannot self-heal and cannot use two potions in same night", () => {
@@ -51,7 +52,8 @@ describe("ToolGateway validation", () => {
     );
 
     expect(selfHeal.ok).toBe(false);
-    expect(selfHeal.error).toContain("不可自救");
+    expect(selfHeal.error).toBe("self_heal");
+    expect(selfHeal.message).toContain("不可自救");
 
     const witch = world.getComponent<RoleComponent>(witchId!, COMPONENT.Role)!;
     const witchState = getWitchState(witch)!;
@@ -65,7 +67,8 @@ describe("ToolGateway validation", () => {
     );
 
     expect(usePoisonAfterHeal.ok).toBe(false);
-    expect(usePoisonAfterHeal.error).toContain("同夜不可双药");
+    expect(usePoisonAfterHeal.error).toBe("two_potions");
+    expect(usePoisonAfterHeal.message).toContain("同夜不可双药");
   });
 
   test("report_bug should validate category/severity/message constraints", () => {

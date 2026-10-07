@@ -40,14 +40,14 @@ describe("AcpTurnRegistry", () => {
         action: "speak",
         arguments: { text: "x" },
       }),
-    ).toEqual({ ok: false, error: "turn_not_open_or_session_invalid" });
+    ).toEqual({ ok: false, error: "turn_not_open_or_session_invalid", message: "本回合未开放或会话不匹配；请仅使用当前会话最新行动提示中的turn_id。" });
     expect(
       registry.submitAction("session-a", {
         turn_id: pending.turnId,
         action: "vote",
         arguments: { target_id: 2, abstain: false },
       }),
-    ).toEqual({ ok: false, error: "tool_not_allowed_in_this_turn" });
+    ).toEqual({ ok: false, error: "tool_not_allowed_in_this_turn", message: "该行动不在本回合允许列表中；请使用最新行动提示列出的行动。" });
     expect(
       registry.submitAction("session-a", {
         turn_id: pending.turnId,
@@ -65,7 +65,7 @@ describe("AcpTurnRegistry", () => {
         action: "speak",
         arguments: { text: "第二次不能生效" },
       }),
-    ).toEqual({ ok: false, error: "turn_not_open_or_session_invalid" });
+    ).toEqual({ ok: false, error: "turn_not_open_or_session_invalid", message: "本回合未开放或会话不匹配；请仅使用当前会话最新行动提示中的turn_id。" });
     registry.close();
   });
 });

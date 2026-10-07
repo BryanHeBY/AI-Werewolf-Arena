@@ -1,3 +1,4 @@
+import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { ToolLoopClient } from "../integrations/llm/transport";
 import { AgentTurnOptions } from "../runtime/agent_turn_executor";
 import { AuditAgentExecutor } from "./contracts";
@@ -62,7 +63,7 @@ export class SdkAuditAgentExecutor implements AuditAgentExecutor {
                 ...(finalAction ? { finalAction, stop: true } : {}),
               };
             }
-            return { toolResult: { ok: false, error: "unknown_audit_tool" } };
+            return { toolResult: toolFailure(registry.locale, "unknown_audit_tool") };
           },
         },
         { signal: controller.signal, maxSteps: 6, toolChoice: "required" },

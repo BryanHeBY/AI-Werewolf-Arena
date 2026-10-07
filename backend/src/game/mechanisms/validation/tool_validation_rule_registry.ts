@@ -1,3 +1,4 @@
+import { RuleError, type RuleViolation } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：聚合通用/角色/机制校验规则并提供统一校验入口。 */
 import { ToolName } from "../../../core/domain/model";
 import { COMMON_VALIDATION_RULES } from "../common/validation_rules";
@@ -29,12 +30,13 @@ export class ToolValidationRuleRegistry {
     this.rules = { ...(rules ?? buildDefaultRules(roleProfileRegistry)) };
   }
 
-  validate(ctx: ValidationRuleContext): string | null {
+  validate(ctx: ValidationRuleContext): RuleViolation | null {
     const rule = this.rules[ctx.toolCall.name as ToolName];
     if (!rule) {
-      return "非法操作，未知工具";
+      return { code: RuleError.UnknownTool };
     }
-    return rule(ctx);
+    const result = rule(ctx);
+    return !result ? null : typeof result === "string" ? { code: RuleError.CustomRuleError, message: result } : result;
   }
 }
 
