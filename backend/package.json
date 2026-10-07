@@ -10,7 +10,7 @@
     "lint:deps": "eslint \"src/**/*.ts\" --max-warnings=0",
     "lint:boundaries": "bun scripts/check_import_boundaries.mjs",
     "smoke": "bun src/run-game-smoke.ts",
-    "release:check": "bun run check && bun run lint:deps && bun run lint:boundaries && bun run test && bun run smoke",
+    "release:check": "bun run check && bun run lint:deps && bun run lint:boundaries && bun run lint:i18n && bun run test && bun run smoke",
     "run": "bun src/runtime/cli/run_game.ts",
     "export:replay": "bun src/replay/export_replay_bundle.ts",
     "run:six": "bun src/runtime/cli/run_game.ts --game-config-name six_player_mvp",
@@ -22,7 +22,8 @@
     "config:check": "bun src/runtime/cli/check_config.ts",
     "config:migrate": "bun src/runtime/cli/migrate_configs.ts",
     "simulate": "bun src/runtime/cli/simulate.ts",
-    "replay:actions": "bun src/runtime/cli/replay_actions.ts"
+    "replay:actions": "bun src/runtime/cli/replay_actions.ts",
+    "lint:i18n": "bun scripts/check_i18n_literals.mjs"
   },
   "dependencies": {
     "@agentclientprotocol/sdk": "^1.5.1",

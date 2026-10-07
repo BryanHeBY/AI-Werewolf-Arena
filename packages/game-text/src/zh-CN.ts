@@ -521,6 +521,21 @@ export const zhCN = Object.freeze({
   "cli.exported": "已导出 {count} 个事件到 {file}。",
   "cli.replay_failed": "复盘文件操作失败（{code}）。",
   "cli.offline_failed": "离线复盘命令失败（{code}）。",
+  "component.alive": "你当前仍存活。",
+  "component.dead": "你当前已出局。",
+  "component.camp": "你属于【{camp}】。",
+  "component.badge_destroyed": "警徽已销毁。",
+  "component.badge_held": "你当前持有警徽，投票权重可提升至 {weight}。",
+  "component.badge_none": "你当前不持有警徽。",
+  "component.vote_none": "你当前没有投票权。",
+  "component.vote_weight": "你的投票权重为 {weight}。",
+  "component.marks_none": "你当前没有状态印记。",
+  "component.marks": "你当前持有状态：{marks}",
+  "component.mark.GuardMark": "[守护印记]",
+  "component.mark.WolfKillMark": "[狼刀印记]",
+  "component.mark.HealMark": "[解药印记]",
+  "component.mark.PoisonMark": "[毒药印记]",
+  "component.role": "你的底牌是【{role}】。",
 } as const);
 
 export type MessageKey = keyof typeof zhCN;

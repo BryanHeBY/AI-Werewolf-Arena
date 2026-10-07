@@ -1,3 +1,4 @@
+import { text, term, type Locale } from "@ai-werewolf-arena/game-text";
 import { Camp, PromptRenderable } from "../model";
 
 /**
@@ -10,17 +11,11 @@ export interface CampComponent extends PromptRenderable {
 /**
  * 创建阵营组件。
  */
-export function createCampComponent(camp: Camp): CampComponent {
+export function createCampComponent(camp: Camp, locale: Locale = "zh-CN"): CampComponent {
   return {
     camp,
-    renderPrompt(): string {
-      if (camp === Camp.Wolf) {
-        return "你属于【狼人阵营】。";
-      }
-      if (camp === Camp.ThirdParty) {
-        return "你属于【第三方阵营】。";
-      }
-      return "你属于【好人阵营】。";
+    renderPrompt(displayLocale: Locale = locale): string {
+      return text(displayLocale, "component.camp", { camp: term("camp_team", this.camp, displayLocale) });
     },
   };
 }

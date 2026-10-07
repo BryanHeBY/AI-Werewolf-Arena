@@ -1,3 +1,4 @@
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { PromptRenderable } from "../model";
 
 /**
@@ -10,11 +11,11 @@ export interface AliveComponent extends PromptRenderable {
 /**
  * 创建存活状态组件。
  */
-export function createAliveComponent(alive: boolean = true): AliveComponent {
+export function createAliveComponent(alive: boolean = true, locale: Locale = "zh-CN"): AliveComponent {
   return {
     alive,
-    renderPrompt(): string {
-      return this.alive ? "你当前仍存活。" : "你当前已出局。";
+    renderPrompt(displayLocale: Locale = locale): string {
+      return text(displayLocale, this.alive ? "component.alive" : "component.dead");
     },
   };
 }

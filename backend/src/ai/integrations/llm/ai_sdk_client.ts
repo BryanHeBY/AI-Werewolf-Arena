@@ -218,7 +218,7 @@ export class AiSdkClient implements ChatModelClient {
       role: message.role === "tool" ? "user" : message.role,
       content:
         message.role === "tool"
-          ? `[上一步工具结果] ${message.content}`
+          ? `[tool_result] ${message.content}`
           : message.content,
     })) as ModelMessage[];
   }

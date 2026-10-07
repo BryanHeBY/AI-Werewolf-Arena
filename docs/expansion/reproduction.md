@@ -40,7 +40,7 @@ bun run --cwd backend replay:actions --record ../record/<session>/reproduction.j
 - 不支持的录制schema、引擎/lock、RNG、规则版本明确拒绝。未封口、动作未消费、观察/事件/资源状态不一致也明确拒绝。
 - 当前采用严格源码与lock一致性；源码hash包含文本变更，不将不同引擎自动判断为兼容。Git commit不同但源码/lock一致可以复现。
 - 本批没有提供跨引擎的自动转换；需要旧引擎时使用记录对应的隔离checkout及依赖，不覆盖当前源码或用户凭据。历史公开播放器档案继续读取，不等同于具有可复现动作的录制。
-- 英文引擎执行与复现随P3接入，当前英文录制明确拒绝，避免在中文请求上错误回放。
+- P3完成后支持zh-CN/en执行与复现；metadata.locale显式绑定到World，不改译原始名字/动作文本。兼容性仍严格检查source/lock/RNG/规则集，未放宽旧Tape政策。
 
 ## 验证
 

@@ -7,7 +7,7 @@
 | P0 | 完成 | 文档 commit `5337194`，三路审查闭环 |
 | P1 | 完成 | `facea9c`共享目录；`87af121`机制参数执行；v2完整配置、迁移/检查及玩家绑定交付；193后端+33前端测试，三路复查0阻断 |
 | P2 | 完成 | T01逐局随机/T02严格脚本/T03受限观察/T04动作录制与兼容回放；227后端+33前端测试，三路复查0阻断 |
-| P3 | 进行中 | 中英字典与locale、提示/工具/拒绝、记录/旧档、前端/视频功能闭环 |
+| P3 | 完成 | I01–I04、诊断/CLI与受控源码扫描；实际SDK/ACP中英完整场景与Tape重放、前端/视频门槛；英文入口开放 |
 | P4–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
@@ -95,4 +95,9 @@ T01实现commit `47bca25`；阶段证据：[三路审查](reviews/p2-t01.md)，�
 
 ## P3 运行提示与CLI
 
-CLI局部语言/安全失败JSON、共享运行/观察文字、structured人格回退告警与双语欢乐局示例交付；迁移报告在写盘前预检。[runtime-display.md](runtime-display.md)说明flags、API变化、原文与默认机器人策略边界。整体英文执行gate仍保持，后端release313、前端48/type/build通过，实际中英CLI/安全反例和[三路审查](reviews/p3-runtime-display.md)复查0阻断；不把CLI解析/显示支持当作英文整局或64角色完成。
+实现commit `1350d70`。CLI局部语言/安全失败JSON、共享运行/观察文字、structured人格回退告警与双语欢乐局示例交付；迁移报告在写盘前预检。[runtime-display.md](runtime-display.md)说明flags、API变化、原文与默认机器人策略边界。整体英文执行gate仍保持，后端release313、前端48/type/build通过，实际中英CLI/安全反例和[三路审查](reviews/p3-runtime-display.md)复查0阻断；不把CLI解析/显示支持当作英文整局或64角色完成。
+
+
+## P3 最终英文激活
+
+ACP合法pass已独立修正commit `e498014`。runner显式World.locale，英文执行/Tape重放开放，模拟locale与metadata同步；公开组件renderPrompt接两语、SDK历史中性标记与源码AST scan交付。[english-execution.md](english-execution.md)说明18真实本机通路对局、原人工oracle/机器等价/权限/资源与兼容边界。[最终审查](reviews/p3-activation.md)三路0阻断；后端release329、前端48/type/build、当前6E2E回归及I04真实视频证据闭环。P3完成，完整持续目标转P4；57计划角色/混合接入/新机制仍未被提前启用。

@@ -1,3 +1,4 @@
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { PromptRenderable } from "../model";
 
 /**
@@ -16,19 +17,20 @@ export interface BadgeComponent extends PromptRenderable {
 export function createBadgeComponent(
   isSheriff: boolean = false,
   destroyed: boolean = false,
+  locale: Locale = "zh-CN",
 ): BadgeComponent {
   return {
     isSheriff,
     destroyed,
     voteWeight: 1.5,
-    renderPrompt(): string {
+    renderPrompt(displayLocale: Locale = locale): string {
       if (this.destroyed) {
-        return "警徽已销毁。";
+        return text(displayLocale, "component.badge_destroyed");
       }
       if (this.isSheriff) {
-        return `你当前持有警徽，投票权重可提升至 ${this.voteWeight}。`;
+        return text(displayLocale, "component.badge_held", { weight: this.voteWeight });
       }
-      return "你当前不持有警徽。";
+      return text(displayLocale, "component.badge_none");
     },
   };
 }

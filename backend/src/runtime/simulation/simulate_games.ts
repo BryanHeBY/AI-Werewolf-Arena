@@ -1,3 +1,4 @@
+import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
 import { bootstrapGame } from "../../app/bootstrap";
 import { createRandom, randomDraws, type ActionProvider, type GameEvent, type RuntimeSnapshot } from "../../core";
 import { readFile } from "node:fs/promises";
@@ -11,7 +12,7 @@ import { COMPONENT, type RoleComponent } from "../../core";
 import { getWitchState } from "../../game/mechanisms/roles/private_state";
 import { beginGameReproduction, captureCheckpoint, currentEngineVersion } from "./reproduction_context";
 
-export interface SimulationOptions { seeds: readonly string[]; recordRoot: string; maxDays?: number; styles?: readonly BotStyle[] }
+export interface SimulationOptions { locale?: Locale; seeds: readonly string[]; recordRoot: string; maxDays?: number; styles?: readonly BotStyle[] }
 
 export interface SimulationReport {
   board: string;
@@ -36,6 +37,8 @@ function branchCounts(events: readonly GameEvent[]): Record<string, number> {
 /** Only the controller can inspect truth for assertions and recording; strategies receive DTOs. */
 export async function simulateGames(board: ResolvedBoardDefinition, options: SimulationOptions): Promise<SimulationReport> {
   if (!options.seeds.length || new Set(options.seeds).size !== options.seeds.length) throw new Error("simulation_seeds_invalid");
+  const locale = options.locale ?? "zh-CN";
+  if (!isLocale(locale)) throw new Error("simulation_locale_invalid");
   const maxDays = options.maxDays ?? 30;
   if (!Number.isSafeInteger(maxDays) || maxDays < 1) throw new Error("simulation_max_days_invalid");
   const styles = options.styles ?? ["active", "conservative", "competitive", "random"];
@@ -45,7 +48,7 @@ export async function simulateGames(board: ResolvedBoardDefinition, options: Sim
   const engine = await currentEngineVersion();
   for (const [index, seed] of options.seeds.entries()) {
     const random = createRandom(seed);
-    const context = bootstrapGame(board.config, { random });
+    const context = bootstrapGame(board.config, { random, locale });
     const strategies = new Map(context.playerIds.map(id => [id, new ObservedBot(randomDraws(random.fork("players").fork(`id:${id}`)), styles[Math.floor(random.fork("styles").fork(`id:${id}`).next() * styles.length)])]));
     const observed = new ObservedPlayersActionProvider(context.world, strategies, board.config);
     const provider: ActionProvider = { async getAction(request) {
@@ -57,7 +60,7 @@ export async function simulateGames(board: ResolvedBoardDefinition, options: Sim
     const recorder = new GameEventRecorder({ world: context.world, replayManager: manager }, context.phaseManager.getSnapshot().phase);
     const summary = await runWithSessionRecorder(manager, async () => {
       const failures: unknown[] = [];
-      const reproduction = beginGameReproduction(manager, context, { engine, boardId: board.definition.id, boardConfig: board.config, locale: "zh-CN", maxDays });
+      const reproduction = beginGameReproduction(manager, context, { engine, boardId: board.definition.id, boardConfig: board.config, locale: context.world.locale, maxDays });
       const recordedProvider: ActionProvider = { getAction: request => reproduction.decide(request, provider) };
       let cycle = 0;
       let priorAlive = context.world.getAliveEntityIds();

@@ -1,3 +1,4 @@
+import { text } from "@ai-werewolf-arena/game-text";
 import {
   ActionProvider,
   BoardConfig,
@@ -91,7 +92,7 @@ export class PhaseManager {
           return {
             id,
             seat: identity?.seat ?? id,
-            name: identity?.name ?? `玩家${id}`,
+            name: identity?.name ?? text(this.world.locale, "common.player_name", { id }),
             role: role?.role ?? "unknown",
             camp: role?.camp ?? "unknown",
           };

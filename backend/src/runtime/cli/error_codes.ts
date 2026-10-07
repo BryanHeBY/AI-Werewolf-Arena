@@ -32,4 +32,5 @@ export const COMMAND_ERROR_CODES = [
   "reproduction_trace_incomplete",
   "replay_export_usage", "replay_export_overwrites_source", "replay_bundle_file_unreadable",
   "replay_bundle_json_invalid", "replay_bundle_invalid",
+  "simulation_locale_invalid",
 ] as const;

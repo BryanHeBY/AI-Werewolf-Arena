@@ -84,7 +84,7 @@ function createPlayers(world: World, config: BoardConfig, options: BootstrapOpti
   for (let seat = 1; seat <= config.boardSize; seat++) {
     const entityId = world.createEntity();
     const role = roles[seat - 1];
-    const roleComp = createRoleComponent(role, roleCatalog.getCamp(role));
+    const roleComp = createRoleComponent(role, roleCatalog.getCamp(role), world.locale);
     roleCatalog.applyRuntime(roleComp, { boardConfig: config, locale: world.locale });
 
     world.addComponent(
@@ -93,11 +93,11 @@ function createPlayers(world: World, config: BoardConfig, options: BootstrapOpti
       createIdentityComponent(entityId, seat, options.playerNames?.[String(seat)] ?? text(world.locale, "common.player_name", { id: seat })),
     );
     world.addComponent(entityId, COMPONENT.Role, roleComp);
-    world.addComponent(entityId, COMPONENT.Camp, createCampComponent(roleComp.camp));
-    world.addComponent(entityId, COMPONENT.Alive, createAliveComponent(true));
-    world.addComponent(entityId, COMPONENT.StatusMarks, createStatusMarksComponent());
-    world.addComponent(entityId, COMPONENT.VotingRight, createVotingRightComponent(1, true));
-    world.addComponent(entityId, COMPONENT.Badge, createBadgeComponent(false, false));
+    world.addComponent(entityId, COMPONENT.Camp, createCampComponent(roleComp.camp, world.locale));
+    world.addComponent(entityId, COMPONENT.Alive, createAliveComponent(true, world.locale));
+    world.addComponent(entityId, COMPONENT.StatusMarks, createStatusMarksComponent(world.locale));
+    world.addComponent(entityId, COMPONENT.VotingRight, createVotingRightComponent(1, true, world.locale));
+    world.addComponent(entityId, COMPONENT.Badge, createBadgeComponent(false, false, world.locale));
     ids.push(entityId);
   }
 

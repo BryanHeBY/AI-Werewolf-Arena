@@ -45,21 +45,21 @@ export class PhaseStageLocalizationRegistry {
 
 export const CORE_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR: PhaseStageLocalizationContributor = {
   phaseNames: {
-    night: "夜晚",
-    day: "白天",
-    voting: "投票",
-    game_over: "终局",
+    night: term("phase", "night", "zh-CN"),
+    day: term("phase", "day", "zh-CN"),
+    voting: term("phase", "voting", "zh-CN"),
+    game_over: term("phase", "game_over", "zh-CN"),
   },
   stageNames: {
-    night: "夜晚",
-    day: "白天",
-    voting: "放逐投票",
-    game_over: "终局",
-    day_speech: "白天发言",
-    on_daybreak: "天亮后窗口",
-    on_pre_election: "警长流程前窗口",
-    on_pre_vote: "放逐前窗口",
-    on_per_speech_gap: "发言间隔窗口",
+    night: term("stage", "night", "zh-CN"),
+    day: term("stage", "day", "zh-CN"),
+    voting: term("stage", "voting", "zh-CN"),
+    game_over: term("stage", "game_over", "zh-CN"),
+    day_speech: term("stage", "day_speech", "zh-CN"),
+    on_daybreak: term("stage", "on_daybreak", "zh-CN"),
+    on_pre_election: term("stage", "on_pre_election", "zh-CN"),
+    on_pre_vote: term("stage", "on_pre_vote", "zh-CN"),
+    on_per_speech_gap: term("stage", "on_per_speech_gap", "zh-CN"),
   },
 };
 

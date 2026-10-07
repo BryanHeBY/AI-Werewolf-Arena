@@ -201,3 +201,19 @@ function completion(message: Record<string, unknown>, finishReason: string): Res
     usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
   });
 }
+
+test("historical tool messages use a neutral machine tag without changing original contents", async () => {
+  const requests: Record<string, unknown>[] = [];
+  const server = Bun.serve({ hostname: "127.0.0.1", port: 0, async fetch(input) {
+    requests.push(await input.json() as Record<string, unknown>);
+    return Response.json({ id: "history", object: "chat.completion", created: 1, model: "test", choices: [{ index: 0, finish_reason: "stop", message: { role: "assistant", content: "ok" } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
+  } });
+  try {
+    const client = new AiSdkClient({ apiKey: "synthetic", baseURL: `${server.url.origin}/v1`, model: "test" });
+    for (const content of ['{"ok":true}', 'Original 中文']) {
+      expect(await client.chat([{ role: "tool", content }])).toBe("ok");
+      expect(requests.at(-1)?.messages).toEqual([{ role: "user", content: `[tool_result] ${content}` }]);
+    }
+    expect(JSON.stringify(requests[0])).not.toMatch(/[\u4e00-\u9fff]/);
+  } finally { server.stop(true); }
+});

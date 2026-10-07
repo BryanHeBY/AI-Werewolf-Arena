@@ -122,7 +122,6 @@ export async function replayReproduction(input: unknown, recordRoot: string) {
   requireMatch(record.metadata.engine.sourceHash === version.sourceHash && record.metadata.engine.lockHash === version.lockHash, "reproduction_engine_or_lock_incompatible");
   requireMatch(record.metadata.random.algorithm === RANDOM_ALGORITHM && record.metadata.random.streamPolicy === RANDOM_STREAM_POLICY && record.metadata.random.path.every(name => name.trim().length > 0), "reproduction_rng_incompatible");
   requireMatch(record.metadata.ruleset.id === RULESET.id && record.metadata.ruleset.version === RULESET.version, "reproduction_ruleset_incompatible");
-  requireMatch(record.metadata.locale === "zh-CN", "reproduction_locale_not_enabled");
   const board = parseBoardDefinition(boardDefinitionFromConfig(record.metadata.boardId, record.metadata.normalizedBoard));
   requireMatch(record.metadata.players.length === board.config.boardSize && record.metadata.players.every((player, index) => player.id === index + 1), "reproduction_players_invalid");
   requireMatch(record.checkpoints.every((checkpoint, index) => checkpoint.cycle === index && (checkpoint.complete || index === record.checkpoints.length - 1) && Boolean(checkpoint.failure) === !checkpoint.complete && checkpoint.eventCount <= record.events.length), "reproduction_checkpoints_invalid");

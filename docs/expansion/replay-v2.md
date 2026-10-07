@@ -24,9 +24,9 @@
 
 ## 与其他记录的边界
 
-公开复盘旧档可通过reader继续展示，不能套用内部动作Tape的严格引擎/锁/RNG一致性规则。reproduction.json继续独立版本和sourceHash政策，语言由其metadata显式带入复现World，再导出相应locale；英文内部复现入口同样保留P3未完成时的明确gate。公开文件不包含这份私有Tape或随机种子。
+公开复盘旧档可通过reader继续展示，不能套用内部动作Tape的严格引擎/锁/RNG一致性规则。reproduction.json继续独立版本和sourceHash政策，语言由其metadata显式带入复现World，再导出相应locale；英文内部复现入口已随P3整局门槛完成开放。公开文件不包含这份私有Tape或随机种子。
 
-本笔先交付公开writer/reader/版本与手工fixture，私有player turn/initial prompt的phase/stage机器化、请求展示MessageRef及其录制schema迁移在I03下一笔处理；I04再交付语言/时区UI与视频。英文runner仍等待P3全链路完成，不因公开reader支持locale而提前开放。
+P3已交付公开/私有writer-reader、机器phase/stage和MessageRef、语言/时区UI与视频、运行/CLI/审计，并通过实际SDK/ACP中英文整局与Tape复现后开放英文runner。历史I03审查记录保留当时gate状态，当前证据见[p3-activation](reviews/p3-activation.md)。
 
 ## 验证
 

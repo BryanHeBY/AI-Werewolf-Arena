@@ -1,3 +1,4 @@
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { PromptRenderable } from "../model";
 
 /**
@@ -14,15 +15,16 @@ export interface VotingRightComponent extends PromptRenderable {
 export function createVotingRightComponent(
   weight: number = 1,
   canVote: boolean = true,
+  locale: Locale = "zh-CN",
 ): VotingRightComponent {
   return {
     weight,
     canVote,
-    renderPrompt(): string {
+    renderPrompt(displayLocale: Locale = locale): string {
       if (!this.canVote) {
-        return "你当前没有投票权。";
+        return text(displayLocale, "component.vote_none");
       }
-      return `你的投票权重为 ${this.weight}。`;
+      return text(displayLocale, "component.vote_weight", { weight: this.weight });
     },
   };
 }

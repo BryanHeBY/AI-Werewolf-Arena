@@ -1,3 +1,4 @@
+import { text, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { PromptRenderable, StatusMark } from "../model";
 
 /**
@@ -7,7 +8,7 @@ import { PromptRenderable, StatusMark } from "../model";
 export class StatusMarksComponent implements PromptRenderable {
   private marks: Set<StatusMark>;
 
-  constructor(initialMarks: StatusMark[] = []) {
+  constructor(initialMarks: StatusMark[] = [], private readonly locale: Locale = "zh-CN") {
     this.marks = new Set(initialMarks);
   }
 
@@ -49,27 +50,15 @@ export class StatusMarksComponent implements PromptRenderable {
   /**
    * 将状态印记渲染为可读文本片段。
    */
-  renderPrompt(): string {
-    if (this.marks.size === 0) {
-      return "你当前没有状态印记。";
-    }
-
-    const map: Record<StatusMark, string> = {
-      [StatusMark.GuardMark]: "[守护印记]",
-      [StatusMark.WolfKillMark]: "[狼刀印记]",
-      [StatusMark.HealMark]: "[解药印记]",
-      [StatusMark.PoisonMark]: "[毒药印记]",
-    };
-
-    return `你当前持有状态：${this.values()
-      .map((mark) => map[mark])
-      .join(" ")}`;
+  renderPrompt(locale: Locale = this.locale): string {
+    if (this.marks.size === 0) return text(locale, "component.marks_none");
+    return text(locale, "component.marks", { marks: this.values().map(mark => text(locale, `component.mark.${mark}` as MessageKey)).join(" ") });
   }
 }
 
 /**
  * 创建状态印记组件。
  */
-export function createStatusMarksComponent(): StatusMarksComponent {
-  return new StatusMarksComponent();
+export function createStatusMarksComponent(locale: Locale = "zh-CN"): StatusMarksComponent {
+  return new StatusMarksComponent([], locale);
 }

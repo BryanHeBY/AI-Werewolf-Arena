@@ -18,7 +18,7 @@ bun run --cwd backend replay:actions --record ../record/session_<id>/reproductio
 bun run --cwd frontend replay:dev -- --input ../record/session_<id> --display-locale en
 ```
 
-上述英文执行命令为P3整体gate通过后使用；本批gate仍保留，能解析和显示英文报告不等于已开放整局。
+英文执行已在实际SDK/ACP整局、机器结果对照与英文Tape复现门槛通过后开放。模拟命令也接受--locale选择World语言；--display-locale仍独立。
 
 ## 系统说明与原文
 
@@ -51,4 +51,4 @@ config:check保留warnings机器数据，并增加warningMessages当前语言说
 
 每个座位含zh-CN/en两版personalityPrompt，均明确欢乐局、争取胜利、公开发言有辨识度、工具/信息权限优先。包括绿茶、霸总、古风、概率nerd、mean姐、解说员、团建经理、小怂包、卷王、玄学段子手、反骨辩手与冷面摸鱼人；策略按座位区分。拿狼后的悍跳/苟住/反冲/借势等是个人偏好，不是新引擎规则。名字在两语言中仍是同一原始昵称。缺译为零，不依赖回退伪装完整英文人格。
 
-本批验证实际CLI失败/配置成功/迁移preview和apply、陌生观察role、默认机器人动作对照及双语示例完整解析；英文runner/完整SDK与ACP对局、Tape英文重放、角色支持矩阵继续按路线执行。
+本批验证实际CLI失败/配置成功/迁移preview和apply、陌生观察role、默认机器人动作对照及双语示例完整解析；英文runner/完整SDK与ACP对局、Tape英文重放已通过P3验收；后续角色/接入矩阵继续随P4–P10扩展。

@@ -30,7 +30,7 @@ LLM和ACP错误记录使用同一诊断契约；ACP逻辑操作reason写code，o
 
 run_game不再打印完整异常并二次throw：顶层只报告安全配置code/path与diagnostic，然后exitCode=1；程序化main仍reject原始错误。configDiagnostic读取typed自有data descriptor，closed CONFIG_ERROR_CODES仅允许已知机器ID，任意namespace形状的异常正文也不能变成输出code。BoardConfigurationError路径只接受既有有限字段路径语法；未知异常不扩展路径。
 
-模拟/迁移/mock入口也不回显异常原文；它们的程序化错误/回滚策略保留。其余CLI用法/配置报告的人类语言、观察输出系统说明和整体英文运行gate继续随P3下一批交付；此处不把全部P3标记完成。
+模拟/迁移/mock入口也不回显异常原文；它们的程序化错误/回滚策略保留。其余CLI/配置报告/观察说明与英文运行已在后续P3批交付，当前阶段证据见[p3-activation](reviews/p3-activation.md)；本页只定义错误边界。
 
 ## 验证范围
 

@@ -48,10 +48,9 @@ class DeadlineAwareActionProvider implements ActionProvider {
 
 /** The caller supplies a fully resolved setup; no configuration I/O happens here. */
 export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> {
-  // P3 will enable the complete English prompt/transport/presentation path.
-  if (setup.context.locale !== "zh-CN" || setup.context.displayLocale !== "zh-CN") throw new Error("runtime_locale_execution_not_enabled");
   const context = bootstrapGame(setup.boardConfig, {
     random: createRandom(setup.context.seed),
+    locale: setup.context.locale,
     playerNames: Object.fromEntries(Object.entries(setup.players).flatMap(([seat, entry]) => entry.name !== undefined ? [[seat, entry.name]] : [])),
   });
   const profilesByActor = selectPlayerProfiles(context.world, setup);

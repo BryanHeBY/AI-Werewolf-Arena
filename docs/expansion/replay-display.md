@@ -49,4 +49,4 @@ bun run --cwd frontend replay:render -- \
 - 实际 Chromium：加载提示、语言/时区、席位筛选、逐帧跳转、播放中语言切换、原名原话、错误/空文件、无胜者终局。
 - 实际中英 PNG 与英文 MP4，同输入/同 frame PNG 重复哈希；类型检查/构建与后端 release。
 
-本批交付 I04 展示/渲染边界；P3 剩余日志与整体双语运行验收仍继续，英文 runner/Tape replay gate 本批不解除。未来角色矩阵、长局视频和全链路最终验证随 P4–P10，不能用基础 fixture 代表所有 64 项角色已实现。
+I04展示/渲染边界与P3剩余日志、整体双语运行门槛均已验证，英文runner/Tape replay已开放。未来角色矩阵、长局视频和全链路最终验证随 P4–P10，不能用基础 fixture 代表所有 64 项角色已实现。

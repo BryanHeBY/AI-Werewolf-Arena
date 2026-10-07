@@ -1,3 +1,4 @@
+import { text, roleName, type Locale } from "@ai-werewolf-arena/game-text";
 import { Camp, EntityId, PromptRenderable, Role } from "../model";
 
 /**
@@ -15,13 +16,13 @@ export interface RoleComponent extends PromptRenderable {
 /**
  * 创建角色组件并按角色初始化私有状态。
  */
-export function createRoleComponent(role: Role, camp: Camp): RoleComponent {
+export function createRoleComponent(role: Role, camp: Camp, locale: Locale = "zh-CN"): RoleComponent {
   return {
     role,
     camp,
     privateState: {},
-    renderPrompt(): string {
-      return `你的底牌是【${this.role}】。`;
+    renderPrompt(displayLocale: Locale = locale): string {
+      return text(displayLocale, "component.role", { role: roleName(this.role, displayLocale) });
     },
   };
 }
