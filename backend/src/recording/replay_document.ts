@@ -32,10 +32,11 @@ export function createReplayDocument(input: {
       winner: input.manifest.winner,
       reason: input.manifest.finish_reason || null,
     },
-    players: input.manifest.players.map(({ player_id, role, camp }) => ({
+    players: input.manifest.players.map(({ player_id, role, camp, name }) => ({
       player_id,
       role,
       camp,
+      ...(name !== undefined ? { name } : {}),
     })),
     events: input.events,
   };

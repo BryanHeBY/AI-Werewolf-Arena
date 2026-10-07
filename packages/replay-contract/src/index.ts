@@ -36,6 +36,7 @@ export interface ReplayDocument {
     player_id: number;
     role: string;
     camp: string;
+    name?: string;
   }>;
   events: ReplayEvent[];
 }
@@ -86,6 +87,7 @@ export function assertReplayDocument(value: unknown): asserts value is ReplayDoc
     playerIds.add(player.player_id);
     assertField(typeof player.role === "string", `${path}.role`);
     assertField(typeof player.camp === "string", `${path}.camp`);
+    assertField(player.name === undefined || typeof player.name === "string", `${path}.name`);
   }
 
   for (let index = 0; index < value.events.length; index += 1) {

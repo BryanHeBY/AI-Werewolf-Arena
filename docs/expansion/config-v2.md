@@ -1,0 +1,69 @@
+# P1 冻结的配置契约
+
+## 板子格式
+
+正常入口只读取 `boards/<id>.json`，ID 必须与文件名一致。当前格式 `version: 2`，规则集 `{ "id": "awa_classic", "version": "1.0.0" }`。角色尚有规则卡记录的实现差异，不能把登记状态称为 verified。
+
+必需结构：`board.size`、`board.roleSetups`、`rules.winConditions`、完整 `rules.hooks`、`mechanisms.sheriff`、`mechanisms.selfDestruct.enabledWindows`、`mechanisms.tieBreaker`。角色参数放 `roles.<id>`，由注册 profile 的 schema 严格验证；当前女巫支持 `selfHeal`。
+
+- 玩家数和单项角色数为 1–128 的整数，总角色数必须等于人数；重复角色条目拒绝，使用单项 count 表示重复数量。
+- 只有已注册 profile 可运行。64 项资料目录不授予运行许可。
+- 起局必须有狼人和好人；屠边还必须同时含神职和平民；胜负条件不可重复。
+- 警长票重为有限正数，转移后沿用；关闭警长时不允许显式初始警长或非默认警徽参数。
+- 放逐平票：`min_id`/`no_elimination`；狼刀平票：`min_id`/`no_kill`；警长平票：`min_id`/`min_seat`/`no_elimination`。未来值先实现再放行，不能接受后按另一策略执行。
+- 本阶段自爆窗口只接受实际已有执行语义的 `on_pre_vote`；空列表明确关闭，不走旧 normalizer 回退。其他窗口在 P4 实现后开放。窗口对应 hook 必须启用。
+- 未知字段、未注册角色、无对应角色的参数、重复窗口及越界座位均拒绝。
+
+## 对局与玩家绑定
+
+对局 `board` 可引用任意合法已存在 ID。现有 `roleAgents`、`playerAgents` 保留，且结合完整板子校验；同一座位同时出现新 `players` 和旧 `playerAgents` 时拒绝。
+
+```json
+{
+  "board": "twelve_player_standard",
+  "agent": "acp_default",
+  "players": {
+    "1": { "name": "苏茶茶", "personalityPrompt": "温柔追问，语气有戏。" },
+    "2": { "name": "Lin", "agent": "acp_default", "personalityPrompt": null }
+  },
+  "locale": "zh-CN",
+  "displayLocale": "zh-CN"
+}
+```
+
+运行 flags 用独立类型，玩家/语言/随机资料不进入 Required flags。
+
+- 名字与模型分开，原字符串保留，不静默去空白或翻译；最长120字符，禁止全空白。
+- 新座位配置没有显式 agent 时保留原角色/默认 Agent 选择；有显式 agent 时选择该 Agent。
+- 座位显式人格整体覆盖选中 profile 的人格；省略则继承，`null` 明确清空。旧绑定的整体选择与覆盖行为不改变，不隐式拼接角色人格。
+- 人格可以是非空字符串或 `zh-CN`/`en` 字典。原字符串不自动翻译；缺选中语言时依次回退中文、英文，配置报告给出安全的 fallback 警告，不打印人格内容。
+- `spawnArgs` 必须同时指定 ACP agent；不允许从不明确的角色/默认模型继承后猜传输。
+- locale 只接受 `zh-CN`/`en`；displayLocale 缺省跟随对局；seed 为非空字符串。
+- 当前 P1 仅冻结/解析语言与 seed 元数据；执行入口明确拒绝尚未接入的英文执行与 seed。P2 开启可复现 seed，P3 开启完整中英运行与展示，检查报告注明执行支持状态。
+- P4 前同一局只能使用一种传输（全 LLM 或全 ACP）；检查报告的 `mixedTransports: false` 表示混合绑定尚不可执行。
+- 名字已进入身份、共享提示和公开复盘的可选 name 字段；前端姓名展示纳入 P3，同步检查旧档兼容。
+
+## 显式迁移
+
+从项目根目录运行：
+
+```bash
+# 预览，不写文件
+bun run --cwd backend config:migrate --configs-dir ../configs
+# 转换并为每份旧板子保存 .v1.bak，不读写 providers、agents 或 games
+bun run --cwd backend config:migrate --configs-dir ../configs --apply
+# 对原根目录/集合文件显式选板和基准，新目标文件不得覆盖另一个现存板子
+bun run --cwd backend config:migrate --configs-dir ../configs --source ../configs/game-config.json --board custom_twelve --base twelve_player_standard
+```
+
+`--source` 的路径按命令 cwd（backend）解析；写入前预览，再追加 `--apply`。旧默认值、onPerSpeechGap 及实际优先胜负条件显式物化；旧单值胜负被覆盖、无角色参数被移除或空自爆列表触发旧回退时给警告。未知旧字段仍拒绝，不能靠迁移偷偷丢弃。
+
+工具先校验全部转换，再创建备份；已有备份与当前旧文件完全相同时可安全重试，内容不同时明确拒绝且不改文件。板子通过临时文件原子发布，新目标独占创建，不能删除其他进程创建的冲突目标；批量失败尽力回滚并保留原错误/回滚错误。示例配置由 Git 保存旧版本，本地备份保留；不得整目录复制 example 覆盖密钥或人格。
+
+## 脱敏配置检查
+
+```bash
+bun run --cwd backend config:check --configs-dir ../configs --game-config-name twelve_player_fun
+```
+
+只输出板子、规则/参数/字段来源、玩家名字、Agent名称/类型/模型、是否有私有人格、限制与执行支持状态。不输出 profile/provider 对象、env、命令参数、URL、认证和人格文本；JSON错误也不回显原输入片段。失败以 `code` 和已确认安全的 `path` 输出，例如 `roles.witch.selfHela`；任意异常只给稳定错误码。没有文件或遇到旧格式明确失败，不搜索其他路径或静默用内置板子替代。

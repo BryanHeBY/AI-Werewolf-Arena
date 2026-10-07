@@ -6,6 +6,7 @@ import {
   getActionRequestStage,
 } from "../../../core/domain/action_request_context";
 import { World } from "../../../core/domain/world";
+import type { IdentityComponent } from "../../../core/domain/entities/player";
 import {
   ConfigRenderRegistry,
   PhaseStageLocalizationRegistry,
@@ -52,6 +53,7 @@ export class PlayerPromptPolicy {
         boardInfoPrompt,
         configPrompt,
         personalityPrompt: this.options.personalityPromptResolver?.(request, role),
+        playerName: this.world.getComponent<IdentityComponent>(request.actorId, COMPONENT.Identity)?.name,
         supportsDebugReporting: options.supportsDebugReporting,
         includeToolUseInstructions: options.includeToolUseInstructions,
       }),

@@ -52,48 +52,48 @@ type StructuredBoardConfig = {
 };
 
 const tieBreaker = z.enum(["min_id", "min_seat", "no_elimination", "no_kill"]);
-const hooks = z.object({
+const hooks = z.strictObject({
   onDaybreak: z.boolean().optional(),
   onPreElection: z.boolean().optional(),
   onPreVote: z.boolean().optional(),
   onPerSpeechGap: z.boolean().optional(),
 });
-const flatOverride = z.object({
+const flatOverride = z.strictObject({
   boardSize: z.number().int().positive().optional(),
   enableSheriff: z.boolean().optional(),
   initialSheriffSeat: z.number().int().positive().optional(),
   winCondition: z.enum(WinCondition).optional(),
   winConditions: z.array(z.enum(WinCondition)).optional(),
   hooks: hooks.optional(),
-  selfDestruct: z.object({ enabledWindows: z.array(z.enum(ActionWindow)) }).optional(),
-  sheriff: z.object({ voteWeight: z.number().positive().optional() }).optional(),
-  witch: z.object({ canSelfHeal: z.enum(WitchSelfHealRule).optional() }).optional(),
-  tieBreaker: z.object({
+  selfDestruct: z.strictObject({ enabledWindows: z.array(z.enum(ActionWindow)) }).optional(),
+  sheriff: z.strictObject({ voteWeight: z.number().positive().optional() }).optional(),
+  witch: z.strictObject({ canSelfHeal: z.enum(WitchSelfHealRule).optional() }).optional(),
+  tieBreaker: z.strictObject({
     exileVote: tieBreaker.optional(), wolfKillVote: tieBreaker.optional(), sheriffVote: tieBreaker.optional(),
   }).optional(),
-  roleSetups: z.array(z.object({ role: z.enum(Role), count: z.number().int().nonnegative() })).optional(),
+  roleSetups: z.array(z.strictObject({ role: z.enum(Role), count: z.number().int().nonnegative() })).optional(),
 });
-const structuredOverride = z.object({
-  board: z.object({
+const structuredOverride = z.strictObject({
+  board: z.strictObject({
     size: z.number().int().positive().optional(),
     roleSetups: flatOverride.shape.roleSetups,
   }).optional(),
-  rules: z.object({
+  rules: z.strictObject({
     winCondition: flatOverride.shape.winCondition,
     winConditions: flatOverride.shape.winConditions,
     hooks: hooks.optional(),
   }).optional(),
-  mechanisms: z.object({
-    sheriff: z.object({
+  mechanisms: z.strictObject({
+    sheriff: z.strictObject({
       enabled: z.boolean().optional(),
       initialSeat: z.number().int().positive().optional(),
       voteWeight: z.number().positive().optional(),
       tieBreaker: tieBreaker.optional(),
     }).optional(),
-    selfDestruct: z.object({ enabledWindows: z.array(z.enum(ActionWindow)).optional() }).optional(),
-    tieBreaker: z.object({ exileVote: tieBreaker.optional(), wolfKillVote: tieBreaker.optional() }).optional(),
+    selfDestruct: z.strictObject({ enabledWindows: z.array(z.enum(ActionWindow)).optional() }).optional(),
+    tieBreaker: z.strictObject({ exileVote: tieBreaker.optional(), wolfKillVote: tieBreaker.optional() }).optional(),
   }).optional(),
-  roles: z.object({ witch: z.object({ selfHeal: z.enum(WitchSelfHealRule).optional() }).optional() }).optional(),
+  roles: z.strictObject({ witch: z.strictObject({ selfHeal: z.enum(WitchSelfHealRule).optional() }).optional() }).optional(),
 });
 
 function validateOverride(schema: z.ZodType, value: unknown): void {
@@ -394,6 +394,19 @@ export function parseBoardOverride(raw: unknown, board: BoardName): BoardOverrid
   }
   if (!isJsonObject(raw)) {
     return null;
+  }
+
+  if ("boards" in raw || "default" in raw) {
+    validateOverride(z.strictObject({
+      boards: z.record(z.string().regex(/^[a-z][a-z0-9_-]*$/), z.union([flatOverride, structuredOverride])).optional(),
+      default: z.union([flatOverride, structuredOverride]).optional(),
+    }), raw);
+  } else {
+    const allowed = new Set([board, "six_player_mvp", "twelve_player_standard"]);
+    for (const [key, value] of Object.entries(raw)) {
+      if (!allowed.has(key)) throw new Error("board_config_invalid_override_field: document");
+      validateOverride(z.union([flatOverride, structuredOverride]), value);
+    }
   }
 
   const boardsEntry = isJsonObject(raw.boards) ? raw.boards[board] : undefined;

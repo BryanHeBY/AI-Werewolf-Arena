@@ -10,6 +10,7 @@ export interface ReplayManifestPlayer {
   role: string;
   camp: string;
   alive: boolean;
+  name?: string;
 }
 
 /** 对局复盘主清单。 */

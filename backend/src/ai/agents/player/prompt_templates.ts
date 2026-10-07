@@ -10,6 +10,7 @@ export interface SystemPromptInput {
   boardInfoPrompt?: string;
   configPrompt?: string;
   personalityPrompt?: string;
+  playerName?: string;
   supportsDebugReporting?: boolean;
   /** 会话初始化阶段可省略行动接口说明，留给实际回合提示提供。 */
   includeToolUseInstructions?: boolean;
@@ -63,6 +64,7 @@ export function buildSystemPrompt(input: SystemPromptInput): string {
     : undefined;
   return [
     `${SYSTEM_BASE_LINES[0]} 你的编号是${input.actorId}号，真实身份是${input.role}。当你看到“[行动提示]”时，说明你可以开始行动了。${SYSTEM_BASE_LINES[1]} ${SYSTEM_BASE_LINES[2]}`,
+    ...(input.playerName ? [`你的昵称是${input.playerName}。称呼其他玩家时仍使用座位编号，避免混淆。`] : []),
     `当前由规则直接告知你的同阵营队友（不含你自己）的编号：${teammateText}。“无”仅表示没有额外公开给你的队友身份，不表示你的阵营中只有你一人。`,
     `你只能引用本局存在的玩家编号，编号范围是1到${input.maxPlayerId}，严禁虚构不存在的玩家编号。`,
     "阶段规则、可用工具与回合约束是不可违反的行动边界；在边界内由你自主决定策略和表达。",

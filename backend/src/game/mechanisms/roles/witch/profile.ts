@@ -6,6 +6,9 @@ import { WITCH_LLM_REPAIR_PACK } from "./llm_repair";
 import { WITCH_NIGHT_STAGES } from "./night_stages";
 import { WITCH_TOOL_SPECS, WITCH_STAGE_DIRECTIVES } from "./tool_specs";
 import { WITCH_VALIDATION_RULES } from "./validation_rules";
+import { z } from "zod";
+
+const witchParameters = z.strictObject({ selfHeal: z.enum(WitchSelfHealRule).default(WitchSelfHealRule.Disabled) });
 
 /** 女巫角色配置。 */
 export const WITCH_ROLE_PROFILE: RoleProfile = {
@@ -14,6 +17,11 @@ export const WITCH_ROLE_PROFILE: RoleProfile = {
   label: "女巫",
   skillBrief: "拥有解药与毒药，可在夜间选择使用",
   goodSide: "god",
+  configuration: {
+    schema: witchParameters,
+    defaults: { selfHeal: WitchSelfHealRule.Disabled },
+    apply: (config, value) => ({ ...config, witch: { canSelfHeal: witchParameters.parse(value).selfHeal } }),
+  },
   init: (roleComp, ctx) => {
     const selfHealRule =
       ctx.boardConfig?.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled;

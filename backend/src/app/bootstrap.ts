@@ -29,13 +29,15 @@ export interface BootstrapResult {
   playerIds: EntityId[];
 }
 
+export interface BootstrapOptions { playerNames?: Readonly<Record<string, string>> }
+
 /**
  * 按板子配置完成一次完整引擎装配，返回可直接运行的上下文对象。
  */
-export function bootstrapGame(config: BoardConfig): BootstrapResult {
+export function bootstrapGame(config: BoardConfig, options: BootstrapOptions = {}): BootstrapResult {
   const world = new World();
   // 先完成实体与组件初始化，再创建系统与管理器，避免空引用。
-  const playerIds = createPlayers(world, config);
+  const playerIds = createPlayers(world, config, options);
   assignInitialSheriff(world, config, playerIds);
 
   const roleRegistry = createDefaultRoleRegistry();
@@ -59,7 +61,7 @@ export function bootstrapGame(config: BoardConfig): BootstrapResult {
   };
 }
 
-function createPlayers(world: World, config: BoardConfig): EntityId[] {
+function createPlayers(world: World, config: BoardConfig, options: BootstrapOptions): EntityId[] {
   const roles = buildRoleDeck(config);
   const ids: EntityId[] = [];
   const roleCatalog = getDefaultRoleCatalog();
@@ -73,7 +75,7 @@ function createPlayers(world: World, config: BoardConfig): EntityId[] {
     world.addComponent(
       entityId,
       COMPONENT.Identity,
-      createIdentityComponent(entityId, seat, `玩家${seat}`),
+      createIdentityComponent(entityId, seat, options.playerNames?.[String(seat)] ?? `玩家${seat}`),
     );
     world.addComponent(entityId, COMPONENT.Role, roleComp);
     world.addComponent(entityId, COMPONENT.Camp, createCampComponent(roleComp.camp));

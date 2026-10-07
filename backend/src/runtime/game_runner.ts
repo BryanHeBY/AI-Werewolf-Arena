@@ -10,9 +10,11 @@ import {
   type RuntimeSnapshot,
   type ToolCall,
   type World,
+  type IdentityComponent,
 } from "../core";
 import type { ResolvedAgentRuntimeProfile } from "./config/contracts";
 import type { ResolvedGameSetup } from "./config/resolve_game_setup";
+import { resolvePlayerProfile } from "./config/resolve_game_setup";
 import { createAcpConsoleLogger, createConsoleLog, presentGameResult, presentStreamEvents } from "./console_presenter";
 import { GameEventRecorder } from "./game_event_recorder";
 import {
@@ -42,7 +44,12 @@ class DeadlineAwareActionProvider implements ActionProvider {
 
 /** The caller supplies a fully resolved setup; no configuration I/O happens here. */
 export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> {
-  const context = bootstrapGame(setup.boardConfig);
+  // P3 will enable the complete English prompt/transport/presentation path.
+  if (setup.context.locale !== "zh-CN" || setup.context.displayLocale !== "zh-CN") throw new Error("runtime_locale_execution_not_enabled");
+  if (setup.context.seed !== undefined) throw new Error("runtime_seed_execution_not_enabled");
+  const context = bootstrapGame(setup.boardConfig, {
+    playerNames: Object.fromEntries(Object.entries(setup.players).flatMap(([seat, entry]) => entry.name !== undefined ? [[seat, entry.name]] : [])),
+  });
   const profilesByActor = selectPlayerProfiles(context.world, setup);
   const sessionId = buildSessionId();
   const recordRoot = setup.options.recordRootDir ?? resolveDefaultRecordRoot();
@@ -174,11 +181,7 @@ function selectPlayerProfiles(
   const profiles = new Map<number, ResolvedAgentRuntimeProfile>();
   for (const id of world.entityIds()) {
     const role = world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role;
-    profiles.set(id,
-      setup.playerProfiles[String(id)]
-        ?? (role ? setup.roleProfiles[role] : undefined)
-        ?? setup.defaultProfile,
-    );
+    profiles.set(id, resolvePlayerProfile(setup, id, role));
   }
   return profiles;
 }
@@ -191,6 +194,7 @@ function replayPlayers(world: World) {
       role: role?.role ?? "unknown",
       camp: role?.camp ?? "unknown",
       alive: world.getComponent<AliveComponent>(id, COMPONENT.Alive)?.alive === true,
+      name: world.getComponent<IdentityComponent>(id, COMPONENT.Identity)?.name,
     };
   });
 }

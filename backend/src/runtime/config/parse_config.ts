@@ -1,8 +1,9 @@
 import type {
   AcpAgentEntryConfig, AgentEntryConfig, AgentsConfig, DebugSummaryConfig,
   GameAgentSelection, GameConfig, GameBoard, LlmAgentEntryConfig, ProviderConfig,
-  ProvidersConfig, ReasoningEffort, RuntimeConfig,
+  ProvidersConfig, ReasoningEffort, RuntimeConfig, PlayerConfig, LocalizedPrompt,
 } from "./contracts";
+import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -27,6 +28,11 @@ function readRequiredString(value: unknown, field: string): string {
 function readOptionalString(value: unknown, field: string): string | undefined {
   if (value === undefined) return undefined;
   return readRequiredString(value, field);
+}
+
+function readPromptText(value: unknown, field: string): string {
+  readRequiredString(value, field);
+  return value as string;
 }
 
 function readOptionalBoolean(value: unknown, field: string): boolean | undefined {
@@ -294,12 +300,10 @@ function normalizeGameAgentSelections(
 ): Record<string, GameAgentSelection> | undefined {
   if (value === undefined) return undefined;
   if (!isRecord(value)) throw new Error(`runtime_config_agent_selections_invalid: ${field}`);
-  return Object.fromEntries(
-    Object.entries(value).map(([key, selection]) => [
-      readRequiredString(key, `${field}.key`),
-      normalizeGameAgentSelection(selection, `${field}.${key}`, agents),
-    ]),
-  );
+  return Object.fromEntries(Object.entries(value).map(([key, selection]) => {
+    if (key !== key.trim()) throw new Error(`runtime_config_selection_key_invalid: ${field}`);
+    return [readRequiredString(key, `${field}.key`), normalizeGameAgentSelection(selection, `${field}.${key}`, agents)];
+  }));
 }
 
 function normalizeGameConfig(raw: unknown, agents: AgentsConfig): GameConfig {
@@ -307,10 +311,10 @@ function normalizeGameConfig(raw: unknown, agents: AgentsConfig): GameConfig {
   assertKnownKeys(raw, [
     "board", "maxDays", "maxRuntimeMs", "llmTimeoutMs", "trace", "printAllEvents",
     "printChat", "streamEvents", "color", "printLlmIo", "printThinking",
-    "printPrivateEvents", "recordRootDir", "agent", "roleAgents", "playerAgents",
+    "printPrivateEvents", "recordRootDir", "agent", "roleAgents", "playerAgents", "players", "locale", "displayLocale", "seed",
   ], "game");
   const board = raw.board === undefined ? undefined : readRequiredString(raw.board, "game.board");
-  if (board !== undefined && board !== "six_player_mvp" && board !== "twelve_player_standard") {
+  if (board !== undefined && !/^[a-z][a-z0-9_-]*$/.test(board)) {
     throw new Error(`runtime_config_board_invalid: ${board}`);
   }
   const agent = raw.agent === undefined
@@ -336,7 +340,49 @@ function normalizeGameConfig(raw: unknown, agents: AgentsConfig): GameConfig {
     agent,
     roleAgents: normalizeGameAgentSelections(raw.roleAgents, "game.roleAgents", agents),
     playerAgents: normalizeGameAgentSelections(raw.playerAgents, "game.playerAgents", agents),
+    players: normalizePlayers(raw.players, agents),
+    locale: readLocale(raw.locale, "game.locale"),
+    displayLocale: readLocale(raw.displayLocale, "game.displayLocale"),
+    seed: readOptionalString(raw.seed, "game.seed"),
   };
+}
+
+function readLocale(value: unknown, field: string): Locale | undefined {
+  if (value === undefined) return undefined;
+  if (!isLocale(value)) throw new Error(`runtime_config_locale_invalid: ${field}`);
+  return value;
+}
+
+function normalizePlayers(value: unknown, agents: AgentsConfig): Record<string, PlayerConfig> | undefined {
+  if (value === undefined) return undefined;
+  if (!isRecord(value)) throw new Error("runtime_config_players_invalid");
+  return Object.fromEntries(Object.entries(value).map(([seat, entry]) => {
+    const field = `game.players.${seat}`;
+    if (!isRecord(entry)) throw new Error(`runtime_config_player_invalid: ${field}`);
+    assertKnownKeys(entry, ["name", "agent", "spawnArgs", "personalityPrompt"], field);
+    let name: string | undefined;
+    if (entry.name !== undefined) {
+      if (typeof entry.name !== "string" || !entry.name.trim() || entry.name.length > 120) throw new Error(`runtime_config_player_name_invalid: ${field}.name`);
+      name = entry.name; // Preserve user spelling; never translate or silently trim names.
+    }
+    const agent = readOptionalString(entry.agent, `${field}.agent`);
+    if (agent && !agents.items[agent]) throw new Error(`runtime_config_agent_not_found: ${agent}`);
+    const spawnArgs = entry.spawnArgs === undefined ? undefined : readStringArray(entry.spawnArgs, `${field}.spawnArgs`);
+    if (spawnArgs && (!agent || agents.items[agent].kind !== "acp")) throw new Error(`runtime_config_spawn_args_require_explicit_acp_agent: ${field}`);
+    let personalityPrompt: LocalizedPrompt | null | undefined;
+    if (entry.personalityPrompt === null) personalityPrompt = null;
+    else if (entry.personalityPrompt !== undefined) {
+      if (typeof entry.personalityPrompt === "string") personalityPrompt = readPromptText(entry.personalityPrompt, `${field}.personalityPrompt`);
+      else {
+        if (!isRecord(entry.personalityPrompt)) throw new Error(`runtime_config_prompt_invalid: ${field}`);
+        assertKnownKeys(entry.personalityPrompt, ["zh-CN", "en"], `${field}.personalityPrompt`);
+        if (!Object.keys(entry.personalityPrompt).length) throw new Error(`runtime_config_prompt_empty: ${field}`);
+        personalityPrompt = Object.fromEntries(Object.entries(entry.personalityPrompt).map(([locale, text]) => [locale, readPromptText(text, `${field}.personalityPrompt.${locale}`)]));
+      }
+    }
+    return [seat, { ...(name !== undefined ? { name } : {}), ...(agent ? { agent } : {}),
+      ...(spawnArgs ? { spawnArgs } : {}), ...(personalityPrompt !== undefined ? { personalityPrompt } : {}) }];
+  }));
 }
 
 function normalizeDebugSummaryConfig(raw: unknown, agents: AgentsConfig): DebugSummaryConfig {

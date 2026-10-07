@@ -6,6 +6,7 @@ import type { ToolRepairPack } from "../llm/contracts";
 import type { NightStageHandler } from "../stages/night/contracts";
 import type { ToolRuleMap } from "../validation/contracts";
 import type { DeathHook, VotedOutHook } from "../hooks/hook_registry";
+import type { z } from "zod";
 
 /** 角色初始化上下文。 */
 export interface RoleInitContext {
@@ -19,6 +20,11 @@ export interface RoleProfile {
   label: string;
   skillBrief: string;
   goodSide?: "god" | "villager";
+  configuration?: {
+    schema: z.ZodType;
+    defaults: Readonly<Record<string, unknown>>;
+    apply: (config: BoardConfig, value: unknown) => BoardConfig;
+  };
   init?: (roleComp: RoleComponent, ctx: RoleInitContext) => void;
   renderPrompt?: (roleComp: RoleComponent) => string;
   toolSpecs?: ToolSpec[];

@@ -7,11 +7,14 @@
 - `backend/`：Bun + TypeScript 的对局引擎、LLM/ACP 调度、复盘落盘与导出 CLI。
 - `frontend/`：React + Remotion Player 的离线复盘播放器；当前只读取导出的 `.replay.json` 文件。
 - `packages/replay-contract/`：前端播放器与后端导出器共享的复盘数据类型。
+- `packages/game-catalog/`：角色稳定ID、中英名称和计划／实现状态；资料登记不代表角色已可运行。
 - `configs.example/`：本地运行配置模板，默认经 OpenRouter 使用 DeepSeek V4 Flash。
 
-真实 Agent 对局由 `runtime/cli/run_game.ts` 启动，并将事件和最终结果写入 `record/<session>/replay.json`；`runtime/run_mock_game.ts` 只运行本地基线机器人对局并打印结果。前端直接加载 `replay.json` 进行播放。当前没有在线观战、权限隔离或兼容层。
+真实 Agent 对局由 `runtime/cli/run_game.ts` 启动，并将事件和最终结果写入 `record/<session>/replay.json`；`runtime/run_mock_game.ts` 只运行本地基线机器人对局并打印结果。前端直接加载 `replay.json` 进行播放。当前没有在线观战或多租户在线服务；引擎按玩家投影信息，ACP 会话和工具权限独立隔离。
 
-运行配置只接受固定文件结构：`runtime/providers.json`、`runtime/agents.json`、`games/<name>.json`，以及可选的 `runtime/debug_summary.json`。每个 Agent 都必须显式声明 `kind: "llm"` 或 `kind: "acp"`；调试汇总通过 `agentName` 引用一个 Agent，不能内联覆盖模型参数。
+运行配置只接受固定文件结构：`runtime/providers.json`、`runtime/agents.json`、`games/<name>.json`、`boards/<id>.json`，以及可选的 `runtime/debug_summary.json`。板子使用完整 `version: 2` 配置，正常运行不搜索旧路径或回退内置板子。每个 Agent 都必须显式声明 `kind: "llm"` 或 `kind: "acp"`；调试汇总通过 `agentName` 引用一个 Agent，不能内联覆盖模型参数。
+
+玩家名字和模型选择可分开配置：`players.<seat>.name`、可选 `agent` 与 `personalityPrompt`。人格可用原字符串或中文／英文字典，`null` 清除继承值。配置格式、阶段执行限制与迁移说明见 [配置契约](docs/expansion/config-v2.md)。
 
 LLM 和 ACP Agent 均支持 `personalityPrompt`，统一追加到玩家的身份与规则提示中。可以在 `runtime/agents.json` 中设置默认风格，也可在对局的 `roleAgents`、`playerAgents` 对象中覆盖，无需重复定义模型或进程配置。例如：
 
@@ -64,6 +67,11 @@ cp -R configs.example configs
 # 使用 DeepSeek V4 Flash 跑六人或十二人对局
 bun run --cwd backend run:six
 bun run --cwd backend run:twelve
+
+# 已有旧板子先预览迁移，再加 --apply 转换并保留备份
+bun run --cwd backend config:migrate --configs-dir ../configs
+# 脱敏检查配置，不调用模型
+bun run --cwd backend config:check --configs-dir ../configs --game-config-name twelve_player_standard
 
 # 使用 configs 中配置的 Codex ACP agent 跑十二人局
 bun run --cwd backend run:twelve:acp

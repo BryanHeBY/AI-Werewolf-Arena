@@ -1,6 +1,7 @@
 /** `openai` 同时覆盖 OpenRouter 等 Chat Completions 兼容网关。 */
+import type { Locale } from "@ai-werewolf-arena/game-catalog";
 export type ProviderType = "openai" | "anthropic" | "acp";
-export type GameBoard = "six_player_mvp" | "twelve_player_standard";
+export type GameBoard = string;
 export type ReasoningEffort = "none" | "minimal" | "low" | "medium" | "high" | "xhigh";
 
 export interface LlmProviderConfig {
@@ -72,6 +73,15 @@ export type GameAgentSelection =
       personalityPrompt?: string;
     };
 
+export type LocalizedPrompt = string | Partial<Record<Locale, string>>;
+export interface PlayerConfig {
+  name?: string;
+  agent?: string;
+  spawnArgs?: string[];
+  /** null explicitly clears inherited personality; strings remain verbatim. */
+  personalityPrompt?: LocalizedPrompt | null;
+}
+
 export interface GameConfig {
   board?: GameBoard;
   maxDays?: number;
@@ -89,6 +99,10 @@ export interface GameConfig {
   agent?: string;
   roleAgents?: Record<string, GameAgentSelection>;
   playerAgents?: Record<string, GameAgentSelection>;
+  players?: Record<string, PlayerConfig>;
+  locale?: Locale;
+  displayLocale?: Locale;
+  seed?: string;
 }
 
 export interface DebugSummaryAgentConfig {

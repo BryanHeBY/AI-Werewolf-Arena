@@ -1,15 +1,36 @@
 {
+  "version": 2,
+  "id": "six_player_mvp",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
   "board": {
     "size": 6,
     "roleSetups": [
-      { "role": "wolf", "count": 2 },
-      { "role": "villager", "count": 2 },
-      { "role": "seer", "count": 1 },
-      { "role": "guard", "count": 1 }
+      {
+        "role": "wolf",
+        "count": 2
+      },
+      {
+        "role": "villager",
+        "count": 2
+      },
+      {
+        "role": "seer",
+        "count": 1
+      },
+      {
+        "role": "guard",
+        "count": 1
+      }
     ]
   },
   "rules": {
-    "winConditions": ["slaughter_city", "wolf_reach_half"],
+    "winConditions": [
+      "slaughter_city",
+      "wolf_reach_half"
+    ],
     "hooks": {
       "onDaybreak": false,
       "onPreElection": false,
@@ -18,9 +39,18 @@
     }
   },
   "mechanisms": {
+    "sheriff": {
+      "enabled": false,
+      "voteWeight": 1.5,
+      "tieBreaker": "min_seat"
+    },
+    "selfDestruct": {
+      "enabledWindows": []
+    },
     "tieBreaker": {
       "exileVote": "min_id",
       "wolfKillVote": "min_id"
     }
-  }
+  },
+  "roles": {}
 }

@@ -1,11 +1,13 @@
 import { loadRuntimeConfig } from "../config/load_config";
-import { loadBoardOverride } from "../config/load_board_override";
+import { loadBoardDefinition } from "../config/load_board_definition";
 import { resolveGameBoard, resolveGameSetup } from "../config/resolve_game_setup";
 import { runGame } from "../game_runner";
 import type { RunGameOptions } from "../config/resolve_game_setup";
 import type { GameBoard } from "../config/contracts";
 function parseBoolean(value: string): boolean {
-  return ["1", "true", "yes", "on"].includes(value.toLowerCase());
+  if (["1", "true", "yes", "on"].includes(value.toLowerCase())) return true;
+  if (["0", "false", "no", "off"].includes(value.toLowerCase())) return false;
+  throw new Error("runtime_cli_boolean_invalid");
 }
 
 function parseArgs(argv: string[]): { configDir: string; gameName: string; overrides: Partial<RunGameOptions> } {
@@ -15,7 +17,7 @@ function parseArgs(argv: string[]): { configDir: string; gameName: string; overr
   for (let i = 0; i < argv.length; i += 1) {
     const token = argv[i];
     const value = argv[i + 1];
-    if (!value) continue;
+    if (!value || value.startsWith("--")) throw new Error("runtime_cli_value_missing");
     if (token === "--configs-dir") configDir = value;
     else if (token === "--game-config-name") gameName = value;
     else if (token === "--game" || token === "--board") overrides.board = value as GameBoard;
@@ -31,7 +33,7 @@ function parseArgs(argv: string[]): { configDir: string; gameName: string; overr
     else if (token === "--print-thinking") overrides.printThinking = parseBoolean(value);
     else if (token === "--print-private-events") overrides.printPrivateEvents = parseBoolean(value);
     else if (token === "--record-root-dir") overrides.recordRootDir = value;
-    else continue;
+    else throw new Error("runtime_cli_option_unknown");
     i += 1;
   }
   return { configDir, gameName, overrides };
@@ -41,7 +43,7 @@ export async function main(argv = process.argv.slice(2)): Promise<void> {
   const args = parseArgs(argv);
   const runtime = await loadRuntimeConfig({ configDir: args.configDir, gameName: args.gameName });
   const board = resolveGameBoard(runtime, args.overrides);
-  const boardOverride = await loadBoardOverride(args.configDir, board, (line) => console.log(line));
+  const boardOverride = await loadBoardDefinition(args.configDir, board);
   const setup = resolveGameSetup(runtime, args.overrides, boardOverride);
   await runGame(setup);
 }

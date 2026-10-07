@@ -20,8 +20,9 @@ async function readJsonFile(filePath: string, label: string): Promise<unknown> {
   }
   try {
     return JSON.parse(raw);
-  } catch (error) {
-    throw new Error(`runtime_config_json_invalid: ${label} -> ${(error as Error).message}`);
+  } catch {
+    // JSON engine diagnostics can quote values from a providers file.
+    throw new Error(`runtime_config_json_invalid: ${label}`);
   }
 }
 
