@@ -1,3 +1,4 @@
+import type { MessageRef } from "@ai-werewolf-arena/game-text";
 import {
   ActionRequest,
   ActionRequestExtras,
@@ -31,7 +32,7 @@ export class GameActionRequestFactory {
     allowedTools: ToolName[];
     stage: ActionStage;
     requiresAction: boolean;
-    summary: string;
+    summary: string | MessageRef;
     actionWindow?: ActionWindow;
     context?: ActionRequestExtras;
   }): ActionRequest {
@@ -43,6 +44,7 @@ export class GameActionRequestFactory {
       ...(input.actionWindow ? { actionWindow: input.actionWindow } : {}),
       context: {
         ...input.context,
+        ...(input.context?.retry_notice_message ? { retry_notice_message: structuredClone(input.context.retry_notice_message) } : {}),
         day: this.day,
         stage: input.stage,
         turn_constraints: buildTurnConstraintContext({

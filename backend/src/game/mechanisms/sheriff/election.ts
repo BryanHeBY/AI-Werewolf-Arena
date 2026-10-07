@@ -64,7 +64,7 @@ async function collectNominations(input: SheriffElectionInput, requests: GameAct
       allowedTools: ["run_for_sheriff"],
       stage: "sheriff_nomination",
       requiresAction: true,
-      summary: "上警声明阶段必须选择上警或退警。",
+      summary: { key: "request.summary.sheriff_nomination" },
       context: {},
     }),
   }));
@@ -124,7 +124,7 @@ async function collectCampaignSpeeches(input: SheriffElectionInput, requests: Ga
       allowedTools: ["speak"],
       stage: "sheriff_campaign_speech",
       requiresAction: true,
-      summary: "警上竞选发言阶段必须完成一次发言。",
+      summary: { key: "request.summary.sheriff_campaign" },
       context: {
         sheriff_candidates: [...candidateSet],
       },
@@ -160,7 +160,7 @@ async function collectWithdrawals(input: SheriffElectionInput, requests: GameAct
       allowedTools: ["run_for_sheriff"],
       stage: "sheriff_withdraw",
       requiresAction: true,
-      summary: "退水阶段必须明确是否继续竞选。",
+      summary: { key: "request.summary.sheriff_withdraw" },
       context: {
         sheriff_candidates: [...candidateSet],
       },
@@ -235,7 +235,7 @@ async function collectSheriffVotes(input: SheriffElectionInput, requests: GameAc
       allowedTools: ["vote_for_sheriff"],
       stage: "sheriff_vote",
       requiresAction: true,
-      summary: "警长投票阶段必须完成一次投票（可弃票）。",
+      summary: { key: "request.summary.sheriff_vote" },
       context: {
         sheriff_candidates: finalizedCandidates,
       },

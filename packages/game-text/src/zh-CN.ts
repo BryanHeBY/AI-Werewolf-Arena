@@ -308,6 +308,20 @@ export const zhCN = Object.freeze({
   "console.potion_none": "未用药",
   "console.live.sheriff_nomination": "[live][上帝][上警] {line}",
   "console.live.sheriff_votes": "[live][上帝][警长投票] {line}",
+  "request.summary.night_action": "夜间行动阶段需完成一次有效动作。",
+  "request.summary.day_speech": "白天发言阶段必须完成一次发言动作。",
+  "request.summary.exile_vote": "放逐投票阶段必须完成一次投票动作（可弃票）。",
+  "request.summary.death_shot": "死亡开枪阶段必须完成一次开枪动作。",
+  "request.summary.last_words": "遗言阶段必须完成一次发言动作。",
+  "request.summary.sheriff_nomination": "上警声明阶段必须明确是否报名上警。",
+  "request.summary.sheriff_campaign": "警上竞选发言阶段必须完成一次发言。",
+  "request.summary.sheriff_withdraw": "退水阶段必须明确是否继续竞选。",
+  "request.summary.sheriff_vote": "警长投票阶段必须完成一次投票（可弃票）。",
+  "request.summary.sheriff_direction": "警长定序阶段必须选择发言方向。",
+  "request.summary.self_destruct_pre_vote": "放逐前自爆窗口可选择执行自爆，也可结束回合。",
+  "request.summary.self_destruct": "自爆窗口可选择执行自爆，也可直接结束回合。",
+  "request.retry.exile_vote": "你的投票动作无效，请严格调用 vote 工具重新行动。",
+  "request.retry.wolf_vote": "你的狼刀动作无效，请严格调用 kill_vote 工具重新行动。",
 } as const);
 
 export type MessageKey = keyof typeof zhCN;

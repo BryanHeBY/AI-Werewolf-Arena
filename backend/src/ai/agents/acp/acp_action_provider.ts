@@ -88,7 +88,7 @@ export class AcpActionProvider implements ActionProvider {
       configRenderRegistry: getDefaultConfigRenderRegistry(),
       boardConfig: options.boardConfig,
     });
-    this.roundRecorder = new PlayerRoundRecorder(world, localization);
+    this.roundRecorder = new PlayerRoundRecorder(world);
   }
 
   async getAction(request: ActionRequest): Promise<ToolCall | null> {

@@ -1,3 +1,4 @@
+import { assertReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { PlayerVisibleEvent } from "../core/domain/model";
 import {
   ReplayDebugReport,
@@ -278,20 +279,24 @@ export class ReplaySessionAggregate {
   private ensurePlayerView(playerId: number, role: string, camp: string): ReplayPlayerView {
     const existing = this.playerViews.get(playerId);
     if (existing) return existing;
-    const view: ReplayPlayerView = { player_id: playerId, role, camp, timeline: [] };
+    const view: ReplayPlayerView = { schemaVersion: 2, ...(this.sessionMeta.locale === undefined ? {} : { locale: this.sessionMeta.locale }), player_id: playerId, role, camp, timeline: [] };
     this.playerViews.set(playerId, view);
     return view;
   }
 
   private normalizePlayerView(view: ReplayPlayerView): ReplayPlayerView {
     const initialPrompt = view.initial_prompt ?? this.deriveInitialPrompt(view);
-    return {
+    const result: ReplayPlayerView = {
+      schemaVersion: 2,
+      ...(this.sessionMeta.locale === undefined ? {} : { locale: this.sessionMeta.locale }),
       player_id: view.player_id,
       role: view.role,
       camp: view.camp,
       ...(initialPrompt ? { initial_prompt: initialPrompt } : {}),
       timeline: view.timeline,
     };
+    assertReplayPlayerView(result);
+    return result;
   }
 
   private deriveInitialPrompt(view: ReplayPlayerView): ReplayPlayerView["initial_prompt"] | undefined {

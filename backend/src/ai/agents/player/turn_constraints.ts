@@ -1,4 +1,4 @@
-import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import { renderMessage, text, type MessageRef, type Locale } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, ToolCall, ToolName } from "../../../core/domain";
 
 export interface ResolvedTurnConstraints {
@@ -6,6 +6,7 @@ export interface ResolvedTurnConstraints {
   maxValidActions: number;
   requiredAnyTools: ToolName[];
   summary?: string;
+  summaryMessage?: MessageRef;
 }
 
 export interface TurnConstraintState {
@@ -22,12 +23,13 @@ export function resolveTurnConstraints(request: ActionRequest): ResolvedTurnCons
   const constraints = request.context.turn_constraints;
   const minValidActions = Math.max(0, Math.floor(constraints?.min_valid_actions ?? 0));
   const maxValidActions = Math.max(minValidActions, Math.floor(constraints?.max_valid_actions ?? 1));
-  const summary = constraints?.summary?.trim();
+  const summary = constraints?.summary;
   return {
     minValidActions,
     maxValidActions,
     requiredAnyTools: constraints?.required_any_tools ?? [],
-    ...(summary ? { summary } : {}),
+    ...(summary !== undefined ? { summary } : {}),
+    ...(constraints?.summary_message ? { summaryMessage: structuredClone(constraints.summary_message) } : {}),
   };
 }
 
@@ -65,11 +67,13 @@ export function evaluateTurnConstraints(
 export function renderTurnConstraintSystemRule(constraints: ResolvedTurnConstraints, locale: Locale = "zh-CN"): string {
   return [text(locale, "turn.system", { min: constraints.minValidActions, max: constraints.maxValidActions }),
     ...(constraints.requiredAnyTools.length ? [text(locale, "turn.required_tools", { tools: constraints.requiredAnyTools.join(", ") })] : []),
-    ...(constraints.summary ? [constraints.summary] : []),
+    ...(constraints.summary !== undefined ? (constraints.summary ? [constraints.summary] : []) : constraints.summaryMessage ? [renderMessage(locale, constraints.summaryMessage)] : []),
   ].join(" ");
 }
 
 export function renderTurnConstraintUserHint(constraints: ResolvedTurnConstraints, locale: Locale = "zh-CN"): string {
-  return text(locale, "turn.user", { min: constraints.minValidActions, max: constraints.maxValidActions,
+  const hint = text(locale, "turn.user", { min: constraints.minValidActions, max: constraints.maxValidActions,
     required: constraints.requiredAnyTools.length ? text(locale, "turn.required_suffix", { tools: constraints.requiredAnyTools.join(", ") }) : "" });
+  const summary = constraints.summary !== undefined ? constraints.summary : constraints.summaryMessage ? renderMessage(locale, constraints.summaryMessage) : undefined;
+  return summary ? `${hint} ${summary}` : hint;
 }

@@ -68,7 +68,7 @@ export class DeathResolution {
             allowedTools: ["shoot"],
             stage: "hunter_shot",
             requiresAction: true,
-            summary: "死亡开枪阶段必须完成一次开枪动作。",
+            summary: { key: "request.summary.death_shot" },
             context: {
               trigger: "on_death",
             },
@@ -124,7 +124,7 @@ export class DeathResolution {
         allowedTools: ["speak"],
         stage: "last_words",
         requiresAction: true,
-        summary: "遗言阶段必须完成一次发言动作。",
+        summary: { key: "request.summary.last_words" },
         context: {
           trigger: "last_words",
           death_phase: phase,

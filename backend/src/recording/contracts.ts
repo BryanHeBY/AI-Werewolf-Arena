@@ -126,76 +126,8 @@ export interface ReplayLlmRequestPayload {
   messages: ReplayLlmRequestMessage[];
 }
 
-/** 玩家单回合增量消息。 */
-export interface ReplayPlayerDeltaMessage {
-  role: "system" | "user" | "assistant" | "tool" | "meta";
-  kind:
-    | "prompt"
-    | "retry_prompt"
-    | "assistant_output"
-    | "request_error"
-    | "constraint_warning"
-    | "tool_call"
-    | "tool_result"
-    | "action_summary"
-    | "fallback";
-  attempt?: number;
-  content?: string;
-  name?: string;
-  args?: Record<string, unknown>;
-  accepted?: boolean;
-  result?: Record<string, unknown> | string;
-}
-
-/** 玩家视角下的结构化事件时间线条目。 */
-export interface ReplayPlayerEventEntry {
-  seq: number;
-  kind: "event";
-  day: number;
-  phase: string;
-  stage: string;
-  request_id: string;
-  timestamp?: string;
-  /** 仅供复盘与审计关联领域事件；不会进入玩家 Agent 协议。 */
-  source_event_seq?: number;
-  event: PlayerVisibleEvent;
-}
-
-/** 玩家回合时间线条目。 */
-export interface ReplayPlayerTurnEntry {
-  seq: number;
-  kind: "turn";
-  day: number;
-  phase: string;
-  stage: string;
-  request_id: string;
-  timestamp?: string;
-  turn_seq: number;
-  delta_messages: ReplayPlayerDeltaMessage[];
-}
-
-/** 玩家时间线条目联合类型。 */
-export type ReplayPlayerTimelineEntry =
-  | ReplayPlayerEventEntry
-  | ReplayPlayerTurnEntry;
-
-/** 玩家视角复盘结构。 */
-export interface ReplayPlayerView {
-  player_id: number;
-  role: string;
-  camp: string;
-  initial_prompt?: {
-    day: number;
-    phase: string;
-    stage: string;
-    request_id: string;
-    timestamp?: string;
-    prompt_system?: string;
-    board_info?: string;
-    prompt_user?: string[];
-  };
-  timeline: ReplayPlayerTimelineEntry[];
-}
+export type { ReplayPlayerDeltaMessage, ReplayPlayerEventEntry, ReplayPlayerTurnEntry, ReplayPlayerTimelineEntry, ReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
+import type { ReplayPlayerDeltaMessage, ReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 
 /** 对局会话元信息。 */
 export interface ReplaySessionMeta {

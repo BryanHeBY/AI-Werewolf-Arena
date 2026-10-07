@@ -76,4 +76,8 @@ T01实现commit `47bca25`；阶段证据：[三路审查](reviews/p2-t01.md)，�
 
 ## P3 I03：公开复盘 v2
 
-公开writer/reader显式v2，后端导出和browser共用legacy转换；精确历史字段路径、未知/原文、只读源保护与128角色别名快照已验证。[格式政策](replay-v2.md)区分旧公开文件与内部Tape严格版本。actualRunner/复现携带locale，未来版本拒绝且英文gate保持。后端release283、前端34测试0失败，三路[复查](reviews/p3-i03-public-v2.md)0阻断。I03私人turn/request机器字段与I04继续推进，不宣称本阶段已完成。
+实现commit `94a5ddf`。公开writer/reader显式v2，后端导出和browser共用legacy转换；精确历史字段路径、未知/原文、只读源保护与128角色别名快照已验证。[格式政策](replay-v2.md)区分旧公开文件与内部Tape严格版本。actualRunner/复现携带locale，未来版本拒绝且英文gate保持。后端release283、前端34测试0失败，三路[复查](reviews/p3-i03-public-v2.md)0阻断。I03私人turn/request机器字段与I04继续推进，不宣称本阶段已完成。
+
+## P3 I03：私有记录与行动请求
+
+player记录v2与shared reader交付，RoundRecorder写机器phase/stage，内置请求说明改MessageRef后逐局渲染；旧档仅元字段归一，原话/unknown/day异常保。raw/empty优先、引用复制、坏嵌套/参数拒绝与API迁移见[private-record-v2.md](private-record-v2.md)。后端release291、前端34测试0失败，三路[复查](reviews/p3-i03-private-requests.md)0阻断。I04、剩余日志与P3整体门槛继续推进，英文执行仍未开放。

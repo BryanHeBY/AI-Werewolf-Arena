@@ -40,8 +40,8 @@ export class SelfDestructWindow {
           stage: window,
           requiresAction: false,
           summary: phase === Phase.Voting
-            ? "放逐前自爆窗口可选择执行自爆，也可结束回合。"
-            : "自爆窗口可选择执行自爆，也可直接结束回合。",
+            ? { key: "request.summary.self_destruct_pre_vote" }
+            : { key: "request.summary.self_destruct" },
           context: {
           },
         });

@@ -1,3 +1,4 @@
+import type { MessageRef } from "@ai-werewolf-arena/game-text";
 import { ToolName, TurnConstraints } from "../../core/domain/model";
 
 /**
@@ -9,7 +10,7 @@ import { ToolName, TurnConstraints } from "../../core/domain/model";
 export function buildTurnConstraintContext(input: {
   requiresAction: boolean;
   allowedTools: ToolName[];
-  summary?: string;
+  summary?: string | MessageRef;
   maxValidActions?: number;
 }): TurnConstraints {
   const min = input.requiresAction ? 1 : 0;
@@ -17,6 +18,6 @@ export function buildTurnConstraintContext(input: {
     min_valid_actions: min,
     max_valid_actions: Math.max(min, Math.floor(input.maxValidActions ?? 1)),
     required_any_tools: input.requiresAction ? [...input.allowedTools] : [],
-    ...(input.summary ? { summary: input.summary } : {}),
+    ...(typeof input.summary === "string" ? (input.summary ? { summary: input.summary } : {}) : input.summary ? { summary_message: structuredClone(input.summary) } : {}),
   };
 }

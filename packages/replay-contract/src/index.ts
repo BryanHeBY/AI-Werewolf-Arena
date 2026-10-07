@@ -1,11 +1,9 @@
+import { isRecord, assertField, ReplayDocumentValidationError } from "./validation";
+export { ReplayDocumentValidationError } from "./validation";
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
 import { legacyPhaseId, legacyStageId, legacyRoleId, legacyCampId, legacyResultReasonId } from "./legacy_aliases";
 export * from "./legacy_aliases";
 export const REPLAY_SCHEMA_VERSION = 2 as const;
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
-}
 
 /**
  * The replay data shape consumed by browser and video clients.
@@ -47,21 +45,6 @@ export interface ReplayDocument {
   }>;
   events: ReplayEvent[];
 }
-
-export class ReplayDocumentValidationError extends Error {
-  constructor(
-    readonly kind: "invalid_document" | "missing_fields" | "invalid_field" | "unsupported_version",
-    readonly path: string,
-  ) {
-    super(`replay_document_invalid:${path}`);
-    this.name = "ReplayDocumentValidationError";
-  }
-}
-
-function assertField(valid: boolean, path: string): asserts valid {
-  if (!valid) throw new ReplayDocumentValidationError("invalid_field", path);
-}
-
 
 /** Validates the canonical, unfiltered document; event sequence numbers start at one. */
 function assertReplayShape(value: unknown): asserts value is Omit<ReplayDocument, "schemaVersion"> & { schemaVersion?: unknown } {
@@ -147,3 +130,5 @@ export function readReplayDocument(value: unknown): ReplayDocument {
   });
   return result;
 }
+
+export * from "./player_record";

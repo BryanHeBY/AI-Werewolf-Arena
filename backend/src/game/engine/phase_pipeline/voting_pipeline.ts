@@ -213,7 +213,7 @@ export class VotingPipeline {
         allowedTools: ["vote"],
         stage: "voting",
         requiresAction: true,
-        summary: "放逐投票阶段必须完成一次投票动作（可弃票）。",
+        summary: { key: "request.summary.exile_vote" },
       });
       const request = attempt === 1 ? baseRequest : {
         ...baseRequest,
@@ -222,7 +222,7 @@ export class VotingPipeline {
           retry_attempt: attempt - 1,
           retry_max: maxRetries,
           retry_reason: retryReason,
-          retry_notice: "你的投票动作无效，请严格调用 vote 工具重新行动。",
+          retry_notice_message: { key: "request.retry.exile_vote" as const },
         },
       };
       const action = await actionProvider.getAction(request);

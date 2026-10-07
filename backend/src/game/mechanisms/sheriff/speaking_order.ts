@@ -35,7 +35,7 @@ export async function chooseSpeakerDirection(input: {
     allowedTools: ["choose_direction"],
     stage: "sheriff_choose_direction",
     requiresAction: true,
-    summary: "警长定序阶段必须选择发言方向。",
+    summary: { key: "request.summary.sheriff_direction" },
     context: {
     },
   });

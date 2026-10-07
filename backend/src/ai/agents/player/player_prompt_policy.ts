@@ -1,4 +1,4 @@
-import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import { renderMessage, text, type Locale } from "@ai-werewolf-arena/game-text";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, BoardConfig, Camp, EntityId, Role, ToolName } from "../../../core/domain"
@@ -120,7 +120,7 @@ export class PlayerPromptPolicy {
       effectiveActionTools: input.effectiveActionTools ?? input.allowedTools,
       toolArgHints: this.toolArgHints(input.allowedTools),
       toolUsageHints: this.options.toolSpecRegistry.getApplicableUserPromptHints(input.allowedTools, this.locale),
-      stageContextHint: this.stageContextHint(request),
+      stageContextHint: [this.stageContextHint(request), request.context.retry_notice !== undefined ? request.context.retry_notice : request.context.retry_notice_message ? renderMessage(this.locale, request.context.retry_notice_message) : undefined].filter(Boolean).join(" ") || undefined,
       actionableIdsHint: this.options.targetHintRegistry.buildActionableIdsHint({
         actorId: request.actorId,
         actorRole: role?.role,

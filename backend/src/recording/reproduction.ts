@@ -1,3 +1,4 @@
+import { dictionaries, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { z } from "zod";
 import { ACTION_STAGES, TOOL_NAMES, ActionWindow, Camp, Phase, Role, WinCondition, WitchSelfHealRule, type ActionProvider, type ActionRequest, type BoardConfig, type GameEvent, type RuntimeSnapshot, type ToolCall } from "../core";
 import type { RandomMetadata } from "../core/domain/random";
@@ -54,11 +55,15 @@ const boardSchema = z.strictObject({ boardSize: positive.max(128), enableSheriff
   witch: z.strictObject({ canSelfHeal: z.enum(WitchSelfHealRule).optional() }).optional(),
   tieBreaker: z.strictObject({ exileVote: strategies.optional(), wolfKillVote: strategies.optional(), sheriffVote: strategies.optional() }).optional(),
 });
+const messageRefSchema = z.strictObject({ key: z.enum(Object.keys(dictionaries["zh-CN"]) as [MessageKey, ...MessageKey[]]), parameters: z.record(z.string(), z.union([z.string(), z.number().finite()])).optional() }).superRefine((message, ctx) => {
+  try { text("zh-CN", message.key, message.parameters); }
+  catch { ctx.addIssue({ code: "custom", message: "reproduction_message_reference_invalid" }); }
+});
 const requestSchema = z.strictObject({ actorId: positive, phase: z.enum(Phase), actionWindow: z.enum(ActionWindow).optional(), allowedTools: z.array(z.enum(TOOL_NAMES)),
   context: z.strictObject({ day: positive, stage: z.enum(ACTION_STAGES), visible_events: z.array(z.strictObject({ seq: positive, type: z.string().min(1), payload: jsonObject })),
-    turn_constraints: z.strictObject({ min_valid_actions: nonnegative.optional(), max_valid_actions: nonnegative.optional(), required_any_tools: z.array(z.enum(TOOL_NAMES)).optional(), summary: z.string().optional() }),
+    turn_constraints: z.strictObject({ min_valid_actions: nonnegative.optional(), max_valid_actions: nonnegative.optional(), required_any_tools: z.array(z.enum(TOOL_NAMES)).optional(), summary: z.string().optional(), summary_message: messageRefSchema.optional() }),
     wolf_target: positive.nullable().optional(), trigger: z.string().optional(), death_phase: z.enum(Phase).optional(), sheriff_candidates: z.array(positive).optional(),
-    round: positive.optional(), max_rounds: positive.optional(), retry_attempt: nonnegative.optional(), retry_max: nonnegative.optional(), retry_reason: z.string().optional(), retry_notice: z.string().optional(),
+    round: positive.optional(), max_rounds: positive.optional(), retry_attempt: nonnegative.optional(), retry_max: nonnegative.optional(), retry_reason: z.string().optional(), retry_notice: z.string().optional(), retry_notice_message: messageRefSchema.optional(),
   }),
 });
 const snapshotSchema = z.strictObject({ day: positive, phase: z.enum(Phase), gameOver: z.boolean(), result: z.strictObject({ winner: z.enum(Camp).nullable(), reason: z.string() }).nullable() });

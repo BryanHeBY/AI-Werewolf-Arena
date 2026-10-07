@@ -139,7 +139,7 @@ export class DayPipeline {
         allowedTools: ["speak"],
         stage: "day_speech",
         requiresAction: true,
-        summary: "白天发言阶段必须完成一次发言动作。",
+        summary: { key: "request.summary.day_speech" },
         context: {
         },
       });

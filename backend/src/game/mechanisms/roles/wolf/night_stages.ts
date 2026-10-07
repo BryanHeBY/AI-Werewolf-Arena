@@ -99,8 +99,7 @@ const wolfKillVoteStage: NightStageHandler = {
                 retry_attempt: attempt - 1,
                 retry_max: WOLF_KILL_VOTE_MAX_RETRIES,
                 retry_reason: retryReason,
-                retry_notice:
-                  "你的狼刀动作无效，请严格调用 kill_vote 工具重新行动。",
+                retry_notice_message: { key: "request.retry.wolf_vote" },
               });
         const action = await ctx.actionProvider.getAction(req);
         if (action?.name !== "kill_vote") {

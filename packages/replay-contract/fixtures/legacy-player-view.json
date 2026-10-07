@@ -1,0 +1,11 @@
+{
+  "player_id": 1,
+  "role": "狼人",
+  "camp": "狼人阵营",
+  "initial_prompt": {"day": 1, "phase": "夜晚", "stage": "狼人交流", "request_id": "1-night-1-1", "prompt_system": "你的角色是狼人。夜晚只是原文。", "board_info": "狼人全部出局", "prompt_user": ["白天"]},
+  "timeline": [
+    {"seq": 1, "kind": "event", "day": 1, "phase": "夜晚", "stage": "狼人交流", "request_id": "1-night-1-event-1", "source_event_seq": 9, "event": {"seq": 1, "type": "wolf_discussion_ended", "payload": {"actorId": 1, "reason": "狼人全部出局", "nested": {"phase": "夜晚"}}}},
+    {"seq": 2, "kind": "turn", "day": 1, "phase": "Night", "stage": "Wolf discussion", "request_id": "1-night-1-1", "turn_seq": 1, "delta_messages": [{"role": "user", "kind": "prompt", "content": "夜晚 {role}"}, {"role": "assistant", "kind": "assistant_output", "content": "我是狼人"}, {"role": "tool", "kind": "tool_result", "result": {"error": "非法操作，工具不匹配", "message": "夜晚"}}]},
+    {"seq": 3, "kind": "turn", "day": 0, "phase": "未知阶段", "stage": "未知技能", "request_id": "old-request", "turn_seq": 2, "delta_messages": []}
+  ]
+}

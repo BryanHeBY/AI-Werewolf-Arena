@@ -110,7 +110,7 @@ export class LlmActionProvider implements ActionProvider {
       options.fallbackProvider ?? new BaselineBotActionProvider(world),
       observer,
     );
-    const recorder = new PlayerRoundRecorder(world, localization);
+    const recorder = new PlayerRoundRecorder(world);
     const sdkToolLoop = new SdkGameToolLoop(world, repairRegistry, promptSession, observer);
     this.orchestrator = new LlmTurnOrchestrator({
       world,

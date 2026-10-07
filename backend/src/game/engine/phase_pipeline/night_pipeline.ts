@@ -152,7 +152,7 @@ export class NightPipeline {
       allowedTools,
       stage,
       requiresAction: true,
-      summary: "夜间行动阶段需完成一次有效动作。",
+      summary: { key: "request.summary.night_action" },
       context: {
         ...extraContext,
       },

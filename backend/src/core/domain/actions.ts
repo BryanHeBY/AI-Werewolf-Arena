@@ -1,3 +1,4 @@
+import type { MessageRef } from "@ai-werewolf-arena/game-text";
 import { ActionWindow, type EntityId, type Phase, type PotionType } from "./identity";
 import type { PlayerVisibleEvent } from "./events";
 
@@ -38,7 +39,9 @@ export interface TurnConstraints {
   min_valid_actions?: number;
   max_valid_actions?: number;
   required_any_tools?: ToolName[];
+  /** Legacy/custom caller text is retained verbatim. */
   summary?: string;
+  summary_message?: MessageRef;
 }
 
 export const ACTION_STAGES = [...Object.values(ActionWindow), "wolf_discussion", "wolf_vote", "guard", "seer", "witch", "day_speech", "voting", "hunter_shot", "last_words", "sheriff_nomination", "sheriff_campaign_speech", "sheriff_withdraw", "sheriff_vote", "sheriff_choose_direction"] as const;
@@ -56,6 +59,7 @@ export interface ActionRequestExtras {
   retry_max?: number;
   retry_reason?: string;
   retry_notice?: string;
+  retry_notice_message?: MessageRef;
 }
 
 /** Canonical engine facts are always present on a request passed to an agent. */

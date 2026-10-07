@@ -6,7 +6,6 @@ import {
   getActionRequestStage,
 } from "../../../core/domain/action_request_context";
 import { World } from "../../../core/domain/world";
-import { PhaseStageLocalizationRegistry } from "../../../game/mechanisms";
 import { getSessionRecorder } from "../../../recording/recording_context";
 import { BuiltPlayerPrompt, PlayerRoundOutcome } from "./contracts";
 
@@ -16,7 +15,6 @@ export class PlayerRoundRecorder {
 
   constructor(
     private readonly world: World,
-    private readonly localization: PhaseStageLocalizationRegistry,
   ) {}
 
   record(
@@ -37,8 +35,8 @@ export class PlayerRoundRecorder {
       role: role?.role ?? "unknown",
       camp: role?.camp ?? "unknown",
       day,
-      phase: this.localization.phaseName(phase),
-      stage: this.localization.stageName(stage),
+      phase,
+      stage,
       requestId: `${day}-${phase}-${request.actorId}-${round}`,
       timestampMs: Date.now(),
       llmRequestMessages: [{ role: "user", content: prompt.userPrompt }],
