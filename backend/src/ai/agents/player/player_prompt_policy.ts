@@ -14,7 +14,8 @@ import {
   TargetHintRegistry,
   ToolSpecRegistry,
 } from "../../../game/mechanisms";
-import { getIdiotState } from "../../../game/mechanisms/roles/private_state";
+import { getGuardState, getHunterState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
+import { freezeObservation, type PlayerObservation } from "./observation";
 import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "./prompt_templates";
 import { renderTurnConstraintUserHint, resolveTurnConstraints } from "./turn_constraints";
 
@@ -34,6 +35,32 @@ export class PlayerPromptPolicy {
     private readonly world: World,
     private readonly options: PlayerPromptPolicyOptions,
   ) {}
+
+  /** Structured counterpart of the same identity/private-state/event prompt policy. */
+  buildObservation(request: ActionRequest): PlayerObservation {
+    const role = this.role(request.actorId);
+    const dead = new Set<number>();
+    for (const event of request.context.visible_events) {
+      if (event.type === "night_resolved" && Array.isArray(event.payload.deaths)) {
+        for (const id of event.payload.deaths) if (typeof id === "number") dead.add(id);
+      }
+      const target = event.type === "voted_out" ? event.payload.target
+        : event.type === "wolf_self_destruct" ? event.payload.wolfId
+        : event.type === "hunter_shot" ? event.payload.targetId : undefined;
+      if (typeof target === "number") dead.add(target);
+    }
+    const ownState: PlayerObservation["ownState"] = {};
+    if (role?.role === Role.Witch) ownState.witch = getWitchState(role);
+    if (role?.role === Role.Guard) ownState.guard = getGuardState(role);
+    if (role?.role === Role.Hunter) ownState.hunter = getHunterState(role);
+    if (role?.role === Role.Idiot) ownState.idiot = getIdiotState(role);
+    if (role?.role === Role.Seer) ownState.seer = getSeerState(role);
+    return freezeObservation({ request, identity: {
+      ...(role ? { role: role.role, camp: role.camp } : {}),
+      name: this.world.getComponent<IdentityComponent>(request.actorId, COMPONENT.Identity)?.name,
+    }, knownAliveIds: this.world.entityIds().filter(id => !dead.has(id)),
+      teammateIds: this.wolfTeammates(request.actorId, role), ownState });
+  }
 
   buildSystem(
     request: ActionRequest,
@@ -119,7 +146,8 @@ export class PlayerPromptPolicy {
 
   private wolfTeammates(actorId: EntityId, role?: RoleComponent): EntityId[] {
     if (role?.camp !== Camp.Wolf) return [];
-    return this.world.getAliveEntityIds()
+    // Mutual recognition is identity knowledge; unannounced deaths cannot erase it.
+    return this.world.entityIds()
       .filter((id) => id !== actorId && this.role(id)?.camp === Camp.Wolf)
       .sort((a, b) => a - b);
   }

@@ -15,6 +15,13 @@ export interface RandomSource {
   fork(name: string): RandomSource;
 }
 
+/** Decision capability: no seed, path, or ability to derive other streams. */
+export interface RandomDraws { next(): number }
+
+export function randomDraws(source: RandomSource): RandomDraws {
+  return Object.freeze({ next: () => source.next() });
+}
+
 class SeededRandom implements RandomSource {
   readonly metadata: RandomMetadata;
   private state: number;

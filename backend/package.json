@@ -20,7 +20,8 @@
     "test:watch": "bun test --preload ./tests/setup.ts tests --watch",
     "test:coverage": "bun test --preload ./tests/setup.ts tests --coverage",
     "config:check": "bun src/runtime/cli/check_config.ts",
-    "config:migrate": "bun src/runtime/cli/migrate_configs.ts"
+    "config:migrate": "bun src/runtime/cli/migrate_configs.ts",
+    "simulate": "bun src/runtime/cli/simulate.ts"
   },
   "dependencies": {
     "@agentclientprotocol/sdk": "^1.5.1",
