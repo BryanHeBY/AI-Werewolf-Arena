@@ -1,5 +1,6 @@
 /** 文件说明：对局复盘记录结构类型定义。 */
 import { Camp, PlayerVisibleEvent, ToolCall } from "../core/domain/model";
+import type { RandomMetadata } from "../core/domain/random";
 
 /** 玩家回合行动模式。 */
 export type ReplayActionMode = "tool_call" | "text_action" | "none";
@@ -22,6 +23,7 @@ export interface ReplayManifest {
   winner: Camp | null;
   finish_reason: string;
   players: ReplayManifestPlayer[];
+  random?: RandomMetadata;
   files: {
     replay: string;
     phase_windows?: string;
@@ -194,6 +196,7 @@ export interface ReplayPlayerView {
 
 /** 对局会话元信息。 */
 export interface ReplaySessionMeta {
+  random?: RandomMetadata;
   sessionId: string;
   board: string;
   startedAtIso: string;

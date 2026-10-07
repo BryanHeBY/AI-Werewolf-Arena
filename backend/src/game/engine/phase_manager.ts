@@ -24,6 +24,7 @@ import { COMPONENT } from "../../core/domain/components/names";
 import { VotingRightComponent } from "../../core/domain/components/voting_right";
 import { IdentityComponent } from "../../core/domain/entities/player";
 import { RoleComponent } from "../../core/domain/components/role";
+import { createRandom, type RandomSource } from "../../core/domain/random";
 
 /**
  * PhaseManager 是游戏引擎的时序中枢。
@@ -51,6 +52,7 @@ export class PhaseManager {
     private readonly roleRegistry: RoleRegistry,
     private readonly conditionRegistry: ConditionRegistry,
     private readonly damageResolutionSystem: DamageResolutionSystem,
+    random: RandomSource = createRandom(),
   ) {
     this.eventRegistry = new EventRegistry();
     this.deathResolution = new DeathResolution(world, this.events, toolGateway, this.eventRegistry, this.state);
@@ -59,6 +61,7 @@ export class PhaseManager {
       toolGateway,
       damageResolutionSystem,
       events: this.events,
+      random: random.fork("night"),
     });
     this.dayPipeline = new DayPipeline({
       world,

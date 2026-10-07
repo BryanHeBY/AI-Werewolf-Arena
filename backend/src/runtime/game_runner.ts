@@ -11,6 +11,7 @@ import {
   type ToolCall,
   type World,
   type IdentityComponent,
+  createRandom,
 } from "../core";
 import type { ResolvedAgentRuntimeProfile } from "./config/contracts";
 import type { ResolvedGameSetup } from "./config/resolve_game_setup";
@@ -46,8 +47,8 @@ class DeadlineAwareActionProvider implements ActionProvider {
 export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> {
   // P3 will enable the complete English prompt/transport/presentation path.
   if (setup.context.locale !== "zh-CN" || setup.context.displayLocale !== "zh-CN") throw new Error("runtime_locale_execution_not_enabled");
-  if (setup.context.seed !== undefined) throw new Error("runtime_seed_execution_not_enabled");
   const context = bootstrapGame(setup.boardConfig, {
+    random: createRandom(setup.context.seed),
     playerNames: Object.fromEntries(Object.entries(setup.players).flatMap(([seat, entry]) => entry.name !== undefined ? [[seat, entry.name]] : [])),
   });
   const profilesByActor = selectPlayerProfiles(context.world, setup);
@@ -57,6 +58,7 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
     sessionId,
     board: setup.options.board,
     startedAtIso: new Date().toISOString(),
+    random: context.random.metadata,
   }, recordRoot);
 
   return runWithSessionRecorder(replayManager, async () => {

@@ -29,7 +29,7 @@ export function describeResolvedSetup(setup: ResolvedGameSetup) {
       clearedPrompt: entry.personalityPrompt === null,
     }])),
     context: setup.context,
-    executionSupport: { locales: ["zh-CN"], reproducibleSeed: false, mixedTransports: false },
+    executionSupport: { locales: ["zh-CN"], reproducibleSeed: true, mixedTransports: false },
     warnings: setup.warnings,
     audit: setup.audit ? { agent: agentSummary(setup.audit.profile), timeoutMs: setup.audit.timeoutMs, concurrency: setup.audit.concurrency } : null,
     limits: { maxDays: setup.options.maxDays, maxRuntimeMs: setup.options.maxRuntimeMs, turnTimeoutMs: setup.options.llmTimeoutMs },

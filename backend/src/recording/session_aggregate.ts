@@ -205,6 +205,7 @@ export class ReplaySessionAggregate {
     return {
       session_id: this.sessionMeta.sessionId,
       board: this.sessionMeta.board,
+      ...(this.sessionMeta.random ? { random: this.sessionMeta.random } : {}),
       started_at: this.sessionMeta.startedAtIso,
       ended_at: meta?.endedAtIso ?? this.sessionMeta.startedAtIso,
       winner: meta?.winner ?? null,

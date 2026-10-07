@@ -18,6 +18,7 @@ import { DamageResolutionSystem } from "../core/domain/systems/damage_resolution
 import { World } from "../core/domain/world";
 import { PhaseManager } from "../game/engine/phase_manager";
 import { ToolGateway } from "../game/gateway/tool_gateway";
+import { createRandom, shuffled, type RandomSource } from "../core/domain/random";
 
 /**
  * bootstrap 负责把“配置”装配成“可运行对局上下文”。
@@ -27,17 +28,24 @@ export interface BootstrapResult {
   world: World;
   phaseManager: PhaseManager;
   playerIds: EntityId[];
+  random: RandomSource;
 }
 
-export interface BootstrapOptions { playerNames?: Readonly<Record<string, string>> }
+export interface BootstrapOptions {
+  playerNames?: Readonly<Record<string, string>>;
+  random?: RandomSource;
+  /** Controller fixture only: exact deck multiplicities are still validated. */
+  fixedRoles?: readonly Role[];
+}
 
 /**
  * 按板子配置完成一次完整引擎装配，返回可直接运行的上下文对象。
  */
 export function bootstrapGame(config: BoardConfig, options: BootstrapOptions = {}): BootstrapResult {
   const world = new World();
+  const random = options.random ?? createRandom();
   // 先完成实体与组件初始化，再创建系统与管理器，避免空引用。
-  const playerIds = createPlayers(world, config, options);
+  const playerIds = createPlayers(world, config, options, random);
   assignInitialSheriff(world, config, playerIds);
 
   const roleRegistry = createDefaultRoleRegistry();
@@ -52,17 +60,19 @@ export function bootstrapGame(config: BoardConfig, options: BootstrapOptions = {
     roleRegistry,
     conditionRegistry,
     damageResolutionSystem,
+    random,
   );
 
   return {
     world,
     phaseManager,
     playerIds,
+    random,
   };
 }
 
-function createPlayers(world: World, config: BoardConfig, options: BootstrapOptions): EntityId[] {
-  const roles = buildRoleDeck(config);
+function createPlayers(world: World, config: BoardConfig, options: BootstrapOptions, random: RandomSource): EntityId[] {
+  const roles = buildRoleDeck(config, options.fixedRoles, random.fork("deal"));
   const ids: EntityId[] = [];
   const roleCatalog = getDefaultRoleCatalog();
 
@@ -89,7 +99,7 @@ function createPlayers(world: World, config: BoardConfig, options: BootstrapOpti
   return ids;
 }
 
-function buildRoleDeck(config: BoardConfig): Role[] {
+function buildRoleDeck(config: BoardConfig, fixedRoles: readonly Role[] | undefined, random: RandomSource): Role[] {
   const deck: Role[] = [];
   for (const setup of config.roleSetups) {
     for (let i = 0; i < setup.count; i++) {
@@ -103,11 +113,9 @@ function buildRoleDeck(config: BoardConfig): Role[] {
     );
   }
 
-  // 开局角色牌堆随机洗牌，避免 seat 与角色配置顺序强绑定。
-  for (let i = deck.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [deck[i], deck[j]] = [deck[j], deck[i]];
+  if (fixedRoles) {
+    if (fixedRoles.length !== deck.length || [...fixedRoles].sort().join(",") !== [...deck].sort().join(",")) throw new Error("fixed_role_deck_mismatch");
+    return [...fixedRoles];
   }
-
-  return deck;
+  return shuffled(deck, random);
 }

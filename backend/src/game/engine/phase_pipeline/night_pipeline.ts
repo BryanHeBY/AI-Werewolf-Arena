@@ -27,6 +27,7 @@ import {
 } from "../../mechanisms";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { GameActionRequestFactory } from "../action_request_factory";
+import { createRandom, shuffled, type RandomSource } from "../../../core/domain/random";
 
 export interface NightPipelineDependencies {
   world: World;
@@ -34,6 +35,7 @@ export interface NightPipelineDependencies {
   damageResolutionSystem: DamageResolutionSystem;
   events: GameEvent[];
   stageRegistry?: NightStageRegistry;
+  random?: RandomSource;
 }
 
 /**
@@ -48,6 +50,7 @@ export class NightPipeline {
   private readonly damageResolutionSystem: DamageResolutionSystem;
   private readonly events: GameEvent[];
   private readonly stageRegistry: NightStageRegistry;
+  private readonly random: RandomSource;
 
   constructor(dependencies: NightPipelineDependencies) {
     this.world = dependencies.world;
@@ -55,6 +58,7 @@ export class NightPipeline {
     this.damageResolutionSystem = dependencies.damageResolutionSystem;
     this.events = dependencies.events;
     this.stageRegistry = dependencies.stageRegistry ?? getDefaultNightStageRegistry();
+    this.random = dependencies.random ?? createRandom();
   }
 
   /**
@@ -105,7 +109,7 @@ export class NightPipeline {
           votes,
           config.tieBreaker?.wolfKillVote ?? "min_id",
         ),
-      shuffleWolves: (ids: EntityId[]) => this.shuffleWolves(ids),
+      shuffleWolves: (ids: EntityId[]) => shuffled(ids, this.random.fork(`day:${day}:wolf-order`)),
       state: stageState,
     };
 
@@ -207,16 +211,4 @@ export class NightPipeline {
     return Number(entries[0][0]);
   }
 
-  /**
-   * 生成狼人随机顺序（供夜聊与投票复用）。
-   */
-  private shuffleWolves(ids: EntityId[]): EntityId[] {
-    // 夜间狼人发言与投票必须共用同一随机顺序，以便回放可追踪。
-    const copied = [...ids];
-    for (let i = copied.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [copied[i], copied[j]] = [copied[j], copied[i]];
-    }
-    return copied;
-  }
 }
