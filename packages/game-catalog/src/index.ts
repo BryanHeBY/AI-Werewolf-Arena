@@ -37,7 +37,7 @@ export const ROLE_DEFINITIONS = [
   {"id": "gargoyle", "names": {"zh-CN": "石像鬼", "en": "Gargoyle"}, "status": "verified", "targetPhase": "P6", "ruleCardRef": "docs/expansion/rules/awa-gargoyle-v1.md#gargoyle", "mechanismSummary": "独立狼、身份查验"},
   {"id": "psychic", "names": {"zh-CN": "通灵师", "en": "Spirit Seer"}, "status": "verified", "targetPhase": "P7", "ruleCardRef": "docs/expansion/rules/awa-psychic-v1.md#psychic", "mechanismSummary": "具体身份查验"},
   {"id": "mirror_girl", "names": {"zh-CN": "魔镜少女", "en": "Mirror Girl"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "具体身份、查验限制"},
-  {"id": "mechanical_wolf", "names": {"zh-CN": "机械狼", "en": "Mechanical Wolf"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "复制技能、资源和接刀"},
+  {"id": "mechanical_wolf", "names": {"zh-CN": "机械狼", "en": "Mechanical Wolf"}, "status": "verified", "targetPhase": "P7", "ruleCardRef": "docs/expansion/rules/awa-mechanical-wolf-v1.md#mechanical_wolf", "mechanismSummary": "复制技能、资源和接刀"},
   {"id": "miracle_merchant", "names": {"zh-CN": "奇迹商人", "en": "Miracle Merchant"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "授予限次能力"},
   {"id": "black_market_merchant", "names": {"zh-CN": "黑市商人", "en": "Black Market Merchant"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "技能交易、反噬"},
   {"id": "hybrid", "names": {"zh-CN": "混血儿", "en": "Hybrid"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "榜样、独立胜利归属"},

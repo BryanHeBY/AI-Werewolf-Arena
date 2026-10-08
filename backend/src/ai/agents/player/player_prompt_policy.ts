@@ -6,6 +6,7 @@ import {canHiddenWolfKnife} from "../../../game/mechanisms/roles/hidden_wolf/inh
 import {roleInspectionPolicy} from "../../../game/mechanisms/roles/abilities";
 import {getGargoyleState,getRoleInspectionState} from "../../../game/mechanisms/roles/private_state";
 import {canGargoyleKnife} from "../../../game/mechanisms/roles/gargoyle/inheritance";
+import { getMechanicalState, projectMechanicalState } from "../../../game/mechanisms/roles/mechanical_wolf/state";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, ActionWindow, BoardConfig, EntityId, Role, ToolName } from "../../../core/domain"
@@ -74,7 +75,7 @@ export class PlayerPromptPolicy {
       }
       const target = event.type === "voted_out" ? event.payload.target
         : event.type === "wolf_self_destruct" ? event.payload.wolfId
-        : event.type === "hunter_shot" || event.type === "wolf_king_shot" ? event.payload.targetId : undefined;
+        : event.type === "hunter_shot" || event.type === "wolf_king_shot" || event.type === "mechanical_shot" ? event.payload.targetId : undefined;
       if (typeof target === "number") dead.add(target);
       if (event.type === "white_wolf_king_self_destruct") {
         if (typeof event.payload.actorId === "number") dead.add(event.payload.actorId);
@@ -95,6 +96,7 @@ export class PlayerPromptPolicy {
     if(role?.role===Role.Bear)ownState.bear=getBearState(role);
     if(role?.role===Role.HiddenWolf)ownState.hiddenWolf={hasInheritedKnife:getHiddenWolfState(role)?.hasInheritedKnife===true,canVoteForKill:canHiddenWolfKnife(role,this.world)};
     if(role?.role===Role.Gargoyle)ownState.gargoyle={hasInheritedKnife:getGargoyleState(role)?.hasInheritedKnife===true,canVoteForKill:canGargoyleKnife(role,this.world)};
+    if (role?.role === Role.MechanicalWolf) { const state = getMechanicalState(role); if (state) ownState.mechanical = projectMechanicalState(state); }
     if(role){const inspection=getRoleInspectionState(role,request.context.ability_id);if(inspection)ownState.roleInspection=inspection;}
     if (role?.role === Role.WolfKing) ownState.wolfKing = getWolfKingState(role);
     if (role?.role === Role.WhiteWolfKing) ownState.whiteWolfKing = getWhiteWolfKingState(role);

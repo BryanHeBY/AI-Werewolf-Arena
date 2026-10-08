@@ -12,7 +12,7 @@ import {
 test("native mechanical owners deep-copy resources/history and contain serializable facts only", () => {
   const template = freshMechanicalState();
   learnMechanicalRole(template, 5, "psychic", 1);
-  const first = createRoleComponent(Role.Wolf, Camp.Wolf), second = createRoleComponent(Role.Wolf, Camp.Wolf);
+  const first = createRoleComponent(Role.MechanicalWolf, Camp.Wolf), second = createRoleComponent(Role.MechanicalWolf, Camp.Wolf);
   const a = setMechanicalState(first, template), b = setMechanicalState(second, template);
   expect(getMechanicalState(first)).toBe(a);
   expect(a).not.toBe(template); expect(a.learned).not.toBe(b.learned);

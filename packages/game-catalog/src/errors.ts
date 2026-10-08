@@ -28,6 +28,8 @@ export enum RuleError {
   RoleInspectUnavailable="role_inspection_unavailable",
   RoleInspectTarget="role_inspection_target",
   RoleInspectRepeat="role_inspection_repeat",
+  MechanicalUnavailable = "mechanical_unavailable",
+  MechanicalTarget = "mechanical_target",
   SelfHeal = "self_heal",
   SheriffDirectionOnly = "sheriff_direction_only",
   SheriffDirectionPhase = "sheriff_direction_phase",

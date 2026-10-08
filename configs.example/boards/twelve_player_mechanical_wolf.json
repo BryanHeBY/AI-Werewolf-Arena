@@ -1,0 +1,73 @@
+{
+  "version": 2,
+  "id": "twelve_player_mechanical_wolf",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 12,
+    "roleSetups": [
+      {
+        "role": "mechanical_wolf",
+        "count": 1
+      },
+      {
+        "role": "wolf",
+        "count": 3
+      },
+      {
+        "role": "psychic",
+        "count": 1
+      },
+      {
+        "role": "witch",
+        "count": 1
+      },
+      {
+        "role": "hunter",
+        "count": 1
+      },
+      {
+        "role": "guard",
+        "count": 1
+      },
+      {
+        "role": "villager",
+        "count": 4
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": [
+      "slaughter_side"
+    ],
+    "hooks": {
+      "onDaybreak": true,
+      "onPreElection": true,
+      "onPreVote": true,
+      "onPerSpeechGap": true
+    }
+  },
+  "mechanisms": {
+    "sheriff": {
+      "enabled": true,
+      "voteWeight": 1.5,
+      "tieBreaker": "min_seat"
+    },
+    "selfDestruct": {
+      "enabledWindows": []
+    },
+    "tieBreaker": {
+      "exileVote": "min_id",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "mechanical_wolf": {},
+    "psychic": {},
+    "witch": {
+      "selfHeal": "disabled"
+    }
+  }
+}

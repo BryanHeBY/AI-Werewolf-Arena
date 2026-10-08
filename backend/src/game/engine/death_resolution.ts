@@ -13,6 +13,7 @@ import type { DreamNightFrame } from "../mechanisms/roles/dreamer/night_frame";
 import {claimCharm,commitCharmDeath,type CharmBinding} from "../mechanisms/roles/wolf_beauty/relation";
 import {refreshHiddenWolfInheritance} from "../mechanisms/roles/hidden_wolf/inheritance";
 import {refreshGargoyleInheritance} from "../mechanisms/roles/gargoyle/inheritance";
+import { refreshMechanicalInheritance } from "../mechanisms/roles/mechanical_wolf/inheritance";
 
 interface DeathWaveActions { phase: Phase; day: number; permits: Array<ReturnType<World["openDeathAction"]>>; isCurrent:()=>boolean }
 
@@ -136,7 +137,7 @@ export class DeathResolution {
                 if(charmTargets.has(id)||(linked.has(id)&&!result.extraDeaths.includes(id))||(!shot&&!(proposedSources[id]??[]).includes(DeathCause.Shot)))publicLinked.push(id);
                 next.add(id);
               }
-              if(newlyMarked){refreshHiddenWolfInheritance(this.world,this.events,this.state.day);refreshGargoyleInheritance(this.world,this.events,this.state.day);}
+              if(newlyMarked){refreshHiddenWolfInheritance(this.world,this.events,this.state.day);refreshGargoyleInheritance(this.world,this.events,this.state.day);refreshMechanicalInheritance(this.world,this.state.day,this.events);}
               if(publicLinked.length)this.events.push({timestamp:Date.now(),type:"additional_deaths",payload:{deaths:publicLinked}});
               for(const binding of charmBindings)if(commitCharmDeath(this.world,binding))this.events.push({timestamp:Date.now(),type:"charm_death",payload:{actorId:binding.actorId,targetId:binding.targetId}});
               nightEffects?.dreams?.recordDeaths([...next,...linked],this.events);
@@ -267,6 +268,6 @@ export class DeathResolution {
       alive.alive = false;
       this.settledLives.set(id, { component: alive, version: aliveLifeVersion(alive) });
     }
-    if(refreshInheritance){refreshHiddenWolfInheritance(this.world,this.events,this.state.day);refreshGargoyleInheritance(this.world,this.events,this.state.day);}
+    if(refreshInheritance){refreshHiddenWolfInheritance(this.world,this.events,this.state.day);refreshGargoyleInheritance(this.world,this.events,this.state.day);refreshMechanicalInheritance(this.world,this.state.day,this.events);}
   }
 }

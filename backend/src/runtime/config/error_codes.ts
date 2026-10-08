@@ -12,6 +12,7 @@ export const CONFIG_ERROR_CODES = [
   "board_config_migration_rollback_failed", "board_config_migration_target_exists",
   "board_config_requires_good_and_wolf", "board_config_role_count_mismatch",
   "board_config_role_not_implemented", "board_config_role_parameters_not_supported",
+  "board_config_role_combination_not_supported",
   "board_config_role_parameters_without_role", "board_config_seat_out_of_range",
   "board_config_slaughter_side_requires_both_sides", "board_config_window_hook_disabled",
   "config_check_failed", "config_check_usage",

@@ -60,11 +60,12 @@ export async function resolveDeathShots(
       continue;
     }
     if (!state.canShoot || !rules.permits(sources)) { state.canShoot = false; continue; }
+    const camp = role.camp, privateState = role.privateState;
     const targets=new Map(world.getAliveEntityIds().map(id=>[id,captureNightLife(world,id)]));
     const selected = await choose(actorId);
     if(context?.isCurrent&&!context.isCurrent())break;
     const currentRole = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
-    if (currentRole !== role || currentRole.role !== rules.role || rules.state(currentRole) !== state || !state.canShoot || world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)?.alive !== false) continue;
+    if (currentRole !== role || currentRole.role !== rules.role || currentRole.camp !== camp || currentRole.privateState !== privateState || rules.state(currentRole) !== state || !state.canShoot || world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)?.alive !== false) continue;
     if (selected.kind === "invalid" || !world.isDeathActionOpen(actorId, "shoot", selected.deathActionId)) continue;
     if (selected.kind === "pass") { state.canShoot = false; continue; }
     const targetScope=selected.targetScope??targets.get(selected.targetId);

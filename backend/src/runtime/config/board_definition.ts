@@ -65,6 +65,11 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
   }
   if (total !== definition.board.size) fail("board_config_role_count_mismatch", "board.roleSetups");
   const profiles = definition.board.roleSetups.map(entry => catalog.require(entry.role as Role));
+  for (const profile of profiles) {
+    if (profile.supportedBoardRoles && definition.board.roleSetups.some(entry => !profile.supportedBoardRoles!.includes(entry.role as Role))) {
+      fail("board_config_role_combination_not_supported", "board.roleSetups");
+    }
+  }
   if (!profiles.some(item => item.camp === Camp.Wolf) || !profiles.some(item => item.camp === Camp.Good)) {
     fail("board_config_requires_good_and_wolf", "board.roleSetups");
   }

@@ -53,7 +53,7 @@ export class ActionReception {
     const properties = spec.llm.parameters.properties as Record<string, { type?: string | string[] }> | undefined;
     for (const [key, value] of Object.entries(input)) {
       const type = properties?.[key]?.type;
-      const numeric = type === "number" || (Array.isArray(type) && type.includes("number"));
+      const numeric = type === "number" || type === "integer" || (Array.isArray(type) && (type.includes("number") || type.includes("integer")));
       if (numeric && typeof value === "string" && /^\d+$/.test(value)) input[key] = Number(value);
     }
     const parsed = schema.safeParse(input);

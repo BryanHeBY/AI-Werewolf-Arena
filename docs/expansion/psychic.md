@@ -1,6 +1,6 @@
 # P7：通灵师与具体查验实例规则
 
-第17项 `psychic`／通灵师／Spirit Seer，采用[AWA冻结卡](rules/awa-psychic-v1.md)。普通通灵师、魔镜少女、石像鬼及机械/觉醒的复制者分别冻结，来源的完整机械板尚未启用。
+第17项 `psychic`／通灵师／Spirit Seer，采用[AWA冻结卡](rules/awa-psychic-v1.md)。普通通灵师、魔镜少女、石像鬼及机械/觉醒的复制者分别冻结，AWA 机械狼有限白名单板已独立交付，见[机械接入契约](mechanical-wolf.md)。
 
 ## 共用能力，分开的规则
 
@@ -23,14 +23,14 @@
 
 `roles.psychic`仅{}、maxCount1，公共parse和bootstrap同限。新ActionStage `psychic`、私有skip事件及state.policy是本笔数据变化，原工具参数不加nullable或可切policy字段；公开schema2/Tape2保留，source/lock/RNG严格兼容不放宽。旧Garg缺policy行为一致，旧source的内部Tape仍拒当前引擎静默复现。
 
-[六人](../../configs.example/boards/six_player_psychic.json)是两狼／通灵女巫／两民；[十二人](../../configs.example/boards/twelve_player_psychic.json)是四普通狼／通灵女巫猎人守卫／四民，有警长。均AWA已实现角色改编，关闭自爆、屠边；不冒称机械狼、镜隐迷踪或任意组合已支持。
+[六人](../../configs.example/boards/six_player_psychic.json)是两狼／通灵女巫／两民；[十二人](../../configs.example/boards/twelve_player_psychic.json)是四普通狼／通灵女巫猎人守卫／四民，有警长。均AWA已实现角色改编，关闭自爆、屠边；这两例不含机械狼；另有独立已验[机械板](mechanical-wolf.md)，镜隐迷踪及任意组合仍未声明支持。
 
 ```sh
 bun run --cwd backend run --configs-dir ../configs.example --game-config-name six_player_psychic
 bun run --cwd backend run --configs-dir ../configs.example --game-config-name twelve_player_psychic
 ```
 
-[6字面场景](../../backend/tests/support/psychic_scenarios.ts)×SDK/ACP/混合×两语=36本机完整局及全部严格Tape，覆盖首夜刀通灵又救、次夜repeat/skip、Good/Wolf末边、王枪报告前缀与完整流程、隐狼接前/后重验、十二人三夜及真实竞选/毒枪/警徽。演员只持本人静态计划；来源不确定的机械时点留下一角色自身卡。两公开板各20受限seed自然终局、0拒绝/回退、实际查验/重验/skip正覆盖并全部重放。
+[6字面场景](../../backend/tests/support/psychic_scenarios.ts)×SDK/ACP/混合×两语=36本机完整局及全部严格Tape，覆盖首夜刀通灵又救、次夜repeat/skip、Good/Wolf末边、王枪报告前缀与完整流程、隐狼接前/后重验、十二人三夜及真实竞选/毒枪/警徽。演员只持本人静态计划；机械原生查验为另一个独立技能，时点以[机械卡](rules/awa-mechanical-wolf-v1.md)为准。两公开板各20受限seed自然终局、0拒绝/回退、实际查验/重验/skip正覆盖并全部重放。
 
 另四个真实factory双policy赠予任务验证Garg重复拒绝后纠正、Psychic允许重复、身份/完整规则/接收只读及MCP/Agent回收，不算完整局。核心固定gateway后撤权、同refpolicy改变、null取消、copy独立账本、同World完整pipeline重入、跨World、梦保护/连续梦死/魅惑实际结算后报告保留。前端从实际God档验证skip/role信息不改seat、后续真实死亡及胜者独立，纯frame/原文/locale不变；证据见[三路审查](reviews/p7-psychic.md)。
 

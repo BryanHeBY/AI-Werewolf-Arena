@@ -11,7 +11,7 @@
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
 | P5 | 完成 | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md) |
 | P6 | 完成 | 五角色与三路审查闭环；16项verified，最终全量1176测试／542实际双语整局/Tape、103前端／42浏览器通过，见[阶段验收](reviews/p6-activation.md) |
-| P7 | 进行中 | 通灵师交付；17项verified，policy/重验/跳过、122实际双语受影响整局/Tape，见[验收](reviews/p7-psychic.md)；其余6项继续 |
+| P7 第三批 | 进行中：通灵师、机械狼 verified | [通灵师](reviews/p7-psychic.md)、[机械狼](reviews/p7-mechanical-wolf.md)；18 verified/46 planned，P7 余奇迹商人、混血儿、魔镜少女、觉醒隐狼、黑市商人 5 项；阶段结束全支持矩阵另验 |
 | P8–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
@@ -317,3 +317,11 @@ front103／953、type/build、actualChromium42、中文接刀与英文十二人�
 六类学习独立库存、next-night/被动枪、学习/模式各自窗口、固定首次刀夜及 extra spent/expired、按实际夜次的连守已建模。原 World/role/state/life/phase 与模式/技能快照约束 runtime 权限；刀查询只读，JSON mode 不恢复旧范围。A/L 发现模式原对象改写、A 发现技能种类改写与跨 World 登记缺口，均修正并交叉复查；39/159 控制专项通过。
 
 最终 type/deps/boundaries/i18n、全部 engine **580/8514/43 文件**通过，三路 0 阻断，见[控制审查](reviews/p7-mechanical-control.md)。这些 helpers 尚无生产装配，synthetic 控制测试不等于机械完整局；此笔未复跑 wire/browser。目录仍 17 已验/47 待交付，下一完整角色笔接实际阶段/网关/死亡 owner/双语/配置/呈现并完成全部功能门槛。
+
+## P7：机械狼完整交付
+
+第 18 项 mechanical_wolf 按[冻结卡](rules/awa-mechanical-wolf-v1.md)与[接入契约](mechanical-wolf.md)完整交付：六学习结果及独立次夜资源、250 模式/580 学习/650 技能/660 额外刀、真实批后固定首刀夜、仅穿普通 Guard 的额外刀、逐源单次反毒/独立机械盾/连守自罚、被动枪原生命与 owner、具体角色伪装和真实 Wolf 阵营分离。有限角色白名单在 parse/directbootstrap 同验；玩家无毒手因果，机械枪类型披露已明确授权。
+
+三路独立发现的 skill 模式序列化绕过、毒瓶 gateway 后耗尽、枪浅 owner/camp/container、配置诊断及双语前缀问题均修并复查；真实同批不假接/不同提案保前缀、外部 G02 与原生排他也有实际核心场景。最终 verified 源码 type/deps/boundaries/i18n、engine/config/catalog **627/8916**，**176 双语本地完整局＋40 受限 seed/全部严格 Tape（90/46157）**通过；没有把候选 source 冒认激活后，登记后同矩阵再次运行。
+
+front **119/1078**、type/build、实际 Chromium **50**与中英真实 PNG root/L 独立目检通过；详见[三路审查](reviews/p7-mechanical-wolf.md)。目录 18 verified/46 planned，新六/十二 board/game 示例可加载，未改用户 configs、未读取认证或调用外部模型。P7 其余奇迹商人、混血儿、魔镜少女、觉醒隐狼、黑市商人及 P8–P10、组合矩阵/长局/T6 持续，完整目标尚未完成。

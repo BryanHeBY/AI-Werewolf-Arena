@@ -1,5 +1,5 @@
 import type { ActionWindow, Camp, EntityId, Phase, PotionType } from "./identity";
-import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
+import type { InspectionResult, RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { GameResult } from "./results";
 
 export interface EventBase<T extends string, P> {
@@ -58,6 +58,16 @@ export interface EventPayloadMap {
   bear_roared: { day:number; roared:boolean };
   hidden_wolf_awakened: {actorId:EntityId;day:number};
   gargoyle_awakened: {actorId:EntityId;day:number};
+  mechanical_awakened: { actorId: EntityId; day: number; firstKnifeNight: number };
+  mechanical_mode_selected: { actorId: EntityId; day: number; mode: "kill" | "skill" };
+  mechanical_mimicked: { actorId: EntityId; day: number; targetId: EntityId; role: RoleId; readyOnNight: number };
+  mechanical_mimic_skipped: { actorId: EntityId; day: number };
+  mechanical_skill_skipped: { actorId: EntityId; day: number };
+  mechanical_poison_used: { actorId: EntityId; day: number; targetId: EntityId };
+  mechanical_guard_chosen: { actorId: EntityId; day: number; targetId: EntityId | null; failed: boolean };
+  mechanical_attack_chosen: { actorId: EntityId; day: number; targetId: EntityId | null };
+  mechanical_poison_reflected: { actorId: EntityId; day: number; protectedTargetId: EntityId; casterId: EntityId };
+  mechanical_shot: { actorId: EntityId; targetId: EntityId };
   role_inspection_skipped: {actorId:EntityId;abilityId?:string;day:number;reason:"passed"|"no_targets"};
   role_inspected: {actorId:EntityId;abilityId?:string;targetId:EntityId;day:number;result:Extract<InspectionResult,{kind:"role"}>};
   wolf_self_destruct: { wolfId: EntityId; window: ActionWindow };

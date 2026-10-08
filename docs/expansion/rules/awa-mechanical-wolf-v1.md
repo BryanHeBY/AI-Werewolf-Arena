@@ -31,7 +31,7 @@ awa_classic 1.0.0，ID `mechanical_wolf`，机械狼／Mechanical Wolf；核验2
 
 所有初批/追加死亡、遗言、全部警徽、角色钩子完整后PM最终judge。枪目标request原生命/版本直到实际额外死亡提交仍复验，不用target_id独自授权复活新生命。原技能枪/连守判离均有明确原因。
 
-私有模仿/模式/机械能力报告只本人；目标无通知，狼队不获历史；反毒因果中的casterId及reflectTargetId仅God；玩家state/history/DTO/玩家事件一律裁掉这些源身份字段，反毒反馈不向模型泄露毒手ID。上帝事件可保因果，玩家投影明确脱离/裁剪；公开仅既有真实死亡/枪/结果。references/Map/clock不落state/DTO/Tape，source/lock/RNG严格兼容保持。
+私有模仿/模式/机械能力报告只本人；目标无通知，狼队不获历史；反毒因果中的casterId及reflectTargetId仅God；玩家state/history/DTO/玩家事件一律裁掉这些源身份字段，反毒反馈不向模型泄露毒手ID。上帝事件可保因果，玩家投影明确脱离/裁剪；公开仅真实死亡/枪/结果。本AWA的mechanical_shot公开机械枪类型、机械狼真实身份及实际命中目标；这项授权披露不公开学习对象ID或其它库存，不伪装为原生Hunter枪。references/Map/clock不落state/DTO/Tape，source/lock/RNG严格兼容保持。
 
 `roles.mechanical_wolf`仅{}，未知任意skill/mode/穿透/相认配置拒绝；公共parse与directbootstrap都验证支持角色集合。六人/十二人与独立完整场景按实际freeze范围配置，不先登记觉醒或任意17牌组合。
 

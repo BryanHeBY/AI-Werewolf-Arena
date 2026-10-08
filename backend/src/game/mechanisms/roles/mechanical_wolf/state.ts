@@ -142,3 +142,22 @@ export function chooseMechanicalGuard(
   skill.lastGuardDay = day;
   return { failed };
 }
+
+/** Explicit player projection: future God-only debug fields must not become player input. */
+export function projectMechanicalState(state: MechanicalState): MechanicalState {
+  const learned = state.learned;
+  let skill: MechanicalSkill | undefined;
+  if (learned) switch (learned.skill.kind) {
+    case "villager": skill = { kind: "villager" }; break;
+    case "inspection": skill = { kind: "inspection", history: learned.skill.history.map(report => ({ day: report.day, targetId: report.targetId, result: { kind: "role", role: report.result.role } })) }; break;
+    case "poison": skill = { kind: "poison", remaining: learned.skill.remaining }; break;
+    case "guard": skill = { kind: "guard", lastTarget: learned.skill.lastTarget, lastGuardDay: learned.skill.lastGuardDay }; break;
+    case "hunter": skill = { kind: "hunter", canShoot: learned.skill.canShoot, armed: learned.skill.armed }; break;
+    case "wolf": skill = { kind: "wolf", extraKnife: learned.skill.extraKnife }; break;
+  }
+  return {
+    learned: learned && skill ? { targetId: learned.targetId, role: learned.role, day: learned.day, readyOnNight: learned.readyOnNight, skill } : null,
+    mimicClosedDay: state.mimicClosedDay, mode: state.mode ? { day: state.mode.day, kind: state.mode.kind } : null,
+    hasInheritedKnife: state.hasInheritedKnife, firstKnifeNight: state.firstKnifeNight, skillClosedDay: state.skillClosedDay,
+  };
+}

@@ -10,7 +10,7 @@ import { freshMechanicalState, selectMechanicalMode, setMechanicalState } from "
 
 function fixture(otherWolves = 1) {
   const world = new World(), actor = world.createEntity();
-  const role = createRoleComponent("mechanical_wolf" as Role, Camp.Wolf), life = createAliveComponent();
+  const role = createRoleComponent(Role.MechanicalWolf, Camp.Wolf), life = createAliveComponent();
   world.addComponent(actor, COMPONENT.Role, role); world.addComponent(actor, COMPONENT.Alive, life);
   const state = setMechanicalState(role, freshMechanicalState());
   const others = Array.from({ length: otherWolves }, () => {

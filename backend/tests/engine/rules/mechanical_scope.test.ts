@@ -8,14 +8,15 @@ import { bindMechanicalSkill, captureMechanicalOwner, hasCurrentMechanicalKillMo
 import { closeMechanicalSkill, freshMechanicalState, learnMechanicalRole, selectMechanicalMode, setMechanicalState } from "../../../src/game/mechanisms/roles/mechanical_wolf/state";
 
 function fixture(mode: "skill" | "kill" = "skill") {
-  // An internal synthetic role is deliberately not bootstrapped/configurable yet.
+  // An isolated World exercises scope controls separately from full lifecycle scenarios.
   const world = new World(), actor = world.createEntity();
-  const role = createRoleComponent("mechanical_wolf" as Role, Camp.Wolf), life = createAliveComponent();
+  const role = createRoleComponent(Role.MechanicalWolf, Camp.Wolf), life = createAliveComponent();
   world.addComponent(actor, COMPONENT.Role, role); world.addComponent(actor, COMPONENT.Alive, life);
   const state = setMechanicalState(role, freshMechanicalState());
   learnMechanicalRole(state, 5, "guard", 1); selectMechanicalMode(state, 2, mode);
   let current = true;
   const scope = captureMechanicalOwner(world, actor, () => current)!;
+  if (mode === "skill") recordMechanicalModeScope(world, scope, 2);
   return { world, actor, role, life, state, scope, cancel: () => { current = false; } };
 }
 

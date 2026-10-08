@@ -33,6 +33,7 @@ import { DreamNightFrame, hasDreamNightCommit } from "../../mechanisms/roles/dre
 import {discardStaleWolfKnife} from "../../mechanisms/roles/wolf/knife_scope";
 import {hasRoleInspectionNightCommit} from "../../mechanisms/roles/role_inspection/night_scope";
 import {AliveComponent,aliveLifeVersion} from "../../../core/domain/components/alive";
+import { hasMechanicalNightCommit } from "../../mechanisms/roles/mechanical_wolf/night_scope";
 
 export interface NightPipelineDependencies {
   world: World;
@@ -87,6 +88,7 @@ export class NightPipeline {
     if (!isCurrent()) return { interrupted: true };
     if(hasDreamNightCommit(this.world,day))throw new Error("dream_night_reentry_after_commit");
     if(hasRoleInspectionNightCommit(this.world,day))throw new Error("role_inspection_night_reentry_after_commit");
+    if(hasMechanicalNightCommit(this.world,day))throw new Error("mechanical_night_reentry_after_commit");
     safeRecordLogicOp({
       scope: "phase_pipeline",
       op: "night_pipeline_start",
@@ -105,6 +107,7 @@ export class NightPipeline {
       seerChecks: [],
       dreamLinks: [],
       poisonClaims: [],
+      mechanicalEffects: { shields: [], attacks: [], failures: [] },
     };
 
     const requests = new GameActionRequestFactory(this.world, this.events, day);
@@ -143,7 +146,8 @@ export class NightPipeline {
 
     discardStaleWolfKnife(this.world,stageState);
     const dreamFrame = new DreamNightFrame(stageState.dreamLinks);
-    const damage = this.damageResolutionSystem.resolve(this.world,{protectedTargets:dreamFrame.protectedTargets(this.world),consecutiveDeaths:dreamFrame.consecutiveDeaths(this.world),poisonClaims:stageState.poisonClaims});
+    const damage = this.damageResolutionSystem.resolve(this.world,{protectedTargets:dreamFrame.protectedTargets(this.world),consecutiveDeaths:dreamFrame.consecutiveDeaths(this.world),poisonClaims:stageState.poisonClaims,mechanicalEffects:stageState.mechanicalEffects});
+    for (const reflection of damage.poisonReflections ?? []) this.events.push({ timestamp: Date.now(), type: "mechanical_poison_reflected", payload: { ...reflection, day } });
     dreamFrame.expandInitialDamage(this.world,damage);
     safeRecordLogicOp({
       scope: "resolution",

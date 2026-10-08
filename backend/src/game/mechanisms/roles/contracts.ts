@@ -37,6 +37,8 @@ export interface RoleProfile {
   goodSide?: "god" | "villager";
   /** Declared composition limit; omitted roles retain their existing multiplicity. */
   maxCount?: number;
+  /** Composition whitelist contributed by a role whose learning rules are deliberately finite. */
+  supportedBoardRoles?: readonly Role[];
   /** Passive Bear sensing is independent of active inspection labels/knife permission. */
   detectableByBear?: (world:World,role:RoleComponent)=>boolean;
   initialVictoryAffiliations?: readonly VictoryAffiliation[] | ((role: RoleComponent, ctx: RoleInitContext) => readonly VictoryAffiliation[]);

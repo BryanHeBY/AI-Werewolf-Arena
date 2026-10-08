@@ -23,6 +23,8 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     guard: { allowSelf: false },
     check_identity: { allowSelf: false },
     inspect_role:{allowSelf:false},
+    mimic_role: { allowSelf: false }, mechanical_inspect: { allowSelf: false },
+    mechanical_poison: { allowSelf: true }, mechanical_guard: { allowSelf: true }, mechanical_attack: { allowSelf: true },
     use_potion: { allowSelf: false },
     vote: { allowSelf: false },
     shoot: { allowSelf: false },
@@ -44,6 +46,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     [Role.WhiteWolfKing]: { kill_vote: { allowSelf: true } },
     [Role.HiddenWolf]: {kill_vote:{allowSelf:true}},
     [Role.Gargoyle]:{kill_vote:{allowSelf:true}},
+    [Role.MechanicalWolf]: { kill_vote: { allowSelf: true } },
     [Role.Witch]: {
       // 女巫可自救，提示层需包含自己。
       use_potion: { allowSelf: true },

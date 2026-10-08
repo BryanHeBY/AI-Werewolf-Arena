@@ -1,5 +1,5 @@
 import { readGravekeeperFeedback, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
-import { text, inspectionLabel, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, type Locale } from "@ai-werewolf-arena/game-text";
+import { text, inspectionLabel, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, mechanicalEventLabel, type Locale } from "@ai-werewolf-arena/game-text";
 /** 文件说明：事件 -> 脚本回放文本/终端文本渲染注册表。 */
 import { GameEvent } from "../../../core/domain/model";
 import {
@@ -145,6 +145,8 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const mechanical = mechanicalEventLabel(event.type, event.payload, locale);
+    if (mechanical !== null) return mechanical;
     const handler = JUDGE_HANDLERS[event.type];
     return handler ? (handler as (event: GameEvent, locale: Locale) => string | null)(event, locale) : null;
   }
@@ -158,6 +160,11 @@ export class ScriptEventRenderRegistry {
   }
 
   toLiveRender(event: GameEvent, printPrivateEvents: boolean, locale: Locale = "zh-CN"): ScriptLiveRender[] {
+    const mechanical = mechanicalEventLabel(event.type, event.payload, locale);
+    if (mechanical !== null) {
+      if (event.type === "mechanical_shot") return [{ kind: "action", text: mechanical }];
+      return printPrivateEvents ? [{ kind: event.type === "mechanical_poison_reflected" ? "god" : "private", text: mechanical }] : [];
+    }
     const handler = LIVE_HANDLERS[event.type];
     if (handler) {
       const rendered = (handler as (event: GameEvent, printPrivateEvents: boolean, locale: Locale) => ScriptLiveRender[] | null)(event, printPrivateEvents, locale);

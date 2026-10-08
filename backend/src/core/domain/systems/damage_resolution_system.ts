@@ -2,7 +2,7 @@ import { COMPONENT } from "../components/names";
 import { StatusMarksComponent } from "../components/status_marks";
 import { EntityId, StatusMark, DeathCause, type DeathSources } from "../model";
 import { World } from "../world";
-import { planMechanicalDamage, type NightPoisonClaim, type NightMechanicalEffects } from "../night_effects";
+import { planMechanicalDamage, type NightPoisonClaim, type NightMechanicalEffects, type NightPoisonReflection } from "../night_effects";
 
 export interface NightDamageEffects {
   protectedTargets?: readonly EntityId[];
@@ -17,6 +17,8 @@ export interface NightDamageEffects {
 export interface DamageResolutionResult {
   deaths: EntityId[];
   deathSources: DeathSources;
+  /** God-only causal output; never included in a player's night summary or state. */
+  poisonReflections?: readonly NightPoisonReflection[];
 }
 
 /**
@@ -90,6 +92,7 @@ export class DamageResolutionSystem {
     return {
       deaths,
       deathSources,
+      ...(mechanical.reflections.length ? { poisonReflections: mechanical.reflections } : {}),
     };
   }
 }

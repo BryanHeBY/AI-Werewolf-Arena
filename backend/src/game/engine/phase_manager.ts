@@ -36,6 +36,7 @@ import {captureBeautyExile,resolveBeautyExileVictory,type BeautyExileCandidate} 
 import {BearNightFrame} from "../mechanisms/roles/bear/night_frame";
 import {refreshHiddenWolfInheritance} from "../mechanisms/roles/hidden_wolf/inheritance";
 import {refreshGargoyleInheritance} from "../mechanisms/roles/gargoyle/inheritance";
+import { refreshMechanicalInheritance } from "../mechanisms/roles/mechanical_wolf/inheritance";
 import {aliveLifeVersion} from "../../core/domain/components/alive";
 import { VotingRightComponent } from "../../core/domain/components/voting_right";
 import { IdentityComponent } from "../../core/domain/entities/player";
@@ -129,6 +130,7 @@ export class PhaseManager {
     const initialSheriffId = findSheriffId(this.world);
     refreshHiddenWolfInheritance(this.world,this.events,this.state.day);
     refreshGargoyleInheritance(this.world,this.events,this.state.day);
+    refreshMechanicalInheritance(this.world, this.state.day, this.events);
     if (initialSheriffId !== null) {
       this.events.push({
         timestamp: Date.now(),

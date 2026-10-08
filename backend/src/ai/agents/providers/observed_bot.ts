@@ -26,6 +26,16 @@ export class ObservedBot implements ObservedPlayerStrategy {
       const target = pick(others.filter(id => !teammateIds.includes(id)));
       return { name: "kill_vote", args: { target_id: target ?? null, abstain: target === undefined } };
     }
+    if (tools.includes("mechanical_mode")) {
+      const state = ownState.mechanical;
+      const ready = state?.hasInheritedKnife && state.firstKnifeNight !== null && state.firstKnifeNight <= request.context.day;
+      return this.style === "conservative" ? null : { name: "mechanical_mode", args: { mode: ready ? "kill" : "skill" } };
+    }
+    if (tools.includes("mimic_role")) { const target = this.style === "conservative" && request.context.day === 1 ? undefined : pick(others); return target === undefined ? null : { name: "mimic_role", args: { target_id: target } }; }
+    if (tools.includes("mechanical_inspect")) { const target = pick(others); return this.style === "conservative" || target === undefined ? null : { name: "mechanical_inspect", args: { target_id: target } }; }
+    if (tools.includes("mechanical_poison")) { const target = pick(others); return this.style === "conservative" || target === undefined ? null : { name: "mechanical_poison", args: { target_id: target } }; }
+    if (tools.includes("mechanical_guard")) return { name: "mechanical_guard", args: { target_id: this.style === "conservative" ? null : pick(knownAliveIds) ?? null } };
+    if (tools.includes("mechanical_attack")) return { name: "mechanical_attack", args: { target_id: pick(others) ?? null } };
     if (tools.includes("guard")) {
       const target = this.style === "conservative" ? undefined : pick(knownAliveIds.filter(id => id !== ownState.guard?.lastTarget));
       return { name: "guard", args: { target_id: target ?? null, abstain: target === undefined } };

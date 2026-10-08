@@ -221,3 +221,12 @@ for(const locale of ["zh-CN","en"] as const)for(const large of [false,true])test
  const caption=await page.getByTestId("composition-caption").boundingBox();expect(caption).not.toBeNull();for(const seat of await page.locator("[data-composition-player]").all()){const box=await seat.boundingBox();expect(box).not.toBeNull();expect(box!.y+box!.height).toBeLessThan(caption!.y);}
  await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(large?8:2);await expect(page.getByTestId("composition-winner")).toHaveCount(large?8:2);
 });
+
+for(const locale of ["zh-CN","en"] as const)for(const large of [false,true])test(`${locale}/${large}: real mechanical reflection and gun keep choices distinct from actual death`,async({page})=>{
+ const replay=JSON.parse(readFileSync(new URL(`../fixtures/mechanical-${large?"twelve":"reflection"}.replay.json`,import.meta.url),"utf8"));replay.meta.locale=locale;await page.route("**/api/replay",route=>route.fulfill({json:replay}));await page.goto("/");
+ const label=large?(locale==="en"?"Mechanical Wolf shot: player 1 hit player 8.":"【机械狼开枪】1号命中8号。"):(locale==="en"?"Mechanical reflection: on night 2, player 1 shielded player 3; poison returned to original caster 4.":"【机械反毒】第2夜，1号保护3号，毒返回原施毒者4号。");
+ await page.locator(".timeline .event").filter({hasText:label}).click();await expect(page.getByTestId("composition-event")).toHaveText(label);await expect(page.locator(".seat-grid .dead")).toHaveCount(large?8:1);await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+ const actor=page.getByRole("button",{name:locale==="en"?"Player 1 · Seat 1":"1号 · Seat 1",exact:true});await expect(actor).toContainText(locale==="en"?"Mechanical Wolf":"机械狼");
+ const caption=await page.getByTestId("composition-caption").boundingBox();expect(caption).not.toBeNull();for(const seat of await page.locator("[data-composition-player]").all()){const box=await seat.boundingBox();expect(box).not.toBeNull();expect(box!.y+box!.height).toBeLessThan(caption!.y);}
+ await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(large?8:4);await expect(page.getByTestId("composition-winner")).toHaveCount(large?8:4);
+});

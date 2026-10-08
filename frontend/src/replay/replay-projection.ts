@@ -76,7 +76,7 @@ export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number):
       if (payload.result === "wolf") markDead(numberValue(payload.targetId));
       if (payload.result === "not_wolf") markDead(numberValue(payload.actorId));
     }
-    if (event.type === "hunter_shot" || event.type === "wolf_king_shot") {
+    if (event.type === "hunter_shot" || event.type === "wolf_king_shot" || event.type === "mechanical_shot") {
       markDead(numberValue(payload.targetId));
     }
     if (event.type === "sheriff_elected") {
