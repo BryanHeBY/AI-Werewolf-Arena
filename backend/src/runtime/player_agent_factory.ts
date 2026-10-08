@@ -115,6 +115,8 @@ async function createAcpRuntime(
       },
       personalityPromptResolver: request => profiles.get(request.actorId)?.personalityPrompt,
       boardConfig: options.boardConfig, turnTimeoutMs: options.llmTimeoutMs,
+      trace: options.trace, displayLocale: options.displayLocale, colorizeLogs: options.colorizeLogs,
+      printLlmIo: options.printLlmIo, printThinking: options.printThinking,
       fallbackProvider: new BaselineBotActionProvider(options.world),
     });
     providers.set(name, provider);

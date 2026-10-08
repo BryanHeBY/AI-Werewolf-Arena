@@ -9,6 +9,7 @@ export interface LlmObserverOptions {
   colorizeLogs?: boolean;
   printLlmIo: boolean;
   printThinking: boolean;
+  transport?: "llm" | "acp";
 }
 
 /** Keeps terminal observability outside the game-decision orchestration. */
@@ -30,7 +31,7 @@ export class LlmObserver {
 
   prompt(messages: ChatMessage[], request: ActionRequest): void {
     if (!this.options.printLlmIo) return;
-    const prefix = colorize("[LLM_IO]", "accent", this.colorizeLogs);
+    const prefix = colorize(this.options.transport === "acp" ? "[ACP_IO]" : "[LLM_IO]", "accent", this.colorizeLogs);
     const marker = `player=${request.actorId} phase=${request.phase}`;
     console.log(`${prefix} prompt_start ${marker} · ${text(this.locale, "runtime.prompt_start")}`);
     for (const msg of messages) {
@@ -44,7 +45,7 @@ export class LlmObserver {
 
   rawResponse(raw: string, request: ActionRequest): void {
     if (!this.options.printLlmIo) return;
-    const prefix = colorize("[LLM_IO]", "accent", this.colorizeLogs);
+    const prefix = colorize(this.options.transport === "acp" ? "[ACP_IO]" : "[LLM_IO]", "accent", this.colorizeLogs);
     const marker = `player=${request.actorId} phase=${request.phase}`;
     console.log(`${prefix} raw_response_start ${marker} · ${text(this.locale, "runtime.raw_response_start")}`);
     console.log(`${prefix} raw_response · ${text(this.locale, "runtime.raw_response")}: ${raw}`);
@@ -79,7 +80,7 @@ export class LlmObserver {
   }
 
   private decorate(line: string): string {
-    const prefix = "[LLMActionProvider]";
+    const prefix = this.options.transport === "acp" ? "[ACPActionProvider]" : "[LLMActionProvider]";
     const key = `runtime.trace.${line.split(" ", 1)[0]}` as MessageKey;
     if (Object.hasOwn(dictionaries[this.locale], key)) line = `${text(this.locale, key)} | ${line}`;
     if (!this.colorizeLogs) return `${prefix} ${line}`;

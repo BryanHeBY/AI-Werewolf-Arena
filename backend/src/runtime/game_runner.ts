@@ -111,8 +111,8 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
         colorizeLogs: options.color,
         printLlmIo: options.printLlmIo,
         printThinking: options.printThinking,
-        createAcpUpdateObserver: options.printThinking
-          ? (actorId) => createAcpConsoleLogger(actorId, log, setup.context.displayLocale)
+        createAcpUpdateObserver: options.printThinking || options.printLlmIo
+          ? (actorId) => createAcpConsoleLogger(actorId, log, setup.context.displayLocale, { printThinking: options.printThinking, printLlmIo: options.printLlmIo })
           : undefined,
       });
       const selectedProvider: ActionProvider = { async getAction(request) {

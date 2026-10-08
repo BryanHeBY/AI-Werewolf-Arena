@@ -1,7 +1,7 @@
 import { resolveTurnConstraints } from "../player/turn_constraints";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
-import { describeError } from "../../../utils/error_diagnostic";
-import { text } from "@ai-werewolf-arena/game-text";
+import { describeError, formatErrorDiagnostic } from "../../../utils/error_diagnostic";
+import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionProvider, ActionRequest, BoardConfig, ToolCall } from "../../../core/domain"
 import { World } from "../../../core/domain/world";
@@ -31,6 +31,7 @@ import { BuiltPlayerPrompt, PlayerRoundOutcome } from "../player/contracts";
 import { PlayerPromptPolicy } from "../player/player_prompt_policy";
 import { PlayerRoundRecorder } from "../player/player_round_recorder";
 import { ScopedRequestScheduler } from "../../runtime/request_scheduler";
+import { LlmObserver } from "../player/player_observer";
 
 export interface AcpActionProviderOptions {
   fallbackProvider?: ActionProvider;
@@ -41,6 +42,11 @@ export interface AcpActionProviderOptions {
   turnTimeoutMs?: number;
   onBugReport?: (report: AcpBugReport) => void;
   maxConcurrentRequests?: number;
+  trace?: boolean;
+  displayLocale?: Locale;
+  colorizeLogs?: boolean;
+  printLlmIo?: boolean;
+  printThinking?: boolean;
 }
 
 interface AcpTurnPromptBuild {
@@ -80,12 +86,16 @@ export class AcpActionProvider implements ActionProvider {
   private readonly closeController = new AbortController();
   private closed = false;
   private readonly scheduler: ScopedRequestScheduler;
+  private readonly observer: LlmObserver;
 
   constructor(
     world: World,
     private readonly options: AcpActionProviderOptions,
   ) {
-    this.scheduler = new ScopedRequestScheduler({ defaultMaxConcurrentRequests: options.maxConcurrentRequests ?? Infinity });
+    this.observer = new LlmObserver({ transport: "acp", trace: options.trace ?? false, locale: options.displayLocale ?? world.locale, colorizeLogs: options.colorizeLogs, printLlmIo: options.printLlmIo ?? false, printThinking: options.printThinking ?? false });
+    this.scheduler = new ScopedRequestScheduler({ defaultMaxConcurrentRequests: options.maxConcurrentRequests ?? Infinity,
+      onWait: ({ request, queueDepth, active, limit }) => this.observer.trace(`request_queue_wait player=${request.actorId} phase=${request.phase} queue_depth=${queueDepth} active=${active}/${limit}`),
+    });
     this.fallbackProvider = options.fallbackProvider ?? new BaselineBotActionProvider(world);
     this.bugReportService = new AgentBugReportService(world);
     this.registry = new AcpTurnRegistry(world, (report) => this.handleBugReport(report));
@@ -124,6 +134,7 @@ export class AcpActionProvider implements ActionProvider {
     let release: (() => void) | undefined;
     try {
       release = await this.scheduler.acquire(request, undefined, signal);
+      this.observer.trace(`request_start player=${request.actorId} phase=${request.phase} tools=${request.allowedTools.join(",")} timeout_ms=${Math.max(0, request.deadlineAtMs! - Date.now())}`);
       return await this.runTurn(request, startedAt, signal);
     } catch (error) {
       if (error === this.closeController.signal.reason) return null;
@@ -140,6 +151,7 @@ export class AcpActionProvider implements ActionProvider {
   }
 
   private async runTurn(request: ActionRequest, startedAt: number, signal: AbortSignal): Promise<ToolCall | null> {
+    if (this.closed) return null;
     const deadlineAtMs = request.deadlineAtMs!;
     let session: AcpSession | undefined;
     let turn: ReturnType<AcpTurnRegistry["openTurn"]> | undefined;
@@ -153,12 +165,16 @@ export class AcpActionProvider implements ActionProvider {
         const factory = this.options.sessionFactoryResolver?.(request.actorId) ?? this.options.sessionFactory;
         if (!factory) throw new Error("acp_session_factory_missing");
         const initialPrompt = this.buildSessionPrompt(request);
+        this.observer.prompt([{ role: "system", content: initialPrompt }], request);
+        if (this.closed) throw this.closeController.signal.reason;
         this.sessionPromptByActor.set(request.actorId, initialPrompt);
         return { factory, input: { actorId: request.actorId, registry: this.registry, initialPrompt } };
       }), signal);
       if (this.sessions.isClosed || deadlineAtMs <= Date.now()) throw new Error("acp_deadline_elapsed");
       turn = this.registry.openTurn(request, session.sessionId);
       built = this.buildTurnPrompt(request, turn.turnId, true);
+      this.observer.prompt([{ role: "user", content: built.prompt }], request);
+      if (this.closed) return null;
       const promptTask = session.prompt(built.prompt);
       const outcome = await awaitWithAbort(this.waitForAction(turn.action, promptTask, request), signal);
       if (this.closed) return null;
@@ -184,6 +200,7 @@ export class AcpActionProvider implements ActionProvider {
       auditTrace = session.takeAuditTrace?.();
       if (this.closed) return null;
       if (outcome.action) {
+        this.observer.trace(`request_ok player=${request.actorId} phase=${request.phase} action=${outcome.action.name} args=${JSON.stringify(outcome.action.args)} elapsed_ms=${Date.now() - startedAt}`);
         this.recordPlayerRound(request, built, {
           action: outcome.action,
           auditTrace,
@@ -192,6 +209,7 @@ export class AcpActionProvider implements ActionProvider {
         return this.closed ? null : outcome.action;
       }
       if (outcome.reason === "model_declined_required_action" && resolveTurnConstraints(request).minValidActions === 0) {
+        this.observer.trace(`request_none player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt}`);
         this.recordPlayerRound(request, built, { action: null, auditTrace, elapsedMs: Date.now() - startedAt });
         return null;
       }
@@ -202,6 +220,8 @@ export class AcpActionProvider implements ActionProvider {
       if (error === this.closeController.signal.reason) return null;
       fallbackReason = "runtime_error";
       requestError = describeError(error);
+      this.observer.trace(`request_transport_fail player=${request.actorId} phase=${request.phase} err=${formatErrorDiagnostic(error, this.observer.locale)}`);
+      if (this.closed) return null;
       safeRecordLogicOp({
         scope: "llm_action_provider",
         op: "action_provider_error",
@@ -228,6 +248,7 @@ export class AcpActionProvider implements ActionProvider {
       fallback = null; fallbackReason = "deadline_skip";
     }
     if (this.closed) return null;
+    this.observer.trace(`request_recovered player=${request.actorId} phase=${request.phase} reason=${fallbackReason} fallback=${fallback?.name ?? "none"}`);
     this.recordPlayerRound(request, built, {
       action: fallback,
       auditTrace,

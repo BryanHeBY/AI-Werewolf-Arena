@@ -28,6 +28,11 @@ try {
       // ACP session IDs are only unique within their own connection.
       send({ jsonrpc: "2.0", id: rpc.id, result: { sessionId: "shared-wire-session" } });
     } else if (rpc.method === "session/prompt") {
+      if (process.env.AWA_TEST_LOGGING === "1") {
+        for (const [sessionUpdate, fragments] of [["agent_thought_chunk", ["private-thought", "-delta"]], ["agent_message_chunk", ["raw-model", "-message"]]] as const) {
+          for (const text of fragments) send({ jsonrpc: "2.0", method: "session/update", params: { sessionId: "shared-wire-session", update: { sessionUpdate, content: { type: "text", text } } } });
+        }
+      }
       const prompt = String(rpc.params.prompt[0].text), turn = /(?:Current turn ID: |当前回合 ID：)(t\d+)/.exec(prompt)?.[1];
       if (turn && mode === "stubborn") { send({ jsonrpc: "2.0", method: "session/update", params: { sessionId: "shared-wire-session", update: { sessionUpdate: "agent_message_chunk", content: { type: "text", text: "fixture_prompt_started" } } } }); await new Promise<never>(() => {}); continue; }
       if (turn) {

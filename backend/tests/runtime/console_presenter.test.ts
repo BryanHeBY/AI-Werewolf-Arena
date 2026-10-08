@@ -121,3 +121,17 @@ describe("ACP console text", () => {
     ]);
   });
 });
+
+test("ACP diagnostic flags independently control message IO and thought/tool traces", () => {
+  for (const printThinking of [false, true]) for (const printLlmIo of [false, true]) {
+    const lines: string[] = [];
+    const logger = createAcpConsoleLogger(1, line => lines.push(line), "en", { printThinking, printLlmIo });
+    logger({ sessionUpdate: "agent_thought_chunk", content: { type: "text", text: "thought-canary" } });
+    logger({ sessionUpdate: "agent_message_chunk", content: { type: "text", text: "message-canary" } });
+    logger({ sessionUpdate: "tool_call", toolCallId: "one", title: "submit_action", status: "pending" }); logger.flush();
+    const output = lines.join("\n");
+    expect(output.includes("thought-canary")).toBe(printThinking);
+    expect(output.includes("message-canary")).toBe(printThinking || printLlmIo);
+    expect(output.includes("[tool]")).toBe(printThinking);
+  }
+});

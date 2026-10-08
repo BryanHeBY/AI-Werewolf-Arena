@@ -78,11 +78,12 @@ export interface AcpConsoleLogger {
   flush(): void;
 }
 
-export function createAcpConsoleLogger(actorId: number, log: ConsoleLog, locale: Locale = "zh-CN"): AcpConsoleLogger {
+export function createAcpConsoleLogger(actorId: number, log: ConsoleLog, locale: Locale = "zh-CN", options: { printThinking: boolean; printLlmIo: boolean } = { printThinking: true, printLlmIo: false }): AcpConsoleLogger {
   const textLabel = (key: MessageKey) => text(locale, key);
   let pending: { kind: "message" | "thought"; id: string; text: string } | null = null;
   const toolStates = new Map<string, { label: string; status?: string; error: string }>();
   const emitText = (kind: "message" | "thought", value: string) => {
+    if (kind === "thought" ? !options.printThinking : !options.printThinking && !options.printLlmIo) return;
     const text = compact(value, Infinity);
     if (text && !/^\*?conversation interrupted\*?$/i.test(text)) {
       log(`[acp][${actorId}][${kind}] ${kind === "thought" ? textLabel("runtime.acp.thought") : textLabel("runtime.acp.message")}: ${text}`, "muted");
@@ -99,6 +100,7 @@ export function createAcpConsoleLogger(actorId: number, log: ConsoleLog, locale:
     const type = event.sessionUpdate;
     if (type === "agent_message_chunk" || type === "agent_thought_chunk") {
       const kind = type === "agent_message_chunk" ? "message" : "thought";
+      if (kind === "thought" ? !options.printThinking : !options.printThinking && !options.printLlmIo) { flush(); return; }
       const messageId = typeof event.messageId === "string" ? event.messageId : "unknown";
       if (pending && (pending.kind !== kind || pending.id !== messageId)) flush();
       if (!pending) pending = { kind, id: messageId, text: "" };
@@ -118,6 +120,7 @@ export function createAcpConsoleLogger(actorId: number, log: ConsoleLog, locale:
       return;
     }
     flush();
+    if (!options.printThinking) return;
     if (type === "tool_call") {
       const rawInput = asRecord(event.rawInput);
       const server = typeof rawInput?.server === "string" ? rawInput.server : undefined;
