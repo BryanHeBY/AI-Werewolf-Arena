@@ -68,6 +68,8 @@ export class ActionReception {
     }
     const checked = this.gateway.validateAndSanitize(this.world, request.actorId, call, {
       phase: request.phase,
+      day: request.context.day,
+      abilityId: request.context.ability_id,
       actionWindow: request.actionWindow,
       allowSelfDestruct: request.allowedTools.includes("self_destruct"),
       allowDeadHunterShoot: request.context.stage === "hunter_shot" && request.context.trigger === "on_death",

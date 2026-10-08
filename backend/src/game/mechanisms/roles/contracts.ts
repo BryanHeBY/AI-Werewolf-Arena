@@ -9,6 +9,7 @@ import type { NightStageHandler } from "../stages/night/contracts";
 import type { ToolRuleMap } from "../validation/contracts";
 import type { DeathHook, VotedOutHook } from "../hooks/hook_registry";
 import type { z } from "zod";
+import type { NightAbilityKind } from "./abilities";
 
 /** 角色初始化上下文。 */
 export interface RoleInitContext {
@@ -44,6 +45,7 @@ export interface RoleProfile {
   stageDirectives?: StageDirectiveRule[];
   validationRules?: ToolRuleMap;
   nightStages?: NightStageHandler[];
+  possibleNightAbilities?: readonly NightAbilityKind[];
   llmRepair?: ToolRepairPack;
   votedOutHook?: VotedOutHook;
   deathHook?: DeathHook;

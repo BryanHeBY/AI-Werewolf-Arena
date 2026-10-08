@@ -1,4 +1,4 @@
-import { renderMessage, text, type Locale } from "@ai-werewolf-arena/game-text";
+import { renderMessage, text, term, type Locale } from "@ai-werewolf-arena/game-text";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, BoardConfig, EntityId, Role, ToolName } from "../../../core/domain"
@@ -15,6 +15,7 @@ import {
   TargetHintRegistry,
   ToolSpecRegistry,
   knownWolfTeammates,
+  allNightAbilities, abilityStatus, projectNightAbility,
 } from "../../../game/mechanisms";
 import { getGuardState, getHunterState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
 import { freezeObservation, type PlayerObservation } from "./observation";
@@ -70,16 +71,20 @@ export class PlayerPromptPolicy {
       if (typeof target === "number") dead.add(target);
     }
     const ownState: PlayerObservation["ownState"] = {};
-    if (role?.role === Role.Witch) ownState.witch = getWitchState(role);
-    if (role?.role === Role.Guard) ownState.guard = getGuardState(role);
+    const witch = role ? getWitchState(role, request.context.ability_id) : undefined;
+    const guard = role ? getGuardState(role, request.context.ability_id) : undefined;
+    if (witch) ownState.witch = witch;
+    if (guard) ownState.guard = guard;
     if (role?.role === Role.Hunter) ownState.hunter = getHunterState(role);
     if (role?.role === Role.Idiot) ownState.idiot = getIdiotState(role);
-    if (role?.role === Role.Seer) ownState.seer = getSeerState(role);
+    const seer = role ? getSeerState(role, request.context.ability_id) : undefined;
+    if (seer) ownState.seer = seer;
     return freezeObservation({ request, identity: {
       ...(role ? { role: role.role, camp: role.camp } : {}),
       name: this.world.getComponent<IdentityComponent>(request.actorId, COMPONENT.Identity)?.name,
     }, knownAliveIds: this.world.entityIds().filter(id => !dead.has(id)),
-      teammateIds: this.wolfTeammates(request.actorId), ownState });
+      teammateIds: this.wolfTeammates(request.actorId), ownState,
+      abilities: allNightAbilities(role).map(ability => projectNightAbility(ability, request.context.day)) });
   }
 
   buildSystem(
@@ -120,6 +125,8 @@ export class PlayerPromptPolicy {
     },
   ): string {
     const role = this.role(request.actorId);
+    const bound = request.context.ability_id ? allNightAbilities(role).find(ability => ability.id === request.context.ability_id) : undefined;
+    const targetRuleRole = bound?.kind === "guard" ? Role.Guard : bound?.kind === "potion" ? Role.Witch : bound?.kind === "seer_check" ? Role.Seer : role?.role;
     const constraints = resolveTurnConstraints(request);
     const stage = getActionRequestStage(request);
     return buildUserPrompt({
@@ -130,7 +137,7 @@ export class PlayerPromptPolicy {
       isSpeechTurn: input.allowedTools.includes("speak") || input.allowedTools.includes("speak_to_wolves"),
       stageDirective: this.options.toolSpecRegistry.getStageDirective(request.allowedTools, this.locale) ??
         text(this.locale, "prompt.stage.default"),
-      statusDirective: this.statusDirective(request.actorId, role),
+      statusDirective: this.statusDirective(request, role),
       requiresAction: constraints.minValidActions > 0,
       turnConstraintHint: renderTurnConstraintUserHint(constraints, this.locale),
       allowedTools: input.allowedTools,
@@ -140,7 +147,7 @@ export class PlayerPromptPolicy {
       stageContextHint: [this.stageContextHint(request), request.context.retry_notice !== undefined ? request.context.retry_notice : request.context.retry_notice_message ? renderMessage(this.locale, request.context.retry_notice_message) : undefined].filter(Boolean).join(" ") || undefined,
       actionableIdsHint: this.options.targetHintRegistry.buildActionableIdsHint({
         actorId: request.actorId,
-        actorRole: role?.role,
+        actorRole: targetRuleRole,
         allowedTools: input.allowedTools,
         world: this.world,
       }),
@@ -166,9 +173,16 @@ export class PlayerPromptPolicy {
     return knownWolfTeammates(this.world, actorId, this.options.roleCatalog);
   }
 
-  private statusDirective(actorId: EntityId, role?: RoleComponent): string | undefined {
+  private statusDirective(request: ActionRequest, role?: RoleComponent): string | undefined {
     const lines: string[] = [];
-    lines.push(text(this.locale, "prompt.status.wolf_teammates", { teammates: this.wolfTeammates(actorId).join(", ") || text(this.locale, "common.none") }));
+    lines.push(text(this.locale, "prompt.status.wolf_teammates", { teammates: this.wolfTeammates(request.actorId).join(", ") || text(this.locale, "common.none") }));
+    if (role) lines.push(text(this.locale, "ability.identity", { role: this.options.roleCatalog.label(role.role, this.locale), camp: term("camp", role.camp, this.locale) }));
+    for (const ability of allNightAbilities(role)) {
+      const status = text(this.locale, `ability.status.${abilityStatus(ability, request.context.day)}`);
+      const state = ability.kind === "seer_check" ? { lastTarget: ability.state.lastTarget, lastResult: ability.state.lastResult ?? null } : ability.state;
+      lines.push(text(this.locale, "ability.summary", { id: ability.id, kind: text(this.locale, `ability.kind.${ability.kind}`), status, uses: ability.maxUses === null ? text(this.locale, "ability.unlimited") : ability.maxUses - ability.uses, state: JSON.stringify(state) }));
+    }
+    if (request.context.ability_id) lines.push(text(this.locale, "ability.bound_turn", { id: request.context.ability_id }));
     const privateState = role?.renderPrompt?.(this.locale).trim();
     if (privateState) lines.push(text(this.locale, "prompt.status.private", { state: privateState }));
     if (role?.role === Role.Idiot && getIdiotState(role)?.revealed) {

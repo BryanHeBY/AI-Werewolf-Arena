@@ -63,7 +63,7 @@ test("gateway refusals have language-neutral codes and never change private reso
   for (const item of cases) for (const locale of ["zh-CN", "en"] as const) {
     const game = bootstrapGame(twelvePlayerStandardConfig, { locale, fixedRoles: twelveRoles }); item.prepare?.(game);
     const before = facts(game);
-    const result = new ToolGateway().validateAndSanitize(game.world, item.actor, item.tool, { phase: item.phase ?? Phase.Day });
+    const result = new ToolGateway().validateAndSanitize(game.world, item.actor, item.tool, { phase: item.phase ?? (["use_potion", "check_identity", "guard"].includes(item.tool.name) ? Phase.Night : Phase.Day) });
     expect(result.ok).toBe(false); expect(result.error).toBe(item.code);
     expect(result.message).toBeDefined(); if (locale === "en") expect(result.message).not.toMatch(han);
     expect(facts(game)).toEqual(before);

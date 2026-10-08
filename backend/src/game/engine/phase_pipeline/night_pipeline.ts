@@ -114,7 +114,7 @@ export class NightPipeline {
       state: stageState,
     };
 
-    for (const stage of this.stageRegistry.getStages(config)) {
+    for (const stage of this.stageRegistry.getStages(config, this.world)) {
       await stage.execute(stageCtx);
     }
 

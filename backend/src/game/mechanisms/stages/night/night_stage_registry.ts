@@ -2,6 +2,12 @@
 import { BoardConfig, Role } from "../../../../core/domain/model";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../roles/catalog";
 import { NightStageHandler } from "./contracts";
+import type { World } from "../../../../core/domain/world";
+import { COMPONENT } from "../../../../core/domain/components/names";
+import type { RoleComponent } from "../../../../core/domain/components/role";
+import { allNightAbilities, type NightAbilityKind } from "../../roles/abilities";
+
+const abilityRole: Record<NightAbilityKind, Role> = { seer_check: Role.Seer, guard: Role.Guard, potion: Role.Witch };
 
 /** 夜间阶段注册表。 */
 export class NightStageRegistry {
@@ -11,8 +17,10 @@ export class NightStageRegistry {
     this.roleCatalog = roleProfileRegistry;
   }
 
-  getStages(config: BoardConfig): NightStageHandler[] {
+  getStages(config: BoardConfig, world?: World): NightStageHandler[] {
     const roleSet = new Set<Role>(config.roleSetups.map((item) => item.role));
+    for (const role of [...roleSet]) for (const kind of this.roleCatalog.get(role)?.possibleNightAbilities ?? []) roleSet.add(abilityRole[kind]);
+    for (const id of world?.entityIds() ?? []) for (const ability of allNightAbilities(world!.getComponent<RoleComponent>(id, COMPONENT.Role))) roleSet.add(abilityRole[ability.kind]);
     const collected: NightStageHandler[] = [];
     for (const role of roleSet.values()) {
       const pack = this.roleCatalog.get(role)?.nightStages ?? [];

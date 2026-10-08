@@ -30,6 +30,10 @@ export function buildAgentVisibleEvent(
 
 /** 只移除可由同一事件其余字段直接推导的冗余数据，不改动事实语义。 */
 function projectPayload(event: GameEvent): Record<string, unknown> {
+  if (event.type === "ability_changed") {
+    const { sourceDisclosed, ...payload } = event.payload;
+    return structuredClone({ ...payload, source: sourceDisclosed ? payload.source : { kind: payload.source.kind } });
+  }
   if (event.type === "vote_summary") {
     const { tally: _derivedTally, ...payload } = event.payload;
     return structuredClone(payload);

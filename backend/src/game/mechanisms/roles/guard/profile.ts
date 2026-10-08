@@ -1,13 +1,14 @@
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：守卫角色 profile。 */
-import { Camp, Role } from "../../../../core/domain/model";
+import { Camp, Role, Phase } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
 import { getGuardState, setGuardState } from "../private_state";
 import { numberOrNull } from "../../llm/helpers";
 import { GUARD_NIGHT_STAGES } from "./night_stages";
 import { GUARD_TOOL_SPECS } from "./tool_specs";
 import { isAliveTarget } from "../../validation/contracts";
+import { activeNightAbility } from "../abilities";
 
 /** 守卫角色配置。 */
 export const GUARD_ROLE_PROFILE: RoleProfile = {
@@ -22,9 +23,11 @@ export const GUARD_ROLE_PROFILE: RoleProfile = {
   renderPrompt: (_roleComp, locale = "zh-CN") => text(locale, "role.guard.state"),
   toolSpecs: GUARD_TOOL_SPECS,
   validationRules: {
-    guard: ({ world, role, toolCall }) => {
-      const guardState = getGuardState(role);
-      if (role.role !== Role.Guard) return { code: RuleError.GuardOnly };
+    guard: ({ world, role, toolCall, day, abilityId, phase }) => {
+      const ability = activeNightAbility(role, "guard", day ?? 1, abilityId);
+      const guardState = ability?.state;
+      if (!ability) return { code: RuleError.GuardOnly };
+      if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
       if (toolCall.name !== "guard") return { code: RuleError.ToolMismatch };
       if (toolCall.args.abstain) return null;
       if (toolCall.args.target_id === null) return { code: RuleError.GuardTarget };
@@ -44,12 +47,12 @@ export const GUARD_ROLE_PROFILE: RoleProfile = {
       },
     },
   },
-  baselineAction: (_roleComp, request, pickAliveNotSelf) => {
+  baselineAction: (roleComp, request, pickAliveNotSelf) => {
     if (!request.allowedTools.includes("guard")) {
       return null;
     }
     const target = pickAliveNotSelf();
-    if (target !== null) {
+    if (target !== null && getGuardState(roleComp, request.context.ability_id)?.lastTarget !== target) {
       return { name: "guard", args: { target_id: target, abstain: false } };
     }
     return { name: "guard", args: { target_id: null, abstain: true } };

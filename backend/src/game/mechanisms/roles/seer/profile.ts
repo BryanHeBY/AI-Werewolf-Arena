@@ -1,13 +1,14 @@
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text, term, inspectionLabel } from "@ai-werewolf-arena/game-text";
 /** 文件说明：预言家角色 profile。 */
-import { Camp, Role } from "../../../../core/domain/model";
+import { Camp, Role, Phase } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
 import { getSeerState, setSeerState } from "../private_state";
 import { numberOrNull } from "../../llm/helpers";
 import { SEER_NIGHT_STAGES } from "./night_stages";
 import { SEER_TOOL_SPECS } from "./tool_specs";
 import { isAliveTarget } from "../../validation/contracts";
+import { activeNightAbility } from "../abilities";
 
 /** 预言家角色配置。 */
 export const SEER_ROLE_PROFILE: RoleProfile = {
@@ -32,8 +33,9 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
   },
   toolSpecs: SEER_TOOL_SPECS,
   validationRules: {
-    check_identity: ({ world, role, toolCall }) => {
-      if (role.role !== Role.Seer) return { code: RuleError.SeerOnly };
+    check_identity: ({ world, role, toolCall, day, abilityId, phase }) => {
+      if (!activeNightAbility(role, "seer_check", day ?? 1, abilityId)) return { code: RuleError.SeerOnly };
+      if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
       if (toolCall.name !== "check_identity") return { code: RuleError.ToolMismatch };
       if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.CheckTarget };
       return null;

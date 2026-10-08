@@ -21,6 +21,8 @@ import { World } from "../../core/domain/world";
  * 动作校验上下文。
  */
 export interface ValidationContext {
+  day?: number;
+  abilityId?: string;
   phase: Phase;
   actionWindow?: ActionWindow;
   allowSelfDestruct?: boolean;
@@ -99,6 +101,8 @@ export class ActionValidator {
       role,
       toolCall,
       phase: context.phase,
+      day: context.day,
+      abilityId: context.abilityId,
       actionWindow: context.actionWindow,
       allowSelfDestruct: context.allowSelfDestruct,
     });

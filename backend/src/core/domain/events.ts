@@ -30,6 +30,13 @@ export interface PrivatePlayerInfo {
 }
 
 export interface EventPayloadMap {
+  ability_changed: {
+    actorId: EntityId; abilityId: string; kind: "seer_check" | "guard" | "potion";
+    operation: "granted" | "disabled" | "enabled" | "transferred_out";
+    source: { kind: "native"; role: string } | { kind: "gift"; actorId: EntityId } | { kind: "copy" | "transfer"; actorId: EntityId; abilityId: string };
+    sourceDisclosed: boolean;
+    startsOnDay: number; expiresAfterDay?: number; maxUses: number | null;
+  };
   god_private_game_info: { boardSize: number; players: PrivatePlayerInfo[] };
   phase_changed: { phase: Phase; day: number; winner?: Camp | null; reason?: string };
   sheriff_elected: {
@@ -47,18 +54,19 @@ export interface EventPayloadMap {
   voted_out: { target: EntityId };
   last_words_granted: { playerId: EntityId; phase: Phase; day: number };
   last_words_spoken: { playerId: EntityId; phase: Phase; day: number; text: string };
-  guard_applied: { actorId: EntityId; abstain: boolean; targetId: EntityId | null };
-  seer_checked: { actorId: EntityId; targetId: EntityId; result: Extract<InspectionResult, { kind: "camp" }>; isWerewolf: boolean };
+  guard_applied: { actorId: EntityId; abilityId?: string; abstain: boolean; targetId: EntityId | null };
+  seer_checked: { actorId: EntityId; abilityId?: string; targetId: EntityId; result: Extract<InspectionResult, { kind: "camp" }>; isWerewolf: boolean };
   hunter_silent_due_to_poison: { hunterId: EntityId };
   hunter_shot: { hunterId: EntityId; targetId: EntityId };
   idiot_revealed: { targetId: EntityId };
   witch_potion_skipped: {
     actorId: EntityId;
+    abilityId?: string;
     targetId: EntityId | null;
     potionType: PotionType;
     reason?: string;
   };
-  witch_potion_used: { actorId: EntityId; targetId: EntityId; potionType: Exclude<PotionType, PotionType.None> };
+  witch_potion_used: { actorId: EntityId; abilityId?: string; targetId: EntityId; potionType: Exclude<PotionType, PotionType.None> };
   wolf_tactical_order: { order: EntityId[] };
   wolf_discussion_ended: { actorId: EntityId; reason: string; round: number };
   wolf_discussion: { actorId: EntityId; text: string; endChat: false; round: number };

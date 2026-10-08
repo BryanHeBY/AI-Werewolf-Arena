@@ -49,6 +49,7 @@ export type ActionStage = typeof ACTION_STAGES[number];
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */
 export interface ActionRequestExtras {
+  ability_id?: string;
   wolf_target?: EntityId | null;
   trigger?: string;
   death_phase?: Phase;

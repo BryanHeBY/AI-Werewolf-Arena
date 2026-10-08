@@ -11,7 +11,7 @@ import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 const roles = [Role.Wolf, Role.Wolf, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Idiot, Role.Villager, Role.Villager, Role.Villager, Role.Villager];
 function game(locale: "zh-CN" | "en" = "en") { return bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }); }
 function request(actorId: number, allowedTools: ActionRequest["allowedTools"], stage: ActionRequest["context"]["stage"] = "day_speech"): ActionRequest {
-  return { actorId, phase: Phase.Day, allowedTools, context: { day: 1, stage, visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } };
+  return { actorId, phase: ["guard", "seer", "witch"].includes(stage) ? Phase.Night : Phase.Day, allowedTools, context: { day: 1, stage, visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } };
 }
 const state = (world: ReturnType<typeof game>["world"]) => world.entityIds().map(id => ({
   id, alive: world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive,

@@ -1,21 +1,25 @@
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：女巫工具校验规则。 */
-import { PotionType, Role } from "../../../../core/domain/model";
+import { PotionType, Phase, WitchSelfHealRule } from "../../../../core/domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 import { getWitchState } from "../private_state";
+import { activeNightAbility } from "../abilities";
 
 /** 女巫工具校验规则集合。 */
 export const WITCH_VALIDATION_RULES: ToolRuleMap = {
-  use_potion: ({ world, actorId, role, toolCall }) => {
-    const witchState = getWitchState(role);
-    if (role.role !== Role.Witch || !witchState) {
+  use_potion: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {
+    const ability = activeNightAbility(role, "potion", day ?? 1, abilityId);
+    const witchState = ability?.state;
+    if (!witchState) {
       return { code: RuleError.WitchOnly };
     }
+    if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
     if (toolCall.name !== "use_potion") {
       return { code: RuleError.ToolMismatch };
     }
     if (toolCall.args.potion_type === PotionType.Heal) {
-      if (!witchState.canSelfHeal && toolCall.args.target_id === actorId) {
+      const canSelfHeal = day === undefined ? witchState.canSelfHeal : witchState.selfHealRule === WitchSelfHealRule.Always || (witchState.selfHealRule === WitchSelfHealRule.FirstNightOnly && day === 1);
+      if (!canSelfHeal && toolCall.args.target_id === actorId) {
         return { code: RuleError.SelfHeal };
       }
       if (witchState.heal <= 0 || witchState.healUsedThisNight) {

@@ -10,6 +10,12 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN"): string
   const target = numberValue(p.targetId);
   const players = (value: unknown) => numberList(value, locale) || t("replay.none");
   switch (event.type) {
+    case "ability_changed": {
+      const kind = stringValue(p.kind), operation = stringValue(p.operation);
+      return t("ability.change", { actor, id: stringValue(p.abilityId),
+        kind: ["seer_check", "guard", "potion"].includes(kind) ? t(`ability.kind.${kind}` as MessageKey) : kind,
+        operation: ["granted", "disabled", "enabled", "transferred_out"].includes(operation) ? t(`ability.operation.${operation}` as MessageKey) : operation });
+    }
     case "god_private_game_info": return t("replay.lineup", { players: formatRoleLineup(p.players, locale) });
     case "phase_changed": {
       const phase = stringValue(p.phase) || event.phase;

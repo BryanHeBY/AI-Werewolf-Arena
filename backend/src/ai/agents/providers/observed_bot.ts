@@ -1,5 +1,6 @@
 import { PotionType, type ToolCall, type RandomDraws } from "../../../core";
 import type { ObservedPlayerStrategy, PlayerObservation } from "../player/observation";
+import { readSeerInspectionResult } from "@ai-werewolf-arena/replay-contract";
 
 export type BotStyle = "active" | "conservative" | "competitive" | "random";
 
@@ -53,7 +54,13 @@ export class ObservedBot implements ObservedPlayerStrategy {
     }
     if (tools.includes("vote")) {
       const revealed = request.context.visible_events.filter(event => event.type === "idiot_revealed").map(event => event.payload.targetId);
-      const seenWolves = ownState.seer?.history.filter(entry => entry.isWerewolf).map(entry => entry.targetId) ?? [];
+      const histories = observation.abilities?.filter(ability => ability.kind === "seer_check").flatMap(ability => ability.state.history) ?? ownState.seer?.history ?? [];
+      const seenWolves = histories.filter(entry => entry.isWerewolf).map(entry => entry.targetId);
+      for (const event of request.context.visible_events) {
+        if (event.type !== "seer_checked") continue;
+        const result = readSeerInspectionResult(event.payload);
+        if (result?.kind === "camp" && result.camp === "wolf" && typeof event.payload.targetId === "number") seenWolves.push(event.payload.targetId);
+      }
       const candidates = others.filter(id => !revealed.includes(id) && !teammateIds.includes(id));
       const known = candidates.filter(id => seenWolves.includes(id));
       const target = pick(known.length ? known : candidates);

@@ -56,6 +56,8 @@ export class ToolGateway {
     actorId: EntityId,
     toolCall: T,
     context: {
+      day?: number;
+      abilityId?: string;
       phase: Phase;
       actionWindow?: ActionWindow;
       allowSelfDestruct?: boolean;

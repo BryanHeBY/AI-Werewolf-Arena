@@ -6,9 +6,10 @@ ActionRequest,
 Camp,
 EntityId,
 Phase,
+Role,
 ToolCall, } from "../../../core/domain"
 import { World } from "../../../core/domain/world";
-import { RoleCatalog, getDefaultRoleCatalog, wolfTeamPermissions } from "../../../game/mechanisms";
+import { RoleCatalog, getDefaultRoleCatalog, wolfTeamPermissions, allNightAbilities, activeNightAbility } from "../../../game/mechanisms";
 
 /**
  * Noop 行为提供器：用于测试“无人行动”场景。
@@ -131,7 +132,10 @@ export class BaselineBotActionProvider implements ActionProvider {
         : { name: "vote", args: { target_id: null, abstain: true } };
     }
 
-    const roleProfile = this.roleCatalog.get(role.role);
+    const bound = request.context.ability_id ? allNightAbilities(role).find(ability => ability.id === request.context.ability_id) : undefined;
+    if (request.context.ability_id && (!bound || request.phase !== Phase.Night || !activeNightAbility(role, bound.kind, request.context.day, bound.id))) return null;
+    const abilityRole = bound?.kind === "seer_check" ? Role.Seer : bound?.kind === "guard" ? Role.Guard : bound?.kind === "potion" ? Role.Witch : role.role;
+    const roleProfile = this.roleCatalog.get(abilityRole);
     if (roleProfile?.baselineAction) {
       const action = roleProfile.baselineAction(
         role,

@@ -86,6 +86,7 @@ const messageRefSchema = z.strictObject({ key: z.enum(Object.keys(dictionaries["
 const requestSchema = z.strictObject({ actorId: positive, phase: z.enum(Phase), actionWindow: z.enum(ActionWindow).optional(), allowedTools: z.array(z.enum(TOOL_NAMES)),
   context: z.strictObject({ day: positive, stage: z.enum(ACTION_STAGES), visible_events: z.array(z.strictObject({ seq: positive, type: z.string().min(1), payload: jsonObject })),
     turn_constraints: z.strictObject({ min_valid_actions: nonnegative.optional(), max_valid_actions: nonnegative.optional(), required_any_tools: z.array(z.enum(TOOL_NAMES)).optional(), summary: z.string().optional(), summary_message: messageRefSchema.optional() }),
+    ability_id: z.string().regex(/^[a-z][a-z0-9:_-]{0,127}$/).optional(),
     wolf_target: positive.nullable().optional(), trigger: z.string().optional(), death_phase: z.enum(Phase).optional(), sheriff_candidates: z.array(positive).optional(),
     round: positive.optional(), max_rounds: positive.optional(), retry_attempt: nonnegative.optional(), retry_max: nonnegative.optional(), retry_reason: z.string().optional(), retry_notice: z.string().optional(), retry_notice_message: messageRefSchema.optional(),
   }),

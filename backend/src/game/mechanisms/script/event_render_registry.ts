@@ -76,6 +76,7 @@ const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
 };
 
 const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
+  ability_changed: (event, printPrivateEvents, locale = "zh-CN") => printPrivateEvents ? [{ kind: "private", text: text(locale, "ability.change", { actor: event.payload.actorId, id: event.payload.abilityId, kind: text(locale, `ability.kind.${event.payload.kind}`), operation: text(locale, `ability.operation.${event.payload.operation}`) }) }] : [],
   god_private_game_info: (event, _private, locale = "zh-CN") => [{ kind: "god", text: text(locale, "console.live.initial", { roles: event.payload.players.map(item => `${item.seat}:${getDefaultTextLocalizationRegistry().roleName(item.role, locale)}`).join(", ") }) }],
   day_speech: (event, _private, locale = "zh-CN") => [{ kind: "system", text: text(locale, "console.live.day", { actor: event.payload.actorId, speech: event.payload.text }) }],
   game_over: (event, _private, locale = "zh-CN") => [{ kind: "god", text: text(locale, "console.live.result", { winner: getDefaultTextLocalizationRegistry().winnerName(event.payload.winner ?? "", locale), reason: getDefaultTextLocalizationRegistry().gameOverReason(event.payload.reason ?? "", locale) }) }],

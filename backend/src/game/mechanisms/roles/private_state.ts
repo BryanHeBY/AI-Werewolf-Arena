@@ -2,6 +2,7 @@
 import { EntityId, WitchSelfHealRule } from "../../../core/domain/model";
 import { RoleComponent } from "../../../core/domain/components/role";
 import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
+import { findNightAbility, installNativeAbility } from "./abilities";
 
 const PRIVATE_STATE_KEYS = {
   witch: "witch",
@@ -59,22 +60,22 @@ function setState<T>(roleComp: RoleComponent, key: string, value: T): T {
 
 /** 写入女巫私有状态。 */
 export function setWitchState(roleComp: RoleComponent, state: WitchState): WitchState {
-  return setState(roleComp, PRIVATE_STATE_KEYS.witch, state);
+  return installNativeAbility(roleComp, "potion", state);
 }
 
 /** 读取女巫私有状态。 */
-export function getWitchState(roleComp: RoleComponent): WitchState | undefined {
-  return getState(roleComp, PRIVATE_STATE_KEYS.witch);
+export function getWitchState(roleComp: RoleComponent, abilityId?: string): WitchState | undefined {
+  return findNightAbility(roleComp, "potion", abilityId)?.state;
 }
 
 /** 写入守卫私有状态。 */
 export function setGuardState(roleComp: RoleComponent, state: GuardState): GuardState {
-  return setState(roleComp, PRIVATE_STATE_KEYS.guard, state);
+  return installNativeAbility(roleComp, "guard", state);
 }
 
 /** 读取守卫私有状态。 */
-export function getGuardState(roleComp: RoleComponent): GuardState | undefined {
-  return getState(roleComp, PRIVATE_STATE_KEYS.guard);
+export function getGuardState(roleComp: RoleComponent, abilityId?: string): GuardState | undefined {
+  return findNightAbility(roleComp, "guard", abilityId)?.state;
 }
 
 /** 写入猎人私有状态。 */
@@ -99,10 +100,10 @@ export function getIdiotState(roleComp: RoleComponent): IdiotState | undefined {
 
 /** 写入预言家私有状态。 */
 export function setSeerState(roleComp: RoleComponent, state: SeerState): SeerState {
-  return setState(roleComp, PRIVATE_STATE_KEYS.seer, state);
+  return installNativeAbility(roleComp, "seer_check", state);
 }
 
 /** 读取预言家私有状态。 */
-export function getSeerState(roleComp: RoleComponent): SeerState | undefined {
-  return getState(roleComp, PRIVATE_STATE_KEYS.seer);
+export function getSeerState(roleComp: RoleComponent, abilityId?: string): SeerState | undefined {
+  return findNightAbility(roleComp, "seer_check", abilityId)?.state;
 }
