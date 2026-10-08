@@ -82,6 +82,20 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
     let heartbeat: NodeJS.Timeout | undefined;
     let streamTimer: NodeJS.Timeout | undefined;
     let timedOut = false;
+    let stopping = false;
+    let closing: Promise<void> | undefined;
+    const stopReason = new DOMException("game_actions_stopped", "AbortError");
+    const inFlight = new Set<Promise<ToolCall | null>>();
+    const actionFailures: unknown[] = [];
+    const cleanupFailures: unknown[] = [];
+    const closeRuntime = (): Promise<void> => {
+      stopping = true;
+      closing ??= Promise.resolve().then(() => agentRuntime?.close()).catch(error => { cleanupFailures.push(error); });
+      return closing;
+    };
+    const drainActions = async () => {
+      while (inFlight.size) await Promise.allSettled([...inFlight]);
+    };
 
     try {
       const reproduction = beginGameReproduction(replayManager, context, { engine: await currentEngineVersion(),
@@ -101,7 +115,25 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
           ? (actorId) => createAcpConsoleLogger(actorId, log, setup.context.displayLocale)
           : undefined,
       });
-      const decisionProvider: ActionProvider = { getAction: request => reproduction.decide(request, agentRuntime!.provider) };
+      const selectedProvider: ActionProvider = { async getAction(request) {
+        if (stopping) throw stopReason;
+        const action = await agentRuntime!.provider.getAction(request);
+        return stopping ? null : action;
+      } };
+      const decisionProvider: ActionProvider = { getAction: request => {
+        const decision = reproduction.decide(request, selectedProvider);
+        let tracked!: Promise<ToolCall | null>;
+        tracked = decision.then(action => { inFlight.delete(tracked); return action; }, error => {
+          inFlight.delete(tracked);
+          if (error !== stopReason) actionFailures.push(error);
+          // The recorder seals this decision before cancellation starts, keeping
+          // the original error's causal position ahead of cancelled peers.
+          void closeRuntime();
+          throw error;
+        });
+        inFlight.add(tracked);
+        return tracked;
+      } };
       const provider = new DeadlineAwareActionProvider(decisionProvider, deadlineAtMs);
       log(`[run_game] start board=${options.board} replay_session_id=${sessionId} record_dir=${replayManager.sessionDir} · ${text(setup.context.displayLocale, "runtime.start")}`, "info");
 
@@ -117,6 +149,7 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
         } catch (error) {
           failures.push(error);
           replayManager.noteReproductionFailure("recording", error);
+          void closeRuntime();
           if (streamTimer) clearInterval(streamTimer);
         }
       }, 1000);
@@ -133,7 +166,11 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
         let complete = false;
         let cycleFailure: unknown;
         try { await context.phaseManager.runSingleCycle(provider, options.maxDays); complete = true; }
-        catch (error) { cycleFailure = error; failures.push(error); replayManager.noteReproductionFailure("cycle", error); }
+        catch (error) {
+          cycleFailure = error; failures.push(error); replayManager.noteReproductionFailure("cycle", error);
+          await closeRuntime();
+          await drainActions();
+        }
         try { reproduction.checkpoint(captureCheckpoint(context.world, context.phaseManager.getSnapshot(), cycle, complete, context.phaseManager.getEvents().length, cycleFailure), context.phaseManager.getEvents()); }
         catch (error) { failures.push(error); reproduction.invalidate(); replayManager.noteReproductionFailure("recording", error); }
         if (failures.length) break;
@@ -152,11 +189,13 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
         failures.push(error);
         replayManager.noteReproductionFailure("recording", error);
       }
-      try {
-        await agentRuntime?.close();
-      } catch (error) {
-        failures.push(error);
-        replayManager.noteReproductionFailure("cleanup", error);
+      await closeRuntime();
+      await drainActions();
+      for (const error of actionFailures) if (!failures.includes(error)) {
+        failures.push(error); replayManager.noteReproductionFailure("controller", error);
+      }
+      for (const error of cleanupFailures) {
+        failures.push(error); replayManager.noteReproductionFailure("cleanup", error);
       }
       try {
         const snapshot = context.phaseManager.getSnapshot();

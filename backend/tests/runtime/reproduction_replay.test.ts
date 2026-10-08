@@ -115,11 +115,12 @@ test("a parallel phase reproduces the first failure before cancellation of an ea
   });
   const setup = resolveGameSetup(runtime, { recordRootDir: root, maxDays: 30, maxRuntimeMs: 10000, streamEvents: false, color: false }, board);
   const first = new TypeError("first_phase_failure");
+  const cancelled = Object.assign(new Error("close_cancelled"), { name: "AbortError" });
   let cancel!: (error: Error) => void;
   const waiting = new Promise<null>((_resolve, reject) => { cancel = reject; });
   const create = spyOn(factory, "createPlayerAgentRuntime").mockImplementation(async options => {
     const baseline = new BaselineBotActionProvider(options.world);
-    return { kind: "llm", async close() { cancel(Object.assign(new Error("close_cancelled"), { name: "AbortError" })); },
+    return { kind: "llm", async close() { cancel(cancelled); },
       provider: { async getAction(request) {
         if (request.context.stage === "sheriff_nomination" && request.actorId === 1) return waiting;
         if (request.context.stage === "sheriff_nomination" && request.actorId === 2) throw first;
@@ -128,7 +129,8 @@ test("a parallel phase reproduces the first failure before cancellation of an ea
     };
   });
   try {
-    await expect(runGame(setup)).rejects.toBe(first);
+    const failure = await runGame(setup).then(() => null, error => error);
+    expect(failure).toBeInstanceOf(AggregateError); expect(failure.errors).toEqual([first, cancelled]);
     const [session] = await readdir(root);
     const record = await readReproduction(path.join(root, session, "reproduction.json"));
     const nominees = record.decisions.filter(decision => decision.stage === "sheriff_nomination");

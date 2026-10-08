@@ -1,5 +1,6 @@
 import { dictionaries, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { z } from "zod";
+import { types } from "node:util";
 import { ACTION_STAGES, TOOL_NAMES, ActionWindow, Camp, Phase, Role, WinCondition, WitchSelfHealRule, type ActionProvider, type ActionRequest, type BoardConfig, type GameEvent, type RuntimeSnapshot, type ToolCall } from "../core";
 import type { RandomMetadata } from "../core/domain/random";
 
@@ -8,8 +9,24 @@ const ERROR_NAMES = ["Error", "TypeError", "RangeError", "AbortError", "TimeoutE
 export type RecordedErrorName = typeof ERROR_NAMES[number];
 const FAILURE_SCOPES = ["initialization", "cycle", "cleanup", "recording", "controller"] as const;
 export type ReproductionFailureScope = typeof FAILURE_SCOPES[number];
+const nativeDomName = Object.getOwnPropertyDescriptor(DOMException.prototype, "name")?.get;
 export function recordedErrorName(error: unknown): RecordedErrorName {
-  return error instanceof Error && ERROR_NAMES.includes(error.name as RecordedErrorName) ? error.name as RecordedErrorName : "Error";
+  const accepted = (value: unknown): RecordedErrorName => typeof value === "string" && ERROR_NAMES.includes(value as RecordedErrorName) ? value as RecordedErrorName : "Error";
+  try {
+    if (!error || typeof error !== "object" || types.isProxy(error)) return "Error";
+    // Native DOMException has a branded intrinsic accessor. Never call a
+    // foreign name getter or trust a value merely because a prior read passed.
+    try { const name = nativeDomName?.call(error); if (name !== undefined) return accepted(name); } catch { /* Not a DOMException. */ }
+    if (!types.isNativeError(error)) return "Error";
+    let current: object | null = error;
+    for (let depth = 0; current && depth < 8; depth++) {
+      if (types.isProxy(current)) return "Error";
+      const descriptor = Object.getOwnPropertyDescriptor(current, "name");
+      if (descriptor) return "value" in descriptor ? accepted(descriptor.value) : "Error";
+      current = Object.getPrototypeOf(current);
+    }
+  } catch { /* An exotic error cannot replace the original failure. */ }
+  return "Error";
 }
 export interface EngineVersion { id: "awa-engine"; sourceHash: string; lockHash: string; commit?: string }
 export interface ReproductionMetadata {
