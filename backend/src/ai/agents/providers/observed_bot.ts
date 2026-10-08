@@ -33,6 +33,10 @@ export class ObservedBot implements ObservedPlayerStrategy {
     if (tools.includes("dream")) {
       const target=pick(others);if(target!==undefined)return{name:"dream",args:{target_id:target}};
     }
+    if(tools.includes("charm")){
+      const previous=ownState.wolfBeauty?.history.at(-1),target=this.style==="conservative"?undefined:pick(others.filter(id=>previous?.day!==request.context.day-1||previous.targetId!==id));
+      return{name:"charm",args:{target_id:target??null}};
+    }
     if (tools.includes("check_identity")) {
       const checked = ownState.seer?.history.map(entry => entry.targetId) ?? [];
       const fresh = others.filter(id => !checked.includes(id));

@@ -24,6 +24,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     self_destruct_with_target: { allowSelf: false },
     duel: { allowSelf: false },
     dream: { allowSelf: false },
+    charm: { allowSelf: false },
     vote_for_sheriff: { allowSelf: false },
   };
 

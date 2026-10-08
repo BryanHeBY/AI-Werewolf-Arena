@@ -15,6 +15,7 @@ import { WHITE_WOLF_KING_ROLE_PROFILE } from "./white_wolf_king/profile";
 import { KNIGHT_ROLE_PROFILE } from "./knight/profile";
 import { GRAVEKEEPER_ROLE_PROFILE } from "./gravekeeper/profile";
 import { DREAMER_ROLE_PROFILE } from "./dreamer/profile";
+import { WOLF_BEAUTY_ROLE_PROFILE } from "./wolf_beauty/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   WOLF_ROLE_PROFILE,
@@ -23,6 +24,7 @@ const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   KNIGHT_ROLE_PROFILE,
   GRAVEKEEPER_ROLE_PROFILE,
   DREAMER_ROLE_PROFILE,
+  WOLF_BEAUTY_ROLE_PROFILE,
   VILLAGER_ROLE_PROFILE,
   SEER_ROLE_PROFILE,
   GUARD_ROLE_PROFILE,

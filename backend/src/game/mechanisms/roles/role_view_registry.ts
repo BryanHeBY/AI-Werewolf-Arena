@@ -12,6 +12,7 @@ const FRONTEND_ROLE_TYPE: Record<Role, string> = {
   [Role.Knight]: "knight",
   [Role.Gravekeeper]: "gravekeeper",
   [Role.Dreamer]: "dreamer",
+  [Role.WolfBeauty]: "wolf_beauty",
   [Role.Villager]: "villager",
   [Role.Seer]: "seer",
   [Role.Guard]: "guard",

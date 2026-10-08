@@ -115,7 +115,7 @@ export class NightPipeline {
       makeRequest: (
         actorId: EntityId,
         allowedTools: ActionRequest["allowedTools"],
-        context: ActionRequestExtras & { stage: ActionStage },
+        context: ActionRequestExtras & { stage: ActionStage; requiresAction?: boolean },
       ) => this.makeRequest(requests, actorId, allowedTools, context),
       getAliveByRole: (role: Role) => this.getAliveByRole(role),
       ensureMarks: (entityId: EntityId) => this.ensureMarks(entityId),
@@ -162,15 +162,15 @@ export class NightPipeline {
     requests: GameActionRequestFactory,
     actorId: EntityId,
     allowedTools: ActionRequest["allowedTools"],
-    context: ActionRequestExtras & { stage: ActionStage },
+    context: ActionRequestExtras & { stage: ActionStage; requiresAction?: boolean },
   ): ActionRequest {
-    const { stage, ...extraContext } = context;
+    const { stage, requiresAction = true, ...extraContext } = context;
     return requests.create({
       phase: Phase.Night,
       actorId,
       allowedTools,
       stage,
-      requiresAction: true,
+      requiresAction,
       summary: { key: "request.summary.night_action" },
       context: {
         ...extraContext,

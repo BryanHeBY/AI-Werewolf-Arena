@@ -5,6 +5,7 @@ const stages: Record<string, [string, string]> = {
   guard: ["守卫行动", "Guard action"], seer: ["预言家行动", "Seer action"], witch: ["女巫行动", "Witch action"],
   day_speech: ["白天发言", "Day speech"], voting: ["放逐投票", "Exile vote"], last_words: ["遗言", "Last words"], hunter_shot: ["猎人开枪", "Hunter shot"], death_shot: ["死亡开枪", "Death shot"],
   dreamer: ["摄梦人行动", "Dreamer action"],
+  wolf_beauty: ["狼美人魅惑", "Wolf Beauty charm"],
   sheriff_nomination: ["上警报名", "Sheriff nomination"], sheriff_campaign_speech: ["警上发言", "Sheriff campaign speech"],
   sheriff_withdraw: ["退水", "Withdraw candidacy"], sheriff_vote: ["警长投票", "Sheriff vote"], sheriff_choose_direction: ["警长定序", "Sheriff speaking order"],
   before_speeches: ["骑士发言前窗口", "Knight before-speech window"], between_speeches: ["骑士发言间隙窗口", "Knight between-speech window"], after_speeches: ["骑士发言结束窗口", "Knight after-speech window"],
@@ -18,6 +19,10 @@ export function assertTransportPrompt(plan: ActorTransportPlan, turn: PlannedTur
   for (const marker of plan.requiredCurrentMarkers ?? []) if (!content.includes(marker)) throw new Error("fixture_private_marker_missing");
   for (const marker of plan.forbiddenCurrentMarkers ?? []) if (content.includes(marker)) throw new Error("fixture_private_marker_exposed");
   if (turn.knightResourceRemaining !== undefined && !content.includes(plan.locale === "en" ? `Duel opportunities remaining: ${turn.knightResourceRemaining}.` : `决斗机会剩余：${turn.knightResourceRemaining}。`)) throw new Error("fixture_knight_resource_mismatch");
+  if(turn.charmLatest){
+    const {targetId,day}=turn.charmLatest,target=targetId??(plan.locale==="en"?"None":"无"),date=day??(plan.locale==="en"?"None":"无");
+    if(!content.includes(plan.locale==="en"?`Current charm target: ${target}; last action day: ${date}.`:`当前魅惑目标：${target}；上次行动日：${date}。`))throw new Error("fixture_charm_history_mismatch");
+  }
   if(turn.dreamLatest!==undefined){
     const choice=turn.dreamLatest,marker=choice?plan.locale==="en"?`Latest dream choice: player ${choice.targetId} on night ${choice.day};`:`最近梦游选择：第${choice.day}夜的${choice.targetId}号；`:plan.locale==="en"?"Latest dream choice:":"最近梦游选择：";
     if(choice?!content.includes(marker):content.includes(marker))throw new Error("fixture_dream_history_mismatch");
@@ -39,8 +44,8 @@ export function assertTransportPrompt(plan: ActorTransportPlan, turn: PlannedTur
 export function assertTransportEvents(role: string, events: Array<[number, string, Record<string, unknown>]>, actorId: number) {
   for (const [, type, payload] of events) {
     if (type === "god_private_game_info") throw new Error("fixture_god_information_exposed");
-    if(type==="dream_death")throw new Error("fixture_dream_death_information_exposed");
-    if (["seer_checked", "dream_applied", "gravekeeper_reported", "witch_potion_used", "witch_potion_skipped", "guard_applied"].includes(type) && payload.actorId !== actorId) throw new Error("fixture_other_private_skill_exposed");
-    if (["wolf_tactical_order", "wolf_discussion", "wolf_discussion_ended", "wolf_kill_vote_cast"].includes(type) && role !== "wolf" && role !== "wolf_king" && role !== "white_wolf_king") throw new Error("fixture_wolf_information_exposed");
+    if(["dream_death","charm_death","charm_blocked"].includes(type))throw new Error("fixture_private_death_information_exposed");
+    if (["seer_checked", "charm_applied", "dream_applied", "gravekeeper_reported", "witch_potion_used", "witch_potion_skipped", "guard_applied"].includes(type) && payload.actorId !== actorId) throw new Error("fixture_other_private_skill_exposed");
+    if (["wolf_tactical_order", "wolf_discussion", "wolf_discussion_ended", "wolf_kill_vote_cast"].includes(type) && !["wolf","wolf_king","white_wolf_king","wolf_beauty"].includes(role)) throw new Error("fixture_wolf_information_exposed");
   }
 }

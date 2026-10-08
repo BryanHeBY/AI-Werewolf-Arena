@@ -48,6 +48,9 @@ const CHAT_HANDLERS: ScriptChatLineHandlers = {
 };
 
 const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
+  charm_applied:(event,locale="zh-CN")=>text(locale,"console.charm.applied",{actor:event.payload.actorId,target:event.payload.targetId??text(locale,"common.none"),day:event.payload.day}),
+  charm_death:(event,locale="zh-CN")=>text(locale,"console.charm.death",{actor:event.payload.actorId,target:event.payload.targetId}),
+  charm_blocked:(event,locale="zh-CN")=>text(locale,"console.charm.blocked",{actor:event.payload.actorId,target:event.payload.targetId}),
   additional_deaths:(event,locale="zh-CN")=>text(locale,"console.additional_deaths",{players:event.payload.deaths.join(", ")}),
   dream_applied: (event,locale="zh-CN")=>text(locale,"console.dream.applied",{actor:event.payload.actorId,target:event.payload.targetId,day:event.payload.day,consecutive:text(locale,event.payload.consecutive?"common.yes":"common.no")}),
   dream_death: (event,locale="zh-CN")=>text(locale,"console.dream.death",{actor:event.payload.actorId,target:event.payload.targetId,day:event.payload.day,reason:text(locale,event.payload.reason==="consecutive"?"console.dream.consecutive":"console.dream.linked")}),
@@ -103,6 +106,9 @@ const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
 };
 
 const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
+  charm_applied:(event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.charm.applied",{actor:event.payload.actorId,target:event.payload.targetId??text(locale,"common.none"),day:event.payload.day})}]:[],
+  charm_death:(event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.charm.death",{actor:event.payload.actorId,target:event.payload.targetId})}]:[],
+  charm_blocked:(event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.charm.blocked",{actor:event.payload.actorId,target:event.payload.targetId})}]:[],
   additional_deaths:(event,_private,locale="zh-CN")=>[{kind:"system",text:text(locale,"console.additional_deaths",{players:event.payload.deaths.join(", ")})}],
   dream_applied: (event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.dream.applied",{actor:event.payload.actorId,target:event.payload.targetId,day:event.payload.day,consecutive:text(locale,event.payload.consecutive?"common.yes":"common.no")})}]:[],
   dream_death: (event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.dream.death",{actor:event.payload.actorId,target:event.payload.targetId,day:event.payload.day,reason:text(locale,event.payload.reason==="consecutive"?"console.dream.consecutive":"console.dream.linked")})}]:[],

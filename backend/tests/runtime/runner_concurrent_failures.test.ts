@@ -46,7 +46,7 @@ for (const diskFailure of [false, true]) for (const lateSuccess of [false, true]
     const record = await readReproduction(path.join(directory, "reproduction.json"));
     expect(record.decisions.every(decision => decision.outcome.kind !== "pending")).toBe(true);
     expect(record.checkpoints.at(-1)!.failure!.name).toBe("TypeError");
-    expect(record.decisions.find(decision => decision.actorId === 1 && decision.stage === "sheriff_nomination")!.outcome).toEqual({ kind: "action", action: null });
+    expect(record.decisions.find(decision => decision.actorId === 1 && decision.stage === "sheriff_nomination")!.outcome).toEqual({ kind: "error", code: "decision_failed", name: "AbortError" });
     expect(record.operations.some(op => op.actor_id === 1 && op.scope === "gateway" && op.input?.tool === "run_for_sheriff")).toBe(false);
     expect(record.termination!.errors).toContainEqual({ scope: "controller", name: "RangeError" });
     expect(record.termination!.errors).toContainEqual({ scope: "cleanup", name: "Error" });

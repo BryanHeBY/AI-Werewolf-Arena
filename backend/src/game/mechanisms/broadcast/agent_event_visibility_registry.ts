@@ -41,6 +41,7 @@ const ACTOR_ONLY_EVENT_TYPES = new Set([
   "seer_checked",
   "gravekeeper_reported",
   "dream_applied",
+  "charm_applied",
   "witch_potion_used",
   "witch_potion_skipped",
   "guard_applied",

@@ -182,3 +182,12 @@ for(const locale of ["zh-CN","en"] as const)for(const kind of ["gun_blocked","gu
  await page.locator(".timeline .event").filter({hasText:text}).click();await expect(page.getByTestId("composition-event")).toHaveText(text);await expect(page.locator(".seat-grid .dead")).toHaveCount(kind==="gun_blocked"?1:3);await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
  await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(5);
 });
+
+for(const locale of ["zh-CN","en"] as const)for(const special of [false,true])test(`${locale}/${special}: actual Beauty archive preserves protected lives and shows a dead winning wolf after the whole exile chain`,async({page})=>{
+ const replay=JSON.parse(readFileSync(new URL(`../fixtures/wolf-beauty-${special?"last-god":"blocked"}.replay.json`,import.meta.url),"utf8"));replay.meta.locale=locale;await page.route("**/api/replay",route=>route.fulfill({json:replay}));await page.goto("/");
+ const text=special?locale==="en"?"Additional deaths: Player 2":"追加死亡：2号":locale==="en"?"Dream protection blocks Wolf Beauty 1's night charm death of player 5":"1号对5号的夜间魅惑牵连被梦保护阻止";
+ await page.locator(".timeline .event").filter({hasText:text}).click();await expect(page.getByTestId("composition-event")).toHaveText(text);await expect(page.locator(".seat-grid .dead")).toHaveCount(special?3:2);await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+ const caption=await page.getByTestId("composition-caption").boundingBox();expect(caption).not.toBeNull();for(const seat of await page.locator("[data-composition-player]").all()){const box=await seat.boundingBox();expect(box).not.toBeNull();expect(box!.y+box!.height).toBeLessThan(caption!.y);}
+ await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(special?1:4);await expect(page.getByTestId("composition-winner")).toHaveCount(special?1:4);
+ if(special)await expect(page.getByRole("button",{name:locale==="en"?"Player 1 · Seat 1":"1号 · Seat 1",exact:true})).toHaveClass(/dead/);
+});

@@ -11,5 +11,5 @@ for(const [id,size] of [["six_player_gravekeeper",6],["twelve_player_gravekeeper
  expect(resolveGameSetup(runtime,{},board).boardConfig.boardSize).toBe(size);expect(game.printPrivateEvents).toBe(false);
  expect(board.config.roleSetups.find(row=>row.role==="gravekeeper")).toEqual({role:"gravekeeper",count:1});
  for(const parameters of [{activeCheck:true},{repeatLatest:true},{revealRole:true}])expect(()=>parseBoardDefinition({...board.definition,roles:{...board.definition.roles,gravekeeper:parameters}})).toThrow(`board_config_invalid_field: roles.gravekeeper.${Object.keys(parameters)[0]}`);
- const planned=structuredClone(board.definition);planned.board.roleSetups[0].role="wolf_beauty";expect(()=>parseBoardDefinition(planned)).toThrow("board_config_role_not_implemented");
+ const planned=structuredClone(board.definition);planned.board.roleSetups[0].role="bear";expect(()=>parseBoardDefinition(planned)).toThrow("board_config_role_not_implemented");
 });

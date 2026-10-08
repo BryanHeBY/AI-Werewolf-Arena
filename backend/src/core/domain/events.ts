@@ -60,6 +60,9 @@ export interface EventPayloadMap {
   knight_duel: { actorId: EntityId; targetId: EntityId; result: "wolf" | "not_wolf" };
   gravekeeper_reported: ExileFeedback & { actorId: EntityId; receivedDay: number };
   dream_applied: { actorId: EntityId; abilityId?: string; targetId: EntityId; day: number; consecutive: boolean };
+  charm_applied: { actorId: EntityId; targetId: EntityId | null; day: number };
+  charm_death: { actorId: EntityId; targetId: EntityId };
+  charm_blocked: { actorId: EntityId; targetId: EntityId; reason: "night_protection" };
   dream_death: { actorId: EntityId; abilityId?: string; targetId: EntityId; day: number; reason: "consecutive" | "linked" };
   death_shot_blocked: { actorId: EntityId; targetId: EntityId; reason: "night_protection" };
   additional_deaths: { deaths: EntityId[] };

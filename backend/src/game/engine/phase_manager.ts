@@ -32,6 +32,7 @@ import { COMPONENT } from "../../core/domain/components/names";
 import { commitSelfDestructSelection } from "../mechanisms/self_destruct/commit";
 import { commitKnightDuel } from "../mechanisms/roles/knight/commit";
 import { captureExileFeedback } from "../mechanisms/roles/gravekeeper/feedback";
+import {captureBeautyExile,resolveBeautyExileVictory,type BeautyExileCandidate} from "../mechanisms/roles/wolf_beauty/relation";
 import { VotingRightComponent } from "../../core/domain/components/voting_right";
 import { IdentityComponent } from "../../core/domain/entities/player";
 import { RoleComponent } from "../../core/domain/components/role";
@@ -247,7 +248,8 @@ export class PhaseManager {
     }
 
     this.setPhase(Phase.Voting);
-    const votingIsCurrent = () => this.state.day === cycleDay && this.state.phase === Phase.Voting && !this.state.gameOver;
+    const votingRevision=this.phaseRevision;
+    const votingIsCurrent = () => this.state.day === cycleDay && this.state.phase === Phase.Voting && !this.state.gameOver&&this.phaseRevision===votingRevision;
     const votingResult = await this.votingPipeline.execute(
       this.config,
       actionProvider,
@@ -255,7 +257,7 @@ export class PhaseManager {
         if (!votingIsCurrent()) return false;
         const blast = commitSelfDestructSelection(this.world, choice, ActionWindow.OnPreVote, Phase.Voting, this.events);
         if (!blast) return false;
-        await this.deathResolution.resolve(blast.deaths, blast.sources, actionProvider, Phase.Voting, Phase.Voting);
+        await this.deathResolution.resolve(blast.deaths, blast.sources, actionProvider, Phase.Voting, Phase.Voting,{}, {isCurrent:votingIsCurrent});
         return true;
       } },
     );
@@ -271,8 +273,10 @@ export class PhaseManager {
       return this.getSnapshot();
     }
 
+    let beautyCandidate:BeautyExileCandidate|null=null;
     if (votingResult.removed.length > 0) {
       const target = votingResult.summary.target;
+      if(target!==null&&votingResult.removed.includes(target))beautyCandidate=captureBeautyExile(this.world,target);
       this.previousExile = target !== null && votingResult.removed.includes(target)
         ? captureExileFeedback(this.world, target, cycleDay) : null;
       const sources: DeathSources = {};
@@ -285,10 +289,12 @@ export class PhaseManager {
         actionProvider,
         Phase.Voting,
         Phase.Voting,
+        {},{isCurrent:votingIsCurrent},
       );
     }
-
-    if (this.checkAndSealResult("exile_settled")) {
+    if(!votingIsCurrent())return this.getSnapshot();
+    const beautyResult=resolveBeautyExileVictory(this.world,beautyCandidate);
+    if (this.checkAndSealResult("exile_settled",beautyResult?{[WinCondition.SlaughterSide]:beautyResult}:{})) {
       return this.getSnapshot();
     }
 
@@ -310,9 +316,9 @@ export class PhaseManager {
   /**
    * 检查胜负并在命中时封盘写入 game_over 事件。
    */
-  private checkAndSealResult(checkpoint: VictoryCheckpoint): boolean {
+  private checkAndSealResult(checkpoint: VictoryCheckpoint,overrides:Partial<Record<WinCondition,WinDecision>>={}): boolean {
     if (this.state.gameOver) return true;
-    const result = this.conditionRegistry.evaluateMany(this.world, this.resolveWinConditions(), checkpoint);
+    const result = this.conditionRegistry.evaluateMany(this.world, this.resolveWinConditions(), checkpoint,overrides);
     if (!result) return false;
     this.sealResult(result, checkpoint, this.state.phase);
     return true;

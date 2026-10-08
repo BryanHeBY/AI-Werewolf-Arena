@@ -18,7 +18,7 @@ import {
   knownWolfTeammates,
   allNightAbilities, abilityStatus, projectNightAbility,
 } from "../../../game/mechanisms";
-import { getGuardState, getHunterState, getWolfKingState, getWhiteWolfKingState, getKnightState, getGravekeeperState, getDreamerState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
+import { getGuardState, getHunterState, getWolfKingState, getWhiteWolfKingState, getKnightState, getGravekeeperState, getDreamerState, getWolfBeautyState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
 import { freezeObservation, type PlayerObservation } from "./observation";
 import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "./prompt_templates";
 import { renderTurnConstraintUserHint, resolveTurnConstraints } from "./turn_constraints";
@@ -85,6 +85,7 @@ export class PlayerPromptPolicy {
     if (witch) ownState.witch = witch;
     if (guard) ownState.guard = guard;
     if (role?.role === Role.Hunter) ownState.hunter = getHunterState(role);
+    if(role?.role===Role.WolfBeauty)ownState.wolfBeauty=getWolfBeautyState(role);
     if (role?.role === Role.WolfKing) ownState.wolfKing = getWolfKingState(role);
     if (role?.role === Role.WhiteWolfKing) ownState.whiteWolfKing = getWhiteWolfKingState(role);
     if (role?.role === Role.Knight) ownState.knight = getKnightState(role);

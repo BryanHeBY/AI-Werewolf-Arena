@@ -9,6 +9,7 @@ import { transferOrDestroySheriffBadge } from "../mechanisms/sheriff/badge";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { EventRegistry } from "./event_registry";
 import type { DreamNightFrame } from "../mechanisms/roles/dreamer/night_frame";
+import {claimCharm,commitCharmDeath,type CharmBinding} from "../mechanisms/roles/wolf_beauty/relation";
 
 interface DeathWaveActions { phase: Phase; day: number; permits: Array<ReturnType<World["openDeathAction"]>>; isCurrent:()=>boolean }
 
@@ -32,7 +33,7 @@ export class DeathResolution {
     phase: Phase,
     lastWordsPhase: Phase,
     deathPhases: Readonly<Record<EntityId, Phase>> = {},
-    nightEffects?: {dreams: DreamNightFrame; nightOriginIds: readonly EntityId[]; isCurrent?:()=>boolean},
+    nightEffects?: {dreams?: DreamNightFrame; nightOriginIds?: readonly EntityId[]; isCurrent?:()=>boolean},
   ): Promise<void> {
     const resolutionPhase = this.state.phase;
     const resolutionDay = this.state.day;
@@ -50,7 +51,7 @@ export class DeathResolution {
       if (!isCurrent()) return;
       const deathPhase = firstBatch ? phase : this.state.phase;
       this.markPlayersDead(pending);
-      nightEffects?.dreams.recordDeaths(pending,this.events);
+      nightEffects?.dreams?.recordDeaths(pending,this.events);
       if (firstBatch) {
         this.lastWordsMechanism.recordLastWordsGranted(
           this.world,
@@ -85,10 +86,22 @@ export class DeathResolution {
             this.events,
             result => {
               if(!isCurrent())return;
-              const proposed=[...result.extraDeaths],proposedSources=structuredClone(result.extraDeathSources),nightTargets=result.nightEffectTargets??[];
+              const proposed=[...result.extraDeaths],proposedSources=structuredClone(result.extraDeathSources),nightTargets=[...(result.nightEffectTargets??[])];
               const linked=new Set<EntityId>(),publicLinked:EntityId[]=[];
+              const charmBindings:CharmBinding[]=[];
+              for(const proposal of result.charmLinks??[]){
+                const binding=proposal.binding;
+                if(!claimCharm(this.world,binding,seen))continue;
+                if(proposal.nightEffect&&nightEffects?.dreams?.blocksNightCharm(this.world,binding.targetId,seen)){
+                  this.events.push({timestamp:Date.now(),type:"charm_blocked",payload:{actorId:binding.actorId,targetId:binding.targetId,reason:"night_protection"}});continue;
+                }
+                charmBindings.push(binding);if(!proposed.includes(binding.targetId))proposed.push(binding.targetId);
+                proposedSources[binding.targetId]=[...new Set([...(proposedSources[binding.targetId]??[]),DeathCause.Charm])];
+                if(proposal.nightEffect)nightTargets.push(binding.targetId);
+              }
+              const charmTargets=new Set(charmBindings.map(binding=>binding.targetId));
               for (const id of nightTargets) nightOrigin.add(id);
-              if (nightEffects && nightTargets.length) for (const id of nightEffects.dreams.linkedDeaths(this.world,nightTargets,new Set(Object.keys(allSources).map(Number)))) {
+              if (nightEffects?.dreams && nightTargets.length) for (const id of nightEffects.dreams.linkedDeaths(this.world,nightTargets,new Set(Object.keys(allSources).map(Number)))) {
                 linked.add(id);
                 if (!proposed.includes(id)) proposed.push(id);
                 proposedSources[id]=[...new Set([...(proposedSources[id]??[]),DeathCause.Dream])];nightOrigin.add(id);
@@ -100,19 +113,21 @@ export class DeathResolution {
                 }
                 if (seen.has(id) || this.isSettledLife(id)) {
                   if(linked.has(id))allSources[id]=[...new Set([...(allSources[id]??[]),DeathCause.Dream])];
+                  if(charmTargets.has(id))allSources[id]=[...new Set([...(allSources[id]??[]),DeathCause.Charm])];
                   continue;
                 }
                 if (!this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)) continue;
                 seen.add(id);
                 allSources[id] = [...new Set(proposedSources[id] ?? [])];
                 this.markPlayersDead([id]);
-                if(linked.has(id)&&!result.extraDeaths.includes(id))publicLinked.push(id);
+                if(charmTargets.has(id)||(linked.has(id)&&!result.extraDeaths.includes(id)))publicLinked.push(id);
                 next.add(id);
               }
               if(publicLinked.length)this.events.push({timestamp:Date.now(),type:"additional_deaths",payload:{deaths:publicLinked}});
-              nightEffects?.dreams.recordDeaths([...next,...linked],this.events);
+              for(const binding of charmBindings)if(commitCharmDeath(this.world,binding))this.events.push({timestamp:Date.now(),type:"charm_death",payload:{actorId:binding.actorId,targetId:binding.targetId}});
+              nightEffects?.dreams?.recordDeaths([...next,...linked],this.events);
             },
-            {nightEffect:nightOrigin.has(deadId),blocksNightShot:targetId=>nightEffects?.dreams.blocksNightShot(this.world,targetId)??false,isCurrent},
+            {nightEffect:nightOrigin.has(deadId),blocksNightShot:targetId=>nightEffects?.dreams?.blocksNightShot(this.world,targetId)??false,blocksNightCharm:targetId=>nightEffects?.dreams?.blocksNightCharm(this.world,targetId,seen)??false,eligibleDead:seen,isCurrent},
           );
         } finally {
           for (const permit of actions.permits) permit.close();

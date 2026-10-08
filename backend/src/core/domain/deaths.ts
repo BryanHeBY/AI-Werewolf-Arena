@@ -8,6 +8,7 @@ export enum DeathCause {
   WhiteWolfBlast = "white_wolf_blast",
   Lovers = "lovers",
   Dream = "dream",
+  Charm = "charm",
   Duel = "duel",
   DuelFailure = "duel_failure",
   Ability = "ability",

@@ -35,6 +35,7 @@ export class DreamNightFrame {
     return [...new Set(this.links.filter(link => this.targetCurrent(world, link) && this.actorCurrent(world, link)).map(link => link.targetId))];
   }
   blocksNightShot(world: World, targetId: EntityId): boolean { return this.protectedTargets(world).includes(targetId); }
+  blocksNightCharm(world:World,targetId:EntityId,eligibleDead:ReadonlySet<EntityId>):boolean{return this.links.some(link=>link.targetId===targetId&&this.actorCurrent(world,link)&&(this.targetCurrent(world,link)||this.targetDeathCurrent(world,link,eligibleDead)));}
 
   consecutiveDeaths(world: World): EntityId[] {
     const deaths = new Set<EntityId>();

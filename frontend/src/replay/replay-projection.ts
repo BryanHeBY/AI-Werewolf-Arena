@@ -65,6 +65,7 @@ export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number):
       markDead(numberValue(payload.target));
     }
     if(event.type==="dream_death"&&(payload.reason==="consecutive"||payload.reason==="linked"))markDead(numberValue(payload.targetId));
+    if(event.type==="charm_death")markDead(numberValue(payload.targetId));
     if (event.type === "wolf_self_destruct") {
       markDead(numberValue(payload.wolfId));
     }

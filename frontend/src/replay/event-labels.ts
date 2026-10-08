@@ -10,6 +10,9 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerI
   const target = numberValue(p.targetId);
   const players = (value: unknown) => numberList(value, locale) || t("replay.none");
   switch (event.type) {
+    case "charm_applied": return t("console.charm.applied",{actor,target:p.targetId===null?t("common.none"):target,day:numberValue(p.day)});
+    case "charm_death": return t("console.charm.death",{actor,target});
+    case "charm_blocked": return p.reason==="night_protection"?t("console.charm.blocked",{actor,target}):t("replay.unknown");
     case "additional_deaths": return t("console.additional_deaths",{players:numberList(p.deaths,locale)});
     case "dream_applied": return typeof p.consecutive==="boolean"?t("console.dream.applied",{actor,target,day:numberValue(p.day),consecutive:t(p.consecutive?"common.yes":"common.no")}):t("replay.unknown");
     case "dream_death": return p.reason==="consecutive"||p.reason==="linked"?t("console.dream.death",{actor,target,day:numberValue(p.day),reason:t(p.reason==="consecutive"?"console.dream.consecutive":"console.dream.linked")}):t("replay.unknown");

@@ -29,9 +29,9 @@ export class ConditionRegistry {
   /**
    * 按给定顺序评估多个胜负模式，命中即返回。
    */
-  evaluateMany(world: World, conditions: WinCondition[], checkpoint?: VictoryCheckpoint): WinDecision | null {
+  evaluateMany(world: World, conditions: WinCondition[], checkpoint?: VictoryCheckpoint, overrides:Partial<Record<WinCondition,WinDecision>>={}): WinDecision | null {
     for (const condition of conditions) {
-      const result = this.evaluate(world, condition, checkpoint);
+      const result = overrides[condition]??this.evaluate(world, condition, checkpoint);
       if (result) {
         return result;
       }

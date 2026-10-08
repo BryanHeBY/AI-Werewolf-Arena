@@ -13,6 +13,7 @@ const PRIVATE_STATE_KEYS = {
   whiteWolfKing: "white_wolf_king",
   knight: "knight",
   gravekeeper: "gravekeeper",
+  wolfBeauty: "wolf_beauty",
   idiot: "idiot",
   seer: "seer",
 } as const;
@@ -42,6 +43,7 @@ export interface KnightState { canDuel: boolean }
 export interface GravekeeperReport extends ExileFeedback { receivedDay: number }
 export interface GravekeeperState { history: GravekeeperReport[] }
 export interface DreamerState { lastTarget: EntityId | null; lastDay: number | null; history: Array<{day: number; targetId: EntityId}> }
+export interface WolfBeautyState { targetId: EntityId | null; lastActedDay: number | null; history: Array<{day:number;targetId:EntityId|null}> }
 
 /** 白痴私有状态。 */
 export interface IdiotState {
@@ -124,6 +126,8 @@ export function getGravekeeperState(roleComp: RoleComponent): GravekeeperState |
 }
 export function setDreamerState(roleComp: RoleComponent, state: DreamerState): DreamerState { return installNativeAbility(roleComp, "dream", state); }
 export function getDreamerState(roleComp: RoleComponent, abilityId?: string): DreamerState | undefined { return findNightAbility(roleComp, "dream", abilityId)?.state; }
+export function setWolfBeautyState(roleComp: RoleComponent, state: WolfBeautyState): WolfBeautyState { return setState(roleComp,PRIVATE_STATE_KEYS.wolfBeauty,state); }
+export function getWolfBeautyState(roleComp: RoleComponent): WolfBeautyState | undefined { return getState(roleComp,PRIVATE_STATE_KEYS.wolfBeauty); }
 
 /** 写入白痴私有状态。 */
 export function setIdiotState(roleComp: RoleComponent, state: IdiotState): IdiotState {

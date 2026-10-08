@@ -118,7 +118,8 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
       const selectedProvider: ActionProvider = { async getAction(request) {
         if (stopping) throw stopReason;
         const action = await agentRuntime!.provider.getAction(request);
-        return stopping ? null : action;
+        if(stopping)throw stopReason;
+        return action;
       } };
       const decisionProvider: ActionProvider = { getAction: request => {
         const decision = reproduction.decide(request, selectedProvider);
@@ -167,7 +168,9 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
         let cycleFailure: unknown;
         try { await context.phaseManager.runSingleCycle(provider, options.maxDays); complete = true; }
         catch (error) {
-          cycleFailure = error; failures.push(error); replayManager.noteReproductionFailure("cycle", error);
+          cycleFailure = error;
+          if(error!==stopReason)failures.push(error);
+          replayManager.noteReproductionFailure("cycle", error);
           await closeRuntime();
           await drainActions();
         }

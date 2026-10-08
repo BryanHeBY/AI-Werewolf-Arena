@@ -1,6 +1,22 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "role.wolf_beauty.brief": "Pack member who may charm another player after the knife vote; exile or poison links death, Duel/Dream suppress it, with no self-destruction or own self-knife vote. Under SlaughterSide, exiling the last living wolf when it is Wolf Beauty and its charm actually takes the last good special role or villager gives wolves victory; configured victory conditions still use their first matching order.",
+  "role.wolf_beauty.state": "Your role is Wolf Beauty, aligned with wolves. Join wolf chat/knife votes, but cannot self-destruct or vote to knife yourself. After the knife vote optionally charm another living player or pass with null, never the same target on adjacent nights. Exile or poison takes the current target; Duel/Dream forbids it. Current dream protection can block Night charm, not ordinary Day charm; Guard/antidote do not block it. The target gets no direct notification. Under SlaughterSide, exiling the last living wolf when it is Wolf Beauty and its charm actually takes the last good special role or villager gives wolves victory; configured victory conditions still use their first matching order.",
+  "role.wolf_beauty.latest": "Current charm target: {target}; last action day: {day}.",
+  "action.charm.hint": "charm: target_id is another living player or null to pass this night. Do not repeat on adjacent nights; a legal pass clears the link and spends this night's opportunity.",
+  "stage.wolf_beauty": "Wolf Beauty charm",
+  "replay.stage.charm_applied": "Charm choice",
+  "replay.stage.charm_death": "Charm resolution",
+  "replay.stage.charm_blocked": "Protected charm",
+  "console.charm.applied": "Wolf Beauty {actor} chooses charm target {target} on night {day}",
+  "console.charm.death": "Player {target} dies through Wolf Beauty {actor}'s charm",
+  "console.charm.blocked": "Dream protection blocks Wolf Beauty {actor}'s night charm death of player {target}",
+  "error.beauty_self_knife": "Wolf Beauty cannot submit a knife vote targeting itself.",
+  "error.charm_unavailable": "This charm already acted this night, or its role/capability is unavailable.",
+  "error.charm_target": "Choose another currently living player, or null to pass.",
+  "error.charm_repeat": "Do not charm the same target on adjacent nights.",
+  "reason.wolf_beauty_last_exile": "The last exiled Wolf Beauty takes the last good side",
   "ability.dream.rules": "Dream ability rules for this turn: choose another living target, who gets no direct notification. It blocks ordinary wolf attacks, poison and night-origin death shots. The same instance choosing the same target on adjacent nights causes dream death; the caster's night death takes that night's target. Dream death bypasses this dream, Guard and antidote and forbids death shots. Ordinary daytime deaths/shots have no dream link or protection. Each instance acts once per night; use its lastTarget/lastDay for continuity. The ability does not change your identity.",
   "replay.stage.additional_deaths": "Additional deaths",
   "replay.stage.death_shot_blocked": "Blocked shot",

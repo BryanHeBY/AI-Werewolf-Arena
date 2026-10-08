@@ -39,7 +39,7 @@ export interface NightStageContext {
   makeRequest(
     actorId: EntityId,
     allowedTools: ActionRequest["allowedTools"],
-    context: ActionRequestExtras & { stage: ActionStage },
+    context: ActionRequestExtras & { stage: ActionStage; requiresAction?: boolean },
   ): ActionRequest;
   getAliveByRole(role: Role): EntityId[];
   ensureMarks(entityId: EntityId): StatusMarksComponent;

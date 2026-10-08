@@ -11,5 +11,6 @@
 - [测试、子代理交叉审查与 commit 拆分指南](expansion/delivery.md)
 - [本轮 P0 文档交叉审查记录](expansion/review-2026-10-07.md)
 - [实施进度与阶段证据](expansion/progress.md)
+- [P6 狼美人规则、配置、生命周期与验收范围](expansion/wolf-beauty.md)
 
 P0 文档与首笔 commit 已完成。用户于 2026-10-07 授权开始完整实现，后续按阶段验收、交叉审查和功能提交持续推进。
