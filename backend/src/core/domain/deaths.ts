@@ -14,6 +14,7 @@ export enum DeathCause {
   DuelFailure = "duel_failure",
   Ability = "ability",
   MechanicalKnife = "mechanical_knife",
+  AwakenedHiddenKnife = "awakened_hidden_knife",
   MechanicalGuardFailure = "mechanical_guard_failure",
   MerchantBacklash = "merchant_backlash",
 }
@@ -24,7 +25,7 @@ export type DeathShotSelection =
   | { kind: "invalid" };
 
 export function permitsDeathShot(sources: readonly DeathCause[]): boolean {
-  return sources.length > 0 && sources.every(source => source === DeathCause.WolfKill || source === DeathCause.MechanicalKnife || source === DeathCause.Exile || source === DeathCause.Shot || source === DeathCause.WhiteWolfBlast);
+  return sources.length > 0 && sources.every(source => source === DeathCause.WolfKill || source === DeathCause.MechanicalKnife || source === DeathCause.AwakenedHiddenKnife || source === DeathCause.Exile || source === DeathCause.Shot || source === DeathCause.WhiteWolfBlast);
 }
 /** Existing Hunter API retains the same cause policy. */
 export const permitsHunterShot = permitsDeathShot;

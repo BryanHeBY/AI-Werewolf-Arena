@@ -32,6 +32,17 @@ export interface NightMechanicalEffects {
   readonly attacks: readonly NightMechanicalEffect[];
   readonly failures: readonly NightMechanicalEffect[];
 }
+/** Awakened guard absorbs toxins; its extra knife follows ordinary protection. */
+export interface NightAwakenedEffect {
+  readonly actorId: EntityId;
+  readonly target: NightLifeScope;
+  /** Paid effects recheck their original owner, rather than the closed action window. */
+  readonly isCurrent: () => boolean;
+}
+export interface NightAwakenedEffects {
+  readonly shields: readonly NightAwakenedEffect[];
+  readonly attacks: readonly NightAwakenedEffect[];
+}
 /** God-only causal facts. Player projections must not expose the poison's source. */
 export interface NightPoisonReflection {
   readonly actorId: EntityId;
@@ -51,6 +62,7 @@ export function planMechanicalDamage(
   world: World,
   effects: NightMechanicalEffects | undefined,
   poisons: readonly NightPoisonClaim[] = [],
+  absorbedPoisonTargets: ReadonlySet<EntityId> = new Set(),
 ): MechanicalDamagePlan {
   const shields = new Map<EntityId, NightMechanicalEffect>();
   for (const shield of effects?.shields ?? []) {
@@ -62,7 +74,7 @@ export function planMechanicalDamage(
   const reflectedPoisonTargets = new Set<EntityId>();
   const reflections: NightPoisonReflection[] = [];
   for (const poison of poisons) {
-    if (!livingNightLife(world, poison.target)) continue;
+    if (!livingNightLife(world, poison.target) || absorbedPoisonTargets.has(poison.target.id)) continue;
     const shield = shields.get(poison.target.id);
     if (!shield) {
       directPoisonTargets.add(poison.target.id);

@@ -377,3 +377,9 @@ A审发现完整ability/source与事件裁剪漏洞、假空history结构，已�
 NativeHunter内部/God旧hunter_shot保持，玩家visible_events统一player_shot{actorId,targetId}与玩家event档death_shot；白名单不携trueRole/库存/模板，ObservedBot排死、前端席位与双语字幕识别新事件。A发现审计遗漏新枪，同时补机械成功枪；blocked/silent不计。Aw尚未启用，21/43保持。
 
 受影响backend163/1976/24文件与type/deps/boundaries/i18n57通过，6实际双语十二人LLM/ACP/MCP/混合完整局及每局Tape、玩家type/stage/PID验证全0；frontend149/1296/type/build、新增双语实际Chromium2全通过（2.3min），两个合成协议变体PNG frame4870核四死/0winner与中立字幕。详见[底座审查](reviews/p7-neutral-player-shot.md)，本笔只验受影响通路，未冒新Aw、外部模型或全已支持阶段release完成。下一笔正常额外刀/吸毒盾和实际900，随后Aw完整联合板及P7余2/P8–P10继续。
+
+## P7：觉醒隐狼刀毒盾底座
+
+NightAwakenedEffects独立typed盾/普通额外刀提案，NightPipeline空数组透传，Damage不拥有角色库存/ready/工具窗口或真实死亡。普通额外刀守救互消/Dream/独立盾判定，Aw盾先吸原毒再机械反射、也挡返毒且不递归；新awakened_hidden_knife沿普通刀遗言/严格全部来源枪许可。旧毒施者死保付费前缀/原目标life、其它伤害与机械原有穿盾反毒语义保留。
+
+受影响engine731/9468/48及static四项通过，随后受控pipeline透传新例与Aw/旧Mechanical窄门槛48/107通过；机械reflection/extra/twelve双语SDK/ACP/MCP/混合18实际完整局、4260断言及每局Tape/PID验证0。见[本笔审查](reviews/p7-awakened-damage.md)。前端/呈现协议未变，不重复无关图/浏览器门槛；本笔不是Aw实际对局，paid owner/学习/实际900/原12镜隐板随后完成，21/43与P7余2/P8–P10/64/22/长局T6持续。

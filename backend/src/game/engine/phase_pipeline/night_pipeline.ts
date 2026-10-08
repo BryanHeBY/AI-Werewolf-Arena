@@ -117,6 +117,7 @@ export class NightPipeline {
       guardClaims: [],
       merchantBacklashes: [],
       mechanicalEffects: { shields: [], attacks: [], failures: [] },
+      awakenedEffects: { shields: [], attacks: [] },
     };
 
     const requests = new GameActionRequestFactory(this.world, this.events, day);
@@ -155,7 +156,7 @@ export class NightPipeline {
 
     discardStaleWolfKnife(this.world,stageState);
     const dreamFrame = new DreamNightFrame(stageState.dreamLinks);
-    const damage = this.damageResolutionSystem.resolve(this.world,{protectedTargets:dreamFrame.protectedTargets(this.world),consecutiveDeaths:dreamFrame.consecutiveDeaths(this.world),poisonClaims:stageState.poisonClaims,guardClaims:stageState.guardClaims,merchantBacklashes:stageState.merchantBacklashes,mechanicalEffects:stageState.mechanicalEffects});
+    const damage = this.damageResolutionSystem.resolve(this.world,{protectedTargets:dreamFrame.protectedTargets(this.world),consecutiveDeaths:dreamFrame.consecutiveDeaths(this.world),poisonClaims:stageState.poisonClaims,guardClaims:stageState.guardClaims,merchantBacklashes:stageState.merchantBacklashes,mechanicalEffects:stageState.mechanicalEffects,awakenedEffects:stageState.awakenedEffects});
     for (const reflection of damage.poisonReflections ?? []) this.events.push({ timestamp: Date.now(), type: "mechanical_poison_reflected", payload: { ...reflection, day } });
     dreamFrame.expandInitialDamage(this.world,damage);
     safeRecordLogicOp({

@@ -17,7 +17,7 @@ import type { RoleCatalog } from "../../roles/catalog";
 import type { DreamNightLink } from "../../roles/dreamer/night_frame";
 import type {AliveComponent} from "../../../../core/domain/components/alive";
 
-import type {NightPoisonClaim, NightMechanicalEffect, NightGuardClaim, NightMerchantBacklash} from "../../../../core/domain/night_effects";
+import type {NightPoisonClaim, NightMechanicalEffect, NightGuardClaim, NightMerchantBacklash, NightAwakenedEffect} from "../../../../core/domain/night_effects";
 
 export interface WolfKnifeTargetScope {targetId:EntityId;life:AliveComponent;version:number;marks:StatusMarksComponent}
 
@@ -34,6 +34,7 @@ export interface NightStageState {
   guardClaims?: NightGuardClaim[];
   merchantBacklashes?: NightMerchantBacklash[];
   mechanicalEffects?: { shields: NightMechanicalEffect[]; attacks: NightMechanicalEffect[]; failures: NightMechanicalEffect[] };
+  awakenedEffects?: { shields: NightAwakenedEffect[]; attacks: NightAwakenedEffect[] };
 }
 
 /** 夜间阶段执行上下文。 */
