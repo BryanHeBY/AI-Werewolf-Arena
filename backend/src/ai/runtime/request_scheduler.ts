@@ -1,5 +1,5 @@
-import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionRequest } from "../../../core/domain";
+import { RoleComponent } from "../../core/domain/components/role";
+import { ActionRequest } from "../../core/domain";
 
 export interface RequestSchedulerOptions {
   defaultMaxConcurrentRequests: number;

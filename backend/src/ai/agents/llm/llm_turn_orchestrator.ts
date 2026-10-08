@@ -12,7 +12,7 @@ import { ChatMessage, ChatModelClient } from "../../integrations/llm/transport";
 import { PlayerPromptSession } from "./player_prompt_session";
 import { PlayerRoundRecorder } from "../player/player_round_recorder";
 import { buildConstraintRetryPrompt } from "../player/prompt_templates";
-import { ScopedRequestScheduler } from "./request_scheduler";
+import { ScopedRequestScheduler } from "../../runtime/request_scheduler";
 import { SdkGameToolLoop } from "./sdk_game_tool_loop";
 import { resolveTurnConstraints } from "../player/turn_constraints";
 

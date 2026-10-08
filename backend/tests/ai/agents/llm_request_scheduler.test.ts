@@ -4,7 +4,7 @@ import { Phase } from "../../../src/core/domain/model";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
 import { ActionRequest } from "../../../src/core/domain/model";
-import { ScopedRequestScheduler } from "../../../src/ai/agents/llm/request_scheduler";
+import { ScopedRequestScheduler } from "../../../src/ai/runtime/request_scheduler";
 
 const request = { actorId: 1, phase: "day" } as ActionRequest;
 

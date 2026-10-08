@@ -118,3 +118,7 @@ SDK 与 ACP 共用 schema/归一化/原有业务规则/回合约束及一次选�
 ## P4 A02：ACP 会话与物理回收
 
 内部 session namespace 与远端 wire ID 分开，短 tN、玩家语言与DTO/Tape边界保持；初始化/动作/兜底沿同一deadline，注册表永久封口。会话池持有创建、discard/迟到关闭及错误；正常关闭失败仍force，进程组/MCP回收有实际PID/端口证据。取消原错、同截止计时器竞态、私有记录关闭窗口、审计prompt+cleanup双错均已修正。最终 release371 测试通过，实际双语整局/Tape/模拟回归全绿；[审查记录](reviews/p4-a02-acp.md)与[兼容契约](runtime-resources.md)说明严格错误及自定义非合作创建边界。混合装配、provider完整并发作用域与runner多错误收尾继续下一笔，A02/P4仍进行中。
+
+## P4 共享调度器归属
+
+将既有 ScopedRequestScheduler 从 ai/agents/llm 移至 ai/runtime，仅修相对导入；为下一笔 ACP/provider 并发与混合装配提供共同位置，没有修改算法。类型/模块边界与7项调度回归通过；A逐字独立审查0阻断。迁移独立提交，行为接入继续下一笔。
