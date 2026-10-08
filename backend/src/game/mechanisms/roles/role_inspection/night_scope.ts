@@ -7,7 +7,7 @@ import {findNightAbility,roleInspectionPolicy,type NightAbility} from "../abilit
 import {getGargoyleState,type GargoyleState,type RoleInspectionState} from "../private_state";
 
 
-interface Completion{role:RoleComponent;state:GargoyleState;ability:NightAbility<"role_check">;inspection:RoleInspectionState;life:AliveComponent;version:number;isCurrent:()=>boolean}
+interface Completion{actorId:number;role:RoleComponent;privateState:RoleComponent["privateState"];state:GargoyleState;ability:NightAbility<"role_check">;abilityId:string;activation:NightAbility["activation"];inspection:RoleInspectionState;life:AliveComponent;version:number;isCurrent:()=>boolean}
 const nights=new WeakMap<World,{day:number;completed:Map<RoleComponent,Completion>}>();
 const committed=new WeakMap<World,Set<number>>();
 export function hasRoleInspectionNightCommit(world:World,day:number):boolean{return committed.get(world)?.has(day)??false;}
@@ -18,9 +18,9 @@ export function recordRoleInspectionCompletion(world:World,actorId:number,day:nu
  recordRoleInspectionNightCommit(world,day,isCurrent);
  const role=world.getComponent<RoleComponent>(actorId,COMPONENT.Role),state=role&&getGargoyleState(role),life=world.getComponent<AliveComponent>(actorId,COMPONENT.Alive),version=life&&aliveLifeVersion(life);
  if(roleInspectionPolicy(ability.state)!=="gargoyle"||role?.role!==Role.Gargoyle||!state||!life?.alive||version===undefined||ability.source.kind!=="native"||ability.source.role!==Role.Gargoyle)return;
- beginRoleInspectionNight(world,day);nights.get(world)!.completed.set(role,{role,state,ability,inspection:ability.state,life,version,isCurrent});
+ beginRoleInspectionNight(world,day);nights.get(world)!.completed.set(role,{actorId,role,privateState:role.privateState,state,ability,abilityId:ability.id,activation:ability.activation,inspection:ability.state,life,version,isCurrent});
 }
 export function completedGargoyleInspection(world:World,role:RoleComponent):boolean{
- const scope=nights.get(world)?.completed.get(role);if(!scope||!scope.isCurrent()||getGargoyleState(role)!==scope.state||role.role!==Role.Gargoyle||findNightAbility(role,"role_check",scope.ability.id)!==scope.ability||scope.ability.disabled||scope.ability.state!==scope.inspection||roleInspectionPolicy(scope.inspection)!=="gargoyle")return false;
- return world.entityIds().some(id=>world.getComponent(id,COMPONENT.Role)===role&&world.getComponent(id,COMPONENT.Alive)===scope.life)&&scope.life.alive&&aliveLifeVersion(scope.life)===scope.version;
+ const scope=nights.get(world)?.completed.get(role);if(!scope||!scope.isCurrent()||role.privateState!==scope.privateState||getGargoyleState(role)!==scope.state||role.role!==Role.Gargoyle||scope.ability.id!==scope.abilityId||scope.ability.activation!==scope.activation||findNightAbility(role,"role_check",scope.abilityId)!==scope.ability||scope.ability.source.kind!=="native"||scope.ability.source.role!==Role.Gargoyle||scope.ability.disabled||scope.ability.state!==scope.inspection||roleInspectionPolicy(scope.inspection)!=="gargoyle")return false;
+ return world.getComponent(scope.actorId,COMPONENT.Role)===role&&world.getComponent(scope.actorId,COMPONENT.Alive)===scope.life&&scope.life.alive&&aliveLifeVersion(scope.life)===scope.version;
 }

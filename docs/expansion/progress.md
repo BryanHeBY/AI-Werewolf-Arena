@@ -351,3 +351,9 @@ front **127／1140**、type/build、实际Chromium **54**及中英真实PNG root
 ## P7：魔镜少女规则冻结
 
 [规则卡](rules/awa-mirror-girl-v1.md#mirror_girl)与[实现边界](mirror-girl.md)按网易2023-10-26正文和官方35/126秒规则帧冻结具体role禁重复；明确AWA独立600/mirror policy、optional/空目标闭夜、稳定ID/复活保历史、fresh copy/gift与完整transfer、原ID/来源/历史提交终验。三policy分别提示/调度、不借Garg原生完成权，四普通狼AWA例不冒原觉醒隐狼镜隐迷踪。R/A/L/D[冻结复查](reviews/p7-mirror-girl-rules.md)0文档阻断。本笔纯文档，不注册角色/policy或配置，目录20 verified/44 planned不变；共用作用域缺口独立fix，后续完整Mirror启用必须过全部角色门槛，P7余3及P8–P10/T6/长局保持。
+
+## P7：具体身份查验原归属修正
+
+Gargoyle/Psychic共用执行器绑定原ability ID/activation与来源ref/分类/owner，gateway和label callback后重验当前实例目标历史；Garg已付完成权限另保存原稳定actor/ID/private owner，正常闭夜消费后仍可出刀，撤权不回滚报告或资源。根6旧请求/重复历史反例、A已付ID意见及根5种paid撤权、R/T gifted→native伪装阻断依[独立审查](reviews/p7-role-inspection-scope.md)修正闭环。
+
+最终冻结源码受影响 **750/22358/53文件**，type/deps/boundaries/i18n与专有core72/494通过；包含既有72双语SDK/ACP/MCP/混合完整局、四板80受限seed与每局严格Tape、赠予小任务；front139/1224/type通过，呈现字段/前端源码未改，未重复无相关变化browser/PNG。R/A复查与L/D最终登记0残留，目录20/44不变，Mirror仍planned，后续完整启用与P7余3/P8–P10/64/22/长局/T6继续。
