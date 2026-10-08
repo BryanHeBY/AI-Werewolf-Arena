@@ -66,6 +66,7 @@ export function transferNightAbility<K extends NightAbilityKind>(world: World, f
   // Transfer preserves resources. The policy can reset inspection knowledge;
   // it cannot refill potions or clear a protection cooldown.
   if (ability.kind === "guard" && (targetState as NightAbilityStates["guard"]).lastTarget !== ability.state.lastTarget) throw new Error("ability_transfer_resources_changed");
+  if (ability.kind === "dream" && ((targetState as NightAbilityStates["dream"]).lastTarget !== ability.state.lastTarget || (targetState as NightAbilityStates["dream"]).lastDay !== ability.state.lastDay)) throw new Error("ability_transfer_resources_changed");
   if (ability.kind === "potion" && ["heal", "poison", "selfHealRule", "canSelfHeal", "healUsedThisNight", "poisonUsedThisNight"].some(key => (targetState as unknown as Record<string, unknown>)[key] !== (ability.state as unknown as Record<string, unknown>)[key])) throw new Error("ability_transfer_resources_changed");
   const received = copyAbilityData({ ...ability, state: targetState, id: targetId, sourceDisclosed: options.sourceDisclosed ?? false, source: { kind: "transfer", actorId: fromId, abilityId: id } }) as NightAbility;
   installAbility(world, toId, received, events);

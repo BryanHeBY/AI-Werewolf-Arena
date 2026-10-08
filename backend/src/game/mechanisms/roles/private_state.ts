@@ -41,6 +41,7 @@ export interface WhiteWolfKingState { canDetonate: boolean }
 export interface KnightState { canDuel: boolean }
 export interface GravekeeperReport extends ExileFeedback { receivedDay: number }
 export interface GravekeeperState { history: GravekeeperReport[] }
+export interface DreamerState { lastTarget: EntityId | null; lastDay: number | null; history: Array<{day: number; targetId: EntityId}> }
 
 /** 白痴私有状态。 */
 export interface IdiotState {
@@ -121,6 +122,8 @@ export function setGravekeeperState(roleComp: RoleComponent, state: GravekeeperS
 export function getGravekeeperState(roleComp: RoleComponent): GravekeeperState | undefined {
   return getState(roleComp, PRIVATE_STATE_KEYS.gravekeeper);
 }
+export function setDreamerState(roleComp: RoleComponent, state: DreamerState): DreamerState { return installNativeAbility(roleComp, "dream", state); }
+export function getDreamerState(roleComp: RoleComponent, abilityId?: string): DreamerState | undefined { return findNightAbility(roleComp, "dream", abilityId)?.state; }
 
 /** 写入白痴私有状态。 */
 export function setIdiotState(roleComp: RoleComponent, state: IdiotState): IdiotState {

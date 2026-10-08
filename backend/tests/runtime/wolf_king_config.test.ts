@@ -14,6 +14,6 @@ for (const [id, size] of [["six_player_wolf_king", 6], ["twelve_player_wolf_king
   expect(board.config.roleSetups.find(entry => entry.role === "wolf_king")).toEqual({ role: "wolf_king", count: 1 });
   expect(game.printPrivateEvents).toBe(false);
   expect(() => parseBoardDefinition({ ...board.definition, roles: { ...board.definition.roles, wolf_king: { unlimitedShots: true } } })).toThrow("board_config_role_parameters_not_supported");
-  const planned = structuredClone(board.definition); planned.board.roleSetups[0].role = "dreamer";
+  const planned = structuredClone(board.definition); planned.board.roleSetups[0].role = "wolf_beauty";
   expect(() => parseBoardDefinition(planned)).toThrow("board_config_role_not_implemented");
 });

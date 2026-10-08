@@ -1,10 +1,10 @@
 import type { EntityId, Role } from "../../../core/domain/model";
 import type { RoleComponent } from "../../../core/domain/components/role";
-import type { GuardState, SeerState, WitchState } from "./private_state";
+import type { GuardState, SeerState, WitchState, DreamerState } from "./private_state";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { World } from "../../../core/domain/world";
 
-export interface NightAbilityStates { seer_check: SeerState; guard: GuardState; potion: WitchState }
+export interface NightAbilityStates { seer_check: SeerState; guard: GuardState; potion: WitchState; dream: DreamerState }
 export type NightAbilityKind = keyof NightAbilityStates;
 export type AbilitySource =
   | { kind: "native"; role: Role }

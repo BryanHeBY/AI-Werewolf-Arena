@@ -809,7 +809,9 @@ describe("LlmActionProvider", () => {
         expect(systemMessages).toContain("当你看到“[行动提示]”时，说明你可以开始行动了");
         expect(systemMessages).toContain("结构化事件是引擎确认的事实");
         expect(systemMessages).toContain("只有收到 night_resolved 才能确认昨夜公开结果");
-        expect(systemMessages).toContain("空数组表示平安夜");
+        expect(systemMessages).toContain("空数组仅表示该初始批次平安");
+        expect(systemMessages).toContain("additional_deaths 和成功的公开枪击可确认后续追加死亡");
+        expect(systemMessages).toContain("death_shot_blocked 表示落空，不能当作击杀");
         expect(systemMessages).toContain("狼人刀人投票只表示刀口选择");
 
         const userMessages = messages

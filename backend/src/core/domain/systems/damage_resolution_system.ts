@@ -22,7 +22,7 @@ export class DamageResolutionSystem {
   /**
    * 执行一轮夜间伤害结算并返回死亡与死因信息。
    */
-  resolve(world: World): DamageResolutionResult {
+  resolve(world: World, dreams: {protectedTargets?: readonly EntityId[]; consecutiveDeaths?: readonly EntityId[]} = {}): DamageResolutionResult {
     const deaths: EntityId[] = [];
     const deathSources: DeathSources = {};
 
@@ -31,37 +31,39 @@ export class DamageResolutionSystem {
         entityId,
         COMPONENT.StatusMarks,
       );
-      if (!marks) {
+      if (!marks && !dreams.consecutiveDeaths?.includes(entityId)) {
         continue;
       }
 
       const sources: DeathCause[] = [];
-      const hasGuard = marks.has(StatusMark.GuardMark);
-      const hasHeal = marks.has(StatusMark.HealMark);
-      const hasWolfKill = marks.has(StatusMark.WolfKillMark);
-      const hasPoison = marks.has(StatusMark.PoisonMark);
+      const hasGuard = marks?.has(StatusMark.GuardMark)===true;
+      const hasHeal = marks?.has(StatusMark.HealMark)===true;
+      const hasWolfKill = marks?.has(StatusMark.WolfKillMark)===true;
+      const hasPoison = marks?.has(StatusMark.PoisonMark)===true;
       // Poison is independent of protection and must survive a conflict.
-      if (hasPoison) sources.push(DeathCause.Poison);
+      const dreamProtected = dreams.protectedTargets?.includes(entityId) === true;
+      if (hasPoison && !dreamProtected) sources.push(DeathCause.Poison);
 
       if (hasGuard && hasHeal) {
         // 同守同救互相抵消，但若同时被狼刀命中仍会死亡。
-        marks.remove(StatusMark.GuardMark);
-        marks.remove(StatusMark.HealMark);
-        if (hasWolfKill) {
+        marks?.remove(StatusMark.GuardMark);
+        marks?.remove(StatusMark.HealMark);
+        if (hasWolfKill && !dreamProtected) {
           sources.push(DeathCause.WolfKill);
         }
       } else {
-        if (hasWolfKill && !(hasGuard || hasHeal)) {
+        if (hasWolfKill && !dreamProtected && !(hasGuard || hasHeal)) {
           sources.push(DeathCause.WolfKill);
         }
       }
+      if (dreams.consecutiveDeaths?.includes(entityId)) sources.push(DeathCause.Dream);
 
       if (sources.length > 0) {
         deaths.push(entityId);
         deathSources[entityId] = sources;
       }
 
-      marks.clear();
+      marks?.clear();
     }
 
     return {

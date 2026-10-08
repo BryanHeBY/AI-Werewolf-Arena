@@ -14,6 +14,7 @@ import {
 import { World } from "../../../../core/domain/world";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import type { RoleCatalog } from "../../roles/catalog";
+import type { DreamNightLink } from "../../roles/dreamer/night_frame";
 
 /** 夜间阶段共享状态。 */
 export interface NightStageState {
@@ -22,6 +23,7 @@ export interface NightStageState {
   wolfVotes: Record<number, number>;
   wolfTarget: EntityId | null;
   seerChecks: NightSummary["seerChecks"];
+  dreamLinks: DreamNightLink[];
 }
 
 /** 夜间阶段执行上下文。 */

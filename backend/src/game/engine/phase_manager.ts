@@ -187,8 +187,8 @@ export class PhaseManager {
       this.state.day === 1 && this.config.enableSheriff === true;
 
     this.setPhase(Phase.Day);
-    const cycleDay = this.state.day;
-    const dayIsCurrent = () => this.state.day === cycleDay && this.state.phase === Phase.Day && !this.state.gameOver;
+    const cycleDay = this.state.day, dayRevision=this.phaseRevision;
+    const dayIsCurrent = () => this.state.day === cycleDay && this.state.phase === Phase.Day && !this.state.gameOver&&this.phaseRevision===dayRevision;
     let nightSettled = false;
     const settleNight = async (blast?: { deaths: number[]; sources: DeathSources }) => {
       if (nightSettled) return this.state.gameOver;
@@ -204,7 +204,7 @@ export class PhaseManager {
           deathPhases[id] = Phase.Day;
         }
       }
-      await this.deathResolution.resolve(deaths, sources, actionProvider, Phase.Night, Phase.Day, deathPhases);
+      await this.deathResolution.resolve(deaths, sources, actionProvider, Phase.Night, Phase.Day, deathPhases,{dreams:night.dreamFrame,nightOriginIds:night.damage.deaths,isCurrent:dayIsCurrent});
       if (!dayIsCurrent()) return this.state.gameOver;
       return this.checkAndSealResult(blast !== undefined ? "day_interrupted" : "night_settled");
     };

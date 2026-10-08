@@ -1,0 +1,11 @@
+{
+  "board": "six_player_dreamer",
+  "agent": "deepseek_v4_flash",
+  "locale": "zh-CN",
+  "maxDays": 8,
+  "maxRuntimeMs": 1800000,
+  "llmTimeoutMs": 45000,
+  "streamEvents": true,
+  "printThinking": false,
+  "printPrivateEvents": false
+}

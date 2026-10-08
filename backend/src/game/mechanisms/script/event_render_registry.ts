@@ -48,6 +48,10 @@ const CHAT_HANDLERS: ScriptChatLineHandlers = {
 };
 
 const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
+  additional_deaths:(event,locale="zh-CN")=>text(locale,"console.additional_deaths",{players:event.payload.deaths.join(", ")}),
+  dream_applied: (event,locale="zh-CN")=>text(locale,"console.dream.applied",{actor:event.payload.actorId,target:event.payload.targetId,day:event.payload.day,consecutive:text(locale,event.payload.consecutive?"common.yes":"common.no")}),
+  dream_death: (event,locale="zh-CN")=>text(locale,"console.dream.death",{actor:event.payload.actorId,target:event.payload.targetId,day:event.payload.day,reason:text(locale,event.payload.reason==="consecutive"?"console.dream.consecutive":"console.dream.linked")}),
+  death_shot_blocked: (event,locale="zh-CN")=>text(locale,"console.shot.blocked",{actor:event.payload.actorId,target:event.payload.targetId}),
   gravekeeper_reported: (event, locale = "zh-CN") => gravekeeperLabel(event.payload, locale),
   phase_changed: (event, locale = "zh-CN") => {
     const p = event.payload;
@@ -77,6 +81,7 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
 };
 
 const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
+  dream_applied: ()=>"dreamer", dream_death: ()=>"dream_death",
   gravekeeper_reported: () => "gravekeeper_feedback",
   phase_changed: (event) => String(event.payload.phase ?? "phase_changed"),
   day_speech: () => "day_speech",
@@ -98,6 +103,10 @@ const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
 };
 
 const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
+  additional_deaths:(event,_private,locale="zh-CN")=>[{kind:"system",text:text(locale,"console.additional_deaths",{players:event.payload.deaths.join(", ")})}],
+  dream_applied: (event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.dream.applied",{actor:event.payload.actorId,target:event.payload.targetId,day:event.payload.day,consecutive:text(locale,event.payload.consecutive?"common.yes":"common.no")})}]:[],
+  dream_death: (event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.dream.death",{actor:event.payload.actorId,target:event.payload.targetId,day:event.payload.day,reason:text(locale,event.payload.reason==="consecutive"?"console.dream.consecutive":"console.dream.linked")})}]:[],
+  death_shot_blocked: (event,_private,locale="zh-CN")=>[{kind:"system",text:text(locale,"console.shot.blocked",{actor:event.payload.actorId,target:event.payload.targetId})}],
   gravekeeper_reported: (event, printPrivateEvents, locale = "zh-CN") => printPrivateEvents ? [{ kind: "private", text: gravekeeperLabel(event.payload, locale) }] : [],
   ability_changed: (event, printPrivateEvents, locale = "zh-CN") => printPrivateEvents ? [{ kind: "private", text: text(locale, "ability.change", { actor: event.payload.actorId, id: event.payload.abilityId, kind: text(locale, `ability.kind.${event.payload.kind}`), operation: text(locale, `ability.operation.${event.payload.operation}`) }) }] : [],
   god_private_game_info: (event, _private, locale = "zh-CN") => [{ kind: "god", text: text(locale, "console.live.initial", { roles: event.payload.players.map(item => `${item.seat}:${getDefaultTextLocalizationRegistry().roleName(item.role, locale)}`).join(", ") }) }],

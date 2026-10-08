@@ -30,6 +30,9 @@ export class ObservedBot implements ObservedPlayerStrategy {
       const target = this.style === "conservative" ? undefined : pick(knownAliveIds.filter(id => id !== ownState.guard?.lastTarget));
       return { name: "guard", args: { target_id: target ?? null, abstain: target === undefined } };
     }
+    if (tools.includes("dream")) {
+      const target=pick(others);if(target!==undefined)return{name:"dream",args:{target_id:target}};
+    }
     if (tools.includes("check_identity")) {
       const checked = ownState.seer?.history.map(entry => entry.targetId) ?? [];
       const fresh = others.filter(id => !checked.includes(id));

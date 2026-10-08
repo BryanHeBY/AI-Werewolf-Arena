@@ -1,0 +1,62 @@
+{
+  "version": 2,
+  "id": "six_player_dreamer",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 6,
+    "roleSetups": [
+      {
+        "role": "dreamer",
+        "count": 1
+      },
+      {
+        "role": "wolf",
+        "count": 1
+      },
+      {
+        "role": "witch",
+        "count": 1
+      },
+      {
+        "role": "hunter",
+        "count": 1
+      },
+      {
+        "role": "villager",
+        "count": 2
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": [
+      "slaughter_side"
+    ],
+    "hooks": {
+      "onDaybreak": true,
+      "onPreElection": true,
+      "onPreVote": true,
+      "onPerSpeechGap": true
+    }
+  },
+  "mechanisms": {
+    "sheriff": {
+      "enabled": false
+    },
+    "selfDestruct": {
+      "enabledWindows": []
+    },
+    "tieBreaker": {
+      "exileVote": "min_id",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "witch": {
+      "selfHeal": "disabled"
+    },
+    "dreamer": {}
+  }
+}

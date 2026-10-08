@@ -45,6 +45,8 @@ export enum RuleError {
   WolfBlastOnly = "wolf_blast_only",
   WhiteWolfBlastUnavailable = "white_wolf_blast_unavailable",
   WhiteWolfBlastTarget = "white_wolf_blast_target",
+  DreamUnavailable = "dream_unavailable",
+  DreamTarget = "dream_target",
   KnightDuelUnavailable = "knight_duel_unavailable",
   KnightDuelWindow = "knight_duel_window",
   KnightDuelTarget = "knight_duel_target",

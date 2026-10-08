@@ -14,7 +14,9 @@ export interface VotedOutResult {
 export interface DeathHookResult {
   extraDeaths: EntityId[];
   extraDeathSources: DeathSources;
+  nightEffectTargets?: EntityId[];
 }
+export interface DeathHookContext { nightEffect: boolean; blocksNightShot(targetId: EntityId): boolean; isCurrent?:()=>boolean }
 
 /** 放逐钩子函数签名。 */
 export type VotedOutHook = (
@@ -30,6 +32,7 @@ export type DeathHook = (
   deathSources: DeathSources,
   chooseDeathShot: (actorId: EntityId) => Promise<DeathShotSelection>,
   events: GameEvent[],
+  context?: DeathHookContext,
 ) => Promise<DeathHookResult>;
 
 function buildDefaultVotedOutHooks(): VotedOutHook[] {
@@ -74,15 +77,18 @@ export class HookRegistry {
     chooseDeathShot: (actorId: EntityId) => Promise<DeathShotSelection>,
     events: GameEvent[],
     commitAdditionalDeaths?: (result: DeathHookResult) => void,
+    context?: DeathHookContext,
   ): Promise<DeathHookResult> {
     const aggregated: DeathHookResult = {
       extraDeaths: [],
       extraDeathSources: {},
     };
     for (const hook of this.deathHooks) {
-      const result = await hook(world, deadIds, deathSources, chooseDeathShot, events);
+      if(context?.isCurrent&&!context.isCurrent())break;
+      const result = await hook(world, deadIds, deathSources, chooseDeathShot, events, context);
       commitAdditionalDeaths?.(result);
       aggregated.extraDeaths.push(...result.extraDeaths);
+      if (result.nightEffectTargets?.length) (aggregated.nightEffectTargets??=[]).push(...result.nightEffectTargets);
       for (const [id, marks] of Object.entries(result.extraDeathSources)) {
         aggregated.extraDeathSources[Number(id)] = [...new Set([...(aggregated.extraDeathSources[Number(id)] ?? []), ...marks])];
       }

@@ -18,10 +18,10 @@ export const WOLF_KING_ROLE_PROFILE: RoleProfile = {
     shoot: ctx => validateDeathShot(ctx, ctx.role.role === Role.WolfKing && getWolfKingState(ctx.role)?.canShoot === true),
   },
   llmRepair: { coerce: { ...WOLF_ROLE_PROFILE.llmRepair?.coerce, ...DEATH_SHOT_REPAIR.coerce } },
-  deathHook: (world, ids, sources, choose, events) => resolveDeathShots(world, ids, sources, choose, events, {
+  deathHook: (world, ids, sources, choose, events, context) => resolveDeathShots(world, ids, sources, choose, events, {
     role: Role.WolfKing, state: getWolfKingState, permits: permitsDeathShot,
     shotEvent: (actorId, targetId) => ({ timestamp: Date.now(), type: "wolf_king_shot", payload: { actorId, targetId } }),
-  }),
+  },context),
   baselineAction: (role, request, pickAliveNotSelf, pickAliveByCamp, locale) => request.allowedTools.includes("shoot")
     ? { name: "shoot", args: { target_id: pickAliveByCamp("good") ?? pickAliveNotSelf() } }
     : WOLF_ROLE_PROFILE.baselineAction!(role, request, pickAliveNotSelf, pickAliveByCamp, locale),

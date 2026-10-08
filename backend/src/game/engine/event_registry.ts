@@ -55,6 +55,7 @@ export class EventRegistry {
     chooseDeathShot: (actorId: EntityId) => Promise<DeathShotSelection>,
     events: GameEvent[],
     commitAdditionalDeaths?: (result: DeathHookResult) => void,
+    context?: import("../mechanisms/hooks/hook_registry").DeathHookContext,
   ): Promise<DeathHookResult> {
     return this.hookRegistry.onDeath(
       world,
@@ -63,6 +64,7 @@ export class EventRegistry {
       chooseDeathShot,
       events,
       commitAdditionalDeaths,
+      context,
     );
   }
 }

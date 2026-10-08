@@ -18,7 +18,7 @@ import {
   knownWolfTeammates,
   allNightAbilities, abilityStatus, projectNightAbility,
 } from "../../../game/mechanisms";
-import { getGuardState, getHunterState, getWolfKingState, getWhiteWolfKingState, getKnightState, getGravekeeperState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
+import { getGuardState, getHunterState, getWolfKingState, getWhiteWolfKingState, getKnightState, getGravekeeperState, getDreamerState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
 import { freezeObservation, type PlayerObservation } from "./observation";
 import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "./prompt_templates";
 import { renderTurnConstraintUserHint, resolveTurnConstraints } from "./turn_constraints";
@@ -63,7 +63,7 @@ export class PlayerPromptPolicy {
     const role = this.role(request.actorId);
     const dead = new Set<number>();
     for (const event of request.context.visible_events) {
-      if (event.type === "night_resolved" && Array.isArray(event.payload.deaths)) {
+      if ((event.type === "night_resolved"||event.type==="additional_deaths") && Array.isArray(event.payload.deaths)) {
         for (const id of event.payload.deaths) if (typeof id === "number") dead.add(id);
       }
       const target = event.type === "voted_out" ? event.payload.target
@@ -95,6 +95,8 @@ export class PlayerPromptPolicy {
     if (role?.role === Role.Idiot) ownState.idiot = getIdiotState(role);
     const seer = role ? getSeerState(role, request.context.ability_id) : undefined;
     if (seer) ownState.seer = seer;
+    const dreamer=role?getDreamerState(role,request.context.ability_id):undefined;
+    if(dreamer)ownState.dreamer=dreamer;
     const { death_action_id: _deathActionId, ...context } = request.context;
     return freezeObservation({ request: { ...request, context }, identity: {
       ...(role ? { role: role.role, camp: role.camp } : {}),
@@ -143,7 +145,7 @@ export class PlayerPromptPolicy {
   ): string {
     const role = this.role(request.actorId);
     const bound = request.context.ability_id ? allNightAbilities(role).find(ability => ability.id === request.context.ability_id) : undefined;
-    const targetRuleRole = bound?.kind === "guard" ? Role.Guard : bound?.kind === "potion" ? Role.Witch : bound?.kind === "seer_check" ? Role.Seer : role?.role;
+    const targetRuleRole = bound?.kind === "guard" ? Role.Guard : bound?.kind === "potion" ? Role.Witch : bound?.kind === "seer_check" ? Role.Seer : bound?.kind === "dream" ? Role.Dreamer : role?.role;
     const constraints = resolveTurnConstraints(request);
     const stage = getActionRequestStage(request);
     return buildUserPrompt({
@@ -203,6 +205,7 @@ export class PlayerPromptPolicy {
       lines.push(text(this.locale, "ability.summary", { id: ability.id, kind: text(this.locale, `ability.kind.${ability.kind}`), status, uses: ability.maxUses === null ? text(this.locale, "ability.unlimited") : ability.maxUses - ability.uses, state: JSON.stringify(state) }));
     }
     if (request.context.ability_id) lines.push(text(this.locale, "ability.bound_turn", { id: request.context.ability_id }));
+    if(request.allowedTools.includes("dream")&&allNightAbilities(role).some(ability=>ability.kind==="dream"))lines.push(text(this.locale,"ability.dream.rules"));
     const privateState = role?.renderPrompt?.(this.locale).trim();
     if (privateState) lines.push(text(this.locale, "prompt.status.private", { state: privateState }));
     if (role?.role === Role.Idiot && getIdiotState(role)?.revealed) {

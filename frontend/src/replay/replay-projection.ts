@@ -56,7 +56,7 @@ export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number):
         for (const player of states.values()) player.isWinner = winners.includes(player.playerId);
       } catch { /* Malformed explicit facts do not imply winner membership. */ }
     }
-    if (event.type === "night_resolved") {
+    if (event.type === "night_resolved"||event.type==="additional_deaths") {
       for (const playerId of numberArray(payload.deaths)) {
         markDead(playerId);
       }
@@ -64,6 +64,7 @@ export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number):
     if (event.type === "voted_out") {
       markDead(numberValue(payload.target));
     }
+    if(event.type==="dream_death"&&(payload.reason==="consecutive"||payload.reason==="linked"))markDead(numberValue(payload.targetId));
     if (event.type === "wolf_self_destruct") {
       markDead(numberValue(payload.wolfId));
     }

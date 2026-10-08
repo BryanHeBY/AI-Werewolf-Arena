@@ -175,3 +175,10 @@ for(const locale of ["zh-CN","en"] as const)test(`${locale}: actual Gravekeeper 
  for(const seat of await page.locator("[data-composition-player]").all()){const box=await seat.boundingBox();expect(box).not.toBeNull();expect(box!.y+box!.height).toBeLessThan(caption!.y);}
  await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(8);await expect(page.getByTestId("composition-winner")).toHaveCount(8);
 });
+
+for(const locale of ["zh-CN","en"] as const)for(const kind of ["gun_blocked","gun_link"] as const)test(`${locale}/${kind}: actual Dreamer archive distinguishes blocked night shots from anonymous real link deaths`,async({page})=>{
+ const replay=JSON.parse(readFileSync(new URL(`../fixtures/dreamer-${kind}.replay.json`,import.meta.url),"utf8"));replay.meta.locale=locale;await page.route("**/api/replay",route=>route.fulfill({json:replay}));await page.goto("/");
+ const text=kind==="gun_blocked"?locale==="en"?"Player 4 shoots at player 5; night protection blocks the shot":"4号向5号开枪，夜间保护使枪击落空":locale==="en"?"Additional deaths: Player 5":"追加死亡：5号";
+ await page.locator(".timeline .event").filter({hasText:text}).click();await expect(page.getByTestId("composition-event")).toHaveText(text);await expect(page.locator(".seat-grid .dead")).toHaveCount(kind==="gun_blocked"?1:3);await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+ await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(5);
+});

@@ -139,7 +139,7 @@ export class BaselineBotActionProvider implements ActionProvider {
 
     const bound = request.context.ability_id ? allNightAbilities(role).find(ability => ability.id === request.context.ability_id) : undefined;
     if (request.context.ability_id && (!bound || request.phase !== Phase.Night || !activeNightAbility(role, bound.kind, request.context.day, bound.id))) return null;
-    const abilityRole = bound?.kind === "seer_check" ? Role.Seer : bound?.kind === "guard" ? Role.Guard : bound?.kind === "potion" ? Role.Witch : role.role;
+    const abilityRole = bound?.kind === "seer_check" ? Role.Seer : bound?.kind === "guard" ? Role.Guard : bound?.kind === "potion" ? Role.Witch : bound?.kind === "dream" ? Role.Dreamer : role.role;
     const roleProfile = this.roleCatalog.get(abilityRole);
     if (roleProfile?.baselineAction) {
       const action = roleProfile.baselineAction(

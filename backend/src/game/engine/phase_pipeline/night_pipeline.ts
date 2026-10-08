@@ -29,6 +29,7 @@ import {
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { GameActionRequestFactory } from "../action_request_factory";
 import { createRandom, shuffled, type RandomSource } from "../../../core/domain/random";
+import { DreamNightFrame, hasDreamNightCommit } from "../../mechanisms/roles/dreamer/night_frame";
 
 export interface NightPipelineDependencies {
   world: World;
@@ -44,7 +45,7 @@ export interface NightPipelineOptions {
   isCurrent?: () => boolean;
 }
 export type NightPipelineResult =
-  | { interrupted: false; summary: NightSummary; damage: DamageResolutionResult }
+  | { interrupted: false; summary: NightSummary; damage: DamageResolutionResult; dreamFrame: DreamNightFrame }
   | { interrupted: true };
 
 /**
@@ -81,6 +82,7 @@ export class NightPipeline {
   ): Promise<NightPipelineResult> {
     const isCurrent = options.isCurrent ?? (() => true);
     if (!isCurrent()) return { interrupted: true };
+    if(hasDreamNightCommit(this.world,day))throw new Error("dream_night_reentry_after_commit");
     safeRecordLogicOp({
       scope: "phase_pipeline",
       op: "night_pipeline_start",
@@ -97,6 +99,7 @@ export class NightPipeline {
       wolfVotes: {},
       wolfTarget: null,
       seerChecks: [],
+      dreamLinks: [],
     };
 
     const requests = new GameActionRequestFactory(this.world, this.events, day);
@@ -131,7 +134,9 @@ export class NightPipeline {
       if (!isCurrent()) return { interrupted: true };
     }
 
-    const damage = this.damageResolutionSystem.resolve(this.world);
+    const dreamFrame = new DreamNightFrame(stageState.dreamLinks);
+    const damage = this.damageResolutionSystem.resolve(this.world,{protectedTargets:dreamFrame.protectedTargets(this.world),consecutiveDeaths:dreamFrame.consecutiveDeaths(this.world)});
+    dreamFrame.expandInitialDamage(this.world,damage);
     safeRecordLogicOp({
       scope: "resolution",
       op: "night_damage_resolved",
@@ -150,7 +155,7 @@ export class NightPipeline {
       interruptedBySelfDestruct: false,
     };
 
-    return { interrupted: false, summary, damage };
+    return { interrupted: false, summary, damage, dreamFrame };
   }
 
   private makeRequest(

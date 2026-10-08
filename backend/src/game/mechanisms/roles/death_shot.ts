@@ -3,7 +3,7 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { DeathCause, type EntityId, type GameEvent, type Role, type DeathSources, type DeathShotSelection } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
-import type { DeathHookResult } from "../hooks/hook_registry";
+import type { DeathHookResult, DeathHookContext } from "../hooks/hook_registry";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import type { ToolSpec } from "../contracts";
 import type { ToolRepairPack } from "../llm/contracts";
@@ -44,9 +44,11 @@ interface DeathShotRules {
 export async function resolveDeathShots(
   world: World, deadIds: EntityId[], deathSources: DeathSources,
   choose: (actorId: EntityId) => Promise<DeathShotSelection>, events: GameEvent[], rules: DeathShotRules,
+  context?: DeathHookContext,
 ): Promise<DeathHookResult> {
   const result: DeathHookResult = { extraDeaths: [], extraDeathSources: {} };
   for (const actorId of deadIds) {
+    if(context?.isCurrent&&!context.isCurrent())break;
     const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
     const state = role ? rules.state(role) : undefined;
     if (!role || role.role !== rules.role || !state || world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)?.alive !== false) continue;
@@ -58,13 +60,19 @@ export async function resolveDeathShots(
     }
     if (!state.canShoot || !rules.permits(sources)) { state.canShoot = false; continue; }
     const selected = await choose(actorId);
+    if(context?.isCurrent&&!context.isCurrent())break;
     const currentRole = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
     if (currentRole !== role || currentRole.role !== rules.role || rules.state(currentRole) !== state || !state.canShoot || world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)?.alive !== false) continue;
     if (selected.kind === "invalid" || !world.isDeathActionOpen(actorId, "shoot", selected.deathActionId)) continue;
     if (selected.kind === "pass") { state.canShoot = false; continue; }
     if (!world.getComponent<AliveComponent>(selected.targetId, COMPONENT.Alive)?.alive) continue;
     state.canShoot = false;
+    if (context?.nightEffect && context.blocksNightShot(selected.targetId)) {
+      events.push({timestamp:Date.now(),type:"death_shot_blocked",payload:{actorId,targetId:selected.targetId,reason:"night_protection"}});
+      continue;
+    }
     result.extraDeaths.push(selected.targetId);
+    if (context?.nightEffect) (result.nightEffectTargets??=[]).push(selected.targetId);
     result.extraDeathSources[selected.targetId] = [DeathCause.Shot];
     events.push(rules.shotEvent(actorId, selected.targetId));
   }

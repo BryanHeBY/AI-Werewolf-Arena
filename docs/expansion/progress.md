@@ -10,7 +10,8 @@
 | P3 | 完成 | I01–I04、诊断/CLI与受控源码扫描；实际SDK/ACP中英完整场景与Tape重放、前端/视频门槛；英文入口开放 |
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
 | P5 | 完成 | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md) |
-| P6–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
+| P6 | 进行中 | 摄梦人交付，狼美人/熊/隐狼/石像鬼继续，见[契约](dreamer.md) |
+| P7–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
 
@@ -240,3 +241,9 @@ A01/A02/M21/G01–G04和基础差异闭环；七項在awa_classic1.0.0已验板�
 第十一项`gravekeeper`交付：前日真实放逐主目标的camp标签定案冻结、下一夜女巫后/预言家前被动反馈，无原生主动工具；PhaseManager私有fact输入、角色/DTO只有已交付历史，actor-only事件与条件终端显示，白痴/无放逐/自爆/决斗/追加枪死不冒充exile。审查修复Night取消后续写/结伤/覆盖跳转，以phaseRevision与阶段/await/gateway检查短路；camp-only共享严格reader让坏历史Unknown而非具体牌。接口与边界见[卡](rules/awa-gravekeeper-v1.md)、[契约](gravekeeper.md)，[审查](reviews/p5-gravekeeper.md)记录发现、复查与证据。
 
 最终release820／60313／107文件及smoke通过；原182＋守墓48＝230实际本机SDK/ACP/混合双语完整局及全部Tape。core20／236，40受限seed/重放及条件终端合9／385，配置8／50；front83／711/type/build，最终actualChromium20（含席位/字幕bbox）与中英十二人真实PNG通过。英文字幕遮下排角色问题已修并复验，未改视频编码器。目录11verified／53planned，新6/12 public board与game可加载，四项P5要求闭环见[整阶段验收](reviews/p5-activation.md)。P6从摄梦人等冻结依赖继续，P7–P10/53角色/发布级矩阵与T6保持完整目标；没有把记录当模型实际输入，没有调用真实模型/认证或改用户configs。
+
+## P6：摄梦人
+
+第十二项`dreamer`交付：G02实例内强制梦、相邻同实例目标连续梦亡、本夜生命周期私有Frame与Night保护/牵连；核心Damage只收已验效果ID，Alive/所有徽章/追加波次归DeathResolution，PhaseManager最后judge。逐actor Night来源枪保护/消耗落空/命中施梦者牵连，普通Day无关系；同波死目标及时补Dream禁后续枪，匿名实际additional_deaths同步玩家和前端，God梦原因不提前泄待夜死。World级重入、mandatory耗尽、phaseRevision/最终gateway许可与gift规则缺口均由独立审查修正，见[卡](rules/awa-dreamer-v1.md)、[契约](dreamer.md)、[审查](reviews/p6-dreamer.md)。
+
+最终release885／68872／112文件及smoke/type/deps/boundaries/i18n通过，原230＋新54＝284本机双语SDK/ACP/混合完整局及全部严格Tape；另4个gift实际任务身份/规则/只读接收/回收通过，非完整局。core30／440，配置10／60，两板40受限seed与重放2／50，front85／732/type/build、actualChromium24及中英PNG通过。三路0剩余阻断，目录12verified／52planned；新6/12 board/game示例可加载。P6其余四角色及P7–P10/T6/长局/发布矩阵继续，觉醒摄梦人仍在64外长期候选，未改用户configs或真实认证。

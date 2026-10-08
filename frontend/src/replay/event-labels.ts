@@ -10,6 +10,10 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerI
   const target = numberValue(p.targetId);
   const players = (value: unknown) => numberList(value, locale) || t("replay.none");
   switch (event.type) {
+    case "additional_deaths": return t("console.additional_deaths",{players:numberList(p.deaths,locale)});
+    case "dream_applied": return typeof p.consecutive==="boolean"?t("console.dream.applied",{actor,target,day:numberValue(p.day),consecutive:t(p.consecutive?"common.yes":"common.no")}):t("replay.unknown");
+    case "dream_death": return p.reason==="consecutive"||p.reason==="linked"?t("console.dream.death",{actor,target,day:numberValue(p.day),reason:t(p.reason==="consecutive"?"console.dream.consecutive":"console.dream.linked")}):t("replay.unknown");
+    case "death_shot_blocked": return p.reason==="night_protection"?t("console.shot.blocked",{actor,target}):t("replay.unknown");
     case "gravekeeper_reported": {
       const report = readGravekeeperFeedback(p);
       return report ? t("console.gravekeeper.report", { actor: report.actorId, target: report.targetId, exileDay: report.exileDay, receivedDay: report.receivedDay, result: inspectionLabel(report.result, locale) }) : t("replay.unknown");
@@ -17,7 +21,7 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerI
     case "ability_changed": {
       const kind = stringValue(p.kind), operation = stringValue(p.operation);
       return t("ability.change", { actor, id: stringValue(p.abilityId),
-        kind: ["seer_check", "guard", "potion"].includes(kind) ? t(`ability.kind.${kind}` as MessageKey) : kind,
+        kind: ["seer_check", "guard", "potion", "dream"].includes(kind) ? t(`ability.kind.${kind}` as MessageKey) : kind,
         operation: ["granted", "disabled", "enabled", "transferred_out"].includes(operation) ? t(`ability.operation.${operation}` as MessageKey) : operation });
     }
     case "god_private_game_info": return t("replay.lineup", { players: formatRoleLineup(p.players, locale) });

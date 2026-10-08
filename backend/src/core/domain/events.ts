@@ -39,7 +39,7 @@ export interface ExileFeedback {
 
 export interface EventPayloadMap {
   ability_changed: {
-    actorId: EntityId; abilityId: string; kind: "seer_check" | "guard" | "potion";
+    actorId: EntityId; abilityId: string; kind: "seer_check" | "guard" | "potion" | "dream";
     operation: "granted" | "disabled" | "enabled" | "transferred_out";
     source: { kind: "native"; role: string } | { kind: "gift"; actorId: EntityId } | { kind: "copy" | "transfer"; actorId: EntityId; abilityId: string };
     sourceDisclosed: boolean;
@@ -59,6 +59,10 @@ export interface EventPayloadMap {
   white_wolf_king_self_destruct: { actorId: EntityId; targetId: EntityId | null; window: ActionWindow };
   knight_duel: { actorId: EntityId; targetId: EntityId; result: "wolf" | "not_wolf" };
   gravekeeper_reported: ExileFeedback & { actorId: EntityId; receivedDay: number };
+  dream_applied: { actorId: EntityId; abilityId?: string; targetId: EntityId; day: number; consecutive: boolean };
+  dream_death: { actorId: EntityId; abilityId?: string; targetId: EntityId; day: number; reason: "consecutive" | "linked" };
+  death_shot_blocked: { actorId: EntityId; targetId: EntityId; reason: "night_protection" };
+  additional_deaths: { deaths: EntityId[] };
   day_speech: { actorId: EntityId; text: string };
   vote_cast: VoteRecord;
   vote_summary: { votes: VoteRecord[]; tally: Record<number, number>; target: EntityId | null };
