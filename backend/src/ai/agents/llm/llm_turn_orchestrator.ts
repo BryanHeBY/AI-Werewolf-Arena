@@ -54,8 +54,10 @@ export class LlmTurnOrchestrator {
     const bounded = { ...request, deadlineAtMs: Math.min(request.deadlineAtMs ?? Infinity, startedAt + this.options.timeoutMs) };
     const controller = new AbortController(); this.controllers.add(controller);
     const timer = setTimeout(() => controller.abort(new Error("request_deadline_elapsed")), Math.max(0, bounded.deadlineAtMs - Date.now()));
-    const task = this.runTurn(bounded, controller.signal, startedAt);
+    let resolve!: (action: ToolCall | null) => void, reject!: (error: unknown) => void;
+    const task = new Promise<ToolCall | null>((done, fail) => { resolve = done; reject = fail; });
     this.pending.add(task);
+    void this.runTurn(bounded, controller.signal, startedAt).then(resolve, reject);
     const cleanup = () => { clearTimeout(timer); this.controllers.delete(controller); this.pending.delete(task); };
     return task.then(action => { cleanup(); return this.closed ? null : action; }, error => { cleanup(); throw error; });
   }

@@ -23,8 +23,8 @@ describe("AcpActionProvider session lifecycle", () => {
   test("falls back when session initialization never resolves", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const factory: AcpSessionFactory = {
-      createSession(): Promise<never> {
-        return new Promise(() => undefined);
+      createSession(input): Promise<never> {
+        return new Promise((_, reject) => input.signal!.addEventListener("abort", () => reject(input.signal!.reason), { once: true }));
       },
     };
     const provider = new AcpActionProvider(context.world, {

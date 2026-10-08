@@ -24,10 +24,20 @@ export class LoopbackMcpControlServer implements AcpMcpControlServer {
   private readonly server = createServer((request, response) => void this.handle(request, response));
   private endpoint: string | null = null;
   private sessionId: string | null = null;
+  private closed = false;
+  private starting?: Promise<AcpMcpServerConfig>;
+  get snapshot() { return { closed: this.closed, listening: this.server.listening }; }
 
   constructor(private readonly options: LoopbackMcpControlOptions) {}
 
   async start(command: string, args: string[]): Promise<AcpMcpServerConfig> {
+    if (this.closed) throw new Error("acp_mcp_control_closed");
+    if (this.starting) throw new Error("acp_mcp_control_already_started");
+    this.starting = this.startListening(command, args);
+    return this.starting;
+  }
+
+  private async startListening(command: string, args: string[]): Promise<AcpMcpServerConfig> {
     await new Promise<void>((resolve, reject) => {
       this.server.once("error", reject);
       this.server.listen(0, "127.0.0.1", () => {
@@ -35,6 +45,7 @@ export class LoopbackMcpControlServer implements AcpMcpControlServer {
         resolve();
       });
     });
+    if (this.closed) { await this.stopServer(true); throw new Error("acp_mcp_control_closed"); }
     const address = this.server.address();
     if (!address || typeof address === "string") {
       throw new Error(`${this.options.serverName}_control_server_address_unavailable`);
@@ -53,15 +64,23 @@ export class LoopbackMcpControlServer implements AcpMcpControlServer {
   }
 
   bindSession(sessionId: string): void {
+    if (this.closed) throw new Error("acp_mcp_control_closed");
+    if (this.sessionId && this.sessionId !== sessionId) throw new Error("acp_mcp_control_already_bound");
     this.sessionId = sessionId;
   }
 
   async close(options: { force?: boolean } = {}): Promise<void> {
+    this.closed = true;
     this.sessionId = null;
-    if (!this.endpoint) return;
+    await this.starting?.catch(() => undefined);
+    await this.stopServer(options.force ?? false);
+  }
+
+  private async stopServer(force: boolean): Promise<void> {
     this.endpoint = null;
-    if (options.force) this.server.closeAllConnections();
-    await new Promise<void>((resolve) => this.server.close(() => resolve()));
+    if (force) this.server.closeAllConnections();
+    if (!this.server.listening) return;
+    await new Promise<void>((resolve, reject) => this.server.close(error => error ? reject(error) : resolve()));
   }
 
   private async handle(request: IncomingMessage, response: ServerResponse): Promise<void> {
@@ -75,10 +94,12 @@ export class LoopbackMcpControlServer implements AcpMcpControlServer {
       return this.respond(response, 409, toolFailure(this.options.locale ?? "zh-CN", this.options.sessionNotReadyError));
     }
     try {
+      const sessionId = this.sessionId;
       const body = await this.readJson(request);
+      if (this.closed || this.sessionId !== sessionId) return this.respond(response, 409, toolFailure(this.options.locale ?? "zh-CN", this.options.sessionNotReadyError));
       if (!body || typeof body !== "object") throw new Error("request_body_must_be_object");
       const input = body as { tool?: unknown; arguments?: unknown };
-      const result = await this.options.dispatch(this.sessionId, input.tool, input.arguments);
+      const result = await this.options.dispatch(sessionId, input.tool, input.arguments);
       this.respond(response, isFailure(result) ? 400 : 200, result);
     } catch {
       this.respond(response, 400, toolFailure(this.options.locale ?? "zh-CN", this.options.invalidRequestPrefix));
@@ -94,6 +115,7 @@ export class LoopbackMcpControlServer implements AcpMcpControlServer {
   }
 
   private respond(response: ServerResponse, status: number, body: unknown): void {
+    if (response.destroyed || response.writableEnded) return;
     response.writeHead(status, { "content-type": "application/json" });
     response.end(JSON.stringify(body));
   }

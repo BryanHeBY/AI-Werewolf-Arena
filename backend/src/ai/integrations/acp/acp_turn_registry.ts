@@ -53,6 +53,8 @@ export class AcpTurnRegistry {
   private readonly pendingBySession = new Map<string, PendingTurn>();
   private readonly nextTurnNumberBySession = new Map<string, number>();
   private readonly reception: ActionReception;
+  private closed = false;
+  get snapshot() { return { closed: this.closed, pending: this.pendingBySession.size }; }
   readonly locale: Locale;
 
   constructor(
@@ -65,6 +67,7 @@ export class AcpTurnRegistry {
   }
 
   openTurn(request: ActionRequest, sessionId: string): AcpPendingTurn {
+    if (this.closed) throw new Error("acp_registry_closed");
     if (this.pendingBySession.has(sessionId)) {
       throw new Error("acp_turn_already_open_for_session");
     }
@@ -139,6 +142,7 @@ export class AcpTurnRegistry {
   }
 
   close(): void {
+    this.closed = true;
     for (const pending of this.pendingBySession.values()) {
       pending.owner.close();
       pending.resolve(null);

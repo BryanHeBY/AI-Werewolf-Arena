@@ -1,4 +1,5 @@
 import { spawn, ChildProcess } from "node:child_process";
+import { randomUUID } from "node:crypto";
 import { promises as fs } from "node:fs";
 import * as path from "node:path";
 import { Readable, Writable } from "node:stream";
@@ -15,8 +16,8 @@ import {
   AcpProcessClientOptions,
   AcpSessionUpdate,
 } from "./session";
-import { closeAcpSession } from "./session_lifecycle";
-import { awaitWithAbort, settleWithin } from "../../runtime/turn_deadline";
+import { AcpInitializationCleanupError, closeAcpSession } from "./session_lifecycle";
+import { awaitBeforeDeadline, awaitWithAbort } from "../../runtime/turn_deadline";
 
 const ACP_CANCEL_TIMEOUT_MS = 300;
 const ACP_SESSION_CLOSE_TIMEOUT_MS = 1_000;
@@ -50,8 +51,9 @@ function signalProcess(child: ChildProcess, signal: NodeJS.Signals): void {
     } else if (child.exitCode === null && child.signalCode === null) {
       child.kill(signal);
     }
-  } catch {
+  } catch (error) {
     // The process group can exit between the state check and signal delivery.
+    if ((error as NodeJS.ErrnoException).code !== "ESRCH") throw error;
   }
 }
 
@@ -76,17 +78,19 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
     let connection: acp.ClientConnection | undefined;
     let processSession: AcpProcessSession | undefined;
     const cleanup = async () => {
-      if (processSession) return processSession.close({ force: true });
-      connection?.close();
+      if (processSession) return closeAcpSession(processSession, true);
+      const failures: unknown[] = [];
+      try { connection?.close(); } catch (error) { failures.push(error); }
       if (child) {
-        signalProcess(child, "SIGKILL");
+        try { signalProcess(child, "SIGKILL"); } catch (error) { failures.push(error); }
         child.stdin?.destroy();
         child.stdout?.destroy();
         child.stderr?.destroy();
-        await waitForProcessExit(child, ACP_PROCESS_KILL_TIMEOUT_MS);
+        if (!await waitForProcessExit(child, ACP_PROCESS_KILL_TIMEOUT_MS)) failures.push(new Error("acp_process_did_not_exit"));
         child.unref();
       }
-      if (mcpControl) await settleWithin(mcpControl.close({ force: true }), ACP_SESSION_CLOSE_TIMEOUT_MS);
+      if (mcpControl) try { await awaitBeforeDeadline(() => mcpControl!.close({ force: true }), Date.now() + ACP_SESSION_CLOSE_TIMEOUT_MS); } catch (error) { failures.push(error); }
+      if (failures.length) throw new AggregateError(failures, "acp_initialization_resource_close_failed");
     };
     const initialize = async (): Promise<AcpSession> => {
       controller.signal.throwIfAborted();
@@ -100,7 +104,7 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
         [bridge.serverEntrypoint(__filename)],
       );
       if (controller.signal.aborted) {
-        await control.close({ force: true });
+        await awaitBeforeDeadline(() => control.close({ force: true }), Date.now() + ACP_SESSION_CLOSE_TIMEOUT_MS);
         controller.signal.throwIfAborted();
       }
       child = spawn(this.options.command, this.options.args ?? [], {
@@ -158,13 +162,13 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
         mcpServers: [mcpServer],
       }).start();
       controller.signal.throwIfAborted();
-      const activeSessionId = session.sessionId;
       await applyAcpSessionConfigOptions(
         protocolConnection.agent,
         session,
         this.options.sessionConfigOptions ?? {},
       );
-      control.bindSession(activeSessionId);
+      const registrySessionId = randomUUID();
+      control.bindSession(registrySessionId);
       const createdSession = new AcpProcessSession(
         session,
         protocolConnection.agent,
@@ -177,6 +181,7 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
         protocolConnection,
         initializeResponse.agentCapabilities?.sessionCapabilities?.close != null,
         this.options.onPromptEnd,
+        registrySessionId,
       );
       processSession = createdSession;
       controller.signal.throwIfAborted();
@@ -189,13 +194,10 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
     };
     try {
       const task = initialize();
-      void task.then((session) => {
-        if (controller.signal.aborted) void closeAcpSession(session, true);
-      }, () => undefined);
       return await awaitWithAbort(task, controller.signal);
     } catch (error) {
       controller.abort(error);
-      await cleanup();
+      try { await cleanup(); } catch (cleanupError) { throw new AcpInitializationCleanupError(error, cleanupError); }
       throw error;
     } finally {
       clearTimeout(timeout);
@@ -218,6 +220,8 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
 
 class AcpProcessSession implements AcpSession {
   private closed = false;
+  private closing?: Promise<void>;
+  private reclaimed = false;
   private auditMessages: string[] = [];
   private auditThoughtText = "";
   private auditMessageId: string | null = null;
@@ -235,10 +239,11 @@ class AcpProcessSession implements AcpSession {
     private readonly connection?: acp.ClientConnection,
     private readonly supportsSessionClose = false,
     private readonly onPromptEnd?: (actorId: number) => void,
+    private readonly registrySessionId = session.sessionId,
   ) {}
 
   get sessionId(): string {
-    return this.session.sessionId;
+    return this.registrySessionId;
   }
 
   async prompt(text: string): Promise<void> {
@@ -254,60 +259,60 @@ class AcpProcessSession implements AcpSession {
   }
 
   async cancel(): Promise<void> {
-    if (!this.closed) {
-      await settleWithin(this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId }), ACP_CANCEL_TIMEOUT_MS);
+    if (!this.closed && this.process.exitCode === null && this.process.signalCode === null) {
+      await awaitBeforeDeadline(() => this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId }), Date.now() + ACP_CANCEL_TIMEOUT_MS);
     }
   }
 
   async close(options: { force?: boolean } = {}): Promise<void> {
-    if (this.closed) {
-      return;
+    let forcedError: unknown;
+    let forceFailed = false;
+    // A force request must still reach a process already in graceful teardown.
+    if (options.force && !this.reclaimed) try { signalProcess(this.process, "SIGKILL"); } catch (error) { forcedError = error; forceFailed = true; }
+    if (!this.closing) {
+      this.closed = true;
+      this.closing = this.closeResources(options.force ?? false);
     }
-    this.closed = true;
-    if (options.force) signalProcess(this.process, "SIGKILL");
-    try {
-      if (!options.force) {
-        await settleWithin(
-          this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId }),
-          ACP_CANCEL_TIMEOUT_MS,
-        );
-        if (this.supportsSessionClose) {
-          await settleWithin(
-            this.client.request(acp.methods.agent.session.close, { sessionId: this.session.sessionId }),
-            ACP_SESSION_CLOSE_TIMEOUT_MS,
-          );
-        }
-      }
-    } finally {
-      this.session.dispose();
-      // Closing the transport closes stdin. codex-acp treats that as shutdown and
-      // gives its nested Codex process a short graceful window before terminating it.
-      this.connection?.close();
-      this.process.stdin?.end();
+    try { await this.closing; }
+    catch (error) { if (forceFailed) throw new AggregateError([forcedError, error], "acp_process_close_failed"); throw error; }
+    if (forceFailed) throw forcedError;
+  }
 
-      let exited = await waitForProcessExit(
-        this.process,
-        ACP_PROCESS_GRACEFUL_EXIT_TIMEOUT_MS,
-      );
-      if (!exited) {
-        signalProcess(this.process, "SIGTERM");
-        exited = await waitForProcessExit(this.process, ACP_PROCESS_TERMINATE_TIMEOUT_MS);
-      }
-      if (!exited) {
-        signalProcess(this.process, "SIGKILL");
-        exited = await waitForProcessExit(this.process, ACP_PROCESS_KILL_TIMEOUT_MS);
-      }
-      if (!exited) {
-        // Do not let a non-cooperative external agent retain this game's event loop.
-        this.process.stdin?.destroy();
-        this.process.stdout?.destroy();
-        this.process.stderr?.destroy();
-        this.process.unref();
-      }
-      // The ACP root can exit before MCP descendants release their process group.
-      signalProcess(this.process, "SIGKILL");
-      if (this.mcpControl) await settleWithin(this.mcpControl.close({ force: true }), ACP_SESSION_CLOSE_TIMEOUT_MS);
+  private async closeResources(force: boolean): Promise<void> {
+    const failures: unknown[] = [];
+    if (!force && this.process.exitCode === null && this.process.signalCode === null) {
+      try {
+        await awaitBeforeDeadline(() => this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId }), Date.now() + ACP_CANCEL_TIMEOUT_MS);
+      } catch (error) { failures.push(error); }
+      if (this.supportsSessionClose) try {
+        await awaitBeforeDeadline(() => this.client.request(acp.methods.agent.session.close, { sessionId: this.session.sessionId }), Date.now() + ACP_SESSION_CLOSE_TIMEOUT_MS);
+      } catch (error) { failures.push(error); }
     }
+    try { this.session.dispose(); } catch (error) { failures.push(error); }
+    try { this.connection?.close(); } catch (error) { failures.push(error); }
+    try { this.process.stdin?.end(); } catch (error) { failures.push(error); }
+    let exited = await waitForProcessExit(this.process, force ? ACP_PROCESS_KILL_TIMEOUT_MS : ACP_PROCESS_GRACEFUL_EXIT_TIMEOUT_MS);
+    if (!exited) {
+      try { signalProcess(this.process, "SIGTERM"); } catch (error) { failures.push(error); }
+      exited = await waitForProcessExit(this.process, ACP_PROCESS_TERMINATE_TIMEOUT_MS);
+    }
+    if (!exited) {
+      try { signalProcess(this.process, "SIGKILL"); } catch (error) { failures.push(error); }
+      exited = await waitForProcessExit(this.process, ACP_PROCESS_KILL_TIMEOUT_MS);
+    }
+    if (!exited) {
+      failures.push(new Error("acp_process_did_not_exit"));
+      this.process.stdin?.destroy(); this.process.stdout?.destroy(); this.process.stderr?.destroy(); this.process.unref();
+    }
+    // Descendants can outlive the root. Reclaim the owned process group too.
+    try { signalProcess(this.process, "SIGKILL"); } catch (error) { failures.push(error); }
+    let controlClosed = !this.mcpControl;
+    if (this.mcpControl) try {
+      await awaitBeforeDeadline(() => this.mcpControl!.close({ force: true }), Date.now() + ACP_SESSION_CLOSE_TIMEOUT_MS);
+      controlClosed = true;
+    } catch (error) { failures.push(error); }
+    this.reclaimed = exited && controlClosed;
+    if (failures.length) throw new AggregateError(failures, "acp_process_close_failed");
   }
 
   takeAuditTrace(): AcpSessionAuditTrace {
