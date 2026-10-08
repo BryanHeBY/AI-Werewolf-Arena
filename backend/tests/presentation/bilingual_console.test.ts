@@ -7,6 +7,7 @@ import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
 
 const event = <K extends GameEvent["type"]>(type: K, payload: Extract<GameEvent, { type: K }>["payload"]): Extract<GameEvent, { type: K }> => ({ timestamp: 1, type, payload }) as Extract<GameEvent, { type: K }>;
 const events: GameEvent[] = [
+  event("gravekeeper_reported", { actorId: 3, targetId: 1, exileDay: 1, receivedDay: 2, result: { kind: "camp", camp: "wolf" } }),
   event("knight_duel", { actorId: 1, targetId: 2, result: "wolf" }), event("knight_duel", { actorId: 1, targetId: 2, result: "not_wolf" }),
   event("god_private_game_info", { boardSize: 2, players: [{ id: 1, seat: 1, name: "One", role: "wolf", camp: "wolf" }, { id: 2, seat: 2, name: "Two", role: "seer", camp: "good" }] }),
   ...[Phase.Night, Phase.Day, Phase.Voting].map(phase => event("phase_changed", { phase, day: 1 })),
@@ -32,6 +33,13 @@ const events: GameEvent[] = [
   event("sheriff_direction_chosen", { sheriffId: 1, direction: "clockwise" }), event("sheriff_direction_chosen", { sheriffId: 1, direction: "counter_clockwise" }),
   event("game_over", { winner: Camp.Good, reason: "all_wolves_eliminated" }), event("game_over", { winner: null, reason: "runtime_timeout" }),
 ];
+
+for(const locale of ["zh-CN","en"] as const)test(`${locale}: passive Gravekeeper information is absent from public terminal/chat and only appears as an explicit private camp label`,()=>{
+ const report=event("gravekeeper_reported",{actorId:3,targetId:1,exileDay:1,receivedDay:2,result:{kind:"camp",camp:"wolf"}}),registry=getDefaultScriptEventRenderRegistry();
+ const expected=locale==="en"?"Gravekeeper 3 learns on night 2 that player 1, exiled on day 1, has camp label Werewolves":"3号守墓人在第2夜获知第1日放逐1号的阵营标签：狼人";
+ expect(registry.toJudgeLine(report,locale)).toBe(expected);expect(registry.toLiveRender(report,true,locale)).toEqual([{kind:"private",text:expected}]);expect(registry.toLiveRender(report,false,locale)).toEqual([]);expect(toChatLines([report],locale)).toEqual([]);
+ const lines:string[]=[];presentStreamEvents([report],false,line=>lines.push(line),locale);expect(lines).toEqual([]);
+});
 
 for(const locale of ["zh-CN","en"] as const)test(`${locale}: Knight terminal judge/live text declares exactly the duel loser without reclassifying a non-wolf`,()=>{
  const registry=getDefaultScriptEventRenderRegistry();

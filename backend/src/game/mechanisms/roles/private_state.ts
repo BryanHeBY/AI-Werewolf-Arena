@@ -2,6 +2,7 @@
 import { EntityId, WitchSelfHealRule } from "../../../core/domain/model";
 import { RoleComponent } from "../../../core/domain/components/role";
 import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
+import type { ExileFeedback } from "../../../core/domain/events";
 import { findNightAbility, installNativeAbility } from "./abilities";
 
 const PRIVATE_STATE_KEYS = {
@@ -11,6 +12,7 @@ const PRIVATE_STATE_KEYS = {
   wolfKing: "wolf_king",
   whiteWolfKing: "white_wolf_king",
   knight: "knight",
+  gravekeeper: "gravekeeper",
   idiot: "idiot",
   seer: "seer",
 } as const;
@@ -37,6 +39,8 @@ export interface HunterState {
 export interface WolfKingState { canShoot: boolean }
 export interface WhiteWolfKingState { canDetonate: boolean }
 export interface KnightState { canDuel: boolean }
+export interface GravekeeperReport extends ExileFeedback { receivedDay: number }
+export interface GravekeeperState { history: GravekeeperReport[] }
 
 /** 白痴私有状态。 */
 export interface IdiotState {
@@ -110,6 +114,12 @@ export function setKnightState(roleComp: RoleComponent, state: KnightState): Kni
 }
 export function getKnightState(roleComp: RoleComponent): KnightState | undefined {
   return getState(roleComp, PRIVATE_STATE_KEYS.knight);
+}
+export function setGravekeeperState(roleComp: RoleComponent, state: GravekeeperState): GravekeeperState {
+  return setState(roleComp, PRIVATE_STATE_KEYS.gravekeeper, state);
+}
+export function getGravekeeperState(roleComp: RoleComponent): GravekeeperState | undefined {
+  return getState(roleComp, PRIVATE_STATE_KEYS.gravekeeper);
 }
 
 /** 写入白痴私有状态。 */

@@ -15,6 +15,7 @@ const guardActionStage: NightStageHandler = {
       if (!ctx.world.getAliveEntityIds().includes(guardId) || activeNightAbility(ctx.world.getComponent<RoleComponent>(guardId, COMPONENT.Role), "guard", ctx.currentDay(), ability.id) !== ability) continue;
       const req = ctx.makeRequest(guardId, ["guard"], { stage: "guard", ability_id: ability.id });
       const action = await ctx.actionProvider.getAction(req);
+      if (!ctx.isCurrent()) return;
       if (action?.name !== "guard") {
         continue;
       }
@@ -23,6 +24,7 @@ const guardActionStage: NightStageHandler = {
         phase: Phase.Night,
         day: ctx.currentDay(), abilityId: ability.id,
       });
+      if (!ctx.isCurrent()) return;
       if (!result.ok || !result.sanitizedCall) {
         safeRecordLogicOp({
           scope: "phase_pipeline",

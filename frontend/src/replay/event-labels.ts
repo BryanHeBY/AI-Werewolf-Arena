@@ -1,5 +1,5 @@
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
-import { readSeerInspectionResult, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
+import { readGravekeeperFeedback, readSeerInspectionResult, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
 import { text, term, inspectionLabel, outcomeLabel, outcomeWinnersLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { campName, phaseName, resultReasonName, roleName } from "./replay-localization";
 
@@ -10,6 +10,10 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerI
   const target = numberValue(p.targetId);
   const players = (value: unknown) => numberList(value, locale) || t("replay.none");
   switch (event.type) {
+    case "gravekeeper_reported": {
+      const report = readGravekeeperFeedback(p);
+      return report ? t("console.gravekeeper.report", { actor: report.actorId, target: report.targetId, exileDay: report.exileDay, receivedDay: report.receivedDay, result: inspectionLabel(report.result, locale) }) : t("replay.unknown");
+    }
     case "ability_changed": {
       const kind = stringValue(p.kind), operation = stringValue(p.operation);
       return t("ability.change", { actor, id: stringValue(p.abilityId),

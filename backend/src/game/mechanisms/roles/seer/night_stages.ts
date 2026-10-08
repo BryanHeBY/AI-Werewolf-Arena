@@ -18,6 +18,7 @@ const seerCheckStage: NightStageHandler = {
         ability_id: ability.id,
       });
       const action = await ctx.actionProvider.getAction(req);
+      if (!ctx.isCurrent()) return;
       if (action?.name !== "check_identity") {
         continue;
       }
@@ -26,12 +27,14 @@ const seerCheckStage: NightStageHandler = {
         phase: Phase.Night,
         day: ctx.currentDay(), abilityId: ability.id,
       });
+      if (!ctx.isCurrent()) return;
       if (!result.ok || !result.sanitizedCall) {
         continue;
       }
 
       const targetId = result.sanitizedCall.args.target_id;
       const inspection = resolveInspection(ctx.world, targetId, "camp", ctx.roleCatalog);
+      if (!ctx.isCurrent()) return;
       if (!inspection) continue;
       const isWerewolf = inspection.camp === Camp.Wolf;
       const seerRole = ctx.world.getComponent<RoleComponent>(seerId, COMPONENT.Role);

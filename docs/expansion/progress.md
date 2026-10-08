@@ -9,7 +9,7 @@
 | P2 | 完成 | T01逐局随机/T02严格脚本/T03受限观察/T04动作录制与兼容回放；227后端+33前端测试，三路复查0阻断 |
 | P3 | 完成 | I01–I04、诊断/CLI与受控源码扫描；实际SDK/ACP中英完整场景与Tape重放、前端/视频门槛；英文入口开放 |
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
-| P5 | 进行中 | 狼王/白狼王/骑士已交付；守墓人继续，见[狼王契约](wolf-king.md) |
+| P5 | 完成 | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md) |
 | P6–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
@@ -234,3 +234,9 @@ A01/A02/M21/G01–G04和基础差异闭环；七項在awa_classic1.0.0已验板�
 第十项`knight`交付：普通一次决斗、三离散窗口及[]关闭，真实Camp/查验伪装分离、公开wolf/not_wolf不揭第三方牌、双方生命/角色/camp与本人资源最终再验。资源/事实提案由同步commit提交，DeathResolution唯一死亡链、PhaseManager唯一推进和判胜；Duel禁枪/带人，纯Day初批DuelFailure获本人授权遗言及徽章。间隙含最后发言、自爆先手与双末窗顺序已明确。冻结版本/API/Tape及资料改编见[规则卡](rules/awa-knight-v1.md)、[契约](knight.md)，[审查记录](reviews/p5-knight.md)保来源/资源提示证据纠正及最终门槛。
 
 最终release770／51514／103文件及smoke通过；原134＋新48＝182实际本机SDK/ACP/混合中英完整局及全部Tape，新增两板40受限seed零拒绝/回退/自然终局/技能正覆盖与重放2／50。core23／204，终端5／321，front77／614/types/build、实际Chromium18及中文命中/英文失误PNG通过。三路复查0阻断，目录10verified／54planned，新6/12 board和game example可加载。P5剩守墓人再推进P6–P10；未将12人已死骑士CP0当次日模型输入，未访问真实认证/外部模型或改用户configs；整体目标继续。
+
+## P5：守墓人及第一批角色收尾
+
+第十一项`gravekeeper`交付：前日真实放逐主目标的camp标签定案冻结、下一夜女巫后/预言家前被动反馈，无原生主动工具；PhaseManager私有fact输入、角色/DTO只有已交付历史，actor-only事件与条件终端显示，白痴/无放逐/自爆/决斗/追加枪死不冒充exile。审查修复Night取消后续写/结伤/覆盖跳转，以phaseRevision与阶段/await/gateway检查短路；camp-only共享严格reader让坏历史Unknown而非具体牌。接口与边界见[卡](rules/awa-gravekeeper-v1.md)、[契约](gravekeeper.md)，[审查](reviews/p5-gravekeeper.md)记录发现、复查与证据。
+
+最终release820／60313／107文件及smoke通过；原182＋守墓48＝230实际本机SDK/ACP/混合双语完整局及全部Tape。core20／236，40受限seed/重放及条件终端合9／385，配置8／50；front83／711/type/build，最终actualChromium20（含席位/字幕bbox）与中英十二人真实PNG通过。英文字幕遮下排角色问题已修并复验，未改视频编码器。目录11verified／53planned，新6/12 public board与game可加载，四项P5要求闭环见[整阶段验收](reviews/p5-activation.md)。P6从摄梦人等冻结依赖继续，P7–P10/53角色/发布级矩阵与T6保持完整目标；没有把记录当模型实际输入，没有调用真实模型/认证或改用户configs。

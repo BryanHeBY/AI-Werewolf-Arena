@@ -30,6 +30,13 @@ export interface PrivatePlayerInfo {
   camp: string;
 }
 
+/** Internal snapshot of an actual exile, delivered only by the following night's role stage. */
+export interface ExileFeedback {
+  exileDay: number;
+  targetId: EntityId;
+  result: Extract<InspectionResult, { kind: "camp" }>;
+}
+
 export interface EventPayloadMap {
   ability_changed: {
     actorId: EntityId; abilityId: string; kind: "seer_check" | "guard" | "potion";
@@ -51,6 +58,7 @@ export interface EventPayloadMap {
   wolf_self_destruct: { wolfId: EntityId; window: ActionWindow };
   white_wolf_king_self_destruct: { actorId: EntityId; targetId: EntityId | null; window: ActionWindow };
   knight_duel: { actorId: EntityId; targetId: EntityId; result: "wolf" | "not_wolf" };
+  gravekeeper_reported: ExileFeedback & { actorId: EntityId; receivedDay: number };
   day_speech: { actorId: EntityId; text: string };
   vote_cast: VoteRecord;
   vote_summary: { votes: VoteRecord[]; tally: Record<number, number>; target: EntityId | null };

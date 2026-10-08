@@ -7,6 +7,7 @@ import {
   ActionStage,
   EntityId,
   GameEvent,
+  ExileFeedback,
   NightSummary,
   Role,
 } from "../../../../core/domain/model";
@@ -25,6 +26,8 @@ export interface NightStageState {
 
 /** 夜间阶段执行上下文。 */
 export interface NightStageContext {
+  isCurrent(): boolean;
+  readonly previousExile: Readonly<ExileFeedback> | null;
   world: World;
   roleCatalog: RoleCatalog;
   toolGateway: ToolGateway;

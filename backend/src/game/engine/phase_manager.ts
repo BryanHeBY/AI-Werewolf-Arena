@@ -7,6 +7,7 @@ import {
   BoardConfig,
   EntityId,
   GameEvent,
+  ExileFeedback,
   GameResult,
   type WinDecision,
   Camp,
@@ -30,6 +31,7 @@ import { RoleRegistry } from "../../core/domain/registries/role_registry";
 import { COMPONENT } from "../../core/domain/components/names";
 import { commitSelfDestructSelection } from "../mechanisms/self_destruct/commit";
 import { commitKnightDuel } from "../mechanisms/roles/knight/commit";
+import { captureExileFeedback } from "../mechanisms/roles/gravekeeper/feedback";
 import { VotingRightComponent } from "../../core/domain/components/voting_right";
 import { IdentityComponent } from "../../core/domain/entities/player";
 import { RoleComponent } from "../../core/domain/components/role";
@@ -47,6 +49,8 @@ export class PhaseManager {
   private readonly dayPipeline: DayPipeline;
   private readonly votingPipeline: VotingPipeline;
   private readonly deathResolution: DeathResolution;
+  private previousExile: ExileFeedback | null = null;
+  private phaseRevision = 0;
 
   private state: RuntimeSnapshot = {
     day: 1,
@@ -152,6 +156,7 @@ export class PhaseManager {
    * 手动跳转阶段（主要用于中断流程控制）。
    */
   jumpTo(phase: Phase): void {
+    this.phaseRevision++;
     this.setPhase(phase);
   }
 
@@ -169,11 +174,15 @@ export class PhaseManager {
     }
 
     this.setPhase(Phase.Night);
+    const nightDay = this.state.day, nightRevision = this.phaseRevision;
+    const nightIsCurrent = () => this.state.day === nightDay && this.state.phase === Phase.Night && !this.state.gameOver && this.phaseRevision === nightRevision;
     const night = await this.nightPipeline.execute(
       this.config,
       actionProvider,
       this.state.day,
+      { previousExile: this.previousExile, isCurrent: nightIsCurrent },
     );
+    if (night.interrupted || !nightIsCurrent()) return this.getSnapshot();
     const firstDaySheriffBeforeNightInfo =
       this.state.day === 1 && this.config.enableSheriff === true;
 
@@ -263,6 +272,9 @@ export class PhaseManager {
     }
 
     if (votingResult.removed.length > 0) {
+      const target = votingResult.summary.target;
+      this.previousExile = target !== null && votingResult.removed.includes(target)
+        ? captureExileFeedback(this.world, target, cycleDay) : null;
       const sources: DeathSources = {};
       for (const removedId of votingResult.removed) {
         sources[removedId] = [DeathCause.Exile];
@@ -366,6 +378,7 @@ export class PhaseManager {
     if (previous === phase) {
       return;
     }
+    this.phaseRevision++;
     this.world.closeDeathActions();
     const gameOverPayload =
       phase === Phase.GameOver && this.state.result

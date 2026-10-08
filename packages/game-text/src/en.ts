@@ -1,6 +1,13 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "role.gravekeeper.brief": "From night two, passively learns the camp inspection label of the previous day's actual exile target; no action is required.",
+  "role.gravekeeper.state": "Your role is Gravekeeper, a good special role. You have no native active night tool; after Witch and before Seer, you automatically receive the previous day's actual exile camp feedback.",
+  "role.gravekeeper.no_report": "No exile feedback received yet; a day without an actual exile does not repeat older results.",
+  "role.gravekeeper.latest": "Latest grave feedback: night {receivedDay} reports player {target}, exiled on day {exileDay}, as {result}. This is a camp label, not an exact role or victory affiliation.",
+  "console.gravekeeper.report": "Gravekeeper {actor} learns on night {receivedDay} that player {target}, exiled on day {exileDay}, has camp label {result}",
+  "stage.gravekeeper_feedback": "Gravekeeper passive feedback",
+  "replay.stage.gravekeeper_feedback": "Grave feedback",
   "common.none": "None", "common.unknown": "Unknown", "common.yes": "Yes", "common.no": "No",
   "common.player_name": "Player {id}",
   "common.player": "Player {id}", "common.enabled": "Enabled", "common.disabled": "Disabled",

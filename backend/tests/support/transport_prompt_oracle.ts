@@ -17,6 +17,11 @@ export function assertTransportPrompt(plan: ActorTransportPlan, turn: PlannedTur
   for (const marker of plan.requiredCurrentMarkers ?? []) if (!content.includes(marker)) throw new Error("fixture_private_marker_missing");
   for (const marker of plan.forbiddenCurrentMarkers ?? []) if (content.includes(marker)) throw new Error("fixture_private_marker_exposed");
   if (turn.knightResourceRemaining !== undefined && !content.includes(plan.locale === "en" ? `Duel opportunities remaining: ${turn.knightResourceRemaining}.` : `决斗机会剩余：${turn.knightResourceRemaining}。`)) throw new Error("fixture_knight_resource_mismatch");
+  if (turn.gravekeeperLatest !== undefined) {
+    const report = turn.gravekeeperLatest, camps = { good: ["好人", "Good"], wolf: ["狼人", "Werewolves"], third_party: ["第三方", "Third party"] };
+    const marker = report ? plan.locale === "en" ? `Latest grave feedback: night ${report.receivedDay} reports player ${report.targetId}, exiled on day ${report.exileDay}, as ${camps[report.camp][1]}.` : `最新守墓反馈：第${report.receivedDay}夜收到第${report.exileDay}日放逐${report.targetId}号的结果：${camps[report.camp][0]}。` : plan.locale === "en" ? "No exile feedback received yet;" : "尚未收到放逐反馈；";
+    if (!content.includes(marker)) throw new Error("fixture_gravekeeper_feedback_mismatch");
+  }
   if (plan.locale === "en" && /[\u4e00-\u9fff]/.test(content)) throw new Error("fixture_prompt_not_english");
   const stage = stages[turn.stage][plan.locale === "en" ? 1 : 0];
   const marker = plan.locale === "en" ? `stage: ${stage};` : `子阶段是${stage}，`;
@@ -28,7 +33,7 @@ export function assertTransportPrompt(plan: ActorTransportPlan, turn: PlannedTur
 export function assertTransportEvents(role: string, events: Array<[number, string, Record<string, unknown>]>, actorId: number) {
   for (const [, type, payload] of events) {
     if (type === "god_private_game_info") throw new Error("fixture_god_information_exposed");
-    if (["seer_checked", "witch_potion_used", "witch_potion_skipped", "guard_applied"].includes(type) && payload.actorId !== actorId) throw new Error("fixture_other_private_skill_exposed");
+    if (["seer_checked", "gravekeeper_reported", "witch_potion_used", "witch_potion_skipped", "guard_applied"].includes(type) && payload.actorId !== actorId) throw new Error("fixture_other_private_skill_exposed");
     if (["wolf_tactical_order", "wolf_discussion", "wolf_discussion_ended", "wolf_kill_vote_cast"].includes(type) && role !== "wolf" && role !== "wolf_king" && role !== "white_wolf_king") throw new Error("fixture_wolf_information_exposed");
   }
 }

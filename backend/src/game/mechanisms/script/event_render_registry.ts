@@ -1,5 +1,5 @@
-import { readVictoryResult } from "@ai-werewolf-arena/replay-contract";
-import { text, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, type Locale } from "@ai-werewolf-arena/game-text";
+import { readGravekeeperFeedback, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
+import { text, inspectionLabel, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, type Locale } from "@ai-werewolf-arena/game-text";
 /** 文件说明：事件 -> 脚本回放文本/终端文本渲染注册表。 */
 import { GameEvent } from "../../../core/domain/model";
 import {
@@ -37,12 +37,18 @@ function resultLabel(payload: unknown, locale: Locale, key: "console.judge.resul
   return text(locale, key, { winner: getDefaultTextLocalizationRegistry().winnerName(old.winner ?? "", locale), reason: getDefaultTextLocalizationRegistry().gameOverReason(old.reason ?? "", locale) });
 }
 
+function gravekeeperLabel(payload: unknown, locale: Locale): string {
+  const report = readGravekeeperFeedback(payload);
+  return report ? text(locale, "console.gravekeeper.report", { actor: report.actorId, target: report.targetId, exileDay: report.exileDay, receivedDay: report.receivedDay, result: inspectionLabel(report.result, locale) }) : text(locale, "replay.unknown");
+}
+
 const CHAT_HANDLERS: ScriptChatLineHandlers = {
   day_speech: (event, locale = "zh-CN") => text(locale, "console.chat.day", { actor: event.payload.actorId, speech: event.payload.text }),
   ...WOLF_SCRIPT_CHAT_HANDLERS,
 };
 
 const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
+  gravekeeper_reported: (event, locale = "zh-CN") => gravekeeperLabel(event.payload, locale),
   phase_changed: (event, locale = "zh-CN") => {
     const p = event.payload;
     if (p.phase === "night") return text(locale, "console.judge.night", { day: p.day });
@@ -71,6 +77,7 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
 };
 
 const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
+  gravekeeper_reported: () => "gravekeeper_feedback",
   phase_changed: (event) => String(event.payload.phase ?? "phase_changed"),
   day_speech: () => "day_speech",
   vote_cast: () => "voting",
@@ -91,6 +98,7 @@ const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
 };
 
 const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
+  gravekeeper_reported: (event, printPrivateEvents, locale = "zh-CN") => printPrivateEvents ? [{ kind: "private", text: gravekeeperLabel(event.payload, locale) }] : [],
   ability_changed: (event, printPrivateEvents, locale = "zh-CN") => printPrivateEvents ? [{ kind: "private", text: text(locale, "ability.change", { actor: event.payload.actorId, id: event.payload.abilityId, kind: text(locale, `ability.kind.${event.payload.kind}`), operation: text(locale, `ability.operation.${event.payload.operation}`) }) }] : [],
   god_private_game_info: (event, _private, locale = "zh-CN") => [{ kind: "god", text: text(locale, "console.live.initial", { roles: event.payload.players.map(item => `${item.seat}:${getDefaultTextLocalizationRegistry().roleName(item.role, locale)}`).join(", ") }) }],
   day_speech: (event, _private, locale = "zh-CN") => [{ kind: "system", text: text(locale, "console.live.day", { actor: event.payload.actorId, speech: event.payload.text }) }],

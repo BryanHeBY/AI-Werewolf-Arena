@@ -1,5 +1,12 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "role.gravekeeper.brief": "从第二夜起被动获知上一日实际放逐主目标的阵营查验标签，不需要主动行动。",
+  "role.gravekeeper.state": "你的底牌是【守墓人】，好人神职。你没有原生主动夜间工具；女巫后、预言家前自动收到上一日实际放逐的阵营反馈。",
+  "role.gravekeeper.no_report": "尚未收到放逐反馈；无实际放逐时不重复更早的结果。",
+  "role.gravekeeper.latest": "最新守墓反馈：第{receivedDay}夜收到第{exileDay}日放逐{target}号的结果：{result}。这是阵营标签，不是具体身份或胜利归属。",
+  "console.gravekeeper.report": "{actor}号守墓人在第{receivedDay}夜获知第{exileDay}日放逐{target}号的阵营标签：{result}",
+  "stage.gravekeeper_feedback": "守墓人被动反馈",
+  "replay.stage.gravekeeper_feedback": "守墓反馈",
   "common.none": "无", "common.unknown": "未知", "common.yes": "是", "common.no": "否",
   "common.player_name": "玩家{id}",
   "common.player": "{id}号", "common.enabled": "启用", "common.disabled": "未启用",

@@ -40,6 +40,7 @@ const witchActionStage: NightStageHandler = {
         ...(ability.state.heal > 0 && !ability.state.healUsedThisNight && !ability.state.poisonUsedThisNight ? { wolf_target: ctx.state.wolfTarget } : {}),
       });
       const action = await ctx.actionProvider.getAction(req);
+      if (!ctx.isCurrent()) return;
       if (action?.name !== "use_potion") {
         ctx.events.push({
           timestamp: Date.now(),
@@ -53,6 +54,7 @@ const witchActionStage: NightStageHandler = {
         phase: Phase.Night,
         day: ctx.currentDay(), abilityId: ability.id,
       });
+      if (!ctx.isCurrent()) return;
       if (!result.ok || !result.sanitizedCall) {
         ctx.events.push({
           timestamp: Date.now(),

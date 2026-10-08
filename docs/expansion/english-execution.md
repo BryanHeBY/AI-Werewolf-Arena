@@ -5,7 +5,7 @@
 - runGame接收ResolvedGameSetup.context.locale/displayLocale，bootstrap明确绑定游戏locale；CLI的--locale只覆盖本次配置副本，--display-locale独立选终端语言。
 - simulateGames新增可选locale（默认zh-CN，未知拒绝），CLI simulate --locale与游戏World、manifest/Tape一致。
 - 英文reproduction.json可通过既有离线replay:actions重放；语言由已校验metadata进入World，身份名字和动作文本原样。source/lock/RNG/schema/规则兼容门槛保留。
-- check报告executionSupport.locales为zh-CN/en，P4 A02后mixedTransports为true。基础七角色及P5狼王/白狼王/骑士已验证当前实现；54计划角色不能因有双语目录而运行。
+- check报告executionSupport.locales为zh-CN/en，P4 A02后mixedTransports为true。基础七角色及P5狼王/白狼王/骑士/守墓人已验证当前实现；53计划角色不能因有双语目录而运行。
 
 ## 实际通路与人工oracle
 

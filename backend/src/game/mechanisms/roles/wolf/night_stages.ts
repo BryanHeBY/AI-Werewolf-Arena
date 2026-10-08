@@ -36,6 +36,7 @@ const wolfDiscussionStage: NightStageHandler = {
           max_rounds: WOLF_DISCUSSION_MAX_ROUNDS,
         });
         const action = await ctx.actionProvider.getAction(req);
+        if (!ctx.isCurrent()) return;
         if (action?.name !== "speak_to_wolves") {
           continue;
         }
@@ -43,6 +44,7 @@ const wolfDiscussionStage: NightStageHandler = {
         const result = ctx.toolGateway.validateAndSanitize(ctx.world, wolfId, action, {
           phase: req.phase,
         });
+        if (!ctx.isCurrent()) return;
         if (!result.ok || !result.sanitizedCall) {
           continue;
         }
@@ -109,6 +111,7 @@ const wolfKillVoteStage: NightStageHandler = {
                 retry_notice_message: { key: "request.retry.wolf_vote" },
               });
         const action = await ctx.actionProvider.getAction(req);
+        if (!ctx.isCurrent()) return;
         if (action?.name !== "kill_vote") {
           retryReason = "no_valid_kill_vote_tool_call";
           if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {
@@ -132,6 +135,7 @@ const wolfKillVoteStage: NightStageHandler = {
         const result = ctx.toolGateway.validateAndSanitize(ctx.world, wolfId, action, {
           phase: Phase.Night,
         });
+        if (!ctx.isCurrent()) return;
         if (!result.ok || !result.sanitizedCall) {
           retryReason = "invalid_kill_vote_arguments";
           if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {

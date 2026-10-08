@@ -9,6 +9,7 @@ import {
   BoardConfig,
   EntityId,
   GameEvent,
+  ExileFeedback,
   NightSummary,
   Phase,
   Role,
@@ -37,6 +38,14 @@ export interface NightPipelineDependencies {
   stageRegistry?: NightStageRegistry;
   random?: RandomSource;
 }
+
+export interface NightPipelineOptions {
+  previousExile?: Readonly<ExileFeedback> | null;
+  isCurrent?: () => boolean;
+}
+export type NightPipelineResult =
+  | { interrupted: false; summary: NightSummary; damage: DamageResolutionResult }
+  | { interrupted: true };
 
 /**
  * 夜间阶段流水线：
@@ -68,10 +77,10 @@ export class NightPipeline {
     config: BoardConfig,
     actionProvider: ActionProvider,
     day: number,
-  ): Promise<{
-    summary: NightSummary;
-    damage: DamageResolutionResult;
-  }> {
+    options: NightPipelineOptions = {},
+  ): Promise<NightPipelineResult> {
+    const isCurrent = options.isCurrent ?? (() => true);
+    if (!isCurrent()) return { interrupted: true };
     safeRecordLogicOp({
       scope: "phase_pipeline",
       op: "night_pipeline_start",
@@ -92,6 +101,8 @@ export class NightPipeline {
 
     const requests = new GameActionRequestFactory(this.world, this.events, day);
     const stageCtx = {
+      isCurrent,
+      previousExile: options.previousExile ? structuredClone(options.previousExile) : null,
       world: this.world,
       roleCatalog: this.stageRegistry.roleCatalog,
       toolGateway: this.toolGateway,
@@ -115,7 +126,9 @@ export class NightPipeline {
     };
 
     for (const stage of this.stageRegistry.getStages(config, this.world)) {
+      if (!isCurrent()) return { interrupted: true };
       await stage.execute(stageCtx);
+      if (!isCurrent()) return { interrupted: true };
     }
 
     const damage = this.damageResolutionSystem.resolve(this.world);
@@ -137,7 +150,7 @@ export class NightPipeline {
       interruptedBySelfDestruct: false,
     };
 
-    return { summary, damage };
+    return { interrupted: false, summary, damage };
   }
 
   private makeRequest(

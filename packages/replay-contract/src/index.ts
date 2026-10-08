@@ -6,6 +6,7 @@ import { legacyPhaseId, legacyStageId, legacyRoleId, legacyCampId, legacyResultR
 export * from "./legacy_aliases";
 export const REPLAY_SCHEMA_VERSION = 2 as const;
 export * from "./inspection";
+export * from "./gravekeeper";
 export * from "./outcomes";
 
 /**

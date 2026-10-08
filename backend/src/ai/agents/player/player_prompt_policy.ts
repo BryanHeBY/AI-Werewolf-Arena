@@ -1,4 +1,5 @@
 import { renderMessage, text, term, type Locale } from "@ai-werewolf-arena/game-text";
+import { readGravekeeperReport } from "@ai-werewolf-arena/replay-contract";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, ActionWindow, BoardConfig, EntityId, Role, ToolName } from "../../../core/domain"
@@ -17,7 +18,7 @@ import {
   knownWolfTeammates,
   allNightAbilities, abilityStatus, projectNightAbility,
 } from "../../../game/mechanisms";
-import { getGuardState, getHunterState, getWolfKingState, getWhiteWolfKingState, getKnightState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
+import { getGuardState, getHunterState, getWolfKingState, getWhiteWolfKingState, getKnightState, getGravekeeperState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
 import { freezeObservation, type PlayerObservation } from "./observation";
 import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "./prompt_templates";
 import { renderTurnConstraintUserHint, resolveTurnConstraints } from "./turn_constraints";
@@ -87,6 +88,10 @@ export class PlayerPromptPolicy {
     if (role?.role === Role.WolfKing) ownState.wolfKing = getWolfKingState(role);
     if (role?.role === Role.WhiteWolfKing) ownState.whiteWolfKing = getWhiteWolfKingState(role);
     if (role?.role === Role.Knight) ownState.knight = getKnightState(role);
+    if (role?.role === Role.Gravekeeper) {
+      const history = getGravekeeperState(role)?.history;
+      ownState.gravekeeper = { history: Array.isArray(history) ? history.flatMap(item => { const report = readGravekeeperReport(item); return report ? [report] : []; }) : [] };
+    }
     if (role?.role === Role.Idiot) ownState.idiot = getIdiotState(role);
     const seer = role ? getSeerState(role, request.context.ability_id) : undefined;
     if (seer) ownState.seer = seer;

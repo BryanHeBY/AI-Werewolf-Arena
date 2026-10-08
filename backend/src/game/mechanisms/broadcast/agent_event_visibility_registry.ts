@@ -37,6 +37,7 @@ const WOLVES_ONLY_EVENT_TYPES = new Set<string>(WOLF_TEAM_EVENT_TYPES);
 const ACTOR_ONLY_EVENT_TYPES = new Set([
   "ability_changed",
   "seer_checked",
+  "gravekeeper_reported",
   "witch_potion_used",
   "witch_potion_skipped",
   "guard_applied",

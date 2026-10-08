@@ -163,3 +163,15 @@ for(const locale of ["zh-CN","en"] as const)for(const miss of [false,true])test(
  await expect(page.getByRole("button",{name:locale==="en"?`Player ${miss?4:1} · Seat ${miss?4:1}`:`${miss?4:1}号 · Seat ${miss?4:1}`,exact:true})).not.toHaveClass(/dead/);
  await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(5);await expect(page.getByTestId("composition-winner")).toHaveCount(5);
 });
+
+for(const locale of ["zh-CN","en"] as const)test(`${locale}: actual Gravekeeper archive displays private camp feedback at the right night without altering death or terminal winners`,async({page})=>{
+ const replay=JSON.parse(readFileSync(new URL("../fixtures/gravekeeper.replay.json",import.meta.url),"utf8"));replay.meta.locale=locale;
+ await page.route("**/api/replay",route=>route.fulfill({json:replay}));await page.goto("/");
+ const first=locale==="en"?"Gravekeeper 8 learns on night 2 that player 1, exiled on day 1, has camp label Werewolves":"8号守墓人在第2夜获知第1日放逐1号的阵营标签：狼人";
+ await page.locator(".timeline .event").filter({hasText:first}).click();await expect(page.getByTestId("composition-event")).toHaveText(first);await expect(page.locator(".seat-grid .dead")).toHaveCount(1);await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+ const second=locale==="en"?"Gravekeeper 8 learns on night 3 that player 5, exiled on day 2, has camp label Good":"8号守墓人在第3夜获知第2日放逐5号的阵营标签：好人";
+ await page.locator(".timeline .event").filter({hasText:second}).click();await expect(page.getByTestId("composition-event")).toHaveText(second);await expect(page.locator(".seat-grid .dead")).toHaveCount(5);await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+ const caption=await page.getByTestId("composition-caption").boundingBox();expect(caption).not.toBeNull();
+ for(const seat of await page.locator("[data-composition-player]").all()){const box=await seat.boundingBox();expect(box).not.toBeNull();expect(box!.y+box!.height).toBeLessThan(caption!.y);}
+ await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(8);await expect(page.getByTestId("composition-winner")).toHaveCount(8);
+});
