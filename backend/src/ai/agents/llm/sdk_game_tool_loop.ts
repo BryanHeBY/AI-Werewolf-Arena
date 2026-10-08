@@ -10,7 +10,7 @@ import { AgentBugReportService } from "../reporting/bug_report_service";
 import { gameToolProtocol } from "../game_tool_protocol";
 import { ActionReception, ActionTurn } from "../player/action_reception";
 import { ToolCallRepairRegistry, type ToolSpecRegistry, getDefaultToolSpecRegistry } from "../../../game/mechanisms";
-import { LlmObserver } from "./llm_observer";
+import { LlmObserver } from "../player/player_observer";
 import { ChatMessage, ChatModelClient } from "../../integrations/llm/transport";
 import { PlayerPromptSession } from "./player_prompt_session";
 import { resolveTurnConstraints } from "../player/turn_constraints";

@@ -6,7 +6,7 @@ import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, ToolCall } from "../../../core/domain"
 import { World } from "../../../core/domain/world";
 import { FallbackActionPolicy, FallbackDeadlineElapsed, FallbackReason } from "./fallback_action_policy";
-import { LlmObserver } from "./llm_observer";
+import { LlmObserver } from "../player/player_observer";
 import { BuiltPlayerPrompt, PlayerRoundOutcome, PlayerRetryTraceEntry } from "../player/contracts";
 import { ChatMessage, ChatModelClient } from "../../integrations/llm/transport";
 import { PlayerPromptSession } from "./player_prompt_session";

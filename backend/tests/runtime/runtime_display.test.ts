@@ -3,7 +3,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { cliFailure, takeDisplayArguments } from "../../src/runtime/cli/display";
-import { LlmObserver } from "../../src/ai/agents/llm/llm_observer";
+import { LlmObserver } from "../../src/ai/agents/player/player_observer";
 import { createAcpConsoleLogger } from "../../src/runtime/console_presenter";
 import { BaselineBotActionProvider } from "../../src/ai/agents/providers/action_providers";
 import { bootstrapGame } from "../../src/app/bootstrap";

@@ -130,3 +130,7 @@ SDK/ACP按actor已解析profile分派，factory持有独立配置快照；同pro
 ## P4 A02：Runner 并发失败与最终保存
 
 runner记录决定后立即关闭一次，停止新模型并在录制前丢弃迟到成功；排空后采集真实失败CP/保存，阶段原错与其它并发决定、cleanup、disk原异常分别保留。实际四组合十二人失败/取消/迟到成功/写盘验证严格Tape、无pending/晚写与原错；旧错误名双读漏洞已补受控snapshot/getter/Proxy反例。最终release395测试通过，三路[审查记录](reviews/p4-a02-runner.md)闭环，当前A02资源/混合/provider预算/runner链路交付。P4继续M21日志开关专项与G01–G04，57计划角色及后续机制未提前标完成。
+
+## P4 共享日志观察能力归属
+
+原 LlmObserver 文件逐字移到 ai/agents/player/player_observer.ts，只更新4源码和2测试imports，class/flags/输出保持。类型、模块边界与既有语言/CLI显示回归通过，A只读逐字审查0阻断。目录迁移独立提交，M21跨传输flags行为随后接入。

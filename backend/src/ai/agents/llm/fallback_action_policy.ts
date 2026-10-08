@@ -1,7 +1,7 @@
 import { text } from "@ai-werewolf-arena/game-text";
 import { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain"
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
-import { LlmObserver } from "./llm_observer";
+import { LlmObserver } from "../player/player_observer";
 import { resolveTurnConstraints } from "../player/turn_constraints";
 import { awaitBeforeDeadline } from "../../runtime/turn_deadline";
 

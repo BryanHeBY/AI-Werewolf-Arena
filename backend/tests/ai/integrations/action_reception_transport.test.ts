@@ -10,7 +10,7 @@ import { AiSdkClient } from "../../../src/ai/integrations/llm/ai_sdk_client";
 import { SdkGameToolLoop } from "../../../src/ai/agents/llm/sdk_game_tool_loop";
 import { PlayerPromptSession } from "../../../src/ai/agents/llm/player_prompt_session";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import { LlmObserver } from "../../../src/ai/agents/llm/llm_observer";
+import { LlmObserver } from "../../../src/ai/agents/player/player_observer";
 import { getDefaultToolCallRepairRegistry, getDefaultToolSpecRegistry, getDefaultRoleCatalog, getDefaultTargetHintRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "../../../src/core";
