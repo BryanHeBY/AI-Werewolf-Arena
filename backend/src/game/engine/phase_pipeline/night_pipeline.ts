@@ -31,6 +31,7 @@ import { GameActionRequestFactory } from "../action_request_factory";
 import { createRandom, shuffled, type RandomSource } from "../../../core/domain/random";
 import { DreamNightFrame, hasDreamNightCommit } from "../../mechanisms/roles/dreamer/night_frame";
 import {discardStaleWolfKnife} from "../../mechanisms/roles/wolf/knife_scope";
+import {hasRoleInspectionNightCommit} from "../../mechanisms/roles/gargoyle/inspection_scope";
 import {AliveComponent,aliveLifeVersion} from "../../../core/domain/components/alive";
 
 export interface NightPipelineDependencies {
@@ -85,6 +86,7 @@ export class NightPipeline {
     const isCurrent = options.isCurrent ?? (() => true);
     if (!isCurrent()) return { interrupted: true };
     if(hasDreamNightCommit(this.world,day))throw new Error("dream_night_reentry_after_commit");
+    if(hasRoleInspectionNightCommit(this.world,day))throw new Error("role_inspection_night_reentry_after_commit");
     safeRecordLogicOp({
       scope: "phase_pipeline",
       op: "night_pipeline_start",

@@ -18,6 +18,7 @@ import { DREAMER_ROLE_PROFILE } from "./dreamer/profile";
 import { WOLF_BEAUTY_ROLE_PROFILE } from "./wolf_beauty/profile";
 import {BEAR_ROLE_PROFILE} from "./bear/profile";
 import {HIDDEN_WOLF_ROLE_PROFILE} from "./hidden_wolf/profile";
+import {GARGOYLE_ROLE_PROFILE} from "./gargoyle/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   WOLF_ROLE_PROFILE,
@@ -29,6 +30,7 @@ const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   WOLF_BEAUTY_ROLE_PROFILE,
   BEAR_ROLE_PROFILE,
   HIDDEN_WOLF_ROLE_PROFILE,
+  GARGOYLE_ROLE_PROFILE,
   VILLAGER_ROLE_PROFILE,
   SEER_ROLE_PROFILE,
   GUARD_ROLE_PROFILE,

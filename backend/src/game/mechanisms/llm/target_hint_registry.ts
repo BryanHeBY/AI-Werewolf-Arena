@@ -3,6 +3,9 @@ import { text } from "@ai-werewolf-arena/game-text";
 import { Role, ToolName } from "../../../core/domain/model";
 import { TargetHintContext, TargetHintRegistry } from "./contracts";
 import { canBeExiled, canBeSheriff } from "../common/participation";
+import {getRoleInspectionState} from "../roles/private_state";
+import {COMPONENT} from "../../../core/domain/components/names";
+import type {RoleComponent} from "../../../core/domain/components/role";
 
 interface TargetRule {
   allowSelf: boolean;
@@ -18,6 +21,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     kill_vote: { allowSelf: false },
     guard: { allowSelf: false },
     check_identity: { allowSelf: false },
+    inspect_role:{allowSelf:false},
     use_potion: { allowSelf: false },
     vote: { allowSelf: false },
     shoot: { allowSelf: false },
@@ -38,6 +42,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     [Role.WolfKing]: { kill_vote: { allowSelf: true } },
     [Role.WhiteWolfKing]: { kill_vote: { allowSelf: true } },
     [Role.HiddenWolf]: {kill_vote:{allowSelf:true}},
+    [Role.Gargoyle]:{kill_vote:{allowSelf:true}},
     [Role.Witch]: {
       // 女巫可自救，提示层需包含自己。
       use_potion: { allowSelf: true },
@@ -54,10 +59,12 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       return undefined;
     }
     const allowSelf = targetTools.some((tool) => this.getRule(ctx.actorRole, tool)?.allowSelf);
+    const inspection=getRoleInspectionState(ctx.world.getComponent<RoleComponent>(ctx.actorId,COMPONENT.Role)!,ctx.abilityId);
     const ids = ctx.world
       .getAliveEntityIds()
       .filter(id => targetTools.some(tool => (this.getRule(ctx.actorRole, tool)?.allowSelf || id !== ctx.actorId) &&
         (tool !== "vote" || canBeExiled(ctx.world, id, ctx.roleCatalog)) &&
+        (tool!=="inspect_role"||!inspection?.history.some(report=>report.targetId===id))&&
         (tool !== "vote_for_sheriff" || ctx.sheriffCandidates?.includes(id) && canBeSheriff(ctx.world, id, ctx.roleCatalog))))
       .sort((a, b) => a - b);
     if (ids.length === 0) {

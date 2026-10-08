@@ -39,7 +39,7 @@ export interface ExileFeedback {
 
 export interface EventPayloadMap {
   ability_changed: {
-    actorId: EntityId; abilityId: string; kind: "seer_check" | "guard" | "potion" | "dream";
+    actorId: EntityId; abilityId: string; kind: "seer_check" | "role_check" | "guard" | "potion" | "dream";
     operation: "granted" | "disabled" | "enabled" | "transferred_out";
     source: { kind: "native"; role: string } | { kind: "gift"; actorId: EntityId } | { kind: "copy" | "transfer"; actorId: EntityId; abilityId: string };
     sourceDisclosed: boolean;
@@ -57,6 +57,8 @@ export interface EventPayloadMap {
   night_resolved: { deaths: EntityId[] };
   bear_roared: { day:number; roared:boolean };
   hidden_wolf_awakened: {actorId:EntityId;day:number};
+  gargoyle_awakened: {actorId:EntityId;day:number};
+  role_inspected: {actorId:EntityId;abilityId?:string;targetId:EntityId;day:number;result:Extract<InspectionResult,{kind:"role"}>};
   wolf_self_destruct: { wolfId: EntityId; window: ActionWindow };
   white_wolf_king_self_destruct: { actorId: EntityId; targetId: EntityId | null; window: ActionWindow };
   knight_duel: { actorId: EntityId; targetId: EntityId; result: "wolf" | "not_wolf" };

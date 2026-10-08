@@ -16,6 +16,7 @@ const PRIVATE_STATE_KEYS = {
   wolfBeauty: "wolf_beauty",
   bear: "bear",
   hiddenWolf: "hidden_wolf",
+  gargoyle:"gargoyle",
   idiot: "idiot",
   seer: "seer",
 } as const;
@@ -48,6 +49,8 @@ export interface DreamerState { lastTarget: EntityId | null; lastDay: number | n
 export interface WolfBeautyState { targetId: EntityId | null; lastActedDay: number | null; history: Array<{day:number;targetId:EntityId|null}> }
 export interface BearState { history:Array<{day:number;roared:boolean}> }
 export interface HiddenWolfState {hasInheritedKnife:boolean}
+export interface GargoyleState {hasInheritedKnife:boolean}
+export interface RoleInspectionState {lastTarget:EntityId|null;lastDay:number|null;history:Array<{day:number;targetId:EntityId;result:Extract<InspectionResult,{kind:"role"}>}>}
 
 /** 白痴私有状态。 */
 export interface IdiotState {
@@ -136,6 +139,10 @@ export function setBearState(role:RoleComponent,state:BearState):BearState{retur
 export function getBearState(role:RoleComponent):BearState|undefined{return getState(role,PRIVATE_STATE_KEYS.bear);}
 export function setHiddenWolfState(role:RoleComponent,state:HiddenWolfState):HiddenWolfState{return setState(role,PRIVATE_STATE_KEYS.hiddenWolf,state);}
 export function getHiddenWolfState(role:RoleComponent):HiddenWolfState|undefined{return getState(role,PRIVATE_STATE_KEYS.hiddenWolf);}
+export function setGargoyleState(role:RoleComponent,state:GargoyleState):GargoyleState{return setState(role,PRIVATE_STATE_KEYS.gargoyle,state);}
+export function getGargoyleState(role:RoleComponent):GargoyleState|undefined{return getState(role,PRIVATE_STATE_KEYS.gargoyle);}
+export function setRoleInspectionState(role:RoleComponent,state:RoleInspectionState):RoleInspectionState{return installNativeAbility(role,"role_check",state);}
+export function getRoleInspectionState(role:RoleComponent,abilityId?:string):RoleInspectionState|undefined{return findNightAbility(role,"role_check",abilityId)?.state;}
 
 /** 写入白痴私有状态。 */
 export function setIdiotState(roleComp: RoleComponent, state: IdiotState): IdiotState {

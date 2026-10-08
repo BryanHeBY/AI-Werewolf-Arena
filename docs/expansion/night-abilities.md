@@ -2,6 +2,8 @@
 
 本批把原生/授予/复制的阵营查验、守护与用药迁入能力实例；死亡技能见已交付的[死亡链](death-chain.md)，具体商人/机械狼等角色和继承规则继续各自角色阶段。没有注册新角色，也不宣称所有未来M07能力变体已完成。
 
+当前 P6 已增加[摄梦](dreamer.md)与[石像鬼 role_check](gargoyle.md)实例，以下 P4 验证计数保留历史。role_check 的每实例禁重复与完整知识转移是明确规则；转移必须保完整 history/lastTarget/lastDay，不沿预言家可重置知识的政策。
+
 ## 所有权与来源
 
 每个玩家的privateState.abilities按实例ID存储，实例拥有唯一state、source、startsOnDay、可选expiresAfterDay、maxUses、uses、lastUsedDay和disabled。原生状态不再同时放在privateState.seer/guard/witch；getter签名新增可选ID，缺ID优先原生或唯一实例，多个非原生实例不猜。setter保持两参数，只安装/替换原生状态并脱离输入模板，返回实际owned state；不是通用实例写入API。
@@ -16,7 +18,7 @@ native来源保存本人的底牌；gift保存赠予者，copy/transfer保存原
 
 能力从startsOnDay起，到expiresAfterDay含当日；disabled阻止使用，maxUses耗尽停止，lastUsedDay挡住同夜再次使用。合法不使用/空守不扣总次数，但结束本夜该实例的机会；查验/有效守护/实际用药增加uses，瓶数仍只在同一实例state里消费。晚于reset阶段收到的用药能力，也按当前真实day推导自救规则，不能继承过时的canSelfHeal缓存。无效或撤权动作不扣次数。
 
-NightPipeline按能力实例而非底牌角色收集三种能力，允许一人拥有多个同种实例。行动请求context.ability_id由引擎绑定，模型工具参数仍只传原有行动参数，不允许自行切换实例。接收及最终网关检查同一个玩家/实例、日期、权限与Night阶段；每次请求前与使用前重新核对存活/资格。
+NightPipeline按能力实例而非底牌角色收集各类夜间能力，允许一人拥有多个同种实例。行动请求context.ability_id由引擎绑定，模型工具参数仍只传原有行动参数，不允许自行切换实例。接收及最终网关检查同一个玩家/实例、日期、权限与Night阶段；每次请求前与使用前重新核对存活/资格。
 
 NightStageRegistry保留原阶段收集/去重/排序。起局已持有的实例，以及RoleProfile.possibleNightAbilities声明的可能授予种类，都会预留原生处理阶段。阶段前授予可当夜执行，已经过去的阶段不倒退；下夜再执行。startsOnDay可明确延迟到下一夜，不从角色身份或查验标签猜。
 

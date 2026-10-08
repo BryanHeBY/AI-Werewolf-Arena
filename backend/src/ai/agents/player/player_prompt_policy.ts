@@ -3,6 +3,8 @@ import { readGravekeeperReport } from "@ai-werewolf-arena/replay-contract";
 import {getBearState} from "../../../game/mechanisms/roles/private_state";
 import {getHiddenWolfState} from "../../../game/mechanisms/roles/private_state";
 import {canHiddenWolfKnife} from "../../../game/mechanisms/roles/hidden_wolf/inheritance";
+import {getGargoyleState,getRoleInspectionState} from "../../../game/mechanisms/roles/private_state";
+import {canGargoyleKnife} from "../../../game/mechanisms/roles/gargoyle/inheritance";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, ActionWindow, BoardConfig, EntityId, Role, ToolName } from "../../../core/domain"
@@ -91,6 +93,8 @@ export class PlayerPromptPolicy {
     if(role?.role===Role.WolfBeauty)ownState.wolfBeauty=getWolfBeautyState(role);
     if(role?.role===Role.Bear)ownState.bear=getBearState(role);
     if(role?.role===Role.HiddenWolf)ownState.hiddenWolf={hasInheritedKnife:getHiddenWolfState(role)?.hasInheritedKnife===true,canVoteForKill:canHiddenWolfKnife(role,this.world)};
+    if(role?.role===Role.Gargoyle)ownState.gargoyle={hasInheritedKnife:getGargoyleState(role)?.hasInheritedKnife===true,canVoteForKill:canGargoyleKnife(role,this.world)};
+    if(role){const inspection=getRoleInspectionState(role,request.context.ability_id);if(inspection)ownState.roleInspection=inspection;}
     if (role?.role === Role.WolfKing) ownState.wolfKing = getWolfKingState(role);
     if (role?.role === Role.WhiteWolfKing) ownState.whiteWolfKing = getWhiteWolfKingState(role);
     if (role?.role === Role.Knight) ownState.knight = getKnightState(role);
@@ -151,7 +155,7 @@ export class PlayerPromptPolicy {
   ): string {
     const role = this.role(request.actorId);
     const bound = request.context.ability_id ? allNightAbilities(role).find(ability => ability.id === request.context.ability_id) : undefined;
-    const targetRuleRole = bound?.kind === "guard" ? Role.Guard : bound?.kind === "potion" ? Role.Witch : bound?.kind === "seer_check" ? Role.Seer : bound?.kind === "dream" ? Role.Dreamer : role?.role;
+    const targetRuleRole = bound?.kind === "role_check" ? Role.Gargoyle : bound?.kind === "guard" ? Role.Guard : bound?.kind === "potion" ? Role.Witch : bound?.kind === "seer_check" ? Role.Seer : bound?.kind === "dream" ? Role.Dreamer : role?.role;
     const constraints = resolveTurnConstraints(request);
     const stage = getActionRequestStage(request);
     return buildUserPrompt({
@@ -173,6 +177,7 @@ export class PlayerPromptPolicy {
       actionableIdsHint: this.options.targetHintRegistry.buildActionableIdsHint({
         actorId: request.actorId,
         actorRole: targetRuleRole,
+        abilityId:request.context.ability_id,
         allowedTools: input.allowedTools,
         world: this.world,
         roleCatalog: this.options.roleCatalog,
@@ -212,6 +217,7 @@ export class PlayerPromptPolicy {
     }
     if (request.context.ability_id) lines.push(text(this.locale, "ability.bound_turn", { id: request.context.ability_id }));
     if(request.allowedTools.includes("dream")&&allNightAbilities(role).some(ability=>ability.kind==="dream"))lines.push(text(this.locale,"ability.dream.rules"));
+    if(request.allowedTools.includes("inspect_role")&&allNightAbilities(role).some(ability=>ability.kind==="role_check"))lines.push(text(this.locale,"ability.role_check.rules"));
     const privateState = role?.renderPrompt?.(this.locale).trim();
     if (privateState) lines.push(text(this.locale, "prompt.status.private", { state: privateState }));
     if (role?.role === Role.Idiot && getIdiotState(role)?.revealed) {

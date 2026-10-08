@@ -33,7 +33,7 @@ actor-only `hidden_wolf_awakened {actorId,day}`一次，无候选／数量／队
 
 ## 配置及验收范围
 
-`roles.hidden_wolf`仅{}、maxCount1，公共parse与directbootstrap约束。chat／永久伪装／mist参数拒绝。[六人](../../configs.example/boards/six_player_hidden_wolf.json)为隐狼／普通狼／预言家／熊／两民；[十二人](../../configs.example/boards/twelve_player_hidden_wolf.json)为隐狼＋3普通狼／熊女猎守／4民、有警长。均是当前AWA组合、屠边／关闭自爆；来源白神不冒充白痴，迷雾及石像鬼联合变体未在本笔提前宣布支持。
+`roles.hidden_wolf`仅{}、maxCount1，公共parse与directbootstrap约束。chat／永久伪装／mist参数拒绝。[六人](../../configs.example/boards/six_player_hidden_wolf.json)为隐狼／普通狼／预言家／熊／两民；[十二人](../../configs.example/boards/twelve_player_hidden_wolf.json)为隐狼＋3普通狼／熊女猎守／4民、有警长。均是当前AWA组合、屠边／关闭自爆；来源白神不冒充白痴，迷雾永久平民／固定顺位仍未支持；石像鬼已另见[契约](gargoyle.md)，两者原生同时在场均要求自己唯一活Wolf，不产生双刀，具体伪装标签有独立能力判例。
 
 ```sh
 bun run --cwd backend run --configs-dir ../configs.example --game-config-name six_player_hidden_wolf
@@ -44,4 +44,4 @@ bun run --cwd backend run --configs-dir ../configs.example --game-config-name tw
 
 两个public各20seed受限观察自然终局／0拒绝回退、潜伏／接刀／实际新刀票正覆盖与全部Tape。十二人全active的前80探索均Wolf先赢、无接刀；改用已有四种风格的固定0–19分配，9／14实际接刀出刀，保正断言、没有更换板子或重写机器人让引擎配合测试。核心另验演员／目标life、旧票／后续阶段／首日候选等待、新生命新票、完整链与阶段撤权。前端本机合成SDK实跑God档／browser／实际中英PNG及三路问题闭环见[审查记录](reviews/p6-hidden-wolf.md)。
 
-本角色功能门槛依delivery§3，P6结束完整已支持矩阵仍须回归；P6石像鬼及P7–P10／T6／发布长局继续，未将72局当外部模型质量评测。
+本角色功能门槛依delivery§3，P6结束完整已支持矩阵仍须回归；P6整阶段与P7–P10／T6／发布长局继续，未将72局当外部模型质量评测。

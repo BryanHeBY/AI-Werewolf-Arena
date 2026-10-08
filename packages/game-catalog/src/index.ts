@@ -34,7 +34,7 @@ export const ROLE_DEFINITIONS = [
   {"id": "wolf_beauty", "names": {"zh-CN": "狼美人", "en": "Wolf Beauty"}, "status": "verified", "targetPhase": "P6", "ruleCardRef": "docs/expansion/rules/awa-wolf-beauty-v1.md#wolf_beauty", "mechanismSummary": "魅惑、死亡牵连"},
   {"id": "bear", "names": {"zh-CN": "熊", "en": "Bear"}, "status": "verified", "targetPhase": "P6", "ruleCardRef": "docs/expansion/rules/awa-bear-v1.md#bear", "mechanismSummary": "邻接的公开反馈"},
   {"id": "hidden_wolf", "names": {"zh-CN": "隐狼", "en": "Hidden Wolf"}, "status": "verified", "targetPhase": "P6", "ruleCardRef": "docs/expansion/rules/awa-hidden-wolf-v1.md#hidden_wolf", "mechanismSummary": "特殊互认、查验和接刀"},
-  {"id": "gargoyle", "names": {"zh-CN": "石像鬼", "en": "Gargoyle"}, "status": "planned", "targetPhase": "P6", "ruleCardRef": null, "mechanismSummary": "独立狼、身份查验"},
+  {"id": "gargoyle", "names": {"zh-CN": "石像鬼", "en": "Gargoyle"}, "status": "verified", "targetPhase": "P6", "ruleCardRef": "docs/expansion/rules/awa-gargoyle-v1.md#gargoyle", "mechanismSummary": "独立狼、身份查验"},
   {"id": "psychic", "names": {"zh-CN": "通灵师", "en": "Spirit Seer"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "具体身份查验"},
   {"id": "mirror_girl", "names": {"zh-CN": "魔镜少女", "en": "Mirror Girl"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "具体身份、查验限制"},
   {"id": "mechanical_wolf", "names": {"zh-CN": "机械狼", "en": "Mechanical Wolf"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "复制技能、资源和接刀"},

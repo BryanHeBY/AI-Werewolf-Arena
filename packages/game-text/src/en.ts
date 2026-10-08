@@ -1,6 +1,20 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "role.gargoyle.brief":"Independent wolf without mutual recognition, pack chat or self-destruction. Inspect another living player's rule-defined role first each night; no self or repeated ID per instance. As the sole living wolf, finish native inspection before inherited knife, including self-knife.",
+  "role.gargoyle.state":"Your role is Gargoyle, aligned with wolves but without pack recognition, chat or shared knife targets; no native self-destruction. First inspect another living uninspected player each night for their rule-defined role, including disguises. Your native instance forbids self/repeat. Complete inspection when eligible targets exist; with none, finish the phase without invented consumption. Inherit the knife when actually the sole living wolf; finish this night's native inspection with valid eligibility before a Night knife, pass or self-knife. No immediate daytime attack. Seer sees you as Wolf; learning a wolf role does not grant pack history.",
+  "role.gargoyle.status":"Personally inherited the knife: {inherited}; knife eligibility after this night's inspection: {active}.",
+  "ability.kind.role_check":"Role inspection",
+  "ability.role_check.rules":"Role inspection ability for this turn: choose another living player ID absent from this instance's history; your true identity/faction does not change. Once per instance per night; never repeat a recorded ID, even after revival. Report the rule-defined role label and respect explicit disguises. Only you receive the report; the target is not notified. Invalid/revoked actions do not spend resources; no eligible targets means no invented result. Transfers preserve history/resources under explicit policy; new instances use their own history.",
+  "action.inspect_role.hint":"inspect_role: target_id is another currently living integer player ID not inspected by this instance. No self/null/repeat.",
+  "stage.role_inspection":"Role inspection",
+  "console.role_inspected":"Player {actor} inspects player {target}'s role: {result}",
+  "console.gargoyle.awakened":"Gargoyle {actor} inherits the knife on day {day}",
+  "replay.stage.role_inspected":"Role inspection",
+  "replay.stage.gargoyle_awakened":"Gargoyle inheritance",
+  "error.role_inspection_unavailable":"This role inspection instance is unavailable or already acted tonight.",
+  "error.role_inspection_target":"Choose another currently living player.",
+  "error.role_inspection_repeat":"This instance already inspected that player ID; do not repeat it.",
   "role.hidden_wolf.brief":"Wolf faction; knows other wolf IDs one way, without pack chat or self-destruction. Inherits the knife when actually the sole living wolf. Before inheritance inspection shows Good/Villager and Bear does not sense it; afterward Wolf/Hidden Wolf. Knight uses true faction.",
   "role.hidden_wolf.state":"Your role is Hidden Wolf, aligned with wolves. You know authorized IDs of other wolves one way; the ordinary pack does not know you. Never join or read ordinary pack chat, and cannot natively self-destruct. Inherit the basic knife at opening if the sole wolf, or after actual deaths leave you the sole living wolf; daytime inheritance gives no immediate attack. Before inheritance inspection shows Good/Villager and Bear does not sense you; once inherited inspection shows Wolf/Hidden Wolf and Bear can sense you, without restoring disguise on death. Knight uses true faction. A current knife action also requires you alive, eligible and the sole living wolf.",
   "role.hidden_wolf.status":"Personally inherited the knife: {inherited}; currently able to attack: {active}.",

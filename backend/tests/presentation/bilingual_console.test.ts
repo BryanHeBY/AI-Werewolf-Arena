@@ -106,3 +106,7 @@ test("broadcast queries use all shared role names, preserve explicit overrides a
   expect(custom.roleName("wolf", "en")).toBe("专属名字"); expect(custom.winnerName("wolf", "en")).toBe("自定阵营");
   expect(registry.roleName("wolf", "en")).toBe("Werewolf"); expect(registry.roleName("wolf")).toBe("狼人");
 });
+for(const locale of ["zh-CN","en"] as const)test(`${locale}: Gargoyle role inspection and inheritance stay private terminal diagnostics with stable recording stages`,()=>{
+ const registry=getDefaultScriptEventRenderRegistry(),rows=[event("role_inspected",{actorId:1,targetId:5,day:1,result:{kind:"role",role:"seer"}}),event("gargoyle_awakened",{actorId:1,day:2})],labels=locale==="en"?["Player 1 inspects player 5's role: Seer","Gargoyle 1 inherits the knife on day 2"]:["1号查验5号的具体角色：预言家","1号石像鬼在第2天获得刀权"];
+ for(const [index,row] of rows.entries()){expect(registry.toJudgeLine(row,locale)).toBe(labels[index]);expect(registry.toLiveRender(row,false,locale)).toEqual([]);expect(registry.toLiveRender(row,true,locale)).toEqual([{kind:"private",text:labels[index]}]);expect(registry.toReplayStage(row)).toBe(row.type);}expect(toChatLines(rows,locale)).toEqual([]);const lines:string[]=[];presentStreamEvents(rows,false,line=>lines.push(line),locale);expect(lines).toEqual([]);
+});

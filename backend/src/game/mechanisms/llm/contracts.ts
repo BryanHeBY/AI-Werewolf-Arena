@@ -22,6 +22,7 @@ export interface ToolRepairPack {
 export interface TargetHintContext {
   actorId: EntityId;
   actorRole?: Role;
+  abilityId?:string;
   allowedTools: ToolName[];
   world: World;
   roleCatalog?: import("../roles/catalog").RoleCatalog;

@@ -7,7 +7,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { allNightAbilities, type NightAbilityKind } from "../../roles/abilities";
 
-const abilityRole: Record<NightAbilityKind, Role> = { seer_check: Role.Seer, guard: Role.Guard, potion: Role.Witch, dream: Role.Dreamer };
+const abilityRole: Record<NightAbilityKind, Role> = { seer_check: Role.Seer,role_check:Role.Gargoyle, guard: Role.Guard, potion: Role.Witch, dream: Role.Dreamer };
 
 /** 夜间阶段注册表。 */
 export class NightStageRegistry {

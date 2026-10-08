@@ -1,5 +1,6 @@
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { readGravekeeperFeedback, readSeerInspectionResult, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
+import {readInspectionResult} from "@ai-werewolf-arena/replay-contract";
 import { text, term, inspectionLabel, outcomeLabel, outcomeWinnersLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { campName, phaseName, resultReasonName, roleName } from "./replay-localization";
 
@@ -10,6 +11,8 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerI
   const target = numberValue(p.targetId);
   const players = (value: unknown) => numberList(value, locale) || t("replay.none");
   switch (event.type) {
+    case "gargoyle_awakened":return t("console.gargoyle.awakened",{actor,day:numberValue(p.day)});
+    case "role_inspected":{const result=readInspectionResult(p.result);return result?.kind==="role"?t("console.role_inspected",{actor,target,result:inspectionLabel(result,locale)}):t("replay.unknown");}
     case "hidden_wolf_awakened": return t("console.hidden_wolf.awakened",{actor,day:numberValue(p.day)});
     case "bear_roared": return typeof p.roared==="boolean"?t("console.bear.report",{day:numberValue(p.day),result:t(p.roared?"bear.roar":"bear.quiet")}):t("replay.unknown");
     case "charm_applied": return t("console.charm.applied",{actor,target:p.targetId===null?t("common.none"):target,day:numberValue(p.day)});
@@ -26,7 +29,7 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerI
     case "ability_changed": {
       const kind = stringValue(p.kind), operation = stringValue(p.operation);
       return t("ability.change", { actor, id: stringValue(p.abilityId),
-        kind: ["seer_check", "guard", "potion", "dream"].includes(kind) ? t(`ability.kind.${kind}` as MessageKey) : kind,
+        kind: ["seer_check", "role_check", "guard", "potion", "dream"].includes(kind) ? t(`ability.kind.${kind}` as MessageKey) : kind,
         operation: ["granted", "disabled", "enabled", "transferred_out"].includes(operation) ? t(`ability.operation.${operation}` as MessageKey) : operation });
     }
     case "god_private_game_info": return t("replay.lineup", { players: formatRoleLineup(p.players, locale) });

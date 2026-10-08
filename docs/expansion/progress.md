@@ -10,7 +10,7 @@
 | P3 | 完成 | I01–I04、诊断/CLI与受控源码扫描；实际SDK/ACP中英完整场景与Tape重放、前端/视频门槛；英文入口开放 |
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
 | P5 | 完成 | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md) |
-| P6 | 进行中 | 摄梦人/狼美人/熊/隐狼交付，石像鬼继续；15项verified，隐狼本轮72实际双语完整局/Tape，见[隐狼验收](reviews/p6-hidden-wolf.md) |
+| P6 | 完成 | 五角色与三路审查闭环；16项verified，最终全量1176测试／542实际双语整局/Tape、103前端／42浏览器通过，见[阶段验收](reviews/p6-activation.md) |
 | P7–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
@@ -269,3 +269,12 @@ A01/A02/M21/G01–G04和基础差异闭环；七項在awa_classic1.0.0已验板�
 最终所涉engine／配置／目录／console／契约524／10323／54文件与type/deps/boundaries/i18n过；隐狼＋8生命core30／156（含白狼/Beauty与正新生命票），本轮最终source72真实本机SDK/ACP/混合双语完整局＋40受限seed／全部严格Tape38／9858自然0拒绝回退，接刀与实际刀票正覆盖。12全active探索无继承未降低断言，采用既有四style0–19／六人active，40seed2／328通过；没有改变公开板子或机器人策略。
 
 front97／893/type/build、actualChromium36及中英实际PNG过，三路0剩余阻断，目录15verified／49planned，六／十二人AWA board/game示例可加载。熊现时文档与已接入隐狼同步；迷雾永久平民／固定顺位／觉醒和石像联合玩法未冒认支持。依delivery§3功能门槛，P6石像鬼完成后全已支持release／阶段矩阵、P7–P10／49角色／22机制／长局T6发布目标保持；用户configs及真实认证未读写。
+
+
+## P6：石像鬼与整阶段完成
+
+第16项gargoyle按[冻结卡](rules/awa-gargoyle-v1.md)交付独立typed具体role查验、每实例禁重复、完整旧知识转移及原生本夜查后刀。world私有完成范围绑定原role/native state/ability/inspection/life/phase；真实完整死亡提案后继承，目标耗尽不假报告或消费。审查发现的转移清空、字段顺序误拒、第三次耗尽未完成、native状态替换旧授权均修复，查后六类撤权、熊/墓/Knight/White/Beauty/Dream/Hidden交互及copy/gift独立账本纳入core32/229。
+
+最终目录16verified／48planned，完整release1176／105387／131文件、0失败、smoke/type/deps/boundaries/i18n通过，`/tmp/awa-p6-release-verified.log`。所有已支持542实际本机SDK/ACP/混合双语完整局与每局严格Tape、各板受限观察seed和资源故障专项共同回归；石像新增36完整局＋4gift重复拒绝/纠正任务。两板40 seed零拒绝回退、自然终局、真实查验/接刀/新刀票正覆盖及全重放；十二人0–19初探无接刀，扩展定位53后采用固定40–59，不改板子/策略或降低断言。
+
+front103／953、type/build、actualChromium42、中文接刀与英文十二人具体角色查验PNG均过并独立目检。三路[角色审查](reviews/p6-gargoyle.md)和[整阶段审查](reviews/p6-activation.md)0剩余阻断，六/十二public board/game例可加载，未读写用户configs/真实认证或调用外部模型。P6关闭；P7从通灵师规则冻结开始，7项P7＋3项P8＋38项P9及P10组合/长局/T6保持持续完整目标。

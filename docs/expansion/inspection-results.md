@@ -1,5 +1,7 @@
 # P4 G02：类型化查验结果
 
+当前 P6 [石像鬼](gargoyle.md)已接入独立 `inspect_role` 与 typed `role_inspected`，原生预言家仍只查 camp；具体 role 标签尊重[隐狼](hidden-wolf.md)的明确伪装。以下 P4 计数和“本子批”范围为当时证据。
+
 ## 当前子批范围
 
 共享InspectionResult区分`camp`、`role`与`combined`；结果是规则揭示的标签，不等同于真实阵营或底牌。生产预言家仍只执行阵营查验，具体身份/组合查验的角色继续P5–P9；能力资源及动态调度基础已交付G02。没有因此启用计划角色，M05/M07/M08也未整项标完成。

@@ -13,6 +13,7 @@ export interface ToolArgMap {
   kill_vote: { target_id: EntityId | null; abstain: boolean };
   guard: { target_id: EntityId | null; abstain: boolean };
   check_identity: { target_id: EntityId };
+  inspect_role: {target_id:EntityId};
   use_potion: { target_id: EntityId; potion_type: PotionType };
   self_destruct: { reason: string; confirm: boolean };
   self_destruct_with_target: { reason: string; confirm: boolean; target_id: EntityId | null };
@@ -28,7 +29,7 @@ export interface ToolArgMap {
 }
 
 export type ToolName = keyof ToolArgMap;
-export const TOOL_NAMES = ["report_bug", "speak_to_wolves", "kill_vote", "guard", "check_identity", "use_potion", "self_destruct", "self_destruct_with_target", "duel", "dream", "charm", "speak", "vote", "shoot", "choose_direction", "run_for_sheriff", "vote_for_sheriff"] as const satisfies readonly ToolName[];
+export const TOOL_NAMES = ["report_bug", "speak_to_wolves", "kill_vote", "guard", "check_identity", "inspect_role", "use_potion", "self_destruct", "self_destruct_with_target", "duel", "dream", "charm", "speak", "vote", "shoot", "choose_direction", "run_for_sheriff", "vote_for_sheriff"] as const satisfies readonly ToolName[];
 export type ToolCall = { [K in ToolName]: { name: K; args: ToolArgMap[K] } }[ToolName];
 export type TypedToolCall<T extends ToolName> = Extract<ToolCall, { name: T }>;
 export interface KnightDuelSelection { actorId: EntityId; targetId: EntityId }
@@ -54,7 +55,7 @@ export interface TurnConstraints {
   summary_message?: MessageRef;
 }
 
-export const ACTION_STAGES = [...Object.values(ActionWindow), ...Object.values(KnightDuelWindow), "wolf_discussion", "wolf_vote", "guard", "seer", "witch", "dreamer", "wolf_beauty", "day_speech", "voting", "hunter_shot", "death_shot", "last_words", "sheriff_nomination", "sheriff_campaign_speech", "sheriff_withdraw", "sheriff_vote", "sheriff_choose_direction"] as const;
+export const ACTION_STAGES = [...Object.values(ActionWindow), ...Object.values(KnightDuelWindow), "wolf_discussion", "wolf_vote", "guard", "seer", "role_inspection", "witch", "dreamer", "wolf_beauty", "day_speech", "voting", "hunter_shot", "death_shot", "last_words", "sheriff_nomination", "sheriff_campaign_speech", "sheriff_withdraw", "sheriff_vote", "sheriff_choose_direction"] as const;
 export type ActionStage = typeof ACTION_STAGES[number];
 export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_shot"];
 

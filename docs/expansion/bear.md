@@ -6,7 +6,7 @@
 
 好人神职，没有原生主动技能／工具／狼队权限，正常公共参与。入夜开始按 Identity.seat 形成存活环，取左右最近存活邻居、环绕、跳过入夜前死人；单邻居只取一次，无邻居为quiet。当夜邻居死亡／身份或座位变化不重新计算，下一夜重新取样。
 
-当前普通狼／狼王／白狼王／狼美人可被感知；[隐狼](hidden-wolf.md)按曾接刀事实：从未接刀不触发、曾接刀可触发，暂时失去当前刀资格不恢复伪装。检测先要求真实 Camp.Wolf，再应用 profile 的独立 `detectableByBear(world,role)` 策略，缺省为可感知；它不借预言家伪装、狼聊或临时刀权状态。
+当前普通狼／狼王／白狼王／狼美人／石像鬼可被感知；[隐狼](hidden-wolf.md)按曾接刀事实：从未接刀不触发、曾接刀可触发，暂时失去当前刀资格不恢复伪装。检测先要求真实 Camp.Wolf，再应用 profile 的独立 `detectableByBear(world,role)` 策略，缺省为可感知；它不借预言家伪装、狼聊或临时刀权状态。
 
 BearNightFrame由PhaseManager在本夜开始持有，包含原World／角色／state／生命引用与版本及待公布bool；不落目标组件、DTO、角色history、操作或录制。第一日竞选／退水／警长投票不能提前拿到样本。全场公告 `bear_roared {day,roared}`，没有熊ID、邻居／方向／数量／身份或死亡原因。只有公开后的 `{day,roared}` 进入本人history／提示／观察，其他人经公共事件获得同一bool。
 
@@ -28,7 +28,7 @@ PhaseManager先跑完整夜死、原初批遗言、警徽和死亡技能／追�
 - `bear_roared`是typed公共事件；terminal直播不受private flag隐藏，chat仍只含发言／狼聊。IO／思考日志属于独立operator诊断，见[M21日志矩阵](runtime-display.md#p4-m21sdk--acp-日志开关)。前端timeline／纯frame同文案，公告不改变Alive或徽章。
 - 公开schema2／Tape2保留，source／lock／rules／RNG兼容门槛包含新代码；旧指纹不假称可执行。记录原文／名字不翻译，不把事件布尔值改成本地化文字。
 
-`roles.bear`仅{}，取样时点／揭ID／主动技能等参数拒绝。公开[六人](../../configs.example/boards/six_player_bear.json)是一狼／熊女猎／两民，AWA演示配比；[十二人](../../configs.example/boards/twelve_player_bear.json)为4普通狼／熊女猎守／4民且有警长，明确AWA当前组合。来源熊隐狼／白神不冒充当前隐狼／白痴，联合板待隐狼另验；两板均屠边、关闭自爆，早爆为人工／wire明确变体。
+`roles.bear`仅{}，取样时点／揭ID／主动技能等参数拒绝。公开[六人](../../configs.example/boards/six_player_bear.json)是一狼／熊女猎／两民，AWA演示配比；[十二人](../../configs.example/boards/twelve_player_bear.json)为4普通狼／熊女猎守／4民且有警长，明确AWA当前组合。来源白神不冒充白痴，已验隐狼联合板另见[隐狼](hidden-wolf.md)；两板均屠边、关闭自爆，早爆为人工／wire明确变体。
 
 ```sh
 bun run --cwd backend run --configs-dir ../configs.example --game-config-name six_player_bear
@@ -41,4 +41,4 @@ bun run --cwd backend run --configs-dir ../configs.example --game-config-name tw
 
 逐轮验证Native Bear真实身份及本人已公开history、首日竞选前所有输入无待公告、匿名公共受众、无额外请求／fallback、实际死亡／原遗言／资源／胜者／终局和全部严格Tape。两个public board各20固定active受限seed须自然结束／0拒绝回退／真roar和quiet正覆盖／全部Tape。前端采用本机合成SDK实跑God档，双语browser／纯frame／实际PNG与三路审查范围见[记录](reviews/p6-bear.md)。
 
-P6隐狼／石像鬼及P7–P10继续；本批不声明外部模型质量或64角色任意组合／22机制／T6／P10发布矩阵完成。
+P6隐狼／石像鬼见各自交付，P7–P10继续；本批不声明外部模型质量或64角色任意组合／22机制／T6／P10发布矩阵完成。

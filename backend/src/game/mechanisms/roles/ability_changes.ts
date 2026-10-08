@@ -1,3 +1,4 @@
+import { isDeepStrictEqual } from "node:util";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import type { EntityId, GameEvent } from "../../../core/domain/model";
@@ -63,11 +64,12 @@ export function transferNightAbility<K extends NightAbilityKind>(world: World, f
   if (!ability) throw new Error("ability_instance_missing");
   if (!options || options.kind !== ability.kind || typeof options.statePolicy !== "function") throw new Error("ability_transfer_policy_required");
   const targetState = options.statePolicy(copyAbilityData(ability.state) as NightAbilityStates[K]);
-  // Transfer preserves resources. The policy can reset inspection knowledge;
-  // it cannot refill potions or clear a protection cooldown.
+  // Transfer preserves resources. A seer_check policy may reset knowledge;
+  // role_check retains its full history, and other policies cannot refill resources.
   if (ability.kind === "guard" && (targetState as NightAbilityStates["guard"]).lastTarget !== ability.state.lastTarget) throw new Error("ability_transfer_resources_changed");
   if (ability.kind === "dream" && ((targetState as NightAbilityStates["dream"]).lastTarget !== ability.state.lastTarget || (targetState as NightAbilityStates["dream"]).lastDay !== ability.state.lastDay)) throw new Error("ability_transfer_resources_changed");
   if (ability.kind === "potion" && ["heal", "poison", "selfHealRule", "canSelfHeal", "healUsedThisNight", "poisonUsedThisNight"].some(key => (targetState as unknown as Record<string, unknown>)[key] !== (ability.state as unknown as Record<string, unknown>)[key])) throw new Error("ability_transfer_resources_changed");
+  if(ability.kind==="role_check"&&!isDeepStrictEqual(targetState,ability.state))throw new Error("ability_transfer_role_inspection_history_changed");
   const received = copyAbilityData({ ...ability, state: targetState, id: targetId, sourceDisclosed: options.sourceDisclosed ?? false, source: { kind: "transfer", actorId: fromId, abilityId: id } }) as NightAbility;
   installAbility(world, toId, received, events);
   delete (source.privateState.abilities as Record<string, NightAbility>)[id];

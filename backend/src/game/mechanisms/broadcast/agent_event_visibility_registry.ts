@@ -44,6 +44,8 @@ const ACTOR_ONLY_EVENT_TYPES = new Set([
   "dream_applied",
   "charm_applied",
   "hidden_wolf_awakened",
+  "gargoyle_awakened",
+  "role_inspected",
   "witch_potion_used",
   "witch_potion_skipped",
   "guard_applied",
