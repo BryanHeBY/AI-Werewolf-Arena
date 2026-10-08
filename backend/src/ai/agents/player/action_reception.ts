@@ -5,7 +5,6 @@ import { type ActionRequest, type ToolCall, type ToolName } from "../../../core/
 import { World } from "../../../core/domain/world";
 import { ActionValidator } from "../../../game/gateway/action_validator";
 import { ToolGateway } from "../../../game/gateway/tool_gateway";
-import { isAliveTarget } from "../../../game/mechanisms/validation/contracts";
 import {
   getDefaultToolCallRepairRegistry, getDefaultToolSpecRegistry,
   getDefaultToolValidationRuleRegistry, type ToolCallRepairRegistry,
@@ -68,15 +67,12 @@ export class ActionReception {
     if (deathStage && (!deathTool || !this.world.hasDeathAction(request.actorId, tool, request.phase, request.context.day, request.context.death_action_id))) {
       return fail(RuleError.DeathActionUnavailable);
     }
-    if (call.name === "vote_for_sheriff" && !call.args.abstain &&
-        (call.args.target_id === null || !request.context.sheriff_candidates?.includes(call.args.target_id) || !isAliveTarget(this.world, call.args.target_id))) {
-      return fail(RuleError.SheriffVoteTarget);
-    }
     const checked = this.gateway.validateAndSanitize(this.world, request.actorId, call, {
       phase: request.phase,
       day: request.context.day,
       abilityId: request.context.ability_id,
       actionWindow: request.actionWindow,
+      sheriffCandidates: request.context.sheriff_candidates,
       allowSelfDestruct: request.allowedTools.includes("self_destruct"),
       deathActionId: deathTool ? request.context.death_action_id : undefined,
     });

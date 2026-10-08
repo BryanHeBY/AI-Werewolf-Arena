@@ -1,8 +1,7 @@
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：定义通用工具的校验规则。 */
-import { COMPONENT } from "../../../core/domain/components/names";
-import { VotingRightComponent } from "../../../core/domain/components/voting_right";
-import { ToolRuleMap, isAliveTarget } from "../validation/contracts";
+import { ToolRuleMap } from "../validation/contracts";
+import { canBeExiled, canVote } from "./participation";
 
 /** 通用工具校验规则集合。 */
 export const COMMON_VALIDATION_RULES: ToolRuleMap = {
@@ -28,12 +27,11 @@ export const COMMON_VALIDATION_RULES: ToolRuleMap = {
     return null;
   },
   speak: () => null,
-  vote: ({ world, actorId, toolCall }) => {
+  vote: ({ world, actorId, toolCall, roleCatalog }) => {
     if (toolCall.name !== "vote") {
       return { code: RuleError.ToolMismatch };
     }
-    const voting = world.getComponent<VotingRightComponent>(actorId, COMPONENT.VotingRight);
-    if (!voting?.canVote) {
+    if (!canVote(world, actorId, roleCatalog)) {
       return { code: RuleError.VoteRight };
     }
     if (toolCall.args.abstain) {
@@ -42,7 +40,7 @@ export const COMMON_VALIDATION_RULES: ToolRuleMap = {
     if (toolCall.args.target_id === null) {
       return { code: RuleError.VoteTarget };
     }
-    if (!isAliveTarget(world, toolCall.args.target_id)) {
+    if (!canBeExiled(world, toolCall.args.target_id, roleCatalog)) {
       return { code: RuleError.VoteTarget };
     }
     return null;

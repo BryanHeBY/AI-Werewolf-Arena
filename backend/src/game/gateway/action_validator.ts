@@ -27,6 +27,7 @@ export interface ValidationContext {
   actionWindow?: ActionWindow;
   allowSelfDestruct?: boolean;
   deathActionId?: number;
+  sheriffCandidates?: readonly EntityId[];
 }
 
 /**
@@ -108,6 +109,7 @@ export class ActionValidator {
       abilityId: context.abilityId,
       actionWindow: context.actionWindow,
       allowSelfDestruct: context.allowSelfDestruct,
+      sheriffCandidates: context.sheriffCandidates,
     });
     if (error) {
       return reject(error);

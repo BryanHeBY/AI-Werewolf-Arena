@@ -281,3 +281,37 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual SDK HTTP 
     if (locale === "en") expect(JSON.stringify(mcp)).not.toMatch(/\p{Script=Han}/u);
   } finally { sdkPermit.close(); acpPermit.close(); registry.close(); await client.close(); await control.close({ force: true }); server.stop(true); }
 });
+
+for (const locale of ["zh-CN", "en"] as const) for (const scenario of ["exile_target", "lost_vote", "nomination", "sheriff_vote", "candidate_vote"] as const) test(`${locale}: actual SDK HTTP and MCP share public participation refusals (${scenario})`, async () => {
+  const { EventRegistry } = await import("../../../src/game/engine/event_registry");
+  const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }), acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
+  for (const game of [sdk, acp]) new EventRegistry().onVotedOut(game.world, 8, []);
+  const action = scenario === "nomination" ? "run_for_sheriff" : scenario === "sheriff_vote" || scenario === "candidate_vote" ? "vote_for_sheriff" : "vote";
+  const actorId = scenario === "exile_target" || scenario === "candidate_vote" ? 9 : 8;
+  const arguments_ = action === "run_for_sheriff" ? { run: true } : { target_id: scenario === "exile_target" ? 8 : 9, abstain: false };
+  const expected = scenario === "exile_target" ? "vote_target" : scenario === "lost_vote" ? "vote_right" : scenario === "nomination" ? "sheriff_nomination_eligibility" : "sheriff_vote_eligibility";
+  const input: ActionRequest = { actorId, phase: action === "vote" ? Phase.Voting : Phase.Day, allowedTools: [action], context: { day: 1, stage: action === "vote" ? "voting" : action === "run_for_sheriff" ? "sheriff_nomination" : "sheriff_vote", sheriff_candidates: [9], visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } };
+  const submission = { turn_id: "t1", action, arguments: arguments_ };
+  let calls = 0;
+  const server = Bun.serve({ hostname: "127.0.0.1", port: 0, async fetch(incoming) {
+    await incoming.json(); calls++;
+    return Response.json({ id: "public-participation", object: "chat.completion", created: 1, model: "synthetic", choices: [{ index: 0, finish_reason: calls === 1 ? "tool_calls" : "stop", message: calls === 1 ? { role: "assistant", content: null, tool_calls: [{ id: "call-1", type: "function", function: { name: "submit_action", arguments: JSON.stringify(submission) } }] } : { role: "assistant", content: "Done" } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
+  } });
+  const registry = new AcpTurnRegistry(acp.world), control = new WerewolfMcpControlServer(registry), client = new Client({ name: "public-participation", version: "1.0.0" });
+  try {
+    const config = await control.start(process.execPath, [path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts")]);
+    control.bindSession("public-participation"); const pending = registry.openTurn(input, "public-participation");
+    await client.connect(new StdioClientTransport({ command: config.command, args: config.args, env: Object.fromEntries(config.env.map(item => [item.name, item.value])) }));
+    const receipts: unknown[] = [];
+    const result = await sdkLoop(sdk.world, trace => receipts.push(...trace.flatMap(step => step.toolCalls.map(call => JSON.parse(call.toolResult))))).run(new AiSdkClient({ apiKey: "synthetic-only", baseURL: `${server.url.origin}/v1`, model: "synthetic" }), input, [{ role: "user", content: "Attempt the requested action." }], 2000, "t1");
+    const receipt = (await client.callTool({ name: "submit_action", arguments: submission })).structuredContent;
+    expect(receipts).toEqual([receipt]); expect(receipt).toMatchObject({ ok: false, error: expected }); expect(result.action).toBeNull();
+    registry.close(); expect(await pending.action).toBeNull();
+    for (const game of [sdk, acp]) {
+      expect(game.world.getComponent<{ alive: boolean }>(8, COMPONENT.Alive)!.alive).toBe(true);
+      expect(game.world.getComponent<{ canVote: boolean; weight: number }>(8, COMPONENT.VotingRight)).toMatchObject({ canVote: false, weight: 0 });
+      expect(game.world.getComponent<{ isSheriff: boolean }>(9, COMPONENT.Badge)!.isSheriff).toBe(false);
+    }
+    if (locale === "en") expect(JSON.stringify(receipt)).not.toMatch(/\p{Script=Han}/u);
+  } finally { registry.close(); await client.close(); await control.close({ force: true }); server.stop(true); }
+});

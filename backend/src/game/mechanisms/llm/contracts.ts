@@ -24,6 +24,8 @@ export interface TargetHintContext {
   actorRole?: Role;
   allowedTools: ToolName[];
   world: World;
+  roleCatalog?: import("../roles/catalog").RoleCatalog;
+  sheriffCandidates?: readonly EntityId[];
 }
 
 /** 目标提示注册器契约。 */

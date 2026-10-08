@@ -83,6 +83,8 @@ describe("PhaseManager", () => {
 
     const actionProvider: ActionProvider = {
       async getAction(request: ActionRequest): Promise<ToolCall | null> {
+        if (request.allowedTools.includes("run_for_sheriff")) return { name: "run_for_sheriff", args: { run: request.actorId === 1 } };
+        if (request.allowedTools.includes("vote_for_sheriff")) return { name: "vote_for_sheriff", args: { target_id: 1, abstain: false } };
         if (request.allowedTools.includes("self_destruct")) {
           return null;
         }

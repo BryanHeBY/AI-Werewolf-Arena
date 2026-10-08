@@ -40,6 +40,12 @@ export class RoleCatalog {
     return Array.from(this.profileByRole.values());
   }
 
+  participation(role: RoleComponent): { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean } {
+    const profile = this.get(role.role);
+    if (!profile) return { canVote: false, canBeExiled: false, canBeSheriff: false };
+    return typeof profile.participation === "function" ? { ...profile.participation(role) } : { ...(profile.participation ?? { canVote: true, canBeExiled: true, canBeSheriff: true }) };
+  }
+
   getCamp(role: Role): Camp {
     const profile = this.require(role);
     return profile.camp ?? Camp.Good;

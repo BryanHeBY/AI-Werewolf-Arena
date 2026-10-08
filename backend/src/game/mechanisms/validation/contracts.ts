@@ -24,6 +24,7 @@ export interface ValidationRuleContext {
   phase: Phase;
   actionWindow?: ActionWindow;
   allowSelfDestruct?: boolean;
+  sheriffCandidates?: readonly EntityId[];
 }
 
 /** 工具校验规则函数签名。 */

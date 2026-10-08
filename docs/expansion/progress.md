@@ -185,3 +185,9 @@ World持有 actor/tool/day/phase/generation 和生命版本授权；stage/trigge
 DeathResolution统一写夜间/正常放逐/默认preVote自爆/枪击死亡，角色钩子和窗口返回事实提案。整波先dead，初批来源限定遗言，所有警徽后逐actor/逐hook技能，追加立即dead再入下一波，无追加遗言，最后PhaseManager判胜。自爆警长不残留，继续时day+1/Night。逐hook提交成功提案保后置错误前缀；生命账本防重复/循环，复活为新生命，来源union保复合毒。接口/失败终止及旧档见[契约](death-chain.md)，独立修正见[审查](reviews/p4-g03-chain.md)。
 
 人工11/104、初步engine173/5022通过；最终完整release537/31062（含34真实双语纯/混合基础完整对局与逐局Tape）通过，三路复查0剩余阻断。扩展3自爆窗口准确位置、白痴/选举与G04继续，不将基础七项或57计划角色提前标verified。
+
+## P4：白痴与警长公共参与资格
+
+三项公开资格由profile/目录定义，并与Alive/VotingRight共同约束接收、最终gateway、流水线、警徽、Baseline及提示。白痴一次翻牌，永久禁投票/再放逐/竞选/持徽，仍可发言与正常其它死亡；重复低层钩子不重发事件。无人上警/全退不恢复候选，零有效票或全员上警不选警长，非法票不改投；正票平票沿配置策略。请求context副本隔离，异步收集后再验，迟到无效票不记录/计数。中英规则与两项stable拒绝同步，接口见[契约](public-participation.md)。
+
+人工16/156，实际SDK HTTP/MCP25/284，初步engine/shared/prompt185/5282，前端54/365/type通过；最终release563/31339（含34真实基础完整对局/Tape）通过，三路[审查](reviews/p4-participation.md)0剩余阻断。三扩展自爆窗口与G04继续，计划角色不提前登记实现。

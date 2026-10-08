@@ -62,6 +62,7 @@ export class ToolGateway {
       actionWindow?: ActionWindow;
       allowSelfDestruct?: boolean;
       deathActionId?: number;
+      sheriffCandidates?: readonly EntityId[];
     },
   ): ToolValidationResult<T> {
     const sanitizedCall = this.sanitize(toolCall);

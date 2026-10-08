@@ -32,6 +32,8 @@ export interface RoleProfile {
   label: string;
   skillBrief: string;
   goodSide?: "god" | "villager";
+  /** Public participation restrictions; secret immunity belongs to resolution hooks. */
+  participation?: { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean } | ((role: RoleComponent) => { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean });
   wolfTeam?: WolfTeamPermissions | ((role: RoleComponent) => WolfTeamPermissions);
   inspectionLabels?: { camp?: InspectionCamp; role?: RoleId } | ((role: RoleComponent) => { camp?: InspectionCamp; role?: RoleId });
   configuration?: {

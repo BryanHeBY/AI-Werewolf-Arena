@@ -8,7 +8,7 @@ import { EntityId, GameEvent, Role } from "../../../../core/domain/model";
 import { World } from "../../../../core/domain/world";
 import { VotedOutResult } from "../../hooks/hook_registry";
 import { transferOrDestroySheriffBadge } from "../../sheriff/badge";
-import { setIdiotState } from "../private_state";
+import { getIdiotState, setIdiotState } from "../private_state";
 
 /** 白痴放逐钩子实现。 */
 export function idiotVotedOutHook(
@@ -23,6 +23,9 @@ export function idiotVotedOutHook(
   }
   if (roleComp.role !== Role.Idiot) {
     return null;
+  }
+  if (getIdiotState(roleComp)?.revealed) {
+    return { prevented: true, removed: [], reason: "idiot_already_revealed" };
   }
 
   setIdiotState(roleComp, { revealed: true });

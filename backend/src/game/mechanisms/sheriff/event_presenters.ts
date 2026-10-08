@@ -13,7 +13,9 @@ function direction(value: string, locale: Locale): string {
 export const SHERIFF_SCRIPT_JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
   sheriff_nomination_summary: (event, locale = "zh-CN") => text(locale, "console.judge.sheriff_nomination", { players: seats(event.payload.candidates, locale) }),
   sheriff_withdraw_summary: (event, locale = "zh-CN") => text(locale, "console.judge.sheriff_withdraw", { players: seats(event.payload.withdrawn, locale) }),
-  sheriff_candidates_finalized: (event, locale = "zh-CN") => text(locale, "console.judge.sheriff_candidates", { players: seats(event.payload.candidates, locale) }),
+  sheriff_candidates_finalized: (event, locale = "zh-CN") => event.payload.candidates.length === 0
+    ? text(locale, "console.judge.sheriff_candidates_none")
+    : text(locale, "console.judge.sheriff_candidates", { players: seats(event.payload.candidates, locale) }),
   sheriff_vote_summary: (event, locale = "zh-CN") => event.payload.winnerId == null
     ? text(locale, "console.judge.sheriff_votes_none", { votes: votes(event.payload.votes, locale) })
     : text(locale, "console.judge.sheriff_votes", { votes: votes(event.payload.votes, locale), winner: event.payload.winnerId }),

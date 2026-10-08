@@ -19,6 +19,7 @@ import { EventRegistry } from "../event_registry";
 import { World } from "../../../core/domain/world";
 import { GameActionRequestFactory } from "../action_request_factory";
 import { SelfDestructWindow, isSelfDestructWindowEnabled } from "../self_destruct_window";
+import { canBeExiled, canVote } from "../../mechanisms/common/participation";
 
 /**
  * 投票流水线执行结果。
@@ -115,13 +116,7 @@ export class VotingPipeline {
       }
     }
 
-    const voters = this.world.getAliveEntityIds().filter((id) => {
-      const voting = this.world.getComponent<VotingRightComponent>(
-        id,
-        COMPONENT.VotingRight,
-      );
-      return voting?.canVote === true;
-    });
+    const voters = this.world.getAliveEntityIds().filter(id => canVote(this.world, id));
 
     // Requests run in parallel; Promise.all retains voter order for deterministic replay events.
     const voteResults = await Promise.all(
@@ -130,7 +125,7 @@ export class VotingPipeline {
     const { tally, publicVotes } = this.recordVotesInSeatOrder(voteResults);
 
     const target = this.pickMajorityTarget(
-      tally,
+      Object.fromEntries(Object.entries(tally).filter(([id]) => canBeExiled(this.world, Number(id)))),
       config.tieBreaker?.exileVote ?? "min_id",
     );
     this.events.push({
@@ -292,6 +287,7 @@ export class VotingPipeline {
     for (const vote of votes) {
       if (!vote) continue;
       const { voterId } = vote;
+      if (!canVote(this.world, voterId) || (!vote.abstain && vote.targetId !== null && !canBeExiled(this.world, vote.targetId))) continue;
       let weight = 0;
       if (!vote.abstain && vote.targetId !== null) {
         const voting = this.world.getComponent<VotingRightComponent>(voterId, COMPONENT.VotingRight);

@@ -2,6 +2,7 @@ import { text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：按工具与角色策略生成 target_id 可行动编号提示。 */
 import { Role, ToolName } from "../../../core/domain/model";
 import { TargetHintContext, TargetHintRegistry } from "./contracts";
+import { canBeExiled, canBeSheriff } from "../common/participation";
 
 interface TargetRule {
   allowSelf: boolean;
@@ -48,7 +49,9 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     const allowSelf = targetTools.some((tool) => this.getRule(ctx.actorRole, tool)?.allowSelf);
     const ids = ctx.world
       .getAliveEntityIds()
-      .filter((id) => allowSelf || id !== ctx.actorId)
+      .filter(id => targetTools.some(tool => (this.getRule(ctx.actorRole, tool)?.allowSelf || id !== ctx.actorId) &&
+        (tool !== "vote" || canBeExiled(ctx.world, id, ctx.roleCatalog)) &&
+        (tool !== "vote_for_sheriff" || ctx.sheriffCandidates?.includes(id) && canBeSheriff(ctx.world, id, ctx.roleCatalog))))
       .sort((a, b) => a - b);
     if (ids.length === 0) {
       return text(ctx.world.locale, "prompt.targets.none");
@@ -78,4 +81,3 @@ export function getDefaultTargetHintRegistry(): TargetHintRegistry {
   }
   return defaultTargetHintRegistry;
 }
-

@@ -6,6 +6,8 @@ import { VotingRightComponent } from "../../../core/domain/components/voting_rig
 import { IdentityComponent } from "../../../core/domain/entities/player";
 import { BoardConfig, EntityId, GameEvent } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
+import { canBeSheriff } from "../common/participation";
+import type { RoleCatalog } from "../roles/catalog";
 
 const SHERIFF_VOTE_WEIGHT = 1.5;
 
@@ -15,7 +17,8 @@ export interface SheriffBadgeTransferResult {
   destroyed: boolean;
 }
 
-export function assignSheriff(world: World, sheriffId: EntityId, config?: BoardConfig): void {
+export function assignSheriff(world: World, sheriffId: EntityId, config?: BoardConfig, catalog?: RoleCatalog): boolean {
+  if (!canBeSheriff(world, sheriffId, catalog)) return false;
   const weight = config?.sheriff?.voteWeight ?? SHERIFF_VOTE_WEIGHT;
   for (const id of world.getAliveEntityIds()) {
     const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge);
@@ -27,16 +30,17 @@ export function assignSheriff(world: World, sheriffId: EntityId, config?: BoardC
     const voting = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight);
     if (voting?.canVote) voting.weight = id === sheriffId ? weight : 1;
   }
+  return true;
 }
 
-export function transferOrDestroySheriffBadge(world: World, fromId: EntityId, reason: string, events: GameEvent[]): SheriffBadgeTransferResult | null {
+export function transferOrDestroySheriffBadge(world: World, fromId: EntityId, reason: string, events: GameEvent[], catalog?: RoleCatalog): SheriffBadgeTransferResult | null {
   const badge = world.getComponent<BadgeComponent>(fromId, COMPONENT.Badge);
   if (!badge?.isSheriff) return null;
   const weight = badge.voteWeight ?? SHERIFF_VOTE_WEIGHT;
   badge.isSheriff = false;
   badge.destroyed = true;
   resetVotingWeight(world, fromId);
-  const nextSheriffId = pickNextSheriffCandidate(world, fromId);
+  const nextSheriffId = pickNextSheriffCandidate(world, fromId, catalog);
   if (nextSheriffId === null) {
     events.push({ timestamp: Date.now(), type: "sheriff_badge_destroyed", payload: { targetId: fromId, reason } });
     return { fromId, toId: null, destroyed: true };
@@ -58,13 +62,13 @@ function resetVotingWeight(world: World, entityId: EntityId): void {
   if (voting) voting.weight = voting.canVote ? 1 : 0;
 }
 
-function pickNextSheriffCandidate(world: World, fromId: EntityId): EntityId | null {
+function pickNextSheriffCandidate(world: World, fromId: EntityId, catalog?: RoleCatalog): EntityId | null {
   const candidates = world.getAliveEntityIds().filter((id) => {
     if (id === fromId) return false;
     const alive = world.getComponent<AliveComponent>(id, COMPONENT.Alive);
     const voting = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight);
     const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge);
-    return alive?.alive === true && voting?.canVote === true && (badge?.destroyed ?? false) === false;
+    return alive?.alive === true && voting?.canVote === true && canBeSheriff(world, id, catalog) && (badge?.destroyed ?? false) === false;
   });
   candidates.sort((a, b) => {
     const aSeat = world.getComponent<IdentityComponent>(a, COMPONENT.Identity)?.seat ?? a;
@@ -74,10 +78,10 @@ function pickNextSheriffCandidate(world: World, fromId: EntityId): EntityId | nu
   return candidates[0] ?? null;
 }
 
-export function findSheriffId(world: World): EntityId | null {
+export function findSheriffId(world: World, catalog?: RoleCatalog): EntityId | null {
   return world.getAliveEntityIds().find((id) => {
     const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge);
-    return badge?.isSheriff === true && badge.destroyed === false;
+    return badge?.isSheriff === true && badge.destroyed === false && canBeSheriff(world, id, catalog);
   }) ?? null;
 }
 

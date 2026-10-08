@@ -43,8 +43,7 @@ export class GameActionRequestFactory {
       allowedTools: [...input.allowedTools],
       ...(input.actionWindow ? { actionWindow: input.actionWindow } : {}),
       context: {
-        ...input.context,
-        ...(input.context?.retry_notice_message ? { retry_notice_message: structuredClone(input.context.retry_notice_message) } : {}),
+        ...structuredClone(input.context ?? {}),
         day: this.day,
         stage: input.stage,
         turn_constraints: buildTurnConstraintContext({

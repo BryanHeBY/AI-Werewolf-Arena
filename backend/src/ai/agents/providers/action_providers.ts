@@ -10,6 +10,7 @@ Role,
 ToolCall, } from "../../../core/domain"
 import { World } from "../../../core/domain/world";
 import { RoleCatalog, getDefaultRoleCatalog, wolfTeamPermissions, allNightAbilities, activeNightAbility } from "../../../game/mechanisms";
+import { canBeExiled, canBeSheriff, canVote } from "../../../game/mechanisms/common/participation";
 
 /**
  * Noop 行为提供器：用于测试“无人行动”场景。
@@ -78,6 +79,7 @@ export class BaselineBotActionProvider implements ActionProvider {
     }
 
     if (request.allowedTools.includes("choose_direction")) {
+      if (!canBeSheriff(this.world, request.actorId, this.roleCatalog)) return null;
       // 基线策略：偶数位顺时针，奇数位逆时针，保证可重复。
       return {
         name: "choose_direction",
@@ -88,6 +90,7 @@ export class BaselineBotActionProvider implements ActionProvider {
     }
 
     if (request.allowedTools.includes("run_for_sheriff")) {
+      if (!canBeSheriff(this.world, request.actorId, this.roleCatalog)) return null;
       // 基线策略：存活玩家默认上警，避免“需至少一次行动”的回合无动作。
       return {
         name: "run_for_sheriff",
@@ -96,11 +99,12 @@ export class BaselineBotActionProvider implements ActionProvider {
     }
 
     if (request.allowedTools.includes("vote_for_sheriff")) {
+      if (!canVote(this.world, request.actorId, this.roleCatalog) || request.context.sheriff_candidates?.includes(request.actorId)) return null;
       const rawCandidates = request.context.sheriff_candidates;
       const candidates = Array.isArray(rawCandidates)
         ? rawCandidates
             .map((item) => Number(item))
-            .filter((id) => Number.isFinite(id) && id > 0)
+            .filter((id) => Number.isFinite(id) && id > 0 && canBeSheriff(this.world, id, this.roleCatalog))
         : [];
       const preferred = candidates.find((id) => id !== request.actorId) ?? candidates[0];
       if (preferred !== undefined) {
@@ -126,7 +130,8 @@ export class BaselineBotActionProvider implements ActionProvider {
     }
 
     if (request.phase === Phase.Voting && request.allowedTools.includes("vote")) {
-      const target = this.pickAliveNotSelf(request.actorId);
+      if (!canVote(this.world, request.actorId, this.roleCatalog)) return null;
+      const target = this.world.getAliveEntityIds().find(id => id !== request.actorId && canBeExiled(this.world, id, this.roleCatalog)) ?? null;
       return target !== null
         ? { name: "vote", args: { target_id: target, abstain: false } }
         : { name: "vote", args: { target_id: null, abstain: true } };

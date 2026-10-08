@@ -29,6 +29,8 @@ export enum RuleError {
   SheriffDirectionOnly = "sheriff_direction_only",
   SheriffDirectionPhase = "sheriff_direction_phase",
   SheriffNominationPhase = "sheriff_nomination_phase",
+  SheriffNominationEligibility = "sheriff_nomination_eligibility",
+  SheriffVoteEligibility = "sheriff_vote_eligibility",
   SheriffRunBoolean = "sheriff_run_boolean",
   SheriffVotePhase = "sheriff_vote_phase",
   SheriffVoteTarget = "sheriff_vote_target",
