@@ -383,3 +383,9 @@ NativeHunter内部/God旧hunter_shot保持，玩家visible_events统一player_sh
 NightAwakenedEffects独立typed盾/普通额外刀提案，NightPipeline空数组透传，Damage不拥有角色库存/ready/工具窗口或真实死亡。普通额外刀守救互消/Dream/独立盾判定，Aw盾先吸原毒再机械反射、也挡返毒且不递归；新awakened_hidden_knife沿普通刀遗言/严格全部来源枪许可。旧毒施者死保付费前缀/原目标life、其它伤害与机械原有穿盾反毒语义保留。
 
 受影响engine731/9468/48及static四项通过，随后受控pipeline透传新例与Aw/旧Mechanical窄门槛48/107通过；机械reflection/extra/twelve双语SDK/ACP/MCP/混合18实际完整局、4260断言及每局Tape/PID验证0。见[本笔审查](reviews/p7-awakened-damage.md)。前端/呈现协议未变，不重复无关图/浏览器门槛；本笔不是Aw实际对局，paid owner/学习/实际900/原12镜隐板随后完成，21/43与P7余2/P8–P10/64/22/长局T6持续。
+
+## P7：觉醒隐狼资源状态
+
+六模板独立typed状态、actual夜末提交时间、Hunter同点armed/主动下一夜、Mirror单实例ID、独立接刀事实与固定首夜、once额外刀晚学和保留、Guard非法连续不支付/skip断链及单毒无补库存落为纯状态操作。JSON独立存储/六skill白名单投影，不复制目标历史/库存/人格，也不建机械mode或统一复制框架。
+
+受影响116测试/672断言/5文件与type/deps/boundaries/i18n57通过，见[独立审查](reviews/p7-awakened-state.md)。未加Role枚举/profile/export/阶段/配置，未冒真实900或完整Aw对局/Tape，仍21/43；后续原owner/phase/life/学习实例安装与ready原子提交、全部真实Aw技能/接刀/枪及原12镜隐板继续，P7余2/P8–P10/64/22/长局T6保持。
