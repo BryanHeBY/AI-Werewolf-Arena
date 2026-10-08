@@ -7,7 +7,7 @@ import type {NightStageHandler} from "../../stages/night/contracts";
 import {activeNightAbility,nightAbilityActors,recordNightAbilityUse} from "../abilities";
 import {getGargoyleState,type RoleInspectionState} from "../private_state";
 import {resolveInspection} from "../inspection";
-import {beginRoleInspectionNight,recordRoleInspectionCompletion} from "./inspection_scope";
+import {beginRoleInspectionNight,recordRoleInspectionCompletion} from "./night_scope";
 
 export function uninspectedRoleTargets(world:World,actorId:EntityId,state:RoleInspectionState):EntityId[]{return world.getAliveEntityIds().filter(id=>id!==actorId&&!state.history.some(report=>report.targetId===id));}
 export const ROLE_INSPECTION_STAGE:NightStageHandler={id:"role_inspection",priority:180,async execute(ctx){

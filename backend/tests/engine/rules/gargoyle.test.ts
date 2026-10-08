@@ -5,7 +5,7 @@ import {sixPlayerMvpConfig} from "../../../src/runtime/scenarios/six_player_mvp"
 import {getGargoyleState,setGargoyleState,getRoleInspectionState,getHiddenWolfState,getSeerState} from "../../../src/game/mechanisms/roles/private_state";
 import {findNightAbility,allNightAbilities} from "../../../src/game/mechanisms/roles/abilities";
 import {canGargoyleKnife} from "../../../src/game/mechanisms/roles/gargoyle/inheritance";
-import {ROLE_INSPECTION_STAGE} from "../../../src/game/mechanisms/roles/gargoyle/night_stages";
+import {ROLE_INSPECTION_STAGE} from "../../../src/game/mechanisms/roles/role_inspection/night_stages";
 import {knownWolfTeammates,wolfChatParticipants,wolfKnifeHolders} from "../../../src/game/mechanisms/roles/wolf_team";
 import {getDefaultRoleCatalog} from "../../../src/game/mechanisms/roles/catalog";
 import {ActionReception} from "../../../src/ai/agents/player/action_reception";

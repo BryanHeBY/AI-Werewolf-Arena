@@ -13,7 +13,7 @@
 ## 状态和 API
 
 - `NightAbilityStates.role_check` 保存 lastTarget、lastDay 和 typed history；资源沿现有 G02 实例计算。gift/copy 以明确新状态建立独立实例，不改变持有者真实身份/阵营。transfer 校验完整语义状态和资源，允许字段重排，拒绝清空旧知识；明确授权新持有者读取完整旧知识，不重发旧事件。
-- `inspection_scope.ts` 按 World/夜保存完成范围及提交账本，不进入 DTO、角色 JSON、事件或 Tape。已提交夜流水线拒绝重入；撤权、原生状态替换、转移、原生命更换或其它狼复活，不能沿用旧完成范围出刀。
+- `role_inspection/night_scope.ts` 按 World/夜保存完成范围及提交账本，不进入 DTO、角色 JSON、事件或 Tape。已提交夜流水线拒绝重入；撤权、原生状态替换、转移、原生命更换或其它狼复活，不能沿用旧完成范围出刀。
 - stage 优先级 180，在摄梦后、狼聊/刀和其它信息阶段前；完整身份在装配时已有。await、gateway 与最终报告提交重验 actor 和 target 原生命。死亡、警徽、遗言、追加波次及最后判胜仍由既有 owner 处理。
 - `RoleProfile.baselineAction` 追加可选 World，旧函数兼容；仅决策 fallback 使用。受限观察机器人只读本人观察中的历史与合法目标，不持有 World。
 - 共享 PlayerPromptPolicy 向 SDK/ACP 注入 bound 实例完整查验规则和本人状态。实际查后刀资格与曾获得事实分别说明；私有日志受现有显示开关控制，公共终端/chat 不输出。

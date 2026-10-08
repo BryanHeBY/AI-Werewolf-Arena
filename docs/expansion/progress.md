@@ -11,7 +11,8 @@
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
 | P5 | 完成 | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md) |
 | P6 | 完成 | 五角色与三路审查闭环；16项verified，最终全量1176测试／542实际双语整局/Tape、103前端／42浏览器通过，见[阶段验收](reviews/p6-activation.md) |
-| P7–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
+| P7 | 准备中 | 查验模块归属调整、通灵师规则冻结；尚未启用新角色 |
+| P8–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
 
@@ -278,3 +279,7 @@ front97／893/type/build、actualChromium36及中英实际PNG过，三路0剩余
 最终目录16verified／48planned，完整release1176／105387／131文件、0失败、smoke/type/deps/boundaries/i18n通过，`/tmp/awa-p6-release-verified.log`。所有已支持542实际本机SDK/ACP/混合双语完整局与每局严格Tape、各板受限观察seed和资源故障专项共同回归；石像新增36完整局＋4gift重复拒绝/纠正任务。两板40 seed零拒绝回退、自然终局、真实查验/接刀/新刀票正覆盖及全重放；十二人0–19初探无接刀，扩展定位53后采用固定40–59，不改板子/策略或降低断言。
 
 front103／953、type/build、actualChromium42、中文接刀与英文十二人具体角色查验PNG均过并独立目检。三路[角色审查](reviews/p6-gargoyle.md)和[整阶段审查](reviews/p6-activation.md)0剩余阻断，六/十二public board/game例可加载，未读写用户configs/真实认证或调用外部模型。P6关闭；P7从通灵师规则冻结开始，7项P7＋3项P8＋38项P9及P10组合/长局/T6保持持续完整目标。
+
+## P7：具体角色查验模块归属
+
+现有石像鬼阶段与私有夜范围移到roles/role_inspection，单独纯迁移，不改规则或提前启用通灵。两文件与HEAD逐字核对（唯一stage内部import修正），外部引用同步；type/deps/boundaries、core32/229和36实际双语SDK/ACP/混合整局＋40seed／全部Tape20/5715通过。两名独立R/A只读核无行为/资源/受众变化，见[迁移审查](reviews/p7-inspection-move.md)。目录仍16verified/48planned，通灵按另笔冻结/实现/验收。

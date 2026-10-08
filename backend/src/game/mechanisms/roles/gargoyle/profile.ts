@@ -9,7 +9,7 @@ import {WOLF_ROLE_PROFILE} from "../wolf/profile";
 import {numberOrNull} from "../../llm/helpers";
 import {isAliveTarget} from "../../validation/contracts";
 import {canGargoyleKnife} from "./inheritance";
-import {ROLE_INSPECTION_STAGE,uninspectedRoleTargets} from "./night_stages";
+import {ROLE_INSPECTION_STAGE,uninspectedRoleTargets} from "../role_inspection/night_stages";
 
 export const GARGOYLE_ROLE_PROFILE:RoleProfile={
  ...WOLF_ROLE_PROFILE,role:Role.Gargoyle,maxCount:1,canSelfDestruct:false,label:roleName("gargoyle"),skillBrief:text("zh-CN","role.gargoyle.brief"),

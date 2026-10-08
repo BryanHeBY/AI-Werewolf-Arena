@@ -3,7 +3,7 @@ import type {RoleComponent} from "../../../../core/domain/components/role";
 import {Camp,Role,type GameEvent} from "../../../../core/domain/model";
 import type {World} from "../../../../core/domain/world";
 import {getGargoyleState} from "../private_state";
-import {completedGargoyleInspection} from "./inspection_scope";
+import {completedGargoyleInspection} from "../role_inspection/night_scope";
 
 export function canGargoyleKnife(role:RoleComponent,world?:World):boolean{
  if(!world||role.role!==Role.Gargoyle||role.camp!==Camp.Wolf||getGargoyleState(role)?.hasInheritedKnife!==true||!completedGargoyleInspection(world,role))return false;

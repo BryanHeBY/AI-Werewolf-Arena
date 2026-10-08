@@ -31,7 +31,7 @@ import { GameActionRequestFactory } from "../action_request_factory";
 import { createRandom, shuffled, type RandomSource } from "../../../core/domain/random";
 import { DreamNightFrame, hasDreamNightCommit } from "../../mechanisms/roles/dreamer/night_frame";
 import {discardStaleWolfKnife} from "../../mechanisms/roles/wolf/knife_scope";
-import {hasRoleInspectionNightCommit} from "../../mechanisms/roles/gargoyle/inspection_scope";
+import {hasRoleInspectionNightCommit} from "../../mechanisms/roles/role_inspection/night_scope";
 import {AliveComponent,aliveLifeVersion} from "../../../core/domain/components/alive";
 
 export interface NightPipelineDependencies {
