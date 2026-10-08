@@ -1,5 +1,13 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "role.bear.brief": "入夜按座位环跳过已出局玩家取左右邻居，有可感知狼人则次日咆哮；夜间不重算，熊出局则不咆哮。公告不揭熊或邻居编号。",
+  "role.bear.state": "你的底牌是【熊】，好人神职，无原生主动技能。每夜开始按当前座位环取左右最近存活邻居；有可感知狼人则次日咆哮，当夜邻居死亡不重算，完整夜死链后你已死亡则不咆哮。全场仅收到是否咆哮，不公布熊ID或邻居。熊感知与预言家查验伪装独立；无刀隐狼不触发（仅在该角色已启用板子有效）。",
+  "role.bear.latest": "最近公开公告：第{day}天，{result}。",
+  "role.bear.no_report": "尚无已公布的熊公告；本夜待公布信息不可提前获知。",
+  "bear.roar": "熊咆哮了",
+  "bear.quiet": "熊没有咆哮",
+  "console.bear.report": "第{day}天：{result}",
+  "replay.stage.bear_roared": "熊公告",
   "role.wolf_beauty.brief": "狼队成员，可在刀后魅惑其它玩家；放逐或毒杀时牵连，骑士/梦亡封技能，无自爆/本人自刀。屠边条件下，最后一名活狼为狼美人，被实际放逐且魅惑实际带走最后一神或最后一民时狼胜；配置的胜利条件仍按先命中顺序判断。",
   "role.wolf_beauty.state": "你的底牌是【狼美人】，狼阵营。参与狼聊/刀票，不能自爆或刀自己。刀后可选魅惑其它存活玩家，可null跳过，不能相邻两夜同目标。放逐或毒杀牵连当前目标，Duel/Dream禁止；Night目标受有效梦保护可挡，Day牵连不借旧梦，Guard/Heal不挡。魅惑目标不获直接通知。屠边条件下，最后一名活狼为狼美人，被实际放逐且魅惑实际带走最后一神或最后一民时狼胜；配置的胜利条件仍按先命中顺序判断。",
   "role.wolf_beauty.latest": "当前魅惑目标：{target}；上次行动日：{day}。",

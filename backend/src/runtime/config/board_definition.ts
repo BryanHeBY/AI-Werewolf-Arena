@@ -59,6 +59,8 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
   for (const [index, entry] of definition.board.roleSetups.entries()) {
     if (!isRoleId(entry.role) || !catalog.get(entry.role as Role)) fail("board_config_role_not_implemented", `board.roleSetups.${index}.role`);
     if (seen.has(entry.role)) fail("board_config_duplicate_role", `board.roleSetups.${index}.role`);
+    const maximum=catalog.require(entry.role as Role).maxCount;
+    if(maximum!==undefined&&entry.count>maximum)fail("board_config_invalid_field",`board.roleSetups.${index}.count`);
     seen.add(entry.role); total += entry.count;
   }
   if (total !== definition.board.size) fail("board_config_role_count_mismatch", "board.roleSetups");

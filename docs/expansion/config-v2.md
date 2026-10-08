@@ -2,7 +2,7 @@
 
 ## 板子格式
 
-正常入口只读取 `boards/<id>.json`，ID 必须与文件名一致。当前格式 `version: 2`，规则集 `{ "id": "awa_classic", "version": "1.0.0" }`。基础七角色已关闭规则差异，在[P4声明验收范围](reviews/p4-activation.md)内登记 verified；当前51计划角色仍不授予运行许可。
+正常入口只读取 `boards/<id>.json`，ID 必须与文件名一致。当前格式 `version: 2`，规则集 `{ "id": "awa_classic", "version": "1.0.0" }`。基础七角色已关闭规则差异，在[P4声明验收范围](reviews/p4-activation.md)内登记 verified；当前50计划角色仍不授予运行许可。
 
 必需结构：`board.size`、`board.roleSetups`、`rules.winConditions`、完整 `rules.hooks`、`mechanisms.sheriff`、`mechanisms.selfDestruct.enabledWindows`、`mechanisms.tieBreaker`。角色参数放 `roles.<id>`，由注册 profile 的 schema 严格验证；当前女巫支持 `selfHeal`。
 
@@ -78,3 +78,5 @@ P5守墓人无原生主动工具/新增参数，roles.gravekeeper只接受{}；�
 P6摄梦人已按[卡与契约](dreamer.md)启用，roles.dreamer仅{}。公开6/12均为已验普通必选/夜间免伤版本；长期候选觉醒与免毒关闭/白天牵连等未声明参数不授予许可。
 
 P6狼美人按[卡与契约](wolf-beauty.md)启用，roles.wolf_beauty仅{}；公开6/12含已实现Knight。魅惑可null消费跳过、相邻夜不能同目标，末狼特殊屠边保配置胜利条件次序；双目标/自爆/无条件牵连不开放，觉醒版仍planned。
+
+P6熊按[卡与契约](bear.md)启用，roles.bear仅{}且原生count最多1；公共解析与直接bootstrap均约束。采用入夜取样、完整夜死后匿名公告版本，不能用参数改天亮活邻居重新计算或揭ID。当前6/12是AWA已实现组合，未包含计划隐狼或来源白神。

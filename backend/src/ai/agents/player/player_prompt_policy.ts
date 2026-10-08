@@ -1,5 +1,6 @@
 import { renderMessage, text, term, type Locale } from "@ai-werewolf-arena/game-text";
 import { readGravekeeperReport } from "@ai-werewolf-arena/replay-contract";
+import {getBearState} from "../../../game/mechanisms/roles/private_state";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, ActionWindow, BoardConfig, EntityId, Role, ToolName } from "../../../core/domain"
@@ -86,6 +87,7 @@ export class PlayerPromptPolicy {
     if (guard) ownState.guard = guard;
     if (role?.role === Role.Hunter) ownState.hunter = getHunterState(role);
     if(role?.role===Role.WolfBeauty)ownState.wolfBeauty=getWolfBeautyState(role);
+    if(role?.role===Role.Bear)ownState.bear=getBearState(role);
     if (role?.role === Role.WolfKing) ownState.wolfKing = getWolfKingState(role);
     if (role?.role === Role.WhiteWolfKing) ownState.whiteWolfKing = getWhiteWolfKingState(role);
     if (role?.role === Role.Knight) ownState.knight = getKnightState(role);

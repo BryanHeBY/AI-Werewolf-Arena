@@ -95,6 +95,7 @@ export class DayPipeline {
       day: options.day,
       enableSheriff: config.enableSheriff,
       config,
+      isCurrent,
     });
     if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
     if (await options.afterSheriffElection?.()) {

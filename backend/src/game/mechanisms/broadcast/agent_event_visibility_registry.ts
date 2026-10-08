@@ -12,6 +12,7 @@ const PUBLIC_EVENT_TYPES = new Set([
   "phase_changed",
   "day_speech",
   "night_resolved",
+  "bear_roared",
   "vote_summary",
   "voted_out",
   "game_over",

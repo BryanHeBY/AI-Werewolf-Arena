@@ -33,6 +33,7 @@ import { commitSelfDestructSelection } from "../mechanisms/self_destruct/commit"
 import { commitKnightDuel } from "../mechanisms/roles/knight/commit";
 import { captureExileFeedback } from "../mechanisms/roles/gravekeeper/feedback";
 import {captureBeautyExile,resolveBeautyExileVictory,type BeautyExileCandidate} from "../mechanisms/roles/wolf_beauty/relation";
+import {BearNightFrame} from "../mechanisms/roles/bear/night_frame";
 import { VotingRightComponent } from "../../core/domain/components/voting_right";
 import { IdentityComponent } from "../../core/domain/entities/player";
 import { RoleComponent } from "../../core/domain/components/role";
@@ -177,6 +178,7 @@ export class PhaseManager {
     this.setPhase(Phase.Night);
     const nightDay = this.state.day, nightRevision = this.phaseRevision;
     const nightIsCurrent = () => this.state.day === nightDay && this.state.phase === Phase.Night && !this.state.gameOver && this.phaseRevision === nightRevision;
+    const bearFrame=BearNightFrame.capture(this.world,nightDay);
     const night = await this.nightPipeline.execute(
       this.config,
       actionProvider,
@@ -207,6 +209,7 @@ export class PhaseManager {
       }
       await this.deathResolution.resolve(deaths, sources, actionProvider, Phase.Night, Phase.Day, deathPhases,{dreams:night.dreamFrame,nightOriginIds:night.damage.deaths,isCurrent:dayIsCurrent});
       if (!dayIsCurrent()) return this.state.gameOver;
+      bearFrame?.publish(this.world,this.events,dayIsCurrent);
       return this.checkAndSealResult(blast !== undefined ? "day_interrupted" : "night_settled");
     };
     if (!firstDaySheriffBeforeNightInfo && await settleNight()) return this.getSnapshot();

@@ -7,6 +7,7 @@ import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
 
 const event = <K extends GameEvent["type"]>(type: K, payload: Extract<GameEvent, { type: K }>["payload"]): Extract<GameEvent, { type: K }> => ({ timestamp: 1, type, payload }) as Extract<GameEvent, { type: K }>;
 const events: GameEvent[] = [
+  event("bear_roared",{day:1,roared:true}),event("bear_roared",{day:2,roared:false}),
   event("charm_applied",{actorId:1,targetId:2,day:1}),event("charm_applied",{actorId:1,targetId:null,day:2}),event("charm_death",{actorId:1,targetId:2}),event("charm_blocked",{actorId:1,targetId:2,reason:"night_protection"}),
   event("gravekeeper_reported", { actorId: 3, targetId: 1, exileDay: 1, receivedDay: 2, result: { kind: "camp", camp: "wolf" } }),
   event("knight_duel", { actorId: 1, targetId: 2, result: "wolf" }), event("knight_duel", { actorId: 1, targetId: 2, result: "not_wolf" }),
@@ -34,6 +35,11 @@ const events: GameEvent[] = [
   event("sheriff_direction_chosen", { sheriffId: 1, direction: "clockwise" }), event("sheriff_direction_chosen", { sheriffId: 1, direction: "counter_clockwise" }),
   event("game_over", { winner: Camp.Good, reason: "all_wolves_eliminated" }), event("game_over", { winner: null, reason: "runtime_timeout" }),
 ];
+
+for(const locale of ["zh-CN","en"] as const)test(`${locale}: Bear positive/quiet announcements are public anonymous facts in both private flag modes`,()=>{
+ const registry=getDefaultScriptEventRenderRegistry(),rows=events.filter(e=>e.type==="bear_roared"),labels=locale==="en"?["Day 1: Bear roared","Day 2: Bear did not roar"]:["第1天：熊咆哮了","第2天：熊没有咆哮"];
+ for(const [index,row] of rows.entries()){expect(registry.toJudgeLine(row,locale)).toBe(labels[index]);expect(registry.toLiveRender(row,false,locale)).toEqual([{kind:"system",text:labels[index]}]);expect(registry.toLiveRender(row,true,locale)).toEqual([{kind:"system",text:labels[index]}]);expect(registry.toReplayStage(row)).toBe("bear_roared");}expect(toChatLines(rows,locale)).toEqual([]);
+});
 
 for(const locale of ["zh-CN","en"] as const)test(`${locale}: Beauty choice, death and protection remain explicit private terminal diagnostics with stable replay stages`,()=>{
  const registry=getDefaultScriptEventRenderRegistry(),rows=events.filter(item=>item.type.startsWith("charm_")),expected=locale==="en"?["Wolf Beauty 1 chooses charm target 2 on night 1","Wolf Beauty 1 chooses charm target None on night 2","Player 2 dies through Wolf Beauty 1's charm","Dream protection blocks Wolf Beauty 1's night charm death of player 2"]:["1号狼美人本夜魅惑目标：2（第1夜）","1号狼美人本夜魅惑目标：无（第2夜）","2号被1号狼美人牵连出局","1号对2号的夜间魅惑牵连被梦保护阻止"];

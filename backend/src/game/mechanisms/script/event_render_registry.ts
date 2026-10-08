@@ -48,6 +48,7 @@ const CHAT_HANDLERS: ScriptChatLineHandlers = {
 };
 
 const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
+  bear_roared:(event,locale="zh-CN")=>text(locale,"console.bear.report",{day:event.payload.day,result:text(locale,event.payload.roared?"bear.roar":"bear.quiet")}),
   charm_applied:(event,locale="zh-CN")=>text(locale,"console.charm.applied",{actor:event.payload.actorId,target:event.payload.targetId??text(locale,"common.none"),day:event.payload.day}),
   charm_death:(event,locale="zh-CN")=>text(locale,"console.charm.death",{actor:event.payload.actorId,target:event.payload.targetId}),
   charm_blocked:(event,locale="zh-CN")=>text(locale,"console.charm.blocked",{actor:event.payload.actorId,target:event.payload.targetId}),
@@ -84,6 +85,7 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
 };
 
 const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
+  bear_roared:()=>"bear_roared",
   dream_applied: ()=>"dreamer", dream_death: ()=>"dream_death",
   gravekeeper_reported: () => "gravekeeper_feedback",
   phase_changed: (event) => String(event.payload.phase ?? "phase_changed"),
@@ -106,6 +108,7 @@ const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
 };
 
 const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
+  bear_roared:(event,_private,locale="zh-CN")=>[{kind:"system",text:text(locale,"console.bear.report",{day:event.payload.day,result:text(locale,event.payload.roared?"bear.roar":"bear.quiet")})}],
   charm_applied:(event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.charm.applied",{actor:event.payload.actorId,target:event.payload.targetId??text(locale,"common.none"),day:event.payload.day})}]:[],
   charm_death:(event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.charm.death",{actor:event.payload.actorId,target:event.payload.targetId})}]:[],
   charm_blocked:(event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.charm.blocked",{actor:event.payload.actorId,target:event.payload.targetId})}]:[],

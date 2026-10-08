@@ -18,6 +18,12 @@ export function assertTransportPrompt(plan: ActorTransportPlan, turn: PlannedTur
   if (!content.includes(plan.locale === "en" ? `Current game day: ${turn.day}.` : `当前日次：第${turn.day}天。`)) throw new Error("fixture_day_mismatch");
   for (const marker of plan.requiredCurrentMarkers ?? []) if (!content.includes(marker)) throw new Error("fixture_private_marker_missing");
   for (const marker of plan.forbiddenCurrentMarkers ?? []) if (content.includes(marker)) throw new Error("fixture_private_marker_exposed");
+  for(const marker of turn.forbiddenPromptMarkers??[])if(content.includes(marker))throw new Error("fixture_premature_marker_exposed");
+  if(turn.bearLatest!==undefined){
+    const report=turn.bearLatest,result=report?.roared?(plan.locale==="en"?"Bear roared":"熊咆哮了"):(plan.locale==="en"?"Bear did not roar":"熊没有咆哮");
+    const marker=report?(plan.locale==="en"?`Latest public announcement: day ${report.day}, ${result}.`:`最近公开公告：第${report.day}天，${result}。`):(plan.locale==="en"?"No Bear announcement has been published yet;":"尚无已公布的熊公告；");
+    if(!content.includes(marker))throw new Error("fixture_bear_history_mismatch");
+  }
   if (turn.knightResourceRemaining !== undefined && !content.includes(plan.locale === "en" ? `Duel opportunities remaining: ${turn.knightResourceRemaining}.` : `决斗机会剩余：${turn.knightResourceRemaining}。`)) throw new Error("fixture_knight_resource_mismatch");
   if(turn.charmLatest){
     const {targetId,day}=turn.charmLatest,target=targetId??(plan.locale==="en"?"None":"无"),date=day??(plan.locale==="en"?"None":"无");
@@ -43,6 +49,7 @@ export function assertTransportPrompt(plan: ActorTransportPlan, turn: PlannedTur
 }
 export function assertTransportEvents(role: string, events: Array<[number, string, Record<string, unknown>]>, actorId: number) {
   for (const [, type, payload] of events) {
+    if(type==="bear_roared"&&(Object.keys(payload).sort().join()!=="day,roared"||!Number.isSafeInteger(payload.day)||Number(payload.day)<1||typeof payload.roared!=="boolean"))throw new Error("fixture_bear_private_or_invalid_signal");
     if (type === "god_private_game_info") throw new Error("fixture_god_information_exposed");
     if(["dream_death","charm_death","charm_blocked"].includes(type))throw new Error("fixture_private_death_information_exposed");
     if (["seer_checked", "charm_applied", "dream_applied", "gravekeeper_reported", "witch_potion_used", "witch_potion_skipped", "guard_applied"].includes(type) && payload.actorId !== actorId) throw new Error("fixture_other_private_skill_exposed");

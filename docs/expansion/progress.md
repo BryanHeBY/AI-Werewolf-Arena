@@ -10,7 +10,7 @@
 | P3 | 完成 | I01–I04、诊断/CLI与受控源码扫描；实际SDK/ACP中英完整场景与Tape重放、前端/视频门槛；英文入口开放 |
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
 | P5 | 完成 | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md) |
-| P6 | 进行中 | 摄梦人/狼美人交付，熊/隐狼/石像鬼继续；13项verified，356实际双语完整局/Tape，见[狼美人验收](reviews/p6-wolf-beauty.md) |
+| P6 | 进行中 | 摄梦人/狼美人/熊交付，隐狼/石像鬼继续；14项verified，熊本轮78实际双语完整局/Tape，见[熊验收](reviews/p6-bear.md) |
 | P7–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
@@ -253,3 +253,11 @@ A01/A02/M21/G01–G04和基础差异闭环；七項在awa_classic1.0.0已验板�
 第十三项 `wolf_beauty` 交付：普通狼队权限与无自爆／本人自刀，刀后女巫前可选魅惑，合法skip耗本夜清关系、相邻夜不能同目标；原World绑定不通知目标，hook令牌在await后同步认领才派生死亡／Night来源。Exile／Poison触发，Duel／Dream复合禁技能，Guard／Heal不挡，Night有效梦保护／梦链与同波原遗言、补因禁后续枪明确。PhaseManager私有末狼候选，仅SlaughterSide条目内应用实际放逐带最后神／民的特殊狼胜，保配置次序与全死亡／徽章连锁先结束。runner own cancellation保持AbortError，不转合法skip，实际失败／已提交前缀及严格Tape保留。
 
 [卡](rules/awa-wolf-beauty-v1.md)、[契约](wolf-beauty.md)、[三路审查](reviews/p6-wolf-beauty.md)记录来源／AWA细则／内部API与修正。最终release963／79767／117文件、smoke/type/deps/boundaries/i18n通过，原284＋新72＝356本机SDK/ACP/混合双语完整局及全部严格Tape；core34／292含四条件徽章1→2→4再judge，runner取消重放／并发失败／配置8／94，40受限seed自然／0拒绝回退／实际Charm分支与重放2／52。front89／781/type/build、actualChromium28及中英真实PNG通过，三路0剩余阻断，目录13verified／51planned。六／十二人board/game示例可加载，用户configs／认证未读写。P6剩熊／隐狼／石像鬼，P7–P10／51角色／22机制完整矩阵／T6保持目标。
+
+## P6：熊
+
+第十四项 `bear` 交付：入夜按当前seat存活环取邻居，待公布样本仅manager持有原World／role／state／life版本；邻居本夜死亡不重算，完整夜死／原遗言／徽章／追加波次后才匿名公布day/bool，再judge。原熊夜死／已死quiet，取消／生命替换／复活无晚报，重复不加history；真Wolf感知独立Seer伪装和临时刀权。profile原生maxCount1在parse/directbootstrap聚合约束；实际竞选取消发现旧Election缺epoch并补所有await／gateway／阶段交接检查。来源版与AWA细则见[卡](rules/awa-bear-v1.md)，API及范围见[契约](bear.md)、[三路审查](reviews/p6-bear.md)。
+
+最终受影响engine／配置／目录／中英终端／契约492／10133／51文件与type/deps/boundaries/i18n通过；本角色最终source的78实际SDK/ACP/混合双语完整局＋40受限seed／全部严格Tape，41／9214通过，roar与quiet都有正覆盖且自然／0拒绝回退。core36／215、public/config/console连core52／809；front93／848/type/build、actualChromium32、中英真实PNG过，三路0剩余阻断。目录14verified／50planned，六／十二人board/game示例可加载；来源Hidden／白神未冒认已实现，用户configs／认证未读写。
+
+依delivery§3按功能运行受影响门槛，未把上一笔963全量的历史source证据当本轮全阶段通过；P6结束全部已支持回归、后续长局／T6／P10门槛保持。P6剩隐狼／石像鬼，P7–P10／50角色／22机制完整矩阵继续。

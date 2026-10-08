@@ -1,6 +1,14 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "role.bear.brief": "At night start, sample the nearest living neighbors on both sides of the seat ring; a detectable wolf causes a roar at dawn. Do not resample during the night; a dead Bear stays quiet. The announcement names neither Bear nor neighbors.",
+  "role.bear.state": "Your role is Bear, a good special role with no native active skill. At each night start sample the nearest living neighbors on both sides of the current seat ring; a detectable wolf causes a roar at dawn. Neighbors dying that night do not change the sample; if you are dead after the complete night death chain, stay quiet. Everyone hears only whether Bear roared, never Bear or neighbor IDs. Bear sensing is separate from Seer inspection disguises; a Hidden Wolf without knife access does not trigger it (only on boards where that role is enabled).",
+  "role.bear.latest": "Latest public announcement: day {day}, {result}.",
+  "role.bear.no_report": "No Bear announcement has been published yet; this night's pending result is unavailable.",
+  "bear.roar": "Bear roared",
+  "bear.quiet": "Bear did not roar",
+  "console.bear.report": "Day {day}: {result}",
+  "replay.stage.bear_roared": "Bear announcement",
   "role.wolf_beauty.brief": "Pack member who may charm another player after the knife vote; exile or poison links death, Duel/Dream suppress it, with no self-destruction or own self-knife vote. Under SlaughterSide, exiling the last living wolf when it is Wolf Beauty and its charm actually takes the last good special role or villager gives wolves victory; configured victory conditions still use their first matching order.",
   "role.wolf_beauty.state": "Your role is Wolf Beauty, aligned with wolves. Join wolf chat/knife votes, but cannot self-destruct or vote to knife yourself. After the knife vote optionally charm another living player or pass with null, never the same target on adjacent nights. Exile or poison takes the current target; Duel/Dream forbids it. Current dream protection can block Night charm, not ordinary Day charm; Guard/antidote do not block it. The target gets no direct notification. Under SlaughterSide, exiling the last living wolf when it is Wolf Beauty and its charm actually takes the last good special role or villager gives wolves victory; configured victory conditions still use their first matching order.",
   "role.wolf_beauty.latest": "Current charm target: {target}; last action day: {day}.",

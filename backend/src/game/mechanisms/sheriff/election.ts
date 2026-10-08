@@ -17,6 +17,7 @@ export interface SheriffElectionInput {
   enableSheriff: boolean;
   config?: BoardConfig;
   roleCatalog?: RoleCatalog;
+  isCurrent?:()=>boolean;
 }
 
 interface SheriffVote {
@@ -26,6 +27,7 @@ interface SheriffVote {
 }
 
 export async function electSheriffIfNeeded(input: SheriffElectionInput): Promise<EntityId | null> {
+  if(!current(input))return null;
   const { world, events, day, enableSheriff, config } = input;
   const currentSheriff = findSheriffId(world, input.roleCatalog);
   if (!enableSheriff || day !== 1 || currentSheriff !== null) return currentSheriff;
@@ -33,10 +35,14 @@ export async function electSheriffIfNeeded(input: SheriffElectionInput): Promise
   const aliveIds = world.getAliveEntityIds().filter(id => canVote(world, id, input.roleCatalog));
   const requests = new GameActionRequestFactory(world, events, day);
   const initialCandidates = await collectNominations(input, requests, aliveIds);
+  if(!current(input))return null;
   const candidateSet = new Set<EntityId>(initialCandidates);
   await collectCampaignSpeeches(input, requests, candidateSet);
+  if(!current(input))return null;
   const finalizedCandidates = await collectWithdrawals(input, requests, candidateSet);
+  if(!current(input))return null;
   const { tally, votes } = await collectSheriffVotes(input, requests, aliveIds, finalizedCandidates, candidateSet);
+  if(!current(input))return null;
   let winner = pickSheriffWinner(world, finalizedCandidates.filter(id => canBeSheriff(world, id, input.roleCatalog)), tally, config?.tieBreaker?.sheriffVote ?? "min_seat");
   if (winner !== null && !assignSheriff(world, winner, config, input.roleCatalog)) winner = null;
   events.push({ timestamp: Date.now(), type: "sheriff_vote_summary", payload: { votes, winnerId: winner } });
@@ -73,14 +79,15 @@ async function collectNominations(input: SheriffElectionInput, requests: GameAct
   }));
   const nominationResults = await Promise.all(
     nominationRequests.map(async ({ actorId, request }) => {
+      if(!current(input))return null;
       const action = await actionProvider.getAction(request);
-      if (action?.name !== "run_for_sheriff") {
+      if (!current(input)||action?.name !== "run_for_sheriff") {
         return null;
       }
       const result = toolGateway.validateAndSanitize(world, actorId, action, {
         phase: Phase.Day,
       });
-      if (!result.ok || !result.sanitizedCall) {
+      if (!current(input)||!result.ok || !result.sanitizedCall) {
         return null;
       }
       return {
@@ -89,6 +96,7 @@ async function collectNominations(input: SheriffElectionInput, requests: GameAct
       };
     }),
   );
+  if(!current(input))return [];
   for (const item of nominationResults) {
     if (!item || !canBeSheriff(world, item.actorId, input.roleCatalog)) {
       continue;
@@ -117,6 +125,7 @@ async function collectCampaignSpeeches(input: SheriffElectionInput, requests: Ga
   const campaignOrder = sortBySeat(world, [...candidateSet]);
   // 上警发言：候选人按座位顺序发言。
   for (const candidateId of campaignOrder) {
+    if(!current(input))return;
     if (!candidateSet.has(candidateId) || !canBeSheriff(world, candidateId, input.roleCatalog)) {
       continue;
     }
@@ -132,11 +141,12 @@ async function collectCampaignSpeeches(input: SheriffElectionInput, requests: Ga
       },
     });
     const speechAction = await actionProvider.getAction(speechReq);
+    if(!current(input))return;
     if (speechAction?.name === "speak") {
       const speechResult = toolGateway.validateAndSanitize(world, candidateId, speechAction, {
         phase: Phase.Day,
       });
-      if (speechResult.ok && speechResult.sanitizedCall && canBeSheriff(world, candidateId, input.roleCatalog)) {
+      if (current(input)&&speechResult.ok && speechResult.sanitizedCall && canBeSheriff(world, candidateId, input.roleCatalog)) {
         events.push({
           timestamp: Date.now(),
           type: "day_speech",
@@ -170,14 +180,15 @@ async function collectWithdrawals(input: SheriffElectionInput, requests: GameAct
   }));
   const withdrawResults = await Promise.all(
     withdrawRequests.map(async ({ candidateId, request }) => {
+      if(!current(input))return null;
       const withdrawAction = await actionProvider.getAction(request);
-      if (withdrawAction?.name !== "run_for_sheriff") {
+      if (!current(input)||withdrawAction?.name !== "run_for_sheriff") {
         return null;
       }
       const withdrawResult = toolGateway.validateAndSanitize(world, candidateId, withdrawAction, {
         phase: Phase.Day,
       });
-      if (!withdrawResult.ok || !withdrawResult.sanitizedCall) {
+      if (!current(input)||!withdrawResult.ok || !withdrawResult.sanitizedCall) {
         return null;
       }
       return {
@@ -186,6 +197,7 @@ async function collectWithdrawals(input: SheriffElectionInput, requests: GameAct
       };
     }),
   );
+  if(!current(input))return [];
   const withdrawn: EntityId[] = [];
   for (const item of withdrawResults) {
     if (!item || item.keepRunning) {
@@ -242,15 +254,16 @@ async function collectSheriffVotes(input: SheriffElectionInput, requests: GameAc
   }));
   const sheriffVoteResults = await Promise.all(
     sheriffVoteRequests.map(async ({ actorId, request }) => {
+      if(!current(input))return null;
       const action = await actionProvider.getAction(request);
-      if (action?.name !== "vote_for_sheriff") {
+      if (!current(input)||action?.name !== "vote_for_sheriff") {
         return null;
       }
       const result = toolGateway.validateAndSanitize(world, actorId, action, {
         phase: Phase.Day,
         sheriffCandidates: finalizedCandidates,
       });
-      if (!result.ok || !result.sanitizedCall) {
+      if (!current(input)||!result.ok || !result.sanitizedCall) {
         return null;
       }
 
@@ -259,6 +272,7 @@ async function collectSheriffVotes(input: SheriffElectionInput, requests: GameAc
       return { actorId, targetId, abstain };
     }),
   );
+  if(!current(input))return{tally,votes:[]};
   const acceptedVotes: SheriffVote[] = [];
   for (const item of sheriffVoteResults) {
     if (!item || !canVote(world, item.actorId, input.roleCatalog) || candidateSet.has(item.actorId) ||
@@ -281,6 +295,8 @@ async function collectSheriffVotes(input: SheriffElectionInput, requests: GameAc
   }
   return { tally, votes: acceptedVotes };
 }
+
+function current(input:SheriffElectionInput):boolean{return input.isCurrent?.()??true;}
 
 function pickSheriffWinner(
   world: World,

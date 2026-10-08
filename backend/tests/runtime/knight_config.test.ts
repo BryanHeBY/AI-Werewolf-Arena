@@ -19,6 +19,6 @@ for (const [id, size] of [["six_player_knight", 6], ["twelve_player_knight", 12]
   expect(configured({ enabledWindows: [] }).config.knight).toEqual({ enabledWindows: [] });
   expect(configured({ enabledWindows: Object.values(KnightDuelWindow) }).config.knight?.enabledWindows).toEqual(Object.values(KnightDuelWindow));
   for (const parameters of [{ enabledWindows: ["on_pre_vote"] }, { enabledWindows: ["after_speeches", "after_speeches"] }, { continuous: true }]) expect(() => configured(parameters)).toThrow();
-  const unsupported = structuredClone(board.definition); unsupported.board.roleSetups[0].role = "bear";
+  const unsupported = structuredClone(board.definition); unsupported.board.roleSetups[0].role = "awakened_hidden_wolf";
   expect(() => parseBoardDefinition(unsupported)).toThrow("board_config_role_not_implemented");
 });

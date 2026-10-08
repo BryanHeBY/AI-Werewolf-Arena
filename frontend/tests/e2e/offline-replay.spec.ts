@@ -191,3 +191,11 @@ for(const locale of ["zh-CN","en"] as const)for(const special of [false,true])te
  await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(special?1:4);await expect(page.getByTestId("composition-winner")).toHaveCount(special?1:4);
  if(special)await expect(page.getByRole("button",{name:locale==="en"?"Player 1 · Seat 1":"1号 · Seat 1",exact:true})).toHaveClass(/dead/);
 });
+
+for(const locale of ["zh-CN","en"] as const)for(const badge of [false,true])test(`${locale}/${badge}: actual Bear archive gives an anonymous quiet signal after death/shot/badge settlement without changing any seat`,async({page})=>{
+ const replay=JSON.parse(readFileSync(new URL(`../fixtures/bear-${badge?"king-badge":"neighbor-update"}.replay.json`,import.meta.url),"utf8"));replay.meta.locale=locale;await page.route("**/api/replay",route=>route.fulfill({json:replay}));await page.goto("/");
+ const text=locale==="en"?`Day ${badge?1:2}: Bear did not roar`:`第${badge?1:2}天：熊没有咆哮`;await page.locator(".timeline .event").filter({hasText:text}).click();await expect(page.getByTestId("composition-event")).toHaveText(text);await expect(page.locator(".seat-grid .dead")).toHaveCount(badge?2:3);await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+ const caption=await page.getByTestId("composition-caption").boundingBox();expect(caption).not.toBeNull();for(const seat of await page.locator("[data-composition-player]").all()){const box=await seat.boundingBox();expect(box).not.toBeNull();expect(box!.y+box!.height).toBeLessThan(caption!.y);}
+ await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(badge?5:4);await expect(page.getByTestId("composition-winner")).toHaveCount(badge?5:4);
+ if(badge)await expect(page.getByRole("button",{name:locale==="en"?"Player 1 · Seat 1":"1号 · Seat 1",exact:true})).toHaveClass(/dead/);
+});

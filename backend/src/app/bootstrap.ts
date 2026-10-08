@@ -115,6 +115,10 @@ function buildRoleDeck(config: BoardConfig, fixedRoles: readonly Role[] | undefi
     }
   }
 
+  const counts=new Map<Role,number>();
+  for(const role of deck)counts.set(role,(counts.get(role)??0)+1);
+  for(const [role,count] of counts){const maximum=getDefaultRoleCatalog().require(role).maxCount;if(maximum!==undefined&&count>maximum)throw new Error(`role_count_exceeds_limit: ${role}`);}
+
   if (deck.length !== config.boardSize) {
     throw new Error(
       `Role setup mismatch: boardSize=${config.boardSize}, roles=${deck.length}`,

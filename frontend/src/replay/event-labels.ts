@@ -10,6 +10,7 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerI
   const target = numberValue(p.targetId);
   const players = (value: unknown) => numberList(value, locale) || t("replay.none");
   switch (event.type) {
+    case "bear_roared": return typeof p.roared==="boolean"?t("console.bear.report",{day:numberValue(p.day),result:t(p.roared?"bear.roar":"bear.quiet")}):t("replay.unknown");
     case "charm_applied": return t("console.charm.applied",{actor,target:p.targetId===null?t("common.none"):target,day:numberValue(p.day)});
     case "charm_death": return t("console.charm.death",{actor,target});
     case "charm_blocked": return p.reason==="night_protection"?t("console.charm.blocked",{actor,target}):t("replay.unknown");

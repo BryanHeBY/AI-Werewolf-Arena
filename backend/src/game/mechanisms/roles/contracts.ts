@@ -11,6 +11,7 @@ import type { ToolRuleMap } from "../validation/contracts";
 import type { DeathHook, VotedOutHook } from "../hooks/hook_registry";
 import type { z } from "zod";
 import type { NightAbilityKind } from "./abilities";
+import type {World} from "../../../core/domain/world";
 
 /** 角色初始化上下文。 */
 export interface RoleInitContext {
@@ -33,6 +34,10 @@ export interface RoleProfile {
   label: string;
   skillBrief: string;
   goodSide?: "god" | "villager";
+  /** Declared composition limit; omitted roles retain their existing multiplicity. */
+  maxCount?: number;
+  /** Passive Bear sensing is independent of active inspection labels/knife permission. */
+  detectableByBear?: (world:World,role:RoleComponent)=>boolean;
   initialVictoryAffiliations?: readonly VictoryAffiliation[] | ((role: RoleComponent, ctx: RoleInitContext) => readonly VictoryAffiliation[]);
   /** Public participation restrictions; secret immunity belongs to resolution hooks. */
   participation?: { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean } | ((role: RoleComponent) => { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean });

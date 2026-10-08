@@ -14,6 +14,7 @@ const PRIVATE_STATE_KEYS = {
   knight: "knight",
   gravekeeper: "gravekeeper",
   wolfBeauty: "wolf_beauty",
+  bear: "bear",
   idiot: "idiot",
   seer: "seer",
 } as const;
@@ -44,6 +45,7 @@ export interface GravekeeperReport extends ExileFeedback { receivedDay: number }
 export interface GravekeeperState { history: GravekeeperReport[] }
 export interface DreamerState { lastTarget: EntityId | null; lastDay: number | null; history: Array<{day: number; targetId: EntityId}> }
 export interface WolfBeautyState { targetId: EntityId | null; lastActedDay: number | null; history: Array<{day:number;targetId:EntityId|null}> }
+export interface BearState { history:Array<{day:number;roared:boolean}> }
 
 /** 白痴私有状态。 */
 export interface IdiotState {
@@ -128,6 +130,8 @@ export function setDreamerState(roleComp: RoleComponent, state: DreamerState): D
 export function getDreamerState(roleComp: RoleComponent, abilityId?: string): DreamerState | undefined { return findNightAbility(roleComp, "dream", abilityId)?.state; }
 export function setWolfBeautyState(roleComp: RoleComponent, state: WolfBeautyState): WolfBeautyState { return setState(roleComp,PRIVATE_STATE_KEYS.wolfBeauty,state); }
 export function getWolfBeautyState(roleComp: RoleComponent): WolfBeautyState | undefined { return getState(roleComp,PRIVATE_STATE_KEYS.wolfBeauty); }
+export function setBearState(role:RoleComponent,state:BearState):BearState{return setState(role,PRIVATE_STATE_KEYS.bear,state);}
+export function getBearState(role:RoleComponent):BearState|undefined{return getState(role,PRIVATE_STATE_KEYS.bear);}
 
 /** 写入白痴私有状态。 */
 export function setIdiotState(roleComp: RoleComponent, state: IdiotState): IdiotState {
