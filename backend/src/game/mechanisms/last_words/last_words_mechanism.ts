@@ -1,13 +1,15 @@
 /** 文件说明：遗言规则与事件写入机制。 */
 import { AliveComponent } from "../../../core/domain/components/alive";
 import { COMPONENT } from "../../../core/domain/components/names";
-import { EntityId, GameEvent, Phase } from "../../../core/domain/model";
+import { EntityId, GameEvent, Phase, DeathCause, type DeathSources } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 
 /** 遗言机制：判定是否可遗言并写入遗言授权事件。 */
 export class LastWordsMechanism {
-  shouldGrantLastWords(deathPhase: Phase, day: number): boolean {
-    return (deathPhase === Phase.Night && day === 1) || deathPhase === Phase.Voting;
+  shouldGrantLastWords(deathPhase: Phase, day: number, sources: readonly DeathCause[]): boolean {
+    if (sources.length === 0 || sources.includes(DeathCause.SelfDestruct)) return false;
+    return (deathPhase === Phase.Night && day === 1 && sources.some(source => source === DeathCause.WolfKill || source === DeathCause.Poison)) ||
+      (deathPhase === Phase.Voting && sources.includes(DeathCause.Exile));
   }
 
   recordLastWordsGranted(
@@ -17,9 +19,10 @@ export class LastWordsMechanism {
     lastWordsPhase: Phase,
     day: number,
     events: GameEvent[],
+    sources: DeathSources,
   ): void {
     for (const deadId of deadIds) {
-      if (!this.shouldGrantLastWords(deathPhase, day)) {
+      if (!this.shouldGrantLastWords(deathPhase, day, sources[deadId] ?? [])) {
         continue;
       }
       const alive = world.getComponent<AliveComponent>(deadId, COMPONENT.Alive);

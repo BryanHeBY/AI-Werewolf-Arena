@@ -75,7 +75,6 @@ export class SelfDestructWindow {
       return null;
     }
 
-    alive.alive = false;
     this.events.push({
       timestamp: Date.now(),
       type: "wolf_self_destruct",

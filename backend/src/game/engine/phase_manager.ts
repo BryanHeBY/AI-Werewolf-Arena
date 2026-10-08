@@ -210,11 +210,16 @@ export class PhaseManager {
       return this.getSnapshot();
     }
     if (dayResult.interrupted) {
+      if (dayResult.summary.selfDestructBy !== null) {
+        const id = dayResult.summary.selfDestructBy;
+        await this.deathResolution.resolve([id], { [id]: [DeathCause.SelfDestruct] }, actionProvider, Phase.Day, Phase.Day);
+      }
       // 白天被自爆中断时直接结束当日并切到下一夜。
       if (this.checkAndSealResult()) {
         return this.getSnapshot();
       }
       this.state.day += 1;
+      this.setPhase(Phase.Night);
       return this.getSnapshot();
     }
 
@@ -226,11 +231,15 @@ export class PhaseManager {
     );
 
     if (votingResult.interrupted) {
+      const sources: DeathSources = {};
+      for (const id of votingResult.removed) sources[id] = [DeathCause.SelfDestruct];
+      await this.deathResolution.resolve(votingResult.removed, sources, actionProvider, Phase.Voting, Phase.Voting);
       // 投票前窗口发生自爆，同样跳过当日剩余流程。
       if (this.checkAndSealResult()) {
         return this.getSnapshot();
       }
       this.state.day += 1;
+      this.setPhase(Phase.Night);
       return this.getSnapshot();
     }
 

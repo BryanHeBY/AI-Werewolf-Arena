@@ -1,0 +1,21 @@
+# P4 G03 基础死亡链交叉审查
+
+## 范围与证据
+
+正常放逐、默认preVote自爆、初批遗言/徽章、猎人追加死亡的Alive写入、逐actor/逐hook提案提交、同生命去重/复活、循环与来源union。契约见[死亡链](../death-chain.md)。扩展三个窗口/首日位置、白痴/警长选举与G04仍下一步。
+
+- 人工完整判例11/104通过，日志 `/tmp/awa-p4-g03-chain-manual-final.log`：双猎人、实际Exile徽→枪→追加徽→终局、两轮并发默认自爆自然终局、保持票权/无遗言、重复/循环/坏目标、复合来源隔离、后置hook失败保目标死亡/枪/原错/窗口0且不继续后续hook。
+- 引擎初步173/5022通过，日志 `/tmp/awa-p4-g03-chain-targets.log`；类型通过。
+- 最终完整release537测试/31062断言通过（类型/deps/边界/i18n/test/smoke），日志 `/tmp/awa-p4-g03-chain-release.log`；含34真实SDK/ACP/混合双语六/十二基础完整对局及逐局严格Tape。全部模型通路是合成本机服务，无外部模型或用户认证。
+
+## 独立三路审查
+
+| 审查者 | 关注/发现 | 修正与复查 |
+| --- | --- | --- |
+| A / review_arch_tests | 后置hook失败会丢前置已消费动作的死亡提案；mark时life登记的失败恢复范围 | 逐hook同步commitAdditionalDeaths，真实Hunter→throw probe保dead/gun/唯一事件/原错/窗口0；文档明示失败终止、不支持简单重试；独立11/102，最终0阻断 |
+| R+T / review_scope_rules | 整波dead、初批来源遗言、所有徽章后逐actor技能、追加立即dead、最后判胜；并发自爆稳定ID与入夜 | 人工oracle吻合；独立10/98，最终0阻断，未覆盖扩展3窗口/白痴 |
+| L+D / review_i18n_delivery | 事件顺序、死亡提案及LastWords来源API、source/Tape、低层调用/旧档展示 | 文档/接口吻合、原文及格式不变、旧档不重排；独立13/108，最终0阻断 |
+
+最后人工判例增补gun=false及错误后handler0断言；已有完整gate不因测试断言增加而放宽任何规则。
+
+三路最终0剩余阻断。正常死亡收尾已集中，其他未开放窗口和基础规则差异按契约继续推进。

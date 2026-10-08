@@ -167,7 +167,7 @@ export class VotingPipeline {
     const votedOut = this.eventRegistry.onVotedOut(this.world, target, this.events);
     const removed = [...votedOut.removed];
 
-    if (!votedOut.prevented) {
+    if (removed.includes(target)) {
       // 只有真正出局才广播 voted_out；白痴翻牌由事件总线单独广播。
       this.events.push({
         timestamp: Date.now(),

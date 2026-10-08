@@ -73,6 +73,7 @@ export class HookRegistry {
     deathSources: DeathSources,
     onHunterShoot: (hunterId: EntityId) => Promise<DeathShotSelection>,
     events: GameEvent[],
+    commitAdditionalDeaths?: (result: DeathHookResult) => void,
   ): Promise<DeathHookResult> {
     const aggregated: DeathHookResult = {
       extraDeaths: [],
@@ -80,9 +81,10 @@ export class HookRegistry {
     };
     for (const hook of this.deathHooks) {
       const result = await hook(world, deadIds, deathSources, onHunterShoot, events);
+      commitAdditionalDeaths?.(result);
       aggregated.extraDeaths.push(...result.extraDeaths);
       for (const [id, marks] of Object.entries(result.extraDeathSources)) {
-        aggregated.extraDeathSources[Number(id)] = marks;
+        aggregated.extraDeathSources[Number(id)] = [...new Set([...(aggregated.extraDeathSources[Number(id)] ?? []), ...marks])];
       }
     }
     return aggregated;

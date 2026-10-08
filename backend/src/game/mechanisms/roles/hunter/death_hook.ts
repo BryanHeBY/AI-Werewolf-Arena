@@ -67,7 +67,6 @@ export async function hunterDeathHook(
     }
 
     hunterState.canShoot = false;
-    targetAlive.alive = false;
     extraDeaths.push(targetId);
     extraDeathSources[targetId] = [DeathCause.Shot];
     events.push({

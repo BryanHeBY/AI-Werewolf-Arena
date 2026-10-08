@@ -57,7 +57,7 @@ describe("EventRegistry hooks", () => {
     expect(targetAlive.alive).toBe(true);
   });
 
-  test("hunter normal death can shoot and cause extra death", async () => {
+  test("hunter normal death returns a sourced proposal without owning Alive", async () => {
     const { world } = bootstrapGame(twelvePlayerStandardConfig);
     const events = [] as any[];
     const eventRegistry = new EventRegistry();
@@ -85,6 +85,6 @@ describe("EventRegistry hooks", () => {
     const targetAlive = world.getComponent<AliveComponent>(targetId, COMPONENT.Alive)!;
 
     expect(result.extraDeaths).toContain(targetId);
-    expect(targetAlive.alive).toBe(false);
+    expect(targetAlive.alive).toBe(true);
   });
 });

@@ -1,6 +1,6 @@
-import { AliveComponent } from "../../core/domain/components/alive";
+import { AliveComponent, aliveLifeVersion } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
-import { ActionProvider, EntityId, GameEvent, Phase, RuntimeSnapshot, type DeathSources, type DeathShotSelection } from "../../core/domain/model";
+import { ActionProvider, EntityId, GameEvent, Phase, RuntimeSnapshot, DeathCause, type DeathSources, type DeathShotSelection } from "../../core/domain/model";
 import { World } from "../../core/domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
 import { getDefaultLastWordsMechanism } from "../mechanisms/last_words/last_words_mechanism";
@@ -8,9 +8,12 @@ import { transferOrDestroySheriffBadge } from "../mechanisms/sheriff/badge";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { EventRegistry } from "./event_registry";
 
+interface DeathWaveActions { phase: Phase; day: number; permits: Array<ReturnType<World["openDeathAction"]>> }
+
 /** Resolves successive death waves without advancing the current action phase. */
 export class DeathResolution {
   private readonly lastWordsMechanism = getDefaultLastWordsMechanism();
+  private readonly settledLives = new Map<EntityId, { component: AliveComponent; version: number | undefined }>();
 
   constructor(
     private readonly world: World,
@@ -29,15 +32,12 @@ export class DeathResolution {
   ): Promise<void> {
     const resolutionPhase = this.state.phase;
     const resolutionDay = this.state.day;
-    const seen = new Set<EntityId>(deadIds);
+    const seen = new Set<EntityId>(deadIds.filter(id => {
+      return this.world.getComponent<AliveComponent>(id, COMPONENT.Alive) !== undefined && !this.isSettledLife(id);
+    }));
     let pending = [...seen];
     const allSources: DeathSources = structuredClone(sources);
     let firstBatch = true;
-    const requests = new GameActionRequestFactory(
-      this.world,
-      this.events,
-      this.state.day,
-    );
 
     while (pending.length > 0) {
       if (this.state.phase !== resolutionPhase || this.state.day !== resolutionDay || this.state.gameOver) return;
@@ -51,91 +51,89 @@ export class DeathResolution {
           lastWordsPhase,
           this.state.day,
           this.events,
+          allSources,
         );
-        await this.collectLastWords(pending, lastWordsPhase, phase, actionProvider);
+        await this.collectLastWords(pending, lastWordsPhase, phase, allSources, actionProvider);
       }
       if (this.state.phase !== resolutionPhase || this.state.day !== resolutionDay || this.state.gameOver) return;
 
       // 先处理警长死亡带来的警徽逻辑，再执行角色死亡钩子。
       for (const deadId of pending) {
-        transferOrDestroySheriffBadge(this.world, deadId, `${phase}_death`, this.events);
+        const causes = allSources[deadId] ?? [];
+        const reason = causes.includes(DeathCause.SelfDestruct) ? "self_destruct" : causes.includes(DeathCause.Exile) ? "voted_out" : `${deathPhase}_death`;
+        transferOrDestroySheriffBadge(this.world, deadId, reason, this.events);
       }
 
-      const permits: Array<ReturnType<World["openDeathAction"]>> = [];
-      let result;
-      try {
-        result = await this.eventRegistry.onDeath(
-          this.world,
-          pending,
-          allSources,
-          async (hunterId): Promise<DeathShotSelection> => {
-            if (this.state.phase !== resolutionPhase || this.state.day !== resolutionDay || this.state.gameOver) return { kind: "invalid" };
-            const actionPhase = this.state.phase;
-            const permit = this.world.openDeathAction(hunterId, "shoot", actionPhase, resolutionDay, () => this.state.phase === resolutionPhase && this.state.day === resolutionDay && !this.state.gameOver);
-            permits.push(permit);
-            for (let attempt = 1; attempt <= 3; attempt++) {
-              const action = await actionProvider.getAction(requests.create({
-                phase: actionPhase,
-                actorId: hunterId,
-                allowedTools: ["shoot"],
-                stage: "hunter_shot",
-                requiresAction: true,
-                summary: { key: "request.summary.death_shot" },
-                context: {
-                  trigger: "on_death",
-                  death_phase: deathPhase,
-                  death_sources: [...(allSources[hunterId] ?? [])],
-                  death_action_id: permit.id,
-                  ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
-                },
-              }));
-              if (this.state.phase !== resolutionPhase || this.state.day !== resolutionDay || this.state.gameOver || !this.world.hasDeathAction(hunterId, "shoot", actionPhase, resolutionDay, permit.id)) return { kind: "invalid" };
-              if (action?.name !== "shoot") {
-                continue;
+      const next = new Set<EntityId>();
+      for (const deadId of pending) {
+        if (this.state.phase !== resolutionPhase || this.state.day !== resolutionDay || this.state.gameOver) return;
+        const actions: DeathWaveActions = { phase: resolutionPhase, day: resolutionDay, permits: [] };
+        try {
+          await this.eventRegistry.onDeath(
+            this.world, [deadId], allSources,
+            hunterId => this.collectHunterShot(hunterId, deathPhase, allSources, actionProvider, actions),
+            this.events,
+            result => {
+              for (const id of result.extraDeaths) {
+                if (next.has(id)) {
+                  allSources[id] = [...new Set([...(allSources[id] ?? []), ...(result.extraDeathSources[id] ?? [])])];
+                  continue;
+                }
+                if (seen.has(id) || !this.world.getComponent<AliveComponent>(id, COMPONENT.Alive) || this.isSettledLife(id)) continue;
+                seen.add(id);
+                allSources[id] = [...new Set(result.extraDeathSources[id] ?? [])];
+                this.markPlayersDead([id]);
+                next.add(id);
               }
-
-              const validated = this.toolGateway.validateAndSanitize(
-                this.world,
-                hunterId,
-                action,
-                {
-                  phase: actionPhase,
-                  day: this.state.day,
-                  deathActionId: permit.id,
-                },
-              );
-              if (!validated.ok || !validated.sanitizedCall) {
-                continue;
-              }
-              const targetId = validated.sanitizedCall.args.target_id;
-              return targetId === null ? { kind: "pass", deathActionId: permit.id } : { kind: "shot", targetId, deathActionId: permit.id };
-            }
-            return { kind: "invalid" };
-          },
-          this.events,
-        );
-      } finally {
-        for (const permit of permits) permit.close();
+            },
+          );
+        } finally {
+          for (const permit of actions.permits) permit.close();
+        }
       }
 
-      pending = result.extraDeaths.filter((id) => !seen.has(id));
-      for (const id of result.extraDeaths) {
-        seen.add(id);
-        allSources[id] = result.extraDeathSources[id] ?? [];
-      }
+      pending = [...next];
       firstBatch = false;
     }
+  }
+
+  private async collectHunterShot(hunterId: EntityId, deathPhase: Phase, sources: DeathSources, actionProvider: ActionProvider, actions: DeathWaveActions): Promise<DeathShotSelection> {
+    const isCurrent = () => this.state.phase === actions.phase && this.state.day === actions.day && !this.state.gameOver;
+    if (!isCurrent()) return { kind: "invalid" };
+    const permit = this.world.openDeathAction(hunterId, "shoot", actions.phase, actions.day, isCurrent);
+    actions.permits.push(permit);
+    const requests = new GameActionRequestFactory(this.world, this.events, actions.day);
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      const action = await actionProvider.getAction(requests.create({
+        phase: actions.phase, actorId: hunterId, allowedTools: ["shoot"], stage: "hunter_shot", requiresAction: true,
+        summary: { key: "request.summary.death_shot" },
+        context: {
+          trigger: "on_death", death_phase: deathPhase, death_sources: [...(sources[hunterId] ?? [])], death_action_id: permit.id,
+          ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
+        },
+      }));
+      if (!isCurrent() || !this.world.hasDeathAction(hunterId, "shoot", actions.phase, actions.day, permit.id)) return { kind: "invalid" };
+      if (action?.name !== "shoot") continue;
+      const validated = this.toolGateway.validateAndSanitize(this.world, hunterId, action, { phase: actions.phase, day: actions.day, deathActionId: permit.id });
+      if (!validated.ok || !validated.sanitizedCall) continue;
+      const targetId = validated.sanitizedCall.args.target_id;
+      return targetId === null ? { kind: "pass", deathActionId: permit.id } : { kind: "shot", targetId, deathActionId: permit.id };
+    }
+    return { kind: "invalid" };
+  }
+
+  private isSettledLife(id: EntityId): boolean {
+    const alive = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive), settled = this.settledLives.get(id);
+    return alive !== undefined && settled?.component === alive && settled.version === aliveLifeVersion(alive);
   }
 
   private async collectLastWords(
     deadIds: EntityId[],
     phase: Phase,
     deathPhase: Phase,
+    sources: DeathSources,
     actionProvider: ActionProvider,
   ): Promise<void> {
-    if (!this.lastWordsMechanism.shouldGrantLastWords(deathPhase, this.state.day)) {
-      return;
-    }
     const requests = new GameActionRequestFactory(
       this.world,
       this.events,
@@ -143,6 +141,7 @@ export class DeathResolution {
     );
     const day = this.state.day;
     for (const deadId of deadIds) {
+      if (!this.lastWordsMechanism.shouldGrantLastWords(deathPhase, day, sources[deadId] ?? [])) continue;
       if (this.state.phase !== phase || this.state.day !== day || this.state.gameOver) return;
       const permit = this.world.openDeathAction(deadId, "speak", phase, day);
       try {
@@ -202,6 +201,7 @@ export class DeathResolution {
         continue;
       }
       alive.alive = false;
+      this.settledLives.set(id, { component: alive, version: aliveLifeVersion(alive) });
     }
   }
 }

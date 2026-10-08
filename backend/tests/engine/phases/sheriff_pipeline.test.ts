@@ -4,7 +4,8 @@ import { AliveComponent } from "../../../src/core/domain/components/alive";
 import { BadgeComponent } from "../../../src/core/domain/components/badge";
 import { VotingRightComponent } from "../../../src/core/domain/components/voting_right";
 import { RoleComponent } from "../../../src/core/domain/components/role";
-import { ActionProvider, ActionRequest, ToolCall } from "../../../src/core/domain/model";
+import { ActionProvider, ActionRequest, ToolCall, DeathCause, Phase } from "../../../src/core/domain/model";
+import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
@@ -31,7 +32,7 @@ describe("sheriff pipeline", () => {
     expect(event?.payload).toEqual({ winnerId: sheriffId, source: "initial_configuration" });
   });
 
-  test("sheriff voted out triggers badge transfer to next alive voter", () => {
+  test("sheriff voted out triggers badge transfer to next alive voter", async () => {
     const { world } = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [];
     const registry = new EventRegistry();
@@ -52,6 +53,9 @@ describe("sheriff pipeline", () => {
     expect(result.prevented).toBe(false);
     expect(result.removed).toEqual([sheriffId]);
 
+    expect(world.getComponent<AliveComponent>(sheriffId, COMPONENT.Alive)!.alive).toBe(true);
+    expect(events).toEqual([]);
+    await new DeathResolution(world, events, new ToolGateway(), registry, { day: 1, phase: Phase.Voting, gameOver: false, result: null }).resolve(result.removed, { [sheriffId]: [DeathCause.Exile] }, { async getAction() { return null; } }, Phase.Voting, Phase.Voting);
     const transferred = events.find((event) => event.type === "sheriff_badge_transferred");
     expect(transferred).toBeDefined();
     const toId = Number(transferred.payload.toId);
@@ -65,7 +69,7 @@ describe("sheriff pipeline", () => {
     expect(nextVoting?.weight).toBe(1.5);
   });
 
-  test("sheriff badge is destroyed when no valid transfer candidate", () => {
+  test("sheriff badge is destroyed when no valid transfer candidate", async () => {
     const { world } = bootstrapGame(twelvePlayerStandardConfig);
     const events: any[] = [];
     const registry = new EventRegistry();
@@ -92,7 +96,8 @@ describe("sheriff pipeline", () => {
       }
     }
 
-    registry.onVotedOut(world, sheriffId, events);
+    const result = registry.onVotedOut(world, sheriffId, events);
+    await new DeathResolution(world, events, new ToolGateway(), registry, { day: 1, phase: Phase.Voting, gameOver: false, result: null }).resolve(result.removed, { [sheriffId]: [DeathCause.Exile] }, { async getAction() { return null; } }, Phase.Voting, Phase.Voting);
     const destroyed = events.find((event) => event.type === "sheriff_badge_destroyed");
     expect(destroyed).toBeDefined();
 

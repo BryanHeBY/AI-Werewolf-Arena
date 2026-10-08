@@ -78,3 +78,5 @@ P4 G02已交付[类型化查验子批](../inspection-results.md)，原生预言�
 P4 G02已修正[女巫刀口及保护/毒结算](../witch-resolution.md)：解药以实际存活狼刀印记授权，耗尽不接收当前刀口，同守同救不漏毒。独立16组合与实际复合毒猎人禁枪验证见[判例](../../../backend/tests/engine/rules/witch_correctness.test.ts)。枪击来源、末神/空枪及其他死亡链差异继续G03。
 
 P4 G03已修正[死亡来源、末神与空枪](../death-causes.md)：独立cause/pass/invalid、复合毒禁枪，实际中英三模式末神枪击先于最终判胜，两猎人追加来源为Shot与当时Day。该项差异关闭；World死亡授权、自爆及完整链条状态归属仍继续G03，不据此把全部基础七角色标verified。
+
+P4 G03已统一[基础死亡链](../death-chain.md)：初批来源遗言→警徽→角色死亡钩子→追加波次→最后判胜；默认preVote自爆警徽/死亡收尾已闭，继续时入Night。三个扩展窗口资格/首日位置与白痴/选举仍在差异表中，未据此提前verified。
