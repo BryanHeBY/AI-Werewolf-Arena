@@ -347,3 +347,7 @@ front **127／1140**、type/build、实际Chromium **54**及中英真实PNG root
 最终源码/目录20 verified/44 planned：**受影响后端964/23966/87文件**、type/deps/boundaries/i18n过，包含54真实本机SDK/ACP/MCP/混合两语完整局与每局严格Tape、两板40受限seed自然零拒绝回退与双方分支、8SDK HTTP/进程内ACP故障/failureTape。front **139/1224**、type/build、修正后实际Chromium **58**与双语实际PNG过，[三路复查](reviews/p7-hybrid.md)0残留。按delivery功能门槛，没有把奇商旧686历史局说成本笔全重验；累计740人工本地局各有来源范围，P7结束再全已支持release/矩阵。
 
 六/十二 AWA board/game示例可加载；未读写用户configs/认证或调用外部模型。P7余魔镜少女、觉醒隐狼、黑市商人三项及P8–P10／22机制全矩阵／长局／T6目标保持，完整目标尚未完成。
+
+## P7：魔镜少女规则冻结
+
+[规则卡](rules/awa-mirror-girl-v1.md#mirror_girl)与[实现边界](mirror-girl.md)按网易2023-10-26正文和官方35/126秒规则帧冻结具体role禁重复；明确AWA独立600/mirror policy、optional/空目标闭夜、稳定ID/复活保历史、fresh copy/gift与完整transfer、原ID/来源/历史提交终验。三policy分别提示/调度、不借Garg原生完成权，四普通狼AWA例不冒原觉醒隐狼镜隐迷踪。R/A/L/D[冻结复查](reviews/p7-mirror-girl-rules.md)0文档阻断。本笔纯文档，不注册角色/policy或配置，目录20 verified/44 planned不变；共用作用域缺口独立fix，后续完整Mirror启用必须过全部角色门槛，P7余3及P8–P10/T6/长局保持。

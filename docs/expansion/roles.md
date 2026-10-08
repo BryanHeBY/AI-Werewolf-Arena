@@ -44,7 +44,7 @@
 | # | 计划 ID | 中文 | English | 机制标签 | 阶段 / 来源 |
 | --- | --- | --- | --- | --- | --- |
 | 17 | `psychic` | 通灵师 | Spirit Seer | 具体身份查验 | `verified`；P7 / [AWA规则卡](rules/awa-psychic-v1.md#psychic) / [验收](reviews/p7-psychic.md) / [S09][mechanicalboard] |
-| 18 | `mirror_girl` | 魔镜少女 | Mirror Girl | 具体身份、查验限制 | P7 扩展 / [S10][mirror] |
+| 18 | `mirror_girl` | 魔镜少女 | Mirror Girl | 具体身份、查验限制 | P7；仍 `planned` / [AWA冻结卡](rules/awa-mirror-girl-v1.md#mirror_girl) / [实现边界](mirror-girl.md) / [S10][mirror] |
 | 19 | `mechanical_wolf` | 机械狼 | Mechanical Wolf | 独立学习、机械技能、资源和接刀 | `verified`；P7 / [AWA规则卡](rules/awa-mechanical-wolf-v1.md#mechanical_wolf) / [验收](reviews/p7-mechanical-wolf.md) / [S09][mechanicalboard] |
 | 20 | `miracle_merchant` | 奇迹商人 | Miracle Merchant | 独立幸运库存、联合目标限制及反噬 | `verified`；P7 / [AWA规则卡](rules/awa-miracle-merchant-v1.md#miracle_merchant) / [验收](reviews/p7-miracle-merchant.md) / [S01][cards] |
 | 21 | `black_market_merchant` | 黑市商人 | Black Market Merchant | 技能交易、反噬 | P7 扩展 / [S11][merchant] |
