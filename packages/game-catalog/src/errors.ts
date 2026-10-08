@@ -43,6 +43,8 @@ export enum RuleError {
   VoteTarget = "vote_target",
   WitchOnly = "witch_only",
   WolfBlastOnly = "wolf_blast_only",
+  WhiteWolfBlastUnavailable = "white_wolf_blast_unavailable",
+  WhiteWolfBlastTarget = "white_wolf_blast_target",
   WolfOnly = "wolf_only",
   WolfChatPermission = "wolf_chat_permission",
   WolfChatPhase = "wolf_chat_phase",

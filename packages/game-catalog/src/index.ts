@@ -27,7 +27,7 @@ export const ROLE_DEFINITIONS = [
   {"id": "guard", "names": {"zh-CN": "守卫", "en": "Guard"}, "status": "verified", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#guard", "mechanismSummary": "狼刀保护"},
   {"id": "idiot", "names": {"zh-CN": "白痴", "en": "Village Idiot"}, "status": "verified", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#idiot", "mechanismSummary": "放逐豁免、投票权"},
   {"id": "wolf_king", "names": {"zh-CN": "狼王", "en": "Wolf King"}, "status": "verified", "targetPhase": "P5", "ruleCardRef": "docs/expansion/rules/awa-wolf-king-v1.md#wolf_king", "mechanismSummary": "死亡带人、死因限制"},
-  {"id": "white_wolf_king", "names": {"zh-CN": "白狼王", "en": "White Wolf King"}, "status": "planned", "targetPhase": "P5", "ruleCardRef": null, "mechanismSummary": "自爆带人、流程中断"},
+  {"id": "white_wolf_king", "names": {"zh-CN": "白狼王", "en": "White Wolf King"}, "status": "verified", "targetPhase": "P5", "ruleCardRef": "docs/expansion/rules/awa-white-wolf-king-v1.md#white_wolf_king", "mechanismSummary": "自爆带人、流程中断"},
   {"id": "knight", "names": {"zh-CN": "骑士", "en": "Knight"}, "status": "planned", "targetPhase": "P5", "ruleCardRef": null, "mechanismSummary": "白天决斗"},
   {"id": "gravekeeper", "names": {"zh-CN": "守墓人", "en": "Gravekeeper"}, "status": "planned", "targetPhase": "P5", "ruleCardRef": null, "mechanismSummary": "放逐后的信息反馈"},
   {"id": "dreamer", "names": {"zh-CN": "摄梦人", "en": "Dreamer"}, "status": "planned", "targetPhase": "P6", "ruleCardRef": null, "mechanismSummary": "持续关系、保护/伤害"},

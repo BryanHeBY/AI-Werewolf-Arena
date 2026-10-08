@@ -48,7 +48,7 @@ export async function runTransportGame(scenario: TransportGameScenario, kind: "l
       const action = invalid ?? turn.action;
       if (invalid) { attempts.set(actor, attempt + 1); rejected.set(actor, (rejected.get(actor) ?? 0) + 1); }
       else {
-        if (turn.invalidActions?.length) expect(JSON.stringify(body.messages)).toContain("shoot_target");
+        if (turn.invalidActions?.length) expect(JSON.stringify(body.messages)).toContain(turn.expectedInvalidError ?? "shoot_target");
         counts.set(actor, index + 1); attempts.delete(actor);
       }
       return Response.json({ id: "synthetic-role-game", object: "chat.completion", created: 1, model: "synthetic", choices: [{ index: 0, finish_reason: action ? "tool_calls" : "stop", message: { role: "assistant", content: action ? null : "No action", ...(action ? { tool_calls: [{ id: `c-${actor}-${index}-${attempt}`, type: "function", function: { name: "submit_action", arguments: JSON.stringify({ turn_id: turnId, action: action.name, arguments: action.args }) } }] } : {}) } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });

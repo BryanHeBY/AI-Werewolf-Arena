@@ -17,7 +17,7 @@ export function collectObservations(input: BuildDebugSummaryInput): SummaryObser
   const observations: SummaryObservation[] = [];
 
   const timelineEntries = views.reduce((acc, view) => acc + view.timeline.length, 0);
-  const selfDestructCount = events.filter((e) => e.type === "wolf_self_destruct").length;
+  const selfDestructCount = events.filter((e) => (e.type === "wolf_self_destruct" || e.type === "white_wolf_king_self_destruct")).length;
   const deathShotCount = events.filter((e) => e.type === "hunter_shot" || e.type === "wolf_king_shot").length;
   const nightResolvedCount = events.filter((e) => e.type === "night_resolved").length;
 
@@ -190,7 +190,7 @@ export function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): Det
   const events = input.publicEvents ?? [];
   const findings: DeterministicFinding[] = [];
 
-  const selfDestruct = events.filter((e) => e.type === "wolf_self_destruct");
+  const selfDestruct = events.filter((e) => (e.type === "wolf_self_destruct" || e.type === "white_wolf_king_self_destruct"));
   for (const e of selfDestruct) {
     if (e.day === 1) {
       findings.push({
@@ -198,7 +198,7 @@ export function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): Det
         category: "rule",
         day: e.day,
         phase: e.phase,
-        actorId: Number((e.payload as any).wolfId ?? 0),
+        actorId: Number((e.payload as any).wolfId ?? (e.payload as any).actorId ?? 0),
         code: "first_day_blast", message: { key: "audit.check.first_day_blast" },
         evidence: [e.seq],
       });

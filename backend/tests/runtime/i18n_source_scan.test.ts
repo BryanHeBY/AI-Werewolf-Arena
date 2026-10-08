@@ -17,4 +17,4 @@ test("repository Chinese literals have exact reviewed compatibility exceptions w
   const exceptions = JSON.parse(await readFile(path.resolve(process.cwd(), "../docs/expansion/i18n-source-exceptions.json"), "utf8"));
   expect(verifyLiteralExceptions(await scanRepository(), exceptions)).toEqual([]);
   expect(exceptions.every((entry: { reason: string; file: string; text: string }) => Boolean(entry.reason) && entry.file && entry.text)).toBe(true);
-});
+}, 30_000); // Whole-repository AST I/O and parsing has its own budget; coverage and exact exceptions remain strict.

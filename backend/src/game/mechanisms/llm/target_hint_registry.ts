@@ -21,6 +21,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     use_potion: { allowSelf: false },
     vote: { allowSelf: false },
     shoot: { allowSelf: false },
+    self_destruct_with_target: { allowSelf: false },
     vote_for_sheriff: { allowSelf: false },
   };
 
@@ -32,6 +33,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       kill_vote: { allowSelf: true },
     },
     [Role.WolfKing]: { kill_vote: { allowSelf: true } },
+    [Role.WhiteWolfKing]: { kill_vote: { allowSelf: true } },
     [Role.Witch]: {
       // 女巫可自救，提示层需包含自己。
       use_potion: { allowSelf: true },

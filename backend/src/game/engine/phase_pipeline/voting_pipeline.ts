@@ -28,13 +28,14 @@ export interface VotingPipelineResult {
   summary: VotingSummary;
   interrupted: boolean;
   removed: EntityId[];
+  selfDestruct?: import("../../../core").SelfDestructSelection;
 }
 
 export interface VotingPipelineOptions {
   /** 当前日次由 PhaseManager 显式传入，不能从事件历史反推。 */
   day: number;
   isCurrent?: () => boolean;
-  commitSelfDestruct?: (actorId: EntityId) => Promise<void>;
+  commitSelfDestruct?: (choice: import("../../../core").SelfDestructSelection) => Promise<void | boolean>;
 }
 
 export interface VotingPipelineDependencies {
@@ -102,7 +103,7 @@ export class VotingPipeline {
         safeRecordLogicOp({
           scope: "phase_pipeline",
           op: "voting_interrupted_by_self_destruct",
-          actorId: exploded,
+          actorId: exploded.actorId,
           phase: Phase.Voting,
           status: "ok",
         });
@@ -110,10 +111,11 @@ export class VotingPipeline {
           summary: {
             tally: {},
             target: null,
-            removed: [exploded],
+            removed: exploded.targetId === null ? [exploded.actorId] : [exploded.actorId, exploded.targetId],
           },
           interrupted: true,
-          removed: [exploded],
+          selfDestruct: exploded,
+          removed: exploded.targetId === null ? [exploded.actorId] : [exploded.actorId, exploded.targetId],
         };
       }
     }

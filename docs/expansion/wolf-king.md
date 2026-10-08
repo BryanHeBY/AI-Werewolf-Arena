@@ -51,3 +51,5 @@ bun run --cwd backend run --configs-dir ../configs.example --game-config-name tw
 [两板受限观察模拟](../../backend/tests/runtime/wolf_king_simulation.test.ts)各12 seed均自然结束、零拒绝/回退、实际wolf_king_shot正覆盖，每局Tape再执行；它补充随机覆盖，不能取代人工oracle。
 
 [前端实际档案](../../frontend/tests/fixtures/wolf-king.replay.json)来自真实SDK完整六人放逐链；单测、Chromium两语交互及实际双语Remotion帧核对枪击标签、逐事件死亡、终局前无winner/最终名单。模型响应为本机合成，不声称完成外部Codex/Claude策略质量评测。最终门槛和三路复查见[交叉审查](reviews/p5-wolf-king.md)。
+
+P5白狼王扩展使用独立WhiteWolfBlast死因；本AWA版本允许猎人/狼王对此追枪，含毒等禁因仍禁止。具体窗口、合并死亡及来源歧义见[白狼王卡](rules/awa-white-wolf-king-v1.md)。

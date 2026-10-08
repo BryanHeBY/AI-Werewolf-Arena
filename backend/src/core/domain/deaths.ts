@@ -5,6 +5,7 @@ export enum DeathCause {
   Shot = "shot",
   Exile = "exile",
   SelfDestruct = "self_destruct",
+  WhiteWolfBlast = "white_wolf_blast",
   Lovers = "lovers",
   Dream = "dream",
   Duel = "duel",
@@ -17,7 +18,7 @@ export type DeathShotSelection =
   | { kind: "invalid" };
 
 export function permitsDeathShot(sources: readonly DeathCause[]): boolean {
-  return sources.length > 0 && sources.every(source => source === DeathCause.WolfKill || source === DeathCause.Exile || source === DeathCause.Shot);
+  return sources.length > 0 && sources.every(source => source === DeathCause.WolfKill || source === DeathCause.Exile || source === DeathCause.Shot || source === DeathCause.WhiteWolfBlast);
 }
 /** Existing Hunter API retains the same cause policy. */
 export const permitsHunterShot = permitsDeathShot;

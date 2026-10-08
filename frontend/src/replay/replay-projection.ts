@@ -67,6 +67,9 @@ export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number):
     if (event.type === "wolf_self_destruct") {
       markDead(numberValue(payload.wolfId));
     }
+    if (event.type === "white_wolf_king_self_destruct") {
+      markDead(numberValue(payload.actorId)); markDead(numberValue(payload.targetId));
+    }
     if (event.type === "hunter_shot" || event.type === "wolf_king_shot") {
       markDead(numberValue(payload.targetId));
     }

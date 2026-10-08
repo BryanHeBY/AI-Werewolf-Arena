@@ -132,7 +132,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: completed concur
       }
       return { name: "self_destruct", args: { confirm: true, reason: "raw" } };
     } }, ActionWindow.OnDaybreak, Phase.Day, () => live);
-    expect(result).toBe(revoke === "phase" ? null : 2);
+    expect(result).toEqual(revoke === "phase" ? null : { kind: "ordinary", actorId: 2, targetId: null });
     expect(events).toEqual([]); // A bare selector returns an intent; the manager commits the fact.
     expect(world.getAliveEntityIds()).toContain(2); // The manager still owns death application.
   }

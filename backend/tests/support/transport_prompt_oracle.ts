@@ -27,6 +27,6 @@ export function assertTransportEvents(role: string, events: Array<[number, strin
   for (const [, type, payload] of events) {
     if (type === "god_private_game_info") throw new Error("fixture_god_information_exposed");
     if (["seer_checked", "witch_potion_used", "witch_potion_skipped", "guard_applied"].includes(type) && payload.actorId !== actorId) throw new Error("fixture_other_private_skill_exposed");
-    if (["wolf_tactical_order", "wolf_discussion", "wolf_discussion_ended", "wolf_kill_vote_cast"].includes(type) && role !== "wolf" && role !== "wolf_king") throw new Error("fixture_wolf_information_exposed");
+    if (["wolf_tactical_order", "wolf_discussion", "wolf_discussion_ended", "wolf_kill_vote_cast"].includes(type) && role !== "wolf" && role !== "wolf_king" && role !== "white_wolf_king") throw new Error("fixture_wolf_information_exposed");
   }
 }

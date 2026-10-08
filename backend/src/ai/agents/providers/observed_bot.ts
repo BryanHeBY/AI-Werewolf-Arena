@@ -66,6 +66,11 @@ export class ObservedBot implements ObservedPlayerStrategy {
       const target = pick(known.length ? known : candidates);
       return { name: "vote", args: { target_id: target ?? null, abstain: target === undefined } };
     }
+    if (tools.includes("self_destruct_with_target")) {
+      if (this.style !== "active" || ownState.whiteWolfKing?.canDetonate !== true || this.random.next() >= 0.5) return null;
+      const target = pick(others.filter(id => !teammateIds.includes(id)));
+      return { name: "self_destruct_with_target", args: { reason: "Active simulated strategy", confirm: true, target_id: target ?? null } };
+    }
     if (tools.includes("self_destruct")) {
       return this.style === "active" && request.context.day > 1 && this.random.next() < 0.25
         ? { name: "self_destruct", args: { reason: "Active simulated strategy", confirm: true } } : null;

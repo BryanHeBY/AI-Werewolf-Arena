@@ -141,3 +141,14 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: an actual wolf-k
   await expect(page.getByTestId("composition-winner")).toHaveCount(5);
   await expect(page.locator(".seat-grid .winner")).toHaveCount(5);
 });
+
+for(const locale of ["zh-CN","en"] as const)test(`${locale}: actual White Wolf King archive applies both initial deaths before the Hunter's response`,async({page})=>{
+ const replay=JSON.parse(readFileSync(new URL("../fixtures/white-wolf-king.replay.json",import.meta.url),"utf8"));replay.meta.locale=locale;
+ await page.route("**/api/replay",route=>route.fulfill({json:replay}));await page.goto("/");
+ const blast=locale==="en"?"White Wolf King 1 self-destructs and takes player 4":"1号白狼王自爆并带走4号";
+ await page.locator(".timeline .event").filter({hasText:blast}).click();await expect(page.getByTestId("composition-event")).toHaveText(blast);
+ await expect(page.locator(".seat-grid .dead")).toHaveCount(3);await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+ const shot=locale==="en"?"Hunter 4 shoots player 2":"4号猎人开枪带走2号";
+ await page.locator(".timeline .event").filter({hasText:shot}).click();await expect(page.getByTestId("composition-event")).toHaveText(shot);
+ await expect(page.locator(".seat-grid .dead")).toHaveCount(4);await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(4);
+});

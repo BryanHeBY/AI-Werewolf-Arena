@@ -15,6 +15,7 @@ export interface ToolArgMap {
   check_identity: { target_id: EntityId };
   use_potion: { target_id: EntityId; potion_type: PotionType };
   self_destruct: { reason: string; confirm: boolean };
+  self_destruct_with_target: { reason: string; confirm: boolean; target_id: EntityId | null };
   speak: { text: string };
   vote: { target_id: EntityId | null; abstain: boolean };
   shoot: { target_id: EntityId | null };
@@ -24,9 +25,12 @@ export interface ToolArgMap {
 }
 
 export type ToolName = keyof ToolArgMap;
-export const TOOL_NAMES = ["report_bug", "speak_to_wolves", "kill_vote", "guard", "check_identity", "use_potion", "self_destruct", "speak", "vote", "shoot", "choose_direction", "run_for_sheriff", "vote_for_sheriff"] as const satisfies readonly ToolName[];
+export const TOOL_NAMES = ["report_bug", "speak_to_wolves", "kill_vote", "guard", "check_identity", "use_potion", "self_destruct", "self_destruct_with_target", "speak", "vote", "shoot", "choose_direction", "run_for_sheriff", "vote_for_sheriff"] as const satisfies readonly ToolName[];
 export type ToolCall = { [K in ToolName]: { name: K; args: ToolArgMap[K] } }[ToolName];
 export type TypedToolCall<T extends ToolName> = Extract<ToolCall, { name: T }>;
+export type SelfDestructSelection =
+  | { kind: "ordinary"; actorId: EntityId; targetId: null }
+  | { kind: "white_wolf_king"; actorId: EntityId; targetId: EntityId | null };
 
 export interface ToolValidationResult<T extends ToolCall = ToolCall> {
   ok: boolean;

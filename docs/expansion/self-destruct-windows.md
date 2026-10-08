@@ -42,3 +42,7 @@ v2 enabledWindows支持ActionWindow四值，重复、未知值及关闭对应hoo
 [人工窗口判例](../../backend/tests/engine/phases/self_destruct_windows.test.ts)核对四时点、关闭/错阶段/无竞选跳过、复合首日死亡和末神枪、最小有效ID与跨生命周期/阶段撤销、新override与历史转换。[真实传输计划](../../backend/tests/support/self_destruct_transport_plan.ts)是独立六人两天字面oracle，模型只接收自己的计划与已授权提示；每个窗口都运行中英SDK/ACP整局、逐局Tape、零拒绝/回退与PID回收。
 
 Daybreak第二天可在预言家验完后直接终局：模型没有后续prompt便没收到最新查验事件，传输可见target只有[1]；本人私有记录与引擎历史仍必须完整保存[1,4]。不把“记录已保存”声称成“模型已经获知”。
+
+## P5白狼王扩展与接口
+
+四时点及普通wolf_self_destruct保持；白狼王用独立self_destruct_with_target/WhiteWolfBlast/white_wolf_king_self_destruct。SelfDestructWindow.execute现返typed selection，callback接selection，false无效应拒绝后继续更高候选；pipeline保旧summary actorID并带新selfDestruct意图。首日待夜死白狼王不可吞死施放，接收不提前泄露，PhaseManager提交前静默排除；具体角色及来源/接口见[白狼王卡](rules/awa-white-wolf-king-v1.md)与[契约](white-wolf-king.md)。

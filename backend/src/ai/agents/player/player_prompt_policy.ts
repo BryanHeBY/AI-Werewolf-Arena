@@ -17,7 +17,7 @@ import {
   knownWolfTeammates,
   allNightAbilities, abilityStatus, projectNightAbility,
 } from "../../../game/mechanisms";
-import { getGuardState, getHunterState, getWolfKingState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
+import { getGuardState, getHunterState, getWolfKingState, getWhiteWolfKingState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
 import { freezeObservation, type PlayerObservation } from "./observation";
 import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "./prompt_templates";
 import { renderTurnConstraintUserHint, resolveTurnConstraints } from "./turn_constraints";
@@ -69,6 +69,10 @@ export class PlayerPromptPolicy {
         : event.type === "wolf_self_destruct" ? event.payload.wolfId
         : event.type === "hunter_shot" || event.type === "wolf_king_shot" ? event.payload.targetId : undefined;
       if (typeof target === "number") dead.add(target);
+      if (event.type === "white_wolf_king_self_destruct") {
+        if (typeof event.payload.actorId === "number") dead.add(event.payload.actorId);
+        if (typeof event.payload.targetId === "number") dead.add(event.payload.targetId);
+      }
     }
     const ownState: PlayerObservation["ownState"] = {};
     const witch = role ? getWitchState(role, request.context.ability_id) : undefined;
@@ -77,6 +81,7 @@ export class PlayerPromptPolicy {
     if (guard) ownState.guard = guard;
     if (role?.role === Role.Hunter) ownState.hunter = getHunterState(role);
     if (role?.role === Role.WolfKing) ownState.wolfKing = getWolfKingState(role);
+    if (role?.role === Role.WhiteWolfKing) ownState.whiteWolfKing = getWhiteWolfKingState(role);
     if (role?.role === Role.Idiot) ownState.idiot = getIdiotState(role);
     const seer = role ? getSeerState(role, request.context.ability_id) : undefined;
     if (seer) ownState.seer = seer;
@@ -233,10 +238,10 @@ export class PlayerPromptPolicy {
     }
     if (stage !== "witch") {
       const onlySelfDestruct = Object.values(ActionWindow).includes(stage as ActionWindow) && request.allowedTools.every(
-        (tool) => tool === "self_destruct" || tool === "report_bug",
+        (tool) => tool === "self_destruct" || tool === "self_destruct_with_target" || tool === "report_bug",
       );
       return onlySelfDestruct
-        ? text(this.locale, "prompt.stage.blast_only")
+        ? text(this.locale, "prompt.stage.blast_only", { tool: request.allowedTools.includes("self_destruct_with_target") ? "self_destruct_with_target" : "self_destruct" })
         : undefined;
     }
     if (typeof request.context.wolf_target === "number") {

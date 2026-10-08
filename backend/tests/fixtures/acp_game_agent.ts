@@ -44,7 +44,7 @@ try {
         trace.consumed++;
         for (const invalid of turn.invalidActions ?? []) {
           const result = await client!.callTool({ name: "submit_action", arguments: { turn_id: turnId, action: invalid.name, arguments: invalid.args } });
-          if (result.structuredContent?.ok !== false || result.structuredContent?.error !== "shoot_target") throw new Error("fixture_invalid_shot_not_rejected");
+          if (result.structuredContent?.ok !== false || result.structuredContent?.error !== (turn.expectedInvalidError ?? "shoot_target")) throw new Error("fixture_invalid_action_not_rejected");
           trace.rejected++;
         }
         if (turn.action) {

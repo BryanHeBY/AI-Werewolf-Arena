@@ -59,6 +59,7 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerI
     case "voted_out": return t("replay.exile", { actor: numberValue(p.target) });
     case "idiot_revealed": return t("replay.idiot", { actor: target });
     case "wolf_self_destruct": return t("replay.blast", { actor: numberValue(p.wolfId) });
+    case "white_wolf_king_self_destruct": return p.targetId === null ? t("console.white_wolf_king.blast_none", { actor }) : t("console.white_wolf_king.blast", { actor, target });
     case "hunter_shot": return t("replay.shot", { actor: numberValue(p.hunterId), target });
     case "wolf_king_shot": return t("console.judge.wolf_king_shot", { actor, target });
     case "hunter_silent_due_to_poison": return t("replay.poisoned_hunter", { actor: numberValue(p.hunterId) });

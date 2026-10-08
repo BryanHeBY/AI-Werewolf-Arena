@@ -9,7 +9,7 @@
 | P2 | 完成 | T01逐局随机/T02严格脚本/T03受限观察/T04动作录制与兼容回放；227后端+33前端测试，三路复查0阻断 |
 | P3 | 完成 | I01–I04、诊断/CLI与受控源码扫描；实际SDK/ACP中英完整场景与Tape重放、前端/视频门槛；英文入口开放 |
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
-| P5 | 进行中 | 狼王已交付；白狼王、骑士、守墓人继续，见[狼王契约](wolf-king.md) |
+| P5 | 进行中 | 狼王/白狼王已交付；骑士、守墓人继续，见[狼王契约](wolf-king.md) |
 | P6–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
@@ -222,3 +222,9 @@ A01/A02/M21/G01–G04和基础差异闭环；七項在awa_classic1.0.0已验板�
 `wolf_king`作为第八项真实角色交付：普通狼队/自爆能力、独立枪资源、明确死因/Shot连锁、共享单次枪schema/消费/修复及按演员profile的同名工具校验；每轮Day与本人状态中英一致，新death_shot/wolf_king_shot与旧Hunter契约分开。native shoot无locale metadata改英文角色中性，旧路径保留，主动SDK/MCP协议仍双语。规则/边界/API见[狼王卡](rules/awa-wolf-king-v1.md)及[接入契约](wolf-king.md)，五场景字面oracle与发现修正见[三路审查](reviews/p5-wolf-king.md)。
 
 最后后端release664／38789／95文件及smoke通过；原50＋狼王30＝80实际本机SDK/ACP/混合双语完整局和逐局严格Tape，狼王24受限观察seed及重放补覆盖。新core12／327、配置2／10、加强身份/私有枪/日次的actual wire15／3967、随机2／34，front69／560/types/build、真实Chromium12、中英实际PNG均通过。三路最终0阻断，目录8verified／56planned；新6/12板子和运行example可加载，未改用户configs。没有声称完成外部模型质量或整个P5，后续先白狼王，再骑士/守墓人与P6–P10。
+
+## P5：白狼王
+
+第九项`white_wolf_king`实际交付：独立自爆带人/null工具与机会、WhiteWolfBlast来源、可追枪/复合毒禁枪、演员/目标生命与资源引用再验、最小有效候选及无效应false继续下一候选。PhaseManager私有pending-night caster不可吞刀/毒施放，接收不泄露，目标合并死因/阶段与完整死亡链后判胜。shared中英正确实际tool/遗言说明，新旧普通wolf/Hunter/King事件和schema2/Tape2边界保留。规则/明确版本选择见[白狼王卡](rules/awa-white-wolf-king-v1.md)，API迁移及验收范围见[契约](white-wolf-king.md)，三路修正和门槛见[审查](reviews/p5-white-wolf-king.md)。
+
+最终后端release717／45747／99文件及smoke通过；原80＋白狼54＝134实际本机双语SDK/ACP/混合完整局与逐局Tape；两板32显式active受限seed实际技能正覆盖及重放2／42，核心22／319、配置4／16、front73／585/types/build、Chromium14与中英PNG通过。扫描全仓AST采用独立30秒预算、覆盖/精确57例外/断言不变，生产预算不改。目录9verified／55planned，P5尚余骑士/守墓人，后续P6–P10目标保持；未调用外部模型或用户认证、未改用户configs。

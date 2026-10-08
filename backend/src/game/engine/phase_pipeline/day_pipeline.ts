@@ -24,6 +24,7 @@ import { SelfDestructWindow, isSelfDestructWindowEnabled } from "../self_destruc
 export interface DayPipelineResult {
   summary: DaySummary;
   interrupted: boolean;
+  selfDestruct?: import("../../../core").SelfDestructSelection;
 }
 
 export interface DayPipelineOptions {
@@ -32,7 +33,7 @@ export interface DayPipelineOptions {
   /** 返回 true 表示已终局，不再请求白天行动。 */
   afterSheriffElection?: () => Promise<boolean>;
   isCurrent?: () => boolean;
-  commitSelfDestruct?: (actorId: EntityId, window: ActionWindow) => Promise<void>;
+  commitSelfDestruct?: (choice: import("../../../core").SelfDestructSelection, window: ActionWindow) => Promise<void | boolean>;
 }
 
 export interface DayPipelineDependencies {
@@ -77,7 +78,7 @@ export class DayPipeline {
     if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
     if (options.day === 1 && config.enableSheriff && findSheriffId(this.world) === null && config.hooks.onPreElection && isSelfDestructWindowEnabled(config, ActionWindow.OnPreElection)) {
       const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnPreElection, Phase.Day, isCurrent, id => options.commitSelfDestruct?.(id, ActionWindow.OnPreElection) ?? Promise.resolve());
-      if (exploded !== null) return { summary: { speeches, selfDestructBy: exploded }, interrupted: true };
+      if (exploded !== null) return { summary: { speeches, selfDestructBy: exploded.actorId }, interrupted: true, selfDestruct: exploded };
       if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
     }
     await electSheriffIfNeeded({
@@ -104,9 +105,10 @@ export class DayPipeline {
         return {
           summary: {
             speeches,
-            selfDestructBy: exploded,
+            selfDestructBy: exploded.actorId,
           },
           interrupted: true,
+          selfDestruct: exploded,
         };
       }
     }
@@ -171,9 +173,10 @@ export class DayPipeline {
           return {
             summary: {
               speeches,
-              selfDestructBy: exploded,
+              selfDestructBy: exploded.actorId,
             },
             interrupted: true,
+          selfDestruct: exploded,
           };
         }
       }

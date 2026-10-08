@@ -7,7 +7,7 @@ import { World } from "../../../core/domain/world";
 /** 遗言机制：判定是否可遗言并写入遗言授权事件。 */
 export class LastWordsMechanism {
   shouldGrantLastWords(deathPhase: Phase, day: number, sources: readonly DeathCause[]): boolean {
-    if (sources.length === 0 || sources.includes(DeathCause.SelfDestruct)) return false;
+    if (sources.length === 0 || sources.includes(DeathCause.SelfDestruct) || sources.includes(DeathCause.WhiteWolfBlast)) return false;
     return (deathPhase === Phase.Night && day === 1 && sources.some(source => source === DeathCause.WolfKill || source === DeathCause.Poison)) ||
       (deathPhase === Phase.Voting && sources.includes(DeathCause.Exile));
   }

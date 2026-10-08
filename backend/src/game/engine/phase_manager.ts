@@ -28,6 +28,7 @@ import { NightPipeline } from "./phase_pipeline/night_pipeline";
 import { VotingPipeline } from "./phase_pipeline/voting_pipeline";
 import { RoleRegistry } from "../../core/domain/registries/role_registry";
 import { COMPONENT } from "../../core/domain/components/names";
+import { commitSelfDestructSelection } from "../mechanisms/self_destruct/commit";
 import { VotingRightComponent } from "../../core/domain/components/voting_right";
 import { IdentityComponent } from "../../core/domain/entities/player";
 import { RoleComponent } from "../../core/domain/components/role";
@@ -179,32 +180,38 @@ export class PhaseManager {
     const cycleDay = this.state.day;
     const dayIsCurrent = () => this.state.day === cycleDay && this.state.phase === Phase.Day && !this.state.gameOver;
     let nightSettled = false;
-    const settleNight = async (explodedId?: EntityId) => {
+    const settleNight = async (blast?: { deaths: number[]; sources: DeathSources }) => {
       if (nightSettled) return this.state.gameOver;
       nightSettled = true;
       this.emitNightResolved(night.summary.deaths);
       const sources: DeathSources = structuredClone(night.damage.deathSources);
       const deaths = [...night.damage.deaths];
       const deathPhases: Record<EntityId, Phase> = {};
-      if (explodedId !== undefined) {
-        if (!deaths.includes(explodedId)) deaths.push(explodedId);
-        sources[explodedId] = [...new Set([...(sources[explodedId] ?? []), DeathCause.SelfDestruct])];
-        deathPhases[explodedId] = Phase.Day;
+      if (blast !== undefined) {
+        for (const id of blast.deaths) {
+          if (!deaths.includes(id)) deaths.push(id);
+          sources[id] = [...new Set([...(sources[id] ?? []), ...(blast.sources[id] ?? [])])];
+          deathPhases[id] = Phase.Day;
+        }
       }
       await this.deathResolution.resolve(deaths, sources, actionProvider, Phase.Night, Phase.Day, deathPhases);
       if (!dayIsCurrent()) return this.state.gameOver;
-      return this.checkAndSealResult(explodedId !== undefined ? "day_interrupted" : "night_settled");
+      return this.checkAndSealResult(blast !== undefined ? "day_interrupted" : "night_settled");
     };
     if (!firstDaySheriffBeforeNightInfo && await settleNight()) return this.getSnapshot();
 
     const dayResult = await this.dayPipeline.execute(this.config, actionProvider, {
       day: cycleDay,
       isCurrent: dayIsCurrent,
-      commitSelfDestruct: async (id, window) => {
-        if (!dayIsCurrent()) return;
-        this.recordSelfDestruct(id, window);
-        if (!nightSettled) await settleNight(id);
-        else await this.deathResolution.resolve([id], { [id]: [DeathCause.SelfDestruct] }, actionProvider, Phase.Day, Phase.Day);
+      commitSelfDestruct: async (choice, window) => {
+        if (!dayIsCurrent()) return false;
+        // Keep pending night information private; a doomed White Wolf King cannot swallow its death with this skill.
+        if (!nightSettled && choice.kind === "white_wolf_king" && night.damage.deaths.includes(choice.actorId)) return false;
+        const blast = commitSelfDestructSelection(this.world, choice, window, Phase.Day, this.events);
+        if (!blast) return false;
+        if (!nightSettled) await settleNight(blast);
+        else await this.deathResolution.resolve(blast.deaths, blast.sources, actionProvider, Phase.Day, Phase.Day);
+        return true;
       },
       ...(firstDaySheriffBeforeNightInfo ? { afterSheriffElection: () => settleNight() } : {}),
     });
@@ -225,10 +232,12 @@ export class PhaseManager {
     const votingResult = await this.votingPipeline.execute(
       this.config,
       actionProvider,
-      { day: cycleDay, isCurrent: votingIsCurrent, commitSelfDestruct: async id => {
-        if (!votingIsCurrent()) return;
-        this.recordSelfDestruct(id, ActionWindow.OnPreVote);
-        await this.deathResolution.resolve([id], { [id]: [DeathCause.SelfDestruct] }, actionProvider, Phase.Voting, Phase.Voting);
+      { day: cycleDay, isCurrent: votingIsCurrent, commitSelfDestruct: async choice => {
+        if (!votingIsCurrent()) return false;
+        const blast = commitSelfDestructSelection(this.world, choice, ActionWindow.OnPreVote, Phase.Voting, this.events);
+        if (!blast) return false;
+        await this.deathResolution.resolve(blast.deaths, blast.sources, actionProvider, Phase.Voting, Phase.Voting);
+        return true;
       } },
     );
 
@@ -321,10 +330,6 @@ export class PhaseManager {
   /**
    * 写入夜晚结算公开信息（用于“昨夜死亡/平安夜”广播）。
    */
-  private recordSelfDestruct(id: EntityId, window: ActionWindow): void {
-    this.events.push({ timestamp: Date.now(), type: "wolf_self_destruct", payload: { wolfId: id, window } });
-  }
-
   private emitNightResolved(deaths: EntityId[]): void {
     this.events.push({
       timestamp: Date.now(),

@@ -49,6 +49,7 @@ export interface EventPayloadMap {
   game_over: GameResult;
   night_resolved: { deaths: EntityId[] };
   wolf_self_destruct: { wolfId: EntityId; window: ActionWindow };
+  white_wolf_king_self_destruct: { actorId: EntityId; targetId: EntityId | null; window: ActionWindow };
   day_speech: { actorId: EntityId; text: string };
   vote_cast: VoteRecord;
   vote_summary: { votes: VoteRecord[]; tally: Record<number, number>; target: EntityId | null };
