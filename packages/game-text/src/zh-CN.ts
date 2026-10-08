@@ -1,7 +1,12 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "role.hidden_wolf.brief":"狼阵营，单向知道其它狼ID，不夜聊、不自爆；实际成为唯一活狼时接刀。接刀前查验好人/平民且熊不感知，接后显示狼/隐狼；Knight仍按真实阵营。",
+  "role.hidden_wolf.state":"你的底牌是【隐狼】，狼阵营。你单向知道其它狼的授权ID，普通狼队不知道你；始终不参与或读取普通狼夜聊，不能原生自爆。开局唯一狼或真实死亡后成为唯一活狼时获得基础刀权，白天获得不立即出刀。未接刀查验好人/平民且不触发熊，曾接刀后查验狼/隐狼并可被熊感知，死后不恢复伪装；骑士看真实阵营。当前实际出刀还要求你存活、资格有效且唯一活狼。",
+  "role.hidden_wolf.status":"本人曾获得刀权：{inherited}；当前可出刀：{active}。",
+  "console.hidden_wolf.awakened":"{actor}号隐狼在第{day}天获得刀权",
+  "replay.stage.hidden_wolf_awakened":"隐狼接刀",
   "role.bear.brief": "入夜按座位环跳过已出局玩家取左右邻居，有可感知狼人则次日咆哮；夜间不重算，熊出局则不咆哮。公告不揭熊或邻居编号。",
-  "role.bear.state": "你的底牌是【熊】，好人神职，无原生主动技能。每夜开始按当前座位环取左右最近存活邻居；有可感知狼人则次日咆哮，当夜邻居死亡不重算，完整夜死链后你已死亡则不咆哮。全场仅收到是否咆哮，不公布熊ID或邻居。熊感知与预言家查验伪装独立；无刀隐狼不触发（仅在该角色已启用板子有效）。",
+  "role.bear.state": "你的底牌是【熊】，好人神职，无原生主动技能。每夜开始按当前座位环取左右最近存活邻居；有可感知狼人则次日咆哮，当夜邻居死亡不重算，完整夜死链后你已死亡则不咆哮。全场仅收到是否咆哮，不公布熊ID或邻居。熊感知与预言家查验伪装独立；从未接刀的隐狼不触发（仅在该角色已启用板子有效）。",
   "role.bear.latest": "最近公开公告：第{day}天，{result}。",
   "role.bear.no_report": "尚无已公布的熊公告；本夜待公布信息不可提前获知。",
   "bear.roar": "熊咆哮了",

@@ -30,6 +30,8 @@ import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { GameActionRequestFactory } from "../action_request_factory";
 import { createRandom, shuffled, type RandomSource } from "../../../core/domain/random";
 import { DreamNightFrame, hasDreamNightCommit } from "../../mechanisms/roles/dreamer/night_frame";
+import {discardStaleWolfKnife} from "../../mechanisms/roles/wolf/knife_scope";
+import {AliveComponent,aliveLifeVersion} from "../../../core/domain/components/alive";
 
 export interface NightPipelineDependencies {
   world: World;
@@ -45,7 +47,7 @@ export interface NightPipelineOptions {
   isCurrent?: () => boolean;
 }
 export type NightPipelineResult =
-  | { interrupted: false; summary: NightSummary; damage: DamageResolutionResult; dreamFrame: DreamNightFrame }
+  | { interrupted: false; summary: NightSummary; damage: DamageResolutionResult; dreamFrame: DreamNightFrame; deathLives:ReadonlyMap<EntityId,{life:AliveComponent;version:number|undefined}> }
   | { interrupted: true };
 
 /**
@@ -130,10 +132,13 @@ export class NightPipeline {
 
     for (const stage of this.stageRegistry.getStages(config, this.world)) {
       if (!isCurrent()) return { interrupted: true };
+      discardStaleWolfKnife(this.world,stageState);
       await stage.execute(stageCtx);
       if (!isCurrent()) return { interrupted: true };
+      discardStaleWolfKnife(this.world,stageState);
     }
 
+    discardStaleWolfKnife(this.world,stageState);
     const dreamFrame = new DreamNightFrame(stageState.dreamLinks);
     const damage = this.damageResolutionSystem.resolve(this.world,{protectedTargets:dreamFrame.protectedTargets(this.world),consecutiveDeaths:dreamFrame.consecutiveDeaths(this.world)});
     dreamFrame.expandInitialDamage(this.world,damage);
@@ -155,7 +160,8 @@ export class NightPipeline {
       interruptedBySelfDestruct: false,
     };
 
-    return { interrupted: false, summary, damage, dreamFrame };
+    const deathLives=new Map(damage.deaths.map(id=>{const life=this.world.getComponent<AliveComponent>(id,COMPONENT.Alive)!;return[id,{life,version:aliveLifeVersion(life)}] as const;}));
+    return { interrupted: false, summary, damage, dreamFrame,deathLives };
   }
 
   private makeRequest(

@@ -56,6 +56,7 @@ export interface EventPayloadMap {
   game_over: GameResult;
   night_resolved: { deaths: EntityId[] };
   bear_roared: { day:number; roared:boolean };
+  hidden_wolf_awakened: {actorId:EntityId;day:number};
   wolf_self_destruct: { wolfId: EntityId; window: ActionWindow };
   white_wolf_king_self_destruct: { actorId: EntityId; targetId: EntityId | null; window: ActionWindow };
   knight_duel: { actorId: EntityId; targetId: EntityId; result: "wolf" | "not_wolf" };

@@ -9,7 +9,7 @@ export interface PlayerObservation {
   knownAliveIds: number[];
   teammateIds: number[];
   abilities: PlayerNightAbility[];
-  ownState: { witch?: WitchState; guard?: GuardState; hunter?: HunterState; wolfKing?: WolfKingState; whiteWolfKing?: WhiteWolfKingState; knight?: KnightState; gravekeeper?: GravekeeperState; dreamer?: DreamerState; wolfBeauty?: WolfBeautyState; bear?:BearState; idiot?: IdiotState; seer?: SeerState };
+  ownState: { witch?: WitchState; guard?: GuardState; hunter?: HunterState; wolfKing?: WolfKingState; whiteWolfKing?: WhiteWolfKingState; knight?: KnightState; gravekeeper?: GravekeeperState; dreamer?: DreamerState; wolfBeauty?: WolfBeautyState; bear?:BearState; hiddenWolf?:{hasInheritedKnife:boolean;canVoteForKill:boolean}; idiot?: IdiotState; seer?: SeerState };
 }
 
 export interface ObservedPlayerStrategy {

@@ -150,7 +150,7 @@ export class BaselineBotActionProvider implements ActionProvider {
         this.world.locale,
       );
       if (action?.name === "speak_to_wolves" || action?.name === "kill_vote") {
-        const access = wolfTeamPermissions(role, this.roleCatalog);
+        const access = wolfTeamPermissions(role, this.roleCatalog,this.world);
         const permitted = action.name === "speak_to_wolves" ? access.canChat : access.canVoteForKill;
         if (!permitted || request.phase !== Phase.Night || !this.world.getAliveEntityIds().includes(request.actorId)) return null;
       }

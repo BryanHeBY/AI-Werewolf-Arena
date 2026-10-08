@@ -17,6 +17,7 @@ export enum Role {
   Dreamer = "dreamer",
   WolfBeauty = "wolf_beauty",
   Bear = "bear",
+  HiddenWolf = "hidden_wolf",
   Villager = "villager",
   Seer = "seer",
   Guard = "guard",

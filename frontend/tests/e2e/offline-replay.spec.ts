@@ -199,3 +199,10 @@ for(const locale of ["zh-CN","en"] as const)for(const badge of [false,true])test
  await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(badge?5:4);await expect(page.getByTestId("composition-winner")).toHaveCount(badge?5:4);
  if(badge)await expect(page.getByRole("button",{name:locale==="en"?"Player 1 · Seat 1":"1号 · Seat 1",exact:true})).toHaveClass(/dead/);
 });
+
+for(const locale of ["zh-CN","en"] as const)for(const large of [false,true])test(`${locale}/${large}: actual Hidden Wolf inheritance is a private fact followed by a separate real death, without premature winners`,async({page})=>{
+ const replay=JSON.parse(readFileSync(new URL(`../fixtures/hidden-wolf-${large?"twelve":"king-link"}.replay.json`,import.meta.url),"utf8"));replay.meta.locale=locale;await page.route("**/api/replay",route=>route.fulfill({json:replay}));await page.goto("/");
+ const label=locale==="en"?`Hidden Wolf 1 inherits the knife on day ${large?2:1}`:`1号隐狼在第${large?2:1}天获得刀权`;await page.locator(".timeline .event").filter({hasText:label}).click();await expect(page.getByTestId("composition-event")).toHaveText(label);await expect(page.locator(".seat-grid .dead")).toHaveCount(large?4:1);await expect(page.locator(".seat-grid .winner")).toHaveCount(0);await expect(page.getByRole("button",{name:locale==="en"?"Player 1 · Seat 1":"1号 · Seat 1",exact:true})).not.toHaveClass(/dead/);
+ const caption=await page.getByTestId("composition-caption").boundingBox();expect(caption).not.toBeNull();for(const seat of await page.locator("[data-composition-player]").all()){const box=await seat.boundingBox();expect(box).not.toBeNull();expect(box!.y+box!.height).toBeLessThan(caption!.y);}
+ await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(large?8:4);await expect(page.getByTestId("composition-winner")).toHaveCount(large?8:4);await expect(page.getByRole("button",{name:locale==="en"?"Player 1 · Seat 1":"1号 · Seat 1",exact:true})).toHaveClass(/dead/);
+});

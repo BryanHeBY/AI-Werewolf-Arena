@@ -5,7 +5,7 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import type { AcpMcpServerConfig } from "../../src/ai/integrations/acp/acp_mcp_bridge";
 import type { ActorTransportPlan } from "../support/foundation_transport_plan";
-import { assertTransportPrompt, assertTransportEvents } from "../support/transport_prompt_oracle";
+import { assertTransportPrompt, assertTransportEvents,assertTransportIdentity } from "../support/transport_prompt_oracle";
 
 const plan: ActorTransportPlan = JSON.parse(await readFile(process.argv[2] ?? process.env.AWA_TEST_PLAN_FILE!, "utf8"));
 const trace = { agentPid: process.pid, mcpPid: 0, locale: "", prompts: [] as string[], submitted: 0, rejected: 0, consumed: 0, visibleSeerTargets: [] as number[], schemaChecked: false, initializationSeen: false, failure: "" };
@@ -62,6 +62,7 @@ try {
           if (plan.forbiddenPersonas?.some(marker => prompt.includes(marker))) throw new Error("fixture_persona_cross_actor");
         }
         trace.initializationSeen = true;
+        assertTransportIdentity(plan,prompt);
       }
       await save();
       send({ jsonrpc: "2.0", id: request.id, result: { stopReason: "end_turn" } });

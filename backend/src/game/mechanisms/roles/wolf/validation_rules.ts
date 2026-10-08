@@ -6,15 +6,15 @@ import { wolfTeamPermissions } from "../wolf_team";
 
 /** 狼人工具校验规则集合。 */
 export const WOLF_VALIDATION_RULES: ToolRuleMap = {
-  speak_to_wolves: ({ role, roleCatalog, phase }) => {
-    if (!wolfTeamPermissions(role, roleCatalog).canChat) {
+  speak_to_wolves: ({ world,role, roleCatalog, phase }) => {
+    if (!wolfTeamPermissions(role, roleCatalog,world).canChat) {
       return { code: RuleError.WolfChatPermission };
     }
     if (phase !== Phase.Night) return { code: RuleError.WolfChatPhase };
     return null;
   },
   kill_vote: ({ world, role, roleCatalog, toolCall, phase }) => {
-    if (!wolfTeamPermissions(role, roleCatalog).canVoteForKill) {
+    if (!wolfTeamPermissions(role, roleCatalog,world).canVoteForKill) {
       return { code: RuleError.WolfKillPermission };
     }
     if (phase !== Phase.Night) return { code: RuleError.WolfKillPhase };

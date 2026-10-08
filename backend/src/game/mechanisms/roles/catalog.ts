@@ -17,6 +17,7 @@ import { GRAVEKEEPER_ROLE_PROFILE } from "./gravekeeper/profile";
 import { DREAMER_ROLE_PROFILE } from "./dreamer/profile";
 import { WOLF_BEAUTY_ROLE_PROFILE } from "./wolf_beauty/profile";
 import {BEAR_ROLE_PROFILE} from "./bear/profile";
+import {HIDDEN_WOLF_ROLE_PROFILE} from "./hidden_wolf/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   WOLF_ROLE_PROFILE,
@@ -27,6 +28,7 @@ const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   DREAMER_ROLE_PROFILE,
   WOLF_BEAUTY_ROLE_PROFILE,
   BEAR_ROLE_PROFILE,
+  HIDDEN_WOLF_ROLE_PROFILE,
   VILLAGER_ROLE_PROFILE,
   SEER_ROLE_PROFILE,
   GUARD_ROLE_PROFILE,
@@ -87,7 +89,7 @@ export class RoleCatalog {
     const defaultLocale = ctx.locale ?? "zh-CN";
     roleComp.renderPrompt = (locale = defaultLocale) => {
       const active = this.require(roleComp.role);
-      return active.renderPrompt ? active.renderPrompt(roleComp, locale) : text(locale, "role.generic.state", { role: this.label(active.role, locale) });
+      return active.renderPrompt ? active.renderPrompt(roleComp, locale,ctx.world) : text(locale, "role.generic.state", { role: this.label(active.role, locale) });
     };
   }
 

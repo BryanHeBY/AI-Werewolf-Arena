@@ -6,7 +6,7 @@
 
 好人神职，没有原生主动技能／工具／狼队权限，正常公共参与。入夜开始按 Identity.seat 形成存活环，取左右最近存活邻居、环绕、跳过入夜前死人；单邻居只取一次，无邻居为quiet。当夜邻居死亡／身份或座位变化不重新计算，下一夜重新取样。
 
-当前全部四种已实现狼可被感知。检测先要求真实 Camp.Wolf，再应用 profile 的独立 `detectableByBear(world,role)` 策略，缺省为可感知；它不借预言家伪装、狼聊或临时刀权状态。未来隐狼的无刀例外留独立批次，角色目录有名字不代表本批已接通。
+当前普通狼／狼王／白狼王／狼美人可被感知；[隐狼](hidden-wolf.md)按曾接刀事实：从未接刀不触发、曾接刀可触发，暂时失去当前刀资格不恢复伪装。检测先要求真实 Camp.Wolf，再应用 profile 的独立 `detectableByBear(world,role)` 策略，缺省为可感知；它不借预言家伪装、狼聊或临时刀权状态。
 
 BearNightFrame由PhaseManager在本夜开始持有，包含原World／角色／state／生命引用与版本及待公布bool；不落目标组件、DTO、角色history、操作或录制。第一日竞选／退水／警长投票不能提前拿到样本。全场公告 `bear_roared {day,roared}`，没有熊ID、邻居／方向／数量／身份或死亡原因。只有公开后的 `{day,roared}` 进入本人history／提示／观察，其他人经公共事件获得同一bool。
 

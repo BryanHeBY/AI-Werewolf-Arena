@@ -1,0 +1,60 @@
+{
+  "version": 2,
+  "id": "six_player_hidden_wolf",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 6,
+    "roleSetups": [
+      {
+        "role": "hidden_wolf",
+        "count": 1
+      },
+      {
+        "role": "wolf",
+        "count": 1
+      },
+      {
+        "role": "seer",
+        "count": 1
+      },
+      {
+        "role": "bear",
+        "count": 1
+      },
+      {
+        "role": "villager",
+        "count": 2
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": [
+      "slaughter_side"
+    ],
+    "hooks": {
+      "onDaybreak": true,
+      "onPreElection": true,
+      "onPreVote": true,
+      "onPerSpeechGap": true
+    }
+  },
+  "mechanisms": {
+    "sheriff": {
+      "enabled": false
+    },
+    "selfDestruct": {
+      "enabledWindows": []
+    },
+    "tieBreaker": {
+      "exileVote": "min_id",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "bear": {},
+    "hidden_wolf": {}
+  }
+}

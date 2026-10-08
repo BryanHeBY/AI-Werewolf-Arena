@@ -86,7 +86,7 @@ function createPlayers(world: World, config: BoardConfig, options: BootstrapOpti
     const entityId = world.createEntity();
     const role = roles[seat - 1];
     const roleComp = createRoleComponent(role, roleCatalog.getCamp(role), world.locale);
-    roleCatalog.applyRuntime(roleComp, { boardConfig: config, locale: world.locale });
+    roleCatalog.applyRuntime(roleComp, { boardConfig: config, locale: world.locale,world });
 
     world.addComponent(
       entityId,

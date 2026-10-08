@@ -7,6 +7,7 @@ import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
 
 const event = <K extends GameEvent["type"]>(type: K, payload: Extract<GameEvent, { type: K }>["payload"]): Extract<GameEvent, { type: K }> => ({ timestamp: 1, type, payload }) as Extract<GameEvent, { type: K }>;
 const events: GameEvent[] = [
+  event("hidden_wolf_awakened",{actorId:1,day:2}),
   event("bear_roared",{day:1,roared:true}),event("bear_roared",{day:2,roared:false}),
   event("charm_applied",{actorId:1,targetId:2,day:1}),event("charm_applied",{actorId:1,targetId:null,day:2}),event("charm_death",{actorId:1,targetId:2}),event("charm_blocked",{actorId:1,targetId:2,reason:"night_protection"}),
   event("gravekeeper_reported", { actorId: 3, targetId: 1, exileDay: 1, receivedDay: 2, result: { kind: "camp", camp: "wolf" } }),
@@ -35,6 +36,11 @@ const events: GameEvent[] = [
   event("sheriff_direction_chosen", { sheriffId: 1, direction: "clockwise" }), event("sheriff_direction_chosen", { sheriffId: 1, direction: "counter_clockwise" }),
   event("game_over", { winner: Camp.Good, reason: "all_wolves_eliminated" }), event("game_over", { winner: null, reason: "runtime_timeout" }),
 ];
+
+for(const locale of ["zh-CN","en"] as const)test(`${locale}: Hidden Wolf acquisition remains private terminal information with scalar fields and a stable recording stage`,()=>{
+ const registry=getDefaultScriptEventRenderRegistry(),item=event("hidden_wolf_awakened",{actorId:1,day:2}),label=locale==="en"?"Hidden Wolf 1 inherits the knife on day 2":"1号隐狼在第2天获得刀权";
+ expect(registry.toJudgeLine(item,locale)).toBe(label);expect(registry.toLiveRender(item,true,locale)).toEqual([{kind:"private",text:label}]);expect(registry.toLiveRender(item,false,locale)).toEqual([]);expect(registry.toReplayStage(item)).toBe("hidden_wolf_awakened");expect(toChatLines([item],locale)).toEqual([]);
+});
 
 for(const locale of ["zh-CN","en"] as const)test(`${locale}: Bear positive/quiet announcements are public anonymous facts in both private flag modes`,()=>{
  const registry=getDefaultScriptEventRenderRegistry(),rows=events.filter(e=>e.type==="bear_roared"),labels=locale==="en"?["Day 1: Bear roared","Day 2: Bear did not roar"]:["第1天：熊咆哮了","第2天：熊没有咆哮"];

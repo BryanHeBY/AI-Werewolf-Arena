@@ -15,6 +15,9 @@ import { World } from "../../../../core/domain/world";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import type { RoleCatalog } from "../../roles/catalog";
 import type { DreamNightLink } from "../../roles/dreamer/night_frame";
+import type {AliveComponent} from "../../../../core/domain/components/alive";
+
+export interface WolfKnifeTargetScope {targetId:EntityId;life:AliveComponent;version:number;marks:StatusMarksComponent}
 
 /** 夜间阶段共享状态。 */
 export interface NightStageState {
@@ -22,6 +25,7 @@ export interface NightStageState {
   endedWolves: Set<EntityId>;
   wolfVotes: Record<number, number>;
   wolfTarget: EntityId | null;
+  wolfTargetScope?:WolfKnifeTargetScope;
   seerChecks: NightSummary["seerChecks"];
   dreamLinks: DreamNightLink[];
 }

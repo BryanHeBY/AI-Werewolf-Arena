@@ -34,6 +34,8 @@ import { commitKnightDuel } from "../mechanisms/roles/knight/commit";
 import { captureExileFeedback } from "../mechanisms/roles/gravekeeper/feedback";
 import {captureBeautyExile,resolveBeautyExileVictory,type BeautyExileCandidate} from "../mechanisms/roles/wolf_beauty/relation";
 import {BearNightFrame} from "../mechanisms/roles/bear/night_frame";
+import {refreshHiddenWolfInheritance} from "../mechanisms/roles/hidden_wolf/inheritance";
+import {aliveLifeVersion} from "../../core/domain/components/alive";
 import { VotingRightComponent } from "../../core/domain/components/voting_right";
 import { IdentityComponent } from "../../core/domain/entities/player";
 import { RoleComponent } from "../../core/domain/components/role";
@@ -124,6 +126,7 @@ export class PhaseManager {
       },
     });
     const initialSheriffId = findSheriffId(this.world);
+    refreshHiddenWolfInheritance(this.world,this.events,this.state.day);
     if (initialSheriffId !== null) {
       this.events.push({
         timestamp: Date.now(),
@@ -196,9 +199,10 @@ export class PhaseManager {
     const settleNight = async (blast?: { deaths: number[]; sources: DeathSources }) => {
       if (nightSettled) return this.state.gameOver;
       nightSettled = true;
-      this.emitNightResolved(night.summary.deaths);
-      const sources: DeathSources = structuredClone(night.damage.deathSources);
-      const deaths = [...night.damage.deaths];
+      const nightDeaths=night.damage.deaths.filter(id=>{const scope=night.deathLives.get(id);return scope&&this.world.getComponent(id,COMPONENT.Alive)===scope.life&&scope.life.alive&&scope.version!==undefined&&aliveLifeVersion(scope.life)===scope.version;});
+      this.emitNightResolved(nightDeaths);
+      const sources: DeathSources = Object.fromEntries(nightDeaths.map(id=>[id,[...(night.damage.deathSources[id]??[])]]));
+      const deaths = [...nightDeaths];
       const deathPhases: Record<EntityId, Phase> = {};
       if (blast !== undefined) {
         for (const id of blast.deaths) {
@@ -207,7 +211,7 @@ export class PhaseManager {
           deathPhases[id] = Phase.Day;
         }
       }
-      await this.deathResolution.resolve(deaths, sources, actionProvider, Phase.Night, Phase.Day, deathPhases,{dreams:night.dreamFrame,nightOriginIds:night.damage.deaths,isCurrent:dayIsCurrent});
+      await this.deathResolution.resolve(deaths, sources, actionProvider, Phase.Night, Phase.Day, deathPhases,{dreams:night.dreamFrame,nightOriginIds:nightDeaths,isCurrent:dayIsCurrent});
       if (!dayIsCurrent()) return this.state.gameOver;
       bearFrame?.publish(this.world,this.events,dayIsCurrent);
       return this.checkAndSealResult(blast !== undefined ? "day_interrupted" : "night_settled");

@@ -17,6 +17,7 @@ import type {World} from "../../../core/domain/world";
 export interface RoleInitContext {
   locale?: Locale;
   boardConfig?: BoardConfig;
+  world?:World;
 }
 
 /** Faction membership alone never grants knowledge, chat access or a knife. */
@@ -41,7 +42,7 @@ export interface RoleProfile {
   initialVictoryAffiliations?: readonly VictoryAffiliation[] | ((role: RoleComponent, ctx: RoleInitContext) => readonly VictoryAffiliation[]);
   /** Public participation restrictions; secret immunity belongs to resolution hooks. */
   participation?: { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean } | ((role: RoleComponent) => { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean });
-  wolfTeam?: WolfTeamPermissions | ((role: RoleComponent) => WolfTeamPermissions);
+  wolfTeam?: WolfTeamPermissions | ((role: RoleComponent,world?:World) => WolfTeamPermissions);
   /** Explicit public self-destruct capability, independent of faction/knife access. */
   canSelfDestruct?: boolean;
   inspectionLabels?: { camp?: InspectionCamp; role?: RoleId } | ((role: RoleComponent) => { camp?: InspectionCamp; role?: RoleId });
@@ -51,7 +52,7 @@ export interface RoleProfile {
     apply: (config: BoardConfig, value: unknown) => BoardConfig;
   };
   init?: (roleComp: RoleComponent, ctx: RoleInitContext) => void;
-  renderPrompt?: (roleComp: RoleComponent, locale?: Locale) => string;
+  renderPrompt?: (roleComp: RoleComponent, locale?: Locale,world?:World) => string;
   toolSpecs?: ToolSpec[];
   stageDirectives?: StageDirectiveRule[];
   validationRules?: ToolRuleMap;

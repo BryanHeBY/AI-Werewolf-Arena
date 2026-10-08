@@ -1,5 +1,11 @@
 import type { ActorTransportPlan, PlannedTurn } from "./foundation_transport_plan";
 
+export function assertTransportIdentity(plan:ActorTransportPlan,content:string):void{
+ if(plan.expectedTeammateIds===undefined)return;
+ const ids=plan.expectedTeammateIds.join(", ")||(plan.locale==="en"?"None":"无"),marker=plan.locale==="en"?`excluding yourself: ${ids}.`:`队友（不含你自己）的编号：${ids}。`;
+ if(!content.includes(marker))throw new Error("fixture_teammate_knowledge_mismatch");
+}
+
 const stages: Record<string, [string, string]> = {
   wolf_discussion: ["狼人交流", "Wolf discussion"], wolf_vote: ["狼人刀人投票", "Wolf kill vote"],
   guard: ["守卫行动", "Guard action"], seer: ["预言家行动", "Seer action"], witch: ["女巫行动", "Witch action"],
@@ -19,6 +25,7 @@ export function assertTransportPrompt(plan: ActorTransportPlan, turn: PlannedTur
   for (const marker of plan.requiredCurrentMarkers ?? []) if (!content.includes(marker)) throw new Error("fixture_private_marker_missing");
   for (const marker of plan.forbiddenCurrentMarkers ?? []) if (content.includes(marker)) throw new Error("fixture_private_marker_exposed");
   for(const marker of turn.forbiddenPromptMarkers??[])if(content.includes(marker))throw new Error("fixture_premature_marker_exposed");
+  if(turn.hiddenWolfStatus){const value=(flag:boolean)=>plan.locale==="en"?(flag?"Yes":"No"):(flag?"是":"否"),{inherited,active}=turn.hiddenWolfStatus;const marker=plan.locale==="en"?`Personally inherited the knife: ${value(inherited)}; currently able to attack: ${value(active)}.`:`本人曾获得刀权：${value(inherited)}；当前可出刀：${value(active)}。`;if(!content.includes(marker))throw new Error("fixture_hidden_knife_status_mismatch");}
   if(turn.bearLatest!==undefined){
     const report=turn.bearLatest,result=report?.roared?(plan.locale==="en"?"Bear roared":"熊咆哮了"):(plan.locale==="en"?"Bear did not roar":"熊没有咆哮");
     const marker=report?(plan.locale==="en"?`Latest public announcement: day ${report.day}, ${result}.`:`最近公开公告：第${report.day}天，${result}。`):(plan.locale==="en"?"No Bear announcement has been published yet;":"尚无已公布的熊公告；");
@@ -52,7 +59,8 @@ export function assertTransportEvents(role: string, events: Array<[number, strin
     if(type==="bear_roared"&&(Object.keys(payload).sort().join()!=="day,roared"||!Number.isSafeInteger(payload.day)||Number(payload.day)<1||typeof payload.roared!=="boolean"))throw new Error("fixture_bear_private_or_invalid_signal");
     if (type === "god_private_game_info") throw new Error("fixture_god_information_exposed");
     if(["dream_death","charm_death","charm_blocked"].includes(type))throw new Error("fixture_private_death_information_exposed");
-    if (["seer_checked", "charm_applied", "dream_applied", "gravekeeper_reported", "witch_potion_used", "witch_potion_skipped", "guard_applied"].includes(type) && payload.actorId !== actorId) throw new Error("fixture_other_private_skill_exposed");
-    if (["wolf_tactical_order", "wolf_discussion", "wolf_discussion_ended", "wolf_kill_vote_cast"].includes(type) && !["wolf","wolf_king","white_wolf_king","wolf_beauty"].includes(role)) throw new Error("fixture_wolf_information_exposed");
+    if (["seer_checked", "hidden_wolf_awakened", "charm_applied", "dream_applied", "gravekeeper_reported", "witch_potion_used", "witch_potion_skipped", "guard_applied"].includes(type) && payload.actorId !== actorId) throw new Error("fixture_other_private_skill_exposed");
+    if(role==="hidden_wolf"&&["wolf_tactical_order","wolf_discussion","wolf_discussion_ended","wolf_kill_vote_cast"].includes(type)){if(type!=="wolf_kill_vote_cast"||payload.actorId!==actorId)throw new Error("fixture_hidden_pack_information_exposed");}
+    else if (["wolf_tactical_order", "wolf_discussion", "wolf_discussion_ended", "wolf_kill_vote_cast"].includes(type) && !["wolf","wolf_king","white_wolf_king","wolf_beauty"].includes(role)) throw new Error("fixture_wolf_information_exposed");
   }
 }

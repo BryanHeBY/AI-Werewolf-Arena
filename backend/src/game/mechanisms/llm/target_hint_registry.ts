@@ -37,6 +37,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     },
     [Role.WolfKing]: { kill_vote: { allowSelf: true } },
     [Role.WhiteWolfKing]: { kill_vote: { allowSelf: true } },
+    [Role.HiddenWolf]: {kill_vote:{allowSelf:true}},
     [Role.Witch]: {
       // 女巫可自救，提示层需包含自己。
       use_potion: { allowSelf: true },

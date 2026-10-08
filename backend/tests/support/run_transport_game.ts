@@ -9,7 +9,7 @@ import { runGame } from "../../src/runtime/game_runner";
 import { readReproduction, replayReproduction } from "../../src/runtime/simulation/replay_reproduction";
 import { createTestTempDirectory } from "./temp_directory";
 import type { ActorTransportPlan, PlannedTurn } from "./foundation_transport_plan";
-import { assertTransportPrompt, assertTransportEvents } from "./transport_prompt_oracle";
+import { assertTransportPrompt, assertTransportEvents,assertTransportIdentity } from "./transport_prompt_oracle";
 import type { Role } from "../../src/core";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import type { ReplayManifest, ReplayPlayerView } from "../../src/recording/contracts";
@@ -17,7 +17,7 @@ import type { ReplayManifest, ReplayPlayerView } from "../../src/recording/contr
 export interface TransportGameScenario {
   board: ResolvedBoardDefinition; seed: string; roles: readonly Role[];
   turns: ReadonlyMap<number, PlannedTurn[]>;
-  promptAssertions?: (actor: number, locale: "zh-CN" | "en") => Pick<ActorTransportPlan, "expectedIdentityMarker" | "requiredCurrentMarkers" | "forbiddenCurrentMarkers">;
+  promptAssertions?: (actor: number, locale: "zh-CN" | "en") => Pick<ActorTransportPlan, "expectedIdentityMarker" | "expectedTeammateIds" | "requiredCurrentMarkers" | "forbiddenCurrentMarkers">;
 }
 
 /** Real runner/factory/SDK/ACP/MCP; only model decisions come from literal actor scripts. */
@@ -40,6 +40,7 @@ export async function runTransportGame(scenario: TransportGameScenario, kind: "l
       if (locale === "en") expect(JSON.stringify(body.messages)).not.toMatch(/\p{Script=Han}/u);
       expect(body.messages[0].content).toContain(locale === "en" ? "Use English" : "你必须使用中文");
       expect(body.messages[0].content).toContain(plan.expectedName!);
+      assertTransportIdentity(plan,body.messages[0].content);
       if (plan.expectedIdentityMarker) expect(body.messages[0].content).toContain(plan.expectedIdentityMarker);
       for (const message of body.messages) if (typeof message.content === "string" && message.content.startsWith('{"event":')) {
         assertTransportEvents(plan.role, [JSON.parse(message.content).event], actor);
