@@ -1,6 +1,6 @@
 import { AliveComponent } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
-import { ActionProvider, EntityId, GameEvent, Phase, RuntimeSnapshot, StatusMark } from "../../core/domain/model";
+import { ActionProvider, EntityId, GameEvent, Phase, RuntimeSnapshot, type DeathSources, type DeathShotSelection } from "../../core/domain/model";
 import { World } from "../../core/domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
 import { getDefaultLastWordsMechanism } from "../mechanisms/last_words/last_words_mechanism";
@@ -22,14 +22,14 @@ export class DeathResolution {
 
   async resolve(
     deadIds: EntityId[],
-    sources: Record<number, StatusMark[]>,
+    sources: DeathSources,
     actionProvider: ActionProvider,
     phase: Phase,
     lastWordsPhase: Phase,
   ): Promise<void> {
     const seen = new Set<EntityId>(deadIds);
     let pending = [...seen];
-    const allSources: Record<number, StatusMark[]> = { ...sources };
+    const allSources: DeathSources = structuredClone(sources);
     let firstBatch = true;
     const requests = new GameActionRequestFactory(
       this.world,
@@ -38,6 +38,7 @@ export class DeathResolution {
     );
 
     while (pending.length > 0) {
+      const deathPhase = firstBatch ? phase : this.state.phase;
       this.markPlayersDead(pending);
       if (firstBatch) {
         this.lastWordsMechanism.recordLastWordsGranted(
@@ -60,36 +61,43 @@ export class DeathResolution {
         this.world,
         pending,
         allSources,
-        async (hunterId) => {
+        async (hunterId): Promise<DeathShotSelection> => {
           const actionPhase = this.state.phase;
-          const action = await actionProvider.getAction(requests.create({
-            phase: actionPhase,
-            actorId: hunterId,
-            allowedTools: ["shoot"],
-            stage: "hunter_shot",
-            requiresAction: true,
-            summary: { key: "request.summary.death_shot" },
-            context: {
-              trigger: "on_death",
-            },
-          }));
-          if (action?.name !== "shoot") {
-            return null;
-          }
-
-          const validated = this.toolGateway.validateAndSanitize(
-            this.world,
-            hunterId,
-            action,
-            {
+          for (let attempt = 1; attempt <= 3; attempt++) {
+            const action = await actionProvider.getAction(requests.create({
               phase: actionPhase,
-              allowDeadHunterShoot: true,
-            },
-          );
-          if (!validated.ok || !validated.sanitizedCall) {
-            return null;
+              actorId: hunterId,
+              allowedTools: ["shoot"],
+              stage: "hunter_shot",
+              requiresAction: true,
+              summary: { key: "request.summary.death_shot" },
+              context: {
+                trigger: "on_death",
+                death_phase: deathPhase,
+                death_sources: [...(allSources[hunterId] ?? [])],
+                ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
+              },
+            }));
+            if (action?.name !== "shoot") {
+              continue;
+            }
+
+            const validated = this.toolGateway.validateAndSanitize(
+              this.world,
+              hunterId,
+              action,
+              {
+                phase: actionPhase,
+                allowDeadHunterShoot: true,
+              },
+            );
+            if (!validated.ok || !validated.sanitizedCall) {
+              continue;
+            }
+            const targetId = validated.sanitizedCall.args.target_id;
+            return targetId === null ? { kind: "pass" } : { kind: "shot", targetId };
           }
-          return validated.sanitizedCall.args.target_id;
+          return { kind: "invalid" };
         },
         this.events,
       );
@@ -127,7 +135,7 @@ export class DeathResolution {
         summary: { key: "request.summary.last_words" },
         context: {
           trigger: "last_words",
-          death_phase: phase,
+          death_phase: deathPhase,
         },
       }));
       if (action?.name !== "speak") {

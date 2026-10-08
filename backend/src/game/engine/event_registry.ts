@@ -2,7 +2,7 @@ import { BadgeComponent } from "../../core/domain/components/badge";
 import { AliveComponent } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
 import { RoleComponent } from "../../core/domain/components/role";
-import { EntityId, GameEvent, StatusMark } from "../../core/domain/model";
+import { EntityId, GameEvent, type DeathSources, type DeathShotSelection } from "../../core/domain/model";
 import { getDefaultHookRegistry, HookRegistry } from "../mechanisms";
 import { World } from "../../core/domain/world";
 import { transferOrDestroySheriffBadge } from "../mechanisms/sheriff/badge";
@@ -59,8 +59,8 @@ export class EventRegistry {
   async onDeath(
     world: World,
     deadIds: EntityId[],
-    deathSources: Record<number, StatusMark[]>,
-    onHunterShoot: (hunterId: EntityId) => Promise<EntityId | null>,
+    deathSources: DeathSources,
+    onHunterShoot: (hunterId: EntityId) => Promise<DeathShotSelection>,
     events: GameEvent[],
   ): Promise<DeathHookResult> {
     return this.hookRegistry.onDeath(

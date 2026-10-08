@@ -1,6 +1,6 @@
 import { COMPONENT } from "../components/names";
 import { StatusMarksComponent } from "../components/status_marks";
-import { EntityId, StatusMark } from "../model";
+import { EntityId, StatusMark, DeathCause, type DeathSources } from "../model";
 import { World } from "../world";
 
 /**
@@ -8,7 +8,7 @@ import { World } from "../world";
  */
 export interface DamageResolutionResult {
   deaths: EntityId[];
-  deathSources: Record<number, StatusMark[]>;
+  deathSources: DeathSources;
 }
 
 /**
@@ -24,7 +24,7 @@ export class DamageResolutionSystem {
    */
   resolve(world: World): DamageResolutionResult {
     const deaths: EntityId[] = [];
-    const deathSources: Record<number, StatusMark[]> = {};
+    const deathSources: DeathSources = {};
 
     for (const entityId of world.getAliveEntityIds()) {
       const marks = world.getComponent<StatusMarksComponent>(
@@ -35,24 +35,24 @@ export class DamageResolutionSystem {
         continue;
       }
 
-      const sources: StatusMark[] = [];
+      const sources: DeathCause[] = [];
       const hasGuard = marks.has(StatusMark.GuardMark);
       const hasHeal = marks.has(StatusMark.HealMark);
       const hasWolfKill = marks.has(StatusMark.WolfKillMark);
       const hasPoison = marks.has(StatusMark.PoisonMark);
       // Poison is independent of protection and must survive a conflict.
-      if (hasPoison) sources.push(StatusMark.PoisonMark);
+      if (hasPoison) sources.push(DeathCause.Poison);
 
       if (hasGuard && hasHeal) {
         // 同守同救互相抵消，但若同时被狼刀命中仍会死亡。
         marks.remove(StatusMark.GuardMark);
         marks.remove(StatusMark.HealMark);
         if (hasWolfKill) {
-          sources.push(StatusMark.WolfKillMark);
+          sources.push(DeathCause.WolfKill);
         }
       } else {
         if (hasWolfKill && !(hasGuard || hasHeal)) {
-          sources.push(StatusMark.WolfKillMark);
+          sources.push(DeathCause.WolfKill);
         }
       }
 

@@ -6,7 +6,10 @@ import {
   EntityId,
   GameEvent,
   Role,
-  StatusMark,
+  DeathCause,
+  permitsHunterShot,
+  type DeathSources,
+  type DeathShotSelection,
 } from "../../../../core/domain/model";
 import { World } from "../../../../core/domain/world";
 import { DeathHookResult } from "../../hooks/hook_registry";
@@ -16,22 +19,22 @@ import { getHunterState } from "../private_state";
 export async function hunterDeathHook(
   world: World,
   deadIds: EntityId[],
-  deathSources: Record<number, StatusMark[]>,
-  onHunterShoot: (hunterId: EntityId) => Promise<EntityId | null>,
+  deathSources: DeathSources,
+  onHunterShoot: (hunterId: EntityId) => Promise<DeathShotSelection>,
   events: GameEvent[],
 ): Promise<DeathHookResult> {
   const extraDeaths: EntityId[] = [];
-  const extraDeathSources: Record<number, StatusMark[]> = {};
+  const extraDeathSources: DeathSources = {};
 
   for (const deadId of deadIds) {
     const roleComp = world.getComponent<RoleComponent>(deadId, COMPONENT.Role);
     const hunterState = roleComp ? getHunterState(roleComp) : undefined;
-    if (!roleComp || roleComp.role !== Role.Hunter || !hunterState) {
+    if (!roleComp || roleComp.role !== Role.Hunter || !hunterState || world.getComponent<AliveComponent>(deadId, COMPONENT.Alive)?.alive !== false) {
       continue;
     }
 
     const sources = deathSources[deadId] ?? [];
-    if (sources.includes(StatusMark.PoisonMark)) {
+    if (sources.includes(DeathCause.Poison)) {
       hunterState.canShoot = false;
       events.push({
         timestamp: Date.now(),
@@ -41,25 +44,31 @@ export async function hunterDeathHook(
       continue;
     }
 
-    if (!hunterState.canShoot || isLastGod(world, deadId)) {
+    if (!hunterState.canShoot || !permitsHunterShot(sources)) {
       hunterState.canShoot = false;
       continue;
     }
 
-    const targetId = await onHunterShoot(deadId);
-    hunterState.canShoot = false;
-    if (targetId === null) {
+    const selection = await onHunterShoot(deadId);
+    const currentRole = world.getComponent<RoleComponent>(deadId, COMPONENT.Role);
+    if (currentRole !== roleComp || currentRole.role !== Role.Hunter || getHunterState(currentRole) !== hunterState || !hunterState.canShoot || world.getComponent<AliveComponent>(deadId, COMPONENT.Alive)?.alive !== false) continue;
+    if (selection.kind === "invalid") continue;
+    if (selection.kind === "pass") {
+      hunterState.canShoot = false;
       continue;
     }
+
+    const targetId = selection.targetId;
 
     const targetAlive = world.getComponent<AliveComponent>(targetId, COMPONENT.Alive);
     if (!targetAlive || !targetAlive.alive) {
       continue;
     }
 
+    hunterState.canShoot = false;
     targetAlive.alive = false;
     extraDeaths.push(targetId);
-    extraDeathSources[targetId] = [StatusMark.WolfKillMark];
+    extraDeathSources[targetId] = [DeathCause.Shot];
     events.push({
       timestamp: Date.now(),
       type: "hunter_shot",
@@ -71,23 +80,4 @@ export async function hunterDeathHook(
   }
 
   return { extraDeaths, extraDeathSources };
-}
-
-function isLastGod(world: World, hunterId: EntityId): boolean {
-  const alive = world.getAliveEntityIds();
-  for (const id of alive) {
-    if (id === hunterId) {
-      continue;
-    }
-    const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
-    if (
-      role &&
-      [Role.Seer, Role.Guard, Role.Witch, Role.Hunter, Role.Idiot].includes(
-        role.role,
-      )
-    ) {
-      return false;
-    }
-  }
-  return true;
 }

@@ -25,13 +25,14 @@ export const HUNTER_ROLE_PROFILE: RoleProfile = {
     shoot: ({ world, role, toolCall }) => {
       if (role.role !== Role.Hunter || !getHunterState(role)?.canShoot) return { code: RuleError.ShootUnavailable };
       if (toolCall.name !== "shoot") return { code: RuleError.ToolMismatch };
-      if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.ShootTarget };
+      if (toolCall.args.target_id !== null && !isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.ShootTarget };
       return null;
     },
   },
   llmRepair: {
     coerce: {
       shoot: (args) => {
+        if (args.target_id === null) return { target_id: null };
         const target = numberOrNull(args.target_id);
         return target === null ? null : { target_id: target };
       },
@@ -43,6 +44,6 @@ export const HUNTER_ROLE_PROFILE: RoleProfile = {
       return null;
     }
     const target = pickAliveNotSelf();
-    return target !== null ? { name: "shoot", args: { target_id: target } } : null;
+    return { name: "shoot", args: { target_id: target } };
   },
 };

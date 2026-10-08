@@ -4,3 +4,4 @@ export * from "./board";
 export * from "./actions";
 export * from "./events";
 export * from "./results";
+export * from "./deaths";

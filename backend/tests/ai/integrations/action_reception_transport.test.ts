@@ -14,8 +14,8 @@ import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_
 import { LlmObserver } from "../../../src/ai/agents/player/player_observer";
 import { getDefaultToolCallRepairRegistry, getDefaultToolSpecRegistry, getDefaultRoleCatalog, getDefaultTargetHintRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
-import { COMPONENT, Camp, Phase, Role, type ActionRequest, type RoleComponent } from "../../../src/core";
-import { getWitchState } from "../../../src/game/mechanisms/roles/private_state";
+import { COMPONENT, Camp, DeathCause, Phase, Role, type ActionRequest, type RoleComponent } from "../../../src/core";
+import { getHunterState, getWitchState } from "../../../src/game/mechanisms/roles/private_state";
 import type { ChatModelClient, ToolLoopCallbacks, ToolLoopStepTrace } from "../../../src/ai/integrations/llm/transport";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
@@ -251,6 +251,32 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual SDK/MCP r
     expect(result.action).toEqual({ name: "use_potion", args: { target_id: 9, potion_type: "heal" } }); expect(await pending.action).toEqual(result.action);
     expect(getWitchState(sdk.world.getComponent<RoleComponent>(6, COMPONENT.Role))!.heal).toBe(1);
     expect(getWitchState(acp.world.getComponent<RoleComponent>(6, COMPONENT.Role))!.heal).toBe(1);
+    if (locale === "en") expect(JSON.stringify(mcp)).not.toMatch(/\p{Script=Han}/u);
+  } finally { registry.close(); await client.close(); await control.close({ force: true }); server.stop(true); }
+});
+
+for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual SDK HTTP and MCP accept explicit empty gun after rejecting an invalid target`, async () => {
+  const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }), acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
+  for (const game of [sdk, acp]) game.world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive = false;
+  const input: ActionRequest = { actorId: 7, phase: Phase.Day, allowedTools: ["shoot"], context: { day: 1, stage: "hunter_shot", trigger: "on_death", death_phase: Phase.Night, death_sources: [DeathCause.WolfKill], visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } };
+  const actions = [{ turn_id: "t1", action: "shoot", arguments: { target_id: 999 } }, { turn_id: "t1", action: "shoot", arguments: { target_id: null } }, { turn_id: "t1", action: "shoot", arguments: { target_id: 1 } }];
+  const server = Bun.serve({ hostname: "127.0.0.1", port: 0, async fetch(incoming) {
+    await incoming.json();
+    return Response.json({ id: "empty-gun", object: "chat.completion", created: 1, model: "synthetic", choices: [{ index: 0, finish_reason: "tool_calls", message: { role: "assistant", content: null, tool_calls: actions.map((args, index) => ({ id: `call-${index}`, type: "function", function: { name: "submit_action", arguments: JSON.stringify(args) } })) } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
+  } });
+  const registry = new AcpTurnRegistry(acp.world), control = new WerewolfMcpControlServer(registry), client = new Client({ name: "empty-gun", version: "1.0.0" });
+  try {
+    const config = await control.start(process.execPath, [path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts")]);
+    control.bindSession("empty-gun"); const pending = registry.openTurn(input, "empty-gun");
+    await client.connect(new StdioClientTransport({ command: config.command, args: config.args, env: Object.fromEntries(config.env.map(item => [item.name, item.value])) }));
+    const receipts: unknown[] = [];
+    const result = await sdkLoop(sdk.world, trace => receipts.push(...trace.flatMap(step => step.toolCalls.map(call => JSON.parse(call.toolResult))))).run(new AiSdkClient({ apiKey: "synthetic-only", baseURL: `${server.url.origin}/v1`, model: "synthetic" }), input, [{ role: "user", content: "Choose a legal target or explicitly pass." }], 2000, "t1");
+    const mcp: any[] = [];
+    for (const arguments_ of actions) mcp.push((await client.callTool({ name: "submit_action", arguments: arguments_ })).structuredContent);
+    expect(receipts).toEqual(mcp); expect(mcp.map(receipt => receipt.ok ? "accepted" : receipt.error)).toEqual(["shoot_target", "accepted", "turn_not_open_or_session_invalid"]);
+    expect(result.action).toEqual({ name: "shoot", args: { target_id: null } }); expect(await pending.action).toEqual(result.action);
+    expect(getHunterState(sdk.world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot).toBe(true);
+    expect(getHunterState(acp.world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot).toBe(true);
     if (locale === "en") expect(JSON.stringify(mcp)).not.toMatch(/\p{Script=Han}/u);
   } finally { registry.close(); await client.close(); await control.close({ force: true }); server.stop(true); }
 });

@@ -8,7 +8,7 @@ const shootSchema = {
   parameters: {
     type: "object",
     properties: {
-      target_id: { type: "number" },
+      target_id: { type: ["number", "null"] },
     },
     required: ["target_id"],
   },
@@ -24,14 +24,15 @@ export const HUNTER_TOOL_SPECS: ToolSpec[] = [
       parameters: {
         type: "object",
         properties: {
-          target_id: prop("number", "目标玩家编号。"),
+          target_id: prop(["number", "null"], "目标玩家编号。"),
         },
         description: "开枪参数。",
         required: ["target_id"],
         additionalProperties: false,
       },
     },
-    argHint: 'shoot args: {"target_id":number}',
+    argHint: 'shoot args: {"target_id":number|null}',
+    userPromptHintKey: "action.shoot.hint",
     gatewaySchema: shootSchema,
   },
 ];

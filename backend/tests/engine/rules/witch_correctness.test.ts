@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Camp, Phase, Role, StatusMark, WitchSelfHealRule, type ActionRequest, type GameEvent, type RoleComponent, type StatusMarksComponent } from "../../../src/core";
+import { COMPONENT, Camp, Phase, Role, StatusMark, DeathCause, WitchSelfHealRule, type ActionRequest, type GameEvent, type RoleComponent, type StatusMarksComponent } from "../../../src/core";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { getWitchState, getHunterState } from "../../../src/game/mechanisms/roles/private_state";
@@ -71,16 +71,16 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: an exhausted ant
 });
 
 // Literal rule table, not computed by the tested resolution algorithm.
-const cases: Array<[StatusMark[], StatusMark[]]> = [
-  [[], []], [[StatusMark.GuardMark], []], [[StatusMark.HealMark], []], [[StatusMark.WolfKillMark], [StatusMark.WolfKillMark]], [[StatusMark.PoisonMark], [StatusMark.PoisonMark]],
+const cases: Array<[StatusMark[], DeathCause[]]> = [
+  [[], []], [[StatusMark.GuardMark], []], [[StatusMark.HealMark], []], [[StatusMark.WolfKillMark], [DeathCause.WolfKill]], [[StatusMark.PoisonMark], [DeathCause.Poison]],
   [[StatusMark.GuardMark, StatusMark.HealMark], []], [[StatusMark.GuardMark, StatusMark.WolfKillMark], []], [[StatusMark.HealMark, StatusMark.WolfKillMark], []],
-  [[StatusMark.GuardMark, StatusMark.PoisonMark], [StatusMark.PoisonMark]], [[StatusMark.HealMark, StatusMark.PoisonMark], [StatusMark.PoisonMark]],
-  [[StatusMark.WolfKillMark, StatusMark.PoisonMark], [StatusMark.PoisonMark, StatusMark.WolfKillMark]],
-  [[StatusMark.GuardMark, StatusMark.HealMark, StatusMark.WolfKillMark], [StatusMark.WolfKillMark]],
-  [[StatusMark.GuardMark, StatusMark.HealMark, StatusMark.PoisonMark], [StatusMark.PoisonMark]],
-  [[StatusMark.GuardMark, StatusMark.WolfKillMark, StatusMark.PoisonMark], [StatusMark.PoisonMark]],
-  [[StatusMark.HealMark, StatusMark.WolfKillMark, StatusMark.PoisonMark], [StatusMark.PoisonMark]],
-  [[StatusMark.GuardMark, StatusMark.HealMark, StatusMark.WolfKillMark, StatusMark.PoisonMark], [StatusMark.PoisonMark, StatusMark.WolfKillMark]],
+  [[StatusMark.GuardMark, StatusMark.PoisonMark], [DeathCause.Poison]], [[StatusMark.HealMark, StatusMark.PoisonMark], [DeathCause.Poison]],
+  [[StatusMark.WolfKillMark, StatusMark.PoisonMark], [DeathCause.Poison, DeathCause.WolfKill]],
+  [[StatusMark.GuardMark, StatusMark.HealMark, StatusMark.WolfKillMark], [DeathCause.WolfKill]],
+  [[StatusMark.GuardMark, StatusMark.HealMark, StatusMark.PoisonMark], [DeathCause.Poison]],
+  [[StatusMark.GuardMark, StatusMark.WolfKillMark, StatusMark.PoisonMark], [DeathCause.Poison]],
+  [[StatusMark.HealMark, StatusMark.WolfKillMark, StatusMark.PoisonMark], [DeathCause.Poison]],
+  [[StatusMark.GuardMark, StatusMark.HealMark, StatusMark.WolfKillMark, StatusMark.PoisonMark], [DeathCause.Poison, DeathCause.WolfKill]],
 ];
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: all 16 knife/poison/guard/heal combinations retain the independent lethal sources and clear marks`, () => {
   for (const [input, expected] of cases) {
@@ -104,9 +104,10 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual guard+hea
     if (input.actorId === 10) return { name: "use_potion", args: { target_id: 7, potion_type: "poison" } };
     return new BaselineBotActionProvider(world).getAction(input);
   } }, 1);
-  expect(result.damage).toEqual({ deaths: [7], deathSources: { 7: [StatusMark.PoisonMark, StatusMark.WolfKillMark] } });
+  expect(result.damage).toEqual({ deaths: [7], deathSources: { 7: [DeathCause.Poison, DeathCause.WolfKill] } });
   let shots = 0;
-  await hunterDeathHook(world, [7], result.damage.deathSources, async () => { shots++; return 1; }, events);
+  world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive = false;
+  await hunterDeathHook(world, [7], result.damage.deathSources, async () => { shots++; return { kind: "shot", targetId: 1 }; }, events);
   expect(shots).toBe(0); expect(getHunterState(role(world, 7))!.canShoot).toBe(false);
   expect(getWitchState(role(world, 6))!.heal).toBe(0);
 });

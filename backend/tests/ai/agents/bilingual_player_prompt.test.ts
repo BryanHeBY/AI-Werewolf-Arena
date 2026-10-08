@@ -53,7 +53,9 @@ test("all base role identities, rules, private state and stages are bilingual an
     if (stage === "wolf_discussion") expect(en).toContain("does not end other wolves");
   }
   const hunter = english.policy.buildUser(request(6, "hunter_shot", ["shoot"]), { turnId: "t9", allowedTools: ["shoot"], actionSubmissionHint: "submit" });
-  expect(hunter).toContain("last living good special role prevents the shot"); // Current behavior; rule correction belongs to P4.
+  expect(hunter).toContain("The last good special role may still shoot");
+  expect(hunter).toContain("target_id=null");
+  expect(hunter).toContain("An invalid target does not spend the shot");
   for (const [target, expected] of [[2, "player 2"], [null, "is empty"], [undefined, "No definite"]] as const) {
     const req = request(5, "witch", ["use_potion"], target);
     const before = getWitchState(english.world.getComponent<RoleComponent>(5, COMPONENT.Role)!);

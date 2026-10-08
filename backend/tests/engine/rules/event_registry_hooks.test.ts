@@ -2,7 +2,7 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { AliveComponent } from "../../../src/core/domain/components/alive";
 import { RoleComponent } from "../../../src/core/domain/components/role";
-import { Role, StatusMark } from "../../../src/core/domain/model";
+import { Role, DeathCause } from "../../../src/core/domain/model";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 
@@ -46,8 +46,8 @@ describe("EventRegistry hooks", () => {
     const result = await eventRegistry.onDeath(
       world,
       [hunterId],
-      { [hunterId]: [StatusMark.PoisonMark] },
-      async () => targetId,
+      { [hunterId]: [DeathCause.Poison] },
+      async () => ({ kind: "shot" as const, targetId }),
       events,
     );
 
@@ -75,8 +75,8 @@ describe("EventRegistry hooks", () => {
     const result = await eventRegistry.onDeath(
       world,
       [hunterId],
-      { [hunterId]: [] },
-      async () => targetId,
+      { [hunterId]: [DeathCause.Exile] },
+      async () => ({ kind: "shot" as const, targetId }),
       events,
     );
 

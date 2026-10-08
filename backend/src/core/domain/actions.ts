@@ -1,6 +1,7 @@
 import type { MessageRef } from "@ai-werewolf-arena/game-text";
 import { ActionWindow, type EntityId, type Phase, type PotionType } from "./identity";
 import type { PlayerVisibleEvent } from "./events";
+import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
   report_bug: {
@@ -16,7 +17,7 @@ export interface ToolArgMap {
   self_destruct: { reason: string; confirm: boolean };
   speak: { text: string };
   vote: { target_id: EntityId | null; abstain: boolean };
-  shoot: { target_id: EntityId };
+  shoot: { target_id: EntityId | null };
   choose_direction: { direction: "clockwise" | "counter_clockwise" };
   run_for_sheriff: { run: boolean };
   vote_for_sheriff: { target_id: EntityId | null; abstain: boolean };
@@ -53,6 +54,7 @@ export interface ActionRequestExtras {
   wolf_target?: EntityId | null;
   trigger?: string;
   death_phase?: Phase;
+  death_sources?: DeathCause[];
   sheriff_candidates?: EntityId[];
   round?: number;
   max_rounds?: number;

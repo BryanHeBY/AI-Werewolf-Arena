@@ -7,7 +7,8 @@ import {
   GameResult,
   Phase,
   RuntimeSnapshot,
-  StatusMark,
+  DeathCause,
+  type DeathSources,
   WinCondition,
 } from "../../core/domain/model";
 import { ConditionRegistry } from "../../core/domain/registries/condition_registry";
@@ -234,9 +235,9 @@ export class PhaseManager {
     }
 
     if (votingResult.removed.length > 0) {
-      const sources: Record<number, StatusMark[]> = {};
+      const sources: DeathSources = {};
       for (const removedId of votingResult.removed) {
-        sources[removedId] = [];
+        sources[removedId] = [DeathCause.Exile];
       }
       await this.deathResolution.resolve(
         votingResult.removed,

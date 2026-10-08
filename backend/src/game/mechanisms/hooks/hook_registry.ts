@@ -1,5 +1,5 @@
 /** 文件说明：统一注册与执行投票/死亡相关机制钩子。 */
-import { EntityId, GameEvent, StatusMark } from "../../../core/domain/model";
+import { EntityId, GameEvent, type DeathSources, type DeathShotSelection } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 import { getDefaultRoleCatalog } from "../roles/catalog";
 
@@ -13,7 +13,7 @@ export interface VotedOutResult {
 /** 死亡钩子聚合结果。 */
 export interface DeathHookResult {
   extraDeaths: EntityId[];
-  extraDeathSources: Record<number, StatusMark[]>;
+  extraDeathSources: DeathSources;
 }
 
 /** 放逐钩子函数签名。 */
@@ -27,8 +27,8 @@ export type VotedOutHook = (
 export type DeathHook = (
   world: World,
   deadIds: EntityId[],
-  deathSources: Record<number, StatusMark[]>,
-  onHunterShoot: (hunterId: EntityId) => Promise<EntityId | null>,
+  deathSources: DeathSources,
+  onHunterShoot: (hunterId: EntityId) => Promise<DeathShotSelection>,
   events: GameEvent[],
 ) => Promise<DeathHookResult>;
 
@@ -70,8 +70,8 @@ export class HookRegistry {
   async onDeath(
     world: World,
     deadIds: EntityId[],
-    deathSources: Record<number, StatusMark[]>,
-    onHunterShoot: (hunterId: EntityId) => Promise<EntityId | null>,
+    deathSources: DeathSources,
+    onHunterShoot: (hunterId: EntityId) => Promise<DeathShotSelection>,
     events: GameEvent[],
   ): Promise<DeathHookResult> {
     const aggregated: DeathHookResult = {
