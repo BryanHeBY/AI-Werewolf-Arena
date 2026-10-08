@@ -67,7 +67,7 @@ export class ObservedBot implements ObservedPlayerStrategy {
       const target = pick(fresh.length ? fresh : permitted);
       if (target !== undefined) return { name: "check_identity", args: { target_id: target } };
     }
-    if(tools.includes("inspect_role")){if(this.style==="conservative"&&request.context.stage==="psychic")return null;const state=ownState.roleInspection,target=pick(others.filter(id=>state?.policy==="psychic"||!state?.history.some(report=>report.targetId===id)));if(target!==undefined)return{name:"inspect_role",args:{target_id:target}};}
+    if(tools.includes("inspect_role")){if(this.style==="conservative"&&(request.context.stage==="psychic"||request.context.stage==="mirror_girl"))return null;const state=ownState.roleInspection,target=pick(others.filter(id=>state?.policy==="psychic"||!state?.history.some(report=>report.targetId===id)));if(target!==undefined)return{name:"inspect_role",args:{target_id:target}};}
     if (tools.includes("use_potion")) {
       const witch = ownState.witch;
       const knife = request.context.wolf_target;

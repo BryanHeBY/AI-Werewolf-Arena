@@ -4,7 +4,7 @@ import { COMPONENT, Phase, Role, WinCondition, type GameEvent, type RoleComponen
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { ROLE_INSPECTION_STAGE, PSYCHIC_INSPECTION_STAGE } from "../../../src/game/mechanisms/roles/role_inspection/night_stages";
+import { ROLE_INSPECTION_STAGE, PSYCHIC_INSPECTION_STAGE, MIRROR_INSPECTION_STAGE } from "../../../src/game/mechanisms/roles/role_inspection/night_stages";
 import { hasRoleInspectionNightCommit } from "../../../src/game/mechanisms/roles/role_inspection/night_scope";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
@@ -12,17 +12,17 @@ import type { NightStageContext } from "../../../src/game/mechanisms/stages/nigh
 import { canGargoyleKnife, refreshGargoyleInheritance } from "../../../src/game/mechanisms/roles/gargoyle/inheritance";
 import { grantNightAbility } from "../../../src/game/mechanisms/roles/ability_changes";
 
-function fixture(kind: Role.Gargoyle | Role.Psychic) {
+function fixture(kind: Role.Gargoyle | Role.Psychic | Role.MirrorGirl) {
   const roles = [kind, Role.Wolf, Role.Seer, Role.Witch, Role.Villager, Role.Villager], config = { ...sixPlayerMvpConfig, winConditions: [WinCondition.SlaughterCity], roleSetups: [...new Set(roles)].map(role => ({ role, count: roles.filter(r => r === role).length })), selfDestruct: { enabledWindows: [] } };
   const game = bootstrapGame(config, { fixedRoles: roles });
-  return { ...game, ability: findNightAbility(game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!, "role_check")!, stage: kind === Role.Gargoyle ? ROLE_INSPECTION_STAGE : PSYCHIC_INSPECTION_STAGE };
+  return { ...game, ability: findNightAbility(game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!, "role_check")!, stage: kind === Role.Gargoyle ? ROLE_INSPECTION_STAGE : kind === Role.MirrorGirl ? MIRROR_INSPECTION_STAGE : PSYCHIC_INSPECTION_STAGE };
 }
 function context(game: ReturnType<typeof fixture>, events: GameEvent[], getAction: NightStageContext["actionProvider"]["getAction"]): NightStageContext {
   const requests = new GameActionRequestFactory(game.world, events, 1);
   return { world: game.world, events, roleCatalog: getDefaultRoleCatalog(), toolGateway: new ToolGateway(), isCurrent: () => true, currentDay: () => 1, actionProvider: { getAction }, makeRequest: (actorId, allowedTools, extra) => requests.create({ actorId, phase: Phase.Night, allowedTools, stage: extra.stage, requiresAction: extra.requiresAction ?? true, context: extra }), getAliveByRole: () => [], state: { wolfChatOrder: [], endedWolves: new Set(), wolfVotes: {}, wolfTarget: null, seerChecks: [], dreamLinks: [] } } as NightStageContext;
 }
 
-for (const kind of [Role.Gargoyle, Role.Psychic] as const) for (const point of ["await", "gateway"] as const) test(`${kind}/${point}: an in-place ability ID change cannot redirect a pending role inspection`, async () => {
+for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const) for (const point of ["await", "gateway"] as const) test(`${kind}/${point}: an in-place ability ID change cannot redirect a pending role inspection`, async () => {
   const game = fixture(kind), events: GameEvent[] = []; let calls = 0;
   const ctx = context(game, events, async request => { calls++; expect(request.context.ability_id).toBe("native:role_check"); if (point === "await") game.ability.id = "native:renamed"; return { name: "inspect_role", args: { target_id: 2 } }; });
   if (point === "gateway") { const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway); ctx.toolGateway.validateAndSanitize = (...args: Parameters<typeof validate>) => { const result = validate(...args); game.ability.id = "native:renamed"; return result; }; }
@@ -78,7 +78,7 @@ for (const point of ["await", "gateway", "label"] as const) test(`${point}: a gi
   expect(calls).toBe(1); expect(gift.uses).toBe(0); expect(gift.lastUsedDay).toBeNull(); expect(gift.state.history).toEqual([]); expect(events).toEqual([]); expect(canGargoyleKnife(role, game.world)).toBe(false); expect(hasRoleInspectionNightCommit(game.world, 1)).toBe(false);
 });
 
-for (const kind of [Role.Gargoyle, Role.Psychic] as const) test(`${kind}: a source owner changed in place revokes the old native request`, async () => {
+for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const) test(`${kind}: a source owner changed in place revokes the old native request`, async () => {
   const game = fixture(kind), events: GameEvent[] = []; let calls = 0;
   await game.stage.execute(context(game, events, async () => { calls++; if (game.ability.source.kind === "native") game.ability.source.role = Role.Wolf; return { name: "inspect_role", args: { target_id: 3 } }; }));
   expect(calls).toBe(1); expect(game.ability.uses).toBe(0); expect(game.ability.state.history).toEqual([]); expect(events).toEqual([]);

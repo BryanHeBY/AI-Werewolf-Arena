@@ -1,6 +1,7 @@
 import { EntityId, GameEvent, PlayerVisibleEvent } from "../../core/domain/model";
 import { World } from "../../core/domain/world";
 import { getDefaultAgentEventVisibilityRegistry } from "../mechanisms";
+import { projectAbilitySource } from "../mechanisms/roles/abilities";
 
 /**
  * 把领域事件投影为指定玩家可见的紧凑结构化事件。
@@ -31,8 +32,10 @@ export function buildAgentVisibleEvent(
 /** 只移除可由同一事件其余字段直接推导的冗余数据，不改动事实语义。 */
 function projectPayload(event: GameEvent): Record<string, unknown> {
   if (event.type === "ability_changed") {
-    const { sourceDisclosed, ...payload } = event.payload;
-    return structuredClone({ ...payload, source: sourceDisclosed ? payload.source : { kind: payload.source.kind } });
+    const payload = event.payload;
+    return structuredClone({ actorId: payload.actorId, abilityId: payload.abilityId, kind: payload.kind, operation: payload.operation,
+      source: projectAbilitySource(payload.source, payload.sourceDisclosed), startsOnDay: payload.startsOnDay,
+      ...(payload.expiresAfterDay === undefined ? {} : { expiresAfterDay: payload.expiresAfterDay }), maxUses: payload.maxUses });
   }
   if (event.type === "vote_summary") {
     const { tally: _derivedTally, ...payload } = event.payload;

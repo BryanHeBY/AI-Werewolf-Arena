@@ -63,7 +63,7 @@ export interface TurnConstraints {
   summary_message?: MessageRef;
 }
 
-export const ACTION_STAGES = [...Object.values(ActionWindow), ...Object.values(KnightDuelWindow), "wolf_discussion", "wolf_vote", "guard", "seer", "role_inspection", "psychic", "lucky", "miracle_merchant", "hybrid", "mechanical_mode", "mechanical_mimic", "mechanical_skill", "mechanical_attack", "witch", "dreamer", "wolf_beauty", "day_speech", "voting", "hunter_shot", "death_shot", "last_words", "sheriff_nomination", "sheriff_campaign_speech", "sheriff_withdraw", "sheriff_vote", "sheriff_choose_direction"] as const;
+export const ACTION_STAGES = [...Object.values(ActionWindow), ...Object.values(KnightDuelWindow), "wolf_discussion", "wolf_vote", "guard", "seer", "role_inspection", "psychic", "mirror_girl", "lucky", "miracle_merchant", "hybrid", "mechanical_mode", "mechanical_mimic", "mechanical_skill", "mechanical_attack", "witch", "dreamer", "wolf_beauty", "day_speech", "voting", "hunter_shot", "death_shot", "last_words", "sheriff_nomination", "sheriff_campaign_speech", "sheriff_withdraw", "sheriff_vote", "sheriff_choose_direction"] as const;
 export type ActionStage = typeof ACTION_STAGES[number];
 export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_shot"];
 

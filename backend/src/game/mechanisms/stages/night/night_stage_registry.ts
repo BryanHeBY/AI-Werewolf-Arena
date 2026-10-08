@@ -7,7 +7,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { allNightAbilities, type NightAbilityKind } from "../../roles/abilities";
 
-import {PSYCHIC_INSPECTION_STAGE} from "../../roles/role_inspection/night_stages";
+import {ROLE_INSPECTION_STAGE,PSYCHIC_INSPECTION_STAGE,MIRROR_INSPECTION_STAGE} from "../../roles/role_inspection/night_stages";
 import { LUCKY_ABILITY_STAGE } from "../../roles/miracle_merchant/lucky_stage";
 
 const abilityRole: Record<NightAbilityKind, Role> = { seer_check: Role.Seer,role_check:Role.Gargoyle, guard: Role.Guard, potion: Role.Witch, dream: Role.Dreamer };
@@ -22,14 +22,15 @@ export class NightStageRegistry {
 
   getStages(config: BoardConfig, world?: World): NightStageHandler[] {
     const roleSet = new Set<Role>(config.roleSetups.map((item) => item.role));
-    for (const role of [...roleSet]) for (const kind of this.roleCatalog.get(role)?.possibleNightAbilities ?? []) roleSet.add(abilityRole[kind]);
-    for (const id of world?.entityIds() ?? []) for (const ability of allNightAbilities(world!.getComponent<RoleComponent>(id, COMPONENT.Role))) roleSet.add(abilityRole[ability.kind]);
+    let hasRoleChecks = false;
+    for (const role of [...roleSet]) for (const kind of this.roleCatalog.get(role)?.possibleNightAbilities ?? []) { roleSet.add(abilityRole[kind]); if (kind === "role_check") hasRoleChecks = true; }
+    for (const id of world?.entityIds() ?? []) for (const ability of allNightAbilities(world!.getComponent<RoleComponent>(id, COMPONENT.Role))) { roleSet.add(abilityRole[ability.kind]); if (ability.kind === "role_check") hasRoleChecks = true; }
     const collected: NightStageHandler[] = [];
     for (const role of roleSet.values()) {
       const pack = this.roleCatalog.get(role)?.nightStages ?? [];
       collected.push(...pack);
     }
-    if(collected.some(stage=>stage.id==="role_inspection"))collected.push(PSYCHIC_INSPECTION_STAGE);
+    if(hasRoleChecks || collected.some(stage=>stage.id==="role_inspection"))collected.push(ROLE_INSPECTION_STAGE,PSYCHIC_INSPECTION_STAGE,MIRROR_INSPECTION_STAGE);
     if (world?.entityIds().some(id => allNightAbilities(world.getComponent<RoleComponent>(id, COMPONENT.Role)).some(ability => ability.activation === "lucky"))) collected.push(LUCKY_ABILITY_STAGE);
     // 去重并按显式优先级排序（priority 越小越先执行）。
     const dedup = new Map<string, NightStageHandler>();

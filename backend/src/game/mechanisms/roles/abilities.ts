@@ -1,15 +1,22 @@
-import type { EntityId, Role } from "../../../core/domain/model";
+import { Role, type EntityId, type EventPayloadMap } from "../../../core/domain/model";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import type { GuardState, SeerState, WitchState, DreamerState,RoleInspectionState } from "./private_state";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { World } from "../../../core/domain/world";
 
 export interface NightAbilityStates { seer_check: SeerState;role_check:RoleInspectionState; guard: GuardState; potion: WitchState; dream: DreamerState }
-export type RoleInspectionPolicy = "gargoyle" | "psychic";
+export type RoleInspectionPolicy = "gargoyle" | "psychic" | "mirror";
+export const ROLE_INSPECTION_POLICY_ROLES: Readonly<Record<RoleInspectionPolicy, Role>> = { gargoyle: Role.Gargoyle, psychic: Role.Psychic, mirror: Role.MirrorGirl };
 export function roleInspectionPolicy(state: RoleInspectionState): RoleInspectionPolicy {
   const policy = state.policy === undefined ? "gargoyle" : state.policy;
-  if (policy !== "gargoyle" && policy !== "psychic") throw new Error("role_inspection_policy_invalid");
+  if (policy !== "gargoyle" && policy !== "psychic" && policy !== "mirror") throw new Error("role_inspection_policy_invalid");
   return policy;
+}
+
+/** Reports and policy are player facts; future internal fields never implicitly enter the DTO. */
+export function projectRoleInspectionState(state: RoleInspectionState): RoleInspectionState {
+  return { ...(state.policy === undefined ? {} : { policy: roleInspectionPolicy(state) }), lastTarget: state.lastTarget, lastDay: state.lastDay,
+    history: state.history.map(report => ({ day: report.day, targetId: report.targetId, result: { kind: "role", role: report.result.role } })) };
 }
 
 export type NightAbilityKind = keyof NightAbilityStates;
@@ -18,6 +25,10 @@ export type AbilitySource =
   | { kind: "gift"; actorId: EntityId }
   | { kind: "copy"; actorId: EntityId; abilityId: string }
   | { kind: "transfer"; actorId: EntityId; abilityId: string };
+/** Reveal only the fields authorized by this source's declared kind. */
+export function projectAbilitySource(origin: EventPayloadMap["ability_changed"]["source"], disclosed: boolean): EventPayloadMap["ability_changed"]["source"] | { kind: AbilitySource["kind"] } {
+  return !disclosed ? { kind: origin.kind } : origin.kind === "native" ? { kind: origin.kind, role: origin.role } : origin.kind === "gift" ? { kind: origin.kind, actorId: origin.actorId } : { kind: origin.kind, actorId: origin.actorId, abilityId: origin.abilityId };
+}
 type NightAbilityUnion = {
   [P in NightAbilityKind]: {
     id: string; kind: P; state: NightAbilityStates[P]; source: AbilitySource; sourceDisclosed: boolean;
@@ -119,6 +130,9 @@ export type PlayerNightAbility = {
   [K in NightAbilityKind]: Omit<NightAbility<K>, "source" | "sourceDisclosed"> & { source: AbilitySource | { kind: AbilitySource["kind"] }; status: AbilityStatus }
 }[NightAbilityKind];
 export function projectNightAbility(ability: NightAbility, day: number): PlayerNightAbility {
-  const { sourceDisclosed, source, ...facts } = ability;
-  return structuredClone({ ...facts, source: sourceDisclosed ? source : { kind: source.kind }, status: abilityStatus(ability, day) }) as PlayerNightAbility;
+  const source = projectAbilitySource(ability.source, ability.sourceDisclosed);
+  return structuredClone({ id: ability.id, kind: ability.kind, state: ability.kind === "role_check" ? projectRoleInspectionState(ability.state) : ability.state,
+    source, startsOnDay: ability.startsOnDay, ...(ability.expiresAfterDay === undefined ? {} : { expiresAfterDay: ability.expiresAfterDay }), maxUses: ability.maxUses,
+    uses: ability.uses, lastUsedDay: ability.lastUsedDay, disabled: ability.disabled,
+    ...(ability.activation === undefined ? {} : { activation: ability.activation }), ...(ability.deathExpired === undefined ? {} : { deathExpired: ability.deathExpired }), status: abilityStatus(ability, day) }) as PlayerNightAbility;
 }

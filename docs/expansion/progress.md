@@ -11,7 +11,7 @@
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
 | P5 | 完成 | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md) |
 | P6 | 完成 | 五角色与三路审查闭环；16项verified，最终全量1176测试／542实际双语整局/Tape、103前端／42浏览器通过，见[阶段验收](reviews/p6-activation.md) |
-| P7 第三批 | 进行中：通灵师、机械狼、奇迹商人、混血儿 | [通灵师](reviews/p7-psychic.md)、[机械狼](reviews/p7-mechanical-wolf.md)、[奇迹商人](reviews/p7-miracle-merchant.md)、[混血儿](reviews/p7-hybrid.md)；20 verified/44 planned，混血最终受影响964/23966＋54实际完整局/Tape与40seed过；P7余魔镜少女、觉醒隐狼、黑市商人3项 |
+| P7 第三批 | 进行中：通灵师、机械狼、奇迹商人、混血儿、魔镜少女 | [通灵师](reviews/p7-psychic.md)、[机械狼](reviews/p7-mechanical-wolf.md)、[奇迹商人](reviews/p7-miracle-merchant.md)、[混血儿](reviews/p7-hybrid.md)、[魔镜少女](reviews/p7-mirror-girl.md)；21 verified/43 planned，Mirror最终受影响1065/34931＋新48及旧72实际完整局/Tape与40seed过；P7余觉醒隐狼、黑市商人2项 |
 | P8–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
@@ -357,3 +357,13 @@ front **127／1140**、type/build、实际Chromium **54**及中英真实PNG root
 Gargoyle/Psychic共用执行器绑定原ability ID/activation与来源ref/分类/owner，gateway和label callback后重验当前实例目标历史；Garg已付完成权限另保存原稳定actor/ID/private owner，正常闭夜消费后仍可出刀，撤权不回滚报告或资源。根6旧请求/重复历史反例、A已付ID意见及根5种paid撤权、R/T gifted→native伪装阻断依[独立审查](reviews/p7-role-inspection-scope.md)修正闭环。
 
 最终冻结源码受影响 **750/22358/53文件**，type/deps/boundaries/i18n与专有core72/494通过；包含既有72双语SDK/ACP/MCP/混合完整局、四板80受限seed与每局严格Tape、赠予小任务；front139/1224/type通过，呈现字段/前端源码未改，未重复无相关变化browser/PNG。R/A复查与L/D最终登记0残留，目录20/44不变，Mirror仍planned，后续完整启用与P7余3/P8–P10/64/22/长局/T6继续。
+
+## P7：魔镜少女完整交付
+
+第21项mirror_girl沿[规则卡](rules/awa-mirror-girl-v1.md#mirror_girl)/[实现边界](mirror-girl.md)增加独立600 mirror policy：optional、整局按实例稳定ID禁重查、无目标闭夜不花uses、真Good神/胜利身份不变；Garg180/原生查后刀及Psychic600/repeat保持独立。能力贡献与实际实例预收三handler、显式Prompt/Baseline/ObservedBot映射；fresh native/copy/gift空历史严格校数组结构，transfer保完整旧状态，重apply/复活不清native历史、转出不补发。
+
+A审发现完整ability/source与事件裁剪漏洞、假空history结构，已改元数据/state/history/result/source字段白名单和真正空数组校验；God原资料保留、玩家不继承未知内部字段。R逐盘核八人工oracle与末目标变历史/取消/原life/闭夜；king徽reason按直接放逐voted_out修字面预期。L/D实图确认验尽目标时所有人仍活，no_targets文案改为“没有可查验的存活目标”，原机器reason/原话不改。
+
+最终目录21 verified/43 planned源码的受影响 **1065/34931/95文件**、type/deps/boundaries/i18n通过；包含新48及旧Garg/Psy72实际本机两语SDK/ACP/MCP/混合完整局与每局严格Tape，两板40受限seed自然0拒绝/回退、真实报告/skip正分支无重查。front147/1278/type/build、双语实际PNG与最终实际Chromium **62全部通过**；三路最后登记见[审查记录](reviews/p7-mirror-girl.md)，首轮旧测试断言误改不是全browser通过证据。
+
+六/十二AWA board/game可加载，未冒觉醒隐狼原镜隐迷踪已交付；未读写用户configs/认证或调用外部模型。历史累计788人工本地局含本笔新48；本笔仅重验受影响120，不冒旧740全矩阵重跑。P7余觉醒隐狼/黑市商人及P8–P10、22机制全矩阵/长局/T6持续，完整目标尚未完成。

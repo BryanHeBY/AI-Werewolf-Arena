@@ -1,6 +1,6 @@
 # P7：魔镜少女实现边界
 
-规则以[冻结卡](rules/awa-mirror-girl-v1.md#mirror_girl)为准。当前角色仍 planned；本文件指导下一笔完整启用，不能作为已能配置运行的说明。
+规则以[冻结卡](rules/awa-mirror-girl-v1.md#mirror_girl)为准。角色实现与[功能验收](reviews/p7-mirror-girl.md)分别记录当前有限组合；觉醒隐狼的原镜隐迷踪联合板仍需其后续独立交付。
 
 ## 继续使用的职责
 
@@ -29,11 +29,20 @@ role/state/ID/policy/来源/生命与时钟在await、gateway与应用点复验�
 
 本人知道报告，不得到真camp、对象能力或无权历史。Garg/Psychic/Mirror同时持有时的规则提示与schema、SDK/ACP/MCP回执、DTO和事件由同一实例数据驱动。复盘God合法保完整事件；普通公开事件和其它玩家档不得接收本人查验。中英工具/规则/错误/角色标签/skip及历史展示均须完整。
 
+能力DTO元数据、role-check状态/history/result，以及来源/ability_changed玩家事件均为显式字段白名单；disclosed source只授已声明的kind字段，不自动授未来内部字段，God原对象仍完整保留。fresh Mirror赠予/复制强制四state key和真正空数组（非length仿对象或带附加字段数组）；transfer的合法非空完整历史保留。native reapply只认真正原生，不借唯一gift冒原生，retired原生不会被补发。
+
+## 当前示例
+
+- [六人板](../../configs.example/boards/six_player_mirror_girl.json)与[对局](../../configs.example/games/six_player_mirror_girl.json)：两普通狼、Mirror/Witch、两民，屠边、无警长。
+- [十二人板](../../configs.example/boards/twelve_player_mirror_girl.json)与[对局](../../configs.example/games/twelve_player_mirror_girl.json)：四普通狼、Mirror/Witch/Hunter/Guard、四民，屠边、警长。
+
+`roles.mirror_girl`只接受{}；游戏locale支持zh-CN/en，沿原agent/名字/人格绑定，不覆写用户配置。查验不造成死亡；没有未查存活目标的skip label明确表示“没有可查验的存活目标”，不误称场上无活人。
+
 ## 实施与提交
 
-1. 规则冻结文档经过R/A/L/D独立审查；Mirror仍不可选择，不改20 verified/44 planned。
+1. 规则冻结历史笔 `889bfc6` 经R/A/L/D独立审查；当时Mirror不可选择、目录20 verified/44 planned。当前完整功能与21/43状态见[验收](reviews/p7-mirror-girl.md)。
 2. 已有RoleInspection作用域缺口的独立fix：原ID与最终历史；Garg付费Completion原ID/native/private owner。反例先复现，旧Garg/Psychic真实局/seed/Tape回归；此笔不注册Mirror。
 3. 完整Mirror启用：policy、profile/阶段、规则/目标/Baseline/观察机器人、所有权/转移、两语、有限6/12配置、核心与跨角色/多policy判例、字面完整SDK/ACP/混合两语局与严格Tape、每板20seed正分支、unit/type/build/actual browser与PNG，独立审查闭环后标verified并提交。
 4. 觉醒隐狼后续启用笔交付原镜隐迷踪板的真实组合，冻结其当夜role伪装、夜末能力和复制资源，另做联合矩阵。不能提前用机械狼替代或把4普通狼的AWA样例称完整原板。
 
-原Source射程、R/A/T/L/D分工和最终门槛见[规则卡](rules/awa-mirror-girl-v1.md)与[delivery](delivery.md)。P7余魔镜少女/觉醒隐狼/黑市商人、P8–P10、64/22、长局与T6目标持续。
+支持范围、R/A/T/L/D分工和最终门槛见[规则卡](rules/awa-mirror-girl-v1.md)与[delivery](delivery.md)。P7余觉醒隐狼/黑市商人、P8–P10、64/22、长局与T6目标持续。

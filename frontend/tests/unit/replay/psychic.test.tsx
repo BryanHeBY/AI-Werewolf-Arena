@@ -15,5 +15,5 @@ for(const locale of ["zh-CN","en"] as const)for(const large of [false,true])test
   const final=buildReplaySnapshot(replay,replay.events.length-1);expect(final.players.filter(p=>p.isWinner).map(p=>p.playerId)).toEqual(large?[5,6,7,8,9,10,11,12]:[1,2]);expect(raw).toEqual(before);
 });
 for(const locale of ["zh-CN","en"] as const)test(`${locale}: pass reason is strict and unknown extensions never become a fabricated inspection`,()=>{
- const replay=readReplayDocument(skip),event=replay.events.find(e=>e.type==="role_inspection_skipped")!;expect(eventLabel({...event,payload:{...event.payload,reason:"unknown"}},locale)).toBe(locale==="en"?"Unknown":"未知");expect(eventLabel({...event,payload:{...event.payload,reason:"no_targets"}},locale)).toBe(locale==="en"?"Player 3 ends the inspection opportunity on night 2: No other living targets":"3号在第2夜结束查验机会：没有其它存活目标");
+ const replay=readReplayDocument(skip),event=replay.events.find(e=>e.type==="role_inspection_skipped")!;expect(eventLabel({...event,payload:{...event.payload,reason:"unknown"}},locale)).toBe(locale==="en"?"Unknown":"未知");expect(eventLabel({...event,payload:{...event.payload,reason:"no_targets"}},locale)).toBe(locale==="en"?"Player 3 ends the inspection opportunity on night 2: No eligible living targets":"3号在第2夜结束查验机会：没有可查验的存活目标");
 });

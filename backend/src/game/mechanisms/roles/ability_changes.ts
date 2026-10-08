@@ -33,6 +33,8 @@ function installAbility(world: World, actorId: EntityId, ability: NightAbility, 
   const input = ability;
   if(input.kind==="role_check")roleInspectionPolicy(input.state);
   const source = input.source;
+  if (input.kind === "role_check" && roleInspectionPolicy(input.state) === "mirror" && source.kind !== "transfer" &&
+      (Object.keys(input.state).sort().join() !== "history,lastDay,lastTarget,policy" || input.state.lastTarget !== null || input.state.lastDay !== null || !Array.isArray(input.state.history) || input.state.history.length !== 0 || Object.keys(input.state.history).length !== 0 || input.uses !== 0 || input.lastUsedDay !== null || input.disabled)) throw new Error("ability_mirror_initial_state_invalid");
   if (source.kind === "native") throw new Error("ability_grant_source_invalid");
   const role = roleOf(world, actorId);
   if (!/^[a-z][a-z0-9:_-]{0,127}$/.test(input.id) || input.id.startsWith("native:") ||

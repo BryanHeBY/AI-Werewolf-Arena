@@ -3,7 +3,7 @@ import { EntityId, WitchSelfHealRule } from "../../../core/domain/model";
 import { RoleComponent } from "../../../core/domain/components/role";
 import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
 import type { ExileFeedback } from "../../../core/domain/events";
-import { findNightAbility, installNativeAbility } from "./abilities";
+import { findNightAbility, installNativeAbility, type RoleInspectionPolicy } from "./abilities";
 
 const PRIVATE_STATE_KEYS = {
   witch: "witch",
@@ -50,7 +50,7 @@ export interface WolfBeautyState { targetId: EntityId | null; lastActedDay: numb
 export interface BearState { history:Array<{day:number;roared:boolean}> }
 export interface HiddenWolfState {hasInheritedKnife:boolean}
 export interface GargoyleState {hasInheritedKnife:boolean}
-export interface RoleInspectionState {policy?: "gargoyle" | "psychic";lastTarget:EntityId|null;lastDay:number|null;history:Array<{day:number;targetId:EntityId;result:Extract<InspectionResult,{kind:"role"}>}>}
+export interface RoleInspectionState {policy?: RoleInspectionPolicy;lastTarget:EntityId|null;lastDay:number|null;history:Array<{day:number;targetId:EntityId;result:Extract<InspectionResult,{kind:"role"}>}>}
 
 /** 白痴私有状态。 */
 export interface IdiotState {

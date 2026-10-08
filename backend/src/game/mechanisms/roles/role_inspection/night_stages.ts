@@ -9,7 +9,7 @@ import { beginRoleInspectionNight, recordRoleInspectionCompletion, recordRoleIns
 import { roleInspectionTargets } from "./rules";
 import { captureNightAbilityScope } from "../ability_scope";
 
-function finishPsychic(ctx: NightStageContext, actorId: number, ability: NightAbility<"role_check">, day: number, reason: "passed" | "no_targets"): void {
+function finishOptionalInspection(ctx: NightStageContext, actorId: number, ability: NightAbility<"role_check">, day: number, reason: "passed" | "no_targets"): void {
   recordNightAbilityUse(ability, day, false);
   ctx.events.push({ timestamp: Date.now(), type: "role_inspection_skipped", payload: { actorId, ...(ability.source.kind === "native" ? {} : { abilityId: ability.id }), day, reason } });
   recordRoleInspectionNightCommit(ctx.world, day, ctx.isCurrent);
@@ -29,7 +29,7 @@ async function executeInspections(ctx: NightStageContext, policy: RoleInspection
     const current = () => scope.isEligible() && getGargoyleState(role) === gargoyleState && roleInspectionPolicy(state) === policy &&
       ability.source === source && source.kind === sourceKind && (source.kind === "native" ? source.role : source.actorId) === sourceOwner &&
       (source.kind === "copy" || source.kind === "transfer" ? source.abilityId : undefined) === sourceAbilityId;
-    const exhausted = () => policy === "gargoyle" ? recordRoleInspectionCompletion(ctx.world, actorId, day, ability, ctx.isCurrent) : finishPsychic(ctx, actorId, ability, day, "no_targets");
+    const exhausted = () => policy === "gargoyle" ? recordRoleInspectionCompletion(ctx.world, actorId, day, ability, ctx.isCurrent) : finishOptionalInspection(ctx, actorId, ability, day, "no_targets");
     if (!current()) continue;
     if (!roleInspectionTargets(ctx.world, actorId, state).length) { exhausted(); continue; }
     let completed = false;
@@ -40,9 +40,9 @@ async function executeInspections(ctx: NightStageContext, policy: RoleInspection
         return [id, { target, version: aliveLifeVersion(target) }] as const;
       }));
       if (!targets.size) { exhausted(); completed = true; break; }
-      const action = await ctx.actionProvider.getAction(ctx.makeRequest(actorId, ["inspect_role"], { stage: policy === "gargoyle" ? "role_inspection" : "psychic", requiresAction: policy === "gargoyle", ability_id: abilityId, ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}) }));
+      const action = await ctx.actionProvider.getAction(ctx.makeRequest(actorId, ["inspect_role"], { stage: policy === "gargoyle" ? "role_inspection" : policy === "mirror" ? "mirror_girl" : "psychic", requiresAction: policy === "gargoyle", ability_id: abilityId, ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}) }));
       if (!current()) break;
-      if (action === null && policy === "psychic") { finishPsychic(ctx, actorId, ability, day, "passed"); completed = true; break; }
+      if (action === null && policy !== "gargoyle") { finishOptionalInspection(ctx, actorId, ability, day, "passed"); completed = true; break; }
       if (action?.name !== "inspect_role") continue;
       const validated = ctx.toolGateway.validateAndSanitize(ctx.world, actorId, action, { phase: Phase.Night, day, abilityId });
       if (!current() || !validated.ok || validated.sanitizedCall?.name !== "inspect_role") continue;
@@ -66,3 +66,5 @@ async function executeInspections(ctx: NightStageContext, policy: RoleInspection
 }
 export const ROLE_INSPECTION_STAGE: NightStageHandler = { id: "role_inspection", priority: 180, execute: ctx => executeInspections(ctx, "gargoyle") };
 export const PSYCHIC_INSPECTION_STAGE: NightStageHandler = { id: "psychic_inspection", priority: 600, execute: ctx => executeInspections(ctx, "psychic") };
+
+export const MIRROR_INSPECTION_STAGE: NightStageHandler = { id: "mirror_inspection", priority: 600, execute: ctx => executeInspections(ctx, "mirror") };

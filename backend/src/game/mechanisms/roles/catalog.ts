@@ -25,6 +25,7 @@ import { MECHANICAL_WOLF_ROLE_PROFILE } from "./mechanical_wolf/profile";
 import { MIRACLE_MERCHANT_ROLE_PROFILE } from "./miracle_merchant/profile";
 
 import { HYBRID_ROLE_PROFILE } from "./hybrid/profile";
+import { MIRROR_GIRL_ROLE_PROFILE } from "./mirror_girl/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   WOLF_ROLE_PROFILE,
@@ -41,6 +42,7 @@ const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   MECHANICAL_WOLF_ROLE_PROFILE,
   MIRACLE_MERCHANT_ROLE_PROFILE,
   HYBRID_ROLE_PROFILE,
+  MIRROR_GIRL_ROLE_PROFILE,
   VILLAGER_ROLE_PROFILE,
   SEER_ROLE_PROFILE,
   GUARD_ROLE_PROFILE,

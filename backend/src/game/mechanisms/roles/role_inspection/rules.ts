@@ -22,6 +22,6 @@ export const validateRoleInspection: ToolRule = ({ world, actorId, role, day, ph
   if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
   if (toolCall.name !== "inspect_role") return { code: RuleError.ToolMismatch };
   if (toolCall.args.target_id === actorId || !isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.RoleInspectTarget };
-  if (roleInspectionPolicy(ability.state) === "gargoyle" && ability.state.history.some(report => report.targetId === toolCall.args.target_id)) return { code: RuleError.RoleInspectRepeat };
+  if (roleInspectionPolicy(ability.state) !== "psychic" && ability.state.history.some(report => report.targetId === toolCall.args.target_id)) return { code: RuleError.RoleInspectRepeat };
   return null;
 };

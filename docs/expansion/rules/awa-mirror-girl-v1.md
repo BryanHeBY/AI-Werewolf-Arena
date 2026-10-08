@@ -1,6 +1,6 @@
 # AWA Mirror Girl 1.0.0 规则卡
 
-规则集 `awa_classic` 1.0.0；ID `mirror_girl`，魔镜少女／Mirror Girl；核验日期2026-10-09。本卡冻结后续实现要求；当前仍 planned，不因文档可读而成为可运行角色。
+规则集 `awa_classic` 1.0.0；ID `mirror_girl`，魔镜少女／Mirror Girl；核验日期2026-10-09。本卡对应有限AWA组合的角色实现，[功能验收](../reviews/p7-mirror-girl.md)记录实际范围；不把未交付的觉醒隐狼原板冒称已支持。
 
 ## 来源与版本边界
 
