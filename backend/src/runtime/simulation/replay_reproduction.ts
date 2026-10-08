@@ -173,6 +173,7 @@ export async function replayReproduction(input: unknown, recordRoot: string, dis
       provider.close();
       try { recorder.flush(context.phaseManager.getEvents()); } catch (error) { failures.push(error); }
       try { summary = await manager.finalize({ endedAtIso: new Date().toISOString(), winner: context.phaseManager.getSnapshot().result?.winner ?? null,
+        ...(context.phaseManager.getSnapshot().result ? { gameResult: context.phaseManager.getSnapshot().result! } : {}),
         finishReason: failures.length ? "runtime_error" : record.termination!.reason,
         players: captureCheckpoint(context.world, context.phaseManager.getSnapshot(), 0, true, 0).players.map(player => ({ player_id: player.id, name: player.name, role: player.role, camp: player.camp, alive: player.alive })),
       }); } catch (error) { failures.push(error); }

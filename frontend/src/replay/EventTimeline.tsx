@@ -6,6 +6,7 @@ import { phaseName, stageName } from "./replay-localization";
 interface EventTimelineProps {
   events: ReplayEvent[];
   locale: Locale;
+  playerIds: readonly number[];
   activeEventSeq: number | null;
   focusedPlayerId: number | null;
   onJumpTo: (index: number) => void;
@@ -15,6 +16,7 @@ interface EventTimelineProps {
 export function EventTimeline({
   events,
   locale,
+  playerIds,
   activeEventSeq,
   focusedPlayerId,
   onJumpTo,
@@ -51,7 +53,7 @@ export function EventTimeline({
                 <span>#{event.seq} · {phaseName(event.phase, locale)}</span>
                 <span>{stageName(event.stage ?? event.type, locale)}</span>
               </div>
-              <p>{eventLabel(event, locale)}</p>
+              <p>{eventLabel(event, locale, playerIds)}</p>
             </div>
           </button>
         ))}

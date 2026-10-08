@@ -1,4 +1,5 @@
-import { text, type Locale } from "@ai-werewolf-arena/game-text";
+import { readVictoryResult } from "@ai-werewolf-arena/replay-contract";
+import { text, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, type Locale } from "@ai-werewolf-arena/game-text";
 /** 文件说明：事件 -> 脚本回放文本/终端文本渲染注册表。 */
 import { GameEvent } from "../../../core/domain/model";
 import {
@@ -24,6 +25,17 @@ import {
   SHERIFF_SCRIPT_LIVE_HANDLERS,
 } from "../sheriff/event_presenters";
 import { getDefaultTextLocalizationRegistry } from "../shared/text_localization_registry";
+
+function resultLabel(payload: unknown, locale: Locale, key: "console.judge.result" | "console.live.result"): string {
+  if (payload && typeof payload === "object" && (Object.hasOwn(payload, "outcome") || Object.hasOwn(payload, "decidedAt"))) {
+    try {
+      const decision = readVictoryResult(payload);
+      return `${text(locale, "victory.finished", { result: outcomeLabel(decision.outcome, locale), reason: getDefaultTextLocalizationRegistry().gameOverReason(decision.reason, locale) })} · ${outcomeWinnersLabel(decision.outcome, locale)} · ${victoryPointLabel(decision.decidedAt, locale)}`;
+    } catch { return text(locale, "replay.unknown"); }
+  }
+  const old = payload as { winner?: string | null; reason?: string };
+  return text(locale, key, { winner: getDefaultTextLocalizationRegistry().winnerName(old.winner ?? "", locale), reason: getDefaultTextLocalizationRegistry().gameOverReason(old.reason ?? "", locale) });
+}
 
 const CHAT_HANDLERS: ScriptChatLineHandlers = {
   day_speech: (event, locale = "zh-CN") => text(locale, "console.chat.day", { actor: event.payload.actorId, speech: event.payload.text }),
@@ -51,7 +63,7 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
   sheriff_badge_transferred: (event, locale = "zh-CN") => text(locale, "console.judge.badge_transfer", { from: event.payload.fromId, to: event.payload.toId }),
   sheriff_badge_destroyed: (event, locale = "zh-CN") => text(locale, "console.judge.badge_destroy", { target: event.payload.targetId }),
   wolf_self_destruct: (event, locale = "zh-CN") => text(locale, "console.judge.blast", { actor: event.payload.wolfId }),
-  game_over: (event, locale = "zh-CN") => text(locale, "console.judge.result", { winner: getDefaultTextLocalizationRegistry().winnerName(event.payload.winner ?? "", locale), reason: getDefaultTextLocalizationRegistry().gameOverReason(event.payload.reason ?? "", locale) }),
+  game_over: (event, locale = "zh-CN") => resultLabel(event.payload, locale, "console.judge.result"),
   ...LAST_WORDS_SCRIPT_JUDGE_HANDLERS, ...IDIOT_SCRIPT_JUDGE_HANDLERS, ...HUNTER_SCRIPT_JUDGE_HANDLERS, ...SHERIFF_SCRIPT_JUDGE_HANDLERS,
 };
 
@@ -79,7 +91,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
   ability_changed: (event, printPrivateEvents, locale = "zh-CN") => printPrivateEvents ? [{ kind: "private", text: text(locale, "ability.change", { actor: event.payload.actorId, id: event.payload.abilityId, kind: text(locale, `ability.kind.${event.payload.kind}`), operation: text(locale, `ability.operation.${event.payload.operation}`) }) }] : [],
   god_private_game_info: (event, _private, locale = "zh-CN") => [{ kind: "god", text: text(locale, "console.live.initial", { roles: event.payload.players.map(item => `${item.seat}:${getDefaultTextLocalizationRegistry().roleName(item.role, locale)}`).join(", ") }) }],
   day_speech: (event, _private, locale = "zh-CN") => [{ kind: "system", text: text(locale, "console.live.day", { actor: event.payload.actorId, speech: event.payload.text }) }],
-  game_over: (event, _private, locale = "zh-CN") => [{ kind: "god", text: text(locale, "console.live.result", { winner: getDefaultTextLocalizationRegistry().winnerName(event.payload.winner ?? "", locale), reason: getDefaultTextLocalizationRegistry().gameOverReason(event.payload.reason ?? "", locale) }) }],
+  game_over: (event, _private, locale = "zh-CN") => [{ kind: "god", text: resultLabel(event.payload, locale, "console.live.result") }],
   ...WOLF_SCRIPT_LIVE_HANDLERS, ...SEER_SCRIPT_LIVE_HANDLERS, ...GUARD_SCRIPT_LIVE_HANDLERS, ...WITCH_SCRIPT_LIVE_HANDLERS, ...LAST_WORDS_SCRIPT_LIVE_HANDLERS, ...SHERIFF_SCRIPT_LIVE_HANDLERS,
 };
 

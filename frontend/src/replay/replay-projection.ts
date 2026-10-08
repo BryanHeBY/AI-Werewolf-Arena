@@ -1,4 +1,5 @@
-import type { ReplayDocument, ReplayEvent } from "@ai-werewolf-arena/replay-contract";
+import { readVictoryResult, type ReplayDocument, type ReplayEvent } from "@ai-werewolf-arena/replay-contract";
+import type { SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
 
 export interface ReplayPlayerState {
   playerId: number;
@@ -7,6 +8,7 @@ export interface ReplayPlayerState {
   camp: string;
   alive: boolean;
   isSheriff: boolean;
+  isWinner: boolean;
 }
 
 export interface ReplaySnapshot {
@@ -14,6 +16,7 @@ export interface ReplaySnapshot {
   players: ReplayPlayerState[];
   day: number;
   phase: string;
+  decision: SealedVictoryResult | null;
 }
 
 function numberValue(value: unknown): number | null {
@@ -35,8 +38,10 @@ export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number):
     camp: player.camp,
     alive: true,
     isSheriff: false,
+    isWinner: false,
   }]));
   const lastIndex = Math.min(Math.max(eventIndex, 0), replay.events.length - 1);
+  let decision: SealedVictoryResult | null = null;
 
   const markDead = (playerId: number | null) => {
     if (playerId !== null && states.has(playerId)) states.get(playerId)!.alive = false;
@@ -44,6 +49,13 @@ export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number):
 
   for (const event of replay.events.slice(0, lastIndex + 1)) {
     const payload = event.payload;
+    if (event.type === "game_over" && Object.hasOwn(payload, "outcome")) {
+      try {
+        decision = readVictoryResult(payload, [...states.keys()]);
+        const winners = decision.outcome.kind === "victory" ? decision.outcome.winningPlayerIds : [];
+        for (const player of states.values()) player.isWinner = winners.includes(player.playerId);
+      } catch { /* Malformed explicit facts do not imply winner membership. */ }
+    }
     if (event.type === "night_resolved") {
       for (const playerId of numberArray(payload.deaths)) {
         markDead(playerId);
@@ -80,5 +92,6 @@ export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number):
     players: [...states.values()].sort((left, right) => left.playerId - right.playerId),
     day: event?.day ?? 0,
     phase: event?.phase ?? "night",
+    decision,
   };
 }

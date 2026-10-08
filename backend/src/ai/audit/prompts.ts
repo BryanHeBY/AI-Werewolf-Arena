@@ -7,6 +7,7 @@ export function auditSystemPrompt(locale: Locale = "zh-CN", initializing = false
     text(locale, "audit.prompt.claims"), text(locale, "audit.prompt.boundaries"),
     ...(initializing ? [text(locale, "audit.prompt.acp.init")] : [text(locale, "audit.prompt.read"), text(locale, "audit.prompt.submit")]),
     text(locale, "audit.prompt.evidence"),
+    text(locale, "audit.prompt.outcome"),
   ].join("\n");
 }
 

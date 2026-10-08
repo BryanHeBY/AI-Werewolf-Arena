@@ -202,6 +202,7 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
         const summaryInput = await replayManager.finalize({
           endedAtIso: new Date().toISOString(),
           winner: snapshot.result?.winner ?? null,
+          ...(snapshot.result ? { gameResult: snapshot.result } : {}),
           finishReason: failures.length ? "runtime_error"
             : snapshot.result?.reason ?? (timedOut ? "runtime_timeout" : "completed"),
           players: replayPlayers(context.world),

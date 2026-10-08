@@ -88,3 +88,38 @@ test("a completed replay with no winner differs from an in-progress replay", asy
   await page.getByLabel("显示语言", { exact: true }).selectOption("en");
   await expect(page.locator(".result-chip strong")).toHaveText("No winner");
 });
+
+for (const locale of ["zh-CN", "en"] as const) test(`${locale}: explicit personal and relationship victory stays visible for dead winners only at the terminal frame`, async ({ page }) => {
+  const victory = JSON.parse(readFileSync(new URL("../fixtures/victory.replay.json", import.meta.url), "utf8"));
+  victory.meta.locale = locale;
+  await page.route("**/api/replay", route => route.fulfill({ json: victory }));
+  await page.goto("/");
+  await expect(page.locator(".result-chip strong")).toContainText(locale === "en" ? "personal goal victory" : "个人目标胜利");
+  await expect(page.locator(".result-chip strong")).toContainText("scenario_pair");
+  await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+  await page.getByRole("button", { name: locale === "en" ? "Next event" : "下一事件", exact: true }).click();
+  await expect(page.locator(".seat-grid .winner")).toHaveCount(3);
+  await expect(page.getByTestId("composition-winner")).toHaveCount(3);
+  await expect(page.getByTestId("composition-victory")).toContainText(locale === "en" ? "Exile settled" : "放逐结算完成");
+  await expect(page.getByRole("button", { name: locale === "en" ? "Player 1 · 原名<Alpha>" : "1号 · 原名<Alpha>", exact: true })).toHaveClass(/dead.*winner-seat/);
+  await page.getByLabel(locale === "en" ? "Display language" : "显示语言", { exact: true }).selectOption(locale === "en" ? "zh-CN" : "en");
+  await expect(page.locator(".seat-grid .winner")).toHaveCount(3);
+  await expect(page.getByTestId("composition-event")).toHaveAttribute("data-event-seq", "2");
+});
+
+for (const locale of ["zh-CN", "en"] as const) test(`${locale}: malformed victory never invents an unknown winning player`, async ({ page }) => {
+  const victory = JSON.parse(readFileSync(new URL("../fixtures/victory.replay.json", import.meta.url), "utf8"));
+  victory.meta.locale = locale; delete victory.result.decision;
+  const outcome = { kind: "victory", primary: { kind: "individual", playerId: 999, goalId: "scenario_unknown", winningPlayerIds: [999] }, additional: [], winningPlayerIds: [999] };
+  victory.events[1].payload.outcome = outcome;
+  await page.route("**/api/replay", route => route.fulfill({ json: victory }));
+  await page.goto("/");
+  const unknown = locale === "en" ? "Unknown" : "未知";
+  await expect(page.locator(".result-chip strong")).toHaveText(unknown);
+  await expect(page.locator(".timeline .event p").last()).toHaveText(unknown);
+  await page.getByRole("button", { name: locale === "en" ? "Next event" : "下一事件", exact: true }).click();
+  await expect(page.locator(".current-event p")).toHaveText(unknown);
+  await expect(page.getByTestId("composition-event")).toHaveText(unknown);
+  await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+  await expect(page.getByTestId("composition-winner")).toHaveCount(0);
+});

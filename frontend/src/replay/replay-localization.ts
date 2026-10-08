@@ -1,5 +1,5 @@
-import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { roleName as sharedRoleName, term, text, dictionaries, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
+import { readVictoryResult, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { roleName as sharedRoleName, term, text, dictionaries, outcomeLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 
 export { type Locale };
 export function roleName(role: string, locale: Locale = "zh-CN"): string { return sharedRoleName(role, locale); }
@@ -19,8 +19,14 @@ export function resultReasonName(reason: string | null, locale: Locale = "zh-CN"
 }
 
 export function replayResultLabel(replay: ReplayDocument, locale: Locale): string {
+  if (replay.result.decision) return outcomeLabel(replay.result.decision.outcome, locale);
+  const explicitTerminal = [...replay.events].reverse().find(event => event.type === "game_over" && (Object.hasOwn(event.payload, "outcome") || Object.hasOwn(event.payload, "decidedAt")));
+  if (explicitTerminal) {
+    try { return outcomeLabel(readVictoryResult(explicitTerminal.payload, replay.players.map(player => player.player_id)).outcome, locale); }
+    catch { return text(locale, "replay.unknown"); }
+  }
   if (replay.result.winner) return campName(replay.result.winner, locale);
-  const ended = ["max_days_reached", "runtime_timeout", "runtime_error", "completed"].includes(replay.result.reason ?? "")
+  const ended = ["max_days_reached", "completed"].includes(replay.result.reason ?? "")
     || replay.events.some(event => event.type === "game_over" || event.type === "phase_changed" && event.payload.phase === "game_over");
   return text(locale, ended ? "replay.no_winner" : "replay.unfinished");
 }

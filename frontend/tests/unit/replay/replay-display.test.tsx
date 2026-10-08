@@ -108,8 +108,10 @@ test("null winner distinguishes terminal outcomes from an in-progress replay in 
     expect(replayResultLabel(replay, locale)).toBe(progress);
     expect(replayResultLabel({ ...replay, result: { winner: null, reason: "in_progress" } }, locale)).toBe(progress);
     expect(replayResultLabel({ ...replay, result: { winner: null, reason: "custom_reason" } }, locale)).toBe(progress);
-    for (const reason of ["max_days_reached", "runtime_timeout", "runtime_error"])
+    for (const reason of ["max_days_reached", "completed"])
       expect(replayResultLabel({ ...replay, result: { winner: null, reason } }, locale)).toBe(ended);
+    for (const reason of ["runtime_timeout", "runtime_error"])
+      expect(replayResultLabel({ ...replay, result: { winner: null, reason } }, locale)).toBe(progress);
     expect(replayResultLabel({ ...replay, events: [event("game_over", { winner: null })] }, locale)).toBe(ended);
     expect(replayResultLabel({ ...replay, events: [event("phase_changed", { phase: "game_over" })] }, locale)).toBe(ended);
   }

@@ -1,6 +1,7 @@
 import { isRecord, assertField, ReplayDocumentValidationError } from "./validation";
 export { ReplayDocumentValidationError } from "./validation";
-import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
+import { isLocale, type Locale, type SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
+import { readVictoryResult } from "./outcomes";
 import { legacyPhaseId, legacyStageId, legacyRoleId, legacyCampId, legacyResultReasonId } from "./legacy_aliases";
 export * from "./legacy_aliases";
 export const REPLAY_SCHEMA_VERSION = 2 as const;
@@ -38,6 +39,8 @@ export interface ReplayDocument {
   result: {
     winner: string | null;
     reason: string | null;
+    /** Explicit engine decision, distinct from execution finish reason. */
+    decision?: SealedVictoryResult;
   };
   players: Array<{
     player_id: number;
@@ -46,6 +49,21 @@ export interface ReplayDocument {
     name?: string;
   }>;
   events: ReplayEvent[];
+}
+
+/** Inspect explicit terminal data without executing getters during structuredClone. */
+function assertSerializedTerminal(value: object): void {
+  const pending: object[] = [value], seen = new Set<object>();
+  while (pending.length) {
+    const current = pending.pop()!;
+    if (seen.has(current)) continue;
+    seen.add(current);
+    for (const key of Reflect.ownKeys(current)) {
+      const descriptor = Object.getOwnPropertyDescriptor(current, key)!;
+      assertField("value" in descriptor && (descriptor.enumerable === true || Array.isArray(current) && key === "length"), "events.game_over.payload");
+      if (descriptor.value !== null && typeof descriptor.value === "object") pending.push(descriptor.value);
+    }
+  }
 }
 
 /** Validates the canonical, unfiltered document; event sequence numbers start at one. */
@@ -98,6 +116,21 @@ function assertReplayShape(value: unknown): asserts value is Omit<ReplayDocument
     assertField(typeof event.type === "string", `${path}.type`);
     assertField(isRecord(event.payload), `${path}.payload`);
   }
+  const decision = Object.getOwnPropertyDescriptor(value.result, "decision");
+  if (decision) {
+    assertField("value" in decision && decision.enumerable === true, "result.decision");
+    const parsed = readVictoryResult(decision.value, [...playerIds]);
+    assertField(parsed.winner === value.result.winner, "result.winner");
+  }
+  const explicit: SealedVictoryResult[] = [];
+  if (decision && "value" in decision) explicit.push(readVictoryResult(decision.value, [...playerIds]));
+  for (const event of value.events) {
+    if (event.type !== "game_over" || !isRecord(event.payload) || !Object.hasOwn(event.payload, "outcome") && !Object.hasOwn(event.payload, "decidedAt")) continue;
+    assertSerializedTerminal(event.payload);
+    try { explicit.push(readVictoryResult(event.payload, [...playerIds])); }
+    catch { /* Isolated malformed terminal facts remain raw unknown events. */ }
+  }
+  if (explicit.length > 1) assertField(explicit.every(item => JSON.stringify(item) === JSON.stringify(explicit[0])), "result.decision_terminal_mismatch");
 }
 
 /** Canonical v2 writer contract. Use readReplayDocument for archived documents. */
@@ -112,7 +145,11 @@ export function readReplayDocument(value: unknown): ReplayDocument {
   const version = value.schemaVersion;
   if (version !== undefined && version !== 1 && version !== REPLAY_SCHEMA_VERSION) throw new ReplayDocumentValidationError("unsupported_version", "schemaVersion");
   assertReplayShape(value);
-  if (version === REPLAY_SCHEMA_VERSION) return structuredClone(value) as ReplayDocument;
+  if (version === REPLAY_SCHEMA_VERSION) {
+    const result = structuredClone(value);
+    assertReplayDocument(result);
+    return result as ReplayDocument;
+  }
   const result = structuredClone(value) as ReplayDocument;
   result.schemaVersion = REPLAY_SCHEMA_VERSION;
   result.players = result.players.map(player => ({ ...player, role: legacyRoleId(player.role), camp: legacyCampId(player.camp) }));
@@ -130,6 +167,7 @@ export function readReplayDocument(value: unknown): ReplayDocument {
     } : player);
     return { ...event, phase: legacyPhaseId(event.phase), ...(event.stage === undefined ? {} : { stage: legacyStageId(event.stage) }), payload };
   });
+  assertReplayDocument(result);
   return result;
 }
 

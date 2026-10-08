@@ -16,3 +16,4 @@ export type VictoryClaim = VictoryTarget & { winningPlayerIds: number[] };
 export type GameOutcome =
   | { kind: "victory"; primary: VictoryClaim; additional: VictoryClaim[]; winningPlayerIds: number[] }
   | { kind: "no_winner" };
+export interface SealedVictoryResult { winner: FactionId | null; reason: string; outcome: GameOutcome; decidedAt: VictoryPoint }

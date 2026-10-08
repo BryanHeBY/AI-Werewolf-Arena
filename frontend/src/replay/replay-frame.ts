@@ -1,5 +1,5 @@
 import { readReplayDocument, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { text } from "@ai-werewolf-arena/game-text";
+import { text, victoryPointLabel } from "@ai-werewolf-arena/game-text";
 import { formatReplayTime, validateReplayDisplay, DEFAULT_REPLAY_TIME_ZONE, type ReplayDisplayOptions } from "./replay-display";
 import { buildPresentationReplay } from "./replay-presentation";
 import { buildReplaySnapshot } from "./replay-projection";
@@ -26,8 +26,10 @@ export function buildReplayFrame(input: ReplayRenderInput, frame: number) {
     eventIndex, eventSeq: event?.seq ?? null, snapshot,
     dayPhase: text(locale, "replay.day_phase", { day: snapshot.day, phase: phaseName(snapshot.phase, locale) }),
     stage: event ? stageName(event.stage ?? event.type, locale) : text(locale, "replay.start"),
-    label: event ? eventLabel(event, locale) : text(locale, "replay.no_events"),
+    label: event ? eventLabel(event, locale, replay.players.map(player => player.player_id)) : text(locale, "replay.no_events"),
     time: formatReplayTime(event?.timestamp, input),
+    victory: snapshot.decision ? victoryPointLabel(snapshot.decision.decidedAt, locale) : null,
+    winnerLabel: text(locale, "victory.winner_badge"),
     players: snapshot.players.map(player => ({ ...player, roleLabel: roleName(player.role, locale), sheriffLabel: player.isSheriff ? text(locale, "replay.sheriff") : "" })),
   };
 }

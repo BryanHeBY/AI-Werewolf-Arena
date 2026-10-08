@@ -1,7 +1,7 @@
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：对局复盘记录结构类型定义。 */
-import { Camp, PlayerVisibleEvent, ToolCall } from "../core/domain/model";
+import { Camp, PlayerVisibleEvent, ToolCall, type GameResult } from "../core/domain/model";
 import type { RandomMetadata } from "../core/domain/random";
 
 /** 玩家回合行动模式。 */
@@ -25,6 +25,7 @@ export interface ReplayManifest {
   ended_at: string;
   winner: Camp | null;
   finish_reason: string;
+  game_result?: GameResult;
   players: ReplayManifestPlayer[];
   random?: RandomMetadata;
   files: {
@@ -144,6 +145,7 @@ export interface ReplayFinalizeMeta {
   endedAtIso: string;
   winner: Camp | null;
   finishReason: string;
+  gameResult?: GameResult;
   players: ReplayManifestPlayer[];
 }
 

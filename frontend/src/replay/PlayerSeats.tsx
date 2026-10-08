@@ -27,11 +27,12 @@ export function PlayerSeats({ players, locale, focusedPlayerId, onToggleFocus }:
             type="button"
             key={player.playerId}
             aria-label={`${text(locale, "replay.player", { id: player.playerId })}${player.name ? ` · ${player.name}` : ""}`}
-            className={`seat ${player.alive ? "alive" : "dead"} ${player.camp} ${focusedPlayerId === player.playerId ? "focused" : ""}`}
+            className={`seat ${player.alive ? "alive" : "dead"} ${player.isWinner ? "winner-seat" : ""} ${player.camp} ${focusedPlayerId === player.playerId ? "focused" : ""}`}
             onClick={() => onToggleFocus(player.playerId)}
           >
             <span className="seat-number">{player.playerId}</span>
             {player.isSheriff && <span className="sheriff">{text(locale, "replay.sheriff_short")}</span>}
+            {player.isWinner && <span className="winner">{text(locale, "victory.winner_badge")}</span>}
             {player.name && <span className="seat-name">{player.name}</span>}
             <strong>{roleName(player.role, locale)}</strong>
             <small>{campName(player.camp, locale)}</small>

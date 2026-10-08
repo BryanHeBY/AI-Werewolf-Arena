@@ -34,6 +34,7 @@ export function createReplayDocument(input: {
     result: {
       winner: input.manifest.winner,
       reason: input.manifest.finish_reason || null,
+      ...(input.manifest.game_result ? { decision: structuredClone(input.manifest.game_result) } : {}),
     },
     players: input.manifest.players.map(({ player_id, role, camp, name }) => ({
       player_id,

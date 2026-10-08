@@ -24,15 +24,17 @@ export function ReplayFrame({ input, frame }: { input: ReplayRenderInput; frame:
       const angle = (Math.PI * 2 * index / view.players.length) - Math.PI / 2;
       const left = 50 + Math.cos(angle) * 38;
       const top = 43 + Math.sin(angle) * 26;
-      return <div key={player.playerId} style={{ position: "absolute", left: `${left}%`, top: `${top}%`, transform: "translate(-50%, -50%)", width: 114, textAlign: "center", opacity: player.alive ? 1 : .35 }}>
+      return <div key={player.playerId} data-testid={player.isWinner ? "composition-winner" : undefined} style={{ position: "absolute", left: `${left}%`, top: `${top}%`, transform: "translate(-50%, -50%)", width: 114, textAlign: "center", opacity: player.alive ? 1 : player.isWinner ? .75 : .35 }}>
         <div style={{ width: 48, height: 48, margin: "0 auto 7px", display: "grid", placeItems: "center", borderRadius: "50%", border: `2px solid ${player.camp === "wolf" ? "#df7771" : "#75bbd7"}`, background: "#0d1620", fontSize: 22, fontWeight: 800 }}>{player.playerId}</div>
         {player.name && <div style={{ fontSize: 14, overflowWrap: "anywhere" }}>{player.name}</div>}
         <div style={{ fontSize: 15, fontWeight: 700 }}>{player.roleLabel}{player.sheriffLabel ? ` · ${player.sheriffLabel}` : ""}</div>
+        {player.isWinner && <div style={{ color: "#e4c67d", fontSize: 14 }}>{view.winnerLabel}</div>}
       </div>;
     })}
     <div style={{ position: "absolute", left: 92, right: 92, bottom: 62, padding: "20px 24px", borderRadius: 16, background: "rgba(6,10,17,.82)", border: "1px solid rgba(231,216,179,.14)", opacity: fade }}>
       <div style={{ color: "#e4c67d", fontSize: 14, letterSpacing: 2, marginBottom: 8 }}>{view.stage} · {view.time}</div>
       <div data-testid="composition-event" data-event-seq={view.eventSeq ?? ""} style={{ fontSize: 27, lineHeight: 1.35, fontWeight: 650 }}>{view.label}</div>
+      {view.victory && <div data-testid="composition-victory" style={{ marginTop: 8, color: "#e4c67d", fontSize: 18 }}>{view.victory}</div>}
     </div>
   </AbsoluteFill>;
 }

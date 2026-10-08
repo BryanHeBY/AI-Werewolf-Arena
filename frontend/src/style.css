@@ -89,3 +89,7 @@ h2 { margin-bottom: 0; font-size: 17px; letter-spacing: -.02em; }
 .frame-control { padding: 0 18px 14px; }
 .frame-control label { display: grid; gap: 8px; color: #b5c3d5; font-size: .8rem; }
 .frame-control input { width: 100%; accent-color: #e4c67d; }
+
+.winner { color: #e4c67d; font-size: .7rem; font-weight: 700; }
+.seat.dead.winner-seat { opacity: .75; }
+.result-chip { max-width: 420px; overflow-wrap: anywhere; }

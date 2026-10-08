@@ -203,3 +203,9 @@ v2四枚举、对应hooks与[]关闭实际接通；竞选前仅首日确实竞�
 独立Victory组件/profile初始声明，不从身份变化/能力复制自动改归属；成员含dead，三种primary/额外claim明确并集，真实camp人数与Good神民独立。WinDecision通过实际checkpoint过滤并由PhaseManager一次封盘，最终按当前归属重验，maxDays明确noWinner且终局事件恰好一次，state/event/外部读取隔离。内部Tape升级2，严格保存membership/outcome/point与共享执行decoder的source指纹；旧1拒版，[]显式无归属，安装与录制共用strictreader。
 
 [契约](victory-outcomes.md)、[三路审查](reviews/p4-g04-core.md)记录真实scope；初版full616/34154、修正人工16/100连repro28/228、front54/365/type过，最终full617/34160（含50真实完整局/Tape）通过，三路复查0剩余阻断。公共主档/reader、终端/前端/视频结果呈现与P4整体验收继续下一子批，57计划角色仍未启用。
+
+## P4 G04：公开胜利记录与双语展示
+
+manifest.game_result/public result.decision保存实际封盘，执行结束原因与判胜原因独立。shared reader检查字段／成员／投影／完整header-terminal一致性，返回副本再验，显式终局复制前拒getter及非枚举；plain坏JSON留raw但显示Unknown。终端、审计、工作台、timeline与frame共享中英formatter，全局roster一致验证，死亡获胜者保dead，终局前不提前标席位。旧档无名单不猜，未封盘运行失败为未结束。契约见[记录与展示](victory-record-display.md)，独立发现及复查见[审查](reviews/p4-g04-display.md)。
+
+最终后端release633／34433（含50实际本地完整局和逐局Tape）及smoke、前端67／539／types／build、实际Chromium10交互通过；中文PNG与英文1280×720／6秒H264视频目视正常。合成个人／关系fixture不宣称新角色已上线。G04代码与呈现交付；P4整阶段目录验证登记另笔收尾，57计划角色继续后续阶段。

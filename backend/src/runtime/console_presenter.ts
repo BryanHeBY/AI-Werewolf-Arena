@@ -1,5 +1,5 @@
 import { formatErrorDiagnostic } from "../utils/error_diagnostic";
-import { text, dictionaries, type MessageKey, type Locale } from "@ai-werewolf-arena/game-text";
+import { text, dictionaries, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, type MessageKey, type Locale } from "@ai-werewolf-arena/game-text";
 import { getDefaultScriptEventRenderRegistry } from "../game";
 import type { GameEvent, RuntimeSnapshot } from "../core";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
@@ -53,6 +53,10 @@ export function presentGameResult(input: {
     "ok",
   );
   log(`[run_game] events=${events.length} · ${text(input.locale ?? "zh-CN", "runtime.event_count")}`, "info");
+  if (snapshot.result) {
+    const locale = input.locale ?? "zh-CN";
+    log(`[result] ${outcomeLabel(snapshot.result.outcome, locale)} · ${outcomeWinnersLabel(snapshot.result.outcome, locale)} · ${victoryPointLabel(snapshot.result.decidedAt, locale)}`, "ok");
+  }
   if (input.printAllEvents) console.log(JSON.stringify(events, null, 2));
   if (input.printChat && !input.streamEvents) {
     for (const line of toChatLines(events, input.locale)) console.log(line);

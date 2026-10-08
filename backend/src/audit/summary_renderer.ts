@@ -42,6 +42,7 @@ export class AuditSummaryRenderer {
               session_id: manifest.session_id,
               board: manifest.board,
               winner: manifest.winner ?? "none",
+              ...(manifest.game_result ? { decision: structuredClone(manifest.game_result) } : {}),
               finish_reason: manifest.finish_reason,
               started_at: manifest.started_at,
               ended_at: manifest.ended_at,

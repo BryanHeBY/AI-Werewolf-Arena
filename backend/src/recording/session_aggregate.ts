@@ -1,4 +1,4 @@
-import { assertReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
+import { assertReplayPlayerView, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
 import { PlayerVisibleEvent } from "../core/domain/model";
 import {
   ReplayDebugReport,
@@ -206,6 +206,8 @@ export class ReplaySessionAggregate {
   }
 
   buildManifest(meta?: ReplayFinalizeMeta): ReplayManifest {
+    const decision = meta?.gameResult === undefined ? undefined : readVictoryResult(meta.gameResult, meta.players.map(player => player.player_id));
+    if (decision && decision.winner !== meta?.winner) throw new Error("replay_result_winner_mismatch");
     return {
       session_id: this.sessionMeta.sessionId,
       board: this.sessionMeta.board,
@@ -215,6 +217,7 @@ export class ReplaySessionAggregate {
       ended_at: meta?.endedAtIso ?? this.sessionMeta.startedAtIso,
       winner: meta?.winner ?? null,
       finish_reason: meta?.finishReason ?? "in_progress",
+      ...(decision ? { game_result: decision as ReplayManifest["game_result"] } : {}),
       players: meta?.players ?? [],
       files: {
         ...(this.reproductionEnabled ? { reproduction: "reproduction.json" } : {}),

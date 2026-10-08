@@ -23,6 +23,9 @@ test("shared audit prompts localize both modes without requesting actions during
     const initial = auditSystemPrompt(locale, true);
     expect(initial).toContain(locale === "en" ? "no turn_id is valid yet" : "尚无有效 turn_id");
     expect(initial).not.toContain(locale === "en" ? "First call get_audit_context" : "先调用 get_audit_context 读取当前任务");
+    expect(initial).toContain("session.decision");
+    expect(initial).toContain(locale === "en" ? "individual or relationship victory" : "个人或关系胜利");
+    expect(initial).toContain(locale === "en" ? "does not override a sealed victory" : "不覆盖已封盘胜利");
     for (const mode of ["inspect", "summarize"] as const) {
       const prompt = auditTurnPrompt("a7", mode, locale);
       expect(prompt).toContain("a7"); expect(prompt).toContain(mode);

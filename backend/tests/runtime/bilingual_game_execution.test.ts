@@ -112,6 +112,7 @@ async function runFixture(size: 6 | 12, alternate: boolean, kind: "llm" | "acp" 
     const alive = size === 6 ? alternate ? [2, 3, 6] : [2, 6] : alternate ? [6, 8, 9, 10, 11, 12] : [5, 6, 8, 9, 10, 11, 12];
     expect(manifest.players.filter((row: any) => row.alive).map((row: any) => row.player_id)).toEqual(alive);
     const replay = JSON.parse(await fs.readFile(path.join(directory, "replay.json"), "utf8")); assertReplayDocument(replay); expect(replay.meta.locale).toBe(locale);
+    expect(replay.result.decision).toEqual(result.snapshot.result); expect(manifest.game_result).toEqual(result.snapshot.result);
     if (window) {
       expect(replay.events.filter((event: any) => event.type === "wolf_self_destruct").map((event: any) => event.payload)).toEqual(window === ActionWindow.OnPreElection ? [{ wolfId: 1, window }] : [{ wolfId: 1, window }, { wolfId: 4, window }]);
       expect(replay.events.filter((event: any) => event.type === "night_resolved").map((event: any) => event.payload.deaths)).toEqual([[3], [5]]);

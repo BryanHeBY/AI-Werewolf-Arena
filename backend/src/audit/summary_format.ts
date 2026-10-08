@@ -1,5 +1,5 @@
 /** Shared Markdown presentation for agent summaries and deterministic fallback. */
-import { auditHeadings, term, text, type Locale } from "@ai-werewolf-arena/game-text";
+import { auditHeadings, term, text, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ReplayDebugReport, ReplayManifest } from "../recording/contracts";
 
 export function auditReportStats(reports: readonly ReplayDebugReport[]) {
@@ -15,10 +15,11 @@ export function auditSummaryHeader(manifest: ReplayManifest, reports: readonly R
   const headings = auditHeadings(locale); const stats = auditReportStats(reports);
   const fields: Array<[string, string | number]> = [
     [text(locale, "audit.field.board"), manifest.board],
-    [text(locale, "audit.field.winner"), manifest.winner ? term("camp_team", manifest.winner, locale) : text(locale, "common.none")],
+    [text(locale, "audit.field.winner"), manifest.game_result ? outcomeLabel(manifest.game_result.outcome, locale) : manifest.winner ? term("camp_team", manifest.winner, locale) : text(locale, "common.none")],
     [text(locale, "audit.field.reason"), term("reason", manifest.finish_reason, locale)],
     [text(locale, "audit.field.started"), manifest.started_at], [text(locale, "audit.field.ended"), manifest.ended_at ?? ""],
   ];
+  if (manifest.game_result) fields.push([text(locale, "victory.winner_badge"), outcomeWinnersLabel(manifest.game_result.outcome, locale)], [text(locale, "replay.final_result"), victoryPointLabel(manifest.game_result.decidedAt, locale)]);
   return [`# ${text(locale, "audit.title", { session: auditInline(manifest.session_id) })}`, "", `## ${headings.session}`,
     ...fields.map(([label, value]) => `- ${label}: ${auditInline(String(value))}`), "", `## ${headings.stats}`,
     `- ${text(locale, "audit.field.total")}: ${stats.total}`,

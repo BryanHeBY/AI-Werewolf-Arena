@@ -1,5 +1,5 @@
 import type { ReplayDocument, ReplayEvent } from "@ai-werewolf-arena/replay-contract";
-import { text } from "@ai-werewolf-arena/game-text";
+import { text, outcomeWinnersLabel, victoryPointLabel } from "@ai-werewolf-arena/game-text";
 import { formatReplayTime, type ReplayDisplayOptions } from "./replay-display";
 import { ReplayDisplayControls } from "./ReplayDisplayControls";
 import { useMemo, useState } from "react";
@@ -21,6 +21,7 @@ export function ReplayWorkspace({ replay, display, onDisplayChange }: {
   const [focusedPlayerId, setFocusedPlayerId] = useState<number | null>(null);
   const snapshot = buildReplaySnapshot(presentationReplay, activeIndex);
   const activeEvent = presentationReplay.events[activeIndex] ?? null;
+  const playerIds = presentationReplay.players.map(player => player.player_id);
   const visibleEvents = focusedPlayerId === null
     ? presentationReplay.events
     : presentationReplay.events.filter((event) => mentionsPlayer(event, focusedPlayerId));
@@ -40,6 +41,11 @@ export function ReplayWorkspace({ replay, display, onDisplayChange }: {
           <span>{text(locale, "replay.final_result")}</span>
           <strong>{replayResultLabel(replay, locale)}</strong>
           <small>{resultReasonName(replay.result.reason, locale)}</small>
+          {replay.result.decision && <>
+            <small>{outcomeWinnersLabel(replay.result.decision.outcome, locale)}</small>
+            <small>{victoryPointLabel(replay.result.decision.decidedAt, locale)}</small>
+            {replay.result.decision.reason !== replay.result.reason && <small>{text(locale, "victory.decision_reason", { reason: resultReasonName(replay.result.decision.reason, locale) })}</small>}
+          </>}
         </div>
       </header>
 
@@ -64,7 +70,7 @@ export function ReplayWorkspace({ replay, display, onDisplayChange }: {
               <span className="phase-pill">{text(locale, "replay.day_phase", { day: snapshot.day, phase: phaseName(snapshot.phase, locale) })}</span>
               <span>#{activeEvent?.seq ?? "—"}</span>
             </div>
-            <p>{activeEvent ? eventLabel(activeEvent, locale) : text(locale, "replay.no_events")}</p>
+            <p>{activeEvent ? eventLabel(activeEvent, locale, playerIds) : text(locale, "replay.no_events")}</p>
             <div className="event-meta">
               <span>{activeEvent ? stageName(activeEvent.stage ?? activeEvent.type, locale) : "—"}</span>
               <time>{formatReplayTime(activeEvent?.timestamp, display)}</time>
@@ -82,6 +88,7 @@ export function ReplayWorkspace({ replay, display, onDisplayChange }: {
       <EventTimeline
         events={visibleEvents}
         locale={locale}
+        playerIds={playerIds}
         activeEventSeq={activeEvent?.seq ?? null}
         focusedPlayerId={focusedPlayerId}
         onJumpTo={(index) => {

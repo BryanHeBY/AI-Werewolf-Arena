@@ -1,4 +1,4 @@
-import { isLocale, roleName as catalogRoleName, type Locale, type InspectionResult } from "@ai-werewolf-arena/game-catalog";
+import { isLocale, roleName as catalogRoleName, type Locale, type InspectionResult, type GameOutcome, type VictoryClaim, type VictoryPoint } from "@ai-werewolf-arena/game-catalog";
 import { zhCN, type MessageKey } from "./zh-CN";
 import { en } from "./en";
 
@@ -71,4 +71,22 @@ export const AUDIT_SECTIONS = ["session", "stats", "findings", "observations", "
 export type AuditSection = typeof AUDIT_SECTIONS[number];
 export function auditHeadings(locale: Locale): Record<AuditSection, string> {
   return Object.fromEntries(AUDIT_SECTIONS.map(section => [section, text(locale, `audit.heading.${section}` as MessageKey)])) as Record<AuditSection, string>;
+}
+
+export function victoryClaimLabel(claim: VictoryClaim, locale: Locale = "zh-CN"): string {
+  if (claim.kind === "faction") return text(locale, "victory.faction", { faction: term("camp_team", claim.faction, locale) });
+  if (claim.kind === "individual") return text(locale, "victory.individual", { player: text(locale, "replay.player", { id: claim.playerId }), goal: claim.goalId });
+  return text(locale, "victory.relationship", { group: claim.groupId });
+}
+export function outcomeLabel(outcome: GameOutcome, locale: Locale = "zh-CN"): string {
+  if (outcome.kind === "no_winner") return text(locale, "replay.no_winner");
+  const primary = victoryClaimLabel(outcome.primary, locale);
+  return outcome.additional.length ? text(locale, "victory.additional", { primary, additional: outcome.additional.map(claim => victoryClaimLabel(claim, locale)).join(locale === "zh-CN" ? "；" : "; ") }) : primary;
+}
+export function outcomeWinnersLabel(outcome: GameOutcome, locale: Locale = "zh-CN"): string {
+  const players = outcome.kind === "victory" ? outcome.winningPlayerIds.map(id => text(locale, "replay.player", { id })).join(locale === "zh-CN" ? "、" : ", ") : "";
+  return text(locale, "victory.winners", { players: players || text(locale, "common.none") });
+}
+export function victoryPointLabel(point: VictoryPoint, locale: Locale = "zh-CN"): string {
+  return text(locale, "victory.point", { day: point.day, phase: term("phase", point.phase, locale), checkpoint: text(locale, `checkpoint.${point.checkpoint}`) });
 }

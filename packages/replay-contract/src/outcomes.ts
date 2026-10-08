@@ -1,4 +1,4 @@
-import { FACTION_IDS, VICTORY_CHECKPOINTS, type GameOutcome, type VictoryClaim, type VictoryPoint, type VictoryAffiliation } from "@ai-werewolf-arena/game-catalog";
+import { FACTION_IDS, VICTORY_CHECKPOINTS, type GameOutcome, type VictoryClaim, type VictoryPoint, type VictoryAffiliation, type SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
 import { ReplayDocumentValidationError } from "./validation";
 
 const fail = (): never => { throw new ReplayDocumentValidationError("invalid_field", "result.outcome"); };
@@ -11,7 +11,7 @@ function record(value: unknown, keys: readonly string[]): Record<string, unknown
   const result: Record<string, unknown> = {};
   for (const key of keys) {
     const descriptor = descriptors[key];
-    if (!descriptor || !("value" in descriptor)) return fail();
+    if (!descriptor || !("value" in descriptor) || !descriptor.enumerable) return fail();
     result[key] = descriptor.value;
   }
   return result;
@@ -64,7 +64,7 @@ function claim(value: unknown): VictoryClaim {
   return fail();
 }
 
-/** Strict detached facts; inherited fields/accessors are never interpreted. */
+/** Strict JSON facts; inherited fields/accessors and nonserialized fields are rejected. */
 export function readGameOutcome(value: unknown, playerIds?: readonly number[]): GameOutcome {
   try {
     const kind = own(value, "kind");
@@ -109,4 +109,15 @@ export function readVictoryAffiliations(value: unknown): VictoryAffiliation[] {
     if (new Set(keys).size !== keys.length) return fail();
     return result;
   } catch { throw new ReplayDocumentValidationError("invalid_field", "victory.affiliations"); }
+}
+
+export function readVictoryResult(value: unknown, playerIds?: readonly number[]): SealedVictoryResult {
+  try {
+    const result = record(value, ["winner", "reason", "outcome", "decidedAt"]);
+    if (typeof result.reason !== "string" || result.reason.length === 0) return fail();
+    const outcome = readGameOutcome(result.outcome, playerIds), decidedAt = readVictoryPoint(result.decidedAt);
+    const winner = outcome.kind === "victory" && outcome.primary.kind === "faction" ? outcome.primary.faction : null;
+    if (winner !== result.winner) return fail();
+    return { winner, reason: result.reason, outcome, decidedAt };
+  } catch { throw new ReplayDocumentValidationError("invalid_field", "result.decision"); }
 }

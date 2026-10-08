@@ -1,9 +1,9 @@
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
-import { readSeerInspectionResult } from "@ai-werewolf-arena/replay-contract";
-import { text, term, inspectionLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
+import { readSeerInspectionResult, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
+import { text, term, inspectionLabel, outcomeLabel, outcomeWinnersLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { campName, phaseName, resultReasonName, roleName } from "./replay-localization";
 
-export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN"): string {
+export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerIds?: readonly number[]): string {
   const p = event.payload;
   const t = (key: MessageKey, params?: Record<string, string | number>) => text(locale, key, params);
   const actor = numberValue(p.actorId);
@@ -64,6 +64,12 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN"): string
     case "last_words_granted": return t("replay.last_granted", { actor: numberValue(p.playerId) });
     case "last_words_spoken": return t("replay.last_spoken", { actor: numberValue(p.playerId), speech: stringValue(p.text) });
     case "game_over": {
+      if (Object.hasOwn(p, "outcome") || Object.hasOwn(p, "decidedAt")) {
+        try {
+          const result = readVictoryResult(p, playerIds);
+          return `${t("victory.finished", { result: outcomeLabel(result.outcome, locale), reason: resultReasonName(result.reason, locale) })} · ${outcomeWinnersLabel(result.outcome, locale)}`;
+        } catch { return t("replay.unknown"); }
+      }
       const reason = stringValue(p.reason) ? resultReasonName(stringValue(p.reason), locale) : t("replay.no_reason");
       return stringValue(p.winner) ? t("replay.over", { winner: campName(stringValue(p.winner), locale), reason }) : t("replay.over_no_winner", { reason });
     }

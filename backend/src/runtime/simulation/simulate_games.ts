@@ -97,6 +97,7 @@ export async function simulateGames(board: ResolvedBoardDefinition, options: Sim
         try {
           const snapshot = context.phaseManager.getSnapshot();
           await manager.finalize({ endedAtIso: new Date().toISOString(), winner: snapshot.result?.winner ?? null,
+            ...(snapshot.result ? { gameResult: snapshot.result } : {}),
             finishReason: failures.length ? "runtime_error" : snapshot.result?.reason ?? "incomplete",
             players: context.playerIds.map(id => {
               const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;

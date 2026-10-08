@@ -51,7 +51,7 @@ Night结算后的action phase为Day；提前/正常自爆为day_interrupted（�
 
 内部reproduction.schemaVersion从1升为2：玩家检查点必含victory.affiliations，终局snapshot必含outcome/decidedAt。严格schema、winner投影/存在成员/point约束及source/lock/rules门槛保留（source包含实际执行的replay-contract共享解析器）。旧内部v1拒绝版本，不自动从历史camp构造胜利归属。
 
-公开复盘和玩家档暂保持v2；本子批game_over及终局phase_changed领域payload新增结果机器字段，公开结果与展示接入下一子批。旧公开文件的未知与原文政策仍保持，内部schema升级不等同公开schema升级。
+公开复盘和玩家档保持v2；game_over及终局phase_changed领域payload新增结果机器字段，接续[公开结果与双语展示](victory-record-display.md)已将封盘记录到manifest.game_result和public result.decision。旧公开文件的未知与原文政策仍保持，内部schema升级不等同公开schema升级。
 
 ## 人工证据
 
