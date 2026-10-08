@@ -367,3 +367,7 @@ A审发现完整ability/source与事件裁剪漏洞、假空history结构，已�
 最终目录21 verified/43 planned源码的受影响 **1065/34931/95文件**、type/deps/boundaries/i18n通过；包含新48及旧Garg/Psy72实际本机两语SDK/ACP/MCP/混合完整局与每局严格Tape，两板40受限seed自然0拒绝/回退、真实报告/skip正分支无重查。front147/1278/type/build、双语实际PNG与最终实际Chromium **62全部通过**；三路最后登记见[审查记录](reviews/p7-mirror-girl.md)，首轮旧测试断言误改不是全browser通过证据。
 
 六/十二AWA board/game可加载，未冒觉醒隐狼原镜隐迷踪已交付；未读写用户configs/认证或调用外部模型。历史累计788人工本地局含本笔新48；本笔仅重验受影响120，不冒旧740全矩阵重跑。P7余觉醒隐狼/黑市商人及P8–P10、22机制全矩阵/长局/T6持续，完整目标尚未完成。
+
+## P7：觉醒隐狼规则冻结
+
+[规则卡](rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)与[实现边界](awakened-hidden-wolf.md)冻结原七角色/十二人镜隐组合、580即刻模板标签/实际900激活、主动实际激活次夜与Hunter同夜末armed、独立资源与无目标wait；once额外刀可留后夜、独立刀毒盾无机械反毒/破盾/模式/自罚。A关于迟到激活、Mirror原库存依赖、双盾毒顺序，R关于Native/复制枪类型及玩家event档stage推来源的意见已明确修正，见[冻结审查](reviews/p7-awakened-hidden-rules.md)。本笔纯文档，Aw仍planned/目录21 verified43 planned不变；随后按底座职责分笔及完整Aw/原12板通路/双语/全gate启用，P7余2及P8–P10/64角色22机制/长局T6继续。

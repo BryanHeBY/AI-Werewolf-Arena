@@ -115,7 +115,7 @@
 | 56 | `awakened_idiot` | 觉醒愚者 | Awakened Village Idiot | 秘密之身/伤害替代 | P9 / [S18][tournament]；完整技能待核验 |
 | 57 | `awakened_seer` | 觉醒预言家 | Awakened Seer | 双目标信息 | P9 / [S19][awakenedseer] |
 | 58 | `awakened_wolf_king` | 觉醒狼王 | Awakened Wolf King | 多次死亡技能、能力转移 | P9 / [S01][cards] |
-| 59 | `awakened_hidden_wolf` | 觉醒隐狼 | Awakened Hidden Wolf | 复制、生效时机、独立狼 | P7 扩展 / [S10][mirror] |
+| 59 | `awakened_hidden_wolf` | 觉醒隐狼 | Awakened Hidden Wolf | 复制、生效时机、独立狼 | P7；仍 `planned` / [AWA冻结卡](rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf) / [实现边界](awakened-hidden-wolf.md) / [S10][mirror] |
 | 60 | `awakened_wolf_beauty` | 觉醒狼美人 | Awakened Wolf Beauty | 替死/关系结算 | P9 / [S16][salon]；采用正式上线版本核验 |
 | 61 | `awakened_witch` | 觉醒女巫 | Awakened Witch | 多次调配、协助者秘密决策 | P9 / [S27][awakenedwitch] |
 | 62 | `awakened_hunter` | 觉醒猎人 | Awakened Hunter | 巡猎及死亡动作 | P9 / [S28][recenttournament]；完整技能待核验 |
