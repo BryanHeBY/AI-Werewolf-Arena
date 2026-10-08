@@ -53,7 +53,7 @@
 
 | # | 计划 ID | 中文 | English | 机制标签 | 阶段 / 来源 |
 | --- | --- | --- | --- | --- | --- |
-| 22 | `hybrid` | 混血儿 | Hybrid | 榜样、独立胜利归属 | P7 / [S12][hybrid] |
+| 22 | `hybrid` | 混血儿 | Hybrid | 榜样、独立胜利归属 | P7；仍 `planned` / [AWA冻结卡](rules/awa-hybrid-v1.md#hybrid) / [实施边界](hybrid.md) / [S12][hybrid] |
 | 23 | `thief` | 盗贼 | Thief | 额外底牌、初始身份选择 | P9 / [S13][cupid] |
 | 24 | `shapeshifter` | 千面人 | Many-Faced One | 初始身份选择变体 | P9 / [S01][cards] |
 | 25 | `lonely_girl` | 孤独少女 | Lonely Girl | 崇拜对象、胜利归属 | P9 / [S01][cards] |

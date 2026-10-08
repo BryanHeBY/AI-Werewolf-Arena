@@ -333,3 +333,7 @@ front **119/1078**、type/build、实际 Chromium **50**与中英真实 PNG root
 三路修复并复查提交后账本变动、实例ID漂移、Lucky毒误用强制原生directive、none本人目标例外与roleCard锚点；真实反噬末神／末狼／徽章终局和九类字面Source计划相互验证。**verified最终source全release1463／134151／151文件＋smoke/type/deps/boundaries/i18n全过**，包括原632＋新54＝**686本机双语SDK/ACP/混合完整局及全部严格Tape**、各板种子与故障专项。新角色两板各20seed自然终局、0拒绝回退、赠予/反噬/Lucky/wait正分支及全重放；未把candidate54冒认激活后门槛。
 
 front **127／1140**、type/build、实际Chromium **54**及中英真实PNG root/L独立目检通过，见[三路最终审查](reviews/p7-miracle-merchant.md)。目录19 verified/45 planned，新六/十二board/game例可加载，未读写用户configs/认证或调用外部模型。P7剩混血儿、魔镜少女、觉醒隐狼、黑市商人四角色；P8–P10／22机制全矩阵／长局／T6持续，完整目标尚未完成。
+
+## P7：混血儿规则冻结
+
+[规则卡](rules/awa-hybrid-v1.md)与[实现边界](hybrid.md)明确首夜榜样、实体 Good 民与独立 victory affiliation、真实阵营快照、验好及无狼权限，采用 Melbourne/GTV 核心并单列 AWA 精确选择。既有 God replay 保存合法私有事实；普通公开事件与玩家投影不带隐藏归属，未新增匿名 public perspective。三路冻结审查与修正见[审查记录](reviews/p7-hybrid-rules.md)。本笔仅文档，Hybrid 仍 planned，19 verified/45 planned 不变；下一笔完整角色/双语/6与12示例/真实本地通路/Tape/seed/前端门槛通过后才能启用，P7 后续四项与 P8–P10/T6/长局目标保持。
