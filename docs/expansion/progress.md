@@ -9,7 +9,8 @@
 | P2 | 完成 | T01逐局随机/T02严格脚本/T03受限观察/T04动作录制与兼容回放；227后端+33前端测试，三路复查0阻断 |
 | P3 | 完成 | I01–I04、诊断/CLI与受控源码扫描；实际SDK/ACP中英完整场景与Tape重放、前端/视频门槛；英文入口开放 |
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
-| P5–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
+| P5 | 进行中 | 狼王已交付；白狼王、骑士、守墓人继续，见[狼王契约](wolf-king.md) |
+| P6–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
 
@@ -215,3 +216,9 @@ manifest.game_result/public result.decision保存实际封盘，执行结束原�
 A01/A02/M21/G01–G04和基础差异闭环；七項在awa_classic1.0.0已验板子范围升级verified，真实profile许可不变。当前目录/唯一基础规则卡/功能契约/Tape2与进度对齐，恢复误复制的女巫文档，历史review保当时事实。[阶段验收](reviews/p4-activation.md)列明six/twelve S01–S04和四个单窗口六人变体共50实际local SDK/ACP/mixed双语整局、严格Tape及50 seed补充；十二人四窗口公开示例不伪称额外完整局。个人/组合成fixture不是角色实现，T6与P10发布级门槛仍保留。
 
 登记后最终后端release633／34433及smoke通过，定向5／272；前端67／539、实际Chromium10、PNG/6秒视频沿用紧接的G04门槛。25 seed＋25重放场景采用独立30秒测试预算，生产时限和断言不变。后续从P5狼王、白狼王、骑士、守墓人依次交付，再推进P6–P10；完整目标尚未完成。
+
+## P5：狼王
+
+`wolf_king`作为第八项真实角色交付：普通狼队/自爆能力、独立枪资源、明确死因/Shot连锁、共享单次枪schema/消费/修复及按演员profile的同名工具校验；每轮Day与本人状态中英一致，新death_shot/wolf_king_shot与旧Hunter契约分开。native shoot无locale metadata改英文角色中性，旧路径保留，主动SDK/MCP协议仍双语。规则/边界/API见[狼王卡](rules/awa-wolf-king-v1.md)及[接入契约](wolf-king.md)，五场景字面oracle与发现修正见[三路审查](reviews/p5-wolf-king.md)。
+
+最后后端release664／38789／95文件及smoke通过；原50＋狼王30＝80实际本机SDK/ACP/混合双语完整局和逐局严格Tape，狼王24受限观察seed及重放补覆盖。新core12／327、配置2／10、加强身份/私有枪/日次的actual wire15／3967、随机2／34，front69／560/types/build、真实Chromium12、中英实际PNG均通过。三路最终0阻断，目录8verified／56planned；新6/12板子和运行example可加载，未改用户configs。没有声称完成外部模型质量或整个P5，后续先白狼王，再骑士/守墓人与P6–P10。

@@ -8,6 +8,7 @@ const PRIVATE_STATE_KEYS = {
   witch: "witch",
   guard: "guard",
   hunter: "hunter",
+  wolfKing: "wolf_king",
   idiot: "idiot",
   seer: "seer",
 } as const;
@@ -31,6 +32,7 @@ export interface GuardState {
 export interface HunterState {
   canShoot: boolean;
 }
+export interface WolfKingState { canShoot: boolean }
 
 /** 白痴私有状态。 */
 export interface IdiotState {
@@ -86,6 +88,12 @@ export function setHunterState(roleComp: RoleComponent, state: HunterState): Hun
 /** 读取猎人私有状态。 */
 export function getHunterState(roleComp: RoleComponent): HunterState | undefined {
   return getState(roleComp, PRIVATE_STATE_KEYS.hunter);
+}
+export function setWolfKingState(roleComp: RoleComponent, state: WolfKingState): WolfKingState {
+  return setState(roleComp, PRIVATE_STATE_KEYS.wolfKing, state);
+}
+export function getWolfKingState(roleComp: RoleComponent): WolfKingState | undefined {
+  return getState(roleComp, PRIVATE_STATE_KEYS.wolfKing);
 }
 
 /** 写入白痴私有状态。 */

@@ -1,13 +1,11 @@
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：猎人角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
 import { getHunterState, setHunterState } from "../private_state";
 import { hunterDeathHook } from "./death_hook";
-import { numberOrNull } from "../../llm/helpers";
 import { HUNTER_TOOL_SPECS } from "./tool_specs";
-import { isAliveTarget } from "../../validation/contracts";
+import { DEATH_SHOT_REPAIR, validateDeathShot } from "../death_shot";
 
 /** 猎人角色配置。 */
 export const HUNTER_ROLE_PROFILE: RoleProfile = {
@@ -22,22 +20,9 @@ export const HUNTER_ROLE_PROFILE: RoleProfile = {
   renderPrompt: (_roleComp, locale = "zh-CN") => text(locale, "role.hunter.state"),
   toolSpecs: HUNTER_TOOL_SPECS,
   validationRules: {
-    shoot: ({ world, role, toolCall }) => {
-      if (role.role !== Role.Hunter || !getHunterState(role)?.canShoot) return { code: RuleError.ShootUnavailable };
-      if (toolCall.name !== "shoot") return { code: RuleError.ToolMismatch };
-      if (toolCall.args.target_id !== null && !isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.ShootTarget };
-      return null;
-    },
+    shoot: ctx => validateDeathShot(ctx, ctx.role.role === Role.Hunter && getHunterState(ctx.role)?.canShoot === true),
   },
-  llmRepair: {
-    coerce: {
-      shoot: (args) => {
-        if (args.target_id === null) return { target_id: null };
-        const target = numberOrNull(args.target_id);
-        return target === null ? null : { target_id: target };
-      },
-    },
-  },
+  llmRepair: DEATH_SHOT_REPAIR,
   deathHook: hunterDeathHook,
   baselineAction: (_roleComp, request, pickAliveNotSelf) => {
     if (!request.allowedTools.includes("shoot")) {

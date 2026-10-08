@@ -1,7 +1,7 @@
 import { z, type ZodType } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { text, toolFailure } from "@ai-werewolf-arena/game-text";
-import { type ActionRequest, type ToolCall, type ToolName } from "../../../core/domain";
+import { DEATH_SHOT_STAGES, type ActionRequest, type ToolCall, type ToolName } from "../../../core/domain";
 import { World } from "../../../core/domain/world";
 import { ActionValidator } from "../../../game/gateway/action_validator";
 import { ToolGateway } from "../../../game/gateway/tool_gateway";
@@ -61,8 +61,8 @@ export class ActionReception {
     const args = this.repair.coerceArgs(tool, parsed.data as Record<string, unknown>, { actorId: request.actorId });
     if (!args || !schema.safeParse(args).success) return fail("invalid_tool_arguments");
     const call = { name: tool, args } as ToolCall;
-    const deathStage = request.context.stage === "hunter_shot" || request.context.stage === "last_words";
-    const deathTool = tool === "shoot" && request.context.stage === "hunter_shot" && request.context.trigger === "on_death" ||
+    const deathStage = DEATH_SHOT_STAGES.includes(request.context.stage) || request.context.stage === "last_words";
+    const deathTool = tool === "shoot" && DEATH_SHOT_STAGES.includes(request.context.stage) && request.context.trigger === "on_death" ||
       tool === "speak" && request.context.stage === "last_words" && request.context.trigger === "last_words";
     if (deathStage && (!deathTool || !this.world.hasDeathAction(request.actorId, tool, request.phase, request.context.day, request.context.death_action_id))) {
       return fail(RuleError.DeathActionUnavailable);

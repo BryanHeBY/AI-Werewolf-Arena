@@ -1,6 +1,7 @@
 import { AliveComponent, aliveLifeVersion } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
-import { ActionProvider, EntityId, GameEvent, Phase, RuntimeSnapshot, DeathCause, type DeathSources, type DeathShotSelection } from "../../core/domain/model";
+import { ActionProvider, EntityId, GameEvent, Phase, Role, RuntimeSnapshot, DeathCause, type DeathSources, type DeathShotSelection } from "../../core/domain/model";
+import type { RoleComponent } from "../../core/domain/components/role";
 import { World } from "../../core/domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
 import { getDefaultLastWordsMechanism } from "../mechanisms/last_words/last_words_mechanism";
@@ -75,7 +76,7 @@ export class DeathResolution {
         try {
           await this.eventRegistry.onDeath(
             this.world, [deadId], allSources,
-            hunterId => this.collectHunterShot(hunterId, firstBatch ? initialPhases[hunterId] ?? deathPhase : deathPhase, allSources, actionProvider, actions),
+            actorId => this.collectDeathShot(actorId, firstBatch ? initialPhases[actorId] ?? deathPhase : deathPhase, allSources, actionProvider, actions),
             this.events,
             result => {
               for (const id of result.extraDeaths) {
@@ -101,24 +102,24 @@ export class DeathResolution {
     }
   }
 
-  private async collectHunterShot(hunterId: EntityId, deathPhase: Phase, sources: DeathSources, actionProvider: ActionProvider, actions: DeathWaveActions): Promise<DeathShotSelection> {
+  private async collectDeathShot(actorId: EntityId, deathPhase: Phase, sources: DeathSources, actionProvider: ActionProvider, actions: DeathWaveActions): Promise<DeathShotSelection> {
     const isCurrent = () => this.state.phase === actions.phase && this.state.day === actions.day && !this.state.gameOver;
     if (!isCurrent()) return { kind: "invalid" };
-    const permit = this.world.openDeathAction(hunterId, "shoot", actions.phase, actions.day, isCurrent);
+    const permit = this.world.openDeathAction(actorId, "shoot", actions.phase, actions.day, isCurrent);
     actions.permits.push(permit);
     const requests = new GameActionRequestFactory(this.world, this.events, actions.day);
     for (let attempt = 1; attempt <= 3; attempt++) {
       const action = await actionProvider.getAction(requests.create({
-        phase: actions.phase, actorId: hunterId, allowedTools: ["shoot"], stage: "hunter_shot", requiresAction: true,
+        phase: actions.phase, actorId: actorId, allowedTools: ["shoot"], stage: this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role === Role.Hunter ? "hunter_shot" : "death_shot", requiresAction: true,
         summary: { key: "request.summary.death_shot" },
         context: {
-          trigger: "on_death", death_phase: deathPhase, death_sources: [...(sources[hunterId] ?? [])], death_action_id: permit.id,
+          trigger: "on_death", death_phase: deathPhase, death_sources: [...(sources[actorId] ?? [])], death_action_id: permit.id,
           ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
         },
       }));
-      if (!isCurrent() || !this.world.hasDeathAction(hunterId, "shoot", actions.phase, actions.day, permit.id)) return { kind: "invalid" };
+      if (!isCurrent() || !this.world.hasDeathAction(actorId, "shoot", actions.phase, actions.day, permit.id)) return { kind: "invalid" };
       if (action?.name !== "shoot") continue;
-      const validated = this.toolGateway.validateAndSanitize(this.world, hunterId, action, { phase: actions.phase, day: actions.day, deathActionId: permit.id });
+      const validated = this.toolGateway.validateAndSanitize(this.world, actorId, action, { phase: actions.phase, day: actions.day, deathActionId: permit.id });
       if (!validated.ok || !validated.sanitizedCall) continue;
       const targetId = validated.sanitizedCall.args.target_id;
       return targetId === null ? { kind: "pass", deathActionId: permit.id } : { kind: "shot", targetId, deathActionId: permit.id };

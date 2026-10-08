@@ -1,6 +1,6 @@
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
 import { bootstrapGame } from "../../app/bootstrap";
-import { createRandom, randomDraws, type ActionProvider, type GameEvent, type RuntimeSnapshot } from "../../core";
+import { DEATH_SHOT_STAGES, createRandom, randomDraws, type ActionProvider, type GameEvent, type RuntimeSnapshot } from "../../core";
 import { readFile } from "node:fs/promises";
 import { ObservedBot, type BotStyle } from "../../ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../ai/agents/providers/observed_players";
@@ -53,7 +53,7 @@ export async function simulateGames(board: ResolvedBoardDefinition, options: Sim
     const observed = new ObservedPlayersActionProvider(context.world, strategies, board.config);
     const provider: ActionProvider = { async getAction(request) {
       if (context.phaseManager.getSnapshot().gameOver) throw new Error("simulation_action_after_game_over");
-      if (!context.world.getAliveEntityIds().includes(request.actorId) && !["last_words", "hunter_shot"].includes(request.context.stage)) throw new Error("simulation_unauthorized_dead_action");
+      if (!context.world.getAliveEntityIds().includes(request.actorId) && request.context.stage !== "last_words" && !DEATH_SHOT_STAGES.includes(request.context.stage)) throw new Error("simulation_unauthorized_dead_action");
       return observed.getAction(request);
     } };
     const manager = await SessionRecordManager.create({ sessionId: `simulation-${batchId}-${index}`, board: board.definition.id, locale: context.world.locale, startedAtIso: new Date().toISOString(), random: random.metadata }, options.recordRoot, options.displayLocale ?? locale);

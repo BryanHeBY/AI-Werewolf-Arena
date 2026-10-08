@@ -7,6 +7,7 @@ import { getWitchState } from "./private_state";
 
 const FRONTEND_ROLE_TYPE: Record<Role, string> = {
   [Role.Wolf]: "wolf",
+  [Role.WolfKing]: "wolf_king",
   [Role.Villager]: "villager",
   [Role.Seer]: "seer",
   [Role.Guard]: "guard",

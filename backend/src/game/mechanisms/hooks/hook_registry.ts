@@ -28,7 +28,7 @@ export type DeathHook = (
   world: World,
   deadIds: EntityId[],
   deathSources: DeathSources,
-  onHunterShoot: (hunterId: EntityId) => Promise<DeathShotSelection>,
+  chooseDeathShot: (actorId: EntityId) => Promise<DeathShotSelection>,
   events: GameEvent[],
 ) => Promise<DeathHookResult>;
 
@@ -71,7 +71,7 @@ export class HookRegistry {
     world: World,
     deadIds: EntityId[],
     deathSources: DeathSources,
-    onHunterShoot: (hunterId: EntityId) => Promise<DeathShotSelection>,
+    chooseDeathShot: (actorId: EntityId) => Promise<DeathShotSelection>,
     events: GameEvent[],
     commitAdditionalDeaths?: (result: DeathHookResult) => void,
   ): Promise<DeathHookResult> {
@@ -80,7 +80,7 @@ export class HookRegistry {
       extraDeathSources: {},
     };
     for (const hook of this.deathHooks) {
-      const result = await hook(world, deadIds, deathSources, onHunterShoot, events);
+      const result = await hook(world, deadIds, deathSources, chooseDeathShot, events);
       commitAdditionalDeaths?.(result);
       aggregated.extraDeaths.push(...result.extraDeaths);
       for (const [id, marks] of Object.entries(result.extraDeathSources)) {

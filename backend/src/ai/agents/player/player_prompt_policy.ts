@@ -17,7 +17,7 @@ import {
   knownWolfTeammates,
   allNightAbilities, abilityStatus, projectNightAbility,
 } from "../../../game/mechanisms";
-import { getGuardState, getHunterState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
+import { getGuardState, getHunterState, getWolfKingState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
 import { freezeObservation, type PlayerObservation } from "./observation";
 import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "./prompt_templates";
 import { renderTurnConstraintUserHint, resolveTurnConstraints } from "./turn_constraints";
@@ -67,7 +67,7 @@ export class PlayerPromptPolicy {
       }
       const target = event.type === "voted_out" ? event.payload.target
         : event.type === "wolf_self_destruct" ? event.payload.wolfId
-        : event.type === "hunter_shot" ? event.payload.targetId : undefined;
+        : event.type === "hunter_shot" || event.type === "wolf_king_shot" ? event.payload.targetId : undefined;
       if (typeof target === "number") dead.add(target);
     }
     const ownState: PlayerObservation["ownState"] = {};
@@ -76,6 +76,7 @@ export class PlayerPromptPolicy {
     if (witch) ownState.witch = witch;
     if (guard) ownState.guard = guard;
     if (role?.role === Role.Hunter) ownState.hunter = getHunterState(role);
+    if (role?.role === Role.WolfKing) ownState.wolfKing = getWolfKingState(role);
     if (role?.role === Role.Idiot) ownState.idiot = getIdiotState(role);
     const seer = role ? getSeerState(role, request.context.ability_id) : undefined;
     if (seer) ownState.seer = seer;
@@ -178,6 +179,7 @@ export class PlayerPromptPolicy {
 
   private statusDirective(request: ActionRequest, role?: RoleComponent): string | undefined {
     const lines: string[] = [];
+    lines.push(text(this.locale, "prompt.status.day", { day: getActionRequestDay(request) }));
     lines.push(text(this.locale, "prompt.status.wolf_teammates", { teammates: this.wolfTeammates(request.actorId).join(", ") || text(this.locale, "common.none") }));
     if (role) lines.push(text(this.locale, "ability.identity", { role: this.options.roleCatalog.label(role.role, this.locale), camp: term("camp", role.camp, this.locale) }));
     for (const ability of allNightAbilities(role)) {

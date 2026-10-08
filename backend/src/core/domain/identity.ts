@@ -10,6 +10,7 @@ export enum Camp {
 
 export enum Role {
   Wolf = "wolf",
+  WolfKing = "wolf_king",
   Villager = "villager",
   Seer = "seer",
   Guard = "guard",

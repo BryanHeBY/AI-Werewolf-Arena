@@ -10,9 +10,11 @@ import { SEER_ROLE_PROFILE } from "./seer/profile";
 import { VILLAGER_ROLE_PROFILE } from "./villager/profile";
 import { WITCH_ROLE_PROFILE } from "./witch/profile";
 import { WOLF_ROLE_PROFILE } from "./wolf/profile";
+import { WOLF_KING_ROLE_PROFILE } from "./wolf_king/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   WOLF_ROLE_PROFILE,
+  WOLF_KING_ROLE_PROFILE,
   VILLAGER_ROLE_PROFILE,
   SEER_ROLE_PROFILE,
   GUARD_ROLE_PROFILE,

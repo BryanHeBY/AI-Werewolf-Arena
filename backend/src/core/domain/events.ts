@@ -59,6 +59,7 @@ export interface EventPayloadMap {
   seer_checked: { actorId: EntityId; abilityId?: string; targetId: EntityId; result: Extract<InspectionResult, { kind: "camp" }>; isWerewolf: boolean };
   hunter_silent_due_to_poison: { hunterId: EntityId };
   hunter_shot: { hunterId: EntityId; targetId: EntityId };
+  wolf_king_shot: { actorId: EntityId; targetId: EntityId };
   idiot_revealed: { targetId: EntityId };
   witch_potion_skipped: {
     actorId: EntityId;

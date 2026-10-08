@@ -22,16 +22,20 @@ function buildDefaultRules(roleProfileRegistry: RoleCatalog): ToolRuleMap {
 /** 工具校验规则注册表。 */
 export class ToolValidationRuleRegistry {
   private readonly rules: ToolRuleMap;
+  private readonly useProfileRules: boolean;
 
   constructor(
     rules?: ToolRuleMap,
     private readonly roleProfileRegistry: RoleCatalog = getDefaultRoleCatalog(),
   ) {
     this.rules = { ...(rules ?? buildDefaultRules(roleProfileRegistry)) };
+    this.useProfileRules = rules === undefined;
   }
 
   validate(ctx: Omit<ValidationRuleContext, "roleCatalog">): RuleViolation | null {
-    const rule = this.rules[ctx.toolCall.name as ToolName];
+    // Two roles may share a tool name while owning different resources/rules.
+    const rule = (this.useProfileRules ? this.roleProfileRegistry.get(ctx.role.role)?.validationRules?.[ctx.toolCall.name] : undefined)
+      ?? this.rules[ctx.toolCall.name as ToolName];
     if (!rule) {
       return { code: RuleError.UnknownTool };
     }

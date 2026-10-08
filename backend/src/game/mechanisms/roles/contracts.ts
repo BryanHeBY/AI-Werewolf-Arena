@@ -37,6 +37,8 @@ export interface RoleProfile {
   /** Public participation restrictions; secret immunity belongs to resolution hooks. */
   participation?: { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean } | ((role: RoleComponent) => { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean });
   wolfTeam?: WolfTeamPermissions | ((role: RoleComponent) => WolfTeamPermissions);
+  /** Explicit public self-destruct capability, independent of faction/knife access. */
+  canSelfDestruct?: boolean;
   inspectionLabels?: { camp?: InspectionCamp; role?: RoleId } | ((role: RoleComponent) => { camp?: InspectionCamp; role?: RoleId });
   configuration?: {
     schema: z.ZodType;

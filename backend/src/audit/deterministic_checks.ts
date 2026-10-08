@@ -18,7 +18,7 @@ export function collectObservations(input: BuildDebugSummaryInput): SummaryObser
 
   const timelineEntries = views.reduce((acc, view) => acc + view.timeline.length, 0);
   const selfDestructCount = events.filter((e) => e.type === "wolf_self_destruct").length;
-  const hunterShotCount = events.filter((e) => e.type === "hunter_shot").length;
+  const deathShotCount = events.filter((e) => e.type === "hunter_shot" || e.type === "wolf_king_shot").length;
   const nightResolvedCount = events.filter((e) => e.type === "night_resolved").length;
 
   const mismatchSeqs: number[] = [];
@@ -68,7 +68,7 @@ export function collectObservations(input: BuildDebugSummaryInput): SummaryObser
   });
   observations.push({
     code: "process_counts", title: "audit.observation.process_counts.title",
-    detail: { key: "audit.observation.process_counts.detail", parameters: { night: nightResolvedCount, blast: selfDestructCount, shot: hunterShotCount } },
+    detail: { key: "audit.observation.process_counts.detail", parameters: { night: nightResolvedCount, blast: selfDestructCount, shot: deathShotCount } },
   });
   observations.push({
     code: "actions", title: "audit.observation.actions.title",

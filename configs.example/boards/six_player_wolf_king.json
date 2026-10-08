@@ -1,0 +1,56 @@
+{
+  "version": 2,
+  "id": "six_player_wolf_king",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 6,
+    "roleSetups": [
+      {
+        "role": "wolf_king",
+        "count": 1
+      },
+      {
+        "role": "hunter",
+        "count": 1
+      },
+      {
+        "role": "seer",
+        "count": 1
+      },
+      {
+        "role": "villager",
+        "count": 3
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": [
+      "slaughter_side"
+    ],
+    "hooks": {
+      "onDaybreak": false,
+      "onPreElection": false,
+      "onPreVote": false,
+      "onPerSpeechGap": false
+    }
+  },
+  "mechanisms": {
+    "sheriff": {
+      "enabled": true,
+      "initialSeat": 1,
+      "voteWeight": 2.25,
+      "tieBreaker": "min_seat"
+    },
+    "selfDestruct": {
+      "enabledWindows": []
+    },
+    "tieBreaker": {
+      "exileVote": "min_id",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {}
+}

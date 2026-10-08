@@ -52,7 +52,7 @@ export class EventRegistry {
     world: World,
     deadIds: EntityId[],
     deathSources: DeathSources,
-    onHunterShoot: (hunterId: EntityId) => Promise<DeathShotSelection>,
+    chooseDeathShot: (actorId: EntityId) => Promise<DeathShotSelection>,
     events: GameEvent[],
     commitAdditionalDeaths?: (result: DeathHookResult) => void,
   ): Promise<DeathHookResult> {
@@ -60,7 +60,7 @@ export class EventRegistry {
       world,
       deadIds,
       deathSources,
-      onHunterShoot,
+      chooseDeathShot,
       events,
       commitAdditionalDeaths,
     );

@@ -8,7 +8,7 @@ import type { ActorTransportPlan } from "../support/foundation_transport_plan";
 import { assertTransportPrompt, assertTransportEvents } from "../support/transport_prompt_oracle";
 
 const plan: ActorTransportPlan = JSON.parse(await readFile(process.argv[2] ?? process.env.AWA_TEST_PLAN_FILE!, "utf8"));
-const trace = { agentPid: process.pid, mcpPid: 0, locale: "", prompts: [] as string[], submitted: 0, consumed: 0, visibleSeerTargets: [] as number[], schemaChecked: false, initializationSeen: false, failure: "" };
+const trace = { agentPid: process.pid, mcpPid: 0, locale: "", prompts: [] as string[], submitted: 0, rejected: 0, consumed: 0, visibleSeerTargets: [] as number[], schemaChecked: false, initializationSeen: false, failure: "" };
 let client: Client | undefined;
 const send = (value: unknown) => process.stdout.write(JSON.stringify(value) + "\n");
 const save = () => writeFile("game-fixture.json", JSON.stringify(trace));
@@ -42,6 +42,11 @@ try {
           for (const [, type, payload] of events) if (type === "seer_checked") trace.visibleSeerTargets.push(payload.targetId as number);
         }
         trace.consumed++;
+        for (const invalid of turn.invalidActions ?? []) {
+          const result = await client!.callTool({ name: "submit_action", arguments: { turn_id: turnId, action: invalid.name, arguments: invalid.args } });
+          if (result.structuredContent?.ok !== false || result.structuredContent?.error !== "shoot_target") throw new Error("fixture_invalid_shot_not_rejected");
+          trace.rejected++;
+        }
         if (turn.action) {
           const result = await client!.callTool({ name: "submit_action", arguments: { turn_id: turnId, action: turn.action.name, arguments: turn.action.args } });
           if (result.structuredContent?.ok !== true || result.structuredContent?.accepted !== true) throw new Error("fixture_submission_rejected");
@@ -50,6 +55,7 @@ try {
       } else {
         if (!prompt.includes(plan.locale === "en" ? "Use English" : "你必须使用中文")) throw new Error("fixture_initial_language_mismatch");
         if (plan.locale === "en" && /[\u4e00-\u9fff]/.test(prompt)) throw new Error("fixture_initial_not_english");
+        if (plan.expectedIdentityMarker && !prompt.includes(plan.expectedIdentityMarker)) throw new Error("fixture_initial_identity_missing");
         if (plan.expectedName) {
           if (!prompt.includes(plan.expectedName)) throw new Error("fixture_persona_name_missing");
           if (plan.expectedPersona && !prompt.includes(plan.expectedPersona)) throw new Error("fixture_persona_missing");

@@ -5,7 +5,7 @@
 - runGame接收ResolvedGameSetup.context.locale/displayLocale，bootstrap明确绑定游戏locale；CLI的--locale只覆盖本次配置副本，--display-locale独立选终端语言。
 - simulateGames新增可选locale（默认zh-CN，未知拒绝），CLI simulate --locale与游戏World、manifest/Tape一致。
 - 英文reproduction.json可通过既有离线replay:actions重放；语言由已校验metadata进入World，身份名字和动作文本原样。source/lock/RNG/schema/规则兼容门槛保留。
-- check报告executionSupport.locales为zh-CN/en，P4 A02后mixedTransports为true。基础七角色已验证当前实现；57计划角色不能因有双语目录而运行。
+- check报告executionSupport.locales为zh-CN/en，P4 A02后mixedTransports为true。基础七角色及P5狼王已验证当前实现；56计划角色不能因有双语目录而运行。
 
 ## 实际通路与人工oracle
 
@@ -29,7 +29,7 @@ Alive/Camp/Badge/VotingRight/StatusMarks/Role的renderPrompt支持显式locale�
 
 SDK旧tool历史仍按兼容端口作为user文本传入，前缀改稳定机器标记[tool_result]，原内容/类型转换策略不改；实际本机HTTP验证没有中文固定前缀。
 
-release:check新增lint:i18n。TypeScript AST扫描backend/src、frontend/src与frontend/scripts的StringLiteral、模板head/middle/tail及JSXText，覆盖Unicode Han；忽略注释及测试数据。精确file/text/count例外见[i18n-source-exceptions.json](i18n-source-exceptions.json)，增量、删改、缺理由与未批准literal均失败。没有整个角色/目录免检：61处保留项仅旧gateway/tool-spec默认中文metadata、默认win-condition描述、历史phase别名和原生语言选项。真实SDK/MCP的主动协议及规则摘要已用共享双语builder；这些旧无locale查询API保兼容，不能当成新功能文本入口复制。
+release:check新增lint:i18n。TypeScript AST扫描backend/src、frontend/src与frontend/scripts的StringLiteral、模板head/middle/tail及JSXText，覆盖Unicode Han；忽略注释及测试数据。精确file/text/count例外见[i18n-source-exceptions.json](i18n-source-exceptions.json)，增量、删改、缺理由与未批准literal均失败。没有整个角色/目录免检：57处保留项仅旧gateway/tool-spec默认中文metadata、默认win-condition描述、历史phase别名和原生语言选项。真实SDK/MCP的主动协议及规则摘要已用共享双语builder；这些旧无locale查询API保兼容，不能当成新功能文本入口复制。
 
 不扫描目录内shared字典的中文值属于独立I01 key/参数/缺译校验责任。未使用“禁止所有汉字”规则抹掉原始用户内容。
 
@@ -38,3 +38,5 @@ release:check新增lint:i18n。TypeScript AST扫描backend/src、frontend/src与
 P3交付时，末神禁枪、重复白痴资格和自爆警徽残留仍为已知差异；跨语相等只证明当时同一实现。P4已统一共同接收，修复[死亡来源/末神](death-causes.md)、[死亡链及自爆警徽](death-chain.md)、[白痴/警长资格](public-participation.md)，并开放[四窗口](self-destruct-windows.md)；独立oracle与新增真实通路门槛见各批审查，不能将P3历史边界当作当前未修清单。
 
 本阶段未调用外部模型或读取真实认证；actual transport是本地合成agent/provider，不声称已完成Codex/Claude真实模型质量评测、发布级长局/并发故障矩阵、所有64角色或22机制。P4–P10继续完整目标。
+
+P5狼王接入后，shoot的旧HUNTER_TOOL_SPECS路径仍保留，但native描述已改英文角色中性；该项无locale静态API不再默认中文。实际SDK/MCP协议和行动hint仍双语，迁移边界见[狼王契约](wolf-king.md)。每轮共同提示显式给当前日次。

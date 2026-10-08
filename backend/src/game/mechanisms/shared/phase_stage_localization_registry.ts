@@ -56,6 +56,7 @@ export const CORE_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR: PhaseStageLocalizationCo
     voting: term("stage", "voting", "zh-CN"),
     game_over: term("stage", "game_over", "zh-CN"),
     day_speech: term("stage", "day_speech", "zh-CN"),
+    death_shot: term("stage", "death_shot", "zh-CN"),
     on_daybreak: term("stage", "on_daybreak", "zh-CN"),
     on_pre_election: term("stage", "on_pre_election", "zh-CN"),
     on_pre_vote: term("stage", "on_pre_vote", "zh-CN"),

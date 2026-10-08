@@ -31,6 +31,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       // 狼人策略中可允许自刀，提示层保留自己编号避免“无效 self target”误判。
       kill_vote: { allowSelf: true },
     },
+    [Role.WolfKing]: { kill_vote: { allowSelf: true } },
     [Role.Witch]: {
       // 女巫可自救，提示层需包含自己。
       use_potion: { allowSelf: true },

@@ -60,6 +60,7 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerI
     case "idiot_revealed": return t("replay.idiot", { actor: target });
     case "wolf_self_destruct": return t("replay.blast", { actor: numberValue(p.wolfId) });
     case "hunter_shot": return t("replay.shot", { actor: numberValue(p.hunterId), target });
+    case "wolf_king_shot": return t("console.judge.wolf_king_shot", { actor, target });
     case "hunter_silent_due_to_poison": return t("replay.poisoned_hunter", { actor: numberValue(p.hunterId) });
     case "last_words_granted": return t("replay.last_granted", { actor: numberValue(p.playerId) });
     case "last_words_spoken": return t("replay.last_spoken", { actor: numberValue(p.playerId), speech: stringValue(p.text) });

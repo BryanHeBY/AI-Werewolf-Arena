@@ -132,30 +132,6 @@
     "reason": "Legacy gateway/tool-spec metadata retains its default Chinese API. Active SDK/MCP protocols and player instructions use the shared locale builder; no new literal copies may be added."
   },
   {
-    "file": "backend/src/game/mechanisms/roles/hunter/tool_specs.ts",
-    "text": "开枪参数。",
-    "count": 1,
-    "reason": "Legacy gateway/tool-spec metadata retains its default Chinese API. Active SDK/MCP protocols and player instructions use the shared locale builder; no new literal copies may be added."
-  },
-  {
-    "file": "backend/src/game/mechanisms/roles/hunter/tool_specs.ts",
-    "text": "猎人开枪带走目标",
-    "count": 1,
-    "reason": "Legacy gateway/tool-spec metadata retains its default Chinese API. Active SDK/MCP protocols and player instructions use the shared locale builder; no new literal copies may be added."
-  },
-  {
-    "file": "backend/src/game/mechanisms/roles/hunter/tool_specs.ts",
-    "text": "猎人开枪指定目标玩家。",
-    "count": 1,
-    "reason": "Legacy gateway/tool-spec metadata retains its default Chinese API. Active SDK/MCP protocols and player instructions use the shared locale builder; no new literal copies may be added."
-  },
-  {
-    "file": "backend/src/game/mechanisms/roles/hunter/tool_specs.ts",
-    "text": "目标玩家编号。",
-    "count": 1,
-    "reason": "Legacy gateway/tool-spec metadata retains its default Chinese API. Active SDK/MCP protocols and player instructions use the shared locale builder; no new literal copies may be added."
-  },
-  {
     "file": "backend/src/game/mechanisms/roles/seer/tool_specs.ts",
     "text": "查验参数。",
     "count": 1,

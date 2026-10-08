@@ -17,6 +17,7 @@ const PUBLIC_EVENT_TYPES = new Set([
   "game_over",
   "wolf_self_destruct",
   "hunter_shot",
+  "wolf_king_shot",
   "idiot_revealed",
   "last_words_granted",
   "last_words_spoken",

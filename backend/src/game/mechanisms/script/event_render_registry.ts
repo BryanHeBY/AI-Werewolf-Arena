@@ -63,6 +63,7 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
   sheriff_badge_transferred: (event, locale = "zh-CN") => text(locale, "console.judge.badge_transfer", { from: event.payload.fromId, to: event.payload.toId }),
   sheriff_badge_destroyed: (event, locale = "zh-CN") => text(locale, "console.judge.badge_destroy", { target: event.payload.targetId }),
   wolf_self_destruct: (event, locale = "zh-CN") => text(locale, "console.judge.blast", { actor: event.payload.wolfId }),
+  wolf_king_shot: (event, locale = "zh-CN") => text(locale, "console.judge.wolf_king_shot", { actor: event.payload.actorId, target: event.payload.targetId }),
   game_over: (event, locale = "zh-CN") => resultLabel(event.payload, locale, "console.judge.result"),
   ...LAST_WORDS_SCRIPT_JUDGE_HANDLERS, ...IDIOT_SCRIPT_JUDGE_HANDLERS, ...HUNTER_SCRIPT_JUDGE_HANDLERS, ...SHERIFF_SCRIPT_JUDGE_HANDLERS,
 };
@@ -91,6 +92,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
   ability_changed: (event, printPrivateEvents, locale = "zh-CN") => printPrivateEvents ? [{ kind: "private", text: text(locale, "ability.change", { actor: event.payload.actorId, id: event.payload.abilityId, kind: text(locale, `ability.kind.${event.payload.kind}`), operation: text(locale, `ability.operation.${event.payload.operation}`) }) }] : [],
   god_private_game_info: (event, _private, locale = "zh-CN") => [{ kind: "god", text: text(locale, "console.live.initial", { roles: event.payload.players.map(item => `${item.seat}:${getDefaultTextLocalizationRegistry().roleName(item.role, locale)}`).join(", ") }) }],
   day_speech: (event, _private, locale = "zh-CN") => [{ kind: "system", text: text(locale, "console.live.day", { actor: event.payload.actorId, speech: event.payload.text }) }],
+  wolf_king_shot: (event, _private, locale = "zh-CN") => [{ kind: "system", text: text(locale, "console.judge.wolf_king_shot", { actor: event.payload.actorId, target: event.payload.targetId }) }],
   game_over: (event, _private, locale = "zh-CN") => [{ kind: "god", text: resultLabel(event.payload, locale, "console.live.result") }],
   ...WOLF_SCRIPT_LIVE_HANDLERS, ...SEER_SCRIPT_LIVE_HANDLERS, ...GUARD_SCRIPT_LIVE_HANDLERS, ...WITCH_SCRIPT_LIVE_HANDLERS, ...LAST_WORDS_SCRIPT_LIVE_HANDLERS, ...SHERIFF_SCRIPT_LIVE_HANDLERS,
 };

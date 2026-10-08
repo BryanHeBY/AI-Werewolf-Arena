@@ -1,6 +1,6 @@
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：狼人工具校验规则。 */
-import { ActionWindow, Phase, Role } from "../../../../core/domain/model";
+import { ActionWindow, Phase } from "../../../../core/domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 import { wolfTeamPermissions } from "../wolf_team";
 
@@ -32,8 +32,8 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
     }
     return null;
   },
-  self_destruct: ({ role, phase, actionWindow, allowSelfDestruct, toolCall }) => {
-    if (role.role !== Role.Wolf) {
+  self_destruct: ({ role, roleCatalog, phase, actionWindow, allowSelfDestruct, toolCall }) => {
+    if (roleCatalog.get(role.role)?.canSelfDestruct !== true) {
       return { code: RuleError.WolfBlastOnly };
     }
     if (phase !== Phase.Day && phase !== Phase.Voting) {

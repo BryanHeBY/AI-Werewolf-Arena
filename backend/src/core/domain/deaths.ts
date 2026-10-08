@@ -16,6 +16,8 @@ export type DeathShotSelection =
   | { kind: "pass"; deathActionId: number }
   | { kind: "invalid" };
 
-export function permitsHunterShot(sources: readonly DeathCause[]): boolean {
+export function permitsDeathShot(sources: readonly DeathCause[]): boolean {
   return sources.length > 0 && sources.every(source => source === DeathCause.WolfKill || source === DeathCause.Exile || source === DeathCause.Shot);
 }
+/** Existing Hunter API retains the same cause policy. */
+export const permitsHunterShot = permitsDeathShot;

@@ -123,3 +123,21 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: malformed victor
   await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
   await expect(page.getByTestId("composition-winner")).toHaveCount(0);
 });
+
+for (const locale of ["zh-CN", "en"] as const) test(`${locale}: an actual wolf-king complete-game archive shows distinct shots and death order`, async ({ page }) => {
+  const replay = JSON.parse(readFileSync(new URL("../fixtures/wolf-king.replay.json", import.meta.url), "utf8")); replay.meta.locale = locale;
+  await page.route("**/api/replay", route => route.fulfill({ json: replay }));
+  await page.goto("/");
+  const king = locale === "en" ? "Wolf King 1 shoots player 2" : "1号狼王开枪带走2号";
+  const hunter = locale === "en" ? "Hunter 2 shoots player 3" : "2号猎人开枪带走3号";
+  await page.locator(".timeline .event").filter({ hasText: king }).click();
+  await expect(page.getByTestId("composition-event")).toHaveText(king);
+  await expect(page.locator(".seat-grid .dead")).toHaveCount(3); // Night victim 5, exiled 1, shot 2.
+  await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+  await page.locator(".timeline .event").filter({ hasText: hunter }).click();
+  await expect(page.getByTestId("composition-event")).toHaveText(hunter);
+  await expect(page.locator(".seat-grid .dead")).toHaveCount(4);
+  await page.locator(".timeline .event").last().click();
+  await expect(page.getByTestId("composition-winner")).toHaveCount(5);
+  await expect(page.locator(".seat-grid .winner")).toHaveCount(5);
+});
