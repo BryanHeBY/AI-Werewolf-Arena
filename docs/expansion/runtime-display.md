@@ -43,7 +43,7 @@ ResolvedGameSetup.warnings由旧组合字符串改为结构对象：
 
 config:check保留warnings机器数据，并增加warningMessages当前语言说明；人格原文不输出，实际回退选择保持。该程序化返回形状是显式API变化，旧字符串contains调用需改用code/字段查询。
 
-迁移warnings原本就是稳定ID数组，保持原格式，另加warningMessages。五项MigrationWarningCode均有双语模板；report JSON及文字在任何备份/发布前构建，文字错误不能导致改盘后假失败。原竞争目标保护、回滚及多错误保留策略不变。
+迁移warnings原本就是稳定ID数组，保持原格式，另加warningMessages。所有MigrationWarningCode均有双语模板（P4窗口批新增旧无执行窗口移除警告）；report JSON及文字在任何备份/发布前构建，文字错误不能导致改盘后假失败。原竞争目标保护、回滚及多错误保留策略不变。
 
 ## 双语欢乐局示例
 

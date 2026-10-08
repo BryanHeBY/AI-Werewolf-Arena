@@ -1,7 +1,7 @@
 import { renderMessage, text, term, type Locale } from "@ai-werewolf-arena/game-text";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionRequest, BoardConfig, EntityId, Role, ToolName } from "../../../core/domain"
+import { ActionRequest, ActionWindow, BoardConfig, EntityId, Role, ToolName } from "../../../core/domain"
 import {
   getActionRequestDay,
   getActionRequestStage,
@@ -230,7 +230,7 @@ export class PlayerPromptPolicy {
       ].filter(Boolean).join(" ");
     }
     if (stage !== "witch") {
-      const onlySelfDestruct = stage === "on_pre_vote" && request.allowedTools.every(
+      const onlySelfDestruct = Object.values(ActionWindow).includes(stage as ActionWindow) && request.allowedTools.every(
         (tool) => tool === "self_destruct" || tool === "report_bug",
       );
       return onlySelfDestruct

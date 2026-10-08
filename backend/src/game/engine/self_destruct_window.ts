@@ -1,7 +1,7 @@
-import { AliveComponent } from "../../core/domain/components/alive";
+import { AliveComponent, aliveLifeVersion } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
 import { RoleComponent } from "../../core/domain/components/role";
-import { ActionProvider, ActionWindow, BoardConfig, EntityId, GameEvent, Phase } from "../../core/domain/model";
+import { ActionProvider, ActionWindow, BoardConfig, EntityId, Phase } from "../../core/domain/model";
 import { RoleRegistry } from "../../core/domain/registries/role_registry";
 import { World } from "../../core/domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
@@ -13,7 +13,6 @@ export class SelfDestructWindow {
     private readonly world: World,
     private readonly roleRegistry: RoleRegistry,
     private readonly toolGateway: ToolGateway,
-    private readonly events: GameEvent[],
   ) {}
 
   async execute(
@@ -21,7 +20,10 @@ export class SelfDestructWindow {
     actionProvider: ActionProvider,
     window: ActionWindow,
     phase: Phase,
+    isCurrent: () => boolean = () => true,
+    commit?: (actorId: EntityId) => Promise<void>,
   ): Promise<EntityId | null> {
+    if (!isCurrent()) return null;
     const actors = this.world.getAliveEntityIds().filter((id) => {
       const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
       if (!role) {
@@ -32,6 +34,9 @@ export class SelfDestructWindow {
 
     const picks = await Promise.all(
       actors.map(async (actorId) => {
+        const alive = this.world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)!;
+        const role = this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!;
+        const lifeVersion = aliveLifeVersion(alive);
         const req = requests.create({
           phase,
           actionWindow: window,
@@ -51,21 +56,18 @@ export class SelfDestructWindow {
           return null;
         }
 
-        const result = this.toolGateway.validateAndSanitize(this.world, actorId, action, {
-          phase,
-          actionWindow: window,
-          allowSelfDestruct: true,
-        });
-        if (!result.ok) {
-          return null;
-        }
-        return actorId;
+        return { actorId, action, alive, role, lifeVersion };
       }),
     );
 
-    const picked = picks
-      .filter((id): id is EntityId => id !== null)
-      .sort((a, b) => a - b)[0];
+    if (!isCurrent()) return null;
+    const valid: EntityId[] = [];
+    for (const pick of picks) {
+      if (!pick || !isCurrent() || this.world.getComponent(pick.actorId, COMPONENT.Alive) !== pick.alive ||
+          this.world.getComponent(pick.actorId, COMPONENT.Role) !== pick.role || pick.lifeVersion === undefined || aliveLifeVersion(pick.alive) !== pick.lifeVersion) continue;
+      if (this.toolGateway.validateAndSanitize(this.world, pick.actorId, pick.action, { phase, actionWindow: window, allowSelfDestruct: true }).ok) valid.push(pick.actorId);
+    }
+    const picked = valid.sort((a, b) => a - b)[0];
     if (picked === undefined) {
       return null;
     }
@@ -75,14 +77,8 @@ export class SelfDestructWindow {
       return null;
     }
 
-    this.events.push({
-      timestamp: Date.now(),
-      type: "wolf_self_destruct",
-      payload: {
-        wolfId: picked,
-        window,
-      },
-    });
+    if (!isCurrent()) return null;
+    await commit?.(picked);
     return picked;
   }
 }

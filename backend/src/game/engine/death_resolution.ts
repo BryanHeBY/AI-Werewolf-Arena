@@ -29,6 +29,7 @@ export class DeathResolution {
     actionProvider: ActionProvider,
     phase: Phase,
     lastWordsPhase: Phase,
+    deathPhases: Readonly<Record<EntityId, Phase>> = {},
   ): Promise<void> {
     const resolutionPhase = this.state.phase;
     const resolutionDay = this.state.day;
@@ -37,6 +38,7 @@ export class DeathResolution {
     }));
     let pending = [...seen];
     const allSources: DeathSources = structuredClone(sources);
+    const initialPhases = structuredClone(deathPhases);
     let firstBatch = true;
 
     while (pending.length > 0) {
@@ -52,15 +54,17 @@ export class DeathResolution {
           this.state.day,
           this.events,
           allSources,
+          initialPhases,
         );
-        await this.collectLastWords(pending, lastWordsPhase, phase, allSources, actionProvider);
+        await this.collectLastWords(pending, lastWordsPhase, phase, allSources, actionProvider, initialPhases);
       }
       if (this.state.phase !== resolutionPhase || this.state.day !== resolutionDay || this.state.gameOver) return;
 
       // 先处理警长死亡带来的警徽逻辑，再执行角色死亡钩子。
       for (const deadId of pending) {
         const causes = allSources[deadId] ?? [];
-        const reason = causes.includes(DeathCause.SelfDestruct) ? "self_destruct" : causes.includes(DeathCause.Exile) ? "voted_out" : `${deathPhase}_death`;
+        const actualDeathPhase = firstBatch ? initialPhases[deadId] ?? deathPhase : deathPhase;
+        const reason = causes.includes(DeathCause.SelfDestruct) ? "self_destruct" : causes.includes(DeathCause.Exile) ? "voted_out" : `${actualDeathPhase}_death`;
         transferOrDestroySheriffBadge(this.world, deadId, reason, this.events);
       }
 
@@ -71,7 +75,7 @@ export class DeathResolution {
         try {
           await this.eventRegistry.onDeath(
             this.world, [deadId], allSources,
-            hunterId => this.collectHunterShot(hunterId, deathPhase, allSources, actionProvider, actions),
+            hunterId => this.collectHunterShot(hunterId, firstBatch ? initialPhases[hunterId] ?? deathPhase : deathPhase, allSources, actionProvider, actions),
             this.events,
             result => {
               for (const id of result.extraDeaths) {
@@ -133,6 +137,7 @@ export class DeathResolution {
     deathPhase: Phase,
     sources: DeathSources,
     actionProvider: ActionProvider,
+    deathPhases: Readonly<Record<EntityId, Phase>>,
   ): Promise<void> {
     const requests = new GameActionRequestFactory(
       this.world,
@@ -141,7 +146,8 @@ export class DeathResolution {
     );
     const day = this.state.day;
     for (const deadId of deadIds) {
-      if (!this.lastWordsMechanism.shouldGrantLastWords(deathPhase, day, sources[deadId] ?? [])) continue;
+      const actualDeathPhase = deathPhases[deadId] ?? deathPhase;
+      if (!this.lastWordsMechanism.shouldGrantLastWords(actualDeathPhase, day, sources[deadId] ?? [])) continue;
       if (this.state.phase !== phase || this.state.day !== day || this.state.gameOver) return;
       const permit = this.world.openDeathAction(deadId, "speak", phase, day);
       try {
@@ -154,7 +160,7 @@ export class DeathResolution {
           summary: { key: "request.summary.last_words" },
           context: {
             trigger: "last_words",
-            death_phase: deathPhase,
+            death_phase: actualDeathPhase,
             death_action_id: permit.id,
           },
         }));

@@ -81,12 +81,12 @@ describe("day interrupt hooks", () => {
       return index === 0 || window !== windows[index - 1];
     });
     expect(result.interrupted).toBe(false);
-    expect(uniqueWindows[0]).toBe(ActionWindow.OnDaybreak);
-    expect(uniqueWindows[1]).toBe(ActionWindow.OnPreElection);
+    expect(uniqueWindows[0]).toBe(ActionWindow.OnPreElection);
+    expect(uniqueWindows[1]).toBe(ActionWindow.OnDaybreak);
     expect(uniqueWindows).toContain(ActionWindow.OnPerSpeechGap);
   });
 
-  test("on_daybreak no longer accepts self-destruct interrupt", async () => {
+  test("on_daybreak accepts self-destruct only when explicitly enabled", async () => {
     const context = bootstrapGame({
       ...twelvePlayerStandardConfig,
       hooks: {
@@ -117,12 +117,13 @@ describe("day interrupt hooks", () => {
       { day: 1 },
     );
 
-    expect(result.interrupted).toBe(false);
-    expect(result.summary.speeches.length).toBeGreaterThan(0);
-    expect(events.some((event) => event.type === "wolf_self_destruct")).toBe(false);
+    expect(result.interrupted).toBe(true);
+    expect(result.summary.speeches).toEqual([]);
+    expect(result.summary.selfDestructBy).not.toBeNull();
+    expect(events.filter((event) => event.type === "wolf_self_destruct")).toHaveLength(0);
   });
 
-  test("on_pre_election no longer accepts self-destruct interrupt", async () => {
+  test("on_pre_election accepts self-destruct only when explicitly enabled", async () => {
     const config = {
       ...twelvePlayerStandardConfig,
       hooks: {
@@ -149,12 +150,13 @@ describe("day interrupt hooks", () => {
       { day: 1 },
     );
 
-    expect(result.interrupted).toBe(false);
-    expect(result.summary.speeches.length).toBeGreaterThan(0);
-    expect(events.some((event) => event.type === "wolf_self_destruct")).toBe(false);
+    expect(result.interrupted).toBe(true);
+    expect(result.summary.speeches).toEqual([]);
+    expect(result.summary.selfDestructBy).not.toBeNull();
+    expect(events.filter((event) => event.type === "wolf_self_destruct")).toHaveLength(0);
   });
 
-  test("on_per_speech_gap no longer accepts self-destruct interrupt", async () => {
+  test("on_per_speech_gap accepts self-destruct only when explicitly enabled", async () => {
     const config = {
       ...twelvePlayerStandardConfig,
       hooks: {
@@ -182,9 +184,10 @@ describe("day interrupt hooks", () => {
       { day: 1 },
     );
 
-    expect(result.interrupted).toBe(false);
+    expect(result.interrupted).toBe(true);
     expect(result.summary.speeches.length).toBeGreaterThanOrEqual(1);
-    expect(events.some((event) => event.type === "wolf_self_destruct")).toBe(false);
+    expect(result.summary.selfDestructBy).not.toBeNull();
+    expect(events.filter((event) => event.type === "wolf_self_destruct")).toHaveLength(0);
   });
 
   test("on_pre_vote can interrupt voting pipeline and jump night", async () => {
@@ -212,9 +215,8 @@ describe("day interrupt hooks", () => {
 
     expect(result.interrupted).toBe(true);
     expect(result.summary.target).toBeNull();
-    expect(events.some((event) => event.payload.window === ActionWindow.OnPreVote)).toBe(
-      true,
-    );
+    expect(result.removed).toHaveLength(1);
+    expect(events.some((event) => event.type === "wolf_self_destruct")).toBe(false);
   });
 
   test("an explicitly empty self-destruct window performs voting without requesting self-destruct", async () => {

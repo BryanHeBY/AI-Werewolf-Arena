@@ -11,7 +11,7 @@
 - 起局必须有狼人和好人；屠边还必须同时含神职和平民；胜负条件不可重复。
 - 警长票重为有限正数，转移后沿用；关闭警长时不允许显式初始警长或非默认警徽参数。
 - 放逐平票：`min_id`/`no_elimination`；狼刀平票：`min_id`/`no_kill`；警长平票：`min_id`/`min_seat`/`no_elimination`。未来值先实现再放行，不能接受后按另一策略执行。
-- 本阶段自爆窗口只接受实际已有执行语义的 `on_pre_vote`；空列表明确关闭，不走旧 normalizer 回退。其他窗口在 P4 实现后开放。窗口对应 hook 必须启用。
+- P4已支持 `on_pre_election`、`on_daybreak`、`on_per_speech_gap`、`on_pre_vote` 四个自爆窗口；对应 hook 必须启用，空列表明确关闭。准确时点、首日提前自爆、消费点提交和历史迁移见[窗口契约](self-destruct-windows.md)。
 - 未知字段、未注册角色、无对应角色的参数、重复窗口及越界座位均拒绝。
 
 ## 对局与玩家绑定

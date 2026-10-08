@@ -39,9 +39,10 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
     if (phase !== Phase.Day && phase !== Phase.Voting) {
       return { code: RuleError.BlastPhase };
     }
-    if (actionWindow !== ActionWindow.OnPreVote) {
+    if (actionWindow === undefined || !Object.values(ActionWindow).includes(actionWindow)) {
       return { code: RuleError.BlastWindow };
     }
+    if (phase !== (actionWindow === ActionWindow.OnPreVote ? Phase.Voting : Phase.Day)) return { code: RuleError.BlastPhase };
     if (!allowSelfDestruct) {
       return { code: RuleError.BlastDisabled };
     }

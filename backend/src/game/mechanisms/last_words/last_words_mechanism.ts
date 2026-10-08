@@ -20,9 +20,10 @@ export class LastWordsMechanism {
     day: number,
     events: GameEvent[],
     sources: DeathSources,
+    deathPhases: Readonly<Record<EntityId, Phase>> = {},
   ): void {
     for (const deadId of deadIds) {
-      if (!this.shouldGrantLastWords(deathPhase, day, sources[deadId] ?? [])) {
+      if (!this.shouldGrantLastWords(deathPhases[deadId] ?? deathPhase, day, sources[deadId] ?? [])) {
         continue;
       }
       const alive = world.getComponent<AliveComponent>(deadId, COMPONENT.Alive);

@@ -7,6 +7,7 @@ const stages: Record<string, [string, string]> = {
   sheriff_nomination: ["上警报名", "Sheriff nomination"], sheriff_campaign_speech: ["警上发言", "Sheriff campaign speech"],
   sheriff_withdraw: ["退水", "Withdraw candidacy"], sheriff_vote: ["警长投票", "Sheriff vote"], sheriff_choose_direction: ["警长定序", "Sheriff speaking order"],
   on_pre_vote: ["放逐前窗口", "Before exile voting"],
+  on_pre_election: ["警长流程前窗口", "Before sheriff election"], on_daybreak: ["天亮后窗口", "Daybreak window"], on_per_speech_gap: ["发言间隔窗口", "Between speeches"],
 };
 export function assertTransportPrompt(plan: ActorTransportPlan, turn: PlannedTurn, content: string): string {
   const actorMarker = plan.locale === "en" ? `[Action prompt] Player ${plan.actorId},` : `[行动提示] ${plan.actorId}号玩家` ;

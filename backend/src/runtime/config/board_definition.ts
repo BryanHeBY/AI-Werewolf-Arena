@@ -25,8 +25,7 @@ const schema = z.strictObject({
       enabled: z.boolean(), initialSeat: safePositive.optional(), voteWeight: z.number().finite().positive().default(1.5),
       tieBreaker: z.enum(["min_id", "min_seat", "no_elimination"]).default("min_seat"),
     }),
-    // Other windows become configurable after P4 implements their execution semantics.
-    selfDestruct: z.strictObject({ enabledWindows: z.array(z.literal(ActionWindow.OnPreVote)) }),
+    selfDestruct: z.strictObject({ enabledWindows: z.array(z.enum(ActionWindow)) }),
     tieBreaker: z.strictObject({
       exileVote: z.enum(["min_id", "no_elimination"]), wolfKillVote: z.enum(["min_id", "no_kill"]),
     }),
@@ -75,7 +74,8 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
   }
   const windows = definition.mechanisms.selfDestruct.enabledWindows;
   if (new Set(windows).size !== windows.length) fail("board_config_duplicate_window", "mechanisms.selfDestruct.enabledWindows");
-  if (windows.includes(ActionWindow.OnPreVote) && !definition.rules.hooks.onPreVote) fail("board_config_window_hook_disabled", "rules.hooks.onPreVote");
+  const windowHooks = { [ActionWindow.OnPreVote]: "onPreVote", [ActionWindow.OnDaybreak]: "onDaybreak", [ActionWindow.OnPreElection]: "onPreElection", [ActionWindow.OnPerSpeechGap]: "onPerSpeechGap" } as const;
+  for (const window of windows) if (!definition.rules.hooks[windowHooks[window]]) fail("board_config_window_hook_disabled", `rules.hooks.${windowHooks[window]}`);
   if (definition.rules.winConditions.includes(WinCondition.SlaughterSide)) {
     if (!profiles.some(item => item.goodSide === "god") || !profiles.some(item => item.goodSide === "villager")) {
       fail("board_config_slaughter_side_requires_both_sides", "rules.winConditions");

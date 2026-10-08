@@ -10,15 +10,18 @@ import { readReproduction, replayReproduction } from "../../src/runtime/simulati
 import { createTestTempDirectory } from "../support/temp_directory";
 import { foundationTransportPlan, type ActorTransportPlan } from "../support/foundation_transport_plan";
 import { assertTransportPrompt, assertTransportEvents } from "../support/transport_prompt_oracle";
-import type { GameEvent } from "../../src/core";
+import { ActionWindow, WinCondition, type GameEvent } from "../../src/core";
+
+import { selfDestructTransportPlan } from "../support/self_destruct_transport_plan";
+import { parseBoardDefinition } from "../../src/runtime/config/board_definition";
 
 const roles6 = ["wolf", "seer", "villager", "wolf", "guard", "villager"] as const;
 const roles12 = ["wolf", "wolf", "wolf", "wolf", "seer", "witch", "hunter", "idiot", "villager", "villager", "villager", "villager"] as const;
 const commonEvents = (events: GameEvent[]) => events.map(({ type, payload }) => ({ type, payload }));
 
-async function runFixture(size: 6 | 12, alternate: boolean, kind: "llm" | "acp" | "mixed", locale: "zh-CN" | "en", swap = false) {
+async function runFixture(size: 6 | 12, alternate: boolean, kind: "llm" | "acp" | "mixed", locale: "zh-CN" | "en", swap = false, window?: ActionWindow) {
   const root = await createTestTempDirectory("awa-full-transport-");
-  const plans = foundationTransportPlan(size, alternate), roles = size === 6 ? roles6 : roles12;
+  const plans = window ? selfDestructTransportPlan(window) : foundationTransportPlan(size, alternate), roles = size === 6 ? roles6 : roles12;
   const actorPlans = new Map<number, ActorTransportPlan>(roles.map((role, index) => [index + 1, { actorId: index + 1, role, locale, turns: plans.get(index + 1)! }]));
   if (kind === "mixed") for (const [actor, plan] of actorPlans) {
     plan.expectedName = `Seat ${actor}`;
@@ -78,7 +81,15 @@ async function runFixture(size: 6 | 12, alternate: boolean, kind: "llm" | "acp" 
     if (actor === 4) (players[String(actor)] as any).personalityPrompt = null;
   }
   const boardName = size === 6 ? "six_player_mvp" : "twelve_player_standard";
-  const board = await loadBoardDefinition(path.resolve(process.cwd(), "../configs.example"), boardName);
+  let board = await loadBoardDefinition(path.resolve(process.cwd(), "../configs.example"), boardName);
+  if (window) {
+    const definition = structuredClone(board.definition);
+    definition.rules.winConditions = [WinCondition.SlaughterCity];
+    definition.rules.hooks = { onDaybreak: true, onPreElection: true, onPreVote: true, onPerSpeechGap: true };
+    definition.mechanisms.sheriff = { enabled: true, voteWeight: 2.25, tieBreaker: "min_seat" };
+    definition.mechanisms.selfDestruct.enabledWindows = [window];
+    board = parseBoardDefinition(definition);
+  }
   const runtime = parseRuntimeConfig({ providers: { default: "actor-1", items: providers }, agents: { default: "actor-1", items: agents },
     game: { board: boardName, locale, displayLocale: locale === "en" ? "zh-CN" : "en", seed: size === 6 ? "foundation-six:116" : "foundation-twelve:124680", players },
     debugSummary: { agent: { enabled: false } },
@@ -99,10 +110,17 @@ async function runFixture(size: 6 | 12, alternate: boolean, kind: "llm" | "acp" 
     const alive = size === 6 ? alternate ? [2, 3, 6] : [2, 6] : alternate ? [6, 8, 9, 10, 11, 12] : [5, 6, 8, 9, 10, 11, 12];
     expect(manifest.players.filter((row: any) => row.alive).map((row: any) => row.player_id)).toEqual(alive);
     const replay = JSON.parse(await fs.readFile(path.join(directory, "replay.json"), "utf8")); assertReplayDocument(replay); expect(replay.meta.locale).toBe(locale);
+    if (window) {
+      expect(replay.events.filter((event: any) => event.type === "wolf_self_destruct").map((event: any) => event.payload)).toEqual(window === ActionWindow.OnPreElection ? [{ wolfId: 1, window }] : [{ wolfId: 1, window }, { wolfId: 4, window }]);
+      expect(replay.events.filter((event: any) => event.type === "night_resolved").map((event: any) => event.payload.deaths)).toEqual([[3], [5]]);
+      expect(replay.events.filter((event: any) => event.type === "last_words_spoken").map((event: any) => event.payload.playerId)).toEqual(window === ActionWindow.OnPreElection ? [3, 4] : [3]);
+      expect(replay.events.filter((event: any) => event.type === "sheriff_elected").map((event: any) => event.payload.winnerId)).toEqual(window === ActionWindow.OnPreElection ? [] : [2]);
+    }
     const logic = JSON.parse(await fs.readFile(path.join(directory, "logic_ops.json"), "utf8")); expect(logic.ops.filter((op: any) => ["rejected", "fallback", "error"].includes(op.status))).toEqual([]);
     const views = await Promise.all(roles.map(async (_, index) => JSON.parse(await fs.readFile(path.join(directory, `players/player_${index + 1}.json`), "utf8"))));
     for (const view of views) {
       assertReplayPlayerView(view); expect(view.locale).toBe(locale);
+      if (window && view.player_id === 2) expect(view.timeline.filter((entry: any) => entry.kind === "event" && entry.event.type === "seer_checked").map((entry: any) => entry.event.payload.targetId)).toEqual([1, 4]);
       const rounds = view.timeline.filter((entry: any) => entry.kind === "turn"); expect(rounds).toHaveLength(plans.get(view.player_id)!.length);
       for (const round of rounds) {
         expect(round.delta_messages.some((message: any) => message.kind === "fallback" || message.kind === "request_error")).toBe(false);
@@ -113,11 +131,11 @@ async function runFixture(size: 6 | 12, alternate: boolean, kind: "llm" | "acp" 
     for (const [actor, plan] of actorPlans) if (actorKind(actor) === "llm") expect(counts.get(actor)).toBe(plan.turns.length);
     else {
       const trace = JSON.parse(await fs.readFile(path.join(directory, `acp-workspaces/player-${actor}/game-fixture.json`), "utf8"));
-      if (plan.role === "seer") expect([...new Set(trace.visibleSeerTargets)]).toEqual(size === 6 ? [1, 4] : [1, 2]);
+      if (plan.role === "seer") expect([...new Set(trace.visibleSeerTargets)]).toEqual(window === ActionWindow.OnDaybreak ? [1] : size === 6 ? [1, 4] : [1, 2]);
       expect(trace.locale).toBe(locale); expect(trace.initializationSeen).toBe(true); expect(trace.schemaChecked).toBe(true); expect(trace.consumed).toBe(plan.turns.length);
       for (const pid of [trace.agentPid, trace.mcpPid]) { expect(Number.isSafeInteger(pid) && pid > 0).toBe(true); try { process.kill(pid, 0); throw new Error("fixture_process_still_alive"); } catch (error) { expect((error as NodeJS.ErrnoException).code).toBe("ESRCH"); } }
     }
-    if (actorKind(size === 6 ? 2 : 5) === "llm") expect([...visibleSeerTargets.get(size === 6 ? 2 : 5)!]).toEqual(size === 6 ? [1, 4] : [1, 2]);
+    if (actorKind(size === 6 ? 2 : 5) === "llm") expect([...visibleSeerTargets.get(size === 6 ? 2 : 5)!]).toEqual(window === ActionWindow.OnDaybreak ? [1] : size === 6 ? [1, 4] : [1, 2]);
     const record = await readReproduction(path.join(directory, "reproduction.json"));
     for (const [actorId, plan] of actorPlans) {
       const decisions = record.decisions.filter(decision => decision.actorId === actorId);
@@ -157,3 +175,10 @@ for (const size of [6, 12] as const) for (const alternate of [false, true]) for 
     const neutral = (record: typeof en.record) => record.decisions.map(({ settleOrder: _settle, openedAfterSettlement: _opening, ...decision }) => decision);
     expect(neutral(en.record)).toEqual(neutral(zh.record));
   }, 120000);
+
+for (const window of Object.values(ActionWindow)) for (const kind of ["llm", "acp"] as const) test(`${window}/${kind}: real bilingual full games preserve window timing and replay`, async () => {
+  const zh = await runFixture(6, false, kind, "zh-CN", false, window);
+  const en = await runFixture(6, false, kind, "en", false, window);
+  expect(en.result).toEqual(zh.result); expect(en.events).toEqual(zh.events);
+  expect(en.record.checkpoints).toEqual(zh.record.checkpoints);
+}, 120000);

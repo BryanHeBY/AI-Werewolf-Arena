@@ -35,6 +35,6 @@ release:check新增lint:i18n。TypeScript AST扫描backend/src、frontend/src与
 
 ## 当前行为与后续边界
 
-共同业务接受语义已由P4 A01统一。末神禁枪、重复白痴资格和自爆警徽等G01–G04差异仍按基础规则卡列待修。S03末狼持徽时自爆的残留徽章没有被认可为正确规则；跨语相等仅证明同一实现，不替代独立规则oracle。
+P3交付时，末神禁枪、重复白痴资格和自爆警徽残留仍为已知差异；跨语相等只证明当时同一实现。P4已统一共同接收，修复[死亡来源/末神](death-causes.md)、[死亡链及自爆警徽](death-chain.md)、[白痴/警长资格](public-participation.md)，并开放[四窗口](self-destruct-windows.md)；独立oracle与新增真实通路门槛见各批审查，不能将P3历史边界当作当前未修清单。
 
 本阶段未调用外部模型或读取真实认证；actual transport是本地合成agent/provider，不声称已完成Codex/Claude真实模型质量评测、发布级长局/并发故障矩阵、所有64角色或22机制。P4–P10继续完整目标。

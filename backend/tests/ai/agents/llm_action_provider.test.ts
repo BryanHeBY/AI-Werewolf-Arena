@@ -1334,7 +1334,7 @@ describe("LlmActionProvider", () => {
         '{"name":"self_destruct","args":{"reason":"test","confirm":true}}',
         (messages) => {
           const user = messages.find((msg) => msg.role === "user")?.content ?? "";
-          expect(user).toContain("唯一会改变局面的动作是 self_destruct");
+          expect(user).toContain("只有 self_destruct 会改变对局");
         },
       ),
       {
@@ -1375,7 +1375,7 @@ describe("LlmActionProvider", () => {
 
     expect(action).toBeNull();
     const user = client.lastMessages.find((message) => message.role === "user")?.content ?? "";
-    expect(user).toContain("若选择不自爆，直接结束本次回复即可");
+    expect(user).toContain("若不自爆，直接结束本次回应，不提交行动");
     expect(user).toContain("你当前可以提交的行动有：self_destruct, report_bug");
   });
 

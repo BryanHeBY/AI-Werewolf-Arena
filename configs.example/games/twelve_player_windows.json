@@ -1,0 +1,9 @@
+{
+  "board": "twelve_player_windows",
+  "maxDays": 20,
+  "maxRuntimeMs": 1800000,
+  "llmTimeoutMs": 45000,
+  "streamEvents": true,
+  "printThinking": false,
+  "printPrivateEvents": false
+}

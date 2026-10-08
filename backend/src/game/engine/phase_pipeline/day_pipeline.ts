@@ -31,6 +31,8 @@ export interface DayPipelineOptions {
   day: number;
   /** 返回 true 表示已终局，不再请求白天行动。 */
   afterSheriffElection?: () => Promise<boolean>;
+  isCurrent?: () => boolean;
+  commitSelfDestruct?: (actorId: EntityId, window: ActionWindow) => Promise<void>;
 }
 
 export interface DayPipelineDependencies {
@@ -57,7 +59,7 @@ export class DayPipeline {
     this.roleRegistry = dependencies.roleRegistry;
     this.toolGateway = dependencies.toolGateway;
     this.events = dependencies.events;
-    this.selfDestructWindow = new SelfDestructWindow(this.world, this.roleRegistry, this.toolGateway, this.events);
+    this.selfDestructWindow = new SelfDestructWindow(this.world, this.roleRegistry, this.toolGateway);
   }
 
   async execute(
@@ -71,6 +73,13 @@ export class DayPipeline {
       this.events,
       options.day,
     );
+    const isCurrent = options.isCurrent ?? (() => true);
+    if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
+    if (options.day === 1 && config.enableSheriff && findSheriffId(this.world) === null && config.hooks.onPreElection && isSelfDestructWindowEnabled(config, ActionWindow.OnPreElection)) {
+      const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnPreElection, Phase.Day, isCurrent, id => options.commitSelfDestruct?.(id, ActionWindow.OnPreElection) ?? Promise.resolve());
+      if (exploded !== null) return { summary: { speeches, selfDestructBy: exploded }, interrupted: true };
+      if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
+    }
     await electSheriffIfNeeded({
       world: this.world,
       events: this.events,
@@ -80,12 +89,29 @@ export class DayPipeline {
       enableSheriff: config.enableSheriff,
       config,
     });
+    if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
     if (await options.afterSheriffElection?.()) {
       return {
         summary: { speeches, selfDestructBy: null },
         interrupted: false,
       };
     }
+
+
+    if (config.hooks.onDaybreak && isSelfDestructWindowEnabled(config, ActionWindow.OnDaybreak)) {
+      const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnDaybreak, Phase.Day, isCurrent, id => options.commitSelfDestruct?.(id, ActionWindow.OnDaybreak) ?? Promise.resolve());
+      if (exploded !== null) {
+        return {
+          summary: {
+            speeches,
+            selfDestructBy: exploded,
+          },
+          interrupted: true,
+        };
+      }
+    }
+
+    if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
     const speakerDirection = await chooseSpeakerDirection({
       world: this.world,
       events: this.events,
@@ -95,32 +121,6 @@ export class DayPipeline {
       enableSheriff: config.enableSheriff,
     });
 
-    if (config.hooks.onDaybreak && isSelfDestructWindowEnabled(config, ActionWindow.OnDaybreak)) {
-      const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnDaybreak, Phase.Day);
-      if (exploded !== null) {
-        return {
-          summary: {
-            speeches,
-            selfDestructBy: exploded,
-          },
-          interrupted: true,
-        };
-      }
-    }
-
-    if (config.hooks.onPreElection && isSelfDestructWindowEnabled(config, ActionWindow.OnPreElection)) {
-      const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnPreElection, Phase.Day);
-      if (exploded !== null) {
-        return {
-          summary: {
-            speeches,
-            selfDestructBy: exploded,
-          },
-          interrupted: true,
-        };
-      }
-    }
-
     const speakers = buildSpeakerOrder(
       this.world,
       this.world.getAliveEntityIds(),
@@ -129,6 +129,7 @@ export class DayPipeline {
     );
 
     for (const actorId of speakers) {
+      if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
       if (!this.isAlive(actorId)) {
         continue;
       }
@@ -145,6 +146,7 @@ export class DayPipeline {
       });
 
       const action = await actionProvider.getAction(req);
+      if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
       if (action?.name === "speak") {
         const result = this.toolGateway.validateAndSanitize(this.world, actorId, action, {
           phase: Phase.Day,
@@ -164,7 +166,7 @@ export class DayPipeline {
       }
 
       if (config.hooks.onPerSpeechGap && isSelfDestructWindowEnabled(config, ActionWindow.OnPerSpeechGap)) {
-        const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnPerSpeechGap, Phase.Day);
+        const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnPerSpeechGap, Phase.Day, isCurrent, id => options.commitSelfDestruct?.(id, ActionWindow.OnPerSpeechGap) ?? Promise.resolve());
         if (exploded !== null) {
           return {
             summary: {

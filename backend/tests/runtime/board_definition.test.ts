@@ -38,7 +38,10 @@ test("parameters require the corresponding role and implemented semantics", asyn
   expect(() => parseBoardDefinition(raw)).toThrow("board_config_invalid_field");
   raw.mechanisms.tieBreaker.wolfKillVote = "min_id";
   raw.mechanisms.selfDestruct.enabledWindows = ["on_daybreak"];
-  expect(() => parseBoardDefinition(raw)).toThrow("board_config_invalid_field");
+  raw.rules.hooks.onDaybreak = false;
+  expect(() => parseBoardDefinition(raw)).toThrow("board_config_window_hook_disabled");
+  raw.rules.hooks.onDaybreak = true;
+  expect(parseBoardDefinition(raw).config.selfDestruct!.enabledWindows).toEqual(["on_daybreak"]);
 });
 
 test("boards require opposing camps before a game can start", async () => {
@@ -150,4 +153,16 @@ test("game bindings and CLI number overrides are validated after board resolutio
   const report = JSON.stringify(describeResolvedSetup(resolveGameSetup(runtime, {}, board)));
   for (const secret of ["PRIVATE_TEST_KEY", "PRIVATE_PROMPT", "password", "SECRET_QUERY"]) expect(report).not.toContain(secret);
   expect(report).toContain('"explicit"');
+});
+
+test("the public twelve-player window example loads through normal v2 setup with all four hooks", async () => {
+  const root = path.resolve(process.cwd(), "../configs.example");
+  const resolved = await loadBoardDefinition(root, "twelve_player_windows");
+  expect(resolved.config.boardSize).toBe(12);
+  expect(resolved.config.selfDestruct!.enabledWindows).toEqual(["on_pre_election", "on_daybreak", "on_per_speech_gap", "on_pre_vote"]);
+  expect(resolved.config.hooks).toEqual({ onDaybreak: true, onPreElection: true, onPreVote: true, onPerSpeechGap: true });
+  const game = JSON.parse(await readFile(path.join(root, "games/twelve_player_windows.json"), "utf8"));
+  const runtime = parseRuntimeConfig({ providers: { default: "synthetic", items: { synthetic: { type: "openai", apiKey: "synthetic-only", baseURL: "http://127.0.0.1:1/v1" } } }, agents: { default: "default", items: { default: { kind: "llm", provider: "synthetic", model: "synthetic" } } }, game });
+  const setup = resolveGameSetup(runtime, {}, resolved);
+  expect(setup.boardConfig.selfDestruct!.enabledWindows).toEqual(resolved.config.selfDestruct!.enabledWindows);
 });

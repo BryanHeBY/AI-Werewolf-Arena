@@ -33,6 +33,8 @@ export interface VotingPipelineResult {
 export interface VotingPipelineOptions {
   /** 当前日次由 PhaseManager 显式传入，不能从事件历史反推。 */
   day: number;
+  isCurrent?: () => boolean;
+  commitSelfDestruct?: (actorId: EntityId) => Promise<void>;
 }
 
 export interface VotingPipelineDependencies {
@@ -69,7 +71,7 @@ export class VotingPipeline {
     this.toolGateway = dependencies.toolGateway;
     this.eventRegistry = dependencies.eventRegistry;
     this.events = dependencies.events;
-    this.selfDestructWindow = new SelfDestructWindow(this.world, dependencies.roleRegistry, this.toolGateway, this.events);
+    this.selfDestructWindow = new SelfDestructWindow(this.world, dependencies.roleRegistry, this.toolGateway);
   }
 
   async execute(
@@ -95,7 +97,7 @@ export class VotingPipeline {
       config.hooks.onPreVote &&
       isSelfDestructWindowEnabled(config, ActionWindow.OnPreVote)
     ) {
-      const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnPreVote, Phase.Voting);
+      const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnPreVote, Phase.Voting, options.isCurrent, options.commitSelfDestruct);
       if (exploded !== null) {
         safeRecordLogicOp({
           scope: "phase_pipeline",
@@ -116,6 +118,7 @@ export class VotingPipeline {
       }
     }
 
+    if (options.isCurrent && !options.isCurrent()) return { summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] };
     const voters = this.world.getAliveEntityIds().filter(id => canVote(this.world, id));
 
     // Requests run in parallel; Promise.all retains voter order for deterministic replay events.

@@ -1,6 +1,7 @@
 import { text } from "@ai-werewolf-arena/game-text";
 import {
   ActionProvider,
+  ActionWindow,
   BoardConfig,
   EntityId,
   GameEvent,
@@ -171,51 +172,43 @@ export class PhaseManager {
       this.state.day === 1 && this.config.enableSheriff === true;
 
     this.setPhase(Phase.Day);
-    if (!firstDaySheriffBeforeNightInfo) {
+    const cycleDay = this.state.day;
+    const dayIsCurrent = () => this.state.day === cycleDay && this.state.phase === Phase.Day && !this.state.gameOver;
+    let nightSettled = false;
+    const settleNight = async (explodedId?: EntityId) => {
+      if (nightSettled) return this.state.gameOver;
+      nightSettled = true;
       this.emitNightResolved(night.summary.deaths);
-      await this.deathResolution.resolve(
-        night.damage.deaths,
-        night.damage.deathSources,
-        actionProvider,
-        Phase.Night,
-        Phase.Day,
-      );
-      if (this.checkAndSealResult()) {
-        return this.getSnapshot();
+      const sources: DeathSources = structuredClone(night.damage.deathSources);
+      const deaths = [...night.damage.deaths];
+      const deathPhases: Record<EntityId, Phase> = {};
+      if (explodedId !== undefined) {
+        if (!deaths.includes(explodedId)) deaths.push(explodedId);
+        sources[explodedId] = [...new Set([...(sources[explodedId] ?? []), DeathCause.SelfDestruct])];
+        deathPhases[explodedId] = Phase.Day;
       }
-    }
+      await this.deathResolution.resolve(deaths, sources, actionProvider, Phase.Night, Phase.Day, deathPhases);
+      if (!dayIsCurrent()) return this.state.gameOver;
+      return this.checkAndSealResult();
+    };
+    if (!firstDaySheriffBeforeNightInfo && await settleNight()) return this.getSnapshot();
 
-    const dayResult = await this.dayPipeline.execute(
-      this.config,
-      actionProvider,
-      firstDaySheriffBeforeNightInfo
-        ? {
-            day: this.state.day,
-            afterSheriffElection: async () => {
-              this.emitNightResolved(night.summary.deaths);
-              await this.deathResolution.resolve(
-                night.damage.deaths,
-                night.damage.deathSources,
-                actionProvider,
-                Phase.Night,
-                Phase.Day,
-              );
-              return this.checkAndSealResult();
-            },
-          }
-        : { day: this.state.day },
-    );
+    const dayResult = await this.dayPipeline.execute(this.config, actionProvider, {
+      day: cycleDay,
+      isCurrent: dayIsCurrent,
+      commitSelfDestruct: async (id, window) => {
+        if (!dayIsCurrent()) return;
+        this.recordSelfDestruct(id, window);
+        if (!nightSettled) await settleNight(id);
+        else await this.deathResolution.resolve([id], { [id]: [DeathCause.SelfDestruct] }, actionProvider, Phase.Day, Phase.Day);
+      },
+      ...(firstDaySheriffBeforeNightInfo ? { afterSheriffElection: () => settleNight() } : {}),
+    });
 
-    if (this.state.gameOver) {
-      return this.getSnapshot();
-    }
+    if (this.state.gameOver || !dayIsCurrent()) return this.getSnapshot();
     if (dayResult.interrupted) {
-      if (dayResult.summary.selfDestructBy !== null) {
-        const id = dayResult.summary.selfDestructBy;
-        await this.deathResolution.resolve([id], { [id]: [DeathCause.SelfDestruct] }, actionProvider, Phase.Day, Phase.Day);
-      }
       // 白天被自爆中断时直接结束当日并切到下一夜。
-      if (this.checkAndSealResult()) {
+      if (this.state.gameOver || this.checkAndSealResult()) {
         return this.getSnapshot();
       }
       this.state.day += 1;
@@ -224,16 +217,19 @@ export class PhaseManager {
     }
 
     this.setPhase(Phase.Voting);
+    const votingIsCurrent = () => this.state.day === cycleDay && this.state.phase === Phase.Voting && !this.state.gameOver;
     const votingResult = await this.votingPipeline.execute(
       this.config,
       actionProvider,
-      { day: this.state.day },
+      { day: cycleDay, isCurrent: votingIsCurrent, commitSelfDestruct: async id => {
+        if (!votingIsCurrent()) return;
+        this.recordSelfDestruct(id, ActionWindow.OnPreVote);
+        await this.deathResolution.resolve([id], { [id]: [DeathCause.SelfDestruct] }, actionProvider, Phase.Voting, Phase.Voting);
+      } },
     );
 
+    if (!votingIsCurrent()) return this.getSnapshot();
     if (votingResult.interrupted) {
-      const sources: DeathSources = {};
-      for (const id of votingResult.removed) sources[id] = [DeathCause.SelfDestruct];
-      await this.deathResolution.resolve(votingResult.removed, sources, actionProvider, Phase.Voting, Phase.Voting);
       // 投票前窗口发生自爆，同样跳过当日剩余流程。
       if (this.checkAndSealResult()) {
         return this.getSnapshot();
@@ -321,6 +317,10 @@ export class PhaseManager {
   /**
    * 写入夜晚结算公开信息（用于“昨夜死亡/平安夜”广播）。
    */
+  private recordSelfDestruct(id: EntityId, window: ActionWindow): void {
+    this.events.push({ timestamp: Date.now(), type: "wolf_self_destruct", payload: { wolfId: id, window } });
+  }
+
   private emitNightResolved(deaths: EntityId[]): void {
     this.events.push({
       timestamp: Date.now(),
