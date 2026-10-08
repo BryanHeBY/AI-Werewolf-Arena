@@ -30,6 +30,7 @@ import {
 import { BuiltPlayerPrompt, PlayerRoundOutcome } from "../player/contracts";
 import { PlayerPromptPolicy } from "../player/player_prompt_policy";
 import { PlayerRoundRecorder } from "../player/player_round_recorder";
+import { ScopedRequestScheduler } from "../../runtime/request_scheduler";
 
 export interface AcpActionProviderOptions {
   fallbackProvider?: ActionProvider;
@@ -39,6 +40,7 @@ export interface AcpActionProviderOptions {
   personalityPromptResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
   turnTimeoutMs?: number;
   onBugReport?: (report: AcpBugReport) => void;
+  maxConcurrentRequests?: number;
 }
 
 interface AcpTurnPromptBuild {
@@ -77,11 +79,13 @@ export class AcpActionProvider implements ActionProvider {
   private readonly controllers = new Map<number, AbortController>();
   private readonly closeController = new AbortController();
   private closed = false;
+  private readonly scheduler: ScopedRequestScheduler;
 
   constructor(
     world: World,
     private readonly options: AcpActionProviderOptions,
   ) {
+    this.scheduler = new ScopedRequestScheduler({ defaultMaxConcurrentRequests: options.maxConcurrentRequests ?? Infinity });
     this.fallbackProvider = options.fallbackProvider ?? new BaselineBotActionProvider(world);
     this.bugReportService = new AgentBugReportService(world);
     this.registry = new AcpTurnRegistry(world, (report) => this.handleBugReport(report));
@@ -98,10 +102,11 @@ export class AcpActionProvider implements ActionProvider {
     this.roundRecorder = new PlayerRoundRecorder(world);
   }
 
-  get runtimeState() { return { closed: this.closed, turns: this.pending.size, registry: this.registry.snapshot, pool: this.sessions.snapshot }; }
+  get runtimeState() { return { closed: this.closed, turns: this.pending.size, registry: this.registry.snapshot, pool: this.sessions.snapshot, scheduler: this.scheduler.snapshot }; }
 
   getAction(request: ActionRequest): Promise<ToolCall | null> {
     if (this.closed) return Promise.reject(new Error("acp_provider_closed"));
+    if (this.sessions.hasUnreclaimedResources) return Promise.reject(new Error("acp_resource_reclamation_failed"));
     if (this.controllers.has(request.actorId)) return Promise.reject(new Error("acp_actor_turn_already_open"));
     const startedAt = Date.now();
     const bounded = { ...request, deadlineAtMs: Math.min(request.deadlineAtMs ?? Infinity, startedAt + (this.options.turnTimeoutMs ?? 45_000)) };
@@ -110,9 +115,28 @@ export class AcpActionProvider implements ActionProvider {
     let resolve!: (action: ToolCall | null) => void, reject!: (error: unknown) => void;
     const task = new Promise<ToolCall | null>((done, fail) => { resolve = done; reject = fail; });
     this.pending.add(task);
-    void this.runTurn(bounded, startedAt, controller.signal).then(resolve, reject);
+    void this.runScheduled(bounded, startedAt, controller.signal).then(resolve, reject);
     const cleanup = () => { clearTimeout(timer); this.controllers.delete(request.actorId); this.pending.delete(task); };
     return task.then(action => { cleanup(); return this.closed ? null : action; }, error => { cleanup(); throw error; });
+  }
+
+  private async runScheduled(request: ActionRequest, startedAt: number, signal: AbortSignal): Promise<ToolCall | null> {
+    let release: (() => void) | undefined;
+    try {
+      release = await this.scheduler.acquire(request, undefined, signal);
+      return await this.runTurn(request, startedAt, signal);
+    } catch (error) {
+      if (error === this.closeController.signal.reason) return null;
+      // No model/session starts after a queue deadline. The existing local
+      // baseline branch still owns the immediate final choice.
+      if (!release && describeError(error).code === "request_timeout") return this.runTurn(request, startedAt, signal);
+      throw error;
+    } finally {
+      // An unknown/failed reclamation cannot become a fresh model slot. Stop
+      // this provider's waiters until a new runtime is explicitly constructed.
+      if (this.sessions.hasUnreclaimedResources) this.scheduler.close(new Error("acp_resource_reclamation_failed"));
+      release?.();
+    }
   }
 
   private async runTurn(request: ActionRequest, startedAt: number, signal: AbortSignal): Promise<ToolCall | null> {
@@ -140,7 +164,7 @@ export class AcpActionProvider implements ActionProvider {
       if (this.closed) return null;
       this.registry.closeTurn(turn.sessionId);
       if (outcome.reason === "request_timeout" || outcome.reason === "deadline_skip") {
-        this.sessions.discard(request.actorId);
+        await this.sessions.discard(request.actorId);
       } else {
         let cancelled = true;
         try { await awaitBeforeDeadline(() => session!.cancel(), Math.min(deadlineAtMs, Date.now() + 300), signal); }
@@ -152,7 +176,7 @@ export class AcpActionProvider implements ActionProvider {
           if (!(error instanceof TurnDeadlineElapsed)) this.sessions.noteCleanupFailure(error);
         }
         if (!cancelled || !await settleWithin(promptTask, Math.min(1_000, Math.max(0, deadlineAtMs - Date.now())))) {
-          this.sessions.discard(request.actorId);
+          await this.sessions.discard(request.actorId);
         }
       }
       if (this.closed) return null;
@@ -174,7 +198,7 @@ export class AcpActionProvider implements ActionProvider {
       fallbackReason = outcome.reason ?? fallbackReason;
       requestError = outcome.requestError;
     } catch (error) {
-      this.sessions.discard(request.actorId);
+      await this.sessions.discard(request.actorId);
       if (error === this.closeController.signal.reason) return null;
       fallbackReason = "runtime_error";
       requestError = describeError(error);
@@ -217,6 +241,7 @@ export class AcpActionProvider implements ActionProvider {
   async close(): Promise<void> {
     this.closed = true;
     this.closeController.abort(new Error("acp_provider_closed"));
+    this.scheduler.close(this.closeController.signal.reason);
     this.registry.close();
     for (const controller of this.controllers.values()) controller.abort(this.closeController.signal.reason);
     const failures: unknown[] = [];

@@ -40,7 +40,8 @@
 - `spawnArgs` 必须同时指定 ACP agent；不允许从不明确的角色/默认模型继承后猜传输。
 - locale 只接受 `zh-CN`/`en`；displayLocale 缺省跟随对局；seed 为非空字符串。
 - P2 T01已开启seed：发牌与逐夜狼人顺序使用按局命名随机流，manifest保存seed、算法/版本与分流方式。相同seed需要相同动作才能复现；真实模型文本不受seed固定。P3完成后执行/展示支持zh-CN/en，检查报告列出实际支持；语言与显示选择独立。
-- P4 前同一局只能使用一种传输（全 LLM 或全 ACP）；检查报告的 `mixedTransports: false` 表示混合绑定尚不可执行。
+- P4 A02 已开启混合 SDK/ACP：按座位/角色选择的已解析 profile 分派，检查报告 `mixedTransports: true`。示例见 `configs.example/games/six_player_mixed.json`；认证和 ACP 命令仍需配置为本地可用值。
+- SDK 与 ACP provider 均支持可选正整数 `maxConcurrentRequests`；同 provider 配置 ID 的玩家共用限额，排队/初始化/重试计入整轮截止时间。不同 provider 独立，别名/同密钥/跨进程不等于全局限额；ACP 计数约束本后端发起的回合，不宣称控制任意适配器内部的额外 HTTP 并发。
 - 名字已进入身份、共享提示和公开复盘的可选 name 字段；前端姓名展示及旧档兼容已由P3验证。
 
 ## 显式迁移

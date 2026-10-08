@@ -14,7 +14,8 @@
       "command": "your-acp-agent",
       "args": ["--acp"],
       "env": {},
-      "initializeTimeoutMs": 45000
+      "initializeTimeoutMs": 45000,
+      "maxConcurrentRequests": 2
     }
   }
 }

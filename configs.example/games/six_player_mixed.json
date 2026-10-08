@@ -1,0 +1,31 @@
+{
+  "board": "six_player_mvp",
+  "locale": "zh-CN",
+  "agent": "deepseek_v4_flash",
+  "maxDays": 10,
+  "maxRuntimeMs": 600000,
+  "llmTimeoutMs": 45000,
+  "players": {
+    "1": {
+      "agent": "deepseek_v4_flash"
+    },
+    "2": {
+      "agent": "acp_default"
+    },
+    "3": {
+      "agent": "deepseek_v4_flash"
+    },
+    "4": {
+      "agent": "acp_default"
+    },
+    "5": {
+      "agent": "deepseek_v4_flash"
+    },
+    "6": {
+      "agent": "acp_default"
+    }
+  },
+  "streamEvents": true,
+  "printThinking": false,
+  "printPrivateEvents": false
+}

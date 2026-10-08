@@ -1,6 +1,6 @@
 # Agent 回合预算与资源（P4 A02）
 
-当前已交付 **SDK 的队列、整回合预算及关闭基础**，本批接续 **ACP session/MCP/进程与审计回收**。混合玩家装配及 runner 的多错误收尾仍由 A02 后续提交验收；不把这些子批当作完整 A02 已完成。
+当前已交付 **SDK 的队列、整回合预算及关闭基础**，本批接续 **ACP session/MCP/进程与审计回收**。混合玩家装配与 provider 并发已接续交付，runner 的多错误收尾仍由 A02 后续提交验收；不把这些子批当作完整 A02 已完成。
 
 ## SDK 的一个回合预算
 
@@ -84,3 +84,24 @@ awaitBeforeDeadline 是等待工具，只持有该次等待的 timer/listener，
 snapshot/runtimeState 只显示 closed 与逻辑计数。真实 ACP 验收另外核对 agent、MCP、嵌套子进程的 ESRCH 与控制面端口失联；相同远端 wire ID 两个玩家的正常动作/复用和双语任务也实际运行。
 
 不配合取消的自定义创建超过 cleanup 等待预算时，close 必须报未完成，creating 可以仍非零；不会先清掉计数伪称释放。该 Promise 若以后返回会话，回收处理仍在，后续 close 可再次汇总它的失败。没有有限等待能证明一个尚未返回句柄、任意自定义实现创建的外部资源已经释放；内置 AcpProcessClient 的真实进程/MCP 协议已按上述物理证据验证。
+
+
+## 混合玩家与 provider 并发
+
+PlayerAgentRuntime.kind 可为 llm、acp 或 mixed；这是聚合 owner 的类型。每个玩家本身的 agent.kind 仍是 llm/acp，由既有座位/角色/默认绑定解析后分派。SDK 与 ACP 各自执行、复用与失败流程保留；没有 Agent 基类或通用投票框架。
+
+factory 在入口复制每个完整 profile/provider 的独立快照，固定本局的 actor→kind/provider/model/人格/预算/启动配置。同 providerName 必须提供相同 provider 配置，否则在初始化前拒绝；改变调用者原 Map/profile/provider 不会修改已运行的路由与限额。陌生 actor 直接拒绝，不能借用另一位玩家的默认客户端。
+
+SDK 共用按 provider ID 分组的 scheduler。ACP 为每个 provider ID 创建自己的 provider/pool/scheduler，限额覆盖初始化提示与实际 prompt；排队包括在原 deadline 内，超时者不启动工厂。对 discard/force 的等待计入 lease 所有权，确认退役完成后才向等待者交接名额。不同 ACP provider 可以同时独立推进，不受另一个 provider 的等待或关闭阻塞。
+
+当回收超时/失败、尚不能证明底层资源已释放时，该 provider 的 scheduler 在放名额前封口，等待和后续新模型请求都拒绝 acp_resource_reclamation_failed；不能因逻辑释放而启动第二个模型。晚到会话仍退役，错误留给最终 close；成功的晚到回收也不自动解除封口，需要显式创建新 runtime。其它 provider 的 owner 不共享这项封口状态。
+
+顶层工厂部分初始化失败时关闭已构造 owner，并把初始化与清理错误同时保留。最终 close 使用 allSettled 尝试全部 SDK/ACP owner，逐个 flush ACP observer；任一错误不跳过其它清理，也不覆盖先前错误。runtimeState 只暴露逻辑状态/计数，仍需物理证据证明进程/网络释放。
+
+兼容说明：纯 SDK/ACP 的 kind 保留，聚合 mixed 是新合法值；外部按 kind 穷举的调用者应处理它。每 actor 的传输类型记录在 Tape.metadata.players[].agent 与配置报告中，manifest 的玩家摘要仍只有原有角色/存活/名称等字段。旧 mixed-not-supported 错误码留在 closed 诊断表作历史兼容，正常路径已不主动抛出。等待工具/语言/旧录制读取规则不变。
+
+### 混合验收证据
+
+共享 SDK 与 ACP provider 各 cap2，S01/S04 六人、S02/S03 十二人、两种奇偶分派、两语共16个新增实际完整对局；与原18局合计34局，均自然结束、零拒绝/回退并逐局严格 Tape 重放。两种分派使七基础角色均经过两条传输；原名、agent 人格继承、席位覆盖和 null 清除在实际 system/init wire 验证本人 marker且无他人 marker。手工胜者/存活/资源/阶段/请求顺序 oracle 沿用原场景，不用引擎计算预期。
+
+quota 回归另外验证过期不创建、强制回收前不交接、回收未完成时不启动等待工厂、caller 原对象变更不改 route/预算、部分初始化/多 owner 清理错误，以及真实不同 ACP provider 同时进展和物理回收。runner 的并发动作多错误与最终收尾仍在下一子批完成，不把本节当作完整 A02/P4 已完成。

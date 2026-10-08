@@ -1,6 +1,6 @@
 import type { ActionStage, Role, ToolCall } from "../../src/core";
 export interface PlannedTurn { day: number; stage: ActionStage; action: ToolCall | null }
-export interface ActorTransportPlan { actorId: number; role: Role; locale: "zh-CN" | "en"; turns: PlannedTurn[] }
+export interface ActorTransportPlan { actorId: number; role: Role; locale: "zh-CN" | "en"; turns: PlannedTurn[]; expectedName?: string; expectedPersona?: string | null; forbiddenPersonas?: string[] }
 
 /** Literal S01/S04/S02/S03 oracle; transport actors never query engine truth. */
 export function foundationTransportPlan(size: 6 | 12, alternate = false) {

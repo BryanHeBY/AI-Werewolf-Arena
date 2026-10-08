@@ -21,6 +21,7 @@ export interface AcpProviderConfig {
   env: Record<string, string>;
   cwd?: string;
   initializeTimeoutMs?: number;
+  maxConcurrentRequests?: number;
   sessionConfigOptions: Record<string, string | boolean>;
 }
 

@@ -5,7 +5,7 @@
 - runGame接收ResolvedGameSetup.context.locale/displayLocale，bootstrap明确绑定游戏locale；CLI的--locale只覆盖本次配置副本，--display-locale独立选终端语言。
 - simulateGames新增可选locale（默认zh-CN，未知拒绝），CLI simulate --locale与游戏World、manifest/Tape一致。
 - 英文reproduction.json可通过既有离线replay:actions重放；语言由已校验metadata进入World，身份名字和动作文本原样。source/lock/RNG/schema/规则兼容门槛保留。
-- check报告executionSupport.locales为zh-CN/en，mixedTransports仍false。基础七角色已验证当前实现；57计划角色不能因有双语目录而运行。
+- check报告executionSupport.locales为zh-CN/en，P4 A02后mixedTransports为true。基础七角色已验证当前实现；57计划角色不能因有双语目录而运行。
 
 ## 实际通路与人工oracle
 
@@ -35,6 +35,6 @@ release:check新增lint:i18n。TypeScript AST扫描backend/src、frontend/src与
 
 ## 当前行为与后续边界
 
-P4待修的末神禁枪、重复白痴资格、自爆警徽及共同业务接受语义仍按基础规则卡列待修。S03末狼持徽时自爆的残留徽章没有被认可为正确规则；跨语相等仅证明同一实现，不替代独立规则oracle。
+共同业务接受语义已由P4 A01统一。末神禁枪、重复白痴资格和自爆警徽等G01–G04差异仍按基础规则卡列待修。S03末狼持徽时自爆的残留徽章没有被认可为正确规则；跨语相等仅证明同一实现，不替代独立规则oracle。
 
-本阶段未调用外部模型或读取真实认证；actual transport是本地合成agent/provider，不声称已完成Codex/Claude真实模型质量评测、全部混合Agent/取消矩阵、所有64角色或22机制。P4–P10继续完整目标。
+本阶段未调用外部模型或读取真实认证；actual transport是本地合成agent/provider，不声称已完成Codex/Claude真实模型质量评测、发布级长局/并发故障矩阵、所有64角色或22机制。P4–P10继续完整目标。

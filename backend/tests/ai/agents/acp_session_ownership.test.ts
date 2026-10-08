@@ -58,7 +58,7 @@ test("ACP close cancels open prompt without fallback and permanently seals its r
   const provider = new AcpActionProvider(world(), { turnTimeoutMs: 1000, sessionFactory: { async createSession(value) { input = value; return { ...session(async () => {}), async prompt() { ready(); await new Promise<never>(() => {}); } }; } }, fallbackProvider: { async getAction() { fallbacks++; return null; } } });
   const pending = provider.getAction(request()); await started; await provider.close();
   expect(await pending).toBeNull(); expect(fallbacks).toBe(0);
-  expect(provider.runtimeState).toEqual({ closed: true, turns: 0, registry: { closed: true, pending: 0 }, pool: { closed: true, sessions: 0, creating: 0, retiring: 0 } });
+  expect(provider.runtimeState).toEqual({ closed: true, turns: 0, registry: { closed: true, pending: 0 }, pool: { closed: true, sessions: 0, creating: 0, retiring: 0 }, scheduler: { closed: true, active: 0, queued: 0 } });
   expect(input.registry.submitAction("synthetic", { turn_id: "t1", action: "speak", arguments: { text: "late" } })).toMatchObject({ ok: false, error: "turn_not_open_or_session_invalid" });
   expect(() => input.registry.openTurn(request(), "synthetic")).toThrow("acp_registry_closed");
   await expect(provider.getAction(request())).rejects.toThrow("acp_provider_closed");
@@ -120,6 +120,6 @@ test("whole-turn and cancellation deadline expiry both force retirement without 
     const action = await provider.getAction(request());
     expect(action).toEqual(budget === 1000 ? { name: "speak", args: { text: "selected" } } : null);
     await provider.close(); expect(forced).toBe(1);
-    expect(provider.runtimeState).toEqual({ closed: true, turns: 0, registry: { closed: true, pending: 0 }, pool: { closed: true, sessions: 0, creating: 0, retiring: 0 } });
+    expect(provider.runtimeState).toEqual({ closed: true, turns: 0, registry: { closed: true, pending: 0 }, pool: { closed: true, sessions: 0, creating: 0, retiring: 0 }, scheduler: { closed: true, active: 0, queued: 0 } });
   }
 });

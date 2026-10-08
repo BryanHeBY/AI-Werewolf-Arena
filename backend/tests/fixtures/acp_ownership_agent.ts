@@ -29,7 +29,7 @@ try {
       send({ jsonrpc: "2.0", id: rpc.id, result: { sessionId: "shared-wire-session" } });
     } else if (rpc.method === "session/prompt") {
       const prompt = String(rpc.params.prompt[0].text), turn = /(?:Current turn ID: |当前回合 ID：)(t\d+)/.exec(prompt)?.[1];
-      if (turn && mode === "stubborn") { await new Promise<never>(() => {}); continue; }
+      if (turn && mode === "stubborn") { send({ jsonrpc: "2.0", method: "session/update", params: { sessionId: "shared-wire-session", update: { sessionUpdate: "agent_message_chunk", content: { type: "text", text: "fixture_prompt_started" } } } }); await new Promise<never>(() => {}); continue; }
       if (turn) {
         const received = await client!.callTool({ name: "submit_action", arguments: { turn_id: turn, action: "speak", arguments: { text: `actor-${actor}` } } });
         facts.accepted.push(received.structuredContent); await save();

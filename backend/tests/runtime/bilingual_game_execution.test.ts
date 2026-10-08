@@ -16,20 +16,33 @@ const roles6 = ["wolf", "seer", "villager", "wolf", "guard", "villager"] as cons
 const roles12 = ["wolf", "wolf", "wolf", "wolf", "seer", "witch", "hunter", "idiot", "villager", "villager", "villager", "villager"] as const;
 const commonEvents = (events: GameEvent[]) => events.map(({ type, payload }) => ({ type, payload }));
 
-async function runFixture(size: 6 | 12, alternate: boolean, kind: "llm" | "acp", locale: "zh-CN" | "en") {
+async function runFixture(size: 6 | 12, alternate: boolean, kind: "llm" | "acp" | "mixed", locale: "zh-CN" | "en", swap = false) {
   const root = await createTestTempDirectory("awa-full-transport-");
   const plans = foundationTransportPlan(size, alternate), roles = size === 6 ? roles6 : roles12;
   const actorPlans = new Map<number, ActorTransportPlan>(roles.map((role, index) => [index + 1, { actorId: index + 1, role, locale, turns: plans.get(index + 1)! }]));
+  if (kind === "mixed") for (const [actor, plan] of actorPlans) {
+    plan.expectedName = `Seat ${actor}`;
+    plan.expectedPersona = actor === 4 ? null : actor === 3 ? "[persona:seat:3]" : `[persona:agent:${actor}]`;
+    plan.forbiddenPersonas = [...roles.flatMap((_, index) => [`[persona:agent:${index + 1}]`, `[persona:seat:${index + 1}]`])].filter(marker => marker !== plan.expectedPersona);
+  }
+  const actorKind = (actor: number) => kind === "mixed" ? (Boolean(actor % 2) !== swap ? "llm" : "acp") : kind;
   const counts = new Map<number, number>(), failures: string[] = [], visibleSeerTargets = new Map<number, Set<number>>();
-  const server = kind === "llm" ? Bun.serve({ hostname: "127.0.0.1", port: 0, async fetch(request) {
+  const server = kind !== "acp" ? Bun.serve({ hostname: "127.0.0.1", port: 0, async fetch(request) {
     try {
-      const actorId = Number(new URL(request.url).pathname.match(/player-(\d+)/)?.[1]), plan = actorPlans.get(actorId)!;
-      const body = await request.json() as any, index = counts.get(actorId) ?? 0, turn = plan.turns[index];
+      const body = await request.json() as any;
+      const actorId = Number(/^synthetic-player-(\d+)$/.exec(body.model)?.[1] ?? new URL(request.url).pathname.match(/player-(\d+)/)?.[1]), plan = actorPlans.get(actorId)!;
+      if (actorKind(actorId) !== "llm") throw new Error("fixture_wrong_transport_route");
+      const index = counts.get(actorId) ?? 0, turn = plan.turns[index];
       if (!turn) throw new Error(`fixture_extra_turn:${actorId}`);
       const prompt = body.messages.at(-1).content as string;
       const turnId = assertTransportPrompt(plan, turn, prompt);
       if (locale === "en") expect(JSON.stringify(body.messages)).not.toMatch(/[\u4e00-\u9fff]/);
       expect(body.messages[0].content).toContain(locale === "en" ? "Use English" : "你必须使用中文");
+      if (plan.expectedName) {
+        expect(body.messages[0].content).toContain(plan.expectedName);
+        if (plan.expectedPersona) expect(body.messages[0].content).toContain(plan.expectedPersona);
+        for (const marker of plan.forbiddenPersonas!) expect(body.messages[0].content).not.toContain(marker);
+      }
       for (const message of body.messages) {
         if (typeof message.content === "string" && message.content.startsWith('{"event":')) {
           const event = JSON.parse(message.content).event as [number, string, Record<string, unknown>];
@@ -44,16 +57,25 @@ async function runFixture(size: 6 | 12, alternate: boolean, kind: "llm" | "acp",
   } }) : undefined;
   try {
   const providers: Record<string, unknown> = {}, agents: Record<string, unknown> = {}, players: Record<string, unknown> = {};
+  if (kind === "mixed") {
+    providers["shared-sdk"] = { type: "openai", apiKey: "synthetic-auth-only", baseURL: `${server!.url.origin}/v1`, maxConcurrentRequests: 2 };
+    providers["shared-acp"] = { type: "acp", transport: "stdio", command: process.execPath, args: [path.resolve(process.cwd(), "tests/fixtures/acp_game_agent.ts")], maxConcurrentRequests: 2 };
+  }
   for (const [actorId, plan] of actorPlans) {
     const id = `actor-${actorId}`; players[String(actorId)] = { name: `Seat ${actorId}`, agent: id };
-    if (kind === "llm") {
+    if (actorKind(actorId) === "llm") {
       providers[id] = { type: "openai", apiKey: "synthetic-auth-only", baseURL: `${server!.url.origin}/v1/player-${actorId}` };
-      agents[id] = { kind, provider: id, model: "synthetic" };
+      agents[id] = kind === "mixed" ? { kind: "llm", provider: "shared-sdk", model: `synthetic-player-${actorId}` } : { kind: "llm", provider: id, model: "synthetic" };
     } else {
       const file = path.join(root, `script-${actorId}.json`); await fs.writeFile(file, JSON.stringify(plan));
       providers[id] = { type: "acp", transport: "stdio", command: process.execPath, args: [path.resolve(process.cwd(), "tests/fixtures/acp_game_agent.ts")], env: { AWA_TEST_PLAN_FILE: file } };
-      agents[id] = { kind, provider: id };
+      agents[id] = kind === "mixed" ? { kind: "acp", provider: "shared-acp", spawnArgs: [file] } : { kind: "acp", provider: id };
     }
+  }
+  if (kind === "mixed") for (const actor of actorPlans.keys()) {
+    (agents[`actor-${actor}`] as any).personalityPrompt = `[persona:agent:${actor}]`;
+    if (actor === 3) (players[String(actor)] as any).personalityPrompt = { "zh-CN": "[persona:seat:3]", en: "[persona:seat:3]" };
+    if (actor === 4) (players[String(actor)] as any).personalityPrompt = null;
   }
   const boardName = size === 6 ? "six_player_mvp" : "twelve_player_standard";
   const board = await loadBoardDefinition(path.resolve(process.cwd(), "../configs.example"), boardName);
@@ -65,7 +87,7 @@ async function runFixture(size: 6 | 12, alternate: boolean, kind: "llm" | "acp",
     const result = await runGame(setup); expect(failures).toEqual([]);
     const session = (await fs.readdir(root)).find(name => name.startsWith("session_"))!;
     const directory = path.join(root, session);
-    if (kind === "acp") for (const actor of actorPlans.keys()) {
+    for (const actor of actorPlans.keys()) if (actorKind(actor) === "acp") {
       const trace = JSON.parse(await fs.readFile(path.join(directory, `acp-workspaces/player-${actor}/game-fixture.json`), "utf8"));
       expect(trace.failure).toBe("");
     }
@@ -73,6 +95,7 @@ async function runFixture(size: 6 | 12, alternate: boolean, kind: "llm" | "acp",
     expect(result.snapshot.result).toEqual({ winner: "good", reason: "all_wolves_eliminated" });
     const manifest = JSON.parse(await fs.readFile(path.join(directory, "manifest.json"), "utf8"));
     expect(manifest.locale).toBe(locale); expect(manifest.players.map((row: any) => row.role)).toEqual(roles);
+    expect(manifest.players.map((row: any) => row.name)).toEqual(roles.map((_, index) => `Seat ${index + 1}`));
     const alive = size === 6 ? alternate ? [2, 3, 6] : [2, 6] : alternate ? [6, 8, 9, 10, 11, 12] : [5, 6, 8, 9, 10, 11, 12];
     expect(manifest.players.filter((row: any) => row.alive).map((row: any) => row.player_id)).toEqual(alive);
     const replay = JSON.parse(await fs.readFile(path.join(directory, "replay.json"), "utf8")); assertReplayDocument(replay); expect(replay.meta.locale).toBe(locale);
@@ -87,14 +110,14 @@ async function runFixture(size: 6 | 12, alternate: boolean, kind: "llm" | "acp",
         expect(prompt).toContain(locale === "en" ? "[Action prompt]" : "[行动提示]");
       }
     }
-    if (kind === "llm") for (const [actor, plan] of actorPlans) expect(counts.get(actor)).toBe(plan.turns.length);
-    else for (const [actor, plan] of actorPlans) {
+    for (const [actor, plan] of actorPlans) if (actorKind(actor) === "llm") expect(counts.get(actor)).toBe(plan.turns.length);
+    else {
       const trace = JSON.parse(await fs.readFile(path.join(directory, `acp-workspaces/player-${actor}/game-fixture.json`), "utf8"));
       if (plan.role === "seer") expect([...new Set(trace.visibleSeerTargets)]).toEqual(size === 6 ? [1, 4] : [1, 2]);
       expect(trace.locale).toBe(locale); expect(trace.initializationSeen).toBe(true); expect(trace.schemaChecked).toBe(true); expect(trace.consumed).toBe(plan.turns.length);
       for (const pid of [trace.agentPid, trace.mcpPid]) { expect(Number.isSafeInteger(pid) && pid > 0).toBe(true); try { process.kill(pid, 0); throw new Error("fixture_process_still_alive"); } catch (error) { expect((error as NodeJS.ErrnoException).code).toBe("ESRCH"); } }
     }
-    if (kind === "llm") expect([...visibleSeerTargets.get(size === 6 ? 2 : 5)!]).toEqual(size === 6 ? [1, 4] : [1, 2]);
+    if (actorKind(size === 6 ? 2 : 5) === "llm") expect([...visibleSeerTargets.get(size === 6 ? 2 : 5)!]).toEqual(size === 6 ? [1, 4] : [1, 2]);
     const record = await readReproduction(path.join(directory, "reproduction.json"));
     for (const [actorId, plan] of actorPlans) {
       const decisions = record.decisions.filter(decision => decision.actorId === actorId);
@@ -124,3 +147,13 @@ test("simultaneous SDK games keep language, records, events and complete replay 
   expect(zh.events).toEqual(en.events); expect(zh.record.metadata.locale).toBe("zh-CN"); expect(en.record.metadata.locale).toBe("en");
   expect(zh.record.checkpoints).toEqual(en.record.checkpoints);
 }, 120000);
+
+
+for (const size of [6, 12] as const) for (const alternate of [false, true]) for (const swap of [false, true])
+  test(`${size}/${alternate ? "alternate" : "standard"}/mixed/${swap ? "even-sdk" : "odd-sdk"}: real shared-provider bilingual games preserve outcomes and exact replay`, async () => {
+    const zh = await runFixture(size, alternate, "mixed", "zh-CN", swap);
+    const en = await runFixture(size, alternate, "mixed", "en", swap);
+    expect(en.result).toEqual(zh.result); expect(en.events).toEqual(zh.events); expect(en.record.checkpoints).toEqual(zh.record.checkpoints);
+    const neutral = (record: typeof en.record) => record.decisions.map(({ settleOrder: _settle, openedAfterSettlement: _opening, ...decision }) => decision);
+    expect(neutral(en.record)).toEqual(neutral(zh.record));
+  }, 120000);

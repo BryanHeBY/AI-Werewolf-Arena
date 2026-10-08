@@ -7,7 +7,7 @@ import type { AcpMcpServerConfig } from "../../src/ai/integrations/acp/acp_mcp_b
 import type { ActorTransportPlan } from "../support/foundation_transport_plan";
 import { assertTransportPrompt, assertTransportEvents } from "../support/transport_prompt_oracle";
 
-const plan: ActorTransportPlan = JSON.parse(await readFile(process.env.AWA_TEST_PLAN_FILE!, "utf8"));
+const plan: ActorTransportPlan = JSON.parse(await readFile(process.argv[2] ?? process.env.AWA_TEST_PLAN_FILE!, "utf8"));
 const trace = { agentPid: process.pid, mcpPid: 0, locale: "", prompts: [] as string[], submitted: 0, consumed: 0, visibleSeerTargets: [] as number[], schemaChecked: false, initializationSeen: false, failure: "" };
 let client: Client | undefined;
 const send = (value: unknown) => process.stdout.write(JSON.stringify(value) + "\n");
@@ -50,6 +50,11 @@ try {
       } else {
         if (!prompt.includes(plan.locale === "en" ? "Use English" : "你必须使用中文")) throw new Error("fixture_initial_language_mismatch");
         if (plan.locale === "en" && /[\u4e00-\u9fff]/.test(prompt)) throw new Error("fixture_initial_not_english");
+        if (plan.expectedName) {
+          if (!prompt.includes(plan.expectedName)) throw new Error("fixture_persona_name_missing");
+          if (plan.expectedPersona && !prompt.includes(plan.expectedPersona)) throw new Error("fixture_persona_missing");
+          if (plan.forbiddenPersonas?.some(marker => prompt.includes(marker))) throw new Error("fixture_persona_cross_actor");
+        }
         trace.initializationSeen = true;
       }
       await save();

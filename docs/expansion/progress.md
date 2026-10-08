@@ -122,3 +122,7 @@ SDK 与 ACP 共用 schema/归一化/原有业务规则/回合约束及一次选�
 ## P4 共享调度器归属
 
 将既有 ScopedRequestScheduler 从 ai/agents/llm 移至 ai/runtime，仅修相对导入；为下一笔 ACP/provider 并发与混合装配提供共同位置，没有修改算法。类型/模块边界与7项调度回归通过；A逐字独立审查0阻断。迁移独立提交，行为接入继续下一笔。
+
+## P4 A02：混合装配与 provider 并发
+
+SDK/ACP按actor已解析profile分派，factory持有独立配置快照；同provider配置一致，原对象变更不漂移路由/预算。ACP provider支持strict正整数maxConcurrentRequests、各自独立pool/scheduler；回收完成才交接lease，未能证明回收则永久拒该provider新模型请求并保原错误。实际34个双语纯/混合整局、两种交错七角色、人设继承/覆盖/null与原名wire、逐局Tape及跨provider物理回收均通过。最终release388测试29034断言，三路[审查记录](reviews/p4-a02-mixed.md)已闭代码阻断；公开mixed=true及[six_player_mixed模板](../../configs.example/games/six_player_mixed.json)交付。runner并发多错收尾接续下一子批，A02/P4仍进行中。

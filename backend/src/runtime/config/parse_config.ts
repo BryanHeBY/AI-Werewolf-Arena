@@ -121,7 +121,7 @@ function normalizeProviderConfig(name: string, raw: unknown, environment: NodeJS
   if (type === "acp") {
     assertKnownKeys(raw, [
       "type", "transport", "command", "args", "env", "cwd",
-      "initializeTimeoutMs", "sessionConfigOptions",
+      "initializeTimeoutMs", "sessionConfigOptions", "maxConcurrentRequests",
     ], `providers.items.${name}`);
     const transport = raw.transport === undefined
       ? "stdio"
@@ -140,6 +140,7 @@ function normalizeProviderConfig(name: string, raw: unknown, environment: NodeJS
         raw.initializeTimeoutMs,
         `providers.items.${name}.initializeTimeoutMs`,
       ),
+      maxConcurrentRequests: readOptionalPositiveInteger(raw.maxConcurrentRequests, `providers.items.${name}.maxConcurrentRequests`),
       sessionConfigOptions: readSessionConfigOptions(
         raw.sessionConfigOptions,
         `providers.items.${name}.sessionConfigOptions`,

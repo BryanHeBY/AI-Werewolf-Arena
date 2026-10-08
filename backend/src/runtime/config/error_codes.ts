@@ -36,7 +36,7 @@ export const CONFIG_ERROR_CODES = [
   "runtime_config_llm_profile_missing_for_actor", "runtime_config_locale_invalid",
   "runtime_config_minimum_integer_invalid", "runtime_config_missing_configs_dir",
   "runtime_config_missing_environment_value", "runtime_config_missing_provider_or_agent_defaults",
-  "runtime_config_mixed_llm_and_acp_agents_not_supported_yet", "runtime_config_optional_boolean_invalid",
+  "runtime_config_mixed_llm_and_acp_agents_not_supported_yet", "runtime_config_provider_binding_inconsistent", "runtime_config_optional_boolean_invalid",
   "runtime_config_optional_number_invalid", "runtime_config_player_binding_conflict",
   "runtime_config_player_binding_invalid", "runtime_config_player_invalid",
   "runtime_config_player_name_invalid", "runtime_config_player_profiles_empty",

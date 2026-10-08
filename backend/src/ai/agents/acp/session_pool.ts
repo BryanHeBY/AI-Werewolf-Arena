@@ -4,6 +4,7 @@ import { awaitBeforeDeadline, awaitWithAbort } from "../../runtime/turn_deadline
 
 interface SessionEntry {
   promise: Promise<AcpSession>;
+  created: Promise<AcpSession>;
   controller: AbortController;
   session?: AcpSession;
 }
@@ -15,10 +16,13 @@ export class AcpSessionPool {
   private readonly retiring = new Set<Promise<void>>();
   private readonly retired = new WeakMap<AcpSession, Promise<void>>();
   private readonly failures: unknown[] = [];
+  private readonly discardedByActor = new Map<number, Promise<void>>();
   private closed = false;
+  private unreclaimed = false;
 
   constructor(private readonly onDiscard: (actorId: number) => void, private readonly cleanupTimeoutMs = ACP_CLOSE_TIMEOUT_MS) {}
   get isClosed(): boolean { return this.closed; }
+  get hasUnreclaimedResources(): boolean { return this.unreclaimed; }
   get snapshot() { return { closed: this.closed, sessions: this.entries.size, creating: this.creations.size, retiring: this.retiring.size }; }
   noteCleanupFailure(error: unknown): void { this.failures.push(error); }
 
@@ -36,7 +40,7 @@ export class AcpSessionPool {
       return factory.createSession({ ...input, actorId, deadlineAtMs, signal: controller.signal });
     });
     this.creations.add(created);
-    const entry: SessionEntry = { promise: awaitWithAbort(created, controller.signal), controller };
+    const entry: SessionEntry = { promise: awaitWithAbort(created, controller.signal), created, controller };
     this.entries.set(actorId, entry);
     void created.then(session => {
       this.creations.delete(created); entry.session = session;
@@ -44,19 +48,26 @@ export class AcpSessionPool {
     }, error => {
       this.creations.delete(created);
       // Real factories retain cleanup failures even when the caller already timed out.
-      if (error instanceof AcpInitializationCleanupError || (controller.signal.aborted && error !== controller.signal.reason)) this.failures.push(error);
+      if (error instanceof AcpInitializationCleanupError || (controller.signal.aborted && error !== controller.signal.reason)) { this.failures.push(error); this.unreclaimed = true; }
     });
     try { return await entry.promise; }
     catch (error) { if (this.entries.get(actorId) === entry) this.discard(actorId); throw error; }
     finally { clearTimeout(timer); }
   }
 
-  discard(actorId: number): void {
-    const entry = this.entries.get(actorId); if (!entry) return;
+  discard(actorId: number): Promise<void> {
+    const entry = this.entries.get(actorId); if (!entry) return this.discardedByActor.get(actorId) ?? Promise.resolve();
     this.entries.delete(actorId);
     entry.controller.abort(new Error("acp_session_discarded"));
     if (entry.session) this.retire(entry.session, true);
-    try { this.onDiscard(actorId); } catch (error) { this.failures.push(error); }
+    try { this.onDiscard(actorId); } catch (error) { this.failures.push(error); this.unreclaimed = true; }
+    const closing = awaitBeforeDeadline(async () => {
+      const session = await entry.created.catch(() => null);
+      if (session) await this.retire(session, true);
+    }, Date.now() + this.cleanupTimeoutMs).catch(error => { this.failures.push(error); this.unreclaimed = true; });
+    this.discardedByActor.set(actorId, closing); this.retiring.add(closing);
+    void closing.then(() => { this.retiring.delete(closing); if (this.discardedByActor.get(actorId) === closing) this.discardedByActor.delete(actorId); });
+    return closing;
   }
 
   async close(): Promise<void> {
@@ -74,10 +85,11 @@ export class AcpSessionPool {
     if (failures.length) throw new AggregateError(failures, "acp_pool_close_failed");
   }
 
-  private retire(session: AcpSession, force: boolean): void {
-    if (this.retired.has(session)) return;
-    const closing = closeAcpSession(session, force, this.cleanupTimeoutMs).catch(error => { this.failures.push(error); });
+  private retire(session: AcpSession, force: boolean): Promise<void> {
+    const existing = this.retired.get(session); if (existing) return existing;
+    const closing = closeAcpSession(session, force, this.cleanupTimeoutMs).catch(error => { this.failures.push(error); this.unreclaimed = true; });
     this.retired.set(session, closing); this.retiring.add(closing);
     void closing.then(() => this.retiring.delete(closing));
+    return closing;
   }
 }

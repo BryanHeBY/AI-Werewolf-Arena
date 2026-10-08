@@ -30,7 +30,7 @@ export function describeResolvedSetup(setup: ResolvedGameSetup, displayLocale: L
       clearedPrompt: entry.personalityPrompt === null,
     }])),
     context: setup.context,
-    executionSupport: { locales: ["zh-CN", "en"], reproducibleSeed: true, mixedTransports: false },
+    executionSupport: { locales: ["zh-CN", "en"], reproducibleSeed: true, mixedTransports: true },
     warnings: setup.warnings,
     warningMessages: setup.warnings.map(warning => text(displayLocale, "config.warning.locale_prompt_fallback", {
       path: warning.path, requested: warning.requestedLocale, fallback: warning.fallbackLocale,

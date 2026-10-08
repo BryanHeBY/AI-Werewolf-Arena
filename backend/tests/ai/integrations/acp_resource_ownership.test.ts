@@ -70,3 +70,18 @@ test("graceful close of a non-cooperative ACP prompt escalates to process-group 
   await stopped(facts.agentPid); await stopped(facts.nestedPid); await stopped(facts.mcpPid); await unreachable(controls[0]);
   expect(registry.snapshot).toEqual({ closed: true, pending: 0 });
 });
+
+test("separate ACP providers progress independently under their own limits", async () => {
+  const { createPlayerAgentRuntime } = await import("../../../src/runtime/player_agent_factory");
+  const root = await createTestTempDirectory("awa-acp-independent-"), game = bootstrapGame(sixPlayerMvpConfig, { locale: "en" });
+  let ready!: () => void; const began = new Promise<void>(done => { ready = done; });
+  const profiles = new Map([1, 2].map(actor => [actor, { name: `actor-${actor}`, kind: "acp" as const, providerName: `independent-${actor}`, provider: { type: "acp" as const, transport: "stdio" as const, command: process.execPath, args: [fixture], env: { AWA_TEST_ACTOR: String(actor), AWA_TEST_MODE: actor === 1 ? "stubborn" : "normal" }, sessionConfigOptions: {}, maxConcurrentRequests: 1 } }]));
+  const runtime = await createPlayerAgentRuntime({ world: game.world, boardConfig: sixPlayerMvpConfig, profilesByActor: profiles, acpWorkspaceRoot: root, llmTimeoutMs: 5000, trace: false, colorizeLogs: false, printLlmIo: false, printThinking: false, createAcpUpdateObserver: actor => actor === 1 ? (update: unknown) => { if ((update as any).content?.text === "fixture_prompt_started") ready(); } : undefined });
+  const blocked = runtime.provider.getAction(request(1)); await began;
+  try {
+    expect(await runtime.provider.getAction(request(2))).toEqual({ name: "speak", args: { text: "actor-2" } });
+    expect(runtime.runtimeState.acp![0].scheduler.active).toBe(1); expect(runtime.runtimeState.acp![1].scheduler.active).toBe(0);
+    await runtime.close(); expect(await blocked).toBeNull();
+    for (const actor of [1, 2]) { const facts = JSON.parse(await readFile(path.join(root, `player-${actor}/acp-owned.json`), "utf8")); await stopped(facts.agentPid); await stopped(facts.mcpPid); if (facts.nestedPid) await stopped(facts.nestedPid); }
+  } finally { await runtime.close(); }
+});
