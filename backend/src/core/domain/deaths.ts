@@ -1,3 +1,4 @@
+import type {NightLifeScope} from "./night_effects";
 /** Death facts are distinct from transient protection/damage marks. */
 export enum DeathCause {
   WolfKill = "wolf_kill",
@@ -15,7 +16,7 @@ export enum DeathCause {
 }
 export type DeathSources = Record<number, DeathCause[]>;
 export type DeathShotSelection =
-  | { kind: "shot"; targetId: number; deathActionId: number }
+  | { kind: "shot"; targetId: number; deathActionId: number; targetScope?: NightLifeScope }
   | { kind: "pass"; deathActionId: number }
   | { kind: "invalid" };
 

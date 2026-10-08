@@ -1,3 +1,4 @@
+import {captureNightLife,livingNightLife} from "../../core/domain/night_effects";
 import { AliveComponent, aliveLifeVersion } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
 import { ActionProvider, EntityId, GameEvent, Phase, Role, RuntimeSnapshot, DeathCause, type DeathSources, type DeathShotSelection } from "../../core/domain/model";
@@ -89,6 +90,14 @@ export class DeathResolution {
             result => {
               if(!isCurrent())return;
               const proposed=[...result.extraDeaths],proposedSources=structuredClone(result.extraDeathSources),nightTargets=[...(result.nightEffectTargets??[])];
+              const shots=new Map((result.pendingShots??[]).map(shot=>[shot.targetScope.id,shot]));
+              for(const [id,shot] of shots){
+                if(livingNightLife(this.world,shot.targetScope))continue;
+                proposedSources[id]=(proposedSources[id]??[]).filter(cause=>cause!==DeathCause.Shot);
+                if(!proposedSources[id].length){const index=proposed.indexOf(id);if(index>=0)proposed.splice(index,1);}
+                if(!proposedSources[id].length)for(let i=nightTargets.length-1;i>=0;i--)if(nightTargets[i]===id)nightTargets.splice(i,1);
+                shots.delete(id);
+              }
               const linked=new Set<EntityId>(),publicLinked:EntityId[]=[];let newlyMarked=false;
               const charmBindings:CharmBinding[]=[];
               for(const proposal of result.charmLinks??[]){
@@ -119,10 +128,12 @@ export class DeathResolution {
                   continue;
                 }
                 if (!this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)) continue;
+                let shot=shots.get(id);if(shot&&!livingNightLife(this.world,shot.targetScope)){proposedSources[id]=(proposedSources[id]??[]).filter(cause=>cause!==DeathCause.Shot);shots.delete(id);shot=undefined;if(!proposedSources[id].length)continue;}
                 seen.add(id);
                 allSources[id] = [...new Set(proposedSources[id] ?? [])];
                 this.markPlayersDead([id],false);newlyMarked=true;
-                if(charmTargets.has(id)||(linked.has(id)&&!result.extraDeaths.includes(id)))publicLinked.push(id);
+                if(shot)this.events.push(shot.event);
+                if(charmTargets.has(id)||(linked.has(id)&&!result.extraDeaths.includes(id))||(!shot&&!(proposedSources[id]??[]).includes(DeathCause.Shot)))publicLinked.push(id);
                 next.add(id);
               }
               if(newlyMarked){refreshHiddenWolfInheritance(this.world,this.events,this.state.day);refreshGargoyleInheritance(this.world,this.events,this.state.day);}
@@ -130,7 +141,7 @@ export class DeathResolution {
               for(const binding of charmBindings)if(commitCharmDeath(this.world,binding))this.events.push({timestamp:Date.now(),type:"charm_death",payload:{actorId:binding.actorId,targetId:binding.targetId}});
               nightEffects?.dreams?.recordDeaths([...next,...linked],this.events);
             },
-            {nightEffect:nightOrigin.has(deadId),blocksNightShot:targetId=>nightEffects?.dreams?.blocksNightShot(this.world,targetId)??false,blocksNightCharm:targetId=>nightEffects?.dreams?.blocksNightCharm(this.world,targetId,seen)??false,eligibleDead:seen,isCurrent},
+            {deferShotCommit:true,nightEffect:nightOrigin.has(deadId),blocksNightShot:targetId=>nightEffects?.dreams?.blocksNightShot(this.world,targetId)??false,blocksNightCharm:targetId=>nightEffects?.dreams?.blocksNightCharm(this.world,targetId,seen)??false,eligibleDead:seen,isCurrent},
           );
         } finally {
           for (const permit of actions.permits) permit.close();
@@ -149,6 +160,7 @@ export class DeathResolution {
     actions.permits.push(permit);
     const requests = new GameActionRequestFactory(this.world, this.events, actions.day);
     for (let attempt = 1; attempt <= 3; attempt++) {
+      const targets=new Map(this.world.getAliveEntityIds().map(id=>[id,captureNightLife(this.world,id)]));
       const action = await actionProvider.getAction(requests.create({
         phase: actions.phase, actorId: actorId, allowedTools: ["shoot"], stage: this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role === Role.Hunter ? "hunter_shot" : "death_shot", requiresAction: true,
         summary: { key: "request.summary.death_shot" },
@@ -160,9 +172,12 @@ export class DeathResolution {
       if (!isCurrent() || !this.world.hasDeathAction(actorId, "shoot", actions.phase, actions.day, permit.id)) return { kind: "invalid" };
       if (action?.name !== "shoot") continue;
       const validated = this.toolGateway.validateAndSanitize(this.world, actorId, action, { phase: actions.phase, day: actions.day, deathActionId: permit.id });
+      if(!isCurrent()||!this.world.hasDeathAction(actorId,"shoot",actions.phase,actions.day,permit.id))return{kind:"invalid"};
       if (!validated.ok || !validated.sanitizedCall) continue;
       const targetId = validated.sanitizedCall.args.target_id;
-      return targetId === null ? { kind: "pass", deathActionId: permit.id } : { kind: "shot", targetId, deathActionId: permit.id };
+      if(targetId===null)return{kind:"pass",deathActionId:permit.id};
+      const targetScope=targets.get(targetId);if(!targetScope||!livingNightLife(this.world,targetScope))continue;
+      return { kind: "shot", targetId, deathActionId: permit.id,targetScope };
     }
     return { kind: "invalid" };
   }

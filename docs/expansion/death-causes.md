@@ -33,3 +33,5 @@
 本死因子批未同时改变所有死亡写入；后续G03已由[World授权](death-action-authority.md)和[中央死亡结算](death-chain.md)统一这些所有权，独立验证遗言/徽章/角色钩子/追加波次和自爆收尾。
 
 后续G03已接入[World死亡窗口](death-action-authority.md)：shot/pass内部选择还需deathActionId且授权覆盖消费点，低层钩子调用者按新契约打开/关闭窗口。Alive中央写入、自爆/徽章与首日收尾现见[死亡链](death-chain.md)和[四窗口](self-destruct-windows.md)。
+
+P7 `DeathShotSelection.shot.targetScope?`与`DeathHookResult.pendingShots?`为runtime-only原生命提案，不是ToolCall/公开schema字段；旧未带scope的hook调用由shared choose前快照兼容。Actual owner defer提交验证，资源接受与公开实际命中分开，见[基础记录](reviews/p7-death-shot-life.md)。

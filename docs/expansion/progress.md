@@ -299,3 +299,9 @@ front103／953、type/build、actualChromium42、中文接刀与英文十二人�
 为机械反毒先交付独立NightPoisonClaim来源基础；Witch等待/网关后复验原actor/target生命，Runtime私有source/target refs经NightPipeline进入Damage，不进state/DTO/events/summary/Tape。已提交毒保瓶数/事件前缀和caster死后效力，target新生命不受旧毒；legacy marks保持，实际两Witch来源保逐条，死亡按body合并。
 
 最终type/deps/boundaries、engine512/8212、122受影响双语完整局＋80seed/全部Tape＋8gift专项73/36177通过，核心13/88由A独立复跑，L/D核无新增数据暴露，见[来源基础审查](reviews/p7-poison-attribution.md)。机械卡AWA差异先冻结，但角色仍planned/未启用，反毒/机械原生技能及完整矩阵后续独立交付；目录保持17已验/47待交付。
+
+## P7：死亡枪原目标生命基础
+
+每次request捕原target生命，await/gateway/shared/Actual owner再验；新retry可绑定当前新life，旧请求不伤新body。shared接受后保枪消费prefix，但公开hunter/king shot只真实追加死亡mark后发；失效Shot只剔此原因，保其它合法原因并匿名actual追加death同步，不假杀播放器。permit结束清零，refs只runtime不进state/DTO/Tape。
+
+最终type/deps/boundaries、engine524/8259与278受影响actual双语完整局/全部Tape139/56818过；三路只读关闭原life/Actor/phase/legacy/公开投影问题，见[枪范围基础](reviews/p7-death-shot-life.md)。角色目录仍17已验、机械planned；下一笔机械状态/模式/特殊技能按已冻卡推进，不把普通枪基础冒认机械已完成。

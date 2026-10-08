@@ -2,6 +2,7 @@
 import { EntityId, GameEvent, type DeathSources, type DeathShotSelection } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 import { getDefaultRoleCatalog } from "../roles/catalog";
+import type {NightLifeScope} from "../../../core/domain/night_effects";
 import type {CharmBinding} from "../roles/wolf_beauty/relation";
 
 /** 放逐钩子返回结果。 */
@@ -16,9 +17,10 @@ export interface DeathHookResult {
   extraDeaths: EntityId[];
   extraDeathSources: DeathSources;
   nightEffectTargets?: EntityId[];
+  pendingShots?: Array<{targetScope:NightLifeScope;event:GameEvent}>;
   charmLinks?: Array<{binding:CharmBinding;nightEffect:boolean}>;
 }
-export interface DeathHookContext { nightEffect: boolean; blocksNightShot(targetId: EntityId): boolean; blocksNightCharm?:(targetId:EntityId)=>boolean; eligibleDead?:ReadonlySet<EntityId>;isCurrent?:()=>boolean }
+export interface DeathHookContext { deferShotCommit?: boolean; nightEffect: boolean; blocksNightShot(targetId: EntityId): boolean; blocksNightCharm?:(targetId:EntityId)=>boolean; eligibleDead?:ReadonlySet<EntityId>;isCurrent?:()=>boolean }
 
 /** 放逐钩子函数签名。 */
 export type VotedOutHook = (
@@ -91,6 +93,7 @@ export class HookRegistry {
       commitAdditionalDeaths?.(result);
       aggregated.extraDeaths.push(...result.extraDeaths);
       if (result.nightEffectTargets?.length) (aggregated.nightEffectTargets??=[]).push(...result.nightEffectTargets);
+      if(result.pendingShots?.length)(aggregated.pendingShots??=[]).push(...result.pendingShots);
       if(result.charmLinks?.length)(aggregated.charmLinks??=[]).push(...result.charmLinks);
       for (const [id, marks] of Object.entries(result.extraDeathSources)) {
         aggregated.extraDeathSources[Number(id)] = [...new Set([...(aggregated.extraDeathSources[Number(id)] ?? []), ...marks])];

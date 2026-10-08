@@ -1,3 +1,4 @@
+import {captureNightLife,livingNightLife} from "../../../core/domain/night_effects";
 import { AliveComponent } from "../../../core/domain/components/alive";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
@@ -59,13 +60,15 @@ export async function resolveDeathShots(
       continue;
     }
     if (!state.canShoot || !rules.permits(sources)) { state.canShoot = false; continue; }
+    const targets=new Map(world.getAliveEntityIds().map(id=>[id,captureNightLife(world,id)]));
     const selected = await choose(actorId);
     if(context?.isCurrent&&!context.isCurrent())break;
     const currentRole = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
     if (currentRole !== role || currentRole.role !== rules.role || rules.state(currentRole) !== state || !state.canShoot || world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)?.alive !== false) continue;
     if (selected.kind === "invalid" || !world.isDeathActionOpen(actorId, "shoot", selected.deathActionId)) continue;
     if (selected.kind === "pass") { state.canShoot = false; continue; }
-    if (!world.getComponent<AliveComponent>(selected.targetId, COMPONENT.Alive)?.alive) continue;
+    const targetScope=selected.targetScope??targets.get(selected.targetId);
+    if (!targetScope||targetScope.id!==selected.targetId||!livingNightLife(world,targetScope)) continue;
     state.canShoot = false;
     if (context?.nightEffect && context.blocksNightShot(selected.targetId)) {
       events.push({timestamp:Date.now(),type:"death_shot_blocked",payload:{actorId,targetId:selected.targetId,reason:"night_protection"}});
@@ -74,7 +77,9 @@ export async function resolveDeathShots(
     result.extraDeaths.push(selected.targetId);
     if (context?.nightEffect) (result.nightEffectTargets??=[]).push(selected.targetId);
     result.extraDeathSources[selected.targetId] = [DeathCause.Shot];
-    events.push(rules.shotEvent(actorId, selected.targetId));
+    const event=rules.shotEvent(actorId, selected.targetId);
+    if(context?.deferShotCommit)(result.pendingShots??=[]).push({targetScope,event});
+    else events.push(event);
   }
   return result;
 }
