@@ -1,6 +1,7 @@
 /** 文件说明：角色私有状态的统一读写封装。 */
 import { EntityId, WitchSelfHealRule } from "../../../core/domain/model";
 import { RoleComponent } from "../../../core/domain/components/role";
+import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
 
 const PRIVATE_STATE_KEYS = {
   witch: "witch",
@@ -39,9 +40,11 @@ export interface IdiotState {
 export interface SeerState {
   lastTarget: EntityId | null;
   lastIsWerewolf: boolean | null;
+  lastResult?: InspectionResult | null;
   history: Array<{
     targetId: EntityId;
     isWerewolf: boolean;
+    result?: InspectionResult;
   }>;
 }
 

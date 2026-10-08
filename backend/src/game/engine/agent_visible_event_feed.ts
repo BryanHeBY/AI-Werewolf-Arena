@@ -32,9 +32,9 @@ export function buildAgentVisibleEvent(
 function projectPayload(event: GameEvent): Record<string, unknown> {
   if (event.type === "vote_summary") {
     const { tally: _derivedTally, ...payload } = event.payload;
-    return payload;
+    return structuredClone(payload);
   }
-  return { ...event.payload };
+  return structuredClone({ ...event.payload });
 }
 
 /**

@@ -1,5 +1,6 @@
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
-import { text, term, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
+import { readSeerInspectionResult } from "@ai-werewolf-arena/replay-contract";
+import { text, term, inspectionLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { campName, phaseName, resultReasonName, roleName } from "./replay-localization";
 
 export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN"): string {
@@ -22,7 +23,17 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN"): string
     case "wolf_discussion_ended": return t("replay.wolf_end", { actor, reason: stringValue(p.reason) });
     case "wolf_kill_vote_cast": return p.abstain === true ? t("replay.kill_skip", { actor }) : t("replay.kill_vote", { actor, target });
     case "guard_applied": return p.abstain === true || p.targetId === null ? t("replay.guard_skip", { actor }) : t("replay.guard", { actor, target });
-    case "seer_checked": return t("replay.check", { actor, target, camp: term("camp", p.isWerewolf === true ? "wolf" : "good", locale) });
+    case "seer_checked": {
+      const result = readSeerInspectionResult(p);
+      let label = result ? inspectionLabel(result, locale) : "?";
+      if (!result) {
+        try {
+          const raw = Object.getOwnPropertyDescriptor(p, "result");
+          if (raw && Object.hasOwn(raw, "value")) label = JSON.stringify(raw.value) ?? "?";
+        } catch { /* Invalid non-JSON diagnostic values remain unknown. */ }
+      }
+      return t("replay.check", { actor, target, camp: label });
+    }
     case "witch_potion_used": return t("replay.potion", { actor, target, potion: p.potionType === "heal" || p.potionType === "poison" ? term("potion", p.potionType, locale) : stringValue(p.potionType) || t("replay.potion_generic") });
     case "witch_potion_skipped": return t("replay.potion_skip", { actor });
     case "sheriff_nomination_summary": return t("replay.nomination", { players: players(p.candidates) });

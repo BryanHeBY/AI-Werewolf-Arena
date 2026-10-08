@@ -18,6 +18,7 @@ export * from "./registries/win_condition_registry";
 export * from "./roles/contracts";
 export * from "./roles/catalog";
 export * from "./roles/wolf_team";
+export * from "./roles/inspection";
 export * from "./roles/role_view_registry";
 export * from "./sheriff/config_normalizer";
 export * from "./sheriff/election";

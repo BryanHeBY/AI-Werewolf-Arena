@@ -127,11 +127,11 @@ for (const locale of ["zh-CN", "en"] as const) for (const blocked of [false, tru
   expect(game.manifest.players.filter((player: { alive: boolean }) => player.alive).map((player: { player_id: number }) => player.player_id)).toEqual(blocked ? [2, 3, 6] : [2, 6]);
   expect(game.replay.events.filter(event => event.type === "last_words_spoken").map(event => event.payload.playerId)).toEqual(blocked ? [1, 4] : [3, 1, 4]);
   expect(game.replay.events.filter(event => event.type === "night_resolved").map(event => event.payload.deaths)).toEqual([blocked ? [] : [3], [5]]);
-  const checks = [{ actorId: 2, targetId: 1, isWerewolf: true }, { actorId: 2, targetId: 4, isWerewolf: true }];
+  const checks = [{ actorId: 2, targetId: 1, isWerewolf: true, result: { kind: "camp", camp: "wolf" } }, { actorId: 2, targetId: 4, isWerewolf: true, result: { kind: "camp", camp: "wolf" } }];
   expect(game.replay.events.filter(event => event.type === "seer_checked").map(event => event.payload)).toEqual(checks);
   expect(game.playerViews[1].timeline.filter(entry => entry.kind === "event" && entry.event.type === "seer_checked").map(entry => entry.kind === "event" ? entry.event.payload : null)).toEqual(checks);
   expect(game.provider.trace.filter(({ request }) => request.actorId === 2).at(-1)?.request.context.visible_events.filter(event => event.type === "seer_checked").map(event => event.payload)).toEqual(checks);
-  expect(getSeerState(game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!)?.history).toEqual([{ targetId: 1, isWerewolf: true }, { targetId: 4, isWerewolf: true }]);
+  expect(getSeerState(game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!)?.history).toEqual([{ targetId: 1, isWerewolf: true, result: { kind: "camp", camp: "wolf" } }, { targetId: 4, isWerewolf: true, result: { kind: "camp", camp: "wolf" } }]);
   expect(getGuardState(game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)?.lastTarget).toBe(blocked ? 6 : null);
   expect(game.provider.trace.filter(({ request }) => request.actorId !== 2).every(({ request }) => !request.context.visible_events.some(event => event.type === "seer_checked"))).toBe(true);
 });
@@ -179,7 +179,7 @@ for (const locale of ["zh-CN", "en"] as const) for (const flipIdiot of [false, t
     expect(game.replay.events.filter(event => event.type === "witch_potion_used").map(event => event.payload)).toEqual([{ actorId: 6, targetId: 9, potionType: "heal" }, { actorId: 6, targetId: 4, potionType: "poison" }]);
     expect(game.replay.events.filter(event => event.type === "hunter_shot").map(event => event.payload)).toEqual([{ hunterId: 7, targetId: 3 }]);
     expect(game.replay.events.filter(event => event.type === "night_resolved").map(event => event.payload.deaths)).toEqual(flipIdiot ? [[], [4, 7], [5]] : [[], [4, 7]]);
-    const checks = [1, 2, ...(flipIdiot ? [2] : [])].map(targetId => ({ actorId: 5, targetId, isWerewolf: true }));
+    const checks = [1, 2, ...(flipIdiot ? [2] : [])].map(targetId => ({ actorId: 5, targetId, isWerewolf: true, result: { kind: "camp", camp: "wolf" } }));
     expect(game.replay.events.filter(event => event.type === "seer_checked").map(event => event.payload)).toEqual(checks);
     expect(game.playerViews[4].timeline.filter(entry => entry.kind === "event" && entry.event.type === "seer_checked").map(entry => entry.kind === "event" ? entry.event.payload : null)).toEqual(checks);
     expect(game.playerViews[5].timeline.filter(entry => entry.kind === "event" && entry.event.type === "witch_potion_used").map(entry => entry.kind === "event" ? entry.event.payload : null)).toEqual([{ actorId: 6, targetId: 9, potionType: "heal" }, { actorId: 6, targetId: 4, potionType: "poison" }]);

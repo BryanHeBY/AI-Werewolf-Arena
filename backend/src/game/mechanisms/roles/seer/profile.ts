@@ -1,5 +1,5 @@
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
-import { roleName, text, term } from "@ai-werewolf-arena/game-text";
+import { roleName, text, term, inspectionLabel } from "@ai-werewolf-arena/game-text";
 /** 文件说明：预言家角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
@@ -20,13 +20,14 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
     setSeerState(roleComp, {
       lastTarget: null,
       lastIsWerewolf: null,
+      lastResult: null,
       history: [],
     });
   },
   renderPrompt: (roleComp, locale = "zh-CN") => {
     const state = getSeerState(roleComp);
-    const latest = state && state.lastTarget !== null && state.lastIsWerewolf !== null
-      ? ` ${text(locale, "role.seer.latest", { target: state.lastTarget, camp: term("camp", state.lastIsWerewolf ? "wolf" : "good", locale) })}` : "";
+    const latest = state && state.lastTarget !== null && (state.lastResult || state.lastIsWerewolf !== null)
+      ? ` ${state.lastResult ? text(locale, "inspection.latest", { target: state.lastTarget, result: inspectionLabel(state.lastResult, locale) }) : text(locale, "role.seer.latest", { target: state.lastTarget, camp: term("camp", state.lastIsWerewolf ? "wolf" : "good", locale) })}` : "";
     return text(locale, "role.seer.state") + latest;
   },
   toolSpecs: SEER_TOOL_SPECS,

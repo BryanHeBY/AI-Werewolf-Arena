@@ -1,0 +1,122 @@
+import { expect, test } from "bun:test";
+import { readInspectionResult, readSeerInspectionResult } from "@ai-werewolf-arena/replay-contract";
+import { inspectionLabel, text } from "@ai-werewolf-arena/game-text";
+import { bootstrapGame } from "../../../src/app/bootstrap";
+import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../src/core";
+import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { resolveInspection } from "../../../src/game/mechanisms/roles/inspection";
+import { getSeerState } from "../../../src/game/mechanisms/roles/private_state";
+import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
+import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
+import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { ActionValidator } from "../../../src/game/gateway/action_validator";
+import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
+import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
+import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { getDefaultScriptEventRenderRegistry } from "../../../src/game/mechanisms/script/event_render_registry";
+
+const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
+for (const locale of ["zh-CN", "en"] as const) {
+  test(`${locale}: camp/role/combined projections are exact detached labels, independent of real identity and wolf permissions`, () => {
+    const { world } = bootstrapGame(sixPlayerMvpConfig, { fixedRoles, locale });
+    const wolf = world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+    const catalog = new RoleCatalog(getDefaultRoleCatalog().all().map(profile => profile.role !== Role.Wolf ? profile : { ...profile, inspectionLabels: (state: RoleComponent) => state.privateState.unmasked === true ? { camp: Camp.Wolf, role: Role.Wolf } : { camp: Camp.Good, role: Role.Villager } }));
+    const before = structuredClone(wolf.privateState);
+    expect(resolveInspection(world, 1, "camp", catalog)).toEqual({ kind: "camp", camp: "good" });
+    expect(resolveInspection(world, 1, "role", catalog)).toEqual({ kind: "role", role: "villager" });
+    const combined = resolveInspection(world, 1, "combined", catalog)!;
+    expect(combined).toEqual({ kind: "combined", role: "villager", camp: "good" });
+    expect(wolf.privateState).toEqual(before); expect(wolf.role).toBe(Role.Wolf); expect(wolf.camp).toBe(Camp.Wolf);
+    expect(catalog.get(Role.Wolf)?.wolfTeam).toEqual(getDefaultRoleCatalog().get(Role.Wolf)?.wolfTeam);
+    wolf.privateState.unmasked = true;
+    expect(resolveInspection(world, 1, "combined", catalog)).toEqual({ kind: "combined", role: "wolf", camp: "wolf" });
+    expect(combined).toEqual({ kind: "combined", role: "villager", camp: "good" });
+    world.getComponent<RoleComponent>(6, COMPONENT.Role)!.camp = Camp.ThirdParty;
+    expect(resolveInspection(world, 6, "camp", catalog)).toEqual({ kind: "camp", camp: "third_party" });
+    expect(resolveInspection(world, 999, "camp", catalog)).toBeNull();
+    expect(inspectionLabel(combined, locale)).toBe(locale === "en" ? "Villager (Good)" : "平民（好人）");
+  });
+
+  for (const inspectedCamp of [Camp.Good, Camp.Wolf, Camp.ThirdParty]) test(`${locale}: actual seer stage records only its authorized ${inspectedCamp} label and detached private history`, async () => {
+    const { world } = bootstrapGame(sixPlayerMvpConfig, { fixedRoles, locale }), events: GameEvent[] = [];
+    const catalog = new RoleCatalog(getDefaultRoleCatalog().all().map(profile => profile.role !== Role.Wolf ? profile : { ...profile, inspectionLabels: { camp: inspectedCamp, role: Role.Villager } }));
+    const pipeline = new NightPipeline({ world, events, damageResolutionSystem: new DamageResolutionSystem(), stageRegistry: new NightStageRegistry(catalog), toolGateway: new ToolGateway(new ActionValidator(new ToolValidationRuleRegistry(undefined, catalog))) });
+    const result = await pipeline.execute(sixPlayerMvpConfig, { async getAction(input) {
+      if (input.allowedTools.includes("speak_to_wolves")) return { name: "speak_to_wolves", args: { text: "end", end_chat: true } };
+      if (input.allowedTools.includes("kill_vote")) return { name: "kill_vote", args: { target_id: null, abstain: true } };
+      if (input.allowedTools.includes("guard")) return { name: "guard", args: { target_id: null, abstain: true } };
+      if (input.allowedTools.includes("check_identity")) return { name: "check_identity", args: { target_id: 1 } };
+      throw new Error("unexpected_action");
+    } }, 1);
+    const inspection = events.find(event => event.type === "seer_checked")!;
+    expect(inspection.payload).toEqual({ actorId: 3, targetId: 1, result: { kind: "camp", camp: inspectedCamp }, isWerewolf: inspectedCamp === Camp.Wolf });
+    expect(inspection.payload.result).not.toHaveProperty("role");
+    expect(result.summary.seerChecks).toEqual([{ seerId: 3, targetId: 1, result: { kind: "camp", camp: inspectedCamp }, isWerewolf: inspectedCamp === Camp.Wolf }]);
+    expect(world.getComponent<RoleComponent>(1, COMPONENT.Role)!.camp).toBe(Camp.Wolf);
+    const state = getSeerState(world.getComponent<RoleComponent>(3, COMPONENT.Role)!)!;
+    expect(state.lastResult).toEqual({ kind: "camp", camp: inspectedCamp });
+    expect(state.history).toEqual([{ targetId: 1, result: { kind: "camp", camp: inspectedCamp }, isWerewolf: inspectedCamp === Camp.Wolf }]);
+    expect(state.lastResult).not.toBe(inspection.payload.result); expect(state.history[0].result).not.toBe(inspection.payload.result);
+    for (const id of world.entityIds()) expect(buildAgentVisibleEventFeed(world, events, id).some(event => event.type === "seer_checked")).toBe(id === 3);
+    const projected = buildAgentVisibleEventFeed(world, events, 3).find(event => event.type === "seer_checked")!;
+    (projected.payload.result as Record<string, unknown>).camp = "synthetic-tampered";
+    expect(inspection.payload.result).toEqual({ kind: "camp", camp: inspectedCamp });
+    expect(state.lastResult).toEqual({ kind: "camp", camp: inspectedCamp });
+    expect(state.history[0].result).toEqual({ kind: "camp", camp: inspectedCamp });
+    expect(result.summary.seerChecks[0].result).toEqual({ kind: "camp", camp: inspectedCamp });
+    const expectedLabel = inspectionLabel({ kind: "camp", camp: inspectedCamp }, locale);
+    expect(getDefaultScriptEventRenderRegistry().toLiveRender(inspection, true, locale)).toEqual([{ kind: "private", text: text(locale, "console.live.check", { actor: 3, target: 1, camp: expectedLabel }) }]);
+    expect(getDefaultScriptEventRenderRegistry().toLiveRender(inspection, false, locale)).toEqual([]);
+    expect(world.getComponent<RoleComponent>(3, COMPONENT.Role)!.renderPrompt(locale)).toContain(text(locale, "inspection.latest", { target: 1, result: expectedLabel }));
+  });
+}
+
+test("serialized readers preserve legitimate legacy booleans and never replace unknown or malformed typed results with a Good guess", () => {
+  expect(readSeerInspectionResult({ isWerewolf: true })).toEqual({ kind: "camp", camp: "wolf" });
+  expect(readSeerInspectionResult({ isWerewolf: false })).toEqual({ kind: "camp", camp: "good" });
+  expect(readSeerInspectionResult({})).toBeNull();
+  expect(readSeerInspectionResult({ isWerewolf: "false" })).toBeNull();
+  for (const bad of [null, [], {}, { kind: "camp", camp: "unknown" }, { kind: "role", role: "custom" }, { kind: "combined", camp: "good" }, { kind: "camp", camp: "good", role: "wolf" }, { kind: "future", camp: "wolf" }]) {
+    expect(readInspectionResult(bad)).toBeNull();
+    expect(readSeerInspectionResult({ isWerewolf: false, result: bad })).toBeNull();
+  }
+  for (const result of [{ kind: "camp", camp: "third_party" }, { kind: "role", role: "seer" }, { kind: "combined", camp: "wolf", role: "wolf" }]) {
+    const parsed = readInspectionResult(result);
+    expect(parsed).toEqual(result); expect(parsed).not.toBe(result);
+  }
+});
+
+test("unknown result decoding reads only own data, never evaluates changing/inherited getters, and handles throwing Proxy traps", () => {
+  let reads = 0;
+  const changing = { kind: "camp", get camp() { reads++; return reads === 1 ? "wolf" : "synthetic-invalid-camp"; } };
+  expect(readInspectionResult(changing)).toBeNull(); expect(reads).toBe(0);
+  expect(readInspectionResult(Object.create({ kind: "camp", camp: "wolf" }))).toBeNull();
+  expect(readSeerInspectionResult(Object.create({ isWerewolf: true }))).toBeNull();
+  const legacy = { get isWerewolf() { reads++; return true; } };
+  expect(readSeerInspectionResult(legacy)).toBeNull(); expect(reads).toBe(0);
+  const accessor = { get result() { reads++; throw new Error("must-not-read"); }, isWerewolf: false };
+  expect(readSeerInspectionResult(accessor)).toBeNull(); expect(reads).toBe(0);
+  const trap = new Proxy({}, { getOwnPropertyDescriptor() { throw new Error("untrusted-trap"); } });
+  expect(readInspectionResult(trap)).toBeNull(); expect(readSeerInspectionResult(trap)).toBeNull();
+  const revoked = Proxy.revocable({}, {}); revoked.revoke();
+  expect(readInspectionResult(revoked.proxy)).toBeNull(); expect(readSeerInspectionResult(revoked.proxy)).toBeNull();
+  const tagged = { kind: "camp", camp: "wolf", [Symbol("extra")]: true };
+  expect(readInspectionResult(tagged)).toBeNull();
+});
+
+for (const locale of ["zh-CN", "en"] as const) test(`${locale}: terminal old/manual result compatibility is strict and never guesses Good for missing or invalid evidence`, () => {
+  const render = (payload: Record<string, unknown>) => getDefaultScriptEventRenderRegistry().toLiveRender({ timestamp: 0, type: "seer_checked", payload: { actorId: 3, targetId: 1, ...payload } } as unknown as GameEvent, true, locale);
+  for (const [payload, expected] of [[{ result: null, isWerewolf: false }, "null"], [{ isWerewolf: "false" }, "?"], [{}, "?"], [{ result: { kind: "future", original: "Raw 原文" }, isWerewolf: false }, JSON.stringify({ kind: "future", original: "Raw 原文" })]] as const) {
+    expect(render(payload)).toEqual([{ kind: "private", text: text(locale, "console.live.check", { actor: 3, target: 1, camp: expected }) }]);
+  }
+});
+
+test("nested public vote evidence is detached from the authority before being given to a decision provider", () => {
+  const { world } = bootstrapGame(sixPlayerMvpConfig, { fixedRoles });
+  const event: GameEvent = { timestamp: 0, type: "vote_summary", payload: { votes: [{ actorId: 1, targetId: 6, abstain: false, weight: 1 }], tally: { 6: 1 }, target: 6 } };
+  const view = buildAgentVisibleEventFeed(world, [event], 3);
+  (view[0].payload.votes as Array<Record<string, unknown>>)[0].targetId = 3;
+  expect(event.payload.votes).toEqual([{ actorId: 1, targetId: 6, abstain: false, weight: 1 }]);
+  expect(view[0].payload).not.toHaveProperty("tally");
+});

@@ -1,4 +1,4 @@
-import { isLocale, roleName as catalogRoleName, type Locale } from "@ai-werewolf-arena/game-catalog";
+import { isLocale, roleName as catalogRoleName, type Locale, type InspectionResult } from "@ai-werewolf-arena/game-catalog";
 import { zhCN, type MessageKey } from "./zh-CN";
 import { en } from "./en";
 
@@ -31,6 +31,12 @@ export function term(kind: "camp" | "camp_team" | "phase" | "stage" | "potion" |
   if (!isLocale(locale)) throw new Error("i18n_locale_invalid");
   const key = `${kind}.${id}` as MessageKey;
   return Object.hasOwn(zhCN, key) ? text(locale, key) : id;
+}
+
+export function inspectionLabel(result: InspectionResult, locale: Locale = "zh-CN"): string {
+  if (result.kind === "camp") return term("camp", result.camp, locale);
+  if (result.kind === "role") return roleName(result.role, locale);
+  return text(locale, "inspection.combined", { role: roleName(result.role, locale), camp: term("camp", result.camp, locale) });
 }
 
 export function validateDictionaries(): void {

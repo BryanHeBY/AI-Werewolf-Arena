@@ -22,7 +22,7 @@
 
 ## seer
 
-预言家 / Seer：每夜选择一个存活目标，兼容当前自验和重复查验；得到本板定义的阵营结果，仅本人获知。普通狼查为狼人，普通好人查为好人；特殊角色与第三方的登记需要角色自己的明确标签。夜间伤害统一结算前仍可执行当夜查验。
+预言家 / Seer：每夜选择一个存活目标，兼容当前自验和重复查验；得到本板定义的类型化阵营标签，仅本人获知；result优先于兼容isWerewolf，false本身不表示好人，查验标签不改变真实身份/阵营。普通狼查为狼人，普通好人查为好人；特殊角色与第三方的登记需要角色自己的明确标签。夜间伤害统一结算前仍可执行当夜查验。
 
 ## witch
 
@@ -75,3 +75,5 @@ P4 须增加明确的缺陷回归并更新本卡验证状态；登记资料不�
 依据：现有 AWA 代码与测试；[官方基础规则](https://langrensha.com/wanfa/guize/2017/10/18/26899_719311.html)、[网易角色资料](https://langrensha.res.netease.com/pc/gw/20190509150909/js/kapaiData_02806e2.js)。对于未在来源中完整说明的 AWA 行为，以上明确写成改编或待冻结项。
 
 P4 G01已交付[狼队权限与历史受众](../wolf-team-access.md)，人工判例见[权限回归](../../../backend/tests/engine/visibility/wolf_team_access.test.ts)。特殊狼仍未登记实现，上表其余G02–G04差异继续修复。
+
+P4 G02已交付[类型化查验子批](../inspection-results.md)，原生预言家仍为camp-only；[人工判例](../../../backend/tests/engine/rules/inspection_results.test.ts)核对标签、身份分离、私有受众和旧值。能力/资源/调度与药/死亡差异仍未因此关闭。

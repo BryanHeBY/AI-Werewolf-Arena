@@ -4,6 +4,7 @@ import { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Phase, Role } from "../../../../core/domain/model";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { getSeerState } from "../private_state";
+import { resolveInspection } from "../inspection";
 
 const seerCheckStage: NightStageHandler = {
   id: "seer_check",
@@ -26,21 +27,23 @@ const seerCheckStage: NightStageHandler = {
       }
 
       const targetId = result.sanitizedCall.args.target_id;
-      const targetRole = ctx.world.getComponent<RoleComponent>(targetId, COMPONENT.Role);
-      const isWerewolf = targetRole?.camp === Camp.Wolf;
+      const inspection = resolveInspection(ctx.world, targetId, "camp", ctx.roleCatalog);
+      if (!inspection) continue;
+      const isWerewolf = inspection.camp === Camp.Wolf;
       const seerRole = ctx.world.getComponent<RoleComponent>(seerId, COMPONENT.Role);
       const seerState = seerRole ? getSeerState(seerRole) : undefined;
       if (seerState) {
         seerState.lastTarget = targetId;
         seerState.lastIsWerewolf = isWerewolf;
-        seerState.history.push({ targetId, isWerewolf });
+        seerState.lastResult = { ...inspection };
+        seerState.history.push({ targetId, isWerewolf, result: { ...inspection } });
       }
 
-      ctx.state.seerChecks.push({ seerId, targetId, isWerewolf });
+      ctx.state.seerChecks.push({ seerId, targetId, isWerewolf, result: { ...inspection } });
       ctx.events.push({
         timestamp: Date.now(),
         type: "seer_checked",
-        payload: { actorId: seerId, targetId, isWerewolf },
+        payload: { actorId: seerId, targetId, isWerewolf, result: { ...inspection } },
       });
     }
   },

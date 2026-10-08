@@ -1,4 +1,5 @@
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { InspectionCamp, RoleId } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：角色 profile 的统一契约定义。 */
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, BoardConfig, Camp, Role, ToolCall } from "../../../core/domain/model";
@@ -31,6 +32,7 @@ export interface RoleProfile {
   skillBrief: string;
   goodSide?: "god" | "villager";
   wolfTeam?: WolfTeamPermissions | ((role: RoleComponent) => WolfTeamPermissions);
+  inspectionLabels?: { camp?: InspectionCamp; role?: RoleId } | ((role: RoleComponent) => { camp?: InspectionCamp; role?: RoleId });
   configuration?: {
     schema: z.ZodType;
     defaults: Readonly<Record<string, unknown>>;

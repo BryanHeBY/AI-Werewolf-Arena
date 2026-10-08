@@ -4,6 +4,7 @@ import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
 import { legacyPhaseId, legacyStageId, legacyRoleId, legacyCampId, legacyResultReasonId } from "./legacy_aliases";
 export * from "./legacy_aliases";
 export const REPLAY_SCHEMA_VERSION = 2 as const;
+export * from "./inspection";
 
 /**
  * The replay data shape consumed by browser and video clients.

@@ -1,4 +1,5 @@
 import type { ActionWindow, Camp, EntityId, Phase, PotionType } from "./identity";
+import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
 
 export interface EventBase<T extends string, P> {
   timestamp: number;
@@ -47,7 +48,7 @@ export interface EventPayloadMap {
   last_words_granted: { playerId: EntityId; phase: Phase; day: number };
   last_words_spoken: { playerId: EntityId; phase: Phase; day: number; text: string };
   guard_applied: { actorId: EntityId; abstain: boolean; targetId: EntityId | null };
-  seer_checked: { actorId: EntityId; targetId: EntityId; isWerewolf: boolean };
+  seer_checked: { actorId: EntityId; targetId: EntityId; result: Extract<InspectionResult, { kind: "camp" }>; isWerewolf: boolean };
   hunter_silent_due_to_poison: { hunterId: EntityId };
   hunter_shot: { hunterId: EntityId; targetId: EntityId };
   idiot_revealed: { targetId: EntityId };

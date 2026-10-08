@@ -1,4 +1,5 @@
 import type { Camp, EntityId, Phase } from "./identity";
+import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
 
 export interface GameResult {
   winner: Camp | null;
@@ -9,6 +10,7 @@ export interface SeerCheckResult {
   seerId: EntityId;
   targetId: EntityId;
   isWerewolf: boolean;
+  result: Extract<InspectionResult, { kind: "camp" }>;
 }
 
 export interface NightSummary {
