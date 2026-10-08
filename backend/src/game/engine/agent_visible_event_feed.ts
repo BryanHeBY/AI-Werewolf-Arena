@@ -22,6 +22,16 @@ export function buildAgentVisibleEvent(
   if (!visibility.canView(world, event, actorId)) {
     return null;
   }
+  if (event.type === "hunter_shot" || event.type === "player_shot") {
+    return {
+      seq: visibleSeq,
+      type: "player_shot",
+      payload: {
+        actorId: event.type === "hunter_shot" ? event.payload.hunterId : event.payload.actorId,
+        targetId: event.payload.targetId,
+      },
+    };
+  }
   return {
     seq: visibleSeq,
     type: event.type,
@@ -29,7 +39,7 @@ export function buildAgentVisibleEvent(
   };
 }
 
-/** 只移除可由同一事件其余字段直接推导的冗余数据，不改动事实语义。 */
+/** Project the authorized wire fields, keeping internal metadata out of player prompts. */
 function projectPayload(event: GameEvent): Record<string, unknown> {
   if (event.type === "ability_changed") {
     const payload = event.payload;

@@ -83,6 +83,8 @@ export function assertTransportPrompt(plan: ActorTransportPlan, turn: PlannedTur
 }
 export function assertTransportEvents(role: string, events: Array<[number, string, Record<string, unknown>]>, actorId: number) {
   for (const [, type, payload] of events) {
+    if (type === "hunter_shot") throw new Error("fixture_native_gun_source_exposed");
+    if (type === "player_shot" && Object.keys(payload).sort().join() !== "actorId,targetId") throw new Error("fixture_gun_private_fields_exposed");
     if(type==="bear_roared"&&(Object.keys(payload).sort().join()!=="day,roared"||!Number.isSafeInteger(payload.day)||Number(payload.day)<1||typeof payload.roared!=="boolean"))throw new Error("fixture_bear_private_or_invalid_signal");
     if (type === "god_private_game_info" || type === "mechanical_poison_reflected" || type === "merchant_trade_resolved" || type === "hybrid_affiliation_resolved") throw new Error("fixture_god_information_exposed");
     if(["merchant_trade_committed","merchant_trade_skipped","lucky_ability_skipped","hybrid_exemplar_chosen"].includes(type)&&payload.actorId!==actorId)throw new Error("fixture_other_private_skill_exposed");

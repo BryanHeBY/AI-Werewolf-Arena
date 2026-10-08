@@ -22,6 +22,7 @@ const PUBLIC_EVENT_TYPES = new Set([
   "death_shot_blocked",
   "additional_deaths",
   "hunter_shot",
+  "player_shot",
   "wolf_king_shot",
   "mechanical_shot",
   "idiot_revealed",

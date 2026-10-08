@@ -48,6 +48,7 @@ const CHAT_HANDLERS: ScriptChatLineHandlers = {
 };
 
 const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
+  player_shot: (event, locale = "zh-CN") => text(locale, "console.player_shot", { actor: event.payload.actorId, target: event.payload.targetId }),
   lucky_ability_skipped: (event,locale="zh-CN") => text(locale,"console.lucky.skipped",{actor:event.payload.actorId,day:event.payload.day,ability:event.payload.abilityId}),
   gargoyle_awakened:(event,locale="zh-CN")=>text(locale,"console.gargoyle.awakened",{actor:event.payload.actorId,day:event.payload.day}),
   role_inspection_skipped:(event,locale="zh-CN")=>text(locale,"console.role_inspection.skipped",{actor:event.payload.actorId,day:event.payload.day,reason:text(locale,event.payload.reason==="passed"?"inspection.skip.passed":"inspection.skip.no_targets")}),
@@ -90,6 +91,7 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
 };
 
 const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
+  player_shot: () => "death_shot",
   gargoyle_awakened:()=>"gargoyle_awakened",role_inspected:()=>"role_inspected",role_inspection_skipped:()=>"role_inspection_skipped",
   hidden_wolf_awakened:()=>"hidden_wolf_awakened",
   bear_roared:()=>"bear_roared",
@@ -115,6 +117,7 @@ const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
 };
 
 const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
+  player_shot: (event, _private, locale = "zh-CN") => [{ kind: "action", text: text(locale, "console.player_shot", { actor: event.payload.actorId, target: event.payload.targetId }) }],
   gargoyle_awakened:(event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.gargoyle.awakened",{actor:event.payload.actorId,day:event.payload.day})}]:[],
   role_inspection_skipped:(event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.role_inspection.skipped",{actor:event.payload.actorId,day:event.payload.day,reason:text(locale,event.payload.reason==="passed"?"inspection.skip.passed":"inspection.skip.no_targets")})}]:[],
   role_inspected:(event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.role_inspected",{actor:event.payload.actorId,target:event.payload.targetId,result:inspectionLabel(event.payload.result,locale)})}]:[],

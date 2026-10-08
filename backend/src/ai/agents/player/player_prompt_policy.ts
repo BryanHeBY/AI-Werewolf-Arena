@@ -78,7 +78,7 @@ export class PlayerPromptPolicy {
       }
       const target = event.type === "voted_out" ? event.payload.target
         : event.type === "wolf_self_destruct" ? event.payload.wolfId
-        : event.type === "hunter_shot" || event.type === "wolf_king_shot" || event.type === "mechanical_shot" ? event.payload.targetId : undefined;
+        : event.type === "player_shot" || event.type === "hunter_shot" || event.type === "wolf_king_shot" || event.type === "mechanical_shot" ? event.payload.targetId : undefined;
       if (typeof target === "number") dead.add(target);
       if (event.type === "white_wolf_king_self_destruct") {
         if (typeof event.payload.actorId === "number") dead.add(event.payload.actorId);

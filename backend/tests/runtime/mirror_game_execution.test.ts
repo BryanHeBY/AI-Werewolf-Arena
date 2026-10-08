@@ -29,7 +29,15 @@ for (const kind of MIRROR_CASES) for (const transport of ["llm", "acp", "mixed"]
     const faction = oracle.wolf ? "wolf" : "good", winners = kind === "twelve" ? [5, 6, 7, 8, 9, 10, 11, 12] : oracle.wolf ? [1, 2] : [3, 4, 5, 6];
     expect(run.result.snapshot.result).toEqual({ winner: faction, reason: oracle.wolf ? "slaughter_side_completed" : "all_wolves_eliminated", outcome: { kind: "victory", primary: { kind: "faction", faction, winningPlayerIds: winners }, additional: [], winningPlayerIds: winners }, decidedAt: { day: oracle.day, phase: kind === "exhausted" ? "day" : "voting", checkpoint: kind === "exhausted" ? "night_settled" : "exile_settled" } });
     if (kind === "king_badge") { expect(events.filter(e => e.type === "wolf_king_shot").map(e => e.payload)).toEqual([{ actorId: 1, targetId: 3 }]); expect(events.filter(e => e.type === "sheriff_badge_transferred").map(e => e.payload)).toEqual([{ fromId: 1, toId: 2, reason: "night_death" }, { fromId: 2, toId: 4, reason: "voted_out" }]); }
-    if (kind === "twelve") expect(events.filter(e => e.type === "hunter_shot").map(e => e.payload)).toEqual([{ hunterId: 7, targetId: 2 }]);
+    if (kind === "twelve") {
+      expect(events.filter(e => e.type === "hunter_shot").map(e => e.payload)).toEqual([{ hunterId: 7, targetId: 2 }]);
+      for (const view of run.views) {
+        const shots = view.timeline.filter(e => e.kind === "event" && e.event.type === "player_shot");
+        expect(shots).toHaveLength(1);
+        expect(shots[0]).toMatchObject({ stage: "death_shot", event: { type: "player_shot", payload: { actorId: 7, targetId: 2 } } });
+        expect(view.timeline.some(e => e.kind === "event" && e.event.type === "hunter_shot")).toBe(false);
+      }
+    }
     for (const view of run.views) { expect(view.timeline.filter(e => e.kind === "event" && e.event.type === "role_inspected")).toHaveLength(view.player_id === actor ? oracle.targets.length : 0); expect(view.timeline.filter(e => e.kind === "event" && e.event.type === "role_inspection_skipped")).toHaveLength(view.player_id === actor ? oracle.skips.length : 0); }
     expect([...run.rejected.values()].reduce((a, b) => a + b, 0) + run.acpTraces.reduce((a, row) => a + row.trace.rejected, 0)).toBe(["unique", "twelve", "hidden_before"].includes(kind) ? 1 : 0);
     expect(events.filter(e => e.type === "game_over")).toHaveLength(1); expect(events.at(-1)!.type).toBe("game_over");

@@ -371,3 +371,9 @@ A审发现完整ability/source与事件裁剪漏洞、假空history结构，已�
 ## P7：觉醒隐狼规则冻结
 
 [规则卡](rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)与[实现边界](awakened-hidden-wolf.md)冻结原七角色/十二人镜隐组合、580即刻模板标签/实际900激活、主动实际激活次夜与Hunter同夜末armed、独立资源与无目标wait；once额外刀可留后夜、独立刀毒盾无机械反毒/破盾/模式/自罚。A关于迟到激活、Mirror原库存依赖、双盾毒顺序，R关于Native/复制枪类型及玩家event档stage推来源的意见已明确修正，见[冻结审查](reviews/p7-awakened-hidden-rules.md)。本笔纯文档，Aw仍planned/目录21 verified43 planned不变；随后按底座职责分笔及完整Aw/原12板通路/双语/全gate启用，P7余2及P8–P10/64角色22机制/长局T6继续。
+
+## P7：中立玩家枪底座
+
+NativeHunter内部/God旧hunter_shot保持，玩家visible_events统一player_shot{actorId,targetId}与玩家event档death_shot；白名单不携trueRole/库存/模板，ObservedBot排死、前端席位与双语字幕识别新事件。A发现审计遗漏新枪，同时补机械成功枪；blocked/silent不计。Aw尚未启用，21/43保持。
+
+受影响backend163/1976/24文件与type/deps/boundaries/i18n57通过，6实际双语十二人LLM/ACP/MCP/混合完整局及每局Tape、玩家type/stage/PID验证全0；frontend149/1296/type/build、新增双语实际Chromium2全通过（2.3min），两个合成协议变体PNG frame4870核四死/0winner与中立字幕。详见[底座审查](reviews/p7-neutral-player-shot.md)，本笔只验受影响通路，未冒新Aw、外部模型或全已支持阶段release完成。下一笔正常额外刀/吸毒盾和实际900，随后Aw完整联合板及P7余2/P8–P10继续。

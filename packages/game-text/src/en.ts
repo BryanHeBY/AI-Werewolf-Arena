@@ -138,6 +138,7 @@ export const en = Object.freeze({
   "console.dream.consecutive": "consecutive sleepwalking",
   "console.dream.linked": "the dream source's night death",
   "console.shot.blocked": "Player {actor} shoots at player {target}; night protection blocks the shot",
+  "console.player_shot": "Player {actor} shoots player {target}",
   "role.gravekeeper.brief": "From night two, passively learns the camp inspection label of the previous day's actual exile target; no action is required.",
   "role.gravekeeper.state": "Your role is Gravekeeper, a good special role. You have no native active night tool; after Witch and before Seer, you automatically receive the previous day's actual exile camp feedback.",
   "role.gravekeeper.no_report": "No exile feedback received yet; a day without an actual exile does not repeat older results.",

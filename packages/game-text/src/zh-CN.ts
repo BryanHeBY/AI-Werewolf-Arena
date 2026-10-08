@@ -138,6 +138,7 @@ export const zhCN = Object.freeze({
   "console.dream.consecutive": "连续两夜梦游",
   "console.dream.linked": "摄梦来源夜间死亡牵连",
   "console.shot.blocked": "{actor}号向{target}号开枪，夜间保护使枪击落空",
+  "console.player_shot": "{actor}号开枪带走{target}号",
   "role.gravekeeper.brief": "从第二夜起被动获知上一日实际放逐主目标的阵营查验标签，不需要主动行动。",
   "role.gravekeeper.state": "你的底牌是【守墓人】，好人神职。你没有原生主动夜间工具；女巫后、预言家前自动收到上一日实际放逐的阵营反馈。",
   "role.gravekeeper.no_report": "尚未收到放逐反馈；无实际放逐时不重复更早的结果。",

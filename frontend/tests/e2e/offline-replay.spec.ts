@@ -2,6 +2,28 @@ import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 const original = JSON.parse(readFileSync(new URL("../fixtures/sample.replay.json", import.meta.url), "utf8"));
 
+for (const locale of ["zh-CN", "en"] as const) test(`${locale}: neutral public gun caption kills the target without asserting Hunter in the caption`, async ({ page }) => {
+  const replay = JSON.parse(readFileSync(new URL("../fixtures/mirror-twelve.replay.json", import.meta.url), "utf8"));
+  replay.meta.locale = locale;
+  const shot = replay.events.find((event: { type: string }) => event.type === "hunter_shot");
+  shot.type = "player_shot"; shot.stage = "death_shot"; shot.payload = { actorId: 7, targetId: 2 };
+  await page.route("**/api/replay", route => route.fulfill({ json: replay }));
+  await page.goto("/");
+  const label = locale === "en" ? "Player 7 shoots player 2" : "7号开枪带走2号";
+  await page.locator(".timeline .event").filter({ hasText: label }).click();
+  await expect(page.getByTestId("composition-event")).toHaveText(label);
+  await expect(page.locator(".seat-grid .dead")).toHaveCount(4);
+  await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+  const victim = page.getByRole("button", { name: locale === "en" ? "Player 2 · Seat 2" : "2号 · Seat 2", exact: true });
+  await expect(victim).toHaveClass(/dead/);
+  const caption = await page.getByTestId("composition-caption").boundingBox();
+  expect(caption).not.toBeNull();
+  for (const seat of await page.locator("[data-composition-player]").all()) {
+    const box = await seat.boundingBox(); expect(box).not.toBeNull();
+    expect(box!.y + box!.height).toBeLessThan(caption!.y);
+  }
+});
+
 test("switches display locale and time zone while keeping playback and seat focus", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "six_player_mvp" })).toBeVisible();

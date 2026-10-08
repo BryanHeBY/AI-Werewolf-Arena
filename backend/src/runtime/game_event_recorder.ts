@@ -51,7 +51,7 @@ export class GameEventRecorder {
           camp: roleComp?.camp ?? "unknown",
           day: this.replayDayCursor,
           phase: this.replayPhaseCursor,
-          stage,
+          stage: visibleEvent.type === "player_shot" ? "death_shot" : stage,
           requestId: `${this.replayDayCursor}-${this.replayPhaseCursor}-${playerId}-event-${i + 1}`,
           timestampMs: event.timestamp,
           sourceEventSeq: i + 1,

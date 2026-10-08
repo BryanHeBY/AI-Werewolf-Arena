@@ -18,7 +18,7 @@ export function collectObservations(input: BuildDebugSummaryInput): SummaryObser
 
   const timelineEntries = views.reduce((acc, view) => acc + view.timeline.length, 0);
   const selfDestructCount = events.filter((e) => (e.type === "wolf_self_destruct" || e.type === "white_wolf_king_self_destruct")).length;
-  const deathShotCount = events.filter((e) => e.type === "hunter_shot" || e.type === "wolf_king_shot").length;
+  const deathShotCount = events.filter((e) => e.type === "player_shot" || e.type === "hunter_shot" || e.type === "wolf_king_shot" || e.type === "mechanical_shot").length;
   const nightResolvedCount = events.filter((e) => e.type === "night_resolved").length;
 
   const mismatchSeqs: number[] = [];
