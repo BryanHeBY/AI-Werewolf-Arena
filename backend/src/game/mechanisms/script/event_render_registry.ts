@@ -49,6 +49,7 @@ const CHAT_HANDLERS: ScriptChatLineHandlers = {
 
 const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
   gargoyle_awakened:(event,locale="zh-CN")=>text(locale,"console.gargoyle.awakened",{actor:event.payload.actorId,day:event.payload.day}),
+  role_inspection_skipped:(event,locale="zh-CN")=>text(locale,"console.role_inspection.skipped",{actor:event.payload.actorId,day:event.payload.day,reason:text(locale,event.payload.reason==="passed"?"inspection.skip.passed":"inspection.skip.no_targets")}),
   role_inspected:(event,locale="zh-CN")=>text(locale,"console.role_inspected",{actor:event.payload.actorId,target:event.payload.targetId,result:inspectionLabel(event.payload.result,locale)}),
   hidden_wolf_awakened:(event,locale="zh-CN")=>text(locale,"console.hidden_wolf.awakened",{actor:event.payload.actorId,day:event.payload.day}),
   bear_roared:(event,locale="zh-CN")=>text(locale,"console.bear.report",{day:event.payload.day,result:text(locale,event.payload.roared?"bear.roar":"bear.quiet")}),
@@ -88,7 +89,7 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
 };
 
 const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
-  gargoyle_awakened:()=>"gargoyle_awakened",role_inspected:()=>"role_inspected",
+  gargoyle_awakened:()=>"gargoyle_awakened",role_inspected:()=>"role_inspected",role_inspection_skipped:()=>"role_inspection_skipped",
   hidden_wolf_awakened:()=>"hidden_wolf_awakened",
   bear_roared:()=>"bear_roared",
   dream_applied: ()=>"dreamer", dream_death: ()=>"dream_death",
@@ -114,6 +115,7 @@ const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
 
 const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
   gargoyle_awakened:(event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.gargoyle.awakened",{actor:event.payload.actorId,day:event.payload.day})}]:[],
+  role_inspection_skipped:(event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.role_inspection.skipped",{actor:event.payload.actorId,day:event.payload.day,reason:text(locale,event.payload.reason==="passed"?"inspection.skip.passed":"inspection.skip.no_targets")})}]:[],
   role_inspected:(event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.role_inspected",{actor:event.payload.actorId,target:event.payload.targetId,result:inspectionLabel(event.payload.result,locale)})}]:[],
   hidden_wolf_awakened:(event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.hidden_wolf.awakened",{actor:event.payload.actorId,day:event.payload.day})}]:[],
   bear_roared:(event,_private,locale="zh-CN")=>[{kind:"system",text:text(locale,"console.bear.report",{day:event.payload.day,result:text(locale,event.payload.roared?"bear.roar":"bear.quiet")})}],

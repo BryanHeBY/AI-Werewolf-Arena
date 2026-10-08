@@ -3,6 +3,7 @@ import { readGravekeeperReport } from "@ai-werewolf-arena/replay-contract";
 import {getBearState} from "../../../game/mechanisms/roles/private_state";
 import {getHiddenWolfState} from "../../../game/mechanisms/roles/private_state";
 import {canHiddenWolfKnife} from "../../../game/mechanisms/roles/hidden_wolf/inheritance";
+import {roleInspectionPolicy} from "../../../game/mechanisms/roles/abilities";
 import {getGargoyleState,getRoleInspectionState} from "../../../game/mechanisms/roles/private_state";
 import {canGargoyleKnife} from "../../../game/mechanisms/roles/gargoyle/inheritance";
 import { COMPONENT } from "../../../core/domain/components/names";
@@ -155,7 +156,7 @@ export class PlayerPromptPolicy {
   ): string {
     const role = this.role(request.actorId);
     const bound = request.context.ability_id ? allNightAbilities(role).find(ability => ability.id === request.context.ability_id) : undefined;
-    const targetRuleRole = bound?.kind === "role_check" ? Role.Gargoyle : bound?.kind === "guard" ? Role.Guard : bound?.kind === "potion" ? Role.Witch : bound?.kind === "seer_check" ? Role.Seer : bound?.kind === "dream" ? Role.Dreamer : role?.role;
+    const targetRuleRole = bound?.kind === "role_check" ? (roleInspectionPolicy(bound.state)==="psychic"?Role.Psychic:Role.Gargoyle) : bound?.kind === "guard" ? Role.Guard : bound?.kind === "potion" ? Role.Witch : bound?.kind === "seer_check" ? Role.Seer : bound?.kind === "dream" ? Role.Dreamer : role?.role;
     const constraints = resolveTurnConstraints(request);
     const stage = getActionRequestStage(request);
     return buildUserPrompt({
@@ -217,7 +218,7 @@ export class PlayerPromptPolicy {
     }
     if (request.context.ability_id) lines.push(text(this.locale, "ability.bound_turn", { id: request.context.ability_id }));
     if(request.allowedTools.includes("dream")&&allNightAbilities(role).some(ability=>ability.kind==="dream"))lines.push(text(this.locale,"ability.dream.rules"));
-    if(request.allowedTools.includes("inspect_role")&&allNightAbilities(role).some(ability=>ability.kind==="role_check"))lines.push(text(this.locale,"ability.role_check.rules"));
+    if(role&&request.allowedTools.includes("inspect_role")){const inspection=getRoleInspectionState(role,request.context.ability_id);if(inspection)lines.push(text(this.locale,roleInspectionPolicy(inspection)==="psychic"?"ability.role_check.psychic_rules":"ability.role_check.rules"));}
     const privateState = role?.renderPrompt?.(this.locale).trim();
     if (privateState) lines.push(text(this.locale, "prompt.status.private", { state: privateState }));
     if (role?.role === Role.Idiot && getIdiotState(role)?.revealed) {

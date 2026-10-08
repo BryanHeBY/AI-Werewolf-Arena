@@ -50,7 +50,7 @@ export interface WolfBeautyState { targetId: EntityId | null; lastActedDay: numb
 export interface BearState { history:Array<{day:number;roared:boolean}> }
 export interface HiddenWolfState {hasInheritedKnife:boolean}
 export interface GargoyleState {hasInheritedKnife:boolean}
-export interface RoleInspectionState {lastTarget:EntityId|null;lastDay:number|null;history:Array<{day:number;targetId:EntityId;result:Extract<InspectionResult,{kind:"role"}>}>}
+export interface RoleInspectionState {policy?: "gargoyle" | "psychic";lastTarget:EntityId|null;lastDay:number|null;history:Array<{day:number;targetId:EntityId;result:Extract<InspectionResult,{kind:"role"}>}>}
 
 /** 白痴私有状态。 */
 export interface IdiotState {

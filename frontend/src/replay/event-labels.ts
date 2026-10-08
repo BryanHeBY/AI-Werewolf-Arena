@@ -12,6 +12,7 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerI
   const players = (value: unknown) => numberList(value, locale) || t("replay.none");
   switch (event.type) {
     case "gargoyle_awakened":return t("console.gargoyle.awakened",{actor,day:numberValue(p.day)});
+    case "role_inspection_skipped":return p.reason==="passed"||p.reason==="no_targets"?t("console.role_inspection.skipped",{actor,day:numberValue(p.day),reason:t(p.reason==="passed"?"inspection.skip.passed":"inspection.skip.no_targets")}):t("replay.unknown");
     case "role_inspected":{const result=readInspectionResult(p.result);return result?.kind==="role"?t("console.role_inspected",{actor,target,result:inspectionLabel(result,locale)}):t("replay.unknown");}
     case "hidden_wolf_awakened": return t("console.hidden_wolf.awakened",{actor,day:numberValue(p.day)});
     case "bear_roared": return typeof p.roared==="boolean"?t("console.bear.report",{day:numberValue(p.day),result:t(p.roared?"bear.roar":"bear.quiet")}):t("replay.unknown");

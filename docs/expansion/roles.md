@@ -1,6 +1,6 @@
 # 可配置角色目标目录
 
-返回 [实施路线](roadmap.md)。本目录共 **64 项定义**，基础7项与P5狼王/白狼王/骑士/守墓人与P6摄梦人/狼美人/熊/隐狼/石像鬼已验证，共16项；剩余48项为目标。已有实现仅表示当前 AWA 版本，不能表示其他同名版本均受支持。
+返回 [实施路线](roadmap.md)。本目录共 **64 项定义**，基础7项与P5狼王/白狼王/骑士/守墓人与P6摄梦人/狼美人/熊/隐狼/石像鬼与P7通灵师已验证，共17项；剩余47项为目标。已有实现仅表示当前 AWA 版本，不能表示其他同名版本均受支持。
 
 ## 使用与冻结要求
 
@@ -11,7 +11,7 @@
 - 每项在实现前建立规则卡：来源、发布日期/核验日期、规则集与版本、身份/阵营/计数/胜利目标、互认/夜聊/刀权、动作/资源/时点、所有死因与保护/重定向交互、允许组合、AWA 改编说明、中英提示及期望测试。
 - 有歧义的复制、替死、反伤、保护及判胜，必须选择并记录某个确定版本；未决规则阻止相关角色宣告支持。
 - 基础/觉醒、机械狼/觉醒隐狼、通灵师/魔镜少女分别登记。白痴与愚者的别名、赤月与血月等名称仅在同规则版本下建立映射。
-- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。基础七项已完成P1–P4并登记 `verified`，见[基础规则卡](rules/awa-classic-v1.md)与[P4验收](reviews/p4-activation.md)；狼王/白狼王/骑士/守墓人及P6摄梦人/狼美人/熊/隐狼/石像鬼已交付，新增其余48项为 `planned`。
+- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。基础七项已完成P1–P4并登记 `verified`，见[基础规则卡](rules/awa-classic-v1.md)与[P4验收](reviews/p4-activation.md)；狼王/白狼王/骑士/守墓人及P6摄梦人/狼美人/熊/隐狼/石像鬼与P7通灵师已交付，新增其余47项为 `planned`。
 
 ## 1. 基础角色：7 项，awa_classic 1.0.0 已验证
 
@@ -43,7 +43,7 @@
 
 | # | 计划 ID | 中文 | English | 机制标签 | 阶段 / 来源 |
 | --- | --- | --- | --- | --- | --- |
-| 17 | `psychic` | 通灵师 | Spirit Seer | 具体身份查验 | P7 / [S09][mechanicalboard] |
+| 17 | `psychic` | 通灵师 | Spirit Seer | 具体身份查验 | `verified`；P7 / [AWA规则卡](rules/awa-psychic-v1.md#psychic) / [验收](reviews/p7-psychic.md) / [S09][mechanicalboard] |
 | 18 | `mirror_girl` | 魔镜少女 | Mirror Girl | 具体身份、查验限制 | P7 扩展 / [S10][mirror] |
 | 19 | `mechanical_wolf` | 机械狼 | Mechanical Wolf | 复制技能、资源和接刀 | P7 / [S09][mechanicalboard] |
 | 20 | `miracle_merchant` | 奇迹商人 | Miracle Merchant | 授予限次能力 | P7 / [S01][cards] |

@@ -3,6 +3,7 @@ import { text } from "@ai-werewolf-arena/game-text";
 import { Role, ToolName } from "../../../core/domain/model";
 import { TargetHintContext, TargetHintRegistry } from "./contracts";
 import { canBeExiled, canBeSheriff } from "../common/participation";
+import {roleInspectionPolicy} from "../roles/abilities";
 import {getRoleInspectionState} from "../roles/private_state";
 import {COMPONENT} from "../../../core/domain/components/names";
 import type {RoleComponent} from "../../../core/domain/components/role";
@@ -64,7 +65,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       .getAliveEntityIds()
       .filter(id => targetTools.some(tool => (this.getRule(ctx.actorRole, tool)?.allowSelf || id !== ctx.actorId) &&
         (tool !== "vote" || canBeExiled(ctx.world, id, ctx.roleCatalog)) &&
-        (tool!=="inspect_role"||!inspection?.history.some(report=>report.targetId===id))&&
+        (tool!=="inspect_role"||!inspection||roleInspectionPolicy(inspection)==="psychic"||!inspection.history.some(report=>report.targetId===id))&&
         (tool !== "vote_for_sheriff" || ctx.sheriffCandidates?.includes(id) && canBeSheriff(ctx.world, id, ctx.roleCatalog))))
       .sort((a, b) => a - b);
     if (ids.length === 0) {

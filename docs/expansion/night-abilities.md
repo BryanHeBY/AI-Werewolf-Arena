@@ -2,7 +2,7 @@
 
 本批把原生/授予/复制的阵营查验、守护与用药迁入能力实例；死亡技能见已交付的[死亡链](death-chain.md)，具体商人/机械狼等角色和继承规则继续各自角色阶段。没有注册新角色，也不宣称所有未来M07能力变体已完成。
 
-当前 P6 已增加[摄梦](dreamer.md)与[石像鬼 role_check](gargoyle.md)实例，以下 P4 验证计数保留历史。role_check 的每实例禁重复与完整知识转移是明确规则；转移必须保完整 history/lastTarget/lastDay，不沿预言家可重置知识的政策。
+当前 P6 已增加[摄梦](dreamer.md)与[石像鬼 role_check](gargoyle.md)，P7增加[通灵policy](psychic.md)实例，以下 P4 验证计数保留历史。gargoyle policy的每实例禁重复与完整知识转移是明确规则；psychic policy允许跨夜重复；转移必须保完整 history/lastTarget/lastDay，不沿预言家可重置知识的政策。
 
 ## 所有权与来源
 
@@ -44,3 +44,5 @@ ability_changed领域事件提供来源、时点和变更，玩家只接收本�
 夜间能力人工判例23项/181断言覆盖两个同种赠予、复制守护、用药不使用/消费、生效/过期/封锁/转移、空缺原生角色的预留阶段、阶段前/后授予、模型请求前死亡/撤权、来源隐藏、模板别名、伪转移拒绝、转移知识策略、晚到自救的真实日期以及strict CP/Tape可序列化。前端54/365、类型和构建通过；未重复浏览器E2E或视频渲染。
 
 原生/赠予的能力记录和完整基础对局可正常录制。合成赠予规则仅作为NightPipeline/接入判例，本批没有为任意外部回调或预注入状态提供跨引擎重放；具体赠予角色的完整决策/效果/Tape在对应P7角色阶段验证。source/lock门槛与旧状态政策没有放宽。
+
+P7 role_check.policy是实例规则标识：旧undefined等价gargoyle，原生psychic显式标记；中性同名工具与validator按bound实例选择stage/repeat/必须，不看真实底牌。合法Psychic skip/noTargets只关本夜lastUsedDay、uses不增，完整转移保关闭与policy/history，返回值先JSON规范化。gift/copy不改变身份、狼权限或Garg原生查后刀范围；详情见[通灵契约](psychic.md)。

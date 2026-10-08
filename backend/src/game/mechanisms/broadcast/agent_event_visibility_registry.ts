@@ -46,6 +46,7 @@ const ACTOR_ONLY_EVENT_TYPES = new Set([
   "hidden_wolf_awakened",
   "gargoyle_awakened",
   "role_inspected",
+  "role_inspection_skipped",
   "witch_potion_used",
   "witch_potion_skipped",
   "guard_applied",

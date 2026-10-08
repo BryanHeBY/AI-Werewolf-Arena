@@ -30,3 +30,5 @@ DeathResolution唯一提交死亡，装配及真实死亡整批后更新native�
 ## 必验
 
 单向皆无互认/聊/刀口、自爆禁；合法具体role/原有seer camp区分、self/repeat/dead/nullable/非法不耗、每实例每夜/无目标/mandatory失败；原role/ability/state/目标life/gateway/phase撤销、gift真实身份与history不变、转移资源；开局/Day/Night/同批/追加继承、查后刀/无目标刀/禁用撤权不旧授权；Keeper反馈/Seer/熊/Knight真阵营、王枪/白狼/Beauty/梦/隐狼核心交互与全链judge；actor-only/目标无通知/不回溯历史/Mask标签/中英/DTO/记录/终端/前端；公开6/12参数/count、SDK/ACP/混合两语字面完整局及每局Tape、20seed每板真实查验+继承/刀分支与重放，三路审查；P6结束完整支持回归。
+
+P7已新增同role_check的[通灵policy](awa-psychic-v1.md)，其晚阶段/可repeat/skip独立；本卡禁重/必须与查后刀完成专属gargoyle policy，旧缺省仍gargoyle。

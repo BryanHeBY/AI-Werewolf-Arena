@@ -3,22 +3,24 @@ import {COMPONENT} from "../../../../core/domain/components/names";
 import type {RoleComponent} from "../../../../core/domain/components/role";
 import {Role} from "../../../../core/domain/model";
 import type {World} from "../../../../core/domain/world";
-import {findNightAbility,type NightAbility} from "../abilities";
+import {findNightAbility,roleInspectionPolicy,type NightAbility} from "../abilities";
 import {getGargoyleState,type GargoyleState,type RoleInspectionState} from "../private_state";
+
 
 interface Completion{role:RoleComponent;state:GargoyleState;ability:NightAbility<"role_check">;inspection:RoleInspectionState;life:AliveComponent;version:number;isCurrent:()=>boolean}
 const nights=new WeakMap<World,{day:number;completed:Map<RoleComponent,Completion>}>();
 const committed=new WeakMap<World,Set<number>>();
 export function hasRoleInspectionNightCommit(world:World,day:number):boolean{return committed.get(world)?.has(day)??false;}
 export function beginRoleInspectionNight(world:World,day:number):void{if(nights.get(world)?.day!==day)nights.set(world,{day,completed:new Map()});}
+export function recordRoleInspectionNightCommit(world:World,day:number,isCurrent:()=>boolean):void{if(!isCurrent())return;const days=committed.get(world)??new Set<number>();days.add(day);committed.set(world,days);}
 export function recordRoleInspectionCompletion(world:World,actorId:number,day:number,ability:NightAbility<"role_check">,isCurrent:()=>boolean):void{
  if(!isCurrent())return;
- const days=committed.get(world)??new Set<number>();days.add(day);committed.set(world,days);
+ recordRoleInspectionNightCommit(world,day,isCurrent);
  const role=world.getComponent<RoleComponent>(actorId,COMPONENT.Role),state=role&&getGargoyleState(role),life=world.getComponent<AliveComponent>(actorId,COMPONENT.Alive),version=life&&aliveLifeVersion(life);
- if(role?.role!==Role.Gargoyle||!state||!life?.alive||version===undefined||ability.source.kind!=="native"||ability.source.role!==Role.Gargoyle)return;
+ if(roleInspectionPolicy(ability.state)!=="gargoyle"||role?.role!==Role.Gargoyle||!state||!life?.alive||version===undefined||ability.source.kind!=="native"||ability.source.role!==Role.Gargoyle)return;
  beginRoleInspectionNight(world,day);nights.get(world)!.completed.set(role,{role,state,ability,inspection:ability.state,life,version,isCurrent});
 }
 export function completedGargoyleInspection(world:World,role:RoleComponent):boolean{
- const scope=nights.get(world)?.completed.get(role);if(!scope||!scope.isCurrent()||getGargoyleState(role)!==scope.state||role.role!==Role.Gargoyle||findNightAbility(role,"role_check",scope.ability.id)!==scope.ability||scope.ability.disabled||scope.ability.state!==scope.inspection)return false;
+ const scope=nights.get(world)?.completed.get(role);if(!scope||!scope.isCurrent()||getGargoyleState(role)!==scope.state||role.role!==Role.Gargoyle||findNightAbility(role,"role_check",scope.ability.id)!==scope.ability||scope.ability.disabled||scope.ability.state!==scope.inspection||roleInspectionPolicy(scope.inspection)!=="gargoyle")return false;
  return world.entityIds().some(id=>world.getComponent(id,COMPONENT.Role)===role&&world.getComponent(id,COMPONENT.Alive)===scope.life)&&scope.life.alive&&aliveLifeVersion(scope.life)===scope.version;
 }

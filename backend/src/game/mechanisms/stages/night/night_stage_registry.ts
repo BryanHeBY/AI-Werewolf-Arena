@@ -7,6 +7,8 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { allNightAbilities, type NightAbilityKind } from "../../roles/abilities";
 
+import {PSYCHIC_INSPECTION_STAGE} from "../../roles/role_inspection/night_stages";
+
 const abilityRole: Record<NightAbilityKind, Role> = { seer_check: Role.Seer,role_check:Role.Gargoyle, guard: Role.Guard, potion: Role.Witch, dream: Role.Dreamer };
 
 /** 夜间阶段注册表。 */
@@ -26,6 +28,7 @@ export class NightStageRegistry {
       const pack = this.roleCatalog.get(role)?.nightStages ?? [];
       collected.push(...pack);
     }
+    if(collected.some(stage=>stage.id==="role_inspection"))collected.push(PSYCHIC_INSPECTION_STAGE);
     // 去重并按显式优先级排序（priority 越小越先执行）。
     const dedup = new Map<string, NightStageHandler>();
     for (const stage of collected) {

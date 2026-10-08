@@ -58,6 +58,7 @@ export interface EventPayloadMap {
   bear_roared: { day:number; roared:boolean };
   hidden_wolf_awakened: {actorId:EntityId;day:number};
   gargoyle_awakened: {actorId:EntityId;day:number};
+  role_inspection_skipped: {actorId:EntityId;abilityId?:string;day:number;reason:"passed"|"no_targets"};
   role_inspected: {actorId:EntityId;abilityId?:string;targetId:EntityId;day:number;result:Extract<InspectionResult,{kind:"role"}>};
   wolf_self_destruct: { wolfId: EntityId; window: ActionWindow };
   white_wolf_king_self_destruct: { actorId: EntityId; targetId: EntityId | null; window: ActionWindow };

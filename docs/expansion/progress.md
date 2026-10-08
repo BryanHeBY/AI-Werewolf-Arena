@@ -11,7 +11,7 @@
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
 | P5 | 完成 | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md) |
 | P6 | 完成 | 五角色与三路审查闭环；16项verified，最终全量1176测试／542实际双语整局/Tape、103前端／42浏览器通过，见[阶段验收](reviews/p6-activation.md) |
-| P7 | 准备中 | 查验模块归属调整、通灵师规则冻结；尚未启用新角色 |
+| P7 | 进行中 | 通灵师交付；17项verified，policy/重验/跳过、122实际双语受影响整局/Tape，见[验收](reviews/p7-psychic.md)；其余6项继续 |
 | P8–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
@@ -283,3 +283,13 @@ front103／953、type/build、actualChromium42、中文接刀与英文十二人�
 ## P7：具体角色查验模块归属
 
 现有石像鬼阶段与私有夜范围移到roles/role_inspection，单独纯迁移，不改规则或提前启用通灵。两文件与HEAD逐字核对（唯一stage内部import修正），外部引用同步；type/deps/boundaries、core32/229和36实际双语SDK/ACP/混合整局＋40seed／全部Tape20/5715通过。两名独立R/A只读核无行为/资源/受众变化，见[迁移审查](reviews/p7-inspection-move.md)。目录仍16verified/48planned，通灵按另笔冻结/实现/验收。
+
+## P7：通灵师
+
+第17项psychic按[冻结卡](rules/awa-psychic-v1.md)与[契约](psychic.md)交付：Good神职，600女巫后允许跨夜重验/无工具skip；共用role_check明确实例policy，旧Garg默认规则保留。同名schema/validator中性，bound实例统一控制stage/目标/Baseline/共享提示；合法skip只关本夜不耗use，scope/policy/生命/gateway再验、完整JSON语义转移，不授狼或Garg刀权限。
+
+最终source type/deps/boundaries/i18n与受影响engine/config/catalog/console **527/10558/42文件**过；通灵core24，连Garg/config58/413，三路独立复查0阻断。最终实际基础50＋Garg36＋通灵36＝**122双语SDK/ACP/混合完整局与全部严格Tape**、两角色80受限seed/Tape＋8gift专项 **73/36177**，日志`/tmp/awa-p7-psychic-wire-final.log`；新角色40seed实际查验/重验/skip自然终局0拒绝回退。没有把前P6全部542历史source当本笔复跑全部。
+
+前端109/998、type/build、实际Chromium46及中英PNG过，copy/gift两个policy真实身份/规则/只读接收/PID回收明确；Role/Psy背景已注明原生。既有no-winner在浏览器首轮/定向各超时一次，保原证据；健康检查更准确等待转换入口，独立testinfra commit b78081a不改断言/预算，最终46全过。独立新缓存probe未复现原根因，没有假称API慢/HMR/冷transform已确定。
+
+目录17verified/47planned，六/十二public board/game例可加载；源代码未在活跃最终对局中修改。P7剩机械狼、奇迹商人、混血儿及同依赖下魔镜少女/觉醒隐狼/黑市商人；P8–P10/组合矩阵/真实模型与长局完整目标保持。未读写用户configs/认证或调用外部模型。

@@ -3,7 +3,7 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import type { EntityId, GameEvent } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
-import { allNightAbilities, copyAbilityData, type AbilitySource, type NightAbility, type NightAbilityKind, type NightAbilityStates } from "./abilities";
+import { allNightAbilities, copyAbilityData, roleInspectionPolicy, type AbilitySource, type NightAbility, type NightAbilityKind, type NightAbilityStates } from "./abilities";
 
 export interface AbilityGrant<K extends NightAbilityKind> {
   id: string; kind: K; state: NightAbilityStates[K]; source: Extract<AbilitySource, { kind: "gift" | "copy" }>;
@@ -30,6 +30,7 @@ export function grantNightAbility<K extends NightAbilityKind>(world: World, acto
 
 function installAbility(world: World, actorId: EntityId, ability: NightAbility, events: GameEvent[]): NightAbility {
   const input = ability;
+  if(input.kind==="role_check")roleInspectionPolicy(input.state);
   const source = input.source;
   if (source.kind === "native") throw new Error("ability_grant_source_invalid");
   const role = roleOf(world, actorId);
@@ -63,7 +64,7 @@ export function transferNightAbility<K extends NightAbilityKind>(world: World, f
   const source = roleOf(world, fromId), ability = allNightAbilities(source).find(ability => ability.id === id);
   if (!ability) throw new Error("ability_instance_missing");
   if (!options || options.kind !== ability.kind || typeof options.statePolicy !== "function") throw new Error("ability_transfer_policy_required");
-  const targetState = options.statePolicy(copyAbilityData(ability.state) as NightAbilityStates[K]);
+  const targetState = copyAbilityData(options.statePolicy(copyAbilityData(ability.state) as NightAbilityStates[K]));
   // Transfer preserves resources. A seer_check policy may reset knowledge;
   // role_check retains its full history, and other policies cannot refill resources.
   if (ability.kind === "guard" && (targetState as NightAbilityStates["guard"]).lastTarget !== ability.state.lastTarget) throw new Error("ability_transfer_resources_changed");

@@ -1,6 +1,6 @@
 # P4 G02：类型化查验结果
 
-当前 P6 [石像鬼](gargoyle.md)已接入独立 `inspect_role` 与 typed `role_inspected`，原生预言家仍只查 camp；具体 role 标签尊重[隐狼](hidden-wolf.md)的明确伪装。以下 P4 计数和“本子批”范围为当时证据。
+当前 P6 [石像鬼](gargoyle.md)已接入独立 `inspect_role` 与 typed `role_inspected`，P7[通灵师](psychic.md)以同工具的实例policy允许重复/skip并在女巫后执行；原生预言家仍只查 camp；具体 role 标签尊重[隐狼](hidden-wolf.md)的明确伪装。以下 P4 计数和“本子批”范围为当时证据。
 
 ## 当前子批范围
 

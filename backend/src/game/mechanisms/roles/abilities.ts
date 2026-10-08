@@ -5,6 +5,13 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import type { World } from "../../../core/domain/world";
 
 export interface NightAbilityStates { seer_check: SeerState;role_check:RoleInspectionState; guard: GuardState; potion: WitchState; dream: DreamerState }
+export type RoleInspectionPolicy = "gargoyle" | "psychic";
+export function roleInspectionPolicy(state: RoleInspectionState): RoleInspectionPolicy {
+  const policy = state.policy === undefined ? "gargoyle" : state.policy;
+  if (policy !== "gargoyle" && policy !== "psychic") throw new Error("role_inspection_policy_invalid");
+  return policy;
+}
+
 export type NightAbilityKind = keyof NightAbilityStates;
 export type AbilitySource =
   | { kind: "native"; role: Role }
@@ -76,6 +83,7 @@ export function activeNightAbility<K extends NightAbilityKind>(role: RoleCompone
 
 export function installNativeAbility<K extends NightAbilityKind>(role: RoleComponent, kind: K, state: NightAbilityStates[K]): NightAbilityStates[K] {
   const ownedState = copyAbilityData(state);
+  if(kind==="role_check")roleInspectionPolicy(ownedState as RoleInspectionState);
   const stored = (role.privateState.abilities ??= {}) as Record<string, NightAbility>;
   const retired = (role.privateState.retiredAbilityIds ?? []) as string[];
   const baseId = `native:${kind}`;
