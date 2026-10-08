@@ -1,6 +1,6 @@
 # 可配置角色目标目录
 
-返回 [实施路线](roadmap.md)。本目录共 **64 项定义**，基础 7 项已有实现，新增 57 项为目标。已有实现仅表示当前 AWA 版本，不能表示其他同名版本均受支持。
+返回 [实施路线](roadmap.md)。本目录共 **64 项定义**，基础 7 项在 awa_classic 1.0.0 已验证，新增 57 项为目标。已有实现仅表示当前 AWA 版本，不能表示其他同名版本均受支持。
 
 ## 使用与冻结要求
 
@@ -11,19 +11,19 @@
 - 每项在实现前建立规则卡：来源、发布日期/核验日期、规则集与版本、身份/阵营/计数/胜利目标、互认/夜聊/刀权、动作/资源/时点、所有死因与保护/重定向交互、允许组合、AWA 改编说明、中英提示及期望测试。
 - 有歧义的复制、替死、反伤、保护及判胜，必须选择并记录某个确定版本；未决规则阻止相关角色宣告支持。
 - 基础/觉醒、机械狼/觉醒隐狼、通灵师/魔镜少女分别登记。白痴与愚者的别名、赤月与血月等名称仅在同规则版本下建立映射。
-- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。当前基础项还需在 P1 补齐规则卡，新增项均为 `planned`。
+- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。基础七项已完成P1–P4并登记 `verified`，见[基础规则卡](rules/awa-classic-v1.md)与[P4验收](reviews/p4-activation.md)；新增项均为 `planned`。
 
-## 1. 基础角色：7 项，现有版本待重新登记验收
+## 1. 基础角色：7 项，awa_classic 1.0.0 已验证
 
 | # | 计划 ID | 中文 | English | 机制标签 | 阶段 / 来源 |
 | --- | --- | --- | --- | --- | --- |
-| 01 | `wolf` | 狼人 | Werewolf | 夜聊、狼刀、自爆 | 已有；P1–P4 验收 / [S01][cards] |
-| 02 | `villager` | 平民 | Villager | 发言、投票 | 已有；P1–P4 验收 / [S01][cards] |
-| 03 | `seer` | 预言家 | Seer | 阵营查验 | 已有；P1–P4 验收 / [S01][cards] |
-| 04 | `witch` | 女巫 | Witch | 解药、毒药 | 已有；P1–P4 验收 / [S01][cards] |
-| 05 | `hunter` | 猎人 | Hunter | 死亡开枪 | 已有；P1–P4 验收 / [S01][cards] |
-| 06 | `guard` | 守卫 | Guard | 狼刀保护 | 已有；P1–P4 验收 / [S01][cards] |
-| 07 | `idiot` | 白痴／愚者 | Village Idiot | 放逐豁免、投票权 | 已有；P1–P4 验收 / [S01][cards] |
+| 01 | `wolf` | 狼人 | Werewolf | 夜聊、狼刀、自爆 | `verified`；P1–P4 / [S01][cards] |
+| 02 | `villager` | 平民 | Villager | 发言、投票 | `verified`；P1–P4 / [S01][cards] |
+| 03 | `seer` | 预言家 | Seer | 阵营查验 | `verified`；P1–P4 / [S01][cards] |
+| 04 | `witch` | 女巫 | Witch | 解药、毒药 | `verified`；P1–P4 / [S01][cards] |
+| 05 | `hunter` | 猎人 | Hunter | 死亡开枪 | `verified`；P1–P4 / [S01][cards] |
+| 06 | `guard` | 守卫 | Guard | 狼刀保护 | `verified`；P1–P4 / [S01][cards] |
+| 07 | `idiot` | 白痴／愚者 | Village Idiot | 放逐豁免、投票权 | `verified`；P1–P4 / [S01][cards] |
 
 ## 2. 常见扩展：9 项
 

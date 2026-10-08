@@ -37,5 +37,5 @@ for (const boardId of ["six_player_mvp", "twelve_player_standard"]) {
     const { recordDir: _firstDir, ...first } = report.games[4];
     const { recordDir: _secondDir, ...second } = replayed.games[0];
     expect(second).toEqual(first); // Position within a batch cannot determine styles or random consumption.
-  });
+  }, 30_000); // 25 complete games plus 25 strict replays; independent of Bun's 5s unit-test default.
 }

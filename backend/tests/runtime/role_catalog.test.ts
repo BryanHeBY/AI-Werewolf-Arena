@@ -10,7 +10,7 @@ import path from "node:path";
 test("shared catalog distinguishes planned definitions from registered roles", () => {
   expect(ROLE_DEFINITIONS).toHaveLength(64);
   expect(new Set(ROLE_IDS).size).toBe(64);
-  expect(ROLE_DEFINITIONS.filter(item => item.status === "implemented").map(item => item.id).sort())
+  expect(ROLE_DEFINITIONS.filter(item => (item.status === "implemented" || item.status === "verified")).map(item => item.id).sort())
     .toEqual(Object.values(Role).sort());
   expect(getDefaultRoleCatalog().all().map(item => item.role).sort()).toEqual(Object.values(Role).sort());
   expect(isRoleId("awakened_hidden_wolf")).toBe(true);
@@ -29,11 +29,11 @@ test("runtime catalog rejects duplicate or missing profiles", () => {
   expect(() => component.renderPrompt()).toThrow("role_profile_not_registered");
 });
 
-test("every catalog entry has bilingual labels and implemented entries have rule cards", async () => {
+test("every catalog entry has bilingual labels and registered entries have rule cards", async () => {
   for (const entry of ROLE_DEFINITIONS) {
     expect(entry.names["zh-CN"].trim().length).toBeGreaterThan(0);
     expect(entry.names.en.trim().length).toBeGreaterThan(0);
-    if (entry.status !== "implemented") continue;
+    if (entry.status !== "implemented" && entry.status !== "verified") continue;
     expect(entry.ruleCardRef).not.toBeNull();
     const [file, anchor] = entry.ruleCardRef!.split("#");
     const text = await readFile(path.resolve(import.meta.dir, "../../..", file), "utf8");

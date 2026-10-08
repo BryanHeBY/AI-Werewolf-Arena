@@ -4,7 +4,7 @@
 
 独立VictoryComponent、阵营/个人/关系组与多人结果类型、条件检查点、一次封盘及结果隔离、内部Tape v2。当前基础引擎只自动执行三个已有阵营条件；个人/关系组通过已解析的规则规格与显式membership表达，人工注入场景证明引擎通路，不代表咒狐/丘比特等计划角色已实现。
 
-G04记录主档/公开reader/前端/终端/视频呈现及完整阶段门槛仍接续下一子批。此处不把目前公开result中的winner=null当作新个人胜利的最终展示交付。
+G04记录主档/公开reader/前端/终端/视频呈现已接续交付，见[完整记录与展示](victory-record-display.md)和[P4验收](reviews/p4-activation.md)。公开result的winner=null仅是兼容投影，显式decision才表达个人/关系胜利或no_winner。
 
 ## 胜利归属与人数统计
 

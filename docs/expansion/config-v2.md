@@ -2,7 +2,7 @@
 
 ## 板子格式
 
-正常入口只读取 `boards/<id>.json`，ID 必须与文件名一致。当前格式 `version: 2`，规则集 `{ "id": "awa_classic", "version": "1.0.0" }`。角色尚有规则卡记录的实现差异，不能把登记状态称为 verified。
+正常入口只读取 `boards/<id>.json`，ID 必须与文件名一致。当前格式 `version: 2`，规则集 `{ "id": "awa_classic", "version": "1.0.0" }`。基础七角色已关闭规则差异，在[P4声明验收范围](reviews/p4-activation.md)内登记 verified；57计划角色仍不授予运行许可。
 
 必需结构：`board.size`、`board.roleSetups`、`rules.winConditions`、完整 `rules.hooks`、`mechanisms.sheriff`、`mechanisms.selfDestruct.enabledWindows`、`mechanisms.tieBreaker`。角色参数放 `roles.<id>`，由注册 profile 的 schema 严格验证；当前女巫支持 `selfHeal`。
 

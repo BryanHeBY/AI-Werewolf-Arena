@@ -1,6 +1,6 @@
 # P4 G02 夜间能力实例
 
-本批把原生/授予/复制的阵营查验、守护与用药迁入能力实例；死亡技能继续G03，具体商人/机械狼等角色和继承规则继续各自角色阶段。没有注册新角色或宣称完整G02/M07完成。
+本批把原生/授予/复制的阵营查验、守护与用药迁入能力实例；死亡技能见已交付的[死亡链](death-chain.md)，具体商人/机械狼等角色和继承规则继续各自角色阶段。没有注册新角色，也不宣称所有未来M07能力变体已完成。
 
 ## 所有权与来源
 
@@ -24,11 +24,11 @@ NightStageRegistry保留原阶段收集/去重/排序。起局已持有的实例
 
 ## 记录、格式与边界
 
-ability_changed领域事件提供来源、时点和变更，玩家只接收本人事件且按sourceDisclosed投影。授予的具体技能事件额外含abilityId；原生事件保留既有payload，行动Tape的context仍记录绑定ID。公开/私有播放器schema2、Tape1保持，内部source兼容严格，不把旧privateState结构自动转成当前引擎。
+ability_changed领域事件提供来源、时点和变更，玩家只接收本人事件且按sourceDisclosed投影。授予的具体技能事件额外含abilityId；原生事件保留既有payload，行动Tape的context仍记录绑定ID。公开/私有播放器schema2保持；内部Tape已随G04升2，旧1拒版，内部source兼容严格，不把旧privateState结构自动转成当前引擎。
 
 三类旧拒绝code保留，双语解释改为能力当前不可用；ability_phase新增两语，避免把“非本角色”当成复制能力的失败原因。终端/时间线/视频的能力变化标签共用game-text。
 
-本批仍复用原用药/伤害规则，女巫解药刀口校验、耗尽后的信息以及同守同救毒来源继续下一子批；猎人资源/死后授权继续G03。不能将新能力数据结构当作这些旧正确性问题已解决。
+本能力子批复用当时用药/伤害流程；相关正确性已由[女巫结算](witch-resolution.md)、[死因](death-causes.md)与[死亡授权](death-action-authority.md)独立修正并验收，不单凭能力数据结构宣称正确。
 
 程序化PlayerObservation构造者须新增abilities数组；私有旧档仍按原数据读取。低层ToolGateway/ActionValidator的day与abilityId保持可选签名兼容，但调用能力必须传真实day，多实例必须传明确abilityId；省略day仅兼容第一日，不适用于第二夜起的期限/次数判断。
 

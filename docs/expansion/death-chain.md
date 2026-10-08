@@ -1,6 +1,6 @@
 # P4 G03：统一基础死亡收尾
 
-本子批统一当前基础夜间、放逐、默认放逐前自爆和猎人追加死亡的写入/收尾，沿用[基础规则卡](rules/awa-classic-v1.md)与[死亡窗口授权](death-action-authority.md)。三个扩展自爆窗口的执行资格与准确时点、警长空票/白痴完整资格及G04仍接续后续子批。
+本子批统一基础夜间、放逐、默认放逐前自爆和猎人追加死亡的写入/收尾，沿用[基础规则卡](rules/awa-classic-v1.md)与[死亡窗口授权](death-action-authority.md)。接续实现已完成[四个公开窗口](self-destruct-windows.md)、[警长/白痴资格](public-participation.md)与[G04结果](victory-record-display.md)，原子批边界不代表当前仍待修。
 
 ## 顺序与状态负责人
 
@@ -24,7 +24,7 @@ LastWordsMechanism 现在显式接收DeathSources。基础遗言只授予首夜�
 
 默认放逐前自爆经过同一死亡收尾：死亡、警徽、死亡钩子与完整追加波次完成后才判胜；继续游戏时切到day+1/Night。多个同时选择仍仅采纳最小稳定玩家ID，其他玩家不被错误杀死。最终一狼自爆也先处理警徽再封盘，死亡警长不残留。
 
-本批没有开放尚受旧BlastWindow校验限制的OnDaybreak/OnPreElection/OnPerSpeechGap，未改变首日警长先于夜间信息的兼容流程。它们需要下一子批同时冻结窗口位置与首日待死亡收尾，不能只放开校验。
+初始死亡链子批未单独放开扩展窗口；接续[四窗口](self-destruct-windows.md)已同时交付OnDaybreak/OnPreElection/OnPerSpeechGap及对应首日待死亡收尾，保留首日警长先于夜间信息的兼容流程。
 
 ## API、事件与验证
 

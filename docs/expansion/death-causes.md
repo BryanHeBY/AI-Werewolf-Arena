@@ -22,7 +22,7 @@
 
 源码 `EventRegistry.onDeath` / DeathHook 的 callback 从数字或 null 改为 `DeathShotSelection`，来源从 `StatusMark[]` 改为 `DeathCause[]`。定制角色钩子需要同步迁移，不把 null 与无效决定混为一谈。
 
-内部 Tape 的严格 request schema 增加可选 `death_sources` 枚举数组；schema 仍为 1，源码/lock/规则兼容校验保留，旧源生成的 Tape 不会被伪装为当前执行兼容。公开复盘与玩家记录格式仍为 v2，`hunter_shot` / `hunter_silent_due_to_poison` payload 未变；旧发言/提示原文不翻译。
+内部 Tape 的严格 request schema 增加可选 `death_sources` 枚举数组；内部schema现为2（G04升级，旧1拒版），源码/lock/规则兼容校验保留，旧源生成的 Tape 不会被伪装为当前执行兼容。公开复盘与玩家记录格式仍为 v2，`hunter_shot` / `hunter_silent_due_to_poison` payload 未变；旧发言/提示原文不翻译。
 
 中英角色说明及枪目标 hint 共用 game-text，说明空枪消费、非法目标不消费和本 AWA 末神规则。新增 death_sources 是引擎私有行动上下文，不自动公布未知夜间细节。
 
@@ -30,6 +30,6 @@
 
 [人工判例](../../backend/tests/engine/rules/death_causes.test.ts) 覆盖双语死因表、复合毒、末神三模式、空枪/非法/异常和真实阶段判胜顺序。[真实传输](../../backend/tests/ai/integrations/action_reception_transport.test.ts) 通过本机 SDK HTTP 与 MCP 子进程核对错误→空枪→重复提交的相同回执，并断言预检不消费。
 
-本批不宣称已经收走 Hunter 钩子、放逐与自爆中的 Alive 写入，也不宣称上下文 stage/trigger 已替换为 World 持有的死亡授权。后续 G03 将统一这些所有权，并验证初批遗言、徽章、角色死亡钩子、追加波次及自爆收尾的完整顺序。
+本死因子批未同时改变所有死亡写入；后续G03已由[World授权](death-action-authority.md)和[中央死亡结算](death-chain.md)统一这些所有权，独立验证遗言/徽章/角色钩子/追加波次和自爆收尾。
 
-后续G03已接入[World死亡窗口](death-action-authority.md)：shot/pass内部选择还需deathActionId且授权覆盖消费点，低层钩子调用者按新契约打开/关闭窗口。Alive中央死亡写入及自爆/徽章仍继续下一子批。
+后续G03已接入[World死亡窗口](death-action-authority.md)：shot/pass内部选择还需deathActionId且授权覆盖消费点，低层钩子调用者按新契约打开/关闭窗口。Alive中央写入、自爆/徽章与首日收尾现见[死亡链](death-chain.md)和[四窗口](self-destruct-windows.md)。

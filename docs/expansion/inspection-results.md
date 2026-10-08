@@ -2,7 +2,7 @@
 
 ## 当前子批范围
 
-共享InspectionResult区分`camp`、`role`与`combined`；结果是规则揭示的标签，不等同于真实阵营或底牌。生产预言家仍只执行阵营查验，具体身份/组合查验的角色、能力资源及动态调度继续G02后续与P5–P9。没有因此启用计划角色，M05/M07/M08也未整项标完成。
+共享InspectionResult区分`camp`、`role`与`combined`；结果是规则揭示的标签，不等同于真实阵营或底牌。生产预言家仍只执行阵营查验，具体身份/组合查验的角色继续P5–P9；能力资源及动态调度基础已交付G02。没有因此启用计划角色，M05/M07/M08也未整项标完成。
 
 | 结果 | 内容 | 不得隐式包含 |
 | --- | --- | --- |
@@ -26,7 +26,7 @@ seer_checked的领域payload新增必填result；领域事件及SeerCheckResult�
 
 结果类型由game-catalog的稳定数据契约提供；replay-contract提供只读解码，game-text提供双语结果标签。前端没有导入后端引擎。终端/时间线/逐帧视频使用这些标签，字段机器ID不翻译，玩家原文不改写。具体身份仅显示role名，组合格式显示role与camp。
 
-公开/私人播放器schema仍为2，内部Tape schema仍为1；新增字段属于payload数据，旧envelope不强制升级。旧档没有result且isWerewolf是真正boolean时，恢复good/wolf标签；存在result时优先完整结果，未知类型/坏结构不能降级为good猜测。终端与浏览器保留并展示原未知result JSON，旧输入文件不修改。decoder只读own data descriptor快照，不执行getter、继承属性或用两次不同读取完成校验/返回；异常Proxy trap按未知处理。不合法bool或完全缺失结果显示未知标记。内部Tape仍严格检查source/lock/规则版本，不能把旧引擎结果按新标签静默复现。
+公开/私人播放器schema仍为2，内部Tape现为2（G04获胜归属升级，旧1明确拒绝）；本查验字段属于payload数据，不独立升级公开envelope。旧档没有result且isWerewolf是真正boolean时，恢复good/wolf标签；存在result时优先完整结果，未知类型/坏结构不能降级为good猜测。终端与浏览器保留并展示原未知result JSON，旧输入文件不修改。decoder只读own data descriptor快照，不执行getter、继承属性或用两次不同读取完成校验/返回；异常Proxy trap按未知处理。不合法bool或完全缺失结果显示未知标记。内部Tape仍严格检查source/lock/规则版本，不能把旧引擎结果按新标签静默复现。
 
 现有SeerState.lastResult及history.result在私有状态API中可选，保留原手工/legacy状态兼容；生产初始化和完成查验都会写入。未来能力类型/资源迁移不得用旧bool替代完整结果。
 
@@ -34,4 +34,4 @@ seer_checked的领域payload新增必填result；领域事件及SeerCheckResult�
 
 人工判例覆盖三个结果类型、三个阵营、静态/动态伪装、独立真实身份/狼权、独立结果对象、实际Seer阶段、只有actor收到、私有history、终端开关、双语、旧boolean和未知typed结果。原六/十二人工整局仍按字面oracle核对真实目标/camp，新增字段没有改成仅检查自身生成值。完整双语SDK/ACP/混合对局与严格Tape继续回归。
 
-下一子批处理能力来源、资源、生效/失效与后续调度，以及女巫刀口/用药正确性。伤害来源与死亡连锁继续G03，胜利结构继续G04。
+能力来源/资源/调度已见[能力实例](night-abilities.md)，刀口和用药见[女巫结算](witch-resolution.md)，死亡与封盘见[死亡链](death-chain.md)和[胜利结果](victory-outcomes.md)。具体身份查询角色仍按P5–P9交付。

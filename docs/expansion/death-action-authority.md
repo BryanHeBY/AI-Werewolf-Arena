@@ -1,6 +1,6 @@
 # P4 G03：死亡动作窗口授权
 
-对应 [死亡来源子批](death-causes.md)，本批收紧原来通过 stage/trigger 与布尔 allowDead 标志授权的通路。完整死亡链 Alive 归属、自爆/徽章和遗言策略继续后续 G03，不提前登记新角色。
+对应 [死亡来源子批](death-causes.md)，本批收紧原来通过 stage/trigger 与布尔 allowDead 标志授权的通路。完整死亡链 Alive 归属、自爆/徽章和遗言策略见已交付的[死亡链](death-chain.md)及[四窗口](self-destruct-windows.md)，不提前登记新角色。
 
 ## 所有者与有效期
 
@@ -20,7 +20,7 @@ World 是受信引擎容器，`openDeathAction` 是引擎装配 API，不暴露�
 
 `ValidationContext.allowDeadHunterShoot` / `allowDeadLastWords` 删除，改为 `deathActionId` 并要求 day/phase 匹配；模型提交的 action arguments 没有新增权限字段。定制死亡机制需要使用 createAliveComponent 创建可跟踪生命周期的组件，先打开 World 窗口，再创建请求/最终验证；shot/pass 返回值包含 deathActionId，实际消费后最后关闭；复制布尔标志不兼容当前执行。
 
-`ActionRequestExtras.death_action_id` 可选正整数，内部 Tape 的严格 request schema 收录；ID 顺序由引擎流程复现，源码兼容门槛不放宽，schema 仍为 1。原始引擎请求与Tape保留关联字段，PlayerPromptPolicy的受限Observation.request副本删除death_action_id，隐藏的他人窗口数量无法通过全局序号泄露；SDK/ACP文字不显示该ID。公开复盘/玩家记录 v2 和已有技能事件 payload 不变，旧原文保留。
+`ActionRequestExtras.death_action_id` 可选正整数，内部 Tape 的严格 request schema 收录；ID 顺序由引擎流程复现，源码兼容门槛不放宽，内部schema现为2（G04归属/结果升级，旧1拒版）。原始引擎请求与Tape保留关联字段，PlayerPromptPolicy的受限Observation.request副本删除death_action_id，隐藏的他人窗口数量无法通过全局序号泄露；SDK/ACP文字不显示该ID。公开复盘/玩家记录 v2 和已有技能事件 payload 不变，旧原文保留。
 
 拒绝 `death_action_unavailable` 提供中英一致说明；通用死亡演员在非死亡 stage 仍为 `actor_dead`，生存演员无授权枪为 `shoot_unavailable`。ID 不随公共技能事件发布。
 

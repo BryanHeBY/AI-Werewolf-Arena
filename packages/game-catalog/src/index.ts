@@ -19,13 +19,13 @@ export interface RoleDefinition {
 }
 
 export const ROLE_DEFINITIONS = [
-  {"id": "wolf", "names": {"zh-CN": "狼人", "en": "Werewolf"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#wolf", "mechanismSummary": "夜聊、狼刀、自爆"},
-  {"id": "villager", "names": {"zh-CN": "平民", "en": "Villager"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#villager", "mechanismSummary": "发言、投票"},
-  {"id": "seer", "names": {"zh-CN": "预言家", "en": "Seer"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#seer", "mechanismSummary": "阵营查验"},
-  {"id": "witch", "names": {"zh-CN": "女巫", "en": "Witch"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#witch", "mechanismSummary": "解药、毒药"},
-  {"id": "hunter", "names": {"zh-CN": "猎人", "en": "Hunter"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#hunter", "mechanismSummary": "死亡开枪"},
-  {"id": "guard", "names": {"zh-CN": "守卫", "en": "Guard"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#guard", "mechanismSummary": "狼刀保护"},
-  {"id": "idiot", "names": {"zh-CN": "白痴", "en": "Village Idiot"}, "status": "implemented", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#idiot", "mechanismSummary": "放逐豁免、投票权"},
+  {"id": "wolf", "names": {"zh-CN": "狼人", "en": "Werewolf"}, "status": "verified", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#wolf", "mechanismSummary": "夜聊、狼刀、自爆"},
+  {"id": "villager", "names": {"zh-CN": "平民", "en": "Villager"}, "status": "verified", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#villager", "mechanismSummary": "发言、投票"},
+  {"id": "seer", "names": {"zh-CN": "预言家", "en": "Seer"}, "status": "verified", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#seer", "mechanismSummary": "阵营查验"},
+  {"id": "witch", "names": {"zh-CN": "女巫", "en": "Witch"}, "status": "verified", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#witch", "mechanismSummary": "解药、毒药"},
+  {"id": "hunter", "names": {"zh-CN": "猎人", "en": "Hunter"}, "status": "verified", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#hunter", "mechanismSummary": "死亡开枪"},
+  {"id": "guard", "names": {"zh-CN": "守卫", "en": "Guard"}, "status": "verified", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#guard", "mechanismSummary": "狼刀保护"},
+  {"id": "idiot", "names": {"zh-CN": "白痴", "en": "Village Idiot"}, "status": "verified", "targetPhase": "P1", "ruleCardRef": "docs/expansion/rules/awa-classic-v1.md#idiot", "mechanismSummary": "放逐豁免、投票权"},
   {"id": "wolf_king", "names": {"zh-CN": "狼王", "en": "Wolf King"}, "status": "planned", "targetPhase": "P5", "ruleCardRef": null, "mechanismSummary": "死亡带人、死因限制"},
   {"id": "white_wolf_king", "names": {"zh-CN": "白狼王", "en": "White Wolf King"}, "status": "planned", "targetPhase": "P5", "ruleCardRef": null, "mechanismSummary": "自爆带人、流程中断"},
   {"id": "knight", "names": {"zh-CN": "骑士", "en": "Knight"}, "status": "planned", "targetPhase": "P5", "ruleCardRef": null, "mechanismSummary": "白天决斗"},

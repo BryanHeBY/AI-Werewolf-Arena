@@ -1,6 +1,6 @@
 # AWA Classic 1.0.0 基础规则卡
 
-规则集标识 `awa_classic`，规则版本 `1.0.0`。这些规则是已选择的规范；资料登记与运行 profile 分开，只有实际注册的角色才能开始对局。基础七角色已有实现，但下文差异关闭前不登记 `verified`。
+规则集标识 `awa_classic`，规则版本 `1.0.0`。这些规则是已选择的规范；资料登记与运行 profile 分开，只有实际注册的角色才能开始对局。基础七角色的差异已关闭；验证登记及支持范围见[P4整阶段验收](../reviews/p4-activation.md)。资料登记不代表所有同名赛事版本或任意牌组均已验证。
 
 ## 通用规则
 
@@ -52,29 +52,19 @@
 
 末神/枪来源、自爆窗口与收尾、配置票权、白痴与选举的基础差异已随P1/P4修正关闭；角色目录的验证登记随P4整体结果与组合门槛完成，不把修正子批当成64角色或22机制全面完成。
 
-## 已有测试证据
+## 当前实现与验收证据
 
-下列是现有实现回归，不代表已覆盖上表待修差异：
+| 规则边界 | 契约与独立判例 |
+| --- | --- |
+| 狼队知识、夜聊、刀权与历史受众 | [狼队权限](../wolf-team-access.md)、[人工判例](../../../backend/tests/engine/visibility/wolf_team_access.test.ts) |
+| 查验标签、身份与真实阵营分离 | [类型化查验](../inspection-results.md)、[人工判例](../../../backend/tests/engine/rules/inspection_results.test.ts) |
+| 用药刀口、资源、耗尽视角、16保护组合 | [女巫结算](../witch-resolution.md)、[人工判例](../../../backend/tests/engine/rules/witch_correctness.test.ts) |
+| 末神、空枪、死因与最终消费授权 | [死因](../death-causes.md)、[World窗口](../death-action-authority.md) |
+| 遗言、警徽、技能、追加死亡与最终判胜 | [死亡链](../death-chain.md)、[四个自爆窗口](../self-destruct-windows.md) |
+| 白痴永久资格与警长空候选／零票／票权 | [公共参与](../public-participation.md) |
+| 获胜归属、完整封盘、记录及双语呈现 | [胜利核心](../victory-outcomes.md)、[主档与展示](../victory-record-display.md) |
+| 六／十二人完整人工流程及真实接入／严格重放 | [场景oracle](../foundation-scenarios.md)、[整阶段验收](../reviews/p4-activation.md) |
 
-- [阶段推进与基础技能](../../../backend/tests/engine/phases/phase_manager.test.ts)、[狼队夜聊](../../../backend/tests/engine/phases/night_wolf_tactical_loop.test.ts)。
-- [网关校验](../../../backend/tests/engine/rules/tool_gateway_validation.test.ts)、[死亡/放逐钩子](../../../backend/tests/engine/rules/event_registry_hooks.test.ts)。
-- [首日时序](../../../backend/tests/engine/phases/first_day_flow_order.test.ts)、[遗言规则](../../../backend/tests/engine/rules/last_words_rules.test.ts)、[警长流程](../../../backend/tests/engine/phases/sheriff_pipeline.test.ts)。
-- [玩家信息投影](../../../backend/tests/engine/visibility/agent_visible_event_feed.test.ts)。
+所有旧基础差异已在相应专项和交叉审查中关闭；历史审查记录保留当时边界，不构成当前待修清单。基础规则卡是规范来源，功能契约记录实现和兼容方式。
 
-P4 须增加明确的缺陷回归并更新本卡验证状态；登记资料不代替运行测试。
-
-依据：现有 AWA 代码与测试；[官方基础规则](https://langrensha.com/wanfa/guize/2017/10/18/26899_719311.html)、[网易角色资料](https://langrensha.res.netease.com/pc/gw/20190509150909/js/kapaiData_02806e2.js)。对于未在来源中完整说明的 AWA 行为，以上明确写成改编或待冻结项。
-
-P4 G01已交付[狼队权限与历史受众](../wolf-team-access.md)，人工判例见[权限回归](../../../backend/tests/engine/visibility/wolf_team_access.test.ts)。特殊狼仍未登记实现，上表其余G02–G04差异继续修复。
-
-P4 G02已交付[类型化查验子批](../inspection-results.md)，原生预言家仍为camp-only；[人工判例](../../../backend/tests/engine/rules/inspection_results.test.ts)核对标签、身份分离、私有受众和旧值。能力/资源/调度与药/死亡差异仍未因此关闭。
-
-P4 G02已修正[女巫刀口及保护/毒结算](../witch-resolution.md)：解药以实际存活狼刀印记授权，耗尽不接收当前刀口，同守同救不漏毒。独立16组合与实际复合毒猎人禁枪验证见[判例](../../../backend/tests/engine/rules/witch_correctness.test.ts)。枪击来源、末神/空枪及其他死亡链差异继续G03。
-
-P4 G03已修正[死亡来源、末神与空枪](../death-causes.md)：独立cause/pass/invalid、复合毒禁枪，实际中英三模式末神枪击先于最终判胜，两猎人追加来源为Shot与当时Day。该项差异关闭；World死亡授权、自爆及完整链条状态归属仍继续G03，不据此把全部基础七角色标verified。
-
-P4 G03已统一[基础死亡链](../death-chain.md)：初批来源遗言→警徽→角色死亡钩子→追加波次→最后判胜；默认preVote自爆警徽/死亡收尾已闭，继续时入Night。三个扩展窗口资格/首日位置与白痴/选举仍在差异表中，未据此提前verified。
-
-P4已关闭[白痴与警长公共参与差异](../public-participation.md)：一次翻牌、公开资格、空候选/全退/零票、非法票不改投和配置票权得到人工与实际SDK/MCP反馈验证。资格跨接收/执行/流水线/提示一致；上表剩余扩展自爆窗口继续下一子批，尚不提前标全部七项verified。
-
-P4 G03已交付[四公开窗口与首日收尾](../self-destruct-windows.md)：v2/生命周期/消费点一致，首日合并待夜死，不截断末神枪，新16局真实SDK/ACP双语整局及逐局Tape通过。新override空窗口关闭，历史转换保原有效行为并明确移除旧不可执行窗口声明。基础差异表已闭；G04继续完整阶段结果契约。
+依据：现有AWA代码与人工测试、[官方基础规则](https://langrensha.com/wanfa/guize/2017/10/18/26899_719311.html)、[网易角色资料](https://langrensha.res.netease.com/pc/gw/20190509150909/js/kapaiData_02806e2.js)。未由来源完整规定的首日流程、自动警徽、离散公开窗口、末神枪和多判胜条件优先级已明确声明AWA改编。后续角色沿独立规则卡／版本扩充，不因本基础验证而提前开放。

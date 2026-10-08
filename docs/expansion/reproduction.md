@@ -51,6 +51,6 @@ bun run --cwd backend replay:actions --record ../record/<session>/reproduction.j
 
 角色规则的人工oracle仍由T02负责；本模块核验实际对局的可复现性，不能以“复现了旧行为”代替规则正确性审查。
 
-P4 G01在内部狼队事件envelope保存发生时的audience，严格重放核对受众；旧结构仍可解析但source版本门槛不放宽。该字段不进入播放器格式，规则与兼容细节见[狼队信息契约](wolf-team-access.md)。
+P4 G01在内部狼队事件envelope保存发生时的audience，严格重放核对受众；当前内部v2及source版本门槛不放宽，旧v1整份录制拒版。该字段不进入播放器格式，规则与兼容细节见[狼队信息契约](wolf-team-access.md)。
 
-G04内部v2格式/归属与结果契约见[胜利结果](victory-outcomes.md)。旧内部v1明确拒绝，不从历史camp猜测affiliation；旧公开v2仍按播放器格式政策读取，公共结果呈现由G04后续子批接入。
+G04内部v2格式/归属与结果契约见[胜利结果](victory-outcomes.md)。旧内部v1明确拒绝，不从历史camp猜测affiliation；旧公开v2仍按播放器格式政策读取，公共结果呈现已见[记录与展示](victory-record-display.md)。
