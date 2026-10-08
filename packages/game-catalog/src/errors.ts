@@ -4,6 +4,7 @@ export enum RuleError {
   ActorDead = "actor_dead",
   ActorMissing = "actor_missing",
   ActorRoleMissing = "actor_role_missing",
+  DeathActionUnavailable = "death_action_unavailable",
   AbilityPhase = "ability_phase",
   BlastConfirm = "blast_confirm",
   BlastDisabled = "blast_disabled",

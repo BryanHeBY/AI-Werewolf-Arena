@@ -107,7 +107,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual guard+hea
   expect(result.damage).toEqual({ deaths: [7], deathSources: { 7: [DeathCause.Poison, DeathCause.WolfKill] } });
   let shots = 0;
   world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive = false;
-  await hunterDeathHook(world, [7], result.damage.deathSources, async () => { shots++; return { kind: "shot", targetId: 1 }; }, events);
+  await hunterDeathHook(world, [7], result.damage.deathSources, async () => { shots++; return { kind: "invalid" }; }, events);
   expect(shots).toBe(0); expect(getHunterState(role(world, 7))!.canShoot).toBe(false);
   expect(getWitchState(role(world, 6))!.heal).toBe(0);
 });

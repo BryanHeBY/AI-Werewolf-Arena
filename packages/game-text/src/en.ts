@@ -57,6 +57,7 @@ export const en = Object.freeze({
   "role.generic.state": "Your role is {role}. Follow the rules of this board.",
   "error.tool_mismatch": "Invalid action: tool mismatch", "error.actor_missing": "Invalid action: player components missing",
   "error.actor_dead": "Invalid action: dead players cannot act", "error.vote_right": "Invalid action: you have no voting rights",
+  "error.death_action_unavailable": "Invalid action: this death-action window is not open for you",
   "error.vote_target": "Invalid action: vote target must be alive", "error.seer_only": "Invalid action: no effective alignment-inspection ability is available",
   "error.check_target": "Invalid action: inspection target must be alive", "error.guard_only": "Invalid action: no effective protection ability is available",
   "error.guard_target": "Invalid action: protection target must be alive", "error.guard_repeat": "Invalid action: a Guard cannot protect the same player on consecutive nights",

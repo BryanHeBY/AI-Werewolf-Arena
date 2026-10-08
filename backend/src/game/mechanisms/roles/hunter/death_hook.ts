@@ -53,6 +53,7 @@ export async function hunterDeathHook(
     const currentRole = world.getComponent<RoleComponent>(deadId, COMPONENT.Role);
     if (currentRole !== roleComp || currentRole.role !== Role.Hunter || getHunterState(currentRole) !== hunterState || !hunterState.canShoot || world.getComponent<AliveComponent>(deadId, COMPONENT.Alive)?.alive !== false) continue;
     if (selection.kind === "invalid") continue;
+    if (!world.isDeathActionOpen(deadId, "shoot", selection.deathActionId)) continue;
     if (selection.kind === "pass") {
       hunterState.canShoot = false;
       continue;

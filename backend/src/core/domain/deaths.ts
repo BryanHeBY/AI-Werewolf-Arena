@@ -12,8 +12,8 @@ export enum DeathCause {
 }
 export type DeathSources = Record<number, DeathCause[]>;
 export type DeathShotSelection =
-  | { kind: "shot"; targetId: number }
-  | { kind: "pass" }
+  | { kind: "shot"; targetId: number; deathActionId: number }
+  | { kind: "pass"; deathActionId: number }
   | { kind: "invalid" };
 
 export function permitsHunterShot(sources: readonly DeathCause[]): boolean {

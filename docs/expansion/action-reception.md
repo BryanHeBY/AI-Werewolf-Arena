@@ -32,7 +32,7 @@ SDK 与 ACP 使用 `ai/agents/player/action_reception.ts` 中同一套 `ActionRe
 2. 参数 schema 从现有 `ToolSpec.llm.parameters` 通过当前锁定的 Zod 转换，保留必填项、类型、enum 和 `additionalProperties`，没有第二份手写参数表。
 3. 保留十进制数字字符串座位号的有限归一化；必填项不能被修复器默认补齐，字符串布尔值和任意对象不能靠 `Boolean()`/`String()` 转成合法输入。修复后再次检查 schema。
 4. 使用原有 `ToolGateway` 清洗及 `ActionValidator` 的角色、存活、目标和资源规则。中英文系统身份前缀均清洗；玩家正文仍保留原文。
-5. 死后开枪/遗言仅从引擎请求的 stage 与 trigger 得到授权；提交参数不提供授权开关。非弃票的警长票必须有当前请求候选列表，且目标属于列表并仍存活；缺列表直接拒绝。
+5. P4 A01最初从stage/trigger识别死亡请求；现已由[G03窗口](death-action-authority.md)进一步要求World持有的actor/tool/day/phase/generation及生命版本授权，最终消费点再次校验。提交参数不提供授权开关。非弃票的警长票必须有当前请求候选列表，且目标属于列表并仍存活；缺列表直接拒绝。
 6. 共同回合约束在选择前检查；选择结果拷贝保存，传输拿到的可变对象不能改写已选择动作。
 
 预检不写 `gateway.validate_tool_call` 领域操作；实际引擎验证照常记录。SDK 的接入拒绝仍记录在 `llm_action_provider` 诊断作用域，与 Tape 的领域操作比较分开，离线重放不制造第二次领域验证。

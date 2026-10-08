@@ -31,3 +31,5 @@
 [人工判例](../../backend/tests/engine/rules/death_causes.test.ts) 覆盖双语死因表、复合毒、末神三模式、空枪/非法/异常和真实阶段判胜顺序。[真实传输](../../backend/tests/ai/integrations/action_reception_transport.test.ts) 通过本机 SDK HTTP 与 MCP 子进程核对错误→空枪→重复提交的相同回执，并断言预检不消费。
 
 本批不宣称已经收走 Hunter 钩子、放逐与自爆中的 Alive 写入，也不宣称上下文 stage/trigger 已替换为 World 持有的死亡授权。后续 G03 将统一这些所有权，并验证初批遗言、徽章、角色死亡钩子、追加波次及自爆收尾的完整顺序。
+
+后续G03已接入[World死亡窗口](death-action-authority.md)：shot/pass内部选择还需deathActionId且授权覆盖消费点，低层钩子调用者按新契约打开/关闭窗口。Alive中央死亡写入及自爆/徽章仍继续下一子批。

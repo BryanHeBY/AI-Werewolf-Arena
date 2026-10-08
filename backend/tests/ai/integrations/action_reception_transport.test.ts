@@ -258,7 +258,8 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual SDK/MCP r
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual SDK HTTP and MCP accept explicit empty gun after rejecting an invalid target`, async () => {
   const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }), acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
   for (const game of [sdk, acp]) game.world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive = false;
-  const input: ActionRequest = { actorId: 7, phase: Phase.Day, allowedTools: ["shoot"], context: { day: 1, stage: "hunter_shot", trigger: "on_death", death_phase: Phase.Night, death_sources: [DeathCause.WolfKill], visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } };
+  const sdkPermit = sdk.world.openDeathAction(7, "shoot", Phase.Day, 1), acpPermit = acp.world.openDeathAction(7, "shoot", Phase.Day, 1);
+  const input: ActionRequest = { actorId: 7, phase: Phase.Day, allowedTools: ["shoot"], context: { day: 1, stage: "hunter_shot", trigger: "on_death", death_phase: Phase.Night, death_sources: [DeathCause.WolfKill], death_action_id: sdkPermit.id, visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } };
   const actions = [{ turn_id: "t1", action: "shoot", arguments: { target_id: 999 } }, { turn_id: "t1", action: "shoot", arguments: { target_id: null } }, { turn_id: "t1", action: "shoot", arguments: { target_id: 1 } }];
   const server = Bun.serve({ hostname: "127.0.0.1", port: 0, async fetch(incoming) {
     await incoming.json();
@@ -278,5 +279,5 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual SDK HTTP 
     expect(getHunterState(sdk.world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot).toBe(true);
     expect(getHunterState(acp.world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot).toBe(true);
     if (locale === "en") expect(JSON.stringify(mcp)).not.toMatch(/\p{Script=Han}/u);
-  } finally { registry.close(); await client.close(); await control.close({ force: true }); server.stop(true); }
+  } finally { sdkPermit.close(); acpPermit.close(); registry.close(); await client.close(); await control.close({ force: true }); server.stop(true); }
 });

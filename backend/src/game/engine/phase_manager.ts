@@ -338,6 +338,7 @@ export class PhaseManager {
     if (previous === phase) {
       return;
     }
+    this.world.closeDeathActions();
     const gameOverPayload =
       phase === Phase.GameOver && this.state.result
         ? {

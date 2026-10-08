@@ -61,8 +61,7 @@ export class ToolGateway {
       phase: Phase;
       actionWindow?: ActionWindow;
       allowSelfDestruct?: boolean;
-      allowDeadHunterShoot?: boolean;
-      allowDeadLastWords?: boolean;
+      deathActionId?: number;
     },
   ): ToolValidationResult<T> {
     const sanitizedCall = this.sanitize(toolCall);

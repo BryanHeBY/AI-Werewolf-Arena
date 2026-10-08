@@ -26,8 +26,7 @@ export interface ValidationContext {
   phase: Phase;
   actionWindow?: ActionWindow;
   allowSelfDestruct?: boolean;
-  allowDeadHunterShoot?: boolean;
-  allowDeadLastWords?: boolean;
+  deathActionId?: number;
 }
 
 /**
@@ -88,11 +87,15 @@ export class ActionValidator {
       return reject({ code: RuleError.ActorMissing });
     }
 
-    const allowDeadAction =
-      (toolCall.name === "shoot" && context.allowDeadHunterShoot) ||
-      (toolCall.name === "speak" && context.allowDeadLastWords);
+    const allowDeadAction = world.hasDeathAction(actorId, toolCall.name, context.phase, context.day, context.deathActionId);
+    if (context.deathActionId !== undefined && (alive.alive || !allowDeadAction)) {
+      return reject({ code: RuleError.DeathActionUnavailable });
+    }
     if (!alive.alive && !allowDeadAction) {
       return reject({ code: RuleError.ActorDead });
+    }
+    if (toolCall.name === "shoot" && (alive.alive || !allowDeadAction)) {
+      return reject({ code: RuleError.ShootUnavailable });
     }
 
     const error = this.ruleRegistry.validate({

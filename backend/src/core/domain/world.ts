@@ -1,6 +1,6 @@
-import { EntityId, Role } from "./model";
+import { EntityId, Phase, Role } from "./model";
 import { COMPONENT, ComponentName } from "./components/names";
-import { AliveComponent } from "./components/alive";
+import { AliveComponent, aliveLifeVersion } from "./components/alive";
 import { RoleComponent } from "./components/role";
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
 
@@ -15,6 +15,53 @@ export class World {
   private nextId: EntityId = 1;
   private entities: Set<EntityId> = new Set();
   private stores: Map<ComponentName, Map<EntityId, unknown>> = new Map();
+  private nextDeathActionId = 1;
+  private deathActions = new Map<EntityId, { id: number; tool: "shoot" | "speak"; phase: Phase; day: number; alive: AliveComponent; lifeVersion: number; isCurrent: () => boolean }>();
+
+  /** Engine-owned, transient permission; its ID alone does not grant an action. */
+  openDeathAction(actorId: EntityId, tool: "shoot" | "speak", phase: Phase, day: number, isCurrent: () => boolean = () => true): { readonly id: number; close(): void } {
+    if (this.currentDeathAction(actorId)) throw new Error("death_action_already_open");
+    const alive = this.getComponent<AliveComponent>(actorId, COMPONENT.Alive);
+    const lifeVersion = alive && aliveLifeVersion(alive);
+    if (!alive || alive.alive !== false || lifeVersion === undefined ||
+        !this.getComponent<RoleComponent>(actorId, COMPONENT.Role) || !Number.isSafeInteger(day) || day < 1 ||
+        !["shoot", "speak"].includes(tool) || !Object.values(Phase).includes(phase) || phase === Phase.GameOver) {
+      throw new Error("death_action_invalid_actor_or_stage");
+    }
+    const id = this.nextDeathActionId++;
+    this.deathActions.set(actorId, { id, tool, phase, day, alive, lifeVersion, isCurrent });
+    return Object.freeze({ id, close: () => {
+      if (this.deathActions.get(actorId)?.id === id) this.deathActions.delete(actorId);
+    } });
+  }
+
+  hasDeathAction(actorId: EntityId, tool: string, phase: Phase, day: number | undefined, id: number | undefined): boolean {
+    const permit = this.currentDeathAction(actorId);
+    return permit !== undefined && permit.id === id && permit.tool === tool && permit.phase === phase && permit.day === day;
+  }
+
+  isDeathActionOpen(actorId: EntityId, tool: string, id: number): boolean {
+    const permit = this.currentDeathAction(actorId);
+    return permit !== undefined && permit.id === id && permit.tool === tool;
+  }
+
+  private currentDeathAction(actorId: EntityId) {
+    const permit = this.deathActions.get(actorId);
+    if (!permit) return undefined;
+    if (this.getComponent<AliveComponent>(actorId, COMPONENT.Alive) !== permit.alive || permit.alive.alive !== false ||
+        aliveLifeVersion(permit.alive) !== permit.lifeVersion || !permit.isCurrent()) {
+      this.deathActions.delete(actorId);
+      return undefined;
+    }
+    return permit;
+  }
+
+  get activeDeathActionCount(): number {
+    for (const actorId of this.deathActions.keys()) this.currentDeathAction(actorId);
+    return this.deathActions.size;
+  }
+
+  closeDeathActions(): void { this.deathActions.clear(); }
 
   /**
    * 创建新实体并返回实体 ID。

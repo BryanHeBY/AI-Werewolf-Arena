@@ -79,7 +79,8 @@ export class PlayerPromptPolicy {
     if (role?.role === Role.Idiot) ownState.idiot = getIdiotState(role);
     const seer = role ? getSeerState(role, request.context.ability_id) : undefined;
     if (seer) ownState.seer = seer;
-    return freezeObservation({ request, identity: {
+    const { death_action_id: _deathActionId, ...context } = request.context;
+    return freezeObservation({ request: { ...request, context }, identity: {
       ...(role ? { role: role.role, camp: role.camp } : {}),
       name: this.world.getComponent<IdentityComponent>(request.actorId, COMPONENT.Identity)?.name,
     }, knownAliveIds: this.world.entityIds().filter(id => !dead.has(id)),

@@ -62,6 +62,12 @@ export class ActionReception {
     const args = this.repair.coerceArgs(tool, parsed.data as Record<string, unknown>, { actorId: request.actorId });
     if (!args || !schema.safeParse(args).success) return fail("invalid_tool_arguments");
     const call = { name: tool, args } as ToolCall;
+    const deathStage = request.context.stage === "hunter_shot" || request.context.stage === "last_words";
+    const deathTool = tool === "shoot" && request.context.stage === "hunter_shot" && request.context.trigger === "on_death" ||
+      tool === "speak" && request.context.stage === "last_words" && request.context.trigger === "last_words";
+    if (deathStage && (!deathTool || !this.world.hasDeathAction(request.actorId, tool, request.phase, request.context.day, request.context.death_action_id))) {
+      return fail(RuleError.DeathActionUnavailable);
+    }
     if (call.name === "vote_for_sheriff" && !call.args.abstain &&
         (call.args.target_id === null || !request.context.sheriff_candidates?.includes(call.args.target_id) || !isAliveTarget(this.world, call.args.target_id))) {
       return fail(RuleError.SheriffVoteTarget);
@@ -72,8 +78,7 @@ export class ActionReception {
       abilityId: request.context.ability_id,
       actionWindow: request.actionWindow,
       allowSelfDestruct: request.allowedTools.includes("self_destruct"),
-      allowDeadHunterShoot: request.context.stage === "hunter_shot" && request.context.trigger === "on_death",
-      allowDeadLastWords: request.context.stage === "last_words" && request.context.trigger === "last_words",
+      deathActionId: deathTool ? request.context.death_action_id : undefined,
     });
     if (!checked.ok || !checked.sanitizedCall) {
       return toolFailure(this.world.locale, checked.error ?? "invalid_tool_arguments", checked.message);

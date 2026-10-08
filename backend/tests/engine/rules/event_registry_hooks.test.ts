@@ -2,7 +2,7 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { AliveComponent } from "../../../src/core/domain/components/alive";
 import { RoleComponent } from "../../../src/core/domain/components/role";
-import { Role, DeathCause } from "../../../src/core/domain/model";
+import { Role, DeathCause, Phase } from "../../../src/core/domain/model";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 
@@ -47,7 +47,7 @@ describe("EventRegistry hooks", () => {
       world,
       [hunterId],
       { [hunterId]: [DeathCause.Poison] },
-      async () => ({ kind: "shot" as const, targetId }),
+      async () => ({ kind: "invalid" as const }),
       events,
     );
 
@@ -72,14 +72,16 @@ describe("EventRegistry hooks", () => {
     const hunterAlive = world.getComponent<AliveComponent>(hunterId, COMPONENT.Alive)!;
     hunterAlive.alive = false;
 
+    const permit = world.openDeathAction(hunterId, "shoot", Phase.Day, 1);
     const result = await eventRegistry.onDeath(
       world,
       [hunterId],
       { [hunterId]: [DeathCause.Exile] },
-      async () => ({ kind: "shot" as const, targetId }),
+      async () => ({ kind: "shot" as const, targetId, deathActionId: permit.id }),
       events,
     );
 
+    permit.close();
     const targetAlive = world.getComponent<AliveComponent>(targetId, COMPONENT.Alive)!;
 
     expect(result.extraDeaths).toContain(targetId);

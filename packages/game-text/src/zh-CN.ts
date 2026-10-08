@@ -56,6 +56,7 @@ export const zhCN = Object.freeze({
   "role.generic.state": "你的底牌是【{role}】。请遵循本板规则。",
   "error.tool_mismatch": "非法操作，工具不匹配", "error.actor_missing": "非法操作，玩家组件不存在",
   "error.actor_dead": "非法操作，死亡玩家无法行动", "error.vote_right": "非法操作，你当前无投票权",
+  "error.death_action_unavailable": "非法操作，当前没有向你开放该死亡行动窗口",
   "error.vote_target": "非法操作，投票目标必须存活", "error.seer_only": "非法操作，当前没有生效的阵营查验能力",
   "error.check_target": "非法操作，查验目标必须存活", "error.guard_only": "非法操作，当前没有生效的守护能力",
   "error.guard_target": "非法操作，守护目标必须存活", "error.guard_repeat": "非法操作，守卫不可连续两晚守同一人",

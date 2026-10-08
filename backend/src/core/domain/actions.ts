@@ -55,6 +55,7 @@ export interface ActionRequestExtras {
   trigger?: string;
   death_phase?: Phase;
   death_sources?: DeathCause[];
+  death_action_id?: number;
   sheriff_candidates?: EntityId[];
   round?: number;
   max_rounds?: number;

@@ -27,6 +27,8 @@ export class DeathResolution {
     phase: Phase,
     lastWordsPhase: Phase,
   ): Promise<void> {
+    const resolutionPhase = this.state.phase;
+    const resolutionDay = this.state.day;
     const seen = new Set<EntityId>(deadIds);
     let pending = [...seen];
     const allSources: DeathSources = structuredClone(sources);
@@ -38,6 +40,7 @@ export class DeathResolution {
     );
 
     while (pending.length > 0) {
+      if (this.state.phase !== resolutionPhase || this.state.day !== resolutionDay || this.state.gameOver) return;
       const deathPhase = firstBatch ? phase : this.state.phase;
       this.markPlayersDead(pending);
       if (firstBatch) {
@@ -51,56 +54,69 @@ export class DeathResolution {
         );
         await this.collectLastWords(pending, lastWordsPhase, phase, actionProvider);
       }
+      if (this.state.phase !== resolutionPhase || this.state.day !== resolutionDay || this.state.gameOver) return;
 
       // 先处理警长死亡带来的警徽逻辑，再执行角色死亡钩子。
       for (const deadId of pending) {
         transferOrDestroySheriffBadge(this.world, deadId, `${phase}_death`, this.events);
       }
 
-      const result = await this.eventRegistry.onDeath(
-        this.world,
-        pending,
-        allSources,
-        async (hunterId): Promise<DeathShotSelection> => {
-          const actionPhase = this.state.phase;
-          for (let attempt = 1; attempt <= 3; attempt++) {
-            const action = await actionProvider.getAction(requests.create({
-              phase: actionPhase,
-              actorId: hunterId,
-              allowedTools: ["shoot"],
-              stage: "hunter_shot",
-              requiresAction: true,
-              summary: { key: "request.summary.death_shot" },
-              context: {
-                trigger: "on_death",
-                death_phase: deathPhase,
-                death_sources: [...(allSources[hunterId] ?? [])],
-                ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
-              },
-            }));
-            if (action?.name !== "shoot") {
-              continue;
-            }
-
-            const validated = this.toolGateway.validateAndSanitize(
-              this.world,
-              hunterId,
-              action,
-              {
+      const permits: Array<ReturnType<World["openDeathAction"]>> = [];
+      let result;
+      try {
+        result = await this.eventRegistry.onDeath(
+          this.world,
+          pending,
+          allSources,
+          async (hunterId): Promise<DeathShotSelection> => {
+            if (this.state.phase !== resolutionPhase || this.state.day !== resolutionDay || this.state.gameOver) return { kind: "invalid" };
+            const actionPhase = this.state.phase;
+            const permit = this.world.openDeathAction(hunterId, "shoot", actionPhase, resolutionDay, () => this.state.phase === resolutionPhase && this.state.day === resolutionDay && !this.state.gameOver);
+            permits.push(permit);
+            for (let attempt = 1; attempt <= 3; attempt++) {
+              const action = await actionProvider.getAction(requests.create({
                 phase: actionPhase,
-                allowDeadHunterShoot: true,
-              },
-            );
-            if (!validated.ok || !validated.sanitizedCall) {
-              continue;
+                actorId: hunterId,
+                allowedTools: ["shoot"],
+                stage: "hunter_shot",
+                requiresAction: true,
+                summary: { key: "request.summary.death_shot" },
+                context: {
+                  trigger: "on_death",
+                  death_phase: deathPhase,
+                  death_sources: [...(allSources[hunterId] ?? [])],
+                  death_action_id: permit.id,
+                  ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
+                },
+              }));
+              if (this.state.phase !== resolutionPhase || this.state.day !== resolutionDay || this.state.gameOver || !this.world.hasDeathAction(hunterId, "shoot", actionPhase, resolutionDay, permit.id)) return { kind: "invalid" };
+              if (action?.name !== "shoot") {
+                continue;
+              }
+
+              const validated = this.toolGateway.validateAndSanitize(
+                this.world,
+                hunterId,
+                action,
+                {
+                  phase: actionPhase,
+                  day: this.state.day,
+                  deathActionId: permit.id,
+                },
+              );
+              if (!validated.ok || !validated.sanitizedCall) {
+                continue;
+              }
+              const targetId = validated.sanitizedCall.args.target_id;
+              return targetId === null ? { kind: "pass", deathActionId: permit.id } : { kind: "shot", targetId, deathActionId: permit.id };
             }
-            const targetId = validated.sanitizedCall.args.target_id;
-            return targetId === null ? { kind: "pass" } : { kind: "shot", targetId };
-          }
-          return { kind: "invalid" };
-        },
-        this.events,
-      );
+            return { kind: "invalid" };
+          },
+          this.events,
+        );
+      } finally {
+        for (const permit of permits) permit.close();
+      }
 
       pending = result.extraDeaths.filter((id) => !seen.has(id));
       for (const id of result.extraDeaths) {
@@ -125,44 +141,54 @@ export class DeathResolution {
       this.events,
       this.state.day,
     );
+    const day = this.state.day;
     for (const deadId of deadIds) {
-      const action = await actionProvider.getAction(requests.create({
-        phase,
-        actorId: deadId,
-        allowedTools: ["speak"],
-        stage: "last_words",
-        requiresAction: true,
-        summary: { key: "request.summary.last_words" },
-        context: {
-          trigger: "last_words",
-          death_phase: deathPhase,
-        },
-      }));
-      if (action?.name !== "speak") {
-        continue;
-      }
-      const validated = this.toolGateway.validateAndSanitize(
-        this.world,
-        deadId,
-        action,
-        {
+      if (this.state.phase !== phase || this.state.day !== day || this.state.gameOver) return;
+      const permit = this.world.openDeathAction(deadId, "speak", phase, day);
+      try {
+        const action = await actionProvider.getAction(requests.create({
           phase,
-          allowDeadLastWords: true,
-        },
-      );
-      if (!validated.ok || !validated.sanitizedCall) {
-        continue;
+          actorId: deadId,
+          allowedTools: ["speak"],
+          stage: "last_words",
+          requiresAction: true,
+          summary: { key: "request.summary.last_words" },
+          context: {
+            trigger: "last_words",
+            death_phase: deathPhase,
+            death_action_id: permit.id,
+          },
+        }));
+        if (this.state.phase !== phase || this.state.day !== day || this.state.gameOver || !this.world.hasDeathAction(deadId, "speak", phase, day, permit.id)) return;
+        if (action?.name !== "speak") {
+          continue;
+        }
+        const validated = this.toolGateway.validateAndSanitize(
+          this.world,
+          deadId,
+          action,
+          {
+            phase,
+            day: this.state.day,
+            deathActionId: permit.id,
+          },
+        );
+        if (!validated.ok || !validated.sanitizedCall) {
+          continue;
+        }
+        this.events.push({
+          timestamp: Date.now(),
+          type: "last_words_spoken",
+          payload: {
+            playerId: deadId,
+            phase,
+            day: this.state.day,
+            text: validated.sanitizedCall.args.text,
+          },
+        });
+      } finally {
+        permit.close();
       }
-      this.events.push({
-        timestamp: Date.now(),
-        type: "last_words_spoken",
-        payload: {
-          playerId: deadId,
-          phase,
-          day: this.state.day,
-          text: validated.sanitizedCall.args.text,
-        },
-      });
     }
   }
 

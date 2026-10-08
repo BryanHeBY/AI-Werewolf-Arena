@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Camp, DeathCause, Phase, Role, WinCondition, permitsHunterShot, type GameEvent, type RoleComponent, type DeathShotSelection } from "../../../src/core";
+import { COMPONENT, Camp, DeathCause, Phase, Role, WinCondition, permitsHunterShot, type GameEvent, type RoleComponent, type DeathSources } from "../../../src/core";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { getHunterState, setHunterState } from "../../../src/game/mechanisms/roles/private_state";
@@ -15,6 +15,18 @@ const fixture = (locale: "zh-CN" | "en", winCondition = WinCondition.SlaughterCi
 const dead = (world: ReturnType<typeof fixture>["world"], id: number) => { world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive = false; };
 const gun = (world: ReturnType<typeof fixture>["world"]) => getHunterState(world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!;
 
+type UnboundSelection = { kind: "shot"; targetId: number } | { kind: "pass" } | { kind: "invalid" };
+async function runHunterHook(world: ReturnType<typeof fixture>["world"], deadIds: number[], sources: DeathSources, choose: (actor: number) => Promise<UnboundSelection>, events: GameEvent[]) {
+  let permit: ReturnType<typeof world.openDeathAction> | undefined;
+  try {
+    return await hunterDeathHook(world, deadIds, sources, async actor => {
+      permit = world.openDeathAction(actor, "shoot", Phase.Day, 1);
+      const selection = await choose(actor);
+      return selection.kind === "invalid" ? selection : { ...selection, deathActionId: permit.id };
+    }, events);
+  } finally { permit?.close(); }
+}
+
 const examples: Array<[DeathCause[], boolean]> = [
   [[DeathCause.WolfKill], true], [[DeathCause.Exile], true], [[DeathCause.Shot], true], [[DeathCause.WolfKill, DeathCause.Shot], true],
   [[DeathCause.Poison], false], [[DeathCause.Poison, DeathCause.WolfKill], false], [[DeathCause.Lovers], false], [[DeathCause.Dream], false], [[DeathCause.Duel], false], [[DeathCause.SelfDestruct], false], [[DeathCause.Ability], false], [[], false],
@@ -23,7 +35,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: death causes exp
   for (const [causes, eligible] of examples) {
     const { world } = fixture(locale), events: GameEvent[] = []; dead(world, 7); let asks = 0;
     expect(permitsHunterShot(causes)).toBe(eligible);
-    const result = await hunterDeathHook(world, [7], { 7: causes }, async () => { asks++; return { kind: "shot", targetId: 1 }; }, events);
+    const result = await runHunterHook(world, [7], { 7: causes }, async () => { asks++; return { kind: "shot", targetId: 1 }; }, events);
     expect(asks).toBe(eligible ? 1 : 0);
     expect(result.extraDeaths).toEqual(eligible ? [1] : []);
     expect(result.extraDeathSources).toEqual(eligible ? { 1: [DeathCause.Shot] } : {});
@@ -34,7 +46,7 @@ for (const mode of [WinCondition.SlaughterCity, WinCondition.SlaughterSide, WinC
   const { world } = fixture("en", mode), events: GameEvent[] = [];
   for (const id of [5, 6, 7, 8]) dead(world, id);
   let asked = 0;
-  const result = await hunterDeathHook(world, [7], { 7: [DeathCause.WolfKill] }, async () => { asked++; return { kind: "shot", targetId: 1 }; }, events);
+  const result = await runHunterHook(world, [7], { 7: [DeathCause.WolfKill] }, async () => { asked++; return { kind: "shot", targetId: 1 }; }, events);
   expect(asked).toBe(1); expect(result.extraDeaths).toEqual([1]); expect(result.extraDeathSources[1]).toEqual([DeathCause.Shot]);
 });
 
@@ -61,20 +73,20 @@ for (const locale of ["zh-CN", "en"] as const) for (const mode of [WinCondition.
 
 test("a living Hunter cannot enter the death hook; invalid or thrown selection preserves the gun, while explicit pass spends it", async () => {
   const { world } = fixture("en"), events: GameEvent[] = []; let asks = 0;
-  const choose = async (): Promise<DeathShotSelection> => { asks++; return { kind: "shot", targetId: 999 }; };
-  await hunterDeathHook(world, [7], { 7: [DeathCause.Exile] }, choose, events);
+  const choose = async (): Promise<UnboundSelection> => { asks++; return { kind: "shot", targetId: 999 }; };
+  await runHunterHook(world, [7], { 7: [DeathCause.Exile] }, choose, events);
   expect(asks).toBe(0); expect(gun(world).canShoot).toBe(true);
   dead(world, 7);
-  await hunterDeathHook(world, [7], { 7: [DeathCause.Exile] }, choose, events);
+  await runHunterHook(world, [7], { 7: [DeathCause.Exile] }, choose, events);
   expect(asks).toBe(1); expect(gun(world).canShoot).toBe(true);
-  await hunterDeathHook(world, [7], { 7: [DeathCause.Exile] }, async () => ({ kind: "invalid" }), events);
+  await runHunterHook(world, [7], { 7: [DeathCause.Exile] }, async () => ({ kind: "invalid" }), events);
   expect(gun(world).canShoot).toBe(true);
   const error = new Error("synthetic-decision-failure");
-  expect(await hunterDeathHook(world, [7], { 7: [DeathCause.Exile] }, async () => { throw error; }, events).catch(failure => failure)).toBe(error);
+  expect(await runHunterHook(world, [7], { 7: [DeathCause.Exile] }, async () => { throw error; }, events).catch(failure => failure)).toBe(error);
   expect(gun(world).canShoot).toBe(true);
-  await hunterDeathHook(world, [7], { 7: [DeathCause.Exile] }, async () => ({ kind: "pass" }), events);
+  await runHunterHook(world, [7], { 7: [DeathCause.Exile] }, async () => ({ kind: "pass" }), events);
   expect(gun(world).canShoot).toBe(false); expect(events.some(event => event.type === "hunter_shot")).toBe(false);
-  await hunterDeathHook(world, [7], { 7: [DeathCause.Exile] }, choose, events); expect(asks).toBe(1);
+  await runHunterHook(world, [7], { 7: [DeathCause.Exile] }, choose, events); expect(asks).toBe(1);
 });
 
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: the real death resolver bounds invalid decisions and accepts a corrected shot or explicit empty shot`, async () => {
@@ -95,12 +107,14 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: the real death r
 
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: shared reception accepts schema-valid null as an explicit gun pass and seals the turn once`, () => {
   const { world } = fixture(locale); dead(world, 7);
-  const request = { actorId: 7, phase: Phase.Day, allowedTools: ["shoot" as const], context: { day: 1, stage: "hunter_shot" as const, trigger: "on_death", death_sources: [DeathCause.Exile], visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } };
+  const permit = world.openDeathAction(7, "shoot", Phase.Day, 1);
+  const request = { actorId: 7, phase: Phase.Day, allowedTools: ["shoot" as const], context: { day: 1, stage: "hunter_shot" as const, trigger: "on_death", death_sources: [DeathCause.Exile], death_action_id: permit.id, visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } };
   const turn = new ActionTurn(new ActionReception(world), request, "t1");
   expect(turn.submit("t1", "shoot", { target_id: 999 })).toMatchObject({ ok: false, error: "shoot_target" });
   expect(turn.submit("t1", "shoot", { target_id: null })).toEqual({ ok: true, accepted: true, applied: false, action: "shoot" });
   expect(gun(world).canShoot).toBe(true); // Still owned by final application.
   expect(turn.submit("t1", "shoot", { target_id: 1 })).toMatchObject({ ok: false, error: "turn_not_open_or_session_invalid" });
+  permit.close(); expect(world.activeDeathActionCount).toBe(0);
 });
 
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: an additional shot death carries its own cause and actual phase`, async () => {
@@ -120,7 +134,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: revoked, replace
   for (const revoke of ["resource", "state", "role", "component", "alive"] as const) {
     const { world } = fixture(locale), events: GameEvent[] = []; dead(world, 7);
     const originalRole = world.getComponent<RoleComponent>(7, COMPONENT.Role)!, originalGun = gun(world);
-    const result = await hunterDeathHook(world, [7], { 7: [DeathCause.Exile] }, async () => {
+    const result = await runHunterHook(world, [7], { 7: [DeathCause.Exile] }, async () => {
       if (revoke === "resource") originalGun.canShoot = false;
       if (revoke === "state") setHunterState(originalRole, { canShoot: false });
       if (revoke === "role") originalRole.role = Role.Villager;
