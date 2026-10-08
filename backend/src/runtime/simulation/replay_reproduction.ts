@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { bootstrapGame } from "../../app/bootstrap";
 import { createRandom, RANDOM_ALGORITHM, RANDOM_STREAM_POLICY, type ActionProvider, type ActionRequest, type GameEvent } from "../../core";
-import { parseReproductionRecord, normalizedRequest, recordedErrorName, type RecordedDecision, type ReproductionRecord } from "../../recording/reproduction";
+import { parseReproductionRecord, normalizedRequest, recordedErrorName, type RecordedDecision, type RecordedGameEvent, type ReproductionRecord } from "../../recording/reproduction";
 import { SessionRecordManager } from "../../recording/session_recorder";
 import { runWithSessionRecorder } from "../../recording/recording_context";
 import { GameEventRecorder } from "../game_event_recorder";
@@ -106,7 +106,7 @@ class RecordedActions implements ActionProvider {
   assertConsumed() { requireMatch(this.consumed.size === this.decisions.size, "reproduction_unconsumed_decisions"); }
 }
 
-function normalizedEvents(events: readonly GameEvent[]) { return events.map(({ timestamp: _timestamp, ...event }) => event); }
+function normalizedEvents(events: readonly (GameEvent | RecordedGameEvent)[]) { return events.map(({ timestamp: _timestamp, ...event }) => event); }
 
 export async function readReproduction(file: string) {
   const raw = await readFile(file, "utf8");

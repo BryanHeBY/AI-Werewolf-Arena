@@ -18,7 +18,7 @@ describe("buildAgentVisibleEventFeed", () => {
     const villagerId = findRole("villager");
     const events: GameEvent[] = [
       { timestamp: 0, type: "god_private_game_info", payload: { players: [{ seat: witchId, role: "witch" }] } },
-      { timestamp: 1, type: "wolf_discussion", payload: { actorId: wolfId, text: "今晚先听队友意见" } },
+      { timestamp: 1, type: "wolf_discussion", audience: [wolfId], payload: { actorId: wolfId, text: "今晚先听队友意见" } },
       { timestamp: 2, type: "witch_potion_used", payload: { actorId: witchId, targetId: seerId, potionType: "heal" } },
       { timestamp: 3, type: "seer_checked", payload: { actorId: seerId, targetId: wolfId, isWerewolf: true } },
       { timestamp: 4, type: "night_resolved", payload: { deaths: [] } },
@@ -110,8 +110,8 @@ describe("buildAgentVisibleEventFeed", () => {
     ];
     const eventsWithHiddenWolfActions: GameEvent[] = [
       publicEvents[0],
-      { timestamp: 2, type: "wolf_discussion", payload: { actorId: wolfId, text: "隐藏狼聊" } },
-      { timestamp: 3, type: "wolf_kill_vote_cast", payload: { actorId: wolfId, targetId: villagerId } },
+      { timestamp: 2, type: "wolf_discussion", audience: [wolfId], payload: { actorId: wolfId, text: "隐藏狼聊" } },
+      { timestamp: 3, type: "wolf_kill_vote_cast", audience: [wolfId], payload: { actorId: wolfId, targetId: villagerId } },
       { timestamp: 4, type: "future_private_mechanic", payload: { secret: true } },
       publicEvents[1],
     ];

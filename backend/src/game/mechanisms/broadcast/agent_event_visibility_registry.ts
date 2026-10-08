@@ -1,7 +1,6 @@
 /** 文件说明：领域事件到玩家 Agent 视角的显式可见性白名单。 */
-import { EntityId, GameEvent } from "../../../core/domain/model";
+import { EntityId, GameEvent, WOLF_TEAM_EVENT_TYPES } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
-import { getDefaultVisibilityRegistry } from "./visibility_registry";
 
 type AgentEventVisibilityRule = (
   world: World,
@@ -30,12 +29,7 @@ const PUBLIC_EVENT_TYPES = new Set([
   "sheriff_direction_chosen",
 ]);
 
-const WOLVES_ONLY_EVENT_TYPES = new Set([
-  "wolf_tactical_order",
-  "wolf_discussion",
-  "wolf_discussion_ended",
-  "wolf_kill_vote_cast",
-]);
+const WOLVES_ONLY_EVENT_TYPES = new Set<string>(WOLF_TEAM_EVENT_TYPES);
 
 const ACTOR_ONLY_EVENT_TYPES = new Set([
   "seer_checked",
@@ -57,12 +51,14 @@ export class AgentEventVisibilityRegistry {
   ) {}
 
   canView(world: World, event: GameEvent, actorId: EntityId): boolean {
+    if (WOLVES_ONLY_EVENT_TYPES.has(event.type)) {
+      // Missing historical authorization fails closed. Current identities never
+      // grant access to past chat or revoke an event already addressed to a player.
+      return "audience" in event && event.audience.includes(actorId);
+    }
     const custom = this.rules[event.type];
     if (custom) return custom(world, event, actorId);
     if (PUBLIC_EVENT_TYPES.has(event.type)) return true;
-    if (WOLVES_ONLY_EVENT_TYPES.has(event.type)) {
-      return getDefaultVisibilityRegistry().isWolfPlayer(world, actorId);
-    }
     if (ACTOR_ONLY_EVENT_TYPES.has(event.type) && "actorId" in event.payload) {
       return event.payload.actorId === actorId;
     }

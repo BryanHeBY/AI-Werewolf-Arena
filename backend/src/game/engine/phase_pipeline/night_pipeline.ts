@@ -83,7 +83,7 @@ export class NightPipeline {
     });
 
     const stageState: NightStageState = {
-      wolfIds: [],
+      wolfChatOrder: [],
       endedWolves: new Set<EntityId>(),
       wolfVotes: {},
       wolfTarget: null,
@@ -93,6 +93,7 @@ export class NightPipeline {
     const requests = new GameActionRequestFactory(this.world, this.events, day);
     const stageCtx = {
       world: this.world,
+      roleCatalog: this.stageRegistry.roleCatalog,
       toolGateway: this.toolGateway,
       events: this.events,
       actionProvider,

@@ -1,7 +1,7 @@
 import { dictionaries, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { z } from "zod";
 import { types } from "node:util";
-import { ACTION_STAGES, TOOL_NAMES, ActionWindow, Camp, Phase, Role, WinCondition, WitchSelfHealRule, type ActionProvider, type ActionRequest, type BoardConfig, type GameEvent, type RuntimeSnapshot, type ToolCall } from "../core";
+import { ACTION_STAGES, TOOL_NAMES, WOLF_TEAM_EVENT_TYPES, ActionWindow, Camp, Phase, Role, WinCondition, WitchSelfHealRule, type ActionProvider, type ActionRequest, type BoardConfig, type GameEvent, type RuntimeSnapshot, type ToolCall } from "../core";
 import type { RandomMetadata } from "../core/domain/random";
 
 export const REPRODUCTION_SCHEMA_VERSION = 1 as const;
@@ -52,9 +52,16 @@ export interface RecordedDecision {
   openedAfterSettlement: number;
   outcome: { kind: "pending" } | { kind: "action"; action: ToolCall | null } | { kind: "error"; code: "decision_failed"; name: RecordedErrorName };
 }
+/** Serialized evidence envelope, including legacy events without authorization. */
+export interface RecordedGameEvent {
+  timestamp: number;
+  type: string;
+  payload: Record<string, unknown>;
+  audience?: readonly number[];
+}
 export interface ReproductionRecord {
   schemaVersion: typeof REPRODUCTION_SCHEMA_VERSION; finalized: boolean; metadata: ReproductionMetadata;
-  decisions: RecordedDecision[]; checkpoints: RecordedCheckpoint[]; events: GameEvent[];
+  decisions: RecordedDecision[]; checkpoints: RecordedCheckpoint[]; events: RecordedGameEvent[];
   operations: Array<{ scope: string; op: string; actor_id?: number; phase?: string; status: string; reason?: string; input?: Record<string, unknown>; output?: Record<string, unknown> }>;
   termination: { reason: string; winner: Camp | null; errors: Array<{ scope: ReproductionFailureScope; name: RecordedErrorName }> } | null;
 }
@@ -99,7 +106,13 @@ const schema = z.strictObject({ schemaVersion: z.literal(REPRODUCTION_SCHEMA_VER
     outcome: z.discriminatedUnion("kind", [z.strictObject({ kind: z.literal("pending") }), z.strictObject({ kind: z.literal("action"), action: z.strictObject({ name: z.enum(TOOL_NAMES), args: jsonObject }).nullable() }), z.strictObject({ kind: z.literal("error"), code: z.literal("decision_failed"), name: z.enum(ERROR_NAMES) })]),
   })),
   checkpoints: z.array(z.strictObject({ cycle: nonnegative, complete: z.boolean(), snapshot: snapshotSchema, players: z.array(playerSchema), eventCount: nonnegative, failure: z.strictObject({ name: z.enum(ERROR_NAMES), code: z.literal("cycle_failed") }).optional() })).min(1),
-  events: z.array(z.strictObject({ timestamp: z.number().finite(), type: z.string().min(1), payload: jsonObject })),
+  events: z.array(z.strictObject({ timestamp: z.number().finite(), type: z.string().min(1), payload: jsonObject,
+    audience: z.array(positive).max(128).refine(ids => ids.every((id, index) => index === 0 || ids[index - 1] < id)).optional(),
+  }).superRefine((event, ctx) => {
+    if (event.audience !== undefined && !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type)) {
+      ctx.addIssue({ code: "custom", message: "reproduction_event_audience_invalid" });
+    }
+  })),
   operations: z.array(z.strictObject({ scope: z.string(), op: z.string(), actor_id: positive.optional(), phase: z.string().optional(), status: z.string(), reason: z.string().optional(), input: jsonObject.optional(), output: jsonObject.optional() })),
   termination: z.strictObject({ reason: z.string(), winner: z.enum(Camp).nullable(), errors: z.array(z.strictObject({ scope: z.enum(FAILURE_SCOPES), name: z.enum(ERROR_NAMES) })) }).nullable(),
 });
@@ -120,7 +133,7 @@ export function normalizedRequest(request: ActionRequest): Omit<ActionRequest, "
 export class ReproductionTrace {
   private readonly decisions: RecordedDecision[] = [];
   private readonly checkpoints: RecordedCheckpoint[] = [];
-  private events: GameEvent[] = [];
+  private events: RecordedGameEvent[] = [];
   private settled = 0;
   private invalid = false;
   private readonly errors: Array<{ scope: ReproductionFailureScope; name: RecordedErrorName }> = [];
@@ -151,7 +164,9 @@ export class ReproductionTrace {
 
   checkpoint(checkpoint: RecordedCheckpoint, events: readonly GameEvent[]): void {
     if (events.length !== checkpoint.eventCount) throw new Error("reproduction_checkpoint_events_mismatch");
-    this.checkpoints.push(structuredClone(checkpoint)); this.events = structuredClone([...events]); this.onChange();
+    this.checkpoints.push(structuredClone(checkpoint));
+    this.events = structuredClone(events.map(({ payload, ...event }) => ({ ...event, payload: { ...payload } })));
+    this.onChange();
   }
 
   build(input?: { operations: ReproductionRecord["operations"]; termination: { reason: string; winner: Camp | null } }): ReproductionRecord {

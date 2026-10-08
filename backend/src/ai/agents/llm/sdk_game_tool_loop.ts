@@ -9,7 +9,7 @@ import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { AgentBugReportService } from "../reporting/bug_report_service";
 import { gameToolProtocol } from "../game_tool_protocol";
 import { ActionReception, ActionTurn } from "../player/action_reception";
-import { ToolCallRepairRegistry, type ToolSpecRegistry, getDefaultToolSpecRegistry } from "../../../game/mechanisms";
+import { ToolCallRepairRegistry, type ToolSpecRegistry, getDefaultToolSpecRegistry, type ToolValidationRuleRegistry, getDefaultToolValidationRuleRegistry } from "../../../game/mechanisms";
 import { LlmObserver } from "../player/player_observer";
 import { ChatMessage, ChatModelClient } from "../../integrations/llm/transport";
 import { PlayerPromptSession } from "./player_prompt_session";
@@ -36,8 +36,9 @@ export class SdkGameToolLoop {
     private readonly promptSession: PlayerPromptSession,
     private readonly observer: LlmObserver,
     toolSpecRegistry: ToolSpecRegistry = getDefaultToolSpecRegistry(),
+    validationRules: ToolValidationRuleRegistry = getDefaultToolValidationRuleRegistry(),
   ) {
-    this.reception = new ActionReception(world, repairRegistry, toolSpecRegistry);
+    this.reception = new ActionReception(world, repairRegistry, toolSpecRegistry, validationRules);
     this.bugReports = new AgentBugReportService(world, {
       onAccepted: (report, reportId) => {
         const message = report.message.length > 120

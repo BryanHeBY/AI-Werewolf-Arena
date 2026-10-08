@@ -1,7 +1,7 @@
 import { renderMessage, text, type Locale } from "@ai-werewolf-arena/game-text";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionRequest, BoardConfig, Camp, EntityId, Role, ToolName } from "../../../core/domain"
+import { ActionRequest, BoardConfig, EntityId, Role, ToolName } from "../../../core/domain"
 import {
   getActionRequestDay,
   getActionRequestStage,
@@ -14,6 +14,7 @@ import {
   RoleCatalog,
   TargetHintRegistry,
   ToolSpecRegistry,
+  knownWolfTeammates,
 } from "../../../game/mechanisms";
 import { getGuardState, getHunterState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
 import { freezeObservation, type PlayerObservation } from "./observation";
@@ -32,10 +33,26 @@ export interface PlayerPromptPolicyOptions {
 
 /** Shared game prompt policy; SDK and ACP adapters only choose transport instructions. */
 export class PlayerPromptPolicy {
+  private readonly publicRoleCounts = new Map<Role, number>();
+  private readonly publicBoardSize: number;
+
   constructor(
     private readonly world: World,
     private readonly options: PlayerPromptPolicyOptions,
-  ) {}
+  ) {
+    this.publicBoardSize = options.boardConfig?.boardSize ?? world.entityIds().length;
+    if (options.boardConfig) {
+      for (const { role, count } of options.boardConfig.roleSetups) {
+        this.publicRoleCounts.set(role, (this.publicRoleCounts.get(role) ?? 0) + count);
+      }
+    } else {
+      // Compatibility for callers constructed at opening without a board input.
+      for (const id of world.entityIds()) {
+        const role = this.role(id);
+        if (role) this.publicRoleCounts.set(role.role, (this.publicRoleCounts.get(role.role) ?? 0) + 1);
+      }
+    }
+  }
 
   get locale(): Locale { return this.world.locale; }
 
@@ -62,7 +79,7 @@ export class PlayerPromptPolicy {
       ...(role ? { role: role.role, camp: role.camp } : {}),
       name: this.world.getComponent<IdentityComponent>(request.actorId, COMPONENT.Identity)?.name,
     }, knownAliveIds: this.world.entityIds().filter(id => !dead.has(id)),
-      teammateIds: this.wolfTeammates(request.actorId, role), ownState });
+      teammateIds: this.wolfTeammates(request.actorId), ownState });
   }
 
   buildSystem(
@@ -80,7 +97,7 @@ export class PlayerPromptPolicy {
         actorId: request.actorId,
         role: role ? this.options.roleCatalog.label(role.role, this.locale) : "unknown",
         maxPlayerId: this.world.entityIds().length,
-        teammateIds: this.wolfTeammates(request.actorId, role),
+        teammateIds: this.wolfTeammates(request.actorId),
         boardInfoPrompt,
         configPrompt,
         personalityPrompt: this.options.personalityPromptResolver?.(request, role),
@@ -113,7 +130,7 @@ export class PlayerPromptPolicy {
       isSpeechTurn: input.allowedTools.includes("speak") || input.allowedTools.includes("speak_to_wolves"),
       stageDirective: this.options.toolSpecRegistry.getStageDirective(request.allowedTools, this.locale) ??
         text(this.locale, "prompt.stage.default"),
-      statusDirective: this.statusDirective(role),
+      statusDirective: this.statusDirective(request.actorId, role),
       requiresAction: constraints.minValidActions > 0,
       turnConstraintHint: renderTurnConstraintUserHint(constraints, this.locale),
       allowedTools: input.allowedTools,
@@ -132,15 +149,10 @@ export class PlayerPromptPolicy {
   }
 
   buildBoardInfo(): string {
-    const counts = new Map<Role, number>();
-    for (const id of this.world.entityIds()) {
-      const role = this.role(id);
-      if (role) counts.set(role.role, (counts.get(role.role) ?? 0) + 1);
-    }
     return buildBoardInfoPrompt({
       locale: this.locale,
-      totalPlayers: this.world.entityIds().length,
-      roleCounts: counts,
+      totalPlayers: this.publicBoardSize,
+      roleCounts: this.publicRoleCounts,
       roleLabel: (role) => this.options.roleCatalog.label(role, this.locale),
       roleSkillBrief: (role) => this.options.roleCatalog.skillBrief(role, this.locale),
     });
@@ -150,16 +162,13 @@ export class PlayerPromptPolicy {
     return this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
   }
 
-  private wolfTeammates(actorId: EntityId, role?: RoleComponent): EntityId[] {
-    if (role?.camp !== Camp.Wolf) return [];
-    // Mutual recognition is identity knowledge; unannounced deaths cannot erase it.
-    return this.world.entityIds()
-      .filter((id) => id !== actorId && this.role(id)?.camp === Camp.Wolf)
-      .sort((a, b) => a - b);
+  private wolfTeammates(actorId: EntityId): EntityId[] {
+    return knownWolfTeammates(this.world, actorId, this.options.roleCatalog);
   }
 
-  private statusDirective(role?: RoleComponent): string | undefined {
+  private statusDirective(actorId: EntityId, role?: RoleComponent): string | undefined {
     const lines: string[] = [];
+    lines.push(text(this.locale, "prompt.status.wolf_teammates", { teammates: this.wolfTeammates(actorId).join(", ") || text(this.locale, "common.none") }));
     const privateState = role?.renderPrompt?.(this.locale).trim();
     if (privateState) lines.push(text(this.locale, "prompt.status.private", { state: privateState }));
     if (role?.role === Role.Idiot && getIdiotState(role)?.revealed) {

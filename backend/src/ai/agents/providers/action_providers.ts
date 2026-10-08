@@ -8,7 +8,7 @@ EntityId,
 Phase,
 ToolCall, } from "../../../core/domain"
 import { World } from "../../../core/domain/world";
-import { RoleCatalog, getDefaultRoleCatalog } from "../../../game/mechanisms";
+import { RoleCatalog, getDefaultRoleCatalog, wolfTeamPermissions } from "../../../game/mechanisms";
 
 /**
  * Noop 行为提供器：用于测试“无人行动”场景。
@@ -133,13 +133,19 @@ export class BaselineBotActionProvider implements ActionProvider {
 
     const roleProfile = this.roleCatalog.get(role.role);
     if (roleProfile?.baselineAction) {
-      return roleProfile.baselineAction(
+      const action = roleProfile.baselineAction(
         role,
         request,
         () => this.pickAliveNotSelf(request.actorId),
         (camp) => this.pickAliveByCamp(request.actorId, this.parseCamp(camp)),
         this.world.locale,
       );
+      if (action?.name === "speak_to_wolves" || action?.name === "kill_vote") {
+        const access = wolfTeamPermissions(role, this.roleCatalog);
+        const permitted = action.name === "speak_to_wolves" ? access.canChat : access.canVoteForKill;
+        if (!permitted || request.phase !== Phase.Night || !this.world.getAliveEntityIds().includes(request.actorId)) return null;
+      }
+      return action;
     }
 
     return null;

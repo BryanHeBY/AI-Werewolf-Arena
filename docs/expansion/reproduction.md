@@ -50,3 +50,5 @@ bun run --cwd backend replay:actions --record ../record/<session>/reproduction.j
 - 多个必要文件同时失败全部保留；未完成决定不能生成成功录制，公开部分档仍保存；旧运行异常与收尾错误回归仍成立。
 
 角色规则的人工oracle仍由T02负责；本模块核验实际对局的可复现性，不能以“复现了旧行为”代替规则正确性审查。
+
+P4 G01在内部狼队事件envelope保存发生时的audience，严格重放核对受众；旧结构仍可解析但source版本门槛不放宽。该字段不进入播放器格式，规则与兼容细节见[狼队信息契约](wolf-team-access.md)。

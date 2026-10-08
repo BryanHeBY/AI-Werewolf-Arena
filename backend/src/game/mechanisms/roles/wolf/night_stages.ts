@@ -1,7 +1,8 @@
 /** 文件说明：狼人夜聊与刀人投票阶段处理。 */
-import { EntityId, Phase, Role, StatusMark } from "../../../../core/domain/model";
+import { EntityId, Phase, StatusMark } from "../../../../core/domain/model";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { NightStageHandler } from "../../stages/night/contracts";
+import { wolfChatParticipants, wolfKnifeHolders, wolfTeamEvent } from "../wolf_team";
 
 const WOLF_DISCUSSION_MAX_ROUNDS = 3;
 const WOLF_KILL_VOTE_MAX_RETRIES = 3;
@@ -10,21 +11,22 @@ const wolfDiscussionStage: NightStageHandler = {
   id: "wolf_discussion",
   priority: 200,
   async execute(ctx): Promise<void> {
-    const wolfIds = ctx.shuffleWolves(ctx.getAliveByRole(Role.Wolf));
-    ctx.state.wolfIds = wolfIds;
+    const wolfIds = ctx.shuffleWolves(wolfChatParticipants(ctx.world, ctx.roleCatalog));
+    ctx.state.wolfChatOrder = wolfIds;
     ctx.state.endedWolves = new Set<EntityId>();
 
     if (wolfIds.length > 0) {
-      ctx.events.push({
+      ctx.events.push(wolfTeamEvent(ctx.world, ctx.roleCatalog, {
         timestamp: Date.now(),
         type: "wolf_tactical_order",
         payload: { order: [...wolfIds] },
-      });
+      }));
     }
 
     // 轮转夜聊：每只狼最多发言 WOLF_DISCUSSION_MAX_ROUNDS 次，end_chat 后跳过后续轮次。
     for (let round = 1; round <= WOLF_DISCUSSION_MAX_ROUNDS; round++) {
       for (const wolfId of wolfIds) {
+        if (!wolfChatParticipants(ctx.world, ctx.roleCatalog).includes(wolfId)) continue;
         if (ctx.state.endedWolves.has(wolfId)) {
           continue;
         }
@@ -46,7 +48,7 @@ const wolfDiscussionStage: NightStageHandler = {
         }
         if (result.sanitizedCall.args.end_chat) {
           ctx.state.endedWolves.add(wolfId);
-          ctx.events.push({
+          ctx.events.push(wolfTeamEvent(ctx.world, ctx.roleCatalog, {
             timestamp: Date.now(),
             type: "wolf_discussion_ended",
             payload: {
@@ -54,9 +56,9 @@ const wolfDiscussionStage: NightStageHandler = {
               reason: result.sanitizedCall.args.text,
               round,
             },
-          });
+          }));
         } else {
-          ctx.events.push({
+          ctx.events.push(wolfTeamEvent(ctx.world, ctx.roleCatalog, {
             timestamp: Date.now(),
             type: "wolf_discussion",
             payload: {
@@ -65,7 +67,7 @@ const wolfDiscussionStage: NightStageHandler = {
               endChat: false,
               round,
             },
-          });
+          }));
         }
       }
       if (ctx.state.endedWolves.size === wolfIds.length) {
@@ -81,7 +83,11 @@ const wolfKillVoteStage: NightStageHandler = {
   async execute(ctx): Promise<void> {
     ctx.state.wolfVotes = {};
     // 顺序收集狼刀票，统一在阶段末做多数决结算，避免中途状态污染。
-    for (const wolfId of ctx.state.wolfIds) {
+    const knifeHolders = wolfKnifeHolders(ctx.world, ctx.roleCatalog);
+    // Preserve the ordinary pack's existing order; knife-only roles are independent.
+    const voteOrder = [...ctx.state.wolfChatOrder.filter(id => knifeHolders.includes(id)), ...knifeHolders.filter(id => !ctx.state.wolfChatOrder.includes(id))];
+    for (const wolfId of voteOrder) {
+      if (!wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId)) continue;
       let voteResolved:
         | {
             abstain: boolean;
@@ -91,6 +97,7 @@ const wolfKillVoteStage: NightStageHandler = {
         | null = null;
       let retryReason = "";
       for (let attempt = 1; attempt <= WOLF_KILL_VOTE_MAX_RETRIES + 1; attempt++) {
+        if (!wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId)) break;
         const req =
           attempt === 1
             ? ctx.makeRequest(wolfId, ["kill_vote"], { stage: "wolf_vote" })
@@ -152,6 +159,7 @@ const wolfKillVoteStage: NightStageHandler = {
         };
         break;
       }
+      if (!wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId)) continue;
       if (!voteResolved) {
         voteResolved = {
           abstain: true,
@@ -176,7 +184,7 @@ const wolfKillVoteStage: NightStageHandler = {
       if (!abstain && targetId !== null) {
         ctx.state.wolfVotes[targetId] = (ctx.state.wolfVotes[targetId] ?? 0) + 1;
       }
-      ctx.events.push({
+      ctx.events.push(wolfTeamEvent(ctx.world, ctx.roleCatalog, {
         timestamp: Date.now(),
         type: "wolf_kill_vote_cast",
         payload: {
@@ -185,7 +193,7 @@ const wolfKillVoteStage: NightStageHandler = {
           targetId,
           ...(voteResolved.fallback ? { fallback: true } : {}),
         },
-      });
+      }));
       safeRecordLogicOp({
         scope: "phase_pipeline",
         op: "wolf_kill_vote_cast",

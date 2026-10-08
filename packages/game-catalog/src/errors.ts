@@ -39,6 +39,10 @@ export enum RuleError {
   WitchOnly = "witch_only",
   WolfBlastOnly = "wolf_blast_only",
   WolfOnly = "wolf_only",
+  WolfChatPermission = "wolf_chat_permission",
+  WolfChatPhase = "wolf_chat_phase",
+  WolfKillPermission = "wolf_kill_permission",
+  WolfKillPhase = "wolf_kill_phase",
 }
 
 Object.freeze(RuleError);
@@ -48,4 +52,3 @@ export interface RuleViolation {
   /** Explicit injected rules may preserve their own original message. */
   message?: string;
 }
-

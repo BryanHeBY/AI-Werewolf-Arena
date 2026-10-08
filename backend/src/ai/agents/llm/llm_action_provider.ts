@@ -18,6 +18,7 @@ import {
   TargetHintRegistry,
   ToolCallRepairRegistry,
   ToolSpecRegistry,
+  ToolValidationRuleRegistry,
 } from "../../../game/mechanisms";
 import { BaselineBotActionProvider } from "../providers/action_providers";
 import { ChatModelClient } from "../../integrations/llm/transport";
@@ -110,11 +111,11 @@ export class LlmActionProvider implements ActionProvider {
       promptPolicy,
     });
     const fallback = new FallbackActionPolicy(
-      options.fallbackProvider ?? new BaselineBotActionProvider(world),
+      options.fallbackProvider ?? new BaselineBotActionProvider(world, roleCatalog),
       observer,
     );
     const recorder = new PlayerRoundRecorder(world);
-    const sdkToolLoop = new SdkGameToolLoop(world, repairRegistry, promptSession, observer, toolSpecRegistry);
+    const sdkToolLoop = new SdkGameToolLoop(world, repairRegistry, promptSession, observer, toolSpecRegistry, new ToolValidationRuleRegistry(undefined, roleCatalog));
     this.orchestrator = new LlmTurnOrchestrator({
       world,
       defaultClient: client,

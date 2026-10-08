@@ -15,6 +15,14 @@ export interface RoleInitContext {
   boardConfig?: BoardConfig;
 }
 
+/** Faction membership alone never grants knowledge, chat access or a knife. */
+export interface WolfTeamPermissions {
+  readonly recognizedByPack: boolean;
+  readonly recognizes: "pack" | "all" | "none" | readonly Role[];
+  readonly canChat: boolean;
+  readonly canVoteForKill: boolean;
+}
+
 /** 单个角色在机制层的完整配置描述。 */
 export interface RoleProfile {
   role: Role;
@@ -22,6 +30,7 @@ export interface RoleProfile {
   label: string;
   skillBrief: string;
   goodSide?: "god" | "villager";
+  wolfTeam?: WolfTeamPermissions | ((role: RoleComponent) => WolfTeamPermissions);
   configuration?: {
     schema: z.ZodType;
     defaults: Readonly<Record<string, unknown>>;

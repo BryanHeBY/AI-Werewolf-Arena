@@ -10,9 +10,11 @@ import {
   ToolName,
 } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
+import type { RoleCatalog } from "../roles/catalog";
 
 /** 单次工具校验上下文。 */
 export interface ValidationRuleContext {
+  roleCatalog: RoleCatalog;
   world: World;
   actorId: EntityId;
   role: RoleComponent;

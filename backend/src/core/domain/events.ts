@@ -73,8 +73,12 @@ export interface EventPayloadMap {
   sheriff_direction_chosen: { sheriffId: EntityId; direction: "clockwise" | "counter_clockwise" };
 }
 
+export const WOLF_TEAM_EVENT_TYPES = ["wolf_tactical_order", "wolf_discussion", "wolf_discussion_ended", "wolf_kill_vote_cast"] as const;
+export type WolfTeamEventType = typeof WOLF_TEAM_EVENT_TYPES[number];
+
 export type GameEvent = {
-  [K in keyof EventPayloadMap]: EventBase<K, EventPayloadMap[K]>
+  [K in keyof EventPayloadMap]: EventBase<K, EventPayloadMap[K]> &
+    (K extends WolfTeamEventType ? { readonly audience: readonly EntityId[] } : {})
 }[keyof EventPayloadMap];
 
 /** Projected protocol; payload is intentionally open because projection/parsing is a wire boundary. */

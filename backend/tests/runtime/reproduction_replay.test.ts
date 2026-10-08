@@ -59,6 +59,11 @@ test("incompatible and altered recordings fail explicitly before being accepted 
   await modify(record => { record.decisions.push(structuredClone(record.decisions[0])); }, "reproduction_settlement_order_invalid");
   await modify(record => { record.decisions[0].request.context.visible_events = []; }, "reproduction_observation_mismatch");
   await modify(record => { record.checkpoints[1].players[0].alive = !record.checkpoints[1].players[0].alive; }, "reproduction_checkpoint_mismatch");
+  await modify(record => { record.events.find((event: any) => event.type === "wolf_tactical_order").audience = []; }, "reproduction_events_mismatch");
+  await modify(record => { delete record.events.find((event: any) => event.type === "wolf_tactical_order").audience; }, "reproduction_events_mismatch");
+  await modify(record => { record.events.find((event: any) => event.type === "wolf_tactical_order").audience = [2, 1]; }, "reproduction_record_invalid");
+  await modify(record => { record.events.find((event: any) => event.type === "wolf_tactical_order").audience = [1, 1]; }, "reproduction_record_invalid");
+  await modify(record => { record.events[0].audience = [1]; }, "reproduction_record_invalid");
   await modify(record => { record.operations.pop(); }, "reproduction_operations_mismatch");
   await modify(record => { record.decisions[0].settleOrder = record.decisions[1].settleOrder; }, "reproduction_settlement_order_invalid");
   await modify(record => { record.decisions[0].request.context.turn_constraints.summary_message = { key: "missing.translation.key" }; }, "reproduction_record_invalid");

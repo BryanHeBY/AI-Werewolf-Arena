@@ -2,19 +2,22 @@ import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：狼人工具校验规则。 */
 import { ActionWindow, Phase, Role } from "../../../../core/domain/model";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
+import { wolfTeamPermissions } from "../wolf_team";
 
 /** 狼人工具校验规则集合。 */
 export const WOLF_VALIDATION_RULES: ToolRuleMap = {
-  speak_to_wolves: ({ role }) => {
-    if (role.role !== Role.Wolf) {
-      return { code: RuleError.WolfOnly };
+  speak_to_wolves: ({ role, roleCatalog, phase }) => {
+    if (!wolfTeamPermissions(role, roleCatalog).canChat) {
+      return { code: RuleError.WolfChatPermission };
     }
+    if (phase !== Phase.Night) return { code: RuleError.WolfChatPhase };
     return null;
   },
-  kill_vote: ({ world, role, toolCall }) => {
-    if (role.role !== Role.Wolf) {
-      return { code: RuleError.WolfOnly };
+  kill_vote: ({ world, role, roleCatalog, toolCall, phase }) => {
+    if (!wolfTeamPermissions(role, roleCatalog).canVoteForKill) {
+      return { code: RuleError.WolfKillPermission };
     }
+    if (phase !== Phase.Night) return { code: RuleError.WolfKillPhase };
     if (toolCall.name !== "kill_vote") {
       return { code: RuleError.ToolMismatch };
     }

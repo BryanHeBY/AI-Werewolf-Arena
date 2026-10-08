@@ -5,17 +5,17 @@ import { NightStageHandler } from "./contracts";
 
 /** 夜间阶段注册表。 */
 export class NightStageRegistry {
-  private readonly roleProfileRegistry: RoleCatalog;
+  readonly roleCatalog: RoleCatalog;
 
   constructor(roleProfileRegistry: RoleCatalog = getDefaultRoleCatalog()) {
-    this.roleProfileRegistry = roleProfileRegistry;
+    this.roleCatalog = roleProfileRegistry;
   }
 
   getStages(config: BoardConfig): NightStageHandler[] {
     const roleSet = new Set<Role>(config.roleSetups.map((item) => item.role));
     const collected: NightStageHandler[] = [];
     for (const role of roleSet.values()) {
-      const pack = this.roleProfileRegistry.get(role)?.nightStages ?? [];
+      const pack = this.roleCatalog.get(role)?.nightStages ?? [];
       collected.push(...pack);
     }
     // 去重并按显式优先级排序（priority 越小越先执行）。

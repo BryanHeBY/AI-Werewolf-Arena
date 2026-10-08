@@ -11,6 +11,7 @@ import {
   getDefaultRoleCatalog,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
+  type RoleCatalog,
 } from "../../../game/mechanisms";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { AcpSession, AcpSessionAuditTrace, AcpSessionFactory } from "../../integrations/acp/session";
@@ -47,6 +48,7 @@ export interface AcpActionProviderOptions {
   colorizeLogs?: boolean;
   printLlmIo?: boolean;
   printThinking?: boolean;
+  roleCatalog?: RoleCatalog;
 }
 
 interface AcpTurnPromptBuild {
@@ -96,14 +98,15 @@ export class AcpActionProvider implements ActionProvider {
     this.scheduler = new ScopedRequestScheduler({ defaultMaxConcurrentRequests: options.maxConcurrentRequests ?? Infinity,
       onWait: ({ request, queueDepth, active, limit }) => this.observer.trace(`request_queue_wait player=${request.actorId} phase=${request.phase} queue_depth=${queueDepth} active=${active}/${limit}`),
     });
-    this.fallbackProvider = options.fallbackProvider ?? new BaselineBotActionProvider(world);
+    const roleCatalog = options.roleCatalog ?? getDefaultRoleCatalog();
+    this.fallbackProvider = options.fallbackProvider ?? new BaselineBotActionProvider(world, roleCatalog);
     this.bugReportService = new AgentBugReportService(world);
-    this.registry = new AcpTurnRegistry(world, (report) => this.handleBugReport(report));
+    this.registry = new AcpTurnRegistry(world, (report) => this.handleBugReport(report), roleCatalog);
     const localization = getDefaultPhaseStageLocalizationRegistry();
     this.promptPolicy = new PlayerPromptPolicy(world, {
       personalityPromptResolver: options.personalityPromptResolver,
       toolSpecRegistry: getDefaultToolSpecRegistry(),
-      roleCatalog: getDefaultRoleCatalog(),
+      roleCatalog,
       targetHintRegistry: getDefaultTargetHintRegistry(),
       phaseStageLocalizationRegistry: localization,
       configRenderRegistry: getDefaultConfigRenderRegistry(),

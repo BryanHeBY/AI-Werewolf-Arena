@@ -11,6 +11,7 @@ import { WOLF_VALIDATION_RULES } from "./validation_rules";
 export const WOLF_ROLE_PROFILE: RoleProfile = {
   role: Role.Wolf,
   camp: Camp.Wolf,
+  wolfTeam: { recognizedByPack: true, recognizes: "pack", canChat: true, canVoteForKill: true },
   label: roleName("wolf"),
   skillBrief: text("zh-CN", "role.wolf.brief"),
   renderPrompt: (_roleComp, locale = "zh-CN") => text(locale, "role.wolf.state"),

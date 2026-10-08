@@ -12,10 +12,11 @@ import {
 } from "../../../../core/domain/model";
 import { World } from "../../../../core/domain/world";
 import { ToolGateway } from "../../../gateway/tool_gateway";
+import type { RoleCatalog } from "../../roles/catalog";
 
 /** 夜间阶段共享状态。 */
 export interface NightStageState {
-  wolfIds: EntityId[];
+  wolfChatOrder: EntityId[];
   endedWolves: Set<EntityId>;
   wolfVotes: Record<number, number>;
   wolfTarget: EntityId | null;
@@ -25,6 +26,7 @@ export interface NightStageState {
 /** 夜间阶段执行上下文。 */
 export interface NightStageContext {
   world: World;
+  roleCatalog: RoleCatalog;
   toolGateway: ToolGateway;
   events: GameEvent[];
   actionProvider: ActionProvider;

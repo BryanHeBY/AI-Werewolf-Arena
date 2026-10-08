@@ -25,17 +25,17 @@ export class ToolValidationRuleRegistry {
 
   constructor(
     rules?: ToolRuleMap,
-    roleProfileRegistry: RoleCatalog = getDefaultRoleCatalog(),
+    private readonly roleProfileRegistry: RoleCatalog = getDefaultRoleCatalog(),
   ) {
     this.rules = { ...(rules ?? buildDefaultRules(roleProfileRegistry)) };
   }
 
-  validate(ctx: ValidationRuleContext): RuleViolation | null {
+  validate(ctx: Omit<ValidationRuleContext, "roleCatalog">): RuleViolation | null {
     const rule = this.rules[ctx.toolCall.name as ToolName];
     if (!rule) {
       return { code: RuleError.UnknownTool };
     }
-    const result = rule(ctx);
+    const result = rule({ ...ctx, roleCatalog: this.roleProfileRegistry });
     return !result ? null : typeof result === "string" ? { code: RuleError.CustomRuleError, message: result } : result;
   }
 }

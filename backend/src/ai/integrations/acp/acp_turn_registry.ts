@@ -1,6 +1,7 @@
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, ToolCall } from "../../../core/domain"
 import { World } from "../../../core/domain/world";
+import { RoleCatalog, getDefaultRoleCatalog, ToolValidationRuleRegistry } from "../../../game/mechanisms";
 import { ActionReception, ActionTurn, type ActionReceipt } from "../../agents/player/action_reception";
 import {
   GameReportBugInput as McpReportBugParams,
@@ -60,10 +61,11 @@ export class AcpTurnRegistry {
   constructor(
     world: World,
     private readonly onBugReport?: (report: AcpBugReport) => McpBridgeResult | void,
+    roleCatalog: RoleCatalog = getDefaultRoleCatalog(),
   ) {
     this.locale = world.locale;
     if (!isLocale(this.locale)) throw new Error("acp_task_locale_invalid");
-    this.reception = new ActionReception(world);
+    this.reception = new ActionReception(world, undefined, undefined, new ToolValidationRuleRegistry(undefined, roleCatalog));
   }
 
   openTurn(request: ActionRequest, sessionId: string): AcpPendingTurn {
