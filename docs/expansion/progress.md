@@ -311,3 +311,9 @@ front103／953、type/build、actualChromium42、中文接刀与英文十二人�
 核心 Damage 新增机械盾、逐源单次反毒、仅穿普通 Guard 的额外刀与独立连守自罚死因；输入绑定原生命和只读有效性谓词，不直接修改 Alive 或判胜。反射绕过施毒者机械盾、不递归，Dream 仍可挡；旧 caster 不伤新生命，普通已提交毒仍保留。三路审查发现普通同守同救后 extra 误用旧 Heal 标记，已修正并补有/无基础刀和独立机械盾人工判例；新死因实际 HunterHook 资格与消费也通过。
 
 最终 type/deps/boundaries/i18n、engine **541/8355/40 文件**及 **278 双语本地 SDK/ACP/混合完整局与全部严格 Tape（139/56818）**通过，三路 0 剩余阻断，见[机械伤害审查](reviews/p7-mechanical-damage.md)。这是不可选择的内部基础；机械 profile/阶段/配置尚未接入，仍 17 verified/47 planned。下一步唯一状态 owner、模式/学习窗口和机械技能进入真实夜间流程；全目标继续。
+
+## P7：机械内部状态与权限控制
+
+六类学习独立库存、next-night/被动枪、学习/模式各自窗口、固定首次刀夜及 extra spent/expired、按实际夜次的连守已建模。原 World/role/state/life/phase 与模式/技能快照约束 runtime 权限；刀查询只读，JSON mode 不恢复旧范围。A/L 发现模式原对象改写、A 发现技能种类改写与跨 World 登记缺口，均修正并交叉复查；39/159 控制专项通过。
+
+最终 type/deps/boundaries/i18n、全部 engine **580/8514/43 文件**通过，三路 0 阻断，见[控制审查](reviews/p7-mechanical-control.md)。这些 helpers 尚无生产装配，synthetic 控制测试不等于机械完整局；此笔未复跑 wire/browser。目录仍 17 已验/47 待交付，下一完整角色笔接实际阶段/网关/死亡 owner/双语/配置/呈现并完成全部功能门槛。
