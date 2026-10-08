@@ -152,3 +152,14 @@ for(const locale of ["zh-CN","en"] as const)test(`${locale}: actual White Wolf K
  await page.locator(".timeline .event").filter({hasText:shot}).click();await expect(page.getByTestId("composition-event")).toHaveText(shot);
  await expect(page.locator(".seat-grid .dead")).toHaveCount(4);await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(4);
 });
+
+for(const locale of ["zh-CN","en"] as const)for(const miss of [false,true])test(`${locale}/${miss}: actual Knight archive kills exactly its duel loser and then settles the terminal frame`,async({page})=>{
+ const replay=JSON.parse(readFileSync(new URL(`../fixtures/${miss?"knight-miss":"knight"}.replay.json`,import.meta.url),"utf8"));replay.meta.locale=locale;
+ await page.route("**/api/replay",route=>route.fulfill({json:replay}));await page.goto("/");
+ const duel=miss?locale==="en"?"Knight 1 duels player 4; the non-wolf target survives and the Knight dies":"1号骑士决斗4号，目标非狼存活，骑士出局":locale==="en"?"Knight 1 duels player 2; the wolf target dies":"1号骑士决斗2号，目标为狼并出局";
+ await page.locator(".timeline .event").filter({hasText:duel}).click();await expect(page.getByTestId("composition-event")).toHaveText(duel);
+ await expect(page.locator(".seat-grid .dead")).toHaveCount(2);await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+ await expect(page.getByRole("button",{name:locale==="en"?`Player ${miss?1:2} · Seat ${miss?1:2}`:`${miss?1:2}号 · Seat ${miss?1:2}`,exact:true})).toHaveClass(/dead/);
+ await expect(page.getByRole("button",{name:locale==="en"?`Player ${miss?4:1} · Seat ${miss?4:1}`:`${miss?4:1}号 · Seat ${miss?4:1}`,exact:true})).not.toHaveClass(/dead/);
+ await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(5);await expect(page.getByTestId("composition-winner")).toHaveCount(5);
+});

@@ -12,6 +12,7 @@ export enum Role {
   Wolf = "wolf",
   WolfKing = "wolf_king",
   WhiteWolfKing = "white_wolf_king",
+  Knight = "knight",
   Villager = "villager",
   Seer = "seer",
   Guard = "guard",
@@ -32,6 +33,11 @@ export enum ActionWindow {
   OnPreElection = "on_pre_election",
   OnPreVote = "on_pre_vote",
   OnPerSpeechGap = "on_per_speech_gap",
+}
+export enum KnightDuelWindow {
+  BeforeSpeeches = "before_speeches",
+  BetweenSpeeches = "between_speeches",
+  AfterSpeeches = "after_speeches",
 }
 
 export enum StatusMark {

@@ -26,6 +26,8 @@ export interface ValidationContext {
   phase: Phase;
   actionWindow?: ActionWindow;
   allowSelfDestruct?: boolean;
+  duelWindow?: import("../../core/domain/identity").KnightDuelWindow;
+  allowKnightDuel?: boolean;
   deathActionId?: number;
   sheriffCandidates?: readonly EntityId[];
 }
@@ -109,6 +111,7 @@ export class ActionValidator {
       abilityId: context.abilityId,
       actionWindow: context.actionWindow,
       allowSelfDestruct: context.allowSelfDestruct,
+      duelWindow: context.duelWindow, allowKnightDuel: context.allowKnightDuel,
       sheriffCandidates: context.sheriffCandidates,
     });
     if (error) {

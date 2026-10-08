@@ -52,6 +52,11 @@ export class ObservedBot implements ObservedPlayerStrategy {
       const target = pick(others);
       if (target !== undefined) return { name: "shoot", args: { target_id: target } };
     }
+    if (tools.includes("duel")) {
+      if (this.style !== "active" || ownState.knight?.canDuel !== true || this.random.next() >= 0.5) return null;
+      const target = pick(others);
+      return target === undefined ? null : { name: "duel", args: { target_id: target, confirm: true } };
+    }
     if (tools.includes("vote")) {
       const revealed = request.context.visible_events.filter(event => event.type === "idiot_revealed").map(event => event.payload.targetId);
       const histories = observation.abilities?.filter(ability => ability.kind === "seer_check").flatMap(ability => ability.state.history) ?? ownState.seer?.history ?? [];

@@ -1,0 +1,72 @@
+{
+  "version": 2,
+  "id": "twelve_player_knight",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 12,
+    "roleSetups": [
+      {
+        "role": "wolf",
+        "count": 4
+      },
+      {
+        "role": "villager",
+        "count": 4
+      },
+      {
+        "role": "seer",
+        "count": 1
+      },
+      {
+        "role": "witch",
+        "count": 1
+      },
+      {
+        "role": "knight",
+        "count": 1
+      },
+      {
+        "role": "idiot",
+        "count": 1
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": [
+      "slaughter_side"
+    ],
+    "hooks": {
+      "onDaybreak": true,
+      "onPreElection": true,
+      "onPreVote": true,
+      "onPerSpeechGap": true
+    }
+  },
+  "mechanisms": {
+    "sheriff": {
+      "enabled": true,
+      "voteWeight": 1.5,
+      "tieBreaker": "min_seat"
+    },
+    "selfDestruct": {
+      "enabledWindows": []
+    },
+    "tieBreaker": {
+      "exileVote": "min_id",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "witch": {
+      "selfHeal": "disabled"
+    },
+    "knight": {
+      "enabledWindows": [
+        "after_speeches"
+      ]
+    }
+  }
+}

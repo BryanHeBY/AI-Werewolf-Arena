@@ -8,6 +8,7 @@ import { World } from "../../../core/domain/world";
 export class LastWordsMechanism {
   shouldGrantLastWords(deathPhase: Phase, day: number, sources: readonly DeathCause[]): boolean {
     if (sources.length === 0 || sources.includes(DeathCause.SelfDestruct) || sources.includes(DeathCause.WhiteWolfBlast)) return false;
+    if (deathPhase === Phase.Day && sources.every(source => source === DeathCause.DuelFailure)) return true;
     return (deathPhase === Phase.Night && day === 1 && sources.some(source => source === DeathCause.WolfKill || source === DeathCause.Poison)) ||
       (deathPhase === Phase.Voting && sources.includes(DeathCause.Exile));
   }

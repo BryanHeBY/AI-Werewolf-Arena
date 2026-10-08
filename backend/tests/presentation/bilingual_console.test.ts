@@ -7,6 +7,7 @@ import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
 
 const event = <K extends GameEvent["type"]>(type: K, payload: Extract<GameEvent, { type: K }>["payload"]): Extract<GameEvent, { type: K }> => ({ timestamp: 1, type, payload }) as Extract<GameEvent, { type: K }>;
 const events: GameEvent[] = [
+  event("knight_duel", { actorId: 1, targetId: 2, result: "wolf" }), event("knight_duel", { actorId: 1, targetId: 2, result: "not_wolf" }),
   event("god_private_game_info", { boardSize: 2, players: [{ id: 1, seat: 1, name: "One", role: "wolf", camp: "wolf" }, { id: 2, seat: 2, name: "Two", role: "seer", camp: "good" }] }),
   ...[Phase.Night, Phase.Day, Phase.Voting].map(phase => event("phase_changed", { phase, day: 1 })),
   event("phase_changed", { phase: Phase.GameOver, day: 2, winner: Camp.Good, reason: "all_wolves_eliminated" }),
@@ -31,6 +32,17 @@ const events: GameEvent[] = [
   event("sheriff_direction_chosen", { sheriffId: 1, direction: "clockwise" }), event("sheriff_direction_chosen", { sheriffId: 1, direction: "counter_clockwise" }),
   event("game_over", { winner: Camp.Good, reason: "all_wolves_eliminated" }), event("game_over", { winner: null, reason: "runtime_timeout" }),
 ];
+
+for(const locale of ["zh-CN","en"] as const)test(`${locale}: Knight terminal judge/live text declares exactly the duel loser without reclassifying a non-wolf`,()=>{
+ const registry=getDefaultScriptEventRenderRegistry();
+ const hit=locale==="en"?"Knight 1 duels player 2; the wolf target dies":"1号骑士决斗2号，目标为狼并出局";
+ const miss=locale==="en"?"Knight 1 duels player 2; the non-wolf target survives and the Knight dies":"1号骑士决斗2号，目标非狼存活，骑士出局";
+ for(const [result,expected] of [["wolf",hit],["not_wolf",miss]] as const){
+  const item=event("knight_duel",{actorId:1,targetId:2,result});
+  expect(registry.toJudgeLine(item,locale)).toBe(expected);expect(registry.toLiveRender(item,false,locale)).toEqual([{kind:"system",text:expected}]);
+  expect(registry.toReplayStage(item)).toBe("knight_duel");
+ }
+});
 
 test("all existing console branches render English without changing event facts, stages or output kinds", () => {
   const registry = getDefaultScriptEventRenderRegistry(); const before = structuredClone(events);

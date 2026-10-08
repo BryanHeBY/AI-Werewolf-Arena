@@ -1,6 +1,6 @@
 # 可配置角色目标目录
 
-返回 [实施路线](roadmap.md)。本目录共 **64 项定义**，基础7项与P5狼王/白狼王已验证，共9项；剩余55项为目标。已有实现仅表示当前 AWA 版本，不能表示其他同名版本均受支持。
+返回 [实施路线](roadmap.md)。本目录共 **64 项定义**，基础7项与P5狼王/白狼王/骑士已验证，共10项；剩余54项为目标。已有实现仅表示当前 AWA 版本，不能表示其他同名版本均受支持。
 
 ## 使用与冻结要求
 
@@ -11,7 +11,7 @@
 - 每项在实现前建立规则卡：来源、发布日期/核验日期、规则集与版本、身份/阵营/计数/胜利目标、互认/夜聊/刀权、动作/资源/时点、所有死因与保护/重定向交互、允许组合、AWA 改编说明、中英提示及期望测试。
 - 有歧义的复制、替死、反伤、保护及判胜，必须选择并记录某个确定版本；未决规则阻止相关角色宣告支持。
 - 基础/觉醒、机械狼/觉醒隐狼、通灵师/魔镜少女分别登记。白痴与愚者的别名、赤月与血月等名称仅在同规则版本下建立映射。
-- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。基础七项已完成P1–P4并登记 `verified`，见[基础规则卡](rules/awa-classic-v1.md)与[P4验收](reviews/p4-activation.md)；狼王/白狼王已交付，新增其余55项为 `planned`。
+- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。基础七项已完成P1–P4并登记 `verified`，见[基础规则卡](rules/awa-classic-v1.md)与[P4验收](reviews/p4-activation.md)；狼王/白狼王/骑士已交付，新增其余54项为 `planned`。
 
 ## 1. 基础角色：7 项，awa_classic 1.0.0 已验证
 
@@ -31,7 +31,7 @@
 | --- | --- | --- | --- | --- | --- |
 | 08 | `wolf_king` | 狼王 | Wolf King | 死亡带人、死因限制 | `verified`；P5 / [AWA规则卡](rules/awa-wolf-king-v1.md#wolf_king) / [S02][wolfking] |
 | 09 | `white_wolf_king` | 白狼王 | White Wolf King | 自爆带人、流程中断 | `verified`；P5 / [AWA规则卡](rules/awa-white-wolf-king-v1.md#white_wolf_king) / [S03][whitewolf] |
-| 10 | `knight` | 骑士 | Knight | 白天决斗 | P5 / [S04][beautyknight] |
+| 10 | `knight` | 骑士 | Knight | 白天决斗 | `verified`；P5 / [AWA规则卡](rules/awa-knight-v1.md#knight) / [验收](reviews/p5-knight.md) / [S04][beautyknight] |
 | 11 | `gravekeeper` | 守墓人 | Gravekeeper | 放逐后的信息反馈 | P5 / [S05][gargoyleboard] |
 | 12 | `dreamer` | 摄梦人 | Dreamer | 持续关系、保护/伤害 | P6 / [S06][dreamer] |
 | 13 | `wolf_beauty` | 狼美人 | Wolf Beauty | 魅惑、死亡牵连 | P6 / [S04][beautyknight] |

@@ -24,6 +24,8 @@ export interface ValidationRuleContext {
   phase: Phase;
   actionWindow?: ActionWindow;
   allowSelfDestruct?: boolean;
+  duelWindow?: import("../../../core/domain/identity").KnightDuelWindow;
+  allowKnightDuel?: boolean;
   sheriffCandidates?: readonly EntityId[];
 }
 

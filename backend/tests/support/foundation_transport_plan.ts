@@ -1,5 +1,5 @@
 import type { ActionStage, Role, ToolCall } from "../../src/core";
-export interface PlannedTurn { day: number; stage: ActionStage; action: ToolCall | null; invalidActions?: ToolCall[]; expectedInvalidError?: string }
+export interface PlannedTurn { day: number; stage: ActionStage; action: ToolCall | null; invalidActions?: ToolCall[]; expectedInvalidError?: string; knightResourceRemaining?: 0 | 1 }
 export interface ActorTransportPlan { actorId: number; role: Role; locale: "zh-CN" | "en"; turns: PlannedTurn[]; expectedName?: string; expectedPersona?: string | null; forbiddenPersonas?: string[]; expectedIdentityMarker?: string; requiredCurrentMarkers?: string[]; forbiddenCurrentMarkers?: string[] }
 
 /** Literal S01/S04/S02/S03 oracle; transport actors never query engine truth. */

@@ -1,0 +1,59 @@
+{
+  "version": 2,
+  "id": "six_player_knight",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 6,
+    "roleSetups": [
+      {
+        "role": "knight",
+        "count": 1
+      },
+      {
+        "role": "wolf",
+        "count": 1
+      },
+      {
+        "role": "seer",
+        "count": 1
+      },
+      {
+        "role": "villager",
+        "count": 3
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": [
+      "slaughter_side"
+    ],
+    "hooks": {
+      "onDaybreak": true,
+      "onPreElection": true,
+      "onPreVote": true,
+      "onPerSpeechGap": true
+    }
+  },
+  "mechanisms": {
+    "sheriff": {
+      "enabled": false
+    },
+    "selfDestruct": {
+      "enabledWindows": []
+    },
+    "tieBreaker": {
+      "exileVote": "min_id",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "knight": {
+      "enabledWindows": [
+        "after_speeches"
+      ]
+    }
+  }
+}

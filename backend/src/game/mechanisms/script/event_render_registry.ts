@@ -64,6 +64,7 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
   sheriff_badge_destroyed: (event, locale = "zh-CN") => text(locale, "console.judge.badge_destroy", { target: event.payload.targetId }),
   wolf_self_destruct: (event, locale = "zh-CN") => text(locale, "console.judge.blast", { actor: event.payload.wolfId }),
   white_wolf_king_self_destruct: (event, locale = "zh-CN") => event.payload.targetId === null ? text(locale, "console.white_wolf_king.blast_none", { actor: event.payload.actorId }) : text(locale, "console.white_wolf_king.blast", { actor: event.payload.actorId, target: event.payload.targetId }),
+  knight_duel: (event, locale = "zh-CN") => text(locale, event.payload.result === "wolf" ? "console.knight.wolf" : "console.knight.miss", { actor: event.payload.actorId, target: event.payload.targetId }),
   wolf_king_shot: (event, locale = "zh-CN") => text(locale, "console.judge.wolf_king_shot", { actor: event.payload.actorId, target: event.payload.targetId }),
   game_over: (event, locale = "zh-CN") => resultLabel(event.payload, locale, "console.judge.result"),
   ...LAST_WORDS_SCRIPT_JUDGE_HANDLERS, ...IDIOT_SCRIPT_JUDGE_HANDLERS, ...HUNTER_SCRIPT_JUDGE_HANDLERS, ...SHERIFF_SCRIPT_JUDGE_HANDLERS,
@@ -95,6 +96,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
   day_speech: (event, _private, locale = "zh-CN") => [{ kind: "system", text: text(locale, "console.live.day", { actor: event.payload.actorId, speech: event.payload.text }) }],
   wolf_king_shot: (event, _private, locale = "zh-CN") => [{ kind: "system", text: text(locale, "console.judge.wolf_king_shot", { actor: event.payload.actorId, target: event.payload.targetId }) }],
   white_wolf_king_self_destruct: (event, _private, locale = "zh-CN") => [{ kind: "system", text: event.payload.targetId === null ? text(locale, "console.white_wolf_king.blast_none", { actor: event.payload.actorId }) : text(locale, "console.white_wolf_king.blast", { actor: event.payload.actorId, target: event.payload.targetId }) }],
+  knight_duel: (event, _private, locale = "zh-CN") => [{ kind: "system", text: text(locale, event.payload.result === "wolf" ? "console.knight.wolf" : "console.knight.miss", { actor: event.payload.actorId, target: event.payload.targetId }) }],
   game_over: (event, _private, locale = "zh-CN") => [{ kind: "god", text: resultLabel(event.payload, locale, "console.live.result") }],
   ...WOLF_SCRIPT_LIVE_HANDLERS, ...SEER_SCRIPT_LIVE_HANDLERS, ...GUARD_SCRIPT_LIVE_HANDLERS, ...WITCH_SCRIPT_LIVE_HANDLERS, ...LAST_WORDS_SCRIPT_LIVE_HANDLERS, ...SHERIFF_SCRIPT_LIVE_HANDLERS,
 };

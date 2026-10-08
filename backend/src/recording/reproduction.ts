@@ -3,7 +3,7 @@ import { z } from "zod";
 import { readGameOutcome, readVictoryPoint, readVictoryAffiliations } from "@ai-werewolf-arena/replay-contract";
 import type { GameOutcome, VictoryPoint, VictoryAffiliation } from "@ai-werewolf-arena/game-catalog";
 import { types } from "node:util";
-import { ACTION_STAGES, TOOL_NAMES, WOLF_TEAM_EVENT_TYPES, ActionWindow, Camp, Phase, Role, WinCondition, WitchSelfHealRule, DeathCause, type ActionProvider, type ActionRequest, type BoardConfig, type GameEvent, type RuntimeSnapshot, type ToolCall } from "../core";
+import { ACTION_STAGES, TOOL_NAMES, WOLF_TEAM_EVENT_TYPES, ActionWindow, KnightDuelWindow, Camp, Phase, Role, WinCondition, WitchSelfHealRule, DeathCause, type ActionProvider, type ActionRequest, type BoardConfig, type GameEvent, type RuntimeSnapshot, type ToolCall } from "../core";
 import type { RandomMetadata } from "../core/domain/random";
 
 export const REPRODUCTION_SCHEMA_VERSION = 2 as const;
@@ -79,6 +79,7 @@ const boardSchema = z.strictObject({ boardSize: positive.max(128), enableSheriff
   roleSetups: z.array(z.strictObject({ role: z.enum(Role), count: nonnegative.max(128) })).min(1),
   selfDestruct: z.strictObject({ enabledWindows: z.array(z.enum(ActionWindow)) }).optional(),
   sheriff: z.strictObject({ voteWeight: z.number().finite().positive().optional() }).optional(),
+  knight: z.strictObject({ enabledWindows: z.array(z.enum(KnightDuelWindow)) }).optional(),
   witch: z.strictObject({ canSelfHeal: z.enum(WitchSelfHealRule).optional() }).optional(),
   tieBreaker: z.strictObject({ exileVote: strategies.optional(), wolfKillVote: strategies.optional(), sheriffVote: strategies.optional() }).optional(),
 });
@@ -90,6 +91,7 @@ const requestSchema = z.strictObject({ actorId: positive, phase: z.enum(Phase), 
   context: z.strictObject({ day: positive, stage: z.enum(ACTION_STAGES), visible_events: z.array(z.strictObject({ seq: positive, type: z.string().min(1), payload: jsonObject })),
     turn_constraints: z.strictObject({ min_valid_actions: nonnegative.optional(), max_valid_actions: nonnegative.optional(), required_any_tools: z.array(z.enum(TOOL_NAMES)).optional(), summary: z.string().optional(), summary_message: messageRefSchema.optional() }),
     ability_id: z.string().regex(/^[a-z][a-z0-9:_-]{0,127}$/).optional(),
+    duel_window: z.enum(KnightDuelWindow).optional(),
     wolf_target: positive.nullable().optional(), trigger: z.string().optional(), death_phase: z.enum(Phase).optional(), death_sources: z.array(z.enum(DeathCause)).optional(), death_action_id: positive.optional(), sheriff_candidates: z.array(positive).optional(),
     round: positive.optional(), max_rounds: positive.optional(), retry_attempt: nonnegative.optional(), retry_max: nonnegative.optional(), retry_reason: z.string().optional(), retry_notice: z.string().optional(), retry_notice_message: messageRefSchema.optional(),
   }),

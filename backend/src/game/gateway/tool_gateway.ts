@@ -61,6 +61,8 @@ export class ToolGateway {
       phase: Phase;
       actionWindow?: ActionWindow;
       allowSelfDestruct?: boolean;
+  duelWindow?: import("../../core/domain/identity").KnightDuelWindow;
+  allowKnightDuel?: boolean;
       deathActionId?: number;
       sheriffCandidates?: readonly EntityId[];
     },

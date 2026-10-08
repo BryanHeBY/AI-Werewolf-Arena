@@ -9,6 +9,7 @@ export enum DeathCause {
   Lovers = "lovers",
   Dream = "dream",
   Duel = "duel",
+  DuelFailure = "duel_failure",
   Ability = "ability",
 }
 export type DeathSources = Record<number, DeathCause[]>;

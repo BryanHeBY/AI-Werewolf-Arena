@@ -29,6 +29,7 @@ import { VotingPipeline } from "./phase_pipeline/voting_pipeline";
 import { RoleRegistry } from "../../core/domain/registries/role_registry";
 import { COMPONENT } from "../../core/domain/components/names";
 import { commitSelfDestructSelection } from "../mechanisms/self_destruct/commit";
+import { commitKnightDuel } from "../mechanisms/roles/knight/commit";
 import { VotingRightComponent } from "../../core/domain/components/voting_right";
 import { IdentityComponent } from "../../core/domain/entities/player";
 import { RoleComponent } from "../../core/domain/components/role";
@@ -214,6 +215,15 @@ export class PhaseManager {
         return true;
       },
       ...(firstDaySheriffBeforeNightInfo ? { afterSheriffElection: () => settleNight() } : {}),
+      commitKnightDuel: async choice => {
+        if (!dayIsCurrent() || !nightSettled) return "rejected";
+        const duel = commitKnightDuel(this.world, choice, Phase.Day, this.events);
+        if (!duel) return "rejected";
+        await this.deathResolution.resolve(duel.deaths, duel.sources, actionProvider, Phase.Day, Phase.Day);
+        if (!dayIsCurrent()) return "terminal";
+        if (this.checkAndSealResult("day_interrupted")) return "terminal";
+        return duel.endsDay ? "night" : "continue";
+      },
     });
 
     if (this.state.gameOver || !dayIsCurrent()) return this.getSnapshot();

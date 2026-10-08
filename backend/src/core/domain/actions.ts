@@ -1,5 +1,5 @@
 import type { MessageRef } from "@ai-werewolf-arena/game-text";
-import { ActionWindow, type EntityId, type Phase, type PotionType } from "./identity";
+import { ActionWindow, KnightDuelWindow, type EntityId, type Phase, type PotionType } from "./identity";
 import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
@@ -16,6 +16,7 @@ export interface ToolArgMap {
   use_potion: { target_id: EntityId; potion_type: PotionType };
   self_destruct: { reason: string; confirm: boolean };
   self_destruct_with_target: { reason: string; confirm: boolean; target_id: EntityId | null };
+  duel: { target_id: EntityId; confirm: boolean };
   speak: { text: string };
   vote: { target_id: EntityId | null; abstain: boolean };
   shoot: { target_id: EntityId | null };
@@ -25,9 +26,11 @@ export interface ToolArgMap {
 }
 
 export type ToolName = keyof ToolArgMap;
-export const TOOL_NAMES = ["report_bug", "speak_to_wolves", "kill_vote", "guard", "check_identity", "use_potion", "self_destruct", "self_destruct_with_target", "speak", "vote", "shoot", "choose_direction", "run_for_sheriff", "vote_for_sheriff"] as const satisfies readonly ToolName[];
+export const TOOL_NAMES = ["report_bug", "speak_to_wolves", "kill_vote", "guard", "check_identity", "use_potion", "self_destruct", "self_destruct_with_target", "duel", "speak", "vote", "shoot", "choose_direction", "run_for_sheriff", "vote_for_sheriff"] as const satisfies readonly ToolName[];
 export type ToolCall = { [K in ToolName]: { name: K; args: ToolArgMap[K] } }[ToolName];
 export type TypedToolCall<T extends ToolName> = Extract<ToolCall, { name: T }>;
+export interface KnightDuelSelection { actorId: EntityId; targetId: EntityId }
+export type KnightDuelCommit = "rejected" | "continue" | "night" | "terminal";
 export type SelfDestructSelection =
   | { kind: "ordinary"; actorId: EntityId; targetId: null }
   | { kind: "white_wolf_king"; actorId: EntityId; targetId: EntityId | null };
@@ -49,13 +52,14 @@ export interface TurnConstraints {
   summary_message?: MessageRef;
 }
 
-export const ACTION_STAGES = [...Object.values(ActionWindow), "wolf_discussion", "wolf_vote", "guard", "seer", "witch", "day_speech", "voting", "hunter_shot", "death_shot", "last_words", "sheriff_nomination", "sheriff_campaign_speech", "sheriff_withdraw", "sheriff_vote", "sheriff_choose_direction"] as const;
+export const ACTION_STAGES = [...Object.values(ActionWindow), ...Object.values(KnightDuelWindow), "wolf_discussion", "wolf_vote", "guard", "seer", "witch", "day_speech", "voting", "hunter_shot", "death_shot", "last_words", "sheriff_nomination", "sheriff_campaign_speech", "sheriff_withdraw", "sheriff_vote", "sheriff_choose_direction"] as const;
 export type ActionStage = typeof ACTION_STAGES[number];
 export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_shot"];
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */
 export interface ActionRequestExtras {
   ability_id?: string;
+  duel_window?: KnightDuelWindow;
   wolf_target?: EntityId | null;
   trigger?: string;
   death_phase?: Phase;

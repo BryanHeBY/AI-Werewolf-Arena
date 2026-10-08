@@ -78,7 +78,8 @@ describe("ConfigRenderRegistry", () => {
     expect(prompt).toContain("警长投票结束后，才由 night_resolved 公布昨夜死亡或平安夜");
     expect(prompt).toContain("昨夜实际死亡的玩家在公开结算前仍会参与上警流程");
     expect(prompt).toContain("普通夜间死亡和放逐出局均不公开底牌");
-    expect(prompt).toContain("仅首夜死亡者和真正被放逐出局者获得遗言");
+    expect(prompt).toContain("首夜死亡者、真正被放逐出局者、白天纯决斗失误的骑士获得遗言");
+    expect(prompt).toContain("决斗成功目标与白狼王带走的目标均无遗言");
     expect(prompt).toContain("不提供原警长自行选择移交目标");
   });
 });

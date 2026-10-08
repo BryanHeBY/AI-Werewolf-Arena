@@ -17,7 +17,7 @@ import {
   knownWolfTeammates,
   allNightAbilities, abilityStatus, projectNightAbility,
 } from "../../../game/mechanisms";
-import { getGuardState, getHunterState, getWolfKingState, getWhiteWolfKingState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
+import { getGuardState, getHunterState, getWolfKingState, getWhiteWolfKingState, getKnightState, getIdiotState, getSeerState, getWitchState } from "../../../game/mechanisms/roles/private_state";
 import { freezeObservation, type PlayerObservation } from "./observation";
 import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "./prompt_templates";
 import { renderTurnConstraintUserHint, resolveTurnConstraints } from "./turn_constraints";
@@ -73,6 +73,10 @@ export class PlayerPromptPolicy {
         if (typeof event.payload.actorId === "number") dead.add(event.payload.actorId);
         if (typeof event.payload.targetId === "number") dead.add(event.payload.targetId);
       }
+      if (event.type === "knight_duel") {
+        const victim = event.payload.result === "wolf" ? event.payload.targetId : event.payload.result === "not_wolf" ? event.payload.actorId : undefined;
+        if (typeof victim === "number") dead.add(victim);
+      }
     }
     const ownState: PlayerObservation["ownState"] = {};
     const witch = role ? getWitchState(role, request.context.ability_id) : undefined;
@@ -82,6 +86,7 @@ export class PlayerPromptPolicy {
     if (role?.role === Role.Hunter) ownState.hunter = getHunterState(role);
     if (role?.role === Role.WolfKing) ownState.wolfKing = getWolfKingState(role);
     if (role?.role === Role.WhiteWolfKing) ownState.whiteWolfKing = getWhiteWolfKingState(role);
+    if (role?.role === Role.Knight) ownState.knight = getKnightState(role);
     if (role?.role === Role.Idiot) ownState.idiot = getIdiotState(role);
     const seer = role ? getSeerState(role, request.context.ability_id) : undefined;
     if (seer) ownState.seer = seer;

@@ -1,4 +1,4 @@
-import type { ActionWindow, Role, WinCondition, WitchSelfHealRule, TieBreakerStrategy } from "./identity";
+import type { ActionWindow, KnightDuelWindow, Role, WinCondition, WitchSelfHealRule, TieBreakerStrategy } from "./identity";
 
 export interface HookConfig {
   onDaybreak: boolean;
@@ -35,6 +35,7 @@ export interface BoardConfig {
   selfDestruct?: SelfDestructConfig;
   sheriff?: SheriffConfig;
   witch?: WitchConfig;
+  knight?: { enabledWindows: KnightDuelWindow[] };
   tieBreaker?: TieBreakerConfig;
   roleSetups: Array<{ role: Role; count: number }>;
 }

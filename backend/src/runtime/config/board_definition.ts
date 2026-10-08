@@ -142,7 +142,9 @@ export function boardDefinitionFromConfig(id: string, config: BoardConfig): Boar
       })[window]) },
       tieBreaker: { exileVote: config.tieBreaker?.exileVote ?? "min_id", wolfKillVote: config.tieBreaker?.wolfKillVote ?? "min_id" },
     },
-    roles: config.roleSetups.some(entry => entry.role === Role.Witch && entry.count > 0)
-      ? { witch: { selfHeal: config.witch?.canSelfHeal ?? "disabled" } } : {},
+    roles: {
+      ...(config.roleSetups.some(entry => entry.role === Role.Witch && entry.count > 0) ? { witch: { selfHeal: config.witch?.canSelfHeal ?? "disabled" } } : {}),
+      ...(config.roleSetups.some(entry => entry.role === Role.Knight && entry.count > 0) ? { knight: { enabledWindows: config.knight?.enabledWindows ?? ["after_speeches"] } } : {}),
+    },
   }).definition;
 }

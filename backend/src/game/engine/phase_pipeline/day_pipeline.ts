@@ -8,6 +8,7 @@ import {
   EntityId,
   GameEvent,
   Phase,
+  KnightDuelWindow as DuelWindow,
 } from "../../../core/domain/model";
 import { RoleRegistry } from "../../../core/domain/registries/role_registry";
 import { ToolGateway } from "../../gateway/tool_gateway";
@@ -17,6 +18,7 @@ import { findSheriffId } from "../../mechanisms/sheriff/badge";
 import { World } from "../../../core/domain/world";
 import { GameActionRequestFactory } from "../action_request_factory";
 import { SelfDestructWindow, isSelfDestructWindowEnabled } from "../self_destruct_window";
+import { KnightDuelWindow } from "../knight_duel_window";
 
 /**
  * 白天流水线执行结果。
@@ -25,6 +27,7 @@ export interface DayPipelineResult {
   summary: DaySummary;
   interrupted: boolean;
   selfDestruct?: import("../../../core").SelfDestructSelection;
+  duel?: import("../../../core").KnightDuelSelection;
 }
 
 export interface DayPipelineOptions {
@@ -34,6 +37,7 @@ export interface DayPipelineOptions {
   afterSheriffElection?: () => Promise<boolean>;
   isCurrent?: () => boolean;
   commitSelfDestruct?: (choice: import("../../../core").SelfDestructSelection, window: ActionWindow) => Promise<void | boolean>;
+  commitKnightDuel?: (choice: import("../../../core").KnightDuelSelection) => Promise<import("../../../core").KnightDuelCommit>;
 }
 
 export interface DayPipelineDependencies {
@@ -55,12 +59,14 @@ export class DayPipeline {
   private readonly toolGateway: ToolGateway;
   private readonly events: GameEvent[];
   private readonly selfDestructWindow: SelfDestructWindow;
+  private readonly knightDuelWindow: KnightDuelWindow;
   constructor(dependencies: DayPipelineDependencies) {
     this.world = dependencies.world;
     this.roleRegistry = dependencies.roleRegistry;
     this.toolGateway = dependencies.toolGateway;
     this.events = dependencies.events;
     this.selfDestructWindow = new SelfDestructWindow(this.world, this.roleRegistry, this.toolGateway);
+    this.knightDuelWindow = new KnightDuelWindow(this.world, this.toolGateway);
   }
 
   async execute(
@@ -113,6 +119,9 @@ export class DayPipeline {
       }
     }
 
+    if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
+    const openingDuel = await this.knightDuelWindow.execute(config, requests, actionProvider, DuelWindow.BeforeSpeeches, isCurrent, options.commitKnightDuel);
+    if (openingDuel.endsDay) return { summary: { speeches, selfDestructBy: null }, interrupted: true, ...(openingDuel.selection ? { duel: openingDuel.selection } : {}) };
     if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
     const speakerDirection = await chooseSpeakerDirection({
       world: this.world,
@@ -180,7 +189,12 @@ export class DayPipeline {
           };
         }
       }
+      const gapDuel = await this.knightDuelWindow.execute(config, requests, actionProvider, DuelWindow.BetweenSpeeches, isCurrent, options.commitKnightDuel);
+      if (gapDuel.endsDay) return { summary: { speeches, selfDestructBy: null }, interrupted: true, ...(gapDuel.selection ? { duel: gapDuel.selection } : {}) };
     }
+
+    const closingDuel = await this.knightDuelWindow.execute(config, requests, actionProvider, DuelWindow.AfterSpeeches, isCurrent, options.commitKnightDuel);
+    if (closingDuel.endsDay) return { summary: { speeches, selfDestructBy: null }, interrupted: true, ...(closingDuel.selection ? { duel: closingDuel.selection } : {}) };
 
     return {
       summary: {

@@ -1,5 +1,5 @@
 /** Renders normalized board rules without holding mutable language state. */
-import { BoardConfig, WinCondition, WitchSelfHealRule } from "../../../core/domain/model";
+import { BoardConfig, WinCondition, WitchSelfHealRule, Role, KnightDuelWindow } from "../../../core/domain/model";
 import { term, text, type Locale } from "@ai-werewolf-arena/game-text";
 
 export interface ConfigRenderRegistry {
@@ -21,6 +21,7 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
       text(locale, "prompt.config.blast", { rules: windows.length ? text(locale, "prompt.config.blast_enabled", { windows: windows.map(item => term("stage", item, locale)).join(", ") }) : text(locale, "common.disabled") }),
       ...(config.witch ? [text(locale, "prompt.config.self_heal", { rules: text(locale, healRule === WitchSelfHealRule.Always ? "prompt.config.self_heal_always" : healRule === WitchSelfHealRule.FirstNightOnly ? "prompt.config.self_heal_first" : "prompt.config.self_heal_disabled") })] : []),
       text(locale, "prompt.config.disclosure"), text(locale, "prompt.config.last_words"),
+      ...(config.roleSetups.some(entry => entry.role === Role.Knight && entry.count > 0) ? [text(locale, "prompt.config.knight_windows", { windows: (config.knight?.enabledWindows ?? [KnightDuelWindow.AfterSpeeches]).map(window => term("stage", window, locale)).join(", ") || text(locale, "common.disabled") })] : []),
       ...(sheriffEnabled ? [text(locale, "prompt.config.badge")] : []),
       text(locale, "prompt.config.ties", { exile: term("tie", config.tieBreaker?.exileVote ?? "min_id", locale),
         wolf: term("tie", config.tieBreaker?.wolfKillVote ?? "min_id", locale),

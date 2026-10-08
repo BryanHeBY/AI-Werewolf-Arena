@@ -74,6 +74,7 @@ export class ActionReception {
       actionWindow: request.actionWindow,
       sheriffCandidates: request.context.sheriff_candidates,
       allowSelfDestruct: request.allowedTools.includes("self_destruct") || request.allowedTools.includes("self_destruct_with_target"),
+      duelWindow: request.context.duel_window, allowKnightDuel: request.context.stage === request.context.duel_window && request.allowedTools.includes("duel"),
       deathActionId: deathTool ? request.context.death_action_id : undefined,
     });
     if (!checked.ok || !checked.sanitizedCall) {

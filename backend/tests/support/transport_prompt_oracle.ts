@@ -6,6 +6,7 @@ const stages: Record<string, [string, string]> = {
   day_speech: ["白天发言", "Day speech"], voting: ["放逐投票", "Exile vote"], last_words: ["遗言", "Last words"], hunter_shot: ["猎人开枪", "Hunter shot"], death_shot: ["死亡开枪", "Death shot"],
   sheriff_nomination: ["上警报名", "Sheriff nomination"], sheriff_campaign_speech: ["警上发言", "Sheriff campaign speech"],
   sheriff_withdraw: ["退水", "Withdraw candidacy"], sheriff_vote: ["警长投票", "Sheriff vote"], sheriff_choose_direction: ["警长定序", "Sheriff speaking order"],
+  before_speeches: ["骑士发言前窗口", "Knight before-speech window"], between_speeches: ["骑士发言间隙窗口", "Knight between-speech window"], after_speeches: ["骑士发言结束窗口", "Knight after-speech window"],
   on_pre_vote: ["放逐前窗口", "Before exile voting"],
   on_pre_election: ["警长流程前窗口", "Before sheriff election"], on_daybreak: ["天亮后窗口", "Daybreak window"], on_per_speech_gap: ["发言间隔窗口", "Between speeches"],
 };
@@ -15,6 +16,7 @@ export function assertTransportPrompt(plan: ActorTransportPlan, turn: PlannedTur
   if (!content.includes(plan.locale === "en" ? `Current game day: ${turn.day}.` : `当前日次：第${turn.day}天。`)) throw new Error("fixture_day_mismatch");
   for (const marker of plan.requiredCurrentMarkers ?? []) if (!content.includes(marker)) throw new Error("fixture_private_marker_missing");
   for (const marker of plan.forbiddenCurrentMarkers ?? []) if (content.includes(marker)) throw new Error("fixture_private_marker_exposed");
+  if (turn.knightResourceRemaining !== undefined && !content.includes(plan.locale === "en" ? `Duel opportunities remaining: ${turn.knightResourceRemaining}.` : `决斗机会剩余：${turn.knightResourceRemaining}。`)) throw new Error("fixture_knight_resource_mismatch");
   if (plan.locale === "en" && /[\u4e00-\u9fff]/.test(content)) throw new Error("fixture_prompt_not_english");
   const stage = stages[turn.stage][plan.locale === "en" ? 1 : 0];
   const marker = plan.locale === "en" ? `stage: ${stage};` : `子阶段是${stage}，`;

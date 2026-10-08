@@ -12,11 +12,13 @@ import { WITCH_ROLE_PROFILE } from "./witch/profile";
 import { WOLF_ROLE_PROFILE } from "./wolf/profile";
 import { WOLF_KING_ROLE_PROFILE } from "./wolf_king/profile";
 import { WHITE_WOLF_KING_ROLE_PROFILE } from "./white_wolf_king/profile";
+import { KNIGHT_ROLE_PROFILE } from "./knight/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   WOLF_ROLE_PROFILE,
   WOLF_KING_ROLE_PROFILE,
   WHITE_WOLF_KING_ROLE_PROFILE,
+  KNIGHT_ROLE_PROFILE,
   VILLAGER_ROLE_PROFILE,
   SEER_ROLE_PROFILE,
   GUARD_ROLE_PROFILE,

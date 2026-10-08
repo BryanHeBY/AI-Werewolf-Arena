@@ -6,7 +6,7 @@
 
 `core/domain/deaths.ts` 的 `DeathCause` 与伤害/保护的临时 `StatusMark` 分开。`DeathSources` 按玩家保存全部死亡原因；DamageResolutionSystem 产生 `wolf_kill` / `poison`，放逐产生 `exile`，猎人追加死亡产生 `shot`。包含毒的复合死亡保留毒原因。
 
-`lovers` / `dream` / `duel` / `self_destruct` / `ability` 是可表达的事实标签，不代表对应扩展角色已经实现。枪资格接受非空且全部为狼刀、放逐、枪击或P5白狼王带人WhiteWolfBlast的来源；其它来源不通过。WhiteWolfBlast是独立原因，本AWA扩展明确允许追枪，不能伪装成Shot。
+`lovers` / `dream` / `duel` / `self_destruct` / `ability` 是可表达的事实标签，具体角色是否支持仍由登记和各自验收决定。P5已接入[普通骑士](knight.md)：成功目标为Duel，失误骑士为独立DuelFailure；二者禁枪，只有纯DuelFailure的Day初批明确授予本人遗言。枪资格接受非空且全部为狼刀、放逐、枪击或P5白狼王带人WhiteWolfBlast的来源；其它来源不通过。WhiteWolfBlast是独立原因，本AWA扩展明确允许追枪，不能伪装成Shot。
 
 ## 猎人决定与消费
 
