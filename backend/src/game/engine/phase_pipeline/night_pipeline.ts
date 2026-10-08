@@ -104,6 +104,7 @@ export class NightPipeline {
       wolfTarget: null,
       seerChecks: [],
       dreamLinks: [],
+      poisonClaims: [],
     };
 
     const requests = new GameActionRequestFactory(this.world, this.events, day);
@@ -142,7 +143,7 @@ export class NightPipeline {
 
     discardStaleWolfKnife(this.world,stageState);
     const dreamFrame = new DreamNightFrame(stageState.dreamLinks);
-    const damage = this.damageResolutionSystem.resolve(this.world,{protectedTargets:dreamFrame.protectedTargets(this.world),consecutiveDeaths:dreamFrame.consecutiveDeaths(this.world)});
+    const damage = this.damageResolutionSystem.resolve(this.world,{protectedTargets:dreamFrame.protectedTargets(this.world),consecutiveDeaths:dreamFrame.consecutiveDeaths(this.world),poisonClaims:stageState.poisonClaims});
     dreamFrame.expandInitialDamage(this.world,damage);
     safeRecordLogicOp({
       scope: "resolution",

@@ -17,6 +17,8 @@ import type { RoleCatalog } from "../../roles/catalog";
 import type { DreamNightLink } from "../../roles/dreamer/night_frame";
 import type {AliveComponent} from "../../../../core/domain/components/alive";
 
+import type {NightPoisonClaim} from "../../../../core/domain/night_effects";
+
 export interface WolfKnifeTargetScope {targetId:EntityId;life:AliveComponent;version:number;marks:StatusMarksComponent}
 
 /** 夜间阶段共享状态。 */
@@ -28,6 +30,7 @@ export interface NightStageState {
   wolfTargetScope?:WolfKnifeTargetScope;
   seerChecks: NightSummary["seerChecks"];
   dreamLinks: DreamNightLink[];
+  poisonClaims?: NightPoisonClaim[];
 }
 
 /** 夜间阶段执行上下文。 */

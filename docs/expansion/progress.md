@@ -293,3 +293,9 @@ front103／953、type/build、actualChromium42、中文接刀与英文十二人�
 前端109/998、type/build、实际Chromium46及中英PNG过，copy/gift两个policy真实身份/规则/只读接收/PID回收明确；Role/Psy背景已注明原生。既有no-winner在浏览器首轮/定向各超时一次，保原证据；健康检查更准确等待转换入口，独立testinfra commit b78081a不改断言/预算，最终46全过。独立新缓存probe未复现原根因，没有假称API慢/HMR/冷transform已确定。
 
 目录17verified/47planned，六/十二public board/game例可加载；源代码未在活跃最终对局中修改。P7剩机械狼、奇迹商人、混血儿及同依赖下魔镜少女/觉醒隐狼/黑市商人；P8–P10/组合矩阵/真实模型与长局完整目标保持。未读写用户configs/认证或调用外部模型。
+
+## P7：毒药来源与原生命基础
+
+为机械反毒先交付独立NightPoisonClaim来源基础；Witch等待/网关后复验原actor/target生命，Runtime私有source/target refs经NightPipeline进入Damage，不进state/DTO/events/summary/Tape。已提交毒保瓶数/事件前缀和caster死后效力，target新生命不受旧毒；legacy marks保持，实际两Witch来源保逐条，死亡按body合并。
+
+最终type/deps/boundaries、engine512/8212、122受影响双语完整局＋80seed/全部Tape＋8gift专项73/36177通过，核心13/88由A独立复跑，L/D核无新增数据暴露，见[来源基础审查](reviews/p7-poison-attribution.md)。机械卡AWA差异先冻结，但角色仍planned/未启用，反毒/机械原生技能及完整矩阵后续独立交付；目录保持17已验/47待交付。

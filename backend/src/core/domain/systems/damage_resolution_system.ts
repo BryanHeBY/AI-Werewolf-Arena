@@ -2,6 +2,7 @@ import { COMPONENT } from "../components/names";
 import { StatusMarksComponent } from "../components/status_marks";
 import { EntityId, StatusMark, DeathCause, type DeathSources } from "../model";
 import { World } from "../world";
+import {livingNightLife,type NightPoisonClaim} from "../night_effects";
 
 /**
  * 黎明伤害结算结果。
@@ -22,7 +23,7 @@ export class DamageResolutionSystem {
   /**
    * 执行一轮夜间伤害结算并返回死亡与死因信息。
    */
-  resolve(world: World, dreams: {protectedTargets?: readonly EntityId[]; consecutiveDeaths?: readonly EntityId[]} = {}): DamageResolutionResult {
+  resolve(world: World, dreams: {protectedTargets?: readonly EntityId[]; consecutiveDeaths?: readonly EntityId[]; poisonClaims?: readonly NightPoisonClaim[]} = {}): DamageResolutionResult {
     const deaths: EntityId[] = [];
     const deathSources: DeathSources = {};
 
@@ -39,7 +40,8 @@ export class DamageResolutionSystem {
       const hasGuard = marks?.has(StatusMark.GuardMark)===true;
       const hasHeal = marks?.has(StatusMark.HealMark)===true;
       const hasWolfKill = marks?.has(StatusMark.WolfKillMark)===true;
-      const hasPoison = marks?.has(StatusMark.PoisonMark)===true;
+      const claims = dreams.poisonClaims?.filter(claim=>claim.target.id===entityId);
+      const hasPoison = marks?.has(StatusMark.PoisonMark)===true && (!claims?.length || claims.some(claim=>livingNightLife(world,claim.target)));
       // Poison is independent of protection and must survive a conflict.
       const dreamProtected = dreams.protectedTargets?.includes(entityId) === true;
       if (hasPoison && !dreamProtected) sources.push(DeathCause.Poison);
