@@ -8,6 +8,7 @@ import {getGargoyleState,getRoleInspectionState} from "../../../game/mechanisms/
 import {canGargoyleKnife} from "../../../game/mechanisms/roles/gargoyle/inheritance";
 import { getMechanicalState, projectMechanicalState } from "../../../game/mechanisms/roles/mechanical_wolf/state";
 import { ownNightActions } from "../../../game/mechanisms/roles/night_action_history";
+import { getHybridState, projectHybridState } from "../../../game/mechanisms/roles/hybrid/state";
 import { getMerchantState, projectMerchantState } from "../../../game/mechanisms/roles/miracle_merchant/state";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
@@ -89,6 +90,7 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    if (role?.role === Role.Hybrid) { const state = getHybridState(role); if (state) ownState.hybrid = projectHybridState(state); }
     if (role?.role === Role.MiracleMerchant) { const state=getMerchantState(role);if(state)ownState.merchant=projectMerchantState(state); }
     const witch = role ? getWitchState(role, request.context.ability_id) : undefined;
     const guard = role ? getGuardState(role, request.context.ability_id) : undefined;

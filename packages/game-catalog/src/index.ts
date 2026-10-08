@@ -40,7 +40,7 @@ export const ROLE_DEFINITIONS = [
   {"id": "mechanical_wolf", "names": {"zh-CN": "机械狼", "en": "Mechanical Wolf"}, "status": "verified", "targetPhase": "P7", "ruleCardRef": "docs/expansion/rules/awa-mechanical-wolf-v1.md#mechanical_wolf", "mechanismSummary": "复制技能、资源和接刀"},
   {"id": "miracle_merchant", "names": {"zh-CN": "奇迹商人", "en": "Miracle Merchant"}, "status": "verified", "targetPhase": "P7", "ruleCardRef": "docs/expansion/rules/awa-miracle-merchant-v1.md#miracle_merchant", "mechanismSummary": "授予限次能力"},
   {"id": "black_market_merchant", "names": {"zh-CN": "黑市商人", "en": "Black Market Merchant"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "技能交易、反噬"},
-  {"id": "hybrid", "names": {"zh-CN": "混血儿", "en": "Hybrid"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "榜样、独立胜利归属"},
+  {"id": "hybrid", "names": {"zh-CN": "混血儿", "en": "Hybrid"}, "status": "verified", "targetPhase": "P7", "ruleCardRef": "docs/expansion/rules/awa-hybrid-v1.md#hybrid", "mechanismSummary": "榜样、独立胜利归属"},
   {"id": "thief", "names": {"zh-CN": "盗贼", "en": "Thief"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "额外底牌、初始身份选择"},
   {"id": "shapeshifter", "names": {"zh-CN": "千面人", "en": "Many-Faced One"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "初始身份选择变体"},
   {"id": "lonely_girl", "names": {"zh-CN": "孤独少女", "en": "Lonely Girl"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "崇拜对象、胜利归属"},

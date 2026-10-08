@@ -52,6 +52,7 @@ const ACTOR_ONLY_EVENT_TYPES = new Set([
   "role_inspection_skipped",
   "lucky_ability_skipped",
   "merchant_trade_committed", "merchant_trade_skipped",
+  "hybrid_exemplar_chosen",
   "witch_potion_used",
   "witch_potion_skipped",
   "guard_applied",

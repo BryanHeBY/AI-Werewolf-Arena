@@ -70,6 +70,8 @@ export interface EventPayloadMap {
   mechanical_shot: { actorId: EntityId; targetId: EntityId };
   role_inspection_skipped: {actorId:EntityId;abilityId?:string;day:number;reason:"passed"|"no_targets"};
   lucky_ability_skipped: { actorId: EntityId; abilityId: string; day: number; kind: "seer_check" | "potion" | "guard" };
+  hybrid_exemplar_chosen: { actorId: EntityId; day: number; targetId: EntityId };
+  hybrid_affiliation_resolved: { actorId: EntityId; day: number; targetId: EntityId; faction: "good" | "wolf" };
   merchant_trade_committed: { actorId: EntityId; day: number; targetId: EntityId; skill: "check" | "poison" | "guard" };
   merchant_trade_skipped: { actorId: EntityId; day: number };
   merchant_trade_resolved: { actorId: EntityId; day: number; targetId: EntityId; skill: "check" | "poison" | "guard"; outcome: "granted" | "backlash" };

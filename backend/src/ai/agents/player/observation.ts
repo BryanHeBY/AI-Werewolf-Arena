@@ -3,6 +3,7 @@ import type { GuardState, HunterState, WolfKingState, WhiteWolfKingState, Knight
 import type { PlayerNightAbility } from "../../../game/mechanisms/roles/abilities";
 import type { MechanicalState } from "../../../game/mechanisms/roles/mechanical_wolf/state";
 import type { OwnNightAction } from "../../../game/mechanisms/roles/night_action_history";
+import type { HybridState } from "../../../game/mechanisms/roles/hybrid/state";
 import type { MerchantState } from "../../../game/mechanisms/roles/miracle_merchant/state";
 
 /** A player decision port: projected facts and their own state, with no world access. */
@@ -13,7 +14,7 @@ export interface PlayerObservation {
   teammateIds: number[];
   abilities: PlayerNightAbility[];
   ownNightActions: OwnNightAction[];
-  ownState: { merchant?: MerchantState; mechanical?: MechanicalState; witch?: WitchState; guard?: GuardState; hunter?: HunterState; wolfKing?: WolfKingState; whiteWolfKing?: WhiteWolfKingState; knight?: KnightState; gravekeeper?: GravekeeperState; dreamer?: DreamerState; wolfBeauty?: WolfBeautyState; bear?:BearState; hiddenWolf?:{hasInheritedKnife:boolean;canVoteForKill:boolean}; gargoyle?:{hasInheritedKnife:boolean;canVoteForKill:boolean};roleInspection?:import("../../../game/mechanisms/roles/private_state").RoleInspectionState; idiot?: IdiotState; seer?: SeerState };
+  ownState: { hybrid?: HybridState; merchant?: MerchantState; mechanical?: MechanicalState; witch?: WitchState; guard?: GuardState; hunter?: HunterState; wolfKing?: WolfKingState; whiteWolfKing?: WhiteWolfKingState; knight?: KnightState; gravekeeper?: GravekeeperState; dreamer?: DreamerState; wolfBeauty?: WolfBeautyState; bear?:BearState; hiddenWolf?:{hasInheritedKnife:boolean;canVoteForKill:boolean}; gargoyle?:{hasInheritedKnife:boolean;canVoteForKill:boolean};roleInspection?:import("../../../game/mechanisms/roles/private_state").RoleInspectionState; idiot?: IdiotState; seer?: SeerState };
 }
 
 export interface ObservedPlayerStrategy {

@@ -37,6 +37,8 @@ import { hasMechanicalNightCommit } from "../../mechanisms/roles/mechanical_wolf
 import { hasLuckyNightCommit } from "../../mechanisms/roles/miracle_merchant/lucky_stage";
 import { hasMerchantNightCommit } from "../../mechanisms/roles/miracle_merchant/night_stage";
 
+import { hasHybridNightCommit } from "../../mechanisms/roles/hybrid/night_stage";
+
 export interface NightPipelineDependencies {
   world: World;
   toolGateway: ToolGateway;
@@ -93,6 +95,7 @@ export class NightPipeline {
     if(hasMechanicalNightCommit(this.world,day))throw new Error("mechanical_night_reentry_after_commit");
     if(hasLuckyNightCommit(this.world,day))throw new Error("lucky_night_reentry_after_commit");
     if(hasMerchantNightCommit(this.world,day))throw new Error("merchant_night_reentry_after_commit");
+    if(hasHybridNightCommit(this.world,day))throw new Error("hybrid_night_reentry_after_commit");
     safeRecordLogicOp({
       scope: "phase_pipeline",
       op: "night_pipeline_start",

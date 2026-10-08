@@ -18,6 +18,11 @@ export interface TurnConstraintEvaluation {
   errors: string[];
 }
 
+/** Transport retries may continue, but a failed mandatory choice cannot be supplied by a fallback. */
+export function allowsActionFallback(request: ActionRequest): boolean {
+  return request.context.allow_fallback !== false;
+}
+
 /** Projects typed engine constraints into player prompt and tool-loop rules. */
 export function resolveTurnConstraints(request: ActionRequest): ResolvedTurnConstraints {
   const constraints = request.context.turn_constraints;

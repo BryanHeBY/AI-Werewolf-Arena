@@ -34,6 +34,8 @@ export enum RuleError {
   MerchantUnavailable = "merchant_unavailable",
   MerchantTarget = "merchant_target",
   MerchantSkill = "merchant_skill",
+  HybridUnavailable = "hybrid_unavailable",
+  HybridTarget = "hybrid_target",
   SelfHeal = "self_heal",
   SheriffDirectionOnly = "sheriff_direction_only",
   SheriffDirectionPhase = "sheriff_direction_phase",

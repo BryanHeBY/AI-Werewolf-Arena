@@ -88,7 +88,7 @@ const messageRefSchema = z.strictObject({ key: z.enum(Object.keys(dictionaries["
   catch { ctx.addIssue({ code: "custom", message: "reproduction_message_reference_invalid" }); }
 });
 const requestSchema = z.strictObject({ actorId: positive, phase: z.enum(Phase), actionWindow: z.enum(ActionWindow).optional(), allowedTools: z.array(z.enum(TOOL_NAMES)),
-  context: z.strictObject({ day: positive, stage: z.enum(ACTION_STAGES), visible_events: z.array(z.strictObject({ seq: positive, type: z.string().min(1), payload: jsonObject })),
+  context: z.strictObject({ allow_fallback: z.boolean().optional(), day: positive, stage: z.enum(ACTION_STAGES), visible_events: z.array(z.strictObject({ seq: positive, type: z.string().min(1), payload: jsonObject })),
     turn_constraints: z.strictObject({ min_valid_actions: nonnegative.optional(), max_valid_actions: nonnegative.optional(), required_any_tools: z.array(z.enum(TOOL_NAMES)).optional(), summary: z.string().optional(), summary_message: messageRefSchema.optional() }),
     ability_id: z.string().regex(/^[a-z][a-z0-9:_-]{0,127}$/).optional(),
     duel_window: z.enum(KnightDuelWindow).optional(),

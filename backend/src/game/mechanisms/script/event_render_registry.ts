@@ -1,5 +1,5 @@
 import { readGravekeeperFeedback, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
-import { text, inspectionLabel, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, mechanicalEventLabel, merchantEventLabel, type Locale } from "@ai-werewolf-arena/game-text";
+import { text, inspectionLabel, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, mechanicalEventLabel, merchantEventLabel, hybridEventLabel, type Locale } from "@ai-werewolf-arena/game-text";
 /** 文件说明：事件 -> 脚本回放文本/终端文本渲染注册表。 */
 import { GameEvent } from "../../../core/domain/model";
 import {
@@ -146,6 +146,7 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const hybrid = hybridEventLabel(event.type, event.payload, locale); if (hybrid !== null) return hybrid;
     const merchant = merchantEventLabel(event.type, event.payload, locale); if (merchant !== null) return merchant;
     const mechanical = mechanicalEventLabel(event.type, event.payload, locale);
     if (mechanical !== null) return mechanical;
@@ -162,6 +163,8 @@ export class ScriptEventRenderRegistry {
   }
 
   toLiveRender(event: GameEvent, printPrivateEvents: boolean, locale: Locale = "zh-CN"): ScriptLiveRender[] {
+    const hybrid = hybridEventLabel(event.type, event.payload, locale);
+    if (hybrid !== null) return printPrivateEvents ? [{ kind: event.type === "hybrid_affiliation_resolved" ? "god" : "private", text: hybrid }] : [];
     const merchant = merchantEventLabel(event.type, event.payload, locale);
     if (merchant !== null) return printPrivateEvents ? [{ kind: event.type === "merchant_trade_resolved" ? "god" : "private", text: merchant }] : [];
     if (event.type === "lucky_ability_skipped") return printPrivateEvents ? [{ kind:"private", text:text(locale,"console.lucky.skipped",{actor:event.payload.actorId,day:event.payload.day,ability:event.payload.abilityId}) }] : [];

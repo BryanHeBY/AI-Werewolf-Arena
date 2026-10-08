@@ -27,6 +27,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     inspect_role:{allowSelf:false},
     mimic_role: { allowSelf: false }, mechanical_inspect: { allowSelf: false },
     bestow_ability: { allowSelf: false },
+    choose_exemplar: { allowSelf: false },
     mechanical_poison: { allowSelf: true }, mechanical_guard: { allowSelf: true }, mechanical_attack: { allowSelf: true },
     use_potion: { allowSelf: false },
     vote: { allowSelf: false },

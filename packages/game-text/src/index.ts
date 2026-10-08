@@ -55,6 +55,22 @@ export function errorMessage(locale: Locale, code: string): string {
   const key = `error.${code}` as MessageKey;
   return Object.hasOwn(zhCN, key) ? text(locale, key) : text(locale, "tool.unknown_error", { code });
 }
+
+/** God labels describe membership separately from physical role/camp and never imply death. */
+export function hybridEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+  if (type !== "hybrid_exemplar_chosen" && type !== "hybrid_affiliation_resolved") return null;
+  const unknown = () => text(locale, "replay.unknown");
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return unknown();
+  const prototype = Object.getPrototypeOf(payload), descriptors = Object.getOwnPropertyDescriptors(payload);
+  if ((prototype !== Object.prototype && prototype !== null) || Object.values(descriptors).some(field => !Object.hasOwn(field, "value") || !field.enumerable)) return unknown();
+  const p = Object.fromEntries(Object.entries(descriptors).map(([key, field]) => [key, field.value]));
+  const positive = (value: unknown): value is number => typeof value === "number" && Number.isSafeInteger(value) && value > 0;
+  const allowed = type === "hybrid_exemplar_chosen" ? ["actorId", "day", "targetId"] : ["actorId", "day", "targetId", "faction"];
+  if (Object.keys(p).some(key => !allowed.includes(key)) || !positive(p.actorId) || p.day !== 1 || !positive(p.targetId) || p.actorId === p.targetId) return unknown();
+  const parameters = { actor: p.actorId, day: p.day, target: p.targetId };
+  if (type === "hybrid_exemplar_chosen") return text(locale, "console.hybrid.choice", parameters);
+  return p.faction === "good" || p.faction === "wolf" ? text(locale, "console.hybrid.affiliation", { ...parameters, faction: term("camp", p.faction, locale) }) : unknown();
+}
 export function toolFailure(locale: Locale, error: string, originalMessage?: string) {
   return { ok: false as const, error, message: originalMessage ?? errorMessage(locale, error) };
 }

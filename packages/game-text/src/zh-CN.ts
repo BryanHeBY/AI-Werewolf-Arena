@@ -1,5 +1,17 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "replay.stage.hybrid_exemplar_chosen": "榜样选择",
+  "replay.stage.hybrid_affiliation_resolved": "胜利归属",
+  "role.hybrid.brief": "首夜选择榜样、胜利跟随其真实阵营但不知阵营；自身始终为Good民，阵营查验始终验好。",
+  "role.hybrid.state": "你的真实底牌是混血儿，真实阵营是Good，始终计入民边。首夜110阶段必须一次choose_exemplar选择另一实际存活玩家作为榜样，不能选自己、死者或null，也不能等待或后夜补选。合法选择之后不可更改：胜利归属跟随提交时榜样的真实阵营，但你不知道其阵营或身份，需自行根据公开信息判断。自身与榜样死亡、复活或榜样后续身份变化均不改变已冻结归属，出局后仍可随该方获胜；无胜者则你也不获胜。你始终验好、具体身份为混血儿，不获得狼队友、互认、夜聊、刀权、自爆或榜样技能，对象也不会收到选择通知。真实狼人全死时按本板Good判胜，即使你支持狼也不延长对局；狼人屠民仍必须清除你。未完成选择前没有默认胜利归属；非法、过期或撤权不会替新状态提交。只保留自己的选择记录，不把推断说成引擎确认。",
+  "role.hybrid.status": "你自己的榜样选择与机会：{state}。其真实阵营与底牌未知。",
+  "action.choose_exemplar.hint": "choose_exemplar：首夜必选一次，整数target_id为另一实际存活玩家；不可self/dead/null，不允许skip或重选。只确认选择，不获得阵营或身份。",
+  "stage.hybrid": "混血儿选择榜样",
+  "error.hybrid_unavailable": "混血儿选择仅首夜获授权且未选择、原胜利归属为空时可用。",
+  "error.hybrid_target": "请选择另一实际存活玩家，不能自选、null或虚构编号。",
+  "console.hybrid.choice": "【混血儿私有选择】{actor}号第{day}夜选择{target}号为榜样，阵营与身份未知。",
+  "console.hybrid.affiliation": "【上帝胜利归属】{actor}号第{day}夜选择{target}号，冻结胜利归属：{faction}。",
+
   "prompt.targets.lucky_poison": "幸运毒药的合法目标编号：{ids}。保留技能可不调用工具；none始终使用你自己的编号{actor}，不受毒目标列表限制。",
   "action.lucky.directive": "当前是幸运儿阶段，本轮只使用绑定的幸运实例；可不调用工具等待到后夜。use_potion仅poison或none（none的target_id须本人），无解药或刀口。guard可守自己/其它活人或target_id:null且abstain:true空守；空守不花一次但关闭本夜，普通守护只挡刀且与解药同守同救相抵消。check_identity不可自验。实际技能使用才花独立的一次库存，原生能力继续按自己的阶段与库存行动。",
   "role.miracle_merchant.brief": "好人神职，任意夜一次赠验/毒/守给另一活人；给真狼反噬，幸运技能当夜起一次。",

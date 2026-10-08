@@ -14,6 +14,7 @@ export class ObservedBot implements ObservedPlayerStrategy {
     const others = knownAliveIds.filter(id => id !== actor);
     const pick = (ids: number[]) => ids.length ? ids[Math.floor(this.random.next() * ids.length)] : undefined;
     const tools = request.allowedTools;
+    if (tools.includes("choose_exemplar")) { const target = pick(others); return target === undefined ? null : { name: "choose_exemplar", args: { target_id: target } }; }
     if (tools.includes("bestow_ability")) {
       if(this.style==="conservative"&&request.context.day===1)return null;
       const target=pick(others),skills=["check","poison","guard"] as const;

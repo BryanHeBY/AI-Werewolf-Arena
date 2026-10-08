@@ -11,6 +11,7 @@ const stages: Record<string, [string, string]> = {
   guard: ["守卫行动", "Guard action"], seer: ["预言家行动", "Seer action"], witch: ["女巫行动", "Witch action"],
   day_speech: ["白天发言", "Day speech"], voting: ["放逐投票", "Exile vote"], last_words: ["遗言", "Last words"], hunter_shot: ["猎人开枪", "Hunter shot"], death_shot: ["死亡开枪", "Death shot"],
   psychic: ["通灵师行动", "Spirit Seer action"],
+  hybrid: ["混血儿选择榜样", "Hybrid exemplar selection"],
   miracle_merchant: ["奇迹商人赠予", "Miracle Merchant trade"], lucky: ["幸运儿行动", "Lucky recipient action"],
   mechanical_mode: ["机械狼模式选择", "Mechanical Wolf mode choice"], mechanical_mimic: ["机械狼学习", "Mechanical Wolf learning"],
   mechanical_skill: ["机械狼技能", "Mechanical Wolf skill"], mechanical_attack: ["机械狼额外刀", "Mechanical Wolf extra knife"],
@@ -31,6 +32,12 @@ export function assertTransportPrompt(plan: ActorTransportPlan, turn: PlannedTur
   for (const marker of plan.forbiddenCurrentMarkers ?? []) if (content.includes(marker)) throw new Error("fixture_private_marker_exposed");
   for(const marker of turn.requiredPromptMarkers??[])if(!content.includes(marker))throw new Error("fixture_required_turn_marker_missing");
   for(const marker of turn.forbiddenPromptMarkers??[])if(content.includes(marker))throw new Error("fixture_premature_marker_exposed");
+  if (turn.hybridChoice !== undefined) {
+    const state = turn.hybridChoice ? { remaining: 0, choice: { day: 1, targetId: turn.hybridChoice.targetId } } : { remaining: 1, choice: null };
+    if (!content.includes(JSON.stringify(state))) throw new Error("fixture_hybrid_choice_mismatch");
+    if (!content.includes(plan.locale === "en" ? "Their true faction and role are unknown." : "其真实阵营与底牌未知。")) throw new Error("fixture_hybrid_unknown_status_missing");
+    if (content.includes('"affiliations"') || content.includes('"faction"')) throw new Error("fixture_hybrid_hidden_membership_exposed");
+  }
   if(turn.gargoyleStatus){const value=(flag:boolean)=>plan.locale==="en"?(flag?"Yes":"No"):(flag?"是":"否"),{inherited,active}=turn.gargoyleStatus;const marker=plan.locale==="en"?`Personally inherited the knife: ${value(inherited)}; knife eligibility after this night's inspection: ${value(active)}.`:`本人曾接刀：${value(inherited)}；本夜查后刀资格：${value(active)}。`;if(!content.includes(marker))throw new Error("fixture_gargoyle_knife_status_mismatch");}
   if (turn.mechanicalStatus) {
     const { learned, ready, inherited, first, mode } = turn.mechanicalStatus, english = plan.locale === "en";
@@ -75,8 +82,8 @@ export function assertTransportPrompt(plan: ActorTransportPlan, turn: PlannedTur
 export function assertTransportEvents(role: string, events: Array<[number, string, Record<string, unknown>]>, actorId: number) {
   for (const [, type, payload] of events) {
     if(type==="bear_roared"&&(Object.keys(payload).sort().join()!=="day,roared"||!Number.isSafeInteger(payload.day)||Number(payload.day)<1||typeof payload.roared!=="boolean"))throw new Error("fixture_bear_private_or_invalid_signal");
-    if (type === "god_private_game_info" || type === "mechanical_poison_reflected" || type === "merchant_trade_resolved") throw new Error("fixture_god_information_exposed");
-    if(["merchant_trade_committed","merchant_trade_skipped","lucky_ability_skipped"].includes(type)&&payload.actorId!==actorId)throw new Error("fixture_other_private_skill_exposed");
+    if (type === "god_private_game_info" || type === "mechanical_poison_reflected" || type === "merchant_trade_resolved" || type === "hybrid_affiliation_resolved") throw new Error("fixture_god_information_exposed");
+    if(["merchant_trade_committed","merchant_trade_skipped","lucky_ability_skipped","hybrid_exemplar_chosen"].includes(type)&&payload.actorId!==actorId)throw new Error("fixture_other_private_skill_exposed");
     if (type.startsWith("mechanical_") && type !== "mechanical_shot" && payload.actorId !== actorId) throw new Error("fixture_other_private_skill_exposed");
     if(["dream_death","charm_death","charm_blocked"].includes(type))throw new Error("fixture_private_death_information_exposed");
     if (["seer_checked", "hidden_wolf_awakened", "role_inspected", "role_inspection_skipped", "gargoyle_awakened", "charm_applied", "dream_applied", "gravekeeper_reported", "witch_potion_used", "witch_potion_skipped", "guard_applied"].includes(type) && payload.actorId !== actorId) throw new Error("fixture_other_private_skill_exposed");

@@ -1,4 +1,4 @@
-import { resolveTurnConstraints } from "../player/turn_constraints";
+import { allowsActionFallback, resolveTurnConstraints } from "../player/turn_constraints";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../../utils/error_diagnostic";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
@@ -244,7 +244,7 @@ export class AcpActionProvider implements ActionProvider {
     auditTrace ??= session?.takeAuditTrace?.();
     if (this.closed) return null;
     let fallback: ToolCall | null;
-    try { fallback = await awaitBeforeDeadline(() => this.fallbackProvider.getAction(request), deadlineAtMs, this.closeController.signal); }
+    try { fallback = allowsActionFallback(request) ? await awaitBeforeDeadline(() => this.fallbackProvider.getAction(request), deadlineAtMs, this.closeController.signal) : null; }
     catch (error) {
       if (error === this.closeController.signal.reason) return null;
       if (!(error instanceof TurnDeadlineElapsed)) throw error;
@@ -423,7 +423,7 @@ export class AcpActionProvider implements ActionProvider {
       ...(input.fallbackReason
         ? {
             fallback: {
-              used: true,
+              used: allowsActionFallback(request),
               reason: input.fallbackReason,
               ...(input.action
                 ? { action: { name: input.action.name, args: actionArgs ?? {} } }

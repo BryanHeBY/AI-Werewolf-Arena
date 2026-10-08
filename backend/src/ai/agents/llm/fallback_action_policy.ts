@@ -2,7 +2,7 @@ import { text } from "@ai-werewolf-arena/game-text";
 import { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain"
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { LlmObserver } from "../player/player_observer";
-import { resolveTurnConstraints } from "../player/turn_constraints";
+import { allowsActionFallback, resolveTurnConstraints } from "../player/turn_constraints";
 import { awaitBeforeDeadline } from "../../runtime/turn_deadline";
 
 export type FallbackReason =
@@ -23,7 +23,7 @@ export class FallbackActionPolicy {
   async resolve(request: ActionRequest, reason: FallbackReason, signal?: AbortSignal): Promise<ToolCall | null> {
     // A local baseline can settle immediately at an exhausted deadline. An
     // asynchronous fallback does not receive a new budget or survive closure.
-    const action = await awaitBeforeDeadline(() => this.provider.getAction(request), request.deadlineAtMs, signal);
+    const action = allowsActionFallback(request) ? await awaitBeforeDeadline(() => this.provider.getAction(request), request.deadlineAtMs, signal) : null;
     const actionText = action
       ? `${action.name} ${JSON.stringify((action as any).args ?? {})}`
       : "none";

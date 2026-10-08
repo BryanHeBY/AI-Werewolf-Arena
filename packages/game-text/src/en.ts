@@ -1,6 +1,17 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "replay.stage.hybrid_exemplar_chosen": "Exemplar choice",
+  "replay.stage.hybrid_affiliation_resolved": "Victory affiliation",
+  "role.hybrid.brief": "Choose an exemplar on night one; victory follows their true faction without revealing it. You always remain a true Good villager and camp inspections show Good.",
+  "role.hybrid.state": "Your true role is Hybrid, your true faction is Good, and you always count on the villager side. In stage 110 on night one you must use choose_exemplar once to choose another actually living player. No self, dead target or null; no passing or later-night choice. After legal commitment you cannot change it: your victory follows the exemplar's true faction at that moment, but you do not learn their faction or role and must infer it from public evidence. Your death, the exemplar's death or revival, and later role changes never rewrite your frozen affiliation; you can win with that faction while dead. No winner means no personal win. Camp inspections always show Good and role inspections show Hybrid. You gain no wolf recognition, teammates, chat, knife, self-destruct or exemplar abilities; the target is not notified. When all true wolves die this board awards Good victory, even if you support wolves; wolves still need to eliminate you to slaughter the villager side. Before choosing you have no default victory affiliation. Invalid, late or revoked decisions never commit a new owner's state. Keep only your own choice; never present an inference as an engine-confirmed faction.",
+  "role.hybrid.status": "Your own exemplar choice and remaining opportunity: {state}. Their true faction and role are unknown.",
+  "action.choose_exemplar.hint": "choose_exemplar: mandatory once on night one. Integer target_id must be another actually living player; no self/dead/null, skip or reselect. Confirms only your choice, not faction or role.",
+  "stage.hybrid": "Hybrid exemplar selection",
+  "error.hybrid_unavailable": "Hybrid selection requires authorization on night one, an unused choice and the original empty victory affiliation.",
+  "error.hybrid_target": "Choose another actually living player; no self, null or invented ID.",
+  "console.hybrid.choice": "Hybrid private choice: player {actor} chose player {target} on night {day}; faction and role remain unknown.",
+  "console.hybrid.affiliation": "God victory affiliation: player {actor} chose player {target} on night {day}; frozen affiliation: {faction}.",
   "prompt.targets.lucky_poison": "Legal poison target IDs for this lucky instance: {ids}. To hold the skill, pass without a tool; none always uses your own ID {actor}, independently of the poison target list.",
   "action.lucky.directive": "This is the Lucky recipient stage. Use only this turn's bound lucky instance, or pass without a tool and hold it for later. use_potion accepts poison or none only (none target_id must be yourself); no antidote or knife information. guard may target self/another living player, or target_id:null with abstain:true for empty guard. Empty guard closes this night without spending the use; ordinary guard blocks knives only and cancels with simultaneous Heal. check_identity cannot target self. An actual skill use spends one independent charge; native skills retain their own stage and inventory.",
   "role.miracle_merchant.brief": "Good god. Once in any night bestow check/poison/guard on another living player; a true wolf causes backlash. A lucky gift has one use from that night.",

@@ -11,7 +11,7 @@
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
 | P5 | 完成 | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md) |
 | P6 | 完成 | 五角色与三路审查闭环；16项verified，最终全量1176测试／542实际双语整局/Tape、103前端／42浏览器通过，见[阶段验收](reviews/p6-activation.md) |
-| P7 第三批 | 进行中：通灵师、机械狼、奇迹商人 | [通灵师](reviews/p7-psychic.md)、[机械狼](reviews/p7-mechanical-wolf.md)、[奇迹商人](reviews/p7-miracle-merchant.md)；19 verified/45 planned，奇商最终全量1463/134151＋686实际完整局/Tape通过；P7余混血儿、魔镜少女、觉醒隐狼、黑市商人4项 |
+| P7 第三批 | 进行中：通灵师、机械狼、奇迹商人、混血儿 | [通灵师](reviews/p7-psychic.md)、[机械狼](reviews/p7-mechanical-wolf.md)、[奇迹商人](reviews/p7-miracle-merchant.md)、[混血儿](reviews/p7-hybrid.md)；20 verified/44 planned，混血最终受影响964/23966＋54实际完整局/Tape与40seed过；P7余魔镜少女、觉醒隐狼、黑市商人3项 |
 | P8–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
@@ -337,3 +337,13 @@ front **127／1140**、type/build、实际Chromium **54**及中英真实PNG root
 ## P7：混血儿规则冻结
 
 [规则卡](rules/awa-hybrid-v1.md)与[实现边界](hybrid.md)明确首夜榜样、实体 Good 民与独立 victory affiliation、真实阵营快照、验好及无狼权限，采用 Melbourne/GTV 核心并单列 AWA 精确选择。既有 God replay 保存合法私有事实；普通公开事件与玩家投影不带隐藏归属，未新增匿名 public perspective。三路冻结审查与修正见[审查记录](reviews/p7-hybrid-rules.md)。本笔仅文档，Hybrid 仍 planned，19 verified/45 planned 不变；下一笔完整角色/双语/6与12示例/真实本地通路/Tape/seed/前端门槛通过后才能启用，P7 后续四项与 P8–P10/T6/长局目标保持。
+
+## P7：混血儿完整交付
+
+第20项 Hybrid 按[规则卡](rules/awa-hybrid-v1.md#hybrid)与[接入契约](hybrid.md)完成：110首夜必选，真实Good民/验好不变，胜利独立跟随提交时榜样真camp；原Victory组件/数组/空内容与actor/target原生命最终复验，同步只首个提交、同日重入拒绝。本人仅choice，God affiliation不进入任何玩家输入，目标无通知/狼混无夜聊刀权；死者胜利/屠民与全真狼死后的Good优先仍由既有成员和实体统计决定。
+
+审查发现真实SDK/ACP默认fallback会代选，已由显式 `allow_fallback:false` 共用校验修正，连注入备用策略也不调用；记录used=false、原重试/传输诊断和none，8故障落盘/失败Tape与篡改检测通过。十二人首日警选在公布夜死前，人工脚本按all electorate补齐H8请求；未改引擎流程。英文长终局caption遮角色已修为仅封盘席位预留空间，实际终局bbox断言与root/L双语PNG目检通过。
+
+最终源码/目录20 verified/44 planned：**受影响后端964/23966/87文件**、type/deps/boundaries/i18n过，包含54真实本机SDK/ACP/MCP/混合两语完整局与每局严格Tape、两板40受限seed自然零拒绝回退与双方分支、8SDK HTTP/进程内ACP故障/failureTape。front **139/1224**、type/build、修正后实际Chromium **58**与双语实际PNG过，[三路复查](reviews/p7-hybrid.md)0残留。按delivery功能门槛，没有把奇商旧686历史局说成本笔全重验；累计740人工本地局各有来源范围，P7结束再全已支持release/矩阵。
+
+六/十二 AWA board/game示例可加载；未读写用户configs/认证或调用外部模型。P7余魔镜少女、觉醒隐狼、黑市商人三项及P8–P10／22机制全矩阵／长局／T6目标保持，完整目标尚未完成。

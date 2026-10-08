@@ -1,0 +1,76 @@
+{
+  "version": 2,
+  "id": "twelve_player_hybrid",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 12,
+    "roleSetups": [
+      {
+        "role": "wolf_king",
+        "count": 1
+      },
+      {
+        "role": "wolf",
+        "count": 3
+      },
+      {
+        "role": "seer",
+        "count": 1
+      },
+      {
+        "role": "witch",
+        "count": 1
+      },
+      {
+        "role": "guard",
+        "count": 1
+      },
+      {
+        "role": "hybrid",
+        "count": 1
+      },
+      {
+        "role": "hunter",
+        "count": 1
+      },
+      {
+        "role": "villager",
+        "count": 3
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": [
+      "slaughter_side"
+    ],
+    "hooks": {
+      "onDaybreak": true,
+      "onPreElection": true,
+      "onPreVote": true,
+      "onPerSpeechGap": true
+    }
+  },
+  "mechanisms": {
+    "sheriff": {
+      "enabled": true,
+      "voteWeight": 1.5,
+      "tieBreaker": "min_seat"
+    },
+    "selfDestruct": {
+      "enabledWindows": []
+    },
+    "tieBreaker": {
+      "exileVote": "min_id",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "witch": {
+      "selfHeal": "disabled"
+    },
+    "hybrid": {}
+  }
+}

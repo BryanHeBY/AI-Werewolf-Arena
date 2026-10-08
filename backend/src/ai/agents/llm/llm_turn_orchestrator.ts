@@ -14,7 +14,7 @@ import { PlayerRoundRecorder } from "../player/player_round_recorder";
 import { buildConstraintRetryPrompt } from "../player/prompt_templates";
 import { ScopedRequestScheduler } from "../../runtime/request_scheduler";
 import { SdkGameToolLoop } from "./sdk_game_tool_loop";
-import { resolveTurnConstraints } from "../player/turn_constraints";
+import { allowsActionFallback, resolveTurnConstraints } from "../player/turn_constraints";
 
 interface LlmTurnOrchestratorOptions {
   world: World;
@@ -260,7 +260,7 @@ export class LlmTurnOrchestrator {
       finalAction: action,
       ...extras,
       fallback: {
-        used: true,
+        used: allowsActionFallback(request),
         reason,
         ...(action ? { action: { name: action.name, args: (action as any).args ?? {} } } : {}),
       },

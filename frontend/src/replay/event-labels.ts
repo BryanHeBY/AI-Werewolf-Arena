@@ -1,11 +1,12 @@
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { readGravekeeperFeedback, readSeerInspectionResult, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
 import {readInspectionResult} from "@ai-werewolf-arena/replay-contract";
-import { text, term, inspectionLabel, outcomeLabel, outcomeWinnersLabel, mechanicalEventLabel, merchantEventLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
+import { text, term, inspectionLabel, outcomeLabel, outcomeWinnersLabel, mechanicalEventLabel, merchantEventLabel, hybridEventLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { campName, phaseName, resultReasonName, roleName } from "./replay-localization";
 
 export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerIds?: readonly number[]): string {
   const p = event.payload;
+  const hybrid = hybridEventLabel(event.type,p,locale); if (hybrid !== null) return hybrid;
   const merchant = merchantEventLabel(event.type,p,locale); if (merchant !== null) return merchant;
   const mechanical = mechanicalEventLabel(event.type, p, locale);
   if (mechanical !== null) return mechanical;
