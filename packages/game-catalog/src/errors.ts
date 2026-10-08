@@ -15,6 +15,7 @@ export enum RuleError {
   GuardRepeat = "guard_repeat",
   GuardTarget = "guard_target",
   HealUnavailable = "heal_unavailable",
+  HealTarget = "heal_target",
   KillTarget = "kill_target",
   PoisonTarget = "poison_target",
   PoisonUnavailable = "poison_unavailable",

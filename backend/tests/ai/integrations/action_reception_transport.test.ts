@@ -229,3 +229,28 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: reused SDK and A
     expect(requests[1].messages.find((message: any) => message.role === "system").content).toContain(text(locale, "prompt.system.teammates", { teammates: "2, 3, 4" }));
   } finally { await sdkProvider.close(); await acpProvider.close(); await client?.close(); await control?.close({ force: true }); server.stop(true); }
 });
+
+for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual SDK/MCP reject non-knife heals, keep the turn open, and accept the correct marked target without consuming`, async () => {
+  const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }), acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
+  for (const game of [sdk, acp]) game.world.getComponent<{ add(mark: string): void }>(9, COMPONENT.StatusMarks)!.add("WolfKillMark");
+  const actions = [{ turn_id: "t1", action: "use_potion", arguments: { target_id: 999, potion_type: "heal" } }, { turn_id: "t1", action: "use_potion", arguments: { target_id: 10, potion_type: "heal" } }, { turn_id: "t1", action: "use_potion", arguments: { target_id: 9, potion_type: "heal" } }];
+  const server = Bun.serve({ hostname: "127.0.0.1", port: 0, async fetch(input) {
+    await input.json();
+    return Response.json({ id: "heal-target", object: "chat.completion", created: 1, model: "synthetic", choices: [{ index: 0, finish_reason: "tool_calls", message: { role: "assistant", content: null, tool_calls: actions.map((args, index) => ({ id: `call-${index}`, type: "function", function: { name: "submit_action", arguments: JSON.stringify(args) } })) } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
+  } });
+  const registry = new AcpTurnRegistry(acp.world), control = new WerewolfMcpControlServer(registry), client = new Client({ name: "heal-target", version: "1.0.0" });
+  const config = await control.start(process.execPath, [path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts")]);
+  control.bindSession("heal-target"); const pending = registry.openTurn(request, "heal-target");
+  try {
+    await client.connect(new StdioClientTransport({ command: config.command, args: config.args, env: Object.fromEntries(config.env.map(item => [item.name, item.value])) }));
+    const receipts: unknown[] = [];
+    const result = await sdkLoop(sdk.world, trace => receipts.push(...trace.flatMap(step => step.toolCalls.map(call => JSON.parse(call.toolResult))))).run(new AiSdkClient({ apiKey: "synthetic-only", baseURL: `${server.url.origin}/v1`, model: "synthetic" }), request, [{ role: "user", content: "Correct the rejected heal target." }], 2000, "t1");
+    const mcp: any[] = [];
+    for (const arguments_ of actions) mcp.push((await client.callTool({ name: "submit_action", arguments: arguments_ })).structuredContent);
+    expect(receipts).toEqual(mcp); expect(mcp.map(receipt => receipt.ok ? "accepted" : receipt.error)).toEqual(["heal_target", "heal_target", "accepted"]);
+    expect(result.action).toEqual({ name: "use_potion", args: { target_id: 9, potion_type: "heal" } }); expect(await pending.action).toEqual(result.action);
+    expect(getWitchState(sdk.world.getComponent<RoleComponent>(6, COMPONENT.Role))!.heal).toBe(1);
+    expect(getWitchState(acp.world.getComponent<RoleComponent>(6, COMPONENT.Role))!.heal).toBe(1);
+    if (locale === "en") expect(JSON.stringify(mcp)).not.toMatch(/\p{Script=Han}/u);
+  } finally { registry.close(); await client.close(); await control.close({ force: true }); server.stop(true); }
+});

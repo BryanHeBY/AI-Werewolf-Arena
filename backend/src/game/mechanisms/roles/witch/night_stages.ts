@@ -37,7 +37,7 @@ const witchActionStage: NightStageHandler = {
       const req = ctx.makeRequest(witchId, ["use_potion"], {
         stage: "witch",
         ability_id: ability.id,
-        wolf_target: ctx.state.wolfTarget,
+        ...(ability.state.heal > 0 && !ability.state.healUsedThisNight && !ability.state.poisonUsedThisNight ? { wolf_target: ctx.state.wolfTarget } : {}),
       });
       const action = await ctx.actionProvider.getAction(req);
       if (action?.name !== "use_potion") {

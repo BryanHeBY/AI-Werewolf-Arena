@@ -1270,7 +1270,7 @@ describe("LlmActionProvider", () => {
         `{"name":"use_potion","args":{"target_id":${witchId},"potion_type":"none"}}`,
         (messages) => {
           const user = messages.find((msg) => msg.role === "user")?.content ?? "";
-          expect(user).toContain("当前已知昨夜刀口是3号");
+          expect(user).toContain("当前已知本夜刀口是3号");
         },
       ),
       {

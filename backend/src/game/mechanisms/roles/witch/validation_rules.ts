@@ -1,6 +1,9 @@
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：女巫工具校验规则。 */
-import { PotionType, Phase, WitchSelfHealRule } from "../../../../core/domain/model";
+import { PotionType, Phase, WitchSelfHealRule, StatusMark } from "../../../../core/domain/model";
+import { COMPONENT } from "../../../../core/domain/components/names";
+import type { StatusMarksComponent } from "../../../../core/domain/components/status_marks";
+import type { RoleComponent } from "../../../../core/domain/components/role";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 import { getWitchState } from "../private_state";
 import { activeNightAbility } from "../abilities";
@@ -27,6 +30,11 @@ export const WITCH_VALIDATION_RULES: ToolRuleMap = {
       }
       if (witchState.poisonUsedThisNight) {
         return { code: RuleError.TwoPotions };
+      }
+      const targetId = toolCall.args.target_id;
+      if (!isAliveTarget(world, targetId) || !world.getComponent<RoleComponent>(targetId, COMPONENT.Role) ||
+          !world.getComponent<StatusMarksComponent>(targetId, COMPONENT.StatusMarks)?.has(StatusMark.WolfKillMark)) {
+        return { code: RuleError.HealTarget };
       }
       return null;
     }

@@ -40,6 +40,8 @@ export class DamageResolutionSystem {
       const hasHeal = marks.has(StatusMark.HealMark);
       const hasWolfKill = marks.has(StatusMark.WolfKillMark);
       const hasPoison = marks.has(StatusMark.PoisonMark);
+      // Poison is independent of protection and must survive a conflict.
+      if (hasPoison) sources.push(StatusMark.PoisonMark);
 
       if (hasGuard && hasHeal) {
         // 同守同救互相抵消，但若同时被狼刀命中仍会死亡。
@@ -49,9 +51,6 @@ export class DamageResolutionSystem {
           sources.push(StatusMark.WolfKillMark);
         }
       } else {
-        if (hasPoison) {
-          sources.push(StatusMark.PoisonMark);
-        }
         if (hasWolfKill && !(hasGuard || hasHeal)) {
           sources.push(StatusMark.WolfKillMark);
         }

@@ -256,6 +256,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: bound guard/poti
     expect(prompt).toContain(locale === "en" ? "1, 2, 3, 4, 5, 6" : "1, 2, 3, 4, 5, 6");
     expect(prompt).not.toContain(locale === "en" ? "Actionable IDs (excluding yourself)" : "可行动编号（不含自己）");
     expect(policy.buildObservation(input).identity.role).toBe(Role.Villager);
+    if (tool === "use_potion") world.getComponent<{ add(value: string): void }>(actor, COMPONENT.StatusMarks)!.add("WolfKillMark");
     const args = tool === "guard" ? { target_id: actor, abstain: false } : { target_id: actor, potion_type: "heal" };
     expect(new ActionReception(world).validate(input, tool, args).ok).toBe(true);
   }
