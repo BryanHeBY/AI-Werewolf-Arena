@@ -16,3 +16,67 @@ export function sameNightLife(world: World, scope: NightLifeScope): boolean {
 export function livingNightLife(world: World, scope: NightLifeScope): boolean {
   return sameNightLife(world, scope) && scope.life.alive;
 }
+
+/** A submitted mechanical effect binds original bodies; inventories remain in their owner. */
+export interface NightMechanicalEffect {
+  readonly actorId: EntityId;
+  readonly target: NightLifeScope;
+  /** Recheck the submitting owner's role, state, life and phase without changing it. */
+  readonly isCurrent: () => boolean;
+}
+export interface NightMechanicalEffects {
+  readonly shields: readonly NightMechanicalEffect[];
+  readonly attacks: readonly NightMechanicalEffect[];
+  readonly failures: readonly NightMechanicalEffect[];
+}
+/** God-only causal facts. Player projections must not expose the poison's source. */
+export interface NightPoisonReflection {
+  readonly actorId: EntityId;
+  readonly protectedTargetId: EntityId;
+  readonly casterId: EntityId;
+}
+export interface MechanicalDamagePlan {
+  readonly shields: ReadonlySet<EntityId>;
+  readonly directPoisonTargets: ReadonlySet<EntityId>;
+  readonly reflectedPoisonTargets: ReadonlySet<EntityId>;
+  readonly attacks: ReadonlySet<EntityId>;
+  readonly failures: ReadonlySet<EntityId>;
+  readonly reflections: readonly NightPoisonReflection[];
+}
+/** Fold each original toxin once; reflected toxins are never fed back through shields. */
+export function planMechanicalDamage(
+  world: World,
+  effects: NightMechanicalEffects | undefined,
+  poisons: readonly NightPoisonClaim[] = [],
+): MechanicalDamagePlan {
+  const shields = new Map<EntityId, NightMechanicalEffect>();
+  for (const shield of effects?.shields ?? []) {
+    if (shield.isCurrent() && livingNightLife(world, shield.target)) {
+      shields.set(shield.target.id, shield);
+    }
+  }
+  const directPoisonTargets = new Set<EntityId>();
+  const reflectedPoisonTargets = new Set<EntityId>();
+  const reflections: NightPoisonReflection[] = [];
+  for (const poison of poisons) {
+    if (!livingNightLife(world, poison.target)) continue;
+    const shield = shields.get(poison.target.id);
+    if (!shield) {
+      directPoisonTargets.add(poison.target.id);
+      continue;
+    }
+    if (livingNightLife(world, poison.source)) {
+      reflectedPoisonTargets.add(poison.source.id);
+      reflections.push({ actorId: shield.actorId, protectedTargetId: poison.target.id, casterId: poison.source.id });
+    }
+  }
+  const attacks = new Set<EntityId>();
+  const failures = new Set<EntityId>();
+  for (const attack of effects?.attacks ?? []) {
+    if (attack.isCurrent() && livingNightLife(world, attack.target)) attacks.add(attack.target.id);
+  }
+  for (const failure of effects?.failures ?? []) {
+    if (failure.isCurrent() && livingNightLife(world, failure.target)) failures.add(failure.target.id);
+  }
+  return { shields: new Set(shields.keys()), directPoisonTargets, reflectedPoisonTargets, attacks, failures, reflections };
+}

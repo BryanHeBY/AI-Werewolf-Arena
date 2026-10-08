@@ -13,6 +13,8 @@ export enum DeathCause {
   Duel = "duel",
   DuelFailure = "duel_failure",
   Ability = "ability",
+  MechanicalKnife = "mechanical_knife",
+  MechanicalGuardFailure = "mechanical_guard_failure",
 }
 export type DeathSources = Record<number, DeathCause[]>;
 export type DeathShotSelection =
@@ -21,7 +23,7 @@ export type DeathShotSelection =
   | { kind: "invalid" };
 
 export function permitsDeathShot(sources: readonly DeathCause[]): boolean {
-  return sources.length > 0 && sources.every(source => source === DeathCause.WolfKill || source === DeathCause.Exile || source === DeathCause.Shot || source === DeathCause.WhiteWolfBlast);
+  return sources.length > 0 && sources.every(source => source === DeathCause.WolfKill || source === DeathCause.MechanicalKnife || source === DeathCause.Exile || source === DeathCause.Shot || source === DeathCause.WhiteWolfBlast);
 }
 /** Existing Hunter API retains the same cause policy. */
 export const permitsHunterShot = permitsDeathShot;

@@ -30,6 +30,8 @@ async function runHunterHook(world: ReturnType<typeof fixture>["world"], deadIds
 const examples: Array<[DeathCause[], boolean]> = [
   [[DeathCause.WolfKill], true], [[DeathCause.Exile], true], [[DeathCause.Shot], true], [[DeathCause.WolfKill, DeathCause.Shot], true],
   [[DeathCause.Poison], false], [[DeathCause.Poison, DeathCause.WolfKill], false], [[DeathCause.Lovers], false], [[DeathCause.Dream], false], [[DeathCause.Duel], false], [[DeathCause.SelfDestruct], false], [[DeathCause.Ability], false], [[], false],
+  [[DeathCause.MechanicalKnife], true], [[DeathCause.MechanicalGuardFailure], false],
+  [[DeathCause.MechanicalKnife, DeathCause.Poison], false], [[DeathCause.MechanicalKnife, DeathCause.MechanicalGuardFailure], false],
 ];
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: death causes explicitly permit or block Hunter actions without counting gods`, async () => {
   for (const [causes, eligible] of examples) {
@@ -39,6 +41,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: death causes exp
     expect(asks).toBe(eligible ? 1 : 0);
     expect(result.extraDeaths).toEqual(eligible ? [1] : []);
     expect(result.extraDeathSources).toEqual(eligible ? { 1: [DeathCause.Shot] } : {});
+    expect(gun(world).canShoot).toBe(false);
   }
 });
 

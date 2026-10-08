@@ -305,3 +305,9 @@ front103／953、type/build、actualChromium42、中文接刀与英文十二人�
 每次request捕原target生命，await/gateway/shared/Actual owner再验；新retry可绑定当前新life，旧请求不伤新body。shared接受后保枪消费prefix，但公开hunter/king shot只真实追加死亡mark后发；失效Shot只剔此原因，保其它合法原因并匿名actual追加death同步，不假杀播放器。permit结束清零，refs只runtime不进state/DTO/Tape。
 
 最终type/deps/boundaries、engine524/8259与278受影响actual双语完整局/全部Tape139/56818过；三路只读关闭原life/Actor/phase/legacy/公开投影问题，见[枪范围基础](reviews/p7-death-shot-life.md)。角色目录仍17已验、机械planned；下一笔机械状态/模式/特殊技能按已冻卡推进，不把普通枪基础冒认机械已完成。
+
+## P7：机械伤害内部基础
+
+核心 Damage 新增机械盾、逐源单次反毒、仅穿普通 Guard 的额外刀与独立连守自罚死因；输入绑定原生命和只读有效性谓词，不直接修改 Alive 或判胜。反射绕过施毒者机械盾、不递归，Dream 仍可挡；旧 caster 不伤新生命，普通已提交毒仍保留。三路审查发现普通同守同救后 extra 误用旧 Heal 标记，已修正并补有/无基础刀和独立机械盾人工判例；新死因实际 HunterHook 资格与消费也通过。
+
+最终 type/deps/boundaries/i18n、engine **541/8355/40 文件**及 **278 双语本地 SDK/ACP/混合完整局与全部严格 Tape（139/56818）**通过，三路 0 剩余阻断，见[机械伤害审查](reviews/p7-mechanical-damage.md)。这是不可选择的内部基础；机械 profile/阶段/配置尚未接入，仍 17 verified/47 planned。下一步唯一状态 owner、模式/学习窗口和机械技能进入真实夜间流程；全目标继续。
