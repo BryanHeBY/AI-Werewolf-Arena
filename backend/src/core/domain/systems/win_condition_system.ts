@@ -1,4 +1,4 @@
-import { GameResult, WinCondition } from "../model";
+import { WinDecision, WinCondition } from "../model";
 import { World } from "../world";
 import { WinConditionEvaluator } from "../registries/condition_registry";
 
@@ -13,7 +13,7 @@ export class WinConditionSystem {
     this.registry = registry;
   }
 
-  evaluate(world: World, condition: WinCondition): GameResult | null {
+  evaluate(world: World, condition: WinCondition): WinDecision | null {
     return this.registry.evaluate(world, condition);
   }
 }

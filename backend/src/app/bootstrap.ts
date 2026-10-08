@@ -6,6 +6,7 @@ import { COMPONENT } from "../core/domain/components/names";
 import { createRoleComponent } from "../core/domain/components/role";
 import { createStatusMarksComponent } from "../core/domain/components/status_marks";
 import { createVotingRightComponent } from "../core/domain/components/voting_right";
+import { createVictoryComponent } from "../core/domain/components/victory";
 import { createIdentityComponent } from "../core/domain/entities/player";
 import { BoardConfig, EntityId, Role } from "../core/domain/model";
 import {
@@ -94,6 +95,8 @@ function createPlayers(world: World, config: BoardConfig, options: BootstrapOpti
     );
     world.addComponent(entityId, COMPONENT.Role, roleComp);
     world.addComponent(entityId, COMPONENT.Camp, createCampComponent(roleComp.camp, world.locale));
+    const membership = roleCatalog.require(role).initialVictoryAffiliations;
+    world.addComponent(entityId, COMPONENT.Victory, createVictoryComponent(typeof membership === "function" ? membership(roleComp, { boardConfig: config, locale: world.locale }) : membership ?? [{ kind: "faction", faction: roleComp.camp }]));
     world.addComponent(entityId, COMPONENT.Alive, createAliveComponent(true, world.locale));
     world.addComponent(entityId, COMPONENT.StatusMarks, createStatusMarksComponent(world.locale));
     world.addComponent(entityId, COMPONENT.VotingRight, createVotingRightComponent(1, true, world.locale));

@@ -4,13 +4,13 @@
 
 游戏runner和受限观察模拟在记录作用域中生成内部`reproduction.json`，manifest给出该文件路径。公开`replay.json`保持原播放器格式，不带这份内部录制。
 
-当前录制`schemaVersion: 1`，包括：
+P2最初录制为v1；P4 G04起当前录制`schemaVersion: 2`，包括：
 
-- 引擎源码SHA-256、根`bun.lock`SHA-256及可获得的Git commit。源码范围是core/game/app与共享游戏目录；commit用于来源追踪，源码/lock用于兼容判定。
+- 引擎源码SHA-256、根`bun.lock`SHA-256及可获得的Git commit。源码范围是core/game/app、共享game-catalog/game-text以及实际执行的replay-contract；commit用于来源追踪，源码/lock用于兼容判定。
 - RNG实际seed、算法/版本、完整命名路径与分流版本；配置格式对应的归一化领域BoardConfig、规则集/规则版本、locale和天数上限。
 - 随机/固定发牌模式、初始角色/阵营/昵称与脱敏的Agent绑定（仅kind/name/model）。固定发牌仍需满足板子多重集。
 - 按玩家/日/阶段/个人回合序号录制实际请求和决定；另存开始时已完成的决定数及实际结束顺序，以恢复并发中的首个失败及关闭取消顺序。请求去除不可复现的墙钟deadline，实际响应/不行动仍保留。
-- 初始及每轮的阶段、结果、存活、身份/资源/票权/警徽/印记；中途失败记录未完成的轮次及安全错误类型。
+- 初始及每轮的阶段、结果（outcome/decidedAt）、显式victory归属、存活、身份/资源/票权/警徽/印记；中途失败记录未完成的轮次及安全错误类型。
 - 原始领域事件和引擎操作，保留接受/拒绝及实际效果证据；原始事件不从前端数据格式反向推导。
 
 没有provider对象、API key、URL、env、认证文件、进程参数或原始传输异常消息。失败只保留安全错误类型/代码；原错误仍由runner抛给调用方，不能为录制替换掉运行错误。玩家原始文本仍按事实记录。
@@ -52,3 +52,5 @@ bun run --cwd backend replay:actions --record ../record/<session>/reproduction.j
 角色规则的人工oracle仍由T02负责；本模块核验实际对局的可复现性，不能以“复现了旧行为”代替规则正确性审查。
 
 P4 G01在内部狼队事件envelope保存发生时的audience，严格重放核对受众；旧结构仍可解析但source版本门槛不放宽。该字段不进入播放器格式，规则与兼容细节见[狼队信息契约](wolf-team-access.md)。
+
+G04内部v2格式/归属与结果契约见[胜利结果](victory-outcomes.md)。旧内部v1明确拒绝，不从历史camp猜测affiliation；旧公开v2仍按播放器格式政策读取，公共结果呈现由G04后续子批接入。

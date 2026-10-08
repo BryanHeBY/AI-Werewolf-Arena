@@ -20,3 +20,5 @@ export * from "./registries/phase_registry";
 export * from "./registries/role_registry";
 export * from "./systems/damage_resolution_system";
 export * from "./systems/win_condition_system";
+
+export * from "./components/victory";

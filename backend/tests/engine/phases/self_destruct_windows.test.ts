@@ -39,7 +39,7 @@ for (const locale of ["zh-CN", "en"] as const) for (const window of Object.value
     }
     return ordinary(request);
   } });
-  expect(result.result).toEqual({ winner: Camp.Good, reason: "all_wolves_eliminated" });
+  expect(result.result).toEqual({ winner: Camp.Good, reason: "all_wolves_eliminated", outcome: { kind: "victory", primary: { kind: "faction", faction: "good", winningPlayerIds: [2, 3, 4, 5, 6] }, additional: [], winningPlayerIds: [2, 3, 4, 5, 6] }, decidedAt: { day: 1, phase: window === ActionWindow.OnPreVote ? Phase.Voting : Phase.Day, checkpoint: "day_interrupted" } });
   expect(game.world.getAliveEntityIds()).toEqual([2, 3, 4, 5, 6]); expect(game.world.activeDeathActionCount).toBe(0);
   const events = game.phaseManager.getEvents(), blast = events.findIndex(event => event.type === "wolf_self_destruct");
   expect(events.filter(event => event.type === "wolf_self_destruct").map(event => event.payload)).toEqual([{ wolfId: 1, window }]);
@@ -76,7 +76,7 @@ for (const locale of ["zh-CN", "en"] as const) for (const poisonedBlast of [fals
     }
     return ordinary(request);
   } });
-  expect(result.result).toEqual({ winner: Camp.Good, reason: "all_wolves_eliminated" }); expect(game.world.getAliveEntityIds()).toEqual([4, 5, 6]);
+  expect(result.result).toEqual({ winner: Camp.Good, reason: "all_wolves_eliminated", outcome: { kind: "victory", primary: { kind: "faction", faction: "good", winningPlayerIds: [2, 3, 4, 5, 6] }, additional: [], winningPlayerIds: [2, 3, 4, 5, 6] }, decidedAt: { day: 1, phase: Phase.Day, checkpoint: "day_interrupted" } }); expect(game.world.getAliveEntityIds()).toEqual([4, 5, 6]);
   const events = game.phaseManager.getEvents();
   expect(events.filter(event => event.type === "night_resolved").map(event => event.payload.deaths)).toEqual([poisonedBlast ? [1, 2] : [2]]);
   expect(events.filter(event => event.type === "last_words_spoken").map(event => event.payload.playerId)).toEqual([2]);
@@ -174,7 +174,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: declining earlie
     return ordinary(request);
   } });
   expect(speeches).toBe(6); expect(gaps).toBe(6);
-  expect(result.result).toEqual({ winner: Camp.Good, reason: "all_wolves_eliminated" });
+  expect(result.result).toEqual({ winner: Camp.Good, reason: "all_wolves_eliminated", outcome: { kind: "victory", primary: { kind: "faction", faction: "good", winningPlayerIds: [2, 3, 4, 5, 6] }, additional: [], winningPlayerIds: [2, 3, 4, 5, 6] }, decidedAt: { day: 1, phase: Phase.Day, checkpoint: "day_interrupted" } });
   const events = game.phaseManager.getEvents();
   const night = events.findIndex(event => event.type === "night_resolved");
   expect(night).toBeGreaterThanOrEqual(0);

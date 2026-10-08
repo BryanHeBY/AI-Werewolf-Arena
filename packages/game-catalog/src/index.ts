@@ -2,6 +2,7 @@
  * Catalog inclusion is not execution permission: the engine requires a registered profile.
  */
 export const LOCALES = ["zh-CN", "en"] as const;
+export * from "./outcomes";
 export type { InspectionCamp, InspectionResult, InspectionKind } from "./inspection";
 export type Locale = typeof LOCALES[number];
 export function isLocale(value: unknown): value is Locale {

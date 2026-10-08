@@ -1,4 +1,5 @@
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { VictoryAffiliation } from "@ai-werewolf-arena/game-catalog";
 import type { InspectionCamp, RoleId } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：角色 profile 的统一契约定义。 */
 import { RoleComponent } from "../../../core/domain/components/role";
@@ -32,6 +33,7 @@ export interface RoleProfile {
   label: string;
   skillBrief: string;
   goodSide?: "god" | "villager";
+  initialVictoryAffiliations?: readonly VictoryAffiliation[] | ((role: RoleComponent, ctx: RoleInitContext) => readonly VictoryAffiliation[]);
   /** Public participation restrictions; secret immunity belongs to resolution hooks. */
   participation?: { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean } | ((role: RoleComponent) => { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean });
   wolfTeam?: WolfTeamPermissions | ((role: RoleComponent) => WolfTeamPermissions);

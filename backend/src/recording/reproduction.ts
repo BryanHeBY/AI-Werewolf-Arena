@@ -1,10 +1,12 @@
 import { dictionaries, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { z } from "zod";
+import { readGameOutcome, readVictoryPoint, readVictoryAffiliations } from "@ai-werewolf-arena/replay-contract";
+import type { GameOutcome, VictoryPoint, VictoryAffiliation } from "@ai-werewolf-arena/game-catalog";
 import { types } from "node:util";
 import { ACTION_STAGES, TOOL_NAMES, WOLF_TEAM_EVENT_TYPES, ActionWindow, Camp, Phase, Role, WinCondition, WitchSelfHealRule, DeathCause, type ActionProvider, type ActionRequest, type BoardConfig, type GameEvent, type RuntimeSnapshot, type ToolCall } from "../core";
 import type { RandomMetadata } from "../core/domain/random";
 
-export const REPRODUCTION_SCHEMA_VERSION = 1 as const;
+export const REPRODUCTION_SCHEMA_VERSION = 2 as const;
 const ERROR_NAMES = ["Error", "TypeError", "RangeError", "AbortError", "TimeoutError", "AggregateError"] as const;
 export type RecordedErrorName = typeof ERROR_NAMES[number];
 const FAILURE_SCOPES = ["initialization", "cycle", "cleanup", "recording", "controller"] as const;
@@ -43,6 +45,7 @@ export interface ReproductionMetadata {
 export interface RecordedPlayerState {
   id: number; seat: number; name: string; role: Role; camp: Camp; alive: boolean;
   privateState: Record<string, unknown>; vote: { weight: number; canVote: boolean }; badge: { isSheriff: boolean; destroyed: boolean; voteWeight: number }; marks: string[];
+  victory: { affiliations: VictoryAffiliation[] };
 }
 export interface RecordedCheckpoint { cycle: number; complete: boolean; snapshot: RuntimeSnapshot; players: RecordedPlayerState[]; eventCount: number; failure?: { name: RecordedErrorName; code: "cycle_failed" } }
 export interface RecordedDecision {
@@ -91,8 +94,16 @@ const requestSchema = z.strictObject({ actorId: positive, phase: z.enum(Phase), 
     round: positive.optional(), max_rounds: positive.optional(), retry_attempt: nonnegative.optional(), retry_max: nonnegative.optional(), retry_reason: z.string().optional(), retry_notice: z.string().optional(), retry_notice_message: messageRefSchema.optional(),
   }),
 });
-const snapshotSchema = z.strictObject({ day: positive, phase: z.enum(Phase), gameOver: z.boolean(), result: z.strictObject({ winner: z.enum(Camp).nullable(), reason: z.string() }).nullable() });
+const outcomeSchema = z.unknown().transform((value, ctx): GameOutcome => { try { return readGameOutcome(value); } catch { ctx.addIssue({ code: "custom", message: "reproduction_outcome_invalid" }); return z.NEVER; } });
+const pointSchema = z.unknown().transform((value, ctx): VictoryPoint => { try { return readVictoryPoint(value); } catch { ctx.addIssue({ code: "custom", message: "reproduction_victory_point_invalid" }); return z.NEVER; } });
+const resultSchema = z.strictObject({ winner: z.enum(Camp).nullable(), reason: z.string().min(1), outcome: outcomeSchema, decidedAt: pointSchema }).superRefine((value, ctx) => {
+  const winner = value.outcome.kind === "victory" && value.outcome.primary.kind === "faction" ? value.outcome.primary.faction : null;
+  if (value.winner !== winner) ctx.addIssue({ code: "custom", message: "reproduction_winner_projection_invalid" });
+});
+const snapshotSchema = z.strictObject({ day: positive, phase: z.enum(Phase), gameOver: z.boolean(), result: resultSchema.nullable() });
+const affiliationsSchema = z.unknown().transform((value, ctx): VictoryAffiliation[] => { try { return readVictoryAffiliations(value); } catch { ctx.addIssue({ code: "custom", message: "reproduction_affiliations_invalid" }); return z.NEVER; } });
 const playerSchema = z.strictObject({ id: positive, seat: positive, name: z.string(), role: z.enum(Role), camp: z.enum(Camp), alive: z.boolean(), privateState: jsonObject,
+  victory: z.strictObject({ affiliations: affiliationsSchema }),
   vote: z.strictObject({ weight: z.number().finite().nonnegative(), canVote: z.boolean() }),
   badge: z.strictObject({ isSheriff: z.boolean(), destroyed: z.boolean(), voteWeight: z.number().finite().positive() }), marks: z.array(z.string()),
 });
@@ -106,7 +117,14 @@ const schema = z.strictObject({ schemaVersion: z.literal(REPRODUCTION_SCHEMA_VER
   decisions: z.array(z.strictObject({ actorId: positive, day: positive, stage: z.enum(ACTION_STAGES), turn: positive, request: requestSchema, settleOrder: positive.optional(), openedAfterSettlement: nonnegative,
     outcome: z.discriminatedUnion("kind", [z.strictObject({ kind: z.literal("pending") }), z.strictObject({ kind: z.literal("action"), action: z.strictObject({ name: z.enum(TOOL_NAMES), args: jsonObject }).nullable() }), z.strictObject({ kind: z.literal("error"), code: z.literal("decision_failed"), name: z.enum(ERROR_NAMES) })]),
   })),
-  checkpoints: z.array(z.strictObject({ cycle: nonnegative, complete: z.boolean(), snapshot: snapshotSchema, players: z.array(playerSchema), eventCount: nonnegative, failure: z.strictObject({ name: z.enum(ERROR_NAMES), code: z.literal("cycle_failed") }).optional() })).min(1),
+  checkpoints: z.array(z.strictObject({ cycle: nonnegative, complete: z.boolean(), snapshot: snapshotSchema, players: z.array(playerSchema), eventCount: nonnegative, failure: z.strictObject({ name: z.enum(ERROR_NAMES), code: z.literal("cycle_failed") }).optional() }).superRefine((value, ctx) => {
+    const result = value.snapshot.result;
+    if (result) {
+      try { readGameOutcome(result.outcome, value.players.map(player => player.id)); }
+      catch { ctx.addIssue({ code: "custom", message: "reproduction_winner_player_unknown" }); }
+      if (!value.snapshot.gameOver || value.snapshot.phase !== Phase.GameOver || result.decidedAt.day !== value.snapshot.day) ctx.addIssue({ code: "custom", message: "reproduction_result_point_invalid" });
+    } else if (value.snapshot.gameOver) ctx.addIssue({ code: "custom", message: "reproduction_result_missing" });
+  })).min(1),
   events: z.array(z.strictObject({ timestamp: z.number().finite(), type: z.string().min(1), payload: jsonObject,
     audience: z.array(positive).max(128).refine(ids => ids.every((id, index) => index === 0 || ids[index - 1] < id)).optional(),
   }).superRefine((event, ctx) => {

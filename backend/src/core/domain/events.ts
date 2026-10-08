@@ -1,5 +1,6 @@
 import type { ActionWindow, Camp, EntityId, Phase, PotionType } from "./identity";
 import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
+import type { GameResult } from "./results";
 
 export interface EventBase<T extends string, P> {
   timestamp: number;
@@ -38,14 +39,14 @@ export interface EventPayloadMap {
     startsOnDay: number; expiresAfterDay?: number; maxUses: number | null;
   };
   god_private_game_info: { boardSize: number; players: PrivatePlayerInfo[] };
-  phase_changed: { phase: Phase; day: number; winner?: Camp | null; reason?: string };
+  phase_changed: { phase: Phase; day: number; winner?: Camp | null; reason?: string; outcome?: GameResult["outcome"]; decidedAt?: GameResult["decidedAt"] };
   sheriff_elected: {
     winnerId: EntityId;
     source?: string;
     candidates?: EntityId[];
     tally?: Record<number, number>;
   };
-  game_over: { winner: Camp | null; reason: string };
+  game_over: GameResult;
   night_resolved: { deaths: EntityId[] };
   wolf_self_destruct: { wolfId: EntityId; window: ActionWindow };
   day_speech: { actorId: EntityId; text: string };

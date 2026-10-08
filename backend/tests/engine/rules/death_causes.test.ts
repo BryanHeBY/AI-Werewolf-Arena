@@ -64,7 +64,7 @@ for (const locale of ["zh-CN", "en"] as const) for (const mode of [WinCondition.
     }
     return null;
   } });
-  expect(shots).toBe(1); expect(result.result).toEqual({ winner: Camp.Good, reason: "all_wolves_eliminated" });
+  expect(shots).toBe(1); expect(result.result).toEqual({ winner: Camp.Good, reason: "all_wolves_eliminated", outcome: { kind: "victory", primary: { kind: "faction", faction: "good", winningPlayerIds: [2, 3, 4, 5, 6] }, additional: [], winningPlayerIds: [2, 3, 4, 5, 6] }, decidedAt: { day: 1, phase: Phase.Day, checkpoint: "night_settled" } });
   const events = game.phaseManager.getEvents();
   expect(events.filter(event => event.type === "game_over")).toHaveLength(1);
   expect(events.findIndex(event => event.type === "hunter_shot")).toBeLessThan(events.findIndex(event => event.type === "game_over"));

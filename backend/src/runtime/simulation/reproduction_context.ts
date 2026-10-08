@@ -2,7 +2,7 @@ import path from "node:path";
 import { readdir, readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
-import { COMPONENT, type AliveComponent, type BadgeComponent, type IdentityComponent, type RoleComponent, type RuntimeSnapshot, type StatusMarksComponent, type VotingRightComponent, type World } from "../../core";
+import { COMPONENT, type AliveComponent, type BadgeComponent, type IdentityComponent, type RoleComponent, type RuntimeSnapshot, type StatusMarksComponent, type VotingRightComponent, type World, type VictoryComponent } from "../../core";
 import type { EngineVersion, RecordedCheckpoint } from "../../recording/reproduction";
 import { recordedErrorName } from "../../recording/reproduction";
 import { RULESET, type Locale } from "@ai-werewolf-arena/game-catalog";
@@ -12,8 +12,8 @@ import type { ResolvedAgentRuntimeProfile } from "../config/contracts";
 import type { SessionRecordManager } from "../../recording/session_recorder";
 
 /** Source and lock hashes make compatibility explicit even with an uncommitted engine edit. */
-export async function currentEngineVersion(): Promise<EngineVersion> {
-  const root = path.resolve(__dirname, "../../../..");
+export async function currentEngineVersion(sourceRoot: string = path.resolve(__dirname, "../../../..")): Promise<EngineVersion> {
+  const root = path.resolve(sourceRoot);
   const hash = createHash("sha256");
   const walk = async (directory: string) => {
     for (const entry of (await readdir(directory, { withFileTypes: true })).sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0)) {
@@ -22,7 +22,7 @@ export async function currentEngineVersion(): Promise<EngineVersion> {
       else if (entry.name.endsWith(".ts")) { hash.update(path.relative(root, file).replaceAll(path.sep, "/")); hash.update("\0"); hash.update(await readFile(file)); hash.update("\0"); }
     }
   };
-  for (const directory of ["backend/src/core", "backend/src/game", "backend/src/app", "packages/game-catalog/src", "packages/game-text/src"]) await walk(path.join(root, directory));
+  for (const directory of ["backend/src/core", "backend/src/game", "backend/src/app", "packages/game-catalog/src", "packages/game-text/src", "packages/replay-contract/src"]) await walk(path.join(root, directory));
   const lockHash = createHash("sha256").update(await readFile(path.join(root, "bun.lock"))).digest("hex");
   let commit: string | undefined;
   try {
@@ -39,7 +39,7 @@ export function captureCheckpoint(world: World, snapshot: RuntimeSnapshot, cycle
     const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge)!;
     const vote = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight)!;
     return { id, seat: identity.seat, name: identity.name, role: role.role, camp: role.camp, alive: world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive,
-      privateState: structuredClone(role.privateState), vote: { weight: vote.weight, canVote: vote.canVote },
+      privateState: structuredClone(role.privateState), victory: structuredClone(world.getComponent<VictoryComponent>(id, COMPONENT.Victory)!), vote: { weight: vote.weight, canVote: vote.canVote },
       badge: { isSheriff: badge.isSheriff, destroyed: badge.destroyed, voteWeight: badge.voteWeight }, marks: world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!.values() };
   }) };
 }

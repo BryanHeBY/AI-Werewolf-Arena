@@ -50,6 +50,7 @@ test("incompatible and altered recordings fail explicitly before being accepted 
     await expect(replayReproduction(record, output)).rejects.toThrow(code);
   };
   await modify(record => { record.schemaVersion = 99; }, "reproduction_schema_not_supported");
+  await modify(record => { record.schemaVersion = 1; }, "reproduction_schema_not_supported");
   await modify(record => { record.metadata.engine.sourceHash = "0".repeat(64); }, "reproduction_engine_or_lock_incompatible");
   await modify(record => { record.metadata.engine.lockHash = "0".repeat(64); }, "reproduction_engine_or_lock_incompatible");
   await modify(record => { record.metadata.random.algorithm = "unknown_rng"; }, "reproduction_rng_incompatible");

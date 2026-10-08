@@ -197,3 +197,9 @@ DeathResolution统一写夜间/正常放逐/默认preVote自爆/枪击死亡，�
 v2四枚举、对应hooks与[]关闭实际接通；竞选前仅首日确实竞选前，天亮在夜结算/遗言后方向前，gap在每次正常speech后（含最后），放逐前仍Voting。early blast合并pendingNight与本身的原因/阶段，先整个死亡链后judge，不跳过末神枪/不重复遗言，也不自动次日补选。选择生命/ref/role/clock最终再验，最小仍有效ID；PhaseManager commit同步公共事实与进入标死，普通低层pipeline只返意图。新override空列表保留，历史迁移保旧[]默认/明确去无执行声明与中英警告。
 
 契约见[四窗口](self-destruct-windows.md)，[交叉审查](reviews/p4-g03-windows.md)含模型信息与保存档案分辨。最终人工29/247、新16局真实双语SDK/ACP整局和逐局Tape8/2460，前端54/365/type通过；最终release600/34055（含50局真实基础/窗口双语纯混合对局及Tape）通过，三路复查0阻断，追加公开四窗口板子/运行配置加载1/4通过。G04与计划角色继续，尚不据此完成整个P4。
+
+## P4 G04：胜利归属与核心结果子批
+
+独立Victory组件/profile初始声明，不从身份变化/能力复制自动改归属；成员含dead，三种primary/额外claim明确并集，真实camp人数与Good神民独立。WinDecision通过实际checkpoint过滤并由PhaseManager一次封盘，最终按当前归属重验，maxDays明确noWinner且终局事件恰好一次，state/event/外部读取隔离。内部Tape升级2，严格保存membership/outcome/point与共享执行decoder的source指纹；旧1拒版，[]显式无归属，安装与录制共用strictreader。
+
+[契约](victory-outcomes.md)、[三路审查](reviews/p4-g04-core.md)记录真实scope；初版full616/34154、修正人工16/100连repro28/228、front54/365/type过，最终full617/34160（含50真实完整局/Tape）通过，三路复查0剩余阻断。公共主档/reader、终端/前端/视频结果呈现与P4整体验收继续下一子批，57计划角色仍未启用。

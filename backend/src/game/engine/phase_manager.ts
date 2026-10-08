@@ -1,3 +1,5 @@
+import { readGameOutcome, readVictoryPoint } from "@ai-werewolf-arena/replay-contract";
+import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-catalog";
 import { text } from "@ai-werewolf-arena/game-text";
 import {
   ActionProvider,
@@ -6,6 +8,8 @@ import {
   EntityId,
   GameEvent,
   GameResult,
+  type WinDecision,
+  Camp,
   Phase,
   RuntimeSnapshot,
   DeathCause,
@@ -28,6 +32,7 @@ import { VotingRightComponent } from "../../core/domain/components/voting_right"
 import { IdentityComponent } from "../../core/domain/entities/player";
 import { RoleComponent } from "../../core/domain/components/role";
 import { createRandom, type RandomSource } from "../../core/domain/random";
+import { victoryDecision } from "../mechanisms/win_conditions/results";
 
 /**
  * PhaseManager 是游戏引擎的时序中枢。
@@ -127,14 +132,18 @@ export class PhaseManager {
    * 获取当前运行时快照（浅拷贝）。
    */
   getSnapshot(): RuntimeSnapshot {
-    return { ...this.state };
+    return structuredClone(this.state);
   }
 
   /**
    * 获取当前累计事件列表（浅拷贝）。
    */
   getEvents(): GameEvent[] {
-    return [...this.events];
+    return this.events.map(event => {
+      const copy = structuredClone(event);
+      if ("audience" in copy) Object.freeze(copy.audience);
+      return copy;
+    });
   }
 
   /**
@@ -153,12 +162,7 @@ export class PhaseManager {
     }
 
     if (this.state.day > maxDays) {
-      this.state.gameOver = true;
-      this.state.result = {
-        winner: null,
-        reason: "max_days_reached",
-      };
-      this.setPhase(Phase.GameOver);
+      this.sealResult({ winner: null, reason: "max_days_reached", outcome: { kind: "no_winner" } }, "max_days_reached", Phase.Night);
       return this.getSnapshot();
     }
 
@@ -189,7 +193,7 @@ export class PhaseManager {
       }
       await this.deathResolution.resolve(deaths, sources, actionProvider, Phase.Night, Phase.Day, deathPhases);
       if (!dayIsCurrent()) return this.state.gameOver;
-      return this.checkAndSealResult();
+      return this.checkAndSealResult(explodedId !== undefined ? "day_interrupted" : "night_settled");
     };
     if (!firstDaySheriffBeforeNightInfo && await settleNight()) return this.getSnapshot();
 
@@ -208,7 +212,7 @@ export class PhaseManager {
     if (this.state.gameOver || !dayIsCurrent()) return this.getSnapshot();
     if (dayResult.interrupted) {
       // 白天被自爆中断时直接结束当日并切到下一夜。
-      if (this.state.gameOver || this.checkAndSealResult()) {
+      if (this.state.gameOver || this.checkAndSealResult("day_interrupted")) {
         return this.getSnapshot();
       }
       this.state.day += 1;
@@ -231,7 +235,7 @@ export class PhaseManager {
     if (!votingIsCurrent()) return this.getSnapshot();
     if (votingResult.interrupted) {
       // 投票前窗口发生自爆，同样跳过当日剩余流程。
-      if (this.checkAndSealResult()) {
+      if (this.checkAndSealResult("day_interrupted")) {
         return this.getSnapshot();
       }
       this.state.day += 1;
@@ -253,7 +257,7 @@ export class PhaseManager {
       );
     }
 
-    if (this.checkAndSealResult()) {
+    if (this.checkAndSealResult("exile_settled")) {
       return this.getSnapshot();
     }
 
@@ -275,29 +279,29 @@ export class PhaseManager {
   /**
    * 检查胜负并在命中时封盘写入 game_over 事件。
    */
-  private checkAndSealResult(): boolean {
-    const result = this.conditionRegistry.evaluateMany(
-      this.world,
-      this.resolveWinConditions(),
-    );
-    if (!result) {
-      return false;
-    }
-
-    this.state.result = result;
-    this.setPhase(Phase.GameOver);
-    this.state.gameOver = true;
-
-    this.events.push({
-      timestamp: Date.now(),
-      type: "game_over",
-      payload: {
-        winner: result.winner,
-        reason: result.reason,
-      },
-    });
-
+  private checkAndSealResult(checkpoint: VictoryCheckpoint): boolean {
+    if (this.state.gameOver) return true;
+    const result = this.conditionRegistry.evaluateMany(this.world, this.resolveWinConditions(), checkpoint);
+    if (!result) return false;
+    this.sealResult(result, checkpoint, this.state.phase);
     return true;
+  }
+
+  private sealResult(decision: WinDecision, checkpoint: VictoryCheckpoint, phase: Phase): void {
+    if (this.state.gameOver) return;
+    const outcome = readGameOutcome(decision.outcome, this.world.entityIds());
+    const winner = outcome.kind === "victory" && outcome.primary.kind === "faction" ? outcome.primary.faction as Camp : null;
+    if (winner !== decision.winner || typeof decision.reason !== "string" || decision.reason.length === 0) throw new Error("game_result_invalid");
+    if (outcome.kind === "victory") {
+      const targets = [outcome.primary, ...outcome.additional].map(({ winningPlayerIds: _ids, ...target }) => target);
+      const expected = victoryDecision(this.world, targets[0], decision.reason, targets.slice(1)).outcome;
+      if (JSON.stringify(expected) !== JSON.stringify(outcome)) throw new Error("game_result_membership_invalid");
+    }
+    const decidedAt = readVictoryPoint({ day: this.state.day, phase, checkpoint });
+    this.state.result = { winner, reason: decision.reason, outcome, decidedAt };
+    this.state.gameOver = true;
+    this.setPhase(Phase.GameOver);
+    this.events.push({ timestamp: Date.now(), type: "game_over", payload: structuredClone(this.state.result) });
   }
 
   /**
@@ -335,7 +339,7 @@ export class PhaseManager {
    * 调试接口：返回当前终局结果。
    */
   debugResult(): GameResult | null {
-    return this.state.result;
+    return this.state.result === null ? null : structuredClone(this.state.result);
   }
 
   /**
@@ -353,6 +357,8 @@ export class PhaseManager {
         ? {
             winner: this.state.result.winner,
             reason: this.state.result.reason,
+            outcome: structuredClone(this.state.result.outcome),
+            decidedAt: { ...this.state.result.decidedAt },
           }
         : {};
     this.events.push({

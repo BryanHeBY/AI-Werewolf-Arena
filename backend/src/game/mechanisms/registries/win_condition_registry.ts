@@ -1,5 +1,6 @@
+import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：管理胜利条件规格与评估入口。 */
-import { GameResult, WinCondition } from "../../../core/domain/model";
+import { WinDecision, WinCondition } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 import {
   DEFAULT_WIN_CONDITION_SPECS,
@@ -20,12 +21,13 @@ export class WinConditionRegistry {
     return this.specById.get(condition);
   }
 
-  evaluate(world: World, condition: WinCondition): GameResult | null {
+  evaluate(world: World, condition: WinCondition, checkpoint?: VictoryCheckpoint): WinDecision | null {
     const spec = this.specById.get(condition);
     if (!spec) {
       throw new Error(`Unknown win condition: ${condition}`);
     }
-    return spec.evaluate(world);
+    if (spec.checkpoints && (checkpoint === undefined || !spec.checkpoints.includes(checkpoint))) return null;
+    return spec.evaluate(world, checkpoint);
   }
 
   all(): WinConditionSpec[] {

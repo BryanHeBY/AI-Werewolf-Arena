@@ -103,7 +103,9 @@ async function runFixture(size: 6 | 12, alternate: boolean, kind: "llm" | "acp" 
       expect(trace.failure).toBe("");
     }
     expect(result.snapshot.day).toBe(size === 12 && alternate ? 3 : 2); expect(result.snapshot.phase).toBe("game_over");
-    expect(result.snapshot.result).toEqual({ winner: "good", reason: "all_wolves_eliminated" });
+    expect(result.snapshot.result).toEqual({ winner: "good", reason: "all_wolves_eliminated", outcome: {
+      kind: "victory", primary: { kind: "faction", faction: "good", winningPlayerIds: size === 6 ? [2, 3, 5, 6] : [5, 6, 7, 8, 9, 10, 11, 12] }, additional: [], winningPlayerIds: size === 6 ? [2, 3, 5, 6] : [5, 6, 7, 8, 9, 10, 11, 12],
+    }, decidedAt: { day: size === 12 && alternate ? 3 : 2, phase: window && window !== ActionWindow.OnPreVote && window !== ActionWindow.OnPreElection ? "day" : "voting", checkpoint: window ? window === ActionWindow.OnPreElection ? "exile_settled" : "day_interrupted" : size === 6 ? "exile_settled" : "day_interrupted" } });
     const manifest = JSON.parse(await fs.readFile(path.join(directory, "manifest.json"), "utf8"));
     expect(manifest.locale).toBe(locale); expect(manifest.players.map((row: any) => row.role)).toEqual(roles);
     expect(manifest.players.map((row: any) => row.name)).toEqual(roles.map((_, index) => `Seat ${index + 1}`));

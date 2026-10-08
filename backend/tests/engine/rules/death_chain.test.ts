@@ -42,7 +42,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: real exile settl
     if (request.allowedTools.includes("speak")) return { name: "speak", args: { text: "raw" } };
     return null;
   } });
-  expect(result.result).toEqual({ winner: Camp.Good, reason: "all_wolves_eliminated" });
+  expect(result.result).toEqual({ winner: Camp.Good, reason: "all_wolves_eliminated", outcome: { kind: "victory", primary: { kind: "faction", faction: "good", winningPlayerIds: [2, 3, 4, 5, 6] }, additional: [], winningPlayerIds: [2, 3, 4, 5, 6] }, decidedAt: { day: 1, phase: Phase.Voting, checkpoint: "exile_settled" } });
   expect(game.world.getAliveEntityIds()).toEqual([3, 4, 5, 6]); expect(game.world.activeDeathActionCount).toBe(0);
   const events = game.phaseManager.getEvents();
   const relevant = events.filter(event => ["voted_out", "last_words_spoken", "sheriff_badge_transferred", "hunter_shot", "game_over"].includes(event.type));
@@ -69,7 +69,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: concurrent defau
   expect(game.world.getAliveEntityIds()).toEqual([2, 3, 4, 5, 6]); expect(game.world.getComponent<{ isSheriff: boolean }>(2, COMPONENT.Badge)!.isSheriff).toBe(true);
   expect(game.world.getComponent<{ weight: number }>(2, COMPONENT.VotingRight)!.weight).toBe(2.25);
   const last = await game.phaseManager.runSingleCycle(provider);
-  expect(last.result).toEqual({ winner: Camp.Good, reason: "all_wolves_eliminated" });
+  expect(last.result).toEqual({ winner: Camp.Good, reason: "all_wolves_eliminated", outcome: { kind: "victory", primary: { kind: "faction", faction: "good", winningPlayerIds: [3, 4, 5, 6] }, additional: [], winningPlayerIds: [3, 4, 5, 6] }, decidedAt: { day: 2, phase: Phase.Voting, checkpoint: "day_interrupted" } });
   expect(game.world.getAliveEntityIds()).toEqual([3, 4, 5, 6]); expect(game.world.getComponent<{ isSheriff: boolean }>(3, COMPONENT.Badge)!.isSheriff).toBe(true);
   expect(game.world.activeDeathActionCount).toBe(0);
   expect(requests.filter(request => request.context.stage === "last_words" || request.allowedTools.includes("vote"))).toEqual([]);
