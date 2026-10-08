@@ -14,6 +14,17 @@ export class ObservedBot implements ObservedPlayerStrategy {
     const others = knownAliveIds.filter(id => id !== actor);
     const pick = (ids: number[]) => ids.length ? ids[Math.floor(this.random.next() * ids.length)] : undefined;
     const tools = request.allowedTools;
+    if (tools.includes("bestow_ability")) {
+      if(this.style==="conservative"&&request.context.day===1)return null;
+      const target=pick(others),skills=["check","poison","guard"] as const;
+      return target===undefined?null:{name:"bestow_ability",args:{target_id:target,skill:skills[Math.floor(this.random.next()*skills.length)]}};
+    }
+    const bound = observation.abilities.find(ability => ability.id === request.context.ability_id);
+    const ownActions = observation.ownNightActions ?? [];
+    const allowed = (kind: "check" | "poison" | "guard", id: number) => {
+      const policy = bound?.activation === "lucky" || observation.abilities.some(ability => ability.activation === "lucky" && ability.kind === (kind === "check" ? "seer_check" : kind === "guard" ? "guard" : "potion")) || ownActions.some(row => row.kind === kind && row.lucky);
+      return !policy || !ownActions.some(row => row.kind === kind && row.targetId === id && (row.day === request.context.day || kind === "guard" && row.day === request.context.day - 1));
+    };
     if (tools.includes("speak")) return { name: "speak", args: { text: `Seat ${actor}, day ${request.context.day}: consider the public evidence.` } };
     if (tools.includes("speak_to_wolves")) return { name: "speak_to_wolves", args: { text: "End discussion", end_chat: true } };
     if (tools.includes("choose_direction")) return { name: "choose_direction", args: { direction: this.random.next() < 0.5 ? "clockwise" : "counter_clockwise" } };
@@ -37,7 +48,7 @@ export class ObservedBot implements ObservedPlayerStrategy {
     if (tools.includes("mechanical_guard")) return { name: "mechanical_guard", args: { target_id: this.style === "conservative" ? null : pick(knownAliveIds) ?? null } };
     if (tools.includes("mechanical_attack")) return { name: "mechanical_attack", args: { target_id: pick(others) ?? null } };
     if (tools.includes("guard")) {
-      const target = this.style === "conservative" ? undefined : pick(knownAliveIds.filter(id => id !== ownState.guard?.lastTarget));
+      const target = this.style === "conservative" ? undefined : pick(knownAliveIds.filter(id => id !== ownState.guard?.lastTarget && allowed("guard", id)));
       return { name: "guard", args: { target_id: target ?? null, abstain: target === undefined } };
     }
     if (tools.includes("dream")) {
@@ -48,9 +59,11 @@ export class ObservedBot implements ObservedPlayerStrategy {
       return{name:"charm",args:{target_id:target??null}};
     }
     if (tools.includes("check_identity")) {
+      if (bound?.activation === "lucky" && this.style === "conservative") return null;
       const checked = ownState.seer?.history.map(entry => entry.targetId) ?? [];
-      const fresh = others.filter(id => !checked.includes(id));
-      const target = pick(fresh.length ? fresh : others);
+      const permitted = others.filter(id => allowed("check", id));
+      const fresh = permitted.filter(id => !checked.includes(id));
+      const target = pick(fresh.length ? fresh : permitted);
       if (target !== undefined) return { name: "check_identity", args: { target_id: target } };
     }
     if(tools.includes("inspect_role")){if(this.style==="conservative"&&request.context.stage==="psychic")return null;const state=ownState.roleInspection,target=pick(others.filter(id=>state?.policy==="psychic"||!state?.history.some(report=>report.targetId===id)));if(target!==undefined)return{name:"inspect_role",args:{target_id:target}};}
@@ -61,7 +74,7 @@ export class ObservedBot implements ObservedPlayerStrategy {
         return { name: "use_potion", args: { target_id: knife, potion_type: PotionType.Heal } };
       }
       if (this.style !== "conservative" && witch && witch.poison > 0 && request.context.day > 1) {
-        const target = pick(others);
+        const target = pick(others.filter(id => allowed("poison", id)));
         if (target !== undefined) return { name: "use_potion", args: { target_id: target, potion_type: PotionType.Poison } };
       }
       return { name: "use_potion", args: { target_id: actor, potion_type: PotionType.None } };

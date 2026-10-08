@@ -9,6 +9,7 @@ import { GUARD_NIGHT_STAGES } from "./night_stages";
 import { GUARD_TOOL_SPECS } from "./tool_specs";
 import { isAliveTarget } from "../../validation/contracts";
 import { activeNightAbility } from "../abilities";
+import { luckyTargetAllowed } from "../night_action_history";
 
 /** 守卫角色配置。 */
 export const GUARD_ROLE_PROFILE: RoleProfile = {
@@ -23,7 +24,7 @@ export const GUARD_ROLE_PROFILE: RoleProfile = {
   renderPrompt: (_roleComp, locale = "zh-CN") => text(locale, "role.guard.state"),
   toolSpecs: GUARD_TOOL_SPECS,
   validationRules: {
-    guard: ({ world, role, toolCall, day, abilityId, phase }) => {
+    guard: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {
       const ability = activeNightAbility(role, "guard", day ?? 1, abilityId);
       const guardState = ability?.state;
       if (!ability) return { code: RuleError.GuardOnly };
@@ -33,6 +34,7 @@ export const GUARD_ROLE_PROFILE: RoleProfile = {
       if (toolCall.args.target_id === null) return { code: RuleError.GuardTarget };
       if (guardState?.lastTarget === toolCall.args.target_id) return { code: RuleError.GuardRepeat };
       if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.GuardTarget };
+      if (!luckyTargetAllowed(world, actorId, ability, day ?? 1, "guard", toolCall.args.target_id)) return { code: RuleError.LuckyTargetRepeat };
       return null;
     },
   },
@@ -47,11 +49,12 @@ export const GUARD_ROLE_PROFILE: RoleProfile = {
       },
     },
   },
-  baselineAction: (roleComp, request, pickAliveNotSelf) => {
+  baselineAction: (roleComp, request, pickAliveNotSelf, _byCamp, _locale, world) => {
     if (!request.allowedTools.includes("guard")) {
       return null;
     }
-    const target = pickAliveNotSelf();
+    const ability = activeNightAbility(roleComp, "guard", request.context.day, request.context.ability_id);
+    const target = world && ability ? world.getAliveEntityIds().find(id => id !== request.actorId && id !== ability.state.lastTarget && luckyTargetAllowed(world, request.actorId, ability, request.context.day, "guard", id)) ?? null : pickAliveNotSelf();
     if (target !== null && getGuardState(roleComp, request.context.ability_id)?.lastTarget !== target) {
       return { name: "guard", args: { target_id: target, abstain: false } };
     }

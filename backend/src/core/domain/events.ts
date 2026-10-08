@@ -69,6 +69,10 @@ export interface EventPayloadMap {
   mechanical_poison_reflected: { actorId: EntityId; day: number; protectedTargetId: EntityId; casterId: EntityId };
   mechanical_shot: { actorId: EntityId; targetId: EntityId };
   role_inspection_skipped: {actorId:EntityId;abilityId?:string;day:number;reason:"passed"|"no_targets"};
+  lucky_ability_skipped: { actorId: EntityId; abilityId: string; day: number; kind: "seer_check" | "potion" | "guard" };
+  merchant_trade_committed: { actorId: EntityId; day: number; targetId: EntityId; skill: "check" | "poison" | "guard" };
+  merchant_trade_skipped: { actorId: EntityId; day: number };
+  merchant_trade_resolved: { actorId: EntityId; day: number; targetId: EntityId; skill: "check" | "poison" | "guard"; outcome: "granted" | "backlash" };
   role_inspected: {actorId:EntityId;abilityId?:string;targetId:EntityId;day:number;result:Extract<InspectionResult,{kind:"role"}>};
   wolf_self_destruct: { wolfId: EntityId; window: ActionWindow };
   white_wolf_king_self_destruct: { actorId: EntityId; targetId: EntityId | null; window: ActionWindow };

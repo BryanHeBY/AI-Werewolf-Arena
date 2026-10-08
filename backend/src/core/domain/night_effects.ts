@@ -2,10 +2,13 @@ import { COMPONENT } from "./components/names";
 import { aliveLifeVersion, type AliveComponent } from "./components/alive";
 import type { World } from "./world";
 import type { EntityId } from "./identity";
+import type { StatusMarksComponent } from "./components/status_marks";
 
 /** Runtime-only ownership. Component references never enter events or recordings. */
 export interface NightLifeScope { readonly id: EntityId; readonly life: AliveComponent; readonly version: number }
 export interface NightPoisonClaim { readonly source: NightLifeScope; readonly target: NightLifeScope }
+export interface NightGuardClaim { readonly target: NightLifeScope; readonly marks: StatusMarksComponent }
+export interface NightMerchantBacklash { readonly target: NightLifeScope; readonly isCurrent: () => boolean }
 export function captureNightLife(world: World, id: EntityId): NightLifeScope | null {
   const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive), version = life && aliveLifeVersion(life);
   return life?.alive && version !== undefined ? { id, life, version } : null;

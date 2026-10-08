@@ -50,6 +50,8 @@ const ACTOR_ONLY_EVENT_TYPES = new Set([
   "mechanical_skill_skipped", "mechanical_poison_used", "mechanical_guard_chosen", "mechanical_attack_chosen",
   "role_inspected",
   "role_inspection_skipped",
+  "lucky_ability_skipped",
+  "merchant_trade_committed", "merchant_trade_skipped",
   "witch_potion_used",
   "witch_potion_skipped",
   "guard_applied",

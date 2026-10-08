@@ -1,11 +1,12 @@
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { readGravekeeperFeedback, readSeerInspectionResult, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
 import {readInspectionResult} from "@ai-werewolf-arena/replay-contract";
-import { text, term, inspectionLabel, outcomeLabel, outcomeWinnersLabel, mechanicalEventLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
+import { text, term, inspectionLabel, outcomeLabel, outcomeWinnersLabel, mechanicalEventLabel, merchantEventLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { campName, phaseName, resultReasonName, roleName } from "./replay-localization";
 
 export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerIds?: readonly number[]): string {
   const p = event.payload;
+  const merchant = merchantEventLabel(event.type,p,locale); if (merchant !== null) return merchant;
   const mechanical = mechanicalEventLabel(event.type, p, locale);
   if (mechanical !== null) return mechanical;
   const t = (key: MessageKey, params?: Record<string, string | number>) => text(locale, key, params);
@@ -13,6 +14,7 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerI
   const target = numberValue(p.targetId);
   const players = (value: unknown) => numberList(value, locale) || t("replay.none");
   switch (event.type) {
+    case "lucky_ability_skipped": return t("console.lucky.skipped", { actor, day: numberValue(p.day), ability: stringValue(p.abilityId) });
     case "gargoyle_awakened":return t("console.gargoyle.awakened",{actor,day:numberValue(p.day)});
     case "role_inspection_skipped":return p.reason==="passed"||p.reason==="no_targets"?t("console.role_inspection.skipped",{actor,day:numberValue(p.day),reason:t(p.reason==="passed"?"inspection.skip.passed":"inspection.skip.no_targets")}):t("replay.unknown");
     case "role_inspected":{const result=readInspectionResult(p.result);return result?.kind==="role"?t("console.role_inspected",{actor,target,result:inspectionLabel(result,locale)}):t("replay.unknown");}

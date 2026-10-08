@@ -23,6 +23,10 @@ type NightAbilityUnion = {
     id: string; kind: P; state: NightAbilityStates[P]; source: AbilitySource; sourceDisclosed: boolean;
     startsOnDay: number; expiresAfterDay?: number; maxUses: number | null;
     uses: number; lastUsedDay: number | null; disabled: boolean;
+    /** Miracle gifts act in their own late slot; ordinary instances omit this policy. */
+    activation?: "lucky";
+    /** An actual death permanently expires a lucky gift, including after transfer/revival. */
+    deathExpired?: boolean;
   }
 }[NightAbilityKind];
 export type NightAbility<K extends NightAbilityKind = NightAbilityKind> = Extract<NightAbilityUnion, { kind: K }>;
@@ -61,7 +65,7 @@ export function allNightAbilities(role: RoleComponent | undefined): NightAbility
 }
 
 export function abilityStatus(ability: NightAbility, day: number): AbilityStatus {
-  if (ability.disabled) return "disabled";
+  if (ability.disabled || ability.deathExpired) return "disabled";
   if (day < ability.startsOnDay) return "pending";
   if (ability.expiresAfterDay !== undefined && day > ability.expiresAfterDay) return "expired";
   if (ability.maxUses !== null && ability.uses >= ability.maxUses) return "spent";

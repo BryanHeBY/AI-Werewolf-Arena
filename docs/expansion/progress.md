@@ -11,7 +11,7 @@
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
 | P5 | 完成 | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md) |
 | P6 | 完成 | 五角色与三路审查闭环；16项verified，最终全量1176测试／542实际双语整局/Tape、103前端／42浏览器通过，见[阶段验收](reviews/p6-activation.md) |
-| P7 第三批 | 进行中：通灵师、机械狼 verified | [通灵师](reviews/p7-psychic.md)、[机械狼](reviews/p7-mechanical-wolf.md)；18 verified/46 planned，P7 余奇迹商人、混血儿、魔镜少女、觉醒隐狼、黑市商人 5 项；阶段结束全支持矩阵另验 |
+| P7 第三批 | 进行中：通灵师、机械狼、奇迹商人 | [通灵师](reviews/p7-psychic.md)、[机械狼](reviews/p7-mechanical-wolf.md)、[奇迹商人](reviews/p7-miracle-merchant.md)；19 verified/45 planned，奇商最终全量1463/134151＋686实际完整局/Tape通过；P7余混血儿、魔镜少女、觉醒隐狼、黑市商人4项 |
 | P8–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
@@ -325,3 +325,11 @@ front103／953、type/build、actualChromium42、中文接刀与英文十二人�
 三路独立发现的 skill 模式序列化绕过、毒瓶 gateway 后耗尽、枪浅 owner/camp/container、配置诊断及双语前缀问题均修并复查；真实同批不假接/不同提案保前缀、外部 G02 与原生排他也有实际核心场景。最终 verified 源码 type/deps/boundaries/i18n、engine/config/catalog **627/8916**，**176 双语本地完整局＋40 受限 seed/全部严格 Tape（90/46157）**通过；没有把候选 source 冒认激活后，登记后同矩阵再次运行。
 
 front **119/1078**、type/build、实际 Chromium **50**与中英真实 PNG root/L 独立目检通过；详见[三路审查](reviews/p7-mechanical-wolf.md)。目录 18 verified/46 planned，新六/十二 board/game 示例可加载，未改用户 configs、未读取认证或调用外部模型。P7 其余奇迹商人、混血儿、魔镜少女、觉醒隐狼、黑市商人及 P8–P10、组合矩阵/长局/T6 持续，完整目标尚未完成。
+
+## P7：奇迹商人完整交付
+
+第19项 miracle_merchant 按[冻结卡](rules/awa-miracle-merchant-v1.md)及[接入契约](miracle-merchant.md)交付：125任意夜一次赠予／700独立当夜或后夜幸运验毒守，普通与Lucky独立库存、同actor同kind本夜及守前夜联合目标限制；原ID/activation/state/actor-target生命最终复验。真实Wolf不授且冻结MerchantBacklash提案，Dream可挡但不返次数，首夜遗言／徽章／全部死亡后PM判胜。无即时成功或donorID、opaque giftID、个人账本分离DTO、God分类不向任何玩家输出；死亡永久失效、transfer不返库存、copy附加gift拒绝。
+
+三路修复并复查提交后账本变动、实例ID漂移、Lucky毒误用强制原生directive、none本人目标例外与roleCard锚点；真实反噬末神／末狼／徽章终局和九类字面Source计划相互验证。**verified最终source全release1463／134151／151文件＋smoke/type/deps/boundaries/i18n全过**，包括原632＋新54＝**686本机双语SDK/ACP/混合完整局及全部严格Tape**、各板种子与故障专项。新角色两板各20seed自然终局、0拒绝回退、赠予/反噬/Lucky/wait正分支及全重放；未把candidate54冒认激活后门槛。
+
+front **127／1140**、type/build、实际Chromium **54**及中英真实PNG root/L独立目检通过，见[三路最终审查](reviews/p7-miracle-merchant.md)。目录19 verified/45 planned，新六/十二board/game例可加载，未读写用户configs/认证或调用外部模型。P7剩混血儿、魔镜少女、觉醒隐狼、黑市商人四角色；P8–P10／22机制全矩阵／长局／T6持续，完整目标尚未完成。

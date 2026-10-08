@@ -14,6 +14,7 @@ import {claimCharm,commitCharmDeath,type CharmBinding} from "../mechanisms/roles
 import {refreshHiddenWolfInheritance} from "../mechanisms/roles/hidden_wolf/inheritance";
 import {refreshGargoyleInheritance} from "../mechanisms/roles/gargoyle/inheritance";
 import { refreshMechanicalInheritance } from "../mechanisms/roles/mechanical_wolf/inheritance";
+import { expireLuckyAbilitiesOnDeath } from "../mechanisms/roles/ability_changes";
 
 interface DeathWaveActions { phase: Phase; day: number; permits: Array<ReturnType<World["openDeathAction"]>>; isCurrent:()=>boolean }
 
@@ -266,6 +267,7 @@ export class DeathResolution {
         continue;
       }
       alive.alive = false;
+      expireLuckyAbilitiesOnDeath(this.world, id, this.events);
       this.settledLives.set(id, { component: alive, version: aliveLifeVersion(alive) });
     }
     if(refreshInheritance){refreshHiddenWolfInheritance(this.world,this.events,this.state.day);refreshGargoyleInheritance(this.world,this.events,this.state.day);refreshMechanicalInheritance(this.world,this.state.day,this.events);}

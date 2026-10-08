@@ -15,6 +15,7 @@ export enum DeathCause {
   Ability = "ability",
   MechanicalKnife = "mechanical_knife",
   MechanicalGuardFailure = "mechanical_guard_failure",
+  MerchantBacklash = "merchant_backlash",
 }
 export type DeathSources = Record<number, DeathCause[]>;
 export type DeathShotSelection =

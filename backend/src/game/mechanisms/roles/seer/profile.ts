@@ -9,6 +9,7 @@ import { SEER_NIGHT_STAGES } from "./night_stages";
 import { SEER_TOOL_SPECS } from "./tool_specs";
 import { isAliveTarget } from "../../validation/contracts";
 import { activeNightAbility } from "../abilities";
+import { luckyTargetAllowed } from "../night_action_history";
 
 /** 预言家角色配置。 */
 export const SEER_ROLE_PROFILE: RoleProfile = {
@@ -33,11 +34,13 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
   },
   toolSpecs: SEER_TOOL_SPECS,
   validationRules: {
-    check_identity: ({ world, role, toolCall, day, abilityId, phase }) => {
-      if (!activeNightAbility(role, "seer_check", day ?? 1, abilityId)) return { code: RuleError.SeerOnly };
+    check_identity: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {
+      const ability = activeNightAbility(role, "seer_check", day ?? 1, abilityId);
+      if (!ability) return { code: RuleError.SeerOnly };
       if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
       if (toolCall.name !== "check_identity") return { code: RuleError.ToolMismatch };
       if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.CheckTarget };
+      if (!luckyTargetAllowed(world, actorId, ability, day ?? 1, "check", toolCall.args.target_id)) return { code: RuleError.LuckyTargetRepeat };
       return null;
     },
   },
@@ -50,11 +53,12 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
       },
     },
   },
-  baselineAction: (_roleComp, request, pickAliveNotSelf) => {
+  baselineAction: (roleComp, request, pickAliveNotSelf, _byCamp, _locale, world) => {
     if (!request.allowedTools.includes("check_identity")) {
       return null;
     }
-    const target = pickAliveNotSelf();
+    const ability = activeNightAbility(roleComp, "seer_check", request.context.day, request.context.ability_id);
+    const target = world && ability ? world.getAliveEntityIds().find(id => id !== request.actorId && luckyTargetAllowed(world, request.actorId, ability, request.context.day, "check", id)) ?? null : pickAliveNotSelf();
     return target !== null ? { name: "check_identity", args: { target_id: target } } : null;
   },
 };

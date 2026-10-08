@@ -124,3 +124,21 @@ export function mechanicalEventLabel(type: string, payload: unknown, locale: Loc
     default: return unknown();
   }
 }
+
+/** Merchant choices and God outcomes label facts without prematurely marking death or changing identity. */
+export function merchantEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+  if (!["merchant_trade_committed", "merchant_trade_skipped", "merchant_trade_resolved"].includes(type)) return null;
+  const unknown = () => text(locale, "replay.unknown");
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return unknown();
+  const prototype = Object.getPrototypeOf(payload), descriptors = Object.getOwnPropertyDescriptors(payload);
+  if ((prototype !== Object.prototype && prototype !== null) || Object.values(descriptors).some(field => !Object.hasOwn(field,"value") || !field.enumerable)) return unknown();
+  const p = Object.fromEntries(Object.entries(descriptors).map(([key,field])=>[key,field.value]));
+  const positive = (value: unknown): value is number => typeof value === "number" && Number.isSafeInteger(value) && value > 0;
+  if (!positive(p.actorId) || !positive(p.day)) return unknown();
+  const actor=p.actorId, day=p.day;
+  if (type === "merchant_trade_skipped") return text(locale,"console.merchant.skip",{actor,day});
+  if (!positive(p.targetId) || !["check","poison","guard"].includes(p.skill)) return unknown();
+  const skill=text(locale,p.skill==="check"?"merchant.skill.check":p.skill==="poison"?"merchant.skill.poison":"merchant.skill.guard"), target=p.targetId;
+  if (type === "merchant_trade_committed") return text(locale,"console.merchant.trade",{actor,day,target,skill});
+  return p.outcome==="granted"||p.outcome==="backlash" ? text(locale,"console.merchant.outcome",{actor,day,target,skill,outcome:text(locale,p.outcome==="granted"?"merchant.outcome.granted":"merchant.outcome.backlash")}) : unknown();
+}

@@ -7,6 +7,8 @@ import {roleInspectionPolicy} from "../roles/abilities";
 import {getRoleInspectionState} from "../roles/private_state";
 import {COMPONENT} from "../../../core/domain/components/names";
 import type {RoleComponent} from "../../../core/domain/components/role";
+import { findNightAbility } from "../roles/abilities";
+import { luckyTargetAllowed } from "../roles/night_action_history";
 
 interface TargetRule {
   allowSelf: boolean;
@@ -24,6 +26,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     check_identity: { allowSelf: false },
     inspect_role:{allowSelf:false},
     mimic_role: { allowSelf: false }, mechanical_inspect: { allowSelf: false },
+    bestow_ability: { allowSelf: false },
     mechanical_poison: { allowSelf: true }, mechanical_guard: { allowSelf: true }, mechanical_attack: { allowSelf: true },
     use_potion: { allowSelf: false },
     vote: { allowSelf: false },
@@ -64,13 +67,28 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     }
     const allowSelf = targetTools.some((tool) => this.getRule(ctx.actorRole, tool)?.allowSelf);
     const inspection=getRoleInspectionState(ctx.world.getComponent<RoleComponent>(ctx.actorId,COMPONENT.Role)!,ctx.abilityId);
+    const ownRole = ctx.world.getComponent<RoleComponent>(ctx.actorId, COMPONENT.Role);
+    const luckyAllowed = (tool: ToolName, id: number) => {
+      const kind = tool === "check_identity" ? "seer_check" : tool === "guard" ? "guard" : tool === "use_potion" ? "potion" : null;
+      if (!kind) return true;
+      const ability = findNightAbility(ownRole, kind, ctx.abilityId);
+      if (!ability) return true;
+      // An ordinary Witch may still heal a target whose poison is blocked by this actor's history.
+      if (ability.kind === "potion" && ability.activation !== "lucky" && ability.state.heal > 0) return true;
+      return luckyTargetAllowed(ctx.world, ctx.actorId, ability, ctx.day ?? 1, kind === "seer_check" ? "check" : kind === "guard" ? "guard" : "poison", id);
+    };
     const ids = ctx.world
       .getAliveEntityIds()
       .filter(id => targetTools.some(tool => (this.getRule(ctx.actorRole, tool)?.allowSelf || id !== ctx.actorId) &&
+        luckyAllowed(tool, id) &&
         (tool !== "vote" || canBeExiled(ctx.world, id, ctx.roleCatalog)) &&
         (tool!=="inspect_role"||!inspection||roleInspectionPolicy(inspection)==="psychic"||!inspection.history.some(report=>report.targetId===id))&&
         (tool !== "vote_for_sheriff" || ctx.sheriffCandidates?.includes(id) && canBeSheriff(ctx.world, id, ctx.roleCatalog))))
       .sort((a, b) => a - b);
+    const potion = findNightAbility(ownRole, "potion", ctx.abilityId);
+    if (targetTools.length === 1 && targetTools[0] === "use_potion" && potion?.activation === "lucky") {
+      return text(ctx.world.locale, "prompt.targets.lucky_poison", { ids: ids.join(", ") || text(ctx.world.locale, "common.none"), actor: ctx.actorId });
+    }
     if (ids.length === 0) {
       return text(ctx.world.locale, "prompt.targets.none");
     }

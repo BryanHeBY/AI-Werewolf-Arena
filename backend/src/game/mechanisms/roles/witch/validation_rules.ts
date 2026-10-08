@@ -7,6 +7,7 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
 import { getWitchState } from "../private_state";
 import { activeNightAbility } from "../abilities";
+import { luckyTargetAllowed } from "../night_action_history";
 
 /** 女巫工具校验规则集合。 */
 export const WITCH_VALIDATION_RULES: ToolRuleMap = {
@@ -20,6 +21,7 @@ export const WITCH_VALIDATION_RULES: ToolRuleMap = {
     if (toolCall.name !== "use_potion") {
       return { code: RuleError.ToolMismatch };
     }
+    if (ability?.activation === "lucky" && toolCall.args.potion_type === PotionType.None && toolCall.args.target_id !== actorId) return { code: RuleError.PoisonTarget };
     if (toolCall.args.potion_type === PotionType.Heal) {
       const canSelfHeal = day === undefined ? witchState.canSelfHeal : witchState.selfHealRule === WitchSelfHealRule.Always || (witchState.selfHealRule === WitchSelfHealRule.FirstNightOnly && day === 1);
       if (!canSelfHeal && toolCall.args.target_id === actorId) {
@@ -48,6 +50,7 @@ export const WITCH_VALIDATION_RULES: ToolRuleMap = {
       if (!isAliveTarget(world, toolCall.args.target_id)) {
         return { code: RuleError.PoisonTarget };
       }
+      if (!luckyTargetAllowed(world, actorId, ability!, day ?? 1, "poison", toolCall.args.target_id)) return { code: RuleError.LuckyTargetRepeat };
       return null;
     }
     return null;

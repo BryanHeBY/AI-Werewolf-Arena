@@ -230,3 +230,11 @@ for(const locale of ["zh-CN","en"] as const)for(const large of [false,true])test
  const caption=await page.getByTestId("composition-caption").boundingBox();expect(caption).not.toBeNull();for(const seat of await page.locator("[data-composition-player]").all()){const box=await seat.boundingBox();expect(box).not.toBeNull();expect(box!.y+box!.height).toBeLessThan(caption!.y);}
  await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(large?8:4);await expect(page.getByTestId("composition-winner")).toHaveCount(large?8:4);
 });
+
+for(const locale of ["zh-CN","en"] as const)for(const large of [false,true])test(`${locale}/${large}: actual Merchant gift and Lucky inspection keep real identities and lives until settlement`,async({page})=>{
+ const replay=JSON.parse(readFileSync(new URL(`../fixtures/merchant-${large?"twelve":"dream"}.replay.json`,import.meta.url),"utf8"));replay.meta.locale=locale;await page.route("**/api/replay",route=>route.fulfill({json:replay}));await page.goto("/");
+ const label=large?(locale==="en"?"Player 5 checks player 2: Werewolves":"5号查验2号：狼人"):(locale==="en"?"God trade result: player 3 to player 1, Inspection, night 1: Backlash proposal.":"【上帝交易结果】第1夜3号对1号的查验：反噬提案。");await page.locator(".timeline .event").filter({hasText:label}).click();await expect(page.getByTestId("composition-event")).toHaveText(label);await expect(page.locator(".seat-grid .dead")).toHaveCount(0);await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+ const actor=page.getByRole("button",{name:locale==="en"?`Player ${large?8:3} · Seat ${large?8:3}`:`${large?8:3}号 · Seat ${large?8:3}`,exact:true});await expect(actor).toContainText(locale==="en"?"Miracle Merchant":"奇迹商人");
+ const caption=await page.getByTestId("composition-caption").boundingBox();expect(caption).not.toBeNull();for(const seat of await page.locator("[data-composition-player]").all()){const box=await seat.boundingBox();expect(box).not.toBeNull();expect(box!.y+box!.height).toBeLessThan(caption!.y);}
+ await page.locator(".timeline .event").last().click();await expect(page.locator(".seat-grid .winner")).toHaveCount(large?8:4);await expect(page.getByTestId("composition-winner")).toHaveCount(large?8:4);
+});

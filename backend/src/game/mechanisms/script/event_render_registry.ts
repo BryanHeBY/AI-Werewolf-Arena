@@ -1,5 +1,5 @@
 import { readGravekeeperFeedback, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
-import { text, inspectionLabel, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, mechanicalEventLabel, type Locale } from "@ai-werewolf-arena/game-text";
+import { text, inspectionLabel, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, mechanicalEventLabel, merchantEventLabel, type Locale } from "@ai-werewolf-arena/game-text";
 /** 文件说明：事件 -> 脚本回放文本/终端文本渲染注册表。 */
 import { GameEvent } from "../../../core/domain/model";
 import {
@@ -48,6 +48,7 @@ const CHAT_HANDLERS: ScriptChatLineHandlers = {
 };
 
 const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
+  lucky_ability_skipped: (event,locale="zh-CN") => text(locale,"console.lucky.skipped",{actor:event.payload.actorId,day:event.payload.day,ability:event.payload.abilityId}),
   gargoyle_awakened:(event,locale="zh-CN")=>text(locale,"console.gargoyle.awakened",{actor:event.payload.actorId,day:event.payload.day}),
   role_inspection_skipped:(event,locale="zh-CN")=>text(locale,"console.role_inspection.skipped",{actor:event.payload.actorId,day:event.payload.day,reason:text(locale,event.payload.reason==="passed"?"inspection.skip.passed":"inspection.skip.no_targets")}),
   role_inspected:(event,locale="zh-CN")=>text(locale,"console.role_inspected",{actor:event.payload.actorId,target:event.payload.targetId,result:inspectionLabel(event.payload.result,locale)}),
@@ -145,6 +146,7 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const merchant = merchantEventLabel(event.type, event.payload, locale); if (merchant !== null) return merchant;
     const mechanical = mechanicalEventLabel(event.type, event.payload, locale);
     if (mechanical !== null) return mechanical;
     const handler = JUDGE_HANDLERS[event.type];
@@ -160,6 +162,9 @@ export class ScriptEventRenderRegistry {
   }
 
   toLiveRender(event: GameEvent, printPrivateEvents: boolean, locale: Locale = "zh-CN"): ScriptLiveRender[] {
+    const merchant = merchantEventLabel(event.type, event.payload, locale);
+    if (merchant !== null) return printPrivateEvents ? [{ kind: event.type === "merchant_trade_resolved" ? "god" : "private", text: merchant }] : [];
+    if (event.type === "lucky_ability_skipped") return printPrivateEvents ? [{ kind:"private", text:text(locale,"console.lucky.skipped",{actor:event.payload.actorId,day:event.payload.day,ability:event.payload.abilityId}) }] : [];
     const mechanical = mechanicalEventLabel(event.type, event.payload, locale);
     if (mechanical !== null) {
       if (event.type === "mechanical_shot") return [{ kind: "action", text: mechanical }];

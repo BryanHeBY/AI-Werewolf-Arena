@@ -7,6 +7,7 @@ import { Phase, PotionType, Role, StatusMark, WitchSelfHealRule } from "../../..
 import { NightStageHandler } from "../../stages/night/contracts";
 import { getWitchState } from "../private_state";
 import { activeNightAbility, allNightAbilities, nightAbilityActors, recordNightAbilityUse } from "../abilities";
+import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";
 
 const resetNightRoleStateStage: NightStageHandler = {
   id: "reset_night_role_state",
@@ -33,10 +34,12 @@ const witchActionStage: NightStageHandler = {
   priority: 500,
   async execute(ctx): Promise<void> {
     for (const { actorId: witchId, ability } of nightAbilityActors(ctx.world, "potion", ctx.currentDay())) {
+      if (ability.activation === "lucky") continue;
       if (!ctx.world.getAliveEntityIds().includes(witchId) || activeNightAbility(ctx.world.getComponent<RoleComponent>(witchId, COMPONENT.Role), "potion", ctx.currentDay(), ability.id) !== ability) continue;
       ability.state.canSelfHeal = ability.state.selfHealRule === WitchSelfHealRule.Always || (ability.state.selfHealRule === WitchSelfHealRule.FirstNightOnly && ctx.currentDay() === 1);
       const day=ctx.currentDay(),originalRole=ctx.world.getComponent<RoleComponent>(witchId,COMPONENT.Role)!,kind=originalRole.role,camp=originalRole.camp,privateState=originalRole.privateState,originalState=ability.state,actorLife=ctx.world.getComponent<AliveComponent>(witchId,COMPONENT.Alive)!,actorVersion=aliveLifeVersion(actorLife);
-      const current=()=>ctx.isCurrent()&&ctx.world.getComponent(witchId,COMPONENT.Role)===originalRole&&originalRole.role===kind&&originalRole.camp===camp&&originalRole.privateState===privateState&&activeNightAbility(originalRole,"potion",day,ability.id)===ability&&ability.state===originalState&&ctx.world.getComponent(witchId,COMPONENT.Alive)===actorLife&&actorLife.alive&&actorVersion!==undefined&&aliveLifeVersion(actorLife)===actorVersion;
+      const activation = ability.activation, originalAbilityId = ability.id;
+      const current=()=>ctx.isCurrent()&&ctx.world.getComponent(witchId,COMPONENT.Role)===originalRole&&originalRole.role===kind&&originalRole.camp===camp&&originalRole.privateState===privateState&&ability.id===originalAbilityId&&activeNightAbility(originalRole,"potion",day,originalAbilityId)===ability&&ability.activation===activation&&ability.state===originalState&&ctx.world.getComponent(witchId,COMPONENT.Alive)===actorLife&&actorLife.alive&&actorVersion!==undefined&&aliveLifeVersion(actorLife)===actorVersion;
       const targets=new Map(ctx.world.getAliveEntityIds().map(id=>[id,captureNightLife(ctx.world,id)]));
       const attribution = ability.source.kind === "native" ? {} : { abilityId: ability.id };
       const req = ctx.makeRequest(witchId, ["use_potion"], {
@@ -89,6 +92,7 @@ const witchActionStage: NightStageHandler = {
       if(potion!==PotionType.None&&(!target||!livingNightLife(ctx.world,target)))continue;
 
       if (potion === "heal") {
+        if (witchState.heal <= 0 || witchState.healUsedThisNight || witchState.poisonUsedThisNight) continue;
         ctx.ensureMarks(targetId).add(StatusMark.HealMark);
         witchState.heal -= 1;
         witchState.healUsedThisNight = true;
@@ -100,11 +104,14 @@ const witchActionStage: NightStageHandler = {
       }
 
       if (potion === "poison") {
+        if (witchState.poison <= 0 || witchState.poisonUsedThisNight || witchState.healUsedThisNight) continue;
+        if (!luckyTargetAllowed(ctx.world, witchId, ability, day, "poison", targetId)) continue;
         const source=captureNightLife(ctx.world,witchId);if(!source||!target)continue;
         (ctx.state.poisonClaims??=[]).push({source,target});
         ctx.ensureMarks(targetId).add(StatusMark.PoisonMark);
         witchState.poison -= 1;
         witchState.poisonUsedThisNight = true;
+        recordOwnNightAction(ctx.world, witchId, day, "poison", targetId, false);
         ctx.events.push({
           timestamp: Date.now(),
           type: "witch_potion_used",

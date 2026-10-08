@@ -1,0 +1,66 @@
+{
+  "version": 2,
+  "id": "six_player_miracle_merchant",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 6,
+    "roleSetups": [
+      {
+        "role": "wolf",
+        "count": 1
+      },
+      {
+        "role": "wolf_king",
+        "count": 1
+      },
+      {
+        "role": "miracle_merchant",
+        "count": 1
+      },
+      {
+        "role": "seer",
+        "count": 1
+      },
+      {
+        "role": "witch",
+        "count": 1
+      },
+      {
+        "role": "villager",
+        "count": 1
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": [
+      "slaughter_city"
+    ],
+    "hooks": {
+      "onDaybreak": true,
+      "onPreElection": true,
+      "onPreVote": true,
+      "onPerSpeechGap": true
+    }
+  },
+  "mechanisms": {
+    "sheriff": {
+      "enabled": false
+    },
+    "selfDestruct": {
+      "enabledWindows": []
+    },
+    "tieBreaker": {
+      "exileVote": "min_id",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "miracle_merchant": {},
+    "witch": {
+      "selfHeal": "disabled"
+    }
+  }
+}

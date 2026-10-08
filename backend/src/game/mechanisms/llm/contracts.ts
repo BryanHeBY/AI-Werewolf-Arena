@@ -21,6 +21,7 @@ export interface ToolRepairPack {
 /** 可行动目标提示上下文。 */
 export interface TargetHintContext {
   actorId: EntityId;
+  day?: number;
   actorRole?: Role;
   abilityId?:string;
   allowedTools: ToolName[];

@@ -22,6 +22,7 @@ import {GARGOYLE_ROLE_PROFILE} from "./gargoyle/profile";
 
 import {PSYCHIC_ROLE_PROFILE} from "./psychic/profile";
 import { MECHANICAL_WOLF_ROLE_PROFILE } from "./mechanical_wolf/profile";
+import { MIRACLE_MERCHANT_ROLE_PROFILE } from "./miracle_merchant/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   WOLF_ROLE_PROFILE,
@@ -36,6 +37,7 @@ const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   GARGOYLE_ROLE_PROFILE,
   PSYCHIC_ROLE_PROFILE,
   MECHANICAL_WOLF_ROLE_PROFILE,
+  MIRACLE_MERCHANT_ROLE_PROFILE,
   VILLAGER_ROLE_PROFILE,
   SEER_ROLE_PROFILE,
   GUARD_ROLE_PROFILE,

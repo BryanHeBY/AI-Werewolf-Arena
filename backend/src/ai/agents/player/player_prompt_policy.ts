@@ -7,6 +7,8 @@ import {roleInspectionPolicy} from "../../../game/mechanisms/roles/abilities";
 import {getGargoyleState,getRoleInspectionState} from "../../../game/mechanisms/roles/private_state";
 import {canGargoyleKnife} from "../../../game/mechanisms/roles/gargoyle/inheritance";
 import { getMechanicalState, projectMechanicalState } from "../../../game/mechanisms/roles/mechanical_wolf/state";
+import { ownNightActions } from "../../../game/mechanisms/roles/night_action_history";
+import { getMerchantState, projectMerchantState } from "../../../game/mechanisms/roles/miracle_merchant/state";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, ActionWindow, BoardConfig, EntityId, Role, ToolName } from "../../../core/domain"
@@ -87,6 +89,7 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    if (role?.role === Role.MiracleMerchant) { const state=getMerchantState(role);if(state)ownState.merchant=projectMerchantState(state); }
     const witch = role ? getWitchState(role, request.context.ability_id) : undefined;
     const guard = role ? getGuardState(role, request.context.ability_id) : undefined;
     if (witch) ownState.witch = witch;
@@ -116,6 +119,7 @@ export class PlayerPromptPolicy {
       name: this.world.getComponent<IdentityComponent>(request.actorId, COMPONENT.Identity)?.name,
     }, knownAliveIds: this.world.entityIds().filter(id => !dead.has(id)),
       teammateIds: this.wolfTeammates(request.actorId), ownState,
+      ownNightActions: ownNightActions(this.world, request.actorId, request.context.day),
       abilities: allNightAbilities(role).map(ability => projectNightAbility(ability, request.context.day)) });
   }
 
@@ -167,7 +171,7 @@ export class PlayerPromptPolicy {
       phase: this.options.phaseStageLocalizationRegistry.phaseName(String(request.phase), this.locale),
       stage: this.options.phaseStageLocalizationRegistry.stageName(stage, this.locale),
       isSpeechTurn: input.allowedTools.includes("speak") || input.allowedTools.includes("speak_to_wolves"),
-      stageDirective: this.options.toolSpecRegistry.getStageDirective(request.allowedTools, this.locale) ??
+      stageDirective: bound?.activation === "lucky" ? text(this.locale, "action.lucky.directive") : this.options.toolSpecRegistry.getStageDirective(request.allowedTools, this.locale) ??
         text(this.locale, "prompt.stage.default"),
       statusDirective: this.statusDirective(request, role),
       requiresAction: constraints.minValidActions > 0,
@@ -179,6 +183,7 @@ export class PlayerPromptPolicy {
       stageContextHint: [this.stageContextHint(request), request.context.retry_notice !== undefined ? request.context.retry_notice : request.context.retry_notice_message ? renderMessage(this.locale, request.context.retry_notice_message) : undefined].filter(Boolean).join(" ") || undefined,
       actionableIdsHint: this.options.targetHintRegistry.buildActionableIdsHint({
         actorId: request.actorId,
+        day: request.context.day,
         actorRole: targetRuleRole,
         abilityId:request.context.ability_id,
         allowedTools: input.allowedTools,
@@ -219,6 +224,8 @@ export class PlayerPromptPolicy {
       lines.push(text(this.locale, "ability.summary", { id: ability.id, kind: text(this.locale, `ability.kind.${ability.kind}`), status, uses: ability.maxUses === null ? text(this.locale, "ability.unlimited") : ability.maxUses - ability.uses, state: JSON.stringify(state) }));
     }
     if (request.context.ability_id) lines.push(text(this.locale, "ability.bound_turn", { id: request.context.ability_id }));
+    const hasLucky = allNightAbilities(role).some(ability => ability.activation === "lucky") || ownNightActions(this.world, request.actorId, request.context.day).some(row => row.lucky);
+    if (hasLucky) lines.push(text(this.locale, "ability.lucky.rules"), text(this.locale, "ability.lucky.history", { actions: JSON.stringify(ownNightActions(this.world, request.actorId, request.context.day)) }));
     if(request.allowedTools.includes("dream")&&allNightAbilities(role).some(ability=>ability.kind==="dream"))lines.push(text(this.locale,"ability.dream.rules"));
     if(role&&request.allowedTools.includes("inspect_role")){const inspection=getRoleInspectionState(role,request.context.ability_id);if(inspection)lines.push(text(this.locale,roleInspectionPolicy(inspection)==="psychic"?"ability.role_check.psychic_rules":"ability.role_check.rules"));}
     const privateState = role?.renderPrompt?.(this.locale).trim();
