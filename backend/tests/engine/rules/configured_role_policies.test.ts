@@ -689,3 +689,40 @@ test("a native death proposal is revoked by a policy edit before central commit"
     permit.close();
   }
 });
+
+for (const locale of ["zh-CN", "en"] as const)
+  test(`${locale}: mixed board policy descriptions identify the role they govern`, () => {
+    const roles = [
+      Role.WolfKing,
+      Role.Hunter,
+      Role.Gargoyle,
+      Role.Psychic,
+      Role.MirrorGirl,
+      Role.Villager,
+    ];
+    const config: BoardConfig = {
+      ...sixPlayerMvpConfig,
+      roleSetups: roles.map((role) => ({ role, count: 1 })),
+      hunter: { deathActionPolicy: "awa_knife_or_exile_v1" },
+      wolfKing: { deathActionPolicy: "awa_qualified_sources_v1" },
+      gargoyle: { inspectionPolicy: "awa_repeat_optional_v1" },
+      psychic: { inspectionPolicy: "awa_unique_required_v1" },
+      mirrorGirl: { inspectionPolicy: "awa_unique_optional_v1" },
+    };
+    const prompt = getDefaultConfigRenderRegistry().renderBoardConfigPrompt(config, locale);
+    expect(prompt).toContain(
+      locale === "en" ? "Hunter: Configured AWA native gun" : "猎人: 配置的AWA原生枪",
+    );
+    expect(prompt).toContain(
+      locale === "en" ? "Wolf King: Configured native gun" : "狼王: 配置的原生枪",
+    );
+    expect(prompt).toContain(
+      locale === "en" ? "Gargoyle: Configured AWA inspection" : "石像鬼: 配置的AWA查验",
+    );
+    expect(prompt).toContain(
+      locale === "en" ? "Spirit Seer: Configured AWA inspection" : "通灵师: 配置的AWA查验",
+    );
+    expect(prompt).toContain(
+      locale === "en" ? "Mirror Girl: Configured AWA inspection" : "魔镜少女: 配置的AWA查验",
+    );
+  });

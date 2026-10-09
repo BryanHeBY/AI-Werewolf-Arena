@@ -40,7 +40,7 @@ for (const [id, size] of [
         ...board.definition,
         roles: { ...board.definition.roles, wolf_king: { unlimitedShots: true } },
       }),
-    ).toThrow("board_config_role_parameters_not_supported");
+    ).toThrow("board_config_invalid_field: roles.wolf_king.unlimitedShots");
     const planned = structuredClone(board.definition);
     planned.board.roleSetups[0].role = "cupid";
     expect(() => parseBoardDefinition(planned)).toThrow("board_config_role_not_implemented");

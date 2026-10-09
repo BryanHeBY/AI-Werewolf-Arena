@@ -8,7 +8,7 @@ import {
   Role,
   KnightDuelWindow,
 } from "../../../core/domain/model";
-import { term, text, type Locale } from "@ai-werewolf-arena/game-text";
+import { roleName, term, text, type Locale } from "@ai-werewolf-arena/game-text";
 
 export interface ConfigRenderRegistry {
   renderBoardConfigPrompt(config: BoardConfig, locale?: Locale): string;
@@ -137,37 +137,43 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
           (entry) =>
             entry.count > 0 && (entry.role === Role.Hunter || entry.role === Role.WolfKing),
         )
-        .map((entry) =>
-          renderDeathActionPolicy(
-            entry.role === Role.Hunter
-              ? config.hunter?.deathActionPolicy
-              : config.wolfKing?.deathActionPolicy,
-            locale,
-          ),
+        .map(
+          (entry) =>
+            roleName(entry.role, locale) +
+            ": " +
+            renderDeathActionPolicy(
+              entry.role === Role.Hunter
+                ? config.hunter?.deathActionPolicy
+                : config.wolfKing?.deathActionPolicy,
+              locale,
+            ),
         ),
       ...config.roleSetups
         .filter(
           (entry) =>
             entry.count > 0 && [Role.Gargoyle, Role.Psychic, Role.MirrorGirl].includes(entry.role),
         )
-        .map((entry) =>
-          renderInspectionPolicy(
-            {
-              policy:
-                entry.role === Role.Gargoyle
-                  ? "gargoyle"
-                  : entry.role === Role.Psychic
-                    ? "psychic"
-                    : "mirror",
-              inspectionPolicy:
-                entry.role === Role.Gargoyle
-                  ? config.gargoyle?.inspectionPolicy
-                  : entry.role === Role.Psychic
-                    ? config.psychic?.inspectionPolicy
-                    : config.mirrorGirl?.inspectionPolicy,
-            },
-            locale,
-          ),
+        .map(
+          (entry) =>
+            roleName(entry.role, locale) +
+            ": " +
+            renderInspectionPolicy(
+              {
+                policy:
+                  entry.role === Role.Gargoyle
+                    ? "gargoyle"
+                    : entry.role === Role.Psychic
+                      ? "psychic"
+                      : "mirror",
+                inspectionPolicy:
+                  entry.role === Role.Gargoyle
+                    ? config.gargoyle?.inspectionPolicy
+                    : entry.role === Role.Psychic
+                      ? config.psychic?.inspectionPolicy
+                      : config.mirrorGirl?.inspectionPolicy,
+              },
+              locale,
+            ),
         ),
       text(locale, "prompt.config.disclosure"),
       text(locale, "prompt.config.last_words"),

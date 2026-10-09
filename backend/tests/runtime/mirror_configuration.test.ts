@@ -15,7 +15,9 @@ for (const id of ["six_player_mirror_girl", "twelve_player_mirror_girl"])
     const root = path.resolve(import.meta.dir, "../../../configs.example"),
       board = await loadBoardDefinition(root, id);
     expect(board.config.boardSize).toBe(id.startsWith("six") ? 6 : 12);
-    expect(board.definition.roles.mirror_girl).toEqual({});
+    expect(board.definition.roles.mirror_girl).toEqual({
+      inspectionPolicy: "awa_unique_optional_v1",
+    });
     expect(JSON.parse(await readFile(path.join(root, "games", `${id}.json`), "utf8")).board).toBe(
       id,
     );
