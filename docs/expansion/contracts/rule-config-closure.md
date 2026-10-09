@@ -4,7 +4,7 @@
 
 ## 已确认的当前默认
 
-- 板子仅使用公开 v2 schema；角色参数经 profile schema/apply 进入 BoardConfig。女巫自救默认 disabled，骑士窗口默认 after_speeches；守卫 repeatPolicy 默认 awa_last_action_v1，隐狼 campInspection 默认 awa_inheritance_v1。所有现有贡献通过 schema/default/apply/serialize 一致往返。
+- 板子仅使用公开 v2 schema；角色参数经 profile schema/apply 进入 BoardConfig。女巫自救默认 disabled，骑士窗口默认 after_speeches；守卫 repeatPolicy 默认 awa_last_action_v1，隐狼 campInspection 默认 awa_inheritance_v1。预言家兼容默认统一为awa_required_when_legal_v1（基线NightPipeline默认requiresAction=true），显式awa_optional_v1可跳过；复核修正了profile.defaults与schema的分歧。其他现有贡献按schema/default/apply/serialize核对。
 - 放逐/狼刀平票默认 min_id；警长默认票权1.5、平票 min_seat。自爆窗口和 hooks 必须一致。
 - 同守同救抵消；普通守救不挡毒；猎人/狼王死亡枪要求全部复合死因通过白名单，Poison另有否决。
 - 机械狼学习创建新资源模板、次夜生效、首刀夜额外刀有过期限制；两商人授赠/反噬时机保持原规则。
@@ -24,7 +24,7 @@
 
 守卫增加 netease_consecutive_nights_v1，使用实际相邻夜判断；无动作/非法动作不清历史，但打断相邻夜。默认 awa_last_action_v1 保留上次合法目标直到换目标或明确空守。隐狼增加 netease_2020_good_v1，仅使阵营查验接刀前后始终为好人；具体角色查验、熊感知、真实阵营和刀权仍独立保持AWA语义。这两项不是完整网易玩法预设，来源及工程推断见 [规则证据](rule-evidence.md)。
 
-女巫本夜最多一瓶原生药、解药可用才显示基础刀口已有运行闭环；三种自救已配置。双原生药、额外枪死因版本、复制资源模板、商人库存/反噬、梦/魅惑牵连变体、完整PK/徽章交接/夜序及同时灭绝优先级仍未增加新策略；不能凭文档标记为已实现。采用有限具名policy及兼容默认，不开放任意优先级或布尔组合。
+女巫披露与三种自救已配置；原生双药按明确非主流AWA实验实现。竞选/放逐PK和死亡持徽者选择已经连通实际流程及严格Tape。额外枪死因与三类查验参数是本次复核确认的原范围缺口，继续实施；保护/公共信息矩阵、夜序/遗言/翻牌/同时灭绝优先级、复制资源模板、商人库存/反噬、梦/魅惑牵连仍须逐项核对实现或保留理由，不能全部归入P8–P10。采用有限具名policy及兼容默认，不开放任意优先级或布尔组合。
 
 ## 本批实施清单
 

@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { SEER_TARGET_POLICIES, SEER_ACTION_POLICIES } from "../../../../core/domain/board";
+import {
+  SEER_TARGET_POLICIES,
+  SEER_ACTION_POLICIES,
+  DEFAULT_SEER_ACTION_POLICY,
+} from "../../../../core/domain/board";
 import { seerTargetAllowed } from "./target_policy";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text, term, inspectionLabel } from "@ai-werewolf-arena/game-text";
@@ -16,7 +20,7 @@ import { luckyTargetAllowed } from "../night_action_history";
 
 const parameters = z.strictObject({
   targetPolicy: z.enum(SEER_TARGET_POLICIES).default("awa_alive_v1"),
-  actionPolicy: z.enum(SEER_ACTION_POLICIES).default("awa_required_when_legal_v1"),
+  actionPolicy: z.enum(SEER_ACTION_POLICIES).default(DEFAULT_SEER_ACTION_POLICY),
 });
 /** 预言家角色配置。 */
 export const SEER_ROLE_PROFILE: RoleProfile = {
@@ -27,7 +31,7 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
   goodSide: "god",
   configuration: {
     schema: parameters,
-    defaults: { targetPolicy: "awa_alive_v1", actionPolicy: "awa_optional_v1" },
+    defaults: { targetPolicy: "awa_alive_v1", actionPolicy: DEFAULT_SEER_ACTION_POLICY },
     apply: (config, value) => ({ ...config, seer: parameters.parse(value) }),
     serialize: (config) => parameters.parse(config.seer ?? {}),
   },

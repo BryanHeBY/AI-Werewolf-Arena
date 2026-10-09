@@ -68,6 +68,8 @@ export const SEER_TARGET_POLICIES = ["awa_alive_v1", "awa_fresh_others_v1"] as c
 export type SeerTargetPolicy = (typeof SEER_TARGET_POLICIES)[number];
 export const SEER_ACTION_POLICIES = ["awa_optional_v1", "awa_required_when_legal_v1"] as const;
 export type SeerActionPolicy = (typeof SEER_ACTION_POLICIES)[number];
+/** Baseline NightPipeline requires a legal Seer action; all normalization paths share this value. */
+export const DEFAULT_SEER_ACTION_POLICY: SeerActionPolicy = "awa_required_when_legal_v1";
 
 export interface BoardConfig {
   boardSize: number;
