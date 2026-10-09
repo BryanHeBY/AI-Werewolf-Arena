@@ -217,9 +217,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "lonely_girl",
     names: { "zh-CN": "孤独少女", en: "Lonely Girl" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-netease-lonely-girl-v1.md",
     mechanismSummary: "崇拜对象、胜利归属",
   },
   {

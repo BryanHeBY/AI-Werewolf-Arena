@@ -1,3 +1,4 @@
+import { projectLonelyGirl } from "../../../game/mechanisms/roles/lonely_girl/lifecycle";
 import { projectWildChild } from "../../../game/mechanisms/roles/wild_child/lifecycle";
 import { initialIdentityCandidateCounts } from "../../../game/mechanisms/roles/initial_identity/deal";
 import { projectShapeshifterState } from "../../../game/mechanisms/roles/shapeshifter/state";
@@ -210,6 +211,7 @@ export class PlayerPromptPolicy {
       const state = getBlackMarketState(role);
       if (state) ownState.blackMarket = projectBlackMarketState(state);
     }
+    if (role?.role === Role.LonelyGirl) ownState.lonelyGirl = projectLonelyGirl(this.world, role);
     if (role?.role === Role.WildChild) ownState.wildChild = projectWildChild(this.world, role);
     if (role?.role === Role.Hybrid) {
       const state = getHybridState(role);
@@ -460,6 +462,12 @@ export class PlayerPromptPolicy {
 
   private statusDirective(request: ActionRequest, role?: RoleComponent): string | undefined {
     const lines: string[] = [];
+    if (role?.role === Role.LonelyGirl)
+      lines.push(
+        text(this.locale, "prompt.status.lonely_girl", {
+          state: JSON.stringify(projectLonelyGirl(this.world, role)),
+        }),
+      );
     if (role?.role === Role.WildChild)
       lines.push(
         text(this.locale, "prompt.status.wild_child", {

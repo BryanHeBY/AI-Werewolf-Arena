@@ -1,4 +1,9 @@
 import {
+  lonelyGirlReady,
+  hasActiveLonelyGirl,
+  openLonelyGirlNight,
+} from "../../mechanisms/roles/lonely_girl/lifecycle";
+import {
   wildChildReady,
   hasActiveWildChild,
   openWildChildNight,
@@ -113,12 +118,15 @@ export class NightPipeline {
     day: number,
     options: NightPipelineOptions = {},
   ): Promise<NightPipelineResult> {
+    if (hasActiveLonelyGirl(this.world) || !lonelyGirlReady(this.world))
+      throw new Error("lonely_girl_setup_before_night_required");
     if (hasActiveWildChild(this.world) || !wildChildReady(this.world))
       throw new Error("wild_child_setup_before_night_required");
     if (hasActiveInitialIdentitySetup(this.world) || !initialIdentitySetupReady(this.world))
       throw new Error(`${initialIdentityKind(this.world) ?? "thief"}_setup_before_night_required`);
     const isCurrent = options.isCurrent ?? (() => true);
     if (!isCurrent()) return { interrupted: true };
+    const closeLonelyGirlNight = openLonelyGirlNight(this.world, day);
     const closeWildChildNight = openWildChildNight(this.world, day, this.events);
     const closeThiefNight = openInitialIdentityNight(this.world, day);
     try {
@@ -258,6 +266,7 @@ export class NightPipeline {
     } finally {
       closeThiefNight();
       closeWildChildNight();
+      closeLonelyGirlNight();
     }
   }
 

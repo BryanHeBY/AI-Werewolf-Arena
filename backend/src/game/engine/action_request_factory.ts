@@ -1,3 +1,4 @@
+import { bindLonelyGirlRequest } from "../mechanisms/roles/lonely_girl/lifecycle";
 import { bindWildChildRequest } from "../mechanisms/roles/wild_child/lifecycle";
 import { bindInitialIdentityRequest } from "../mechanisms/roles/initial_identity/setup";
 import { bindWallRequest } from "../mechanisms/events/wall_notes/authority";
@@ -57,6 +58,7 @@ export class GameActionRequestFactory {
         visible_events: buildAgentVisibleEventFeed(this.world, [...this.events], input.actorId),
       },
     };
+    if (input.stage === "lonely_girl") bindLonelyGirlRequest(this.world, request);
     if (input.stage === "wild_child") bindWildChildRequest(this.world, request);
     if (input.stage === "thief" || input.stage === "shapeshifter")
       bindInitialIdentityRequest(this.world, request);

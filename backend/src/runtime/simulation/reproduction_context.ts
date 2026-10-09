@@ -1,3 +1,9 @@
+import {
+  projectLonelyGirl,
+  projectLonelyGirlSetup,
+  projectLonelyGirlVictory,
+  projectLonelyGirlAuditPlayer,
+} from "../../game/mechanisms/roles/lonely_girl/lifecycle";
 import { initialIdentityDeal } from "../../game/mechanisms/roles/initial_identity/deal";
 import { projectThiefSetup } from "../../game/mechanisms/roles/thief/deal";
 import { projectShapeshifterSetup } from "../../game/mechanisms/roles/shapeshifter/deal";
@@ -86,9 +92,11 @@ export function captureCheckpoint(
   eventCount: number,
   failure?: unknown,
 ): RecordedCheckpoint {
+  const lonelyGirlSetup = projectLonelyGirlSetup(world);
   const thiefSetup = projectThiefSetup(world),
     shapeshifterSetup = projectShapeshifterSetup(world);
   return {
+    ...(lonelyGirlSetup ? { lonelyGirlSetup } : {}),
     ...(thiefSetup ? { thiefSetup } : {}),
     ...(shapeshifterSetup ? { shapeshifterSetup } : {}),
     cycle,
@@ -103,6 +111,7 @@ export function captureCheckpoint(
       const role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
       const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge)!;
       const vote = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight)!;
+      const audit = projectLonelyGirlAuditPlayer(world, id);
       const wall = projectWallNote(world, id);
       const wallNote = wall
         ? {
@@ -116,10 +125,14 @@ export function captureCheckpoint(
         id,
         seat: identity.seat,
         name: identity.name,
-        role: role.role,
-        camp: role.camp,
-        alive: world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive,
-        privateState: structuredClone(role.privateState),
+        role: audit?.role ?? role.role,
+        camp: audit?.camp ?? role.camp,
+        alive: audit?.alive ?? world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive,
+        privateState:
+          audit?.privateState ??
+          (projectLonelyGirl(world, role)
+            ? { lonelyGirl: projectLonelyGirl(world, role) }
+            : structuredClone(role.privateState)),
         ...(wallNote ? { wallNote } : {}),
         ...(world.getComponent(id, COMPONENT.DebatePenalty)
           ? {
@@ -140,7 +153,9 @@ export function captureCheckpoint(
               ),
             }
           : {}),
-        victory: structuredClone(world.getComponent<VictoryComponent>(id, COMPONENT.Victory)!),
+        victory:
+          projectLonelyGirlVictory(world, id) ??
+          structuredClone(world.getComponent<VictoryComponent>(id, COMPONENT.Victory)!),
         vote: { weight: vote.weight, canVote: vote.canVote },
         badge: {
           isSheriff: badge.isSheriff,

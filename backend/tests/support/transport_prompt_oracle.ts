@@ -9,6 +9,7 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  lonely_girl: ["孤独少女首夜崇拜", "Lonely Girl initial admiration"],
   wild_child: ["野孩子首夜选榜样", "Wild Child initial model choice"],
   thief: ["盗贼首次身份选择", "Thief initial identity choice"],
   shapeshifter: ["千面人首次身份必选", "Many-Faced One mandatory initial choice"],
@@ -293,6 +294,7 @@ export function assertTransportEvents(
       throw new Error("fixture_god_information_exposed");
     if (
       [
+        "lonely_girl_admired_chosen",
         "wild_child_model_chosen",
         "wild_child_transformed",
         "wild_child_pack_activated",
@@ -308,6 +310,11 @@ export function assertTransportEvents(
       payload.actorId !== actorId
     )
       throw new Error("fixture_other_private_skill_exposed");
+    if (
+      type === "lonely_girl_admired_chosen" &&
+      (Object.keys(payload).length !== 4 || Object.hasOwn(payload, "camp"))
+    )
+      throw new Error("fixture_girl_god_membership_exposed");
     if (type.startsWith("mechanical_") && type !== "mechanical_shot" && payload.actorId !== actorId)
       throw new Error("fixture_other_private_skill_exposed");
     if (type.startsWith("awakened_") && payload.actorId !== actorId)

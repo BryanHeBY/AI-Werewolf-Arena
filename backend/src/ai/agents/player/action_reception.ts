@@ -1,3 +1,5 @@
+import { lonelyGirlRequestScope } from "../../../game/mechanisms/roles/lonely_girl/lifecycle";
+import { readLonelyGirlTool } from "../../../game/mechanisms/roles/lonely_girl/state";
 import { wildChildRequestScope } from "../../../game/mechanisms/roles/wild_child/lifecycle";
 import { readWildChildTool } from "../../../game/mechanisms/roles/wild_child/state";
 import { shapeshifterRequestScope } from "../../../game/mechanisms/roles/shapeshifter/setup";
@@ -78,6 +80,8 @@ export class ActionReception {
       return fail(
         tool === "choose_thief_card" ? RuleError.ThiefChoice : RuleError.ShapeshifterChoice,
       );
+    if (tool === "choose_admired_player" && !readLonelyGirlTool({ name: tool, args: rawArgs }))
+      return fail(RuleError.LonelyGirlChoice);
     const wildCall =
       tool === "choose_wild_model" ? readWildChildTool({ name: tool, args: rawArgs }) : null;
     if (tool === "choose_wild_model" && !wildCall) return fail(RuleError.WildChildChoice);
@@ -140,6 +144,7 @@ export class ActionReception {
       day: request.context.day,
       thiefScope: thiefRequestScope(this.world, request),
       shapeshifterScope: shapeshifterRequestScope(this.world, request),
+      lonelyGirlScope: lonelyGirlRequestScope(this.world, request),
       wildChildScope: wildChildRequestScope(this.world, request),
       wallScope: wallRequestScope(this.world, request),
       wallId: request.context.wall_id,

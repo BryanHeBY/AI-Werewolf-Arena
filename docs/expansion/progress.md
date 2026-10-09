@@ -471,3 +471,7 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 ## P9a 孤独少女规则冻结
 
 网易num24直接来源与2020相近暗恋者/2024赛事评分辅助已分别核实；首夜关系秘密、真实Good民与独立胜利、原Camp/空Victory授权、精确God→本人lean事件/关闭矩阵及终局winner推断边界，经三路原审查者复验闭合。见[规则卡](rules/awa-netease-lonely-girl-v1.md)/[冻结审查](reviews/p9-lonely-girl-rules.md)。仅冻结文档，未注册；目录23verified/6implemented/35planned不变，立即接续实现，整体仍待用户最终验收。
+
+## P9a 第四项：孤独少女（2026-10-09）
+
+来源首夜崇拜、胜利跟随与双方秘密语义通过独立原组件授权、God五键/本人lean四键事实、原Girl/Good民边、独立胜利目标和失败安全审计贯通。保持Hybrid旧窗口/状态/接口，修正首夜阶段重入、getter、原choice污染和慢ACP中途刷盘边界，三组报告全部复查闭合。见[规则卡](rules/awa-netease-lonely-girl-v1.md)/[验收](reviews/p9-lonely-girl.md)。冻结源码全backend **3164/318832/237文件**、frontend **312/3072/46文件**、完整Chromium **152/152**均0失败；check/lint/format及双端build通过。72真实双语三transport完整局逐Tape、8严格失败partialTape、200受限Observed逐Tape、1000独立World自然终局分别验证。目录23verified/7implemented/34planned；main本地commit，接续鬼魂新娘/P9/P10，总体待用户最终验收。

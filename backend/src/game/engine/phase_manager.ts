@@ -1,3 +1,9 @@
+import { LonelyGirlSetupWindow } from "../mechanisms/roles/lonely_girl/setup";
+import {
+  lonelyGirlReady,
+  hasActiveLonelyGirl,
+  hasLonelyGirlNightCommit,
+} from "../mechanisms/roles/lonely_girl/lifecycle";
 import {
   initialIdentityDeal,
   INITIAL_IDENTITY_POLICIES,
@@ -215,6 +221,12 @@ export class PhaseManager {
    * 手动跳转阶段（主要用于中断流程控制）。
    */
   jumpTo(phase: Phase): void {
+    if (
+      hasActiveLonelyGirl(this.world) ||
+      !lonelyGirlReady(this.world) ||
+      (!this.state.gameOver && hasLonelyGirlNightCommit(this.world, this.state.day))
+    )
+      throw new Error("lonely_girl_phase_reentry");
     this.phaseRevision++;
     this.setPhase(phase);
   }
@@ -223,6 +235,11 @@ export class PhaseManager {
     actionProvider: ActionProvider,
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
+    if (
+      hasActiveLonelyGirl(this.world) ||
+      (!this.state.gameOver && hasLonelyGirlNightCommit(this.world, this.state.day))
+    )
+      throw new Error("lonely_girl_cycle_reentry");
     if (
       hasActiveWildChild(this.world) ||
       (!this.state.gameOver && hasWildChildNightCommit(this.world, this.state.day))
@@ -265,6 +282,14 @@ export class PhaseManager {
     }
     if (!wildChildReady(this.world)) {
       const ready = await new WildChildSetupWindow(
+        this.world,
+        this.toolGateway,
+        this.events,
+      ).execute(this.config, actionProvider, nightDay, nightIsCurrent);
+      if (!ready || !nightIsCurrent()) return this.getSnapshot();
+    }
+    if (!lonelyGirlReady(this.world)) {
+      const ready = await new LonelyGirlSetupWindow(
         this.world,
         this.toolGateway,
         this.events,

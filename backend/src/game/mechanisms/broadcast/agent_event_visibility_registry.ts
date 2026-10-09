@@ -47,6 +47,7 @@ const PUBLIC_EVENT_TYPES = new Set([
 const WOLVES_ONLY_EVENT_TYPES = new Set<string>(WOLF_TEAM_EVENT_TYPES);
 
 const ACTOR_ONLY_EVENT_TYPES = new Set([
+  "lonely_girl_admired_chosen",
   "wild_child_model_chosen",
   "wild_child_transformed",
   "wild_child_pack_activated",

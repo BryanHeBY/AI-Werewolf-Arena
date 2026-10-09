@@ -1,5 +1,7 @@
 /** Stable rule failures; human messages belong to game-text. */
 export enum RuleError {
+  LonelyGirlUnavailable = "lonely_girl_unavailable",
+  LonelyGirlChoice = "lonely_girl_choice",
   WildChildUnavailable = "wild_child_unavailable",
   WildChildChoice = "wild_child_choice",
   ThiefUnavailable = "thief_unavailable",

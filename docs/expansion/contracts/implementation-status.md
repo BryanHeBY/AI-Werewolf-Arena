@@ -24,7 +24,11 @@ CLI目录、能力授权、独立玩家/展示DTO、统一回放事实reader、�
 
 ## 当前 P8–P10 接续（024a933之后）
 
-用户已验收上一批整改并授权普通推送，远端main核验为024a933；随后明确授权完成全部剩余任务。当前持续实施41角色、有限事件/道具与P10，具体约束见[p8-p10-continuation.md](p8-p10-continuation.md)。下方未验收/未push及P8–P10未开始说明保留对应历史批次语境，不代表本次授权边界。咒狐、丘比特、杠精、盗贼和野孩子首批组合已启用并登记implemented，其余36项planned尚未启用；后续门禁按新源码独立记录；不将历史2389/223/82当未来角色验收。
+用户已验收上一批整改并授权普通推送，远端main核验为024a933；随后明确授权完成全部剩余任务。当前持续实施41角色、有限事件/道具与P10，具体约束见[p8-p10-continuation.md](p8-p10-continuation.md)。下方未验收/未push及P8–P10未开始说明保留对应历史批次语境，不代表本次授权边界。咒狐、丘比特、杠精、盗贼、野孩子、千面人和孤独少女有限组合已启用并登记implemented，其余34项planned尚未启用；后续门禁按新源码独立记录；不将历史2389/223/82当未来角色验收。
+
+## P9a 孤独少女（2026-10-09）
+
+唯一AWA网易来源版本implemented，保持原Girl/Good民边、独立冻结崇拜目标阵营、死亡后胜利归属以及封盘前的身份秘密；标准N和七基础/City有限组合。原请求/组件/生命/目标/Victory授权、完整失败矩阵、God/lean reader、录制及实际strict Tape贯通，旧Hybrid行为保持，三组审查报告复查闭合。见[规则卡](../rules/awa-netease-lonely-girl-v1.md)/[验收](../reviews/p9-lonely-girl.md)。冻结源码完整后端3164/318832/237文件、前端312/3072/46文件、Chromium152/152全部0失败，check/lint/format和双端build通过；72实际双语三transport完整局/Tape、8严格失败partialTape、200受限Observed逐Tape、1000独立World分别记录。当前23verified/7implemented/34planned，继续鬼魂新娘/P9/P10，总体待最终验收；无push/真实模型/秘密操作。
 
 ## 本次 Seer/摄梦/狼美人实施与门禁（本提交，基线 ef2f48f）
 

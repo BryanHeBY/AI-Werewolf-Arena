@@ -1,6 +1,26 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "role.lonely_girl.brief":
+    "Before other first-night actions choose another living player to admire. Your personal victory follows their true faction at that choice; you remain a Good civilian with no pack recognition, wolf chat, knife or self-destruct. You do not learn their identity; they are not told they are admired. The AWA policy freezes membership, which survives death.",
+  "role.lonely_girl.state":
+    "Private Lonely Girl choice state: {state}; the target identity and frozen membership are not directly disclosed to you.",
+  "prompt.status.lonely_girl":
+    "Current Lonely Girl choice state: {state}. You remain a Good civilian. The target faction is not directly disclosed during play; the final outcome may allow inference.",
+  "action.choose_admired_player.hint":
+    "On the first night choose another living player to admire; no self-choice, abstention or second choice.",
+  "turn.lonely_girl.required":
+    "A valid admired player is required; no skip or fabricated fallback.",
+  "stage.lonely_girl": "Lonely Girl initial admiration",
+  "error.lonely_girl_unavailable":
+    "No Lonely Girl first-night scope bound to the original life is available.",
+  "error.lonely_girl_choice":
+    "The admired target must be another currently authorized living player.",
+  "console.lonely_girl.choice": "Lonely Girl {actor} chose to admire player {target}.",
+  "console.lonely_girl.god":
+    "Lonely Girl {actor} chose to admire player {target}; personal victory membership is {camp}.",
+  "replay.stage.lonely_girl_admired_chosen": "Lonely Girl private choice",
+
   "role.wild_child.brief":
     "Starts with Good villagers. Choose a model on the first night. If your model is eliminated while you remain alive, become Wolf and join pack knowledge, chat and knife voting on the following night. No copied skills or self-destruct.",
   "role.wild_child.state":

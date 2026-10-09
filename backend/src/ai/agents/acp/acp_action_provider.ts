@@ -1,3 +1,4 @@
+import { inheritLonelyGirlDeadlineRequest } from "../../../game/mechanisms/roles/lonely_girl/lifecycle";
 import { inheritWildChildDeadlineRequest } from "../../../game/mechanisms/roles/wild_child/lifecycle";
 import { inheritInitialIdentityDeadlineRequest } from "../../../game/mechanisms/roles/initial_identity/setup";
 import { inheritWallDeadlineRequest } from "../../../game/mechanisms/events/wall_notes/authority";
@@ -167,6 +168,7 @@ export class AcpActionProvider implements ActionProvider {
     inheritWallDeadlineRequest(request, bounded);
     inheritInitialIdentityDeadlineRequest(request, bounded);
     inheritWildChildDeadlineRequest(request, bounded);
+    inheritLonelyGirlDeadlineRequest(request, bounded);
     const controller = new AbortController();
     this.controllers.set(request.actorId, controller);
     const timer = setTimeout(

@@ -695,3 +695,20 @@ export function shapeshifterEventLabel(
     camp: term("camp_team", p.camp as "good" | "wolf", locale),
   });
 }
+
+export * from "./lonely-girl";
+import { readLonelyGirlEventFact } from "./lonely-girl";
+export function lonelyGirlEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale,
+): string | null {
+  const p = readLonelyGirlEventFact(type, payload);
+  return p
+    ? text(locale, p.camp ? "console.lonely_girl.god" : "console.lonely_girl.choice", {
+        actor: p.actorId,
+        target: p.targetId,
+        ...(p.camp ? { camp: term("camp", p.camp, locale) } : {}),
+      })
+    : null;
+}

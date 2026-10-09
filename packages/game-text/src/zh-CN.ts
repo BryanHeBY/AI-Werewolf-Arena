@@ -1,5 +1,19 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "role.lonely_girl.brief":
+    "首夜先选择另一活人为崇拜对象，个人胜利跟随其选择时真实阵营；自身仍是好人民边，无狼互认、夜聊、刀或自爆。你不知道对象身份，对象不知道被崇拜。AWA策略固定胜利归属，死亡不撤销。",
+  "role.lonely_girl.state": "孤独少女私有选择状态：{state}；目标身份和冻结归属不会直接告知本人。",
+  "prompt.status.lonely_girl":
+    "孤独少女当前选择状态：{state}。你始终是好人民边；封盘前不直接获知对象阵营，终局胜负可能允许推断。",
+  "action.choose_admired_player.hint": "首夜必须选择另一名活人作为崇拜对象；不能自选、弃选或重选。",
+  "turn.lonely_girl.required": "必须选择合法崇拜对象；不能跳过或默认代选。",
+  "stage.lonely_girl": "孤独少女首夜崇拜",
+  "error.lonely_girl_unavailable": "当前没有原生命与首夜授权的孤独少女选择窗口。",
+  "error.lonely_girl_choice": "崇拜对象必须是另一名当前授权的活人。",
+  "console.lonely_girl.choice": "孤独少女{actor}号选择崇拜{target}号。",
+  "console.lonely_girl.god": "孤独少女{actor}号选择崇拜{target}号，个人胜利归属为{camp}。",
+  "replay.stage.lonely_girl_admired_chosen": "孤独少女私有选择",
+
   "role.wild_child.brief":
     "初始为好人民边，首夜必选榜样；榜样实际淘汰时若本人仍活则变狼，下一夜才互认、夜聊与投刀。不获榜样能力，不可自爆。",
   "role.wild_child.state":

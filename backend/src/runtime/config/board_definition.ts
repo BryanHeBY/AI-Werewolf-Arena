@@ -143,6 +143,15 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
     )
   )
     fail("board_config_role_combination_not_supported", "board.roleSetups");
+  if (
+    definition.board.roleSetups.some((row) => row.role === "lonely_girl") &&
+    (definition.board.size < 6 ||
+      !definition.board.roleSetups.some((row) => row.role === "wolf") ||
+      !definition.board.roleSetups.some(
+        (row) => row.role !== "lonely_girl" && catalog.getCamp(row.role as Role) === Camp.Good,
+      ))
+  )
+    fail("board_config_role_combination_not_supported", "board.roleSetups");
   const profiles = definition.board.roleSetups.map((entry) => catalog.require(entry.role as Role));
   for (const profile of profiles) {
     if (

@@ -23,6 +23,7 @@ export enum Role {
   Thief = "thief",
   Shapeshifter = "shapeshifter",
   WildChild = "wild_child",
+  LonelyGirl = "lonely_girl",
   HiddenWolf = "hidden_wolf",
   Gargoyle = "gargoyle",
   Psychic = "psychic",

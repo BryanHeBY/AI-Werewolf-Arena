@@ -1,3 +1,4 @@
+import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-text";
 import { wildChildEventLabel } from "@ai-werewolf-arena/game-text";
 import { shapeshifterEventLabel } from "@ai-werewolf-arena/game-text";
 import { thiefEventLabel } from "@ai-werewolf-arena/game-text";
@@ -556,6 +557,8 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const lonely = lonelyGirlEventLabel(event.type, event.payload, locale);
+    if (lonely) return lonely;
     const wild = wildChildEventLabel(event.type, event.payload, locale);
     if (wild !== null) return wild;
     const shape = shapeshifterEventLabel(event.type, event.payload, locale);
@@ -599,6 +602,8 @@ export class ScriptEventRenderRegistry {
     printPrivateEvents: boolean,
     locale: Locale = "zh-CN",
   ): ScriptLiveRender[] {
+    const lonely = lonelyGirlEventLabel(event.type, event.payload, locale);
+    if (lonely) return printPrivateEvents ? [{ kind: "god", text: lonely }] : [];
     const wild = wildChildEventLabel(event.type, event.payload, locale);
     if (wild !== null) return printPrivateEvents ? [{ kind: "god", text: wild }] : [];
     const shape = shapeshifterEventLabel(event.type, event.payload, locale);

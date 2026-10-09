@@ -12,6 +12,7 @@ export interface ValidationRuleContext {
   thiefScope?: object;
   shapeshifterScope?: object;
   wildChildScope?: object;
+  lonelyGirlScope?: object;
   wallScope?: object;
   wallId?: string;
   itemInstanceId?: string;

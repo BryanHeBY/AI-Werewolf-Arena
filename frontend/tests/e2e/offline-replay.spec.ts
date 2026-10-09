@@ -1,5 +1,5 @@
 import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
-import { shapeshifterEventLabel } from "@ai-werewolf-arena/game-text";
+import { lonelyGirlEventLabel, shapeshifterEventLabel } from "@ai-werewolf-arena/game-text";
 import { expect, test } from "@playwright/test";
 import { wildChildEventLabel } from "@ai-werewolf-arena/game-text";
 import { readFileSync } from "node:fs";
@@ -1515,6 +1515,123 @@ for (const name of ["6-seer", "12-one1"])
             : "预言家",
       );
       await expect(seat).not.toHaveClass(/dead/);
+      for (const p of replay.players.filter((p: any) => p.player_id !== actor))
+        await expect(page.locator(`[data-composition-player="${p.player_id}"]`)).toContainText(
+          "unknown",
+        );
+    });
+
+for (const name of ["6-good_dead", "6-hunter_chain", "6-wolf_needs_girl", "12-wolf_win"])
+  for (const locale of ["zh-CN", "en"] as const)
+    test(`${name}/${locale}: actual Lonely Girl God archive keeps identity at admiration and shows terminal membership`, async ({
+      page,
+    }) => {
+      const replay = JSON.parse(
+        readFileSync(
+          new URL(`../fixtures/lonely-girl-${name}.replay.json`, import.meta.url),
+          "utf8",
+        ),
+      );
+      replay.meta.locale = locale;
+      const event = replay.events.find((e: any) => e.type === "lonely_girl_admired_chosen"),
+        actor = event.payload.actorId,
+        label = lonelyGirlEventLabel(event.type, event.payload, locale)!;
+      await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
+      await page.goto("/");
+      const seat = page.getByRole("button", {
+        name: locale === "en" ? `Player ${actor} · Seat ${actor}` : `${actor}号 · Seat ${actor}`,
+        exact: true,
+      });
+      await page.locator(".timeline .event").filter({ hasText: label }).click();
+      await expect(page.getByTestId("composition-event")).toHaveText(label);
+      await expect(seat).toContainText(locale === "en" ? "Lonely Girl" : "孤独少女");
+      await expect(seat).not.toHaveClass(/dead/);
+      await expect(page.locator(`[data-composition-player="${actor}"]`)).toContainText(
+        locale === "en" ? "Lonely Girl" : "孤独少女",
+      );
+      const slider = page.getByRole("slider");
+      for (let n = 0; n < 15; n++) await slider.press("ArrowRight");
+      await expect(page.getByTestId("composition-caption")).toHaveCSS("opacity", "1");
+      if (name === "12-wolf_win")
+        await page.screenshot({
+          path: `/tmp/awa-p9-lonely-girl-${locale}-browser.png`,
+          fullPage: true,
+        });
+      await page.locator(".timeline .event").last().click();
+      await expect(seat).toContainText(locale === "en" ? "Lonely Girl" : "孤独少女");
+      await expect(seat).toHaveClass(/dead/);
+      await expect(seat).toHaveClass(/winner-seat/);
+      await expect(page.locator(`[data-composition-player="${actor}"]`)).toHaveAttribute(
+        "data-testid",
+        "composition-winner",
+      );
+      if (name === "12-wolf_win")
+        await page.screenshot({
+          path: `/tmp/awa-p9-lonely-girl-${locale}-terminal-browser.png`,
+          fullPage: true,
+        });
+    });
+for (const name of ["6-good_dead", "12-wolf_win"])
+  for (const locale of ["zh-CN", "en"] as const)
+    test(`${name}/${locale}: actual actor admiration has no target identity or membership in minimal shared frame`, async ({
+      page,
+    }) => {
+      const view = readReplayPlayerView(
+          JSON.parse(
+            readFileSync(
+              new URL(`../fixtures/player-views/lonely-girl-${name}.player.json`, import.meta.url),
+              "utf8",
+            ),
+          ),
+        ),
+        god = JSON.parse(
+          readFileSync(
+            new URL(`../fixtures/lonely-girl-${name}.replay.json`, import.meta.url),
+            "utf8",
+          ),
+        ),
+        own = view.timeline.find(
+          (row) => row.kind === "event" && row.event.type === "lonely_girl_admired_chosen",
+        );
+      if (!own || own.kind !== "event") throw new Error("missing_actor_fact");
+      const actor = view.player_id,
+        event = {
+          seq: 2,
+          timestamp: own.timestamp,
+          phase: own.phase,
+          day: own.day,
+          type: own.event.type,
+          payload: own.event.payload,
+        },
+        replay = {
+          ...god,
+          meta: { ...god.meta, locale },
+          players: god.players.map((p: any) => ({
+            ...p,
+            role: p.player_id === actor ? view.role : "unknown",
+            camp: p.player_id === actor ? view.camp : "unknown",
+          })),
+          events: [
+            {
+              seq: 1,
+              timestamp: "2026-10-09T00:00:00Z",
+              phase: "night",
+              day: 1,
+              type: "phase_changed",
+              payload: { phase: "night", day: 1 },
+            },
+            event,
+          ],
+        };
+      expect(Object.hasOwn(event.payload, "camp")).toBe(false);
+      await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
+      await page.goto("/");
+      const label = lonelyGirlEventLabel(event.type, event.payload, locale)!;
+      await page.locator(".timeline .event").filter({ hasText: label }).click();
+      await expect(page.getByTestId("composition-event")).toHaveText(label);
+      await expect(page.locator(`[data-composition-player="${actor}"]`)).toContainText(
+        locale === "en" ? "Lonely Girl" : "孤独少女",
+      );
       for (const p of replay.players.filter((p: any) => p.player_id !== actor))
         await expect(page.locator(`[data-composition-player="${p.player_id}"]`)).toContainText(
           "unknown",

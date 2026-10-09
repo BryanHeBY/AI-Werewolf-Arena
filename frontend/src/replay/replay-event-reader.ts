@@ -1,3 +1,4 @@
+import { readLonelyGirlEventFact } from "@ai-werewolf-arena/game-text";
 import {
   WILD_CHILD_EVENT_TYPES,
   readWildChildEventFact,
@@ -38,6 +39,7 @@ export interface ReadReplayEvent {
 
 // Required references are event-specific. Unknown extension fields never imply player membership.
 const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
+  lonely_girl_admired_chosen: ["actorId", "targetId"],
   wild_child_model_chosen: ["actorId", "targetId"],
   wild_child_model_eliminated: ["actorId", "targetId"],
   wild_child_transformed: ["actorId"],
@@ -206,6 +208,7 @@ function record(value: unknown): value is Record<string, unknown> {
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
   if ((WILD_CHILD_EVENT_TYPES as readonly string[]).includes(type))
     return !!(readWildChildEventFact(type, p) ?? readWildChildPlayerFact(type, p));
+  if (type === "lonely_girl_admired_chosen") return !!readLonelyGirlEventFact(type, p);
   if ((SHAPESHIFTER_EVENT_TYPES as readonly string[]).includes(type))
     return !!readShapeshifterEventFact(type, p);
   if ((THIEF_EVENT_TYPES as readonly string[]).includes(type)) return !!readThiefEventFact(type, p);
@@ -369,6 +372,8 @@ export function readReplayEvent(
     };
     if (!KNOWN.has(safe.type)) return { event: safe, relatedPlayerIds: [], effects: [] };
     if (!validKnownFields(safe.type, p)) return null;
+    if (safe.type === "lonely_girl_admired_chosen" && (safe.day !== 1 || safe.phase !== "night"))
+      return null;
     for (const key of REQUIRED_IDS[safe.type] ?? []) add(p[key]);
     if (safe.type === "wall_note_order_recorded")
       for (const row of p.rows as Array<{ actorId: number }>) add(row.actorId);

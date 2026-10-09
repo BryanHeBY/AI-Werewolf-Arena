@@ -1,3 +1,4 @@
+import { readLonelyGirlEventFact } from "@ai-werewolf-arena/game-text";
 import { WILD_CHILD_EVENT_TYPES, readWildChildEventFact } from "@ai-werewolf-arena/game-text";
 import { SHAPESHIFTER_EVENT_TYPES, readShapeshifterEventFact } from "@ai-werewolf-arena/game-text";
 import { THIEF_EVENT_TYPES, readThiefEventFact } from "@ai-werewolf-arena/game-text";
@@ -29,6 +30,11 @@ export function buildAgentVisibleEvent(
   actorId: EntityId,
   visibleSeq: number,
 ): PlayerVisibleEvent | null {
+  if (
+    event.type === "lonely_girl_admired_chosen" &&
+    !readLonelyGirlEventFact(event.type, event.payload)
+  )
+    return null;
   if (
     (CUPID_EVENT_TYPES as readonly string[]).includes(event.type) &&
     !readCupidEventFact(event.type, event.payload)
@@ -83,6 +89,13 @@ export function buildAgentVisibleEvent(
 /** Project the authorized wire fields, keeping internal metadata out of player prompts. */
 function projectPayload(event: GameEvent): Record<string, unknown> {
   switch (event.type) {
+    case "lonely_girl_admired_chosen":
+      return {
+        policy: event.payload.policy,
+        actorId: event.payload.actorId,
+        day: 1,
+        targetId: event.payload.targetId,
+      };
     case "wild_child_transformed":
       return {
         actorId: event.payload.actorId,

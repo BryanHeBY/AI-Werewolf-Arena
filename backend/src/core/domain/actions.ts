@@ -13,6 +13,7 @@ export interface ToolArgMap {
   choose_wild_model: { target_id: EntityId };
   choose_thief_card: { slot: 0 | 1 };
   choose_shapeshifter_card: { slot: 0 | 1 };
+  choose_admired_player: { target_id: number };
   write_note: { text: string };
   report_bug: {
     category: "flow" | "rule" | "state" | "logging" | "other";
@@ -60,6 +61,7 @@ export const TOOL_NAMES = [
   "choose_wild_model",
   "choose_thief_card",
   "choose_shapeshifter_card",
+  "choose_admired_player",
   "write_note",
   "report_bug",
   "speak_to_wolves",
@@ -148,6 +150,7 @@ export const ACTION_STAGES = [
   "thief",
   "shapeshifter",
   "wild_child",
+  "lonely_girl",
   "awakened_mimic",
   "awakened_skill",
   "awakened_attack",

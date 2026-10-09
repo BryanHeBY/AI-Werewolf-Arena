@@ -36,6 +36,7 @@ export interface PlayerObservation {
   deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];
   ownState: {
+    lonelyGirl?: import("../../../game/mechanisms/roles/lonely_girl/state").LonelyGirlState;
     wildChild?: import("../../../game/mechanisms/roles/wild_child/state").WildChildState;
     thief?: import("../../../game/mechanisms/roles/thief/state").ThiefState & {
       required?: boolean;

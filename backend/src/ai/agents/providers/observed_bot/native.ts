@@ -1,3 +1,13 @@
+export const choose_admired_player: ObservedToolHandler = ({
+  knownAliveIds,
+  request,
+  ownState,
+}) => {
+  const target = knownAliveIds.find((id) => id !== request.actorId);
+  return ownState.lonelyGirl?.remaining === 1 && target !== undefined
+    ? { name: "choose_admired_player", args: { target_id: target } }
+    : null;
+};
 export const choose_wild_model: ObservedToolHandler = ({ knownAliveIds, request }) => {
   const target = knownAliveIds.find((id) => id !== request.actorId);
   return target === undefined ? null : { name: "choose_wild_model", args: { target_id: target } };

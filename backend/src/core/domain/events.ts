@@ -39,6 +39,13 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  lonely_girl_admired_chosen: {
+    policy: "awa_netease_lonely_girl_v1";
+    actorId: EntityId;
+    day: 1;
+    targetId: EntityId;
+    camp: Camp;
+  };
   wild_child_model_chosen: { actorId: EntityId; day: 1; targetId: EntityId };
   wild_child_model_eliminated: {
     actorId: EntityId;

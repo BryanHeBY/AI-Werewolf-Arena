@@ -1,3 +1,4 @@
+import { inheritLonelyGirlDeadlineRequest } from "../game/mechanisms/roles/lonely_girl/lifecycle";
 import { initialPlayerIdentity } from "../core/domain/initial_roster";
 import { inheritWildChildDeadlineRequest } from "../game/mechanisms/roles/wild_child/lifecycle";
 import { initialIdentityDeal } from "../game/mechanisms/roles/initial_identity/deal";
@@ -60,6 +61,7 @@ class DeadlineAwareActionProvider implements ActionProvider {
     inheritWallDeadlineRequest(request, timed);
     inheritInitialIdentityDeadlineRequest(request, timed);
     inheritWildChildDeadlineRequest(request, timed);
+    inheritLonelyGirlDeadlineRequest(request, timed);
     return this.delegate.getAction(timed);
   }
 }

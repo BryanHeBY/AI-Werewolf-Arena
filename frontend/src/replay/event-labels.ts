@@ -1,3 +1,4 @@
+import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-text";
 import { wildChildEventLabel } from "@ai-werewolf-arena/game-text";
 import { shapeshifterEventLabel } from "@ai-werewolf-arena/game-text";
 import { thiefEventLabel } from "@ai-werewolf-arena/game-text";
@@ -44,6 +45,8 @@ export function eventLabel(
   if (deathAbility !== null) return deathAbility;
   const awakened = awakenedEventLabel(event.type, p, locale);
   if (awakened !== null) return awakened;
+  const lonely = lonelyGirlEventLabel(event.type, p, locale);
+  if (lonely) return lonely;
   const wild = wildChildEventLabel(event.type, p, locale);
   if (wild !== null) return wild;
   const shape = shapeshifterEventLabel(event.type, p, locale);

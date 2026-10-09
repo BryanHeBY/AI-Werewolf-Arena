@@ -1,0 +1,88 @@
+{
+  "version": 2,
+  "id": "awa_netease_lonely_girl_12_v1",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 12,
+    "roleSetups": [
+      {
+        "role": "lonely_girl",
+        "count": 1
+      },
+      {
+        "role": "wolf",
+        "count": 4
+      },
+      {
+        "role": "seer",
+        "count": 1
+      },
+      {
+        "role": "witch",
+        "count": 1
+      },
+      {
+        "role": "hunter",
+        "count": 1
+      },
+      {
+        "role": "villager",
+        "count": 4
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": ["slaughter_city"],
+    "hooks": {
+      "onDaybreak": false,
+      "onPreElection": false,
+      "onPreVote": false,
+      "onPerSpeechGap": false
+    }
+  },
+  "mechanisms": {
+    "disclosure": {
+      "deathRevealPolicy": "awa_hidden_v1"
+    },
+    "lastWords": {
+      "policy": "awa_initial_wave_v1"
+    },
+    "sheriff": {
+      "enabled": false,
+      "electionPolicy": "awa_final_candidates_v1",
+      "badgePolicy": "awa_next_seat_v1",
+      "voteWeight": 1.5,
+      "tieBreaker": "min_seat"
+    },
+    "voting": {
+      "exilePolicy": "awa_direct_v1"
+    },
+    "selfDestruct": {
+      "enabledWindows": []
+    },
+    "tieBreaker": {
+      "exileVote": "min_id",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "seer": {
+      "targetPolicy": "awa_alive_v1",
+      "actionPolicy": "awa_required_when_legal_v1"
+    },
+    "witch": {
+      "selfHeal": "disabled",
+      "knifeVisibility": "awa_with_heal_v1",
+      "potionPolicy": "awa_one_native_v1"
+    },
+    "hunter": {
+      "deathActionPolicy": "awa_qualified_sources_v1"
+    },
+    "lonely_girl": {
+      "policy": "awa_netease_lonely_girl_v1"
+    }
+  }
+}

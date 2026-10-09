@@ -1,3 +1,4 @@
+import { installLonelyGirl } from "../game/mechanisms/roles/lonely_girl/lifecycle";
 import { installWildChild } from "../game/mechanisms/roles/wild_child/lifecycle";
 import { installInitialRoster } from "../core/domain/initial_roster";
 import { installShapeshifterDeal } from "../game/mechanisms/roles/shapeshifter/deal";
@@ -140,6 +141,7 @@ function createPlayers(
     installShapeshifterDeal(world, roles, ids);
   installInitialRoster(world);
   installWildChild(world, config);
+  installLonelyGirl(world, config);
   return ids;
 }
 
@@ -192,6 +194,20 @@ function buildRoleDeck(
     (!counts.has(Role.Thief) || config.thief.policy !== "lui_meme_thief_two_extra_villagers_v1")
   )
     throw new Error("thief_policy_invalid");
+  if (
+    config.lonelyGirl &&
+    (!counts.has(Role.LonelyGirl) || config.lonelyGirl.policy !== "awa_netease_lonely_girl_v1")
+  )
+    throw new Error("lonely_girl_policy_invalid");
+  if (
+    counts.has(Role.LonelyGirl) &&
+    (config.boardSize < 6 ||
+      !counts.has(Role.Wolf) ||
+      ![...counts.keys()].some(
+        (role) => role !== Role.LonelyGirl && getDefaultRoleCatalog().getCamp(role) === Camp.Good,
+      ))
+  )
+    throw new Error("lonely_girl_finite_composition_required");
   if (
     config.wildChild &&
     (!counts.has(Role.WildChild) || config.wildChild.policy !== "awa_lui_meme_wild_child_v1")

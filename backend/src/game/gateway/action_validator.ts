@@ -22,6 +22,7 @@ export interface ValidationContext {
   thiefScope?: object;
   shapeshifterScope?: object;
   wildChildScope?: object;
+  lonelyGirlScope?: object;
   wallScope?: object;
   wallId?: string;
   itemInstanceId?: string;
@@ -128,6 +129,7 @@ export class ActionValidator {
       thiefScope: context.thiefScope,
       shapeshifterScope: context.shapeshifterScope,
       wildChildScope: context.wildChildScope,
+      lonelyGirlScope: context.lonelyGirlScope,
       wallScope: context.wallScope,
       wallId: context.wallId,
       itemInstanceId: context.itemInstanceId,
