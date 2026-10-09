@@ -2,7 +2,8 @@ import { Role, type EntityId, type EventPayloadMap } from "../../../core/domain/
 import type { RoleComponent } from "../../../core/domain/components/role";
 import type { GuardState, SeerState, WitchState, DreamerState,RoleInspectionState } from "./private_state";
 import { COMPONENT } from "../../../core/domain/components/names";
-import { readInspectionResult } from "@ai-werewolf-arena/replay-contract";
+import { projectDreamerState, projectGuardState, projectRoleInspectionState, projectSeerState, projectWitchState, type PlayerDreamerState, type PlayerGuardState, type PlayerRoleInspectionState, type PlayerSeerState, type PlayerWitchState } from "./player_state";
+export { projectRoleInspectionState, projectSeerState, projectWitchState } from "./player_state";
 import type { World } from "../../../core/domain/world";
 
 export interface NightAbilityStates { seer_check: SeerState;role_check:RoleInspectionState; guard: GuardState; potion: WitchState; dream: DreamerState }
@@ -12,12 +13,6 @@ export function roleInspectionPolicy(state: RoleInspectionState): RoleInspection
   const policy = state.policy === undefined ? "gargoyle" : state.policy;
   if (policy !== "gargoyle" && policy !== "psychic" && policy !== "mirror") throw new Error("role_inspection_policy_invalid");
   return policy;
-}
-
-/** Reports and policy are player facts; future internal fields never implicitly enter the DTO. */
-export function projectRoleInspectionState(state: RoleInspectionState): RoleInspectionState {
-  return { ...(state.policy === undefined ? {} : { policy: roleInspectionPolicy(state) }), lastTarget: state.lastTarget, lastDay: state.lastDay,
-    history: state.history.map(report => ({ day: report.day, targetId: report.targetId, result: { kind: "role", role: report.result.role } })) };
 }
 
 export type NightAbilityKind = keyof NightAbilityStates;
@@ -44,23 +39,16 @@ type NightAbilityUnion = {
 export type NightAbility<K extends NightAbilityKind = NightAbilityKind> = Extract<NightAbilityUnion, { kind: K }>;
 export type AbilityStatus = "pending" | "expired" | "disabled" | "spent" | "used_this_night" | "active";
 
-function projectInspectionResult(value: unknown) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
-  const fields = Object.getOwnPropertyDescriptors(value), own = (key: string) => fields[key] && Object.hasOwn(fields[key], "value") ? fields[key].value : undefined, kind = own("kind");
-  return readInspectionResult(kind === "camp" ? { kind, camp: own("camp") } : kind === "role" ? { kind, role: own("role") } : kind === "combined" ? { kind, camp: own("camp"), role: own("role") } : null);
-}
-
-/** Player-facing resources and reports always select their declared fields. */
-export function projectSeerState(state: SeerState): SeerState {
-  return { lastTarget: state.lastTarget, lastIsWerewolf: state.lastIsWerewolf, ...(state.lastResult === undefined ? {} : { lastResult: state.lastResult === null ? null : projectInspectionResult(state.lastResult) }), history: state.history.map(report => ({ targetId: report.targetId, isWerewolf: report.isWerewolf, ...(report.result === undefined ? {} : { result: projectInspectionResult(report.result) ?? undefined }) })) };
-}
-export function projectWitchState(state: WitchState): WitchState { return { heal: state.heal, poison: state.poison, selfHealRule: state.selfHealRule, canSelfHeal: state.canSelfHeal, healUsedThisNight: state.healUsedThisNight, poisonUsedThisNight: state.poisonUsedThisNight }; }
-export function projectNightState(ability: NightAbility): NightAbilityStates[NightAbilityKind] {
-  if (ability.kind === "seer_check") return projectSeerState(ability.state);
-  if (ability.kind === "potion") return projectWitchState(ability.state);
-  if (ability.kind === "role_check") return projectRoleInspectionState(ability.state);
-  if (ability.kind === "guard") return { lastTarget: ability.state.lastTarget };
-  return { lastTarget: ability.state.lastTarget, lastDay: ability.state.lastDay };
+export interface PlayerNightAbilityStates { seer_check: PlayerSeerState; role_check: PlayerRoleInspectionState; guard: PlayerGuardState; potion: PlayerWitchState; dream: PlayerDreamerState }
+/** The DTO contract matches its explicit projection, including already-known dream history. */
+export function projectNightState(ability: NightAbility): PlayerNightAbilityStates[NightAbilityKind] {
+  switch (ability.kind) {
+    case "seer_check": return projectSeerState(ability.state);
+    case "potion": return projectWitchState(ability.state);
+    case "role_check": return projectRoleInspectionState(ability.state);
+    case "guard": return projectGuardState(ability.state);
+    case "dream": return projectDreamerState(ability.state);
+  }
 }
 
 /** Preserve valid JSON facts; optional undefined fields are absent on disk. */
@@ -147,12 +135,18 @@ export function nightAbilityActors<K extends NightAbilityKind>(world: World, kin
 }
 
 export type PlayerNightAbility = {
-  [K in NightAbilityKind]: Omit<NightAbility<K>, "source" | "sourceDisclosed"> & { source: AbilitySource | { kind: AbilitySource["kind"] }; status: AbilityStatus }
+  [K in NightAbilityKind]: Omit<NightAbility<K>, "source" | "sourceDisclosed" | "state"> & { state: PlayerNightAbilityStates[K]; source: AbilitySource | { kind: AbilitySource["kind"] }; status: AbilityStatus }
 }[NightAbilityKind];
 export function projectNightAbility(ability: NightAbility, day: number): PlayerNightAbility {
-  const source = projectAbilitySource(ability.source, ability.sourceDisclosed);
-  return structuredClone({ id: ability.id, kind: ability.kind, state: projectNightState(ability),
-    source, startsOnDay: ability.startsOnDay, ...(ability.expiresAfterDay === undefined ? {} : { expiresAfterDay: ability.expiresAfterDay }), maxUses: ability.maxUses,
+  const metadata = { id: ability.id, source: projectAbilitySource(ability.source, ability.sourceDisclosed), startsOnDay: ability.startsOnDay,
+    ...(ability.expiresAfterDay === undefined ? {} : { expiresAfterDay: ability.expiresAfterDay }), maxUses: ability.maxUses,
     uses: ability.uses, lastUsedDay: ability.lastUsedDay, disabled: ability.disabled,
-    ...(ability.activation === undefined ? {} : { activation: ability.activation }), ...(ability.deathExpired === undefined ? {} : { deathExpired: ability.deathExpired }), status: abilityStatus(ability, day) }) as PlayerNightAbility;
+    ...(ability.activation === undefined ? {} : { activation: ability.activation }), ...(ability.deathExpired === undefined ? {} : { deathExpired: ability.deathExpired }), status: abilityStatus(ability, day) };
+  switch (ability.kind) {
+    case "seer_check": return { ...metadata, kind: "seer_check", state: projectSeerState(ability.state) };
+    case "potion": return { ...metadata, kind: "potion", state: projectWitchState(ability.state) };
+    case "role_check": return { ...metadata, kind: "role_check", state: projectRoleInspectionState(ability.state) };
+    case "guard": return { ...metadata, kind: "guard", state: projectGuardState(ability.state) };
+    case "dream": return { ...metadata, kind: "dream", state: projectDreamerState(ability.state) };
+  }
 }

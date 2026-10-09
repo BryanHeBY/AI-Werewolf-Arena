@@ -1,3 +1,4 @@
+import { projectBearState, projectDreamerState, projectGuardState, projectHunterState, projectIdiotState, projectKnightState, projectWhiteWolfKingState, projectWolfBeautyState, projectWolfKingState } from "../../../game/mechanisms/roles/player_state";
 import { renderMessage, text, term, type Locale } from "@ai-werewolf-arena/game-text";
 import { readGravekeeperReport } from "@ai-werewolf-arena/replay-contract";
 import {getBearState} from "../../../game/mechanisms/roles/private_state";
@@ -99,27 +100,27 @@ export class PlayerPromptPolicy {
     const witch = role ? getWitchState(role, request.context.ability_id) : undefined;
     const guard = role ? getGuardState(role, request.context.ability_id) : undefined;
     if (witch) ownState.witch = projectWitchState(witch);
-    if (guard) ownState.guard = guard;
-    if (role?.role === Role.Hunter) ownState.hunter = getHunterState(role);
-    if(role?.role===Role.WolfBeauty)ownState.wolfBeauty=getWolfBeautyState(role);
-    if(role?.role===Role.Bear)ownState.bear=getBearState(role);
+    if (guard) ownState.guard = projectGuardState(guard);
+    if (role?.role === Role.Hunter) { const state=getHunterState(role); if(state)ownState.hunter=projectHunterState(state); }
+    if(role?.role===Role.WolfBeauty){ const state=getWolfBeautyState(role); if(state)ownState.wolfBeauty=projectWolfBeautyState(state); }
+    if(role?.role===Role.Bear){ const state=getBearState(role); if(state)ownState.bear=projectBearState(state); }
     if(role?.role===Role.HiddenWolf)ownState.hiddenWolf={hasInheritedKnife:getHiddenWolfState(role)?.hasInheritedKnife===true,canVoteForKill:canHiddenWolfKnife(role,this.world)};
     if(role?.role===Role.Gargoyle)ownState.gargoyle={hasInheritedKnife:getGargoyleState(role)?.hasInheritedKnife===true,canVoteForKill:canGargoyleKnife(role,this.world)};
     if (role?.role === Role.MechanicalWolf) { const state = getMechanicalState(role); if (state) ownState.mechanical = projectMechanicalState(state); }
     if (role?.role === Role.AwakenedHiddenWolf) { const state = getAwakenedState(role); if (state) ownState.awakened = projectAwakenedState(state); }
     if(role){const inspection=getRoleInspectionState(role,request.context.ability_id);if(inspection)ownState.roleInspection=projectRoleInspectionState(inspection);}
-    if (role?.role === Role.WolfKing) ownState.wolfKing = getWolfKingState(role);
-    if (role?.role === Role.WhiteWolfKing) ownState.whiteWolfKing = getWhiteWolfKingState(role);
-    if (role?.role === Role.Knight) ownState.knight = getKnightState(role);
+    if (role?.role === Role.WolfKing) { const state=getWolfKingState(role); if(state)ownState.wolfKing=projectWolfKingState(state); }
+    if (role?.role === Role.WhiteWolfKing) { const state=getWhiteWolfKingState(role); if(state)ownState.whiteWolfKing=projectWhiteWolfKingState(state); }
+    if (role?.role === Role.Knight) { const state=getKnightState(role); if(state)ownState.knight=projectKnightState(state); }
     if (role?.role === Role.Gravekeeper) {
       const history = getGravekeeperState(role)?.history;
       ownState.gravekeeper = { history: Array.isArray(history) ? history.flatMap(item => { const report = readGravekeeperReport(item); return report ? [report] : []; }) : [] };
     }
-    if (role?.role === Role.Idiot) ownState.idiot = getIdiotState(role);
+    if (role?.role === Role.Idiot) { const state=getIdiotState(role); if(state)ownState.idiot=projectIdiotState(state); }
     const seer = role ? getSeerState(role, request.context.ability_id) : undefined;
     if (seer) ownState.seer = projectSeerState(seer);
     const dreamer=role?getDreamerState(role,request.context.ability_id):undefined;
-    if(dreamer)ownState.dreamer=dreamer;
+    if(dreamer)ownState.dreamer=projectDreamerState(dreamer);
     const { death_action_id: _deathActionId, ...context } = request.context;
     return freezeObservation({ request: { ...request, context }, identity: {
       ...(role ? { role: role.role, camp: role.camp } : {}),
