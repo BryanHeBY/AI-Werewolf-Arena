@@ -1,3 +1,4 @@
+import { nativePotionsCanCombine } from "./policies";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：女巫工具校验规则。 */
 import { PotionType, Phase, WitchSelfHealRule, StatusMark } from "../../../../core/domain/model";
@@ -45,7 +46,7 @@ export const WITCH_VALIDATION_RULES: ToolRuleMap = {
       if (witchState.heal <= 0 || witchState.healUsedThisNight) {
         return { code: RuleError.HealUnavailable };
       }
-      if (witchState.poisonUsedThisNight) {
+      if (witchState.poisonUsedThisNight && !nativePotionsCanCombine(ability!)) {
         return { code: RuleError.TwoPotions };
       }
       const targetId = toolCall.args.target_id;
@@ -64,7 +65,7 @@ export const WITCH_VALIDATION_RULES: ToolRuleMap = {
       if (witchState.poison <= 0 || witchState.poisonUsedThisNight) {
         return { code: RuleError.PoisonUnavailable };
       }
-      if (witchState.healUsedThisNight) {
+      if (witchState.healUsedThisNight && !nativePotionsCanCombine(ability!)) {
         return { code: RuleError.TwoPotions };
       }
       if (!isAliveTarget(world, toolCall.args.target_id)) {

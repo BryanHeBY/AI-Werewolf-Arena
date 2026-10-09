@@ -468,6 +468,13 @@ export const en = Object.freeze({
   "replay.stage.ability_changed": "Ability change",
   "role.guard.state":
     "Your role is Guard. Each night choose a living player to protect, including yourself, or explicitly leave the guard empty. Target repetition follows this game’s configured policy.",
+  "role.witch.knife_always":
+    "AWA native knife disclosure: reveal the wolf target even after heal is spent.",
+  "role.witch.knife_with_heal":
+    "AWA native knife disclosure: reveal the wolf target only while heal is usable tonight.",
+  "role.witch.potions_both":
+    "AWA native potion experiment (not a verified mainstream rule): use one of each potion per night; an accepted potion opens a second turn, a pass ends it; copied and gifted potions are excluded.",
+  "role.witch.potions_one": "AWA native potion policy: at most one potion per night.",
   "role.witch.state": "Your role is Witch. Antidote:{heal} Poison:{poison}",
   "role.hunter.state":
     "Your role is Hunter. An authorized death window permits shooting after wolf kill, exile, a shot or White Wolf King blast; poison and forbidden causes block it. The last good special role may still shoot. To pass deliberately, submit target_id=null and spend the opportunity.",

@@ -21,6 +21,10 @@ const PRIVATE_STATE_KEYS = {
 
 /** 女巫私有状态。 */
 export interface WitchState {
+  knifeVisibility?: import("../../../core/domain/board").WitchKnifeVisibilityPolicy;
+  potionPolicy?: import("../../../core/domain/board").WitchPotionPolicy;
+  /** Terminal pass or completed second turn, never exposed through the player DTO. */
+  potionTurnClosedDay?: number;
   heal: number;
   poison: number;
   selfHealRule: WitchSelfHealRule;

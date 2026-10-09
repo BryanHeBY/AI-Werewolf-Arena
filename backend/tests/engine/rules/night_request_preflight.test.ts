@@ -84,3 +84,64 @@ for (const item of cases)
       expect(ability.lastUsedDay).toBeNull();
       expect(events).toEqual([]);
     });
+
+for (const item of cases.filter((item) => item.kind !== "dream"))
+  test(`${item.role}/policy: a policy change during request construction revokes provider access`, async () => {
+    const roles = [
+      item.role,
+      Role.Wolf,
+      Role.Villager,
+      Role.Villager,
+      Role.Villager,
+      Role.Villager,
+    ];
+    const game = bootstrapGame(
+      {
+        ...sixPlayerMvpConfig,
+        roleSetups: [...new Set(roles)].map((role) => ({
+          role,
+          count: roles.filter((x) => x === role).length,
+        })),
+      },
+      { fixedRoles: roles },
+    );
+    const ability = findNightAbility(
+      game.world.getComponent<RoleComponent>(1, COMPONENT.Role),
+      item.kind,
+    )!;
+    const events: GameEvent[] = [];
+    let calls = 0;
+    const factory = new GameActionRequestFactory(game.world, events, 1);
+    await item.stage.execute(
+      nightStageContext({
+        world: game.world,
+        events,
+        makeRequest: (actorId, allowedTools, extra) => {
+          const request = factory.create({
+            actorId,
+            allowedTools,
+            phase: Phase.Night,
+            stage: extra.stage,
+            context: extra,
+            requiresAction: true,
+            summary: "Policy revoke",
+          });
+          if (ability.kind === "seer_check") ability.state.targetPolicy = "awa_fresh_others_v1";
+          if (ability.kind === "guard")
+            ability.state.repeatPolicy = "netease_consecutive_nights_v1";
+          if (ability.kind === "potion") ability.state.knifeVisibility = "awa_always_v1";
+          return request;
+        },
+        actionProvider: {
+          async getAction() {
+            calls++;
+            return null;
+          },
+        },
+      }),
+    );
+    expect(calls).toBe(0);
+    expect(ability.uses).toBe(0);
+    expect(ability.lastUsedDay).toBeNull();
+    expect(events).toEqual([]);
+  });

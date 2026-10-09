@@ -63,8 +63,25 @@ export const inspect_role: ObservedToolHandler = (context) => {
 };
 
 export const use_potion: ObservedToolHandler = (context) => {
-  const { request, knownAliveIds, ownState, actor, others, pick, style, allowed } = context;
-  const witch = ownState.witch;
+  const {
+    observation,
+    request,
+    knownAliveIds,
+    ownState,
+    actor,
+    others,
+    pick,
+    style,
+    allowed,
+    bound,
+  } = context;
+  const ability =
+    bound?.kind === "potion"
+      ? bound
+      : observation.abilities.find((row) => row.kind === "potion" && row.source.kind === "native");
+  const witch = ability?.kind === "potion" ? ability.state : ownState.witch;
+  const both =
+    ability?.source.kind === "native" && witch?.potionPolicy === "awa_both_native_experimental_v1";
   const knife = request.context.wolf_target;
   if (
     style !== "conservative" &&
@@ -72,11 +89,20 @@ export const use_potion: ObservedToolHandler = (context) => {
     typeof knife === "number" &&
     knownAliveIds.includes(knife) &&
     witch.heal > 0 &&
+    !witch.healUsedThisNight &&
+    (both || !witch.poisonUsedThisNight) &&
     (knife !== actor || witch.canSelfHeal)
   ) {
     return { name: "use_potion", args: { target_id: knife, potion_type: PotionType.Heal } };
   }
-  if (style !== "conservative" && witch && witch.poison > 0 && request.context.day > 1) {
+  if (
+    style !== "conservative" &&
+    witch &&
+    witch.poison > 0 &&
+    !witch.poisonUsedThisNight &&
+    (both || !witch.healUsedThisNight) &&
+    request.context.day > 1
+  ) {
     const target = pick(others.filter((id) => allowed("poison", id)));
     if (target !== undefined)
       return {

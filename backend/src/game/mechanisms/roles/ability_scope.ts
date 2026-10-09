@@ -6,6 +6,26 @@ import type { EntityId } from "../../../core/domain/model";
 import { activeNightAbility, type NightAbility, type NightAbilityKind } from "./abilities";
 import { aliveLifeVersion } from "../../../core/domain/components/alive";
 
+/** A policy edit is an authorization edit, even if the resource object survives. */
+function policyIdentity(ability: NightAbility): string {
+  switch (ability.kind) {
+    case "seer_check":
+      return JSON.stringify([ability.state.targetPolicy, ability.state.actionPolicy]);
+    case "potion":
+      return JSON.stringify([
+        ability.state.selfHealRule,
+        ability.state.knifeVisibility,
+        ability.state.potionPolicy,
+      ]);
+    case "guard":
+      return JSON.stringify([ability.state.repeatPolicy]);
+    case "role_check":
+      return JSON.stringify([ability.state.policy]);
+    case "dream":
+      return "dream";
+  }
+}
+
 /** Capture before requesting an action; eligibility is read-only and rechecked at commitment. */
 export function captureNightAbilityScope<K extends NightAbilityKind>(
   world: World,
@@ -28,6 +48,7 @@ export function captureNightAbilityScope<K extends NightAbilityKind>(
     sourceKind = source.kind,
     sourceOwner = source.kind === "native" ? source.role : source.actorId,
     sourceId = source.kind === "copy" || source.kind === "transfer" ? source.abilityId : undefined;
+  const policy = policyIdentity(ability);
   const starts = ability.startsOnDay,
     expires = ability.expiresAfterDay,
     maxUses = ability.maxUses,
@@ -47,6 +68,7 @@ export function captureNightAbilityScope<K extends NightAbilityKind>(
     ability.kind === kind &&
     ability.activation === activation &&
     ability.state === state &&
+    policyIdentity(ability) === policy &&
     (role.privateState.abilities as Record<string, NightAbility> | undefined)?.[id] === ability &&
     ability.source === source &&
     source.kind === sourceKind &&

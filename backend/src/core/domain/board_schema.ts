@@ -4,6 +4,8 @@ import {
   HIDDEN_WOLF_CAMP_INSPECTION_POLICIES,
   SEER_TARGET_POLICIES,
   SEER_ACTION_POLICIES,
+  WITCH_KNIFE_VISIBILITY_POLICIES,
+  WITCH_POTION_POLICIES,
 } from "./board";
 import { ActionWindow, KnightDuelWindow, Role, WinCondition, WitchSelfHealRule } from "./identity";
 
@@ -38,7 +40,13 @@ export const boardConfigSchema = z.strictObject({
       actionPolicy: z.enum(SEER_ACTION_POLICIES),
     })
     .optional(),
-  witch: z.strictObject({ canSelfHeal: z.enum(WitchSelfHealRule).optional() }).optional(),
+  witch: z
+    .strictObject({
+      canSelfHeal: z.enum(WitchSelfHealRule).optional(),
+      knifeVisibility: z.enum(WITCH_KNIFE_VISIBILITY_POLICIES).optional(),
+      potionPolicy: z.enum(WITCH_POTION_POLICIES).optional(),
+    })
+    .optional(),
   tieBreaker: z
     .strictObject({
       exileVote: strategies.optional(),

@@ -57,3 +57,5 @@ Legacy清理切片：23角色派生权限前后逐项相等；删除三个无人
 ObservedBot/provider切片：ObservedBot只持有玩家RNG与样式，handler仅消费PlayerObservation；3,780组样式/日期/席位/资源/单或多工具输入的动作及随机数次数与此前一致。35条LLM、5条ACP原测试AST逐条一致；LLM由1635行拆为协议/回退/提示/审计文件，ACP拆开turn registry/MCP control/provider。全部类型、依赖/边界/i18n、构建与48项/295断言离线回归通过。日志`/tmp/arena-provider-split-{final-types,tests,build}.log`。剩余角色规则配置及完整警徽/投票/PK流程继续实施，历史全量门禁尚待全部源改动结束后重跑。
 
 Seer策略切片：增加targetPolicy（活人默认/从未验过的其他活人）与actionPolicy（存在合法目标必行动默认/可跳过）两个版本化AWA产品枚举。查无目标跳过、await后历史变动拒绝，无隐式历史重置；所有四组合严格JSON Tape往返/恢复。80项/1382断言定向回归及类型/lint/构建通过，原请求默认min_valid_actions=1保留，纠正文档旧描述。尚待女巫信息/用药与完整警徽/投票/PK等范围。
+
+女巫切片：保留selfHeal原三值，新增仅有两值的刀口披露策略与明确非已核验主流的`awa_both_native_experimental_v1`产品实验。默认一夜一药不变，实验用独立单动作第二回合、各一瓶、终止/重入保护及原生来源限制实现，赠毒/复制/转移不扩权。两个完整离线夜顺序的伤害结算已验证。策略变更也加入scope授权身份；3项新增请求构造撤权回归。171项/1588断言定向回归和全部类型/lint/build通过；日志`/tmp/arena-witch-final-{types,tests,build}.log`。仍待完整警徽/投票/PK及其余确有依据的原范围，整体未完成。

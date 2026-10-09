@@ -44,6 +44,8 @@ export interface PlayerSeerState {
   history: Array<{ targetId: number; isWerewolf: boolean; result?: InspectionResult }>;
 }
 export interface PlayerWitchState {
+  knifeVisibility?: import("../../../core/domain/board").WitchKnifeVisibilityPolicy;
+  potionPolicy?: import("../../../core/domain/board").WitchPotionPolicy;
   heal: number;
   poison: number;
   selfHealRule: WitchSelfHealRule;
@@ -186,7 +188,15 @@ export function projectSeerState(state: unknown): PlayerSeerState {
 }
 export function projectWitchState(state: unknown): PlayerWitchState {
   const rule = playerDataField(state, "selfHealRule");
+  const knifeVisibility = playerDataField(state, "knifeVisibility"),
+    potionPolicy = playerDataField(state, "potionPolicy");
   return {
+    ...(knifeVisibility === "awa_with_heal_v1" || knifeVisibility === "awa_always_v1"
+      ? { knifeVisibility }
+      : {}),
+    ...(potionPolicy === "awa_one_native_v1" || potionPolicy === "awa_both_native_experimental_v1"
+      ? { potionPolicy }
+      : {}),
     heal: stock(playerDataField(state, "heal")),
     poison: stock(playerDataField(state, "poison")),
     selfHealRule:

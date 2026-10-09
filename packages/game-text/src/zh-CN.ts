@@ -414,6 +414,11 @@ export const zhCN = Object.freeze({
   "replay.stage.ability_changed": "能力变化",
   "role.guard.state":
     "你的底牌是【守卫】。每夜可以守护一名存活玩家（包括自己），也可以明确空守。重复目标限制遵循本局配置的策略。",
+  "role.witch.knife_always": "AWA原生刀口策略：即使解药耗尽也显示本夜刀口。",
+  "role.witch.knife_with_heal": "AWA原生刀口策略：仅解药本夜可用时披露刀口。",
+  "role.witch.potions_both":
+    "AWA原生用药实验（非已核验主流规则）：同夜可各用一瓶；首次有效用药后开放第二回合，空动作终止，复制/赠予药不适用。",
+  "role.witch.potions_one": "AWA原生用药策略：同夜至多用一瓶。",
   "role.witch.state": "你的底牌是【女巫】。解药:{heal} 毒药:{poison}",
   "role.hunter.state":
     "你的底牌是【猎人】。狼刀、放逐、枪击或白狼王带人死亡可在授权窗口开枪；含毒等禁止来源不能开枪。末神仍可开枪，主动空枪以target_id=null提交并消耗机会。",

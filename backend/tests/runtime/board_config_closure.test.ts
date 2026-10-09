@@ -64,7 +64,11 @@ for (const rule of Object.values(WitchSelfHealRule))
       };
       const definition = boardDefinitionFromConfig("closure_test", initial);
       expect(definition.ruleset).toEqual(RULESET);
-      expect(definition.roles.witch).toEqual({ selfHeal: rule });
+      expect(definition.roles.witch).toEqual({
+        selfHeal: rule,
+        knifeVisibility: "awa_with_heal_v1",
+        potionPolicy: "awa_one_native_v1",
+      });
       expect(definition.roles.knight).toEqual({ enabledWindows: windows });
       const resolved = parseBoardDefinition(definition);
       expect(boardDefinitionFromConfig(definition.id, resolved.config)).toEqual(definition);

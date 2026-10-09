@@ -88,6 +88,22 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
             ),
           ]
         : []),
+      ...(config.roleSetups.some((entry) => entry.role === Role.Witch && entry.count > 0)
+        ? [
+            text(
+              locale,
+              config.witch?.knifeVisibility === "awa_always_v1"
+                ? "role.witch.knife_always"
+                : "role.witch.knife_with_heal",
+            ),
+            text(
+              locale,
+              config.witch?.potionPolicy === "awa_both_native_experimental_v1"
+                ? "role.witch.potions_both"
+                : "role.witch.potions_one",
+            ),
+          ]
+        : []),
       text(locale, "prompt.config.disclosure"),
       text(locale, "prompt.config.last_words"),
       ...(config.roleSetups.some((entry) => entry.role === Role.Knight && entry.count > 0)

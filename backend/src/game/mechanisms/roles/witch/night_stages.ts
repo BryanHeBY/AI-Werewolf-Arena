@@ -9,7 +9,9 @@ import {
   StatusMark,
   WitchSelfHealRule,
 } from "../../../../core/domain/model";
-import { NightStageHandler } from "../../stages/night/contracts";
+import { type NightAbility } from "../abilities";
+import { nativePotionsCanCombine, witchKnifeVisible } from "./policies";
+import { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import { getWitchState } from "../private_state";
 import {
   activeNightAbility,
@@ -50,128 +52,170 @@ const witchActionStage: NightStageHandler = {
     )) {
       if (ability.activation === "lucky" || ability.activation === "black_market") continue;
       const day = ctx.currentDay();
-      const scope = captureNightAbilityScope(
+      const ownership = captureNightAbilityScope(
         ctx.world,
         witchId,
         ability,
         day,
         () => ctx.isCurrent() && ctx.currentDay() === day,
       );
-      if (!scope?.isEligible()) continue;
-      ability.state.canSelfHeal =
-        ability.state.selfHealRule === WitchSelfHealRule.Always ||
-        (ability.state.selfHealRule === WitchSelfHealRule.FirstNightOnly && day === 1);
-      const targets = new Map(
-        ctx.world.getAliveEntityIds().map((id) => [id, captureNightLife(ctx.world, id)]),
-      );
-      const attribution = ability.source.kind === "native" ? {} : { abilityId: ability.id };
-      const req = ctx.makeRequest(witchId, ["use_potion"], {
-        stage: "witch",
-        ability_id: ability.id,
-        ...(ability.state.heal > 0 &&
-        !ability.state.healUsedThisNight &&
-        !ability.state.poisonUsedThisNight
-          ? { wolf_target: ctx.state.wolfTarget }
-          : {}),
-      });
-      if (!scope.isEligible()) continue;
-      const action = await ctx.actionProvider.getAction(req);
-      if (!ctx.isCurrent()) return;
-      if (!scope.isEligible()) continue;
-      if (action?.name !== "use_potion") {
-        ctx.events.push({
-          timestamp: Date.now(),
-          type: "witch_potion_skipped",
-          payload: {
-            actorId: witchId,
-            ...attribution,
-            targetId: null,
-            potionType: PotionType.None,
-            reason: "no_action",
-          },
-        });
-        continue;
-      }
-
-      const result = ctx.toolGateway.validateAndSanitize(ctx.world, witchId, action, {
-        phase: Phase.Night,
-        day: ctx.currentDay(),
-        abilityId: ability.id,
-      });
-      if (!ctx.isCurrent()) return;
-      if (!scope.isEligible()) continue;
-      if (!result.ok || !result.sanitizedCall) {
-        ctx.events.push({
-          timestamp: Date.now(),
-          type: "witch_potion_skipped",
-          payload: {
-            actorId: witchId,
-            ...attribution,
-            targetId: action.args.target_id ?? null,
-            potionType: PotionType.None,
-            reason: "invalid_action",
-          },
-        });
-        continue;
-      }
-
-      const witch = ctx.world.getComponent<RoleComponent>(witchId, COMPONENT.Role);
-      if (!activeNightAbility(witch, "potion", ctx.currentDay(), ability.id)) continue;
-      const witchState = witch ? getWitchState(witch, ability.id) : undefined;
-      if (!witchState) {
-        continue;
-      }
-      const targetId = result.sanitizedCall.args.target_id;
-      const potion = result.sanitizedCall.args.potion_type;
-      const target = targets.get(targetId);
-      if (potion !== PotionType.None && (!target || !livingNightLife(ctx.world, target))) continue;
-
-      if (potion === "heal") {
-        if (witchState.heal <= 0 || witchState.healUsedThisNight || witchState.poisonUsedThisNight)
-          continue;
-        ctx.ensureMarks(targetId).add(StatusMark.HealMark);
-        witchState.heal -= 1;
-        witchState.healUsedThisNight = true;
-        ctx.events.push({
-          timestamp: Date.now(),
-          type: "witch_potion_used",
-          payload: { actorId: witchId, ...attribution, targetId, potionType: PotionType.Heal },
-        });
-      }
-
-      if (potion === "poison") {
+      if (!ownership?.isEligible()) continue;
+      const close = () => {
+        if (ownership.isOwnerCurrent() && !ability.disabled && !ability.deathExpired)
+          ability.state.potionTurnClosedDay = day;
+      };
+      const both = nativePotionsCanCombine(ability);
+      for (let turn = 0; turn < (both ? 2 : 1); turn++) {
         if (
-          witchState.poison <= 0 ||
-          witchState.poisonUsedThisNight ||
-          witchState.healUsedThisNight
+          !activeNightAbility(
+            ctx.world.getComponent<RoleComponent>(witchId, COMPONENT.Role),
+            "potion",
+            ctx.currentDay(),
+            ability.id,
+          )
         )
-          continue;
-        if (!luckyTargetAllowed(ctx.world, witchId, ability, day, "poison", targetId)) continue;
-        const source = captureNightLife(ctx.world, witchId);
-        if (!source || !target) continue;
-        (ctx.state.poisonClaims ??= []).push({ source, target });
-        ctx.ensureMarks(targetId).add(StatusMark.PoisonMark);
-        witchState.poison -= 1;
-        witchState.poisonUsedThisNight = true;
-        recordOwnNightAction(ctx.world, witchId, day, "poison", targetId, false);
-        ctx.events.push({
-          timestamp: Date.now(),
-          type: "witch_potion_used",
-          payload: { actorId: witchId, ...attribution, targetId, potionType: PotionType.Poison },
-        });
+          break;
+        const used = await executePotionTurn(ctx, witchId, ability);
+        if (!ctx.isCurrent()) return;
+        if (!used) {
+          if (both) close();
+          break;
+        }
       }
-
-      if (potion === "none") {
-        ctx.events.push({
-          timestamp: Date.now(),
-          type: "witch_potion_skipped",
-          payload: { actorId: witchId, ...attribution, targetId, potionType: PotionType.None },
-        });
-      }
-      recordNightAbilityUse(ability, ctx.currentDay(), potion !== PotionType.None);
+      if (both) close();
     }
   },
 };
 
 /** 女巫夜间阶段列表。 */
 export const WITCH_NIGHT_STAGES: NightStageHandler[] = [resetNightRoleStateStage, witchActionStage];
+
+async function executePotionTurn(
+  ctx: NightStageContext,
+  witchId: number,
+  ability: NightAbility<"potion">,
+): Promise<boolean> {
+  const day = ctx.currentDay();
+  const scope = captureNightAbilityScope(
+    ctx.world,
+    witchId,
+    ability,
+    day,
+    () => ctx.isCurrent() && ctx.currentDay() === day,
+  );
+  if (!scope?.isEligible()) return false;
+  ability.state.canSelfHeal =
+    ability.state.selfHealRule === WitchSelfHealRule.Always ||
+    (ability.state.selfHealRule === WitchSelfHealRule.FirstNightOnly && day === 1);
+  const targets = new Map(
+    ctx.world.getAliveEntityIds().map((id) => [id, captureNightLife(ctx.world, id)]),
+  );
+  const attribution = ability.source.kind === "native" ? {} : { abilityId: ability.id };
+  const req = ctx.makeRequest(witchId, ["use_potion"], {
+    stage: "witch",
+    ability_id: ability.id,
+    ...(witchKnifeVisible(ability) ? { wolf_target: ctx.state.wolfTarget } : {}),
+  });
+  if (!scope.isEligible()) return false;
+  const action = await ctx.actionProvider.getAction(req);
+  if (!ctx.isCurrent()) return false;
+  if (!scope.isEligible()) return false;
+  if (action?.name !== "use_potion") {
+    ctx.events.push({
+      timestamp: Date.now(),
+      type: "witch_potion_skipped",
+      payload: {
+        actorId: witchId,
+        ...attribution,
+        targetId: null,
+        potionType: PotionType.None,
+        reason: "no_action",
+      },
+    });
+    return false;
+  }
+
+  const result = ctx.toolGateway.validateAndSanitize(ctx.world, witchId, action, {
+    phase: Phase.Night,
+    day: ctx.currentDay(),
+    abilityId: ability.id,
+  });
+  if (!ctx.isCurrent()) return false;
+  if (!scope.isEligible()) return false;
+  if (!result.ok || !result.sanitizedCall) {
+    ctx.events.push({
+      timestamp: Date.now(),
+      type: "witch_potion_skipped",
+      payload: {
+        actorId: witchId,
+        ...attribution,
+        targetId: action.args.target_id ?? null,
+        potionType: PotionType.None,
+        reason: "invalid_action",
+      },
+    });
+    return false;
+  }
+
+  const witch = ctx.world.getComponent<RoleComponent>(witchId, COMPONENT.Role);
+  if (!activeNightAbility(witch, "potion", ctx.currentDay(), ability.id)) return false;
+  const witchState = witch ? getWitchState(witch, ability.id) : undefined;
+  if (!witchState) {
+    return false;
+  }
+  const targetId = result.sanitizedCall.args.target_id;
+  const potion = result.sanitizedCall.args.potion_type;
+  const target = targets.get(targetId);
+  if (potion !== PotionType.None && (!target || !livingNightLife(ctx.world, target))) return false;
+
+  if (potion === "heal") {
+    if (
+      witchState.heal <= 0 ||
+      witchState.healUsedThisNight ||
+      (witchState.poisonUsedThisNight && !nativePotionsCanCombine(ability))
+    )
+      return false;
+    recordNightAbilityUse(ability, day, true);
+    ctx.ensureMarks(targetId).add(StatusMark.HealMark);
+    witchState.heal -= 1;
+    witchState.healUsedThisNight = true;
+    ctx.events.push({
+      timestamp: Date.now(),
+      type: "witch_potion_used",
+      payload: { actorId: witchId, ...attribution, targetId, potionType: PotionType.Heal },
+    });
+  }
+
+  if (potion === "poison") {
+    if (
+      witchState.poison <= 0 ||
+      witchState.poisonUsedThisNight ||
+      (witchState.healUsedThisNight && !nativePotionsCanCombine(ability))
+    )
+      return false;
+    if (!luckyTargetAllowed(ctx.world, witchId, ability, day, "poison", targetId)) return false;
+    const source = captureNightLife(ctx.world, witchId);
+    if (!source || !target) return false;
+    recordNightAbilityUse(ability, day, true);
+    (ctx.state.poisonClaims ??= []).push({ source, target });
+    ctx.ensureMarks(targetId).add(StatusMark.PoisonMark);
+    witchState.poison -= 1;
+    witchState.poisonUsedThisNight = true;
+    recordOwnNightAction(ctx.world, witchId, day, "poison", targetId, false);
+    ctx.events.push({
+      timestamp: Date.now(),
+      type: "witch_potion_used",
+      payload: { actorId: witchId, ...attribution, targetId, potionType: PotionType.Poison },
+    });
+  }
+
+  if (potion === "none") {
+    ctx.events.push({
+      timestamp: Date.now(),
+      type: "witch_potion_skipped",
+      payload: { actorId: witchId, ...attribution, targetId, potionType: PotionType.None },
+    });
+  }
+  if (potion === PotionType.None) recordNightAbilityUse(ability, day, false);
+  return potion !== PotionType.None;
+}

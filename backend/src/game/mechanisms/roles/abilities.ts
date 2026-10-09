@@ -1,3 +1,4 @@
+import { nativePotionSecondTurn } from "./witch/policies";
 import { Role, type EntityId, type EventPayloadMap } from "../../../core/domain/model";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import type {
@@ -156,7 +157,19 @@ export function abilityStatus(ability: NightAbility, day: number): AbilityStatus
   if (day < ability.startsOnDay) return "pending";
   if (ability.expiresAfterDay !== undefined && day > ability.expiresAfterDay) return "expired";
   if (ability.maxUses !== null && ability.uses >= ability.maxUses) return "spent";
-  if (ability.lastUsedDay === day) return "used_this_night";
+  if (
+    ability.lastUsedDay === day &&
+    !(ability.kind === "potion" && nativePotionSecondTurn(ability, day))
+  )
+    return "used_this_night";
+  if (
+    ability.kind === "potion" &&
+    ability.source.kind === "native" &&
+    ability.source.role === Role.Witch &&
+    ability.state.potionPolicy === "awa_both_native_experimental_v1" &&
+    ability.state.potionTurnClosedDay === day
+  )
+    return "used_this_night";
   return "active";
 }
 

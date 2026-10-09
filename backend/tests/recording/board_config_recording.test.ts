@@ -112,3 +112,21 @@ for (const targetPolicy of ["awa_alive_v1", "awa_fresh_others_v1"] as const)
       const restored = trace(record.metadata.normalizedBoard);
       expect(restored.checkpoints).toEqual(trace(config).checkpoints);
     });
+
+for (const knifeVisibility of ["awa_with_heal_v1", "awa_always_v1"] as const)
+  for (const potionPolicy of ["awa_one_native_v1", "awa_both_native_experimental_v1"] as const)
+    test(`${knifeVisibility}/${potionPolicy}: Witch policy identity survives strict JSON Tape and checkpoints`, () => {
+      const raw: BoardConfig = {
+        ...sixPlayerMvpConfig,
+        roleSetups: [
+          { role: Role.Wolf, count: 1 },
+          { role: Role.Witch, count: 1 },
+          { role: Role.Villager, count: 4 },
+        ],
+        witch: { knifeVisibility, potionPolicy },
+      };
+      const config = parseBoardDefinition(boardDefinitionFromConfig("witch_policy", raw)).config;
+      const record = parseReproductionRecord(JSON.parse(JSON.stringify(trace(config))));
+      expect(record.metadata.normalizedBoard.witch).toEqual(config.witch);
+      expect(trace(record.metadata.normalizedBoard).checkpoints).toEqual(trace(config).checkpoints);
+    });

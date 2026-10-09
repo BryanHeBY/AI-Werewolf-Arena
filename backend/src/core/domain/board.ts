@@ -22,7 +22,16 @@ export interface SheriffConfig {
   voteWeight?: number;
 }
 
+export const WITCH_KNIFE_VISIBILITY_POLICIES = ["awa_with_heal_v1", "awa_always_v1"] as const;
+export type WitchKnifeVisibilityPolicy = (typeof WITCH_KNIFE_VISIBILITY_POLICIES)[number];
+export const WITCH_POTION_POLICIES = [
+  "awa_one_native_v1",
+  "awa_both_native_experimental_v1",
+] as const;
+export type WitchPotionPolicy = (typeof WITCH_POTION_POLICIES)[number];
 export interface WitchConfig {
+  knifeVisibility?: WitchKnifeVisibilityPolicy;
+  potionPolicy?: WitchPotionPolicy;
   canSelfHeal?: WitchSelfHealRule;
 }
 
