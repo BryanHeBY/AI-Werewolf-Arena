@@ -1,3 +1,4 @@
+import { readReplayEventType } from "./replay-event-reader";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 
 /**
@@ -24,6 +25,8 @@ export function buildPresentationReplay(replay: ReplayDocument): PresentationRep
     kind: "presentation",
     sourceSchemaVersion: schemaVersion,
     sourcePerspective: perspective,
-    events: replay.events.filter((event) => !SUMMARY_ONLY_EVENT_TYPES.has(event.type)),
+    events: replay.events.filter(
+      (event) => !SUMMARY_ONLY_EVENT_TYPES.has(readReplayEventType(event) ?? ""),
+    ),
   };
 }

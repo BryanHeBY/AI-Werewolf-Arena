@@ -1,3 +1,4 @@
+import { buildPresentationReplay } from "../../../src/replay/replay-presentation";
 import { expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";
 import {
@@ -259,5 +260,39 @@ test("canonical and rendering entrypoints reject getters before cloning can turn
     },
   });
   expect(() => createReplayRenderInput(input)).toThrow("document");
+  expect(reads).toBe(0);
+});
+
+test("result classification and presentation filtering do not execute a foreign type getter", () => {
+  const hostile = event("game_over", { winner: "good", reason: "all_wolves_eliminated" });
+  let reads = 0;
+  Object.defineProperty(hostile, "type", {
+    enumerable: true,
+    get() {
+      reads++;
+      return "game_over";
+    },
+  });
+  expect(replayResultLabel(replay(hostile), "en")).toBe("Unknown");
+  expect(buildPresentationReplay(replay(hostile)).events).toHaveLength(2);
+  expect(reads).toBe(0);
+});
+
+test("snapshot context and returned active event only come from valid reader facts", () => {
+  const hostile = event("white_wolf_king_self_destruct", { actorId: 1, targetId: 2 });
+  let reads = 0;
+  for (const key of ["day", "phase", "timestamp"] as const)
+    Object.defineProperty(hostile, key, {
+      enumerable: true,
+      get() {
+        reads++;
+        return key === "day" ? 999 : "late";
+      },
+    });
+  const snapshot = buildReplaySnapshot(replay(hostile), 1);
+  expect(snapshot.event).toBeNull();
+  expect(snapshot.day).toBe(1);
+  expect(snapshot.phase).toBe("day");
+  expect(snapshot.players.every((player) => player.alive)).toBe(true);
   expect(reads).toBe(0);
 });

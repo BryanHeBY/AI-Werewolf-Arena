@@ -1,5 +1,5 @@
 import { type ReplayDocument, type ReplayEvent } from "@ai-werewolf-arena/replay-contract";
-import { readReplayEvent } from "./replay-event-reader";
+import { readReplayEvent, readReplayEventEnvelope } from "./replay-event-reader";
 import type { SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
 
 export interface ReplayPlayerState {
@@ -46,8 +46,16 @@ export function buildReplaySnapshot(
   };
 
   const playerIds = [...states.keys()];
-  for (const event of replay.events.slice(0, lastIndex + 1)) {
-    const fact = readReplayEvent(event, playerIds);
+  let event: ReplayEvent | null = null,
+    day = 0,
+    phase = "night";
+  for (const raw of replay.events.slice(0, lastIndex + 1)) {
+    const fact = readReplayEvent(raw, playerIds);
+    event = fact?.event ?? readReplayEventEnvelope(raw);
+    if (fact) {
+      day = fact.event.day;
+      phase = fact.event.phase;
+    }
     for (const effect of fact?.effects ?? []) {
       switch (effect.kind) {
         case "deaths":
@@ -75,12 +83,11 @@ export function buildReplaySnapshot(
     }
   }
 
-  const event = replay.events[lastIndex] ?? null;
   return {
     event,
     players: [...states.values()].sort((left, right) => left.playerId - right.playerId),
-    day: event?.day ?? 0,
-    phase: event?.phase ?? "night",
+    day,
+    phase,
     decision,
   };
 }

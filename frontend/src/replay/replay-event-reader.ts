@@ -246,11 +246,8 @@ function validKnownFields(type: string, p: Record<string, unknown>): boolean {
   return true;
 }
 
-/** Raw archives remain permissive; malformed known facts have no partial display/state effects. */
-export function readReplayEvent(
-  event: ReplayEvent,
-  knownPlayerIds?: readonly number[],
-): ReadReplayEvent | null {
+/** Read a detached, inert envelope for neutral display of malformed event facts. */
+export function readReplayEventEnvelope(event: ReplayEvent): ReplayEvent | null {
   try {
     const safe = copyJson(event) as ReplayEvent;
     if (
@@ -265,6 +262,20 @@ export function readReplayEvent(
       (safe.stage !== undefined && typeof safe.stage !== "string")
     )
       return null;
+    return safe;
+  } catch {
+    return null;
+  }
+}
+
+/** Raw archives remain permissive; malformed known facts have no partial display/state effects. */
+export function readReplayEvent(
+  event: ReplayEvent,
+  knownPlayerIds?: readonly number[],
+): ReadReplayEvent | null {
+  try {
+    const safe = readReplayEventEnvelope(event);
+    if (!safe) return null;
     const p = safe.payload;
     const related = new Set<number>();
     const id = (value: unknown): value is number =>
@@ -380,4 +391,16 @@ export function replayEventPlayerIds(
   knownPlayerIds?: readonly number[],
 ): number[] {
   return readReplayEvent(event, knownPlayerIds)?.relatedPlayerIds ?? [];
+}
+
+/** Classification only: inspect a data descriptor without evaluating an accessor. */
+export function readReplayEventType(event: ReplayEvent): string | null {
+  try {
+    const descriptor = Object.getOwnPropertyDescriptor(event, "type");
+    return descriptor?.enumerable && "value" in descriptor && typeof descriptor.value === "string"
+      ? descriptor.value
+      : null;
+  } catch {
+    return null;
+  }
 }

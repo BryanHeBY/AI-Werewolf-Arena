@@ -1,4 +1,4 @@
-import { readReplayEvent } from "./replay-event-reader";
+import { readReplayEvent, readReplayEventType } from "./replay-event-reader";
 import { type ReplayEvent, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import {
   roleName as sharedRoleName,
@@ -73,8 +73,10 @@ export function replayResultLabel(replay: ReplayDocument, locale: Locale): strin
   const playerIds = replay.players.map((player) => player.player_id);
   const facts = replay.events.map((event) => readReplayEvent(event, playerIds));
   for (let index = replay.events.length - 1; index >= 0; index--) {
-    if (replay.events[index]!.type !== "game_over") continue;
     const fact = facts[index];
+    const type = fact?.event.type ?? readReplayEventType(replay.events[index]!);
+    if (type === null) return text(locale, "replay.unknown");
+    if (type !== "game_over") continue;
     if (!fact) return text(locale, "replay.unknown");
     const victory = fact.effects.find((effect) => effect.kind === "victory");
     if (victory?.kind === "victory") return outcomeLabel(victory.decision.outcome, locale);
