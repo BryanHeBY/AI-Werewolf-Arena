@@ -1,3 +1,5 @@
+import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
+import { shapeshifterEventLabel } from "@ai-werewolf-arena/game-text";
 import { expect, test } from "@playwright/test";
 import { wildChildEventLabel } from "@ai-werewolf-arena/game-text";
 import { readFileSync } from "node:fs";
@@ -1389,4 +1391,132 @@ for (const name of ["6-wolf_exile", "6-hunter_chain", "12-good_knife", "6-same_w
           path: `/tmp/awa-p9-wild-child-${locale}-browser.png`,
           fullPage: true,
         });
+    });
+
+for (const name of ["6-seer", "6-hunter", "12-both0", "12-one1"])
+  for (const locale of ["zh-CN", "en"] as const)
+    test(`${name}/${locale}: actual Shapeshifter archive changes original role only at chosen fact in studio and video`, async ({
+      page,
+    }) => {
+      const replay = JSON.parse(
+        readFileSync(
+          new URL(`../fixtures/shapeshifter-${name}.replay.json`, import.meta.url),
+          "utf8",
+        ),
+      );
+      replay.meta.locale = locale;
+      const index = replay.events.findIndex(
+          (e: { type: string }) => e.type === "shapeshifter_identity_chosen",
+        ),
+        event = replay.events[index],
+        actor = event.payload.actorId;
+      await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
+      await page.goto("/");
+      const seat = page.getByRole("button", {
+        name: locale === "en" ? `Player ${actor} · Seat ${actor}` : `${actor}号 · Seat ${actor}`,
+        exact: true,
+      });
+      await expect(seat).toContainText(locale === "en" ? "Many-Faced One" : "千面人");
+      const selectedLabel = shapeshifterEventLabel(event.type, event.payload, locale)!;
+      await page.locator(".timeline .event").filter({ hasText: selectedLabel }).click();
+      await expect(page.getByTestId("composition-event")).toHaveText(selectedLabel);
+      const labels: Record<string, [string, string]> = {
+        seer: ["预言家", "Seer"],
+        hunter: ["猎人", "Hunter"],
+        wolf: ["狼人", "Werewolf"],
+        shapeshifter: ["千面人", "Many-Faced One"],
+      };
+      const label = labels[event.payload.role]![locale === "en" ? 1 : 0];
+      await expect(seat).toContainText(label);
+      await expect(seat).not.toHaveClass(/dead/);
+      await expect(page.locator(`[data-composition-player="${actor}"]`)).toContainText(label);
+      await expect(page.getByTestId("composition-caption")).toContainText(
+        locale === "en" ? "Many-Faced One" : "千面人",
+      );
+      const slider = page.getByRole("slider");
+      for (let n = 0; n < 15; n++) await slider.press("ArrowRight");
+      await expect(page.getByTestId("composition-caption")).toHaveCSS("opacity", "1");
+      if (name === "12-both0")
+        await page.screenshot({
+          path: `/tmp/awa-p9-shapeshifter-${locale}-browser.png`,
+          fullPage: true,
+        });
+    });
+
+for (const name of ["6-seer", "12-one1"])
+  for (const locale of ["zh-CN", "en"] as const)
+    test(`${name}/${locale}: actual actor choice archive renders native role while other identities stay unknown`, async ({
+      page,
+    }) => {
+      const privateView = readReplayPlayerView(
+          JSON.parse(
+            readFileSync(
+              new URL(`../fixtures/player-views/shapeshifter-${name}.player.json`, import.meta.url),
+              "utf8",
+            ),
+          ),
+        ),
+        god = JSON.parse(
+          readFileSync(
+            new URL(`../fixtures/shapeshifter-${name}.replay.json`, import.meta.url),
+            "utf8",
+          ),
+        );
+      const own = privateView.timeline.find(
+        (row) => row.kind === "event" && row.event.type === "shapeshifter_identity_chosen",
+      );
+      if (!own || own.kind !== "event") throw new Error("actual_actor_fact_missing");
+      const actor = privateView.player_id,
+        event = {
+          seq: 1,
+          timestamp: own.timestamp,
+          phase: own.phase,
+          day: own.day,
+          type: own.event.type,
+          payload: own.event.payload,
+        },
+        replay = {
+          ...god,
+          meta: { ...god.meta, locale },
+          players: god.players.map((p: any) => ({
+            ...p,
+            role: p.player_id === actor ? privateView.role : "unknown",
+            camp: p.player_id === actor ? privateView.camp : "unknown",
+          })),
+          events: [
+            {
+              seq: 1,
+              timestamp: "2026-10-09T00:00:00Z",
+              phase: "night",
+              day: 1,
+              type: "phase_changed",
+              payload: { phase: "night", day: 1 },
+            },
+            { ...event, seq: 2 },
+          ],
+        };
+      await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
+      await page.goto("/");
+      const seat = page.getByRole("button", {
+        name: locale === "en" ? `Player ${actor} · Seat ${actor}` : `${actor}号 · Seat ${actor}`,
+        exact: true,
+      });
+      await expect(seat).toContainText(locale === "en" ? "Many-Faced One" : "千面人");
+      const label = shapeshifterEventLabel(event.type, event.payload, locale)!;
+      await page.locator(".timeline .event").filter({ hasText: label }).click();
+      await expect(page.getByTestId("composition-event")).toHaveText(label);
+      await expect(seat).toContainText(
+        event.payload.role === "wolf"
+          ? locale === "en"
+            ? "Werewolf"
+            : "狼人"
+          : locale === "en"
+            ? "Seer"
+            : "预言家",
+      );
+      await expect(seat).not.toHaveClass(/dead/);
+      for (const p of replay.players.filter((p: any) => p.player_id !== actor))
+        await expect(page.locator(`[data-composition-player="${p.player_id}"]`)).toContainText(
+          "unknown",
+        );
     });

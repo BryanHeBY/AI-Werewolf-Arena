@@ -30,6 +30,7 @@ import {
 import {
   choose_wild_model,
   choose_thief_card,
+  choose_shapeshifter_card,
   write_note,
   choose_exemplar,
   choose_lovers,
@@ -48,6 +49,7 @@ import {
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
   { tool: "choose_wild_model", decide: choose_wild_model },
   { tool: "choose_thief_card", decide: choose_thief_card },
+  { tool: "choose_shapeshifter_card", decide: choose_shapeshifter_card },
   { tool: "choose_exemplar", decide: choose_exemplar },
   { tool: "choose_lovers", decide: choose_lovers },
   { tool: "write_note", decide: write_note },

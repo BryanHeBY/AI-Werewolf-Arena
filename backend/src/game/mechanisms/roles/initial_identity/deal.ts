@@ -239,6 +239,15 @@ export function selectInitialIdentityCard(
   if (!o || !hasActiveInitialIdentitySetup(world) || !pendingInitialIdentityDealValid(world))
     throw unavailable(world, "selection_unavailable");
   const original = Map.prototype.get.call(o.hands, actorId) as InitialIdentityCard;
+  if (
+    o.kind === "shapeshifter" &&
+    (slot === null ||
+      (slot !== 0 && slot !== 1) ||
+      readInitialIdentityCard(original)?.role !== Role.Shapeshifter ||
+      (o.reserve.some((card) => readInitialIdentityCard(card)?.role === Role.Wolf) &&
+        readInitialIdentityCard(readSlot(o.reserve, slot))?.role !== Role.Wolf))
+  )
+    throw unavailable(world, "selection_invalid");
   const chosen = slot === null ? original : (readSlot(o.reserve, slot) as InitialIdentityCard);
   if (slot !== null) {
     Map.prototype.set.call(o.hands, actorId, chosen);

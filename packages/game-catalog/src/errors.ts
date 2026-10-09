@@ -4,6 +4,8 @@ export enum RuleError {
   WildChildChoice = "wild_child_choice",
   ThiefUnavailable = "thief_unavailable",
   ThiefChoice = "thief_choice",
+  ShapeshifterUnavailable = "shapeshifter_unavailable",
+  ShapeshifterChoice = "shapeshifter_choice",
   WallNoteUnavailable = "wall_note_unavailable",
   WallNoteText = "wall_note_text",
   BadgeChoiceUnavailable = "badge_choice_unavailable",

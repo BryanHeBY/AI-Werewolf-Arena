@@ -51,6 +51,7 @@ const ACTOR_ONLY_EVENT_TYPES = new Set([
   "wild_child_transformed",
   "wild_child_pack_activated",
   "thief_identity_chosen",
+  "shapeshifter_identity_chosen",
   "ability_changed",
   "black_market_trade_skipped",
   "black_market_trade_committed",

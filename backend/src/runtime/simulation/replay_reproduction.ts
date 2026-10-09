@@ -1,5 +1,5 @@
 import { initialPlayerIdentity } from "../../core/domain/initial_roster";
-import { initialThiefDeal } from "../../game/mechanisms/roles/thief/deal";
+import { initialIdentityDeal } from "../../game/mechanisms/roles/initial_identity/deal";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
 import { readFile } from "node:fs/promises";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
@@ -288,7 +288,7 @@ export async function replayReproduction(
     ),
   });
   requireMatch(
-    stableJson(initialThiefDeal(context.world) ?? null) ===
+    stableJson(initialIdentityDeal(context.world) ?? null) ===
       stableJson(record.metadata.initialDeal ?? null),
     "reproduction_initial_deal_mismatch",
   );
@@ -396,11 +396,11 @@ export async function replayReproduction(
             name: player.name,
             role:
               initialPlayerIdentity(context.world, player.id)?.role ??
-              initialThiefDeal(context.world)?.[index] ??
+              initialIdentityDeal(context.world)?.[index] ??
               player.role,
             camp:
               initialPlayerIdentity(context.world, player.id)?.camp ??
-              (initialThiefDeal(context.world)
+              (initialIdentityDeal(context.world)
                 ? record.metadata.players[index]!.camp
                 : player.camp),
             alive: player.alive,

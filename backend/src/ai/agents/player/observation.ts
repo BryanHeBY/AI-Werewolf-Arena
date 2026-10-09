@@ -41,6 +41,11 @@ export interface PlayerObservation {
       required?: boolean;
       cards?: Array<{ slot: 0 | 1; role: Role }>;
     };
+    shapeshifter?: import("../../../game/mechanisms/roles/shapeshifter/state").ShapeshifterState & {
+      mustChoose?: boolean;
+      allowedSlots?: Array<0 | 1>;
+      cards?: Array<{ slot: 0 | 1; role: Role }>;
+    };
     wallNote?: import("../../../core/domain/components/wall_note").WallNoteComponent & {
       effectiveRemaining: 0 | 1;
     };

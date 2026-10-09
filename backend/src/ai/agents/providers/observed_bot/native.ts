@@ -159,3 +159,11 @@ export const duel: ObservedToolHandler = (context) => {
   const target = pick(others);
   return target === undefined ? null : { name: "duel", args: { target_id: target, confirm: true } };
 };
+
+export const choose_shapeshifter_card: ObservedToolHandler = ({ ownState }) => {
+  const s = ownState.shapeshifter;
+  if (!s || s.remaining !== 1 || s.mustChoose !== true || !s.allowedSlots?.length || !s.cards)
+    return null;
+  const card = s.cards.find((c) => s.allowedSlots!.includes(c.slot));
+  return card ? { name: "choose_shapeshifter_card", args: { slot: card.slot } } : null;
+};

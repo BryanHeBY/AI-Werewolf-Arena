@@ -1,5 +1,5 @@
 import { bindWildChildRequest } from "../mechanisms/roles/wild_child/lifecycle";
-import { bindThiefRequest } from "../mechanisms/roles/thief/setup";
+import { bindInitialIdentityRequest } from "../mechanisms/roles/initial_identity/setup";
 import { bindWallRequest } from "../mechanisms/events/wall_notes/authority";
 import type { MessageRef } from "@ai-werewolf-arena/game-text";
 import {
@@ -58,7 +58,8 @@ export class GameActionRequestFactory {
       },
     };
     if (input.stage === "wild_child") bindWildChildRequest(this.world, request);
-    if (input.stage === "thief") bindThiefRequest(this.world, request);
+    if (input.stage === "thief" || input.stage === "shapeshifter")
+      bindInitialIdentityRequest(this.world, request);
     if (input.stage === "wall_notes") bindWallRequest(this.world, request);
     return request;
   }

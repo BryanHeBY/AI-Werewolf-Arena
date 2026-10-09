@@ -1,4 +1,7 @@
-import { initialThiefDeal } from "../mechanisms/roles/thief/deal";
+import {
+  initialIdentityDeal,
+  INITIAL_IDENTITY_POLICIES,
+} from "../mechanisms/roles/initial_identity/deal";
 import { WildChildSetupWindow } from "../mechanisms/roles/wild_child/setup";
 import {
   wildChildReady,
@@ -12,7 +15,7 @@ import {
   initialIdentitySetupReady,
   initialIdentityKind,
 } from "../mechanisms/roles/initial_identity/deal";
-import { ThiefSetupWindow } from "../mechanisms/roles/thief/setup";
+import { InitialIdentitySetupWindow } from "../mechanisms/roles/initial_identity/setup";
 import { WallNotesWindow } from "../mechanisms/events/wall_notes/window";
 import { hasActiveWall } from "../mechanisms/events/wall_notes/authority";
 import { GameActionRequestFactory } from "./action_request_factory";
@@ -146,17 +149,24 @@ export class PhaseManager {
         }),
       },
     });
-    const initialDeal = initialThiefDeal(this.world);
-    if (initialDeal)
-      this.events.push({
-        timestamp: Date.now(),
-        type: "thief_initial_deal",
-        payload: {
-          policy: "lui_meme_thief_two_extra_villagers_v1",
-          roles: [...initialDeal],
-          boardSize: this.config.boardSize,
-        },
-      });
+    const initialDeal = initialIdentityDeal(this.world),
+      initialKind = initialIdentityKind(this.world);
+    if (initialDeal) {
+      const data = { roles: [...initialDeal], boardSize: this.config.boardSize };
+      this.events.push(
+        initialKind === "shapeshifter"
+          ? {
+              timestamp: Date.now(),
+              type: "shapeshifter_initial_deal",
+              payload: { ...data, policy: INITIAL_IDENTITY_POLICIES.shapeshifter },
+            }
+          : {
+              timestamp: Date.now(),
+              type: "thief_initial_deal",
+              payload: { ...data, policy: INITIAL_IDENTITY_POLICIES.thief },
+            },
+      );
+    }
     // 初始阶段也写入上帝公开广播，确保首轮请求前玩家可见当前阶段。
     this.events.push({
       timestamp: Date.now(),
@@ -227,9 +237,6 @@ export class PhaseManager {
       return this.getSnapshot();
     }
 
-    if (!initialIdentitySetupReady(this.world) && initialIdentityKind(this.world) !== "thief")
-      throw new Error("initial_identity_setup_handler_unavailable");
-
     if (this.state.day > maxDays) {
       this.sealResult(
         { winner: null, reason: "max_days_reached", outcome: { kind: "no_winner" } },
@@ -248,12 +255,12 @@ export class PhaseManager {
       !this.state.gameOver &&
       this.phaseRevision === nightRevision;
     if (!initialIdentitySetupReady(this.world)) {
-      const ready = await new ThiefSetupWindow(this.world, this.toolGateway, this.events).execute(
-        this.config,
-        actionProvider,
-        nightDay,
-        nightIsCurrent,
-      );
+      const ready = await new InitialIdentitySetupWindow(
+        this.world,
+        this.toolGateway,
+        this.events,
+        initialIdentityKind(this.world)!,
+      ).execute(this.config, actionProvider, nightDay, nightIsCurrent);
       if (!ready || !nightIsCurrent()) return this.getSnapshot();
     }
     if (!wildChildReady(this.world)) {

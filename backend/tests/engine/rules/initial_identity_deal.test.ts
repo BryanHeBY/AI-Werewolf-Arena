@@ -65,16 +65,10 @@ test("legacy Thief boundary never exposes or closes a different initial mechanis
 });
 test("shared night and PM gates reject actual recursive cycles before changing phase or events", async () => {
   const g = foundation();
-  const initialSnapshot = g.phaseManager.getSnapshot(),
-    initialEvents = g.phaseManager.getEvents().length;
-  await expect(g.phaseManager.runSingleCycle({ getAction: async () => null })).rejects.toThrow(
-    "initial_identity_setup_handler_unavailable",
-  );
-  await expect(g.phaseManager.runSingleCycle({ getAction: async () => null }, 0)).rejects.toThrow(
-    "initial_identity_setup_handler_unavailable",
-  );
-  expect(g.phaseManager.getSnapshot()).toEqual(initialSnapshot);
-  expect(g.phaseManager.getEvents()).toHaveLength(initialEvents);
+  // The registered handler completes an absent actor without a choice.
+  const h = foundation();
+  await h.phaseManager.runSingleCycle({ getAction: async () => null });
+  expect(shared.initialIdentitySetupStatus(h.world)).toBe("complete");
   shared.openInitialIdentitySetup(g.world);
   const before = g.phaseManager.getSnapshot(),
     n = g.phaseManager.getEvents().length;

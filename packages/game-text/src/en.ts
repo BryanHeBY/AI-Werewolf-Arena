@@ -99,6 +99,30 @@ export const en = Object.freeze({
   "prompt.status.lovers_vote":
     "This source policy forbids lovers from voting to exile each other, including PK.",
 
+  "role.shapeshifter.brief":
+    "Before other first-night skills, choose an undealt card; any ordinary Werewolf card forces a Werewolf choice.",
+  "role.shapeshifter.state":
+    "You begin as Many-Faced One, a Good civilian. Before every other night-one skill inspect only your two undealt cards and choose one. Any ordinary Werewolf forces a Werewolf slot; two Werewolves allow either. You cannot retain Many-Faced One. The swap installs the true role, faction, victory membership and fresh native stock for this night; ID, life, badge, vote and history remain. Your own opportunity: {state}.",
+  "action.choose_shapeshifter_card.hint":
+    "choose_shapeshifter_card takes only integer slot 0 or 1 in your allowedSlots. Every combination requires a choice; any Werewolf forces a Werewolf slot. No null, retain, player ID, extra field or automatic fallback.",
+  "stage.shapeshifter": "Many-Faced One mandatory initial choice",
+  "replay.stage.shapeshifter_initial_deal": "Many-Faced One God initial deal",
+  "replay.stage.shapeshifter_identity_chosen": "Many-Faced One identity choice",
+  "error.shapeshifter_unavailable":
+    "Your original identity, physical cards or initial choice authority has closed or been revoked.",
+  "error.shapeshifter_choice":
+    "Submit only integer slot 0 or 1 in your allowedSlots. Any Werewolf forces a Werewolf slot; no retain or extra fields.",
+  "prompt.board.shapeshifter":
+    "The counts above describe N+2 candidate cards: only N actual players and two unknown undealt cards. Do not infer in-play role counts; Many-Faced One may be undealt.",
+  "prompt.status.shapeshifter":
+    "Your own initial opportunity and authorized undealt cards, visible only to you: {state}.",
+  "console.shapeshifter.deal":
+    "Many-Faced One God initial full N+2 deal: {roles}; {size} actual players.",
+  "console.shapeshifter.choice":
+    "Private Many-Faced One player {actor} selects card slot {slot}; current true role {role}, faction {camp}.",
+  "console.shapeshifter": "Many-Faced One identity fact",
+  "turn.shapeshifter.required":
+    "Submit one choose_shapeshifter_card with integer slot in your allowedSlots. Any Werewolf forces a Werewolf slot; no retain or automatic fallback.",
   "role.thief.brief":
     "Inspect two undealt cards on night one; you may swap one, and must swap if both are ordinary Werewolves.",
   "role.thief.state":

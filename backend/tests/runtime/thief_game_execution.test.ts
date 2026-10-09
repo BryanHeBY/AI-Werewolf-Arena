@@ -84,6 +84,27 @@ for (const size of [6, 12] as const)
           if (kind === "seer" && size === 6 && transport === "llm" && locale === "zh-CN") {
             for (const mutate of [
               (r: typeof record) => {
+                r.events.push({
+                  timestamp: 0,
+                  type: "shapeshifter_identity_chosen",
+                  payload: {
+                    actorId: scenario.actorId,
+                    day: 1,
+                    slot: 0,
+                    role: Role.Wolf,
+                    camp: Camp.Wolf,
+                    policy: "awa_netease_shapeshifter_two_extra_villagers_v1",
+                  },
+                });
+              },
+              (r: typeof record) => {
+                const d = structuredClone(r.decisions.find((d) => d.stage === "thief")!);
+                d.stage = "shapeshifter";
+                d.request.context.stage = "shapeshifter";
+                d.request.allowedTools = ["choose_shapeshifter_card"];
+                r.decisions.push(d);
+              },
+              (r: typeof record) => {
                 r.checkpoints[0]!.thiefSetup!.status = "complete";
                 r.checkpoints[0]!.thiefSetup!.selection = {
                   actorId: scenario.actorId,

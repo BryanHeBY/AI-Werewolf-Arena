@@ -1,5 +1,6 @@
 import { installWildChild } from "../game/mechanisms/roles/wild_child/lifecycle";
 import { installInitialRoster } from "../core/domain/initial_roster";
+import { installShapeshifterDeal } from "../game/mechanisms/roles/shapeshifter/deal";
 import { installThiefDeal } from "../game/mechanisms/roles/thief/deal";
 import { supportsWallRoles } from "../game/mechanisms/events/wall_notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -135,6 +136,8 @@ function createPlayers(
 
   if (config.roleSetups.some((row) => row.role === Role.Thief && row.count === 1))
     installThiefDeal(world, roles, ids);
+  if (config.roleSetups.some((row) => row.role === Role.Shapeshifter && row.count === 1))
+    installShapeshifterDeal(world, roles, ids);
   installInitialRoster(world);
   installWildChild(world, config);
   return ids;
@@ -205,6 +208,26 @@ function buildRoleDeck(
         .reduce((n, [, count]) => n + count, 0) < 1)
   )
     throw new Error("wild_child_finite_composition_required");
+  if (
+    config.shapeshifter &&
+    (!counts.has(Role.Shapeshifter) ||
+      config.shapeshifter.policy !== "awa_netease_shapeshifter_two_extra_villagers_v1")
+  )
+    throw new Error("shapeshifter_policy_invalid");
+  if (counts.has(Role.Shapeshifter)) {
+    if (
+      config.boardSize < 6 ||
+      (counts.get(Role.Wolf) ?? 0) < 2 ||
+      [...counts]
+        .filter(
+          ([role]) =>
+            role !== Role.Shapeshifter && getDefaultRoleCatalog().getCamp(role) === Camp.Good,
+        )
+        .reduce((n, [, count]) => n + count, 0) < 1
+    )
+      throw new Error("shapeshifter_finite_composition_required");
+    deck.push(Role.Villager, Role.Villager);
+  }
   if (counts.has(Role.Thief)) {
     if (
       (counts.get(Role.Wolf) ?? 0) < 2 ||

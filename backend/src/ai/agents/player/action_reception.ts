@@ -1,5 +1,6 @@
 import { wildChildRequestScope } from "../../../game/mechanisms/roles/wild_child/lifecycle";
 import { readWildChildTool } from "../../../game/mechanisms/roles/wild_child/state";
+import { shapeshifterRequestScope } from "../../../game/mechanisms/roles/shapeshifter/setup";
 import { thiefRequestScope } from "../../../game/mechanisms/roles/thief/setup";
 import { readThiefChoice } from "../../../game/mechanisms/roles/thief/state";
 import { wallRequestScope } from "../../../game/mechanisms/events/wall_notes/authority";
@@ -71,15 +72,19 @@ export class ActionReception {
     // text by truthiness/String(), and never invent missing required arguments.
     const wallCall = tool === "write_note" ? readWallTool({ name: tool, args: rawArgs }) : null;
     if (tool === "write_note" && !wallCall) return fail(RuleError.WallNoteText);
-    const thiefSlot = tool === "choose_thief_card" ? readThiefChoice(rawArgs) : undefined;
-    if (tool === "choose_thief_card" && thiefSlot === undefined) return fail(RuleError.ThiefChoice);
+    const initialChoice = tool === "choose_thief_card" || tool === "choose_shapeshifter_card";
+    const thiefSlot = initialChoice ? readThiefChoice(rawArgs) : undefined;
+    if (initialChoice && thiefSlot === undefined)
+      return fail(
+        tool === "choose_thief_card" ? RuleError.ThiefChoice : RuleError.ShapeshifterChoice,
+      );
     const wildCall =
       tool === "choose_wild_model" ? readWildChildTool({ name: tool, args: rawArgs }) : null;
     if (tool === "choose_wild_model" && !wildCall) return fail(RuleError.WildChildChoice);
     const input = (
       wildCall
         ? wildCall.args
-        : tool === "choose_thief_card"
+        : initialChoice
           ? { slot: thiefSlot }
           : wallCall
             ? wallCall.args
@@ -134,6 +139,7 @@ export class ActionReception {
       phase: request.phase,
       day: request.context.day,
       thiefScope: thiefRequestScope(this.world, request),
+      shapeshifterScope: shapeshifterRequestScope(this.world, request),
       wildChildScope: wildChildRequestScope(this.world, request),
       wallScope: wallRequestScope(this.world, request),
       wallId: request.context.wall_id,

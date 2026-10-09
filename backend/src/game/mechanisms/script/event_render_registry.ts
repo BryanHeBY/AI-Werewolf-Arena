@@ -1,4 +1,5 @@
 import { wildChildEventLabel } from "@ai-werewolf-arena/game-text";
+import { shapeshifterEventLabel } from "@ai-werewolf-arena/game-text";
 import { thiefEventLabel } from "@ai-werewolf-arena/game-text";
 import { readGravekeeperFeedback, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
 import {
@@ -557,6 +558,8 @@ export class ScriptEventRenderRegistry {
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
     const wild = wildChildEventLabel(event.type, event.payload, locale);
     if (wild !== null) return wild;
+    const shape = shapeshifterEventLabel(event.type, event.payload, locale);
+    if (shape !== null) return shape;
     const thief = thiefEventLabel(event.type, event.payload, locale);
     if (thief !== null) return thief;
     const black = blackMarketEventLabel(event.type, event.payload, locale);
@@ -598,6 +601,8 @@ export class ScriptEventRenderRegistry {
   ): ScriptLiveRender[] {
     const wild = wildChildEventLabel(event.type, event.payload, locale);
     if (wild !== null) return printPrivateEvents ? [{ kind: "god", text: wild }] : [];
+    const shape = shapeshifterEventLabel(event.type, event.payload, locale);
+    if (shape !== null) return printPrivateEvents ? [{ kind: "god", text: shape }] : [];
     const thief = thiefEventLabel(event.type, event.payload, locale);
     if (thief !== null) return printPrivateEvents ? [{ kind: "god", text: thief }] : [];
     const wall = wallEventLabel(event.type, event.payload, locale);

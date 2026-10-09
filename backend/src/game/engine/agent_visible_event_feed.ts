@@ -1,4 +1,5 @@
 import { WILD_CHILD_EVENT_TYPES, readWildChildEventFact } from "@ai-werewolf-arena/game-text";
+import { SHAPESHIFTER_EVENT_TYPES, readShapeshifterEventFact } from "@ai-werewolf-arena/game-text";
 import { THIEF_EVENT_TYPES, readThiefEventFact } from "@ai-werewolf-arena/game-text";
 import {
   WALL_EVENT_TYPES,
@@ -51,6 +52,11 @@ export function buildAgentVisibleEvent(
   if (
     (WILD_CHILD_EVENT_TYPES as readonly string[]).includes(event.type) &&
     !readWildChildEventFact(event.type, event.payload)
+  )
+    return null;
+  if (
+    (SHAPESHIFTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
+    !readShapeshifterEventFact(event.type, event.payload)
   )
     return null;
   const visibility = getDefaultAgentEventVisibilityRegistry();

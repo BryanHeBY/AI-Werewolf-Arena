@@ -1,3 +1,5 @@
+import { readShapeshifterChoiceTool } from "@ai-werewolf-arena/game-text";
+import { SHAPESHIFTER_EVENT_TYPES, readShapeshifterEventFact } from "@ai-werewolf-arena/game-text";
 import { readWildChildEventFact, WILD_CHILD_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
 import { CUPID_POLICIES } from "../core/domain/board";
 import { boardConfigSchema } from "../core/domain/board_schema";
@@ -129,6 +131,13 @@ export interface RecordedCheckpoint {
     hands: Array<{ actorId: number; cardId: string; role: Role }>;
     reserve: [{ cardId: string; role: Role }, { cardId: string; role: Role }];
     selection: { actorId: number; slot: 0 | 1 | null; role: Role } | null;
+  };
+  shapeshifterSetup?: {
+    policy: "awa_netease_shapeshifter_two_extra_villagers_v1";
+    status: "pending" | "complete" | "cancelled" | "failed";
+    hands: Array<{ actorId: number; cardId: string; role: Role }>;
+    reserve: [{ cardId: string; role: Role }, { cardId: string; role: Role }];
+    selection: { actorId: number; slot: 0 | 1; role: Role } | null;
   };
   cycle: number;
   complete: boolean;
@@ -370,6 +379,16 @@ const thiefSetupSchema = z.strictObject({
     })
     .nullable(),
 });
+const shapeshifterSetupSchema = thiefSetupSchema.extend({
+  policy: z.literal("awa_netease_shapeshifter_two_extra_villagers_v1"),
+  selection: z
+    .strictObject({
+      actorId: positive,
+      slot: z.union([z.literal(0), z.literal(1)]),
+      role: z.enum(Role),
+    })
+    .nullable(),
+});
 const schema = z.strictObject({
   schemaVersion: z.literal(REPRODUCTION_SCHEMA_VERSION),
   finalized: z.boolean(),
@@ -445,6 +464,7 @@ const schema = z.strictObject({
           complete: z.boolean(),
           snapshot: snapshotSchema,
           thiefSetup: thiefSetupSchema.optional(),
+          shapeshifterSetup: shapeshifterSetupSchema.optional(),
           players: z.array(playerSchema),
           eventCount: nonnegative,
           failure: z
@@ -527,7 +547,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   const parsed = schema.safeParse(value);
   if (!parsed.success) throw new Error("reproduction_record_invalid");
   const result = parsed.data as unknown as ReproductionRecord;
-  validateThiefRecord(result);
+  validateInitialIdentityRecord(result);
   validateWildChildRecord(result);
   return result;
 }
@@ -624,14 +644,42 @@ export class ReproductionTrace {
 }
 
 /** New Thief archives carry the original full deal; old ordinary archives keep their exact shape. */
-function validateThiefRecord(record: ReproductionRecord): void {
+function validateInitialIdentityRecord(record: ReproductionRecord): void {
   const m = record.metadata,
-    hasThief = m.normalizedBoard.roleSetups.some((row) => row.role === Role.Thief && row.count > 0);
+    hasThief = m.normalizedBoard.roleSetups.some((row) => row.role === Role.Thief && row.count > 0),
+    hasShape = m.normalizedBoard.roleSetups.some(
+      (row) => row.role === Role.Shapeshifter && row.count > 0,
+    ),
+    identity = hasShape ? Role.Shapeshifter : Role.Thief;
+  if (hasShape && hasThief) throw new Error("reproduction_initial_identity_owners_invalid");
   const fail = () => {
-    throw new Error("reproduction_thief_state_invalid");
+    throw new Error(
+      hasShape ? "reproduction_shapeshifter_state_invalid" : "reproduction_thief_state_invalid",
+    );
   };
-  if (!hasThief) {
-    if (m.initialDeal !== undefined || record.checkpoints.some((c) => c.thiefSetup !== undefined))
+  if (
+    !hasShape &&
+    (record.events.some((e) => (SHAPESHIFTER_EVENT_TYPES as readonly string[]).includes(e.type)) ||
+      record.decisions.some(
+        (d) =>
+          d.stage === "shapeshifter" ||
+          d.request.context.stage === "shapeshifter" ||
+          d.request.allowedTools.includes("choose_shapeshifter_card") ||
+          (d.outcome.kind === "action" && d.outcome.action?.name === "choose_shapeshifter_card"),
+      ) ||
+      record.checkpoints.some((c) =>
+        c.players.some((p) => p.privateState.shapeshifter !== undefined),
+      ))
+  )
+    fail();
+  if (!hasThief && !hasShape) {
+    if (
+      m.initialDeal !== undefined ||
+      record.checkpoints.some(
+        (c) => c.thiefSetup !== undefined || c.shapeshifterSetup !== undefined,
+      ) ||
+      record.events.some((e) => (SHAPESHIFTER_EVENT_TYPES as readonly string[]).includes(e.type))
+    )
       fail();
     return;
   }
@@ -642,11 +690,11 @@ function validateThiefRecord(record: ReproductionRecord): void {
   deck.push(Role.Villager, Role.Villager);
   if (
     [...initial].sort().join(",") !== deck.sort().join(",") ||
-    initial.filter((role) => role === Role.Thief).length !== 1
+    initial.filter((role) => role === identity).length !== 1
   )
     fail();
   const supported = [
-    Role.Thief,
+    identity,
     Role.Wolf,
     Role.Villager,
     Role.Seer,
@@ -662,12 +710,14 @@ function validateThiefRecord(record: ReproductionRecord): void {
     )
   )
     fail();
-  const actorIndex = initial.slice(0, n).indexOf(Role.Thief),
+  const actorIndex = initial.slice(0, n).indexOf(identity),
     actorId = actorIndex < 0 ? null : m.players[actorIndex]!.id;
   const originalIds = Array.from({ length: n + 2 }, (_, i) => `deal:${i}`);
   let previousStatus: string | undefined, previousSelection: string | undefined;
   for (const checkpoint of record.checkpoints) {
-    const state = checkpoint.thiefSetup;
+    if (hasShape ? checkpoint.thiefSetup !== undefined : checkpoint.shapeshifterSetup !== undefined)
+      fail();
+    const state = hasShape ? checkpoint.shapeshifterSetup : checkpoint.thiefSetup;
     if (!state || state.hands.length !== n || state.reserve.length !== 2) return fail();
     const cards = [...state.hands, ...state.reserve];
     if (
@@ -701,11 +751,18 @@ function validateThiefRecord(record: ReproductionRecord): void {
       selection &&
       (selection.actorId !== actorId ||
         (selection.slot === null
-          ? selection.role !== Role.Thief
+          ? selection.role !== identity
           : selection.role !== initial[n + selection.slot]))
     )
       fail();
     if (selection?.slot === null && initial[n] === Role.Wolf && initial[n + 1] === Role.Wolf)
+      fail();
+    if (
+      hasShape &&
+      selection &&
+      (selection.slot === null ||
+        ([initial[n], initial[n + 1]].includes(Role.Wolf) && selection.role !== Role.Wolf))
+    )
       fail();
     for (let i = 0; i < n; i++) {
       const player = m.players[i]!,
@@ -727,6 +784,119 @@ function validateThiefRecord(record: ReproductionRecord): void {
     for (const slot of [0, 1] as const) {
       const expected = selection?.slot === slot ? `deal:${actorIndex}` : `deal:${n + slot}`;
       if (state.reserve[slot].cardId !== expected) fail();
+    }
+  }
+  if (hasShape) {
+    if (
+      record.decisions.some(
+        (d) =>
+          d.stage === "thief" ||
+          d.request.context.stage === "thief" ||
+          d.request.allowedTools.includes("choose_thief_card") ||
+          (d.outcome.kind === "action" && d.outcome.action?.name === "choose_thief_card"),
+      )
+    )
+      fail();
+    const facts = record.events.filter((e) =>
+      (SHAPESHIFTER_EVENT_TYPES as readonly string[]).includes(e.type),
+    );
+    if (
+      record.events.some(
+        (e) => e.type === "thief_initial_deal" || e.type === "thief_identity_chosen",
+      ) ||
+      facts.some((e) => !readShapeshifterEventFact(e.type, e.payload))
+    )
+      fail();
+    const deals = facts.filter((e) => e.type === "shapeshifter_initial_deal"),
+      choices = facts.filter((e) => e.type === "shapeshifter_identity_chosen"),
+      decisions = record.decisions.filter(
+        (d) =>
+          d.stage === "shapeshifter" ||
+          d.request.context.stage === "shapeshifter" ||
+          d.request.allowedTools.includes("choose_shapeshifter_card") ||
+          (d.outcome.kind === "action" && d.outcome.action?.name === "choose_shapeshifter_card"),
+      );
+    if (
+      deals.length !== 1 ||
+      JSON.stringify(deals[0]!.payload.roles) !== JSON.stringify(initial) ||
+      deals[0]!.payload.boardSize !== n ||
+      choices.length > 1 ||
+      decisions.length > (actorId === null ? 0 : 1)
+    )
+      fail();
+    if (
+      decisions.some(
+        (d) =>
+          d.stage !== "shapeshifter" ||
+          d.actorId !== actorId ||
+          d.request.actorId !== d.actorId ||
+          d.request.context.day !== d.day ||
+          d.request.context.stage !== "shapeshifter" ||
+          d.day !== 1 ||
+          d.request.phase !== Phase.Night ||
+          d.request.allowedTools.length !== 1 ||
+          d.request.allowedTools[0] !== "choose_shapeshifter_card" ||
+          d.request.context.allow_fallback !== false ||
+          d.request.context.action_failure_policy !== "error" ||
+          d.request.context.turn_constraints.min_valid_actions !== 1 ||
+          d.request.context.turn_constraints.max_valid_actions !== 1 ||
+          JSON.stringify(d.request.context.turn_constraints.required_any_tools) !==
+            JSON.stringify(["choose_shapeshifter_card"]),
+      )
+    )
+      fail();
+    if (choices.length) {
+      const choice = choices[0]!.payload,
+        decision = decisions[0],
+        call =
+          decision?.outcome.kind === "action"
+            ? readShapeshifterChoiceTool(decision.outcome.action)
+            : null;
+      if (
+        !decision ||
+        decision.outcome.kind !== "action" ||
+        !call ||
+        call.args.slot !== choice.slot ||
+        choice.actorId !== actorId ||
+        choice.role !== initial![n + (choice.slot as number)] ||
+        ([initial![n], initial![n + 1]].includes(Role.Wolf) && choice.role !== Role.Wolf)
+      )
+        fail();
+    }
+    for (const checkpoint of record.checkpoints) {
+      const state = checkpoint.shapeshifterSetup!,
+        selection = state.selection;
+      const seen = record.events
+        .slice(0, checkpoint.eventCount)
+        .filter((e) => e.type === "shapeshifter_identity_chosen");
+      if (
+        seen.length !== (selection ? 1 : 0) ||
+        (selection &&
+          (seen[0]!.payload.slot !== selection.slot ||
+            seen[0]!.payload.actorId !== selection.actorId))
+      )
+        fail();
+      for (const player of checkpoint.players) {
+        const expectedCamp = player.role === Role.Wolf ? Camp.Wolf : Camp.Good;
+        if (
+          JSON.stringify(player.victory.affiliations) !==
+          JSON.stringify([{ kind: "faction", faction: expectedCamp }])
+        )
+          fail();
+        const resource = player.privateState.shapeshifter;
+        if (player.role === Role.Shapeshifter) {
+          if (
+            !resource ||
+            typeof resource !== "object" ||
+            Array.isArray(resource) ||
+            Object.keys(resource).sort().join(",") !== "choice,policy,remaining" ||
+            (resource as any).policy !== "awa_netease_shapeshifter_two_extra_villagers_v1" ||
+            (resource as any).choice !== null ||
+            (resource as any).remaining !== (state.status === "pending" ? 1 : 0)
+          )
+            fail();
+        } else if (resource !== undefined) fail();
+      }
     }
   }
 }

@@ -84,6 +84,26 @@ export const zhCN = Object.freeze({
     "你的伴侣是{partner}号，仅互认编号，不知底牌或阵营。殉情禁死亡技能，保留原生能力。",
   "prompt.status.lovers_vote": "此来源策略禁止情侣互投放逐（包括PK）。",
 
+  "role.shapeshifter.brief": "第一夜在其它技能前必选一张底牌；只要有普通狼牌就必须选狼。",
+  "role.shapeshifter.state":
+    "开局为千面人/好人民边。第一夜在所有其它技能前查看本人两张底牌并必须选一张；有狼时只能选狼槽，两狼可任选。没有保留千面人选项。换牌同步安装真实身份、阵营、胜利归属与原生库存，首夜即启用；编号、生命、警徽、票权和历史保留。当前私有机会：{state}。",
+  "action.choose_shapeshifter_card.hint":
+    "choose_shapeshifter_card只接受整数slot0或1；必须属于本人allowedSlots。任何底牌组合都必选，出现狼必须选狼。禁止null、保留、玩家编号、额外字段或回退代选。",
+  "stage.shapeshifter": "千面人首次身份必选",
+  "replay.stage.shapeshifter_initial_deal": "千面人上帝初始牌池",
+  "replay.stage.shapeshifter_identity_chosen": "千面人身份选择",
+  "error.shapeshifter_unavailable": "千面人的原身份、物理底牌或首次选择权限已关闭或撤销。",
+  "error.shapeshifter_choice":
+    "必须提交唯一整数slot0或1且属于本人allowedSlots；有狼只可选狼，禁止保留或额外字段。",
+  "prompt.board.shapeshifter":
+    "上述为N+2候选牌计数，实际只有N名玩家，另有两张未知底牌；不得据此推断实际场上角色人数，千面人可能落底。",
+  "prompt.status.shapeshifter": "本人千面人首次机会与授权底牌（仅本人可见）：{state}。",
+  "console.shapeshifter.deal": "千面人上帝开局完整N+2牌序：{roles}；实际玩家{size}名。",
+  "console.shapeshifter.choice":
+    "千面人本人{actor}号选择底牌槽{slot}，当前真实身份{role}、阵营{camp}。",
+  "console.shapeshifter": "千面人身份事实",
+  "turn.shapeshifter.required":
+    "必须提交一次choose_shapeshifter_card，整数slot须属于本人allowedSlots；只要有狼必须选狼，禁止保留与代选。",
   "role.thief.brief": "首夜查看两张额外底牌，可换一张；两张都是狼人时必须换牌。",
   "role.thief.state":
     "你是开局盗贼，初始为好人民边。仅第一夜身份启用前查看本人两底牌：两张普通狼人必须选slot0或slot1，其它组合可不调用工具保留盗贼或选任一slot。只给本人底牌，不给他人身份或已发牌数量。换牌后真实角色、阵营、胜利及原生库存更新，同夜按新角色行动；原编号/生命/警徽/票权/会话历史保留。整局一次，不复制/赠予技能。当前本人机会：{state}。",

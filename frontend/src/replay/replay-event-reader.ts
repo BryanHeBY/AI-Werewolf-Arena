@@ -3,6 +3,7 @@ import {
   readWildChildEventFact,
   readWildChildPlayerFact,
 } from "@ai-werewolf-arena/game-text";
+import { SHAPESHIFTER_EVENT_TYPES, readShapeshifterEventFact } from "@ai-werewolf-arena/game-text";
 import { THIEF_EVENT_TYPES, readThiefEventFact } from "@ai-werewolf-arena/game-text";
 import {
   WALL_EVENT_TYPES,
@@ -42,6 +43,7 @@ const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
   wild_child_transformed: ["actorId"],
   wild_child_pack_activated: ["actorId"],
   thief_identity_chosen: ["actorId"],
+  shapeshifter_identity_chosen: ["actorId"],
   wall_note_changed: ["actorId"],
   debater_revealed: ["actorId"],
   debate_started: ["actorId", "targetId"],
@@ -145,6 +147,7 @@ const VOTES = new Set(["wolf_kill_vote_cast", "guard_applied", "sheriff_vote_cas
 const SUMMARIES = new Set(["sheriff_vote_summary", "vote_summary"]);
 const NO_IDS = new Set([
   "thief_initial_deal",
+  "shapeshifter_initial_deal",
   "wall_notes_started",
   "wall_notes_published",
   "wall_notes_canceled",
@@ -203,6 +206,8 @@ function record(value: unknown): value is Record<string, unknown> {
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
   if ((WILD_CHILD_EVENT_TYPES as readonly string[]).includes(type))
     return !!(readWildChildEventFact(type, p) ?? readWildChildPlayerFact(type, p));
+  if ((SHAPESHIFTER_EVENT_TYPES as readonly string[]).includes(type))
+    return !!readShapeshifterEventFact(type, p);
   if ((THIEF_EVENT_TYPES as readonly string[]).includes(type)) return !!readThiefEventFact(type, p);
   if ((WALL_EVENT_TYPES as readonly string[]).includes(type))
     return readWallEventFact(type, p) !== null;
@@ -412,7 +417,10 @@ export function readReplayEvent(
       return null;
     if (safe.type === "wild_child_pack_activated" && (p.day !== safe.day || safe.phase !== "night"))
       return null;
-    if (safe.type === "thief_identity_chosen" && isRoleId(p.role)) {
+    if (
+      (safe.type === "thief_identity_chosen" || safe.type === "shapeshifter_identity_chosen") &&
+      isRoleId(p.role)
+    ) {
       if (safe.day !== 1 || safe.phase !== "night") return null;
       effects.push({
         kind: "identity_changed",

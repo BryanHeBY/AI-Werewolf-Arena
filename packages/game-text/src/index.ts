@@ -5,6 +5,12 @@ export {
   WILD_CHILD_EVENT_TYPES,
 } from "./wild-child";
 import type { RoleId } from "@ai-werewolf-arena/game-catalog";
+import { readShapeshifterEventFact } from "./shapeshifter";
+export {
+  readShapeshifterEventFact,
+  readShapeshifterChoiceTool,
+  SHAPESHIFTER_EVENT_TYPES,
+} from "./shapeshifter";
 import { readThiefEventFact } from "./thief";
 export { readThiefEventFact, THIEF_EVENT_TYPES } from "./thief";
 export { copyEventData } from "./event-data";
@@ -667,5 +673,25 @@ export function wildChildEventLabel(type: string, payload: unknown, locale: Loca
   return text(locale, "console.wild_child.active", {
     actor: p.actorId as number,
     night: p.day as number,
+  });
+}
+
+export function shapeshifterEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale,
+): string | null {
+  const p = readShapeshifterEventFact(type, payload);
+  if (!p) return null;
+  if (type === "shapeshifter_initial_deal")
+    return text(locale, "console.shapeshifter.deal", {
+      roles: JSON.stringify((p.roles as RoleId[]).map((role) => roleName(role, locale))),
+      size: p.boardSize as number,
+    });
+  return text(locale, "console.shapeshifter.choice", {
+    actor: p.actorId as number,
+    slot: p.slot as number,
+    role: roleName(p.role as RoleId, locale),
+    camp: term("camp_team", p.camp as "good" | "wolf", locale),
   });
 }

@@ -209,10 +209,10 @@ export const ROLE_DEFINITIONS = [
   {
     id: "shapeshifter",
     names: { "zh-CN": "千面人", en: "Many-Faced One" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
-    mechanismSummary: "初始身份选择变体",
+    ruleCardRef: "docs/expansion/rules/awa-netease-shapeshifter-v1.md",
+    mechanismSummary: "首夜必选身份、有狼强制狼槽",
   },
   {
     id: "lonely_girl",

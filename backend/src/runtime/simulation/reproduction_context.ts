@@ -1,4 +1,6 @@
-import { projectThiefSetup, initialThiefDeal } from "../../game/mechanisms/roles/thief/deal";
+import { initialIdentityDeal } from "../../game/mechanisms/roles/initial_identity/deal";
+import { projectThiefSetup } from "../../game/mechanisms/roles/thief/deal";
+import { projectShapeshifterSetup } from "../../game/mechanisms/roles/shapeshifter/deal";
 import { projectWallNote } from "../../game/mechanisms/events/wall_notes/authority";
 import path from "node:path";
 import { readdir, readFile } from "node:fs/promises";
@@ -84,9 +86,11 @@ export function captureCheckpoint(
   eventCount: number,
   failure?: unknown,
 ): RecordedCheckpoint {
-  const thiefSetup = projectThiefSetup(world);
+  const thiefSetup = projectThiefSetup(world),
+    shapeshifterSetup = projectShapeshifterSetup(world);
   return {
     ...(thiefSetup ? { thiefSetup } : {}),
+    ...(shapeshifterSetup ? { shapeshifterSetup } : {}),
     cycle,
     complete,
     snapshot,
@@ -176,8 +180,8 @@ export function beginGameReproduction(
     locale: options.locale,
     maxDays: options.maxDays,
     dealMode: context.dealMode,
-    ...(initialThiefDeal(context.world)
-      ? { initialDeal: [...initialThiefDeal(context.world)!] }
+    ...(initialIdentityDeal(context.world)
+      ? { initialDeal: [...initialIdentityDeal(context.world)!] }
       : {}),
     ruleset: RULESET,
     random: context.random.metadata,

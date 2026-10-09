@@ -12,6 +12,7 @@ import type { DeathCause } from "./deaths";
 export interface ToolArgMap {
   choose_wild_model: { target_id: EntityId };
   choose_thief_card: { slot: 0 | 1 };
+  choose_shapeshifter_card: { slot: 0 | 1 };
   write_note: { text: string };
   report_bug: {
     category: "flow" | "rule" | "state" | "logging" | "other";
@@ -58,6 +59,7 @@ export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
   "choose_wild_model",
   "choose_thief_card",
+  "choose_shapeshifter_card",
   "write_note",
   "report_bug",
   "speak_to_wolves",
@@ -144,6 +146,7 @@ export const ACTION_STAGES = [
   "debate_ballot",
   "wall_notes",
   "thief",
+  "shapeshifter",
   "wild_child",
   "awakened_mimic",
   "awakened_skill",

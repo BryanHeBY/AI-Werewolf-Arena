@@ -1,7 +1,7 @@
 import { initialPlayerIdentity } from "../core/domain/initial_roster";
 import { inheritWildChildDeadlineRequest } from "../game/mechanisms/roles/wild_child/lifecycle";
-import { initialThiefDeal } from "../game/mechanisms/roles/thief/deal";
-import { inheritThiefDeadlineRequest } from "../game/mechanisms/roles/thief/setup";
+import { initialIdentityDeal } from "../game/mechanisms/roles/initial_identity/deal";
+import { inheritInitialIdentityDeadlineRequest } from "../game/mechanisms/roles/initial_identity/setup";
 import { inheritWallDeadlineRequest } from "../game/mechanisms/events/wall_notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
 import { formatErrorDiagnostic } from "../utils/error_diagnostic";
@@ -58,7 +58,7 @@ class DeadlineAwareActionProvider implements ActionProvider {
   getAction(request: ActionRequest): Promise<ToolCall | null> {
     const timed = { ...request, deadlineAtMs: this.deadlineAtMs };
     inheritWallDeadlineRequest(request, timed);
-    inheritThiefDeadlineRequest(request, timed);
+    inheritInitialIdentityDeadlineRequest(request, timed);
     inheritWildChildDeadlineRequest(request, timed);
     return this.delegate.getAction(timed);
   }
@@ -352,7 +352,7 @@ function selectPlayerProfiles(
 }
 
 function replayPlayers(world: World) {
-  const initial = initialThiefDeal(world);
+  const initial = initialIdentityDeal(world);
   return world.entityIds().map((id, index) => {
     const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
     return {

@@ -1,5 +1,8 @@
 import { projectWildChild } from "../../../game/mechanisms/roles/wild_child/lifecycle";
-import { thiefCandidateCounts } from "../../../game/mechanisms/roles/thief/deal";
+import { initialIdentityCandidateCounts } from "../../../game/mechanisms/roles/initial_identity/deal";
+import { projectShapeshifterState } from "../../../game/mechanisms/roles/shapeshifter/state";
+import { projectShapeshifterChoices } from "../../../game/mechanisms/roles/shapeshifter/setup";
+import { initialIdentityKind } from "../../../game/mechanisms/roles/initial_identity/deal";
 import { projectThiefState } from "../../../game/mechanisms/roles/thief/state";
 import { projectThiefChoices } from "../../../game/mechanisms/roles/thief/setup";
 import { projectWallNote } from "../../../game/mechanisms/events/wall_notes/authority";
@@ -123,7 +126,7 @@ export class PlayerPromptPolicy {
     private readonly options: PlayerPromptPolicyOptions,
   ) {
     this.publicBoardSize = options.boardConfig?.boardSize ?? world.entityIds().length;
-    const thiefCounts = thiefCandidateCounts(world);
+    const thiefCounts = initialIdentityCandidateCounts(world);
     if (thiefCounts) {
       for (const [role, count] of thiefCounts) this.publicRoleCounts.set(role, count);
     } else if (options.boardConfig) {
@@ -185,6 +188,9 @@ export class PlayerPromptPolicy {
     const thief = projectThiefState(role, this.world),
       choices = projectThiefChoices(this.world, request.actorId);
     if (thief) ownState.thief = { ...thief, ...(choices ?? {}) };
+    const shape = projectShapeshifterState(role, this.world),
+      shapeChoices = projectShapeshifterChoices(this.world, request.actorId);
+    if (shape) ownState.shapeshifter = { ...shape, ...(shapeChoices ?? {}) };
     const wallNote = projectWallNote(this.world, request.actorId);
     if (wallNote) ownState.wallNote = wallNote;
     if (debateVoteBlocked(this.world, request.actorId, request.context.day))
@@ -432,8 +438,15 @@ export class PlayerPromptPolicy {
       roleLabel: (role) => this.options.roleCatalog.label(role, this.locale),
       roleSkillBrief: (role) => this.options.roleCatalog.skillBrief(role, this.locale),
     });
-    return thiefCandidateCounts(this.world)
-      ? info + "\n" + text(this.locale, "prompt.board.thief")
+    return initialIdentityCandidateCounts(this.world)
+      ? info +
+          "\n" +
+          text(
+            this.locale,
+            initialIdentityKind(this.world) === "shapeshifter"
+              ? "prompt.board.shapeshifter"
+              : "prompt.board.thief",
+          )
       : info;
   }
 
@@ -455,6 +468,14 @@ export class PlayerPromptPolicy {
       );
     const thief = projectThiefState(role, this.world),
       choices = projectThiefChoices(this.world, request.actorId);
+    const shape = projectShapeshifterState(role, this.world),
+      shapeChoices = projectShapeshifterChoices(this.world, request.actorId);
+    if (shape)
+      lines.push(
+        text(this.locale, "prompt.status.shapeshifter", {
+          state: JSON.stringify({ ...shape, ...(shapeChoices ?? {}) }),
+        }),
+      );
     if (thief)
       lines.push(
         text(this.locale, "prompt.status.thief", {

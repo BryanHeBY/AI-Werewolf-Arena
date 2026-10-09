@@ -115,6 +115,17 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
     total += entry.count;
   }
   if (total !== definition.board.size) fail("board_config_role_count_mismatch", "board.roleSetups");
+  if (
+    definition.board.roleSetups.some((row) => row.role === "shapeshifter") &&
+    (definition.board.size < 6 ||
+      definition.board.roleSetups
+        .filter((row) => row.role === "wolf")
+        .reduce((n, row) => n + row.count, 0) < 2 ||
+      !definition.board.roleSetups.some(
+        (row) => row.role !== "shapeshifter" && catalog.getCamp(row.role as Role) === Camp.Good,
+      ))
+  )
+    fail("board_config_role_combination_not_supported", "board.roleSetups");
   if (definition.board.roleSetups.some((row) => row.role === "thief")) {
     const wolves = definition.board.roleSetups
         .filter((row) => row.role === "wolf")

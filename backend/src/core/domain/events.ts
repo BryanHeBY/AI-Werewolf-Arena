@@ -73,6 +73,20 @@ export interface EventPayloadMap {
     role: Role;
     camp: Camp;
   };
+
+  shapeshifter_initial_deal: {
+    policy: "awa_netease_shapeshifter_two_extra_villagers_v1";
+    roles: Role[];
+    boardSize: number;
+  };
+  shapeshifter_identity_chosen: {
+    policy: "awa_netease_shapeshifter_two_extra_villagers_v1";
+    actorId: EntityId;
+    day: 1;
+    slot: 0 | 1;
+    role: Role;
+    camp: Camp;
+  };
   wall_note_changed: {
     actorId: number;
     day: 1;

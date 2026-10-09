@@ -20,6 +20,7 @@ import { World } from "../../core/domain/world";
 export interface ValidationContext {
   day?: number;
   thiefScope?: object;
+  shapeshifterScope?: object;
   wildChildScope?: object;
   wallScope?: object;
   wallId?: string;
@@ -125,6 +126,7 @@ export class ActionValidator {
       phase: context.phase,
       day: context.day,
       thiefScope: context.thiefScope,
+      shapeshifterScope: context.shapeshifterScope,
       wildChildScope: context.wildChildScope,
       wallScope: context.wallScope,
       wallId: context.wallId,
