@@ -1,7 +1,7 @@
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { eventLabel } from "./event-labels";
-import { phaseName, stageName } from "./replay-localization";
+import { phaseName, eventStageName } from "./replay-localization";
 
 interface EventTimelineProps {
   events: ReplayEvent[];
@@ -51,7 +51,7 @@ export function EventTimeline({
             <div>
               <div className="event-head">
                 <span>#{event.seq} · {phaseName(event.phase, locale)}</span>
-                <span>{stageName(event.stage ?? event.type, locale)}</span>
+                <span>{eventStageName(event, locale, playerIds)}</span>
               </div>
               <p>{eventLabel(event, locale, playerIds)}</p>
             </div>

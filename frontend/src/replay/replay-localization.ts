@@ -1,5 +1,5 @@
 import { readReplayEvent } from "./replay-event-reader";
-import { type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { type ReplayEvent, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { roleName as sharedRoleName, term, text, dictionaries, outcomeLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 
 export { type Locale };
@@ -9,6 +9,14 @@ export function phaseName(phase: string, locale: Locale = "zh-CN"): string { ret
 export function stageName(stage: string, locale: Locale = "zh-CN"): string {
   const key = `replay.stage.${stage}` as MessageKey;
   return Object.hasOwn(dictionaries[locale], key) ? text(locale, key) : term("stage", stage, locale);
+}
+const GIFT_ACTION_EVENTS = new Set(["guard_applied", "seer_checked", "role_inspected", "witch_potion_used", "witch_potion_skipped", "dream_applied"]);
+/** Explicit gift instances describe an action without attributing the recipient's physical role. */
+export function eventStageName(event: ReplayEvent, locale: Locale = "zh-CN", playerIds?: readonly number[]): string {
+  const fact = readReplayEvent(event, playerIds);
+  const abilityId = fact?.event.payload.abilityId;
+  if (GIFT_ACTION_EVENTS.has(event.type) && typeof abilityId === "string" && abilityId.startsWith("gift:")) return text(locale, "replay.stage.gift_ability");
+  return stageName(event.stage ?? event.type, locale);
 }
 // These are archived reason IDs; current records already use the canonical IDs.
 const historicalReasons: Readonly<Record<string, string>> = Object.freeze({

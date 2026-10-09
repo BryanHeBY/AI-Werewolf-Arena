@@ -6,7 +6,7 @@ import { ReplayDisplayControls } from "./ReplayDisplayControls";
 import { useMemo, useState } from "react";
 import { buildReplaySnapshot } from "./replay-projection";
 import { buildPresentationReplay } from "./replay-presentation";
-import { replayResultLabel, phaseName, resultReasonName, stageName } from "./replay-localization";
+import { replayResultLabel, phaseName, resultReasonName, eventStageName } from "./replay-localization";
 import { eventLabel } from "./event-labels";
 import { ReplayStage } from "./ReplayStage";
 import { PlayerSeats } from "./PlayerSeats";
@@ -73,7 +73,7 @@ export function ReplayWorkspace({ replay, display, onDisplayChange }: {
             </div>
             <p>{activeEvent ? eventLabel(activeEvent, locale, playerIds) : text(locale, "replay.no_events")}</p>
             <div className="event-meta">
-              <span>{activeEvent ? stageName(activeEvent.stage ?? activeEvent.type, locale) : "—"}</span>
+              <span>{activeEvent ? eventStageName(activeEvent, locale, playerIds) : "—"}</span>
               <time>{formatReplayTime(activeEvent?.timestamp, display)}</time>
             </div>
           </section>

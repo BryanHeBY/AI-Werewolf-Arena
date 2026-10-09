@@ -4,7 +4,7 @@ import { formatReplayTime, validateReplayDisplay, DEFAULT_REPLAY_TIME_ZONE, type
 import { buildPresentationReplay, type PresentationReplay } from "./replay-presentation";
 import { buildReplaySnapshot } from "./replay-projection";
 import { eventLabel } from "./event-labels";
-import { phaseName, roleName, stageName } from "./replay-localization";
+import { phaseName, roleName, eventStageName } from "./replay-localization";
 
 export const FRAMES_PER_EVENT = 90;
 export type ReplayRenderInput = ReplayDisplayOptions & { replay: PresentationReplay };
@@ -25,7 +25,7 @@ export function buildReplayFrame(input: ReplayRenderInput, frame: number) {
   return {
     eventIndex, eventSeq: event?.seq ?? null, snapshot,
     dayPhase: text(locale, "replay.day_phase", { day: snapshot.day, phase: phaseName(snapshot.phase, locale) }),
-    stage: event ? stageName(event.stage ?? event.type, locale) : text(locale, "replay.start"),
+    stage: event ? eventStageName(event, locale, replay.players.map(player => player.player_id)) : text(locale, "replay.start"),
     label: event ? eventLabel(event, locale, replay.players.map(player => player.player_id)) : text(locale, "replay.no_events"),
     time: formatReplayTime(event?.timestamp, input),
     victory: snapshot.decision ? victoryPointLabel(snapshot.decision.decidedAt, locale) : null,

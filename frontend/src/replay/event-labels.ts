@@ -22,7 +22,7 @@ export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerI
   const target = numberValue(p.targetId);
   const players = (value: unknown) => numberList(value, locale) || t("replay.none");
   switch (event.type) {
-    case "lucky_ability_skipped": return t("console.lucky.skipped", { actor, day: numberValue(p.day), ability: stringValue(p.abilityId) });
+    case "lucky_ability_skipped": return t("replay.gift_ability_skipped", { actor, day: numberValue(p.day), ability: stringValue(p.abilityId) });
     case "gargoyle_awakened":return t("console.gargoyle.awakened",{actor,day:numberValue(p.day)});
     case "role_inspection_skipped":return p.reason==="passed"||p.reason==="no_targets"?t("console.role_inspection.skipped",{actor,day:numberValue(p.day),reason:t(p.reason==="passed"?"inspection.skip.passed":"inspection.skip.no_targets")}):t("replay.unknown");
     case "role_inspected":{const result=readInspectionResult(p.result);return result?.kind==="role"?t("console.role_inspected",{actor,target,result:inspectionLabel(result,locale)}):t("replay.unknown");}
