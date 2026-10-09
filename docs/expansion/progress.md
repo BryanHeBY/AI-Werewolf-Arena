@@ -467,3 +467,7 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 ## P9a 第三项：千面人（2026-10-09）
 
 网易现用卡表直接来源的首夜必选、一狼强制与原Thief optional策略分开，真实N+2物理deal、原native身份/库存及同夜技能、独立God/本人档、严格decision/物理牌因果Tape已贯通。三组只读复核报告全部修复复验闭合，见[规则卡](rules/awa-netease-shapeshifter-v1.md)/[验收](reviews/p9-shapeshifter.md)。冻结源码后全backend **3049/303048/233文件**、frontend **294/2869/44文件**、完整Chromium **140/140**均0失败；check/lint/format、双端build通过。96实际双语三transport完整局及逐Tape、8严格失败Tape、200受限观察逐Tape、1000独立World自然局分别验证；旧Thief90实际双语完整局/Tape保持。当前23verified/6implemented/35planned，main本地commit，立即继续孤独少女/P9/P10，总体待用户最终验收。
+
+## P9a 孤独少女规则冻结
+
+网易num24直接来源与2020相近暗恋者/2024赛事评分辅助已分别核实；首夜关系秘密、真实Good民与独立胜利、原Camp/空Victory授权、精确God→本人lean事件/关闭矩阵及终局winner推断边界，经三路原审查者复验闭合。见[规则卡](rules/awa-netease-lonely-girl-v1.md)/[冻结审查](reviews/p9-lonely-girl-rules.md)。仅冻结文档，未注册；目录23verified/6implemented/35planned不变，立即接续实现，整体仍待用户最终验收。
