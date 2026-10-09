@@ -38,6 +38,7 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  death_ability_changed: { actorId: EntityId; abilityId: string; operation: "granted" | "armed" | "disabled" | "enabled" | "transferred_out"; grantedNight: number; armedOnNight: number | null; remaining: 0 | 1; disabled: boolean; deathExpired: boolean };
   ability_changed: {
     actorId: EntityId; abilityId: string; kind: "seer_check" | "role_check" | "guard" | "potion" | "dream";
     operation: "granted" | "disabled" | "enabled" | "transferred_out";

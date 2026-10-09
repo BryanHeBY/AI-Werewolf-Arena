@@ -421,3 +421,12 @@ Aw候选与正式配置例子仍在工作区；六人AWA缩编和原12镜隐牌�
 ## P7：死亡许可实例绑定
 
 World短期death permission与当前请求的ability_id严格匹配，原生undefined兼容；赠予ID不能附遗言或借原生许可，旧close不撤新库存许可。仅授权底座，不建立赠枪库存、自动第二枪或注册Black。新11核心与2双语实际SDK/MCP反例、旧18双语实际枪整局/Tape、受影响1050/11744/72文件及四项静态通过，见[本笔审查](reviews/p7-death-action-instance.md)。原schema/事件/前端文字不变。目录22/42与Black后续实例/角色、P7验收及P8–P10全目标保持。
+
+
+## P7：独立被动赠枪底座
+
+独立DeathGun与owner/World/body/metadata作用域、真实900激活、各native Hook真正commit后关闭permit再gift、paid shot生效终验和首次死亡finally永久过期已接入；source/DTO白名单及共用中英状态/事件标签完成，原身份/阵营/胜利不变。Profile即使夜初无库存，也能贡献夜末处理器；不增加Black注册或交易/公开板。
+
+独立审查修复跨World借权、target ID与lifeScope错配、judge标签遗漏和malformed armed/null状态，原审查者probe闭环。核心39/254、16真正SDK HTTP/ACP进程+注入MCP与私人记录、4受控PM完整临界局、旧18实际双语完整局/全部Tape、受影响1188/13101/87文件通过；前端163/1429/type/build、4实际浏览器与中英最终PNG通过。见[本笔验收](reviews/p7-gift-gun-foundation.md)。
+
+目录仍22/42。新gift严格Tape随真实Black交易启用后验证，本笔不冒Black完整交付或新板模拟；下一笔完整角色/延期主动礼物与例子，再P7全已支持验收及P8–P10/64/22/长局/T6。

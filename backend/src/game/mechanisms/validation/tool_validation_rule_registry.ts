@@ -5,6 +5,7 @@ import { COMMON_VALIDATION_RULES } from "../common/validation_rules";
 import { RoleCatalog, getDefaultRoleCatalog } from "../roles/catalog";
 import { SHERIFF_VALIDATION_RULES } from "../sheriff/validation_rules";
 import { ToolRuleMap, ValidationRuleContext } from "./contracts";
+import { validateGiftGun } from "../roles/death_abilities";
 
 function buildDefaultRules(roleProfileRegistry: RoleCatalog): ToolRuleMap {
   const rules: ToolRuleMap = {
@@ -33,6 +34,7 @@ export class ToolValidationRuleRegistry {
   }
 
   validate(ctx: Omit<ValidationRuleContext, "roleCatalog">): RuleViolation | null {
+    if (this.useProfileRules && ctx.toolCall.name === "shoot" && ctx.abilityId !== undefined) return validateGiftGun({ ...ctx, roleCatalog: this.roleProfileRegistry });
     // Two roles may share a tool name while owning different resources/rules.
     const rule = (this.useProfileRules ? this.roleProfileRegistry.get(ctx.role.role)?.validationRules?.[ctx.toolCall.name] : undefined)
       ?? this.rules[ctx.toolCall.name as ToolName];

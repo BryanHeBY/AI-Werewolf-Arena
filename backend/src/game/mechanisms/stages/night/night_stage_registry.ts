@@ -9,6 +9,8 @@ import { allNightAbilities, type NightAbilityKind } from "../../roles/abilities"
 
 import {ROLE_INSPECTION_STAGE,PSYCHIC_INSPECTION_STAGE,MIRROR_INSPECTION_STAGE} from "../../roles/role_inspection/night_stages";
 import { LUCKY_ABILITY_STAGE } from "../../roles/miracle_merchant/lucky_stage";
+import { allDeathGuns } from "../../roles/death_abilities";
+import { DEATH_ABILITY_ACTIVATION_STAGE } from "../../roles/death_ability_activation";
 
 const abilityRole: Record<NightAbilityKind, Role> = { seer_check: Role.Seer,role_check:Role.Gargoyle, guard: Role.Guard, potion: Role.Witch, dream: Role.Dreamer };
 
@@ -26,6 +28,7 @@ export class NightStageRegistry {
     for (const role of [...roleSet]) for (const kind of this.roleCatalog.get(role)?.possibleNightAbilities ?? []) { roleSet.add(abilityRole[kind]); if (kind === "role_check") hasRoleChecks = true; }
     for (const id of world?.entityIds() ?? []) for (const ability of allNightAbilities(world!.getComponent<RoleComponent>(id, COMPONENT.Role))) { roleSet.add(abilityRole[ability.kind]); if (ability.kind === "role_check") hasRoleChecks = true; }
     const collected: NightStageHandler[] = [];
+    if ([...roleSet].some(role => this.roleCatalog.get(role)?.possibleDeathAbilities?.includes("gun")) || world?.getAliveEntityIds().some(id => allDeathGuns(world.getComponent<RoleComponent>(id, COMPONENT.Role)).some(gun => gun.armedOnNight === null && !gun.disabled && !gun.deathExpired))) collected.push(DEATH_ABILITY_ACTIVATION_STAGE);
     for (const role of roleSet.values()) {
       const pack = this.roleCatalog.get(role)?.nightStages ?? [];
       collected.push(...pack);

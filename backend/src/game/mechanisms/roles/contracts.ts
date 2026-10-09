@@ -60,6 +60,7 @@ export interface RoleProfile {
   validationRules?: ToolRuleMap;
   nightStages?: NightStageHandler[];
   possibleNightAbilities?: readonly NightAbilityKind[];
+  possibleDeathAbilities?: readonly "gun"[];
   llmRepair?: ToolRepairPack;
   votedOutHook?: VotedOutHook;
   deathHook?: DeathHook;

@@ -1,6 +1,7 @@
 import type { ActionRequest, Camp, Role } from "../../../core";
 import type { GuardState, HunterState, WolfKingState, WhiteWolfKingState, KnightState, GravekeeperState, DreamerState, WolfBeautyState, BearState, IdiotState, SeerState, WitchState } from "../../../game/mechanisms/roles/private_state";
 import type { PlayerNightAbility } from "../../../game/mechanisms/roles/abilities";
+import type { PlayerDeathGun } from "../../../game/mechanisms/roles/death_abilities";
 import type { MechanicalState } from "../../../game/mechanisms/roles/mechanical_wolf/state";
 import type { AwakenedState } from "../../../game/mechanisms/roles/awakened_hidden_wolf/state";
 import type { OwnNightAction } from "../../../game/mechanisms/roles/night_action_history";
@@ -14,6 +15,7 @@ export interface PlayerObservation {
   knownAliveIds: number[];
   teammateIds: number[];
   abilities: PlayerNightAbility[];
+  deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];
   ownState: { awakened?: AwakenedState; hybrid?: HybridState; merchant?: MerchantState; mechanical?: MechanicalState; witch?: WitchState; guard?: GuardState; hunter?: HunterState; wolfKing?: WolfKingState; whiteWolfKing?: WhiteWolfKingState; knight?: KnightState; gravekeeper?: GravekeeperState; dreamer?: DreamerState; wolfBeauty?: WolfBeautyState; bear?:BearState; hiddenWolf?:{hasInheritedKnife:boolean;canVoteForKill:boolean}; gargoyle?:{hasInheritedKnife:boolean;canVoteForKill:boolean};roleInspection?:import("../../../game/mechanisms/roles/private_state").RoleInspectionState; idiot?: IdiotState; seer?: SeerState };
 }

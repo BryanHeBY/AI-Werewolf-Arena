@@ -4,6 +4,7 @@ import { World } from "../../../core/domain/world";
 import { getDefaultRoleCatalog } from "../roles/catalog";
 import type {NightLifeScope} from "../../../core/domain/night_effects";
 import type {CharmBinding} from "../roles/wolf_beauty/relation";
+import { giftGunDeathHook } from "../roles/gift_gun_death_hook";
 
 /** 放逐钩子返回结果。 */
 export interface VotedOutResult {
@@ -17,10 +18,10 @@ export interface DeathHookResult {
   extraDeaths: EntityId[];
   extraDeathSources: DeathSources;
   nightEffectTargets?: EntityId[];
-  pendingShots?: Array<{targetScope:NightLifeScope;event:GameEvent}>;
+  pendingShots?: Array<{targetScope:NightLifeScope;event:GameEvent;isCurrent?:()=>boolean}>;
   charmLinks?: Array<{binding:CharmBinding;nightEffect:boolean}>;
 }
-export interface DeathHookContext { deferShotCommit?: boolean; nightEffect: boolean; blocksNightShot(targetId: EntityId): boolean; blocksNightCharm?:(targetId:EntityId)=>boolean; eligibleDead?:ReadonlySet<EntityId>;isCurrent?:()=>boolean }
+export interface DeathHookContext { day?: number; deferShotCommit?: boolean; nightEffect: boolean; blocksNightShot(targetId: EntityId): boolean; blocksNightCharm?:(targetId:EntityId)=>boolean; eligibleDead?:ReadonlySet<EntityId>;isCurrent?:()=>boolean }
 
 /** 放逐钩子函数签名。 */
 export type VotedOutHook = (
@@ -34,7 +35,7 @@ export type DeathHook = (
   world: World,
   deadIds: EntityId[],
   deathSources: DeathSources,
-  chooseDeathShot: (actorId: EntityId) => Promise<DeathShotSelection>,
+  chooseDeathShot: (actorId: EntityId, abilityId?: string) => Promise<DeathShotSelection>,
   events: GameEvent[],
   context?: DeathHookContext,
 ) => Promise<DeathHookResult>;
@@ -50,7 +51,7 @@ function buildDefaultDeathHooks(): DeathHook[] {
   return getDefaultRoleCatalog()
     .all()
     .map((profile) => profile.deathHook)
-    .filter((hook): hook is DeathHook => Boolean(hook));
+    .filter((hook): hook is DeathHook => Boolean(hook)).concat(giftGunDeathHook);
 }
 
 /** 钩子注册表：负责分发放逐钩子与死亡钩子。 */
@@ -78,7 +79,7 @@ export class HookRegistry {
     world: World,
     deadIds: EntityId[],
     deathSources: DeathSources,
-    chooseDeathShot: (actorId: EntityId) => Promise<DeathShotSelection>,
+    chooseDeathShot: (actorId: EntityId, abilityId?: string) => Promise<DeathShotSelection>,
     events: GameEvent[],
     commitAdditionalDeaths?: (result: DeathHookResult) => void,
     context?: DeathHookContext,

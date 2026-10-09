@@ -4,6 +4,7 @@ import {getBearState} from "../../../game/mechanisms/roles/private_state";
 import {getHiddenWolfState} from "../../../game/mechanisms/roles/private_state";
 import {canHiddenWolfKnife} from "../../../game/mechanisms/roles/hidden_wolf/inheritance";
 import {roleInspectionPolicy,ROLE_INSPECTION_POLICY_ROLES,projectRoleInspectionState} from "../../../game/mechanisms/roles/abilities";
+import { allDeathGuns, projectDeathGun } from "../../../game/mechanisms/roles/death_abilities";
 import {getGargoyleState,getRoleInspectionState} from "../../../game/mechanisms/roles/private_state";
 import {canGargoyleKnife} from "../../../game/mechanisms/roles/gargoyle/inheritance";
 import { getMechanicalState, projectMechanicalState } from "../../../game/mechanisms/roles/mechanical_wolf/state";
@@ -124,7 +125,7 @@ export class PlayerPromptPolicy {
     }, knownAliveIds: this.world.entityIds().filter(id => !dead.has(id)),
       teammateIds: this.wolfTeammates(request.actorId), ownState,
       ownNightActions: ownNightActions(this.world, request.actorId, request.context.day),
-      abilities: allNightAbilities(role).map(ability => projectNightAbility(ability, request.context.day)) });
+      abilities: allNightAbilities(role).map(ability => projectNightAbility(ability, request.context.day)), deathAbilities: allDeathGuns(role).map(projectDeathGun) });
   }
 
   buildSystem(
@@ -228,6 +229,7 @@ export class PlayerPromptPolicy {
       lines.push(text(this.locale, "ability.summary", { id: ability.id, kind: text(this.locale, `ability.kind.${ability.kind}`), status, uses: ability.maxUses === null ? text(this.locale, "ability.unlimited") : ability.maxUses - ability.uses, state: JSON.stringify(state) }));
     }
     if (request.context.ability_id) lines.push(text(this.locale, "ability.bound_turn", { id: request.context.ability_id }));
+    for (const gun of allDeathGuns(role)) { const projected = projectDeathGun(gun); lines.push(text(this.locale, "ability.death_gun.summary", { id: projected.id, status: text(this.locale, `ability.status.${projected.status}`), remaining: projected.remaining, granted: projected.grantedNight, armed: projected.armedOnNight ?? text(this.locale, "common.none") })); }
     const hasLucky = allNightAbilities(role).some(ability => ability.activation === "lucky") || ownNightActions(this.world, request.actorId, request.context.day).some(row => row.lucky);
     if (hasLucky) lines.push(text(this.locale, "ability.lucky.rules"), text(this.locale, "ability.lucky.history", { actions: JSON.stringify(ownNightActions(this.world, request.actorId, request.context.day)) }));
     if(request.allowedTools.includes("dream")&&allNightAbilities(role).some(ability=>ability.kind==="dream"))lines.push(text(this.locale,"ability.dream.rules"));

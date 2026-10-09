@@ -1,5 +1,5 @@
 import { readGravekeeperFeedback, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
-import { text, inspectionLabel, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, mechanicalEventLabel, merchantEventLabel, hybridEventLabel, awakenedEventLabel, type Locale } from "@ai-werewolf-arena/game-text";
+import { deathAbilityEventLabel, text, inspectionLabel, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, mechanicalEventLabel, merchantEventLabel, hybridEventLabel, awakenedEventLabel, type Locale } from "@ai-werewolf-arena/game-text";
 /** 文件说明：事件 -> 脚本回放文本/终端文本渲染注册表。 */
 import { GameEvent } from "../../../core/domain/model";
 import {
@@ -134,6 +134,7 @@ const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
   dream_death: (event,privateEvents,locale="zh-CN")=>privateEvents?[{kind:"private",text:text(locale,"console.dream.death",{actor:event.payload.actorId,target:event.payload.targetId,day:event.payload.day,reason:text(locale,event.payload.reason==="consecutive"?"console.dream.consecutive":"console.dream.linked")})}]:[],
   death_shot_blocked: (event,_private,locale="zh-CN")=>[{kind:"system",text:text(locale,"console.shot.blocked",{actor:event.payload.actorId,target:event.payload.targetId})}],
   gravekeeper_reported: (event, printPrivateEvents, locale = "zh-CN") => printPrivateEvents ? [{ kind: "private", text: gravekeeperLabel(event.payload, locale) }] : [],
+  death_ability_changed: (event, printPrivateEvents, locale = "zh-CN") => printPrivateEvents ? [{ kind: "private", text: deathAbilityEventLabel(event.type, event.payload, locale)! }] : [],
   ability_changed: (event, printPrivateEvents, locale = "zh-CN") => printPrivateEvents ? [{ kind: "private", text: text(locale, "ability.change", { actor: event.payload.actorId, id: event.payload.abilityId, kind: text(locale, `ability.kind.${event.payload.kind}`), operation: text(locale, `ability.operation.${event.payload.operation}`) }) }] : [],
   god_private_game_info: (event, _private, locale = "zh-CN") => [{ kind: "god", text: text(locale, "console.live.initial", { roles: event.payload.players.map(item => `${item.seat}:${getDefaultTextLocalizationRegistry().roleName(item.role, locale)}`).join(", ") }) }],
   day_speech: (event, _private, locale = "zh-CN") => [{ kind: "system", text: text(locale, "console.live.day", { actor: event.payload.actorId, speech: event.payload.text }) }],
@@ -152,6 +153,7 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const deathAbility = deathAbilityEventLabel(event.type, event.payload, locale); if (deathAbility !== null) return deathAbility;
     const awakened = awakenedEventLabel(event.type, event.payload, locale); if (awakened !== null) return awakened;
     const hybrid = hybridEventLabel(event.type, event.payload, locale); if (hybrid !== null) return hybrid;
     const merchant = merchantEventLabel(event.type, event.payload, locale); if (merchant !== null) return merchant;

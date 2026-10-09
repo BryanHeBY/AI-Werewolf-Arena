@@ -1,5 +1,9 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "ability.death_gun.summary": "赠枪{id}：{status}；剩余{remaining}；第{granted}夜领取；实际激活夜：{armed}。你的原身份和技能保持不变。",
+  "ability.death_gun.change": "{actor}号：赠枪{id}，{operation}。",
+  "ability.operation.armed": "已激活",
+  "replay.stage.death_ability_changed": "赠枪状态",
   "replay.stage.hybrid_exemplar_chosen": "榜样选择",
   "replay.stage.hybrid_affiliation_resolved": "胜利归属",
   "role.hybrid.brief": "首夜选择榜样、胜利跟随其真实阵营但不知阵营；自身始终为Good民，阵营查验始终验好。",

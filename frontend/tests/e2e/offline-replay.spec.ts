@@ -2,6 +2,18 @@ import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 const original = JSON.parse(readFileSync(new URL("../fixtures/sample.replay.json", import.meta.url), "utf8"));
 
+for (const locale of ["zh-CN", "en"] as const) for (const first of ["wolf", "god"] as const) test(`${locale}/${first}: controlled gifted gun preserves a second choice before terminal victory`, async ({ page }) => {
+  const replay = JSON.parse(readFileSync(new URL(`../fixtures/gift-gun-last-${first}.replay.json`, import.meta.url), "utf8")); replay.meta.locale = locale;
+  await page.route("**/api/replay", route => route.fulfill({ json: replay })); await page.goto("/");
+  const armed = locale === "en" ? "Player 2: gifted gun gift-gun:1, Armed." : "2号：赠枪gift-gun:1，已激活。";
+  await page.locator(".timeline .event").filter({ hasText: armed }).click(); await expect(page.getByTestId("composition-event")).toHaveText(armed); await expect(page.locator(".seat-grid .dead")).toHaveCount(0); await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+  const actor = page.getByRole("button", { name: locale === "en" ? "Player 2 · Seat 2" : "2号 · Seat 2", exact: true }); await expect(actor).toContainText(locale === "en" ? "Hunter" : "猎人");
+  const target = first === "wolf" ? 3 : 1, shot = locale === "en" ? `Player 2 shoots player ${target}` : `2号开枪带走${target}号`;
+  await page.locator(".timeline .event").filter({ hasText: shot }).click(); await expect(page.getByTestId("composition-event")).toHaveText(shot); await expect(page.locator(".seat-grid .dead")).toHaveCount(3); await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+  const caption = await page.getByTestId("composition-caption").boundingBox(); expect(caption).not.toBeNull(); for (const seat of await page.locator("[data-composition-player]").all()) { const box = await seat.boundingBox(); expect(box).not.toBeNull(); expect(box!.y + box!.height).toBeLessThan(caption!.y); }
+  await page.locator(".timeline .event").last().click(); await expect(page.locator(".seat-grid .winner")).toHaveCount(5); await expect(actor).toHaveClass(/dead/); await expect(actor).toHaveClass(/winner/);
+});
+
 for (const locale of ["zh-CN", "en"] as const) for (const kind of ["twelve", "guard", "extra_hold"] as const) test(`${locale}/${kind}: actual Awakened replay separates copied skills from God identity and final victory`, async ({ page }) => {
   const replay = JSON.parse(readFileSync(new URL(`../fixtures/awakened-${kind}.replay.json`, import.meta.url), "utf8")); replay.meta.locale = locale;
   await page.route("**/api/replay", route => route.fulfill({ json: replay })); await page.goto("/");

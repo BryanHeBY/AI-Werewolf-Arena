@@ -1,6 +1,10 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "ability.death_gun.summary": "Gifted gun {id}: {status}; remaining {remaining}; received on night {granted}; actually armed on night {armed}. Your original role and skills remain unchanged.",
+  "ability.death_gun.change": "Player {actor}: gifted gun {id}, {operation}.",
+  "ability.operation.armed": "Armed",
+  "replay.stage.death_ability_changed": "Gifted gun status",
   "replay.stage.hybrid_exemplar_chosen": "Exemplar choice",
   "replay.stage.hybrid_affiliation_resolved": "Victory affiliation",
   "role.hybrid.brief": "Choose an exemplar on night one; victory follows their true faction without revealing it. You always remain a true Good villager and camp inspections show Good.",

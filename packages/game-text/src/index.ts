@@ -182,3 +182,18 @@ export function merchantEventLabel(type: string, payload: unknown, locale: Local
   if (type === "merchant_trade_committed") return text(locale,"console.merchant.trade",{actor,day,target,skill});
   return p.outcome==="granted"||p.outcome==="backlash" ? text(locale,"console.merchant.outcome",{actor,day,target,skill,outcome:text(locale,p.outcome==="granted"?"merchant.outcome.granted":"merchant.outcome.backlash")}) : unknown();
 }
+
+
+/** Shared private gift status text. Invalid/non-JSON descriptors never execute during rendering. */
+export function deathAbilityEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+  if (type !== "death_ability_changed") return null;
+  const unknown = () => text(locale, "replay.unknown");
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return unknown();
+  const prototype = Object.getPrototypeOf(payload), descriptors = Object.getOwnPropertyDescriptors(payload);
+  if ((prototype !== Object.prototype && prototype !== null) || Object.values(descriptors).some(field => !Object.hasOwn(field, "value") || !field.enumerable)) return unknown();
+  const p = Object.fromEntries(Object.entries(descriptors).map(([key, field]) => [key, field.value]));
+  const positive = (value: unknown): value is number => typeof value === "number" && Number.isSafeInteger(value) && value > 0;
+  if (!positive(p.actorId) || typeof p.abilityId !== "string" || !/^[a-z][a-z0-9:_-]{0,127}$/.test(p.abilityId) || p.abilityId.startsWith("native:") || !positive(p.grantedNight) || !(p.armedOnNight === null || positive(p.armedOnNight) && p.armedOnNight >= p.grantedNight) || ![0, 1].includes(p.remaining) || typeof p.disabled !== "boolean" || typeof p.deathExpired !== "boolean" || !["granted", "armed", "disabled", "enabled", "transferred_out"].includes(p.operation)) return unknown();
+  if (p.operation === "armed" && (p.armedOnNight === null || p.disabled || p.deathExpired || p.remaining !== 1) || p.operation === "disabled" && !p.disabled || p.operation === "enabled" && (p.disabled || p.deathExpired) || p.deathExpired && (!p.disabled || p.remaining !== 0)) return unknown();
+  return text(locale, "ability.death_gun.change", { actor: p.actorId, id: p.abilityId, operation: text(locale, `ability.operation.${p.operation}` as MessageKey) });
+}
