@@ -1010,3 +1010,54 @@ for (const locale of ["zh-CN", "en"] as const)
         expect(box!.y + box!.height).toBeLessThan(finalCaption!.y);
       }
     });
+
+for (const locale of ["zh-CN", "en"] as const)
+  test(`${locale}: PK captions stay public and badge effects change only at recorded handoff`, async ({
+    page,
+  }) => {
+    const replay = structuredClone(original);
+    replay.meta = { ...replay.meta, locale };
+    replay.result = { winner: null, reason: "max_days_reached" };
+    replay.players = [1, 2, 3].map((player_id) => ({ player_id, role: "villager", camp: "good" }));
+    const facts = [
+      { type: "sheriff_pk_started", stage: "sheriff_pk_speech", payload: { candidates: [1, 2] } },
+      { type: "sheriff_elected", stage: "sheriff_vote", payload: { winnerId: 1 } },
+      { type: "exile_pk_started", stage: "exile_pk_speech", payload: { candidates: [1, 2] } },
+      { type: "night_resolved", stage: "night_resolved", payload: { deaths: [1] } },
+      {
+        type: "sheriff_badge_transferred",
+        stage: "sheriff_badge_choice",
+        payload: { fromId: 1, toId: 3, reason: "night_death" },
+      },
+    ];
+    replay.events = facts.map((fact, index) => ({
+      ...fact,
+      seq: index + 1,
+      day: index < 3 ? 1 : 2,
+      phase: index < 3 ? "day" : "night",
+      timestamp: "2026-10-09T00:00:00.000Z",
+    }));
+    await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
+    await page.goto("/");
+    const first =
+      locale === "en" ? "Sheriff PK begins: Player 1, Player 2." : "警长PK开始：1号、2号。";
+    await page.locator(".timeline .event").filter({ hasText: first }).click();
+    await expect(page.getByTestId("composition-event")).toHaveText(first);
+    await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
+    await expect(page.locator(".seat-grid .sheriff")).toHaveCount(0);
+    const third =
+      locale === "en" ? "Exile PK begins: Player 1, Player 2." : "放逐PK开始：1号、2号。";
+    await page.locator(".timeline .event").filter({ hasText: third }).click();
+    await expect(page.getByTestId("composition-event")).toHaveText(third);
+    await expect(page.locator(".seat-grid .sheriff")).toHaveCount(1);
+    await expect(page.locator(".seat-grid .dead")).toHaveCount(0);
+    await page.locator(".timeline .event").last().click();
+    await expect(page.locator(".seat-grid .dead")).toHaveCount(1);
+    const successor = page.getByRole("button", {
+      name: locale === "en" ? "Player 3" : "3号",
+      exact: true,
+    });
+    await expect(successor.locator(".sheriff")).toHaveCount(1);
+    await expect(page.getByTestId("composition-event")).toContainText("3");
+    await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+  });

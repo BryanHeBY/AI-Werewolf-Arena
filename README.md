@@ -103,3 +103,5 @@ bun run format
 类型门禁覆盖测试与夹具，后端脚本的 JavaScript 实现也参与检查；不通过排除文件或关闭严格选项避开错误。格式配置与 `.editorconfig` 使用两空格、LF 和文件末尾换行；本地秘密配置、构建产物和历史复盘 JSON 夹具不参加自动格式写入。检查命令不会启动真实 Agent 对局。
 
 已实现行为以代码和测试为准。玩法扩充的目标、64 项角色、中英双语支持、阶段验收、交叉审查和提交要求见 [扩充路线](docs/expansion/roadmap.md)；计划功能在实现并验证后才登记为支持。
+
+已有默认板子保持兼容。`configs.example/boards/awa_classic_pk_choice_12_v1.json` 提供完整的AWA具名竞选PK、放逐PK与死亡持徽者选择组合：首轮仅未上警者投警长、最多一次PK、再次平票/全弃票无徽或无人放逐、死亡警长选择继任者或撕徽。它不是网易或赛事的完整规则镜像；详细边界与参数见[警徽/投票契约](docs/expansion/contracts/sheriff-voting-policies.md)。示例不覆盖本地configs或改变省略参数默认；双语12人离线录制与严格Tape复现覆盖完整组合。
