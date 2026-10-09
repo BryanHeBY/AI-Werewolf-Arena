@@ -29,6 +29,7 @@ import {
 } from "./copied";
 import {
   choose_exemplar,
+  choose_lovers,
   guard,
   dream,
   check_identity,
@@ -41,6 +42,7 @@ import {
 /** Preserve protocol-independent priority and RNG order for strict Tape reproducibility. */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
   { tool: "choose_exemplar", decide: choose_exemplar },
+  { tool: "choose_lovers", decide: choose_lovers },
   { tool: "bestow_ability", decide: bestow_ability },
   { tool: "black_market_trade", decide: black_market_trade },
   { tool: "speak", decide: speak },

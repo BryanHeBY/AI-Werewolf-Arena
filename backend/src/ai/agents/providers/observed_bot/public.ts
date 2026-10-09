@@ -61,6 +61,7 @@ export const vote: ObservedToolHandler = (context) => {
   }
   const candidates = others.filter(
     (id) =>
+      !(ownState.lover?.mayNotVotePartner && ownState.lover.partnerId === id) &&
       !revealed.includes(id) &&
       !teammateIds.includes(id) &&
       (request.context.exile_candidates === undefined ||

@@ -1,3 +1,4 @@
+import { prohibitsLoversVote } from "../../../game/mechanisms/roles/cupid/relation";
 import { text } from "@ai-werewolf-arena/game-text";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
@@ -168,7 +169,8 @@ export class BaselineBotActionProvider implements ActionProvider {
               id !== request.actorId &&
               (request.context.exile_candidates === undefined ||
                 request.context.exile_candidates.includes(id)) &&
-              canBeExiled(this.world, id, this.roleCatalog),
+              canBeExiled(this.world, id, this.roleCatalog) &&
+              !prohibitsLoversVote(this.world, request.actorId, id),
           ) ?? null;
       return target !== null
         ? { name: "vote", args: { target_id: target, abstain: false } }

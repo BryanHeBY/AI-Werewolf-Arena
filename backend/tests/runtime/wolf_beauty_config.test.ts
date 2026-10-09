@@ -21,6 +21,6 @@ for (const id of ["six_player_wolf_beauty", "twelve_player_wolf_beauty"] as cons
         }),
       ).toThrow(`board_config_invalid_field: roles.wolf_beauty.${Object.keys(params)[0]}`);
     const planned = structuredClone(board.definition);
-    planned.board.roleSetups[0].role = "cupid";
+    planned.board.roleSetups[0].role = "awakened_knight";
     expect(() => parseBoardDefinition(planned)).toThrow("board_config_role_not_implemented");
   });

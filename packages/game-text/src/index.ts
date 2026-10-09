@@ -8,6 +8,8 @@ import {
   type VictoryClaim,
   type VictoryPoint,
 } from "@ai-werewolf-arena/game-catalog";
+import { CUPID_EVENT_TYPES, readCupidEventFact } from "./cupid";
+export { CUPID_EVENT_TYPES, readCupidEventFact } from "./cupid";
 import { zhCN, type MessageKey } from "./zh-CN";
 import { en } from "./en";
 
@@ -122,6 +124,29 @@ export function hybridEventLabel(type: string, payload: unknown, locale: Locale)
       })
     : unknown();
 }
+export function cupidEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+  if (!(CUPID_EVENT_TYPES as readonly string[]).includes(type)) return null;
+  const p = readCupidEventFact(type, payload);
+  if (!p) return text(locale, "replay.unknown");
+  const actor = p.actorId as number;
+  if (type === "lover_recognized")
+    return text(locale, "console.cupid.recognition", { actor, partner: p.partnerId as number });
+  if (type === "lovers_death")
+    return text(locale, "console.cupid.death", { actor, target: p.targetId as number });
+  const pair = p.pairIds as number[];
+  if (type === "cupid_lovers_chosen")
+    return text(locale, "console.cupid.choice", { actor, first: pair[0]!, second: pair[1]! });
+  const camps = p.pairCamps as string[];
+  return text(locale, "console.cupid.resolved", {
+    actor,
+    first: pair[0]!,
+    second: pair[1]!,
+    firstCamp: term("camp", camps[0]!, locale),
+    secondCamp: term("camp", camps[1]!, locale),
+    policy: term("rule", p.policy as string, locale),
+    mixed: text(locale, p.mixed ? "common.yes" : "common.no"),
+  });
+}
 export function toolFailure(locale: Locale, error: string, originalMessage?: string) {
   return { ok: false as const, error, message: originalMessage ?? errorMessage(locale, error) };
 }
@@ -164,7 +189,10 @@ export function victoryClaimLabel(claim: VictoryClaim, locale: Locale = "zh-CN")
           ? text(locale, "victory.goal.netease_cursed_fox_last_faction_v1")
           : claim.goalId,
     });
-  return text(locale, "victory.relationship", { group: claim.groupId });
+  return text(locale, "victory.relationship", {
+    group:
+      claim.groupId === "cupid_lovers" ? text(locale, "victory.group.cupid_lovers") : claim.groupId,
+  });
 }
 export function outcomeLabel(outcome: GameOutcome, locale: Locale = "zh-CN"): string {
   if (outcome.kind === "no_winner") return text(locale, "replay.no_winner");

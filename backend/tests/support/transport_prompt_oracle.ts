@@ -21,6 +21,7 @@ const stages: Record<string, [string, string]> = {
   death_shot: ["死亡开枪", "Death shot"],
   mirror_girl: ["魔镜少女行动", "Mirror Girl action"],
   psychic: ["通灵师行动", "Spirit Seer action"],
+  cupid: ["丘比特连接情侣", "Cupid lover selection"],
   hybrid: ["混血儿选择榜样", "Hybrid exemplar selection"],
   black_market_merchant: ["黑市商人交易", "Black Market trade"],
   black_market_recipient: ["黑市幸运儿行动", "Black Market recipient"],
@@ -275,7 +276,9 @@ export function assertTransportEvents(
       type === "god_private_game_info" ||
       type === "mechanical_poison_reflected" ||
       type === "merchant_trade_resolved" ||
-      type === "hybrid_affiliation_resolved"
+      type === "hybrid_affiliation_resolved" ||
+      type === "cupid_relation_resolved" ||
+      type === "lovers_death"
     )
       throw new Error("fixture_god_information_exposed");
     if (
@@ -284,6 +287,8 @@ export function assertTransportEvents(
         "merchant_trade_skipped",
         "lucky_ability_skipped",
         "hybrid_exemplar_chosen",
+        "cupid_lovers_chosen",
+        "lover_recognized",
       ].includes(type) &&
       payload.actorId !== actorId
     )

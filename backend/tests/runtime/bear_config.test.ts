@@ -33,6 +33,6 @@ for (const id of ["six_player_bear", "twelve_player_bear"] as const)
       }),
     ).toThrow("role_count_exceeds_limit: bear");
     const planned = structuredClone(board.definition);
-    planned.board.roleSetups[0].role = "cupid";
+    planned.board.roleSetups[0].role = "awakened_knight";
     expect(() => parseBoardDefinition(planned)).toThrow("board_config_role_not_implemented");
   });

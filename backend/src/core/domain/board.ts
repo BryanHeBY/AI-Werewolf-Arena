@@ -99,7 +99,14 @@ export const BEAUTY_DEATH_LINK_POLICIES = [
 ] as const;
 export type BeautyDeathLinkPolicy = (typeof BEAUTY_DEATH_LINK_POLICIES)[number];
 
+export const CUPID_POLICIES = [
+  "netease_2017_cupid_follows_lovers_v1",
+  "lui_meme_lovers_only_v1",
+] as const;
+export type CupidPolicy = (typeof CUPID_POLICIES)[number];
+
 export interface BoardConfig {
+  cupid?: { policy: CupidPolicy };
   dreamer?: { protectionPolicy: DreamProtectionPolicy };
   wolfBeauty?: { deathLinkPolicy: BeautyDeathLinkPolicy };
   disclosure?: { deathRevealPolicy: DeathRevealPolicy };

@@ -435,3 +435,7 @@ Black完整功能commit `83cac45`；赠枪底座 `5c41428`、死亡实例许可 
 ## 2026-10-09 P8 首项：咒狐
 
 [规则卡](rules/netease-cursed-fox-v1.md)与[三组审查/验证](reviews/p8-cursed-fox.md)已交付；implemented首项、剩余40项planned，P8/P9/P10持续推进。三组源/执行/时序问题修复复查关闭；本批2441后端、229前端、88浏览器无失败，1000固定seed局及48实际双语SDK/ACP/MCP局含strict Tape。未推送、未运行真实模型；总体任务等待用户最终验收。下一项丘比特规则草案正在核对计数、保密与殉情波次，不把草案登记为支持。
+
+## 2026-10-09 P8 第二项：丘比特
+
+[来源策略卡](rules/sourced-cupid-v1.md)区分网易2017丘比特始终跟随与Lui-même未被选丘比特仍随好人，保留真实身份/刀权、情侣互认ID、殉情禁技能和完整链后胜利。三组审查发现的请求构造撤权、当前关系DTO生命、数组choice丢失、取消与外部种子漏链均修复复查。60实际双语三transport局/Tape、480受限ObservedBot局逐局Tape、1200World基线、前端/浏览器与最终源码门禁分别见[验收](reviews/p8-cupid.md)。implemented已2项，23verified/39planned；杠精与首组事件道具、P9/P10继续开放，不关闭总体用户验收。本批只本地commit，未push或调用真实模型。

@@ -238,9 +238,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "cupid",
     names: { "zh-CN": "丘比特", en: "Cupid" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P8",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/sourced-cupid-v1.md#cupid",
     mechanismSummary: "情侣、殉情和目标变化",
   },
   {

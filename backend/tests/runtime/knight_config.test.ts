@@ -50,6 +50,6 @@ for (const [id, size] of [
     ])
       expect(() => configured(parameters)).toThrow();
     const unsupported = structuredClone(board.definition);
-    unsupported.board.roleSetups[0].role = "cupid";
+    unsupported.board.roleSetups[0].role = "awakened_knight";
     expect(() => parseBoardDefinition(unsupported)).toThrow("board_config_role_not_implemented");
   });

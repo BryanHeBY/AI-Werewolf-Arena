@@ -1,4 +1,5 @@
 /** 文件说明：内置胜利条件规格实现。 */
+import { cupidCityDecision } from "../roles/cupid/victory";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { Camp, type WinDecision, WinCondition } from "../../../core/domain/model";
@@ -45,6 +46,8 @@ function statAlive(world: World): AliveStat {
 }
 
 function evaluateSlaughterCity(world: World): WinDecision | null {
+  const cupid = cupidCityDecision(world);
+  if (cupid) return cupid.decision;
   const stat = statAlive(world);
   if (stat.wolves === 0) {
     return victoryDecision(world, { kind: "faction", faction: Camp.Good }, "all_wolves_eliminated");

@@ -38,6 +38,10 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  cupid_lovers_chosen: { actorId: EntityId; day: 1; pairIds: [EntityId, EntityId] };
+  lover_recognized: { actorId: EntityId; partnerId: EntityId };
+  cupid_relation_resolved: import("./components/lovers").LoversComponent;
+  lovers_death: { actorId: EntityId; targetId: EntityId };
   player_role_revealed: { playerId: EntityId; role: RoleId };
   sheriff_pk_started: { candidates: EntityId[] };
   exile_pk_started: { candidates: EntityId[] };

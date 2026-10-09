@@ -15,6 +15,7 @@ import {
   mechanicalEventLabel,
   merchantEventLabel,
   hybridEventLabel,
+  cupidEventLabel,
   awakenedEventLabel,
   deathAbilityEventLabel,
   blackMarketEventLabel,
@@ -38,6 +39,8 @@ export function eventLabel(
   if (deathAbility !== null) return deathAbility;
   const awakened = awakenedEventLabel(event.type, p, locale);
   if (awakened !== null) return awakened;
+  const cupid = cupidEventLabel(event.type, p, locale);
+  if (cupid !== null) return cupid;
   const hybrid = hybridEventLabel(event.type, p, locale);
   if (hybrid !== null) return hybrid;
   const merchant = merchantEventLabel(event.type, p, locale);

@@ -167,6 +167,7 @@ export function permitsCharm(
     );
   if (policy !== "awa_exile_poison_v1") return false;
   return (
+    !sources.includes(DeathCause.Lovers) &&
     !sources.includes(DeathCause.Duel) &&
     !sources.includes(DeathCause.Dream) &&
     sources.some((source) => source === DeathCause.Exile || source === DeathCause.Poison)

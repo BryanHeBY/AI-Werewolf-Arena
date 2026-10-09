@@ -42,6 +42,8 @@ import {
   projectAwakenedState,
 } from "../../../game/mechanisms/roles/awakened_hidden_wolf/state";
 import { ownNightActions } from "../../../game/mechanisms/roles/night_action_history";
+import { getCupidState, projectCupidState } from "../../../game/mechanisms/roles/cupid/state";
+import { projectLover } from "../../../game/mechanisms/roles/cupid/relation";
 import { getHybridState, projectHybridState } from "../../../game/mechanisms/roles/hybrid/state";
 import {
   getMerchantState,
@@ -167,6 +169,12 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    const lover = projectLover(this.world, request.actorId);
+    if (lover) ownState.lover = lover;
+    if (role?.role === Role.Cupid) {
+      const state = getCupidState(role);
+      if (state) ownState.cupid = projectCupidState(state);
+    }
     if (role?.role === Role.BlackMarketMerchant) {
       const state = getBlackMarketState(role);
       if (state) ownState.blackMarket = projectBlackMarketState(state);
@@ -492,6 +500,11 @@ export class PlayerPromptPolicy {
                     : "ability.role_check.rules",
               ),
         );
+    }
+    const lover = projectLover(this.world, request.actorId);
+    if (lover) {
+      lines.push(text(this.locale, "prompt.status.lover", { partner: lover.partnerId }));
+      if (lover.mayNotVotePartner) lines.push(text(this.locale, "prompt.status.lovers_vote"));
     }
     const privateState = role?.renderPrompt?.(this.locale).trim();
     if (privateState)

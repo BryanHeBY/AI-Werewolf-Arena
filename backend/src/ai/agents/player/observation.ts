@@ -39,6 +39,8 @@ export interface PlayerObservation {
     blackMarket?: PlayerBlackMarketState;
     awakened?: PlayerAwakenedState;
     hybrid?: PlayerHybridState;
+    cupid?: import("../../../game/mechanisms/roles/player_extended_state").PlayerCupidState;
+    lover?: { partnerId: number; mayNotVotePartner: boolean };
     merchant?: PlayerMerchantState;
     mechanical?: PlayerMechanicalState;
     witch?: PlayerWitchState;

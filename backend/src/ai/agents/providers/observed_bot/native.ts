@@ -1,6 +1,14 @@
 import type { ObservedToolHandler } from "./context";
 import { PotionType } from "../../../../core";
 
+export const choose_lovers: ObservedToolHandler = ({ knownAliveIds, pick }) => {
+  const first = pick(knownAliveIds),
+    second = pick(knownAliveIds.filter((id) => id !== first));
+  return first === undefined || second === undefined
+    ? null
+    : { name: "choose_lovers", args: { first_id: first, second_id: second } };
+};
+
 export const choose_exemplar: ObservedToolHandler = (context) => {
   const { others, pick } = context;
   const target = pick(others);
@@ -116,7 +124,7 @@ export const use_potion: ObservedToolHandler = (context) => {
 export const shoot: ObservedToolHandler = (context) => {
   const { others, pick } = context;
   const target = pick(others);
-  if (target !== undefined) return { name: "shoot", args: { target_id: target } };
+  return { name: "shoot", args: { target_id: target ?? null } };
 };
 
 export const duel: ObservedToolHandler = (context) => {

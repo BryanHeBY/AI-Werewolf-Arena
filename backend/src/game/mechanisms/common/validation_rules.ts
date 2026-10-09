@@ -1,3 +1,4 @@
+import { prohibitsLoversVote } from "../roles/cupid/relation";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：定义通用工具的校验规则。 */
 import { ToolRuleMap } from "../validation/contracts";
@@ -47,6 +48,8 @@ export const COMMON_VALIDATION_RULES: ToolRuleMap = {
     if (toolCall.args.target_id === null) {
       return { code: RuleError.VoteTarget };
     }
+    if (prohibitsLoversVote(world, actorId, toolCall.args.target_id))
+      return { code: RuleError.LoversVote };
     if (!canBeExiled(world, toolCall.args.target_id, roleCatalog)) {
       return { code: RuleError.VoteTarget };
     }

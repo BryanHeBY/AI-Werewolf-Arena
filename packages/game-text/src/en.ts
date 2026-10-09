@@ -1,6 +1,48 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "rule.netease_2017_cupid_follows_lovers_v1": "NetEase 2017: Cupid follows lovers",
+  "rule.lui_meme_lovers_only_v1": "Lui-même original: separate Cupid follows Good",
+  "prompt.status.lover":
+    "Your partner is player {partner}; recognition grants no role or faction information. Heartbreak suppresses death abilities; original abilities remain.",
+  "prompt.status.lovers_vote":
+    "This source policy forbids lovers from voting to exile each other, including PK.",
+
+  "role.cupid.brief":
+    "Connect two lovers on night one; either death causes heartbreak, which suppresses death abilities. Victory uses a named source policy.",
+  "role.cupid.state":
+    "Your role is Cupid, a true Good god. At stage 80 on night one you must choose two distinct actually living players with choose_lovers; you may include yourself. No null, duplicate, dead target, passing or later choice. After commitment you cannot change them. You learn only your selected IDs, never their roles, factions or hidden victory group. Lovers learn only their partner ID and keep original abilities, inspection labels and wolf permissions. Either death causes the other to die of heartbreak, which suppresses guns and Wolf Beauty death links and ignores protection. Two independent lethal sources in the same wave add heartbreak to both lovers: an explicit engineering completion. Paid Dreamer effects still follow night death. Victory waits for the entire death chain.",
+  "role.cupid.netease":
+    "Source policy: NetEase 2017. You always win with the lovers. Two Good lovers follow Good; two Wolf lovers follow Wolf, but this grants you no wolf knowledge or knife and never counts you as a true wolf. Mixed lovers must both survive and eliminate everyone except themselves and you; you win with them whether alive or dead. When following Wolf or the relationship group, you no longer block Wolf slaughter of Good. All true wolves dying still awards Good victory. The source does not specify a mutual-vote ban; current AWA voting permission is retained.",
+  "role.cupid.lui":
+    "Source policy: Lui-même original. An unselected Cupid stays with Good and counts as Good. Mixed lovers must both survive and eliminate everyone else, including a separate Cupid. A selected Cupid follows the pair. Lovers cannot vote to exile each other, including PK; sheriff elections are unaffected.",
+  "role.cupid.status":
+    "Your own chosen IDs and opportunity: {state}. The engine has not disclosed their roles or factions.",
+  "action.choose_lovers.hint":
+    "Choose two distinct living IDs using first_id and second_id; self is allowed and passing is forbidden.",
+  "prompt.targets.lovers":
+    "Select first_id and second_id separately from actually living IDs: {ids}. They must differ; self is allowed.",
+  "stage.cupid": "Cupid lover selection",
+  "error.cupid_unavailable":
+    "Cupid selection requires the original authorized, unused choice on night one.",
+  "error.cupid_target": "Choose two distinct actually living integer IDs; self is allowed.",
+  "error.lovers_vote":
+    "The current original policy forbids lovers from voting to exile each other.",
+  "console.cupid.choice":
+    "Cupid private choice: player {actor} connected players {first} and {second} on night one; roles and factions are unknown.",
+  "console.cupid.recognition":
+    "Lover private recognition: player {actor} learned that player {partner} is their partner; role and faction are unknown.",
+  "console.cupid.resolved":
+    "God relationship fact: player {actor} connected player {first} ({firstCamp}) and player {second} ({secondCamp}); source policy {policy}; mixed pair: {mixed}.",
+  "console.cupid.death":
+    "God heartbreak fact: player {actor} died, causing player {target} to die.",
+  "replay.stage.cupid_lovers_chosen": "Lover selection",
+  "replay.stage.lover_recognized": "Lover recognition",
+  "replay.stage.cupid_relation_resolved": "Lover victory affiliation",
+  "replay.stage.lovers_death": "Heartbreak",
+  "reason.cupid_lovers_only_survivors": "Lovers completed the relationship victory goal",
+  "victory.group.cupid_lovers": "Cupid lovers",
+
   "role.hunter.configured_state":
     "You are Hunter. One native gun can be used only in an authorized death window under this board’s cause policy; the last good god may still act. Passing with target_id=null spends the opportunity.",
   "role.wolf_king.configured_state":
@@ -273,7 +315,7 @@ export const en = Object.freeze({
   "role.wolf_beauty.state":
     "Your role is Wolf Beauty, aligned with wolves. Join wolf chat/knife votes, but cannot self-destruct or vote to knife yourself. After the knife vote optionally charm another living player or pass with null, never the same target on adjacent nights. The selected named policy determines linking causes. Current dream protection can block Night charm, not ordinary Day charm; Guard/antidote do not block it. The target gets no direct notification. Under SlaughterSide, exiling the last living wolf when it is Wolf Beauty and its charm actually takes the last good special role or villager gives wolves victory; configured victory conditions still use their first matching order.",
   "role.wolf_beauty.link_awa":
-    "Wolf Beauty awa_exile_poison_v1: Exile/Poison link; Shot does not. Compound Duel/Dream suppress. Charm may be skipped; no own knife, blast or consecutive repeat.",
+    "Wolf Beauty awa_exile_poison_v1: Exile/Poison link; Shot does not. Compound Duel/Dream/Heartbreak suppress. Charm may be skipped; no own knife, blast or consecutive repeat.",
   "role.wolf_beauty.link_s7":
     "Wolf Beauty heroes_s7_2017_exile_hunter_v1: Exile/native Hunter shot link; Poison does not. Every other compound cause suppresses (engineering completion); unattributed shots never imply Hunter. Optional charm follows the 2019 guidance; no own knife, blast or consecutive repeat.",
   "role.dreamer.protection_awa":

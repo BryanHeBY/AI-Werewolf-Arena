@@ -6,6 +6,11 @@ import type { GravekeeperReport } from "@ai-werewolf-arena/replay-contract";
 export interface PlayerGravekeeperState {
   history: GravekeeperReport[];
 }
+export interface PlayerCupidState {
+  policy: import("../../../core/domain/board").CupidPolicy;
+  remaining: 0 | 1;
+  choice: { day: 1; pairIds: [number, number] } | null;
+}
 export interface PlayerHybridState {
   remaining: 0 | 1;
   choice: { day: number; targetId: number } | null;

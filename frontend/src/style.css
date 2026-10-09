@@ -405,6 +405,7 @@ h2 {
   padding: 6px 9px;
 }
 .seat-name {
+  display: block;
   overflow-wrap: anywhere;
   font-size: 0.8rem;
 }
@@ -423,6 +424,8 @@ h2 {
 }
 
 .winner {
+  display: block;
+  margin-top: 4px;
   color: #e4c67d;
   font-size: 0.7rem;
   font-weight: 700;

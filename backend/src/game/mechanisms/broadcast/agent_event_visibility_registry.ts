@@ -71,6 +71,8 @@ const ACTOR_ONLY_EVENT_TYPES = new Set([
   "merchant_trade_committed",
   "merchant_trade_skipped",
   "hybrid_exemplar_chosen",
+  "cupid_lovers_chosen",
+  "lover_recognized",
   "witch_potion_used",
   "witch_potion_skipped",
   "guard_applied",

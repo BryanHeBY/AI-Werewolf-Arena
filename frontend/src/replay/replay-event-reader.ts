@@ -1,3 +1,4 @@
+import { readCupidEventFact, CUPID_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
 import {
   readGravekeeperFeedback,
   readInspectionResult,
@@ -80,6 +81,10 @@ const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
   awakened_poison_used: ["actorId", "targetId"],
   awakened_guard_chosen: ["actorId"],
   awakened_attack_chosen: ["actorId"],
+  cupid_lovers_chosen: ["actorId"],
+  cupid_relation_resolved: ["actorId"],
+  lover_recognized: ["actorId", "partnerId"],
+  lovers_death: ["actorId", "targetId"],
   hybrid_exemplar_chosen: ["actorId", "targetId"],
   hybrid_affiliation_resolved: ["actorId", "targetId"],
   merchant_trade_committed: ["actorId", "targetId"],
@@ -90,6 +95,8 @@ const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
   black_market_trade_skipped: ["actorId"],
 };
 const ID_LISTS: Readonly<Record<string, string>> = {
+  cupid_lovers_chosen: "pairIds",
+  cupid_relation_resolved: "pairIds",
   night_resolved: "deaths",
   additional_deaths: "deaths",
   wolf_tactical_order: "order",
@@ -157,6 +164,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if ((CUPID_EVENT_TYPES as readonly string[]).includes(type))
+    return readCupidEventFact(type, p) !== null;
   if (type === "player_role_revealed")
     return isRoleId(p.role) && Object.keys(p).every((key) => key === "playerId" || key === "role");
   const positive = (value: unknown): value is number =>
@@ -368,6 +377,7 @@ export function readReplayEvent(
       dead.push(...(p.deaths as number[]));
     if (safe.type === "voted_out") dead.push(p.target as number);
     if (
+      safe.type === "lovers_death" ||
       safe.type === "charm_death" ||
       safe.type === "dream_death" ||
       ["hunter_shot", "player_shot", "wolf_king_shot", "mechanical_shot"].includes(safe.type)

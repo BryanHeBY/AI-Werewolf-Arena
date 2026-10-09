@@ -103,6 +103,16 @@ export function captureCheckpoint(
         camp: role.camp,
         alive: world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive,
         privateState: structuredClone(role.privateState),
+        ...(world.getComponent(id, COMPONENT.Lovers)
+          ? {
+              lovers: structuredClone(
+                world.getComponent<import("../../core/domain/components/lovers").LoversComponent>(
+                  id,
+                  COMPONENT.Lovers,
+                )!,
+              ),
+            }
+          : {}),
         victory: structuredClone(world.getComponent<VictoryComponent>(id, COMPONENT.Victory)!),
         vote: { weight: vote.weight, canVote: vote.canVote },
         badge: {

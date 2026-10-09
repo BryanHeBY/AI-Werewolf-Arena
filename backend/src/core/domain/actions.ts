@@ -31,6 +31,7 @@ export interface ToolArgMap {
   mechanical_guard: { target_id: EntityId | null };
   mechanical_attack: { target_id: EntityId | null };
   choose_exemplar: { target_id: EntityId };
+  choose_lovers: { first_id: EntityId; second_id: EntityId };
   bestow_ability: { target_id: EntityId; skill: "check" | "poison" | "guard" };
   black_market_trade: { target_id: EntityId; skill: "check" | "poison" | "gun" };
   use_potion: { target_id: EntityId; potion_type: PotionType };
@@ -69,6 +70,7 @@ export const TOOL_NAMES = [
   "bestow_ability",
   "black_market_trade",
   "choose_exemplar",
+  "choose_lovers",
   "use_potion",
   "self_destruct",
   "self_destruct_with_target",
@@ -126,6 +128,7 @@ export const ACTION_STAGES = [
   "black_market_merchant",
   "black_market_recipient",
   "hybrid",
+  "cupid",
   "awakened_mimic",
   "awakened_skill",
   "awakened_attack",

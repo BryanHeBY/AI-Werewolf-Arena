@@ -28,7 +28,7 @@ test("canonical boards reject nested misspellings, planned roles and incomplete 
   raw.roles.witch.selfHela = "always";
   expect(() => parseBoardDefinition(raw)).toThrow("roles.witch.selfHela");
   delete raw.roles.witch.selfHela;
-  raw.board.roleSetups[0].role = "cupid";
+  raw.board.roleSetups[0].role = "awakened_knight";
   expect(() => parseBoardDefinition(raw)).toThrow("board_config_role_not_implemented");
   raw.board.roleSetups[0].role = "wolf";
   raw.board.roleSetups[0].count = 3;

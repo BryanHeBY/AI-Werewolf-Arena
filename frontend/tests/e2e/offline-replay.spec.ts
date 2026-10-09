@@ -1151,3 +1151,48 @@ for (const locale of ["zh-CN", "en"] as const)
       if (kind === "dream")
         await page.screenshot({ path: `/tmp/awa-p8-fox-${locale}-browser.png`, fullPage: true });
     });
+
+for (const locale of ["zh-CN", "en"] as const)
+  for (const kind of ["mixed_netease", "mixed_lui", "root_hunter", "dream_chain"] as const)
+    test(`${locale}/${kind}: actual Cupid archive separates relationship membership, heartbreak death and chain-final winners`, async ({
+      page,
+    }) => {
+      const replay = JSON.parse(
+        readFileSync(new URL(`../fixtures/cupid-${kind}.replay.json`, import.meta.url), "utf8"),
+      );
+      replay.meta.locale = locale;
+      await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
+      await page.goto("/");
+      await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+      await page.locator(".timeline .event").last().click();
+      const count = kind === "mixed_netease" ? 3 : kind === "mixed_lui" ? 2 : 4;
+      await expect(page.locator(".seat-grid .winner")).toHaveCount(count);
+      await expect(page.getByTestId("composition-winner")).toHaveCount(count);
+      const cupid = page.getByRole("button", {
+        name: locale === "en" ? "Player 1 · Seat 1" : "1号 · Seat 1",
+        exact: true,
+      });
+      if (kind === "mixed_netease") {
+        await expect(cupid).not.toHaveClass(/dead/);
+        await expect(cupid).toHaveClass(/winner/);
+      } else {
+        await expect(cupid).toHaveClass(/dead/);
+        if (kind === "mixed_lui") await expect(cupid).not.toHaveClass(/winner/);
+        else await expect(cupid).toHaveClass(/winner/);
+      }
+      if (kind.startsWith("mixed_")) {
+        await expect(page.locator(".result-chip strong")).toContainText(
+          locale === "en" ? "Cupid lovers" : "丘比特情侣组",
+        );
+        await expect(page.locator(".result-chip strong")).not.toContainText("cupid_lovers");
+      }
+      const caption = await page.getByTestId("composition-caption").boundingBox();
+      expect(caption).not.toBeNull();
+      for (const seat of await page.locator("[data-composition-player]").all()) {
+        const box = await seat.boundingBox();
+        expect(box).not.toBeNull();
+        expect(box!.y + box!.height).toBeLessThan(caption!.y);
+      }
+      if (kind === "mixed_netease")
+        await page.screenshot({ path: `/tmp/awa-p8-cupid-${locale}-browser.png`, fullPage: true });
+    });

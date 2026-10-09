@@ -1,3 +1,4 @@
+import { expandLoversWave } from "../mechanisms/roles/cupid/relation";
 import { permitsCharm } from "../mechanisms/roles/wolf_beauty/relation";
 import { isRoleId } from "@ai-werewolf-arena/game-catalog";
 import type { BoardConfig, LastWordsPolicy } from "../../core/domain/board";
@@ -105,8 +106,28 @@ export class DeathResolution {
     let pending = [...seen];
     const allSources: DeathSources = structuredClone(sources);
     const nativeHunterShotTargets = new Set<EntityId>();
-    const initialPhases = structuredClone(deathPhases);
+    const initialPhases: Record<EntityId, Phase> = structuredClone(deathPhases);
     const nightOrigin = new Set(nightEffects?.nightOriginIds ?? []);
+    if (!isCurrent()) return;
+    const linkedInitial = expandLoversWave(
+      this.world,
+      pending,
+      allSources,
+      this.events,
+      nightOrigin,
+      seen,
+      nightEffects?.dreams,
+    );
+    for (const id of linkedInitial) {
+      seen.add(id);
+      initialPhases[id] = nightOrigin.has(id) ? Phase.Night : phase;
+    }
+    if (linkedInitial.length)
+      this.events.push({
+        timestamp: Date.now(),
+        type: "additional_deaths",
+        payload: { deaths: linkedInitial },
+      });
     let firstBatch = true;
     const gunsToExpire: ReturnType<typeof firstDeathGuns> = [];
 
@@ -271,6 +292,15 @@ export class DeathResolution {
                     ];
                     nightOrigin.add(id);
                   }
+                expandLoversWave(
+                  this.world,
+                  proposed,
+                  proposedSources,
+                  this.events,
+                  nightOrigin,
+                  seen,
+                  nightEffects?.dreams,
+                );
                 for (const id of proposed) {
                   if (next.has(id)) {
                     allSources[id] = [
@@ -279,6 +309,8 @@ export class DeathResolution {
                     continue;
                   }
                   if (seen.has(id) || this.isSettledLife(id)) {
+                    if ((proposedSources[id] ?? []).includes(DeathCause.Lovers))
+                      allSources[id] = [...new Set([...(allSources[id] ?? []), DeathCause.Lovers])];
                     if (linked.has(id))
                       allSources[id] = [...new Set([...(allSources[id] ?? []), DeathCause.Dream])];
                     if (charmTargets.has(id))

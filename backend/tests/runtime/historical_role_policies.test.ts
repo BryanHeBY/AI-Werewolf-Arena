@@ -75,7 +75,8 @@ for (const policy of BEAUTY_DEATH_LINK_POLICIES)
       for (const hunter of [false, true]) {
         const oracle =
           policy === "awa_exile_poison_v1"
-            ? !sources.includes(DeathCause.Duel) &&
+            ? !sources.includes(DeathCause.Lovers) &&
+              !sources.includes(DeathCause.Duel) &&
               !sources.includes(DeathCause.Dream) &&
               sources.some((x) => [DeathCause.Exile, DeathCause.Poison].includes(x))
             : sources.length > 0 &&

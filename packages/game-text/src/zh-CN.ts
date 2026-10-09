@@ -1,5 +1,39 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "rule.netease_2017_cupid_follows_lovers_v1": "网易2017：丘比特跟随情侣",
+  "rule.lui_meme_lovers_only_v1": "Lui-même原版：独立丘比特随好人",
+  "prompt.status.lover":
+    "你的伴侣是{partner}号，仅互认编号，不知底牌或阵营。殉情禁死亡技能，保留原生能力。",
+  "prompt.status.lovers_vote": "此来源策略禁止情侣互投放逐（包括PK）。",
+
+  "role.cupid.brief": "首夜连接两名情侣；一人死亡另一人殉情，殉情禁技能；按具名来源策略判胜。",
+  "role.cupid.state":
+    "你的底牌是【丘比特】，真实阵营为好人神职。首夜阶段80必须以choose_lovers选择两名不同实际活人，可包括自己。null、重复、死人均无效，不可跳过或后夜补选。提交后不能更换；你只知道所选编号，不知道底牌、阵营或秘密胜利分组。情侣只互认编号，保留原技能、查验标签及原狼队权限。一人死亡使另一人殉情；殉情禁枪与狼美人死亡牵连，保护不能阻挡。双方同波独立致死都追加殉情禁技能，属于显式工程补全。已付费当夜梦关系仍按夜死条件牵连。死亡链全部结束才判胜。",
+  "role.cupid.netease":
+    "来源策略：网易2017。你始终跟随情侣胜利。双好人情侣随好人；双狼人情侣随狼，但你不会因此获得狼队信息或刀权，也不会被当作额外真狼。人狼恋的两个情侣须同时存活并消灭除情侣和你之外的所有人；你可活或死而同胜。跟随狼或第三方的你不阻挡狼屠城；全体真狼死亡照常好人胜。网易未明确禁情侣互投，当前保留AWA许可。",
+  "role.cupid.lui":
+    "来源策略：Lui-même原版。你若未被选为情侣，仍随好人并计好人数。人狼恋双方必须存活并消灭所有其他人，包括独立丘比特。你若在情侣中则随情侣。情侣不能互相放逐投票（包括PK）；不限制警长选举。",
+  "role.cupid.status": "你自己的已选编号与机会：{state}。没有来自引擎的情侣底牌或阵营信息。",
+  "action.choose_lovers.hint": "必须选两名不同活人：first_id和second_id；可选自己，不可跳过。",
+  "prompt.targets.lovers":
+    "first_id和second_id分别选自实际活人编号：{ids}；二者必须不同，可包括自己。",
+  "stage.cupid": "丘比特连接情侣",
+  "error.cupid_unavailable": "丘比特连接仅首夜本人获授权且未提交时可用。",
+  "error.cupid_target": "请选择两名不同的实际活人整数编号，可包括自己。",
+  "error.lovers_vote": "当前原版策略禁止情侣互相放逐投票。",
+  "console.cupid.choice":
+    "丘比特私有选择：{actor}号首夜连接{first}号与{second}号；底牌和阵营未知。",
+  "console.cupid.recognition": "情侣私有互认：{actor}号得知伴侣为{partner}号；底牌和阵营未知。",
+  "console.cupid.resolved":
+    "上帝关系事实：{actor}号连接{first}号（{firstCamp}）与{second}号（{secondCamp}），来源策略{policy}，人狼恋：{mixed}。",
+  "console.cupid.death": "上帝殉情事实：{actor}号死亡牵连{target}号。",
+  "replay.stage.cupid_lovers_chosen": "情侣选择",
+  "replay.stage.lover_recognized": "情侣互认",
+  "replay.stage.cupid_relation_resolved": "情侣胜利归属",
+  "replay.stage.lovers_death": "殉情",
+  "reason.cupid_lovers_only_survivors": "情侣完成关系独胜目标",
+  "victory.group.cupid_lovers": "丘比特情侣组",
+
   "role.hunter.configured_state":
     "你是猎人。一份原生枪仅在获授权死亡窗口按本板死因策略使用；最后神职仍可行动。target_id=null主动空枪消耗机会。",
   "role.wolf_king.configured_state":
@@ -243,7 +277,7 @@ export const zhCN = Object.freeze({
   "role.wolf_beauty.state":
     "你的底牌是【狼美人】，狼阵营。参与狼聊/刀票，不能自爆或刀自己。刀后可选魅惑其它存活玩家，可null跳过，不能相邻两夜同目标。牵连死因按本局具名策略；Night目标受有效梦保护可挡，Day牵连不借旧梦，Guard/Heal不挡。魅惑目标不获直接通知。屠边条件下，最后一名活狼为狼美人，被实际放逐且魅惑实际带走最后一神或最后一民时狼胜；配置的胜利条件仍按先命中顺序判断。",
   "role.wolf_beauty.link_awa":
-    "狼美人 awa_exile_poison_v1：放逐/毒牵连，枪不牵连；复合Duel/Dream否决。可弃魅，禁本人自刀、自爆与相邻夜连魅。",
+    "狼美人 awa_exile_poison_v1：放逐/毒牵连，枪不牵连；复合Duel/Dream/殉情否决。可弃魅，禁本人自刀、自爆与相邻夜连魅。",
   "role.wolf_beauty.link_s7":
     "狼美人 heroes_s7_2017_exile_hunter_v1：放逐/原生猎人枪牵连，毒不牵连。复合死因抑制优先：含其它死因均否决（工程补全）；无来源枪不猜猎人。可弃魅沿2019条款，禁本人自刀、自爆与相邻夜连魅。",
   "role.dreamer.protection_awa":

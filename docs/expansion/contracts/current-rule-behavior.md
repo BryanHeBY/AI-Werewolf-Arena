@@ -8,7 +8,7 @@
 
 阵营/具体身份查验只发授权私有受众，按角色伪装解析；预言家历史不成为全队历史。历史狼队事件按记录 audience 授权，而不是用今日身份反推过去受众。ownState 使用独立 DTO 白名单，不复制 privateState；PresentationReplay 独立白名单不承载玩家私有状态。梦游者/魅惑目标无直接通知或特殊状态字段；合法公开落空结果仍可用于推断。坏回放事实原子拒绝，不从字段名称猜角色。
 
-已有配置：明牌/遗言策略；hidden_wolf.campInspection；seer target/action；gargoyle/psychic/mirror_girl inspectionPolicy；witch knifeVisibility。没有“全部公开/共享全部历史/穿透所有伪装”开关：官方条款仅证明特定身份与受众，未证明全局扩权。源码：engine/agent_visible_event_feed.ts、roles/player_state.ts、roles/inspection.ts、replay reader；证据：agent_visibility/player_observation/replay_event_reader/public_death_policies 与本批独立DTO回归。
+丘比特选择只在God保留来源策略/原阵营/关系组；情侣各自仅收到对方ID，Cupid自己的DTO只保留已选两人ID，不泄漏底牌或最终分组；历史私有通知按原actor授权，复活/换生命撤销当前关系DTO。已有配置：丘比特具名胜利策略、明牌/遗言策略；hidden_wolf.campInspection；seer target/action；gargoyle/psychic/mirror_girl inspectionPolicy；witch knifeVisibility。没有“全部公开/共享全部历史/穿透所有伪装”开关：官方条款仅证明特定身份与受众，未证明全局扩权。源码：engine/agent_visible_event_feed.ts、roles/player_state.ts、roles/inspection.ts、replay reader；证据：agent_visibility/player_observation/replay_event_reader/public_death_policies 与本批独立DTO回归。
 
 ## 2. 保护与伤害
 
@@ -29,17 +29,17 @@ Night 来源枪/Charm 由 DeathResolution/DreamNightFrame 单独判断梦保护�
 
 ## 3. 夜序与动态能力
 
-按 priority 升序，同 priority 按 stage id 排序并去重。当前阶段：100女巫重置；110混血；125奇迹赠予；130黑市交易；140黑市受赠；150摄梦；180通灵；200狼聊；250机械/觉醒模式；300守卫；400刀票；450魅惑；500女巫；580机械/觉醒学习；600预言家/石像鬼/魔镜；650机械/觉醒技能；660特殊刀；700幸运儿；900觉醒激活/赠枪激活。相同优先级仍以实际注册 id 次序，未在板子里的阶段不凭表出现。
+按 priority 升序，同 priority 按 stage id 排序并去重。当前阶段：80丘比特（仅首夜）；100女巫重置；110混血；125奇迹赠予；130黑市交易；140黑市受赠；150摄梦；180通灵；200狼聊；250机械/觉醒模式；300守卫；400刀票；450魅惑；500女巫；580机械/觉醒学习；600预言家/石像鬼/魔镜；650机械/觉醒技能；660特殊刀；700幸运儿；900觉醒激活/赠枪激活。相同优先级仍以实际注册 id 次序，未在板子里的阶段不凭表出现。
 
 NightStageRegistry 预先纳入角色 possibleNightAbilities/possibleDeathAbilities 与世界已有实例，因此前置赠予产生能力后可进后置阶段；每实例实际 startsOnDay/expiresAfterDay/activation/scope 再限制。已配置：角色组合、具体行动策略与骑士 Day enabledWindows；**没有夜序 preset 或数字优先级用户字段**。公告支持奇迹前置赠予/后置幸运儿，机械参考页只给其自身板型，不能据此重排混血/商人/梦/觉醒混合板。保持稳定 AWA 顺序，避免未知跨板语义。源码：mechanisms/stages/night/night_stage_registry.ts 与各角色 night_stages.ts；证据：night_abilities、merchant_game_execution、mechanical/awakened execution + strict Tape。
 
 ## 4. 死亡链与胜利先后
 
-DeathResolution 先标死再处理初批遗言、警徽与死后技能，所有追加波次/梦/魅惑/枪及警徽完成后 PhaseManager 判胜；不在见到末神或末狼时跳过链。默认 winConditions 缺省为屠城；SlaughterCity/SlaughterSide/WolfReachHalf 各条目先检查 wolves=0，因此普通双方全灭为 Good，不产生通用平局。板子 rules.winConditions 是有序数组，先命中的有效决策生效。WolfReachHalf 还要求 good>0 且 wolves>=good，是 AWA 工程条件。
+丘比特关系先按本次外部死亡种子闭合，殉情方在任何死亡技能请求前取得Lovers抑制死因；夜间已付费梦关系继续迭代，日间不沿旧梦。守/救/梦不挡殉情；狼美人全部来源版本都不因殉情发动魅惑。这是新增情侣规则的有限跨角色工程补全。DeathResolution 再标死并处理初批遗言、警徽与死后技能，所有追加波次/梦/魅惑/枪及警徽完成后 PhaseManager 判胜；不在见到末神或末狼时跳过链。默认 winConditions 缺省为屠城；SlaughterCity/SlaughterSide/WolfReachHalf 各条目先检查 wolves=0，因此普通双方全灭为 Good，不产生通用平局。板子 rules.winConditions 是有序数组，先命中的有效决策生效。WolfReachHalf 还要求 good>0 且 wolves>=good，是 AWA 工程条件。
 
 末狼狼美人只有真实放逐、有效魅惑实际消灭最后一神/民时，exile_settled 的 slaughter_side 条目可覆盖普通清狼；[City,Side] 与 [Side,City] 可因此不同。胜者成员按胜利归属，不按当前持有技能或是否活着改写。
 
-已配置有序胜利条件、死亡枪deathActionPolicy、遗言/警徽策略、有限死因策略；没有任意抢先判胜/平局 preset。2017基础条款支持屠边/清狼，未给出所有扩展同时灭绝与复合链裁定，保留 AWA 具体结果。源码：engine/death_resolution.ts、engine/phase_manager.ts、win_conditions/default_specs.ts、wolf_beauty/relation.ts；证据：victory_outcomes/death_chain/wolf_beauty/第一夜临界局。
+丘比特首批仅屠城：完整链之后先检查两名原生命情侣均存活且关系组外皆死的独胜，再检查普通屠城。网易2017丘比特始终跟随情侣，Lui-même独立丘比特仍随好人；狼数量只计真实Wolf，网易跟随Wolf/第三方的原丘比特不阻挡狼屠城。其它独立目标组合仍拒绝，详见[来源策略卡](../rules/sourced-cupid-v1.md)。已配置有序胜利条件、死亡枪deathActionPolicy、遗言/警徽策略、有限死因策略；没有任意抢先判胜/平局 preset。2017基础条款支持屠边/清狼，未给出所有扩展同时灭绝与复合链裁定，保留 AWA 具体结果。源码：engine/death_resolution.ts、engine/phase_manager.ts、win_conditions/default_specs.ts、wolf_beauty/relation.ts；证据：victory_outcomes/death_chain/wolf_beauty/第一夜临界局。
 
 ## 5. 复制资源与期限
 

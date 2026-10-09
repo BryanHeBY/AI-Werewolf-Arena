@@ -28,7 +28,7 @@ test("shared catalog distinguishes planned definitions from registered roles", (
   expect(getDefaultRoleCatalog().require(Role.BlackMarketMerchant).role).toBe(
     Role.BlackMarketMerchant,
   );
-  expect(() => getDefaultRoleCatalog().require("cupid" as Role)).toThrow(
+  expect(() => getDefaultRoleCatalog().require("awakened_knight" as Role)).toThrow(
     "role_profile_not_registered",
   );
   expect(roleName("wolf", "zh-CN")).toBe("狼人");
@@ -41,7 +41,7 @@ test("runtime catalog rejects duplicate or missing profiles", () => {
   expect(() => new RoleCatalog([]).getCamp(Role.Seer)).toThrow("role_profile_not_registered");
   const component = createRoleComponent(Role.Wolf, Camp.Wolf);
   getDefaultRoleCatalog().applyRuntime(component);
-  component.role = "cupid" as Role;
+  component.role = "awakened_knight" as Role;
   expect(() => component.renderPrompt()).toThrow("role_profile_not_registered");
 });
 

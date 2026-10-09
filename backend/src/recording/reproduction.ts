@@ -1,3 +1,4 @@
+import { CUPID_POLICIES } from "../core/domain/board";
 import { boardConfigSchema } from "../core/domain/board_schema";
 import { dictionaries, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { z } from "zod";
@@ -106,6 +107,7 @@ export interface RecordedPlayerState {
   camp: Camp;
   alive: boolean;
   privateState: Record<string, unknown>;
+  lovers?: import("../core/domain/components/lovers").LoversComponent;
   vote: { weight: number; canVote: boolean };
   badge: {
     isSheriff: boolean;
@@ -278,6 +280,23 @@ const playerSchema = z.strictObject({
   camp: z.enum(Camp),
   alive: z.boolean(),
   privateState: jsonObject,
+  lovers: z
+    .strictObject({
+      actorId: positive,
+      day: z.literal(1),
+      policy: z.enum(CUPID_POLICIES),
+      pairIds: z.tuple([positive, positive]),
+      pairCamps: z.tuple([z.enum([Camp.Good, Camp.Wolf]), z.enum([Camp.Good, Camp.Wolf])]),
+      groupId: z.literal("cupid_lovers"),
+      mixed: z.boolean(),
+    })
+    .refine(
+      (record) =>
+        record.pairIds[0] !== record.pairIds[1] &&
+        record.mixed === (record.pairCamps[0] !== record.pairCamps[1]),
+      "reproduction_lovers_invalid",
+    )
+    .optional(),
   victory: z.strictObject({ affiliations: affiliationsSchema }),
   vote: z.strictObject({ weight: z.number().finite().nonnegative(), canVote: z.boolean() }),
   badge: z.strictObject({

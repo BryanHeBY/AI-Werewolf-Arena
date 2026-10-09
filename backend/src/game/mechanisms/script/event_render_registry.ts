@@ -11,6 +11,7 @@ import {
   mechanicalEventLabel,
   merchantEventLabel,
   hybridEventLabel,
+  cupidEventLabel,
   awakenedEventLabel,
   type Locale,
 } from "@ai-werewolf-arena/game-text";
@@ -556,6 +557,8 @@ export class ScriptEventRenderRegistry {
     if (deathAbility !== null) return deathAbility;
     const awakened = awakenedEventLabel(event.type, event.payload, locale);
     if (awakened !== null) return awakened;
+    const cupid = cupidEventLabel(event.type, event.payload, locale);
+    if (cupid !== null) return cupid;
     const hybrid = hybridEventLabel(event.type, event.payload, locale);
     if (hybrid !== null) return hybrid;
     const merchant = merchantEventLabel(event.type, event.payload, locale);
@@ -581,6 +584,18 @@ export class ScriptEventRenderRegistry {
     printPrivateEvents: boolean,
     locale: Locale = "zh-CN",
   ): ScriptLiveRender[] {
+    const cupid = cupidEventLabel(event.type, event.payload, locale);
+    if (cupid !== null)
+      return printPrivateEvents
+        ? [
+            {
+              kind: ["cupid_relation_resolved", "lovers_death"].includes(event.type)
+                ? "god"
+                : "private",
+              text: cupid,
+            },
+          ]
+        : [];
     const black = blackMarketEventLabel(event.type, event.payload, locale);
     if (black !== null)
       return printPrivateEvents

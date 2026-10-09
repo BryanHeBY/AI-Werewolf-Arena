@@ -31,6 +31,8 @@ import { AWAKENED_HIDDEN_WOLF_ROLE_PROFILE } from "./awakened_hidden_wolf/profil
 
 import { CURSED_FOX_ROLE_PROFILE } from "./cursed_fox/profile";
 
+import { CUPID_ROLE_PROFILE } from "./cupid/profile";
+
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   WOLF_ROLE_PROFILE,
   WOLF_KING_ROLE_PROFILE,
@@ -41,6 +43,7 @@ const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   WOLF_BEAUTY_ROLE_PROFILE,
   BEAR_ROLE_PROFILE,
   CURSED_FOX_ROLE_PROFILE,
+  CUPID_ROLE_PROFILE,
   HIDDEN_WOLF_ROLE_PROFILE,
   GARGOYLE_ROLE_PROFILE,
   PSYCHIC_ROLE_PROFILE,

@@ -1,3 +1,4 @@
+import { prohibitsLoversVote } from "../roles/cupid/relation";
 import { seerTargetAllowed } from "../roles/seer/target_policy";
 import { guardTargetRepeated } from "../roles/guard/repeat_policy";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -73,6 +74,10 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
   };
 
   buildActionableIdsHint(ctx: TargetHintContext): string | undefined {
+    if (ctx.allowedTools.includes("choose_lovers"))
+      return text(ctx.world.locale, "prompt.targets.lovers", {
+        ids: ctx.world.getAliveEntityIds().join(", "),
+      });
     const targetTools = ctx.allowedTools.filter((tool) => this.getRule(ctx.actorRole, tool));
     if (targetTools.length === 0) {
       return undefined;
@@ -129,7 +134,8 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
               awakenedGuard.lastTarget !== id) &&
             (tool !== "vote" ||
               ((ctx.exileCandidates === undefined || ctx.exileCandidates.includes(id)) &&
-                canBeExiled(ctx.world, id, ctx.roleCatalog))) &&
+                canBeExiled(ctx.world, id, ctx.roleCatalog) &&
+                !prohibitsLoversVote(ctx.world, ctx.actorId, id))) &&
             (tool !== "inspect_role" ||
               !inspection ||
               inspectionRepeats(inspection) ||
