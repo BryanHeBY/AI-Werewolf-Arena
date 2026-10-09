@@ -455,3 +455,7 @@ Black完整功能commit `83cac45`；赠枪底座 `5c41428`、死亡实例许可 
 ## P9a 第二项：野孩子（2026-10-09）
 
 唯一来源AWA适配首夜必选榜样、实际完整死亡波次转真实阵营/胜利、下一实际Night才双向狼队权限、原始roster与严格因果Tape已贯通。47核心/309断言、60实际双语三transport完整局及逐Tape、8真实严格失败partial Tape、200受限观察局逐Tape、1000独立World自然局（788转换/678实际activation）分别验证。三组已报告问题修复并由原审查者复验闭合。冻结源码后全backend **2932/281583/229文件**、frontend **277/2696/42文件**、完整Chromium **128/128**均0失败；type/lint/format与双端build通过，双语12人实际PNG/shared frame已目检。见[规则卡](rules/awa-lui-meme-wild-child-v1.md)/[验收](reviews/p9-wild-child.md)。当前23verified/5implemented/36planned；main本地commit，继续千面人/P9/P10，总体待用户最终验收，无push/真实模型/用户configs或秘密操作。
+
+## P9a 千面人规则冻结
+
+网易现用公开卡表真实HTTP与静态解码确认一狼强制、无狼仍必选，与已实施发行商Thief默认分开。三组只读审查/复验已关闭空方配置和请求/私有槽/录制字段缺口，共享底座、原Thief兼容与God/本人实际回放门禁冻结于[规则卡](rules/awa-netease-shapeshifter-v1.md)。尚未注册，目录23verified/5implemented/36planned不变；立即接续实现，整体仍待用户最终验收。
