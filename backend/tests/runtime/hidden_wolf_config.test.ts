@@ -9,5 +9,5 @@ for(const id of ["six_player_hidden_wolf","twelve_player_hidden_wolf"] as const)
  for(const params of [{chat:true},{permanentDisguise:true},{variant:"mist"}])expect(()=>parseBoardDefinition({...board.definition,roles:{...board.definition.roles,hidden_wolf:params}})).toThrow(`board_config_invalid_field: roles.hidden_wolf.${Object.keys(params)[0]}`);
  const doubled=structuredClone(board.definition);doubled.board.size++;doubled.board.roleSetups[index].count++;expect(()=>parseBoardDefinition(doubled)).toThrow(`board_config_invalid_field: board.roleSetups.${index}.count`);
  expect(()=>bootstrapGame({...board.config,boardSize:board.config.boardSize+1,roleSetups:[...board.config.roleSetups,{role:Role.HiddenWolf,count:1}]})).toThrow("role_count_exceeds_limit: hidden_wolf");
- const planned=structuredClone(board.definition);planned.board.roleSetups[0].role="awakened_hidden_wolf";expect(()=>parseBoardDefinition(planned)).toThrow("board_config_role_not_implemented");
+ const planned=structuredClone(board.definition);planned.board.roleSetups[0].role="cupid";expect(()=>parseBoardDefinition(planned)).toThrow("board_config_role_not_implemented");
 });

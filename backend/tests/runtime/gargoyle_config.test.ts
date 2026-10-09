@@ -9,5 +9,5 @@ for(const id of ["six_player_gargoyle","twelve_player_gargoyle"] as const)test(`
  for(const params of [{chat:true},{permanentDisguise:true},{variant:"mist"}])expect(()=>parseBoardDefinition({...board.definition,roles:{...board.definition.roles,gargoyle:params}})).toThrow(`board_config_invalid_field: roles.gargoyle.${Object.keys(params)[0]}`);
  const doubled=structuredClone(board.definition);doubled.board.size++;doubled.board.roleSetups[index].count++;expect(()=>parseBoardDefinition(doubled)).toThrow(`board_config_invalid_field: board.roleSetups.${index}.count`);
  expect(()=>bootstrapGame({...board.config,boardSize:board.config.boardSize+1,roleSetups:[...board.config.roleSetups,{role:Role.Gargoyle,count:1}]})).toThrow("role_count_exceeds_limit: gargoyle");
- const planned=structuredClone(board.definition);planned.board.roleSetups[0].role="awakened_hidden_wolf";expect(()=>parseBoardDefinition(planned)).toThrow("board_config_role_not_implemented");
+ const planned=structuredClone(board.definition);planned.board.roleSetups[0].role="cupid";expect(()=>parseBoardDefinition(planned)).toThrow("board_config_role_not_implemented");
 });

@@ -5,5 +5,5 @@ import {parseBoardDefinition} from "../../src/runtime/config/board_definition";
 for(const id of ["six_player_dreamer","twelve_player_dreamer"] as const)test(`${id}: public role registration accepts only the frozen empty parameter set`,async()=>{
  const board=await loadBoardDefinition(path.resolve(import.meta.dir,"../../../configs.example"),id);expect(board.config.roleSetups.find(row=>row.role==="dreamer")).toEqual({role:"dreamer",count:1});
  for(const params of [{poisonImmunity:false},{optional:true},{dayLink:true}])expect(()=>parseBoardDefinition({...board.definition,roles:{...board.definition.roles,dreamer:params}})).toThrow(`board_config_invalid_field: roles.dreamer.${Object.keys(params)[0]}`);
- const planned=structuredClone(board.definition);planned.board.roleSetups[0].role="awakened_hidden_wolf";expect(()=>parseBoardDefinition(planned)).toThrow("board_config_role_not_implemented");
+ const planned=structuredClone(board.definition);planned.board.roleSetups[0].role="cupid";expect(()=>parseBoardDefinition(planned)).toThrow("board_config_role_not_implemented");
 });
