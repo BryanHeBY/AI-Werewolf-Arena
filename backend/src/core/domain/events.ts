@@ -38,6 +38,25 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  wall_notes_started: { day: 1; eventId: "awa_wall_notes_v1" };
+  wall_notes_published: { day: 1; eventId: "awa_wall_notes_v1"; texts: string[] };
+  wall_notes_canceled: { day: 1; eventId: "awa_wall_notes_v1"; reason: "scope_changed" };
+  wall_note_changed: {
+    actorId: number;
+    day: 1;
+    eventId: "awa_wall_notes_v1";
+    itemId: "anonymous_note";
+    instanceId: string;
+    operation: "granted" | "accepted" | "rejected" | "revoked" | "expired";
+    remaining: 0 | 1;
+    expired: boolean;
+    text?: string;
+  };
+  wall_note_order_recorded: {
+    day: 1;
+    eventId: "awa_wall_notes_v1";
+    rows: Array<{ actorId: number; instanceId: string; text: string; rank: number }>;
+  };
   debate_ballots_recorded: {
     actorId: EntityId;
     targetId: EntityId;

@@ -1,3 +1,4 @@
+import { bindWallRequest } from "../mechanisms/events/wall_notes/authority";
 import type { MessageRef } from "@ai-werewolf-arena/game-text";
 import {
   ActionRequest,
@@ -37,7 +38,7 @@ export class GameActionRequestFactory {
     context?: ActionRequestExtras;
   }): ActionRequest {
     // 公共事实由工厂生成；调用方只能提供机制特有的信息。
-    return {
+    const request: ActionRequest = {
       phase: input.phase,
       actorId: input.actorId,
       allowedTools: [...input.allowedTools],
@@ -54,5 +55,7 @@ export class GameActionRequestFactory {
         visible_events: buildAgentVisibleEventFeed(this.world, [...this.events], input.actorId),
       },
     };
+    if (input.stage === "wall_notes") bindWallRequest(this.world, request);
+    return request;
   }
 }

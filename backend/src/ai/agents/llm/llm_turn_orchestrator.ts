@@ -1,3 +1,4 @@
+import { inheritWallDeadlineRequest } from "../../../game/mechanisms/events/wall_notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../../utils/error_diagnostic";
@@ -66,6 +67,7 @@ export class LlmTurnOrchestrator {
       ...request,
       deadlineAtMs: Math.min(request.deadlineAtMs ?? Infinity, startedAt + this.options.timeoutMs),
     };
+    inheritWallDeadlineRequest(request, bounded);
     const controller = new AbortController();
     this.controllers.add(controller);
     const timer = setTimeout(

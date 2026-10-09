@@ -1,3 +1,4 @@
+import { supportsWallRoles } from "../game/mechanisms/events/wall_notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
 import { createAliveComponent } from "../core/domain/components/alive";
 import { createBadgeComponent } from "../core/domain/components/badge";
@@ -144,6 +145,11 @@ function buildRoleDeck(
     }
   }
 
+  if (
+    config.events &&
+    (!supportsWallRoles(deck) || config.events.pack !== "awa_wall_notes_once_v1")
+  )
+    throw new Error("event_pack_combination_not_supported");
   const counts = new Map<Role, number>();
   for (const role of deck) counts.set(role, (counts.get(role) ?? 0) + 1);
   for (const [role, count] of counts) {

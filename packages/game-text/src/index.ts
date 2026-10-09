@@ -1,3 +1,11 @@
+import { readWallEventFact } from "./wall-notes";
+export {
+  WALL_EVENT_TYPES,
+  readWallEventFact,
+  validWallText,
+  readWallTool,
+  readWallNoteData,
+} from "./wall-notes";
 import {
   isRoleId,
   isLocale,
@@ -589,4 +597,22 @@ export function blackMarketEventLabel(
         ),
       })
     : unknown();
+}
+
+export function wallEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+  const p = readWallEventFact(type, payload);
+  if (!p) return null;
+  if (type === "wall_notes_started") return text(locale, "console.wall.start");
+  if (type === "wall_notes_canceled") return text(locale, "console.wall.cancel");
+  if (type === "wall_notes_published")
+    return text(locale, "console.wall.publish", { notes: JSON.stringify(p.texts) });
+  if (type === "wall_note_order_recorded")
+    return text(locale, "console.wall.order", { rows: JSON.stringify(p.rows) });
+  return text(locale, "console.wall.item", {
+    actor: p.actorId,
+    operation: text(locale, `item.operation.${p.operation}` as MessageKey),
+    remaining: p.remaining,
+    expired: String(p.expired),
+    body: p.text ?? "",
+  });
 }

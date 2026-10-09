@@ -60,9 +60,10 @@ export class GameEventRecorder {
           day: this.replayDayCursor,
           phase: this.replayPhaseCursor,
           stage: visibleEvent.type === "player_shot" ? "death_shot" : stage,
-          requestId: `${this.replayDayCursor}-${this.replayPhaseCursor}-${playerId}-event-${i + 1}`,
+          requestId: `${this.replayDayCursor}-${this.replayPhaseCursor}-${playerId}-event-${nextVisibleSeq}`,
           timestampMs: event.timestamp,
-          sourceEventSeq: i + 1,
+          // Player provenance is view-local; global indexes reveal hidden God event counts.
+          sourceEventSeq: nextVisibleSeq,
           event: visibleEvent,
         });
       }

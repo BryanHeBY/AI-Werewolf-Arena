@@ -1,6 +1,9 @@
+export const EVENT_PACK_IDS = ["awa_wall_notes_once_v1"] as const;
 /** Stable catalog shared by configuration, engine metadata and presentation.
  * Catalog inclusion is not execution permission: the engine requires a registered profile.
  */
+export const EVENT_IDS = ["awa_wall_notes_v1"] as const;
+export const ITEM_IDS = ["anonymous_note"] as const;
 export const LOCALES = ["zh-CN", "en"] as const;
 export * from "./outcomes";
 export type { InspectionCamp, InspectionResult, InspectionKind } from "./inspection";

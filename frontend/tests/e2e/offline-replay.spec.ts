@@ -1240,3 +1240,52 @@ for (const size of [6, 12])
             fullPage: true,
           });
       });
+
+for (const size of [6, 12])
+  for (const mode of ["write", "skip"])
+    for (const locale of ["zh-CN", "en"] as const)
+      test(`${size}/${mode}/${locale}: actual anonymous wall caption and unchanged alive seats`, async ({
+        page,
+      }) => {
+        const replay = JSON.parse(
+          readFileSync(
+            new URL(`../fixtures/wall-${size}-${mode}.replay.json`, import.meta.url),
+            "utf8",
+          ),
+        );
+        replay.meta.locale = locale;
+        await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
+        await page.goto("/");
+        await page
+          .locator(".timeline .event")
+          .filter({
+            hasText:
+              locale === "en" ? "Anonymous wall notes (random order)" : "匿名墙纸条（随机顺序）",
+          })
+          .click();
+        await expect(page.getByTestId("composition-caption")).toContainText(
+          locale === "en" ? "Anonymous wall" : "匿名墙",
+        );
+        await expect(page.getByTestId("composition-caption")).toContainText(
+          mode === "write" ? "[God] secret 💌" : "[]",
+        );
+        await expect(page.getByTestId("composition-caption")).not.toContainText("actorId");
+        const exile = replay.events.find((e: { type: string }) => e.type === "voted_out").payload
+          .target;
+        for (const player of replay.players) {
+          const seat = page.getByRole("button", {
+            name:
+              locale === "en"
+                ? `Player ${player.player_id} · Seat ${player.player_id}`
+                : `${player.player_id}号 · Seat ${player.player_id}`,
+            exact: true,
+          });
+          if (player.player_id === exile) await expect(seat).toHaveClass(/dead/);
+          else await expect(seat).not.toHaveClass(/dead/);
+        }
+        const slider = page.getByRole("slider");
+        for (let step = 0; step < 15; step++) await slider.press("ArrowRight");
+        await expect(page.getByTestId("composition-caption")).toHaveCSS("opacity", "1");
+        if (size === 12 && mode === "write")
+          await page.screenshot({ path: `/tmp/awa-p8-wall-${locale}-browser.png`, fullPage: true });
+      });

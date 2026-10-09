@@ -1,6 +1,7 @@
+import { wallRequestScope } from "../../../game/mechanisms/events/wall_notes/authority";
 import { z, type ZodType } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
-import { text, toolFailure } from "@ai-werewolf-arena/game-text";
+import { readWallTool, text, toolFailure } from "@ai-werewolf-arena/game-text";
 import {
   DEATH_SHOT_STAGES,
   type ActionRequest,
@@ -64,7 +65,9 @@ export class ActionReception {
     }
     // Preserve the existing numeric-string repair, but never coerce booleans or
     // text by truthiness/String(), and never invent missing required arguments.
-    const input = { ...rawArgs } as Record<string, unknown>;
+    const wallCall = tool === "write_note" ? readWallTool({ name: tool, args: rawArgs }) : null;
+    if (tool === "write_note" && !wallCall) return fail(RuleError.WallNoteText);
+    const input = (wallCall ? wallCall.args : { ...rawArgs }) as Record<string, unknown>;
     const properties = spec.parameters.properties as
       Record<string, { type?: string | string[] }> | undefined;
     for (const [key, value] of Object.entries(input)) {
@@ -113,6 +116,9 @@ export class ActionReception {
     const checked = this.gateway.validateAndSanitize(this.world, request.actorId, call, {
       phase: request.phase,
       day: request.context.day,
+      wallScope: wallRequestScope(this.world, request),
+      wallId: request.context.wall_id,
+      itemInstanceId: request.context.item_instance_id,
       debateId: request.context.debate_id,
       abilityId: request.context.ability_id,
       actionWindow: request.actionWindow,

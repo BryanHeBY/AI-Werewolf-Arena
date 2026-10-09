@@ -1,3 +1,4 @@
+import { projectWallNote } from "../../game/mechanisms/events/wall_notes/authority";
 import path from "node:path";
 import { readdir, readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
@@ -95,6 +96,15 @@ export function captureCheckpoint(
       const role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
       const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge)!;
       const vote = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight)!;
+      const wall = projectWallNote(world, id);
+      const wallNote = wall
+        ? {
+            instanceId: wall.instanceId,
+            source: { ...wall.source },
+            remaining: wall.remaining,
+            expired: wall.expired,
+          }
+        : undefined;
       return {
         id,
         seat: identity.seat,
@@ -103,6 +113,7 @@ export function captureCheckpoint(
         camp: role.camp,
         alive: world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive,
         privateState: structuredClone(role.privateState),
+        ...(wallNote ? { wallNote } : {}),
         ...(world.getComponent(id, COMPONENT.DebatePenalty)
           ? {
               debatePenalty: structuredClone(

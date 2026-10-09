@@ -24,3 +24,4 @@ export * from "./systems/win_condition_system";
 export * from "./components/victory";
 export * from "./components/lovers";
 export * from "./components/debate_penalty";
+export * from "./components/wall_note";

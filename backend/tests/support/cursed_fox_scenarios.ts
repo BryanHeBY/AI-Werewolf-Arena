@@ -27,6 +27,7 @@ export type FoxCase = (typeof FOX_CASES)[number];
 export function foxBoard(roles: readonly Role[]): BoardConfig {
   return {
     ...sixPlayerMvpConfig,
+    hooks: { ...sixPlayerMvpConfig.hooks },
     boardSize: roles.length,
     roleSetups: [...new Set(roles)].map((role) => ({
       role,

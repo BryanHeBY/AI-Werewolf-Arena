@@ -1,3 +1,4 @@
+import { inheritWallDeadlineRequest } from "../../../game/mechanisms/events/wall_notes/authority";
 import { allowsActionFallback, resolveTurnConstraints } from "../player/turn_constraints";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../../utils/error_diagnostic";
@@ -161,6 +162,7 @@ export class AcpActionProvider implements ActionProvider {
         startedAt + (this.options.turnTimeoutMs ?? 45_000),
       ),
     };
+    inheritWallDeadlineRequest(request, bounded);
     const controller = new AbortController();
     this.controllers.set(request.actorId, controller);
     const timer = setTimeout(

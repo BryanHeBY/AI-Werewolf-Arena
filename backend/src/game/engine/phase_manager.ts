@@ -1,3 +1,6 @@
+import { WallNotesWindow } from "../mechanisms/events/wall_notes/window";
+import { hasActiveWall } from "../mechanisms/events/wall_notes/authority";
+import { GameActionRequestFactory } from "./action_request_factory";
 import { replaceWithFoxVictory } from "../mechanisms/roles/cursed_fox/victory";
 import { readGameOutcome, readVictoryPoint } from "@ai-werewolf-arena/replay-contract";
 import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-catalog";
@@ -78,7 +81,7 @@ export class PhaseManager {
     private readonly roleRegistry: RoleRegistry,
     private readonly conditionRegistry: ConditionRegistry,
     private readonly damageResolutionSystem: DamageResolutionSystem,
-    random: RandomSource = createRandom(),
+    private readonly random: RandomSource = createRandom(),
   ) {
     this.eventRegistry = new EventRegistry();
     this.deathResolution = new DeathResolution(
@@ -184,6 +187,7 @@ export class PhaseManager {
     actionProvider: ActionProvider,
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
+    if (hasActiveWall(this.world)) throw new Error("wall_window_reentry");
     if (this.state.gameOver) {
       return this.getSnapshot();
     }
@@ -415,6 +419,15 @@ export class PhaseManager {
       return this.getSnapshot();
     }
 
+    await new WallNotesWindow(this.world, this.toolGateway, this.events).execute(
+      this.config,
+      new GameActionRequestFactory(this.world, this.events, cycleDay),
+      actionProvider,
+      cycleDay,
+      votingIsCurrent,
+      () => this.random.fork("wall_notes"),
+    );
+    if (!votingIsCurrent()) return this.getSnapshot();
     this.state.day += 1;
     return this.getSnapshot();
   }

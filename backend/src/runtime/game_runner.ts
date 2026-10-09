@@ -1,3 +1,4 @@
+import { inheritWallDeadlineRequest } from "../game/mechanisms/events/wall_notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
 import { formatErrorDiagnostic } from "../utils/error_diagnostic";
 /** Owns one game's resources, deadline, failure policy, and final replay. */
@@ -51,7 +52,9 @@ class DeadlineAwareActionProvider implements ActionProvider {
   ) {}
 
   getAction(request: ActionRequest): Promise<ToolCall | null> {
-    return this.delegate.getAction({ ...request, deadlineAtMs: this.deadlineAtMs });
+    const timed = { ...request, deadlineAtMs: this.deadlineAtMs };
+    inheritWallDeadlineRequest(request, timed);
+    return this.delegate.getAction(timed);
   }
 }
 

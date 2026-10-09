@@ -10,6 +10,7 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  write_note: { text: string };
   report_bug: {
     category: "flow" | "rule" | "state" | "logging" | "other";
     severity: "low" | "medium" | "high" | "critical";
@@ -53,6 +54,7 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "write_note",
   "report_bug",
   "speak_to_wolves",
   "kill_vote",
@@ -136,6 +138,7 @@ export const ACTION_STAGES = [
   "debate_challenge",
   "debate_speech",
   "debate_ballot",
+  "wall_notes",
   "awakened_mimic",
   "awakened_skill",
   "awakened_attack",
@@ -173,6 +176,8 @@ export interface ActionRequestExtras {
   allow_fallback?: boolean;
   ability_id?: string;
   duel_window?: KnightDuelWindow;
+  wall_id?: string;
+  item_instance_id?: string;
   debate_id?: string;
   debate_target_id?: EntityId;
   debate_actor_id?: EntityId;

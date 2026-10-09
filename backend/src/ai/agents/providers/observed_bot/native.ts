@@ -1,6 +1,11 @@
 import type { ObservedToolHandler } from "./context";
 import { PotionType } from "../../../../core";
 
+export const write_note: ObservedToolHandler = ({ ownState, style }) =>
+  ownState.wallNote?.effectiveRemaining === 1 && style !== "conservative"
+    ? { name: "write_note", args: { text: "..." } }
+    : null;
+
 export const challenge: ObservedToolHandler = ({ request, ownState, style }) => {
   const target = request.context.debate_target_id;
   return style !== "conservative" && ownState.debater?.remaining === 1 && target !== undefined

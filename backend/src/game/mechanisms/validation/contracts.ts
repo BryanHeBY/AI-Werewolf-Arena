@@ -9,6 +9,9 @@ import type { RoleCatalog } from "../roles/catalog";
 /** 单次工具校验上下文。 */
 export interface ValidationRuleContext {
   day?: number;
+  wallScope?: object;
+  wallId?: string;
+  itemInstanceId?: string;
   debateId?: string;
   abilityId?: string;
   roleCatalog: RoleCatalog;

@@ -1,3 +1,4 @@
+import { projectWallNote } from "../../../game/mechanisms/events/wall_notes/authority";
 import {
   projectBearState,
   projectDreamerState,
@@ -174,6 +175,8 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    const wallNote = projectWallNote(this.world, request.actorId);
+    if (wallNote) ownState.wallNote = wallNote;
     if (debateVoteBlocked(this.world, request.actorId, request.context.day))
       ownState.debatePenalty = { day: request.context.day };
     if (role?.role === Role.Debater) {
@@ -273,7 +276,12 @@ export class PlayerPromptPolicy {
     if (seer) ownState.seer = projectSeerState(seer);
     const dreamer = role ? getDreamerState(role, request.context.ability_id) : undefined;
     if (dreamer) ownState.dreamer = projectDreamerState(dreamer);
-    const { death_action_id: _deathActionId, debate_id: _debateId, ...context } = request.context;
+    const {
+      wall_id: _wallId,
+      death_action_id: _deathActionId,
+      debate_id: _debateId,
+      ...context
+    } = request.context;
     return freezeObservation({
       request: { ...request, context },
       identity: {
@@ -425,6 +433,9 @@ export class PlayerPromptPolicy {
 
   private statusDirective(request: ActionRequest, role?: RoleComponent): string | undefined {
     const lines: string[] = [];
+    const wallNote = projectWallNote(this.world, request.actorId);
+    if (wallNote)
+      lines.push(text(this.locale, "prompt.status.wall_note", { state: JSON.stringify(wallNote) }));
     lines.push(text(this.locale, "prompt.status.day", { day: getActionRequestDay(request) }));
     lines.push(
       text(this.locale, "prompt.status.wolf_teammates", {

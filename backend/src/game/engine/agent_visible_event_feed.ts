@@ -1,4 +1,6 @@
 import {
+  WALL_EVENT_TYPES,
+  readWallEventFact,
   readCupidEventFact,
   CUPID_EVENT_TYPES,
   readDebateEventFact,
@@ -32,6 +34,11 @@ export function buildAgentVisibleEvent(
   if (
     (DEBATE_EVENT_TYPES as readonly string[]).includes(event.type) &&
     !readDebateEventFact(event.type, event.payload)
+  )
+    return null;
+  if (
+    (WALL_EVENT_TYPES as readonly string[]).includes(event.type) &&
+    !readWallEventFact(event.type, event.payload)
   )
     return null;
   const visibility = getDefaultAgentEventVisibilityRegistry();

@@ -19,6 +19,9 @@ import { World } from "../../core/domain/world";
  */
 export interface ValidationContext {
   day?: number;
+  wallScope?: object;
+  wallId?: string;
+  itemInstanceId?: string;
   debateId?: string;
   abilityId?: string;
   phase: Phase;
@@ -119,6 +122,9 @@ export class ActionValidator {
       toolCall,
       phase: context.phase,
       day: context.day,
+      wallScope: context.wallScope,
+      wallId: context.wallId,
+      itemInstanceId: context.itemInstanceId,
       debateId: context.debateId,
       abilityId: context.abilityId,
       actionWindow: context.actionWindow,

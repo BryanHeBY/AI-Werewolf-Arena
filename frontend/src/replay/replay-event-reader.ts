@@ -1,4 +1,6 @@
 import {
+  WALL_EVENT_TYPES,
+  readWallEventFact,
   readCupidEventFact,
   CUPID_EVENT_TYPES,
   readDebateEventFact,
@@ -27,6 +29,7 @@ export interface ReadReplayEvent {
 
 // Required references are event-specific. Unknown extension fields never imply player membership.
 const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
+  wall_note_changed: ["actorId"],
   debater_revealed: ["actorId"],
   debate_started: ["actorId", "targetId"],
   debate_speech: ["actorId"],
@@ -127,7 +130,16 @@ const NULLABLE_TARGETS = new Set([
 ]);
 const VOTES = new Set(["wolf_kill_vote_cast", "guard_applied", "sheriff_vote_cast", "vote_cast"]);
 const SUMMARIES = new Set(["sheriff_vote_summary", "vote_summary"]);
-const NO_IDS = new Set(["phase_changed", "bear_roared", "game_over", "god_private_game_info"]);
+const NO_IDS = new Set([
+  "wall_notes_started",
+  "wall_notes_published",
+  "wall_notes_canceled",
+  "wall_note_order_recorded",
+  "phase_changed",
+  "bear_roared",
+  "game_over",
+  "god_private_game_info",
+]);
 export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([
   ...new Set([...Object.keys(REQUIRED_IDS), ...Object.keys(ID_LISTS), ...SUMMARIES, ...NO_IDS]),
 ]);
@@ -175,6 +187,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if ((WALL_EVENT_TYPES as readonly string[]).includes(type))
+    return readWallEventFact(type, p) !== null;
   if ((DEBATE_EVENT_TYPES as readonly string[]).includes(type))
     return readDebateEventFact(type, p) !== null;
   if ((CUPID_EVENT_TYPES as readonly string[]).includes(type))
@@ -334,6 +348,8 @@ export function readReplayEvent(
     if (!KNOWN.has(safe.type)) return { event: safe, relatedPlayerIds: [], effects: [] };
     if (!validKnownFields(safe.type, p)) return null;
     for (const key of REQUIRED_IDS[safe.type] ?? []) add(p[key]);
+    if (safe.type === "wall_note_order_recorded")
+      for (const row of p.rows as Array<{ actorId: number }>) add(row.actorId);
     if (safe.type === "debate_ballots_recorded")
       for (const ballot of p.ballots as Array<{ voterId: number }>) add(ballot.voterId);
     if (NULLABLE_TARGETS.has(safe.type)) add(p.targetId, true);

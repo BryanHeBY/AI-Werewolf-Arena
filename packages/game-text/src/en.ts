@@ -1,6 +1,32 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "action.write_note.hint":
+    "Optional anonymous note: submit your own free text with write_note, 1–160 Unicode codepoints, not all whitespace. Original text is preserved. Notes are collected then published in random order without author links.",
+  "request.summary.wall_notes":
+    "Optionally submit one anonymous note; your paper expires when this window closes.",
+  "stage.wall_notes": "Anonymous wall note",
+  "error.wall_note_unavailable": "No authorized unspent personal wall note is available.",
+  "error.wall_note_text": "Use 1–160 Unicode codepoints, not all whitespace or malformed UTF-16.",
+  "prompt.status.wall_note":
+    "Your personal anonymous paper instance and effective stock: {state}. Other authors’ submissions are hidden.",
+  "console.wall.start": "The anonymous wall is collecting notes.",
+  "console.wall.cancel": "The wall window was revoked; notes were not published.",
+  "console.wall.publish": "Anonymous wall notes (random order): {notes}",
+  "console.wall.order": "God note authors and publication order: {rows}",
+  "console.wall.item":
+    "God paper: player {actor}, {operation}, stock {remaining}, expired {expired}; {body}",
+  "item.operation.granted": "granted",
+  "item.operation.accepted": "accepted",
+  "item.operation.rejected": "rejected",
+  "item.operation.revoked": "revoked",
+  "item.operation.expired": "expired",
+  "replay.stage.wall_notes_started": "Wall note fact",
+  "replay.stage.wall_notes_published": "Wall note fact",
+  "replay.stage.wall_notes_canceled": "Wall note fact",
+  "replay.stage.wall_note_changed": "Wall note fact",
+  "replay.stage.wall_note_order_recorded": "Wall note fact",
+
   "rule.awa_melbourne_2026_speech_gap_v1": "AWA Melbourne 2026 ordinary speech window adaptation",
   "role.debater.brief":
     "Once per game challenge the current ordinary speaker. Every living player casts a sealed ballot; a strict majority blocks the target’s exile vote, otherwise yours.",

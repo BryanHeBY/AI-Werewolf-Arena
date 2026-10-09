@@ -1,9 +1,11 @@
 /** The single public board format. Unknown fields and unregistered roles fail closed. */
+import { supportsWallRoles } from "../../game/mechanisms/events/wall_notes/authority";
 import { z } from "zod";
 import { ROLE_IDS, RULESET, isRoleId } from "@ai-werewolf-arena/game-catalog";
 import { ActionWindow, Camp, Role, WinCondition, type BoardConfig } from "../../core/domain/model";
 import { getDefaultRoleCatalog } from "../../game/mechanisms/roles/catalog";
 import {
+  EVENT_PACK_IDS,
   DEATH_REVEAL_POLICIES,
   LAST_WORDS_POLICIES,
   SHERIFF_BADGE_POLICIES,
@@ -39,6 +41,7 @@ const schema = z.strictObject({
   }),
   rules: z.strictObject({ winConditions: z.array(z.enum(WinCondition)).min(1), hooks }),
   mechanisms: z.strictObject({
+    eventPack: z.enum(EVENT_PACK_IDS).optional(),
     disclosure: z
       .strictObject({ deathRevealPolicy: z.enum(DEATH_REVEAL_POLICIES).default("awa_hidden_v1") })
       .default({ deathRevealPolicy: "awa_hidden_v1" }),
@@ -139,6 +142,11 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
       fail("board_config_role_win_condition_not_supported", "rules.winConditions");
   if (new Set(definition.rules.winConditions).size !== definition.rules.winConditions.length)
     fail("board_config_duplicate_win_condition", "rules.winConditions");
+  if (
+    definition.mechanisms.eventPack &&
+    !supportsWallRoles(definition.board.roleSetups.map((e) => e.role as Role))
+  )
+    fail("board_config_role_combination_not_supported", "mechanisms.eventPack");
   const sheriff = definition.mechanisms.sheriff;
   if (sheriff.initialSeat && sheriff.initialSeat > total)
     fail("board_config_seat_out_of_range", "mechanisms.sheriff.initialSeat");
@@ -192,6 +200,9 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
         }
       : {}),
     selfDestruct: { enabledWindows: [...windows] },
+    ...(definition.mechanisms.eventPack
+      ? { events: { pack: definition.mechanisms.eventPack } }
+      : {}),
     voting: { ...definition.mechanisms.voting },
     disclosure: { ...definition.mechanisms.disclosure },
     lastWords: { ...definition.mechanisms.lastWords },
@@ -267,6 +278,7 @@ export function boardDefinitionFromConfig(id: string, config: BoardConfig): Boar
     },
     rules: { winConditions: conditions, hooks: config.hooks },
     mechanisms: {
+      ...(config.events ? { eventPack: config.events.pack } : {}),
       disclosure: { deathRevealPolicy: config.disclosure?.deathRevealPolicy ?? "awa_hidden_v1" },
       lastWords: { policy: config.lastWords?.policy ?? "awa_initial_wave_v1" },
       sheriff: {

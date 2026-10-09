@@ -36,6 +36,9 @@ export interface PlayerObservation {
   deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];
   ownState: {
+    wallNote?: import("../../../core/domain/components/wall_note").WallNoteComponent & {
+      effectiveRemaining: 0 | 1;
+    };
     blackMarket?: PlayerBlackMarketState;
     awakened?: PlayerAwakenedState;
     hybrid?: PlayerHybridState;

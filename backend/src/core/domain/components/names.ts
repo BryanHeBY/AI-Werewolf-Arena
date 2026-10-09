@@ -11,6 +11,7 @@ export const COMPONENT = {
   Badge: "BadgeComponent",
   Victory: "VictoryComponent",
   Lovers: "LoversComponent",
+  WallNote: "WallNoteComponent",
   DebatePenalty: "DebatePenaltyComponent",
 } as const;
 

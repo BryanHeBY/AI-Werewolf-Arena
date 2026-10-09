@@ -1,3 +1,4 @@
+import { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 import type {
   ActionWindow,
   KnightDuelWindow,
@@ -108,7 +109,9 @@ export type CupidPolicy = (typeof CUPID_POLICIES)[number];
 export const DEBATER_POLICIES = ["awa_melbourne_2026_speech_gap_v1"] as const;
 export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
+export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
+  events?: { pack: (typeof EVENT_PACK_IDS)[number] };
   debater?: { policy: DebaterPolicy };
   cupid?: { policy: CupidPolicy };
   dreamer?: { protectionPolicy: DreamProtectionPolicy };

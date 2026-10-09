@@ -1,5 +1,6 @@
 import { readGravekeeperFeedback, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
 import {
+  wallEventLabel,
   blackMarketEventLabel,
   deathAbilityEventLabel,
   text,
@@ -558,6 +559,8 @@ export class ScriptEventRenderRegistry {
     if (deathAbility !== null) return deathAbility;
     const awakened = awakenedEventLabel(event.type, event.payload, locale);
     if (awakened !== null) return awakened;
+    const wall = wallEventLabel(event.type, event.payload, locale);
+    if (wall !== null) return wall;
     const debate = debateEventLabel(event.type, event.payload, locale);
     if (debate !== null) return debate;
     const cupid = cupidEventLabel(event.type, event.payload, locale);
@@ -587,6 +590,13 @@ export class ScriptEventRenderRegistry {
     printPrivateEvents: boolean,
     locale: Locale = "zh-CN",
   ): ScriptLiveRender[] {
+    const wall = wallEventLabel(event.type, event.payload, locale);
+    if (wall !== null)
+      return ["wall_note_changed", "wall_note_order_recorded"].includes(event.type)
+        ? printPrivateEvents
+          ? [{ kind: "god", text: wall }]
+          : []
+        : [{ kind: "system", text: wall }];
     const debate = debateEventLabel(event.type, event.payload, locale);
     if (debate !== null)
       return event.type === "debate_ballots_recorded"

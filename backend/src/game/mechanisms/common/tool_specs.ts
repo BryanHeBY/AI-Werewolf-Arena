@@ -4,6 +4,17 @@ import { ToolSpec } from "../contracts";
 /** 通用工具规格列表。 */
 export const COMMON_TOOL_SPECS: ToolSpec[] = [
   {
+    name: "write_note",
+    parameters: {
+      type: "object",
+      properties: { text: { type: "string" } },
+      required: ["text"],
+      additionalProperties: false,
+    },
+    argHint: 'write_note args: {"text":"..."}',
+    userPromptHintKey: "action.write_note.hint",
+  },
+  {
     name: "debate_vote",
     parameters: {
       type: "object",

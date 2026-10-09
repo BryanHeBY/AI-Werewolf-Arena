@@ -107,6 +107,7 @@ export interface RecordedPlayerState {
   camp: Camp;
   alive: boolean;
   privateState: Record<string, unknown>;
+  wallNote?: import("../core/domain/components/wall_note").WallNoteComponent;
   debatePenalty?: import("../core/domain/components/debate_penalty").DebatePenaltyComponent;
   lovers?: import("../core/domain/components/lovers").LoversComponent;
   vote: { weight: number; canVote: boolean };
@@ -206,6 +207,11 @@ const requestSchema = z.strictObject({
       summary: z.string().optional(),
       summary_message: messageRefSchema.optional(),
     }),
+    wall_id: z.literal("wall:1").optional(),
+    item_instance_id: z
+      .string()
+      .regex(/^wall:1:[1-9][0-9]*$/)
+      .optional(),
     debate_id: z
       .string()
       .regex(/^debate:[1-9][0-9]*:[1-9][0-9]*:[1-9][0-9]*:[1-9][0-9]*$/)
@@ -279,48 +285,65 @@ const affiliationsSchema = z.unknown().transform((value, ctx): VictoryAffiliatio
     return z.NEVER;
   }
 });
-const playerSchema = z.strictObject({
-  id: positive,
-  seat: positive,
-  name: z.string(),
-  role: z.enum(Role),
-  camp: z.enum(Camp),
-  alive: z.boolean(),
-  privateState: jsonObject,
-  debatePenalty: z
-    .strictObject({
-      day: positive,
-      sourceId: positive,
-      lifeVersion: z.number().int().nonnegative(),
-    })
-    .optional(),
-  lovers: z
-    .strictObject({
-      actorId: positive,
-      day: z.literal(1),
-      policy: z.enum(CUPID_POLICIES),
-      pairIds: z.tuple([positive, positive]),
-      pairCamps: z.tuple([z.enum([Camp.Good, Camp.Wolf]), z.enum([Camp.Good, Camp.Wolf])]),
-      groupId: z.literal("cupid_lovers"),
-      mixed: z.boolean(),
-    })
-    .refine(
-      (record) =>
-        record.pairIds[0] !== record.pairIds[1] &&
-        record.mixed === (record.pairCamps[0] !== record.pairCamps[1]),
-      "reproduction_lovers_invalid",
-    )
-    .optional(),
-  victory: z.strictObject({ affiliations: affiliationsSchema }),
-  vote: z.strictObject({ weight: z.number().finite().nonnegative(), canVote: z.boolean() }),
-  badge: z.strictObject({
-    isSheriff: z.boolean(),
-    destroyed: z.boolean(),
-    voteWeight: z.number().finite().positive(),
-    handoffPolicy: z.enum(SHERIFF_BADGE_POLICIES).optional(),
-  }),
-  marks: z.array(z.string()),
-});
+const playerSchema = z
+  .strictObject({
+    id: positive,
+    seat: positive,
+    name: z.string(),
+    role: z.enum(Role),
+    camp: z.enum(Camp),
+    alive: z.boolean(),
+    privateState: jsonObject,
+    wallNote: z
+      .strictObject({
+        instanceId: z.string().regex(/^wall:1:[1-9][0-9]*$/),
+        source: z.strictObject({
+          kind: z.literal("wall_event"),
+          eventId: z.literal("awa_wall_notes_v1"),
+          day: z.literal(1),
+        }),
+        remaining: z.union([z.literal(0), z.literal(1)]),
+        expired: z.boolean(),
+      })
+      .optional(),
+    debatePenalty: z
+      .strictObject({
+        day: positive,
+        sourceId: positive,
+        lifeVersion: z.number().int().nonnegative(),
+      })
+      .optional(),
+    lovers: z
+      .strictObject({
+        actorId: positive,
+        day: z.literal(1),
+        policy: z.enum(CUPID_POLICIES),
+        pairIds: z.tuple([positive, positive]),
+        pairCamps: z.tuple([z.enum([Camp.Good, Camp.Wolf]), z.enum([Camp.Good, Camp.Wolf])]),
+        groupId: z.literal("cupid_lovers"),
+        mixed: z.boolean(),
+      })
+      .refine(
+        (record) =>
+          record.pairIds[0] !== record.pairIds[1] &&
+          record.mixed === (record.pairCamps[0] !== record.pairCamps[1]),
+        "reproduction_lovers_invalid",
+      )
+      .optional(),
+    victory: z.strictObject({ affiliations: affiliationsSchema }),
+    vote: z.strictObject({ weight: z.number().finite().nonnegative(), canVote: z.boolean() }),
+    badge: z.strictObject({
+      isSheriff: z.boolean(),
+      destroyed: z.boolean(),
+      voteWeight: z.number().finite().positive(),
+      handoffPolicy: z.enum(SHERIFF_BADGE_POLICIES).optional(),
+    }),
+    marks: z.array(z.string()),
+  })
+  .refine(
+    (player) => !player.wallNote || player.wallNote.instanceId === `wall:1:${player.id}`,
+    "reproduction_wall_owner_invalid",
+  );
 const schema = z.strictObject({
   schemaVersion: z.literal(REPRODUCTION_SCHEMA_VERSION),
   finalized: z.boolean(),

@@ -1,3 +1,5 @@
+import { readWallTool } from "@ai-werewolf-arena/game-text";
+import { authorizedWallAuthor } from "../events/wall_notes/authority";
 import { prohibitsLoversVote } from "../roles/cupid/relation";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：定义通用工具的校验规则。 */
@@ -8,6 +10,15 @@ import { canBeExiled, canVoteExile } from "./participation";
 
 /** 通用工具校验规则集合。 */
 export const COMMON_VALIDATION_RULES: ToolRuleMap = {
+  write_note: ({ world, actorId, day, phase, toolCall, wallScope, wallId, itemInstanceId }) => {
+    if (
+      day !== 1 ||
+      phase !== Phase.Voting ||
+      !authorizedWallAuthor(world, actorId, wallId, itemInstanceId, wallScope)
+    )
+      return { code: RuleError.WallNoteUnavailable };
+    return readWallTool(toolCall) ? null : { code: RuleError.WallNoteText };
+  },
   debate_vote: ({ world, actorId, day, phase, toolCall, debateId }) => {
     const a = debateAuthority(world, debateId),
       actor = a?.participants.get(actorId);

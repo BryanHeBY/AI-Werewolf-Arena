@@ -1,5 +1,28 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "action.write_note.hint":
+    "匿名纸条，可不提交。write_note只写本人自由短句：1–160个Unicode字符，不能全空白；保留原文字。收齐后随机公布，无作者关联。",
+  "request.summary.wall_notes": "可写一张匿名纸条，也可不提交；本轮关闭即过期。",
+  "stage.wall_notes": "匿名墙纸条",
+  "error.wall_note_unavailable": "没有本人可用的匿名纸条窗口。",
+  "error.wall_note_text": "纸条须为1–160个Unicode字符，不能全空白或含无效代理字符。",
+  "prompt.status.wall_note": "本人的匿名纸条实例与有效库存：{state}。不包含其他作者的投稿。",
+  "console.wall.start": "匿名墙开始收集纸条。",
+  "console.wall.cancel": "匿名墙窗口失效，未公布纸条。",
+  "console.wall.publish": "匿名墙纸条（随机顺序）：{notes}",
+  "console.wall.order": "上帝纸条作者和公布次序：{rows}",
+  "console.wall.item": "上帝纸条：{actor}号，{operation}，库存{remaining}，过期{expired}；{body}",
+  "item.operation.granted": "发放",
+  "item.operation.accepted": "接受",
+  "item.operation.rejected": "拒绝",
+  "item.operation.revoked": "撤权",
+  "item.operation.expired": "过期",
+  "replay.stage.wall_notes_started": "匿名墙事实",
+  "replay.stage.wall_notes_published": "匿名墙事实",
+  "replay.stage.wall_notes_canceled": "匿名墙事实",
+  "replay.stage.wall_note_changed": "匿名墙事实",
+  "replay.stage.wall_note_order_recorded": "匿名墙事实",
+
   "rule.awa_melbourne_2026_speech_gap_v1": "AWA墨尔本2026普通发言窗口适配",
   "role.debater.brief":
     "整局一次翻牌开杠当前普通发言者；全体活人匿名表决，严格过半禁对方当日放逐票，否则禁自己。",

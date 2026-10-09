@@ -9,6 +9,7 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  wall_notes: ["匿名墙纸条", "Anonymous wall note"],
   wolf_discussion: ["狼人交流", "Wolf discussion"],
   wolf_vote: ["狼人刀人投票", "Wolf kill vote"],
   guard: ["守卫行动", "Guard action"],
