@@ -1,0 +1,20 @@
+node_modules/
+**/node_modules/
+.git/
+.codex/
+.env*
+configs/
+bun.lock
+dist/
+**/dist/
+coverage/
+**/coverage/
+record/
+data/records/
+backend/data/records/
+frontend/test-results/
+frontend/playwright-report/
+# Recorded fixtures are historical evidence, including hashes and original bytes.
+frontend/tests/fixtures/*.json
+packages/replay-contract/fixtures/*.json
+*.log

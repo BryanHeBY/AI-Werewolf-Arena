@@ -11,16 +11,25 @@
   ],
   "scripts": {
     "dev:frontend": "bun --filter ai-werewolf-arena-frontend dev",
-    "replay:dev": "bun --cwd frontend run replay:dev",
+    "replay:dev": "bun run --cwd frontend replay:dev",
     "build:backend": "bun --filter ai-werewolf-arena-backend build",
     "build:frontend": "bun --filter ai-werewolf-arena-frontend build",
     "check:backend": "bun --filter ai-werewolf-arena-backend check",
     "check:frontend": "bun --filter ai-werewolf-arena-frontend typecheck",
     "test": "bun run test:backend && bun run test:frontend",
     "test:backend": "bun --filter ai-werewolf-arena-backend test",
-    "test:frontend": "bun --filter ai-werewolf-arena-frontend test"
+    "test:frontend": "bun --filter ai-werewolf-arena-frontend test",
+    "check": "bun run check:backend && bun run check:frontend",
+    "lint:backend": "bun run --cwd backend lint:deps && bun run --cwd backend lint:boundaries && bun run --cwd backend lint:i18n",
+    "lint:frontend": "bun run --cwd frontend lint",
+    "lint": "bun run lint:backend && bun run lint:frontend",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "engines": {
     "bun": ">=1.4.2"
+  },
+  "devDependencies": {
+    "prettier": "3.9.9"
   }
 }

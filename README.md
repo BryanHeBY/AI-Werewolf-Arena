@@ -91,10 +91,15 @@ bun run dev:frontend
 ## 验证
 
 ```bash
-bun run check:backend
-bun run test:backend
-bun run check:frontend
-bun run test:frontend
+bun run check          # 后端源码/测试/脚本 + 前端源码/测试/脚本
+bun run lint           # 后端依赖边界与i18n检查 + 前端ESLint
+bun run format:check   # 统一Prettier格式检查
+bun run test           # 离线单测；部分使用本机假HTTP/MCP与ACP夹具
+
+# 需要整理格式时单独提交格式变更
+bun run format
 ```
+
+类型门禁覆盖测试与夹具，后端脚本的 JavaScript 实现也参与检查；不通过排除文件或关闭严格选项避开错误。格式配置与 `.editorconfig` 使用两空格、LF 和文件末尾换行；本地秘密配置、构建产物和历史复盘 JSON 夹具不参加自动格式写入。检查命令不会启动真实 Agent 对局。
 
 已实现行为以代码和测试为准。玩法扩充的目标、64 项角色、中英双语支持、阶段验收、交叉审查和提交要求见 [扩充路线](docs/expansion/roadmap.md)；计划功能在实现并验证后才登记为支持。
