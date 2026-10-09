@@ -2,6 +2,8 @@
 
 用户于 2026-10-07 明确授权启动完整目标，P0 结束后的等待要求已满足。持续目标覆盖 P1–P10；长期候选不自动纳入。
 
+**当前执行边界（2026-10-09最新指令）**：完成P7最后的黑市商人及P7阶段验收后收尾、整理交接；P8–P10保留原目标和路线，交给后续agent，本轮不继续实现。
+
 | 阶段 | 状态 | 当前证据 |
 | --- | --- | --- |
 | P0 | 完成 | 文档 commit `5337194`，三路审查闭环 |
@@ -11,7 +13,7 @@
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
 | P5 | 完成 | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md) |
 | P6 | 完成 | 五角色与三路审查闭环；16项verified，最终全量1176测试／542实际双语整局/Tape、103前端／42浏览器通过，见[阶段验收](reviews/p6-activation.md) |
-| P7 第三批 | 进行中：已交付六角色，余黑市商人 | [通灵师](reviews/p7-psychic.md)、[机械狼](reviews/p7-mechanical-wolf.md)、[奇迹商人](reviews/p7-miracle-merchant.md)、[混血儿](reviews/p7-hybrid.md)、[魔镜少女](reviews/p7-mirror-girl.md)、[觉醒隐狼](reviews/p7-awakened-hidden-wolf.md)；22 verified/42 planned，Aw最终60双语本地完整局/Tape与40seed、1223受影响后端、157前端、6实际浏览器通过 |
+| P7 第三批 | 完成：七角色及全阶段验收 | [通灵师](reviews/p7-psychic.md)、[机械狼](reviews/p7-mechanical-wolf.md)、[奇迹商人](reviews/p7-miracle-merchant.md)、[混血儿](reviews/p7-hybrid.md)、[魔镜少女](reviews/p7-mirror-girl.md)、[觉醒隐狼](reviews/p7-awakened-hidden-wolf.md)、[黑市商人](reviews/p7-black-market-merchant.md)；23 verified/41 planned；Black新增84双语本地完整局/Tape、40seed与4失败Tape，全量后端2027测试/184573断言、前端173/78浏览器通过；见[阶段验收](reviews/p7-activation.md)，三路最终复查0阻断；功能commit `83cac45`，收尾交接见[文档](handoff-p7.md) |
 | P8–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
@@ -430,3 +432,12 @@ World短期death permission与当前请求的ability_id严格匹配，原生unde
 独立审查修复跨World借权、target ID与lifeScope错配、judge标签遗漏和malformed armed/null状态，原审查者probe闭环。核心39/254、16真正SDK HTTP/ACP进程+注入MCP与私人记录、4受控PM完整临界局、旧18实际双语完整局/全部Tape、受影响1188/13101/87文件通过；前端163/1429/type/build、4实际浏览器与中英最终PNG通过。见[本笔验收](reviews/p7-gift-gun-foundation.md)。
 
 目录仍22/42。新gift严格Tape随真实Black交易启用后验证，本笔不冒Black完整交付或新板模拟；下一笔完整角色/延期主动礼物与例子，再P7全已支持验收及P8–P10/64/22/长局/T6。
+
+
+## P7最终黑市商人与阶段收尾（2026-10-09）
+
+Black完整功能commit `83cac45`；赠枪底座 `5c41428`、死亡实例许可 `0c3c878`、规则冻结 `0b389d8`。另以 `3bcadb6` 独立修正11份旧配置测试中的planned角色例子，31测试/179断言通过，未改生产规则。Black新增84实际本机双语SDK/ACP/MCP/混合完整局、40自然seed及4受控失败Tape，最终48测试/13906断言通过；三路功能末审0残留。
+
+最终全backend release **2027测试/184573断言/182文件/0失败**，type/deps/boundaries/i18n（57精确例外）/smoke全部exit0；前端173测试/1496断言、type/build及全78实际Chromium通过，两Black双语PNG root/L独立目检。A、R/T、L/D复核正式文档和全量终态后0阻断。详细范围见[阶段验收](reviews/p7-activation.md)，下一Agent从[交接](handoff-p7.md)进入。
+
+本轮止于P7，当前23 verified/41 planned。P8–P10、64角色/22机制全目标、定时1000seed、发布长局/T6未完成，不访问外部模型或修改用户认证；保留后续指令入口。
