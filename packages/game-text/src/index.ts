@@ -712,3 +712,5 @@ export function lonelyGirlEventLabel(
       })
     : null;
 }
+
+export * from "./ghost-bride";

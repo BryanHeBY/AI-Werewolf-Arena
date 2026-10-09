@@ -9,6 +9,12 @@ export interface AliveComponent extends PromptRenderable {
 }
 
 const lifeVersions = new WeakMap<AliveComponent, number>();
+const originalDescriptors = new WeakMap<AliveComponent, PropertyDescriptor>();
+/** A copy of the factory-owned accessor descriptor; inspecting it never invokes an accessor. */
+export function aliveLifeDescriptor(component: AliveComponent): PropertyDescriptor | undefined {
+  const descriptor = originalDescriptors.get(component);
+  return descriptor && { ...descriptor };
+}
 export function aliveLifeVersion(component: AliveComponent): number | undefined {
   return lifeVersions.get(component);
 }
@@ -35,6 +41,7 @@ export function createAliveComponent(
       return text(displayLocale, this.alive ? "component.alive" : "component.dead");
     },
   };
+  originalDescriptors.set(component, Object.getOwnPropertyDescriptor(component, "alive")!);
   lifeVersions.set(component, 0);
   return component;
 }
