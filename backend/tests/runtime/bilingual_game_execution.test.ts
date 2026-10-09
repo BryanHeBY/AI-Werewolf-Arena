@@ -247,6 +247,7 @@ async function runFixture(
       definition.mechanisms.sheriff = {
         enabled: true,
         electionPolicy: "awa_final_candidates_v1",
+        badgePolicy: "awa_next_seat_v1",
         voteWeight: 2.25,
         tieBreaker: "min_seat",
       };

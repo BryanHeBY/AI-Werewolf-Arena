@@ -7,6 +7,7 @@ import {
   WITCH_KNIFE_VISIBILITY_POLICIES,
   WITCH_POTION_POLICIES,
   SHERIFF_ELECTION_POLICIES,
+  SHERIFF_BADGE_POLICIES,
   EXILE_VOTE_POLICIES,
 } from "./board";
 import { ActionWindow, KnightDuelWindow, Role, WinCondition, WitchSelfHealRule } from "./identity";
@@ -34,6 +35,7 @@ export const boardConfigSchema = z.strictObject({
     .strictObject({
       voteWeight: z.number().finite().positive().optional(),
       electionPolicy: z.enum(SHERIFF_ELECTION_POLICIES).optional(),
+      badgePolicy: z.enum(SHERIFF_BADGE_POLICIES).optional(),
     })
     .optional(),
   voting: z.strictObject({ exilePolicy: z.enum(EXILE_VOTE_POLICIES) }).optional(),

@@ -1089,6 +1089,12 @@ export const zhCN = Object.freeze({
   "replay.gift_ability_skipped": "{actor}号第{day}夜保留受赠技能{ability}，本夜机会已关闭。",
   "replay.stage.sheriff_pk_started": "警长PK",
   "replay.stage.exile_pk_started": "放逐PK",
+  "error.badge_choice_unavailable": "当前警徽不可移交。",
+  "error.badge_choice_target": "只能向名单内合格活人移交警徽。",
+  "stage.sheriff_badge_choice": "警徽移交选择",
+  "request.summary.badge_choice": "选择名单内继任者，或用null撕毁警徽。",
+  "prompt.config.badge_next": "警徽：出局后按存活座位顺序自动移交。",
+  "prompt.config.badge_choice": "警徽：死亡持有者选择合格活人继任或撕毁；白痴翻牌直接撕毁。",
 } as const);
 
 export type MessageKey = keyof typeof zhCN;

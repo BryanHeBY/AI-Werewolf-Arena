@@ -28,6 +28,7 @@ export interface TargetHintContext {
   world: World;
   roleCatalog?: import("../roles/catalog").RoleCatalog;
   sheriffCandidates?: readonly EntityId[];
+  badgeCandidates?: readonly EntityId[];
   exileCandidates?: readonly EntityId[];
 }
 

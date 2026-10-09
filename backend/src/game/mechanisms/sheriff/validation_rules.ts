@@ -7,6 +7,24 @@ import { canBeSheriff, canVote } from "../common/participation";
 
 /** 警长机制工具校验规则集合。 */
 export const SHERIFF_VALIDATION_RULES: ToolRuleMap = {
+  choose_badge_successor: ({ world, actorId, toolCall, badgeCandidates, roleCatalog }) => {
+    const badge = world.getComponent<
+      import("../../../core/domain/components/badge").BadgeComponent
+    >(actorId, COMPONENT.Badge);
+    if (!badge?.isSheriff || badge.destroyed || badge.handoffPolicy !== "awa_holder_choice_v1")
+      return { code: RuleError.BadgeChoiceUnavailable };
+    const target = toolCall.args as { target_id?: unknown };
+    if (target.target_id === null) return null;
+    if (
+      !Number.isSafeInteger(target.target_id) ||
+      !badgeCandidates?.includes(target.target_id as number) ||
+      !canBeSheriff(world, target.target_id as number, roleCatalog) ||
+      world.getComponent<{ destroyed: boolean }>(target.target_id as number, COMPONENT.Badge)
+        ?.destroyed !== false
+    )
+      return { code: RuleError.BadgeChoiceTarget };
+    return null;
+  },
   run_for_sheriff: ({ world, actorId, phase, toolCall, roleCatalog }) => {
     if (phase !== Phase.Day) {
       return { code: RuleError.SheriffNominationPhase };

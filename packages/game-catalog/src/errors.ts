@@ -1,5 +1,7 @@
 /** Stable rule failures; human messages belong to game-text. */
 export enum RuleError {
+  BadgeChoiceUnavailable = "badge_choice_unavailable",
+  BadgeChoiceTarget = "badge_choice_target",
   AbstainTargetNull = "abstain_target_null",
   ActorDead = "actor_dead",
   ActorMissing = "actor_missing",

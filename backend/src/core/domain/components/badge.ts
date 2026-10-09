@@ -9,6 +9,7 @@ export interface BadgeComponent extends PromptRenderable {
   destroyed: boolean;
   /** Owned by the badge, so transfer retains the board's configured weight. */
   voteWeight: number;
+  handoffPolicy?: import("../board").SheriffBadgePolicy;
 }
 
 /**

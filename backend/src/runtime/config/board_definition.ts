@@ -3,7 +3,11 @@ import { z } from "zod";
 import { ROLE_IDS, RULESET, isRoleId } from "@ai-werewolf-arena/game-catalog";
 import { ActionWindow, Camp, Role, WinCondition, type BoardConfig } from "../../core/domain/model";
 import { getDefaultRoleCatalog } from "../../game/mechanisms/roles/catalog";
-import { SHERIFF_ELECTION_POLICIES, EXILE_VOTE_POLICIES } from "../../core/domain/board";
+import {
+  SHERIFF_BADGE_POLICIES,
+  SHERIFF_ELECTION_POLICIES,
+  EXILE_VOTE_POLICIES,
+} from "../../core/domain/board";
 import { boardConfigSchema } from "../../core/domain/board_schema";
 
 export const CONFIG_ID_PATTERN = /^[a-z][a-z0-9_-]*$/;
@@ -36,6 +40,7 @@ const schema = z.strictObject({
     sheriff: z.strictObject({
       enabled: z.boolean(),
       electionPolicy: z.enum(SHERIFF_ELECTION_POLICIES).default("awa_final_candidates_v1"),
+      badgePolicy: z.enum(SHERIFF_BADGE_POLICIES).default("awa_next_seat_v1"),
       initialSeat: safePositive.optional(),
       voteWeight: z.number().finite().positive().default(1.5),
       tieBreaker: z.enum(["min_id", "min_seat", "no_elimination"]).default("min_seat"),
@@ -126,7 +131,8 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
     (sheriff.initialSeat ||
       sheriff.voteWeight !== 1.5 ||
       sheriff.tieBreaker !== "min_seat" ||
-      sheriff.electionPolicy !== "awa_final_candidates_v1")
+      sheriff.electionPolicy !== "awa_final_candidates_v1" ||
+      sheriff.badgePolicy !== "awa_next_seat_v1")
   ) {
     fail("board_config_disabled_mechanism_parameters", "mechanisms.sheriff");
   }
@@ -161,7 +167,13 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
     enableSheriff: sheriff.enabled,
     ...(sheriff.initialSeat ? { initialSheriffSeat: sheriff.initialSeat } : {}),
     ...(sheriff.enabled
-      ? { sheriff: { voteWeight: sheriff.voteWeight, electionPolicy: sheriff.electionPolicy } }
+      ? {
+          sheriff: {
+            voteWeight: sheriff.voteWeight,
+            electionPolicy: sheriff.electionPolicy,
+            badgePolicy: sheriff.badgePolicy,
+          },
+        }
       : {}),
     selfDestruct: { enabledWindows: [...windows] },
     voting: { ...definition.mechanisms.voting },
@@ -246,6 +258,7 @@ export function boardDefinitionFromConfig(id: string, config: BoardConfig): Boar
                 : {}),
               voteWeight: config.sheriff?.voteWeight ?? 1.5,
               electionPolicy: config.sheriff?.electionPolicy ?? "awa_final_candidates_v1",
+              badgePolicy: config.sheriff?.badgePolicy ?? "awa_next_seat_v1",
               tieBreaker: config.tieBreaker?.sheriffVote ?? "min_seat",
             }
           : {}),

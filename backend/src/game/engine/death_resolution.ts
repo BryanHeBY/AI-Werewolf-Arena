@@ -16,7 +16,7 @@ import type { RoleComponent } from "../../core/domain/components/role";
 import { World } from "../../core/domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
 import { getDefaultLastWordsMechanism } from "../mechanisms/last_words/last_words_mechanism";
-import { transferOrDestroySheriffBadge } from "../mechanisms/sheriff/badge";
+import { resolveSheriffBadge } from "../mechanisms/sheriff/badge_choice";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { EventRegistry } from "./event_registry";
 import type { DreamNightFrame } from "../mechanisms/roles/dreamer/night_frame";
@@ -133,7 +133,18 @@ export class DeathResolution {
             : causes.includes(DeathCause.Exile)
               ? "voted_out"
               : `${actualDeathPhase}_death`;
-          transferOrDestroySheriffBadge(this.world, deadId, reason, this.events);
+          await resolveSheriffBadge(
+            this.world,
+            deadId,
+            reason,
+            this.events,
+            this.toolGateway,
+            actionProvider,
+            resolutionPhase,
+            resolutionDay,
+            isCurrent,
+          );
+          if (!isCurrent()) return;
         }
 
         const next = new Set<EntityId>();

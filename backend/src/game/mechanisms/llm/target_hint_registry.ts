@@ -48,6 +48,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     dream: { allowSelf: false },
     charm: { allowSelf: false },
     vote_for_sheriff: { allowSelf: false },
+    choose_badge_successor: { allowSelf: false },
   };
 
   private readonly roleOverrides: Partial<Record<Role, Partial<Record<ToolName, TargetRule>>>> = {
@@ -133,6 +134,9 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
               !inspection ||
               roleInspectionPolicy(inspection) === "psychic" ||
               !inspection.history.some((report) => report.targetId === id)) &&
+            (tool !== "choose_badge_successor" ||
+              (ctx.badgeCandidates?.includes(id) &&
+                canBeSheriff(ctx.world, id, ctx.roleCatalog))) &&
             (tool !== "vote_for_sheriff" ||
               (ctx.sheriffCandidates?.includes(id) &&
                 canBeSheriff(ctx.world, id, ctx.roleCatalog))),

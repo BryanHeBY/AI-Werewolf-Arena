@@ -42,6 +42,7 @@ export interface ToolArgMap {
   speak: { text: string };
   vote: { target_id: EntityId | null; abstain: boolean };
   shoot: { target_id: EntityId | null };
+  choose_badge_successor: { target_id: EntityId | null };
   choose_direction: { direction: "clockwise" | "counter_clockwise" };
   run_for_sheriff: { run: boolean };
   vote_for_sheriff: { target_id: EntityId | null; abstain: boolean };
@@ -77,6 +78,7 @@ export const TOOL_NAMES = [
   "speak",
   "vote",
   "shoot",
+  "choose_badge_successor",
   "choose_direction",
   "run_for_sheriff",
   "vote_for_sheriff",
@@ -143,6 +145,7 @@ export const ACTION_STAGES = [
   "sheriff_campaign_speech",
   "sheriff_withdraw",
   "sheriff_vote",
+  "sheriff_badge_choice",
   "sheriff_choose_direction",
   "sheriff_pk_speech",
   "sheriff_pk_vote",
@@ -166,6 +169,7 @@ export interface ActionRequestExtras {
   death_sources?: DeathCause[];
   death_action_id?: number;
   sheriff_candidates?: EntityId[];
+  badge_candidates?: readonly EntityId[];
   exile_candidates?: EntityId[];
   round?: number;
   max_rounds?: number;

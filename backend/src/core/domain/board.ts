@@ -25,7 +25,10 @@ export const SHERIFF_ELECTION_POLICIES = [
 export type SheriffElectionPolicy = (typeof SHERIFF_ELECTION_POLICIES)[number];
 export const EXILE_VOTE_POLICIES = ["awa_direct_v1", "awa_one_pk_v1"] as const;
 export type ExileVotePolicy = (typeof EXILE_VOTE_POLICIES)[number];
+export const SHERIFF_BADGE_POLICIES = ["awa_next_seat_v1", "awa_holder_choice_v1"] as const;
+export type SheriffBadgePolicy = (typeof SHERIFF_BADGE_POLICIES)[number];
 export interface SheriffConfig {
+  badgePolicy?: SheriffBadgePolicy;
   electionPolicy?: SheriffElectionPolicy;
   voteWeight?: number;
 }

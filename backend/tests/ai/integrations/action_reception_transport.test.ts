@@ -1366,3 +1366,137 @@ for (const locale of ["zh-CN", "en"] as const)
         server.stop(true);
       }
     });
+
+for (const locale of ["zh-CN", "en"] as const)
+  test(`${locale}: actual SDK HTTP and MCP share dead badge authorization and read-only choice receipts`, async () => {
+    const config = {
+      ...twelvePlayerStandardConfig,
+      initialSheriffSeat: 7,
+      sheriff: { voteWeight: 2.25, badgePolicy: "awa_holder_choice_v1" as const },
+    };
+    const sdk = bootstrapGame(config, { fixedRoles: roles, locale });
+    const acp = bootstrapGame(config, { fixedRoles: roles, locale });
+    sdk.world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive = false;
+    acp.world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive = false;
+    const sdkPermit = sdk.world.openDeathAction(7, "choose_badge_successor", Phase.Voting, 2);
+    const acpPermit = acp.world.openDeathAction(7, "choose_badge_successor", Phase.Voting, 2);
+    const choice: ActionRequest = {
+      actorId: 7,
+      phase: Phase.Voting,
+      allowedTools: ["choose_badge_successor"],
+      context: {
+        day: 2,
+        stage: "sheriff_badge_choice",
+        trigger: "badge_handoff",
+        death_action_id: sdkPermit.id,
+        badge_candidates: [1, 9],
+        visible_events: [],
+        turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },
+      },
+    };
+    const submissions = [
+      { turn_id: "stale", action: "choose_badge_successor", arguments: { target_id: 9 } },
+      { turn_id: "t1", action: "choose_badge_successor", arguments: { target_id: false } },
+      { turn_id: "t1", action: "choose_badge_successor", arguments: { target_id: 10 } },
+      { turn_id: "t1", action: "choose_badge_successor", arguments: { target_id: "9" } },
+    ];
+    const server = Bun.serve({
+      hostname: "127.0.0.1",
+      port: 0,
+      async fetch(input) {
+        await input.json();
+        return Response.json({
+          id: "synthetic-badge",
+          object: "chat.completion",
+          created: 1,
+          model: "synthetic",
+          choices: [
+            {
+              index: 0,
+              finish_reason: "tool_calls",
+              message: {
+                role: "assistant",
+                content: null,
+                tool_calls: submissions.map((args, index) => ({
+                  id: `badge-${index}`,
+                  type: "function",
+                  function: { name: "submit_action", arguments: JSON.stringify(args) },
+                })),
+              },
+            },
+          ],
+          usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
+        });
+      },
+    });
+    const registry = new AcpTurnRegistry(acp.world);
+    const control = new WerewolfMcpControlServer(registry);
+    const client = new Client({ name: "badge-reception", version: "1.0.0" });
+    const controlConfig = await control.start(process.execPath, [
+      path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+    ]);
+    control.bindSession("badge-session");
+    const pending = registry.openTurn(
+      { ...choice, context: { ...choice.context, death_action_id: acpPermit.id } },
+      "badge-session",
+    );
+    try {
+      await client.connect(
+        new StdioClientTransport({
+          command: controlConfig.command,
+          args: controlConfig.args,
+          env: Object.fromEntries(controlConfig.env.map((item) => [item.name, item.value])),
+        }),
+      );
+      const sdkReceipts: unknown[] = [];
+      const result = await sdkLoop(sdk.world, (trace) =>
+        sdkReceipts.push(
+          ...trace.flatMap((step) => step.toolCalls.map((call) => JSON.parse(call.toolResult))),
+        ),
+      ).run(
+        new AiSdkClient({
+          apiKey: "synthetic-only",
+          baseURL: `${server.url.origin}/v1`,
+          model: "synthetic",
+        }),
+        choice,
+        [{ role: "user", content: "Select the badge successor." }],
+        2000,
+        "t1",
+      );
+      const acpReceipts: unknown[] = [];
+      for (const args of submissions)
+        acpReceipts.push(
+          (await client.callTool({ name: "submit_action", arguments: args })).structuredContent,
+        );
+      expect(sdkReceipts).toEqual(acpReceipts);
+      expect(sdkReceipts).toMatchObject([
+        { ok: false, error: "turn_id_mismatch" },
+        { ok: false, error: "invalid_tool_arguments" },
+        { ok: false, error: "badge_choice_target" },
+        { ok: true, accepted: true, applied: false, action: "choose_badge_successor" },
+      ]);
+      expect(result.action).toEqual({ name: "choose_badge_successor", args: { target_id: 9 } });
+      expect(await pending.action).toEqual(result.action);
+      for (const game of [sdk, acp])
+        expect(game.world.getComponent<{ isSheriff: boolean }>(7, COMPONENT.Badge)?.isSheriff).toBe(
+          true,
+        );
+      sdkPermit.close();
+      acpPermit.close();
+      expect(
+        new ToolGateway().validateAndSanitize(sdk.world, 7, result.action!, {
+          phase: Phase.Voting,
+          day: 2,
+          deathActionId: sdkPermit.id,
+          badgeCandidates: [1, 9],
+        }).ok,
+      ).toBe(false);
+    } finally {
+      sdkPermit.close();
+      acpPermit.close();
+      await client.close();
+      await control.close();
+      server.stop(true);
+    }
+  });

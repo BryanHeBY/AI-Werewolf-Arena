@@ -31,6 +31,9 @@ export function assignSheriff(
       badge.isSheriff = id === sheriffId;
       badge.destroyed = false;
       badge.voteWeight = weight;
+      if (config?.sheriff?.badgePolicy === "awa_holder_choice_v1")
+        badge.handoffPolicy = "awa_holder_choice_v1";
+      else delete badge.handoffPolicy;
     }
     const voting = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight);
     if (voting?.canVote) voting.weight = id === sheriffId ? weight : 1;
@@ -46,12 +49,37 @@ export function transferOrDestroySheriffBadge(
   catalog?: RoleCatalog,
 ): SheriffBadgeTransferResult | null {
   const badge = world.getComponent<BadgeComponent>(fromId, COMPONENT.Badge);
-  if (!badge?.isSheriff) return null;
+  if (!badge?.isSheriff || badge.destroyed) return null;
+  return commitSheriffBadgeChoice(
+    world,
+    fromId,
+    reason,
+    events,
+    badge.handoffPolicy === "awa_holder_choice_v1"
+      ? null
+      : pickNextSheriffCandidate(world, fromId, catalog),
+    catalog,
+  );
+}
+
+/** Commits only a currently eligible target; a rejected choice destroys the held badge. */
+export function commitSheriffBadgeChoice(
+  world: World,
+  fromId: EntityId,
+  reason: string,
+  events: GameEvent[],
+  targetId: EntityId | null,
+  catalog?: RoleCatalog,
+): SheriffBadgeTransferResult | null {
+  const badge = world.getComponent<BadgeComponent>(fromId, COMPONENT.Badge);
+  if (!badge?.isSheriff || badge.destroyed) return null;
   const weight = badge.voteWeight ?? SHERIFF_VOTE_WEIGHT;
+  const policy = badge.handoffPolicy;
+  const nextSheriffId =
+    targetId !== null && badgeSuccessorEligible(world, fromId, targetId, catalog) ? targetId : null;
   badge.isSheriff = false;
   badge.destroyed = true;
   resetVotingWeight(world, fromId);
-  const nextSheriffId = pickNextSheriffCandidate(world, fromId, catalog);
   if (nextSheriffId === null) {
     events.push({
       timestamp: Date.now(),
@@ -65,6 +93,8 @@ export function transferOrDestroySheriffBadge(
     nextBadge.isSheriff = true;
     nextBadge.destroyed = false;
     nextBadge.voteWeight = weight;
+    if (policy) nextBadge.handoffPolicy = policy;
+    else delete nextBadge.handoffPolicy;
   }
   const nextVoting = world.getComponent<VotingRightComponent>(nextSheriffId, COMPONENT.VotingRight);
   if (nextVoting) nextVoting.weight = weight;
@@ -81,23 +111,29 @@ function resetVotingWeight(world: World, entityId: EntityId): void {
   if (voting) voting.weight = voting.canVote ? 1 : 0;
 }
 
+export function badgeSuccessorEligible(
+  world: World,
+  fromId: EntityId,
+  id: EntityId,
+  catalog?: RoleCatalog,
+): boolean {
+  return (
+    id !== fromId &&
+    canBeSheriff(world, id, catalog) &&
+    world.getComponent<AliveComponent>(id, COMPONENT.Alive)?.alive === true &&
+    world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight)?.canVote === true &&
+    world.getComponent<BadgeComponent>(id, COMPONENT.Badge)?.destroyed === false
+  );
+}
+
 function pickNextSheriffCandidate(
   world: World,
   fromId: EntityId,
   catalog?: RoleCatalog,
 ): EntityId | null {
-  const candidates = world.getAliveEntityIds().filter((id) => {
-    if (id === fromId) return false;
-    const alive = world.getComponent<AliveComponent>(id, COMPONENT.Alive);
-    const voting = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight);
-    const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge);
-    return (
-      alive?.alive === true &&
-      voting?.canVote === true &&
-      canBeSheriff(world, id, catalog) &&
-      (badge?.destroyed ?? false) === false
-    );
-  });
+  const candidates = world
+    .getAliveEntityIds()
+    .filter((id) => badgeSuccessorEligible(world, fromId, id, catalog));
   candidates.sort((a, b) => {
     const aSeat = world.getComponent<IdentityComponent>(a, COMPONENT.Identity)?.seat ?? a;
     const bSeat = world.getComponent<IdentityComponent>(b, COMPONENT.Identity)?.seat ?? b;

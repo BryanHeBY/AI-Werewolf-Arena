@@ -4,6 +4,16 @@ import { ToolSpec } from "../contracts";
 /** 警长机制工具规格列表。 */
 export const SHERIFF_TOOL_SPECS: ToolSpec[] = [
   {
+    name: "choose_badge_successor",
+    parameters: {
+      type: "object",
+      properties: { target_id: { type: ["integer", "null"], minimum: 1 } },
+      required: ["target_id"],
+      additionalProperties: false,
+    },
+    argHint: 'choose_badge_successor args: {"target_id":number|null}',
+  },
+  {
     name: "run_for_sheriff",
     parameters: {
       type: "object",

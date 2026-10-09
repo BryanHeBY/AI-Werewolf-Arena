@@ -70,3 +70,10 @@ export const vote: ObservedToolHandler = (context) => {
   const target = pick(known.length ? known : candidates);
   return { name: "vote", args: { target_id: target ?? null, abstain: target === undefined } };
 };
+
+export const choose_badge_successor: ObservedToolHandler = ({ request, knownAliveIds, pick }) => {
+  const target = pick(
+    request.context.badge_candidates?.filter((id) => knownAliveIds.includes(id)) ?? [],
+  );
+  return { name: "choose_badge_successor", args: { target_id: target ?? null } };
+};

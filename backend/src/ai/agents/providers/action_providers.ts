@@ -88,6 +88,12 @@ export class BaselineBotActionProvider implements ActionProvider {
       return null;
     }
 
+    if (request.allowedTools.includes("choose_badge_successor")) {
+      const id = request.context.badge_candidates?.find((id) =>
+        canBeSheriff(this.world, id, this.roleCatalog),
+      );
+      return { name: "choose_badge_successor", args: { target_id: id ?? null } };
+    }
     if (request.allowedTools.includes("choose_direction")) {
       if (!canBeSheriff(this.world, request.actorId, this.roleCatalog)) return null;
       // 基线策略：偶数位顺时针，奇数位逆时针，保证可重复。

@@ -1,5 +1,12 @@
 import type { ObservedToolEntry } from "./context";
-import { speak, choose_direction, run_for_sheriff, vote_for_sheriff, vote } from "./public";
+import {
+  choose_badge_successor,
+  speak,
+  choose_direction,
+  run_for_sheriff,
+  vote_for_sheriff,
+  vote,
+} from "./public";
 import {
   speak_to_wolves,
   kill_vote,
@@ -38,6 +45,7 @@ export const observedToolHandlers: readonly ObservedToolEntry[] = [
   { tool: "black_market_trade", decide: black_market_trade },
   { tool: "speak", decide: speak },
   { tool: "speak_to_wolves", decide: speak_to_wolves },
+  { tool: "choose_badge_successor", decide: choose_badge_successor },
   { tool: "choose_direction", decide: choose_direction },
   { tool: "run_for_sheriff", decide: run_for_sheriff },
   { tool: "vote_for_sheriff", decide: vote_for_sheriff },

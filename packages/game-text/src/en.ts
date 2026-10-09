@@ -1207,4 +1207,11 @@ export const en = Object.freeze({
     "Player {actor} holds gifted ability {ability} on night {day}; this night’s opportunity is closed.",
   "replay.stage.sheriff_pk_started": "Sheriff PK",
   "replay.stage.exile_pk_started": "Exile PK",
+  "error.badge_choice_unavailable": "The badge is unavailable for handoff.",
+  "error.badge_choice_target": "Choose an eligible living player in the handoff list.",
+  "stage.sheriff_badge_choice": "Badge successor choice",
+  "request.summary.badge_choice": "Choose a listed successor, or use null to destroy the badge.",
+  "prompt.config.badge_next": "Badge: transfer automatically by living seat order after death.",
+  "prompt.config.badge_choice":
+    "Badge: the deceased holder chooses an eligible living successor or destroys it; revealed Idiots destroy it directly.",
 } satisfies Record<MessageKey, string>);

@@ -14,6 +14,7 @@ import type {
 import { types } from "node:util";
 import {
   ACTION_STAGES,
+  SHERIFF_BADGE_POLICIES,
   TOOL_NAMES,
   WOLF_TEAM_EVENT_TYPES,
   ActionWindow,
@@ -106,7 +107,12 @@ export interface RecordedPlayerState {
   alive: boolean;
   privateState: Record<string, unknown>;
   vote: { weight: number; canVote: boolean };
-  badge: { isSheriff: boolean; destroyed: boolean; voteWeight: number };
+  badge: {
+    isSheriff: boolean;
+    destroyed: boolean;
+    voteWeight: number;
+    handoffPolicy?: import("../core/domain/board").SheriffBadgePolicy;
+  };
   marks: string[];
   victory: { affiliations: VictoryAffiliation[] };
 }
@@ -209,6 +215,7 @@ const requestSchema = z.strictObject({
     death_action_id: positive.optional(),
     sheriff_candidates: z.array(positive).optional(),
     exile_candidates: z.array(positive).optional(),
+    badge_candidates: z.array(positive).optional(),
     round: positive.optional(),
     max_rounds: positive.optional(),
     retry_attempt: nonnegative.optional(),
@@ -277,6 +284,7 @@ const playerSchema = z.strictObject({
     isSheriff: z.boolean(),
     destroyed: z.boolean(),
     voteWeight: z.number().finite().positive(),
+    handoffPolicy: z.enum(SHERIFF_BADGE_POLICIES).optional(),
   }),
   marks: z.array(z.string()),
 });

@@ -83,8 +83,13 @@ export class ActionReception {
     if (!args || !schema.safeParse(args).success) return fail("invalid_tool_arguments");
     const call = { name: tool, args } as ToolCall;
     const deathStage =
-      DEATH_SHOT_STAGES.includes(request.context.stage) || request.context.stage === "last_words";
+      DEATH_SHOT_STAGES.includes(request.context.stage) ||
+      request.context.stage === "last_words" ||
+      request.context.stage === "sheriff_badge_choice";
     const deathTool =
+      (tool === "choose_badge_successor" &&
+        request.context.stage === "sheriff_badge_choice" &&
+        request.context.trigger === "badge_handoff") ||
       (tool === "shoot" &&
         DEATH_SHOT_STAGES.includes(request.context.stage) &&
         request.context.trigger === "on_death") ||
@@ -112,6 +117,7 @@ export class ActionReception {
       actionWindow: request.actionWindow,
       sheriffCandidates: request.context.sheriff_candidates,
       exileCandidates: request.context.exile_candidates,
+      badgeCandidates: request.context.badge_candidates,
       allowSelfDestruct:
         request.allowedTools.includes("self_destruct") ||
         request.allowedTools.includes("self_destruct_with_target"),

@@ -21,6 +21,7 @@ export interface ValidationRuleContext {
   duelWindow?: import("../../../core/domain/identity").KnightDuelWindow;
   allowKnightDuel?: boolean;
   sheriffCandidates?: readonly EntityId[];
+  badgeCandidates?: readonly EntityId[];
   exileCandidates?: readonly EntityId[];
 }
 

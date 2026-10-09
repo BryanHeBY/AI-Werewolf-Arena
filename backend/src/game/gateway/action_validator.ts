@@ -27,6 +27,7 @@ export interface ValidationContext {
   allowKnightDuel?: boolean;
   deathActionId?: number;
   sheriffCandidates?: readonly EntityId[];
+  badgeCandidates?: readonly EntityId[];
   exileCandidates?: readonly EntityId[];
 }
 
@@ -104,6 +105,8 @@ export class ActionValidator {
     if (!alive.alive && !allowDeadAction) {
       return reject({ code: RuleError.ActorDead });
     }
+    if (toolCall.name === "choose_badge_successor" && (alive.alive || !allowDeadAction))
+      return reject({ code: RuleError.DeathActionUnavailable });
     if (toolCall.name === "shoot" && (alive.alive || !allowDeadAction)) {
       return reject({ code: RuleError.ShootUnavailable });
     }
@@ -122,6 +125,7 @@ export class ActionValidator {
       allowKnightDuel: context.allowKnightDuel,
       sheriffCandidates: context.sheriffCandidates,
       exileCandidates: context.exileCandidates,
+      badgeCandidates: context.badgeCandidates,
     });
     if (error) {
       return reject(error);

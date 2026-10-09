@@ -20,7 +20,7 @@ export class World {
     EntityId,
     {
       id: number;
-      tool: "shoot" | "speak";
+      tool: "shoot" | "speak" | "choose_badge_successor";
       phase: Phase;
       day: number;
       abilityId?: string;
@@ -33,7 +33,7 @@ export class World {
   /** Engine-owned, transient permission; its ID alone does not grant an action. */
   openDeathAction(
     actorId: EntityId,
-    tool: "shoot" | "speak",
+    tool: "shoot" | "speak" | "choose_badge_successor",
     phase: Phase,
     day: number,
     isCurrent: () => boolean = () => true,
@@ -49,7 +49,7 @@ export class World {
       !this.getComponent<RoleComponent>(actorId, COMPONENT.Role) ||
       !Number.isSafeInteger(day) ||
       day < 1 ||
-      !["shoot", "speak"].includes(tool) ||
+      !["shoot", "speak", "choose_badge_successor"].includes(tool) ||
       !Object.values(Phase).includes(phase) ||
       phase === Phase.GameOver ||
       (abilityId !== undefined &&

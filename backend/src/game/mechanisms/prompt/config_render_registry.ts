@@ -30,7 +30,17 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
             })
           : text(locale, "common.disabled"),
       }),
-      ...(sheriffEnabled ? [text(locale, "prompt.config.sheriff_timing")] : []),
+      ...(sheriffEnabled
+        ? [
+            text(locale, "prompt.config.sheriff_timing"),
+            text(
+              locale,
+              config.sheriff?.badgePolicy === "awa_holder_choice_v1"
+                ? "prompt.config.badge_choice"
+                : "prompt.config.badge_next",
+            ),
+          ]
+        : []),
       text(locale, "prompt.config.blast", {
         rules: windows.length
           ? text(locale, "prompt.config.blast_enabled", {

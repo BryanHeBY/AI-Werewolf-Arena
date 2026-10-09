@@ -109,6 +109,7 @@ export function captureCheckpoint(
           isSheriff: badge.isSheriff,
           destroyed: badge.destroyed,
           voteWeight: badge.voteWeight,
+          ...(badge.handoffPolicy ? { handoffPolicy: badge.handoffPolicy } : {}),
         },
         marks: world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!.values(),
       };
