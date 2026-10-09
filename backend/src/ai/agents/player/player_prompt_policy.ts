@@ -1,3 +1,6 @@
+import { thiefCandidateCounts } from "../../../game/mechanisms/roles/thief/deal";
+import { projectThiefState } from "../../../game/mechanisms/roles/thief/state";
+import { projectThiefChoices } from "../../../game/mechanisms/roles/thief/setup";
 import { projectWallNote } from "../../../game/mechanisms/events/wall_notes/authority";
 import {
   projectBearState,
@@ -119,7 +122,10 @@ export class PlayerPromptPolicy {
     private readonly options: PlayerPromptPolicyOptions,
   ) {
     this.publicBoardSize = options.boardConfig?.boardSize ?? world.entityIds().length;
-    if (options.boardConfig) {
+    const thiefCounts = thiefCandidateCounts(world);
+    if (thiefCounts) {
+      for (const [role, count] of thiefCounts) this.publicRoleCounts.set(role, count);
+    } else if (options.boardConfig) {
       for (const { role, count } of options.boardConfig.roleSetups) {
         this.publicRoleCounts.set(role, (this.publicRoleCounts.get(role) ?? 0) + count);
       }
@@ -175,6 +181,9 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    const thief = projectThiefState(role, this.world),
+      choices = projectThiefChoices(this.world, request.actorId);
+    if (thief) ownState.thief = { ...thief, ...(choices ?? {}) };
     const wallNote = projectWallNote(this.world, request.actorId);
     if (wallNote) ownState.wallNote = wallNote;
     if (debateVoteBlocked(this.world, request.actorId, request.context.day))
@@ -414,13 +423,16 @@ export class PlayerPromptPolicy {
   }
 
   buildBoardInfo(): string {
-    return buildBoardInfoPrompt({
+    const info = buildBoardInfoPrompt({
       locale: this.locale,
       totalPlayers: this.publicBoardSize,
       roleCounts: this.publicRoleCounts,
       roleLabel: (role) => this.options.roleCatalog.label(role, this.locale),
       roleSkillBrief: (role) => this.options.roleCatalog.skillBrief(role, this.locale),
     });
+    return thiefCandidateCounts(this.world)
+      ? info + "\n" + text(this.locale, "prompt.board.thief")
+      : info;
   }
 
   private role(actorId: EntityId): RoleComponent | undefined {
@@ -433,6 +445,14 @@ export class PlayerPromptPolicy {
 
   private statusDirective(request: ActionRequest, role?: RoleComponent): string | undefined {
     const lines: string[] = [];
+    const thief = projectThiefState(role, this.world),
+      choices = projectThiefChoices(this.world, request.actorId);
+    if (thief)
+      lines.push(
+        text(this.locale, "prompt.status.thief", {
+          state: JSON.stringify({ ...thief, ...(choices ?? {}) }),
+        }),
+      );
     const wallNote = projectWallNote(this.world, request.actorId);
     if (wallNote)
       lines.push(text(this.locale, "prompt.status.wall_note", { state: JSON.stringify(wallNote) }));

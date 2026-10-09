@@ -1,3 +1,4 @@
+import { thiefSetupReady } from "./thief/deal";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import {
@@ -23,6 +24,7 @@ export function wolfTeamPermissions(
   catalog: RoleCatalog,
   world?: World,
 ): WolfTeamPermissions {
+  if (world && !thiefSetupReady(world)) return NO_ACCESS;
   if (!role || role.camp !== Camp.Wolf) return NO_ACCESS;
   const permissions = catalog.get(role.role)?.wolfTeam;
   return typeof permissions === "function" ? permissions(role, world) : (permissions ?? NO_ACCESS);

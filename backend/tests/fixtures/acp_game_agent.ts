@@ -77,7 +77,7 @@ try {
           const events = JSON.parse(batch.slice(batch.indexOf('{"events":'))).events as Array<
             [number, string, Record<string, unknown>]
           >;
-          assertTransportEvents(plan.role, events, plan.actorId);
+          assertTransportEvents(plan.eventRole ?? plan.role, events, plan.actorId);
           for (const [, type, payload] of events)
             if (type === "seer_checked") trace.visibleSeerTargets.push(payload.targetId as number);
         }

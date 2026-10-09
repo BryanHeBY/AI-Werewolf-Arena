@@ -69,7 +69,7 @@ bun run --cwd backend config:check --configs-dir ../configs --game-config-name t
 
 只输出板子、规则/参数/字段来源、玩家名字、Agent名称/类型/模型、是否有私有人格、限制与执行支持状态。不输出 profile/provider 对象、env、命令参数、URL、认证和人格文本；JSON错误也不回显原输入片段。失败以 `code` 和已确认安全的 `path` 输出，例如 `roles.witch.selfHela`；任意异常只给稳定错误码。没有文件或遇到旧格式明确失败，不搜索其他路径或静默用内置板子替代。
 
-P5狼王/白狼王/骑士/守墓人已按独立卡与通路验收注册；当前已验证23项可运行，41计划项仍拒绝。新自爆选择/API边界见[白狼王契约](white-wolf-king.md)。
+P5狼王/白狼王/骑士/守墓人已按独立卡与通路验收注册；当前23项verified与4项implemented可在各自有限组合运行，37项planned仍拒绝。新自爆选择/API边界见[白狼王契约](white-wolf-king.md)。
 
 骑士的三种离散发言窗口/default及[]关闭见[接入契约](knight.md)。公开six/twelve_player_knight板子与games可加载，普通/觉醒分别登记，额外参数与未注册角色仍拒绝。
 
@@ -96,3 +96,7 @@ P7通灵师按[规则与契约](psychic.md)启用，roles.psychic支持inspectio
 `mechanisms.disclosure.deathRevealPolicy`为`awa_hidden_v1`（兼容默认）或`netease_2017_open_v1`；`mechanisms.lastWords.policy`为`awa_initial_wave_v1`（兼容默认）或`netease_2017_day_and_first_night_v1`。省略机制对象或填空对象均归一化为默认，未知字段/版本拒绝；反向转换和strict Tape保留有效配置。明牌只公开实际死亡者当前身份牌，不公开技能、资源或阵营；遗言按逐人死亡时间及夜源链分类，默认首波限制保留。详见[契约](contracts/public-death-policies.md)。
 
 `configs.example/boards/netease_2017_open_clause_6_v1.json`使用2017页六人角色构成与屠城目标，示范局部翻牌/遗言条款；其它流程仍为AWA，不是完整平台镜像。不会覆盖本地configs。
+
+## P9a 盗贼有限来源配置
+
+`roles.thief.dealPolicy`唯一接受`lui_meme_thief_two_extra_villagers_v1`（省略等价默认）。至多一Thief、City、仅七基础角色组合，原配置至少两Wolf/两非ThiefGood；其它角色或event pack组合显式拒绝。roleSetups仍N张，初始化另加两普通Villager，一次随机发N留2，不保证Thief或God上场。fixed/Tape必须完整N+2且原多重集一致，两Wolf底牌必选slot0/1，其它可null保留Thief。无fallback/任意底牌/保证神职参数。公开例子`configs.example/boards/lui_meme_thief_{6,12}_v1.json`；实际schema、实例、native库存、首夜动作与Tape边界见[来源卡](rules/lui-meme-thief-v1.md)/[验收](reviews/p9-thief.md)。

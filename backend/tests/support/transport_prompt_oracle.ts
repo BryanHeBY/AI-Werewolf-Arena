@@ -9,6 +9,7 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  thief: ["盗贼首次身份选择", "Thief initial identity choice"],
   wall_notes: ["匿名墙纸条", "Anonymous wall note"],
   wolf_discussion: ["狼人交流", "Wolf discussion"],
   wolf_vote: ["狼人刀人投票", "Wolf kill vote"],
@@ -278,6 +279,7 @@ export function assertTransportEvents(
       throw new Error("fixture_bear_private_or_invalid_signal");
     if (
       type === "god_private_game_info" ||
+      type === "thief_initial_deal" ||
       type === "mechanical_poison_reflected" ||
       type === "merchant_trade_resolved" ||
       type === "hybrid_affiliation_resolved" ||
@@ -287,6 +289,7 @@ export function assertTransportEvents(
       throw new Error("fixture_god_information_exposed");
     if (
       [
+        "thief_identity_chosen",
         "merchant_trade_committed",
         "merchant_trade_skipped",
         "lucky_ability_skipped",

@@ -1,3 +1,4 @@
+import { THIEF_ROLE_PROFILE } from "./thief/profile";
 /** 文件说明：集中注册角色 profile，并提供阵营、提示词和运行时适配能力。 */
 import { RoleComponent } from "../../../core/domain/components/role";
 import { Camp, Role } from "../../../core/domain/model";
@@ -35,6 +36,7 @@ import { DEBATER_ROLE_PROFILE } from "./debater/profile";
 import { CUPID_ROLE_PROFILE } from "./cupid/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
+  THIEF_ROLE_PROFILE,
   WOLF_ROLE_PROFILE,
   WOLF_KING_ROLE_PROFILE,
   WHITE_WOLF_KING_ROLE_PROFILE,

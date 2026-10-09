@@ -1,3 +1,4 @@
+import { inheritThiefDeadlineRequest } from "../../../game/mechanisms/roles/thief/setup";
 import { inheritWallDeadlineRequest } from "../../../game/mechanisms/events/wall_notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
@@ -68,6 +69,7 @@ export class LlmTurnOrchestrator {
       deadlineAtMs: Math.min(request.deadlineAtMs ?? Infinity, startedAt + this.options.timeoutMs),
     };
     inheritWallDeadlineRequest(request, bounded);
+    inheritThiefDeadlineRequest(request, bounded);
     const controller = new AbortController();
     this.controllers.add(controller);
     const timer = setTimeout(

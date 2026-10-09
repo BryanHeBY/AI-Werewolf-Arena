@@ -36,6 +36,10 @@ export interface PlayerObservation {
   deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];
   ownState: {
+    thief?: import("../../../game/mechanisms/roles/thief/state").ThiefState & {
+      required?: boolean;
+      cards?: Array<{ slot: 0 | 1; role: Role }>;
+    };
     wallNote?: import("../../../core/domain/components/wall_note").WallNoteComponent & {
       effectiveRemaining: 0 | 1;
     };

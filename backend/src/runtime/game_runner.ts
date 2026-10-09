@@ -1,3 +1,5 @@
+import { initialThiefDeal } from "../game/mechanisms/roles/thief/deal";
+import { inheritThiefDeadlineRequest } from "../game/mechanisms/roles/thief/setup";
 import { inheritWallDeadlineRequest } from "../game/mechanisms/events/wall_notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
 import { formatErrorDiagnostic } from "../utils/error_diagnostic";
@@ -54,6 +56,7 @@ class DeadlineAwareActionProvider implements ActionProvider {
   getAction(request: ActionRequest): Promise<ToolCall | null> {
     const timed = { ...request, deadlineAtMs: this.deadlineAtMs };
     inheritWallDeadlineRequest(request, timed);
+    inheritThiefDeadlineRequest(request, timed);
     return this.delegate.getAction(timed);
   }
 }
@@ -346,12 +349,13 @@ function selectPlayerProfiles(
 }
 
 function replayPlayers(world: World) {
-  return world.entityIds().map((id) => {
+  const initial = initialThiefDeal(world);
+  return world.entityIds().map((id, index) => {
     const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
     return {
       player_id: id,
-      role: role?.role ?? "unknown",
-      camp: role?.camp ?? "unknown",
+      role: initial?.[index] ?? role?.role ?? "unknown",
+      camp: initial ? (initial[index] === "wolf" ? "wolf" : "good") : (role?.camp ?? "unknown"),
       alive: world.getComponent<AliveComponent>(id, COMPONENT.Alive)?.alive === true,
       name: world.getComponent<IdentityComponent>(id, COMPONENT.Identity)?.name,
     };

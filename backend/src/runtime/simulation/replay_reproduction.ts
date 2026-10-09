@@ -1,3 +1,4 @@
+import { initialThiefDeal } from "../../game/mechanisms/roles/thief/deal";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
 import { readFile } from "node:fs/promises";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
@@ -276,12 +277,20 @@ export async function replayReproduction(
     random,
     locale: record.metadata.locale,
     ...(record.metadata.dealMode === "fixed"
-      ? { fixedRoles: record.metadata.players.map((player) => player.role) }
+      ? {
+          fixedRoles:
+            record.metadata.initialDeal ?? record.metadata.players.map((player) => player.role),
+        }
       : {}),
     playerNames: Object.fromEntries(
       record.metadata.players.map((player) => [String(player.id), player.name]),
     ),
   });
+  requireMatch(
+    stableJson(initialThiefDeal(context.world) ?? null) ===
+      stableJson(record.metadata.initialDeal ?? null),
+    "reproduction_initial_deal_mismatch",
+  );
   const initial = captureCheckpoint(
     context.world,
     context.phaseManager.getSnapshot(),
@@ -381,11 +390,13 @@ export async function replayReproduction(
             0,
             true,
             0,
-          ).players.map((player) => ({
+          ).players.map((player, index) => ({
             player_id: player.id,
             name: player.name,
-            role: player.role,
-            camp: player.camp,
+            role: initialThiefDeal(context.world)?.[index] ?? player.role,
+            camp: initialThiefDeal(context.world)
+              ? record.metadata.players[index]!.camp
+              : player.camp,
             alive: player.alive,
           })),
         });

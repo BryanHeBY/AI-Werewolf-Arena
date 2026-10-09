@@ -1,3 +1,4 @@
+import { THIEF_EVENT_TYPES, readThiefEventFact } from "@ai-werewolf-arena/game-text";
 import {
   WALL_EVENT_TYPES,
   readWallEventFact,
@@ -39,6 +40,11 @@ export function buildAgentVisibleEvent(
   if (
     (WALL_EVENT_TYPES as readonly string[]).includes(event.type) &&
     !readWallEventFact(event.type, event.payload)
+  )
+    return null;
+  if (
+    (THIEF_EVENT_TYPES as readonly string[]).includes(event.type) &&
+    !readThiefEventFact(event.type, event.payload)
   )
     return null;
   const visibility = getDefaultAgentEventVisibilityRegistry();

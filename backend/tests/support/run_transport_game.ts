@@ -24,6 +24,7 @@ import type { ReplayManifest, ReplayPlayerView } from "../../src/recording/contr
 export interface TransportGameScenario {
   board: ResolvedBoardDefinition;
   seed: string;
+  eventRoles?: readonly Role[];
   roles: readonly Role[];
   turns: ReadonlyMap<number, PlannedTurn[]>;
   promptAssertions?: (
@@ -50,6 +51,7 @@ export async function runTransportGame(
     plans.set(actorId, {
       actorId,
       role: scenario.roles[actorId - 1],
+      eventRole: scenario.eventRoles?.[actorId - 1],
       locale,
       turns,
       expectedName: `Seat ${actorId}`,
@@ -102,7 +104,11 @@ export async function runTransportGame(
                   typeof message.content === "string" &&
                   message.content.startsWith('{"event":')
                 ) {
-                  assertTransportEvents(plan.role, [JSON.parse(message.content).event], actor);
+                  assertTransportEvents(
+                    plan.eventRole ?? plan.role,
+                    [JSON.parse(message.content).event],
+                    actor,
+                  );
                 }
               const attempt = attempts.get(actor) ?? 0,
                 invalid = turn.invalidActions?.[attempt];
@@ -250,7 +256,7 @@ export async function runTransportGame(
             : undefined,
         )
         .filter((entry) => entry !== undefined);
-      assertTransportEvents(plan.role, events, actor);
+      assertTransportEvents(plan.eventRole ?? plan.role, events, actor);
       const rounds = view.timeline.filter((entry) => entry.kind === "turn");
       expect(rounds).toHaveLength(plan.turns.length);
       for (const round of rounds)

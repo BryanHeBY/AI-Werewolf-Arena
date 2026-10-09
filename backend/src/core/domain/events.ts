@@ -1,4 +1,4 @@
-import type { ActionWindow, Camp, EntityId, Phase, PotionType } from "./identity";
+import type { ActionWindow, Camp, EntityId, Phase, PotionType, Role } from "./identity";
 import type { InspectionResult, RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { GameResult } from "./results";
 
@@ -41,6 +41,19 @@ export interface EventPayloadMap {
   wall_notes_started: { day: 1; eventId: "awa_wall_notes_v1" };
   wall_notes_published: { day: 1; eventId: "awa_wall_notes_v1"; texts: string[] };
   wall_notes_canceled: { day: 1; eventId: "awa_wall_notes_v1"; reason: "scope_changed" };
+  thief_initial_deal: {
+    policy: "lui_meme_thief_two_extra_villagers_v1";
+    roles: Role[];
+    boardSize: number;
+  };
+  thief_identity_chosen: {
+    policy: "lui_meme_thief_two_extra_villagers_v1";
+    actorId: EntityId;
+    day: 1;
+    slot: 0 | 1 | null;
+    role: Role;
+    camp: Camp;
+  };
   wall_note_changed: {
     actorId: number;
     day: 1;

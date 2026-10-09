@@ -201,9 +201,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "thief",
     names: { "zh-CN": "盗贼", en: "Thief" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/lui-meme-thief-v1.md",
     mechanismSummary: "额外底牌、初始身份选择",
   },
   {

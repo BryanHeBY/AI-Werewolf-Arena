@@ -1,5 +1,7 @@
 /** Stable rule failures; human messages belong to game-text. */
 export enum RuleError {
+  ThiefUnavailable = "thief_unavailable",
+  ThiefChoice = "thief_choice",
   WallNoteUnavailable = "wall_note_unavailable",
   WallNoteText = "wall_note_text",
   BadgeChoiceUnavailable = "badge_choice_unavailable",

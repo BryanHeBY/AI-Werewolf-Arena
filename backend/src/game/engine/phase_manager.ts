@@ -1,3 +1,11 @@
+import {
+  hasActiveThiefSetup,
+  hasActiveThiefNight,
+  hasThiefNightCommit,
+  thiefSetupReady,
+  initialThiefDeal,
+} from "../mechanisms/roles/thief/deal";
+import { ThiefSetupWindow } from "../mechanisms/roles/thief/setup";
 import { WallNotesWindow } from "../mechanisms/events/wall_notes/window";
 import { hasActiveWall } from "../mechanisms/events/wall_notes/authority";
 import { GameActionRequestFactory } from "./action_request_factory";
@@ -131,6 +139,17 @@ export class PhaseManager {
         }),
       },
     });
+    const initialDeal = initialThiefDeal(this.world);
+    if (initialDeal)
+      this.events.push({
+        timestamp: Date.now(),
+        type: "thief_initial_deal",
+        payload: {
+          policy: "lui_meme_thief_two_extra_villagers_v1",
+          roles: [...initialDeal],
+          boardSize: this.config.boardSize,
+        },
+      });
     // 初始阶段也写入上帝公开广播，确保首轮请求前玩家可见当前阶段。
     this.events.push({
       timestamp: Date.now(),
@@ -187,6 +206,10 @@ export class PhaseManager {
     actionProvider: ActionProvider,
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
+    if (hasActiveThiefSetup(this.world) || hasActiveThiefNight(this.world))
+      throw new Error("thief_setup_reentry");
+    if (!this.state.gameOver && hasThiefNightCommit(this.world, this.state.day))
+      throw new Error("thief_cycle_reentry_after_night");
     if (hasActiveWall(this.world)) throw new Error("wall_window_reentry");
     if (this.state.gameOver) {
       return this.getSnapshot();
@@ -209,6 +232,15 @@ export class PhaseManager {
       this.state.phase === Phase.Night &&
       !this.state.gameOver &&
       this.phaseRevision === nightRevision;
+    if (!thiefSetupReady(this.world)) {
+      const ready = await new ThiefSetupWindow(this.world, this.toolGateway, this.events).execute(
+        this.config,
+        actionProvider,
+        nightDay,
+        nightIsCurrent,
+      );
+      if (!ready || !nightIsCurrent()) return this.getSnapshot();
+    }
     const bearFrame = BearNightFrame.capture(this.world, nightDay);
     const night = await this.nightPipeline.execute(this.config, actionProvider, this.state.day, {
       previousExile: this.previousExile,

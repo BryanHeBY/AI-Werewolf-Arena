@@ -1,3 +1,4 @@
+import { thiefEventLabel } from "@ai-werewolf-arena/game-text";
 import { readReplayEvent } from "./replay-event-reader";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import {
@@ -41,6 +42,8 @@ export function eventLabel(
   if (deathAbility !== null) return deathAbility;
   const awakened = awakenedEventLabel(event.type, p, locale);
   if (awakened !== null) return awakened;
+  const thief = thiefEventLabel(event.type, p, locale);
+  if (thief !== null) return thief;
   const wall = wallEventLabel(event.type, p, locale);
   if (wall !== null) return wall;
   const debate = debateEventLabel(event.type, p, locale);

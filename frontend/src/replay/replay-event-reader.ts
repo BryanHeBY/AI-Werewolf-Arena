@@ -1,3 +1,4 @@
+import { THIEF_EVENT_TYPES, readThiefEventFact } from "@ai-werewolf-arena/game-text";
 import {
   WALL_EVENT_TYPES,
   readWallEventFact,
@@ -15,6 +16,7 @@ import {
 import { isRoleId, type RoleId, type SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
 
 export type ReplayEffect =
+  | { kind: "identity_changed"; playerId: number; role: RoleId; camp: string }
   | { kind: "role_revealed"; playerId: number; role: RoleId }
   | { kind: "deaths"; playerIds: number[] }
   | { kind: "sheriff_elected"; playerId: number }
@@ -29,6 +31,7 @@ export interface ReadReplayEvent {
 
 // Required references are event-specific. Unknown extension fields never imply player membership.
 const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
+  thief_identity_chosen: ["actorId"],
   wall_note_changed: ["actorId"],
   debater_revealed: ["actorId"],
   debate_started: ["actorId", "targetId"],
@@ -131,6 +134,7 @@ const NULLABLE_TARGETS = new Set([
 const VOTES = new Set(["wolf_kill_vote_cast", "guard_applied", "sheriff_vote_cast", "vote_cast"]);
 const SUMMARIES = new Set(["sheriff_vote_summary", "vote_summary"]);
 const NO_IDS = new Set([
+  "thief_initial_deal",
   "wall_notes_started",
   "wall_notes_published",
   "wall_notes_canceled",
@@ -187,6 +191,7 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if ((THIEF_EVENT_TYPES as readonly string[]).includes(type)) return !!readThiefEventFact(type, p);
   if ((WALL_EVENT_TYPES as readonly string[]).includes(type))
     return readWallEventFact(type, p) !== null;
   if ((DEBATE_EVENT_TYPES as readonly string[]).includes(type))
@@ -387,6 +392,15 @@ export function readReplayEvent(
     if (safe.type === "knight_duel" && p.result !== "wolf" && p.result !== "not_wolf") return null;
     if (safe.type === "phase_changed" && typeof p.phase !== "string") return null;
     const effects: ReplayEffect[] = [];
+    if (safe.type === "thief_identity_chosen" && isRoleId(p.role)) {
+      if (safe.day !== 1 || safe.phase !== "night") return null;
+      effects.push({
+        kind: "identity_changed",
+        playerId: p.actorId as number,
+        role: p.role,
+        camp: p.camp as string,
+      });
+    }
     if (safe.type === "debater_revealed")
       effects.push({ kind: "role_revealed", playerId: p.actorId as number, role: "debater" });
     if (safe.type === "player_role_revealed" && isRoleId(p.role)) {

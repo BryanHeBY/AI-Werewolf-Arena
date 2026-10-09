@@ -62,6 +62,26 @@ export const zhCN = Object.freeze({
     "你的伴侣是{partner}号，仅互认编号，不知底牌或阵营。殉情禁死亡技能，保留原生能力。",
   "prompt.status.lovers_vote": "此来源策略禁止情侣互投放逐（包括PK）。",
 
+  "role.thief.brief": "首夜查看两张额外底牌，可换一张；两张都是狼人时必须换牌。",
+  "role.thief.state":
+    "你是开局盗贼，初始为好人民边。仅第一夜身份启用前查看本人两底牌：两张普通狼人必须选slot0或slot1，其它组合可不调用工具保留盗贼或选任一slot。只给本人底牌，不给他人身份或已发牌数量。换牌后真实角色、阵营、胜利及原生库存更新，同夜按新角色行动；原编号/生命/警徽/票权/会话历史保留。整局一次，不复制/赠予技能。当前本人机会：{state}。",
+  "action.choose_thief_card.hint":
+    "选择工具choose_thief_card的整数slot为0或1，代表本人所见底牌槽，不能填玩家编号/null。两底皆狼必须选择且禁止回退代选，其它组合可无动作保留。",
+  "stage.thief": "盗贼首次身份选择",
+  "replay.stage.thief_initial_deal": "上帝初始牌池",
+  "replay.stage.thief_identity_chosen": "盗贼身份选择",
+  "error.thief_unavailable": "盗贼首次身份或底牌授权已关闭/撤销，当前请求不能选择。",
+  "error.thief_choice": "请只提交整数slot0或1，不能使用玩家编号、null或额外字段。",
+  "prompt.board.thief":
+    "本局有盗贼：上述为N+2张候选牌，实际只发给N名玩家，两底牌不上场；实际角色数量未知，不能把候选数量当作在场数量。",
+  "prompt.status.thief": "本人盗贼机会与当前授权底牌（只有本人可见）：{state}。",
+  "console.thief.deal": "上帝开局完整N+2牌序：{roles}；实际玩家{size}名。",
+  "console.thief.choice": "盗贼本人{actor}号选择底牌槽{slot}，当前真实身份{role}、阵营{camp}。",
+  "console.thief.keep": "盗贼本人{actor}号保留盗贼身份，首次机会已关闭。",
+  "console.thief": "盗贼身份事实",
+  "turn.thief.required": "两底牌皆为狼人，必须提交一次choose_thief_card(slot0或1)，禁止代选。",
+  "turn.thief.optional":
+    "可以提交一次choose_thief_card(slot0或1)换牌，或不调用工具保留盗贼；禁止代选。",
   "role.cupid.brief": "首夜连接两名情侣；一人死亡另一人殉情，殉情禁技能；按具名来源策略判胜。",
   "role.cupid.state":
     "你的底牌是【丘比特】，真实阵营为好人神职。首夜阶段80必须以choose_lovers选择两名不同实际活人，可包括自己。null、重复、死人均无效，不可跳过或后夜补选。提交后不能更换；你只知道所选编号，不知道底牌、阵营或秘密胜利分组。情侣只互认编号，保留原技能、查验标签及原狼队权限。一人死亡使另一人殉情；殉情禁枪与狼美人死亡牵连，保护不能阻挡。双方同波独立致死都追加殉情禁技能，属于显式工程补全。已付费当夜梦关系仍按夜死条件牵连。死亡链全部结束才判胜。",
@@ -658,7 +678,7 @@ export const zhCN = Object.freeze({
   "ui.day": "第{day}天",
   "ui.winner": "胜利阵营：{camp}",
   "prompt.system.identity":
-    "你是狼人杀引擎中的单个玩家智能体。你的编号是{actor}号，真实身份是{role}。当你看到“[行动提示]”时，说明你可以开始行动了。",
+    "你是狼人杀引擎中的单个玩家智能体。你的编号是{actor}号。本会话建立时，你的真实身份是{role}。后续每轮当前身份/阵营/原生库存以引擎状态为准，旧身份介绍只作历史，不授权旧技能。当你看到“[行动提示]”时，说明你可以开始行动了。",
   "prompt.system.goal":
     "你的唯一目标是帮助你所在阵营赢得本局。请基于自己可见的信息自由判断、博弈、试探和调整策略，不要为了迎合多数意见而放弃独立判断。",
   "prompt.system.language": "你必须使用中文进行思考和表达。",

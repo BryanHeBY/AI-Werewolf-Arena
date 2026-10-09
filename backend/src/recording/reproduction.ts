@@ -91,6 +91,7 @@ export interface ReproductionMetadata {
   locale: "zh-CN" | "en";
   maxDays: number;
   dealMode: "random" | "fixed";
+  initialDeal?: Role[];
   players: Array<{
     id: number;
     name: string;
@@ -121,6 +122,13 @@ export interface RecordedPlayerState {
   victory: { affiliations: VictoryAffiliation[] };
 }
 export interface RecordedCheckpoint {
+  thiefSetup?: {
+    policy: "lui_meme_thief_two_extra_villagers_v1";
+    status: "pending" | "complete" | "cancelled" | "failed";
+    hands: Array<{ actorId: number; cardId: string; role: Role }>;
+    reserve: [{ cardId: string; role: Role }, { cardId: string; role: Role }];
+    selection: { actorId: number; slot: 0 | 1 | null; role: Role } | null;
+  };
   cycle: number;
   complete: boolean;
   snapshot: RuntimeSnapshot;
@@ -344,6 +352,23 @@ const playerSchema = z
     (player) => !player.wallNote || player.wallNote.instanceId === `wall:1:${player.id}`,
     "reproduction_wall_owner_invalid",
   );
+const thiefCardSchema = z.strictObject({
+  cardId: z.string().regex(/^deal:[0-9]+$/),
+  role: z.enum(Role),
+});
+const thiefSetupSchema = z.strictObject({
+  policy: z.literal("lui_meme_thief_two_extra_villagers_v1"),
+  status: z.enum(["pending", "complete", "cancelled", "failed"]),
+  hands: z.array(thiefCardSchema.extend({ actorId: positive })),
+  reserve: z.tuple([thiefCardSchema, thiefCardSchema]),
+  selection: z
+    .strictObject({
+      actorId: positive,
+      slot: z.union([z.literal(0), z.literal(1), z.null()]),
+      role: z.enum(Role),
+    })
+    .nullable(),
+});
 const schema = z.strictObject({
   schemaVersion: z.literal(REPRODUCTION_SCHEMA_VERSION),
   finalized: z.boolean(),
@@ -369,6 +394,7 @@ const schema = z.strictObject({
     locale: z.enum(["zh-CN", "en"]),
     maxDays: positive,
     dealMode: z.enum(["random", "fixed"]),
+    initialDeal: z.array(z.enum(Role)).min(3).max(130).optional(),
     players: z
       .array(
         z.strictObject({
@@ -417,6 +443,7 @@ const schema = z.strictObject({
           cycle: nonnegative,
           complete: z.boolean(),
           snapshot: snapshotSchema,
+          thiefSetup: thiefSetupSchema.optional(),
           players: z.array(playerSchema),
           eventCount: nonnegative,
           failure: z
@@ -498,7 +525,9 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
     throw new Error("reproduction_schema_not_supported");
   const parsed = schema.safeParse(value);
   if (!parsed.success) throw new Error("reproduction_record_invalid");
-  return parsed.data as unknown as ReproductionRecord;
+  const result = parsed.data as unknown as ReproductionRecord;
+  validateThiefRecord(result);
+  return result;
 }
 
 export function normalizedRequest(request: ActionRequest): Omit<ActionRequest, "deadlineAtMs"> {
@@ -589,5 +618,113 @@ export class ReproductionTrace {
     if (input && this.decisions.some((entry) => entry.outcome.kind === "pending"))
       throw new Error("reproduction_decisions_pending");
     return parseReproductionRecord(record);
+  }
+}
+
+/** New Thief archives carry the original full deal; old ordinary archives keep their exact shape. */
+function validateThiefRecord(record: ReproductionRecord): void {
+  const m = record.metadata,
+    hasThief = m.normalizedBoard.roleSetups.some((row) => row.role === Role.Thief && row.count > 0);
+  const fail = () => {
+    throw new Error("reproduction_thief_state_invalid");
+  };
+  if (!hasThief) {
+    if (m.initialDeal !== undefined || record.checkpoints.some((c) => c.thiefSetup !== undefined))
+      fail();
+    return;
+  }
+  const initial = m.initialDeal,
+    n = m.normalizedBoard.boardSize;
+  if (!initial || initial.length !== n + 2 || m.players.length !== n) return fail();
+  const deck = m.normalizedBoard.roleSetups.flatMap((row) => Array<Role>(row.count).fill(row.role));
+  deck.push(Role.Villager, Role.Villager);
+  if (
+    [...initial].sort().join(",") !== deck.sort().join(",") ||
+    initial.filter((role) => role === Role.Thief).length !== 1
+  )
+    fail();
+  const supported = [
+    Role.Thief,
+    Role.Wolf,
+    Role.Villager,
+    Role.Seer,
+    Role.Witch,
+    Role.Hunter,
+    Role.Guard,
+    Role.Idiot,
+  ];
+  if (
+    initial.some((role) => !supported.includes(role)) ||
+    m.players.some(
+      (p, i) => p.role !== initial[i] || p.camp !== (p.role === Role.Wolf ? Camp.Wolf : Camp.Good),
+    )
+  )
+    fail();
+  const actorIndex = initial.slice(0, n).indexOf(Role.Thief),
+    actorId = actorIndex < 0 ? null : m.players[actorIndex]!.id;
+  const originalIds = Array.from({ length: n + 2 }, (_, i) => `deal:${i}`);
+  let previousStatus: string | undefined, previousSelection: string | undefined;
+  for (const checkpoint of record.checkpoints) {
+    const state = checkpoint.thiefSetup;
+    if (!state || state.hands.length !== n || state.reserve.length !== 2) return fail();
+    const cards = [...state.hands, ...state.reserve];
+    if (
+      new Set(cards.map((card) => card.cardId)).size !== n + 2 ||
+      cards.some(
+        (card) =>
+          !originalIds.includes(card.cardId) ||
+          initial[originalIds.indexOf(card.cardId)] !== card.role,
+      )
+    )
+      fail();
+    if (
+      new Set(state.hands.map((hand) => hand.actorId)).size !== n ||
+      state.hands.some((hand) => !m.players.some((p) => p.id === hand.actorId))
+    )
+      fail();
+    const selection = state.selection;
+    if (checkpoint.cycle > 0 && state.status === "pending") fail();
+    if (checkpoint.cycle === 0 && (state.status !== "pending" || selection !== null)) fail();
+    if (
+      previousStatus &&
+      previousStatus !== "pending" &&
+      (state.status !== previousStatus || JSON.stringify(selection) !== previousSelection)
+    )
+      fail();
+    previousStatus = state.status;
+    previousSelection = JSON.stringify(selection);
+    if (state.status !== "complete" && selection !== null) fail();
+    if (state.status === "complete" && (actorId === null) !== (selection === null)) fail();
+    if (
+      selection &&
+      (selection.actorId !== actorId ||
+        (selection.slot === null
+          ? selection.role !== Role.Thief
+          : selection.role !== initial[n + selection.slot]))
+    )
+      fail();
+    if (selection?.slot === null && initial[n] === Role.Wolf && initial[n + 1] === Role.Wolf)
+      fail();
+    for (let i = 0; i < n; i++) {
+      const player = m.players[i]!,
+        hand = state.hands.find((h) => h.actorId === player.id),
+        current = checkpoint.players.find((p) => p.id === player.id);
+      const expected =
+        i === actorIndex && selection?.slot !== undefined && selection.slot !== null
+          ? `deal:${n + selection.slot}`
+          : `deal:${i}`;
+      if (
+        !hand ||
+        !current ||
+        hand.cardId !== expected ||
+        current.role !== hand.role ||
+        current.camp !== (hand.role === Role.Wolf ? Camp.Wolf : Camp.Good)
+      )
+        fail();
+    }
+    for (const slot of [0, 1] as const) {
+      const expected = selection?.slot === slot ? `deal:${actorIndex}` : `deal:${n + slot}`;
+      if (state.reserve[slot].cardId !== expected) fail();
+    }
   }
 }

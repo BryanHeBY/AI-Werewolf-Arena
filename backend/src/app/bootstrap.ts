@@ -1,3 +1,4 @@
+import { installThiefDeal } from "../game/mechanisms/roles/thief/deal";
 import { supportsWallRoles } from "../game/mechanisms/events/wall_notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
 import { createAliveComponent } from "../core/domain/components/alive";
@@ -9,7 +10,7 @@ import { createStatusMarksComponent } from "../core/domain/components/status_mar
 import { createVotingRightComponent } from "../core/domain/components/voting_right";
 import { createVictoryComponent } from "../core/domain/components/victory";
 import { createIdentityComponent } from "../core/domain/entities/player";
-import { BoardConfig, EntityId, Role, WinCondition } from "../core/domain/model";
+import { BoardConfig, EntityId, Role, Camp, WinCondition } from "../core/domain/model";
 import {
   getDefaultWinConditionRegistry,
   getDefaultRoleCatalog,
@@ -130,6 +131,8 @@ function createPlayers(
     ids.push(entityId);
   }
 
+  if (config.roleSetups.some((row) => row.role === Role.Thief && row.count === 1))
+    installThiefDeal(world, roles, ids);
   return ids;
 }
 
@@ -177,6 +180,23 @@ function buildRoleDeck(
     throw new Error(`Role setup mismatch: boardSize=${config.boardSize}, roles=${deck.length}`);
   }
 
+  if (
+    config.thief &&
+    (!counts.has(Role.Thief) || config.thief.policy !== "lui_meme_thief_two_extra_villagers_v1")
+  )
+    throw new Error("thief_policy_invalid");
+  if (counts.has(Role.Thief)) {
+    if (
+      (counts.get(Role.Wolf) ?? 0) < 2 ||
+      [...counts]
+        .filter(
+          ([role]) => role !== Role.Thief && getDefaultRoleCatalog().getCamp(role) === Camp.Good,
+        )
+        .reduce((n, [, count]) => n + count, 0) < 2
+    )
+      throw new Error("thief_finite_composition_required");
+    deck.push(Role.Villager, Role.Villager);
+  }
   if (fixedRoles) {
     if (
       fixedRoles.length !== deck.length ||

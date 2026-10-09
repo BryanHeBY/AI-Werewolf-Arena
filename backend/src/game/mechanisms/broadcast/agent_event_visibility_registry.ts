@@ -47,6 +47,7 @@ const PUBLIC_EVENT_TYPES = new Set([
 const WOLVES_ONLY_EVENT_TYPES = new Set<string>(WOLF_TEAM_EVENT_TYPES);
 
 const ACTOR_ONLY_EVENT_TYPES = new Set([
+  "thief_identity_chosen",
   "ability_changed",
   "black_market_trade_skipped",
   "black_market_trade_committed",

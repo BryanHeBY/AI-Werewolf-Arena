@@ -1,3 +1,4 @@
+import { inheritThiefDeadlineRequest } from "../../../game/mechanisms/roles/thief/setup";
 import { inheritWallDeadlineRequest } from "../../../game/mechanisms/events/wall_notes/authority";
 import { allowsActionFallback, resolveTurnConstraints } from "../player/turn_constraints";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
@@ -163,6 +164,7 @@ export class AcpActionProvider implements ActionProvider {
       ),
     };
     inheritWallDeadlineRequest(request, bounded);
+    inheritThiefDeadlineRequest(request, bounded);
     const controller = new AbortController();
     this.controllers.set(request.actorId, controller);
     const timer = setTimeout(

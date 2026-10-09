@@ -33,6 +33,7 @@ export interface PlannedTurn {
 export interface ActorTransportPlan {
   actorId: number;
   role: Role;
+  eventRole?: Role;
   locale: "zh-CN" | "en";
   turns: PlannedTurn[];
   expectedName?: string;

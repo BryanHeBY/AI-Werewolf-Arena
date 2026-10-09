@@ -1,3 +1,7 @@
+import type { RoleId } from "@ai-werewolf-arena/game-catalog";
+import { readThiefEventFact } from "./thief";
+export { readThiefEventFact, THIEF_EVENT_TYPES } from "./thief";
+export { copyEventData } from "./event-data";
 import { readWallEventFact } from "./wall-notes";
 export {
   WALL_EVENT_TYPES,
@@ -614,5 +618,22 @@ export function wallEventLabel(type: string, payload: unknown, locale: Locale): 
     remaining: p.remaining,
     expired: String(p.expired),
     body: p.text ?? "",
+  });
+}
+
+export function thiefEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+  const p = readThiefEventFact(type, payload);
+  if (!p) return null;
+  if (type === "thief_initial_deal")
+    return text(locale, "console.thief.deal", {
+      roles: JSON.stringify((p.roles as RoleId[]).map((role) => roleName(role, locale))),
+      size: p.boardSize as number,
+    });
+  if (p.slot === null) return text(locale, "console.thief.keep", { actor: p.actorId as number });
+  return text(locale, "console.thief.choice", {
+    actor: p.actorId as number,
+    slot: p.slot as number,
+    role: roleName(p.role as RoleId, locale),
+    camp: term("camp_team", p.camp as "good" | "wolf", locale),
   });
 }

@@ -1,3 +1,9 @@
+export const choose_thief_card: ObservedToolHandler = ({ ownState, style }) => {
+  const state = ownState.thief;
+  if (!state || state.remaining !== 1 || !state.cards?.length) return null;
+  if (style === "conservative" && !state.required) return null;
+  return { name: "choose_thief_card", args: { slot: state.cards[0]!.slot } };
+};
 import type { ObservedToolHandler } from "./context";
 import { PotionType } from "../../../../core";
 

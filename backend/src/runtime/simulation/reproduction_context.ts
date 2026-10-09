@@ -1,3 +1,4 @@
+import { projectThiefSetup, initialThiefDeal } from "../../game/mechanisms/roles/thief/deal";
 import { projectWallNote } from "../../game/mechanisms/events/wall_notes/authority";
 import path from "node:path";
 import { readdir, readFile } from "node:fs/promises";
@@ -83,7 +84,9 @@ export function captureCheckpoint(
   eventCount: number,
   failure?: unknown,
 ): RecordedCheckpoint {
+  const thiefSetup = projectThiefSetup(world);
   return {
+    ...(thiefSetup ? { thiefSetup } : {}),
     cycle,
     complete,
     snapshot,
@@ -173,6 +176,9 @@ export function beginGameReproduction(
     locale: options.locale,
     maxDays: options.maxDays,
     dealMode: context.dealMode,
+    ...(initialThiefDeal(context.world)
+      ? { initialDeal: [...initialThiefDeal(context.world)!] }
+      : {}),
     ruleset: RULESET,
     random: context.random.metadata,
     players: initial.players.map((player) => {

@@ -1,3 +1,8 @@
+import {
+  hasActiveThiefSetup,
+  thiefSetupReady,
+  openThiefNight,
+} from "../../mechanisms/roles/thief/deal";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { StatusMarksComponent } from "../../../core/domain/components/status_marks";
@@ -102,139 +107,148 @@ export class NightPipeline {
     day: number,
     options: NightPipelineOptions = {},
   ): Promise<NightPipelineResult> {
+    if (hasActiveThiefSetup(this.world) || !thiefSetupReady(this.world))
+      throw new Error("thief_setup_before_night_required");
     const isCurrent = options.isCurrent ?? (() => true);
     if (!isCurrent()) return { interrupted: true };
-    if (hasFoxInspectionNightCommit(this.world, day))
-      throw new Error("fox_inspection_night_reentry_after_commit");
-    if (hasDreamNightCommit(this.world, day)) throw new Error("dream_night_reentry_after_commit");
-    if (hasRoleInspectionNightCommit(this.world, day))
-      throw new Error("role_inspection_night_reentry_after_commit");
-    if (hasMechanicalNightCommit(this.world, day))
-      throw new Error("mechanical_night_reentry_after_commit");
-    if (
-      hasBlackMarketNightCommit(this.world, day) ||
-      hasRecipientNightCommit(this.world, day, "black_market")
-    )
-      throw new Error("black_market_night_reentry_after_commit");
-    if (hasLuckyNightCommit(this.world, day)) throw new Error("lucky_night_reentry_after_commit");
-    if (hasMerchantNightCommit(this.world, day))
-      throw new Error("merchant_night_reentry_after_commit");
-    if (hasCupidNightCommit(this.world, day)) throw new Error("cupid_night_reentry_after_commit");
-    if (hasHybridNightCommit(this.world, day)) throw new Error("hybrid_night_reentry_after_commit");
-    if (hasAwakenedNightCommit(this.world, day))
-      throw new Error("awakened_night_reentry_after_commit");
-    if (hasDeathAbilityActivationCommit(this.world, day))
-      throw new Error("death_ability_night_reentry_after_commit");
-    safeRecordLogicOp({
-      scope: "phase_pipeline",
-      op: "night_pipeline_start",
-      phase: Phase.Night,
-      status: "ok",
-      input: {
-        board_size: config.boardSize,
-      },
-    });
-
-    const stageState: NightStageState = {
-      wolfChatOrder: [],
-      endedWolves: new Set<EntityId>(),
-      wolfVotes: {},
-      wolfTarget: null,
-      seerChecks: [],
-      dreamLinks: [],
-      poisonClaims: [],
-      guardClaims: [],
-      merchantBacklashes: [],
-      blackMarketBacklashes: [],
-      mechanicalEffects: { shields: [], attacks: [], failures: [] },
-      awakenedEffects: { shields: [], attacks: [] },
-    };
-
-    const requests = new GameActionRequestFactory(this.world, this.events, day);
-    const stageCtx = {
-      isCurrent,
-      previousExile: options.previousExile ? structuredClone(options.previousExile) : null,
-      world: this.world,
-      roleCatalog: this.stageRegistry.roleCatalog,
-      toolGateway: this.toolGateway,
-      events: this.events,
-      actionProvider,
-      currentDay: () => day,
-      makeRequest: (
-        actorId: EntityId,
-        allowedTools: ActionRequest["allowedTools"],
-        context: ActionRequestExtras & { stage: ActionStage; requiresAction?: boolean },
-      ) => this.makeRequest(requests, actorId, allowedTools, context),
-      getAliveByRole: (role: Role) => this.getAliveByRole(role),
-      ensureMarks: (entityId: EntityId) => this.ensureMarks(entityId),
-      pickMajorityTarget: (votes: Record<number, number>) =>
-        this.pickMajorityTarget(votes, config.tieBreaker?.wolfKillVote ?? "min_id"),
-      shuffleWolves: (ids: EntityId[]) => shuffled(ids, this.random.fork(`day:${day}:wolf-order`)),
-      state: stageState,
-    };
-
-    for (const stage of this.stageRegistry.getStages(config, this.world)) {
-      if (!isCurrent()) return { interrupted: true };
-      discardStaleWolfKnife(this.world, stageState);
-      await stage.execute(stageCtx);
-      if (!isCurrent()) return { interrupted: true };
-      discardStaleWolfKnife(this.world, stageState);
-    }
-
-    discardStaleWolfKnife(this.world, stageState);
-    const dreamFrame = new DreamNightFrame(stageState.dreamLinks);
-    const damage = this.damageResolutionSystem.resolve(this.world, {
-      protectedTargets: dreamFrame.protectedTargets(this.world),
-      immuneNightTargets: dreamFrame.immuneNightTargets(this.world),
-      consecutiveDeaths: dreamFrame.consecutiveDeaths(this.world),
-      poisonClaims: stageState.poisonClaims,
-      foxInspections: stageState.foxInspections,
-      wolfImmuneTargets: this.getAliveByRole(Role.CursedFox),
-      guardClaims: stageState.guardClaims,
-      merchantBacklashes: stageState.merchantBacklashes,
-      blackMarketBacklashes: stageState.blackMarketBacklashes,
-      mechanicalEffects: stageState.mechanicalEffects,
-      awakenedEffects: stageState.awakenedEffects,
-    });
-    for (const reflection of damage.poisonReflections ?? [])
-      this.events.push({
-        timestamp: Date.now(),
-        type: "mechanical_poison_reflected",
-        payload: { ...reflection, day },
+    const closeThiefNight = openThiefNight(this.world, day);
+    try {
+      if (hasFoxInspectionNightCommit(this.world, day))
+        throw new Error("fox_inspection_night_reentry_after_commit");
+      if (hasDreamNightCommit(this.world, day)) throw new Error("dream_night_reentry_after_commit");
+      if (hasRoleInspectionNightCommit(this.world, day))
+        throw new Error("role_inspection_night_reentry_after_commit");
+      if (hasMechanicalNightCommit(this.world, day))
+        throw new Error("mechanical_night_reentry_after_commit");
+      if (
+        hasBlackMarketNightCommit(this.world, day) ||
+        hasRecipientNightCommit(this.world, day, "black_market")
+      )
+        throw new Error("black_market_night_reentry_after_commit");
+      if (hasLuckyNightCommit(this.world, day)) throw new Error("lucky_night_reentry_after_commit");
+      if (hasMerchantNightCommit(this.world, day))
+        throw new Error("merchant_night_reentry_after_commit");
+      if (hasCupidNightCommit(this.world, day)) throw new Error("cupid_night_reentry_after_commit");
+      if (hasHybridNightCommit(this.world, day))
+        throw new Error("hybrid_night_reentry_after_commit");
+      if (hasAwakenedNightCommit(this.world, day))
+        throw new Error("awakened_night_reentry_after_commit");
+      if (hasDeathAbilityActivationCommit(this.world, day))
+        throw new Error("death_ability_night_reentry_after_commit");
+      safeRecordLogicOp({
+        scope: "phase_pipeline",
+        op: "night_pipeline_start",
+        phase: Phase.Night,
+        status: "ok",
+        input: {
+          board_size: config.boardSize,
+        },
       });
-    dreamFrame.expandInitialDamage(this.world, damage);
-    safeRecordLogicOp({
-      scope: "resolution",
-      op: "night_damage_resolved",
-      phase: Phase.Night,
-      status: "ok",
-      output: {
-        deaths: damage.deaths,
-        death_sources: damage.deathSources,
-      },
-    });
 
-    const summary: NightSummary = {
-      wolfTarget: stageState.wolfTarget,
-      deaths: [...damage.deaths],
-      seerChecks: stageState.seerChecks,
-      interruptedBySelfDestruct: false,
-    };
+      const stageState: NightStageState = {
+        wolfChatOrder: [],
+        endedWolves: new Set<EntityId>(),
+        wolfVotes: {},
+        wolfTarget: null,
+        seerChecks: [],
+        dreamLinks: [],
+        poisonClaims: [],
+        guardClaims: [],
+        merchantBacklashes: [],
+        blackMarketBacklashes: [],
+        mechanicalEffects: { shields: [], attacks: [], failures: [] },
+        awakenedEffects: { shields: [], attacks: [] },
+      };
 
-    const deathLives = new Map(
-      damage.deaths.map((id) => {
-        const life = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
-        return [id, { life, version: aliveLifeVersion(life) }] as const;
-      }),
-    );
-    return {
-      interrupted: false,
-      summary,
-      damage,
-      dreamFrame,
-      deathLives,
-      foxInspections: stageState.foxInspections,
-    };
+      const requests = new GameActionRequestFactory(this.world, this.events, day);
+      const stageCtx = {
+        isCurrent,
+        previousExile: options.previousExile ? structuredClone(options.previousExile) : null,
+        world: this.world,
+        roleCatalog: this.stageRegistry.roleCatalog,
+        toolGateway: this.toolGateway,
+        events: this.events,
+        actionProvider,
+        currentDay: () => day,
+        makeRequest: (
+          actorId: EntityId,
+          allowedTools: ActionRequest["allowedTools"],
+          context: ActionRequestExtras & { stage: ActionStage; requiresAction?: boolean },
+        ) => this.makeRequest(requests, actorId, allowedTools, context),
+        getAliveByRole: (role: Role) => this.getAliveByRole(role),
+        ensureMarks: (entityId: EntityId) => this.ensureMarks(entityId),
+        pickMajorityTarget: (votes: Record<number, number>) =>
+          this.pickMajorityTarget(votes, config.tieBreaker?.wolfKillVote ?? "min_id"),
+        shuffleWolves: (ids: EntityId[]) =>
+          shuffled(ids, this.random.fork(`day:${day}:wolf-order`)),
+        state: stageState,
+      };
+
+      for (const stage of this.stageRegistry.getStages(config, this.world)) {
+        if (!isCurrent()) return { interrupted: true };
+        discardStaleWolfKnife(this.world, stageState);
+        await stage.execute(stageCtx);
+        if (!isCurrent()) return { interrupted: true };
+        discardStaleWolfKnife(this.world, stageState);
+      }
+
+      discardStaleWolfKnife(this.world, stageState);
+      const dreamFrame = new DreamNightFrame(stageState.dreamLinks);
+      const damage = this.damageResolutionSystem.resolve(this.world, {
+        protectedTargets: dreamFrame.protectedTargets(this.world),
+        immuneNightTargets: dreamFrame.immuneNightTargets(this.world),
+        consecutiveDeaths: dreamFrame.consecutiveDeaths(this.world),
+        poisonClaims: stageState.poisonClaims,
+        foxInspections: stageState.foxInspections,
+        wolfImmuneTargets: this.getAliveByRole(Role.CursedFox),
+        guardClaims: stageState.guardClaims,
+        merchantBacklashes: stageState.merchantBacklashes,
+        blackMarketBacklashes: stageState.blackMarketBacklashes,
+        mechanicalEffects: stageState.mechanicalEffects,
+        awakenedEffects: stageState.awakenedEffects,
+      });
+      for (const reflection of damage.poisonReflections ?? [])
+        this.events.push({
+          timestamp: Date.now(),
+          type: "mechanical_poison_reflected",
+          payload: { ...reflection, day },
+        });
+      dreamFrame.expandInitialDamage(this.world, damage);
+      safeRecordLogicOp({
+        scope: "resolution",
+        op: "night_damage_resolved",
+        phase: Phase.Night,
+        status: "ok",
+        output: {
+          deaths: damage.deaths,
+          death_sources: damage.deathSources,
+        },
+      });
+
+      const summary: NightSummary = {
+        wolfTarget: stageState.wolfTarget,
+        deaths: [...damage.deaths],
+        seerChecks: stageState.seerChecks,
+        interruptedBySelfDestruct: false,
+      };
+
+      const deathLives = new Map(
+        damage.deaths.map((id) => {
+          const life = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+          return [id, { life, version: aliveLifeVersion(life) }] as const;
+        }),
+      );
+      return {
+        interrupted: false,
+        summary,
+        damage,
+        dreamFrame,
+        deathLives,
+        foxInspections: stageState.foxInspections,
+      };
+    } finally {
+      closeThiefNight();
+    }
   }
 
   private makeRequest(

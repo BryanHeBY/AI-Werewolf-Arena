@@ -4,7 +4,7 @@
 
 ## 范围与执行
 
-- 64 项既定角色中 23 verified、41 planned；P8 三角色，P9a–f 分别 5/6/7/6/6/8 项，P10 总体验收。觉醒隐狼已经 P7 交付，不重复计数；范围外长期候选不静默加入。
+- 授权接续时64 项既定角色中 23 verified、41 planned；P8 三角色，P9a–f 分别 5/6/7/6/6/8 项，P10 总体验收。觉醒隐狼已经 P7 交付，不重复计数；范围外长期候选不静默加入。
 - P8 同时交付首组有限事件/道具效果。先冻结确切 ID、来源、次数、抽取/持有人、受众、起止时间与判例；资料名单不是执行许可。
 - 在原目录 main 线性推进，不新建分支/worktree。先检查并保留用户变更，docs 先定契约，必要公共基础、角色、支持组合和阶段验收按可构建边界本地小提交。
 - 主任务负责重要研究和绝大部分实现；独立子代理默认只读审查。遵守 delivery 的 R/A/T/L/D、至少两名独立审查者、高风险三组、修正与原审查者复查要求。完成阶段后直接继续下阶段。
@@ -48,4 +48,4 @@ game-catalog 拥有稳定 ID/名称/状态，game-text 拥有双语文案。新�
 
 ## 当前里程碑
 
-执行范围契约已更新；P8咒狐首批City有限组合已启用（implemented），来源、三组审查/复查、实际SDK/ACP/MCP/Tape、1000seed及全量门禁见[角色验收](../reviews/p8-cursed-fox.md)。丘比特有限双来源策略也已启用（implemented），见[规则卡](../rules/sourced-cupid-v1.md)/[验收](../reviews/p8-cupid.md)；杠精也已implemented，具名AWA发言窗口适配及实际匿名表决/临时禁票/警徽闭环见[规则卡](../rules/awa-melbourne-debater-v1.md)/[本批验收](../reviews/p8-debater.md)。当前23verified/3implemented/38planned。首组匿名墙事件/纸条已有限implemented并完成三组复查和最终全量门禁，见[规则卡](../rules/awa-wall-notes-v1.md)/[验收](../reviews/p8-wall-notes.md)；P9/P10仍推进。后续状态以 progress.md、规则卡、角色目录与按源码记录的验收为准。
+执行范围契约已更新；P8咒狐首批City有限组合已启用（implemented），来源、三组审查/复查、实际SDK/ACP/MCP/Tape、1000seed及全量门禁见[角色验收](../reviews/p8-cursed-fox.md)。丘比特有限双来源策略也已启用（implemented），见[规则卡](../rules/sourced-cupid-v1.md)/[验收](../reviews/p8-cupid.md)；杠精也已implemented，具名AWA发言窗口适配及实际匿名表决/临时禁票/警徽闭环见[规则卡](../rules/awa-melbourne-debater-v1.md)/[本批验收](../reviews/p8-debater.md)。盗贼也已有限implemented，真实N+2发牌/原生身份首次启用见[规则卡](../rules/lui-meme-thief-v1.md)/[验收](../reviews/p9-thief.md)。当前23verified/4implemented/37planned。首组匿名墙事件/纸条已有限implemented并完成三组复查和最终全量门禁，见[规则卡](../rules/awa-wall-notes-v1.md)/[验收](../reviews/p8-wall-notes.md)；P9/P10仍推进。后续状态以 progress.md、规则卡、角色目录与按源码记录的验收为准。

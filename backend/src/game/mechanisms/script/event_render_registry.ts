@@ -1,3 +1,4 @@
+import { thiefEventLabel } from "@ai-werewolf-arena/game-text";
 import { readGravekeeperFeedback, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
 import {
   wallEventLabel,
@@ -553,6 +554,8 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const thief = thiefEventLabel(event.type, event.payload, locale);
+    if (thief !== null) return thief;
     const black = blackMarketEventLabel(event.type, event.payload, locale);
     if (black !== null) return black;
     const deathAbility = deathAbilityEventLabel(event.type, event.payload, locale);
@@ -590,6 +593,8 @@ export class ScriptEventRenderRegistry {
     printPrivateEvents: boolean,
     locale: Locale = "zh-CN",
   ): ScriptLiveRender[] {
+    const thief = thiefEventLabel(event.type, event.payload, locale);
+    if (thief !== null) return printPrivateEvents ? [{ kind: "god", text: thief }] : [];
     const wall = wallEventLabel(event.type, event.payload, locale);
     if (wall !== null)
       return ["wall_note_changed", "wall_note_order_recorded"].includes(event.type)

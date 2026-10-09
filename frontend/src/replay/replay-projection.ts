@@ -59,6 +59,10 @@ export function buildReplaySnapshot(
     }
     for (const effect of fact?.effects ?? []) {
       switch (effect.kind) {
+        case "identity_changed":
+          states.get(effect.playerId)!.role = effect.role;
+          states.get(effect.playerId)!.camp = effect.camp;
+          break;
         case "role_revealed":
           (states.get(effect.playerId)! as ReplayPlayerState).publicRole = effect.role;
           break;

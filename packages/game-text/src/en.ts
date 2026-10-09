@@ -74,6 +74,32 @@ export const en = Object.freeze({
   "prompt.status.lovers_vote":
     "This source policy forbids lovers from voting to exile each other, including PK.",
 
+  "role.thief.brief":
+    "Inspect two undealt cards on night one; you may swap one, and must swap if both are ordinary Werewolves.",
+  "role.thief.state":
+    "You start as Thief, a Good civilian. Before all night-one identity activation inspect only your two undealt cards: if both are ordinary Werewolves choose slot0 or slot1; otherwise you may wait to retain Thief or select either slot. No other identities or actual dealt role counts are disclosed. A swap installs the true new role, faction, victory membership and fresh native stock for this same night; your player ID, life, badge, vote and session/history remain. This happens once, with no copied or gifted skill. Your current opportunity: {state}.",
+  "action.choose_thief_card.hint":
+    "choose_thief_card requires integer slot 0 or 1 for your undealt-card slot, never a player ID or null. Both Werewolves require a choice with no fallback; other combinations allow a clean wait to retain Thief.",
+  "stage.thief": "Thief initial identity choice",
+  "replay.stage.thief_initial_deal": "God initial deal",
+  "replay.stage.thief_identity_chosen": "Thief identity choice",
+  "error.thief_unavailable":
+    "Thief identity or undealt-card authority has closed or been revoked; this request cannot choose.",
+  "error.thief_choice": "Submit only integer slot 0 or 1; no player ID, null or extra fields.",
+  "prompt.board.thief":
+    "With Thief the counts above describe N+2 candidate cards. Only N cards are dealt to N players and two remain undealt; actual in-play role counts are unknown and must not be inferred from candidate counts.",
+  "prompt.status.thief":
+    "Your own Thief opportunity and currently authorized undealt cards, visible only to you: {state}.",
+  "console.thief.deal": "God initial full N+2 deal: {roles}; {size} actual players.",
+  "console.thief.choice":
+    "Private Thief player {actor} selects card slot {slot}; current true role {role}, faction {camp}.",
+  "console.thief.keep":
+    "Private Thief player {actor} retains Thief; the initial opportunity has closed.",
+  "console.thief": "Thief identity fact",
+  "turn.thief.required":
+    "Both undealt cards are Werewolves: submit one choose_thief_card(slot0 or slot1), with no automatic fallback.",
+  "turn.thief.optional":
+    "You may submit one choose_thief_card(slot0 or slot1), or wait to retain Thief; no automatic fallback.",
   "role.cupid.brief":
     "Connect two lovers on night one; either death causes heartbreak, which suppresses death abilities. Victory uses a named source policy.",
   "role.cupid.state":
@@ -755,7 +781,7 @@ export const en = Object.freeze({
   "ui.day": "Day {day}",
   "ui.winner": "Winning team: {camp}",
   "prompt.system.identity":
-    "You are one player agent in the Werewolf engine. Your seat is {actor}, and your true role is {role}. When you receive [Action prompt], you may act.",
+    "You are one player agent in the Werewolf engine. Your seat is {actor}. At session creation, your true role is {role}. On every later turn the engine current identity, faction and native stock are authoritative; old role introductions are historical and grant no old skill. When you receive [Action prompt], you may act.",
   "prompt.system.goal":
     "Your goal is to help your team win this game. Use information visible to you to judge, negotiate, probe and adjust your strategy. Keep your own judgment even when the majority disagrees.",
   "prompt.system.language": "Use English for your reasoning and expression.",

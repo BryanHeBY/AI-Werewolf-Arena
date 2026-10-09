@@ -1,3 +1,5 @@
+import { thiefRequestScope } from "../../../game/mechanisms/roles/thief/setup";
+import { readThiefChoice } from "../../../game/mechanisms/roles/thief/state";
 import { wallRequestScope } from "../../../game/mechanisms/events/wall_notes/authority";
 import { z, type ZodType } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
@@ -67,7 +69,11 @@ export class ActionReception {
     // text by truthiness/String(), and never invent missing required arguments.
     const wallCall = tool === "write_note" ? readWallTool({ name: tool, args: rawArgs }) : null;
     if (tool === "write_note" && !wallCall) return fail(RuleError.WallNoteText);
-    const input = (wallCall ? wallCall.args : { ...rawArgs }) as Record<string, unknown>;
+    const thiefSlot = tool === "choose_thief_card" ? readThiefChoice(rawArgs) : undefined;
+    if (tool === "choose_thief_card" && thiefSlot === undefined) return fail(RuleError.ThiefChoice);
+    const input = (
+      tool === "choose_thief_card" ? { slot: thiefSlot } : wallCall ? wallCall.args : { ...rawArgs }
+    ) as Record<string, unknown>;
     const properties = spec.parameters.properties as
       Record<string, { type?: string | string[] }> | undefined;
     for (const [key, value] of Object.entries(input)) {
@@ -116,6 +122,7 @@ export class ActionReception {
     const checked = this.gateway.validateAndSanitize(this.world, request.actorId, call, {
       phase: request.phase,
       day: request.context.day,
+      thiefScope: thiefRequestScope(this.world, request),
       wallScope: wallRequestScope(this.world, request),
       wallId: request.context.wall_id,
       itemInstanceId: request.context.item_instance_id,
