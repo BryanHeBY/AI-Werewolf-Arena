@@ -1,7 +1,7 @@
 import { text } from "@ai-werewolf-arena/game-text";
 import type { ReplayDisplayOptions } from "./replay-display";
 import { Player, type PlayerRef } from "@remotion/player";
-import type { RefObject } from "react";
+import { useMemo, type RefObject } from "react";
 import type { PresentationReplay } from "./replay-presentation";
 import { FRAMES_PER_EVENT, ReplayComposition } from "./ReplayComposition";
 
@@ -33,6 +33,11 @@ export function ReplayStage({
   onTogglePlayback,
 }: ReplayStageProps) {
   const eventCount = replay.events.length;
+  // Remotion rebuilds playback configuration when inputProps identity changes.
+  const inputProps = useMemo(
+    () => ({ replay, locale: display.locale, timeZone: display.timeZone }),
+    [replay, display.locale, display.timeZone],
+  );
 
   return (
     <article className="stage panel">
@@ -49,7 +54,7 @@ export function ReplayStage({
         <Player
           ref={playerRef}
           component={ReplayComposition}
-          inputProps={{ replay, ...display }}
+          inputProps={inputProps}
           durationInFrames={Math.max(eventCount * FRAMES_PER_EVENT, 1)}
           compositionWidth={1280}
           compositionHeight={720}

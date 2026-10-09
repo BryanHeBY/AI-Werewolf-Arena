@@ -25,7 +25,7 @@ export default defineConfig({
   ],
   webServer: {
     command:
-      "AWA_REPLAY_INPUT=tests/fixtures/sample.replay.json bunx vite --host 127.0.0.1 --port 4173",
+      "AWA_REPLAY_INPUT=tests/fixtures/sample.replay.json bun --no-env-file ./node_modules/vite/bin/vite.js --host 127.0.0.1 --port 4173",
     url: "http://127.0.0.1:4173/src/main.tsx",
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
