@@ -228,6 +228,8 @@ export const zhCN = Object.freeze({
   "role.wolf.brief": "夜间可狼队夜聊并参与刀人投票",
   "role.villager.brief": "无夜间技能，白天通过发言和投票推进局势",
   "role.seer.brief": "每晚可查验一名玩家阵营",
+  "role.guard.repeat_actual_nights": "守卫策略 netease_consecutive_nights_v1：仅禁止连续实际两夜守同一目标；没有已提交守护的夜晚打断连续性，仍保留上次目标记录。",
+  "role.guard.repeat_last_action": "守卫策略 awa_last_action_v1：上次合法守护目标保持禁选，直到合法守另一目标或明确空守。",
   "role.guard.brief": "每晚可守护一名玩家，不可连续两晚守护同一人",
   "role.witch.brief": "拥有解药与毒药，可在夜间选择使用",
   "role.knight.brief": "发言阶段启用窗口一次决斗；真实狼死且入夜，非狼则骑士死并遗言，继续白天",

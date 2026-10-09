@@ -228,6 +228,8 @@ export const en = Object.freeze({
   "role.wolf.brief": "Participates in wolf discussion and the collective kill vote at night",
   "role.villager.brief": "Has no night skill; influences the game through daytime speech and voting",
   "role.seer.brief": "May inspect one player's alignment each night",
+  "role.guard.repeat_actual_nights": "Guard policy netease_consecutive_nights_v1: the same target is forbidden only on adjacent actual nights. A night with no committed guard breaks adjacency; it does not erase the recorded last target.",
+  "role.guard.repeat_last_action": "Guard policy awa_last_action_v1: your last accepted target remains forbidden until a different target or explicit empty guard is accepted.",
   "role.guard.brief": "May protect one player each night, but cannot protect the same player on consecutive nights",
   "role.witch.brief": "Has one antidote and one poison and may choose a potion at night",
   "role.knight.brief": "One duel at enabled speech windows: a true wolf dies and night follows; against a non-wolf the Knight dies with last words and daytime continues",

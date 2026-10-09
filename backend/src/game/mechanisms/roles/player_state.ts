@@ -1,9 +1,9 @@
-import { WitchSelfHealRule } from "../../../core/domain/model";
+import { WitchSelfHealRule, type GuardRepeatPolicy } from "../../../core/domain/model";
 import { readInspectionResult } from "@ai-werewolf-arena/replay-contract";
 import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
 
 /** Player DTOs deliberately do not inherit engine-state fields, including report rows. */
-export interface PlayerGuardState { lastTarget: number | null }
+export interface PlayerGuardState { lastTarget: number | null; repeatPolicy?: GuardRepeatPolicy }
 export interface PlayerHunterState { canShoot: boolean }
 export interface PlayerWolfKingState { canShoot: boolean }
 export interface PlayerWhiteWolfKingState { canDetonate: boolean }
@@ -42,7 +42,11 @@ function inspection(value: unknown) {
     : kind === "combined" ? { kind, camp: playerDataField(value, "camp"), role: playerDataField(value, "role") } : null);
 }
 
-export function projectGuardState(state: unknown): PlayerGuardState { return { lastTarget: positiveOrNull(playerDataField(state, "lastTarget")) }; }
+export function projectGuardState(state: unknown): PlayerGuardState {
+  const policy = playerDataField(state, "repeatPolicy");
+  return { lastTarget: positiveOrNull(playerDataField(state, "lastTarget")),
+    ...(policy === "awa_last_action_v1" || policy === "netease_consecutive_nights_v1" ? { repeatPolicy: policy } : {}) };
+}
 export function projectHunterState(state: unknown): PlayerHunterState { return { canShoot: playerDataField(state, "canShoot") === true }; }
 export function projectWolfKingState(state: unknown): PlayerWolfKingState { return { canShoot: playerDataField(state, "canShoot") === true }; }
 export function projectWhiteWolfKingState(state: unknown): PlayerWhiteWolfKingState { return { canDetonate: playerDataField(state, "canDetonate") === true }; }

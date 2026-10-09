@@ -1,5 +1,5 @@
 /** 文件说明：角色私有状态的统一读写封装。 */
-import { EntityId, WitchSelfHealRule } from "../../../core/domain/model";
+import { EntityId, WitchSelfHealRule, type GuardRepeatPolicy } from "../../../core/domain/model";
 import { RoleComponent } from "../../../core/domain/components/role";
 import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
 import type { ExileFeedback } from "../../../core/domain/events";
@@ -34,6 +34,7 @@ export interface WitchState {
 /** 守卫私有状态。 */
 export interface GuardState {
   lastTarget: EntityId | null;
+  repeatPolicy?: GuardRepeatPolicy;
 }
 
 /** 猎人私有状态。 */

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { GUARD_REPEAT_POLICIES } from "./board";
 import { ActionWindow, KnightDuelWindow, Role, WinCondition, WitchSelfHealRule } from "./identity";
 
 const positive = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
@@ -14,6 +15,7 @@ export const boardConfigSchema = z.strictObject({
   selfDestruct: z.strictObject({ enabledWindows: z.array(z.enum(ActionWindow)) }).optional(),
   sheriff: z.strictObject({ voteWeight: z.number().finite().positive().optional() }).optional(),
   knight: z.strictObject({ enabledWindows: z.array(z.enum(KnightDuelWindow)) }).optional(),
+  guard: z.strictObject({ repeatPolicy: z.enum(GUARD_REPEAT_POLICIES) }).optional(),
   witch: z.strictObject({ canSelfHeal: z.enum(WitchSelfHealRule).optional() }).optional(),
   tieBreaker: z.strictObject({ exileVote: strategies.optional(), wolfKillVote: strategies.optional(), sheriffVote: strategies.optional() }).optional(),
 });

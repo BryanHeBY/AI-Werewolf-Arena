@@ -1,3 +1,4 @@
+import { guardTargetRepeated } from "../roles/guard/repeat_policy";
 import { text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：按工具与角色策略生成 target_id 可行动编号提示。 */
 import { Role, ToolName } from "../../../core/domain/model";
@@ -81,6 +82,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       if (!ability) return true;
       // An ordinary Witch may still heal a target whose poison is blocked by this actor's history.
       if (ability.kind === "potion" && ability.activation !== "lucky" && ability.activation !== "black_market" && ability.state.heal > 0) return true;
+      if (ability.kind === "guard" && guardTargetRepeated(ability, ctx.day ?? 1, id)) return false;
       return luckyTargetAllowed(ctx.world, ctx.actorId, ability, ctx.day ?? 1, kind === "seer_check" ? "check" : kind === "guard" ? "guard" : "poison", id);
     };
     const ids = ctx.world

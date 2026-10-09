@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { GUARD_REPEAT_POLICIES } from "../../../../core/domain/board";
+import { guardTargetRepeated } from "./repeat_policy";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：守卫角色 profile。 */
@@ -11,6 +14,8 @@ import { isAliveTarget } from "../../validation/contracts";
 import { activeNightAbility } from "../abilities";
 import { luckyTargetAllowed } from "../night_action_history";
 
+const parameters = z.strictObject({ repeatPolicy: z.enum(GUARD_REPEAT_POLICIES).default("awa_last_action_v1") });
+
 /** 守卫角色配置。 */
 export const GUARD_ROLE_PROFILE: RoleProfile = {
   role: Role.Guard,
@@ -18,21 +23,25 @@ export const GUARD_ROLE_PROFILE: RoleProfile = {
   label: roleName("guard"),
   skillBrief: text("zh-CN", "role.guard.brief"),
   goodSide: "god",
-  init: (roleComp) => {
-    setGuardState(roleComp, { lastTarget: null });
+  configuration: {
+    schema: parameters, defaults: { repeatPolicy: "awa_last_action_v1" },
+    apply: (config, value) => ({ ...config, guard: parameters.parse(value) }),
+    serialize: config => parameters.parse(config.guard ?? {}),
   },
-  renderPrompt: (_roleComp, locale = "zh-CN") => text(locale, "role.guard.state"),
+  init: (roleComp, ctx) => {
+    setGuardState(roleComp, { lastTarget: null, ...(ctx.boardConfig?.guard?.repeatPolicy === "netease_consecutive_nights_v1" ? { repeatPolicy: ctx.boardConfig.guard.repeatPolicy } : {}) });
+  },
+  renderPrompt: (roleComp, locale = "zh-CN") => text(locale, "role.guard.state") + " " + text(locale, getGuardState(roleComp)?.repeatPolicy === "netease_consecutive_nights_v1" ? "role.guard.repeat_actual_nights" : "role.guard.repeat_last_action"),
   toolSpecs: GUARD_TOOL_SPECS,
   validationRules: {
     guard: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {
       const ability = activeNightAbility(role, "guard", day ?? 1, abilityId);
-      const guardState = ability?.state;
       if (!ability) return { code: RuleError.GuardOnly };
       if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
       if (toolCall.name !== "guard") return { code: RuleError.ToolMismatch };
       if (toolCall.args.abstain) return null;
       if (toolCall.args.target_id === null) return { code: RuleError.GuardTarget };
-      if (guardState?.lastTarget === toolCall.args.target_id) return { code: RuleError.GuardRepeat };
+      if (guardTargetRepeated(ability, day ?? 1, toolCall.args.target_id)) return { code: RuleError.GuardRepeat };
       if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.GuardTarget };
       if (!luckyTargetAllowed(world, actorId, ability, day ?? 1, "guard", toolCall.args.target_id)) return { code: RuleError.LuckyTargetRepeat };
       return null;
@@ -54,8 +63,8 @@ export const GUARD_ROLE_PROFILE: RoleProfile = {
       return null;
     }
     const ability = activeNightAbility(roleComp, "guard", request.context.day, request.context.ability_id);
-    const target = world && ability ? world.getAliveEntityIds().find(id => id !== request.actorId && id !== ability.state.lastTarget && luckyTargetAllowed(world, request.actorId, ability, request.context.day, "guard", id)) ?? null : pickAliveNotSelf();
-    if (target !== null && getGuardState(roleComp, request.context.ability_id)?.lastTarget !== target) {
+    const target = world && ability ? world.getAliveEntityIds().find(id => id !== request.actorId && !guardTargetRepeated(ability, request.context.day, id) && luckyTargetAllowed(world, request.actorId, ability, request.context.day, "guard", id)) ?? null : pickAliveNotSelf();
+    if (target !== null && ability && !guardTargetRepeated(ability, request.context.day, target)) {
       return { name: "guard", args: { target_id: target, abstain: false } };
     }
     return { name: "guard", args: { target_id: null, abstain: true } };
