@@ -52,16 +52,18 @@ export interface ReplayDocument {
   events: ReplayEvent[];
 }
 
-/** Inspect explicit terminal data without executing getters during structuredClone. */
-function assertSerializedTerminal(value: object): void {
+/** Reject non-data descriptors before any shape read or structuredClone can execute a getter. */
+function assertSerializedData(value: object, path: string): void {
   const pending: object[] = [value], seen = new Set<object>();
   while (pending.length) {
     const current = pending.pop()!;
     if (seen.has(current)) continue;
     seen.add(current);
+    const prototype = Object.getPrototypeOf(current);
+    assertField(Array.isArray(current) ? prototype === Array.prototype : prototype === Object.prototype || prototype === null, path);
     for (const key of Reflect.ownKeys(current)) {
       const descriptor = Object.getOwnPropertyDescriptor(current, key)!;
-      assertField("value" in descriptor && (descriptor.enumerable === true || Array.isArray(current) && key === "length"), "events.game_over.payload");
+      assertField(typeof key === "string" && "value" in descriptor && (descriptor.enumerable === true || Array.isArray(current) && key === "length"), path);
       if (descriptor.value !== null && typeof descriptor.value === "object") pending.push(descriptor.value);
     }
   }
@@ -127,7 +129,7 @@ function assertReplayShape(value: unknown): asserts value is Omit<ReplayDocument
   if (decision && "value" in decision) explicit.push(readVictoryResult(decision.value, [...playerIds]));
   for (const event of value.events) {
     if (event.type !== "game_over" || !isRecord(event.payload) || !Object.hasOwn(event.payload, "outcome") && !Object.hasOwn(event.payload, "decidedAt")) continue;
-    assertSerializedTerminal(event.payload);
+    assertSerializedData(event.payload, "events.game_over.payload");
     try { explicit.push(readVictoryResult(event.payload, [...playerIds])); }
     catch { /* Isolated malformed terminal facts remain raw unknown events. */ }
   }
@@ -136,12 +138,14 @@ function assertReplayShape(value: unknown): asserts value is Omit<ReplayDocument
 
 /** Canonical v2 writer contract. Use readReplayDocument for archived documents. */
 export function assertReplayDocument(value: unknown): asserts value is ReplayDocument {
+  if (value !== null && typeof value === "object") assertSerializedData(value, "document");
   assertReplayShape(value);
   if (value.schemaVersion !== REPLAY_SCHEMA_VERSION) throw new ReplayDocumentValidationError("unsupported_version", "schemaVersion");
 }
 
 /** Read-only conversion; version negotiation occurs before any legacy interpretation. */
 export function readReplayDocument(value: unknown): ReplayDocument {
+  if (value !== null && typeof value === "object") assertSerializedData(value, "document");
   if (!isRecord(value)) throw new ReplayDocumentValidationError("invalid_document", "document");
   const version = value.schemaVersion;
   if (version !== undefined && version !== 1 && version !== REPLAY_SCHEMA_VERSION) throw new ReplayDocumentValidationError("unsupported_version", "schemaVersion");

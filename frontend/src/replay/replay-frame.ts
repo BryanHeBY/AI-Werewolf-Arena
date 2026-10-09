@@ -9,11 +9,11 @@ import { phaseName, roleName, eventStageName } from "./replay-localization";
 export const FRAMES_PER_EVENT = 90;
 export type ReplayRenderInput = ReplayDisplayOptions & { replay: PresentationReplay };
 /** Offline rendering input: no workspace focus, playback state, clock, or host time zone. */
-export function createReplayRenderInput(replay: ReplayDocument, display: ReplayDisplayOptions = {
-  locale: replay.meta.locale ?? "zh-CN", timeZone: DEFAULT_REPLAY_TIME_ZONE,
-}): ReplayRenderInput {
-  validateReplayDisplay(display);
-  return { replay: buildPresentationReplay(readReplayDocument(replay)), locale: display.locale, timeZone: display.timeZone };
+export function createReplayRenderInput(replay: ReplayDocument, display?: ReplayDisplayOptions): ReplayRenderInput {
+  const canonical = readReplayDocument(replay);
+  const options = display ?? { locale: canonical.meta.locale ?? "zh-CN", timeZone: DEFAULT_REPLAY_TIME_ZONE };
+  validateReplayDisplay(options);
+  return { replay: buildPresentationReplay(canonical), locale: options.locale, timeZone: options.timeZone };
 }
 export function buildReplayFrame(input: ReplayRenderInput, frame: number) {
   validateReplayDisplay(input);

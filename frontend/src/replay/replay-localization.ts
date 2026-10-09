@@ -14,9 +14,10 @@ const GIFT_ACTION_EVENTS = new Set(["guard_applied", "seer_checked", "role_inspe
 /** Explicit gift instances describe an action without attributing the recipient's physical role. */
 export function eventStageName(event: ReplayEvent, locale: Locale = "zh-CN", playerIds?: readonly number[]): string {
   const fact = readReplayEvent(event, playerIds);
-  const abilityId = fact?.event.payload.abilityId;
-  if (GIFT_ACTION_EVENTS.has(event.type) && typeof abilityId === "string" && abilityId.startsWith("gift:")) return text(locale, "replay.stage.gift_ability");
-  return stageName(event.stage ?? event.type, locale);
+  if (!fact) return text(locale, "replay.unknown");
+  const abilityId = fact.event.payload.abilityId;
+  if (GIFT_ACTION_EVENTS.has(fact.event.type) && typeof abilityId === "string" && abilityId.startsWith("gift:")) return text(locale, "replay.stage.gift_ability");
+  return stageName(fact.event.stage ?? fact.event.type, locale);
 }
 // These are archived reason IDs; current records already use the canonical IDs.
 const historicalReasons: Readonly<Record<string, string>> = Object.freeze({

@@ -5,7 +5,8 @@ import { text } from "@ai-werewolf-arena/game-text";
 import { readReplayEvent, replayEventPlayerIds, KNOWN_REPLAY_EVENT_TYPES } from "../../../src/replay/replay-event-reader";
 import { eventLabel } from "../../../src/replay/event-labels";
 import { buildReplaySnapshot } from "../../../src/replay/replay-projection";
-import { replayResultLabel } from "../../../src/replay/replay-localization";
+import { createReplayRenderInput } from "../../../src/replay/replay-frame";
+import { eventStageName, replayResultLabel } from "../../../src/replay/replay-localization";
 
 const event = (type: string, payload: Record<string, unknown>): ReplayEvent => ({ seq: 2, day: 1, phase: "day", timestamp: "t2", type, payload });
 const replay = (fact: ReplayEvent): ReplayDocument => ({
@@ -97,4 +98,29 @@ test("an explicitly undefined optional envelope stage keeps valid event effects"
   expect(read?.event).not.toHaveProperty("stage");
   expect(event).toHaveProperty("stage", undefined);
   expect(readReplayEvent({ ...event, payload: { target: 2, invalid: undefined } }, [1, 2])).toBeNull();
+});
+
+
+test("stage labels never fall back to accessor fields after the event reader rejects them", () => {
+  for (const field of ["stage", "type"] as const) {
+    const hostile = event("white_wolf_king_self_destruct", { actorId: 1, targetId: 2 });
+    let reads = 0;
+    Object.defineProperty(hostile, field, { enumerable: true, get() { reads++; return "day"; } });
+    expect(eventStageName(hostile, "en", [1, 2, 3])).toBe("Unknown");
+    expect(reads).toBe(0);
+  }
+});
+
+test("canonical and rendering entrypoints reject getters before cloning can turn them into death facts", () => {
+  const hostile = event("white_wolf_king_self_destruct", { actorId: 1 });
+  let reads = 0;
+  Object.defineProperty(hostile.payload, "targetId", { enumerable: true, get() { reads++; return 2; } });
+  const input = replay(hostile);
+  expect(() => readReplayDocument(input)).toThrow("document");
+  expect(() => createReplayRenderInput(input)).toThrow("document");
+  expect(reads).toBe(0);
+  expect(buildReplaySnapshot(input, 1).players.every(player => player.alive)).toBe(true);
+  Object.defineProperty(input.meta, "locale", { enumerable: true, get() { reads++; return "en"; } });
+  expect(() => createReplayRenderInput(input)).toThrow("document");
+  expect(reads).toBe(0);
 });
