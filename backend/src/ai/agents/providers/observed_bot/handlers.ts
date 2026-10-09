@@ -1,0 +1,66 @@
+import type { ObservedToolEntry } from "./context";
+import { speak, choose_direction, run_for_sheriff, vote_for_sheriff, vote } from "./public";
+import {
+  speak_to_wolves,
+  kill_vote,
+  charm,
+  self_destruct_with_target,
+  self_destruct,
+} from "./wolf";
+import { bestow_ability, black_market_trade } from "./granted";
+import {
+  mechanical_mode,
+  mimic_role,
+  awakened_mimic,
+  awakened_poison,
+  awakened_guard,
+  awakened_attack,
+  mechanical_inspect,
+  mechanical_poison,
+  mechanical_guard,
+  mechanical_attack,
+} from "./copied";
+import {
+  choose_exemplar,
+  guard,
+  dream,
+  check_identity,
+  inspect_role,
+  use_potion,
+  shoot,
+  duel,
+} from "./native";
+
+/** Preserve protocol-independent priority and RNG order for strict Tape reproducibility. */
+export const observedToolHandlers: readonly ObservedToolEntry[] = [
+  { tool: "choose_exemplar", decide: choose_exemplar },
+  { tool: "bestow_ability", decide: bestow_ability },
+  { tool: "black_market_trade", decide: black_market_trade },
+  { tool: "speak", decide: speak },
+  { tool: "speak_to_wolves", decide: speak_to_wolves },
+  { tool: "choose_direction", decide: choose_direction },
+  { tool: "run_for_sheriff", decide: run_for_sheriff },
+  { tool: "vote_for_sheriff", decide: vote_for_sheriff },
+  { tool: "kill_vote", decide: kill_vote },
+  { tool: "mechanical_mode", decide: mechanical_mode },
+  { tool: "mimic_role", decide: mimic_role },
+  { tool: "awakened_mimic", decide: awakened_mimic },
+  { tool: "awakened_poison", decide: awakened_poison },
+  { tool: "awakened_guard", decide: awakened_guard },
+  { tool: "awakened_attack", decide: awakened_attack },
+  { tool: "mechanical_inspect", decide: mechanical_inspect },
+  { tool: "mechanical_poison", decide: mechanical_poison },
+  { tool: "mechanical_guard", decide: mechanical_guard },
+  { tool: "mechanical_attack", decide: mechanical_attack },
+  { tool: "guard", decide: guard },
+  { tool: "dream", decide: dream },
+  { tool: "charm", decide: charm },
+  { tool: "check_identity", decide: check_identity },
+  { tool: "inspect_role", decide: inspect_role },
+  { tool: "use_potion", decide: use_potion },
+  { tool: "shoot", decide: shoot },
+  { tool: "duel", decide: duel },
+  { tool: "vote", decide: vote },
+  { tool: "self_destruct_with_target", decide: self_destruct_with_target },
+  { tool: "self_destruct", decide: self_destruct },
+];
