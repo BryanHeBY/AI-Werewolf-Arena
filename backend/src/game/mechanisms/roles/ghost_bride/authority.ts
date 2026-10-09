@@ -12,6 +12,8 @@ import {
   readWeddingTool,
 } from "@ai-werewolf-arena/game-text";
 import {
+  bindRequestDeliveryGuard,
+  settleRequestDelivery,
   DeathCause,
   type DeathSources,
   COMPONENT,
@@ -498,7 +500,11 @@ function validRequestProof(t: Turn): boolean {
   );
 }
 function validTurn(t: Turn): boolean {
-  return validWindow(t) && validRequestProof(t);
+  return (
+    validWindow(t) &&
+    validRequestProof(t) &&
+    (t.kind !== "witness" || t.binding.votes.length !== 1 || validConsent(t.binding, t))
+  );
 }
 function validConsent(b: Binding, second: Turn): boolean {
   const t = b.consent;
@@ -541,10 +547,13 @@ export function authorizedWeddingTurn(
 export function closeWeddingTurn(scope: object): void {
   const t = turns.get(scope);
   if (t && t.binding.turn === t) t.binding.turn = null;
+  if (!t || t.binding.pendingChat !== t) settleRequestDelivery(scope, false);
 }
 export function closeWeddingSetup(world: World, status: "failed" | "cancelled"): void {
   const b = bindings.get(world);
   if (!b || b.status === "complete" || b.status === "failed" || b.status === "cancelled") return;
+  if (b.turn) settleRequestDelivery(b.turn.scope, false);
+  if (b.pendingChat) settleRequestDelivery(b.pendingChat.scope, false);
   b.status = status;
   b.turn = null;
   b.pendingChat = null;
@@ -605,6 +614,11 @@ export function bindGhostBrideRequest(world: World, request: WeddingRequest): vo
       fields: Object.getOwnPropertyDescriptors(request),
       deadline: p.deadlineAtMs ?? null,
     });
+    bindRequestDeliveryGuard(
+      request,
+      () => ghostBrideRequestScope(world, request) !== undefined,
+      t.scope,
+    );
   }
 }
 export function ghostBrideRequestScope(world: World, request: WeddingRequest): object | undefined {
@@ -623,6 +637,7 @@ export function inheritGhostBrideDeadlineRequest(
   target: WeddingRequest,
 ): void {
   const a = requests.get(source);
+  if (requests.has(target)) return;
   if (!a || !ghostBrideRequestScope(a.turn.binding.world, source)) return;
   const fields = Object.getOwnPropertyDescriptors(target),
     keys = Object.keys(a.fields).filter((k) => k !== "deadlineAtMs"),
@@ -648,6 +663,11 @@ export function inheritGhostBrideDeadlineRequest(
   ) {
     a.turn.deadline = typeof deadline === "number" ? deadline : null;
     requests.set(target, { ...a, deadline: typeof deadline === "number" ? deadline : null });
+    bindRequestDeliveryGuard(
+      target,
+      () => ghostBrideRequestScope(a.turn.binding.world, target) !== undefined,
+      a.turn.scope,
+    );
   }
 }
 function targetCurrent(t: Turn, id: number): boolean {
@@ -657,6 +677,13 @@ function targetCurrent(t: Turn, id: number): boolean {
   );
 }
 export function commitWeddingTool(scope: object, value: unknown): boolean {
+  const t = turns.get(scope);
+  const accepted = commitWeddingToolInternal(scope, value);
+  if (!accepted) settleRequestDelivery(scope, false);
+  else if (t?.kind !== "chat") settleRequestDelivery(scope, true);
+  return accepted;
+}
+function commitWeddingToolInternal(scope: object, value: unknown): boolean {
   const t = turns.get(scope),
     call = readWeddingTool(value);
   if (!t || !call || call.name !== t.tool || !validTurn(t)) return false;
@@ -704,6 +731,8 @@ export function commitWeddingTool(scope: object, value: unknown): boolean {
     if (b.votes.length === 1) b.consent = t;
     if (b.votes.length === 2) {
       if (b.votes[0]!.targetId !== id) {
+        // Both valid but disagreeing votes really committed; replay must retain this action.
+        settleRequestDelivery(scope, true);
         closeWeddingSetup(b.world, "failed");
         return false;
       }
@@ -731,6 +760,7 @@ export function commitWeddingTool(scope: object, value: unknown): boolean {
       return false;
     n.votes.push(Object.freeze({ actorId: t.actorId, targetId: id, abstain: call.args.abstain }));
   }
+  if (t.kind !== "chat") settleRequestDelivery(scope, true);
   closeWeddingTurn(scope);
   return true;
 }
@@ -854,6 +884,8 @@ export function weddingKnifeCurrent(world: World, day: number, targetId: number)
 export function closeWeddingNight(world: World): void {
   const b = bindings.get(world);
   if (!b?.activeNight) return;
+  if (b.turn) settleRequestDelivery(b.turn.scope, false);
+  if (b.pendingChat) settleRequestDelivery(b.pendingChat.scope, false);
   b.activeNight.closed = true;
   b.activeNight = null;
   b.turn = null;
@@ -983,12 +1015,15 @@ export function takeWeddingChat(
     !targetCurrent(t, message.recipientId) ||
     (!setup && (!b.activeNight || b.activeNight.day !== t.day || b.activeNight.closed)) ||
     [...b.participants].some(([id, p]) => json(p.state) !== t.privateJson.get(id))
-  )
+  ) {
+    if (b.pendingChat === t) settleRequestDelivery(scope, false);
     return null;
+  }
   t.delivered = true;
   b.pendingChat = null;
   if (setup) b.chats++;
   else b.activeNight!.chats++;
+  settleRequestDelivery(scope, true);
   return { ...message };
 }
 export type WeddingActorView =

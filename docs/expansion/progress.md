@@ -483,3 +483,7 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 ## P9a 鬼魂新娘独立授权基础
 
 接928eec2规则冻结，严格typed状态/请求proof、双阶段consent、一次性chat投递、固定三方assignment、原包/两级继承单刀与独立根死亡闭包primitive已完成，三路审查报告阻断全部复验关闭。71专项/848断言、全部engine1642/17085/77文件、frontend312/3072/46文件及check/lint/format/双端build均通过，见[基础审查](reviews/p9-ghost-bride-foundation.md)。尚未注册或接runtime/录制/Tape，无实际Bride整局或浏览器证据；保持23verified/7implemented/34planned。立即接续阶段和完整通路，不将基础当完整角色，总体待用户最终验收。
+
+## P9a 鬼魂新娘录制提交边界
+
+接515c882基础，原request/合法deadline clone的交付检查与opaque scope延迟结算已贯通：provider返回仍pending，同步域提交才action；首票后到期、拒绝或关窗error，真实分歧两票保留action，chat最后投递成功/失败当回合结算。三路原审查者报告全部复验关闭，见[提交边界审查](reviews/p9-ghost-bride-delivery.md)。受影响engine/recording/runtime Tape共1730/17677/87文件零失败，check/lint/format/backend build通过；真实普通六人partial Tape仅证明通用失败路径，尚非Ghost实际整局/Tape。角色仍planned、目录23verified/7implemented/34planned，不以基础推断角色完成；立即继续runtime与完整通路，总体待用户最终验收。

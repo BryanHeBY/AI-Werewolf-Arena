@@ -13,6 +13,8 @@ import {
 } from "@ai-werewolf-arena/game-text";
 import {
   World,
+  assertRequestDelivery,
+  deferRequestDelivery,
   Role,
   Camp,
   Phase,
@@ -834,9 +836,11 @@ test("first consent expires independently before agreement and keeps one-vote pr
   );
   const clock = spyOn(Date, "now").mockReturnValue(now + 1001);
   try {
-    expect(turn(g, "witness", 2, { name: "choose_wedding_witness", args: { target_id: 3 } })).toBe(
-      false,
-    );
+    const second = openWeddingTurn(g.world, "witness", 2, 1, () => true);
+    expect(authorizedWeddingTurn(g.world, 2, Phase.Night, 1, second)).toBe(false);
+    expect(
+      commitWeddingTool(second, { name: "choose_wedding_witness", args: { target_id: 3 } }),
+    ).toBe(false);
   } finally {
     clock.mockRestore();
   }
@@ -884,4 +888,120 @@ test("unconsumed chat receipt prevents reopening or advancing a turn", () => {
   expect(() => openWeddingTurn(g.world, "chat", 2, 1, () => true)).toThrow();
   expect(takeWeddingChat(scope)).not.toBeNull();
   expect(() => openWeddingTurn(g.world, "chat", 2, 1, () => true)).not.toThrow();
+});
+
+test("authorized deadline clones retain the transaction and reject await-time revocation", () => {
+  const g = fixture();
+  let current = true;
+  beginWeddingSetup(g.world, g.c, () => current);
+  const scope = openRawWeddingTurn(g.world, "bridegroom", 1, 1, () => current);
+  const original = request(1, "choose_bridegroom", "ghost_bride_groom", 1);
+  bindGhostBrideRequest(g.world, original);
+  const timed = { ...original, deadlineAtMs: Date.now() + 1000 };
+  inheritGhostBrideDeadlineRequest(original, timed);
+  expect(ghostBrideRequestScope(g.world, timed)).toBe(scope);
+  expect(() => assertRequestDelivery(timed as never)).not.toThrow();
+  const receipt = { settled: null as boolean | null };
+  expect(
+    deferRequestDelivery(timed as never, (accepted) => {
+      receipt.settled = accepted;
+    }),
+  ).toBe(true);
+  current = false;
+  expect(() => assertRequestDelivery(timed as never)).toThrow(
+    "action_request_delivery_authority_revoked",
+  );
+  closeWeddingSetup(g.world, "cancelled");
+  expect(receipt.settled as boolean | null).toBe(false);
+});
+test("first consent expires after delivery validation but before second commit without a successful receipt", () => {
+  const g = fixture();
+  pair(g);
+  for (const actor of [1, g.groom])
+    expect(turn(g, "chat", actor, { name: "speak_to_partner", args: { text: "" } })).toBe(true);
+  let now = 1000;
+  const clock = spyOn(Date, "now").mockImplementation(() => now);
+  try {
+    const first = openRawWeddingTurn(g.world, "witness", 1, 1, () => true);
+    const firstRequest = {
+      ...request(1, "choose_wedding_witness", "ghost_bride_witness", 1),
+      deadlineAtMs: 1010,
+    };
+    bindGhostBrideRequest(g.world, firstRequest);
+    expect(
+      commitWeddingTool(first, { name: "choose_wedding_witness", args: { target_id: g.witness } }),
+    ).toBe(true);
+    const second = openRawWeddingTurn(g.world, "witness", g.groom, 1, () => true);
+    const secondRequest = request(g.groom, "choose_wedding_witness", "ghost_bride_witness", 1);
+    bindGhostBrideRequest(g.world, secondRequest);
+    expect(() => assertRequestDelivery(secondRequest as never)).not.toThrow();
+    const receipt = { settled: null as boolean | null };
+    expect(
+      deferRequestDelivery(secondRequest as never, (accepted) => {
+        receipt.settled = accepted;
+      }),
+    ).toBe(true);
+    now = 1011;
+    expect(
+      commitWeddingTool(second, { name: "choose_wedding_witness", args: { target_id: g.witness } }),
+    ).toBe(false);
+    expect(receipt.settled as boolean | null).toBe(false);
+    expect(weddingSetup(g.world)!.witnessVotes).toHaveLength(1);
+    expect(weddingGroup(g.world)).toBeNull();
+    closeWeddingSetup(g.world, "failed");
+  } finally {
+    clock.mockRestore();
+  }
+});
+test("chat receipt waits for final delivery, and disagreement records the actually committed second vote", () => {
+  const g = fixture();
+  pair(g);
+  const chat = openRawWeddingTurn(g.world, "chat", 1, 1, () => true);
+  const chatRequest = request(1, "speak_to_partner", "ghost_bride_chat", 1);
+  bindGhostBrideRequest(g.world, chatRequest);
+  const receipt = { settled: null as boolean | null };
+  deferRequestDelivery(chatRequest as never, (accepted) => {
+    receipt.settled = accepted;
+  });
+  expect(commitWeddingTool(chat, { name: "speak_to_partner", args: { text: "" } })).toBe(true);
+  expect(receipt.settled as boolean | null).toBeNull();
+  expect(takeWeddingChat(chat)).not.toBeNull();
+  expect(receipt.settled as boolean | null).toBe(true);
+  expect(turn(g, "chat", g.groom, { name: "speak_to_partner", args: { text: "" } })).toBe(true);
+  expect(
+    turn(g, "witness", 1, { name: "choose_wedding_witness", args: { target_id: g.witness } }),
+  ).toBe(true);
+  const vote = openRawWeddingTurn(g.world, "witness", g.groom, 1, () => true);
+  const voteRequest = request(g.groom, "choose_wedding_witness", "ghost_bride_witness", 1);
+  bindGhostBrideRequest(g.world, voteRequest);
+  receipt.settled = null;
+  deferRequestDelivery(voteRequest as never, (accepted) => {
+    receipt.settled = accepted;
+  });
+  expect(commitWeddingTool(vote, { name: "choose_wedding_witness", args: { target_id: 4 } })).toBe(
+    false,
+  );
+  expect(receipt.settled as boolean | null).toBe(true);
+  expect(weddingSetup(g.world)!.witnessVotes).toHaveLength(2);
+  expect(weddingSetup(g.world)!.status).toBe("failed");
+});
+
+test("a rejected pending chat settles error in its own turn without waiting for global setup close", () => {
+  const g = fixture();
+  pair(g);
+  let current = true;
+  const chat = openRawWeddingTurn(g.world, "chat", 1, 1, () => current);
+  const chatRequest = request(1, "speak_to_partner", "ghost_bride_chat", 1);
+  bindGhostBrideRequest(g.world, chatRequest);
+  const receipt = { settled: null as boolean | null };
+  deferRequestDelivery(chatRequest as never, (accepted) => {
+    receipt.settled = accepted;
+  });
+  expect(commitWeddingTool(chat, { name: "speak_to_partner", args: { text: "" } })).toBe(true);
+  current = false;
+  expect(takeWeddingChat(chat)).toBeNull();
+  closeWeddingTurn(chat);
+  expect(receipt.settled as boolean | null).toBe(false);
+  expect(weddingSetup(g.world)!.status).toBe("paired");
+  expect(() => openRawWeddingTurn(g.world, "chat", g.groom, 1, () => true)).toThrow();
 });

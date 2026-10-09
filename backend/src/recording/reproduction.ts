@@ -22,6 +22,8 @@ import type {
 } from "@ai-werewolf-arena/game-catalog";
 import { types } from "node:util";
 import {
+  assertRequestDelivery,
+  deferRequestDelivery,
   ACTION_STAGES,
   SHERIFF_BADGE_POLICIES,
   TOOL_NAMES,
@@ -575,6 +577,50 @@ export function normalizedRequest(request: ActionRequest): Omit<ActionRequest, "
   return structuredClone(facts);
 }
 
+/** Copy provider data without invoking getters, proxies, or custom serialization. */
+function copyDecisionData(value: unknown, depth = 0): unknown {
+  if (
+    value === null ||
+    typeof value === "string" ||
+    typeof value === "boolean" ||
+    (typeof value === "number" && Number.isFinite(value))
+  )
+    return value;
+  if (
+    !value ||
+    typeof value !== "object" ||
+    depth > 32 ||
+    types.isProxy(value) ||
+    Object.getOwnPropertySymbols(value).length
+  )
+    throw new Error("reproduction_action_not_data");
+  const array = Array.isArray(value),
+    proto = Object.getPrototypeOf(value);
+  if (array ? proto !== Array.prototype : proto !== Object.prototype && proto !== null)
+    throw new Error("reproduction_action_not_plain");
+  const fields = Object.getOwnPropertyDescriptors(value),
+    copy: Record<string, unknown> = {};
+  for (const [key, field] of Object.entries(fields)) {
+    if (array && key === "length") continue;
+    if (!field.enumerable || !Object.hasOwn(field, "value"))
+      throw new Error("reproduction_action_accessor");
+    Object.defineProperty(copy, key, {
+      value: copyDecisionData(field.value, depth + 1),
+      enumerable: true,
+    });
+  }
+  if (!array) return copy;
+  const length = fields.length?.value;
+  if (
+    !Number.isSafeInteger(length) ||
+    length > 1024 ||
+    Object.keys(copy).length !== length ||
+    !Array.from({ length }, (_, i) => Object.hasOwn(copy, i)).every(Boolean)
+  )
+    throw new Error("reproduction_action_array");
+  return Array.from({ length }, (_, i) => copy[i]);
+}
+
 export class ReproductionTrace {
   private readonly decisions: RecordedDecision[] = [];
   private readonly checkpoints: RecordedCheckpoint[] = [];
@@ -607,10 +653,17 @@ export class ReproductionTrace {
     this.onChange();
     try {
       const action = await provider.getAction(request);
-      entry.outcome = { kind: "action", action: structuredClone(action) };
-      entry.settleOrder = ++this.settled;
-      this.onChange();
-      return action;
+      const recordedAction = copyDecisionData(action) as ToolCall | null;
+      assertRequestDelivery(request);
+      const settle = (accepted: boolean) => {
+        entry.outcome = accepted
+          ? { kind: "action", action: recordedAction }
+          : { kind: "error", code: "decision_failed", name: "Error" };
+        entry.settleOrder = ++this.settled;
+        this.onChange();
+      };
+      if (!deferRequestDelivery(request, settle)) settle(true);
+      return recordedAction;
     } catch (error) {
       // Transport error strings may contain credentials. Preserve a reproducible failure, not its raw message.
       entry.outcome = { kind: "error", code: "decision_failed", name: recordedErrorName(error) };

@@ -25,3 +25,5 @@ export * from "./components/victory";
 export * from "./components/lovers";
 export * from "./components/debate_penalty";
 export * from "./components/wall_note";
+
+export * from "./request_delivery";
