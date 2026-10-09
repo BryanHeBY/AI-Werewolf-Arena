@@ -16,11 +16,12 @@ const guardActionStage: NightStageHandler = {
   async execute(ctx): Promise<void> {
     for (const { actorId: guardId, ability } of nightAbilityActors(ctx.world, "guard", ctx.currentDay())) {
       if (ability.activation === "lucky" || ability.activation === "black_market") continue;
-      const day = ctx.currentDay(), scope = captureNightAbilityScope(ctx.world, guardId, ability, day, ctx.isCurrent);
+      const day = ctx.currentDay(), scope = captureNightAbilityScope(ctx.world, guardId, ability, day, () => ctx.isCurrent() && ctx.currentDay() === day);
       if (!scope?.isEligible()) continue;
       const targets = new Map(ctx.world.getAliveEntityIds().map(id => [id, captureNightLife(ctx.world, id)]));
       if (!ctx.world.getAliveEntityIds().includes(guardId) || activeNightAbility(ctx.world.getComponent<RoleComponent>(guardId, COMPONENT.Role), "guard", ctx.currentDay(), ability.id) !== ability) continue;
       const req = ctx.makeRequest(guardId, ["guard"], { stage: "guard", ability_id: ability.id });
+      if (!scope.isEligible()) continue;
       const action = await ctx.actionProvider.getAction(req);
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;

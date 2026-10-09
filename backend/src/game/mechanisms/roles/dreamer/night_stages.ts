@@ -24,6 +24,7 @@ export const DREAMER_NIGHT_STAGE: NightStageHandler = {
       for (let attempt=1;attempt<=3;attempt++) {
         if (!current()) break;
         const request=ctx.makeRequest(actorId,["dream"],{stage:"dreamer",ability_id:ability.id,...(attempt===1?{}:{retry_attempt:attempt-1,retry_max:2})});
+        if (!current()) break;
         const action=await ctx.actionProvider.getAction(request);
         if (!current()) break;
         if (action?.name!=="dream") continue;

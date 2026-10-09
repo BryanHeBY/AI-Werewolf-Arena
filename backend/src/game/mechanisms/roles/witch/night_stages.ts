@@ -36,7 +36,7 @@ const witchActionStage: NightStageHandler = {
     for (const { actorId: witchId, ability } of nightAbilityActors(ctx.world, "potion", ctx.currentDay())) {
       if (ability.activation === "lucky" || ability.activation === "black_market") continue;
       const day = ctx.currentDay();
-      const scope = captureNightAbilityScope(ctx.world, witchId, ability, day, ctx.isCurrent);
+      const scope = captureNightAbilityScope(ctx.world, witchId, ability, day, () => ctx.isCurrent() && ctx.currentDay() === day);
       if (!scope?.isEligible()) continue;
       ability.state.canSelfHeal = ability.state.selfHealRule === WitchSelfHealRule.Always || (ability.state.selfHealRule === WitchSelfHealRule.FirstNightOnly && day === 1);
       const targets=new Map(ctx.world.getAliveEntityIds().map(id=>[id,captureNightLife(ctx.world,id)]));
