@@ -195,7 +195,6 @@ for (const locale of ["zh-CN", "en"] as const)
         new WinConditionRegistry([
           {
             id: WinCondition.SlaughterCity,
-            description: "synthetic goal",
             checkpoints: [checkpoint],
             evaluate: () => victoryDecision(world, target, "scenario_goal"),
           },
@@ -355,7 +354,6 @@ test("final sealing rejects a structurally valid forged membership even from a c
     new WinConditionRegistry([
       {
         id: WinCondition.SlaughterCity,
-        description: "synthetic forged goal",
         evaluate: () => ({
           winner: Camp.Good,
           reason: "scenario_forged",

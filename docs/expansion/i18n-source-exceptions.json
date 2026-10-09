@@ -24,24 +24,6 @@
     "reason": "Exact historical localized phase alias for legacy-record recognition, not generated display text."
   },
   {
-    "file": "backend/src/game/mechanisms/win_conditions/default_specs.ts",
-    "text": "屠城局：好人全灭或狼人全灭。",
-    "count": 1,
-    "reason": "Compatibility-only default win-condition description. Active bilingual game rule summaries use shared rule terms; no rule behavior is defined by this string."
-  },
-  {
-    "file": "backend/src/game/mechanisms/win_conditions/default_specs.ts",
-    "text": "屠边局：神民任一边全灭或狼人全灭。",
-    "count": 1,
-    "reason": "Compatibility-only default win-condition description. Active bilingual game rule summaries use shared rule terms; no rule behavior is defined by this string."
-  },
-  {
-    "file": "backend/src/game/mechanisms/win_conditions/default_specs.ts",
-    "text": "狼人达半：存活狼人数量大于等于存活好人数量时，狼人胜利。",
-    "count": 1,
-    "reason": "Compatibility-only default win-condition description. Active bilingual game rule summaries use shared rule terms; no rule behavior is defined by this string."
-  },
-  {
     "file": "frontend/src/replay/ReplayDisplayControls.tsx",
     "text": "中文",
     "count": 1,

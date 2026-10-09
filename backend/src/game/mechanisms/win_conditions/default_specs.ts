@@ -85,17 +85,14 @@ function evaluateWolfReachHalf(world: World): WinDecision | null {
 export const DEFAULT_WIN_CONDITION_SPECS: WinConditionSpec[] = [
   {
     id: WinCondition.SlaughterCity,
-    description: "屠城局：好人全灭或狼人全灭。",
     evaluate: evaluateSlaughterCity,
   },
   {
     id: WinCondition.SlaughterSide,
-    description: "屠边局：神民任一边全灭或狼人全灭。",
     evaluate: evaluateSlaughterSide,
   },
   {
     id: WinCondition.WolfReachHalf,
-    description: "狼人达半：存活狼人数量大于等于存活好人数量时，狼人胜利。",
     evaluate: evaluateWolfReachHalf,
   },
 ];

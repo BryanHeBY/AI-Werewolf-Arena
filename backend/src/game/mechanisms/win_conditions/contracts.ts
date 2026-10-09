@@ -6,7 +6,6 @@ import { World } from "../../../core/domain/world";
 /** 单个胜利条件规格定义。 */
 export interface WinConditionSpec {
   id: WinCondition;
-  description: string;
   checkpoints?: readonly VictoryCheckpoint[];
   evaluate: (world: World, checkpoint?: VictoryCheckpoint) => WinDecision | null;
 }
