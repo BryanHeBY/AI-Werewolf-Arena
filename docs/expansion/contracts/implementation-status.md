@@ -6,6 +6,10 @@ CLI目录、能力授权、独立玩家/展示DTO、统一回放事实reader、�
 
 完整示例：[AWA十二人PK与警徽选择板子](../../../configs.example/boards/awa_classic_pk_choice_12_v1.json)。它是有限具名AWA产品规则，不是完整网易或赛事镜像。中/英两局同局实际录制包含竞选PK、放逐PK再次平票、次夜警长死亡和自主警徽移交，严格Tape复现一致。默认板子及省略参数保留原行为，未覆盖本地configs。
 
+## 当前 P8–P10 接续（024a933之后）
+
+用户已验收上一批整改并授权普通推送，远端main核验为024a933；随后明确授权完成全部剩余任务。当前持续实施41角色、有限事件/道具与P10，具体约束见[p8-p10-continuation.md](p8-p10-continuation.md)。下方未验收/未push及P8–P10未开始说明保留对应历史批次语境，不代表本次授权边界。当前新角色尚未启用，后续门禁按新源码独立记录；不将历史2389/223/82当未来角色验收。
+
 ## 本次 Seer/摄梦/狼美人实施与门禁（本提交，基线 ef2f48f）
 
 原目录 main，兼容AWA默认。Seer已用eb4f026实际流水线采集并保存required请求约束，可重复脚本与六入口三夜Tape验证一致。新增 dreamer.protectionPolicy 两种版本；新增 wolf_beauty.deathLinkPolicy 的AWA默认/S7放逐原生猎人枪版本。2019空连/骑士抑制作为独立已支持约束，复合死因抑制优先与扩展夜伤免疫明确是工程补全；不冒称完整官方preset。
@@ -101,7 +105,7 @@ Chromium完整门禁在`90cb845`完成；其后`52103ea`仅改变后端警徽请
 - `52103ea`：警徽请求明确`allow_fallback=false`，SDK/ACP空回复及非法回复不得代选继任者；8项双语回归验证fallback未调用、撕徽及权限回收。
 - `78dc6a0`：独立机械格式提交，便于从功能差异隔开审查。`3496031` / `01e74ca`：播放输入稳定和无音轨静音启动。
 
-最新本机证据：`/tmp/arena-backend-final-summary.json`、`/tmp/arena-backend-final-shards-manifest.json`、`/tmp/arena-backend-final-shard-{1..4}.log`及对应`.status.json`；前端`/tmp/arena-badge-frontend-tests.log`，浏览器`/tmp/arena-current-full-browser.log`。类型/lint/格式日志为`/tmp/arena-final-{check,lint,format}.log`，构建为`/tmp/arena-final-build-{backend,frontend}.log`。首轮完整日志`/tmp/arena-current-full-backend.log`保留失败及修复历史。临时日志不保证长期保留，提交内测试和源码是可复现交付。
+该历史批次本机证据：`/tmp/arena-backend-final-summary.json`、`/tmp/arena-backend-final-shards-manifest.json`、`/tmp/arena-backend-final-shard-{1..4}.log`及对应`.status.json`；前端`/tmp/arena-badge-frontend-tests.log`，浏览器`/tmp/arena-current-full-browser.log`。类型/lint/格式日志为`/tmp/arena-final-{check,lint,format}.log`，构建为`/tmp/arena-final-build-{backend,frontend}.log`。首轮完整日志`/tmp/arena-current-full-backend.log`保留失败及修复历史。临时日志不保证长期保留，提交内测试和源码是可复现交付。
 
 ## 来源与验证边界
 

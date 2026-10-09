@@ -427,3 +427,7 @@ Black完整功能commit `83cac45`；赠枪底座 `5c41428`、死亡实例许可 
 最终全backend release **2027测试/184573断言/182文件/0失败**，type/deps/boundaries/i18n（57精确例外）/smoke全部exit0；前端173测试/1496断言、type/build及全78实际Chromium通过，两Black双语PNG root/L独立目检。A、R/T、L/D复核正式文档和全量终态后0阻断。详细范围见[阶段验收](reviews/p7-activation.md)，下一Agent从[交接](handoff-p7.md)进入。
 
 本轮止于P7，当前23 verified/41 planned。P8–P10、64角色/22机制全目标、定时1000seed、发布长局/T6未完成，不访问外部模型或修改用户认证；保留后续指令入口。
+
+## 2026-10-09：P8–P10接续授权与范围更新
+
+整改功能05cd47b、浏览器证据024a933已获用户验收并普通推送，随后授权“完成所有剩余任务，避免停下来询问”。恢复41角色（P8 3/P9 38）、有限首组事件道具及P10；不重复觉醒隐狼或扩大长期候选。执行契约见[持续实施](contracts/p8-p10-continuation.md)。本笔只更新docs执行边界，P8三角色来源核验/规则卡继续，目录仍23verified/41planned。main线性小提交，本次新提交暂不推送，不读用户configs/秘密或无界调用模型。
