@@ -20,7 +20,7 @@ export interface TurnConstraintEvaluation {
 
 /** Transport retries may continue, but a failed mandatory choice cannot be supplied by a fallback. */
 export function allowsActionFallback(request: ActionRequest): boolean {
-  return request.context.allow_fallback !== false;
+  return request.context.action_failure_policy !== "error" && request.context.allow_fallback !== false;
 }
 
 /** Projects typed engine constraints into player prompt and tool-loop rules. */

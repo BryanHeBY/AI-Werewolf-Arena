@@ -130,7 +130,12 @@ export class AcpActionProvider implements ActionProvider {
     this.pending.add(task);
     void this.runScheduled(bounded, startedAt, controller.signal).then(resolve, reject);
     const cleanup = () => { clearTimeout(timer); this.controllers.delete(request.actorId); this.pending.delete(task); };
-    return task.then(action => { cleanup(); return this.closed ? null : action; }, error => { cleanup(); throw error; });
+    return task.then(action => {
+      cleanup();
+      if (this.closed) return this.closedResult(request);
+      if (bounded.context.action_failure_policy === "error" && (controller.signal.aborted || bounded.deadlineAtMs <= Date.now())) throw new Error("action_turn_failed");
+      return action;
+    }, error => { cleanup(); throw error; });
   }
 
   private async runScheduled(request: ActionRequest, startedAt: number, signal: AbortSignal): Promise<ToolCall | null> {
@@ -140,7 +145,7 @@ export class AcpActionProvider implements ActionProvider {
       this.observer.trace(`request_start player=${request.actorId} phase=${request.phase} tools=${request.allowedTools.join(",")} timeout_ms=${Math.max(0, request.deadlineAtMs! - Date.now())}`);
       return await this.runTurn(request, startedAt, signal);
     } catch (error) {
-      if (error === this.closeController.signal.reason) return null;
+      if (error === this.closeController.signal.reason) return this.closedResult(request);
       // No model/session starts after a queue deadline. The existing local
       // baseline branch still owns the immediate final choice.
       if (!release && describeError(error).code === "request_timeout") return this.runTurn(request, startedAt, signal);
@@ -154,7 +159,7 @@ export class AcpActionProvider implements ActionProvider {
   }
 
   private async runTurn(request: ActionRequest, startedAt: number, signal: AbortSignal): Promise<ToolCall | null> {
-    if (this.closed) return null;
+    if (this.closed) return this.closedResult(request);
     const deadlineAtMs = request.deadlineAtMs!;
     let session: AcpSession | undefined;
     let turn: ReturnType<AcpTurnRegistry["openTurn"]> | undefined;
@@ -162,6 +167,7 @@ export class AcpActionProvider implements ActionProvider {
     let auditTrace: AcpSessionAuditTrace | undefined;
     let fallbackReason = "model_declined_required_action";
     let requestError: ErrorDiagnostic | undefined;
+    let actionFailureReason: string | undefined;
     try {
       if (this.sessions.isClosed || deadlineAtMs <= Date.now()) throw new Error("acp_deadline_elapsed");
       session = await awaitWithAbort(this.sessions.getOrCreate(request.actorId, deadlineAtMs, () => {
@@ -177,10 +183,10 @@ export class AcpActionProvider implements ActionProvider {
       turn = this.registry.openTurn(request, session.sessionId);
       built = this.buildTurnPrompt(request, turn.turnId, true);
       this.observer.prompt([{ role: "user", content: built.prompt }], request);
-      if (this.closed) return null;
+      if (this.closed) return this.closedResult(request);
       const promptTask = session.prompt(built.prompt);
       const outcome = await awaitWithAbort(this.waitForAction(turn.action, promptTask, request), signal);
-      if (this.closed) return null;
+      if (this.closed) return this.closedResult(request);
       this.registry.closeTurn(turn.sessionId);
       if (outcome.reason === "request_timeout" || outcome.reason === "deadline_skip") {
         await this.sessions.discard(request.actorId);
@@ -188,7 +194,7 @@ export class AcpActionProvider implements ActionProvider {
         let cancelled = true;
         try { await awaitBeforeDeadline(() => session!.cancel(), Math.min(deadlineAtMs, Date.now() + 300), signal); }
         catch (error) {
-          if (error === this.closeController.signal.reason) return null;
+          if (error === this.closeController.signal.reason) return this.closedResult(request);
           cancelled = false;
           // A bounded cancellation timeout triggers force reclamation. A real
           // RPC/adapter failure remains owned and is reported by final close.
@@ -198,10 +204,10 @@ export class AcpActionProvider implements ActionProvider {
           await this.sessions.discard(request.actorId);
         }
       }
-      if (this.closed) return null;
+      if (this.closed) return this.closedResult(request);
       if (signal.aborted || deadlineAtMs <= Date.now()) throw signal.reason ?? new Error("acp_deadline_elapsed");
       auditTrace = session.takeAuditTrace?.();
-      if (this.closed) return null;
+      if (this.closed) return this.closedResult(request);
       if (outcome.action) {
         this.observer.trace(`request_ok player=${request.actorId} phase=${request.phase} action=${outcome.action.name} args=${JSON.stringify(outcome.action.args)} elapsed_ms=${Date.now() - startedAt}`);
         this.recordPlayerRound(request, built, {
@@ -209,22 +215,28 @@ export class AcpActionProvider implements ActionProvider {
           auditTrace,
           elapsedMs: Date.now() - startedAt,
         });
-        return this.closed ? null : outcome.action;
+        this.rejectLateDelivery(request, built, startedAt);
+        return this.closed ? this.closedResult(request) : outcome.action;
       }
-      if (outcome.reason === "model_declined_required_action" && resolveTurnConstraints(request).minValidActions === 0) {
+      if (outcome.reason === "model_declined_required_action" && resolveTurnConstraints(request).minValidActions === 0 &&
+          (request.context.action_failure_policy !== "error" || turn.outcome.rejectedActions === 0)) {
         this.observer.trace(`request_none player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt}`);
         this.recordPlayerRound(request, built, { action: null, auditTrace, elapsedMs: Date.now() - startedAt });
+        this.rejectLateDelivery(request, built, startedAt);
         return null;
       }
-      fallbackReason = outcome.reason ?? fallbackReason;
-      requestError = outcome.requestError;
+      if (request.context.action_failure_policy === "error" && turn.outcome.rejectedActions) {
+        fallbackReason = turn.outcome.failureCode ?? "action_turn_failed";
+        actionFailureReason = fallbackReason;
+      } else fallbackReason = outcome.reason ?? fallbackReason;
+      requestError = outcome.requestError ?? requestError;
     } catch (error) {
       await this.sessions.discard(request.actorId);
-      if (error === this.closeController.signal.reason) return null;
+      if (error === this.closeController.signal.reason) return this.closedResult(request);
       fallbackReason = "runtime_error";
       requestError = describeError(error);
       this.observer.trace(`request_transport_fail player=${request.actorId} phase=${request.phase} err=${formatErrorDiagnostic(error, this.observer.locale)}`);
-      if (this.closed) return null;
+      if (this.closed) return this.closedResult(request);
       safeRecordLogicOp({
         scope: "llm_action_provider",
         op: "action_provider_error",
@@ -239,18 +251,18 @@ export class AcpActionProvider implements ActionProvider {
         this.registry.closeTurn(turn.sessionId);
       }
     }
-    if (this.closed) return null;
+    if (this.closed) return this.closedResult(request);
     built ??= this.buildTurnPrompt(request, turn?.turnId ?? "unopened", false);
     auditTrace ??= session?.takeAuditTrace?.();
-    if (this.closed) return null;
+    if (this.closed) return this.closedResult(request);
     let fallback: ToolCall | null;
     try { fallback = allowsActionFallback(request) ? await awaitBeforeDeadline(() => this.fallbackProvider.getAction(request), deadlineAtMs, this.closeController.signal) : null; }
     catch (error) {
-      if (error === this.closeController.signal.reason) return null;
+      if (error === this.closeController.signal.reason) return this.closedResult(request);
       if (!(error instanceof TurnDeadlineElapsed)) throw error;
       fallback = null; fallbackReason = "deadline_skip";
     }
-    if (this.closed) return null;
+    if (this.closed) return this.closedResult(request);
     this.observer.trace(`request_recovered player=${request.actorId} phase=${request.phase} reason=${fallbackReason} fallback=${fallback?.name ?? "none"}`);
     this.recordPlayerRound(request, built, {
       action: fallback,
@@ -258,20 +270,22 @@ export class AcpActionProvider implements ActionProvider {
       elapsedMs: Date.now() - startedAt,
       fallbackReason,
       requestError,
+      actionFailureReason,
     });
-    return this.closed ? null : fallback;
+    if (!this.closed && request.context.action_failure_policy === "error" && !fallback) throw new Error("action_turn_failed");
+    return this.closed ? this.closedResult(request) : fallback;
   }
 
   async close(): Promise<void> {
     this.closed = true;
-    this.closeController.abort(new Error("acp_provider_closed"));
+    this.closeController.abort(new DOMException("acp_provider_closed", "AbortError"));
     this.scheduler.close(this.closeController.signal.reason);
     this.registry.close();
     for (const controller of this.controllers.values()) controller.abort(this.closeController.signal.reason);
     const failures: unknown[] = [];
     const closing = this.sessions.close().catch(error => { failures.push(error); });
     const settled = await Promise.allSettled([...this.pending]);
-    for (const result of settled) if (result.status === "rejected") failures.push(result.reason);
+    for (const result of settled) if (result.status === "rejected" && result.reason !== this.closeController.signal.reason) failures.push(result.reason);
     await closing;
     this.eventCursor.clear(); this.sessionPromptByActor.clear();
     if (failures.length) throw new AggregateError(failures, "acp_provider_close_failed");
@@ -320,6 +334,15 @@ export class AcpActionProvider implements ActionProvider {
       ? configured
       : Math.max(0, request.deadlineAtMs - Date.now());
     return Math.min(configured, remaining);
+  }
+  private closedResult(request: ActionRequest): null {
+    if (request.context.action_failure_policy === "error") throw this.closeController.signal.reason;
+    return null;
+  }
+  private rejectLateDelivery(request: ActionRequest, built: AcpTurnPromptBuild, startedAt: number): void {
+    if (request.context.action_failure_policy !== "error" || (request.deadlineAtMs ?? Infinity) > Date.now()) return;
+    this.recordPlayerRound(request, built, { action: null, elapsedMs: Date.now() - startedAt, requestError: { code: "request_timeout" } });
+    throw new Error("action_turn_failed");
   }
 
   /** 创建 session 时复用 LLM provider 的既有身份、规则和板子系统提示。 */
@@ -374,6 +397,7 @@ export class AcpActionProvider implements ActionProvider {
       elapsedMs: number;
       fallbackReason?: string;
       requestError?: ErrorDiagnostic;
+      actionFailureReason?: string;
     },
   ): void {
     if (this.closed) return;
@@ -419,7 +443,7 @@ export class AcpActionProvider implements ActionProvider {
       finalAction: input.action,
       ...(input.requestError
         ? { retryTrace: [{ attempt: 0, status: "request_error", reason: input.requestError.code, diagnostic: input.requestError }] }
-        : {}),
+        : input.actionFailureReason ? { retryTrace: [{ attempt: 0, status: "no_valid_action", reason: input.actionFailureReason }] } : {}),
       ...(input.fallbackReason
         ? {
             fallback: {

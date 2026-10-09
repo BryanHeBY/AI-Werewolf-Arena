@@ -26,6 +26,8 @@ export interface AiSdkClientOptions {
   maxTokens?: number;
   reasoningEffort?: string;
   thinkingEnabled?: boolean;
+  /** Private transport dependency, never a JSON runtime configuration field. */
+  fetch?: typeof fetch;
 }
 
 export interface ChatResult {
@@ -71,6 +73,7 @@ export class AiSdkClient implements ChatModelClient {
         apiKey: options.apiKey,
         baseURL: options.baseURL,
         name: this.providerName,
+        fetch: options.fetch,
       });
       this.model = provider(options.model);
       return;
@@ -79,6 +82,7 @@ export class AiSdkClient implements ChatModelClient {
     const provider = createOpenAICompatible({
       name: this.providerName,
       apiKey: options.apiKey,
+      fetch: options.fetch,
       baseURL: options.baseURL || "https://api.openai.com/v1",
       transformRequestBody: this.thinkingEnabled
         ? (body) => this.transformOpenAICompatibleRequest(body)
@@ -119,10 +123,12 @@ export class AiSdkClient implements ChatModelClient {
     finalAction: T | null;
     assistantText: string;
     thinkingTrace: ToolLoopStepTrace[];
+    failedToolInvocations: Array<{ name: string; id: string }>;
   }> {
     let finalAction: T | null = null;
     let stopped = false;
     const traces: ToolLoopStepTrace[] = [];
+    const failedToolInvocations: Array<{ name: string; id: string }> = [];
     const toolDefinitions: Record<string, any> = {};
 
     for (const schema of schemas) {
@@ -185,6 +191,7 @@ export class AiSdkClient implements ChatModelClient {
         });
       },
       onStepFinish: (step) => {
+        for (const call of step.toolCalls) if ("invalid" in call && call.invalid === true) failedToolInvocations.push({ name: call.toolName, id: call.toolCallId });
         const current = traces.at(-1);
         if (current) {
           current.assistantText = step.text;
@@ -208,6 +215,7 @@ export class AiSdkClient implements ChatModelClient {
       finalAction,
       assistantText: result?.steps.at(-1)?.text ?? result?.text ?? traces.at(-1)?.assistantText ?? "",
       thinkingTrace: traces,
+      failedToolInvocations,
     };
   }
 

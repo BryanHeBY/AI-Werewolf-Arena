@@ -35,6 +35,7 @@ interface NativeAttempt {
   deadlineExceeded?: boolean;
   diagnostic?: ErrorDiagnostic;
   assistantText?: string;
+  refusalReason?: string;
 }
 
 /** Application service coordinating one native-tool LLM turn. */
@@ -59,7 +60,12 @@ export class LlmTurnOrchestrator {
     this.pending.add(task);
     void this.runTurn(bounded, controller.signal, startedAt).then(resolve, reject);
     const cleanup = () => { clearTimeout(timer); this.controllers.delete(controller); this.pending.delete(task); };
-    return task.then(action => { cleanup(); return this.closed ? null : action; }, error => { cleanup(); throw error; });
+    return task.then(action => {
+      cleanup();
+      if (this.closed) return this.closedResult(request);
+      if (bounded.context.action_failure_policy === "error" && (controller.signal.aborted || bounded.deadlineAtMs <= Date.now())) throw new Error("action_turn_failed");
+      return action;
+    }, error => { cleanup(); throw error; });
   }
 
   async close(): Promise<void> {
@@ -68,7 +74,7 @@ export class LlmTurnOrchestrator {
     this.options.scheduler.close(this.closeController.signal.reason);
     for (const controller of this.controllers) controller.abort(this.closeController.signal.reason);
     const settled = await Promise.allSettled([...this.pending]);
-    const failures = settled.flatMap(result => result.status === "rejected" ? [result.reason] : []);
+    const failures = settled.flatMap(result => result.status === "rejected" && result.reason !== this.closeController.signal.reason ? [result.reason] : []);
     if (failures.length) throw new AggregateError(failures, "llm_turns_failed_during_close");
   }
 
@@ -80,17 +86,22 @@ export class LlmTurnOrchestrator {
     let release: (() => void) | undefined;
     try {
       release = await this.options.scheduler.acquire(request, role, signal);
-      if (this.closed) return null;
+      if (this.closed) return this.closedResult(request);
       if (signal.aborted || this.effectiveTimeout(request.deadlineAtMs) <= 0) {
         return this.finishWithFallback(request, prompt, "deadline_skip");
       }
       this.options.observer.trace(`request_start player=${request.actorId} phase=${request.phase} tools=${request.allowedTools.join(",")} timeout_ms=${this.effectiveTimeout(request.deadlineAtMs)}`);
       this.options.observer.prompt(prompt.messages, request);
       const action = await this.runNative(client, request, prompt, startedAt, signal);
-      return this.closed ? null : action;
+      if (!this.closed && request.context.action_failure_policy === "error" && (signal.aborted || this.effectiveTimeout(request.deadlineAtMs) <= 0)) {
+        return this.finishWithFallback(request, prompt, "deadline_skip", {
+          retryTrace: [{ attempt: 0, status: "request_error", reason: "request_timeout", diagnostic: { code: "request_timeout" } }],
+        });
+      }
+      return this.closed ? this.closedResult(request) : action;
     } catch (error) {
       const diagnostic = describeError(error);
-      if (this.closed && (error === this.closeController.signal.reason || error === signal.reason)) return null;
+      if (this.closed && (error === this.closeController.signal.reason || error === signal.reason)) return this.closedResult(request);
       // Native transport failures are already handled in runNative. A fallback
       // or recording failure must propagate once, never invoke fallback twice.
       if (release) throw error;
@@ -121,7 +132,10 @@ export class LlmTurnOrchestrator {
           prompt.turnId,
           signal,
         );
-        return { action: result.action, failed: false, assistantText: result.thinkingText };
+        if (request.context.action_failure_policy === "error" && (signal.aborted || this.effectiveTimeout(request.deadlineAtMs) <= 0)) {
+          return { action: null, failed: false, deadlineExceeded: true, diagnostic: { code: "request_timeout" } };
+        }
+        return { action: result.action, failed: result.failureCode !== undefined, refusalReason: result.failureCode, assistantText: result.thinkingText };
       } catch (error) {
         const diagnostic = describeError(error);
         this.options.observer.trace(
@@ -132,17 +146,19 @@ export class LlmTurnOrchestrator {
     };
 
     const first = await attempt(prompt.messages);
-    if (this.closed) return null;
-    if (first.deadlineExceeded) return this.finishWithFallback(request, prompt, "deadline_skip");
+    if (this.closed) return this.closedResult(request);
+    if (first.deadlineExceeded) return this.finishWithFallback(request, prompt, "deadline_skip", {
+      ...(request.context.action_failure_policy === "error" ? { retryTrace: [{ attempt: 0, status: "request_error" as const, reason: "request_timeout", diagnostic: first.diagnostic ?? { code: "request_timeout" as const } }] } : {}),
+    });
     if (first.failed) {
       retryTrace.push({
         attempt: 0,
-        status: "request_error",
-        reason: first.diagnostic?.code,
+        status: first.refusalReason ? "no_valid_action" : "request_error",
+        reason: first.refusalReason ?? first.diagnostic?.code,
         diagnostic: first.diagnostic,
         assistantText: first.assistantText,
       });
-      return this.finishWithFallback(request, prompt, "runtime_error", {
+      return this.finishWithFallback(request, prompt, first.refusalReason ? "model_declined_required_action" : "runtime_error", {
         thinkingText: first.assistantText,
         retryTrace,
       });
@@ -184,7 +200,7 @@ export class LlmTurnOrchestrator {
       retryTrace.push(trace);
       this.options.observer.prompt(messages, request);
       const result = await attempt(messages);
-      if (this.closed) return null;
+      if (this.closed) return this.closedResult(request);
       trace.assistantText = result.assistantText;
       if (result.deadlineExceeded) {
         trace.reason = result.diagnostic?.code;
@@ -195,10 +211,10 @@ export class LlmTurnOrchestrator {
         });
       }
       if (result.failed) {
-        trace.status = "request_error";
-        trace.reason = result.diagnostic?.code;
+        trace.status = result.refusalReason ? "no_valid_action" : "request_error";
+        trace.reason = result.refusalReason ?? result.diagnostic?.code;
         trace.diagnostic = result.diagnostic;
-        return this.finishWithFallback(request, prompt, "runtime_error", {
+        return this.finishWithFallback(request, prompt, result.refusalReason ? "model_declined_required_action" : "runtime_error", {
           thinkingText: result.assistantText,
           retryTrace,
         });
@@ -224,11 +240,11 @@ export class LlmTurnOrchestrator {
     startedAt: number,
     extras: { thinkingText?: string; retryTrace?: PlayerRetryTraceEntry[]; retryAttempt?: number } = {},
   ): Promise<ToolCall | null> {
-    if (this.closed) return null;
+    if (this.closed) return this.closedResult(request);
     this.options.observer.trace(
       `${extras.retryAttempt ? "request_ok_retry" : "request_ok"} player=${request.actorId} phase=${request.phase}${extras.retryAttempt ? ` attempt=${extras.retryAttempt}/3` : ""} action=${action.name} args=${JSON.stringify((action as any).args ?? {})} elapsed_ms=${Date.now() - startedAt}`,
     );
-    if (this.closed) return null;
+    if (this.closed) return this.closedResult(request);
     this.options.recorder.record(request, prompt, {
       actionMode: "tool_call",
       toolCalls: this.toToolCalls(action),
@@ -236,7 +252,7 @@ export class LlmTurnOrchestrator {
       thinkingText: extras.thinkingText,
       ...(extras.retryTrace?.length ? { retryTrace: [...extras.retryTrace] } : {}),
     });
-    return this.closed ? null : action;
+    return this.closed ? this.closedResult(request) : action;
   }
 
   private async finishWithFallback(
@@ -245,15 +261,15 @@ export class LlmTurnOrchestrator {
     reason: FallbackReason,
     extras: Pick<PlayerRoundOutcome, "thinkingText" | "retryTrace"> = {},
   ): Promise<ToolCall | null> {
-    if (this.closed) return null;
+    if (this.closed) return this.closedResult(request);
     let action: ToolCall | null;
     try { action = await this.options.fallbackPolicy.resolve(request, reason, this.closeController.signal); }
     catch (error) {
-      if (error === this.closeController.signal.reason) return null;
+      if (error === this.closeController.signal.reason) return this.closedResult(request);
       if (!(error instanceof FallbackDeadlineElapsed)) throw error;
       action = null; reason = "deadline_skip";
     }
-    if (this.closed) return null;
+    if (this.closed) return this.closedResult(request);
     this.options.recorder.record(request, prompt, {
       actionMode: action ? "tool_call" : "none",
       toolCalls: this.toToolCalls(action),
@@ -265,7 +281,8 @@ export class LlmTurnOrchestrator {
         ...(action ? { action: { name: action.name, args: (action as any).args ?? {} } } : {}),
       },
     });
-    return this.closed ? null : action;
+    if (!this.closed && request.context.action_failure_policy === "error" && !action) throw new Error("action_turn_failed");
+    return this.closed ? this.closedResult(request) : action;
   }
 
   private toToolCalls(action?: ToolCall | null) {
@@ -276,6 +293,10 @@ export class LlmTurnOrchestrator {
 
   private requiresAction(request: ActionRequest): boolean {
     return resolveTurnConstraints(request).minValidActions > 0;
+  }
+  private closedResult(request: ActionRequest): null {
+    if (request.context.action_failure_policy === "error") throw this.closeController.signal.reason;
+    return null;
   }
 
   private effectiveTimeout(deadlineAtMs?: number): number {

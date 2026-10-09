@@ -19,10 +19,7 @@ import { awaitWithAbort } from "../../runtime/turn_deadline";
 interface ToolLoopActionResult {
   action: ToolCall | null;
   thinkingText?: string;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return value !== null && typeof value === "object" && !Array.isArray(value);
+  failureCode?: "turn_invalid_action_limit" | "action_turn_failed";
 }
 
 /** Native SDK implementation of the shared werewolf game tool protocol. */
@@ -62,6 +59,7 @@ export class SdkGameToolLoop {
     const controller = new AbortController();
     let timer: NodeJS.Timeout | null = null;
     const turn = new ActionTurn(this.reception, request, turnId);
+    let protocolRejected = false;
     const abort = () => { turn.close(); controller.abort(signal?.reason); };
     if (signal?.aborted) abort();
     else signal?.addEventListener("abort", abort, { once: true });
@@ -90,16 +88,12 @@ export class SdkGameToolLoop {
             let actionArgs = invocation.args;
             if (invocation.name === "submit_action") {
               if (invocation.args.turn_id !== turnId) {
+                protocolRejected = true;
                 return { toolResult: this.recordRefusal(request, invocation.name, invocation.args, turn.authorize(invocation.args.turn_id)!) };
               }
-              if (typeof invocation.args.action !== "string") {
-                return { toolResult: toolFailure(this.world.locale, "invalid_submit_action_arguments") };
-              }
-              actionName = invocation.args.action;
-              if (!isRecord(invocation.args.arguments)) {
-                return { toolResult: toolFailure(this.world.locale, "invalid_submit_action_arguments") };
-              }
-              actionArgs = invocation.args.arguments;
+              const receipt = turn.submit(turnId, invocation.args.action, invocation.args.arguments);
+              if (!receipt.ok) return { toolResult: this.recordRefusal(request, invocation.name, invocation.args, receipt) };
+              return { toolResult: receipt, finalAction: turn.action! };
             }
             const receipt = turn.submit(turnId, actionName, actionArgs);
             if (!receipt.ok) {
@@ -134,6 +128,8 @@ export class SdkGameToolLoop {
       }
       this.observer.thinking(result.thinkingTrace ?? [], request);
       this.observer.rawResponse(result.assistantText ?? "", request);
+      const failedActionInput = result.failedToolInvocations?.some(call => call.name !== "get_game_schema" && call.name !== "report_bug") === true;
+      if (!turn.action && request.context.action_failure_policy === "error" && (turn.outcome.rejectedActions || protocolRejected || failedActionInput)) return { action: null, failureCode: turn.outcome.failureCode ?? "action_turn_failed", ...(thinkingText ? { thinkingText } : {}) };
       return {
         action: turn.action,
         ...(thinkingText ? { thinkingText } : {}),

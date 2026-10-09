@@ -42,6 +42,10 @@ export class WerewolfMcpControlServer {
 
   private dispatch(sessionId: string, tool: unknown, args: unknown): unknown {
     if (tool === "get_game_schema") return this.registry.getSchema();
+    if (tool === "reject_submission_input") {
+      const turnId = args && typeof args === "object" && !Array.isArray(args) ? (args as Record<string, unknown>).turn_id : undefined;
+      return this.registry.rejectSubmissionInput(sessionId, turnId);
+    }
     if (tool === "submit_action") {
       if (!args || typeof args !== "object") return toolFailure(this.registry.locale, "invalid_submit_action_arguments");
       return this.registry.submitAction(sessionId, args as McpSubmitActionParams);

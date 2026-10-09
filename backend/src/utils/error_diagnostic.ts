@@ -11,6 +11,7 @@ function nativeExceptionName(value: unknown): unknown {
   try { return domNameGetter?.call(value); } catch { return undefined; }
 }
 const internalCodes: Readonly<Record<string, ErrorDiagnosticCode>> = Object.freeze({
+  action_turn_failed: "action_failed", turn_invalid_action_limit: "action_failed",
   acp_deadline_elapsed: "request_timeout", acp_initialize_timeout: "request_timeout", audit_acp_timeout: "request_timeout",
   acp_initialization_timeout: "request_timeout", request_deadline_elapsed: "request_timeout",
   acp_initialization_aborted: "request_aborted", audit_acp_turn_closed: "request_aborted", audit_acp_executor_closed: "request_aborted",

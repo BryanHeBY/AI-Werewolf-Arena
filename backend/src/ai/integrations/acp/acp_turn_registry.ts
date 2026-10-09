@@ -36,6 +36,7 @@ export interface AcpPendingTurn {
   sessionId: string;
   turnId: string;
   action: Promise<ToolCall | null>;
+  readonly outcome: ActionTurn["outcome"];
 }
 
 interface PendingTurn extends AcpPendingTurn {
@@ -83,15 +84,17 @@ export class AcpTurnRegistry {
     const action = new Promise<ToolCall | null>((done) => {
       resolve = done;
     });
+    const owner = new ActionTurn(this.reception, request, turnId);
     this.pendingBySession.set(sessionId, {
       sessionId,
       turnId,
       request,
-      owner: new ActionTurn(this.reception, request, turnId),
+      owner,
+      get outcome() { return owner.outcome; },
       action,
       resolve,
     });
-    return { sessionId, turnId, action };
+    return { sessionId, turnId, action, get outcome() { return owner.outcome; } };
   }
 
   closeTurn(sessionId: string): void {
@@ -114,11 +117,21 @@ export class AcpTurnRegistry {
       return toolFailure(this.locale, "turn_not_open_or_session_invalid");
     }
     const result = pending.owner.submit(input.turn_id, input.action, input.arguments);
-    if (!result.ok) return result;
+    if (!result.ok) {
+      if (pending.owner.outcome.failureCode) { this.pendingBySession.delete(sessionId); pending.owner.close(); pending.resolve(null); }
+      return result;
+    }
 
     // 接受一次即关闭当前窗口；后续请求只能拿到明确拒绝，不能污染下一阶段。
     this.pendingBySession.delete(sessionId);
     pending.resolve(pending.owner.action);
+    return result;
+  }
+  rejectSubmissionInput(sessionId: string, turnId: unknown): McpBridgeResult {
+    const pending = this.pendingBySession.get(sessionId);
+    if (!pending) return toolFailure(this.locale, "turn_not_open_or_session_invalid");
+    const result = pending.owner.rejectSubmissionInput(turnId);
+    if (pending.owner.outcome.failureCode) { this.pendingBySession.delete(sessionId); pending.owner.close(); pending.resolve(null); }
     return result;
   }
 

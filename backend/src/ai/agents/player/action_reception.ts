@@ -92,6 +92,7 @@ export class ActionReception {
 export class ActionTurn {
   private selected: ToolCall | null = null;
   private closed = false;
+  private rejectedActions = 0;
   constructor(
     private readonly reception: ActionReception,
     readonly request: ActionRequest,
@@ -99,12 +100,16 @@ export class ActionTurn {
   ) {}
 
   get action(): ToolCall | null { return this.selected ? structuredClone(this.selected) : null; }
+  get outcome(): { rejectedActions: number; failureCode: "turn_invalid_action_limit" | null } {
+    return { rejectedActions: this.rejectedActions, failureCode: !this.selected && this.request.context.action_failure_policy === "error" && this.rejectedActions >= 3 ? "turn_invalid_action_limit" : null };
+  }
 
   authorize(turnId: unknown, tool = "submit_action"): Extract<ActionReceipt, { ok: false }> | null {
     const locale = this.reception.world.locale;
     if (this.closed || this.selected || (this.request.deadlineAtMs ?? Infinity) <= Date.now()) {
       return toolFailure(locale, "turn_not_open_or_session_invalid");
     }
+    if (this.outcome.failureCode) return toolFailure(locale, this.outcome.failureCode);
     if (turnId !== this.turnId) {
       return { ...toolFailure(locale, "turn_id_mismatch"), expected_turn_id: this.turnId,
         received_turn_id: typeof turnId === "string" ? turnId : null,
@@ -117,12 +122,20 @@ export class ActionTurn {
     const refusal = this.authorize(turnId);
     if (refusal) return refusal;
     if (typeof name !== "string" || args === null || typeof args !== "object" || Array.isArray(args)) {
+      this.rejectedActions++;
       return toolFailure(this.reception.world.locale, "invalid_submit_action_arguments");
     }
     const result = this.reception.validate(this.request, name, args);
-    if (!result.ok) return result;
+    if (!result.ok) { this.rejectedActions++; return result; }
     this.selected = result.action;
     return { ok: true, accepted: true, applied: false, action: result.action.name };
+  }
+  /** Schema rejection may happen before tool execution, but only the addressed live turn owns it. */
+  rejectSubmissionInput(turnId: unknown): ActionReceipt {
+    const refusal = this.authorize(turnId);
+    if (refusal) return refusal;
+    this.rejectedActions++;
+    return toolFailure(this.reception.world.locale, "invalid_submit_action_arguments");
   }
 
   close(): void { this.closed = true; }

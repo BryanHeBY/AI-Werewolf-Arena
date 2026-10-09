@@ -3,7 +3,7 @@ import { assertField, isRecord } from "./validation";
 /** Diagnostic facts are a whitelist, never a serialized Error or provider response. */
 export const ERROR_DIAGNOSTIC_CODES = [
   "transport_error", "request_timeout", "request_aborted", "rate_limited", "authentication_failed",
-  "permission_denied", "model_unavailable", "network_error", "filesystem_error",
+  "permission_denied", "model_unavailable", "network_error", "filesystem_error", "action_failed",
 ] as const;
 export type ErrorDiagnosticCode = typeof ERROR_DIAGNOSTIC_CODES[number];
 export const FILE_ERROR_CODES = ["EACCES", "EPERM", "ENOENT", "ENOSPC", "EROFS", "EEXIST", "EMFILE", "ENFILE", "EIO"] as const;

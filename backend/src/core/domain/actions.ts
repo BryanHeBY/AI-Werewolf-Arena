@@ -69,6 +69,8 @@ export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */
 export interface ActionRequestExtras {
+  /** Explicit strict turns distinguish a clean optional wait from a failed submission/transport. */
+  action_failure_policy?: "error";
   /** Some mandatory choices must fail explicitly instead of accepting a fabricated fallback. */
   allow_fallback?: boolean;
   ability_id?: string;

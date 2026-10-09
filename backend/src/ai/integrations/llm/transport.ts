@@ -50,6 +50,8 @@ export interface ToolLoopResult<T> {
   finalAction: T | null;
   assistantText?: string;
   thinkingTrace?: ToolLoopStepTrace[];
+  /** SDK input failures may happen before execution callbacks; raw input/errors are never copied. */
+  failedToolInvocations?: Array<{ name: string; id: string }>;
 }
 
 /** Tool execution port shared by game and audit agents. */
