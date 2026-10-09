@@ -1,3 +1,5 @@
+import { installWildChild } from "../game/mechanisms/roles/wild_child/lifecycle";
+import { installInitialRoster } from "../core/domain/initial_roster";
 import { installThiefDeal } from "../game/mechanisms/roles/thief/deal";
 import { supportsWallRoles } from "../game/mechanisms/events/wall_notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -133,6 +135,8 @@ function createPlayers(
 
   if (config.roleSetups.some((row) => row.role === Role.Thief && row.count === 1))
     installThiefDeal(world, roles, ids);
+  installInitialRoster(world);
+  installWildChild(world, config);
   return ids;
 }
 
@@ -185,6 +189,22 @@ function buildRoleDeck(
     (!counts.has(Role.Thief) || config.thief.policy !== "lui_meme_thief_two_extra_villagers_v1")
   )
     throw new Error("thief_policy_invalid");
+  if (
+    config.wildChild &&
+    (!counts.has(Role.WildChild) || config.wildChild.policy !== "awa_lui_meme_wild_child_v1")
+  )
+    throw new Error("wild_child_policy_invalid");
+  if (
+    counts.has(Role.WildChild) &&
+    ((counts.get(Role.Wolf) ?? 0) < 1 ||
+      [...counts]
+        .filter(
+          ([role]) =>
+            role !== Role.WildChild && getDefaultRoleCatalog().getCamp(role) === Camp.Good,
+        )
+        .reduce((n, [, count]) => n + count, 0) < 1)
+  )
+    throw new Error("wild_child_finite_composition_required");
   if (counts.has(Role.Thief)) {
     if (
       (counts.get(Role.Wolf) ?? 0) < 2 ||

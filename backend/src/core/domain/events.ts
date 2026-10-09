@@ -1,3 +1,4 @@
+import type { DeathCause } from "./deaths";
 import type { ActionWindow, Camp, EntityId, Phase, PotionType, Role } from "./identity";
 import type { InspectionResult, RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { GameResult } from "./results";
@@ -38,6 +39,24 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  wild_child_model_chosen: { actorId: EntityId; day: 1; targetId: EntityId };
+  wild_child_model_eliminated: {
+    actorId: EntityId;
+    targetId: EntityId;
+    day: number;
+    phase: Phase;
+    deathCommit: string;
+    sources: DeathCause[];
+    deadIds: EntityId[];
+  };
+  wild_child_transformed: {
+    actorId: EntityId;
+    day: number;
+    eligibleNight: number;
+    camp: Camp.Wolf;
+    deathCommit: string;
+  };
+  wild_child_pack_activated: { actorId: EntityId; day: number; eligibleNight: number };
   wall_notes_started: { day: 1; eventId: "awa_wall_notes_v1" };
   wall_notes_published: { day: 1; eventId: "awa_wall_notes_v1"; texts: string[] };
   wall_notes_canceled: { day: 1; eventId: "awa_wall_notes_v1"; reason: "scope_changed" };

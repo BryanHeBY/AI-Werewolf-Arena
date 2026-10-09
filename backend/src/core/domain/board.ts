@@ -112,6 +112,7 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
   events?: { pack: (typeof EVENT_PACK_IDS)[number] };
+  wildChild?: { policy: "awa_lui_meme_wild_child_v1" };
   thief?: { policy: "lui_meme_thief_two_extra_villagers_v1" };
   debater?: { policy: DebaterPolicy };
   cupid?: { policy: CupidPolicy };

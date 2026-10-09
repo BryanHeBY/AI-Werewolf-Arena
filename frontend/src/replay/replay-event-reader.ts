@@ -1,3 +1,8 @@
+import {
+  WILD_CHILD_EVENT_TYPES,
+  readWildChildEventFact,
+  readWildChildPlayerFact,
+} from "@ai-werewolf-arena/game-text";
 import { THIEF_EVENT_TYPES, readThiefEventFact } from "@ai-werewolf-arena/game-text";
 import {
   WALL_EVENT_TYPES,
@@ -16,6 +21,7 @@ import {
 import { isRoleId, type RoleId, type SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
 
 export type ReplayEffect =
+  | { kind: "camp_changed"; playerId: number; camp: "wolf" }
   | { kind: "identity_changed"; playerId: number; role: RoleId; camp: string }
   | { kind: "role_revealed"; playerId: number; role: RoleId }
   | { kind: "deaths"; playerIds: number[] }
@@ -31,6 +37,10 @@ export interface ReadReplayEvent {
 
 // Required references are event-specific. Unknown extension fields never imply player membership.
 const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
+  wild_child_model_chosen: ["actorId", "targetId"],
+  wild_child_model_eliminated: ["actorId", "targetId"],
+  wild_child_transformed: ["actorId"],
+  wild_child_pack_activated: ["actorId"],
   thief_identity_chosen: ["actorId"],
   wall_note_changed: ["actorId"],
   debater_revealed: ["actorId"],
@@ -191,6 +201,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if ((WILD_CHILD_EVENT_TYPES as readonly string[]).includes(type))
+    return !!(readWildChildEventFact(type, p) ?? readWildChildPlayerFact(type, p));
   if ((THIEF_EVENT_TYPES as readonly string[]).includes(type)) return !!readThiefEventFact(type, p);
   if ((WALL_EVENT_TYPES as readonly string[]).includes(type))
     return readWallEventFact(type, p) !== null;
@@ -392,6 +404,14 @@ export function readReplayEvent(
     if (safe.type === "knight_duel" && p.result !== "wolf" && p.result !== "not_wolf") return null;
     if (safe.type === "phase_changed" && typeof p.phase !== "string") return null;
     const effects: ReplayEffect[] = [];
+    if (safe.type === "wild_child_transformed") {
+      if (p.day !== safe.day) return null;
+      effects.push({ kind: "camp_changed", playerId: p.actorId as number, camp: "wolf" });
+    }
+    if (safe.type === "wild_child_model_chosen" && (safe.day !== 1 || safe.phase !== "night"))
+      return null;
+    if (safe.type === "wild_child_pack_activated" && (p.day !== safe.day || safe.phase !== "night"))
+      return null;
     if (safe.type === "thief_identity_chosen" && isRoleId(p.role)) {
       if (safe.day !== 1 || safe.phase !== "night") return null;
       effects.push({

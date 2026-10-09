@@ -1,6 +1,31 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "role.wild_child.brief":
+    "Starts with Good villagers. Choose a model on the first night. If your model is eliminated while you remain alive, become Wolf and join pack knowledge, chat and knife voting on the following night. No copied skills or self-destruct.",
+  "role.wild_child.state":
+    "The initial Good introduction is historical. Current true faction: {camp}; your model and stage: {state}. Chosen remains Good; transformed is truly Wolf without pack access; active grants mutual recognition, chat and knife voting.",
+  "prompt.status.wild_child":
+    "Your Wild Child state: {state}. No model role, faction or hidden cause is revealed. No reselection or revival refresh.",
+  "action.choose_wild_model.hint":
+    "Choose one other living player as your model on night one, once per game. Submit target_id only; their role and faction stay hidden.",
+  "turn.wild_child.required": "A valid model is required; no skip or fabricated fallback.",
+  "stage.wild_child": "Wild Child initial model choice",
+  "error.wild_child_unavailable":
+    "No Wild Child first-night choice is authorized for this original life.",
+  "error.wild_child_choice": "The model must be another currently authorized living player.",
+  "console.wild_child.choice": "Wild Child {actor} chose player {target} as model.",
+  "console.wild_child.death":
+    "God: model {target} of Wild Child {actor} was committed eliminated; causes {causes}, commit {commit}.",
+  "console.wild_child.transform":
+    "Wild Child {actor} now belongs to Wolf; pack access is eligible from night {night}.",
+  "console.wild_child.active":
+    "Wild Child {actor} joined the pack on night {night}: mutual recognition, chat and knife voting are active.",
+  "replay.stage.wild_child_model_chosen": "Wild Child private fact",
+  "replay.stage.wild_child_model_eliminated": "Wild Child private fact",
+  "replay.stage.wild_child_transformed": "Wild Child private fact",
+  "replay.stage.wild_child_pack_activated": "Wild Child private fact",
+
   "action.write_note.hint":
     "Optional anonymous note: submit your own free text with write_note, 1–160 Unicode codepoints, not all whitespace. Original text is preserved. Notes are collected then published in random order without author links.",
   "request.summary.wall_notes":

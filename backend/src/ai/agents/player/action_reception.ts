@@ -1,3 +1,5 @@
+import { wildChildRequestScope } from "../../../game/mechanisms/roles/wild_child/lifecycle";
+import { readWildChildTool } from "../../../game/mechanisms/roles/wild_child/state";
 import { thiefRequestScope } from "../../../game/mechanisms/roles/thief/setup";
 import { readThiefChoice } from "../../../game/mechanisms/roles/thief/state";
 import { wallRequestScope } from "../../../game/mechanisms/events/wall_notes/authority";
@@ -71,8 +73,17 @@ export class ActionReception {
     if (tool === "write_note" && !wallCall) return fail(RuleError.WallNoteText);
     const thiefSlot = tool === "choose_thief_card" ? readThiefChoice(rawArgs) : undefined;
     if (tool === "choose_thief_card" && thiefSlot === undefined) return fail(RuleError.ThiefChoice);
+    const wildCall =
+      tool === "choose_wild_model" ? readWildChildTool({ name: tool, args: rawArgs }) : null;
+    if (tool === "choose_wild_model" && !wildCall) return fail(RuleError.WildChildChoice);
     const input = (
-      tool === "choose_thief_card" ? { slot: thiefSlot } : wallCall ? wallCall.args : { ...rawArgs }
+      wildCall
+        ? wildCall.args
+        : tool === "choose_thief_card"
+          ? { slot: thiefSlot }
+          : wallCall
+            ? wallCall.args
+            : { ...rawArgs }
     ) as Record<string, unknown>;
     const properties = spec.parameters.properties as
       Record<string, { type?: string | string[] }> | undefined;
@@ -123,6 +134,7 @@ export class ActionReception {
       phase: request.phase,
       day: request.context.day,
       thiefScope: thiefRequestScope(this.world, request),
+      wildChildScope: wildChildRequestScope(this.world, request),
       wallScope: wallRequestScope(this.world, request),
       wallId: request.context.wall_id,
       itemInstanceId: request.context.item_instance_id,

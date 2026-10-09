@@ -10,6 +10,7 @@ import type { RoleCatalog } from "../roles/catalog";
 export interface ValidationRuleContext {
   day?: number;
   thiefScope?: object;
+  wildChildScope?: object;
   wallScope?: object;
   wallId?: string;
   itemInstanceId?: string;

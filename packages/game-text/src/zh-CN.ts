@@ -1,5 +1,27 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "role.wild_child.brief":
+    "初始为好人民边，首夜必选榜样；榜样实际淘汰时若本人仍活则变狼，下一夜才互认、夜聊与投刀。不获榜样能力，不可自爆。",
+  "role.wild_child.state":
+    "初始好人介绍为历史。当前真实阵营：{camp}；你的榜样与阶段：{state}。chosen仍好人，transformed已是真狼但尚无狼队权限，active才有双向互认/夜聊/刀权。",
+  "prompt.status.wild_child":
+    "野孩子本人状态：{state}；不透露榜样角色/阵营或隐藏死因，不能重选或复活刷新。",
+  "action.choose_wild_model.hint":
+    "首夜必须选一个其它活人作为榜样，一局一次；只提交target_id，不获其角色/阵营。",
+  "turn.wild_child.required": "必须选择合法榜样；不能跳过或默认代选。",
+  "stage.wild_child": "野孩子首夜选榜样",
+  "error.wild_child_unavailable": "当前没有原生命与首夜授权的野孩子选择窗口。",
+  "error.wild_child_choice": "榜样必须是另一名当前授权的活人。",
+  "console.wild_child.choice": "野孩子{actor}号选择{target}号为榜样。",
+  "console.wild_child.death":
+    "God：野孩子{actor}号的榜样{target}号已实际淘汰，死因{causes}，提交{commit}。",
+  "console.wild_child.transform": "野孩子{actor}号现在属于狼阵营，从第{night}夜才能入群。",
+  "console.wild_child.active": "野孩子{actor}号已在第{night}夜加入狼群，启用互认、夜聊与投刀。",
+  "replay.stage.wild_child_model_chosen": "野孩子私有事实",
+  "replay.stage.wild_child_model_eliminated": "野孩子私有事实",
+  "replay.stage.wild_child_transformed": "野孩子私有事实",
+  "replay.stage.wild_child_pack_activated": "野孩子私有事实",
+
   "action.write_note.hint":
     "匿名纸条，可不提交。write_note只写本人自由短句：1–160个Unicode字符，不能全空白；保留原文字。收齐后随机公布，无作者关联。",
   "request.summary.wall_notes": "可写一张匿名纸条，也可不提交；本轮关闭即过期。",

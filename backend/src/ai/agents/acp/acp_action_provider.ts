@@ -1,3 +1,4 @@
+import { inheritWildChildDeadlineRequest } from "../../../game/mechanisms/roles/wild_child/lifecycle";
 import { inheritThiefDeadlineRequest } from "../../../game/mechanisms/roles/thief/setup";
 import { inheritWallDeadlineRequest } from "../../../game/mechanisms/events/wall_notes/authority";
 import { allowsActionFallback, resolveTurnConstraints } from "../player/turn_constraints";
@@ -165,6 +166,7 @@ export class AcpActionProvider implements ActionProvider {
     };
     inheritWallDeadlineRequest(request, bounded);
     inheritThiefDeadlineRequest(request, bounded);
+    inheritWildChildDeadlineRequest(request, bounded);
     const controller = new AbortController();
     this.controllers.set(request.actorId, controller);
     const timer = setTimeout(

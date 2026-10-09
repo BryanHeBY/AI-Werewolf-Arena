@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { wildChildEventLabel } from "@ai-werewolf-arena/game-text";
 import { readFileSync } from "node:fs";
 const original = JSON.parse(
   readFileSync(new URL("../fixtures/sample.replay.json", import.meta.url), "utf8"),
@@ -1330,4 +1331,62 @@ for (const name of ["6-seer", "6-hunter", "12-both0", "12-keep"])
       await expect(page.getByTestId("composition-caption")).toHaveCSS("opacity", "1");
       if (name === "12-both0")
         await page.screenshot({ path: `/tmp/awa-p9-thief-${locale}-browser.png`, fullPage: true });
+    });
+
+for (const name of ["6-wolf_exile", "6-hunter_chain", "12-good_knife", "6-same_wave"])
+  for (const locale of ["zh-CN", "en"] as const)
+    test(`${name}/${locale}: actual Wild Child archive keeps role and changes camp only at transformation`, async ({
+      page,
+    }) => {
+      const replay = JSON.parse(
+        readFileSync(
+          new URL(`../fixtures/wild-child-${name}.replay.json`, import.meta.url),
+          "utf8",
+        ),
+      );
+      replay.meta.locale = locale;
+      const actor = replay.events.find(
+          (e: { type: string }) => e.type === "wild_child_model_chosen",
+        ).payload.actorId,
+        index = replay.events.findIndex(
+          (e: { type: string }) => e.type === "wild_child_transformed",
+        );
+      await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
+      await page.goto("/");
+      const seat = page.getByRole("button", {
+        name: locale === "en" ? `Player ${actor} · Seat ${actor}` : `${actor}号 · Seat ${actor}`,
+        exact: true,
+      });
+      await expect(seat).toContainText(locale === "en" ? "Wild Child" : "野孩子");
+      await expect(seat).toHaveClass(/good/);
+      if (index < 0) {
+        await page.locator(".timeline .event").last().click();
+        await expect(seat).toHaveClass(/dead/);
+        await expect(seat).toContainText(locale === "en" ? "Wild Child" : "野孩子");
+        return;
+      }
+      const selectedLabel = wildChildEventLabel(
+        "wild_child_transformed",
+        replay.events[index].payload,
+        locale,
+      )!;
+      await page.locator(".timeline .event").filter({ hasText: selectedLabel }).click();
+      await expect(page.getByTestId("composition-event")).toHaveText(selectedLabel);
+      await expect(seat).not.toHaveClass(/dead/);
+      await expect(seat).toHaveClass(/wolf/);
+      await expect(seat).toContainText(locale === "en" ? "Wild Child" : "野孩子");
+      await expect(page.locator(`[data-composition-player="${actor}"]`)).toContainText(
+        locale === "en" ? "Wild Child" : "野孩子",
+      );
+      await expect(page.getByTestId("composition-caption")).toContainText(
+        locale === "en" ? "Wild Child" : "野孩子",
+      );
+      const slider = page.getByRole("slider");
+      for (let n = 0; n < 15; n++) await slider.press("ArrowRight");
+      await expect(page.getByTestId("composition-caption")).toHaveCSS("opacity", "1");
+      if (name === "12-good_knife")
+        await page.screenshot({
+          path: `/tmp/awa-p9-wild-child-${locale}-browser.png`,
+          fullPage: true,
+        });
     });

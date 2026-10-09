@@ -28,6 +28,7 @@ const strategies = z.enum(["min_id", "min_seat", "no_elimination", "no_kill"]);
 /** Internal board shape shared by reverse configuration writing and reproduction. No defaults are added here. */
 export const boardConfigSchema = z.strictObject({
   events: z.strictObject({ pack: z.enum(EVENT_PACK_IDS) }).optional(),
+  wildChild: z.strictObject({ policy: z.literal("awa_lui_meme_wild_child_v1") }).optional(),
   thief: z.strictObject({ policy: z.literal("lui_meme_thief_two_extra_villagers_v1") }).optional(),
   debater: z.strictObject({ policy: z.enum(DEBATER_POLICIES) }).optional(),
   cupid: z.strictObject({ policy: z.enum(CUPID_POLICIES) }).optional(),

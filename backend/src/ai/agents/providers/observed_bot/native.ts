@@ -1,3 +1,7 @@
+export const choose_wild_model: ObservedToolHandler = ({ knownAliveIds, request }) => {
+  const target = knownAliveIds.find((id) => id !== request.actorId);
+  return target === undefined ? null : { name: "choose_wild_model", args: { target_id: target } };
+};
 export const choose_thief_card: ObservedToolHandler = ({ ownState, style }) => {
   const state = ownState.thief;
   if (!state || state.remaining !== 1 || !state.cards?.length) return null;

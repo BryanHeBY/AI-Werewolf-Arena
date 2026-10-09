@@ -28,6 +28,7 @@ import {
   mechanical_attack,
 } from "./copied";
 import {
+  choose_wild_model,
   choose_thief_card,
   write_note,
   choose_exemplar,
@@ -45,6 +46,7 @@ import {
 
 /** Preserve protocol-independent priority and RNG order for strict Tape reproducibility. */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
+  { tool: "choose_wild_model", decide: choose_wild_model },
   { tool: "choose_thief_card", decide: choose_thief_card },
   { tool: "choose_exemplar", decide: choose_exemplar },
   { tool: "choose_lovers", decide: choose_lovers },

@@ -10,6 +10,7 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  choose_wild_model: { target_id: EntityId };
   choose_thief_card: { slot: 0 | 1 };
   write_note: { text: string };
   report_bug: {
@@ -55,6 +56,7 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "choose_wild_model",
   "choose_thief_card",
   "write_note",
   "report_bug",
@@ -142,6 +144,7 @@ export const ACTION_STAGES = [
   "debate_ballot",
   "wall_notes",
   "thief",
+  "wild_child",
   "awakened_mimic",
   "awakened_skill",
   "awakened_attack",

@@ -451,3 +451,7 @@ Black完整功能commit `83cac45`；赠枪底座 `5c41428`、死亡实例许可 
 ## P9a 首项：盗贼（2026-10-09）
 
 唯一来源策略真实N+2发牌、两Wolf必选与其它可保留、原生新身份/库存及首夜动作、原物理牌交换/晚授权、私有提示/录制/strict Tape和初始回放身份已完整贯通。52核心/失败Tape/样例测试，90实际双语三transport完整局及逐Tape、200受限ObservedBot逐Tape、1000独立World自然局分别验证。三组只读审查所有报告项修复复验关闭。最终后端2834/266021/225文件、前端267/2601/40文件、Chromium120/120均零失败；check/lint/format、双端build通过。见[规则卡](rules/lui-meme-thief-v1.md)/[验收](reviews/p9-thief.md)。当前23verified/4implemented/37planned，继续P9a其余角色及P9/P10；仅本地commit，整体仍待用户最终验收。
+
+## P9a 第二项：野孩子（2026-10-09）
+
+唯一来源AWA适配首夜必选榜样、实际完整死亡波次转真实阵营/胜利、下一实际Night才双向狼队权限、原始roster与严格因果Tape已贯通。47核心/309断言、60实际双语三transport完整局及逐Tape、8真实严格失败partial Tape、200受限观察局逐Tape、1000独立World自然局（788转换/678实际activation）分别验证。三组已报告问题修复并由原审查者复验闭合。冻结源码后全backend **2932/281583/229文件**、frontend **277/2696/42文件**、完整Chromium **128/128**均0失败；type/lint/format与双端build通过，双语12人实际PNG/shared frame已目检。见[规则卡](rules/awa-lui-meme-wild-child-v1.md)/[验收](reviews/p9-wild-child.md)。当前23verified/5implemented/36planned；main本地commit，继续千面人/P9/P10，总体待用户最终验收，无push/真实模型/用户configs或秘密操作。

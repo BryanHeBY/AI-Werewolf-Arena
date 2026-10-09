@@ -1,3 +1,4 @@
+import { inheritWildChildDeadlineRequest } from "../../../game/mechanisms/roles/wild_child/lifecycle";
 import { inheritThiefDeadlineRequest } from "../../../game/mechanisms/roles/thief/setup";
 import { inheritWallDeadlineRequest } from "../../../game/mechanisms/events/wall_notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -70,6 +71,7 @@ export class LlmTurnOrchestrator {
     };
     inheritWallDeadlineRequest(request, bounded);
     inheritThiefDeadlineRequest(request, bounded);
+    inheritWildChildDeadlineRequest(request, bounded);
     const controller = new AbortController();
     this.controllers.add(controller);
     const timer = setTimeout(

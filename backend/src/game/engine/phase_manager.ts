@@ -1,3 +1,9 @@
+import { WildChildSetupWindow } from "../mechanisms/roles/wild_child/setup";
+import {
+  wildChildReady,
+  hasActiveWildChild,
+  hasWildChildNightCommit,
+} from "../mechanisms/roles/wild_child/lifecycle";
 import {
   hasActiveThiefSetup,
   hasActiveThiefNight,
@@ -206,6 +212,11 @@ export class PhaseManager {
     actionProvider: ActionProvider,
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
+    if (
+      hasActiveWildChild(this.world) ||
+      (!this.state.gameOver && hasWildChildNightCommit(this.world, this.state.day))
+    )
+      throw new Error("wild_child_cycle_reentry");
     if (hasActiveThiefSetup(this.world) || hasActiveThiefNight(this.world))
       throw new Error("thief_setup_reentry");
     if (!this.state.gameOver && hasThiefNightCommit(this.world, this.state.day))
@@ -239,6 +250,14 @@ export class PhaseManager {
         nightDay,
         nightIsCurrent,
       );
+      if (!ready || !nightIsCurrent()) return this.getSnapshot();
+    }
+    if (!wildChildReady(this.world)) {
+      const ready = await new WildChildSetupWindow(
+        this.world,
+        this.toolGateway,
+        this.events,
+      ).execute(this.config, actionProvider, nightDay, nightIsCurrent);
       if (!ready || !nightIsCurrent()) return this.getSnapshot();
     }
     const bearFrame = BearNightFrame.capture(this.world, nightDay);

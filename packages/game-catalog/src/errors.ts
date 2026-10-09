@@ -1,5 +1,7 @@
 /** Stable rule failures; human messages belong to game-text. */
 export enum RuleError {
+  WildChildUnavailable = "wild_child_unavailable",
+  WildChildChoice = "wild_child_choice",
   ThiefUnavailable = "thief_unavailable",
   ThiefChoice = "thief_choice",
   WallNoteUnavailable = "wall_note_unavailable",

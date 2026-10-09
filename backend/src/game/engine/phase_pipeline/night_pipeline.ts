@@ -1,4 +1,9 @@
 import {
+  wildChildReady,
+  hasActiveWildChild,
+  openWildChildNight,
+} from "../../mechanisms/roles/wild_child/lifecycle";
+import {
   hasActiveThiefSetup,
   thiefSetupReady,
   openThiefNight,
@@ -107,10 +112,13 @@ export class NightPipeline {
     day: number,
     options: NightPipelineOptions = {},
   ): Promise<NightPipelineResult> {
+    if (hasActiveWildChild(this.world) || !wildChildReady(this.world))
+      throw new Error("wild_child_setup_before_night_required");
     if (hasActiveThiefSetup(this.world) || !thiefSetupReady(this.world))
       throw new Error("thief_setup_before_night_required");
     const isCurrent = options.isCurrent ?? (() => true);
     if (!isCurrent()) return { interrupted: true };
+    const closeWildChildNight = openWildChildNight(this.world, day, this.events);
     const closeThiefNight = openThiefNight(this.world, day);
     try {
       if (hasFoxInspectionNightCommit(this.world, day))
@@ -248,6 +256,7 @@ export class NightPipeline {
       };
     } finally {
       closeThiefNight();
+      closeWildChildNight();
     }
   }
 

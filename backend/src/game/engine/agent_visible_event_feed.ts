@@ -1,3 +1,4 @@
+import { WILD_CHILD_EVENT_TYPES, readWildChildEventFact } from "@ai-werewolf-arena/game-text";
 import { THIEF_EVENT_TYPES, readThiefEventFact } from "@ai-werewolf-arena/game-text";
 import {
   WALL_EVENT_TYPES,
@@ -47,6 +48,11 @@ export function buildAgentVisibleEvent(
     !readThiefEventFact(event.type, event.payload)
   )
     return null;
+  if (
+    (WILD_CHILD_EVENT_TYPES as readonly string[]).includes(event.type) &&
+    !readWildChildEventFact(event.type, event.payload)
+  )
+    return null;
   const visibility = getDefaultAgentEventVisibilityRegistry();
   if (!visibility.canView(world, event, actorId)) {
     return null;
@@ -71,6 +77,13 @@ export function buildAgentVisibleEvent(
 /** Project the authorized wire fields, keeping internal metadata out of player prompts. */
 function projectPayload(event: GameEvent): Record<string, unknown> {
   switch (event.type) {
+    case "wild_child_transformed":
+      return {
+        actorId: event.payload.actorId,
+        day: event.payload.day,
+        eligibleNight: event.payload.eligibleNight,
+        camp: event.payload.camp,
+      };
     case "player_role_revealed":
       return { playerId: event.payload.playerId, role: event.payload.role };
     case "black_market_trade_committed":

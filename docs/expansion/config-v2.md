@@ -2,7 +2,7 @@
 
 ## 板子格式
 
-正常入口只读取 `boards/<id>.json`，ID 必须与文件名一致。当前格式 `version: 2`，规则集 `{ "id": "awa_classic", "version": "1.0.0" }`。基础七角色已关闭规则差异，在[P4声明验收范围](reviews/p4-activation.md)内登记 verified；当前47计划角色仍不授予运行许可。
+正常入口只读取 `boards/<id>.json`，ID 必须与文件名一致。当前格式 `version: 2`，规则集 `{ "id": "awa_classic", "version": "1.0.0" }`。基础七角色已关闭规则差异，在[P4声明验收范围](reviews/p4-activation.md)内登记 verified；当前36计划角色仍不授予运行许可。
 
 必需结构：`board.size`、`board.roleSetups`、`rules.winConditions`、完整 `rules.hooks`、`mechanisms.sheriff`、`mechanisms.selfDestruct.enabledWindows`、`mechanisms.tieBreaker`。角色参数放 `roles.<id>`，由注册 profile 的 schema 严格验证；当前女巫支持 `selfHeal`。
 
@@ -69,7 +69,7 @@ bun run --cwd backend config:check --configs-dir ../configs --game-config-name t
 
 只输出板子、规则/参数/字段来源、玩家名字、Agent名称/类型/模型、是否有私有人格、限制与执行支持状态。不输出 profile/provider 对象、env、命令参数、URL、认证和人格文本；JSON错误也不回显原输入片段。失败以 `code` 和已确认安全的 `path` 输出，例如 `roles.witch.selfHela`；任意异常只给稳定错误码。没有文件或遇到旧格式明确失败，不搜索其他路径或静默用内置板子替代。
 
-P5狼王/白狼王/骑士/守墓人已按独立卡与通路验收注册；当前23项verified与4项implemented可在各自有限组合运行，37项planned仍拒绝。新自爆选择/API边界见[白狼王契约](white-wolf-king.md)。
+P5狼王/白狼王/骑士/守墓人已按独立卡与通路验收注册；当前23项verified与5项implemented可在各自有限组合运行，36项planned仍拒绝。新自爆选择/API边界见[白狼王契约](white-wolf-king.md)。
 
 骑士的三种离散发言窗口/default及[]关闭见[接入契约](knight.md)。公开six/twelve_player_knight板子与games可加载，普通/觉醒分别登记，额外参数与未注册角色仍拒绝。
 
@@ -100,3 +100,7 @@ P7通灵师按[规则与契约](psychic.md)启用，roles.psychic支持inspectio
 ## P9a 盗贼有限来源配置
 
 `roles.thief.policy`唯一接受`lui_meme_thief_two_extra_villagers_v1`（省略等价默认）。至多一Thief、City、仅七基础角色组合，原配置至少两Wolf/两非ThiefGood；其它角色或event pack组合显式拒绝。roleSetups仍N张，初始化另加两普通Villager，一次随机发N留2，不保证Thief或God上场。fixed/Tape必须完整N+2且原多重集一致，两Wolf底牌必选slot0/1，其它可null保留Thief。无fallback/任意底牌/保证神职参数。公开例子`configs.example/boards/lui_meme_thief_{6,12}_v1.json`；实际schema、实例、native库存、首夜动作与Tape边界见[来源卡](rules/lui-meme-thief-v1.md)/[验收](reviews/p9-thief.md)。
+
+## P9a 野孩子有限来源配置
+
+`roles.wild_child.policy=awa_lui_meme_wild_child_v1`，标准N牌、最多一个，与七基础角色/City有限支持；至少一个普通Wolf、一个非WildChildGood。首实际夜必选其它活人榜样，榜样引擎实际淘汰后转真实Wolf阵营/胜利，原WildChild身份保留，下一实际Night才能入群互认/夜聊/投刀。完整波次、权限撤回、初始roster/录制与private DTO边界见[规则卡](rules/awa-lui-meme-wild-child-v1.md)/[验收](reviews/p9-wild-child.md)。6/12例为 `configs.example/boards/awa_lui_meme_wild_child_{6,12}_v1.json`；Thief/Cupid/事件包/其它扩展明确拒绝，不冒完整官方预设。

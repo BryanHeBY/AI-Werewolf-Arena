@@ -9,6 +9,7 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  wild_child: ["野孩子首夜选榜样", "Wild Child initial model choice"],
   thief: ["盗贼首次身份选择", "Thief initial identity choice"],
   wall_notes: ["匿名墙纸条", "Anonymous wall note"],
   wolf_discussion: ["狼人交流", "Wolf discussion"],
@@ -280,6 +281,7 @@ export function assertTransportEvents(
     if (
       type === "god_private_game_info" ||
       type === "thief_initial_deal" ||
+      type === "wild_child_model_eliminated" ||
       type === "mechanical_poison_reflected" ||
       type === "merchant_trade_resolved" ||
       type === "hybrid_affiliation_resolved" ||
@@ -289,6 +291,9 @@ export function assertTransportEvents(
       throw new Error("fixture_god_information_exposed");
     if (
       [
+        "wild_child_model_chosen",
+        "wild_child_transformed",
+        "wild_child_pack_activated",
         "thief_identity_chosen",
         "merchant_trade_committed",
         "merchant_trade_skipped",

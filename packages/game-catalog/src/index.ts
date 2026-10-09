@@ -225,9 +225,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "wild_child",
     names: { "zh-CN": "野孩子", en: "Wild Child" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-lui-meme-wild-child-v1.md",
     mechanismSummary: "榜样死亡、阵营变化",
   },
   {

@@ -1,3 +1,7 @@
+import {
+  recordWildChildDeathCommit,
+  resolveWildChildDeathWave,
+} from "../mechanisms/roles/wild_child/lifecycle";
 import { expandLoversWave } from "../mechanisms/roles/cupid/relation";
 import { permitsCharm } from "../mechanisms/roles/wolf_beauty/relation";
 import { isRoleId } from "@ai-werewolf-arena/game-catalog";
@@ -136,6 +140,14 @@ export class DeathResolution {
         if (!isCurrent()) return;
         const deathPhase = firstBatch ? phase : this.state.phase;
         this.markPlayersDead(pending, true, gunsToExpire, revealPolicy === "netease_2017_open_v1");
+        resolveWildChildDeathWave(
+          this.world,
+          pending,
+          allSources,
+          resolutionDay,
+          deathPhase,
+          this.events,
+        );
         nightEffects?.dreams?.recordDeaths(pending, this.events);
         if (
           (firstBatch || lastWordsPolicy === "netease_2017_day_and_first_night_v1") &&
@@ -640,6 +652,7 @@ export class DeathResolution {
         continue;
       }
       const firstSettlement = !this.isSettledLife(id);
+      if (firstSettlement) recordWildChildDeathCommit(this.world, id);
       alive.alive = false;
       const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role;
       if (reveal && firstSettlement && isRoleId(role))

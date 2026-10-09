@@ -1,3 +1,9 @@
+import { readWildChildEventFact, readWildChildPlayerFact } from "./wild-child";
+export {
+  readWildChildEventFact,
+  readWildChildPlayerFact,
+  WILD_CHILD_EVENT_TYPES,
+} from "./wild-child";
 import type { RoleId } from "@ai-werewolf-arena/game-catalog";
 import { readThiefEventFact } from "./thief";
 export { readThiefEventFact, THIEF_EVENT_TYPES } from "./thief";
@@ -635,5 +641,31 @@ export function thiefEventLabel(type: string, payload: unknown, locale: Locale):
     slot: p.slot as number,
     role: roleName(p.role as RoleId, locale),
     camp: term("camp_team", p.camp as "good" | "wolf", locale),
+  });
+}
+
+export function wildChildEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+  const p = readWildChildEventFact(type, payload) ?? readWildChildPlayerFact(type, payload);
+  if (!p) return null;
+  if (type === "wild_child_model_chosen")
+    return text(locale, "console.wild_child.choice", {
+      actor: p.actorId as number,
+      target: p.targetId as number,
+    });
+  if (type === "wild_child_model_eliminated")
+    return text(locale, "console.wild_child.death", {
+      actor: p.actorId as number,
+      target: p.targetId as number,
+      causes: JSON.stringify(p.sources),
+      commit: p.deathCommit as string,
+    });
+  if (type === "wild_child_transformed")
+    return text(locale, "console.wild_child.transform", {
+      actor: p.actorId as number,
+      night: p.eligibleNight as number,
+    });
+  return text(locale, "console.wild_child.active", {
+    actor: p.actorId as number,
+    night: p.day as number,
   });
 }

@@ -125,6 +125,13 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
     if (wolves < 2 || good < 2)
       fail("board_config_role_combination_not_supported", "board.roleSetups");
   }
+  if (
+    definition.board.roleSetups.some((row) => row.role === "wild_child") &&
+    !definition.board.roleSetups.some(
+      (row) => row.role !== "wild_child" && catalog.getCamp(row.role as Role) === Camp.Good,
+    )
+  )
+    fail("board_config_role_combination_not_supported", "board.roleSetups");
   const profiles = definition.board.roleSetups.map((entry) => catalog.require(entry.role as Role));
   for (const profile of profiles) {
     if (

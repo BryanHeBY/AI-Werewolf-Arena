@@ -1,3 +1,4 @@
+import { projectWildChild } from "../../../game/mechanisms/roles/wild_child/lifecycle";
 import { thiefCandidateCounts } from "../../../game/mechanisms/roles/thief/deal";
 import { projectThiefState } from "../../../game/mechanisms/roles/thief/state";
 import { projectThiefChoices } from "../../../game/mechanisms/roles/thief/setup";
@@ -203,6 +204,7 @@ export class PlayerPromptPolicy {
       const state = getBlackMarketState(role);
       if (state) ownState.blackMarket = projectBlackMarketState(state);
     }
+    if (role?.role === Role.WildChild) ownState.wildChild = projectWildChild(this.world, role);
     if (role?.role === Role.Hybrid) {
       const state = getHybridState(role);
       if (state) ownState.hybrid = projectHybridState(state);
@@ -445,6 +447,12 @@ export class PlayerPromptPolicy {
 
   private statusDirective(request: ActionRequest, role?: RoleComponent): string | undefined {
     const lines: string[] = [];
+    if (role?.role === Role.WildChild)
+      lines.push(
+        text(this.locale, "prompt.status.wild_child", {
+          state: JSON.stringify(projectWildChild(this.world, role)),
+        }),
+      );
     const thief = projectThiefState(role, this.world),
       choices = projectThiefChoices(this.world, request.actorId);
     if (thief)

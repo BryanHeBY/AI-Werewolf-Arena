@@ -1,3 +1,4 @@
+import { initialPlayerIdentity } from "../../core/domain/initial_roster";
 import { initialThiefDeal } from "../../game/mechanisms/roles/thief/deal";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
 import { readFile } from "node:fs/promises";
@@ -393,10 +394,15 @@ export async function replayReproduction(
           ).players.map((player, index) => ({
             player_id: player.id,
             name: player.name,
-            role: initialThiefDeal(context.world)?.[index] ?? player.role,
-            camp: initialThiefDeal(context.world)
-              ? record.metadata.players[index]!.camp
-              : player.camp,
+            role:
+              initialPlayerIdentity(context.world, player.id)?.role ??
+              initialThiefDeal(context.world)?.[index] ??
+              player.role,
+            camp:
+              initialPlayerIdentity(context.world, player.id)?.camp ??
+              (initialThiefDeal(context.world)
+                ? record.metadata.players[index]!.camp
+                : player.camp),
             alive: player.alive,
           })),
         });

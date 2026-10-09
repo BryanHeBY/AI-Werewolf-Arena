@@ -73,4 +73,10 @@ BlackMarketBacklash 不受普通保护和 AWA 默认梦阻止；网易具名梦�
 
 ## P8杠精的有限当前行为补充
 
-`roles.debater.policy=awa_melbourne_2026_speech_gap_v1`仅一项赛事来源AWA窗口适配，schema严格、默认具名，首批11角色。普通发言前可选、整局接受一次，不改夜序/保护/死因/复制转移/商人库存；真实Good神职仍按原AWA胜利计数。匿名表决按接受时全活人固定1票严格过半，与放逐和警长票重分离；临时禁票只原生命/该日常规和PK，徽移交保留配置。完整边界见[规则卡](../rules/awa-melbourne-debater-v1.md)与[验收](../reviews/p8-debater.md)，不能称完整赛事预设。首组事件尚未启用，原八类行为及已有配置保持各自来源语境。
+`roles.debater.policy=awa_melbourne_2026_speech_gap_v1`仅一项赛事来源AWA窗口适配，schema严格、默认具名，首批11角色。普通发言前可选、整局接受一次，不改夜序/保护/死因/复制转移/商人库存；真实Good神职仍按原AWA胜利计数。匿名表决按接受时全活人固定1票严格过半，与放逐和警长票重分离；临时禁票只原生命/该日常规和PK，徽移交保留配置。完整边界见[规则卡](../rules/awa-melbourne-debater-v1.md)与[验收](../reviews/p8-debater.md)，不能称完整赛事预设。首组匿名墙已有限启用并默认关闭，见[规则卡](../rules/awa-wall-notes-v1.md)/[验收](../reviews/p8-wall-notes.md)；原八类行为及已有配置保持各自来源语境。
+
+## P9a 当前初始身份与阵营变化补充
+
+盗贼唯一来源策略 `lui_meme_thief_two_extra_villagers_v1` 实际N+2发牌，两Wolf底牌必须选一，其余可保留Good民边Thief；原生新身份/库存/首夜动作与原物理牌交换一次生效，role在实际事实时改变。这不是grant/copy/transfer，不刷新其它玩家库存。详见[规则卡](../rules/lui-meme-thief-v1.md)/[验收](../reviews/p9-thief.md)。
+
+野孩子唯一 `awa_lui_meme_wild_child_v1` 标准N牌。首夜在普通夜技能前必选其他活人，实际完整死亡波次后、遗言/徽/枪await及Judge前同步换当前Camp/Victory为Wolf，Role仍WildChild；仅次个实际Night前置入口一次给pack权限，不补旧事件。实际同波孩子也死不转，先模型死后晚枪杀孩子则以Wolf死；实际死后保互认但无动作，复活/换生命撤权。玩家仅本人lean选择/变身/activation，God才有整波/cause/commit；原始roster保回放初值Good。实际救/守/Idiot免死不视为淘汰。无额外免伤/技能复制或任意入群、自爆时点配置，有限工程补全绑定具名策略，见[规则卡](../rules/awa-lui-meme-wild-child-v1.md)/[验收](../reviews/p9-wild-child.md)。Thief/其它扩展/匿名墙与WildChild组合尚未核验并明确拒绝。

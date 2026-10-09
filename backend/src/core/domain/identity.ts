@@ -21,6 +21,7 @@ export enum Role {
   Cupid = "cupid",
   Debater = "debater",
   Thief = "thief",
+  WildChild = "wild_child",
   HiddenWolf = "hidden_wolf",
   Gargoyle = "gargoyle",
   Psychic = "psychic",
