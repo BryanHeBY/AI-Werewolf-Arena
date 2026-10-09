@@ -33,7 +33,7 @@ actor-only `hidden_wolf_awakened {actorId,day}`一次，无候选／数量／队
 
 ## 配置及验收范围
 
-`roles.hidden_wolf`仅{}、maxCount1，公共parse与directbootstrap约束。chat／永久伪装／mist参数拒绝。[六人](../../configs.example/boards/six_player_hidden_wolf.json)为隐狼／普通狼／预言家／熊／两民；[十二人](../../configs.example/boards/twelve_player_hidden_wolf.json)为隐狼＋3普通狼／熊女猎守／4民、有警长。均是当前AWA组合、屠边／关闭自爆；来源白神不冒充白痴，迷雾永久平民／固定顺位仍未支持；石像鬼已另见[契约](gargoyle.md)，两者原生同时在场均要求自己唯一活Wolf，不产生双刀，具体伪装标签有独立能力判例。
+`roles.hidden_wolf`接受`campInspection`（默认`awa_inheritance_v1`，具名`netease_2020_good_v1`仅影响阵营查验），maxCount1，公共parse与directbootstrap约束。chat／永久伪装／mist参数拒绝。[六人](../../configs.example/boards/six_player_hidden_wolf.json)为隐狼／普通狼／预言家／熊／两民；[十二人](../../configs.example/boards/twelve_player_hidden_wolf.json)为隐狼＋3普通狼／熊女猎守／4民、有警长。均是当前AWA组合、屠边／关闭自爆；来源白神不冒充白痴，迷雾永久平民／固定顺位仍未支持；石像鬼已另见[契约](gargoyle.md)，两者原生同时在场均要求自己唯一活Wolf，不产生双刀，具体伪装标签有独立能力判例。
 
 ```sh
 bun run --cwd backend run --configs-dir ../configs.example --game-config-name six_player_hidden_wolf

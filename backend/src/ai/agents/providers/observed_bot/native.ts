@@ -45,18 +45,18 @@ export const check_identity: ObservedToolHandler = (context) => {
   if (seer?.targetPolicy === "awa_fresh_others_v1") return null;
 };
 
+import { inspectionRepeats } from "../../../../game/mechanisms/roles/role_inspection/policies";
+
 export const inspect_role: ObservedToolHandler = (context) => {
   const { request, ownState, others, pick, style } = context;
-  if (
-    style === "conservative" &&
-    (request.context.stage === "psychic" || request.context.stage === "mirror_girl")
-  )
+  if (style === "conservative" && request.context.turn_constraints.min_valid_actions === 0)
     return null;
   const state = ownState.roleInspection,
     target = pick(
       others.filter(
         (id) =>
-          state?.policy === "psychic" || !state?.history.some((report) => report.targetId === id),
+          (state && inspectionRepeats(state)) ||
+          !state?.history.some((report) => report.targetId === id),
       ),
     );
   if (target !== undefined) return { name: "inspect_role", args: { target_id: target } };

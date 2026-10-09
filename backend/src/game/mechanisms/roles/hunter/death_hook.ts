@@ -14,7 +14,8 @@ export const hunterDeathHook: DeathHook = (world, ids, sources, choose, events, 
     {
       role: Role.Hunter,
       state: getHunterState,
-      permits: permitsHunterShot,
+      permits: (sources) => permitsHunterShot(sources),
+      policy: (state) => state.deathActionPolicy ?? "awa_qualified_sources_v1",
       poisonEvent: (hunterId) => ({
         timestamp: Date.now(),
         type: "hunter_silent_due_to_poison",

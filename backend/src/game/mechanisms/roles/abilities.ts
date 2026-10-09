@@ -1,3 +1,4 @@
+import { INSPECTION_POLICIES } from "../../../core/domain/board";
 import { nativePotionSecondTurn } from "./witch/policies";
 import { Role, type EntityId, type EventPayloadMap } from "../../../core/domain/model";
 import type { RoleComponent } from "../../../core/domain/components/role";
@@ -38,6 +39,8 @@ export const ROLE_INSPECTION_POLICY_ROLES: Readonly<Record<RoleInspectionPolicy,
   mirror: Role.MirrorGirl,
 };
 export function roleInspectionPolicy(state: RoleInspectionState): RoleInspectionPolicy {
+  if (state.inspectionPolicy !== undefined && !INSPECTION_POLICIES.includes(state.inspectionPolicy))
+    throw new Error("role_inspection_configuration_policy_invalid");
   const policy = state.policy === undefined ? "gargoyle" : state.policy;
   if (policy !== "gargoyle" && policy !== "psychic" && policy !== "mirror")
     throw new Error("role_inspection_policy_invalid");

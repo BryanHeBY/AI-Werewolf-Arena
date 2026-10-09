@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { inspectionConfiguration, renderInspectionPolicy } from "../role_inspection/policies";
 import { roleName, text, inspectionLabel } from "@ai-werewolf-arena/game-text";
 import { Role } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
@@ -26,9 +26,17 @@ export const GARGOYLE_ROLE_PROFILE: RoleProfile = {
   canSelfDestruct: false,
   label: roleName("gargoyle"),
   skillBrief: text("zh-CN", "role.gargoyle.brief"),
-  init: (role) => {
+  init: (role, ctx) => {
     setGargoyleState(role, { hasInheritedKnife: false });
-    setRoleInspectionState(role, { lastTarget: null, lastDay: null, history: [] });
+    setRoleInspectionState(role, {
+      lastTarget: null,
+      lastDay: null,
+      history: [],
+      ...(ctx.boardConfig?.gargoyle?.inspectionPolicy &&
+      ctx.boardConfig.gargoyle.inspectionPolicy !== "awa_unique_required_v1"
+        ? { inspectionPolicy: ctx.boardConfig.gargoyle.inspectionPolicy }
+        : {}),
+    });
   },
   wolfTeam: (role, world) => ({
     recognizedByPack: false,
@@ -39,7 +47,14 @@ export const GARGOYLE_ROLE_PROFILE: RoleProfile = {
   renderPrompt: (role, locale = "zh-CN", world) => {
     const report = getRoleInspectionState(role)?.history.at(-1);
     return (
-      text(locale, "role.gargoyle.state") +
+      text(
+        locale,
+        getRoleInspectionState(role)?.inspectionPolicy
+          ? "role.gargoyle.configured_identity"
+          : "role.gargoyle.state",
+      ) +
+      " " +
+      renderInspectionPolicy(getRoleInspectionState(role)!, locale) +
       " " +
       text(locale, "role.gargoyle.status", {
         inherited: text(
@@ -57,12 +72,7 @@ export const GARGOYLE_ROLE_PROFILE: RoleProfile = {
         : "")
     );
   },
-  configuration: {
-    schema: z.strictObject({}),
-    defaults: {},
-    apply: (config) => config,
-    serialize: () => ({}),
-  },
+  configuration: inspectionConfiguration("gargoyle", "awa_unique_required_v1"),
   nightStages: [ROLE_INSPECTION_STAGE, ...WOLF_ROLE_PROFILE.nightStages!],
   possibleNightAbilities: ["role_check"],
   toolSpecs: [

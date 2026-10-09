@@ -21,7 +21,7 @@
 
 ## 配置与接口
 
-`roles.psychic`仅{}、maxCount1，公共parse和bootstrap同限。新ActionStage `psychic`、私有skip事件及state.policy是本笔数据变化，原工具参数不加nullable或可切policy字段；公开schema2/Tape2保留，source/lock/RNG严格兼容不放宽。旧Garg缺policy行为一致，旧source的内部Tape仍拒当前引擎静默复现。
+`roles.psychic`接受有限`inspectionPolicy`，默认`awa_repeat_optional_v1`，另有`awa_unique_required_v1`/`awa_unique_optional_v1`；maxCount1，公共parse和bootstrap同限。新ActionStage `psychic`、私有skip事件及state.policy是本笔数据变化，工具参数不加nullable或policy字段；板子策略与身份policy分离，见[策略契约](contracts/role-policy-configuration.md)；公开schema2/Tape2保留，source/lock/RNG严格兼容不放宽。旧Garg缺policy行为一致，旧source的内部Tape仍拒当前引擎静默复现。
 
 [六人](../../configs.example/boards/six_player_psychic.json)是两狼／通灵女巫／两民；[十二人](../../configs.example/boards/twelve_player_psychic.json)是四普通狼／通灵女巫猎人守卫／四民，有警长。均AWA已实现角色改编，关闭自爆、屠边；这两例不含机械狼；另有独立已验[机械板](mechanical-wolf.md)，镜隐迷踪及任意组合仍未声明支持。
 

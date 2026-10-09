@@ -1,3 +1,4 @@
+import type { DeathActionPolicy } from "./board";
 import type { NightLifeScope } from "./night_effects";
 /** Death facts are distinct from transient protection/damage marks. */
 export enum DeathCause {
@@ -25,7 +26,11 @@ export type DeathShotSelection =
   | { kind: "pass"; deathActionId: number }
   | { kind: "invalid" };
 
-export function permitsDeathShot(sources: readonly DeathCause[]): boolean {
+export function permitsDeathShot(
+  sources: readonly DeathCause[],
+  policy: DeathActionPolicy = "awa_qualified_sources_v1",
+): boolean {
+  if (policy !== "awa_qualified_sources_v1" && policy !== "awa_knife_or_exile_v1") return false;
   return (
     sources.length > 0 &&
     sources.every(
@@ -34,8 +39,8 @@ export function permitsDeathShot(sources: readonly DeathCause[]): boolean {
         source === DeathCause.MechanicalKnife ||
         source === DeathCause.AwakenedHiddenKnife ||
         source === DeathCause.Exile ||
-        source === DeathCause.Shot ||
-        source === DeathCause.WhiteWolfBlast,
+        (policy === "awa_qualified_sources_v1" &&
+          (source === DeathCause.Shot || source === DeathCause.WhiteWolfBlast)),
     )
   );
 }

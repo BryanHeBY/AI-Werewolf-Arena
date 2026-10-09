@@ -1,9 +1,11 @@
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
-import { AliveComponent } from "../../../core/domain/components/alive";
+import { AliveComponent, aliveLifeVersion } from "../../../core/domain/components/alive";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import {
   DeathCause,
+  permitsDeathShot,
+  type DeathActionPolicy,
   type EntityId,
   type GameEvent,
   type Role,
@@ -58,7 +60,13 @@ export function validateDeathShot(ctx: ValidationRuleContext, hasShot: boolean) 
 
 interface DeathShotRules {
   role: Role;
-  state: (role: RoleComponent) => { canShoot: boolean } | undefined;
+  state: (
+    role: RoleComponent,
+  ) => { canShoot: boolean; deathActionPolicy?: DeathActionPolicy } | undefined;
+  policy?: (state: {
+    canShoot: boolean;
+    deathActionPolicy?: DeathActionPolicy;
+  }) => DeathActionPolicy;
   permits: (sources: readonly DeathCause[]) => boolean;
   shotEvent: (actorId: EntityId, targetId: EntityId) => GameEvent;
   poisonEvent?: (actorId: EntityId) => GameEvent;
@@ -92,10 +100,18 @@ export async function resolveDeathShots(
       if (rules.poisonEvent) events.push(rules.poisonEvent(actorId));
       continue;
     }
-    if (!state.canShoot || !rules.permits(sources)) {
+    const policy = rules.policy?.(state);
+    const causeIdentity = JSON.stringify(sources);
+    if (
+      !state.canShoot ||
+      !rules.permits(sources) ||
+      (policy !== undefined && !permitsDeathShot(sources, policy))
+    ) {
       state.canShoot = false;
       continue;
     }
+    const actorLife = world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)!;
+    const actorVersion = aliveLifeVersion(actorLife);
     const camp = role.camp,
       privateState = role.privateState;
     const targets = new Map(
@@ -110,8 +126,14 @@ export async function resolveDeathShots(
       currentRole.camp !== camp ||
       currentRole.privateState !== privateState ||
       rules.state(currentRole) !== state ||
+      rules.policy?.(state) !== policy ||
+      JSON.stringify(deathSources[actorId] ?? []) !== causeIdentity ||
+      !rules.permits(deathSources[actorId] ?? []) ||
+      (policy !== undefined && !permitsDeathShot(deathSources[actorId] ?? [], policy)) ||
       !state.canShoot ||
-      world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)?.alive !== false
+      world.getComponent(actorId, COMPONENT.Alive) !== actorLife ||
+      actorLife.alive ||
+      aliveLifeVersion(actorLife) !== actorVersion
     )
       continue;
     if (
@@ -143,7 +165,24 @@ export async function resolveDeathShots(
     if (context?.nightEffect) (result.nightEffectTargets ??= []).push(selected.targetId);
     result.extraDeathSources[selected.targetId] = [DeathCause.Shot];
     const event = rules.shotEvent(actorId, selected.targetId);
-    if (context?.deferShotCommit) (result.pendingShots ??= []).push({ targetScope, event });
+    if (context?.deferShotCommit)
+      (result.pendingShots ??= []).push({
+        targetScope,
+        event,
+        isCurrent: () =>
+          (context.isCurrent?.() ?? true) &&
+          world.getComponent(actorId, COMPONENT.Role) === role &&
+          role.role === rules.role &&
+          role.camp === camp &&
+          role.privateState === privateState &&
+          rules.state(role) === state &&
+          rules.policy?.(state) === policy &&
+          world.getComponent(actorId, COMPONENT.Alive) === actorLife &&
+          !actorLife.alive &&
+          aliveLifeVersion(actorLife) === actorVersion &&
+          JSON.stringify(deathSources[actorId] ?? []) === causeIdentity &&
+          world.isDeathActionOpen(actorId, "shoot", selected.deathActionId),
+      });
     else events.push(event);
   }
   return result;

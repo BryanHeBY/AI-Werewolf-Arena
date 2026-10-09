@@ -41,9 +41,11 @@ export interface GuardState {
 
 /** 猎人私有状态。 */
 export interface HunterState {
+  deathActionPolicy?: import("../../../core/domain/board").DeathActionPolicy;
   canShoot: boolean;
 }
 export interface WolfKingState {
+  deathActionPolicy?: import("../../../core/domain/board").DeathActionPolicy;
   canShoot: boolean;
 }
 export interface WhiteWolfKingState {
@@ -79,6 +81,7 @@ export interface GargoyleState {
   hasInheritedKnife: boolean;
 }
 export interface RoleInspectionState {
+  inspectionPolicy?: import("../../../core/domain/board").InspectionPolicy;
   policy?: RoleInspectionPolicy;
   lastTarget: EntityId | null;
   lastDay: number | null;

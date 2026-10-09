@@ -15,6 +15,7 @@ interface Completion {
   abilityId: string;
   activation: NightAbility["activation"];
   inspection: RoleInspectionState;
+  inspectionPolicy: RoleInspectionState["inspectionPolicy"];
   life: AliveComponent;
   version: number;
   isCurrent: () => boolean;
@@ -70,6 +71,7 @@ export function recordRoleInspectionCompletion(
     abilityId: ability.id,
     activation: ability.activation,
     inspection: ability.state,
+    inspectionPolicy: ability.state.inspectionPolicy,
     life,
     version,
     isCurrent,
@@ -90,6 +92,7 @@ export function completedGargoyleInspection(world: World, role: RoleComponent): 
     scope.ability.source.role !== Role.Gargoyle ||
     scope.ability.disabled ||
     scope.ability.state !== scope.inspection ||
+    scope.inspection.inspectionPolicy !== scope.inspectionPolicy ||
     roleInspectionPolicy(scope.inspection) !== "gargoyle"
   )
     return false;

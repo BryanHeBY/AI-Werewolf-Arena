@@ -1,6 +1,28 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "role.hunter.configured_state":
+    "You are Hunter. One native gun can be used only in an authorized death window under this board’s cause policy; the last good god may still act. Passing with target_id=null spends the opportunity.",
+  "role.wolf_king.configured_state":
+    "You are Wolf King with normal pack recognition, chat, knife and ordinary self-destruct. Native shots remaining: {remaining}. An authorized death window follows this board’s cause policy; all death chains finish before victory. Passing spends the gun.",
+  "role.gargoyle.configured_identity":
+    "You are Gargoyle, a true Wolf acting independently in early role inspection. No pack recognition, chat or native self-destruct. When all other true Wolves are dead, knife access requires completion of your native inspection opportunity that night. Use the configured inspection policy below.",
+  "role.psychic.configured_identity":
+    "You are Spirit Seer, a true Good god. Your concrete role inspection acts in the late inspection stage; reports respect declared role disguises. No native knife, death gun or protection. Use the configured inspection policy below.",
+  "role.mirror_girl.configured_identity":
+    "You are Mirror Girl, a true Good god. Your native concrete role inspection acts in the late Mirror stage and preserves its instance history across lives; reports respect declared role disguises. It grants no pack access or knife. Use the configured inspection policy below.",
+
+  "role.inspection.unique_required":
+    "Configured AWA inspection: another living target not in this instance’s lifetime history; history never resets. Required while a legal target exists; three invalid or missing actions fail. Reports use the current rule role label and preserve past knowledge.",
+  "role.inspection.repeat_optional":
+    "Configured AWA inspection: another living target; repeat inspection across nights is allowed. A clean tool-free pass closes this night without spending. Invalid replies are not a pass. Reports use the current rule role label.",
+  "role.inspection.unique_optional":
+    "Configured AWA inspection: another living target not in this instance’s lifetime history; history never resets. A clean tool-free pass closes this night without spending. Invalid replies are not a pass. Reports use the current rule role label.",
+  "role.death_action.qualified":
+    "Configured native gun: every nonempty death source must be knife, exile, shot or White Wolf blast; poison and every other or unknown source veto it. Copies and gifts keep their own policy.",
+  "role.death_action.knife_exile":
+    "Configured AWA native gun: every nonempty death source must be knife or exile; shot, blast, poison and every other or unknown source veto it. Copies and gifts keep their own policy.",
+
   "stage.black_market_merchant": "Black Market trade",
   "stage.black_market_recipient": "Black Market recipient",
 
@@ -179,14 +201,14 @@ export const en = Object.freeze({
     "Mechanical reflection: on night {day}, player {actor} shielded player {target}; poison returned to original caster {caster}.",
   "console.mechanical.shot": "Mechanical Wolf shot: player {actor} hit player {target}.",
   "role.mirror_girl.brief":
-    "Good god. After Witch, optionally inspect another living player's specific role. Never repeat an ID in this instance's whole-game history; passing closes the night without spending a use.",
+    "AWA default: Good god. After Witch, optionally inspect another living player's specific role. Never repeat an ID in this instance's whole-game history; passing closes the night without spending a use.",
   "role.mirror_girl.state":
     "Your role is Mirror Girl, a Good god helping Good win. Your native Mirror inspection acts at stage 600 after Witch each night: inspect_role chooses another actually living player absent from this instance's history. No self/dead/null targets; pending knife or poison deaths have not yet removed their actions. Never repeat a stable player ID for this instance across the game, even after your or the target's revival, role changes or seat changes. Only you receive the rule-defined role label, respecting explicit disguises. No extra true faction, inventories, wolf knowledge/chat/knife; the target is not notified and future changes do not rewrite old reports. You may pass without a tool; no targets also closes this night, without spending uses or changing previous reports. Three invalid decisions are not a legal pass. Inspection causes no damage or identity change. New Mirror gifts/copies have independent empty histories; transfers preserve complete policy/history/resources and the closed night. Other instances and players do not count as your repeat. A stale or revoked original ID/policy/source/state/life cannot spend a new owner's resource; unique history is rechecked after gateway. Follow this turn's bound policy for other granted inspections; Mirror never substitutes for native Gargoyle inspection-to-knife authority.",
   "ability.role_check.mirror_rules":
     "Mirror inspection ability for this turn: after Witch, optionally inspect_role another living integer target_id absent from this instance's entire history. No self/dead/null; never repeat an ID across the game, including owner/target revival or role/seat changes. Once per instance per night; passing without a tool closes the night without increasing uses or changing reports. No targets means no invented report. Only the rule-defined role label, respecting disguises; no extra faction, skills or teammates, no damage and no target notification. New instances start with empty histories; transfer retains complete policy/history/resources and the closed night, without changing true identity/faction. Revoked ID/source/life scopes cannot consume, report or close a new instance. Mirror does not authorize a Gargoyle native inspection-to-knife completion.",
   "stage.mirror_girl": "Mirror Girl action",
   "role.psychic.brief":
-    "Good god. After Witch, optionally inspect another living player's rule-defined role, including repeat IDs across nights; passing closes this night without spending a use.",
+    "AWA default: Good god. After Witch, optionally inspect another living player's rule-defined role, including repeat IDs across nights; passing closes this night without spending a use.",
   "role.psychic.state":
     "Your role is Spirit Seer, a Good god. Your native Spirit Seer ability acts after Witch each night: inspect another actually living player's rule-defined role, respecting explicit disguises. Repeat IDs across nights are allowed; no self or dead targets. You may pass without calling a tool, closing this instance for the night without increasing uses; target_id:null is not a valid target. Only you receive the report. Learning a wolf role grants no pack chat or knife rights; later disguises never rewrite previous reports. For a granted inspection, follow this turn's bound instance rules.",
   "ability.role_check.psychic_rules":
@@ -198,7 +220,7 @@ export const en = Object.freeze({
   "inspection.skip.no_targets": "No eligible living targets",
   "replay.stage.role_inspection_skipped": "Inspection pass",
   "role.gargoyle.brief":
-    "Independent wolf without mutual recognition, pack chat or self-destruction. Inspect another living player's rule-defined role first each night; no self or repeated ID per instance. As the sole living wolf, finish native inspection before inherited knife, including self-knife.",
+    "AWA default: Independent wolf without mutual recognition, pack chat or self-destruction. Inspect another living player's rule-defined role first each night; no self or repeated ID per instance. As the sole living wolf, finish native inspection before inherited knife, including self-knife.",
   "role.gargoyle.state":
     "Your role is Gargoyle, aligned with wolves but without pack recognition, chat or shared knife targets; no native self-destruction. Your native Gargoyle ability first inspects another living uninspected player each night for their rule-defined role, including disguises. Your native instance forbids self/repeat. Complete inspection when eligible targets exist; with none, finish the phase without invented consumption. Inherit the knife when actually the sole living wolf; finish this night's native inspection with valid eligibility before a Night knife, pass or self-knife. No immediate daytime attack. Seer sees you as Wolf; learning a wolf role does not grant pack history.",
   "role.gargoyle.status":
@@ -424,7 +446,7 @@ export const en = Object.freeze({
     "White Wolf King {actor} self-destructs and deliberately takes nobody",
   "replay.stage.white_wolf_king_self_destruct": "White Wolf King self-destruct",
   "role.wolf_king.brief":
-    "Normal pack recognition, chat, knife and self-destruct; one death shot after wolf kill, exile, a shot or White Wolf King blast, blocked by poison, dream, lovers, duel or self-destruct",
+    "AWA default: Normal pack recognition, chat, knife and self-destruct; one death shot after wolf kill, exile, a shot or White Wolf King blast, blocked by poison, dream, lovers, duel or self-destruct",
   "prompt.status.day": "Current game day: {day}.",
   "role.wolf_king.state":
     "Your role is Wolf King. You share normal pack recognition, chat and knife access. An authorized death window permits one shot only after wolf kill, exile, a shot or White Wolf King blast; victory is checked after the complete death chain. Poison, dream, lovers, duel and self-destruct block shooting. Passing with target_id=null spends the shot; an invalid target does not. Shots remaining: {remaining}. Ordinary self-destruct starts night without taking another player.",
@@ -432,7 +454,7 @@ export const en = Object.freeze({
   "console.judge.wolf_king_shot": "Wolf King {actor} shoots player {target}",
   "replay.stage.wolf_king_shot": "Wolf King shot",
   "role.hunter.brief":
-    "May shoot after wolf kill, exile, a shot or White Wolf King blast; poison and forbidden causes block it. The last good special role may shoot or explicitly pass",
+    "AWA default: May shoot after wolf kill, exile, a shot or White Wolf King blast; poison and forbidden causes block it. The last good special role may shoot or explicitly pass",
   "role.idiot.brief":
     "Reveals and survives the first exile, then cannot vote, be exiled again or hold the sheriff badge",
   "role.wolf.state":

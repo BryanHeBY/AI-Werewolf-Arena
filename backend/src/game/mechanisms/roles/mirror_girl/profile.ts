@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { inspectionConfiguration, renderInspectionPolicy } from "../role_inspection/policies";
 import { roleName, text, inspectionLabel } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
@@ -49,7 +49,7 @@ export const MIRROR_GIRL_ROLE_PROFILE: RoleProfile = {
     Role.Idiot,
     Role.Villager,
   ],
-  init: (role) => {
+  init: (role, ctx) => {
     const native = nativeMirror(role);
     if (native?.kind === "role_check" && roleInspectionPolicy(native.state) !== "mirror")
       throw new Error("mirror_native_policy_invalid");
@@ -60,13 +60,29 @@ export const MIRROR_GIRL_ROLE_PROFILE: RoleProfile = {
         id.startsWith("native:role_check"),
       )
     )
-      setRoleInspectionState(role, freshMirrorInspectionState());
+      setRoleInspectionState(role, {
+        ...freshMirrorInspectionState(),
+        ...(ctx.boardConfig?.mirrorGirl?.inspectionPolicy &&
+        ctx.boardConfig.mirrorGirl.inspectionPolicy !== "awa_unique_optional_v1"
+          ? { inspectionPolicy: ctx.boardConfig.mirrorGirl.inspectionPolicy }
+          : {}),
+      });
   },
   renderPrompt: (role, locale = "zh-CN") => {
     const native = nativeMirror(role),
       report = native?.kind === "role_check" ? native.state.history.at(-1) : undefined;
     return (
-      text(locale, "role.mirror_girl.state") +
+      text(
+        locale,
+        native?.kind === "role_check" && native.state.inspectionPolicy
+          ? "role.mirror_girl.configured_identity"
+          : "role.mirror_girl.state",
+      ) +
+      " " +
+      renderInspectionPolicy(
+        native?.kind === "role_check" ? native.state : freshMirrorInspectionState(),
+        locale,
+      ) +
       (report
         ? " " +
           text(locale, "inspection.latest", {
@@ -76,12 +92,7 @@ export const MIRROR_GIRL_ROLE_PROFILE: RoleProfile = {
         : "")
     );
   },
-  configuration: {
-    schema: z.strictObject({}),
-    defaults: {},
-    apply: (config) => config,
-    serialize: () => ({}),
-  },
+  configuration: inspectionConfiguration("mirrorGirl", "awa_unique_optional_v1"),
   toolSpecs: [ROLE_INSPECTION_TOOL],
   validationRules: { inspect_role: validateRoleInspection },
   nightStages: [MIRROR_INSPECTION_STAGE],

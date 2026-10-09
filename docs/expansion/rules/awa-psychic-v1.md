@@ -17,7 +17,7 @@ awa_classic 1.0.0 角色扩展，核验2026-10-08，ID `psychic`，通灵师／S
 
 每个实例拥有完整policy/history/lastTarget/lastDay与uses/lastUsedDay/disabled/时效。gift/copy由角色规则明确初态和资源，不能用来源角色或查验label自动推定；transfer保完整语义state/policy、资源与本夜关闭，明确授权新持有者旧typed知识且不重发旧报告。旧缺省policy只兼容P6gargoyle；未知policy拒绝，不配置任意阶段priority或规则布尔拼接。
 
-`roles.psychic`仅{}，未知重复限制/self/真身份穿透/夜序等参数拒绝。公开六人与十二人用已实现角色的AWA改编（十二人为4普通狼／通灵女巫猎人守卫／4民），机械狼仍planned，不冒充来源完整机械板。角色不写死亡或判胜；DeathResolution与PM保持完整遗言/警徽/技能/追加死亡后最后judge。
+本卡描述兼容默认；`roles.psychic.inspectionPolicy`现可显式选有限AWA目标/行动策略，见[配置契约](../contracts/role-policy-configuration.md)，未知self/真身份穿透/夜序等参数拒绝。公开六人与十二人用已实现角色的AWA改编（十二人为4普通狼／通灵女巫猎人守卫／4民），机械狼仍planned，不冒充来源完整机械板。角色不写死亡或判胜；DeathResolution与PM保持完整遗言/警徽/技能/追加死亡后最后judge。
 
 ## 来源与AWA细则
 

@@ -4,7 +4,8 @@ import type { World } from "../../../../core/domain/world";
 import type { ToolRule } from "../../validation/contracts";
 import { isAliveTarget } from "../../validation/contracts";
 import type { RoleProfile } from "../contracts";
-import { activeNightAbility, roleInspectionPolicy } from "../abilities";
+import { activeNightAbility } from "../abilities";
+import { inspectionRepeats } from "./policies";
 import type { RoleInspectionState } from "../private_state";
 
 export function roleInspectionTargets(
@@ -12,7 +13,7 @@ export function roleInspectionTargets(
   actorId: EntityId,
   state: RoleInspectionState,
 ): EntityId[] {
-  const repeat = roleInspectionPolicy(state) === "psychic";
+  const repeat = inspectionRepeats(state);
   return world
     .getAliveEntityIds()
     .filter(
@@ -46,7 +47,7 @@ export const validateRoleInspection: ToolRule = ({
   if (toolCall.args.target_id === actorId || !isAliveTarget(world, toolCall.args.target_id))
     return { code: RuleError.RoleInspectTarget };
   if (
-    roleInspectionPolicy(ability.state) !== "psychic" &&
+    !inspectionRepeats(ability.state) &&
     ability.state.history.some((report) => report.targetId === toolCall.args.target_id)
   )
     return { code: RuleError.RoleInspectRepeat };

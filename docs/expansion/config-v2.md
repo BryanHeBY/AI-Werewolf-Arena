@@ -81,8 +81,12 @@ P6狼美人按[卡与契约](wolf-beauty.md)启用，roles.wolf_beauty仅{}；�
 
 P6熊按[卡与契约](bear.md)启用，roles.bear仅{}且原生count最多1；公共解析与直接bootstrap均约束。采用入夜取样、完整夜死后匿名公告版本，不能用参数改天亮活邻居重新计算或揭ID。原熊6/12示例是AWA组合，隐狼联合组合另见下段，均不冒认来源白神。
 
-P6隐狼按[卡与契约](hidden-wolf.md)启用，roles.hidden_wolf仅{}且原生count最多1。采用单向互认、不夜聊、真实死亡后唯一活Wolf接刀，掩码与熊检测按曾接刀事实；不开放mist/永久平民/自爆/复制。这两板为熊隐狼AWA组合，不含石像鬼；觉醒隐狼仍为计划角色。
+P6隐狼按[卡与契约](hidden-wolf.md)启用，roles.hidden_wolf支持campInspection有限具名策略且原生count最多1。采用单向互认、不夜聊、真实死亡后唯一活Wolf接刀，掩码与熊检测按曾接刀事实；不开放mist/永久平民/自爆/复制。这两板为熊隐狼AWA组合，不含石像鬼；觉醒隐狼仍为计划角色。
 
-P6石像鬼按[规则和契约](gargoyle.md)启用，roles.gargoyle仅{}、原生count最多1；无相认/夜聊/自爆，先具体角色查验后按原生流程及真实唯一活Wolf接刀。公开six/twelve_player_gargoyle含守墓人，十二人采用来源3普通狼＋石像鬼／预女猎墓／4民。未知mist/固定刀位/self-check/repeat等参数拒绝。
+P6石像鬼按[规则和契约](gargoyle.md)启用，roles.gargoyle支持inspectionPolicy有限AWA策略、默认awa_unique_required_v1、原生count最多1；无相认/夜聊/自爆，先具体角色查验后按原生流程及真实唯一活Wolf接刀。公开six/twelve_player_gargoyle含守墓人，十二人采用来源3普通狼＋石像鬼／预女猎墓／4民。未知mist/固定刀位/self-check等参数拒绝。
 
-P7通灵师按[规则与契约](psychic.md)启用，roles.psychic仅{}、maxCount1。原生role_check显式policy=psychic，女巫后可跨夜重复或跳过；旧Garg缺policy维持刀前禁重/必须。policy不开放为任意配置开关，新增未知字段仍拒绝。公开六/十二用已实现角色改编，机械狼与镜隐迷踪仍在后续冻结，不由通灵师注册自动授权。
+P7通灵师按[规则与契约](psychic.md)启用，roles.psychic支持inspectionPolicy有限AWA策略、默认awa_repeat_optional_v1、maxCount1。原生role_check显式policy=psychic，女巫后可跨夜重复或跳过；旧Garg缺policy维持刀前禁重/必须。身份policy不开放为任意配置开关；目标/行动配置与身份policy分离，新增未知字段仍拒绝。公开六/十二用已实现角色改编，机械狼与镜隐迷踪仍在后续冻结，不由通灵师注册自动授权。
+
+## 复核补齐的现有角色配置
+
+预言家actionPolicy所有入口统一默认awa_required_when_legal_v1，只有显式awa_optional_v1才可跳过。hunter/wolf_king的deathActionPolicy默认awa_qualified_sources_v1，可选awa_knife_or_exile_v1；只改变原生死亡枪，复制/赠予/转移枪不从持有者配置继承。gargoyle/psychic/mirror_girl的inspectionPolicy只有awa_unique_required_v1、awa_repeat_optional_v1、awa_unique_optional_v1，默认分别为这三者；时序/阵营/伪装/接刀保持身份policy机制。各空对象与省略值一致，未知版本/无对应角色均拒绝，反向序列化、实例/validator/执行/双语提示与实际严格Tape闭环。详见[有限契约与矩阵](contracts/role-policy-configuration.md)。这些AWA策略不冒称主流完整平台规则。

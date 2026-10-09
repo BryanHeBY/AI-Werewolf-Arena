@@ -1,3 +1,4 @@
+import { deathActionConfiguration, renderDeathActionPolicy } from "../death_action_policy";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Role, permitsDeathShot } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
@@ -16,11 +17,27 @@ export const WOLF_KING_ROLE_PROFILE: RoleProfile = {
   role: Role.WolfKing,
   label: roleName("wolf_king"),
   skillBrief: text("zh-CN", "role.wolf_king.brief"),
-  init: (role) => {
-    setWolfKingState(role, { canShoot: true });
+  configuration: deathActionConfiguration("wolfKing"),
+  init: (role, ctx) => {
+    setWolfKingState(role, {
+      canShoot: true,
+      ...(ctx.boardConfig?.wolfKing?.deathActionPolicy === "awa_knife_or_exile_v1"
+        ? { deathActionPolicy: ctx.boardConfig.wolfKing.deathActionPolicy }
+        : {}),
+    });
   },
   renderPrompt: (role, locale = "zh-CN") =>
-    text(locale, "role.wolf_king.state", { remaining: getWolfKingState(role)?.canShoot ? 1 : 0 }),
+    text(
+      locale,
+      getWolfKingState(role)?.deathActionPolicy === "awa_knife_or_exile_v1"
+        ? "role.wolf_king.configured_state"
+        : "role.wolf_king.state",
+      {
+        remaining: getWolfKingState(role)?.canShoot ? 1 : 0,
+      },
+    ) +
+    " " +
+    renderDeathActionPolicy(getWolfKingState(role)?.deathActionPolicy, locale),
   toolSpecs: [...WOLF_ROLE_PROFILE.toolSpecs!, ...DEATH_SHOT_TOOL_SPECS],
   validationRules: {
     ...WOLF_ROLE_PROFILE.validationRules,
@@ -41,7 +58,8 @@ export const WOLF_KING_ROLE_PROFILE: RoleProfile = {
       {
         role: Role.WolfKing,
         state: getWolfKingState,
-        permits: permitsDeathShot,
+        permits: (sources) => permitsDeathShot(sources),
+        policy: (state) => state.deathActionPolicy ?? "awa_qualified_sources_v1",
         shotEvent: (actorId, targetId) => ({
           timestamp: Date.now(),
           type: "wolf_king_shot",

@@ -1,5 +1,27 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "role.hunter.configured_state":
+    "你是猎人。一份原生枪仅在获授权死亡窗口按本板死因策略使用；最后神职仍可行动。target_id=null主动空枪消耗机会。",
+  "role.wolf_king.configured_state":
+    "你是狼王，正常狼队互认、夜聊、狼刀与普通自爆。原生枪剩余：{remaining}。授权死亡窗口按本板死因策略执行，全部死亡链结束后判胜；主动空枪消耗机会。",
+  "role.gargoyle.configured_identity":
+    "你是独立的真实狼人石像鬼，在前段具体角色查验阶段行动；无狼队互认、夜聊或原生自爆。其他真实狼人全部死亡后，刀权仍要求本夜原生查验机会合法完成。查验目标与行动按下述配置策略。",
+  "role.psychic.configured_identity":
+    "你是通灵师，真实好人神职，在后段查验阶段查具体规则角色，报告尊重明确伪装；无原生狼刀、死亡枪或保护。查验目标与行动按下述配置策略。",
+  "role.mirror_girl.configured_identity":
+    "你是魔镜少女，真实好人神职。原生具体角色查验在后段魔镜阶段执行，实例历史跨生命保留，报告尊重明确伪装；不授予狼队权限或刀权。查验目标与行动按下述配置策略。",
+
+  "role.inspection.unique_required":
+    "配置的AWA查验：仅其他存活且本实例整局未验对象，历史不重置。有合法目标时必须行动；三次非法或缺失行动失败。报告使用当前规则角色标签，旧知识保持。",
+  "role.inspection.repeat_optional":
+    "配置的AWA查验：仅其他存活对象，可跨夜重复。合法无工具跳过关闭本夜但不消耗；非法回复不是跳过。报告使用当前规则角色标签。",
+  "role.inspection.unique_optional":
+    "配置的AWA查验：仅其他存活且本实例整局未验对象，历史不重置。合法无工具跳过关闭本夜但不消耗；非法回复不是跳过。报告使用当前规则角色标签。",
+  "role.death_action.qualified":
+    "配置的原生枪：非空复合死因每项均须为刀、放逐、枪或白狼爆带；毒和其他或未知来源均否决。复制与赠枪保持各自策略。",
+  "role.death_action.knife_exile":
+    "配置的AWA原生枪：非空复合死因每项均须为刀或放逐；枪、爆带、毒和其他或未知来源均否决。复制与赠枪保持各自策略。",
+
   "stage.black_market_merchant": "黑市商人交易",
   "stage.black_market_recipient": "黑市幸运儿行动",
 
@@ -156,14 +178,14 @@ export const zhCN = Object.freeze({
     "【机械反毒】第{day}夜，{actor}号保护{target}号，毒返回原施毒者{caster}号。",
   "console.mechanical.shot": "【机械狼开枪】{actor}号命中{target}号。",
   "role.mirror_girl.brief":
-    "好人神职，每夜女巫后可查另一活人的具体角色；同实例整局不可重查已记录编号，可跳过关闭本夜而不花次数。",
+    "AWA默认：好人神职，每夜女巫后可查另一活人的具体角色；同实例整局不可重查已记录编号，可跳过关闭本夜而不花次数。",
   "role.mirror_girl.state":
     "你的角色是魔镜少女，好人神职，随好人获胜。原生魔镜查验在每夜女巫后600阶段，用inspect_role选择另一实际存活、未在本实例历史中查过的玩家，不能self/dead/null；等待刀毒结算但未实际标死者仍可行动或被查。同一能力实例跨整局不可重复稳定玩家ID，自己或目标复活、目标改身份/座位也不清历史。报告按本板明确role标签和伪装规则，只有你知道，不额外获得真实阵营、能力库存、狼队信息/夜聊/刀权；对象无通知，历史不因未来变化回写。可不调用工具跳过，或无目标时自动关闭本夜，uses不增加且旧报告不改；连续三次非法决策不是合法skip。查验不造成伤害或改身份。赠予/复制的魔镜实例有独立空历史，转移完整保留该实例的policy/记录/库存/闭夜；不同实例和玩家互不算重查。原ID/policy/来源/状态/生命撤换或迟到不消费新owner，gateway后重复历史仍须重验。取得另一个查验实例时按当前绑定policy行动，魔镜不能替石像鬼原生查后刀。",
   "ability.role_check.mirror_rules":
     "本轮魔镜查验能力：女巫后可inspect_role另一存活且不在本实例全部历史中的整数target_id，不可self/dead/null。整局禁重查，持有者和目标复活/变身份/座位也不重置。每实例每夜一次，可不调用工具skip：闭本夜但uses不增加、旧报告不改；无目标不造报告。只查本板role标签，尊重伪装，无附加camp/技能/队友，查验不伤人；对象不获通知。独立新实例空历史，transfer保完整policy/history/resources/闭夜，真实身份和阵营不变。撤权或原ID/来源/生命改变不消费、报告或关闭新实例；魔镜不授权Garg原生查后刀。",
   "stage.mirror_girl": "魔镜少女行动",
   "role.psychic.brief":
-    "好人神职，女巫后可查另一存活玩家的具体规则角色，可跨夜重验；也可无工具跳过，关闭本夜机会但不耗次数。",
+    "AWA默认：好人神职，女巫后可查另一存活玩家的具体规则角色，可跨夜重验；也可无工具跳过，关闭本夜机会但不耗次数。",
   "role.psychic.state":
     "你的底牌是【通灵师】，好人神职。你的原生通灵能力每夜女巫后可查其它实际存活玩家的具体规则角色，尊重明确伪装；可跨夜重复查同编号，不可自验或查死者。可以不调用工具跳过，关闭本实例本夜机会但uses不增；target_id:null不是合法目标。报告仅你可见，知道狼人身份不授予狼聊/刀权；旧报告不会被后来的伪装变化回写；获赠其它查验时，以本轮绑定实例规则为准。",
   "ability.role_check.psychic_rules":
@@ -174,7 +196,7 @@ export const zhCN = Object.freeze({
   "inspection.skip.no_targets": "没有可查验的存活目标",
   "replay.stage.role_inspection_skipped": "查验跳过",
   "role.gargoyle.brief":
-    "独立狼，无相认/狼聊/自爆。每夜先查其它存活玩家具体角色，同实例不能self/重复；唯一活Wolf接刀后须结束本夜查验再刀，可自刀。",
+    "AWA默认：独立狼，无相认/狼聊/自爆。每夜先查其它存活玩家具体角色，同实例不能self/重复；唯一活Wolf接刀后须结束本夜查验再刀，可自刀。",
   "role.gargoyle.state":
     "你的底牌是【石像鬼】，狼阵营但不与狼队相认、夜聊或共享刀口，不能原生自爆。你的原生石像鬼查验每夜上半夜先查其它存活未验玩家的具体规则角色（含伪装），原生同实例不能自验/重验。有效目标存在时须完成，无未验目标则流程自然结束不假消费。真正成为唯一活Wolf时接刀，仍须本夜原生查验流程结束且资格有效才可Night刀人/弃票/自刀；Day不立即出刀。预言家查你为Wolf，知道某狼身份不授予狼聊历史。",
   "role.gargoyle.status": "本人曾接刀：{inherited}；本夜查后刀资格：{active}。",
@@ -374,7 +396,7 @@ export const zhCN = Object.freeze({
   "console.white_wolf_king.blast_none": "{actor}号白狼王自爆，明确不带人",
   "replay.stage.white_wolf_king_self_destruct": "白狼王自爆",
   "role.wolf_king.brief":
-    "狼队互认、夜聊、狼刀及普通自爆；狼刀、放逐、枪击或白狼王带人死亡可开一枪，毒、梦亡、殉情、决斗或自爆禁枪",
+    "AWA默认：狼队互认、夜聊、狼刀及普通自爆；狼刀、放逐、枪击或白狼王带人死亡可开一枪，毒、梦亡、殉情、决斗或自爆禁枪",
   "prompt.status.day": "当前日次：第{day}天。",
   "role.wolf_king.state":
     "你的底牌是【狼王】。你拥有普通狼队互认、夜聊与刀权。授权死亡窗口仅在狼刀、放逐、枪击或白狼王带人死因下可开枪，整链后判胜；含毒、梦亡、殉情、决斗或自爆不能开枪。主动空枪target_id=null消耗机会，非法目标不耗枪。剩余枪：{remaining}。普通自爆中断入夜，但不能带人。",
@@ -382,7 +404,7 @@ export const zhCN = Object.freeze({
   "console.judge.wolf_king_shot": "{actor}号狼王开枪带走{target}号",
   "replay.stage.wolf_king_shot": "狼王开枪",
   "role.hunter.brief":
-    "狼刀、放逐、枪击或白狼王带人死亡可开枪，含毒等禁枪来源则不能开枪；允许末神开枪与主动空枪",
+    "AWA默认：狼刀、放逐、枪击或白狼王带人死亡可开枪，含毒等禁枪来源则不能开枪；允许末神开枪与主动空枪",
   "role.idiot.brief": "首次被放逐翻牌免死，此后不可投票、再被放逐或持有警徽",
   "role.wolf.state": "你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。",
   "role.villager.state":

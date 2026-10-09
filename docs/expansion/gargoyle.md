@@ -20,7 +20,7 @@
 
 ## 配置和声明支持
 
-`roles.gargoyle` 只接受 `{}`，maxCount=1；未知相认、自爆、重复查验、固定刀位或迷雾参数拒绝。公开[六人板](../../configs.example/boards/six_player_gargoyle.json)为石像鬼／普通狼／预言家／守墓人／两民；[十二人板](../../configs.example/boards/twelve_player_gargoyle.json)为石像鬼＋三狼／预言家女巫猎人守墓人／四民，有警长。采用屠边、关闭原生自爆；不宣称其它同名变体已实现。
+`roles.gargoyle`接受有限`inspectionPolicy`，默认`awa_unique_required_v1`，另有`awa_repeat_optional_v1`/`awa_unique_optional_v1`；maxCount=1，未知相认、自爆、固定刀位或迷雾参数拒绝。配置闭环见[策略契约](contracts/role-policy-configuration.md)。公开[六人板](../../configs.example/boards/six_player_gargoyle.json)为石像鬼／普通狼／预言家／守墓人／两民；[十二人板](../../configs.example/boards/twelve_player_gargoyle.json)为石像鬼＋三狼／预言家女巫猎人守墓人／四民，有警长。采用屠边、关闭原生自爆；不宣称其它同名变体已实现。
 
 ```sh
 bun run --cwd backend run --configs-dir ../configs.example --game-config-name six_player_gargoyle

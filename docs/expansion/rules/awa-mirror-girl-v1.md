@@ -14,7 +14,7 @@
 
 ## mirror_girl
 
-1. 原生最多1名，真实 Good 神职、Good 胜利，正常发言/投票/警长；无原生狼互认/夜聊/刀、自爆、保护、死亡枪或查验伤害。`roles.mirror_girl` 只接受 `{}`；未知重查/self/时序/穿透/库存参数拒绝。
+1. 原生最多1名，真实 Good 神职、Good 胜利，正常发言/投票/警长；无原生狼互认/夜聊/刀、自爆、保护、死亡枪或查验伤害。本卡描述兼容默认；`roles.mirror_girl.inspectionPolicy`可显式选有限AWA策略，见[配置契约](../contracts/role-policy-configuration.md)；未知self/时序/穿透/库存参数拒绝。
 2. 原生 `role_check` 实例显式 `policy:"mirror"`。每夜女巫之后，独立600 `mirror_girl` 阶段，可以 `inspect_role {target_id:integer}` 查另一实际存活玩家的规则具体角色标签；不可self/dead/null，待刀/毒但尚未实际标死者仍可行动/被查。
 3. **每实例跨整局不重复稳定玩家ID**，不因持有者或目标死亡/复活、目标变底牌/变阵营、座位重排而重置；持有者复活也不重新初始化原生实例历史。成功才追加 `{day,targetId,result:{kind:"role",role}}`、增加uses并关闭当夜；旧报告不因后续标签变化回写。不从 lastTarget 一个值猜完整历史。
 4. 可以不调用工具跳过，关闭该实例本夜、uses不增加，lastTarget/lastDay/历史不变；null是Provider合法无行动，不是 `target_id:null`。没有其它存活未查对象时不请求、不造报告，同样关闭本夜。三次决策持续返回非法动作且仍有目标则明确运行失败，不把非法动作当合法跳过。

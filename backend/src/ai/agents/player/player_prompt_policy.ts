@@ -9,6 +9,7 @@ import {
   projectWolfBeautyState,
   projectWolfKingState,
 } from "../../../game/mechanisms/roles/player_state";
+import { renderInspectionPolicy } from "../../../game/mechanisms/roles/role_inspection/policies";
 import { renderMessage, text, term, type Locale } from "@ai-werewolf-arena/game-text";
 import { readGravekeeperReport } from "@ai-werewolf-arena/replay-contract";
 import { getBearState } from "../../../game/mechanisms/roles/private_state";
@@ -470,14 +471,16 @@ export class PlayerPromptPolicy {
       const inspection = getRoleInspectionState(role, request.context.ability_id);
       if (inspection)
         lines.push(
-          text(
-            this.locale,
-            roleInspectionPolicy(inspection) === "psychic"
-              ? "ability.role_check.psychic_rules"
-              : roleInspectionPolicy(inspection) === "mirror"
-                ? "ability.role_check.mirror_rules"
-                : "ability.role_check.rules",
-          ),
+          inspection.inspectionPolicy
+            ? renderInspectionPolicy(inspection, this.locale)
+            : text(
+                this.locale,
+                roleInspectionPolicy(inspection) === "psychic"
+                  ? "ability.role_check.psychic_rules"
+                  : roleInspectionPolicy(inspection) === "mirror"
+                    ? "ability.role_check.mirror_rules"
+                    : "ability.role_check.rules",
+              ),
         );
     }
     const privateState = role?.renderPrompt?.(this.locale).trim();

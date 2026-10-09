@@ -9,6 +9,7 @@ import {
   Role,
   RuntimeSnapshot,
   DeathCause,
+  permitsDeathShot,
   type DeathSources,
   type DeathShotSelection,
 } from "../../core/domain/model";
@@ -36,6 +37,8 @@ import {
   firstDeathGuns,
   finishDeathGuns,
 } from "../mechanisms/roles/death_abilities";
+
+import { getHunterState, getWolfKingState } from "../mechanisms/roles/private_state";
 
 interface DeathWaveActions {
   phase: Phase;
@@ -343,16 +346,40 @@ export class DeathResolution {
         ? undefined
         : activeDeathGun(this.world, actorId, abilityId, actions.day, true);
     if (abilityId !== undefined && !gun) return { kind: "invalid" };
-    const eligible = gun
+    const role = this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+    const nativeState =
+      abilityId === undefined && role
+        ? role.role === Role.Hunter
+          ? getHunterState(role)
+          : role.role === Role.WolfKing
+            ? getWolfKingState(role)
+            : undefined
+        : undefined;
+    const nativePolicy = nativeState?.deathActionPolicy ?? "awa_qualified_sources_v1";
+    const causeIdentity = JSON.stringify(sources[actorId] ?? []);
+    const nativeCurrent = () =>
+      !nativeState ||
+      (this.world.getComponent(actorId, COMPONENT.Role) === role &&
+        (role?.role === Role.Hunter
+          ? getHunterState(role)
+          : role?.role === Role.WolfKing
+            ? getWolfKingState(role)
+            : undefined) === nativeState &&
+        (nativeState.deathActionPolicy ?? "awa_qualified_sources_v1") === nativePolicy &&
+        JSON.stringify(sources[actorId] ?? []) === causeIdentity &&
+        permitsDeathShot(sources[actorId] ?? [], nativePolicy));
+    const gunCurrent = gun
       ? captureDeathGun(this.world, actorId, gun, actions.day, isCurrent).isEligible
       : isCurrent;
+    const permissionCurrent = () => gunCurrent() && nativeCurrent();
+    const eligible = () => permissionCurrent() && (!nativeState || nativeState.canShoot);
     if (!eligible()) return { kind: "invalid" };
     const permit = this.world.openDeathAction(
       actorId,
       "shoot",
       actions.phase,
       actions.day,
-      isCurrent,
+      permissionCurrent,
       abilityId,
     );
     actions.permits.push(permit);
@@ -361,33 +388,34 @@ export class DeathResolution {
       const targets = new Map(
         this.world.getAliveEntityIds().map((id) => [id, captureNightLife(this.world, id)]),
       );
-      const action = await actionProvider.getAction(
-        requests.create({
-          phase: actions.phase,
-          actorId: actorId,
-          allowedTools: ["shoot"],
-          stage:
-            abilityId === undefined &&
-            this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role === Role.Hunter
-              ? "hunter_shot"
-              : "death_shot",
-          requiresAction: true,
-          summary: { key: "request.summary.death_shot" },
-          context: {
-            ...(abilityId !== undefined ||
-            this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role ===
-              Role.AwakenedHiddenWolf
-              ? { action_failure_policy: "error" as const, allow_fallback: false }
-              : {}),
-            ...(abilityId === undefined ? {} : { ability_id: abilityId }),
-            trigger: "on_death",
-            death_phase: deathPhase,
-            death_sources: [...(sources[actorId] ?? [])],
-            death_action_id: permit.id,
-            ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
-          },
-        }),
-      );
+      if (!eligible()) return { kind: "invalid" };
+      const request = requests.create({
+        phase: actions.phase,
+        actorId: actorId,
+        allowedTools: ["shoot"],
+        stage:
+          abilityId === undefined &&
+          this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role === Role.Hunter
+            ? "hunter_shot"
+            : "death_shot",
+        requiresAction: true,
+        summary: { key: "request.summary.death_shot" },
+        context: {
+          ...(abilityId !== undefined ||
+          this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role ===
+            Role.AwakenedHiddenWolf
+            ? { action_failure_policy: "error" as const, allow_fallback: false }
+            : {}),
+          ...(abilityId === undefined ? {} : { ability_id: abilityId }),
+          trigger: "on_death",
+          death_phase: deathPhase,
+          death_sources: [...(sources[actorId] ?? [])],
+          death_action_id: permit.id,
+          ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
+        },
+      });
+      if (!eligible()) return { kind: "invalid" };
+      const action = await actionProvider.getAction(request);
       if (
         !eligible() ||
         !this.world.hasDeathAction(

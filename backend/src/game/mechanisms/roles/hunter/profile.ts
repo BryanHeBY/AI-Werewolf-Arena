@@ -1,3 +1,4 @@
+import { deathActionConfiguration, renderDeathActionPolicy } from "../death_action_policy";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：猎人角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
@@ -14,10 +15,24 @@ export const HUNTER_ROLE_PROFILE: RoleProfile = {
   label: roleName("hunter"),
   skillBrief: text("zh-CN", "role.hunter.brief"),
   goodSide: "god",
-  init: (roleComp) => {
-    setHunterState(roleComp, { canShoot: true });
+  configuration: deathActionConfiguration("hunter"),
+  init: (roleComp, ctx) => {
+    setHunterState(roleComp, {
+      canShoot: true,
+      ...(ctx.boardConfig?.hunter?.deathActionPolicy === "awa_knife_or_exile_v1"
+        ? { deathActionPolicy: ctx.boardConfig.hunter.deathActionPolicy }
+        : {}),
+    });
   },
-  renderPrompt: (_roleComp, locale = "zh-CN") => text(locale, "role.hunter.state"),
+  renderPrompt: (role, locale = "zh-CN") =>
+    text(
+      locale,
+      getHunterState(role)?.deathActionPolicy === "awa_knife_or_exile_v1"
+        ? "role.hunter.configured_state"
+        : "role.hunter.state",
+    ) +
+    " " +
+    renderDeathActionPolicy(getHunterState(role)?.deathActionPolicy, locale),
   toolSpecs: HUNTER_TOOL_SPECS,
   validationRules: {
     shoot: (ctx) =>

@@ -5,7 +5,7 @@ import { text } from "@ai-werewolf-arena/game-text";
 import { Role, ToolName } from "../../../core/domain/model";
 import { TargetHintContext, TargetHintRegistry } from "./contracts";
 import { canBeExiled, canBeSheriff } from "../common/participation";
-import { roleInspectionPolicy } from "../roles/abilities";
+import { inspectionRepeats } from "../roles/role_inspection/policies";
 import { getRoleInspectionState } from "../roles/private_state";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
@@ -132,7 +132,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
                 canBeExiled(ctx.world, id, ctx.roleCatalog))) &&
             (tool !== "inspect_role" ||
               !inspection ||
-              roleInspectionPolicy(inspection) === "psychic" ||
+              inspectionRepeats(inspection) ||
               !inspection.history.some((report) => report.targetId === id)) &&
             (tool !== "choose_badge_successor" ||
               (ctx.badgeCandidates?.includes(id) &&

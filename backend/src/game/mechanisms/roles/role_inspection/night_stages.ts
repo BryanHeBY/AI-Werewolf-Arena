@@ -16,6 +16,7 @@ import {
   recordRoleInspectionCompletion,
   recordRoleInspectionNightCommit,
 } from "./night_scope";
+import { inspectionRequired } from "./policies";
 import { roleInspectionTargets } from "./rules";
 import { captureNightAbilityScope } from "../ability_scope";
 import { captureAwakenedMirrorScope } from "../awakened_hidden_wolf/night_scope";
@@ -109,25 +110,27 @@ async function executeInspections(
         completed = true;
         break;
       }
-      const action = await ctx.actionProvider.getAction(
-        ctx.makeRequest(actorId, ["inspect_role"], {
-          stage:
-            policy === "gargoyle"
-              ? "role_inspection"
-              : policy === "mirror"
-                ? "mirror_girl"
-                : "psychic",
-          requiresAction: policy === "gargoyle",
-          ability_id: abilityId,
-          ...(sourceKind === "native" && sourceOwner === Role.AwakenedHiddenWolf
-            ? { action_failure_policy: "error" as const, allow_fallback: false }
-            : {}),
-          ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),
-        }),
-      );
+      const request = ctx.makeRequest(actorId, ["inspect_role"], {
+        stage:
+          policy === "gargoyle"
+            ? "role_inspection"
+            : policy === "mirror"
+              ? "mirror_girl"
+              : "psychic",
+        requiresAction: inspectionRequired(state),
+        ability_id: abilityId,
+        ...(sourceKind === "native" && sourceOwner === Role.AwakenedHiddenWolf
+          ? { action_failure_policy: "error" as const, allow_fallback: false }
+          : {}),
+        ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),
+      });
       if (!current()) break;
-      if (action === null && policy !== "gargoyle") {
+      const action = await ctx.actionProvider.getAction(request);
+      if (!current()) break;
+      if (action === null && !inspectionRequired(state)) {
         finishOptionalInspection(ctx, actorId, ability, day, "passed");
+        if (policy === "gargoyle")
+          recordRoleInspectionCompletion(ctx.world, actorId, day, ability, ctx.isCurrent);
         completed = true;
         break;
       }

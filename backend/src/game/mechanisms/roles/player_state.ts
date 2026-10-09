@@ -8,9 +8,11 @@ export interface PlayerGuardState {
   repeatPolicy?: GuardRepeatPolicy;
 }
 export interface PlayerHunterState {
+  deathActionPolicy?: import("../../../core/domain/board").DeathActionPolicy;
   canShoot: boolean;
 }
 export interface PlayerWolfKingState {
+  deathActionPolicy?: import("../../../core/domain/board").DeathActionPolicy;
   canShoot: boolean;
 }
 export interface PlayerWhiteWolfKingState {
@@ -54,6 +56,7 @@ export interface PlayerWitchState {
   poisonUsedThisNight: boolean;
 }
 export interface PlayerRoleInspectionState {
+  inspectionPolicy?: import("../../../core/domain/board").InspectionPolicy;
   policy?: "gargoyle" | "psychic" | "mirror";
   lastTarget: number | null;
   lastDay: number | null;
@@ -113,11 +116,20 @@ export function projectGuardState(state: unknown): PlayerGuardState {
       : {}),
   };
 }
+function projectGunState(state: unknown): PlayerHunterState {
+  const policy = playerDataField(state, "deathActionPolicy");
+  return {
+    canShoot: playerDataField(state, "canShoot") === true,
+    ...(policy === "awa_qualified_sources_v1" || policy === "awa_knife_or_exile_v1"
+      ? { deathActionPolicy: policy }
+      : {}),
+  };
+}
 export function projectHunterState(state: unknown): PlayerHunterState {
-  return { canShoot: playerDataField(state, "canShoot") === true };
+  return projectGunState(state);
 }
 export function projectWolfKingState(state: unknown): PlayerWolfKingState {
-  return { canShoot: playerDataField(state, "canShoot") === true };
+  return projectGunState(state);
 }
 export function projectWhiteWolfKingState(state: unknown): PlayerWhiteWolfKingState {
   return { canDetonate: playerDataField(state, "canDetonate") === true };
@@ -209,8 +221,14 @@ export function projectWitchState(state: unknown): PlayerWitchState {
   };
 }
 export function projectRoleInspectionState(state: unknown): PlayerRoleInspectionState {
-  const policy = playerDataField(state, "policy");
+  const policy = playerDataField(state, "policy"),
+    inspectionPolicy = playerDataField(state, "inspectionPolicy");
   return {
+    ...(inspectionPolicy === "awa_unique_required_v1" ||
+    inspectionPolicy === "awa_repeat_optional_v1" ||
+    inspectionPolicy === "awa_unique_optional_v1"
+      ? { inspectionPolicy }
+      : {}),
     ...(policy === "gargoyle" || policy === "psychic" || policy === "mirror" ? { policy } : {}),
     lastTarget: positiveOrNull(playerDataField(state, "lastTarget")),
     lastDay: positiveOrNull(playerDataField(state, "lastDay")),

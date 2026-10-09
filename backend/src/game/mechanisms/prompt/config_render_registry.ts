@@ -1,4 +1,6 @@
 /** Renders normalized board rules without holding mutable language state. */
+import { renderDeathActionPolicy } from "../roles/death_action_policy";
+import { renderInspectionPolicy } from "../roles/role_inspection/policies";
 import {
   BoardConfig,
   WinCondition,
@@ -130,6 +132,43 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
           ? "prompt.config.exile_pk"
           : "prompt.config.exile_direct",
       ),
+      ...config.roleSetups
+        .filter(
+          (entry) =>
+            entry.count > 0 && (entry.role === Role.Hunter || entry.role === Role.WolfKing),
+        )
+        .map((entry) =>
+          renderDeathActionPolicy(
+            entry.role === Role.Hunter
+              ? config.hunter?.deathActionPolicy
+              : config.wolfKing?.deathActionPolicy,
+            locale,
+          ),
+        ),
+      ...config.roleSetups
+        .filter(
+          (entry) =>
+            entry.count > 0 && [Role.Gargoyle, Role.Psychic, Role.MirrorGirl].includes(entry.role),
+        )
+        .map((entry) =>
+          renderInspectionPolicy(
+            {
+              policy:
+                entry.role === Role.Gargoyle
+                  ? "gargoyle"
+                  : entry.role === Role.Psychic
+                    ? "psychic"
+                    : "mirror",
+              inspectionPolicy:
+                entry.role === Role.Gargoyle
+                  ? config.gargoyle?.inspectionPolicy
+                  : entry.role === Role.Psychic
+                    ? config.psychic?.inspectionPolicy
+                    : config.mirrorGirl?.inspectionPolicy,
+            },
+            locale,
+          ),
+        ),
       text(locale, "prompt.config.disclosure"),
       text(locale, "prompt.config.last_words"),
       ...(config.roleSetups.some((entry) => entry.role === Role.Knight && entry.count > 0)

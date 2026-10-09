@@ -105,3 +105,5 @@ bun run format
 已实现行为以代码和测试为准。玩法扩充的目标、64 项角色、中英双语支持、阶段验收、交叉审查和提交要求见 [扩充路线](docs/expansion/roadmap.md)；计划功能在实现并验证后才登记为支持。
 
 已有默认板子保持兼容。`configs.example/boards/awa_classic_pk_choice_12_v1.json` 提供完整的AWA具名竞选PK、放逐PK与死亡持徽者选择组合：首轮仅未上警者投警长、最多一次PK、再次平票/全弃票无徽或无人放逐、死亡警长选择继任者或撕徽。它不是网易或赛事的完整规则镜像；详细边界与参数见[警徽/投票契约](docs/expansion/contracts/sheriff-voting-policies.md)。示例不覆盖本地configs或改变省略参数默认；双语12人离线录制与严格Tape复现覆盖完整组合。
+
+现有角色配置复核：预言家省略/空对象统一保留必选默认；猎人/狼王原生deathActionPolicy和石像鬼/通灵师/魔镜少女inspectionPolicy已连通有限AWA版本策略及实际Tape，详见[策略契约](docs/expansion/contracts/role-policy-configuration.md)。原审查范围仍在逐项复核，历史门禁不表示全部配置需求已交付。

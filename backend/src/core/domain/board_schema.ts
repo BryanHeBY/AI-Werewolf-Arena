@@ -1,5 +1,7 @@
 import { z } from "zod";
 import {
+  DEATH_ACTION_POLICIES,
+  INSPECTION_POLICIES,
   GUARD_REPEAT_POLICIES,
   HIDDEN_WOLF_CAMP_INSPECTION_POLICIES,
   SEER_TARGET_POLICIES,
@@ -40,6 +42,11 @@ export const boardConfigSchema = z.strictObject({
     .optional(),
   voting: z.strictObject({ exilePolicy: z.enum(EXILE_VOTE_POLICIES) }).optional(),
   knight: z.strictObject({ enabledWindows: z.array(z.enum(KnightDuelWindow)) }).optional(),
+  hunter: z.strictObject({ deathActionPolicy: z.enum(DEATH_ACTION_POLICIES) }).optional(),
+  wolfKing: z.strictObject({ deathActionPolicy: z.enum(DEATH_ACTION_POLICIES) }).optional(),
+  gargoyle: z.strictObject({ inspectionPolicy: z.enum(INSPECTION_POLICIES) }).optional(),
+  psychic: z.strictObject({ inspectionPolicy: z.enum(INSPECTION_POLICIES) }).optional(),
+  mirrorGirl: z.strictObject({ inspectionPolicy: z.enum(INSPECTION_POLICIES) }).optional(),
   guard: z.strictObject({ repeatPolicy: z.enum(GUARD_REPEAT_POLICIES) }).optional(),
   hiddenWolf: z
     .strictObject({ campInspection: z.enum(HIDDEN_WOLF_CAMP_INSPECTION_POLICIES) })

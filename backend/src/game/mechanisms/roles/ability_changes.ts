@@ -87,7 +87,10 @@ function installAbility(
     input.kind === "role_check" &&
     roleInspectionPolicy(input.state) === "mirror" &&
     source.kind !== "transfer" &&
-    (Object.keys(input.state).sort().join() !== "history,lastDay,lastTarget,policy" ||
+    (Object.keys(input.state)
+      .filter((key) => key !== "inspectionPolicy")
+      .sort()
+      .join() !== "history,lastDay,lastTarget,policy" ||
       input.state.lastTarget !== null ||
       input.state.lastDay !== null ||
       !Array.isArray(input.state.history) ||

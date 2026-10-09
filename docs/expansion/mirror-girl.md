@@ -36,7 +36,7 @@ role/state/ID/policy/来源/生命与时钟在await、gateway与应用点复验�
 - [六人板](../../configs.example/boards/six_player_mirror_girl.json)与[对局](../../configs.example/games/six_player_mirror_girl.json)：两普通狼、Mirror/Witch、两民，屠边、无警长。
 - [十二人板](../../configs.example/boards/twelve_player_mirror_girl.json)与[对局](../../configs.example/games/twelve_player_mirror_girl.json)：四普通狼、Mirror/Witch/Hunter/Guard、四民，屠边、警长。
 
-`roles.mirror_girl`只接受{}；游戏locale支持zh-CN/en，沿原agent/名字/人格绑定，不覆写用户配置。查验不造成死亡；没有未查存活目标的skip label明确表示“没有可查验的存活目标”，不误称场上无活人。
+`roles.mirror_girl`接受有限`inspectionPolicy`，默认`awa_unique_optional_v1`，另有`awa_unique_required_v1`/`awa_repeat_optional_v1`；[策略契约](contracts/role-policy-configuration.md)记录AWA配置与原生身份policy的边界；游戏locale支持zh-CN/en，沿原agent/名字/人格绑定，不覆写用户配置。查验不造成死亡；没有未查存活目标的skip label明确表示“没有可查验的存活目标”，不误称场上无活人。
 
 ## 实施与提交
 
