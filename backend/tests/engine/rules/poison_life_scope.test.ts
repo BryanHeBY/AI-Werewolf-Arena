@@ -33,3 +33,45 @@ test("unmanaged legacy marks remain compatible, and multiple accepted toxin sour
  const game=fixture(),marks=new StatusMarksComponent([StatusMark.PoisonMark]);game.world.addComponent(5,COMPONENT.StatusMarks,marks);expect(new DamageResolutionSystem().resolve(game.world,{poisonClaims:[]})).toEqual({deaths:[5],deathSources:{5:[DeathCause.Poison]}});
  const twinRoles=[Role.Wolf,Role.Witch,Role.Witch,Role.Guard,Role.Villager,Role.Villager],twins=bootstrapGame({...config,roleSetups:[...new Set(twinRoles)].map(role=>({role,count:twinRoles.filter(r=>r===role).length}))},{fixedRoles:twinRoles}),events:GameEvent[]=[],ctx=context(twins,events,async()=>({name:"use_potion",args:{target_id:5,potion_type:PotionType.Poison}}));await stage.execute(ctx);expect(ctx.state.poisonClaims!.map(claim=>[claim.source.id,claim.target.id])).toEqual([[2,5],[3,5]]);expect(new DamageResolutionSystem().resolve(twins.world,{poisonClaims:ctx.state.poisonClaims})).toEqual({deaths:[5],deathSources:{5:[DeathCause.Poison]}});
 });
+
+for (const change of ["source", "source_role", "expiry", "starts", "max_uses", "disclosure"] as const) {
+  for (const boundary of ["request", "reply", "validation"] as const) {
+    test(`${change}/${boundary}: potion metadata belongs to the captured ability scope`, async () => {
+      const game = fixture(), events: GameEvent[] = [];
+      const ability = findNightAbility(role(game, 2), "potion")!;
+      const oldState = ability.state;
+      const mutate = () => {
+        switch (change) {
+          case "source": ability.source = { kind: "native", role: Role.Witch }; break;
+          case "source_role": if (ability.source.kind === "native") ability.source.role = Role.Villager; break;
+          case "expiry": ability.expiresAfterDay = 10; break;
+          case "starts": ability.startsOnDay = 0; break;
+          case "max_uses": ability.maxUses = 2; break;
+          case "disclosure": ability.sourceDisclosed = !ability.sourceDisclosed; break;
+        }
+      };
+      let calls = 0;
+      const ctx = context(game, events, async () => {
+        calls++;
+        if (boundary === "reply") mutate();
+        return { name: "use_potion", args: { target_id: 5, potion_type: PotionType.Poison } };
+      });
+      if (boundary === "request") {
+        const makeRequest = ctx.makeRequest;
+        ctx.makeRequest = (...args) => { const request = makeRequest(...args); mutate(); return request; };
+      }
+      if (boundary === "validation") {
+        const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway);
+        ctx.toolGateway.validateAndSanitize = (...args) => { const result = validate(...args); mutate(); return result; };
+      }
+      await stage.execute(ctx);
+      expect(calls).toBe(boundary === "request" ? 0 : 1);
+      expect(oldState.poison).toBe(1);
+      expect(ability.uses).toBe(0);
+      expect(ability.lastUsedDay).toBeNull();
+      expect(ctx.state.poisonClaims).toEqual([]);
+      expect(events).toEqual([]);
+      expect(game.world.getComponent<StatusMarksComponent>(5, COMPONENT.StatusMarks)?.has(StatusMark.PoisonMark) ?? false).toBe(false);
+    });
+  }
+}

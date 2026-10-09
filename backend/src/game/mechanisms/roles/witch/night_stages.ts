@@ -1,6 +1,5 @@
 /** 文件说明：女巫夜间用药阶段处理。 */
 import {captureNightLife,livingNightLife} from "../../../../core/domain/night_effects";
-import {aliveLifeVersion,type AliveComponent} from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, PotionType, Role, StatusMark, WitchSelfHealRule } from "../../../../core/domain/model";
@@ -8,6 +7,7 @@ import { NightStageHandler } from "../../stages/night/contracts";
 import { getWitchState } from "../private_state";
 import { activeNightAbility, allNightAbilities, nightAbilityActors, recordNightAbilityUse } from "../abilities";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";
+import { captureNightAbilityScope } from "../ability_scope";
 
 const resetNightRoleStateStage: NightStageHandler = {
   id: "reset_night_role_state",
@@ -35,11 +35,10 @@ const witchActionStage: NightStageHandler = {
   async execute(ctx): Promise<void> {
     for (const { actorId: witchId, ability } of nightAbilityActors(ctx.world, "potion", ctx.currentDay())) {
       if (ability.activation === "lucky" || ability.activation === "black_market") continue;
-      if (!ctx.world.getAliveEntityIds().includes(witchId) || activeNightAbility(ctx.world.getComponent<RoleComponent>(witchId, COMPONENT.Role), "potion", ctx.currentDay(), ability.id) !== ability) continue;
-      ability.state.canSelfHeal = ability.state.selfHealRule === WitchSelfHealRule.Always || (ability.state.selfHealRule === WitchSelfHealRule.FirstNightOnly && ctx.currentDay() === 1);
-      const day=ctx.currentDay(),originalRole=ctx.world.getComponent<RoleComponent>(witchId,COMPONENT.Role)!,kind=originalRole.role,camp=originalRole.camp,privateState=originalRole.privateState,originalState=ability.state,actorLife=ctx.world.getComponent<AliveComponent>(witchId,COMPONENT.Alive)!,actorVersion=aliveLifeVersion(actorLife);
-      const activation = ability.activation, originalAbilityId = ability.id;
-      const current=()=>ctx.isCurrent()&&ctx.world.getComponent(witchId,COMPONENT.Role)===originalRole&&originalRole.role===kind&&originalRole.camp===camp&&originalRole.privateState===privateState&&ability.id===originalAbilityId&&activeNightAbility(originalRole,"potion",day,originalAbilityId)===ability&&ability.activation===activation&&ability.state===originalState&&ctx.world.getComponent(witchId,COMPONENT.Alive)===actorLife&&actorLife.alive&&actorVersion!==undefined&&aliveLifeVersion(actorLife)===actorVersion;
+      const day = ctx.currentDay();
+      const scope = captureNightAbilityScope(ctx.world, witchId, ability, day, ctx.isCurrent);
+      if (!scope?.isEligible()) continue;
+      ability.state.canSelfHeal = ability.state.selfHealRule === WitchSelfHealRule.Always || (ability.state.selfHealRule === WitchSelfHealRule.FirstNightOnly && day === 1);
       const targets=new Map(ctx.world.getAliveEntityIds().map(id=>[id,captureNightLife(ctx.world,id)]));
       const attribution = ability.source.kind === "native" ? {} : { abilityId: ability.id };
       const req = ctx.makeRequest(witchId, ["use_potion"], {
@@ -47,9 +46,10 @@ const witchActionStage: NightStageHandler = {
         ability_id: ability.id,
         ...(ability.state.heal > 0 && !ability.state.healUsedThisNight && !ability.state.poisonUsedThisNight ? { wolf_target: ctx.state.wolfTarget } : {}),
       });
+      if (!scope.isEligible()) continue;
       const action = await ctx.actionProvider.getAction(req);
       if (!ctx.isCurrent()) return;
-      if(!current())continue;
+      if (!scope.isEligible()) continue;
       if (action?.name !== "use_potion") {
         ctx.events.push({
           timestamp: Date.now(),
@@ -64,7 +64,7 @@ const witchActionStage: NightStageHandler = {
         day: ctx.currentDay(), abilityId: ability.id,
       });
       if (!ctx.isCurrent()) return;
-      if(!current())continue;
+      if (!scope.isEligible()) continue;
       if (!result.ok || !result.sanitizedCall) {
         ctx.events.push({
           timestamp: Date.now(),
