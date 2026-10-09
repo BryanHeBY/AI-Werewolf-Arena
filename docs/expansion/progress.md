@@ -414,3 +414,5 @@ Aw候选与正式配置例子仍在工作区；六人AWA缩编和原12镜隐牌�
 后端受影响**1223/14272/104文件**、type/deps/boundary/i18n57通过；frontend **157/1370/25文件**、type/build、6实际中英Chromium和两张中英实际PNG通过。新增复合死因断言曾错误要求数组先后，改核完整集合后63专项/276及最终受影响全量均通过；生产规则没有为适配断言改变。见[交付审查](reviews/p7-awakened-hidden-wolf.md)和历史[候选修正记录](reviews/p7-awakened-runtime-candidate.md)。
 
 当前22 verified/42 planned。本笔不是全backend release或P7阶段结束；P7黑市商人、P8–P10、64角色/22机制全矩阵、长局及外部模型T6继续。未读写用户configs/认证，未调用外部模型。
+
+觉醒隐狼完整功能commit `83e6379`（57文件）；三路最终0，详见正式审查。黑市商人规则与[实现步骤](black-market-merchant.md)已完成[三路文档冻结审查](reviews/p7-black-market-rules.md)，0残留，仍planned且22/42不变；先被动赠枪授权底座，再完整角色与延期主动槽，最后P7整阶段验收。
