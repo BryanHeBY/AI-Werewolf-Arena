@@ -1,3 +1,4 @@
+import { Role, WitchSelfHealRule } from "../../src/core";
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
@@ -261,3 +262,42 @@ test("offline reconstruction carries the explicit recorded language into the new
   const replay = JSON.parse(await readFile(path.join(output, dirs[0], "replay.json"), "utf8"));
   expect(replay.schemaVersion).toBe(2); expect(replay.meta.locale).toBe(record.metadata.locale);
 });
+
+
+test("actual Tape replay preserves internal legacy fields and supported ties without public-config coercion", async () => {
+  const board = await loadBoardDefinition(fixtures, "six_player_mvp");
+  const config = { ...board.config,
+    witch: { canSelfHeal: WitchSelfHealRule.Always },
+    knight: { enabledWindows: [] }, sheriff: { voteWeight: 2 }, initialSheriffSeat: 1,
+    winCondition: board.config.winConditions![0],
+    roleSetups: [...board.config.roleSetups, { role: Role.Hunter, count: 0 }],
+    tieBreaker: { ...board.config.tieBreaker, exileVote: "min_seat" as const },
+  };
+  const root = await createTestTempDirectory("awa-legacy-internal-tape-");
+  const output = await createTestTempDirectory("awa-legacy-internal-replay-");
+  const simulated = await simulateGames({ ...board, config }, { seeds: ["legacy-internal-fields"], recordRoot: root });
+  const record = await readReproduction(path.join(simulated.games[0].recordDir, "reproduction.json"));
+  expect(record.metadata.normalizedBoard).toEqual(config);
+  const before = JSON.stringify(record);
+  const replayed = await replayReproduction(record, output);
+  expect(replayed.snapshot.result).toEqual(simulated.games[0].result);
+  expect(replayed.eventCount).toBe(record.events.length);
+  expect(JSON.stringify(record)).toBe(before);
+});
+
+for (const repeatPolicy of ["awa_last_action_v1", "netease_consecutive_nights_v1"] as const) {
+  test(`${repeatPolicy}: recorded policy reproduces through actual checkpoints and observation matching`, async () => {
+    const board = await loadBoardDefinition(fixtures, "six_player_mvp");
+    const configured = { ...board, config: { ...board.config, guard: { repeatPolicy } } };
+    const root = await createTestTempDirectory("awa-guard-policy-tape-");
+    const output = await createTestTempDirectory("awa-guard-policy-replay-");
+    const simulated = await simulateGames(configured, { seeds: ["guard-policy"], recordRoot: root });
+    const record = await readReproduction(path.join(simulated.games[0].recordDir, "reproduction.json"));
+    expect(record.metadata.normalizedBoard.guard).toEqual({ repeatPolicy });
+    const before = JSON.stringify(record);
+    const replayed = await replayReproduction(record, output);
+    expect(replayed.snapshot.result).toEqual(simulated.games[0].result);
+    expect(replayed.decisionCount).toBe(record.decisions.length);
+    expect(JSON.stringify(record)).toBe(before);
+  });
+}

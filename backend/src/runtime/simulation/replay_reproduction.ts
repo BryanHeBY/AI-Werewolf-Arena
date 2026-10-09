@@ -7,7 +7,6 @@ import { parseReproductionRecord, normalizedRequest, recordedErrorName, type Rec
 import { SessionRecordManager } from "../../recording/session_recorder";
 import { runWithSessionRecorder } from "../../recording/recording_context";
 import { GameEventRecorder } from "../game_event_recorder";
-import { boardDefinitionFromConfig, parseBoardDefinition } from "../config/board_definition";
 import { captureCheckpoint, currentEngineVersion } from "./reproduction_context";
 
 function stableJson(value: unknown): string {
@@ -123,8 +122,10 @@ export async function replayReproduction(input: unknown, recordRoot: string, dis
   requireMatch(record.metadata.engine.sourceHash === version.sourceHash && record.metadata.engine.lockHash === version.lockHash, "reproduction_engine_or_lock_incompatible");
   requireMatch(record.metadata.random.algorithm === RANDOM_ALGORITHM && record.metadata.random.streamPolicy === RANDOM_STREAM_POLICY && record.metadata.random.path.every(name => name.trim().length > 0), "reproduction_rng_incompatible");
   requireMatch(record.metadata.ruleset.id === RULESET.id && record.metadata.ruleset.version === RULESET.version, "reproduction_ruleset_incompatible");
-  const board = parseBoardDefinition(boardDefinitionFromConfig(record.metadata.boardId, record.metadata.normalizedBoard));
-  requireMatch(record.metadata.players.length === board.config.boardSize && record.metadata.players.every((player, index) => player.id === index + 1), "reproduction_players_invalid");
+  // Tape has already passed the strict internal board schema. Rebuilding it through
+  // the narrower public config would drop legacy optional fields and change defaults.
+  const board = record.metadata.normalizedBoard;
+  requireMatch(record.metadata.players.length === board.boardSize && record.metadata.players.every((player, index) => player.id === index + 1), "reproduction_players_invalid");
   requireMatch(record.checkpoints.every((checkpoint, index) => checkpoint.cycle === index && (checkpoint.complete || index === record.checkpoints.length - 1) && Boolean(checkpoint.failure) === !checkpoint.complete && checkpoint.eventCount <= record.events.length), "reproduction_checkpoints_invalid");
   requireMatch(record.checkpoints[0].complete && record.checkpoints.at(-1)!.eventCount === record.events.length, "reproduction_event_count_invalid");
   const finalResult = record.checkpoints.at(-1)!.snapshot.result;
@@ -140,13 +141,13 @@ export async function replayReproduction(input: unknown, recordRoot: string, dis
   const provider = new RecordedActions(record);
   let random = createRandom(record.metadata.random.seed);
   for (const name of record.metadata.random.path) random = random.fork(name);
-  const context = bootstrapGame(board.config, { random, locale: record.metadata.locale, ...(record.metadata.dealMode === "fixed" ? { fixedRoles: record.metadata.players.map(player => player.role) } : {}),
+  const context = bootstrapGame(board, { random, locale: record.metadata.locale, ...(record.metadata.dealMode === "fixed" ? { fixedRoles: record.metadata.players.map(player => player.role) } : {}),
     playerNames: Object.fromEntries(record.metadata.players.map(player => [String(player.id), player.name])),
   });
   const initial = captureCheckpoint(context.world, context.phaseManager.getSnapshot(), 0, true, context.phaseManager.getEvents().length);
   requireMatch(stableJson(initial) === stableJson(record.checkpoints[0]), "reproduction_initial_state_mismatch");
   requireMatch(stableJson(initial.players.map(player => ({ id: player.id, role: player.role, camp: player.camp, name: player.name }))) === stableJson(record.metadata.players.map(({ agent: _agent, ...player }) => player)), "reproduction_identity_mismatch");
-  const manager = await SessionRecordManager.create({ sessionId: `reproduction-${crypto.randomUUID()}`, board: board.definition.id, locale: context.world.locale, startedAtIso: new Date().toISOString(), random: context.random.metadata }, recordRoot, displayLocale ?? record.metadata.locale);
+  const manager = await SessionRecordManager.create({ sessionId: `reproduction-${crypto.randomUUID()}`, board: record.metadata.boardId, locale: context.world.locale, startedAtIso: new Date().toISOString(), random: context.random.metadata }, recordRoot, displayLocale ?? record.metadata.locale);
   const recorder = new GameEventRecorder({ world: context.world, replayManager: manager }, context.phaseManager.getSnapshot().phase);
   let summary: Awaited<ReturnType<SessionRecordManager["finalize"]>> | undefined;
   await runWithSessionRecorder(manager, async () => {
