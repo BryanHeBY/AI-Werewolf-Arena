@@ -32,7 +32,7 @@ for (const locale of ["zh-CN", "en"] as const) for (const kind of ["faction", "i
   if (kind !== "no_winner") expect(label).not.toBe(locale === "en" ? "No winner" : "无胜者");
   const input = createReplayRenderInput(document, { locale, timeZone: "UTC" });
   const frame = buildReplayFrame(input, 100);
-  expect(frame.snapshot.decision).toEqual(document.result.decision);
+  expect(frame.snapshot.decision).toEqual(result(kind));
   expect(frame.label).toContain(label); expect(frame.label).toContain(locale === "en" ? "Winning players" : "获胜玩家"); expect(frame.victory).toContain(kind === "no_winner" ? locale === "en" ? "Day limit reached" : "达到天数上限" : locale === "en" ? "Exile settled" : "放逐结算完成");
   const markup = renderToStaticMarkup(<ReplayFrame input={input} frame={100} />);
   expect(markup).toBe(renderToStaticMarkup(<ReplayFrame input={input} frame={100} />));
@@ -60,7 +60,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: unknown winning 
   const document = replay("individual"); delete document.result.decision;
   const bad = result("individual");
   bad.outcome = { kind: "victory", primary: { kind: "individual", playerId: 999, goalId: "scenario_unknown", winningPlayerIds: [999] }, additional: [], winningPlayerIds: [999] };
-  document.events[1].payload = bad as unknown as Record<string, unknown>;
+  document.events[1].payload = { ...bad };
   const before = structuredClone(document), loaded = readReplayDocument(document), unknown = locale === "en" ? "Unknown" : "未知";
   const playerIds = loaded.players.map(player => player.player_id);
   expect(replayResultLabel(loaded, locale)).toBe(unknown);
@@ -69,8 +69,8 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: unknown winning 
   expect(buildReplaySnapshot(loaded, 1).players.filter(player => player.isWinner)).toEqual([]);
   const markup = renderToStaticMarkup(<EventTimeline events={loaded.events} locale={locale} playerIds={playerIds} activeEventSeq={2} focusedPlayerId={null} onJumpTo={() => {}} onClearFocus={() => {}} />);
   expect(markup).toContain(`<p>${unknown}</p>`); expect(markup).not.toContain("999");
-  expect(document).toEqual(before); expect(loaded.events[1].payload).toEqual(bad);
+  expect(document).toEqual(before); expect(loaded.events[1].payload).toEqual({ ...bad });
   // A valid terminal-only archive still supplies explicit results without a final header.
-  loaded.events[1].payload = result("individual") as unknown as Record<string, unknown>;
+  loaded.events[1].payload = { ...result("individual") };
   expect(replayResultLabel(loaded, locale)).toContain(locale === "en" ? "personal goal victory" : "个人目标胜利");
 });

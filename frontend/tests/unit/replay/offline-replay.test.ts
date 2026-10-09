@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { eventLabel } from "../../../src/replay/event-labels";
 import { parseOfflineReplayJson } from "../../../src/replay/offline-replay";
 
@@ -85,7 +86,7 @@ test("accepts an in-progress document without players or terminal events", () =>
     meta: { board: "test", startedAt: "t1", endedAt: "t1" },
     result: { winner: null, reason: "in_progress" }, players: [],
     events: [{ seq: 1, timestamp: "t1", phase: "night", day: 1, type: "phase_changed", payload: {} }],
-  };
+  } satisfies Omit<ReplayDocument, "schemaVersion">;
   expect(parseOfflineReplayJson(JSON.stringify(document))).toEqual({ ...document, schemaVersion: 2 });
 });
 

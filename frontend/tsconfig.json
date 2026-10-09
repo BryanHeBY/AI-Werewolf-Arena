@@ -22,16 +22,11 @@
     }
   },
   "include": [
-    "src/main.tsx",
-    "src/App.tsx",
-    "src/replay/**/*.ts",
-    "src/replay/**/*.tsx",
-    "tests/replay/**/*.ts",
-    "scripts/render-replay.ts",
-    "tests/unit/replay/replay-display.test.tsx",
-    "tests/unit/replay/render-replay.test.ts",
-    "tests/unit/replay/replay-cli.test.ts",
-    "tests/e2e/offline-replay.spec.ts"
-  ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "scripts/**/*.ts",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    "*.ts"
+  ]
 }
