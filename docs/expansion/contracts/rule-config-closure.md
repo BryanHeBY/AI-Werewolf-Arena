@@ -1,0 +1,35 @@
+# 规则与配置闭环契约
+
+本批基线为 `eb4f026`，规则集 `awa_classic/1.0.0`。目标是收口现有行为与工程门禁，不新增未经决定的玩法变体。当前23项 verified、41项 planned；P8–P10不因本批维护而标完成。
+
+## 已确认的当前默认
+
+- 板子仅使用公开 v2 schema；角色参数经 profile schema/apply 进入 BoardConfig。女巫自救默认 disabled，骑士窗口默认 after_speeches；其他角色参数为空或未贡献。
+- 放逐/狼刀平票默认 min_id；警长默认票权1.5、平票 min_seat。自爆窗口和 hooks 必须一致。
+- 同守同救抵消；普通守救不挡毒；猎人/狼王死亡枪要求全部复合死因通过白名单，Poison另有否决。
+- 机械狼学习创建新资源模板、次夜生效、首刀夜额外刀有过期限制；两商人授赠/反噬时机保持原规则。
+- 完整死亡链后判胜；winConditions 按配置顺序；胜利归属独立于角色、真实阵营与技能。
+
+证据：`runtime/config/board_definition.ts`、`core/domain/board.ts`、`roles/witch/`、`roles/knight/`、`damage_resolution_system.ts`、`core/domain/deaths.ts`、`roles/mechanical_wolf/state.ts`、`phase_manager.ts`（路径相对backend/src，伤害系统位于core/domain/systems）。
+
+## 必须闭环
+
+一个现有参数须在公开解析、默认归一化、角色初始化/运行消费、反向转换、规则提示、reproduction strict schema及版本身份中有同一语义。显式值与省略默认应产生相同有效行为；保存后重新解析不能丢字段。保持角色数量与组合白名单检查，不增加 allowUnsupported。
+
+正常CLI的默认configs位置以项目根目录为基准，不随从根目录/backend目录启动而改变；显式参数和环境路径保留可解释的相对路径语义。不得覆盖本地忽略配置或读取认证值写入报告。
+
+源码改变会改变Tape source fingerprint；旧Tape只能由对应旧版本严格复现，不能篡改指纹或放宽兼容验证。旧公开回放继续经兼容reader读取。
+
+## 待决定，保持当前行为
+
+守卫lastTarget在无动作/非法动作时不清除、显式弃守清除：需决定限制“相邻夜”还是“上次成功守护”。女巫双药/刀口可见性、枪死因版本、复制资源、商人库存/反噬、梦/魅惑牵连、选举/重投/夜序和同时灭绝优先级均仍为设计候选。未来采用有限具名policy/preset及兼容默认，不开放任意优先级或布尔组合。
+
+## 本批实施清单
+
+1. 先复核并修CLI默认目录、摄梦请求前撤权、机械英文、前端完整typecheck和后端测试typecheck。
+2. 统一回放事件reader、玩家关联提取与展示类型；黑市受赠中性标签、阶段映射及完备断言。
+3. 收口异步scope/玩家DTO/工具描述；只删除确认无消费者且核对公开API的旧路径。保留活动迁移parser。
+4. 引入项目级formatter/EditorConfig/前端lint；格式独立提交，保留原导入边界门禁。
+5. 补现有witch/knight等参数的往返、提示、录制与版本回归，不增加新玩法。
+
+每批实现与针对性回归一起提交；离线类型、单测、lint、格式、构建及假provider/浏览器验证按变更范围执行。禁止收费模型、真实对局、GitHub认证和网络推送。ObservedBot/provider测试拆分为不阻挡核心的低优先级维护。
