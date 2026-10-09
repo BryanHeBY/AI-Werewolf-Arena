@@ -69,6 +69,7 @@ export async function resolveSheriffBadge(
       requiresAction: true,
       summary: { key: "request.summary.badge_choice" },
       context: {
+        allow_fallback: false,
         trigger: "badge_handoff",
         death_action_id: permit.id,
         badge_candidates: candidates,

@@ -1,3 +1,6 @@
+import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
+import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
+import { NoActionToolLoopClient, ToolLoopClient } from "../../support/llm_provider_clients";
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -344,3 +347,74 @@ test("unknown and disabled badge policy parameters fail before play", () => {
     }),
   ).toThrow("board_config_disabled_mechanism_parameters");
 });
+
+for (const locale of ["zh-CN", "en"] as const)
+  for (const transport of ["llm_empty", "llm_invalid", "acp_empty", "acp_invalid"] as const)
+    test(`${locale}/${transport}: declined or rejected badge reply never fabricates a fallback successor`, async () => {
+      const f = fixture(locale);
+      let fallbackCalls = 0;
+      const fallback = {
+        async getAction(): Promise<ToolCall | null> {
+          fallbackCalls++;
+          return { name: "choose_badge_successor", args: { target_id: 5 } };
+        },
+      };
+      const provider = transport.startsWith("llm")
+        ? new LlmActionProvider(
+            f.world,
+            transport === "llm_empty"
+              ? new NoActionToolLoopClient()
+              : new ToolLoopClient("submit_action", {
+                  turn_id: "t1",
+                  action: "choose_badge_successor",
+                  arguments: { target_id: 99 },
+                }),
+            { fallbackProvider: fallback, llmTimeoutMs: 500, maxConcurrentRequests: 1 },
+          )
+        : new AcpActionProvider(f.world, {
+            fallbackProvider: fallback,
+            turnTimeoutMs: 500,
+            sessionFactory: {
+              async createSession(input) {
+                return {
+                  sessionId: "badge-no-fallback",
+                  async prompt() {
+                    if (transport === "acp_invalid")
+                      expect(
+                        input.registry.submitAction("badge-no-fallback", {
+                          turn_id: "t1",
+                          action: "choose_badge_successor",
+                          arguments: { target_id: 99 },
+                        }),
+                      ).toMatchObject({ ok: false, error: "badge_choice_target" });
+                  },
+                  async cancel() {},
+                  async close() {},
+                };
+              },
+            },
+          });
+      try {
+        await f.resolution.resolve(
+          [2],
+          { 2: [DeathCause.Exile] },
+          {
+            async getAction(request) {
+              if (request.context.stage !== "sheriff_badge_choice") return null;
+              expect(request.context.allow_fallback).toBe(false);
+              return provider.getAction(request);
+            },
+          },
+          Phase.Voting,
+          Phase.Voting,
+        );
+        expect(fallbackCalls).toBe(0);
+        expect(f.events.filter((event) => event.type === "sheriff_badge_destroyed")).toHaveLength(
+          1,
+        );
+        expect(f.events.some((event) => event.type === "sheriff_badge_transferred")).toBe(false);
+        expect(f.world.activeDeathActionCount).toBe(0);
+      } finally {
+        await provider.close();
+      }
+    });

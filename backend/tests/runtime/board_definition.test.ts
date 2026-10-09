@@ -163,7 +163,11 @@ test("legacy conversion preserves effective hooks and backup without touching ru
   await writeFile(path.join(root, "runtime/providers.json"), "PRIVATE_PROVIDER_CONTENT");
   const converted = convertLegacyBoard(legacy, "twelve_player_standard");
   expect(converted.definition.rules.hooks.onPerSpeechGap).toBe(false);
-  expect(converted.definition.roles.witch).toEqual({ selfHeal: "always" });
+  expect(converted.definition.roles.witch).toEqual({
+    selfHeal: "always",
+    knifeVisibility: "awa_with_heal_v1",
+    potionPolicy: "awa_one_native_v1",
+  });
   await migrateBoards(root, false);
   expect(await readFile(path.join(root, "boards/twelve_player_standard.json"), "utf8")).toBe(
     original,
