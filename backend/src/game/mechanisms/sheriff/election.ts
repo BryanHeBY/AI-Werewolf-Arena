@@ -1,3 +1,4 @@
+import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { IdentityComponent } from "../../../core/domain/entities/player";
 import {
@@ -48,25 +49,56 @@ export async function electSheriffIfNeeded(input: SheriffElectionInput): Promise
   if (!current(input)) return null;
   const finalizedCandidates = await collectWithdrawals(input, requests, candidateSet);
   if (!current(input)) return null;
-  const { tally, votes } = await collectSheriffVotes(
-    input,
-    requests,
-    aliveIds,
-    finalizedCandidates,
-    candidateSet,
-  );
+  const pk = config?.sheriff?.electionPolicy === "awa_nomination_offstage_pk_v1";
+  const forbidden = pk ? new Set(initialCandidates) : candidateSet;
+  let { tally, votes } =
+    pk && finalizedCandidates.length === 1
+      ? { tally: new Map([[finalizedCandidates[0], 0]]), votes: [] as SheriffVote[] }
+      : await collectSheriffVotes(input, requests, aliveIds, finalizedCandidates, forbidden);
   if (!current(input)) return null;
-  let winner = pickSheriffWinner(
-    world,
-    finalizedCandidates.filter((id) => canBeSheriff(world, id, input.roleCatalog)),
-    tally,
-    config?.tieBreaker?.sheriffVote ?? "min_seat",
-  );
+  let round = 1;
+  let eligible = finalizedCandidates.filter((id) => canBeSheriff(world, id, input.roleCatalog));
+  const top = positiveLeaders(eligible, tally);
+  if (pk && top.length > 1) {
+    events.push({
+      timestamp: Date.now(),
+      type: "sheriff_vote_summary",
+      payload: { votes, winnerId: null, round: 1 },
+    });
+    events.push({
+      timestamp: Date.now(),
+      type: "sheriff_pk_started",
+      payload: { candidates: top },
+    });
+    await collectCampaignSpeeches(input, requests, new Set(top), "sheriff_pk_speech");
+    if (!current(input)) return null;
+    const tied = top.filter((id) => canBeSheriff(world, id, input.roleCatalog));
+    ({ tally, votes } = await collectSheriffVotes(
+      input,
+      requests,
+      aliveIds,
+      tied,
+      new Set(top),
+      2,
+    ));
+    if (!current(input)) return null;
+    eligible = tied.filter((id) => canBeSheriff(world, id, input.roleCatalog));
+    round = 2;
+  }
+  let winner =
+    pk && finalizedCandidates.length === 1 && eligible.length === 1
+      ? eligible[0]
+      : pickSheriffWinner(
+          world,
+          eligible,
+          tally,
+          pk ? "no_elimination" : (config?.tieBreaker?.sheriffVote ?? "min_seat"),
+        );
   if (winner !== null && !assignSheriff(world, winner, config, input.roleCatalog)) winner = null;
   events.push({
     timestamp: Date.now(),
     type: "sheriff_vote_summary",
-    payload: { votes, winnerId: winner },
+    payload: { votes, winnerId: winner, ...(pk ? { round } : {}) },
   });
   if (winner !== null) {
     events.push({
@@ -95,6 +127,7 @@ async function collectNominations(
     .filter((id) => canBeSheriff(world, id, input.roleCatalog))
     .map((actorId) => ({
       actorId,
+      life: captureNightLife(world, actorId),
       request: requests.create({
         phase: Phase.Day,
         actorId,
@@ -106,10 +139,15 @@ async function collectNominations(
       }),
     }));
   const nominationResults = await Promise.all(
-    nominationRequests.map(async ({ actorId, request }) => {
+    nominationRequests.map(async ({ actorId, request, life }) => {
       if (!current(input)) return null;
       const action = await actionProvider.getAction(request);
-      if (!current(input) || action?.name !== "run_for_sheriff") {
+      if (
+        !current(input) ||
+        !life ||
+        !livingNightLife(world, life) ||
+        action?.name !== "run_for_sheriff"
+      ) {
         return null;
       }
       const result = toolGateway.validateAndSanitize(world, actorId, action, {
@@ -121,12 +159,17 @@ async function collectNominations(
       return {
         actorId,
         run: result.sanitizedCall.args.run === true,
+        life,
       };
     }),
   );
   if (!current(input)) return [];
   for (const item of nominationResults) {
-    if (!item || !canBeSheriff(world, item.actorId, input.roleCatalog)) {
+    if (
+      !item ||
+      !livingNightLife(world, item.life) ||
+      !canBeSheriff(world, item.actorId, input.roleCatalog)
+    ) {
       continue;
     }
     events.push({
@@ -152,6 +195,7 @@ async function collectCampaignSpeeches(
   input: SheriffElectionInput,
   requests: GameActionRequestFactory,
   candidateSet: Set<EntityId>,
+  stage: "sheriff_campaign_speech" | "sheriff_pk_speech" = "sheriff_campaign_speech",
 ): Promise<void> {
   const { world, events, toolGateway, actionProvider } = input;
   const campaignOrder = sortBySeat(world, [...candidateSet]);
@@ -161,11 +205,13 @@ async function collectCampaignSpeeches(
     if (!candidateSet.has(candidateId) || !canBeSheriff(world, candidateId, input.roleCatalog)) {
       continue;
     }
+    const life = captureNightLife(world, candidateId);
+    if (!life) continue;
     const speechReq = requests.create({
       phase: Phase.Day,
       actorId: candidateId,
       allowedTools: ["speak"],
-      stage: "sheriff_campaign_speech",
+      stage,
       requiresAction: true,
       summary: { key: "request.summary.sheriff_campaign" },
       context: {
@@ -180,6 +226,7 @@ async function collectCampaignSpeeches(
       });
       if (
         current(input) &&
+        livingNightLife(world, life) &&
         speechResult.ok &&
         speechResult.sanitizedCall &&
         canBeSheriff(world, candidateId, input.roleCatalog)
@@ -210,6 +257,7 @@ async function collectWithdrawals(
   );
   const withdrawRequests = orderedCandidates.map((candidateId) => ({
     candidateId,
+    life: captureNightLife(world, candidateId),
     request: requests.create({
       phase: Phase.Day,
       actorId: candidateId,
@@ -223,10 +271,15 @@ async function collectWithdrawals(
     }),
   }));
   const withdrawResults = await Promise.all(
-    withdrawRequests.map(async ({ candidateId, request }) => {
+    withdrawRequests.map(async ({ candidateId, request, life }) => {
       if (!current(input)) return null;
       const withdrawAction = await actionProvider.getAction(request);
-      if (!current(input) || withdrawAction?.name !== "run_for_sheriff") {
+      if (
+        !current(input) ||
+        !life ||
+        !livingNightLife(world, life) ||
+        withdrawAction?.name !== "run_for_sheriff"
+      ) {
         return null;
       }
       const withdrawResult = toolGateway.validateAndSanitize(world, candidateId, withdrawAction, {
@@ -238,13 +291,14 @@ async function collectWithdrawals(
       return {
         candidateId,
         keepRunning: withdrawResult.sanitizedCall.args.run === true,
+        life,
       };
     }),
   );
   if (!current(input)) return [];
   const withdrawn: EntityId[] = [];
   for (const item of withdrawResults) {
-    if (!item || item.keepRunning) {
+    if (!item || !livingNightLife(world, item.life) || item.keepRunning) {
       continue;
     }
     candidateSet.delete(item.candidateId);
@@ -278,6 +332,7 @@ async function collectSheriffVotes(
   aliveIds: EntityId[],
   finalizedCandidates: EntityId[],
   candidateSet: Set<EntityId>,
+  round = 1,
 ): Promise<{ tally: Map<EntityId, number>; votes: SheriffVote[] }> {
   const { world, events, toolGateway, actionProvider } = input;
   const tally = new Map<EntityId, number>();
@@ -291,25 +346,35 @@ async function collectSheriffVotes(
     (id) => !candidateSet.has(id) && canVote(world, id, input.roleCatalog),
   );
   // 警长投票同样并行收集，所有投票基于同一快照上下文。
+  const candidateLives = new Map(
+    finalizedCandidates.map((id) => [id, captureNightLife(world, id)]),
+  );
   const sheriffVoteRequests = sheriffVoterIds.map((actorId) => ({
     actorId,
+    life: captureNightLife(world, actorId),
     request: requests.create({
       phase: Phase.Day,
       actorId,
       allowedTools: ["vote_for_sheriff"],
-      stage: "sheriff_vote",
+      stage: round === 2 ? "sheriff_pk_vote" : "sheriff_vote",
       requiresAction: true,
       summary: { key: "request.summary.sheriff_vote" },
       context: {
         sheriff_candidates: finalizedCandidates,
+        ...(round === 2 ? { round: 2, max_rounds: 2 } : {}),
       },
     }),
   }));
   const sheriffVoteResults = await Promise.all(
-    sheriffVoteRequests.map(async ({ actorId, request }) => {
+    sheriffVoteRequests.map(async ({ actorId, request, life }) => {
       if (!current(input)) return null;
       const action = await actionProvider.getAction(request);
-      if (!current(input) || action?.name !== "vote_for_sheriff") {
+      if (
+        !current(input) ||
+        !life ||
+        !livingNightLife(world, life) ||
+        action?.name !== "vote_for_sheriff"
+      ) {
         return null;
       }
       const result = toolGateway.validateAndSanitize(world, actorId, action, {
@@ -322,7 +387,7 @@ async function collectSheriffVotes(
 
       const abstain = result.sanitizedCall.args.abstain === true;
       const targetId = result.sanitizedCall.args.target_id;
-      return { actorId, targetId, abstain };
+      return { actorId, targetId, abstain, life };
     }),
   );
   if (!current(input)) return { tally, votes: [] };
@@ -330,16 +395,19 @@ async function collectSheriffVotes(
   for (const item of sheriffVoteResults) {
     if (
       !item ||
+      !livingNightLife(world, item.life) ||
       !canVote(world, item.actorId, input.roleCatalog) ||
       candidateSet.has(item.actorId) ||
       (!item.abstain &&
         (item.targetId === null ||
           !finalizedCandidates.includes(item.targetId) ||
+          !candidateLives.get(item.targetId) ||
+          !livingNightLife(world, candidateLives.get(item.targetId)!) ||
           !canBeSheriff(world, item.targetId, input.roleCatalog)))
     ) {
       continue;
     }
-    acceptedVotes.push(item);
+    acceptedVotes.push({ actorId: item.actorId, targetId: item.targetId, abstain: item.abstain });
     events.push({
       timestamp: Date.now(),
       type: "sheriff_vote_cast",
@@ -398,4 +466,9 @@ function sortBySeat(world: World, ids: EntityId[]): EntityId[] {
     const bSeat = world.getComponent<IdentityComponent>(b, COMPONENT.Identity)?.seat ?? b;
     return aSeat - bSeat;
   });
+}
+
+function positiveLeaders(candidates: EntityId[], tally: Map<EntityId, number>): EntityId[] {
+  const maximum = Math.max(0, ...candidates.map((id) => tally.get(id) ?? 0));
+  return maximum > 0 ? candidates.filter((id) => (tally.get(id) ?? 0) === maximum) : [];
 }

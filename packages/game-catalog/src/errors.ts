@@ -12,6 +12,8 @@ export enum RuleError {
   BlastWindow = "blast_window",
   CheckTarget = "check_target",
   SeerTargetPolicy = "seer_target_policy",
+  PkVoteEligibility = "pk_vote_eligibility",
+  PkVoteTarget = "pk_vote_target",
   CustomRuleError = "custom_rule_error",
   GuardOnly = "guard_only",
   GuardRepeat = "guard_repeat",

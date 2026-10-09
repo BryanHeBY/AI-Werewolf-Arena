@@ -1,3 +1,4 @@
+import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { IdentityComponent } from "../../../core/domain/entities/player";
 import { VotingRightComponent } from "../../../core/domain/components/voting_right";
@@ -53,6 +54,8 @@ interface CollectedVote {
   targetId: EntityId | null;
   abstain: boolean;
   fallback: boolean;
+  voterLife: NonNullable<ReturnType<typeof captureNightLife>>;
+  targetLife?: NonNullable<ReturnType<typeof captureNightLife>>;
 }
 
 /**
@@ -135,16 +138,103 @@ export class VotingPipeline {
     const voters = this.world.getAliveEntityIds().filter((id) => canVote(this.world, id));
 
     // Requests run in parallel; Promise.all retains voter order for deterministic replay events.
-    const voteResults = await Promise.all(
-      voters.map((voterId) => this.collectVoterVote(voterId, requests, actionProvider)),
+    const voteResults = await this.collectVotes(voters, requests, actionProvider, options);
+    if (options.isCurrent?.() === false)
+      return { summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] };
+    let { tally, publicVotes } = this.recordVotesInSeatOrder(voteResults);
+    const pk = config.voting?.exilePolicy === "awa_one_pk_v1";
+    const maximum = Math.max(
+      0,
+      ...Object.entries(tally)
+        .filter(([id]) => canBeExiled(this.world, Number(id)))
+        .map(([, score]) => score),
     );
-    const { tally, publicVotes } = this.recordVotesInSeatOrder(voteResults);
+    const tied =
+      maximum > 0
+        ? Object.entries(tally)
+            .filter(([id, score]) => score === maximum && canBeExiled(this.world, Number(id)))
+            .map(([id]) => Number(id))
+        : [];
+    let round = 1;
+    if (pk && tied.length > 1) {
+      this.events.push({
+        timestamp: Date.now(),
+        type: "vote_summary",
+        payload: { votes: publicVotes, tally, target: null, round: 1 },
+      });
+      this.events.push({
+        timestamp: Date.now(),
+        type: "exile_pk_started",
+        payload: { candidates: tied },
+      });
+      for (const actorId of tied) {
+        if (options.isCurrent?.() === false)
+          return {
+            summary: { tally: {}, target: null, removed: [] },
+            interrupted: false,
+            removed: [],
+          };
+        const life = captureNightLife(this.world, actorId);
+        if (!life || !canBeExiled(this.world, actorId)) continue;
+        const request = requests.create({
+          phase: Phase.Voting,
+          actorId,
+          allowedTools: ["speak"],
+          stage: "exile_pk_speech",
+          requiresAction: true,
+          summary: { key: "request.summary.exile_pk" },
+          context: { exile_candidates: tied, round: 2, max_rounds: 2 },
+        });
+        const action = await actionProvider.getAction(request);
+        if (options.isCurrent?.() === false)
+          return {
+            summary: { tally: {}, target: null, removed: [] },
+            interrupted: false,
+            removed: [],
+          };
+        if (
+          action?.name !== "speak" ||
+          !livingNightLife(this.world, life) ||
+          !canBeExiled(this.world, actorId)
+        )
+          continue;
+        const result = this.toolGateway.validateAndSanitize(this.world, actorId, action, {
+          phase: Phase.Voting,
+          day: options.day,
+        });
+        if (result.ok && result.sanitizedCall && livingNightLife(this.world, life))
+          this.events.push({
+            timestamp: Date.now(),
+            type: "day_speech",
+            payload: { actorId, text: result.sanitizedCall.args.text },
+          });
+      }
+      const candidates = tied.filter((id) => canBeExiled(this.world, id));
+      const revoters = this.world
+        .getAliveEntityIds()
+        .filter((id) => !tied.includes(id) && canVote(this.world, id));
+      const results = await this.collectVotes(
+        revoters,
+        requests,
+        actionProvider,
+        options,
+        candidates,
+      );
+      if (options.isCurrent?.() === false)
+        return {
+          summary: { tally: {}, target: null, removed: [] },
+          interrupted: false,
+          removed: [],
+        };
+      ({ tally, publicVotes } = this.recordVotesInSeatOrder(results));
+      round = 2;
+    }
 
     const target = this.pickMajorityTarget(
       Object.fromEntries(
         Object.entries(tally).filter(([id]) => canBeExiled(this.world, Number(id))),
       ),
-      config.tieBreaker?.exileVote ?? "min_id",
+      pk ? "no_elimination" : (config.tieBreaker?.exileVote ?? "min_id"),
     );
     this.events.push({
       timestamp: Date.now(),
@@ -153,6 +243,7 @@ export class VotingPipeline {
         votes: publicVotes,
         tally,
         target,
+        ...(pk ? { round } : {}),
       },
     });
     safeRecordLogicOp({
@@ -202,11 +293,55 @@ export class VotingPipeline {
     };
   }
 
-  private async collectVoterVote(
-    voterId: EntityId,
+  private async collectVotes(
+    voters: EntityId[],
     requests: GameActionRequestFactory,
     actionProvider: ActionProvider,
+    options: VotingPipelineOptions,
+    candidates?: EntityId[],
+  ): Promise<Array<CollectedVote | null>> {
+    // Capture the entire round before invoking any provider, including synchronous fakes.
+    const voterLives = voters.map((voterId) => ({
+      voterId,
+      life: captureNightLife(this.world, voterId),
+    }));
+    const targetLives = new Map(
+      (candidates ?? this.world.getAliveEntityIds()).flatMap((id) => {
+        const life = captureNightLife(this.world, id);
+        return life ? [[id, life] as const] : [];
+      }),
+    );
+    return Promise.all(
+      voterLives.map(({ voterId, life }) =>
+        life
+          ? this.collectVoterVote(
+              voterId,
+              life,
+              targetLives,
+              requests,
+              actionProvider,
+              options,
+              candidates,
+            )
+          : null,
+      ),
+    );
+  }
+
+  private async collectVoterVote(
+    voterId: EntityId,
+    voterLife: NonNullable<ReturnType<typeof captureNightLife>>,
+    targetLives: ReadonlyMap<EntityId, NonNullable<ReturnType<typeof captureNightLife>>>,
+    requests: GameActionRequestFactory,
+    actionProvider: ActionProvider,
+    options: VotingPipelineOptions,
+    candidates?: EntityId[],
   ): Promise<CollectedVote | null> {
+    const current = () =>
+      options.isCurrent?.() !== false &&
+      livingNightLife(this.world, voterLife) &&
+      canVote(this.world, voterId) &&
+      !candidates?.includes(voterId);
     const maxRetries = VotingPipeline.MAX_VOTE_RETRIES;
     let retryReason = "";
     const recordRetry = (attempt: number) =>
@@ -221,13 +356,17 @@ export class VotingPipeline {
       });
 
     for (let attempt = 1; attempt <= maxRetries + 1; attempt++) {
+      if (!current()) return null;
       const baseRequest = requests.create({
         phase: Phase.Voting,
         actorId: voterId,
         allowedTools: ["vote"],
-        stage: "voting",
+        stage: candidates ? "exile_pk_vote" : "voting",
         requiresAction: true,
         summary: { key: "request.summary.exile_vote" },
+        ...(candidates
+          ? { context: { exile_candidates: candidates, round: 2, max_rounds: 2 } }
+          : {}),
       });
       const request =
         attempt === 1
@@ -242,7 +381,9 @@ export class VotingPipeline {
                 retry_notice_message: { key: "request.retry.exile_vote" as const },
               },
             };
+      if (!current()) return null;
       const action = await actionProvider.getAction(request);
+      if (!current()) return null;
       if (action?.name !== "vote") {
         retryReason = "no_valid_vote_tool_call";
         if (attempt <= maxRetries) {
@@ -254,8 +395,16 @@ export class VotingPipeline {
 
       const result = this.toolGateway.validateAndSanitize(this.world, voterId, action, {
         phase: Phase.Voting,
+        day: options.day,
+        exileCandidates: candidates,
       });
-      if (!result.ok || !result.sanitizedCall) {
+      if (
+        !result.ok ||
+        !result.sanitizedCall ||
+        (!result.sanitizedCall.args.abstain &&
+          (!targetLives.get(result.sanitizedCall.args.target_id!) ||
+            !livingNightLife(this.world, targetLives.get(result.sanitizedCall.args.target_id!)!)))
+      ) {
         retryReason = "invalid_vote_arguments";
         if (attempt <= maxRetries) {
           recordRetry(attempt);
@@ -268,15 +417,20 @@ export class VotingPipeline {
         targetId: result.sanitizedCall.args.target_id,
         abstain: result.sanitizedCall.args.abstain === true,
         fallback: attempt > 1,
+        voterLife,
+        ...(result.sanitizedCall.args.target_id !== null
+          ? { targetLife: targetLives.get(result.sanitizedCall.args.target_id) }
+          : {}),
       };
     }
 
+    if (!current()) return null;
     // Exhausted requests become an explicit abstention when the gateway accepts it.
     const repaired = this.toolGateway.validateAndSanitize(
       this.world,
       voterId,
       { name: "vote", args: { target_id: null, abstain: true } },
-      { phase: Phase.Voting },
+      { phase: Phase.Voting, day: options.day, exileCandidates: candidates },
     );
     if (repaired.ok && repaired.sanitizedCall) {
       safeRecordLogicOp({
@@ -287,7 +441,7 @@ export class VotingPipeline {
         status: "ok",
         reason: retryReason || "vote_retry_exhausted",
       });
-      return { voterId, targetId: null, abstain: true, fallback: true };
+      return { voterId, targetId: null, abstain: true, fallback: true, voterLife };
     }
     safeRecordLogicOp({
       scope: "phase_pipeline",
@@ -310,6 +464,8 @@ export class VotingPipeline {
       if (!vote) continue;
       const { voterId } = vote;
       if (
+        !livingNightLife(this.world, vote.voterLife) ||
+        (!vote.abstain && (!vote.targetLife || !livingNightLife(this.world, vote.targetLife))) ||
         !canVote(this.world, voterId) ||
         (!vote.abstain && vote.targetId !== null && !canBeExiled(this.world, vote.targetId))
       )

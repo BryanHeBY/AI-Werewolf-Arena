@@ -126,7 +126,9 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
               awakenedGuard?.kind !== "guard" ||
               awakenedGuard.lastGuardDay !== (ctx.day ?? 1) - 1 ||
               awakenedGuard.lastTarget !== id) &&
-            (tool !== "vote" || canBeExiled(ctx.world, id, ctx.roleCatalog)) &&
+            (tool !== "vote" ||
+              ((ctx.exileCandidates === undefined || ctx.exileCandidates.includes(id)) &&
+                canBeExiled(ctx.world, id, ctx.roleCatalog))) &&
             (tool !== "inspect_role" ||
               !inspection ||
               roleInspectionPolicy(inspection) === "psychic" ||

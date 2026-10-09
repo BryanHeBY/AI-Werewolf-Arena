@@ -149,12 +149,21 @@ export class BaselineBotActionProvider implements ActionProvider {
     }
 
     if (request.phase === Phase.Voting && request.allowedTools.includes("vote")) {
-      if (!canVote(this.world, request.actorId, this.roleCatalog)) return null;
+      if (
+        !canVote(this.world, request.actorId, this.roleCatalog) ||
+        request.context.exile_candidates?.includes(request.actorId)
+      )
+        return null;
       const target =
         this.world
           .getAliveEntityIds()
-          .find((id) => id !== request.actorId && canBeExiled(this.world, id, this.roleCatalog)) ??
-        null;
+          .find(
+            (id) =>
+              id !== request.actorId &&
+              (request.context.exile_candidates === undefined ||
+                request.context.exile_candidates.includes(id)) &&
+              canBeExiled(this.world, id, this.roleCatalog),
+          ) ?? null;
       return target !== null
         ? { name: "vote", args: { target_id: target, abstain: false } }
         : { name: "vote", args: { target_id: null, abstain: true } };

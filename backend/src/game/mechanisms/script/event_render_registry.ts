@@ -83,6 +83,10 @@ const CHAT_HANDLERS: ScriptChatLineHandlers = {
 };
 
 const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
+  sheriff_pk_started: (event, locale = "zh-CN") =>
+    text(locale, "console.pk.sheriff", { players: event.payload.candidates.join(", ") }),
+  exile_pk_started: (event, locale = "zh-CN") =>
+    text(locale, "console.pk.exile", { players: event.payload.candidates.join(", ") }),
   player_shot: (event, locale = "zh-CN") =>
     text(locale, "console.player_shot", {
       actor: event.payload.actorId,
@@ -255,6 +259,8 @@ const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
   gravekeeper_reported: () => "gravekeeper_feedback",
   phase_changed: (event) => String(event.payload.phase ?? "phase_changed"),
   day_speech: () => "day_speech",
+  sheriff_pk_started: () => "sheriff_pk_speech",
+  exile_pk_started: () => "exile_pk_speech",
   vote_cast: () => "voting",
   vote_summary: () => "voting",
   voted_out: () => "voting",
@@ -273,6 +279,19 @@ const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
 };
 
 const LIVE_HANDLERS: ScriptLiveRenderHandlers = {
+  sheriff_pk_started: (event, _private, locale = "zh-CN") => [
+    {
+      kind: "god",
+      text: text(locale, "console.pk.sheriff", { players: event.payload.candidates.join(", ") }),
+    },
+  ],
+  exile_pk_started: (event, _private, locale = "zh-CN") => [
+    {
+      kind: "god",
+      text: text(locale, "console.pk.exile", { players: event.payload.candidates.join(", ") }),
+    },
+  ],
+
   player_shot: (event, _private, locale = "zh-CN") => [
     {
       kind: "action",

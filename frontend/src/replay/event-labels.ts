@@ -50,6 +50,10 @@ export function eventLabel(
   const target = numberValue(p.targetId);
   const players = (value: unknown) => numberList(value, locale) || t("replay.none");
   switch (event.type) {
+    case "sheriff_pk_started":
+      return t("console.pk.sheriff", { players: players(p.candidates) });
+    case "exile_pk_started":
+      return t("console.pk.exile", { players: players(p.candidates) });
     case "lucky_ability_skipped":
       return t("replay.gift_ability_skipped", {
         actor,

@@ -92,6 +92,8 @@ const ID_LISTS: Readonly<Record<string, string>> = {
   additional_deaths: "deaths",
   wolf_tactical_order: "order",
   sheriff_nomination_summary: "candidates",
+  sheriff_pk_started: "candidates",
+  exile_pk_started: "candidates",
   sheriff_candidates_finalized: "candidates",
   sheriff_withdraw_summary: "withdrawn",
 };

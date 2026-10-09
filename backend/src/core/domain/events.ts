@@ -38,6 +38,8 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  sheriff_pk_started: { candidates: EntityId[] };
+  exile_pk_started: { candidates: EntityId[] };
   black_market_trade_skipped: { actorId: EntityId; day: number };
   black_market_trade_committed: {
     actorId: EntityId;
@@ -204,7 +206,12 @@ export interface EventPayloadMap {
   additional_deaths: { deaths: EntityId[] };
   day_speech: { actorId: EntityId; text: string };
   vote_cast: VoteRecord;
-  vote_summary: { votes: VoteRecord[]; tally: Record<number, number>; target: EntityId | null };
+  vote_summary: {
+    round?: number;
+    votes: VoteRecord[];
+    tally: Record<number, number>;
+    target: EntityId | null;
+  };
   voted_out: { target: EntityId };
   last_words_granted: { playerId: EntityId; phase: Phase; day: number };
   last_words_spoken: { playerId: EntityId; phase: Phase; day: number; text: string };
@@ -251,7 +258,11 @@ export interface EventPayloadMap {
   };
   sheriff_badge_destroyed: { targetId: EntityId; reason: string };
   sheriff_badge_transferred: { fromId: EntityId; toId: EntityId; reason: string };
-  sheriff_vote_summary: { votes: SheriffVoteRecord[]; winnerId: EntityId | null };
+  sheriff_vote_summary: {
+    round?: number;
+    votes: SheriffVoteRecord[];
+    winnerId: EntityId | null;
+  };
   sheriff_candidate_declared: { actorId: EntityId; run: boolean };
   sheriff_nomination_summary: { candidates: EntityId[] };
   sheriff_withdraw_summary: { withdrawn: EntityId[] };

@@ -6,6 +6,8 @@ import {
   SEER_ACTION_POLICIES,
   WITCH_KNIFE_VISIBILITY_POLICIES,
   WITCH_POTION_POLICIES,
+  SHERIFF_ELECTION_POLICIES,
+  EXILE_VOTE_POLICIES,
 } from "./board";
 import { ActionWindow, KnightDuelWindow, Role, WinCondition, WitchSelfHealRule } from "./identity";
 
@@ -28,7 +30,13 @@ export const boardConfigSchema = z.strictObject({
   }),
   roleSetups: z.array(z.strictObject({ role: z.enum(Role), count: nonnegative.max(128) })).min(1),
   selfDestruct: z.strictObject({ enabledWindows: z.array(z.enum(ActionWindow)) }).optional(),
-  sheriff: z.strictObject({ voteWeight: z.number().finite().positive().optional() }).optional(),
+  sheriff: z
+    .strictObject({
+      voteWeight: z.number().finite().positive().optional(),
+      electionPolicy: z.enum(SHERIFF_ELECTION_POLICIES).optional(),
+    })
+    .optional(),
+  voting: z.strictObject({ exilePolicy: z.enum(EXILE_VOTE_POLICIES) }).optional(),
   knight: z.strictObject({ enabledWindows: z.array(z.enum(KnightDuelWindow)) }).optional(),
   guard: z.strictObject({ repeatPolicy: z.enum(GUARD_REPEAT_POLICIES) }).optional(),
   hiddenWolf: z

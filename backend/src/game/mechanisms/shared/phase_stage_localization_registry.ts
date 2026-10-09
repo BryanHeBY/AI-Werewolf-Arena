@@ -54,6 +54,8 @@ export const CORE_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR: PhaseStageLocalizationCo
     night: term("stage", "night", "zh-CN"),
     day: term("stage", "day", "zh-CN"),
     voting: term("stage", "voting", "zh-CN"),
+    exile_pk_speech: term("stage", "exile_pk_speech", "zh-CN"),
+    exile_pk_vote: term("stage", "exile_pk_vote", "zh-CN"),
     game_over: term("stage", "game_over", "zh-CN"),
     day_speech: term("stage", "day_speech", "zh-CN"),
     death_shot: term("stage", "death_shot", "zh-CN"),

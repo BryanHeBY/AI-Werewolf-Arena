@@ -244,7 +244,12 @@ async function runFixture(
         onPreVote: true,
         onPerSpeechGap: true,
       };
-      definition.mechanisms.sheriff = { enabled: true, voteWeight: 2.25, tieBreaker: "min_seat" };
+      definition.mechanisms.sheriff = {
+        enabled: true,
+        electionPolicy: "awa_final_candidates_v1",
+        voteWeight: 2.25,
+        tieBreaker: "min_seat",
+      };
       definition.mechanisms.selfDestruct.enabledWindows = [window];
       board = parseBoardDefinition(definition);
     }

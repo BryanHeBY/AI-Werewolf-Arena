@@ -59,7 +59,13 @@ export const vote: ObservedToolHandler = (context) => {
     )
       seenWolves.push(event.payload.targetId);
   }
-  const candidates = others.filter((id) => !revealed.includes(id) && !teammateIds.includes(id));
+  const candidates = others.filter(
+    (id) =>
+      !revealed.includes(id) &&
+      !teammateIds.includes(id) &&
+      (request.context.exile_candidates === undefined ||
+        request.context.exile_candidates.includes(id)),
+  );
   const known = candidates.filter((id) => seenWolves.includes(id));
   const target = pick(known.length ? known : candidates);
   return { name: "vote", args: { target_id: target ?? null, abstain: target === undefined } };

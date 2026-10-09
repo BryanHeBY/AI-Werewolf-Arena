@@ -104,6 +104,22 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
             ),
           ]
         : []),
+      ...(sheriffEnabled
+        ? [
+            text(
+              locale,
+              config.sheriff?.electionPolicy === "awa_nomination_offstage_pk_v1"
+                ? "prompt.config.sheriff_pk"
+                : "prompt.config.sheriff_direct",
+            ),
+          ]
+        : []),
+      text(
+        locale,
+        config.voting?.exilePolicy === "awa_one_pk_v1"
+          ? "prompt.config.exile_pk"
+          : "prompt.config.exile_direct",
+      ),
       text(locale, "prompt.config.disclosure"),
       text(locale, "prompt.config.last_words"),
       ...(config.roleSetups.some((entry) => entry.role === Role.Knight && entry.count > 0)

@@ -27,10 +27,17 @@ export const COMMON_VALIDATION_RULES: ToolRuleMap = {
     return null;
   },
   speak: () => null,
-  vote: ({ world, actorId, toolCall, roleCatalog }) => {
+  vote: ({ world, actorId, toolCall, roleCatalog, exileCandidates }) => {
     if (toolCall.name !== "vote") {
       return { code: RuleError.ToolMismatch };
     }
+    if (exileCandidates?.includes(actorId)) return { code: RuleError.PkVoteEligibility };
+    if (
+      !toolCall.args.abstain &&
+      exileCandidates &&
+      !exileCandidates.includes(toolCall.args.target_id!)
+    )
+      return { code: RuleError.PkVoteTarget };
     if (!canVote(world, actorId, roleCatalog)) {
       return { code: RuleError.VoteRight };
     }

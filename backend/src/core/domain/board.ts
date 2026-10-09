@@ -18,7 +18,15 @@ export interface SelfDestructConfig {
   enabledWindows: ActionWindow[];
 }
 
+export const SHERIFF_ELECTION_POLICIES = [
+  "awa_final_candidates_v1",
+  "awa_nomination_offstage_pk_v1",
+] as const;
+export type SheriffElectionPolicy = (typeof SHERIFF_ELECTION_POLICIES)[number];
+export const EXILE_VOTE_POLICIES = ["awa_direct_v1", "awa_one_pk_v1"] as const;
+export type ExileVotePolicy = (typeof EXILE_VOTE_POLICIES)[number];
 export interface SheriffConfig {
+  electionPolicy?: SheriffElectionPolicy;
   voteWeight?: number;
 }
 
@@ -73,5 +81,6 @@ export interface BoardConfig {
   hiddenWolf?: { campInspection: HiddenWolfCampInspectionPolicy };
   knight?: { enabledWindows: KnightDuelWindow[] };
   tieBreaker?: TieBreakerConfig;
+  voting?: { exilePolicy: ExileVotePolicy };
   roleSetups: Array<{ role: Role; count: number }>;
 }

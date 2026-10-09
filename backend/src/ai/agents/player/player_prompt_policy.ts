@@ -376,6 +376,7 @@ export class PlayerPromptPolicy {
         world: this.world,
         roleCatalog: this.options.roleCatalog,
         sheriffCandidates: request.context.sheriff_candidates,
+        exileCandidates: request.context.exile_candidates,
       }),
       actionSubmissionHint: input.actionSubmissionHint,
     });

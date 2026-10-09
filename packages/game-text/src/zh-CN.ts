@@ -439,6 +439,22 @@ export const zhCN = Object.freeze({
   "role.seer.targets_fresh": "AWA新目标策略：仅可查验从未查验过的其他存活玩家，不重置历史。",
   "role.seer.action_required": "存在合法目标时必须提交查验；目标耗尽时跳过。",
   "role.seer.action_optional": "查验可跳过。",
+  "error.pk_vote_eligibility": "PK候选人不能参与本轮投票",
+  "error.pk_vote_target": "PK投票目标必须是本轮仍合格的PK候选人",
+  "request.summary.exile_pk": "平票玩家进行一次PK发言，随后由其他合格玩家重投。",
+  "stage.sheriff_pk_speech": "警长PK发言",
+  "stage.sheriff_pk_vote": "警长PK重投",
+  "stage.exile_pk_speech": "放逐PK发言",
+  "stage.exile_pk_vote": "放逐PK重投",
+  "console.pk.sheriff": "警长PK开始：{players}。",
+  "console.pk.exile": "放逐PK开始：{players}。",
+  "prompt.config.sheriff_pk":
+    "AWA警长策略：首轮只有未上警者投票，唯一候选直接当选；平票一次PK，PK者不投，第二次平票或全弃票无徽。",
+  "prompt.config.sheriff_direct":
+    "AWA警长策略：最终候选人之外的合格玩家投票，平票按本局直接决议策略。",
+  "prompt.config.exile_pk":
+    "AWA放逐策略：最高正票平票时一次PK；PK者不参与重投，仅投仍合格PK目标，再平票或全弃票不放逐。",
+  "prompt.config.exile_direct": "AWA放逐策略：直接按本局平票策略决议。",
   "error.check_target": "非法操作，查验目标必须存活",
   "error.guard_only": "非法操作，当前没有生效的守护能力",
   "error.guard_target": "非法操作，守护目标必须存活",
@@ -1071,6 +1087,8 @@ export const zhCN = Object.freeze({
   "replay.stage.lucky": "受赠能力行动",
   "replay.stage.gift_ability": "受赠能力行动",
   "replay.gift_ability_skipped": "{actor}号第{day}夜保留受赠技能{ability}，本夜机会已关闭。",
+  "replay.stage.sheriff_pk_started": "警长PK",
+  "replay.stage.exile_pk_started": "放逐PK",
 } as const);
 
 export type MessageKey = keyof typeof zhCN;

@@ -1,13 +1,6 @@
-import {
-  ActionWindow,
-  EntityId,
-  Phase,
-  ToolCall,
-  ToolName,
-  ToolValidationResult,
-} from "../../core/domain/model";
+import { EntityId, ToolCall, ToolValidationResult } from "../../core/domain/model";
 import { World } from "../../core/domain/world";
-import { ActionValidator } from "./action_validator";
+import { ActionValidator, type ValidationContext } from "./action_validator";
 
 const RESERVED_PREFIX = /^(\s*\[(上帝|法官|系统|God|Judge|System)\]\s*)+/gi;
 
@@ -26,17 +19,7 @@ export class ToolGateway {
     world: World,
     actorId: EntityId,
     toolCall: T,
-    context: {
-      day?: number;
-      abilityId?: string;
-      phase: Phase;
-      actionWindow?: ActionWindow;
-      allowSelfDestruct?: boolean;
-      duelWindow?: import("../../core/domain/identity").KnightDuelWindow;
-      allowKnightDuel?: boolean;
-      deathActionId?: number;
-      sheriffCandidates?: readonly EntityId[];
-    },
+    context: ValidationContext,
   ): ToolValidationResult<T> {
     const sanitizedCall = this.sanitize(toolCall);
     return this.validator.validate(world, actorId, sanitizedCall, context);

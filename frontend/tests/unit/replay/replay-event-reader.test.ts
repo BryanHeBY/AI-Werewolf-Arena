@@ -296,3 +296,31 @@ test("snapshot context and returned active event only come from valid reader fac
   expect(snapshot.players.every((player) => player.alive)).toBe(true);
   expect(reads).toBe(0);
 });
+
+for (const type of ["sheriff_pk_started", "exile_pk_started"]) {
+  test(`${type}: public candidates produce detached labels and associations without effects`, () => {
+    const fact = event(type, { candidates: [1, 2], secret: [3] });
+    const read = readReplayEvent(fact, [1, 2, 3])!;
+    expect(read.relatedPlayerIds).toEqual([1, 2]);
+    expect(read.effects).toEqual([]);
+    for (const locale of ["zh-CN", "en"] as const)
+      expect(eventLabel(fact, locale, [1, 2, 3])).toBe(
+        text(locale, type === "sheriff_pk_started" ? "console.pk.sheriff" : "console.pk.exile", {
+          players: locale === "zh-CN" ? "1号、2号" : "Player 1, Player 2",
+        }),
+      );
+    (fact.payload.candidates as number[]).push(3);
+    expect(read.event.payload.candidates).toEqual([1, 2]);
+  });
+  for (const candidates of [
+    [1, 99],
+    [0, 2],
+    [1, "2"],
+  ])
+    test(`${type}: malformed candidate list ${JSON.stringify(candidates)} is rejected atomically`, () => {
+      const fact = event(type, { candidates });
+      expect(readReplayEvent(fact, [1, 2, 3])).toBeNull();
+      expect(replayEventPlayerIds(fact, [1, 2, 3])).toEqual([]);
+      expect(eventLabel(fact, "en", [1, 2, 3])).toBe(text("en", "replay.unknown"));
+    });
+}

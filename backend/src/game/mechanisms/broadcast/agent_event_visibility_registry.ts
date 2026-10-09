@@ -27,6 +27,8 @@ const PUBLIC_EVENT_TYPES = new Set([
   "sheriff_nomination_summary",
   "sheriff_withdraw_summary",
   "sheriff_candidates_finalized",
+  "sheriff_pk_started",
+  "exile_pk_started",
   "sheriff_vote_summary",
   "sheriff_badge_transferred",
   "sheriff_badge_destroyed",

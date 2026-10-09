@@ -144,6 +144,10 @@ export const ACTION_STAGES = [
   "sheriff_withdraw",
   "sheriff_vote",
   "sheriff_choose_direction",
+  "sheriff_pk_speech",
+  "sheriff_pk_vote",
+  "exile_pk_speech",
+  "exile_pk_vote",
 ] as const;
 export type ActionStage = (typeof ACTION_STAGES)[number];
 export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_shot"];
@@ -162,6 +166,7 @@ export interface ActionRequestExtras {
   death_sources?: DeathCause[];
   death_action_id?: number;
   sheriff_candidates?: EntityId[];
+  exile_candidates?: EntityId[];
   round?: number;
   max_rounds?: number;
   retry_attempt?: number;

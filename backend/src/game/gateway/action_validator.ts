@@ -27,6 +27,7 @@ export interface ValidationContext {
   allowKnightDuel?: boolean;
   deathActionId?: number;
   sheriffCandidates?: readonly EntityId[];
+  exileCandidates?: readonly EntityId[];
 }
 
 /**
@@ -120,6 +121,7 @@ export class ActionValidator {
       duelWindow: context.duelWindow,
       allowKnightDuel: context.allowKnightDuel,
       sheriffCandidates: context.sheriffCandidates,
+      exileCandidates: context.exileCandidates,
     });
     if (error) {
       return reject(error);

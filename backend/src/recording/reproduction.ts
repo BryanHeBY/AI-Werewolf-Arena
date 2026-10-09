@@ -208,6 +208,7 @@ const requestSchema = z.strictObject({
     death_sources: z.array(z.enum(DeathCause)).optional(),
     death_action_id: positive.optional(),
     sheriff_candidates: z.array(positive).optional(),
+    exile_candidates: z.array(positive).optional(),
     round: positive.optional(),
     max_rounds: positive.optional(),
     retry_attempt: nonnegative.optional(),

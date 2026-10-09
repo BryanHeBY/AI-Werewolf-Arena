@@ -28,6 +28,7 @@ export interface TargetHintContext {
   world: World;
   roleCatalog?: import("../roles/catalog").RoleCatalog;
   sheriffCandidates?: readonly EntityId[];
+  exileCandidates?: readonly EntityId[];
 }
 
 /** 目标提示注册器契约。 */

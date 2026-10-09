@@ -499,6 +499,23 @@ export const en = Object.freeze({
   "role.seer.action_required":
     "An inspection is required while a legal target exists; skip when targets are exhausted.",
   "role.seer.action_optional": "Inspection is optional.",
+  "error.pk_vote_eligibility": "PK candidates cannot vote in this round",
+  "error.pk_vote_target": "A PK vote must target a still-eligible candidate in this round",
+  "request.summary.exile_pk":
+    "Tied players give one PK speech each; other eligible players then vote again.",
+  "stage.sheriff_pk_speech": "Sheriff PK speeches",
+  "stage.sheriff_pk_vote": "Sheriff PK revote",
+  "stage.exile_pk_speech": "Exile PK speeches",
+  "stage.exile_pk_vote": "Exile PK revote",
+  "console.pk.sheriff": "Sheriff PK begins: {players}.",
+  "console.pk.exile": "Exile PK begins: {players}.",
+  "prompt.config.sheriff_pk":
+    "AWA sheriff policy: only non-nominees vote first; a sole candidate wins directly. One PK on a tie; PK candidates cannot vote. Another tie or all abstentions leaves no badge.",
+  "prompt.config.sheriff_direct":
+    "AWA sheriff policy: eligible players outside the final candidate list vote; configured direct tie resolution applies.",
+  "prompt.config.exile_pk":
+    "AWA exile policy: one PK after a positive top-vote tie; PK candidates cannot revote, only remaining eligible PK candidates may be targeted. Another tie or all abstentions means no exile.",
+  "prompt.config.exile_direct": "AWA exile policy: configured direct tie resolution applies.",
   "error.check_target": "Invalid action: inspection target must be alive",
   "error.guard_only": "Invalid action: no effective protection ability is available",
   "error.guard_target": "Invalid action: protection target must be alive",
@@ -1188,4 +1205,6 @@ export const en = Object.freeze({
   "replay.stage.gift_ability": "Gifted ability action",
   "replay.gift_ability_skipped":
     "Player {actor} holds gifted ability {ability} on night {day}; this night’s opportunity is closed.",
+  "replay.stage.sheriff_pk_started": "Sheriff PK",
+  "replay.stage.exile_pk_started": "Exile PK",
 } satisfies Record<MessageKey, string>);

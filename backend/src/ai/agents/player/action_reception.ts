@@ -111,6 +111,7 @@ export class ActionReception {
       abilityId: request.context.ability_id,
       actionWindow: request.actionWindow,
       sheriffCandidates: request.context.sheriff_candidates,
+      exileCandidates: request.context.exile_candidates,
       allowSelfDestruct:
         request.allowedTools.includes("self_destruct") ||
         request.allowedTools.includes("self_destruct_with_target"),
