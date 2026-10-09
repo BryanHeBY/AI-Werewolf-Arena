@@ -47,7 +47,7 @@
 
 Seer新策略的schema/default/apply/serialize、实际夜stage、gateway晚验、baseline/目标提示、双语角色和板子提示、DTO/ObservedBot及JSON Tape状态恢复均闭环。80项定向测试（1382断言）通过。原文“当前可跳过”混淆引擎收到null时不提交与真实请求的min_valid_actions=1，已按运行代码纠正并保留默认。策略是AWA产品口径，未据扣分规则推出官方强制。
 
-## 女巫披露与产品实验（继续实施，不构成完整平台preset）
+## 女巫披露与产品实验（已实施，不构成完整平台preset）
 
 `roles.witch.knifeVisibility`仅支持`awa_with_heal_v1`（默认，解药本夜仍可用才披露刀口）和`awa_always_v1`（显式AWA产品口径，耗尽解药后仍披露），不声明后者是已核验官方主流规则；未加入无来源的第三种隐藏刀口选项。已有`selfHeal`三值与其双语/录制/原生资源语义保持。
 
@@ -58,3 +58,5 @@ Seer新策略的schema/default/apply/serialize、实际夜stage、gateway晚验�
 ## 警长、放逐PK与警徽选择
 
 `mechanisms.sheriff.electionPolicy=awa_nomination_offstage_pk_v1`、`badgePolicy=awa_holder_choice_v1`、`mechanisms.voting.exilePolicy=awa_one_pk_v1`组成有限AWA产品规则。各省略参数保留直接选举/顺位移交/直接放逐默认。PK候选人不重投，最多一次PK，再平票或全弃票无徽/无人放逐；唯一最终警长候选直接授徽，首轮仅从未上警者投票，PK轮退水者可投。警徽选择只能在真实死亡持徽者的引擎临时授权中进行，继任保留票重；非法/无动作撕徽，撤权不提交，白痴翻牌直接撕徽。来源只支持上表描述的部分，命名始终AWA，不冒称官方整套规则。
+
+最终验证固定于`52103ea`：后端203文件四组共2260项通过，四组退出码均0；前端215项、Chromium80项通过，类型/lint/格式/构建通过。警徽选择请求禁用fallback；SDK/ACP失败、空回复及非法回复不得代选继任者。完整AWA组合例已完成双语实际同局Tape复现；详见[验收记录](implementation-status.md)。
