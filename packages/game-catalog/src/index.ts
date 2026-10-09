@@ -246,9 +246,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "cursed_fox",
     names: { "zh-CN": "咒狐", en: "Cursed Fox" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P8",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/netease-cursed-fox-v1.md#cursed_fox",
     mechanismSummary: "特殊生存、查验和胜利",
   },
   {

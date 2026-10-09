@@ -52,6 +52,9 @@ export const en = Object.freeze({
   "console.black_market.result":
     "God Black Market result: player {actor} to player {target}, {skill}, night {day}: {outcome}.",
   "error.black_market_skill": "Choose check, poison or gun as the Black Market gift.",
+  "death.fox_inspection": "Cursed Fox inspection",
+  "reason.cursed_fox_survived_faction_elimination":
+    "Cursed Fox survives an ordinary faction elimination and wins alone",
   "death.black_market_backlash": "Black Market backlash",
 
   "ability.death_gun.summary":
@@ -403,6 +406,10 @@ export const en = Object.freeze({
   "tie.no_elimination": "No elimination",
   "tie.no_kill": "No death",
   "role.wolf.brief": "Participates in wolf discussion and the collective kill vote at night",
+  "role.cursed_fox.brief":
+    "Independent third-party goal; immune to the ordinary wolf knife, eliminated by Seer or Lucky inspection, and wins alone if alive when either ordinary faction is eliminated",
+  "role.cursed_fox.state":
+    "Your role is Cursed Fox. You belong to a third party with an independent goal: if either Good or Wolf is entirely eliminated and you remain alive, only you win. You resist the ordinary wolf knife, but not poison, shots, exile or linked deaths. Seer and Lucky camp inspection eliminate you; Mirror role inspection does not. Dream protection can prevent inspection death that night. You have no native active night ability and can receive a Miracle Merchant gift.",
   "role.villager.brief":
     "Has no night skill; influences the game through daytime speech and voting",
   "role.seer.brief": "May inspect one player's alignment each night",
@@ -987,6 +994,7 @@ export const en = Object.freeze({
   "victory.additional": "{primary}; also winning: {additional}",
   "victory.winners": "Winning players: {players}",
   "victory.point": "Day {day} · {phase} · {checkpoint}",
+  "victory.goal.netease_cursed_fox_last_faction_v1": "Survive an ordinary faction elimination",
   "victory.decision_reason": "Decision reason: {reason}",
   "victory.winner_badge": "Winner",
   "victory.faction": "{faction} wins",

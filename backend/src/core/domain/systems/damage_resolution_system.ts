@@ -6,6 +6,7 @@ import {
   planMechanicalDamage,
   livingNightLife,
   type NightPoisonClaim,
+  type NightFoxInspectionClaim,
   type NightGuardClaim,
   type NightMechanicalEffects,
   type NightPoisonReflection,
@@ -16,6 +17,8 @@ import {
 
 export interface NightDamageEffects {
   protectedTargets?: readonly EntityId[];
+  wolfImmuneTargets?: readonly EntityId[];
+  foxInspections?: readonly NightFoxInspectionClaim[];
   /** Sourced night immunity; extension interactions are an explicit AWA completion. */
   immuneNightTargets?: readonly EntityId[];
   consecutiveDeaths?: readonly EntityId[];
@@ -90,10 +93,16 @@ export class DamageResolutionSystem {
         .map((effect) => effect.target.id),
     );
 
+    const foxInspections = new Set(
+      effects.foxInspections
+        ?.filter((claim) => claim.isCurrent() && livingNightLife(world, claim.target))
+        .map((claim) => claim.target.id),
+    );
     for (const entityId of world.getAliveEntityIds()) {
       const marks = world.getComponent<StatusMarksComponent>(entityId, COMPONENT.StatusMarks);
       if (
         !marks &&
+        !foxInspections.has(entityId) &&
         !effects.consecutiveDeaths?.includes(entityId) &&
         !mechanical.attacks.has(entityId) &&
         !awakenedAttacks.has(entityId) &&
@@ -109,7 +118,9 @@ export class DamageResolutionSystem {
         (!claimedGuardTargets.has(entityId) || guarded.has(entityId));
       const hasHeal = marks?.has(StatusMark.HealMark) === true;
       const effectiveHeal = hasHeal && !hasGuard;
-      const hasWolfKill = marks?.has(StatusMark.WolfKillMark) === true;
+      const hasWolfKill =
+        marks?.has(StatusMark.WolfKillMark) === true &&
+        !effects.wolfImmuneTargets?.includes(entityId);
       const hasDirectPoison =
         marks?.has(StatusMark.PoisonMark) === true &&
         (!claimedPoisonTargets.has(entityId) || mechanical.directPoisonTargets.has(entityId));
@@ -118,6 +129,7 @@ export class DamageResolutionSystem {
       const dreamProtected = effects.protectedTargets?.includes(entityId) === true;
       const mechanicalShield = mechanical.shields.has(entityId);
       const awakenedShield = awakenedShields.has(entityId);
+      if (foxInspections.has(entityId) && !dreamProtected) sources.push(DeathCause.FoxInspection);
       if (hasPoison && !dreamProtected && !awakenedShield) sources.push(DeathCause.Poison);
 
       if (hasGuard && hasHeal) {

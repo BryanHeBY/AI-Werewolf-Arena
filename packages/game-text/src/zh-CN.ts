@@ -50,6 +50,8 @@ export const zhCN = Object.freeze({
   "console.black_market.result":
     "【上帝黑市结果】第{day}夜{actor}号对{target}号的{skill}：{outcome}。",
   "error.black_market_skill": "黑市礼物只可选择check、poison或gun。",
+  "death.fox_inspection": "查验咒狐致死",
+  "reason.cursed_fox_survived_faction_elimination": "普通阵营全灭时咒狐存活独胜",
   "death.black_market_backlash": "黑市反噬",
 
   "ability.death_gun.summary":
@@ -362,6 +364,10 @@ export const zhCN = Object.freeze({
   "tie.no_elimination": "无人出局",
   "tie.no_kill": "无人死亡",
   "role.wolf.brief": "夜间可狼队夜聊并参与刀人投票",
+  "role.cursed_fox.brief":
+    "第三方独立目标；免普通狼刀，预言家或幸运儿查验导致出局，任一普通阵营全灭时存活则独胜",
+  "role.cursed_fox.state":
+    "你的底牌是【咒狐】。你属于第三方，独立获胜：好人或狼人全灭时，你仍存活则只有你获胜。你免疫普通狼刀，但不免毒、枪、放逐或牵连。预言家及幸运儿查验使你出局，魔镜身份查验不会；当夜摄梦可保护查验死亡。你没有原生主动夜间技能，可获得奇迹商人赠技。",
   "role.villager.brief": "无夜间技能，白天通过发言和投票推进局势",
   "role.seer.brief": "每晚可查验一名玩家阵营",
   "role.guard.repeat_actual_nights":
@@ -880,6 +886,7 @@ export const zhCN = Object.freeze({
   "victory.additional": "{primary}；同时获胜：{additional}",
   "victory.winners": "获胜玩家：{players}",
   "victory.point": "第{day}日 · {phase} · {checkpoint}",
+  "victory.goal.netease_cursed_fox_last_faction_v1": "普通阵营全灭时存活",
   "victory.decision_reason": "判胜原因：{reason}",
   "victory.winner_badge": "获胜",
   "victory.faction": "{faction}胜利",

@@ -35,6 +35,8 @@ export function recordRecipientNightCommit(
   committed.set(world, policies);
 }
 
+import { captureInspectionIdentity, commitFoxInspection } from "./cursed_fox/inspection_effect";
+
 type LuckyAbility = NightAbility<"seer_check" | "potion" | "guard">;
 function isRecipient(ability: NightAbility, policy: RecipientPolicy): ability is LuckyAbility {
   return (
@@ -94,6 +96,9 @@ export function recipientAbilityStage(
                 .filter((id) => luckyTargetAllowed(ctx.world, actorId, ability, day, kind, id))
                 .map((id) => [id, captureNightLife(ctx.world, id)!] as const),
             );
+            const identities = new Map(
+              [...targets].map(([id, life]) => [id, captureInspectionIdentity(ctx.world, life)]),
+            );
             if (ability.kind === "seer_check" && !targets.size) {
               skip();
               completed = true;
@@ -142,10 +147,12 @@ export function recipientAbilityStage(
             if (!target || !livingNightLife(ctx.world, target)) continue;
             if (!luckyTargetAllowed(ctx.world, actorId, ability, day, kind, target.id)) continue;
             if (call.name === "check_identity" && ability.kind === "seer_check") {
+              if (!identities.get(target.id)?.isCurrent()) continue;
               const result = resolveInspection(ctx.world, target.id, "camp", ctx.roleCatalog);
               if (
                 !result ||
                 !current() ||
+                !identities.get(target.id)?.isCurrent() ||
                 !livingNightLife(ctx.world, target) ||
                 !luckyTargetAllowed(ctx.world, actorId, ability, day, kind, target.id)
               )
@@ -159,6 +166,9 @@ export function recipientAbilityStage(
                 isWerewolf,
                 result: { ...result },
               });
+              commitFoxInspection(ctx.world, ctx.state, target, day, () =>
+                scope.isOwnerCurrent(true),
+              );
               ctx.state.seerChecks.push({
                 seerId: actorId,
                 targetId: target.id,

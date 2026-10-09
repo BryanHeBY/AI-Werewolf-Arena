@@ -19,6 +19,7 @@ import type { AliveComponent } from "../../../../core/domain/components/alive";
 
 import type {
   NightPoisonClaim,
+  NightFoxInspectionClaim,
   NightMechanicalEffect,
   NightGuardClaim,
   NightMerchantBacklash,
@@ -43,6 +44,7 @@ export interface NightStageState {
   seerChecks: NightSummary["seerChecks"];
   dreamLinks: DreamNightLink[];
   poisonClaims?: NightPoisonClaim[];
+  foxInspections?: NightFoxInspectionClaim[];
   guardClaims?: NightGuardClaim[];
   merchantBacklashes?: NightMerchantBacklash[];
   blackMarketBacklashes?: NightBlackMarketBacklash[];

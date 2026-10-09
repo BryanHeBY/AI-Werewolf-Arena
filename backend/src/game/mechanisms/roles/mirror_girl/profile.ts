@@ -35,6 +35,7 @@ export const MIRROR_GIRL_ROLE_PROFILE: RoleProfile = {
   label: roleName("mirror_girl"),
   skillBrief: text("zh-CN", "role.mirror_girl.brief"),
   supportedBoardRoles: [
+    Role.CursedFox,
     Role.MirrorGirl,
     Role.AwakenedHiddenWolf,
     Role.Wolf,

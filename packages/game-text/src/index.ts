@@ -159,7 +159,10 @@ export function victoryClaimLabel(claim: VictoryClaim, locale: Locale = "zh-CN")
   if (claim.kind === "individual")
     return text(locale, "victory.individual", {
       player: text(locale, "replay.player", { id: claim.playerId }),
-      goal: claim.goalId,
+      goal:
+        claim.goalId === "netease_cursed_fox_last_faction_v1"
+          ? text(locale, "victory.goal.netease_cursed_fox_last_faction_v1")
+          : claim.goalId,
     });
   return text(locale, "victory.relationship", { group: claim.groupId });
 }

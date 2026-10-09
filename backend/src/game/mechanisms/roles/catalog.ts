@@ -29,6 +29,8 @@ import { HYBRID_ROLE_PROFILE } from "./hybrid/profile";
 import { MIRROR_GIRL_ROLE_PROFILE } from "./mirror_girl/profile";
 import { AWAKENED_HIDDEN_WOLF_ROLE_PROFILE } from "./awakened_hidden_wolf/profile";
 
+import { CURSED_FOX_ROLE_PROFILE } from "./cursed_fox/profile";
+
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   WOLF_ROLE_PROFILE,
   WOLF_KING_ROLE_PROFILE,
@@ -38,6 +40,7 @@ const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   DREAMER_ROLE_PROFILE,
   WOLF_BEAUTY_ROLE_PROFILE,
   BEAR_ROLE_PROFILE,
+  CURSED_FOX_ROLE_PROFILE,
   HIDDEN_WOLF_ROLE_PROFILE,
   GARGOYLE_ROLE_PROFILE,
   PSYCHIC_ROLE_PROFILE,

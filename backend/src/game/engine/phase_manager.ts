@@ -1,3 +1,4 @@
+import { replaceWithFoxVictory } from "../mechanisms/roles/cursed_fox/victory";
 import { readGameOutcome, readVictoryPoint } from "@ai-werewolf-arena/replay-contract";
 import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-catalog";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -225,10 +226,23 @@ export class PhaseManager {
     const settleNight = async (blast?: { deaths: number[]; sources: DeathSources }) => {
       if (nightSettled) return this.state.gameOver;
       nightSettled = true;
+      const retainedSources: DeathSources = Object.fromEntries(
+        night.damage.deaths.map((id) => [
+          id,
+          (night.damage.deathSources[id] ?? []).filter(
+            (source) =>
+              source !== DeathCause.FoxInspection ||
+              night.foxInspections?.some(
+                (claim) => claim.target.id === id && claim.isTargetCurrent(),
+              ),
+          ),
+        ]),
+      );
       const nightDeaths = night.damage.deaths.filter((id) => {
         const scope = night.deathLives.get(id);
         return (
           scope &&
+          retainedSources[id]?.length &&
           this.world.getComponent(id, COMPONENT.Alive) === scope.life &&
           scope.life.alive &&
           scope.version !== undefined &&
@@ -237,7 +251,7 @@ export class PhaseManager {
       });
       this.emitNightResolved(nightDeaths);
       const sources: DeathSources = Object.fromEntries(
-        nightDeaths.map((id) => [id, [...(night.damage.deathSources[id] ?? [])]]),
+        nightDeaths.map((id) => [id, [...(retainedSources[id] ?? [])]]),
       );
       const deaths = [...nightDeaths];
       const deathPhases: Record<EntityId, Phase> = {};
@@ -430,7 +444,7 @@ export class PhaseManager {
       overrides,
     );
     if (!result) return false;
-    this.sealResult(result, checkpoint, this.state.phase);
+    this.sealResult(replaceWithFoxVictory(this.world, result), checkpoint, this.state.phase);
     return true;
   }
 

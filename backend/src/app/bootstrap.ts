@@ -8,7 +8,7 @@ import { createStatusMarksComponent } from "../core/domain/components/status_mar
 import { createVotingRightComponent } from "../core/domain/components/voting_right";
 import { createVictoryComponent } from "../core/domain/components/victory";
 import { createIdentityComponent } from "../core/domain/entities/player";
-import { BoardConfig, EntityId, Role } from "../core/domain/model";
+import { BoardConfig, EntityId, Role, WinCondition } from "../core/domain/model";
 import {
   getDefaultWinConditionRegistry,
   getDefaultRoleCatalog,
@@ -152,7 +152,17 @@ function buildRoleDeck(
       throw new Error(`role_count_exceeds_limit: ${role}`);
   }
   for (const role of counts.keys()) {
-    const supported = getDefaultRoleCatalog().require(role).supportedBoardRoles;
+    const profile = getDefaultRoleCatalog().require(role);
+    const conditions = config.winConditions?.length
+      ? config.winConditions
+      : [config.winCondition ?? WinCondition.SlaughterCity];
+    if (
+      profile.supportedWinConditions &&
+      (new Set(conditions).size !== conditions.length ||
+        conditions.some((condition) => !profile.supportedWinConditions!.includes(condition)))
+    )
+      throw new Error(`role_win_condition_not_supported: ${role}`);
+    const supported = profile.supportedBoardRoles;
     if (supported && [...counts.keys()].some((candidate) => !supported.includes(candidate)))
       throw new Error(`role_combination_not_supported: ${role}`);
   }

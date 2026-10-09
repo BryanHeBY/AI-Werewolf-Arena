@@ -23,6 +23,7 @@ export const MIRACLE_MERCHANT_ROLE_PROFILE: RoleProfile = {
   label: roleName("miracle_merchant"),
   skillBrief: text("zh-CN", "role.miracle_merchant.brief"),
   supportedBoardRoles: [
+    Role.CursedFox,
     Role.MiracleMerchant,
     Role.Wolf,
     Role.WolfKing,

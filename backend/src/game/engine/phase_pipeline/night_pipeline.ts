@@ -43,6 +43,8 @@ import { hasHybridNightCommit } from "../../mechanisms/roles/hybrid/night_stage"
 import { hasAwakenedNightCommit } from "../../mechanisms/roles/awakened_hidden_wolf/night_scope";
 import { hasDeathAbilityActivationCommit } from "../../mechanisms/roles/death_ability_activation";
 
+import { hasFoxInspectionNightCommit } from "../../mechanisms/roles/cursed_fox/inspection_effect";
+
 export interface NightPipelineDependencies {
   world: World;
   toolGateway: ToolGateway;
@@ -62,6 +64,7 @@ export type NightPipelineResult =
       summary: NightSummary;
       damage: DamageResolutionResult;
       dreamFrame: DreamNightFrame;
+      foxInspections?: readonly import("../../../core/domain/night_effects").NightFoxInspectionClaim[];
       deathLives: ReadonlyMap<EntityId, { life: AliveComponent; version: number | undefined }>;
     }
   | { interrupted: true };
@@ -100,6 +103,8 @@ export class NightPipeline {
   ): Promise<NightPipelineResult> {
     const isCurrent = options.isCurrent ?? (() => true);
     if (!isCurrent()) return { interrupted: true };
+    if (hasFoxInspectionNightCommit(this.world, day))
+      throw new Error("fox_inspection_night_reentry_after_commit");
     if (hasDreamNightCommit(this.world, day)) throw new Error("dream_night_reentry_after_commit");
     if (hasRoleInspectionNightCommit(this.world, day))
       throw new Error("role_inspection_night_reentry_after_commit");
@@ -181,6 +186,8 @@ export class NightPipeline {
       immuneNightTargets: dreamFrame.immuneNightTargets(this.world),
       consecutiveDeaths: dreamFrame.consecutiveDeaths(this.world),
       poisonClaims: stageState.poisonClaims,
+      foxInspections: stageState.foxInspections,
+      wolfImmuneTargets: this.getAliveByRole(Role.CursedFox),
       guardClaims: stageState.guardClaims,
       merchantBacklashes: stageState.merchantBacklashes,
       blackMarketBacklashes: stageState.blackMarketBacklashes,
@@ -218,7 +225,14 @@ export class NightPipeline {
         return [id, { life, version: aliveLifeVersion(life) }] as const;
       }),
     );
-    return { interrupted: false, summary, damage, dreamFrame, deathLives };
+    return {
+      interrupted: false,
+      summary,
+      damage,
+      dreamFrame,
+      deathLives,
+      foxInspections: stageState.foxInspections,
+    };
   }
 
   private makeRequest(

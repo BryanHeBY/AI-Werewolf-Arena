@@ -14,7 +14,7 @@
 | P5        | 完成                     | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md)                                                                                                                                                                                                                                                                                                                                                                                                     |
 | P6        | 完成                     | 五角色与三路审查闭环；16项verified，最终全量1176测试／542实际双语整局/Tape、103前端／42浏览器通过，见[阶段验收](reviews/p6-activation.md)                                                                                                                                                                                                                                                                                                                                                                                                    |
 | P7 第三批 | 完成：七角色及全阶段验收 | [通灵师](reviews/p7-psychic.md)、[机械狼](reviews/p7-mechanical-wolf.md)、[奇迹商人](reviews/p7-miracle-merchant.md)、[混血儿](reviews/p7-hybrid.md)、[魔镜少女](reviews/p7-mirror-girl.md)、[觉醒隐狼](reviews/p7-awakened-hidden-wolf.md)、[黑市商人](reviews/p7-black-market-merchant.md)；23 verified/41 planned；Black新增84双语本地完整局/Tape、40seed与4失败Tape，全量后端2027测试/184573断言、前端173/78浏览器通过；见[阶段验收](reviews/p7-activation.md)，三路最终复查0阻断；功能commit `83cac45`，收尾交接见[文档](handoff-p7.md) |
-| P8–P10    | 未开始                   | 按路线依赖推进，不把目录登记当成实现                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| P8–P10    | 进行中                   | 按路线依赖推进，不把目录登记当成实现                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 
 ## P1 已确认决策
 
@@ -431,3 +431,7 @@ Black完整功能commit `83cac45`；赠枪底座 `5c41428`、死亡实例许可 
 ## 2026-10-09：P8–P10接续授权与范围更新
 
 整改功能05cd47b、浏览器证据024a933已获用户验收并普通推送，随后授权“完成所有剩余任务，避免停下来询问”。恢复41角色（P8 3/P9 38）、有限首组事件道具及P10；不重复觉醒隐狼或扩大长期候选。执行契约见[持续实施](contracts/p8-p10-continuation.md)。本笔只更新docs执行边界，P8三角色来源核验/规则卡继续，目录仍23verified/41planned。main线性小提交，本次新提交暂不推送，不读用户configs/秘密或无界调用模型。
+
+## 2026-10-09 P8 首项：咒狐
+
+[规则卡](rules/netease-cursed-fox-v1.md)与[三组审查/验证](reviews/p8-cursed-fox.md)已交付；implemented首项、剩余40项planned，P8/P9/P10持续推进。三组源/执行/时序问题修复复查关闭；本批2441后端、229前端、88浏览器无失败，1000固定seed局及48实际双语SDK/ACP/MCP局含strict Tape。未推送、未运行真实模型；总体任务等待用户最终验收。下一项丘比特规则草案正在核对计数、保密与殉情波次，不把草案登记为支持。

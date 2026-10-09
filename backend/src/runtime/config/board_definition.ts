@@ -129,6 +129,14 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
   ) {
     fail("board_config_requires_good_and_wolf", "board.roleSetups");
   }
+  for (const profile of profiles)
+    if (
+      profile.supportedWinConditions &&
+      definition.rules.winConditions.some(
+        (condition) => !profile.supportedWinConditions!.includes(condition),
+      )
+    )
+      fail("board_config_role_win_condition_not_supported", "rules.winConditions");
   if (new Set(definition.rules.winConditions).size !== definition.rules.winConditions.length)
     fail("board_config_duplicate_win_condition", "rules.winConditions");
   const sheriff = definition.mechanisms.sheriff;

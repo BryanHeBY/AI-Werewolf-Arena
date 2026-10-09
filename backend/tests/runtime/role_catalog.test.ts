@@ -11,7 +11,7 @@ test("shared catalog distinguishes planned definitions from registered roles", (
   expect(ROLE_DEFINITIONS).toHaveLength(64);
   expect(new Set(ROLE_IDS).size).toBe(64);
   expect(
-    ROLE_DEFINITIONS.filter((item) => item.status === "verified")
+    ROLE_DEFINITIONS.filter((item) => item.status === "verified" || item.status === "implemented")
       .map((item) => item.id)
       .sort(),
   ).toEqual(Object.values(Role).sort());

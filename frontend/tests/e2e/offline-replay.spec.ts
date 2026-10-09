@@ -1108,3 +1108,46 @@ for (const locale of ["zh-CN", "en"] as const)
     await expect(target).not.toContainText(marker);
     await expect(target).toHaveClass(/alive/);
   });
+
+for (const locale of ["zh-CN", "en"] as const)
+  for (const kind of ["dream", "inspection", "king_chain"] as const)
+    test(`${locale}/${kind}: actual Cursed Fox archive reaches a chain-final personal victory or dead Fox with Good winners`, async ({
+      page,
+    }) => {
+      const replay = JSON.parse(
+        readFileSync(new URL(`../fixtures/fox-${kind}.replay.json`, import.meta.url), "utf8"),
+      );
+      replay.meta.locale = locale;
+      await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
+      await page.goto("/");
+      await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+      await page.locator(".timeline .event").last().click();
+      await expect(page.locator(".seat-grid .winner")).toHaveCount(kind === "dream" ? 1 : 4);
+      await expect(page.getByTestId("composition-winner")).toHaveCount(kind === "dream" ? 1 : 4);
+      const fox = page.getByRole("button", {
+        name: locale === "en" ? "Player 1 · Seat 1" : "1号 · Seat 1",
+        exact: true,
+      });
+      if (kind === "dream") {
+        await expect(fox).not.toHaveClass(/dead/);
+        await expect(fox).toHaveClass(/winner/);
+        await expect(page.locator(".result-chip strong")).toContainText(
+          locale === "en" ? "personal goal victory" : "个人目标胜利",
+        );
+        await expect(page.getByTestId("composition-event")).toContainText(
+          locale === "en" ? "Survive an ordinary faction elimination" : "普通阵营全灭时存活",
+        );
+      } else {
+        await expect(fox).toHaveClass(/dead/);
+        await expect(fox).not.toHaveClass(/winner/);
+      }
+      const caption = await page.getByTestId("composition-caption").boundingBox();
+      expect(caption).not.toBeNull();
+      for (const seat of await page.locator("[data-composition-player]").all()) {
+        const box = await seat.boundingBox();
+        expect(box).not.toBeNull();
+        expect(box!.y + box!.height).toBeLessThan(caption!.y);
+      }
+      if (kind === "dream")
+        await page.screenshot({ path: `/tmp/awa-p8-fox-${locale}-browser.png`, fullPage: true });
+    });

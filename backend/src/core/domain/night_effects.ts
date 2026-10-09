@@ -15,6 +15,12 @@ export interface NightPoisonClaim {
   readonly target: NightLifeScope;
   readonly isCurrent?: () => boolean;
 }
+export interface NightFoxInspectionClaim {
+  readonly target: NightLifeScope;
+  /** Target binding survives the phase change before first-day sheriff settlement. */
+  readonly isTargetCurrent: () => boolean;
+  readonly isCurrent: () => boolean;
+}
 export interface NightGuardClaim {
   readonly target: NightLifeScope;
   readonly marks: StatusMarksComponent;

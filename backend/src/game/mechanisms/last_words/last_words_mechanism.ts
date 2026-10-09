@@ -46,6 +46,7 @@ export class LastWordsMechanism {
             source === DeathCause.AwakenedHiddenKnife ||
             source === DeathCause.Poison ||
             source === DeathCause.Dream ||
+            source === DeathCause.FoxInspection ||
             source === DeathCause.MerchantBacklash ||
             source === DeathCause.BlackMarketBacklash,
         )) ||

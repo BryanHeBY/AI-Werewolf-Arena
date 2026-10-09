@@ -11,6 +11,8 @@ import { captureNightAbilityScope } from "../ability_scope";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";
 
+import { captureInspectionIdentity, commitFoxInspection } from "../cursed_fox/inspection_effect";
+
 const seerCheckStage: NightStageHandler = {
   id: "seer_check",
   priority: 600,
@@ -32,6 +34,11 @@ const seerCheckStage: NightStageHandler = {
       if (!scope?.isEligible()) continue;
       const targets = new Map(
         ctx.world.getAliveEntityIds().map((id) => [id, captureNightLife(ctx.world, id)]),
+      );
+      const identities = new Map(
+        [...targets].flatMap(([id, life]) =>
+          life ? [[id, captureInspectionIdentity(ctx.world, life)] as const] : [],
+        ),
       );
       if (
         !ctx.world.getAliveEntityIds().includes(seerId) ||
@@ -77,11 +84,13 @@ const seerCheckStage: NightStageHandler = {
 
       const targetId = result.sanitizedCall.args.target_id;
       const target = targets.get(targetId);
-      if (!target || !livingNightLife(ctx.world, target)) continue;
+      if (!target || !livingNightLife(ctx.world, target) || !identities.get(targetId)?.isCurrent())
+        continue;
       const inspection = resolveInspection(ctx.world, targetId, "camp", ctx.roleCatalog);
       if (!ctx.isCurrent()) return;
       if (
         !scope.isEligible() ||
+        !identities.get(targetId)?.isCurrent() ||
         !livingNightLife(ctx.world, target) ||
         !seerTargetAllowed(ability.state, seerId, targetId) ||
         !luckyTargetAllowed(ctx.world, seerId, ability, day, "check", targetId)
@@ -99,6 +108,7 @@ const seerCheckStage: NightStageHandler = {
         seerState.history.push({ targetId, isWerewolf, result: { ...inspection } });
       }
 
+      commitFoxInspection(ctx.world, ctx.state, target, day, () => scope.isOwnerCurrent(true));
       ctx.state.seerChecks.push({ seerId, targetId, isWerewolf, result: { ...inspection } });
       recordNightAbilityUse(ability, ctx.currentDay(), true);
       recordOwnNightAction(ctx.world, seerId, day, "check", targetId, false);

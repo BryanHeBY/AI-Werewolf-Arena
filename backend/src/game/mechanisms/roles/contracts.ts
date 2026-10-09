@@ -39,6 +39,8 @@ export interface RoleProfile {
   maxCount?: number;
   /** Composition whitelist contributed by a role whose learning rules are deliberately finite. */
   supportedBoardRoles?: readonly Role[];
+  /** Finite sourced goals; both public parsing and internal bootstrap reject incompatible goals. */
+  supportedWinConditions?: readonly import("../../../core/domain/identity").WinCondition[];
   /** Passive Bear sensing is independent of active inspection labels/knife permission. */
   detectableByBear?: (world: World, role: RoleComponent) => boolean;
   initialVictoryAffiliations?:
