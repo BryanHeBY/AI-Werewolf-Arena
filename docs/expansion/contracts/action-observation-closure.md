@@ -9,7 +9,7 @@
 - 使用共同scope helper表达可复用约束，保留机械模式、觉醒激活和付费赠予的特殊政策；不把所有调用机械替换为一套较弱检查。
 - 死亡行动仅由DeathResolution授权，绑定确切能力实例并及时关闭；库存与pass/invalid语义保持当前契约。
 
-证据：`backend/src/game/mechanisms/roles/ability_scope.ts`、`death_abilities.ts`、`ability_changes.ts`及`game/engine/death_resolution.ts`。摄梦请求前撤权是待实现前复核项；回归应证明没有发生请求和提交，而非仅检查最终存活状态。
+证据：`backend/src/game/mechanisms/roles/ability_scope.ts`、`death_abilities.ts`、`ability_changes.ts`及`game/engine/death_resolution.ts`。摄梦请求前撤权已修复；女巫补全能力元数据绑定，守卫/预言家/女巫绑定确切夜晚，摄梦/守卫/预言家在构造请求后复核。回归证明已撤权对象不进入provider、不提交或耗费资源，并保留此前已接受前缀。
 
 ## 玩家信息
 
