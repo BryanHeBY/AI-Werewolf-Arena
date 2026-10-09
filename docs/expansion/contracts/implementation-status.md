@@ -16,6 +16,7 @@ CLI目录、能力授权、独立玩家/展示DTO、统一回放事实reader、�
 | --------------- | --------------------------------------------------------------------------------------------------- |
 | 后端全量        | 2389通过，0失败，189737断言，209文件；四组741/559/496/593，均退出0，最长组248.93秒                  |
 | 前端全量单测    | 223通过，0失败，2119断言，32文件                                                                    |
+| 完整Chromium    | 82/82通过，0失败/跳过/不稳定项；当前功能提交05cd47b，1 worker、0 retry，186.72秒                    |
 | 全源码/测试类型 | root check通过，配置未放宽                                                                          |
 | lint/格式/差异  | root lint、format:check及git diff --check通过                                                       |
 | 前后端构建      | 均通过；已有>500KB bundle提示保留                                                                   |
@@ -24,7 +25,7 @@ CLI目录、能力授权、独立玩家/展示DTO、统一回放事实reader、�
 
 209文件精确并集清单 `/tmp/arena-historical-backend-manifest.json`，各组日志/状态 `/tmp/arena-historical-backend-{1..4}.{log,status.json}`，汇总 `/tmp/arena-historical-backend-summary.json`。新源码首轮沙箱禁本地listen，SDK/MCP fixture报EPERM，日志保留为 `/tmp/arena-historical-backend-sandbox-*`；未修改测试/超时/断言或放宽规则，获准本地loopback离线fixture后按此前四组完整重跑得到上表。类型/lint/格式/前端/构建日志为 `/tmp/arena-historical-{check,lint,format,frontend,build-backend,build-frontend}.log`；基线实际请求 `/tmp/arena-historical-seer-baseline.log`。
 
-本批未改前端播放或公开事件wire，没有重复Chromium；上一批82项只属于上一批源码证据，不能写成本次浏览器结果。网易2026页面此次只取得站点壳，使用此前已读条款加此轮可读2017/2019正文推进，不以抓取失败结束。机械+摄梦公开组合仍未开放，机械失败免疫只验低层frame/伤害矩阵；黑市+摄梦已支持并完成实际Tape分叉。外部平台所有板子、真实模型质量与视频导出未验证。P8–P10未开始，整体任务保持待用户最终验收。
+本次完整Chromium门禁在干净main提交 `05cd47bee67b83b1328a6fdebfcb9eb9b3b89158` 上实际重跑，82/82通过，0失败/跳过/不稳定项；单worker、零重试，使用现有 `/usr/bin/chromium` 与新建127.0.0.1 fixture服务。日志 `/tmp/arena-historical-browser.log`，完整JSON `/tmp/arena-historical-browser.json`，含精确源码提交/命令/退出码的状态 `/tmp/arena-historical-browser.status.json`。此后仅更新本文件记录，功能源码保持05cd47b。运行初期因日志暂为空误判停住，原Bun运行实际自然完成；误启动的Node重复运行已取消，其日志/状态单独保留为 `/tmp/arena-historical-browser-node-cancelled.*`，不计门禁或失败。上一批82项仍仅是历史证据，不用于替代本次结果。网易2026页面此次只取得站点壳，使用此前已读条款加此轮可读2017/2019正文推进，不以抓取失败结束。机械+摄梦公开组合仍未开放，机械失败免疫只验低层frame/伤害矩阵；黑市+摄梦已支持并完成实际Tape分叉。外部平台所有板子、真实模型质量与视频导出未验证。P8–P10未开始，整体任务保持待用户最终验收。
 
 ## 上一批功能源码门禁（0954991）
 
