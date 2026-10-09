@@ -54,19 +54,14 @@ export const MIRACLE_MERCHANT_ROLE_PROFILE: RoleProfile = {
   toolSpecs: [
     {
       name: "bestow_ability",
-      llm: {
-        name: "bestow_ability",
-        description:
-          "Choose another living player and one Miracle Merchant skill, once per game. Your true role and faction remain unchanged.",
-        parameters: {
-          type: "object",
-          properties: {
-            target_id: { type: "integer" },
-            skill: { type: "string", enum: ["check", "poison", "guard"] },
-          },
-          required: ["target_id", "skill"],
-          additionalProperties: false,
+      parameters: {
+        type: "object",
+        properties: {
+          target_id: { type: "integer" },
+          skill: { type: "string", enum: ["check", "poison", "guard"] },
         },
+        required: ["target_id", "skill"],
+        additionalProperties: false,
       },
       argHint: 'bestow_ability args: {"target_id":number,"skill":"check"|"poison"|"guard"}',
       userPromptHintKey: "action.bestow_ability.hint",

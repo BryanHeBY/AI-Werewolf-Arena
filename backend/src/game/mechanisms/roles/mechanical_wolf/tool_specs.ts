@@ -27,11 +27,7 @@ export const MECHANICAL_TOOL_SPECS: ToolSpec[] = MECHANICAL_TOOL_NAMES.map((name
         };
   return {
     name,
-    llm: {
-      name,
-      description: `Use ${name} only when authorized by this turn's Mechanical Wolf rules.`,
-      parameters,
-    },
+    parameters: parameters,
     argHint:
       name === "mechanical_mode"
         ? 'mechanical_mode args: {"mode":"kill"|"skill"}'

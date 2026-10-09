@@ -6,7 +6,6 @@ import {
   ToolName,
   ToolValidationResult,
 } from "../../core/domain/model";
-import { getDefaultToolSpecRegistry, ToolSpecRegistry } from "../mechanisms";
 import { World } from "../../core/domain/world";
 import { ActionValidator } from "./action_validator";
 
@@ -14,41 +13,13 @@ const RESERVED_PREFIX = /^(\s*\[(上帝|法官|系统|God|Judge|System)\]\s*)+/g
 
 /**
  * ToolGateway 负责两件事：
- * 1) 对外维护可用工具 schema；
- * 2) 在执行前做输入清洗 + 规则校验。
+ * 在执行前做输入清洗与领域规则校验。传输入参的JSON Schema由ActionReception持有。
  */
 export class ToolGateway {
   private readonly validator: ActionValidator;
-  private readonly schemas: Map<ToolName, unknown> = new Map();
-  private readonly toolSpecRegistry: ToolSpecRegistry;
 
-  constructor(
-    validator: ActionValidator = new ActionValidator(),
-    toolSpecRegistry: ToolSpecRegistry = getDefaultToolSpecRegistry(),
-  ) {
+  constructor(validator: ActionValidator = new ActionValidator()) {
     this.validator = validator;
-    this.toolSpecRegistry = toolSpecRegistry;
-    for (const { name, schema } of this.toolSpecRegistry.getGatewaySchemas()) {
-      this.registerSchema(name, schema);
-    }
-  }
-
-  /**
-   * 注册单个工具的 schema。
-   */
-  registerSchema(name: ToolName, schema: unknown): void {
-    this.schemas.set(name, schema);
-  }
-
-  /**
-   * 获取当前已注册 schema 映射。
-   */
-  getRegisteredSchemas(): Record<string, unknown> {
-    const obj: Record<string, unknown> = {};
-    for (const [name, schema] of this.schemas.entries()) {
-      obj[name] = schema;
-    }
-    return obj;
   }
 
   validateAndSanitize<T extends ToolCall>(

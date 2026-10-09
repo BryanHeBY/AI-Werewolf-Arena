@@ -1,23 +1,15 @@
 import type { MessageKey } from "@ai-werewolf-arena/game-text";
 /** 文件说明：机制层公共规格类型定义。 */
-import { ToolName } from "../../core/domain/model";
-import { Role } from "../../core/domain/model";
-
-/** 工具 schema 描述结构。 */
-export interface MechanismToolSchema {
-  name: string;
-  description: string;
-  parameters: Record<string, unknown>;
-}
+import { ToolName, Role } from "../../core/domain/model";
 
 /** 工具规格定义。 */
 export interface ToolSpec {
   name: ToolName;
-  llm: MechanismToolSchema;
+  /** Validation-only JSON Schema; player prose belongs to shared localized hints. */
+  parameters: Record<string, unknown>;
   argHint: string;
   userPromptHint?: string;
   userPromptHintKey?: MessageKey;
-  gatewaySchema?: unknown;
 }
 
 /** 阶段提示词匹配规则。 */

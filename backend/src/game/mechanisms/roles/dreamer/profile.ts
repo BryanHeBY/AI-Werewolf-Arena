@@ -38,16 +38,11 @@ export const DREAMER_ROLE_PROFILE: RoleProfile = {
   toolSpecs: [
     {
       name: "dream",
-      llm: {
-        name: "dream",
-        description:
-          "Choose another living player as this night's sleepwalker. A target is required.",
-        parameters: {
-          type: "object",
-          properties: { target_id: { type: "number" } },
-          required: ["target_id"],
-          additionalProperties: false,
-        },
+      parameters: {
+        type: "object",
+        properties: { target_id: { type: "number" } },
+        required: ["target_id"],
+        additionalProperties: false,
       },
       argHint: 'dream args: {"target_id":number}',
       userPromptHintKey: "action.dream.hint",

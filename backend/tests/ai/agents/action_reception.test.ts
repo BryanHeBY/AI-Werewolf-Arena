@@ -18,6 +18,7 @@ import {
 } from "../../../src/game/mechanisms/roles/private_state";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { ToolSpecRegistry, getDefaultToolSpecRegistry } from "../../../src/game/mechanisms";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 
 const roles = [
@@ -338,4 +339,39 @@ test("ACP bug reports use the same turn owner: expired, wrong and sealed turns h
   });
   expect(reports).toBe(1);
   registry.close();
+});
+
+test("preflight uses the machine schema without reading obsolete LLM or gateway metadata", () => {
+  const guarded = bootstrapGame(sixPlayerMvpConfig, {
+    fixedRoles: [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager],
+  });
+  const spec = { ...getDefaultToolSpecRegistry().get("guard")! };
+  let obsoleteReads = 0;
+  for (const key of ["llm", "gatewaySchema"]) {
+    Object.defineProperty(spec, key, {
+      get() {
+        obsoleteReads++;
+        throw new Error("obsolete metadata must not be read");
+      },
+    });
+  }
+  const before = state(guarded.world);
+  const reception = new ActionReception(guarded.world, undefined, new ToolSpecRegistry([spec]));
+  const turn = request(5, ["guard"], "guard");
+  expect(reception.validate(turn, "guard", { target_id: "3", abstain: false })).toEqual({
+    ok: true,
+    action: { name: "guard", args: { target_id: 3, abstain: false } },
+  });
+  expect(reception.validate(turn, "guard", { target_id: 3, abstain: "false" })).toMatchObject({
+    ok: false,
+    error: "invalid_tool_arguments",
+  });
+  expect(
+    reception.validate(turn, "guard", { target_id: 3, abstain: false, override: true }),
+  ).toMatchObject({
+    ok: false,
+    error: "invalid_tool_arguments",
+  });
+  expect(obsoleteReads).toBe(0);
+  expect(state(guarded.world)).toEqual(before);
 });

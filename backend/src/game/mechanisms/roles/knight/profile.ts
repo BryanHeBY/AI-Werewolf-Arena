@@ -37,15 +37,11 @@ export const KNIGHT_ROLE_PROFILE: RoleProfile = {
   toolSpecs: [
     {
       name: "duel",
-      llm: {
-        name: "duel",
-        description: "Reveal as Knight and duel another living player at an enabled public window.",
-        parameters: {
-          type: "object",
-          properties: { target_id: { type: "number" }, confirm: { type: "boolean" } },
-          required: ["target_id", "confirm"],
-          additionalProperties: false,
-        },
+      parameters: {
+        type: "object",
+        properties: { target_id: { type: "number" }, confirm: { type: "boolean" } },
+        required: ["target_id", "confirm"],
+        additionalProperties: false,
       },
       argHint: 'duel args: {"target_id":number,"confirm":true}',
       userPromptHintKey: "action.knight.hint",

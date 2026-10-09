@@ -24,19 +24,15 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: RoleProfile = {
     ...WOLF_ROLE_PROFILE.toolSpecs!.filter((spec) => spec.name !== "self_destruct"),
     {
       name: "self_destruct_with_target",
-      llm: {
-        name: "self_destruct_with_target",
-        description: "Self-destruct and optionally take one other living player.",
-        parameters: {
-          type: "object",
-          properties: {
-            reason: { type: "string" },
-            confirm: { type: "boolean" },
-            target_id: { type: ["number", "null"] },
-          },
-          required: ["reason", "confirm", "target_id"],
-          additionalProperties: false,
+      parameters: {
+        type: "object",
+        properties: {
+          reason: { type: "string" },
+          confirm: { type: "boolean" },
+          target_id: { type: ["number", "null"] },
         },
+        required: ["reason", "confirm", "target_id"],
+        additionalProperties: false,
       },
       argHint:
         'self_destruct_with_target args: {"reason":"...","confirm":true,"target_id":number|null}',

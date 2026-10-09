@@ -22,33 +22,18 @@ import { isAliveTarget, type ValidationRuleContext } from "../validation/contrac
 export const DEATH_SHOT_TOOL_SPECS: ToolSpec[] = [
   {
     name: "shoot",
-    llm: {
-      name: "shoot",
-      description: "Shoot a living target during an authorized death turn.",
-      parameters: {
-        type: "object",
-        properties: {
-          target_id: {
-            type: ["number", "null"],
-            description: "Target player number; null deliberately passes.",
-          },
+    parameters: {
+      type: "object",
+      properties: {
+        target_id: {
+          type: ["number", "null"],
         },
-        description: "Death-shot arguments.",
-        required: ["target_id"],
-        additionalProperties: false,
       },
+      required: ["target_id"],
+      additionalProperties: false,
     },
     argHint: 'shoot args: {"target_id":number|null}',
     userPromptHintKey: "action.shoot.hint",
-    gatewaySchema: {
-      name: "shoot",
-      description: "One authorized death shot.",
-      parameters: {
-        type: "object",
-        properties: { target_id: { type: ["number", "null"] } },
-        required: ["target_id"],
-      },
-    },
   },
 ];
 export const DEATH_SHOT_REPAIR: ToolRepairPack = {

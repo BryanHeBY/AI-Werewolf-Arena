@@ -2,45 +2,24 @@ import { text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：女巫工具规格与阶段提示规则定义。 */
 import { PotionType } from "../../../../core/domain/model";
 import { StageDirectiveRule, ToolSpec } from "../../contracts";
-import { prop } from "../../shared/schema";
-
-const usePotionSchema = {
-  name: "use_potion",
-  description: "女巫使用解药或毒药，不能同夜双药；是否允许自救以本局规则配置为准",
-  parameters: {
-    type: "object",
-    properties: {
-      target_id: { type: "number" },
-      potion_type: { type: "string", enum: ["heal", "poison", "none"] },
-    },
-    required: ["target_id", "potion_type"],
-  },
-} as const;
 
 /** 女巫工具规格列表。 */
 export const WITCH_TOOL_SPECS: ToolSpec[] = [
   {
     name: "use_potion",
-    llm: {
-      name: "use_potion",
-      description: "女巫使用药剂。",
-      parameters: {
-        type: "object",
-        properties: {
-          target_id: prop("number", "药剂目标玩家编号。"),
-          potion_type: {
-            type: "string",
-            enum: [PotionType.Heal, PotionType.Poison, PotionType.None],
-            description: "药剂类型：heal=解药，poison=毒药，none=本轮不使用药剂。",
-          },
+    parameters: {
+      type: "object",
+      properties: {
+        target_id: { type: "number" },
+        potion_type: {
+          type: "string",
+          enum: [PotionType.Heal, PotionType.Poison, PotionType.None],
         },
-        description: "女巫用药参数。",
-        required: ["target_id", "potion_type"],
-        additionalProperties: false,
       },
+      required: ["target_id", "potion_type"],
+      additionalProperties: false,
     },
     argHint: `use_potion args: {"target_id":number,"potion_type":"${PotionType.Heal}"|"${PotionType.Poison}"|"${PotionType.None}"}`,
-    gatewaySchema: usePotionSchema,
   },
 ];
 

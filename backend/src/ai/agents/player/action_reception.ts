@@ -44,7 +44,7 @@ export class ActionReception {
     rules: ToolValidationRuleRegistry = getDefaultToolValidationRuleRegistry(),
   ) {
     // Preflight must not create a second domain validation operation in the Tape.
-    this.gateway = new ToolGateway(new ActionValidator(rules, false), specs);
+    this.gateway = new ToolGateway(new ActionValidator(rules, false));
   }
 
   validate(request: ActionRequest, name: string, rawArgs: unknown): Validation {
@@ -59,13 +59,13 @@ export class ActionReception {
     }
     let schema = this.schemas.get(tool);
     if (!schema) {
-      schema = z.fromJSONSchema(spec.llm.parameters);
+      schema = z.fromJSONSchema(spec.parameters);
       this.schemas.set(tool, schema);
     }
     // Preserve the existing numeric-string repair, but never coerce booleans or
     // text by truthiness/String(), and never invent missing required arguments.
     const input = { ...rawArgs } as Record<string, unknown>;
-    const properties = spec.llm.parameters.properties as
+    const properties = spec.parameters.properties as
       Record<string, { type?: string | string[] }> | undefined;
     for (const [key, value] of Object.entries(input)) {
       const type = properties?.[key]?.type;

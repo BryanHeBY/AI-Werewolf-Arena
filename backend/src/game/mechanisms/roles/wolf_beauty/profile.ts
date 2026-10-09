@@ -43,16 +43,11 @@ export const WOLF_BEAUTY_ROLE_PROFILE: RoleProfile = {
     ...WOLF_ROLE_PROFILE.toolSpecs!.filter((spec) => spec.name !== "self_destruct"),
     {
       name: "charm",
-      llm: {
-        name: "charm",
-        description:
-          "Privately choose another living charm target for this night, or null to skip.",
-        parameters: {
-          type: "object",
-          properties: { target_id: { type: ["number", "null"] } },
-          required: ["target_id"],
-          additionalProperties: false,
-        },
+      parameters: {
+        type: "object",
+        properties: { target_id: { type: ["number", "null"] } },
+        required: ["target_id"],
+        additionalProperties: false,
       },
       argHint: 'charm args: {"target_id":number|null}',
       userPromptHintKey: "action.charm.hint",

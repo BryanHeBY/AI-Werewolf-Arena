@@ -22,3 +22,9 @@
 机器工具名/schema与面向人的描述/提示分别维护；中英描述来自显式locale，不修改稳定enum/key/参数类型。旧tool_specs或contributor只有确认无消费者、检查包导出/测试及兼容用途后可移除；活动迁移parser保留在独立路径。原始名字、人设、发言不自动翻译。
 
 回归覆盖请求前撤权、await中撤权、原生命死亡/复活、资源耗尽、来源撤换、DTO未知字段/非法history、双语工具schema等价及特殊实例授权。
+
+## 机器schema收口（main继续实施）
+
+旧ToolSpec.llm描述包装和gatewaySchema副本已移除。ActionReception直接消费ToolSpec.parameters；48个规格贡献的type/enum/required/additionalProperties等机器约束与旧值完全相同，只删除description注释。活动SDK/ACP统一协议与共享locale提示保持原接口。四旧角色26条、通用/警长23条独立中文描述同时退出源码例外表；getLlmSchema、无消费者getMany及旧gateway schema注册/查询去除。机器工具名及argHint不变。
+
+新增实际preflight回归为旧llm/gatewaySchema放置抛错getter：合法数字字符串仍归一化，错误布尔/额外字段仍拒绝，不读取旧metadata也不修改World。其他legacy contributor/角色视图清理在独立切片继续，不能把本切片宣称全部prompt与规则配置完成。

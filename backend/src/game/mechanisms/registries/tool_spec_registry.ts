@@ -48,12 +48,6 @@ export class ToolSpecRegistry {
     return this.specByName.get(name);
   }
 
-  getMany(names: ToolName[]): ToolSpec[] {
-    return names
-      .map((name) => this.specByName.get(name))
-      .filter((item): item is ToolSpec => Boolean(item));
-  }
-
   getArgHint(name: ToolName): string | null {
     return this.specByName.get(name)?.argHint ?? null;
   }
@@ -64,20 +58,6 @@ export class ToolSpecRegistry {
       spec?.userPromptHint ??
       (spec?.userPromptHintKey ? text(locale, spec.userPromptHintKey) : null)
     );
-  }
-
-  getLlmSchema(name: ToolName): ToolSpec["llm"] | null {
-    return this.specByName.get(name)?.llm ?? null;
-  }
-
-  getGatewaySchemas(): Array<{ name: ToolName; schema: unknown }> {
-    const out: Array<{ name: ToolName; schema: unknown }> = [];
-    for (const spec of this.specByName.values()) {
-      if (spec.gatewaySchema !== undefined) {
-        out.push({ name: spec.name, schema: spec.gatewaySchema });
-      }
-    }
-    return out;
   }
 
   getStageDirective(allowedTools: ToolName[], locale: Locale = "zh-CN"): string | null {
