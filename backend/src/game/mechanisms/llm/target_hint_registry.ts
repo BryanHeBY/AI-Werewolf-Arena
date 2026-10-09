@@ -1,3 +1,4 @@
+import { seerTargetAllowed } from "../roles/seer/target_policy";
 import { guardTargetRepeated } from "../roles/guard/repeat_policy";
 import { text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：按工具与角色策略生成 target_id 可行动编号提示。 */
@@ -102,6 +103,8 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
         ability.state.heal > 0
       )
         return true;
+      if (ability.kind === "seer_check" && !seerTargetAllowed(ability.state, ctx.actorId, id))
+        return false;
       if (ability.kind === "guard" && guardTargetRepeated(ability, ctx.day ?? 1, id)) return false;
       return luckyTargetAllowed(
         ctx.world,

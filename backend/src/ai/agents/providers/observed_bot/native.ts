@@ -32,10 +32,17 @@ export const check_identity: ObservedToolHandler = (context) => {
   )
     return null;
   const checked = ownState.seer?.history.map((entry) => entry.targetId) ?? [];
-  const permitted = others.filter((id) => allowed("check", id));
+  const seer = bound?.kind === "seer_check" ? bound.state : ownState.seer;
+  const permitted = others.filter(
+    (id) =>
+      allowed("check", id) &&
+      (seer?.targetPolicy !== "awa_fresh_others_v1" ||
+        !seer.history.some((row) => row.targetId === id)),
+  );
   const fresh = permitted.filter((id) => !checked.includes(id));
   const target = pick(fresh.length ? fresh : permitted);
   if (target !== undefined) return { name: "check_identity", args: { target_id: target } };
+  if (seer?.targetPolicy === "awa_fresh_others_v1") return null;
 };
 
 export const inspect_role: ObservedToolHandler = (context) => {

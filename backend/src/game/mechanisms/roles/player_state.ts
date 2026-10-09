@@ -36,6 +36,8 @@ export interface PlayerBearState {
   history: Array<{ day: number; roared: boolean }>;
 }
 export interface PlayerSeerState {
+  targetPolicy?: import("../../../core/domain/board").SeerTargetPolicy;
+  actionPolicy?: import("../../../core/domain/board").SeerActionPolicy;
   lastTarget: number | null;
   lastIsWerewolf: boolean | null;
   lastResult?: InspectionResult | null;
@@ -156,9 +158,17 @@ export function projectBearState(state: unknown): PlayerBearState {
   };
 }
 export function projectSeerState(state: unknown): PlayerSeerState {
+  const targetPolicy = playerDataField(state, "targetPolicy"),
+    actionPolicy = playerDataField(state, "actionPolicy");
   const lastIsWerewolf = playerDataField(state, "lastIsWerewolf"),
     lastResult = playerDataField(state, "lastResult");
   return {
+    ...(targetPolicy === "awa_alive_v1" || targetPolicy === "awa_fresh_others_v1"
+      ? { targetPolicy }
+      : {}),
+    ...(actionPolicy === "awa_optional_v1" || actionPolicy === "awa_required_when_legal_v1"
+      ? { actionPolicy }
+      : {}),
     lastTarget: positiveOrNull(playerDataField(state, "lastTarget")),
     lastIsWerewolf: typeof lastIsWerewolf === "boolean" ? lastIsWerewolf : null,
     ...(lastResult === undefined

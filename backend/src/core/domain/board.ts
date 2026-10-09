@@ -44,6 +44,11 @@ export const HIDDEN_WOLF_CAMP_INSPECTION_POLICIES = [
 ] as const;
 export type HiddenWolfCampInspectionPolicy = (typeof HIDDEN_WOLF_CAMP_INSPECTION_POLICIES)[number];
 
+export const SEER_TARGET_POLICIES = ["awa_alive_v1", "awa_fresh_others_v1"] as const;
+export type SeerTargetPolicy = (typeof SEER_TARGET_POLICIES)[number];
+export const SEER_ACTION_POLICIES = ["awa_optional_v1", "awa_required_when_legal_v1"] as const;
+export type SeerActionPolicy = (typeof SEER_ACTION_POLICIES)[number];
+
 export interface BoardConfig {
   boardSize: number;
   enableSheriff: boolean;
@@ -54,6 +59,7 @@ export interface BoardConfig {
   selfDestruct?: SelfDestructConfig;
   sheriff?: SheriffConfig;
   witch?: WitchConfig;
+  seer?: { targetPolicy: SeerTargetPolicy; actionPolicy: SeerActionPolicy };
   guard?: { repeatPolicy: GuardRepeatPolicy };
   hiddenWolf?: { campInspection: HiddenWolfCampInspectionPolicy };
   knight?: { enabledWindows: KnightDuelWindow[] };

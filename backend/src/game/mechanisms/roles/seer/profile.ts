@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { SEER_TARGET_POLICIES, SEER_ACTION_POLICIES } from "../../../../core/domain/board";
+import { seerTargetAllowed } from "./target_policy";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text, term, inspectionLabel } from "@ai-werewolf-arena/game-text";
 /** 文件说明：预言家角色 profile。 */
@@ -11,6 +14,10 @@ import { isAliveTarget } from "../../validation/contracts";
 import { activeNightAbility } from "../abilities";
 import { luckyTargetAllowed } from "../night_action_history";
 
+const parameters = z.strictObject({
+  targetPolicy: z.enum(SEER_TARGET_POLICIES).default("awa_alive_v1"),
+  actionPolicy: z.enum(SEER_ACTION_POLICIES).default("awa_required_when_legal_v1"),
+});
 /** 预言家角色配置。 */
 export const SEER_ROLE_PROFILE: RoleProfile = {
   role: Role.Seer,
@@ -18,12 +25,24 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
   label: roleName("seer"),
   skillBrief: text("zh-CN", "role.seer.brief"),
   goodSide: "god",
-  init: (roleComp) => {
+  configuration: {
+    schema: parameters,
+    defaults: { targetPolicy: "awa_alive_v1", actionPolicy: "awa_optional_v1" },
+    apply: (config, value) => ({ ...config, seer: parameters.parse(value) }),
+    serialize: (config) => parameters.parse(config.seer ?? {}),
+  },
+  init: (roleComp, ctx) => {
     setSeerState(roleComp, {
       lastTarget: null,
       lastIsWerewolf: null,
       lastResult: null,
       history: [],
+      ...(ctx.boardConfig?.seer?.targetPolicy === "awa_fresh_others_v1"
+        ? { targetPolicy: ctx.boardConfig.seer.targetPolicy }
+        : {}),
+      ...(ctx.boardConfig?.seer?.actionPolicy === "awa_optional_v1"
+        ? { actionPolicy: ctx.boardConfig.seer.actionPolicy }
+        : {}),
     });
   },
   renderPrompt: (roleComp, locale = "zh-CN") => {
@@ -32,7 +51,24 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
       state && state.lastTarget !== null && (state.lastResult || state.lastIsWerewolf !== null)
         ? ` ${state.lastResult ? text(locale, "inspection.latest", { target: state.lastTarget, result: inspectionLabel(state.lastResult, locale) }) : text(locale, "role.seer.latest", { target: state.lastTarget, camp: term("camp", state.lastIsWerewolf ? "wolf" : "good", locale) })}`
         : "";
-    return text(locale, "role.seer.state") + latest;
+    return (
+      text(locale, "role.seer.state") +
+      latest +
+      " " +
+      text(
+        locale,
+        state?.targetPolicy === "awa_fresh_others_v1"
+          ? "role.seer.targets_fresh"
+          : "role.seer.targets_alive",
+      ) +
+      " " +
+      text(
+        locale,
+        state?.actionPolicy !== "awa_optional_v1"
+          ? "role.seer.action_required"
+          : "role.seer.action_optional",
+      )
+    );
   },
   toolSpecs: SEER_TOOL_SPECS,
   validationRules: {
@@ -42,6 +78,8 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
       if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
       if (toolCall.name !== "check_identity") return { code: RuleError.ToolMismatch };
       if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.CheckTarget };
+      if (!seerTargetAllowed(ability.state, actorId, toolCall.args.target_id))
+        return { code: RuleError.SeerTargetPolicy };
       if (!luckyTargetAllowed(world, actorId, ability, day ?? 1, "check", toolCall.args.target_id))
         return { code: RuleError.LuckyTargetRepeat };
       return null;
@@ -73,6 +111,7 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
             .find(
               (id) =>
                 id !== request.actorId &&
+                seerTargetAllowed(ability.state, request.actorId, id) &&
                 luckyTargetAllowed(
                   world,
                   request.actorId,

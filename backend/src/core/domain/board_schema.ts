@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { GUARD_REPEAT_POLICIES, HIDDEN_WOLF_CAMP_INSPECTION_POLICIES } from "./board";
+import {
+  GUARD_REPEAT_POLICIES,
+  HIDDEN_WOLF_CAMP_INSPECTION_POLICIES,
+  SEER_TARGET_POLICIES,
+  SEER_ACTION_POLICIES,
+} from "./board";
 import { ActionWindow, KnightDuelWindow, Role, WinCondition, WitchSelfHealRule } from "./identity";
 
 const positive = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
@@ -26,6 +31,12 @@ export const boardConfigSchema = z.strictObject({
   guard: z.strictObject({ repeatPolicy: z.enum(GUARD_REPEAT_POLICIES) }).optional(),
   hiddenWolf: z
     .strictObject({ campInspection: z.enum(HIDDEN_WOLF_CAMP_INSPECTION_POLICIES) })
+    .optional(),
+  seer: z
+    .strictObject({
+      targetPolicy: z.enum(SEER_TARGET_POLICIES),
+      actionPolicy: z.enum(SEER_ACTION_POLICIES),
+    })
     .optional(),
   witch: z.strictObject({ canSelfHeal: z.enum(WitchSelfHealRule).optional() }).optional(),
   tieBreaker: z

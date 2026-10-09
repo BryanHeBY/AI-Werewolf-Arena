@@ -101,3 +101,14 @@ test("reverse writing and Tape reject the same unknown nested configuration fiel
   expect(() => boardDefinitionFromConfig("closure_test", config)).toThrow("config.witch.unused");
   expect(() => trace(config)).toThrow("reproduction_record_invalid");
 });
+
+for (const targetPolicy of ["awa_alive_v1", "awa_fresh_others_v1"] as const)
+  for (const actionPolicy of ["awa_optional_v1", "awa_required_when_legal_v1"] as const)
+    test(`${targetPolicy}/${actionPolicy}: Seer policy identity survives JSON Tape and checkpoint restoration`, () => {
+      const raw: BoardConfig = { ...sixPlayerMvpConfig, seer: { targetPolicy, actionPolicy } };
+      const config = parseBoardDefinition(boardDefinitionFromConfig("seer_policy", raw)).config;
+      const record = parseReproductionRecord(JSON.parse(JSON.stringify(trace(config))));
+      expect(record.metadata.normalizedBoard.seer).toEqual({ targetPolicy, actionPolicy });
+      const restored = trace(record.metadata.normalizedBoard);
+      expect(restored.checkpoints).toEqual(trace(config).checkpoints);
+    });

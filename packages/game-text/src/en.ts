@@ -483,6 +483,15 @@ export const en = Object.freeze({
   "error.death_action_unavailable": "Invalid action: this death-action window is not open for you",
   "error.vote_target": "Invalid action: vote target must be alive and eligible for exile",
   "error.seer_only": "Invalid action: no effective alignment-inspection ability is available",
+  "error.seer_target_policy":
+    "This inspection policy permits only previously unchecked living players other than yourself",
+  "role.seer.targets_alive":
+    "AWA living-target policy: self-inspection and repeat inspection are legal.",
+  "role.seer.targets_fresh":
+    "AWA fresh-target policy: inspect only previously unchecked living players other than yourself; history never resets.",
+  "role.seer.action_required":
+    "An inspection is required while a legal target exists; skip when targets are exhausted.",
+  "role.seer.action_optional": "Inspection is optional.",
   "error.check_target": "Invalid action: inspection target must be alive",
   "error.guard_only": "Invalid action: no effective protection ability is available",
   "error.guard_target": "Invalid action: protection target must be alive",

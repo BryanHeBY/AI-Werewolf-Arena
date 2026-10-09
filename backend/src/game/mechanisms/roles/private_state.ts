@@ -92,6 +92,8 @@ export interface IdiotState {
 
 /** 预言家私有状态。 */
 export interface SeerState {
+  targetPolicy?: import("../../../core/domain/board").SeerTargetPolicy;
+  actionPolicy?: import("../../../core/domain/board").SeerActionPolicy;
   lastTarget: EntityId | null;
   lastIsWerewolf: boolean | null;
   lastResult?: InspectionResult | null;

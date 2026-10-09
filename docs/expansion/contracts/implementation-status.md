@@ -55,3 +55,5 @@ Remotion当前版本在默认未静音的Player中会创建AudioContext并等待
 Legacy清理切片：23角色派生权限前后逐项相等；删除三个无人调用的文本contributor、RoleViewRegistry、重复RoleSpecRegistry及死WinCondition描述。活动RoleCatalog的自定义label/skillBrief/renderPrompt仍有真实消费者，TextLocalizationRegistry仍用于事件展示，保留。源码/全部测试类型、依赖/导入/i18n门禁、后端构建和73项/1067断言定向回归通过；i18n例外仅余4条兼容阶段别名及原生语言名。此后继续ObservedBot和provider拆分，整个原范围仍未完成。
 
 ObservedBot/provider切片：ObservedBot只持有玩家RNG与样式，handler仅消费PlayerObservation；3,780组样式/日期/席位/资源/单或多工具输入的动作及随机数次数与此前一致。35条LLM、5条ACP原测试AST逐条一致；LLM由1635行拆为协议/回退/提示/审计文件，ACP拆开turn registry/MCP control/provider。全部类型、依赖/边界/i18n、构建与48项/295断言离线回归通过。日志`/tmp/arena-provider-split-{final-types,tests,build}.log`。剩余角色规则配置及完整警徽/投票/PK流程继续实施，历史全量门禁尚待全部源改动结束后重跑。
+
+Seer策略切片：增加targetPolicy（活人默认/从未验过的其他活人）与actionPolicy（存在合法目标必行动默认/可跳过）两个版本化AWA产品枚举。查无目标跳过、await后历史变动拒绝，无隐式历史重置；所有四组合严格JSON Tape往返/恢复。80项/1382断言定向回归及类型/lint/构建通过，原请求默认min_valid_actions=1保留，纠正文档旧描述。尚待女巫信息/用药与完整警徽/投票/PK等范围。

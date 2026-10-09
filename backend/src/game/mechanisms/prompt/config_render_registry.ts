@@ -72,6 +72,22 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
             ),
           ]
         : []),
+      ...(config.roleSetups.some((entry) => entry.role === Role.Seer && entry.count > 0)
+        ? [
+            text(
+              locale,
+              config.seer?.targetPolicy === "awa_fresh_others_v1"
+                ? "role.seer.targets_fresh"
+                : "role.seer.targets_alive",
+            ),
+            text(
+              locale,
+              config.seer?.actionPolicy !== "awa_optional_v1"
+                ? "role.seer.action_required"
+                : "role.seer.action_optional",
+            ),
+          ]
+        : []),
       text(locale, "prompt.config.disclosure"),
       text(locale, "prompt.config.last_words"),
       ...(config.roleSetups.some((entry) => entry.role === Role.Knight && entry.count > 0)

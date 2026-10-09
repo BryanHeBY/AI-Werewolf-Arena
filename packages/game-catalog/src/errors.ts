@@ -11,6 +11,7 @@ export enum RuleError {
   BlastPhase = "blast_phase",
   BlastWindow = "blast_window",
   CheckTarget = "check_target",
+  SeerTargetPolicy = "seer_target_policy",
   CustomRuleError = "custom_rule_error",
   GuardOnly = "guard_only",
   GuardRepeat = "guard_repeat",

@@ -1,4 +1,5 @@
 /** 文件说明：预言家夜间查验阶段处理。 */
+import { seerTargetAllowed } from "./target_policy";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Phase, Role } from "../../../../core/domain/model";
@@ -42,9 +43,18 @@ const seerCheckStage: NightStageHandler = {
         ) !== ability
       )
         continue;
+      const legalTargets = ctx.world
+        .getAliveEntityIds()
+        .filter(
+          (id) =>
+            seerTargetAllowed(ability.state, seerId, id) &&
+            luckyTargetAllowed(ctx.world, seerId, ability, day, "check", id),
+        );
+      if (!legalTargets.length) continue;
       const req = ctx.makeRequest(seerId, ["check_identity"], {
         stage: "seer",
         ability_id: ability.id,
+        requiresAction: ability.state.actionPolicy !== "awa_optional_v1",
       });
       if (!scope.isEligible()) continue;
       const action = await ctx.actionProvider.getAction(req);
@@ -73,6 +83,7 @@ const seerCheckStage: NightStageHandler = {
       if (
         !scope.isEligible() ||
         !livingNightLife(ctx.world, target) ||
+        !seerTargetAllowed(ability.state, seerId, targetId) ||
         !luckyTargetAllowed(ctx.world, seerId, ability, day, "check", targetId)
       )
         continue;
