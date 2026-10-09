@@ -53,7 +53,7 @@ for (const kind of ["llm", "acp"] as const) {
     const provider = kind === "llm" ? new LlmActionProvider(world, client, { personalityPromptResolver }) : new AcpActionProvider(world, { sessionFactory: factory, personalityPromptResolver });
     try {
       for (const actorId of [1, 2, 3, 4, 5]) {
-        const action = await provider.getAction({ actorId, phase: Phase.Day, allowedTools: ["speak"], context: { day: 1, stage: "day_speech", visible_events: [] } });
+        const action = await provider.getAction({ actorId, phase: Phase.Day, allowedTools: ["speak"], context: { day: 1, stage: "day_speech", visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } });
         expect(action?.name).toBe("speak");
       }
       expect(prompts.get(1)).toContain("Player One");

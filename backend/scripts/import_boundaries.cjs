@@ -8,10 +8,12 @@ const boundaries = [
   { layer: "recording", forbidden: ["app", "ai", "runtime", "game", "audit", "replay"] },
 ];
 
+/** @param {string} file @param {string} directory */
 function within(file, directory) {
   return file === directory || file.startsWith(`${directory}/`);
 }
 
+/** @param {string} rootDir @param {string} filePath @param {string} specifier */
 function importBoundaryViolation(rootDir, filePath, specifier) {
   if (!specifier.startsWith(".") && !path.isAbsolute(specifier)) return null;
   const source = path.relative(rootDir, filePath).replace(/\\/g, "/");

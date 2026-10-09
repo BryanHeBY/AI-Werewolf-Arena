@@ -26,14 +26,14 @@ for (const locale of ["zh-CN", "en"] as const) for (const kind of ["faction", "i
   const manifest = JSON.parse(await readFile(path.join(manager.sessionDir, "manifest.json"), "utf8")), replay = readReplayDocument(JSON.parse(await readFile(path.join(manager.sessionDir, "replay.json"), "utf8")));
   expect(manifest.game_result).toEqual(original); expect(manifest.finish_reason).toBe("runtime_error");
   expect(replay.result).toEqual({ winner: original.winner, reason: "runtime_error", decision: original });
-  expect(replay.events[0].payload).toEqual(original);
+  expect(replay.events[0].payload).toEqual({ ...original });
   const label = outcomeLabel(original.outcome, locale), winners = outcomeWinnersLabel(original.outcome, locale), point = victoryPointLabel(original.decidedAt, locale);
   const rendered = getDefaultScriptEventRenderRegistry().toLiveRender({ type: "game_over", timestamp: 1, payload: original }, false, locale).map(item => item.text).join(" ");
   expect(rendered).toContain(label); expect(rendered).toContain(winners); expect(rendered).toContain(point);
   const audit = auditSummaryHeader(summary.manifest, [], locale).join("\n"); expect(audit).toContain(label); expect(audit).toContain(winners);
   if (kind === "individual" || kind === "relationship" || kind === "multiple") expect(label).not.toBe(locale === "en" ? "No winner" : "无获胜方");
   if (original.outcome.kind === "victory") original.outcome.winningPlayerIds.length = 0;
-  expect(replay.result.decision).toEqual(result); // Detached from other copies.
+  expect(replay.result.decision).toEqual({ ...result }); // Detached from other copies.
 });
 
 test("public result validation rejects projections, unknown winners, malformed explicit decisions and accessors; old archives stay without inferred members", () => {
@@ -50,7 +50,7 @@ test("public result validation rejects projections, unknown winners, malformed e
   const old = { ...good, schemaVersion: 1, result: { winner: "好人", reason: "狼人全灭" } };
   const preserved = readReplayDocument(old); expect(preserved.result).not.toHaveProperty("decision"); expect(preserved.result.winner).toBe("good");
   expect(old.result.winner).toBe("好人");
-  expect(readVictoryResult(result, [1, 2, 3, 4, 5, 6])).toEqual(result);
+  expect(readVictoryResult(result, [1, 2, 3, 4, 5, 6])).toEqual({ ...result });
 });
 
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: a decidedAt-only malformed explicit terminal fact stays unknown in console rather than becoming a faction win`, () => {

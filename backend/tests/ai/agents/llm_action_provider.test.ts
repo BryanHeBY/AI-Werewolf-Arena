@@ -1,3 +1,4 @@
+import { PotionType } from "../../../src/core";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { RoleComponent } from "../../../src/core/domain/components/role";
@@ -191,15 +192,15 @@ class InvalidPotionThenNoneToolLoopClient {
     const invalid = await callbacks.onToolCall({
       id: "tool_heal_1",
       name: "use_potion",
-      args: { target_id: this.targetId, potion_type: "heal" },
-      rawArgs: JSON.stringify({ target_id: this.targetId, potion_type: "heal" }),
+      args: { target_id: this.targetId, potion_type: PotionType.Heal },
+      rawArgs: JSON.stringify({ target_id: this.targetId, potion_type: PotionType.Heal }),
     });
     this.invalidPotionResult = invalid.toolResult;
     const valid = await callbacks.onToolCall({
       id: "tool_none_1",
       name: "use_potion",
-      args: { target_id: this.targetId, potion_type: "none" },
-      rawArgs: JSON.stringify({ target_id: this.targetId, potion_type: "none" }),
+      args: { target_id: this.targetId, potion_type: PotionType.None },
+      rawArgs: JSON.stringify({ target_id: this.targetId, potion_type: PotionType.None }),
     });
     return {
       finalAction: (valid.finalAction ?? null) as T | null,
@@ -412,7 +413,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -435,7 +436,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Voting,
       actorId: 1,
       allowedTools: ["vote"],
-      context: {},
+      context: {day: 1, stage: "voting", visible_events: [], turn_constraints: {}},
     });
 
     expect(action).toEqual({
@@ -459,7 +460,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: seerId,
       allowedTools: ["check_identity"],
-      context: {},
+      context: {day: 1, stage: "seer", visible_events: [], turn_constraints: {}},
     });
 
     expect(action).toEqual({
@@ -486,7 +487,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -509,7 +510,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {},
+      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: {}},
     });
 
     expect(action?.name).toBe("speak");
@@ -530,7 +531,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 6,
       allowedTools: ["speak"],
-      context: {},
+      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: {}},
     });
 
     expect(action?.name).toBe("speak");
@@ -558,7 +559,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: wolfId,
       allowedTools: ["self_destruct"],
-      context: {},
+      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: {}},
     });
 
     expect(action).toBeNull();
@@ -587,7 +588,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {visible_events: [], day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     }));
 
     expect(action).toEqual({
@@ -646,7 +647,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {visible_events: [], day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     }));
     expect(action).toEqual({
       name: "speak",
@@ -724,7 +725,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: seerId,
       allowedTools: ["speak"],
-      context: {},
+      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: {}},
     });
 
     expect(action).toEqual({
@@ -750,7 +751,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -781,7 +782,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 2,
       allowedTools: ["speak"],
-      context: {
+      context: {day: 1, stage: "day_speech",
         turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
         visible_events: [{ seq: 1, type: "day_speech", payload: { actorId: 1, text: "我是1号，我是狼人" } }],
       },
@@ -838,7 +839,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {day: 1, visible_events: [], stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -877,7 +878,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: wolfId,
       allowedTools: ["kill_vote"],
-      context: { stage: "wolf_vote", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {day: 1, visible_events: [], stage: "wolf_vote", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -897,7 +898,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -918,7 +919,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     })).resolves.toEqual({
       name: "speak",
       args: { text: "通过统一协议发言" },
@@ -939,7 +940,7 @@ describe("LlmActionProvider", () => {
       async runToolLoop<T>(_messages: unknown, _tools: unknown, callbacks: any) {
         const submit = (turnId: string) => callbacks.onToolCall({
           id: `call-${turnId}`, name: "submit_action", rawArgs: "{}",
-          args: { turn_id: turnId, action: "use_potion", arguments: { target_id: witchId, potion_type: "none" } },
+          args: { turn_id: turnId, action: "use_potion", arguments: { target_id: witchId, potion_type: PotionType.None } },
         });
         const rejected = await submit("t2");
         expect(rejected.toolResult).toMatchObject({
@@ -954,8 +955,8 @@ describe("LlmActionProvider", () => {
     const provider = new LlmActionProvider(context.world, client, { fallbackProvider: new FallbackProvider(null) });
     await expect(runWithSessionRecorder(recorder, () => provider.getAction({
       phase: Phase.Night, actorId: witchId, allowedTools: ["use_potion"],
-      context: { day: 1, stage: "witch", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
-    }))).resolves.toEqual({ name: "use_potion", args: { target_id: witchId, potion_type: "none" } });
+      context: {visible_events: [], day: 1, stage: "witch", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+    }))).resolves.toEqual({ name: "use_potion", args: { target_id: witchId, potion_type: PotionType.None } });
     await recorder.flushNow();
     const logic = JSON.parse(await fs.readFile(path.join(recorder.sessionDir, "logic_ops.json"), "utf8"));
     expect(logic.ops).toContainEqual(expect.objectContaining({
@@ -984,7 +985,7 @@ describe("LlmActionProvider", () => {
           message = { role: "assistant", content: null, tool_calls: [{
             id: "corrected-action", type: "function", function: {
               name: "submit_action", arguments: JSON.stringify({
-                turn_id: turnId, action: "use_potion", arguments: { target_id: witchId, potion_type: "none" },
+                turn_id: turnId, action: "use_potion", arguments: { target_id: witchId, potion_type: PotionType.None },
               }),
             },
           }] };
@@ -1002,8 +1003,8 @@ describe("LlmActionProvider", () => {
       }), { llmTimeoutMs: 5000, fallbackProvider: new FallbackProvider(null) });
       await expect(provider.getAction({
         phase: Phase.Night, actorId: witchId, allowedTools: ["use_potion"],
-        context: { day: 1, stage: "witch", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
-      })).resolves.toEqual({ name: "use_potion", args: { target_id: witchId, potion_type: "none" } });
+        context: {visible_events: [], day: 1, stage: "witch", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      })).resolves.toEqual({ name: "use_potion", args: { target_id: witchId, potion_type: PotionType.None } });
       expect(requests).toBe(2);
     } finally { server.stop(true); }
   });
@@ -1019,7 +1020,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {
+      context: {day: 1, stage: "day_speech",
         turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
         visible_events: [{ seq: 1, type: "phase_changed", payload: { day: 1, phase: "day" } }],
       },
@@ -1029,7 +1030,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {
+      context: {day: 1, stage: "day_speech",
         turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
         visible_events: [
           { seq: 1, type: "phase_changed", payload: { day: 1, phase: "day" } },
@@ -1062,7 +1063,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
+      context: {day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
     });
 
     expect(action).toEqual({
@@ -1082,7 +1083,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(client.lastToolNames).toEqual([
@@ -1104,7 +1105,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {},
+      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: {}},
     });
 
     expect(client.lastToolNames).toEqual([
@@ -1126,7 +1127,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Voting,
       actorId: 1,
       allowedTools: ["vote"],
-      context: {},
+      context: {day: 1, stage: "voting", visible_events: [], turn_constraints: {}},
     });
 
     expect(client.lastToolNames).toEqual([
@@ -1176,7 +1177,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: 1,
       allowedTools: ["speak_to_wolves"],
-      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {day: 1, stage: "wolf_discussion", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
   });
 
@@ -1199,12 +1200,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: witchId,
       allowedTools: ["use_potion"],
-      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
+      context: {day: 1, stage: "witch", turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
     });
 
     expect(action).toEqual({
       name: "use_potion",
-      args: { target_id: witchId, potion_type: "none" },
+      args: { target_id: witchId, potion_type: PotionType.None },
     });
   });
 
@@ -1223,7 +1224,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: wolfId,
       allowedTools: ["kill_vote"],
-      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {day: 1, stage: "wolf_vote", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
@@ -1249,7 +1250,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
+      context: {day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
     });
 
     expect(action).toEqual({
@@ -1284,12 +1285,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: witchId,
       allowedTools: ["use_potion"],
-      context: { stage: "witch", wolf_target: 3, visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {day: 1, stage: "witch", wolf_target: 3, visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
       name: "use_potion",
-      args: { target_id: witchId, potion_type: "none" },
+      args: { target_id: witchId, potion_type: PotionType.None },
     });
   });
 
@@ -1310,12 +1311,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: witchId,
       allowedTools: ["use_potion"],
-      context: { stage: "witch", wolf_target: targetId, turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {day: 1, visible_events: [], stage: "witch", wolf_target: targetId, turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
     });
 
     expect(action).toEqual({
       name: "use_potion",
-      args: { target_id: targetId, potion_type: "none" },
+      args: { target_id: targetId, potion_type: PotionType.None },
     });
     expect(client.invalidPotionResult).toEqual({ ok: false, error: "heal_unavailable", message: "非法操作，解药不可用" });
     const user = client.lastMessages.find((message) => message.role === "user")?.content ?? "";
@@ -1349,7 +1350,7 @@ describe("LlmActionProvider", () => {
       actionWindow: ActionWindow.OnPreVote,
       actorId: wolfId,
       allowedTools: ["self_destruct"],
-      context: { stage: "on_pre_vote" },
+      context: {day: 1, visible_events: [], turn_constraints: {}, stage: ActionWindow.OnPreVote },
     });
 
     expect(action).toEqual({
@@ -1372,7 +1373,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Voting,
       actorId: wolfId,
       allowedTools: ["self_destruct"],
-      context: { stage: "on_pre_vote" },
+      context: {day: 1, visible_events: [], turn_constraints: {}, stage: ActionWindow.OnPreVote },
     });
 
     expect(action).toBeNull();
@@ -1402,7 +1403,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
+      context: {day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
     });
   });
 
@@ -1414,7 +1415,7 @@ describe("LlmActionProvider", () => {
     });
     await provider.getAction({
       actorId: 1, phase: Phase.Day, allowedTools: ["speak"],
-      context: { day: 1, stage: "day_speech", visible_events: [] },
+      context: {turn_constraints: {}, day: 1, stage: "day_speech", visible_events: [] },
     });
     const system = client.lastMessages.find(message => message.role === "system")?.content;
     expect(system).toContain("你的性格与发言风格要求：先总结事实，再提出问题。");
@@ -1441,13 +1442,13 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["run_for_sheriff"],
-      context: { day: 1, stage: "sheriff_nomination", visible_events: [] },
+      context: {turn_constraints: {}, day: 1, stage: "sheriff_nomination", visible_events: [] },
     });
     await provider.getAction({
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["run_for_sheriff"],
-      context: { day: 1, stage: "sheriff_withdraw", visible_events: [] },
+      context: {turn_constraints: {}, day: 1, stage: "sheriff_withdraw", visible_events: [] },
     });
 
     expect(observedPrompts[0]).toContain("这是上警报名阶段，不是退水阶段");
@@ -1466,7 +1467,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
+      context: {day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
     });
 
     const system = client.lastMessages.find((message) => message.role === "system")?.content ?? "";

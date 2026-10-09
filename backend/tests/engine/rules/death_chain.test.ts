@@ -76,7 +76,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: concurrent defau
   const events = game.phaseManager.getEvents();
   expect(events.filter(event => event.type === "wolf_self_destruct").map(event => event.payload.wolfId)).toEqual([1, 2]);
   expect(events.filter(event => event.type === "sheriff_badge_transferred").map(event => event.payload)).toEqual([{ fromId: 1, toId: 2, reason: "self_destruct" }, { fromId: 2, toId: 3, reason: "self_destruct" }]);
-  const finalBadge = events.findLastIndex(event => event.type === "sheriff_badge_transferred"); expect(finalBadge).toBeLessThan(events.findIndex(event => event.type === "game_over"));
+  const finalBadge = events.reduce((last, event, index) => event.type === "sheriff_badge_transferred" ? index : last, -1); expect(finalBadge).toBeLessThan(events.findIndex(event => event.type === "game_over"));
 });
 
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: the same life is settled once; revival allows a new death and cyclic proposals terminate`, async () => {
@@ -120,6 +120,6 @@ test("a later hook failure keeps a completed gun death, original error and close
   expect(result).toBe(error); expect(world.activeDeathActionCount).toBe(0);
   expect(events.filter(event => event.type === "hunter_shot").map(event => event.payload)).toEqual([{ hunterId: 2, targetId: 4 }]);
   expect(world.getComponent<{ alive: boolean }>(4, COMPONENT.Alive)!.alive).toBe(false);
-  expect(getHunterState(world.getComponent<RoleComponent>(2, COMPONENT.Role))!.canShoot).toBe(false);
+  expect(getHunterState(world.getComponent<RoleComponent>(2, COMPONENT.Role)!)!.canShoot).toBe(false);
   expect(afterError).toBe(0);
 });

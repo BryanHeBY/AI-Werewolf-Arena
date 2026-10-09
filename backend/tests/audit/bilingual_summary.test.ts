@@ -34,7 +34,7 @@ test("deterministic findings and observations remain machine facts while rendere
   const views: ReplayPlayerView[] = [{ player_id: 1, role: "witch", camp: "good", timeline: [{ seq: 8, kind: "turn", day: 0, phase: "Day", stage: "day_speech", request_id: "1-night-1-1", turn_seq: 1, delta_messages: [] }] }];
   const input: BuildDebugSummaryInput = { manifest: { ...manifest, players: [{ player_id: 1, role: "witch", camp: "good", alive: true }] }, reports: [], playerViews: views,
     publicEvents: [event(1, "wolf_self_destruct", { wolfId: 2 }), event(2, "day_speech", { playerId: 1, text: "I used the antidote and I claim Guard." })] };
-  const expected = [{ code: "first_day_blast", actorId: 2, evidence: [1] }, { code: "guard_mention", actorId: 1, evidence: [2] }, { code: "potion_claim", actorId: 1, evidence: [2] }];
+  const expected: Array<Pick<ReturnType<typeof scanEventsForPotentialIssues>[number], "code" | "actorId" | "evidence">> = [{ code: "first_day_blast", actorId: 2, evidence: [1] }, { code: "guard_mention", actorId: 1, evidence: [2] }, { code: "potion_claim", actorId: 1, evidence: [2] }];
   expect(scanEventsForPotentialIssues(input).map(({ code, actorId, evidence }) => ({ code, actorId, evidence }))).toEqual(expected);
   expect(scanPlayerTimelineMetadataIssues(views).map(({ code, evidence }) => ({ code, evidence }))).toEqual([{ code: "invalid_day", evidence: [8] }, { code: "request_mismatch", evidence: [8] }]);
   expect(collectObservations(input).find(item => item.code === "event_counts")?.detail.parameters).toEqual({ events: 2, ops: 0, players: 1, timeline: 1 });

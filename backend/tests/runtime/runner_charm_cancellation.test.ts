@@ -1,3 +1,4 @@
+import { PotionType } from "../../src/core/domain/identity";
 import {expect,spyOn,test} from "bun:test";
 import {readFile,readdir} from "node:fs/promises";
 import path from "node:path";
@@ -20,11 +21,11 @@ for(const late of [null,{name:"charm",args:{target_id:null}}] as const)test(`run
  const config=parseRuntimeConfig({providers:{default:"fake",items:{fake:{type:"openai",apiKey:"synthetic-unused"}}},agents:{default:"fake",items:{fake:{kind:"llm",provider:"fake",model:"synthetic"}}},game:{board:"six_player_charm_cancel",seed:"cancel-charm"},debugSummary:{agent:{enabled:false}}});
  const board=parseBoardDefinition(boardDefinitionFromConfig("six_player_charm_cancel",{...sixPlayerMvpConfig,roleSetups:[{role:Role.WolfBeauty,count:1},{role:Role.Witch,count:1},{role:Role.Seer,count:1},{role:Role.Villager,count:3}]}));
  const create=spyOn(factory,"createPlayerAgentRuntime").mockImplementation(async options=>{
-  world=options.world;return{kind:"llm",async close(){closed++;release(late);},provider:{async getAction(request){
+  world=options.world;return{kind:"llm",runtimeState:{closed:false},async close(){closed++;release(late);},provider:{async getAction(request){
    if(request.allowedTools.includes("charm")){if(request.context.day===2){pending=true;return held;}return{name:"charm",args:{target_id:world.entityIds().find(id=>id!==request.actorId)!}};}
    if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};
    if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:null,abstain:true}};
-   if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:request.actorId,potion_type:"none"}};
+   if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:request.actorId,potion_type:PotionType.None}};
    if(request.allowedTools.includes("check_identity"))return{name:"check_identity",args:{target_id:world.entityIds().find(id=>id!==request.actorId)!}};
    if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};
    if(request.allowedTools.includes("vote"))return{name:"vote",args:{target_id:null,abstain:true}};
@@ -32,7 +33,7 @@ for(const late of [null,{name:"charm",args:{target_id:null}}] as const)test(`run
   }}};
  });
  const original=GameEventRecorder.prototype.flush;
- const flush=spyOn(GameEventRecorder.prototype,"flush").mockImplementation(function(events){if(pending&&!failed){failed=true;throw failure;}return original.call(this,events);});
+ const flush=spyOn(GameEventRecorder.prototype,"flush").mockImplementation(function(this: GameEventRecorder, events){if(pending&&!failed){failed=true;throw failure;}return original.call(this,events);});
  try{
   await expect(runGame(resolveGameSetup(config,{recordRootDir:root,maxDays:10,maxRuntimeMs:10000,streamEvents:false,color:false},board))).rejects.toBe(failure);
   expect(closed).toBe(1);expect(failed).toBe(true);

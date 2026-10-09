@@ -1,3 +1,4 @@
+import { Camp, DeathCause, Phase } from "../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { MIRROR_CASES, mirrorScenario, type MirrorScenario } from "../support/mirror_scenarios";
@@ -15,7 +16,7 @@ const facts: Record<MirrorScenario, { alive: number[]; words: number[]; day: num
 };
 
 for (const kind of MIRROR_CASES) for (const transport of ["llm", "acp", "mixed"] as const) test(`${kind}/${transport}: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape`, async () => {
-  const runs = [];
+  const runs: Awaited<ReturnType<typeof runTransportGame>>[] = [];
   for (const locale of ["zh-CN", "en"] as const) {
     const scenario = mirrorScenario(kind), run = await runTransportGame(scenario, transport, locale); runs.push(run);
     const oracle = facts[kind], actor = kind === "twelve" ? 5 : 3, events = run.replay.events;
@@ -26,8 +27,8 @@ for (const kind of MIRROR_CASES) for (const transport of ["llm", "acp", "mixed"]
     expect(ability).toMatchObject({ uses: oracle.targets.length, lastUsedDay: oracle.day, state: { policy: "mirror" } }); expect(ability.state.history.map((report: any) => [report.targetId, report.result.role])).toEqual(oracle.targets.map((target, i) => [target, oracle.roles[i]]));
     expect(new Set(ability.state.history.map((report: any) => report.targetId)).size).toBe(ability.state.history.length);
     expect(run.manifest.players.filter(p => p.alive).map(p => p.player_id)).toEqual(oracle.alive); expect(events.filter(e => e.type === "last_words_spoken").map(e => e.payload.playerId)).toEqual(oracle.words);
-    const faction = oracle.wolf ? "wolf" : "good", winners = kind === "twelve" ? [5, 6, 7, 8, 9, 10, 11, 12] : oracle.wolf ? [1, 2] : [3, 4, 5, 6];
-    expect(run.result.snapshot.result).toEqual({ winner: faction, reason: oracle.wolf ? "slaughter_side_completed" : "all_wolves_eliminated", outcome: { kind: "victory", primary: { kind: "faction", faction, winningPlayerIds: winners }, additional: [], winningPlayerIds: winners }, decidedAt: { day: oracle.day, phase: kind === "exhausted" ? "day" : "voting", checkpoint: kind === "exhausted" ? "night_settled" : "exile_settled" } });
+    const faction = oracle.wolf ? Camp.Wolf:Camp.Good, winners = kind === "twelve" ? [5, 6, 7, 8, 9, 10, 11, 12] : oracle.wolf ? [1, 2] : [3, 4, 5, 6];
+    expect(run.result.snapshot.result).toEqual({ winner: faction, reason: oracle.wolf ? "slaughter_side_completed" : "all_wolves_eliminated", outcome: { kind: "victory", primary: { kind: "faction", faction, winningPlayerIds: winners }, additional: [], winningPlayerIds: winners }, decidedAt: { day: oracle.day, phase: kind === "exhausted" ? Phase.Day:Phase.Voting, checkpoint: kind === "exhausted" ? "night_settled" : "exile_settled" } });
     if (kind === "king_badge") { expect(events.filter(e => e.type === "wolf_king_shot").map(e => e.payload)).toEqual([{ actorId: 1, targetId: 3 }]); expect(events.filter(e => e.type === "sheriff_badge_transferred").map(e => e.payload)).toEqual([{ fromId: 1, toId: 2, reason: "night_death" }, { fromId: 2, toId: 4, reason: "voted_out" }]); }
     if (kind === "twelve") {
       expect(events.filter(e => e.type === "hunter_shot").map(e => e.payload)).toEqual([{ hunterId: 7, targetId: 2 }]);

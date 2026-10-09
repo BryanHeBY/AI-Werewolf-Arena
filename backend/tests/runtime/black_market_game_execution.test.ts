@@ -1,3 +1,4 @@
+import { Camp, DeathCause, Phase } from "../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { BLACK_CASES, blackMarketScenario, type BlackScenario } from "../support/black_market_scenarios";
@@ -7,11 +8,11 @@ const facts: Record<BlackScenario, { alive: number[]; words: number[]; day: numb
   check_cross: { alive: [5, 6], words: [3, 1, 2], day: 2 }, check_duplicate: { alive: [4, 5, 6], words: [1, 2], day: 2 }, poison_duplicate: { alive: [6], words: [3, 1], day: 2, night: true }, late_hold: { alive: [6], words: [1], day: 4, night: true }, hidden_backlash: { alive: [5, 6], words: [3, 1, 2], day: 2 }, seer_gun: { alive: [3, 5, 6], words: [4, 2], day: 1 }, gun_poison: { alive: [5, 6], words: [4, 1, 2], day: 2 }, gun_compound: { alive: [5, 6], words: [4, 1, 2], day: 2 }, native_double: { alive: [3, 5, 6], words: [4], day: 1, night: true }, native_pass: { alive: [3, 5, 6], words: [4, 2], day: 1 }, last_wolf: { alive: [6], words: [3, 2], day: 2, night: true }, last_god: { alive: [6], words: [5, 2], day: 2, night: true }, twelve_gun: { alive: [5, 6, 8, 10, 11, 12], words: [3, 4], day: 2 }, twelve_backlash: { alive: [6, 8, 9, 10, 11, 12], words: [7, 4, 1], day: 2 },
 };
 for (const kind of BLACK_CASES) for (const transport of ["llm", "acp", "mixed"] as const) test(`${kind}/${transport}: literal Black Market bilingual complete games preserve private gifts and strict Tape`, async () => {
-  const runs = [];
+  const runs: Awaited<ReturnType<typeof runTransportGame>>[] = [];
   for (const locale of ["zh-CN", "en"] as const) {
     const scenario = blackMarketScenario(kind), run = await runTransportGame(scenario, transport, locale); runs.push(run); const events = run.replay.events, oracle = facts[kind];
     expect(run.manifest.players.filter(p => p.alive).map(p => p.player_id)).toEqual(oracle.alive); expect(events.filter(e => e.type === "last_words_spoken").map(e => e.payload.playerId)).toEqual(oracle.words);
-    expect(run.result.snapshot.result).toMatchObject({ winner: "good", reason: "all_wolves_eliminated", decidedAt: { day: oracle.day, phase: oracle.night ? "day" : "voting", checkpoint: oracle.night ? "night_settled" : "exile_settled" }, outcome: { winningPlayerIds: kind.startsWith("twelve") ? [5, 6, 7, 8, 9, 10, 11, 12] : [3, 4, 5, 6] } });
+    expect(run.result.snapshot.result).toMatchObject({ winner: Camp.Good, reason: "all_wolves_eliminated", decidedAt: { day: oracle.day, phase: oracle.night ? Phase.Day:Phase.Voting, checkpoint: oracle.night ? "night_settled" : "exile_settled" }, outcome: { winningPlayerIds: kind.startsWith("twelve") ? [5, 6, 7, 8, 9, 10, 11, 12] : [3, 4, 5, 6] } });
     const merchant = kind.startsWith("twelve") ? 7 : 3;
     expect(events.filter(e => e.type === "black_market_trade_committed")).toHaveLength(1); expect(events.filter(e => e.type === "black_market_trade_resolved")).toHaveLength(1);
     const choice = events.find(e => e.type === "black_market_trade_committed")!.payload, failed = kind === "hidden_backlash" || kind === "twelve_backlash";

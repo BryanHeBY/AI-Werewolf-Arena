@@ -1,3 +1,5 @@
+import { completedNight } from "../night_stage_fixture";
+import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Camp, Phase, Role, StatusMark, DeathCause, WitchSelfHealRule, type ActionRequest, type GameEvent, type RoleComponent, type StatusMarksComponent } from "../../../src/core";
@@ -27,19 +29,19 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: only the living 
   marks(world, 9).add(StatusMark.WolfKillMark);
   const before = structuredClone(role(world, 6).privateState);
   for (const target of [999, 10]) {
-    expect(turn.submit("t1", "use_potion", { target_id: target, potion_type: "heal" })).toMatchObject({ ok: false, error: "heal_target" });
+    expect(turn.submit("t1", "use_potion", { target_id: target, potion_type: PotionType.Heal })).toMatchObject({ ok: false, error: "heal_target" });
     expect(role(world, 6).privateState).toEqual(before); expect(turn.action).toBeNull();
   }
   world.getComponent<{ alive: boolean }>(9, COMPONENT.Alive)!.alive = false;
-  expect(turn.submit("t1", "use_potion", { target_id: 9, potion_type: "heal" })).toMatchObject({ ok: false, error: "heal_target" });
+  expect(turn.submit("t1", "use_potion", { target_id: 9, potion_type: PotionType.Heal })).toMatchObject({ ok: false, error: "heal_target" });
   world.getComponent<{ alive: boolean }>(9, COMPONENT.Alive)!.alive = true;
-  expect(turn.submit("t1", "use_potion", { target_id: 9, potion_type: "heal" })).toEqual({ ok: true, accepted: true, applied: false, action: "use_potion" });
+  expect(turn.submit("t1", "use_potion", { target_id: 9, potion_type: PotionType.Heal })).toEqual({ ok: true, accepted: true, applied: false, action: "use_potion" });
   expect(potion.heal).toBe(1); // Reception never applies or spends.
   marks(world, 9).remove(StatusMark.WolfKillMark);
   expect(new ToolGateway().validateAndSanitize(world, 6, turn.action!, { phase: Phase.Night, day: 1, abilityId: "native:potion" })).toMatchObject({ ok: false, error: "heal_target" });
   expect(role(world, 6).privateState).toEqual(before);
   // A forged visible context cannot create a real knife.
-  expect(receive.validate(request, "use_potion", { target_id: 9, potion_type: "heal" })).toMatchObject({ ok: false, error: "heal_target" });
+  expect(receive.validate(request, "use_potion", { target_id: 9, potion_type: PotionType.Heal })).toMatchObject({ ok: false, error: "heal_target" });
 });
 
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: an exhausted antidote removes the knife from requests and prompts but preserves legitimate past knowledge`, async () => {
@@ -50,10 +52,10 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: an exhausted ant
     if (input.actorId === 6 && input.context.stage === "witch") {
       requests.push(structuredClone(input));
       if (input.context.day === 2) for (const target of [9, 10, 999]) {
-        const receipt = new ActionReception(world).validate(input, "use_potion", { target_id: target, potion_type: "heal" });
+        const receipt = new ActionReception(world).validate(input, "use_potion", { target_id: target, potion_type: PotionType.Heal });
         rejectionCodes.push(receipt.ok ? "accepted" : receipt.error);
       }
-      return { name: "use_potion" as const, args: { target_id: input.context.day === 1 ? 9 : 6, potion_type: input.context.day === 1 ? "heal" as const : "none" as const } };
+      return { name: "use_potion" as const, args: { target_id: input.context.day === 1 ? 9 : 6, potion_type: input.context.day === 1 ? PotionType.Heal as const : PotionType.None as const } };
     }
     return new BaselineBotActionProvider(world).getAction(input);
   } };
@@ -100,14 +102,14 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual guard+hea
   const result = await pipeline.execute(twelvePlayerStandardConfig, { async getAction(input) {
     if (input.context.stage === "wolf_vote") return { name: "kill_vote", args: { target_id: 7, abstain: false } };
     if (input.actorId === 9) return { name: "guard", args: { target_id: 7, abstain: false } };
-    if (input.actorId === 6 && input.context.stage === "witch") return { name: "use_potion", args: { target_id: 7, potion_type: "heal" } };
-    if (input.actorId === 10) return { name: "use_potion", args: { target_id: 7, potion_type: "poison" } };
+    if (input.actorId === 6 && input.context.stage === "witch") return { name: "use_potion", args: { target_id: 7, potion_type: PotionType.Heal } };
+    if (input.actorId === 10) return { name: "use_potion", args: { target_id: 7, potion_type: PotionType.Poison } };
     return new BaselineBotActionProvider(world).getAction(input);
   } }, 1);
-  expect(result.damage).toEqual({ deaths: [7], deathSources: { 7: [DeathCause.Poison, DeathCause.WolfKill] } });
+  expect(completedNight(result).damage).toEqual({ deaths: [7], deathSources: { 7: [DeathCause.Poison, DeathCause.WolfKill] } });
   let shots = 0;
   world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive = false;
-  await hunterDeathHook(world, [7], result.damage.deathSources, async () => { shots++; return { kind: "invalid" }; }, events);
+  await hunterDeathHook(world, [7], completedNight(result).damage.deathSources, async () => { shots++; return { kind: "invalid" }; }, events);
   expect(shots).toBe(0); expect(getHunterState(role(world, 7))!.canShoot).toBe(false);
   expect(getWitchState(role(world, 6))!.heal).toBe(0);
 });

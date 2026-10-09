@@ -11,7 +11,7 @@ function request(deadlineAtMs: number): ActionRequest {
     phase: Phase.Day,
     allowedTools: ["speak"],
     deadlineAtMs,
-    context: {
+    context: {turn_constraints: {},
       day: 1,
       stage: "day_speech",
       visible_events: [],

@@ -1,3 +1,5 @@
+import { Phase } from "../../../src/core";
+import { PotionType } from "../../../src/core";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { RoleComponent } from "../../../src/core/domain/components/role";
@@ -17,10 +19,10 @@ describe("buildAgentVisibleEventFeed", () => {
     const seerId = findRole("seer");
     const villagerId = findRole("villager");
     const events: GameEvent[] = [
-      { timestamp: 0, type: "god_private_game_info", payload: { players: [{ seat: witchId, role: "witch" }] } },
-      { timestamp: 1, type: "wolf_discussion", audience: [wolfId], payload: { actorId: wolfId, text: "今晚先听队友意见" } },
-      { timestamp: 2, type: "witch_potion_used", payload: { actorId: witchId, targetId: seerId, potionType: "heal" } },
-      { timestamp: 3, type: "seer_checked", payload: { actorId: seerId, targetId: wolfId, isWerewolf: true } },
+      { timestamp: 0, type: "god_private_game_info", payload: { boardSize: twelvePlayerStandardConfig.boardSize, players: [{ id: witchId, seat: witchId, name: "Witch fixture", role: "witch", camp: "good" }] } },
+      { timestamp: 1, type: "wolf_discussion", audience: [wolfId], payload: { actorId: wolfId, text: "今晚先听队友意见", endChat: false, round: 1 } },
+      { timestamp: 2, type: "witch_potion_used", payload: { actorId: witchId, targetId: seerId, potionType: PotionType.Heal } },
+      { timestamp: 3, type: "seer_checked", payload: { actorId: seerId, targetId: wolfId, isWerewolf: true, result: { kind: "camp", camp: "wolf" } } },
       { timestamp: 4, type: "night_resolved", payload: { deaths: [] } },
     ];
 
@@ -36,7 +38,7 @@ describe("buildAgentVisibleEventFeed", () => {
     expect(seerFeed[0]).toEqual({
       seq: 1,
       type: "seer_checked",
-      payload: { actorId: seerId, targetId: wolfId, isWerewolf: true },
+      payload: { actorId: seerId, targetId: wolfId, isWerewolf: true, result: { kind: "camp", camp: "wolf" } },
     });
     for (const feed of [wolfFeed, witchFeed, seerFeed, villagerFeed]) {
       expect(feed.some((event) => event.type === "god_private_game_info")).toBe(false);
@@ -70,15 +72,16 @@ describe("buildAgentVisibleEventFeed", () => {
     }
   });
 
+  // Deliberate untyped historical input exercises the fail-closed boundary.
   test("defaults unknown events to invisible", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const feed = buildAgentVisibleEventFeed(context.world, [
-      { timestamp: 1, type: "future_private_mechanic", payload: { secret: "never leak" } },
-      { timestamp: 2, type: "phase_changed", payload: { day: 1, phase: "day" } },
+      ({ timestamp: 1, type: "future_private_mechanic", payload: { secret: "never leak" } } as unknown as GameEvent),
+      { timestamp: 2, type: "phase_changed", payload: { day: 1, phase: Phase.Day } },
     ], context.world.entityIds()[0]);
 
     expect(feed).toEqual([
-      { seq: 1, type: "phase_changed", payload: { day: 1, phase: "day" } },
+      { seq: 1, type: "phase_changed", payload: { day: 1, phase: Phase.Day } },
     ]);
   });
 
@@ -105,14 +108,14 @@ describe("buildAgentVisibleEventFeed", () => {
       (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf",
     )!;
     const publicEvents: GameEvent[] = [
-      { timestamp: 1, type: "phase_changed", payload: { day: 1, phase: "night" } },
-      { timestamp: 5, type: "phase_changed", payload: { day: 1, phase: "day" } },
+      { timestamp: 1, type: "phase_changed", payload: { day: 1, phase: Phase.Night } },
+      { timestamp: 5, type: "phase_changed", payload: { day: 1, phase: Phase.Day } },
     ];
     const eventsWithHiddenWolfActions: GameEvent[] = [
       publicEvents[0],
-      { timestamp: 2, type: "wolf_discussion", audience: [wolfId], payload: { actorId: wolfId, text: "隐藏狼聊" } },
-      { timestamp: 3, type: "wolf_kill_vote_cast", audience: [wolfId], payload: { actorId: wolfId, targetId: villagerId } },
-      { timestamp: 4, type: "future_private_mechanic", payload: { secret: true } },
+      { timestamp: 2, type: "wolf_discussion", audience: [wolfId], payload: { actorId: wolfId, text: "隐藏狼聊", endChat: false, round: 1 } },
+      { timestamp: 3, type: "wolf_kill_vote_cast", audience: [wolfId], payload: { actorId: wolfId, targetId: villagerId, abstain: false } },
+      ({ timestamp: 4, type: "future_private_mechanic", payload: { secret: true } } as unknown as GameEvent),
       publicEvents[1],
     ];
 
@@ -121,8 +124,8 @@ describe("buildAgentVisibleEventFeed", () => {
     );
     expect(buildAgentVisibleEventFeed(context.world, eventsWithHiddenWolfActions, villagerId))
       .toEqual([
-        { seq: 1, type: "phase_changed", payload: { day: 1, phase: "night" } },
-        { seq: 2, type: "phase_changed", payload: { day: 1, phase: "day" } },
+        { seq: 1, type: "phase_changed", payload: { day: 1, phase: Phase.Night } },
+        { seq: 2, type: "phase_changed", payload: { day: 1, phase: Phase.Day } },
       ]);
   });
 });

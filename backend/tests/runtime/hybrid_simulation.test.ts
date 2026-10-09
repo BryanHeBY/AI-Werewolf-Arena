@@ -1,3 +1,4 @@
+import { Camp } from "../../src/core";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
@@ -13,7 +14,7 @@ for (const id of ["six_player_hybrid", "twelve_player_hybrid"]) test(`${id}: twe
     const record = await readReproduction(path.join(game.recordDir, "reproduction.json")), choice = record.events.find(e => e.type === "hybrid_affiliation_resolved")!;
     choice.payload.faction === "good" ? good++ : wolf++; game.result?.winner === "good" ? wonGood++ : wonWolf++;
     const own = record.checkpoints.at(-1)!.players.find(p => p.role === "hybrid")!;
-    expect(own.camp).toBe("good"); expect(own.victory.affiliations).toEqual([{ kind: "faction", faction: choice.payload.faction }]);
+    expect(own.camp).toBe(Camp.Good); expect(own.victory.affiliations).toEqual([{ kind: "faction", faction: choice.payload.faction === "good" ? "good" : "wolf" }]); expect(choice.payload.faction === "good" || choice.payload.faction === "wolf").toBe(true);
     expect((await replayReproduction(record, root)).snapshot.result).toEqual(game.result);
   }
   expect(good).toBeGreaterThan(0); expect(wolf).toBeGreaterThan(0); expect(wonGood).toBeGreaterThan(0); expect(wonWolf).toBeGreaterThan(0);

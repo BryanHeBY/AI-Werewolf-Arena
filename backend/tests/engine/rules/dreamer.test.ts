@@ -1,3 +1,5 @@
+import { Camp } from "../../../src/core";
+import { PotionType } from "../../../src/core";
 import {expect,test} from "bun:test";
 import {bootstrapGame} from "../../../src/app/bootstrap";
 import {Role,Phase,WinCondition,COMPONENT,ActionWindow,type BoardConfig,type RoleComponent,type ActionRequest} from "../../../src/core";
@@ -34,7 +36,7 @@ for(const mode of ["mixed_waves","compound_body"] as const)test(`${mode}: early 
   if(request.allowedTools.includes("dream"))return{name:"dream",args:{target_id:7}};
   if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};
   if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:mode==="mixed_waves"?4:5,abstain:false}};
-  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:6,potion_type:"none"}};
+  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:6,potion_type:PotionType.None}};
   if(request.allowedTools.includes("self_destruct_with_target"))return{name:"self_destruct_with_target",args:{target_id:5,confirm:true,reason:"Public blast"}};
   if(request.allowedTools.includes("self_destruct"))return null;
   if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};
@@ -73,7 +75,7 @@ test("a same-phase jump during a Night-origin death shot revokes the old gun and
   if(request.allowedTools.includes("dream"))return{name:"dream",args:{target_id:5}};
   if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};
   if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:4,abstain:false}};
-  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:3,potion_type:"none"}};
+  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:3,potion_type:PotionType.None}};
   if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};
   if(request.allowedTools.includes("shoot")){game.phaseManager.jumpTo(Phase.Day);return{name:"shoot",args:{target_id:1}};}
   throw new Error("no_action_after_revoke");
@@ -88,7 +90,7 @@ test("a same-wave already dead target receives Dream cause before its later deat
   if(request.allowedTools.includes("dream"))return{name:"dream",args:{target_id:5}};
   if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};
   if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:4,abstain:false}};
-  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:6,potion_type:"none"}};
+  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:6,potion_type:PotionType.None}};
   if(request.allowedTools.includes("self_destruct_with_target"))return{name:"self_destruct_with_target",args:{target_id:5,confirm:true,reason:"Public blast"}};
   if(request.allowedTools.includes("self_destruct"))return null;
   if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};
@@ -127,7 +129,7 @@ for(const locale of ["zh-CN","en"] as const)for(const kind of ["protected","knif
   if(request.allowedTools.includes("dream"))return{name:"dream",args:{target_id:kind==="poison_link"?4:5}};
   if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};
   if(request.allowedTools.includes("kill_vote")){const target=kind==="knife_link"||kind==="saved"?1:kind==="gun_blocked"||kind==="gun_link"?4:kind==="protected"?5:null;return{name:"kill_vote",args:{target_id:target,abstain:target===null}};}
-  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:kind==="saved"||kind==="poison_link"?1:kind==="protected"?5:3,potion_type:kind==="saved"?"heal":kind==="protected"||kind==="poison_link"?"poison":"none"}};
+  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:kind==="saved"||kind==="poison_link"?1:kind==="protected"?5:3,potion_type:kind==="saved"?PotionType.Heal:kind==="protected"||kind==="poison_link"?PotionType.Poison:PotionType.None}};
   if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};
   if(request.allowedTools.includes("shoot")){guns++;return{name:"shoot",args:{target_id:kind==="gun_link"?1:5}};}
   if(request.allowedTools.includes("vote"))return{name:"vote",args:{target_id:kind==="day_gun"?4:kind==="day_exile"?1:2,abstain:false}};
@@ -146,7 +148,7 @@ for(const locale of ["zh-CN","en"] as const)for(const kind of ["protected","knif
  if(kind==="protected")expect(getWitchState(role(game,3))?.poison).toBe(0);
  if(kind==="saved")expect(getWitchState(role(game,3))?.heal).toBe(0);
  if(kind==="gun_blocked")expect(getHunterState(role(game,4))?.canShoot).toBe(false);
- if(kind!=="day_gun"&&kind!=="day_exile")expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");
+ if(kind!=="day_gun"&&kind!=="day_exile")expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
  for(const actor of game.world.entityIds()){
   const feed=buildAgentVisibleEventFeed(game.world,events,actor);
   expect(feed.some(event=>event.type==="dream_applied")).toBe(actor===1);expect(feed.some(event=>event.type==="dream_death")).toBe(false);
@@ -161,7 +163,7 @@ for(const king of [false,true])test(`consecutive/${king}: repeated dream overrid
   if(request.allowedTools.includes("dream"))return{name:"dream" as const,args:{target_id:king?2:5}};
   if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves" as const,args:{text:"End",end_chat:true}};
   if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote" as const,args:{target_id:day===2&&!king?5:null,abstain:day!==2||king}};
-  if(request.allowedTools.includes("use_potion"))return{name:"use_potion" as const,args:{target_id:day===2&&!king?5:3,potion_type:day===2&&!king?"heal" as const:"none" as const}};
+  if(request.allowedTools.includes("use_potion"))return{name:"use_potion" as const,args:{target_id:day===2&&!king?5:3,potion_type:day===2&&!king?PotionType.Heal as const:PotionType.None as const}};
   if(request.allowedTools.includes("speak"))return{name:"speak" as const,args:{text:"Raw"}};
   if(request.allowedTools.includes("vote"))return{name:"vote" as const,args:{target_id:day===1?null:2,abstain:day===1}};
   if(request.allowedTools.includes("shoot")){guns++;throw new Error("dream_forbids_gun");}
@@ -171,7 +173,7 @@ for(const king of [false,true])test(`consecutive/${king}: repeated dream overrid
  const events=game.phaseManager.getEvents();expect(events.filter(event=>event.type==="dream_applied").map(event=>event.payload.consecutive)).toEqual([false,true]);
  expect(events.filter(event=>event.type==="dream_death").map(event=>event.payload)).toEqual([{actorId:1,targetId:king?2:5,day:2,reason:"consecutive"}]);
  expect(guns).toBe(0);if(king)expect(getWolfKingState(role(game,2))?.canShoot).toBe(false);
- expect(game.phaseManager.getSnapshot().result).toMatchObject({winner:"good",decidedAt:{day:2,phase:king?Phase.Day:Phase.Voting,checkpoint:king?"night_settled":"exile_settled"}});
+ expect(game.phaseManager.getSnapshot().result).toMatchObject({winner:Camp.Good,decidedAt:{day:2,phase:king?Phase.Day:Phase.Voting,checkpoint:king?"night_settled":"exile_settled"}});
 });
 
 test("two Dreamers form one terminating night chain before judging, with no duplicate death or late gun",async()=>{
@@ -184,5 +186,5 @@ test("two Dreamers form one terminating night chain before judging, with no dupl
   if(request.allowedTools.includes("vote"))return{name:"vote",args:{target_id:3,abstain:false}};
   throw new Error(`unexpected:${request.context.stage}`);
  }});
- expect(game.phaseManager.getEvents().find(event=>event.type==="night_resolved")!.payload.deaths).toEqual([1,2,5]);expect(game.world.getAliveEntityIds()).toEqual([4,6]);expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");
+ expect(game.phaseManager.getEvents().find(event=>event.type==="night_resolved")!.payload.deaths).toEqual([1,2,5]);expect(game.world.getAliveEntityIds()).toEqual([4,6]);expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
 });

@@ -1,3 +1,4 @@
+import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Camp, COMPONENT, Phase, Role, WinCondition, createVictoryComponent, type ActionRequest, type BoardConfig, type GameEvent, type RoleComponent, type ToolCall } from "../../../src/core";
@@ -104,7 +105,7 @@ for (const point of ["await", "gateway"] as const) for (const change of ["clock"
     if (change === "target_camp") role(game, 6).camp = role(game, 6).camp === Camp.Good ? Camp.Wolf : Camp.Good;
   };
   const ctx = context(game, events, async () => { calls++; if (point === "await") mutate(); return choose(6); }, 1, () => current);
-  if (point === "gateway") { const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway); ctx.toolGateway.validateAndSanitize = (...args: Parameters<typeof validate>) => { const result = validate(...args); mutate(); return result; }; }
+  if (point === "gateway") { const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway); ctx.toolGateway.validateAndSanitize = (world, actorId, call, validationContext) => { const result = validate(world, actorId, call, validationContext); mutate(); return result; }; }
   if (change.startsWith("target")) await expect(HYBRID_STAGE.execute(ctx)).rejects.toThrow("hybrid_valid_action_missing"); else await HYBRID_STAGE.execute(ctx);
   expect(calls).toBe(change.startsWith("target") ? 3 : 1); expect(state).toEqual({ remaining: 1, choice: null }); expect(events).toEqual([]);
 });
@@ -137,7 +138,7 @@ for (const followWolf of [false, true]) test(`${followWolf}: actual first-night 
     if (request.allowedTools.includes("speak_to_wolves")) return { name: "speak_to_wolves", args: { text: "End", end_chat: true } };
     if (request.allowedTools.includes("kill_vote")) return { name: "kill_vote", args: { target_id: 2, abstain: false } };
     if (request.allowedTools.includes("check_identity")) return { name: "check_identity", args: { target_id: 1 } };
-    if (request.allowedTools.includes("use_potion")) return { name: "use_potion", args: { target_id: 1, potion_type: "poison" } };
+    if (request.allowedTools.includes("use_potion")) return { name: "use_potion", args: { target_id: 1, potion_type: PotionType.Poison } };
     if (request.context.stage === "last_words") return { name: "speak", args: { text: "Raw" } }; throw new Error(`unexpected:${request.context.stage}`);
   } });
   expect(game.world.getAliveEntityIds()).toEqual([3, 4, 5, 6]); expect(asks.filter(r => r.context.stage === "last_words").map(r => r.actorId)).toEqual([1, 2]);

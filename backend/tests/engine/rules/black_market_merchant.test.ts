@@ -1,3 +1,4 @@
+import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Role, Phase, Camp, DeathCause, StatusMark, WinCondition, type RoleComponent, type ActionProvider, type GameEvent, type ToolCall } from "../../../src/core";
@@ -68,7 +69,7 @@ test("a pure first-night Black backlash gets actual last words before day voting
     if (request.allowedTools.includes("black_market_trade")) return { name: "black_market_trade", args: { target_id: 1, skill: "check" } };
     if (request.allowedTools.includes("speak_to_wolves")) return { name: "speak_to_wolves", args: { text: "Raw", end_chat: true } };
     if (request.allowedTools.includes("kill_vote")) return { name: "kill_vote", args: { target_id: 3, abstain: false } };
-    if (request.allowedTools.includes("use_potion")) return { name: "use_potion", args: { target_id: 3, potion_type: "heal" } };
+    if (request.allowedTools.includes("use_potion")) return { name: "use_potion", args: { target_id: 3, potion_type: PotionType.Heal } };
     if (request.allowedTools.includes("check_identity")) return { name: "check_identity", args: { target_id: 1 } };
     if (request.allowedTools.includes("speak")) return { name: "speak", args: { text: "Raw" } };
     if (request.allowedTools.includes("vote")) return { name: "vote", args: { target_id: 1, abstain: false } }; throw new Error("unexpected_request");

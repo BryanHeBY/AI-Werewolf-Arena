@@ -73,8 +73,8 @@ export async function runTransportGame(scenario: TransportGameScenario, kind: "l
     const session = (await fs.readdir(root)).find(name => name.startsWith("session_"))!, directory = path.join(root, session);
     const replay: ReplayDocument = JSON.parse(await fs.readFile(path.join(directory, "replay.json"), "utf8")); assertReplayDocument(replay);
     const manifest: ReplayManifest = JSON.parse(await fs.readFile(path.join(directory, "manifest.json"), "utf8"));
-    expect(replay.players.map(player => player.role)).toEqual(scenario.roles);
-    expect(manifest.game_result).toEqual(result.snapshot.result); expect(replay.result.decision).toEqual(result.snapshot.result);
+    expect(replay.players.map(player => player.role)).toEqual([...scenario.roles]);
+    expect(manifest.game_result).toEqual(result.snapshot.result ?? undefined); expect(replay.result.decision).toEqual(result.snapshot.result ?? undefined);
     const views: ReplayPlayerView[] = [];
     for (const [actor, plan] of plans) {
       const view: ReplayPlayerView = JSON.parse(await fs.readFile(path.join(directory, `players/player_${actor}.json`), "utf8")); assertReplayPlayerView(view); views.push(view);

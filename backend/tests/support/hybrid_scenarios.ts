@@ -1,4 +1,4 @@
-import { Role, WinCondition, type BoardConfig } from "../../src/core";
+import { PotionType, Role, WinCondition, type BoardConfig } from "../../src/core";
 import { parseBoardDefinition, boardDefinitionFromConfig } from "../../src/runtime/config/board_definition";
 import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
 import type { PlannedTurn } from "./foundation_transport_plan";
@@ -19,7 +19,7 @@ export function hybridScenario(kind: HybridScenario): TransportGameScenario {
   const words = (day: number, actors: number[]) => add(day, actors, "last_words", { name: "speak", args: { text: "Authorized words" } });
   const vote = (day: number, actors: number[], exile: number) => { add(day, actors, "day_speech", { name: "speak", args: { text: "Public speech" } }); add(day, actors, "voting", { name: "vote", args: { target_id: exile, abstain: false } }); words(day, [exile]); };
   const check = (day: number, actor: number, inspected: number) => add(day, [actor], "seer", { name: "check_identity", args: { target_id: inspected } });
-  const potion = (day: number, actor: number, chosen: number, potion_type: "heal" | "poison" | "none") => add(day, [actor], "witch", { name: "use_potion", args: { target_id: chosen, potion_type } });
+  const potion = (day: number, actor: number, chosen: number, potion_type: PotionType.Heal | PotionType.Poison | PotionType.None) => add(day, [actor], "witch", { name: "use_potion", args: { target_id: chosen, potion_type } });
   const guard = (day: number, chosen: number) => add(day, [7], "guard", { name: "guard", args: { target_id: chosen, abstain: false } });
   const direction = (day: number, sheriff: number) => add(day, [sheriff], "sheriff_choose_direction", { name: "choose_direction", args: { direction: "clockwise" } });
   const election = (alive: number[], sheriff: number) => {
@@ -31,20 +31,20 @@ export function hybridScenario(kind: HybridScenario): TransportGameScenario {
   if (kind === "good_alive") { const turn = rows.get(hybrid)![0]; turn.invalidActions = [{ name: "choose_exemplar", args: { target_id: hybrid } }]; turn.expectedInvalidError = "hybrid_target"; }
   if (large) {
     const all = Array.from({ length: 12 }, (_, i) => i + 1);
-    guard(1, 10); pack(1, [1, 2, 3, 4], wolfWin ? 8 : 9); potion(1, 6, wolfWin ? 6 : 9, wolfWin ? "none" : "heal"); check(1, 5, 8);
+    guard(1, 10); pack(1, [1, 2, 3, 4], wolfWin ? 8 : 9); potion(1, 6, wolfWin ? 6 : 9, wolfWin ? PotionType.None : PotionType.Heal); check(1, 5, 8);
     if (wolfWin) {
       election(all, 5); words(1, [8]); const alive = all.filter(id => id !== 8); vote(1, alive, 12);
-      guard(2, 7); pack(2, [1, 2, 3, 4], 11); potion(2, 6, 6, "none"); check(2, 5, 1); direction(2, 5); vote(2, [1, 2, 3, 4, 5, 6, 7, 9, 10], 10);
+      guard(2, 7); pack(2, [1, 2, 3, 4], 11); potion(2, 6, 6, PotionType.None); check(2, 5, 1); direction(2, 5); vote(2, [1, 2, 3, 4, 5, 6, 7, 9, 10], 10);
     } else {
       election(all, 8); vote(1, all, 4);
-      guard(2, 11); pack(2, [1, 2, 3], 9); potion(2, 6, 3, "poison"); check(2, 5, 2); add(2, [9], "hunter_shot", { name: "shoot", args: { target_id: 2 } });
+      guard(2, 11); pack(2, [1, 2, 3], 9); potion(2, 6, 3, PotionType.Poison); check(2, 5, 2); add(2, [9], "hunter_shot", { name: "shoot", args: { target_id: 2 } });
       direction(2, 8); vote(2, [1, 5, 6, 7, 8, 10, 11, 12], 1); add(2, [1], "death_shot", { name: "shoot", args: { target_id: 8 } });
     }
   } else {
-    pack(1, hidden ? [1] : [1, 2], earlyDeath ? 3 : 6); potion(1, 5, earlyDeath ? 5 : 6, earlyDeath ? "none" : "heal"); check(1, 4, 3);
+    pack(1, hidden ? [1] : [1, 2], earlyDeath ? 3 : 6); potion(1, 5, earlyDeath ? 5 : 6, earlyDeath ? PotionType.None : PotionType.Heal); check(1, 4, 3);
     if (earlyDeath) words(1, [3]); vote(1, earlyDeath ? [1, 2, 4, 5, 6] : [1, 2, 3, 4, 5, 6], wolfWin ? 4 : 1);
     if (hidden) add(2, [2], "wolf_vote", { name: "kill_vote", args: { target_id: 6, abstain: false } }); else pack(2, wolfWin ? [1, 2] : [2], 6);
-    potion(2, 5, 5, "none"); if (!wolfWin) check(2, 4, 2);
+    potion(2, 5, 5, PotionType.None); if (!wolfWin) check(2, 4, 2);
     vote(2, wolfWin ? [1, 2, 5] : earlyDeath ? [2, 4, 5] : [2, 3, 4, 5], wolfWin ? 5 : 2);
     if (!hidden && !wolfWin) add(2, [2], "death_shot", { name: "shoot", args: { target_id: 4 } });
   }

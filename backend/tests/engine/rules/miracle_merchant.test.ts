@@ -1,3 +1,4 @@
+import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Role, Camp, Phase, WinCondition, DeathCause, COMPONENT, StatusMark, type BoardConfig, type RoleComponent, type GameEvent, type ActionRequest, type ToolCall } from "../../../src/core";
@@ -74,14 +75,14 @@ for(const revoke of ["clock","actor_life","actor_state","target_life","target_ro
    calls++;if(revoke==="clock")current=false;if(revoke==="actor_life")game.world.addComponent(1,COMPONENT.Alive,createAliveComponent());if(revoke==="actor_state")role(game).privateState.miracle_merchant={...state};if(revoke==="target_life")changeTarget();if(revoke==="target_role")game.world.addComponent(6,COMPONENT.Role,{...role(game,6)});if(revoke==="resource")state.remaining=0;
    return{name:"bestow_ability",args:{target_id:6,skill:"poison"}};
  },1,()=>current);
- if(revoke==="gateway_target"){const validate=ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway);ctx.toolGateway.validateAndSanitize=(...args:Parameters<typeof validate>)=>{const result=validate(...args);changeTarget();return result;};}
+ if(revoke==="gateway_target"){const validate=ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway);ctx.toolGateway.validateAndSanitize=(world, actorId, call, validationContext)=>{const result=validate(world, actorId, call, validationContext);changeTarget();return result;};}
  if(["target_life","target_role","gateway_target"].includes(revoke))await expect(MIRACLE_MERCHANT_STAGE.execute(ctx)).rejects.toThrow("merchant_valid_action_missing");else await MIRACLE_MERCHANT_STAGE.execute(ctx);
  expect(calls).toBe(["target_life","target_role","gateway_target"].includes(revoke)?3:1);expect(allNightAbilities(role(game,6))).toEqual([]);expect(events).toEqual([]);expect(state.remaining).toBe(revoke==="resource"?0:1);
 });
 
 test("full actual first-night Wolf backlash grants last words and settles initial deaths before later voting",async()=>{
  const game=fixture(),requests:ActionRequest[]=[];
- const result=await game.phaseManager.runSingleCycle({async getAction(request):Promise<ToolCall|null>{requests.push(request);if(request.allowedTools.includes("bestow_ability"))return{name:"bestow_ability",args:{target_id:2,skill:"check"}};if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:6,abstain:false}};if(request.allowedTools.includes("check_identity"))return{name:"check_identity",args:{target_id:2}};if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:5,potion_type:"none"}};if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};if(request.allowedTools.includes("vote"))return{name:"vote",args:{target_id:2,abstain:false}};return null;}});
+ const result=await game.phaseManager.runSingleCycle({async getAction(request):Promise<ToolCall|null>{requests.push(request);if(request.allowedTools.includes("bestow_ability"))return{name:"bestow_ability",args:{target_id:2,skill:"check"}};if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:6,abstain:false}};if(request.allowedTools.includes("check_identity"))return{name:"check_identity",args:{target_id:2}};if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:5,potion_type:PotionType.None}};if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};if(request.allowedTools.includes("vote"))return{name:"vote",args:{target_id:2,abstain:false}};return null;}});
  expect(requests.filter(r=>r.context.stage==="last_words").map(r=>r.actorId)).toEqual([1,6,2]);expect(game.world.getAliveEntityIds()).toEqual([3,4,5]);expect(result.gameOver).toBe(false);
  expect(game.phaseManager.getEvents().filter(e=>e.type==="merchant_trade_resolved")).toHaveLength(1);
 });

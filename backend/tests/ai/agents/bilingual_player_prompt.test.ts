@@ -1,7 +1,7 @@
 import { WOLF_STAGE_DIRECTIVES, WOLF_TOOL_SPECS } from "../../../src/game/mechanisms/roles/wolf/tool_specs";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Phase, Role, WinCondition, ActionWindow, WitchSelfHealRule, type ActionRequest, type BoardConfig, type ToolName } from "../../../src/core";
+import { Phase, Role, WinCondition, ActionWindow, WitchSelfHealRule, type ActionRequest, type BoardConfig, type ToolName, type ActionStage } from "../../../src/core";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
 import { PlayerPromptSession } from "../../../src/ai/agents/llm/player_prompt_session";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
@@ -15,7 +15,7 @@ import type { Locale } from "@ai-werewolf-arena/game-text";
 
 const roles = [Role.Wolf, Role.Villager, Role.Seer, Role.Guard, Role.Witch, Role.Hunter, Role.Idiot];
 const names = Object.fromEntries(roles.map((_, index) => [index + 1, `Seat ${index + 1}`]));
-const board: BoardConfig = { boardSize: 7, roleSetups: roles.map(role => ({ role, count: 1 })), winConditions: [WinCondition.SlaughterSide, WinCondition.WolfReachHalf], enableSheriff: true,
+const board: BoardConfig = { boardSize: 7, roleSetups: roles.map(role => ({ role, count: 1 })), winConditions: [WinCondition.SlaughterSide, WinCondition.WolfReachHalf], enableSheriff: true, hooks: { onDaybreak: false, onPreElection: false, onPreVote: false, onPerSpeechGap: false },
   sheriff: { voteWeight: 2 }, selfDestruct: { enabledWindows: [ActionWindow.OnPreVote] }, witch: { canSelfHeal: WitchSelfHealRule.FirstNightOnly }, tieBreaker: { exileVote: "no_elimination", wolfKillVote: "no_kill", sheriffVote: "min_seat" } };
 
 function setup(locale: Locale, personality?: string) {
@@ -24,11 +24,11 @@ function setup(locale: Locale, personality?: string) {
     roleCatalog: getDefaultRoleCatalog(), toolSpecRegistry: getDefaultToolSpecRegistry(), targetHintRegistry: getDefaultTargetHintRegistry(), phaseStageLocalizationRegistry: getDefaultPhaseStageLocalizationRegistry(), configRenderRegistry: getDefaultConfigRenderRegistry() });
   return { ...game, policy };
 }
-function request(actorId: number, stage: string, allowedTools: ToolName[], wolfTarget?: number | null): ActionRequest {
+function request(actorId: number, stage: ActionStage, allowedTools: ToolName[], wolfTarget?: number | null): ActionRequest {
   return { actorId, phase: stage === "witch" || stage === "wolf_vote" || stage === "wolf_discussion" ? Phase.Night : Phase.Day, allowedTools,
     context: { day: 1, stage, visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 }, ...(wolfTarget === undefined ? {} : { wolf_target: wolfTarget }) } };
 }
-const stages: Array<[string, ToolName[]]> = [["day_speech", ["speak"]], ["last_words", ["speak"]], ["wolf_discussion", ["speak_to_wolves"]], ["wolf_vote", ["kill_vote"]], ["guard", ["guard"]], ["seer", ["check_identity"]], ["witch", ["use_potion"]], ["hunter_shot", ["shoot"]], ["on_pre_vote", ["self_destruct"]], ["sheriff_nomination", ["run_for_sheriff"]], ["sheriff_withdraw", ["run_for_sheriff"]], ["sheriff_campaign_speech", ["speak"]], ["sheriff_vote", ["vote_for_sheriff"]], ["sheriff_choose_direction", ["choose_direction"]]];
+const stages: Array<[ActionStage, ToolName[]]> = [["day_speech", ["speak"]], ["last_words", ["speak"]], ["wolf_discussion", ["speak_to_wolves"]], ["wolf_vote", ["kill_vote"]], ["guard", ["guard"]], ["seer", ["check_identity"]], ["witch", ["use_potion"]], ["hunter_shot", ["shoot"]], [ActionWindow.OnPreVote, ["self_destruct"]], ["sheriff_nomination", ["run_for_sheriff"]], ["sheriff_withdraw", ["run_for_sheriff"]], ["sheriff_campaign_speech", ["speak"]], ["sheriff_vote", ["vote_for_sheriff"]], ["sheriff_choose_direction", ["choose_direction"]]];
 
 test("all base role identities, rules, private state and stages are bilingual and observation-neutral", () => {
   const chinese = setup("zh-CN"); const english = setup("en");

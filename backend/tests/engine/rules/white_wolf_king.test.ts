@@ -1,3 +1,5 @@
+import { Camp } from "../../../src/core";
+import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Role, Phase, ActionWindow, DeathCause, WinCondition, type ActionRequest, type RoleComponent, type GameEvent } from "../../../src/core";
@@ -52,7 +54,7 @@ for (const locale of ["zh-CN", "en"] as const) for (const window of Object.value
   throw new Error(`unexpected:${request.context.stage}`);
  } });
  expect(shots).toBe(1); expect(voted).toBe(0); expect(elections).toBe(window === ActionWindow.OnPreElection ? 0 : 6);
- expect(snapshot.result).toEqual({ winner: "good", reason: "all_wolves_eliminated", outcome: { kind: "victory", primary: { kind: "faction", faction: "good", winningPlayerIds: [3, 4, 5, 6] }, additional: [], winningPlayerIds: [3, 4, 5, 6] }, decidedAt: { day: 1, phase: window === ActionWindow.OnPreVote ? Phase.Voting : Phase.Day, checkpoint: "day_interrupted" } });
+ expect(snapshot.result).toEqual({ winner: Camp.Good, reason: "all_wolves_eliminated", outcome: { kind: "victory", primary: { kind: "faction", faction: "good", winningPlayerIds: [3, 4, 5, 6] }, additional: [], winningPlayerIds: [3, 4, 5, 6] }, decidedAt: { day: 1, phase: window === ActionWindow.OnPreVote ? Phase.Voting : Phase.Day, checkpoint: "day_interrupted" } });
  expect(game.world.getAliveEntityIds()).toEqual([3, 6]); expect(game.world.activeDeathActionCount).toBe(0);
  const events = game.phaseManager.getEvents();
  expect(events.filter(event => event.type === "last_words_spoken").map(event => event.payload.playerId)).toEqual([5]);
@@ -89,7 +91,7 @@ for (const locale of ["zh-CN", "en"] as const) for (const cause of ["knife", "po
   if(request.allowedTools.includes("speak_to_wolves")) return {name:"speak_to_wolves",args:{text:"End",end_chat:true}};
   if(request.allowedTools.includes("kill_vote")) return {name:"kill_vote",args:{target_id:cause==="knife"?1:5,abstain:false}};
   if(request.allowedTools.includes("check_identity")) return {name:"check_identity",args:{target_id:1}};
-  if(request.allowedTools.includes("use_potion")) return {name:"use_potion",args:{target_id:1,potion_type:(cause==="poison"?"poison":"none") as never}};
+  if(request.allowedTools.includes("use_potion")) return {name:"use_potion",args:{target_id:1,potion_type:(cause===PotionType.Poison?PotionType.Poison:PotionType.None) as never}};
   if(request.allowedTools.includes("self_destruct_with_target")) {
    whiteRequests++; expect(request.context).not.toHaveProperty("death_sources"); expect(getWhiteWolfKingState(role(game.world,1))?.canDetonate).toBe(true);
    const accepted=new ActionReception(game.world).validate(request,"self_destruct_with_target",call(3).args); expect(accepted.ok).toBe(true);
@@ -100,7 +102,7 @@ for (const locale of ["zh-CN", "en"] as const) for (const cause of ["knife", "po
   if(request.allowedTools.includes("run_for_sheriff")) {elections++;throw new Error("ordinary_interrupt_before_election");}
   throw new Error(`unexpected:${request.context.stage}`);
  } });
- expect(whiteRequests).toBe(1); expect(elections).toBe(0); expect(snapshot.result?.winner).toBe("good");
+ expect(whiteRequests).toBe(1); expect(elections).toBe(0); expect(snapshot.result?.winner).toBe(Camp.Good);
  expect(snapshot.result?.decidedAt).toEqual({day:1,phase:Phase.Day,checkpoint:"day_interrupted"});
  expect(getWhiteWolfKingState(role(game.world,1))?.canDetonate).toBe(true); expect(game.world.getAliveEntityIds()).toContain(3);
  const events=game.phaseManager.getEvents();expect(events.filter(event=>event.type==="white_wolf_king_self_destruct")).toEqual([]);
@@ -137,7 +139,7 @@ for(const locale of ["zh-CN","en"] as const)test(`${locale}: real night guard pr
    if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:4,abstain:false}};
    if(request.allowedTools.includes("check_identity"))return{name:"check_identity",args:{target_id:1}};
    if(request.allowedTools.includes("guard"))return{name:"guard",args:{target_id:4,abstain:false}};
-   if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:4,potion_type:"poison" as never}};
+   if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:4,potion_type:PotionType.Poison as never}};
    if(request.allowedTools.includes("self_destruct_with_target"))return call(4);
    if(request.allowedTools.includes("self_destruct"))return null;
    if(request.allowedTools.includes("shoot")){guns++;expect(request.context.death_sources).toEqual([DeathCause.WhiteWolfBlast]);return{name:"shoot",args:{target_id:2}};}
@@ -149,7 +151,7 @@ for(const locale of ["zh-CN","en"] as const)test(`${locale}: real night guard pr
   expect(events.filter(event=>event.type==="last_words_spoken")).toEqual([]);expect(guns).toBe(poison?0:1);
   expect(getHunterState(role(game.world,4))?.canShoot).toBe(false);expect(game.world.getAliveEntityIds()).toEqual(poison?[2,3,5,6]:[3,5,6]);
   if(poison){expect(snapshot.gameOver).toBe(false);expect(snapshot.day).toBe(2);expect(snapshot.phase).toBe(Phase.Night);expect(events.filter(event=>event.type==="hunter_silent_due_to_poison")).toHaveLength(1);}
-  else{expect(snapshot.result?.winner).toBe("good");expect(events.find(event=>event.type==="night_resolved")?.payload.deaths).toEqual([]);}
+  else{expect(snapshot.result?.winner).toBe(Camp.Good);expect(events.find(event=>event.type==="night_resolved")?.payload.deaths).toEqual([]);}
  }
 });
 

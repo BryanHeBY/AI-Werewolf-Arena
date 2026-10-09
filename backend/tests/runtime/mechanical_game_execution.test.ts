@@ -1,3 +1,4 @@
+import { Camp, DeathCause, Phase } from "../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { MECHANICAL_CASES, mechanicalScenario, type MechanicalScenario } from "../support/mechanical_scenarios";
@@ -16,7 +17,7 @@ const facts: Record<MechanicalScenario, { alive:number[]; words:number[]; day:nu
 };
 
 for (const kind of MECHANICAL_CASES) for (const transport of ["llm","acp","mixed"] as const) test(`${kind}/${transport}: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape`, async () => {
-  const runs=[];
+  const runs: Awaited<ReturnType<typeof runTransportGame>>[] = [];
   for (const locale of ["zh-CN","en"] as const) {
     const scenario=mechanicalScenario(kind), run=await runTransportGame(scenario,transport,locale);runs.push(run);
     const oracle=facts[kind], events=run.replay.events;
@@ -34,7 +35,7 @@ for (const kind of MECHANICAL_CASES) for (const transport of ["llm","acp","mixed
     if(kind==="extra"){expect(state.learned.skill).toEqual({kind:"wolf",extraKnife:"spent"});expect(events.filter(e=>e.type==="mechanical_attack_chosen").map(e=>e.payload)).toEqual([{actorId:1,day:2,targetId:3}]);}
     if(kind==="hunter"||kind==="twelve"){expect(state.learned.skill).toEqual({kind:"hunter",canShoot:false,armed:true});expect(events.filter(e=>e.type==="mechanical_shot").map(e=>e.payload)).toEqual([{actorId:1,targetId:kind==="twelve"?8:4}]);}
     const winners=kind==="twelve"?[5,6,7,8,9,10,11,12]:[3,4,5,6],night=kind==="guard_failure";
-    expect(run.result.snapshot.result).toEqual({winner:"good",reason:"all_wolves_eliminated",outcome:{kind:"victory",primary:{kind:"faction",faction:"good",winningPlayerIds:winners},additional:[],winningPlayerIds:winners},decidedAt:{day:oracle.day,phase:night?"day":"voting",checkpoint:night?"night_settled":"exile_settled"}});
+    expect(run.result.snapshot.result).toEqual({winner:Camp.Good,reason:"all_wolves_eliminated",outcome:{kind:"victory",primary:{kind:"faction",faction:Camp.Good,winningPlayerIds:winners},additional:[],winningPlayerIds:winners},decidedAt:{day:oracle.day,phase:night?Phase.Day:Phase.Voting,checkpoint:night?"night_settled":"exile_settled"}});
     for(const view of run.views){
       const projected=view.timeline.filter(row=>row.kind==="event").map(row=>row.event);
       expect(projected.some(e=>e.type==="mechanical_poison_reflected")).toBe(false);

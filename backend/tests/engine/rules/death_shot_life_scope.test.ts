@@ -4,6 +4,7 @@ import {Role,Phase,COMPONENT,DeathCause,type RoleComponent,type GameEvent,type B
 import {sixPlayerMvpConfig} from "../../../src/runtime/scenarios/six_player_mvp";
 import {DeathResolution} from "../../../src/game/engine/death_resolution";
 import {EventRegistry} from "../../../src/game/engine/event_registry";
+import type { DeathHookResult } from "../../../src/game/mechanisms/hooks/hook_registry";
 import {HookRegistry} from "../../../src/game/mechanisms/hooks/hook_registry";
 import {hunterDeathHook} from "../../../src/game/mechanisms/roles/hunter/death_hook";
 import {ToolGateway} from "../../../src/game/gateway/tool_gateway";
@@ -24,13 +25,13 @@ test("a new retry request can bind the current new life after the first reply wa
 });
 test("gateway target replacement cannot turn an accepted numeric ID into a new-life shot",async()=>{
  const game=fixture(),events:GameEvent[]=[],gateway=new ToolGateway(),validate=gateway.validateAndSanitize.bind(gateway);let requests=0;
- gateway.validateAndSanitize=(...args)=>{const result=validate(...args);if(args[2].name==="shoot")game.world.addComponent(5,COMPONENT.Alive,createAliveComponent());return result;};
+ gateway.validateAndSanitize=(world, actorId, call, validationContext)=>{const result=validate(world, actorId, call, validationContext);if(call.name==="shoot")game.world.addComponent(5,COMPONENT.Alive,createAliveComponent());return result;};
  await new DeathResolution(game.world,events,gateway,new EventRegistry(),{day:1,phase:Phase.Day,gameOver:false,result:null}).resolve([2],{2:[DeathCause.WolfKill]},{async getAction(request){if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};requests++;return{name:"shoot",args:{target_id:5}};}},Phase.Night,Phase.Day);
  expect(requests).toBe(3);expect(game.world.getAliveEntityIds()).toContain(5);expect(getHunterState(role(game,2))!.canShoot).toBe(true);expect(events.some(e=>e.type==="hunter_shot")).toBe(false);
 });
 for(const otherSource of [false,true])test(`${otherSource}: an invalid pending Shot does not produce public death or erase a separately valid death source`,async()=>{
  const game=fixture(),events:GameEvent[]=[],scope=captureNightLife(game.world,5)!;game.world.addComponent(5,COMPONENT.Alive,createAliveComponent());
- const registry=new EventRegistry(new HookRegistry([],[async(_world,ids)=>ids.includes(2)?{extraDeaths:[5],extraDeathSources:{5:otherSource?[DeathCause.Shot,DeathCause.Ability]:[DeathCause.Shot]},pendingShots:[{targetScope:scope,event:{timestamp:1,type:"hunter_shot",payload:{hunterId:2,targetId:5}}}]}:{extraDeaths:[],extraDeathSources:{}}]));
+ const registry=new EventRegistry(new HookRegistry([],[async(_world,ids):Promise<DeathHookResult>=>ids.includes(2)?{extraDeaths:[5],extraDeathSources:{5:otherSource?[DeathCause.Shot,DeathCause.Ability]:[DeathCause.Shot]},pendingShots:[{targetScope:scope,event:{timestamp:1,type:"hunter_shot",payload:{hunterId:2,targetId:5}}}]}:{extraDeaths:[],extraDeathSources:{}}]));
  await new DeathResolution(game.world,events,new ToolGateway(),registry,{day:1,phase:Phase.Day,gameOver:false,result:null}).resolve([2],{2:[DeathCause.WolfKill]},{async getAction(){return{name:"speak",args:{text:"Raw"}};}},Phase.Night,Phase.Day);
  expect(game.world.getAliveEntityIds().includes(5)).toBe(!otherSource);expect(events.filter(e=>e.type==="additional_deaths").map(e=>e.payload)).toEqual(otherSource?[{deaths:[5]}]:[]);expect(events.some(e=>e.type==="hunter_shot")).toBe(false);expect(JSON.stringify(events)).not.toContain('"life"');
 });
@@ -43,7 +44,7 @@ test("a accepted shot invalidated between hook completion and actual owner commi
 for(const change of ["actor_revive","actor_replace","clock","accepted_clock"] as const)test(`${change}: original death permit stays bound and cleanup preserves only legitimately consumed prefixes`,async()=>{
  const game=fixture(),events:GameEvent[]=[],state={day:1,phase:Phase.Day,gameOver:false,result:null},gateway=new ToolGateway(),original=getHunterState(role(game,2))!;
  const registry=change==="accepted_clock"?new EventRegistry(new HookRegistry([],[async(...args)=>{const result=await hunterDeathHook(...args);if(result.pendingShots?.length)state.phase=Phase.Voting;return result;}])):new EventRegistry();
- if(change==="actor_replace"){const validate=gateway.validateAndSanitize.bind(gateway);gateway.validateAndSanitize=(...args)=>{const result=validate(...args);if(args[2].name==="shoot")game.world.addComponent(2,COMPONENT.Alive,createAliveComponent(false));return result;};}
+ if(change==="actor_replace"){const validate=gateway.validateAndSanitize.bind(gateway);gateway.validateAndSanitize=(world, actorId, call, validationContext)=>{const result=validate(world, actorId, call, validationContext);if(call.name==="shoot")game.world.addComponent(2,COMPONENT.Alive,createAliveComponent(false));return result;};}
  await new DeathResolution(game.world,events,gateway,registry,state).resolve([2],{2:[DeathCause.WolfKill]},{async getAction(request){if(request.allowedTools.includes("shoot")){if(change==="actor_revive"){const life=game.world.getComponent<{alive:boolean}>(2,COMPONENT.Alive)!;life.alive=true;life.alive=false;}if(change==="clock")state.phase=Phase.Voting;return{name:"shoot",args:{target_id:5}};}return{name:"speak",args:{text:"Raw"}};}},Phase.Night,Phase.Day);
  expect(original.canShoot).toBe(change!=="accepted_clock");expect(game.world.getAliveEntityIds()).toContain(5);expect(events.some(e=>e.type==="hunter_shot")).toBe(false);expect(game.world.activeDeathActionCount).toBe(0);
 });

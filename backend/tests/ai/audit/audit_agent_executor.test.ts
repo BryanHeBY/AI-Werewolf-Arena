@@ -135,7 +135,7 @@ describe("Audit ACP MCP bridge", () => {
       await client.connect(new StdioClientTransport({
         command: process.execPath,
         args: [path.resolve(process.cwd(), "src/ai/audit/audit_mcp_server.ts")],
-        env: { ...process.env, ...env },
+        env: Object.fromEntries(Object.entries({ ...process.env, ...env }).filter((entry): entry is [string, string] => entry[1] !== undefined)),
       }));
       const tools = await client.listTools();
       expect(tools.tools.map((tool) => tool.name)).toEqual([

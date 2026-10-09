@@ -22,6 +22,7 @@ function speakRequest(actorId = 1): ActionRequest {
     context: {
       day: 1,
       stage: "day_speech",
+      turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },
       visible_events: [{ seq: 1, type: "phase_changed", payload: { day: 1, phase: "day" } }],
     },
   };
@@ -90,7 +91,7 @@ describe("WerewolfMcpControlServer", () => {
       const transport = new StdioClientTransport({
         command: process.execPath,
         args: [path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts")],
-        env: { ...process.env, ...env },
+        env: Object.fromEntries(Object.entries({ ...process.env, ...env }).filter((entry): entry is [string, string] => entry[1] !== undefined)),
       });
       await mcpClient.connect(transport);
       const tools = await mcpClient.listTools();

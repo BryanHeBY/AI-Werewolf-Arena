@@ -1,3 +1,5 @@
+import { completedNight } from "../night_stage_fixture";
+import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Camp, Phase, Role, WitchSelfHealRule, type ActionRequest, type GameEvent, type RoleComponent } from "../../../src/core";
@@ -126,6 +128,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: anonymous proven
   const { world } = fixture(locale), events: GameEvent[] = [];
   grantNightAbility(world, 5, { id: "gift:private", kind: "seer_check", state: freshSeer(), source: { kind: "gift", actorId: 3 }, startsOnDay: 1, maxUses: 1 }, events);
   grantNightAbility(world, 5, { id: "gift:disclosed", kind: "seer_check", state: freshSeer(), source: { kind: "gift", actorId: 3 }, sourceDisclosed: true, startsOnDay: 1, maxUses: 1 }, events);
+  if (events[0].type !== "ability_changed") throw new Error("unexpected_ability_grant_event");
   expect(events[0].payload.source).toEqual({ kind: "gift", actorId: 3 });
   const view = buildAgentVisibleEventFeed(world, events, 5);
   expect(view[0].payload.source).toEqual({ kind: "gift" }); expect(view[0].payload).not.toHaveProperty("sourceDisclosed");
@@ -141,7 +144,7 @@ test("granted potion consumes its own resources only when used; declining ends t
   const ability = grantNightAbility(world, 6, { id: "gift:potion", kind: "potion", state: { heal: 0, poison: 1, selfHealRule: WitchSelfHealRule.Disabled, canSelfHeal: false, healUsedThisNight: false, poisonUsedThisNight: false }, source: { kind: "gift", actorId: 3 }, startsOnDay: 1, maxUses: 1 }, events);
   const pipeline = new NightPipeline({ world, events, toolGateway: new ToolGateway(), damageResolutionSystem: new DamageResolutionSystem() });
   const provider = { async getAction(input: ActionRequest) {
-    if (input.actorId === 6 && input.context.stage === "witch") return { name: "use_potion" as const, args: { target_id: input.context.day === 1 ? 6 : 1, potion_type: input.context.day === 1 ? "none" as const : "poison" as const } };
+    if (input.actorId === 6 && input.context.stage === "witch") return { name: "use_potion" as const, args: { target_id: input.context.day === 1 ? 6 : 1, potion_type: input.context.day === 1 ? PotionType.None as const : PotionType.Poison as const } };
     return new BaselineBotActionProvider(world).getAction(input);
   } };
   await pipeline.execute(sixPlayerMvpConfig, provider, 1);
@@ -149,7 +152,7 @@ test("granted potion consumes its own resources only when used; declining ends t
   await pipeline.execute(sixPlayerMvpConfig, provider, 2);
   expect(ability.uses).toBe(1); expect(ability.state.poison).toBe(0); expect(abilityStatus(ability, 2)).toBe("spent");
   expect(getWitchState(role(world, 6), ability.id)).toBe(ability.state);
-  expect(events.filter(event => event.type === "witch_potion_used" && event.payload.actorId === 6).map(event => event.payload)).toEqual([{ actorId: 6, abilityId: "gift:potion", targetId: 1, potionType: "poison" }]);
+  expect(events.filter(event => event.type === "witch_potion_used" && event.payload.actorId === 6).map(event => event.payload)).toEqual([{ actorId: 6, abilityId: "gift:potion", targetId: 1, potionType: PotionType.Poison }]);
 });
 
 test("later snapshot entries lose their opportunity before another model request when they are blocked or die", async () => {
@@ -188,7 +191,7 @@ test("native installation and replacement detach repeated templates and return t
 });
 
 test("transfer requires an explicit knowledge policy and preserves generic counters while clearing unauthorized inspection memory", () => {
-  const { world } = fixture(), events: GameEvent[] = [], original = allNightAbilities(role(world, 3))[0];
+  const { world } = fixture(), events: GameEvent[] = [], original = activeNightAbility(role(world, 3), "seer_check", 1)!;
   original.state.history.push({ targetId: 1, isWerewolf: true }); recordNightAbilityUse(original, 1, true);
   expect(() => transferNightAbility(world, 3, 5, original.id, "move:vision", events, undefined as never)).toThrow("ability_transfer_policy_required");
   expect(allNightAbilities(role(world, 5))).toEqual([]);
@@ -207,13 +210,14 @@ for (const [rule, day, stale, healed] of [[WitchSelfHealRule.Always, 2, false, t
     const pipeline = new NightPipeline({ world, events, stageRegistry: new NightStageRegistry(catalog), toolGateway: new ToolGateway(new ActionValidator(new ToolValidationRuleRegistry(undefined, catalog))), damageResolutionSystem: new DamageResolutionSystem() });
     const result = await pipeline.execute(sixPlayerMvpConfig, { async getAction(input) {
       if (input.context.stage === "wolf_vote") return { name: "kill_vote", args: { target_id: 5, abstain: false } };
-      if (input.actorId === 5 && input.context.stage === "witch") return { name: "use_potion", args: { target_id: 5, potion_type: "heal" } };
+      if (input.actorId === 5 && input.context.stage === "witch") return { name: "use_potion", args: { target_id: 5, potion_type: PotionType.Heal } };
       return new BaselineBotActionProvider(world, catalog).getAction(input);
     } }, day);
-    const ability = allNightAbilities(role(world, 5))[0];
+    const ability = activeNightAbility(role(world, 5), "potion", day) ?? allNightAbilities(role(world, 5)).find(owned => owned.kind === "potion");
+    if (!ability || ability.kind !== "potion") throw new Error("missing_late_potion_fixture");
     expect(ability.kind).toBe("potion"); expect(ability.state.canSelfHeal).toBe(healed);
     expect(ability.uses).toBe(healed ? 1 : 0); expect(ability.state.heal).toBe(healed ? 0 : 1);
-    expect(result.damage.deaths).toEqual(healed ? [] : [5]);
+    expect(completedNight(result).damage.deaths).toEqual(healed ? [] : [5]);
   });
 
 test("explicit undefined optional fields normalize into a serializable CP/Tape without weakening strict JSON parsing", async () => {
@@ -257,7 +261,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: bound guard/poti
     expect(prompt).not.toContain(locale === "en" ? "Actionable IDs (excluding yourself)" : "可行动编号（不含自己）");
     expect(policy.buildObservation(input).identity.role).toBe(Role.Villager);
     if (tool === "use_potion") world.getComponent<{ add(value: string): void }>(actor, COMPONENT.StatusMarks)!.add("WolfKillMark");
-    const args = tool === "guard" ? { target_id: actor, abstain: false } : { target_id: actor, potion_type: "heal" };
+    const args = tool === "guard" ? { target_id: actor, abstain: false } : { target_id: actor, potion_type: PotionType.Heal };
     expect(new ActionReception(world).validate(input, tool, args).ok).toBe(true);
   }
 });

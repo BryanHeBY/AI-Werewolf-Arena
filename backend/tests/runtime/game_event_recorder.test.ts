@@ -1,3 +1,4 @@
+import { Phase } from "../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../src/app/bootstrap";
 import type { GameEvent } from "../../src/core/domain/model";
@@ -17,7 +18,7 @@ test("terminal presentation failure does not replay already recorded events", as
   const { world } = bootstrapGame(sixPlayerMvpConfig);
   const recorder = new GameEventRecorder({ world, replayManager: manager }, "night");
   const events: GameEvent[] = [
-    { timestamp: 1, type: "phase_changed", payload: { phase: "day", day: 1 } },
+    { timestamp: 1, type: "phase_changed", payload: { phase: Phase.Day, day: 1 } },
     { timestamp: 2, type: "day_speech", payload: { actorId: 1, text: "hello" } },
   ];
 

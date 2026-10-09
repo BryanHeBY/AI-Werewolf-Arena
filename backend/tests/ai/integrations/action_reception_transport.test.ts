@@ -1,3 +1,4 @@
+import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { text } from "@ai-werewolf-arena/game-text";
 import path from "node:path";
@@ -31,14 +32,14 @@ function sdkLoop(world: ReturnType<typeof bootstrapGame>["world"], onTrace?: (tr
   return new SdkGameToolLoop(world, getDefaultToolCallRepairRegistry(), new PlayerPromptSession({ maxPromptEvents: 20, promptPolicy: policy }), observer);
 }
 const submissions = [
-  { turn_id: "t99", action: "use_potion", arguments: { target_id: 6, potion_type: "none" } },
+  { turn_id: "t99", action: "use_potion", arguments: { target_id: 6, potion_type: PotionType.None } },
   { turn_id: "t1", action: "speak", arguments: { text: "wrong tool" } },
-  { turn_id: "t1", action: "use_potion", arguments: { target_id: 9, potion_type: "heal", private_override: "synthetic-secret" } },
-  { turn_id: "t1", action: "use_potion", arguments: { target_id: 6, potion_type: "heal" } },
-  { turn_id: "t1", action: "use_potion", arguments: { target_id: 9, potion_type: "heal" } },
-  { turn_id: "t1", action: "use_potion", arguments: { target_id: 999, potion_type: "poison" } },
-  { turn_id: "t1", action: "use_potion", arguments: { target_id: 6, potion_type: "none" } },
-  { turn_id: "t1", action: "use_potion", arguments: { target_id: 9, potion_type: "poison" } },
+  { turn_id: "t1", action: "use_potion", arguments: { target_id: 9, potion_type: PotionType.Heal, private_override: "synthetic-secret" } },
+  { turn_id: "t1", action: "use_potion", arguments: { target_id: 6, potion_type: PotionType.Heal } },
+  { turn_id: "t1", action: "use_potion", arguments: { target_id: 9, potion_type: PotionType.Heal } },
+  { turn_id: "t1", action: "use_potion", arguments: { target_id: 999, potion_type: PotionType.Poison } },
+  { turn_id: "t1", action: "use_potion", arguments: { target_id: 6, potion_type: PotionType.None } },
+  { turn_id: "t1", action: "use_potion", arguments: { target_id: 9, potion_type: PotionType.Poison } },
 ];
 const staleReport = { turn_id: "t99", category: "state", severity: "high", message: "synthetic stale report" };
 const expectedCodes = ["turn_id_mismatch", "turn_id_mismatch", "tool_not_allowed_in_this_turn", "invalid_tool_arguments", "self_heal", "heal_unavailable", "poison_target", "accepted", "turn_not_open_or_session_invalid"];
@@ -46,8 +47,8 @@ const expectedCodes = ["turn_id_mismatch", "turn_id_mismatch", "tool_not_allowed
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: real SDK HTTP and injected MCP return identical business receipts; rejected calls remain open and preflight does not record domain operations`, async () => {
   const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
   const acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
-  const sdkState = getWitchState(sdk.world.getComponent<RoleComponent>(6, COMPONENT.Role))!;
-  const acpState = getWitchState(acp.world.getComponent<RoleComponent>(6, COMPONENT.Role))!;
+  const sdkState = getWitchState(sdk.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!;
+  const acpState = getWitchState(acp.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!;
   sdkState.heal = 0; acpState.heal = 0;
   const before = structuredClone(sdkState);
   let requests = 0;
@@ -76,7 +77,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: real SDK HTTP an
       expect(receivedAcp[7]).toEqual({ ok: true, accepted: true, applied: false, action: "use_potion" });
       expect(JSON.stringify(receivedAcp)).not.toContain("synthetic-secret");
       if (locale === "en") expect(JSON.stringify(receivedAcp)).not.toMatch(/\p{Script=Han}/u);
-      expect(result.action).toEqual({ name: "use_potion", args: { target_id: 6, potion_type: "none" } });
+      expect(result.action).toEqual({ name: "use_potion", args: { target_id: 6, potion_type: PotionType.None } });
       expect(await pending.action).toEqual(result.action);
       expect(sdkState).toEqual(before); expect(acpState).toEqual(before); expect(requests).toBe(2);
       expect(new ToolGateway().validateAndSanitize(sdk.world, 6, result.action!, { phase: Phase.Night }).ok).toBe(true);
@@ -91,14 +92,14 @@ test("SDK owns its accepted action, rejects callbacks after completion/timeout, 
   const game = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale: "en" });
   let callback!: ToolLoopCallbacks<import("../../../src/core").ToolCall>["onToolCall"];
   const submitted = { id: "synthetic", name: "submit_action", rawArgs: "{}", args: submissions[6] };
-  const forgedClient = { chat: async () => "", async runToolLoop<T>(_messages: unknown, _tools: unknown, callbacks: any) { callback = callbacks.onToolCall; return { finalAction: { name: "use_potion", args: { target_id: 9, potion_type: "poison" } } as T, assistantText: "" }; } } as ChatModelClient;
+  const forgedClient = { chat: async () => "", async runToolLoop<T>(_messages: unknown, _tools: unknown, callbacks: any) { callback = callbacks.onToolCall; return { finalAction: { name: "use_potion", args: { target_id: 9, potion_type: PotionType.Poison } } as T, assistantText: "" }; } } as ChatModelClient;
   expect((await sdkLoop(game.world).run(forgedClient, request, [], 1000, "t1")).action).toBeNull();
   expect((await callback(submitted)).toolResult).toMatchObject({ ok: false, error: "turn_not_open_or_session_invalid" });
   const hanging = { chat: async () => "", async runToolLoop<T>(_messages: unknown, _tools: unknown, callbacks: any) { callback = callbacks.onToolCall; return new Promise<never>(() => {}); } } as ChatModelClient;
   await expect(sdkLoop(game.world).run(hanging, request, [], 30, "t1")).rejects.toThrow("llm_request_timeout_30ms");
   expect((await callback(submitted)).toolResult).toMatchObject({ ok: false, error: "turn_not_open_or_session_invalid" });
   expect((await callback({ id: "late-report", name: "report_bug", rawArgs: "{}", args: { turn_id: "t1", category: "state", severity: "high", message: "late synthetic report" } })).toolResult).toMatchObject({ ok: false, error: "turn_not_open_or_session_invalid" });
-  expect(getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role))!.poison).toBe(1);
+  expect(getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!.poison).toBe(1);
 });
 
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: real SDK and MCP enforce wolf chat/knife permissions and phases before accepting a correction`, async () => {
@@ -233,7 +234,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: reused SDK and A
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual SDK/MCP reject non-knife heals, keep the turn open, and accept the correct marked target without consuming`, async () => {
   const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }), acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
   for (const game of [sdk, acp]) game.world.getComponent<{ add(mark: string): void }>(9, COMPONENT.StatusMarks)!.add("WolfKillMark");
-  const actions = [{ turn_id: "t1", action: "use_potion", arguments: { target_id: 999, potion_type: "heal" } }, { turn_id: "t1", action: "use_potion", arguments: { target_id: 10, potion_type: "heal" } }, { turn_id: "t1", action: "use_potion", arguments: { target_id: 9, potion_type: "heal" } }];
+  const actions = [{ turn_id: "t1", action: "use_potion", arguments: { target_id: 999, potion_type: PotionType.Heal } }, { turn_id: "t1", action: "use_potion", arguments: { target_id: 10, potion_type: PotionType.Heal } }, { turn_id: "t1", action: "use_potion", arguments: { target_id: 9, potion_type: PotionType.Heal } }];
   const server = Bun.serve({ hostname: "127.0.0.1", port: 0, async fetch(input) {
     await input.json();
     return Response.json({ id: "heal-target", object: "chat.completion", created: 1, model: "synthetic", choices: [{ index: 0, finish_reason: "tool_calls", message: { role: "assistant", content: null, tool_calls: actions.map((args, index) => ({ id: `call-${index}`, type: "function", function: { name: "submit_action", arguments: JSON.stringify(args) } })) } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
@@ -248,9 +249,9 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual SDK/MCP r
     const mcp: any[] = [];
     for (const arguments_ of actions) mcp.push((await client.callTool({ name: "submit_action", arguments: arguments_ })).structuredContent);
     expect(receipts).toEqual(mcp); expect(mcp.map(receipt => receipt.ok ? "accepted" : receipt.error)).toEqual(["heal_target", "heal_target", "accepted"]);
-    expect(result.action).toEqual({ name: "use_potion", args: { target_id: 9, potion_type: "heal" } }); expect(await pending.action).toEqual(result.action);
-    expect(getWitchState(sdk.world.getComponent<RoleComponent>(6, COMPONENT.Role))!.heal).toBe(1);
-    expect(getWitchState(acp.world.getComponent<RoleComponent>(6, COMPONENT.Role))!.heal).toBe(1);
+    expect(result.action).toEqual({ name: "use_potion", args: { target_id: 9, potion_type: PotionType.Heal } }); expect(await pending.action).toEqual(result.action);
+    expect(getWitchState(sdk.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!.heal).toBe(1);
+    expect(getWitchState(acp.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!.heal).toBe(1);
     if (locale === "en") expect(JSON.stringify(mcp)).not.toMatch(/\p{Script=Han}/u);
   } finally { registry.close(); await client.close(); await control.close({ force: true }); server.stop(true); }
 });

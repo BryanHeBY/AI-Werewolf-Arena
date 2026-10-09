@@ -1,3 +1,4 @@
+import { nightStageContext } from "../night_stage_fixture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Camp, COMPONENT, Phase, Role, WinCondition, type ActionRequest, type BoardConfig, type GameEvent, type RoleComponent } from "../../../src/core";
@@ -30,7 +31,7 @@ const role = (game: ReturnType<typeof fixture>, id = 1) => game.world.getCompone
 const native = (game: ReturnType<typeof fixture>) => findNightAbility(role(game), "role_check")!;
 function context(game: ReturnType<typeof fixture>, events: GameEvent[], getAction: NightStageContext["actionProvider"]["getAction"], day = 1, clock = () => true): NightStageContext {
   const requests = new GameActionRequestFactory(game.world, events, day);
-  return { world: game.world, events, roleCatalog: getDefaultRoleCatalog(), toolGateway: new ToolGateway(), isCurrent: clock, currentDay: () => day, actionProvider: { getAction }, makeRequest: (actorId, allowedTools, extra) => requests.create({ actorId, phase: Phase.Night, allowedTools, stage: extra.stage, requiresAction: extra.requiresAction ?? true, context: extra }), getAliveByRole: () => [], state: { wolfChatOrder: [], endedWolves: new Set(), wolfVotes: {}, wolfTarget: null, seerChecks: [], dreamLinks: [] } } as NightStageContext;
+  return nightStageContext({ world: game.world, events, roleCatalog: getDefaultRoleCatalog(), toolGateway: new ToolGateway(), isCurrent: clock, currentDay: () => day, actionProvider: { getAction }, makeRequest: (actorId, allowedTools, extra) => requests.create({summary: "Offline stage fixture",  actorId, phase: Phase.Night, allowedTools, stage: extra.stage, requiresAction: extra.requiresAction ?? true, context: extra }), getAliveByRole: () => [], state: { wolfChatOrder: [], endedWolves: new Set(), wolfVotes: {}, wolfTarget: null, seerChecks: [], dreamLinks: [] } });
 }
 const policy = (game: ReturnType<typeof fixture>) => new PlayerPromptPolicy(game.world, { boardConfig: game.config, roleCatalog: getDefaultRoleCatalog(), toolSpecRegistry: getDefaultToolSpecRegistry(), targetHintRegistry: getDefaultTargetHintRegistry(), phaseStageLocalizationRegistry: getDefaultPhaseStageLocalizationRegistry(), configRenderRegistry: getDefaultConfigRenderRegistry() });
 
@@ -59,7 +60,7 @@ test("Hidden role labels change after inheritance but a previous Mirror report i
   game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive = false; refreshHiddenWolfInheritance(game.world, events, 1);
   expect(resolveInspection(game.world, 3, "role", getDefaultRoleCatalog())).toEqual({ kind: "role", role: Role.HiddenWolf });
   expect(ability.state.history[0].result).toEqual({ kind: "role", role: Role.Villager });
-  const request = context(game, events, async () => null, 2).makeRequest(1, ["inspect_role"], { stage: "mirror_girl", ability_id: ability.id }); expect(new ActionReception(game.world).validate(request, "inspect_role", { target_id: 3 }).error).toBe("role_inspection_repeat");
+  const request = context(game, events, async () => null, 2).makeRequest(1, ["inspect_role"], { stage: "mirror_girl", ability_id: ability.id }); expect(new ActionReception(game.world).validate(request, "inspect_role", { target_id: 3 })).toMatchObject({ ok: false, error: "role_inspection_repeat" });
 });
 
 test("Mirror pass and later exhausted target set close the night without consuming or changing old reports; invalid replies still fail", async () => {
@@ -143,7 +144,7 @@ for (const point of ["gateway", "label"] as const) test(`${point}: Mirror rechec
   for (const targetId of [3, 4, 5, 6]) ability.state.history.push({ day: 1, targetId, result: { kind: "role", role: Role.Villager } });
   const inject = () => ability.state.history.push({ day: 1, targetId: 2, result: { kind: "role", role: Role.Wolf } });
   const ctx = context(game, events, async () => { calls++; return { name: "inspect_role", args: { target_id: 2 } }; });
-  if (point === "gateway") { const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway); ctx.toolGateway.validateAndSanitize = (...args: Parameters<typeof validate>) => { const result = validate(...args); inject(); return result; }; }
+  if (point === "gateway") { const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway); ctx.toolGateway.validateAndSanitize = (world, actorId, call, validationContext) => { const result = validate(world, actorId, call, validationContext); inject(); return result; }; }
   if (point === "label") { const { RoleCatalog } = await import("../../../src/game/mechanisms/roles/catalog"); ctx.roleCatalog = new RoleCatalog(getDefaultRoleCatalog().all().map(profile => profile.role === Role.Wolf ? { ...profile, inspectionLabels: () => { inject(); return { role: Role.Wolf }; } } : profile)); }
   await MIRROR_INSPECTION_STAGE.execute(ctx); expect(calls).toBe(1); expect(ability.state.history.map(r => r.targetId)).toEqual([3, 4, 5, 6, 2]); expect(ability.uses).toBe(0); expect(ability.lastUsedDay).toBe(1); expect(ability.state.lastTarget).toBeNull(); expect(events.map(e => [e.type, e.payload])).toEqual([["role_inspection_skipped", { actorId: 1, day: 1, reason: "no_targets" }]]);
 });

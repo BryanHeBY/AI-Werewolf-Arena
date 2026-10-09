@@ -29,7 +29,7 @@ test("mandatory manifest, public replay and reproduction failures are all awaite
   const files = ["manifest.json", "replay.json", "reproduction.json"];
   const errors = files.map(file => new Error(`${file}_write_failed`));
   const realWrite = ReplayFileStore.prototype.writeJsonStrict;
-  const write = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(async function(file, data) {
+  const write = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(async function(this: ReplayFileStore, file, data) {
     const index = files.indexOf(file);
     if (index !== -1 && (file !== "reproduction.json" || (data as { finalized?: boolean }).finalized)) throw errors[index];
     return realWrite.call(this, file, data);
@@ -69,7 +69,7 @@ test("settling a decision during a slow prefix write cannot schedule a later ove
   const started = new Promise<void>(done => { notify = done; });
   const realWrite = ReplayFileStore.prototype.writeJsonStrict;
   let paused = false;
-  const write = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(async function(file, data) {
+  const write = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(async function(this: ReplayFileStore, file, data) {
     if (!paused && file === "reproduction.json" && !(data as { finalized: boolean }).finalized) { paused = true; notify(); await blocked; }
     return realWrite.call(this, file, data);
   });
@@ -89,7 +89,7 @@ test("a failed strict prefix write remains visible even when the final publicati
   const error = new Error("prefix_write_failed");
   const realWrite = ReplayFileStore.prototype.writeJsonStrict;
   let failed = false;
-  const write = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(async function(file, data) {
+  const write = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(async function(this: ReplayFileStore, file, data) {
     if (!failed && file === "reproduction.json" && !(data as { finalized: boolean }).finalized) { failed = true; throw error; }
     return realWrite.call(this, file, data);
   });

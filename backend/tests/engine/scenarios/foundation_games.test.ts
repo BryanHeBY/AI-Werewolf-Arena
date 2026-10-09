@@ -1,3 +1,4 @@
+import { ActionWindow } from "../../../src/core";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
 import { PlayerPromptSession } from "../../../src/ai/agents/llm/player_prompt_session";
@@ -150,7 +151,7 @@ for (const locale of ["zh-CN", "en"] as const) for (const flipIdiot of [false, t
     p.add(1, [8, 10], "sheriff_withdraw", actor => ({ name: "run_for_sheriff", args: { run: actor === 8 } }));
     p.add(1, all.filter(id => id !== 8), "sheriff_vote", { name: "vote_for_sheriff", args: { target_id: 8, abstain: false } });
     p.add(1, [8], "sheriff_choose_direction", { name: "choose_direction", args: { direction: "clockwise" } });
-    p.speech(1, all); p.add(1, [1, 2, 3, 4], "on_pre_vote", null);
+    p.speech(1, all); p.add(1, [1, 2, 3, 4], ActionWindow.OnPreVote, null);
     p.vote(1, all, flipIdiot ? 8 : 1); if (!flipIdiot) p.lastWords(1, 1);
     p.wolves(2, flipIdiot ? [1, 2, 3, 4] : [2, 3, 4], 7);
     p.add(2, [6], "witch", { name: "use_potion", args: { target_id: 4, potion_type: PotionType.Poison } });
@@ -159,7 +160,7 @@ for (const locale of ["zh-CN", "en"] as const) for (const flipIdiot of [false, t
     p.add(2, [flipIdiot ? 1 : 8], "sheriff_choose_direction", { name: "choose_direction", args: { direction: "clockwise" } });
     p.speech(2, flipIdiot ? [1, 2, 5, 6, 8, 9, 10, 11, 12] : [2, 5, 6, 8, 9, 10, 11, 12]);
     if (flipIdiot) {
-      p.add(2, [1, 2], "on_pre_vote", null);
+      p.add(2, [1, 2], ActionWindow.OnPreVote, null);
       p.vote(2, [1, 2, 5, 6, 9, 10, 11, 12], 1); p.lastWords(2, 1);
       p.wolves(3, [2], 5);
       p.add(3, [6], "witch", { name: "use_potion", args: { target_id: 6, potion_type: PotionType.None } });
@@ -167,24 +168,24 @@ for (const locale of ["zh-CN", "en"] as const) for (const flipIdiot of [false, t
       p.add(3, [2], "sheriff_choose_direction", { name: "choose_direction", args: { direction: "clockwise" } });
       p.speech(3, [2, 6, 8, 9, 10, 11, 12]);
     }
-    p.add(flipIdiot ? 3 : 2, [2], "on_pre_vote", { name: "self_destruct", args: { reason: "Final wolf", confirm: true } });
+    p.add(flipIdiot ? 3 : 2, [2], ActionWindow.OnPreVote, { name: "self_destruct", args: { reason: "Final wolf", confirm: true } });
     const game = await runRecorded(twelvePlayerStandardConfig, twelveRoles, p.steps, locale);
     expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
     expect(game.world.getAliveEntityIds()).toEqual(flipIdiot ? [6, 8, 9, 10, 11, 12] : [5, 6, 8, 9, 10, 11, 12]);
     expect(game.manifest.players.filter((player: { alive: boolean }) => player.alive).map((player: { player_id: number }) => player.player_id)).toEqual(flipIdiot ? [6, 8, 9, 10, 11, 12] : [5, 6, 8, 9, 10, 11, 12]);
-    const witch = getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role));
+    const witch = getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!);
     expect(witch?.heal).toBe(0); expect(witch?.poison).toBe(0);
-    expect(getHunterState(game.world.getComponent<RoleComponent>(7, COMPONENT.Role))?.canShoot).toBe(false);
+    expect(getHunterState(game.world.getComponent<RoleComponent>(7, COMPONENT.Role)!)?.canShoot).toBe(false);
     expect(game.replay.events.filter((event: { type: string }) => event.type === "witch_potion_used")).toHaveLength(2);
-    expect(game.replay.events.filter(event => event.type === "witch_potion_used").map(event => event.payload)).toEqual([{ actorId: 6, targetId: 9, potionType: "heal" }, { actorId: 6, targetId: 4, potionType: "poison" }]);
+    expect(game.replay.events.filter(event => event.type === "witch_potion_used").map(event => event.payload)).toEqual([{ actorId: 6, targetId: 9, potionType: PotionType.Heal }, { actorId: 6, targetId: 4, potionType: PotionType.Poison }]);
     expect(game.replay.events.filter(event => event.type === "hunter_shot").map(event => event.payload)).toEqual([{ hunterId: 7, targetId: 3 }]);
     expect(game.replay.events.filter(event => event.type === "night_resolved").map(event => event.payload.deaths)).toEqual(flipIdiot ? [[], [4, 7], [5]] : [[], [4, 7]]);
     const checks = [1, 2, ...(flipIdiot ? [2] : [])].map(targetId => ({ actorId: 5, targetId, isWerewolf: true, result: { kind: "camp", camp: "wolf" } }));
     expect(game.replay.events.filter(event => event.type === "seer_checked").map(event => event.payload)).toEqual(checks);
     expect(game.playerViews[4].timeline.filter(entry => entry.kind === "event" && entry.event.type === "seer_checked").map(entry => entry.kind === "event" ? entry.event.payload : null)).toEqual(checks);
-    expect(game.playerViews[5].timeline.filter(entry => entry.kind === "event" && entry.event.type === "witch_potion_used").map(entry => entry.kind === "event" ? entry.event.payload : null)).toEqual([{ actorId: 6, targetId: 9, potionType: "heal" }, { actorId: 6, targetId: 4, potionType: "poison" }]);
+    expect(game.playerViews[5].timeline.filter(entry => entry.kind === "event" && entry.event.type === "witch_potion_used").map(entry => entry.kind === "event" ? entry.event.payload : null)).toEqual([{ actorId: 6, targetId: 9, potionType: PotionType.Heal }, { actorId: 6, targetId: 4, potionType: PotionType.Poison }]);
     expect(game.replay.events.some((event: { type: string }) => event.type === "hunter_shot")).toBe(true);
-    expect(game.replay.events.at(-1).type).toBe("game_over");
+    expect(game.replay.events.at(-1)!.type).toBe("game_over");
     const types = game.replay.events.map((event: { type: string }) => event.type);
     expect(types.indexOf("sheriff_elected")).toBeLessThan(types.indexOf("night_resolved"));
     expect(types.indexOf("witch_potion_used")).toBeLessThan(types.indexOf("sheriff_elected"));
@@ -215,7 +216,7 @@ test("a final event flush failure still finalizes and preserves the script and p
   const flush = spyOn(GameEventRecorder.prototype, "flush").mockImplementation(() => { throw flushError; });
   const realFinalize = SessionRecordManager.prototype.finalize;
   let finalized = 0;
-  const finalize = spyOn(SessionRecordManager.prototype, "finalize").mockImplementation(async function(meta) {
+  const finalize = spyOn(SessionRecordManager.prototype, "finalize").mockImplementation(async function(this: SessionRecordManager, meta) {
     finalized++;
     await realFinalize.call(this, meta);
     throw persistError;

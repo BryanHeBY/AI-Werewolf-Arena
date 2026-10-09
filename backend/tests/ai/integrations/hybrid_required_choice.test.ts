@@ -41,7 +41,7 @@ for (const locale of ["zh-CN", "en"] as const) for (const transport of ["sdk", "
       return reproduction.decide(request, provider);
     } }).catch(error => { cycleFailure = error; throw error; })).rejects.toThrow("hybrid_valid_action_missing");
     expect(decisions).toBe(3); expect(nativeCalls).toBeGreaterThanOrEqual(3); expect(fallbacks).toBe(0);
-    expect(getHybridState(game.world.getComponent<RoleComponent>(1, COMPONENT.Role))).toEqual({ remaining: 1, choice: null }); expect(game.world.getComponent<VictoryComponent>(1, COMPONENT.Victory)!.affiliations).toEqual([]);
+    expect(getHybridState(game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!)).toEqual({ remaining: 1, choice: null }); expect(game.world.getComponent<VictoryComponent>(1, COMPONENT.Victory)!.affiliations).toEqual([]);
     expect(game.phaseManager.getEvents().some(e => e.type.startsWith("hybrid_"))).toBe(false); expect(game.phaseManager.getSnapshot().gameOver).toBe(false); expect(game.world.getAliveEntityIds()).toEqual([1, 2, 3, 4, 5, 6]);
     reproduction.checkpoint(captureCheckpoint(game.world, game.phaseManager.getSnapshot(), 1, false, game.phaseManager.getEvents().length, cycleFailure), game.phaseManager.getEvents()); manager.noteReproductionFailure("cycle", cycleFailure);
     await manager.finalize({ endedAtIso: "2026-10-09T00:01:00.000Z", winner: null, finishReason: "runtime_error", players: [] });

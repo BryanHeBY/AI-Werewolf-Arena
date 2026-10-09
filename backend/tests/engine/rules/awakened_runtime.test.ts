@@ -1,3 +1,4 @@
+import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Camp, DeathCause, Phase, Role, StatusMark, type ActionProvider, type BoardConfig, type GameEvent, type RoleComponent, type ToolCall } from "../../../src/core";
@@ -93,7 +94,7 @@ for (const boundary of ["await", "gateway", "label"] as const) for (const mutati
     if (boundary === "await") mutate();
     return { name: "inspect_role", args: { target_id: 6 } };
   });
-  if (boundary === "gateway") { const validate = next.toolGateway.validateAndSanitize.bind(next.toolGateway); next.toolGateway.validateAndSanitize = (...args) => { const result = validate(...args); if (args[1] === 1) mutate(); return result; }; }
+  if (boundary === "gateway") { const validate = next.toolGateway.validateAndSanitize.bind(next.toolGateway); next.toolGateway.validateAndSanitize = (world, actorId, call, validationContext) => { const result = validate(world, actorId, call, validationContext); if (actorId === 1) mutate(); return result; }; }
   if (boundary === "label") next.roleCatalog = new RoleCatalog(next.roleCatalog.all().map(profile => profile.role === Role.Villager ? { ...profile, inspectionLabels: () => { mutate(); return { role: Role.Villager }; } } : profile));
   await stage("awakened_opening").execute(next); await MIRROR_INSPECTION_STAGE.execute(next);
   expect(ability.uses).toBe(0); expect(ability.lastUsedDay).toBeNull(); expect(ability.state.history).toEqual([]);
@@ -170,7 +171,7 @@ for (const boundary of ["spent", "await", "gateway"] as const) test(`${boundary}
   const game = fixture(Role.Witch); ready(game, "witch"); const skill = state(game).learned!.skill; if (skill.kind !== "poison") throw new Error("wrong fixture");
   let requests = 0; if (boundary === "spent") skill.remaining = 0;
   const ctx = context(game, 2, async () => { requests++; if (boundary === "await") skill.remaining = 0; return { name: "awakened_poison", args: { target_id: 6 } }; });
-  if (boundary === "gateway") { const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway); ctx.toolGateway.validateAndSanitize = (...args) => { const result = validate(...args); skill.remaining = 0; return result; }; }
+  if (boundary === "gateway") { const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway); ctx.toolGateway.validateAndSanitize = (world, actorId, call, validationContext) => { const result = validate(world, actorId, call, validationContext); skill.remaining = 0; return result; }; }
   await stage("awakened_opening").execute(ctx); await stage("awakened_skill").execute(ctx);
   expect(requests).toBe(boundary === "spent" ? 0 : 1); expect(ctx.state.poisonClaims).toEqual([]); expect(ctx.events).toEqual([]); expect(state(game).skillClosedDay).toBeNull();
 });
@@ -243,7 +244,7 @@ test("a completed night with only a Villager template and inherited base knife c
   const provider: ActionProvider = { async getAction(request) {
     if (request.allowedTools.includes("kill_vote")) { knives++; return { name: "kill_vote", args: { target_id: 6, abstain: false } }; }
     if (request.allowedTools.includes("guard")) return { name: "guard", args: { target_id: null, abstain: true } };
-    if (request.allowedTools.includes("use_potion")) return { name: "use_potion", args: { target_id: 4, potion_type: "none" } };
+    if (request.allowedTools.includes("use_potion")) return { name: "use_potion", args: { target_id: 4, potion_type: PotionType.None } };
     throw new Error("unexpected_action_request");
   } };
   const first = await pipeline.execute(game.config, provider, 2);
@@ -259,7 +260,7 @@ test("actual first-night knife death arms the copied gun at 900 and resolves its
     if (request.allowedTools.includes("speak_to_wolves")) return { name: "speak_to_wolves", args: { text: "done", end_chat: true } };
     if (request.allowedTools.includes("kill_vote")) return { name: "kill_vote", args: { target_id: 1, abstain: false } };
     if (request.allowedTools.includes("guard")) return { name: "guard", args: { target_id: null, abstain: true } };
-    if (request.allowedTools.includes("use_potion")) return { name: "use_potion", args: { target_id: 4, potion_type: "none" } };
+    if (request.allowedTools.includes("use_potion")) return { name: "use_potion", args: { target_id: 4, potion_type: PotionType.None } };
     if (request.allowedTools.includes("awakened_mimic")) return { name: "awakened_mimic", args: { target_id: 3 } };
     if (request.allowedTools.includes("shoot")) { expect(request.context.stage).toBe("death_shot"); return { name: "shoot", args: { target_id: 2 } }; }
     if (request.allowedTools.includes("speak")) return { name: "speak", args: { text: "last words" } };
@@ -270,7 +271,7 @@ test("actual first-night knife death arms the copied gun at 900 and resolves its
   expect(events.filter(e => e.type === "player_shot").map(e => e.payload)).toEqual([{ actorId: 1, targetId: 2 }]);
   expect(events.findIndex(e => e.type === "awakened_ready")).toBeLessThan(events.findIndex(e => e.type === "night_resolved"));
   expect(events.findIndex(e => e.type === "player_shot")).toBeLessThan(events.findIndex(e => e.type === "game_over"));
-  expect(game.world.getAliveEntityIds()).toEqual([3, 4, 5, 6]); expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");
+  expect(game.world.getAliveEntityIds()).toEqual([3, 4, 5, 6]); expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
   expect(captureAwakenedOwner(game.world, 1, () => true)).toBeNull();
 });
 
@@ -279,7 +280,7 @@ function nightGunProvider(knife: number | null, poison: number | null, gun: numb
     if (request.allowedTools.includes("speak_to_wolves")) return { name: "speak_to_wolves", args: { text: "done", end_chat: true } };
     if (request.allowedTools.includes("kill_vote")) return { name: "kill_vote", args: { target_id: knife, abstain: knife === null } };
     if (request.allowedTools.includes("guard")) return { name: "guard", args: { target_id: null, abstain: true } };
-    if (request.allowedTools.includes("use_potion")) return { name: "use_potion", args: { target_id: poison ?? 4, potion_type: poison === null ? "none" : "poison" } };
+    if (request.allowedTools.includes("use_potion")) return { name: "use_potion", args: { target_id: poison ?? 4, potion_type: poison === null ? PotionType.None : PotionType.Poison } };
     if (request.allowedTools.includes("awakened_mimic")) return { name: "awakened_mimic", args: { target_id: 3 } };
     if (request.allowedTools.includes("shoot")) return { name: "shoot", args: { target_id: gun } };
     if (request.allowedTools.includes("speak")) return { name: "speak", args: { text: "words" } };
@@ -294,7 +295,7 @@ test("Aw and the last ordinary Wolf dying in the same real initial batch never c
   expect(events.find(e => e.type === "night_resolved")!.payload.deaths).toEqual([1, 2]);
   expect(events.some(e => e.type === "awakened_inherited")).toBe(false); expect(state(game).hasInheritedKnife).toBe(false); expect(state(game).firstKnifeNight).toBeNull();
   expect(state(game).learned!.skill).toEqual({ kind: "hunter", armed: true, canShoot: false });
-  expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");
+  expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
 });
 
 test("inheritance before a later actual Hunter shot death keeps the paid fact and never grants a dead knife", async () => {
@@ -305,7 +306,7 @@ test("inheritance before a later actual Hunter shot death keeps the paid fact an
   expect(events.filter(e => e.type === "hunter_shot").map(e => e.payload)).toEqual([{ hunterId: 3, targetId: 1 }]);
   expect(events.findIndex(e => e.type === "awakened_inherited")).toBeLessThan(events.findIndex(e => e.type === "hunter_shot"));
   expect(state(game).hasInheritedKnife).toBe(true); expect(canAwakenedKnife(role(game), game.world)).toBe(false);
-  expect(game.world.getAliveEntityIds()).toEqual([4, 5, 6]); expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");
+  expect(game.world.getAliveEntityIds()).toEqual([4, 5, 6]); expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
 });
 
 for (const knife of [null, 1]) test(`${knife}: actual first-night poison or knife+poison compound suppresses the armed copied gun`, async () => {
@@ -316,7 +317,7 @@ for (const knife of [null, 1]) test(`${knife}: actual first-night poison or knif
   await game.phaseManager.runSingleCycle({ async getAction(request) { if (request.actorId === 1 && request.allowedTools.includes("shoot")) requests++; return source.getAction(request); } });
   const events = game.phaseManager.getEvents();
   expect(state(game).learned!.skill).toEqual({ kind: "hunter", armed: true, canShoot: false }); expect(requests).toBe(0); expect(events.some(e => e.type === "player_shot")).toBe(false);
-  expect(events.some(e => e.type === "awakened_inherited")).toBe(false); expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");
+  expect(events.some(e => e.type === "awakened_inherited")).toBe(false); expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
 });
 
 test("another Wolf revival temporarily removes a current knife without resetting its inheritance or extra stock", async () => {

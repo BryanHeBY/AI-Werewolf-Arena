@@ -179,6 +179,6 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: declining earlie
   const night = events.findIndex(event => event.type === "night_resolved");
   expect(night).toBeGreaterThanOrEqual(0);
   expect(events.slice(night + 1).filter(event => event.type === "day_speech").map(event => event.payload.actorId)).toEqual([4, 5, 6, 1, 2, 3]);
-  expect(events.findLastIndex(event => event.type === "day_speech")).toBeLessThan(events.findIndex(event => event.type === "wolf_self_destruct"));
+  expect(events.reduce((last, event, index) => event.type === "day_speech" ? index : last, -1)).toBeLessThan(events.findIndex(event => event.type === "wolf_self_destruct"));
   expect(events.filter(event => event.type === "vote_cast")).toEqual([]);
 });

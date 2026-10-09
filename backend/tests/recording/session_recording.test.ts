@@ -609,14 +609,14 @@ describe("SessionRecordManager", () => {
     );
     const { promise: secondStarted, resolve: releaseSecond } = Promise.withResolvers<void>();
     const secondRun = runWithSessionRecorder(second, async () => {
-      safeRecordLogicOp({ scope: "test", op: "second_before", status: "ok" });
+      safeRecordLogicOp({ scope: "gateway", op: "second_before", status: "ok" });
       releaseSecond();
       await Promise.resolve();
-      safeRecordLogicOp({ scope: "test", op: "second_after", status: "ok" });
+      safeRecordLogicOp({ scope: "gateway", op: "second_after", status: "ok" });
     });
     const firstRun = runWithSessionRecorder(first, async () => {
       await secondStarted;
-      safeRecordLogicOp({ scope: "test", op: "first_only", status: "ok" });
+      safeRecordLogicOp({ scope: "gateway", op: "first_only", status: "ok" });
     });
     await Promise.all([firstRun, secondRun]);
     await first.finalize({ endedAtIso: new Date().toISOString(), winner: null, finishReason: "test_done", players: [] });

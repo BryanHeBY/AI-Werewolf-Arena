@@ -22,7 +22,7 @@ test("all action schemas reject missing/extra arguments and ambiguous types befo
   const { world } = game(); const receive = new ActionReception(world);
   const samples = [
     [1, "speak_to_wolves", { text: "raw", end_chat: false }], [1, "kill_vote", { target_id: 9, abstain: false }],
-    [5, "check_identity", { target_id: 9 }], [6, "use_potion", { target_id: 6, potion_type: "none" }],
+    [5, "check_identity", { target_id: 9 }], [6, "use_potion", { target_id: 6, potion_type: PotionType.None }],
     [9, "speak", { text: "raw" }], [9, "vote", { target_id: 1, abstain: false }],
     [7, "shoot", { target_id: 1 }], [9, "run_for_sheriff", { run: false }],
     [9, "vote_for_sheriff", { target_id: 1, abstain: false }],
@@ -47,18 +47,18 @@ test("all action schemas reject missing/extra arguments and ambiguous types befo
 
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: rules reject before sealing, leave resources intact, and accept one detached sanitized action`, async () => {
   const { world } = game(locale), receive = new ActionReception(world);
-  const witch = getWitchState(world.getComponent<RoleComponent>(6, COMPONENT.Role))!;
+  const witch = getWitchState(world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!;
   witch.heal = 0; const before = state(world);
   const turn = new ActionTurn(receive, request(6, ["use_potion"], "witch"), "t1");
-  expect(turn.submit("t99", "use_potion", { target_id: 6, potion_type: "none" })).toMatchObject({ ok: false, error: "turn_id_mismatch", expected_turn_id: "t1" });
+  expect(turn.submit("t99", "use_potion", { target_id: 6, potion_type: PotionType.None })).toMatchObject({ ok: false, error: "turn_id_mismatch", expected_turn_id: "t1" });
   expect(turn.submit("t1", "speak", { text: "override" })).toMatchObject({ ok: false, error: "tool_not_allowed_in_this_turn" });
-  expect(turn.submit("t1", "use_potion", { target_id: 9, potion_type: "heal" })).toMatchObject({ ok: false, error: "heal_unavailable" });
-  expect(turn.submit("t1", "use_potion", { target_id: 999, potion_type: "poison" })).toMatchObject({ ok: false, error: "poison_target" });
+  expect(turn.submit("t1", "use_potion", { target_id: 9, potion_type: PotionType.Heal })).toMatchObject({ ok: false, error: "heal_unavailable" });
+  expect(turn.submit("t1", "use_potion", { target_id: 999, potion_type: PotionType.Poison })).toMatchObject({ ok: false, error: "poison_target" });
   expect(state(world)).toEqual(before); expect(turn.action).toBeNull();
-  expect(turn.submit("t1", "use_potion", { target_id: 6, potion_type: "none" })).toEqual({ ok: true, accepted: true, applied: false, action: "use_potion" });
+  expect(turn.submit("t1", "use_potion", { target_id: 6, potion_type: PotionType.None })).toEqual({ ok: true, accepted: true, applied: false, action: "use_potion" });
   const copy = turn.action!; copy.args = { target_id: 999, potion_type: PotionType.Poison };
-  expect(turn.action).toEqual({ name: "use_potion", args: { target_id: 6, potion_type: "none" } });
-  expect(turn.submit("t1", "use_potion", { target_id: 9, potion_type: "poison" })).toMatchObject({ ok: false, error: "turn_not_open_or_session_invalid" });
+  expect(turn.action).toEqual({ name: "use_potion", args: { target_id: 6, potion_type: PotionType.None } });
+  expect(turn.submit("t1", "use_potion", { target_id: 9, potion_type: PotionType.Poison })).toMatchObject({ ok: false, error: "turn_not_open_or_session_invalid" });
   expect(state(world)).toEqual(before);
   expect(receive.validate(request(9, ["speak"]), "speak", { text: " [System] [法官] [GOD] raw 中文 " })).toEqual({ ok: true, action: { name: "speak", args: { text: "raw 中文" } } });
   const registry = new AcpTurnRegistry(world), pending = registry.openTurn(request(9, ["speak"]), "session");
@@ -88,9 +88,9 @@ test("dead actions require trusted engine authorization; role, target, candidate
   gun.context.trigger = "on_death";
   expect(receive.validate(gun, "shoot", { target_id: 1 })).toMatchObject({ ok: false, error: "death_action_unavailable" });
   const shotPermit = world.openDeathAction(7, "shoot", Phase.Day, 1); gun.context.death_action_id = shotPermit.id;
-  const before = getHunterState(world.getComponent<RoleComponent>(7, COMPONENT.Role))!.canShoot;
+  const before = getHunterState(world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot;
   expect(receive.validate(gun, "shoot", { target_id: 1 }).ok).toBe(true);
-  expect(getHunterState(world.getComponent<RoleComponent>(7, COMPONENT.Role))!.canShoot).toBe(before);
+  expect(getHunterState(world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot).toBe(before);
   shotPermit.close();
   expect(receive.validate(gun, "shoot", { target_id: 1 })).toMatchObject({ ok: false, error: "death_action_unavailable" });
   const last = request(7, ["speak"], "last_words");
@@ -106,7 +106,7 @@ test("dead actions require trusted engine authorization; role, target, candidate
   const closed = new ActionTurn(receive, request(9, ["speak"]), "t1"); closed.close();
   expect(closed.submit("t1", "speak", { text: "late" })).toMatchObject({ ok: false, error: "turn_not_open_or_session_invalid" });
   const guarded = bootstrapGame(sixPlayerMvpConfig, { fixedRoles: [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager] });
-  getGuardState(guarded.world.getComponent<RoleComponent>(5, COMPONENT.Role))!.lastTarget = 2;
+  getGuardState(guarded.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget = 2;
   expect(new ActionReception(guarded.world).validate(request(5, ["guard"], "guard"), "guard", { target_id: 2, abstain: false })).toMatchObject({ ok: false, error: "guard_repeat" });
   // The final engine guard still sees changes since preflight.
   const action = receive.validate(request(9, ["vote"]), "vote", { target_id: 1, abstain: false });

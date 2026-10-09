@@ -44,7 +44,7 @@ class DeterministicFlowProvider implements ActionProvider {
       return { name: "check_identity", args: { target_id: target ?? request.actorId } };
     }
     if (request.allowedTools.includes("run_for_sheriff")) {
-      if (request.context?.phase === "sheriff_withdraw") {
+      if (request.context.stage === "sheriff_withdraw") {
         return { name: "run_for_sheriff", args: { run: true } };
       }
       return {
@@ -132,10 +132,13 @@ describe("first day flow order", () => {
       (event) => event.type === "phase_changed" && event.payload.phase === Phase.GameOver,
     );
     expect(sheriffIndex).toBeGreaterThanOrEqual(0);
+    if (events[sheriffIndex].type !== "sheriff_elected") throw new Error("unexpected_flow_event");
     expect(events[sheriffIndex].payload.winnerId).toBe(sheriffId);
     expect(sheriffIndex).toBeLessThan(nightIndex);
+    if (events[nightIndex].type !== "night_resolved") throw new Error("unexpected_flow_event");
     expect(events[nightIndex].payload.deaths).toEqual([wolfId]);
     expect(nightIndex).toBeLessThan(lastWordsIndex);
+    if (events[lastWordsIndex].type !== "last_words_spoken") throw new Error("unexpected_flow_event");
     expect(events[lastWordsIndex].payload.playerId).toBe(wolfId);
     expect(lastWordsIndex).toBeLessThan(gameOverIndex);
     expect(events.slice(gameOverIndex + 1)).toEqual([

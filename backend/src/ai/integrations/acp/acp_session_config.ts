@@ -8,7 +8,7 @@ export type AcpSessionConfigOptionValue = string | boolean;
  */
 export async function applyAcpSessionConfigOptions(
   client: acp.ClientContext,
-  session: acp.ActiveSession,
+  session: Pick<acp.ActiveSession, "sessionId" | "newSessionResponse">,
   configured: Readonly<Record<string, AcpSessionConfigOptionValue>>,
 ): Promise<void> {
   const entries = Object.entries(configured);

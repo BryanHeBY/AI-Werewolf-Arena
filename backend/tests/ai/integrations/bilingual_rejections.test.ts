@@ -36,7 +36,7 @@ test("generic failure builders need no turn context and old error-only ACP callb
     expect(generic.message).toContain("turn_id"); if (lang === "en") expect(generic.message).not.toMatch(han);
     expect(toolFailure(lang, "unknown").message).toContain("unknown");
     const registry = new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig, { locale: lang }).world, () => ({ ok: false, error: "invalid_report_bug_category" }));
-    const turn = registry.openTurn({ actorId: 1, phase: Phase.Day, allowedTools: ["speak"], context: { day: 1, stage: "day_speech", visible_events: [] } }, "own-session");
+    const turn = registry.openTurn({ actorId: 1, phase: Phase.Day, allowedTools: ["speak"], context: {turn_constraints: {}, day: 1, stage: "day_speech", visible_events: [] } }, "own-session");
     const report = registry.reportBug("own-session", { turn_id: turn.turnId, category: "flow", severity: "high", message: "Original report" });
     expect(report).toEqual({ ok: false, error: "invalid_report_bug_category", message: lang === "en" ? "Invalid report_bug.category. Use a category declared in the tool schema." : "report_bug.category无效；请使用工具schema声明的类别。" });
     registry.close();
@@ -48,11 +48,11 @@ test("gateway refusals have language-neutral codes and never change private reso
     { actor: 999, tool: { name: "speak", args: { text: "original" } }, code: "actor_missing" },
     { actor: 9, tool: { name: "speak", args: { text: "original" } }, code: "actor_dead", prepare: game => { game.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!.alive = false; } },
     { actor: 6, tool: { name: "use_potion", args: { target_id: 6, potion_type: PotionType.Heal } }, code: "self_heal" },
-    { actor: 6, tool: { name: "use_potion", args: { target_id: 9, potion_type: PotionType.Heal } }, code: "heal_unavailable", prepare: game => { getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role))!.heal = 0; } },
-    { actor: 6, tool: { name: "use_potion", args: { target_id: 9, potion_type: PotionType.Poison } }, code: "two_potions", prepare: game => { getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role))!.healUsedThisNight = true; } },
+    { actor: 6, tool: { name: "use_potion", args: { target_id: 9, potion_type: PotionType.Heal } }, code: "heal_unavailable", prepare: game => { getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!.heal = 0; } },
+    { actor: 6, tool: { name: "use_potion", args: { target_id: 9, potion_type: PotionType.Poison } }, code: "two_potions", prepare: game => { getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!.healUsedThisNight = true; } },
     { actor: 6, tool: { name: "use_potion", args: { target_id: 999, potion_type: PotionType.Poison } }, code: "poison_target" },
     { actor: 5, tool: { name: "check_identity", args: { target_id: 999 } }, code: "check_target" },
-    { actor: 7, tool: { name: "shoot", args: { target_id: 9 } }, code: "shoot_unavailable", prepare: game => { getHunterState(game.world.getComponent<RoleComponent>(7, COMPONENT.Role))!.canShoot = false; } },
+    { actor: 7, tool: { name: "shoot", args: { target_id: 9 } }, code: "shoot_unavailable", prepare: game => { getHunterState(game.world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot = false; } },
     { actor: 8, tool: { name: "vote", args: { target_id: 1, abstain: false } }, code: "vote_right", prepare: game => { game.world.getComponent<VotingRightComponent>(8, COMPONENT.VotingRight)!.canVote = false; } },
     { actor: 1, tool: { name: "self_destruct", args: { reason: "raw original", confirm: true } }, code: "blast_phase", phase: Phase.Night },
     { actor: 9, tool: { name: "choose_direction", args: { direction: "clockwise" } }, code: "sheriff_direction_only" },
@@ -70,9 +70,9 @@ test("gateway refusals have language-neutral codes and never change private reso
   }
   for (const locale of ["zh-CN", "en"] as const) {
     const game = bootstrapGame(sixPlayerMvpConfig, { locale, fixedRoles: [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager] });
-    getGuardState(game.world.getComponent<RoleComponent>(5, COMPONENT.Role))!.lastTarget = 2;
+    getGuardState(game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget = 2;
     const rejected = new ToolGateway().validateAndSanitize(game.world, 5, { name: "guard", args: { target_id: 2, abstain: false } }, { phase: Phase.Night });
-    expect(rejected.error).toBe("guard_repeat"); expect(getGuardState(game.world.getComponent<RoleComponent>(5, COMPONENT.Role))!.lastTarget).toBe(2);
+    expect(rejected.error).toBe("guard_repeat"); expect(getGuardState(game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget).toBe(2);
   }
 });
 
@@ -93,17 +93,17 @@ for (const locale of ["zh-CN", "en"] as const) test(`actual SDK ${locale} correc
   const server = Bun.serve({ hostname: "127.0.0.1", port: 0, async fetch(input) {
     requests.push(await input.json());
     const calls = requests.length === 1 ? [
-      { turn_id: "t99", action: "use_potion", arguments: { target_id: 6, potion_type: "none" } },
-      { turn_id: "t1", action: "use_potion", arguments: { target_id: 9, potion_type: "heal" } },
-    ] : [{ turn_id: "t1", action: "use_potion", arguments: { target_id: 6, potion_type: "none" } }];
+      { turn_id: "t99", action: "use_potion", arguments: { target_id: 6, potion_type: PotionType.None } },
+      { turn_id: "t1", action: "use_potion", arguments: { target_id: 9, potion_type: PotionType.Heal } },
+    ] : [{ turn_id: "t1", action: "use_potion", arguments: { target_id: 6, potion_type: PotionType.None } }];
     return Response.json({ id: "rejection-test", object: "chat.completion", created: 1, model: "test", choices: [{ index: 0, finish_reason: "tool_calls", message: { role: "assistant", content: null, tool_calls: calls.map((args, index) => ({ id: `call-${requests.length}-${index}`, type: "function", function: { name: "submit_action", arguments: JSON.stringify(args) } })) } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
   } });
   const game = bootstrapGame(twelvePlayerStandardConfig, { locale, fixedRoles: twelveRoles });
-  const witch = getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role))!; witch.heal = 0;
+  const witch = getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!; witch.heal = 0;
   const before = structuredClone(witch);
   const provider = new LlmActionProvider(game.world, new AiSdkClient({ apiKey: "synthetic", baseURL: `${server.url.origin}/v1`, model: "test" }), { boardConfig: twelvePlayerStandardConfig, llmTimeoutMs: 2000, fallbackProvider: { async getAction() { throw new Error("unexpected_fallback"); } } });
   try {
-    expect(await provider.getAction({ actorId: 6, phase: Phase.Night, allowedTools: ["use_potion"], context: { day: 1, stage: "witch", wolf_target: 9, visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } })).toEqual({ name: "use_potion", args: { target_id: 6, potion_type: "none" } });
+    expect(await provider.getAction({ actorId: 6, phase: Phase.Night, allowedTools: ["use_potion"], context: { day: 1, stage: "witch", wolf_target: 9, visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } })).toEqual({ name: "use_potion", args: { target_id: 6, potion_type: PotionType.None } });
     expect(requests.length).toBe(2);
     const replies = requests[1].messages.filter((message: any) => message.role === "tool").map((message: any) => JSON.parse(message.content));
     expect(replies.map((reply: any) => reply.error)).toEqual(["turn_id_mismatch", "heal_unavailable"]);

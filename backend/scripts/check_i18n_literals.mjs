@@ -5,10 +5,15 @@ import { readFile, readdir } from "node:fs/promises";
 
 export const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const han = /\p{Script=Han}/u;
+/** @typedef {{ file: string, text: string, line: number }} ChineseLiteral */
+/** @typedef {{ file: string, text: string, count: number, reason: string }} LiteralException */
 /** Comments and fixtures are excluded; strings, template segments, and JSX are scanned. */
+/** @param {string} file @param {string} source */
 export function collectChineseLiterals(file, source) {
   const parsed = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true, file.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
+  /** @type {ChineseLiteral[]} */
   const found = [];
+  /** @param {import("typescript").Node} node */
   const visit = node => {
     if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node) || ts.isJsxText(node)) {
       if (han.test(node.text)) found.push({ file, text: node.text, line: parsed.getLineAndCharacterOfPosition(node.getStart(parsed)).line + 1 });
@@ -17,25 +22,31 @@ export function collectChineseLiterals(file, source) {
   };
   visit(parsed); return found;
 }
+/** @param {readonly ChineseLiteral[]} found @param {readonly LiteralException[]} exceptions */
 export function verifyLiteralExceptions(found, exceptions) {
+  /** @type {Map<string, LiteralException>} */
   const expected = new Map();
   for (const entry of exceptions) {
     if (!entry.reason || !Number.isSafeInteger(entry.count) || entry.count < 1) throw new Error("i18n_scan_exception_invalid");
     const key = JSON.stringify([entry.file, entry.text]);
     if (expected.has(key)) throw new Error("i18n_scan_exception_duplicate"); expected.set(key, entry);
   }
+  /** @type {Map<string, number>} */
   const actual = new Map();
   for (const entry of found) { const key = JSON.stringify([entry.file, entry.text]); actual.set(key, (actual.get(key) ?? 0) + 1); }
   const problems = [];
   for (const entry of found) {
     const key = JSON.stringify([entry.file, entry.text]);
-    if (!expected.has(key) || actual.get(key) > expected.get(key).count) problems.push(`${entry.file}:${entry.line}: unapproved Chinese literal`);
+    const exception = expected.get(key);
+    if (!exception || (actual.get(key) ?? 0) > exception.count) problems.push(`${entry.file}:${entry.line}: unapproved Chinese literal`);
   }
   for (const [key, entry] of expected) if (actual.get(key) !== entry.count) problems.push(`${entry.file}: stale or changed i18n exception`);
   return problems;
 }
 export async function scanRepository() {
+  /** @type {ChineseLiteral[]} */
   const found = [];
+  /** @param {string} directory @returns {Promise<void>} */
   const walk = async directory => {
     for (const entry of await readdir(path.join(repositoryRoot, directory), { withFileTypes: true })) {
       const file = `${directory}/${entry.name}`;

@@ -43,7 +43,7 @@ test("the existing exporter uses the same reader and writes v2 without rewriting
 });
 
 test("new writer emits an explicit version and supplied game locale while excluding private metadata", () => {
-  const written = createReplayDocument({ manifest: { locale: "en", session_id: "new", board: "synthetic", started_at: "t1", ended_at: "t2", winner: null, finish_reason: "in_progress", players: [], random: { seed: "PRIVATE_SEED", algorithm: "test", streamPolicy: "test", path: [] }, files: { replay: "replay.json", logic_ops: "logic_ops.json", debug_reports: "debug_reports.json", debug_summary: "debug_summary.md", player_views: [] } }, events: [] });
+  const written = createReplayDocument({ manifest: { locale: "en", session_id: "new", board: "synthetic", started_at: "t1", ended_at: "t2", winner: null, finish_reason: "in_progress", players: [], random: { seed: "PRIVATE_SEED", algorithm: "mulberry32-fnv1a-utf16-v1", streamPolicy: "named-path-v1", path: [] }, files: { replay: "replay.json", logic_ops: "logic_ops.json", debug_reports: "debug_reports.json", debug_summary: "debug_summary.md", player_views: [] } }, events: [] });
   assertReplayDocument(written); expect(written.schemaVersion).toBe(2); expect(written.meta.locale).toBe("en");
   expect(JSON.stringify(written)).not.toContain("PRIVATE_SEED");
 });

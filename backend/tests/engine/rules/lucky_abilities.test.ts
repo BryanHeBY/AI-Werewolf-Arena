@@ -1,3 +1,4 @@
+import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Role, Camp, Phase, WinCondition, WitchSelfHealRule, StatusMark, DeathCause, type ActionRequest, type GameEvent, type RoleComponent, type BoardConfig } from "../../../src/core";
@@ -44,10 +45,10 @@ test("Lucky check acts only in late slot, shares actor target limits with native
 test("native Witch heal and Lucky poison have independent bottles; Lucky waits then uses exactly once without knife information",async()=>{
  const game=fixture(),events:GameEvent[]=[],gift=grantNightAbility(game.world,4,{id:"gift:miracle",kind:"potion",activation:"lucky",state:potion(),source:{kind:"gift",actorId:3},startsOnDay:1,maxUses:1},events);
  game.world.getComponent<StatusMarksComponent>(6,COMPONENT.StatusMarks)!.add(StatusMark.WolfKillMark);
- const ctx=context(game,1,events,async()=>({name:"use_potion",args:{target_id:6,potion_type:"heal"}}));ctx.state.wolfTarget=6;await ordinary("witch_action").execute(ctx);
+ const ctx=context(game,1,events,async()=>({name:"use_potion",args:{target_id:6,potion_type:PotionType.Heal}}));ctx.state.wolfTarget=6;await ordinary("witch_action").execute(ctx);
  expect(findNightAbility(role(game,4),"potion")!.state).toMatchObject({heal:0,poison:1});
  ctx.actionProvider={async getAction(request){expect(request.context.wolf_target).toBeUndefined();return null;}};await LUCKY_ABILITY_STAGE.execute(ctx);expect(gift.uses).toBe(0);expect(gift.lastUsedDay).toBe(1);
- const next=context(game,2,events,async()=>({name:"use_potion",args:{target_id:1,potion_type:"poison"}}));await LUCKY_ABILITY_STAGE.execute(next);
+ const next=context(game,2,events,async()=>({name:"use_potion",args:{target_id:1,potion_type:PotionType.Poison}}));await LUCKY_ABILITY_STAGE.execute(next);
  expect(gift.state.poison).toBe(0);expect(gift.uses).toBe(1);expect(next.state.poisonClaims).toHaveLength(1);
  expect(new DamageResolutionSystem().resolve(game.world,{poisonClaims:next.state.poisonClaims})).toMatchObject({deaths:[1],deathSources:{1:[DeathCause.Poison]}});
  const later=context(game,3,events,async()=>{throw new Error("spent_no_request");});await LUCKY_ABILITY_STAGE.execute(later);
@@ -86,7 +87,7 @@ for(const kind of ["seer_check","guard"] as const)for(const revoke of ["actor_li
    if(revoke==="target_life")targetChange();
    return kind==="guard"?{name:"guard",args:{target_id:1,abstain:false}}:{name:"check_identity",args:{target_id:1}};
  });
- if(revoke==="gateway_target"){const validate=ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway);ctx.toolGateway.validateAndSanitize=(...args:Parameters<typeof validate>)=>{const result=validate(...args);targetChange();return result;};}
+ if(revoke==="gateway_target"){const validate=ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway);ctx.toolGateway.validateAndSanitize=(world, actorId, call, validationContext)=>{const result=validate(world, actorId, call, validationContext);targetChange();return result;};}
  await ordinary(kind==="guard"?"guard_action":"seer_check").execute(ctx);
  expect(ability.uses).toBe(0);expect(ownNightActions(game.world,actor,1)).toEqual([]);expect(events).toEqual([]);expect(ctx.state.guardClaims).toEqual([]);
 });
@@ -94,7 +95,7 @@ for(const kind of ["seer_check","guard"] as const)for(const revoke of ["actor_li
 test("a successful gateway cannot bypass a new same-actor target constraint at actual Lucky commitment",async()=>{
  const game=fixture(),events:GameEvent[]=[],gift=grantNightAbility(game.world,6,{id:"gift:miracle",kind:"seer_check",activation:"lucky",state:seer(),source:{kind:"gift",actorId:3},startsOnDay:1,maxUses:1},events);
  const ctx=context(game,1,events,async()=>({name:"check_identity",args:{target_id:1}})),validate=ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway);events.length=0;
- ctx.toolGateway.validateAndSanitize=(...args:Parameters<typeof validate>)=>{const result=validate(...args);recordOwnNightAction(game.world,6,1,"check",1,false);return result;};
+ ctx.toolGateway.validateAndSanitize=(world, actorId, call, validationContext)=>{const result=validate(world, actorId, call, validationContext);recordOwnNightAction(game.world,6,1,"check",1,false);return result;};
  await expect(LUCKY_ABILITY_STAGE.execute(ctx)).rejects.toThrow("lucky_valid_action_missing");expect(gift.uses).toBe(0);expect(gift.state.history).toEqual([]);expect(events).toEqual([]);expect(ownNightActions(game.world,6,1).every(row=>row.lucky===false)).toBe(true);
 });
 
@@ -113,5 +114,5 @@ for(const locale of ["zh-CN","en"] as const)test(`${locale}: Lucky poison prompt
  const prompt=policy.buildUser(request,{turnId:"t1",allowedTools:["use_potion"],actionSubmissionHint:"submit"});
  expect(prompt).toContain(locale==="en"?"This is the Lucky recipient stage":"当前是幸运儿阶段");expect(prompt).not.toContain(locale==="en"?"This is the Witch stage: submit use_potion":"当前女巫阶段：必须调用use_potion");
  expect(prompt).toContain(locale==="en"?"none always uses your own ID 4":"none始终使用你自己的编号4");
- expect(new ToolGateway().validateAndSanitize(game.world,4,{name:"use_potion",args:{target_id:4,potion_type:"none"}},{phase:Phase.Night,day:1,abilityId:gift.id}).ok).toBe(true);
+ expect(new ToolGateway().validateAndSanitize(game.world,4,{name:"use_potion",args:{target_id:4,potion_type:PotionType.None}},{phase:Phase.Night,day:1,abilityId:gift.id}).ok).toBe(true);
 });

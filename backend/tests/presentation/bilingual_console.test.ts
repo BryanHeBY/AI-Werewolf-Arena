@@ -1,3 +1,4 @@
+import { fixtureResult } from "../support/fixture_values";
 import { TextLocalizationRegistry } from "../../src/game/mechanisms/shared/text_localization_registry";
 import { expect, test } from "bun:test";
 import { Camp, Phase, PotionType, ActionWindow, type GameEvent } from "../../src/core";
@@ -21,7 +22,7 @@ const events: GameEvent[] = [
   event("wolf_discussion_ended", { actorId: 1, reason: "Original reason", round: 1 }),
   event("wolf_kill_vote_cast", { actorId: 1, targetId: 2, abstain: false }), event("wolf_kill_vote_cast", { actorId: 1, targetId: null, abstain: true }), event("wolf_kill_vote_cast", { actorId: 1, targetId: null, abstain: false }),
   event("guard_applied", { actorId: 1, targetId: 2, abstain: false }), event("guard_applied", { actorId: 1, targetId: null, abstain: true }),
-  event("seer_checked", { actorId: 1, targetId: 2, isWerewolf: false }), event("seer_checked", { actorId: 1, targetId: 2, isWerewolf: true }),
+  event("seer_checked", { actorId: 1, targetId: 2, isWerewolf: false, result: { kind: "camp", camp: "good" } }), event("seer_checked", { actorId: 1, targetId: 2, isWerewolf: true, result: { kind: "camp", camp: "wolf" } }),
   event("witch_potion_used", { actorId: 1, targetId: 2, potionType: PotionType.Heal }), event("witch_potion_used", { actorId: 1, targetId: 2, potionType: PotionType.Poison }),
   event("witch_potion_skipped", { actorId: 1, targetId: null, potionType: PotionType.None }),
   event("hunter_shot", { hunterId: 1, targetId: 2 }), event("idiot_revealed", { targetId: 1 }),
@@ -34,7 +35,7 @@ const events: GameEvent[] = [
   event("sheriff_vote_summary", { votes: [{ actorId: 1, targetId: 2, abstain: false }], winnerId: 2 }), event("sheriff_vote_summary", { votes: [], winnerId: null }),
   event("sheriff_badge_transferred", { fromId: 1, toId: 2, reason: "transfer" }), event("sheriff_badge_destroyed", { targetId: 1, reason: "destroyed" }),
   event("sheriff_direction_chosen", { sheriffId: 1, direction: "clockwise" }), event("sheriff_direction_chosen", { sheriffId: 1, direction: "counter_clockwise" }),
-  event("game_over", { winner: Camp.Good, reason: "all_wolves_eliminated" }), event("game_over", { winner: null, reason: "runtime_timeout" }),
+  event("game_over", fixtureResult(Camp.Good, "all_wolves_eliminated")), event("game_over", fixtureResult(null, "runtime_timeout")),
 ];
 
 for(const locale of ["zh-CN","en"] as const)test(`${locale}: Hidden Wolf acquisition remains private terminal information with scalar fields and a stable recording stage`,()=>{
@@ -85,7 +86,7 @@ test("all existing console branches render English without changing event facts,
   expect(registry.toReplayStage(event("day_speech", { actorId: 1, text: "raw" }))).toBe("day_speech");
   expect(registry.toReplayStage(event("wolf_kill_vote_cast", { actorId: 1, targetId: 2, abstain: false }))).toBe("wolf_discussion"); // Existing recording mapping; I03 handles versioned IDs.
   expect(registry.toJudgeLine(events.find(item => item.type === "vote_summary")!, "en")).toContain("1->2(w=2)");
-  expect(registry.toLiveRender(events.at(-1)!, true, "en")[0].text).toContain("Winner=None");
+  expect(registry.toLiveRender(events.at(-1)!, true, "en")[0].text).toContain("No winner");
 });
 
 test("terminal wrappers honor their locale while speech, last words and wolf closing reason remain original", () => {

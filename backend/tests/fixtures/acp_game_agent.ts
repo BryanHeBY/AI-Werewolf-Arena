@@ -1,3 +1,4 @@
+import { fixtureObject } from "../support/fixture_values";
 /** Real ACP process with a private per-actor script, using only its injected game MCP. */
 import { createInterface } from "node:readline";
 import { readFile, writeFile } from "node:fs/promises";
@@ -44,12 +45,12 @@ try {
         trace.consumed++;
         for (const invalid of turn.invalidActions ?? []) {
           const result = await client!.callTool({ name: "submit_action", arguments: { turn_id: turnId, action: invalid.name, arguments: invalid.args } });
-          if (result.structuredContent?.ok !== false || result.structuredContent?.error !== (turn.expectedInvalidError ?? "shoot_target")) throw new Error("fixture_invalid_action_not_rejected");
+          if (fixtureObject(result.structuredContent).ok !== false || fixtureObject(result.structuredContent).error !== (turn.expectedInvalidError ?? "shoot_target")) throw new Error("fixture_invalid_action_not_rejected");
           trace.rejected++;
         }
         if (turn.action) {
           const result = await client!.callTool({ name: "submit_action", arguments: { turn_id: turnId, action: turn.action.name, arguments: turn.action.args } });
-          if (result.structuredContent?.ok !== true || result.structuredContent?.accepted !== true) throw new Error("fixture_submission_rejected");
+          if (fixtureObject(result.structuredContent).ok !== true || fixtureObject(result.structuredContent).accepted !== true) throw new Error("fixture_submission_rejected");
           trace.submitted++;
         }
       } else {

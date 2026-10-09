@@ -114,7 +114,7 @@ for (const first of [1, 3]) for (const locale of ["zh-CN", "en"] as const) test(
   expect(shoots).toHaveLength(2); expect(gun).toMatchObject({ armedOnNight: 1, remaining: 0, deathExpired: true }); expect(game.world.getAliveEntityIds()).toEqual([4, 5, 6]);
   const events = game.phaseManager.getEvents(); expect(events.filter(e => e.type === "hunter_shot" || e.type === "player_shot").map(e => e.payload.targetId)).toEqual([first, first === 1 ? 3 : 1]);
   expect(events.findIndex(e => e.type === "player_shot")).toBeLessThan(events.findIndex(e => e.type === "game_over")); expect(events.at(-1)!.type).toBe("game_over");
-  expect(game.phaseManager.getSnapshot().result).toMatchObject({ winner: "good", reason: "all_wolves_eliminated", decidedAt: { day: 1, phase: "day", checkpoint: "night_settled" }, outcome: { winningPlayerIds: [2, 3, 4, 5, 6] } });
+  expect(game.phaseManager.getSnapshot().result).toMatchObject({ winner: Camp.Good, reason: "all_wolves_eliminated", decidedAt: { day: 1, phase: Phase.Day, checkpoint: "night_settled" }, outcome: { winningPlayerIds: [2, 3, 4, 5, 6] } });
   recorder.flush([...opening, ...initial, ...events.slice(opening.length)]);
   await manager.finalize({ endedAtIso: new Date().toISOString(), winner: Camp.Good, finishReason: "test", gameResult: game.phaseManager.getSnapshot().result!, players: deck.map((role, i) => ({ player_id: i + 1, role, camp: i === 0 ? "wolf" : "good", alive: game.world.getAliveEntityIds().includes(i + 1), name: `Seat ${i + 1}` })) });
   await writeFile(`/tmp/awa-gift-gun-controlled-${first}-${locale}.replay.json`, await readFile(path.join(root, sessionId, "replay.json"), "utf8"));

@@ -1,4 +1,4 @@
-import { Role, WinCondition, PotionType, ActionWindow } from "../../src/core";
+import { ActionWindow, PotionType, Role, WinCondition } from "../../src/core";
 import { parseBoardDefinition } from "../../src/runtime/config/board_definition";
 import { foundationTransportPlan, type PlannedTurn } from "./foundation_transport_plan";
 import type { TransportGameScenario } from "./run_transport_game";
@@ -6,7 +6,7 @@ import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../src/runtime/scenarios/twelve_player_standard";
 import { boardDefinitionFromConfig } from "../../src/runtime/config/board_definition";
 
-export type WolfKingScenario = "exile_chain" | "poison" | "twelve" | "blast" | "shot_chain";
+export type WolfKingScenario = "exile_chain" | PotionType.Poison | "twelve" | "blast" | "shot_chain";
 function withPromptOracle(scenario: TransportGameScenario): TransportGameScenario {
   return { ...scenario, promptAssertions: (actor, locale) => scenario.roles[actor - 1] === Role.WolfKing ? {
     expectedIdentityMarker: locale === "en" ? "your true role is Wolf King." : "真实身份是狼王。",
@@ -23,15 +23,15 @@ export function wolfKingScenario(kind: WolfKingScenario): TransportGameScenario 
     const definition = boardDefinitionFromConfig("twelve_player_wolf_king", { ...twelvePlayerStandardConfig, roleSetups: [{ role: Role.WolfKing, count: 1 }, { role: Role.Wolf, count: 3 }, ...twelvePlayerStandardConfig.roleSetups.slice(1)] });
     return withPromptOracle({ board: parseBoardDefinition(definition), seed: "foundation-twelve:124680", roles: [Role.Wolf, Role.WolfKing, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Idiot, Role.Villager, Role.Villager, Role.Villager, Role.Villager], turns });
   }
-  const roles = kind === "poison" ? [Role.WolfKing, Role.Hunter, Role.Seer, Role.Witch, Role.Villager, Role.Villager] : [Role.WolfKing, Role.Hunter, Role.Seer, Role.Villager, Role.Villager, Role.Villager];
+  const roles = kind === PotionType.Poison ? [Role.WolfKing, Role.Hunter, Role.Seer, Role.Witch, Role.Villager, Role.Villager] : [Role.WolfKing, Role.Hunter, Role.Seer, Role.Villager, Role.Villager, Role.Villager];
   const counts = roles.map(role => ({ role, count: roles.filter(item => item === role).length })).filter((entry, index, array) => array.findIndex(item => item.role === entry.role) === index);
-  const board = parseBoardDefinition(boardDefinitionFromConfig(kind === "poison" ? "six_player_wolf_king_poison" : "six_player_wolf_king", { ...sixPlayerMvpConfig, winConditions: [WinCondition.SlaughterSide], roleSetups: counts, enableSheriff: true, initialSheriffSeat: 1, sheriff: { voteWeight: 2.25 }, hooks: { ...sixPlayerMvpConfig.hooks, onPreVote: kind === "blast" }, selfDestruct: { enabledWindows: kind === "blast" ? [ActionWindow.OnPreVote] : [] } }));
+  const board = parseBoardDefinition(boardDefinitionFromConfig(kind === PotionType.Poison ? "six_player_wolf_king_poison" : "six_player_wolf_king", { ...sixPlayerMvpConfig, winConditions: [WinCondition.SlaughterSide], roleSetups: counts, enableSheriff: true, initialSheriffSeat: 1, sheriff: { voteWeight: 2.25 }, hooks: { ...sixPlayerMvpConfig.hooks, onPreVote: kind === "blast" }, selfDestruct: { enabledWindows: kind === "blast" ? [ActionWindow.OnPreVote] : [] } }));
   const turns = new Map<number, PlannedTurn[]>(roles.map((_, index) => [index + 1, []]));
   const add = (actors: number[], stage: PlannedTurn["stage"], action: PlannedTurn["action"]) => actors.forEach(actor => turns.get(actor)!.push({ day: 1, stage, action }));
   add([1], "wolf_discussion", { name: "speak_to_wolves", args: { text: "End discussion", end_chat: true } });
-  add([1], "wolf_vote", { name: "kill_vote", args: { target_id: kind === "poison" || kind === "shot_chain" ? 2 : 5, abstain: false } });
+  add([1], "wolf_vote", { name: "kill_vote", args: { target_id: kind === PotionType.Poison || kind === "shot_chain" ? 2 : 5, abstain: false } });
   add([3], "seer", { name: "check_identity", args: { target_id: 1 } });
-  if (kind === "poison") {
+  if (kind === PotionType.Poison) {
     add([4], "witch", { name: "use_potion", args: { target_id: 1, potion_type: PotionType.Poison } });
     add([1, 2], "last_words", { name: "speak", args: { text: "First night last words" } });
     add([2], "hunter_shot", { name: "shoot", args: { target_id: 5 } });
@@ -43,7 +43,7 @@ export function wolfKingScenario(kind: WolfKingScenario): TransportGameScenario 
     add([5], "last_words", { name: "speak", args: { text: "First night last words" } });
     add([1], "sheriff_choose_direction", { name: "choose_direction", args: { direction: "clockwise" } });
     add([1, 2, 3, 4, 6], "day_speech", { name: "speak", args: { text: "Exile the wolf king" } });
-    if (kind === "blast") add([1], "on_pre_vote", { name: "self_destruct", args: { reason: "Ordinary blast", confirm: true } });
+    if (kind === "blast") add([1], ActionWindow.OnPreVote, { name: "self_destruct", args: { reason: "Ordinary blast", confirm: true } });
     else {
       add([1, 2, 3, 4, 6], "voting", { name: "vote", args: { target_id: 1, abstain: false } });
       add([1], "last_words", { name: "speak", args: { text: "Exile last words" } });
@@ -51,5 +51,5 @@ export function wolfKingScenario(kind: WolfKingScenario): TransportGameScenario 
       add([2], "hunter_shot", { name: "shoot", args: { target_id: 3 } });
     }
   }
-  return withPromptOracle({ board, roles, turns, seed: kind === "poison" ? "wolf-king-poison:225" : "wolf-king-exile:91" });
+  return withPromptOracle({ board, roles, turns, seed: kind === PotionType.Poison ? "wolf-king-poison:225" : "wolf-king-exile:91" });
 }

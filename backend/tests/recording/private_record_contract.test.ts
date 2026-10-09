@@ -51,8 +51,8 @@ for (const locale of ["zh-CN", "en"] as const) test(`actual player round writes 
   });
   const view = JSON.parse(await readFile(path.join(root, "private-v2/players/player_1.json"), "utf8"));
   assertReplayPlayerView(view); expect(view.schemaVersion).toBe(2); expect(view.locale).toBe(locale);
-  expect(view.initial_prompt.phase).toBe("night"); expect(view.initial_prompt.stage).toBe("wolf_discussion");
+  expect(view.initial_prompt!.phase).toBe("night"); expect(view.initial_prompt!.stage).toBe("wolf_discussion");
   expect(view.timeline[0].phase).toBe("night"); expect(view.timeline[0].stage).toBe("wolf_discussion");
-  expect(view.timeline[0].request_id).toBe("1-night-1-1"); expect(view.initial_prompt.prompt_system).toBe("Original 系统");
+  expect(view.timeline[0].request_id).toBe("1-night-1-1"); expect(view.initial_prompt!.prompt_system).toBe("Original 系统");
   expect(JSON.stringify(view)).toContain("Original 思考"); expect(JSON.stringify(view)).toContain("Original 当前提示");
 });

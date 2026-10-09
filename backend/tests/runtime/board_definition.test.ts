@@ -1,3 +1,4 @@
+import { ActionWindow, WinCondition } from "../../src/core/domain/identity";
 import { expect, test } from "bun:test";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
@@ -41,7 +42,7 @@ test("parameters require the corresponding role and implemented semantics", asyn
   raw.rules.hooks.onDaybreak = false;
   expect(() => parseBoardDefinition(raw)).toThrow("board_config_window_hook_disabled");
   raw.rules.hooks.onDaybreak = true;
-  expect(parseBoardDefinition(raw).config.selfDestruct!.enabledWindows).toEqual(["on_daybreak"]);
+  expect(parseBoardDefinition(raw).config.selfDestruct!.enabledWindows).toEqual([ActionWindow.OnDaybreak]);
 });
 
 test("boards require opposing camps before a game can start", async () => {
@@ -69,9 +70,9 @@ test("legacy collections validate all fields and select a source independently o
 
 test("legacy empty win arrays materialize the conditions the engine actually used", () => {
   const fallback = convertLegacyBoard({ winConditions: [] }, "twelve_player_standard");
-  expect(fallback.definition.rules.winConditions).toEqual(["slaughter_city"]);
+  expect(fallback.definition.rules.winConditions).toEqual([WinCondition.SlaughterCity]);
   const single = convertLegacyBoard({ winConditions: [], winCondition: "wolf_reach_half" }, "twelve_player_standard");
-  expect(single.definition.rules.winConditions).toEqual(["wolf_reach_half"]);
+  expect(single.definition.rules.winConditions).toEqual([WinCondition.WolfReachHalf]);
   expect(single.warnings).not.toContain("legacy_single_win_condition_shadowed_by_effective_win_conditions");
   const shadowed = convertLegacyBoard({ winCondition: "wolf_reach_half" }, "twelve_player_standard");
   expect(shadowed.warnings).toContain("legacy_single_win_condition_shadowed_by_effective_win_conditions");
@@ -159,7 +160,7 @@ test("the public twelve-player window example loads through normal v2 setup with
   const root = path.resolve(process.cwd(), "../configs.example");
   const resolved = await loadBoardDefinition(root, "twelve_player_windows");
   expect(resolved.config.boardSize).toBe(12);
-  expect(resolved.config.selfDestruct!.enabledWindows).toEqual(["on_pre_election", "on_daybreak", "on_per_speech_gap", "on_pre_vote"]);
+  expect(resolved.config.selfDestruct!.enabledWindows).toEqual([ActionWindow.OnPreElection, ActionWindow.OnDaybreak, ActionWindow.OnPerSpeechGap, ActionWindow.OnPreVote]);
   expect(resolved.config.hooks).toEqual({ onDaybreak: true, onPreElection: true, onPreVote: true, onPerSpeechGap: true });
   const game = JSON.parse(await readFile(path.join(root, "games/twelve_player_windows.json"), "utf8"));
   const runtime = parseRuntimeConfig({ providers: { default: "synthetic", items: { synthetic: { type: "openai", apiKey: "synthetic-only", baseURL: "http://127.0.0.1:1/v1" } } }, agents: { default: "default", items: { default: { kind: "llm", provider: "synthetic", model: "synthetic" } } }, game });

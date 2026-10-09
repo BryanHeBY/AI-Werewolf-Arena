@@ -1,23 +1,24 @@
+import { Camp, DeathCause, Phase } from "../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { HYBRID_CASES, hybridScenario, type HybridScenario } from "../support/hybrid_scenarios";
 import { runTransportGame } from "../support/run_transport_game";
 
 /** Independent literal end states; never derived from observed engine winners or chosen camp. */
-const facts: Record<HybridScenario, { alive: number[]; words: number[]; target: number; faction: "good" | "wolf"; winner: "good" | "wolf"; winners: number[] }> = {
-  good_alive: { alive: [3, 5], words: [1, 2], target: 4, faction: "good", winner: "good", winners: [3, 4, 5, 6] },
-  wolf_alive: { alive: [3, 5], words: [1, 2], target: 1, faction: "wolf", winner: "good", winners: [4, 5, 6] },
-  good_dead: { alive: [5], words: [3, 1, 2], target: 4, faction: "good", winner: "good", winners: [3, 4, 5, 6] },
-  wolf_dead: { alive: [5], words: [3, 1, 2], target: 2, faction: "wolf", winner: "good", winners: [4, 5, 6] },
-  wolf_win: { alive: [1, 2], words: [3, 4, 5], target: 1, faction: "wolf", winner: "wolf", winners: [1, 2, 3] },
-  hidden: { alive: [3, 4, 5], words: [1, 2], target: 2, faction: "wolf", winner: "good", winners: [4, 5, 6] },
-  twelve_good: { alive: [5, 6, 7, 10, 11, 12], words: [4, 1], target: 9, faction: "good", winner: "good", winners: [5, 6, 7, 8, 9, 10, 11, 12] },
-  twelve_wolf: { alive: [5, 6, 7, 10, 11, 12], words: [4, 1], target: 1, faction: "wolf", winner: "good", winners: [5, 6, 7, 9, 10, 11, 12] },
-  twelve_wolf_win: { alive: [1, 2, 3, 4, 5, 6, 7, 9], words: [8, 12, 10], target: 1, faction: "wolf", winner: "wolf", winners: [1, 2, 3, 4, 8] },
+const facts: Record<HybridScenario, { alive: number[]; words: number[]; target: number; faction: Camp.Good | Camp.Wolf; winner: Camp.Good | Camp.Wolf; winners: number[] }> = {
+  good_alive: { alive: [3, 5], words: [1, 2], target: 4, faction: Camp.Good, winner: Camp.Good, winners: [3, 4, 5, 6] },
+  wolf_alive: { alive: [3, 5], words: [1, 2], target: 1, faction: Camp.Wolf, winner: Camp.Good, winners: [4, 5, 6] },
+  good_dead: { alive: [5], words: [3, 1, 2], target: 4, faction: Camp.Good, winner: Camp.Good, winners: [3, 4, 5, 6] },
+  wolf_dead: { alive: [5], words: [3, 1, 2], target: 2, faction: Camp.Wolf, winner: Camp.Good, winners: [4, 5, 6] },
+  wolf_win: { alive: [1, 2], words: [3, 4, 5], target: 1, faction: Camp.Wolf, winner: Camp.Wolf, winners: [1, 2, 3] },
+  hidden: { alive: [3, 4, 5], words: [1, 2], target: 2, faction: Camp.Wolf, winner: Camp.Good, winners: [4, 5, 6] },
+  twelve_good: { alive: [5, 6, 7, 10, 11, 12], words: [4, 1], target: 9, faction: Camp.Good, winner: Camp.Good, winners: [5, 6, 7, 8, 9, 10, 11, 12] },
+  twelve_wolf: { alive: [5, 6, 7, 10, 11, 12], words: [4, 1], target: 1, faction: Camp.Wolf, winner: Camp.Good, winners: [5, 6, 7, 9, 10, 11, 12] },
+  twelve_wolf_win: { alive: [1, 2, 3, 4, 5, 6, 7, 9], words: [8, 12, 10], target: 1, faction: Camp.Wolf, winner: Camp.Wolf, winners: [1, 2, 3, 4, 8] },
 };
 
 for (const kind of HYBRID_CASES) for (const transport of ["llm", "acp", "mixed"] as const) test(`${kind}/${transport}: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members`, async () => {
-  const runs = [];
+  const runs: Awaited<ReturnType<typeof runTransportGame>>[] = [];
   for (const locale of ["zh-CN", "en"] as const) {
     const run = await runTransportGame(hybridScenario(kind), transport, locale); runs.push(run);
     const oracle = facts[kind], hybrid = kind.startsWith("twelve") ? 8 : 3, events = run.replay.events;
@@ -29,7 +30,7 @@ for (const kind of HYBRID_CASES) for (const transport of ["llm", "acp", "mixed"]
     expect(Object.keys(own.privateState.hybrid as object).sort()).toEqual(["choice", "remaining"]);
     expect(events.filter(e => e.type === "seer_checked" && e.payload.targetId === hybrid).map(e => e.payload.result)).toEqual([{ kind: "camp", camp: "good" }]);
     const reason = oracle.winner === "good" ? "all_wolves_eliminated" : kind === "wolf_win" ? "all_good_eliminated" : "slaughter_side_completed";
-    expect(run.result.snapshot.result).toEqual({ winner: oracle.winner, reason, outcome: { kind: "victory", primary: { kind: "faction", faction: oracle.winner, winningPlayerIds: oracle.winners }, additional: [], winningPlayerIds: oracle.winners }, decidedAt: { day: 2, phase: "voting", checkpoint: "exile_settled" } });
+    expect(run.result.snapshot.result).toEqual({ winner: oracle.winner, reason, outcome: { kind: "victory", primary: { kind: "faction", faction: oracle.winner, winningPlayerIds: oracle.winners }, additional: [], winningPlayerIds: oracle.winners }, decidedAt: { day: 2, phase: Phase.Voting, checkpoint: "exile_settled" } });
     for (const view of run.views) {
       const projected = view.timeline.filter(row => row.kind === "event").map(row => row.event);
       expect(projected.some(e => e.type === "hybrid_affiliation_resolved")).toBe(false);

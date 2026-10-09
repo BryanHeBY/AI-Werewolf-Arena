@@ -1,20 +1,21 @@
+import type { VictoryPoint } from "@ai-werewolf-arena/game-catalog";
+import { Camp, DeathCause, KnightDuelWindow, Phase } from "../../src/core";
 import{expect,test}from"bun:test";
 import{writeFile}from"node:fs/promises";
-import{KnightDuelWindow}from"../../src/core";
 import{knightScenario,type KnightScenario}from"../support/knight_scenarios";
 import{runTransportGame}from"../support/run_transport_game";
 const cases:Array<[KnightScenario,KnightDuelWindow]>=Object.values(KnightDuelWindow).map(window=>["hit",window]);
 for(const kind of ["miss","last_god_miss","king_hit","white_hit","twelve"]as KnightScenario[])cases.push([kind,kind==="last_god_miss"?KnightDuelWindow.BeforeSpeeches:KnightDuelWindow.AfterSpeeches]);
 for(const[kind,window]of cases)for(const transport of["llm","acp","mixed"]as const)test(`${kind}/${window}/${transport}: actual bilingual Knight complete games preserve literal results, words and strict replay`,async()=>{
- const runs=[];
+ const runs: Awaited<ReturnType<typeof runTransportGame>>[] = [];
  for(const locale of["zh-CN","en"]as const){
   const run=await runTransportGame(knightScenario(kind,window),transport,locale);runs.push(run);const events=run.replay.events;
   const actor=kind==="twelve"?7:1,target=kind==="miss"?4:kind==="last_god_miss"?3:kind==="twelve"?1:2,miss=kind==="miss"||kind==="last_god_miss";
   expect(events.filter(event=>event.type==="knight_duel").map(event=>event.payload)).toEqual([{actorId:actor,targetId:target,result:miss?"not_wolf":"wolf"}]);
   expect(events.filter(event=>event.type==="hunter_shot"||event.type==="wolf_king_shot"||event.type==="white_wolf_king_self_destruct")).toEqual([]);
   const winners=kind==="twelve"?[5,6,7,8,9,10,11,12]:kind==="last_god_miss"?[2]:[1,3,4,5,6];
-  const point={day:kind==="twelve"?3:1,phase:kind==="miss"||kind==="twelve"?"voting":"day",checkpoint:kind==="miss"||kind==="twelve"?"exile_settled":"day_interrupted"};
-  const faction=kind==="last_god_miss"?"wolf":"good",reason=kind==="last_god_miss"?"slaughter_side_completed":"all_wolves_eliminated";
+  const point: VictoryPoint ={day:kind==="twelve"?3:1,phase:kind==="miss"||kind==="twelve"?Phase.Voting:Phase.Day,checkpoint:kind==="miss"||kind==="twelve"?"exile_settled":"day_interrupted"};
+  const faction=kind==="last_god_miss"?Camp.Wolf:Camp.Good,reason=kind==="last_god_miss"?"slaughter_side_completed":"all_wolves_eliminated";
   expect(run.result.snapshot.result).toEqual({winner:faction,reason,outcome:{kind:"victory",primary:{kind:"faction",faction,winningPlayerIds:winners},additional:[],winningPlayerIds:winners},decidedAt:point});
   expect(run.manifest.players.filter(player=>player.alive).map(player=>player.player_id)).toEqual(kind==="twelve"?[6,8,9,10,11,12]:kind==="miss"?[3,4,6]:kind==="last_god_miss"?[2,3,4,6]:[1,3,4,6]);
   expect(events.filter(event=>event.type==="last_words_spoken").map(event=>event.payload.playerId)).toEqual(kind==="twelve"?[2,3]:kind==="miss"?[5,1,2]:kind==="last_god_miss"?[5,1]:[5]);

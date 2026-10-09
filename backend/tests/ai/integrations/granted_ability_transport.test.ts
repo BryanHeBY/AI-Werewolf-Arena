@@ -1,3 +1,4 @@
+import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
@@ -27,16 +28,16 @@ for (const locale of ["zh-CN", "en"] as const) for (const kind of ["llm", "acp"]
       const turn = /turn_id (?:must be|必须为) (t\d+)/.exec(body.messages.at(-1).content)![1];
       return Response.json({ id: "granted", object: "chat.completion", created: 1, model: "synthetic", choices: [{ index: 0, finish_reason: "tool_calls", message: { role: "assistant", content: null, tool_calls: [{ id: "call", type: "function", function: { name: "submit_action", arguments: JSON.stringify({ turn_id: turn, action: "check_identity", arguments: { target_id: 1 } }) } }] } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
     } }) : undefined;
-    const profile: ResolvedAgentRuntimeProfile = kind === "llm" ? { name: "synthetic", providerName: "synthetic", kind, model: "synthetic", provider: { type: "openai", apiKey: "synthetic-only", baseURL: `${server!.url.origin}/v1` } } : { name: "synthetic", providerName: "synthetic", kind, provider: { type: "acp", transport: "stdio", command: process.execPath, args: [path.resolve(process.cwd(), "tests/fixtures/acp_game_agent.ts"), planFile] } };
+    const profile: ResolvedAgentRuntimeProfile = kind === "llm" ? { name: "synthetic", providerName: "synthetic", kind, model: "synthetic", provider: { type: "openai", apiKey: "synthetic-only", baseURL: `${server!.url.origin}/v1` } } : { name: "synthetic", providerName: "synthetic", kind, provider: { type: "acp", sessionConfigOptions: {}, transport: "stdio", command: process.execPath, env: {}, args: [path.resolve(process.cwd(), "tests/fixtures/acp_game_agent.ts"), planFile] } };
     const workspace = path.join(root, "workspace");
     const runtime = await createPlayerAgentRuntime({ world, boardConfig: sixPlayerMvpConfig, profilesByActor: new Map([[5, profile]]), acpWorkspaceRoot: workspace, llmTimeoutMs: 3000, printLlmIo: false, printThinking: false, trace: false, displayLocale: locale, colorizeLogs: false });
     try {
       const pipeline = new NightPipeline({ world, events, toolGateway: new ToolGateway(), damageResolutionSystem: new DamageResolutionSystem() });
       await pipeline.execute(sixPlayerMvpConfig, { getAction: request => request.actorId === 5 ? runtime.provider.getAction(request) : new BaselineBotActionProvider(world).getAction(request) }, 1);
-      const ability = allNightAbilities(world.getComponent<RoleComponent>(5, COMPONENT.Role))[0];
+      const ability = allNightAbilities(world.getComponent<RoleComponent>(5, COMPONENT.Role)!)[0];
       expect(ability.uses).toBe(1); expect(ability.lastUsedDay).toBe(1);
       expect(events.filter(event => event.type === "seer_checked" && event.payload.actorId === 5).map(event => event.payload)).toEqual([{ actorId: 5, abilityId: "gift:transport", targetId: 1, isWerewolf: true, result: { kind: "camp", camp: "wolf" } }]);
-      expect(world.getComponent<RoleComponent>(5, COMPONENT.Role)).toMatchObject({ role: Role.Villager, camp: Camp.Good });
+      expect(world.getComponent<RoleComponent>(5, COMPONENT.Role)!).toMatchObject({ role: Role.Villager, camp: Camp.Good });
       await runtime.close();
       if (kind === "llm") {
         const visible = messages.filter(message => typeof message.content === "string" && message.content.startsWith('{"event":')).map(message => JSON.parse(message.content).event);
@@ -64,13 +65,13 @@ for (const locale of ["zh-CN", "en"] as const) for (const kind of ["llm", "acp"]
     const { world } = bootstrapGame(twelvePlayerStandardConfig, { locale, fixedRoles: [Role.Wolf, Role.Wolf, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Idiot, Role.Villager, Role.Villager, Role.Villager, Role.Villager] });
     getWitchState(world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!.heal = 0;
     const planFile = path.join(root, "plan.json");
-    await writeFile(planFile, JSON.stringify({ actorId: 6, role: "witch", locale, turns: [{ day: 1, stage: "witch", action: { name: "use_potion", args: { target_id: 6, potion_type: "none" } } }] }));
+    await writeFile(planFile, JSON.stringify({ actorId: 6, role: "witch", locale, turns: [{ day: 1, stage: "witch", action: { name: "use_potion", args: { target_id: 6, potion_type: PotionType.None } } }] }));
     const server = kind === "llm" ? Bun.serve({ hostname: "127.0.0.1", port: 0, async fetch(request) {
       const body = await request.json() as any; prompts.push(body.messages.at(-1).content);
       const turn = /turn_id (?:must be|必须为) (t\d+)/.exec(body.messages.at(-1).content)![1];
-      return Response.json({ id: "exhausted", object: "chat.completion", created: 1, model: "synthetic", choices: [{ index: 0, finish_reason: "tool_calls", message: { role: "assistant", content: null, tool_calls: [{ id: "call", type: "function", function: { name: "submit_action", arguments: JSON.stringify({ turn_id: turn, action: "use_potion", arguments: { target_id: 6, potion_type: "none" } }) } }] } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
+      return Response.json({ id: "exhausted", object: "chat.completion", created: 1, model: "synthetic", choices: [{ index: 0, finish_reason: "tool_calls", message: { role: "assistant", content: null, tool_calls: [{ id: "call", type: "function", function: { name: "submit_action", arguments: JSON.stringify({ turn_id: turn, action: "use_potion", arguments: { target_id: 6, potion_type: PotionType.None } }) } }] } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
     } }) : undefined;
-    const profile: ResolvedAgentRuntimeProfile = kind === "llm" ? { name: "synthetic", providerName: "synthetic", kind, model: "synthetic", provider: { type: "openai", apiKey: "synthetic-only", baseURL: `${server!.url.origin}/v1` } } : { name: "synthetic", providerName: "synthetic", kind, provider: { type: "acp", transport: "stdio", command: process.execPath, args: [path.resolve(process.cwd(), "tests/fixtures/acp_game_agent.ts"), planFile] } };
+    const profile: ResolvedAgentRuntimeProfile = kind === "llm" ? { name: "synthetic", providerName: "synthetic", kind, model: "synthetic", provider: { type: "openai", apiKey: "synthetic-only", baseURL: `${server!.url.origin}/v1` } } : { name: "synthetic", providerName: "synthetic", kind, provider: { type: "acp", sessionConfigOptions: {}, transport: "stdio", command: process.execPath, env: {}, args: [path.resolve(process.cwd(), "tests/fixtures/acp_game_agent.ts"), planFile] } };
     const workspace = path.join(root, "workspace"), runtime = await createPlayerAgentRuntime({ world, boardConfig: twelvePlayerStandardConfig, profilesByActor: new Map([[6, profile]]), acpWorkspaceRoot: workspace, llmTimeoutMs: 3000, trace: false, printLlmIo: false, printThinking: false, displayLocale: locale, colorizeLogs: false });
     try {
       await new NightPipeline({ world, events, toolGateway: new ToolGateway(), damageResolutionSystem: new DamageResolutionSystem() }).execute(twelvePlayerStandardConfig, { async getAction(request) {

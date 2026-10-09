@@ -22,7 +22,7 @@ for (const seed of ["recorded-seed", undefined]) {
     const setup = resolveGameSetup(runtime, { recordRootDir: root, maxDays: 30, streamEvents: false, color: false });
     let closed = 0;
     const create = spyOn(factory, "createPlayerAgentRuntime").mockImplementation(async options => ({
-      kind: "llm", provider: new BaselineBotActionProvider(options.world), async close() { closed++; },
+      kind: "llm", runtimeState: { closed: false }, provider: new BaselineBotActionProvider(options.world), async close() { closed++; },
     }));
     try {
       const result = await runGame(setup);

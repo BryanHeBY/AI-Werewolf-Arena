@@ -10,6 +10,8 @@ import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mv
 describe("GameActionRequestFactory", () => {
   test("owns canonical day, stage, visibility and constraint fields", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
+    // Runtime input can carry forged canonical fields; the factory must overwrite them.
+    const forgedContext = { trigger: "test", day: 99, stage: "forged_stage", visible_events: [], turn_constraints: { min_valid_actions: 0 } };
     const request = new GameActionRequestFactory(
       context.world,
       context.phaseManager.getEvents(),
@@ -21,13 +23,7 @@ describe("GameActionRequestFactory", () => {
       stage: "day_speech",
       requiresAction: true,
       summary: "必须发言。",
-      context: {
-        trigger: "test",
-        day: 99,
-        stage: "forged_stage",
-        visible_events: [],
-        turn_constraints: { min_valid_actions: 0 },
-      },
+      context: forgedContext,
     });
 
     expect(request.context.day).toBe(3);
@@ -49,7 +45,7 @@ describe("GameActionRequestFactory", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: { day: 2, stage: "hunter_shot" },
+      context: { day: 2, stage: "hunter_shot", visible_events: [], turn_constraints: {} },
     });
 
     expect(stage).toBe("hunter_shot");

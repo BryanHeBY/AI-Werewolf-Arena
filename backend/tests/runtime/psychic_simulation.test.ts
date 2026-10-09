@@ -1,3 +1,4 @@
+import { fixtureNumber } from "../support/fixture_values";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
@@ -9,7 +10,7 @@ for(const id of ["six_player_psychic","twelve_player_psychic"] as const)test(`${
   expect(report.games).toHaveLength(20);expect(report.naturallyFinished).toBe(20);expect(report.rejects).toBe(0);expect(report.fallbacks).toBe(0);expect(report.branches.role_inspected).toBeGreaterThan(0);expect(report.branches.role_inspection_skipped).toBeGreaterThan(0);let repeats=0;
   const root=await createTestTempDirectory("awa-psychic-random-replay-");
   for(const game of report.games){const record=await readReproduction(path.join(game.recordDir,"reproduction.json")),actor=record.metadata.players.find(p=>p.role==="psychic")!.id,seen=new Set<number>();
-    for(const e of record.events){if(e.type==="role_inspected"&&e.payload.actorId===actor){if(seen.has(e.payload.targetId))repeats++;seen.add(e.payload.targetId);}if(["wolf_discussion","wolf_kill_vote_cast"].includes(e.type))expect(e.payload.actorId).not.toBe(actor);}
+    for(const e of record.events){if(e.type==="role_inspected"&&e.payload.actorId===actor){if(seen.has(fixtureNumber(e.payload.targetId)))repeats++;seen.add(fixtureNumber(e.payload.targetId));}if(["wolf_discussion","wolf_kill_vote_cast"].includes(e.type))expect(e.payload.actorId).not.toBe(actor);}
     expect((await replayReproduction(record,root)).snapshot.result).toEqual(game.result);
   }
   expect(repeats).toBeGreaterThan(0);

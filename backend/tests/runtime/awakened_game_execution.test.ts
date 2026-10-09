@@ -1,3 +1,4 @@
+import { Camp, DeathCause, Phase } from "../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { AWAKENED_CASES, awakenedScenario, type AwakenedScenario } from "../support/awakened_scenarios";
@@ -16,7 +17,7 @@ const facts: Record<AwakenedScenario, { alive: number[]; words: number[]; day: n
   twelve: { alive: [5, 6, 10, 11, 12], words: [4, 9], day: 3, template: "hunter", inheritance: 2, night: true },
 };
 for (const kind of AWAKENED_CASES) for (const transport of ["llm", "acp", "mixed"] as const) test(`${kind}/${transport}: literal bilingual Awakened games preserve night-end ownership and strict Tape`, async () => {
-  const runs = [];
+  const runs: Awaited<ReturnType<typeof runTransportGame>>[] = [];
   for (const locale of ["zh-CN", "en"] as const) {
     const scenario = awakenedScenario(kind), run = await runTransportGame(scenario, transport, locale); runs.push(run);
     const oracle = facts[kind], events = run.replay.events, learnedDay = oracle.learnedDay ?? 1;
@@ -47,8 +48,8 @@ for (const kind of AWAKENED_CASES) for (const transport of ["llm", "acp", "mixed
         expect(events.indexOf(shots[0])).toBeLessThan(inherited); expect(inherited).toBeLessThan(events.indexOf(shots[1]));
       }
     }
-    const faction = oracle.wolf ? "wolf" : "good", winners = scenario.roles.flatMap((role, i) => (["wolf", "awakened_hidden_wolf"].includes(role) === !!oracle.wolf) ? [i + 1] : []);
-    expect(run.result.snapshot.result).toEqual({ winner: faction, reason: oracle.wolf ? "slaughter_side_completed" : "all_wolves_eliminated", outcome: { kind: "victory", primary: { kind: "faction", faction, winningPlayerIds: winners }, additional: [], winningPlayerIds: winners }, decidedAt: { day: oracle.day, phase: oracle.night ? "day" : "voting", checkpoint: oracle.night ? "night_settled" : "exile_settled" } });
+    const faction = oracle.wolf ? Camp.Wolf:Camp.Good, winners = scenario.roles.flatMap((role, i) => (["wolf", "awakened_hidden_wolf"].includes(role) === !!oracle.wolf) ? [i + 1] : []);
+    expect(run.result.snapshot.result).toEqual({ winner: faction, reason: oracle.wolf ? "slaughter_side_completed" : "all_wolves_eliminated", outcome: { kind: "victory", primary: { kind: "faction", faction, winningPlayerIds: winners }, additional: [], winningPlayerIds: winners }, decidedAt: { day: oracle.day, phase: oracle.night ? Phase.Day:Phase.Voting, checkpoint: oracle.night ? "night_settled" : "exile_settled" } });
     for (const view of run.views) {
       expect(view.timeline.filter(row => row.kind === "event" && row.event.type === "awakened_mimicked")).toHaveLength(view.player_id === 1 ? 1 : 0);
       expect(view.timeline.filter(row => row.kind === "event" && row.event.type === "awakened_ready")).toHaveLength(view.player_id === 1 ? 1 : 0);

@@ -1,3 +1,4 @@
+import { PotionType } from "../../../src/core";
 import {expect,test} from "bun:test";
 import {bootstrapGame} from "../../../src/app/bootstrap";
 import {Role,Camp,Phase,WinCondition,COMPONENT,ActionWindow,type BoardConfig,type RoleComponent,type ActionRequest,type ToolCall,type GameEvent} from "../../../src/core";
@@ -9,6 +10,7 @@ import {createAliveComponent} from "../../../src/core/domain/components/alive";
 import {createRoleComponent} from "../../../src/core/domain/components/role";
 import type {IdentityComponent} from "../../../src/core/domain/entities/player";
 import {buildAgentVisibleEventFeed} from "../../../src/game/engine/agent_visible_event_feed";
+import {getDefaultToolSpecRegistry,getDefaultTargetHintRegistry,getDefaultPhaseStageLocalizationRegistry,getDefaultConfigRenderRegistry} from "../../../src/game/mechanisms";
 import {PlayerPromptPolicy} from "../../../src/ai/agents/player/player_prompt_policy";
 import {ActionReception} from "../../../src/ai/agents/player/action_reception";
 
@@ -48,7 +50,7 @@ for(const mutation of ["clock","life_replace","revive","role_replace","state_rep
 test("a sampled neighbor's later death does not resample; next night skips its dead seat and duplicate publication changes nothing",()=>{
  const game=bootstrapGame(config(),{fixedRoles:deck}),frame=BearNightFrame.capture(game.world,1)!,events:GameEvent[]=[];game.world.getComponent<{alive:boolean}>(2,COMPONENT.Alive)!.alive=false;
  frame.publish(game.world,events,()=>true);frame.publish(game.world,events,()=>true);BearNightFrame.capture(game.world,1)!.publish(game.world,events,()=>true);BearNightFrame.capture(game.world,2)!.publish(game.world,events,()=>true);
- expect(events.map(event=>event.payload)).toEqual([{day:1,roared:true},{day:2,roared:false}]);expect(getBearState(role(game,1))!.history).toEqual(events.map(event=>event.payload));
+ expect(events.map(event=>event.payload)).toEqual([{day:1,roared:true},{day:2,roared:false}]);expect(getBearState(role(game,1))!.history).toEqual(events.filter(event=>event.type==="bear_roared").map(event=>event.payload));
 });
 
 test("a manager frame belongs to its original World even if another controller reuses the same component references",()=>{
@@ -69,7 +71,7 @@ for(const killedBefore of [false,true])test(`dead/${killedBefore}: the original 
 });
 
 for(const locale of ["zh-CN","en"] as const)test(`${locale}: no active Bear tool or pack permission, no pending observation/history, and only already-public history reaches its own prompt`,()=>{
- const game=bootstrapGame(config(),{locale,fixedRoles:deck}),policy=new PlayerPromptPolicy(game.world,{boardConfig:config()}),request:ActionRequest={actorId:1,phase:Phase.Day,allowedTools:["speak"],context:{day:1,stage:"day_speech",visible_events:[],turn_constraints:{}}},frame=BearNightFrame.capture(game.world,1)!;
+ const game=bootstrapGame(config(),{locale,fixedRoles:deck}),policy=new PlayerPromptPolicy(game.world,{boardConfig:config(),roleCatalog:getDefaultRoleCatalog(),toolSpecRegistry:getDefaultToolSpecRegistry(),targetHintRegistry:getDefaultTargetHintRegistry(),phaseStageLocalizationRegistry:getDefaultPhaseStageLocalizationRegistry(),configRenderRegistry:getDefaultConfigRenderRegistry()}),request:ActionRequest={actorId:1,phase:Phase.Day,allowedTools:["speak"],context:{day:1,stage:"day_speech",visible_events:[],turn_constraints:{}}},frame=BearNightFrame.capture(game.world,1)!;
  expect(policy.buildObservation(request).ownState.bear).toEqual({history:[]});expect(role(game,1).renderPrompt(locale)).toContain(locale==="en"?"No Bear announcement has been published":"尚无已公布的熊公告");
  expect(getDefaultRoleCatalog().require(Role.Bear).toolSpecs??[]).toEqual([]);expect(new ActionReception(game.world).validate({...request,phase:Phase.Night,allowedTools:["kill_vote"]},"kill_vote",{target_id:2,abstain:false}).ok).toBe(false);
  const events:GameEvent[]=[];frame.publish(game.world,events,()=>true);request.context.visible_events=buildAgentVisibleEventFeed(game.world,events,1);
@@ -78,7 +80,7 @@ for(const locale of ["zh-CN","en"] as const)test(`${locale}: no active Bear tool
 
 const passive=(request:ActionRequest):ToolCall|null=>{
  if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};
- if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:request.actorId,potion_type:"none"}};
+ if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:request.actorId,potion_type:PotionType.None}};
  if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};
  if(request.allowedTools.includes("vote"))return{name:"vote",args:{target_id:null,abstain:true}};
  if(request.allowedTools.includes("duel"))return null;
@@ -87,7 +89,7 @@ const passive=(request:ActionRequest):ToolCall|null=>{
 
 test("real night last wolf death keeps its original positive sample, publishes after original words, and only then seals the victory",async()=>{
  const game=bootstrapGame(config(),{fixedRoles:deck});await game.phaseManager.runSingleCycle({async getAction(request){if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:2,abstain:false}};return passive(request);}});
- const events=game.phaseManager.getEvents();expect(events.filter(e=>e.type==="bear_roared").map(e=>e.payload)).toEqual([{day:1,roared:true}]);expect(events.findIndex(e=>e.type==="last_words_spoken")).toBeLessThan(events.findIndex(e=>e.type==="bear_roared"));expect(events.findIndex(e=>e.type==="bear_roared")).toBeLessThan(events.findIndex(e=>e.type==="game_over"));expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");
+ const events=game.phaseManager.getEvents();expect(events.filter(e=>e.type==="bear_roared").map(e=>e.payload)).toEqual([{day:1,roared:true}]);expect(events.findIndex(e=>e.type==="last_words_spoken")).toBeLessThan(events.findIndex(e=>e.type==="bear_roared"));expect(events.findIndex(e=>e.type==="bear_roared")).toBeLessThan(events.findIndex(e=>e.type==="game_over"));expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
 });
 
 for(const cause of ["knife","poison","dream","charm","night_shot"] as const)test(`${cause}: a Bear killed anywhere in the real night wave announces quiet after the whole chain`,async()=>{
@@ -97,7 +99,7 @@ for(const cause of ["knife","poison","dream","charm","night_shot"] as const)test
   if(request.allowedTools.includes("dream"))return{name:"dream",args:{target_id:1}};
   if(request.allowedTools.includes("charm"))return{name:"charm",args:{target_id:1}};
   if(request.allowedTools.includes("shoot"))return{name:"shoot",args:{target_id:1}};
-  if(request.allowedTools.includes("use_potion")&&(cause==="poison"||cause==="charm"))return{name:"use_potion",args:{target_id:cause==="charm"?2:1,potion_type:"poison"}};
+  if(request.allowedTools.includes("use_potion")&&(cause==="poison"||cause==="charm"))return{name:"use_potion",args:{target_id:cause==="charm"?2:1,potion_type:PotionType.Poison}};
   return passive(request);
  }});
  const events=game.phaseManager.getEvents(),report=events.findIndex(e=>e.type==="bear_roared");expect(events.filter(e=>e.type==="bear_roared").map(e=>e.payload)).toEqual([{day:1,roared:false}]);expect(game.world.getAliveEntityIds()).not.toContain(1);expect(getBearState(role(game,1))!.history).toEqual([{day:1,roared:false}]);for(const e of events.filter(e=>["last_words_spoken","hunter_shot","dream_death","charm_death","additional_deaths"].includes(e.type)))expect(events.indexOf(e)).toBeLessThan(report);
@@ -130,5 +132,5 @@ test("first-day early White blast announces quiet after merged Night/Day deaths 
 test("night Wolf King gun kills the only good special role: complete its badge chain, announce quiet, then ordinary Good victory",async()=>{
  const fixed=[Role.Bear,Role.WolfKing,Role.Villager,Role.Villager,Role.Villager,Role.Villager],game=bootstrapGame({...config(fixed),enableSheriff:true,initialSheriffSeat:1},{fixedRoles:fixed});
  await game.phaseManager.runSingleCycle({async getAction(request){if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:2,abstain:false}};if(request.allowedTools.includes("shoot"))return{name:"shoot",args:{target_id:1}};return passive(request);}});
- const events=game.phaseManager.getEvents(),gun=events.findIndex(e=>e.type==="wolf_king_shot"),badge=events.findIndex(e=>e.type==="sheriff_badge_transferred"),report=events.findIndex(e=>e.type==="bear_roared");expect(gun).toBeGreaterThan(-1);expect(gun).toBeLessThan(badge);expect(badge).toBeLessThan(report);expect(events.filter(e=>e.type==="bear_roared").map(e=>e.payload)).toEqual([{day:1,roared:false}]);expect(report).toBeLessThan(events.findIndex(e=>e.type==="game_over"));expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");expect(game.world.getAliveEntityIds()).toEqual([3,4,5,6]);
+ const events=game.phaseManager.getEvents(),gun=events.findIndex(e=>e.type==="wolf_king_shot"),badge=events.findIndex(e=>e.type==="sheriff_badge_transferred"),report=events.findIndex(e=>e.type==="bear_roared");expect(gun).toBeGreaterThan(-1);expect(gun).toBeLessThan(badge);expect(badge).toBeLessThan(report);expect(events.filter(e=>e.type==="bear_roared").map(e=>e.payload)).toEqual([{day:1,roared:false}]);expect(report).toBeLessThan(events.findIndex(e=>e.type==="game_over"));expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);expect(game.world.getAliveEntityIds()).toEqual([3,4,5,6]);
 });

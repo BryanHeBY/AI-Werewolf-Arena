@@ -1,9 +1,9 @@
-import {Role,WinCondition,KnightDuelWindow,type BoardConfig} from "../../src/core";
+import { KnightDuelWindow, PotionType, Role, WinCondition, type BoardConfig } from "../../src/core";
 import {parseBoardDefinition,boardDefinitionFromConfig} from "../../src/runtime/config/board_definition";
 import {sixPlayerMvpConfig} from "../../src/runtime/scenarios/six_player_mvp";
 import type {PlannedTurn} from "./foundation_transport_plan";
 import type {TransportGameScenario} from "./run_transport_game";
-export const BEAUTY_CASES=["exile","poison","duel","night_dream_block","night_dream_chain","same_wave","last_god","last_villager","city_first","side_first","skip","twelve"] as const;
+export const BEAUTY_CASES=["exile",PotionType.Poison,"duel","night_dream_block","night_dream_chain","same_wave","last_god","last_villager","city_first","side_first","skip","twelve"] as const;
 export type BeautyScenario=typeof BEAUTY_CASES[number];
 export function wolfBeautyScenario(kind:BeautyScenario):TransportGameScenario{
  const twelve=kind==="twelve",special=["last_god","city_first","side_first"].includes(kind),dream=kind.startsWith("night_dream");
@@ -13,17 +13,17 @@ export function wolfBeautyScenario(kind:BeautyScenario):TransportGameScenario{
  const add=(day:number,actors:number[],stage:PlannedTurn["stage"],action:PlannedTurn["action"])=>actors.forEach(actor=>turns.get(actor)!.push({day,stage,action}));
  const night=(day:number,actors:number[],target:number|null)=>{add(day,actors,"wolf_discussion",{name:"speak_to_wolves",args:{text:"End",end_chat:true}});add(day,actors,"wolf_vote",{name:"kill_vote",args:{target_id:target,abstain:target===null}});};
  const charm=(day:number,target:number|null)=>add(day,[1],"wolf_beauty",{name:"charm",args:{target_id:target}});
- const potion=(day:number,actor:number,target:number,type:"none"|"heal"|"poison"="none")=>add(day,[actor],"witch",{name:"use_potion",args:{target_id:target,potion_type:type}});
+ const potion=(day:number,actor:number,target:number,type: PotionType = PotionType.None)=>add(day,[actor],"witch",{name:"use_potion",args:{target_id:target,potion_type:type}});
  const speech=(day:number,actors:number[])=>add(day,actors,"day_speech",{name:"speak",args:{text:"Public speech"}});
  const vote=(day:number,actors:number[],target:number|null)=>add(day,actors,"voting",{name:"vote",args:{target_id:target,abstain:target===null}});
  const words=(day:number,actors:number[])=>add(day,actors,"last_words",{name:"speak",args:{text:"Authorized words"}});
- const knight=(day:number,actors:number[],target?:number)=>add(day,actors,"after_speeches",target===undefined?null:{name:"duel",args:{target_id:target,confirm:true}});
+ const knight=(day:number,actors:number[],target?:number)=>add(day,actors,KnightDuelWindow.AfterSpeeches,target===undefined?null:{name:"duel",args:{target_id:target,confirm:true}});
  if(twelve){
   const all=Array.from({length:12},(_,i)=>i+1);
   for(const day of [1,2,3]){
    if(day!==3)add(day,[7],"guard",{name:"guard",args:{target_id:day===2?12:10,abstain:false}});
    night(day,day===1?[1,2,3,4]:day===2?[1,3,4]:[1],day===2?7:9);charm(day,day===1?null:day===2?11:12);
-   potion(day,6,day===1?9:day===2?3:6,day===1?"heal":day===2?"poison":"none");
+   potion(day,6,day===1?9:day===2?3:6,day===1?PotionType.Heal:day===2?PotionType.Poison:PotionType.None);
    add(day,[5],"seer",{name:"check_identity",args:{target_id:day===1?2:day===2?4:1}});
    if(day===1)add(day,all,"sheriff_nomination",{name:"run_for_sheriff",args:{run:false}});
    const alive=day===1?all:day===2?[1,4,5,6,8,9,10,11,12]:[1,5,6,8,10,11,12];speech(day,alive);knight(day,[8]);vote(day,alive,day===1?2:day===2?4:1);words(day,[day===1?2:day===2?4:1]);
@@ -38,9 +38,9 @@ export function wolfBeautyScenario(kind:BeautyScenario):TransportGameScenario{
   }
  }else{
   if(dream)add(1,[4],"dreamer",{name:"dream",args:{target_id:5}});
-  night(1,[1,2],kind==="same_wave"?5:6);charm(1,kind==="duel"?3:kind==="night_dream_chain"?4:5);potion(1,3,kind==="poison"||dream||kind==="same_wave"?1:3,kind==="poison"||dream||kind==="same_wave"?"poison":"none");
-  words(1,kind==="poison"||dream?[1,6]:kind==="same_wave"?[1,5]:[6]);
-  if(kind!=="poison"&&kind!=="night_dream_chain"){
+  night(1,[1,2],kind==="same_wave"?5:6);charm(1,kind==="duel"?3:kind==="night_dream_chain"?4:5);potion(1,3,kind===PotionType.Poison||dream||kind==="same_wave"?1:3,kind===PotionType.Poison||dream||kind==="same_wave"?PotionType.Poison:PotionType.None);
+  words(1,kind===PotionType.Poison||dream?[1,6]:kind==="same_wave"?[1,5]:[6]);
+  if(kind!==PotionType.Poison&&kind!=="night_dream_chain"){
    const alive=kind==="night_dream_block"?[2,3,4,5]:kind==="same_wave"?[2,3,4,6]:[1,2,3,4,5];speech(1,alive);if(!dream)knight(1,[4],kind==="duel"?1:undefined);
    if(kind==="duel"){night(2,[2],2);potion(2,3,3);}else{vote(1,alive,kind==="night_dream_block"||kind==="same_wave"?2:1);words(1,[kind==="night_dream_block"||kind==="same_wave"?2:1]);}
   }

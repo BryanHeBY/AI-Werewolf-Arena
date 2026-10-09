@@ -32,7 +32,7 @@ for (const diskFailure of [false, true]) for (const lateSuccess of [false, true]
     } } };
   });
   const write = ReplayFileStore.prototype.writeJsonStrict;
-  const disk = diskFailure ? spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(async function (file, data) {
+  const disk = diskFailure ? spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(async function(this: ReplayFileStore, file, data) {
     if (file === "replay.json" && (data as any).result?.reason === "runtime_error") throw persistence;
     return write.call(this, file, data);
   }) : undefined;

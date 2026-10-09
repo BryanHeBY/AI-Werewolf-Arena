@@ -5,7 +5,7 @@ import * as path from "node:path";
 import { createTestTempDirectory } from "../../support/temp_directory";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { createPlayerAgentRuntime } from "../../../src/runtime/player_agent_factory";
-import { ResolvedAgentRuntimeProfile } from "../../../src/runtime/config/runtime_config";
+import { ResolvedAgentRuntimeProfile } from "../../../src/runtime/config/contracts";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
 function baseOptions(profilesByActor: Map<number, ResolvedAgentRuntimeProfile>, root: string) {
@@ -108,7 +108,7 @@ test("factory snapshots caller bindings and provider budgets for the lifetime of
     started++; ready(); await held;
     const turn = /(?:turn_id must be |turn_id 必须为 )(t\d+)/.exec(messages.at(-1).content)![1];
     const accepted = await callbacks.onToolCall({ id: "snapshot", name: "submit_action", rawArgs: "{}", args: { turn_id: turn, action: "speak", arguments: { text: "snapshot" } } });
-    return { finalAction: accepted.finalAction, assistantText: "" };
+    return { finalAction: accepted.finalAction, assistantText: "", thinkingTrace: [], failedToolInvocations: [] };
   });
   const sourceProvider = { ...llmProfile.provider, maxConcurrentRequests: 1 }, first = { ...llmProfile, provider: sourceProvider }, third = { ...llmProfile, provider: sourceProvider };
   const source = new Map([[1, first], [3, third]]);

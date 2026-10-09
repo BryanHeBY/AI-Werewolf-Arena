@@ -1,11 +1,11 @@
-import { Role, ActionWindow, PotionType, WinCondition } from "../../src/core";
+import { ActionWindow, PotionType, Role, WinCondition } from "../../src/core";
 import { boardDefinitionFromConfig, parseBoardDefinition } from "../../src/runtime/config/board_definition";
 import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../src/runtime/scenarios/twelve_player_standard";
 import { foundationTransportPlan, type PlannedTurn } from "./foundation_transport_plan";
 import type { TransportGameScenario } from "./run_transport_game";
 
-export type WhiteWolfScenario = "hunter" | "none" | "pending_poison" | "pending_knife" | "wolf_king" | "twelve";
+export type WhiteWolfScenario = "hunter" | PotionType.None | "pending_poison" | "pending_knife" | "wolf_king" | "twelve";
 const whiteAction = (target_id:number|null) => ({name:"self_destruct_with_target" as const,args:{reason:"Chosen public action",confirm:true,target_id}});
 function oracle(scenario:TransportGameScenario):TransportGameScenario {
  return {...scenario,promptAssertions:(actor,locale)=>scenario.roles[actor-1]===Role.WhiteWolfKing?{
@@ -17,8 +17,8 @@ export function whiteWolfScenario(kind:WhiteWolfScenario, window:ActionWindow=Ac
  if(kind==="twelve") {
   const turns=foundationTransportPlan(12);
   for(const [actor,rows] of turns) turns.set(actor,rows.filter(row=>!(row.day===1&&(row.stage==="voting"||row.stage==="last_words"))&&!(actor===10&&row.day===2)&&!(actor===2&&row.day===2)));
-  turns.get(2)!.find(row=>row.stage==="on_pre_vote")!.action=whiteAction(10);
-  const cast=turns.get(2)!.find(row=>row.stage==="on_pre_vote")!;cast.invalidActions=[whiteAction(999)];cast.expectedInvalidError="white_wolf_blast_target";
+  turns.get(2)!.find(row=>row.stage===ActionWindow.OnPreVote)!.action=whiteAction(10);
+  const cast=turns.get(2)!.find(row=>row.stage===ActionWindow.OnPreVote)!;cast.invalidActions=[whiteAction(999)];cast.expectedInvalidError="white_wolf_blast_target";
   for(const row of turns.get(5)!.filter(row=>row.stage==="seer")) row.action={name:"check_identity",args:{target_id:row.day===1?2:1}};
   // Remaining ordinary wolf 1 survives the first interruption and replaces old wolf 2's second-night/final-blast script.
   turns.set(1,[...turns.get(1)!,...foundationTransportPlan(12).get(2)!.filter(row=>row.day===2)]);
@@ -43,7 +43,7 @@ export function whiteWolfScenario(kind:WhiteWolfScenario, window:ActionWindow=Ac
   if(actualWindow===ActionWindow.OnPerSpeechGap)add(1,[1],"day_speech",{name:"speak",args:{text:"First normal speech"}});
   if(actualWindow===ActionWindow.OnPreVote)add(1,[1,2,3,4,6],"day_speech",{name:"speak",args:{text:"Public speech"}});
  }
- const target=kind==="none"?null:pending?3:kind==="wolf_king"?2:4;
+ const target=kind===PotionType.None?null:pending?3:kind==="wolf_king"?2:4;
  add(1,[1],actualWindow,whiteAction(target));
  turns.get(1)!.at(-1)!.invalidActions=[whiteAction(999)];turns.get(1)!.at(-1)!.expectedInvalidError="white_wolf_blast_target";
  add(1,[2],actualWindow,pending?{name:"self_destruct",args:{reason:"Higher valid candidate",confirm:true}}:null);
@@ -55,7 +55,7 @@ export function whiteWolfScenario(kind:WhiteWolfScenario, window:ActionWindow=Ac
   add(1,[2],"death_shot",{name:"shoot",args:{target_id:4}});
   add(1,[4],"hunter_shot",{name:"shoot",args:{target_id:3}});
  }
- if(kind==="none") {
+ if(kind===PotionType.None) {
   add(2,[2],"wolf_discussion",{name:"speak_to_wolves",args:{text:"End",end_chat:true}});
   add(2,[2],"wolf_vote",{name:"kill_vote",args:{target_id:4,abstain:false}});
   add(2,[3],"seer",{name:"check_identity",args:{target_id:2}});

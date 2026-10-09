@@ -1,3 +1,4 @@
+import { ActionWindow } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
@@ -18,7 +19,7 @@ for (const required of [false, true]) test(`successful ACP prompt with no tool s
   });
   const root = await createTestTempDirectory("awa-optional-acp-");
   const manager = await SessionRecordManager.create({ sessionId: "optional", board: "synthetic", startedAtIso: "2026-10-08T00:00:00.000Z" }, root);
-  const request: ActionRequest = { actorId: 1, phase: Phase.Day, allowedTools: ["self_destruct"], context: { day: 1, stage: "on_pre_vote", visible_events: [], turn_constraints: { min_valid_actions: required ? 1 : 0, max_valid_actions: 1 } } };
+  const request: ActionRequest = { actorId: 1, phase: Phase.Day, allowedTools: ["self_destruct"], context: { day: 1, stage: ActionWindow.OnPreVote, visible_events: [], turn_constraints: { min_valid_actions: required ? 1 : 0, max_valid_actions: 1 } } };
   await runWithSessionRecorder(manager, async () => {
     const action = await provider.getAction(request); expect(required ? action?.name : action).toBe(required ? "self_destruct" : null);
     await provider.close(); await manager.finalize({ endedAtIso: "2026-10-08T00:01:00.000Z", winner: null, finishReason: "completed", players: [] });

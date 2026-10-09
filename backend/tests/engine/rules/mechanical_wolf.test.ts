@@ -1,3 +1,4 @@
+import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Camp, Role, Phase, WinCondition, type BoardConfig, type RoleComponent, type ToolCall, type ActionRequest } from "../../../src/core";
@@ -43,7 +44,7 @@ function play(game: Game, options: { learn?: number; mode?: "kill" | "skill" | n
       if (request.allowedTools.includes("speak_to_wolves")) return { name: "speak_to_wolves", args: { text: "End", end_chat: true } };
       if (request.allowedTools.includes("kill_vote")) return { name: "kill_vote", args: { target_id: options.knife ?? null, abstain: options.knife == null } };
       if (request.allowedTools.includes("guard")) return { name: "guard", args: { target_id: null, abstain: true } };
-      if (request.allowedTools.includes("use_potion")) return options.witch ?? { name: "use_potion", args: { target_id: request.actorId, potion_type: "none" } };
+      if (request.allowedTools.includes("use_potion")) return options.witch ?? { name: "use_potion", args: { target_id: request.actorId, potion_type: PotionType.None } };
       if (request.allowedTools.includes("inspect_role")) return { name: "inspect_role", args: { target_id: 1 } };
       if (request.allowedTools.includes("speak")) return { name: "speak", args: { text: "Raw text" } };
       if (request.allowedTools.includes("vote")) return { name: "vote", args: { target_id: options.exile ?? null, abstain: options.exile == null } };
@@ -103,7 +104,7 @@ test("one mechanical poison is source-bound, closes its turn and never creates a
 
 test("mechanical Guard reflects a real Witch toxin to its original caster, with no player causal leak", async () => {
   const game = fixture(); await game.phaseManager.runSingleCycle(play(game, { learn: 5, exile: 2 }));
-  await game.phaseManager.runSingleCycle(play(game, { mode: "skill", skill: { name: "mechanical_guard", args: { target_id: 3 } }, witch: { name: "use_potion", args: { target_id: 3, potion_type: "poison" } } }));
+  await game.phaseManager.runSingleCycle(play(game, { mode: "skill", skill: { name: "mechanical_guard", args: { target_id: 3 } }, witch: { name: "use_potion", args: { target_id: 3, potion_type: PotionType.Poison } } }));
   expect(game.world.getAliveEntityIds()).toEqual([1,3,5,6]);
   const events = game.phaseManager.getEvents();
   expect(events.filter(e => e.type === "mechanical_poison_reflected").map(e => e.payload)).toEqual([{ actorId: 1, day: 2, protectedTargetId: 3, casterId: 4 }]);
@@ -136,7 +137,7 @@ test("learning Hunter gives a private passive gun next night, and actual exile g
   await game.phaseManager.runSingleCycle(play(game, { learn: 3, exile: 2 }));
   expect(game.state.learned?.skill).toEqual({ kind: "hunter", armed: false, canShoot: true });
   const provider = play(game, { mode: "kill", exile: 1, shot: 4 }); await game.phaseManager.runSingleCycle(provider);
-  expect(provider.requests.filter(r => r.actorId === 1 && r.allowedTools.includes("shoot")).map(r => [r.context.stage, r.context.death_sources])).toEqual([["death_shot", ["exile"]]]);
+  expect(provider.requests.filter(r => r.actorId === 1 && r.allowedTools.includes("shoot")).map(r => [r.context.stage, r.context.death_sources])).toEqual([["death_shot", [DeathCause.Exile]]]);
   expect(game.phaseManager.getEvents().filter(e => e.type === "mechanical_shot").map(e => e.payload)).toEqual([{ actorId: 1, targetId: 4 }]);
   expect(game.state.learned?.skill).toEqual({ kind: "hunter", armed: true, canShoot: false });
   expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
@@ -190,8 +191,8 @@ for (const revoke of ["cancel", "actor_life", "actor_state", "learning", "mode",
   const original = game.state.learned!.skill;
   const replaceTarget = () => game.world.addComponent(3, COMPONENT.Alive, createAliveComponent());
   const gateway = ctx.toolGateway, validate = gateway.validateAndSanitize.bind(gateway);
-  if (revoke === "gateway_target") gateway.validateAndSanitize = ((...args: Parameters<typeof validate>) => { const result = validate(...args); replaceTarget(); return result; });
-  if (revoke === "gateway_spent") gateway.validateAndSanitize = ((...args: Parameters<typeof validate>) => { const result = validate(...args); if(original.kind === "poison")original.remaining=0; return result; });
+  if (revoke === "gateway_target") gateway.validateAndSanitize = ((world, actorId, call, validationContext) => { const result = validate(world, actorId, call, validationContext); replaceTarget(); return result; });
+  if (revoke === "gateway_spent") gateway.validateAndSanitize = ((world, actorId, call, validationContext) => { const result = validate(world, actorId, call, validationContext); if(original.kind === "poison")original.remaining=0; return result; });
   ctx.actionProvider = { async getAction() {
     attempts++;
     if (revoke === "cancel") current = false;
@@ -251,7 +252,7 @@ for (const revoke of ["camp", "private_state", "owner_state", "learning"] as con
 
 for(const sameBatch of [true,false])test(`${sameBatch}: actual death owner distinguishes a same-proposal death from an inherited prefix before a later Hunter shot`,async()=>{
   const roles=[Role.MechanicalWolf,Role.Wolf,Role.Hunter,Role.Witch,Role.Guard,Role.Villager],game=fixture("en",roles);
-  const provider=play(game,{learn:sameBatch?3:2,knife:sameBatch?2:3,witch:{name:"use_potion",args:{target_id:sameBatch?1:2,potion_type:"poison"}},shot:1});
+  const provider=play(game,{learn:sameBatch?3:2,knife:sameBatch?2:3,witch:{name:"use_potion",args:{target_id:sameBatch?1:2,potion_type:PotionType.Poison}},shot:1});
   await game.phaseManager.runSingleCycle(provider);
   expect(game.world.getAliveEntityIds()).toEqual(sameBatch?[3,4,5,6]:[4,5,6]);
   const events=game.phaseManager.getEvents();expect(events.filter(e=>e.type==="mechanical_awakened").map(e=>e.payload)).toEqual(sameBatch?[]:[{actorId:1,day:1,firstKnifeNight:2}]);

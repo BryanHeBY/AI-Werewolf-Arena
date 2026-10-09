@@ -1,3 +1,4 @@
+import { completedNight } from "../night_stage_fixture";
 import { expect, test } from "bun:test";
 import { readInspectionResult, readSeerInspectionResult } from "@ai-werewolf-arena/replay-contract";
 import { inspectionLabel, text } from "@ai-werewolf-arena/game-text";
@@ -52,7 +53,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     const inspection = events.find(event => event.type === "seer_checked")!;
     expect(inspection.payload).toEqual({ actorId: 3, targetId: 1, result: { kind: "camp", camp: inspectedCamp }, isWerewolf: inspectedCamp === Camp.Wolf });
     expect(inspection.payload.result).not.toHaveProperty("role");
-    expect(result.summary.seerChecks).toEqual([{ seerId: 3, targetId: 1, result: { kind: "camp", camp: inspectedCamp }, isWerewolf: inspectedCamp === Camp.Wolf }]);
+    expect(completedNight(result).summary.seerChecks).toEqual([{ seerId: 3, targetId: 1, result: { kind: "camp", camp: inspectedCamp }, isWerewolf: inspectedCamp === Camp.Wolf }]);
     expect(world.getComponent<RoleComponent>(1, COMPONENT.Role)!.camp).toBe(Camp.Wolf);
     const state = getSeerState(world.getComponent<RoleComponent>(3, COMPONENT.Role)!)!;
     expect(state.lastResult).toEqual({ kind: "camp", camp: inspectedCamp });
@@ -64,7 +65,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     expect(inspection.payload.result).toEqual({ kind: "camp", camp: inspectedCamp });
     expect(state.lastResult).toEqual({ kind: "camp", camp: inspectedCamp });
     expect(state.history[0].result).toEqual({ kind: "camp", camp: inspectedCamp });
-    expect(result.summary.seerChecks[0].result).toEqual({ kind: "camp", camp: inspectedCamp });
+    expect(completedNight(result).summary.seerChecks[0].result).toEqual({ kind: "camp", camp: inspectedCamp });
     const expectedLabel = inspectionLabel({ kind: "camp", camp: inspectedCamp }, locale);
     expect(getDefaultScriptEventRenderRegistry().toLiveRender(inspection, true, locale)).toEqual([{ kind: "private", text: text(locale, "console.live.check", { actor: 3, target: 1, camp: expectedLabel }) }]);
     expect(getDefaultScriptEventRenderRegistry().toLiveRender(inspection, false, locale)).toEqual([]);
@@ -81,7 +82,7 @@ test("serialized readers preserve legitimate legacy booleans and never replace u
     expect(readInspectionResult(bad)).toBeNull();
     expect(readSeerInspectionResult({ isWerewolf: false, result: bad })).toBeNull();
   }
-  for (const result of [{ kind: "camp", camp: "third_party" }, { kind: "role", role: "seer" }, { kind: "combined", camp: "wolf", role: "wolf" }]) {
+  for (const result of [{ kind: "camp", camp: "third_party" }, { kind: "role", role: "seer" }, { kind: "combined", camp: "wolf", role: "wolf" }] as const) {
     const parsed = readInspectionResult(result);
     expect(parsed).toEqual(result); expect(parsed).not.toBe(result);
   }

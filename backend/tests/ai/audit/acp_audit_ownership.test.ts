@@ -6,7 +6,7 @@ import type { AcpSession } from "../../../src/ai/integrations/acp/session";
 import type { ResolvedAgentRuntimeProfile } from "../../../src/runtime/config/contracts";
 import { createTestTempDirectory } from "../../support/temp_directory";
 
-const profile: ResolvedAgentRuntimeProfile = { name: "synthetic", providerName: "synthetic", kind: "acp", provider: { type: "acp", transport: "stdio", command: "/bin/false" } };
+const profile: ResolvedAgentRuntimeProfile = { name: "synthetic", providerName: "synthetic", kind: "acp", provider: { type: "acp", transport: "stdio", command: "/bin/false", args: [], env: {}, sessionConfigOptions: {} } };
 const context: AuditToolContext = { locale: "en", mode: "inspect", taskName: "synthetic", source: "synthetic", payload: { events: [{ seq: 1 }] } };
 
 test("audit prompt and cleanup errors retain both original identities", async () => {

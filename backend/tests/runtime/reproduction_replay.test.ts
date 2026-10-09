@@ -86,7 +86,7 @@ for (const fault of ["transport", "malformed_action"] as const) {
     const transportError = new Error("PRIVATE_TRANSPORT_ERROR_WITH_TOKEN");
     const create = spyOn(factory, "createPlayerAgentRuntime").mockImplementation(async options => {
       const baseline = new BaselineBotActionProvider(options.world);
-      return { kind: "llm", async close() {}, provider: { async getAction(request) {
+      return { kind: "llm", runtimeState: { closed: false }, async close() {}, provider: { async getAction(request) {
         if (fault === "transport" && request.context.stage === "wolf_vote") throw transportError;
         if (fault === "malformed_action" && request.context.stage === "day_speech") return { name: "speak", args: {} } as any;
         return baseline.getAction(request);
@@ -126,7 +126,7 @@ test("a parallel phase reproduces the first failure before cancellation of an ea
   const waiting = new Promise<null>((_resolve, reject) => { cancel = reject; });
   const create = spyOn(factory, "createPlayerAgentRuntime").mockImplementation(async options => {
     const baseline = new BaselineBotActionProvider(options.world);
-    return { kind: "llm", async close() { cancel(cancelled); },
+    return { kind: "llm", runtimeState: { closed: false }, async close() { cancel(cancelled); },
       provider: { async getAction(request) {
         if (request.context.stage === "sheriff_nomination" && request.actorId === 1) return waiting;
         if (request.context.stage === "sheriff_nomination" && request.actorId === 2) throw first;
@@ -161,11 +161,11 @@ test("a game and checkpoint failure keep both errors and cannot seal an incomple
   const primary = new Error("original_action_failure");
   const secondary = new Error("checkpoint_failed");
   const originalCheckpoint = ReproductionTrace.prototype.checkpoint;
-  const checkpoint = spyOn(ReproductionTrace.prototype, "checkpoint").mockImplementation(function(value, events) {
+  const checkpoint = spyOn(ReproductionTrace.prototype, "checkpoint").mockImplementation(function(this: ReproductionTrace, value, events) {
     if (value.cycle > 0) throw secondary;
     originalCheckpoint.call(this, value, events);
   });
-  const create = spyOn(factory, "createPlayerAgentRuntime").mockImplementation(async () => ({ kind: "llm", async close() {}, provider: { async getAction() { throw primary; } } }));
+  const create = spyOn(factory, "createPlayerAgentRuntime").mockImplementation(async () => ({ kind: "llm", runtimeState: { closed: false }, async close() {}, provider: { async getAction() { throw primary; } } }));
   try {
     let failure: unknown;
     try { await runGame(setup); } catch (error) { failure = error; }
@@ -188,7 +188,7 @@ test("a real runner deadline produces an explicitly partial timeout recording", 
   const setup = resolveGameSetup(runtime, { recordRootDir: root, maxDays: 30, streamEvents: false, color: false });
   const create = spyOn(factory, "createPlayerAgentRuntime").mockImplementation(async options => {
     await new Promise(done => setTimeout(done, 20));
-    return { kind: "llm", provider: new BaselineBotActionProvider(options.world), async close() {} };
+    return { kind: "llm", runtimeState: { closed: false }, provider: new BaselineBotActionProvider(options.world), async close() {} };
   });
   try {
     const result = await runGame(setup);
@@ -207,7 +207,7 @@ test("simulation also preserves a decision error when checkpoint recording fails
   const secondary = new Error("simulated_checkpoint_failed");
   const decide = spyOn(ObservedBot.prototype, "decide").mockRejectedValue(primary);
   const originalCheckpoint = ReproductionTrace.prototype.checkpoint;
-  const checkpoint = spyOn(ReproductionTrace.prototype, "checkpoint").mockImplementation(function(value, events) {
+  const checkpoint = spyOn(ReproductionTrace.prototype, "checkpoint").mockImplementation(function(this: ReproductionTrace, value, events) {
     if (value.cycle > 0) throw secondary;
     originalCheckpoint.call(this, value, events);
   });
@@ -230,7 +230,7 @@ for (const simultaneous of [false, true]) {
     const retried = new Set<number>();
     const create = spyOn(factory, "createPlayerAgentRuntime").mockImplementation(async options => {
       const baseline = new BaselineBotActionProvider(options.world);
-      return { kind: "llm", async close() {}, provider: { async getAction(request) {
+      return { kind: "llm", runtimeState: { closed: false }, async close() {}, provider: { async getAction(request) {
         const action = await baseline.getAction(request);
         if (request.context.stage === "voting" && !retried.has(request.actorId) && (simultaneous || retried.size === 0)) {
           retried.add(request.actorId); return { name: "vote", args: { target_id: 999, abstain: false } } as const;

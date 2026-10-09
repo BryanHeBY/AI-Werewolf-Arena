@@ -29,6 +29,7 @@ describe("sheriff pipeline", () => {
     const event = context.phaseManager.getEvents().find((item) => item.type === "sheriff_elected");
 
     expect(sheriffId).toBeDefined();
+    if (sheriffId === undefined) throw new Error("missing_initial_sheriff_fixture");
     expect(event?.payload).toEqual({ winnerId: sheriffId, source: "initial_configuration" });
   });
 
@@ -132,7 +133,7 @@ describe("sheriff pipeline", () => {
 
   test("day pipeline elects sheriff on day 1", async () => {
     const { world } = bootstrapGame(twelvePlayerStandardConfig);
-    const events: any[] = [{ timestamp: Date.now(), type: "phase_changed", payload: { phase: "day", day: 1 } }];
+    const events: any[] = [{ timestamp: Date.now(), type: "phase_changed", payload: { phase: Phase.Day, day: 1 } }];
     const pipeline = new DayPipeline({
       world,
       roleRegistry: createDefaultRoleRegistry(),

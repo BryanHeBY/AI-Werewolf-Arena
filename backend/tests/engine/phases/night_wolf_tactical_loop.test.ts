@@ -1,3 +1,4 @@
+import { completedNight } from "../night_stage_fixture";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { RoleComponent } from "../../../src/core/domain/components/role";
@@ -93,7 +94,7 @@ class EarlyEndWolfDiscussionProvider implements ActionProvider {
     }
 
     if (request.allowedTools.includes("speak_to_wolves")) {
-      const round = Number((request.context as Record<string, unknown>).round ?? 1);
+      const round = Number(request.context.round ?? 1);
       this.discussionOrder.push(request.actorId);
       if (round === 1 && this.endedActorId === null) {
         this.endedActorId = request.actorId;
@@ -268,7 +269,7 @@ describe("night wolf tactical loop", () => {
     expect(
       provider.discussionOrder.slice(provider.voteOrder.length * 2),
     ).toEqual(provider.voteOrder);
-    expect(result.summary.wolfTarget).toBe(wolfTargetId);
+    expect(completedNight(result).summary.wolfTarget).toBe(wolfTargetId);
   });
 
   test("wolf can end discussion early and is skipped in later rounds", async () => {
@@ -358,9 +359,9 @@ describe("night wolf tactical loop", () => {
     const provider = new TacticalOrderProvider(wolfTargetId, poisonTargetId);
 
     const result = await pipeline.execute(customConfig, provider, 1);
-    expect(result.summary.wolfTarget).toBe(wolfTargetId);
-    expect(result.summary.deaths).not.toContain(wolfTargetId);
-    expect(result.summary.deaths).toContain(poisonTargetId);
+    expect(completedNight(result).summary.wolfTarget).toBe(wolfTargetId);
+    expect(completedNight(result).summary.deaths).not.toContain(wolfTargetId);
+    expect(completedNight(result).summary.deaths).toContain(poisonTargetId);
   });
 
   test("seer check result is persisted into seer private state", async () => {
@@ -410,8 +411,8 @@ describe("night wolf tactical loop", () => {
     const provider = new AbstainKillVoteProvider();
     const result = await pipeline.execute(twelvePlayerStandardConfig, provider, 1);
 
-    expect(result.summary.wolfTarget).toBeNull();
-    expect(result.summary.deaths.length).toBe(0);
+    expect(completedNight(result).summary.wolfTarget).toBeNull();
+    expect(completedNight(result).summary.deaths.length).toBe(0);
     const abstains = events.filter(
       (event) =>
         event.type === "wolf_kill_vote_cast" && event.payload.abstain === true,
@@ -438,7 +439,7 @@ describe("night wolf tactical loop", () => {
 
     const result = await pipeline.execute(twelvePlayerStandardConfig, provider, 1);
 
-    expect(result.summary.wolfTarget).toBe(targetId);
+    expect(completedNight(result).summary.wolfTarget).toBe(targetId);
     const wolfIds = context.world
       .getAliveEntityIds()
       .filter(

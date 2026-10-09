@@ -83,7 +83,7 @@ test("audit getContext excludes transport exceptions and arbitrary diagnostics i
 for (const locale of ["zh-CN", "en"] as const) for (const mode of ["inspect", "summarize"] as const) test(`actual ACP and injected MCP audit ${locale}/${mode} preserve prompt language, payload and process cleanup`, async () => {
   const workspace = await createTestTempDirectory("awa-audit-locale-");
   const entry = path.resolve(process.cwd(), "tests/fixtures/acp_audit_agent.ts");
-  const executor = new AcpAuditAgentExecutor({ workspaceRoot: workspace, profile: { kind: "acp", name: "synthetic", providerName: "synthetic", provider: { type: "acp", transport: "stdio", command: process.execPath, args: [entry] } } });
+  const executor = new AcpAuditAgentExecutor({ workspaceRoot: workspace, profile: { kind: "acp", name: "synthetic", providerName: "synthetic", provider: { type: "acp", transport: "stdio", env: {}, sessionConfigOptions: {}, command: process.execPath, args: [entry] } } });
   const payload = mode === "inspect" ? { events: [{ seq: 7, text: "Original 玩家原话" }] } : { findings: [] };
   let result;
   try { result = await executor.runTurn({ mode, locale, taskName: "local-audit", source: "synthetic", payload }, { timeoutMs: 4000 }); }
@@ -111,7 +111,7 @@ test("complete synthetic generator and pipeline preserve separate inspection and
   await Promise.all((["zh-CN", "en"] as const).map(async locale => {
     const displayLocale = locale === "en" ? "zh-CN" : "en";
     const sessionDir = await createTestTempDirectory("awa-audit-pipeline-locale-");
-    const profile = { kind: "acp" as const, name: "synthetic", providerName: "synthetic", provider: { type: "acp" as const, transport: "stdio" as const, command: process.execPath, args: [path.resolve(process.cwd(), "tests/fixtures/acp_audit_agent.ts")] } };
+    const profile = { kind: "acp" as const, name: "synthetic", providerName: "synthetic", provider: { type: "acp" as const, transport: "stdio" as const, env: {}, sessionConfigOptions: {}, command: process.execPath, args: [path.resolve(process.cwd(), "tests/fixtures/acp_audit_agent.ts")] } };
     const markdown = await buildDebugSummaryMarkdown({ locale, displayLocale, manifest, sessionDir, publicEvents: [], logicOps: [], playerViews: [], reports: [{ report_id: "synthetic", timestamp: "2026-10-08T00:00:00.000Z", day: 1, phase: "day", stage: "day_speech", actor_id: 1, actor_role: "wolf", actor_camp: "wolf", category: "flow", severity: "high", message: "Original 报告", evidence_event_seq: [], status: "open" }] }, { profile, timeoutMs: 4000, maxAttempts: 1, concurrency: 2, publicMaxItems: 10, maxItems: 10, playerMaxItems: 10 });
     expect(markdown).toBe(auditSummaryFixture(displayLocale, undefined, "Original 模型报告"));
     const root = path.join(sessionDir, "audit-workspaces");

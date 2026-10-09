@@ -97,7 +97,7 @@ describe("ScopedRequestScheduler", () => {
     });
     const pending = [1, 2, 3, 4].map(actorId => provider.getAction({
       phase: Phase.Day, actorId, allowedTools: ["speak"],
-      context: { turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } },
+      context: { day: 1, stage: "day_speech", visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } },
     }));
     try {
       await twoStarted;

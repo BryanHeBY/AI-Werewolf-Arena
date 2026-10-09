@@ -1,3 +1,5 @@
+import { nightStageContext } from "../night_stage_fixture";
+import { PotionType } from "../../../src/core";
 import {expect,test} from "bun:test";
 import {bootstrapGame} from "../../../src/app/bootstrap";
 import {Role,Camp,Phase,COMPONENT,WinCondition,KnightDuelWindow,type BoardConfig,type ActionRequest,type RoleComponent} from "../../../src/core";
@@ -45,7 +47,7 @@ test("same-wave knife Hunter retains already valid initial words, while a later 
   if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};
   if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:5,abstain:false}};
   if(request.allowedTools.includes("charm"))return{name:"charm",args:{target_id:5}};
-  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:1,potion_type:"poison"}};
+  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:1,potion_type:PotionType.Poison}};
   if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};
   if(request.allowedTools.includes("duel"))return null;
   if(request.allowedTools.includes("shoot")){guns++;throw new Error("charm_forbids_pending_gun");}
@@ -54,7 +56,7 @@ test("same-wave knife Hunter retains already valid initial words, while a later 
  }});
  const events=game.phaseManager.getEvents();expect(guns).toBe(0);expect(events.filter(event=>event.type==="last_words_spoken").map(event=>event.payload.playerId)).toEqual([1,5,2]);
  expect(events.filter(event=>event.type==="charm_death").map(event=>event.payload)).toEqual([{actorId:1,targetId:5}]);expect(events.some(event=>event.type==="additional_deaths")).toBe(false);
- expect(game.world.getAliveEntityIds()).toEqual([3,4,6]);expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");
+ expect(game.world.getAliveEntityIds()).toEqual([3,4,6]);expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
 });
 
 test("compound Duel/Dream suppress charm despite poison, while standalone exile/poison are its only trigger causes",()=>{
@@ -68,14 +70,14 @@ for(const lastVillager of [false,true])test(`last Beauty villager side/${lastVil
   if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};
   if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:3,abstain:false}};
   if(request.allowedTools.includes("charm"))return{name:"charm",args:{target_id:lastVillager?6:4}};
-  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:2,potion_type:"none"}};
+  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:2,potion_type:PotionType.None}};
   if(request.allowedTools.includes("check_identity"))return{name:"check_identity",args:{target_id:1}};
   if(request.allowedTools.includes("duel"))return null;
   if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};
   if(request.allowedTools.includes("vote"))return{name:"vote",args:{target_id:1,abstain:false}};
   throw new Error(`unexpected:${request.context.stage}`);
  }});
- expect(game.phaseManager.getSnapshot().result).toMatchObject({winner:lastVillager?"wolf":"good",reason:lastVillager?"wolf_beauty_last_exile":"all_wolves_eliminated"});expect(game.world.getAliveEntityIds()).toEqual(lastVillager?[2,4,5]:[2,5,6]);
+ expect(game.phaseManager.getSnapshot().result).toMatchObject({winner:lastVillager?Camp.Wolf:Camp.Good,reason:lastVillager?"wolf_beauty_last_exile":"all_wolves_eliminated"});expect(game.world.getAliveEntityIds()).toEqual(lastVillager?[2,4,5]:[2,5,6]);
 });
 
 for(const cycle of [false,true])test(`multiple Beauties/${cycle}: independent bindings terminate and Charm alone cannot recursively trigger another Beauty`,async()=>{
@@ -84,24 +86,24 @@ for(const cycle of [false,true])test(`multiple Beauties/${cycle}: independent bi
   if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};
   if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:cycle?null:6,abstain:cycle}};
   if(request.allowedTools.includes("charm"))return{name:"charm",args:{target_id:request.actorId===1?2:cycle?1:5}};
-  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:request.actorId===3?1:2,potion_type:"poison"}};
+  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:request.actorId===3?1:2,potion_type:PotionType.Poison}};
   if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};
   throw new Error(`unexpected:${request.context.stage}`);
  }});
  const events=game.phaseManager.getEvents();expect(events.filter(event=>event.type==="charm_death").map(event=>[event.payload.actorId,event.payload.targetId])).toEqual(cycle?[[1,2],[2,1]]:[[1,2]]);
- expect(events.filter(event=>event.type==="additional_deaths").map(event=>event.payload.deaths)).toEqual(cycle?[]:[[2]]);expect(events.some(event=>event.type==="hunter_shot")).toBe(false);expect(game.world.getAliveEntityIds()).toEqual(cycle?[3,4,5,6]:[3,4,5]);expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");
+ expect(events.filter(event=>event.type==="additional_deaths").map(event=>event.payload.deaths)).toEqual(cycle?[]:[[2]]);expect(events.some(event=>event.type==="hunter_shot")).toBe(false);expect(game.world.getAliveEntityIds()).toEqual(cycle?[3,4,5,6]:[3,4,5]);expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
 });
 
 for(const mutation of ["phase","actor_life","target_life","state"] as const)test(`${mutation}: asynchronous charm replacement/revocation forms no late relationship or private fact`,async()=>{
  const game=bootstrapGame(board(),{fixedRoles:deck}),events:GameEvent[]=[],old=getWolfBeautyState(role(game,1))!;let current=true;
  const requests=new GameActionRequestFactory(game.world,events,1);
- const ctx={world:game.world,events,currentDay:()=>1,isCurrent:()=>current,getAliveByRole:()=>[1],toolGateway:new ToolGateway(),makeRequest:(actorId:number,allowedTools:ActionRequest["allowedTools"],context:{stage:"wolf_beauty"})=>requests.create({actorId,phase:Phase.Night,allowedTools,stage:context.stage,requiresAction:false}),actionProvider:{async getAction(){
+ const ctx=nightStageContext({world:game.world,events,currentDay:()=>1,isCurrent:()=>current,getAliveByRole:()=>[1],toolGateway:new ToolGateway(),makeRequest:(actorId:number,allowedTools:ActionRequest["allowedTools"],context:{stage:"wolf_beauty"})=>requests.create({summary: "Offline stage fixture", actorId,phase:Phase.Night,allowedTools,stage:context.stage,requiresAction:false}),actionProvider:{async getAction(){
   if(mutation==="phase")current=false;
   if(mutation==="actor_life"){const life=game.world.getComponent<{alive:boolean}>(1,COMPONENT.Alive)!;life.alive=false;life.alive=true;}
   if(mutation==="target_life"){const life=game.world.getComponent<{alive:boolean}>(5,COMPONENT.Alive)!;life.alive=false;life.alive=true;}
   if(mutation==="state")role(game,1).privateState.wolf_beauty={targetId:null,lastActedDay:null,history:[]};
   return{name:"charm",args:{target_id:5}};
- }}} as NightStageContext;
+ }}});
  await WOLF_BEAUTY_CHARM_STAGE.execute(ctx);expect(old).toEqual({targetId:null,lastActedDay:null,history:[]});expect(events).toEqual([]);expect(activeCharm(game.world,1)).toBeNull();
 });
 
@@ -117,13 +119,13 @@ for(const heal of [false,true])test(`Night guard/heal/${heal}: ordinary protecti
   if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:6,abstain:false}};
   if(request.allowedTools.includes("guard"))return{name:"guard",args:{target_id:6,abstain:false}};
   if(request.allowedTools.includes("charm"))return{name:"charm",args:{target_id:6}};
-  if(request.allowedTools.includes("use_potion"))return request.actorId===5?{name:"use_potion",args:{target_id:1,potion_type:"poison"}}:{name:"use_potion",args:{target_id:heal?6:3,potion_type:heal?"heal":"none"}};
+  if(request.allowedTools.includes("use_potion"))return request.actorId===5?{name:"use_potion",args:{target_id:1,potion_type:PotionType.Poison}}:{name:"use_potion",args:{target_id:heal?6:3,potion_type:heal?PotionType.Heal:PotionType.None}};
   if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};
   if(request.allowedTools.includes("shoot")){guns++;throw new Error("charm_forbids_gun");}
   if(request.allowedTools.includes("vote"))return{name:"vote",args:{target_id:2,abstain:false}};
   throw new Error(`unexpected:${request.context.stage}`);
  }});
- expect(guns).toBe(0);expect(game.phaseManager.getEvents().filter(event=>event.type==="charm_death").map(event=>event.payload.targetId)).toEqual([6]);expect(game.world.getAliveEntityIds()).toEqual([3,4,5,7,8]);expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");
+ expect(guns).toBe(0);expect(game.phaseManager.getEvents().filter(event=>event.type==="charm_death").map(event=>event.payload.targetId)).toEqual([6]);expect(game.world.getAliveEntityIds()).toEqual([3,4,5,7,8]);expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
 });
 
 for(const locale of ["zh-CN","en"] as const)test(`${locale}: Beauty keeps ID-only pack permissions, no blast or own self-knife, and charm receipt is strict and read-only`,()=>{
@@ -145,7 +147,7 @@ for(const locale of ["zh-CN","en"] as const)for(const mode of ["exile","poison",
   if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:6,abstain:false}};
   if(request.allowedTools.includes("dream"))return{name:"dream",args:{target_id:5}};
   if(request.allowedTools.includes("charm"))return{name:"charm",args:{target_id:mode==="night_dream_chain"?4:mode==="duel"?3:5}};
-  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:mode==="poison"||mode.startsWith("night_dream")?1:3,potion_type:mode==="poison"||mode.startsWith("night_dream")?"poison":"none"}};
+  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:mode==="poison"||mode.startsWith("night_dream")?1:3,potion_type:mode===PotionType.Poison||mode.startsWith("night_dream")?PotionType.Poison:PotionType.None}};
   if(request.allowedTools.includes("duel"))return mode==="duel"?{name:"duel",args:{target_id:1,confirm:true}}:null;
   if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};
   if(request.allowedTools.includes("vote"))return{name:"vote",args:{target_id:mode==="night_dream_block"?2:1,abstain:false}};
@@ -156,7 +158,7 @@ for(const locale of ["zh-CN","en"] as const)for(const mode of ["exile","poison",
  expect(events.filter(event=>event.type==="additional_deaths").map(event=>event.payload.deaths)).toEqual(mode==="duel"||mode==="night_dream_block"?[]:mode==="night_dream_chain"?[[4,5]]:[[5]]);
  expect(events.some(event=>event.type==="hunter_shot"||event.type==="wolf_king_shot")).toBe(false);
  expect(events.filter(event=>event.type==="last_words_spoken").map(event=>event.payload.playerId)).toEqual(mode==="exile"?[6,1]:mode==="duel"?[6]:mode==="night_dream_block"?[1,6,2]:[1,6]);
- if(mode==="night_dream_block"){expect(game.world.getAliveEntityIds()).toEqual([3,4,5]);expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");}else if(mode==="duel"){expect(game.world.getAliveEntityIds()).toEqual([2,3,4,5]);expect(game.phaseManager.getSnapshot()).toEqual({day:2,phase:Phase.Night,gameOver:false,result:null});}else expect(game.phaseManager.getSnapshot().result).toMatchObject({winner:"wolf",reason:"slaughter_side_completed"});
+ if(mode==="night_dream_block"){expect(game.world.getAliveEntityIds()).toEqual([3,4,5]);expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);}else if(mode==="duel"){expect(game.world.getAliveEntityIds()).toEqual([2,3,4,5]);expect(game.phaseManager.getSnapshot()).toEqual({day:2,phase:Phase.Night,gameOver:false,result:null});}else expect(game.phaseManager.getSnapshot().result).toMatchObject({winner:Camp.Wolf,reason:"slaughter_side_completed"});
  for(const actor of game.world.entityIds()){
   const feed=buildAgentVisibleEventFeed(game.world,events,actor);expect(feed.some(event=>event.type==="charm_applied")).toBe(actor===1);expect(feed.some(event=>event.type==="charm_death"||event.type==="charm_blocked")).toBe(false);
  }
@@ -168,13 +170,13 @@ for(const conditions of [[WinCondition.SlaughterSide],[WinCondition.SlaughterCit
   if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};
   if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:3,abstain:false}};
   if(request.allowedTools.includes("charm"))return{name:"charm",args:{target_id:2}};
-  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:2,potion_type:"none"}};
+  if(request.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:2,potion_type:PotionType.None}};
   if(request.allowedTools.includes("speak"))return{name:"speak",args:{text:"Raw"}};
   if(request.allowedTools.includes("choose_direction"))return{name:"choose_direction",args:{direction:"clockwise"}};
   if(request.allowedTools.includes("vote"))return{name:"vote",args:{target_id:1,abstain:false}};
   throw new Error(`unexpected:${request.context.stage}`);
  }});
- const wolf=conditions[0]===WinCondition.SlaughterSide,winners=wolf?[1]:[2,3,4,5,6];expect(game.phaseManager.getSnapshot().result).toEqual({winner:wolf?"wolf":"good",reason:wolf?"wolf_beauty_last_exile":"all_wolves_eliminated",outcome:{kind:"victory",primary:{kind:"faction",faction:wolf?"wolf":"good",winningPlayerIds:winners},additional:[],winningPlayerIds:winners},decidedAt:{day:1,phase:Phase.Voting,checkpoint:"exile_settled"}});
+ const wolf=conditions[0]===WinCondition.SlaughterSide,winners=wolf?[1]:[2,3,4,5,6];expect(game.phaseManager.getSnapshot().result).toEqual({winner:wolf?Camp.Wolf:Camp.Good,reason:wolf?"wolf_beauty_last_exile":"all_wolves_eliminated",outcome:{kind:"victory",primary:{kind:"faction",faction:wolf?"wolf":"good",winningPlayerIds:winners},additional:[],winningPlayerIds:winners},decidedAt:{day:1,phase:Phase.Voting,checkpoint:"exile_settled"}});
  expect(game.world.getAliveEntityIds()).toEqual([4,5,6]);const events=game.phaseManager.getEvents();expect(events.findIndex(event=>event.type==="additional_deaths")).toBeLessThan(events.findIndex(event=>event.type==="game_over"));
  const badges=events.filter(event=>event.type==="sheriff_badge_transferred");expect(badges.map(event=>[event.payload.fromId,event.payload.toId])).toEqual([[1,2],[2,4]]);expect(events.findIndex(event=>event===badges.at(-1))).toBeLessThan(events.findIndex(event=>event.type==="game_over"));
 });
@@ -185,7 +187,7 @@ test("skip clears current charm and adjacent-night duplicate rejection never mut
   if(request.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves" as const,args:{text:"End",end_chat:true}};
   if(request.allowedTools.includes("kill_vote"))return{name:"kill_vote" as const,args:{target_id:null,abstain:true}};
   if(request.allowedTools.includes("charm"))return cycle===1?{name:"charm" as const,args:{target_id:5}}:null;
-  if(request.allowedTools.includes("use_potion"))return{name:"use_potion" as const,args:{target_id:3,potion_type:"none" as const}};
+  if(request.allowedTools.includes("use_potion"))return{name:"use_potion" as const,args:{target_id:3,potion_type:PotionType.None as const}};
   if(request.allowedTools.includes("speak"))return{name:"speak" as const,args:{text:"Raw"}};
   if(request.allowedTools.includes("duel"))return null;
   if(request.allowedTools.includes("vote"))return{name:"vote" as const,args:{target_id:null,abstain:true}};

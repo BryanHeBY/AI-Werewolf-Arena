@@ -1,3 +1,4 @@
+import { fixtureNumber } from "../support/fixture_values";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { writeFile } from "node:fs/promises";
@@ -23,9 +24,9 @@ for (const id of ["six_player_awakened_hidden_wolf", "twelve_player_awakened_hid
       if (learned?.skill.kind === "wolf") { if (extra === "spent") expect(learned.skill.extraKnife).toBe("spent"); extra = learned.skill.extraKnife; }
     }
     for (const event of record.events) {
-      if (event.type === "role_inspected" && event.payload.actorId === actor) { expect(checked.has(event.payload.targetId)).toBe(false); checked.add(event.payload.targetId); }
+      if (event.type === "role_inspected" && event.payload.actorId === actor) { expect(checked.has(fixtureNumber(event.payload.targetId))).toBe(false); checked.add(fixtureNumber(event.payload.targetId)); }
       if (["wolf_discussion", "wolf_discussion_ended", "wolf_self_destruct"].includes(event.type)) expect(event.payload.actorId ?? event.payload.wolfId).not.toBe(actor);
-      if (event.type === "awakened_ready") expect(event.payload.activeFromNight).toBe(event.payload.activationNight + 1);
+      if (event.type === "awakened_ready") expect(event.payload.activeFromNight).toBe(fixtureNumber(event.payload.activationNight) + 1);
     }
     expect((await replayReproduction(record, output)).snapshot.result).toEqual(game.result);
   }

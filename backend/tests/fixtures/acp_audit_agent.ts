@@ -1,3 +1,4 @@
+import { fixtureObject } from "../support/fixture_values";
 import { auditSummaryFixture } from "../support/audit_summary_fixture";
 /** Synthetic ACP agent: reads only the injected audit MCP and records test prompts. */
 import { createInterface } from "node:readline";
@@ -35,7 +36,7 @@ try {
         trace.stale = (await client!.callTool({ name: "get_audit_context", arguments: { turn_id: "a999" } })).structuredContent;
         const reply = await client!.callTool({ name: "get_audit_context", arguments: { turn_id: turn } });
         trace.context = reply.structuredContent;
-        const context = reply.structuredContent?.context as { mode: string };
+        const context = fixtureObject(reply.structuredContent).context as { mode: string };
         trace.submission = (await client!.callTool(context.mode === "inspect"
           ? { name: "submit_audit_findings", arguments: { turn_id: turn, findings: [], notes: ["Original 模型说明"] } }
           : { name: "submit_audit_summary", arguments: { turn_id: turn, markdown: auditSummaryFixture(trace.locale === "en" ? "en" : "zh-CN", undefined, "Original 模型报告") } })).structuredContent;

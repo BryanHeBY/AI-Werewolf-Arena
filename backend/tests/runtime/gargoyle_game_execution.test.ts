@@ -1,3 +1,4 @@
+import { Camp, DeathCause, Phase } from "../../src/core";
 import {expect,test} from "bun:test";
 import {writeFile} from "node:fs/promises";
 import {GARGOYLE_CASES,gargoyleScenario,type GargoyleScenario} from "../support/gargoyle_scenarios";
@@ -11,15 +12,15 @@ const facts:Record<GargoyleScenario,{alive:number[];words:number[];day:number;ni
  twelve:{alive:[5,8,10,11,12],words:[4,9,1],day:3,awake:2,inherited:true,roles:["seer","witch","gravekeeper"],checks:3,grave:["wolf","good"]},
 };
 for(const kind of GARGOYLE_CASES)for(const transport of ["llm","acp","mixed"] as const)test(`${kind}/${transport}: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape`,async()=>{
- const runs=[];
+ const runs: Awaited<ReturnType<typeof runTransportGame>>[] = [];
  for(const locale of ["zh-CN","en"] as const){
   const scenario=gargoyleScenario(kind),run=await runTransportGame(scenario,transport,locale);runs.push(run);const oracle=facts[kind],events=run.replay.events;
   expect(events.filter(e=>e.type==="gargoyle_awakened").map(e=>e.payload)).toEqual(oracle.awake===null?[]:[{actorId:1,day:oracle.awake}]);expect(run.record.checkpoints.at(-1)!.players.find(p=>p.id===1)!.privateState.gargoyle).toEqual({hasInheritedKnife:oracle.inherited});
   expect(events.filter(e=>e.type==="role_inspected").map(e=>e.payload.result)).toEqual(oracle.roles.map(role=>({kind:"role",role})));expect(events.filter(e=>e.type==="seer_checked").map(e=>e.payload.isWerewolf)).toEqual(Array(oracle.checks).fill(true));
   expect(events.filter(e=>e.type==="gravekeeper_reported").map(e=>e.payload.result)).toEqual(oracle.grave.map(camp=>({kind:"camp",camp})));
   expect(events.filter(e=>e.type==="last_words_spoken").map(e=>e.payload.playerId)).toEqual(oracle.words);expect(run.manifest.players.filter(p=>p.alive).map(p=>p.player_id)).toEqual(oracle.alive);
-  const wolves=scenario.roles.flatMap((r,i)=>["wolf","wolf_king","gargoyle"].includes(r)?[i+1]:[]),winners=oracle.wolf?wolves:scenario.roles.flatMap((_,i)=>!wolves.includes(i+1)?[i+1]:[]),faction=oracle.wolf?"wolf":"good";
-  expect(run.result.snapshot.result).toEqual({winner:faction,reason:oracle.wolf?"slaughter_side_completed":"all_wolves_eliminated",outcome:{kind:"victory",primary:{kind:"faction",faction,winningPlayerIds:winners},additional:[],winningPlayerIds:winners},decidedAt:{day:oracle.day,phase:oracle.night?"day":"voting",checkpoint:oracle.night?"night_settled":"exile_settled"}});
+  const wolves=scenario.roles.flatMap((r,i)=>["wolf","wolf_king","gargoyle"].includes(r)?[i+1]:[]),winners=oracle.wolf?wolves:scenario.roles.flatMap((_,i)=>!wolves.includes(i+1)?[i+1]:[]),faction=oracle.wolf?Camp.Wolf:Camp.Good;
+  expect(run.result.snapshot.result).toEqual({winner:faction,reason:oracle.wolf?"slaughter_side_completed":"all_wolves_eliminated",outcome:{kind:"victory",primary:{kind:"faction",faction,winningPlayerIds:winners},additional:[],winningPlayerIds:winners},decidedAt:{day:oracle.day,phase:oracle.night?Phase.Day:Phase.Voting,checkpoint:oracle.night?"night_settled":"exile_settled"}});
   const knives=scenario.turns.get(1)!.filter(t=>t.stage==="wolf_vote").map(t=>[t.day,t.action?.name==="kill_vote"?t.action.args.target_id:null]);expect(events.filter(e=>e.type==="wolf_kill_vote_cast"&&e.payload.actorId===1).map(e=>[e.day,e.payload.targetId])).toEqual(knives);
   for(const e of events.filter(e=>e.type==="wolf_kill_vote_cast"&&e.payload.actorId===1)){expect(events.findIndex(x=>x.type==="role_inspected"&&x.day===e.day)).toBeLessThan(events.indexOf(e));}
   expect(events.some(e=>["wolf_discussion","wolf_discussion_ended"].includes(e.type)&&e.payload.actorId===1)).toBe(false);

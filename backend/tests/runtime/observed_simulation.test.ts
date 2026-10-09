@@ -28,7 +28,7 @@ for (const boardId of ["six_player_mvp", "twelve_player_standard"]) {
     for (const game of report.games) {
       const replay = JSON.parse(await readFile(path.join(game.recordDir, "replay.json"), "utf8"));
       assertReplayDocument(replay);
-      expect(replay.result).toEqual({ winner: game.result!.winner, reason: game.result!.reason, decision: game.result });
+      expect(replay.result).toEqual({ winner: game.result!.winner, reason: game.result!.reason, decision: game.result ?? undefined });
       const reproduction = await readReproduction(path.join(game.recordDir, "reproduction.json"));
       expect((await replayReproduction(reproduction, actionReplayRoot)).snapshot.result).toEqual(game.result);
     }

@@ -101,5 +101,6 @@ test("a neutral public shot updates observer knowledge and excludes the victim f
   const action = await provider.getAction(factory.create({ actorId: 1, phase: Phase.Voting, allowedTools: ["vote"], stage: "voting", requiresAction: true, summary: "Vote" }));
   expect(observations[0].request.context.visible_events).toEqual([{ seq: 1, type: "player_shot", payload: { actorId: 3, targetId: 2 } }]);
   expect(observations[0].knownAliveIds).toEqual([1, 3, 4, 5, 6]);
-  expect(action?.args.target_id).not.toBe(2);
+  if (action?.name !== "vote") throw new Error("expected_vote");
+  expect(action.args.target_id).not.toBe(2);
 });

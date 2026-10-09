@@ -67,7 +67,7 @@ test("real game/audit MCP subprocesses preserve simultaneous task locales and au
       for (const tool of listed.tools) {
         const spec = protocol.specs.find(spec => spec.name === tool.name)!;
         expect(tool.description).toBe(spec.description);
-        expect(tool.inputSchema).toEqual(spec.parameters);
+        expect(spec.parameters).toEqual(tool.inputSchema);
         const body = JSON.stringify(tool);
         if (locale === "en") expect(body).not.toMatch(/[\u4e00-\u9fff]/);
       }

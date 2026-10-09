@@ -30,7 +30,7 @@ for (const abilityId of [undefined, "gift:1", "gift:2"]) test(`${abilityId}: a d
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: inserting a gifted ID cannot borrow a native gun permission at reception or application`, () => {
   const { world } = fixture(locale), receive = new ActionReception(world), gateway = new ToolGateway(), permit = world.openDeathAction(2, "shoot", Phase.Day, 1);
   const request: ActionRequest = { actorId: 2, phase: Phase.Day, allowedTools: ["shoot"], context: { day: 1, stage: "hunter_shot", trigger: "on_death", death_action_id: permit.id, visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } };
-  const nativeState = getHunterState(world.getComponent<RoleComponent>(2, COMPONENT.Role))!;
+  const nativeState = getHunterState(world.getComponent<RoleComponent>(2, COMPONENT.Role)!)!;
   try {
     const forged = structuredClone(request); forged.context.ability_id = "gift:1";
     expect(receive.validate(forged, "shoot", { target_id: 1 })).toMatchObject({ ok: false, error: "death_action_unavailable" });

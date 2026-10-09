@@ -25,7 +25,7 @@ describe("applyAcpSessionConfigOptions", () => {
     const session = {
       sessionId: "session-fast",
       newSessionResponse: { sessionId: "session-fast", configOptions: [option(false)] },
-    } as acp.ActiveSession;
+    } satisfies Pick<acp.ActiveSession, "sessionId" | "newSessionResponse">;
 
     await applyAcpSessionConfigOptions(client, session, { "fast-mode": true });
 
@@ -41,7 +41,7 @@ describe("applyAcpSessionConfigOptions", () => {
     const session = {
       sessionId: "session-no-fast",
       newSessionResponse: { sessionId: "session-no-fast", configOptions: [] },
-    } as acp.ActiveSession;
+    } satisfies Pick<acp.ActiveSession, "sessionId" | "newSessionResponse">;
 
     await expect(applyAcpSessionConfigOptions(
       {} as acp.ClientContext,

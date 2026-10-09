@@ -1,3 +1,4 @@
+import { ActionWindow, PotionType } from "../../src/core";
 import type { ActionStage, Role, ToolCall } from "../../src/core";
 export interface PlannedTurn { hybridChoice?: { targetId: number } | null; mechanicalStatus?: { learned: [string,string] | null; ready: number | null; inherited: boolean; first: number | null; mode: {day:number;kind:"skill"|"kill"} | null }; day: number; stage: ActionStage; action: ToolCall | null; invalidActions?: ToolCall[]; expectedInvalidError?: string; gargoyleStatus?:{inherited:boolean;active:boolean};roleInspectionLatest?:null|{targetId:number;roleLabel:[string,string]}; hiddenWolfStatus?:{inherited:boolean;active:boolean}; requiredPromptMarkers?:string[];forbiddenPromptMarkers?:string[]; bearLatest?:null|{day:number;roared:boolean}; knightResourceRemaining?: 0 | 1; charmLatest?: {day: number|null;targetId:number|null}; dreamLatest?: null | {day: number; targetId: number}; gravekeeperLatest?: null | { exileDay: number; receivedDay: number; targetId: number; camp: "good" | "wolf" | "third_party" } }
 export interface ActorTransportPlan { actorId: number; role: Role; locale: "zh-CN" | "en"; turns: PlannedTurn[]; expectedName?: string; expectedPersona?: string | null; forbiddenPersonas?: string[]; expectedIdentityMarker?: string; expectedTeammateIds?:number[]; requiredCurrentMarkers?: string[]; forbiddenCurrentMarkers?: string[] }
@@ -29,27 +30,27 @@ export function foundationTransportPlan(size: 6 | 12, alternate = false) {
   } else {
     const all = Array.from({ length: 12 }, (_, index) => index + 1);
     wolves(1, [1, 2, 3, 4], 9);
-    add(1, [6], "witch", { name: "use_potion", args: { target_id: 9, potion_type: "heal" } });
+    add(1, [6], "witch", { name: "use_potion", args: { target_id: 9, potion_type: PotionType.Heal } });
     add(1, [5], "seer", { name: "check_identity", args: { target_id: 1 } });
     add(1, all, "sheriff_nomination", actor => ({ name: "run_for_sheriff", args: { run: actor === 8 || actor === 10 } }));
     add(1, [8, 10], "sheriff_campaign_speech", { name: "speak", args: { text: "Campaign" } });
     add(1, [8, 10], "sheriff_withdraw", actor => ({ name: "run_for_sheriff", args: { run: actor === 8 } }));
     add(1, all.filter(id => id !== 8), "sheriff_vote", { name: "vote_for_sheriff", args: { target_id: 8, abstain: false } });
     add(1, [8], "sheriff_choose_direction", { name: "choose_direction", args: { direction: "clockwise" } });
-    speech(1, all); add(1, [1, 2, 3, 4], "on_pre_vote", null); vote(1, all, alternate ? 8 : 1); if (!alternate) last(1, 1);
+    speech(1, all); add(1, [1, 2, 3, 4], ActionWindow.OnPreVote, null); vote(1, all, alternate ? 8 : 1); if (!alternate) last(1, 1);
     wolves(2, alternate ? [1, 2, 3, 4] : [2, 3, 4], 7);
-    add(2, [6], "witch", { name: "use_potion", args: { target_id: 4, potion_type: "poison" } });
+    add(2, [6], "witch", { name: "use_potion", args: { target_id: 4, potion_type: PotionType.Poison } });
     add(2, [5], "seer", { name: "check_identity", args: { target_id: 2 } });
     add(2, [7], "hunter_shot", { name: "shoot", args: { target_id: 3 } });
     add(2, [alternate ? 1 : 8], "sheriff_choose_direction", { name: "choose_direction", args: { direction: "clockwise" } });
     speech(2, alternate ? [1, 2, 5, 6, 8, 9, 10, 11, 12] : [2, 5, 6, 8, 9, 10, 11, 12]);
     if (alternate) {
-      add(2, [1, 2], "on_pre_vote", null); vote(2, [1, 2, 5, 6, 9, 10, 11, 12], 1); last(2, 1);
-      wolves(3, [2], 5); add(3, [6], "witch", { name: "use_potion", args: { target_id: 6, potion_type: "none" } });
+      add(2, [1, 2], ActionWindow.OnPreVote, null); vote(2, [1, 2, 5, 6, 9, 10, 11, 12], 1); last(2, 1);
+      wolves(3, [2], 5); add(3, [6], "witch", { name: "use_potion", args: { target_id: 6, potion_type: PotionType.None } });
       add(3, [5], "seer", { name: "check_identity", args: { target_id: 2 } });
       add(3, [2], "sheriff_choose_direction", { name: "choose_direction", args: { direction: "clockwise" } }); speech(3, [2, 6, 8, 9, 10, 11, 12]);
     }
-    add(alternate ? 3 : 2, [2], "on_pre_vote", { name: "self_destruct", args: { reason: "Final wolf", confirm: true } });
+    add(alternate ? 3 : 2, [2], ActionWindow.OnPreVote, { name: "self_destruct", args: { reason: "Final wolf", confirm: true } });
   }
   return rows;
 }

@@ -1,3 +1,4 @@
+import { completedNight } from "../night_stage_fixture";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile } from "node:fs/promises";
@@ -85,7 +86,8 @@ for (const locale of ["zh-CN", "en"] as const) {
       const applied = gateway.validateAndSanitize(world, item.actor, item.call, { phase: item.phase });
       expect(preflight).toMatchObject({ ok: false, error: item.error });
       expect(applied).toMatchObject({ ok: false, error: item.error });
-      expect(preflight).toEqual(applied); expect(state()).toEqual(before);
+      if (preflight.ok || applied.ok || applied.error === undefined || applied.message === undefined) throw new Error("expected_rejected_permission_fixture");
+      expect(preflight).toEqual({ ...applied, ok: false, error: applied.error, message: applied.message }); expect(state()).toEqual(before);
     }
     expect(reception.validate(request(4, "speak_to_wolves"), chat.name, chat.args).ok).toBe(true);
     role(world, 3).privateState.knife = true;
@@ -105,7 +107,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       wolfTeamEvent(world, catalog, { timestamp: 3, type: "wolf_discussion_ended", payload: { actorId: 4, reason: "end", round: 1 } }),
       wolfTeamEvent(world, catalog, { timestamp: 4, type: "wolf_kill_vote_cast", payload: { actorId: 1, abstain: false, targetId: 6 } }),
     ];
-    for (const event of events.slice(1)) { expect(event.audience).toEqual([1, 2, 4]); expect(Object.isFrozen(event.audience)).toBe(true); }
+    for (const event of events.slice(1)) { if (!("audience" in event)) throw new Error("missing_wolf_audience_fixture"); expect(event.audience).toEqual([1, 2, 4]); expect(Object.isFrozen(event.audience)).toBe(true); }
     // Admission after emission cannot reveal any previous private event. Exit
     // cannot erase past knowledge. A knife-only grant is independent of chat.
     role(world, 1).camp = Camp.Good; alive(world, 2).alive = false;
@@ -113,6 +115,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     role(world, 3).privateState.knife = true;
     events.push(wolfTeamEvent(world, catalog, { timestamp: 5, type: "wolf_discussion", payload: { actorId: 4, text: "secret-after", endChat: false, round: 2 } }));
     events.push(wolfTeamEvent(world, catalog, { timestamp: 6, type: "wolf_kill_vote_cast", payload: { actorId: 3, abstain: true, targetId: null } }));
+    if (!("audience" in events[5]) || !("audience" in events[6])) throw new Error("missing_wolf_audience_fixture");
     expect(events[5].audience).toEqual([4, 6]); expect(events[6].audience).toEqual([3, 4, 6]);
     const expected = [
       [1, ["phase_changed", "wolf_tactical_order", "wolf_discussion", "wolf_discussion_ended", "wolf_kill_vote_cast"]],
@@ -126,7 +129,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     await record.flushNow();
     for (const [actor, types] of expected) {
       const projected = buildAgentVisibleEventFeed(world, events, actor);
-      expect(projected.map(item => item.type)).toEqual(types);
+      expect(projected.map(item => item.type)).toEqual([...types]);
       expect(projected.map(item => item.seq)).toEqual(types.map((_, index) => index + 1));
       expect(JSON.stringify(projected)).not.toContain('"audience"');
       const saved = JSON.parse(await readFile(path.join(record.sessionDir, `players/player_${actor}.json`), "utf8"));
@@ -155,7 +158,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual night sch
   } }, 1);
   expect(asked.filter(([, stage]) => stage === "wolf_discussion").map(([id]) => id).sort()).toEqual([1, 2, 4]);
   expect(asked.filter(([, stage]) => stage === "wolf_vote").map(([id]) => id)).toEqual([1, 3]);
-  expect(result.summary.wolfTarget).toBe(6); expect(result.damage.deaths).toEqual([6]);
+  expect(completedNight(result).summary.wolfTarget).toBe(6); expect(completedNight(result).damage.deaths).toEqual([6]);
   expect(events.filter(event => event.type === "wolf_discussion_ended").every(event => JSON.stringify(event.audience) === "[1,2,4]")).toBe(true);
   expect(events.filter(event => event.type === "wolf_kill_vote_cast").map(event => ({ actor: event.payload.actorId, audience: event.audience }))).toEqual([{ actor: 1, audience: [1, 3, 4] }, { actor: 3, audience: [1, 3, 4] }]);
   expect(buildAgentVisibleEventFeed(world, events, 2).some(event => event.type === "wolf_kill_vote_cast")).toBe(false);
@@ -170,9 +173,9 @@ test("a knife revoked during an in-flight decision is not applied, retried or re
     asks.push(input.actorId); role(world, input.actorId).camp = Camp.Good;
     return { name: "kill_vote", args: { target_id: 6, abstain: false } };
   } }, 1);
-  expect(asks.sort()).toEqual([1, 2]); expect(result.summary.wolfTarget).toBeNull();
+  expect(asks.sort()).toEqual([1, 2]); expect(completedNight(result).summary.wolfTarget).toBeNull();
   expect(events.filter(event => event.type === "wolf_kill_vote_cast")).toEqual([]);
-  expect(result.damage.deaths).toEqual([]);
+  expect(completedNight(result).damage.deaths).toEqual([]);
 });
 
 for (const locale of ["zh-CN", "en"] as const) for (const configured of [false, true])

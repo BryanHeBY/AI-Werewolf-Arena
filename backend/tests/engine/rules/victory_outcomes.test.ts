@@ -93,7 +93,7 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: max-day terminat
 });
 
 test("strict shared outcome readers reject malformed facts and never invoke foreign accessors", () => {
-  const valid = { kind: "victory", primary: { kind: "faction", faction: "good", winningPlayerIds: [1, 3] }, additional: [], winningPlayerIds: [1, 3] };
+  const valid: Extract<ReturnType<typeof readGameOutcome>, { kind: "victory" }> = { kind: "victory", primary: { kind: "faction", faction: "good", winningPlayerIds: [1, 3] }, additional: [], winningPlayerIds: [1, 3] };
   expect(readGameOutcome(valid, [1, 2, 3])).toEqual(valid);
   const malformed = [ { ...valid, winningPlayerIds: [1] }, { ...valid, winningPlayerIds: [3, 1] }, { ...valid, additional: [valid.primary] }, { ...valid, primary: { kind: "individual", playerId: 2, goalId: "scenario_solo", winningPlayerIds: [1] } }, { kind: "no_winner", winningPlayerIds: [] }, { ...valid, primary: { ...valid.primary, faction: "other" } } ];
   for (const value of malformed) expect(() => readGameOutcome(value)).toThrow();
@@ -105,7 +105,7 @@ test("strict shared outcome readers reject malformed facts and never invoke fore
   const copy = readGameOutcome(valid); if (copy.kind === "victory") copy.primary.winningPlayerIds.length = 0;
   expect(valid.primary.winningPlayerIds).toEqual([1, 3]);
   expect(readVictoryPoint({ day: 2, phase: "voting", checkpoint: "exile_settled" })).toEqual({ day: 2, phase: "voting", checkpoint: "exile_settled" });
-  expect(() => readVictoryPoint({ day: 2, phase: "day", checkpoint: "exile_settled" })).toThrow();
+  expect(() => readVictoryPoint({ day: 2, phase: Phase.Day, checkpoint: "exile_settled" })).toThrow();
 });
 
 test("an executed shared result decoder change invalidates the engine fingerprint without changing the lockfile", async () => {

@@ -1,3 +1,5 @@
+import { nightStageContext } from "../night_stage_fixture";
+import { PotionType } from "../../../src/core";
 import {expect,test} from "bun:test";
 import {bootstrapGame} from "../../../src/app/bootstrap";
 import {Camp,Role,Phase,COMPONENT,WinCondition,ActionWindow,KnightDuelWindow,type RoleComponent,type GameEvent,type BoardConfig,type ActionRequest} from "../../../src/core";
@@ -35,19 +37,19 @@ for(const mode of ["leave_night","leave_and_restore","same_phase_jump"] as const
  expect(game.phaseManager.getEvents().slice(prefix).map(event=>event.type)).not.toContain("wolf_kill_vote_cast");
  for(const type of ["gravekeeper_reported","night_resolved","seer_checked","day_speech","vote_cast"])expect(game.phaseManager.getEvents().slice(prefix).some(event=>event.type===type)).toBe(false);
  expect(cancelled).not.toHaveProperty("previousExile");
- await game.phaseManager.runSingleCycle(provider);expect(state(game.world).history).toEqual([{exileDay:1,receivedDay:2,targetId:1,result:{kind:"camp",camp:"wolf"}}]);expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");
+ await game.phaseManager.runSingleCycle(provider);expect(state(game.world).history).toEqual([{exileDay:1,receivedDay:2,targetId:1,result:{kind:"camp",camp:"wolf"}}]);expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
 });
 
 for(const locale of ["zh-CN","en"] as const)test(`${locale}: strict feedback readers and private rendering reject role/combined labels, bad IDs/dates, extra fields and accessors without exposing an exact role`,()=>{
  const {world}=bootstrapGame(board,{fixedRoles:deck,locale});let reads=0;
- const good={exileDay:1,receivedDay:2,targetId:1,result:{kind:"camp",camp:"wolf"}},accessor={...good};Object.defineProperty(accessor,"result",{enumerable:true,get(){reads++;return{kind:"role",role:"wolf_king"};}});
+ const good:NonNullable<ReturnType<typeof readGravekeeperReport>>={exileDay:1,receivedDay:2,targetId:1,result:{kind:"camp",camp:"wolf"}},accessor={...good};Object.defineProperty(accessor,"result",{enumerable:true,get(){reads++;return{kind:"role",role:"wolf_king"};}});
  const bad=[{...good,result:{kind:"role",role:"wolf_king"}},{...good,result:{kind:"combined",camp:"wolf",role:"wolf_king"}},{...good,result:{kind:"camp",camp:"unknown"}},{...good,targetId:0},{...good,targetId:1.5},{...good,exileDay:0},{...good,receivedDay:3},{...good,receivedDay:Infinity},{...good,role:"wolf_king"},accessor];
  for(const item of bad){
   expect(readGravekeeperReport(item)).toBeNull();
   setGravekeeperState(role(world,3),{history:[item as never]});const prompt=role(world,3).renderPrompt(locale);
   expect(prompt).toContain(locale==="en"?"Unknown":"未知");expect(prompt).not.toContain("Wolf King");expect(policy(world).buildObservation(request(3,2,[])).ownState.gravekeeper).toEqual({history:[]});
  }
- expect(reads).toBe(0);const parsed=readGravekeeperReport(good)!;parsed.result.camp="good";expect(good.result.camp).toBe("wolf");
+ expect(reads).toBe(0);const parsed=readGravekeeperReport(good)!;parsed.result.camp="good";expect(good.result.camp).toBe(Camp.Wolf);
  expect(readGravekeeperFeedback({...good,actorId:3})).toEqual({...good,actorId:3});expect(readGravekeeperFeedback({...good,actorId:-1})).toBeNull();
  const event={timestamp:1,type:"gravekeeper_reported",payload:{...good,actorId:3,result:{kind:"role",role:"wolf_king"}}} as unknown as GameEvent;
  expect(getDefaultScriptEventRenderRegistry().toJudgeLine(event,locale)).toBe(locale==="en"?"Unknown":"未知");
@@ -75,7 +77,7 @@ for(const mode of ["knight","white_wolf_king"] as const)test(`${mode}: a public 
   throw new Error(`unexpected:${req.context.stage}`);
  }};
  await game.phaseManager.runSingleCycle(provider);cycle=2;await game.phaseManager.runSingleCycle(provider);
- expect(game.phaseManager.getEvents().some(event=>event.type==="gravekeeper_reported")).toBe(false);expect(state(game.world)).toEqual({history:[]});expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");
+ expect(game.phaseManager.getEvents().some(event=>event.type==="gravekeeper_reported")).toBe(false);expect(state(game.world)).toEqual({history:[]});expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
 });
 
 for(const locale of ["zh-CN","en"] as const)test(`${locale}: frozen camp labels are delivered after Witch/before Seer, remain actor-private and expose no pending fact or exact role`,async()=>{
@@ -88,7 +90,7 @@ for(const locale of ["zh-CN","en"] as const)test(`${locale}: frozen camp labels 
  const executionOrder:string[]=[];
  const instrumented=new RoleCatalog(getDefaultRoleCatalog().all().map(profile=>profile.role!==Role.Gravekeeper?profile:{...profile,nightStages:[{...GRAVEKEEPER_FEEDBACK_STAGE,async execute(ctx){executionOrder.push("feedback");await GRAVEKEEPER_FEEDBACK_STAGE.execute(ctx);}}]}));
  const pipeline=new NightPipeline({world,events,toolGateway:new ToolGateway(),damageResolutionSystem:new DamageResolutionSystem(),stageRegistry:new NightStageRegistry(instrumented)});
- await pipeline.execute(config,{async getAction(req){executionOrder.push(req.context.stage);if(req.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};if(req.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:null,abstain:true}};if(req.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:5,potion_type:"none"}};if(req.allowedTools.includes("check_identity"))return{name:"check_identity",args:{target_id:2}};throw new Error("no_gravekeeper_action");}},2,{previousExile:fact});
+ await pipeline.execute(config,{async getAction(req){executionOrder.push(req.context.stage);if(req.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves",args:{text:"End",end_chat:true}};if(req.allowedTools.includes("kill_vote"))return{name:"kill_vote",args:{target_id:null,abstain:true}};if(req.allowedTools.includes("use_potion"))return{name:"use_potion",args:{target_id:5,potion_type:PotionType.None}};if(req.allowedTools.includes("check_identity"))return{name:"check_identity",args:{target_id:2}};throw new Error("no_gravekeeper_action");}},2,{previousExile:fact});
  expect(executionOrder.indexOf("witch")).toBeLessThan(executionOrder.indexOf("feedback"));
  expect(executionOrder.indexOf("feedback")).toBeLessThan(executionOrder.indexOf("seer"));
  const report=events.find(event=>event.type==="gravekeeper_reported")!;expect(report.payload).toEqual({actorId:3,targetId:1,exileDay:1,receivedDay:2,result:{kind:"camp",camp:"good"}});
@@ -120,7 +122,7 @@ for(const locale of ["zh-CN","en"] as const)test(`${locale}: passive exile feedb
 for(const locale of ["zh-CN","en"] as const)test(`${locale}: multiple native keepers only learn the immediately preceding exile once per night, and dead/transformed keepers receive nothing`,async()=>{
  const config={...board,roleSetups:[{role:Role.Wolf,count:2},{role:Role.Gravekeeper,count:2},{role:Role.Villager,count:2}]},game=bootstrapGame(config,{fixedRoles:[Role.Wolf,Role.Wolf,Role.Gravekeeper,Role.Gravekeeper,Role.Villager,Role.Villager],locale}),events:GameEvent[]=[];
  let fact={exileDay:1,targetId:1,result:{kind:"camp" as const,camp:Camp.ThirdParty}};
- let day=1;const ctx={world:game.world,events,isCurrent:()=>true,currentDay:()=>day,get previousExile(){return fact;},getAliveByRole:(wanted:Role)=>game.world.getAliveEntityIds().filter(id=>role(game.world,id).role===wanted)} as NightStageContext;
+ let day=1;const ctx=nightStageContext({world:game.world,events,isCurrent:()=>true,currentDay:()=>day,get previousExile(){return fact;},getAliveByRole:(wanted:Role)=>game.world.getAliveEntityIds().filter(id=>role(game.world,id).role===wanted)});
  await GRAVEKEEPER_FEEDBACK_STAGE.execute(ctx);expect(events).toEqual([]);day=2;
  await GRAVEKEEPER_FEEDBACK_STAGE.execute(ctx);await GRAVEKEEPER_FEEDBACK_STAGE.execute(ctx);expect(events.filter(event=>event.type==="gravekeeper_reported").map(event=>event.payload.actorId)).toEqual([3,4]);
  expect(state(game.world,3).history).toHaveLength(1);expect(state(game.world,4).history).toHaveLength(1);expect(state(game.world,3).history[0]).not.toBe(state(game.world,4).history[0]);
@@ -142,7 +144,7 @@ for(const target of [1,4] as const)test(`actual exile ${target}: no early state,
  await game.phaseManager.runSingleCycle(provider);expect(state(game.world)).toEqual({history:[]});expect(game.phaseManager.getEvents().some(event=>event.type==="gravekeeper_reported")).toBe(false);
  cycle=2;await game.phaseManager.runSingleCycle(provider);expect(state(game.world).history).toEqual([{exileDay:1,receivedDay:2,targetId:target,result:{kind:"camp",camp:target===1?"wolf":"good"}}]);
  if(target===4){cycle=3;await game.phaseManager.runSingleCycle(provider);expect(state(game.world).history.at(-1)).toEqual({exileDay:2,receivedDay:3,targetId:1,result:{kind:"camp",camp:"wolf"}});}
- expect(game.phaseManager.getSnapshot().result?.winner).toBe("good");const length=game.phaseManager.getEvents().length;await game.phaseManager.runSingleCycle(provider);expect(game.phaseManager.getEvents()).toHaveLength(length);
+ expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);const length=game.phaseManager.getEvents().length;await game.phaseManager.runSingleCycle(provider);expect(game.phaseManager.getEvents()).toHaveLength(length);
 });
 
 for(const mode of ["idiot","abstain","keeper_dead","pending_knife","pending_poison"] as const)test(`${mode}: non-exiles and prior death give no feedback; current-night pending damage does not suppress an eligible keeper`,async()=>{
@@ -150,7 +152,7 @@ for(const mode of ["idiot","abstain","keeper_dead","pending_knife","pending_pois
  const provider={async getAction(req:ActionRequest){
   if(req.allowedTools.includes("speak_to_wolves"))return{name:"speak_to_wolves" as const,args:{text:"End",end_chat:true}};
   if(req.allowedTools.includes("kill_vote"))return{name:"kill_vote" as const,args:{target_id:cycle===2&&mode==="pending_knife"?3:null,abstain:!(cycle===2&&mode==="pending_knife")}};
-  if(req.allowedTools.includes("use_potion"))return{name:"use_potion" as const,args:{target_id:cycle===2&&mode==="pending_poison"?3:4,potion_type:cycle===2&&mode==="pending_poison"?"poison" as const:"none" as const}};
+  if(req.allowedTools.includes("use_potion"))return{name:"use_potion" as const,args:{target_id:cycle===2&&mode==="pending_poison"?3:4,potion_type:cycle===2&&mode==="pending_poison"?PotionType.Poison as const:PotionType.None as const}};
   if(req.allowedTools.includes("speak"))return{name:"speak" as const,args:{text:"Raw"}};
   if(req.allowedTools.includes("vote"))return{name:"vote" as const,args:{target_id:cycle===1?mode==="abstain"?null:mode==="idiot"?4:mode==="keeper_dead"?3:1:null,abstain:cycle!==1||mode==="abstain"}};
   throw new Error(`unexpected:${req.context.stage}`);

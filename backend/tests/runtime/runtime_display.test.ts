@@ -14,7 +14,7 @@ import { migrateBoardSource, migrateBoards } from "../../src/runtime/cli/migrate
 import { MIGRATION_WARNING_CODES } from "../../src/runtime/config/migrate_board";
 
 const speech = "Original 原话 {role} <b>quoted</b>";
-const request: ActionRequest = { actorId: 1, phase: Phase.Day, allowedTools: ["speak"], context: { day: 1, stage: "day_speech", visible_events: [] } };
+const request: ActionRequest = { actorId: 1, phase: Phase.Day, allowedTools: ["speak"], context: { day: 1, stage: "day_speech", visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } };
 async function command(file: string, args: string[]) {
   const child = Bun.spawn([Bun.env.BUN_RUNTIME_EXECUTABLE ?? "bun", path.resolve(import.meta.dir, `../../src/runtime/cli/${file}`), ...args], { stdout: "pipe", stderr: "pipe" });
   const [stdout, stderr, code] = await Promise.all([new Response(child.stdout).text(), new Response(child.stderr).text(), child.exited]);

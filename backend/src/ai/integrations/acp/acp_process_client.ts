@@ -122,7 +122,9 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
 
       const stream = acp.ndJsonStream(
         Writable.toWeb(spawnedChild.stdin),
-        Readable.toWeb(spawnedChild.stdout) as ReadableStream<Uint8Array>,
+        // Node converts the binary stdout pipe to a WHATWG byte stream.
+        // Bun and @types/node declare incompatible getReader overloads for that same runtime object.
+        Readable.toWeb(spawnedChild.stdout) as unknown as Parameters<typeof acp.ndJsonStream>[1],
       );
       // ACP adapters such as codex-acp ask for an explicit permission immediately
       // before invoking an MCP tool. Remember only tool calls announced by our

@@ -86,7 +86,7 @@ for(const locale of ["zh-CN","en"] as const)test(`${locale}: strict readonly due
  expect(receive.validate({...req,actorId:4},"duel",duel(2).args).ok).toBe(false);expect(getKnightState(role(world,1))).toEqual({canDuel:true});
  role(world,4).camp=Camp.ThirdParty;const events:GameEvent[]=[];
  expect(commitKnightDuel(world,{actorId:1,targetId:4},Phase.Day,events)).toEqual({deaths:[1],sources:{1:[DeathCause.DuelFailure]},endsDay:false});
- expect(events.map(event=>[event.type,event.payload])).toEqual([["knight_duel",{actorId:1,targetId:4,result:"not_wolf"}]]);
+ expect(events).toEqual([{timestamp:expect.any(Number),type:"knight_duel",payload:{actorId:1,targetId:4,result:"not_wolf"}}]);
  expect(JSON.stringify(events)).not.toContain("third_party");expect(getKnightState(role(world,1))).toEqual({canDuel:false});expect(world.getAliveEntityIds()).toHaveLength(6);
  expect(commitKnightDuel(world,{actorId:1,targetId:2},Phase.Day,events)).toBeNull();
 });
@@ -153,7 +153,7 @@ for(const locale of ["zh-CN","en"] as const)test(`${locale}: the last wolf duel 
   if(request.allowedTools.includes("duel"))return duel(2);
   throw new Error(`post_duel_action:${request.context.stage}`);
  }});
- expect(snapshot.result).toEqual({winner:"good",reason:"all_wolves_eliminated",outcome:{kind:"victory",primary:{kind:"faction",faction:"good",winningPlayerIds:[1,3,4,5,6]},additional:[],winningPlayerIds:[1,3,4,5,6]},decidedAt:{day:1,phase:Phase.Day,checkpoint:"day_interrupted"}});
+ expect(snapshot.result).toEqual({winner:Camp.Good,reason:"all_wolves_eliminated",outcome:{kind:"victory",primary:{kind:"faction",faction:"good",winningPlayerIds:[1,3,4,5,6]},additional:[],winningPlayerIds:[1,3,4,5,6]},decidedAt:{day:1,phase:Phase.Day,checkpoint:"day_interrupted"}});
  expect(game.world.getAliveEntityIds()).toEqual([1,3,4,6]);expect(game.phaseManager.getEvents().filter(event=>event.type==="game_over")).toHaveLength(1);
 });
 
@@ -166,7 +166,7 @@ for(const locale of ["zh-CN","en"] as const)test(`${locale}: the last good speci
   if(request.allowedTools.includes("speak")){expect(request.context.stage).toBe("last_words");return{name:"speak",args:{text:"Authorized words"}};}
   throw new Error(`no_later_action:${request.context.stage}`);
  }});
- expect(snapshot.result).toEqual({winner:"wolf",reason:"slaughter_side_completed",outcome:{kind:"victory",primary:{kind:"faction",faction:"wolf",winningPlayerIds:[2]},additional:[],winningPlayerIds:[2]},decidedAt:{day:1,phase:Phase.Day,checkpoint:"day_interrupted"}});
+ expect(snapshot.result).toEqual({winner:Camp.Wolf,reason:"slaughter_side_completed",outcome:{kind:"victory",primary:{kind:"faction",faction:"wolf",winningPlayerIds:[2]},additional:[],winningPlayerIds:[2]},decidedAt:{day:1,phase:Phase.Day,checkpoint:"day_interrupted"}});
  const events=game.phaseManager.getEvents();expect(events.filter(event=>event.type==="last_words_spoken").map(event=>event.payload.playerId)).toEqual([5,1]);
  expect(events.filter(event=>event.type==="sheriff_badge_transferred").map(event=>[event.payload.fromId,event.payload.toId])).toEqual([[1,2]]);
  expect(events.findIndex(event=>event.type==="sheriff_badge_transferred")).toBeLessThan(events.findIndex(event=>event.type==="game_over"));expect(game.world.getAliveEntityIds()).toEqual([2,3,4,6]);

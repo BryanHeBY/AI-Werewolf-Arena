@@ -6,7 +6,7 @@ import {
   closeMechanicalMimic, closeMechanicalSkill, chooseMechanicalGuard,
   freshMechanicalState, getMechanicalState, learnMechanicalRole,
   mechanicalKnifeSelected, mechanicalLearning, mechanicalSkillForNight,
-  recordMechanicalInheritance, selectMechanicalMode, setMechanicalState,
+  recordMechanicalInheritance, selectMechanicalMode, setMechanicalState, type MechanicalSkill,
 } from "../../../src/game/mechanisms/roles/mechanical_wolf/state";
 
 test("native mechanical owners deep-copy resources/history and contain serializable facts only", () => {
@@ -27,7 +27,7 @@ const initialSkills = {
   villager: { kind: "villager" }, psychic: { kind: "inspection", history: [] },
   witch: { kind: "poison", remaining: 1 }, guard: { kind: "guard", lastTarget: null, lastGuardDay: null },
   hunter: { kind: "hunter", canShoot: true, armed: false }, wolf: { kind: "wolf", extraKnife: "available" },
-} as const;
+} satisfies Record<string, MechanicalSkill>;
 for (const role of Object.keys(initialSkills) as Array<keyof typeof initialSkills>) {
   test(`${role}: learning has independent full initial resources and starts next night`, () => {
     expect(mechanicalLearning(7, role, 3)).toEqual({ targetId: 7, role, day: 3, readyOnNight: 4, skill: initialSkills[role] });

@@ -228,7 +228,7 @@ describe("day interrupt hooks", () => {
     const result = await pipeline.execute(config, {
       async getAction(request) {
         requests.push(request);
-        if (request.allowedTools.includes("self_destruct")) return { name: "self_destruct", args: { confirm: true } };
+        if (request.allowedTools.includes("self_destruct")) return { name: "self_destruct", args: { confirm: true, reason: "Disabled-window fixture" } };
         return { name: "vote", args: { target_id: null, abstain: true } };
       },
     }, { day: 1 });

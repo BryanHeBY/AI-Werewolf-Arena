@@ -1,3 +1,5 @@
+import { Camp, Phase, PotionType } from "../../src/core/domain/identity";
+import { fixtureResult } from "../support/fixture_values";
 import {
   getDefaultScriptEventRenderRegistry,
 } from "../../src/game/mechanisms";
@@ -8,15 +10,12 @@ describe("broadcast localization", () => {
     const event: GameEvent = {
       timestamp: Date.now(),
       type: "game_over",
-      payload: {
-        winner: "wolf",
-        reason: "wolves_reach_half",
-      },
+      payload: fixtureResult(Camp.Wolf, "wolves_reach_half"),
     };
 
     const live = getDefaultScriptEventRenderRegistry().toLiveRender(event, true);
-    expect(live.some((item) => item.text.includes("胜利阵营=狼人"))).toBe(true);
-    expect(live.some((item) => item.text.includes("原因=狼人达半"))).toBe(true);
+    expect(live.some((item) => item.text.includes("狼人阵营胜利"))).toBe(true);
+    expect(live.some((item) => item.text.includes("狼人达半"))).toBe(true);
   });
 
   test("witch_potion_used should render localized potion text", () => {
@@ -26,7 +25,7 @@ describe("broadcast localization", () => {
       payload: {
         actorId: 7,
         targetId: 3,
-        potionType: "heal",
+        potionType: PotionType.Heal,
       },
     };
 
@@ -39,10 +38,11 @@ describe("broadcast localization", () => {
       timestamp: Date.now(),
       type: "god_private_game_info",
       payload: {
+        boardSize: 3,
         players: [
-          { seat: 1, role: "wolf" },
-          { seat: 2, role: "seer" },
-          { seat: 3, role: "villager" },
+          { id: 1, seat: 1, name: "Player 1", camp: Camp.Wolf, role: "wolf" },
+          { id: 2, seat: 2, name: "Player 2", camp: Camp.Good, role: "seer" },
+          { id: 3, seat: 3, name: "Player 3", camp: Camp.Good, role: "villager" },
         ],
       },
     };
@@ -59,9 +59,9 @@ describe("broadcast localization", () => {
       timestamp: Date.now(),
       type: "phase_changed",
       payload: {
-        phase: "game_over",
+        phase: Phase.GameOver,
         day: 2,
-        winner: "wolf",
+        winner: Camp.Wolf,
         reason: "wolves_reach_half",
       },
     };
@@ -79,6 +79,7 @@ describe("broadcast localization", () => {
     const event: GameEvent = {
       timestamp: Date.now(),
       type: "wolf_tactical_order",
+      audience: [5, 3],
       payload: {
         order: [5, 3],
       },
@@ -93,6 +94,8 @@ describe("broadcast localization", () => {
       type: "last_words_spoken",
       payload: {
         playerId: 6,
+        phase: Phase.Voting,
+        day: 1,
         text: "我是预言家，昨晚验1金水。",
       },
     };

@@ -9,7 +9,7 @@ import { AWAKENED_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/awaken
 import { getAwakenedState } from "../../../src/game/mechanisms/roles/awakened_hidden_wolf/state";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
+import { nightStageContext } from "../../engine/night_stage_fixture";
 
 const modes = ["clean_wait", "correct_after_one", "correct_after_two", "reject3", "valid_fourth", "malformed3", "transport_failure"] as const;
 for (const transport of ["sdk", "acp"] as const) for (const locale of ["zh-CN", "en"] as const) for (const mode of modes) test(`${transport}/${locale}/${mode}: strict optional turns distinguish intentional waiting from failure`, async () => {
@@ -35,15 +35,15 @@ for (const transport of ["sdk", "acp"] as const) for (const locale of ["zh-CN", 
       return { sessionId: "strict-optional", async prompt() { await submissions(args => input.registry.submitAction("strict-optional", args)); }, async cancel() {}, async close() { closes++; } };
     } },
   });
-  const ctx = { world: game.world, roleCatalog: getDefaultRoleCatalog(), toolGateway: new ToolGateway(), events, isCurrent: () => true, currentDay: () => 1, state: {}, actionProvider: provider,
-    makeRequest: (actorId, allowedTools, extra) => { const { stage, requiresAction, ...context } = extra; return factory.create({ actorId, phase: Phase.Night, allowedTools, stage, requiresAction, context, summary: { key: "request.summary.night_action" } }); },
-  } as NightStageContext;
+  const ctx = nightStageContext({ world: game.world, roleCatalog: getDefaultRoleCatalog(), toolGateway: new ToolGateway(), events, isCurrent: () => true, currentDay: () => 1, actionProvider: provider,
+    makeRequest: (actorId, allowedTools, extra) => { const { stage, requiresAction, ...context } = extra; return factory.create({ actorId, phase: Phase.Night, allowedTools, stage, requiresAction: requiresAction ?? false, context, summary: { key: "request.summary.night_action" } }); },
+  });
   await AWAKENED_NIGHT_STAGES.find(stage => stage.id === "awakened_opening")!.execute(ctx);
   const action = () => AWAKENED_NIGHT_STAGES.find(stage => stage.id === "awakened_mimic")!.execute(ctx);
   try {
     const success = ["clean_wait", "correct_after_one", "correct_after_two"].includes(mode);
     if (success) await action(); else await expect(action()).rejects.toThrow("action_turn_failed");
-    const state = getAwakenedState(game.world.getComponent<RoleComponent>(1, COMPONENT.Role))!;
+    const state = getAwakenedState(game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!)!;
     expect(fallbackCalls).toBe(0);
     if (mode === "clean_wait") { expect(state.learned).toBeNull(); expect(state.mimicClosedDay).toBe(1); expect(events.map(e => e.type)).toEqual(["awakened_mimic_skipped"]); }
     else if (success) { expect(state.learned).toMatchObject({ targetId: 3, role: "mirror_girl", activationNight: null }); expect(events.map(e => e.type)).toEqual(["awakened_mimicked"]); }

@@ -19,7 +19,7 @@ describe("AuditEvidencePolicy", () => {
         agent: "b",
         findings: [
           { category: "flow", severity: "high", message: "major", evidence: [2], source: "a" },
-          { category: "logic", severity: "medium", message: "invented", evidence: [99], source: "b" },
+          { category: "rule", severity: "medium", message: "invented", evidence: [99], source: "b" },
         ],
         notes: [],
         missing_info: [],

@@ -5,8 +5,10 @@ import ts from "typescript";
 import { importBoundaryViolation } from "./import_boundaries.cjs";
 
 const rootDir = path.resolve(process.cwd(), process.argv[2] ?? "src");
+/** @type {string[]} */
 const errors = [];
 
+/** @param {string} dir */
 function walk(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const abs = path.join(dir, entry.name);
@@ -15,8 +17,10 @@ function walk(dir) {
   }
 }
 
+/** @param {string} filePath */
 function checkFile(filePath) {
   const source = ts.createSourceFile(filePath, fs.readFileSync(filePath, "utf8"), ts.ScriptTarget.Latest, true);
+  /** @param {import("typescript").Node} node */
   function visit(node) {
     let specifier;
     if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) {

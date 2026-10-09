@@ -36,11 +36,11 @@ for (const transport of ["sdk", "acp"] as const) for (const strict of [false, tr
 for (const locale of ["zh-CN", "en"] as const) for (const malformed of ["json", "wrong_turn"] as const) test(`${locale}/${malformed}: production AiSdkClient parse/protocol failure cannot become a clean optional wait`, async () => {
   const { world } = bootstrapGame(sixPlayerMvpConfig, { fixedRoles: roles, locale });
   let requests = 0, fallbacks = 0;
-  const syntheticFetch = (async () => {
+  const syntheticFetch = Object.assign(async () => {
     requests++;
     const bad = requests <= 3, args = malformed === "json" ? "{bad_json" : JSON.stringify({ turn_id: "wrong-turn", action: "guard", arguments: { target_id: 6, abstain: false } });
     return Response.json({ id: "synthetic", object: "chat.completion", created: 1, model: "synthetic", choices: [{ index: 0, finish_reason: bad ? "tool_calls" : "stop", message: bad ? { role: "assistant", content: null, tool_calls: [{ id: `invalid-${requests}`, type: "function", function: { name: "submit_action", arguments: args } }] } : { role: "assistant", content: "End" } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
-  }) as typeof fetch;
+  }, { preconnect: fetch.preconnect });
   const provider = new LlmActionProvider(world, new AiSdkClient({ apiKey: "synthetic", baseURL: "https://synthetic.invalid/v1", model: "synthetic", fetch: syntheticFetch }), { llmTimeoutMs: 1500, fallbackProvider: { async getAction() { fallbacks++; return null; } } });
   try {
     await expect(provider.getAction(request(true))).rejects.toThrow("action_turn_failed");
@@ -70,10 +70,10 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: required-turn re
 
 for (const locale of ["zh-CN", "en"] as const) for (const helper of ["report_bug", "get_game_schema"] as const) test(`${locale}/${helper}: SDK helper parse errors do not become action attempts or forbid optional waiting`, async () => {
   const { world } = bootstrapGame(sixPlayerMvpConfig, { fixedRoles: roles, locale }); let requests = 0;
-  const syntheticFetch = (async () => {
+  const syntheticFetch = Object.assign(async () => {
     requests++; const bad = requests <= 3;
     return Response.json({ id: "synthetic", object: "chat.completion", created: 1, model: "synthetic", choices: [{ index: 0, finish_reason: bad ? "tool_calls" : "stop", message: bad ? { role: "assistant", content: null, tool_calls: [{ id: `helper-${requests}`, type: "function", function: { name: helper, arguments: "{bad_json" } }] } : { role: "assistant", content: "Wait" } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
-  }) as typeof fetch;
+  }, { preconnect: fetch.preconnect });
   const provider = new LlmActionProvider(world, new AiSdkClient({ apiKey: "synthetic", baseURL: "https://synthetic.invalid/v1", model: "synthetic", fetch: syntheticFetch }), { llmTimeoutMs: 1500 });
   try { expect(await provider.getAction(request(true))).toBeNull(); expect(requests).toBe(4); expect(getGuardState(world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget).toBeNull(); }
   finally { await provider.close(); }

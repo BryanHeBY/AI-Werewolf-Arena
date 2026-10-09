@@ -1,4 +1,4 @@
-import {Role,WinCondition,ActionWindow,PotionType} from "../../src/core";
+import { ActionWindow, PotionType, Role, WinCondition } from "../../src/core";
 import {parseBoardDefinition,boardDefinitionFromConfig} from "../../src/runtime/config/board_definition";
 import {sixPlayerMvpConfig} from "../../src/runtime/scenarios/six_player_mvp";
 import {twelvePlayerStandardConfig} from "../../src/runtime/scenarios/twelve_player_standard";
@@ -19,7 +19,7 @@ export function gravekeeperScenario(kind:GravekeeperScenario):TransportGameScena
  const speech=(day:number,actors:number[])=>add(day,actors,"day_speech",{name:"speak",args:{text:"Public speech"}});
  const vote=(day:number,actors:number[],target:number)=>add(day,actors,"voting",{name:"vote",args:{target_id:target,abstain:false}});
  const words=(day:number,actor:number)=>add(day,[actor],"last_words",{name:"speak",args:{text:"Authorized last words"}});
- const blasts=(day:number,wolves:number[],caster:number|null)=>wolves.forEach(actor=>add(day,[actor],"on_pre_vote",actor===caster?{name:"self_destruct",args:{reason:"Public blast",confirm:true}}:null));
+ const blasts=(day:number,wolves:number[],caster:number|null)=>wolves.forEach(actor=>add(day,[actor],ActionWindow.OnPreVote,actor===caster?{name:"self_destruct",args:{reason:"Public blast",confirm:true}}:null));
  let seed="grave-six:419";let latestByDay:Record<number,PlannedTurn["gravekeeperLatest"]>={1:null};
  if(kind==="twelve"){
   seed="foundation-twelve:124680";night(1,[1,2,3,4],9);add(1,[6],"witch",{name:"use_potion",args:{target_id:9,potion_type:PotionType.Heal}});add(1,[5],"seer",{name:"check_identity",args:{target_id:1}});
