@@ -22,6 +22,7 @@ import {GARGOYLE_ROLE_PROFILE} from "./gargoyle/profile";
 
 import {PSYCHIC_ROLE_PROFILE} from "./psychic/profile";
 import { MECHANICAL_WOLF_ROLE_PROFILE } from "./mechanical_wolf/profile";
+import { BLACK_MARKET_MERCHANT_ROLE_PROFILE } from "./black_market_merchant/profile";
 import { MIRACLE_MERCHANT_ROLE_PROFILE } from "./miracle_merchant/profile";
 
 import { HYBRID_ROLE_PROFILE } from "./hybrid/profile";
@@ -42,6 +43,7 @@ const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   PSYCHIC_ROLE_PROFILE,
   MECHANICAL_WOLF_ROLE_PROFILE,
   MIRACLE_MERCHANT_ROLE_PROFILE,
+  BLACK_MARKET_MERCHANT_ROLE_PROFILE,
   HYBRID_ROLE_PROFILE,
   MIRROR_GIRL_ROLE_PROFILE,
   AWAKENED_HIDDEN_WOLF_ROLE_PROFILE,

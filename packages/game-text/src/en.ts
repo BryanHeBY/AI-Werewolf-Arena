@@ -1,6 +1,30 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "stage.black_market_merchant": "Black Market trade",
+  "stage.black_market_recipient": "Black Market recipient",
+
+  "ability.black_market.rules": "Black Market gift rules: one independent use, first available next night in early stage 140, not on the receiving night. You may hold it or wait without spending; poison none uses any valid living target ID. No heal or knife information. Inspection excludes self; poison may target self. Same actor and same kind cannot hit the same ID twice this night across native/gift slots. Other actors are independent. Death permanently expires the gift; no revival, transfer or copy refill. Your original role and victory affiliation remain unchanged; donor ID is hidden.",
+
+  "role.black_market_merchant.brief": "Once per game give another living player one inspection, poison or gun. Active gifts start next night; guns arm at actual night end. A Wolf target gets nothing and causes your unblockable dawn backlash.",
+  "role.black_market_merchant.state": "You are Black Market Merchant, a true Good god. Stage 130 trades once in any night with another living player using check, poison or gun. A clean tool-free wait closes this night without spending the game use. You retain only your choice and inventory, not immediate success, faction or gift reports. A true Good target keeps their original identity and skills and receives an independent gift; a true Wolf (including Hidden Wolf) receives no notification, and you suffer unpreventable backlash at dawn. Guard, heal and Dream do not stop it. Inspection and poison start in early recipient stage 140 on the next night, can be held, and expire on the recipient's first actual death; no copying or refill. The recipient never learns your number. A gifted gun actually arms at night end 900 and may fire on that night's knife death during Day, after any native gun. Complete both stocks and death chains before judging. Strict invalid actions or transport errors must not become a successful wait.",
+  "role.black_market_merchant.status": "Your private trade choice and inventory: {state}",
+  "action.black_market_trade.hint": "black_market_trade: target_id is another living positive integer; skill is check, poison or gun. A clean tool-free wait is allowed; no self, dead or null target. One accepted trade spends your game use.",
+  "action.black_market_recipient.directive": "Early Black Market recipient stage: use only this bound independent instance. No native stock is consumed. Inspection cannot target yourself. Poison can target yourself, offers no heal or knife knowledge, and none passes with a valid living target ID. Clean tool-free wait or poison none closes this night without spending. Same actor and same kind cannot hit the same ID twice this night across native/gift slots; others' choices are not known. First actual death permanently expires the gift.",
+  "replay.stage.black_market_merchant": "Black Market trade",
+  "replay.stage.black_market_recipient": "Black Market recipient",
+  "replay.stage.black_market_trade_committed": "Black Market choice",
+  "replay.stage.black_market_trade_skipped": "Black Market wait",
+  "replay.stage.black_market_trade_resolved": "God Black Market result",
+  "black_market.skill.gun": "Gun",
+  "black_market.skill.check": "Inspection",
+  "black_market.skill.poison": "Poison",
+  "console.black_market.choice": "Black Market choice: player {actor} offered {skill} to player {target} on night {day}.",
+  "console.black_market.skip": "Player {actor} passed Black Market trade on night {day}.",
+  "console.black_market.result": "God Black Market result: player {actor} to player {target}, {skill}, night {day}: {outcome}.",
+  "error.black_market_skill": "Choose check, poison or gun as the Black Market gift.",
+  "death.black_market_backlash": "Black Market backlash",
+
   "ability.death_gun.summary": "Gifted gun {id}: {status}; remaining {remaining}; received on night {granted}; actually armed on night {armed}. Your original role and skills remain unchanged.",
   "ability.death_gun.change": "Player {actor}: gifted gun {id}, {operation}.",
   "ability.operation.armed": "Armed",

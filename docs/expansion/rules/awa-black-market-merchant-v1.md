@@ -1,6 +1,6 @@
 # AWA Black Market Merchant 1.0.0 规则卡
 
-规则集 `awa_classic` 1.0.0；ID `black_market_merchant`，黑市商人／Black Market Merchant。核验2026-10-09。当前仍planned；本卡已明确P7最后一角色的执行边界，经过R/A/L交叉审查及修正复查冻结，见[审查记录](../reviews/p7-black-market-rules.md)；功能随后交付。没有启用角色或宣称原版板子可运行。
+规则集 `awa_classic` 1.0.0；ID `black_market_merchant`，黑市商人／Black Market Merchant。核验2026-10-09。当前 `verified`；规则经过R/A/L交叉审查及修正复查冻结，见[规则审查](../reviews/p7-black-market-rules.md)；完整功能证据见[交付验收](../reviews/p7-black-market-merchant.md)。支持范围为本卡限定的AWA版本与板子。
 
 ## 第一方来源与版本选择
 
@@ -45,12 +45,12 @@
 
 ## 本笔支持范围和交付
 
-候选白名单：Black Market Merchant、普通Wolf、Wolf King、Hidden Wolf、Seer、Witch、Hunter、Guard、Dreamer、Villager。需每个受限Profile共同通过组合检查；未核组合不得因角色都存在就通过随机组牌。
+已开放组合白名单：Black Market Merchant、普通Wolf、Wolf King、Hidden Wolf、Seer、Witch、Hunter、Guard、Dreamer、Villager。需每个受限Profile共同通过组合检查；未核组合不得因角色都存在就通过随机组牌。
 
-公开示例拟定：六人AWA缩编（2Wolf+Black Merchant+Seer+Witch+Villager）；十二人AWA单枪改编（3Wolf+Wolf King+Seer/Witch/Black Merchant/Dreamer各1+4Villager）。明确注明与社区双枪版、节目狼兄弟版不同，不承诺未实现狼兄弟或双枪狼王。
+已交付公开示例：六人AWA缩编（2Wolf+Black Merchant+Seer+Witch+Villager）；十二人AWA单枪改编（3Wolf+Wolf King+Seer/Witch/Black Merchant/Dreamer各1+4Villager）。明确注明与社区双枪版、节目狼兄弟版不同，不承诺未实现狼兄弟或双枪狼王。
 
 按功能拆提交：先被动赠枪实例/授权/逐枪提交底座与原生枪回归，再完整Black角色/延期主动槽/例子/双语，最后P7阶段全已支持验收。不要将半角色注册为implemented/verified。
 
 至少手写成功check/毒/gun、skip后晚赠、赠Wolf/Hidden失败不泄露、原Hunter双枪（含首枪null及首枪命中末Wolf/末神后仍完成另一枪）、原生与礼物同kind去重/跨actor独立、首夜knife/poison/compound、Dream保护/死亡、死亡与owner撤换、原12改编警徽/遗言/临界胜利的整局预期。角色正常及失败Tape、SDK/ACP（实际MCP）/混合×两语完整局、每板20受限seed、资源与私有信息、前端God档与玩家中立枪、实际browser/PNG全部过；R规则/人工oracle、A实例/授权/时序/清理、L/D双语/投影/呈现分别审查复查后启用。
 
-本卡规则已冻结，尚未实现，不改当前22 verified/42 planned。P8–P10、64/22组合矩阵、长局与T6继续。
+本卡规则及完整实现已验证，当前目录23 verified/41 planned。按2026-10-09最新指令，P7验收后收尾交接，P8–P10、64/22组合矩阵、定时大样本、发布长局与T6留给后续agent。

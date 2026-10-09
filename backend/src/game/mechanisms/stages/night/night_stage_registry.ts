@@ -8,6 +8,7 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import { allNightAbilities, type NightAbilityKind } from "../../roles/abilities";
 
 import {ROLE_INSPECTION_STAGE,PSYCHIC_INSPECTION_STAGE,MIRROR_INSPECTION_STAGE} from "../../roles/role_inspection/night_stages";
+import { BLACK_MARKET_RECIPIENT_STAGE } from "../../roles/black_market_merchant/night_stage";
 import { LUCKY_ABILITY_STAGE } from "../../roles/miracle_merchant/lucky_stage";
 import { allDeathGuns } from "../../roles/death_abilities";
 import { DEATH_ABILITY_ACTIVATION_STAGE } from "../../roles/death_ability_activation";
@@ -35,6 +36,7 @@ export class NightStageRegistry {
     }
     if(hasRoleChecks || collected.some(stage=>stage.id==="role_inspection"))collected.push(ROLE_INSPECTION_STAGE,PSYCHIC_INSPECTION_STAGE,MIRROR_INSPECTION_STAGE);
     if (world?.entityIds().some(id => allNightAbilities(world.getComponent<RoleComponent>(id, COMPONENT.Role)).some(ability => ability.activation === "lucky"))) collected.push(LUCKY_ABILITY_STAGE);
+    if (world?.entityIds().some(id => allNightAbilities(world.getComponent<RoleComponent>(id, COMPONENT.Role)).some(ability => ability.activation === "black_market"))) collected.push(BLACK_MARKET_RECIPIENT_STAGE);
     // 去重并按显式优先级排序（priority 越小越先执行）。
     const dedup = new Map<string, NightStageHandler>();
     for (const stage of collected) {

@@ -34,6 +34,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     use_potion: { allowSelf: false },
     vote: { allowSelf: false },
     shoot: { allowSelf: false },
+    black_market_trade: { allowSelf: false },
     self_destruct_with_target: { allowSelf: false },
     duel: { allowSelf: false },
     dream: { allowSelf: false },
@@ -79,7 +80,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       const ability = findNightAbility(ownRole, kind, ctx.abilityId);
       if (!ability) return true;
       // An ordinary Witch may still heal a target whose poison is blocked by this actor's history.
-      if (ability.kind === "potion" && ability.activation !== "lucky" && ability.state.heal > 0) return true;
+      if (ability.kind === "potion" && ability.activation !== "lucky" && ability.activation !== "black_market" && ability.state.heal > 0) return true;
       return luckyTargetAllowed(ctx.world, ctx.actorId, ability, ctx.day ?? 1, kind === "seer_check" ? "check" : kind === "guard" ? "guard" : "poison", id);
     };
     const ids = ctx.world

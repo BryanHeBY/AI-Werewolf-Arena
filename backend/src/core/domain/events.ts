@@ -38,6 +38,9 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  black_market_trade_skipped: { actorId: EntityId; day: number };
+  black_market_trade_committed: { actorId: EntityId; day: number; targetId: EntityId; skill: "check" | "poison" | "gun" };
+  black_market_trade_resolved: { actorId: EntityId; day: number; targetId: EntityId; skill: "check" | "poison" | "gun"; outcome: "granted" | "backlash" };
   death_ability_changed: { actorId: EntityId; abilityId: string; operation: "granted" | "armed" | "disabled" | "enabled" | "transferred_out"; grantedNight: number; armedOnNight: number | null; remaining: 0 | 1; disabled: boolean; deathExpired: boolean };
   ability_changed: {
     actorId: EntityId; abilityId: string; kind: "seer_check" | "role_check" | "guard" | "potion" | "dream";

@@ -197,3 +197,20 @@ export function deathAbilityEventLabel(type: string, payload: unknown, locale: L
   if (p.operation === "armed" && (p.armedOnNight === null || p.disabled || p.deathExpired || p.remaining !== 1) || p.operation === "disabled" && !p.disabled || p.operation === "enabled" && (p.disabled || p.deathExpired) || p.deathExpired && (!p.disabled || p.remaining !== 0)) return unknown();
   return text(locale, "ability.death_gun.change", { actor: p.actorId, id: p.abilityId, operation: text(locale, `ability.operation.${p.operation}` as MessageKey) });
 }
+
+
+export function blackMarketEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+  if (!["black_market_trade_committed", "black_market_trade_skipped", "black_market_trade_resolved"].includes(type)) return null;
+  const unknown = () => text(locale, "replay.unknown");
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return unknown();
+  const prototype = Object.getPrototypeOf(payload), descriptors = Object.getOwnPropertyDescriptors(payload);
+  if ((prototype !== Object.prototype && prototype !== null) || Object.values(descriptors).some(field => !Object.hasOwn(field, "value") || !field.enumerable)) return unknown();
+  const p = Object.fromEntries(Object.entries(descriptors).map(([key, field]) => [key, field.value]));
+  const positive = (v: unknown): v is number => typeof v === "number" && Number.isSafeInteger(v) && v > 0;
+  if (!positive(p.actorId) || !positive(p.day)) return unknown();
+  if (type === "black_market_trade_skipped") return text(locale, "console.black_market.skip", { actor: p.actorId, day: p.day });
+  if (!positive(p.targetId) || p.actorId === p.targetId || !["check", "poison", "gun"].includes(p.skill)) return unknown();
+  const args = { actor: p.actorId, day: p.day, target: p.targetId, skill: text(locale, `black_market.skill.${p.skill}` as MessageKey) };
+  if (type === "black_market_trade_committed") return text(locale, "console.black_market.choice", args);
+  return p.outcome === "granted" || p.outcome === "backlash" ? text(locale, "console.black_market.result", { ...args, outcome: text(locale, p.outcome === "granted" ? "merchant.outcome.granted" : "merchant.outcome.backlash") }) : unknown();
+}

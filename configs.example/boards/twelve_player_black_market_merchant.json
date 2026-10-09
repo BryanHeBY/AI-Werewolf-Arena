@@ -1,0 +1,72 @@
+{
+  "version": 2,
+  "id": "twelve_player_black_market_merchant",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 12,
+    "roleSetups": [
+      {
+        "role": "wolf",
+        "count": 3
+      },
+      {
+        "role": "wolf_king",
+        "count": 1
+      },
+      {
+        "role": "seer",
+        "count": 1
+      },
+      {
+        "role": "witch",
+        "count": 1
+      },
+      {
+        "role": "black_market_merchant",
+        "count": 1
+      },
+      {
+        "role": "dreamer",
+        "count": 1
+      },
+      {
+        "role": "villager",
+        "count": 4
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": [
+      "slaughter_side"
+    ],
+    "hooks": {
+      "onDaybreak": true,
+      "onPreElection": true,
+      "onPreVote": true,
+      "onPerSpeechGap": true
+    }
+  },
+  "mechanisms": {
+    "sheriff": {
+      "enabled": true,
+      "voteWeight": 1.5,
+      "tieBreaker": "min_seat"
+    },
+    "selfDestruct": {
+      "enabledWindows": []
+    },
+    "tieBreaker": {
+      "exileVote": "min_id",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "black_market_merchant": {},
+    "witch": {
+      "selfHeal": "disabled"
+    }
+  }
+}

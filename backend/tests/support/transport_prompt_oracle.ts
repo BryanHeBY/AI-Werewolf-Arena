@@ -13,6 +13,7 @@ const stages: Record<string, [string, string]> = {
   mirror_girl: ["魔镜少女行动", "Mirror Girl action"],
   psychic: ["通灵师行动", "Spirit Seer action"],
   hybrid: ["混血儿选择榜样", "Hybrid exemplar selection"],
+  black_market_merchant: ["黑市商人交易", "Black Market trade"], black_market_recipient: ["黑市幸运儿行动", "Black Market recipient"],
   miracle_merchant: ["奇迹商人赠予", "Miracle Merchant trade"], lucky: ["幸运儿行动", "Lucky recipient action"],
   mechanical_mode: ["机械狼模式选择", "Mechanical Wolf mode choice"], mechanical_mimic: ["机械狼学习", "Mechanical Wolf learning"],
   mechanical_skill: ["机械狼技能", "Mechanical Wolf skill"], mechanical_attack: ["机械狼额外刀", "Mechanical Wolf extra knife"],

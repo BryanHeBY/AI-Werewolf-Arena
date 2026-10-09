@@ -15,7 +15,7 @@ const seerCheckStage: NightStageHandler = {
   priority: 600,
   async execute(ctx): Promise<void> {
     for (const { actorId: seerId, ability } of nightAbilityActors(ctx.world, "seer_check", ctx.currentDay())) {
-      if (ability.activation === "lucky") continue;
+      if (ability.activation === "lucky" || ability.activation === "black_market") continue;
       const day = ctx.currentDay(), scope = captureNightAbilityScope(ctx.world, seerId, ability, day, ctx.isCurrent);
       if (!scope?.isEligible()) continue;
       const targets = new Map(ctx.world.getAliveEntityIds().map(id => [id, captureNightLife(ctx.world, id)]));

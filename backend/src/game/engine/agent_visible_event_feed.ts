@@ -42,6 +42,8 @@ export function buildAgentVisibleEvent(
 /** Project the authorized wire fields, keeping internal metadata out of player prompts. */
 function projectPayload(event: GameEvent): Record<string, unknown> {
   switch (event.type) {
+    case "black_market_trade_committed": return { actorId: event.payload.actorId, day: event.payload.day, targetId: event.payload.targetId, skill: event.payload.skill };
+    case "black_market_trade_skipped": return { actorId: event.payload.actorId, day: event.payload.day };
     case "death_ability_changed": { const p = event.payload; return { actorId: p.actorId, abilityId: p.abilityId, operation: p.operation, grantedNight: p.grantedNight, armedOnNight: p.armedOnNight, remaining: p.remaining, disabled: p.disabled, deathExpired: p.deathExpired }; }
     case "awakened_inherited": return { actorId: event.payload.actorId, day: event.payload.day, firstKnifeNight: event.payload.firstKnifeNight };
     case "awakened_mimicked": return { actorId: event.payload.actorId, day: event.payload.day, targetId: event.payload.targetId, role: event.payload.role };

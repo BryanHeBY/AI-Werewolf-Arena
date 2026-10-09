@@ -2,6 +2,7 @@ import { Role, type EntityId, type EventPayloadMap } from "../../../core/domain/
 import type { RoleComponent } from "../../../core/domain/components/role";
 import type { GuardState, SeerState, WitchState, DreamerState,RoleInspectionState } from "./private_state";
 import { COMPONENT } from "../../../core/domain/components/names";
+import { readInspectionResult } from "@ai-werewolf-arena/replay-contract";
 import type { World } from "../../../core/domain/world";
 
 export interface NightAbilityStates { seer_check: SeerState;role_check:RoleInspectionState; guard: GuardState; potion: WitchState; dream: DreamerState }
@@ -35,13 +36,32 @@ type NightAbilityUnion = {
     startsOnDay: number; expiresAfterDay?: number; maxUses: number | null;
     uses: number; lastUsedDay: number | null; disabled: boolean;
     /** Miracle gifts act in their own late slot; ordinary instances omit this policy. */
-    activation?: "lucky";
+    activation?: "lucky" | "black_market";
     /** An actual death permanently expires a lucky gift, including after transfer/revival. */
     deathExpired?: boolean;
   }
 }[NightAbilityKind];
 export type NightAbility<K extends NightAbilityKind = NightAbilityKind> = Extract<NightAbilityUnion, { kind: K }>;
 export type AbilityStatus = "pending" | "expired" | "disabled" | "spent" | "used_this_night" | "active";
+
+function projectInspectionResult(value: unknown) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const fields = Object.getOwnPropertyDescriptors(value), own = (key: string) => fields[key] && Object.hasOwn(fields[key], "value") ? fields[key].value : undefined, kind = own("kind");
+  return readInspectionResult(kind === "camp" ? { kind, camp: own("camp") } : kind === "role" ? { kind, role: own("role") } : kind === "combined" ? { kind, camp: own("camp"), role: own("role") } : null);
+}
+
+/** Player-facing resources and reports always select their declared fields. */
+export function projectSeerState(state: SeerState): SeerState {
+  return { lastTarget: state.lastTarget, lastIsWerewolf: state.lastIsWerewolf, ...(state.lastResult === undefined ? {} : { lastResult: state.lastResult === null ? null : projectInspectionResult(state.lastResult) }), history: state.history.map(report => ({ targetId: report.targetId, isWerewolf: report.isWerewolf, ...(report.result === undefined ? {} : { result: projectInspectionResult(report.result) ?? undefined }) })) };
+}
+export function projectWitchState(state: WitchState): WitchState { return { heal: state.heal, poison: state.poison, selfHealRule: state.selfHealRule, canSelfHeal: state.canSelfHeal, healUsedThisNight: state.healUsedThisNight, poisonUsedThisNight: state.poisonUsedThisNight }; }
+export function projectNightState(ability: NightAbility): NightAbilityStates[NightAbilityKind] {
+  if (ability.kind === "seer_check") return projectSeerState(ability.state);
+  if (ability.kind === "potion") return projectWitchState(ability.state);
+  if (ability.kind === "role_check") return projectRoleInspectionState(ability.state);
+  if (ability.kind === "guard") return { lastTarget: ability.state.lastTarget };
+  return { lastTarget: ability.state.lastTarget, lastDay: ability.state.lastDay };
+}
 
 /** Preserve valid JSON facts; optional undefined fields are absent on disk. */
 export function copyAbilityData<T>(value: T): T {
@@ -131,7 +151,7 @@ export type PlayerNightAbility = {
 }[NightAbilityKind];
 export function projectNightAbility(ability: NightAbility, day: number): PlayerNightAbility {
   const source = projectAbilitySource(ability.source, ability.sourceDisclosed);
-  return structuredClone({ id: ability.id, kind: ability.kind, state: ability.kind === "role_check" ? projectRoleInspectionState(ability.state) : ability.state,
+  return structuredClone({ id: ability.id, kind: ability.kind, state: projectNightState(ability),
     source, startsOnDay: ability.startsOnDay, ...(ability.expiresAfterDay === undefined ? {} : { expiresAfterDay: ability.expiresAfterDay }), maxUses: ability.maxUses,
     uses: ability.uses, lastUsedDay: ability.lastUsedDay, disabled: ability.disabled,
     ...(ability.activation === undefined ? {} : { activation: ability.activation }), ...(ability.deathExpired === undefined ? {} : { deathExpired: ability.deathExpired }), status: abilityStatus(ability, day) }) as PlayerNightAbility;

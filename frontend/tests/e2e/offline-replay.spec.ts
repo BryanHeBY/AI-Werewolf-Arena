@@ -2,6 +2,16 @@ import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 const original = JSON.parse(readFileSync(new URL("../fixtures/sample.replay.json", import.meta.url), "utf8"));
 
+for (const locale of ["zh-CN", "en"] as const) for (const backlash of [false, true]) test(`${locale}/${backlash}: actual Black Market choice keeps identity until death and final victory`, async ({ page }) => {
+  const replay = JSON.parse(readFileSync(new URL(`../fixtures/black-market-${backlash ? "twelve_backlash" : "twelve_gun"}.replay.json`, import.meta.url), "utf8")); replay.meta.locale = locale;
+  await page.route("**/api/replay", route => route.fulfill({ json: replay })); await page.goto("/");
+  const label = locale === "en" ? backlash ? "God Black Market result: player 7 to player 1, Inspection, night 1: Backlash proposal." : "Black Market choice: player 7 offered Gun to player 9 on night 1." : backlash ? "【上帝黑市结果】第1夜7号对1号的查验：反噬提案。" : "【黑市选择】第1夜7号给9号猎枪。";
+  await page.locator(".timeline .event").filter({ hasText: label }).click(); await expect(page.getByTestId("composition-event")).toHaveText(label); await expect(page.locator(".seat-grid .dead")).toHaveCount(0); await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+  const actor = page.getByRole("button", { name: locale === "en" ? "Player 7 · Seat 7" : "7号 · Seat 7", exact: true }); await expect(actor).toContainText(locale === "en" ? "Black Market Merchant" : "黑市商人");
+  const caption = await page.getByTestId("composition-caption").boundingBox(); expect(caption).not.toBeNull(); for (const seat of await page.locator("[data-composition-player]").all()) { const box = await seat.boundingBox(); expect(box).not.toBeNull(); expect(box!.y + box!.height).toBeLessThan(caption!.y); }
+  await page.locator(".timeline .event").last().click(); await expect(page.locator(".seat-grid .winner")).toHaveCount(8); await expect(actor).toHaveClass(/dead/); await expect(actor).toHaveClass(/winner/); await expect(page.getByTestId("composition-winner")).toHaveCount(8);
+});
+
 for (const locale of ["zh-CN", "en"] as const) for (const first of ["wolf", "god"] as const) test(`${locale}/${first}: controlled gifted gun preserves a second choice before terminal victory`, async ({ page }) => {
   const replay = JSON.parse(readFileSync(new URL(`../fixtures/gift-gun-last-${first}.replay.json`, import.meta.url), "utf8")); replay.meta.locale = locale;
   await page.route("**/api/replay", route => route.fulfill({ json: replay })); await page.goto("/");

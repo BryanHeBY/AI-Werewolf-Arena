@@ -9,6 +9,7 @@ export interface NightLifeScope { readonly id: EntityId; readonly life: AliveCom
 export interface NightPoisonClaim { readonly source: NightLifeScope; readonly target: NightLifeScope; readonly isCurrent?: () => boolean }
 export interface NightGuardClaim { readonly target: NightLifeScope; readonly marks: StatusMarksComponent }
 export interface NightMerchantBacklash { readonly target: NightLifeScope; readonly isCurrent: () => boolean }
+export interface NightBlackMarketBacklash { readonly target: NightLifeScope; readonly isCurrent: () => boolean }
 export function captureNightLife(world: World, id: EntityId): NightLifeScope | null {
   const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive), version = life && aliveLifeVersion(life);
   return life?.alive && version !== undefined ? { id, life, version } : null;

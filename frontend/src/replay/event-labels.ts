@@ -1,11 +1,12 @@
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { readGravekeeperFeedback, readSeerInspectionResult, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
 import {readInspectionResult} from "@ai-werewolf-arena/replay-contract";
-import { text, term, inspectionLabel, outcomeLabel, outcomeWinnersLabel, mechanicalEventLabel, merchantEventLabel, hybridEventLabel, awakenedEventLabel, deathAbilityEventLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
+import { text, term, inspectionLabel, outcomeLabel, outcomeWinnersLabel, mechanicalEventLabel, merchantEventLabel, hybridEventLabel, awakenedEventLabel, deathAbilityEventLabel, blackMarketEventLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { campName, phaseName, resultReasonName, roleName } from "./replay-localization";
 
 export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerIds?: readonly number[]): string {
   const p = event.payload;
+  const black = blackMarketEventLabel(event.type, p, locale); if (black !== null) return black;
   const deathAbility = deathAbilityEventLabel(event.type, p, locale); if (deathAbility !== null) return deathAbility;
   const awakened = awakenedEventLabel(event.type, p, locale); if (awakened !== null) return awakened;
   const hybrid = hybridEventLabel(event.type,p,locale); if (hybrid !== null) return hybrid;

@@ -1,6 +1,6 @@
 # P7：黑市商人实现步骤与资源所有权
 
-规则以[AWA卡](rules/awa-black-market-merchant-v1.md#black_market_merchant)为准。当前仅文档，未启用角色；22 verified/42 planned不变。下列步骤按职责分别提交，每笔必须可运行并交叉复查。
+规则以[AWA卡](rules/awa-black-market-merchant-v1.md#black_market_merchant)为准。赠枪底座与完整角色已交付，当前23 verified/41 planned。下列职责边界保持；运行、双语、随机、失败Tape及三路复查证据见[完整验收](reviews/p7-black-market-merchant.md)。
 
 ## 1. 被动赠枪底座
 
@@ -14,7 +14,7 @@ DeathResolution开枪许可除actor/tool/phase/day/nonce，还须绑定本次确
 
 实际首次死亡可进入pending shot，但此时不抢先disabled礼物枪。该死亡动作/禁枪/放弃完成后永久过期，不能复活或enable恢复；取消/owner撤换沿原body/phase验证，不能把旧选择提交给新owner。低层transfer只给另一存活Good，保原库存/窗口/时点与退休记录，pending gun不得转出。禁止copy礼物。
 
-本笔不注册Black；用受控Good角色G02礼物做有意义判例及真正SDK/ACP/MCP授权、迟到/取消/严格失败记录与Tape，旧Hunter/WolfKing/Aw等原生枪另作回归，不把Wolf当作本板合法获赠方。NativeHunter、复制Hunter与Black赠枪的玩家协议沿player_shot/death_shot，God原生来源保留；原WolfKing及其它已冻结具名枪保持各自公开type，不扩大中立化范围。中英本人投影、提示和记录具名字段不能漏到未授权玩家。
+底座commit `5c41428` 未注册Black，用受控Good角色G02礼物做有意义判例及真正SDK/ACP/MCP授权、迟到/取消/严格失败记录与Tape，旧Hunter/WolfKing/Aw等原生枪另作回归，不把Wolf当作本板合法获赠方。NativeHunter、复制Hunter与Black赠枪的玩家协议沿player_shot/death_shot，God原生来源保留；原WolfKing及其它已冻结具名枪保持各自公开type，不扩大中立化范围。中英本人投影、提示和记录具名字段不能漏到未授权玩家。
 
 ## 2. 完整角色与延期主动礼物
 
@@ -28,4 +28,4 @@ DeathResolution开枪许可除actor/tool/phase/day/nonce，还须绑定本次确
 
 ## 3. P7整阶段验收
 
-Black完成后核P7七项均交付与全已支持板子/角色回归、模型通路、双语/复盘前端、作用域/PID与记录。受影响功能证据不能冒全阶段或全backend release。更新P7状态及功能commit记录后继续P8–P10，64角色/22机制全矩阵、长局与T6仍是持续目标。
+Black完成后核P7七项均交付与全已支持板子/角色回归、模型通路、双语/复盘前端、作用域/PID与记录。受影响功能证据不能冒全阶段或全backend release。按2026-10-09最新指令，更新P7状态及功能commit记录后收尾交接，本轮不继续P8–P10。64角色/22机制全矩阵、定时大样本、发布长局与T6保留为后续工作，见[交接](handoff-p7.md)。

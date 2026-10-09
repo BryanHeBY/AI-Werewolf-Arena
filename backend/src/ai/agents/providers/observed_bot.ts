@@ -20,10 +20,11 @@ export class ObservedBot implements ObservedPlayerStrategy {
       const target=pick(others),skills=["check","poison","guard"] as const;
       return target===undefined?null:{name:"bestow_ability",args:{target_id:target,skill:skills[Math.floor(this.random.next()*skills.length)]}};
     }
+    if (tools.includes("black_market_trade")) { if (this.style === "conservative" && request.context.day === 1) return null; const target = pick(others), skills = ["check", "poison", "gun"] as const; return target === undefined ? null : { name: "black_market_trade", args: { target_id: target, skill: skills[Math.floor(this.random.next() * skills.length)] } }; }
     const bound = observation.abilities.find(ability => ability.id === request.context.ability_id);
     const ownActions = observation.ownNightActions ?? [];
     const allowed = (kind: "check" | "poison" | "guard", id: number) => {
-      const policy = bound?.activation === "lucky" || observation.abilities.some(ability => ability.activation === "lucky" && ability.kind === (kind === "check" ? "seer_check" : kind === "guard" ? "guard" : "potion")) || ownActions.some(row => row.kind === kind && row.lucky);
+      const policy = (bound?.activation === "lucky" || bound?.activation === "black_market") || observation.abilities.some(ability => (ability.activation === "lucky" || ability.activation === "black_market") && ability.kind === (kind === "check" ? "seer_check" : kind === "guard" ? "guard" : "potion")) || ownActions.some(row => row.kind === kind && row.lucky);
       return !policy || !ownActions.some(row => row.kind === kind && row.targetId === id && (row.day === request.context.day || kind === "guard" && row.day === request.context.day - 1));
     };
     if (tools.includes("speak")) return { name: "speak", args: { text: `Seat ${actor}, day ${request.context.day}: consider the public evidence.` } };
@@ -68,7 +69,7 @@ export class ObservedBot implements ObservedPlayerStrategy {
       return{name:"charm",args:{target_id:target??null}};
     }
     if (tools.includes("check_identity")) {
-      if (bound?.activation === "lucky" && this.style === "conservative") return null;
+      if ((bound?.activation === "lucky" || bound?.activation === "black_market") && this.style === "conservative") return null;
       const checked = ownState.seer?.history.map(entry => entry.targetId) ?? [];
       const permitted = others.filter(id => allowed("check", id));
       const fresh = permitted.filter(id => !checked.includes(id));

@@ -36,6 +36,7 @@ export enum RuleError {
   LuckyTargetRepeat = "lucky_target_repeat",
   MerchantUnavailable = "merchant_unavailable",
   MerchantTarget = "merchant_target",
+  BlackMarketSkill = "black_market_skill",
   MerchantSkill = "merchant_skill",
   HybridUnavailable = "hybrid_unavailable",
   HybridTarget = "hybrid_target",

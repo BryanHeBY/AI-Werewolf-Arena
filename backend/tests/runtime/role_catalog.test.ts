@@ -15,7 +15,8 @@ test("shared catalog distinguishes planned definitions from registered roles", (
   expect(getDefaultRoleCatalog().all().map(item => item.role).sort()).toEqual(Object.values(Role).sort());
   expect(isRoleId("awakened_hidden_wolf")).toBe(true);
   expect(getDefaultRoleCatalog().require(Role.AwakenedHiddenWolf).role).toBe(Role.AwakenedHiddenWolf);
-  expect(() => getDefaultRoleCatalog().require("black_market_merchant" as Role)).toThrow("role_profile_not_registered");
+  expect(getDefaultRoleCatalog().require(Role.BlackMarketMerchant).role).toBe(Role.BlackMarketMerchant);
+  expect(() => getDefaultRoleCatalog().require("cupid" as Role)).toThrow("role_profile_not_registered");
   expect(roleName("wolf", "zh-CN")).toBe("狼人");
   expect(roleName("wolf", "en")).toBe("Werewolf");
 });
@@ -26,7 +27,7 @@ test("runtime catalog rejects duplicate or missing profiles", () => {
   expect(() => new RoleCatalog([]).getCamp(Role.Seer)).toThrow("role_profile_not_registered");
   const component = createRoleComponent(Role.Wolf, Camp.Wolf);
   getDefaultRoleCatalog().applyRuntime(component);
-  component.role = "black_market_merchant" as Role;
+  component.role = "cupid" as Role;
   expect(() => component.renderPrompt()).toThrow("role_profile_not_registered");
 });
 

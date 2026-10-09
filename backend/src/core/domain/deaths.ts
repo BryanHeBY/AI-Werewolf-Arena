@@ -17,6 +17,7 @@ export enum DeathCause {
   AwakenedHiddenKnife = "awakened_hidden_knife",
   MechanicalGuardFailure = "mechanical_guard_failure",
   MerchantBacklash = "merchant_backlash",
+  BlackMarketBacklash = "black_market_backlash",
 }
 export type DeathSources = Record<number, DeathCause[]>;
 export type DeathShotSelection =

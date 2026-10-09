@@ -1,5 +1,29 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "stage.black_market_merchant": "黑市商人交易",
+  "stage.black_market_recipient": "黑市幸运儿行动",
+
+  "ability.black_market.rules": "黑市礼物规则：独立一次库存，领取次夜起140早槽可用，领取当夜不可用。可以留后夜/不调用工具等待不耗，毒药none配任意合法存活编号可跳过，无解药/刀口。查验不可自己，毒可自己；同人同类原生/礼物本夜不得重复同一ID，他人独立。实际死亡永久过期，复活/转移/copy不补库存，原身份/胜利归属不变，donor编号隐藏。",
+
+  "role.black_market_merchant.brief": "任意夜一次给另一活人查验、毒药或枪；主动礼物次夜生效，枪实际夜末激活；给狼不授能力且自己天亮不可挡反噬。",
+  "role.black_market_merchant.state": "你是黑市商人，真实好人神职。130交易阶段任意夜全局一次，用check/poison/gun给另一存活玩家；不调用工具的合法等待只关闭本夜，不耗全局次数。你只保存自己的选择和库存，不获立即成功/阵营反馈或礼物报告。真实Good获得独立礼物且原身份技能不变，真实Wolf（含隐狼）不获通知，你天亮不可挡反噬，守、救、梦均不挡。查验/毒次夜140早槽起可留后夜，收者首次实际死亡永久过期，不copy或补库存；收者不获你的编号。赠枪900实际夜末激活，该夜刀死可在白天开枪，原生枪先、赠枪后，全部枪与死亡链完成才判胜。严格非法提交/取消/网络失败不得伪装成功等待。",
+  "role.black_market_merchant.status": "本人交易选择与库存：{state}",
+  "action.black_market_trade.hint": "black_market_trade：target_id为另一存活正整数编号，skill仅check/poison/gun；可不调用工具合法等待，不可自己/死者/null，合法一次交易后全局机会耗尽。",
+  "action.black_market_recipient.directive": "当前是黑市幸运儿早槽，只用本轮绑定的独立实例，不耗原生库存。查验不可自验；单毒可自毒，无解药/刀口，none配合法存活编号可跳过。不调用工具的合法等待/none关闭本夜不耗库存。同人同类原生/礼物本夜不能重复命中同一ID，不知道他人选择。首次实际死亡礼物永久过期。",
+  "replay.stage.black_market_merchant": "黑市商人交易",
+  "replay.stage.black_market_recipient": "黑市幸运儿行动",
+  "replay.stage.black_market_trade_committed": "黑市交易选择",
+  "replay.stage.black_market_trade_skipped": "黑市等待",
+  "replay.stage.black_market_trade_resolved": "上帝黑市结果",
+  "black_market.skill.gun": "猎枪",
+  "black_market.skill.check": "查验",
+  "black_market.skill.poison": "毒药",
+  "console.black_market.choice": "【黑市选择】第{day}夜{actor}号给{target}号{skill}。",
+  "console.black_market.skip": "{actor}号第{day}夜等待黑市交易。",
+  "console.black_market.result": "【上帝黑市结果】第{day}夜{actor}号对{target}号的{skill}：{outcome}。",
+  "error.black_market_skill": "黑市礼物只可选择check、poison或gun。",
+  "death.black_market_backlash": "黑市反噬",
+
   "ability.death_gun.summary": "赠枪{id}：{status}；剩余{remaining}；第{granted}夜领取；实际激活夜：{armed}。你的原身份和技能保持不变。",
   "ability.death_gun.change": "{actor}号：赠枪{id}，{operation}。",
   "ability.operation.armed": "已激活",

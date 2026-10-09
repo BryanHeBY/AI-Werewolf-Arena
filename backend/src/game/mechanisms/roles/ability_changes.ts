@@ -3,13 +3,14 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import type { EntityId, GameEvent } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
-import { allNightAbilities, copyAbilityData, roleInspectionPolicy, type AbilitySource, type NightAbility, type NightAbilityKind, type NightAbilityStates } from "./abilities";
+import { allNightAbilities, copyAbilityData, roleInspectionPolicy, projectNightState, type AbilitySource, type NightAbility, type NightAbilityKind, type NightAbilityStates } from "./abilities";
+import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 
 export interface AbilityGrant<K extends NightAbilityKind> {
   id: string; kind: K; state: NightAbilityStates[K]; source: Extract<AbilitySource, { kind: "gift" | "copy" }>;
   startsOnDay: number; expiresAfterDay?: number; maxUses: number | null;
   sourceDisclosed?: boolean;
-  activation?: "lucky";
+  activation?: "lucky" | "black_market";
 }
 const roleOf = (world: World, actorId: EntityId): RoleComponent => {
   const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
@@ -42,9 +43,10 @@ function installAbility(world: World, actorId: EntityId, ability: NightAbility, 
       (input.expiresAfterDay !== undefined && (!Number.isSafeInteger(input.expiresAfterDay) || input.expiresAfterDay < input.startsOnDay)) ||
       (input.maxUses !== null && (!Number.isSafeInteger(input.maxUses) || input.maxUses < 0))) throw new Error("ability_grant_invalid");
   roleOf(world, source.actorId);
+  if (input.activation === "black_market" && (source.kind === "copy" || input.sourceDisclosed !== false || input.id !== "gift:black-market" || role.camp !== "good" || input.startsOnDay < 2)) throw new Error("ability_black_market_policy_invalid");
   const origin = source.kind === "copy" ? allNightAbilities(roleOf(world, source.actorId)).find(ability => ability.id === source.abilityId) : undefined;
-  if (origin?.activation === "lucky") throw new Error("ability_copy_lucky_not_supported");
-  if (input.activation !== undefined && (input.activation !== "lucky" || !["seer_check", "potion", "guard"].includes(input.kind) || input.maxUses !== 1)) throw new Error("ability_lucky_policy_invalid");
+  if (origin?.activation === "lucky" || origin?.activation === "black_market") throw new Error("ability_copy_lucky_not_supported");
+  if (input.activation !== undefined && (!["lucky", "black_market"].includes(input.activation) || !(input.activation === "black_market" ? ["seer_check", "potion"] : ["seer_check", "potion", "guard"]).includes(input.kind) || input.maxUses !== 1)) throw new Error("ability_lucky_policy_invalid");
   if (allNightAbilities(role).some(ability => ability.id === input.id) || ((role.privateState.retiredAbilityIds ?? []) as string[]).includes(input.id)) throw new Error("ability_id_duplicate");
   if (source.kind !== "gift" && !allNightAbilities(roleOf(world, source.actorId)).some(ability => ability.id === source.abilityId && ability.kind === input.kind)) throw new Error("ability_source_mismatch");
   const stored = (role.privateState.abilities ??= {}) as Record<string, NightAbility>;
@@ -64,7 +66,7 @@ export function setNightAbilityEnabled(world: World, actorId: EntityId, id: stri
 /** Death expiry follows an instance through revival/transfer; applied night effects remain committed. */
 export function expireLuckyAbilitiesOnDeath(world: World, actorId: EntityId, events: GameEvent[]): void {
   for (const ability of allNightAbilities(world.getComponent<RoleComponent>(actorId, COMPONENT.Role))) {
-    if (ability.activation !== "lucky" || ability.deathExpired) continue;
+    if ((ability.activation !== "lucky" && ability.activation !== "black_market") || ability.deathExpired) continue;
     ability.deathExpired = true; ability.disabled = true;
     emit(events, actorId, ability, "disabled");
   }
@@ -80,8 +82,12 @@ export function transferNightAbility<K extends NightAbilityKind>(world: World, f
   const source = roleOf(world, fromId), ability = allNightAbilities(source).find(ability => ability.id === id);
   if (!ability) throw new Error("ability_instance_missing");
   if (!options || options.kind !== ability.kind || typeof options.statePolicy !== "function") throw new Error("ability_transfer_policy_required");
-  const targetState = copyAbilityData(options.statePolicy(copyAbilityData(ability.state) as NightAbilityStates[K]));
-  if (ability.activation === "lucky" && !isDeepStrictEqual(targetState, ability.state)) throw new Error("ability_transfer_lucky_state_changed");
+  const black = ability.activation === "black_market", target = roleOf(world, toId), fromLife = captureNightLife(world, fromId), toLife = captureNightLife(world, toId), originalState = ability.state, originalSource = ability.source, sourcePrivate = source.privateState, targetPrivate = target.privateState, originalRole = source.role, targetRole = target.role;
+  if (black && (!fromLife || !toLife || source.camp !== "good" || target.camp !== "good" || targetId !== id || options.sourceDisclosed === true)) throw new Error("ability_black_market_transfer_invalid");
+  const before = black ? copyAbilityData({ id: ability.id, kind: ability.kind, source: ability.source, startsOnDay: ability.startsOnDay, expiresAfterDay: ability.expiresAfterDay, maxUses: ability.maxUses, uses: ability.uses, lastUsedDay: ability.lastUsedDay, disabled: ability.disabled, deathExpired: ability.deathExpired, activation: ability.activation, sourceDisclosed: ability.sourceDisclosed, state: projectNightState(ability) }) : undefined;
+  const targetState = copyAbilityData(options.statePolicy(copyAbilityData(black ? projectNightState(ability) : ability.state) as NightAbilityStates[K]));
+  if (black && (options.kind !== ability.kind || options.sourceDisclosed === true || world.getComponent(fromId, COMPONENT.Role) !== source || source.role !== originalRole || source.camp !== "good" || source.privateState !== sourcePrivate || world.getComponent(toId, COMPONENT.Role) !== target || target.role !== targetRole || target.camp !== "good" || target.privateState !== targetPrivate || !livingNightLife(world, fromLife!) || !livingNightLife(world, toLife!) || allNightAbilities(source).find(candidate => candidate.id === id) !== ability || ability.state !== originalState || ability.source !== originalSource || !isDeepStrictEqual(before, copyAbilityData({ id: ability.id, kind: ability.kind, source: ability.source, startsOnDay: ability.startsOnDay, expiresAfterDay: ability.expiresAfterDay, maxUses: ability.maxUses, uses: ability.uses, lastUsedDay: ability.lastUsedDay, disabled: ability.disabled, deathExpired: ability.deathExpired, activation: ability.activation, sourceDisclosed: ability.sourceDisclosed, state: projectNightState(ability) })))) throw new Error("ability_black_market_transfer_revoked");
+  if ((ability.activation === "lucky" || ability.activation === "black_market") && !isDeepStrictEqual(targetState, black ? projectNightState(ability) : ability.state)) throw new Error("ability_transfer_lucky_state_changed");
   // Transfer preserves resources. A seer_check policy may reset knowledge;
   // role_check retains its full history, and other policies cannot refill resources.
   if (ability.kind === "guard" && (targetState as NightAbilityStates["guard"]).lastTarget !== ability.state.lastTarget) throw new Error("ability_transfer_resources_changed");

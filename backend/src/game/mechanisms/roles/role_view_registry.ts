@@ -21,6 +21,7 @@ const FRONTEND_ROLE_TYPE: Record<Role, string> = {
   [Role.MechanicalWolf]: "mechanical_wolf",
   [Role.AwakenedHiddenWolf]: "awakened_hidden_wolf",
   [Role.MiracleMerchant]: "miracle_merchant",
+  [Role.BlackMarketMerchant]: "black_market_merchant",
   [Role.Hybrid]: "hybrid",
   [Role.Villager]: "villager",
   [Role.Seer]: "seer",

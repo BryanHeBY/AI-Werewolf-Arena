@@ -34,7 +34,7 @@ const witchActionStage: NightStageHandler = {
   priority: 500,
   async execute(ctx): Promise<void> {
     for (const { actorId: witchId, ability } of nightAbilityActors(ctx.world, "potion", ctx.currentDay())) {
-      if (ability.activation === "lucky") continue;
+      if (ability.activation === "lucky" || ability.activation === "black_market") continue;
       if (!ctx.world.getAliveEntityIds().includes(witchId) || activeNightAbility(ctx.world.getComponent<RoleComponent>(witchId, COMPONENT.Role), "potion", ctx.currentDay(), ability.id) !== ability) continue;
       ability.state.canSelfHeal = ability.state.selfHealRule === WitchSelfHealRule.Always || (ability.state.selfHealRule === WitchSelfHealRule.FirstNightOnly && ctx.currentDay() === 1);
       const day=ctx.currentDay(),originalRole=ctx.world.getComponent<RoleComponent>(witchId,COMPONENT.Role)!,kind=originalRole.role,camp=originalRole.camp,privateState=originalRole.privateState,originalState=ability.state,actorLife=ctx.world.getComponent<AliveComponent>(witchId,COMPONENT.Alive)!,actorVersion=aliveLifeVersion(actorLife);
