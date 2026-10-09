@@ -1,5 +1,6 @@
+import { AWAKENED_TOOL_NAMES } from "./tool_names";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
-import { Camp, Phase, Role, type ToolName } from "../../../../core/domain/model";
+import { Camp, Phase, Role } from "../../../../core/domain/model";
 import { isAliveTarget, type ToolRule, type ToolRuleMap } from "../../validation/contracts";
 import { canAwakenedKnife } from "./inheritance";
 import { currentAwakenedNight } from "./night_scope";
@@ -26,5 +27,5 @@ const validateAwakened: ToolRule = ({ world, actorId, role, phase, day, toolCall
   }
   return { code: RuleError.AwakenedUnavailable };
 };
-export const AWAKENED_TOOL_NAMES = ["awakened_mimic", "awakened_poison", "awakened_guard", "awakened_attack"] as const satisfies readonly ToolName[];
+export { AWAKENED_TOOL_NAMES } from "./tool_names";
 export const AWAKENED_VALIDATION_RULES: ToolRuleMap = Object.fromEntries(AWAKENED_TOOL_NAMES.map(name => [name, validateAwakened]));

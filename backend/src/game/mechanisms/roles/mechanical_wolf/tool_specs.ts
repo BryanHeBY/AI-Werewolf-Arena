@@ -1,6 +1,6 @@
 import type { MessageKey } from "@ai-werewolf-arena/game-text";
 import type { ToolSpec } from "../../contracts";
-import { MECHANICAL_TOOL_NAMES } from "./rules";
+import { MECHANICAL_TOOL_NAMES } from "./tool_names";
 
 /** Shared transport descriptions remain neutral; current-turn hints carry localized full rules. */
 export const MECHANICAL_TOOL_SPECS: ToolSpec[] = MECHANICAL_TOOL_NAMES.map(name => {

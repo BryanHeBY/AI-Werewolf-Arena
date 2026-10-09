@@ -1,6 +1,6 @@
 import type { MessageKey } from "@ai-werewolf-arena/game-text";
 import type { ToolSpec } from "../../contracts";
-import { AWAKENED_TOOL_NAMES } from "./rules";
+import { AWAKENED_TOOL_NAMES } from "./tool_names";
 
 export const AWAKENED_TOOL_SPECS: ToolSpec[] = AWAKENED_TOOL_NAMES.map(name => {
   const nullable = name === "awakened_guard" || name === "awakened_attack";

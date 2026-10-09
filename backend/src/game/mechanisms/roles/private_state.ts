@@ -6,8 +6,6 @@ import type { ExileFeedback } from "../../../core/domain/events";
 import { findNightAbility, installNativeAbility, type RoleInspectionPolicy } from "./abilities";
 
 const PRIVATE_STATE_KEYS = {
-  witch: "witch",
-  guard: "guard",
   hunter: "hunter",
   wolfKing: "wolf_king",
   whiteWolfKing: "white_wolf_king",
@@ -18,7 +16,6 @@ const PRIVATE_STATE_KEYS = {
   hiddenWolf: "hidden_wolf",
   gargoyle:"gargoyle",
   idiot: "idiot",
-  seer: "seer",
 } as const;
 
 /** 女巫私有状态。 */

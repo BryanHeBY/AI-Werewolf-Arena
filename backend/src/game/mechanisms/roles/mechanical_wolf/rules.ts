@@ -1,5 +1,6 @@
+import { MECHANICAL_TOOL_NAMES } from "./tool_names";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
-import { Camp, Role, Phase, type ToolName } from "../../../../core/domain/model";
+import { Camp, Role, Phase } from "../../../../core/domain/model";
 import type { ToolRule, ToolRuleMap } from "../../validation/contracts";
 import { isAliveTarget } from "../../validation/contracts";
 import { canMechanicalKnife } from "./inheritance";
@@ -35,5 +36,5 @@ const validateMechanical: ToolRule = ({ world, actorId, role, day, phase, toolCa
   return { code: RuleError.MechanicalUnavailable };
 };
 
-export const MECHANICAL_TOOL_NAMES = ["mimic_role", "mechanical_mode", "mechanical_inspect", "mechanical_poison", "mechanical_guard", "mechanical_attack"] as const satisfies readonly ToolName[];
+export { MECHANICAL_TOOL_NAMES } from "./tool_names";
 export const MECHANICAL_VALIDATION_RULES: ToolRuleMap = Object.fromEntries(MECHANICAL_TOOL_NAMES.map(name => [name, validateMechanical]));
