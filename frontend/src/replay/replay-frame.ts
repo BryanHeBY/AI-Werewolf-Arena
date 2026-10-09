@@ -1,13 +1,13 @@
 import { readReplayDocument, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { text, victoryPointLabel } from "@ai-werewolf-arena/game-text";
 import { formatReplayTime, validateReplayDisplay, DEFAULT_REPLAY_TIME_ZONE, type ReplayDisplayOptions } from "./replay-display";
-import { buildPresentationReplay } from "./replay-presentation";
+import { buildPresentationReplay, type PresentationReplay } from "./replay-presentation";
 import { buildReplaySnapshot } from "./replay-projection";
 import { eventLabel } from "./event-labels";
 import { phaseName, roleName, stageName } from "./replay-localization";
 
 export const FRAMES_PER_EVENT = 90;
-export type ReplayRenderInput = ReplayDisplayOptions & { replay: ReplayDocument };
+export type ReplayRenderInput = ReplayDisplayOptions & { replay: PresentationReplay };
 /** Offline rendering input: no workspace focus, playback state, clock, or host time zone. */
 export function createReplayRenderInput(replay: ReplayDocument, display: ReplayDisplayOptions = {
   locale: replay.meta.locale ?? "zh-CN", timeZone: DEFAULT_REPLAY_TIME_ZONE,

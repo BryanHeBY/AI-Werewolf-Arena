@@ -28,7 +28,7 @@ test("unknown result fallback does not execute a foreign result accessor", () =>
   let reads = 0;
   const value = event({});
   Object.defineProperty(value.payload, "result", { get() { reads++; throw new Error("must-not-read"); } });
-  expect(eventLabel(value, "en")).toContain("?"); expect(reads).toBe(0);
+  expect(eventLabel(value, "en")).toBe(text("en", "replay.unknown")); expect(reads).toBe(0);
 });
 
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: ability changes share timeline/video text and preserve unknown future fields`, () => {

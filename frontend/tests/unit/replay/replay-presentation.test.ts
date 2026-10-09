@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { assertReplayDocument, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { buildPresentationReplay } from "../../../src/replay/replay-presentation";
 
 test("collapses concurrent declarations and votes into their summary events", () => {
@@ -27,4 +27,14 @@ test("collapses concurrent declarations and votes into their summary events", ()
     "vote_summary",
   ]);
   expect(replay.events).toHaveLength(6);
+  expect(presentation.kind).toBe("presentation");
+  expect(presentation.sourceSchemaVersion).toBe(2);
+  expect(presentation.events.map(event => event.seq)).toEqual([2, 4, 6]);
+  expect(Object.hasOwn(presentation, "schemaVersion")).toBe(false);
+  expect(Object.hasOwn(presentation, "perspective")).toBe(false);
+  expect(() => assertReplayDocument(replay)).not.toThrow();
+  expect(() => assertReplayDocument(presentation)).toThrow();
+  // @ts-expect-error A filtered view is deliberately not assignable to a persisted document.
+  const persisted: ReplayDocument = presentation;
+  void persisted;
 });

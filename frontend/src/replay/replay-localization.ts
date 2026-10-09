@@ -1,4 +1,5 @@
-import { readVictoryResult, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { readReplayEvent } from "./replay-event-reader";
+import { type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { roleName as sharedRoleName, term, text, dictionaries, outcomeLabel, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 
 export { type Locale };
@@ -20,13 +21,17 @@ export function resultReasonName(reason: string | null, locale: Locale = "zh-CN"
 
 export function replayResultLabel(replay: ReplayDocument, locale: Locale): string {
   if (replay.result.decision) return outcomeLabel(replay.result.decision.outcome, locale);
-  const explicitTerminal = [...replay.events].reverse().find(event => event.type === "game_over" && (Object.hasOwn(event.payload, "outcome") || Object.hasOwn(event.payload, "decidedAt")));
-  if (explicitTerminal) {
-    try { return outcomeLabel(readVictoryResult(explicitTerminal.payload, replay.players.map(player => player.player_id)).outcome, locale); }
-    catch { return text(locale, "replay.unknown"); }
+  const playerIds = replay.players.map(player => player.player_id);
+  const facts = replay.events.map(event => readReplayEvent(event, playerIds));
+  for (let index = replay.events.length - 1; index >= 0; index--) {
+    if (replay.events[index]!.type !== "game_over") continue;
+    const fact = facts[index];
+    if (!fact) return text(locale, "replay.unknown");
+    const victory = fact.effects.find(effect => effect.kind === "victory");
+    if (victory?.kind === "victory") return outcomeLabel(victory.decision.outcome, locale);
   }
   if (replay.result.winner) return campName(replay.result.winner, locale);
   const ended = ["max_days_reached", "completed"].includes(replay.result.reason ?? "")
-    || replay.events.some(event => event.type === "game_over" || event.type === "phase_changed" && event.payload.phase === "game_over");
+    || facts.some(fact => fact?.event.type === "game_over" || fact?.event.type === "phase_changed" && fact.event.payload.phase === "game_over");
   return text(locale, ended ? "replay.no_winner" : "replay.unfinished");
 }

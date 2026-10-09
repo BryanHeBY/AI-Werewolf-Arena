@@ -1,4 +1,5 @@
-import { readVictoryResult, type ReplayDocument, type ReplayEvent } from "@ai-werewolf-arena/replay-contract";
+import { type ReplayDocument, type ReplayEvent } from "@ai-werewolf-arena/replay-contract";
+import { readReplayEvent } from "./replay-event-reader";
 import type { SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
 
 export interface ReplayPlayerState {
@@ -19,18 +20,7 @@ export interface ReplaySnapshot {
   decision: SealedVictoryResult | null;
 }
 
-function numberValue(value: unknown): number | null {
-  return typeof value === "number" && Number.isInteger(value) ? value : null;
-}
-
-function numberArray(value: unknown): number[] {
-  return Array.isArray(value) ? value.flatMap((item) => {
-    const number = numberValue(item);
-    return number === null ? [] : [number];
-  }) : [];
-}
-
-export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number): ReplaySnapshot {
+export function buildReplaySnapshot(replay: Pick<ReplayDocument, "players" | "events">, eventIndex: number): ReplaySnapshot {
   const states = new Map(replay.players.map((player) => [player.player_id, {
     playerId: player.player_id,
     ...(player.name === undefined ? {} : { name: player.name }),
@@ -47,51 +37,22 @@ export function buildReplaySnapshot(replay: ReplayDocument, eventIndex: number):
     if (playerId !== null && states.has(playerId)) states.get(playerId)!.alive = false;
   };
 
+  const playerIds = [...states.keys()];
   for (const event of replay.events.slice(0, lastIndex + 1)) {
-    const payload = event.payload;
-    if (event.type === "game_over" && Object.hasOwn(payload, "outcome")) {
-      try {
-        decision = readVictoryResult(payload, [...states.keys()]);
-        const winners = decision.outcome.kind === "victory" ? decision.outcome.winningPlayerIds : [];
-        for (const player of states.values()) player.isWinner = winners.includes(player.playerId);
-      } catch { /* Malformed explicit facts do not imply winner membership. */ }
-    }
-    if (event.type === "night_resolved"||event.type==="additional_deaths") {
-      for (const playerId of numberArray(payload.deaths)) {
-        markDead(playerId);
+    const fact = readReplayEvent(event, playerIds);
+    for (const effect of fact?.effects ?? []) {
+      switch (effect.kind) {
+        case "deaths": for (const playerId of effect.playerIds) markDead(playerId); break;
+        case "sheriff_elected": for (const player of states.values()) player.isSheriff = player.playerId === effect.playerId; break;
+        case "sheriff_transferred": states.get(effect.fromId)!.isSheriff = false; states.get(effect.toId)!.isSheriff = true; break;
+        case "sheriff_destroyed": states.get(effect.playerId)!.isSheriff = false; break;
+        case "victory": {
+          decision = effect.decision;
+          const winners = decision.outcome.kind === "victory" ? decision.outcome.winningPlayerIds : [];
+          for (const player of states.values()) player.isWinner = winners.includes(player.playerId);
+          break;
+        }
       }
-    }
-    if (event.type === "voted_out") {
-      markDead(numberValue(payload.target));
-    }
-    if(event.type==="dream_death"&&(payload.reason==="consecutive"||payload.reason==="linked"))markDead(numberValue(payload.targetId));
-    if(event.type==="charm_death")markDead(numberValue(payload.targetId));
-    if (event.type === "wolf_self_destruct") {
-      markDead(numberValue(payload.wolfId));
-    }
-    if (event.type === "white_wolf_king_self_destruct") {
-      markDead(numberValue(payload.actorId)); markDead(numberValue(payload.targetId));
-    }
-    if (event.type === "knight_duel") {
-      if (payload.result === "wolf") markDead(numberValue(payload.targetId));
-      if (payload.result === "not_wolf") markDead(numberValue(payload.actorId));
-    }
-    if (event.type === "player_shot" || event.type === "hunter_shot" || event.type === "wolf_king_shot" || event.type === "mechanical_shot") {
-      markDead(numberValue(payload.targetId));
-    }
-    if (event.type === "sheriff_elected") {
-      const playerId = numberValue(payload.winnerId);
-      for (const player of states.values()) player.isSheriff = player.playerId === playerId;
-    }
-    if (event.type === "sheriff_badge_transferred") {
-      const fromId = numberValue(payload.fromId);
-      const toId = numberValue(payload.toId);
-      if (fromId !== null && states.has(fromId)) states.get(fromId)!.isSheriff = false;
-      if (toId !== null && states.has(toId)) states.get(toId)!.isSheriff = true;
-    }
-    if (event.type === "sheriff_badge_destroyed") {
-      const playerId = numberValue(payload.targetId);
-      if (playerId !== null && states.has(playerId)) states.get(playerId)!.isSheriff = false;
     }
   }
 

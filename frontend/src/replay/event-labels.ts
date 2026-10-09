@@ -1,3 +1,4 @@
+import { readReplayEvent } from "./replay-event-reader";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { readGravekeeperFeedback, readSeerInspectionResult, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
 import {readInspectionResult} from "@ai-werewolf-arena/replay-contract";
@@ -5,6 +6,9 @@ import { text, term, inspectionLabel, outcomeLabel, outcomeWinnersLabel, mechani
 import { campName, phaseName, resultReasonName, roleName } from "./replay-localization";
 
 export function eventLabel(event: ReplayEvent, locale: Locale = "zh-CN", playerIds?: readonly number[]): string {
+  const fact = readReplayEvent(event, playerIds);
+  if (!fact) return text(locale, "replay.unknown");
+  event = fact.event;
   const p = event.payload;
   const black = blackMarketEventLabel(event.type, p, locale); if (black !== null) return black;
   const deathAbility = deathAbilityEventLabel(event.type, p, locale); if (deathAbility !== null) return deathAbility;

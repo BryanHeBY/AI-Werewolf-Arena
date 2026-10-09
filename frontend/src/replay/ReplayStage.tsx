@@ -2,11 +2,11 @@ import { text } from "@ai-werewolf-arena/game-text";
 import type { ReplayDisplayOptions } from "./replay-display";
 import { Player, type PlayerRef } from "@remotion/player";
 import type { RefObject } from "react";
-import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import type { PresentationReplay } from "./replay-presentation";
 import { FRAMES_PER_EVENT, ReplayComposition } from "./ReplayComposition";
 
 interface ReplayStageProps {
-  replay: ReplayDocument;
+  replay: PresentationReplay;
   display: ReplayDisplayOptions;
   activeIndex: number;
   currentFrame: number;

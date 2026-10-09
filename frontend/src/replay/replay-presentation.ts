@@ -10,9 +10,20 @@ const SUMMARY_ONLY_EVENT_TYPES = new Set([
   "vote_cast",
 ]);
 
-export function buildPresentationReplay(replay: ReplayDocument): ReplayDocument {
+/** A filtered view preserves source event seq values; it is not a persisted ReplayDocument. */
+export interface PresentationReplay extends Omit<ReplayDocument, "schemaVersion" | "perspective"> {
+  kind: "presentation";
+  sourceSchemaVersion: ReplayDocument["schemaVersion"];
+  sourcePerspective: ReplayDocument["perspective"];
+}
+
+export function buildPresentationReplay(replay: ReplayDocument): PresentationReplay {
+  const { schemaVersion, perspective, ...content } = replay;
   return {
-    ...replay,
+    ...content,
+    kind: "presentation",
+    sourceSchemaVersion: schemaVersion,
+    sourcePerspective: perspective,
     events: replay.events.filter((event) => !SUMMARY_ONLY_EVENT_TYPES.has(event.type)),
   };
 }

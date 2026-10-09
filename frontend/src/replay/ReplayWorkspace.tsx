@@ -1,4 +1,5 @@
-import type { ReplayDocument, ReplayEvent } from "@ai-werewolf-arena/replay-contract";
+import { replayEventPlayerIds } from "./replay-event-reader";
+import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { text, outcomeWinnersLabel, victoryPointLabel } from "@ai-werewolf-arena/game-text";
 import { formatReplayTime, type ReplayDisplayOptions } from "./replay-display";
 import { ReplayDisplayControls } from "./ReplayDisplayControls";
@@ -24,7 +25,7 @@ export function ReplayWorkspace({ replay, display, onDisplayChange }: {
   const playerIds = presentationReplay.players.map(player => player.player_id);
   const visibleEvents = focusedPlayerId === null
     ? presentationReplay.events
-    : presentationReplay.events.filter((event) => mentionsPlayer(event, focusedPlayerId));
+    : presentationReplay.events.filter((event) => replayEventPlayerIds(event, playerIds).includes(focusedPlayerId));
 
   return (
     <main className="shell">
@@ -100,11 +101,4 @@ export function ReplayWorkspace({ replay, display, onDisplayChange }: {
       />
     </main>
   );
-}
-
-function mentionsPlayer(event: ReplayEvent, playerId: number): boolean {
-  const payload = event.payload;
-  return [payload.actorId, payload.target, payload.targetId, payload.playerId, payload.winnerId, payload.sheriffId, payload.fromId, payload.toId, payload.wolfId, payload.hunterId]
-    .some((value) => value === playerId)
-    || Object.values(payload).some((value) => Array.isArray(value) && value.includes(playerId));
 }
