@@ -416,3 +416,8 @@ Aw候选与正式配置例子仍在工作区；六人AWA缩编和原12镜隐牌�
 当前22 verified/42 planned。本笔不是全backend release或P7阶段结束；P7黑市商人、P8–P10、64角色/22机制全矩阵、长局及外部模型T6继续。未读写用户configs/认证，未调用外部模型。
 
 觉醒隐狼完整功能commit `83e6379`（57文件）；三路最终0，详见正式审查。黑市商人规则与[实现步骤](black-market-merchant.md)已完成[三路文档冻结审查](reviews/p7-black-market-rules.md)，0残留，仍planned且22/42不变；先被动赠枪授权底座，再完整角色与延期主动槽，最后P7整阶段验收。
+
+
+## P7：死亡许可实例绑定
+
+World短期death permission与当前请求的ability_id严格匹配，原生undefined兼容；赠予ID不能附遗言或借原生许可，旧close不撤新库存许可。仅授权底座，不建立赠枪库存、自动第二枪或注册Black。新11核心与2双语实际SDK/MCP反例、旧18双语实际枪整局/Tape、受影响1050/11744/72文件及四项静态通过，见[本笔审查](reviews/p7-death-action-instance.md)。原schema/事件/前端文字不变。目录22/42与Black后续实例/角色、P7验收及P8–P10全目标保持。

@@ -64,7 +64,7 @@ export class ActionReception {
     const deathStage = DEATH_SHOT_STAGES.includes(request.context.stage) || request.context.stage === "last_words";
     const deathTool = tool === "shoot" && DEATH_SHOT_STAGES.includes(request.context.stage) && request.context.trigger === "on_death" ||
       tool === "speak" && request.context.stage === "last_words" && request.context.trigger === "last_words";
-    if (deathStage && (!deathTool || !this.world.hasDeathAction(request.actorId, tool, request.phase, request.context.day, request.context.death_action_id))) {
+    if (deathStage && (!deathTool || !this.world.hasDeathAction(request.actorId, tool, request.phase, request.context.day, request.context.death_action_id, request.context.ability_id))) {
       return fail(RuleError.DeathActionUnavailable);
     }
     const checked = this.gateway.validateAndSanitize(this.world, request.actorId, call, {

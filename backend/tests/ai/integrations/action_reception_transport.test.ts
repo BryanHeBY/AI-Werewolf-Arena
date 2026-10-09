@@ -282,6 +282,36 @@ for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual SDK HTTP 
   } finally { sdkPermit.close(); acpPermit.close(); registry.close(); await client.close(); await control.close({ force: true }); server.stop(true); }
 });
 
+for (const locale of ["zh-CN", "en"] as const) test(`${locale}: actual SDK HTTP and stdio MCP reject a gifted-instance request borrowing a native gun permit`, async () => {
+  const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }), acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
+  for (const game of [sdk, acp]) game.world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive = false;
+  const sdkPermit = sdk.world.openDeathAction(7, "shoot", Phase.Day, 1), acpPermit = acp.world.openDeathAction(7, "shoot", Phase.Day, 1);
+  const input: ActionRequest = { actorId: 7, phase: Phase.Day, allowedTools: ["shoot"], context: { day: 1, stage: "death_shot", trigger: "on_death", death_action_id: sdkPermit.id, ability_id: "gift:1", action_failure_policy: "error", visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } } };
+  const actions = Array.from({ length: 4 }, (_, index) => ({ turn_id: "t1", action: "shoot", arguments: { target_id: index === 3 ? null : 1 } }));
+  let responses = 0;
+  const server = Bun.serve({ hostname: "127.0.0.1", port: 0, async fetch(incoming) {
+    await incoming.json();
+    const first = responses++ === 0;
+    return Response.json({ id: "wrong-gun-instance", object: "chat.completion", created: 1, model: "synthetic", choices: [{ index: 0, finish_reason: first ? "tool_calls" : "stop", message: { role: "assistant", content: first ? null : "Stopped after refusals.", ...(first ? { tool_calls: actions.map((args, index) => ({ id: `call-${index}`, type: "function", function: { name: "submit_action", arguments: JSON.stringify(args) } })) } : {}) } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
+  } });
+  const registry = new AcpTurnRegistry(acp.world), control = new WerewolfMcpControlServer(registry), client = new Client({ name: "wrong-gun-instance", version: "1.0.0" }); let transport: StdioClientTransport | undefined;
+  try {
+    const config = await control.start(process.execPath, [path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts")]); control.bindSession("wrong-gun-instance");
+    const acpInput = structuredClone(input); acpInput.context.death_action_id = acpPermit.id;
+    const pending = registry.openTurn(acpInput, "wrong-gun-instance");
+    transport = new StdioClientTransport({ command: config.command, args: config.args, env: Object.fromEntries(config.env.map(item => [item.name, item.value])) }); await client.connect(transport);
+    const receipts: unknown[] = [], result = await sdkLoop(sdk.world, trace => receipts.push(...trace.flatMap(step => step.toolCalls.map(call => JSON.parse(call.toolResult))))).run(new AiSdkClient({ apiKey: "synthetic-only", baseURL: `${server.url.origin}/v1`, model: "synthetic" }), input, [{ role: "user", content: "Submit this turn's action." }], 2000, "t1");
+    const mcp: any[] = []; for (const arguments_ of actions) mcp.push((await client.callTool({ name: "submit_action", arguments: arguments_ })).structuredContent);
+    expect(receipts).toHaveLength(4); expect(receipts.slice(0, 3)).toEqual(mcp.slice(0, 3));
+    expect(receipts[3]).toMatchObject({ ok: false, error: "turn_invalid_action_limit" });
+    expect(mcp.map(receipt => receipt.error)).toEqual(["death_action_unavailable", "death_action_unavailable", "death_action_unavailable", "turn_not_open_or_session_invalid"]);
+    expect(result.action).toBeNull(); expect(result.failureCode).toBe("turn_invalid_action_limit"); expect(await pending.action).toBeNull();
+    for (const game of [sdk, acp]) { expect(getHunterState(game.world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot).toBe(true); expect(game.world.getAliveEntityIds()).toContain(1); }
+    if (locale === "en") expect(JSON.stringify(mcp)).not.toMatch(/\p{Script=Han}/u);
+  } finally { sdkPermit.close(); acpPermit.close(); registry.close(); const pid = transport?.pid; await client.close(); await control.close({ force: true }); server.stop(true); if (pid) { try { process.kill(pid, 0); throw new Error("mcp_child_still_alive"); } catch (error) { expect((error as NodeJS.ErrnoException).code).toBe("ESRCH"); } } }
+  expect(sdk.world.activeDeathActionCount).toBe(0); expect(acp.world.activeDeathActionCount).toBe(0);
+});
+
 for (const locale of ["zh-CN", "en"] as const) for (const scenario of ["exile_target", "lost_vote", "nomination", "sheriff_vote", "candidate_vote"] as const) test(`${locale}: actual SDK HTTP and MCP share public participation refusals (${scenario})`, async () => {
   const { EventRegistry } = await import("../../../src/game/engine/event_registry");
   const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }), acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });

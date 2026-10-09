@@ -90,7 +90,7 @@ export class ActionValidator {
       return reject({ code: RuleError.ActorMissing });
     }
 
-    const allowDeadAction = world.hasDeathAction(actorId, toolCall.name, context.phase, context.day, context.deathActionId);
+    const allowDeadAction = world.hasDeathAction(actorId, toolCall.name, context.phase, context.day, context.deathActionId, context.abilityId);
     if (context.deathActionId !== undefined && (alive.alive || !allowDeadAction)) {
       return reject({ code: RuleError.DeathActionUnavailable });
     }
