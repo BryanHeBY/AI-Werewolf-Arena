@@ -4,6 +4,8 @@ import { ROLE_IDS, RULESET, isRoleId } from "@ai-werewolf-arena/game-catalog";
 import { ActionWindow, Camp, Role, WinCondition, type BoardConfig } from "../../core/domain/model";
 import { getDefaultRoleCatalog } from "../../game/mechanisms/roles/catalog";
 import {
+  DEATH_REVEAL_POLICIES,
+  LAST_WORDS_POLICIES,
   SHERIFF_BADGE_POLICIES,
   SHERIFF_ELECTION_POLICIES,
   EXILE_VOTE_POLICIES,
@@ -37,6 +39,12 @@ const schema = z.strictObject({
   }),
   rules: z.strictObject({ winConditions: z.array(z.enum(WinCondition)).min(1), hooks }),
   mechanisms: z.strictObject({
+    disclosure: z
+      .strictObject({ deathRevealPolicy: z.enum(DEATH_REVEAL_POLICIES).default("awa_hidden_v1") })
+      .default({ deathRevealPolicy: "awa_hidden_v1" }),
+    lastWords: z
+      .strictObject({ policy: z.enum(LAST_WORDS_POLICIES).default("awa_initial_wave_v1") })
+      .default({ policy: "awa_initial_wave_v1" }),
     sheriff: z.strictObject({
       enabled: z.boolean(),
       electionPolicy: z.enum(SHERIFF_ELECTION_POLICIES).default("awa_final_candidates_v1"),
@@ -177,6 +185,8 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
       : {}),
     selfDestruct: { enabledWindows: [...windows] },
     voting: { ...definition.mechanisms.voting },
+    disclosure: { ...definition.mechanisms.disclosure },
+    lastWords: { ...definition.mechanisms.lastWords },
     tieBreaker: {
       ...definition.mechanisms.tieBreaker,
       ...(sheriff.enabled ? { sheriffVote: sheriff.tieBreaker } : {}),
@@ -249,6 +259,8 @@ export function boardDefinitionFromConfig(id: string, config: BoardConfig): Boar
     },
     rules: { winConditions: conditions, hooks: config.hooks },
     mechanisms: {
+      disclosure: { deathRevealPolicy: config.disclosure?.deathRevealPolicy ?? "awa_hidden_v1" },
+      lastWords: { policy: config.lastWords?.policy ?? "awa_initial_wave_v1" },
       sheriff: {
         enabled: config.enableSheriff,
         ...(config.enableSheriff

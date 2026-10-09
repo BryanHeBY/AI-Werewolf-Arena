@@ -10,6 +10,7 @@ export interface ReplayPlayerState {
   alive: boolean;
   isSheriff: boolean;
   isWinner: boolean;
+  publicRole?: string;
 }
 
 export interface ReplaySnapshot {
@@ -58,6 +59,9 @@ export function buildReplaySnapshot(
     }
     for (const effect of fact?.effects ?? []) {
       switch (effect.kind) {
+        case "role_revealed":
+          (states.get(effect.playerId)! as ReplayPlayerState).publicRole = effect.role;
+          break;
         case "deaths":
           for (const playerId of effect.playerIds) markDead(playerId);
           break;

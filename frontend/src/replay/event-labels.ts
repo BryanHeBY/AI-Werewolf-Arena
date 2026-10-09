@@ -50,6 +50,11 @@ export function eventLabel(
   const target = numberValue(p.targetId);
   const players = (value: unknown) => numberList(value, locale) || t("replay.none");
   switch (event.type) {
+    case "player_role_revealed":
+      return t("console.role_revealed", {
+        actor: numberValue(p.playerId),
+        role: roleName(stringValue(p.role), locale),
+      });
     case "sheriff_pk_started":
       return t("console.pk.sheriff", { players: players(p.candidates) });
     case "exile_pk_started":

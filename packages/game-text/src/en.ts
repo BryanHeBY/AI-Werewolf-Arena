@@ -722,6 +722,13 @@ export const en = Object.freeze({
   "prompt.config.self_heal_always": "Always allowed",
   "prompt.config.self_heal_first": "Allowed only on the first night",
   "prompt.config.self_heal_disabled": "Disallowed",
+  "prompt.config.disclosure_open":
+    "Disclosure (NetEase 2017 open-card clause): after an actual death is settled, player_role_revealed publicly confirms that player's current role card. It reveals no camp, victory affiliation, copied or gifted abilities, resources or private history. Pending night deaths are not revealed early. Speech claims are not engine confirmation.",
+  "prompt.config.last_words_2017":
+    "Last words (NetEase 2017 clause): every daytime or voting death, including self-destruction and subsequent death waves, and every first-night death receives last words. Later night deaths receive none. Night-origin shot or linked deaths remain night deaths; a surviving Village Idiot receives none. This policy does not change gun eligibility or victory timing.",
+  "console.role_revealed": "Player {actor} revealed their role card: {role}",
+  "replay.role_revealed_badge": "Revealed: {role}",
+  "replay.stage.player_role_revealed": "Role card revealed",
   "prompt.config.disclosure":
     "Disclosure: ordinary night deaths and exile do not reveal roles. Only identities explicitly revealed by engine events such as idiot_revealed, and private role or inspection events received by you, are confirmed facts. A role claim in speech or last words is not engine confirmation.",
   "prompt.config.last_words":

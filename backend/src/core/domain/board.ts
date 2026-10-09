@@ -80,7 +80,17 @@ export const INSPECTION_POLICIES = [
 ] as const;
 export type InspectionPolicy = (typeof INSPECTION_POLICIES)[number];
 
+export const DEATH_REVEAL_POLICIES = ["awa_hidden_v1", "netease_2017_open_v1"] as const;
+export type DeathRevealPolicy = (typeof DEATH_REVEAL_POLICIES)[number];
+export const LAST_WORDS_POLICIES = [
+  "awa_initial_wave_v1",
+  "netease_2017_day_and_first_night_v1",
+] as const;
+export type LastWordsPolicy = (typeof LAST_WORDS_POLICIES)[number];
+
 export interface BoardConfig {
+  disclosure?: { deathRevealPolicy: DeathRevealPolicy };
+  lastWords?: { policy: LastWordsPolicy };
   boardSize: number;
   enableSheriff: boolean;
   initialSheriffSeat?: number;

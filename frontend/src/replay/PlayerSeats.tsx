@@ -40,6 +40,13 @@ export function PlayerSeats({ players, locale, focusedPlayerId, onToggleFocus }:
             {player.name && <span className="seat-name">{player.name}</span>}
             <strong>{roleName(player.role, locale)}</strong>
             <small>{campName(player.camp, locale)}</small>
+            {player.publicRole && (
+              <small>
+                {text(locale, "replay.role_revealed_badge", {
+                  role: roleName(player.publicRole, locale),
+                })}
+              </small>
+            )}
           </button>
         ))}
       </div>

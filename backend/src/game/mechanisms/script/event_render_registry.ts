@@ -3,6 +3,7 @@ import {
   blackMarketEventLabel,
   deathAbilityEventLabel,
   text,
+  roleName,
   inspectionLabel,
   outcomeLabel,
   outcomeWinnersLabel,
@@ -83,6 +84,11 @@ const CHAT_HANDLERS: ScriptChatLineHandlers = {
 };
 
 const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
+  player_role_revealed: (event, locale = "zh-CN") =>
+    text(locale, "console.role_revealed", {
+      actor: event.payload.playerId,
+      role: roleName(event.payload.role, locale),
+    }),
   sheriff_pk_started: (event, locale = "zh-CN") =>
     text(locale, "console.pk.sheriff", { players: event.payload.candidates.join(", ") }),
   exile_pk_started: (event, locale = "zh-CN") =>

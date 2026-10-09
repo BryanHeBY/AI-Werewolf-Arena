@@ -1,4 +1,5 @@
 /** 文件说明：遗言规则与事件写入机制。 */
+import type { LastWordsPolicy } from "../../../core/domain/board";
 import { AliveComponent } from "../../../core/domain/components/alive";
 import { COMPONENT } from "../../../core/domain/components/names";
 import {
@@ -12,7 +13,22 @@ import { World } from "../../../core/domain/world";
 
 /** 遗言机制：判定是否可遗言并写入遗言授权事件。 */
 export class LastWordsMechanism {
-  shouldGrantLastWords(deathPhase: Phase, day: number, sources: readonly DeathCause[]): boolean {
+  shouldGrantLastWords(
+    deathPhase: Phase,
+    day: number,
+    sources: readonly DeathCause[],
+    policy: LastWordsPolicy = "awa_initial_wave_v1",
+  ): boolean {
+    if (policy === "netease_2017_day_and_first_night_v1") {
+      if (!sources.length || sources.some((source) => !Object.values(DeathCause).includes(source)))
+        return false;
+      return (
+        deathPhase === Phase.Day ||
+        deathPhase === Phase.Voting ||
+        (deathPhase === Phase.Night && day === 1)
+      );
+    }
+    if (policy !== "awa_initial_wave_v1") return false;
     if (
       sources.length === 0 ||
       sources.includes(DeathCause.SelfDestruct) ||
@@ -46,10 +62,16 @@ export class LastWordsMechanism {
     events: GameEvent[],
     sources: DeathSources,
     deathPhases: Readonly<Record<EntityId, Phase>> = {},
+    policy: LastWordsPolicy = "awa_initial_wave_v1",
   ): void {
     for (const deadId of deadIds) {
       if (
-        !this.shouldGrantLastWords(deathPhases[deadId] ?? deathPhase, day, sources[deadId] ?? [])
+        !this.shouldGrantLastWords(
+          deathPhases[deadId] ?? deathPhase,
+          day,
+          sources[deadId] ?? [],
+          policy,
+        )
       ) {
         continue;
       }

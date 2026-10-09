@@ -4,9 +4,10 @@ import {
   readVictoryResult,
   type ReplayEvent,
 } from "@ai-werewolf-arena/replay-contract";
-import { isRoleId, type SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
+import { isRoleId, type RoleId, type SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
 
 export type ReplayEffect =
+  | { kind: "role_revealed"; playerId: number; role: RoleId }
   | { kind: "deaths"; playerIds: number[] }
   | { kind: "sheriff_elected"; playerId: number }
   | { kind: "sheriff_transferred"; fromId: number; toId: number }
@@ -20,6 +21,7 @@ export interface ReadReplayEvent {
 
 // Required references are event-specific. Unknown extension fields never imply player membership.
 const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
+  player_role_revealed: ["playerId"],
   ability_changed: ["actorId"],
   death_ability_changed: ["actorId"],
   lucky_ability_skipped: ["actorId"],
@@ -155,6 +157,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if (type === "player_role_revealed")
+    return isRoleId(p.role) && Object.keys(p).every((key) => key === "playerId" || key === "role");
   const positive = (value: unknown): value is number =>
     typeof value === "number" && Number.isSafeInteger(value) && value > 0;
   const strings: Readonly<Record<string, string[]>> = {
@@ -343,6 +347,10 @@ export function readReplayEvent(
     if (safe.type === "knight_duel" && p.result !== "wolf" && p.result !== "not_wolf") return null;
     if (safe.type === "phase_changed" && typeof p.phase !== "string") return null;
     const effects: ReplayEffect[] = [];
+    if (safe.type === "player_role_revealed" && isRoleId(p.role)) {
+      effects.push({ kind: "role_revealed", playerId: p.playerId as number, role: p.role });
+      effects.push({ kind: "deaths", playerIds: [p.playerId as number] });
+    }
     if (safe.type === "game_over") {
       if (Object.hasOwn(p, "outcome") || Object.hasOwn(p, "decidedAt")) {
         const decision = readVictoryResult(p, knownPlayerIds);

@@ -1,3 +1,5 @@
+import { isRoleId } from "@ai-werewolf-arena/game-catalog";
+import type { BoardConfig, LastWordsPolicy } from "../../core/domain/board";
 import { captureNightLife, livingNightLife } from "../../core/domain/night_effects";
 import { AliveComponent, aliveLifeVersion } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
@@ -61,6 +63,7 @@ export class DeathResolution {
     private readonly toolGateway: ToolGateway,
     private readonly eventRegistry: EventRegistry,
     private readonly state: RuntimeSnapshot,
+    private readonly config?: BoardConfig,
   ) {}
 
   async resolve(
@@ -78,11 +81,18 @@ export class DeathResolution {
   ): Promise<void> {
     const resolutionPhase = this.state.phase;
     const resolutionDay = this.state.day;
+    const lastWordsPolicy = this.config?.lastWords?.policy ?? "awa_initial_wave_v1";
+    const revealPolicy = this.config?.disclosure?.deathRevealPolicy ?? "awa_hidden_v1";
     const isCurrent = () =>
       this.state.phase === resolutionPhase &&
       this.state.day === resolutionDay &&
       !this.state.gameOver &&
       (nightEffects?.isCurrent?.() ?? true);
+    const revealCurrent = () =>
+      revealPolicy === "netease_2017_open_v1" &&
+      this.config?.disclosure?.deathRevealPolicy === revealPolicy;
+    const lastWordsCurrent = () =>
+      isCurrent() && (this.config?.lastWords?.policy ?? "awa_initial_wave_v1") === lastWordsPolicy;
     const seen = new Set<EntityId>(
       deadIds.filter((id) => {
         return (
@@ -102,9 +112,17 @@ export class DeathResolution {
       while (pending.length > 0) {
         if (!isCurrent()) return;
         const deathPhase = firstBatch ? phase : this.state.phase;
-        this.markPlayersDead(pending, true, gunsToExpire);
+        this.markPlayersDead(pending, true, gunsToExpire, revealPolicy === "netease_2017_open_v1");
         nightEffects?.dreams?.recordDeaths(pending, this.events);
-        if (firstBatch) {
+        if (
+          (firstBatch || lastWordsPolicy === "netease_2017_day_and_first_night_v1") &&
+          lastWordsCurrent()
+        ) {
+          const wordsPhases = firstBatch
+            ? initialPhases
+            : Object.fromEntries(
+                pending.map((id) => [id, nightOrigin.has(id) ? Phase.Night : deathPhase]),
+              );
           this.lastWordsMechanism.recordLastWordsGranted(
             this.world,
             pending,
@@ -113,7 +131,8 @@ export class DeathResolution {
             this.state.day,
             this.events,
             allSources,
-            initialPhases,
+            wordsPhases,
+            lastWordsPolicy,
           );
           await this.collectLastWords(
             pending,
@@ -121,8 +140,9 @@ export class DeathResolution {
             phase,
             allSources,
             actionProvider,
-            initialPhases,
-            isCurrent,
+            wordsPhases,
+            lastWordsCurrent,
+            lastWordsPolicy,
           );
         }
         if (!isCurrent()) return;
@@ -270,7 +290,7 @@ export class DeathResolution {
                   }
                   seen.add(id);
                   allSources[id] = [...new Set(proposedSources[id] ?? [])];
-                  this.markPlayersDead([id], false, gunsToExpire);
+                  this.markPlayersDead([id], false, gunsToExpire, revealCurrent());
                   newlyMarked = true;
                   if (shot) this.events.push(shot.event);
                   if (
@@ -476,13 +496,19 @@ export class DeathResolution {
     actionProvider: ActionProvider,
     deathPhases: Readonly<Record<EntityId, Phase>>,
     scopeCurrent: () => boolean = () => true,
+    policy: LastWordsPolicy = "awa_initial_wave_v1",
   ): Promise<void> {
     const requests = new GameActionRequestFactory(this.world, this.events, this.state.day);
     const day = this.state.day;
     for (const deadId of deadIds) {
       const actualDeathPhase = deathPhases[deadId] ?? deathPhase;
       if (
-        !this.lastWordsMechanism.shouldGrantLastWords(actualDeathPhase, day, sources[deadId] ?? [])
+        !this.lastWordsMechanism.shouldGrantLastWords(
+          actualDeathPhase,
+          day,
+          sources[deadId] ?? [],
+          policy,
+        )
       )
         continue;
       if (
@@ -494,21 +520,22 @@ export class DeathResolution {
         return;
       const permit = this.world.openDeathAction(deadId, "speak", phase, day, scopeCurrent);
       try {
-        const action = await actionProvider.getAction(
-          requests.create({
-            phase,
-            actorId: deadId,
-            allowedTools: ["speak"],
-            stage: "last_words",
-            requiresAction: true,
-            summary: { key: "request.summary.last_words" },
-            context: {
-              trigger: "last_words",
-              death_phase: actualDeathPhase,
-              death_action_id: permit.id,
-            },
-          }),
-        );
+        const request = requests.create({
+          phase,
+          actorId: deadId,
+          allowedTools: ["speak"],
+          stage: "last_words",
+          requiresAction: true,
+          summary: { key: "request.summary.last_words" },
+          context: {
+            trigger: "last_words",
+            death_phase: actualDeathPhase,
+            death_action_id: permit.id,
+          },
+        });
+        if (!scopeCurrent() || !this.world.hasDeathAction(deadId, "speak", phase, day, permit.id))
+          return;
+        const action = await actionProvider.getAction(request);
         if (
           !scopeCurrent() ||
           this.state.phase !== phase ||
@@ -559,13 +586,22 @@ export class DeathResolution {
     playerIds: EntityId[],
     refreshInheritance = true,
     gunsToExpire: ReturnType<typeof firstDeathGuns> = [],
+    reveal = false,
   ): void {
     for (const id of playerIds) {
       const alive = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive);
       if (!alive) {
         continue;
       }
+      const firstSettlement = !this.isSettledLife(id);
       alive.alive = false;
+      const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role;
+      if (reveal && firstSettlement && isRoleId(role))
+        this.events.push({
+          timestamp: Date.now(),
+          type: "player_role_revealed",
+          payload: { playerId: id, role },
+        });
       gunsToExpire.push(...firstDeathGuns(this.world, id));
       expireLuckyAbilitiesOnDeath(this.world, id, this.events);
       this.settledLives.set(id, { component: alive, version: aliveLifeVersion(alive) });

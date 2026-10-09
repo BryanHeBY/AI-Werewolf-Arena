@@ -1061,3 +1061,50 @@ for (const locale of ["zh-CN", "en"] as const)
     await expect(page.getByTestId("composition-event")).toContainText("3");
     await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
   });
+
+for (const locale of ["zh-CN", "en"] as const)
+  test(`${locale}: public death reveal changes the card marker at its recorded event`, async ({
+    page,
+  }) => {
+    const replay = structuredClone(original);
+    replay.meta = { ...replay.meta, locale };
+    replay.result = { winner: null, reason: "max_days_reached" };
+    replay.players = [
+      { player_id: 1, role: "wolf", camp: "wolf" },
+      { player_id: 2, role: "hunter", camp: "good" },
+    ];
+    replay.events = [
+      { type: "phase_changed", payload: { phase: "day" } },
+      { type: "player_role_revealed", payload: { playerId: 2, role: "hunter" } },
+      {
+        type: "last_words_spoken",
+        payload: { playerId: 2, text: "Final words", phase: "day", day: 1 },
+      },
+    ].map((fact, index) => ({
+      ...fact,
+      seq: index + 1,
+      day: 1,
+      phase: "day",
+      timestamp: "2026-10-09T00:00:00.000Z",
+    }));
+    await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
+    await page.goto("/");
+    await page.locator(".timeline .event").first().click();
+    const target = page.getByRole("button", {
+      name: locale === "en" ? "Player 2" : "2号",
+      exact: true,
+    });
+    const marker = locale === "en" ? "Revealed: Hunter" : "已翻牌：猎人";
+    await expect(target).not.toContainText(marker);
+    await expect(target).toHaveClass(/alive/);
+    const label =
+      locale === "en" ? "Player 2 revealed their role card: Hunter" : "2号公开身份牌：猎人";
+    await page.locator(".timeline .event").filter({ hasText: label }).click();
+    await expect(page.getByTestId("composition-event")).toHaveText(label);
+    await expect(target).toContainText(marker);
+    await expect(target).toHaveClass(/dead/);
+    await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+    await page.locator(".timeline .event").first().click();
+    await expect(target).not.toContainText(marker);
+    await expect(target).toHaveClass(/alive/);
+  });

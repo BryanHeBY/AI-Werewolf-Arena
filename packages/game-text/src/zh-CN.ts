@@ -640,6 +640,13 @@ export const zhCN = Object.freeze({
   "prompt.config.self_heal_always": "一直允许",
   "prompt.config.self_heal_first": "仅首夜允许",
   "prompt.config.self_heal_disabled": "不允许",
+  "prompt.config.disclosure_open":
+    "公开裁定（网易2017明牌条款）：真正结算死亡后，player_role_revealed向全体确认该玩家当前身份牌；不公开阵营、胜利归属、复制/赠予能力、资源或私有历史。夜间待死不提前翻牌，发言自报身份不属于引擎认证。",
+  "prompt.config.last_words_2017":
+    "遗言规则（网易2017条款）：全部白天/投票死亡，包括自爆和追加死亡波次，以及全部首夜死亡均有遗言；后续夜死无遗言。夜源枪击/牵连仍算夜死，白痴翻牌免死无遗言；本参数不更改开枪资格或判胜时点。",
+  "console.role_revealed": "{actor}号公开身份牌：{role}",
+  "replay.role_revealed_badge": "已翻牌：{role}",
+  "replay.stage.player_role_revealed": "死亡翻牌",
   "prompt.config.disclosure":
     "公开裁定：普通夜间死亡和放逐出局均不公开底牌；仅以 idiot_revealed 等引擎事件明确公开的身份，以及个人收到的私有身份/查验事件为事实。玩家在发言或遗言中自报身份不属于引擎认证。",
   "prompt.config.last_words":

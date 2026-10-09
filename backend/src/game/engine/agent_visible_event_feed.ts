@@ -42,6 +42,8 @@ export function buildAgentVisibleEvent(
 /** Project the authorized wire fields, keeping internal metadata out of player prompts. */
 function projectPayload(event: GameEvent): Record<string, unknown> {
   switch (event.type) {
+    case "player_role_revealed":
+      return { playerId: event.payload.playerId, role: event.payload.role };
     case "black_market_trade_committed":
       return {
         actorId: event.payload.actorId,

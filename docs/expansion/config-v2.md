@@ -69,7 +69,7 @@ bun run --cwd backend config:check --configs-dir ../configs --game-config-name t
 
 只输出板子、规则/参数/字段来源、玩家名字、Agent名称/类型/模型、是否有私有人格、限制与执行支持状态。不输出 profile/provider 对象、env、命令参数、URL、认证和人格文本；JSON错误也不回显原输入片段。失败以 `code` 和已确认安全的 `path` 输出，例如 `roles.witch.selfHela`；任意异常只给稳定错误码。没有文件或遇到旧格式明确失败，不搜索其他路径或静默用内置板子替代。
 
-P5狼王/白狼王/骑士/守墓人已按独立卡与通路验收注册；当前已验证17项可运行，47计划项仍拒绝。新自爆选择/API边界见[白狼王契约](white-wolf-king.md)。
+P5狼王/白狼王/骑士/守墓人已按独立卡与通路验收注册；当前已验证23项可运行，41计划项仍拒绝。新自爆选择/API边界见[白狼王契约](white-wolf-king.md)。
 
 骑士的三种离散发言窗口/default及[]关闭见[接入契约](knight.md)。公开six/twelve_player_knight板子与games可加载，普通/觉醒分别登记，额外参数与未注册角色仍拒绝。
 
@@ -81,12 +81,18 @@ P6狼美人按[卡与契约](wolf-beauty.md)启用，roles.wolf_beauty仅{}；�
 
 P6熊按[卡与契约](bear.md)启用，roles.bear仅{}且原生count最多1；公共解析与直接bootstrap均约束。采用入夜取样、完整夜死后匿名公告版本，不能用参数改天亮活邻居重新计算或揭ID。原熊6/12示例是AWA组合，隐狼联合组合另见下段，均不冒认来源白神。
 
-P6隐狼按[卡与契约](hidden-wolf.md)启用，roles.hidden_wolf支持campInspection有限具名策略且原生count最多1。采用单向互认、不夜聊、真实死亡后唯一活Wolf接刀，掩码与熊检测按曾接刀事实；不开放mist/永久平民/自爆/复制。这两板为熊隐狼AWA组合，不含石像鬼；觉醒隐狼仍为计划角色。
+P6隐狼按[卡与契约](hidden-wolf.md)启用，roles.hidden_wolf支持campInspection有限具名策略且原生count最多1。采用单向互认、不夜聊、真实死亡后唯一活Wolf接刀，掩码与熊检测按曾接刀事实；不开放mist/永久平民/自爆/复制。这两板为熊隐狼AWA组合，不含石像鬼；觉醒隐狼已按P7独立契约交付，普通隐狼参数不自动授予觉醒技能。
 
 P6石像鬼按[规则和契约](gargoyle.md)启用，roles.gargoyle支持inspectionPolicy有限AWA策略、默认awa_unique_required_v1、原生count最多1；无相认/夜聊/自爆，先具体角色查验后按原生流程及真实唯一活Wolf接刀。公开six/twelve_player_gargoyle含守墓人，十二人采用来源3普通狼＋石像鬼／预女猎墓／4民。未知mist/固定刀位/self-check等参数拒绝。
 
-P7通灵师按[规则与契约](psychic.md)启用，roles.psychic支持inspectionPolicy有限AWA策略、默认awa_repeat_optional_v1、maxCount1。原生role_check显式policy=psychic，女巫后可跨夜重复或跳过；旧Garg缺policy维持刀前禁重/必须。身份policy不开放为任意配置开关；目标/行动配置与身份policy分离，新增未知字段仍拒绝。公开六/十二用已实现角色改编，机械狼与镜隐迷踪仍在后续冻结，不由通灵师注册自动授权。
+P7通灵师按[规则与契约](psychic.md)启用，roles.psychic支持inspectionPolicy有限AWA策略、默认awa_repeat_optional_v1、maxCount1。原生role_check显式policy=psychic，女巫后可跨夜重复或跳过；旧Garg缺policy维持刀前禁重/必须。身份policy不开放为任意配置开关；目标/行动配置与身份policy分离，新增未知字段仍拒绝。公开六/十二用已实现角色改编，机械狼与镜隐迷踪按各自P7契约和支持板子验证，不由通灵师注册自动授权。
 
 ## 复核补齐的现有角色配置
 
 预言家actionPolicy所有入口统一默认awa_required_when_legal_v1，只有显式awa_optional_v1才可跳过。hunter/wolf_king的deathActionPolicy默认awa_qualified_sources_v1，可选awa_knife_or_exile_v1；只改变原生死亡枪，复制/赠予/转移枪不从持有者配置继承。gargoyle/psychic/mirror_girl的inspectionPolicy只有awa_unique_required_v1、awa_repeat_optional_v1、awa_unique_optional_v1，默认分别为这三者；时序/阵营/伪装/接刀保持身份policy机制。各空对象与省略值一致，未知版本/无对应角色均拒绝，反向序列化、实例/validator/执行/双语提示与实际严格Tape闭环。详见[有限契约与矩阵](contracts/role-policy-configuration.md)。这些AWA策略不冒称主流完整平台规则。
+
+## 公开死亡信息与遗言
+
+`mechanisms.disclosure.deathRevealPolicy`为`awa_hidden_v1`（兼容默认）或`netease_2017_open_v1`；`mechanisms.lastWords.policy`为`awa_initial_wave_v1`（兼容默认）或`netease_2017_day_and_first_night_v1`。省略机制对象或填空对象均归一化为默认，未知字段/版本拒绝；反向转换和strict Tape保留有效配置。明牌只公开实际死亡者当前身份牌，不公开技能、资源或阵营；遗言按逐人死亡时间及夜源链分类，默认首波限制保留。详见[契约](contracts/public-death-policies.md)。
+
+`configs.example/boards/netease_2017_open_clause_6_v1.json`使用2017页六人角色构成与屠城目标，示范局部翻牌/遗言条款；其它流程仍为AWA，不是完整平台镜像。不会覆盖本地configs。

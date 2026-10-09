@@ -175,8 +175,18 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
               locale,
             ),
         ),
-      text(locale, "prompt.config.disclosure"),
-      text(locale, "prompt.config.last_words"),
+      text(
+        locale,
+        config.disclosure?.deathRevealPolicy === "netease_2017_open_v1"
+          ? "prompt.config.disclosure_open"
+          : "prompt.config.disclosure",
+      ),
+      text(
+        locale,
+        config.lastWords?.policy === "netease_2017_day_and_first_night_v1"
+          ? "prompt.config.last_words_2017"
+          : "prompt.config.last_words",
+      ),
       ...(config.roleSetups.some((entry) => entry.role === Role.Knight && entry.count > 0)
         ? [
             text(locale, "prompt.config.knight_windows", {

@@ -86,6 +86,7 @@ export class PhaseManager {
       toolGateway,
       this.eventRegistry,
       this.state,
+      config,
     );
     this.nightPipeline = new NightPipeline({
       world,

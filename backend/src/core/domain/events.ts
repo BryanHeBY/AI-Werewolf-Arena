@@ -38,6 +38,7 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  player_role_revealed: { playerId: EntityId; role: RoleId };
   sheriff_pk_started: { candidates: EntityId[] };
   exile_pk_started: { candidates: EntityId[] };
   black_market_trade_skipped: { actorId: EntityId; day: number };
