@@ -13,7 +13,7 @@ export const BLACK_MARKET_MERCHANT_ROLE_PROFILE: RoleProfile = {
   supportedBoardRoles: [Role.BlackMarketMerchant, Role.Wolf, Role.WolfKing, Role.HiddenWolf, Role.Seer, Role.Witch, Role.Guard, Role.Hunter, Role.Dreamer, Role.Villager],
   init: role => { if (!getBlackMarketState(role)) setBlackMarketState(role, freshBlackMarketState()); },
   renderPrompt: (role, locale = "zh-CN") => text(locale, "role.black_market_merchant.state") + " " + text(locale, "role.black_market_merchant.status", { state: JSON.stringify(projectBlackMarketState(getBlackMarketState(role)!)) }),
-  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config },
+  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config, serialize: () => ({}) },
   nightStages: [BLACK_MARKET_TRADE_STAGE, BLACK_MARKET_RECIPIENT_STAGE], possibleNightAbilities: ["seer_check", "potion"], possibleDeathAbilities: ["gun"],
   toolSpecs: [{ name: "black_market_trade", llm: { name: "black_market_trade", description: "Choose another living player and one Black Market gift, once per game.", parameters: { type: "object", properties: { target_id: { type: "integer", minimum: 1 }, skill: { type: "string", enum: ["check", "poison", "gun"] } }, required: ["target_id", "skill"], additionalProperties: false } }, argHint: 'black_market_trade args: {"target_id":number,"skill":"check"|"poison"|"gun"}', userPromptHintKey: "action.black_market_trade.hint" }],
   validationRules: { black_market_trade: ({ world, actorId, role, day, phase, toolCall }) => {

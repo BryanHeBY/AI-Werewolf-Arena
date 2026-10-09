@@ -15,7 +15,7 @@ export const GARGOYLE_ROLE_PROFILE:RoleProfile={
  init:role=>{setGargoyleState(role,{hasInheritedKnife:false});setRoleInspectionState(role,{lastTarget:null,lastDay:null,history:[]});},
  wolfTeam:(role,world)=>({recognizedByPack:false,recognizes:"none",canChat:false,canVoteForKill:canGargoyleKnife(role,world)}),
  renderPrompt:(role,locale="zh-CN",world)=>{const report=getRoleInspectionState(role)?.history.at(-1);return text(locale,"role.gargoyle.state")+" "+text(locale,"role.gargoyle.status",{inherited:text(locale,getGargoyleState(role)?.hasInheritedKnife===true?"common.yes":"common.no"),active:text(locale,canGargoyleKnife(role,world)?"common.yes":"common.no")})+(report?" "+text(locale,"inspection.latest",{target:report.targetId,result:inspectionLabel(report.result,locale)}):"");},
- configuration:{schema:z.strictObject({}),defaults:{},apply:config=>config},
+ configuration:{schema:z.strictObject({}),defaults:{},apply:config=>config,serialize:()=>({})},
  nightStages:[ROLE_INSPECTION_STAGE,...WOLF_ROLE_PROFILE.nightStages!],possibleNightAbilities:["role_check"],
  toolSpecs:[...WOLF_ROLE_PROFILE.toolSpecs!.filter(spec=>spec.name==="kill_vote"),ROLE_INSPECTION_TOOL],
  validationRules:{...WOLF_ROLE_PROFILE.validationRules,inspect_role:validateRoleInspection},

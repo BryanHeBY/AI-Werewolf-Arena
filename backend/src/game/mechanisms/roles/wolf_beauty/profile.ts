@@ -15,7 +15,7 @@ export const WOLF_BEAUTY_ROLE_PROFILE:RoleProfile={
  ...WOLF_ROLE_PROFILE,role:Role.WolfBeauty,canSelfDestruct:false,label:roleName("wolf_beauty"),skillBrief:text("zh-CN","role.wolf_beauty.brief"),
  init:role=>{setWolfBeautyState(role,{targetId:null,lastActedDay:null,history:[]});},
  renderPrompt:(role,locale="zh-CN")=>{const state=getWolfBeautyState(role);return text(locale,"role.wolf_beauty.state")+" "+text(locale,"role.wolf_beauty.latest",{target:state?.targetId??text(locale,"common.none"),day:state?.lastActedDay??text(locale,"common.none")});},
- configuration:{schema:z.strictObject({}),defaults:{},apply:config=>config},
+ configuration:{schema:z.strictObject({}),defaults:{},apply:config=>config,serialize:()=>({})},
  nightStages:[...WOLF_ROLE_PROFILE.nightStages!,WOLF_BEAUTY_CHARM_STAGE],deathHook:wolfBeautyDeathHook,
  toolSpecs:[...WOLF_ROLE_PROFILE.toolSpecs!.filter(spec=>spec.name!=="self_destruct"),{name:"charm",llm:{name:"charm",description:"Privately choose another living charm target for this night, or null to skip.",parameters:{type:"object",properties:{target_id:{type:["number","null"]}},required:["target_id"],additionalProperties:false}},argHint:'charm args: {"target_id":number|null}',userPromptHintKey:"action.charm.hint"}],
  validationRules:{...WOLF_VALIDATION_RULES,

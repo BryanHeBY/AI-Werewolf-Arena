@@ -3,6 +3,7 @@ import { z } from "zod";
 import { ROLE_IDS, RULESET, isRoleId } from "@ai-werewolf-arena/game-catalog";
 import { ActionWindow, Camp, Role, WinCondition, type BoardConfig } from "../../core/domain/model";
 import { getDefaultRoleCatalog } from "../../game/mechanisms/roles/catalog";
+import { boardConfigSchema } from "../../core/domain/board_schema";
 
 export const CONFIG_ID_PATTERN = /^[a-z][a-z0-9_-]*$/;
 export const MAX_BOARD_PLAYERS = 128;
@@ -130,7 +131,20 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
   return { definition, config, fieldSources };
 }
 
+/** Public boards contain parameters for present roles only; Tape retains the complete internal board. */
 export function boardDefinitionFromConfig(id: string, config: BoardConfig): BoardDefinition {
+  const valid = boardConfigSchema.safeParse(config);
+  if (!valid.success) {
+    const issue = valid.error.issues[0];
+    const key = issue.code === "unrecognized_keys" ? issue.keys[0] : undefined;
+    fail("board_config_invalid_field", ["config", ...issue.path, ...(key ? [key] : [])].join("."));
+  }
+  const catalog = getDefaultRoleCatalog();
+  const roles: Record<string, unknown> = {};
+  for (const entry of config.roleSetups.filter(entry => entry.count > 0)) {
+    const contribution = catalog.require(entry.role).configuration;
+    if (contribution) roles[entry.role] = contribution.serialize(config);
+  }
   const conditions = config.winConditions?.length ? config.winConditions : [config.winCondition ?? WinCondition.SlaughterCity];
   return parseBoardDefinition({
     version: 2, id, ruleset: RULESET,
@@ -138,7 +152,7 @@ export function boardDefinitionFromConfig(id: string, config: BoardConfig): Boar
     rules: { winConditions: conditions, hooks: config.hooks },
     mechanisms: {
       sheriff: { enabled: config.enableSheriff, ...(config.enableSheriff ? {
-        initialSeat: config.initialSheriffSeat, voteWeight: config.sheriff?.voteWeight ?? 1.5,
+        ...(config.initialSheriffSeat !== undefined ? { initialSeat: config.initialSheriffSeat } : {}), voteWeight: config.sheriff?.voteWeight ?? 1.5,
         tieBreaker: config.tieBreaker?.sheriffVote ?? "min_seat",
       } : {}) },
       selfDestruct: { enabledWindows: (config.selfDestruct?.enabledWindows ?? [ActionWindow.OnPreVote]).filter(window => ({
@@ -149,9 +163,6 @@ export function boardDefinitionFromConfig(id: string, config: BoardConfig): Boar
       })[window]) },
       tieBreaker: { exileVote: config.tieBreaker?.exileVote ?? "min_id", wolfKillVote: config.tieBreaker?.wolfKillVote ?? "min_id" },
     },
-    roles: {
-      ...(config.roleSetups.some(entry => entry.role === Role.Witch && entry.count > 0) ? { witch: { selfHeal: config.witch?.canSelfHeal ?? "disabled" } } : {}),
-      ...(config.roleSetups.some(entry => entry.role === Role.Knight && entry.count > 0) ? { knight: { enabledWindows: config.knight?.enabledWindows ?? ["after_speeches"] } } : {}),
-    },
+    roles,
   }).definition;
 }

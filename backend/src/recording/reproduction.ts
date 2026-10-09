@@ -1,3 +1,4 @@
+import { boardConfigSchema } from "../core/domain/board_schema";
 import { dictionaries, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { z } from "zod";
 import { readGameOutcome, readVictoryPoint, readVictoryAffiliations } from "@ai-werewolf-arena/replay-contract";
@@ -72,17 +73,6 @@ export interface ReproductionRecord {
 const positive = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
 const nonnegative = z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
 const jsonObject = z.record(z.string(), z.json());
-const strategies = z.enum(["min_id", "min_seat", "no_elimination", "no_kill"]);
-const boardSchema = z.strictObject({ boardSize: positive.max(128), enableSheriff: z.boolean(), initialSheriffSeat: positive.optional(),
-  winConditions: z.array(z.enum(WinCondition)).optional(), winCondition: z.enum(WinCondition).optional(),
-  hooks: z.strictObject({ onDaybreak: z.boolean(), onPreElection: z.boolean(), onPreVote: z.boolean(), onPerSpeechGap: z.boolean() }),
-  roleSetups: z.array(z.strictObject({ role: z.enum(Role), count: nonnegative.max(128) })).min(1),
-  selfDestruct: z.strictObject({ enabledWindows: z.array(z.enum(ActionWindow)) }).optional(),
-  sheriff: z.strictObject({ voteWeight: z.number().finite().positive().optional() }).optional(),
-  knight: z.strictObject({ enabledWindows: z.array(z.enum(KnightDuelWindow)) }).optional(),
-  witch: z.strictObject({ canSelfHeal: z.enum(WitchSelfHealRule).optional() }).optional(),
-  tieBreaker: z.strictObject({ exileVote: strategies.optional(), wolfKillVote: strategies.optional(), sheriffVote: strategies.optional() }).optional(),
-});
 const messageRefSchema = z.strictObject({ key: z.enum(Object.keys(dictionaries["zh-CN"]) as [MessageKey, ...MessageKey[]]), parameters: z.record(z.string(), z.union([z.string(), z.number().finite()])).optional() }).superRefine((message, ctx) => {
   try { text("zh-CN", message.key, message.parameters); }
   catch { ctx.addIssue({ code: "custom", message: "reproduction_message_reference_invalid" }); }
@@ -112,7 +102,7 @@ const playerSchema = z.strictObject({ id: positive, seat: positive, name: z.stri
 const schema = z.strictObject({ schemaVersion: z.literal(REPRODUCTION_SCHEMA_VERSION), finalized: z.boolean(),
   metadata: z.strictObject({ engine: z.strictObject({ id: z.literal("awa-engine"), sourceHash: z.string().regex(/^[a-f0-9]{64}$/), lockHash: z.string().regex(/^[a-f0-9]{64}$/), commit: z.string().regex(/^[a-f0-9]{40}$/).optional() }),
     random: z.strictObject({ seed: z.string().min(1), algorithm: z.string().min(1), streamPolicy: z.string().min(1), path: z.array(z.string()) }),
-    ruleset: z.strictObject({ id: z.string().min(1), version: z.string().min(1) }), boardId: z.string().regex(/^[a-z][a-z0-9_-]*$/), normalizedBoard: boardSchema,
+    ruleset: z.strictObject({ id: z.string().min(1), version: z.string().min(1) }), boardId: z.string().regex(/^[a-z][a-z0-9_-]*$/), normalizedBoard: boardConfigSchema,
     locale: z.enum(["zh-CN", "en"]), maxDays: positive, dealMode: z.enum(["random", "fixed"]),
     players: z.array(z.strictObject({ id: positive, name: z.string(), role: z.enum(Role), camp: z.enum(Camp), agent: z.strictObject({ kind: z.enum(["llm", "acp"]), name: z.string(), model: z.string().optional() }).optional() })).min(1),
   }),

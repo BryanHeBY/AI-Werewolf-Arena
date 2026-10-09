@@ -13,6 +13,6 @@ export const HIDDEN_WOLF_ROLE_PROFILE:RoleProfile={
  inspectionLabels:role=>getHiddenWolfState(role)?.hasInheritedKnife===true?{camp:Camp.Wolf,role:Role.HiddenWolf}:{camp:Camp.Good,role:Role.Villager},
  detectableByBear:(_world,role)=>getHiddenWolfState(role)?.hasInheritedKnife===true,
  renderPrompt:(role,locale="zh-CN",world)=>text(locale,"role.hidden_wolf.state")+" "+text(locale,"role.hidden_wolf.status",{inherited:text(locale,getHiddenWolfState(role)?.hasInheritedKnife===true?"common.yes":"common.no"),active:text(locale,canHiddenWolfKnife(role,world)?"common.yes":"common.no")}),
- configuration:{schema:z.strictObject({}),defaults:{},apply:config=>config},
+ configuration:{schema:z.strictObject({}),defaults:{},apply:config=>config,serialize:()=>({})},
  toolSpecs:WOLF_ROLE_PROFILE.toolSpecs!.filter(spec=>spec.name==="kill_vote"),
 };

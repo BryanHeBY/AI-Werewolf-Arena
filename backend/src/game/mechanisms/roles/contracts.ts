@@ -52,6 +52,8 @@ export interface RoleProfile {
     schema: z.ZodType;
     defaults: Readonly<Record<string, unknown>>;
     apply: (config: BoardConfig, value: unknown) => BoardConfig;
+    /** Serialize only this role's public parameters from a resolved internal board. */
+    serialize: (config: BoardConfig) => unknown;
   };
   init?: (roleComp: RoleComponent, ctx: RoleInitContext) => void;
   renderPrompt?: (roleComp: RoleComponent, locale?: Locale,world?:World) => string;

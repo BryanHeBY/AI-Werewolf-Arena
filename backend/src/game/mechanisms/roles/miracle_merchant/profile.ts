@@ -15,7 +15,7 @@ export const MIRACLE_MERCHANT_ROLE_PROFILE: RoleProfile = {
   supportedBoardRoles: [Role.MiracleMerchant,Role.Wolf,Role.WolfKing,Role.HiddenWolf,Role.Seer,Role.Witch,Role.Guard,Role.Hunter,Role.Dreamer,Role.Villager],
   init: role => { if (!getMerchantState(role)) setMerchantState(role, freshMerchantState()); },
   renderPrompt: (role,locale="zh-CN") => text(locale,"role.miracle_merchant.state") + " " + text(locale,"role.miracle_merchant.status",{state:JSON.stringify(projectMerchantState(getMerchantState(role)!))}),
-  configuration: { schema:z.strictObject({}),defaults:{},apply:config=>config },
+  configuration: { schema:z.strictObject({}),defaults:{},apply:config=>config,serialize:()=>({}) },
   nightStages: [MIRACLE_MERCHANT_STAGE,LUCKY_ABILITY_STAGE], possibleNightAbilities:["seer_check","potion","guard"],
   toolSpecs: [{name:"bestow_ability",llm:{name:"bestow_ability",description:"Choose another living player and one Miracle Merchant skill, once per game. Your true role and faction remain unchanged.",parameters:{type:"object",properties:{target_id:{type:"integer"},skill:{type:"string",enum:["check","poison","guard"]}},required:["target_id","skill"],additionalProperties:false}},argHint:'bestow_ability args: {"target_id":number,"skill":"check"|"poison"|"guard"}',userPromptHintKey:"action.bestow_ability.hint"}],
   validationRules: {bestow_ability:({world,actorId,role,day,phase,toolCall})=>{

@@ -2,7 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { BoardName, BoardOverride, parseBoardOverride } from "../scenarios/board_config_resolver";
 
-/** Read the first applicable board override. A present but invalid file is an error. */
+/** @deprecated Migration/legacy programmatic compatibility only. Normal CLI loading uses loadBoardDefinition and never probes these fallback paths. */
 export async function loadBoardOverride(
   configDir: string,
   board: BoardName,

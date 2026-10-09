@@ -17,6 +17,6 @@ export const GRAVEKEEPER_ROLE_PROFILE: RoleProfile = {
       ? text(locale, "role.gravekeeper.latest", { exileDay: report.exileDay, receivedDay: report.receivedDay, target: report.targetId, result: inspectionLabel(report.result, locale) })
       : text(locale, raw === undefined && Array.isArray(history) ? "role.gravekeeper.no_report" : "replay.unknown"));
   },
-  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config },
+  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config, serialize: () => ({}) },
   nightStages: [GRAVEKEEPER_FEEDBACK_STAGE],
 };

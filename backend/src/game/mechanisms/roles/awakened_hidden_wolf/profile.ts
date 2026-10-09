@@ -21,7 +21,7 @@ export const AWAKENED_HIDDEN_WOLF_ROLE_PROFILE: RoleProfile = {
   init: role => { if (!getAwakenedState(role)) setAwakenedState(role, freshAwakenedState()); },
   wolfTeam: (role, world) => ({ recognizedByPack: false, recognizes: "none", canChat: false, canVoteForKill: canAwakenedKnife(role, world) }),
   inspectionLabels: role => ({ camp: Camp.Wolf, role: getAwakenedState(role)?.learned?.role ?? Role.AwakenedHiddenWolf }),
-  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config },
+  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config, serialize: () => ({}) },
   possibleNightAbilities: ["role_check"],
   renderPrompt: (role, locale = "zh-CN") => {
     const raw = getAwakenedState(role), state = raw && projectAwakenedState(raw), learned = state?.learned, none = text(locale, "common.none");

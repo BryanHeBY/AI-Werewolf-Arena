@@ -15,7 +15,7 @@ export const PSYCHIC_ROLE_PROFILE: RoleProfile = {
     const report = getRoleInspectionState(role)?.history.at(-1);
     return text(locale, "role.psychic.state") + (report ? " " + text(locale, "inspection.latest", { target: report.targetId, result: inspectionLabel(report.result, locale) }) : "");
   },
-  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config },
+  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config, serialize: () => ({}) },
   toolSpecs: [ROLE_INSPECTION_TOOL], validationRules: { inspect_role: validateRoleInspection },
   nightStages: [PSYCHIC_INSPECTION_STAGE], possibleNightAbilities: ["role_check"],
   llmRepair: { coerce: { inspect_role: args => { const target = numberOrNull(args.target_id); return target === null ? null : { target_id: target }; } } },

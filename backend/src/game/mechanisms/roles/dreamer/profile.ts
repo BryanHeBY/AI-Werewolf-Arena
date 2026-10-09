@@ -13,7 +13,7 @@ export const DREAMER_ROLE_PROFILE:RoleProfile={
   role:Role.Dreamer,camp:Camp.Good,goodSide:"god",label:roleName("dreamer"),skillBrief:text("zh-CN","role.dreamer.brief"),
   init:role=>{setDreamerState(role,{lastTarget:null,lastDay:null,history:[]});},
   renderPrompt:(role,locale="zh-CN")=>{const state=getDreamerState(role);return text(locale,"role.dreamer.state")+(state?.lastTarget!==null&&state?.lastTarget!==undefined&&state.lastDay!==null?" "+text(locale,"role.dreamer.latest",{target:state.lastTarget,day:state.lastDay}):"");},
-  configuration:{schema:z.strictObject({}),defaults:{},apply:config=>config},
+  configuration:{schema:z.strictObject({}),defaults:{},apply:config=>config,serialize:()=>({})},
   nightStages:[DREAMER_NIGHT_STAGE],
   toolSpecs:[{name:"dream",llm:{name:"dream",description:"Choose another living player as this night's sleepwalker. A target is required.",parameters:{type:"object",properties:{target_id:{type:"number"}},required:["target_id"],additionalProperties:false}},argHint:'dream args: {"target_id":number}',userPromptHintKey:"action.dream.hint"}],
   validationRules:{dream:({world,actorId,role,toolCall,phase,day,abilityId})=>{

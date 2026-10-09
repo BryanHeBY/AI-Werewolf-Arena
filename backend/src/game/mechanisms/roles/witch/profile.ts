@@ -22,6 +22,7 @@ export const WITCH_ROLE_PROFILE: RoleProfile = {
     schema: witchParameters,
     defaults: { selfHeal: WitchSelfHealRule.Disabled },
     apply: (config, value) => ({ ...config, witch: { canSelfHeal: witchParameters.parse(value).selfHeal } }),
+    serialize: config => witchParameters.parse({ selfHeal: config.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled }),
   },
   init: (roleComp, ctx) => {
     const selfHealRule =

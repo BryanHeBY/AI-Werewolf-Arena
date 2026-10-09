@@ -16,7 +16,7 @@ export const HYBRID_ROLE_PROFILE: RoleProfile = {
   supportedBoardRoles: [Role.Hybrid, Role.Wolf, Role.WolfKing, Role.HiddenWolf, Role.Seer, Role.Witch, Role.Guard, Role.Hunter, Role.Idiot, Role.Villager],
   init: role => { if (!getHybridState(role)) role.privateState.hybrid = freshHybridState(); },
   renderPrompt: (role, locale = "zh-CN") => text(locale, "role.hybrid.state") + " " + text(locale, "role.hybrid.status", { state: JSON.stringify(projectHybridState(getHybridState(role)!)) }),
-  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config },
+  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config, serialize: () => ({}) },
   nightStages: [HYBRID_STAGE],
   toolSpecs: [{ name: "choose_exemplar", llm: { name: "choose_exemplar", description: "On night one choose another living player as your exemplar, once. Your victory follows their true faction without revealing it; your true Good villager identity never changes.", parameters: { type: "object", properties: { target_id: { type: "integer" } }, required: ["target_id"], additionalProperties: false } }, argHint: 'choose_exemplar args: {"target_id":number}', userPromptHintKey: "action.choose_exemplar.hint" }],
   validationRules: { choose_exemplar: ({ world, actorId, role, day, phase, toolCall }) => {

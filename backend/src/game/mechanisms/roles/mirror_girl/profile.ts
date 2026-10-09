@@ -26,7 +26,7 @@ export const MIRROR_GIRL_ROLE_PROFILE: RoleProfile = {
     const native = nativeMirror(role), report = native?.kind === "role_check" ? native.state.history.at(-1) : undefined;
     return text(locale, "role.mirror_girl.state") + (report ? " " + text(locale, "inspection.latest", { target: report.targetId, result: inspectionLabel(report.result, locale) }) : "");
   },
-  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config },
+  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config, serialize: () => ({}) },
   toolSpecs: [ROLE_INSPECTION_TOOL], validationRules: { inspect_role: validateRoleInspection },
   nightStages: [MIRROR_INSPECTION_STAGE], possibleNightAbilities: ["role_check"],
   llmRepair: { coerce: { inspect_role: args => { const target = numberOrNull(args.target_id); return target === null ? null : { target_id: target }; } } },

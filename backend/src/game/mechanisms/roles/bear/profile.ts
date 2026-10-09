@@ -11,5 +11,5 @@ export const BEAR_ROLE_PROFILE:RoleProfile={
   const report=getBearState(role)?.history.at(-1);
   return text(locale,"role.bear.state")+" "+(report?text(locale,"role.bear.latest",{day:report.day,result:text(locale,report.roared?"bear.roar":"bear.quiet")}):text(locale,"role.bear.no_report"));
  },
- configuration:{schema:z.strictObject({}),defaults:{},apply:config=>config},
+ configuration:{schema:z.strictObject({}),defaults:{},apply:config=>config,serialize:()=>({})},
 };

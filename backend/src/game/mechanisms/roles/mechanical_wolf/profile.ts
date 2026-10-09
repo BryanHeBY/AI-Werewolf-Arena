@@ -19,7 +19,7 @@ export const MECHANICAL_WOLF_ROLE_PROFILE: RoleProfile = {
   init: role => { if (!getMechanicalState(role)) setMechanicalState(role, freshMechanicalState()); },
   wolfTeam: (role, world) => ({ recognizedByPack: false, recognizes: "none", canChat: false, canVoteForKill: canMechanicalKnife(role, world) }),
   inspectionLabels: role => ({ camp: Camp.Wolf, role: getMechanicalState(role)?.learned?.role ?? Role.MechanicalWolf }),
-  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config },
+  configuration: { schema: z.strictObject({}), defaults: {}, apply: config => config, serialize: () => ({}) },
   renderPrompt: (role, locale = "zh-CN") => {
     const raw = getMechanicalState(role), state = raw && projectMechanicalState(raw), learned = state?.learned, none = text(locale, "common.none");
     return text(locale, "role.mechanical_wolf.state") + " " + text(locale, "role.mechanical_wolf.status", {
