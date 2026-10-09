@@ -1,5 +1,38 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "rule.awa_melbourne_2026_speech_gap_v1": "AWA墨尔本2026普通发言窗口适配",
+  "role.debater.brief":
+    "整局一次翻牌开杠当前普通发言者；全体活人匿名表决，严格过半禁对方当日放逐票，否则禁自己。",
+  "role.debater.state":
+    "你是好人神职杠精。AWA适配墨尔本2026规则：普通放逐发言前可开杠当前指定的其他活人，整局一次。接受后公开翻牌且立即消费；你先发言，对方随后发言，再由冻结的全体活人（含双方和已翻牌白痴）匿名投支持/反对/弃权。严格超过全体人数一半则成功，对方本次普通发言被取消、当天普通与PK放逐禁票；否则你当天放逐禁票。成功且对方持警徽则警徽自动移交给你，保留配置权重；不影响警长选举或PK发言。失效取消不补已消费机会。",
+  "role.debater.status": "你的有效机会与已选记录：{state}。",
+  "action.challenge.hint": "可用challenge指定当前窗口唯一target_id，或不选择而保留机会。",
+  "action.debate_vote.hint": "匿名表决support=true支持杠精、false反对、null弃权；不使用放逐票重。",
+  "prompt.targets.debate": "本窗口challenge唯一合法target_id：{target}。不可选择自己或其他编号。",
+  "prompt.status.debate_penalty": "你本日普通与PK放逐禁票；匿名开杠表决与警长选举不受影响。",
+  "error.debate_unavailable": "当前没有授权的未消费杠精窗口。",
+  "error.debate_target": "只能开杠本窗口指定的其他活人。",
+  "error.debate_ballot": "匿名开杠表决仅当前授权活人可提交true、false或null。",
+  "console.debate.reveal": "{actor}号公开翻牌为杠精，仍然存活。",
+  "console.debate.start": "{actor}号开杠{target}号。",
+  "console.debate.speech": "开杠发言（{actor}号）：{speech}",
+  "console.debate.cancel": "{actor}号对{target}号的开杠因窗口失效取消；已消费机会不返还。",
+  "console.debate.ledger": "上帝记录：{actor}号对{target}号的匿名选票已收集。",
+  "console.debate.result":
+    "{actor}号开杠{target}号：全体{eligible}人，支持{supports}、反对{rejects}、弃权{abstentions}，成功：{result}；{blocked}号本日放逐禁票。",
+  "request.summary.debate_challenge": "是否开杠当前指定的{target}号？",
+  "request.summary.debate_speech": "提交你的公开开杠发言。",
+  "request.summary.debate_ballot": "匿名表决是否支持杠精。",
+  "stage.debate_challenge": "杠精开杠选择",
+  "stage.debate_speech": "双方开杠发言",
+  "stage.debate_ballot": "匿名开杠表决",
+  "replay.stage.debater_revealed": "杠精翻牌",
+  "replay.stage.debate_started": "开杠",
+  "replay.stage.debate_speech": "开杠发言",
+  "replay.stage.debate_resolved": "开杠结果",
+  "replay.stage.debate_canceled": "开杠取消",
+  "replay.stage.debate_ballots_recorded": "上帝匿名选票记录",
+
   "rule.netease_2017_cupid_follows_lovers_v1": "网易2017：丘比特跟随情侣",
   "rule.lui_meme_lovers_only_v1": "Lui-même原版：独立丘比特随好人",
   "prompt.status.lover":

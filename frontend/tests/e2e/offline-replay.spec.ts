@@ -1196,3 +1196,47 @@ for (const locale of ["zh-CN", "en"] as const)
       if (kind === "mixed_netease")
         await page.screenshot({ path: `/tmp/awa-p8-cupid-${locale}-browser.png`, fullPage: true });
     });
+
+for (const size of [6, 12])
+  for (const outcome of ["success", "tie"])
+    for (const locale of ["zh-CN", "en"] as const)
+      test(`${size}/${outcome}/${locale}: actual Debater live reveal and anonymous studio result`, async ({
+        page,
+      }) => {
+        const replay = JSON.parse(
+          readFileSync(
+            new URL(`../fixtures/debater-${size}-${outcome}.replay.json`, import.meta.url),
+            "utf8",
+          ),
+        );
+        replay.meta.locale = locale;
+        const index = replay.events.findIndex(
+            (e: { type: string }) => e.type === "debater_revealed",
+          ),
+          actor = replay.events[index].payload.actorId;
+        await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
+        await page.goto("/");
+        await page.locator(".timeline .event").nth(index).click();
+        const seat = page.getByRole("button", {
+          name: locale === "en" ? `Player ${actor} · Seat ${actor}` : `${actor}号 · Seat ${actor}`,
+          exact: true,
+        });
+        await expect(seat).not.toHaveClass(/dead/);
+        await expect(page.getByTestId("composition-caption")).toContainText(
+          locale === "en" ? "remains alive" : "仍然存活",
+        );
+        const result = replay.events.findIndex(
+          (e: { type: string }) => e.type === "debate_resolved",
+        );
+        await page.locator(".timeline .event").nth(result).click();
+        await expect(page.getByTestId("composition-caption")).toContainText(
+          locale === "en" ? "participants" : "全体",
+        );
+        await expect(page.getByTestId("composition-caption")).not.toContainText("voterId");
+        await expect(seat).not.toHaveClass(/dead/);
+        if (size === 12 && outcome === "success")
+          await page.screenshot({
+            path: `/tmp/awa-p8-debater-${locale}-browser.png`,
+            fullPage: true,
+          });
+      });

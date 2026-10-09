@@ -439,3 +439,7 @@ Black完整功能commit `83cac45`；赠枪底座 `5c41428`、死亡实例许可 
 ## 2026-10-09 P8 第二项：丘比特
 
 [来源策略卡](rules/sourced-cupid-v1.md)区分网易2017丘比特始终跟随与Lui-même未被选丘比特仍随好人，保留真实身份/刀权、情侣互认ID、殉情禁技能和完整链后胜利。三组审查发现的请求构造撤权、当前关系DTO生命、数组choice丢失、取消与外部种子漏链均修复复查。60实际双语三transport局/Tape、480受限ObservedBot局逐局Tape、1200World基线、前端/浏览器与最终源码门禁分别见[验收](reviews/p8-cupid.md)。implemented已2项，23verified/39planned；杠精与首组事件道具、P9/P10继续开放，不关闭总体用户验收。本批只本地commit，未push或调用真实模型。
+
+## P8 第三项：杠精（2026-10-09）
+
+杠精implemented，来源为Melbourne Masters 2026特定赛事，唯一具名AWA普通发言前改编。匿名活人严格过半、整局一次付费、临时普通/PK禁票、完整徽资格与配置权重、原发言顺序/骑士自爆间隙、生命/身份/phase撤权及前端活人翻牌均闭环；三组已报告项修复复查关闭。见[规则卡](rules/awa-melbourne-debater-v1.md)/[验收](reviews/p8-debater.md)。最终冻结源码后完整backend 2648/237397/219文件、frontend248/2411/36文件、Chromium104/104均0失败；check/lint/format/build通过。36实际本机双语三transport完整局/Tape、320受限观察局逐Tape、1008独立World基线分别记录。当前23verified/3implemented/38planned；首组事件道具/P9/P10继续，总体等待用户最终验收。

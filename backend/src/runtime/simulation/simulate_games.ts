@@ -111,7 +111,18 @@ export async function simulateGames(
         if (
           !context.world.getAliveEntityIds().includes(request.actorId) &&
           request.context.stage !== "last_words" &&
-          !DEATH_SHOT_STAGES.includes(request.context.stage)
+          !DEATH_SHOT_STAGES.includes(request.context.stage) &&
+          !(
+            request.context.stage === "sheriff_badge_choice" &&
+            request.allowedTools.includes("choose_badge_successor") &&
+            context.world.hasDeathAction(
+              request.actorId,
+              "choose_badge_successor",
+              request.phase,
+              request.context.day,
+              request.context.death_action_id,
+            )
+          )
         )
           throw new Error("simulation_unauthorized_dead_action");
         return observed.getAction(request);

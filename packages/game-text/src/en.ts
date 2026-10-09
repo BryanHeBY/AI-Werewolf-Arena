@@ -1,6 +1,46 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "rule.awa_melbourne_2026_speech_gap_v1": "AWA Melbourne 2026 ordinary speech window adaptation",
+  "role.debater.brief":
+    "Once per game challenge the current ordinary speaker. Every living player casts a sealed ballot; a strict majority blocks the target’s exile vote, otherwise yours.",
+  "role.debater.state":
+    "You are the Good god Debater. AWA adapts Melbourne 2026: challenge only the designated other living ordinary exile speaker, once per game. Acceptance publicly reveals you and immediately spends the opportunity. You speak first, then the target; every living player frozen at the start, including both participants and a revealed Idiot, votes anonymously. Strictly more than half supporting succeeds: cancel only the target’s current ordinary speech and block their ordinary and PK exile votes today. Otherwise block yours. Success against the sheriff automatically transfers the badge to you with its configured weight. Sheriff elections and PK speeches are unaffected. Cancellation after acceptance does not refund the opportunity.",
+  "role.debater.status": "Your effective opportunity and recorded choice: {state}.",
+  "action.challenge.hint":
+    "Use challenge with this window’s unique target_id, or pass to keep the opportunity.",
+  "action.debate_vote.hint":
+    "Sealed ballot: support=true supports Debater, false opposes, null abstains. Exile vote weights do not apply.",
+  "prompt.targets.debate":
+    "The only legal challenge target_id in this window is {target}. No self or other ID.",
+  "prompt.status.debate_penalty":
+    "Your ordinary and PK exile votes are blocked today; sealed debate ballots and sheriff elections are unaffected.",
+  "error.debate_unavailable": "No authorized unspent Debater window is active.",
+  "error.debate_target": "Challenge only the designated other living speaker.",
+  "error.debate_ballot":
+    "Only an authorized current living participant may submit true, false or null.",
+  "console.debate.reveal": "Player {actor} publicly reveals as Debater and remains alive.",
+  "console.debate.start": "Player {actor} challenges player {target}.",
+  "console.debate.speech": "Debate statement (player {actor}): {speech}",
+  "console.debate.cancel":
+    "Player {actor}’s challenge to {target} was canceled after scope changed; the spent opportunity is not refunded.",
+  "console.debate.ledger":
+    "God ledger: sealed ballots for player {actor}’s challenge to {target} have been collected.",
+  "console.debate.result":
+    "Player {actor} challenges {target}: {eligible} participants, {supports} support, {rejects} oppose, {abstentions} abstain; success: {result}; player {blocked} cannot cast exile votes today.",
+  "request.summary.debate_challenge": "Challenge the designated player {target}?",
+  "request.summary.debate_speech": "Submit your public debate statement.",
+  "request.summary.debate_ballot": "Cast a sealed ballot supporting or opposing Debater.",
+  "stage.debate_challenge": "Debater challenge choice",
+  "stage.debate_speech": "Both debate statements",
+  "stage.debate_ballot": "Sealed debate ballot",
+  "replay.stage.debater_revealed": "Debater revelation",
+  "replay.stage.debate_started": "Challenge",
+  "replay.stage.debate_speech": "Debate statement",
+  "replay.stage.debate_resolved": "Debate result",
+  "replay.stage.debate_canceled": "Debate canceled",
+  "replay.stage.debate_ballots_recorded": "God sealed ballot ledger",
+
   "rule.netease_2017_cupid_follows_lovers_v1": "NetEase 2017: Cupid follows lovers",
   "rule.lui_meme_lovers_only_v1": "Lui-même original: separate Cupid follows Good",
   "prompt.status.lover":

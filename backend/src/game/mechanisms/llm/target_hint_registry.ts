@@ -74,6 +74,8 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
   };
 
   buildActionableIdsHint(ctx: TargetHintContext): string | undefined {
+    if (ctx.allowedTools.includes("challenge") && ctx.debateTargetId !== undefined)
+      return text(ctx.world.locale, "prompt.targets.debate", { target: ctx.debateTargetId });
     if (ctx.allowedTools.includes("choose_lovers"))
       return text(ctx.world.locale, "prompt.targets.lovers", {
         ids: ctx.world.getAliveEntityIds().join(", "),

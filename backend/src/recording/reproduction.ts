@@ -107,6 +107,7 @@ export interface RecordedPlayerState {
   camp: Camp;
   alive: boolean;
   privateState: Record<string, unknown>;
+  debatePenalty?: import("../core/domain/components/debate_penalty").DebatePenaltyComponent;
   lovers?: import("../core/domain/components/lovers").LoversComponent;
   vote: { weight: number; canVote: boolean };
   badge: {
@@ -205,6 +206,12 @@ const requestSchema = z.strictObject({
       summary: z.string().optional(),
       summary_message: messageRefSchema.optional(),
     }),
+    debate_id: z
+      .string()
+      .regex(/^debate:[1-9][0-9]*:[1-9][0-9]*:[1-9][0-9]*:[1-9][0-9]*$/)
+      .optional(),
+    debate_actor_id: positive.optional(),
+    debate_target_id: positive.optional(),
     ability_id: z
       .string()
       .regex(/^[a-z][a-z0-9:_-]{0,127}$/)
@@ -280,6 +287,13 @@ const playerSchema = z.strictObject({
   camp: z.enum(Camp),
   alive: z.boolean(),
   privateState: jsonObject,
+  debatePenalty: z
+    .strictObject({
+      day: positive,
+      sourceId: positive,
+      lifeVersion: z.number().int().nonnegative(),
+    })
+    .optional(),
   lovers: z
     .strictObject({
       actorId: positive,

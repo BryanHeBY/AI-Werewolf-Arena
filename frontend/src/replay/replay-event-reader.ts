@@ -1,4 +1,9 @@
-import { readCupidEventFact, CUPID_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
+import {
+  readCupidEventFact,
+  CUPID_EVENT_TYPES,
+  readDebateEventFact,
+  DEBATE_EVENT_TYPES,
+} from "@ai-werewolf-arena/game-text";
 import {
   readGravekeeperFeedback,
   readInspectionResult,
@@ -22,6 +27,12 @@ export interface ReadReplayEvent {
 
 // Required references are event-specific. Unknown extension fields never imply player membership.
 const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
+  debater_revealed: ["actorId"],
+  debate_started: ["actorId", "targetId"],
+  debate_speech: ["actorId"],
+  debate_resolved: ["actorId", "targetId", "blockedId"],
+  debate_canceled: ["actorId", "targetId"],
+  debate_ballots_recorded: ["actorId", "targetId"],
   player_role_revealed: ["playerId"],
   ability_changed: ["actorId"],
   death_ability_changed: ["actorId"],
@@ -164,6 +175,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if ((DEBATE_EVENT_TYPES as readonly string[]).includes(type))
+    return readDebateEventFact(type, p) !== null;
   if ((CUPID_EVENT_TYPES as readonly string[]).includes(type))
     return readCupidEventFact(type, p) !== null;
   if (type === "player_role_revealed")
@@ -321,6 +334,8 @@ export function readReplayEvent(
     if (!KNOWN.has(safe.type)) return { event: safe, relatedPlayerIds: [], effects: [] };
     if (!validKnownFields(safe.type, p)) return null;
     for (const key of REQUIRED_IDS[safe.type] ?? []) add(p[key]);
+    if (safe.type === "debate_ballots_recorded")
+      for (const ballot of p.ballots as Array<{ voterId: number }>) add(ballot.voterId);
     if (NULLABLE_TARGETS.has(safe.type)) add(p.targetId, true);
     if (ID_LISTS[safe.type]) list(p[ID_LISTS[safe.type]!]);
     if (VOTES.has(safe.type)) vote(p);
@@ -356,6 +371,8 @@ export function readReplayEvent(
     if (safe.type === "knight_duel" && p.result !== "wolf" && p.result !== "not_wolf") return null;
     if (safe.type === "phase_changed" && typeof p.phase !== "string") return null;
     const effects: ReplayEffect[] = [];
+    if (safe.type === "debater_revealed")
+      effects.push({ kind: "role_revealed", playerId: p.actorId as number, role: "debater" });
     if (safe.type === "player_role_revealed" && isRoleId(p.role)) {
       effects.push({ kind: "role_revealed", playerId: p.playerId as number, role: p.role });
       effects.push({ kind: "deaths", playerIds: [p.playerId as number] });

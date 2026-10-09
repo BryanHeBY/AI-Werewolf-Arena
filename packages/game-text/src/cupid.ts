@@ -1,3 +1,4 @@
+import { copyEventData } from "./event-data";
 /** Strict inert source facts shared by engine text and replay association. */
 export const CUPID_EVENT_TYPES = [
   "cupid_lovers_chosen",
@@ -5,49 +6,10 @@ export const CUPID_EVENT_TYPES = [
   "cupid_relation_resolved",
   "lovers_death",
 ] as const;
-function copyData(value: unknown, depth = 0): unknown {
-  if (
-    value === null ||
-    typeof value === "string" ||
-    typeof value === "boolean" ||
-    (typeof value === "number" && Number.isFinite(value))
-  )
-    return value;
-  if (!value || typeof value !== "object" || depth > 3) throw new Error("cupid_fact_not_data");
-  const array = Array.isArray(value),
-    prototype = Object.getPrototypeOf(value),
-    descriptors = Object.getOwnPropertyDescriptors(value);
-  if (
-    (array
-      ? prototype !== Array.prototype
-      : prototype !== Object.prototype && prototype !== null) ||
-    Object.getOwnPropertySymbols(value).length
-  )
-    throw new Error("cupid_fact_not_plain");
-  const result: Record<string, unknown> = Object.create(null);
-  for (const [key, field] of Object.entries(descriptors)) {
-    if (array && key === "length") continue;
-    if (!field.enumerable || !Object.hasOwn(field, "value")) throw new Error("cupid_fact_accessor");
-    result[key] = copyData(field.value, depth + 1);
-  }
-  if (!array) return result;
-  const length = descriptors.length?.value;
-  if (
-    !Number.isSafeInteger(length) ||
-    length < 0 ||
-    length > 4 ||
-    Object.keys(result).length !== length
-  )
-    throw new Error("cupid_fact_array");
-  return Array.from({ length }, (_, index) => {
-    if (!Object.hasOwn(result, String(index))) throw new Error("cupid_fact_sparse");
-    return result[String(index)];
-  });
-}
 export function readCupidEventFact(type: string, value: unknown): Record<string, unknown> | null {
   if (!(CUPID_EVENT_TYPES as readonly string[]).includes(type)) return null;
   try {
-    const p = copyData(value) as Record<string, unknown>;
+    const p = copyEventData(value, 4) as Record<string, unknown>;
     if (!p || typeof p !== "object" || Array.isArray(p)) return null;
     const positive = (id: unknown): id is number =>
       typeof id === "number" && Number.isSafeInteger(id) && id > 0;

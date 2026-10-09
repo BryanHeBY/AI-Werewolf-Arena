@@ -20,7 +20,7 @@ import { EventRegistry } from "../event_registry";
 import { World } from "../../../core/domain/world";
 import { GameActionRequestFactory } from "../action_request_factory";
 import { SelfDestructWindow, isSelfDestructWindowEnabled } from "../self_destruct_window";
-import { canBeExiled, canVote } from "../../mechanisms/common/participation";
+import { canBeExiled, canVoteExile } from "../../mechanisms/common/participation";
 
 /**
  * 投票流水线执行结果。
@@ -135,13 +135,15 @@ export class VotingPipeline {
 
     if (options.isCurrent && !options.isCurrent())
       return { summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] };
-    const voters = this.world.getAliveEntityIds().filter((id) => canVote(this.world, id));
+    const voters = this.world
+      .getAliveEntityIds()
+      .filter((id) => canVoteExile(this.world, id, options.day));
 
     // Requests run in parallel; Promise.all retains voter order for deterministic replay events.
     const voteResults = await this.collectVotes(voters, requests, actionProvider, options);
     if (options.isCurrent?.() === false)
       return { summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] };
-    let { tally, publicVotes } = this.recordVotesInSeatOrder(voteResults);
+    let { tally, publicVotes } = this.recordVotesInSeatOrder(voteResults, options.day);
     const pk = config.voting?.exilePolicy === "awa_one_pk_v1";
     const maximum = Math.max(
       0,
@@ -212,7 +214,7 @@ export class VotingPipeline {
       const candidates = tied.filter((id) => canBeExiled(this.world, id));
       const revoters = this.world
         .getAliveEntityIds()
-        .filter((id) => !tied.includes(id) && canVote(this.world, id));
+        .filter((id) => !tied.includes(id) && canVoteExile(this.world, id, options.day));
       const results = await this.collectVotes(
         revoters,
         requests,
@@ -226,7 +228,7 @@ export class VotingPipeline {
           interrupted: false,
           removed: [],
         };
-      ({ tally, publicVotes } = this.recordVotesInSeatOrder(results));
+      ({ tally, publicVotes } = this.recordVotesInSeatOrder(results, options.day));
       round = 2;
     }
 
@@ -340,7 +342,7 @@ export class VotingPipeline {
     const current = () =>
       options.isCurrent?.() !== false &&
       livingNightLife(this.world, voterLife) &&
-      canVote(this.world, voterId) &&
+      canVoteExile(this.world, voterId, options.day) &&
       !candidates?.includes(voterId);
     const maxRetries = VotingPipeline.MAX_VOTE_RETRIES;
     let retryReason = "";
@@ -454,7 +456,10 @@ export class VotingPipeline {
     return null;
   }
 
-  private recordVotesInSeatOrder(votes: Array<CollectedVote | null>): {
+  private recordVotesInSeatOrder(
+    votes: Array<CollectedVote | null>,
+    day: number,
+  ): {
     tally: Record<number, number>;
     publicVotes: VoteRecord[];
   } {
@@ -466,7 +471,7 @@ export class VotingPipeline {
       if (
         !livingNightLife(this.world, vote.voterLife) ||
         (!vote.abstain && (!vote.targetLife || !livingNightLife(this.world, vote.targetLife))) ||
-        !canVote(this.world, voterId) ||
+        !canVoteExile(this.world, voterId, day) ||
         (!vote.abstain && vote.targetId !== null && !canBeExiled(this.world, vote.targetId))
       )
         continue;

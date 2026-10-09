@@ -19,6 +19,7 @@ import { World } from "../../core/domain/world";
  */
 export interface ValidationContext {
   day?: number;
+  debateId?: string;
   abilityId?: string;
   phase: Phase;
   actionWindow?: ActionWindow;
@@ -118,6 +119,7 @@ export class ActionValidator {
       toolCall,
       phase: context.phase,
       day: context.day,
+      debateId: context.debateId,
       abilityId: context.abilityId,
       actionWindow: context.actionWindow,
       allowSelfDestruct: context.allowSelfDestruct,

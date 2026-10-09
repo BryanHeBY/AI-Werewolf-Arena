@@ -1,6 +1,17 @@
 import type { ObservedToolHandler } from "./context";
 import { PotionType } from "../../../../core";
 
+export const challenge: ObservedToolHandler = ({ request, ownState, style }) => {
+  const target = request.context.debate_target_id;
+  return style !== "conservative" && ownState.debater?.remaining === 1 && target !== undefined
+    ? { name: "challenge", args: { target_id: target } }
+    : null;
+};
+export const debate_vote: ObservedToolHandler = ({ random, style }) => ({
+  name: "debate_vote",
+  args: { support: style === "conservative" ? false : random.next() < 0.6 },
+});
+
 export const choose_lovers: ObservedToolHandler = ({ knownAliveIds, pick }) => {
   const first = pick(knownAliveIds),
     second = pick(knownAliveIds.filter((id) => id !== first));

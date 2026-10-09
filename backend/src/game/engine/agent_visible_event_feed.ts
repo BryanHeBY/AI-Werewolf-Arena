@@ -1,4 +1,9 @@
-import { readCupidEventFact, CUPID_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
+import {
+  readCupidEventFact,
+  CUPID_EVENT_TYPES,
+  readDebateEventFact,
+  DEBATE_EVENT_TYPES,
+} from "@ai-werewolf-arena/game-text";
 import { EntityId, GameEvent, PlayerVisibleEvent } from "../../core/domain/model";
 import { World } from "../../core/domain/world";
 import { getDefaultAgentEventVisibilityRegistry } from "../mechanisms";
@@ -22,6 +27,11 @@ export function buildAgentVisibleEvent(
   if (
     (CUPID_EVENT_TYPES as readonly string[]).includes(event.type) &&
     !readCupidEventFact(event.type, event.payload)
+  )
+    return null;
+  if (
+    (DEBATE_EVENT_TYPES as readonly string[]).includes(event.type) &&
+    !readDebateEventFact(event.type, event.payload)
   )
     return null;
   const visibility = getDefaultAgentEventVisibilityRegistry();

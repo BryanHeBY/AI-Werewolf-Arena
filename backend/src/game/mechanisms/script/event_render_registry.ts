@@ -12,6 +12,7 @@ import {
   merchantEventLabel,
   hybridEventLabel,
   cupidEventLabel,
+  debateEventLabel,
   awakenedEventLabel,
   type Locale,
 } from "@ai-werewolf-arena/game-text";
@@ -557,6 +558,8 @@ export class ScriptEventRenderRegistry {
     if (deathAbility !== null) return deathAbility;
     const awakened = awakenedEventLabel(event.type, event.payload, locale);
     if (awakened !== null) return awakened;
+    const debate = debateEventLabel(event.type, event.payload, locale);
+    if (debate !== null) return debate;
     const cupid = cupidEventLabel(event.type, event.payload, locale);
     if (cupid !== null) return cupid;
     const hybrid = hybridEventLabel(event.type, event.payload, locale);
@@ -584,6 +587,13 @@ export class ScriptEventRenderRegistry {
     printPrivateEvents: boolean,
     locale: Locale = "zh-CN",
   ): ScriptLiveRender[] {
+    const debate = debateEventLabel(event.type, event.payload, locale);
+    if (debate !== null)
+      return event.type === "debate_ballots_recorded"
+        ? printPrivateEvents
+          ? [{ kind: "god", text: debate }]
+          : []
+        : [{ kind: "system", text: debate }];
     const cupid = cupidEventLabel(event.type, event.payload, locale);
     if (cupid !== null)
       return printPrivateEvents

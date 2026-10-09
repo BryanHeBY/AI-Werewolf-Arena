@@ -113,6 +113,7 @@ export class ActionReception {
     const checked = this.gateway.validateAndSanitize(this.world, request.actorId, call, {
       phase: request.phase,
       day: request.context.day,
+      debateId: request.context.debate_id,
       abilityId: request.context.ability_id,
       actionWindow: request.actionWindow,
       sheriffCandidates: request.context.sheriff_candidates,

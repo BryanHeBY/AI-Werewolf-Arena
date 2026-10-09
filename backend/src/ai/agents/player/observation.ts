@@ -39,6 +39,12 @@ export interface PlayerObservation {
     blackMarket?: PlayerBlackMarketState;
     awakened?: PlayerAwakenedState;
     hybrid?: PlayerHybridState;
+    debater?: {
+      policy: import("../../../core/domain/board").DebaterPolicy;
+      remaining: 0 | 1;
+      choice: { day: number; targetId: number } | null;
+    };
+    debatePenalty?: { day: number };
     cupid?: import("../../../game/mechanisms/roles/player_extended_state").PlayerCupidState;
     lover?: { partnerId: number; mayNotVotePartner: boolean };
     merchant?: PlayerMerchantState;

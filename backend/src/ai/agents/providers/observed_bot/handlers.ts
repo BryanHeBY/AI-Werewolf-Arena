@@ -30,6 +30,8 @@ import {
 import {
   choose_exemplar,
   choose_lovers,
+  challenge,
+  debate_vote,
   guard,
   dream,
   check_identity,
@@ -43,6 +45,8 @@ import {
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
   { tool: "choose_exemplar", decide: choose_exemplar },
   { tool: "choose_lovers", decide: choose_lovers },
+  { tool: "challenge", decide: challenge },
+  { tool: "debate_vote", decide: debate_vote },
   { tool: "bestow_ability", decide: bestow_ability },
   { tool: "black_market_trade", decide: black_market_trade },
   { tool: "speak", decide: speak },

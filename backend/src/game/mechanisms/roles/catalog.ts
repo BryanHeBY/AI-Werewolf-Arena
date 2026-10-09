@@ -31,6 +31,7 @@ import { AWAKENED_HIDDEN_WOLF_ROLE_PROFILE } from "./awakened_hidden_wolf/profil
 
 import { CURSED_FOX_ROLE_PROFILE } from "./cursed_fox/profile";
 
+import { DEBATER_ROLE_PROFILE } from "./debater/profile";
 import { CUPID_ROLE_PROFILE } from "./cupid/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
@@ -44,6 +45,7 @@ const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   BEAR_ROLE_PROFILE,
   CURSED_FOX_ROLE_PROFILE,
   CUPID_ROLE_PROFILE,
+  DEBATER_ROLE_PROFILE,
   HIDDEN_WOLF_ROLE_PROFILE,
   GARGOYLE_ROLE_PROFILE,
   PSYCHIC_ROLE_PROFILE,

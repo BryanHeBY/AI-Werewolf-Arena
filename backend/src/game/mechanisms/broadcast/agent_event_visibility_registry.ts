@@ -5,6 +5,11 @@ import { World } from "../../../core/domain/world";
 type AgentEventVisibilityRule = (world: World, event: GameEvent, actorId: EntityId) => boolean;
 
 const PUBLIC_EVENT_TYPES = new Set([
+  "debater_revealed",
+  "debate_started",
+  "debate_speech",
+  "debate_resolved",
+  "debate_canceled",
   "player_role_revealed",
   "phase_changed",
   "day_speech",

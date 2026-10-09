@@ -84,6 +84,8 @@ export class BaselineBotActionProvider implements ActionProvider {
    * 根据阶段与角色生成默认动作。
    */
   async getAction(request: ActionRequest): Promise<ToolCall | null> {
+    if (request.allowedTools.includes("debate_vote"))
+      return { name: "debate_vote", args: { support: true } };
     const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
     if (!role) {
       return null;

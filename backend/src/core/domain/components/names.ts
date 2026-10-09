@@ -11,6 +11,7 @@ export const COMPONENT = {
   Badge: "BadgeComponent",
   Victory: "VictoryComponent",
   Lovers: "LoversComponent",
+  DebatePenalty: "DebatePenaltyComponent",
 } as const;
 
 /**

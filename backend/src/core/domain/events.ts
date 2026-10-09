@@ -38,6 +38,28 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  debate_ballots_recorded: {
+    actorId: EntityId;
+    targetId: EntityId;
+    day: number;
+    eligibleCount: number;
+    ballots: Array<{ voterId: EntityId; support: boolean | null }>;
+  };
+  debater_revealed: { actorId: EntityId; day: number };
+  debate_started: { actorId: EntityId; targetId: EntityId; day: number };
+  debate_speech: { actorId: EntityId; text: string };
+  debate_resolved: {
+    actorId: EntityId;
+    targetId: EntityId;
+    day: number;
+    eligibleCount: number;
+    supports: number;
+    rejects: number;
+    abstentions: number;
+    success: boolean;
+    blockedId: EntityId;
+  };
+  debate_canceled: { actorId: EntityId; targetId: EntityId; day: number; reason: "scope_changed" };
   cupid_lovers_chosen: { actorId: EntityId; day: 1; pairIds: [EntityId, EntityId] };
   lover_recognized: { actorId: EntityId; partnerId: EntityId };
   cupid_relation_resolved: import("./components/lovers").LoversComponent;

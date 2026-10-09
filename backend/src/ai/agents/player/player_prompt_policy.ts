@@ -42,6 +42,11 @@ import {
   projectAwakenedState,
 } from "../../../game/mechanisms/roles/awakened_hidden_wolf/state";
 import { ownNightActions } from "../../../game/mechanisms/roles/night_action_history";
+import { getDebaterState, projectDebaterState } from "../../../game/mechanisms/roles/debater/state";
+import {
+  hasDebateCommit,
+  debateVoteBlocked,
+} from "../../../game/mechanisms/roles/debater/authority";
 import { getCupidState, projectCupidState } from "../../../game/mechanisms/roles/cupid/state";
 import { projectLover } from "../../../game/mechanisms/roles/cupid/relation";
 import { getHybridState, projectHybridState } from "../../../game/mechanisms/roles/hybrid/state";
@@ -169,6 +174,13 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    if (debateVoteBlocked(this.world, request.actorId, request.context.day))
+      ownState.debatePenalty = { day: request.context.day };
+    if (role?.role === Role.Debater) {
+      const state = getDebaterState(role);
+      if (state)
+        ownState.debater = projectDebaterState(state, hasDebateCommit(this.world, request.actorId));
+    }
     const lover = projectLover(this.world, request.actorId);
     if (lover) ownState.lover = lover;
     if (role?.role === Role.Cupid) {
@@ -261,7 +273,7 @@ export class PlayerPromptPolicy {
     if (seer) ownState.seer = projectSeerState(seer);
     const dreamer = role ? getDreamerState(role, request.context.ability_id) : undefined;
     if (dreamer) ownState.dreamer = projectDreamerState(dreamer);
-    const { death_action_id: _deathActionId, ...context } = request.context;
+    const { death_action_id: _deathActionId, debate_id: _debateId, ...context } = request.context;
     return freezeObservation({
       request: { ...request, context },
       identity: {
@@ -381,6 +393,7 @@ export class PlayerPromptPolicy {
         day: request.context.day,
         actorRole: targetRuleRole,
         abilityId: request.context.ability_id,
+        debateTargetId: request.context.debate_target_id,
         allowedTools: input.allowedTools,
         world: this.world,
         roleCatalog: this.options.roleCatalog,
@@ -501,6 +514,8 @@ export class PlayerPromptPolicy {
               ),
         );
     }
+    if (debateVoteBlocked(this.world, request.actorId, request.context.day))
+      lines.push(text(this.locale, "prompt.status.debate_penalty"));
     const lover = projectLover(this.world, request.actorId);
     if (lover) {
       lines.push(text(this.locale, "prompt.status.lover", { partner: lover.partnerId }));

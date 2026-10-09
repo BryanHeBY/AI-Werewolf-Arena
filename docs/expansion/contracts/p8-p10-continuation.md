@@ -48,4 +48,4 @@ game-catalog 拥有稳定 ID/名称/状态，game-text 拥有双语文案。新�
 
 ## 当前里程碑
 
-执行范围契约已更新；P8咒狐首批City有限组合已启用（implemented），来源、三组审查/复查、实际SDK/ACP/MCP/Tape、1000seed及全量门禁见[角色验收](../reviews/p8-cursed-fox.md)。丘比特有限双来源策略也已启用（implemented），见[规则卡](../rules/sourced-cupid-v1.md)/[验收](../reviews/p8-cupid.md)；当前23verified/2implemented/39planned。杠精及首组事件/道具尚未启用，继续规则卡与实现。后续状态以 progress.md、规则卡、角色目录与按源码记录的验收为准。
+执行范围契约已更新；P8咒狐首批City有限组合已启用（implemented），来源、三组审查/复查、实际SDK/ACP/MCP/Tape、1000seed及全量门禁见[角色验收](../reviews/p8-cursed-fox.md)。丘比特有限双来源策略也已启用（implemented），见[规则卡](../rules/sourced-cupid-v1.md)/[验收](../reviews/p8-cupid.md)；杠精也已implemented，具名AWA发言窗口适配及实际匿名表决/临时禁票/警徽闭环见[规则卡](../rules/awa-melbourne-debater-v1.md)/[本批验收](../reviews/p8-debater.md)。当前23verified/3implemented/38planned。首组事件/道具规则候选已完成三组方案审查，继续有限实现；P9/P10仍推进。后续状态以 progress.md、规则卡、角色目录与按源码记录的验收为准。

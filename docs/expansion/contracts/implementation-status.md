@@ -14,6 +14,10 @@ CLI目录、能力授权、独立玩家/展示DTO、统一回放事实reader、�
 
 丘比特implemented，网易2017跟随情侣与Lui-même情侣独胜的具名策略贯通schema、实例、实际请求、关系闭包、胜利归属、私有DTO、双语、录制与Tape；三组审查修正并复查，详见[功能验收](../reviews/p8-cupid.md)。60实际本机三transport双语完整局/Tape、480受限观察机器人逐局Tape与1200独立World基线分别记录；最终后端2551/226151/216文件、前端238/2315/34文件、Chromium96/96皆0失败，check/lint/format及前后端build通过；完整门禁按该验收的新源码清单登记。当前目录23verified/2implemented/39planned，本项不关闭P8其余角色、P9/P10或用户最终验收。
 
+## P8 第三项：杠精（2026-10-09）
+
+杠精implemented，来源为Melbourne Masters 2026特定赛事，唯一具名AWA普通发言前改编。匿名活人严格过半、整局一次付费、临时普通/PK禁票、完整徽资格与配置权重、原发言顺序/骑士自爆间隙、生命/身份/phase撤权及前端活人翻牌均闭环；三组已报告项修复复查关闭。见[规则卡](../rules/awa-melbourne-debater-v1.md)/[验收](../reviews/p8-debater.md)。最终冻结源码后完整backend 2648/237397/219文件、frontend248/2411/36文件、Chromium104/104均0失败；check/lint/format/build通过。36实际本机双语三transport完整局/Tape、320受限观察局逐Tape、1008独立World基线分别记录。当前23verified/3implemented/38planned；首组事件道具/P9/P10继续，总体等待用户最终验收。
+
 ## 当前 P8–P10 接续（024a933之后）
 
 用户已验收上一批整改并授权普通推送，远端main核验为024a933；随后明确授权完成全部剩余任务。当前持续实施41角色、有限事件/道具与P10，具体约束见[p8-p10-continuation.md](p8-p10-continuation.md)。下方未验收/未push及P8–P10未开始说明保留对应历史批次语境，不代表本次授权边界。咒狐和丘比特首批组合已启用并登记implemented，其余角色尚未启用；后续门禁按新源码独立记录；不将历史2389/223/82当未来角色验收。

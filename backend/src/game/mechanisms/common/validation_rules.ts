@@ -2,10 +2,33 @@ import { prohibitsLoversVote } from "../roles/cupid/relation";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：定义通用工具的校验规则。 */
 import { ToolRuleMap } from "../validation/contracts";
-import { canBeExiled, canVote } from "./participation";
+import { debateAuthority, sameDebateParticipant } from "../roles/debater/authority";
+import { Phase } from "../../../core/domain";
+import { canBeExiled, canVoteExile } from "./participation";
 
 /** 通用工具校验规则集合。 */
 export const COMMON_VALIDATION_RULES: ToolRuleMap = {
+  debate_vote: ({ world, actorId, day, phase, toolCall, debateId }) => {
+    const a = debateAuthority(world, debateId),
+      actor = a?.participants.get(actorId);
+    if (toolCall.name !== "debate_vote") return { code: RuleError.ToolMismatch };
+    if (
+      !a ||
+      !actor ||
+      a.stage !== "ballot" ||
+      a.day !== day ||
+      phase !== Phase.Day ||
+      !sameDebateParticipant(world, actor)
+    )
+      return { code: RuleError.DebateUnavailable };
+    if (
+      toolCall.args.support !== true &&
+      toolCall.args.support !== false &&
+      toolCall.args.support !== null
+    )
+      return { code: RuleError.DebateBallot };
+    return null;
+  },
   report_bug: ({ toolCall }) => {
     if (toolCall.name !== "report_bug") {
       return { code: RuleError.ToolMismatch };
@@ -28,7 +51,7 @@ export const COMMON_VALIDATION_RULES: ToolRuleMap = {
     return null;
   },
   speak: () => null,
-  vote: ({ world, actorId, toolCall, roleCatalog, exileCandidates }) => {
+  vote: ({ world, actorId, day, toolCall, roleCatalog, exileCandidates }) => {
     if (toolCall.name !== "vote") {
       return { code: RuleError.ToolMismatch };
     }
@@ -39,7 +62,7 @@ export const COMMON_VALIDATION_RULES: ToolRuleMap = {
       !exileCandidates.includes(toolCall.args.target_id!)
     )
       return { code: RuleError.PkVoteTarget };
-    if (!canVote(world, actorId, roleCatalog)) {
+    if (!canVoteExile(world, actorId, day, roleCatalog)) {
       return { code: RuleError.VoteRight };
     }
     if (toolCall.args.abstain) {

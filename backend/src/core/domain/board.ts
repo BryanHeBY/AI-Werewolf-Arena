@@ -105,7 +105,11 @@ export const CUPID_POLICIES = [
 ] as const;
 export type CupidPolicy = (typeof CUPID_POLICIES)[number];
 
+export const DEBATER_POLICIES = ["awa_melbourne_2026_speech_gap_v1"] as const;
+export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
+
 export interface BoardConfig {
+  debater?: { policy: DebaterPolicy };
   cupid?: { policy: CupidPolicy };
   dreamer?: { protectionPolicy: DreamProtectionPolicy };
   wolfBeauty?: { deathLinkPolicy: BeautyDeathLinkPolicy };

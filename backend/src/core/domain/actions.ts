@@ -32,6 +32,8 @@ export interface ToolArgMap {
   mechanical_attack: { target_id: EntityId | null };
   choose_exemplar: { target_id: EntityId };
   choose_lovers: { first_id: EntityId; second_id: EntityId };
+  challenge: { target_id: EntityId };
+  debate_vote: { support: boolean | null };
   bestow_ability: { target_id: EntityId; skill: "check" | "poison" | "guard" };
   black_market_trade: { target_id: EntityId; skill: "check" | "poison" | "gun" };
   use_potion: { target_id: EntityId; potion_type: PotionType };
@@ -71,6 +73,8 @@ export const TOOL_NAMES = [
   "black_market_trade",
   "choose_exemplar",
   "choose_lovers",
+  "challenge",
+  "debate_vote",
   "use_potion",
   "self_destruct",
   "self_destruct_with_target",
@@ -129,6 +133,9 @@ export const ACTION_STAGES = [
   "black_market_recipient",
   "hybrid",
   "cupid",
+  "debate_challenge",
+  "debate_speech",
+  "debate_ballot",
   "awakened_mimic",
   "awakened_skill",
   "awakened_attack",
@@ -166,6 +173,9 @@ export interface ActionRequestExtras {
   allow_fallback?: boolean;
   ability_id?: string;
   duel_window?: KnightDuelWindow;
+  debate_id?: string;
+  debate_target_id?: EntityId;
+  debate_actor_id?: EntityId;
   wolf_target?: EntityId | null;
   trigger?: string;
   death_phase?: Phase;

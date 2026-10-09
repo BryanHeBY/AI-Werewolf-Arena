@@ -70,3 +70,7 @@ MerchantBacklash 初始夜死因，不受Guard/Heal/机械盾/觉醒盾阻止，
 BlackMarketBacklash 不受普通保护和 AWA 默认梦阻止；网易具名梦挡是本批明确扩展工程规则。角色参数仍{}；本批没有改库存/同夜生效/来源通知规则，也没有新增黑市多次库存或自身免反噬preset。黑市并非奇迹别名，同名二手资料不足以替换已冻结 P7 版本；故保留具体 AWA 行为，而非用奇迹官方来源冒称黑市标准。源码：black_market_merchant/night_stage.ts、state.ts、death_abilities.ts；证据：black_market_merchant/black_market_game_execution/gift_gun 与双语黑市反噬 Tape。
 
 八项状态均为当前实现已逐项复核；没有来源的额外玩法没有实现或宣称实现。新源码门禁记录在 [implementation-status.md](implementation-status.md)，用户最终验收仍待进行。
+
+## P8杠精的有限当前行为补充
+
+`roles.debater.policy=awa_melbourne_2026_speech_gap_v1`仅一项赛事来源AWA窗口适配，schema严格、默认具名，首批11角色。普通发言前可选、整局接受一次，不改夜序/保护/死因/复制转移/商人库存；真实Good神职仍按原AWA胜利计数。匿名表决按接受时全活人固定1票严格过半，与放逐和警长票重分离；临时禁票只原生命/该日常规和PK，徽移交保留配置。完整边界见[规则卡](../rules/awa-melbourne-debater-v1.md)与[验收](../reviews/p8-debater.md)，不能称完整赛事预设。首组事件尚未启用，原八类行为及已有配置保持各自来源语境。

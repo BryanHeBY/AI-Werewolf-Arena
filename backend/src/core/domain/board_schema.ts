@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
   CUPID_POLICIES,
+  DEBATER_POLICIES,
   DREAM_PROTECTION_POLICIES,
   BEAUTY_DEATH_LINK_POLICIES,
   DEATH_REVEAL_POLICIES,
@@ -25,6 +26,7 @@ const strategies = z.enum(["min_id", "min_seat", "no_elimination", "no_kill"]);
 
 /** Internal board shape shared by reverse configuration writing and reproduction. No defaults are added here. */
 export const boardConfigSchema = z.strictObject({
+  debater: z.strictObject({ policy: z.enum(DEBATER_POLICIES) }).optional(),
   cupid: z.strictObject({ policy: z.enum(CUPID_POLICIES) }).optional(),
   dreamer: z.strictObject({ protectionPolicy: z.enum(DREAM_PROTECTION_POLICIES) }).optional(),
   wolfBeauty: z.strictObject({ deathLinkPolicy: z.enum(BEAUTY_DEATH_LINK_POLICIES) }).optional(),

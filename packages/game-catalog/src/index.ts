@@ -406,9 +406,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "debater",
     names: { "zh-CN": "杠精", en: "Debater" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P8",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-melbourne-debater-v1.md#debater",
     mechanismSummary: "挑战、辩论、投票资格",
   },
   {

@@ -24,6 +24,7 @@ export interface TargetHintContext {
   day?: number;
   actorRole?: Role;
   abilityId?: string;
+  debateTargetId?: number;
   allowedTools: ToolName[];
   world: World;
   roleCatalog?: import("../roles/catalog").RoleCatalog;

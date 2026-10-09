@@ -8,6 +8,8 @@ import {
   type VictoryClaim,
   type VictoryPoint,
 } from "@ai-werewolf-arena/game-catalog";
+import { DEBATE_EVENT_TYPES, readDebateEventFact } from "./debate";
+export { DEBATE_EVENT_TYPES, readDebateEventFact } from "./debate";
 import { CUPID_EVENT_TYPES, readCupidEventFact } from "./cupid";
 export { CUPID_EVENT_TYPES, readCupidEventFact } from "./cupid";
 import { zhCN, type MessageKey } from "./zh-CN";
@@ -145,6 +147,30 @@ export function cupidEventLabel(type: string, payload: unknown, locale: Locale):
     secondCamp: term("camp", camps[1]!, locale),
     policy: term("rule", p.policy as string, locale),
     mixed: text(locale, p.mixed ? "common.yes" : "common.no"),
+  });
+}
+export function debateEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+  if (!(DEBATE_EVENT_TYPES as readonly string[]).includes(type)) return null;
+  const p = readDebateEventFact(type, payload);
+  if (!p) return text(locale, "replay.unknown");
+  const actor = p.actorId as number;
+  if (type === "debater_revealed") return text(locale, "console.debate.reveal", { actor });
+  if (type === "debate_speech")
+    return text(locale, "console.debate.speech", { actor, speech: p.text as string });
+  const target = p.targetId as number;
+  if (type === "debate_started") return text(locale, "console.debate.start", { actor, target });
+  if (type === "debate_canceled") return text(locale, "console.debate.cancel", { actor, target });
+  if (type === "debate_ballots_recorded")
+    return text(locale, "console.debate.ledger", { actor, target });
+  return text(locale, "console.debate.result", {
+    actor,
+    target,
+    eligible: p.eligibleCount as number,
+    supports: p.supports as number,
+    rejects: p.rejects as number,
+    abstentions: p.abstentions as number,
+    result: text(locale, p.success ? "common.yes" : "common.no"),
+    blocked: p.blockedId as number,
   });
 }
 export function toolFailure(locale: Locale, error: string, originalMessage?: string) {

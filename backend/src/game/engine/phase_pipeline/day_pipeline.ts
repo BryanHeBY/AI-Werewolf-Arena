@@ -1,3 +1,5 @@
+import { hasActiveDebate } from "../../mechanisms/roles/debater/authority";
+import { DebaterWindow } from "../../mechanisms/roles/debater/window";
 import { AliveComponent } from "../../../core/domain/components/alive";
 import { COMPONENT } from "../../../core/domain/components/names";
 import {
@@ -65,6 +67,7 @@ export class DayPipeline {
   private readonly events: GameEvent[];
   private readonly selfDestructWindow: SelfDestructWindow;
   private readonly knightDuelWindow: KnightDuelWindow;
+  private readonly debaterWindow: DebaterWindow;
   constructor(dependencies: DayPipelineDependencies) {
     this.world = dependencies.world;
     this.roleRegistry = dependencies.roleRegistry;
@@ -76,6 +79,7 @@ export class DayPipeline {
       this.toolGateway,
     );
     this.knightDuelWindow = new KnightDuelWindow(this.world, this.toolGateway);
+    this.debaterWindow = new DebaterWindow(this.world, this.toolGateway, this.events);
   }
 
   async execute(
@@ -83,6 +87,7 @@ export class DayPipeline {
     actionProvider: ActionProvider,
     options: DayPipelineOptions,
   ): Promise<DayPipelineResult> {
+    if (hasActiveDebate(this.world)) throw new Error("debate_window_reentry");
     const speeches: DaySummary["speeches"] = [];
     const requests = new GameActionRequestFactory(this.world, this.events, options.day);
     const isCurrent = options.isCurrent ?? (() => true);
@@ -187,33 +192,45 @@ export class DayPipeline {
         continue;
       }
 
-      const req = requests.create({
-        phase: Phase.Day,
+      const debate = await this.debaterWindow.execute(
+        config,
+        requests,
+        actionProvider,
         actorId,
-        allowedTools: ["speak"],
-        stage: "day_speech",
-        requiresAction: true,
-        summary: { key: "request.summary.day_speech" },
-        context: {},
-      });
-
-      const action = await actionProvider.getAction(req);
+        options.day,
+        isCurrent,
+      );
       if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
-      if (action?.name === "speak") {
-        const result = this.toolGateway.validateAndSanitize(this.world, actorId, action, {
+      if (!debate.skipSpeech && this.isAlive(actorId)) {
+        const req = requests.create({
           phase: Phase.Day,
+          actorId,
+          allowedTools: ["speak"],
+          stage: "day_speech",
+          requiresAction: true,
+          summary: { key: "request.summary.day_speech" },
+          context: {},
         });
 
-        if (result.ok && result.sanitizedCall) {
-          speeches.push({ actorId, text: result.sanitizedCall.args.text });
-          this.events.push({
-            timestamp: Date.now(),
-            type: "day_speech",
-            payload: {
-              actorId,
-              text: result.sanitizedCall.args.text,
-            },
+        const action = await actionProvider.getAction(req);
+        if (!isCurrent())
+          return { summary: { speeches, selfDestructBy: null }, interrupted: false };
+        if (action?.name === "speak") {
+          const result = this.toolGateway.validateAndSanitize(this.world, actorId, action, {
+            phase: Phase.Day,
           });
+
+          if (result.ok && result.sanitizedCall) {
+            speeches.push({ actorId, text: result.sanitizedCall.args.text });
+            this.events.push({
+              timestamp: Date.now(),
+              type: "day_speech",
+              payload: {
+                actorId,
+                text: result.sanitizedCall.args.text,
+              },
+            });
+          }
         }
       }
 

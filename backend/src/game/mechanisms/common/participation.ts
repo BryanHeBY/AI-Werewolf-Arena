@@ -1,6 +1,17 @@
 import { COMPONENT, type RoleComponent, type World, type EntityId } from "../../../core/domain";
 import { getDefaultRoleCatalog, type RoleCatalog } from "../roles/catalog";
 
+import { debateVoteBlocked } from "../roles/debater/authority";
+
+export function canVoteExile(
+  world: World,
+  id: EntityId,
+  day: number | undefined,
+  catalog?: RoleCatalog,
+): boolean {
+  return canVote(world, id, catalog) && !debateVoteBlocked(world, id, day);
+}
+
 /** Public eligibility; never exposes a secret immunity or another player's state. */
 export function canBeExiled(
   world: World,
