@@ -2,6 +2,8 @@ node_modules/
 **/node_modules/
 .git/
 .codex/
+.agents/
+.aws/
 .env*
 configs/
 bun.lock
