@@ -1,3 +1,4 @@
+import type { HiddenWolfCampInspectionPolicy } from "../../../core/domain/board";
 import type { InspectionResult, RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { GravekeeperReport } from "@ai-werewolf-arena/replay-contract";
 
@@ -30,3 +31,5 @@ export interface PlayerAwakenedState {
   mimicClosedDay: number | null; skillClosedDay: number | null;
   hasInheritedKnife: boolean; firstKnifeNight: number | null;
 }
+
+export interface PlayerHiddenWolfState { hasInheritedKnife: boolean; canVoteForKill: boolean; campInspection?: HiddenWolfCampInspectionPolicy }

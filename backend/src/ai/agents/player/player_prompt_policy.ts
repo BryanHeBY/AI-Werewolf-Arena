@@ -104,7 +104,7 @@ export class PlayerPromptPolicy {
     if (role?.role === Role.Hunter) { const state=getHunterState(role); if(state)ownState.hunter=projectHunterState(state); }
     if(role?.role===Role.WolfBeauty){ const state=getWolfBeautyState(role); if(state)ownState.wolfBeauty=projectWolfBeautyState(state); }
     if(role?.role===Role.Bear){ const state=getBearState(role); if(state)ownState.bear=projectBearState(state); }
-    if(role?.role===Role.HiddenWolf)ownState.hiddenWolf={hasInheritedKnife:getHiddenWolfState(role)?.hasInheritedKnife===true,canVoteForKill:canHiddenWolfKnife(role,this.world)};
+    if(role?.role===Role.HiddenWolf){const state=getHiddenWolfState(role);ownState.hiddenWolf={hasInheritedKnife:state?.hasInheritedKnife===true,canVoteForKill:canHiddenWolfKnife(role,this.world),...(state?.campInspection === "netease_2020_good_v1" ? {campInspection:state.campInspection} : {})};}
     if(role?.role===Role.Gargoyle)ownState.gargoyle={hasInheritedKnife:getGargoyleState(role)?.hasInheritedKnife===true,canVoteForKill:canGargoyleKnife(role,this.world)};
     if (role?.role === Role.MechanicalWolf) { const state = getMechanicalState(role); if (state) ownState.mechanical = projectMechanicalState(state); }
     if (role?.role === Role.AwakenedHiddenWolf) { const state = getAwakenedState(role); if (state) ownState.awakened = projectAwakenedState(state); }

@@ -21,6 +21,7 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
       text(locale, "prompt.config.blast", { rules: windows.length ? text(locale, "prompt.config.blast_enabled", { windows: windows.map(item => term("stage", item, locale)).join(", ") }) : text(locale, "common.disabled") }),
       ...(config.witch ? [text(locale, "prompt.config.self_heal", { rules: text(locale, healRule === WitchSelfHealRule.Always ? "prompt.config.self_heal_always" : healRule === WitchSelfHealRule.FirstNightOnly ? "prompt.config.self_heal_first" : "prompt.config.self_heal_disabled") })] : []),
       ...(config.roleSetups.some(entry => entry.role === Role.Guard && entry.count > 0) ? [text(locale, config.guard?.repeatPolicy === "netease_consecutive_nights_v1" ? "role.guard.repeat_actual_nights" : "role.guard.repeat_last_action")] : []),
+      ...(config.roleSetups.some(entry => entry.role === Role.HiddenWolf && entry.count > 0) ? [text(locale, config.hiddenWolf?.campInspection === "netease_2020_good_v1" ? "role.hidden_wolf.camp_good_v1" : "role.hidden_wolf.camp_inheritance_v1")] : []),
       text(locale, "prompt.config.disclosure"), text(locale, "prompt.config.last_words"),
       ...(config.roleSetups.some(entry => entry.role === Role.Knight && entry.count > 0) ? [text(locale, "prompt.config.knight_windows", { windows: (config.knight?.enabledWindows ?? [KnightDuelWindow.AfterSpeeches]).map(window => term("stage", window, locale)).join(", ") || text(locale, "common.disabled") })] : []),
       ...(sheriffEnabled ? [text(locale, "prompt.config.badge")] : []),

@@ -1,3 +1,4 @@
+import type { HiddenWolfCampInspectionPolicy } from "../../../core/domain/board";
 /** 文件说明：角色私有状态的统一读写封装。 */
 import { EntityId, WitchSelfHealRule, type GuardRepeatPolicy } from "../../../core/domain/model";
 import { RoleComponent } from "../../../core/domain/components/role";
@@ -46,7 +47,7 @@ export interface GravekeeperState { history: GravekeeperReport[] }
 export interface DreamerState { lastTarget: EntityId | null; lastDay: number | null; history: Array<{day: number; targetId: EntityId}> }
 export interface WolfBeautyState { targetId: EntityId | null; lastActedDay: number | null; history: Array<{day:number;targetId:EntityId|null}> }
 export interface BearState { history:Array<{day:number;roared:boolean}> }
-export interface HiddenWolfState {hasInheritedKnife:boolean}
+export interface HiddenWolfState {hasInheritedKnife:boolean;campInspection?:HiddenWolfCampInspectionPolicy}
 export interface GargoyleState {hasInheritedKnife:boolean}
 export interface RoleInspectionState {policy?: RoleInspectionPolicy;lastTarget:EntityId|null;lastDay:number|null;history:Array<{day:number;targetId:EntityId;result:Extract<InspectionResult,{kind:"role"}>}>}
 

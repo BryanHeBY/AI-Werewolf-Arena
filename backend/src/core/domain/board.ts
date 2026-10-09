@@ -28,6 +28,9 @@ export interface TieBreakerConfig {
 export const GUARD_REPEAT_POLICIES = ["awa_last_action_v1", "netease_consecutive_nights_v1"] as const;
 export type GuardRepeatPolicy = typeof GUARD_REPEAT_POLICIES[number];
 
+export const HIDDEN_WOLF_CAMP_INSPECTION_POLICIES = ["awa_inheritance_v1", "netease_2020_good_v1"] as const;
+export type HiddenWolfCampInspectionPolicy = typeof HIDDEN_WOLF_CAMP_INSPECTION_POLICIES[number];
+
 export interface BoardConfig {
   boardSize: number;
   enableSheriff: boolean;
@@ -39,6 +42,7 @@ export interface BoardConfig {
   sheriff?: SheriffConfig;
   witch?: WitchConfig;
   guard?: { repeatPolicy: GuardRepeatPolicy };
+  hiddenWolf?: { campInspection: HiddenWolfCampInspectionPolicy };
   knight?: { enabledWindows: KnightDuelWindow[] };
   tieBreaker?: TieBreakerConfig;
   roleSetups: Array<{ role: Role; count: number }>;

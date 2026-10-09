@@ -301,3 +301,24 @@ for (const repeatPolicy of ["awa_last_action_v1", "netease_consecutive_nights_v1
     expect(JSON.stringify(record)).toBe(before);
   });
 }
+
+for (const campInspection of ["awa_inheritance_v1", "netease_2020_good_v1"] as const) {
+  test(`${campInspection}: named Hidden Wolf camp policy is recorded and reproduces every request and checkpoint`, async () => {
+    const { boardDefinitionFromConfig, parseBoardDefinition } = await import("../../src/runtime/config/board_definition");
+    const { sixPlayerMvpConfig } = await import("../../src/runtime/scenarios/six_player_mvp");
+    const root = await createTestTempDirectory("awa-hidden-policy-record-");
+    const output = await createTestTempDirectory("awa-hidden-policy-replay-");
+    const roles = [Role.HiddenWolf, Role.Wolf, Role.Seer, Role.Knight, Role.Villager, Role.Villager];
+    const config = { ...sixPlayerMvpConfig, hiddenWolf: { campInspection }, roleSetups: [...new Set(roles)].map(role => ({ role, count: roles.filter(item => item === role).length })) };
+    const board = parseBoardDefinition(boardDefinitionFromConfig("hidden_policy", config));
+    const simulated = await simulateGames(board, { seeds: ["hidden-policy"], recordRoot: root });
+    const record = await readReproduction(path.join(simulated.games[0].recordDir, "reproduction.json"));
+    expect(record.metadata.normalizedBoard.hiddenWolf).toEqual({ campInspection });
+    const before = JSON.stringify(record);
+    const replayed = await replayReproduction(record, output);
+    expect(replayed.snapshot.result).toEqual(simulated.games[0].result);
+    expect(replayed.eventCount).toBe(record.events.length);
+    expect(replayed.decisionCount).toBe(record.decisions.length);
+    expect(JSON.stringify(record)).toBe(before);
+  });
+}
