@@ -459,3 +459,7 @@ Black完整功能commit `83cac45`；赠枪底座 `5c41428`、死亡实例许可 
 ## P9a 千面人规则冻结
 
 网易现用公开卡表真实HTTP与静态解码确认一狼强制、无狼仍必选，与已实施发行商Thief默认分开。三组只读审查/复验已关闭空方配置和请求/私有槽/录制字段缺口，共享底座、原Thief兼容与God/本人实际回放门禁冻结于[规则卡](rules/awa-netease-shapeshifter-v1.md)。尚未注册，目录23verified/5implemented/36planned不变；立即接续实现，整体仍待用户最终验收。
+
+## P9a：共用初始身份物理牌底座
+
+Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Night/狼知识门禁已提取；旧接口不暴露其他角色。176 受影响离线测试、90 实际双语运输逐 Tape、200 受限观察逐 Tape与全部静态/后端构建通过，三组只读复验闭合，见[底座审查](reviews/p9-initial-identity-deal.md)。千面人仍未注册，23verified/5implemented/36planned，继续其授权窗口与完整功能。

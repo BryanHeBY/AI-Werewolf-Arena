@@ -4,10 +4,11 @@ import {
   openWildChildNight,
 } from "../../mechanisms/roles/wild_child/lifecycle";
 import {
-  hasActiveThiefSetup,
-  thiefSetupReady,
-  openThiefNight,
-} from "../../mechanisms/roles/thief/deal";
+  hasActiveInitialIdentitySetup,
+  initialIdentityKind,
+  initialIdentitySetupReady,
+  openInitialIdentityNight,
+} from "../../mechanisms/roles/initial_identity/deal";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { StatusMarksComponent } from "../../../core/domain/components/status_marks";
@@ -114,12 +115,12 @@ export class NightPipeline {
   ): Promise<NightPipelineResult> {
     if (hasActiveWildChild(this.world) || !wildChildReady(this.world))
       throw new Error("wild_child_setup_before_night_required");
-    if (hasActiveThiefSetup(this.world) || !thiefSetupReady(this.world))
-      throw new Error("thief_setup_before_night_required");
+    if (hasActiveInitialIdentitySetup(this.world) || !initialIdentitySetupReady(this.world))
+      throw new Error(`${initialIdentityKind(this.world) ?? "thief"}_setup_before_night_required`);
     const isCurrent = options.isCurrent ?? (() => true);
     if (!isCurrent()) return { interrupted: true };
     const closeWildChildNight = openWildChildNight(this.world, day, this.events);
-    const closeThiefNight = openThiefNight(this.world, day);
+    const closeThiefNight = openInitialIdentityNight(this.world, day);
     try {
       if (hasFoxInspectionNightCommit(this.world, day))
         throw new Error("fox_inspection_night_reentry_after_commit");

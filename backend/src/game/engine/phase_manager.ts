@@ -1,3 +1,4 @@
+import { initialThiefDeal } from "../mechanisms/roles/thief/deal";
 import { WildChildSetupWindow } from "../mechanisms/roles/wild_child/setup";
 import {
   wildChildReady,
@@ -5,12 +6,12 @@ import {
   hasWildChildNightCommit,
 } from "../mechanisms/roles/wild_child/lifecycle";
 import {
-  hasActiveThiefSetup,
-  hasActiveThiefNight,
-  hasThiefNightCommit,
-  thiefSetupReady,
-  initialThiefDeal,
-} from "../mechanisms/roles/thief/deal";
+  hasActiveInitialIdentitySetup,
+  hasActiveInitialIdentityNight,
+  hasInitialIdentityNightCommit,
+  initialIdentitySetupReady,
+  initialIdentityKind,
+} from "../mechanisms/roles/initial_identity/deal";
 import { ThiefSetupWindow } from "../mechanisms/roles/thief/setup";
 import { WallNotesWindow } from "../mechanisms/events/wall_notes/window";
 import { hasActiveWall } from "../mechanisms/events/wall_notes/authority";
@@ -217,14 +218,17 @@ export class PhaseManager {
       (!this.state.gameOver && hasWildChildNightCommit(this.world, this.state.day))
     )
       throw new Error("wild_child_cycle_reentry");
-    if (hasActiveThiefSetup(this.world) || hasActiveThiefNight(this.world))
-      throw new Error("thief_setup_reentry");
-    if (!this.state.gameOver && hasThiefNightCommit(this.world, this.state.day))
-      throw new Error("thief_cycle_reentry_after_night");
+    if (hasActiveInitialIdentitySetup(this.world) || hasActiveInitialIdentityNight(this.world))
+      throw new Error(`${initialIdentityKind(this.world) ?? "thief"}_setup_reentry`);
+    if (!this.state.gameOver && hasInitialIdentityNightCommit(this.world, this.state.day))
+      throw new Error(`${initialIdentityKind(this.world) ?? "thief"}_cycle_reentry_after_night`);
     if (hasActiveWall(this.world)) throw new Error("wall_window_reentry");
     if (this.state.gameOver) {
       return this.getSnapshot();
     }
+
+    if (!initialIdentitySetupReady(this.world) && initialIdentityKind(this.world) !== "thief")
+      throw new Error("initial_identity_setup_handler_unavailable");
 
     if (this.state.day > maxDays) {
       this.sealResult(
@@ -243,7 +247,7 @@ export class PhaseManager {
       this.state.phase === Phase.Night &&
       !this.state.gameOver &&
       this.phaseRevision === nightRevision;
-    if (!thiefSetupReady(this.world)) {
+    if (!initialIdentitySetupReady(this.world)) {
       const ready = await new ThiefSetupWindow(this.world, this.toolGateway, this.events).execute(
         this.config,
         actionProvider,
