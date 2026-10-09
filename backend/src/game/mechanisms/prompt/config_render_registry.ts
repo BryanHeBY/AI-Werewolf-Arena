@@ -84,6 +84,26 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
             ),
           ]
         : []),
+      ...(config.roleSetups.some((entry) => entry.role === Role.Dreamer && entry.count > 0)
+        ? [
+            text(
+              locale,
+              config.dreamer?.protectionPolicy === "netease_2026_night_immunity_v1"
+                ? "role.dreamer.protection_netease"
+                : "role.dreamer.protection_awa",
+            ),
+          ]
+        : []),
+      ...(config.roleSetups.some((entry) => entry.role === Role.WolfBeauty && entry.count > 0)
+        ? [
+            text(
+              locale,
+              config.wolfBeauty?.deathLinkPolicy === "heroes_s7_2017_exile_hunter_v1"
+                ? "role.wolf_beauty.link_s7"
+                : "role.wolf_beauty.link_awa",
+            ),
+          ]
+        : []),
       ...(config.roleSetups.some((entry) => entry.role === Role.Seer && entry.count > 0)
         ? [
             text(

@@ -31,6 +31,7 @@ export interface DeathHookResult {
   charmLinks?: Array<{ binding: CharmBinding; nightEffect: boolean }>;
 }
 export interface DeathHookContext {
+  nativeHunterShotTargets?: ReadonlySet<EntityId>;
   day?: number;
   deferShotCommit?: boolean;
   nightEffect: boolean;

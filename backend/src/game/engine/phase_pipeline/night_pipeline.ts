@@ -178,6 +178,7 @@ export class NightPipeline {
     const dreamFrame = new DreamNightFrame(stageState.dreamLinks);
     const damage = this.damageResolutionSystem.resolve(this.world, {
       protectedTargets: dreamFrame.protectedTargets(this.world),
+      immuneNightTargets: dreamFrame.immuneNightTargets(this.world),
       consecutiveDeaths: dreamFrame.consecutiveDeaths(this.world),
       poisonClaims: stageState.poisonClaims,
       guardClaims: stageState.guardClaims,

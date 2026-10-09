@@ -26,6 +26,8 @@
 
 女巫披露与三种自救已配置；原生双药按明确非主流AWA实验实现。竞选/放逐PK和死亡持徽者选择已经连通实际流程及严格Tape。原生猎人/狼王deathActionPolicy与三类inspectionPolicy已按[有限契约](role-policy-configuration.md)贯通；[公开翻牌/遗言](public-death-policies.md)具名条款已实施。0954991新源码208文件2363项全量、223前端及82浏览器通过；保护/公共信息、夜序/同时灭绝、复制库存、商人反噬、梦/魅惑按[问题名矩阵](original-review-closure.md)逐项记录实现或具体保留理由，不能全部归入P8–P10，也不冒称未新增变体已完成。采用有限具名policy及兼容默认，不开放任意优先级或布尔组合。
 
+当前在上述基线上进一步补[摄梦/狼美人历史策略](historical-night-role-policies.md)，AWA默认保持；其余八类[具体当前行为](current-rule-behavior.md)为验收依据。
+
 ## 本批实施清单
 
 1. 先复核并修CLI默认目录、摄梦请求前撤权、机械英文、前端完整typecheck和后端测试typecheck。

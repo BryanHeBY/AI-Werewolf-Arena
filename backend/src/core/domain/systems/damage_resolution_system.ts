@@ -16,6 +16,8 @@ import {
 
 export interface NightDamageEffects {
   protectedTargets?: readonly EntityId[];
+  /** Sourced night immunity; extension interactions are an explicit AWA completion. */
+  immuneNightTargets?: readonly EntityId[];
   consecutiveDeaths?: readonly EntityId[];
   poisonClaims?: readonly NightPoisonClaim[];
   guardClaims?: readonly NightGuardClaim[];
@@ -156,8 +158,11 @@ export class DamageResolutionSystem {
       ) {
         sources.push(DeathCause.AwakenedHiddenKnife);
       }
-      if (mechanical.failures.has(entityId)) sources.push(DeathCause.MechanicalGuardFailure);
-      if (blackBacklashes.has(entityId)) sources.push(DeathCause.BlackMarketBacklash);
+      const nightImmune = effects.immuneNightTargets?.includes(entityId) === true;
+      if (mechanical.failures.has(entityId) && !nightImmune)
+        sources.push(DeathCause.MechanicalGuardFailure);
+      if (blackBacklashes.has(entityId) && !nightImmune)
+        sources.push(DeathCause.BlackMarketBacklash);
       if (backlashTargets.has(entityId) && !dreamProtected)
         sources.push(DeathCause.MerchantBacklash);
       if (effects.consecutiveDeaths?.includes(entityId)) sources.push(DeathCause.Dream);

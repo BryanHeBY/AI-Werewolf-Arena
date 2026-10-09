@@ -24,6 +24,7 @@ export interface CharmBinding {
   targetVersion: number | undefined;
   resolved: boolean;
   applied: boolean;
+  deathLinkPolicy: import("../../../../core/domain/board").BeautyDeathLinkPolicy;
 }
 const bindings = new WeakMap<World, Map<EntityId, CharmBinding>>();
 export function bindCharm(world: World, actorId: EntityId, targetId: EntityId | null): void {
@@ -46,6 +47,7 @@ export function bindCharm(world: World, actorId: EntityId, targetId: EntityId | 
     targetVersion: aliveLifeVersion(targetLife),
     resolved: false,
     applied: false,
+    deathLinkPolicy: state.deathLinkPolicy ?? "awa_exile_poison_v1",
   });
 }
 function current(world: World, binding: CharmBinding): boolean {
@@ -54,6 +56,7 @@ function current(world: World, binding: CharmBinding): boolean {
     binding.role.role === Role.WolfBeauty &&
     getWolfBeautyState(binding.role) === binding.state &&
     binding.state.targetId === binding.targetId &&
+    (binding.state.deathLinkPolicy ?? "awa_exile_poison_v1") === binding.deathLinkPolicy &&
     world.getComponent(binding.actorId, COMPONENT.Alive) === binding.actorLife &&
     binding.actorVersion !== undefined &&
     aliveLifeVersion(binding.actorLife) ===
@@ -149,7 +152,20 @@ export function resolveBeautyExileVictory(
     ? null
     : victoryDecision(world, { kind: "faction", faction: Camp.Wolf }, "wolf_beauty_last_exile");
 }
-export function permitsCharm(sources: readonly DeathCause[]): boolean {
+export function permitsCharm(
+  sources: readonly DeathCause[],
+  policy: import("../../../../core/domain/board").BeautyDeathLinkPolicy = "awa_exile_poison_v1",
+  nativeHunterShot = false,
+): boolean {
+  // S7 specifies exile/native Hunter. Missing compound rules use suppression first.
+  if (policy === "heroes_s7_2017_exile_hunter_v1")
+    return (
+      sources.length > 0 &&
+      sources.every(
+        (source) => source === DeathCause.Exile || (source === DeathCause.Shot && nativeHunterShot),
+      )
+    );
+  if (policy !== "awa_exile_poison_v1") return false;
   return (
     !sources.includes(DeathCause.Duel) &&
     !sources.includes(DeathCause.Dream) &&

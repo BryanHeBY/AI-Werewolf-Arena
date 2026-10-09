@@ -1,4 +1,5 @@
 import { isDeepStrictEqual } from "node:util";
+import { DREAM_PROTECTION_POLICIES } from "../../../core/domain/board";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import type { EntityId, GameEvent } from "../../../core/domain/model";
@@ -82,6 +83,12 @@ function installAbility(
 ): NightAbility {
   const input = ability;
   if (input.kind === "role_check") roleInspectionPolicy(input.state);
+  if (
+    input.kind === "dream" &&
+    input.state.protectionPolicy !== undefined &&
+    !DREAM_PROTECTION_POLICIES.includes(input.state.protectionPolicy)
+  )
+    throw new Error("ability_dream_policy_invalid");
   const source = input.source;
   if (
     input.kind === "role_check" &&
@@ -310,7 +317,9 @@ export function transferNightAbility<K extends NightAbilityKind>(
   if (
     ability.kind === "dream" &&
     ((targetState as NightAbilityStates["dream"]).lastTarget !== ability.state.lastTarget ||
-      (targetState as NightAbilityStates["dream"]).lastDay !== ability.state.lastDay)
+      (targetState as NightAbilityStates["dream"]).lastDay !== ability.state.lastDay ||
+      (targetState as NightAbilityStates["dream"]).protectionPolicy !==
+        ability.state.protectionPolicy)
   )
     throw new Error("ability_transfer_resources_changed");
   if (

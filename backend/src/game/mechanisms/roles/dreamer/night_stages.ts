@@ -76,6 +76,7 @@ export const DREAMER_NIGHT_STAGE: NightStageHandler = {
           targetId,
           day,
           consecutive,
+          protectionPolicy: state.protectionPolicy,
           actorLife,
           actorVersion,
           targetLife: target.life,

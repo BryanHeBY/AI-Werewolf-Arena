@@ -36,7 +36,7 @@ schema2/Tape2保留，source/lock/rules/RNG门槛覆盖新代码；Frame引用�
 
 ## 配置与实际门槛
 
-`roles.dreamer`仅{}，未声明免毒/可弃权/全天牵连字段拒绝。公开[六人](../../configs.example/boards/six_player_dreamer.json)为一狼/摄梦/女巫/猎人/两民（AWA演示非竞技配比）；[十二人](../../configs.example/boards/twelve_player_dreamer.json)为4狼/预女猎梦/4民。均屠边、关闭自爆以聚焦梦，12有警长；混合早爆与双梦是明确人工交互变体。
+`roles.dreamer.protectionPolicy`支持AWA兼容默认与网易2026具名夜伤版本，见[历史策略契约](contracts/historical-night-role-policies.md)；未声明免毒/可弃权/全天牵连字段拒绝。公开[六人](../../configs.example/boards/six_player_dreamer.json)为一狼/摄梦/女巫/猎人/两民（AWA演示非竞技配比）；[十二人](../../configs.example/boards/twelve_player_dreamer.json)为4狼/预女猎梦/4民。均屠边、关闭自爆以聚焦梦，12有警长；混合早爆与双梦是明确人工交互变体。
 
 ```sh
 bun run --cwd backend run --configs-dir ../configs.example --game-config-name six_player_dreamer

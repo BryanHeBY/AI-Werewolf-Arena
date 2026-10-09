@@ -29,6 +29,8 @@ import {
 } from "../../src/runtime/simulation/replay_reproduction";
 import { createTestTempDirectory } from "../support/temp_directory";
 
+import baselineRequest from "../support/seer_baseline_request.json";
+
 const cases = [
   ["omitted", undefined],
   ["empty", {}],
@@ -139,6 +141,15 @@ for (const [name, parameters] of cases)
       decision.request.allowedTools.includes("check_identity"),
     );
     expect(decisions).toHaveLength(3);
+    if (name !== "optional")
+      for (const decision of decisions) {
+        expect(JSON.stringify(decision.request.allowedTools)).toBe(
+          JSON.stringify(baselineRequest.request.allowedTools),
+        );
+        expect(JSON.stringify(decision.request.context.turn_constraints)).toBe(
+          JSON.stringify(baselineRequest.request.turn_constraints),
+        );
+      }
     expect(
       decisions.map((decision) => decision.request.context.turn_constraints.min_valid_actions),
     ).toEqual(Array(3).fill(actionPolicy === "awa_optional_v1" ? 0 : 1));

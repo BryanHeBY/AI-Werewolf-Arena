@@ -39,7 +39,7 @@ DeathHook **只返回原绑定提案**。DeathResolution 在 await 返回后同�
 
 ## 示例与验收范围
 
-`roles.wolf_beauty` 仅 `{}`；双目标、自爆、无条件全天牵连等未声明参数拒绝。[六人](../../configs.example/boards/six_player_wolf_beauty.json)为狼美人／狼／女巫／骑士／两民，AWA 演示配比；[十二人](../../configs.example/boards/twelve_player_wolf_beauty.json)为狼美人＋3狼／预女守骑／4民，沿来源板。均屠边、关闭自爆；十二人开启警长。
+`roles.wolf_beauty.deathLinkPolicy`支持AWA兼容默认与2017 S7放逐/原生猎人枪版本，见[历史策略契约](contracts/historical-night-role-policies.md)；双目标、自爆、无条件全天牵连等未声明参数拒绝。[六人](../../configs.example/boards/six_player_wolf_beauty.json)为狼美人／狼／女巫／骑士／两民，AWA 演示配比；[十二人](../../configs.example/boards/twelve_player_wolf_beauty.json)为狼美人＋3狼／预女守骑／4民，沿来源板。均屠边、关闭自爆；十二人开启警长。
 
 ```sh
 bun run --cwd backend run --configs-dir ../configs.example --game-config-name six_player_wolf_beauty

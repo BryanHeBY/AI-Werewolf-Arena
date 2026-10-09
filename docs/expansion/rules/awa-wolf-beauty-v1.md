@@ -26,6 +26,6 @@ awa_classic 1.0.0角色扩展，ID `wolf_beauty`，狼美人／Wolf Beauty；核
 
 ## 参数与验收
 
-`roles.wolf_beauty`仅{}，未声明双目标/自爆/全天无条件牵连参数拒绝。6/12公开板子必须完整配置并含已注册角色；支持范围由契约/实际矩阵列明，不凭目录开放未实现角色。
+当前增加有限 `roles.wolf_beauty.deathLinkPolicy`，默认 awa_exile_poison_v1，历史 heroes_s7_2017_exile_hunter_v1；见[历史策略契约](../contracts/historical-night-role-policies.md)。本卡上文描述 AWA 默认，未声明双目标/自爆/全天无条件牵连参数拒绝。6/12公开板子必须完整配置并含已注册角色；支持范围由契约/实际矩阵列明，不凭目录开放未实现角色。
 
 必验：互认/狼聊/刀权与无自爆、自刀；charm合法/self/null/重复/撤权/目标生命更换/换目标和过期；放逐/毒与其余死因矩阵、Duel/Dream复合禁技能、Guard/Heal/梦Night交互、多Charm/循环/同波；遗言/徽章/末狼特殊候选/普通Good胜与全部追加后judge；无目标通知/本人状态和隐藏狼数量不泄露、中英工具/错误/状态/结果；6/12字面完整局、SDK/ACP/混合/Tape、每板固定seed受限观察与分支、终端/前端/browser/实际frame、三路交叉审查。

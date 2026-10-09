@@ -1,3 +1,4 @@
+import { permitsCharm } from "../mechanisms/roles/wolf_beauty/relation";
 import { isRoleId } from "@ai-werewolf-arena/game-catalog";
 import type { BoardConfig, LastWordsPolicy } from "../../core/domain/board";
 import { captureNightLife, livingNightLife } from "../../core/domain/night_effects";
@@ -103,6 +104,7 @@ export class DeathResolution {
     );
     let pending = [...seen];
     const allSources: DeathSources = structuredClone(sources);
+    const nativeHunterShotTargets = new Set<EntityId>();
     const initialPhases = structuredClone(deathPhases);
     const nightOrigin = new Set(nightEffects?.nightOriginIds ?? []);
     let firstBatch = true;
@@ -223,7 +225,15 @@ export class DeathResolution {
                 const charmBindings: CharmBinding[] = [];
                 for (const proposal of result.charmLinks ?? []) {
                   const binding = proposal.binding;
-                  if (!claimCharm(this.world, binding, seen)) continue;
+                  if (
+                    !permitsCharm(
+                      allSources[binding.actorId] ?? [],
+                      binding.deathLinkPolicy,
+                      nativeHunterShotTargets.has(binding.actorId),
+                    ) ||
+                    !claimCharm(this.world, binding, seen)
+                  )
+                    continue;
                   if (
                     proposal.nightEffect &&
                     nightEffects?.dreams?.blocksNightCharm(this.world, binding.targetId, seen)
@@ -292,7 +302,10 @@ export class DeathResolution {
                   allSources[id] = [...new Set(proposedSources[id] ?? [])];
                   this.markPlayersDead([id], false, gunsToExpire, revealCurrent());
                   newlyMarked = true;
-                  if (shot) this.events.push(shot.event);
+                  if (shot) {
+                    if (shot.event.type === "hunter_shot") nativeHunterShotTargets.add(id);
+                    this.events.push(shot.event);
+                  }
                   if (
                     charmTargets.has(id) ||
                     (linked.has(id) && !result.extraDeaths.includes(id)) ||
@@ -325,6 +338,7 @@ export class DeathResolution {
               },
               {
                 day: resolutionDay,
+                nativeHunterShotTargets,
                 deferShotCommit: true,
                 nightEffect: nightOrigin.has(deadId),
                 blocksNightShot: (targetId) =>

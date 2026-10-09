@@ -1,3 +1,4 @@
+import { getWolfBeautyState } from "../private_state";
 import { Role, DeathCause } from "../../../../core/domain/model";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -17,7 +18,12 @@ export const wolfBeautyDeathHook: DeathHook = async (
     if (context?.isCurrent && !context.isCurrent()) break;
     if (
       world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role !== Role.WolfBeauty ||
-      !permitsCharm(sources[actorId] ?? [])
+      !permitsCharm(
+        sources[actorId] ?? [],
+        getWolfBeautyState(world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!)
+          ?.deathLinkPolicy,
+        context?.nativeHunterShotTargets?.has(actorId) ?? false,
+      )
     )
       continue;
     const binding = activeCharm(world, actorId);

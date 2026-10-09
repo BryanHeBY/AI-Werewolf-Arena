@@ -49,7 +49,13 @@ const board = (roles = deck): BoardConfig => ({
 const role = (game: ReturnType<typeof bootstrapGame>, id: number) =>
   game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
 
-for (const mutation of ["replace_life", "revive", "clear_binding", "replace_state"] as const)
+for (const mutation of [
+  "replace_life",
+  "revive",
+  "clear_binding",
+  "replace_state",
+  "change_policy",
+] as const)
   test(`${mutation}: a revoked real hook proposal cannot kill or add sources/public facts after its await`, async () => {
     const game = bootstrapGame(board(), { fixedRoles: deck }),
       events: GameEvent[] = [],
@@ -70,6 +76,8 @@ for (const mutation of ["replace_life", "revive", "clear_binding", "replace_stat
                 original.alive = false;
                 original.alive = true;
               }
+              if (mutation === "change_policy")
+                state.deathLinkPolicy = "heroes_s7_2017_exile_hunter_v1";
               if (mutation === "clear_binding") bindCharm(game.world, 1, null);
               if (mutation === "replace_state")
                 role(game, 1).privateState.wolf_beauty = {

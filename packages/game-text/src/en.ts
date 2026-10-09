@@ -266,9 +266,17 @@ export const en = Object.freeze({
   "console.bear.report": "Day {day}: {result}",
   "replay.stage.bear_roared": "Bear announcement",
   "role.wolf_beauty.brief":
-    "Pack member who may charm another player after the knife vote; exile or poison links death, Duel/Dream suppress it, with no self-destruction or own self-knife vote. Under SlaughterSide, exiling the last living wolf when it is Wolf Beauty and its charm actually takes the last good special role or villager gives wolves victory; configured victory conditions still use their first matching order.",
+    "Pack member who may charm another player after the knife vote; linking uses the selected named death policy, with no self-destruction or own self-knife vote. Under SlaughterSide, exiling the last living wolf when it is Wolf Beauty and its charm actually takes the last good special role or villager gives wolves victory; configured victory conditions still use their first matching order.",
   "role.wolf_beauty.state":
-    "Your role is Wolf Beauty, aligned with wolves. Join wolf chat/knife votes, but cannot self-destruct or vote to knife yourself. After the knife vote optionally charm another living player or pass with null, never the same target on adjacent nights. Exile or poison takes the current target; Duel/Dream forbids it. Current dream protection can block Night charm, not ordinary Day charm; Guard/antidote do not block it. The target gets no direct notification. Under SlaughterSide, exiling the last living wolf when it is Wolf Beauty and its charm actually takes the last good special role or villager gives wolves victory; configured victory conditions still use their first matching order.",
+    "Your role is Wolf Beauty, aligned with wolves. Join wolf chat/knife votes, but cannot self-destruct or vote to knife yourself. After the knife vote optionally charm another living player or pass with null, never the same target on adjacent nights. The selected named policy determines linking causes. Current dream protection can block Night charm, not ordinary Day charm; Guard/antidote do not block it. The target gets no direct notification. Under SlaughterSide, exiling the last living wolf when it is Wolf Beauty and its charm actually takes the last good special role or villager gives wolves victory; configured victory conditions still use their first matching order.",
+  "role.wolf_beauty.link_awa":
+    "Wolf Beauty awa_exile_poison_v1: Exile/Poison link; Shot does not. Compound Duel/Dream suppress. Charm may be skipped; no own knife, blast or consecutive repeat.",
+  "role.wolf_beauty.link_s7":
+    "Wolf Beauty heroes_s7_2017_exile_hunter_v1: Exile/native Hunter shot link; Poison does not. Every other compound cause suppresses (engineering completion); unattributed shots never imply Hunter. Optional charm follows the 2019 guidance; no own knife, blast or consecutive repeat.",
+  "role.dreamer.protection_awa":
+    "Dreamer awa_night_damage_v1: blocks ordinary knife/poison, extra knives, night-origin shots/charm and Miracle backlash; not mechanical guard failure/Black Market backlash. Dream deaths remain lethal.",
+  "role.dreamer.protection_netease":
+    "Dreamer netease_2026_night_immunity_v1: mandatory nightly choice, night immunity, night-death linkage, consecutive dream death and no dream-death guns. Immunity to mechanical guard failure/Black Market backlash is an extension engineering completion. Dream deaths remain lethal.",
   "role.wolf_beauty.latest": "Current charm target: {target}; last action day: {day}.",
   "action.charm.hint":
     "charm: target_id is another living player or null to pass this night. Do not repeat on adjacent nights; a legal pass clears the link and spends this night's opportunity.",

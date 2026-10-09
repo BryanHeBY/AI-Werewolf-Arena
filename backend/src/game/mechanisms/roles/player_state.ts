@@ -25,11 +25,13 @@ export interface PlayerIdiotState {
   revealed: boolean;
 }
 export interface PlayerDreamerState {
+  protectionPolicy?: import("../../../core/domain/board").DreamProtectionPolicy;
   lastTarget: number | null;
   lastDay: number | null;
   history: Array<{ day: number; targetId: number }>;
 }
 export interface PlayerWolfBeautyState {
+  deathLinkPolicy?: import("../../../core/domain/board").BeautyDeathLinkPolicy;
   targetId: number | null;
   lastActedDay: number | null;
   history: Array<{ day: number; targetId: number | null }>;
@@ -141,7 +143,11 @@ export function projectIdiotState(state: unknown): PlayerIdiotState {
   return { revealed: playerDataField(state, "revealed") === true };
 }
 export function projectDreamerState(state: unknown): PlayerDreamerState {
+  const policy = playerDataField(state, "protectionPolicy");
   return {
+    ...(policy === "awa_night_damage_v1" || policy === "netease_2026_night_immunity_v1"
+      ? { protectionPolicy: policy }
+      : {}),
     lastTarget: positiveOrNull(playerDataField(state, "lastTarget")),
     lastDay: positiveOrNull(playerDataField(state, "lastDay")),
     history: rows(playerDataField(state, "history")).flatMap((row) => {
@@ -152,7 +158,11 @@ export function projectDreamerState(state: unknown): PlayerDreamerState {
   };
 }
 export function projectWolfBeautyState(state: unknown): PlayerWolfBeautyState {
+  const policy = playerDataField(state, "deathLinkPolicy");
   return {
+    ...(policy === "awa_exile_poison_v1" || policy === "heroes_s7_2017_exile_hunter_v1"
+      ? { deathLinkPolicy: policy }
+      : {}),
     targetId: positiveOrNull(playerDataField(state, "targetId")),
     lastActedDay: positiveOrNull(playerDataField(state, "lastActedDay")),
     history: rows(playerDataField(state, "history")).flatMap((row) => {

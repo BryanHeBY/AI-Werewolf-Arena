@@ -1,0 +1,17 @@
+{
+  "baseline": "eb4f026a38205d420cc2172b32fe23a29cb00da0",
+  "request": {
+    "actorId": 6,
+    "day": 1,
+    "stage": "seer",
+    "allowedTools": ["check_identity"],
+    "turn_constraints": {
+      "min_valid_actions": 1,
+      "max_valid_actions": 1,
+      "required_any_tools": ["check_identity"],
+      "summary_message": {
+        "key": "request.summary.night_action"
+      }
+    }
+  }
+}

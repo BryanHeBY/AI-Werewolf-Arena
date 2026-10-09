@@ -10,6 +10,7 @@ export interface DreamNightLink {
   day: number;
   abilityId?: string;
   consecutive: boolean;
+  protectionPolicy?: import("../../../../core/domain/board").DreamProtectionPolicy;
   actorLife: AliveComponent;
   actorVersion: number | undefined;
   targetLife: AliveComponent;
@@ -68,6 +69,16 @@ export class DreamNightFrame {
           .map((link) => link.targetId),
       ),
     ];
+  }
+  immuneNightTargets(world: World): EntityId[] {
+    return this.links
+      .filter(
+        (link) =>
+          link.protectionPolicy === "netease_2026_night_immunity_v1" &&
+          this.targetCurrent(world, link) &&
+          this.actorCurrent(world, link),
+      )
+      .map((link) => link.targetId);
   }
   blocksNightShot(world: World, targetId: EntityId): boolean {
     return this.protectedTargets(world).includes(targetId);

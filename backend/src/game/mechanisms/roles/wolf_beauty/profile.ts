@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { BEAUTY_DEATH_LINK_POLICIES } from "../../../../core/domain/board";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Role, Camp, Phase } from "../../../../core/domain/model";
@@ -11,19 +12,38 @@ import { numberOrNull } from "../../llm/helpers";
 import { WOLF_BEAUTY_CHARM_STAGE } from "./night_stages";
 import { wolfBeautyDeathHook } from "./death_hook";
 
+const parameters = z.strictObject({
+  deathLinkPolicy: z.enum(BEAUTY_DEATH_LINK_POLICIES).default("awa_exile_poison_v1"),
+});
+
 export const WOLF_BEAUTY_ROLE_PROFILE: RoleProfile = {
   ...WOLF_ROLE_PROFILE,
   role: Role.WolfBeauty,
   canSelfDestruct: false,
   label: roleName("wolf_beauty"),
   skillBrief: text("zh-CN", "role.wolf_beauty.brief"),
-  init: (role) => {
-    setWolfBeautyState(role, { targetId: null, lastActedDay: null, history: [] });
+  init: (role, ctx) => {
+    setWolfBeautyState(role, {
+      targetId: null,
+      lastActedDay: null,
+      history: [],
+      ...(ctx.boardConfig?.wolfBeauty?.deathLinkPolicy &&
+      ctx.boardConfig.wolfBeauty.deathLinkPolicy !== "awa_exile_poison_v1"
+        ? { deathLinkPolicy: ctx.boardConfig.wolfBeauty.deathLinkPolicy }
+        : {}),
+    });
   },
   renderPrompt: (role, locale = "zh-CN") => {
     const state = getWolfBeautyState(role);
     return (
       text(locale, "role.wolf_beauty.state") +
+      " " +
+      text(
+        locale,
+        state?.deathLinkPolicy === "heroes_s7_2017_exile_hunter_v1"
+          ? "role.wolf_beauty.link_s7"
+          : "role.wolf_beauty.link_awa",
+      ) +
       " " +
       text(locale, "role.wolf_beauty.latest", {
         target: state?.targetId ?? text(locale, "common.none"),
@@ -32,10 +52,10 @@ export const WOLF_BEAUTY_ROLE_PROFILE: RoleProfile = {
     );
   },
   configuration: {
-    schema: z.strictObject({}),
-    defaults: {},
-    apply: (config) => config,
-    serialize: () => ({}),
+    schema: parameters,
+    defaults: { deathLinkPolicy: "awa_exile_poison_v1" },
+    apply: (config, value) => ({ ...config, wolfBeauty: parameters.parse(value) }),
+    serialize: (config) => parameters.parse(config.wolfBeauty ?? {}),
   },
   nightStages: [...WOLF_ROLE_PROFILE.nightStages!, WOLF_BEAUTY_CHARM_STAGE],
   deathHook: wolfBeautyDeathHook,

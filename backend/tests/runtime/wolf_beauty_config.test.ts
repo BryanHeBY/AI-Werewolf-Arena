@@ -4,7 +4,7 @@ import path from "node:path";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
 import { parseBoardDefinition } from "../../src/runtime/config/board_definition";
 for (const id of ["six_player_wolf_beauty", "twelve_player_wolf_beauty"] as const)
-  test(`${id}: public Beauty/Knight board accepts only its frozen empty charm parameters`, async () => {
+  test(`${id}: public Beauty/Knight board accepts the named death policies and rejects arbitrary variants`, async () => {
     const board = await loadBoardDefinition(
       path.resolve(import.meta.dir, "../../../configs.example"),
       id,

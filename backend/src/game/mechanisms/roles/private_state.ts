@@ -61,11 +61,13 @@ export interface GravekeeperState {
   history: GravekeeperReport[];
 }
 export interface DreamerState {
+  protectionPolicy?: import("../../../core/domain/board").DreamProtectionPolicy;
   lastTarget: EntityId | null;
   lastDay: number | null;
   history: Array<{ day: number; targetId: EntityId }>;
 }
 export interface WolfBeautyState {
+  deathLinkPolicy?: import("../../../core/domain/board").BeautyDeathLinkPolicy;
   targetId: EntityId | null;
   lastActedDay: number | null;
   history: Array<{ day: number; targetId: EntityId | null }>;

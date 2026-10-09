@@ -22,7 +22,7 @@ function policyIdentity(ability: NightAbility): string {
     case "role_check":
       return JSON.stringify([ability.state.policy, ability.state.inspectionPolicy]);
     case "dream":
-      return "dream";
+      return JSON.stringify([ability.state.protectionPolicy]);
   }
 }
 

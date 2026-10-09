@@ -16,7 +16,8 @@ export const WOLF_BEAUTY_CHARM_STAGE: NightStageHandler = {
       const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!,
         state = getWolfBeautyState(role),
         actorLife = ctx.world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)!,
-        actorVersion = aliveLifeVersion(actorLife);
+        actorVersion = aliveLifeVersion(actorLife),
+        policy = state?.deathLinkPolicy;
       if (role.camp !== Camp.Wolf || !state || state.lastActedDay === day) continue;
       const targets = new Map(
         ctx.world
@@ -36,6 +37,7 @@ export const WOLF_BEAUTY_CHARM_STAGE: NightStageHandler = {
         role.role === Role.WolfBeauty &&
         role.camp === Camp.Wolf &&
         getWolfBeautyState(role) === state &&
+        state.deathLinkPolicy === policy &&
         state.lastActedDay !== day &&
         ctx.world.getComponent(actorId, COMPONENT.Alive) === actorLife &&
         actorLife.alive &&

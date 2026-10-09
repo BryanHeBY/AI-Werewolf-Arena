@@ -88,7 +88,20 @@ export const LAST_WORDS_POLICIES = [
 ] as const;
 export type LastWordsPolicy = (typeof LAST_WORDS_POLICIES)[number];
 
+export const DREAM_PROTECTION_POLICIES = [
+  "awa_night_damage_v1",
+  "netease_2026_night_immunity_v1",
+] as const;
+export type DreamProtectionPolicy = (typeof DREAM_PROTECTION_POLICIES)[number];
+export const BEAUTY_DEATH_LINK_POLICIES = [
+  "awa_exile_poison_v1",
+  "heroes_s7_2017_exile_hunter_v1",
+] as const;
+export type BeautyDeathLinkPolicy = (typeof BEAUTY_DEATH_LINK_POLICIES)[number];
+
 export interface BoardConfig {
+  dreamer?: { protectionPolicy: DreamProtectionPolicy };
+  wolfBeauty?: { deathLinkPolicy: BeautyDeathLinkPolicy };
   disclosure?: { deathRevealPolicy: DeathRevealPolicy };
   lastWords?: { policy: LastWordsPolicy };
   boardSize: number;

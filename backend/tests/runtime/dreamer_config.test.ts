@@ -4,7 +4,7 @@ import path from "node:path";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
 import { parseBoardDefinition } from "../../src/runtime/config/board_definition";
 for (const id of ["six_player_dreamer", "twelve_player_dreamer"] as const)
-  test(`${id}: public role registration accepts only the frozen empty parameter set`, async () => {
+  test(`${id}: public role registration accepts the named policies and rejects arbitrary variants`, async () => {
     const board = await loadBoardDefinition(
       path.resolve(import.meta.dir, "../../../configs.example"),
       id,

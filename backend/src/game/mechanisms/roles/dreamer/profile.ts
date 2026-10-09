@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { DREAM_PROTECTION_POLICIES } from "../../../../core/domain/board";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, Phase } from "../../../../core/domain/model";
@@ -9,19 +10,38 @@ import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";
 import { DREAMER_NIGHT_STAGE } from "./night_stages";
 
+const parameters = z.strictObject({
+  protectionPolicy: z.enum(DREAM_PROTECTION_POLICIES).default("awa_night_damage_v1"),
+});
+
 export const DREAMER_ROLE_PROFILE: RoleProfile = {
   role: Role.Dreamer,
   camp: Camp.Good,
   goodSide: "god",
   label: roleName("dreamer"),
   skillBrief: text("zh-CN", "role.dreamer.brief"),
-  init: (role) => {
-    setDreamerState(role, { lastTarget: null, lastDay: null, history: [] });
+  init: (role, ctx) => {
+    setDreamerState(role, {
+      lastTarget: null,
+      lastDay: null,
+      history: [],
+      ...(ctx.boardConfig?.dreamer?.protectionPolicy &&
+      ctx.boardConfig.dreamer.protectionPolicy !== "awa_night_damage_v1"
+        ? { protectionPolicy: ctx.boardConfig.dreamer.protectionPolicy }
+        : {}),
+    });
   },
   renderPrompt: (role, locale = "zh-CN") => {
     const state = getDreamerState(role);
     return (
       text(locale, "role.dreamer.state") +
+      " " +
+      text(
+        locale,
+        state?.protectionPolicy === "netease_2026_night_immunity_v1"
+          ? "role.dreamer.protection_netease"
+          : "role.dreamer.protection_awa",
+      ) +
       (state?.lastTarget !== null && state?.lastTarget !== undefined && state.lastDay !== null
         ? " " +
           text(locale, "role.dreamer.latest", { target: state.lastTarget, day: state.lastDay })
@@ -29,10 +49,10 @@ export const DREAMER_ROLE_PROFILE: RoleProfile = {
     );
   },
   configuration: {
-    schema: z.strictObject({}),
-    defaults: {},
-    apply: (config) => config,
-    serialize: () => ({}),
+    schema: parameters,
+    defaults: { protectionPolicy: "awa_night_damage_v1" },
+    apply: (config, value) => ({ ...config, dreamer: parameters.parse(value) }),
+    serialize: (config) => parameters.parse(config.dreamer ?? {}),
   },
   nightStages: [DREAMER_NIGHT_STAGE],
   toolSpecs: [

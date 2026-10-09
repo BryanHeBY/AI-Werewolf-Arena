@@ -1,12 +1,32 @@
 # 授权整改实施记录（逐项复核与新源码验收）
 
-最新功能源码：`095499186eff4748a46ef2f18d0834d5cb36f969`，原目录 `/home/hby/dev/AI-Werewolf-Arena` 的 `main`。基线 `eb4f026a38205d420cc2172b32fe23a29cb00da0`。`14f9e3c`修正Seer默认，`e9e7fac`补原生死亡枪及三角色查验策略，`acc20ed`补混合板子提示和旧配置断言，`0954991`补公开翻牌/遗言条款。后续全部线性本地提交，不推送。
+上一批功能源码：`095499186eff4748a46ef2f18d0834d5cb36f969`，原目录 `/home/hby/dev/AI-Werewolf-Arena` 的 `main`。基线 `eb4f026a38205d420cc2172b32fe23a29cb00da0`。`14f9e3c`修正Seer默认，`e9e7fac`补原生死亡枪及三角色查验策略，`acc20ed`补混合板子提示和旧配置断言，`0954991`补公开翻牌/遗言条款。后续全部线性本地提交，不推送。
 
 CLI目录、能力授权、独立玩家/展示DTO、统一回放事实reader、工具metadata及旧接口清理、bot/provider拆分和有限规则配置均已落地。竞选PK、放逐PK与死亡持徽者选择已连通选民、候选、阶段、晚校验、单轮上限、二次平票/弃票、公共事件、双语展示、SDK/MCP统一preflight和实际严格Tape。
 
 完整示例：[AWA十二人PK与警徽选择板子](../../../configs.example/boards/awa_classic_pk_choice_12_v1.json)。它是有限具名AWA产品规则，不是完整网易或赛事镜像。中/英两局同局实际录制包含竞选PK、放逐PK再次平票、次夜警长死亡和自主警徽移交，严格Tape复现一致。默认板子及省略参数保留原行为，未覆盖本地configs。
 
-## 最新功能源码门禁（0954991）
+## 本次 Seer/摄梦/狼美人实施与门禁（本提交，基线 ef2f48f）
+
+原目录 main，兼容AWA默认。Seer已用eb4f026实际流水线采集并保存required请求约束，可重复脚本与六入口三夜Tape验证一致。新增 dreamer.protectionPolicy 两种版本；新增 wolf_beauty.deathLinkPolicy 的AWA默认/S7放逐原生猎人枪版本。2019空连/骑士抑制作为独立已支持约束，复合死因抑制优先与扩展夜伤免疫明确是工程补全；不冒称完整官方preset。
+
+[历史来源/实现契约](historical-night-role-policies.md)说明schema→状态实例→执行/来源→双语提示/DTO→录制→严格Tape；[八类当前规则行为](current-rule-behavior.md)逐项列默认、已经配置的字段和无来源变体保留理由。用户configs、秘密、系统设置未触碰；没有push/部署/真实模型调用、新分支或worktree。
+
+| 门禁            | 本次结果                                                                                            |
+| --------------- | --------------------------------------------------------------------------------------------------- |
+| 后端全量        | 2389通过，0失败，189737断言，209文件；四组741/559/496/593，均退出0，最长组248.93秒                  |
+| 前端全量单测    | 223通过，0失败，2119断言，32文件                                                                    |
+| 全源码/测试类型 | root check通过，配置未放宽                                                                          |
+| lint/格式/差异  | root lint、format:check及git diff --check通过                                                       |
+| 前后端构建      | 均通过；已有>500KB bundle提示保留                                                                   |
+| 定向证据        | 66通过/1889断言/3文件；新文件25项含16局双语实际录制和严格Tape；Seer baseline probe与字面fixture一致 |
+| 只读独立复核    | 未发现实质代码缺陷；旧transfer全状态保证文档已按实际kind检查纠正                                    |
+
+209文件精确并集清单 `/tmp/arena-historical-backend-manifest.json`，各组日志/状态 `/tmp/arena-historical-backend-{1..4}.{log,status.json}`，汇总 `/tmp/arena-historical-backend-summary.json`。新源码首轮沙箱禁本地listen，SDK/MCP fixture报EPERM，日志保留为 `/tmp/arena-historical-backend-sandbox-*`；未修改测试/超时/断言或放宽规则，获准本地loopback离线fixture后按此前四组完整重跑得到上表。类型/lint/格式/前端/构建日志为 `/tmp/arena-historical-{check,lint,format,frontend,build-backend,build-frontend}.log`；基线实际请求 `/tmp/arena-historical-seer-baseline.log`。
+
+本批未改前端播放或公开事件wire，没有重复Chromium；上一批82项只属于上一批源码证据，不能写成本次浏览器结果。网易2026页面此次只取得站点壳，使用此前已读条款加此轮可读2017/2019正文推进，不以抓取失败结束。机械+摄梦公开组合仍未开放，机械失败免疫只验低层frame/伤害矩阵；黑市+摄梦已支持并完成实际Tape分叉。外部平台所有板子、真实模型质量与视频导出未验证。P8–P10未开始，整体任务保持待用户最终验收。
+
+## 上一批功能源码门禁（0954991）
 
 | 门禁                             | 结果                                                                             |
 | -------------------------------- | -------------------------------------------------------------------------------- |
@@ -20,7 +40,7 @@ CLI目录、能力授权、独立玩家/展示DTO、统一回放事实reader、�
 
 `e9e7fac`首次全量2327通过、4个旧配置断言失败；acc20ed更新正确默认/未知字段断言并新增两项提示回归。0954991新增30项（含八个双语完整局/Tape），最终全量2363项全部通过。早期public新增夹具的错误工具名、枚举和时间类型已修正；原生产超时、断言及历史回归没有放宽。
 
-[原审查问题名与保留理由](original-review-closure.md)完成逐项对应及保护矩阵；新公开死亡参数见[契约](public-death-policies.md)。其余新平台夜序、同时灭绝、库存及梦/魅惑变体没有新增，保留理由具体记录，不能称这些变体已交付。P8–P10仍未开始；本记录是提交和证据，是否满足用户验收由用户判断。
+[原审查问题名与保留理由](original-review-closure.md)完成逐项对应及保护矩阵；新公开死亡参数见[契约](public-death-policies.md)。该历史批次没有新增平台夜序、同时灭绝、库存及梦/魅惑策略；本次已进一步新增摄梦/狼美人具名策略，见上方新门禁与历史契约。P8–P10仍未开始；本记录是提交和证据，是否满足用户验收由用户判断。
 
 ## 历史功能源码门禁（52103ea）
 

@@ -34,7 +34,7 @@ NightPipeline统一生成夜间基础死亡与连续/关系梦亡提案。DeathR
 
 低层grant/copy必须显式提供状态政策；同一新能力实例独立连续计数。transfer保lastTarget/lastDay、使用次数与本夜标记，不能清空连续记录换取保护；已经生效本夜关系归原提交者且不会因transfer改成新持有者的关系。真实商人/机械狼等复制角色及对应参数仍随各自阶段交付。
 
-本版无变体参数，`roles.dreamer`只接受{}；不得填写“免毒关闭/全天牵连”等未声明字段。支持的6/12示例与每项组合验收在接入契约登记；其它尚未注册角色不得据目录名先行组合。
+当前增加有限 `roles.dreamer.protectionPolicy`，默认 awa_night_damage_v1，网易具名 netease_2026_night_immunity_v1；见[历史策略契约](../contracts/historical-night-role-policies.md)。本卡上文描述兼容 AWA 默认；不得填写“免毒关闭/全天牵连”等未声明字段。支持的6/12示例与每项组合验收在接入契约登记；其它尚未注册角色不得据目录名先行组合。
 
 [官方2026-04-02普通能力回顾](https://langrensha.com/news/update/20260402/26905_1294456.html)明确每夜必须、隐藏梦游、夜间免伤/夜死牵连、连续两夜梦亡。[官方2017规则介绍的12人摄梦人段](https://langrensha.com/wanfa/guize/2017/10/18/26899_719311.html)补夜间药/枪落空、梦亡禁死亡技能；采用现有AWA暗牌、遗言与死亡链基础，不照搬该旧页所有白天死亡遗言等其它差异。
 

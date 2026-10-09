@@ -465,8 +465,18 @@ export class PlayerPromptPolicy {
     if (
       request.allowedTools.includes("dream") &&
       allNightAbilities(role).some((ability) => ability.kind === "dream")
-    )
+    ) {
       lines.push(text(this.locale, "ability.dream.rules"));
+      const state = getDreamerState(role!, request.context.ability_id);
+      lines.push(
+        text(
+          this.locale,
+          state?.protectionPolicy === "netease_2026_night_immunity_v1"
+            ? "role.dreamer.protection_netease"
+            : "role.dreamer.protection_awa",
+        ),
+      );
+    }
     if (role && request.allowedTools.includes("inspect_role")) {
       const inspection = getRoleInspectionState(role, request.context.ability_id);
       if (inspection)
