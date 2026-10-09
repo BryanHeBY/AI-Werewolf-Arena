@@ -65,6 +65,9 @@ function copyJson(value: unknown, ancestors = new Set<object>(), depth = 0): unk
     for (const [key, descriptor] of Object.entries(descriptors)) {
       if (array && key === "length") continue;
       if (!descriptor.enumerable || !Object.hasOwn(descriptor, "value")) throw new Error("replay_event_accessor");
+      // The TypeScript envelope permits an explicitly undefined optional stage.
+      // Disk JSON omits that field; payload values must still be strict JSON.
+      if (depth === 0 && key === "stage" && descriptor.value === undefined) continue;
       result[key] = copyJson(descriptor.value, ancestors, depth + 1);
     }
     if (!array) return result;

@@ -87,3 +87,14 @@ test("getters, cycles, invalid array items and traps fail without evaluating pay
   expect(readReplayEvent(event("night_resolved", new Proxy({}, { ownKeys() { throw new Error("trap"); } })))).toBeNull();
   expect(replayResultLabel(replay(event("phase_changed", { phase: 42 })), "en")).toBe("Unfinished");
 });
+
+
+test("an explicitly undefined optional envelope stage keeps valid event effects", () => {
+  const event: ReplayEvent = { seq: 1, timestamp: "t", phase: "voting", day: 1, stage: undefined, type: "voted_out", payload: { target: 2 } };
+  const read = readReplayEvent(event, [1, 2]);
+  expect(read?.effects).toEqual([{ kind: "deaths", playerIds: [2] }]);
+  expect(read?.relatedPlayerIds).toEqual([2]);
+  expect(read?.event).not.toHaveProperty("stage");
+  expect(event).toHaveProperty("stage", undefined);
+  expect(readReplayEvent({ ...event, payload: { target: 2, invalid: undefined } }, [1, 2])).toBeNull();
+});
