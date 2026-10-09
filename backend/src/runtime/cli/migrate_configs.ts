@@ -1,3 +1,4 @@
+import { resolveCliConfigDirectory } from "./config_directory";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { runCli, takeDisplayArguments, type CliDisplayContext } from "./display";
 import { readFile, writeFile, readdir, access, mkdir, unlink, rename, link, stat, open, type FileHandle } from "node:fs/promises";
@@ -121,7 +122,7 @@ export async function main(argv = process.argv.slice(2), display: CliDisplayCont
     if (!["--configs-dir", "--source", "--board", "--base"].includes(args[i]) || !args[i + 1] || args[i + 1].startsWith("--")) throw new Error("config_migration_usage");
     values[args[i]] = args[++i];
   }
-  const configDir = values["--configs-dir"] ?? "configs";
+  const configDir = resolveCliConfigDirectory(values["--configs-dir"]);
   if (values["--base"] && !["six_player_mvp", "twelve_player_standard"].includes(values["--base"])) throw new Error("board_config_legacy_base_unknown");
   if (Boolean(values["--source"]) !== Boolean(values["--board"]) || (values["--base"] && !values["--source"])) throw new Error("config_migration_usage");
   const task = values["--source"]

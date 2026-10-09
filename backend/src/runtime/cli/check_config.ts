@@ -4,6 +4,7 @@ import { loadRuntimeConfig } from "../config/load_config";
 import { loadBoardDefinition } from "../config/load_board_definition";
 import { resolveGameSetup, resolveGameBoard } from "../config/resolve_game_setup";
 import { describeResolvedSetup } from "../config/describe_setup";
+import { resolveCliConfigDirectory } from "./config_directory";
 
 export async function checkConfig(configDir: string, gameName: string, display?: CliDisplayContext) {
   const runtime = await loadRuntimeConfig({ configDir, gameName });
@@ -22,7 +23,7 @@ export async function main(argv = process.argv.slice(2), display: CliDisplayCont
     if (!["--configs-dir", "--game-config-name"].includes(args[i]) || !args[i + 1] || args[i + 1].startsWith("--")) throw new Error("config_check_usage");
     values[args[i]] = args[i + 1];
   }
-  const result = await checkConfig(values["--configs-dir"] ?? "configs", values["--game-config-name"] ?? "default", display);
+  const result = await checkConfig(resolveCliConfigDirectory(values["--configs-dir"]), values["--game-config-name"] ?? "default", display);
   console.log(JSON.stringify({ ...result, message: text(display.locale, "cli.config_checked") }, null, 2));
 }
 

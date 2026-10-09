@@ -6,17 +6,18 @@ import { resolveGameBoard, resolveGameSetup } from "../config/resolve_game_setup
 import { runGame } from "../game_runner";
 import type { RunGameOptions } from "../config/resolve_game_setup";
 import type { GameBoard } from "../config/contracts";
+import { resolveCliConfigDirectory } from "./config_directory";
 function parseBoolean(value: string): boolean {
   if (["1", "true", "yes", "on"].includes(value.toLowerCase())) return true;
   if (["0", "false", "no", "off"].includes(value.toLowerCase())) return false;
   throw new Error("runtime_cli_boolean_invalid");
 }
 
-function parseArgs(argv: string[]): { configDir: string; gameName: string; overrides: Partial<RunGameOptions>; locale?: Locale } {
+export function parseRunGameArgs(argv: string[], environment: NodeJS.ProcessEnv = process.env): { configDir: string; gameName: string; overrides: Partial<RunGameOptions>; locale?: Locale } {
   const overrides: Partial<RunGameOptions> = {};
   let locale: Locale | undefined;
-  let configDir = process.env.GAME_CONFIGS_DIR ?? "configs";
-  let gameName = process.env.GAME_CONFIG_NAME ?? "default";
+  let configDir = resolveCliConfigDirectory(undefined, environment);
+  let gameName = environment.GAME_CONFIG_NAME ?? "default";
   for (let i = 0; i < argv.length; i += 1) {
     const token = argv[i];
     const value = argv[i + 1];
@@ -44,7 +45,7 @@ function parseArgs(argv: string[]): { configDir: string; gameName: string; overr
 }
 
 export async function main(argv = process.argv.slice(2), display: CliDisplayContext = { locale: "zh-CN", explicit: false }): Promise<void> {
-  const args = parseArgs(takeDisplayArguments(argv, display));
+  const args = parseRunGameArgs(takeDisplayArguments(argv, display));
   if (!display.explicit && args.locale) display.locale = args.locale;
   const runtime = await loadRuntimeConfig({ configDir: args.configDir, gameName: args.gameName });
   const board = resolveGameBoard(runtime, args.overrides);
