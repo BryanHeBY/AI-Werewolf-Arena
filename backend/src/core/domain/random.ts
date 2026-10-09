@@ -16,7 +16,9 @@ export interface RandomSource {
 }
 
 /** Decision capability: no seed, path, or ability to derive other streams. */
-export interface RandomDraws { next(): number }
+export interface RandomDraws {
+  next(): number;
+}
 
 export function randomDraws(source: RandomSource): RandomDraws {
   return Object.freeze({ next: () => source.next() });
@@ -28,10 +30,16 @@ class SeededRandom implements RandomSource {
 
   constructor(seed: string, path: readonly string[] = []) {
     if (!seed.trim()) throw new Error("random_seed_empty");
-    this.metadata = Object.freeze({ seed, algorithm: RANDOM_ALGORITHM, streamPolicy: RANDOM_STREAM_POLICY, path: Object.freeze([...path]) });
+    this.metadata = Object.freeze({
+      seed,
+      algorithm: RANDOM_ALGORITHM,
+      streamPolicy: RANDOM_STREAM_POLICY,
+      path: Object.freeze([...path]),
+    });
     const input = JSON.stringify([seed, ...path]);
     let hash = 0x811c9dc5;
-    for (let index = 0; index < input.length; index++) hash = Math.imul(hash ^ input.charCodeAt(index), 0x01000193) >>> 0;
+    for (let index = 0; index < input.length; index++)
+      hash = Math.imul(hash ^ input.charCodeAt(index), 0x01000193) >>> 0;
     this.state = hash;
   }
 
@@ -49,7 +57,9 @@ class SeededRandom implements RandomSource {
   }
 }
 
-export function createRandom(seed: string = crypto.randomUUID()): RandomSource { return new SeededRandom(seed); }
+export function createRandom(seed: string = crypto.randomUUID()): RandomSource {
+  return new SeededRandom(seed);
+}
 
 export function shuffled<T>(values: readonly T[], random: RandomSource): T[] {
   const result = [...values];

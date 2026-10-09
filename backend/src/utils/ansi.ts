@@ -1,15 +1,7 @@
-
 /**
  * ANSI 颜色工具：统一日志着色开关与渲染。
  */
-export type AnsiTone =
-  | "muted"
-  | "info"
-  | "ok"
-  | "warn"
-  | "error"
-  | "accent"
-  | "god";
+export type AnsiTone = "muted" | "info" | "ok" | "warn" | "error" | "accent" | "god";
 
 const ANSI_RESET = "\u001b[0m";
 const ANSI: Record<AnsiTone, string> = {

@@ -1,4 +1,4 @@
-import { PlayerVisibleEvent } from "../../core/domain"
+import { PlayerVisibleEvent } from "../../core/domain";
 
 /** 解析、去重并按玩家本地连续 seq 排序可见事件。 */
 export function parsePlayerVisibleEvents(value: unknown): PlayerVisibleEvent[] {
@@ -27,11 +27,7 @@ export function parsePlayerVisibleEvents(value: unknown): PlayerVisibleEvent[] {
   return [...bySeq.values()].sort((left, right) => left.seq - right.seq);
 }
 
-type PlayerVisibleEventTuple = [
-  seq: number,
-  type: string,
-  payload: Record<string, unknown>,
-];
+type PlayerVisibleEventTuple = [seq: number, type: string, payload: Record<string, unknown>];
 
 function toTuple(event: PlayerVisibleEvent): PlayerVisibleEventTuple {
   return [event.seq, event.type, event.payload];

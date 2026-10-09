@@ -45,6 +45,11 @@ export async function loadBoardOverride(
 function isOtherBoardCollection(value: unknown, board: BoardName): boolean {
   if (!value || typeof value !== "object" || Array.isArray(value)) return false;
   const boards = (value as Record<string, unknown>).boards;
-  return !!boards && typeof boards === "object" && !Array.isArray(boards)
-    && !(board in boards) && !("default" in value);
+  return (
+    !!boards &&
+    typeof boards === "object" &&
+    !Array.isArray(boards) &&
+    !(board in boards) &&
+    !("default" in value)
+  );
 }

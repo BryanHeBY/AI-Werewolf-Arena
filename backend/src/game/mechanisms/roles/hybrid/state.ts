@@ -11,7 +11,10 @@ export function getHybridState(role: RoleComponent | undefined): HybridState | u
   return role?.privateState.hybrid as HybridState | undefined;
 }
 export function projectHybridState(state: HybridState): PlayerHybridState {
-  return { remaining: state.remaining, choice: state.choice ? { day: state.choice.day, targetId: state.choice.targetId } : null };
+  return {
+    remaining: state.remaining,
+    choice: state.choice ? { day: state.choice.day, targetId: state.choice.targetId } : null,
+  };
 }
 export function canChooseExemplar(state: HybridState, day: number): boolean {
   return day === 1 && state.remaining === 1 && state.choice === null;

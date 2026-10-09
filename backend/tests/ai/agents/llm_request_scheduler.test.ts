@@ -49,7 +49,7 @@ describe("ScopedRequestScheduler", () => {
     const second = scheduler.acquire(request);
     releaseFirst();
     let thirdAcquired = false;
-    const third = scheduler.acquire(request).then(release => {
+    const third = scheduler.acquire(request).then((release) => {
       thirdAcquired = true;
       return release;
     });
@@ -70,8 +70,12 @@ describe("ScopedRequestScheduler", () => {
     let peak = 0;
     let unblock!: () => void;
     let signalTwoStarted!: () => void;
-    const blocked = new Promise<void>(resolve => { unblock = resolve; });
-    const twoStarted = new Promise<void>(resolve => { signalTwoStarted = resolve; });
+    const blocked = new Promise<void>((resolve) => {
+      unblock = resolve;
+    });
+    const twoStarted = new Promise<void>((resolve) => {
+      signalTwoStarted = resolve;
+    });
     const client = {
       chat: async () => "",
       async runToolLoop<T>(messages: Array<{ content: string }>, _tools: unknown, callbacks: any) {
@@ -82,11 +86,15 @@ describe("ScopedRequestScheduler", () => {
         try {
           const turnId = messages.at(-1)!.content.match(/turn_id 必须为 (t\d+)/)![1];
           const handled = await callbacks.onToolCall({
-            id: `call-${started}`, name: "submit_action",
-            args: { turn_id: turnId, action: "speak", arguments: { text: "模型发言" } }, rawArgs: "{}",
+            id: `call-${started}`,
+            name: "submit_action",
+            args: { turn_id: turnId, action: "speak", arguments: { text: "模型发言" } },
+            rawArgs: "{}",
           });
           return { finalAction: handled.finalAction as T, assistantText: "" };
-        } finally { active--; }
+        } finally {
+          active--;
+        }
       },
     };
     const provider = new LlmActionProvider(context.world, client, {
@@ -95,22 +103,32 @@ describe("ScopedRequestScheduler", () => {
       maxConcurrentRequestsResolver: () => 2,
       fallbackProvider: { getAction: async () => null },
     });
-    const pending = [1, 2, 3, 4].map(actorId => provider.getAction({
-      phase: Phase.Day, actorId, allowedTools: ["speak"],
-      context: { day: 1, stage: "day_speech", visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 } },
-    }));
+    const pending = [1, 2, 3, 4].map((actorId) =>
+      provider.getAction({
+        phase: Phase.Day,
+        actorId,
+        allowedTools: ["speak"],
+        context: {
+          day: 1,
+          stage: "day_speech",
+          visible_events: [],
+          turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },
+        },
+      }),
+    );
     try {
       await twoStarted;
       await Bun.sleep(0);
       expect(started).toBe(2);
       expect(peak).toBe(2);
-    } finally { unblock(); }
+    } finally {
+      unblock();
+    }
     const actions = await Promise.all(pending);
     expect(started).toBe(4);
     expect(peak).toBe(2);
-    expect(actions.every(action => action?.name === "speak")).toBe(true);
+    expect(actions.every((action) => action?.name === "speak")).toBe(true);
   });
-
 });
 
 test("queued cancellation removes its waiter; expired requests never receive a released lease", async () => {
@@ -124,8 +142,10 @@ test("queued cancellation removes its waiter; expired requests never receive a r
   const elapsed = scheduler.acquire({ ...request, deadlineAtMs: Date.now() + 30 });
   await expect(elapsed).rejects.toThrow("request_deadline_elapsed");
   expect(scheduler.snapshot).toEqual({ closed: false, active: 1, queued: 0 });
-  first(); expect(scheduler.snapshot).toEqual({ closed: false, active: 0, queued: 0 });
-  const next = await scheduler.acquire(request); next();
+  first();
+  expect(scheduler.snapshot).toEqual({ closed: false, active: 0, queued: 0 });
+  const next = await scheduler.acquire(request);
+  next();
   expect(scheduler.snapshot.active).toBe(0);
 });
 
@@ -133,23 +153,37 @@ test("closed scheduler rejects queued and future work, retaining active lease ow
   const scheduler = new ScopedRequestScheduler({ defaultMaxConcurrentRequests: 1 });
   const first = await scheduler.acquire(request);
   const queued = scheduler.acquire(request);
-  scheduler.close(); await expect(queued).rejects.toThrow("request_scheduler_closed");
+  scheduler.close();
+  await expect(queued).rejects.toThrow("request_scheduler_closed");
   expect(scheduler.snapshot).toEqual({ closed: true, active: 1, queued: 0 });
   await expect(scheduler.acquire(request)).rejects.toThrow("request_scheduler_closed");
-  first(); first(); scheduler.close();
+  first();
+  first();
+  scheduler.close();
   expect(scheduler.snapshot).toEqual({ closed: true, active: 0, queued: 0 });
 });
 
 test("abort after grant cannot free another lease, and a throwing queue observer leaves no orphan waiter", async () => {
   const scheduler = new ScopedRequestScheduler({ defaultMaxConcurrentRequests: 1 });
-  const first = await scheduler.acquire(request), control = new AbortController();
+  const first = await scheduler.acquire(request),
+    control = new AbortController();
   const pending = scheduler.acquire(request, undefined, control.signal);
-  first(); const granted = await pending; control.abort();
+  first();
+  const granted = await pending;
+  control.abort();
   expect(scheduler.snapshot).toEqual({ closed: false, active: 1, queued: 0 });
-  granted(); expect(scheduler.snapshot.active).toBe(0);
+  granted();
+  expect(scheduler.snapshot.active).toBe(0);
   const failure = new Error("observer-error");
-  const other = new ScopedRequestScheduler({ defaultMaxConcurrentRequests: 1, onWait() { throw failure; } });
+  const other = new ScopedRequestScheduler({
+    defaultMaxConcurrentRequests: 1,
+    onWait() {
+      throw failure;
+    },
+  });
   const held = await other.acquire(request);
   await expect(other.acquire(request)).rejects.toBe(failure);
-  expect(other.snapshot.queued).toBe(0); held(); expect(other.snapshot.active).toBe(0);
+  expect(other.snapshot.queued).toBe(0);
+  held();
+  expect(other.snapshot.active).toBe(0);
 });

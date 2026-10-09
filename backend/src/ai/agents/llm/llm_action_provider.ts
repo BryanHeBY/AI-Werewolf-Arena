@@ -1,9 +1,6 @@
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionProvider,
-ActionRequest,
-BoardConfig,
-ToolCall, } from "../../../core/domain"
+import { ActionProvider, ActionRequest, BoardConfig, ToolCall } from "../../../core/domain";
 import { World } from "../../../core/domain/world";
 import {
   ConfigRenderRegistry,
@@ -67,19 +64,16 @@ export interface LlmActionProviderOptions {
 export class LlmActionProvider implements ActionProvider {
   private readonly orchestrator: LlmTurnOrchestrator;
 
-  constructor(
-    world: World,
-    client: ChatModelClient,
-    options: LlmActionProviderOptions = {},
-  ) {
+  constructor(world: World, client: ChatModelClient, options: LlmActionProviderOptions = {}) {
     const toolSpecRegistry = options.toolSpecRegistry ?? getDefaultToolSpecRegistry();
     const roleCatalog = options.roleCatalog ?? getDefaultRoleCatalog();
     const repairRegistry = options.toolCallRepairRegistry ?? getDefaultToolCallRepairRegistry();
     const targetHintRegistry = options.targetHintRegistry ?? getDefaultTargetHintRegistry();
-    const localization = options.phaseStageLocalizationRegistry ??
-      getDefaultPhaseStageLocalizationRegistry();
+    const localization =
+      options.phaseStageLocalizationRegistry ?? getDefaultPhaseStageLocalizationRegistry();
     const configRenderer = options.configRenderRegistry ?? getDefaultConfigRenderRegistry();
-    const configuredConcurrency = options.maxConcurrentRequests ?? this.readConcurrencyFromEnvironment();
+    const configuredConcurrency =
+      options.maxConcurrentRequests ?? this.readConcurrencyFromEnvironment();
     const observer = new LlmObserver({
       trace: options.trace ?? false,
       locale: options.displayLocale ?? world.locale,
@@ -115,7 +109,14 @@ export class LlmActionProvider implements ActionProvider {
       observer,
     );
     const recorder = new PlayerRoundRecorder(world);
-    const sdkToolLoop = new SdkGameToolLoop(world, repairRegistry, promptSession, observer, toolSpecRegistry, new ToolValidationRuleRegistry(undefined, roleCatalog));
+    const sdkToolLoop = new SdkGameToolLoop(
+      world,
+      repairRegistry,
+      promptSession,
+      observer,
+      toolSpecRegistry,
+      new ToolValidationRuleRegistry(undefined, roleCatalog),
+    );
     this.orchestrator = new LlmTurnOrchestrator({
       world,
       defaultClient: client,
@@ -142,9 +143,13 @@ export class LlmActionProvider implements ActionProvider {
     return this.orchestrator.run(request);
   }
 
-  close(): Promise<void> { return this.orchestrator.close(); }
+  close(): Promise<void> {
+    return this.orchestrator.close();
+  }
 
-  get runtimeState() { return this.orchestrator.runtimeState; }
+  get runtimeState() {
+    return this.orchestrator.runtimeState;
+  }
 
   private readConcurrencyFromEnvironment(): number {
     const value = Number(process.env.LLM_MAX_CONCURRENT_REQUESTS ?? "");

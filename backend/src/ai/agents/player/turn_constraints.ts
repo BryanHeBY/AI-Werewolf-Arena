@@ -20,21 +20,28 @@ export interface TurnConstraintEvaluation {
 
 /** Transport retries may continue, but a failed mandatory choice cannot be supplied by a fallback. */
 export function allowsActionFallback(request: ActionRequest): boolean {
-  return request.context.action_failure_policy !== "error" && request.context.allow_fallback !== false;
+  return (
+    request.context.action_failure_policy !== "error" && request.context.allow_fallback !== false
+  );
 }
 
 /** Projects typed engine constraints into player prompt and tool-loop rules. */
 export function resolveTurnConstraints(request: ActionRequest): ResolvedTurnConstraints {
   const constraints = request.context.turn_constraints;
   const minValidActions = Math.max(0, Math.floor(constraints?.min_valid_actions ?? 0));
-  const maxValidActions = Math.max(minValidActions, Math.floor(constraints?.max_valid_actions ?? 1));
+  const maxValidActions = Math.max(
+    minValidActions,
+    Math.floor(constraints?.max_valid_actions ?? 1),
+  );
   const summary = constraints?.summary;
   return {
     minValidActions,
     maxValidActions,
     requiredAnyTools: constraints?.required_any_tools ?? [],
     ...(summary !== undefined ? { summary } : {}),
-    ...(constraints?.summary_message ? { summaryMessage: structuredClone(constraints.summary_message) } : {}),
+    ...(constraints?.summary_message
+      ? { summaryMessage: structuredClone(constraints.summary_message) }
+      : {}),
   };
 }
 
@@ -69,16 +76,44 @@ export function evaluateTurnConstraints(
 }
 
 /** Human text uses the same immutable locale as this player's prompt. */
-export function renderTurnConstraintSystemRule(constraints: ResolvedTurnConstraints, locale: Locale = "zh-CN"): string {
-  return [text(locale, "turn.system", { min: constraints.minValidActions, max: constraints.maxValidActions }),
-    ...(constraints.requiredAnyTools.length ? [text(locale, "turn.required_tools", { tools: constraints.requiredAnyTools.join(", ") })] : []),
-    ...(constraints.summary !== undefined ? (constraints.summary ? [constraints.summary] : []) : constraints.summaryMessage ? [renderMessage(locale, constraints.summaryMessage)] : []),
+export function renderTurnConstraintSystemRule(
+  constraints: ResolvedTurnConstraints,
+  locale: Locale = "zh-CN",
+): string {
+  return [
+    text(locale, "turn.system", {
+      min: constraints.minValidActions,
+      max: constraints.maxValidActions,
+    }),
+    ...(constraints.requiredAnyTools.length
+      ? [text(locale, "turn.required_tools", { tools: constraints.requiredAnyTools.join(", ") })]
+      : []),
+    ...(constraints.summary !== undefined
+      ? constraints.summary
+        ? [constraints.summary]
+        : []
+      : constraints.summaryMessage
+        ? [renderMessage(locale, constraints.summaryMessage)]
+        : []),
   ].join(" ");
 }
 
-export function renderTurnConstraintUserHint(constraints: ResolvedTurnConstraints, locale: Locale = "zh-CN"): string {
-  const hint = text(locale, "turn.user", { min: constraints.minValidActions, max: constraints.maxValidActions,
-    required: constraints.requiredAnyTools.length ? text(locale, "turn.required_suffix", { tools: constraints.requiredAnyTools.join(", ") }) : "" });
-  const summary = constraints.summary !== undefined ? constraints.summary : constraints.summaryMessage ? renderMessage(locale, constraints.summaryMessage) : undefined;
+export function renderTurnConstraintUserHint(
+  constraints: ResolvedTurnConstraints,
+  locale: Locale = "zh-CN",
+): string {
+  const hint = text(locale, "turn.user", {
+    min: constraints.minValidActions,
+    max: constraints.maxValidActions,
+    required: constraints.requiredAnyTools.length
+      ? text(locale, "turn.required_suffix", { tools: constraints.requiredAnyTools.join(", ") })
+      : "",
+  });
+  const summary =
+    constraints.summary !== undefined
+      ? constraints.summary
+      : constraints.summaryMessage
+        ? renderMessage(locale, constraints.summaryMessage)
+        : undefined;
   return summary ? `${hint} ${summary}` : hint;
 }

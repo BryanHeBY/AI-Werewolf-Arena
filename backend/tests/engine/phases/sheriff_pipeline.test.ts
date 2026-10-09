@@ -4,7 +4,13 @@ import { AliveComponent } from "../../../src/core/domain/components/alive";
 import { BadgeComponent } from "../../../src/core/domain/components/badge";
 import { VotingRightComponent } from "../../../src/core/domain/components/voting_right";
 import { RoleComponent } from "../../../src/core/domain/components/role";
-import { ActionProvider, ActionRequest, ToolCall, DeathCause, Phase } from "../../../src/core/domain/model";
+import {
+  ActionProvider,
+  ActionRequest,
+  ToolCall,
+  DeathCause,
+  Phase,
+} from "../../../src/core/domain/model";
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
@@ -25,7 +31,9 @@ describe("sheriff pipeline", () => {
   test("initial sheriff assignment emits a canonical replay election event", () => {
     const config = { ...twelvePlayerStandardConfig, initialSheriffSeat: 1 };
     const context = bootstrapGame(config);
-    const sheriffId = context.playerIds.find((id) => context.world.getComponent<{ seat: number }>(id, COMPONENT.Identity)?.seat === 1);
+    const sheriffId = context.playerIds.find(
+      (id) => context.world.getComponent<{ seat: number }>(id, COMPONENT.Identity)?.seat === 1,
+    );
     const event = context.phaseManager.getEvents().find((item) => item.type === "sheriff_elected");
 
     expect(sheriffId).toBeDefined();
@@ -56,15 +64,27 @@ describe("sheriff pipeline", () => {
 
     expect(world.getComponent<AliveComponent>(sheriffId, COMPONENT.Alive)!.alive).toBe(true);
     expect(events).toEqual([]);
-    await new DeathResolution(world, events, new ToolGateway(), registry, { day: 1, phase: Phase.Voting, gameOver: false, result: null }).resolve(result.removed, { [sheriffId]: [DeathCause.Exile] }, { async getAction() { return null; } }, Phase.Voting, Phase.Voting);
+    await new DeathResolution(world, events, new ToolGateway(), registry, {
+      day: 1,
+      phase: Phase.Voting,
+      gameOver: false,
+      result: null,
+    }).resolve(
+      result.removed,
+      { [sheriffId]: [DeathCause.Exile] },
+      {
+        async getAction() {
+          return null;
+        },
+      },
+      Phase.Voting,
+      Phase.Voting,
+    );
     const transferred = events.find((event) => event.type === "sheriff_badge_transferred");
     expect(transferred).toBeDefined();
     const toId = Number(transferred.payload.toId);
     const nextBadge = world.getComponent<BadgeComponent>(toId, COMPONENT.Badge);
-    const nextVoting = world.getComponent<VotingRightComponent>(
-      toId,
-      COMPONENT.VotingRight,
-    );
+    const nextVoting = world.getComponent<VotingRightComponent>(toId, COMPONENT.VotingRight);
     expect(nextBadge?.isSheriff).toBe(true);
     expect(nextBadge?.destroyed).toBe(false);
     expect(nextVoting?.weight).toBe(1.5);
@@ -98,7 +118,22 @@ describe("sheriff pipeline", () => {
     }
 
     const result = registry.onVotedOut(world, sheriffId, events);
-    await new DeathResolution(world, events, new ToolGateway(), registry, { day: 1, phase: Phase.Voting, gameOver: false, result: null }).resolve(result.removed, { [sheriffId]: [DeathCause.Exile] }, { async getAction() { return null; } }, Phase.Voting, Phase.Voting);
+    await new DeathResolution(world, events, new ToolGateway(), registry, {
+      day: 1,
+      phase: Phase.Voting,
+      gameOver: false,
+      result: null,
+    }).resolve(
+      result.removed,
+      { [sheriffId]: [DeathCause.Exile] },
+      {
+        async getAction() {
+          return null;
+        },
+      },
+      Phase.Voting,
+      Phase.Voting,
+    );
     const destroyed = events.find((event) => event.type === "sheriff_badge_destroyed");
     expect(destroyed).toBeDefined();
 
@@ -125,15 +160,16 @@ describe("sheriff pipeline", () => {
     expect(
       events.some(
         (event) =>
-          event.type === "sheriff_badge_transferred" ||
-          event.type === "sheriff_badge_destroyed",
+          event.type === "sheriff_badge_transferred" || event.type === "sheriff_badge_destroyed",
       ),
     ).toBe(true);
   });
 
   test("day pipeline elects sheriff on day 1", async () => {
     const { world } = bootstrapGame(twelvePlayerStandardConfig);
-    const events: any[] = [{ timestamp: Date.now(), type: "phase_changed", payload: { phase: Phase.Day, day: 1 } }];
+    const events: any[] = [
+      { timestamp: Date.now(), type: "phase_changed", payload: { phase: Phase.Day, day: 1 } },
+    ];
     const pipeline = new DayPipeline({
       world,
       roleRegistry: createDefaultRoleRegistry(),
@@ -153,7 +189,7 @@ describe("sheriff pipeline", () => {
         }
         if (request.allowedTools.includes("vote_for_sheriff")) {
           const feed = Array.isArray(request.context.visible_events)
-            ? request.context.visible_events as Array<{ type: string }>
+            ? (request.context.visible_events as Array<{ type: string }>)
             : [];
           sheriffVoteActors.push(request.actorId);
           voteStageFeeds.push(feed);

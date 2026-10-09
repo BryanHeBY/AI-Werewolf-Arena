@@ -7,4 +7,3 @@ export const WOLF_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR: PhaseStageLocalizationCo
     wolf_vote: term("stage", "wolf_vote", "zh-CN"),
   },
 };
-

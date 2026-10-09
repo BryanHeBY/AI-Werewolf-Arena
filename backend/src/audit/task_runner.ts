@@ -1,11 +1,7 @@
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { formatErrorDiagnostic } from "../utils/error_diagnostic";
 import type { AuditAgentExecutor } from "../ai/audit/contracts";
-import {
-  AuditAgentOutput,
-  AuditAgentTask,
-  shrinkAuditPayload,
-} from "./payload_builder";
+import { AuditAgentOutput, AuditAgentTask, shrinkAuditPayload } from "./payload_builder";
 
 export interface AuditTaskRunnerOptions {
   timeoutMs: number;

@@ -2,11 +2,11 @@
 
 日期：2026-10-08。范围：基础/七角色/警长/遗言chat、judge、live双语说明，查询注册器和runner展示语言传递。
 
-| 代理 | 首轮发现 | 修正及最终复查 |
-| --- | --- | --- |
-| `review_scope_rules` R/T | nullable狼刀target被nonnull断言掩盖，翻译参数导致异常 | 目标使用String(null)保原显示，不改校验/生产；11presentation测试315断言、diff检查通过，0阻断 |
-| `review_arch_tests` A/T | 逐调用locale、typed handler与资源边界正确 | 追加空目标交叉复查；24tests352断言及类型检查通过，0阻断 |
-| `review_i18n_delivery` L/D | 默认字典应共用目录、定制原文及私有开关旧语义须说明 | 默认查共享资料，legacy Contributor由同一来源生成；API缺省zh/unknown与原文边界、privateFlag实际旧策略文档明确，复查0阻断 |
+| 代理                       | 首轮发现                                              | 修正及最终复查                                                                                                          |
+| -------------------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `review_scope_rules` R/T   | nullable狼刀target被nonnull断言掩盖，翻译参数导致异常 | 目标使用String(null)保原显示，不改校验/生产；11presentation测试315断言、diff检查通过，0阻断                             |
+| `review_arch_tests` A/T    | 逐调用locale、typed handler与资源边界正确             | 追加空目标交叉复查；24tests352断言及类型检查通过，0阻断                                                                 |
+| `review_i18n_delivery` L/D | 默认字典应共用目录、定制原文及私有开关旧语义须说明    | 默认查共享资料，legacy Contributor由同一来源生成；API缺省zh/unknown与原文边界、privateFlag实际旧策略文档明确，复查0阻断 |
 
 ## 验证
 

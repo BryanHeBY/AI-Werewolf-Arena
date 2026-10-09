@@ -1,8 +1,6 @@
 import { Camp, Phase, PotionType } from "../../src/core/domain/identity";
 import { fixtureResult } from "../support/fixture_values";
-import {
-  getDefaultScriptEventRenderRegistry,
-} from "../../src/game/mechanisms";
+import { getDefaultScriptEventRenderRegistry } from "../../src/game/mechanisms";
 import { GameEvent } from "../../src/core/domain/model";
 
 describe("broadcast localization", () => {
@@ -72,7 +70,11 @@ describe("broadcast localization", () => {
     expect(judge).toContain("原因：狼人达半");
 
     const live = getDefaultScriptEventRenderRegistry().toLiveRender(event, true);
-    expect(live.some((item) => item.text.includes("[live][上帝] 对局结束，胜利阵营：狼人，原因：狼人达半"))).toBe(true);
+    expect(
+      live.some((item) =>
+        item.text.includes("[live][上帝] 对局结束，胜利阵营：狼人，原因：狼人达半"),
+      ),
+    ).toBe(true);
   });
 
   test("wolf_tactical_order should render as god guidance line", () => {
@@ -85,7 +87,9 @@ describe("broadcast localization", () => {
       },
     };
     const live = getDefaultScriptEventRenderRegistry().toLiveRender(event, true);
-    expect(live.some((item) => item.text.includes("[live][上帝] 狼人开始夜聊讨论，顺序：5->3"))).toBe(true);
+    expect(
+      live.some((item) => item.text.includes("[live][上帝] 狼人开始夜聊讨论，顺序：5->3")),
+    ).toBe(true);
   });
 
   test("last_words_spoken should render dedicated last-words channel line", () => {

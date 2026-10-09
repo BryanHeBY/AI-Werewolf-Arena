@@ -21,12 +21,16 @@ export interface LoopbackMcpControlOptions {
  */
 export class LoopbackMcpControlServer implements AcpMcpControlServer {
   private readonly token = randomBytes(32).toString("base64url");
-  private readonly server = createServer((request, response) => void this.handle(request, response));
+  private readonly server = createServer(
+    (request, response) => void this.handle(request, response),
+  );
   private endpoint: string | null = null;
   private sessionId: string | null = null;
   private closed = false;
   private starting?: Promise<AcpMcpServerConfig>;
-  get snapshot() { return { closed: this.closed, listening: this.server.listening }; }
+  get snapshot() {
+    return { closed: this.closed, listening: this.server.listening };
+  }
 
   constructor(private readonly options: LoopbackMcpControlOptions) {}
 
@@ -45,7 +49,10 @@ export class LoopbackMcpControlServer implements AcpMcpControlServer {
         resolve();
       });
     });
-    if (this.closed) { await this.stopServer(true); throw new Error("acp_mcp_control_closed"); }
+    if (this.closed) {
+      await this.stopServer(true);
+      throw new Error("acp_mcp_control_closed");
+    }
     const address = this.server.address();
     if (!address || typeof address === "string") {
       throw new Error(`${this.options.serverName}_control_server_address_unavailable`);
@@ -65,7 +72,8 @@ export class LoopbackMcpControlServer implements AcpMcpControlServer {
 
   bindSession(sessionId: string): void {
     if (this.closed) throw new Error("acp_mcp_control_closed");
-    if (this.sessionId && this.sessionId !== sessionId) throw new Error("acp_mcp_control_already_bound");
+    if (this.sessionId && this.sessionId !== sessionId)
+      throw new Error("acp_mcp_control_already_bound");
     this.sessionId = sessionId;
   }
 
@@ -80,7 +88,9 @@ export class LoopbackMcpControlServer implements AcpMcpControlServer {
     this.endpoint = null;
     if (force) this.server.closeAllConnections();
     if (!this.server.listening) return;
-    await new Promise<void>((resolve, reject) => this.server.close(error => error ? reject(error) : resolve()));
+    await new Promise<void>((resolve, reject) =>
+      this.server.close((error) => (error ? reject(error) : resolve())),
+    );
   }
 
   private async handle(request: IncomingMessage, response: ServerResponse): Promise<void> {
@@ -88,21 +98,38 @@ export class LoopbackMcpControlServer implements AcpMcpControlServer {
       return this.respond(response, 404, toolFailure(this.options.locale ?? "zh-CN", "not_found"));
     }
     if (request.headers.authorization !== `Bearer ${this.token}`) {
-      return this.respond(response, 401, toolFailure(this.options.locale ?? "zh-CN", "unauthorized"));
+      return this.respond(
+        response,
+        401,
+        toolFailure(this.options.locale ?? "zh-CN", "unauthorized"),
+      );
     }
     if (!this.sessionId) {
-      return this.respond(response, 409, toolFailure(this.options.locale ?? "zh-CN", this.options.sessionNotReadyError));
+      return this.respond(
+        response,
+        409,
+        toolFailure(this.options.locale ?? "zh-CN", this.options.sessionNotReadyError),
+      );
     }
     try {
       const sessionId = this.sessionId;
       const body = await this.readJson(request);
-      if (this.closed || this.sessionId !== sessionId) return this.respond(response, 409, toolFailure(this.options.locale ?? "zh-CN", this.options.sessionNotReadyError));
+      if (this.closed || this.sessionId !== sessionId)
+        return this.respond(
+          response,
+          409,
+          toolFailure(this.options.locale ?? "zh-CN", this.options.sessionNotReadyError),
+        );
       if (!body || typeof body !== "object") throw new Error("request_body_must_be_object");
       const input = body as { tool?: unknown; arguments?: unknown };
       const result = await this.options.dispatch(sessionId, input.tool, input.arguments);
       this.respond(response, isFailure(result) ? 400 : 200, result);
     } catch {
-      this.respond(response, 400, toolFailure(this.options.locale ?? "zh-CN", this.options.invalidRequestPrefix));
+      this.respond(
+        response,
+        400,
+        toolFailure(this.options.locale ?? "zh-CN", this.options.invalidRequestPrefix),
+      );
     }
   }
 

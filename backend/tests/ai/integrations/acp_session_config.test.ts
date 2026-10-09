@@ -29,12 +29,14 @@ describe("applyAcpSessionConfigOptions", () => {
 
     await applyAcpSessionConfigOptions(client, session, { "fast-mode": true });
 
-    expect(requests).toEqual([{
-      sessionId: "session-fast",
-      configId: "fast-mode",
-      type: "boolean",
-      value: true,
-    }]);
+    expect(requests).toEqual([
+      {
+        sessionId: "session-fast",
+        configId: "fast-mode",
+        type: "boolean",
+        value: true,
+      },
+    ]);
   });
 
   test("fails instead of silently ignoring an unsupported option", async () => {
@@ -43,10 +45,8 @@ describe("applyAcpSessionConfigOptions", () => {
       newSessionResponse: { sessionId: "session-no-fast", configOptions: [] },
     } satisfies Pick<acp.ActiveSession, "sessionId" | "newSessionResponse">;
 
-    await expect(applyAcpSessionConfigOptions(
-      {} as acp.ClientContext,
-      session,
-      { "fast-mode": true },
-    )).rejects.toThrow("acp_session_config_option_not_advertised:fast-mode");
+    await expect(
+      applyAcpSessionConfigOptions({} as acp.ClientContext, session, { "fast-mode": true }),
+    ).rejects.toThrow("acp_session_config_option_not_advertised:fast-mode");
   });
 });

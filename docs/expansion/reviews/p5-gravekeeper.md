@@ -13,11 +13,11 @@
 
 ## 三路发现与修正
 
-| 路线 | 发现/建议 | 处理 |
-| --- | --- | --- |
-| R/T：review_scope_rules | 初卡可冻结；label必须放逐定案冻结、pending不入DTO；Night2死前记录≠真实模型收到 | 内部fact输入、不再重读目标、day−1无旧重报、明确次夜死亡场景只有Day1模型turn；其它场景逐turn标记实际最新/无反馈 |
-| A：review_arch_tests | Medium：手动jump后夜间仍反馈、结伤/覆盖phase；Medium：异常history kind:role被展示成具体牌 | night phaseRevision clock＋stage前后/await及gateway后守卫，interrupted union让manager短路；shared精确camp-only reader由profile/DTO/console/front共同使用，坏值Unknown；实际取消/往返/同phase及畸形回归 |
-| L/D：review_i18n_delivery | API参数/ctx迁移明确；“无主动工具”与G02 gift能力措辞冲突 | 最新第4参options/返回union/手工ctx必填在契约列明；“无原生主动工具”中英一致，giftSeer独立判例通过 |
+| 路线                      | 发现/建议                                                                                 | 处理                                                                                                                                                                                                   |
+| ------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| R/T：review_scope_rules   | 初卡可冻结；label必须放逐定案冻结、pending不入DTO；Night2死前记录≠真实模型收到            | 内部fact输入、不再重读目标、day−1无旧重报、明确次夜死亡场景只有Day1模型turn；其它场景逐turn标记实际最新/无反馈                                                                                         |
+| A：review_arch_tests      | Medium：手动jump后夜间仍反馈、结伤/覆盖phase；Medium：异常history kind:role被展示成具体牌 | night phaseRevision clock＋stage前后/await及gateway后守卫，interrupted union让manager短路；shared精确camp-only reader由profile/DTO/console/front共同使用，坏值Unknown；实际取消/往返/同phase及畸形回归 |
+| L/D：review_i18n_delivery | API参数/ctx迁移明确；“无主动工具”与G02 gift能力措辞冲突                                   | 最新第4参options/返回union/手工ctx必填在契约列明；“无原生主动工具”中英一致，giftSeer独立判例通过                                                                                                       |
 
 独立A复查core20／236，原两Medium关闭，确认clock/union和reader/DTO/文档迁移；L先11／86、后20／236与front6／96，随后只读复查契约及记录≠模型收到；R规则卡先0阻断，源码/8场景人工oracle复查0执行或玩家隐私阻断；提醒事件直播privateFlag不控制独立operator prompt/thinking输出，卡/契约已限定事件行并链接日志矩阵。代理不重复全矩阵/全release，主代理证据独立列明。
 

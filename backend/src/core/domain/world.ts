@@ -16,41 +16,107 @@ export class World {
   private entities: Set<EntityId> = new Set();
   private stores: Map<ComponentName, Map<EntityId, unknown>> = new Map();
   private nextDeathActionId = 1;
-  private deathActions = new Map<EntityId, { id: number; tool: "shoot" | "speak"; phase: Phase; day: number; abilityId?: string; alive: AliveComponent; lifeVersion: number; isCurrent: () => boolean }>();
+  private deathActions = new Map<
+    EntityId,
+    {
+      id: number;
+      tool: "shoot" | "speak";
+      phase: Phase;
+      day: number;
+      abilityId?: string;
+      alive: AliveComponent;
+      lifeVersion: number;
+      isCurrent: () => boolean;
+    }
+  >();
 
   /** Engine-owned, transient permission; its ID alone does not grant an action. */
-  openDeathAction(actorId: EntityId, tool: "shoot" | "speak", phase: Phase, day: number, isCurrent: () => boolean = () => true, abilityId?: string): { readonly id: number; close(): void } {
+  openDeathAction(
+    actorId: EntityId,
+    tool: "shoot" | "speak",
+    phase: Phase,
+    day: number,
+    isCurrent: () => boolean = () => true,
+    abilityId?: string,
+  ): { readonly id: number; close(): void } {
     if (this.currentDeathAction(actorId)) throw new Error("death_action_already_open");
     const alive = this.getComponent<AliveComponent>(actorId, COMPONENT.Alive);
     const lifeVersion = alive && aliveLifeVersion(alive);
-    if (!alive || alive.alive !== false || lifeVersion === undefined ||
-        !this.getComponent<RoleComponent>(actorId, COMPONENT.Role) || !Number.isSafeInteger(day) || day < 1 ||
-        !["shoot", "speak"].includes(tool) || !Object.values(Phase).includes(phase) || phase === Phase.GameOver ||
-        (abilityId !== undefined && (tool !== "shoot" || typeof abilityId !== "string" || !/^[a-z][a-z0-9:_-]{0,127}$/.test(abilityId) || abilityId.startsWith("native:")))) {
+    if (
+      !alive ||
+      alive.alive !== false ||
+      lifeVersion === undefined ||
+      !this.getComponent<RoleComponent>(actorId, COMPONENT.Role) ||
+      !Number.isSafeInteger(day) ||
+      day < 1 ||
+      !["shoot", "speak"].includes(tool) ||
+      !Object.values(Phase).includes(phase) ||
+      phase === Phase.GameOver ||
+      (abilityId !== undefined &&
+        (tool !== "shoot" ||
+          typeof abilityId !== "string" ||
+          !/^[a-z][a-z0-9:_-]{0,127}$/.test(abilityId) ||
+          abilityId.startsWith("native:")))
+    ) {
       throw new Error("death_action_invalid_actor_or_stage");
     }
     const id = this.nextDeathActionId++;
-    this.deathActions.set(actorId, { id, tool, phase, day, abilityId, alive, lifeVersion, isCurrent });
-    return Object.freeze({ id, close: () => {
-      if (this.deathActions.get(actorId)?.id === id) this.deathActions.delete(actorId);
-    } });
+    this.deathActions.set(actorId, {
+      id,
+      tool,
+      phase,
+      day,
+      abilityId,
+      alive,
+      lifeVersion,
+      isCurrent,
+    });
+    return Object.freeze({
+      id,
+      close: () => {
+        if (this.deathActions.get(actorId)?.id === id) this.deathActions.delete(actorId);
+      },
+    });
   }
 
-  hasDeathAction(actorId: EntityId, tool: string, phase: Phase, day: number | undefined, id: number | undefined, abilityId?: string): boolean {
+  hasDeathAction(
+    actorId: EntityId,
+    tool: string,
+    phase: Phase,
+    day: number | undefined,
+    id: number | undefined,
+    abilityId?: string,
+  ): boolean {
     const permit = this.currentDeathAction(actorId);
-    return permit !== undefined && permit.id === id && permit.tool === tool && permit.phase === phase && permit.day === day && permit.abilityId === abilityId;
+    return (
+      permit !== undefined &&
+      permit.id === id &&
+      permit.tool === tool &&
+      permit.phase === phase &&
+      permit.day === day &&
+      permit.abilityId === abilityId
+    );
   }
 
   isDeathActionOpen(actorId: EntityId, tool: string, id: number, abilityId?: string): boolean {
     const permit = this.currentDeathAction(actorId);
-    return permit !== undefined && permit.id === id && permit.tool === tool && permit.abilityId === abilityId;
+    return (
+      permit !== undefined &&
+      permit.id === id &&
+      permit.tool === tool &&
+      permit.abilityId === abilityId
+    );
   }
 
   private currentDeathAction(actorId: EntityId) {
     const permit = this.deathActions.get(actorId);
     if (!permit) return undefined;
-    if (this.getComponent<AliveComponent>(actorId, COMPONENT.Alive) !== permit.alive || permit.alive.alive !== false ||
-        aliveLifeVersion(permit.alive) !== permit.lifeVersion || !permit.isCurrent()) {
+    if (
+      this.getComponent<AliveComponent>(actorId, COMPONENT.Alive) !== permit.alive ||
+      permit.alive.alive !== false ||
+      aliveLifeVersion(permit.alive) !== permit.lifeVersion ||
+      !permit.isCurrent()
+    ) {
       this.deathActions.delete(actorId);
       return undefined;
     }
@@ -62,7 +128,9 @@ export class World {
     return this.deathActions.size;
   }
 
-  closeDeathActions(): void { this.deathActions.clear(); }
+  closeDeathActions(): void {
+    this.deathActions.clear();
+  }
 
   /**
    * 创建新实体并返回实体 ID。

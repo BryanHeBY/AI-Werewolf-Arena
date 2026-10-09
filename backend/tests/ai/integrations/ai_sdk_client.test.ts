@@ -10,7 +10,7 @@ describe("AiSdkClient with the installed AI SDK", () => {
       port: 0,
       async fetch(request) {
         userAgents.push(request.headers.get("user-agent") ?? "");
-        requests.push(await request.json() as Record<string, unknown>);
+        requests.push((await request.json()) as Record<string, unknown>);
         return completion({ role: "assistant", content: "收到" }, "stop");
       },
     });
@@ -50,7 +50,7 @@ describe("AiSdkClient with the installed AI SDK", () => {
       hostname: "127.0.0.1",
       port: 0,
       async fetch(request) {
-        requests.push(await request.json() as Record<string, unknown>);
+        requests.push((await request.json()) as Record<string, unknown>);
         return Response.json({
           id: "msg-test",
           type: "message",
@@ -87,16 +87,21 @@ describe("AiSdkClient with the installed AI SDK", () => {
       hostname: "127.0.0.1",
       port: 0,
       async fetch(request) {
-        requests.push(await request.json() as Record<string, unknown>);
-        return completion({
-          role: "assistant",
-          content: null,
-          tool_calls: [{
-            id: "call-1",
-            type: "function",
-            function: { name: "submit_action", arguments: '{"target_id":2}' },
-          }],
-        }, "tool_calls");
+        requests.push((await request.json()) as Record<string, unknown>);
+        return completion(
+          {
+            role: "assistant",
+            content: null,
+            tool_calls: [
+              {
+                id: "call-1",
+                type: "function",
+                function: { name: "submit_action", arguments: '{"target_id":2}' },
+              },
+            ],
+          },
+          "tool_calls",
+        );
       },
     });
 
@@ -108,15 +113,17 @@ describe("AiSdkClient with the installed AI SDK", () => {
       });
       const result = await client.runToolLoop(
         [{ role: "user", content: "投票" }],
-        [{
-          name: "submit_action",
-          description: "提交投票",
-          parameters: {
-            type: "object",
-            properties: { target_id: { type: "integer" } },
-            required: ["target_id"],
+        [
+          {
+            name: "submit_action",
+            description: "提交投票",
+            parameters: {
+              type: "object",
+              properties: { target_id: { type: "integer" } },
+              required: ["target_id"],
+            },
           },
-        }],
+        ],
         {
           async onToolCall(invocation) {
             expect(invocation).toMatchObject({
@@ -160,7 +167,9 @@ describe("AiSdkClient with the installed AI SDK", () => {
         baseURL: `${server.url.origin}/v1`,
         model: "invalid-model",
       });
-      await expect(client.chat([{ role: "user", content: "测试" }])).rejects.toThrow("invalid model");
+      await expect(client.chat([{ role: "user", content: "测试" }])).rejects.toThrow(
+        "invalid model",
+      );
       expect(requests).toBe(1);
     } finally {
       server.stop(true);
@@ -169,17 +178,32 @@ describe("AiSdkClient with the installed AI SDK", () => {
 
   test("returns a required-tool non-action to the game retry policy", async () => {
     const server = Bun.serve({
-      hostname: "127.0.0.1", port: 0,
-      fetch() { return completion({ role: "assistant", content: "我还没有提交行动" }, "stop"); },
+      hostname: "127.0.0.1",
+      port: 0,
+      fetch() {
+        return completion({ role: "assistant", content: "我还没有提交行动" }, "stop");
+      },
     });
     try {
       const client = new AiSdkClient({
-        apiKey: "test-key", baseURL: `${server.url.origin}/v1`, model: "test-model",
+        apiKey: "test-key",
+        baseURL: `${server.url.origin}/v1`,
+        model: "test-model",
       });
       const result = await client.runToolLoop(
         [{ role: "user", content: "请提交行动" }],
-        [{ name: "submit_action", description: "提交行动", parameters: { type: "object", properties: {} } }],
-        { onToolCall: async () => { throw new Error("No tool should execute"); } },
+        [
+          {
+            name: "submit_action",
+            description: "提交行动",
+            parameters: { type: "object", properties: {} },
+          },
+        ],
+        {
+          onToolCall: async () => {
+            throw new Error("No tool should execute");
+          },
+        },
         { toolChoice: "required" },
       );
       expect(result.finalAction).toBeNull();
@@ -204,16 +228,37 @@ function completion(message: Record<string, unknown>, finishReason: string): Res
 
 test("historical tool messages use a neutral machine tag without changing original contents", async () => {
   const requests: Record<string, unknown>[] = [];
-  const server = Bun.serve({ hostname: "127.0.0.1", port: 0, async fetch(input) {
-    requests.push(await input.json() as Record<string, unknown>);
-    return Response.json({ id: "history", object: "chat.completion", created: 1, model: "test", choices: [{ index: 0, finish_reason: "stop", message: { role: "assistant", content: "ok" } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } });
-  } });
+  const server = Bun.serve({
+    hostname: "127.0.0.1",
+    port: 0,
+    async fetch(input) {
+      requests.push((await input.json()) as Record<string, unknown>);
+      return Response.json({
+        id: "history",
+        object: "chat.completion",
+        created: 1,
+        model: "test",
+        choices: [
+          { index: 0, finish_reason: "stop", message: { role: "assistant", content: "ok" } },
+        ],
+        usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
+      });
+    },
+  });
   try {
-    const client = new AiSdkClient({ apiKey: "synthetic", baseURL: `${server.url.origin}/v1`, model: "test" });
-    for (const content of ['{"ok":true}', 'Original 中文']) {
+    const client = new AiSdkClient({
+      apiKey: "synthetic",
+      baseURL: `${server.url.origin}/v1`,
+      model: "test",
+    });
+    for (const content of ['{"ok":true}', "Original 中文"]) {
       expect(await client.chat([{ role: "tool", content }])).toBe("ok");
-      expect(requests.at(-1)?.messages).toEqual([{ role: "user", content: `[tool_result] ${content}` }]);
+      expect(requests.at(-1)?.messages).toEqual([
+        { role: "user", content: `[tool_result] ${content}` },
+      ]);
     }
     expect(JSON.stringify(requests[0])).not.toMatch(/[\u4e00-\u9fff]/);
-  } finally { server.stop(true); }
+  } finally {
+    server.stop(true);
+  }
 });

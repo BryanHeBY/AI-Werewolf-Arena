@@ -2,11 +2,11 @@
 
 日期：2026-10-08。范围：稳定RuleError/RuleViolation、规则网关与SDK/ACP游戏/审计错误解释、局部Zod诊断、控制面异常反馈。
 
-| 代理 | 首轮发现 | 修正及最终复查 |
-| --- | --- | --- |
-| `review_scope_rules` R/T | 校验条件、顺序及消费没有变化；自定string不能因同形代码被改译 | 内置明确返回RuleViolation对象，所有非空自定string保原文，空string保持允许；23定向测试3555断言通过。修正交叉复查14测试529断言，0阻断 |
-| `review_arch_tests` A/T | 通用toolFailure调用参数化turn_id_mismatch会抛；旧error-only callback不应被required message破坏 | 通用error解释无占位，动态turn/tool独立模板，unknown不与fallback模板碰撞；ACP回调message可选，registry按任务补齐。独立14测试529断言，0阻断 |
-| `review_i18n_delivery` L/D | error从中文理由变code、registry返回类型变化及旧记录政策需要明确 | i18n文档补API迁移、旧原文/Tape hash/public兼容和P4未统一接收边界；builder/回调和同形原文最终复查0阻断 |
+| 代理                       | 首轮发现                                                                                       | 修正及最终复查                                                                                                                            |
+| -------------------------- | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `review_scope_rules` R/T   | 校验条件、顺序及消费没有变化；自定string不能因同形代码被改译                                   | 内置明确返回RuleViolation对象，所有非空自定string保原文，空string保持允许；23定向测试3555断言通过。修正交叉复查14测试529断言，0阻断       |
+| `review_arch_tests` A/T    | 通用toolFailure调用参数化turn_id_mismatch会抛；旧error-only callback不应被required message破坏 | 通用error解释无占位，动态turn/tool独立模板，unknown不与fallback模板碰撞；ACP回调message可选，registry按任务补齐。独立14测试529断言，0阻断 |
+| `review_i18n_delivery` L/D | error从中文理由变code、registry返回类型变化及旧记录政策需要明确                                | i18n文档补API迁移、旧原文/Tape hash/public兼容和P4未统一接收边界；builder/回调和同形原文最终复查0阻断                                     |
 
 ## 验证
 

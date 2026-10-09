@@ -1,5 +1,5 @@
 import { text } from "@ai-werewolf-arena/game-text";
-import { ActionRequest, EntityId, PlayerVisibleEvent, ToolName } from "../../../core/domain"
+import { ActionRequest, EntityId, PlayerVisibleEvent, ToolName } from "../../../core/domain";
 import { encodePlayerVisibleEvent, parsePlayerVisibleEvents } from "../visible_event_protocol";
 import { BuiltPlayerPrompt } from "../player/contracts";
 import { ChatMessage } from "../../integrations/llm/transport";
@@ -39,13 +39,21 @@ export class PlayerPromptSession {
     const userPrompt = this.options.promptPolicy.buildUser(request, {
       turnId,
       allowedTools,
-      effectiveActionTools: allowedTools.filter((tool) => tool !== PlayerPromptSession.REPORT_BUG_TOOL),
-      actionSubmissionHint: text(this.options.promptPolicy.locale, "prompt.sdk.submit", { turn: turnId }),
+      effectiveActionTools: allowedTools.filter(
+        (tool) => tool !== PlayerPromptSession.REPORT_BUG_TOOL,
+      ),
+      actionSubmissionHint: text(this.options.promptPolicy.locale, "prompt.sdk.submit", {
+        turn: turnId,
+      }),
     });
     const currentTurnUser: ChatMessage = { role: "user", content: userPrompt };
     this.append(request.actorId, currentTurnUser);
     return {
-      messages: [{ role: "system", content: systemPrompt }, ...contextWindow.history, currentTurnUser],
+      messages: [
+        { role: "system", content: systemPrompt },
+        ...contextWindow.history,
+        currentTurnUser,
+      ],
       systemPrompt,
       userPrompt,
       ...(system?.boardInfoPrompt ? { boardInfoPrompt: system.boardInfoPrompt } : {}),

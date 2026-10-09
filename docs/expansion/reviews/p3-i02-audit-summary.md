@@ -2,11 +2,11 @@
 
 日期：2026-10-08。范围：确定性MessageRef/标识、中英摘要/关闭AI的fallback、词面筛选、固定标题与任务证据解析。
 
-| 代理 | 首轮发现 | 修正及复查 |
-| --- | --- | --- |
-| `review_scope_rules` R/T | summary用了全局证据而非本任务实际证据；None分支跳过缩进检查 | 取merged findings证据与global交集；None原始行exact并先检查格式。任务权限/真实ACP回归28测试382断言，最终容器10测试134断言，0阻断 |
-| `review_arch_tests` A/T | 缩进/closing hashes/未知标题可绕过；phase自由字段可注入；引用块和list内标题仍被渲染 | 固定顺序/标题白名单、自由文本NL/HTML/原文marker展示编码、禁引用/容器header；逐层列表前缀缩短，不用歧义嵌套regex。最终独立10测试134断言与额外容器探针，0阻断 |
-| `review_i18n_delivery` L/D | HTML comment能隐藏整个合法结构；同形未知phase不标异常；NLU词面可误报 | 禁HTML/comments/CDATA与代码格式，unknown requestPhase也需known集合；未知原值保留。文档说明API/旧Markdown及词面局限，复查0阻断 |
+| 代理                       | 首轮发现                                                                            | 修正及复查                                                                                                                                                  |
+| -------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `review_scope_rules` R/T   | summary用了全局证据而非本任务实际证据；None分支跳过缩进检查                         | 取merged findings证据与global交集；None原始行exact并先检查格式。任务权限/真实ACP回归28测试382断言，最终容器10测试134断言，0阻断                             |
+| `review_arch_tests` A/T    | 缩进/closing hashes/未知标题可绕过；phase自由字段可注入；引用块和list内标题仍被渲染 | 固定顺序/标题白名单、自由文本NL/HTML/原文marker展示编码、禁引用/容器header；逐层列表前缀缩短，不用歧义嵌套regex。最终独立10测试134断言与额外容器探针，0阻断 |
+| `review_i18n_delivery` L/D | HTML comment能隐藏整个合法结构；同形未知phase不标异常；NLU词面可误报                | 禁HTML/comments/CDATA与代码格式，unknown requestPhase也需known集合；未知原值保留。文档说明API/旧Markdown及词面局限，复查0阻断                               |
 
 ## 验证
 

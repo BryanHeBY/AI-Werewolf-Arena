@@ -56,8 +56,9 @@ describe("parallel agent dispatch", () => {
     const result = await votingPipeline.execute(config, provider, { day: 1 });
     expect(result.interrupted).toBe(false);
     expect(maxConcurrentVotes).toBeGreaterThan(1);
-    expect(events.filter((event) => event.type === "vote_cast").map((event) => event.payload.actorId))
-      .toEqual(voterIds);
+    expect(
+      events.filter((event) => event.type === "vote_cast").map((event) => event.payload.actorId),
+    ).toEqual(voterIds);
   });
 
   test("wolf self-destruct window requests are dispatched in parallel", async () => {
@@ -91,10 +92,7 @@ describe("parallel agent dispatch", () => {
         }
         if (request.allowedTools.includes("self_destruct")) {
           activeSelfDestruct += 1;
-          maxConcurrentSelfDestruct = Math.max(
-            maxConcurrentSelfDestruct,
-            activeSelfDestruct,
-          );
+          maxConcurrentSelfDestruct = Math.max(maxConcurrentSelfDestruct, activeSelfDestruct);
           await sleep(30);
           activeSelfDestruct -= 1;
           return null;

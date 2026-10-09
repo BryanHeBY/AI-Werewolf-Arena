@@ -6,4 +6,3 @@ export const SEER_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR: PhaseStageLocalizationCo
     seer: term("stage", "seer", "zh-CN"),
   },
 };
-

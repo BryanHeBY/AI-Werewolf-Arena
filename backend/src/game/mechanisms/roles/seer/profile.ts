@@ -28,8 +28,10 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
   },
   renderPrompt: (roleComp, locale = "zh-CN") => {
     const state = getSeerState(roleComp);
-    const latest = state && state.lastTarget !== null && (state.lastResult || state.lastIsWerewolf !== null)
-      ? ` ${state.lastResult ? text(locale, "inspection.latest", { target: state.lastTarget, result: inspectionLabel(state.lastResult, locale) }) : text(locale, "role.seer.latest", { target: state.lastTarget, camp: term("camp", state.lastIsWerewolf ? "wolf" : "good", locale) })}` : "";
+    const latest =
+      state && state.lastTarget !== null && (state.lastResult || state.lastIsWerewolf !== null)
+        ? ` ${state.lastResult ? text(locale, "inspection.latest", { target: state.lastTarget, result: inspectionLabel(state.lastResult, locale) }) : text(locale, "role.seer.latest", { target: state.lastTarget, camp: term("camp", state.lastIsWerewolf ? "wolf" : "good", locale) })}`
+        : "";
     return text(locale, "role.seer.state") + latest;
   },
   toolSpecs: SEER_TOOL_SPECS,
@@ -40,7 +42,8 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
       if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
       if (toolCall.name !== "check_identity") return { code: RuleError.ToolMismatch };
       if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.CheckTarget };
-      if (!luckyTargetAllowed(world, actorId, ability, day ?? 1, "check", toolCall.args.target_id)) return { code: RuleError.LuckyTargetRepeat };
+      if (!luckyTargetAllowed(world, actorId, ability, day ?? 1, "check", toolCall.args.target_id))
+        return { code: RuleError.LuckyTargetRepeat };
       return null;
     },
   },
@@ -57,8 +60,29 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
     if (!request.allowedTools.includes("check_identity")) {
       return null;
     }
-    const ability = activeNightAbility(roleComp, "seer_check", request.context.day, request.context.ability_id);
-    const target = world && ability ? world.getAliveEntityIds().find(id => id !== request.actorId && luckyTargetAllowed(world, request.actorId, ability, request.context.day, "check", id)) ?? null : pickAliveNotSelf();
+    const ability = activeNightAbility(
+      roleComp,
+      "seer_check",
+      request.context.day,
+      request.context.ability_id,
+    );
+    const target =
+      world && ability
+        ? (world
+            .getAliveEntityIds()
+            .find(
+              (id) =>
+                id !== request.actorId &&
+                luckyTargetAllowed(
+                  world,
+                  request.actorId,
+                  ability,
+                  request.context.day,
+                  "check",
+                  id,
+                ),
+            ) ?? null)
+        : pickAliveNotSelf();
     return target !== null ? { name: "check_identity", args: { target_id: target } } : null;
   },
 };

@@ -6,13 +6,13 @@
 
 共享`ErrorDiagnostic`属于`replay-contract`，供私有文件和审计消费；不依赖后端引擎或模型SDK。字段只允许：
 
-| 字段 | 约束 |
-| --- | --- |
-| code | transport_error / request_timeout / request_aborted / rate_limited / authentication_failed / permission_denied / model_unavailable / network_error / filesystem_error |
-| statusCode | 可选100–599整数；原始HTTP状态 |
-| retryable | 可选boolean，来自实际SDK异常`isRetryable`，不是按code擅自决定 |
-| retryAfterMs | 可选0–86400000整数；仅接受delta秒形式Retry-After，最多三位小数，十进制精确换算 |
-| fileCode | 可选固定errno：EACCES、EPERM、ENOENT、ENOSPC、EROFS、EEXIST、EMFILE、ENFILE、EIO |
+| 字段         | 约束                                                                                                                                                                  |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| code         | transport_error / request_timeout / request_aborted / rate_limited / authentication_failed / permission_denied / model_unavailable / network_error / filesystem_error |
+| statusCode   | 可选100–599整数；原始HTTP状态                                                                                                                                         |
+| retryable    | 可选boolean，来自实际SDK异常`isRetryable`，不是按code擅自决定                                                                                                         |
+| retryAfterMs | 可选0–86400000整数；仅接受delta秒形式Retry-After，最多三位小数，十进制精确换算                                                                                        |
+| fileCode     | 可选固定errno：EACCES、EPERM、ENOENT、ENOSPC、EROFS、EEXIST、EMFILE、ENFILE、EIO                                                                                      |
 
 没有URL、请求体、响应体、任意headers、认证、环境、异常类名/原话、stack、cause对象或provider配置字段。普通字段只读自有data descriptor，不调用外部getter、toString或toJSON；对象探测失败安全回落。原生DOMException通过捕获的内置name getter做品牌检查，实例遮蔽getter不执行，支持原生AbortError/TimeoutError。
 

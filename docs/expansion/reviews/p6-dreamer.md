@@ -14,11 +14,11 @@
 
 ## 三路发现与修正
 
-| 审查 | 发现 | 修正 |
-| --- | --- | --- |
-| R/T | 三次null可跳过强制梦；pipeline实例guard可被同World重建绕过；混波来源/原刀口/追加公开死亡/重入细则未清楚 | 有效资格/clock/稳定目标仍在时耗尽throw；World WeakMap同步commit；逐actor来源+匿名追加、Witch耗药不预知、同夜失败World不假恢复均冻结/实际判例 |
-| A | World重建丢shield；Night枪同phasejump继续提交；已标死梦目标不补Dream仍开枪；最后gateway遗言撤权缝 | World ledger、manager epoch到permit/await/gateway/提交回调；原生命同波补因不重死，后续枪禁；遗言写前最终许可/clock再验。各probe变最小回归 |
-| L/D | 无NativeDreamer板子的gift请求缺完整能力规则；旧system事实把Night名单说成最终 | shared按实际dream请求注入effect/邻接历史/Day边界而不变身份；实际四wire确认，模板区分初始名单/追加/成功枪与blocked非死 |
+| 审查 | 发现                                                                                                    | 修正                                                                                                                                         |
+| ---- | ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| R/T  | 三次null可跳过强制梦；pipeline实例guard可被同World重建绕过；混波来源/原刀口/追加公开死亡/重入细则未清楚 | 有效资格/clock/稳定目标仍在时耗尽throw；World WeakMap同步commit；逐actor来源+匿名追加、Witch耗药不预知、同夜失败World不假恢复均冻结/实际判例 |
+| A    | World重建丢shield；Night枪同phasejump继续提交；已标死梦目标不补Dream仍开枪；最后gateway遗言撤权缝       | World ledger、manager epoch到permit/await/gateway/提交回调；原生命同波补因不重死，后续枪禁；遗言写前最终许可/clock再验。各probe变最小回归    |
+| L/D  | 无NativeDreamer板子的gift请求缺完整能力规则；旧system事实把Night名单说成最终                            | shared按实际dream请求注入effect/邻接历史/Day边界而不变身份；实际四wire确认，模板区分初始名单/追加/成功枪与blocked非死                        |
 
 R独立29／436复查原阻断关闭；L独立29／436关闭提示缺口；A原问题29／436后，最后遗言同步撤权probe独立1／4通过并关闭；主代理完整core30／440。R最终完整core30／440通过，L指出tool/kind dream与stage dreamer的记法已分别写准。三路不重复全54/browser矩阵，实际主代理门槛独立记录。最后source/frame/角色登记及全量验收不以早期绿冒充完成。
 

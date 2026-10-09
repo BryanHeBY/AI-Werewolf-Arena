@@ -36,9 +36,7 @@ describe("EventRegistry hooks", () => {
     const hunterId = world
       .getAliveEntityIds()
       .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Hunter)!;
-    const targetId = world
-      .getAliveEntityIds()
-      .find((id) => id !== hunterId)!;
+    const targetId = world.getAliveEntityIds().find((id) => id !== hunterId)!;
 
     const hunterAlive = world.getComponent<AliveComponent>(hunterId, COMPONENT.Alive)!;
     hunterAlive.alive = false;
@@ -65,9 +63,7 @@ describe("EventRegistry hooks", () => {
     const hunterId = world
       .getAliveEntityIds()
       .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Hunter)!;
-    const targetId = world
-      .getAliveEntityIds()
-      .find((id) => id !== hunterId)!;
+    const targetId = world.getAliveEntityIds().find((id) => id !== hunterId)!;
 
     const hunterAlive = world.getComponent<AliveComponent>(hunterId, COMPONENT.Alive)!;
     hunterAlive.alive = false;

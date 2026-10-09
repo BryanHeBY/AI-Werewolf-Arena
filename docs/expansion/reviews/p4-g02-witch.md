@@ -14,11 +14,11 @@
 
 ## 独立三路审查
 
-| 审查者 | 检查及建议 | 复查与证据 |
-| --- | --- | --- |
-| A / review_arch_tests | World真实mark与Alive/Role授权、readonly预检/最终消费，按实例隐藏输入，Damage不接管Alive/死亡链；建议PID验证ESRCH | 初读0阻断，独立witch专项8/144通过；ESRCH建议采纳、最后8/68日志核对，最终0阻断 |
-| R+T / review_scope_rules | 冻结目标/自救/资源条件、未查询目标前的耗尽拒绝、unknown/null区别、独立16oracle与actual compound | 独立31/325通过；实际负例仍有其它神在场，gun0未靠旧末神分支蒙关；0未决阻断，未扩大G03 |
-| L+D / review_i18n_delivery | stablecode两語、历史信息、schema/source兼容；建议本夜而非昨夜措辞 | 本夜/this night统一，旧档原文不改；独立31/325，核对actual13/166与8/60，最终0阻断 |
+| 审查者                     | 检查及建议                                                                                                       | 复查与证据                                                                           |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| A / review_arch_tests      | World真实mark与Alive/Role授权、readonly预检/最终消费，按实例隐藏输入，Damage不接管Alive/死亡链；建议PID验证ESRCH | 初读0阻断，独立witch专项8/144通过；ESRCH建议采纳、最后8/68日志核对，最终0阻断        |
+| R+T / review_scope_rules   | 冻结目标/自救/资源条件、未查询目标前的耗尽拒绝、unknown/null区别、独立16oracle与actual compound                  | 独立31/325通过；实际负例仍有其它神在场，gun0未靠旧末神分支蒙关；0未决阻断，未扩大G03 |
+| L+D / review_i18n_delivery | stablecode两語、历史信息、schema/source兼容；建议本夜而非昨夜措辞                                                | 本夜/this night统一，旧档原文不改；独立31/325，核对actual13/166与8/60，最终0阻断     |
 
 实现初步检查31/325通过；后来“本夜”文案让旧LLM fixture仍期待昨夜而失败，已修正明确期待本夜，定向1测试/2断言通过，最终完整门槛无遗留失败。测试未因实现更严而放宽目标规则，赠予自救提示判例补真实WolfKillMark。
 

@@ -1,16 +1,40 @@
 /** 文件说明：遗言规则与事件写入机制。 */
 import { AliveComponent } from "../../../core/domain/components/alive";
 import { COMPONENT } from "../../../core/domain/components/names";
-import { EntityId, GameEvent, Phase, DeathCause, type DeathSources } from "../../../core/domain/model";
+import {
+  EntityId,
+  GameEvent,
+  Phase,
+  DeathCause,
+  type DeathSources,
+} from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 
 /** 遗言机制：判定是否可遗言并写入遗言授权事件。 */
 export class LastWordsMechanism {
   shouldGrantLastWords(deathPhase: Phase, day: number, sources: readonly DeathCause[]): boolean {
-    if (sources.length === 0 || sources.includes(DeathCause.SelfDestruct) || sources.includes(DeathCause.WhiteWolfBlast)) return false;
-    if (deathPhase === Phase.Day && sources.every(source => source === DeathCause.DuelFailure)) return true;
-    return (deathPhase === Phase.Night && day === 1 && sources.some(source => source === DeathCause.WolfKill || source === DeathCause.AwakenedHiddenKnife || source === DeathCause.Poison || source === DeathCause.Dream || source === DeathCause.MerchantBacklash || source === DeathCause.BlackMarketBacklash)) ||
-      (deathPhase === Phase.Voting && sources.includes(DeathCause.Exile));
+    if (
+      sources.length === 0 ||
+      sources.includes(DeathCause.SelfDestruct) ||
+      sources.includes(DeathCause.WhiteWolfBlast)
+    )
+      return false;
+    if (deathPhase === Phase.Day && sources.every((source) => source === DeathCause.DuelFailure))
+      return true;
+    return (
+      (deathPhase === Phase.Night &&
+        day === 1 &&
+        sources.some(
+          (source) =>
+            source === DeathCause.WolfKill ||
+            source === DeathCause.AwakenedHiddenKnife ||
+            source === DeathCause.Poison ||
+            source === DeathCause.Dream ||
+            source === DeathCause.MerchantBacklash ||
+            source === DeathCause.BlackMarketBacklash,
+        )) ||
+      (deathPhase === Phase.Voting && sources.includes(DeathCause.Exile))
+    );
   }
 
   recordLastWordsGranted(
@@ -24,7 +48,9 @@ export class LastWordsMechanism {
     deathPhases: Readonly<Record<EntityId, Phase>> = {},
   ): void {
     for (const deadId of deadIds) {
-      if (!this.shouldGrantLastWords(deathPhases[deadId] ?? deathPhase, day, sources[deadId] ?? [])) {
+      if (
+        !this.shouldGrantLastWords(deathPhases[deadId] ?? deathPhase, day, sources[deadId] ?? [])
+      ) {
         continue;
       }
       const alive = world.getComponent<AliveComponent>(deadId, COMPONENT.Alive);

@@ -15,11 +15,23 @@ import { World } from "../../../../core/domain/world";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import type { RoleCatalog } from "../../roles/catalog";
 import type { DreamNightLink } from "../../roles/dreamer/night_frame";
-import type {AliveComponent} from "../../../../core/domain/components/alive";
+import type { AliveComponent } from "../../../../core/domain/components/alive";
 
-import type {NightPoisonClaim, NightMechanicalEffect, NightGuardClaim, NightMerchantBacklash, NightBlackMarketBacklash, NightAwakenedEffect} from "../../../../core/domain/night_effects";
+import type {
+  NightPoisonClaim,
+  NightMechanicalEffect,
+  NightGuardClaim,
+  NightMerchantBacklash,
+  NightBlackMarketBacklash,
+  NightAwakenedEffect,
+} from "../../../../core/domain/night_effects";
 
-export interface WolfKnifeTargetScope {targetId:EntityId;life:AliveComponent;version:number;marks:StatusMarksComponent}
+export interface WolfKnifeTargetScope {
+  targetId: EntityId;
+  life: AliveComponent;
+  version: number;
+  marks: StatusMarksComponent;
+}
 
 /** 夜间阶段共享状态。 */
 export interface NightStageState {
@@ -27,14 +39,18 @@ export interface NightStageState {
   endedWolves: Set<EntityId>;
   wolfVotes: Record<number, number>;
   wolfTarget: EntityId | null;
-  wolfTargetScope?:WolfKnifeTargetScope;
+  wolfTargetScope?: WolfKnifeTargetScope;
   seerChecks: NightSummary["seerChecks"];
   dreamLinks: DreamNightLink[];
   poisonClaims?: NightPoisonClaim[];
   guardClaims?: NightGuardClaim[];
   merchantBacklashes?: NightMerchantBacklash[];
   blackMarketBacklashes?: NightBlackMarketBacklash[];
-  mechanicalEffects?: { shields: NightMechanicalEffect[]; attacks: NightMechanicalEffect[]; failures: NightMechanicalEffect[] };
+  mechanicalEffects?: {
+    shields: NightMechanicalEffect[];
+    attacks: NightMechanicalEffect[];
+    failures: NightMechanicalEffect[];
+  };
   awakenedEffects?: { shields: NightAwakenedEffect[]; attacks: NightAwakenedEffect[] };
 }
 

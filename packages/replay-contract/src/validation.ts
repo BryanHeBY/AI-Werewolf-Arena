@@ -15,5 +15,3 @@ export class ReplayDocumentValidationError extends Error {
 export function assertField(valid: boolean, path: string): asserts valid {
   if (!valid) throw new ReplayDocumentValidationError("invalid_field", path);
 }
-
-

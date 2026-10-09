@@ -4,7 +4,10 @@ import path from "node:path";
 import { assertReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
 import { simulateGames } from "../../src/runtime/simulation/simulate_games";
-import { readReproduction, replayReproduction } from "../../src/runtime/simulation/replay_reproduction";
+import {
+  readReproduction,
+  replayReproduction,
+} from "../../src/runtime/simulation/replay_reproduction";
 import { createTestTempDirectory } from "../support/temp_directory";
 
 const fixtures = path.resolve(import.meta.dir, "../../../configs.example");
@@ -17,20 +20,36 @@ for (const boardId of ["six_player_mvp", "twelve_player_standard"]) {
     const report = await simulateGames(board, { seeds, recordRoot: root });
     const actionReplayRoot = await createTestTempDirectory("awa-observed-action-replays-");
     expect(report.naturallyFinished).toBe(25);
-    expect(report.rejects).toBe(0); expect(report.fallbacks).toBe(0);
+    expect(report.rejects).toBe(0);
+    expect(report.fallbacks).toBe(0);
     expect(report.branches.seer_checked).toBeGreaterThan(0);
     if (boardId === "six_player_mvp") {
       expect(report.branches["guard_applied.protect"]).toBeGreaterThan(0);
       expect(report.branches["guard_applied.skip"]).toBeGreaterThan(0);
     } else {
-      for (const branch of ["witch_potion_used.heal", "witch_potion_used.poison", "witch_potion_skipped", "hunter_shot", "wolf_self_destruct", "idiot_revealed", "sheriff_elected"]) expect(report.branches[branch]).toBeGreaterThan(0);
+      for (const branch of [
+        "witch_potion_used.heal",
+        "witch_potion_used.poison",
+        "witch_potion_skipped",
+        "hunter_shot",
+        "wolf_self_destruct",
+        "idiot_revealed",
+        "sheriff_elected",
+      ])
+        expect(report.branches[branch]).toBeGreaterThan(0);
     }
     for (const game of report.games) {
       const replay = JSON.parse(await readFile(path.join(game.recordDir, "replay.json"), "utf8"));
       assertReplayDocument(replay);
-      expect(replay.result).toEqual({ winner: game.result!.winner, reason: game.result!.reason, decision: game.result ?? undefined });
+      expect(replay.result).toEqual({
+        winner: game.result!.winner,
+        reason: game.result!.reason,
+        decision: game.result ?? undefined,
+      });
       const reproduction = await readReproduction(path.join(game.recordDir, "reproduction.json"));
-      expect((await replayReproduction(reproduction, actionReplayRoot)).snapshot.result).toEqual(game.result);
+      expect((await replayReproduction(reproduction, actionReplayRoot)).snapshot.result).toEqual(
+        game.result,
+      );
     }
     const replayRoot = await createTestTempDirectory("awa-observed-repeat-");
     const replayed = await simulateGames(board, { seeds: [seeds[4]], recordRoot: replayRoot });

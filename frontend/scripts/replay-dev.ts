@@ -21,7 +21,8 @@ export function resolveReplayInput(input: string, cwd: string = process.cwd()): 
 if (import.meta.main) {
   let locale: Locale = "zh-CN";
   try {
-    const argv = process.argv.slice(2), args = argv[0] === "--" ? argv.slice(1) : argv;
+    const argv = process.argv.slice(2),
+      args = argv[0] === "--" ? argv.slice(1) : argv;
     let input: string | undefined;
     for (let index = 0; index < args.length; index += 2) {
       const value = args[index + 1];
@@ -35,9 +36,15 @@ if (import.meta.main) {
     if (!input) throw new Error("replay_dev_usage");
     const replayPath = resolveReplayInput(input);
     const child = Bun.spawn(["bunx", "vite"], {
-      cwd: process.cwd(), env: { ...process.env, AWA_REPLAY_INPUT: replayPath },
-      stdin: "inherit", stdout: "inherit", stderr: "inherit",
+      cwd: process.cwd(),
+      env: { ...process.env, AWA_REPLAY_INPUT: replayPath },
+      stdin: "inherit",
+      stdout: "inherit",
+      stderr: "inherit",
     });
     process.exitCode = await child.exited;
-  } catch (error) { console.error(JSON.stringify(replayCommandFailure(error, locale))); process.exitCode = 1; }
+  } catch (error) {
+    console.error(JSON.stringify(replayCommandFailure(error, locale)));
+    process.exitCode = 1;
+  }
 }

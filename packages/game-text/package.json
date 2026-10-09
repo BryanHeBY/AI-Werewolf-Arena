@@ -4,6 +4,10 @@
   "private": true,
   "type": "module",
   "types": "./src/index.ts",
-  "exports": { ".": "./src/index.ts" },
-  "dependencies": { "@ai-werewolf-arena/game-catalog": "workspace:*" }
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ai-werewolf-arena/game-catalog": "workspace:*"
+  }
 }

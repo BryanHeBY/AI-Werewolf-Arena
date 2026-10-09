@@ -14,18 +14,18 @@ Black板子与游戏例子：`configs.example/{boards,games}/six_player_black_ma
 
 ## 接续时必须保持的所有权
 
-| 边界 | 当前实现与禁止退化 |
-| --- | --- |
-| 阶段/死亡 | PhaseManager推进且最终判胜；DeathResolution先完整遗言、警徽、原生/礼物死亡钩子与追加波次。第一枪末狼/末神仍不能跳过后续枪 |
-| 死亡动作 | permit绑定原World/body/life/phase/day及确切ability instance ID；关闭旧许可后开新许可，迟到/换实例不能借资源 |
-| 夜能力 | 每实例唯一state/资源/source/activation；role/private/metadata撤换撤销旧请求。付费提案保首次死亡前缀，但复活的新life不能继承旧效果 |
-| 礼物 | 不改变真实角色、阵营、胜利归属、原生资源；Black下一夜140，Miracle原125/700；gift-gun实际900armed，首次死亡后永久过期 |
-| 能力变化 | callback后复查生命、role/private、source/metadata、库存与activation；Black只转living Good且保原状态，不copy、不补stock，不能凭低层API宣称玩家转移机制已交付 |
-| 同目标历史 | actor-local、same-kind、成功接受才记录；原生/礼物共享政策，不同actor独立；转出/耗尽不抹历史。recipientPolicy历史仍影响合法目标与提示 |
-| 信息 | 玩家DTO/prompt使用已知字段投影，不直接序列化raw privateState/实例对象，不调用未知getter；God记录/Tape保合法完整数据，排除运行引用。查验camp/role/组合合法报告保留。事件按发生时受众，God提案不提前改玩家life |
-| 语言 | zh-CN/en按局/展示调用传入；机器ID/key/enum稳定，原始名字、人设、发言不自动改译。前端只依赖共享契约/文本 |
-| 失败/记录 | 对显式action_failure_policy:error的请求，无工具clean wait合法，none/null按具体机制处理；三拒绝/transport/cancel报错，不伪skip/fallback。旧Lucky/default策略按原契约。Tape兼容检查按源码指纹，不放宽成“能读就重播” |
-| 资源 | runner负责一次关闭、原错和并发清理错误汇总；provider调度器/会话池负责租约、迟到创建、ACP进程与MCP监听回收 |
+| 边界       | 当前实现与禁止退化                                                                                                                                                                                                |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 阶段/死亡  | PhaseManager推进且最终判胜；DeathResolution先完整遗言、警徽、原生/礼物死亡钩子与追加波次。第一枪末狼/末神仍不能跳过后续枪                                                                                         |
+| 死亡动作   | permit绑定原World/body/life/phase/day及确切ability instance ID；关闭旧许可后开新许可，迟到/换实例不能借资源                                                                                                       |
+| 夜能力     | 每实例唯一state/资源/source/activation；role/private/metadata撤换撤销旧请求。付费提案保首次死亡前缀，但复活的新life不能继承旧效果                                                                                 |
+| 礼物       | 不改变真实角色、阵营、胜利归属、原生资源；Black下一夜140，Miracle原125/700；gift-gun实际900armed，首次死亡后永久过期                                                                                              |
+| 能力变化   | callback后复查生命、role/private、source/metadata、库存与activation；Black只转living Good且保原状态，不copy、不补stock，不能凭低层API宣称玩家转移机制已交付                                                       |
+| 同目标历史 | actor-local、same-kind、成功接受才记录；原生/礼物共享政策，不同actor独立；转出/耗尽不抹历史。recipientPolicy历史仍影响合法目标与提示                                                                              |
+| 信息       | 玩家DTO/prompt使用已知字段投影，不直接序列化raw privateState/实例对象，不调用未知getter；God记录/Tape保合法完整数据，排除运行引用。查验camp/role/组合合法报告保留。事件按发生时受众，God提案不提前改玩家life      |
+| 语言       | zh-CN/en按局/展示调用传入；机器ID/key/enum稳定，原始名字、人设、发言不自动改译。前端只依赖共享契约/文本                                                                                                           |
+| 失败/记录  | 对显式action_failure_policy:error的请求，无工具clean wait合法，none/null按具体机制处理；三拒绝/transport/cancel报错，不伪skip/fallback。旧Lucky/default策略按原契约。Tape兼容检查按源码指纹，不放宽成“能读就重播” |
+| 资源       | runner负责一次关闭、原错和并发清理错误汇总；provider调度器/会话池负责租约、迟到创建、ACP进程与MCP监听回收                                                                                                         |
 
 主要入口：`backend/src/game/mechanisms/roles/{abilities,ability_scope,ability_changes,recipient_ability_stage,night_action_history}.ts`、`black_market_merchant/`、`backend/src/game/engine/phase_pipeline/night_pipeline.ts`，以及既有death_resolution、player_prompt_policy、记录/回放模块。旧Miracle lucky_stage路径是共享recipient流程的兼容导出，不能未经调用核查删除。
 

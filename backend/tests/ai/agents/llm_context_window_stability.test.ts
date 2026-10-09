@@ -31,7 +31,7 @@ class RepeatSpeakToolLoopClient {
       id: "speak_1",
       name: "speak",
       args: { text: "持续发言" },
-      rawArgs: "{\"text\":\"持续发言\"}",
+      rawArgs: '{"text":"持续发言"}',
     });
     return {
       finalAction: (handled.finalAction ?? null) as T | null,

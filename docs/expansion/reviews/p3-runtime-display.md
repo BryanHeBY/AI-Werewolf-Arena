@@ -4,11 +4,11 @@
 
 ## 三路发现与关闭
 
-| 代理 | 独立重点 | 结果 |
-| --- | --- | --- |
-| A `review_arch_tests` | 局部display context/配置副本、CLI原错/exit、迁移事务与循环、入口范围 | 迁移默认warning缺key会导致apply改盘后报失败；补两语模板，single/batch报告预构建，再保持原出版/回滚。真实英文preview/apply复查成功。export/smoke最初漏统一，现都接入；前端离线命令也有独立安全说明。0剩余阻断 |
-| R `review_scope_rules` | fallback策略、技能/受众、人格偏好与语言、报告/文档 | 未改变目标/技能/end_chat/竞选/资源；bot只改系统拥有的默认语言。12席人格有共同规则/信息边界，策略不是新增能力。预检与原文/元字段范围准确，0剩余阻断 |
-| L `review_i18n_delivery` | 模板/legacy IDs/未知值、raw/locale隔离、前端error反例 | 补schema_not_supported/record_invalid等固定Tape ID，不恢复namespace正则；陌生prompt role不查缺key导致fallback。前端loader ref getter能带入canary；现own descriptor/封闭5消息/严格HTTP status，原probe getter0次/canary不可达。0剩余阻断 |
+| 代理                     | 独立重点                                                             | 结果                                                                                                                                                                                                                                    |
+| ------------------------ | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A `review_arch_tests`    | 局部display context/配置副本、CLI原错/exit、迁移事务与循环、入口范围 | 迁移默认warning缺key会导致apply改盘后报失败；补两语模板，single/batch报告预构建，再保持原出版/回滚。真实英文preview/apply复查成功。export/smoke最初漏统一，现都接入；前端离线命令也有独立安全说明。0剩余阻断                            |
+| R `review_scope_rules`   | fallback策略、技能/受众、人格偏好与语言、报告/文档                   | 未改变目标/技能/end_chat/竞选/资源；bot只改系统拥有的默认语言。12席人格有共同规则/信息边界，策略不是新增能力。预检与原文/元字段范围准确，0剩余阻断                                                                                      |
+| L `review_i18n_delivery` | 模板/legacy IDs/未知值、raw/locale隔离、前端error反例                | 补schema_not_supported/record_invalid等固定Tape ID，不恢复namespace正则；陌生prompt role不查缺key导致fallback。前端loader ref getter能带入canary；现own descriptor/封闭5消息/严格HTTP status，原probe getter0次/canary不可达。0剩余阻断 |
 
 ## 验证
 

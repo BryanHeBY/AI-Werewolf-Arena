@@ -6,13 +6,13 @@
 
 `RoleProfile.wolfTeam`声明狼队能力；`Camp.Wolf`只说明阵营，不授予身份知识、夜聊或刀权。未声明权限、未注册profile和非狼阵营均无这三项权利。普通狼profile声明双向pack互认、夜聊和刀权，基础七项的注册/支持状态不增加。
 
-| 字段 / 查询 | 契约 |
-| --- | --- |
-| `recognizedByPack` | 是否出现在具有pack互认权限的其他狼的队友名单中 |
-| `recognizes` | `pack`只认识公开给狼队的成员；`all`认识所有狼阵营；`none`不获显式队友名单；role数组表达部分互认 |
-| `canChat` / `wolfChatParticipants` | 独立的夜聊参与权，实际参与者还必须存活 |
-| `canVoteForKill` / `wolfKnifeHolders` | 独立的狼刀投票权，实际投票者还必须存活 |
-| `knownWolfTeammates` | 逐viewer查询、排序、排除本人；不使用未公开的存活状态删掉已知队友 |
+| 字段 / 查询                           | 契约                                                                                            |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `recognizedByPack`                    | 是否出现在具有pack互认权限的其他狼的队友名单中                                                  |
+| `recognizes`                          | `pack`只认识公开给狼队的成员；`all`认识所有狼阵营；`none`不获显式队友名单；role数组表达部分互认 |
+| `canChat` / `wolfChatParticipants`    | 独立的夜聊参与权，实际参与者还必须存活                                                          |
+| `canVoteForKill` / `wolfKnifeHolders` | 独立的狼刀投票权，实际投票者还必须存活                                                          |
+| `knownWolfTeammates`                  | 逐viewer查询、排序、排除本人；不使用未公开的存活状态删掉已知队友                                |
 
 互认名单与聊天并非匿名协议：即使recognizes=none，若canChat=true，仍可看到已授权战术顺序和发言者ID，不能把无显式名单宣称为无身份推断。
 

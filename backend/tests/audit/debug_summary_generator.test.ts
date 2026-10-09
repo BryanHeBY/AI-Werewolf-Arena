@@ -39,11 +39,14 @@ describe("debug summary metadata checks", () => {
       },
     ];
 
-    const markdown = await buildDebugSummaryMarkdown({
-      manifest,
-      reports: [],
-      playerViews,
-    }, null);
+    const markdown = await buildDebugSummaryMarkdown(
+      {
+        manifest,
+        reports: [],
+        playerViews,
+      },
+      null,
+    );
 
     expect(markdown).not.toContain("request_id 与 day/phase 不一致");
     expect(markdown).not.toContain("请求编号异常");

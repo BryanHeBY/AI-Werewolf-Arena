@@ -2,13 +2,7 @@ import type { RuleViolation } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：工具校验规则契约定义。 */
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
-import {
-  ActionWindow,
-  EntityId,
-  Phase,
-  ToolCall,
-  ToolName,
-} from "../../../core/domain/model";
+import { ActionWindow, EntityId, Phase, ToolCall, ToolName } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 import type { RoleCatalog } from "../roles/catalog";
 

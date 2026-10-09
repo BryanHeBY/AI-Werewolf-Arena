@@ -9,7 +9,9 @@ import { WITCH_TOOL_SPECS, WITCH_STAGE_DIRECTIVES } from "./tool_specs";
 import { WITCH_VALIDATION_RULES } from "./validation_rules";
 import { z } from "zod";
 
-const witchParameters = z.strictObject({ selfHeal: z.enum(WitchSelfHealRule).default(WitchSelfHealRule.Disabled) });
+const witchParameters = z.strictObject({
+  selfHeal: z.enum(WitchSelfHealRule).default(WitchSelfHealRule.Disabled),
+});
 
 /** 女巫角色配置。 */
 export const WITCH_ROLE_PROFILE: RoleProfile = {
@@ -21,12 +23,15 @@ export const WITCH_ROLE_PROFILE: RoleProfile = {
   configuration: {
     schema: witchParameters,
     defaults: { selfHeal: WitchSelfHealRule.Disabled },
-    apply: (config, value) => ({ ...config, witch: { canSelfHeal: witchParameters.parse(value).selfHeal } }),
-    serialize: config => witchParameters.parse({ selfHeal: config.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled }),
+    apply: (config, value) => ({
+      ...config,
+      witch: { canSelfHeal: witchParameters.parse(value).selfHeal },
+    }),
+    serialize: (config) =>
+      witchParameters.parse({ selfHeal: config.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled }),
   },
   init: (roleComp, ctx) => {
-    const selfHealRule =
-      ctx.boardConfig?.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled;
+    const selfHealRule = ctx.boardConfig?.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled;
     setWitchState(roleComp, {
       heal: 1,
       poison: 1,
@@ -38,7 +43,11 @@ export const WITCH_ROLE_PROFILE: RoleProfile = {
       poisonUsedThisNight: false,
     });
   },
-  renderPrompt: (roleComp, locale = "zh-CN") => text(locale, "role.witch.state", { heal: getWitchState(roleComp)?.heal ?? 0, poison: getWitchState(roleComp)?.poison ?? 0 }),
+  renderPrompt: (roleComp, locale = "zh-CN") =>
+    text(locale, "role.witch.state", {
+      heal: getWitchState(roleComp)?.heal ?? 0,
+      poison: getWitchState(roleComp)?.poison ?? 0,
+    }),
   toolSpecs: WITCH_TOOL_SPECS,
   stageDirectives: WITCH_STAGE_DIRECTIVES,
   validationRules: WITCH_VALIDATION_RULES,

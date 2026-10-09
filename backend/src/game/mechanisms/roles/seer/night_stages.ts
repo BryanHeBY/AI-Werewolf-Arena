@@ -14,12 +14,34 @@ const seerCheckStage: NightStageHandler = {
   id: "seer_check",
   priority: 600,
   async execute(ctx): Promise<void> {
-    for (const { actorId: seerId, ability } of nightAbilityActors(ctx.world, "seer_check", ctx.currentDay())) {
+    for (const { actorId: seerId, ability } of nightAbilityActors(
+      ctx.world,
+      "seer_check",
+      ctx.currentDay(),
+    )) {
       if (ability.activation === "lucky" || ability.activation === "black_market") continue;
-      const day = ctx.currentDay(), scope = captureNightAbilityScope(ctx.world, seerId, ability, day, () => ctx.isCurrent() && ctx.currentDay() === day);
+      const day = ctx.currentDay(),
+        scope = captureNightAbilityScope(
+          ctx.world,
+          seerId,
+          ability,
+          day,
+          () => ctx.isCurrent() && ctx.currentDay() === day,
+        );
       if (!scope?.isEligible()) continue;
-      const targets = new Map(ctx.world.getAliveEntityIds().map(id => [id, captureNightLife(ctx.world, id)]));
-      if (!ctx.world.getAliveEntityIds().includes(seerId) || activeNightAbility(ctx.world.getComponent<RoleComponent>(seerId, COMPONENT.Role), "seer_check", ctx.currentDay(), ability.id) !== ability) continue;
+      const targets = new Map(
+        ctx.world.getAliveEntityIds().map((id) => [id, captureNightLife(ctx.world, id)]),
+      );
+      if (
+        !ctx.world.getAliveEntityIds().includes(seerId) ||
+        activeNightAbility(
+          ctx.world.getComponent<RoleComponent>(seerId, COMPONENT.Role),
+          "seer_check",
+          ctx.currentDay(),
+          ability.id,
+        ) !== ability
+      )
+        continue;
       const req = ctx.makeRequest(seerId, ["check_identity"], {
         stage: "seer",
         ability_id: ability.id,
@@ -34,7 +56,8 @@ const seerCheckStage: NightStageHandler = {
 
       const result = ctx.toolGateway.validateAndSanitize(ctx.world, seerId, action, {
         phase: Phase.Night,
-        day: ctx.currentDay(), abilityId: ability.id,
+        day: ctx.currentDay(),
+        abilityId: ability.id,
       });
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;
@@ -47,7 +70,12 @@ const seerCheckStage: NightStageHandler = {
       if (!target || !livingNightLife(ctx.world, target)) continue;
       const inspection = resolveInspection(ctx.world, targetId, "camp", ctx.roleCatalog);
       if (!ctx.isCurrent()) return;
-      if (!scope.isEligible() || !livingNightLife(ctx.world, target) || !luckyTargetAllowed(ctx.world, seerId, ability, day, "check", targetId)) continue;
+      if (
+        !scope.isEligible() ||
+        !livingNightLife(ctx.world, target) ||
+        !luckyTargetAllowed(ctx.world, seerId, ability, day, "check", targetId)
+      )
+        continue;
       if (!inspection) continue;
       const isWerewolf = inspection.camp === Camp.Wolf;
       const seerRole = ctx.world.getComponent<RoleComponent>(seerId, COMPONENT.Role);
@@ -66,7 +94,13 @@ const seerCheckStage: NightStageHandler = {
       ctx.events.push({
         timestamp: Date.now(),
         type: "seer_checked",
-        payload: { actorId: seerId, ...(ability.source.kind === "native" ? {} : { abilityId: ability.id }), targetId, isWerewolf, result: { ...inspection } },
+        payload: {
+          actorId: seerId,
+          ...(ability.source.kind === "native" ? {} : { abilityId: ability.id }),
+          targetId,
+          isWerewolf,
+          result: { ...inspection },
+        },
       });
     }
   },

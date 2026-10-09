@@ -22,12 +22,16 @@ export const WOLF_TOOL_SPECS: ToolSpec[] = [
     name: "speak_to_wolves",
     llm: {
       name: "speak_to_wolves",
-      description: "狼人夜聊发言；end_chat=true 表示发言后结束本人本夜的后续夜聊轮次，不会结束其他狼人的发言。",
+      description:
+        "狼人夜聊发言；end_chat=true 表示发言后结束本人本夜的后续夜聊轮次，不会结束其他狼人的发言。",
       parameters: {
         type: "object",
         properties: {
           text: prop("string", "狼人夜聊发言内容。"),
-          end_chat: prop("boolean", "是否在本次发言后结束本人本夜的后续夜聊轮次；不会结束其他狼人的发言。"),
+          end_chat: prop(
+            "boolean",
+            "是否在本次发言后结束本人本夜的后续夜聊轮次；不会结束其他狼人的发言。",
+          ),
         },
         description: "狼人夜聊发言参数。",
         required: ["text", "end_chat"],

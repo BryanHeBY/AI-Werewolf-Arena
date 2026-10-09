@@ -17,14 +17,23 @@ try {
     const request = JSON.parse(line);
     if (request.id === undefined) continue;
     if (request.method === "initialize") {
-      send({ jsonrpc: "2.0", id: request.id, result: { protocolVersion: 1, agentCapabilities: {} } });
+      send({
+        jsonrpc: "2.0",
+        id: request.id,
+        result: { protocolVersion: 1, agentCapabilities: {} },
+      });
     } else if (request.method === "session/new") {
       const config = request.params.mcpServers[0] as AcpMcpServerConfig;
-      const environment = Object.fromEntries(config.env.map(entry => [entry.name, entry.value]));
+      const environment = Object.fromEntries(config.env.map((entry) => [entry.name, entry.value]));
       trace.locale = environment.AWA_TASK_LOCALE; // Do not persist control tokens or configuration.
       client = new Client({ name: "synthetic-audit-agent", version: "1.0.0" });
-      transport = new StdioClientTransport({ command: config.command, args: config.args, env: environment });
-      await client.connect(transport); trace.mcpPid = transport.pid;
+      transport = new StdioClientTransport({
+        command: config.command,
+        args: config.args,
+        env: environment,
+      });
+      await client.connect(transport);
+      trace.mcpPid = transport.pid;
       await save();
       send({ jsonrpc: "2.0", id: request.id, result: { sessionId: "audit-fixture" } });
     } else if (request.method === "session/prompt") {
@@ -32,17 +41,43 @@ try {
       (trace.prompts as string[]).push(prompt);
       const turn = /(?:当前审计回合 ID：|Current audit turn ID: )(a\d+)/.exec(prompt)?.[1];
       if (turn) {
-        trace.schema = (await client!.callTool({ name: "get_audit_schema", arguments: {} })).structuredContent;
-        trace.stale = (await client!.callTool({ name: "get_audit_context", arguments: { turn_id: "a999" } })).structuredContent;
-        const reply = await client!.callTool({ name: "get_audit_context", arguments: { turn_id: turn } });
+        trace.schema = (
+          await client!.callTool({ name: "get_audit_schema", arguments: {} })
+        ).structuredContent;
+        trace.stale = (
+          await client!.callTool({ name: "get_audit_context", arguments: { turn_id: "a999" } })
+        ).structuredContent;
+        const reply = await client!.callTool({
+          name: "get_audit_context",
+          arguments: { turn_id: turn },
+        });
         trace.context = reply.structuredContent;
         const context = fixtureObject(reply.structuredContent).context as { mode: string };
-        trace.submission = (await client!.callTool(context.mode === "inspect"
-          ? { name: "submit_audit_findings", arguments: { turn_id: turn, findings: [], notes: ["Original 模型说明"] } }
-          : { name: "submit_audit_summary", arguments: { turn_id: turn, markdown: auditSummaryFixture(trace.locale === "en" ? "en" : "zh-CN", undefined, "Original 模型报告") } })).structuredContent;
+        trace.submission = (
+          await client!.callTool(
+            context.mode === "inspect"
+              ? {
+                  name: "submit_audit_findings",
+                  arguments: { turn_id: turn, findings: [], notes: ["Original 模型说明"] },
+                }
+              : {
+                  name: "submit_audit_summary",
+                  arguments: {
+                    turn_id: turn,
+                    markdown: auditSummaryFixture(
+                      trace.locale === "en" ? "en" : "zh-CN",
+                      undefined,
+                      "Original 模型报告",
+                    ),
+                  },
+                },
+          )
+        ).structuredContent;
       }
       await save();
       send({ jsonrpc: "2.0", id: request.id, result: { stopReason: "end_turn" } });
     }
   }
-} finally { await client?.close(); }
+} finally {
+  await client?.close();
+}

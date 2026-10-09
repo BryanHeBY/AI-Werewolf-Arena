@@ -11,13 +11,13 @@ import type { ToolRuleMap } from "../validation/contracts";
 import type { DeathHook, VotedOutHook } from "../hooks/hook_registry";
 import type { z } from "zod";
 import type { NightAbilityKind } from "./abilities";
-import type {World} from "../../../core/domain/world";
+import type { World } from "../../../core/domain/world";
 
 /** 角色初始化上下文。 */
 export interface RoleInitContext {
   locale?: Locale;
   boardConfig?: BoardConfig;
-  world?:World;
+  world?: World;
 }
 
 /** Faction membership alone never grants knowledge, chat access or a knife. */
@@ -40,14 +40,20 @@ export interface RoleProfile {
   /** Composition whitelist contributed by a role whose learning rules are deliberately finite. */
   supportedBoardRoles?: readonly Role[];
   /** Passive Bear sensing is independent of active inspection labels/knife permission. */
-  detectableByBear?: (world:World,role:RoleComponent)=>boolean;
-  initialVictoryAffiliations?: readonly VictoryAffiliation[] | ((role: RoleComponent, ctx: RoleInitContext) => readonly VictoryAffiliation[]);
+  detectableByBear?: (world: World, role: RoleComponent) => boolean;
+  initialVictoryAffiliations?:
+    | readonly VictoryAffiliation[]
+    | ((role: RoleComponent, ctx: RoleInitContext) => readonly VictoryAffiliation[]);
   /** Public participation restrictions; secret immunity belongs to resolution hooks. */
-  participation?: { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean } | ((role: RoleComponent) => { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean });
-  wolfTeam?: WolfTeamPermissions | ((role: RoleComponent,world?:World) => WolfTeamPermissions);
+  participation?:
+    | { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean }
+    | ((role: RoleComponent) => { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean });
+  wolfTeam?: WolfTeamPermissions | ((role: RoleComponent, world?: World) => WolfTeamPermissions);
   /** Explicit public self-destruct capability, independent of faction/knife access. */
   canSelfDestruct?: boolean;
-  inspectionLabels?: { camp?: InspectionCamp; role?: RoleId } | ((role: RoleComponent) => { camp?: InspectionCamp; role?: RoleId });
+  inspectionLabels?:
+    | { camp?: InspectionCamp; role?: RoleId }
+    | ((role: RoleComponent) => { camp?: InspectionCamp; role?: RoleId });
   configuration?: {
     schema: z.ZodType;
     defaults: Readonly<Record<string, unknown>>;
@@ -56,7 +62,7 @@ export interface RoleProfile {
     serialize: (config: BoardConfig) => unknown;
   };
   init?: (roleComp: RoleComponent, ctx: RoleInitContext) => void;
-  renderPrompt?: (roleComp: RoleComponent, locale?: Locale,world?:World) => string;
+  renderPrompt?: (roleComp: RoleComponent, locale?: Locale, world?: World) => string;
   toolSpecs?: ToolSpec[];
   stageDirectives?: StageDirectiveRule[];
   validationRules?: ToolRuleMap;
@@ -72,6 +78,6 @@ export interface RoleProfile {
     pickAliveNotSelf: () => number | null,
     pickAliveByCamp: (camp: "good" | "wolf" | "third_party") => number | null,
     locale?: Locale,
-    world?:World,
+    world?: World,
   ) => ToolCall | null;
 }

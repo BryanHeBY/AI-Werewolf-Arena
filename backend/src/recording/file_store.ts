@@ -5,7 +5,10 @@ import path from "path";
 
 /** Atomic filesystem adapter for one replay session directory. */
 export class ReplayFileStore {
-  constructor(readonly sessionDir: string, private readonly locale: Locale = "zh-CN") {}
+  constructor(
+    readonly sessionDir: string,
+    private readonly locale: Locale = "zh-CN",
+  ) {}
 
   async initialize(): Promise<void> {
     await fs.mkdir(path.join(this.sessionDir, "players"), { recursive: true });

@@ -22,17 +22,17 @@ Merchant私有状态只有remaining/closedDay/choice(day,targetId,skill)，无su
 
 [九类计划](../../backend/tests/support/merchant_scenarios.ts)通过正常seed发牌，演员只读本人计划；不借生产damage/judge生成预期。每类SDK/ACP/混合×中英，共54本地实际完整局及全部严格Tape：
 
-| 场景 | 关键动作与最终字面结果 |
-| --- | --- |
-| check | 原生Seer4验1、Lucky验2；同夜重复1先拒后纠正。两夜放逐W1/WK2，WK枪4；Good，活3/5，遗言1/2。 |
-| poison | Witch5原生救6，Lucky毒W1；当日放逐WK2枪4。Good活3/5/6，原生毒仍1、Lucky毒0。 |
-| guard | Guard5普通守6、Lucky守4；次夜普通再守4先拒后守3，WK刀6，放逐WK枪5。Good活3/4，Gift死亡永久失效。 |
-| hold | V6当夜保幸运验，次夜验WK2；WK刀4，放逐WK枪5。Good活3/6。 |
-| late | M3首夜不赠，第二夜赠V6毒；WK刀5与Lucky毒WK2同批，Good夜终局活3/4/6。 |
-| backlash | 给W1无赠，商人首夜反噬遗言3；次夜Witch毒WK2与刀4全死亡后Good夜终局活5/6。 |
-| dream | 首夜给W1反噬及刀M3都被Dream保护，交易仍花；次夜WK刀6、放逐WK枪Dream5。Good活3/4，无全天梦牵连。 |
-| hidden | 给未接刀伪装Hidden2失败，商人遗言3；W1放逐后Hidden接刀，次夜刀6，放逐Hidden。Good活4/5。 |
-| twelve | Seer5首夜原生验WK1/Lucky验W2、实际竞选；三夜消灭四狼，最后WK枪M8。Good活5/7/10/11/12，遗言4/2/1。 |
+| 场景     | 关键动作与最终字面结果                                                                            |
+| -------- | ------------------------------------------------------------------------------------------------- |
+| check    | 原生Seer4验1、Lucky验2；同夜重复1先拒后纠正。两夜放逐W1/WK2，WK枪4；Good，活3/5，遗言1/2。        |
+| poison   | Witch5原生救6，Lucky毒W1；当日放逐WK2枪4。Good活3/5/6，原生毒仍1、Lucky毒0。                      |
+| guard    | Guard5普通守6、Lucky守4；次夜普通再守4先拒后守3，WK刀6，放逐WK枪5。Good活3/4，Gift死亡永久失效。  |
+| hold     | V6当夜保幸运验，次夜验WK2；WK刀4，放逐WK枪5。Good活3/6。                                          |
+| late     | M3首夜不赠，第二夜赠V6毒；WK刀5与Lucky毒WK2同批，Good夜终局活3/4/6。                              |
+| backlash | 给W1无赠，商人首夜反噬遗言3；次夜Witch毒WK2与刀4全死亡后Good夜终局活5/6。                         |
+| dream    | 首夜给W1反噬及刀M3都被Dream保护，交易仍花；次夜WK刀6、放逐WK枪Dream5。Good活3/4，无全天梦牵连。   |
+| hidden   | 给未接刀伪装Hidden2失败，商人遗言3；W1放逐后Hidden接刀，次夜刀6，放逐Hidden。Good活4/5。          |
+| twelve   | Seer5首夜原生验WK1/Lucky验W2、实际竞选；三夜消灭四狼，最后WK枪M8。Good活5/7/10/11/12，遗言4/2/1。 |
 
 核心另外有终局真实反噬＋末狼自刀：两份首夜遗言、商人警徽转给活民后才Good优先封盘；联合历史/ID漂移/resource/原生命/gateway后撤权、隐私与永久死亡/transfer/copy固定回归。两公开板各20受限观察seed，要求自然结束、零意外拒绝/回退、实际赠予/反噬/幸运效果/等待正分支并逐局Tape。
 

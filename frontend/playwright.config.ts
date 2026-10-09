@@ -11,7 +11,9 @@ export default defineConfig({
     baseURL: "http://127.0.0.1:4173",
     trace: "on-first-retry",
     headless: process.env.PLAYWRIGHT_HEADLESS !== "false",
-    launchOptions: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE } : undefined,
+    launchOptions: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE
+      ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE }
+      : undefined,
   },
   projects: [
     {
@@ -22,7 +24,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "AWA_REPLAY_INPUT=tests/fixtures/sample.replay.json bunx vite --host 127.0.0.1 --port 4173",
+    command:
+      "AWA_REPLAY_INPUT=tests/fixtures/sample.replay.json bunx vite --host 127.0.0.1 --port 4173",
     url: "http://127.0.0.1:4173/src/main.tsx",
     reuseExistingServer: !process.env.CI,
     timeout: 120000,

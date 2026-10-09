@@ -39,9 +39,7 @@
     ]
   },
   "rules": {
-    "winConditions": [
-      "slaughter_side"
-    ],
+    "winConditions": ["slaughter_side"],
     "hooks": {
       "onDaybreak": true,
       "onPreElection": true,
@@ -68,9 +66,7 @@
       "selfHeal": "disabled"
     },
     "knight": {
-      "enabledWindows": [
-        "after_speeches"
-      ]
+      "enabledWindows": ["after_speeches"]
     },
     "wolf_beauty": {}
   }

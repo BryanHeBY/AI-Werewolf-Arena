@@ -2,7 +2,17 @@ import { COMPONENT } from "../components/names";
 import { StatusMarksComponent } from "../components/status_marks";
 import { EntityId, StatusMark, DeathCause, type DeathSources } from "../model";
 import { World } from "../world";
-import { planMechanicalDamage, livingNightLife, type NightPoisonClaim, type NightGuardClaim, type NightMechanicalEffects, type NightPoisonReflection, type NightMerchantBacklash, type NightBlackMarketBacklash, type NightAwakenedEffects } from "../night_effects";
+import {
+  planMechanicalDamage,
+  livingNightLife,
+  type NightPoisonClaim,
+  type NightGuardClaim,
+  type NightMechanicalEffects,
+  type NightPoisonReflection,
+  type NightMerchantBacklash,
+  type NightBlackMarketBacklash,
+  type NightAwakenedEffects,
+} from "../night_effects";
 
 export interface NightDamageEffects {
   protectedTargets?: readonly EntityId[];
@@ -39,33 +49,67 @@ export class DamageResolutionSystem {
   resolve(world: World, effects: NightDamageEffects = {}): DamageResolutionResult {
     const deaths: EntityId[] = [];
     const deathSources: DeathSources = {};
-    const awakenedShields = new Set(effects.awakenedEffects?.shields.filter(effect => effect.isCurrent() && livingNightLife(world, effect.target)).map(effect => effect.target.id));
-    const awakenedAttacks = new Set(effects.awakenedEffects?.attacks.filter(effect => effect.isCurrent() && livingNightLife(world, effect.target)).map(effect => effect.target.id));
+    const awakenedShields = new Set(
+      effects.awakenedEffects?.shields
+        .filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
+        .map((effect) => effect.target.id),
+    );
+    const awakenedAttacks = new Set(
+      effects.awakenedEffects?.attacks
+        .filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
+        .map((effect) => effect.target.id),
+    );
     // Absorbed original toxins never enter mechanical reflection; returning toxins are checked below.
-    const mechanical = planMechanicalDamage(world, effects.mechanicalEffects, effects.poisonClaims, awakenedShields);
-    const claimedPoisonTargets = new Set(effects.poisonClaims?.map(claim => claim.target.id));
-    const claimedGuardTargets = new Set(effects.guardClaims?.map(claim => claim.target.id));
-    const guarded = new Set(effects.guardClaims?.filter(claim => livingNightLife(world, claim.target) && world.getComponent(claim.target.id, COMPONENT.StatusMarks) === claim.marks).map(claim => claim.target.id));
-    const blackBacklashes = new Set(effects.blackMarketBacklashes?.filter(effect => effect.isCurrent() && livingNightLife(world, effect.target)).map(effect => effect.target.id));
-    const backlashTargets = new Set(effects.merchantBacklashes?.filter(effect => effect.isCurrent() && livingNightLife(world, effect.target)).map(effect => effect.target.id));
+    const mechanical = planMechanicalDamage(
+      world,
+      effects.mechanicalEffects,
+      effects.poisonClaims,
+      awakenedShields,
+    );
+    const claimedPoisonTargets = new Set(effects.poisonClaims?.map((claim) => claim.target.id));
+    const claimedGuardTargets = new Set(effects.guardClaims?.map((claim) => claim.target.id));
+    const guarded = new Set(
+      effects.guardClaims
+        ?.filter(
+          (claim) =>
+            livingNightLife(world, claim.target) &&
+            world.getComponent(claim.target.id, COMPONENT.StatusMarks) === claim.marks,
+        )
+        .map((claim) => claim.target.id),
+    );
+    const blackBacklashes = new Set(
+      effects.blackMarketBacklashes
+        ?.filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
+        .map((effect) => effect.target.id),
+    );
+    const backlashTargets = new Set(
+      effects.merchantBacklashes
+        ?.filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
+        .map((effect) => effect.target.id),
+    );
 
     for (const entityId of world.getAliveEntityIds()) {
-      const marks = world.getComponent<StatusMarksComponent>(
-        entityId,
-        COMPONENT.StatusMarks,
-      );
-      if (!marks && !effects.consecutiveDeaths?.includes(entityId) &&
-          !mechanical.attacks.has(entityId) && !awakenedAttacks.has(entityId) && !mechanical.failures.has(entityId) &&
-          !mechanical.reflectedPoisonTargets.has(entityId)) {
+      const marks = world.getComponent<StatusMarksComponent>(entityId, COMPONENT.StatusMarks);
+      if (
+        !marks &&
+        !effects.consecutiveDeaths?.includes(entityId) &&
+        !mechanical.attacks.has(entityId) &&
+        !awakenedAttacks.has(entityId) &&
+        !mechanical.failures.has(entityId) &&
+        !mechanical.reflectedPoisonTargets.has(entityId)
+      ) {
         if (!backlashTargets.has(entityId) && !blackBacklashes.has(entityId)) continue;
       }
 
       const sources: DeathCause[] = [];
-      const hasGuard = marks?.has(StatusMark.GuardMark) === true && (!claimedGuardTargets.has(entityId) || guarded.has(entityId));
+      const hasGuard =
+        marks?.has(StatusMark.GuardMark) === true &&
+        (!claimedGuardTargets.has(entityId) || guarded.has(entityId));
       const hasHeal = marks?.has(StatusMark.HealMark) === true;
       const effectiveHeal = hasHeal && !hasGuard;
       const hasWolfKill = marks?.has(StatusMark.WolfKillMark) === true;
-      const hasDirectPoison = marks?.has(StatusMark.PoisonMark) === true &&
+      const hasDirectPoison =
+        marks?.has(StatusMark.PoisonMark) === true &&
         (!claimedPoisonTargets.has(entityId) || mechanical.directPoisonTargets.has(entityId));
       const hasPoison = hasDirectPoison || mechanical.reflectedPoisonTargets.has(entityId);
       // Poison is independent of protection and must survive a conflict.
@@ -82,21 +126,40 @@ export class DamageResolutionSystem {
           sources.push(DeathCause.WolfKill);
         }
       } else {
-        if (hasWolfKill && !dreamProtected && !mechanicalShield && !awakenedShield && !(hasGuard || hasHeal)) {
+        if (
+          hasWolfKill &&
+          !dreamProtected &&
+          !mechanicalShield &&
+          !awakenedShield &&
+          !(hasGuard || hasHeal)
+        ) {
           sources.push(DeathCause.WolfKill);
         }
       }
       // An extra knife pierces ordinary Guard, but not Heal, Dream or a mechanical shield.
-      if (mechanical.attacks.has(entityId) && !effectiveHeal && !dreamProtected && !mechanicalShield && !awakenedShield) {
+      if (
+        mechanical.attacks.has(entityId) &&
+        !effectiveHeal &&
+        !dreamProtected &&
+        !mechanicalShield &&
+        !awakenedShield
+      ) {
         sources.push(DeathCause.MechanicalKnife);
       }
       const ordinaryProtection = hasGuard !== hasHeal;
-      if (awakenedAttacks.has(entityId) && !ordinaryProtection && !dreamProtected && !mechanicalShield && !awakenedShield) {
+      if (
+        awakenedAttacks.has(entityId) &&
+        !ordinaryProtection &&
+        !dreamProtected &&
+        !mechanicalShield &&
+        !awakenedShield
+      ) {
         sources.push(DeathCause.AwakenedHiddenKnife);
       }
       if (mechanical.failures.has(entityId)) sources.push(DeathCause.MechanicalGuardFailure);
       if (blackBacklashes.has(entityId)) sources.push(DeathCause.BlackMarketBacklash);
-      if (backlashTargets.has(entityId) && !dreamProtected) sources.push(DeathCause.MerchantBacklash);
+      if (backlashTargets.has(entityId) && !dreamProtected)
+        sources.push(DeathCause.MerchantBacklash);
       if (effects.consecutiveDeaths?.includes(entityId)) sources.push(DeathCause.Dream);
 
       if (sources.length > 0) {

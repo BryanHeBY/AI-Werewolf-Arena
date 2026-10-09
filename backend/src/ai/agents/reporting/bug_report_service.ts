@@ -28,8 +28,10 @@ export interface AgentBugReportServiceOptions {
   onAccepted?: (report: NormalizedAgentBugReport, reportId: string) => void;
 }
 
-export interface NormalizedAgentBugReport
-  extends Omit<AgentBugReportInput, "category" | "severity" | "message"> {
+export interface NormalizedAgentBugReport extends Omit<
+  AgentBugReportInput,
+  "category" | "severity" | "message"
+> {
   category: AgentBugCategory;
   severity: AgentBugSeverity;
   message: string;
@@ -66,13 +68,14 @@ export class AgentBugReportService {
     const messageKey = `${actorDayKey}|${report.category}|${report.severity}|${normalizeMessage(report.message)}`;
     const acceptedCount = this.acceptedCountByActorDay.get(actorDayKey) ?? 0;
 
-    const droppedReason = acceptedCount >= this.maxPerActorPerDay
-      ? "report_bug_actor_day_rate_limited"
-      : this.acceptedScopes.has(scopeKey)
-      ? "report_bug_scope_rate_limited"
-      : this.acceptedMessages.has(messageKey)
-      ? "report_bug_duplicate_message"
-      : undefined;
+    const droppedReason =
+      acceptedCount >= this.maxPerActorPerDay
+        ? "report_bug_actor_day_rate_limited"
+        : this.acceptedScopes.has(scopeKey)
+          ? "report_bug_scope_rate_limited"
+          : this.acceptedMessages.has(messageKey)
+            ? "report_bug_duplicate_message"
+            : undefined;
     if (droppedReason) {
       safeRecordLogicOp({
         scope: "llm_action_provider",
@@ -87,18 +90,19 @@ export class AgentBugReportService {
     }
 
     const role = this.world.getComponent<RoleComponent>(report.actorId, COMPONENT.Role);
-    const reportId = getSessionRecorder()?.recordDebugReport({
-      timestampMs: Date.now(),
-      day: report.day,
-      phase: report.phase,
-      stage: report.stage,
-      actorId: report.actorId,
-      actorRole: role?.role ?? "unknown",
-      actorCamp: role?.camp ?? "unknown",
-      category: report.category,
-      severity: report.severity,
-      message: report.message,
-    }) ?? "rb-no-recorder";
+    const reportId =
+      getSessionRecorder()?.recordDebugReport({
+        timestampMs: Date.now(),
+        day: report.day,
+        phase: report.phase,
+        stage: report.stage,
+        actorId: report.actorId,
+        actorRole: role?.role ?? "unknown",
+        actorCamp: role?.camp ?? "unknown",
+        category: report.category,
+        severity: report.severity,
+        message: report.message,
+      }) ?? "rb-no-recorder";
 
     this.acceptedScopes.add(scopeKey);
     this.acceptedMessages.add(messageKey);
@@ -119,9 +123,9 @@ export class AgentBugReportService {
     return { ok: true, accepted: true, report_id: reportId };
   }
 
-  private normalize(input: AgentBugReportInput):
-    | { ok: true; value: NormalizedAgentBugReport }
-    | { ok: false; error: string } {
+  private normalize(
+    input: AgentBugReportInput,
+  ): { ok: true; value: NormalizedAgentBugReport } | { ok: false; error: string } {
     const category = String(input.category ?? "") as AgentBugCategory;
     const severity = String(input.severity ?? "") as AgentBugSeverity;
     const message = typeof input.message === "string" ? input.message.trim() : "";
@@ -140,7 +144,9 @@ export class AgentBugReportService {
       phase: input.phase,
       status: "rejected",
       reason,
-      input: { args: { category: input.category, severity: input.severity, message: input.message } },
+      input: {
+        args: { category: input.category, severity: input.severity, message: input.message },
+      },
     });
   }
 }
@@ -148,4 +154,3 @@ export class AgentBugReportService {
 function normalizeMessage(message: string): string {
   return message.toLowerCase().replace(/\s+/g, " ").trim();
 }
-

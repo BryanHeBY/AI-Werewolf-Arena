@@ -4,12 +4,12 @@
 
 ## 三路发现与修正
 
-| 路径 | 发现／边界 | 修正／复查 |
-| --- | --- | --- |
-| R/T | 官方Dawn存活邻居与组织者入夜版本不同；首日早爆合并Night+Day不属于night_settled | 卡明确取组织者版，邻狼本夜死亡不重算；完整合并波后／day_interrupted前发布一次，纯Day White带熊quiet，实际判例 |
-| A/R | 需要原World／原Role/state/life版本及取消链，原生单熊不可只在CLI限制 | manager帧绑定World，发布点再验，公开后的history只day/bool；profile maxCount1同时parse/directbootstrap聚合限制，重复条目也拒绝 |
-| 实际core→A | 竞选取消后旧Election仍启动退水／票 | DayPipeline向Election传epoch回调，每await/gateway／聚合／交接再验；4真实选举点samephase取消不启动后续请求、不晚公告／发言／授徽 |
-| L/D | “无主动技能”会误导G02获赠能力使用者；API/感知/数量需准确范围 | 改“无原生主动技能”；新增maxCount、独立detectableByBear及可选ElectionInput.isCurrent契约，未来多熊／转化／隐藏狼不提前声明 |
+| 路径       | 发现／边界                                                                     | 修正／复查                                                                                                                      |
+| ---------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| R/T        | 官方Dawn存活邻居与组织者入夜版本不同；首日早爆合并Night+Day不属于night_settled | 卡明确取组织者版，邻狼本夜死亡不重算；完整合并波后／day_interrupted前发布一次，纯Day White带熊quiet，实际判例                   |
+| A/R        | 需要原World／原Role/state/life版本及取消链，原生单熊不可只在CLI限制            | manager帧绑定World，发布点再验，公开后的history只day/bool；profile maxCount1同时parse/directbootstrap聚合限制，重复条目也拒绝   |
+| 实际core→A | 竞选取消后旧Election仍启动退水／票                                             | DayPipeline向Election传epoch回调，每await/gateway／聚合／交接再验；4真实选举点samephase取消不启动后续请求、不晚公告／发言／授徽 |
+| L/D        | “无主动技能”会误导G02获赠能力使用者；API/感知/数量需准确范围                   | 改“无原生主动技能”；新增maxCount、独立detectableByBear及可选ElectionInput.isCurrent契约，未来多熊／转化／隐藏狼不提前声明       |
 
 首轮R独立36／215通过并核来源、特殊死链；A独立35／212及三个数量限制探针确认0阻断，再独立World防跨引用1／3通过；L独立core＋配置38／229通过，原提示措辞已修。正式契约／完整矩阵范围三路复查均0剩余阻断：R逐案核13literal，A核内部API／clock／World／native maxCount，L核实际匿名反馈／提示／记录／前端及范围。代理只读，不冒称重复全matrix。
 

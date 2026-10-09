@@ -19,23 +19,32 @@ function walk(dir) {
 
 /** @param {string} filePath */
 function checkFile(filePath) {
-  const source = ts.createSourceFile(filePath, fs.readFileSync(filePath, "utf8"), ts.ScriptTarget.Latest, true);
+  const source = ts.createSourceFile(
+    filePath,
+    fs.readFileSync(filePath, "utf8"),
+    ts.ScriptTarget.Latest,
+    true,
+  );
   /** @param {import("typescript").Node} node */
   function visit(node) {
     let specifier;
     if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) {
       specifier = node.moduleSpecifier;
-    } else if (ts.isCallExpression(node) && (
-      node.expression.kind === ts.SyntaxKind.ImportKeyword ||
-      (ts.isIdentifier(node.expression) && node.expression.text === "require")
-    )) {
+    } else if (
+      ts.isCallExpression(node) &&
+      (node.expression.kind === ts.SyntaxKind.ImportKeyword ||
+        (ts.isIdentifier(node.expression) && node.expression.text === "require"))
+    ) {
       specifier = node.arguments[0];
     } else if (ts.isExternalModuleReference(node)) {
       specifier = node.expression;
     } else if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument)) {
       specifier = node.argument.literal;
     }
-    if (specifier && (ts.isStringLiteral(specifier) || ts.isNoSubstitutionTemplateLiteral(specifier))) {
+    if (
+      specifier &&
+      (ts.isStringLiteral(specifier) || ts.isNoSubstitutionTemplateLiteral(specifier))
+    ) {
       const violation = importBoundaryViolation(rootDir, filePath, specifier.text);
       if (violation) errors.push(`${path.relative(process.cwd(), filePath)}: ${violation}`);
     }

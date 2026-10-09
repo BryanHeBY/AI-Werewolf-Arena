@@ -3,18 +3,35 @@ import { EntityId, Phase, StatusMark } from "../../../../core/domain/model";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { wolfChatParticipants, wolfKnifeHolders, wolfTeamEvent } from "../wolf_team";
-import {COMPONENT} from "../../../../core/domain/components/names";
-import {AliveComponent,aliveLifeVersion} from "../../../../core/domain/components/alive";
-import type {RoleComponent} from "../../../../core/domain/components/role";
-import type {NightStageContext} from "../../stages/night/contracts";
+import { COMPONENT } from "../../../../core/domain/components/names";
+import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
+import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { NightStageContext } from "../../stages/night/contracts";
 
 const WOLF_DISCUSSION_MAX_ROUNDS = 3;
 const WOLF_KILL_VOTE_MAX_RETRIES = 3;
 
-function captureActorScope(ctx:NightStageContext,actorId:EntityId):()=>boolean{
- const role=ctx.world.getComponent<RoleComponent>(actorId,COMPONENT.Role),kind=role?.role,camp=role?.camp,state=role?.privateState,refs=state?Object.entries(state):[];
- const life=ctx.world.getComponent<AliveComponent>(actorId,COMPONENT.Alive),version=life&&aliveLifeVersion(life);
- return()=>ctx.isCurrent()&&!!role&&ctx.world.getComponent(actorId,COMPONENT.Role)===role&&role.role===kind&&role.camp===camp&&role.privateState===state&&refs.every(([key,value])=>state![key]===value)&&!!life&&ctx.world.getComponent(actorId,COMPONENT.Alive)===life&&life.alive&&version!==undefined&&aliveLifeVersion(life)===version;
+function captureActorScope(ctx: NightStageContext, actorId: EntityId): () => boolean {
+  const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
+    kind = role?.role,
+    camp = role?.camp,
+    state = role?.privateState,
+    refs = state ? Object.entries(state) : [];
+  const life = ctx.world.getComponent<AliveComponent>(actorId, COMPONENT.Alive),
+    version = life && aliveLifeVersion(life);
+  return () =>
+    ctx.isCurrent() &&
+    !!role &&
+    ctx.world.getComponent(actorId, COMPONENT.Role) === role &&
+    role.role === kind &&
+    role.camp === camp &&
+    role.privateState === state &&
+    refs.every(([key, value]) => state![key] === value) &&
+    !!life &&
+    ctx.world.getComponent(actorId, COMPONENT.Alive) === life &&
+    life.alive &&
+    version !== undefined &&
+    aliveLifeVersion(life) === version;
 }
 
 const wolfDiscussionStage: NightStageHandler = {
@@ -26,11 +43,13 @@ const wolfDiscussionStage: NightStageHandler = {
     ctx.state.endedWolves = new Set<EntityId>();
 
     if (wolfIds.length > 0) {
-      ctx.events.push(wolfTeamEvent(ctx.world, ctx.roleCatalog, {
-        timestamp: Date.now(),
-        type: "wolf_tactical_order",
-        payload: { order: [...wolfIds] },
-      }));
+      ctx.events.push(
+        wolfTeamEvent(ctx.world, ctx.roleCatalog, {
+          timestamp: Date.now(),
+          type: "wolf_tactical_order",
+          payload: { order: [...wolfIds] },
+        }),
+      );
     }
 
     // 轮转夜聊：每只狼最多发言 WOLF_DISCUSSION_MAX_ROUNDS 次，end_chat 后跳过后续轮次。
@@ -40,8 +59,9 @@ const wolfDiscussionStage: NightStageHandler = {
         if (ctx.state.endedWolves.has(wolfId)) {
           continue;
         }
-        const actorCurrent=captureActorScope(ctx,wolfId);
-        if(!actorCurrent()||!wolfChatParticipants(ctx.world,ctx.roleCatalog).includes(wolfId))continue;
+        const actorCurrent = captureActorScope(ctx, wolfId);
+        if (!actorCurrent() || !wolfChatParticipants(ctx.world, ctx.roleCatalog).includes(wolfId))
+          continue;
         const req = ctx.makeRequest(wolfId, ["speak_to_wolves"], {
           stage: "wolf_discussion",
           round,
@@ -49,7 +69,8 @@ const wolfDiscussionStage: NightStageHandler = {
         });
         const action = await ctx.actionProvider.getAction(req);
         if (!ctx.isCurrent()) return;
-        if(!actorCurrent()||!wolfChatParticipants(ctx.world,ctx.roleCatalog).includes(wolfId))continue;
+        if (!actorCurrent() || !wolfChatParticipants(ctx.world, ctx.roleCatalog).includes(wolfId))
+          continue;
         if (action?.name !== "speak_to_wolves") {
           continue;
         }
@@ -58,32 +79,37 @@ const wolfDiscussionStage: NightStageHandler = {
           phase: req.phase,
         });
         if (!ctx.isCurrent()) return;
-        if(!actorCurrent()||!wolfChatParticipants(ctx.world,ctx.roleCatalog).includes(wolfId))continue;
+        if (!actorCurrent() || !wolfChatParticipants(ctx.world, ctx.roleCatalog).includes(wolfId))
+          continue;
         if (!result.ok || !result.sanitizedCall) {
           continue;
         }
         if (result.sanitizedCall.args.end_chat) {
           ctx.state.endedWolves.add(wolfId);
-          ctx.events.push(wolfTeamEvent(ctx.world, ctx.roleCatalog, {
-            timestamp: Date.now(),
-            type: "wolf_discussion_ended",
-            payload: {
-              actorId: wolfId,
-              reason: result.sanitizedCall.args.text,
-              round,
-            },
-          }));
+          ctx.events.push(
+            wolfTeamEvent(ctx.world, ctx.roleCatalog, {
+              timestamp: Date.now(),
+              type: "wolf_discussion_ended",
+              payload: {
+                actorId: wolfId,
+                reason: result.sanitizedCall.args.text,
+                round,
+              },
+            }),
+          );
         } else {
-          ctx.events.push(wolfTeamEvent(ctx.world, ctx.roleCatalog, {
-            timestamp: Date.now(),
-            type: "wolf_discussion",
-            payload: {
-              actorId: wolfId,
-              text: result.sanitizedCall.args.text,
-              endChat: false,
-              round,
-            },
-          }));
+          ctx.events.push(
+            wolfTeamEvent(ctx.world, ctx.roleCatalog, {
+              timestamp: Date.now(),
+              type: "wolf_discussion",
+              payload: {
+                actorId: wolfId,
+                text: result.sanitizedCall.args.text,
+                endChat: false,
+                round,
+              },
+            }),
+          );
         }
       }
       if (ctx.state.endedWolves.size === wolfIds.length) {
@@ -98,26 +124,28 @@ const wolfKillVoteStage: NightStageHandler = {
   priority: 400,
   async execute(ctx): Promise<void> {
     ctx.state.wolfVotes = {};
-    const acceptedTargets:Array<{targetId:EntityId;life:AliveComponent;version:number}>=[];
+    const acceptedTargets: Array<{ targetId: EntityId; life: AliveComponent; version: number }> =
+      [];
     // 顺序收集狼刀票，统一在阶段末做多数决结算，避免中途状态污染。
     const knifeHolders = wolfKnifeHolders(ctx.world, ctx.roleCatalog);
     // Preserve the ordinary pack's existing order; knife-only roles are independent.
-    const voteOrder = [...ctx.state.wolfChatOrder.filter(id => knifeHolders.includes(id)), ...knifeHolders.filter(id => !ctx.state.wolfChatOrder.includes(id))];
+    const voteOrder = [
+      ...ctx.state.wolfChatOrder.filter((id) => knifeHolders.includes(id)),
+      ...knifeHolders.filter((id) => !ctx.state.wolfChatOrder.includes(id)),
+    ];
     for (const wolfId of voteOrder) {
       if (!wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId)) continue;
-      const actorCurrent=captureActorScope(ctx,wolfId);
-      if(!actorCurrent())continue;
-      let voteResolved:
-        | {
-            abstain: boolean;
-            targetId: EntityId | null;
-            fallback: boolean;
-            targetLife?:{life:AliveComponent;version:number};
-          }
-        | null = null;
+      const actorCurrent = captureActorScope(ctx, wolfId);
+      if (!actorCurrent()) continue;
+      let voteResolved: {
+        abstain: boolean;
+        targetId: EntityId | null;
+        fallback: boolean;
+        targetLife?: { life: AliveComponent; version: number };
+      } | null = null;
       let retryReason = "";
       for (let attempt = 1; attempt <= WOLF_KILL_VOTE_MAX_RETRIES + 1; attempt++) {
-        if(!actorCurrent())break;
+        if (!actorCurrent()) break;
         if (!wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId)) break;
         const req =
           attempt === 1
@@ -129,10 +157,15 @@ const wolfKillVoteStage: NightStageHandler = {
                 retry_reason: retryReason,
                 retry_notice_message: { key: "request.retry.wolf_vote" },
               });
-        const targetLives=new Map(ctx.world.getAliveEntityIds().map(id=>{const life=ctx.world.getComponent<AliveComponent>(id,COMPONENT.Alive)!;return[id,{life,version:aliveLifeVersion(life)}] as const;}));
+        const targetLives = new Map(
+          ctx.world.getAliveEntityIds().map((id) => {
+            const life = ctx.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+            return [id, { life, version: aliveLifeVersion(life) }] as const;
+          }),
+        );
         const action = await ctx.actionProvider.getAction(req);
         if (!ctx.isCurrent()) return;
-        if(!actorCurrent())break;
+        if (!actorCurrent()) break;
         if (action?.name !== "kill_vote") {
           retryReason = "no_valid_kill_vote_tool_call";
           if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {
@@ -157,10 +190,18 @@ const wolfKillVoteStage: NightStageHandler = {
           phase: Phase.Night,
         });
         if (!ctx.isCurrent()) return;
-        if(!actorCurrent())break;
-        const target=result.sanitizedCall?.args.target_id,snapshot=typeof target==="number"?targetLives.get(target):undefined;
-        const targetCurrent=result.sanitizedCall?.args.abstain===true||target===null||!!snapshot&&ctx.world.getComponent(target as number,COMPONENT.Alive)===snapshot.life&&snapshot.life.alive&&snapshot.version!==undefined&&aliveLifeVersion(snapshot.life)===snapshot.version;
-        if (!result.ok || !result.sanitizedCall ||!targetCurrent) {
+        if (!actorCurrent()) break;
+        const target = result.sanitizedCall?.args.target_id,
+          snapshot = typeof target === "number" ? targetLives.get(target) : undefined;
+        const targetCurrent =
+          result.sanitizedCall?.args.abstain === true ||
+          target === null ||
+          (!!snapshot &&
+            ctx.world.getComponent(target as number, COMPONENT.Alive) === snapshot.life &&
+            snapshot.life.alive &&
+            snapshot.version !== undefined &&
+            aliveLifeVersion(snapshot.life) === snapshot.version);
+        if (!result.ok || !result.sanitizedCall || !targetCurrent) {
           retryReason = "invalid_kill_vote_arguments";
           if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {
             safeRecordLogicOp({
@@ -184,11 +225,14 @@ const wolfKillVoteStage: NightStageHandler = {
           abstain: result.sanitizedCall.args.abstain === true,
           targetId: result.sanitizedCall.args.target_id,
           fallback: attempt > 1,
-          ...(!result.sanitizedCall.args.abstain&&snapshot&&snapshot.version!==undefined?{targetLife:{life:snapshot.life,version:snapshot.version}}:{}),
+          ...(!result.sanitizedCall.args.abstain && snapshot && snapshot.version !== undefined
+            ? { targetLife: { life: snapshot.life, version: snapshot.version } }
+            : {}),
         };
         break;
       }
-      if (!actorCurrent()||!wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId)) continue;
+      if (!actorCurrent() || !wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId))
+        continue;
       if (!voteResolved) {
         voteResolved = {
           abstain: true,
@@ -211,18 +255,20 @@ const wolfKillVoteStage: NightStageHandler = {
       const abstain = voteResolved.abstain;
       const targetId = voteResolved.targetId;
       if (!abstain && targetId !== null) {
-        if(voteResolved.targetLife)acceptedTargets.push({targetId,...voteResolved.targetLife});
+        if (voteResolved.targetLife) acceptedTargets.push({ targetId, ...voteResolved.targetLife });
       }
-      ctx.events.push(wolfTeamEvent(ctx.world, ctx.roleCatalog, {
-        timestamp: Date.now(),
-        type: "wolf_kill_vote_cast",
-        payload: {
-          actorId: wolfId,
-          abstain,
-          targetId,
-          ...(voteResolved.fallback ? { fallback: true } : {}),
-        },
-      }));
+      ctx.events.push(
+        wolfTeamEvent(ctx.world, ctx.roleCatalog, {
+          timestamp: Date.now(),
+          type: "wolf_kill_vote_cast",
+          payload: {
+            actorId: wolfId,
+            abstain,
+            targetId,
+            ...(voteResolved.fallback ? { fallback: true } : {}),
+          },
+        }),
+      );
       safeRecordLogicOp({
         scope: "phase_pipeline",
         op: "wolf_kill_vote_cast",
@@ -233,7 +279,13 @@ const wolfKillVoteStage: NightStageHandler = {
       });
     }
 
-    for(const target of acceptedTargets)if(ctx.world.getComponent(target.targetId,COMPONENT.Alive)===target.life&&target.life.alive&&aliveLifeVersion(target.life)===target.version)ctx.state.wolfVotes[target.targetId]=(ctx.state.wolfVotes[target.targetId]??0)+1;
+    for (const target of acceptedTargets)
+      if (
+        ctx.world.getComponent(target.targetId, COMPONENT.Alive) === target.life &&
+        target.life.alive &&
+        aliveLifeVersion(target.life) === target.version
+      )
+        ctx.state.wolfVotes[target.targetId] = (ctx.state.wolfVotes[target.targetId] ?? 0) + 1;
     const wolfTarget = ctx.pickMajorityTarget(ctx.state.wolfVotes);
     ctx.state.wolfTarget = wolfTarget;
     safeRecordLogicOp({
@@ -244,14 +296,21 @@ const wolfKillVoteStage: NightStageHandler = {
       output: { tally: ctx.state.wolfVotes, wolf_target: wolfTarget },
     });
     if (wolfTarget !== null) {
-      const target=acceptedTargets.find(item=>item.targetId===wolfTarget&&ctx.world.getComponent(item.targetId,COMPONENT.Alive)===item.life&&item.life.alive&&aliveLifeVersion(item.life)===item.version);
-      if(target){const marks=ctx.ensureMarks(wolfTarget);marks.add(StatusMark.WolfKillMark);ctx.state.wolfTargetScope={...target,marks};}
+      const target = acceptedTargets.find(
+        (item) =>
+          item.targetId === wolfTarget &&
+          ctx.world.getComponent(item.targetId, COMPONENT.Alive) === item.life &&
+          item.life.alive &&
+          aliveLifeVersion(item.life) === item.version,
+      );
+      if (target) {
+        const marks = ctx.ensureMarks(wolfTarget);
+        marks.add(StatusMark.WolfKillMark);
+        ctx.state.wolfTargetScope = { ...target, marks };
+      }
     }
   },
 };
 
 /** 狼人夜间阶段列表。 */
-export const WOLF_NIGHT_STAGES: NightStageHandler[] = [
-  wolfDiscussionStage,
-  wolfKillVoteStage,
-];
+export const WOLF_NIGHT_STAGES: NightStageHandler[] = [wolfDiscussionStage, wolfKillVoteStage];

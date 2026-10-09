@@ -14,11 +14,15 @@ describe("last words rules", () => {
     const alive = world.getComponent<AliveComponent>(deadId, COMPONENT.Alive)!;
     alive.alive = false;
 
-    mechanism.recordLastWordsGranted(world, [deadId], Phase.Night, Phase.Day, 1, events, { [deadId]: [DeathCause.WolfKill] });
+    mechanism.recordLastWordsGranted(world, [deadId], Phase.Night, Phase.Day, 1, events, {
+      [deadId]: [DeathCause.WolfKill],
+    });
     expect(events.some((event) => event.type === "last_words_granted")).toBe(true);
 
     events.length = 0;
-    mechanism.recordLastWordsGranted(world, [deadId], Phase.Night, Phase.Day, 2, events, { [deadId]: [DeathCause.WolfKill] });
+    mechanism.recordLastWordsGranted(world, [deadId], Phase.Night, Phase.Day, 2, events, {
+      [deadId]: [DeathCause.WolfKill],
+    });
     expect(events.some((event) => event.type === "last_words_granted")).toBe(false);
   });
 
@@ -30,11 +34,15 @@ describe("last words rules", () => {
     const alive = world.getComponent<AliveComponent>(deadId, COMPONENT.Alive)!;
     alive.alive = false;
 
-    mechanism.recordLastWordsGranted(world, [deadId], Phase.Voting, Phase.Voting, 3, events, { [deadId]: [DeathCause.Exile] });
+    mechanism.recordLastWordsGranted(world, [deadId], Phase.Voting, Phase.Voting, 3, events, {
+      [deadId]: [DeathCause.Exile],
+    });
     expect(events.some((event) => event.type === "last_words_granted")).toBe(true);
 
     events.length = 0;
-    mechanism.recordLastWordsGranted(world, [deadId], Phase.Day, Phase.Day, 3, events, { [deadId]: [DeathCause.SelfDestruct] });
+    mechanism.recordLastWordsGranted(world, [deadId], Phase.Day, Phase.Day, 3, events, {
+      [deadId]: [DeathCause.SelfDestruct],
+    });
     expect(events.some((event) => event.type === "last_words_granted")).toBe(false);
   });
 });

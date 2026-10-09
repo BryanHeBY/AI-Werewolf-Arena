@@ -35,9 +35,7 @@
     ]
   },
   "rules": {
-    "winConditions": [
-      "slaughter_side"
-    ],
+    "winConditions": ["slaughter_side"],
     "hooks": {
       "onDaybreak": true,
       "onPreElection": true,

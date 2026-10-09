@@ -1,13 +1,23 @@
 /** Deterministic observations and report screening for one recorded game. */
-import type { ReplayDebugReport, ReplayPlayerView, ReplayPublicEvent } from "../recording/contracts";
+import type {
+  ReplayDebugReport,
+  ReplayPlayerView,
+  ReplayPublicEvent,
+} from "../recording/contracts";
 import type { BuildDebugSummaryInput, DeterministicFinding, SummaryObservation } from "./contracts";
 
 /** Exact historic labels; do not infer IDs from arbitrary player text. */
 const REQUEST_PHASE_ALIASES: Record<string, readonly string[]> = {
-  night: ["夜晚", "Night"], day: ["白天", "Day"], voting: ["投票", "Voting"], game_over: ["终局", "Game over"],
+  night: ["夜晚", "Night"],
+  day: ["白天", "Day"],
+  voting: ["投票", "Voting"],
+  game_over: ["终局", "Game over"],
 };
 function requestPhaseMatchesTimelinePhase(requestPhase: string, timelinePhase: string): boolean {
-  return Object.hasOwn(REQUEST_PHASE_ALIASES, requestPhase) && (requestPhase === timelinePhase || REQUEST_PHASE_ALIASES[requestPhase].includes(timelinePhase));
+  return (
+    Object.hasOwn(REQUEST_PHASE_ALIASES, requestPhase) &&
+    (requestPhase === timelinePhase || REQUEST_PHASE_ALIASES[requestPhase].includes(timelinePhase))
+  );
 }
 
 export function collectObservations(input: BuildDebugSummaryInput): SummaryObservation[] {
@@ -17,8 +27,16 @@ export function collectObservations(input: BuildDebugSummaryInput): SummaryObser
   const observations: SummaryObservation[] = [];
 
   const timelineEntries = views.reduce((acc, view) => acc + view.timeline.length, 0);
-  const selfDestructCount = events.filter((e) => (e.type === "wolf_self_destruct" || e.type === "white_wolf_king_self_destruct")).length;
-  const deathShotCount = events.filter((e) => e.type === "player_shot" || e.type === "hunter_shot" || e.type === "wolf_king_shot" || e.type === "mechanical_shot").length;
+  const selfDestructCount = events.filter(
+    (e) => e.type === "wolf_self_destruct" || e.type === "white_wolf_king_self_destruct",
+  ).length;
+  const deathShotCount = events.filter(
+    (e) =>
+      e.type === "player_shot" ||
+      e.type === "hunter_shot" ||
+      e.type === "wolf_king_shot" ||
+      e.type === "mechanical_shot",
+  ).length;
   const nightResolvedCount = events.filter((e) => e.type === "night_resolved").length;
 
   const mismatchSeqs: number[] = [];
@@ -53,9 +71,7 @@ export function collectObservations(input: BuildDebugSummaryInput): SummaryObser
         toolRejectedCount += 1;
       }
       if (
-        entry.delta_messages.some(
-          (item) => item.kind === "tool_call" && item.accepted === false,
-        )
+        entry.delta_messages.some((item) => item.kind === "tool_call" && item.accepted === false)
       ) {
         toolRejectedCount += 1;
       }
@@ -63,29 +79,54 @@ export function collectObservations(input: BuildDebugSummaryInput): SummaryObser
   }
 
   observations.push({
-    code: "event_counts", title: "audit.observation.event_counts.title",
-    detail: { key: "audit.observation.event_counts.detail", parameters: { events: events.length, ops: ops.length, players: views.length, timeline: timelineEntries } },
+    code: "event_counts",
+    title: "audit.observation.event_counts.title",
+    detail: {
+      key: "audit.observation.event_counts.detail",
+      parameters: {
+        events: events.length,
+        ops: ops.length,
+        players: views.length,
+        timeline: timelineEntries,
+      },
+    },
   });
   observations.push({
-    code: "process_counts", title: "audit.observation.process_counts.title",
-    detail: { key: "audit.observation.process_counts.detail", parameters: { night: nightResolvedCount, blast: selfDestructCount, shot: deathShotCount } },
+    code: "process_counts",
+    title: "audit.observation.process_counts.title",
+    detail: {
+      key: "audit.observation.process_counts.detail",
+      parameters: { night: nightResolvedCount, blast: selfDestructCount, shot: deathShotCount },
+    },
   });
   observations.push({
-    code: "actions", title: "audit.observation.actions.title",
-    detail: { key: "audit.observation.actions.detail", parameters: { rejected: toolRejectedCount, fallback: fallbackCount } },
+    code: "actions",
+    title: "audit.observation.actions.title",
+    detail: {
+      key: "audit.observation.actions.detail",
+      parameters: { rejected: toolRejectedCount, fallback: fallbackCount },
+    },
   });
 
   if (invalidDaySeqs.length > 0) {
     observations.push({
-      code: "invalid_day", title: "audit.observation.invalid_day.title",
-      detail: { key: "audit.observation.invalid_day.detail", parameters: { count: invalidDaySeqs.length } },
+      code: "invalid_day",
+      title: "audit.observation.invalid_day.title",
+      detail: {
+        key: "audit.observation.invalid_day.detail",
+        parameters: { count: invalidDaySeqs.length },
+      },
       evidence: invalidDaySeqs.slice(0, 10),
     });
   }
   if (mismatchSeqs.length > 0) {
     observations.push({
-      code: "request_mismatch", title: "audit.observation.request_mismatch.title",
-      detail: { key: "audit.observation.request_mismatch.detail", parameters: { count: mismatchSeqs.length } },
+      code: "request_mismatch",
+      title: "audit.observation.request_mismatch.title",
+      detail: {
+        key: "audit.observation.request_mismatch.detail",
+        parameters: { count: mismatchSeqs.length },
+      },
       evidence: mismatchSeqs.slice(0, 10),
     });
   }
@@ -96,22 +137,18 @@ export function filterActionableReports(
   reports: ReplayDebugReport[],
   publicEvents: ReplayPublicEvent[],
 ): ReplayDebugReport[] {
-  return reports.filter((report) =>
-    isActionableReport(report, publicEvents),
-  );
+  return reports.filter((report) => isActionableReport(report, publicEvents));
 }
 
-function isActionableReport(
-  report: ReplayDebugReport,
-  publicEvents: ReplayPublicEvent[],
-): boolean {
+function isActionableReport(report: ReplayDebugReport, publicEvents: ReplayPublicEvent[]): boolean {
   const message = report.message;
   const category = report.category;
   const text = String(message ?? "").trim();
   if (!text) {
     return false;
   }
-  const hasEvidenceSeq = Array.isArray(report.evidence_event_seq) && report.evidence_event_seq.length > 0;
+  const hasEvidenceSeq =
+    Array.isArray(report.evidence_event_seq) && report.evidence_event_seq.length > 0;
 
   const hardBugSignal =
     /(日志|广播|顺序|重复|缺失|未(触发|执行|生效|公布|记录|结算)|跳过|死后|出局后|仍然发言|工具.*调用|调用.*失败|报错|error|timeout|fallback|不一致|矛盾|\bcontradict(?:ion|s|ory)?\b|越权|空守|弃票|\blogs?\b|\bbroadcast\b|\border\b|\bduplicate\b|\bmissing\b|\bskipped\b|\bafter death\b|\bafter elimination\b|\btool.*call\b|\bcall.*failed\b|\binconsistent\b|\bunauthorized\b|\babstain\b|没(有)?(公布|记录|触发|执行|生效))/i;
@@ -136,10 +173,7 @@ function isActionableReport(
   }
 
   // 规则/流程类分类在无明显噪声时默认保留，避免漏掉简短上报。
-  return (
-    hasEvidenceSeq &&
-    (category === "flow" || category === "rule" || category === "logging")
-  );
+  return hasEvidenceSeq && (category === "flow" || category === "rule" || category === "logging");
 }
 
 function detectFlowAnomaly(events: ReplayPublicEvent[]): boolean {
@@ -186,11 +220,15 @@ function detectFlowAnomaly(events: ReplayPublicEvent[]): boolean {
   return false;
 }
 
-export function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): DeterministicFinding[] {
+export function scanEventsForPotentialIssues(
+  input: BuildDebugSummaryInput,
+): DeterministicFinding[] {
   const events = input.publicEvents ?? [];
   const findings: DeterministicFinding[] = [];
 
-  const selfDestruct = events.filter((e) => (e.type === "wolf_self_destruct" || e.type === "white_wolf_king_self_destruct"));
+  const selfDestruct = events.filter(
+    (e) => e.type === "wolf_self_destruct" || e.type === "white_wolf_king_self_destruct",
+  );
   for (const e of selfDestruct) {
     if (e.day === 1) {
       findings.push({
@@ -199,7 +237,8 @@ export function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): Det
         day: e.day,
         phase: e.phase,
         actorId: Number((e.payload as any).wolfId ?? (e.payload as any).actorId ?? 0),
-        code: "first_day_blast", message: { key: "audit.check.first_day_blast" },
+        code: "first_day_blast",
+        message: { key: "audit.check.first_day_blast" },
         evidence: [e.seq],
       });
     }
@@ -218,8 +257,13 @@ export function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): Det
         category: "state",
         day: guardMentions[0].day,
         phase: guardMentions[0].phase,
-        actorId: Number((guardMentions[0].payload as any).actorId ?? (guardMentions[0].payload as any).playerId ?? 0),
-        code: "guard_mention", message: { key: "audit.check.guard_mention" },
+        actorId: Number(
+          (guardMentions[0].payload as any).actorId ??
+            (guardMentions[0].payload as any).playerId ??
+            0,
+        ),
+        code: "guard_mention",
+        message: { key: "audit.check.guard_mention" },
         evidence: guardMentions.slice(0, 6).map((e) => e.seq),
       });
     }
@@ -243,7 +287,8 @@ export function scanEventsForPotentialIssues(input: BuildDebugSummaryInput): Det
         day: witchSpeechClaims[0].day,
         phase: witchSpeechClaims[0].phase,
         actorId: witchId,
-        code: "potion_claim", message: { key: "audit.check.potion_claim" },
+        code: "potion_claim",
+        message: { key: "audit.check.potion_claim" },
         evidence: witchSpeechClaims.slice(0, 6).map((e) => e.seq),
       });
     }
@@ -289,7 +334,8 @@ export function scanPlayerTimelineMetadataIssues(
         day: 0,
         phase: "unknown",
         actorId: view.player_id,
-        code: "invalid_day", message: { key: "audit.check.invalid_day" },
+        code: "invalid_day",
+        message: { key: "audit.check.invalid_day" },
         evidence: invalidDaySeqs.slice(0, 8),
       });
     }
@@ -301,7 +347,8 @@ export function scanPlayerTimelineMetadataIssues(
         day: 0,
         phase: "unknown",
         actorId: view.player_id,
-        code: "request_mismatch", message: { key: "audit.check.request_mismatch" },
+        code: "request_mismatch",
+        message: { key: "audit.check.request_mismatch" },
         evidence: inconsistentReqSeqs.slice(0, 8),
       });
     }

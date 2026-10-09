@@ -36,8 +36,7 @@ export async function chooseSpeakerDirection(input: {
     stage: "sheriff_choose_direction",
     requiresAction: true,
     summary: { key: "request.summary.sheriff_direction" },
-    context: {
-    },
+    context: {},
   });
   const action = await actionProvider.getAction(req);
   if (action?.name === "choose_direction") {
@@ -77,19 +76,14 @@ export function buildSpeakerOrder(
     seatMap.set(id, identity?.seat ?? id);
   }
 
-  const orderedBySeat = [...aliveIds].sort(
-    (a, b) => (seatMap.get(a) ?? a) - (seatMap.get(b) ?? b),
-  );
+  const orderedBySeat = [...aliveIds].sort((a, b) => (seatMap.get(a) ?? a) - (seatMap.get(b) ?? b));
   const sheriffIndex = orderedBySeat.indexOf(sheriffId);
   if (sheriffIndex < 0) {
     return orderedBySeat;
   }
 
   if (direction === "clockwise") {
-    return [
-      ...orderedBySeat.slice(sheriffIndex + 1),
-      ...orderedBySeat.slice(0, sheriffIndex + 1),
-    ];
+    return [...orderedBySeat.slice(sheriffIndex + 1), ...orderedBySeat.slice(0, sheriffIndex + 1)];
   }
 
   const counterClockwise: EntityId[] = [];

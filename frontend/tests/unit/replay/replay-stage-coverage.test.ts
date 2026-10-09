@@ -7,46 +7,89 @@ import { KNOWN_REPLAY_EVENT_TYPES } from "../../../src/replay/replay-event-reade
 
 // Read producer contracts without importing the backend into any frontend bundle or executing it.
 const root = new URL("../../../../", import.meta.url);
-function source(path: string) { return ts.createSourceFile(path, readFileSync(new URL(path, root), "utf8"), ts.ScriptTarget.Latest, true); }
+function source(path: string) {
+  return ts.createSourceFile(
+    path,
+    readFileSync(new URL(path, root), "utf8"),
+    ts.ScriptTarget.Latest,
+    true,
+  );
+}
 function find<T extends ts.Node>(file: ts.Node, match: (node: ts.Node) => node is T): T {
   let found: T | undefined;
-  function visit(node: ts.Node) { if (match(node)) found = node; else ts.forEachChild(node, visit); }
+  function visit(node: ts.Node) {
+    if (match(node)) found = node;
+    else ts.forEachChild(node, visit);
+  }
   visit(file);
   if (!found) throw new Error("stage_contract_node_missing");
   return found;
 }
 function strings(node: ts.Node): string[] {
   const values: string[] = [];
-  function visit(item: ts.Node) { if (ts.isStringLiteral(item)) values.push(item.text); else ts.forEachChild(item, visit); }
-  visit(node); return values;
+  function visit(item: ts.Node) {
+    if (ts.isStringLiteral(item)) values.push(item.text);
+    else ts.forEachChild(item, visit);
+  }
+  visit(node);
+  return values;
 }
 function variable(path: string, name: string) {
-  return find(source(path), (node): node is ts.VariableDeclaration => ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === name);
+  return find(
+    source(path),
+    (node): node is ts.VariableDeclaration =>
+      ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === name,
+  );
 }
 function enumValues(name: string): string[] {
-  const declaration = find(source("backend/src/core/domain/identity.ts"), (node): node is ts.EnumDeclaration => ts.isEnumDeclaration(node) && node.name.text === name);
-  return declaration.members.map(member => { if (!member.initializer || !ts.isStringLiteral(member.initializer)) throw new Error("stage_enum_not_literal"); return member.initializer.text; });
+  const declaration = find(
+    source("backend/src/core/domain/identity.ts"),
+    (node): node is ts.EnumDeclaration => ts.isEnumDeclaration(node) && node.name.text === name,
+  );
+  return declaration.members.map((member) => {
+    if (!member.initializer || !ts.isStringLiteral(member.initializer))
+      throw new Error("stage_enum_not_literal");
+    return member.initializer.text;
+  });
 }
 function eventTypes() {
-  const declaration = find(source("backend/src/core/domain/events.ts"), (node): node is ts.InterfaceDeclaration => ts.isInterfaceDeclaration(node) && node.name.text === "EventPayloadMap");
-  return declaration.members.map(member => {
-    if (!member.name || !(ts.isIdentifier(member.name) || ts.isStringLiteral(member.name))) throw new Error("event_name_not_literal");
+  const declaration = find(
+    source("backend/src/core/domain/events.ts"),
+    (node): node is ts.InterfaceDeclaration =>
+      ts.isInterfaceDeclaration(node) && node.name.text === "EventPayloadMap",
+  );
+  return declaration.members.map((member) => {
+    if (!member.name || !(ts.isIdentifier(member.name) || ts.isStringLiteral(member.name)))
+      throw new Error("event_name_not_literal");
     return member.name.text;
   });
 }
 function currentStageIds(): string[] {
   const actions = variable("backend/src/core/domain/actions.ts", "ACTION_STAGES");
   if (!actions.initializer) throw new Error("stage_actions_missing");
-  const registry = variable("backend/src/game/mechanisms/script/event_render_registry.ts", "REPLAY_STAGE_HANDLERS");
-  if (!registry.initializer || !ts.isObjectLiteralExpression(registry.initializer)) throw new Error("stage_registry_missing");
-  const runtimeStageIds = registry.initializer.properties.flatMap(property => {
+  const registry = variable(
+    "backend/src/game/mechanisms/script/event_render_registry.ts",
+    "REPLAY_STAGE_HANDLERS",
+  );
+  if (!registry.initializer || !ts.isObjectLiteralExpression(registry.initializer))
+    throw new Error("stage_registry_missing");
+  const runtimeStageIds = registry.initializer.properties.flatMap((property) => {
     if (!ts.isPropertyAssignment(property)) throw new Error("stage_handler_not_static");
     return strings(property.initializer);
   });
-  const stages = new Set([...strings(actions.initializer), ...enumValues("ActionWindow"), ...enumValues("KnightDuelWindow"), ...enumValues("Phase"), ...runtimeStageIds, ...eventTypes()]);
+  const stages = new Set([
+    ...strings(actions.initializer),
+    ...enumValues("ActionWindow"),
+    ...enumValues("KnightDuelWindow"),
+    ...enumValues("Phase"),
+    ...runtimeStageIds,
+    ...eventTypes(),
+  ]);
   const fixtures = new URL("frontend/tests/fixtures/", root);
-  for (const file of readdirSync(fixtures).filter(file => file.endsWith(".json"))) {
-    const replay = JSON.parse(readFileSync(new URL(file, fixtures), "utf8")) as { events: { type: string; stage?: string }[] };
+  for (const file of readdirSync(fixtures).filter((file) => file.endsWith(".json"))) {
+    const replay = JSON.parse(readFileSync(new URL(file, fixtures), "utf8")) as {
+      events: { type: string; stage?: string }[];
+    };
     for (const event of replay.events) stages.add(event.stage ?? event.type);
   }
   return [...stages].sort();
@@ -55,14 +98,19 @@ function currentStageIds(): string[] {
 test("the common reader handles the complete current producer event contract", () => {
   expect([...KNOWN_REPLAY_EVENT_TYPES].sort()).toEqual(eventTypes().sort());
 });
-for (const locale of ["zh-CN", "en"] as const) test(`${locale}: every action window, runtime stage and raw-event fallback has a stage name`, () => {
-  const stages = currentStageIds();
-  expect(stages).toContain("on_per_speech_gap");
-  expect(stages).toContain("after_speeches");
-  expect(stages).toContain("mechanical_mimic_skipped");
-  expect(stages).toContain("merchant_trade_skipped");
-  const missing = stages.filter(stage => !Object.hasOwn(dictionaries[locale], `replay.stage.${stage}`) && !Object.hasOwn(dictionaries[locale], `stage.${stage}`));
-  expect(missing).toEqual([]);
-  for (const stage of stages) expect(stageName(stage, locale)).not.toBe(stage);
-  expect(stageName("future_stage", locale)).toBe("future_stage");
-});
+for (const locale of ["zh-CN", "en"] as const)
+  test(`${locale}: every action window, runtime stage and raw-event fallback has a stage name`, () => {
+    const stages = currentStageIds();
+    expect(stages).toContain("on_per_speech_gap");
+    expect(stages).toContain("after_speeches");
+    expect(stages).toContain("mechanical_mimic_skipped");
+    expect(stages).toContain("merchant_trade_skipped");
+    const missing = stages.filter(
+      (stage) =>
+        !Object.hasOwn(dictionaries[locale], `replay.stage.${stage}`) &&
+        !Object.hasOwn(dictionaries[locale], `stage.${stage}`),
+    );
+    expect(missing).toEqual([]);
+    for (const stage of stages) expect(stageName(stage, locale)).not.toBe(stage);
+    expect(stageName("future_stage", locale)).toBe("future_stage");
+  });

@@ -41,14 +41,22 @@ describe("AcpTurnRegistry", () => {
         action: "speak",
         arguments: { text: "x" },
       }),
-    ).toEqual({ ok: false, error: "turn_not_open_or_session_invalid", message: "本回合未开放或会话不匹配；请仅使用当前会话最新行动提示中的turn_id。" });
+    ).toEqual({
+      ok: false,
+      error: "turn_not_open_or_session_invalid",
+      message: "本回合未开放或会话不匹配；请仅使用当前会话最新行动提示中的turn_id。",
+    });
     expect(
       registry.submitAction("session-a", {
         turn_id: pending.turnId,
         action: "vote",
         arguments: { target_id: 2, abstain: false },
       }),
-    ).toEqual({ ok: false, error: "tool_not_allowed_in_this_turn", message: "该行动不在本回合允许列表中；请使用最新行动提示列出的行动。" });
+    ).toEqual({
+      ok: false,
+      error: "tool_not_allowed_in_this_turn",
+      message: "该行动不在本回合允许列表中；请使用最新行动提示列出的行动。",
+    });
     expect(
       registry.submitAction("session-a", {
         turn_id: pending.turnId,
@@ -66,7 +74,11 @@ describe("AcpTurnRegistry", () => {
         action: "speak",
         arguments: { text: "第二次不能生效" },
       }),
-    ).toEqual({ ok: false, error: "turn_not_open_or_session_invalid", message: "本回合未开放或会话不匹配；请仅使用当前会话最新行动提示中的turn_id。" });
+    ).toEqual({
+      ok: false,
+      error: "turn_not_open_or_session_invalid",
+      message: "本回合未开放或会话不匹配；请仅使用当前会话最新行动提示中的turn_id。",
+    });
     registry.close();
   });
 });
@@ -82,7 +94,10 @@ describe("WerewolfMcpControlServer", () => {
     try {
       const schema = await fetch(`${env.WEREWOLF_MCP_CONTROL_URL}/invoke`, {
         method: "POST",
-        headers: { authorization: `Bearer ${env.WEREWOLF_MCP_TOKEN}`, "content-type": "application/json" },
+        headers: {
+          authorization: `Bearer ${env.WEREWOLF_MCP_TOKEN}`,
+          "content-type": "application/json",
+        },
         body: JSON.stringify({ tool: "get_game_schema", arguments: {} }),
       });
       await expect(schema.json()).resolves.toMatchObject({ protocol_version: "1" });
@@ -91,22 +106,37 @@ describe("WerewolfMcpControlServer", () => {
       const transport = new StdioClientTransport({
         command: process.execPath,
         args: [path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts")],
-        env: Object.fromEntries(Object.entries({ ...process.env, ...env }).filter((entry): entry is [string, string] => entry[1] !== undefined)),
+        env: Object.fromEntries(
+          Object.entries({ ...process.env, ...env }).filter(
+            (entry): entry is [string, string] => entry[1] !== undefined,
+          ),
+        ),
       });
       await mcpClient.connect(transport);
       const tools = await mcpClient.listTools();
       expect(tools.tools.map((tool) => tool.name)).toEqual(
         expect.arrayContaining(["get_game_schema", "submit_action", "report_bug"]),
       );
-      await expect(mcpClient.callTool({ name: "get_game_schema", arguments: {} })).resolves.toMatchObject({
+      await expect(
+        mcpClient.callTool({ name: "get_game_schema", arguments: {} }),
+      ).resolves.toMatchObject({
         structuredContent: { protocol_version: "1" },
       });
 
-      await expect(mcpClient.callTool({
-        name: "submit_action",
-        arguments: { turn_id: pending.turnId, action: "speak", arguments: { text: "MCP 生效。" } },
-      })).resolves.toMatchObject({ structuredContent: { ok: true, accepted: true } });
-      await expect(pending.action).resolves.toEqual({ name: "speak", args: { text: "MCP 生效。" } });
+      await expect(
+        mcpClient.callTool({
+          name: "submit_action",
+          arguments: {
+            turn_id: pending.turnId,
+            action: "speak",
+            arguments: { text: "MCP 生效。" },
+          },
+        }),
+      ).resolves.toMatchObject({ structuredContent: { ok: true, accepted: true } });
+      await expect(pending.action).resolves.toEqual({
+        name: "speak",
+        args: { text: "MCP 生效。" },
+      });
       await mcpClient.close();
     } finally {
       registry.close();
@@ -133,18 +163,22 @@ describe("AcpActionProvider", () => {
           sessionId: "audit-session",
           async prompt(prompt: string): Promise<void> {
             const turnId = /当前回合 ID：(\S+)/.exec(prompt)?.[1] ?? "";
-            expect(input.registry.reportBug("audit-session", {
-              turn_id: turnId,
-              category: "flow",
-              severity: "high",
-              message: "测试：阶段状态明显矛盾",
-            })).toEqual({ ok: true, accepted: true });
-            expect(input.registry.reportBug("audit-session", {
-              turn_id: turnId,
-              category: "flow",
-              severity: "high",
-              message: "测试：同阶段重复上报",
-            })).toEqual({
+            expect(
+              input.registry.reportBug("audit-session", {
+                turn_id: turnId,
+                category: "flow",
+                severity: "high",
+                message: "测试：阶段状态明显矛盾",
+              }),
+            ).toEqual({ ok: true, accepted: true });
+            expect(
+              input.registry.reportBug("audit-session", {
+                turn_id: turnId,
+                category: "flow",
+                severity: "high",
+                message: "测试：同阶段重复上报",
+              }),
+            ).toEqual({
               ok: true,
               accepted: false,
               dropped: true,
@@ -173,7 +207,9 @@ describe("AcpActionProvider", () => {
     });
 
     try {
-      await expect(runWithSessionRecorder(recorder, () => provider.getAction(speakRequest()))).resolves.toEqual({
+      await expect(
+        runWithSessionRecorder(recorder, () => provider.getAction(speakRequest())),
+      ).resolves.toEqual({
         name: "speak",
         args: { text: "审计动作已提交。" },
       });
@@ -186,12 +222,18 @@ describe("AcpActionProvider", () => {
       );
       const turn = player.timeline.find((entry: any) => entry.kind === "turn");
       expect(turn).toBeDefined();
-      expect(turn.delta_messages.some((item: any) =>
-        item.kind === "assistant_output" && item.content.includes("正在核对阶段信息")
-      )).toBe(true);
-      expect(turn.delta_messages.some((item: any) =>
-        item.kind === "tool_call" && item.name === "speak" && item.accepted === true
-      )).toBe(true);
+      expect(
+        turn.delta_messages.some(
+          (item: any) =>
+            item.kind === "assistant_output" && item.content.includes("正在核对阶段信息"),
+        ),
+      ).toBe(true);
+      expect(
+        turn.delta_messages.some(
+          (item: any) =>
+            item.kind === "tool_call" && item.name === "speak" && item.accepted === true,
+        ),
+      ).toBe(true);
       expect(player.initial_prompt.prompt_user[0]).toContain("transport=acp_mcp");
 
       const reports = JSON.parse(
@@ -294,7 +336,8 @@ describe("AcpActionProvider", () => {
     });
 
     const startedAt = Date.now();
-    const required = speakRequest(); required.context.turn_constraints = { min_valid_actions: 1, max_valid_actions: 1 };
+    const required = speakRequest();
+    required.context.turn_constraints = { min_valid_actions: 1, max_valid_actions: 1 };
     await expect(provider.getAction(required)).resolves.toEqual({
       name: "speak",
       args: { text: "立即回退。" },

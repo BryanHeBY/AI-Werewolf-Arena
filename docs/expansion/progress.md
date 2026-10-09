@@ -4,17 +4,17 @@
 
 **当前执行边界（2026-10-09最新指令）**：完成P7最后的黑市商人及P7阶段验收后收尾、整理交接；P8–P10保留原目标和路线，交给后续agent，本轮不继续实现。
 
-| 阶段 | 状态 | 当前证据 |
-| --- | --- | --- |
-| P0 | 完成 | 文档 commit `5337194`，三路审查闭环 |
-| P1 | 完成 | `facea9c`共享目录；`87af121`机制参数执行；v2完整配置、迁移/检查及玩家绑定交付；193后端+33前端测试，三路复查0阻断 |
-| P2 | 完成 | T01逐局随机/T02严格脚本/T03受限观察/T04动作录制与兼容回放；227后端+33前端测试，三路复查0阻断 |
-| P3 | 完成 | I01–I04、诊断/CLI与受控源码扫描；实际SDK/ACP中英完整场景与Tape重放、前端/视频门槛；英文入口开放 |
-| P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
-| P5 | 完成 | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md) |
-| P6 | 完成 | 五角色与三路审查闭环；16项verified，最终全量1176测试／542实际双语整局/Tape、103前端／42浏览器通过，见[阶段验收](reviews/p6-activation.md) |
+| 阶段      | 状态                     | 当前证据                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| --------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P0        | 完成                     | 文档 commit `5337194`，三路审查闭环                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| P1        | 完成                     | `facea9c`共享目录；`87af121`机制参数执行；v2完整配置、迁移/检查及玩家绑定交付；193后端+33前端测试，三路复查0阻断                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| P2        | 完成                     | T01逐局随机/T02严格脚本/T03受限观察/T04动作录制与兼容回放；227后端+33前端测试，三路复查0阻断                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| P3        | 完成                     | I01–I04、诊断/CLI与受控源码扫描；实际SDK/ACP中英完整场景与Tape重放、前端/视频门槛；英文入口开放                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| P4        | 完成                     | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md)                                                                                                                                                                                                                                                                                                                                                                                |
+| P5        | 完成                     | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md)                                                                                                                                                                                                                                                                                                                                                                                                     |
+| P6        | 完成                     | 五角色与三路审查闭环；16项verified，最终全量1176测试／542实际双语整局/Tape、103前端／42浏览器通过，见[阶段验收](reviews/p6-activation.md)                                                                                                                                                                                                                                                                                                                                                                                                    |
 | P7 第三批 | 完成：七角色及全阶段验收 | [通灵师](reviews/p7-psychic.md)、[机械狼](reviews/p7-mechanical-wolf.md)、[奇迹商人](reviews/p7-miracle-merchant.md)、[混血儿](reviews/p7-hybrid.md)、[魔镜少女](reviews/p7-mirror-girl.md)、[觉醒隐狼](reviews/p7-awakened-hidden-wolf.md)、[黑市商人](reviews/p7-black-market-merchant.md)；23 verified/41 planned；Black新增84双语本地完整局/Tape、40seed与4失败Tape，全量后端2027测试/184573断言、前端173/78浏览器通过；见[阶段验收](reviews/p7-activation.md)，三路最终复查0阻断；功能commit `83cac45`，收尾交接见[文档](handoff-p7.md) |
-| P8–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
+| P8–P10    | 未开始                   | 按路线依赖推进，不把目录登记当成实现                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 
 ## P1 已确认决策
 
@@ -88,21 +88,17 @@ T01实现commit `47bca25`；阶段证据：[三路审查](reviews/p2-t01.md)，�
 
 实现commit `77c12fc`。player记录v2与shared reader交付，RoundRecorder写机器phase/stage，内置请求说明改MessageRef后逐局渲染；旧档仅元字段归一，原话/unknown/day异常保。raw/empty优先、引用复制、坏嵌套/参数拒绝与API迁移见[private-record-v2.md](private-record-v2.md)。后端release291、前端34测试0失败，三路[复查](reviews/p3-i03-private-requests.md)0阻断。I04、剩余日志与P3整体门槛继续推进，英文执行仍未开放。
 
-
 ## P3 I04：工作台与视频
 
 实现commit `6915c71`。共享文本目录、显式展示locale/timeZone、逐帧纯投影与真实离线PNG/MP4入口完成；用户语言选择独立于source hint，原话/unknown不改，时区/DST与空胜者终局有明确显示。[展示与渲染契约](replay-display.md)说明API、CLI、独占发布和资源所有权。后端release291、前端45单测/6实际E2E、类型/构建及中英PNG/英文MP4全部通过；同frame PNG重复哈希一致。三路[复查](reviews/p3-i04-display.md)0剩余阻断；P3剩余日志和整体英文运行门槛继续推进，不把57项计划角色或完整阶段标记完成。
-
 
 ## P3 剩余日志：安全错误诊断
 
 实现commit `95a99d0`。模型/ACP错误记录、审计与持久化告警共用closed diagnostic；原始exception/provider字段不进入新错误记录或输出，displayLocale是独立临时输入。原生取消/超时、SDK RetryError、HTTP与有限Retry-After、原始玩家内容和legacy政策见[error-diagnostics.md](error-diagnostics.md)。CLI安全catch/closed配置code与strict可选private字段已接通；后端release304、前端45/type/build通过；实际SDK/CLI错误与数据安全反例经[三路审查](reviews/p3-error-diagnostics.md)复查0阻断。P3观察/CLI人类说明和整体英文运行门槛继续，未启用P4/计划角色。
 
-
 ## P3 运行提示与CLI
 
 实现commit `1350d70`。CLI局部语言/安全失败JSON、共享运行/观察文字、structured人格回退告警与双语欢乐局示例交付；迁移报告在写盘前预检。[runtime-display.md](runtime-display.md)说明flags、API变化、原文与默认机器人策略边界。整体英文执行gate仍保持，后端release313、前端48/type/build通过，实际中英CLI/安全反例和[三路审查](reviews/p3-runtime-display.md)复查0阻断；不把CLI解析/显示支持当作英文整局或64角色完成。
-
 
 ## P3 最终英文激活
 
@@ -140,11 +136,9 @@ runner记录决定后立即关闭一次，停止新模型并在录制前丢弃�
 
 原 LlmObserver 文件逐字移到 ai/agents/player/player_observer.ts，只更新4源码和2测试imports，class/flags/输出保持。类型、模块边界与既有语言/CLI显示回归通过，A只读逐字审查0阻断。目录迁移独立提交，M21跨传输flags行为随后接入。
 
-
 ## P4 M21：跨传输日志开关
 
 SDK/ACP共享IO、轨迹和trace的终端语义，ACP初始化/实际行动提示加入共同观察器；流式message只输出一次，IO-only不输出thought/tool。展示locale与World语言独立，私有提示/思考/动作摘要始终保存，6种同步日志close触发无晚写和迟到动作。最终后端release411测试/29307断言、34实际双语纯/混合整局及严格Tape通过；追加原思考canary专项15/189通过。三路[审查](reviews/p4-m21.md)复查0阻断，[日志矩阵](runtime-display.md#p4-m21sdk--acp-日志开关)明确trace仍包含已接受动作参数与旧API默认。P4继续G01–G04，未启用57计划角色。
-
 
 ## P4 G01：狼队权限与事件时受众
 
@@ -152,20 +146,17 @@ SDK/ACP共享IO、轨迹和trace的终端语义，ACP初始化/实际行动提�
 
 三路[审查](reviews/p4-g01.md)修正后0阻断；最终release436测试/29674断言、34实际双语纯/混合整局与严格Tape通过，前端48/336、类型/构建通过。新增同会话initial→grant→revoke两语实际SDK HTTP/MCP专项2/36。详细权限、低层API、历史文件及合成profile边界见[契约](wolf-team-access.md)。G01不代表特殊狼或继承规则已启用，基础七项其余规则差异继续G02–G04；57计划角色仍未登记实现。
 
-
 ## P4 G02：类型化查验子批
 
 共享camp/role/combined结果、规则标签查询与两语展示交付；原生预言家仍仅执行camp，保留派生isWerewolf兼容但不拿false推断good，结果不改变真实阵营/身份/狼权。实际事件、私有latest/history/summary与玩家投影均隔离副本，模型不能选择额外查验mode。严格reader只读own data快照，legacy真bool仅缺typed结果时回退；终端/前端未知结果保持原JSON/未知标记，system提示明确标签/真实身份与完整结果语义。
 
 最终后端release449测试/29877断言、34实际双语纯/混合整局/Tape通过；前端52/360、类型/构建通过，英文措辞最后微调经R/L审查且双语提示/文本9/1581回归通过。三路[交叉审查](reviews/p4-g02-inspection.md)发现的重复未知字段读取、嵌套投影共享与终端truthiness回退均修复并复查0阻断。[结果契约](inspection-results.md)明确原生Camp-only与纯查询基础的范围、旧状态及格式兼容。G02能力/资源/生效与调度及女巫缺口继续下一子批，不标M05/M07/M08或完整G02完成，57计划角色未提前启用。
 
-
 ## P4 G02：夜间能力实例子批
 
 三类原生夜间状态迁入唯一能力实例，支持多来源、同类多实例、启用/到期、次数与封锁；阵营查验/守护/用药按实例调度，请求绑定ID，接收与执行重新检查。gift/copy输入与专用transfer路径分开，转移保留次数/同夜限制、显式知识策略及退役ID；所有安装路径脱离模板并规范JSON，不放宽Tape。来源默认不给玩家真实giver/原实例；身份、Agent与人设继续跟随玩家。每轮双语状态与目标提示按实际实例，晚到用药按真实日期派生自救。
 
 最终release476测试/30135断言、34实际双语纯/混合基础整局与严格Tape通过；新增两语真实SDK HTTP/ACP进程和MCP赠予查验4/32，实例人工23/181，前端54/365/type/build通过。三路[审查](reviews/p4-g02-abilities.md)发现的伪转移、模板别名、晚到自救、JSON缺省/数组与目标提示问题修复后0剩余阻断。[契约](night-abilities.md)明确API/记录、源披露、知识与资源、预留阶段及合成fixture的范围。G02女巫刀口/耗药后信息与保护结算继续下一子批；死亡技能及胜利继续G03–G04，57计划角色仍未启用。
-
 
 ## P4 G02：女巫目标、当前刀口与保护/毒
 
@@ -272,7 +263,6 @@ A01/A02/M21/G01–G04和基础差异闭环；七項在awa_classic1.0.0已验板�
 最终所涉engine／配置／目录／console／契约524／10323／54文件与type/deps/boundaries/i18n过；隐狼＋8生命core30／156（含白狼/Beauty与正新生命票），本轮最终source72真实本机SDK/ACP/混合双语完整局＋40受限seed／全部严格Tape38／9858自然0拒绝回退，接刀与实际刀票正覆盖。12全active探索无继承未降低断言，采用既有四style0–19／六人active，40seed2／328通过；没有改变公开板子或机器人策略。
 
 front97／893/type/build、actualChromium36及中英实际PNG过，三路0剩余阻断，目录15verified／49planned，六／十二人AWA board/game示例可加载。熊现时文档与已接入隐狼同步；迷雾永久平民／固定顺位／觉醒和石像联合玩法未冒认支持。依delivery§3功能门槛，P6石像鬼完成后全已支持release／阶段矩阵、P7–P10／49角色／22机制／长局T6发布目标保持；用户configs及真实认证未读写。
-
 
 ## P6：石像鬼与整阶段完成
 
@@ -406,7 +396,6 @@ NightAwakenedEffects独立typed盾/普通额外刀提案，NightPipeline空数�
 
 Aw候选与正式配置例子仍在工作区；六人AWA缩编和原12镜隐牌组加载、未知角色组合/参数及重复Aw拒绝15/46已通过。其余40seed、全60双语真实本机矩阵、最终catalog/呈现/三路交付与P7余黑市商人、P8–P10/64/22/长局T6继续，目录仍21/43。
 
-
 ## P7：觉醒隐狼完整交付
 
 有限七角色组合、六模板、580即时身份伪装与900实际夜末激活、原生Mirror独立实例、单毒/可空守/被动枪/可保留额外普通刀及独立接刀已交付。已付效果与原life/owner、整批死亡后的权限更新、中立玩家枪协议、strict失败录制和中英私有投影保持各自所有权。六人AWA缩编和原12镜隐迷踪board/game样例均通过配置与真实整局。
@@ -419,11 +408,9 @@ Aw候选与正式配置例子仍在工作区；六人AWA缩编和原12镜隐牌�
 
 觉醒隐狼完整功能commit `83e6379`（57文件）；三路最终0，详见正式审查。黑市商人规则与[实现步骤](black-market-merchant.md)已完成[三路文档冻结审查](reviews/p7-black-market-rules.md)，0残留，仍planned且22/42不变；先被动赠枪授权底座，再完整角色与延期主动槽，最后P7整阶段验收。
 
-
 ## P7：死亡许可实例绑定
 
 World短期death permission与当前请求的ability_id严格匹配，原生undefined兼容；赠予ID不能附遗言或借原生许可，旧close不撤新库存许可。仅授权底座，不建立赠枪库存、自动第二枪或注册Black。新11核心与2双语实际SDK/MCP反例、旧18双语实际枪整局/Tape、受影响1050/11744/72文件及四项静态通过，见[本笔审查](reviews/p7-death-action-instance.md)。原schema/事件/前端文字不变。目录22/42与Black后续实例/角色、P7验收及P8–P10全目标保持。
-
 
 ## P7：独立被动赠枪底座
 
@@ -432,7 +419,6 @@ World短期death permission与当前请求的ability_id严格匹配，原生unde
 独立审查修复跨World借权、target ID与lifeScope错配、judge标签遗漏和malformed armed/null状态，原审查者probe闭环。核心39/254、16真正SDK HTTP/ACP进程+注入MCP与私人记录、4受控PM完整临界局、旧18实际双语完整局/全部Tape、受影响1188/13101/87文件通过；前端163/1429/type/build、4实际浏览器与中英最终PNG通过。见[本笔验收](reviews/p7-gift-gun-foundation.md)。
 
 目录仍22/42。新gift严格Tape随真实Black交易启用后验证，本笔不冒Black完整交付或新板模拟；下一笔完整角色/延期主动礼物与例子，再P7全已支持验收及P8–P10/64/22/长局/T6。
-
 
 ## P7最终黑市商人与阶段收尾（2026-10-09）
 

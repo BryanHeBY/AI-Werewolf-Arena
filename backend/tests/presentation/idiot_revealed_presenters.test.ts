@@ -13,13 +13,10 @@ describe("idiot_revealed event presenters", () => {
       payload: { targetId: 2 },
     };
 
-    expect(
-      getDefaultAgentEventVisibilityRegistry().canView(new World(), event, 1),
-    ).toBe(true);
+    expect(getDefaultAgentEventVisibilityRegistry().canView(new World(), event, 1)).toBe(true);
 
     const judgeLine = getDefaultScriptEventRenderRegistry().toJudgeLine(event);
     expect(judgeLine).toContain("2号翻牌为白痴");
-
   });
 
   test("live render should include explicit idiot reveal line", () => {

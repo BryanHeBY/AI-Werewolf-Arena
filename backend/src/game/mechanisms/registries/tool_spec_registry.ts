@@ -16,9 +16,7 @@ function buildDefaultSpecs(roleProfileRegistry: RoleCatalog): ToolSpec[] {
   return specs;
 }
 
-function buildDefaultStageDirectives(
-  roleProfileRegistry: RoleCatalog,
-): StageDirectiveRule[] {
+function buildDefaultStageDirectives(roleProfileRegistry: RoleCatalog): StageDirectiveRule[] {
   const directives: StageDirectiveRule[] = [];
   for (const profile of roleProfileRegistry.all()) {
     if (profile.stageDirectives) {
@@ -39,8 +37,7 @@ export class ToolSpecRegistry {
     roleProfileRegistry: RoleCatalog = getDefaultRoleCatalog(),
   ) {
     const effectiveSpecs = specs ?? buildDefaultSpecs(roleProfileRegistry);
-    const effectiveDirectives =
-      stageDirectives ?? buildDefaultStageDirectives(roleProfileRegistry);
+    const effectiveDirectives = stageDirectives ?? buildDefaultStageDirectives(roleProfileRegistry);
     for (const spec of effectiveSpecs) {
       this.specByName.set(spec.name, spec);
     }
@@ -63,7 +60,10 @@ export class ToolSpecRegistry {
 
   getUserPromptHint(name: ToolName, locale: Locale = "zh-CN"): string | null {
     const spec = this.specByName.get(name);
-    return spec?.userPromptHint ?? (spec?.userPromptHintKey ? text(locale, spec.userPromptHintKey) : null);
+    return (
+      spec?.userPromptHint ??
+      (spec?.userPromptHintKey ? text(locale, spec.userPromptHintKey) : null)
+    );
   }
 
   getLlmSchema(name: ToolName): ToolSpec["llm"] | null {
@@ -85,7 +85,8 @@ export class ToolSpecRegistry {
     if (!matched) return null;
     // A caller may spread a built-in rule and replace its text; preserve that override.
     return matched.messageKey && matched.text === text("zh-CN", matched.messageKey)
-      ? text(locale, matched.messageKey) : matched.text;
+      ? text(locale, matched.messageKey)
+      : matched.text;
   }
 
   getApplicableUserPromptHints(allowedTools: ToolName[], locale: Locale = "zh-CN"): string[] {

@@ -17,7 +17,7 @@ SDK 与 ACP 使用 `ai/agents/player/action_reception.ts` 中同一套 `ActionRe
 两条游戏通路成功均返回：
 
 ```json
-{"ok": true, "accepted": true, "applied": false, "action": "use_potion"}
+{ "ok": true, "accepted": true, "applied": false, "action": "use_potion" }
 ```
 
 `accepted` 表示动作经过共同预检并成为该回合唯一选择；`applied: false` 明确资源、伤害、投票与公开事件尚未结算。后续是否生效以引擎动作/领域事件为准。最终校验仍检查世界状态的变化，不能把预检当成资源预约或已完成的结算。

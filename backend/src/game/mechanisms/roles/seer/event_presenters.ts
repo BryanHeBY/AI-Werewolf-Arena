@@ -10,8 +10,19 @@ export const SEER_SCRIPT_LIVE_HANDLERS: ScriptLiveRenderHandlers = {
       try {
         const raw = Object.getOwnPropertyDescriptor(event.payload, "result");
         if (raw && Object.hasOwn(raw, "value")) label = JSON.stringify(raw.value) ?? "?";
-      } catch { /* Invalid non-JSON diagnostic values remain unknown. */ }
+      } catch {
+        /* Invalid non-JSON diagnostic values remain unknown. */
+      }
     }
-    return [{ kind: "private", text: text(locale, "console.live.check", { actor: event.payload.actorId, target: event.payload.targetId, camp: label }) }];
+    return [
+      {
+        kind: "private",
+        text: text(locale, "console.live.check", {
+          actor: event.payload.actorId,
+          target: event.payload.targetId,
+          camp: label,
+        }),
+      },
+    ];
   },
 };

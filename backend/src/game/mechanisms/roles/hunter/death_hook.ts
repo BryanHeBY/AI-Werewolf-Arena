@@ -4,8 +4,27 @@ import type { DeathHook } from "../../hooks/hook_registry";
 import { getHunterState } from "../private_state";
 import { resolveDeathShots } from "../death_shot";
 
-export const hunterDeathHook: DeathHook = (world, ids, sources, choose, events, context) => resolveDeathShots(world, ids, sources, choose, events, {
-  role: Role.Hunter, state: getHunterState, permits: permitsHunterShot,
-  poisonEvent: hunterId => ({ timestamp: Date.now(), type: "hunter_silent_due_to_poison", payload: { hunterId } }),
-  shotEvent: (hunterId, targetId) => ({ timestamp: Date.now(), type: "hunter_shot", payload: { hunterId, targetId } }),
-}, context);
+export const hunterDeathHook: DeathHook = (world, ids, sources, choose, events, context) =>
+  resolveDeathShots(
+    world,
+    ids,
+    sources,
+    choose,
+    events,
+    {
+      role: Role.Hunter,
+      state: getHunterState,
+      permits: permitsHunterShot,
+      poisonEvent: (hunterId) => ({
+        timestamp: Date.now(),
+        type: "hunter_silent_due_to_poison",
+        payload: { hunterId },
+      }),
+      shotEvent: (hunterId, targetId) => ({
+        timestamp: Date.now(),
+        type: "hunter_shot",
+        payload: { hunterId, targetId },
+      }),
+    },
+    context,
+  );

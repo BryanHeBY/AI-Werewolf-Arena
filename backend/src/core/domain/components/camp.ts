@@ -15,7 +15,9 @@ export function createCampComponent(camp: Camp, locale: Locale = "zh-CN"): CampC
   return {
     camp,
     renderPrompt(displayLocale: Locale = locale): string {
-      return text(displayLocale, "component.camp", { camp: term("camp_team", this.camp, displayLocale) });
+      return text(displayLocale, "component.camp", {
+        camp: term("camp_team", this.camp, displayLocale),
+      });
     },
   };
 }

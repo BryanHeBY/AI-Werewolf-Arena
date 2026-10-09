@@ -4,11 +4,11 @@
 
 ## 三路审查与修正
 
-| 代理 | 独立重点 | 发现与关闭 |
-| --- | --- | --- |
-| R `review_scope_rules` | 事件payload/原文/unknown、存活与警徽、最终结果、canonical不变 | null winner曾固定显示Unfinished，max_days实际已终局；现以终止事实/有限终止原因显示No winner，in_progress保持Unfinished。双语人工4frame警徽/死亡oracle通过，0剩余阻断 |
-| A `review_arch_tests` | 显式props/frame、Player状态、渲染输入/源保护、资源与失败、参数/测试 | SDK内部close未明确await；现显式browser owner、统一实例、等待close、保留多个错误。直接最终路径渲染存在晚到symlink覆盖源的实际复现；现owned artifact→同FS link独占发布，原探针确认源/竞争目标未变、EEXIST拒绝、browser关闭一次。0剩余阻断 |
-| L `review_i18n_delivery` | 字典/控制/错误/语言hint/日期、历史数据与文档 | 原型形状unknown reason、缺失timezone、固定英文kicker、loading仅改时区误锁locale均已修。原话/未知保留；原生固定英文controls改自有双语交互。文档限定Date解析失败保原文，不宣称严格历法校验。0剩余阻断 |
+| 代理                     | 独立重点                                                            | 发现与关闭                                                                                                                                                                                                                              |
+| ------------------------ | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| R `review_scope_rules`   | 事件payload/原文/unknown、存活与警徽、最终结果、canonical不变       | null winner曾固定显示Unfinished，max_days实际已终局；现以终止事实/有限终止原因显示No winner，in_progress保持Unfinished。双语人工4frame警徽/死亡oracle通过，0剩余阻断                                                                    |
+| A `review_arch_tests`    | 显式props/frame、Player状态、渲染输入/源保护、资源与失败、参数/测试 | SDK内部close未明确await；现显式browser owner、统一实例、等待close、保留多个错误。直接最终路径渲染存在晚到symlink覆盖源的实际复现；现owned artifact→同FS link独占发布，原探针确认源/竞争目标未变、EEXIST拒绝、browser关闭一次。0剩余阻断 |
+| L `review_i18n_delivery` | 字典/控制/错误/语言hint/日期、历史数据与文档                        | 原型形状unknown reason、缺失timezone、固定英文kicker、loading仅改时区误锁locale均已修。原话/未知保留；原生固定英文controls改自有双语交互。文档限定Date解析失败保原文，不宣称严格历法校验。0剩余阻断                                     |
 
 A建议补播放中切换；现实际E2E断言Pause状态保留且进入下一个事件。L建议File I/O也使用MessageRef；现`readOfflineReplay`归一异常，合成私密异常标记不展示。新输出父目录可创建；只清本次拥有的临时目录，不删除竞争方目标。
 

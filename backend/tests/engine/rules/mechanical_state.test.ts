@@ -2,21 +2,36 @@ import { expect, test } from "bun:test";
 import { createRoleComponent } from "../../../src/core/domain/components/role";
 import { Camp, Role } from "../../../src/core/domain/model";
 import {
-  advanceMechanicalNight, canMechanicalExtraKnife, canMechanicalMimic,
-  closeMechanicalMimic, closeMechanicalSkill, chooseMechanicalGuard,
-  freshMechanicalState, getMechanicalState, learnMechanicalRole,
-  mechanicalKnifeSelected, mechanicalLearning, mechanicalSkillForNight,
-  recordMechanicalInheritance, selectMechanicalMode, setMechanicalState, type MechanicalSkill,
+  advanceMechanicalNight,
+  canMechanicalExtraKnife,
+  canMechanicalMimic,
+  closeMechanicalMimic,
+  closeMechanicalSkill,
+  chooseMechanicalGuard,
+  freshMechanicalState,
+  getMechanicalState,
+  learnMechanicalRole,
+  mechanicalKnifeSelected,
+  mechanicalLearning,
+  mechanicalSkillForNight,
+  recordMechanicalInheritance,
+  selectMechanicalMode,
+  setMechanicalState,
+  type MechanicalSkill,
 } from "../../../src/game/mechanisms/roles/mechanical_wolf/state";
 
 test("native mechanical owners deep-copy resources/history and contain serializable facts only", () => {
   const template = freshMechanicalState();
   learnMechanicalRole(template, 5, "psychic", 1);
-  const first = createRoleComponent(Role.MechanicalWolf, Camp.Wolf), second = createRoleComponent(Role.MechanicalWolf, Camp.Wolf);
-  const a = setMechanicalState(first, template), b = setMechanicalState(second, template);
+  const first = createRoleComponent(Role.MechanicalWolf, Camp.Wolf),
+    second = createRoleComponent(Role.MechanicalWolf, Camp.Wolf);
+  const a = setMechanicalState(first, template),
+    b = setMechanicalState(second, template);
   expect(getMechanicalState(first)).toBe(a);
-  expect(a).not.toBe(template); expect(a.learned).not.toBe(b.learned);
-  if (a.learned?.skill.kind !== "inspection" || b.learned?.skill.kind !== "inspection") throw new Error("wrong fixture");
+  expect(a).not.toBe(template);
+  expect(a.learned).not.toBe(b.learned);
+  if (a.learned?.skill.kind !== "inspection" || b.learned?.skill.kind !== "inspection")
+    throw new Error("wrong fixture");
   a.learned.skill.history.push({ day: 2, targetId: 4, result: { kind: "role", role: "witch" } });
   expect(b.learned.skill.history).toEqual([]);
   expect(JSON.parse(JSON.stringify(a))).toEqual(a);
@@ -24,19 +39,30 @@ test("native mechanical owners deep-copy resources/history and contain serializa
 });
 
 const initialSkills = {
-  villager: { kind: "villager" }, psychic: { kind: "inspection", history: [] },
-  witch: { kind: "poison", remaining: 1 }, guard: { kind: "guard", lastTarget: null, lastGuardDay: null },
-  hunter: { kind: "hunter", canShoot: true, armed: false }, wolf: { kind: "wolf", extraKnife: "available" },
+  villager: { kind: "villager" },
+  psychic: { kind: "inspection", history: [] },
+  witch: { kind: "poison", remaining: 1 },
+  guard: { kind: "guard", lastTarget: null, lastGuardDay: null },
+  hunter: { kind: "hunter", canShoot: true, armed: false },
+  wolf: { kind: "wolf", extraKnife: "available" },
 } satisfies Record<string, MechanicalSkill>;
 for (const role of Object.keys(initialSkills) as Array<keyof typeof initialSkills>) {
   test(`${role}: learning has independent full initial resources and starts next night`, () => {
-    expect(mechanicalLearning(7, role, 3)).toEqual({ targetId: 7, role, day: 3, readyOnNight: 4, skill: initialSkills[role] });
+    expect(mechanicalLearning(7, role, 3)).toEqual({
+      targetId: 7,
+      role,
+      day: 3,
+      readyOnNight: 4,
+      skill: initialSkills[role],
+    });
   });
 }
 
 test("unsupported learning does not spend a learning opportunity", () => {
   const state = freshMechanicalState();
-  expect(() => learnMechanicalRole(state, 5, "seer", 1)).toThrow("mechanical_learning_role_not_supported");
+  expect(() => learnMechanicalRole(state, 5, "seer", 1)).toThrow(
+    "mechanical_learning_role_not_supported",
+  );
   expect(state).toEqual(freshMechanicalState());
 });
 
@@ -48,12 +74,19 @@ test("a skipped first-night learning remains available on later nights, and acce
   expect(learnMechanicalRole(state, 5, "witch", 2)).toBe(true);
   expect(canMechanicalMimic(state, 3)).toBe(false);
   expect(learnMechanicalRole(state, 6, "guard", 3)).toBe(false);
-  expect(state.learned).toEqual({ targetId: 5, role: "witch", day: 2, readyOnNight: 3, skill: { kind: "poison", remaining: 1 } });
+  expect(state.learned).toEqual({
+    targetId: 5,
+    role: "witch",
+    day: 2,
+    readyOnNight: 3,
+    skill: { kind: "poison", remaining: 1 },
+  });
 });
 
 test("night one has no mode, active skill or knife even with a pre-existing inheritance fact", () => {
   const state = freshMechanicalState();
-  recordMechanicalInheritance(state, 1); learnMechanicalRole(state, 5, "witch", 1);
+  recordMechanicalInheritance(state, 1);
+  learnMechanicalRole(state, 5, "witch", 1);
   expect(selectMechanicalMode(state, 1, "kill")).toBe(false);
   expect(mechanicalKnifeSelected(state, 1)).toBe(false);
   expect(mechanicalSkillForNight(state, 1)).toBeUndefined();
@@ -75,10 +108,12 @@ test("mode and learning are separate windows; late learning cannot act in the sa
 
 test("native active skill and inherited knife are mutually exclusive while gun readiness is independent", () => {
   const state = freshMechanicalState();
-  recordMechanicalInheritance(state, 1); learnMechanicalRole(state, 5, "hunter", 1);
+  recordMechanicalInheritance(state, 1);
+  learnMechanicalRole(state, 5, "hunter", 1);
   advanceMechanicalNight(state, 1);
   expect(state.learned?.skill).toEqual({ kind: "hunter", canShoot: true, armed: false });
-  advanceMechanicalNight(state, 2); selectMechanicalMode(state, 2, "kill");
+  advanceMechanicalNight(state, 2);
+  selectMechanicalMode(state, 2, "kill");
   expect(state.learned?.skill).toEqual({ kind: "hunter", canShoot: true, armed: true });
   expect(mechanicalKnifeSelected(state, 2)).toBe(true);
   expect(mechanicalSkillForNight(state, 2)).toBeUndefined();
@@ -89,7 +124,8 @@ test("native active skill and inherited knife are mutually exclusive while gun r
 
 test("a legal active-skill skip closes only that night's window and does not consume poison", () => {
   const state = freshMechanicalState();
-  learnMechanicalRole(state, 5, "witch", 1); selectMechanicalMode(state, 2, "skill");
+  learnMechanicalRole(state, 5, "witch", 1);
+  selectMechanicalMode(state, 2, "skill");
   expect(closeMechanicalSkill(state, 2)).toBe(true);
   expect(closeMechanicalSkill(state, 2)).toBe(false);
   expect(mechanicalSkillForNight(state, 2)).toBeUndefined();
@@ -112,13 +148,17 @@ test("first knife night is fixed by actual inheritance and never reset by anothe
 
 test("extra knife exists only in the first inherited knife night and is not replenished", () => {
   const state = freshMechanicalState();
-  learnMechanicalRole(state, 5, "wolf", 1); recordMechanicalInheritance(state, 2);
-  selectMechanicalMode(state, 2, "kill"); expect(canMechanicalExtraKnife(state, 2)).toBe(false);
-  selectMechanicalMode(state, 3, "kill"); expect(canMechanicalExtraKnife(state, 3)).toBe(true);
+  learnMechanicalRole(state, 5, "wolf", 1);
+  recordMechanicalInheritance(state, 2);
+  selectMechanicalMode(state, 2, "kill");
+  expect(canMechanicalExtraKnife(state, 2)).toBe(false);
+  selectMechanicalMode(state, 3, "kill");
+  expect(canMechanicalExtraKnife(state, 3)).toBe(true);
   if (state.learned?.skill.kind !== "wolf") throw new Error("wrong fixture");
   state.learned.skill.extraKnife = "spent";
   expect(canMechanicalExtraKnife(state, 3)).toBe(false);
-  advanceMechanicalNight(state, 4); selectMechanicalMode(state, 4, "kill");
+  advanceMechanicalNight(state, 4);
+  selectMechanicalMode(state, 4, "kill");
   expect(state.learned.skill.extraKnife).toBe("spent");
   expect(canMechanicalExtraKnife(state, 4)).toBe(false);
 });
@@ -130,7 +170,8 @@ test("skill-mode, an entirely skipped window and late Wolf learning all expire t
     recordMechanicalInheritance(state, 1);
     if (choice === "skill") selectMechanicalMode(state, 2, "skill");
     if (choice === "late") learnMechanicalRole(state, 5, "wolf", 2);
-    advanceMechanicalNight(state, 3); selectMechanicalMode(state, 3, "kill");
+    advanceMechanicalNight(state, 3);
+    selectMechanicalMode(state, 3, "kill");
     expect(state.learned?.skill).toEqual({ kind: "wolf", extraKnife: "expired" });
     expect(canMechanicalExtraKnife(state, 3)).toBe(false);
     expect(mechanicalKnifeSelected(state, 3)).toBe(true);
@@ -142,8 +183,11 @@ test("only consecutive actual night IDs fail guard; skipping, kill mode and empt
   const consecutive = guard();
   expect(chooseMechanicalGuard(consecutive, 5, 2)).toEqual({ failed: false });
   expect(chooseMechanicalGuard(consecutive, 5, 3)).toEqual({ failed: true });
-  const gap = guard(); chooseMechanicalGuard(gap, 5, 2);
+  const gap = guard();
+  chooseMechanicalGuard(gap, 5, 2);
   expect(chooseMechanicalGuard(gap, 5, 4)).toEqual({ failed: false });
-  const empty = guard(); chooseMechanicalGuard(empty, 5, 2); chooseMechanicalGuard(empty, null, 3);
+  const empty = guard();
+  chooseMechanicalGuard(empty, 5, 2);
+  chooseMechanicalGuard(empty, null, 3);
   expect(chooseMechanicalGuard(empty, 5, 4)).toEqual({ failed: false });
 });

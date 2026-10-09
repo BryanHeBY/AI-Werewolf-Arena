@@ -58,7 +58,11 @@ export class AuditSummaryRenderer {
         { timeoutMs: this.timeoutMs },
       );
       const markdown = result?.kind === "summary" ? result.markdown.trim() : "";
-      const visible = new Set(merged.findings.flatMap(finding => finding.evidence).filter(sequence => allowed.has(sequence)));
+      const visible = new Set(
+        merged.findings
+          .flatMap((finding) => finding.evidence)
+          .filter((sequence) => allowed.has(sequence)),
+      );
       return markdown && this.evidencePolicy.validatesMarkdown(markdown, visible, this.locale)
         ? markdown
         : null;
@@ -80,15 +84,22 @@ export class AuditSummaryRenderer {
     if (merged.findings.length) {
       lines.push(`## ${headings.todo}`);
       merged.findings.forEach((finding, index) => {
-        lines.push(`- [ ] [P${index + 1}] ${text(this.locale, "audit.todo", { category: text(this.locale, `audit.category.${finding.category}` as MessageKey), message: auditInline(finding.message) })}`);
+        lines.push(
+          `- [ ] [P${index + 1}] ${text(this.locale, "audit.todo", { category: text(this.locale, `audit.category.${finding.category}` as MessageKey), message: auditInline(finding.message) })}`,
+        );
       });
     } else {
       lines.push(`## ${headings.conclusion}`, `- ${text(this.locale, "audit.conclusion")}`);
     }
     lines.push("", `## ${headings.pipeline}`);
     lines.push(`- ${text(this.locale, "audit.field.agents_total")}: ${merged.totalAgents}`);
-    lines.push(`- ${text(this.locale, "audit.field.agents_failed")}: ${merged.failedAgents.length}`);
-    if (merged.failedAgents.length) lines.push(`- ${text(this.locale, "audit.field.failed_list")}: ${auditInline(merged.failedAgents.join(", "))}`);
+    lines.push(
+      `- ${text(this.locale, "audit.field.agents_failed")}: ${merged.failedAgents.length}`,
+    );
+    if (merged.failedAgents.length)
+      lines.push(
+        `- ${text(this.locale, "audit.field.failed_list")}: ${auditInline(merged.failedAgents.join(", "))}`,
+      );
     if (merged.missingInfo.length) {
       lines.push(`- ${text(this.locale, "audit.field.missing")}:`);
       for (const note of merged.missingInfo) lines.push(`- ${auditInline(note)}`);

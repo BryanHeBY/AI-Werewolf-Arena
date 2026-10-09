@@ -16,7 +16,10 @@ export class GameEventRecorder {
   private replayDayCursor = 1;
   private replayPhaseCursor: string;
 
-  constructor(private readonly options: GameEventRecorderOptions, initialPhase: string) {
+  constructor(
+    private readonly options: GameEventRecorderOptions,
+    initialPhase: string,
+  ) {
     this.replayPhaseCursor = initialPhase;
   }
 
@@ -41,7 +44,12 @@ export class GameEventRecorder {
       });
       for (const playerId of this.options.world.entityIds()) {
         const nextVisibleSeq = (this.playerVisibleEventSeq.get(playerId) ?? 0) + 1;
-        const visibleEvent = buildAgentVisibleEvent(this.options.world, event, playerId, nextVisibleSeq);
+        const visibleEvent = buildAgentVisibleEvent(
+          this.options.world,
+          event,
+          playerId,
+          nextVisibleSeq,
+        );
         if (!visibleEvent) continue;
         this.playerVisibleEventSeq.set(playerId, nextVisibleSeq);
         const roleComp = this.options.world.getComponent<RoleComponent>(playerId, COMPONENT.Role);

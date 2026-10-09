@@ -57,11 +57,11 @@ config:check保留warnings机器数据，并增加warningMessages当前语言说
 
 两个传输沿用同一运行配置，开关只控制终端观察，不改变提示构建、动作接收、私有记录和资源回收。
 
-| 开关 | SDK | ACP |
-| --- | --- | --- |
-| `printLlmIo` | 实际请求消息与原始模型响应 | 首次初始化系统提示、实际每轮提示与合并后的模型 message |
-| `printThinking` | assistant 文字、工具调用及结果轨迹 | 合并后的 thought / message 与工具状态变化 |
-| `trace` | 请求、排队、接受、恢复及安全失败诊断 | 同样的生命周期标记与安全失败诊断 |
+| 开关            | SDK                                  | ACP                                                    |
+| --------------- | ------------------------------------ | ------------------------------------------------------ |
+| `printLlmIo`    | 实际请求消息与原始模型响应           | 首次初始化系统提示、实际每轮提示与合并后的模型 message |
+| `printThinking` | assistant 文字、工具调用及结果轨迹   | 合并后的 thought / message 与工具状态变化              |
+| `trace`         | 请求、排队、接受、恢复及安全失败诊断 | 同样的生命周期标记与安全失败诊断                       |
 
 两种详细开关同时关闭时，不显示提示、模型 message / thought 或工具轨迹；单独开启 IO 不显示 ACP thought 或工具状态。SDK 的 assistant 输出与 ACP message 同时属于 IO 和轨迹，因此任一相关开关开启即可显示。ACP IO 从流式观察器输出一次，逐 token 合并及工具状态去重保持；没有额外复制整份 response。`createAcpConsoleLogger` 三参数 API 仍沿用既有轨迹输出默认值，runner 明确传入本局两个 flags。
 

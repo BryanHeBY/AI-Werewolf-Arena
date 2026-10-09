@@ -24,16 +24,16 @@
 
 最终目录 **20 verified/44 planned** 的源码冻结后，以下门槛全部终态exit0：
 
-| 门槛 | 证据与实际范围 |
-| --- | --- |
-| 后端受影响门槛 | `/tmp/awa-hybrid-verified-gate.log`：**964 pass/0 fail/23966 assertions/87 files**；全部engine、AI、recording、contracts，角色配置/目录与本笔54局/40seed及8故障Tape。不是全backend release |
-| 实际完整局 | 同日志九场景×SDK/ACP/混合×两语＝**54局**，每局严格Tape、逐字独立oracle、agent/MCP PID回收；candidate独立27/11649后又在最终元数据源重验 |
-| 受限随机 | 同日志六/十二各20 seed，共40，全部自然终局/零reject和fallback，两方选择/胜者正分支，每局严格Tape；candidate独立2/138后最终再验 |
-| 必选故障 | 同日志8例＋原专项 `/tmp/awa-hybrid-required3.log` 8/249；SDK实际HTTP、ACP进程内factory，失败落盘none与空membership、false回放/true篡改拒；不冒称完整局 |
-| 静态门槛 | `/tmp/awa-hybrid-verified-{type,deps,boundary,i18n}.log`；type/deps/boundaries/i18n exit0，仍57精确源码例外 |
-| 前端 | `/tmp/awa-hybrid-verified-front-unit.log`：**139/0 fail/1224 assertions/22 files**；final front type/build exit0 |
-| 浏览器 | `/tmp/awa-hybrid-browser-final.log`：**58实际Chromium全部通过（2.9m）**，布局修正后全既有回归与Hybrid四例，含终局每席位caption边界 |
-| 实际PNG | `/tmp/awa-hybrid-affiliation-zh-final.png` frame280，`/tmp/awa-hybrid-twelve-en-final.png` presentation frame6760；两render命令终态exit0，root/L独立view。先前使用raw frame10720越界已按presentation76事件纠正，未更改渲染范围约束 |
+| 门槛           | 证据与实际范围                                                                                                                                                                                                                     |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 后端受影响门槛 | `/tmp/awa-hybrid-verified-gate.log`：**964 pass/0 fail/23966 assertions/87 files**；全部engine、AI、recording、contracts，角色配置/目录与本笔54局/40seed及8故障Tape。不是全backend release                                         |
+| 实际完整局     | 同日志九场景×SDK/ACP/混合×两语＝**54局**，每局严格Tape、逐字独立oracle、agent/MCP PID回收；candidate独立27/11649后又在最终元数据源重验                                                                                             |
+| 受限随机       | 同日志六/十二各20 seed，共40，全部自然终局/零reject和fallback，两方选择/胜者正分支，每局严格Tape；candidate独立2/138后最终再验                                                                                                     |
+| 必选故障       | 同日志8例＋原专项 `/tmp/awa-hybrid-required3.log` 8/249；SDK实际HTTP、ACP进程内factory，失败落盘none与空membership、false回放/true篡改拒；不冒称完整局                                                                             |
+| 静态门槛       | `/tmp/awa-hybrid-verified-{type,deps,boundary,i18n}.log`；type/deps/boundaries/i18n exit0，仍57精确源码例外                                                                                                                        |
+| 前端           | `/tmp/awa-hybrid-verified-front-unit.log`：**139/0 fail/1224 assertions/22 files**；final front type/build exit0                                                                                                                   |
+| 浏览器         | `/tmp/awa-hybrid-browser-final.log`：**58实际Chromium全部通过（2.9m）**，布局修正后全既有回归与Hybrid四例，含终局每席位caption边界                                                                                                 |
+| 实际PNG        | `/tmp/awa-hybrid-affiliation-zh-final.png` frame280，`/tmp/awa-hybrid-twelve-en-final.png` presentation frame6760；两render命令终态exit0，root/L独立view。先前使用raw frame10720越界已按presentation76事件纠正，未更改渲染范围约束 |
 
 L/D最后独立目检：中文全6活，stage“胜利归属”、God字幕准确；英文7号Guard与8号已死Good/Hybrid/Winner均在caption上方清晰，五赢家1/2/3/4/8，遮挡关闭。A禁fallback/记录及R九字面预期复查0残留；最终文档证据与源码范围已交原审查者核对。这不是P7整阶段或P10最终验收。
 

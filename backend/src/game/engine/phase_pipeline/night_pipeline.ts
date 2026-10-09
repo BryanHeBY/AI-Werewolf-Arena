@@ -30,9 +30,9 @@ import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { GameActionRequestFactory } from "../action_request_factory";
 import { createRandom, shuffled, type RandomSource } from "../../../core/domain/random";
 import { DreamNightFrame, hasDreamNightCommit } from "../../mechanisms/roles/dreamer/night_frame";
-import {discardStaleWolfKnife} from "../../mechanisms/roles/wolf/knife_scope";
-import {hasRoleInspectionNightCommit} from "../../mechanisms/roles/role_inspection/night_scope";
-import {AliveComponent,aliveLifeVersion} from "../../../core/domain/components/alive";
+import { discardStaleWolfKnife } from "../../mechanisms/roles/wolf/knife_scope";
+import { hasRoleInspectionNightCommit } from "../../mechanisms/roles/role_inspection/night_scope";
+import { AliveComponent, aliveLifeVersion } from "../../../core/domain/components/alive";
 import { hasMechanicalNightCommit } from "../../mechanisms/roles/mechanical_wolf/night_scope";
 import { hasBlackMarketNightCommit } from "../../mechanisms/roles/black_market_merchant/night_stage";
 import { hasRecipientNightCommit } from "../../mechanisms/roles/recipient_ability_stage";
@@ -57,7 +57,13 @@ export interface NightPipelineOptions {
   isCurrent?: () => boolean;
 }
 export type NightPipelineResult =
-  | { interrupted: false; summary: NightSummary; damage: DamageResolutionResult; dreamFrame: DreamNightFrame; deathLives:ReadonlyMap<EntityId,{life:AliveComponent;version:number|undefined}> }
+  | {
+      interrupted: false;
+      summary: NightSummary;
+      damage: DamageResolutionResult;
+      dreamFrame: DreamNightFrame;
+      deathLives: ReadonlyMap<EntityId, { life: AliveComponent; version: number | undefined }>;
+    }
   | { interrupted: true };
 
 /**
@@ -94,15 +100,24 @@ export class NightPipeline {
   ): Promise<NightPipelineResult> {
     const isCurrent = options.isCurrent ?? (() => true);
     if (!isCurrent()) return { interrupted: true };
-    if(hasDreamNightCommit(this.world,day))throw new Error("dream_night_reentry_after_commit");
-    if(hasRoleInspectionNightCommit(this.world,day))throw new Error("role_inspection_night_reentry_after_commit");
-    if(hasMechanicalNightCommit(this.world,day))throw new Error("mechanical_night_reentry_after_commit");
-    if(hasBlackMarketNightCommit(this.world,day)||hasRecipientNightCommit(this.world,day,"black_market"))throw new Error("black_market_night_reentry_after_commit");
-    if(hasLuckyNightCommit(this.world,day))throw new Error("lucky_night_reentry_after_commit");
-    if(hasMerchantNightCommit(this.world,day))throw new Error("merchant_night_reentry_after_commit");
-    if(hasHybridNightCommit(this.world,day))throw new Error("hybrid_night_reentry_after_commit");
-    if(hasAwakenedNightCommit(this.world,day))throw new Error("awakened_night_reentry_after_commit");
-    if(hasDeathAbilityActivationCommit(this.world,day))throw new Error("death_ability_night_reentry_after_commit");
+    if (hasDreamNightCommit(this.world, day)) throw new Error("dream_night_reentry_after_commit");
+    if (hasRoleInspectionNightCommit(this.world, day))
+      throw new Error("role_inspection_night_reentry_after_commit");
+    if (hasMechanicalNightCommit(this.world, day))
+      throw new Error("mechanical_night_reentry_after_commit");
+    if (
+      hasBlackMarketNightCommit(this.world, day) ||
+      hasRecipientNightCommit(this.world, day, "black_market")
+    )
+      throw new Error("black_market_night_reentry_after_commit");
+    if (hasLuckyNightCommit(this.world, day)) throw new Error("lucky_night_reentry_after_commit");
+    if (hasMerchantNightCommit(this.world, day))
+      throw new Error("merchant_night_reentry_after_commit");
+    if (hasHybridNightCommit(this.world, day)) throw new Error("hybrid_night_reentry_after_commit");
+    if (hasAwakenedNightCommit(this.world, day))
+      throw new Error("awakened_night_reentry_after_commit");
+    if (hasDeathAbilityActivationCommit(this.world, day))
+      throw new Error("death_ability_night_reentry_after_commit");
     safeRecordLogicOp({
       scope: "phase_pipeline",
       op: "night_pipeline_start",
@@ -122,7 +137,8 @@ export class NightPipeline {
       dreamLinks: [],
       poisonClaims: [],
       guardClaims: [],
-      merchantBacklashes: [], blackMarketBacklashes: [],
+      merchantBacklashes: [],
+      blackMarketBacklashes: [],
       mechanicalEffects: { shields: [], attacks: [], failures: [] },
       awakenedEffects: { shields: [], attacks: [] },
     };
@@ -145,27 +161,38 @@ export class NightPipeline {
       getAliveByRole: (role: Role) => this.getAliveByRole(role),
       ensureMarks: (entityId: EntityId) => this.ensureMarks(entityId),
       pickMajorityTarget: (votes: Record<number, number>) =>
-        this.pickMajorityTarget(
-          votes,
-          config.tieBreaker?.wolfKillVote ?? "min_id",
-        ),
+        this.pickMajorityTarget(votes, config.tieBreaker?.wolfKillVote ?? "min_id"),
       shuffleWolves: (ids: EntityId[]) => shuffled(ids, this.random.fork(`day:${day}:wolf-order`)),
       state: stageState,
     };
 
     for (const stage of this.stageRegistry.getStages(config, this.world)) {
       if (!isCurrent()) return { interrupted: true };
-      discardStaleWolfKnife(this.world,stageState);
+      discardStaleWolfKnife(this.world, stageState);
       await stage.execute(stageCtx);
       if (!isCurrent()) return { interrupted: true };
-      discardStaleWolfKnife(this.world,stageState);
+      discardStaleWolfKnife(this.world, stageState);
     }
 
-    discardStaleWolfKnife(this.world,stageState);
+    discardStaleWolfKnife(this.world, stageState);
     const dreamFrame = new DreamNightFrame(stageState.dreamLinks);
-    const damage = this.damageResolutionSystem.resolve(this.world,{protectedTargets:dreamFrame.protectedTargets(this.world),consecutiveDeaths:dreamFrame.consecutiveDeaths(this.world),poisonClaims:stageState.poisonClaims,guardClaims:stageState.guardClaims,merchantBacklashes:stageState.merchantBacklashes,blackMarketBacklashes:stageState.blackMarketBacklashes,mechanicalEffects:stageState.mechanicalEffects,awakenedEffects:stageState.awakenedEffects});
-    for (const reflection of damage.poisonReflections ?? []) this.events.push({ timestamp: Date.now(), type: "mechanical_poison_reflected", payload: { ...reflection, day } });
-    dreamFrame.expandInitialDamage(this.world,damage);
+    const damage = this.damageResolutionSystem.resolve(this.world, {
+      protectedTargets: dreamFrame.protectedTargets(this.world),
+      consecutiveDeaths: dreamFrame.consecutiveDeaths(this.world),
+      poisonClaims: stageState.poisonClaims,
+      guardClaims: stageState.guardClaims,
+      merchantBacklashes: stageState.merchantBacklashes,
+      blackMarketBacklashes: stageState.blackMarketBacklashes,
+      mechanicalEffects: stageState.mechanicalEffects,
+      awakenedEffects: stageState.awakenedEffects,
+    });
+    for (const reflection of damage.poisonReflections ?? [])
+      this.events.push({
+        timestamp: Date.now(),
+        type: "mechanical_poison_reflected",
+        payload: { ...reflection, day },
+      });
+    dreamFrame.expandInitialDamage(this.world, damage);
     safeRecordLogicOp({
       scope: "resolution",
       op: "night_damage_resolved",
@@ -184,8 +211,13 @@ export class NightPipeline {
       interruptedBySelfDestruct: false,
     };
 
-    const deathLives=new Map(damage.deaths.map(id=>{const life=this.world.getComponent<AliveComponent>(id,COMPONENT.Alive)!;return[id,{life,version:aliveLifeVersion(life)}] as const;}));
-    return { interrupted: false, summary, damage, dreamFrame,deathLives };
+    const deathLives = new Map(
+      damage.deaths.map((id) => {
+        const life = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+        return [id, { life, version: aliveLifeVersion(life) }] as const;
+      }),
+    );
+    return { interrupted: false, summary, damage, dreamFrame, deathLives };
   }
 
   private makeRequest(
@@ -222,10 +254,7 @@ export class NightPipeline {
    * 获取或创建目标玩家的状态印记组件。
    */
   private ensureMarks(entityId: EntityId): StatusMarksComponent {
-    let marks = this.world.getComponent<StatusMarksComponent>(
-      entityId,
-      COMPONENT.StatusMarks,
-    );
+    let marks = this.world.getComponent<StatusMarksComponent>(entityId, COMPONENT.StatusMarks);
     if (!marks) {
       // 标记组件按需创建，避免无状态玩家占用冗余存储。
       marks = new StatusMarksComponent();
@@ -259,5 +288,4 @@ export class NightPipeline {
     }
     return Number(entries[0][0]);
   }
-
 }

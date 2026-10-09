@@ -2,11 +2,11 @@
 
 日期：2026-10-08。范围：共享版本契约、旧无版本/1转换、后端writer/export与浏览器reader、游戏locale元数据。
 
-| 代理 | 首轮发现 | 修正及最终复查 |
-| --- | --- | --- |
-| `review_scope_rules` R/T | 声明payload路径宜纳永久回归；新增source guard的resolve/join对绝对形状sessionId不一致 | 中英phase_changed/god初始资料正式回归；guard使用resolve(join(...))同reader语义，原路径/软硬链接和/legacy回归均保护源字节。独立FS复现及9测试47断言，0阻断 |
-| `review_arch_tests` A/T | runner/reproduction locale输出建议直接核验 | actualRunner manifest/public locale与schema2断言；真实sim→动作复现输出locale，English仍明确gate。21测试194断言含50局完整复现；最终核查/legacy测试确实落盘，0阻断 |
-| `review_i18n_delivery` L/D | 当前工作名不能持续充当历史角色别名；payload英文路径宜覆盖 | 128角色别名literal历史快照、append-only政策；中英路径原话保护回归。后续路径修补交叉复查0阻断 |
+| 代理                       | 首轮发现                                                                             | 修正及最终复查                                                                                                                                                   |
+| -------------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `review_scope_rules` R/T   | 声明payload路径宜纳永久回归；新增source guard的resolve/join对绝对形状sessionId不一致 | 中英phase_changed/god初始资料正式回归；guard使用resolve(join(...))同reader语义，原路径/软硬链接和/legacy回归均保护源字节。独立FS复现及9测试47断言，0阻断         |
+| `review_arch_tests` A/T    | runner/reproduction locale输出建议直接核验                                           | actualRunner manifest/public locale与schema2断言；真实sim→动作复现输出locale，English仍明确gate。21测试194断言含50局完整复现；最终核查/legacy测试确实落盘，0阻断 |
+| `review_i18n_delivery` L/D | 当前工作名不能持续充当历史角色别名；payload英文路径宜覆盖                            | 128角色别名literal历史快照、append-only政策；中英路径原话保护回归。后续路径修补交叉复查0阻断                                                                     |
 
 ## 验证
 

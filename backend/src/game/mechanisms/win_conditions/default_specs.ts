@@ -61,7 +61,11 @@ function evaluateSlaughterSide(world: World): WinDecision | null {
     return victoryDecision(world, { kind: "faction", faction: Camp.Good }, "all_wolves_eliminated");
   }
   if (stat.gods === 0 || stat.villagers === 0) {
-    return victoryDecision(world, { kind: "faction", faction: Camp.Wolf }, "slaughter_side_completed");
+    return victoryDecision(
+      world,
+      { kind: "faction", faction: Camp.Wolf },
+      "slaughter_side_completed",
+    );
   }
   return null;
 }

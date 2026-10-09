@@ -2,10 +2,10 @@
 
 日期：2026-10-08。范围：游戏/审计SDK与MCP共享逐任务语言协议、参数描述、sidecar语言传递、源码fingerprint。
 
-| 代理 | 首轮发现 | 修正及复查 |
-| --- | --- | --- |
-| `review_scope_rules` R/T | 工具约束、会话和证据隔离没有行为变化 | 独立运行6测试130断言；原文、并发locale及固定code一致，0阻断 |
-| `review_arch_tests` A/T | schema比较不应过滤约束差异 | 删除旧过滤helper，MCP输入schema与SDK参数完整toEqual；独立6测试130断言，0阻断 |
+| 代理                       | 首轮发现                               | 修正及复查                                                                                                               |
+| -------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `review_scope_rules` R/T   | 工具约束、会话和证据隔离没有行为变化   | 独立运行6测试130断言；原文、并发locale及固定code一致，0阻断                                                              |
+| `review_arch_tests` A/T    | schema比较不应过滤约束差异             | 删除旧过滤helper，MCP输入schema与SDK参数完整toEqual；独立6测试130断言，0阻断                                             |
 | `review_i18n_delivery` L/D | home遮蔽后workspace共享包symlink不可达 | 本地provider仅追加game-catalog/game-text只读目录，原件0600备份；四条真实bwrap MCP验证及私有路径不可达探针复查通过，0阻断 |
 
 ## 验证

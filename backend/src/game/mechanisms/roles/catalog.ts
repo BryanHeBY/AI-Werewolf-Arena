@@ -16,11 +16,11 @@ import { KNIGHT_ROLE_PROFILE } from "./knight/profile";
 import { GRAVEKEEPER_ROLE_PROFILE } from "./gravekeeper/profile";
 import { DREAMER_ROLE_PROFILE } from "./dreamer/profile";
 import { WOLF_BEAUTY_ROLE_PROFILE } from "./wolf_beauty/profile";
-import {BEAR_ROLE_PROFILE} from "./bear/profile";
-import {HIDDEN_WOLF_ROLE_PROFILE} from "./hidden_wolf/profile";
-import {GARGOYLE_ROLE_PROFILE} from "./gargoyle/profile";
+import { BEAR_ROLE_PROFILE } from "./bear/profile";
+import { HIDDEN_WOLF_ROLE_PROFILE } from "./hidden_wolf/profile";
+import { GARGOYLE_ROLE_PROFILE } from "./gargoyle/profile";
 
-import {PSYCHIC_ROLE_PROFILE} from "./psychic/profile";
+import { PSYCHIC_ROLE_PROFILE } from "./psychic/profile";
 import { MECHANICAL_WOLF_ROLE_PROFILE } from "./mechanical_wolf/profile";
 import { BLACK_MARKET_MERCHANT_ROLE_PROFILE } from "./black_market_merchant/profile";
 import { MIRACLE_MERCHANT_ROLE_PROFILE } from "./miracle_merchant/profile";
@@ -61,7 +61,8 @@ export class RoleCatalog {
 
   constructor(profiles: RoleProfile[] = DEFAULT_ROLE_PROFILES) {
     for (const profile of profiles) {
-      if (this.profileByRole.has(profile.role)) throw new Error(`role_profile_duplicate: ${profile.role}`);
+      if (this.profileByRole.has(profile.role))
+        throw new Error(`role_profile_duplicate: ${profile.role}`);
       this.profileByRole.set(profile.role, profile);
     }
   }
@@ -74,10 +75,16 @@ export class RoleCatalog {
     return Array.from(this.profileByRole.values());
   }
 
-  participation(role: RoleComponent): { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean } {
+  participation(role: RoleComponent): {
+    canVote: boolean;
+    canBeExiled: boolean;
+    canBeSheriff: boolean;
+  } {
     const profile = this.get(role.role);
     if (!profile) return { canVote: false, canBeExiled: false, canBeSheriff: false };
-    return typeof profile.participation === "function" ? { ...profile.participation(role) } : { ...(profile.participation ?? { canVote: true, canBeExiled: true, canBeSheriff: true }) };
+    return typeof profile.participation === "function"
+      ? { ...profile.participation(role) }
+      : { ...(profile.participation ?? { canVote: true, canBeExiled: true, canBeSheriff: true }) };
   }
 
   getCamp(role: Role): Camp {
@@ -87,7 +94,7 @@ export class RoleCatalog {
 
   label(role: Role, locale: Locale = "zh-CN"): string {
     const profile = this.get(role);
-    const builtIn = DEFAULT_ROLE_PROFILES.find(entry => entry.role === role);
+    const builtIn = DEFAULT_ROLE_PROFILES.find((entry) => entry.role === role);
     // Explicit injected text is user content, not a built-in translation key.
     if (profile && (!builtIn || profile.label !== builtIn.label)) return profile.label;
     return roleName(role, locale);
@@ -96,7 +103,7 @@ export class RoleCatalog {
   skillBrief(role: Role, locale: Locale = "zh-CN"): string {
     const profile = this.get(role);
     if (!profile) return role;
-    const builtIn = DEFAULT_ROLE_PROFILES.find(entry => entry.role === role);
+    const builtIn = DEFAULT_ROLE_PROFILES.find((entry) => entry.role === role);
     if (!builtIn || profile.skillBrief !== builtIn.skillBrief) return profile.skillBrief;
     return text(locale, `role.${role}.brief` as MessageKey);
   }
@@ -107,7 +114,9 @@ export class RoleCatalog {
     const defaultLocale = ctx.locale ?? "zh-CN";
     roleComp.renderPrompt = (locale = defaultLocale) => {
       const active = this.require(roleComp.role);
-      return active.renderPrompt ? active.renderPrompt(roleComp, locale,ctx.world) : text(locale, "role.generic.state", { role: this.label(active.role, locale) });
+      return active.renderPrompt
+        ? active.renderPrompt(roleComp, locale, ctx.world)
+        : text(locale, "role.generic.state", { role: this.label(active.role, locale) });
     };
   }
 

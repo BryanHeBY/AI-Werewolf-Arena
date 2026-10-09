@@ -8,7 +8,10 @@ import { PromptRenderable, StatusMark } from "../model";
 export class StatusMarksComponent implements PromptRenderable {
   private marks: Set<StatusMark>;
 
-  constructor(initialMarks: StatusMark[] = [], private readonly locale: Locale = "zh-CN") {
+  constructor(
+    initialMarks: StatusMark[] = [],
+    private readonly locale: Locale = "zh-CN",
+  ) {
     this.marks = new Set(initialMarks);
   }
 
@@ -52,7 +55,11 @@ export class StatusMarksComponent implements PromptRenderable {
    */
   renderPrompt(locale: Locale = this.locale): string {
     if (this.marks.size === 0) return text(locale, "component.marks_none");
-    return text(locale, "component.marks", { marks: this.values().map(mark => text(locale, `component.mark.${mark}` as MessageKey)).join(" ") });
+    return text(locale, "component.marks", {
+      marks: this.values()
+        .map((mark) => text(locale, `component.mark.${mark}` as MessageKey))
+        .join(" "),
+    });
   }
 }
 

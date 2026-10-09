@@ -10,11 +10,13 @@ test("frontend typecheck includes every source, script, test and tool configurat
   const parsed = ts.parseJsonConfigFileContent(config.config, ts.sys, root, undefined, configPath);
   expect(parsed.errors).toEqual([]);
   expect(parsed.options.noEmit).toBe(true);
-  const checked = new Set(parsed.fileNames.map(file => path.resolve(file)));
-  const authored = ["src", "scripts", "tests"].flatMap(directory =>
+  const checked = new Set(parsed.fileNames.map((file) => path.resolve(file)));
+  const authored = ["src", "scripts", "tests"].flatMap((directory) =>
     ts.sys.readDirectory(path.join(root, directory), [".ts", ".tsx"]),
   );
   authored.push(...ts.sys.readDirectory(root, [".ts", ".tsx"], undefined, ["*"], 1));
-  const missing = authored.filter(file => !checked.has(path.resolve(file))).map(file => path.relative(root, file));
+  const missing = authored
+    .filter((file) => !checked.has(path.resolve(file)))
+    .map((file) => path.relative(root, file));
   expect(missing).toEqual([]);
 });

@@ -11,11 +11,7 @@ function request(deadlineAtMs: number): ActionRequest {
     phase: Phase.Day,
     allowedTools: ["speak"],
     deadlineAtMs,
-    context: {turn_constraints: {},
-      day: 1,
-      stage: "day_speech",
-      visible_events: [],
-    },
+    context: { turn_constraints: {}, day: 1, stage: "day_speech", visible_events: [] },
   };
 }
 
@@ -24,7 +20,11 @@ describe("AcpActionProvider session lifecycle", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const factory: AcpSessionFactory = {
       createSession(input): Promise<never> {
-        return new Promise((_, reject) => input.signal!.addEventListener("abort", () => reject(input.signal!.reason), { once: true }));
+        return new Promise((_, reject) =>
+          input.signal!.addEventListener("abort", () => reject(input.signal!.reason), {
+            once: true,
+          }),
+        );
       },
     };
     const provider = new AcpActionProvider(context.world, {

@@ -4,16 +4,16 @@
 
 ## 状态与能力所有权
 
-| 事实 | 唯一所有者 | 公开范围 |
-| --- | --- | --- |
-| 真Aw/Wolf/Victory与玩家身份 | RoleProfile、Role/Victory/Identity组件 | 本人；God完整底牌，普通查验只按授权label |
-| 模仿机会、本夜关闭、已学对象/真实role | Aw typed private state | 仅本人及God，不给目标/小狼 |
-| actual activationNight与activeFromNight | Aw learned元数据 | 本人；夜末900真实提交，不猜学习日+1 |
-| Mirror报告/uses/closed/disabled | 一个Aw原生role_check实例，mirror policy | 既有同实例私人投影；Aw元数据只保存ability ID |
-| Poison/Guard/Hunter/Wolf复制库存及关闭 | Aw typed skill union | 只本人，明确空技能Villager，无机械mode |
-| 唯一活Wolf继承/固定首个可刀时点 | 装配/DeathResolution更新的Aw事实 | 本人，不补狼队知识；查询只读 |
-| 原life、提交owner与本夜效果提案 | per-World运行作用域/typed Damage输入 | 不落DTO/Tape对象ref；God可保结果因果 |
-| 真实死亡、枪/徽/遗言与最后judge | Damage/DeathResolution/PhaseManager | 原职责不移到角色阶段 |
+| 事实                                    | 唯一所有者                              | 公开范围                                     |
+| --------------------------------------- | --------------------------------------- | -------------------------------------------- |
+| 真Aw/Wolf/Victory与玩家身份             | RoleProfile、Role/Victory/Identity组件  | 本人；God完整底牌，普通查验只按授权label     |
+| 模仿机会、本夜关闭、已学对象/真实role   | Aw typed private state                  | 仅本人及God，不给目标/小狼                   |
+| actual activationNight与activeFromNight | Aw learned元数据                        | 本人；夜末900真实提交，不猜学习日+1          |
+| Mirror报告/uses/closed/disabled         | 一个Aw原生role_check实例，mirror policy | 既有同实例私人投影；Aw元数据只保存ability ID |
+| Poison/Guard/Hunter/Wolf复制库存及关闭  | Aw typed skill union                    | 只本人，明确空技能Villager，无机械mode       |
+| 唯一活Wolf继承/固定首个可刀时点         | 装配/DeathResolution更新的Aw事实        | 本人，不补狼队知识；查询只读                 |
+| 原life、提交owner与本夜效果提案         | per-World运行作用域/typed Damage输入    | 不落DTO/Tape对象ref；God可保结果因果         |
+| 真实死亡、枪/徽/遗言与最后judge         | Damage/DeathResolution/PhaseManager     | 原职责不移到角色阶段                         |
 
 声明独立的Aw状态与步骤，复用现有原life/时间约束/role_check/枪许可组合。不能把MechanicalState改role名字继续携带mode、反毒、穿盾刀、连续守护判离或全部nextNight语义，也不建通用复制/Agent基类。
 

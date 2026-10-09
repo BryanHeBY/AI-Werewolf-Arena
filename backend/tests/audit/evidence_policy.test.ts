@@ -19,14 +19,22 @@ describe("AuditEvidencePolicy", () => {
         agent: "b",
         findings: [
           { category: "flow", severity: "high", message: "major", evidence: [2], source: "a" },
-          { category: "rule", severity: "medium", message: "invented", evidence: [99], source: "b" },
+          {
+            category: "rule",
+            severity: "medium",
+            message: "invented",
+            evidence: [99],
+            source: "b",
+          },
         ],
         notes: [],
         missing_info: [],
       },
     ]);
     expect(merged.findings.map((finding) => finding.message)).toEqual([
-      "major", "invented", "minor",
+      "major",
+      "invented",
+      "minor",
     ]);
     const filtered = policy.filterByEvidence(merged.findings, new Set([1, 2]));
     expect(filtered.findings.map((finding) => finding.message)).toEqual(["major", "minor"]);
@@ -35,13 +43,17 @@ describe("AuditEvidencePolicy", () => {
 
   test("requires every generated finding line to cite an existing sequence", () => {
     const policy = new AuditEvidencePolicy();
-    expect(policy.validatesMarkdown(
-      auditSummaryFixture("en", "- [HIGH][flow] issue evidence=2"),
-      new Set([2]),
-    )).toBe(true);
-    expect(policy.validatesMarkdown(
-      auditSummaryFixture("en", "- [HIGH][flow] unsupported"),
-      new Set([2]),
-    )).toBe(false);
+    expect(
+      policy.validatesMarkdown(
+        auditSummaryFixture("en", "- [HIGH][flow] issue evidence=2"),
+        new Set([2]),
+      ),
+    ).toBe(true);
+    expect(
+      policy.validatesMarkdown(
+        auditSummaryFixture("en", "- [HIGH][flow] unsupported"),
+        new Set([2]),
+      ),
+    ).toBe(false);
   });
 });

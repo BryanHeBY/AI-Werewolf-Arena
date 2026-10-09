@@ -32,13 +32,17 @@ import { COMPONENT } from "../../core/domain/components/names";
 import { commitSelfDestructSelection } from "../mechanisms/self_destruct/commit";
 import { commitKnightDuel } from "../mechanisms/roles/knight/commit";
 import { captureExileFeedback } from "../mechanisms/roles/gravekeeper/feedback";
-import {captureBeautyExile,resolveBeautyExileVictory,type BeautyExileCandidate} from "../mechanisms/roles/wolf_beauty/relation";
-import {BearNightFrame} from "../mechanisms/roles/bear/night_frame";
-import {refreshHiddenWolfInheritance} from "../mechanisms/roles/hidden_wolf/inheritance";
-import {refreshGargoyleInheritance} from "../mechanisms/roles/gargoyle/inheritance";
+import {
+  captureBeautyExile,
+  resolveBeautyExileVictory,
+  type BeautyExileCandidate,
+} from "../mechanisms/roles/wolf_beauty/relation";
+import { BearNightFrame } from "../mechanisms/roles/bear/night_frame";
+import { refreshHiddenWolfInheritance } from "../mechanisms/roles/hidden_wolf/inheritance";
+import { refreshGargoyleInheritance } from "../mechanisms/roles/gargoyle/inheritance";
 import { refreshMechanicalInheritance } from "../mechanisms/roles/mechanical_wolf/inheritance";
 import { refreshAwakenedInheritance } from "../mechanisms/roles/awakened_hidden_wolf/inheritance";
-import {aliveLifeVersion} from "../../core/domain/components/alive";
+import { aliveLifeVersion } from "../../core/domain/components/alive";
 import { VotingRightComponent } from "../../core/domain/components/voting_right";
 import { IdentityComponent } from "../../core/domain/entities/player";
 import { RoleComponent } from "../../core/domain/components/role";
@@ -76,7 +80,13 @@ export class PhaseManager {
     random: RandomSource = createRandom(),
   ) {
     this.eventRegistry = new EventRegistry();
-    this.deathResolution = new DeathResolution(world, this.events, toolGateway, this.eventRegistry, this.state);
+    this.deathResolution = new DeathResolution(
+      world,
+      this.events,
+      toolGateway,
+      this.eventRegistry,
+      this.state,
+    );
     this.nightPipeline = new NightPipeline({
       world,
       toolGateway,
@@ -104,10 +114,7 @@ export class PhaseManager {
       payload: {
         boardSize: this.config.boardSize,
         players: this.world.getAliveEntityIds().map((id) => {
-          const identity = this.world.getComponent<IdentityComponent>(
-            id,
-            COMPONENT.Identity,
-          );
+          const identity = this.world.getComponent<IdentityComponent>(id, COMPONENT.Identity);
           const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
           return {
             id,
@@ -129,8 +136,8 @@ export class PhaseManager {
       },
     });
     const initialSheriffId = findSheriffId(this.world);
-    refreshHiddenWolfInheritance(this.world,this.events,this.state.day);
-    refreshGargoyleInheritance(this.world,this.events,this.state.day);
+    refreshHiddenWolfInheritance(this.world, this.events, this.state.day);
+    refreshGargoyleInheritance(this.world, this.events, this.state.day);
     refreshMechanicalInheritance(this.world, this.state.day, this.events);
     refreshAwakenedInheritance(this.world, this.state.day, this.events);
     if (initialSheriffId !== null) {
@@ -156,7 +163,7 @@ export class PhaseManager {
    * 获取当前累计事件列表（浅拷贝）。
    */
   getEvents(): GameEvent[] {
-    return this.events.map(event => {
+    return this.events.map((event) => {
       const copy = structuredClone(event);
       if ("audience" in copy) Object.freeze(copy.audience);
       return copy;
@@ -180,34 +187,57 @@ export class PhaseManager {
     }
 
     if (this.state.day > maxDays) {
-      this.sealResult({ winner: null, reason: "max_days_reached", outcome: { kind: "no_winner" } }, "max_days_reached", Phase.Night);
+      this.sealResult(
+        { winner: null, reason: "max_days_reached", outcome: { kind: "no_winner" } },
+        "max_days_reached",
+        Phase.Night,
+      );
       return this.getSnapshot();
     }
 
     this.setPhase(Phase.Night);
-    const nightDay = this.state.day, nightRevision = this.phaseRevision;
-    const nightIsCurrent = () => this.state.day === nightDay && this.state.phase === Phase.Night && !this.state.gameOver && this.phaseRevision === nightRevision;
-    const bearFrame=BearNightFrame.capture(this.world,nightDay);
-    const night = await this.nightPipeline.execute(
-      this.config,
-      actionProvider,
-      this.state.day,
-      { previousExile: this.previousExile, isCurrent: nightIsCurrent },
-    );
+    const nightDay = this.state.day,
+      nightRevision = this.phaseRevision;
+    const nightIsCurrent = () =>
+      this.state.day === nightDay &&
+      this.state.phase === Phase.Night &&
+      !this.state.gameOver &&
+      this.phaseRevision === nightRevision;
+    const bearFrame = BearNightFrame.capture(this.world, nightDay);
+    const night = await this.nightPipeline.execute(this.config, actionProvider, this.state.day, {
+      previousExile: this.previousExile,
+      isCurrent: nightIsCurrent,
+    });
     if (night.interrupted || !nightIsCurrent()) return this.getSnapshot();
     const firstDaySheriffBeforeNightInfo =
       this.state.day === 1 && this.config.enableSheriff === true;
 
     this.setPhase(Phase.Day);
-    const cycleDay = this.state.day, dayRevision=this.phaseRevision;
-    const dayIsCurrent = () => this.state.day === cycleDay && this.state.phase === Phase.Day && !this.state.gameOver&&this.phaseRevision===dayRevision;
+    const cycleDay = this.state.day,
+      dayRevision = this.phaseRevision;
+    const dayIsCurrent = () =>
+      this.state.day === cycleDay &&
+      this.state.phase === Phase.Day &&
+      !this.state.gameOver &&
+      this.phaseRevision === dayRevision;
     let nightSettled = false;
     const settleNight = async (blast?: { deaths: number[]; sources: DeathSources }) => {
       if (nightSettled) return this.state.gameOver;
       nightSettled = true;
-      const nightDeaths=night.damage.deaths.filter(id=>{const scope=night.deathLives.get(id);return scope&&this.world.getComponent(id,COMPONENT.Alive)===scope.life&&scope.life.alive&&scope.version!==undefined&&aliveLifeVersion(scope.life)===scope.version;});
+      const nightDeaths = night.damage.deaths.filter((id) => {
+        const scope = night.deathLives.get(id);
+        return (
+          scope &&
+          this.world.getComponent(id, COMPONENT.Alive) === scope.life &&
+          scope.life.alive &&
+          scope.version !== undefined &&
+          aliveLifeVersion(scope.life) === scope.version
+        );
+      });
       this.emitNightResolved(nightDeaths);
-      const sources: DeathSources = Object.fromEntries(nightDeaths.map(id=>[id,[...(night.damage.deathSources[id]??[])]]));
+      const sources: DeathSources = Object.fromEntries(
+        nightDeaths.map((id) => [id, [...(night.damage.deathSources[id] ?? [])]]),
+      );
       const deaths = [...nightDeaths];
       const deathPhases: Record<EntityId, Phase> = {};
       if (blast !== undefined) {
@@ -217,12 +247,20 @@ export class PhaseManager {
           deathPhases[id] = Phase.Day;
         }
       }
-      await this.deathResolution.resolve(deaths, sources, actionProvider, Phase.Night, Phase.Day, deathPhases,{dreams:night.dreamFrame,nightOriginIds:nightDeaths,isCurrent:dayIsCurrent});
+      await this.deathResolution.resolve(
+        deaths,
+        sources,
+        actionProvider,
+        Phase.Night,
+        Phase.Day,
+        deathPhases,
+        { dreams: night.dreamFrame, nightOriginIds: nightDeaths, isCurrent: dayIsCurrent },
+      );
       if (!dayIsCurrent()) return this.state.gameOver;
-      bearFrame?.publish(this.world,this.events,dayIsCurrent);
+      bearFrame?.publish(this.world, this.events, dayIsCurrent);
       return this.checkAndSealResult(blast !== undefined ? "day_interrupted" : "night_settled");
     };
-    if (!firstDaySheriffBeforeNightInfo && await settleNight()) return this.getSnapshot();
+    if (!firstDaySheriffBeforeNightInfo && (await settleNight())) return this.getSnapshot();
 
     const dayResult = await this.dayPipeline.execute(this.config, actionProvider, {
       day: cycleDay,
@@ -230,19 +268,43 @@ export class PhaseManager {
       commitSelfDestruct: async (choice, window) => {
         if (!dayIsCurrent()) return false;
         // Keep pending night information private; a doomed White Wolf King cannot swallow its death with this skill.
-        if (!nightSettled && choice.kind === "white_wolf_king" && night.damage.deaths.includes(choice.actorId)) return false;
-        const blast = commitSelfDestructSelection(this.world, choice, window, Phase.Day, this.events);
+        if (
+          !nightSettled &&
+          choice.kind === "white_wolf_king" &&
+          night.damage.deaths.includes(choice.actorId)
+        )
+          return false;
+        const blast = commitSelfDestructSelection(
+          this.world,
+          choice,
+          window,
+          Phase.Day,
+          this.events,
+        );
         if (!blast) return false;
         if (!nightSettled) await settleNight(blast);
-        else await this.deathResolution.resolve(blast.deaths, blast.sources, actionProvider, Phase.Day, Phase.Day);
+        else
+          await this.deathResolution.resolve(
+            blast.deaths,
+            blast.sources,
+            actionProvider,
+            Phase.Day,
+            Phase.Day,
+          );
         return true;
       },
       ...(firstDaySheriffBeforeNightInfo ? { afterSheriffElection: () => settleNight() } : {}),
-      commitKnightDuel: async choice => {
+      commitKnightDuel: async (choice) => {
         if (!dayIsCurrent() || !nightSettled) return "rejected";
         const duel = commitKnightDuel(this.world, choice, Phase.Day, this.events);
         if (!duel) return "rejected";
-        await this.deathResolution.resolve(duel.deaths, duel.sources, actionProvider, Phase.Day, Phase.Day);
+        await this.deathResolution.resolve(
+          duel.deaths,
+          duel.sources,
+          actionProvider,
+          Phase.Day,
+          Phase.Day,
+        );
         if (!dayIsCurrent()) return "terminal";
         if (this.checkAndSealResult("day_interrupted")) return "terminal";
         return duel.endsDay ? "night" : "continue";
@@ -261,19 +323,37 @@ export class PhaseManager {
     }
 
     this.setPhase(Phase.Voting);
-    const votingRevision=this.phaseRevision;
-    const votingIsCurrent = () => this.state.day === cycleDay && this.state.phase === Phase.Voting && !this.state.gameOver&&this.phaseRevision===votingRevision;
-    const votingResult = await this.votingPipeline.execute(
-      this.config,
-      actionProvider,
-      { day: cycleDay, isCurrent: votingIsCurrent, commitSelfDestruct: async choice => {
+    const votingRevision = this.phaseRevision;
+    const votingIsCurrent = () =>
+      this.state.day === cycleDay &&
+      this.state.phase === Phase.Voting &&
+      !this.state.gameOver &&
+      this.phaseRevision === votingRevision;
+    const votingResult = await this.votingPipeline.execute(this.config, actionProvider, {
+      day: cycleDay,
+      isCurrent: votingIsCurrent,
+      commitSelfDestruct: async (choice) => {
         if (!votingIsCurrent()) return false;
-        const blast = commitSelfDestructSelection(this.world, choice, ActionWindow.OnPreVote, Phase.Voting, this.events);
+        const blast = commitSelfDestructSelection(
+          this.world,
+          choice,
+          ActionWindow.OnPreVote,
+          Phase.Voting,
+          this.events,
+        );
         if (!blast) return false;
-        await this.deathResolution.resolve(blast.deaths, blast.sources, actionProvider, Phase.Voting, Phase.Voting,{}, {isCurrent:votingIsCurrent});
+        await this.deathResolution.resolve(
+          blast.deaths,
+          blast.sources,
+          actionProvider,
+          Phase.Voting,
+          Phase.Voting,
+          {},
+          { isCurrent: votingIsCurrent },
+        );
         return true;
-      } },
-    );
+      },
+    });
 
     if (!votingIsCurrent()) return this.getSnapshot();
     if (votingResult.interrupted) {
@@ -286,12 +366,15 @@ export class PhaseManager {
       return this.getSnapshot();
     }
 
-    let beautyCandidate:BeautyExileCandidate|null=null;
+    let beautyCandidate: BeautyExileCandidate | null = null;
     if (votingResult.removed.length > 0) {
       const target = votingResult.summary.target;
-      if(target!==null&&votingResult.removed.includes(target))beautyCandidate=captureBeautyExile(this.world,target);
-      this.previousExile = target !== null && votingResult.removed.includes(target)
-        ? captureExileFeedback(this.world, target, cycleDay) : null;
+      if (target !== null && votingResult.removed.includes(target))
+        beautyCandidate = captureBeautyExile(this.world, target);
+      this.previousExile =
+        target !== null && votingResult.removed.includes(target)
+          ? captureExileFeedback(this.world, target, cycleDay)
+          : null;
       const sources: DeathSources = {};
       for (const removedId of votingResult.removed) {
         sources[removedId] = [DeathCause.Exile];
@@ -302,12 +385,18 @@ export class PhaseManager {
         actionProvider,
         Phase.Voting,
         Phase.Voting,
-        {},{isCurrent:votingIsCurrent},
+        {},
+        { isCurrent: votingIsCurrent },
       );
     }
-    if(!votingIsCurrent())return this.getSnapshot();
-    const beautyResult=resolveBeautyExileVictory(this.world,beautyCandidate);
-    if (this.checkAndSealResult("exile_settled",beautyResult?{[WinCondition.SlaughterSide]:beautyResult}:{})) {
+    if (!votingIsCurrent()) return this.getSnapshot();
+    const beautyResult = resolveBeautyExileVictory(this.world, beautyCandidate);
+    if (
+      this.checkAndSealResult(
+        "exile_settled",
+        beautyResult ? { [WinCondition.SlaughterSide]: beautyResult } : {},
+      )
+    ) {
       return this.getSnapshot();
     }
 
@@ -325,13 +414,20 @@ export class PhaseManager {
     return this.getSnapshot();
   }
 
-
   /**
    * 检查胜负并在命中时封盘写入 game_over 事件。
    */
-  private checkAndSealResult(checkpoint: VictoryCheckpoint,overrides:Partial<Record<WinCondition,WinDecision>>={}): boolean {
+  private checkAndSealResult(
+    checkpoint: VictoryCheckpoint,
+    overrides: Partial<Record<WinCondition, WinDecision>> = {},
+  ): boolean {
     if (this.state.gameOver) return true;
-    const result = this.conditionRegistry.evaluateMany(this.world, this.resolveWinConditions(), checkpoint,overrides);
+    const result = this.conditionRegistry.evaluateMany(
+      this.world,
+      this.resolveWinConditions(),
+      checkpoint,
+      overrides,
+    );
     if (!result) return false;
     this.sealResult(result, checkpoint, this.state.phase);
     return true;
@@ -340,18 +436,38 @@ export class PhaseManager {
   private sealResult(decision: WinDecision, checkpoint: VictoryCheckpoint, phase: Phase): void {
     if (this.state.gameOver) return;
     const outcome = readGameOutcome(decision.outcome, this.world.entityIds());
-    const winner = outcome.kind === "victory" && outcome.primary.kind === "faction" ? outcome.primary.faction as Camp : null;
-    if (winner !== decision.winner || typeof decision.reason !== "string" || decision.reason.length === 0) throw new Error("game_result_invalid");
+    const winner =
+      outcome.kind === "victory" && outcome.primary.kind === "faction"
+        ? (outcome.primary.faction as Camp)
+        : null;
+    if (
+      winner !== decision.winner ||
+      typeof decision.reason !== "string" ||
+      decision.reason.length === 0
+    )
+      throw new Error("game_result_invalid");
     if (outcome.kind === "victory") {
-      const targets = [outcome.primary, ...outcome.additional].map(({ winningPlayerIds: _ids, ...target }) => target);
-      const expected = victoryDecision(this.world, targets[0], decision.reason, targets.slice(1)).outcome;
-      if (JSON.stringify(expected) !== JSON.stringify(outcome)) throw new Error("game_result_membership_invalid");
+      const targets = [outcome.primary, ...outcome.additional].map(
+        ({ winningPlayerIds: _ids, ...target }) => target,
+      );
+      const expected = victoryDecision(
+        this.world,
+        targets[0],
+        decision.reason,
+        targets.slice(1),
+      ).outcome;
+      if (JSON.stringify(expected) !== JSON.stringify(outcome))
+        throw new Error("game_result_membership_invalid");
     }
     const decidedAt = readVictoryPoint({ day: this.state.day, phase, checkpoint });
     this.state.result = { winner, reason: decision.reason, outcome, decidedAt };
     this.state.gameOver = true;
     this.setPhase(Phase.GameOver);
-    this.events.push({ timestamp: Date.now(), type: "game_over", payload: structuredClone(this.state.result) });
+    this.events.push({
+      timestamp: Date.now(),
+      type: "game_over",
+      payload: structuredClone(this.state.result),
+    });
   }
 
   /**
@@ -418,5 +534,4 @@ export class PhaseManager {
       },
     });
   }
-
 }

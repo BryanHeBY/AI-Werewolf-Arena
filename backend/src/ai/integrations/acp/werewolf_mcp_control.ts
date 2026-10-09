@@ -1,9 +1,5 @@
 import { toolFailure } from "@ai-werewolf-arena/game-text";
-import {
-  AcpTurnRegistry,
-  McpReportBugParams,
-  McpSubmitActionParams,
-} from "./acp_turn_registry";
+import { AcpTurnRegistry, McpReportBugParams, McpSubmitActionParams } from "./acp_turn_registry";
 import { AcpMcpServerConfig } from "./acp_mcp_bridge";
 import { LoopbackMcpControlServer } from "./loopback_mcp_control_server";
 
@@ -43,15 +39,20 @@ export class WerewolfMcpControlServer {
   private dispatch(sessionId: string, tool: unknown, args: unknown): unknown {
     if (tool === "get_game_schema") return this.registry.getSchema();
     if (tool === "reject_submission_input") {
-      const turnId = args && typeof args === "object" && !Array.isArray(args) ? (args as Record<string, unknown>).turn_id : undefined;
+      const turnId =
+        args && typeof args === "object" && !Array.isArray(args)
+          ? (args as Record<string, unknown>).turn_id
+          : undefined;
       return this.registry.rejectSubmissionInput(sessionId, turnId);
     }
     if (tool === "submit_action") {
-      if (!args || typeof args !== "object") return toolFailure(this.registry.locale, "invalid_submit_action_arguments");
+      if (!args || typeof args !== "object")
+        return toolFailure(this.registry.locale, "invalid_submit_action_arguments");
       return this.registry.submitAction(sessionId, args as McpSubmitActionParams);
     }
     if (tool === "report_bug") {
-      if (!args || typeof args !== "object") return toolFailure(this.registry.locale, "invalid_report_bug_arguments");
+      if (!args || typeof args !== "object")
+        return toolFailure(this.registry.locale, "invalid_report_bug_arguments");
       return this.registry.reportBug(sessionId, args as McpReportBugParams);
     }
     return toolFailure(this.registry.locale, "unknown_mcp_tool");

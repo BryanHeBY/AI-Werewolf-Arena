@@ -1,5 +1,11 @@
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { ActionProvider, ActionRequest, ActionWindow, Phase, ToolCall } from "../../../src/core/domain/model";
+import {
+  ActionProvider,
+  ActionRequest,
+  ActionWindow,
+  Phase,
+  ToolCall,
+} from "../../../src/core/domain/model";
 import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
 import { VotingPipeline } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
@@ -7,9 +13,7 @@ import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 
-function makeProviderForWindow(
-  hitWindow: ActionWindow,
-): ActionProvider {
+function makeProviderForWindow(hitWindow: ActionWindow): ActionProvider {
   return {
     async getAction(request: ActionRequest): Promise<ToolCall | null> {
       if (request.allowedTools.includes("choose_direction")) {
@@ -18,10 +22,7 @@ function makeProviderForWindow(
       if (request.allowedTools.includes("speak")) {
         return { name: "speak", args: { text: `发言_${request.actorId}` } };
       }
-      if (
-        request.allowedTools.includes("self_destruct") &&
-        request.actionWindow === hitWindow
-      ) {
+      if (request.allowedTools.includes("self_destruct") && request.actionWindow === hitWindow) {
         return {
           name: "self_destruct",
           args: { reason: `hit_${hitWindow}`, confirm: true },
@@ -224,18 +225,32 @@ describe("day interrupt hooks", () => {
     const { world } = bootstrapGame(config);
     const events: any[] = [];
     const requests: ActionRequest[] = [];
-    const pipeline = new VotingPipeline({ world, roleRegistry: createDefaultRoleRegistry(), toolGateway: new ToolGateway(), eventRegistry: new EventRegistry(), events });
-    const result = await pipeline.execute(config, {
-      async getAction(request) {
-        requests.push(request);
-        if (request.allowedTools.includes("self_destruct")) return { name: "self_destruct", args: { confirm: true, reason: "Disabled-window fixture" } };
-        return { name: "vote", args: { target_id: null, abstain: true } };
+    const pipeline = new VotingPipeline({
+      world,
+      roleRegistry: createDefaultRoleRegistry(),
+      toolGateway: new ToolGateway(),
+      eventRegistry: new EventRegistry(),
+      events,
+    });
+    const result = await pipeline.execute(
+      config,
+      {
+        async getAction(request) {
+          requests.push(request);
+          if (request.allowedTools.includes("self_destruct"))
+            return {
+              name: "self_destruct",
+              args: { confirm: true, reason: "Disabled-window fixture" },
+            };
+          return { name: "vote", args: { target_id: null, abstain: true } };
+        },
       },
-    }, { day: 1 });
+      { day: 1 },
+    );
     expect(result.interrupted).toBe(false);
     expect(requests.length).toBe(12);
-    expect(requests.every(request => request.allowedTools[0] === "vote")).toBe(true);
-    expect(events.some(event => event.type === "wolf_self_destruct")).toBe(false);
+    expect(requests.every((request) => request.allowedTools[0] === "vote")).toBe(true);
+    expect(events.some((event) => event.type === "wolf_self_destruct")).toBe(false);
     expect(world.getAliveEntityIds().length).toBe(12);
   });
 });

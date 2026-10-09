@@ -1,7 +1,11 @@
 import * as path from "node:path";
 import { AcpProcessClient } from "../integrations/acp/acp_process_client";
 import { AcpSession, AcpSessionFactory } from "../integrations/acp/session";
-import { ACP_CLOSE_TIMEOUT_MS, AcpInitializationCleanupError, closeAcpSession } from "../integrations/acp/session_lifecycle";
+import {
+  ACP_CLOSE_TIMEOUT_MS,
+  AcpInitializationCleanupError,
+  closeAcpSession,
+} from "../integrations/acp/session_lifecycle";
 import { awaitBeforeDeadline, awaitWithAbort } from "../runtime/turn_deadline";
 import { AcpMcpBridgeFactory } from "../integrations/acp/acp_mcp_bridge";
 import { ResolvedAgentRuntimeProfile } from "../../runtime/config/contracts";
@@ -30,7 +34,15 @@ export class AcpAuditAgentExecutor implements AuditAgentExecutor {
   private readonly retired = new WeakMap<AcpSession, Promise<void>>();
   private readonly cleanupFailures: unknown[] = [];
 
-  get runtimeState() { return { closed: this.closed, pending: this.pending.size, sessions: this.sessions.size, creating: this.creating.size, retiring: this.retiring.size }; }
+  get runtimeState() {
+    return {
+      closed: this.closed,
+      pending: this.pending.size,
+      sessions: this.sessions.size,
+      creating: this.creating.size,
+      retiring: this.retiring.size,
+    };
+  }
 
   constructor(private readonly options: AcpAuditAgentExecutorOptions) {}
 
@@ -44,8 +56,9 @@ export class AcpAuditAgentExecutor implements AuditAgentExecutor {
       this.options.workspaceRoot,
       `${String(context.taskName).replace(/[^a-zA-Z0-9_-]/g, "_")}-${++this.nextSession}`,
     );
-    const factory = this.options.sessionFactoryResolver?.(registry, workspace)
-      ?? this.createProcessFactory(registry, workspace);
+    const factory =
+      this.options.sessionFactoryResolver?.(registry, workspace) ??
+      this.createProcessFactory(registry, workspace);
     if (this.closed) return null;
     let session: AcpSession | undefined;
     let primary: unknown;
@@ -58,30 +71,54 @@ export class AcpAuditAgentExecutor implements AuditAgentExecutor {
       options.timeoutMs,
     );
     try {
-      const sessionTask = Promise.resolve().then(() => factory.createSession({
-        actorId: 0,
-        registry,
-        initialPrompt: auditSystemPrompt(registry.locale, true),
-        deadlineAtMs,
-        signal: controller.signal,
-      }));
+      const sessionTask = Promise.resolve().then(() =>
+        factory.createSession({
+          actorId: 0,
+          registry,
+          initialPrompt: auditSystemPrompt(registry.locale, true),
+          deadlineAtMs,
+          signal: controller.signal,
+        }),
+      );
       this.creating.add(sessionTask);
-      void sessionTask.then(lateSession => {
-        this.creating.delete(sessionTask);
-        if (controller.signal.aborted || this.closed) void this.retire(lateSession, true).catch(() => undefined);
-      }, error => {
-        this.creating.delete(sessionTask);
-        if (error instanceof AcpInitializationCleanupError || (controller.signal.aborted && error !== controller.signal.reason)) this.cleanupFailures.push(error);
-      });
+      void sessionTask.then(
+        (lateSession) => {
+          this.creating.delete(sessionTask);
+          if (controller.signal.aborted || this.closed)
+            void this.retire(lateSession, true).catch(() => undefined);
+        },
+        (error) => {
+          this.creating.delete(sessionTask);
+          if (
+            error instanceof AcpInitializationCleanupError ||
+            (controller.signal.aborted && error !== controller.signal.reason)
+          )
+            this.cleanupFailures.push(error);
+        },
+      );
       session = await awaitWithAbort(sessionTask, controller.signal);
       this.sessions.add(session);
       controller.signal.throwIfAborted();
       const turn = registry.openTurn(context, session.sessionId);
-      const promptTask = session.prompt(auditTurnPrompt(turn.turnId, context.mode, registry.locale));
-      return await awaitWithAbort(Promise.race([
-        turn.result,
-        promptTask.then(() => null, error => { if (!controller.signal.aborted && !hasPrimary) { primary = error; hasPrimary = true; } return null; }),
-      ]), controller.signal);
+      const promptTask = session.prompt(
+        auditTurnPrompt(turn.turnId, context.mode, registry.locale),
+      );
+      return await awaitWithAbort(
+        Promise.race([
+          turn.result,
+          promptTask.then(
+            () => null,
+            (error) => {
+              if (!controller.signal.aborted && !hasPrimary) {
+                primary = error;
+                hasPrimary = true;
+              }
+              return null;
+            },
+          ),
+        ]),
+        controller.signal,
+      );
     } catch (error) {
       primary = error;
       hasPrimary = true;
@@ -94,8 +131,13 @@ export class AcpAuditAgentExecutor implements AuditAgentExecutor {
       controller.abort(new Error("audit_acp_turn_closed"));
       if (session) {
         this.sessions.delete(session);
-        try { await this.retire(session, force); }
-        catch (error) { if (hasPrimary) throw new AggregateError([primary, error], "audit_acp_turn_and_cleanup_failed"); throw error; }
+        try {
+          await this.retire(session, force);
+        } catch (error) {
+          if (hasPrimary)
+            throw new AggregateError([primary, error], "audit_acp_turn_and_cleanup_failed");
+          throw error;
+        }
       }
     }
   }
@@ -107,19 +149,29 @@ export class AcpAuditAgentExecutor implements AuditAgentExecutor {
     }
     for (const session of this.sessions) void this.retire(session, true).catch(() => undefined);
     this.sessions.clear();
-    try { await awaitBeforeDeadline(() => Promise.allSettled([...this.creating]), Date.now() + ACP_CLOSE_TIMEOUT_MS); }
-    catch (error) { this.cleanupFailures.push(error); }
+    try {
+      await awaitBeforeDeadline(
+        () => Promise.allSettled([...this.creating]),
+        Date.now() + ACP_CLOSE_TIMEOUT_MS,
+      );
+    } catch (error) {
+      this.cleanupFailures.push(error);
+    }
     while (this.retiring.size) await Promise.all([...this.retiring]);
     const failures = this.cleanupFailures.splice(0);
     if (failures.length) throw new AggregateError(failures, "audit_acp_close_failed");
   }
 
   private retire(session: AcpSession, force: boolean): Promise<void> {
-    const existing = this.retired.get(session); if (existing) return existing;
+    const existing = this.retired.get(session);
+    if (existing) return existing;
     const closing = closeAcpSession(session, force);
     this.retired.set(session, closing);
-    const accounted = closing.catch(error => { this.cleanupFailures.push(error); });
-    this.retiring.add(accounted); void accounted.then(() => this.retiring.delete(accounted));
+    const accounted = closing.catch((error) => {
+      this.cleanupFailures.push(error);
+    });
+    this.retiring.add(accounted);
+    void accounted.then(() => this.retiring.delete(accounted));
     return closing;
   }
 

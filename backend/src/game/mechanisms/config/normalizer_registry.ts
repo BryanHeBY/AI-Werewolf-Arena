@@ -18,10 +18,7 @@ export class ConfigNormalizerRegistry {
 
   /** 按注册顺序依次执行规范化。 */
   normalize(config: BoardConfig): BoardConfig {
-    return this.normalizers.reduce(
-      (current, normalizer) => normalizer.normalize(current),
-      config,
-    );
+    return this.normalizers.reduce((current, normalizer) => normalizer.normalize(current), config);
   }
 }
 

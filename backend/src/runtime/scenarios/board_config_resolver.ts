@@ -1,6 +1,13 @@
 /** 将已读取的板子覆盖配置合并为规范化的 BoardConfig。 */
 import { z } from "zod";
-import { ActionWindow, BoardConfig, HookConfig, Role, WinCondition, WitchSelfHealRule } from "../../core/domain/model";
+import {
+  ActionWindow,
+  BoardConfig,
+  HookConfig,
+  Role,
+  WinCondition,
+  WitchSelfHealRule,
+} from "../../core/domain/model";
 import { getDefaultConfigNormalizerRegistry } from "../../game/mechanisms";
 import { sixPlayerMvpConfig } from "./six_player_mvp";
 import { twelvePlayerStandardConfig } from "./twelve_player_standard";
@@ -68,32 +75,54 @@ const flatOverride = z.strictObject({
   selfDestruct: z.strictObject({ enabledWindows: z.array(z.enum(ActionWindow)) }).optional(),
   sheriff: z.strictObject({ voteWeight: z.number().positive().optional() }).optional(),
   witch: z.strictObject({ canSelfHeal: z.enum(WitchSelfHealRule).optional() }).optional(),
-  tieBreaker: z.strictObject({
-    exileVote: tieBreaker.optional(), wolfKillVote: tieBreaker.optional(), sheriffVote: tieBreaker.optional(),
-  }).optional(),
-  roleSetups: z.array(z.strictObject({ role: z.enum(Role), count: z.number().int().nonnegative() })).optional(),
+  tieBreaker: z
+    .strictObject({
+      exileVote: tieBreaker.optional(),
+      wolfKillVote: tieBreaker.optional(),
+      sheriffVote: tieBreaker.optional(),
+    })
+    .optional(),
+  roleSetups: z
+    .array(z.strictObject({ role: z.enum(Role), count: z.number().int().nonnegative() }))
+    .optional(),
 });
 const structuredOverride = z.strictObject({
-  board: z.strictObject({
-    size: z.number().int().positive().optional(),
-    roleSetups: flatOverride.shape.roleSetups,
-  }).optional(),
-  rules: z.strictObject({
-    winCondition: flatOverride.shape.winCondition,
-    winConditions: flatOverride.shape.winConditions,
-    hooks: hooks.optional(),
-  }).optional(),
-  mechanisms: z.strictObject({
-    sheriff: z.strictObject({
-      enabled: z.boolean().optional(),
-      initialSeat: z.number().int().positive().optional(),
-      voteWeight: z.number().positive().optional(),
-      tieBreaker: tieBreaker.optional(),
-    }).optional(),
-    selfDestruct: z.strictObject({ enabledWindows: z.array(z.enum(ActionWindow)).optional() }).optional(),
-    tieBreaker: z.strictObject({ exileVote: tieBreaker.optional(), wolfKillVote: tieBreaker.optional() }).optional(),
-  }).optional(),
-  roles: z.strictObject({ witch: z.strictObject({ selfHeal: z.enum(WitchSelfHealRule).optional() }).optional() }).optional(),
+  board: z
+    .strictObject({
+      size: z.number().int().positive().optional(),
+      roleSetups: flatOverride.shape.roleSetups,
+    })
+    .optional(),
+  rules: z
+    .strictObject({
+      winCondition: flatOverride.shape.winCondition,
+      winConditions: flatOverride.shape.winConditions,
+      hooks: hooks.optional(),
+    })
+    .optional(),
+  mechanisms: z
+    .strictObject({
+      sheriff: z
+        .strictObject({
+          enabled: z.boolean().optional(),
+          initialSeat: z.number().int().positive().optional(),
+          voteWeight: z.number().positive().optional(),
+          tieBreaker: tieBreaker.optional(),
+        })
+        .optional(),
+      selfDestruct: z
+        .strictObject({ enabledWindows: z.array(z.enum(ActionWindow)).optional() })
+        .optional(),
+      tieBreaker: z
+        .strictObject({ exileVote: tieBreaker.optional(), wolfKillVote: tieBreaker.optional() })
+        .optional(),
+    })
+    .optional(),
+  roles: z
+    .strictObject({
+      witch: z.strictObject({ selfHeal: z.enum(WitchSelfHealRule).optional() }).optional(),
+    })
+    .optional(),
 });
 
 function validateOverride(schema: z.ZodType, value: unknown): void {
@@ -158,10 +187,7 @@ function mergeBoardConfig(base: BoardConfig, override: BoardOverride): BoardConf
 }
 
 /** 以“覆盖层”语义合并 default + board 专属配置。 */
-function mergeBoardOverride(
-  base: BoardOverride,
-  override: BoardOverride,
-): BoardOverride {
+function mergeBoardOverride(base: BoardOverride, override: BoardOverride): BoardOverride {
   return {
     ...base,
     ...override,
@@ -333,8 +359,9 @@ function parseStructuredBoardOverride(raw: StructuredBoardConfig): BoardOverride
     if (isJsonObject(raw.mechanisms.selfDestruct)) {
       if (Array.isArray(raw.mechanisms.selfDestruct.enabledWindows)) {
         out.selfDestruct = {
-          enabledWindows: raw.mechanisms.selfDestruct
-            .enabledWindows as NonNullable<BoardConfig["selfDestruct"]>["enabledWindows"],
+          enabledWindows: raw.mechanisms.selfDestruct.enabledWindows as NonNullable<
+            BoardConfig["selfDestruct"]
+          >["enabledWindows"],
         };
       }
     }
@@ -363,9 +390,7 @@ function parseStructuredBoardOverride(raw: StructuredBoardConfig): BoardOverride
     if (isJsonObject(raw.roles.witch) && typeof raw.roles.witch.selfHeal === "string") {
       out.witch = {
         ...(out.witch ?? {}),
-        canSelfHeal: raw.roles.witch.selfHeal as NonNullable<
-          BoardConfig["witch"]
-        >["canSelfHeal"],
+        canSelfHeal: raw.roles.witch.selfHeal as NonNullable<BoardConfig["witch"]>["canSelfHeal"],
       };
     }
   }
@@ -397,10 +422,18 @@ export function parseBoardOverride(raw: unknown, board: BoardName): BoardOverrid
   }
 
   if ("boards" in raw || "default" in raw) {
-    validateOverride(z.strictObject({
-      boards: z.record(z.string().regex(/^[a-z][a-z0-9_-]*$/), z.union([flatOverride, structuredOverride])).optional(),
-      default: z.union([flatOverride, structuredOverride]).optional(),
-    }), raw);
+    validateOverride(
+      z.strictObject({
+        boards: z
+          .record(
+            z.string().regex(/^[a-z][a-z0-9_-]*$/),
+            z.union([flatOverride, structuredOverride]),
+          )
+          .optional(),
+        default: z.union([flatOverride, structuredOverride]).optional(),
+      }),
+      raw,
+    );
   } else {
     const allowed = new Set([board, "six_player_mvp", "twelve_player_standard"]);
     for (const [key, value] of Object.entries(raw)) {

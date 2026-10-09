@@ -4,17 +4,17 @@
 
 ## 验收与范围证据
 
-| P3要求 | 当前证据 |
-| --- | --- |
-| 共用文本/术语与逐局语言 | game-text/game-catalog与I01 key/参数/缺译、不变性测试；World只读locale、调用方display独立；64名称不等于角色激活 |
-| 提示/工具/拒绝 | I02真实SDK/MCP两语schema/描述、七角色十四阶段、共享约束/retry和错误解释；最终ASCII全prompt实际wire检查 |
-| 运行/CLI/人格 | runtime-display审查：真实多CLI安全JSON与局部语言、结构warn、双语12席示例，用户原文不译 |
-| 审计 | I02实际SDK/ACP检查/总结、MCP授权与证据交集；两种inspection/display组合与fallback；最终runner反向display摘要 |
-| 机器记录/历史读取 | 公共/私有v2、MessageRef、精确legacy aliases、unknown/raw；schema与校验snapshot；Tape另有严格兼容政策 |
-| 前端/视频 | I04同frame显式locale/timeZone、实际PNG/MP4和哈希证据；当前前端48单测/types/build；实际6E2E回归见门槛日志 |
-| 领域与接入等价 | S01/S04/S02/S03×SDK/ACP×两语16局，加2并行SDK局；机器events/全CP/request/actions一致，manual role/alive/winner/day/stage/actor与技能原人工oracle |
-| 复现/资源/权限 | 每局实际Tape重放；同一角色的完整private轮数、无神信息/其他技能/越权狼聊、seer后续wire正向；ACP进程/MCP实际ESRCH |
-| CI受控源码扫描 | lint:i18n纳入release；AST字符串/模板全段/JSX/Unicode Han；61 exact file/text/count+reason例外，增量/漂移/无理由fail；无整目录豁免 |
+| P3要求                  | 当前证据                                                                                                                                        |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| 共用文本/术语与逐局语言 | game-text/game-catalog与I01 key/参数/缺译、不变性测试；World只读locale、调用方display独立；64名称不等于角色激活                                 |
+| 提示/工具/拒绝          | I02真实SDK/MCP两语schema/描述、七角色十四阶段、共享约束/retry和错误解释；最终ASCII全prompt实际wire检查                                          |
+| 运行/CLI/人格           | runtime-display审查：真实多CLI安全JSON与局部语言、结构warn、双语12席示例，用户原文不译                                                          |
+| 审计                    | I02实际SDK/ACP检查/总结、MCP授权与证据交集；两种inspection/display组合与fallback；最终runner反向display摘要                                     |
+| 机器记录/历史读取       | 公共/私有v2、MessageRef、精确legacy aliases、unknown/raw；schema与校验snapshot；Tape另有严格兼容政策                                            |
+| 前端/视频               | I04同frame显式locale/timeZone、实际PNG/MP4和哈希证据；当前前端48单测/types/build；实际6E2E回归见门槛日志                                        |
+| 领域与接入等价          | S01/S04/S02/S03×SDK/ACP×两语16局，加2并行SDK局；机器events/全CP/request/actions一致，manual role/alive/winner/day/stage/actor与技能原人工oracle |
+| 复现/资源/权限          | 每局实际Tape重放；同一角色的完整private轮数、无神信息/其他技能/越权狼聊、seer后续wire正向；ACP进程/MCP实际ESRCH                                 |
+| CI受控源码扫描          | lint:i18n纳入release；AST字符串/模板全段/JSX/Unicode Han；61 exact file/text/count+reason例外，增量/漂移/无理由fail；无整目录豁免               |
 
 ## 最终三路
 

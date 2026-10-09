@@ -1,14 +1,11 @@
 import { text } from "@ai-werewolf-arena/game-text";
-import { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain"
+import { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { LlmObserver } from "../player/player_observer";
 import { allowsActionFallback, resolveTurnConstraints } from "../player/turn_constraints";
 import { awaitBeforeDeadline } from "../../runtime/turn_deadline";
 
-export type FallbackReason =
-  | "runtime_error"
-  | "deadline_skip"
-  | "model_declined_required_action";
+export type FallbackReason = "runtime_error" | "deadline_skip" | "model_declined_required_action";
 
 /** Distinguishes this policy's deadline from an injected provider's error. */
 export { TurnDeadlineElapsed as FallbackDeadlineElapsed } from "../../runtime/turn_deadline";
@@ -20,10 +17,20 @@ export class FallbackActionPolicy {
     private readonly observer: LlmObserver,
   ) {}
 
-  async resolve(request: ActionRequest, reason: FallbackReason, signal?: AbortSignal): Promise<ToolCall | null> {
+  async resolve(
+    request: ActionRequest,
+    reason: FallbackReason,
+    signal?: AbortSignal,
+  ): Promise<ToolCall | null> {
     // A local baseline can settle immediately at an exhausted deadline. An
     // asynchronous fallback does not receive a new budget or survive closure.
-    const action = allowsActionFallback(request) ? await awaitBeforeDeadline(() => this.provider.getAction(request), request.deadlineAtMs, signal) : null;
+    const action = allowsActionFallback(request)
+      ? await awaitBeforeDeadline(
+          () => this.provider.getAction(request),
+          request.deadlineAtMs,
+          signal,
+        )
+      : null;
     const actionText = action
       ? `${action.name} ${JSON.stringify((action as any).args ?? {})}`
       : "none";
@@ -38,9 +45,7 @@ export class FallbackActionPolicy {
       phase: request.phase,
       status: action ? "fallback" : "error",
       reason,
-      output: action
-        ? { action: action.name, args: (action as any).args ?? {} }
-        : undefined,
+      output: action ? { action: action.name, args: (action as any).args ?? {} } : undefined,
     });
     if (signal?.aborted) throw signal.reason;
     this.observer.trace(

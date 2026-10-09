@@ -1,6 +1,12 @@
 import type { MessageKey, MessageRef } from "@ai-werewolf-arena/game-text";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
-import type { ReplayDebugReport, ReplayLogicOp, ReplayManifest, ReplayPlayerView, ReplayPublicEvent } from "../recording/contracts";
+import type {
+  ReplayDebugReport,
+  ReplayLogicOp,
+  ReplayManifest,
+  ReplayPlayerView,
+  ReplayPublicEvent,
+} from "../recording/contracts";
 
 export interface BuildDebugSummaryInput {
   /** Inspection language; source text stays original. */

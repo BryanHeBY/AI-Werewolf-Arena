@@ -16,23 +16,27 @@ export function createAuditAgentExecutor(options: {
     });
   }
   if (
-    profile.kind !== "llm"
-    || profile.provider.type === "acp"
-    || !profile.provider.apiKey
-    || !profile.model
+    profile.kind !== "llm" ||
+    profile.provider.type === "acp" ||
+    !profile.provider.apiKey ||
+    !profile.model
   ) {
     return null;
   }
-  return new SdkAuditAgentExecutor(new AiSdkClient({
-    providerType: profile.provider.type,
-    providerName: profile.providerName,
-    apiKey: profile.provider.apiKey,
-    model: profile.model,
-    baseURL: profile.provider.baseURL,
-    userAgent: profile.provider.userAgent,
-    temperature: profile.temperature ?? (profile.reasoningEffort || profile.thinkingEnabled ? undefined : 0.1),
-    maxTokens: profile.maxTokens ?? 1200,
-    reasoningEffort: profile.reasoningEffort,
-    thinkingEnabled: profile.thinkingEnabled ?? false,
-  }));
+  return new SdkAuditAgentExecutor(
+    new AiSdkClient({
+      providerType: profile.provider.type,
+      providerName: profile.providerName,
+      apiKey: profile.provider.apiKey,
+      model: profile.model,
+      baseURL: profile.provider.baseURL,
+      userAgent: profile.provider.userAgent,
+      temperature:
+        profile.temperature ??
+        (profile.reasoningEffort || profile.thinkingEnabled ? undefined : 0.1),
+      maxTokens: profile.maxTokens ?? 1200,
+      reasoningEffort: profile.reasoningEffort,
+      thinkingEnabled: profile.thinkingEnabled ?? false,
+    }),
+  );
 }

@@ -60,9 +60,21 @@ export function ReplayStage({
       </div>
       <div className="frame-control">
         <label>
-          <span>{text(display.locale, "replay.frame_position", { frame: currentFrame + 1, total: durationInFrames })}</span>
-          <input type="range" aria-label={text(display.locale, "replay.seek")} min={0} max={durationInFrames - 1}
-            value={currentFrame} disabled={eventCount === 0} onChange={event => onSeekToFrame(Number(event.target.value))} />
+          <span>
+            {text(display.locale, "replay.frame_position", {
+              frame: currentFrame + 1,
+              total: durationInFrames,
+            })}
+          </span>
+          <input
+            type="range"
+            aria-label={text(display.locale, "replay.seek")}
+            min={0}
+            max={durationInFrames - 1}
+            value={currentFrame}
+            disabled={eventCount === 0}
+            onChange={(event) => onSeekToFrame(Number(event.target.value))}
+          />
         </label>
       </div>
       <nav className="transport" aria-label={text(display.locale, "replay.navigation")}>
@@ -73,7 +85,12 @@ export function ReplayStage({
         >
           {text(display.locale, "replay.previous")}
         </button>
-        <button type="button" className="primary" onClick={onTogglePlayback} disabled={eventCount === 0}>
+        <button
+          type="button"
+          className="primary"
+          onClick={onTogglePlayback}
+          disabled={eventCount === 0}
+        >
           {text(display.locale, playing ? "replay.pause" : "replay.play")}
         </button>
         <button
@@ -83,7 +100,9 @@ export function ReplayStage({
         >
           {text(display.locale, "replay.next")}
         </button>
-        <button type="button" onClick={onToggleFullscreen}>{text(display.locale, "replay.fullscreen")}</button>
+        <button type="button" onClick={onToggleFullscreen}>
+          {text(display.locale, "replay.fullscreen")}
+        </button>
       </nav>
     </article>
   );

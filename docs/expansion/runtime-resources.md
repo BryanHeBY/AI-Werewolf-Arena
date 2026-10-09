@@ -52,7 +52,6 @@ FallbackActionPolicy 的等待同时受关闭取消控制；取消后不会再�
 - 慢兜底关闭、迟到成功/失败、异步兜底 deadline、外来 TimeoutError/AbortError 原错保留一次，以及 close 聚合原运行错误。
 - 既有双语完整 SDK/ACP 18 对局、严格 Tape 重放与固定种子模拟保持回归。
 
-
 ## ACP 会话与控制面
 
 ACP 的初始化、当前工具回合、取消与响应尾部沿用从 getAction 开始计算的同一个收紧 deadline，注册表使用同一请求副本。耗尽预算的即时本地 Baseline 例外与 SDK 相同；异步 fallback 使用原 deadline 和关闭取消，不重获预算。同玩家同时发起两个 getAction 直接拒绝 `acp_actor_turn_already_open`。
@@ -84,7 +83,6 @@ awaitBeforeDeadline 是等待工具，只持有该次等待的 timer/listener，
 snapshot/runtimeState 只显示 closed 与逻辑计数。真实 ACP 验收另外核对 agent、MCP、嵌套子进程的 ESRCH 与控制面端口失联；相同远端 wire ID 两个玩家的正常动作/复用和双语任务也实际运行。
 
 不配合取消的自定义创建超过 cleanup 等待预算时，close 必须报未完成，creating 可以仍非零；不会先清掉计数伪称释放。该 Promise 若以后返回会话，回收处理仍在，后续 close 可再次汇总它的失败。没有有限等待能证明一个尚未返回句柄、任意自定义实现创建的外部资源已经释放；内置 AcpProcessClient 的真实进程/MCP 协议已按上述物理证据验证。
-
 
 ## 混合玩家与 provider 并发
 

@@ -14,17 +14,33 @@ export interface MechanicalInheritanceFact {
 /** Queries are conservative and never create inheritance or restore past mode authority. */
 export function canMechanicalKnife(role: RoleComponent, world?: World): boolean {
   const state = getMechanicalState(role);
-  if (!world || role.role !== Role.MechanicalWolf || role.camp !== Camp.Wolf || !state ||
-      !mechanicalKnifeSelected(state, state.mode?.day ?? 0) || !hasCurrentMechanicalKillMode(world, role)) return false;
-  const wolves = world.getAliveEntityIds().filter(id => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf);
+  if (
+    !world ||
+    role.role !== Role.MechanicalWolf ||
+    role.camp !== Camp.Wolf ||
+    !state ||
+    !mechanicalKnifeSelected(state, state.mode?.day ?? 0) ||
+    !hasCurrentMechanicalKillMode(world, role)
+  )
+    return false;
+  const wolves = world
+    .getAliveEntityIds()
+    .filter((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf);
   return wolves.length === 1 && world.getComponent(wolves[0]!, COMPONENT.Role) === role;
 }
 
 /** Called only by assembly or the death owner after marking the complete actual proposal. */
-export function refreshMechanicalInheritance(world: World, day: number, events?: GameEvent[]): MechanicalInheritanceFact[] {
-  const wolves = world.getAliveEntityIds().filter(id => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf);
+export function refreshMechanicalInheritance(
+  world: World,
+  day: number,
+  events?: GameEvent[],
+): MechanicalInheritanceFact[] {
+  const wolves = world
+    .getAliveEntityIds()
+    .filter((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf);
   if (wolves.length !== 1) return [];
-  const actorId = wolves[0]!, role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!;
+  const actorId = wolves[0]!,
+    role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!;
   if (role.role !== Role.MechanicalWolf) return [];
   const state = getMechanicalState(role);
   if (!state || !recordMechanicalInheritance(state, day)) return [];

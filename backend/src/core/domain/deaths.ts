@@ -1,4 +1,4 @@
-import type {NightLifeScope} from "./night_effects";
+import type { NightLifeScope } from "./night_effects";
 /** Death facts are distinct from transient protection/damage marks. */
 export enum DeathCause {
   WolfKill = "wolf_kill",
@@ -26,7 +26,18 @@ export type DeathShotSelection =
   | { kind: "invalid" };
 
 export function permitsDeathShot(sources: readonly DeathCause[]): boolean {
-  return sources.length > 0 && sources.every(source => source === DeathCause.WolfKill || source === DeathCause.MechanicalKnife || source === DeathCause.AwakenedHiddenKnife || source === DeathCause.Exile || source === DeathCause.Shot || source === DeathCause.WhiteWolfBlast);
+  return (
+    sources.length > 0 &&
+    sources.every(
+      (source) =>
+        source === DeathCause.WolfKill ||
+        source === DeathCause.MechanicalKnife ||
+        source === DeathCause.AwakenedHiddenKnife ||
+        source === DeathCause.Exile ||
+        source === DeathCause.Shot ||
+        source === DeathCause.WhiteWolfBlast,
+    )
+  );
 }
 /** Existing Hunter API retains the same cause policy. */
 export const permitsHunterShot = permitsDeathShot;

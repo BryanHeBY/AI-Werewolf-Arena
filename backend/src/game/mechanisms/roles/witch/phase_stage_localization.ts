@@ -6,4 +6,3 @@ export const WITCH_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR: PhaseStageLocalizationC
     witch: term("stage", "witch", "zh-CN"),
   },
 };
-

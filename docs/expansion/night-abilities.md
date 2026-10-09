@@ -36,7 +36,6 @@ ability_changed领域事件提供来源、时点和变更，玩家只接收本�
 
 能力state与可选元数据在安装时规范成脱离的JSON数据，显式undefined可选属性按缺省缺键保存；非有限数、循环与非JSON状态拒绝。不能为安装兼容而放宽严格Tape。
 
-
 ## 验证证据与未交付部分
 
 最终release:check通过476测试/30135断言，包含34实际双语SDK/ACP/混合基础整局及严格Tape。新增四项两語真实SDK HTTP/ACP进程和注入MCP测试，从Factory经过NightPipeline把平民的赠予查验实际生效，正确消费单一实例并确认Agent/MCP退出；没有把模拟AcpSession当作进程证据。

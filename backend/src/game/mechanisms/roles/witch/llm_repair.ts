@@ -7,7 +7,12 @@ export const WITCH_LLM_REPAIR_PACK: ToolRepairPack = {
   coerce: {
     use_potion: (args) => {
       const target = numberOrNull(args.target_id);
-      if (target === null || ![PotionType.Heal, PotionType.Poison, PotionType.None].includes(args.potion_type as PotionType)) {
+      if (
+        target === null ||
+        ![PotionType.Heal, PotionType.Poison, PotionType.None].includes(
+          args.potion_type as PotionType,
+        )
+      ) {
         return null;
       }
       return { target_id: target, potion_type: args.potion_type };

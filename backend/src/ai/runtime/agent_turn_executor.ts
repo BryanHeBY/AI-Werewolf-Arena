@@ -7,4 +7,3 @@ export interface AgentTurnExecutor<TContext, TResult> {
   runTurn(context: TContext, options: AgentTurnOptions): Promise<TResult | null>;
   close(): Promise<void>;
 }
-

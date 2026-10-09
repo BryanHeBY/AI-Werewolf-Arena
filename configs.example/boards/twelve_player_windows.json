@@ -35,10 +35,7 @@
     ]
   },
   "rules": {
-    "winConditions": [
-      "slaughter_side",
-      "wolf_reach_half"
-    ],
+    "winConditions": ["slaughter_side", "wolf_reach_half"],
     "hooks": {
       "onDaybreak": true,
       "onPreElection": true,
@@ -53,12 +50,7 @@
       "tieBreaker": "min_seat"
     },
     "selfDestruct": {
-      "enabledWindows": [
-        "on_pre_election",
-        "on_daybreak",
-        "on_per_speech_gap",
-        "on_pre_vote"
-      ]
+      "enabledWindows": ["on_pre_election", "on_daybreak", "on_per_speech_gap", "on_pre_vote"]
     },
     "tieBreaker": {
       "exileVote": "min_id",

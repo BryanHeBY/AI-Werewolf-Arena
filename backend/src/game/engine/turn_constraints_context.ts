@@ -18,6 +18,12 @@ export function buildTurnConstraintContext(input: {
     min_valid_actions: min,
     max_valid_actions: Math.max(min, Math.floor(input.maxValidActions ?? 1)),
     required_any_tools: input.requiresAction ? [...input.allowedTools] : [],
-    ...(typeof input.summary === "string" ? (input.summary ? { summary: input.summary } : {}) : input.summary ? { summary_message: structuredClone(input.summary) } : {}),
+    ...(typeof input.summary === "string"
+      ? input.summary
+        ? { summary: input.summary }
+        : {}
+      : input.summary
+        ? { summary_message: structuredClone(input.summary) }
+        : {}),
   };
 }

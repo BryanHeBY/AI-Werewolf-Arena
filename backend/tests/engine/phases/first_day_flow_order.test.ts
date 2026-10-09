@@ -1,7 +1,15 @@
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { RoleComponent } from "../../../src/core/domain/components/role";
-import { ActionProvider, ActionRequest, Camp, Phase, PotionType, Role, ToolCall } from "../../../src/core/domain/model";
+import {
+  ActionProvider,
+  ActionRequest,
+  Camp,
+  Phase,
+  PotionType,
+  Role,
+  ToolCall,
+} from "../../../src/core/domain/model";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 
 class DeterministicFlowProvider implements ActionProvider {
@@ -38,9 +46,7 @@ class DeterministicFlowProvider implements ActionProvider {
       };
     }
     if (request.allowedTools.includes("check_identity")) {
-      const target = this.world
-        .getAliveEntityIds()
-        .find((id) => id !== request.actorId);
+      const target = this.world.getAliveEntityIds().find((id) => id !== request.actorId);
       return { name: "check_identity", args: { target_id: target ?? request.actorId } };
     }
     if (request.allowedTools.includes("run_for_sheriff")) {
@@ -62,9 +68,7 @@ class DeterministicFlowProvider implements ActionProvider {
       return { name: "choose_direction", args: { direction: "clockwise" } };
     }
     if (request.allowedTools.includes("vote")) {
-      const target = this.world
-        .getAliveEntityIds()
-        .find((id) => id !== request.actorId);
+      const target = this.world.getAliveEntityIds().find((id) => id !== request.actorId);
       return { name: "vote", args: { target_id: target ?? request.actorId, abstain: false } };
     }
     if (request.allowedTools.includes("speak")) {
@@ -102,7 +106,10 @@ describe("first day flow order", () => {
           return { name: "kill_vote", args: { target_id: null, abstain: true } };
         }
         if (request.allowedTools.includes("use_potion")) {
-          return { name: "use_potion", args: { target_id: wolfId, potion_type: PotionType.Poison } };
+          return {
+            name: "use_potion",
+            args: { target_id: wolfId, potion_type: PotionType.Poison },
+          };
         }
         if (request.allowedTools.includes("run_for_sheriff")) {
           return { name: "run_for_sheriff", args: { run: request.actorId === sheriffId } };
@@ -121,8 +128,15 @@ describe("first day flow order", () => {
     };
 
     const snapshot = await context.phaseManager.runSingleCycle(provider, 10);
-    expect(snapshot).toMatchObject({ day: 1, phase: Phase.GameOver, gameOver: true, result: { winner: Camp.Good } });
-    expect(context.world.getAliveEntityIds()).toEqual(context.playerIds.filter((id) => id !== wolfId));
+    expect(snapshot).toMatchObject({
+      day: 1,
+      phase: Phase.GameOver,
+      gameOver: true,
+      result: { winner: Camp.Good },
+    });
+    expect(context.world.getAliveEntityIds()).toEqual(
+      context.playerIds.filter((id) => id !== wolfId),
+    );
 
     const events = context.phaseManager.getEvents();
     const sheriffIndex = events.findIndex((event) => event.type === "sheriff_elected");
@@ -138,19 +152,36 @@ describe("first day flow order", () => {
     if (events[nightIndex].type !== "night_resolved") throw new Error("unexpected_flow_event");
     expect(events[nightIndex].payload.deaths).toEqual([wolfId]);
     expect(nightIndex).toBeLessThan(lastWordsIndex);
-    if (events[lastWordsIndex].type !== "last_words_spoken") throw new Error("unexpected_flow_event");
+    if (events[lastWordsIndex].type !== "last_words_spoken")
+      throw new Error("unexpected_flow_event");
     expect(events[lastWordsIndex].payload.playerId).toBe(wolfId);
     expect(lastWordsIndex).toBeLessThan(gameOverIndex);
     expect(events.slice(gameOverIndex + 1)).toEqual([
-      expect.objectContaining({ type: "game_over", payload: expect.objectContaining({ winner: Camp.Good }) }),
+      expect.objectContaining({
+        type: "game_over",
+        payload: expect.objectContaining({ winner: Camp.Good }),
+      }),
     ]);
-    expect(events.slice(nightIndex).filter((event) => ["sheriff_direction_chosen", "day_speech", "vote_cast"].includes(event.type))).toEqual([]);
-    expect(requests.filter((request) =>
-      request.allowedTools.includes("choose_direction") ||
-      request.context.stage === "day_speech" ||
-      request.phase === Phase.Voting,
-    )).toEqual([]);
-    expect(requests.filter((request) => request.context.stage === "last_words").map((request) => request.actorId)).toEqual([wolfId]);
+    expect(
+      events
+        .slice(nightIndex)
+        .filter((event) =>
+          ["sheriff_direction_chosen", "day_speech", "vote_cast"].includes(event.type),
+        ),
+    ).toEqual([]);
+    expect(
+      requests.filter(
+        (request) =>
+          request.allowedTools.includes("choose_direction") ||
+          request.context.stage === "day_speech" ||
+          request.phase === Phase.Voting,
+      ),
+    ).toEqual([]);
+    expect(
+      requests
+        .filter((request) => request.context.stage === "last_words")
+        .map((request) => request.actorId),
+    ).toEqual([wolfId]);
   });
 
   test("day1 should elect sheriff before announcing previous night deaths", async () => {
@@ -202,13 +233,11 @@ describe("first day flow order", () => {
     expect(deaths.length).toBeGreaterThan(0);
 
     const firstNightDeadId = deaths[0];
-    const sheriffVoteSummary = events.find(
-      (event) => event.type === "sheriff_vote_summary",
-    );
+    const sheriffVoteSummary = events.find((event) => event.type === "sheriff_vote_summary");
     expect(sheriffVoteSummary).toBeTruthy();
-    const sheriffVoters = (
-      (sheriffVoteSummary?.payload.votes as { actorId: number }[]) ?? []
-    ).map((vote) => vote.actorId);
+    const sheriffVoters = ((sheriffVoteSummary?.payload.votes as { actorId: number }[]) ?? []).map(
+      (vote) => vote.actorId,
+    );
     expect(sheriffVoters).toContain(firstNightDeadId);
 
     const daySpeechActors = events

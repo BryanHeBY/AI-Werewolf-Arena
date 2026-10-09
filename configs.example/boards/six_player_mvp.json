@@ -27,10 +27,7 @@
     ]
   },
   "rules": {
-    "winConditions": [
-      "slaughter_city",
-      "wolf_reach_half"
-    ],
+    "winConditions": ["slaughter_city", "wolf_reach_half"],
     "hooks": {
       "onDaybreak": false,
       "onPreElection": false,

@@ -1,7 +1,12 @@
 import { AliveComponent } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
 import { RoleComponent } from "../../core/domain/components/role";
-import { EntityId, GameEvent, type DeathSources, type DeathShotSelection } from "../../core/domain/model";
+import {
+  EntityId,
+  GameEvent,
+  type DeathSources,
+  type DeathShotSelection,
+} from "../../core/domain/model";
 import { getDefaultHookRegistry, HookRegistry } from "../mechanisms";
 import { World } from "../../core/domain/world";
 
@@ -21,9 +26,7 @@ export type DeathHookResult = import("../mechanisms").DeathHookResult;
  * - onDeath: 返回追加死亡提案；DeathResolution 写入死亡状态。
  */
 export class EventRegistry {
-  constructor(
-    private readonly hookRegistry: HookRegistry = getDefaultHookRegistry(),
-  ) {}
+  constructor(private readonly hookRegistry: HookRegistry = getDefaultHookRegistry()) {}
 
   /**
    * 处理放逐资格和免死，不提前写死亡或处理死亡警徽。

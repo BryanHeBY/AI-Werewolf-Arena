@@ -1,20 +1,35 @@
 import { z, type ZodType } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { text, toolFailure } from "@ai-werewolf-arena/game-text";
-import { DEATH_SHOT_STAGES, type ActionRequest, type ToolCall, type ToolName } from "../../../core/domain";
+import {
+  DEATH_SHOT_STAGES,
+  type ActionRequest,
+  type ToolCall,
+  type ToolName,
+} from "../../../core/domain";
 import { World } from "../../../core/domain/world";
 import { ActionValidator } from "../../../game/gateway/action_validator";
 import { ToolGateway } from "../../../game/gateway/tool_gateway";
 import {
-  getDefaultToolCallRepairRegistry, getDefaultToolSpecRegistry,
-  getDefaultToolValidationRuleRegistry, type ToolCallRepairRegistry,
-  type ToolSpecRegistry, type ToolValidationRuleRegistry,
+  getDefaultToolCallRepairRegistry,
+  getDefaultToolSpecRegistry,
+  getDefaultToolValidationRuleRegistry,
+  type ToolCallRepairRegistry,
+  type ToolSpecRegistry,
+  type ToolValidationRuleRegistry,
 } from "../../../game/mechanisms";
 import { evaluateTurnConstraints, resolveTurnConstraints } from "./turn_constraints";
 
 export type ActionReceipt =
   | { ok: true; accepted: true; applied: false; action: ToolName }
-  | { ok: false; error: string; message: string; details?: string[]; expected_turn_id?: string; received_turn_id?: unknown };
+  | {
+      ok: false;
+      error: string;
+      message: string;
+      details?: string[];
+      expected_turn_id?: string;
+      received_turn_id?: unknown;
+    };
 type Validation = { ok: true; action: ToolCall } | Extract<ActionReceipt, { ok: false }>;
 
 /** Read-only preflight. The engine still owns application and resource consumption. */
@@ -50,21 +65,44 @@ export class ActionReception {
     // Preserve the existing numeric-string repair, but never coerce booleans or
     // text by truthiness/String(), and never invent missing required arguments.
     const input = { ...rawArgs } as Record<string, unknown>;
-    const properties = spec.llm.parameters.properties as Record<string, { type?: string | string[] }> | undefined;
+    const properties = spec.llm.parameters.properties as
+      Record<string, { type?: string | string[] }> | undefined;
     for (const [key, value] of Object.entries(input)) {
       const type = properties?.[key]?.type;
-      const numeric = type === "number" || type === "integer" || (Array.isArray(type) && (type.includes("number") || type.includes("integer")));
+      const numeric =
+        type === "number" ||
+        type === "integer" ||
+        (Array.isArray(type) && (type.includes("number") || type.includes("integer")));
       if (numeric && typeof value === "string" && /^\d+$/.test(value)) input[key] = Number(value);
     }
     const parsed = schema.safeParse(input);
     if (!parsed.success) return fail("invalid_tool_arguments");
-    const args = this.repair.coerceArgs(tool, parsed.data as Record<string, unknown>, { actorId: request.actorId });
+    const args = this.repair.coerceArgs(tool, parsed.data as Record<string, unknown>, {
+      actorId: request.actorId,
+    });
     if (!args || !schema.safeParse(args).success) return fail("invalid_tool_arguments");
     const call = { name: tool, args } as ToolCall;
-    const deathStage = DEATH_SHOT_STAGES.includes(request.context.stage) || request.context.stage === "last_words";
-    const deathTool = tool === "shoot" && DEATH_SHOT_STAGES.includes(request.context.stage) && request.context.trigger === "on_death" ||
-      tool === "speak" && request.context.stage === "last_words" && request.context.trigger === "last_words";
-    if (deathStage && (!deathTool || !this.world.hasDeathAction(request.actorId, tool, request.phase, request.context.day, request.context.death_action_id, request.context.ability_id))) {
+    const deathStage =
+      DEATH_SHOT_STAGES.includes(request.context.stage) || request.context.stage === "last_words";
+    const deathTool =
+      (tool === "shoot" &&
+        DEATH_SHOT_STAGES.includes(request.context.stage) &&
+        request.context.trigger === "on_death") ||
+      (tool === "speak" &&
+        request.context.stage === "last_words" &&
+        request.context.trigger === "last_words");
+    if (
+      deathStage &&
+      (!deathTool ||
+        !this.world.hasDeathAction(
+          request.actorId,
+          tool,
+          request.phase,
+          request.context.day,
+          request.context.death_action_id,
+          request.context.ability_id,
+        ))
+    ) {
       return fail(RuleError.DeathActionUnavailable);
     }
     const checked = this.gateway.validateAndSanitize(this.world, request.actorId, call, {
@@ -73,14 +111,27 @@ export class ActionReception {
       abilityId: request.context.ability_id,
       actionWindow: request.actionWindow,
       sheriffCandidates: request.context.sheriff_candidates,
-      allowSelfDestruct: request.allowedTools.includes("self_destruct") || request.allowedTools.includes("self_destruct_with_target"),
-      duelWindow: request.context.duel_window, allowKnightDuel: request.context.stage === request.context.duel_window && request.allowedTools.includes("duel"),
+      allowSelfDestruct:
+        request.allowedTools.includes("self_destruct") ||
+        request.allowedTools.includes("self_destruct_with_target"),
+      duelWindow: request.context.duel_window,
+      allowKnightDuel:
+        request.context.stage === request.context.duel_window &&
+        request.allowedTools.includes("duel"),
       deathActionId: deathTool ? request.context.death_action_id : undefined,
     });
     if (!checked.ok || !checked.sanitizedCall) {
-      return toolFailure(this.world.locale, checked.error ?? "invalid_tool_arguments", checked.message);
+      return toolFailure(
+        this.world.locale,
+        checked.error ?? "invalid_tool_arguments",
+        checked.message,
+      );
     }
-    const evaluation = evaluateTurnConstraints({ validActions: [checked.sanitizedCall] }, resolveTurnConstraints(request), this.world.locale);
+    const evaluation = evaluateTurnConstraints(
+      { validActions: [checked.sanitizedCall] },
+      resolveTurnConstraints(request),
+      this.world.locale,
+    );
     if (!evaluation.ok) {
       return { ...fail("turn_constraints_not_satisfied"), details: evaluation.errors };
     }
@@ -99,9 +150,19 @@ export class ActionTurn {
     readonly turnId: string,
   ) {}
 
-  get action(): ToolCall | null { return this.selected ? structuredClone(this.selected) : null; }
+  get action(): ToolCall | null {
+    return this.selected ? structuredClone(this.selected) : null;
+  }
   get outcome(): { rejectedActions: number; failureCode: "turn_invalid_action_limit" | null } {
-    return { rejectedActions: this.rejectedActions, failureCode: !this.selected && this.request.context.action_failure_policy === "error" && this.rejectedActions >= 3 ? "turn_invalid_action_limit" : null };
+    return {
+      rejectedActions: this.rejectedActions,
+      failureCode:
+        !this.selected &&
+        this.request.context.action_failure_policy === "error" &&
+        this.rejectedActions >= 3
+          ? "turn_invalid_action_limit"
+          : null,
+    };
   }
 
   authorize(turnId: unknown, tool = "submit_action"): Extract<ActionReceipt, { ok: false }> | null {
@@ -111,9 +172,12 @@ export class ActionTurn {
     }
     if (this.outcome.failureCode) return toolFailure(locale, this.outcome.failureCode);
     if (turnId !== this.turnId) {
-      return { ...toolFailure(locale, "turn_id_mismatch"), expected_turn_id: this.turnId,
+      return {
+        ...toolFailure(locale, "turn_id_mismatch"),
+        expected_turn_id: this.turnId,
         received_turn_id: typeof turnId === "string" ? turnId : null,
-        message: text(locale, "tool.turn_id_mismatch_context", { turn: this.turnId, tool }) };
+        message: text(locale, "tool.turn_id_mismatch_context", { turn: this.turnId, tool }),
+      };
     }
     return null;
   }
@@ -121,12 +185,20 @@ export class ActionTurn {
   submit(turnId: unknown, name: unknown, args: unknown): ActionReceipt {
     const refusal = this.authorize(turnId);
     if (refusal) return refusal;
-    if (typeof name !== "string" || args === null || typeof args !== "object" || Array.isArray(args)) {
+    if (
+      typeof name !== "string" ||
+      args === null ||
+      typeof args !== "object" ||
+      Array.isArray(args)
+    ) {
       this.rejectedActions++;
       return toolFailure(this.reception.world.locale, "invalid_submit_action_arguments");
     }
     const result = this.reception.validate(this.request, name, args);
-    if (!result.ok) { this.rejectedActions++; return result; }
+    if (!result.ok) {
+      this.rejectedActions++;
+      return result;
+    }
     this.selected = result.action;
     return { ok: true, accepted: true, applied: false, action: result.action.name };
   }
@@ -138,5 +210,7 @@ export class ActionTurn {
     return toolFailure(this.reception.world.locale, "invalid_submit_action_arguments");
   }
 
-  close(): void { this.closed = true; }
+  close(): void {
+    this.closed = true;
+  }
 }

@@ -6,4 +6,3 @@ export const GUARD_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR: PhaseStageLocalizationC
     guard: term("stage", "guard", "zh-CN"),
   },
 };
-

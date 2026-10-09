@@ -12,7 +12,10 @@ export const IDIOT_ROLE_PROFILE: RoleProfile = {
   label: roleName("idiot"),
   skillBrief: text("zh-CN", "role.idiot.brief"),
   goodSide: "god",
-  participation: role => { const enabled = getIdiotState(role)?.revealed !== true; return { canVote: enabled, canBeExiled: enabled, canBeSheriff: enabled }; },
+  participation: (role) => {
+    const enabled = getIdiotState(role)?.revealed !== true;
+    return { canVote: enabled, canBeExiled: enabled, canBeSheriff: enabled };
+  },
   init: (roleComp) => {
     setIdiotState(roleComp, { revealed: false });
   },

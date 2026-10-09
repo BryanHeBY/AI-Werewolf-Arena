@@ -4,14 +4,14 @@
 
 ## 发现与处理
 
-| 审查 | 问题/要求 | 处理 |
-| --- | --- | --- |
-| R/T | 来源未明确self/repeat/alive/skip，机械版本差异不能混 | 卡逐项注明AWA选择，600相对女巫/未来学习与技能；普通通灵不套魔镜禁重，经典版.net与网易.com分开 |
-| A | 同名工具按实际角色/注册顺序会污染gift两policy | shared neutral spec/validator按bound实例，two handlers只处理自己policy；baseline/hints/prompt/bot同步 |
-| A、R | skip是否关本夜必须唯一明确 | 卡选择lastUsedDay关闭/uses不增，合法null决策与非法null目标分开；成功/skip/noTargets ledger隔离不授Garg刀 |
-| A、R/T | gateway后撤权、copy隔离、完整pipeline重入与梦/Charm需固定 | 纳入仓库回归，取消null不当skip；typed报告前缀保留、死亡/最后judge仍既有owner |
-| L/D | 原生背景与获赠规则有阅读歧义 | 中英state明确原生能力与本轮bound规则，不改action/schema/身份；独立实际交叉gift验证 |
-| 主代理 | 新optional policy重构时显式undefined与缺键应保JSON语义 | transfer返回state先JSON规范化再深等，legacy正回归；policy改变/历史清空仍拒绝 |
+| 审查   | 问题/要求                                                 | 处理                                                                                                     |
+| ------ | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| R/T    | 来源未明确self/repeat/alive/skip，机械版本差异不能混      | 卡逐项注明AWA选择，600相对女巫/未来学习与技能；普通通灵不套魔镜禁重，经典版.net与网易.com分开            |
+| A      | 同名工具按实际角色/注册顺序会污染gift两policy             | shared neutral spec/validator按bound实例，two handlers只处理自己policy；baseline/hints/prompt/bot同步    |
+| A、R   | skip是否关本夜必须唯一明确                                | 卡选择lastUsedDay关闭/uses不增，合法null决策与非法null目标分开；成功/skip/noTargets ledger隔离不授Garg刀 |
+| A、R/T | gateway后撤权、copy隔离、完整pipeline重入与梦/Charm需固定 | 纳入仓库回归，取消null不当skip；typed报告前缀保留、死亡/最后judge仍既有owner                             |
+| L/D    | 原生背景与获赠规则有阅读歧义                              | 中英state明确原生能力与本轮bound规则，不改action/schema/身份；独立实际交叉gift验证                       |
+| 主代理 | 新optional policy重构时显式undefined与缺键应保JSON语义    | transfer返回state先JSON规范化再深等，legacy正回归；policy改变/历史清空仍拒绝                             |
 
 三路只读。A独立core46/340及8项/tmp probe，确认pipeline成功/pass同日拒重入、World隔离、gateway撤权及复制policy独立，源无阻断。R独立48/354，人工复算六场景死亡/遗言/存活/判胜，最终补核心覆盖后独立58/413复查0阻断。L/D独立6/238两语观察/目标/DTO/权限、40/628核心配置终端、actual factory4/54和front fixture6/44，当前无生产阻断。
 

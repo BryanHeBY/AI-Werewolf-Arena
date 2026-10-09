@@ -40,11 +40,12 @@ export async function exportReplayBundle(options: {
   if (source === destination) throw new Error("replay_export_overwrites_source");
   const bundle = await readReplayBundle(options.recordRoot, options.sessionId);
   const sourceInfo = await fs.stat(source);
-  const destinationInfo = await fs.stat(destination).catch(error => {
+  const destinationInfo = await fs.stat(destination).catch((error) => {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return null;
     throw error;
   });
-  if (destinationInfo?.dev === sourceInfo.dev && destinationInfo.ino === sourceInfo.ino) throw new Error("replay_export_overwrites_source");
+  if (destinationInfo?.dev === sourceInfo.dev && destinationInfo.ino === sourceInfo.ino)
+    throw new Error("replay_export_overwrites_source");
   await fs.mkdir(path.dirname(options.outputFile), { recursive: true });
   await fs.writeFile(options.outputFile, `${JSON.stringify(bundle, null, 2)}\n`, "utf-8");
   return bundle;
@@ -65,7 +66,9 @@ async function main(argv: string[], display: CliDisplayContext): Promise<void> {
   }
   const bundle = await exportReplayBundle({ recordRoot, sessionId, outputFile });
   if (!display.explicit) display.locale = bundle.meta.locale ?? "zh-CN";
-  console.log(text(display.locale, "cli.exported", { count: bundle.events.length, file: outputFile }));
+  console.log(
+    text(display.locale, "cli.exported", { count: bundle.events.length, file: outputFile }),
+  );
 }
 
 if (require.main === module) {

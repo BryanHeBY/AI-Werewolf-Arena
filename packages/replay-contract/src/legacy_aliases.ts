@@ -1,20 +1,98 @@
 /** Exact archived display labels. Unknown strings are kept; player prose is never scanned. */
 import { LEGACY_ROLE_ALIASES } from "./legacy_role_aliases";
 
-const phases: Readonly<Record<string, string>> = Object.freeze({ "夜晚": "night", "白天": "day", "投票": "voting", "终局": "game_over", "Night": "night", "Day": "day", "Voting": "voting", "Game over": "game_over" });
-const stages: Readonly<Record<string, string>> = Object.freeze({ ...phases,
-  "放逐投票": "voting", "Exile vote": "voting", "白天发言": "day_speech", "Day speech": "day_speech", "遗言": "last_words", "Last words": "last_words",
-  "猎人开枪": "hunter_shot", "Hunter shot": "hunter_shot", "狼人交流": "wolf_discussion", "Wolf discussion": "wolf_discussion", "狼人刀人投票": "wolf_vote", "Wolf kill vote": "wolf_vote",
-  "守卫行动": "guard", "Guard action": "guard", "预言家行动": "seer", "Seer action": "seer", "女巫行动": "witch", "Witch action": "witch",
-  "警长竞选": "sheriff", "Sheriff election": "sheriff", "上警报名": "sheriff_nomination", "Sheriff nomination": "sheriff_nomination", "警上发言": "sheriff_campaign_speech", "Sheriff campaign speech": "sheriff_campaign_speech",
-  "退水": "sheriff_withdraw", "Withdraw candidacy": "sheriff_withdraw", "警长投票": "sheriff_vote", "Sheriff vote": "sheriff_vote", "警长定序": "sheriff_choose_direction", "Sheriff speaking order": "sheriff_choose_direction",
-  "天亮后窗口": "on_daybreak", "Daybreak window": "on_daybreak", "警长流程前窗口": "on_pre_election", "Before sheriff election": "on_pre_election", "放逐前窗口": "on_pre_vote", "Before exile voting": "on_pre_vote", "发言间隔窗口": "on_per_speech_gap", "Between speeches": "on_per_speech_gap",
-  "初始角色": "god_private_game_info", "Initial roles": "god_private_game_info", "夜晚结算": "night_resolved", "Night resolution": "night_resolved",
+const phases: Readonly<Record<string, string>> = Object.freeze({
+  夜晚: "night",
+  白天: "day",
+  投票: "voting",
+  终局: "game_over",
+  Night: "night",
+  Day: "day",
+  Voting: "voting",
+  "Game over": "game_over",
+});
+const stages: Readonly<Record<string, string>> = Object.freeze({
+  ...phases,
+  放逐投票: "voting",
+  "Exile vote": "voting",
+  白天发言: "day_speech",
+  "Day speech": "day_speech",
+  遗言: "last_words",
+  "Last words": "last_words",
+  猎人开枪: "hunter_shot",
+  "Hunter shot": "hunter_shot",
+  狼人交流: "wolf_discussion",
+  "Wolf discussion": "wolf_discussion",
+  狼人刀人投票: "wolf_vote",
+  "Wolf kill vote": "wolf_vote",
+  守卫行动: "guard",
+  "Guard action": "guard",
+  预言家行动: "seer",
+  "Seer action": "seer",
+  女巫行动: "witch",
+  "Witch action": "witch",
+  警长竞选: "sheriff",
+  "Sheriff election": "sheriff",
+  上警报名: "sheriff_nomination",
+  "Sheriff nomination": "sheriff_nomination",
+  警上发言: "sheriff_campaign_speech",
+  "Sheriff campaign speech": "sheriff_campaign_speech",
+  退水: "sheriff_withdraw",
+  "Withdraw candidacy": "sheriff_withdraw",
+  警长投票: "sheriff_vote",
+  "Sheriff vote": "sheriff_vote",
+  警长定序: "sheriff_choose_direction",
+  "Sheriff speaking order": "sheriff_choose_direction",
+  天亮后窗口: "on_daybreak",
+  "Daybreak window": "on_daybreak",
+  警长流程前窗口: "on_pre_election",
+  "Before sheriff election": "on_pre_election",
+  放逐前窗口: "on_pre_vote",
+  "Before exile voting": "on_pre_vote",
+  发言间隔窗口: "on_per_speech_gap",
+  "Between speeches": "on_per_speech_gap",
+  初始角色: "god_private_game_info",
+  "Initial roles": "god_private_game_info",
+  夜晚结算: "night_resolved",
+  "Night resolution": "night_resolved",
 });
 
-const camps: Readonly<Record<string, string>> = Object.freeze({ "好人": "good", "好人阵营": "good", "Good": "good", "Good team": "good", "狼人": "wolf", "狼人阵营": "wolf", "Werewolves": "wolf", "Werewolf team": "wolf", "第三方": "third_party", "第三方阵营": "third_party", "Third party": "third_party", "Third party team": "third_party" });
-const reasons: Readonly<Record<string, string>> = Object.freeze({ "狼人全部出局": "all_wolves_eliminated", "All wolves eliminated": "all_wolves_eliminated", "好人全部出局": "all_good_eliminated", "All good players eliminated": "all_good_eliminated", "屠边条件达成": "slaughter_side_completed", "All good special roles or all villagers eliminated": "slaughter_side_completed", "狼人达半": "wolves_reach_half", "Living wolves reach parity": "wolves_reach_half", "达到最大天数": "max_days_reached", "Maximum day count reached": "max_days_reached", "运行异常": "runtime_error", "Runtime error": "runtime_error", "达到运行期限": "runtime_timeout", "Runtime deadline reached": "runtime_timeout", "已完成": "completed", "Completed": "completed", "进行中": "in_progress", "In progress": "in_progress" });
-const alias = (map: Readonly<Record<string, string>>, value: string): string => Object.hasOwn(map, value) ? map[value] : value;
+const camps: Readonly<Record<string, string>> = Object.freeze({
+  好人: "good",
+  好人阵营: "good",
+  Good: "good",
+  "Good team": "good",
+  狼人: "wolf",
+  狼人阵营: "wolf",
+  Werewolves: "wolf",
+  "Werewolf team": "wolf",
+  第三方: "third_party",
+  第三方阵营: "third_party",
+  "Third party": "third_party",
+  "Third party team": "third_party",
+});
+const reasons: Readonly<Record<string, string>> = Object.freeze({
+  狼人全部出局: "all_wolves_eliminated",
+  "All wolves eliminated": "all_wolves_eliminated",
+  好人全部出局: "all_good_eliminated",
+  "All good players eliminated": "all_good_eliminated",
+  屠边条件达成: "slaughter_side_completed",
+  "All good special roles or all villagers eliminated": "slaughter_side_completed",
+  狼人达半: "wolves_reach_half",
+  "Living wolves reach parity": "wolves_reach_half",
+  达到最大天数: "max_days_reached",
+  "Maximum day count reached": "max_days_reached",
+  运行异常: "runtime_error",
+  "Runtime error": "runtime_error",
+  达到运行期限: "runtime_timeout",
+  "Runtime deadline reached": "runtime_timeout",
+  已完成: "completed",
+  Completed: "completed",
+  进行中: "in_progress",
+  "In progress": "in_progress",
+});
+const alias = (map: Readonly<Record<string, string>>, value: string): string =>
+  Object.hasOwn(map, value) ? map[value] : value;
 export const legacyPhaseId = (value: string): string => alias(phases, value);
 export const legacyStageId = (value: string): string => alias(stages, value);
 export const legacyRoleId = (value: string): string => alias(LEGACY_ROLE_ALIASES, value);

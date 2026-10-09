@@ -58,8 +58,7 @@ function signalProcess(child: ChildProcess, signal: NodeJS.Signals): void {
 }
 
 /** ACP stdio client. One instance/session is intentionally created per player. */
-export class AcpProcessClient<TRegistry = AcpTurnRegistry>
-  implements AcpSessionFactory<TRegistry> {
+export class AcpProcessClient<TRegistry = AcpTurnRegistry> implements AcpSessionFactory<TRegistry> {
   constructor(private readonly options: AcpProcessClientOptions<TRegistry>) {}
 
   async createSession(input: AcpSessionCreateInput<TRegistry>): Promise<AcpSession> {
@@ -68,10 +67,14 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
       input.deadlineAtMs ?? Infinity,
       Date.now() + (this.options.initializeTimeoutMs ?? ACP_INITIALIZE_TIMEOUT_MS),
     );
-    const abort = () => controller.abort(input.signal?.reason ?? new Error("acp_initialization_aborted"));
+    const abort = () =>
+      controller.abort(input.signal?.reason ?? new Error("acp_initialization_aborted"));
     input.signal?.addEventListener("abort", abort, { once: true });
     if (input.signal?.aborted) abort();
-    const timeout = setTimeout(() => controller.abort(new Error("acp_initialize_timeout")), Math.max(0, deadlineAt - Date.now()));
+    const timeout = setTimeout(
+      () => controller.abort(new Error("acp_initialize_timeout")),
+      Math.max(0, deadlineAt - Date.now()),
+    );
     if (deadlineAt <= Date.now()) controller.abort(new Error("acp_initialize_timeout"));
     let child: ChildProcess | undefined;
     let mcpControl: AcpMcpControlServer | undefined;
@@ -80,17 +83,35 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
     const cleanup = async () => {
       if (processSession) return closeAcpSession(processSession, true);
       const failures: unknown[] = [];
-      try { connection?.close(); } catch (error) { failures.push(error); }
+      try {
+        connection?.close();
+      } catch (error) {
+        failures.push(error);
+      }
       if (child) {
-        try { signalProcess(child, "SIGKILL"); } catch (error) { failures.push(error); }
+        try {
+          signalProcess(child, "SIGKILL");
+        } catch (error) {
+          failures.push(error);
+        }
         child.stdin?.destroy();
         child.stdout?.destroy();
         child.stderr?.destroy();
-        if (!await waitForProcessExit(child, ACP_PROCESS_KILL_TIMEOUT_MS)) failures.push(new Error("acp_process_did_not_exit"));
+        if (!(await waitForProcessExit(child, ACP_PROCESS_KILL_TIMEOUT_MS)))
+          failures.push(new Error("acp_process_did_not_exit"));
         child.unref();
       }
-      if (mcpControl) try { await awaitBeforeDeadline(() => mcpControl!.close({ force: true }), Date.now() + ACP_SESSION_CLOSE_TIMEOUT_MS); } catch (error) { failures.push(error); }
-      if (failures.length) throw new AggregateError(failures, "acp_initialization_resource_close_failed");
+      if (mcpControl)
+        try {
+          await awaitBeforeDeadline(
+            () => mcpControl!.close({ force: true }),
+            Date.now() + ACP_SESSION_CLOSE_TIMEOUT_MS,
+          );
+        } catch (error) {
+          failures.push(error);
+        }
+      if (failures.length)
+        throw new AggregateError(failures, "acp_initialization_resource_close_failed");
     };
     const initialize = async (): Promise<AcpSession> => {
       controller.signal.throwIfAborted();
@@ -99,12 +120,14 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
       const bridge = this.options.mcpBridge ?? this.defaultWerewolfBridge();
       const control = bridge.createControl(input.registry);
       mcpControl = control;
-      const mcpServer = await control.start(
-        process.execPath,
-        [bridge.serverEntrypoint(__filename)],
-      );
+      const mcpServer = await control.start(process.execPath, [
+        bridge.serverEntrypoint(__filename),
+      ]);
       if (controller.signal.aborted) {
-        await awaitBeforeDeadline(() => control.close({ force: true }), Date.now() + ACP_SESSION_CLOSE_TIMEOUT_MS);
+        await awaitBeforeDeadline(
+          () => control.close({ force: true }),
+          Date.now() + ACP_SESSION_CLOSE_TIMEOUT_MS,
+        );
         controller.signal.throwIfAborted();
       }
       child = spawn(this.options.command, this.options.args ?? [], {
@@ -118,7 +141,8 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
       if (!child.stdin || !child.stdout) throw new Error("acp_agent_stdio_unavailable");
 
       const spawnedChild = child;
-      if (!spawnedChild.stdin || !spawnedChild.stdout) throw new Error("acp_agent_stdio_unavailable");
+      if (!spawnedChild.stdin || !spawnedChild.stdout)
+        throw new Error("acp_agent_stdio_unavailable");
 
       const stream = acp.ndJsonStream(
         Writable.toWeb(spawnedChild.stdin),
@@ -135,11 +159,12 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
         .client({ name: "ai-werewolf-arena" })
         .onRequest(acp.methods.client.session.requestPermission, async ({ params: request }) => {
           if (
-            request._meta?.is_mcp_tool_approval === true
-            && approvedInjectedMcpToolCallIds.has(request.toolCall.toolCallId)
+            request._meta?.is_mcp_tool_approval === true &&
+            approvedInjectedMcpToolCallIds.has(request.toolCall.toolCallId)
           ) {
-            const option = request.options.find((item) => item.optionId === "allow_session")
-              ?? request.options.find((item) => item.kind === "allow_once");
+            const option =
+              request.options.find((item) => item.optionId === "allow_session") ??
+              request.options.find((item) => item.kind === "allow_once");
             if (option) {
               return {
                 outcome: { outcome: "selected" as const, optionId: option.optionId },
@@ -152,17 +177,22 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
       connection = protocolConnection;
 
       controller.signal.throwIfAborted();
-      const initializeResponse = await protocolConnection.agent.request(acp.methods.agent.initialize, {
-        protocolVersion: acp.PROTOCOL_VERSION,
-        clientCapabilities: {
-          session: { configOptions: { boolean: {} } },
+      const initializeResponse = await protocolConnection.agent.request(
+        acp.methods.agent.initialize,
+        {
+          protocolVersion: acp.PROTOCOL_VERSION,
+          clientCapabilities: {
+            session: { configOptions: { boolean: {} } },
+          },
         },
-      });
+      );
       controller.signal.throwIfAborted();
-      const session = await protocolConnection.agent.buildSession({
-        cwd: this.options.cwd,
-        mcpServers: [mcpServer],
-      }).start();
+      const session = await protocolConnection.agent
+        .buildSession({
+          cwd: this.options.cwd,
+          mcpServers: [mcpServer],
+        })
+        .start();
       controller.signal.throwIfAborted();
       await applyAcpSessionConfigOptions(
         protocolConnection.agent,
@@ -199,7 +229,11 @@ export class AcpProcessClient<TRegistry = AcpTurnRegistry>
       return await awaitWithAbort(task, controller.signal);
     } catch (error) {
       controller.abort(error);
-      try { await cleanup(); } catch (cleanupError) { throw new AcpInitializationCleanupError(error, cleanupError); }
+      try {
+        await cleanup();
+      } catch (cleanupError) {
+        throw new AcpInitializationCleanupError(error, cleanupError);
+      }
       throw error;
     } finally {
       clearTimeout(timeout);
@@ -262,7 +296,13 @@ class AcpProcessSession implements AcpSession {
 
   async cancel(): Promise<void> {
     if (!this.closed && this.process.exitCode === null && this.process.signalCode === null) {
-      await awaitBeforeDeadline(() => this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId }), Date.now() + ACP_CANCEL_TIMEOUT_MS);
+      await awaitBeforeDeadline(
+        () =>
+          this.client.notify(acp.methods.agent.session.cancel, {
+            sessionId: this.session.sessionId,
+          }),
+        Date.now() + ACP_CANCEL_TIMEOUT_MS,
+      );
     }
   }
 
@@ -270,13 +310,23 @@ class AcpProcessSession implements AcpSession {
     let forcedError: unknown;
     let forceFailed = false;
     // A force request must still reach a process already in graceful teardown.
-    if (options.force && !this.reclaimed) try { signalProcess(this.process, "SIGKILL"); } catch (error) { forcedError = error; forceFailed = true; }
+    if (options.force && !this.reclaimed)
+      try {
+        signalProcess(this.process, "SIGKILL");
+      } catch (error) {
+        forcedError = error;
+        forceFailed = true;
+      }
     if (!this.closing) {
       this.closed = true;
       this.closing = this.closeResources(options.force ?? false);
     }
-    try { await this.closing; }
-    catch (error) { if (forceFailed) throw new AggregateError([forcedError, error], "acp_process_close_failed"); throw error; }
+    try {
+      await this.closing;
+    } catch (error) {
+      if (forceFailed) throw new AggregateError([forcedError, error], "acp_process_close_failed");
+      throw error;
+    }
     if (forceFailed) throw forcedError;
   }
 
@@ -284,35 +334,88 @@ class AcpProcessSession implements AcpSession {
     const failures: unknown[] = [];
     if (!force && this.process.exitCode === null && this.process.signalCode === null) {
       try {
-        await awaitBeforeDeadline(() => this.client.notify(acp.methods.agent.session.cancel, { sessionId: this.session.sessionId }), Date.now() + ACP_CANCEL_TIMEOUT_MS);
-      } catch (error) { failures.push(error); }
-      if (this.supportsSessionClose) try {
-        await awaitBeforeDeadline(() => this.client.request(acp.methods.agent.session.close, { sessionId: this.session.sessionId }), Date.now() + ACP_SESSION_CLOSE_TIMEOUT_MS);
-      } catch (error) { failures.push(error); }
+        await awaitBeforeDeadline(
+          () =>
+            this.client.notify(acp.methods.agent.session.cancel, {
+              sessionId: this.session.sessionId,
+            }),
+          Date.now() + ACP_CANCEL_TIMEOUT_MS,
+        );
+      } catch (error) {
+        failures.push(error);
+      }
+      if (this.supportsSessionClose)
+        try {
+          await awaitBeforeDeadline(
+            () =>
+              this.client.request(acp.methods.agent.session.close, {
+                sessionId: this.session.sessionId,
+              }),
+            Date.now() + ACP_SESSION_CLOSE_TIMEOUT_MS,
+          );
+        } catch (error) {
+          failures.push(error);
+        }
     }
-    try { this.session.dispose(); } catch (error) { failures.push(error); }
-    try { this.connection?.close(); } catch (error) { failures.push(error); }
-    try { this.process.stdin?.end(); } catch (error) { failures.push(error); }
-    let exited = await waitForProcessExit(this.process, force ? ACP_PROCESS_KILL_TIMEOUT_MS : ACP_PROCESS_GRACEFUL_EXIT_TIMEOUT_MS);
+    try {
+      this.session.dispose();
+    } catch (error) {
+      failures.push(error);
+    }
+    try {
+      this.connection?.close();
+    } catch (error) {
+      failures.push(error);
+    }
+    try {
+      this.process.stdin?.end();
+    } catch (error) {
+      failures.push(error);
+    }
+    let exited = await waitForProcessExit(
+      this.process,
+      force ? ACP_PROCESS_KILL_TIMEOUT_MS : ACP_PROCESS_GRACEFUL_EXIT_TIMEOUT_MS,
+    );
     if (!exited) {
-      try { signalProcess(this.process, "SIGTERM"); } catch (error) { failures.push(error); }
+      try {
+        signalProcess(this.process, "SIGTERM");
+      } catch (error) {
+        failures.push(error);
+      }
       exited = await waitForProcessExit(this.process, ACP_PROCESS_TERMINATE_TIMEOUT_MS);
     }
     if (!exited) {
-      try { signalProcess(this.process, "SIGKILL"); } catch (error) { failures.push(error); }
+      try {
+        signalProcess(this.process, "SIGKILL");
+      } catch (error) {
+        failures.push(error);
+      }
       exited = await waitForProcessExit(this.process, ACP_PROCESS_KILL_TIMEOUT_MS);
     }
     if (!exited) {
       failures.push(new Error("acp_process_did_not_exit"));
-      this.process.stdin?.destroy(); this.process.stdout?.destroy(); this.process.stderr?.destroy(); this.process.unref();
+      this.process.stdin?.destroy();
+      this.process.stdout?.destroy();
+      this.process.stderr?.destroy();
+      this.process.unref();
     }
     // Descendants can outlive the root. Reclaim the owned process group too.
-    try { signalProcess(this.process, "SIGKILL"); } catch (error) { failures.push(error); }
+    try {
+      signalProcess(this.process, "SIGKILL");
+    } catch (error) {
+      failures.push(error);
+    }
     let controlClosed = !this.mcpControl;
-    if (this.mcpControl) try {
-      await awaitBeforeDeadline(() => this.mcpControl!.close({ force: true }), Date.now() + ACP_SESSION_CLOSE_TIMEOUT_MS);
-      controlClosed = true;
-    } catch (error) { failures.push(error); }
+    if (this.mcpControl)
+      try {
+        await awaitBeforeDeadline(
+          () => this.mcpControl!.close({ force: true }),
+          Date.now() + ACP_SESSION_CLOSE_TIMEOUT_MS,
+        );
+        controlClosed = true;
+      } catch (error) {
+        failures.push(error);
+      }
     this.reclaimed = exited && controlClosed;
     if (failures.length) throw new AggregateError(failures, "acp_process_close_failed");
   }
@@ -413,17 +516,17 @@ class AcpProcessSession implements AcpSession {
       status?: unknown;
     };
     if (
-      event.sessionUpdate === "tool_call"
-      && event.rawInput?.server === this.approvedMcpServerName
-      && typeof event.toolCallId === "string"
+      event.sessionUpdate === "tool_call" &&
+      event.rawInput?.server === this.approvedMcpServerName &&
+      typeof event.toolCallId === "string"
     ) {
       this.approvedInjectedMcpToolCallIds.add(event.toolCallId);
       return;
     }
     if (
-      event.sessionUpdate === "tool_call_update"
-      && typeof event.toolCallId === "string"
-      && (event.status === "completed" || event.status === "failed")
+      event.sessionUpdate === "tool_call_update" &&
+      typeof event.toolCallId === "string" &&
+      (event.status === "completed" || event.status === "failed")
     ) {
       this.approvedInjectedMcpToolCallIds.delete(event.toolCallId);
     }

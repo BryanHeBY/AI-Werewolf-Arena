@@ -6,7 +6,11 @@ import { World } from "../world";
  * 胜负判定注册中心抽象：由机制层实现并在装配期注入。
  */
 export interface WinConditionEvaluator {
-  evaluate(world: World, condition: WinCondition, checkpoint?: VictoryCheckpoint): WinDecision | null;
+  evaluate(
+    world: World,
+    condition: WinCondition,
+    checkpoint?: VictoryCheckpoint,
+  ): WinDecision | null;
 }
 
 /**
@@ -22,16 +26,25 @@ export class ConditionRegistry {
   /**
    * 按指定胜负模式执行胜负判定。
    */
-  evaluate(world: World, condition: WinCondition, checkpoint?: VictoryCheckpoint): WinDecision | null {
+  evaluate(
+    world: World,
+    condition: WinCondition,
+    checkpoint?: VictoryCheckpoint,
+  ): WinDecision | null {
     return this.winRegistry.evaluate(world, condition, checkpoint);
   }
 
   /**
    * 按给定顺序评估多个胜负模式，命中即返回。
    */
-  evaluateMany(world: World, conditions: WinCondition[], checkpoint?: VictoryCheckpoint, overrides:Partial<Record<WinCondition,WinDecision>>={}): WinDecision | null {
+  evaluateMany(
+    world: World,
+    conditions: WinCondition[],
+    checkpoint?: VictoryCheckpoint,
+    overrides: Partial<Record<WinCondition, WinDecision>> = {},
+  ): WinDecision | null {
     for (const condition of conditions) {
-      const result = overrides[condition]??this.evaluate(world, condition, checkpoint);
+      const result = overrides[condition] ?? this.evaluate(world, condition, checkpoint);
       if (result) {
         return result;
       }

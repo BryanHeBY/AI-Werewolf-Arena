@@ -23,7 +23,7 @@ export interface TargetHintContext {
   actorId: EntityId;
   day?: number;
   actorRole?: Role;
-  abilityId?:string;
+  abilityId?: string;
   allowedTools: ToolName[];
   world: World;
   roleCatalog?: import("../roles/catalog").RoleCatalog;

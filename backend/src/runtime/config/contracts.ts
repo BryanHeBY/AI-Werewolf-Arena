@@ -129,7 +129,6 @@ export interface RuntimeConfig {
   debugSummary?: DebugSummaryConfig;
 }
 
-
 export interface ResolvedAuditConfig {
   profile: ResolvedAgentRuntimeProfile;
   timeoutMs: number;

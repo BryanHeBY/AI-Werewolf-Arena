@@ -12,10 +12,10 @@ VictoryComponent/profile初始归属与身份/阵营/能力独立，三种primar
 
 ## 独立三路审查
 
-| 审查者 | 关注/发现 | 修正/结论 |
-| --- | --- | --- |
-| A / review_arch_tests | Runtime reader未入source指纹；[]构造成功而Tape min1拒绝；其它类型/alias/最终成员 | 指纹含replay-contract及隔离变更实证；constructor/Tape共用strictreader明确[]，坏ID/重复/getter早拒；独立16/100，最终0阻断 |
-| R+T / review_scope_rules | 初始归属独立、含dead、实际Good god/vill统计、条件顺序与point、合成Goal边界 | 独立13/86，0阻断；未把个人/group规格当角色实现 |
+| 审查者                     | 关注/发现                                                                          | 修正/结论                                                                                                                       |
+| -------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| A / review_arch_tests      | Runtime reader未入source指纹；[]构造成功而Tape min1拒绝；其它类型/alias/最终成员   | 指纹含replay-contract及隔离变更实证；constructor/Tape共用strictreader明确[]，坏ID/重复/getter早拒；独立16/100，最终0阻断        |
+| R+T / review_scope_rules   | 初始归属独立、含dead、实际Good god/vill统计、条件顺序与point、合成Goal边界         | 独立13/86，0阻断；未把个人/group规格当角色实现                                                                                  |
 | L+D / review_i18n_delivery | 语言中立类型/null投影不等于无胜者、未发私有归属、schema2/旧1/API与public下一步边界 | 初读15/95，0运行阻断；reproduction.md/current2、Spec/Evaluator/ConditionRegistry迁移/必填终局字段/深副本已同步并复查，最终0阻断 |
 
 初版green并未掩盖独立契约缺陷；两项实际发现均修复后验证。基本条件的历史reason/winner投影保留，已补充新字段的人工字面期望，没有把exact equal改成宽匹配以绕过结果要求。

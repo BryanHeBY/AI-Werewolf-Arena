@@ -3,7 +3,13 @@ import { ToolLoopClient } from "../integrations/llm/transport";
 import { AgentTurnOptions } from "../runtime/agent_turn_executor";
 import { AuditAgentExecutor } from "./contracts";
 import { auditSystemPrompt, auditTurnPrompt } from "./prompts";
-import { auditToolProtocol, AuditSubmission, AuditToolContext, AuditToolResult, AuditToolTurnRegistry } from "./audit_tool_protocol";
+import {
+  auditToolProtocol,
+  AuditSubmission,
+  AuditToolContext,
+  AuditToolResult,
+  AuditToolTurnRegistry,
+} from "./audit_tool_protocol";
 function asToolRecord(result: AuditToolResult | object): Record<string, unknown> {
   return result as Record<string, unknown>;
 }

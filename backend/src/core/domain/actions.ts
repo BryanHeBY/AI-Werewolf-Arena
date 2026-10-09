@@ -1,5 +1,11 @@
 import type { MessageRef } from "@ai-werewolf-arena/game-text";
-import { ActionWindow, KnightDuelWindow, type EntityId, type Phase, type PotionType } from "./identity";
+import {
+  ActionWindow,
+  KnightDuelWindow,
+  type EntityId,
+  type Phase,
+  type PotionType,
+} from "./identity";
 import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
@@ -13,7 +19,7 @@ export interface ToolArgMap {
   kill_vote: { target_id: EntityId | null; abstain: boolean };
   guard: { target_id: EntityId | null; abstain: boolean };
   check_identity: { target_id: EntityId };
-  inspect_role: {target_id:EntityId};
+  inspect_role: { target_id: EntityId };
   mimic_role: { target_id: EntityId };
   awakened_mimic: { target_id: EntityId };
   awakened_poison: { target_id: EntityId };
@@ -42,10 +48,45 @@ export interface ToolArgMap {
 }
 
 export type ToolName = keyof ToolArgMap;
-export const TOOL_NAMES = ["report_bug", "speak_to_wolves", "kill_vote", "guard", "check_identity", "inspect_role", "mimic_role", "awakened_mimic", "awakened_poison", "awakened_guard", "awakened_attack", "mechanical_mode", "mechanical_inspect", "mechanical_poison", "mechanical_guard", "mechanical_attack", "bestow_ability", "black_market_trade", "choose_exemplar", "use_potion", "self_destruct", "self_destruct_with_target", "duel", "dream", "charm", "speak", "vote", "shoot", "choose_direction", "run_for_sheriff", "vote_for_sheriff"] as const satisfies readonly ToolName[];
+export const TOOL_NAMES = [
+  "report_bug",
+  "speak_to_wolves",
+  "kill_vote",
+  "guard",
+  "check_identity",
+  "inspect_role",
+  "mimic_role",
+  "awakened_mimic",
+  "awakened_poison",
+  "awakened_guard",
+  "awakened_attack",
+  "mechanical_mode",
+  "mechanical_inspect",
+  "mechanical_poison",
+  "mechanical_guard",
+  "mechanical_attack",
+  "bestow_ability",
+  "black_market_trade",
+  "choose_exemplar",
+  "use_potion",
+  "self_destruct",
+  "self_destruct_with_target",
+  "duel",
+  "dream",
+  "charm",
+  "speak",
+  "vote",
+  "shoot",
+  "choose_direction",
+  "run_for_sheriff",
+  "vote_for_sheriff",
+] as const satisfies readonly ToolName[];
 export type ToolCall = { [K in ToolName]: { name: K; args: ToolArgMap[K] } }[ToolName];
 export type TypedToolCall<T extends ToolName> = Extract<ToolCall, { name: T }>;
-export interface KnightDuelSelection { actorId: EntityId; targetId: EntityId }
+export interface KnightDuelSelection {
+  actorId: EntityId;
+  targetId: EntityId;
+}
 export type KnightDuelCommit = "rejected" | "continue" | "night" | "terminal";
 export type SelfDestructSelection =
   | { kind: "ordinary"; actorId: EntityId; targetId: null }
@@ -68,8 +109,43 @@ export interface TurnConstraints {
   summary_message?: MessageRef;
 }
 
-export const ACTION_STAGES = [...Object.values(ActionWindow), ...Object.values(KnightDuelWindow), "wolf_discussion", "wolf_vote", "guard", "seer", "role_inspection", "psychic", "mirror_girl", "lucky", "miracle_merchant", "black_market_merchant", "black_market_recipient", "hybrid", "awakened_mimic", "awakened_skill", "awakened_attack", "mechanical_mode", "mechanical_mimic", "mechanical_skill", "mechanical_attack", "witch", "dreamer", "wolf_beauty", "day_speech", "voting", "hunter_shot", "death_shot", "last_words", "sheriff_nomination", "sheriff_campaign_speech", "sheriff_withdraw", "sheriff_vote", "sheriff_choose_direction"] as const;
-export type ActionStage = typeof ACTION_STAGES[number];
+export const ACTION_STAGES = [
+  ...Object.values(ActionWindow),
+  ...Object.values(KnightDuelWindow),
+  "wolf_discussion",
+  "wolf_vote",
+  "guard",
+  "seer",
+  "role_inspection",
+  "psychic",
+  "mirror_girl",
+  "lucky",
+  "miracle_merchant",
+  "black_market_merchant",
+  "black_market_recipient",
+  "hybrid",
+  "awakened_mimic",
+  "awakened_skill",
+  "awakened_attack",
+  "mechanical_mode",
+  "mechanical_mimic",
+  "mechanical_skill",
+  "mechanical_attack",
+  "witch",
+  "dreamer",
+  "wolf_beauty",
+  "day_speech",
+  "voting",
+  "hunter_shot",
+  "death_shot",
+  "last_words",
+  "sheriff_nomination",
+  "sheriff_campaign_speech",
+  "sheriff_withdraw",
+  "sheriff_vote",
+  "sheriff_choose_direction",
+] as const;
+export type ActionStage = (typeof ACTION_STAGES)[number];
 export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_shot"];
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */

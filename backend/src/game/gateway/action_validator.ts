@@ -10,10 +10,7 @@ import {
   ToolCall,
   ToolValidationResult,
 } from "../../core/domain/model";
-import {
-  getDefaultToolValidationRuleRegistry,
-  ToolValidationRuleRegistry,
-} from "../mechanisms";
+import { getDefaultToolValidationRuleRegistry, ToolValidationRuleRegistry } from "../mechanisms";
 import { safeRecordLogicOp } from "../../recording/session_recorder";
 import { World } from "../../core/domain/world";
 
@@ -49,34 +46,36 @@ export class ActionValidator {
     context: ValidationContext,
   ): ToolValidationResult<T> {
     const reject = (violation: RuleViolation): ToolValidationResult<T> => {
-      if (this.recordOperations) safeRecordLogicOp({
-        scope: "gateway",
-        op: "validate_tool_call",
-        actorId,
-        phase: context.phase,
-        status: "rejected",
-        reason: violation.code,
-        input: {
-          tool: toolCall.name,
-          args: (toolCall as any).args ?? {},
-          action_window: context.actionWindow,
-        },
-      });
+      if (this.recordOperations)
+        safeRecordLogicOp({
+          scope: "gateway",
+          op: "validate_tool_call",
+          actorId,
+          phase: context.phase,
+          status: "rejected",
+          reason: violation.code,
+          input: {
+            tool: toolCall.name,
+            args: (toolCall as any).args ?? {},
+            action_window: context.actionWindow,
+          },
+        });
       return toolFailure(world.locale, violation.code, violation.message);
     };
     const accept = (): ToolValidationResult<T> => {
-      if (this.recordOperations) safeRecordLogicOp({
-        scope: "gateway",
-        op: "validate_tool_call",
-        actorId,
-        phase: context.phase,
-        status: "ok",
-        input: {
-          tool: toolCall.name,
-          args: (toolCall as any).args ?? {},
-          action_window: context.actionWindow,
-        },
-      });
+      if (this.recordOperations)
+        safeRecordLogicOp({
+          scope: "gateway",
+          op: "validate_tool_call",
+          actorId,
+          phase: context.phase,
+          status: "ok",
+          input: {
+            tool: toolCall.name,
+            args: (toolCall as any).args ?? {},
+            action_window: context.actionWindow,
+          },
+        });
       return {
         ok: true,
         sanitizedCall: toolCall,
@@ -90,7 +89,14 @@ export class ActionValidator {
       return reject({ code: RuleError.ActorMissing });
     }
 
-    const allowDeadAction = world.hasDeathAction(actorId, toolCall.name, context.phase, context.day, context.deathActionId, context.abilityId);
+    const allowDeadAction = world.hasDeathAction(
+      actorId,
+      toolCall.name,
+      context.phase,
+      context.day,
+      context.deathActionId,
+      context.abilityId,
+    );
     if (context.deathActionId !== undefined && (alive.alive || !allowDeadAction)) {
       return reject({ code: RuleError.DeathActionUnavailable });
     }
@@ -111,7 +117,8 @@ export class ActionValidator {
       abilityId: context.abilityId,
       actionWindow: context.actionWindow,
       allowSelfDestruct: context.allowSelfDestruct,
-      duelWindow: context.duelWindow, allowKnightDuel: context.allowKnightDuel,
+      duelWindow: context.duelWindow,
+      allowKnightDuel: context.allowKnightDuel,
       sheriffCandidates: context.sheriffCandidates,
     });
     if (error) {

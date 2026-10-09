@@ -16,7 +16,11 @@ export interface RoleComponent extends PromptRenderable {
 /**
  * 创建角色组件并按角色初始化私有状态。
  */
-export function createRoleComponent(role: Role, camp: Camp, locale: Locale = "zh-CN"): RoleComponent {
+export function createRoleComponent(
+  role: Role,
+  camp: Camp,
+  locale: Locale = "zh-CN",
+): RoleComponent {
   return {
     role,
     camp,

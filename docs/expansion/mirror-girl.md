@@ -4,14 +4,14 @@
 
 ## 继续使用的职责
 
-| 事实 | 唯一负责人 | 边界 |
-| --- | --- | --- |
-| 身份/Good神职/胜利成员 | RoleProfile与既有Role/Victory组件 | 能力变化不改实体身份、Agent/人格或胜利归属 |
-| 禁重复的个人报告与库存 | 绑定的role_check能力实例 | 明确mirror policy，完整history按稳定ID，不按其它实例/玩家聚合 |
-| 本夜资格与消费 | shared RoleInspection执行器 | native、gift/copy、transfer按当前绑定实例规则；original ID/state/life与最终历史复验 |
-| Garg原生查后刀 | 专属Completion作用域 | 支付后的原native ID/owner仍有效才能授权；Mirror/Psychic不得代替 |
-| 玩家提示/DTO与目标提示 | 既有PlayerPromptPolicy/TargetHint/Baseline | 依据绑定policy，不拿actor真实底牌猜能力；本人仅报告/自己的资源 |
-| 事件/录制/播放 | actor-only投影、God replay与共享reader/labels | no字段改名或新视角，机器role/stage/key不本地化；画面由frame决定 |
+| 事实                   | 唯一负责人                                    | 边界                                                                                |
+| ---------------------- | --------------------------------------------- | ----------------------------------------------------------------------------------- |
+| 身份/Good神职/胜利成员 | RoleProfile与既有Role/Victory组件             | 能力变化不改实体身份、Agent/人格或胜利归属                                          |
+| 禁重复的个人报告与库存 | 绑定的role_check能力实例                      | 明确mirror policy，完整history按稳定ID，不按其它实例/玩家聚合                       |
+| 本夜资格与消费         | shared RoleInspection执行器                   | native、gift/copy、transfer按当前绑定实例规则；original ID/state/life与最终历史复验 |
+| Garg原生查后刀         | 专属Completion作用域                          | 支付后的原native ID/owner仍有效才能授权；Mirror/Psychic不得代替                     |
+| 玩家提示/DTO与目标提示 | 既有PlayerPromptPolicy/TargetHint/Baseline    | 依据绑定policy，不拿actor真实底牌猜能力；本人仅报告/自己的资源                      |
+| 事件/录制/播放         | actor-only投影、God replay与共享reader/labels | no字段改名或新视角，机器role/stage/key不本地化；画面由frame决定                     |
 
 无需增加统一Agent、事件总线或角色生命周期框架。扩现有policy闭合联合即可：旧缺省/gargoyle、psychic、mirror；旧未知policy拒绝行为保持。
 

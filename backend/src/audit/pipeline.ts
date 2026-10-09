@@ -55,16 +55,17 @@ export async function buildDebugSummaryWithAgents(
 
   try {
     const tasks = buildAuditTasks(input, settings);
-    const runner = new AuditTaskRunner(executor, input.manifest.session_id, { ...settings, displayLocale: input.displayLocale ?? input.locale });
+    const runner = new AuditTaskRunner(executor, input.manifest.session_id, {
+      ...settings,
+      displayLocale: input.displayLocale ?? input.locale,
+    });
     const outputs = await runner.run(tasks);
     const evidencePolicy = new AuditEvidencePolicy();
     const merged = evidencePolicy.merge(outputs);
     const allowedSequences = evidencePolicy.allowedSequences(input);
     const filtered = evidencePolicy.filterByEvidence(merged.findings, allowedSequences);
     merged.findings = filtered.findings;
-    merged.missingInfo.push(
-      ...filtered.dropped.map((note) => `dropped: ${note}`),
-    );
+    merged.missingInfo.push(...filtered.dropped.map((note) => `dropped: ${note}`));
     const renderer = new AuditSummaryRenderer(
       executor,
       evidencePolicy,
@@ -72,12 +73,7 @@ export async function buildDebugSummaryWithAgents(
       input.displayLocale ?? input.locale ?? "zh-CN",
     );
     return {
-      markdown: await renderer.render(
-        input.manifest,
-        input.reports,
-        merged,
-        allowedSequences,
-      ),
+      markdown: await renderer.render(input.manifest, input.reports, merged, allowedSequences),
       failedAgents: merged.failedAgents,
     };
   } finally {

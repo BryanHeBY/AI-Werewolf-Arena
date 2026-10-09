@@ -4,13 +4,13 @@
 
 ## 已关闭问题
 
-| 路径 | 发现 | 修正与独立复查 |
-| --- | --- | --- |
-| R/T | Night／Day Guard+Heal语义、合法skip消费／邻接、特殊判胜全局抢先有歧义 | 冻结两期普通保护均不挡；合法skip清关系耗本夜；末狼例外仅Side条目内，保持City/Side次序。核心25／252独立通过 |
-| A | hook await缝换目标生命或撤绑定，裸ID先杀、新binding后校验太晚 | hook只返原binding令牌；同步claim通过才派生Charm死因／Night传播／标死。4真实微任务撤权＋samewave共5／18独立通过，原High关闭 |
-| R/T | 同波Hunter先刀死遗言、后补Charm禁枪，与“无遗言”绝对文案冲突 | 明确已完成原初批遗言不回滚，补因只禁未执行技能；实际words[1,5,2]、charm1→5、gun0、无重复additional判例；独立core30／270 |
-| R/A/L | Runner stopping把晚到结果变null，可变合法skip并消费 | 保原Abort事实；checkpoint/Tape照录取消，外层不重复自身stopReason，外来错误保留。真实Night2heldCharm+timer flush故障两case覆盖null/late charm:null，独立2／14；主代理增强严格Tape重放后2case继续全过 |
-| L/D | 模型未获通用末狼例外／条件顺序，未行动显示day0 | 中英brief/state加入通用规则，无当前资格/count/candidate；初始day为无／None。独立复查关闭，英文god统一special role |
+| 路径  | 发现                                                                  | 修正与独立复查                                                                                                                                                                                      |
+| ----- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| R/T   | Night／Day Guard+Heal语义、合法skip消费／邻接、特殊判胜全局抢先有歧义 | 冻结两期普通保护均不挡；合法skip清关系耗本夜；末狼例外仅Side条目内，保持City/Side次序。核心25／252独立通过                                                                                          |
+| A     | hook await缝换目标生命或撤绑定，裸ID先杀、新binding后校验太晚         | hook只返原binding令牌；同步claim通过才派生Charm死因／Night传播／标死。4真实微任务撤权＋samewave共5／18独立通过，原High关闭                                                                          |
+| R/T   | 同波Hunter先刀死遗言、后补Charm禁枪，与“无遗言”绝对文案冲突           | 明确已完成原初批遗言不回滚，补因只禁未执行技能；实际words[1,5,2]、charm1→5、gun0、无重复additional判例；独立core30／270                                                                             |
+| R/A/L | Runner stopping把晚到结果变null，可变合法skip并消费                   | 保原Abort事实；checkpoint/Tape照录取消，外层不重复自身stopReason，外来错误保留。真实Night2heldCharm+timer flush故障两case覆盖null/late charm:null，独立2／14；主代理增强严格Tape重放后2case继续全过 |
+| L/D   | 模型未获通用末狼例外／条件顺序，未行动显示day0                        | 中英brief/state加入通用规则，无当前资格/count/candidate；初始day为无／None。独立复查关闭，英文god统一special role                                                                                   |
 
 三路已完成首轮、修正及正式契约／完整场景范围复查，0剩余阻断。R独立core34／292并核对12literal；A独立新增判胜／循环／徽章8／34，确认取消严格重放日志与API；L独立原core30／270及取消2／14后复查正式提示／契约／信息／交付范围。各代理只读，没有修改实现或宣称重复全矩阵；最新数字与operator日志开关说明提醒均修正。
 

@@ -45,8 +45,14 @@ export async function loadRuntimeConfig(options: RuntimeConfigLoadOptions): Prom
   return parseRuntimeConfig({
     providers: await readJsonFile(path.join(runtimeDir, "providers.json"), "providers"),
     agents: await readJsonFile(path.join(runtimeDir, "agents.json"), "agents"),
-    game: await readJsonFile(path.join(configRoot, "games", `${options.gameName}.json`), `games.${options.gameName}`),
-    debugSummary: await readOptionalJsonFile(path.join(runtimeDir, "debug_summary.json"), "debugSummary"),
+    game: await readJsonFile(
+      path.join(configRoot, "games", `${options.gameName}.json`),
+      `games.${options.gameName}`,
+    ),
+    debugSummary: await readOptionalJsonFile(
+      path.join(runtimeDir, "debug_summary.json"),
+      "debugSummary",
+    ),
     environment: options.environment,
   });
 }

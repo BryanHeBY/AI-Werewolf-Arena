@@ -2,11 +2,11 @@
 
 日期：2026-10-08。范围：私有player记录机器phase/stage与v2/sharedreader、引擎请求MessageRef、Tape ref schema及旧原文。
 
-| 代理 | 首轮发现 | 修正及最终复查 |
-| --- | --- | --- |
-| `review_scope_rules` R/T | String枚举校验接受数组；继承Ref压掉显式custom文本 | typeofstring后枚举，旧/2坏嵌套回归；raw/empty优先且保空白与占位。独立36测试3371断言含中英人工对局与50局复现；收尾8测试75断言，0阻断 |
-| `review_arch_tests` A/T | 新retry ref仍与调用方共享；kind反例应使用prompt而非user | retry/summary均clone，新input key/parameters变更请求不变；role=user/kind=prompt分别拒coercion。独立8测试75断言，owner/API/生命周期复查0阻断 |
-| `review_i18n_delivery` L/D | raw并存/empty政策和private schema/构造器/Tape需准确说明 | private-record-v2+i18n写独立schema、元字段only、unknown/day诊断、Ctor去localizer、原文/empty优先与严格兼容，最终复查0阻断 |
+| 代理                       | 首轮发现                                                | 修正及最终复查                                                                                                                              |
+| -------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `review_scope_rules` R/T   | String枚举校验接受数组；继承Ref压掉显式custom文本       | typeofstring后枚举，旧/2坏嵌套回归；raw/empty优先且保空白与占位。独立36测试3371断言含中英人工对局与50局复现；收尾8测试75断言，0阻断         |
+| `review_arch_tests` A/T    | 新retry ref仍与调用方共享；kind反例应使用prompt而非user | retry/summary均clone，新input key/parameters变更请求不变；role=user/kind=prompt分别拒coercion。独立8测试75断言，owner/API/生命周期复查0阻断 |
+| `review_i18n_delivery` L/D | raw并存/empty政策和private schema/构造器/Tape需准确说明 | private-record-v2+i18n写独立schema、元字段only、unknown/day诊断、Ctor去localizer、原文/empty优先与严格兼容，最终复查0阻断                   |
 
 ## 验证
 

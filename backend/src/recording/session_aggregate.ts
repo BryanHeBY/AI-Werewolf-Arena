@@ -52,9 +52,7 @@ function normalizeDeltaMessages(
 ): ReplayPlayerDeltaMessage[] {
   return (messages ?? []).map((message) => ({
     ...message,
-    ...(message.content
-      ? { content: message.content.slice(0, LLM_MESSAGE_MAX_CHARS) }
-      : {}),
+    ...(message.content ? { content: message.content.slice(0, LLM_MESSAGE_MAX_CHARS) } : {}),
     ...(message.args !== undefined
       ? { args: safeReplayJson(message.args) as Record<string, unknown> }
       : {}),
@@ -68,7 +66,9 @@ function normalizeDeltaMessages(
 export class ReplaySessionAggregate {
   private reproductionEnabled = false;
 
-  enableReproduction(): void { this.reproductionEnabled = true; }
+  enableReproduction(): void {
+    this.reproductionEnabled = true;
+  }
   private publicSeq = 0;
   private logicSeq = 0;
   private readonly publicEvents: ReplayPublicEvent[] = [];
@@ -116,7 +116,9 @@ export class ReplaySessionAggregate {
         timestamp: toIso(input.timestampMs ?? Date.now()),
         ...(input.initialPromptSystem
           ? { prompt_system: input.initialPromptSystem }
-          : input.promptSystem ? { prompt_system: input.promptSystem } : {}),
+          : input.promptSystem
+            ? { prompt_system: input.promptSystem }
+            : {}),
         ...(input.initialBoardInfo ? { board_info: input.initialBoardInfo } : {}),
         ...(input.promptUserDelta ? { prompt_user: [...input.promptUserDelta] } : {}),
       };
@@ -150,9 +152,7 @@ export class ReplaySessionAggregate {
       stage: input.stage,
       request_id: input.requestId,
       timestamp: toIso(input.timestampMs ?? Date.now()),
-      ...(input.sourceEventSeq === undefined
-        ? {}
-        : { source_event_seq: input.sourceEventSeq }),
+      ...(input.sourceEventSeq === undefined ? {} : { source_event_seq: input.sourceEventSeq }),
       event: safeReplayJson(input.event) as unknown as PlayerVisibleEvent,
     };
     view.timeline.push(entry);
@@ -178,8 +178,12 @@ export class ReplaySessionAggregate {
     return reportId;
   }
 
-  publicTimelinePayload() { return { events: this.publicEvents }; }
-  logicOpsPayload() { return { ops: this.logicOps }; }
+  publicTimelinePayload() {
+    return { events: this.publicEvents };
+  }
+  logicOpsPayload() {
+    return { ops: this.logicOps };
+  }
   debugReportsPayload() {
     return {
       session_id: this.sessionMeta.sessionId,
@@ -187,8 +191,12 @@ export class ReplaySessionAggregate {
       reports: this.debugReports,
     };
   }
-  playerIds(): number[] { return [...this.playerViews.keys()].sort((a, b) => a - b); }
-  playerFiles(): string[] { return this.playerIds().map((id) => `players/player_${id}.json`); }
+  playerIds(): number[] {
+    return [...this.playerViews.keys()].sort((a, b) => a - b);
+  }
+  playerFiles(): string[] {
+    return this.playerIds().map((id) => `players/player_${id}.json`);
+  }
   normalizedPlayerView(playerId: number): ReplayPlayerView | undefined {
     const view = this.playerViews.get(playerId);
     return view ? this.normalizePlayerView(view) : undefined;
@@ -206,8 +214,15 @@ export class ReplaySessionAggregate {
   }
 
   buildManifest(meta?: ReplayFinalizeMeta): ReplayManifest {
-    const decision = meta?.gameResult === undefined ? undefined : readVictoryResult(meta.gameResult, meta.players.map(player => player.player_id));
-    if (decision && decision.winner !== meta?.winner) throw new Error("replay_result_winner_mismatch");
+    const decision =
+      meta?.gameResult === undefined
+        ? undefined
+        : readVictoryResult(
+            meta.gameResult,
+            meta.players.map((player) => player.player_id),
+          );
+    if (decision && decision.winner !== meta?.winner)
+      throw new Error("replay_result_winner_mismatch");
     return {
       session_id: this.sessionMeta.sessionId,
       board: this.sessionMeta.board,
@@ -282,7 +297,14 @@ export class ReplaySessionAggregate {
   private ensurePlayerView(playerId: number, role: string, camp: string): ReplayPlayerView {
     const existing = this.playerViews.get(playerId);
     if (existing) return existing;
-    const view: ReplayPlayerView = { schemaVersion: 2, ...(this.sessionMeta.locale === undefined ? {} : { locale: this.sessionMeta.locale }), player_id: playerId, role, camp, timeline: [] };
+    const view: ReplayPlayerView = {
+      schemaVersion: 2,
+      ...(this.sessionMeta.locale === undefined ? {} : { locale: this.sessionMeta.locale }),
+      player_id: playerId,
+      role,
+      camp,
+      timeline: [],
+    };
     this.playerViews.set(playerId, view);
     return view;
   }
@@ -302,7 +324,9 @@ export class ReplaySessionAggregate {
     return result;
   }
 
-  private deriveInitialPrompt(view: ReplayPlayerView): ReplayPlayerView["initial_prompt"] | undefined {
+  private deriveInitialPrompt(
+    view: ReplayPlayerView,
+  ): ReplayPlayerView["initial_prompt"] | undefined {
     const firstTurn = view.timeline.find((entry) => entry.kind === "turn");
     if (!firstTurn || firstTurn.kind !== "turn") return undefined;
     const system = firstTurn.delta_messages.find(
@@ -330,35 +354,48 @@ export class ReplaySessionAggregate {
       target.push({ role: message.role, kind: "prompt", content: message.content });
     }
     for (const item of input.retryTrace ?? []) {
-      if (item.retryPrompt) target.push({
-        role: "user", kind: "retry_prompt", attempt: item.attempt, content: item.retryPrompt,
-      });
-      if (item.assistantText) target.push({
-        role: "assistant", kind: "assistant_output", attempt: item.attempt, content: item.assistantText,
-      });
-      if (item.reason) target.push({
-        role: "meta",
-        kind: item.status === "request_error" ? "request_error" : "constraint_warning",
-        attempt: item.attempt,
-        content: item.reason,
-        ...(item.diagnostic ? { diagnostic: structuredClone(item.diagnostic) } : {}),
-      });
+      if (item.retryPrompt)
+        target.push({
+          role: "user",
+          kind: "retry_prompt",
+          attempt: item.attempt,
+          content: item.retryPrompt,
+        });
+      if (item.assistantText)
+        target.push({
+          role: "assistant",
+          kind: "assistant_output",
+          attempt: item.attempt,
+          content: item.assistantText,
+        });
+      if (item.reason)
+        target.push({
+          role: "meta",
+          kind: item.status === "request_error" ? "request_error" : "constraint_warning",
+          attempt: item.attempt,
+          content: item.reason,
+          ...(item.diagnostic ? { diagnostic: structuredClone(item.diagnostic) } : {}),
+        });
     }
-    if (thinkingText) target.push({ role: "assistant", kind: "assistant_output", content: thinkingText });
+    if (thinkingText)
+      target.push({ role: "assistant", kind: "assistant_output", content: thinkingText });
     for (const call of input.toolCalls) {
       target.push({
         role: "assistant",
         kind: "tool_call",
         name: call.name,
-        ...(call.args !== undefined ? { args: safeReplayJson(call.args) as Record<string, unknown> } : {}),
+        ...(call.args !== undefined
+          ? { args: safeReplayJson(call.args) as Record<string, unknown> }
+          : {}),
         ...(call.accepted !== undefined ? { accepted: call.accepted } : {}),
       });
-      if (call.result !== undefined) target.push({
-        role: "tool",
-        kind: "tool_result",
-        name: call.name,
-        result: safeReplayJson(call.result) as Record<string, unknown> | string,
-      });
+      if (call.result !== undefined)
+        target.push({
+          role: "tool",
+          kind: "tool_result",
+          name: call.name,
+          result: safeReplayJson(call.result) as Record<string, unknown> | string,
+        });
     }
     target.push({
       role: "meta",
@@ -368,10 +405,11 @@ export class ReplaySessionAggregate {
         final_action: input.finalAction !== undefined ? safeReplayJson(input.finalAction) : null,
       }),
     });
-    if (input.fallback?.used) target.push({
-      role: "meta",
-      kind: "fallback",
-      content: JSON.stringify(safeReplayJson(input.fallback)),
-    });
+    if (input.fallback?.used)
+      target.push({
+        role: "meta",
+        kind: "fallback",
+        content: JSON.stringify(safeReplayJson(input.fallback)),
+      });
   }
 }

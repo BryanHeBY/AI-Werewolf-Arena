@@ -4,10 +4,10 @@ import { text } from "@ai-werewolf-arena/game-text";
 import { Role, ToolName } from "../../../core/domain/model";
 import { TargetHintContext, TargetHintRegistry } from "./contracts";
 import { canBeExiled, canBeSheriff } from "../common/participation";
-import {roleInspectionPolicy} from "../roles/abilities";
-import {getRoleInspectionState} from "../roles/private_state";
-import {COMPONENT} from "../../../core/domain/components/names";
-import type {RoleComponent} from "../../../core/domain/components/role";
+import { roleInspectionPolicy } from "../roles/abilities";
+import { getRoleInspectionState } from "../roles/private_state";
+import { COMPONENT } from "../../../core/domain/components/names";
+import type { RoleComponent } from "../../../core/domain/components/role";
 import { findNightAbility } from "../roles/abilities";
 import { luckyTargetAllowed } from "../roles/night_action_history";
 import { getAwakenedState } from "../roles/awakened_hidden_wolf/state";
@@ -26,12 +26,18 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     kill_vote: { allowSelf: false },
     guard: { allowSelf: false },
     check_identity: { allowSelf: false },
-    inspect_role:{allowSelf:false},
-    mimic_role: { allowSelf: false }, mechanical_inspect: { allowSelf: false },
-    awakened_mimic: { allowSelf: false }, awakened_poison: { allowSelf: true }, awakened_guard: { allowSelf: true }, awakened_attack: { allowSelf: true },
+    inspect_role: { allowSelf: false },
+    mimic_role: { allowSelf: false },
+    mechanical_inspect: { allowSelf: false },
+    awakened_mimic: { allowSelf: false },
+    awakened_poison: { allowSelf: true },
+    awakened_guard: { allowSelf: true },
+    awakened_attack: { allowSelf: true },
     bestow_ability: { allowSelf: false },
     choose_exemplar: { allowSelf: false },
-    mechanical_poison: { allowSelf: true }, mechanical_guard: { allowSelf: true }, mechanical_attack: { allowSelf: true },
+    mechanical_poison: { allowSelf: true },
+    mechanical_guard: { allowSelf: true },
+    mechanical_attack: { allowSelf: true },
     use_potion: { allowSelf: false },
     vote: { allowSelf: false },
     shoot: { allowSelf: false },
@@ -43,17 +49,15 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     vote_for_sheriff: { allowSelf: false },
   };
 
-  private readonly roleOverrides: Partial<
-    Record<Role, Partial<Record<ToolName, TargetRule>>>
-  > = {
+  private readonly roleOverrides: Partial<Record<Role, Partial<Record<ToolName, TargetRule>>>> = {
     [Role.Wolf]: {
       // 狼人策略中可允许自刀，提示层保留自己编号避免“无效 self target”误判。
       kill_vote: { allowSelf: true },
     },
     [Role.WolfKing]: { kill_vote: { allowSelf: true } },
     [Role.WhiteWolfKing]: { kill_vote: { allowSelf: true } },
-    [Role.HiddenWolf]: {kill_vote:{allowSelf:true}},
-    [Role.Gargoyle]:{kill_vote:{allowSelf:true}},
+    [Role.HiddenWolf]: { kill_vote: { allowSelf: true } },
+    [Role.Gargoyle]: { kill_vote: { allowSelf: true } },
     [Role.MechanicalWolf]: { kill_vote: { allowSelf: true } },
     [Role.AwakenedHiddenWolf]: { kill_vote: { allowSelf: true } },
     [Role.Witch]: {
@@ -72,31 +76,74 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       return undefined;
     }
     const allowSelf = targetTools.some((tool) => this.getRule(ctx.actorRole, tool)?.allowSelf);
-    const inspection=getRoleInspectionState(ctx.world.getComponent<RoleComponent>(ctx.actorId,COMPONENT.Role)!,ctx.abilityId);
+    const inspection = getRoleInspectionState(
+      ctx.world.getComponent<RoleComponent>(ctx.actorId, COMPONENT.Role)!,
+      ctx.abilityId,
+    );
     const ownRole = ctx.world.getComponent<RoleComponent>(ctx.actorId, COMPONENT.Role);
     const awakenedGuard = getAwakenedState(ownRole)?.learned?.skill;
     const luckyAllowed = (tool: ToolName, id: number) => {
-      const kind = tool === "check_identity" ? "seer_check" : tool === "guard" ? "guard" : tool === "use_potion" ? "potion" : null;
+      const kind =
+        tool === "check_identity"
+          ? "seer_check"
+          : tool === "guard"
+            ? "guard"
+            : tool === "use_potion"
+              ? "potion"
+              : null;
       if (!kind) return true;
       const ability = findNightAbility(ownRole, kind, ctx.abilityId);
       if (!ability) return true;
       // An ordinary Witch may still heal a target whose poison is blocked by this actor's history.
-      if (ability.kind === "potion" && ability.activation !== "lucky" && ability.activation !== "black_market" && ability.state.heal > 0) return true;
+      if (
+        ability.kind === "potion" &&
+        ability.activation !== "lucky" &&
+        ability.activation !== "black_market" &&
+        ability.state.heal > 0
+      )
+        return true;
       if (ability.kind === "guard" && guardTargetRepeated(ability, ctx.day ?? 1, id)) return false;
-      return luckyTargetAllowed(ctx.world, ctx.actorId, ability, ctx.day ?? 1, kind === "seer_check" ? "check" : kind === "guard" ? "guard" : "poison", id);
+      return luckyTargetAllowed(
+        ctx.world,
+        ctx.actorId,
+        ability,
+        ctx.day ?? 1,
+        kind === "seer_check" ? "check" : kind === "guard" ? "guard" : "poison",
+        id,
+      );
     };
     const ids = ctx.world
       .getAliveEntityIds()
-      .filter(id => targetTools.some(tool => (this.getRule(ctx.actorRole, tool)?.allowSelf || id !== ctx.actorId) &&
-        luckyAllowed(tool, id) &&
-        (tool !== "awakened_guard" || awakenedGuard?.kind !== "guard" || awakenedGuard.lastGuardDay !== (ctx.day ?? 1) - 1 || awakenedGuard.lastTarget !== id) &&
-        (tool !== "vote" || canBeExiled(ctx.world, id, ctx.roleCatalog)) &&
-        (tool!=="inspect_role"||!inspection||roleInspectionPolicy(inspection)==="psychic"||!inspection.history.some(report=>report.targetId===id))&&
-        (tool !== "vote_for_sheriff" || ctx.sheriffCandidates?.includes(id) && canBeSheriff(ctx.world, id, ctx.roleCatalog))))
+      .filter((id) =>
+        targetTools.some(
+          (tool) =>
+            (this.getRule(ctx.actorRole, tool)?.allowSelf || id !== ctx.actorId) &&
+            luckyAllowed(tool, id) &&
+            (tool !== "awakened_guard" ||
+              awakenedGuard?.kind !== "guard" ||
+              awakenedGuard.lastGuardDay !== (ctx.day ?? 1) - 1 ||
+              awakenedGuard.lastTarget !== id) &&
+            (tool !== "vote" || canBeExiled(ctx.world, id, ctx.roleCatalog)) &&
+            (tool !== "inspect_role" ||
+              !inspection ||
+              roleInspectionPolicy(inspection) === "psychic" ||
+              !inspection.history.some((report) => report.targetId === id)) &&
+            (tool !== "vote_for_sheriff" ||
+              (ctx.sheriffCandidates?.includes(id) &&
+                canBeSheriff(ctx.world, id, ctx.roleCatalog))),
+        ),
+      )
       .sort((a, b) => a - b);
     const potion = findNightAbility(ownRole, "potion", ctx.abilityId);
-    if (targetTools.length === 1 && targetTools[0] === "use_potion" && potion?.activation === "lucky") {
-      return text(ctx.world.locale, "prompt.targets.lucky_poison", { ids: ids.join(", ") || text(ctx.world.locale, "common.none"), actor: ctx.actorId });
+    if (
+      targetTools.length === 1 &&
+      targetTools[0] === "use_potion" &&
+      potion?.activation === "lucky"
+    ) {
+      return text(ctx.world.locale, "prompt.targets.lucky_poison", {
+        ids: ids.join(", ") || text(ctx.world.locale, "common.none"),
+        actor: ctx.actorId,
+      });
     }
     if (ids.length === 0) {
       return text(ctx.world.locale, "prompt.targets.none");
@@ -107,12 +154,8 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     return text(ctx.world.locale, "prompt.targets.others", { ids: ids.join(", ") });
   }
 
-  private getRule(
-    role: Role | undefined,
-    tool: ToolName,
-  ): TargetRule | undefined {
-    const roleRule =
-      role !== undefined ? this.roleOverrides[role]?.[tool] : undefined;
+  private getRule(role: Role | undefined, tool: ToolName): TargetRule | undefined {
+    const roleRule = role !== undefined ? this.roleOverrides[role]?.[tool] : undefined;
     return roleRule ?? this.toolRules[tool];
   }
 }

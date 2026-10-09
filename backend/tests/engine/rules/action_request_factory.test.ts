@@ -11,7 +11,13 @@ describe("GameActionRequestFactory", () => {
   test("owns canonical day, stage, visibility and constraint fields", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     // Runtime input can carry forged canonical fields; the factory must overwrite them.
-    const forgedContext = { trigger: "test", day: 99, stage: "forged_stage", visible_events: [], turn_constraints: { min_valid_actions: 0 } };
+    const forgedContext = {
+      trigger: "test",
+      day: 99,
+      stage: "forged_stage",
+      visible_events: [],
+      turn_constraints: { min_valid_actions: 0 },
+    };
     const request = new GameActionRequestFactory(
       context.world,
       context.phaseManager.getEvents(),

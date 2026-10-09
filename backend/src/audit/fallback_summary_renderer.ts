@@ -3,16 +3,18 @@ import { auditInline, auditSummaryHeader } from "./summary_format";
 /** Render a deterministic summary when AI audit is unavailable or unnecessary. */
 import type { ReplayDebugReport } from "../recording/contracts";
 import type { BuildDebugSummaryInput } from "./contracts";
-import { collectObservations, filterActionableReports, scanEventsForPotentialIssues, scanPlayerTimelineMetadataIssues } from "./deterministic_checks";
+import {
+  collectObservations,
+  filterActionableReports,
+  scanEventsForPotentialIssues,
+  scanPlayerTimelineMetadataIssues,
+} from "./deterministic_checks";
 
 export function buildFallbackSummary(input: BuildDebugSummaryInput): string {
   const { manifest, reports } = input;
   const locale = input.displayLocale ?? input.locale ?? "zh-CN";
   const headings = auditHeadings(locale);
-  const actionableReports = filterActionableReports(
-    reports,
-    input.publicEvents ?? [],
-  );
+  const actionableReports = filterActionableReports(reports, input.publicEvents ?? []);
   const autoFindings = scanEventsForPotentialIssues(input);
   const metadataFindings = scanPlayerTimelineMetadataIssues(input.playerViews ?? []);
   const allFindings = [
@@ -25,7 +27,10 @@ export function buildFallbackSummary(input: BuildDebugSummaryInput): string {
       message: r.message,
       evidence: Array.isArray(r.evidence_event_seq) ? r.evidence_event_seq : [],
     })),
-    ...[...autoFindings, ...metadataFindings].map(item => ({ ...item, message: renderMessage(locale, item.message) })),
+    ...[...autoFindings, ...metadataFindings].map((item) => ({
+      ...item,
+      message: renderMessage(locale, item.message),
+    })),
   ];
   const observations = collectObservations(input);
   const lines = auditSummaryHeader(manifest, reports, locale, actionableReports.length);
@@ -34,10 +39,7 @@ export function buildFallbackSummary(input: BuildDebugSummaryInput): string {
     lines.push(`- ${text(locale, "common.none")}`);
   } else {
     for (const report of allFindings) {
-      const evidence =
-        report.evidence.length > 0
-          ? ` evidence=${report.evidence.join(",")}`
-          : "";
+      const evidence = report.evidence.length > 0 ? ` evidence=${report.evidence.join(",")}` : "";
       lines.push(
         `- [${report.severity.toUpperCase()}][${auditInline(report.category)}] day=${report.day} phase=${auditInline(report.phase)} actor=${report.actorId}: ${auditInline(report.message)}${evidence}`,
       );
@@ -50,9 +52,7 @@ export function buildFallbackSummary(input: BuildDebugSummaryInput): string {
   } else {
     for (const obs of observations) {
       const evidence =
-        obs.evidence && obs.evidence.length > 0
-          ? ` evidence=${obs.evidence.join(",")}`
-          : "";
+        obs.evidence && obs.evidence.length > 0 ? ` evidence=${obs.evidence.join(",")}` : "";
       lines.push(`- ${text(locale, obs.title)}: ${renderMessage(locale, obs.detail)}${evidence}`);
     }
   }

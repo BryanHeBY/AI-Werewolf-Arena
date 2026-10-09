@@ -10,13 +10,27 @@ import path from "node:path";
 test("shared catalog distinguishes planned definitions from registered roles", () => {
   expect(ROLE_DEFINITIONS).toHaveLength(64);
   expect(new Set(ROLE_IDS).size).toBe(64);
-  expect(ROLE_DEFINITIONS.filter(item => item.status === "verified").map(item => item.id).sort())
-    .toEqual(Object.values(Role).sort());
-  expect(getDefaultRoleCatalog().all().map(item => item.role).sort()).toEqual(Object.values(Role).sort());
+  expect(
+    ROLE_DEFINITIONS.filter((item) => item.status === "verified")
+      .map((item) => item.id)
+      .sort(),
+  ).toEqual(Object.values(Role).sort());
+  expect(
+    getDefaultRoleCatalog()
+      .all()
+      .map((item) => item.role)
+      .sort(),
+  ).toEqual(Object.values(Role).sort());
   expect(isRoleId("awakened_hidden_wolf")).toBe(true);
-  expect(getDefaultRoleCatalog().require(Role.AwakenedHiddenWolf).role).toBe(Role.AwakenedHiddenWolf);
-  expect(getDefaultRoleCatalog().require(Role.BlackMarketMerchant).role).toBe(Role.BlackMarketMerchant);
-  expect(() => getDefaultRoleCatalog().require("cupid" as Role)).toThrow("role_profile_not_registered");
+  expect(getDefaultRoleCatalog().require(Role.AwakenedHiddenWolf).role).toBe(
+    Role.AwakenedHiddenWolf,
+  );
+  expect(getDefaultRoleCatalog().require(Role.BlackMarketMerchant).role).toBe(
+    Role.BlackMarketMerchant,
+  );
+  expect(() => getDefaultRoleCatalog().require("cupid" as Role)).toThrow(
+    "role_profile_not_registered",
+  );
   expect(roleName("wolf", "zh-CN")).toBe("狼人");
   expect(roleName("wolf", "en")).toBe("Werewolf");
 });

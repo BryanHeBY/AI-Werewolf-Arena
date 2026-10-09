@@ -1,15 +1,25 @@
 import { text } from "@ai-werewolf-arena/game-text";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionProvider,
-ActionRequest,
-Camp,
-EntityId,
-Phase,
-Role,
-ToolCall, } from "../../../core/domain"
+import {
+  ActionProvider,
+  ActionRequest,
+  Camp,
+  EntityId,
+  Phase,
+  Role,
+  ToolCall,
+} from "../../../core/domain";
 import { World } from "../../../core/domain/world";
-import { RoleCatalog, getDefaultRoleCatalog, wolfTeamPermissions, allNightAbilities, activeNightAbility, roleInspectionPolicy, ROLE_INSPECTION_POLICY_ROLES } from "../../../game/mechanisms";
+import {
+  RoleCatalog,
+  getDefaultRoleCatalog,
+  wolfTeamPermissions,
+  allNightAbilities,
+  activeNightAbility,
+  roleInspectionPolicy,
+  ROLE_INSPECTION_POLICY_ROLES,
+} from "../../../game/mechanisms";
 import { canBeExiled, canBeSheriff, canVote } from "../../../game/mechanisms/common/participation";
 
 /**
@@ -99,12 +109,19 @@ export class BaselineBotActionProvider implements ActionProvider {
     }
 
     if (request.allowedTools.includes("vote_for_sheriff")) {
-      if (!canVote(this.world, request.actorId, this.roleCatalog) || request.context.sheriff_candidates?.includes(request.actorId)) return null;
+      if (
+        !canVote(this.world, request.actorId, this.roleCatalog) ||
+        request.context.sheriff_candidates?.includes(request.actorId)
+      )
+        return null;
       const rawCandidates = request.context.sheriff_candidates;
       const candidates = Array.isArray(rawCandidates)
         ? rawCandidates
             .map((item) => Number(item))
-            .filter((id) => Number.isFinite(id) && id > 0 && canBeSheriff(this.world, id, this.roleCatalog))
+            .filter(
+              (id) =>
+                Number.isFinite(id) && id > 0 && canBeSheriff(this.world, id, this.roleCatalog),
+            )
         : [];
       const preferred = candidates.find((id) => id !== request.actorId) ?? candidates[0];
       if (preferred !== undefined) {
@@ -124,22 +141,47 @@ export class BaselineBotActionProvider implements ActionProvider {
       return {
         name: "speak",
         args: {
-          text: text(this.world.locale, isLastWords ? "fallback.last_words" : "fallback.speech", { actor: request.actorId }),
+          text: text(this.world.locale, isLastWords ? "fallback.last_words" : "fallback.speech", {
+            actor: request.actorId,
+          }),
         },
       };
     }
 
     if (request.phase === Phase.Voting && request.allowedTools.includes("vote")) {
       if (!canVote(this.world, request.actorId, this.roleCatalog)) return null;
-      const target = this.world.getAliveEntityIds().find(id => id !== request.actorId && canBeExiled(this.world, id, this.roleCatalog)) ?? null;
+      const target =
+        this.world
+          .getAliveEntityIds()
+          .find((id) => id !== request.actorId && canBeExiled(this.world, id, this.roleCatalog)) ??
+        null;
       return target !== null
         ? { name: "vote", args: { target_id: target, abstain: false } }
         : { name: "vote", args: { target_id: null, abstain: true } };
     }
 
-    const bound = request.context.ability_id ? allNightAbilities(role).find(ability => ability.id === request.context.ability_id) : undefined;
-    if (request.context.ability_id && (!bound || request.phase !== Phase.Night || !activeNightAbility(role, bound.kind, request.context.day, bound.id))) return null;
-    const abilityRole = bound?.kind === "role_check" ? ROLE_INSPECTION_POLICY_ROLES[roleInspectionPolicy(bound.state)] : bound?.kind === "seer_check" ? Role.Seer : bound?.kind === "guard" ? Role.Guard : bound?.kind === "potion" ? Role.Witch : bound?.kind === "dream" ? Role.Dreamer : role.role;
+    const bound = request.context.ability_id
+      ? allNightAbilities(role).find((ability) => ability.id === request.context.ability_id)
+      : undefined;
+    if (
+      request.context.ability_id &&
+      (!bound ||
+        request.phase !== Phase.Night ||
+        !activeNightAbility(role, bound.kind, request.context.day, bound.id))
+    )
+      return null;
+    const abilityRole =
+      bound?.kind === "role_check"
+        ? ROLE_INSPECTION_POLICY_ROLES[roleInspectionPolicy(bound.state)]
+        : bound?.kind === "seer_check"
+          ? Role.Seer
+          : bound?.kind === "guard"
+            ? Role.Guard
+            : bound?.kind === "potion"
+              ? Role.Witch
+              : bound?.kind === "dream"
+                ? Role.Dreamer
+                : role.role;
     const roleProfile = this.roleCatalog.get(abilityRole);
     if (roleProfile?.baselineAction) {
       const action = roleProfile.baselineAction(
@@ -151,9 +193,15 @@ export class BaselineBotActionProvider implements ActionProvider {
         this.world,
       );
       if (action?.name === "speak_to_wolves" || action?.name === "kill_vote") {
-        const access = wolfTeamPermissions(role, this.roleCatalog,this.world);
-        const permitted = action.name === "speak_to_wolves" ? access.canChat : access.canVoteForKill;
-        if (!permitted || request.phase !== Phase.Night || !this.world.getAliveEntityIds().includes(request.actorId)) return null;
+        const access = wolfTeamPermissions(role, this.roleCatalog, this.world);
+        const permitted =
+          action.name === "speak_to_wolves" ? access.canChat : access.canVoteForKill;
+        if (
+          !permitted ||
+          request.phase !== Phase.Night ||
+          !this.world.getAliveEntityIds().includes(request.actorId)
+        )
+          return null;
       }
       return action;
     }

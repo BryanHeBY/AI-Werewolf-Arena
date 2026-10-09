@@ -6,13 +6,13 @@
 
 真实 role/camp/victory 始终为 Mechanical/Wolf/Wolf。一次学习保存真实学习目标的身份事实及独立库存；具体角色查验立即显示该角色，阵营查验仍 Wolf。学习目标后来死亡或变化不回写已知事实。机械原生能力不装成普通 G02 gift/copy，不复制目标资源及历史。外部已支持 G02 能力仍按其绑定实例规则独立运行。
 
-| 阶段 | 优先级 | 接收与状态 |
-| --- | --- | --- |
-| mechanical_mode | 250 | 第二夜起选择 kill/skill，null 回复默认 skill；每夜只接受一次。进入实际夜晚时更新被动枪就绪及额外刀过期。 |
-| 既有狼票 | 400 | 唯一活真 Wolf、已继承、达到固定刀夜且原 mode 范围仍有效才有 kill_vote；不授狼聊或历史。 |
-| mechanical_mimic | 580 | 女巫后、通灵查验前，一局一次 mimic_role；合法等待只关闭本夜，任意 mode 可晚学，所有技能次夜起。 |
-| mechanical_skill | 650 | skill 模式按实际已学库存生成 mechanical_inspect/poison/guard；合法 skip 关闭机会但不消费瓶数。 |
-| mechanical_attack | 660 | 仅已学 Wolf 的固定首次可刀夜 kill 模式；单次独立目标或 null，不改基础刀及女巫刀口。 |
+| 阶段              | 优先级 | 接收与状态                                                                                               |
+| ----------------- | ------ | -------------------------------------------------------------------------------------------------------- |
+| mechanical_mode   | 250    | 第二夜起选择 kill/skill，null 回复默认 skill；每夜只接受一次。进入实际夜晚时更新被动枪就绪及额外刀过期。 |
+| 既有狼票          | 400    | 唯一活真 Wolf、已继承、达到固定刀夜且原 mode 范围仍有效才有 kill_vote；不授狼聊或历史。                  |
+| mechanical_mimic  | 580    | 女巫后、通灵查验前，一局一次 mimic_role；合法等待只关闭本夜，任意 mode 可晚学，所有技能次夜起。          |
+| mechanical_skill  | 650    | skill 模式按实际已学库存生成 mechanical_inspect/poison/guard；合法 skip 关闭机会但不消费瓶数。           |
+| mechanical_attack | 660    | 仅已学 Wolf 的固定首次可刀夜 kill 模式；单次独立目标或 null，不改基础刀及女巫刀口。                      |
 
 学习、每夜模式和机械技能机会由一个 typed MechanicalState owner 持有。mode 权限额外保存原 World/role/state/life/phase 与已接受种类快照；序列化 mode 或复活后的旧 mode 不恢复行动权限。主动效果绑定原学习、技能种类和模式，消费自身资源不撤已提交效果。
 

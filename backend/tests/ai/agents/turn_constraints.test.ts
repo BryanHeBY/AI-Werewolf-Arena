@@ -10,7 +10,7 @@ describe("turn_constraints", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: {}},
+      context: { day: 1, stage: "day_speech", visible_events: [], turn_constraints: {} },
     };
     const resolved = resolveTurnConstraints(request);
     expect(resolved.minValidActions).toBe(0);
@@ -22,7 +22,10 @@ describe("turn_constraints", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak", "vote"],
-      context: {day: 1, stage: "day_speech", visible_events: [],
+      context: {
+        day: 1,
+        stage: "day_speech",
+        visible_events: [],
         turn_constraints: {
           min_valid_actions: 1,
           max_valid_actions: 2,

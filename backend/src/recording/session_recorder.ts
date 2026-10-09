@@ -16,7 +16,11 @@ import { createReplayDocument } from "./replay_document";
 import { ReplayFileStore } from "./file_store";
 import { ReplaySessionAggregate } from "./session_aggregate";
 import { getSessionRecorder } from "./recording_context";
-import { ReproductionTrace, type ReproductionFailureScope, type ReproductionMetadata } from "./reproduction";
+import {
+  ReproductionTrace,
+  type ReproductionFailureScope,
+  type ReproductionMetadata,
+} from "./reproduction";
 
 const FLUSH_DEBOUNCE_MS = 100;
 
@@ -50,7 +54,10 @@ export class SessionRecordManager {
     recordRootDir: string,
     displayLocale: Locale = sessionMeta.locale ?? "zh-CN",
   ): Promise<SessionRecordManager> {
-    const store = new ReplayFileStore(path.join(recordRootDir, sessionMeta.sessionId), displayLocale);
+    const store = new ReplayFileStore(
+      path.join(recordRootDir, sessionMeta.sessionId),
+      displayLocale,
+    );
     const manager = new SessionRecordManager(
       new ReplaySessionAggregate(sessionMeta),
       store,
@@ -61,11 +68,16 @@ export class SessionRecordManager {
     return manager;
   }
 
-  get sessionId(): string { return this.aggregate.sessionMeta.sessionId; }
-  get sessionDir(): string { return this.store.sessionDir; }
+  get sessionId(): string {
+    return this.aggregate.sessionMeta.sessionId;
+  }
+  get sessionDir(): string {
+    return this.store.sessionDir;
+  }
 
   beginReproduction(metadata: ReproductionMetadata): ReproductionTrace {
-    if (this.closed || this.reproduction) throw new Error("reproduction_scope_already_started_or_closed");
+    if (this.closed || this.reproduction)
+      throw new Error("reproduction_scope_already_started_or_closed");
     this.aggregate.enableReproduction();
     this.reproduction = new ReproductionTrace(metadata, () => {
       if (this.closed) return;
@@ -75,7 +87,9 @@ export class SessionRecordManager {
     return this.reproduction;
   }
 
-  noteReproductionFailure(scope: ReproductionFailureScope, error: unknown): void { this.reproduction?.noteFailure(scope, error); }
+  noteReproductionFailure(scope: ReproductionFailureScope, error: unknown): void {
+    this.reproduction?.noteFailure(scope, error);
+  }
 
   recordPublicEvent(input: ReplayRecordPublicEventInput): void {
     if (this.closed) return;
@@ -115,7 +129,10 @@ export class SessionRecordManager {
 
   async flushNow(): Promise<void> {
     if (this.closed) return;
-    if (this.closing) { await this.flushChain; return; }
+    if (this.closing) {
+      await this.flushChain;
+      return;
+    }
     if (this.flushTimer) {
       clearTimeout(this.flushTimer);
       this.flushTimer = null;
@@ -135,7 +152,10 @@ export class SessionRecordManager {
   private async persistFinalRecord(meta: ReplayFinalizeMeta): Promise<DebugSummaryInput> {
     this.closing = true; // Prevent new timers before the first await.
     this.finalMeta = meta;
-    if (this.flushTimer) { clearTimeout(this.flushTimer); this.flushTimer = null; }
+    if (this.flushTimer) {
+      clearTimeout(this.flushTimer);
+      this.flushTimer = null;
+    }
     await this.enqueueFlush();
     this.closed = true;
 
@@ -143,13 +163,24 @@ export class SessionRecordManager {
     const replayDocument = this.buildReplayDocument(meta);
     const reproducible = () => {
       const input = this.aggregate.debugSummaryInput();
-      const operations = (input.logicOps ?? []).filter(op => op.scope !== "llm_action_provider").map(({ seq: _seq, timestamp: _timestamp, ...op }) => op);
-      return this.reproduction!.build({ operations, termination: { reason: meta.finishReason, winner: meta.winner } });
+      const operations = (input.logicOps ?? [])
+        .filter((op) => op.scope !== "llm_action_provider")
+        .map(({ seq: _seq, timestamp: _timestamp, ...op }) => op);
+      return this.reproduction!.build({
+        operations,
+        termination: { reason: meta.finishReason, winner: meta.winner },
+      });
     };
     const required = await Promise.allSettled([
       this.store.writeJsonStrict("manifest.json", manifest),
       this.store.writeJsonStrict("replay.json", replayDocument),
-      ...(this.reproduction ? [Promise.resolve().then(() => this.store.writeJsonStrict("reproduction.json", reproducible()))] : []),
+      ...(this.reproduction
+        ? [
+            Promise.resolve().then(() =>
+              this.store.writeJsonStrict("reproduction.json", reproducible()),
+            ),
+          ]
+        : []),
     ]);
     await Promise.all([
       this.store.writeJson("phase_windows.json", this.aggregate.phaseWindowsPayload()),
@@ -159,11 +190,18 @@ export class SessionRecordManager {
     ]);
 
     const playerViews = this.aggregate.normalizedPlayerViews();
-    await Promise.all(playerViews.map((view) =>
-      this.store.writeJson(`players/player_${view.player_id}.json`, view),
-    ));
+    await Promise.all(
+      playerViews.map((view) =>
+        this.store.writeJson(`players/player_${view.player_id}.json`, view),
+      ),
+    );
 
-    const failures = [...this.mandatoryFlushFailures, ...required.filter((result): result is PromiseRejectedResult => result.status === "rejected").map(result => result.reason)];
+    const failures = [
+      ...this.mandatoryFlushFailures,
+      ...required
+        .filter((result): result is PromiseRejectedResult => result.status === "rejected")
+        .map((result) => result.reason),
+    ];
     if (failures.length === 1) throw failures[0];
     if (failures.length) throw new AggregateError(failures, "session_record_finalization_failed");
 
@@ -183,7 +221,9 @@ export class SessionRecordManager {
       this.store.writeJson("logic_ops.json", this.aggregate.logicOpsPayload()),
       this.store.writeJson("debug_reports.json", this.aggregate.debugReportsPayload()),
     ]);
-    const failures = results.filter((result): result is PromiseRejectedResult => result.status === "rejected").map(result => result.reason);
+    const failures = results
+      .filter((result): result is PromiseRejectedResult => result.status === "rejected")
+      .map((result) => result.reason);
     if (failures.length === 1) throw failures[0];
     if (failures.length) throw new AggregateError(failures, "session_record_initialization_failed");
   }
@@ -201,7 +241,9 @@ export class SessionRecordManager {
     this.flushChain = this.flushChain
       .then(() => this.flushDirtyFiles())
       .catch((error) => {
-        console.warn(`[observability] replay_flush_failed err=${formatErrorDiagnostic(error, this.displayLocale)}`);
+        console.warn(
+          `[observability] replay_flush_failed err=${formatErrorDiagnostic(error, this.displayLocale)}`,
+        );
       });
     return this.flushChain;
   }
@@ -210,8 +252,13 @@ export class SessionRecordManager {
     if (this.closed) return;
     if (this.dirtyReproduction && this.reproduction) {
       this.dirtyReproduction = false;
-      try { await this.store.writeJsonStrict("reproduction.json", this.reproduction.build()); }
-      catch (error) { this.mandatoryFlushFailures.push(error); this.reproduction.noteFailure("recording", error); throw error; }
+      try {
+        await this.store.writeJsonStrict("reproduction.json", this.reproduction.build());
+      } catch (error) {
+        this.mandatoryFlushFailures.push(error);
+        this.reproduction.noteFailure("recording", error);
+        throw error;
+      }
     }
     if (this.dirtyPublicTimeline) {
       this.dirtyPublicTimeline = false;
@@ -232,12 +279,17 @@ export class SessionRecordManager {
     if (this.dirtyPlayers.size > 0) {
       const playerIds = [...this.dirtyPlayers];
       this.dirtyPlayers.clear();
-      await Promise.all(playerIds.map(async (playerId) => {
-        const view = this.aggregate.normalizedPlayerView(playerId);
-        if (view) await this.store.writeJson(`players/player_${playerId}.json`, view);
-      }));
+      await Promise.all(
+        playerIds.map(async (playerId) => {
+          const view = this.aggregate.normalizedPlayerView(playerId);
+          if (view) await this.store.writeJson(`players/player_${playerId}.json`, view);
+        }),
+      );
       await Promise.all([
-        this.store.writeJson("manifest.json", this.aggregate.buildManifest(this.finalMeta ?? undefined)),
+        this.store.writeJson(
+          "manifest.json",
+          this.aggregate.buildManifest(this.finalMeta ?? undefined),
+        ),
         this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
       ]);
     }
@@ -250,7 +302,6 @@ export class SessionRecordManager {
     });
   }
 }
-
 
 export function resolveDefaultRecordRoot(cwd: string = process.cwd()): string {
   return path.basename(cwd) === "backend"
@@ -268,6 +319,8 @@ export function safeRecordLogicOp(input: ReplayRecordLogicOpInput): void {
   try {
     active.recordLogicOp(input);
   } catch (error) {
-    console.warn(`[observability] logic_op_record_failed op=${input.op} err=${formatErrorDiagnostic(error, active.displayLocale)}`);
+    console.warn(
+      `[observability] logic_op_record_failed op=${input.op} err=${formatErrorDiagnostic(error, active.displayLocale)}`,
+    );
   }
 }

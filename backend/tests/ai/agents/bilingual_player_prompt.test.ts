@@ -1,42 +1,125 @@
-import { WOLF_STAGE_DIRECTIVES, WOLF_TOOL_SPECS } from "../../../src/game/mechanisms/roles/wolf/tool_specs";
+import {
+  WOLF_STAGE_DIRECTIVES,
+  WOLF_TOOL_SPECS,
+} from "../../../src/game/mechanisms/roles/wolf/tool_specs";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Phase, Role, WinCondition, ActionWindow, WitchSelfHealRule, type ActionRequest, type BoardConfig, type ToolName, type ActionStage } from "../../../src/core";
+import {
+  Phase,
+  Role,
+  WinCondition,
+  ActionWindow,
+  WitchSelfHealRule,
+  type ActionRequest,
+  type BoardConfig,
+  type ToolName,
+  type ActionStage,
+} from "../../../src/core";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
 import { PlayerPromptSession } from "../../../src/ai/agents/llm/player_prompt_session";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
 import { buildConstraintRetryPrompt } from "../../../src/ai/agents/player/prompt_templates";
-import { evaluateTurnConstraints, renderTurnConstraintSystemRule } from "../../../src/ai/agents/player/turn_constraints";
-import { getDefaultConfigRenderRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultRoleCatalog, getDefaultTargetHintRegistry, getDefaultToolSpecRegistry, RoleCatalog, ToolSpecRegistry } from "../../../src/game/mechanisms";
+import {
+  evaluateTurnConstraints,
+  renderTurnConstraintSystemRule,
+} from "../../../src/ai/agents/player/turn_constraints";
+import {
+  getDefaultConfigRenderRegistry,
+  getDefaultPhaseStageLocalizationRegistry,
+  getDefaultRoleCatalog,
+  getDefaultTargetHintRegistry,
+  getDefaultToolSpecRegistry,
+  RoleCatalog,
+  ToolSpecRegistry,
+} from "../../../src/game/mechanisms";
 import { getWitchState, setSeerState } from "../../../src/game/mechanisms/roles/private_state";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import type { RoleComponent } from "../../../src/core/domain/components/role";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 
-const roles = [Role.Wolf, Role.Villager, Role.Seer, Role.Guard, Role.Witch, Role.Hunter, Role.Idiot];
+const roles = [
+  Role.Wolf,
+  Role.Villager,
+  Role.Seer,
+  Role.Guard,
+  Role.Witch,
+  Role.Hunter,
+  Role.Idiot,
+];
 const names = Object.fromEntries(roles.map((_, index) => [index + 1, `Seat ${index + 1}`]));
-const board: BoardConfig = { boardSize: 7, roleSetups: roles.map(role => ({ role, count: 1 })), winConditions: [WinCondition.SlaughterSide, WinCondition.WolfReachHalf], enableSheriff: true, hooks: { onDaybreak: false, onPreElection: false, onPreVote: false, onPerSpeechGap: false },
-  sheriff: { voteWeight: 2 }, selfDestruct: { enabledWindows: [ActionWindow.OnPreVote] }, witch: { canSelfHeal: WitchSelfHealRule.FirstNightOnly }, tieBreaker: { exileVote: "no_elimination", wolfKillVote: "no_kill", sheriffVote: "min_seat" } };
+const board: BoardConfig = {
+  boardSize: 7,
+  roleSetups: roles.map((role) => ({ role, count: 1 })),
+  winConditions: [WinCondition.SlaughterSide, WinCondition.WolfReachHalf],
+  enableSheriff: true,
+  hooks: { onDaybreak: false, onPreElection: false, onPreVote: false, onPerSpeechGap: false },
+  sheriff: { voteWeight: 2 },
+  selfDestruct: { enabledWindows: [ActionWindow.OnPreVote] },
+  witch: { canSelfHeal: WitchSelfHealRule.FirstNightOnly },
+  tieBreaker: { exileVote: "no_elimination", wolfKillVote: "no_kill", sheriffVote: "min_seat" },
+};
 
 function setup(locale: Locale, personality?: string) {
   const game = bootstrapGame(board, { locale, fixedRoles: roles, playerNames: names });
-  const policy = new PlayerPromptPolicy(game.world, { personalityPromptResolver: () => personality, boardConfig: board,
-    roleCatalog: getDefaultRoleCatalog(), toolSpecRegistry: getDefaultToolSpecRegistry(), targetHintRegistry: getDefaultTargetHintRegistry(), phaseStageLocalizationRegistry: getDefaultPhaseStageLocalizationRegistry(), configRenderRegistry: getDefaultConfigRenderRegistry() });
+  const policy = new PlayerPromptPolicy(game.world, {
+    personalityPromptResolver: () => personality,
+    boardConfig: board,
+    roleCatalog: getDefaultRoleCatalog(),
+    toolSpecRegistry: getDefaultToolSpecRegistry(),
+    targetHintRegistry: getDefaultTargetHintRegistry(),
+    phaseStageLocalizationRegistry: getDefaultPhaseStageLocalizationRegistry(),
+    configRenderRegistry: getDefaultConfigRenderRegistry(),
+  });
   return { ...game, policy };
 }
-function request(actorId: number, stage: ActionStage, allowedTools: ToolName[], wolfTarget?: number | null): ActionRequest {
-  return { actorId, phase: stage === "witch" || stage === "wolf_vote" || stage === "wolf_discussion" ? Phase.Night : Phase.Day, allowedTools,
-    context: { day: 1, stage, visible_events: [], turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 }, ...(wolfTarget === undefined ? {} : { wolf_target: wolfTarget }) } };
+function request(
+  actorId: number,
+  stage: ActionStage,
+  allowedTools: ToolName[],
+  wolfTarget?: number | null,
+): ActionRequest {
+  return {
+    actorId,
+    phase:
+      stage === "witch" || stage === "wolf_vote" || stage === "wolf_discussion"
+        ? Phase.Night
+        : Phase.Day,
+    allowedTools,
+    context: {
+      day: 1,
+      stage,
+      visible_events: [],
+      turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },
+      ...(wolfTarget === undefined ? {} : { wolf_target: wolfTarget }),
+    },
+  };
 }
-const stages: Array<[ActionStage, ToolName[]]> = [["day_speech", ["speak"]], ["last_words", ["speak"]], ["wolf_discussion", ["speak_to_wolves"]], ["wolf_vote", ["kill_vote"]], ["guard", ["guard"]], ["seer", ["check_identity"]], ["witch", ["use_potion"]], ["hunter_shot", ["shoot"]], [ActionWindow.OnPreVote, ["self_destruct"]], ["sheriff_nomination", ["run_for_sheriff"]], ["sheriff_withdraw", ["run_for_sheriff"]], ["sheriff_campaign_speech", ["speak"]], ["sheriff_vote", ["vote_for_sheriff"]], ["sheriff_choose_direction", ["choose_direction"]]];
+const stages: Array<[ActionStage, ToolName[]]> = [
+  ["day_speech", ["speak"]],
+  ["last_words", ["speak"]],
+  ["wolf_discussion", ["speak_to_wolves"]],
+  ["wolf_vote", ["kill_vote"]],
+  ["guard", ["guard"]],
+  ["seer", ["check_identity"]],
+  ["witch", ["use_potion"]],
+  ["hunter_shot", ["shoot"]],
+  [ActionWindow.OnPreVote, ["self_destruct"]],
+  ["sheriff_nomination", ["run_for_sheriff"]],
+  ["sheriff_withdraw", ["run_for_sheriff"]],
+  ["sheriff_campaign_speech", ["speak"]],
+  ["sheriff_vote", ["vote_for_sheriff"]],
+  ["sheriff_choose_direction", ["choose_direction"]],
+];
 
 test("all base role identities, rules, private state and stages are bilingual and observation-neutral", () => {
-  const chinese = setup("zh-CN"); const english = setup("en");
+  const chinese = setup("zh-CN");
+  const english = setup("en");
   for (const actorId of chinese.playerIds) {
     const req = request(actorId, "day_speech", ["speak"]);
     const zh = chinese.policy.buildSystem(req, { supportsDebugReporting: true }).systemPrompt;
     const en = english.policy.buildSystem(req, { supportsDebugReporting: true }).systemPrompt;
-    expect(zh).toContain("你必须使用中文"); expect(en).toContain("Use English");
+    expect(zh).toContain("你必须使用中文");
+    expect(en).toContain("Use English");
     expect(en).not.toMatch(/[\u4e00-\u9fff]/);
     expect(chinese.policy.buildObservation(req)).toEqual(english.policy.buildObservation(req));
     const role = english.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!;
@@ -44,35 +127,77 @@ test("all base role identities, rules, private state and stages are bilingual an
   }
   for (const [stage, tools] of stages) {
     const req = request(stage === "witch" ? 5 : 1, stage, tools);
-    const en = english.policy.buildUser(req, { turnId: "t9", allowedTools: tools, actionSubmissionHint: "submit_action turn_id=t9" });
+    const en = english.policy.buildUser(req, {
+      turnId: "t9",
+      allowedTools: tools,
+      actionSubmissionHint: "submit_action turn_id=t9",
+    });
     expect(en).not.toMatch(/[\u4e00-\u9fff]/);
-    expect(en).toContain(tools[0]); expect(en).toContain("t9");
+    expect(en).toContain(tools[0]);
+    expect(en).toContain("t9");
     if (stage === "sheriff_nomination") expect(en).toContain("not withdrawal");
     if (stage === "sheriff_withdraw") expect(en).toContain("run=false withdraws");
     if (stage === "sheriff_vote") expect(en).toContain("including withdrawn candidates");
     if (stage === "wolf_discussion") expect(en).toContain("does not end other wolves");
   }
-  const hunter = english.policy.buildUser(request(6, "hunter_shot", ["shoot"]), { turnId: "t9", allowedTools: ["shoot"], actionSubmissionHint: "submit" });
+  const hunter = english.policy.buildUser(request(6, "hunter_shot", ["shoot"]), {
+    turnId: "t9",
+    allowedTools: ["shoot"],
+    actionSubmissionHint: "submit",
+  });
   expect(hunter).toContain("The last good special role may still shoot");
   expect(hunter).toContain("target_id=null");
   expect(hunter).toContain("An invalid target does not spend the shot");
-  for (const [target, expected] of [[2, "player 2"], [null, "is empty"], [undefined, "No definite"]] as const) {
+  for (const [target, expected] of [
+    [2, "player 2"],
+    [null, "is empty"],
+    [undefined, "No definite"],
+  ] as const) {
     const req = request(5, "witch", ["use_potion"], target);
     const before = getWitchState(english.world.getComponent<RoleComponent>(5, COMPONENT.Role)!);
-    expect(english.policy.buildUser(req, { turnId: "t9", allowedTools: req.allowedTools, actionSubmissionHint: "submit" })).toContain(expected);
-    expect(getWitchState(english.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)).toEqual(before);
+    expect(
+      english.policy.buildUser(req, {
+        turnId: "t9",
+        allowedTools: req.allowedTools,
+        actionSubmissionHint: "submit",
+      }),
+    ).toContain(expected);
+    expect(getWitchState(english.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)).toEqual(
+      before,
+    );
   }
-  setSeerState(english.world.getComponent<RoleComponent>(3, COMPONENT.Role)!, { lastTarget: 1, lastIsWerewolf: true, history: [] });
-  expect(english.policy.buildUser(request(3, "seer", ["check_identity"]), { turnId: "t9", allowedTools: ["check_identity"], actionSubmissionHint: "submit" })).toContain("player 1's alignment is Werewolves");
+  setSeerState(english.world.getComponent<RoleComponent>(3, COMPONENT.Role)!, {
+    lastTarget: 1,
+    lastIsWerewolf: true,
+    history: [],
+  });
+  expect(
+    english.policy.buildUser(request(3, "seer", ["check_identity"]), {
+      turnId: "t9",
+      allowedTools: ["check_identity"],
+      actionSubmissionHint: "submit",
+    }),
+  ).toContain("player 1's alignment is Werewolves");
 });
 
 test("new default names follow game locale while explicit names resembling defaults remain raw", () => {
   for (const locale of ["zh-CN", "en"] as const) {
     const game = bootstrapGame(board, { locale, fixedRoles: roles, playerNames: { "1": "玩家1" } });
     const catalog = getDefaultRoleCatalog();
-    const policy = new PlayerPromptPolicy(game.world, { boardConfig: board, roleCatalog: catalog, toolSpecRegistry: getDefaultToolSpecRegistry(), targetHintRegistry: getDefaultTargetHintRegistry(), phaseStageLocalizationRegistry: getDefaultPhaseStageLocalizationRegistry(), configRenderRegistry: getDefaultConfigRenderRegistry() });
-    const custom = policy.buildSystem(request(1, "day_speech", ["speak"]), { supportsDebugReporting: false }).systemPrompt;
-    const generated = policy.buildSystem(request(2, "day_speech", ["speak"]), { supportsDebugReporting: false }).systemPrompt;
+    const policy = new PlayerPromptPolicy(game.world, {
+      boardConfig: board,
+      roleCatalog: catalog,
+      toolSpecRegistry: getDefaultToolSpecRegistry(),
+      targetHintRegistry: getDefaultTargetHintRegistry(),
+      phaseStageLocalizationRegistry: getDefaultPhaseStageLocalizationRegistry(),
+      configRenderRegistry: getDefaultConfigRenderRegistry(),
+    });
+    const custom = policy.buildSystem(request(1, "day_speech", ["speak"]), {
+      supportsDebugReporting: false,
+    }).systemPrompt;
+    const generated = policy.buildSystem(request(2, "day_speech", ["speak"]), {
+      supportsDebugReporting: false,
+    }).systemPrompt;
     expect(custom).toContain("玩家1");
     expect(generated).toContain(locale === "en" ? "Your nickname is Player 2" : "你的昵称是玩家2");
     if (locale === "en") expect(generated).not.toMatch(/[\u4e00-\u9fff]/);
@@ -83,61 +208,135 @@ test("player original text and explicit injected profile/directive text survive 
   for (const locale of ["zh-CN", "en"] as const) {
     const game = setup(locale, "统计控：我估计概率为60% {actor}");
     const req = request(1, "day_speech", ["speak"]);
-    expect(game.policy.buildSystem(req, { supportsDebugReporting: true }).systemPrompt).toContain("统计控：我估计概率为60% {actor}");
-    const catalog = new RoleCatalog([{ ...getDefaultRoleCatalog().require(Role.Wolf), label: "自定狼人", skillBrief: "原文说明", renderPrompt: () => "原文私有状态" }]);
-    expect(catalog.label(Role.Wolf, locale)).toBe("自定狼人"); expect(catalog.skillBrief(Role.Wolf, locale)).toBe("原文说明");
-    const role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!; catalog.applyRuntime(role, { locale }); expect(role.renderPrompt(locale)).toBe("原文私有状态");
+    expect(game.policy.buildSystem(req, { supportsDebugReporting: true }).systemPrompt).toContain(
+      "统计控：我估计概率为60% {actor}",
+    );
+    const catalog = new RoleCatalog([
+      {
+        ...getDefaultRoleCatalog().require(Role.Wolf),
+        label: "自定狼人",
+        skillBrief: "原文说明",
+        renderPrompt: () => "原文私有状态",
+      },
+    ]);
+    expect(catalog.label(Role.Wolf, locale)).toBe("自定狼人");
+    expect(catalog.skillBrief(Role.Wolf, locale)).toBe("原文说明");
+    const role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+    catalog.applyRuntime(role, { locale });
+    expect(role.renderPrompt(locale)).toBe("原文私有状态");
     const tools = new ToolSpecRegistry([], [{ match: () => true, text: "定制阶段 {actor}" }]);
     expect(tools.getStageDirective(["speak"], locale)).toBe("定制阶段 {actor}");
-    const inherited = new ToolSpecRegistry([{ ...WOLF_TOOL_SPECS[0], userPromptHint: "覆盖用法 {actor}" }], [{ ...WOLF_STAGE_DIRECTIVES[0], text: "覆盖阶段 {actor}" }]);
+    const inherited = new ToolSpecRegistry(
+      [{ ...WOLF_TOOL_SPECS[0], userPromptHint: "覆盖用法 {actor}" }],
+      [{ ...WOLF_STAGE_DIRECTIVES[0], text: "覆盖阶段 {actor}" }],
+    );
     expect(inherited.getUserPromptHint("speak_to_wolves", locale)).toBe("覆盖用法 {actor}");
     expect(inherited.getStageDirective(["speak_to_wolves"], locale)).toBe("覆盖阶段 {actor}");
   }
 });
 
 test("SDK prompt histories preserve raw events and keep each session's language during retries", () => {
-  const sessions = (["zh-CN", "en"] as const).map(locale => new PlayerPromptSession({ maxPromptEvents: 3, promptPolicy: setup(locale).policy }));
+  const sessions = (["zh-CN", "en"] as const).map(
+    (locale) => new PlayerPromptSession({ maxPromptEvents: 3, promptPolicy: setup(locale).policy }),
+  );
   const req = request(2, "day_speech", ["speak"]);
-  req.context.visible_events = [{ seq: 1, type: "day_speech", payload: { playerId: 1, text: "绿茶：人家概率60%" } }];
+  req.context.visible_events = [
+    { seq: 1, type: "day_speech", payload: { playerId: 1, text: "绿茶：人家概率60%" } },
+  ];
   for (let index = 0; index < sessions.length; index++) {
     const locale = index === 0 ? "zh-CN" : "en";
-    const first = sessions[index].build(req); const second = sessions[index].build(req);
+    const first = sessions[index].build(req);
+    const second = sessions[index].build(req);
     expect(first.systemPrompt).toContain(locale === "en" ? "Use English" : "你必须使用中文");
-    expect(first.messages.some(message => message.content === '{"event":[1,"day_speech",{"playerId":1,"text":"绿茶：人家概率60%"}]}')).toBe(true);
-    expect(first.userPrompt).toContain("t1"); expect(second.userPrompt).toContain("t2");
+    expect(
+      first.messages.some(
+        (message) =>
+          message.content ===
+          '{"event":[1,"day_speech",{"playerId":1,"text":"绿茶：人家概率60%"}]}',
+      ),
+    ).toBe(true);
+    expect(first.userPrompt).toContain("t1");
+    expect(second.userPrompt).toContain("t2");
     for (let attempt = 1; attempt <= 3; attempt++) {
       const retry = buildConstraintRetryPrompt(attempt, 3, locale);
-      expect(retry).toContain(`${attempt}/3`); expect(retry).toContain("submit_action");
+      expect(retry).toContain(`${attempt}/3`);
+      expect(retry).toContain("submit_action");
       if (locale === "en") expect(retry).not.toMatch(/[\u4e00-\u9fff]/);
     }
-    const constraints = { minValidActions: 1, maxValidActions: 1, requiredAnyTools: ["speak"] as ToolName[] };
+    const constraints = {
+      minValidActions: 1,
+      maxValidActions: 1,
+      requiredAnyTools: ["speak"] as ToolName[],
+    };
     const evaluated = evaluateTurnConstraints({ validActions: [] }, constraints, locale);
-    expect(evaluated.ok).toBe(false); expect(evaluated.errors.length).toBe(2);
+    expect(evaluated.ok).toBe(false);
+    expect(evaluated.errors.length).toBe(2);
     if (locale === "en") expect(JSON.stringify(evaluated.errors)).not.toMatch(/[\u4e00-\u9fff]/);
-    expect(renderTurnConstraintSystemRule({ ...constraints, summary: "自定约束原文" }, locale)).toContain("自定约束原文");
+    expect(
+      renderTurnConstraintSystemRule({ ...constraints, summary: "自定约束原文" }, locale),
+    ).toContain("自定约束原文");
   }
 });
 
 test("ACP session identity and actual turn prompts use isolated game locales and preserve raw event batches", async () => {
-  await Promise.all((["zh-CN", "en"] as const).map(async locale => {
-    const game = setup(locale, "绿茶人设"); const captured: string[] = []; let initial = "";
-    const provider = new AcpActionProvider(game.world, { boardConfig: board, personalityPromptResolver: () => "绿茶人设", fallbackProvider: { async getAction() { throw new Error("unexpected_fallback"); } },
-      sessionFactory: { async createSession(input) {
-        initial = input.initialPrompt!;
-        return { sessionId: `task-${locale}`, async prompt(prompt) {
-          captured.push(prompt);
-          const turn = /(?:当前回合 ID：|Current turn ID: )(t\d+)/.exec(prompt)![1];
-          expect(input.registry.submitAction(`task-${locale}`, { turn_id: turn, action: "speak", arguments: { text: "原文欢乐发言" } })).toEqual({ ok: true, accepted: true });
-        }, async cancel() {}, async close() {} };
-      } } });
-    const req = request(2, "day_speech", ["speak"]); req.context.visible_events = [{ seq: 1, type: "day_speech", payload: { playerId: 1, text: "原文事件" } }];
-    try {
-      expect(await provider.getAction(req)).toEqual({ name: "speak", args: { text: "原文欢乐发言" } });
-      expect(initial).toContain("绿茶人设"); expect(initial).toContain(locale === "en" ? "Use English" : "你必须使用中文");
-      expect(initial).not.toContain(locale === "en" ? "All effective game actions" : "游戏中所有能起效的行动");
-      expect(captured[0]).toContain('{"events":[[1,"day_speech",{"playerId":1,"text":"原文事件"}]]}');
-      expect(captured[0]).toContain("werewolf-game");
-      if (locale === "en") expect(captured[0].replace("原文事件", "")).not.toMatch(/[\u4e00-\u9fff]/);
-    } finally { await provider.close(); }
-  }));
+  await Promise.all(
+    (["zh-CN", "en"] as const).map(async (locale) => {
+      const game = setup(locale, "绿茶人设");
+      const captured: string[] = [];
+      let initial = "";
+      const provider = new AcpActionProvider(game.world, {
+        boardConfig: board,
+        personalityPromptResolver: () => "绿茶人设",
+        fallbackProvider: {
+          async getAction() {
+            throw new Error("unexpected_fallback");
+          },
+        },
+        sessionFactory: {
+          async createSession(input) {
+            initial = input.initialPrompt!;
+            return {
+              sessionId: `task-${locale}`,
+              async prompt(prompt) {
+                captured.push(prompt);
+                const turn = /(?:当前回合 ID：|Current turn ID: )(t\d+)/.exec(prompt)![1];
+                expect(
+                  input.registry.submitAction(`task-${locale}`, {
+                    turn_id: turn,
+                    action: "speak",
+                    arguments: { text: "原文欢乐发言" },
+                  }),
+                ).toEqual({ ok: true, accepted: true });
+              },
+              async cancel() {},
+              async close() {},
+            };
+          },
+        },
+      });
+      const req = request(2, "day_speech", ["speak"]);
+      req.context.visible_events = [
+        { seq: 1, type: "day_speech", payload: { playerId: 1, text: "原文事件" } },
+      ];
+      try {
+        expect(await provider.getAction(req)).toEqual({
+          name: "speak",
+          args: { text: "原文欢乐发言" },
+        });
+        expect(initial).toContain("绿茶人设");
+        expect(initial).toContain(locale === "en" ? "Use English" : "你必须使用中文");
+        expect(initial).not.toContain(
+          locale === "en" ? "All effective game actions" : "游戏中所有能起效的行动",
+        );
+        expect(captured[0]).toContain(
+          '{"events":[[1,"day_speech",{"playerId":1,"text":"原文事件"}]]}',
+        );
+        expect(captured[0]).toContain("werewolf-game");
+        if (locale === "en")
+          expect(captured[0].replace("原文事件", "")).not.toMatch(/[\u4e00-\u9fff]/);
+      } finally {
+        await provider.close();
+      }
+    }),
+  );
 });

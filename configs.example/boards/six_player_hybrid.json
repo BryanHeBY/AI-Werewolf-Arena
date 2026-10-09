@@ -35,9 +35,7 @@
     ]
   },
   "rules": {
-    "winConditions": [
-      "slaughter_city"
-    ],
+    "winConditions": ["slaughter_city"],
     "hooks": {
       "onDaybreak": true,
       "onPreElection": true,

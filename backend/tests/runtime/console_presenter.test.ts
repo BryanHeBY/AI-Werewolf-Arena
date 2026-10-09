@@ -10,7 +10,7 @@ describe("ACP console text", () => {
     const text = "我是11号，先等待行动提示。\n不要泄露身份。";
     const render = (chunks: string[]) => {
       const lines: string[] = [];
-      const logger = createAcpConsoleLogger(11, line => lines.push(line));
+      const logger = createAcpConsoleLogger(11, (line) => lines.push(line));
       for (const text of chunks) logger(chunk("thought", text));
       logger(chunk("message", "已就绪，等待行动提示。"));
       logger.flush();
@@ -28,11 +28,15 @@ describe("ACP console text", () => {
 
   test("flushes text before tools and when the message id changes", () => {
     const lines: string[] = [];
-    const logger = createAcpConsoleLogger(8, line => lines.push(line));
+    const logger = createAcpConsoleLogger(8, (line) => lines.push(line));
     logger(chunk("thought", "准备调用工具"));
     logger(chunk("message", "第一条", "m1"));
     logger(chunk("message", "第二条", "m2"));
-    logger({ sessionUpdate: "tool_call", toolCallId: "call1", rawInput: { server: "werewolf-game", tool: "submit_action" } });
+    logger({
+      sessionUpdate: "tool_call",
+      toolCallId: "call1",
+      rawInput: { server: "werewolf-game", tool: "submit_action" },
+    });
     logger({ sessionUpdate: "tool_call_update", toolCallId: "call1", status: "completed" });
     expect(lines).toEqual([
       "[acp][8][thought] 思考: 准备调用工具",
@@ -45,12 +49,12 @@ describe("ACP console text", () => {
 
   test("bounds long text without truncating it or breaking Unicode", () => {
     const lines: string[] = [];
-    const logger = createAcpConsoleLogger(1, line => lines.push(line));
+    const logger = createAcpConsoleLogger(1, (line) => lines.push(line));
     const text = `${"字".repeat(499)}😀${"长".repeat(1100)}尾`;
     logger(chunk("thought", text));
     expect(lines.length).toBeGreaterThan(0);
     logger.flush();
-    const parts = lines.map(line => line.replace("[acp][1][thought] 思考: ", ""));
+    const parts = lines.map((line) => line.replace("[acp][1][thought] 思考: ", ""));
     expect(parts.join("")).toBe(text);
     for (const part of parts) {
       expect(part.length).toBeLessThanOrEqual(500);
@@ -60,11 +64,19 @@ describe("ACP console text", () => {
 
   test("prints tool state changes once and suppresses content refinements", () => {
     const lines: string[] = [];
-    const logger = createAcpConsoleLogger(10, line => lines.push(line));
-    const update = (fields: Record<string, unknown>) => logger({
-      sessionUpdate: "tool_call_update", toolCallId: "call1", ...fields,
+    const logger = createAcpConsoleLogger(10, (line) => lines.push(line));
+    const update = (fields: Record<string, unknown>) =>
+      logger({
+        sessionUpdate: "tool_call_update",
+        toolCallId: "call1",
+        ...fields,
+      });
+    logger({
+      sessionUpdate: "tool_call",
+      toolCallId: "call1",
+      title: "mcp__werewolf-game__submit_action",
+      status: "pending",
     });
-    logger({ sessionUpdate: "tool_call", toolCallId: "call1", title: "mcp__werewolf-game__submit_action", status: "pending" });
     update({ rawInput: { action: "speak" } });
     update({ content: [{ type: "text", text: "input changed" }] });
     update({ status: "pending" });
@@ -82,10 +94,18 @@ describe("ACP console text", () => {
 
   test("reports safe error metadata and distinguishes separate calls to the same tool", () => {
     const lines: string[] = [];
-    const logger = createAcpConsoleLogger(10, line => lines.push(line));
+    const logger = createAcpConsoleLogger(10, (line) => lines.push(line));
     logger({ sessionUpdate: "tool_call", toolCallId: "call1", title: "submit_action" });
-    logger({ sessionUpdate: "tool_call_update", toolCallId: "call1", error: { text: "permission denied" } });
-    logger({ sessionUpdate: "tool_call_update", toolCallId: "call1", error: { text: "permission denied" } });
+    logger({
+      sessionUpdate: "tool_call_update",
+      toolCallId: "call1",
+      error: { text: "permission denied" },
+    });
+    logger({
+      sessionUpdate: "tool_call_update",
+      toolCallId: "call1",
+      error: { text: "permission denied" },
+    });
     logger({ sessionUpdate: "tool_call_update", toolCallId: "call1", status: "failed" });
     logger({ sessionUpdate: "tool_call", toolCallId: "call2", title: "submit_action" });
     logger({ sessionUpdate: "tool_call_update", toolCallId: "call2", status: "completed" });
@@ -106,8 +126,8 @@ describe("ACP console text", () => {
 
   test("keeps players and prompt tails separate", () => {
     const lines: string[] = [];
-    const first = createAcpConsoleLogger(1, line => lines.push(line));
-    const second = createAcpConsoleLogger(2, line => lines.push(line));
+    const first = createAcpConsoleLogger(1, (line) => lines.push(line));
+    const second = createAcpConsoleLogger(2, (line) => lines.push(line));
     first(chunk("thought", "玩家一"));
     second(chunk("thought", "玩家二"));
     second.flush();
@@ -123,15 +143,31 @@ describe("ACP console text", () => {
 });
 
 test("ACP diagnostic flags independently control message IO and thought/tool traces", () => {
-  for (const printThinking of [false, true]) for (const printLlmIo of [false, true]) {
-    const lines: string[] = [];
-    const logger = createAcpConsoleLogger(1, line => lines.push(line), "en", { printThinking, printLlmIo });
-    logger({ sessionUpdate: "agent_thought_chunk", content: { type: "text", text: "thought-canary" } });
-    logger({ sessionUpdate: "agent_message_chunk", content: { type: "text", text: "message-canary" } });
-    logger({ sessionUpdate: "tool_call", toolCallId: "one", title: "submit_action", status: "pending" }); logger.flush();
-    const output = lines.join("\n");
-    expect(output.includes("thought-canary")).toBe(printThinking);
-    expect(output.includes("message-canary")).toBe(printThinking || printLlmIo);
-    expect(output.includes("[tool]")).toBe(printThinking);
-  }
+  for (const printThinking of [false, true])
+    for (const printLlmIo of [false, true]) {
+      const lines: string[] = [];
+      const logger = createAcpConsoleLogger(1, (line) => lines.push(line), "en", {
+        printThinking,
+        printLlmIo,
+      });
+      logger({
+        sessionUpdate: "agent_thought_chunk",
+        content: { type: "text", text: "thought-canary" },
+      });
+      logger({
+        sessionUpdate: "agent_message_chunk",
+        content: { type: "text", text: "message-canary" },
+      });
+      logger({
+        sessionUpdate: "tool_call",
+        toolCallId: "one",
+        title: "submit_action",
+        status: "pending",
+      });
+      logger.flush();
+      const output = lines.join("\n");
+      expect(output.includes("thought-canary")).toBe(printThinking);
+      expect(output.includes("message-canary")).toBe(printThinking || printLlmIo);
+      expect(output.includes("[tool]")).toBe(printThinking);
+    }
 });

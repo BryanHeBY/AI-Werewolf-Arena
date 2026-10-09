@@ -50,7 +50,9 @@ export function EventTimeline({
             <span className="event-marker">D{event.day}</span>
             <div>
               <div className="event-head">
-                <span>#{event.seq} · {phaseName(event.phase, locale)}</span>
+                <span>
+                  #{event.seq} · {phaseName(event.phase, locale)}
+                </span>
                 <span>{eventStageName(event, locale, playerIds)}</span>
               </div>
               <p>{eventLabel(event, locale, playerIds)}</p>

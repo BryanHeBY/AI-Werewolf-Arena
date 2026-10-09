@@ -7,13 +7,23 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { allNightAbilities, type NightAbilityKind } from "../../roles/abilities";
 
-import {ROLE_INSPECTION_STAGE,PSYCHIC_INSPECTION_STAGE,MIRROR_INSPECTION_STAGE} from "../../roles/role_inspection/night_stages";
+import {
+  ROLE_INSPECTION_STAGE,
+  PSYCHIC_INSPECTION_STAGE,
+  MIRROR_INSPECTION_STAGE,
+} from "../../roles/role_inspection/night_stages";
 import { BLACK_MARKET_RECIPIENT_STAGE } from "../../roles/black_market_merchant/night_stage";
 import { LUCKY_ABILITY_STAGE } from "../../roles/miracle_merchant/lucky_stage";
 import { allDeathGuns } from "../../roles/death_abilities";
 import { DEATH_ABILITY_ACTIVATION_STAGE } from "../../roles/death_ability_activation";
 
-const abilityRole: Record<NightAbilityKind, Role> = { seer_check: Role.Seer,role_check:Role.Gargoyle, guard: Role.Guard, potion: Role.Witch, dream: Role.Dreamer };
+const abilityRole: Record<NightAbilityKind, Role> = {
+  seer_check: Role.Seer,
+  role_check: Role.Gargoyle,
+  guard: Role.Guard,
+  potion: Role.Witch,
+  dream: Role.Dreamer,
+};
 
 /** 夜间阶段注册表。 */
 export class NightStageRegistry {
@@ -26,17 +36,58 @@ export class NightStageRegistry {
   getStages(config: BoardConfig, world?: World): NightStageHandler[] {
     const roleSet = new Set<Role>(config.roleSetups.map((item) => item.role));
     let hasRoleChecks = false;
-    for (const role of [...roleSet]) for (const kind of this.roleCatalog.get(role)?.possibleNightAbilities ?? []) { roleSet.add(abilityRole[kind]); if (kind === "role_check") hasRoleChecks = true; }
-    for (const id of world?.entityIds() ?? []) for (const ability of allNightAbilities(world!.getComponent<RoleComponent>(id, COMPONENT.Role))) { roleSet.add(abilityRole[ability.kind]); if (ability.kind === "role_check") hasRoleChecks = true; }
+    for (const role of [...roleSet])
+      for (const kind of this.roleCatalog.get(role)?.possibleNightAbilities ?? []) {
+        roleSet.add(abilityRole[kind]);
+        if (kind === "role_check") hasRoleChecks = true;
+      }
+    for (const id of world?.entityIds() ?? [])
+      for (const ability of allNightAbilities(
+        world!.getComponent<RoleComponent>(id, COMPONENT.Role),
+      )) {
+        roleSet.add(abilityRole[ability.kind]);
+        if (ability.kind === "role_check") hasRoleChecks = true;
+      }
     const collected: NightStageHandler[] = [];
-    if ([...roleSet].some(role => this.roleCatalog.get(role)?.possibleDeathAbilities?.includes("gun")) || world?.getAliveEntityIds().some(id => allDeathGuns(world.getComponent<RoleComponent>(id, COMPONENT.Role)).some(gun => gun.armedOnNight === null && !gun.disabled && !gun.deathExpired))) collected.push(DEATH_ABILITY_ACTIVATION_STAGE);
+    if (
+      [...roleSet].some((role) =>
+        this.roleCatalog.get(role)?.possibleDeathAbilities?.includes("gun"),
+      ) ||
+      world
+        ?.getAliveEntityIds()
+        .some((id) =>
+          allDeathGuns(world.getComponent<RoleComponent>(id, COMPONENT.Role)).some(
+            (gun) => gun.armedOnNight === null && !gun.disabled && !gun.deathExpired,
+          ),
+        )
+    )
+      collected.push(DEATH_ABILITY_ACTIVATION_STAGE);
     for (const role of roleSet.values()) {
       const pack = this.roleCatalog.get(role)?.nightStages ?? [];
       collected.push(...pack);
     }
-    if(hasRoleChecks || collected.some(stage=>stage.id==="role_inspection"))collected.push(ROLE_INSPECTION_STAGE,PSYCHIC_INSPECTION_STAGE,MIRROR_INSPECTION_STAGE);
-    if (world?.entityIds().some(id => allNightAbilities(world.getComponent<RoleComponent>(id, COMPONENT.Role)).some(ability => ability.activation === "lucky"))) collected.push(LUCKY_ABILITY_STAGE);
-    if (world?.entityIds().some(id => allNightAbilities(world.getComponent<RoleComponent>(id, COMPONENT.Role)).some(ability => ability.activation === "black_market"))) collected.push(BLACK_MARKET_RECIPIENT_STAGE);
+    if (hasRoleChecks || collected.some((stage) => stage.id === "role_inspection"))
+      collected.push(ROLE_INSPECTION_STAGE, PSYCHIC_INSPECTION_STAGE, MIRROR_INSPECTION_STAGE);
+    if (
+      world
+        ?.entityIds()
+        .some((id) =>
+          allNightAbilities(world.getComponent<RoleComponent>(id, COMPONENT.Role)).some(
+            (ability) => ability.activation === "lucky",
+          ),
+        )
+    )
+      collected.push(LUCKY_ABILITY_STAGE);
+    if (
+      world
+        ?.entityIds()
+        .some((id) =>
+          allNightAbilities(world.getComponent<RoleComponent>(id, COMPONENT.Role)).some(
+            (ability) => ability.activation === "black_market",
+          ),
+        )
+    )
+      collected.push(BLACK_MARKET_RECIPIENT_STAGE);
     // 去重并按显式优先级排序（priority 越小越先执行）。
     const dedup = new Map<string, NightStageHandler>();
     for (const stage of collected) {

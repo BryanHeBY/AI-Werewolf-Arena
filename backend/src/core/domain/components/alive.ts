@@ -9,14 +9,21 @@ export interface AliveComponent extends PromptRenderable {
 }
 
 const lifeVersions = new WeakMap<AliveComponent, number>();
-export function aliveLifeVersion(component: AliveComponent): number | undefined { return lifeVersions.get(component); }
+export function aliveLifeVersion(component: AliveComponent): number | undefined {
+  return lifeVersions.get(component);
+}
 
 /**
  * 创建存活状态组件。
  */
-export function createAliveComponent(alive: boolean = true, locale: Locale = "zh-CN"): AliveComponent {
+export function createAliveComponent(
+  alive: boolean = true,
+  locale: Locale = "zh-CN",
+): AliveComponent {
   const component: AliveComponent = {
-    get alive() { return alive; },
+    get alive() {
+      return alive;
+    },
     set alive(value: boolean) {
       if (typeof value !== "boolean") throw new Error("alive_state_invalid");
       if (value !== alive) {

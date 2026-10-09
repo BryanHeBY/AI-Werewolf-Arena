@@ -26,13 +26,13 @@
 
 最终 **21 verified/43 planned** 源码已冻结，以下证据已核终态：
 
-| 门槛 | 当前证据与范围 |
-| --- | --- |
+| 门槛           | 当前证据与范围                                                                                                                                                                                                                               |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 后端受影响门槛 | `/tmp/awa-mirror-verified-gate.log` **1065 pass/0fail/34931 assertions/95 files**，exec terminal exit0。全部engine/AI/recording/contracts/presentation、角色配置/目录、新48和旧Garg/Psy72完整局、40seed及每局严格Tape；不是全backend release |
-| 静态 | `/tmp/awa-mirror-verified-{type,deps,boundary,i18n}.log`，所有exec terminal exit0，仍57精确源码例外 |
-| 前端 | `/tmp/awa-mirror-verified-front-unit.log` **147/0fail/1278/23 files**，type/build均terminal exit0 |
-| 实际PNG | `/tmp/awa-mirror-exhausted-zh.png` frame8830，`/tmp/awa-mirror-twelve-en.png` frame6760；两render terminal exit0、root/L独立view，无字幕/角色遮挡 |
-| Chromium | `/tmp/awa-mirror-browser-final.log`，**62实际Chromium全部通过（2.9m）**，exec terminal exit0；首轮60pass/2fail不算全过 |
+| 静态           | `/tmp/awa-mirror-verified-{type,deps,boundary,i18n}.log`，所有exec terminal exit0，仍57精确源码例外                                                                                                                                          |
+| 前端           | `/tmp/awa-mirror-verified-front-unit.log` **147/0fail/1278/23 files**，type/build均terminal exit0                                                                                                                                            |
+| 实际PNG        | `/tmp/awa-mirror-exhausted-zh.png` frame8830，`/tmp/awa-mirror-twelve-en.png` frame6760；两render terminal exit0、root/L独立view，无字幕/角色遮挡                                                                                            |
+| Chromium       | `/tmp/awa-mirror-browser-final.log`，**62实际Chromium全部通过（2.9m）**，exec terminal exit0；首轮60pass/2fail不算全过                                                                                                                       |
 
 首轮两个旧Spirit用例的dead count因根代理文本替换范围误扩为0；按其既有真实fixture恢复1，仅新Mirror验尽目标N6帧保持0。生产投影正确，没有改历史fixture来适配断言，最终全62已重新验证。L/D独立PNG：中文第6夜全6活/无winner/eligible文案准确；英文第3夜Mirror5仍Sheriff、8仍Guard、五个已死亡席位/无提前winner；独立scope/未知字段probe6/188通过。A两隐私/输入意见与event路径复查0残留，R八literal oracle R0；最后交付登记交原审查者核对最终日志。这不是P7整阶段或全backend release。
 

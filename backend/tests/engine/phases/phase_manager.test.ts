@@ -2,7 +2,15 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { AliveComponent } from "../../../src/core/domain/components/alive";
 import { RoleComponent } from "../../../src/core/domain/components/role";
-import { ActionProvider, ActionRequest, Camp, Phase, ToolCall, Role, WinCondition } from "../../../src/core/domain/model";
+import {
+  ActionProvider,
+  ActionRequest,
+  Camp,
+  Phase,
+  ToolCall,
+  Role,
+  WinCondition,
+} from "../../../src/core/domain/model";
 import { VotingPipeline } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
 import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
@@ -83,8 +91,10 @@ describe("PhaseManager", () => {
 
     const actionProvider: ActionProvider = {
       async getAction(request: ActionRequest): Promise<ToolCall | null> {
-        if (request.allowedTools.includes("run_for_sheriff")) return { name: "run_for_sheriff", args: { run: request.actorId === 1 } };
-        if (request.allowedTools.includes("vote_for_sheriff")) return { name: "vote_for_sheriff", args: { target_id: 1, abstain: false } };
+        if (request.allowedTools.includes("run_for_sheriff"))
+          return { name: "run_for_sheriff", args: { run: request.actorId === 1 } };
+        if (request.allowedTools.includes("vote_for_sheriff"))
+          return { name: "vote_for_sheriff", args: { target_id: 1, abstain: false } };
         if (request.allowedTools.includes("self_destruct")) {
           return null;
         }
@@ -251,10 +261,14 @@ describe("PhaseManager", () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const hunterId = context.world
       .getAliveEntityIds()
-      .find((id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Hunter)!;
+      .find(
+        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Hunter,
+      )!;
     const wolfIds = context.world
       .getAliveEntityIds()
-      .filter((id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf);
+      .filter(
+        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf,
+      );
     const shootTarget = context.world
       .getAliveEntityIds()
       .find((id) => id !== hunterId && !wolfIds.includes(id))!;

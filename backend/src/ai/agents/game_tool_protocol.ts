@@ -7,30 +7,63 @@ export function gameToolProtocol(locale: Locale = "zh-CN") {
   const schemaError = text(locale, "error.schema_input");
   const inputs = {
     get_game_schema: z.object({}, { error: schemaError }),
-    submit_action: z.object({
-      turn_id: z.string({ error: schemaError }).min(1, { error: schemaError }).describe(text(locale, "schema.turn_id")),
-      action: z.string({ error: schemaError }).min(1, { error: schemaError }).describe(text(locale, "schema.action")),
-      arguments: z.record(z.string({ error: schemaError }), z.unknown(), { error: schemaError }).describe(text(locale, "schema.arguments")),
-    }, { error: schemaError }),
-    report_bug: z.object({
-      turn_id: z.string({ error: schemaError }).min(1, { error: schemaError }).describe(text(locale, "schema.turn_id")),
-      category: z.enum(["flow", "rule", "state", "logging", "other"], { error: schemaError }).describe(text(locale, "schema.category")),
-      severity: z.enum(["low", "medium", "high", "critical"], { error: schemaError }).describe(text(locale, "schema.severity")),
-      message: z.string({ error: schemaError }).min(1, { error: schemaError }).max(300, { error: schemaError }).describe(text(locale, "schema.report_message")),
-    }, { error: schemaError }),
+    submit_action: z.object(
+      {
+        turn_id: z
+          .string({ error: schemaError })
+          .min(1, { error: schemaError })
+          .describe(text(locale, "schema.turn_id")),
+        action: z
+          .string({ error: schemaError })
+          .min(1, { error: schemaError })
+          .describe(text(locale, "schema.action")),
+        arguments: z
+          .record(z.string({ error: schemaError }), z.unknown(), { error: schemaError })
+          .describe(text(locale, "schema.arguments")),
+      },
+      { error: schemaError },
+    ),
+    report_bug: z.object(
+      {
+        turn_id: z
+          .string({ error: schemaError })
+          .min(1, { error: schemaError })
+          .describe(text(locale, "schema.turn_id")),
+        category: z
+          .enum(["flow", "rule", "state", "logging", "other"], { error: schemaError })
+          .describe(text(locale, "schema.category")),
+        severity: z
+          .enum(["low", "medium", "high", "critical"], { error: schemaError })
+          .describe(text(locale, "schema.severity")),
+        message: z
+          .string({ error: schemaError })
+          .min(1, { error: schemaError })
+          .max(300, { error: schemaError })
+          .describe(text(locale, "schema.report_message")),
+      },
+      { error: schemaError },
+    ),
   };
-  const schema = { protocol_version: "1", tools: {
-    get_game_schema: text(locale, "schema.game.static_query"),
-    submit_action: text(locale, "schema.game.static_submit"),
-    report_bug: text(locale, "schema.game.static_report"),
-  } };
+  const schema = {
+    protocol_version: "1",
+    tools: {
+      get_game_schema: text(locale, "schema.game.static_query"),
+      submit_action: text(locale, "schema.game.static_submit"),
+      report_bug: text(locale, "schema.game.static_report"),
+    },
+  };
   const descriptions = {
     get_game_schema: text(locale, "schema.game.query"),
     submit_action: text(locale, "schema.game.submit"),
     report_bug: text(locale, "schema.game.report"),
   };
-  const specs: ToolSchema[] = (Object.keys(inputs) as Array<keyof typeof inputs>).map(name => ({
-    name, description: descriptions[name], parameters: z.toJSONSchema(inputs[name], { io: "input", target: "draft-7" }) as Record<string, unknown>,
+  const specs: ToolSchema[] = (Object.keys(inputs) as Array<keyof typeof inputs>).map((name) => ({
+    name,
+    description: descriptions[name],
+    parameters: z.toJSONSchema(inputs[name], { io: "input", target: "draft-7" }) as Record<
+      string,
+      unknown
+    >,
   }));
   return { inputs, descriptions, schema, specs };
 }

@@ -25,16 +25,16 @@
 
 生产源码在最终实际旧局/Tape之前冻结，以下日志均核exec终态exit0：
 
-| 门槛 | 证据 |
-| --- | --- |
-| 核心 | `/tmp/awa-gift-gun-core.log` **39/254**；含两库存、禁死因/compound、paid到commit撤权、donor死保资源、原World、原目标、错误/取消、晚激活/重入、夜中产生能力及四完整PM场景 |
-| 真接入与记录 | `/tmp/awa-gift-gun-runtime.log` **16/238**；double/native null/V recipient/strict3 invalid ×zh-CN/en×SDK HTTP/真实ACP进程与注入MCP。核绑定prompt、原角色、null失败/无fallback/无假死亡、永久过期、permit0、runtime close及ACP/MCP PID ESRCH |
-| 旧实际完整局/Tape | `/tmp/awa-gift-gun-old-game-tape.log` **9/3955**，猎人首夜/枪链/原十二Aw×SDK/ACP/混合×两语＝**18完整局，每局strict Tape**。这是旧角色兼容门槛，不称新赠枪严格Tape |
-| 受影响后端 | `/tmp/awa-gift-gun-final-affected.log` **1188/13101/87 files**；全部engine、AI agents及所涉actual集成/recording/replay/presentation。不是全backend release |
-| 静态 | backend type/deps/boundaries/i18n全部exit0（仍57精确例外），git diff --check；frontend type/build exit0 |
-| 前端 | `/tmp/awa-gift-gun-front-unit.log` **163/1429/26 files**，两个实际受控God档、双语选择不改身份/生命、两枪先后、死Good赢家、无提前judge、malformed回退 |
-| Chromium | `/tmp/awa-gift-gun-browser.log` **4实际中英用例通过（2.3min）**，字幕/席位无遮挡、arming全活、gift三死且尚无winner、最后五个Good赢家 |
-| PNG | `/tmp/awa-gift-gun-armed-en-final.png` frame640，全六活/0winner；`/tmp/awa-gift-gun-second-zh-final.png` frame1180，1/2/3死/0winner、2枪杀1；两render exit0，root/L独立目检无遮挡 |
+| 门槛              | 证据                                                                                                                                                                                                                                        |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 核心              | `/tmp/awa-gift-gun-core.log` **39/254**；含两库存、禁死因/compound、paid到commit撤权、donor死保资源、原World、原目标、错误/取消、晚激活/重入、夜中产生能力及四完整PM场景                                                                    |
+| 真接入与记录      | `/tmp/awa-gift-gun-runtime.log` **16/238**；double/native null/V recipient/strict3 invalid ×zh-CN/en×SDK HTTP/真实ACP进程与注入MCP。核绑定prompt、原角色、null失败/无fallback/无假死亡、永久过期、permit0、runtime close及ACP/MCP PID ESRCH |
+| 旧实际完整局/Tape | `/tmp/awa-gift-gun-old-game-tape.log` **9/3955**，猎人首夜/枪链/原十二Aw×SDK/ACP/混合×两语＝**18完整局，每局strict Tape**。这是旧角色兼容门槛，不称新赠枪严格Tape                                                                           |
+| 受影响后端        | `/tmp/awa-gift-gun-final-affected.log` **1188/13101/87 files**；全部engine、AI agents及所涉actual集成/recording/replay/presentation。不是全backend release                                                                                  |
+| 静态              | backend type/deps/boundaries/i18n全部exit0（仍57精确例外），git diff --check；frontend type/build exit0                                                                                                                                     |
+| 前端              | `/tmp/awa-gift-gun-front-unit.log` **163/1429/26 files**，两个实际受控God档、双语选择不改身份/生命、两枪先后、死Good赢家、无提前judge、malformed回退                                                                                        |
+| Chromium          | `/tmp/awa-gift-gun-browser.log` **4实际中英用例通过（2.3min）**，字幕/席位无遮挡、arming全活、gift三死且尚无winner、最后五个Good赢家                                                                                                        |
+| PNG               | `/tmp/awa-gift-gun-armed-en-final.png` frame640，全六活/0winner；`/tmp/awa-gift-gun-second-zh-final.png` frame1180，1/2/3死/0winner、2枪杀1；两render exit0，root/L独立目检无遮挡                                                           |
 
 新gift通路是受控死亡流程及真实private记录，四PM局是正常bootstrap/阶段推进加受控初始G02资源。**新gift的交易生产与完整严格Tape将在Black启用笔验证**，不能用本笔18旧局替代。没有新公开板子，未跑未声明板子的随机局；Black功能笔仍需每公开板20seed、字面全局/每局Tape和最终审查。
 

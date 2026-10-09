@@ -36,10 +36,18 @@ function safeJsonString(value: unknown, maxChars: number): string {
 
 function summarizePublicEvents(events: ReplayPublicEvent[], maxItems: number) {
   const keepTypes = new Set([
-    "phase_changed", "night_resolved", "wolf_self_destruct",
-    "sheriff_nomination_summary", "sheriff_vote_summary", "sheriff_elected",
-    "voted_out", "idiot_revealed", "last_words_spoken", "witch_potion_used",
-    "witch_potion_skipped", "day_speech",
+    "phase_changed",
+    "night_resolved",
+    "wolf_self_destruct",
+    "sheriff_nomination_summary",
+    "sheriff_vote_summary",
+    "sheriff_elected",
+    "voted_out",
+    "idiot_revealed",
+    "last_words_spoken",
+    "witch_potion_used",
+    "witch_potion_skipped",
+    "day_speech",
   ]);
   const output: Record<string, unknown>[] = [];
   for (const event of events) {
@@ -69,14 +77,40 @@ function summarizePublicEvents(events: ReplayPublicEvent[], maxItems: number) {
 
 // Transport exception text and arbitrary transport input/output may contain credentials.
 // Audit tasks receive diagnostic facts, while original records stay unchanged.
-const transportOperations = new Set(["action_provider_error", "tool_call_rejected", "llm_fallback", "report_bug_dropped", "report_bug_recorded", "report_bug_rejected"]);
-const transportReasons = new Set<string>([...Object.values(RuleError), "runtime_error", "deadline_skip", "request_timeout", "model_declined_required_action", "turn_constraints_no_valid_action", "turn_id_mismatch", "report_bug_actor_day_rate_limited", "report_bug_scope_rate_limited", "report_bug_duplicate_message"]);
+const transportOperations = new Set([
+  "action_provider_error",
+  "tool_call_rejected",
+  "llm_fallback",
+  "report_bug_dropped",
+  "report_bug_recorded",
+  "report_bug_rejected",
+]);
+const transportReasons = new Set<string>([
+  ...Object.values(RuleError),
+  "runtime_error",
+  "deadline_skip",
+  "request_timeout",
+  "model_declined_required_action",
+  "turn_constraints_no_valid_action",
+  "turn_id_mismatch",
+  "report_bug_actor_day_rate_limited",
+  "report_bug_scope_rate_limited",
+  "report_bug_duplicate_message",
+]);
 function transportReason(value: unknown): string | undefined {
-  return value === undefined ? undefined : typeof value === "string" && transportReasons.has(value) ? value : "transport_diagnostic_omitted";
+  return value === undefined
+    ? undefined
+    : typeof value === "string" && transportReasons.has(value)
+      ? value
+      : "transport_diagnostic_omitted";
 }
 
 function diagnosticFacts(value: unknown): ErrorDiagnostic | undefined {
-  try { return readErrorDiagnostic(value); } catch { return undefined; }
+  try {
+    return readErrorDiagnostic(value);
+  } catch {
+    return undefined;
+  }
 }
 
 function summarizeLogicOps(ops: ReplayLogicOp[], maxItems: number) {
@@ -84,19 +118,31 @@ function summarizeLogicOps(ops: ReplayLogicOp[], maxItems: number) {
     if (op.scope === "llm_action_provider") {
       const diagnostic = diagnosticFacts(op.output?.diagnostic);
       return {
-      seq: Number.isSafeInteger(op.seq) ? op.seq : 0,
-      scope: "llm_action_provider",
-      op: transportOperations.has(op.op) ? op.op : "transport_diagnostic",
-      actor_id: typeof op.actor_id === "number" && Number.isSafeInteger(op.actor_id) ? op.actor_id : undefined,
-      phase: ["night", "day", "voting", "game_over"].includes(op.phase ?? "") ? op.phase : undefined,
-      status: ["ok", "rejected", "fallback", "error"].includes(op.status) ? op.status : "error",
-      reason: op.op === "action_provider_error" ? "runtime_error" : transportReason(op.reason),
-      ...(diagnostic ? { diagnostic } : {}),
+        seq: Number.isSafeInteger(op.seq) ? op.seq : 0,
+        scope: "llm_action_provider",
+        op: transportOperations.has(op.op) ? op.op : "transport_diagnostic",
+        actor_id:
+          typeof op.actor_id === "number" && Number.isSafeInteger(op.actor_id)
+            ? op.actor_id
+            : undefined,
+        phase: ["night", "day", "voting", "game_over"].includes(op.phase ?? "")
+          ? op.phase
+          : undefined,
+        status: ["ok", "rejected", "fallback", "error"].includes(op.status) ? op.status : "error",
+        reason: op.op === "action_provider_error" ? "runtime_error" : transportReason(op.reason),
+        ...(diagnostic ? { diagnostic } : {}),
       };
     }
     return {
-      seq: op.seq, scope: op.scope, op: op.op, actor_id: op.actor_id, phase: op.phase,
-      status: op.status, reason: op.reason, input: safeJsonString(op.input, 200), output: safeJsonString(op.output, 200),
+      seq: op.seq,
+      scope: op.scope,
+      op: op.op,
+      actor_id: op.actor_id,
+      phase: op.phase,
+      status: op.status,
+      reason: op.reason,
+      input: safeJsonString(op.input, 200),
+      output: safeJsonString(op.output, 200),
     };
   });
 }
@@ -130,7 +176,9 @@ function summarizePlayerView(view: ReplayPlayerView, maxItems: number) {
       try {
         const actionMode = JSON.parse(actionSummary.content)?.action_mode;
         if (actionMode) base.action_mode = actionMode;
-      } catch { /* malformed replay data is evidence for another layer */ }
+      } catch {
+        /* malformed replay data is evidence for another layer */
+      }
     }
     base.tool_calls = entry.delta_messages
       .filter((item) => item.kind === "tool_call")
@@ -145,14 +193,14 @@ function summarizePlayerView(view: ReplayPlayerView, maxItems: number) {
           ...(diagnostic ? { diagnostic } : {}),
         };
       });
-    const fallback = entry.delta_messages.find(
-      (item) => item.kind === "fallback" && item.content,
-    );
+    const fallback = entry.delta_messages.find((item) => item.kind === "fallback" && item.content);
     if (fallback?.content) {
       try {
         const reason = JSON.parse(fallback.content)?.reason;
         if (reason) base.fallback_reason = transportReason(reason);
-      } catch { /* ignore malformed optional metadata */ }
+      } catch {
+        /* ignore malformed optional metadata */
+      }
     }
     return base;
   });

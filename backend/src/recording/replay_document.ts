@@ -1,9 +1,6 @@
 import { assertReplayDocument, REPLAY_SCHEMA_VERSION } from "@ai-werewolf-arena/replay-contract";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import {
-  ReplayManifest,
-  ReplayPublicEvent,
-} from "./contracts";
+import { ReplayManifest, ReplayPublicEvent } from "./contracts";
 
 /** 浏览器播放器与视频渲染器直接消费的离线复盘文件。 */
 export type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -34,7 +31,9 @@ export function createReplayDocument(input: {
     result: {
       winner: input.manifest.winner,
       reason: input.manifest.finish_reason || null,
-      ...(input.manifest.game_result ? { decision: structuredClone(input.manifest.game_result) } : {}),
+      ...(input.manifest.game_result
+        ? { decision: structuredClone(input.manifest.game_result) }
+        : {}),
     },
     players: input.manifest.players.map(({ player_id, role, camp, name }) => ({
       player_id,

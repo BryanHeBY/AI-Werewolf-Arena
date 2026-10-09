@@ -54,16 +54,16 @@
 
 ## 当前实现与验收证据
 
-| 规则边界 | 契约与独立判例 |
-| --- | --- |
-| 狼队知识、夜聊、刀权与历史受众 | [狼队权限](../wolf-team-access.md)、[人工判例](../../../backend/tests/engine/visibility/wolf_team_access.test.ts) |
-| 查验标签、身份与真实阵营分离 | [类型化查验](../inspection-results.md)、[人工判例](../../../backend/tests/engine/rules/inspection_results.test.ts) |
-| 用药刀口、资源、耗尽视角、16保护组合 | [女巫结算](../witch-resolution.md)、[人工判例](../../../backend/tests/engine/rules/witch_correctness.test.ts) |
-| 末神、空枪、死因与最终消费授权 | [死因](../death-causes.md)、[World窗口](../death-action-authority.md) |
-| 遗言、警徽、技能、追加死亡与最终判胜 | [死亡链](../death-chain.md)、[四个自爆窗口](../self-destruct-windows.md) |
-| 白痴永久资格与警长空候选／零票／票权 | [公共参与](../public-participation.md) |
-| 获胜归属、完整封盘、记录及双语呈现 | [胜利核心](../victory-outcomes.md)、[主档与展示](../victory-record-display.md) |
-| 六／十二人完整人工流程及真实接入／严格重放 | [场景oracle](../foundation-scenarios.md)、[整阶段验收](../reviews/p4-activation.md) |
+| 规则边界                                   | 契约与独立判例                                                                                                     |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| 狼队知识、夜聊、刀权与历史受众             | [狼队权限](../wolf-team-access.md)、[人工判例](../../../backend/tests/engine/visibility/wolf_team_access.test.ts)  |
+| 查验标签、身份与真实阵营分离               | [类型化查验](../inspection-results.md)、[人工判例](../../../backend/tests/engine/rules/inspection_results.test.ts) |
+| 用药刀口、资源、耗尽视角、16保护组合       | [女巫结算](../witch-resolution.md)、[人工判例](../../../backend/tests/engine/rules/witch_correctness.test.ts)      |
+| 末神、空枪、死因与最终消费授权             | [死因](../death-causes.md)、[World窗口](../death-action-authority.md)                                              |
+| 遗言、警徽、技能、追加死亡与最终判胜       | [死亡链](../death-chain.md)、[四个自爆窗口](../self-destruct-windows.md)                                           |
+| 白痴永久资格与警长空候选／零票／票权       | [公共参与](../public-participation.md)                                                                             |
+| 获胜归属、完整封盘、记录及双语呈现         | [胜利核心](../victory-outcomes.md)、[主档与展示](../victory-record-display.md)                                     |
+| 六／十二人完整人工流程及真实接入／严格重放 | [场景oracle](../foundation-scenarios.md)、[整阶段验收](../reviews/p4-activation.md)                                |
 
 所有旧基础差异已在相应专项和交叉审查中关闭；历史审查记录保留当时边界，不构成当前待修清单。基础规则卡是规范来源，功能契约记录实现和兼容方式。
 

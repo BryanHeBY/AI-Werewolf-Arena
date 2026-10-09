@@ -35,7 +35,9 @@ export interface VotingPipelineOptions {
   /** 当前日次由 PhaseManager 显式传入，不能从事件历史反推。 */
   day: number;
   isCurrent?: () => boolean;
-  commitSelfDestruct?: (choice: import("../../../core").SelfDestructSelection) => Promise<void | boolean>;
+  commitSelfDestruct?: (
+    choice: import("../../../core").SelfDestructSelection,
+  ) => Promise<void | boolean>;
 }
 
 export interface VotingPipelineDependencies {
@@ -72,7 +74,11 @@ export class VotingPipeline {
     this.toolGateway = dependencies.toolGateway;
     this.eventRegistry = dependencies.eventRegistry;
     this.events = dependencies.events;
-    this.selfDestructWindow = new SelfDestructWindow(this.world, dependencies.roleRegistry, this.toolGateway);
+    this.selfDestructWindow = new SelfDestructWindow(
+      this.world,
+      dependencies.roleRegistry,
+      this.toolGateway,
+    );
   }
 
   async execute(
@@ -80,11 +86,7 @@ export class VotingPipeline {
     actionProvider: ActionProvider,
     options: VotingPipelineOptions,
   ): Promise<VotingPipelineResult> {
-    const requests = new GameActionRequestFactory(
-      this.world,
-      this.events,
-      options.day,
-    );
+    const requests = new GameActionRequestFactory(this.world, this.events, options.day);
     safeRecordLogicOp({
       scope: "phase_pipeline",
       op: "voting_pipeline_start",
@@ -94,11 +96,15 @@ export class VotingPipeline {
         on_pre_vote_hook: config.hooks.onPreVote,
       },
     });
-    if (
-      config.hooks.onPreVote &&
-      isSelfDestructWindowEnabled(config, ActionWindow.OnPreVote)
-    ) {
-      const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnPreVote, Phase.Voting, options.isCurrent, options.commitSelfDestruct);
+    if (config.hooks.onPreVote && isSelfDestructWindowEnabled(config, ActionWindow.OnPreVote)) {
+      const exploded = await this.selfDestructWindow.execute(
+        requests,
+        actionProvider,
+        ActionWindow.OnPreVote,
+        Phase.Voting,
+        options.isCurrent,
+        options.commitSelfDestruct,
+      );
       if (exploded !== null) {
         safeRecordLogicOp({
           scope: "phase_pipeline",
@@ -111,17 +117,22 @@ export class VotingPipeline {
           summary: {
             tally: {},
             target: null,
-            removed: exploded.targetId === null ? [exploded.actorId] : [exploded.actorId, exploded.targetId],
+            removed:
+              exploded.targetId === null
+                ? [exploded.actorId]
+                : [exploded.actorId, exploded.targetId],
           },
           interrupted: true,
           selfDestruct: exploded,
-          removed: exploded.targetId === null ? [exploded.actorId] : [exploded.actorId, exploded.targetId],
+          removed:
+            exploded.targetId === null ? [exploded.actorId] : [exploded.actorId, exploded.targetId],
         };
       }
     }
 
-    if (options.isCurrent && !options.isCurrent()) return { summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] };
-    const voters = this.world.getAliveEntityIds().filter(id => canVote(this.world, id));
+    if (options.isCurrent && !options.isCurrent())
+      return { summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] };
+    const voters = this.world.getAliveEntityIds().filter((id) => canVote(this.world, id));
 
     // Requests run in parallel; Promise.all retains voter order for deterministic replay events.
     const voteResults = await Promise.all(
@@ -130,7 +141,9 @@ export class VotingPipeline {
     const { tally, publicVotes } = this.recordVotesInSeatOrder(voteResults);
 
     const target = this.pickMajorityTarget(
-      Object.fromEntries(Object.entries(tally).filter(([id]) => canBeExiled(this.world, Number(id)))),
+      Object.fromEntries(
+        Object.entries(tally).filter(([id]) => canBeExiled(this.world, Number(id))),
+      ),
       config.tieBreaker?.exileVote ?? "min_id",
     );
     this.events.push({
@@ -196,15 +209,16 @@ export class VotingPipeline {
   ): Promise<CollectedVote | null> {
     const maxRetries = VotingPipeline.MAX_VOTE_RETRIES;
     let retryReason = "";
-    const recordRetry = (attempt: number) => safeRecordLogicOp({
-      scope: "phase_pipeline",
-      op: "vote_retry_requested",
-      actorId: voterId,
-      phase: Phase.Voting,
-      status: "fallback",
-      reason: retryReason,
-      output: { attempt, max_retries: maxRetries },
-    });
+    const recordRetry = (attempt: number) =>
+      safeRecordLogicOp({
+        scope: "phase_pipeline",
+        op: "vote_retry_requested",
+        actorId: voterId,
+        phase: Phase.Voting,
+        status: "fallback",
+        reason: retryReason,
+        output: { attempt, max_retries: maxRetries },
+      });
 
     for (let attempt = 1; attempt <= maxRetries + 1; attempt++) {
       const baseRequest = requests.create({
@@ -215,16 +229,19 @@ export class VotingPipeline {
         requiresAction: true,
         summary: { key: "request.summary.exile_vote" },
       });
-      const request = attempt === 1 ? baseRequest : {
-        ...baseRequest,
-        context: {
-          ...baseRequest.context,
-          retry_attempt: attempt - 1,
-          retry_max: maxRetries,
-          retry_reason: retryReason,
-          retry_notice_message: { key: "request.retry.exile_vote" as const },
-        },
-      };
+      const request =
+        attempt === 1
+          ? baseRequest
+          : {
+              ...baseRequest,
+              context: {
+                ...baseRequest.context,
+                retry_attempt: attempt - 1,
+                retry_max: maxRetries,
+                retry_reason: retryReason,
+                retry_notice_message: { key: "request.retry.exile_vote" as const },
+              },
+            };
       const action = await actionProvider.getAction(request);
       if (action?.name !== "vote") {
         retryReason = "no_valid_vote_tool_call";
@@ -235,9 +252,9 @@ export class VotingPipeline {
         break;
       }
 
-      const result = this.toolGateway.validateAndSanitize(
-        this.world, voterId, action, { phase: Phase.Voting },
-      );
+      const result = this.toolGateway.validateAndSanitize(this.world, voterId, action, {
+        phase: Phase.Voting,
+      });
       if (!result.ok || !result.sanitizedCall) {
         retryReason = "invalid_vote_arguments";
         if (attempt <= maxRetries) {
@@ -292,10 +309,17 @@ export class VotingPipeline {
     for (const vote of votes) {
       if (!vote) continue;
       const { voterId } = vote;
-      if (!canVote(this.world, voterId) || (!vote.abstain && vote.targetId !== null && !canBeExiled(this.world, vote.targetId))) continue;
+      if (
+        !canVote(this.world, voterId) ||
+        (!vote.abstain && vote.targetId !== null && !canBeExiled(this.world, vote.targetId))
+      )
+        continue;
       let weight = 0;
       if (!vote.abstain && vote.targetId !== null) {
-        const voting = this.world.getComponent<VotingRightComponent>(voterId, COMPONENT.VotingRight);
+        const voting = this.world.getComponent<VotingRightComponent>(
+          voterId,
+          COMPONENT.VotingRight,
+        );
         weight = voting?.weight ?? 1;
         tally[vote.targetId] = (tally[vote.targetId] ?? 0) + weight;
       }
@@ -310,7 +334,12 @@ export class VotingPipeline {
           ...(vote.fallback ? { fallback: true } : {}),
         },
       });
-      publicVotes.push({ actorId: voterId, targetId: vote.targetId, abstain: vote.abstain, weight });
+      publicVotes.push({
+        actorId: voterId,
+        targetId: vote.targetId,
+        abstain: vote.abstain,
+        weight,
+      });
       safeRecordLogicOp({
         scope: "phase_pipeline",
         op: "vote_cast",
@@ -344,11 +373,9 @@ export class VotingPipeline {
         const aId = Number(a[0]);
         const bId = Number(b[0]);
         const aSeat =
-          this.world.getComponent<IdentityComponent>(aId, COMPONENT.Identity)?.seat ??
-          aId;
+          this.world.getComponent<IdentityComponent>(aId, COMPONENT.Identity)?.seat ?? aId;
         const bSeat =
-          this.world.getComponent<IdentityComponent>(bId, COMPONENT.Identity)?.seat ??
-          bId;
+          this.world.getComponent<IdentityComponent>(bId, COMPONENT.Identity)?.seat ?? bId;
         return aSeat - bSeat;
       }
       return Number(a[0]) - Number(b[0]);

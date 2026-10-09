@@ -20,7 +20,11 @@ export const HUNTER_ROLE_PROFILE: RoleProfile = {
   renderPrompt: (_roleComp, locale = "zh-CN") => text(locale, "role.hunter.state"),
   toolSpecs: HUNTER_TOOL_SPECS,
   validationRules: {
-    shoot: ctx => validateDeathShot(ctx, ctx.role.role === Role.Hunter && getHunterState(ctx.role)?.canShoot === true),
+    shoot: (ctx) =>
+      validateDeathShot(
+        ctx,
+        ctx.role.role === Role.Hunter && getHunterState(ctx.role)?.canShoot === true,
+      ),
   },
   llmRepair: DEATH_SHOT_REPAIR,
   deathHook: hunterDeathHook,

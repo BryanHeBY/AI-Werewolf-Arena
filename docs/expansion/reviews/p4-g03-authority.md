@@ -13,10 +13,10 @@ World持有的死亡授权、actor/tool/day/phase/generation与生命版本、�
 
 ## 独立审查与修正
 
-| 审查者 | 发现 | 修正及复查 |
-| --- | --- | --- |
-| A / review_arch_tests | callback finally早于Hook消费关闭，最终gateway后微任务撤销仍枪击 | 持有窗口直到完整onDeath完成，shot/pass带本次ID，同步消费点再次验World授权/运行clock；独立14/347，最终0阻断 |
-| R+T / review_scope_rules | 旧窗在复活再死后能再次通过，窗口generation未绑定生命 | Alive转换WeakMap内部版本及组件ref，永久失效旧窗，不依赖中途查询；新窗不受旧close影响，复查最终0阻断 |
+| 审查者                     | 发现                                                            | 修正及复查                                                                                                      |
+| -------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| A / review_arch_tests      | callback finally早于Hook消费关闭，最终gateway后微任务撤销仍枪击 | 持有窗口直到完整onDeath完成，shot/pass带本次ID，同步消费点再次验World授权/运行clock；独立14/347，最终0阻断      |
+| R+T / review_scope_rules   | 旧窗在复活再死后能再次通过，窗口generation未绑定生命            | Alive转换WeakMap内部版本及组件ref，永久失效旧窗，不依赖中途查询；新窗不受旧close影响，复查最终0阻断             |
 | L+D / review_i18n_delivery | 全局递增授权ID原样进入Observation.request，泄露他人隐藏窗口数量 | 受限副本去ID、引擎/Tape留关联；两语不同hiddenCount观察全等，callback/生命周期API说明同步；独立14/347，最终0阻断 |
 
 上述全部为本批实际问题，没有通过扩张scope或收窄保证绕过。版本信息在严格源码gate内，新增字段不自动兼容旧内部Tape。

@@ -2,11 +2,7 @@
 import { EntityId, GameEvent, WOLF_TEAM_EVENT_TYPES } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 
-type AgentEventVisibilityRule = (
-  world: World,
-  event: GameEvent,
-  actorId: EntityId,
-) => boolean;
+type AgentEventVisibilityRule = (world: World, event: GameEvent, actorId: EntityId) => boolean;
 
 const PUBLIC_EVENT_TYPES = new Set([
   "phase_changed",
@@ -40,7 +36,9 @@ const PUBLIC_EVENT_TYPES = new Set([
 const WOLVES_ONLY_EVENT_TYPES = new Set<string>(WOLF_TEAM_EVENT_TYPES);
 
 const ACTOR_ONLY_EVENT_TYPES = new Set([
-  "ability_changed", "black_market_trade_skipped", "black_market_trade_committed",
+  "ability_changed",
+  "black_market_trade_skipped",
+  "black_market_trade_committed",
   "death_ability_changed",
   "seer_checked",
   "gravekeeper_reported",
@@ -48,14 +46,27 @@ const ACTOR_ONLY_EVENT_TYPES = new Set([
   "charm_applied",
   "hidden_wolf_awakened",
   "gargoyle_awakened",
-  "mechanical_awakened", "mechanical_mode_selected", "mechanical_mimicked", "mechanical_mimic_skipped",
-  "mechanical_skill_skipped", "mechanical_poison_used", "mechanical_guard_chosen", "mechanical_attack_chosen",
-  "awakened_inherited", "awakened_mimicked", "awakened_mimic_skipped", "awakened_ready", "awakened_skill_skipped",
-  "awakened_poison_used", "awakened_guard_chosen", "awakened_attack_chosen",
+  "mechanical_awakened",
+  "mechanical_mode_selected",
+  "mechanical_mimicked",
+  "mechanical_mimic_skipped",
+  "mechanical_skill_skipped",
+  "mechanical_poison_used",
+  "mechanical_guard_chosen",
+  "mechanical_attack_chosen",
+  "awakened_inherited",
+  "awakened_mimicked",
+  "awakened_mimic_skipped",
+  "awakened_ready",
+  "awakened_skill_skipped",
+  "awakened_poison_used",
+  "awakened_guard_chosen",
+  "awakened_attack_chosen",
   "role_inspected",
   "role_inspection_skipped",
   "lucky_ability_skipped",
-  "merchant_trade_committed", "merchant_trade_skipped",
+  "merchant_trade_committed",
+  "merchant_trade_skipped",
   "hybrid_exemplar_chosen",
   "witch_potion_used",
   "witch_potion_skipped",
@@ -70,9 +81,7 @@ const DEFAULT_RULES: Record<string, AgentEventVisibilityRule> = {};
  * 有意不提供“默认公开”：新增事件必须先明确受众才能进入玩家上下文。
  */
 export class AgentEventVisibilityRegistry {
-  constructor(
-    private readonly rules: Record<string, AgentEventVisibilityRule> = DEFAULT_RULES,
-  ) {}
+  constructor(private readonly rules: Record<string, AgentEventVisibilityRule> = DEFAULT_RULES) {}
 
   canView(world: World, event: GameEvent, actorId: EntityId): boolean {
     if (WOLVES_ONLY_EVENT_TYPES.has(event.type)) {

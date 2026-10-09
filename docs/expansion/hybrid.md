@@ -6,14 +6,14 @@
 
 复用现有 `RoleProfile`、首夜阶段、`VictoryComponent`、动作接收与玩家投影。无需新增阵营类、投票引擎或 Agent 基类。
 
-| 事实 | 所有者 | 玩家可见范围 |
-| --- | --- | --- |
-| 真身份 Hybrid、真 Camp Good、民边 | RoleComponent / RoleProfile | 本人，及规则允许的查验者 |
-| 首夜是否已选择、榜样稳定 ID、选择日 | 本人 role.privateState 的 Hybrid 状态 | 仅本人，投影显式字段白名单 |
-| 冻结榜样真阵营与胜利成员资格 | 独立 VictoryComponent.affiliations | God / 严格内部 Tape；不是普通观察字段 |
-| 狼队互认、夜聊与刀权 | 既有 WolfTeamPermissions 查询 | 不从胜利归属派生 |
-| 存活人数与民边人数 | 原真实 camp 与 profile.goodSide | 既有判胜条件读取，不查 affiliations |
-| 最终胜利成员与判定点 | PhaseManager 封盘的 GameResult | 终局公开，不附带榜样 ID |
+| 事实                                | 所有者                                | 玩家可见范围                          |
+| ----------------------------------- | ------------------------------------- | ------------------------------------- |
+| 真身份 Hybrid、真 Camp Good、民边   | RoleComponent / RoleProfile           | 本人，及规则允许的查验者              |
+| 首夜是否已选择、榜样稳定 ID、选择日 | 本人 role.privateState 的 Hybrid 状态 | 仅本人，投影显式字段白名单            |
+| 冻结榜样真阵营与胜利成员资格        | 独立 VictoryComponent.affiliations    | God / 严格内部 Tape；不是普通观察字段 |
+| 狼队互认、夜聊与刀权                | 既有 WolfTeamPermissions 查询         | 不从胜利归属派生                      |
+| 存活人数与民边人数                  | 原真实 camp 与 profile.goodSide       | 既有判胜条件读取，不查 affiliations   |
+| 最终胜利成员与判定点                | PhaseManager 封盘的 GameResult        | 终局公开，不附带榜样 ID               |
 
 初始 affiliation 是显式 `[]`；合法选择安装 Good 或 Wolf faction membership 的独立值。自身选择状态不得保存已推断/实际榜样阵营、对象底牌或角色组件引用；提示明确“未知，需自行判断”。已有阵营计数及结果呈现可以复用，必须以实际角色测试证明分离语义。
 

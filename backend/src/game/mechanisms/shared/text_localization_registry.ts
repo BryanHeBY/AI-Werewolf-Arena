@@ -41,7 +41,10 @@ export class TextLocalizationRegistry {
   }
 
   winnerName(winner: string, locale: Locale = "zh-CN"): string {
-    return this.winnerNames.get(String(winner)) ?? (winner ? term("camp", winner, locale) : text(locale, "common.none"));
+    return (
+      this.winnerNames.get(String(winner)) ??
+      (winner ? term("camp", winner, locale) : text(locale, "common.none"))
+    );
   }
 
   gameOverReason(reason: string, locale: Locale = "zh-CN"): string {
@@ -49,7 +52,12 @@ export class TextLocalizationRegistry {
   }
 
   potionType(potionType: string, locale: Locale = "zh-CN"): string {
-    return this.potionTypes.get(String(potionType)) ?? (potionType === "none" ? text(locale, "console.potion_none") : term("potion", potionType, locale));
+    return (
+      this.potionTypes.get(String(potionType)) ??
+      (potionType === "none"
+        ? text(locale, "console.potion_none")
+        : term("potion", potionType, locale))
+    );
   }
 }
 
@@ -62,4 +70,3 @@ export function getDefaultTextLocalizationRegistry(): TextLocalizationRegistry {
   }
   return defaultRegistry;
 }
-

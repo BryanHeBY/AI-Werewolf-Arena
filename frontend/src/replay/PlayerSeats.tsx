@@ -31,8 +31,12 @@ export function PlayerSeats({ players, locale, focusedPlayerId, onToggleFocus }:
             onClick={() => onToggleFocus(player.playerId)}
           >
             <span className="seat-number">{player.playerId}</span>
-            {player.isSheriff && <span className="sheriff">{text(locale, "replay.sheriff_short")}</span>}
-            {player.isWinner && <span className="winner">{text(locale, "victory.winner_badge")}</span>}
+            {player.isSheriff && (
+              <span className="sheriff">{text(locale, "replay.sheriff_short")}</span>
+            )}
+            {player.isWinner && (
+              <span className="winner">{text(locale, "victory.winner_badge")}</span>
+            )}
             {player.name && <span className="seat-name">{player.name}</span>}
             <strong>{roleName(player.role, locale)}</strong>
             <small>{campName(player.camp, locale)}</small>

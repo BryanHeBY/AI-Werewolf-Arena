@@ -10,7 +10,8 @@ export interface ScriptStep {
   assertRequest?: (request: ActionRequest) => void;
 }
 
-const stepKey = (step: Pick<ScriptStep, "actorId" | "day" | "stage" | "turn">) => `${step.actorId}/${step.day}/${step.stage}/${step.turn}`;
+const stepKey = (step: Pick<ScriptStep, "actorId" | "day" | "stage" | "turn">) =>
+  `${step.actorId}/${step.day}/${step.stage}/${step.turn}`;
 
 /** Replace decisions only; extra/missing requests cannot hide behind a default action. */
 export class StrictScriptedPlayers implements ActionProvider {
@@ -42,7 +43,7 @@ export class StrictScriptedPlayers implements ActionProvider {
   }
 
   assertConsumed(): void {
-    const missing = [...this.steps.keys()].filter(key => !this.consumed.has(key));
+    const missing = [...this.steps.keys()].filter((key) => !this.consumed.has(key));
     if (missing.length) throw new Error(`script_missing_requests: ${missing.join(", ")}`);
   }
 }

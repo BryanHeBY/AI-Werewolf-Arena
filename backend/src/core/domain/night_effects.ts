@@ -5,17 +5,38 @@ import type { EntityId } from "./identity";
 import type { StatusMarksComponent } from "./components/status_marks";
 
 /** Runtime-only ownership. Component references never enter events or recordings. */
-export interface NightLifeScope { readonly id: EntityId; readonly life: AliveComponent; readonly version: number }
-export interface NightPoisonClaim { readonly source: NightLifeScope; readonly target: NightLifeScope; readonly isCurrent?: () => boolean }
-export interface NightGuardClaim { readonly target: NightLifeScope; readonly marks: StatusMarksComponent }
-export interface NightMerchantBacklash { readonly target: NightLifeScope; readonly isCurrent: () => boolean }
-export interface NightBlackMarketBacklash { readonly target: NightLifeScope; readonly isCurrent: () => boolean }
+export interface NightLifeScope {
+  readonly id: EntityId;
+  readonly life: AliveComponent;
+  readonly version: number;
+}
+export interface NightPoisonClaim {
+  readonly source: NightLifeScope;
+  readonly target: NightLifeScope;
+  readonly isCurrent?: () => boolean;
+}
+export interface NightGuardClaim {
+  readonly target: NightLifeScope;
+  readonly marks: StatusMarksComponent;
+}
+export interface NightMerchantBacklash {
+  readonly target: NightLifeScope;
+  readonly isCurrent: () => boolean;
+}
+export interface NightBlackMarketBacklash {
+  readonly target: NightLifeScope;
+  readonly isCurrent: () => boolean;
+}
 export function captureNightLife(world: World, id: EntityId): NightLifeScope | null {
-  const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive), version = life && aliveLifeVersion(life);
+  const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive),
+    version = life && aliveLifeVersion(life);
   return life?.alive && version !== undefined ? { id, life, version } : null;
 }
 export function sameNightLife(world: World, scope: NightLifeScope): boolean {
-  return world.getComponent(scope.id, COMPONENT.Alive) === scope.life && aliveLifeVersion(scope.life) === scope.version;
+  return (
+    world.getComponent(scope.id, COMPONENT.Alive) === scope.life &&
+    aliveLifeVersion(scope.life) === scope.version
+  );
 }
 export function livingNightLife(world: World, scope: NightLifeScope): boolean {
   return sameNightLife(world, scope) && scope.life.alive;
@@ -75,7 +96,12 @@ export function planMechanicalDamage(
   const reflectedPoisonTargets = new Set<EntityId>();
   const reflections: NightPoisonReflection[] = [];
   for (const poison of poisons) {
-    if (poison.isCurrent?.() === false || !livingNightLife(world, poison.target) || absorbedPoisonTargets.has(poison.target.id)) continue;
+    if (
+      poison.isCurrent?.() === false ||
+      !livingNightLife(world, poison.target) ||
+      absorbedPoisonTargets.has(poison.target.id)
+    )
+      continue;
     const shield = shields.get(poison.target.id);
     if (!shield) {
       directPoisonTargets.add(poison.target.id);
@@ -83,7 +109,11 @@ export function planMechanicalDamage(
     }
     if (livingNightLife(world, poison.source)) {
       reflectedPoisonTargets.add(poison.source.id);
-      reflections.push({ actorId: shield.actorId, protectedTargetId: poison.target.id, casterId: poison.source.id });
+      reflections.push({
+        actorId: shield.actorId,
+        protectedTargetId: poison.target.id,
+        casterId: poison.source.id,
+      });
     }
   }
   const attacks = new Set<EntityId>();
@@ -92,7 +122,15 @@ export function planMechanicalDamage(
     if (attack.isCurrent() && livingNightLife(world, attack.target)) attacks.add(attack.target.id);
   }
   for (const failure of effects?.failures ?? []) {
-    if (failure.isCurrent() && livingNightLife(world, failure.target)) failures.add(failure.target.id);
+    if (failure.isCurrent() && livingNightLife(world, failure.target))
+      failures.add(failure.target.id);
   }
-  return { shields: new Set(shields.keys()), directPoisonTargets, reflectedPoisonTargets, attacks, failures, reflections };
+  return {
+    shields: new Set(shields.keys()),
+    directPoisonTargets,
+    reflectedPoisonTargets,
+    attacks,
+    failures,
+    reflections,
+  };
 }

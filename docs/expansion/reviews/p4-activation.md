@@ -4,17 +4,17 @@
 
 P4交付A01/A02、M21、G01–G04及基础卡差异修正。基础七项仅在 `awa_classic 1.0.0` 的以下声明范围登记 `verified`，角色注册仍由真实profile决定；64项目录中剩余57项为planned，22机制的特殊变体继续对应P5–P10。不是任意人数、牌组、同名赛事版本或所有组合都已验证。
 
-| P4要求 | 当前实现与独立证据 |
-| --- | --- |
-| A01统一接收 | [共同接收](../action-reception.md)、[审查](p4-a01.md)：SDK与ACP同schema/业务拒绝与更正，accepted与applied区分，单一ActionTurn与回合/连接隔离，错误不双重生效 |
-| A02资源与预算 | [资源契约](../runtime-resources.md)、SDK/ACP/mixed/runner四份审查：provider FIFO作用域、排队/初始化/重试共deadline，超时/迟到/取消/强制进程回收，正PID/ESRCH与MCP端口释放；原运行及清理错误分别保留 |
-| M21输出一致 | [日志矩阵](../runtime-display.md#p4-m21sdk--acp-日志开关)、[审查](p4-m21.md)：日志开关不改变私有录制，模型原文保留，SDK/ACP同语义 |
-| G01知识权限 | [狼队契约](../wolf-team-access.md)、[审查](p4-g01.md)：互认/夜聊/刀权分离，历史事件按发生时授权，不借后续状态追溯扩权 |
-| G02查询与资源 | [查验](../inspection-results.md)、[能力实例](../night-abilities.md)、[女巫](../witch-resolution.md)及三份G02审查：类型化结果/阵营分离、sourced实例生效/失效/调度、刀口/耗尽信息与16保护组合 |
-| G03死亡所有权 | [来源](../death-causes.md)、[World授权](../death-action-authority.md)、[死亡链](../death-chain.md)及三份G03审查：独立原因、shot/pass/invalid、末神枪、临时窗口到消费点、整波先标死，遗言→警徽→死亡技能→追加波次→判胜 |
-| 公共资格与窗口 | [参与资格](../public-participation.md)、[四窗口](../self-destruct-windows.md)及对应审查：白痴一次翻牌/永久资格、空候选/全退/零票、可配徽权，首日/天亮/发言间隙/投票前自爆真实位置与中断收尾 |
-| G04结果闭环 | [核心](../victory-outcomes.md)、[记录展示](../victory-record-display.md)、[两份审查](p4-g04-display.md)：获胜membership独立于真实camp，三种primary/额外claim/名单/检查点，一次封盘，manifest/public/终端/审计/前端/视频一致 |
-| 双语与兼容 | shared game-text、每局locale与display、受控i18n gate、实际wire/schema/error两语、旧公开/玩家v2原文；内部Tape2对source/lock/rules严格，旧1明确拒绝 |
+| P4要求         | 当前实现与独立证据                                                                                                                                                                                                          |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A01统一接收    | [共同接收](../action-reception.md)、[审查](p4-a01.md)：SDK与ACP同schema/业务拒绝与更正，accepted与applied区分，单一ActionTurn与回合/连接隔离，错误不双重生效                                                                |
+| A02资源与预算  | [资源契约](../runtime-resources.md)、SDK/ACP/mixed/runner四份审查：provider FIFO作用域、排队/初始化/重试共deadline，超时/迟到/取消/强制进程回收，正PID/ESRCH与MCP端口释放；原运行及清理错误分别保留                         |
+| M21输出一致    | [日志矩阵](../runtime-display.md#p4-m21sdk--acp-日志开关)、[审查](p4-m21.md)：日志开关不改变私有录制，模型原文保留，SDK/ACP同语义                                                                                           |
+| G01知识权限    | [狼队契约](../wolf-team-access.md)、[审查](p4-g01.md)：互认/夜聊/刀权分离，历史事件按发生时授权，不借后续状态追溯扩权                                                                                                       |
+| G02查询与资源  | [查验](../inspection-results.md)、[能力实例](../night-abilities.md)、[女巫](../witch-resolution.md)及三份G02审查：类型化结果/阵营分离、sourced实例生效/失效/调度、刀口/耗尽信息与16保护组合                                 |
+| G03死亡所有权  | [来源](../death-causes.md)、[World授权](../death-action-authority.md)、[死亡链](../death-chain.md)及三份G03审查：独立原因、shot/pass/invalid、末神枪、临时窗口到消费点、整波先标死，遗言→警徽→死亡技能→追加波次→判胜        |
+| 公共资格与窗口 | [参与资格](../public-participation.md)、[四窗口](../self-destruct-windows.md)及对应审查：白痴一次翻牌/永久资格、空候选/全退/零票、可配徽权，首日/天亮/发言间隙/投票前自爆真实位置与中断收尾                                 |
+| G04结果闭环    | [核心](../victory-outcomes.md)、[记录展示](../victory-record-display.md)、[两份审查](p4-g04-display.md)：获胜membership独立于真实camp，三种primary/额外claim/名单/检查点，一次封盘，manifest/public/终端/审计/前端/视频一致 |
+| 双语与兼容     | shared game-text、每局locale与display、受控i18n gate、实际wire/schema/error两语、旧公开/玩家v2原文；内部Tape2对source/lock/rules严格，旧1明确拒绝                                                                           |
 
 能力赠予、个人／关系目标等合成profile案例检验公共机制契约，不能当作商人／机械狼／丘比特已实现；这些真实角色完整行为与Tape在对应阶段交付。
 
@@ -46,10 +46,10 @@ A审查架构/资源/真实门槛，R+T审查基础规则/oracle与支持范围�
 
 ### 最终独立结论
 
-| 审查路 | 最终结论与修正 |
-| --- | --- |
-| A / review_arch_tests | 0阻断；架构、注册许可、T1–T5和50实际局／Tape证据匹配；独立目录3／153及diff check通过，核实最终633／34433日志。16窗局不混入Hunter证据已修 |
-| R+T / review_scope_rules | 0阻断；基础七项按声明范围verified，误复制女巫页／canonical卡／规则卡两status检查已闭；S03与枪专项／窗口wire范围准确，未重复full/browser |
-| L+D / review_i18n_delivery | 0阻断；配置当前登记、G04展示已交付和Tape2/旧1拒版说明已同步；用药不新增狼队视角且保独立合法权限，目录／双语／数据及T6/P10范围一致 |
+| 审查路                     | 最终结论与修正                                                                                                                           |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| A / review_arch_tests      | 0阻断；架构、注册许可、T1–T5和50实际局／Tape证据匹配；独立目录3／153及diff check通过，核实最终633／34433日志。16窗局不混入Hunter证据已修 |
+| R+T / review_scope_rules   | 0阻断；基础七项按声明范围verified，误复制女巫页／canonical卡／规则卡两status检查已闭；S03与枪专项／窗口wire范围准确，未重复full/browser  |
+| L+D / review_i18n_delivery | 0阻断；配置当前登记、G04展示已交付和Tape2/旧1拒版说明已同步；用药不新增狼队视角且保独立合法权限，目录／双语／数据及T6/P10范围一致        |
 
 当前文档相对链接与git diff --check通过；三路发现均修正并复查。P4完成，完整P1–P10目标继续P5。

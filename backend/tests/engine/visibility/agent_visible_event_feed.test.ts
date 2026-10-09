@@ -11,18 +11,48 @@ import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelv
 describe("buildAgentVisibleEventFeed", () => {
   test("keeps wolf and role actions private while public results stay visible", () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
-    const findRole = (roleName: string) => context.world.entityIds().find(
-      (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === roleName,
-    )!;
+    const findRole = (roleName: string) =>
+      context.world
+        .entityIds()
+        .find(
+          (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === roleName,
+        )!;
     const wolfId = findRole("wolf");
     const witchId = findRole("witch");
     const seerId = findRole("seer");
     const villagerId = findRole("villager");
     const events: GameEvent[] = [
-      { timestamp: 0, type: "god_private_game_info", payload: { boardSize: twelvePlayerStandardConfig.boardSize, players: [{ id: witchId, seat: witchId, name: "Witch fixture", role: "witch", camp: "good" }] } },
-      { timestamp: 1, type: "wolf_discussion", audience: [wolfId], payload: { actorId: wolfId, text: "今晚先听队友意见", endChat: false, round: 1 } },
-      { timestamp: 2, type: "witch_potion_used", payload: { actorId: witchId, targetId: seerId, potionType: PotionType.Heal } },
-      { timestamp: 3, type: "seer_checked", payload: { actorId: seerId, targetId: wolfId, isWerewolf: true, result: { kind: "camp", camp: "wolf" } } },
+      {
+        timestamp: 0,
+        type: "god_private_game_info",
+        payload: {
+          boardSize: twelvePlayerStandardConfig.boardSize,
+          players: [
+            { id: witchId, seat: witchId, name: "Witch fixture", role: "witch", camp: "good" },
+          ],
+        },
+      },
+      {
+        timestamp: 1,
+        type: "wolf_discussion",
+        audience: [wolfId],
+        payload: { actorId: wolfId, text: "今晚先听队友意见", endChat: false, round: 1 },
+      },
+      {
+        timestamp: 2,
+        type: "witch_potion_used",
+        payload: { actorId: witchId, targetId: seerId, potionType: PotionType.Heal },
+      },
+      {
+        timestamp: 3,
+        type: "seer_checked",
+        payload: {
+          actorId: seerId,
+          targetId: wolfId,
+          isWerewolf: true,
+          result: { kind: "camp", camp: "wolf" },
+        },
+      },
       { timestamp: 4, type: "night_resolved", payload: { deaths: [] } },
     ];
 
@@ -38,7 +68,12 @@ describe("buildAgentVisibleEventFeed", () => {
     expect(seerFeed[0]).toEqual({
       seq: 1,
       type: "seer_checked",
-      payload: { actorId: seerId, targetId: wolfId, isWerewolf: true, result: { kind: "camp", camp: "wolf" } },
+      payload: {
+        actorId: seerId,
+        targetId: wolfId,
+        isWerewolf: true,
+        result: { kind: "camp", camp: "wolf" },
+      },
     });
     for (const feed of [wolfFeed, witchFeed, seerFeed, villagerFeed]) {
       expect(feed.some((event) => event.type === "god_private_game_info")).toBe(false);
@@ -48,7 +83,11 @@ describe("buildAgentVisibleEventFeed", () => {
   test("exposes structured vote summaries but not intermediate individual votes", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const events: GameEvent[] = [
-      { timestamp: 1, type: "vote_cast", payload: { actorId: 4, targetId: 1, abstain: false, weight: 1 } },
+      {
+        timestamp: 1,
+        type: "vote_cast",
+        payload: { actorId: 4, targetId: 1, abstain: false, weight: 1 },
+      },
       {
         timestamp: 2,
         type: "vote_summary",
@@ -75,10 +114,18 @@ describe("buildAgentVisibleEventFeed", () => {
   // Deliberate untyped historical input exercises the fail-closed boundary.
   test("defaults unknown events to invisible", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
-    const feed = buildAgentVisibleEventFeed(context.world, [
-      ({ timestamp: 1, type: "future_private_mechanic", payload: { secret: "never leak" } } as unknown as GameEvent),
-      { timestamp: 2, type: "phase_changed", payload: { day: 1, phase: Phase.Day } },
-    ], context.world.entityIds()[0]);
+    const feed = buildAgentVisibleEventFeed(
+      context.world,
+      [
+        {
+          timestamp: 1,
+          type: "future_private_mechanic",
+          payload: { secret: "never leak" },
+        } as unknown as GameEvent,
+        { timestamp: 2, type: "phase_changed", payload: { day: 1, phase: Phase.Day } },
+      ],
+      context.world.entityIds()[0],
+    );
 
     expect(feed).toEqual([
       { seq: 1, type: "phase_changed", payload: { day: 1, phase: Phase.Day } },
@@ -101,31 +148,50 @@ describe("buildAgentVisibleEventFeed", () => {
 
   test("hidden events neither consume seq values nor reveal their count", () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
-    const villagerId = context.world.entityIds().find(
-      (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "villager",
-    )!;
-    const wolfId = context.world.entityIds().find(
-      (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf",
-    )!;
+    const villagerId = context.world
+      .entityIds()
+      .find(
+        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "villager",
+      )!;
+    const wolfId = context.world
+      .entityIds()
+      .find(
+        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf",
+      )!;
     const publicEvents: GameEvent[] = [
       { timestamp: 1, type: "phase_changed", payload: { day: 1, phase: Phase.Night } },
       { timestamp: 5, type: "phase_changed", payload: { day: 1, phase: Phase.Day } },
     ];
     const eventsWithHiddenWolfActions: GameEvent[] = [
       publicEvents[0],
-      { timestamp: 2, type: "wolf_discussion", audience: [wolfId], payload: { actorId: wolfId, text: "隐藏狼聊", endChat: false, round: 1 } },
-      { timestamp: 3, type: "wolf_kill_vote_cast", audience: [wolfId], payload: { actorId: wolfId, targetId: villagerId, abstain: false } },
-      ({ timestamp: 4, type: "future_private_mechanic", payload: { secret: true } } as unknown as GameEvent),
+      {
+        timestamp: 2,
+        type: "wolf_discussion",
+        audience: [wolfId],
+        payload: { actorId: wolfId, text: "隐藏狼聊", endChat: false, round: 1 },
+      },
+      {
+        timestamp: 3,
+        type: "wolf_kill_vote_cast",
+        audience: [wolfId],
+        payload: { actorId: wolfId, targetId: villagerId, abstain: false },
+      },
+      {
+        timestamp: 4,
+        type: "future_private_mechanic",
+        payload: { secret: true },
+      } as unknown as GameEvent,
       publicEvents[1],
     ];
 
     expect(buildAgentVisibleEventFeed(context.world, publicEvents, villagerId)).toEqual(
       buildAgentVisibleEventFeed(context.world, eventsWithHiddenWolfActions, villagerId),
     );
-    expect(buildAgentVisibleEventFeed(context.world, eventsWithHiddenWolfActions, villagerId))
-      .toEqual([
-        { seq: 1, type: "phase_changed", payload: { day: 1, phase: Phase.Night } },
-        { seq: 2, type: "phase_changed", payload: { day: 1, phase: Phase.Day } },
-      ]);
+    expect(
+      buildAgentVisibleEventFeed(context.world, eventsWithHiddenWolfActions, villagerId),
+    ).toEqual([
+      { seq: 1, type: "phase_changed", payload: { day: 1, phase: Phase.Night } },
+      { seq: 2, type: "phase_changed", payload: { day: 1, phase: Phase.Day } },
+    ]);
   });
 });

@@ -22,25 +22,31 @@ function manifest(players: ReplayManifest["players"] = []): ReplayManifest {
 }
 
 test("rejects missing or duplicated event sequence numbers", () => {
-  expect(() => createReplayDocument({
-    manifest: manifest(),
-    events: [{
-      seq: 2,
-      timestamp: "2026-08-01T00:00:00.000Z",
-      phase: "night",
-      day: 1,
-      type: "phase_changed",
-      payload: {},
-    }],
-  })).toThrow("replay_document_non_canonical_event_sequence");
+  expect(() =>
+    createReplayDocument({
+      manifest: manifest(),
+      events: [
+        {
+          seq: 2,
+          timestamp: "2026-08-01T00:00:00.000Z",
+          phase: "night",
+          day: 1,
+          type: "phase_changed",
+          payload: {},
+        },
+      ],
+    }),
+  ).toThrow("replay_document_non_canonical_event_sequence");
 });
 
 test("rejects duplicated player records", () => {
-  expect(() => createReplayDocument({
-    manifest: manifest([
-      { player_id: 1, role: "wolf", camp: "wolf", alive: true },
-      { player_id: 1, role: "wolf", camp: "wolf", alive: false },
-    ]),
-    events: [],
-  })).toThrow("replay_document_duplicate_player:1");
+  expect(() =>
+    createReplayDocument({
+      manifest: manifest([
+        { player_id: 1, role: "wolf", camp: "wolf", alive: true },
+        { player_id: 1, role: "wolf", camp: "wolf", alive: false },
+      ]),
+      events: [],
+    }),
+  ).toThrow("replay_document_duplicate_player:1");
 });

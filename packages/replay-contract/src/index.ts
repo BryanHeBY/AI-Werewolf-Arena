@@ -2,7 +2,13 @@ import { isRecord, assertField, ReplayDocumentValidationError } from "./validati
 export { ReplayDocumentValidationError } from "./validation";
 import { isLocale, type Locale, type SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
 import { readVictoryResult } from "./outcomes";
-import { legacyPhaseId, legacyStageId, legacyRoleId, legacyCampId, legacyResultReasonId } from "./legacy_aliases";
+import {
+  legacyPhaseId,
+  legacyStageId,
+  legacyRoleId,
+  legacyCampId,
+  legacyResultReasonId,
+} from "./legacy_aliases";
 export * from "./legacy_aliases";
 export const REPLAY_SCHEMA_VERSION = 2 as const;
 export * from "./inspection";
@@ -54,26 +60,42 @@ export interface ReplayDocument {
 
 /** Reject non-data descriptors before any shape read or structuredClone can execute a getter. */
 function assertSerializedData(value: object, path: string): void {
-  const pending: object[] = [value], seen = new Set<object>();
+  const pending: object[] = [value],
+    seen = new Set<object>();
   while (pending.length) {
     const current = pending.pop()!;
     if (seen.has(current)) continue;
     seen.add(current);
     const prototype = Object.getPrototypeOf(current);
-    assertField(Array.isArray(current) ? prototype === Array.prototype : prototype === Object.prototype || prototype === null, path);
+    assertField(
+      Array.isArray(current)
+        ? prototype === Array.prototype
+        : prototype === Object.prototype || prototype === null,
+      path,
+    );
     for (const key of Reflect.ownKeys(current)) {
       const descriptor = Object.getOwnPropertyDescriptor(current, key)!;
-      assertField(typeof key === "string" && "value" in descriptor && (descriptor.enumerable === true || Array.isArray(current) && key === "length"), path);
-      if (descriptor.value !== null && typeof descriptor.value === "object") pending.push(descriptor.value);
+      assertField(
+        typeof key === "string" &&
+          "value" in descriptor &&
+          (descriptor.enumerable === true || (Array.isArray(current) && key === "length")),
+        path,
+      );
+      if (descriptor.value !== null && typeof descriptor.value === "object")
+        pending.push(descriptor.value);
     }
   }
 }
 
 /** Validates the canonical, unfiltered document; event sequence numbers start at one. */
-function assertReplayShape(value: unknown): asserts value is Omit<ReplayDocument, "schemaVersion"> & { schemaVersion?: unknown } {
+function assertReplayShape(
+  value: unknown,
+): asserts value is Omit<ReplayDocument, "schemaVersion"> & { schemaVersion?: unknown } {
   if (
-    !isRecord(value) || value.perspective !== "god" ||
-    typeof value.sessionId !== "string" || !Array.isArray(value.events)
+    !isRecord(value) ||
+    value.perspective !== "god" ||
+    typeof value.sessionId !== "string" ||
+    !Array.isArray(value.events)
   ) {
     throw new ReplayDocumentValidationError("invalid_document", "document");
   }
@@ -85,8 +107,14 @@ function assertReplayShape(value: unknown): asserts value is Omit<ReplayDocument
   assertField(typeof value.meta.board === "string", "meta.board");
   assertField(typeof value.meta.startedAt === "string", "meta.startedAt");
   assertField(typeof value.meta.endedAt === "string", "meta.endedAt");
-  assertField(value.result.winner === null || typeof value.result.winner === "string", "result.winner");
-  assertField(value.result.reason === null || typeof value.result.reason === "string", "result.reason");
+  assertField(
+    value.result.winner === null || typeof value.result.winner === "string",
+    "result.winner",
+  );
+  assertField(
+    value.result.reason === null || typeof value.result.reason === "string",
+    "result.reason",
+  );
 
   const playerIds = new Set<number>();
   for (let index = 0; index < value.players.length; index += 1) {
@@ -94,7 +122,9 @@ function assertReplayShape(value: unknown): asserts value is Omit<ReplayDocument
     const path = `players[${index}]`;
     assertField(isRecord(player), path);
     assertField(
-      typeof player.player_id === "number" && Number.isSafeInteger(player.player_id) && player.player_id > 0,
+      typeof player.player_id === "number" &&
+        Number.isSafeInteger(player.player_id) &&
+        player.player_id > 0,
       `${path}.player_id`,
     );
     assertField(!playerIds.has(player.player_id), `${path}.player_id`);
@@ -126,21 +156,35 @@ function assertReplayShape(value: unknown): asserts value is Omit<ReplayDocument
     assertField(parsed.winner === value.result.winner, "result.winner");
   }
   const explicit: SealedVictoryResult[] = [];
-  if (decision && "value" in decision) explicit.push(readVictoryResult(decision.value, [...playerIds]));
+  if (decision && "value" in decision)
+    explicit.push(readVictoryResult(decision.value, [...playerIds]));
   for (const event of value.events) {
-    if (event.type !== "game_over" || !isRecord(event.payload) || !Object.hasOwn(event.payload, "outcome") && !Object.hasOwn(event.payload, "decidedAt")) continue;
+    if (
+      event.type !== "game_over" ||
+      !isRecord(event.payload) ||
+      (!Object.hasOwn(event.payload, "outcome") && !Object.hasOwn(event.payload, "decidedAt"))
+    )
+      continue;
     assertSerializedData(event.payload, "events.game_over.payload");
-    try { explicit.push(readVictoryResult(event.payload, [...playerIds])); }
-    catch { /* Isolated malformed terminal facts remain raw unknown events. */ }
+    try {
+      explicit.push(readVictoryResult(event.payload, [...playerIds]));
+    } catch {
+      /* Isolated malformed terminal facts remain raw unknown events. */
+    }
   }
-  if (explicit.length > 1) assertField(explicit.every(item => JSON.stringify(item) === JSON.stringify(explicit[0])), "result.decision_terminal_mismatch");
+  if (explicit.length > 1)
+    assertField(
+      explicit.every((item) => JSON.stringify(item) === JSON.stringify(explicit[0])),
+      "result.decision_terminal_mismatch",
+    );
 }
 
 /** Canonical v2 writer contract. Use readReplayDocument for archived documents. */
 export function assertReplayDocument(value: unknown): asserts value is ReplayDocument {
   if (value !== null && typeof value === "object") assertSerializedData(value, "document");
   assertReplayShape(value);
-  if (value.schemaVersion !== REPLAY_SCHEMA_VERSION) throw new ReplayDocumentValidationError("unsupported_version", "schemaVersion");
+  if (value.schemaVersion !== REPLAY_SCHEMA_VERSION)
+    throw new ReplayDocumentValidationError("unsupported_version", "schemaVersion");
 }
 
 /** Read-only conversion; version negotiation occurs before any legacy interpretation. */
@@ -148,7 +192,8 @@ export function readReplayDocument(value: unknown): ReplayDocument {
   if (value !== null && typeof value === "object") assertSerializedData(value, "document");
   if (!isRecord(value)) throw new ReplayDocumentValidationError("invalid_document", "document");
   const version = value.schemaVersion;
-  if (version !== undefined && version !== 1 && version !== REPLAY_SCHEMA_VERSION) throw new ReplayDocumentValidationError("unsupported_version", "schemaVersion");
+  if (version !== undefined && version !== 1 && version !== REPLAY_SCHEMA_VERSION)
+    throw new ReplayDocumentValidationError("unsupported_version", "schemaVersion");
   assertReplayShape(value);
   if (version === REPLAY_SCHEMA_VERSION) {
     const result = structuredClone(value);
@@ -157,20 +202,38 @@ export function readReplayDocument(value: unknown): ReplayDocument {
   }
   const result = structuredClone(value) as ReplayDocument;
   result.schemaVersion = REPLAY_SCHEMA_VERSION;
-  result.players = result.players.map(player => ({ ...player, role: legacyRoleId(player.role), camp: legacyCampId(player.camp) }));
+  result.players = result.players.map((player) => ({
+    ...player,
+    role: legacyRoleId(player.role),
+    camp: legacyCampId(player.camp),
+  }));
   result.result.winner = result.result.winner === null ? null : legacyCampId(result.result.winner);
-  result.result.reason = result.result.reason === null ? null : legacyResultReasonId(result.result.reason);
-  result.events = result.events.map(event => {
+  result.result.reason =
+    result.result.reason === null ? null : legacyResultReasonId(result.result.reason);
+  result.events = result.events.map((event) => {
     const payload = { ...event.payload };
-    if (event.type === "phase_changed" && typeof payload.phase === "string") payload.phase = legacyPhaseId(payload.phase);
+    if (event.type === "phase_changed" && typeof payload.phase === "string")
+      payload.phase = legacyPhaseId(payload.phase);
     if (event.type === "game_over" || event.type === "phase_changed") {
       if (typeof payload.winner === "string") payload.winner = legacyCampId(payload.winner);
       if (typeof payload.reason === "string") payload.reason = legacyResultReasonId(payload.reason);
     }
-    if (event.type === "god_private_game_info" && Array.isArray(payload.players)) payload.players = payload.players.map(player => isRecord(player) ? {
-      ...player, ...(typeof player.role === "string" ? { role: legacyRoleId(player.role) } : {}), ...(typeof player.camp === "string" ? { camp: legacyCampId(player.camp) } : {}),
-    } : player);
-    return { ...event, phase: legacyPhaseId(event.phase), ...(event.stage === undefined ? {} : { stage: legacyStageId(event.stage) }), payload };
+    if (event.type === "god_private_game_info" && Array.isArray(payload.players))
+      payload.players = payload.players.map((player) =>
+        isRecord(player)
+          ? {
+              ...player,
+              ...(typeof player.role === "string" ? { role: legacyRoleId(player.role) } : {}),
+              ...(typeof player.camp === "string" ? { camp: legacyCampId(player.camp) } : {}),
+            }
+          : player,
+      );
+    return {
+      ...event,
+      phase: legacyPhaseId(event.phase),
+      ...(event.stage === undefined ? {} : { stage: legacyStageId(event.stage) }),
+      payload,
+    };
   });
   assertReplayDocument(result);
   return result;

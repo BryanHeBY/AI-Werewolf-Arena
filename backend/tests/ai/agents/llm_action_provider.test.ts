@@ -2,7 +2,13 @@ import { PotionType } from "../../../src/core";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { RoleComponent } from "../../../src/core/domain/components/role";
-import { ActionProvider, ActionRequest, ActionWindow, Phase, ToolCall } from "../../../src/core/domain/model";
+import {
+  ActionProvider,
+  ActionRequest,
+  ActionWindow,
+  Phase,
+  ToolCall,
+} from "../../../src/core/domain/model";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
@@ -320,8 +326,7 @@ class ReportThenSpeakToolLoopClient {
         severity: "high",
         message: "测试：白痴翻牌日志未显示",
       },
-      rawArgs:
-        '{"category":"flow","severity":"high","message":"测试：白痴翻牌日志未显示"}',
+      rawArgs: '{"category":"flow","severity":"high","message":"测试：白痴翻牌日志未显示"}',
     });
     const handled = await callbacks.onToolCall({
       id: "tool_speak_1",
@@ -413,7 +418,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {
+        day: 1,
+        stage: "day_speech",
+        visible_events: [],
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+      },
     });
 
     expect(action).toEqual({
@@ -436,7 +446,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Voting,
       actorId: 1,
       allowedTools: ["vote"],
-      context: {day: 1, stage: "voting", visible_events: [], turn_constraints: {}},
+      context: { day: 1, stage: "voting", visible_events: [], turn_constraints: {} },
     });
 
     expect(action).toEqual({
@@ -447,7 +457,11 @@ describe("LlmActionProvider", () => {
 
   test("accepts a native role-action callback", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
-    const seerId = context.world.entityIds().find(id => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "seer")!;
+    const seerId = context.world
+      .entityIds()
+      .find(
+        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "seer",
+      )!;
     const provider = new LlmActionProvider(
       context.world,
       new ToolLoopClient("check_identity", { target_id: 2 }),
@@ -460,7 +474,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: seerId,
       allowedTools: ["check_identity"],
-      context: {day: 1, stage: "seer", visible_events: [], turn_constraints: {}},
+      context: { day: 1, stage: "seer", visible_events: [], turn_constraints: {} },
     });
 
     expect(action).toEqual({
@@ -487,7 +501,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {
+        day: 1,
+        stage: "day_speech",
+        visible_events: [],
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+      },
     });
 
     expect(action).toEqual({
@@ -510,7 +529,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: {}},
+      context: { day: 1, stage: "day_speech", visible_events: [], turn_constraints: {} },
     });
 
     expect(action?.name).toBe("speak");
@@ -531,7 +550,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 6,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: {}},
+      context: { day: 1, stage: "day_speech", visible_events: [], turn_constraints: {} },
     });
 
     expect(action?.name).toBe("speak");
@@ -540,26 +559,20 @@ describe("LlmActionProvider", () => {
 
   test("does not invent an action when the native loop returns none", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
-    const wolfId = context.world
-      .getAliveEntityIds()
-      .find((id) => {
-        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-        return role?.role === "wolf";
-      })!;
+    const wolfId = context.world.getAliveEntityIds().find((id) => {
+      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      return role?.role === "wolf";
+    })!;
 
-    const provider = new LlmActionProvider(
-      context.world,
-      new NoActionToolLoopClient(),
-      {
-        fallbackProvider: new FallbackProvider(null),
-      },
-    );
+    const provider = new LlmActionProvider(context.world, new NoActionToolLoopClient(), {
+      fallbackProvider: new FallbackProvider(null),
+    });
 
     const action = await provider.getAction({
       phase: Phase.Day,
       actorId: wolfId,
       allowedTools: ["self_destruct"],
-      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: {}},
+      context: { day: 1, stage: "day_speech", visible_events: [], turn_constraints: {} },
     });
 
     expect(action).toBeNull();
@@ -576,20 +589,23 @@ describe("LlmActionProvider", () => {
       root,
     );
     const context = bootstrapGame(sixPlayerMvpConfig);
-    const provider = new LlmActionProvider(
-      context.world,
-      new ReportThenSpeakToolLoopClient(),
-      {
-        fallbackProvider: new FallbackProvider(null),
-      },
-    );
+    const provider = new LlmActionProvider(context.world, new ReportThenSpeakToolLoopClient(), {
+      fallbackProvider: new FallbackProvider(null),
+    });
 
-    const action = await runWithSessionRecorder(recorder, async () => provider.getAction({
-      phase: Phase.Day,
-      actorId: 1,
-      allowedTools: ["speak"],
-      context: {visible_events: [], day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
-    }));
+    const action = await runWithSessionRecorder(recorder, async () =>
+      provider.getAction({
+        phase: Phase.Day,
+        actorId: 1,
+        allowedTools: ["speak"],
+        context: {
+          visible_events: [],
+          day: 1,
+          stage: "day_speech",
+          turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+        },
+      }),
+    );
 
     expect(action).toEqual({
       name: "speak",
@@ -602,22 +618,14 @@ describe("LlmActionProvider", () => {
       finishReason: "test_done",
       players: context.world.entityIds().map((id) => ({
         player_id: id,
-        role:
-          context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role ??
-          "unknown",
-        camp:
-          context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp ??
-          "unknown",
+        role: context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role ?? "unknown",
+        camp: context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp ?? "unknown",
         alive: true,
       })),
     });
 
-
     const reports = JSON.parse(
-      await fs.readFile(
-        path.join(root, "session_report_bug_test", "debug_reports.json"),
-        "utf-8",
-      ),
+      await fs.readFile(path.join(root, "session_report_bug_test", "debug_reports.json"), "utf-8"),
     );
     expect(reports.reports.length).toBe(1);
     expect(reports.reports[0].category).toBe("flow");
@@ -643,12 +651,19 @@ describe("LlmActionProvider", () => {
       },
     );
 
-    const action = await runWithSessionRecorder(recorder, async () => provider.getAction({
-      phase: Phase.Day,
-      actorId: 1,
-      allowedTools: ["speak"],
-      context: {visible_events: [], day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
-    }));
+    const action = await runWithSessionRecorder(recorder, async () =>
+      provider.getAction({
+        phase: Phase.Day,
+        actorId: 1,
+        allowedTools: ["speak"],
+        context: {
+          visible_events: [],
+          day: 1,
+          stage: "day_speech",
+          turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+        },
+      }),
+    );
     expect(action).toEqual({
       name: "speak",
       args: { text: "继续发言" },
@@ -660,12 +675,8 @@ describe("LlmActionProvider", () => {
       finishReason: "test_done",
       players: context.world.entityIds().map((id) => ({
         player_id: id,
-        role:
-          context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role ??
-          "unknown",
-        camp:
-          context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp ??
-          "unknown",
+        role: context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role ?? "unknown",
+        camp: context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp ?? "unknown",
         alive: true,
       })),
     });
@@ -687,20 +698,17 @@ describe("LlmActionProvider", () => {
     expect(
       logicOps.ops.some(
         (op: any) =>
-          op.op === "report_bug_dropped" &&
-          op.reason === "report_bug_scope_rate_limited",
+          op.op === "report_bug_dropped" && op.reason === "report_bug_scope_rate_limited",
       ),
     ).toBe(true);
   });
 
   test("prompt no longer contains private-intel snapshot line", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
-    const seerId = context.world
-      .entityIds()
-      .find((id) => {
-        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-        return role?.role === "seer";
-      })!;
+    const seerId = context.world.entityIds().find((id) => {
+      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      return role?.role === "seer";
+    })!;
     const seerRole = context.world.getComponent<RoleComponent>(seerId, COMPONENT.Role)!;
     const seerState = getSeerState(seerRole)!;
     seerState.lastTarget = 1;
@@ -725,7 +733,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: seerId,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: {}},
+      context: { day: 1, stage: "day_speech", visible_events: [], turn_constraints: {} },
     });
 
     expect(action).toEqual({
@@ -736,22 +744,23 @@ describe("LlmActionProvider", () => {
 
   test("falls back when model returns none but action is required", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
-    const provider = new LlmActionProvider(
-      context.world,
-      new NoActionToolLoopClient(),
-      {
-        fallbackProvider: new FallbackProvider({
-          name: "speak",
-          args: { text: "fallback_required_action" },
-        }),
-      },
-    );
+    const provider = new LlmActionProvider(context.world, new NoActionToolLoopClient(), {
+      fallbackProvider: new FallbackProvider({
+        name: "speak",
+        args: { text: "fallback_required_action" },
+      }),
+    });
 
     const action = await provider.getAction({
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {
+        day: 1,
+        stage: "day_speech",
+        visible_events: [],
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+      },
     });
 
     expect(action).toEqual({
@@ -769,7 +778,9 @@ describe("LlmActionProvider", () => {
           .filter((m) => m.role === "user")
           .map((m) => m.content)
           .join("\n");
-        expect(joined).toContain('{"event":[1,"day_speech",{"actorId":1,"text":"我是1号，我是狼人"}]}');
+        expect(joined).toContain(
+          '{"event":[1,"day_speech",{"actorId":1,"text":"我是1号，我是狼人"}]}',
+        );
         expect(joined).not.toContain("公开信息摘要=");
         expect(joined).not.toContain("阶段上下文=");
       }),
@@ -782,9 +793,13 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 2,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech",
+      context: {
+        day: 1,
+        stage: "day_speech",
         turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
-        visible_events: [{ seq: 1, type: "day_speech", payload: { actorId: 1, text: "我是1号，我是狼人" } }],
+        visible_events: [
+          { seq: 1, type: "day_speech", payload: { actorId: 1, text: "我是1号，我是狼人" } },
+        ],
       },
     });
 
@@ -815,9 +830,7 @@ describe("LlmActionProvider", () => {
         expect(systemMessages).toContain("death_shot_blocked 表示落空，不能当作击杀");
         expect(systemMessages).toContain("狼人刀人投票只表示刀口选择");
 
-        const userMessages = messages
-          .filter((m) => m.role === "user")
-          .map((m) => m.content);
+        const userMessages = messages.filter((m) => m.role === "user").map((m) => m.content);
         const latest = userMessages[userMessages.length - 1] ?? "";
         const lines = latest.split("\n");
         expect(lines.length).toBe(4);
@@ -839,7 +852,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, visible_events: [], stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {
+        day: 1,
+        visible_events: [],
+        stage: "day_speech",
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+      },
     });
 
     expect(action).toEqual({
@@ -850,12 +868,10 @@ describe("LlmActionProvider", () => {
 
   test("target_id tools should include actionable ids hint with role-specific self override", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
-    const wolfId = context.world
-      .entityIds()
-      .find((id) => {
-        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-        return role?.role === "wolf";
-      })!;
+    const wolfId = context.world.entityIds().find((id) => {
+      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      return role?.role === "wolf";
+    })!;
     const provider = new LlmActionProvider(
       context.world,
       new AssertClient(
@@ -878,7 +894,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: wolfId,
       allowedTools: ["kill_vote"],
-      context: {day: 1, visible_events: [], stage: "wolf_vote", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {
+        day: 1,
+        visible_events: [],
+        stage: "wolf_vote",
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+      },
     });
 
     expect(action).toEqual({
@@ -898,7 +919,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {
+        day: 1,
+        stage: "day_speech",
+        visible_events: [],
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+      },
     });
 
     expect(action).toEqual({
@@ -909,18 +935,23 @@ describe("LlmActionProvider", () => {
 
   test("accepts game actions through the shared submit_action contract", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
-    const provider = new LlmActionProvider(
-      context.world,
-      new GenericSubmitActionClient() as any,
-      { fallbackProvider: new FallbackProvider(null) },
-    );
+    const provider = new LlmActionProvider(context.world, new GenericSubmitActionClient() as any, {
+      fallbackProvider: new FallbackProvider(null),
+    });
 
-    await expect(provider.getAction({
-      phase: Phase.Day,
-      actorId: 1,
-      allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
-    })).resolves.toEqual({
+    await expect(
+      provider.getAction({
+        phase: Phase.Day,
+        actorId: 1,
+        allowedTools: ["speak"],
+        context: {
+          day: 1,
+          stage: "day_speech",
+          visible_events: [],
+          turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+        },
+      }),
+    ).resolves.toEqual({
       name: "speak",
       args: { text: "通过统一协议发言" },
     });
@@ -929,22 +960,39 @@ describe("LlmActionProvider", () => {
   test("returns actionable turn-id feedback and accepts a corrected witch action", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const root = await createTestTempDirectory("turn-id-feedback-");
-    const recorder = await SessionRecordManager.create({
-      sessionId: "session_turn_id_feedback", board: "twelve_player_standard",
-      startedAtIso: new Date().toISOString(),
-    }, root);
-    const witchId = context.world.entityIds().find(id =>
-      context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "witch")!;
+    const recorder = await SessionRecordManager.create(
+      {
+        sessionId: "session_turn_id_feedback",
+        board: "twelve_player_standard",
+        startedAtIso: new Date().toISOString(),
+      },
+      root,
+    );
+    const witchId = context.world
+      .entityIds()
+      .find(
+        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "witch",
+      )!;
     const client = {
       chat: async () => "",
       async runToolLoop<T>(_messages: unknown, _tools: unknown, callbacks: any) {
-        const submit = (turnId: string) => callbacks.onToolCall({
-          id: `call-${turnId}`, name: "submit_action", rawArgs: "{}",
-          args: { turn_id: turnId, action: "use_potion", arguments: { target_id: witchId, potion_type: PotionType.None } },
-        });
+        const submit = (turnId: string) =>
+          callbacks.onToolCall({
+            id: `call-${turnId}`,
+            name: "submit_action",
+            rawArgs: "{}",
+            args: {
+              turn_id: turnId,
+              action: "use_potion",
+              arguments: { target_id: witchId, potion_type: PotionType.None },
+            },
+          });
         const rejected = await submit("t2");
         expect(rejected.toolResult).toMatchObject({
-          ok: false, error: "turn_id_mismatch", expected_turn_id: "t1", received_turn_id: "t2",
+          ok: false,
+          error: "turn_id_mismatch",
+          expected_turn_id: "t1",
+          received_turn_id: "t2",
         });
         expect(rejected.finalAction).toBeUndefined();
         const accepted = await submit(rejected.toolResult.expected_turn_id);
@@ -952,61 +1000,123 @@ describe("LlmActionProvider", () => {
         return { finalAction: accepted.finalAction as T, assistantText: "" };
       },
     };
-    const provider = new LlmActionProvider(context.world, client, { fallbackProvider: new FallbackProvider(null) });
-    await expect(runWithSessionRecorder(recorder, () => provider.getAction({
-      phase: Phase.Night, actorId: witchId, allowedTools: ["use_potion"],
-      context: {visible_events: [], day: 1, stage: "witch", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
-    }))).resolves.toEqual({ name: "use_potion", args: { target_id: witchId, potion_type: PotionType.None } });
+    const provider = new LlmActionProvider(context.world, client, {
+      fallbackProvider: new FallbackProvider(null),
+    });
+    await expect(
+      runWithSessionRecorder(recorder, () =>
+        provider.getAction({
+          phase: Phase.Night,
+          actorId: witchId,
+          allowedTools: ["use_potion"],
+          context: {
+            visible_events: [],
+            day: 1,
+            stage: "witch",
+            turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+          },
+        }),
+      ),
+    ).resolves.toEqual({
+      name: "use_potion",
+      args: { target_id: witchId, potion_type: PotionType.None },
+    });
     await recorder.flushNow();
-    const logic = JSON.parse(await fs.readFile(path.join(recorder.sessionDir, "logic_ops.json"), "utf8"));
-    expect(logic.ops).toContainEqual(expect.objectContaining({
-      op: "tool_call_rejected", status: "rejected", reason: "turn_id_mismatch",
-      input: expect.objectContaining({ args: expect.objectContaining({ turn_id: "t2" }) }),
-      output: expect.objectContaining({ expected_turn_id: "t1", received_turn_id: "t2" }),
-    }));
+    const logic = JSON.parse(
+      await fs.readFile(path.join(recorder.sessionDir, "logic_ops.json"), "utf8"),
+    );
+    expect(logic.ops).toContainEqual(
+      expect.objectContaining({
+        op: "tool_call_rejected",
+        status: "rejected",
+        reason: "turn_id_mismatch",
+        input: expect.objectContaining({ args: expect.objectContaining({ turn_id: "t2" }) }),
+        output: expect.objectContaining({ expected_turn_id: "t1", received_turn_id: "t2" }),
+      }),
+    );
   });
 
   test("retries a text-only required-tool response and completes the witch turn", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
-    const witchId = context.world.entityIds().find(id =>
-      context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "witch")!;
+    const witchId = context.world
+      .entityIds()
+      .find(
+        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "witch",
+      )!;
     let requests = 0;
     const server = Bun.serve({
-      hostname: "127.0.0.1", port: 0,
+      hostname: "127.0.0.1",
+      port: 0,
       async fetch(request) {
-        const body = await request.json() as any;
+        const body = (await request.json()) as any;
         requests++;
         expect(body.tool_choice).toBe("required");
         let message: Record<string, unknown> = { role: "assistant", content: "我未能提交行动" };
         if (requests > 1) {
-          const prompt = body.messages.findLast((item: any) => item.content?.includes("turn_id 必须为"));
+          const prompt = body.messages.findLast((item: any) =>
+            item.content?.includes("turn_id 必须为"),
+          );
           const turnId = prompt.content.match(/turn_id 必须为 (t\d+)/)[1];
           expect(body.messages.at(-1).content).toContain("重试 1/3");
-          message = { role: "assistant", content: null, tool_calls: [{
-            id: "corrected-action", type: "function", function: {
-              name: "submit_action", arguments: JSON.stringify({
-                turn_id: turnId, action: "use_potion", arguments: { target_id: witchId, potion_type: PotionType.None },
-              }),
-            },
-          }] };
+          message = {
+            role: "assistant",
+            content: null,
+            tool_calls: [
+              {
+                id: "corrected-action",
+                type: "function",
+                function: {
+                  name: "submit_action",
+                  arguments: JSON.stringify({
+                    turn_id: turnId,
+                    action: "use_potion",
+                    arguments: { target_id: witchId, potion_type: PotionType.None },
+                  }),
+                },
+              },
+            ],
+          };
         }
         return Response.json({
-          id: "chatcmpl-witch", object: "chat.completion", created: 1, model: "test-model",
+          id: "chatcmpl-witch",
+          object: "chat.completion",
+          created: 1,
+          model: "test-model",
           choices: [{ index: 0, message, finish_reason: requests === 1 ? "stop" : "tool_calls" }],
           usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
         });
       },
     });
     try {
-      const provider = new LlmActionProvider(context.world, new AiSdkClient({
-        apiKey: "test-key", baseURL: `${server.url.origin}/v1`, model: "test-model",
-      }), { llmTimeoutMs: 5000, fallbackProvider: new FallbackProvider(null) });
-      await expect(provider.getAction({
-        phase: Phase.Night, actorId: witchId, allowedTools: ["use_potion"],
-        context: {visible_events: [], day: 1, stage: "witch", turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
-      })).resolves.toEqual({ name: "use_potion", args: { target_id: witchId, potion_type: PotionType.None } });
+      const provider = new LlmActionProvider(
+        context.world,
+        new AiSdkClient({
+          apiKey: "test-key",
+          baseURL: `${server.url.origin}/v1`,
+          model: "test-model",
+        }),
+        { llmTimeoutMs: 5000, fallbackProvider: new FallbackProvider(null) },
+      );
+      await expect(
+        provider.getAction({
+          phase: Phase.Night,
+          actorId: witchId,
+          allowedTools: ["use_potion"],
+          context: {
+            visible_events: [],
+            day: 1,
+            stage: "witch",
+            turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+          },
+        }),
+      ).resolves.toEqual({
+        name: "use_potion",
+        args: { target_id: witchId, potion_type: PotionType.None },
+      });
       expect(requests).toBe(2);
-    } finally { server.stop(true); }
+    } finally {
+      server.stop(true);
+    }
   });
 
   test("appends structured events once using seq cursors", async () => {
@@ -1020,7 +1130,9 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech",
+      context: {
+        day: 1,
+        stage: "day_speech",
         turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
         visible_events: [{ seq: 1, type: "phase_changed", payload: { day: 1, phase: "day" } }],
       },
@@ -1030,7 +1142,9 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech",
+      context: {
+        day: 1,
+        stage: "day_speech",
         turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
         visible_events: [
           { seq: 1, type: "phase_changed", payload: { day: 1, phase: "day" } },
@@ -1039,31 +1153,30 @@ describe("LlmActionProvider", () => {
       },
     });
 
-    const joined = toolClient.lastMessages
-      .map((msg) => `${msg.role}:${msg.content}`)
-      .join("\n");
+    const joined = toolClient.lastMessages.map((msg) => `${msg.role}:${msg.content}`).join("\n");
     expect(joined).toContain('{"event":[1,"phase_changed"');
     expect(joined).toContain('{"event":[2,"day_speech"');
   });
 
   test("sdk loop falls back when it completes without a required action", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
-    const provider = new LlmActionProvider(
-      context.world,
-      new NoActionToolLoopClient() as any,
-      {
-        fallbackProvider: new FallbackProvider({
-          name: "speak",
-          args: { text: "fallback_required_action" },
-        }),
-      },
-    );
+    const provider = new LlmActionProvider(context.world, new NoActionToolLoopClient() as any, {
+      fallbackProvider: new FallbackProvider({
+        name: "speak",
+        args: { text: "fallback_required_action" },
+      }),
+    });
 
     const action = await provider.getAction({
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
+      context: {
+        day: 1,
+        stage: "day_speech",
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+        visible_events: [],
+      },
     });
 
     expect(action).toEqual({
@@ -1083,14 +1196,15 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {
+        day: 1,
+        stage: "day_speech",
+        visible_events: [],
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+      },
     });
 
-    expect(client.lastToolNames).toEqual([
-      "get_game_schema",
-      "submit_action",
-      "report_bug",
-    ]);
+    expect(client.lastToolNames).toEqual(["get_game_schema", "submit_action", "report_bug"]);
     expect(client.lastOptions?.toolChoice).toBe("required");
   });
 
@@ -1105,14 +1219,10 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", visible_events: [], turn_constraints: {}},
+      context: { day: 1, stage: "day_speech", visible_events: [], turn_constraints: {} },
     });
 
-    expect(client.lastToolNames).toEqual([
-      "get_game_schema",
-      "submit_action",
-      "report_bug",
-    ]);
+    expect(client.lastToolNames).toEqual(["get_game_schema", "submit_action", "report_bug"]);
     expect(client.lastOptions?.toolChoice).toBe("auto");
   });
 
@@ -1127,14 +1237,10 @@ describe("LlmActionProvider", () => {
       phase: Phase.Voting,
       actorId: 1,
       allowedTools: ["vote"],
-      context: {day: 1, stage: "voting", visible_events: [], turn_constraints: {}},
+      context: { day: 1, stage: "voting", visible_events: [], turn_constraints: {} },
     });
 
-    expect(client.lastToolNames).toEqual([
-      "get_game_schema",
-      "submit_action",
-      "report_bug",
-    ]);
+    expect(client.lastToolNames).toEqual(["get_game_schema", "submit_action", "report_bug"]);
     const submitTool = client.lastTools.find((tool) => tool.name === "submit_action");
     expect(submitTool?.description).toContain("accepted=true、applied=false");
     expect(submitTool?.parameters?.required).toEqual(["turn_id", "action", "arguments"]);
@@ -1158,15 +1264,13 @@ describe("LlmActionProvider", () => {
       new AssertClient(
         '{"name":"speak_to_wolves","args":{"text":"收到","end_chat":false}}',
         (messages) => {
-        const system = messages.find((msg) => msg.role === "system")?.content ?? "";
-        const user = messages.find((msg) => msg.role === "user")?.content ?? "";
-        expect(system).toContain("狼人交流阶段");
-        expect(system).toContain("不会在本阶段完成刀人");
-        expect(system).toContain("end_chat=true");
-        expect(user).toContain(
-          'speak_to_wolves args: {"text":"...","end_chat":true|false}',
-        );
-      },
+          const system = messages.find((msg) => msg.role === "system")?.content ?? "";
+          const user = messages.find((msg) => msg.role === "user")?.content ?? "";
+          expect(system).toContain("狼人交流阶段");
+          expect(system).toContain("不会在本阶段完成刀人");
+          expect(system).toContain("end_chat=true");
+          expect(user).toContain('speak_to_wolves args: {"text":"...","end_chat":true|false}');
+        },
       ),
       {
         fallbackProvider: new FallbackProvider(null),
@@ -1177,7 +1281,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: 1,
       allowedTools: ["speak_to_wolves"],
-      context: {day: 1, stage: "wolf_discussion", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {
+        day: 1,
+        stage: "wolf_discussion",
+        visible_events: [],
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+      },
     });
   });
 
@@ -1189,18 +1298,21 @@ describe("LlmActionProvider", () => {
       // 不传 fallbackProvider，走 BaselineBotActionProvider 默认兜底。
     );
 
-    const witchId = context.world
-      .entityIds()
-      .find((id) => {
-        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-        return role?.role === "witch";
-      })!;
+    const witchId = context.world.entityIds().find((id) => {
+      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      return role?.role === "witch";
+    })!;
 
     const action = await provider.getAction({
       phase: Phase.Night,
       actorId: witchId,
       allowedTools: ["use_potion"],
-      context: {day: 1, stage: "witch", turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
+      context: {
+        day: 1,
+        stage: "witch",
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+        visible_events: [],
+      },
     });
 
     expect(action).toEqual({
@@ -1211,7 +1323,11 @@ describe("LlmActionProvider", () => {
 
   test("parses wolf kill abstain vote", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
-    const wolfId = context.world.entityIds().find(id => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf")!;
+    const wolfId = context.world
+      .entityIds()
+      .find(
+        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf",
+      )!;
     const provider = new LlmActionProvider(
       context.world,
       new ToolLoopClient("kill_vote", { target_id: null, abstain: true }),
@@ -1224,7 +1340,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: wolfId,
       allowedTools: ["kill_vote"],
-      context: {day: 1, stage: "wolf_vote", visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {
+        day: 1,
+        stage: "wolf_vote",
+        visible_events: [],
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+      },
     });
 
     expect(action).toEqual({
@@ -1250,7 +1371,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
+      context: {
+        day: 1,
+        stage: "day_speech",
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+        visible_events: [],
+      },
     });
 
     expect(action).toEqual({
@@ -1261,12 +1387,10 @@ describe("LlmActionProvider", () => {
 
   test("witch prompt should include wolf target hint before potion action", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
-    const witchId = context.world
-      .entityIds()
-      .find((id) => {
-        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-        return role?.role === "witch";
-      })!;
+    const witchId = context.world.entityIds().find((id) => {
+      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      return role?.role === "witch";
+    })!;
     const provider = new LlmActionProvider(
       context.world,
       new AssertClient(
@@ -1285,7 +1409,13 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: witchId,
       allowedTools: ["use_potion"],
-      context: {day: 1, stage: "witch", wolf_target: 3, visible_events: [], turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {
+        day: 1,
+        stage: "witch",
+        wolf_target: 3,
+        visible_events: [],
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+      },
     });
 
     expect(action).toEqual({
@@ -1298,7 +1428,9 @@ describe("LlmActionProvider", () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const witchId = context.world
       .entityIds()
-      .find((id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "witch")!;
+      .find(
+        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "witch",
+      )!;
     const witch = context.world.getComponent<RoleComponent>(witchId, COMPONENT.Role)!;
     getWitchState(witch)!.heal = 0;
     const targetId = context.world.entityIds().find((id) => id !== witchId)!;
@@ -1311,26 +1443,34 @@ describe("LlmActionProvider", () => {
       phase: Phase.Night,
       actorId: witchId,
       allowedTools: ["use_potion"],
-      context: {day: 1, visible_events: [], stage: "witch", wolf_target: targetId, turn_constraints: REQUIRED_ACTION_CONSTRAINTS },
+      context: {
+        day: 1,
+        visible_events: [],
+        stage: "witch",
+        wolf_target: targetId,
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+      },
     });
 
     expect(action).toEqual({
       name: "use_potion",
       args: { target_id: targetId, potion_type: PotionType.None },
     });
-    expect(client.invalidPotionResult).toEqual({ ok: false, error: "heal_unavailable", message: "非法操作，解药不可用" });
+    expect(client.invalidPotionResult).toEqual({
+      ok: false,
+      error: "heal_unavailable",
+      message: "非法操作，解药不可用",
+    });
     const user = client.lastMessages.find((message) => message.role === "user")?.content ?? "";
     expect(user).toContain("你的私有状态：你的底牌是【女巫】。解药:0 毒药:1");
   });
 
   test("on_pre_vote self_destruct window should include strict tool boundary hint", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
-    const wolfId = context.world
-      .entityIds()
-      .find((id) => {
-        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-        return role?.role === "wolf";
-      })!;
+    const wolfId = context.world.entityIds().find((id) => {
+      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      return role?.role === "wolf";
+    })!;
     const provider = new LlmActionProvider(
       context.world,
       new AssertClient(
@@ -1350,7 +1490,7 @@ describe("LlmActionProvider", () => {
       actionWindow: ActionWindow.OnPreVote,
       actorId: wolfId,
       allowedTools: ["self_destruct"],
-      context: {day: 1, visible_events: [], turn_constraints: {}, stage: ActionWindow.OnPreVote },
+      context: { day: 1, visible_events: [], turn_constraints: {}, stage: ActionWindow.OnPreVote },
     });
 
     expect(action).toEqual({
@@ -1363,7 +1503,9 @@ describe("LlmActionProvider", () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const wolfId = context.world
       .entityIds()
-      .find((id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf")!;
+      .find(
+        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf",
+      )!;
     const client = new NoActionToolLoopClient();
     const provider = new LlmActionProvider(context.world, client as any, {
       fallbackProvider: new FallbackProvider(null),
@@ -1373,7 +1515,7 @@ describe("LlmActionProvider", () => {
       phase: Phase.Voting,
       actorId: wolfId,
       allowedTools: ["self_destruct"],
-      context: {day: 1, visible_events: [], turn_constraints: {}, stage: ActionWindow.OnPreVote },
+      context: { day: 1, visible_events: [], turn_constraints: {}, stage: ActionWindow.OnPreVote },
     });
 
     expect(action).toBeNull();
@@ -1403,7 +1545,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
+      context: {
+        day: 1,
+        stage: "day_speech",
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+        visible_events: [],
+      },
     });
   });
 
@@ -1414,10 +1561,12 @@ describe("LlmActionProvider", () => {
       personalityPromptResolver: () => "先总结事实，再提出问题。",
     });
     await provider.getAction({
-      actorId: 1, phase: Phase.Day, allowedTools: ["speak"],
-      context: {turn_constraints: {}, day: 1, stage: "day_speech", visible_events: [] },
+      actorId: 1,
+      phase: Phase.Day,
+      allowedTools: ["speak"],
+      context: { turn_constraints: {}, day: 1, stage: "day_speech", visible_events: [] },
     });
-    const system = client.lastMessages.find(message => message.role === "system")?.content;
+    const system = client.lastMessages.find((message) => message.role === "system")?.content;
     expect(system).toContain("你的性格与发言风格要求：先总结事实，再提出问题。");
     expect(system).toContain("你的唯一目标是帮助你所在阵营赢得本局");
   });
@@ -1442,13 +1591,13 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["run_for_sheriff"],
-      context: {turn_constraints: {}, day: 1, stage: "sheriff_nomination", visible_events: [] },
+      context: { turn_constraints: {}, day: 1, stage: "sheriff_nomination", visible_events: [] },
     });
     await provider.getAction({
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["run_for_sheriff"],
-      context: {turn_constraints: {}, day: 1, stage: "sheriff_withdraw", visible_events: [] },
+      context: { turn_constraints: {}, day: 1, stage: "sheriff_withdraw", visible_events: [] },
     });
 
     expect(observedPrompts[0]).toContain("这是上警报名阶段，不是退水阶段");
@@ -1467,7 +1616,12 @@ describe("LlmActionProvider", () => {
       phase: Phase.Day,
       actorId: 1,
       allowedTools: ["speak"],
-      context: {day: 1, stage: "day_speech", turn_constraints: REQUIRED_ACTION_CONSTRAINTS, visible_events: [] },
+      context: {
+        day: 1,
+        stage: "day_speech",
+        turn_constraints: REQUIRED_ACTION_CONSTRAINTS,
+        visible_events: [],
+      },
     });
 
     const system = client.lastMessages.find((message) => message.role === "system")?.content ?? "";

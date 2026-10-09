@@ -57,10 +57,7 @@ class TacticalOrderProvider implements ActionProvider {
       };
     }
 
-    if (
-      request.allowedTools.includes("use_potion") &&
-      this.poisonTargetId !== undefined
-    ) {
+    if (request.allowedTools.includes("use_potion") && this.poisonTargetId !== undefined) {
       return {
         name: "use_potion",
         args: {
@@ -243,12 +240,10 @@ describe("night wolf tactical loop", () => {
       events,
     });
 
-    const wolfTargetId = context.world
-      .getAliveEntityIds()
-      .find((id) => {
-        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-        return role?.camp === Camp.Good;
-      })!;
+    const wolfTargetId = context.world.getAliveEntityIds().find((id) => {
+      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      return role?.camp === Camp.Good;
+    })!;
 
     const provider = new TacticalOrderProvider(wolfTargetId);
     const randomSpy = jest.spyOn(Math, "random").mockReturnValue(0.42);
@@ -257,18 +252,15 @@ describe("night wolf tactical loop", () => {
 
     expect(provider.voteOrder.length).toBeGreaterThan(0);
     expect(provider.discussionOrder.length).toBe(provider.voteOrder.length * 3);
+    expect(provider.discussionOrder.slice(0, provider.voteOrder.length)).toEqual(
+      provider.voteOrder,
+    );
     expect(
-      provider.discussionOrder.slice(0, provider.voteOrder.length),
+      provider.discussionOrder.slice(provider.voteOrder.length, provider.voteOrder.length * 2),
     ).toEqual(provider.voteOrder);
-    expect(
-      provider.discussionOrder.slice(
-        provider.voteOrder.length,
-        provider.voteOrder.length * 2,
-      ),
-    ).toEqual(provider.voteOrder);
-    expect(
-      provider.discussionOrder.slice(provider.voteOrder.length * 2),
-    ).toEqual(provider.voteOrder);
+    expect(provider.discussionOrder.slice(provider.voteOrder.length * 2)).toEqual(
+      provider.voteOrder,
+    );
     expect(completedNight(result).summary.wolfTarget).toBe(wolfTargetId);
   });
 
@@ -282,12 +274,10 @@ describe("night wolf tactical loop", () => {
       events,
     });
 
-    const wolfTargetId = context.world
-      .getAliveEntityIds()
-      .find((id) => {
-        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-        return role?.camp === Camp.Good;
-      })!;
+    const wolfTargetId = context.world.getAliveEntityIds().find((id) => {
+      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      return role?.camp === Camp.Good;
+    })!;
 
     const provider = new EarlyEndWolfDiscussionProvider(wolfTargetId);
     const randomSpy = jest.spyOn(Math, "random").mockReturnValue(0.11);
@@ -347,12 +337,10 @@ describe("night wolf tactical loop", () => {
       events,
     });
 
-    const aliveGood = context.world
-      .getAliveEntityIds()
-      .filter((id) => {
-        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-        return role?.camp === Camp.Good;
-      });
+    const aliveGood = context.world.getAliveEntityIds().filter((id) => {
+      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      return role?.camp === Camp.Good;
+    });
 
     const wolfTargetId = aliveGood[0];
     const poisonTargetId = aliveGood[1];
@@ -374,22 +362,18 @@ describe("night wolf tactical loop", () => {
       events,
     });
 
-    const wolfTargetId = context.world
-      .getAliveEntityIds()
-      .find((id) => {
-        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-        return role?.role === Role.Wolf;
-      })!;
+    const wolfTargetId = context.world.getAliveEntityIds().find((id) => {
+      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      return role?.role === Role.Wolf;
+    })!;
 
     const provider = new TacticalOrderProvider(wolfTargetId);
     await pipeline.execute(twelvePlayerStandardConfig, provider, 1);
 
-    const seerId = context.world
-      .getAliveEntityIds()
-      .find((id) => {
-        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-        return role?.role === Role.Seer;
-      })!;
+    const seerId = context.world.getAliveEntityIds().find((id) => {
+      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      return role?.role === Role.Seer;
+    })!;
     const seerRole = context.world.getComponent<RoleComponent>(seerId, COMPONENT.Role)!;
     const seerState = getSeerState(seerRole);
 
@@ -414,8 +398,7 @@ describe("night wolf tactical loop", () => {
     expect(completedNight(result).summary.wolfTarget).toBeNull();
     expect(completedNight(result).summary.deaths.length).toBe(0);
     const abstains = events.filter(
-      (event) =>
-        event.type === "wolf_kill_vote_cast" && event.payload.abstain === true,
+      (event) => event.type === "wolf_kill_vote_cast" && event.payload.abstain === true,
     );
     expect(abstains.length).toBeGreaterThan(0);
   });
@@ -429,12 +412,10 @@ describe("night wolf tactical loop", () => {
       damageResolutionSystem: new DamageResolutionSystem(),
       events,
     });
-    const targetId = context.world
-      .getAliveEntityIds()
-      .find((id) => {
-        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-        return role?.camp === Camp.Good;
-      })!;
+    const targetId = context.world.getAliveEntityIds().find((id) => {
+      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      return role?.camp === Camp.Good;
+    })!;
     const provider = new RetryThenKillVoteProvider(targetId);
 
     const result = await pipeline.execute(twelvePlayerStandardConfig, provider, 1);
@@ -443,8 +424,7 @@ describe("night wolf tactical loop", () => {
     const wolfIds = context.world
       .getAliveEntityIds()
       .filter(
-        (id) =>
-          context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf,
+        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf,
       );
     for (const wolfId of wolfIds) {
       expect(provider.killVoteAttempts.get(wolfId)).toBe(4);

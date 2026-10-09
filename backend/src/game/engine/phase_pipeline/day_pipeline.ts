@@ -36,8 +36,13 @@ export interface DayPipelineOptions {
   /** 返回 true 表示已终局，不再请求白天行动。 */
   afterSheriffElection?: () => Promise<boolean>;
   isCurrent?: () => boolean;
-  commitSelfDestruct?: (choice: import("../../../core").SelfDestructSelection, window: ActionWindow) => Promise<void | boolean>;
-  commitKnightDuel?: (choice: import("../../../core").KnightDuelSelection) => Promise<import("../../../core").KnightDuelCommit>;
+  commitSelfDestruct?: (
+    choice: import("../../../core").SelfDestructSelection,
+    window: ActionWindow,
+  ) => Promise<void | boolean>;
+  commitKnightDuel?: (
+    choice: import("../../../core").KnightDuelSelection,
+  ) => Promise<import("../../../core").KnightDuelCommit>;
 }
 
 export interface DayPipelineDependencies {
@@ -65,7 +70,11 @@ export class DayPipeline {
     this.roleRegistry = dependencies.roleRegistry;
     this.toolGateway = dependencies.toolGateway;
     this.events = dependencies.events;
-    this.selfDestructWindow = new SelfDestructWindow(this.world, this.roleRegistry, this.toolGateway);
+    this.selfDestructWindow = new SelfDestructWindow(
+      this.world,
+      this.roleRegistry,
+      this.toolGateway,
+    );
     this.knightDuelWindow = new KnightDuelWindow(this.world, this.toolGateway);
   }
 
@@ -75,16 +84,30 @@ export class DayPipeline {
     options: DayPipelineOptions,
   ): Promise<DayPipelineResult> {
     const speeches: DaySummary["speeches"] = [];
-    const requests = new GameActionRequestFactory(
-      this.world,
-      this.events,
-      options.day,
-    );
+    const requests = new GameActionRequestFactory(this.world, this.events, options.day);
     const isCurrent = options.isCurrent ?? (() => true);
     if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
-    if (options.day === 1 && config.enableSheriff && findSheriffId(this.world) === null && config.hooks.onPreElection && isSelfDestructWindowEnabled(config, ActionWindow.OnPreElection)) {
-      const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnPreElection, Phase.Day, isCurrent, id => options.commitSelfDestruct?.(id, ActionWindow.OnPreElection) ?? Promise.resolve());
-      if (exploded !== null) return { summary: { speeches, selfDestructBy: exploded.actorId }, interrupted: true, selfDestruct: exploded };
+    if (
+      options.day === 1 &&
+      config.enableSheriff &&
+      findSheriffId(this.world) === null &&
+      config.hooks.onPreElection &&
+      isSelfDestructWindowEnabled(config, ActionWindow.OnPreElection)
+    ) {
+      const exploded = await this.selfDestructWindow.execute(
+        requests,
+        actionProvider,
+        ActionWindow.OnPreElection,
+        Phase.Day,
+        isCurrent,
+        (id) => options.commitSelfDestruct?.(id, ActionWindow.OnPreElection) ?? Promise.resolve(),
+      );
+      if (exploded !== null)
+        return {
+          summary: { speeches, selfDestructBy: exploded.actorId },
+          interrupted: true,
+          selfDestruct: exploded,
+        };
       if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
     }
     await electSheriffIfNeeded({
@@ -105,9 +128,15 @@ export class DayPipeline {
       };
     }
 
-
     if (config.hooks.onDaybreak && isSelfDestructWindowEnabled(config, ActionWindow.OnDaybreak)) {
-      const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnDaybreak, Phase.Day, isCurrent, id => options.commitSelfDestruct?.(id, ActionWindow.OnDaybreak) ?? Promise.resolve());
+      const exploded = await this.selfDestructWindow.execute(
+        requests,
+        actionProvider,
+        ActionWindow.OnDaybreak,
+        Phase.Day,
+        isCurrent,
+        (id) => options.commitSelfDestruct?.(id, ActionWindow.OnDaybreak) ?? Promise.resolve(),
+      );
       if (exploded !== null) {
         return {
           summary: {
@@ -121,8 +150,20 @@ export class DayPipeline {
     }
 
     if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
-    const openingDuel = await this.knightDuelWindow.execute(config, requests, actionProvider, DuelWindow.BeforeSpeeches, isCurrent, options.commitKnightDuel);
-    if (openingDuel.endsDay) return { summary: { speeches, selfDestructBy: null }, interrupted: true, ...(openingDuel.selection ? { duel: openingDuel.selection } : {}) };
+    const openingDuel = await this.knightDuelWindow.execute(
+      config,
+      requests,
+      actionProvider,
+      DuelWindow.BeforeSpeeches,
+      isCurrent,
+      options.commitKnightDuel,
+    );
+    if (openingDuel.endsDay)
+      return {
+        summary: { speeches, selfDestructBy: null },
+        interrupted: true,
+        ...(openingDuel.selection ? { duel: openingDuel.selection } : {}),
+      };
     if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
     const speakerDirection = await chooseSpeakerDirection({
       world: this.world,
@@ -153,8 +194,7 @@ export class DayPipeline {
         stage: "day_speech",
         requiresAction: true,
         summary: { key: "request.summary.day_speech" },
-        context: {
-        },
+        context: {},
       });
 
       const action = await actionProvider.getAction(req);
@@ -177,8 +217,19 @@ export class DayPipeline {
         }
       }
 
-      if (config.hooks.onPerSpeechGap && isSelfDestructWindowEnabled(config, ActionWindow.OnPerSpeechGap)) {
-        const exploded = await this.selfDestructWindow.execute(requests, actionProvider, ActionWindow.OnPerSpeechGap, Phase.Day, isCurrent, id => options.commitSelfDestruct?.(id, ActionWindow.OnPerSpeechGap) ?? Promise.resolve());
+      if (
+        config.hooks.onPerSpeechGap &&
+        isSelfDestructWindowEnabled(config, ActionWindow.OnPerSpeechGap)
+      ) {
+        const exploded = await this.selfDestructWindow.execute(
+          requests,
+          actionProvider,
+          ActionWindow.OnPerSpeechGap,
+          Phase.Day,
+          isCurrent,
+          (id) =>
+            options.commitSelfDestruct?.(id, ActionWindow.OnPerSpeechGap) ?? Promise.resolve(),
+        );
         if (exploded !== null) {
           return {
             summary: {
@@ -186,16 +237,40 @@ export class DayPipeline {
               selfDestructBy: exploded.actorId,
             },
             interrupted: true,
-          selfDestruct: exploded,
+            selfDestruct: exploded,
           };
         }
       }
-      const gapDuel = await this.knightDuelWindow.execute(config, requests, actionProvider, DuelWindow.BetweenSpeeches, isCurrent, options.commitKnightDuel);
-      if (gapDuel.endsDay) return { summary: { speeches, selfDestructBy: null }, interrupted: true, ...(gapDuel.selection ? { duel: gapDuel.selection } : {}) };
+      const gapDuel = await this.knightDuelWindow.execute(
+        config,
+        requests,
+        actionProvider,
+        DuelWindow.BetweenSpeeches,
+        isCurrent,
+        options.commitKnightDuel,
+      );
+      if (gapDuel.endsDay)
+        return {
+          summary: { speeches, selfDestructBy: null },
+          interrupted: true,
+          ...(gapDuel.selection ? { duel: gapDuel.selection } : {}),
+        };
     }
 
-    const closingDuel = await this.knightDuelWindow.execute(config, requests, actionProvider, DuelWindow.AfterSpeeches, isCurrent, options.commitKnightDuel);
-    if (closingDuel.endsDay) return { summary: { speeches, selfDestructBy: null }, interrupted: true, ...(closingDuel.selection ? { duel: closingDuel.selection } : {}) };
+    const closingDuel = await this.knightDuelWindow.execute(
+      config,
+      requests,
+      actionProvider,
+      DuelWindow.AfterSpeeches,
+      isCurrent,
+      options.commitKnightDuel,
+    );
+    if (closingDuel.endsDay)
+      return {
+        summary: { speeches, selfDestructBy: null },
+        interrupted: true,
+        ...(closingDuel.selection ? { duel: closingDuel.selection } : {}),
+      };
 
     return {
       summary: {
@@ -205,7 +280,6 @@ export class DayPipeline {
       interrupted: false,
     };
   }
-
 
   /**
    * 判断目标玩家是否存活。

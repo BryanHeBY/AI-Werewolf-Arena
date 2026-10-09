@@ -33,9 +33,10 @@ export class AuditEvidencePolicy {
       }
       for (const note of output.missing_info) missingInfo.push(`${output.agent}: ${note}`);
     }
-    const findings = [...unique.values()].sort((a, b) =>
-      SEVERITY_RANK[b.severity] - SEVERITY_RANK[a.severity] ||
-      (a.evidence[0] ?? 0) - (b.evidence[0] ?? 0),
+    const findings = [...unique.values()].sort(
+      (a, b) =>
+        SEVERITY_RANK[b.severity] - SEVERITY_RANK[a.severity] ||
+        (a.evidence[0] ?? 0) - (b.evidence[0] ?? 0),
     );
     return { findings, failedAgents, missingInfo, totalAgents: outputs.length };
   }
@@ -70,10 +71,16 @@ export class AuditEvidencePolicy {
 
   /** Generated summaries use a deliberately narrow Markdown protocol, not arbitrary Markdown. */
   validatesMarkdown(markdown: string, allowed: Set<number>, locale: Locale = "en"): boolean {
-    const lines = markdown.split("\n").map(line => line.replace(/\r$/, ""));
+    const lines = markdown.split("\n").map((line) => line.replace(/\r$/, ""));
     for (const line of lines) {
-      if (/^\s*(?:```|~~~)/.test(line) || /<\/?[a-z][^>]*>|<!--|-->|<!|<\?/i.test(line)
-        || /^(?: {4}|[ \t]*\t)/.test(line) || /^[ \t]*>/.test(line) || /^[ \t]*(?:=+|-+)[ \t]*$/.test(line)) return false;
+      if (
+        /^\s*(?:```|~~~)/.test(line) ||
+        /<\/?[a-z][^>]*>|<!--|-->|<!|<\?/i.test(line) ||
+        /^(?: {4}|[ \t]*\t)/.test(line) ||
+        /^[ \t]*>/.test(line) ||
+        /^[ \t]*(?:=+|-+)[ \t]*$/.test(line)
+      )
+        return false;
       let content = line.trimStart();
       let container = false;
       for (;;) {
@@ -82,42 +89,63 @@ export class AuditEvidencePolicy {
         container = true;
         content = content.slice(prefix[0].length).trimStart();
       }
-      if (container && (/^#{1,6}(?:[ \t]|$)/.test(content) || content.startsWith(">"))) return false;
+      if (container && (/^#{1,6}(?:[ \t]|$)/.test(content) || content.startsWith(">")))
+        return false;
     }
     const headings = auditHeadings(locale);
     const sections: Array<{ name: string; index: number }> = [];
     let titleSeen = false;
-    const firstContent = lines.findIndex(line => line.trim());
+    const firstContent = lines.findIndex((line) => line.trim());
     for (let index = 0; index < lines.length; index++) {
       const line = lines[index];
       if (!/^[ \t]{0,3}#{1,6}(?:[ \t]|$)/.test(line)) continue;
-      if (/^# [^#].*[^#]$/.test(line) && index === firstContent && !titleSeen) { titleSeen = true; continue; }
+      if (/^# [^#].*[^#]$/.test(line) && index === firstContent && !titleSeen) {
+        titleSeen = true;
+        continue;
+      }
       const match = /^## ([^#]+)$/.exec(line);
       if (!match || !Object.values(headings).includes(match[1])) return false;
       sections.push({ name: match[1], index });
     }
-    const names = sections.map(section => section.name);
+    const names = sections.map((section) => section.name);
     const hasObservations = names.includes(headings.observations);
     const ending = names.includes(headings.todo) ? headings.todo : headings.conclusion;
-    const expected = [headings.session, headings.stats, headings.findings, ...(hasObservations ? [headings.observations] : []), ending, headings.pipeline];
+    const expected = [
+      headings.session,
+      headings.stats,
+      headings.findings,
+      ...(hasObservations ? [headings.observations] : []),
+      ending,
+      headings.pipeline,
+    ];
     if (JSON.stringify(names) !== JSON.stringify(expected)) return false;
     const evidenceValid = (line: string, required: boolean): boolean => {
       const markers = [...line.matchAll(/evidence=/gi)];
       if (!markers.length) return !required;
       if (markers.length !== 1) return false;
-      const tail = line.slice(markers[0].index! + markers[0][0].length).replace(/[ \t]*,[ \t]*/g, ",");
+      const tail = line
+        .slice(markers[0].index! + markers[0][0].length)
+        .replace(/[ \t]*,[ \t]*/g, ",");
       const match = /^([1-9]\d*(?:,[1-9]\d*)*)(?:[ \t]+|$)/.exec(tail);
       if (!match) return false;
-      return match[1].split(",").every(value => Number.isSafeInteger(Number(value)) && allowed.has(Number(value)));
+      return match[1]
+        .split(",")
+        .every((value) => Number.isSafeInteger(Number(value)) && allowed.has(Number(value)));
     };
     // References outside Findings have the same task-local authorization boundary.
-    if (lines.some(line => !evidenceValid(line, false))) return false;
-    const start = sections.find(section => section.name === headings.findings)!.index;
-    const end = sections.find(section => section.index > start)!.index;
-    const entries = lines.slice(start + 1, end).filter(line => line.trim());
+    if (lines.some((line) => !evidenceValid(line, false))) return false;
+    const start = sections.find((section) => section.name === headings.findings)!.index;
+    const end = sections.find((section) => section.index > start)!.index;
+    const entries = lines.slice(start + 1, end).filter((line) => line.trim());
     if (!entries.length) return false;
     const none = `- ${text(locale, "common.none")}`.toLowerCase();
     if (entries.length === 1 && entries[0].toLowerCase() === none) return true;
-    return entries.every(line => !/^[ \t]{4}/.test(line) && line.startsWith("- ") && line.trim().toLowerCase() !== none && evidenceValid(line, true));
+    return entries.every(
+      (line) =>
+        !/^[ \t]{4}/.test(line) &&
+        line.startsWith("- ") &&
+        line.trim().toLowerCase() !== none &&
+        evidenceValid(line, true),
+    );
   }
 }

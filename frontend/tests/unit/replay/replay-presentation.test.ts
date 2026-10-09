@@ -11,12 +11,54 @@ test("collapses concurrent declarations and votes into their summary events", ()
     result: { winner: null, reason: null },
     players: [],
     events: [
-      { seq: 1, timestamp: "t1", day: 1, phase: "day", type: "sheriff_candidate_declared", payload: { actorId: 1, run: true } },
-      { seq: 2, timestamp: "t1", day: 1, phase: "day", type: "sheriff_nomination_summary", payload: { candidates: [1] } },
-      { seq: 3, timestamp: "t1", day: 1, phase: "day", type: "sheriff_vote_cast", payload: { actorId: 2, targetId: 1 } },
-      { seq: 4, timestamp: "t1", day: 1, phase: "day", type: "sheriff_vote_summary", payload: { votes: [], winnerId: 1 } },
-      { seq: 5, timestamp: "t2", day: 1, phase: "voting", type: "vote_cast", payload: { actorId: 1, targetId: 2 } },
-      { seq: 6, timestamp: "t2", day: 1, phase: "voting", type: "vote_summary", payload: { votes: [] } },
+      {
+        seq: 1,
+        timestamp: "t1",
+        day: 1,
+        phase: "day",
+        type: "sheriff_candidate_declared",
+        payload: { actorId: 1, run: true },
+      },
+      {
+        seq: 2,
+        timestamp: "t1",
+        day: 1,
+        phase: "day",
+        type: "sheriff_nomination_summary",
+        payload: { candidates: [1] },
+      },
+      {
+        seq: 3,
+        timestamp: "t1",
+        day: 1,
+        phase: "day",
+        type: "sheriff_vote_cast",
+        payload: { actorId: 2, targetId: 1 },
+      },
+      {
+        seq: 4,
+        timestamp: "t1",
+        day: 1,
+        phase: "day",
+        type: "sheriff_vote_summary",
+        payload: { votes: [], winnerId: 1 },
+      },
+      {
+        seq: 5,
+        timestamp: "t2",
+        day: 1,
+        phase: "voting",
+        type: "vote_cast",
+        payload: { actorId: 1, targetId: 2 },
+      },
+      {
+        seq: 6,
+        timestamp: "t2",
+        day: 1,
+        phase: "voting",
+        type: "vote_summary",
+        payload: { votes: [] },
+      },
     ],
   };
 
@@ -29,7 +71,7 @@ test("collapses concurrent declarations and votes into their summary events", ()
   expect(replay.events).toHaveLength(6);
   expect(presentation.kind).toBe("presentation");
   expect(presentation.sourceSchemaVersion).toBe(2);
-  expect(presentation.events.map(event => event.seq)).toEqual([2, 4, 6]);
+  expect(presentation.events.map((event) => event.seq)).toEqual([2, 4, 6]);
   expect(Object.hasOwn(presentation, "schemaVersion")).toBe(false);
   expect(Object.hasOwn(presentation, "perspective")).toBe(false);
   expect(() => assertReplayDocument(replay)).not.toThrow();

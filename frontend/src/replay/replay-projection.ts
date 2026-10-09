@@ -20,16 +20,24 @@ export interface ReplaySnapshot {
   decision: SealedVictoryResult | null;
 }
 
-export function buildReplaySnapshot(replay: Pick<ReplayDocument, "players" | "events">, eventIndex: number): ReplaySnapshot {
-  const states = new Map(replay.players.map((player) => [player.player_id, {
-    playerId: player.player_id,
-    ...(player.name === undefined ? {} : { name: player.name }),
-    role: player.role,
-    camp: player.camp,
-    alive: true,
-    isSheriff: false,
-    isWinner: false,
-  }]));
+export function buildReplaySnapshot(
+  replay: Pick<ReplayDocument, "players" | "events">,
+  eventIndex: number,
+): ReplaySnapshot {
+  const states = new Map(
+    replay.players.map((player) => [
+      player.player_id,
+      {
+        playerId: player.player_id,
+        ...(player.name === undefined ? {} : { name: player.name }),
+        role: player.role,
+        camp: player.camp,
+        alive: true,
+        isSheriff: false,
+        isWinner: false,
+      },
+    ]),
+  );
   const lastIndex = Math.min(Math.max(eventIndex, 0), replay.events.length - 1);
   let decision: SealedVictoryResult | null = null;
 
@@ -42,13 +50,24 @@ export function buildReplaySnapshot(replay: Pick<ReplayDocument, "players" | "ev
     const fact = readReplayEvent(event, playerIds);
     for (const effect of fact?.effects ?? []) {
       switch (effect.kind) {
-        case "deaths": for (const playerId of effect.playerIds) markDead(playerId); break;
-        case "sheriff_elected": for (const player of states.values()) player.isSheriff = player.playerId === effect.playerId; break;
-        case "sheriff_transferred": states.get(effect.fromId)!.isSheriff = false; states.get(effect.toId)!.isSheriff = true; break;
-        case "sheriff_destroyed": states.get(effect.playerId)!.isSheriff = false; break;
+        case "deaths":
+          for (const playerId of effect.playerIds) markDead(playerId);
+          break;
+        case "sheriff_elected":
+          for (const player of states.values())
+            player.isSheriff = player.playerId === effect.playerId;
+          break;
+        case "sheriff_transferred":
+          states.get(effect.fromId)!.isSheriff = false;
+          states.get(effect.toId)!.isSheriff = true;
+          break;
+        case "sheriff_destroyed":
+          states.get(effect.playerId)!.isSheriff = false;
+          break;
         case "victory": {
           decision = effect.decision;
-          const winners = decision.outcome.kind === "victory" ? decision.outcome.winningPlayerIds : [];
+          const winners =
+            decision.outcome.kind === "victory" ? decision.outcome.winningPlayerIds : [];
           for (const player of states.values()) player.isWinner = winners.includes(player.playerId);
           break;
         }

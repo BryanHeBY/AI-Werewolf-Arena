@@ -10,4 +10,3 @@ export const SHERIFF_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR: PhaseStageLocalizatio
     sheriff_choose_direction: term("stage", "sheriff_choose_direction", "zh-CN"),
   },
 };
-

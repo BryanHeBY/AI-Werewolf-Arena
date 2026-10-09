@@ -1,4 +1,11 @@
-import type { ActionWindow, KnightDuelWindow, Role, WinCondition, WitchSelfHealRule, TieBreakerStrategy } from "./identity";
+import type {
+  ActionWindow,
+  KnightDuelWindow,
+  Role,
+  WinCondition,
+  WitchSelfHealRule,
+  TieBreakerStrategy,
+} from "./identity";
 
 export interface HookConfig {
   onDaybreak: boolean;
@@ -25,11 +32,17 @@ export interface TieBreakerConfig {
   sheriffVote?: TieBreakerStrategy;
 }
 
-export const GUARD_REPEAT_POLICIES = ["awa_last_action_v1", "netease_consecutive_nights_v1"] as const;
-export type GuardRepeatPolicy = typeof GUARD_REPEAT_POLICIES[number];
+export const GUARD_REPEAT_POLICIES = [
+  "awa_last_action_v1",
+  "netease_consecutive_nights_v1",
+] as const;
+export type GuardRepeatPolicy = (typeof GUARD_REPEAT_POLICIES)[number];
 
-export const HIDDEN_WOLF_CAMP_INSPECTION_POLICIES = ["awa_inheritance_v1", "netease_2020_good_v1"] as const;
-export type HiddenWolfCampInspectionPolicy = typeof HIDDEN_WOLF_CAMP_INSPECTION_POLICIES[number];
+export const HIDDEN_WOLF_CAMP_INSPECTION_POLICIES = [
+  "awa_inheritance_v1",
+  "netease_2020_good_v1",
+] as const;
+export type HiddenWolfCampInspectionPolicy = (typeof HIDDEN_WOLF_CAMP_INSPECTION_POLICIES)[number];
 
 export interface BoardConfig {
   boardSize: number;

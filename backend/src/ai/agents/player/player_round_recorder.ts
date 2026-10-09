@@ -1,6 +1,6 @@
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionRequest, EntityId } from "../../../core/domain"
+import { ActionRequest, EntityId } from "../../../core/domain";
 import {
   getActionRequestDay,
   getActionRequestStage,
@@ -13,15 +13,9 @@ import { BuiltPlayerPrompt, PlayerRoundOutcome } from "./contracts";
 export class PlayerRoundRecorder {
   private readonly roundCounters = new Map<EntityId, number>();
 
-  constructor(
-    private readonly world: World,
-  ) {}
+  constructor(private readonly world: World) {}
 
-  record(
-    request: ActionRequest,
-    prompt: BuiltPlayerPrompt,
-    outcome: PlayerRoundOutcome,
-  ): void {
+  record(request: ActionRequest, prompt: BuiltPlayerPrompt, outcome: PlayerRoundOutcome): void {
     const recorder = getSessionRecorder();
     if (!recorder) return;
     const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);

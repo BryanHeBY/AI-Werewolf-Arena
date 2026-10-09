@@ -28,16 +28,16 @@
 
 目录 **23 verified/41 planned** 在最终完整局/Tape前冻结，生产源在运行期间未修改。以下进程均终态exit0：
 
-| 门槛 | 范围与本机日志 |
-| --- | --- |
-| 84完整局＋40seed＋4失败Tape | `/tmp/awa-black-frozen-matrix.log`：48 pass / 13906 assertions / 3 files；实际SDK/ACP/MCP/混合、正常无fallback、严格Tape与回收 |
-| 失败断言修正复验 | `/tmp/awa-black-failure-final.log`：4 / 48 / 1 file；仅修改测试事件ID，生产源与录制兼容指纹不变 |
-| 受影响后端 | `/tmp/awa-black-affected-preview.log`：1175 / 12678 / 88 files；core/engine/game/AI/记录/回放/配置/呈现，非全backend release |
-| 配置/目录与seed | `/tmp/awa-black-seeds-config.log`：20 / 604 / 3 files；参数仅strict空对象、至多一位，有限组合和公开六/十二例 |
-| 静态 | backend type/deps/boundaries/i18n exit0；57条精确既有字面例外；git diff --check |
-| 前端 | `/tmp/awa-black-front.log`：173 / 1496 / 27 files，type/build exit0；含10条Black中英投影/文案单测及5份实际God档 |
-| Chromium | `/tmp/awa-black-browser.log`：新增4实际浏览器通过；`/tmp/awa-p7-browser-all.log`：全量78通过，3.1分钟 |
-| Remotion PNG | `/tmp/awa-black-trade-en.png`、`/tmp/awa-black-backlash-zh.png`，均frame280、render exit0；root/L独立目检十二席无遮挡、仍全活/无赢家，反噬结果仅提案，V9获枪仍是Villager |
+| 门槛                        | 范围与本机日志                                                                                                                                                           |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 84完整局＋40seed＋4失败Tape | `/tmp/awa-black-frozen-matrix.log`：48 pass / 13906 assertions / 3 files；实际SDK/ACP/MCP/混合、正常无fallback、严格Tape与回收                                           |
+| 失败断言修正复验            | `/tmp/awa-black-failure-final.log`：4 / 48 / 1 file；仅修改测试事件ID，生产源与录制兼容指纹不变                                                                          |
+| 受影响后端                  | `/tmp/awa-black-affected-preview.log`：1175 / 12678 / 88 files；core/engine/game/AI/记录/回放/配置/呈现，非全backend release                                             |
+| 配置/目录与seed             | `/tmp/awa-black-seeds-config.log`：20 / 604 / 3 files；参数仅strict空对象、至多一位，有限组合和公开六/十二例                                                             |
+| 静态                        | backend type/deps/boundaries/i18n exit0；57条精确既有字面例外；git diff --check                                                                                          |
+| 前端                        | `/tmp/awa-black-front.log`：173 / 1496 / 27 files，type/build exit0；含10条Black中英投影/文案单测及5份实际God档                                                          |
+| Chromium                    | `/tmp/awa-black-browser.log`：新增4实际浏览器通过；`/tmp/awa-p7-browser-all.log`：全量78通过，3.1分钟                                                                    |
+| Remotion PNG                | `/tmp/awa-black-trade-en.png`、`/tmp/awa-black-backlash-zh.png`，均frame280、render exit0；root/L独立目检十二席无遮挡、仍全活/无赢家，反噬结果仅提案，V9获枪仍是Villager |
 
 日志路径是本机验收记录，临时目录不属于版本化产物；可复跑命令与仓库测试位置见[交接](../handoff-p7.md)。P7全阶段门槛另见[阶段验收](p7-activation.md)，不得将上述受影响范围冒充全量。
 

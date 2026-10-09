@@ -6,10 +6,10 @@
 
 具体角色查验继续使用 `role_check`、numeric `inspect_role` 与 typed `role_inspected`；工具名/schema保持中性。每实例state新增可选 `policy:"gargoyle"|"psychic"`：旧缺省明确兼容Garg，新原生Psychic显式写psychic，未知值在原生/授予安装前拒绝。policy不是任意priority/规则开关。
 
-| policy | 时点 | 重复/必须 | 跳过与刀权 |
-| --- | --- | --- | --- |
-| gargoyle | 180，刀前 | 不自验、不重复；有目标必须完成 | 无目标不伪造报告/消费；只原生Garg能形成查后刀完成范围 |
-| psychic | 600，女巫后 | 不自验，允许跨夜重复 | 可不调用工具/null决策跳过；无原生狼权限，不形成Garg完成范围 |
+| policy   | 时点        | 重复/必须                      | 跳过与刀权                                                  |
+| -------- | ----------- | ------------------------------ | ----------------------------------------------------------- |
+| gargoyle | 180，刀前   | 不自验、不重复；有目标必须完成 | 无目标不伪造报告/消费；只原生Garg能形成查后刀完成范围       |
+| psychic  | 600，女巫后 | 不自验，允许跨夜重复           | 可不调用工具/null决策跳过；无原生狼权限，不形成Garg完成范围 |
 
 两个具名handler按实例policy筛选。同一个Villager可以分别拥有early/late能力，真实身份不变；不能根据持有者底牌或来源猜规则。ToolSpec与validator只有一份，各profile引用相同对象/函数，避免同名工具被注册顺序覆盖。Baseline、目标提示、受限观察策略及SDK/ACP共同policy使用本轮bound实例，角色背景明确原生能力与获赠规则区别。
 

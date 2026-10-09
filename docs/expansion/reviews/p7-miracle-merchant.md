@@ -8,16 +8,16 @@ R独立核2020-06-10官方TapTap作者徽章/完整Q&A、2020-06-11上线、6/18
 
 ## 三路发现及关闭
 
-| 职责 | 发现 | 修正及复查 |
-| --- | --- | --- |
-| R 时序 | Dream原生150，商人同150不能保证首个行动 | 固定125并真实有Dream/无Dream排序断言。 |
-| A 调度/库存 | 阶段列表预收集；gift当夜、原生混调用、联合账本与生命范围需明确 | Merchant提前贡献Lucky700与三能力调度；activation实例政策，原生S/G/W过滤，scope含kind/activation/id；target原life guardClaims，caster死保前缀。 |
-| A 提交 | gateway成功后账本再变仍同kind重复目标；实例同ref ID改写仍旧请求生效 | 原生与Lucky实际应用前复验联合历史，scope捕原ID；独立原probe与固定ID/ledger回归关闭。 |
-| A 生命周期 | death不能仅disabled，enable/transfer/copy可能洗资源 | deathExpired永久事实，真实DeathResolution统一失效，enable拒，transfer完整state/policy/计数/关闭/lostfact，copy来源Lucky拒。 |
-| L 提示 | Lucky毒套强制普通Witch阶段，与可等待矛盾 | Lucky bound专属optional directive，普通Witch保原行为；两语真policy probe及仓库回归。 |
-| L 目标 | Lucky毒self已用后，毒ID列表删self却none-self仍合法 | 另列毒目标及none本人例外，规则/validator/提示同时明确；不同kind不共用限制。 |
-| L 目录 | 中文标题anchor不符合固定role目录检查 | 改稳定miracle_merchant锚点；目录3/177独立核过。 |
-| R 证据 | 普通未终局case标题冒称badge/最终judge | 收窄旧标题；另真实Merchant+末Wolf同批死、初始Sheriff、两遗言/徽转活民/Good优先终局固定回归。 |
+| 职责        | 发现                                                                | 修正及复查                                                                                                                                     |
+| ----------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| R 时序      | Dream原生150，商人同150不能保证首个行动                             | 固定125并真实有Dream/无Dream排序断言。                                                                                                         |
+| A 调度/库存 | 阶段列表预收集；gift当夜、原生混调用、联合账本与生命范围需明确      | Merchant提前贡献Lucky700与三能力调度；activation实例政策，原生S/G/W过滤，scope含kind/activation/id；target原life guardClaims，caster死保前缀。 |
+| A 提交      | gateway成功后账本再变仍同kind重复目标；实例同ref ID改写仍旧请求生效 | 原生与Lucky实际应用前复验联合历史，scope捕原ID；独立原probe与固定ID/ledger回归关闭。                                                           |
+| A 生命周期  | death不能仅disabled，enable/transfer/copy可能洗资源                 | deathExpired永久事实，真实DeathResolution统一失效，enable拒，transfer完整state/policy/计数/关闭/lostfact，copy来源Lucky拒。                    |
+| L 提示      | Lucky毒套强制普通Witch阶段，与可等待矛盾                            | Lucky bound专属optional directive，普通Witch保原行为；两语真policy probe及仓库回归。                                                           |
+| L 目标      | Lucky毒self已用后，毒ID列表删self却none-self仍合法                  | 另列毒目标及none本人例外，规则/validator/提示同时明确；不同kind不共用限制。                                                                    |
+| L 目录      | 中文标题anchor不符合固定role目录检查                                | 改稳定miracle_merchant锚点；目录3/177独立核过。                                                                                                |
+| R 证据      | 普通未终局case标题冒称badge/最终judge                               | 收窄旧标题；另真实Merchant+末Wolf同批死、初始Sheriff、两遗言/徽转活民/Good优先终局固定回归。                                                   |
 
 A独立37/292及原复现关闭；L独立8/122＋catalog3/177，实际God/choice/ownDTO/donor/history/死亡与transfer/copy；R独立33/271及新的真实末神末狼/联合账本probe。九类完整局字面计划/手写结果与契约表已交叉核，不靠生产damage/judge生成预期；当前所有已发现阻断已关闭。
 

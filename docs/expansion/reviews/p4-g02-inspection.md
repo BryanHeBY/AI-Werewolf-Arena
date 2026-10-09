@@ -12,12 +12,12 @@
 
 ## 独立审查、修正与复查
 
-| 审查者 | 首轮发现 | 根修正与最终状态 |
-| --- | --- | --- |
-| A / review_arch_tests | decoder校验与返回重复读取unknown属性，getter可使返回不满足InspectionResult | own data descriptor快照验证，不执行getter、不读取继承，Proxy异常未知；补changing getter/继承/throwing与revoked Proxy反例，复查关闭 |
-| A / review_arch_tests | 新nested result经浅投影与领域事件共享，只有请求DTO的provider可改写权威事实 | 投影structuredClone整份payload；实际Seer投影改动不影响event/latest/history/summary，公票据nested也验证，复查关闭 |
-| R+T / review_scope_rules | terminal旧值truthiness与严格reader/文档不一致：null/缺字段猜good，字符串false猜wolf | 终端同用shared decoder，null/unknown保持原JSON、不合法bool/缺失显示?；两語四反例通过，复查关闭 |
-| L+D / review_i18n_delivery | typed/legacy优先级、三结果两语、原文、版本与API范围 | 没有契约阻断；核对renderer一致、producer camp-only、旧private可选及source不放宽；英文最后措辞建议采纳 |
+| 审查者                     | 首轮发现                                                                            | 根修正与最终状态                                                                                                                   |
+| -------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| A / review_arch_tests      | decoder校验与返回重复读取unknown属性，getter可使返回不满足InspectionResult          | own data descriptor快照验证，不执行getter、不读取继承，Proxy异常未知；补changing getter/继承/throwing与revoked Proxy反例，复查关闭 |
+| A / review_arch_tests      | 新nested result经浅投影与领域事件共享，只有请求DTO的provider可改写权威事实          | 投影structuredClone整份payload；实际Seer投影改动不影响event/latest/history/summary，公票据nested也验证，复查关闭                   |
+| R+T / review_scope_rules   | terminal旧值truthiness与严格reader/文档不一致：null/缺字段猜good，字符串false猜wolf | 终端同用shared decoder，null/unknown保持原JSON、不合法bool/缺失显示?；两語四反例通过，复查关闭                                     |
+| L+D / review_i18n_delivery | typed/legacy优先级、三结果两语、原文、版本与API范围                                 | 没有契约阻断；核对renderer一致、producer camp-only、旧private可选及source不放宽；英文最后措辞建议采纳                              |
 
 A独立最后13测试/199断言通过。R独立20测试/3279断言及前端3项，修正后核对根28/3346且未重复完整门槛。L独立最后后端13/199、前端4/24通过；最后system文本两语与R共同复查0阻断。没有把根完整矩阵当成审查者重复执行。
 

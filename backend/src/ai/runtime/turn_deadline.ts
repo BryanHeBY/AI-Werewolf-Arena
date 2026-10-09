@@ -1,21 +1,34 @@
 export class TurnDeadlineElapsed extends Error {
-  constructor() { super("request_deadline_elapsed"); }
+  constructor() {
+    super("request_deadline_elapsed");
+  }
 }
 
 /** Owns only a wait's timer/listener; the caller still owns the underlying resource. */
-export async function awaitBeforeDeadline<T>(start: () => Promise<T>, deadlineAtMs?: number, signal?: AbortSignal): Promise<T> {
+export async function awaitBeforeDeadline<T>(
+  start: () => Promise<T>,
+  deadlineAtMs?: number,
+  signal?: AbortSignal,
+): Promise<T> {
   if (signal?.aborted) throw signal.reason;
   const controller = new AbortController();
   const abort = () => controller.abort(signal?.reason);
   signal?.addEventListener("abort", abort, { once: true });
-  const timer = deadlineAtMs === undefined ? undefined : setTimeout(
-    () => controller.abort(new TurnDeadlineElapsed()), Math.max(0, deadlineAtMs - Date.now()),
-  );
+  const timer =
+    deadlineAtMs === undefined
+      ? undefined
+      : setTimeout(
+          () => controller.abort(new TurnDeadlineElapsed()),
+          Math.max(0, deadlineAtMs - Date.now()),
+        );
   try {
-    const result = await awaitWithAbort(Promise.resolve().then(() => {
-      controller.signal.throwIfAborted();
-      return start();
-    }), controller.signal);
+    const result = await awaitWithAbort(
+      Promise.resolve().then(() => {
+        controller.signal.throwIfAborted();
+        return start();
+      }),
+      controller.signal,
+    );
     controller.signal.throwIfAborted();
     return result;
   } finally {
@@ -41,8 +54,13 @@ export async function settleWithin(promise: Promise<unknown>, timeoutMs: number)
   let timer: NodeJS.Timeout | undefined;
   try {
     return await Promise.race([
-      promise.then(() => true, () => false),
-      new Promise<boolean>((resolve) => { timer = setTimeout(() => resolve(false), timeoutMs); }),
+      promise.then(
+        () => true,
+        () => false,
+      ),
+      new Promise<boolean>((resolve) => {
+        timer = setTimeout(() => resolve(false), timeoutMs);
+      }),
     ]);
   } finally {
     if (timer) clearTimeout(timer);

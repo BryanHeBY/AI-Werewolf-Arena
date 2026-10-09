@@ -15,7 +15,7 @@ const PRIVATE_STATE_KEYS = {
   wolfBeauty: "wolf_beauty",
   bear: "bear",
   hiddenWolf: "hidden_wolf",
-  gargoyle:"gargoyle",
+  gargoyle: "gargoyle",
   idiot: "idiot",
 } as const;
 
@@ -39,17 +39,51 @@ export interface GuardState {
 export interface HunterState {
   canShoot: boolean;
 }
-export interface WolfKingState { canShoot: boolean }
-export interface WhiteWolfKingState { canDetonate: boolean }
-export interface KnightState { canDuel: boolean }
-export interface GravekeeperReport extends ExileFeedback { receivedDay: number }
-export interface GravekeeperState { history: GravekeeperReport[] }
-export interface DreamerState { lastTarget: EntityId | null; lastDay: number | null; history: Array<{day: number; targetId: EntityId}> }
-export interface WolfBeautyState { targetId: EntityId | null; lastActedDay: number | null; history: Array<{day:number;targetId:EntityId|null}> }
-export interface BearState { history:Array<{day:number;roared:boolean}> }
-export interface HiddenWolfState {hasInheritedKnife:boolean;campInspection?:HiddenWolfCampInspectionPolicy}
-export interface GargoyleState {hasInheritedKnife:boolean}
-export interface RoleInspectionState {policy?: RoleInspectionPolicy;lastTarget:EntityId|null;lastDay:number|null;history:Array<{day:number;targetId:EntityId;result:Extract<InspectionResult,{kind:"role"}>}>}
+export interface WolfKingState {
+  canShoot: boolean;
+}
+export interface WhiteWolfKingState {
+  canDetonate: boolean;
+}
+export interface KnightState {
+  canDuel: boolean;
+}
+export interface GravekeeperReport extends ExileFeedback {
+  receivedDay: number;
+}
+export interface GravekeeperState {
+  history: GravekeeperReport[];
+}
+export interface DreamerState {
+  lastTarget: EntityId | null;
+  lastDay: number | null;
+  history: Array<{ day: number; targetId: EntityId }>;
+}
+export interface WolfBeautyState {
+  targetId: EntityId | null;
+  lastActedDay: number | null;
+  history: Array<{ day: number; targetId: EntityId | null }>;
+}
+export interface BearState {
+  history: Array<{ day: number; roared: boolean }>;
+}
+export interface HiddenWolfState {
+  hasInheritedKnife: boolean;
+  campInspection?: HiddenWolfCampInspectionPolicy;
+}
+export interface GargoyleState {
+  hasInheritedKnife: boolean;
+}
+export interface RoleInspectionState {
+  policy?: RoleInspectionPolicy;
+  lastTarget: EntityId | null;
+  lastDay: number | null;
+  history: Array<{
+    day: number;
+    targetId: EntityId;
+    result: Extract<InspectionResult, { kind: "role" }>;
+  }>;
+}
 
 /** 白痴私有状态。 */
 export interface IdiotState {
@@ -112,7 +146,10 @@ export function setWolfKingState(roleComp: RoleComponent, state: WolfKingState):
 export function getWolfKingState(roleComp: RoleComponent): WolfKingState | undefined {
   return getState(roleComp, PRIVATE_STATE_KEYS.wolfKing);
 }
-export function setWhiteWolfKingState(roleComp: RoleComponent, state: WhiteWolfKingState): WhiteWolfKingState {
+export function setWhiteWolfKingState(
+  roleComp: RoleComponent,
+  state: WhiteWolfKingState,
+): WhiteWolfKingState {
   return setState(roleComp, PRIVATE_STATE_KEYS.whiteWolfKing, state);
 }
 export function getWhiteWolfKingState(roleComp: RoleComponent): WhiteWolfKingState | undefined {
@@ -124,24 +161,63 @@ export function setKnightState(roleComp: RoleComponent, state: KnightState): Kni
 export function getKnightState(roleComp: RoleComponent): KnightState | undefined {
   return getState(roleComp, PRIVATE_STATE_KEYS.knight);
 }
-export function setGravekeeperState(roleComp: RoleComponent, state: GravekeeperState): GravekeeperState {
+export function setGravekeeperState(
+  roleComp: RoleComponent,
+  state: GravekeeperState,
+): GravekeeperState {
   return setState(roleComp, PRIVATE_STATE_KEYS.gravekeeper, state);
 }
 export function getGravekeeperState(roleComp: RoleComponent): GravekeeperState | undefined {
   return getState(roleComp, PRIVATE_STATE_KEYS.gravekeeper);
 }
-export function setDreamerState(roleComp: RoleComponent, state: DreamerState): DreamerState { return installNativeAbility(roleComp, "dream", state); }
-export function getDreamerState(roleComp: RoleComponent, abilityId?: string): DreamerState | undefined { return findNightAbility(roleComp, "dream", abilityId)?.state; }
-export function setWolfBeautyState(roleComp: RoleComponent, state: WolfBeautyState): WolfBeautyState { return setState(roleComp,PRIVATE_STATE_KEYS.wolfBeauty,state); }
-export function getWolfBeautyState(roleComp: RoleComponent): WolfBeautyState | undefined { return getState(roleComp,PRIVATE_STATE_KEYS.wolfBeauty); }
-export function setBearState(role:RoleComponent,state:BearState):BearState{return setState(role,PRIVATE_STATE_KEYS.bear,state);}
-export function getBearState(role:RoleComponent):BearState|undefined{return getState(role,PRIVATE_STATE_KEYS.bear);}
-export function setHiddenWolfState(role:RoleComponent,state:HiddenWolfState):HiddenWolfState{return setState(role,PRIVATE_STATE_KEYS.hiddenWolf,state);}
-export function getHiddenWolfState(role:RoleComponent):HiddenWolfState|undefined{return getState(role,PRIVATE_STATE_KEYS.hiddenWolf);}
-export function setGargoyleState(role:RoleComponent,state:GargoyleState):GargoyleState{return setState(role,PRIVATE_STATE_KEYS.gargoyle,state);}
-export function getGargoyleState(role:RoleComponent):GargoyleState|undefined{return getState(role,PRIVATE_STATE_KEYS.gargoyle);}
-export function setRoleInspectionState(role:RoleComponent,state:RoleInspectionState):RoleInspectionState{return installNativeAbility(role,"role_check",state);}
-export function getRoleInspectionState(role:RoleComponent,abilityId?:string):RoleInspectionState|undefined{return findNightAbility(role,"role_check",abilityId)?.state;}
+export function setDreamerState(roleComp: RoleComponent, state: DreamerState): DreamerState {
+  return installNativeAbility(roleComp, "dream", state);
+}
+export function getDreamerState(
+  roleComp: RoleComponent,
+  abilityId?: string,
+): DreamerState | undefined {
+  return findNightAbility(roleComp, "dream", abilityId)?.state;
+}
+export function setWolfBeautyState(
+  roleComp: RoleComponent,
+  state: WolfBeautyState,
+): WolfBeautyState {
+  return setState(roleComp, PRIVATE_STATE_KEYS.wolfBeauty, state);
+}
+export function getWolfBeautyState(roleComp: RoleComponent): WolfBeautyState | undefined {
+  return getState(roleComp, PRIVATE_STATE_KEYS.wolfBeauty);
+}
+export function setBearState(role: RoleComponent, state: BearState): BearState {
+  return setState(role, PRIVATE_STATE_KEYS.bear, state);
+}
+export function getBearState(role: RoleComponent): BearState | undefined {
+  return getState(role, PRIVATE_STATE_KEYS.bear);
+}
+export function setHiddenWolfState(role: RoleComponent, state: HiddenWolfState): HiddenWolfState {
+  return setState(role, PRIVATE_STATE_KEYS.hiddenWolf, state);
+}
+export function getHiddenWolfState(role: RoleComponent): HiddenWolfState | undefined {
+  return getState(role, PRIVATE_STATE_KEYS.hiddenWolf);
+}
+export function setGargoyleState(role: RoleComponent, state: GargoyleState): GargoyleState {
+  return setState(role, PRIVATE_STATE_KEYS.gargoyle, state);
+}
+export function getGargoyleState(role: RoleComponent): GargoyleState | undefined {
+  return getState(role, PRIVATE_STATE_KEYS.gargoyle);
+}
+export function setRoleInspectionState(
+  role: RoleComponent,
+  state: RoleInspectionState,
+): RoleInspectionState {
+  return installNativeAbility(role, "role_check", state);
+}
+export function getRoleInspectionState(
+  role: RoleComponent,
+  abilityId?: string,
+): RoleInspectionState | undefined {
+  return findNightAbility(role, "role_check", abilityId)?.state;
+}
 
 /** 写入白痴私有状态。 */
 export function setIdiotState(roleComp: RoleComponent, state: IdiotState): IdiotState {

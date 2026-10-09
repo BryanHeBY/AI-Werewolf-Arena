@@ -3,13 +3,7 @@ import type { Locale } from "@ai-werewolf-arena/game-text";
 import type { GameEvent } from "../../../core/domain/model";
 
 /** 终端 live 输出类型。 */
-export type ScriptLiveKind =
-  | "chat"
-  | "action"
-  | "private"
-  | "god"
-  | "system"
-  | "end";
+export type ScriptLiveKind = "chat" | "action" | "private" | "god" | "system" | "end";
 
 /** 终端 live 渲染结果结构。 */
 export interface ScriptLiveRender {

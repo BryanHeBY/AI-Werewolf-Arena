@@ -13,7 +13,10 @@ function parseBoolean(value: string): boolean {
   throw new Error("runtime_cli_boolean_invalid");
 }
 
-export function parseRunGameArgs(argv: string[], environment: NodeJS.ProcessEnv = process.env): { configDir: string; gameName: string; overrides: Partial<RunGameOptions>; locale?: Locale } {
+export function parseRunGameArgs(
+  argv: string[],
+  environment: NodeJS.ProcessEnv = process.env,
+): { configDir: string; gameName: string; overrides: Partial<RunGameOptions>; locale?: Locale } {
   const overrides: Partial<RunGameOptions> = {};
   let locale: Locale | undefined;
   let configDir = resolveCliConfigDirectory(undefined, environment);
@@ -25,8 +28,10 @@ export function parseRunGameArgs(argv: string[], environment: NodeJS.ProcessEnv 
     if (token === "--configs-dir") configDir = value;
     else if (token === "--game-config-name") gameName = value;
     else if (token === "--game" || token === "--board") overrides.board = value as GameBoard;
-    else if (token === "--locale") { if (!isLocale(value)) throw new Error("runtime_cli_locale_invalid"); locale = value; }
-    else if (token === "--max-days") overrides.maxDays = Number(value);
+    else if (token === "--locale") {
+      if (!isLocale(value)) throw new Error("runtime_cli_locale_invalid");
+      locale = value;
+    } else if (token === "--max-days") overrides.maxDays = Number(value);
     else if (token === "--trace") overrides.trace = parseBoolean(value);
     else if (token === "--max-runtime-ms") overrides.maxRuntimeMs = Number(value);
     else if (token === "--llm-timeout-ms") overrides.llmTimeoutMs = Number(value);
@@ -44,16 +49,27 @@ export function parseRunGameArgs(argv: string[], environment: NodeJS.ProcessEnv 
   return { configDir, gameName, overrides, locale };
 }
 
-export async function main(argv = process.argv.slice(2), display: CliDisplayContext = { locale: "zh-CN", explicit: false }): Promise<void> {
+export async function main(
+  argv = process.argv.slice(2),
+  display: CliDisplayContext = { locale: "zh-CN", explicit: false },
+): Promise<void> {
   const args = parseRunGameArgs(takeDisplayArguments(argv, display));
   if (!display.explicit && args.locale) display.locale = args.locale;
   const runtime = await loadRuntimeConfig({ configDir: args.configDir, gameName: args.gameName });
   const board = resolveGameBoard(runtime, args.overrides);
   const boardOverride = await loadBoardDefinition(args.configDir, board);
-  const setup = resolveGameSetup({ ...runtime, game: { ...runtime.game,
-    ...(args.locale ? { locale: args.locale } : {}),
-    ...(display.explicit ? { displayLocale: display.locale } : {}),
-  } }, args.overrides, boardOverride);
+  const setup = resolveGameSetup(
+    {
+      ...runtime,
+      game: {
+        ...runtime.game,
+        ...(args.locale ? { locale: args.locale } : {}),
+        ...(display.explicit ? { displayLocale: display.locale } : {}),
+      },
+    },
+    args.overrides,
+    boardOverride,
+  );
   display.locale = setup.context.displayLocale;
   await runGame(setup);
 }

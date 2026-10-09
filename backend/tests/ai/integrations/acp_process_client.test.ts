@@ -22,10 +22,12 @@ describe("AcpProcessClient initialization deadlines", () => {
     });
 
     const startedAt = Date.now();
-    await expect(client.createSession({
-      actorId: 1,
-      registry: new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig).world),
-    })).rejects.toBeDefined();
+    await expect(
+      client.createSession({
+        actorId: 1,
+        registry: new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig).world),
+      }),
+    ).rejects.toBeDefined();
     expect(Date.now() - startedAt).toBeLessThan(5_000);
 
     const pid = Number(await fs.readFile(pidFile, "utf8"));
@@ -36,7 +38,9 @@ describe("AcpProcessClient initialization deadlines", () => {
 test("drains final ACP chunks on success, failure and forced closure", async () => {
   const root = await createTestTempDirectory("awa-acp-stream-");
   const script = path.join(root, "agent.ts");
-  await fs.writeFile(script, `
+  await fs.writeFile(
+    script,
+    `
     import { createInterface } from "node:readline";
     const send = value => process.stdout.write(JSON.stringify(value) + "\\n");
     for await (const line of createInterface({ input: process.stdin })) {
@@ -60,19 +64,25 @@ test("drains final ACP chunks on success, failure and forced closure", async () 
         }
       }
     }
-  `);
+  `,
+  );
   const updates: string[] = [];
   let onLastChunk: (() => void) | undefined;
   const client = new AcpProcessClient({
-    command: process.execPath, args: [script], cwd: root,
+    command: process.execPath,
+    args: [script],
+    cwd: root,
     onUpdate: ({ update }) => {
       const text = (update as { content: { text: string } }).content.text;
       updates.push(text);
       if (text === "片段") onLastChunk?.();
     },
-    onPromptEnd: actorId => updates.push(`end:${actorId}`),
+    onPromptEnd: (actorId) => updates.push(`end:${actorId}`),
   });
-  const session = await client.createSession({ actorId: 11, registry: new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig).world) });
+  const session = await client.createSession({
+    actorId: 11,
+    registry: new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig).world),
+  });
   try {
     await session.prompt("ok");
     expect(updates).toEqual(["最", "后", "片段", "end:11"]);
@@ -81,8 +91,13 @@ test("drains final ACP chunks on success, failure and forced closure", async () 
     await expect(session.prompt("fail")).rejects.toBeDefined();
     expect(updates).toEqual(["最", "后", "片段", "end:11"]);
     updates.length = 0;
-    const lastChunk = new Promise<void>(resolve => { onLastChunk = resolve; });
-    const pending = session.prompt("hang").then(() => false, () => true);
+    const lastChunk = new Promise<void>((resolve) => {
+      onLastChunk = resolve;
+    });
+    const pending = session.prompt("hang").then(
+      () => false,
+      () => true,
+    );
     await lastChunk;
     await session.close({ force: true });
     expect(await pending).toBe(true);

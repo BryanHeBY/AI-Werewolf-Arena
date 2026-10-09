@@ -25,15 +25,15 @@
 
 最终目录 **22 verified/42 planned** 在整局/Tape之前冻结，期间无生产源码编辑。以下日志已核进程终态exit0：
 
-| 门槛 | 证据与范围 |
-| --- | --- |
-| 60完整局＋40seed/Tape | `/tmp/awa-awakened-frozen-matrix.log` **32 pass/11544 assertions/2 files**；每决策/检查点/受众、无fallback、ACP/MCP/PID回收；非外部模型 |
-| 受影响后端 | `/tmp/awa-awakened-final-affected.log` **1223 pass/14272 assertions/104 files**；core/engine/game/AI/recording/replay/diagnostics/presentation及Aw配置/目录/failure Tape，非全backend release |
-| 核心专项 | `/tmp/awa-awakened-final-rules.log` **63/276**；真实同批死亡、先接刀后枪死、首夜毒/复合禁枪与Wolf复活、原owner/实例/paid前缀 |
-| 静态 | backend type/deps/boundaries/i18n全部exit0，仍57精确兼容字面例外；git diff --check |
-| 前端 | `/tmp/awa-awakened-front-unit.log` **157/1370/25 files**，type/build exit0；真实God fixture身份、查验mask、choice不致死、枪实际死亡、dead Wolf赢家与getter回退 |
-| Chromium | `/tmp/awa-awakened-browser.log` **6实际中英浏览器通过（2.3min）**；十二枪、守护、额外刀保留，席位与字幕布局、无提前赢家及末态成员 |
-| PNG | `/tmp/awa-awakened-twelve-en.png` presentation frame6760，中立枪、七个已死亡席位且0winner；`/tmp/awa-awakened-guard-zh.png` frame2620，只有既死2号、目标6仍活。两render exit0，root/L独立目检无遮挡 |
+| 门槛                  | 证据与范围                                                                                                                                                                                          |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 60完整局＋40seed/Tape | `/tmp/awa-awakened-frozen-matrix.log` **32 pass/11544 assertions/2 files**；每决策/检查点/受众、无fallback、ACP/MCP/PID回收；非外部模型                                                             |
+| 受影响后端            | `/tmp/awa-awakened-final-affected.log` **1223 pass/14272 assertions/104 files**；core/engine/game/AI/recording/replay/diagnostics/presentation及Aw配置/目录/failure Tape，非全backend release       |
+| 核心专项              | `/tmp/awa-awakened-final-rules.log` **63/276**；真实同批死亡、先接刀后枪死、首夜毒/复合禁枪与Wolf复活、原owner/实例/paid前缀                                                                        |
+| 静态                  | backend type/deps/boundaries/i18n全部exit0，仍57精确兼容字面例外；git diff --check                                                                                                                  |
+| 前端                  | `/tmp/awa-awakened-front-unit.log` **157/1370/25 files**，type/build exit0；真实God fixture身份、查验mask、choice不致死、枪实际死亡、dead Wolf赢家与getter回退                                      |
+| Chromium              | `/tmp/awa-awakened-browser.log` **6实际中英浏览器通过（2.3min）**；十二枪、守护、额外刀保留，席位与字幕布局、无提前赢家及末态成员                                                                   |
+| PNG                   | `/tmp/awa-awakened-twelve-en.png` presentation frame6760，中立枪、七个已死亡席位且0winner；`/tmp/awa-awakened-guard-zh.png` frame2620，只有既死2号、目标6仍活。两render exit0，root/L独立目检无遮挡 |
 
 最终宽回归首轮唯一失败为新增复合死因断言要求数组顺序；死因是集合，改排序比较后专项及最终1223全部通过。前端英文原文含撇号，静态HTML正确编码，断言同步按HTML转义核；没有改生产文案或真实fixture适配错误。
 

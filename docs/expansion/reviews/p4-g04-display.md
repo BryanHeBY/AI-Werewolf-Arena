@@ -14,11 +14,11 @@
 
 ## 三路审查与修正
 
-| 审查者 | 发现 | 修正 |
-| --- | --- | --- |
-| A / review_arch_tests | 校验原输入后返回另一 clone；header／合法 terminal 不一致；坏 typed getter 经 clone 实体化；未知成员的 label 与 seats 矛盾 | 返回实际副本再验；完整 decision 一致；显式 terminal 图用迭代 own descriptor 检查、拒访问器／非枚举、cycle guard；实际所有 label 路径传全局 roster，坏 JSON 原文保留但 Unknown |
-| R+T / review_scope_rules | decidedAt-only 坏事实在 console 回退旧阵营胜利 | outcome OR decidedAt 判别与严格 reader，双语 judge/live Unknown 反例；帧时点、dead winner、null个人／组投影、旧无名单不猜均保持 |
-| L+D / review_i18n_delivery | 非枚举 decision 可静默丢；未封盘 runtime_error／timeout 误作 no_winner；英文 reason 文案精度 | 显式与 nested serialized 字段拒非枚举；无终局失败显示未结束；Decision reason 两语一致；审计共同提示明确 decision、兼容 null 与执行 reason 的不同语义 |
+| 审查者                     | 发现                                                                                                                      | 修正                                                                                                                                                                          |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A / review_arch_tests      | 校验原输入后返回另一 clone；header／合法 terminal 不一致；坏 typed getter 经 clone 实体化；未知成员的 label 与 seats 矛盾 | 返回实际副本再验；完整 decision 一致；显式 terminal 图用迭代 own descriptor 检查、拒访问器／非枚举、cycle guard；实际所有 label 路径传全局 roster，坏 JSON 原文保留但 Unknown |
+| R+T / review_scope_rules   | decidedAt-only 坏事实在 console 回退旧阵营胜利                                                                            | outcome OR decidedAt 判别与严格 reader，双语 judge/live Unknown 反例；帧时点、dead winner、null个人／组投影、旧无名单不猜均保持                                               |
+| L+D / review_i18n_delivery | 非枚举 decision 可静默丢；未封盘 runtime_error／timeout 误作 no_winner；英文 reason 文案精度                              | 显式与 nested serialized 字段拒非枚举；无终局失败显示未结束；Decision reason 两语一致；审计共同提示明确 decision、兼容 null 与执行 reason 的不同语义                          |
 
 审查结论以最终复查为准；各路使用独立轻量判例／probe，不将其声称为代理运行浏览器、编码或完整 Tape。主代理承担上列实际门槛。
 

@@ -9,9 +9,7 @@ import { RoleCatalog, getDefaultRoleCatalog } from "../roles/catalog";
 export class RoleSpecRegistry {
   private readonly specByRole = new Map<Role, RoleSpec>();
 
-  constructor(
-    roleCatalog: RoleCatalog = getDefaultRoleCatalog(),
-  ) {
+  constructor(roleCatalog: RoleCatalog = getDefaultRoleCatalog()) {
     const commonTools = COMMON_TOOL_SPECS.map((spec) => spec.name);
     for (const role of Object.values(Role)) {
       const roleTools = roleCatalog.get(role)?.toolSpecs?.map((spec) => spec.name) ?? [];

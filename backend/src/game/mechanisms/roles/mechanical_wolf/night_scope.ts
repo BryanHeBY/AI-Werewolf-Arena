@@ -1,9 +1,18 @@
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, type EntityId } from "../../../../core/domain/model";
-import { captureNightLife, livingNightLife, type NightLifeScope } from "../../../../core/domain/night_effects";
+import {
+  captureNightLife,
+  livingNightLife,
+  type NightLifeScope,
+} from "../../../../core/domain/night_effects";
 import type { World } from "../../../../core/domain/world";
-import { getMechanicalState, type MechanicalMode, type MechanicalState, type MechanicalSkill } from "./state";
+import {
+  getMechanicalState,
+  type MechanicalMode,
+  type MechanicalState,
+  type MechanicalSkill,
+} from "./state";
 
 export interface MechanicalOwnerScope {
   readonly world: World;
@@ -23,28 +32,68 @@ export function captureMechanicalOwner(
   const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
   const state = getMechanicalState(role);
   const life = captureNightLife(world, actorId);
-  if (!phaseCurrent() || !role || role.role !== Role.MechanicalWolf || role.camp !== Camp.Wolf || !state || !life) return null;
+  if (
+    !phaseCurrent() ||
+    !role ||
+    role.role !== Role.MechanicalWolf ||
+    role.camp !== Camp.Wolf ||
+    !state ||
+    !life
+  )
+    return null;
   const privateState = role.privateState;
   return {
-    world, actorId, role, state, life,
-    isCurrent: () => phaseCurrent() && world.getComponent(actorId, COMPONENT.Role) === role &&
-      role.role === Role.MechanicalWolf && role.camp === Camp.Wolf && role.privateState === privateState &&
-      getMechanicalState(role) === state && livingNightLife(world, life),
+    world,
+    actorId,
+    role,
+    state,
+    life,
+    isCurrent: () =>
+      phaseCurrent() &&
+      world.getComponent(actorId, COMPONENT.Role) === role &&
+      role.role === Role.MechanicalWolf &&
+      role.camp === Camp.Wolf &&
+      role.privateState === privateState &&
+      getMechanicalState(role) === state &&
+      livingNightLife(world, life),
   };
 }
 
 /** Bind a committed active effect to the exact learning and chosen mode, not resource counters. */
-export function bindMechanicalSkill(scope: MechanicalOwnerScope, day: number): {
+export function bindMechanicalSkill(
+  scope: MechanicalOwnerScope,
+  day: number,
+): {
   readonly skill: MechanicalSkill;
   isCurrent(): boolean;
 } | null {
-  const learned = scope.state.learned, mode = scope.state.mode;
-  if (day < 2 || !scope.isCurrent() || !hasCurrentMechanicalMode(scope.world, scope.role, "skill") || !learned || learned.readyOnNight > day || !mode || mode.day !== day || mode.kind !== "skill") return null;
-  const skill = learned.skill, kind = skill.kind;
+  const learned = scope.state.learned,
+    mode = scope.state.mode;
+  if (
+    day < 2 ||
+    !scope.isCurrent() ||
+    !hasCurrentMechanicalMode(scope.world, scope.role, "skill") ||
+    !learned ||
+    learned.readyOnNight > day ||
+    !mode ||
+    mode.day !== day ||
+    mode.kind !== "skill"
+  )
+    return null;
+  const skill = learned.skill,
+    kind = skill.kind;
   return {
     skill,
-    isCurrent: () => scope.isCurrent() && hasCurrentMechanicalMode(scope.world, scope.role, "skill") && scope.state.learned === learned && learned.skill === skill && skill.kind === kind &&
-      scope.state.mode === mode && mode.day === day && mode.kind === "skill" && learned.readyOnNight <= day,
+    isCurrent: () =>
+      scope.isCurrent() &&
+      hasCurrentMechanicalMode(scope.world, scope.role, "skill") &&
+      scope.state.learned === learned &&
+      learned.skill === skill &&
+      skill.kind === kind &&
+      scope.state.mode === mode &&
+      mode.day === day &&
+      mode.kind === "skill" &&
+      learned.readyOnNight <= day,
   };
 }
 
@@ -53,17 +102,29 @@ interface MechanicalModeScope {
   readonly mode: NonNullable<MechanicalState["mode"]>;
   readonly kind: MechanicalMode;
 }
-const modes = new WeakMap<World, { readonly day: number; readonly actors: Map<EntityId, MechanicalModeScope> }>();
+const modes = new WeakMap<
+  World,
+  { readonly day: number; readonly actors: Map<EntityId, MechanicalModeScope> }
+>();
 const committed = new WeakMap<World, Set<number>>();
-export function hasMechanicalNightCommit(world: World, day: number): boolean { return committed.get(world)?.has(day) ?? false; }
+export function hasMechanicalNightCommit(world: World, day: number): boolean {
+  return committed.get(world)?.has(day) ?? false;
+}
 export function recordMechanicalNightCommit(world: World, day: number): void {
-  const days = committed.get(world) ?? new Set<number>(); days.add(day); committed.set(world, days);
+  const days = committed.get(world) ?? new Set<number>();
+  days.add(day);
+  committed.set(world, days);
 }
 
 /** Save authority only after an accepted mode choice or its explicit skill-mode default. */
-export function recordMechanicalModeScope(world: World, scope: MechanicalOwnerScope, day: number): boolean {
+export function recordMechanicalModeScope(
+  world: World,
+  scope: MechanicalOwnerScope,
+  day: number,
+): boolean {
   const mode = scope.state.mode;
-  if (scope.world !== world || day < 2 || !scope.isCurrent() || !mode || mode.day !== day) return false;
+  if (scope.world !== world || day < 2 || !scope.isCurrent() || !mode || mode.day !== day)
+    return false;
   let night = modes.get(world);
   if (night && night.day > day) return false;
   if (!night || night.day !== day) {
@@ -76,12 +137,23 @@ export function recordMechanicalModeScope(world: World, scope: MechanicalOwnerSc
 }
 
 /** Read-only knife authorization; serialized mode facts alone do not restore old authority. */
-export function hasCurrentMechanicalMode(world: World, role: RoleComponent, expectedKind: MechanicalMode): boolean {
+export function hasCurrentMechanicalMode(
+  world: World,
+  role: RoleComponent,
+  expectedKind: MechanicalMode,
+): boolean {
   const night = modes.get(world);
   if (!night) return false;
   for (const { owner, mode, kind } of night.actors.values()) {
-    if (owner.role === role && owner.isCurrent() && owner.state.mode === mode &&
-        mode.day === night.day && mode.kind === kind && kind === expectedKind) return true;
+    if (
+      owner.role === role &&
+      owner.isCurrent() &&
+      owner.state.mode === mode &&
+      mode.day === night.day &&
+      mode.kind === kind &&
+      kind === expectedKind
+    )
+      return true;
   }
   return false;
 }

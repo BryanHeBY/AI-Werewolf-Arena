@@ -1,5 +1,5 @@
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
-import { ToolCall } from "../../../core/domain"
+import { ToolCall } from "../../../core/domain";
 import { ChatMessage } from "../../integrations/llm/transport";
 
 export interface BuiltPlayerPrompt {

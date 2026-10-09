@@ -4,11 +4,11 @@
 
 ## 独立三路与修正
 
-| 代理 | 重点 | 发现与复查 |
-| --- | --- | --- |
-| A `review_arch_tests` | 实际SDK错误、读取安全、metadata/资源/错误策略、CLI | 原生DOMException分类漏失，现通过内置品牌getter正确分类且遮蔽getter不执行；小数1.001秒精确换算1001ms。configDiagnostic直接getter可能令catch二次抛，现data descriptor/Proxy保护+closed code名单。旧ACP raw error文案测试迁移。全部关闭，最终0阻断 |
-| R `review_scope_rules` | 429推断、原动作/资源/受众、旧档、审计scalar与归因 | 不推断日限额，不更改fallback/SDK retry/资源策略；旧原文不重写。filesystem说明曾过窄误称记录故障，现两语为通用文件系统操作失败。最终0阻断 |
-| L `review_i18n_delivery` | 两语言与数据独立、exception字段、audit输出白名单/文档 | 记录warn误用game locale、检查warn误用inspect locale，现独立transient displayLocale。audit先assert再clone可被变化getter绕过；原探针复现，改shared data-descriptor decoder验证实际snapshot，复查getter0次/canary不可达。全部关闭，最终0阻断 |
+| 代理                     | 重点                                                  | 发现与复查                                                                                                                                                                                                                                      |
+| ------------------------ | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A `review_arch_tests`    | 实际SDK错误、读取安全、metadata/资源/错误策略、CLI    | 原生DOMException分类漏失，现通过内置品牌getter正确分类且遮蔽getter不执行；小数1.001秒精确换算1001ms。configDiagnostic直接getter可能令catch二次抛，现data descriptor/Proxy保护+closed code名单。旧ACP raw error文案测试迁移。全部关闭，最终0阻断 |
+| R `review_scope_rules`   | 429推断、原动作/资源/受众、旧档、审计scalar与归因     | 不推断日限额，不更改fallback/SDK retry/资源策略；旧原文不重写。filesystem说明曾过窄误称记录故障，现两语为通用文件系统操作失败。最终0阻断                                                                                                        |
+| L `review_i18n_delivery` | 两语言与数据独立、exception字段、audit输出白名单/文档 | 记录warn误用game locale、检查warn误用inspect locale，现独立transient displayLocale。audit先assert再clone可被变化getter绕过；原探针复现，改shared data-descriptor decoder验证实际snapshot，复查getter0次/canary不可达。全部关闭，最终0阻断       |
 
 私有reader也校验实际克隆对象/版本，避免未知对象值变化后逃过声明的结构；正常旧JSON精确metadata转换和raw/unknown保留不变。没有创建Agent基类、取消框架或新的业务清理策略。
 

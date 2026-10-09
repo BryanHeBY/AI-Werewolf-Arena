@@ -31,9 +31,7 @@
     ]
   },
   "rules": {
-    "winConditions": [
-      "slaughter_side"
-    ],
+    "winConditions": ["slaughter_side"],
     "hooks": {
       "onDaybreak": true,
       "onPreElection": true,
@@ -48,9 +46,7 @@
       "tieBreaker": "min_seat"
     },
     "selfDestruct": {
-      "enabledWindows": [
-        "on_pre_vote"
-      ]
+      "enabledWindows": ["on_pre_vote"]
     },
     "tieBreaker": {
       "exileVote": "min_id",

@@ -30,9 +30,7 @@ describe("ConfigRenderRegistry", () => {
     };
 
     const prompt = registry.renderBoardConfigPrompt(config);
-    const line = prompt
-      .split("\n")
-      .find((item) => item.startsWith("胜利条件：")) ?? "";
+    const line = prompt.split("\n").find((item) => item.startsWith("胜利条件：")) ?? "";
 
     const halfIndex = line.indexOf("狼人达半");
     const cityIndex = line.indexOf("屠城");

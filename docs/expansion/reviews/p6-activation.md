@@ -4,13 +4,13 @@
 
 roadmap P6 的摄梦人、狼美人、熊、隐狼、石像鬼依赖均已分别实现。各角色规则、双语、状态和动作所有权、公开六/十二样例、真实接入整局/Tape与呈现证据独立保存。阶段门槛是所有已支持玩法完整回归，不能拿前一角色的旧 source 指纹作为本阶段最终证据。
 
-| 角色 | 冻结版本与边界 | 完整场景证据 | 公开板子 |
-| --- | --- | --- | --- |
-| 摄梦人 | [卡](../rules/awa-dreamer-v1.md)、[契约](../dreamer.md)；每实例选择/连续、夜间保护、梦主死亡连锁、原生命/取消 | [审查](p6-dreamer.md)；54本机双语整局、40受限seed | six/twelve_player_dreamer |
-| 狼美人 | [卡](../rules/awa-wolf-beauty-v1.md)、[契约](../wolf-beauty.md)；魅惑、放逐/毒牵连、梦保护和复合死因、末Beauty特殊屠边 | [审查](p6-wolf-beauty.md)；72整局、40seed | six/twelve_player_wolf_beauty |
-| 熊 | [卡](../rules/awa-bear-v1.md)、[契约](../bear.md)；夜初存活座位环取样、完整死亡/警徽后匿名公告、不改变底牌/生命 | [审查](p6-bear.md)；78整局、40seed | six/twelve_player_bear |
-| 隐狼 | [卡](../rules/awa-hidden-wolf-v1.md)、[契约](../hidden-wolf.md)；单向知ID、无聊、实际唯一Wolf接刀、曾获得决定伪装/熊 | [审查](p6-hidden-wolf.md)；72整局、40seed | six/twelve_player_hidden_wolf |
-| 石像鬼 | [卡](../rules/awa-gargoyle-v1.md)、[契约](../gargoyle.md)；独立具体role查验、每实例禁重复、完整知识转移、原生本夜查后刀 | [审查](p6-gargoyle.md)；36整局、40seed | six/twelve_player_gargoyle |
+| 角色   | 冻结版本与边界                                                                                                          | 完整场景证据                                      | 公开板子                      |
+| ------ | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | ----------------------------- |
+| 摄梦人 | [卡](../rules/awa-dreamer-v1.md)、[契约](../dreamer.md)；每实例选择/连续、夜间保护、梦主死亡连锁、原生命/取消           | [审查](p6-dreamer.md)；54本机双语整局、40受限seed | six/twelve_player_dreamer     |
+| 狼美人 | [卡](../rules/awa-wolf-beauty-v1.md)、[契约](../wolf-beauty.md)；魅惑、放逐/毒牵连、梦保护和复合死因、末Beauty特殊屠边  | [审查](p6-wolf-beauty.md)；72整局、40seed         | six/twelve_player_wolf_beauty |
+| 熊     | [卡](../rules/awa-bear-v1.md)、[契约](../bear.md)；夜初存活座位环取样、完整死亡/警徽后匿名公告、不改变底牌/生命         | [审查](p6-bear.md)；78整局、40seed                | six/twelve_player_bear        |
+| 隐狼   | [卡](../rules/awa-hidden-wolf-v1.md)、[契约](../hidden-wolf.md)；单向知ID、无聊、实际唯一Wolf接刀、曾获得决定伪装/熊    | [审查](p6-hidden-wolf.md)；72整局、40seed         | six/twelve_player_hidden_wolf |
+| 石像鬼 | [卡](../rules/awa-gargoyle-v1.md)、[契约](../gargoyle.md)；独立具体role查验、每实例禁重复、完整知识转移、原生本夜查后刀 | [审查](p6-gargoyle.md)；36整局、40seed            | six/twelve_player_gargoyle    |
 
 P4基础七项和P5四项范围保持。共享目录目标仍64项；P6关闭后16 verified／48 planned，不把任意16张组牌全排列或22机制所有变体声称完成。隐狼/石像鬼规则不是迷雾永久伪装/固定顺位；觉醒隐狼等仍在P7后续，觉醒摄梦人/觉醒石像鬼属于本次64外长期候选。
 

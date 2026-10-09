@@ -13,9 +13,23 @@ const replay: ReplayDocument = {
     { player_id: 2, role: "wolf", camp: "wolf" },
   ],
   events: [
-    { seq: 1, timestamp: "t1", day: 1, phase: "day", type: "sheriff_elected", payload: { winnerId: 1 } },
+    {
+      seq: 1,
+      timestamp: "t1",
+      day: 1,
+      phase: "day",
+      type: "sheriff_elected",
+      payload: { winnerId: 1 },
+    },
     { seq: 2, timestamp: "t1", day: 1, phase: "day", type: "voted_out", payload: { target: 1 } },
-    { seq: 3, timestamp: "t2", day: 2, phase: "night", type: "sheriff_badge_transferred", payload: { fromId: 1, toId: 2 } },
+    {
+      seq: 3,
+      timestamp: "t2",
+      day: 2,
+      phase: "night",
+      type: "sheriff_badge_transferred",
+      payload: { fromId: 1, toId: 2 },
+    },
   ],
 };
 
@@ -33,8 +47,22 @@ test("projects an initially configured sheriff from the canonical bootstrap even
   const initialSheriffReplay: ReplayDocument = {
     ...replay,
     events: [
-      { seq: 1, timestamp: "t1", day: 1, phase: "night", type: "phase_changed", payload: { phase: "night", day: 1 } },
-      { seq: 2, timestamp: "t1", day: 1, phase: "night", type: "sheriff_elected", payload: { winnerId: 1, source: "initial_configuration" } },
+      {
+        seq: 1,
+        timestamp: "t1",
+        day: 1,
+        phase: "night",
+        type: "phase_changed",
+        payload: { phase: "night", day: 1 },
+      },
+      {
+        seq: 2,
+        timestamp: "t1",
+        day: 1,
+        phase: "night",
+        type: "sheriff_elected",
+        payload: { winnerId: 1, source: "initial_configuration" },
+      },
     ],
   };
   const snapshot = buildReplaySnapshot(initialSheriffReplay, 1);
@@ -45,8 +73,22 @@ test("removes the sheriff badge when the canonical destroy event names targetId"
   const destroyedReplay: ReplayDocument = {
     ...replay,
     events: [
-      { seq: 1, timestamp: "t1", day: 1, phase: "day", type: "sheriff_elected", payload: { winnerId: 1 } },
-      { seq: 2, timestamp: "t2", day: 1, phase: "voting", type: "sheriff_badge_destroyed", payload: { targetId: 1, reason: "voted_out" } },
+      {
+        seq: 1,
+        timestamp: "t1",
+        day: 1,
+        phase: "day",
+        type: "sheriff_elected",
+        payload: { winnerId: 1 },
+      },
+      {
+        seq: 2,
+        timestamp: "t2",
+        day: 1,
+        phase: "voting",
+        type: "sheriff_badge_destroyed",
+        payload: { targetId: 1, reason: "voted_out" },
+      },
     ],
   };
 
@@ -63,8 +105,22 @@ test("projects self-destruct and hunter-shot targets as dead", () => {
       { player_id: 4, role: "villager", camp: "good" },
     ],
     events: [
-      { seq: 1, timestamp: "t1", day: 1, phase: "voting", type: "wolf_self_destruct", payload: { wolfId: 2 } },
-      { seq: 2, timestamp: "t2", day: 2, phase: "day", type: "hunter_shot", payload: { hunterId: 3, targetId: 4 } },
+      {
+        seq: 1,
+        timestamp: "t1",
+        day: 1,
+        phase: "voting",
+        type: "wolf_self_destruct",
+        payload: { wolfId: 2 },
+      },
+      {
+        seq: 2,
+        timestamp: "t2",
+        day: 2,
+        phase: "day",
+        type: "hunter_shot",
+        payload: { hunterId: 3, targetId: 4 },
+      },
     ],
   };
 

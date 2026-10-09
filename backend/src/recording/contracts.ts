@@ -128,8 +128,17 @@ export interface ReplayLlmRequestPayload {
   messages: ReplayLlmRequestMessage[];
 }
 
-export type { ReplayPlayerDeltaMessage, ReplayPlayerEventEntry, ReplayPlayerTurnEntry, ReplayPlayerTimelineEntry, ReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
-import type { ReplayPlayerDeltaMessage, ReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
+export type {
+  ReplayPlayerDeltaMessage,
+  ReplayPlayerEventEntry,
+  ReplayPlayerTurnEntry,
+  ReplayPlayerTimelineEntry,
+  ReplayPlayerView,
+} from "@ai-werewolf-arena/replay-contract";
+import type {
+  ReplayPlayerDeltaMessage,
+  ReplayPlayerView,
+} from "@ai-werewolf-arena/replay-contract";
 
 /** 对局会话元信息。 */
 export interface ReplaySessionMeta {

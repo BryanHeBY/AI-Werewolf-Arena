@@ -20,8 +20,6 @@ async function finalizeManager(
 }
 
 describe("SessionRecordManager", () => {
-
-
   test("should persist timeline and player files during game before finalize", async () => {
     const root = await createTestTempDirectory("awa-realtime-");
     const manager = await SessionRecordManager.create(
@@ -83,12 +81,8 @@ describe("SessionRecordManager", () => {
     await manager.flushNow();
 
     const sessionDir = path.join(root, "session_realtime_1");
-    const replay = JSON.parse(
-      await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8"),
-    );
-    const logic = JSON.parse(
-      await fs.readFile(path.join(sessionDir, "logic_ops.json"), "utf-8"),
-    );
+    const replay = JSON.parse(await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8"));
+    const logic = JSON.parse(await fs.readFile(path.join(sessionDir, "logic_ops.json"), "utf-8"));
     const player1 = JSON.parse(
       await fs.readFile(path.join(sessionDir, "players", "player_1.json"), "utf-8"),
     );
@@ -146,10 +140,7 @@ describe("SessionRecordManager", () => {
     }
     await manager.flushNow();
     const view = JSON.parse(
-      await fs.readFile(
-        path.join(root, "session_stage_1", "players", "player_1.json"),
-        "utf-8",
-      ),
+      await fs.readFile(path.join(root, "session_stage_1", "players", "player_1.json"), "utf-8"),
     );
     const stages = view.timeline.map((entry: any) => entry.stage);
     expect(stages).toContain("night");
@@ -251,9 +242,7 @@ describe("SessionRecordManager", () => {
     expect(files).toContain("debug_summary.md");
     expect(files).toContain("players");
 
-    const manifest = JSON.parse(
-      await fs.readFile(path.join(sessionDir, "manifest.json"), "utf-8"),
-    );
+    const manifest = JSON.parse(await fs.readFile(path.join(sessionDir, "manifest.json"), "utf-8"));
     expect(manifest.session_id).toBe("session_test_1");
     expect(manifest.files.replay).toBe("replay.json");
     expect(manifest.files.phase_windows).toBe("phase_windows.json");
@@ -261,15 +250,11 @@ describe("SessionRecordManager", () => {
     expect(manifest.files.debug_reports).toBe("debug_reports.json");
     expect(manifest.files.debug_summary).toBe("debug_summary.md");
 
-    const replay = JSON.parse(
-      await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8"),
-    );
+    const replay = JSON.parse(await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8"));
     expect(replay.sessionId).toBe("session_test_1");
     expect(Array.isArray(replay.events)).toBe(true);
     expect(replay.events[0].type).toBe("phase_changed");
-    expect(new Set(replay.events.map((event: any) => event.seq)).size).toBe(
-      replay.events.length,
-    );
+    expect(new Set(replay.events.map((event: any) => event.seq)).size).toBe(replay.events.length);
     expect(replay.players).toEqual([
       { player_id: 1, role: "wolf", camp: "wolf" },
       { player_id: 2, role: "wolf", camp: "wolf" },
@@ -325,10 +310,7 @@ describe("SessionRecordManager", () => {
     expect(debugReports.reports.length).toBe(1);
     expect(debugReports.reports[0].category).toBe("flow");
 
-    const debugSummary = await fs.readFile(
-      path.join(sessionDir, "debug_summary.md"),
-      "utf-8",
-    );
+    const debugSummary = await fs.readFile(path.join(sessionDir, "debug_summary.md"), "utf-8");
     expect(debugSummary).toContain("## 对局");
     expect(debugSummary).toContain("## 待办");
   });
@@ -600,11 +582,19 @@ describe("SessionRecordManager", () => {
     const firstRoot = await createTestTempDirectory("awa-record-scope-a-");
     const secondRoot = await createTestTempDirectory("awa-record-scope-b-");
     const first = await SessionRecordManager.create(
-      { sessionId: "session_scope_a", board: "six_player_mvp", startedAtIso: new Date().toISOString() },
+      {
+        sessionId: "session_scope_a",
+        board: "six_player_mvp",
+        startedAtIso: new Date().toISOString(),
+      },
       firstRoot,
     );
     const second = await SessionRecordManager.create(
-      { sessionId: "session_scope_b", board: "six_player_mvp", startedAtIso: new Date().toISOString() },
+      {
+        sessionId: "session_scope_b",
+        board: "six_player_mvp",
+        startedAtIso: new Date().toISOString(),
+      },
       secondRoot,
     );
     const { promise: secondStarted, resolve: releaseSecond } = Promise.withResolvers<void>();
@@ -619,11 +609,28 @@ describe("SessionRecordManager", () => {
       safeRecordLogicOp({ scope: "gateway", op: "first_only", status: "ok" });
     });
     await Promise.all([firstRun, secondRun]);
-    await first.finalize({ endedAtIso: new Date().toISOString(), winner: null, finishReason: "test_done", players: [] });
-    await second.finalize({ endedAtIso: new Date().toISOString(), winner: null, finishReason: "test_done", players: [] });
-    const firstOps = JSON.parse(await fs.readFile(path.join(firstRoot, "session_scope_a", "logic_ops.json"), "utf-8"));
-    const secondOps = JSON.parse(await fs.readFile(path.join(secondRoot, "session_scope_b", "logic_ops.json"), "utf-8"));
+    await first.finalize({
+      endedAtIso: new Date().toISOString(),
+      winner: null,
+      finishReason: "test_done",
+      players: [],
+    });
+    await second.finalize({
+      endedAtIso: new Date().toISOString(),
+      winner: null,
+      finishReason: "test_done",
+      players: [],
+    });
+    const firstOps = JSON.parse(
+      await fs.readFile(path.join(firstRoot, "session_scope_a", "logic_ops.json"), "utf-8"),
+    );
+    const secondOps = JSON.parse(
+      await fs.readFile(path.join(secondRoot, "session_scope_b", "logic_ops.json"), "utf-8"),
+    );
     expect(firstOps.ops.map((op: { op: string }) => op.op)).toEqual(["first_only"]);
-    expect(secondOps.ops.map((op: { op: string }) => op.op)).toEqual(["second_before", "second_after"]);
+    expect(secondOps.ops.map((op: { op: string }) => op.op)).toEqual([
+      "second_before",
+      "second_after",
+    ]);
   });
 });

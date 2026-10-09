@@ -46,7 +46,10 @@ export interface BootstrapOptions {
 /**
  * 按板子配置完成一次完整引擎装配，返回可直接运行的上下文对象。
  */
-export function bootstrapGame(config: BoardConfig, options: BootstrapOptions = {}): BootstrapResult {
+export function bootstrapGame(
+  config: BoardConfig,
+  options: BootstrapOptions = {},
+): BootstrapResult {
   const world = new World(options.locale);
   const random = options.random ?? createRandom();
   // 先完成实体与组件初始化，再创建系统与管理器，避免空引用。
@@ -77,7 +80,12 @@ export function bootstrapGame(config: BoardConfig, options: BootstrapOptions = {
   };
 }
 
-function createPlayers(world: World, config: BoardConfig, options: BootstrapOptions, random: RandomSource): EntityId[] {
+function createPlayers(
+  world: World,
+  config: BoardConfig,
+  options: BootstrapOptions,
+  random: RandomSource,
+): EntityId[] {
   const roles = buildRoleDeck(config, options.fixedRoles, random.fork("deal"));
   const ids: EntityId[] = [];
   const roleCatalog = getDefaultRoleCatalog();
@@ -86,20 +94,37 @@ function createPlayers(world: World, config: BoardConfig, options: BootstrapOpti
     const entityId = world.createEntity();
     const role = roles[seat - 1];
     const roleComp = createRoleComponent(role, roleCatalog.getCamp(role), world.locale);
-    roleCatalog.applyRuntime(roleComp, { boardConfig: config, locale: world.locale,world });
+    roleCatalog.applyRuntime(roleComp, { boardConfig: config, locale: world.locale, world });
 
     world.addComponent(
       entityId,
       COMPONENT.Identity,
-      createIdentityComponent(entityId, seat, options.playerNames?.[String(seat)] ?? text(world.locale, "common.player_name", { id: seat })),
+      createIdentityComponent(
+        entityId,
+        seat,
+        options.playerNames?.[String(seat)] ??
+          text(world.locale, "common.player_name", { id: seat }),
+      ),
     );
     world.addComponent(entityId, COMPONENT.Role, roleComp);
     world.addComponent(entityId, COMPONENT.Camp, createCampComponent(roleComp.camp, world.locale));
     const membership = roleCatalog.require(role).initialVictoryAffiliations;
-    world.addComponent(entityId, COMPONENT.Victory, createVictoryComponent(typeof membership === "function" ? membership(roleComp, { boardConfig: config, locale: world.locale }) : membership ?? [{ kind: "faction", faction: roleComp.camp }]));
+    world.addComponent(
+      entityId,
+      COMPONENT.Victory,
+      createVictoryComponent(
+        typeof membership === "function"
+          ? membership(roleComp, { boardConfig: config, locale: world.locale })
+          : (membership ?? [{ kind: "faction", faction: roleComp.camp }]),
+      ),
+    );
     world.addComponent(entityId, COMPONENT.Alive, createAliveComponent(true, world.locale));
     world.addComponent(entityId, COMPONENT.StatusMarks, createStatusMarksComponent(world.locale));
-    world.addComponent(entityId, COMPONENT.VotingRight, createVotingRightComponent(1, true, world.locale));
+    world.addComponent(
+      entityId,
+      COMPONENT.VotingRight,
+      createVotingRightComponent(1, true, world.locale),
+    );
     world.addComponent(entityId, COMPONENT.Badge, createBadgeComponent(false, false, world.locale));
     ids.push(entityId);
   }
@@ -107,7 +132,11 @@ function createPlayers(world: World, config: BoardConfig, options: BootstrapOpti
   return ids;
 }
 
-function buildRoleDeck(config: BoardConfig, fixedRoles: readonly Role[] | undefined, random: RandomSource): Role[] {
+function buildRoleDeck(
+  config: BoardConfig,
+  fixedRoles: readonly Role[] | undefined,
+  random: RandomSource,
+): Role[] {
   const deck: Role[] = [];
   for (const setup of config.roleSetups) {
     for (let i = 0; i < setup.count; i++) {
@@ -115,22 +144,29 @@ function buildRoleDeck(config: BoardConfig, fixedRoles: readonly Role[] | undefi
     }
   }
 
-  const counts=new Map<Role,number>();
-  for(const role of deck)counts.set(role,(counts.get(role)??0)+1);
-  for(const [role,count] of counts){const maximum=getDefaultRoleCatalog().require(role).maxCount;if(maximum!==undefined&&count>maximum)throw new Error(`role_count_exceeds_limit: ${role}`);}
+  const counts = new Map<Role, number>();
+  for (const role of deck) counts.set(role, (counts.get(role) ?? 0) + 1);
+  for (const [role, count] of counts) {
+    const maximum = getDefaultRoleCatalog().require(role).maxCount;
+    if (maximum !== undefined && count > maximum)
+      throw new Error(`role_count_exceeds_limit: ${role}`);
+  }
   for (const role of counts.keys()) {
     const supported = getDefaultRoleCatalog().require(role).supportedBoardRoles;
-    if (supported && [...counts.keys()].some(candidate => !supported.includes(candidate))) throw new Error(`role_combination_not_supported: ${role}`);
+    if (supported && [...counts.keys()].some((candidate) => !supported.includes(candidate)))
+      throw new Error(`role_combination_not_supported: ${role}`);
   }
 
   if (deck.length !== config.boardSize) {
-    throw new Error(
-      `Role setup mismatch: boardSize=${config.boardSize}, roles=${deck.length}`,
-    );
+    throw new Error(`Role setup mismatch: boardSize=${config.boardSize}, roles=${deck.length}`);
   }
 
   if (fixedRoles) {
-    if (fixedRoles.length !== deck.length || [...fixedRoles].sort().join(",") !== [...deck].sort().join(",")) throw new Error("fixed_role_deck_mismatch");
+    if (
+      fixedRoles.length !== deck.length ||
+      [...fixedRoles].sort().join(",") !== [...deck].sort().join(",")
+    )
+      throw new Error("fixed_role_deck_mismatch");
     return [...fixedRoles];
   }
   return shuffled(deck, random);

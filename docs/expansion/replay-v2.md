@@ -8,13 +8,13 @@
 
 ## 兼容政策
 
-| 输入 | 处理 |
-| --- | --- |
-| 无schemaVersion | 既有完整god格式按旧版读取并显式转换为v2 |
-| schemaVersion=1 | 与无版本格式相同的旧契约 |
-| schemaVersion=2 | 校验结构后复制，不根据中文文字猜旧格式 |
-| 其他数字/非整数/string/null | unsupported_version明确拒绝，不降级为旧版 |
-| 仅events的旧timeline、其他perspective或嵌套字段损坏 | 拒绝，不猜整个schema |
+| 输入                                                | 处理                                      |
+| --------------------------------------------------- | ----------------------------------------- |
+| 无schemaVersion                                     | 既有完整god格式按旧版读取并显式转换为v2   |
+| schemaVersion=1                                     | 与无版本格式相同的旧契约                  |
+| schemaVersion=2                                     | 校验结构后复制，不根据中文文字猜旧格式    |
+| 其他数字/非整数/string/null                         | unsupported_version明确拒绝，不降级为旧版 |
+| 仅events的旧timeline、其他perspective或嵌套字段损坏 | 拒绝，不猜整个schema                      |
 
 转换只在声明位置用精确历史别名：players.role/camp、result.winner/reason、events.phase/stage；phase_changed的payload.phase/winner/reason、game_over的winner/reason，以及god_private_game_info.players的role/camp。原有ID仍保留，未知历史ID/名称也保留。别名不使用substring/trim/fuzzy匹配，不扫描任意payload。角色别名使用v1历史快照；工作显示名调整时仅追加新别名，不替换或删除旧拼写，不实时依赖当前工作名称。
 

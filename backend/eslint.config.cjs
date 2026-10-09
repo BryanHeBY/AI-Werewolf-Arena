@@ -17,11 +17,19 @@ module.exports = [
             meta: { type: "problem", schema: [], messages: { forbidden: "{{violation}}" } },
             create(context) {
               function check(node, source) {
-                const specifier = source?.value ?? (source?.type === "TemplateLiteral" && source.expressions.length === 0
-                  ? source.quasis[0].value.cooked : null);
+                const specifier =
+                  source?.value ??
+                  (source?.type === "TemplateLiteral" && source.expressions.length === 0
+                    ? source.quasis[0].value.cooked
+                    : null);
                 if (typeof specifier !== "string") return;
-                const violation = importBoundaryViolation(path.join(__dirname, "src"), context.filename, specifier);
-                if (violation) context.report({ node, messageId: "forbidden", data: { violation } });
+                const violation = importBoundaryViolation(
+                  path.join(__dirname, "src"),
+                  context.filename,
+                  specifier,
+                );
+                if (violation)
+                  context.report({ node, messageId: "forbidden", data: { violation } });
               }
               return {
                 ImportDeclaration: (node) => check(node, node.source),
@@ -31,7 +39,8 @@ module.exports = [
                 TSImportType: (node) => check(node, node.argument),
                 TSExternalModuleReference: (node) => check(node, node.expression),
                 CallExpression(node) {
-                  if (node.callee.type === "Identifier" && node.callee.name === "require") check(node, node.arguments[0]);
+                  if (node.callee.type === "Identifier" && node.callee.name === "require")
+                    check(node, node.arguments[0]);
                 },
               };
             },

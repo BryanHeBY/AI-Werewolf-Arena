@@ -14,11 +14,11 @@
 
 ## 已发现并修正
 
-| 审查路 | 发现 | 当前修正 |
-| --- | --- | --- |
-| R+T / review_scope_rules | pending-night caster吞毒/吞刀歧义；基础Hunter/King三cause卡与新增WhiteWolfBlast例外不一致 | 卡明确全部待夜死caster不能发动，收集/接收不回传隐含知识，PhaseManager无效应false拒绝并继续高候选；卡/提示/因表同步独立WhiteWolfBlast、复合毒禁止 |
-| L+D / review_i18n_delivery | public blast_only模板仍只许ordinary工具，实际新工具矛盾；共享遗言文案漏白爆和狼王枪 | 以本轮真实tool填模板；新旧两语字面正负测试；共享遗言说明明确合并夜死目标不获遗言 |
-| A / review_arch_tests | 架构/资源/类型/公开API及真实门槛 | typed selection/callback返回与无commit意图、旧summary ID兼容已在契约写明；最终审查结论收尾时补 |
+| 审查路                     | 发现                                                                                      | 当前修正                                                                                                                                         |
+| -------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| R+T / review_scope_rules   | pending-night caster吞毒/吞刀歧义；基础Hunter/King三cause卡与新增WhiteWolfBlast例外不一致 | 卡明确全部待夜死caster不能发动，收集/接收不回传隐含知识，PhaseManager无效应false拒绝并继续高候选；卡/提示/因表同步独立WhiteWolfBlast、复合毒禁止 |
+| L+D / review_i18n_delivery | public blast_only模板仍只许ordinary工具，实际新工具矛盾；共享遗言文案漏白爆和狼王枪       | 以本轮真实tool填模板；新旧两语字面正负测试；共享遗言说明明确合并夜死目标不获遗言                                                                 |
+| A / review_arch_tests      | 架构/资源/类型/公开API及真实门槛                                                          | typed selection/callback返回与无commit意图、旧summary ID兼容已在契约写明；最终审查结论收尾时补                                                   |
 
 普通首日选举发生在夜死公告前，六人oracle应有六名nomination（不是已剔夜死后的五名），首轮fixture期望已纠正为冻结基础时序，没有改生产规则。API不是只换文件名：真实commit唯一提交资源/公共事实/提案，中央resolver唯一标死/链条，PhaseManager拥有私有pending事实/推进及判胜。
 

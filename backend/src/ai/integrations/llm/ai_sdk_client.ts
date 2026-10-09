@@ -1,6 +1,12 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
-import { generateText, jsonSchema, ToolChoiceViolationError, type LanguageModel, type ModelMessage } from "ai";
+import {
+  generateText,
+  jsonSchema,
+  ToolChoiceViolationError,
+  type LanguageModel,
+  type ModelMessage,
+} from "ai";
 
 import {
   ChatMessage,
@@ -53,11 +59,18 @@ export class AiSdkClient implements ChatModelClient {
   private readonly thinkingEnabled: boolean;
 
   constructor(options: AiSdkClientOptions) {
-    if (options.providerType === "anthropic" && options.thinkingEnabled && options.temperature !== undefined) {
+    if (
+      options.providerType === "anthropic" &&
+      options.thinkingEnabled &&
+      options.temperature !== undefined
+    ) {
       throw new Error("anthropic_adaptive_thinking_does_not_support_temperature");
     }
-    if (options.providerType === "anthropic" && options.reasoningEffort
-      && !["low", "medium", "high"].includes(options.reasoningEffort)) {
+    if (
+      options.providerType === "anthropic" &&
+      options.reasoningEffort &&
+      !["low", "medium", "high"].includes(options.reasoningEffort)
+    ) {
       throw new Error("anthropic_reasoning_effort_invalid");
     }
     this.temperature = options.temperature;
@@ -95,10 +108,7 @@ export class AiSdkClient implements ChatModelClient {
     return (await this.chatWithMeta(messages, options)).content;
   }
 
-  async chatWithMeta(
-    messages: ChatMessage[],
-    options: ChatOptions = {},
-  ): Promise<ChatResult> {
+  async chatWithMeta(messages: ChatMessage[], options: ChatOptions = {}): Promise<ChatResult> {
     const result = await generateText({
       model: this.model,
       messages: this.toModelMessages(messages),
@@ -191,7 +201,9 @@ export class AiSdkClient implements ChatModelClient {
         });
       },
       onStepFinish: (step) => {
-        for (const call of step.toolCalls) if ("invalid" in call && call.invalid === true) failedToolInvocations.push({ name: call.toolName, id: call.toolCallId });
+        for (const call of step.toolCalls)
+          if ("invalid" in call && call.invalid === true)
+            failedToolInvocations.push({ name: call.toolName, id: call.toolCallId });
         const current = traces.at(-1);
         if (current) {
           current.assistantText = step.text;
@@ -213,7 +225,8 @@ export class AiSdkClient implements ChatModelClient {
 
     return {
       finalAction,
-      assistantText: result?.steps.at(-1)?.text ?? result?.text ?? traces.at(-1)?.assistantText ?? "",
+      assistantText:
+        result?.steps.at(-1)?.text ?? result?.text ?? traces.at(-1)?.assistantText ?? "",
       thinkingTrace: traces,
       failedToolInvocations,
     };
@@ -224,10 +237,7 @@ export class AiSdkClient implements ChatModelClient {
     // tool messages textual because no raw provider tool-call ids are persisted.
     return messages.map((message) => ({
       role: message.role === "tool" ? "user" : message.role,
-      content:
-        message.role === "tool"
-          ? `[tool_result] ${message.content}`
-          : message.content,
+      content: message.role === "tool" ? `[tool_result] ${message.content}` : message.content,
     })) as ModelMessage[];
   }
 
@@ -242,7 +252,9 @@ export class AiSdkClient implements ChatModelClient {
       };
     }
     if (!this.reasoningEffort) return undefined;
-    const optionKey = this.providerName.replace(/[-_]([a-z0-9])/g, (_, letter: string) => letter.toUpperCase());
+    const optionKey = this.providerName.replace(/[-_]([a-z0-9])/g, (_, letter: string) =>
+      letter.toUpperCase(),
+    );
     return { [optionKey]: { reasoningEffort: this.reasoningEffort } };
   }
 

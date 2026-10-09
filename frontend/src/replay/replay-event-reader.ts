@@ -1,4 +1,9 @@
-import { readGravekeeperFeedback, readInspectionResult, readVictoryResult, type ReplayEvent } from "@ai-werewolf-arena/replay-contract";
+import {
+  readGravekeeperFeedback,
+  readInspectionResult,
+  readVictoryResult,
+  type ReplayEvent,
+} from "@ai-werewolf-arena/replay-contract";
 import { isRoleId, type SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
 
 export type ReplayEffect =
@@ -15,37 +20,95 @@ export interface ReadReplayEvent {
 
 // Required references are event-specific. Unknown extension fields never imply player membership.
 const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
-  ability_changed: ["actorId"], death_ability_changed: ["actorId"], lucky_ability_skipped: ["actorId"],
-  gargoyle_awakened: ["actorId"], hidden_wolf_awakened: ["actorId"], role_inspection_skipped: ["actorId"],
-  role_inspected: ["actorId", "targetId"], seer_checked: ["actorId", "targetId"],
-  charm_applied: ["actorId"], charm_death: ["actorId", "targetId"], charm_blocked: ["actorId", "targetId"],
-  dream_applied: ["actorId", "targetId"], dream_death: ["actorId", "targetId"], death_shot_blocked: ["actorId", "targetId"],
-  gravekeeper_reported: ["actorId", "targetId"], wolf_discussion: ["actorId"], wolf_discussion_ended: ["actorId"],
-  wolf_kill_vote_cast: ["actorId"], guard_applied: ["actorId"], witch_potion_used: ["actorId", "targetId"], witch_potion_skipped: ["actorId"],
-  sheriff_candidate_declared: ["actorId"], sheriff_vote_cast: ["actorId"], vote_cast: ["actorId"],
-  sheriff_elected: ["winnerId"], sheriff_direction_chosen: ["sheriffId"], sheriff_badge_transferred: ["fromId", "toId"], sheriff_badge_destroyed: ["targetId"],
-  day_speech: ["actorId"], voted_out: ["target"], idiot_revealed: ["targetId"], wolf_self_destruct: ["wolfId"],
-  white_wolf_king_self_destruct: ["actorId"], knight_duel: ["actorId", "targetId"], hunter_shot: ["hunterId", "targetId"],
-  player_shot: ["actorId", "targetId"], wolf_king_shot: ["actorId", "targetId"], hunter_silent_due_to_poison: ["hunterId"],
-  last_words_granted: ["playerId"], last_words_spoken: ["playerId"],
-  mechanical_awakened: ["actorId"], mechanical_mode_selected: ["actorId"], mechanical_mimicked: ["actorId", "targetId"],
-  mechanical_mimic_skipped: ["actorId"], mechanical_skill_skipped: ["actorId"], mechanical_poison_used: ["actorId", "targetId"],
-  mechanical_guard_chosen: ["actorId"], mechanical_attack_chosen: ["actorId"], mechanical_poison_reflected: ["actorId", "protectedTargetId", "casterId"], mechanical_shot: ["actorId", "targetId"],
-  awakened_inherited: ["actorId"], awakened_mimicked: ["actorId", "targetId"], awakened_mimic_skipped: ["actorId"], awakened_ready: ["actorId"],
-  awakened_skill_skipped: ["actorId"], awakened_poison_used: ["actorId", "targetId"], awakened_guard_chosen: ["actorId"], awakened_attack_chosen: ["actorId"],
-  hybrid_exemplar_chosen: ["actorId", "targetId"], hybrid_affiliation_resolved: ["actorId", "targetId"],
-  merchant_trade_committed: ["actorId", "targetId"], merchant_trade_resolved: ["actorId", "targetId"], merchant_trade_skipped: ["actorId"],
-  black_market_trade_committed: ["actorId", "targetId"], black_market_trade_resolved: ["actorId", "targetId"], black_market_trade_skipped: ["actorId"],
+  ability_changed: ["actorId"],
+  death_ability_changed: ["actorId"],
+  lucky_ability_skipped: ["actorId"],
+  gargoyle_awakened: ["actorId"],
+  hidden_wolf_awakened: ["actorId"],
+  role_inspection_skipped: ["actorId"],
+  role_inspected: ["actorId", "targetId"],
+  seer_checked: ["actorId", "targetId"],
+  charm_applied: ["actorId"],
+  charm_death: ["actorId", "targetId"],
+  charm_blocked: ["actorId", "targetId"],
+  dream_applied: ["actorId", "targetId"],
+  dream_death: ["actorId", "targetId"],
+  death_shot_blocked: ["actorId", "targetId"],
+  gravekeeper_reported: ["actorId", "targetId"],
+  wolf_discussion: ["actorId"],
+  wolf_discussion_ended: ["actorId"],
+  wolf_kill_vote_cast: ["actorId"],
+  guard_applied: ["actorId"],
+  witch_potion_used: ["actorId", "targetId"],
+  witch_potion_skipped: ["actorId"],
+  sheriff_candidate_declared: ["actorId"],
+  sheriff_vote_cast: ["actorId"],
+  vote_cast: ["actorId"],
+  sheriff_elected: ["winnerId"],
+  sheriff_direction_chosen: ["sheriffId"],
+  sheriff_badge_transferred: ["fromId", "toId"],
+  sheriff_badge_destroyed: ["targetId"],
+  day_speech: ["actorId"],
+  voted_out: ["target"],
+  idiot_revealed: ["targetId"],
+  wolf_self_destruct: ["wolfId"],
+  white_wolf_king_self_destruct: ["actorId"],
+  knight_duel: ["actorId", "targetId"],
+  hunter_shot: ["hunterId", "targetId"],
+  player_shot: ["actorId", "targetId"],
+  wolf_king_shot: ["actorId", "targetId"],
+  hunter_silent_due_to_poison: ["hunterId"],
+  last_words_granted: ["playerId"],
+  last_words_spoken: ["playerId"],
+  mechanical_awakened: ["actorId"],
+  mechanical_mode_selected: ["actorId"],
+  mechanical_mimicked: ["actorId", "targetId"],
+  mechanical_mimic_skipped: ["actorId"],
+  mechanical_skill_skipped: ["actorId"],
+  mechanical_poison_used: ["actorId", "targetId"],
+  mechanical_guard_chosen: ["actorId"],
+  mechanical_attack_chosen: ["actorId"],
+  mechanical_poison_reflected: ["actorId", "protectedTargetId", "casterId"],
+  mechanical_shot: ["actorId", "targetId"],
+  awakened_inherited: ["actorId"],
+  awakened_mimicked: ["actorId", "targetId"],
+  awakened_mimic_skipped: ["actorId"],
+  awakened_ready: ["actorId"],
+  awakened_skill_skipped: ["actorId"],
+  awakened_poison_used: ["actorId", "targetId"],
+  awakened_guard_chosen: ["actorId"],
+  awakened_attack_chosen: ["actorId"],
+  hybrid_exemplar_chosen: ["actorId", "targetId"],
+  hybrid_affiliation_resolved: ["actorId", "targetId"],
+  merchant_trade_committed: ["actorId", "targetId"],
+  merchant_trade_resolved: ["actorId", "targetId"],
+  merchant_trade_skipped: ["actorId"],
+  black_market_trade_committed: ["actorId", "targetId"],
+  black_market_trade_resolved: ["actorId", "targetId"],
+  black_market_trade_skipped: ["actorId"],
 };
 const ID_LISTS: Readonly<Record<string, string>> = {
-  night_resolved: "deaths", additional_deaths: "deaths", wolf_tactical_order: "order",
-  sheriff_nomination_summary: "candidates", sheriff_candidates_finalized: "candidates", sheriff_withdraw_summary: "withdrawn",
+  night_resolved: "deaths",
+  additional_deaths: "deaths",
+  wolf_tactical_order: "order",
+  sheriff_nomination_summary: "candidates",
+  sheriff_candidates_finalized: "candidates",
+  sheriff_withdraw_summary: "withdrawn",
 };
-const NULLABLE_TARGETS = new Set(["charm_applied", "white_wolf_king_self_destruct", "mechanical_guard_chosen", "mechanical_attack_chosen", "awakened_guard_chosen", "awakened_attack_chosen"]);
+const NULLABLE_TARGETS = new Set([
+  "charm_applied",
+  "white_wolf_king_self_destruct",
+  "mechanical_guard_chosen",
+  "mechanical_attack_chosen",
+  "awakened_guard_chosen",
+  "awakened_attack_chosen",
+]);
 const VOTES = new Set(["wolf_kill_vote_cast", "guard_applied", "sheriff_vote_cast", "vote_cast"]);
 const SUMMARIES = new Set(["sheriff_vote_summary", "vote_summary"]);
 const NO_IDS = new Set(["phase_changed", "bear_roared", "game_over", "god_private_game_info"]);
-export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([...new Set([...Object.keys(REQUIRED_IDS), ...Object.keys(ID_LISTS), ...SUMMARIES, ...NO_IDS])]);
+export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([
+  ...new Set([...Object.keys(REQUIRED_IDS), ...Object.keys(ID_LISTS), ...SUMMARIES, ...NO_IDS]),
+]);
 const KNOWN = new Set(KNOWN_REPLAY_EVENT_TYPES);
 
 // Read only plain JSON data descriptors. Accessors, cycles, sparse arrays and non-JSON values
@@ -53,10 +116,12 @@ const KNOWN = new Set(KNOWN_REPLAY_EVENT_TYPES);
 function copyJson(value: unknown, ancestors = new Set<object>(), depth = 0): unknown {
   if (value === null || typeof value === "string" || typeof value === "boolean") return value;
   if (typeof value === "number" && Number.isFinite(value)) return value;
-  if (typeof value !== "object" || depth > 64 || ancestors.has(value)) throw new Error("replay_event_not_json");
+  if (typeof value !== "object" || depth > 64 || ancestors.has(value))
+    throw new Error("replay_event_not_json");
   const array = Array.isArray(value);
   const prototype = Object.getPrototypeOf(value);
-  if (array ? prototype !== Array.prototype : prototype !== Object.prototype && prototype !== null) throw new Error("replay_event_not_plain");
+  if (array ? prototype !== Array.prototype : prototype !== Object.prototype && prototype !== null)
+    throw new Error("replay_event_not_plain");
   const descriptors = Object.getOwnPropertyDescriptors(value);
   if (Object.getOwnPropertySymbols(value).length) throw new Error("replay_event_symbol");
   ancestors.add(value);
@@ -64,7 +129,8 @@ function copyJson(value: unknown, ancestors = new Set<object>(), depth = 0): unk
     const result: Record<string, unknown> = Object.create(null);
     for (const [key, descriptor] of Object.entries(descriptors)) {
       if (array && key === "length") continue;
-      if (!descriptor.enumerable || !Object.hasOwn(descriptor, "value")) throw new Error("replay_event_accessor");
+      if (!descriptor.enumerable || !Object.hasOwn(descriptor, "value"))
+        throw new Error("replay_event_accessor");
       // The TypeScript envelope permits an explicitly undefined optional stage.
       // Disk JSON omits that field; payload values must still be strict JSON.
       if (depth === 0 && key === "stage" && descriptor.value === undefined) continue;
@@ -72,57 +138,140 @@ function copyJson(value: unknown, ancestors = new Set<object>(), depth = 0): unk
     }
     if (!array) return result;
     const length = descriptors.length?.value;
-    if (!Number.isSafeInteger(length) || Object.keys(result).length !== length) throw new Error("replay_event_sparse_array");
+    if (!Number.isSafeInteger(length) || Object.keys(result).length !== length)
+      throw new Error("replay_event_sparse_array");
     return Array.from({ length }, (_, index) => {
       if (!Object.hasOwn(result, String(index))) throw new Error("replay_event_array_key");
       return result[String(index)];
     });
-  } finally { ancestors.delete(value); }
+  } finally {
+    ancestors.delete(value);
+  }
 }
-function record(value: unknown): value is Record<string, unknown> { return value !== null && typeof value === "object" && !Array.isArray(value); }
+function record(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
-  const positive = (value: unknown): value is number => typeof value === "number" && Number.isSafeInteger(value) && value > 0;
+  const positive = (value: unknown): value is number =>
+    typeof value === "number" && Number.isSafeInteger(value) && value > 0;
   const strings: Readonly<Record<string, string[]>> = {
-    ability_changed: ["abilityId", "kind", "operation"], lucky_ability_skipped: ["abilityId", "kind"],
-    wolf_discussion: ["text"], wolf_discussion_ended: ["reason"], day_speech: ["text"], last_words_spoken: ["text"],
-    sheriff_direction_chosen: ["direction"], witch_potion_used: ["potionType"],
+    ability_changed: ["abilityId", "kind", "operation"],
+    lucky_ability_skipped: ["abilityId", "kind"],
+    wolf_discussion: ["text"],
+    wolf_discussion_ended: ["reason"],
+    day_speech: ["text"],
+    last_words_spoken: ["text"],
+    sheriff_direction_chosen: ["direction"],
+    witch_potion_used: ["potionType"],
   };
-  if ((strings[type] ?? []).some(key => typeof p[key] !== "string")) return false;
+  if ((strings[type] ?? []).some((key) => typeof p[key] !== "string")) return false;
   if (p.day !== undefined && !positive(p.day)) return false;
   if (type === "sheriff_candidate_declared" && typeof p.run !== "boolean") return false;
-  if (type === "role_inspection_skipped" && p.reason !== "passed" && p.reason !== "no_targets") return false;
-  if (type === "seer_checked" && p.isWerewolf !== undefined && typeof p.isWerewolf !== "boolean") return false;
+  if (type === "role_inspection_skipped" && p.reason !== "passed" && p.reason !== "no_targets")
+    return false;
+  if (type === "seer_checked" && p.isWerewolf !== undefined && typeof p.isWerewolf !== "boolean")
+    return false;
   if (type.startsWith("mechanical_") || type.startsWith("awakened_")) {
     if (type !== "mechanical_shot" && type !== "awakened_ready" && !positive(p.day)) return false;
-    if (type.endsWith("_awakened") || type === "awakened_inherited") return positive(p.firstKnifeNight);
+    if (type.endsWith("_awakened") || type === "awakened_inherited")
+      return positive(p.firstKnifeNight);
     if (type === "mechanical_mode_selected") return p.mode === "kill" || p.mode === "skill";
-    if (type.endsWith("_mimicked")) return isRoleId(p.role) && (type !== "mechanical_mimicked" || positive(p.readyOnNight)) && (type !== "awakened_mimicked" || p.targetId !== p.actorId);
-    if (type === "awakened_ready") return positive(p.activationNight) && p.activeFromNight === p.activationNight + 1 && isRoleId(p.role);
+    if (type.endsWith("_mimicked"))
+      return (
+        isRoleId(p.role) &&
+        (type !== "mechanical_mimicked" || positive(p.readyOnNight)) &&
+        (type !== "awakened_mimicked" || p.targetId !== p.actorId)
+      );
+    if (type === "awakened_ready")
+      return (
+        positive(p.activationNight) &&
+        p.activeFromNight === p.activationNight + 1 &&
+        isRoleId(p.role)
+      );
     if (type === "mechanical_guard_chosen") return typeof p.failed === "boolean";
   }
-  if (type.startsWith("hybrid_")) return p.day === 1 && p.actorId !== p.targetId && Object.keys(p).every(key => ["actorId", "targetId", "day", ...(type === "hybrid_affiliation_resolved" ? ["faction"] : [])].includes(key)) && (type !== "hybrid_affiliation_resolved" || p.faction === "wolf" || p.faction === "good");
+  if (type.startsWith("hybrid_"))
+    return (
+      p.day === 1 &&
+      p.actorId !== p.targetId &&
+      Object.keys(p).every((key) =>
+        [
+          "actorId",
+          "targetId",
+          "day",
+          ...(type === "hybrid_affiliation_resolved" ? ["faction"] : []),
+        ].includes(key),
+      ) &&
+      (type !== "hybrid_affiliation_resolved" || p.faction === "wolf" || p.faction === "good")
+    );
   if (type.startsWith("merchant_trade_") || type.startsWith("black_market_trade_")) {
     if (!positive(p.day)) return false;
     if (type.endsWith("_skipped")) return true;
     const black = type.startsWith("black_market_");
-    return (!black || p.actorId !== p.targetId) && (black ? ["check", "poison", "gun"] : ["check", "poison", "guard"]).includes(p.skill as string) && (!type.endsWith("_resolved") || p.outcome === "granted" || p.outcome === "backlash");
+    return (
+      (!black || p.actorId !== p.targetId) &&
+      (black ? ["check", "poison", "gun"] : ["check", "poison", "guard"]).includes(
+        p.skill as string,
+      ) &&
+      (!type.endsWith("_resolved") || p.outcome === "granted" || p.outcome === "backlash")
+    );
   }
   if (type === "death_ability_changed") {
-    if (typeof p.abilityId !== "string" || !/^[a-z][a-z0-9:_-]{0,127}$/.test(p.abilityId) || p.abilityId.startsWith("native:") || !positive(p.grantedNight) || !(p.armedOnNight === null || positive(p.armedOnNight) && p.armedOnNight >= p.grantedNight) || ![0, 1].includes(p.remaining as number) || typeof p.disabled !== "boolean" || typeof p.deathExpired !== "boolean" || !["granted", "armed", "disabled", "enabled", "transferred_out"].includes(p.operation as string)) return false;
-    return !(p.operation === "armed" && (p.armedOnNight === null || p.disabled || p.deathExpired || p.remaining !== 1) || p.operation === "disabled" && !p.disabled || p.operation === "enabled" && (p.disabled || p.deathExpired) || p.deathExpired && (!p.disabled || p.remaining !== 0));
+    if (
+      typeof p.abilityId !== "string" ||
+      !/^[a-z][a-z0-9:_-]{0,127}$/.test(p.abilityId) ||
+      p.abilityId.startsWith("native:") ||
+      !positive(p.grantedNight) ||
+      !(
+        p.armedOnNight === null ||
+        (positive(p.armedOnNight) && p.armedOnNight >= p.grantedNight)
+      ) ||
+      ![0, 1].includes(p.remaining as number) ||
+      typeof p.disabled !== "boolean" ||
+      typeof p.deathExpired !== "boolean" ||
+      !["granted", "armed", "disabled", "enabled", "transferred_out"].includes(
+        p.operation as string,
+      )
+    )
+      return false;
+    return !(
+      (p.operation === "armed" &&
+        (p.armedOnNight === null || p.disabled || p.deathExpired || p.remaining !== 1)) ||
+      (p.operation === "disabled" && !p.disabled) ||
+      (p.operation === "enabled" && (p.disabled || p.deathExpired)) ||
+      (p.deathExpired && (!p.disabled || p.remaining !== 0))
+    );
   }
   return true;
 }
 
 /** Raw archives remain permissive; malformed known facts have no partial display/state effects. */
-export function readReplayEvent(event: ReplayEvent, knownPlayerIds?: readonly number[]): ReadReplayEvent | null {
+export function readReplayEvent(
+  event: ReplayEvent,
+  knownPlayerIds?: readonly number[],
+): ReadReplayEvent | null {
   try {
     const safe = copyJson(event) as ReplayEvent;
-    if (!record(safe.payload) || typeof safe.type !== "string" || !Number.isSafeInteger(safe.seq) || safe.seq < 1 || !Number.isSafeInteger(safe.day) || safe.day < 0 || typeof safe.phase !== "string" || typeof safe.timestamp !== "string" || safe.stage !== undefined && typeof safe.stage !== "string") return null;
+    if (
+      !record(safe.payload) ||
+      typeof safe.type !== "string" ||
+      !Number.isSafeInteger(safe.seq) ||
+      safe.seq < 1 ||
+      !Number.isSafeInteger(safe.day) ||
+      safe.day < 0 ||
+      typeof safe.phase !== "string" ||
+      typeof safe.timestamp !== "string" ||
+      (safe.stage !== undefined && typeof safe.stage !== "string")
+    )
+      return null;
     const p = safe.payload;
     const related = new Set<number>();
-    const id = (value: unknown): value is number => typeof value === "number" && Number.isSafeInteger(value) && value > 0 && (!knownPlayerIds || knownPlayerIds.includes(value));
+    const id = (value: unknown): value is number =>
+      typeof value === "number" &&
+      Number.isSafeInteger(value) &&
+      value > 0 &&
+      (!knownPlayerIds || knownPlayerIds.includes(value));
     const add = (value: unknown, nullable = false) => {
       if (nullable && value === null) return;
       if (!id(value)) throw new Error("replay_event_player_id");
@@ -135,10 +284,13 @@ export function readReplayEvent(event: ReplayEvent, knownPlayerIds?: readonly nu
     const vote = (row: unknown) => {
       if (!record(row)) throw new Error("replay_event_vote");
       add(row.actorId);
-      if (row.abstain !== undefined && typeof row.abstain !== "boolean") throw new Error("replay_event_abstain");
-      if (row.abstain === true) { if (row.targetId !== undefined) add(row.targetId, true); }
-      else add(row.targetId, row.targetId === null);
-      if (row.weight !== undefined && (typeof row.weight !== "number" || row.weight < 0)) throw new Error("replay_event_weight");
+      if (row.abstain !== undefined && typeof row.abstain !== "boolean")
+        throw new Error("replay_event_abstain");
+      if (row.abstain === true) {
+        if (row.targetId !== undefined) add(row.targetId, true);
+      } else add(row.targetId, row.targetId === null);
+      if (row.weight !== undefined && (typeof row.weight !== "number" || row.weight < 0))
+        throw new Error("replay_event_weight");
     };
     if (!KNOWN.has(safe.type)) return { event: safe, relatedPlayerIds: [], effects: [] };
     if (!validKnownFields(safe.type, p)) return null;
@@ -154,15 +306,25 @@ export function readReplayEvent(event: ReplayEvent, knownPlayerIds?: readonly nu
     }
     if (safe.type === "sheriff_elected" && Object.hasOwn(p, "candidates")) list(p.candidates);
     if (safe.type === "witch_potion_skipped" && Object.hasOwn(p, "targetId")) add(p.targetId, true);
-    if (safe.type === "ability_changed" && record(p.source) && Object.hasOwn(p.source, "actorId")) add(p.source.actorId);
+    if (safe.type === "ability_changed" && record(p.source) && Object.hasOwn(p.source, "actorId"))
+      add(p.source.actorId);
     if (safe.type === "god_private_game_info") {
       if (!Array.isArray(p.players)) return null;
-      for (const player of p.players) { if (!record(player) || typeof player.role !== "string") return null; add(player.id ?? player.seat); }
+      for (const player of p.players) {
+        if (!record(player) || typeof player.role !== "string") return null;
+        add(player.id ?? player.seat);
+      }
     }
     if (safe.type === "gravekeeper_reported" && !readGravekeeperFeedback(p)) return null;
-    if (safe.type === "role_inspected" && readInspectionResult(p.result)?.kind !== "role") return null;
-    if (["charm_blocked", "death_shot_blocked"].includes(safe.type) && p.reason !== "night_protection") return null;
-    if (safe.type === "dream_death" && p.reason !== "consecutive" && p.reason !== "linked") return null;
+    if (safe.type === "role_inspected" && readInspectionResult(p.result)?.kind !== "role")
+      return null;
+    if (
+      ["charm_blocked", "death_shot_blocked"].includes(safe.type) &&
+      p.reason !== "night_protection"
+    )
+      return null;
+    if (safe.type === "dream_death" && p.reason !== "consecutive" && p.reason !== "linked")
+      return null;
     if (safe.type === "dream_applied" && typeof p.consecutive !== "boolean") return null;
     if (safe.type === "bear_roared" && typeof p.roared !== "boolean") return null;
     if (safe.type === "knight_duel" && p.result !== "wolf" && p.result !== "not_wolf") return null;
@@ -173,22 +335,49 @@ export function readReplayEvent(event: ReplayEvent, knownPlayerIds?: readonly nu
         const decision = readVictoryResult(p, knownPlayerIds);
         if (decision.outcome.kind === "victory") list(decision.outcome.winningPlayerIds);
         effects.push({ kind: "victory", decision });
-      } else if (!Object.hasOwn(p, "winner") || (p.winner !== null && typeof p.winner !== "string") || (p.reason !== undefined && p.reason !== null && typeof p.reason !== "string")) return null;
+      } else if (
+        !Object.hasOwn(p, "winner") ||
+        (p.winner !== null && typeof p.winner !== "string") ||
+        (p.reason !== undefined && p.reason !== null && typeof p.reason !== "string")
+      )
+        return null;
     }
     const dead: number[] = [];
-    if (safe.type === "night_resolved" || safe.type === "additional_deaths") dead.push(...p.deaths as number[]);
+    if (safe.type === "night_resolved" || safe.type === "additional_deaths")
+      dead.push(...(p.deaths as number[]));
     if (safe.type === "voted_out") dead.push(p.target as number);
-    if (safe.type === "charm_death" || safe.type === "dream_death" || ["hunter_shot", "player_shot", "wolf_king_shot", "mechanical_shot"].includes(safe.type)) dead.push(p.targetId as number);
+    if (
+      safe.type === "charm_death" ||
+      safe.type === "dream_death" ||
+      ["hunter_shot", "player_shot", "wolf_king_shot", "mechanical_shot"].includes(safe.type)
+    )
+      dead.push(p.targetId as number);
     if (safe.type === "wolf_self_destruct") dead.push(p.wolfId as number);
-    if (safe.type === "white_wolf_king_self_destruct") { dead.push(p.actorId as number); if (p.targetId !== null) dead.push(p.targetId as number); }
-    if (safe.type === "knight_duel") dead.push((p.result === "wolf" ? p.targetId : p.actorId) as number);
+    if (safe.type === "white_wolf_king_self_destruct") {
+      dead.push(p.actorId as number);
+      if (p.targetId !== null) dead.push(p.targetId as number);
+    }
+    if (safe.type === "knight_duel")
+      dead.push((p.result === "wolf" ? p.targetId : p.actorId) as number);
     if (dead.length) effects.push({ kind: "deaths", playerIds: dead });
-    if (safe.type === "sheriff_elected") effects.push({ kind: "sheriff_elected", playerId: p.winnerId as number });
-    if (safe.type === "sheriff_badge_transferred") effects.push({ kind: "sheriff_transferred", fromId: p.fromId as number, toId: p.toId as number });
-    if (safe.type === "sheriff_badge_destroyed") effects.push({ kind: "sheriff_destroyed", playerId: p.targetId as number });
+    if (safe.type === "sheriff_elected")
+      effects.push({ kind: "sheriff_elected", playerId: p.winnerId as number });
+    if (safe.type === "sheriff_badge_transferred")
+      effects.push({
+        kind: "sheriff_transferred",
+        fromId: p.fromId as number,
+        toId: p.toId as number,
+      });
+    if (safe.type === "sheriff_badge_destroyed")
+      effects.push({ kind: "sheriff_destroyed", playerId: p.targetId as number });
     return { event: safe, relatedPlayerIds: [...related].sort((a, b) => a - b), effects };
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 }
-export function replayEventPlayerIds(event: ReplayEvent, knownPlayerIds?: readonly number[]): number[] {
+export function replayEventPlayerIds(
+  event: ReplayEvent,
+  knownPlayerIds?: readonly number[],
+): number[] {
   return readReplayEvent(event, knownPlayerIds)?.relatedPlayerIds ?? [];
 }

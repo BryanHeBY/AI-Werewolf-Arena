@@ -6,4 +6,3 @@ export const HUNTER_PHASE_STAGE_LOCALIZATION_CONTRIBUTOR: PhaseStageLocalization
     hunter_shot: term("stage", "hunter_shot", "zh-CN"),
   },
 };
-

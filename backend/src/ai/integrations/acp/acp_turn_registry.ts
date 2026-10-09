@@ -1,12 +1,21 @@
 import { toolFailure } from "@ai-werewolf-arena/game-text";
-import { ActionRequest, ToolCall } from "../../../core/domain"
+import { ActionRequest, ToolCall } from "../../../core/domain";
 import { World } from "../../../core/domain/world";
-import { RoleCatalog, getDefaultRoleCatalog, ToolValidationRuleRegistry } from "../../../game/mechanisms";
-import { ActionReception, ActionTurn, type ActionReceipt } from "../../agents/player/action_reception";
+import {
+  RoleCatalog,
+  getDefaultRoleCatalog,
+  ToolValidationRuleRegistry,
+} from "../../../game/mechanisms";
+import {
+  ActionReception,
+  ActionTurn,
+  type ActionReceipt,
+} from "../../agents/player/action_reception";
 import {
   GameReportBugInput as McpReportBugParams,
   GameSubmitActionInput as McpSubmitActionParams,
-  WEREWOLF_GAME_TOOL_SCHEMA, gameToolProtocol,
+  WEREWOLF_GAME_TOOL_SCHEMA,
+  gameToolProtocol,
 } from "../../agents/game_tool_protocol";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { isLocale } from "@ai-werewolf-arena/game-catalog";
@@ -14,9 +23,13 @@ import {
   getActionRequestDay,
   getActionRequestStage,
 } from "../../../core/domain/action_request_context";
-export type { GameReportBugInput as McpReportBugParams, GameSubmitActionInput as McpSubmitActionParams } from "../../agents/game_tool_protocol";
+export type {
+  GameReportBugInput as McpReportBugParams,
+  GameSubmitActionInput as McpSubmitActionParams,
+} from "../../agents/game_tool_protocol";
 
-export type McpBridgeResult = ActionReceipt
+export type McpBridgeResult =
+  | ActionReceipt
   | { ok: true; accepted: true }
   | { ok: true; accepted: false; dropped: true; reason: string }
   | { ok: false; error: string; message?: string };
@@ -56,7 +69,9 @@ export class AcpTurnRegistry {
   private readonly nextTurnNumberBySession = new Map<string, number>();
   private readonly reception: ActionReception;
   private closed = false;
-  get snapshot() { return { closed: this.closed, pending: this.pendingBySession.size }; }
+  get snapshot() {
+    return { closed: this.closed, pending: this.pendingBySession.size };
+  }
   readonly locale: Locale;
 
   constructor(
@@ -66,7 +81,12 @@ export class AcpTurnRegistry {
   ) {
     this.locale = world.locale;
     if (!isLocale(this.locale)) throw new Error("acp_task_locale_invalid");
-    this.reception = new ActionReception(world, undefined, undefined, new ToolValidationRuleRegistry(undefined, roleCatalog));
+    this.reception = new ActionReception(
+      world,
+      undefined,
+      undefined,
+      new ToolValidationRuleRegistry(undefined, roleCatalog),
+    );
   }
 
   openTurn(request: ActionRequest, sessionId: string): AcpPendingTurn {
@@ -90,11 +110,20 @@ export class AcpTurnRegistry {
       turnId,
       request,
       owner,
-      get outcome() { return owner.outcome; },
+      get outcome() {
+        return owner.outcome;
+      },
       action,
       resolve,
     });
-    return { sessionId, turnId, action, get outcome() { return owner.outcome; } };
+    return {
+      sessionId,
+      turnId,
+      action,
+      get outcome() {
+        return owner.outcome;
+      },
+    };
   }
 
   closeTurn(sessionId: string): void {
@@ -118,7 +147,11 @@ export class AcpTurnRegistry {
     }
     const result = pending.owner.submit(input.turn_id, input.action, input.arguments);
     if (!result.ok) {
-      if (pending.owner.outcome.failureCode) { this.pendingBySession.delete(sessionId); pending.owner.close(); pending.resolve(null); }
+      if (pending.owner.outcome.failureCode) {
+        this.pendingBySession.delete(sessionId);
+        pending.owner.close();
+        pending.resolve(null);
+      }
       return result;
     }
 
@@ -131,7 +164,11 @@ export class AcpTurnRegistry {
     const pending = this.pendingBySession.get(sessionId);
     if (!pending) return toolFailure(this.locale, "turn_not_open_or_session_invalid");
     const result = pending.owner.rejectSubmissionInput(turnId);
-    if (pending.owner.outcome.failureCode) { this.pendingBySession.delete(sessionId); pending.owner.close(); pending.resolve(null); }
+    if (pending.owner.outcome.failureCode) {
+      this.pendingBySession.delete(sessionId);
+      pending.owner.close();
+      pending.resolve(null);
+    }
     return result;
   }
 
@@ -165,5 +202,4 @@ export class AcpTurnRegistry {
     this.pendingBySession.clear();
     this.nextTurnNumberBySession.clear();
   }
-
 }
