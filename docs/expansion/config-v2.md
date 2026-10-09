@@ -99,4 +99,4 @@ P7通灵师按[规则与契约](psychic.md)启用，roles.psychic支持inspectio
 
 ## P9a 盗贼有限来源配置
 
-`roles.thief.dealPolicy`唯一接受`lui_meme_thief_two_extra_villagers_v1`（省略等价默认）。至多一Thief、City、仅七基础角色组合，原配置至少两Wolf/两非ThiefGood；其它角色或event pack组合显式拒绝。roleSetups仍N张，初始化另加两普通Villager，一次随机发N留2，不保证Thief或God上场。fixed/Tape必须完整N+2且原多重集一致，两Wolf底牌必选slot0/1，其它可null保留Thief。无fallback/任意底牌/保证神职参数。公开例子`configs.example/boards/lui_meme_thief_{6,12}_v1.json`；实际schema、实例、native库存、首夜动作与Tape边界见[来源卡](rules/lui-meme-thief-v1.md)/[验收](reviews/p9-thief.md)。
+`roles.thief.policy`唯一接受`lui_meme_thief_two_extra_villagers_v1`（省略等价默认）。至多一Thief、City、仅七基础角色组合，原配置至少两Wolf/两非ThiefGood；其它角色或event pack组合显式拒绝。roleSetups仍N张，初始化另加两普通Villager，一次随机发N留2，不保证Thief或God上场。fixed/Tape必须完整N+2且原多重集一致，两Wolf底牌必选slot0/1，其它可null保留Thief。无fallback/任意底牌/保证神职参数。公开例子`configs.example/boards/lui_meme_thief_{6,12}_v1.json`；实际schema、实例、native库存、首夜动作与Tape边界见[来源卡](rules/lui-meme-thief-v1.md)/[验收](reviews/p9-thief.md)。
