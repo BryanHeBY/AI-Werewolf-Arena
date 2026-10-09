@@ -11,7 +11,7 @@
 | P4 | 完成 | A01/A02/M21、G01–G04、白痴/警长及四窗口闭环；七基础角色verified，双语50实际本地完整局/Tape、终端/审计/前端/视频一致，见[整阶段验收](reviews/p4-activation.md) |
 | P5 | 完成 | 狼王/白狼王/骑士/守墓人逐项交付；11项verified，230双语actual局/Tape、820后端/83前端/20浏览器通过，见[阶段验收](reviews/p5-activation.md) |
 | P6 | 完成 | 五角色与三路审查闭环；16项verified，最终全量1176测试／542实际双语整局/Tape、103前端／42浏览器通过，见[阶段验收](reviews/p6-activation.md) |
-| P7 第三批 | 进行中：通灵师、机械狼、奇迹商人、混血儿、魔镜少女 | [通灵师](reviews/p7-psychic.md)、[机械狼](reviews/p7-mechanical-wolf.md)、[奇迹商人](reviews/p7-miracle-merchant.md)、[混血儿](reviews/p7-hybrid.md)、[魔镜少女](reviews/p7-mirror-girl.md)；21 verified/43 planned，Mirror最终受影响1065/34931＋新48及旧72实际完整局/Tape与40seed过；P7余觉醒隐狼、黑市商人2项 |
+| P7 第三批 | 进行中：已交付六角色，余黑市商人 | [通灵师](reviews/p7-psychic.md)、[机械狼](reviews/p7-mechanical-wolf.md)、[奇迹商人](reviews/p7-miracle-merchant.md)、[混血儿](reviews/p7-hybrid.md)、[魔镜少女](reviews/p7-mirror-girl.md)、[觉醒隐狼](reviews/p7-awakened-hidden-wolf.md)；22 verified/42 planned，Aw最终60双语本地完整局/Tape与40seed、1223受影响后端、157前端、6实际浏览器通过 |
 | P8–P10 | 未开始 | 按路线依赖推进，不把目录登记当成实现 |
 
 ## P1 已确认决策
@@ -389,3 +389,28 @@ NightAwakenedEffects独立typed盾/普通额外刀提案，NightPipeline空数�
 六模板独立typed状态、actual夜末提交时间、Hunter同点armed/主动下一夜、Mirror单实例ID、独立接刀事实与固定首夜、once额外刀晚学和保留、Guard非法连续不支付/skip断链及单毒无补库存落为纯状态操作。JSON独立存储/六skill白名单投影，不复制目标历史/库存/人格，也不建机械mode或统一复制框架。
 
 受影响116测试/672断言/5文件与type/deps/boundaries/i18n57通过，见[独立审查](reviews/p7-awakened-state.md)。未加Role枚举/profile/export/阶段/配置，未冒真实900或完整Aw对局/Tape，仍21/43；后续原owner/phase/life/学习实例安装与ready原子提交、全部真实Aw技能/接刀/枪及原12镜隐板继续，P7余2/P8–P10/64/22/长局T6保持。
+
+## P7：觉醒隐狼运行候选（工作区未提交）
+
+真实角色/阶段/接刀/枪、Mirror实例与私有双语投影已接入候选，审查修正gun metadata、同日权限重开、native Mirror owner及末候选消失路径。运行58/244、严格本地optional28/162与生产SDK坏JSON/错ID及取消8/40、默认生命周期40/212通过。十字面场景SDK预验9/10通过，原12镜隐组合预验成功；原生Guard连续自守的剧本已改尚待再验。详见[候选记录](reviews/p7-awakened-runtime-candidate.md)，其中明确旧886门槛/预验hash不是最终证明。
+
+正在完成共享strict失败策略与真实MCP schema早拒边界，再做failure Tape/配置/40seed/60双语SDKACP混合局/最终呈现与交叉复查。Role/Profile在工作区候选，shared catalog仍planned/21-43，未提交或宣称Aw交付；完整64角色/22机制及P8–P10/长局T6继续。
+
+## P7：公共严格失败策略交付
+
+1d6124e独立提交公共策略：strict请求的领域拒绝、传输失败、取消/截止及最终交付迟到不再伪装合法wait；默认旧策略保持，3次正确nonce拒绝封闭，一/二次纠错有效、辅助/旧回合不耗行动预算。SDK早期坏JSON与本loop错nonce、生产MCP canonical schema早拒都有正式路径；SDK/ACP结构化失败原因和策略进Tape。
+
+最终工作区受影响367测试/6014断言/49文件、front149/1296/24/type与backend静态门槛通过；由HEAD+仅暂存18公共文件构成的独立/tmp快照，不含Aw源码或依赖测试，最终37/303/type/deps/boundaries/i18n57通过。三路审查均闭，详见[公共策略审查](reviews/p7-strict-turn-policy.md)。Aw四failureTape例仅候选证据，不冒公共HEAD已启用它。
+
+Aw候选与正式配置例子仍在工作区；六人AWA缩编和原12镜隐牌组加载、未知角色组合/参数及重复Aw拒绝15/46已通过。其余40seed、全60双语真实本机矩阵、最终catalog/呈现/三路交付与P7余黑市商人、P8–P10/64/22/长局T6继续，目录仍21/43。
+
+
+## P7：觉醒隐狼完整交付
+
+有限七角色组合、六模板、580即时身份伪装与900实际夜末激活、原生Mirror独立实例、单毒/可空守/被动枪/可保留额外普通刀及独立接刀已交付。已付效果与原life/owner、整批死亡后的权限更新、中立玩家枪协议、strict失败录制和中英私有投影保持各自所有权。六人AWA缩编和原12镜隐迷踪board/game样例均通过配置与真实整局。
+
+最终冻结目录后**60双语实际本机SDK/ACP（注入MCP）/混合完整局＋40受限seed**及每局strict Tape通过，32测试/11544断言；十条人工oracle覆盖六模板、夜末枪、死亡连锁、毒库存不继承、空守断链、晚学与额外刀留用。随机局两板自然结束、0拒绝/回退，实触发学习/激活/接刀/skip/复制毒；其它技能正分支由手写整局保证，不声称20seed随机覆盖全部技能。
+
+后端受影响**1223/14272/104文件**、type/deps/boundary/i18n57通过；frontend **157/1370/25文件**、type/build、6实际中英Chromium和两张中英实际PNG通过。新增复合死因断言曾错误要求数组先后，改核完整集合后63专项/276及最终受影响全量均通过；生产规则没有为适配断言改变。见[交付审查](reviews/p7-awakened-hidden-wolf.md)和历史[候选修正记录](reviews/p7-awakened-runtime-candidate.md)。
+
+当前22 verified/42 planned。本笔不是全backend release或P7阶段结束；P7黑市商人、P8–P10、64角色/22机制全矩阵、长局及外部模型T6继续。未读写用户configs/认证，未调用外部模型。

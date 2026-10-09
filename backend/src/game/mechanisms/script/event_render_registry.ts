@@ -1,5 +1,5 @@
 import { readGravekeeperFeedback, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
-import { text, inspectionLabel, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, mechanicalEventLabel, merchantEventLabel, hybridEventLabel, type Locale } from "@ai-werewolf-arena/game-text";
+import { text, inspectionLabel, outcomeLabel, outcomeWinnersLabel, victoryPointLabel, mechanicalEventLabel, merchantEventLabel, hybridEventLabel, awakenedEventLabel, type Locale } from "@ai-werewolf-arena/game-text";
 /** 文件说明：事件 -> 脚本回放文本/终端文本渲染注册表。 */
 import { GameEvent } from "../../../core/domain/model";
 import {
@@ -91,6 +91,9 @@ const JUDGE_HANDLERS: ScriptJudgeLineHandlers = {
 };
 
 const REPLAY_STAGE_HANDLERS: ScriptReplayStageHandlers = {
+  awakened_inherited: () => "awakened_inherited", awakened_ready: () => "awakened_activation",
+  awakened_mimicked: () => "awakened_mimic", awakened_mimic_skipped: () => "awakened_mimic",
+  awakened_poison_used: () => "awakened_skill", awakened_guard_chosen: () => "awakened_skill", awakened_skill_skipped: () => "awakened_skill", awakened_attack_chosen: () => "awakened_attack",
   player_shot: () => "death_shot",
   gargoyle_awakened:()=>"gargoyle_awakened",role_inspected:()=>"role_inspected",role_inspection_skipped:()=>"role_inspection_skipped",
   hidden_wolf_awakened:()=>"hidden_wolf_awakened",
@@ -149,6 +152,7 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const awakened = awakenedEventLabel(event.type, event.payload, locale); if (awakened !== null) return awakened;
     const hybrid = hybridEventLabel(event.type, event.payload, locale); if (hybrid !== null) return hybrid;
     const merchant = merchantEventLabel(event.type, event.payload, locale); if (merchant !== null) return merchant;
     const mechanical = mechanicalEventLabel(event.type, event.payload, locale);
@@ -166,6 +170,7 @@ export class ScriptEventRenderRegistry {
   }
 
   toLiveRender(event: GameEvent, printPrivateEvents: boolean, locale: Locale = "zh-CN"): ScriptLiveRender[] {
+    const awakened = awakenedEventLabel(event.type, event.payload, locale); if (awakened !== null) return printPrivateEvents ? [{ kind: "private", text: awakened }] : [];
     const hybrid = hybridEventLabel(event.type, event.payload, locale);
     if (hybrid !== null) return printPrivateEvents ? [{ kind: event.type === "hybrid_affiliation_resolved" ? "god" : "private", text: hybrid }] : [];
     const merchant = merchantEventLabel(event.type, event.payload, locale);

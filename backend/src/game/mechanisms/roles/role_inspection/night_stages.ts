@@ -1,6 +1,6 @@
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
-import { Phase } from "../../../../core/domain/model";
+import { Phase, Role } from "../../../../core/domain/model";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import { nightAbilityActors, recordNightAbilityUse, roleInspectionPolicy, type RoleInspectionPolicy, type NightAbility } from "../abilities";
 import { getGargoyleState } from "../private_state";
@@ -8,6 +8,7 @@ import { resolveInspection } from "../inspection";
 import { beginRoleInspectionNight, recordRoleInspectionCompletion, recordRoleInspectionNightCommit } from "./night_scope";
 import { roleInspectionTargets } from "./rules";
 import { captureNightAbilityScope } from "../ability_scope";
+import { captureAwakenedMirrorScope } from "../awakened_hidden_wolf/night_scope";
 
 function finishOptionalInspection(ctx: NightStageContext, actorId: number, ability: NightAbility<"role_check">, day: number, reason: "passed" | "no_targets"): void {
   recordNightAbilityUse(ability, day, false);
@@ -26,7 +27,8 @@ async function executeInspections(ctx: NightStageContext, policy: RoleInspection
     const source = ability.source, sourceKind = source.kind;
     const sourceOwner = source.kind === "native" ? source.role : source.actorId;
     const sourceAbilityId = source.kind === "copy" || source.kind === "transfer" ? source.abilityId : undefined;
-    const current = () => scope.isEligible() && getGargoyleState(role) === gargoyleState && roleInspectionPolicy(state) === policy &&
+    const awakenedCurrent = source.kind === "native" && source.role === Role.AwakenedHiddenWolf ? captureAwakenedMirrorScope(ctx.world, actorId, ability, day, () => ctx.isCurrent() && ctx.currentDay() === day) : () => true;
+    const current = () => awakenedCurrent?.() === true && scope.isEligible() && getGargoyleState(role) === gargoyleState && roleInspectionPolicy(state) === policy &&
       ability.source === source && source.kind === sourceKind && (source.kind === "native" ? source.role : source.actorId) === sourceOwner &&
       (source.kind === "copy" || source.kind === "transfer" ? source.abilityId : undefined) === sourceAbilityId;
     const exhausted = () => policy === "gargoyle" ? recordRoleInspectionCompletion(ctx.world, actorId, day, ability, ctx.isCurrent) : finishOptionalInspection(ctx, actorId, ability, day, "no_targets");
@@ -40,7 +42,7 @@ async function executeInspections(ctx: NightStageContext, policy: RoleInspection
         return [id, { target, version: aliveLifeVersion(target) }] as const;
       }));
       if (!targets.size) { exhausted(); completed = true; break; }
-      const action = await ctx.actionProvider.getAction(ctx.makeRequest(actorId, ["inspect_role"], { stage: policy === "gargoyle" ? "role_inspection" : policy === "mirror" ? "mirror_girl" : "psychic", requiresAction: policy === "gargoyle", ability_id: abilityId, ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}) }));
+      const action = await ctx.actionProvider.getAction(ctx.makeRequest(actorId, ["inspect_role"], { stage: policy === "gargoyle" ? "role_inspection" : policy === "mirror" ? "mirror_girl" : "psychic", requiresAction: policy === "gargoyle", ability_id: abilityId, ...(sourceKind === "native" && sourceOwner === Role.AwakenedHiddenWolf ? { action_failure_policy: "error" as const, allow_fallback: false } : {}), ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}) }));
       if (!current()) break;
       if (action === null && policy !== "gargoyle") { finishOptionalInspection(ctx, actorId, ability, day, "passed"); completed = true; break; }
       if (action?.name !== "inspect_role") continue;

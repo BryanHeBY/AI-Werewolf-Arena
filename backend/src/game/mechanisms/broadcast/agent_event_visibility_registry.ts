@@ -49,6 +49,8 @@ const ACTOR_ONLY_EVENT_TYPES = new Set([
   "gargoyle_awakened",
   "mechanical_awakened", "mechanical_mode_selected", "mechanical_mimicked", "mechanical_mimic_skipped",
   "mechanical_skill_skipped", "mechanical_poison_used", "mechanical_guard_chosen", "mechanical_attack_chosen",
+  "awakened_inherited", "awakened_mimicked", "awakened_mimic_skipped", "awakened_ready", "awakened_skill_skipped",
+  "awakened_poison_used", "awakened_guard_chosen", "awakened_attack_chosen",
   "role_inspected",
   "role_inspection_skipped",
   "lucky_ability_skipped",

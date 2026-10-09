@@ -1,6 +1,6 @@
 # AWA Awakened Hidden Wolf 1.0.0 规则卡
 
-规则集 `awa_classic` 1.0.0；ID `awakened_hidden_wolf`，觉醒隐狼／Awakened Hidden Wolf；核验2026-10-09。当前planned，本卡冻结P7后续实现，不因已有隐狼/机械狼/魔镜少女而成为已交付角色。
+规则集 `awa_classic` 1.0.0；ID `awakened_hidden_wolf`，觉醒隐狼／Awakened Hidden Wolf；核验2026-10-09。规则冻结时为planned；现完整角色与原十二人镜隐迷踪联合板已验收，登记verified，见[交付审查](../reviews/p7-awakened-hidden-wolf.md)。不以已有隐狼/机械狼/魔镜少女的单角色交付代替本角色门槛。
 
 ## 已核第一方来源
 

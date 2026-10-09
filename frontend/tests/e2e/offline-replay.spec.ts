@@ -2,6 +2,23 @@ import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 const original = JSON.parse(readFileSync(new URL("../fixtures/sample.replay.json", import.meta.url), "utf8"));
 
+for (const locale of ["zh-CN", "en"] as const) for (const kind of ["twelve", "guard", "extra_hold"] as const) test(`${locale}/${kind}: actual Awakened replay separates copied skills from God identity and final victory`, async ({ page }) => {
+  const replay = JSON.parse(readFileSync(new URL(`../fixtures/awakened-${kind}.replay.json`, import.meta.url), "utf8")); replay.meta.locale = locale;
+  await page.route("**/api/replay", route => route.fulfill({ json: replay })); await page.goto("/");
+  const label = kind === "twelve" ? (locale === "en" ? "Player 1 shoots player 8" : "1号开枪带走8号") : kind === "guard" ? (locale === "en" ? "Awakened guard: player 1 chose 6 on night 2." : "觉醒守护：1号第2夜选择6。") : (locale === "en" ? "Awakened extra knife: player 1 chose 6 on night 3." : "觉醒额外刀：1号第3夜选择6。");
+  await page.locator(".timeline .event").filter({ hasText: label }).click(); await expect(page.getByTestId("composition-event")).toHaveText(label);
+  await expect(page.locator(".seat-grid .winner")).toHaveCount(0);
+  const actor = page.getByRole("button", { name: locale === "en" ? "Player 1 · Seat 1" : "1号 · Seat 1", exact: true });
+  await expect(actor).toContainText(locale === "en" ? "Awakened Hidden Wolf" : "觉醒隐狼");
+  const victim = page.getByRole("button", { name: locale === "en" ? `Player ${kind === "twelve" ? 8 : 6} · Seat ${kind === "twelve" ? 8 : 6}` : `${kind === "twelve" ? 8 : 6}号 · Seat ${kind === "twelve" ? 8 : 6}`, exact: true });
+  if (kind === "twelve") await expect(victim).toHaveClass(/dead/); else await expect(victim).not.toHaveClass(/dead/);
+  const caption = await page.getByTestId("composition-caption").boundingBox(); expect(caption).not.toBeNull();
+  for (const seat of await page.locator("[data-composition-player]").all()) { const box = await seat.boundingBox(); expect(box).not.toBeNull(); expect(box!.y + box!.height).toBeLessThan(caption!.y); }
+  await page.locator(".timeline .event").last().click(); const winners = kind === "twelve" ? 8 : kind === "guard" ? 4 : 3;
+  await expect(page.locator(".seat-grid .winner")).toHaveCount(winners); await expect(page.getByTestId("composition-winner")).toHaveCount(winners);
+  if (kind === "extra_hold") { await expect(actor).toHaveClass(/winner/); await expect(page.getByRole("button", { name: locale === "en" ? "Player 2 · Seat 2" : "2号 · Seat 2", exact: true })).toHaveClass(/dead/); }
+});
+
 for (const locale of ["zh-CN", "en"] as const) test(`${locale}: neutral public gun caption kills the target without asserting Hunter in the caption`, async ({ page }) => {
   const replay = JSON.parse(readFileSync(new URL("../fixtures/mirror-twelve.replay.json", import.meta.url), "utf8"));
   replay.meta.locale = locale;

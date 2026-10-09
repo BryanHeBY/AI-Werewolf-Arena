@@ -22,6 +22,7 @@ export enum Role {
   Psychic = "psychic",
   MirrorGirl = "mirror_girl",
   MechanicalWolf = "mechanical_wolf",
+  AwakenedHiddenWolf = "awakened_hidden_wolf",
   MiracleMerchant = "miracle_merchant",
   Hybrid = "hybrid",
   Villager = "villager",

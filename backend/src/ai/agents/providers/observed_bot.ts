@@ -44,6 +44,14 @@ export class ObservedBot implements ObservedPlayerStrategy {
       return this.style === "conservative" ? null : { name: "mechanical_mode", args: { mode: ready ? "kill" : "skill" } };
     }
     if (tools.includes("mimic_role")) { const target = this.style === "conservative" && request.context.day === 1 ? undefined : pick(others); return target === undefined ? null : { name: "mimic_role", args: { target_id: target } }; }
+    if (tools.includes("awakened_mimic")) { const target = this.style === "conservative" && request.context.day === 1 ? undefined : pick(others); return target === undefined ? null : { name: "awakened_mimic", args: { target_id: target } }; }
+    if (tools.includes("awakened_poison")) { const target = this.style === "conservative" ? undefined : pick(others); return target === undefined ? null : { name: "awakened_poison", args: { target_id: target } }; }
+    if (tools.includes("awakened_guard")) {
+      const skill = ownState.awakened?.learned?.skill;
+      const candidates = knownAliveIds.filter(id => skill?.kind !== "guard" || skill.lastGuardDay !== request.context.day - 1 || skill.lastTarget !== id);
+      return { name: "awakened_guard", args: { target_id: this.style === "conservative" ? null : pick(candidates) ?? null } };
+    }
+    if (tools.includes("awakened_attack")) return { name: "awakened_attack", args: { target_id: this.style === "conservative" ? null : pick(others) ?? null } };
     if (tools.includes("mechanical_inspect")) { const target = pick(others); return this.style === "conservative" || target === undefined ? null : { name: "mechanical_inspect", args: { target_id: target } }; }
     if (tools.includes("mechanical_poison")) { const target = pick(others); return this.style === "conservative" || target === undefined ? null : { name: "mechanical_poison", args: { target_id: target } }; }
     if (tools.includes("mechanical_guard")) return { name: "mechanical_guard", args: { target_id: this.style === "conservative" ? null : pick(knownAliveIds) ?? null } };

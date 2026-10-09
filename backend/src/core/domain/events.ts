@@ -59,6 +59,14 @@ export interface EventPayloadMap {
   hidden_wolf_awakened: {actorId:EntityId;day:number};
   gargoyle_awakened: {actorId:EntityId;day:number};
   mechanical_awakened: { actorId: EntityId; day: number; firstKnifeNight: number };
+  awakened_inherited: { actorId: EntityId; day: number; firstKnifeNight: number };
+  awakened_mimicked: { actorId: EntityId; day: number; targetId: EntityId; role: RoleId };
+  awakened_mimic_skipped: { actorId: EntityId; day: number };
+  awakened_ready: { actorId: EntityId; activationNight: number; activeFromNight: number; role: RoleId };
+  awakened_skill_skipped: { actorId: EntityId; day: number };
+  awakened_poison_used: { actorId: EntityId; day: number; targetId: EntityId };
+  awakened_guard_chosen: { actorId: EntityId; day: number; targetId: EntityId | null };
+  awakened_attack_chosen: { actorId: EntityId; day: number; targetId: EntityId | null };
   mechanical_mode_selected: { actorId: EntityId; day: number; mode: "kill" | "skill" };
   mechanical_mimicked: { actorId: EntityId; day: number; targetId: EntityId; role: RoleId; readyOnNight: number };
   mechanical_mimic_skipped: { actorId: EntityId; day: number };

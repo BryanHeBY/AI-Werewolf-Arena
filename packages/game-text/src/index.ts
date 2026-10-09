@@ -113,6 +113,30 @@ export const MECHANICAL_EVENT_TYPES = [
   "mechanical_poison_reflected", "mechanical_shot",
 ] as const;
 
+export const AWAKENED_EVENT_TYPES = ["awakened_inherited", "awakened_mimicked", "awakened_mimic_skipped", "awakened_ready", "awakened_skill_skipped", "awakened_poison_used", "awakened_guard_chosen", "awakened_attack_chosen"] as const;
+/** Private learning/choice facts never imply deaths or change true God seat identities. */
+export function awakenedEventLabel(type: string, payload: unknown, locale: Locale): string | null {
+  if (!(AWAKENED_EVENT_TYPES as readonly string[]).includes(type)) return null;
+  const unknown = () => text(locale, "replay.unknown");
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return unknown();
+  const prototype = Object.getPrototypeOf(payload), descriptors = Object.getOwnPropertyDescriptors(payload);
+  if ((prototype !== Object.prototype && prototype !== null) || Object.values(descriptors).some(field => !Object.hasOwn(field, "value") || !field.enumerable)) return unknown();
+  const p = Object.fromEntries(Object.entries(descriptors).map(([key, field]) => [key, field.value]));
+  const positive = (value: unknown): value is number => typeof value === "number" && Number.isSafeInteger(value) && value > 0;
+  const actor = p.actorId, day = p.day, target = p.targetId;
+  if (!positive(actor) || (type !== "awakened_ready" && !positive(day))) return unknown();
+  switch (type) {
+    case "awakened_inherited": return positive(p.firstKnifeNight) ? text(locale, "console.awakened.inherited", { actor, day, first: p.firstKnifeNight }) : unknown();
+    case "awakened_mimicked": return positive(target) && target !== actor && isRoleId(p.role) ? text(locale, "console.awakened.mimic", { actor, day, target, role: roleName(p.role, locale) }) : unknown();
+    case "awakened_ready": return positive(p.activationNight) && positive(p.activeFromNight) && p.activeFromNight === p.activationNight + 1 && isRoleId(p.role) ? text(locale, "console.awakened.ready", { actor, activation: p.activationNight, ready: p.activeFromNight, role: roleName(p.role, locale) }) : unknown();
+    case "awakened_mimic_skipped": return text(locale, "console.awakened.mimic_skip", { actor, day });
+    case "awakened_skill_skipped": return text(locale, "console.awakened.skill_skip", { actor, day });
+    case "awakened_poison_used": return positive(target) ? text(locale, "console.awakened.poison", { actor, day, target }) : unknown();
+    case "awakened_guard_chosen": case "awakened_attack_chosen": return target === null || positive(target) ? text(locale, type === "awakened_guard_chosen" ? "console.awakened.guard" : "console.awakened.attack", { actor, day, target: target ?? text(locale, "common.none") }) : unknown();
+  }
+  return unknown();
+}
+
 /** Wire-facing labels shared by console and replay; choices never imply a player has died. */
 export function mechanicalEventLabel(type: string, payload: unknown, locale: Locale): string | null {
   if (!(MECHANICAL_EVENT_TYPES as readonly string[]).includes(type)) return null;

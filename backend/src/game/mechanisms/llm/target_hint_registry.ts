@@ -9,6 +9,7 @@ import {COMPONENT} from "../../../core/domain/components/names";
 import type {RoleComponent} from "../../../core/domain/components/role";
 import { findNightAbility } from "../roles/abilities";
 import { luckyTargetAllowed } from "../roles/night_action_history";
+import { getAwakenedState } from "../roles/awakened_hidden_wolf/state";
 
 interface TargetRule {
   allowSelf: boolean;
@@ -26,6 +27,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     check_identity: { allowSelf: false },
     inspect_role:{allowSelf:false},
     mimic_role: { allowSelf: false }, mechanical_inspect: { allowSelf: false },
+    awakened_mimic: { allowSelf: false }, awakened_poison: { allowSelf: true }, awakened_guard: { allowSelf: true }, awakened_attack: { allowSelf: true },
     bestow_ability: { allowSelf: false },
     choose_exemplar: { allowSelf: false },
     mechanical_poison: { allowSelf: true }, mechanical_guard: { allowSelf: true }, mechanical_attack: { allowSelf: true },
@@ -51,6 +53,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     [Role.HiddenWolf]: {kill_vote:{allowSelf:true}},
     [Role.Gargoyle]:{kill_vote:{allowSelf:true}},
     [Role.MechanicalWolf]: { kill_vote: { allowSelf: true } },
+    [Role.AwakenedHiddenWolf]: { kill_vote: { allowSelf: true } },
     [Role.Witch]: {
       // 女巫可自救，提示层需包含自己。
       use_potion: { allowSelf: true },
@@ -69,6 +72,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     const allowSelf = targetTools.some((tool) => this.getRule(ctx.actorRole, tool)?.allowSelf);
     const inspection=getRoleInspectionState(ctx.world.getComponent<RoleComponent>(ctx.actorId,COMPONENT.Role)!,ctx.abilityId);
     const ownRole = ctx.world.getComponent<RoleComponent>(ctx.actorId, COMPONENT.Role);
+    const awakenedGuard = getAwakenedState(ownRole)?.learned?.skill;
     const luckyAllowed = (tool: ToolName, id: number) => {
       const kind = tool === "check_identity" ? "seer_check" : tool === "guard" ? "guard" : tool === "use_potion" ? "potion" : null;
       if (!kind) return true;
@@ -82,6 +86,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       .getAliveEntityIds()
       .filter(id => targetTools.some(tool => (this.getRule(ctx.actorRole, tool)?.allowSelf || id !== ctx.actorId) &&
         luckyAllowed(tool, id) &&
+        (tool !== "awakened_guard" || awakenedGuard?.kind !== "guard" || awakenedGuard.lastGuardDay !== (ctx.day ?? 1) - 1 || awakenedGuard.lastTarget !== id) &&
         (tool !== "vote" || canBeExiled(ctx.world, id, ctx.roleCatalog)) &&
         (tool!=="inspect_role"||!inspection||roleInspectionPolicy(inspection)==="psychic"||!inspection.history.some(report=>report.targetId===id))&&
         (tool !== "vote_for_sheriff" || ctx.sheriffCandidates?.includes(id) && canBeSheriff(ctx.world, id, ctx.roleCatalog))))

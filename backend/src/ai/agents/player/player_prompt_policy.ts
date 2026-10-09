@@ -7,6 +7,7 @@ import {roleInspectionPolicy,ROLE_INSPECTION_POLICY_ROLES,projectRoleInspectionS
 import {getGargoyleState,getRoleInspectionState} from "../../../game/mechanisms/roles/private_state";
 import {canGargoyleKnife} from "../../../game/mechanisms/roles/gargoyle/inheritance";
 import { getMechanicalState, projectMechanicalState } from "../../../game/mechanisms/roles/mechanical_wolf/state";
+import { getAwakenedState, projectAwakenedState } from "../../../game/mechanisms/roles/awakened_hidden_wolf/state";
 import { ownNightActions } from "../../../game/mechanisms/roles/night_action_history";
 import { getHybridState, projectHybridState } from "../../../game/mechanisms/roles/hybrid/state";
 import { getMerchantState, projectMerchantState } from "../../../game/mechanisms/roles/miracle_merchant/state";
@@ -102,6 +103,7 @@ export class PlayerPromptPolicy {
     if(role?.role===Role.HiddenWolf)ownState.hiddenWolf={hasInheritedKnife:getHiddenWolfState(role)?.hasInheritedKnife===true,canVoteForKill:canHiddenWolfKnife(role,this.world)};
     if(role?.role===Role.Gargoyle)ownState.gargoyle={hasInheritedKnife:getGargoyleState(role)?.hasInheritedKnife===true,canVoteForKill:canGargoyleKnife(role,this.world)};
     if (role?.role === Role.MechanicalWolf) { const state = getMechanicalState(role); if (state) ownState.mechanical = projectMechanicalState(state); }
+    if (role?.role === Role.AwakenedHiddenWolf) { const state = getAwakenedState(role); if (state) ownState.awakened = projectAwakenedState(state); }
     if(role){const inspection=getRoleInspectionState(role,request.context.ability_id);if(inspection)ownState.roleInspection=projectRoleInspectionState(inspection);}
     if (role?.role === Role.WolfKing) ownState.wolfKing = getWolfKingState(role);
     if (role?.role === Role.WhiteWolfKing) ownState.whiteWolfKing = getWhiteWolfKingState(role);

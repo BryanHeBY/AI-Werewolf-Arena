@@ -1,6 +1,6 @@
 # P7：觉醒隐狼实现与资源边界
 
-以[规则卡](rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)为准；角色当前planned。已交付Mirror不是原镜隐迷踪联合板完成证明，觉醒隐狼启用笔必须包含原12人实际组合。
+以[规则卡](rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)为准；角色已完成并登记 `verified`，见[完整验收](reviews/p7-awakened-hidden-wolf.md)。本笔包含原12人镜隐迷踪组合；先前Mirror单角色交付不作为原联合板证明。
 
 ## 状态与能力所有权
 
@@ -35,7 +35,7 @@
 
 ## 分笔与审查
 
-- **规则冻结文档**：来源＋AWA差异、夜末/资源/保护/中立枪受众、原板/有限组合与完整gate，R/T核来源和独立判例，A核资源/时间/引用与typed proposal，L/D核i18n/记录/视角/原板承诺。仍21 verified/43 planned。
+- **规则冻结文档**：来源＋AWA差异、夜末/资源/保护/中立枪受众、原板/有限组合与完整gate，R/T核来源和独立判例，A核资源/时间/引用与typed proposal，L/D核i18n/记录/视角/原板承诺。冻结笔当时21 verified/43 planned；完整启用后22 verified/42 planned。
 - **必要底座功能fix/feat**：中立玩家枪与记录stage、正常可挡额外刀/吸收毒盾、真实夜末激活时点等，按独立职责拆可运行提交；真实旧角色通路与Tape及中英/前端视角门槛。不能在这些笔启用半角色。
 - **完整Aw启用**：一份原生角色/资源装配＋六类学习、实际刀/技能/枪，6人AWA与原12镜隐板；八种以上独立字面SDK/ACP/MCP/混合两语完整局、每板至少20受限seed和所有技能/继承/skip正分支、严格Tape、静态/前端/实际browser/双语PNG；独立交叉审查、修正复查后才verified。
 - **P7结束**：黑市商人随后完成，再全已支持release与阶段矩阵。不是拿本角色或原板通过代替P8–P10、64角色/22机制组合、长局与外部模型T6。

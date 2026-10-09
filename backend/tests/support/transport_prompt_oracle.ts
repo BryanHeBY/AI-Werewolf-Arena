@@ -16,6 +16,7 @@ const stages: Record<string, [string, string]> = {
   miracle_merchant: ["奇迹商人赠予", "Miracle Merchant trade"], lucky: ["幸运儿行动", "Lucky recipient action"],
   mechanical_mode: ["机械狼模式选择", "Mechanical Wolf mode choice"], mechanical_mimic: ["机械狼学习", "Mechanical Wolf learning"],
   mechanical_skill: ["机械狼技能", "Mechanical Wolf skill"], mechanical_attack: ["机械狼额外刀", "Mechanical Wolf extra knife"],
+  awakened_mimic: ["觉醒隐狼模仿", "Awakened Hidden Wolf learning"], awakened_skill: ["觉醒隐狼技能", "Awakened Hidden Wolf skill"], awakened_attack: ["觉醒隐狼额外刀", "Awakened Hidden Wolf extra knife"],
   role_inspection: ["具体角色查验", "Role inspection"],
   dreamer: ["摄梦人行动", "Dreamer action"],
   wolf_beauty: ["狼美人魅惑", "Wolf Beauty charm"],
@@ -89,9 +90,10 @@ export function assertTransportEvents(role: string, events: Array<[number, strin
     if (type === "god_private_game_info" || type === "mechanical_poison_reflected" || type === "merchant_trade_resolved" || type === "hybrid_affiliation_resolved") throw new Error("fixture_god_information_exposed");
     if(["merchant_trade_committed","merchant_trade_skipped","lucky_ability_skipped","hybrid_exemplar_chosen"].includes(type)&&payload.actorId!==actorId)throw new Error("fixture_other_private_skill_exposed");
     if (type.startsWith("mechanical_") && type !== "mechanical_shot" && payload.actorId !== actorId) throw new Error("fixture_other_private_skill_exposed");
+    if (type.startsWith("awakened_") && payload.actorId !== actorId) throw new Error("fixture_other_private_skill_exposed");
     if(["dream_death","charm_death","charm_blocked"].includes(type))throw new Error("fixture_private_death_information_exposed");
     if (["seer_checked", "hidden_wolf_awakened", "role_inspected", "role_inspection_skipped", "gargoyle_awakened", "charm_applied", "dream_applied", "gravekeeper_reported", "witch_potion_used", "witch_potion_skipped", "guard_applied"].includes(type) && payload.actorId !== actorId) throw new Error("fixture_other_private_skill_exposed");
-    if(["hidden_wolf","gargoyle","mechanical_wolf"].includes(role)&&["wolf_tactical_order","wolf_discussion","wolf_discussion_ended","wolf_kill_vote_cast"].includes(type)){if(type!=="wolf_kill_vote_cast"||payload.actorId!==actorId)throw new Error("fixture_hidden_pack_information_exposed");}
+    if(["hidden_wolf","gargoyle","mechanical_wolf","awakened_hidden_wolf"].includes(role)&&["wolf_tactical_order","wolf_discussion","wolf_discussion_ended","wolf_kill_vote_cast"].includes(type)){if(type!=="wolf_kill_vote_cast"||payload.actorId!==actorId)throw new Error("fixture_hidden_pack_information_exposed");}
     else if (["wolf_tactical_order", "wolf_discussion", "wolf_discussion_ended", "wolf_kill_vote_cast"].includes(type) && !["wolf","wolf_king","white_wolf_king","wolf_beauty"].includes(role)) throw new Error("fixture_wolf_information_exposed");
   }
 }

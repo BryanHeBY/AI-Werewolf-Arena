@@ -14,6 +14,7 @@ import {claimCharm,commitCharmDeath,type CharmBinding} from "../mechanisms/roles
 import {refreshHiddenWolfInheritance} from "../mechanisms/roles/hidden_wolf/inheritance";
 import {refreshGargoyleInheritance} from "../mechanisms/roles/gargoyle/inheritance";
 import { refreshMechanicalInheritance } from "../mechanisms/roles/mechanical_wolf/inheritance";
+import { refreshAwakenedInheritance } from "../mechanisms/roles/awakened_hidden_wolf/inheritance";
 import { expireLuckyAbilitiesOnDeath } from "../mechanisms/roles/ability_changes";
 
 interface DeathWaveActions { phase: Phase; day: number; permits: Array<ReturnType<World["openDeathAction"]>>; isCurrent:()=>boolean }
@@ -138,7 +139,7 @@ export class DeathResolution {
                 if(charmTargets.has(id)||(linked.has(id)&&!result.extraDeaths.includes(id))||(!shot&&!(proposedSources[id]??[]).includes(DeathCause.Shot)))publicLinked.push(id);
                 next.add(id);
               }
-              if(newlyMarked){refreshHiddenWolfInheritance(this.world,this.events,this.state.day);refreshGargoyleInheritance(this.world,this.events,this.state.day);refreshMechanicalInheritance(this.world,this.state.day,this.events);}
+              if(newlyMarked){refreshHiddenWolfInheritance(this.world,this.events,this.state.day);refreshGargoyleInheritance(this.world,this.events,this.state.day);refreshMechanicalInheritance(this.world,this.state.day,this.events);refreshAwakenedInheritance(this.world,this.state.day,this.events);}
               if(publicLinked.length)this.events.push({timestamp:Date.now(),type:"additional_deaths",payload:{deaths:publicLinked}});
               for(const binding of charmBindings)if(commitCharmDeath(this.world,binding))this.events.push({timestamp:Date.now(),type:"charm_death",payload:{actorId:binding.actorId,targetId:binding.targetId}});
               nightEffects?.dreams?.recordDeaths([...next,...linked],this.events);
@@ -167,6 +168,7 @@ export class DeathResolution {
         phase: actions.phase, actorId: actorId, allowedTools: ["shoot"], stage: this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role === Role.Hunter ? "hunter_shot" : "death_shot", requiresAction: true,
         summary: { key: "request.summary.death_shot" },
         context: {
+          ...(this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role === Role.AwakenedHiddenWolf ? { action_failure_policy: "error" as const, allow_fallback: false } : {}),
           trigger: "on_death", death_phase: deathPhase, death_sources: [...(sources[actorId] ?? [])], death_action_id: permit.id,
           ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
         },
@@ -270,6 +272,6 @@ export class DeathResolution {
       expireLuckyAbilitiesOnDeath(this.world, id, this.events);
       this.settledLives.set(id, { component: alive, version: aliveLifeVersion(alive) });
     }
-    if(refreshInheritance){refreshHiddenWolfInheritance(this.world,this.events,this.state.day);refreshGargoyleInheritance(this.world,this.events,this.state.day);refreshMechanicalInheritance(this.world,this.state.day,this.events);}
+    if(refreshInheritance){refreshHiddenWolfInheritance(this.world,this.events,this.state.day);refreshGargoyleInheritance(this.world,this.events,this.state.day);refreshMechanicalInheritance(this.world,this.state.day,this.events);refreshAwakenedInheritance(this.world,this.state.day,this.events);}
   }
 }

@@ -41,6 +41,13 @@ export function buildAgentVisibleEvent(
 
 /** Project the authorized wire fields, keeping internal metadata out of player prompts. */
 function projectPayload(event: GameEvent): Record<string, unknown> {
+  switch (event.type) {
+    case "awakened_inherited": return { actorId: event.payload.actorId, day: event.payload.day, firstKnifeNight: event.payload.firstKnifeNight };
+    case "awakened_mimicked": return { actorId: event.payload.actorId, day: event.payload.day, targetId: event.payload.targetId, role: event.payload.role };
+    case "awakened_ready": return { actorId: event.payload.actorId, activationNight: event.payload.activationNight, activeFromNight: event.payload.activeFromNight, role: event.payload.role };
+    case "awakened_mimic_skipped": case "awakened_skill_skipped": return { actorId: event.payload.actorId, day: event.payload.day };
+    case "awakened_poison_used": case "awakened_guard_chosen": case "awakened_attack_chosen": return { actorId: event.payload.actorId, day: event.payload.day, targetId: event.payload.targetId };
+  }
   if (event.type === "ability_changed") {
     const payload = event.payload;
     return structuredClone({ actorId: payload.actorId, abilityId: payload.abilityId, kind: payload.kind, operation: payload.operation,

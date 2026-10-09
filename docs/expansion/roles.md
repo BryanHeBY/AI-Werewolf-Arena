@@ -1,6 +1,6 @@
 # 可配置角色目标目录
 
-返回 [实施路线](roadmap.md)。本目录共 **64 项定义**，基础7项与P5狼王/白狼王/骑士/守墓人与P6摄梦人/狼美人/熊/隐狼/石像鬼与P7通灵师/机械狼/奇迹商人/混血儿/魔镜少女已验证，共21项；剩余43项为目标。已有实现仅表示当前 AWA 版本，不能表示其他同名版本均受支持。
+返回 [实施路线](roadmap.md)。本目录共 **64 项定义**，基础7项与P5狼王/白狼王/骑士/守墓人与P6摄梦人/狼美人/熊/隐狼/石像鬼与P7通灵师/机械狼/奇迹商人/混血儿/魔镜少女/觉醒隐狼已验证，共22项；剩余42项为目标。已有实现仅表示当前 AWA 版本，不能表示其他同名版本均受支持。
 
 ## 使用与冻结要求
 
@@ -11,7 +11,7 @@
 - 每项在实现前建立规则卡：来源、发布日期/核验日期、规则集与版本、身份/阵营/计数/胜利目标、互认/夜聊/刀权、动作/资源/时点、所有死因与保护/重定向交互、允许组合、AWA 改编说明、中英提示及期望测试。
 - 有歧义的复制、替死、反伤、保护及判胜，必须选择并记录某个确定版本；未决规则阻止相关角色宣告支持。
 - 基础/觉醒、机械狼/觉醒隐狼、通灵师/魔镜少女分别登记。白痴与愚者的别名、赤月与血月等名称仅在同规则版本下建立映射。
-- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。基础七项已完成P1–P4并登记 `verified`，见[基础规则卡](rules/awa-classic-v1.md)与[P4验收](reviews/p4-activation.md)；狼王/白狼王/骑士/守墓人及P6摄梦人/狼美人/熊/隐狼/石像鬼与P7通灵师/机械狼/奇迹商人/混血儿/魔镜少女已交付，新增其余43项为 `planned`。
+- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。基础七项已完成P1–P4并登记 `verified`，见[基础规则卡](rules/awa-classic-v1.md)与[P4验收](reviews/p4-activation.md)；狼王/白狼王/骑士/守墓人及P6摄梦人/狼美人/熊/隐狼/石像鬼与P7通灵师/机械狼/奇迹商人/混血儿/魔镜少女/觉醒隐狼已交付，新增其余42项为 `planned`。
 
 ## 1. 基础角色：7 项，awa_classic 1.0.0 已验证
 
@@ -115,7 +115,7 @@
 | 56 | `awakened_idiot` | 觉醒愚者 | Awakened Village Idiot | 秘密之身/伤害替代 | P9 / [S18][tournament]；完整技能待核验 |
 | 57 | `awakened_seer` | 觉醒预言家 | Awakened Seer | 双目标信息 | P9 / [S19][awakenedseer] |
 | 58 | `awakened_wolf_king` | 觉醒狼王 | Awakened Wolf King | 多次死亡技能、能力转移 | P9 / [S01][cards] |
-| 59 | `awakened_hidden_wolf` | 觉醒隐狼 | Awakened Hidden Wolf | 复制、生效时机、独立狼 | P7；仍 `planned` / [AWA冻结卡](rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf) / [实现边界](awakened-hidden-wolf.md) / [S10][mirror] |
+| 59 | `awakened_hidden_wolf` | 觉醒隐狼 | Awakened Hidden Wolf | 复制、生效时机、独立狼 | P7；`verified` / [完整验收](reviews/p7-awakened-hidden-wolf.md) / [AWA冻结卡](rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf) / [实现边界](awakened-hidden-wolf.md) / [S10][mirror] |
 | 60 | `awakened_wolf_beauty` | 觉醒狼美人 | Awakened Wolf Beauty | 替死/关系结算 | P9 / [S16][salon]；采用正式上线版本核验 |
 | 61 | `awakened_witch` | 觉醒女巫 | Awakened Witch | 多次调配、协助者秘密决策 | P9 / [S27][awakenedwitch] |
 | 62 | `awakened_hunter` | 觉醒猎人 | Awakened Hunter | 巡猎及死亡动作 | P9 / [S28][recenttournament]；完整技能待核验 |

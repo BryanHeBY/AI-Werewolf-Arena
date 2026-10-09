@@ -15,7 +15,7 @@ const nativeMirror = (role: RoleComponent) => allNightAbilities(role).find(abili
 export const MIRROR_GIRL_ROLE_PROFILE: RoleProfile = {
   role: Role.MirrorGirl, camp: Camp.Good, goodSide: "god", maxCount: 1,
   label: roleName("mirror_girl"), skillBrief: text("zh-CN", "role.mirror_girl.brief"),
-  supportedBoardRoles: [Role.MirrorGirl, Role.Wolf, Role.WolfKing, Role.HiddenWolf, Role.Gargoyle, Role.Psychic, Role.Seer, Role.Witch, Role.Guard, Role.Hunter, Role.Idiot, Role.Villager],
+  supportedBoardRoles: [Role.MirrorGirl, Role.AwakenedHiddenWolf, Role.Wolf, Role.WolfKing, Role.HiddenWolf, Role.Gargoyle, Role.Psychic, Role.Seer, Role.Witch, Role.Guard, Role.Hunter, Role.Idiot, Role.Villager],
   init: role => {
     const native = nativeMirror(role);
     if (native?.kind === "role_check" && roleInspectionPolicy(native.state) !== "mirror") throw new Error("mirror_native_policy_invalid");

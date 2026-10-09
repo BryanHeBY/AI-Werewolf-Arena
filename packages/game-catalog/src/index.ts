@@ -77,7 +77,7 @@ export const ROLE_DEFINITIONS = [
   {"id": "awakened_idiot", "names": {"zh-CN": "觉醒愚者", "en": "Awakened Village Idiot"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "秘密之身/伤害替代"},
   {"id": "awakened_seer", "names": {"zh-CN": "觉醒预言家", "en": "Awakened Seer"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "双目标信息"},
   {"id": "awakened_wolf_king", "names": {"zh-CN": "觉醒狼王", "en": "Awakened Wolf King"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "多次死亡技能、能力转移"},
-  {"id": "awakened_hidden_wolf", "names": {"zh-CN": "觉醒隐狼", "en": "Awakened Hidden Wolf"}, "status": "planned", "targetPhase": "P7", "ruleCardRef": null, "mechanismSummary": "复制、生效时机、独立狼"},
+  {"id": "awakened_hidden_wolf", "names": {"zh-CN": "觉醒隐狼", "en": "Awakened Hidden Wolf"}, "status": "verified", "targetPhase": "P7", "ruleCardRef": "docs/expansion/rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf", "mechanismSummary": "复制、生效时机、独立狼"},
   {"id": "awakened_wolf_beauty", "names": {"zh-CN": "觉醒狼美人", "en": "Awakened Wolf Beauty"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "替死/关系结算"},
   {"id": "awakened_witch", "names": {"zh-CN": "觉醒女巫", "en": "Awakened Witch"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "多次调配、协助者秘密决策"},
   {"id": "awakened_hunter", "names": {"zh-CN": "觉醒猎人", "en": "Awakened Hunter"}, "status": "planned", "targetPhase": "P9", "ruleCardRef": null, "mechanismSummary": "巡猎及死亡动作"},
