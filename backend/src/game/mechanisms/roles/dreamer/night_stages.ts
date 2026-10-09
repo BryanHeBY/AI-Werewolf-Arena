@@ -1,9 +1,9 @@
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase } from "../../../../core/domain/model";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { activeNightAbility, nightAbilityActors, recordNightAbilityUse } from "../abilities";
+import { nightAbilityActors, recordNightAbilityUse } from "../abilities";
+import { captureNightAbilityScope } from "../ability_scope";
 import { markDreamNightCommitted } from "./night_frame";
 
 export const DREAMER_NIGHT_STAGE: NightStageHandler = {
@@ -12,15 +12,17 @@ export const DREAMER_NIGHT_STAGE: NightStageHandler = {
     const day = ctx.currentDay();
     for (const {actorId,ability} of nightAbilityActors(ctx.world,"dream",day)) {
       if (!ctx.isCurrent()) return;
-      const role = ctx.world.getComponent<RoleComponent>(actorId,COMPONENT.Role), actorLife = ctx.world.getComponent<AliveComponent>(actorId,COMPONENT.Alive), actorVersion = actorLife ? aliveLifeVersion(actorLife) : undefined, state = ability.state;
-      if (!actorLife?.alive || !role) continue;
+      const scope=captureNightAbilityScope(ctx.world,actorId,ability,day,()=>ctx.isCurrent()&&ctx.currentDay()===day);
+      if (!scope?.isEligible()) continue;
+      const actorLife=scope.life.life,actorVersion=scope.life.version,state=ability.state;
       const targets = new Map(ctx.world.getAliveEntityIds().filter(id=>id!==actorId).map(id=>{
         const life=ctx.world.getComponent<AliveComponent>(id,COMPONENT.Alive)!;return [id,{life,version:aliveLifeVersion(life)}] as const;
       }));
       if (targets.size===0) continue;
       let applied=false;
-      const current=()=>ctx.isCurrent()&&ctx.world.getComponent(actorId,COMPONENT.Role)===role&&ctx.world.getComponent(actorId,COMPONENT.Alive)===actorLife&&actorLife.alive&&actorVersion!==undefined&&aliveLifeVersion(actorLife)===actorVersion&&activeNightAbility(role,"dream",day,ability.id)===ability&&ability.state===state;
+      const current=()=>scope.isEligible();
       for (let attempt=1;attempt<=3;attempt++) {
+        if (!current()) break;
         const request=ctx.makeRequest(actorId,["dream"],{stage:"dreamer",ability_id:ability.id,...(attempt===1?{}:{retry_attempt:attempt-1,retry_max:2})});
         const action=await ctx.actionProvider.getAction(request);
         if (!current()) break;
