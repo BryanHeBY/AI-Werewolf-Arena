@@ -291,11 +291,23 @@ test("choosing only a time zone during load does not override the incoming repla
 });
 
 test("playing video keeps advancing while display language changes", async ({ page }) => {
+  // A silent composition must keep playing even if the audio device never resumes.
+  await page.addInitScript(() => {
+    AudioContext.prototype.resume = () => new Promise<void>(() => {});
+  });
   await page.goto("/");
   await page.getByRole("button", { name: "播放", exact: true }).click();
   await expect(page.getByRole("button", { name: "暂停", exact: true })).toBeVisible();
+  const position = page.getByLabel("播放位置", { exact: true });
+  await expect.poll(async () => Number(await position.inputValue())).toBeGreaterThan(0);
+  const beforeLocaleChange = Number(await position.inputValue());
   await page.getByLabel("显示语言", { exact: true }).selectOption("en");
   await expect(page.getByRole("button", { name: "Pause", exact: true })).toBeVisible();
+  await expect
+    .poll(async () =>
+      Number(await page.getByLabel("Playback position", { exact: true }).inputValue()),
+    )
+    .toBeGreaterThan(beforeLocaleChange);
   await expect(page.getByTestId("composition-event")).toHaveAttribute("data-event-seq", "2", {
     timeout: 5000,
   });
@@ -311,6 +323,19 @@ test("a completed replay with no winner differs from an in-progress replay", asy
   await expect(page.locator(".result-chip strong")).toHaveText("无胜者");
   await page.getByLabel("显示语言", { exact: true }).selectOption("en");
   await expect(page.locator(".result-chip strong")).toHaveText("No winner");
+  await page.unroute("**/api/replay");
+  await page.route("**/api/replay", (route) =>
+    route.fulfill({
+      json: {
+        ...original,
+        result: { winner: null, reason: null },
+      },
+    }),
+  );
+  await page.reload();
+  await expect(page.locator(".result-chip strong")).toHaveText("未结束");
+  await page.getByLabel("显示语言", { exact: true }).selectOption("en");
+  await expect(page.locator(".result-chip strong")).toHaveText("Unfinished");
 });
 
 for (const locale of ["zh-CN", "en"] as const)

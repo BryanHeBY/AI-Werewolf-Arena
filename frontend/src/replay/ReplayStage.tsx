@@ -60,6 +60,8 @@ export function ReplayStage({
           compositionHeight={720}
           fps={30}
           controls={false}
+          // This composition has no audio; audio-device startup must not block its frames.
+          initiallyMuted
           acknowledgeRemotionLicense
         />
       </div>
