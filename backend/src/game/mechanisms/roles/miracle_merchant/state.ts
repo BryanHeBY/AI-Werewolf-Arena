@@ -1,3 +1,4 @@
+import type { PlayerMerchantState } from "../player_extended_state";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { copyAbilityData } from "../abilities";
 
@@ -10,7 +11,7 @@ export interface MerchantState {
 export const freshMerchantState = (): MerchantState => ({ remaining: 1, closedDay: null, choice: null });
 export function getMerchantState(role: RoleComponent | undefined): MerchantState | undefined { return role?.privateState.miracle_merchant as MerchantState | undefined; }
 export function setMerchantState(role: RoleComponent, state: MerchantState): void { role.privateState.miracle_merchant = copyAbilityData(state); }
-export function projectMerchantState(state: MerchantState): MerchantState {
+export function projectMerchantState(state: MerchantState): PlayerMerchantState {
   return { remaining: state.remaining, closedDay: state.closedDay, choice: state.choice ? { day: state.choice.day, targetId: state.choice.targetId, skill: state.choice.skill } : null };
 }
 export function canMerchantTrade(state: MerchantState, day: number): boolean { return state.remaining > 0 && day >= 1 && (state.closedDay === null || state.closedDay < day); }

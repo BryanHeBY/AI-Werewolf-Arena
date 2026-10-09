@@ -1,3 +1,4 @@
+import type { PlayerAwakenedState } from "../player_extended_state";
 import type { RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "../../../../core/domain/identity";
@@ -136,7 +137,7 @@ export function useAwakenedPoison(state: AwakenedState, night: number): boolean 
 }
 
 /** Known-field projection; Mirror history and inventory belong solely to its ability instance. */
-export function projectAwakenedState(state: AwakenedState): AwakenedState {
+export function projectAwakenedState(state: AwakenedState): PlayerAwakenedState {
   const learned = state.learned;
   let skill: AwakenedSkill | undefined;
   if (learned) switch (learned.skill.kind) {

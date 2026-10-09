@@ -1,3 +1,4 @@
+import type { PlayerMechanicalState } from "../player_extended_state";
 import type { InspectionResult, RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "../../../../core/domain/identity";
@@ -144,7 +145,7 @@ export function chooseMechanicalGuard(
 }
 
 /** Explicit player projection: future God-only debug fields must not become player input. */
-export function projectMechanicalState(state: MechanicalState): MechanicalState {
+export function projectMechanicalState(state: MechanicalState): PlayerMechanicalState {
   const learned = state.learned;
   let skill: MechanicalSkill | undefined;
   if (learned) switch (learned.skill.kind) {

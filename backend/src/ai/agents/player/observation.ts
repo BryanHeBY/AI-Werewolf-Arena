@@ -1,14 +1,9 @@
+import type { PlayerGravekeeperState, PlayerMechanicalState, PlayerAwakenedState, PlayerHybridState, PlayerBlackMarketState, PlayerMerchantState } from "../../../game/mechanisms/roles/player_extended_state";
 import type { ActionRequest, Camp, Role } from "../../../core";
-import type { GravekeeperState } from "../../../game/mechanisms/roles/private_state";
 import type { PlayerGuardState, PlayerHunterState, PlayerWolfKingState, PlayerWhiteWolfKingState, PlayerKnightState, PlayerDreamerState, PlayerWolfBeautyState, PlayerBearState, PlayerIdiotState, PlayerSeerState, PlayerWitchState, PlayerRoleInspectionState } from "../../../game/mechanisms/roles/player_state";
 import type { PlayerNightAbility } from "../../../game/mechanisms/roles/abilities";
 import type { PlayerDeathGun } from "../../../game/mechanisms/roles/death_abilities";
-import type { MechanicalState } from "../../../game/mechanisms/roles/mechanical_wolf/state";
-import type { AwakenedState } from "../../../game/mechanisms/roles/awakened_hidden_wolf/state";
 import type { OwnNightAction } from "../../../game/mechanisms/roles/night_action_history";
-import type { HybridState } from "../../../game/mechanisms/roles/hybrid/state";
-import type { BlackMarketState } from "../../../game/mechanisms/roles/black_market_merchant/state";
-import type { MerchantState } from "../../../game/mechanisms/roles/miracle_merchant/state";
 
 /** A player decision port: projected facts and their own state, with no world access. */
 export interface PlayerObservation {
@@ -19,7 +14,7 @@ export interface PlayerObservation {
   abilities: PlayerNightAbility[];
   deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];
-  ownState: { blackMarket?: BlackMarketState; awakened?: AwakenedState; hybrid?: HybridState; merchant?: MerchantState; mechanical?: MechanicalState; witch?: PlayerWitchState; guard?: PlayerGuardState; hunter?: PlayerHunterState; wolfKing?: PlayerWolfKingState; whiteWolfKing?: PlayerWhiteWolfKingState; knight?: PlayerKnightState; gravekeeper?: GravekeeperState; dreamer?: PlayerDreamerState; wolfBeauty?: PlayerWolfBeautyState; bear?:PlayerBearState; hiddenWolf?:{hasInheritedKnife:boolean;canVoteForKill:boolean}; gargoyle?:{hasInheritedKnife:boolean;canVoteForKill:boolean};roleInspection?:PlayerRoleInspectionState; idiot?: PlayerIdiotState; seer?: PlayerSeerState };
+  ownState: { blackMarket?: PlayerBlackMarketState; awakened?: PlayerAwakenedState; hybrid?: PlayerHybridState; merchant?: PlayerMerchantState; mechanical?: PlayerMechanicalState; witch?: PlayerWitchState; guard?: PlayerGuardState; hunter?: PlayerHunterState; wolfKing?: PlayerWolfKingState; whiteWolfKing?: PlayerWhiteWolfKingState; knight?: PlayerKnightState; gravekeeper?: PlayerGravekeeperState; dreamer?: PlayerDreamerState; wolfBeauty?: PlayerWolfBeautyState; bear?:PlayerBearState; hiddenWolf?:{hasInheritedKnife:boolean;canVoteForKill:boolean}; gargoyle?:{hasInheritedKnife:boolean;canVoteForKill:boolean};roleInspection?:PlayerRoleInspectionState; idiot?: PlayerIdiotState; seer?: PlayerSeerState };
 }
 
 export interface ObservedPlayerStrategy {
