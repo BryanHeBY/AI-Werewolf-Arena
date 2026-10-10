@@ -1,3 +1,4 @@
+import { wolfKnifeTargetAllowed } from "./target_policy";
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { StatusMark } from "../../../../core/domain/model";
@@ -13,7 +14,8 @@ export function discardStaleWolfKnife(world: World, state: NightStageState): voi
     world.getComponent(scope.targetId, COMPONENT.Alive) === scope.life &&
     scope.life.alive &&
     aliveLifeVersion(scope.life) === scope.version &&
-    world.getComponent(scope.targetId, COMPONENT.StatusMarks) === scope.marks
+    world.getComponent(scope.targetId, COMPONENT.StatusMarks) === scope.marks &&
+    wolfKnifeTargetAllowed(world, scope.targetId)
   )
     return;
   scope.marks.remove(StatusMark.WolfKillMark);

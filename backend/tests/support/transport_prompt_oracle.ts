@@ -363,7 +363,14 @@ export function assertTransportEvents(
         "wolf_discussion_ended",
         "wolf_kill_vote_cast",
       ].includes(type) &&
-      !["wolf", "wolf_king", "white_wolf_king", "wolf_beauty", "wolf_witch"].includes(role)
+      ![
+        "wolf",
+        "wolf_king",
+        "white_wolf_king",
+        "wolf_beauty",
+        "wolf_witch",
+        "evil_knight",
+      ].includes(role)
     )
       throw new Error("fixture_wolf_information_exposed");
   }

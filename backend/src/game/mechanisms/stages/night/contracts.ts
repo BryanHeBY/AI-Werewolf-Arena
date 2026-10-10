@@ -48,6 +48,12 @@ export interface NightStageState {
   dreamLinks: DreamNightLink[];
   poisonClaims?: NightPoisonClaim[];
   inspectionAttacks?: NightInspectionAttack[];
+  retaliationAttacks?: import("../../../../core/domain/night_effects").NightRetaliationAttack[];
+  nightImmunities?: import("../../../../core/domain/night_effects").NightImmunityClaim[];
+  evilKnightBindings?: Map<
+    EntityId,
+    NonNullable<ReturnType<typeof import("../../roles/evil_knight/state").captureEvilKnight>>
+  >;
   foxInspections?: NightFoxInspectionClaim[];
   guardClaims?: NightGuardClaim[];
   merchantBacklashes?: NightMerchantBacklash[];

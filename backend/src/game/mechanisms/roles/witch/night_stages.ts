@@ -1,3 +1,5 @@
+import { commitEvilKnightReflection } from "../evil_knight/state";
+import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../evil_knight/night_frame";
 import { demonHunterActorId, demonWitchRequiredThisNight } from "../demon_hunter/authority";
 /** 文件说明：女巫夜间用药阶段处理。 */
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
@@ -111,6 +113,12 @@ async function executePotionTurn(
   witchId: number,
   ability: NightAbility<"potion">,
 ): Promise<boolean> {
+  assertEvilKnightNativeActor(ctx.world, witchId, Role.Witch);
+  if (
+    isEvilKnightBoard(ctx.world) &&
+    (ability.source.kind !== "native" || ability.source.role !== Role.Witch)
+  )
+    throw new Error("evil_knight_witch_source_invalid");
   const day = ctx.currentDay();
   const scope = captureNightAbilityScope(
     ctx.world,
@@ -137,6 +145,7 @@ async function executePotionTurn(
   if (!ctx.isCurrent()) return false;
   if (!scope.isEligible()) return false;
   if (action?.name !== "use_potion") {
+    if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_witch_action_missing");
     ctx.events.push({
       timestamp: Date.now(),
       type: "witch_potion_skipped",
@@ -159,6 +168,7 @@ async function executePotionTurn(
   if (!ctx.isCurrent()) return false;
   if (!scope.isEligible()) return false;
   if (!result.ok || !result.sanitizedCall) {
+    if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_witch_action_invalid");
     ctx.events.push({
       timestamp: Date.now(),
       type: "witch_potion_skipped",
@@ -217,6 +227,18 @@ async function executePotionTurn(
     ctx.ensureMarks(targetId).add(StatusMark.PoisonMark);
     witchState.poison -= 1;
     witchState.poisonUsedThisNight = true;
+    if (isEvilKnightBoard(ctx.world)) {
+      if (ability.source.kind !== "native" || ability.source.role !== Role.Witch)
+        throw new Error("evil_knight_witch_source_invalid");
+      const reflection = commitEvilKnightReflection(
+        ctx.world,
+        ctx.state.evilKnightBindings?.get(targetId) ?? null,
+        source,
+        "poison",
+        () => scope.isOwnerCurrent() && !ability.disabled && !ability.deathExpired,
+      );
+      if (reflection) (ctx.state.retaliationAttacks ??= []).push(reflection);
+    }
     recordOwnNightAction(ctx.world, witchId, day, "poison", targetId, false);
     ctx.events.push({
       timestamp: Date.now(),

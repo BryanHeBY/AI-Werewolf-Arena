@@ -278,7 +278,11 @@ export async function runTransportGame(
           .snapshot,
       ).toEqual(record.checkpoints.at(-1)!.snapshot);
       for (const actor of plans.keys()) {
-        if (transportKind(actor) !== "acp" || !plans.get(actor)!.turns.length) continue;
+        if (
+          transportKind(actor) !== "acp" ||
+          !record.decisions.some((decision) => decision.actorId === actor)
+        )
+          continue;
         const trace = JSON.parse(
           await fs.readFile(
             path.join(directory, `acp-workspaces/player-${actor}/game-fixture.json`),

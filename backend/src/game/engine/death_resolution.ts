@@ -108,6 +108,7 @@ export class DeathResolution {
     deathPhases: Readonly<Record<EntityId, Phase>> = {},
     nightEffects?: {
       dreams?: DreamNightFrame;
+      blocksPassiveNightShot?: (targetId: EntityId) => boolean;
       nightOriginIds?: readonly EntityId[];
       isCurrent?: () => boolean;
     },
@@ -419,7 +420,8 @@ export class DeathResolution {
                 deferShotCommit: true,
                 nightEffect: nightOrigin.has(deadId),
                 blocksNightShot: (targetId) =>
-                  nightEffects?.dreams?.blocksNightShot(this.world, targetId) ?? false,
+                  (nightEffects?.blocksPassiveNightShot?.(targetId) ?? false) ||
+                  (nightEffects?.dreams?.blocksNightShot(this.world, targetId) ?? false),
                 blocksNightCharm: (targetId) =>
                   nightEffects?.dreams?.blocksNightCharm(this.world, targetId, seen) ?? false,
                 eligibleDead: seen,
@@ -516,7 +518,8 @@ export class DeathResolution {
         requiresAction: true,
         summary: { key: "request.summary.death_shot" },
         context: {
-          ...(abilityId !== undefined ||
+          ...(this.config?.evilKnight ||
+          abilityId !== undefined ||
           this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role ===
             Role.AwakenedHiddenWolf
             ? { action_failure_policy: "error" as const, allow_fallback: false }
@@ -544,7 +547,10 @@ export class DeathResolution {
         )
       )
         return { kind: "invalid" };
-      if (action?.name !== "shoot") continue;
+      if (action?.name !== "shoot") {
+        if (this.config?.evilKnight) throw new Error("evil_knight_hunter_action_missing");
+        continue;
+      }
       const validated = this.toolGateway.validateAndSanitize(this.world, actorId, action, {
         phase: actions.phase,
         day: actions.day,
@@ -563,7 +569,10 @@ export class DeathResolution {
         )
       )
         return { kind: "invalid" };
-      if (!validated.ok || !validated.sanitizedCall) continue;
+      if (!validated.ok || !validated.sanitizedCall) {
+        if (this.config?.evilKnight) throw new Error("evil_knight_hunter_action_invalid");
+        continue;
+      }
       const targetId = validated.sanitizedCall.args.target_id;
       if (targetId === null) return { kind: "pass", deathActionId: permit.id };
       const targetScope = targets.get(targetId);

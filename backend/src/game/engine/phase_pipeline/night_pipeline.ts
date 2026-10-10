@@ -1,4 +1,8 @@
 import {
+  isEvilKnightBoard,
+  assertEvilKnightRosterCurrent,
+} from "../../mechanisms/roles/evil_knight/night_frame";
+import {
   sealNativeGuardContribution,
   lateUnknownGuardContribution,
 } from "../../mechanisms/roles/demon_hunter/guard_contribution";
@@ -110,6 +114,8 @@ export type NightPipelineResult =
       damage: DamageResolutionResult;
       dreamFrame: DreamNightFrame;
       demonSources?: object;
+      retaliationAttacks?: readonly import("../../../core/domain/night_effects").NightRetaliationAttack[];
+      evilKnightBindings?: NightStageState["evilKnightBindings"];
       inspectionAttacks?: readonly import("../../../core/domain/night_effects").NightInspectionAttack[];
       demonWolfSourceCurrent?: (targetId: number) => boolean;
       demonKnifeProtection?: Readonly<{
@@ -180,22 +186,24 @@ export class NightPipeline {
         demonAcquired = true;
       }
       const assertReadable = () => {
+        assertEvilKnightRosterCurrent(this.world);
         if (!ownsDemon) return;
         assertDemonNightReadable(this.world);
         if (!this.world.entityIds().every((id) => demonWitchMarksSafe(this.world, id)))
           throw new Error("demon_hunter_unreadable_marks");
       };
       assertReadable();
-      const nativeProvider = ownsDemon
-        ? {
-            getAction: async (request: ActionRequest) => {
-              assertReadable();
-              const action = await actionProvider.getAction(request);
-              assertReadable();
-              return action;
-            },
-          }
-        : actionProvider;
+      const nativeProvider =
+        ownsDemon || isEvilKnightBoard(this.world)
+          ? {
+              getAction: async (request: ActionRequest) => {
+                assertReadable();
+                const action = await actionProvider.getAction(request);
+                assertReadable();
+                return action;
+              },
+            }
+          : actionProvider;
       if (ownsWedding) {
         const capture = captureWeddingKnife(this.world, day, isCurrent);
         this.events.push({
@@ -277,11 +285,13 @@ export class NightPipeline {
       };
 
       for (const stage of this.stageRegistry.getStages(config, this.world)) {
+        assertEvilKnightRosterCurrent(this.world);
         if (!isCurrent()) return { interrupted: true };
         assertReadable();
         discardStaleWolfKnife(this.world, stageState);
         if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
         await stage.execute(stageCtx);
+        assertEvilKnightRosterCurrent(this.world);
         assertReadable();
         if (!isCurrent()) return { interrupted: true };
         discardStaleWolfKnife(this.world, stageState);
@@ -355,6 +365,8 @@ export class NightPipeline {
         immuneNightTargets: dreamFrame.immuneNightTargets(this.world),
         consecutiveDeaths: dreamFrame.consecutiveDeaths(this.world),
         poisonClaims: stageState.poisonClaims,
+        retaliationAttacks: stageState.retaliationAttacks,
+        nightImmunities: stageState.nightImmunities,
         inspectionAttacks: stageState.inspectionAttacks,
         foxInspections: stageState.foxInspections,
         wolfImmuneTargets: this.getAliveByRole(Role.CursedFox),
@@ -406,6 +418,8 @@ export class NightPipeline {
         damage,
         dreamFrame,
         deathLives,
+        retaliationAttacks: stageState.retaliationAttacks,
+        evilKnightBindings: stageState.evilKnightBindings,
         inspectionAttacks: stageState.inspectionAttacks,
         foxInspections: stageState.foxInspections,
         ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
@@ -435,6 +449,9 @@ export class NightPipeline {
       summary: { key: "request.summary.night_action" },
       context: {
         ...extraContext,
+        ...(isEvilKnightBoard(this.world)
+          ? { action_failure_policy: "error" as const, allow_fallback: false }
+          : {}),
       },
     });
   }

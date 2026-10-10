@@ -1,3 +1,4 @@
+import { wolfKnifeTargetAllowed } from "../roles/wolf/target_policy";
 import { prohibitsLoversVote } from "../roles/cupid/relation";
 import { seerTargetAllowed } from "../roles/seer/target_policy";
 import { guardTargetRepeated } from "../roles/guard/repeat_policy";
@@ -132,6 +133,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
           (tool) =>
             (this.getRule(ctx.actorRole, tool)?.allowSelf || id !== ctx.actorId) &&
             luckyAllowed(tool, id) &&
+            (tool !== "kill_vote" || wolfKnifeTargetAllowed(ctx.world, id)) &&
             (tool !== "inspect_night_identity" ||
               ctx.actorRole !== Role.WolfWitch ||
               ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp !== "wolf") &&

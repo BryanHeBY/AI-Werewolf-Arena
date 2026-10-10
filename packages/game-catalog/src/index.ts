@@ -281,9 +281,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "evil_knight",
     names: { "zh-CN": "恶夜骑士", en: "Dark Knight" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-evil-knight-v1.md",
     mechanismSummary: "夜间免疫、反伤",
   },
   {

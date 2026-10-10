@@ -1,3 +1,4 @@
+import { isEvilKnightPreset } from "@ai-werewolf-arena/game-text";
 import { isDemonHunterPreset } from "../../game/mechanisms/roles/demon_hunter/preset";
 import { isPureWhitePreset } from "@ai-werewolf-arena/game-text";
 import { isGhostBridePreset } from "@ai-werewolf-arena/game-text";
@@ -275,6 +276,8 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
       config = contribution.apply(config, defaults);
     }
   }
+  if (seen.has("evil_knight") && !isEvilKnightPreset(config))
+    fail("board_config_evil_knight_preset_invalid", "board");
   if ((seen.has("pure_white_girl") || seen.has("wolf_witch")) && !isPureWhitePreset(config))
     fail("board_config_pure_white_preset_invalid", "board");
   if (seen.has("demon_hunter") && !isDemonHunterPreset(config))

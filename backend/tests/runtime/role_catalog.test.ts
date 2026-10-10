@@ -56,3 +56,18 @@ test("every catalog entry has bilingual labels and registered entries have rule 
     expect(text).toContain(`## ${anchor}`);
   }
 });
+
+import { createDefaultRoleRegistry } from "../../src/game/mechanisms/roles/permissions";
+
+test("evil knight keeps wolf night tools without inheriting self-destruct requests", () => {
+  const profile = getDefaultRoleCatalog().require(Role.EvilKnight);
+  const registry = createDefaultRoleRegistry();
+  expect(profile.canSelfDestruct).toBe(false);
+  const tools = registry.getAllowedTools(Role.EvilKnight);
+  expect(tools).toContain("speak_to_wolves");
+  expect(tools).toContain("kill_vote");
+  expect(tools).not.toContain("self_destruct");
+  expect(tools).not.toContain("self_destruct_with_target");
+  expect(registry.getAllowedTools(Role.Wolf)).toContain("self_destruct");
+  expect(registry.getAllowedTools(Role.WhiteWolfKing)).toContain("self_destruct_with_target");
+});

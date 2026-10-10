@@ -1,3 +1,5 @@
+import { commitEvilKnightReflection } from "../evil_knight/state";
+import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../evil_knight/night_frame";
 /** 文件说明：预言家夜间查验阶段处理。 */
 import { demonHunterActorId } from "../demon_hunter/authority";
 import { seerTargetAllowed } from "./target_policy";
@@ -29,6 +31,12 @@ const seerCheckStage: NightStageHandler = {
       ctx.currentDay(),
     )) {
       if (ability.activation === "lucky" || ability.activation === "black_market") continue;
+      if (
+        isEvilKnightBoard(ctx.world) &&
+        (ability.source.kind !== "native" || ability.source.role !== Role.Seer)
+      )
+        throw new Error("evil_knight_seer_source_invalid");
+      assertEvilKnightNativeActor(ctx.world, seerId, Role.Seer);
       const day = ctx.currentDay(),
         scope = captureNightAbilityScope(
           ctx.world,
@@ -74,6 +82,7 @@ const seerCheckStage: NightStageHandler = {
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;
       if (action?.name !== "check_identity") {
+        if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_seer_action_missing");
         continue;
       }
 
@@ -85,6 +94,7 @@ const seerCheckStage: NightStageHandler = {
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;
       if (!result.ok || !result.sanitizedCall) {
+        if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_seer_action_invalid");
         continue;
       }
 
@@ -117,6 +127,18 @@ const seerCheckStage: NightStageHandler = {
       commitFoxInspection(ctx.world, ctx.state, target, day, () => scope.isOwnerCurrent(true));
       ctx.state.seerChecks.push({ seerId, targetId, isWerewolf, result: { ...inspection } });
       recordNightAbilityUse(ability, ctx.currentDay(), true);
+      if (isEvilKnightBoard(ctx.world)) {
+        if (ability.source.kind !== "native" || ability.source.role !== Role.Seer)
+          throw new Error("evil_knight_seer_source_invalid");
+        const reflection = commitEvilKnightReflection(
+          ctx.world,
+          ctx.state.evilKnightBindings?.get(targetId) ?? null,
+          scope.life,
+          "seer_check",
+          () => scope.isOwnerCurrent() && !ability.disabled && !ability.deathExpired,
+        );
+        if (reflection) (ctx.state.retaliationAttacks ??= []).push(reflection);
+      }
       recordOwnNightAction(ctx.world, seerId, day, "check", targetId, false);
       ctx.events.push({
         timestamp: Date.now(),

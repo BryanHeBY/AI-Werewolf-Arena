@@ -1,3 +1,5 @@
+import { isEvilKnightPreset } from "@ai-werewolf-arena/game-text";
+import { installEvilKnightBoard } from "../game/mechanisms/roles/evil_knight/night_frame";
 import { installDemonHunter } from "../game/mechanisms/roles/demon_hunter/authority";
 import { isPureWhitePreset } from "@ai-werewolf-arena/game-text";
 import { WinConditionRegistry as PureWhiteWinRegistry } from "../game/mechanisms/registries/win_condition_registry";
@@ -156,6 +158,7 @@ function createPlayers(
   if (config.roleSetups.some((row) => row.role === Role.Shapeshifter && row.count === 1))
     installShapeshifterDeal(world, roles, ids);
   installInitialRoster(world);
+  if (roles.includes(Role.EvilKnight)) installEvilKnightBoard(world);
   if (roles.includes(Role.DemonHunter)) installDemonHunter(world, config);
   if (roles.includes(Role.GhostBride)) installGhostBride(world, config);
   installWildChild(world, config);
@@ -168,6 +171,12 @@ function buildRoleDeck(
   fixedRoles: readonly Role[] | undefined,
   random: RandomSource,
 ): Role[] {
+  if (
+    (config.evilKnight ||
+      config.roleSetups.some((row) => row.role === Role.EvilKnight && row.count > 0)) &&
+    !isEvilKnightPreset(config)
+  )
+    throw new Error("evil_knight_preset_invalid");
   if (
     (config.pureWhite ||
       config.wolfWitch ||

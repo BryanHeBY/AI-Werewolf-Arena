@@ -1,3 +1,4 @@
+import { getEvilKnightState } from "../../../game/mechanisms/roles/evil_knight/state";
 import { projectDemonHunter } from "../../../game/mechanisms/roles/demon_hunter/authority";
 import {
   weddingActorView,
@@ -191,6 +192,13 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    const evilKnight = getEvilKnightState(role);
+    if (evilKnight)
+      ownState.evilKnight = {
+        policy: evilKnight.policy,
+        shotPolicy: evilKnight.shotPolicy,
+        reflectionRemaining: evilKnight.reflectionRemaining,
+      };
     const thief = projectThiefState(role, this.world),
       choices = projectThiefChoices(this.world, request.actorId);
     if (thief) ownState.thief = { ...thief, ...(choices ?? {}) };

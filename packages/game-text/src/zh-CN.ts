@@ -274,6 +274,7 @@ export const zhCN = Object.freeze({
   "console.black_market.result":
     "【上帝黑市结果】第{day}夜{actor}号对{target}号的{skill}：{outcome}。",
   "error.black_market_skill": "黑市礼物只可选择check、poison或gun。",
+  "death.evil_knight_reflection": "恶夜骑士反伤",
   "death.pure_white_inspection": "纯白验杀",
   "death.wolf_witch_inspection": "狼巫验杀",
   "death.demon_hunt": "猎魔致死",
@@ -433,6 +434,13 @@ export const zhCN = Object.freeze({
   "ability.kind.role_check": "具体角色查验",
   "ability.role_check.rules":
     "本轮具体角色查验能力：选其它存活未验player ID，不改变你的真实身份/阵营。每实例每夜一次，history中同ID不可再验（复活也不重置）；结果为规则role标签，尊重明确伪装。只给你报告，目标无通知；非法/撤权不耗用，无可选目标不伪造结果。转移按明确政策保history/资源，新实例按自己的history。",
+  "role.evil_knight.brief":
+    "狼人阵营，参与狼聊与狼刀，不能自爆且不能成为狼刀目标。夜间免疫，并有整局一次验毒反伤。",
+  "role.evil_knight.state":
+    "你是恶夜骑士，参与狼聊与狼刀，不能自爆，所有狼人都不能对你投刀。夜间免疫不随反伤次数耗尽而消失。剩余反伤次数：{remaining}。首次合法预言家查验或女巫毒药触发一次反伤，施法者在整夜统一结算时死亡；守护和解药不能抵挡反伤。查验仍报告狼人，毒药仍消耗。AWA 本板女巫先于预言家行动，同夜验毒时毒药先触发；守护与治疗本身不触发反伤。不要推断未收到的行动或公开身份。",
+  "role.evil_knight.gun_immune": "本板夜间死亡连锁的猎枪不能杀死你；白天放逐引发的猎枪可以。",
+  "role.evil_knight.gun_bypasses":
+    "本板采用猎枪例外策略：猎人合法开枪可以杀死你，包括夜间死亡连锁。",
   "role.pure_white_girl.brief":
     "好人神职。每夜查验另一名存活玩家的具体身份；第二夜起验到狼人还会在夜间统一结算时将其验杀，允许跨夜重复查验。",
   "role.wolf_witch.brief":

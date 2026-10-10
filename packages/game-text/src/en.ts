@@ -319,6 +319,7 @@ export const en = Object.freeze({
   "console.black_market.result":
     "God Black Market result: player {actor} to player {target}, {skill}, night {day}: {outcome}.",
   "error.black_market_skill": "Choose check, poison or gun as the Black Market gift.",
+  "death.evil_knight_reflection": "Dark Knight retaliation",
   "death.pure_white_inspection": "Pure White inspection",
   "death.wolf_witch_inspection": "Wolf Witch inspection",
   "death.demon_hunt": "Demon Hunt",
@@ -502,6 +503,14 @@ export const en = Object.freeze({
   "ability.kind.role_check": "Role inspection",
   "ability.role_check.rules":
     "Role inspection ability for this turn: choose another living player ID absent from this instance's history; your true identity/faction does not change. Once per instance per night; never repeat a recorded ID, even after revival. Report the rule-defined role label and respect explicit disguises. Only you receive the report; the target is not notified. Invalid/revoked actions do not spend resources; no eligible targets means no invented result. Transfers preserve history/resources under explicit policy; new instances use their own history.",
+  "role.evil_knight.brief":
+    "Wolf with pack chat and knife rights. Cannot self-destruct or be a pack-knife target. Persistent night immunity and one retaliation against Seer checks or Witch poison.",
+  "role.evil_knight.state":
+    "You are Dark Knight. Join pack chat and knife voting, but never self-destruct; no wolf may knife you. Night immunity persists after retaliation is spent. Retaliations remaining: {remaining}. The first accepted native Seer check or Witch poison triggers one retaliation, killing its caster at simultaneous night settlement despite guard or healing. The Seer still learns Wolf and the Witch still spends poison. This AWA board runs Witch before Seer, so poison takes priority when both act that night. Guard and healing alone never trigger retaliation. Do not infer unreceived actions or public role reveals.",
+  "role.evil_knight.gun_immune":
+    "This board blocks Hunter shots originating from the night death chain. Shots following daytime exile can kill you.",
+  "role.evil_knight.gun_bypasses":
+    "This board uses the Hunter-shot exception: a qualified Hunter shot can kill you, including in a night death chain.",
   "role.pure_white_girl.brief":
     "Good god. Inspect another living player's exact role each night; from night two, inspecting a wolf also kills that player at night settlement. Repeated targets are allowed.",
   "role.wolf_witch.brief":

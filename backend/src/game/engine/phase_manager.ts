@@ -285,9 +285,11 @@ export class PhaseManager {
     actionProvider: ActionProvider,
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
-    if (this.config.pureWhite && !this.state.gameOver) {
+    if ((this.config.pureWhite || this.config.evilKnight) && !this.state.gameOver) {
       if (this.pureWhiteStartedDays.has(this.state.day))
-        throw new Error("pure_white_cycle_reentry");
+        throw new Error(
+          this.config.evilKnight ? "evil_knight_cycle_reentry" : "pure_white_cycle_reentry",
+        );
       this.pureWhiteStartedDays.add(this.state.day);
     }
     return this.runSingleCycleInternal(actionProvider, maxDays);
@@ -401,7 +403,8 @@ export class PhaseManager {
     const ownsWedding = weddingSetup(this.world) !== null;
     const ownsDemon = demonHunterActorId(this.world) !== null;
     const ownsPureWhite = this.config.pureWhite !== undefined;
-    if (ownsWedding || ownsDemon || ownsPureWhite) {
+    const ownsEvilKnight = this.config.evilKnight !== undefined;
+    if (ownsWedding || ownsDemon || ownsPureWhite || ownsEvilKnight) {
       try {
         this.assertDemonReadable();
 
@@ -487,6 +490,10 @@ export class PhaseManager {
                     : ownsDemon
                       ? night.demonWolfSourceCurrent?.(id) === true
                       : true)) &&
+                (cause !== DeathCause.EvilKnightReflection ||
+                  night.retaliationAttacks?.some(
+                    (attack) => attack.target.id === id && attack.isCurrent(),
+                  ) === true) &&
                 ((cause !== DeathCause.PureWhiteInspection &&
                   cause !== DeathCause.WolfWitchInspection) ||
                   night.inspectionAttacks?.some(
@@ -546,7 +553,16 @@ export class PhaseManager {
           Phase.Night,
           Phase.Night,
           {},
-          { nightOriginIds: deaths, isCurrent: nightIsCurrent },
+          {
+            nightOriginIds: deaths,
+            isCurrent: nightIsCurrent,
+            blocksPassiveNightShot: (id) => {
+              const binding = night.evilKnightBindings?.get(id);
+              return (
+                !!binding && binding.isCurrent() && binding.state.shotPolicy === "night_shot_immune"
+              );
+            },
+          },
         );
         this.assertDemonReadable();
         if (!nightIsCurrent()) return this.getSnapshot();
@@ -573,6 +589,7 @@ export class PhaseManager {
       !ownsWedding &&
       !ownsDemon &&
       !ownsPureWhite &&
+      !ownsEvilKnight &&
       this.state.day === 1 &&
       this.config.enableSheriff === true;
 
@@ -584,7 +601,7 @@ export class PhaseManager {
       this.state.phase === Phase.Day &&
       !this.state.gameOver &&
       this.phaseRevision === dayRevision;
-    let nightSettled = ownsWedding || ownsDemon || ownsPureWhite;
+    let nightSettled = ownsWedding || ownsDemon || ownsPureWhite || ownsEvilKnight;
     const settleNight = async (blast?: { deaths: number[]; sources: DeathSources }) => {
       if (nightSettled) return this.state.gameOver;
       nightSettled = true;

@@ -1,3 +1,4 @@
+import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../evil_knight/night_frame";
 /** 文件说明：守卫夜间阶段处理。 */
 import { demonHunterActorId } from "../demon_hunter/authority";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -26,6 +27,7 @@ const guardActionStage: NightStageHandler = {
       ctx.currentDay(),
     )) {
       if (ability.activation === "lucky" || ability.activation === "black_market") continue;
+      assertEvilKnightNativeActor(ctx.world, guardId, Role.Guard);
       const day = ctx.currentDay(),
         scope = captureNightAbilityScope(
           ctx.world,
@@ -54,6 +56,7 @@ const guardActionStage: NightStageHandler = {
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;
       if (action?.name !== "guard") {
+        if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_guard_action_missing");
         continue;
       }
 
@@ -65,6 +68,7 @@ const guardActionStage: NightStageHandler = {
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;
       if (!result.ok || !result.sanitizedCall) {
+        if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_guard_action_invalid");
         safeRecordLogicOp({
           scope: "phase_pipeline",
           op: "guard_action_rejected",

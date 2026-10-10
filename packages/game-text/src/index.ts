@@ -793,3 +793,4 @@ export function demonHunterEventLabel(
 
 export * from "./demon-hunter-preset";
 export * from "./pure-white-preset";
+export * from "./evil-knight-preset";

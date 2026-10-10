@@ -115,6 +115,10 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
+  evilKnight?: {
+    policy: "awa_evil_knight_v1";
+    shotPolicy: "night_shot_immune" | "hunter_shot_bypasses";
+  };
   pureWhite?: { policy: "awa_pure_white_night_v1"; eliminationPriority: EliminationPriority };
   wolfWitch?: { policy: "awa_pure_white_night_v1" };
   demonHunter?: { policy: "awa_netease_demon_hunter_v1" };

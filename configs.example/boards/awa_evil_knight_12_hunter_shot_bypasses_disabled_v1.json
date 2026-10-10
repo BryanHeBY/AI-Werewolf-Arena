@@ -1,0 +1,96 @@
+{
+  "version": 2,
+  "id": "awa_evil_knight_12_hunter_shot_bypasses_disabled_v1",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 12,
+    "roleSetups": [
+      {
+        "role": "wolf",
+        "count": 3
+      },
+      {
+        "role": "evil_knight",
+        "count": 1
+      },
+      {
+        "role": "villager",
+        "count": 4
+      },
+      {
+        "role": "seer",
+        "count": 1
+      },
+      {
+        "role": "witch",
+        "count": 1
+      },
+      {
+        "role": "hunter",
+        "count": 1
+      },
+      {
+        "role": "guard",
+        "count": 1
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": ["slaughter_side"],
+    "hooks": {
+      "onDaybreak": false,
+      "onPreElection": true,
+      "onPreVote": true,
+      "onPerSpeechGap": false
+    }
+  },
+  "mechanisms": {
+    "disclosure": {
+      "deathRevealPolicy": "awa_hidden_v1"
+    },
+    "lastWords": {
+      "policy": "awa_initial_wave_v1"
+    },
+    "sheriff": {
+      "enabled": true,
+      "electionPolicy": "awa_nomination_offstage_pk_v1",
+      "badgePolicy": "awa_holder_choice_v1",
+      "voteWeight": 1.5,
+      "tieBreaker": "no_elimination"
+    },
+    "voting": {
+      "exilePolicy": "awa_one_pk_v1"
+    },
+    "selfDestruct": {
+      "enabledWindows": ["on_pre_election", "on_pre_vote"]
+    },
+    "tieBreaker": {
+      "exileVote": "no_elimination",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "witch": {
+      "selfHeal": "disabled",
+      "knifeVisibility": "awa_with_heal_v1",
+      "potionPolicy": "awa_one_native_v1"
+    },
+    "hunter": {
+      "deathActionPolicy": "awa_knife_or_exile_v1"
+    },
+    "guard": {
+      "repeatPolicy": "netease_consecutive_nights_v1"
+    },
+    "evil_knight": {
+      "policy": "awa_evil_knight_v1",
+      "shotPolicy": "hunter_shot_bypasses"
+    },
+    "seer": {
+      "targetPolicy": "awa_alive_v1",
+      "actionPolicy": "awa_required_when_legal_v1"
+    }
+  }
+}
