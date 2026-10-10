@@ -1003,6 +1003,8 @@ export function demonOriginalWolfTargetCurrent(
 
 /** Finite native Seer/Guard commits compute the next stock from the last lawful snapshot. */
 export interface DemonNativeNightFrame {
+  readonly targetCurrent: (id: number) => boolean;
+  readonly sourceCurrent: () => boolean;
   readonly isCurrent: () => boolean;
   readonly commitSeer: (targetId: number, result: unknown) => boolean;
   readonly commitGuard: (targetId: number | null) => boolean;
@@ -1146,6 +1148,16 @@ export function openDemonNativeNightFrame(
     return true;
   };
   return Object.freeze({
+    targetCurrent: (id: number) =>
+      !n.closed && b.active === n && n.isCurrent() && validBinding(b) && targetCurrent(n, id),
+    sourceCurrent: () =>
+      committed &&
+      !n.closed &&
+      b.active === n &&
+      n.isCurrent() &&
+      validBinding(b) &&
+      targetCurrent(n, actorId) &&
+      demonJson(p.privateState) === p.auditPrivateJson,
     isCurrent: current,
     commitSeer: (targetId: number, result: unknown) =>
       kind === "seer_check" && commit(targetId, result),
@@ -1407,4 +1419,22 @@ export function assertDemonBadgeReadable(world: World): void {
     )
       throw new Error("demon_hunter_badge_unreadable");
   }
+}
+
+export function demonNativeNightActor(
+  world: World,
+  kind: "seer_check" | "guard",
+): { actorId: number; ability: object } | null {
+  const b = bindings.get(world),
+    n = b?.active;
+  if (!b || !n || n.closed || n.frozen || !validBinding(b))
+    throw new Error("demon_hunter_native_night_unavailable");
+  const p = [...b.players.values()].find(
+    (p) => p.kind === (kind === "seer_check" ? Role.Seer : Role.Guard),
+  );
+  if (!p || !n.targets.has(p.id)) return null;
+  const ability = ownDemonData(ownDemonData(p.privateState, "abilities"), `native:${kind}`);
+  if (!ability || typeof ability !== "object")
+    throw new Error("demon_hunter_native_night_unavailable");
+  return { actorId: p.id, ability };
 }

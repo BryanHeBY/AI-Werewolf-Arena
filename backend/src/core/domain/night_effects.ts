@@ -22,6 +22,8 @@ export interface NightFoxInspectionClaim {
   readonly isCurrent: () => boolean;
 }
 export interface NightGuardClaim {
+  readonly isCurrent?: () => boolean;
+  readonly contribution?: object;
   readonly target: NightLifeScope;
   readonly marks: StatusMarksComponent;
 }

@@ -1,5 +1,7 @@
 import {
   demonWitchRequestTargetCurrent,
+  demonWitchRequestCurrent,
+  readDemonNativeNightTool,
   readDemonPotionTool,
 } from "../../../game/mechanisms/roles/demon_hunter/native_potion_requests";
 import {
@@ -123,6 +125,17 @@ export class ActionReception {
           demonHunterRequestScope(this.world, request),
           demonCall,
         ))
+    )
+      return fail(RuleError.ToolMismatch);
+    const demonNative =
+      (tool === "check_identity" || tool === "guard") && demonHunterActorId(this.world) !== null;
+    const nativeCall = demonNative ? readDemonNativeNightTool({ name: tool, args: rawArgs }) : null;
+    if (
+      demonNative &&
+      (!nativeCall ||
+        !demonWitchRequestCurrent(this.world, request) ||
+        (nativeCall.args.target_id !== null &&
+          !demonWitchRequestTargetCurrent(this.world, request, nativeCall.args.target_id)))
     )
       return fail(RuleError.ToolMismatch);
     const demonWitch = tool === "use_potion" && demonHunterActorId(this.world) !== null;

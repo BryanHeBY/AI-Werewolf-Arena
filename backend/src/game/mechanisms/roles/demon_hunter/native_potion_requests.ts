@@ -51,12 +51,13 @@ function current(request: object, r: Request): boolean {
     (r.turn.deadline === null || r.turn.deadline > Date.now())
   );
 }
-export function bindDemonWitchRequest(
+function bindDemonNativeRequest(
   world: World,
   request: ActionRequest,
   scope: object,
   isCurrent: () => boolean,
   targetCurrent: (targetId: number) => boolean,
+  spec: readonly [string, string, string],
 ): void {
   const json = body(request),
     context = ownDemonData(request, "context"),
@@ -67,10 +68,10 @@ export function bindDemonWitchRequest(
     typeof context !== "object" ||
     requests.has(request) ||
     request.phase !== Phase.Night ||
-    request.context.stage !== "witch" ||
+    request.context.stage !== spec[0] ||
     request.allowedTools.length !== 1 ||
-    request.allowedTools[0] !== "use_potion" ||
-    request.context.ability_id !== "native:potion" ||
+    request.allowedTools[0] !== spec[1] ||
+    request.context.ability_id !== spec[2] ||
     (deadline !== undefined &&
       (typeof deadline !== "number" || !Number.isFinite(deadline) || deadline <= Date.now()))
   )
@@ -89,6 +90,65 @@ export function bindDemonWitchRequest(
     r = { turn, context, deadline };
   bindRequestDeliveryGuard(request, () => current(request, r), scope);
   requests.set(request, r);
+}
+export function bindDemonWitchRequest(
+  world: World,
+  request: ActionRequest,
+  scope: object,
+  isCurrent: () => boolean,
+  targetCurrent: (id: number) => boolean,
+): void {
+  bindDemonNativeRequest(world, request, scope, isCurrent, targetCurrent, [
+    "witch",
+    "use_potion",
+    "native:potion",
+  ]);
+}
+export function bindDemonNativeNightRequest(
+  world: World,
+  request: ActionRequest,
+  scope: object,
+  isCurrent: () => boolean,
+  targetCurrent: (id: number) => boolean,
+  kind: "seer_check" | "guard",
+): void {
+  bindDemonNativeRequest(
+    world,
+    request,
+    scope,
+    isCurrent,
+    targetCurrent,
+    kind === "guard"
+      ? ["guard", "guard", "native:guard"]
+      : ["seer", "check_identity", "native:seer_check"],
+  );
+}
+export function readDemonNativeNightTool(
+  value: unknown,
+): Extract<ToolCall, { name: "check_identity" | "guard" }> | null {
+  try {
+    const call = demonSnapshot(value);
+    if (
+      !exactDemonData(call, ["name", "args"]) ||
+      !exactDemonData(call.args, call.name === "guard" ? ["target_id", "abstain"] : ["target_id"])
+    )
+      return null;
+    const target = call.args.target_id,
+      positive = Number.isSafeInteger(target) && (target as number) > 0;
+    if (call.name === "check_identity")
+      return positive ? (call as unknown as Extract<ToolCall, { name: "check_identity" }>) : null;
+    if (
+      call.name !== "guard" ||
+      !(
+        (target === null && call.args.abstain === true) ||
+        (positive && call.args.abstain === false)
+      )
+    )
+      return null;
+    return call as unknown as Extract<ToolCall, { name: "guard" }>;
+  } catch {
+    return null;
+  }
 }
 export function demonWitchRequestCurrent(world: World, request: object): boolean {
   const r = requests.get(request);

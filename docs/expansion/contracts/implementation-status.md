@@ -146,3 +146,7 @@ Chromium完整门禁在`90cb845`完成；其后`52103ea`仅改变后端警徽请
 ## P9a 第五项：鬼魂新娘（2026-10-10）
 
 唯一Melbourne来源AWA精确12人三方板implemented；首夜原请求共同婚礼、私聊/证婚人、原身份库存和独立胜利、普通狼/情侣/证婚人逐夜唯一刀owner、复合殉情/枪源、吞徽与完整Night终局闭环。严格God/四scope投影、CP安全库存/零getter和Proxy、实际provider失败/accepted提交边界及strict Tape贯通，三组报告修复复验关闭。见[规则卡](../rules/awa-melbourne-ghost-bride-v1.md)/[完整验收](../reviews/p9-ghost-bride.md)。最终全backend **3315/329141/246文件**、frontend **364/3862/48文件**、Chromium **172/172**均0失败；check/lint/format及双端build通过。24真实双语三transport完整局逐Tape、8严格失败partialTape、200受限Observed逐Tape、1000独立World及终局公开死亡逐人等于真实Alive分别记录。Observed每语言seed43一次盲枪合法拒绝精确断言，不冒零reject，fallback为0。P9a五角色技术功能已交付，目录23verified/8implemented/33planned；猎魔人规则候选审查继续，P9b–f/P10和总体用户验收保持开放。仅main本地commit，无push/部署/真实模型或用户configs/秘密操作。
+
+## P9b 猎魔人有限原生夜间交付（2026-10-10）
+
+原Seer/Guard在四种Demon候选板绑定真实Factory请求及严格scope，双语SDK/ACP provider类合法/非法/空回复均不fallback。Guard实际贡献封存与晚撤权保持合法库存；普通刀重算有效Guard/Heal，清印记后独立贡献及当前factory marks保留。51项新测试，定向135/713/4文件、受影响回归2372/22660/131文件均0失败；后端type/lint/dependency/boundary/i18n/build及局部格式通过，三组已报告问题复验关闭。见[本批记录](../reviews/p9-demon-hunter-native-night.md)。HTTP/ACP子进程整局、既定单一FaultPlan与严格Tape、四板公开登记及完整门禁仍是角色验收必要依赖；不新增故障操作。目录23verified/8implemented/33planned，角色继续实施，整体待用户验收。

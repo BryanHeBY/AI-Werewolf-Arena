@@ -1,4 +1,8 @@
 import {
+  sealNativeGuardContribution,
+  lateUnknownGuardContribution,
+} from "../../mechanisms/roles/demon_hunter/guard_contribution";
+import {
   demonHunterActorId,
   assertDemonNightReadable,
   beginDemonHunterNight,
@@ -111,6 +115,7 @@ export type NightPipelineResult =
         targetId: number;
         wolf: boolean;
         guard: boolean;
+        guardCurrent?: () => boolean;
         heal: boolean;
       }>;
       foxInspections?: readonly import("../../../core/domain/night_effects").NightFoxInspectionClaim[];
@@ -294,6 +299,15 @@ export class NightPipeline {
             demonOriginalWolfSourceCurrent(this.world, day, demonWolfActors) &&
             demonOriginalWolfTargetCurrent(this.world, day, targetId)
         : undefined;
+      const demonGuardSources = ownsDemon
+        ? (stageState.guardClaims ?? []).flatMap((claim) =>
+            claim.contribution
+              ? [{ claim, sealed: sealNativeGuardContribution(claim.contribution) }]
+              : [],
+          )
+        : [];
+      const demonUnknownGuard =
+        knifeScope && statusMarkSnapshot(knifeScope.marks, StatusMark.GuardMark)?.present === true;
       const demonKnifeProtection =
         ownsDemon && knifeScope
           ? Object.freeze({
@@ -310,6 +324,27 @@ export class NightPipeline {
                       claim.marks === knifeScope.marks &&
                       livingNightLife(this.world, claim.target),
                   )),
+              guardCurrent: () => {
+                const sources = demonGuardSources.filter(
+                  ({ claim }) => claim.target.id === knifeScope.targetId,
+                );
+                if (!sources.length)
+                  return (
+                    !!demonUnknownGuard ||
+                    statusMarkSnapshot(
+                      this.world.getComponent(knifeScope.targetId, COMPONENT.StatusMarks),
+                      StatusMark.GuardMark,
+                    )?.present === true
+                  );
+                return sources.some(
+                  ({ claim, sealed }) =>
+                    sealed.unknown ||
+                    lateUnknownGuardContribution(claim.contribution!) ||
+                    (sealed.native &&
+                      claim.isCurrent?.() === true &&
+                      livingNightLife(this.world, claim.target)),
+                );
+              },
               heal: statusMarkSnapshot(knifeScope.marks, StatusMark.HealMark)?.present === true,
             })
           : undefined;

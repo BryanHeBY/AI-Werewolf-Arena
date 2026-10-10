@@ -61,3 +61,7 @@ source/Replay同一engine边界都真正以World操作新建Alive组件，记录
 ## 有限原生库存 CP 工程实现
 
 四板原Seer/Guard/Hunter的合法同步动作分别计算并立即缓存下一原生库存；原Witch和Demon既有提交缓存保持。CP读取原安装roster/Role/Camp/Victory/捕获Alive accessor和合法库存缓存，失败不刷新mutable inventory。实际授徽/移徽/毁徽计算并整体保存合法Badge/Vote前缀；成功CP也只核对缓存，不收养任意live修改。optional handoffPolicy的accessor不能充当缺省。此项服务正常/失败/迟到与strict Tape核对，不扩大角色规则或故障输入范围。
+
+## 有限原生夜间严格交付与 Guard 来源
+
+四板原Seer/Guard采用真实Factory error/noFallback请求；Seer精确整数且必答，Guard只接受整数/false或null/true。原scope和最早deadline约束实际提交，成功后保存真实库存并确认receipt。Guard实际单次贡献在普通Damage清印记前封存，冻结时复验原source/target，撤权不退款；独立未知贡献及清印记后当前factory marks保留。普通刀按有效Guard/Heal重新计算同守同救，hunt/反噬仍绕过。以上为有限交付工程补全，不变更网易角色规则，不开放其它板变体。

@@ -1,5 +1,5 @@
 /** 文件说明：守卫夜间阶段处理。 */
-import { openDemonNativeNightFrame } from "../demon_hunter/authority";
+import { demonHunterActorId } from "../demon_hunter/authority";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, Role, StatusMark } from "../../../../core/domain/model";
@@ -15,6 +15,11 @@ const guardActionStage: NightStageHandler = {
   id: "guard_action",
   priority: 300,
   async execute(ctx): Promise<void> {
+    if (demonHunterActorId(ctx.world) !== null) {
+      const { executeDemonNativeNight } = await import("../demon_hunter/native_night_controller");
+      await executeDemonNativeNight(ctx, "guard");
+      return;
+    }
     for (const { actorId: guardId, ability } of nightAbilityActors(
       ctx.world,
       "guard",
@@ -30,7 +35,6 @@ const guardActionStage: NightStageHandler = {
           () => ctx.isCurrent() && ctx.currentDay() === day,
         );
       if (!scope?.isEligible()) continue;
-      const nativeFrame = openDemonNativeNightFrame(ctx.world, guardId, ability, "guard", day);
       const targets = new Map(
         ctx.world.getAliveEntityIds().map((id) => [id, captureNightLife(ctx.world, id)]),
       );
@@ -45,12 +49,8 @@ const guardActionStage: NightStageHandler = {
       )
         continue;
       const req = ctx.makeRequest(guardId, ["guard"], { stage: "guard", ability_id: ability.id });
-      if (nativeFrame && !nativeFrame.isCurrent())
-        throw new Error("demon_hunter_native_guard_stock_revoked");
       if (!scope.isEligible()) continue;
       const action = await ctx.actionProvider.getAction(req);
-      if (nativeFrame && !nativeFrame.isCurrent())
-        throw new Error("demon_hunter_native_guard_stock_revoked");
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;
       if (action?.name !== "guard") {
@@ -62,8 +62,6 @@ const guardActionStage: NightStageHandler = {
         day: ctx.currentDay(),
         abilityId: ability.id,
       });
-      if (nativeFrame && !nativeFrame.isCurrent())
-        throw new Error("demon_hunter_native_guard_stock_revoked");
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;
       if (!result.ok || !result.sanitizedCall) {
@@ -88,8 +86,6 @@ const guardActionStage: NightStageHandler = {
         !luckyTargetAllowed(ctx.world, guardId, ability, day, "guard", targetId)
       )
         continue;
-      if (nativeFrame && !nativeFrame.commitGuard(targetId))
-        throw new Error("demon_hunter_native_guard_commit_revoked");
       if (!abstain && targetId !== null) {
         const marks = ctx.ensureMarks(targetId);
         marks.add(StatusMark.GuardMark);
@@ -116,10 +112,10 @@ const guardActionStage: NightStageHandler = {
 
       const role = ctx.world.getComponent<RoleComponent>(guardId, COMPONENT.Role);
       const guardState = role ? getGuardState(role, ability.id) : undefined;
-      if (!nativeFrame && guardState) {
+      if (guardState) {
         guardState.lastTarget = targetId;
       }
-      if (!nativeFrame) recordNightAbilityUse(ability, ctx.currentDay(), !abstain);
+      recordNightAbilityUse(ability, ctx.currentDay(), !abstain);
       if (!abstain && targetId !== null)
         recordOwnNightAction(ctx.world, guardId, day, "guard", targetId, false);
     }

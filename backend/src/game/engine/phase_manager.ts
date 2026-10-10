@@ -1,3 +1,5 @@
+import { StatusMark } from "../../core";
+import { statusMarkSnapshot } from "../../core/domain/components/status_marks";
 import {
   demonHunterActorId,
   assertDemonOriginalRoster,
@@ -376,6 +378,7 @@ export class PhaseManager {
         const proposedSources: DeathSources = Object.fromEntries(
           night.damage.deaths.map((id) => [id, [...(night.damage.deathSources[id] ?? [])]]),
         );
+        const guardOverrides: Array<{ targetId: number; guard: boolean }> = [];
         if (demon) {
           for (const override of demon.poisonOverrides) {
             const causes: DeathCause[] = (proposedSources[override.targetId] ?? []).filter(
@@ -386,17 +389,19 @@ export class PhaseManager {
           }
           if (night.demonKnifeProtection) {
             const knife = night.demonKnifeProtection;
+            const guard = knife.guardCurrent?.() ?? knife.guard;
+            guardOverrides.push({ targetId: knife.targetId, guard });
             const heal =
               demon.healOverrides.find((effect) => effect.targetId === knife.targetId)?.heal ??
-              knife.heal;
+              (knife.heal ||
+                statusMarkSnapshot(
+                  this.world.getComponent(knife.targetId, COMPONENT.StatusMarks),
+                  StatusMark.HealMark,
+                )?.present === true);
             const causes = (proposedSources[knife.targetId] ?? []).filter(
               (cause) => cause !== DeathCause.WolfKill,
             ) as DeathCause[];
-            if (
-              knife.wolf &&
-              knife.guard === heal &&
-              night.demonWolfSourceCurrent?.(knife.targetId)
-            )
+            if (knife.wolf && guard === heal && night.demonWolfSourceCurrent?.(knife.targetId))
               causes.push(DeathCause.WolfKill);
             proposedSources[knife.targetId] = causes;
           }
@@ -460,6 +465,7 @@ export class PhaseManager {
               poison_immunities: demon.poisonImmunities,
               poison_overrides: demon.poisonOverrides,
               heal_overrides: demon.healOverrides,
+              guard_overrides: guardOverrides,
               deaths: [...deaths],
               death_sources: sources,
             },
