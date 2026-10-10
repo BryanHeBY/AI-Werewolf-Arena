@@ -1,3 +1,4 @@
+import { canRoleSelfDestruct } from "../roles/self_destruct_capability";
 import {
   weddingMember,
   weddingSetup,
@@ -47,10 +48,7 @@ export function commitSelfDestructSelection(
   const deaths = [choice.actorId],
     sources: DeathSources = { [choice.actorId]: [DeathCause.SelfDestruct] };
   if (choice.kind === "ordinary") {
-    if (
-      choice.targetId !== null ||
-      getDefaultRoleCatalog().get(role.role)?.canSelfDestruct !== true
-    )
+    if (choice.targetId !== null || !canRoleSelfDestruct(role, getDefaultRoleCatalog()))
       return null;
     if (ownsWedding) swallowWeddingBadges(world, events);
     events.push({

@@ -1,3 +1,4 @@
+import { nightmareFearTargets } from "../roles/nightmare_shadow/state";
 import { wolfKnifeTargetAllowed } from "../roles/wolf/target_policy";
 import { prohibitsLoversVote } from "../roles/cupid/relation";
 import { seerTargetAllowed } from "../roles/seer/target_policy";
@@ -27,6 +28,7 @@ interface TargetRule {
 export class DefaultTargetHintRegistry implements TargetHintRegistry {
   private readonly toolRules: Partial<Record<ToolName, TargetRule>> = {
     kill_vote: { allowSelf: false },
+    fear: { allowSelf: false },
     guard: { allowSelf: false },
     check_identity: { allowSelf: false },
     inspect_role: { allowSelf: false },
@@ -60,6 +62,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       kill_vote: { allowSelf: true },
     },
     [Role.WolfKing]: { kill_vote: { allowSelf: true } },
+    [Role.NightmareShadow]: { kill_vote: { allowSelf: true } },
     [Role.WolfWitch]: { kill_vote: { allowSelf: true } },
     [Role.WhiteWolfKing]: { kill_vote: { allowSelf: true } },
     [Role.HiddenWolf]: { kill_vote: { allowSelf: true } },
@@ -133,6 +136,8 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
           (tool) =>
             (this.getRule(ctx.actorRole, tool)?.allowSelf || id !== ctx.actorId) &&
             luckyAllowed(tool, id) &&
+            (tool !== "fear" ||
+              nightmareFearTargets(ctx.world, ctx.actorId, ctx.day ?? 1).includes(id)) &&
             (tool !== "kill_vote" || wolfKnifeTargetAllowed(ctx.world, id)) &&
             (tool !== "inspect_night_identity" ||
               ctx.actorRole !== Role.WolfWitch ||

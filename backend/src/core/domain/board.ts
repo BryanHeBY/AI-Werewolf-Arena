@@ -115,6 +115,11 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
+  nightmareShadow?: {
+    policy: "awa_nightmare_dreamer_v1";
+    fearActionPolicy: "optional" | "required_when_legal";
+    wolfActionPolicy: "standard" | "no_blast_no_self_knife";
+  };
   evilKnight?: {
     policy: "awa_evil_knight_v1";
     shotPolicy: "night_shot_immune" | "hunter_shot_bypasses";

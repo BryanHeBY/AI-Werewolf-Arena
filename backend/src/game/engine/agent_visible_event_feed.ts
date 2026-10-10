@@ -1,3 +1,4 @@
+import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
 import { DEMON_HUNTER_EVENT_TYPES, readDemonHunterEventFact } from "@ai-werewolf-arena/game-text";
 import { GHOST_BRIDE_EVENT_TYPES, readGhostBrideEventFact } from "@ai-werewolf-arena/game-text";
 import { readLonelyGirlEventFact } from "@ai-werewolf-arena/game-text";
@@ -77,6 +78,11 @@ export function buildAgentVisibleEvent(
     !readDemonHunterEventFact(event.type, event.payload)
   )
     return null;
+  if (
+    event.type === "nightmare_fear_committed" &&
+    !readNightmareFearFact(event.type, event.payload)
+  )
+    return null;
   const visibility = getDefaultAgentEventVisibilityRegistry();
   if (!visibility.canView(world, event, actorId)) {
     return null;
@@ -101,6 +107,8 @@ export function buildAgentVisibleEvent(
 /** Project the authorized wire fields, keeping internal metadata out of player prompts. */
 function projectPayload(event: GameEvent): Record<string, unknown> {
   switch (event.type) {
+    case "nightmare_fear_committed":
+      return { day: event.payload.day, targetId: event.payload.targetId };
     case "demon_hunter_chosen":
       return {
         policy: event.payload.policy,

@@ -1,3 +1,4 @@
+import { readNightmareFearFact, readNightmareOwnFearFact } from "@ai-werewolf-arena/game-text";
 import {
   DEMON_HUNTER_EVENT_TYPES,
   readDemonHunterEventFact,
@@ -45,6 +46,7 @@ export interface ReadReplayEvent {
 
 // Required references are event-specific. Unknown extension fields never imply player membership.
 const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
+  nightmare_fear_committed: [],
   demon_hunter_chosen: [],
   demon_hunter_cancelled: ["actorId", "targetId"],
   demon_hunter_poison_immune: ["actorId", "witchId"],
@@ -155,6 +157,7 @@ const ID_LISTS: Readonly<Record<string, string>> = {
   sheriff_withdraw_summary: "withdrawn",
 };
 const NULLABLE_TARGETS = new Set([
+  "nightmare_fear_committed",
   "demon_hunter_chosen",
   "ghost_bride_knife_vote",
   "ghost_bride_knife_resolved",
@@ -226,6 +229,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if (type === "nightmare_fear_committed")
+    return !!(readNightmareFearFact(type, p) ?? readNightmareOwnFearFact(type, p));
   if ((DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(type))
     return !!(readDemonHunterEventFact(type, p) ?? readDemonHunterPlayerFact(type, p));
   if ((GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(type))
@@ -396,6 +401,10 @@ export function readReplayEvent(
     };
     if (!KNOWN.has(safe.type)) return { event: safe, relatedPlayerIds: [], effects: [] };
     if (!validKnownFields(safe.type, p)) return null;
+    if (safe.type === "nightmare_fear_committed") {
+      if (p.day !== safe.day || safe.phase !== "night") return null;
+      if (Object.hasOwn(p, "actorId")) add(p.actorId);
+    }
     if ((DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(safe.type)) {
       if (p.day !== safe.day || safe.phase !== "night") return null;
       if (safe.type === "demon_hunter_chosen" && Object.hasOwn(p, "actorId")) add(p.actorId);

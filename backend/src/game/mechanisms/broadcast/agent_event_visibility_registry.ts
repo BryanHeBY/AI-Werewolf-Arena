@@ -1,3 +1,4 @@
+import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
 import { demonHunterActorId } from "../roles/demon_hunter/authority";
 import { GHOST_BRIDE_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
 /** 文件说明：领域事件到玩家 Agent 视角的显式可见性白名单。 */
@@ -105,6 +106,15 @@ export class AgentEventVisibilityRegistry {
   constructor(private readonly rules: Record<string, AgentEventVisibilityRule> = DEFAULT_RULES) {}
 
   canView(world: World, event: GameEvent, actorId: EntityId): boolean {
+    if (event.type === "nightmare_fear_committed")
+      return (
+        !!readNightmareFearFact(event.type, event.payload) &&
+        Array.isArray(event.audience) &&
+        event.audience.length === 1 &&
+        event.audience[0] === actorId &&
+        event.payload.actorId === actorId
+      );
+
     if (
       WOLVES_ONLY_EVENT_TYPES.has(event.type) ||
       (GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type)

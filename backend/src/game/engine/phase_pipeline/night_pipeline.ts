@@ -1,4 +1,8 @@
 import {
+  assertNightmareRosterCurrent,
+  isNightmareBoard,
+} from "../../mechanisms/roles/nightmare_shadow/night_frame";
+import {
   isEvilKnightBoard,
   assertEvilKnightRosterCurrent,
 } from "../../mechanisms/roles/evil_knight/night_frame";
@@ -186,6 +190,7 @@ export class NightPipeline {
         demonAcquired = true;
       }
       const assertReadable = () => {
+        assertNightmareRosterCurrent(this.world);
         assertEvilKnightRosterCurrent(this.world);
         if (!ownsDemon) return;
         assertDemonNightReadable(this.world);
@@ -194,7 +199,7 @@ export class NightPipeline {
       };
       assertReadable();
       const nativeProvider =
-        ownsDemon || isEvilKnightBoard(this.world)
+        ownsDemon || isEvilKnightBoard(this.world) || isNightmareBoard(this.world)
           ? {
               getAction: async (request: ActionRequest) => {
                 assertReadable();
@@ -449,7 +454,7 @@ export class NightPipeline {
       summary: { key: "request.summary.night_action" },
       context: {
         ...extraContext,
-        ...(isEvilKnightBoard(this.world)
+        ...(isEvilKnightBoard(this.world) || isNightmareBoard(this.world)
           ? { action_failure_policy: "error" as const, allow_fallback: false }
           : {}),
       },

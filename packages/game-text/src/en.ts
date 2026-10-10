@@ -503,6 +503,31 @@ export const en = Object.freeze({
   "ability.kind.role_check": "Role inspection",
   "ability.role_check.rules":
     "Role inspection ability for this turn: choose another living player ID absent from this instance's history; your true identity/faction does not change. Once per instance per night; never repeat a recorded ID, even after revival. Report the rule-defined role label and respect explicit disguises. Only you receive the report; the target is not notified. Invalid/revoked actions do not spend resources; no eligible targets means no invented result. Transfers preserve history/resources under explicit policy; new instances use their own history.",
+  "console.nightmare.own": "Your fear choice on night {day}: {target}",
+  "console.nightmare.pass": "pass",
+  "role.nightmare.brief":
+    "Wolf faction. Act first each night to silence one player for that night; fearing a wolf blocks the entire pack attack. Pack identities are hidden until the first fear commits.",
+  "role.nightmare.state":
+    "You are the Nightmare Shadow. Fear acts before dreaming, wolf chat and the knife. Do not target yourself, dead players, or the same player on consecutive nights. You learn the pack after your first fear commits and cannot fear teammates thereafter. A feared Seer, Witch or Dreamer does not act that night. A feared Hunter cannot shoot after a night death but can after a daytime exile. Fearing a wolf blocks the whole pack knife, not wolf chat. Do not infer identities or actions you have not received.",
+  "role.nightmare.required":
+    "Choose a fear target whenever one is legal; explicitly pass only when none is legal.",
+  "role.nightmare.optional":
+    "You may explicitly pass. A passed night breaks the consecutive-target restriction.",
+  "role.nightmare.standard":
+    "You may self-destruct under ordinary wolf rules and the pack may target you with its knife.",
+  "role.nightmare.no_blast":
+    "You cannot self-destruct and no pack knife may target you. Ordinary wolves keep their self-destruct ability.",
+  "action.fear.hint":
+    "fear: use a legal living target_id with abstain=false, or target_id=null with abstain=true to explicitly pass when the board policy permits.",
+  "action.fear.directive":
+    "Submit only fear, choosing a current legal target or an explicitly permitted pass. A missing response is never a pass.",
+  "stage.nightmare_fear": "Nightmare fear",
+  "replay.stage.nightmare_fear": "Fear action",
+  "replay.stage.nightmare_fear_committed": "Fear choice",
+  "error.nightmare_unavailable":
+    "Fear is unavailable, already committed, or owned by another actor.",
+  "error.nightmare_target": "The fear target or pass does not satisfy this board's policy.",
+  "console.nightmare.fear": "Player {actor}'s fear choice on night {day}: {target}",
   "role.evil_knight.brief":
     "Wolf with pack chat and knife rights. Cannot self-destruct or be a pack-knife target. Persistent night immunity and one retaliation against Seer checks or Witch poison.",
   "role.evil_knight.state":

@@ -1,3 +1,4 @@
+import { isNightmareBoard } from "../nightmare_shadow/night_frame";
 import { commitEvilKnightReflection } from "../evil_knight/state";
 import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../evil_knight/night_frame";
 import { demonHunterActorId, demonWitchRequiredThisNight } from "../demon_hunter/authority";
@@ -145,7 +146,12 @@ async function executePotionTurn(
   if (!ctx.isCurrent()) return false;
   if (!scope.isEligible()) return false;
   if (action?.name !== "use_potion") {
-    if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_witch_action_missing");
+    if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+      throw new Error(
+        isNightmareBoard(ctx.world)
+          ? "nightmare_witch_action_missing"
+          : "evil_knight_witch_action_missing",
+      );
     ctx.events.push({
       timestamp: Date.now(),
       type: "witch_potion_skipped",
@@ -168,7 +174,12 @@ async function executePotionTurn(
   if (!ctx.isCurrent()) return false;
   if (!scope.isEligible()) return false;
   if (!result.ok || !result.sanitizedCall) {
-    if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_witch_action_invalid");
+    if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+      throw new Error(
+        isNightmareBoard(ctx.world)
+          ? "nightmare_witch_action_invalid"
+          : "evil_knight_witch_action_invalid",
+      );
     ctx.events.push({
       timestamp: Date.now(),
       type: "witch_potion_skipped",

@@ -1,8 +1,8 @@
 # 可配置角色目标目录
 
-返回 [实施路线](roadmap.md)。本目录共 **64 项定义**，基础7项与P5狼王/白狼王/骑士/守墓人与P6摄梦人/狼美人/熊/隐狼/石像鬼与P7通灵师/机械狼/奇迹商人/混血儿/魔镜少女/觉醒隐狼/黑市商人已验证，共23项；咒狐、丘比特、杠精、盗贼、野孩子、千面人、孤独少女、鬼魂新娘与猎魔人已implemented并完成各自本批功能门禁，见[鬼魂新娘验收](reviews/p9-ghost-bride.md)/[孤独少女验收](reviews/p9-lonely-girl.md)/[千面人验收](reviews/p9-shapeshifter.md)/[咒狐验收](reviews/p8-cursed-fox.md)/[丘比特验收](reviews/p8-cupid.md)/[杠精验收](reviews/p8-debater.md)/[盗贼验收](reviews/p9-thief.md)/[野孩子验收](reviews/p9-wild-child.md)，剩余30项为目标。已有实现仅表示当前 AWA 版本，不能表示其他同名版本均受支持。
+返回 [实施路线](roadmap.md)。本目录共 **64 项定义**：23 verified、13 implemented、28 planned，合计 36 项已达到各自有限范围内的技术门禁。已有实现仅表示当前 AWA 版本，不代表其他同名版本均受支持；P9/P10 和用户总体验收仍开放。
 
-猎魔人四个有限板子的实现和最新完整门禁见[猎魔人验收](reviews/p9-demon-hunter.md)。当前代码目录为 23 verified、11 implemented、30 planned；纯白之女与狼巫的有限板子已通过本批完整功能门禁，见[纯白验收](reviews/p9-pure-white.md)；P9/P10 总体验收仍开放。
+基础七项及 P5–P7 的十六项为 verified。咒狐、丘比特、杠精、盗贼、野孩子、千面人、孤独少女、鬼魂新娘、猎魔人、纯白之女、狼巫、恶夜骑士、噩梦之影登记 implemented。各角色来源、支持组合和验证边界见各自规则卡与验收记录；最新交付见[恶夜骑士验收](reviews/p9-evil-knight.md)、[噩梦之影验收](reviews/p9-nightmare.md)。
 
 ## 使用与冻结要求
 
@@ -13,7 +13,7 @@
 - 每项在实现前建立规则卡：来源、发布日期/核验日期、规则集与版本、身份/阵营/计数/胜利目标、互认/夜聊/刀权、动作/资源/时点、所有死因与保护/重定向交互、允许组合、AWA 改编说明、中英提示及期望测试。
 - 有歧义的复制、替死、反伤、保护及判胜，必须选择并记录某个确定版本；未决规则阻止相关角色宣告支持。
 - 基础/觉醒、机械狼/觉醒隐狼、通灵师/魔镜少女分别登记。白痴与愚者的别名、赤月与血月等名称仅在同规则版本下建立映射。
-- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。基础七项已完成P1–P4并登记 `verified`，见[基础规则卡](rules/awa-classic-v1.md)与[P4验收](reviews/p4-activation.md)；狼王/白狼王/骑士/守墓人及P6摄梦人/狼美人/熊/隐狼/石像鬼与P7通灵师/机械狼/奇迹商人/混血儿/魔镜少女/觉醒隐狼/黑市商人已交付，咒狐、丘比特、杠精、盗贼、野孩子、千面人、孤独少女、鬼魂新娘与猎魔人登记 `implemented`，本批功能验证见[咒狐审查](reviews/p8-cursed-fox.md)/[丘比特审查](reviews/p8-cupid.md)/[杠精审查](reviews/p8-debater.md)/[盗贼审查](reviews/p9-thief.md)/[野孩子审查](reviews/p9-wild-child.md)；其余32项为 `planned`。
+- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。当前统计以上方目录为准；剩余 28 项为 planned，不能直接用于已支持板子。
 
 ## 1. 基础角色：7 项，awa_classic 1.0.0 已验证
 
@@ -71,32 +71,32 @@
 
 ## 6. 进阶攻防：11 项
 
-| #   | 计划 ID            | 中文     | English          | 机制标签               | 阶段 / 来源                                                                                           |
-| --- | ------------------ | -------- | ---------------- | ---------------------- | ----------------------------------------------------------------------------------------------------- |
-| 30  | `demon_hunter`     | 猎魔人   | Demon Hunter     | 夜间对决、伤害资格     | implemented；P9b / [规则卡](rules/awa-netease-demon-hunter-v1.md)、[验收](reviews/p9-demon-hunter.md) |
-| 31  | `pure_white_girl`  | 纯白之女 | Pure White Girl  | 查验与伤害             | implemented；P9b / [规则卡](rules/awa-pure-white-night-v1.md)、[验收](reviews/p9-pure-white.md)       |
-| 32  | `wolf_witch`       | 狼巫     | Wolf Witch       | 狼队身份查验           | implemented；P9b / [规则卡](rules/awa-pure-white-night-v1.md)、[验收](reviews/p9-pure-white.md)       |
-| 33  | `evil_knight`      | 恶夜骑士 | Dark Knight      | 夜间免疫、反伤         | P9 / [S01][cards]                                                                                     |
-| 34  | `red_moon_apostle` | 赤月使徒 | Red Moon Apostle | 自爆、封夜、特殊死亡   | P9 / [S01][cards]                                                                                     |
-| 35  | `alchemist`        | 炼金魔女 | Alchemist        | 刀口约束、特殊救人流程 | P9 / [S17][mist]                                                                                      |
-| 36  | `raven_claw_wolf`  | 狼鸦之爪 | Raven-Claw Wolf  | 解封、特殊攻击         | P9 / [S17][mist]                                                                                      |
-| 37  | `radiant_count`    | 流光伯爵 | Radiant Count    | 保护范围和限制         | P9 / [S01][cards]                                                                                     |
-| 38  | `eclipse_maid`     | 蚀日侍女 | Eclipse Maid     | 技能吞噬与临时失效     | P9 / [S01][cards]、[S16][salon]                                                                       |
-| 39  | `night_noble`      | 夜之贵族 | Night Noble      | 持续夜间状态           | P9 / [S18][tournament]；完整技能待核验                                                                |
-| 40  | `fragrant_phantom` | 寻香魅影 | Fragrant Phantom | 绑定、牵连、接刀       | P9 / [S19][awakenedseer]                                                                              |
+| #   | 计划 ID            | 中文     | English          | 机制标签               | 阶段 / 来源                                                                                                  |
+| --- | ------------------ | -------- | ---------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------ |
+| 30  | `demon_hunter`     | 猎魔人   | Demon Hunter     | 夜间对决、伤害资格     | implemented；P9b / [规则卡](rules/awa-netease-demon-hunter-v1.md)、[验收](reviews/p9-demon-hunter.md)        |
+| 31  | `pure_white_girl`  | 纯白之女 | Pure White Girl  | 查验与伤害             | implemented；P9b / [规则卡](rules/awa-pure-white-night-v1.md)、[验收](reviews/p9-pure-white.md)              |
+| 32  | `wolf_witch`       | 狼巫     | Wolf Witch       | 狼队身份查验           | implemented；P9b / [规则卡](rules/awa-pure-white-night-v1.md)、[验收](reviews/p9-pure-white.md)              |
+| 33  | `evil_knight`      | 恶夜骑士 | Dark Knight      | 夜间免疫、反伤         | `implemented`；P9 / [规则卡](rules/awa-evil-knight-v1.md) / [验收](reviews/p9-evil-knight.md) / [S01][cards] |
+| 34  | `red_moon_apostle` | 赤月使徒 | Red Moon Apostle | 自爆、封夜、特殊死亡   | P9 / [S01][cards]                                                                                            |
+| 35  | `alchemist`        | 炼金魔女 | Alchemist        | 刀口约束、特殊救人流程 | P9 / [S17][mist]                                                                                             |
+| 36  | `raven_claw_wolf`  | 狼鸦之爪 | Raven-Claw Wolf  | 解封、特殊攻击         | P9 / [S17][mist]                                                                                             |
+| 37  | `radiant_count`    | 流光伯爵 | Radiant Count    | 保护范围和限制         | P9 / [S01][cards]                                                                                            |
+| 38  | `eclipse_maid`     | 蚀日侍女 | Eclipse Maid     | 技能吞噬与临时失效     | P9 / [S01][cards]、[S16][salon]                                                                              |
+| 39  | `night_noble`      | 夜之贵族 | Night Noble      | 持续夜间状态           | P9 / [S18][tournament]；完整技能待核验                                                                       |
+| 40  | `fragrant_phantom` | 寻香魅影 | Fragrant Phantom | 绑定、牵连、接刀       | P9 / [S19][awakenedseer]                                                                                     |
 
 ## 7. 控制与流程变化：8 项
 
-| #   | 计划 ID             | 中文     | English           | 机制标签           | 阶段 / 来源                       |
-| --- | ------------------- | -------- | ----------------- | ------------------ | --------------------------------- |
-| 41  | `nightmare`         | 噩梦之影 | Nightmare         | 恐惧、行动封锁     | P9 / [S01][cards]                 |
-| 42  | `magician`          | 魔术师   | Magician          | 夜间技能目标映射   | P9 / [S20][magician]              |
-| 43  | `trickster`         | 诡术师   | Trickster         | 号码映射及公开结果 | P9 / [S21][trickster]             |
-| 44  | `wolf_sorcerer`     | 狼术师   | Wolf Sorcerer     | 狼队目标/座位映射  | P9 / [S22][sorcerer]              |
-| 45  | `order_prince`      | 定序王子 | Order Prince      | 限次重投与发言     | P9 / [S23][prince]                |
-| 46  | `time_wolf_consort` | 蚀时狼妃 | Time-Wolf Consort | 反弹与封锁         | P9 / [S01][cards]                 |
-| 47  | `day_scholar`       | 白昼学者 | Day Scholar       | 技能增幅/削弱      | P9 / [S01][cards]；效果矩阵待核验 |
-| 48  | `night_mentor`      | 寂夜导师 | Night Mentor      | 技能增幅/削弱      | P9 / [S01][cards]；效果矩阵待核验 |
+| #   | 计划 ID             | 中文     | English           | 机制标签           | 阶段 / 来源                                                                                                      |
+| --- | ------------------- | -------- | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| 41  | `nightmare`         | 噩梦之影 | Nightmare         | 恐惧、行动封锁     | `implemented`；P9 / [规则卡](rules/awa-nightmare-dreamer-v1.md) / [验收](reviews/p9-nightmare.md) / [S01][cards] |
+| 42  | `magician`          | 魔术师   | Magician          | 夜间技能目标映射   | P9 / [S20][magician]                                                                                             |
+| 43  | `trickster`         | 诡术师   | Trickster         | 号码映射及公开结果 | P9 / [S21][trickster]                                                                                            |
+| 44  | `wolf_sorcerer`     | 狼术师   | Wolf Sorcerer     | 狼队目标/座位映射  | P9 / [S22][sorcerer]                                                                                             |
+| 45  | `order_prince`      | 定序王子 | Order Prince      | 限次重投与发言     | P9 / [S23][prince]                                                                                               |
+| 46  | `time_wolf_consort` | 蚀时狼妃 | Time-Wolf Consort | 反弹与封锁         | P9 / [S01][cards]                                                                                                |
+| 47  | `day_scholar`       | 白昼学者 | Day Scholar       | 技能增幅/削弱      | P9 / [S01][cards]；效果矩阵待核验                                                                                |
+| 48  | `night_mentor`      | 寂夜导师 | Night Mentor      | 技能增幅/削弱      | P9 / [S01][cards]；效果矩阵待核验                                                                                |
 
 ## 8. 娱乐与流程互动：7 项
 

@@ -1,3 +1,4 @@
+import { nightmareKnifeBlocked } from "./nightmare_shadow/night_frame";
 import { weddingMember, ghostBrideReady, weddingSetup } from "./ghost_bride/authority";
 import { initialIdentitySetupReady } from "./initial_identity/deal";
 import { COMPONENT } from "../../../core/domain/components/names";
@@ -30,7 +31,9 @@ export function wolfTeamPermissions(
   if (world && weddingSetup(world) && (!ghostBrideReady(world) || weddingMember(world, role)))
     return NO_ACCESS;
   const permissions = catalog.get(role.role)?.wolfTeam;
-  return typeof permissions === "function" ? permissions(role, world) : (permissions ?? NO_ACCESS);
+  const result =
+    typeof permissions === "function" ? permissions(role, world) : (permissions ?? NO_ACCESS);
+  return world && nightmareKnifeBlocked(world) ? { ...result, canVoteForKill: false } : result;
 }
 
 export function knownWolfTeammates(

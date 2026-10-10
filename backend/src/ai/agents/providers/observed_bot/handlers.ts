@@ -34,6 +34,7 @@ import {
   mechanical_attack,
 } from "./copied";
 import {
+  fear,
   demon_hunt,
   choose_admired_player,
   choose_wild_model,
@@ -56,6 +57,7 @@ import {
 
 /** Preserve protocol-independent priority and RNG order for strict Tape reproducibility. */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
+  { tool: "fear", decide: fear },
   { tool: "choose_bridegroom", decide: choose_bridegroom },
   { tool: "speak_to_partner", decide: speak_to_partner },
   { tool: "choose_wedding_witness", decide: choose_wedding_witness },

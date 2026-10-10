@@ -202,3 +202,24 @@ export const choose_shapeshifter_card: ObservedToolHandler = ({ ownState }) => {
   const card = s.cards.find((c) => s.allowedSlots!.includes(c.slot));
   return card ? { name: "choose_shapeshifter_card", args: { slot: card.slot } } : null;
 };
+
+export const fear: ObservedToolHandler = ({
+  ownState,
+  request,
+  others,
+  teammateIds,
+  pick,
+  style,
+}) => {
+  const state = ownState.nightmare;
+  if (!state) throw new Error("nightmare_observed_state_missing");
+  const day = request.context.day;
+  const targets = others.filter(
+    (id) =>
+      !(state.lastDay === day - 1 && state.lastTarget === id) &&
+      (!state.packReady || !teammateIds.includes(id)),
+  );
+  const target =
+    style === "conservative" && state.fearActionPolicy === "optional" ? undefined : pick(targets);
+  return { name: "fear", args: { target_id: target ?? null, abstain: target === undefined } };
+};

@@ -1,3 +1,4 @@
+import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
 import { validateDemonHunterRecord } from "./demon_hunter_record";
 import { readFaultPlan, type FaultPlan } from "../core/domain/fault_plan";
 import { DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
@@ -552,11 +553,18 @@ const schema = z.strictObject({
           .optional(),
       })
       .superRefine((event, ctx) => {
+        if (event.type === "nightmare_fear_committed") {
+          const fact = readNightmareFearFact(event.type, event.payload);
+          if (!fact || event.audience?.length !== 1 || event.audience[0] !== fact.actorId)
+            ctx.addIssue({ code: "custom", message: "reproduction_nightmare_audience_invalid" });
+        }
+
         if (
           event.audience !== undefined &&
           !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
-          !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type)
+          !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
+          event.type !== "nightmare_fear_committed"
         ) {
           ctx.addIssue({ code: "custom", message: "reproduction_event_audience_invalid" });
         }

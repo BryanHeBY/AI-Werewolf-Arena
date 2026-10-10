@@ -1,3 +1,4 @@
+import { nightmareFearBlocks } from "../mechanisms/roles/nightmare_shadow/night_frame";
 import { demonHunterNativeGunCurrent } from "../mechanisms/roles/demon_hunter/authority";
 import { expandWeddingDeaths, weddingGroup } from "../mechanisms/roles/ghost_bride/authority";
 import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-text";
@@ -449,6 +450,8 @@ export class DeathResolution {
     actions: DeathWaveActions,
     abilityId?: string,
   ): Promise<DeathShotSelection> {
+    if (deathPhase === Phase.Night && nightmareFearBlocks(this.world, actorId, actions.day, true))
+      return { kind: "invalid" };
     const isCurrent = () =>
       actions.isCurrent() &&
       this.state.phase === actions.phase &&

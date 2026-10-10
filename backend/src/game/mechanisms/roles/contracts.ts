@@ -52,7 +52,7 @@ export interface RoleProfile {
     | ((role: RoleComponent) => { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean });
   wolfTeam?: WolfTeamPermissions | ((role: RoleComponent, world?: World) => WolfTeamPermissions);
   /** Explicit public self-destruct capability, independent of faction/knife access. */
-  canSelfDestruct?: boolean;
+  canSelfDestruct?: boolean | ((role: RoleComponent) => boolean);
   inspectionLabels?:
     | { camp?: InspectionCamp; role?: RoleId }
     | ((role: RoleComponent) => { camp?: InspectionCamp; role?: RoleId });

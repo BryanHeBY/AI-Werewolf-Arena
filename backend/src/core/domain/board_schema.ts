@@ -27,6 +27,13 @@ const strategies = z.enum(["min_id", "min_seat", "no_elimination", "no_kill"]);
 
 /** Internal board shape shared by reverse configuration writing and reproduction. No defaults are added here. */
 export const boardConfigSchema = z.strictObject({
+  nightmareShadow: z
+    .strictObject({
+      policy: z.literal("awa_nightmare_dreamer_v1"),
+      fearActionPolicy: z.enum(["optional", "required_when_legal"]),
+      wolfActionPolicy: z.enum(["standard", "no_blast_no_self_knife"]),
+    })
+    .optional(),
   evilKnight: z
     .strictObject({
       policy: z.literal("awa_evil_knight_v1"),

@@ -1,3 +1,4 @@
+import { canRoleSelfDestruct } from "../self_destruct_capability";
 import { wolfKnifeTargetAllowed } from "./target_policy";
 import {
   weddingMember,
@@ -54,7 +55,7 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
   }) => {
     if (weddingSetup(world) && (!ghostBrideReady(world) || weddingMember(world, role)))
       return { code: RuleError.WolfBlastOnly };
-    if (roleCatalog.get(role.role)?.canSelfDestruct !== true) {
+    if (!canRoleSelfDestruct(role, roleCatalog)) {
       return { code: RuleError.WolfBlastOnly };
     }
     if (phase !== Phase.Day && phase !== Phase.Voting) {

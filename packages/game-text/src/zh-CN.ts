@@ -434,6 +434,26 @@ export const zhCN = Object.freeze({
   "ability.kind.role_check": "具体角色查验",
   "ability.role_check.rules":
     "本轮具体角色查验能力：选其它存活未验player ID，不改变你的真实身份/阵营。每实例每夜一次，history中同ID不可再验（复活也不重置）；结果为规则role标签，尊重明确伪装。只给你报告，目标无通知；非法/撤权不耗用，无可选目标不伪造结果。转移按明确政策保history/资源，新实例按自己的history。",
+  "console.nightmare.own": "你第{day}夜的恐惧选择：{target}",
+  "console.nightmare.pass": "弃用",
+  "role.nightmare.brief":
+    "狼人阵营。每夜先恐惧一名玩家，使其当夜不能行动；恐惧狼人则整队不能袭击。首夜恐惧前不与狼队互认。",
+  "role.nightmare.state":
+    "你是噩梦之影。恐惧在摄梦、狼聊和狼刀之前行动；不能选择自己、死亡玩家或连续两夜同一目标。首夜恐惧提交后与狼队互认，以后不能恐惧狼队友。被恐惧的预言家、女巫和摄梦人本夜不行动；猎人夜间死亡不能开枪，白天放逐仍可开枪。恐惧到狼人时全队本夜不能投刀，但仍可狼聊。不要推断未收到的角色或行动信息。",
+  "role.nightmare.required": "本板有合法恐惧目标时必须选择；无合法目标时明确弃用。",
+  "role.nightmare.optional": "本板允许明确弃用恐惧，弃用打断连续目标限制。",
+  "role.nightmare.standard": "本板允许你按普通狼人规则自爆，也允许狼刀选择你。",
+  "role.nightmare.no_blast": "本板禁止你自爆，所有狼刀都不能选择你；普通狼的自爆能力不受影响。",
+  "action.fear.hint":
+    "fear：选择合法存活编号且 abstain=false；明确弃用时 target_id=null 且 abstain=true。是否允许主动弃用以本板策略为准。",
+  "action.fear.directive":
+    "本轮只能提交 fear，按当前候选和板子策略选择目标或明确弃用，不能用缺失响应代替弃用。",
+  "stage.nightmare_fear": "噩梦之影恐惧",
+  "replay.stage.nightmare_fear": "恐惧行动",
+  "replay.stage.nightmare_fear_committed": "恐惧选择",
+  "error.nightmare_unavailable": "本夜恐惧不可用、已提交或不属于当前行动者。",
+  "error.nightmare_target": "恐惧目标或弃用不符合本板策略。",
+  "console.nightmare.fear": "{actor}号第{day}夜的恐惧选择：{target}",
   "role.evil_knight.brief":
     "狼人阵营，参与狼聊与狼刀，不能自爆且不能成为狼刀目标。夜间免疫，并有整局一次验毒反伤。",
   "role.evil_knight.state":

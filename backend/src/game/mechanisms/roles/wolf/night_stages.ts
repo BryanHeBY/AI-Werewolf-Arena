@@ -1,3 +1,4 @@
+import { nightmareKnifeBlocked, isNightmareBoard } from "../nightmare_shadow/night_frame";
 import { wolfKnifeTargetAllowed } from "./target_policy";
 import { isEvilKnightBoard } from "../evil_knight/night_frame";
 /** 文件说明：狼人夜聊与刀人投票阶段处理。 */
@@ -74,15 +75,24 @@ const wolfDiscussionStage: NightStageHandler = {
         if (!actorCurrent() || !wolfChatParticipants(ctx.world, ctx.roleCatalog).includes(wolfId))
           continue;
         if (action?.name !== "speak_to_wolves") {
-          if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_wolf_chat_action_missing");
+          if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+            throw new Error(
+              isNightmareBoard(ctx.world)
+                ? "nightmare_wolf_chat_action_missing"
+                : "evil_knight_wolf_chat_action_missing",
+            );
           continue;
         }
 
         if (
-          isEvilKnightBoard(ctx.world) &&
+          (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world)) &&
           (typeof action.args?.text !== "string" || typeof action.args?.end_chat !== "boolean")
         ) {
-          throw new Error("evil_knight_wolf_chat_action_invalid");
+          throw new Error(
+            isNightmareBoard(ctx.world)
+              ? "nightmare_wolf_chat_action_invalid"
+              : "evil_knight_wolf_chat_action_invalid",
+          );
         }
         const result = ctx.toolGateway.validateAndSanitize(ctx.world, wolfId, action, {
           phase: req.phase,
@@ -91,7 +101,12 @@ const wolfDiscussionStage: NightStageHandler = {
         if (!actorCurrent() || !wolfChatParticipants(ctx.world, ctx.roleCatalog).includes(wolfId))
           continue;
         if (!result.ok || !result.sanitizedCall) {
-          if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_wolf_chat_action_invalid");
+          if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+            throw new Error(
+              isNightmareBoard(ctx.world)
+                ? "nightmare_wolf_chat_action_invalid"
+                : "evil_knight_wolf_chat_action_invalid",
+            );
           continue;
         }
         if (result.sanitizedCall.args.end_chat) {
@@ -134,6 +149,12 @@ const wolfKillVoteStage: NightStageHandler = {
   priority: 400,
   async execute(ctx): Promise<void> {
     ctx.state.wolfVotes = {};
+    if (nightmareKnifeBlocked(ctx.world, ctx.currentDay())) {
+      ctx.state.wolfTarget = null;
+      delete ctx.state.wolfTargetScope;
+      ctx.state.wolfTargetVoters = [];
+      return;
+    }
     const acceptedTargets: Array<{
       actorId: EntityId;
       targetId: EntityId;
@@ -181,7 +202,12 @@ const wolfKillVoteStage: NightStageHandler = {
         if (!ctx.isCurrent()) return;
         if (!actorCurrent()) break;
         if (action?.name !== "kill_vote") {
-          if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_wolf_action_missing");
+          if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+            throw new Error(
+              isNightmareBoard(ctx.world)
+                ? "nightmare_wolf_action_missing"
+                : "evil_knight_wolf_action_missing",
+            );
           retryReason = "no_valid_kill_vote_tool_call";
           if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {
             safeRecordLogicOp({
@@ -218,7 +244,12 @@ const wolfKillVoteStage: NightStageHandler = {
             snapshot.version !== undefined &&
             aliveLifeVersion(snapshot.life) === snapshot.version);
         if (!result.ok || !result.sanitizedCall || !targetCurrent) {
-          if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_wolf_action_invalid");
+          if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+            throw new Error(
+              isNightmareBoard(ctx.world)
+                ? "nightmare_wolf_action_invalid"
+                : "evil_knight_wolf_action_invalid",
+            );
           retryReason = "invalid_kill_vote_arguments";
           if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {
             safeRecordLogicOp({
@@ -251,7 +282,12 @@ const wolfKillVoteStage: NightStageHandler = {
       if (!actorCurrent() || !wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId))
         continue;
       if (!voteResolved) {
-        if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_wolf_action_missing");
+        if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+          throw new Error(
+            isNightmareBoard(ctx.world)
+              ? "nightmare_wolf_action_missing"
+              : "evil_knight_wolf_action_missing",
+          );
         voteResolved = {
           abstain: true,
           targetId: null,

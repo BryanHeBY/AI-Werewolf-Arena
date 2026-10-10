@@ -1,3 +1,4 @@
+import { readNightmareOwnFearFact } from "@ai-werewolf-arena/game-text";
 import type { ActorTransportPlan, PlannedTurn } from "./foundation_transport_plan";
 
 export function assertTransportIdentity(plan: ActorTransportPlan, content: string): void {
@@ -51,6 +52,7 @@ const stages: Record<string, [string, string]> = {
   awakened_attack: ["觉醒隐狼额外刀", "Awakened Hidden Wolf extra knife"],
   role_inspection: ["具体角色查验", "Role inspection"],
   dreamer: ["摄梦人行动", "Dreamer action"],
+  nightmare_fear: ["噩梦之影恐惧", "Nightmare fear"],
   wolf_beauty: ["狼美人魅惑", "Wolf Beauty charm"],
   sheriff_nomination: ["上警报名", "Sheriff nomination"],
   sheriff_campaign_speech: ["警上发言", "Sheriff campaign speech"],
@@ -276,6 +278,12 @@ export function assertTransportEvents(
   actorId: number,
 ) {
   for (const [, type, payload] of events) {
+    if (
+      type === "nightmare_fear_committed" &&
+      (role !== "nightmare" || !readNightmareOwnFearFact(type, payload))
+    )
+      throw new Error("fixture_nightmare_private_information_exposed");
+
     if (type === "hunter_shot") throw new Error("fixture_native_gun_source_exposed");
     if (type === "player_shot" && Object.keys(payload).sort().join() !== "actorId,targetId")
       throw new Error("fixture_gun_private_fields_exposed");
@@ -370,6 +378,7 @@ export function assertTransportEvents(
         "wolf_beauty",
         "wolf_witch",
         "evil_knight",
+        "nightmare",
       ].includes(role)
     )
       throw new Error("fixture_wolf_information_exposed");

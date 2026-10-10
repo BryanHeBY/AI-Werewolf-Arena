@@ -794,3 +794,22 @@ export function demonHunterEventLabel(
 export * from "./demon-hunter-preset";
 export * from "./pure-white-preset";
 export * from "./evil-knight-preset";
+
+export * from "./nightmare-preset";
+
+export * from "./nightmare";
+import { readNightmareFearFact, readNightmareOwnFearFact } from "./nightmare";
+export function nightmareEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale = "zh-CN",
+): string | null {
+  const full = readNightmareFearFact(type, payload);
+  const own = readNightmareOwnFearFact(type, payload);
+  const fact = full ?? own;
+  if (!fact) return null;
+  const target = fact.targetId ?? text(locale, "console.nightmare.pass");
+  return full
+    ? text(locale, "console.nightmare.fear", { actor: full.actorId, day: full.day, target })
+    : text(locale, "console.nightmare.own", { day: fact.day, target });
+}

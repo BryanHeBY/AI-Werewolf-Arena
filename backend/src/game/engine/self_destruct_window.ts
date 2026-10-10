@@ -1,3 +1,5 @@
+import { canRoleSelfDestruct } from "../mechanisms/roles/self_destruct_capability";
+import { getDefaultRoleCatalog } from "../mechanisms/roles/catalog";
 import {
   weddingMember,
   weddingSetup,
@@ -58,6 +60,8 @@ export class SelfDestructWindow {
             ? "self_destruct"
             : null;
         if (!tool) return null;
+        if (tool === "self_destruct" && !canRoleSelfDestruct(role, getDefaultRoleCatalog()))
+          return null;
         const resource =
           tool === "self_destruct_with_target" ? getWhiteWolfKingState(role) : undefined;
         if (tool === "self_destruct_with_target" && resource?.canDetonate !== true) return null;

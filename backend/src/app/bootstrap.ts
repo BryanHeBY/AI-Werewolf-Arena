@@ -1,3 +1,5 @@
+import { isNightmarePreset } from "@ai-werewolf-arena/game-text";
+import { installNightmareBoard } from "../game/mechanisms/roles/nightmare_shadow/night_frame";
 import { isEvilKnightPreset } from "@ai-werewolf-arena/game-text";
 import { installEvilKnightBoard } from "../game/mechanisms/roles/evil_knight/night_frame";
 import { installDemonHunter } from "../game/mechanisms/roles/demon_hunter/authority";
@@ -159,6 +161,7 @@ function createPlayers(
     installShapeshifterDeal(world, roles, ids);
   installInitialRoster(world);
   if (roles.includes(Role.EvilKnight)) installEvilKnightBoard(world);
+  if (roles.includes(Role.NightmareShadow)) installNightmareBoard(world);
   if (roles.includes(Role.DemonHunter)) installDemonHunter(world, config);
   if (roles.includes(Role.GhostBride)) installGhostBride(world, config);
   installWildChild(world, config);
@@ -171,6 +174,12 @@ function buildRoleDeck(
   fixedRoles: readonly Role[] | undefined,
   random: RandomSource,
 ): Role[] {
+  if (
+    (config.nightmareShadow ||
+      config.roleSetups.some((row) => row.role === Role.NightmareShadow && row.count > 0)) &&
+    !isNightmarePreset(config)
+  )
+    throw new Error("nightmare_preset_invalid");
   if (
     (config.evilKnight ||
       config.roleSetups.some((row) => row.role === Role.EvilKnight && row.count > 0)) &&

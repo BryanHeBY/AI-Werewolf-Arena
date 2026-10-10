@@ -1,3 +1,4 @@
+import { nightmareFearBlocks } from "./nightmare_shadow/night_frame";
 import { INSPECTION_POLICIES } from "../../../core/domain/board";
 import { nativePotionSecondTurn } from "./witch/policies";
 import { Role, type EntityId, type EventPayloadMap } from "../../../core/domain/model";
@@ -260,14 +261,17 @@ export function nightAbilityActors<K extends NightAbilityKind>(
   kind: K,
   day: number,
 ): Array<{ actorId: EntityId; ability: NightAbility<K> }> {
-  return world.getAliveEntityIds().flatMap((actorId) =>
-    allNightAbilities(world.getComponent<RoleComponent>(actorId, COMPONENT.Role))
-      .filter(
-        (ability): ability is NightAbility<K> =>
-          ability.kind === kind && abilityStatus(ability, day) === "active",
-      )
-      .map((ability) => ({ actorId, ability })),
-  );
+  return world
+    .getAliveEntityIds()
+    .filter((actorId) => !nightmareFearBlocks(world, actorId, day))
+    .flatMap((actorId) =>
+      allNightAbilities(world.getComponent<RoleComponent>(actorId, COMPONENT.Role))
+        .filter(
+          (ability): ability is NightAbility<K> =>
+            ability.kind === kind && abilityStatus(ability, day) === "active",
+        )
+        .map((ability) => ({ actorId, ability })),
+    );
 }
 
 export type PlayerNightAbility = {

@@ -345,9 +345,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "nightmare",
     names: { "zh-CN": "噩梦之影", en: "Nightmare" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-nightmare-dreamer-v1.md",
     mechanismSummary: "恐惧、行动封锁",
   },
   {

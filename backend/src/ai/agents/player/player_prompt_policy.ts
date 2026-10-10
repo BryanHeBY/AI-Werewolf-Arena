@@ -1,3 +1,4 @@
+import { getNightmareShadowState } from "../../../game/mechanisms/roles/nightmare_shadow/state";
 import { getEvilKnightState } from "../../../game/mechanisms/roles/evil_knight/state";
 import { projectDemonHunter } from "../../../game/mechanisms/roles/demon_hunter/authority";
 import {
@@ -192,6 +193,23 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    const nightmare = getNightmareShadowState(role);
+    if (nightmare)
+      ownState.nightmare = {
+        policy: nightmare.policy,
+        fearActionPolicy: nightmare.fearActionPolicy,
+        wolfActionPolicy: nightmare.wolfActionPolicy,
+        packReady: nightmare.packReady,
+        lastDay: nightmare.lastDay,
+        lastTarget: nightmare.lastTarget,
+        history: Array.prototype.map.call(
+          nightmare.history,
+          (entry: { day: number; targetId: number | null }) => ({
+            day: entry.day,
+            targetId: entry.targetId,
+          }),
+        ) as Array<{ day: number; targetId: number | null }>,
+      };
     const evilKnight = getEvilKnightState(role);
     if (evilKnight)
       ownState.evilKnight = {

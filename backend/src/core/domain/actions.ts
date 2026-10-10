@@ -10,6 +10,7 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  fear: { target_id: EntityId | null; abstain: boolean };
   inspect_night_identity: { target_id: EntityId | null; abstain: boolean };
   demon_hunt: { target_id: EntityId | null; abstain: boolean };
   choose_bridegroom: { target_id: EntityId };
@@ -64,6 +65,7 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "fear",
   "inspect_night_identity",
   "demon_hunt",
   "choose_bridegroom",
@@ -140,6 +142,7 @@ export interface TurnConstraints {
 }
 
 export const ACTION_STAGES = [
+  "nightmare_fear",
   "pure_white_girl",
   "wolf_witch",
   "demon_hunter",

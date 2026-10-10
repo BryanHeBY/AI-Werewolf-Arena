@@ -1,3 +1,4 @@
+import { nightmareEventLabel } from "@ai-werewolf-arena/game-text";
 import { demonHunterEventLabel } from "@ai-werewolf-arena/game-text";
 import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-text";
 import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-text";
@@ -47,6 +48,8 @@ export function eventLabel(
   if (deathAbility !== null) return deathAbility;
   const awakened = awakenedEventLabel(event.type, p, locale);
   if (awakened !== null) return awakened;
+  const nightmare = nightmareEventLabel(event.type, p, locale);
+  if (nightmare !== null) return nightmare;
   const demon = demonHunterEventLabel(event.type, p, locale);
   if (demon !== null) return demon;
   const wedding = ghostBrideEventLabel(event.type, p, locale);

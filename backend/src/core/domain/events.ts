@@ -45,6 +45,7 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  nightmare_fear_committed: { actorId: EntityId; day: number; targetId: EntityId | null };
   demon_hunter_chosen: DemonHunterChoiceFact;
   demon_hunter_cancelled: DemonHunterCancelFact;
   demon_hunter_poison_immune: DemonHunterPoisonImmuneFact;
@@ -439,6 +440,7 @@ export type GameEvent = {
     (K extends
       | WolfTeamEventType
       | WeddingEventType
+      | "nightmare_fear_committed"
       | "demon_hunter_chosen"
       | "demon_hunter_cancelled"
       | "demon_hunter_poison_immune"

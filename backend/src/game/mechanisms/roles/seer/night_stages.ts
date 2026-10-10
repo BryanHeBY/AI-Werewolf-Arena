@@ -1,3 +1,4 @@
+import { isNightmareBoard } from "../nightmare_shadow/night_frame";
 import { commitEvilKnightReflection } from "../evil_knight/state";
 import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../evil_knight/night_frame";
 /** 文件说明：预言家夜间查验阶段处理。 */
@@ -82,7 +83,12 @@ const seerCheckStage: NightStageHandler = {
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;
       if (action?.name !== "check_identity") {
-        if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_seer_action_missing");
+        if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+          throw new Error(
+            isNightmareBoard(ctx.world)
+              ? "nightmare_seer_action_missing"
+              : "evil_knight_seer_action_missing",
+          );
         continue;
       }
 
@@ -94,7 +100,12 @@ const seerCheckStage: NightStageHandler = {
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;
       if (!result.ok || !result.sanitizedCall) {
-        if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_seer_action_invalid");
+        if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+          throw new Error(
+            isNightmareBoard(ctx.world)
+              ? "nightmare_seer_action_invalid"
+              : "evil_knight_seer_action_invalid",
+          );
         continue;
       }
 
