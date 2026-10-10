@@ -483,6 +483,27 @@ export function authorizedDemonHunter(
     turnCurrent(t)
   );
 }
+export function demonHunterActorId(world: World): number | null {
+  return bindings.get(world)?.actorId ?? null;
+}
+export function canSubmitDemonHunt(
+  world: World,
+  actorId: number,
+  phase: Phase,
+  day: number,
+  scope: object | undefined,
+  input: unknown,
+): boolean {
+  if (!scope || !authorizedDemonHunter(world, actorId, phase, day, scope)) return false;
+  const t = turns.get(scope),
+    call = readDemonHuntTool(input);
+  return (
+    !!t &&
+    !!call &&
+    (call.args.target_id === null ||
+      (call.args.target_id !== actorId && targetCurrent(t.night, call.args.target_id)))
+  );
+}
 export function commitDemonHunt(
   world: World,
   scope: object,

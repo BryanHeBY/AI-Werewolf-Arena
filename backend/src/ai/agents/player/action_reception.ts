@@ -1,4 +1,9 @@
 import {
+  demonHunterRequestScope,
+  canSubmitDemonHunt,
+} from "../../../game/mechanisms/roles/demon_hunter/authority";
+import { readDemonHuntTool } from "../../../game/mechanisms/roles/demon_hunter/state";
+import {
   ghostBrideRequestScope,
   weddingSetup,
 } from "../../../game/mechanisms/roles/ghost_bride/authority";
@@ -100,16 +105,33 @@ export class ActionReception {
       (tool === "kill_vote" && weddingSetup(this.world) !== null);
     const weddingCall = weddingTool ? readWeddingTool({ name: tool, args: rawArgs }) : null;
     if (weddingTool && !weddingCall) return fail(RuleError.GhostBrideChoice);
+    const demonCall =
+      name === "demon_hunt" ? readDemonHuntTool({ name: tool, args: rawArgs }) : null;
+    if (
+      name === "demon_hunt" &&
+      (!demonCall ||
+        !canSubmitDemonHunt(
+          this.world,
+          request.actorId,
+          request.phase,
+          request.context.day,
+          demonHunterRequestScope(this.world, request),
+          demonCall,
+        ))
+    )
+      return fail(RuleError.ToolMismatch);
     const input = (
-      weddingCall
-        ? weddingCall.args
-        : wildCall
-          ? wildCall.args
-          : initialChoice
-            ? { slot: thiefSlot }
-            : wallCall
-              ? wallCall.args
-              : { ...rawArgs }
+      demonCall
+        ? demonCall.args
+        : weddingCall
+          ? weddingCall.args
+          : wildCall
+            ? wildCall.args
+            : initialChoice
+              ? { slot: thiefSlot }
+              : wallCall
+                ? wallCall.args
+                : { ...rawArgs }
     ) as Record<string, unknown>;
     const properties = spec.parameters.properties as
       Record<string, { type?: string | string[] }> | undefined;
@@ -163,6 +185,7 @@ export class ActionReception {
       shapeshifterScope: shapeshifterRequestScope(this.world, request),
       lonelyGirlScope: lonelyGirlRequestScope(this.world, request),
       ghostBrideScope: ghostBrideRequestScope(this.world, request),
+      demonHunterScope: demonHunterRequestScope(this.world, request),
       wildChildScope: wildChildRequestScope(this.world, request),
       wallScope: wallRequestScope(this.world, request),
       wallId: request.context.wall_id,

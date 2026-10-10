@@ -1,3 +1,4 @@
+import { inheritDemonHunterDeadlineRequest } from "../../../game/mechanisms/roles/demon_hunter/authority";
 import { inheritGhostBrideDeadlineRequest } from "../../../game/mechanisms/roles/ghost_bride/authority";
 import { inheritLonelyGirlDeadlineRequest } from "../../../game/mechanisms/roles/lonely_girl/lifecycle";
 import { inheritWildChildDeadlineRequest } from "../../../game/mechanisms/roles/wild_child/lifecycle";
@@ -171,6 +172,7 @@ export class AcpActionProvider implements ActionProvider {
     inheritWildChildDeadlineRequest(request, bounded);
     inheritLonelyGirlDeadlineRequest(request, bounded);
     inheritGhostBrideDeadlineRequest(request, bounded);
+    inheritDemonHunterDeadlineRequest(request, bounded);
     const controller = new AbortController();
     this.controllers.set(request.actorId, controller);
     const timer = setTimeout(

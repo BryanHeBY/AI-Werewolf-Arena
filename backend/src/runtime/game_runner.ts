@@ -1,3 +1,4 @@
+import { inheritDemonHunterDeadlineRequest } from "../game/mechanisms/roles/demon_hunter/authority";
 import { inheritGhostBrideDeadlineRequest } from "../game/mechanisms/roles/ghost_bride/authority";
 import { inheritLonelyGirlDeadlineRequest } from "../game/mechanisms/roles/lonely_girl/lifecycle";
 import { initialPlayerIdentity } from "../core/domain/initial_roster";
@@ -64,6 +65,7 @@ class DeadlineAwareActionProvider implements ActionProvider {
     inheritWildChildDeadlineRequest(request, timed);
     inheritLonelyGirlDeadlineRequest(request, timed);
     inheritGhostBrideDeadlineRequest(request, timed);
+    inheritDemonHunterDeadlineRequest(request, timed);
     return this.delegate.getAction(timed);
   }
 }

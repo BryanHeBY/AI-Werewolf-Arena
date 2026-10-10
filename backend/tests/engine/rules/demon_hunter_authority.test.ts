@@ -1,4 +1,4 @@
-import { expect, test } from "bun:test";
+import { expect, test, spyOn } from "bun:test";
 import {
   World,
   Role,
@@ -892,3 +892,226 @@ test("a real long canonical visible history remains authorized without relaxing 
   expect(demonHunterRequestScope(f.world, request)).toBe(scope);
   expect(commitDemonHunt(f.world, scope, hunt(1))).toEqual({ day: 2, targetId: 1 });
 });
+
+async function controllerDependencies() {
+  await import("../../../src/app/bootstrap");
+  const [
+    { ToolGateway },
+    { ActionValidator },
+    { ToolValidationRuleRegistry },
+    { DEMON_HUNTER_TOOL_RULE },
+    { executeDemonHunterTurn },
+    recorder,
+  ] = await Promise.all([
+    import("../../../src/game/gateway/tool_gateway"),
+    import("../../../src/game/gateway/action_validator"),
+    import("../../../src/game/mechanisms/validation/tool_validation_rule_registry"),
+    import("../../../src/game/mechanisms/roles/demon_hunter/validation_rules"),
+    import("../../../src/game/mechanisms/roles/demon_hunter/controller"),
+    import("../../../src/recording/session_recorder"),
+  ]);
+  return {
+    executeDemonHunterTurn,
+    recorder,
+    gateway: new ToolGateway(
+      new ActionValidator(
+        new ToolValidationRuleRegistry({ ["demon_hunt" as ToolName]: DEMON_HUNTER_TOOL_RULE }),
+      ),
+    ),
+  };
+}
+for (const target of [1, 3, null] as const)
+  test(`actual controller target ${target}: canonical factory/gateway commit and receipt settle only once`, async () => {
+    const f = fixture(),
+      { executeDemonHunterTurn, recorder, gateway } = await controllerDependencies(),
+      spy = spyOn(recorder, "safeRecordLogicOp").mockImplementation(() => {});
+    beginDemonHunterNight(f.world, 2, () => true);
+    const receipts: boolean[] = [];
+    try {
+      const fact = await executeDemonHunterTurn({
+        world: f.world,
+        gateway,
+        events: [],
+        day: 2,
+        provider: {
+          async getAction(request) {
+            expect(request.context.turn_constraints).toMatchObject({
+              min_valid_actions: 1,
+              max_valid_actions: 1,
+              required_any_tools: ["demon_hunt"],
+            });
+            expect(request.context.allow_fallback).toBe(false);
+            expect(request.context.action_failure_policy).toBe("error");
+            expect(Object.hasOwn(request.context, "requiresAction")).toBe(false);
+            expect(
+              deferRequestDelivery(request, (accepted) => {
+                receipts.push(accepted);
+              }),
+            ).toBe(true);
+            expect(receipts).toEqual([]);
+            return hunt(target) as never;
+          },
+        },
+      });
+      expect(fact).toEqual({
+        policy: "awa_netease_demon_hunter_v1",
+        actorId: 6,
+        day: 2,
+        targetId: target,
+      });
+      expect(receipts).toEqual([true]);
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy.mock.calls[0]?.[0]).toMatchObject({
+        scope: "gateway",
+        op: "validate_tool_call",
+        actorId: 6,
+        phase: Phase.Night,
+        status: "ok",
+        input: { tool: "demon_hunt", args: { target_id: target, abstain: target === null } },
+      });
+      expect(freezeDemonHunt(f.world).damage).toEqual(
+        target === null
+          ? null
+          : target === 1
+            ? { targetId: 1, cause: "demon_hunt" }
+            : { targetId: 6, cause: "demon_hunt_backlash" },
+      );
+    } finally {
+      spy.mockRestore();
+    }
+  });
+for (const kind of ["missing", "self", "extra", "getter", "revoked", "throw"] as const)
+  test(`actual controller ${kind} strictly closes without action/op/history or supplement`, async () => {
+    const f = fixture(),
+      { executeDemonHunterTurn, recorder, gateway } = await controllerDependencies(),
+      spy = spyOn(recorder, "safeRecordLogicOp").mockImplementation(() => {});
+    let current = true,
+      reads = 0;
+    beginDemonHunterNight(f.world, 2, () => current);
+    const receipts: boolean[] = [];
+    try {
+      await expect(
+        executeDemonHunterTurn({
+          world: f.world,
+          gateway,
+          events: [],
+          day: 2,
+          provider: {
+            async getAction(request) {
+              deferRequestDelivery(request, (accepted) => {
+                receipts.push(accepted);
+              });
+              if (kind === "throw") throw new Error("offline_provider_failure");
+              if (kind === "missing") return null;
+              if (kind === "self") return hunt(6) as never;
+              if (kind === "extra")
+                return {
+                  name: "demon_hunt",
+                  args: { target_id: 1, abstain: false, hidden: true },
+                } as never;
+              if (kind === "getter")
+                return {
+                  name: "demon_hunt",
+                  get args() {
+                    reads++;
+                    return { target_id: 1, abstain: false };
+                  },
+                } as never;
+              if (kind === "revoked") current = false;
+              return hunt(1) as never;
+            },
+          },
+        }),
+      ).rejects.toThrow();
+      expect(receipts).toEqual([false]);
+      expect(spy).not.toHaveBeenCalled();
+      expect(reads).toBe(0);
+      expect(demonHunterAuditPlayer(f.world, 6)).toEqual({
+        demonHunter: { policy: "awa_netease_demon_hunter_v1", history: [] },
+      });
+      expect(() => openDemonHunterTurn(f.world)).toThrow();
+    } finally {
+      spy.mockRestore();
+    }
+  });
+
+for (const mode of ["original", "clone", "copied", "string", "extra", "getter", "proxy"] as const)
+  test(`actual ActionReception ${mode}: native scope and canonical args remain strict without mutation`, async () => {
+    await controllerDependencies();
+    const [
+      { ActionReception },
+      { ToolSpecRegistry },
+      { ToolValidationRuleRegistry },
+      { DEMON_HUNTER_TOOL_RULE },
+    ] = await Promise.all([
+      import("../../../src/ai/agents/player/action_reception"),
+      import("../../../src/game/mechanisms/registries/tool_spec_registry"),
+      import("../../../src/game/mechanisms/validation/tool_validation_rule_registry"),
+      import("../../../src/game/mechanisms/roles/demon_hunter/validation_rules"),
+    ]);
+    const f = fixture(),
+      { request, scope } = turn(f);
+    let reads = 0;
+    const receive = new ActionReception(
+      f.world,
+      undefined,
+      new ToolSpecRegistry([
+        {
+          name: "demon_hunt" as ToolName,
+          argHint: "Candidate native hunt",
+          parameters: {
+            type: "object",
+            properties: { target_id: { type: ["integer", "null"] }, abstain: { type: "boolean" } },
+            required: ["target_id", "abstain"],
+            additionalProperties: false,
+          },
+        },
+      ]),
+      new ToolValidationRuleRegistry({ ["demon_hunt" as ToolName]: DEMON_HUNTER_TOOL_RULE }),
+    );
+    const bound =
+      mode === "clone"
+        ? { ...request, deadlineAtMs: Date.now() + 10000 }
+        : mode === "copied"
+          ? structuredClone(request)
+          : request;
+    if (mode === "clone") inheritDemonHunterDeadlineRequest(request, bound);
+    const args =
+      mode === "string"
+        ? { target_id: "1", abstain: false }
+        : mode === "extra"
+          ? { target_id: 1, abstain: false, hidden: true }
+          : mode === "getter"
+            ? {
+                get target_id() {
+                  reads++;
+                  return 1;
+                },
+                abstain: false,
+              }
+            : mode === "proxy"
+              ? new Proxy(
+                  { target_id: 1, abstain: false },
+                  {
+                    ownKeys(t) {
+                      reads++;
+                      return Reflect.ownKeys(t);
+                    },
+                    get(t, key) {
+                      reads++;
+                      return Reflect.get(t, key);
+                    },
+                  },
+                )
+              : { target_id: 1, abstain: false };
+    const result = receive.validate(bound as never, "demon_hunt", args);
+    expect(result.ok).toBe(mode === "original" || mode === "clone");
+    expect(reads).toBe(0);
+    expect(demonHunterAuditPlayer(f.world, 6)).toEqual({ demonHunter: freshDemonHunterState() });
+    expect(f.world.getAliveEntityIds()).toEqual([1, 2, 3, 4, 5, 6]);
+    if (result.ok) {
+      expect(result.action).toEqual(hunt(1) as never);
+      expect(commitDemonHunt(f.world, scope, result.action)).toEqual({ day: 2, targetId: 1 });
+    }
+    closeDemonHunterTurn(scope);
+  });
