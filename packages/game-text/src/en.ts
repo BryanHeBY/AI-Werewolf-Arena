@@ -502,6 +502,22 @@ export const en = Object.freeze({
   "ability.kind.role_check": "Role inspection",
   "ability.role_check.rules":
     "Role inspection ability for this turn: choose another living player ID absent from this instance's history; your true identity/faction does not change. Once per instance per night; never repeat a recorded ID, even after revival. Report the rule-defined role label and respect explicit disguises. Only you receive the report; the target is not notified. Invalid/revoked actions do not spend resources; no eligible targets means no invented result. Transfers preserve history/resources under explicit policy; new instances use their own history.",
+  "role.pure_white_girl.brief":
+    "Good god. Inspect another living player's exact role each night; from night two, inspecting a wolf also kills that player at night settlement. Repeated targets are allowed.",
+  "role.wolf_witch.brief":
+    "Wolf with pack chat and knife rights. After Pure White Girl, inspect another living non-wolf player's exact role; from night two, inspecting Pure White Girl also kills her at night settlement.",
+  "role.pure_white_girl.state":
+    "You are Pure White Girl, a Good god. After Witch each night, use inspect_night_identity on another living player, or explicitly pass. Repeated targets across nights are legal. Only you receive the exact role report. Night one never causes inspection damage; from night two, inspecting a wolf causes independent inspection damage at simultaneous night settlement, unaffected by ordinary guard or healing. Pending knife or poison does not remove your action. Never infer an extra report, a public role reveal, or an immediate death. Follow the board's published simultaneous-elimination priority.",
+  "role.wolf_witch.state":
+    "You are Wolf Witch, on the Wolf team. You participate in ordinary pack chat and knife voting, may self-vote for the knife, and may self-destruct in the board's enabled windows. After Pure White Girl each night, use inspect_night_identity on another living non-wolf player, or explicitly pass; repeats are legal. Only you receive the exact role report. Night one never causes inspection damage; from night two, only inspecting Pure White Girl causes independent inspection damage at simultaneous settlement, unaffected by guard or healing. Other inspected roles survive this ability. Reports are not automatically shared with wolves and cannot retroactively change this night's knife; you may share them in later legal speech. Pending knife or poison does not remove your action. Follow the board's published simultaneous-elimination priority.",
+  "prompt.board.pure_white.wolf_priority":
+    "Pure White board: resolve all night deaths and resulting shots before announcing deaths and checking victory; the sheriff election follows if the game continues. If all wolves and either all gods or all villagers are eliminated at the same checkpoint, Wolves win. Otherwise use ordinary side-elimination goals.",
+  "prompt.board.pure_white.good_priority":
+    "Pure White board: resolve all night deaths and resulting shots before announcing deaths and checking victory; the sheriff election follows if the game continues. If all wolves and either all gods or all villagers are eliminated at the same checkpoint, this AWA variant awards Good the win. Otherwise use ordinary side-elimination goals.",
+  "action.inspect_night_identity.hint":
+    "Inspect another living player with an integer target_id and abstain:false, or explicitly pass with target_id:null and abstain:true. Wolf Witch cannot inspect a wolf-camp player. Repeat targets across nights are allowed.",
+  "stage.pure_white_girl": "Pure White Girl inspection",
+  "stage.wolf_witch": "Wolf Witch inspection",
   "action.inspect_role.hint":
     "inspect_role: target_id is another currently living integer player ID. No self/null/dead target; follow this bound instance's repetition rule.",
   "stage.role_inspection": "Role inspection",

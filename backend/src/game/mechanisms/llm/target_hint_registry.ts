@@ -29,6 +29,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     guard: { allowSelf: false },
     check_identity: { allowSelf: false },
     inspect_role: { allowSelf: false },
+    inspect_night_identity: { allowSelf: false },
     mimic_role: { allowSelf: false },
     mechanical_inspect: { allowSelf: false },
     awakened_mimic: { allowSelf: false },
@@ -58,6 +59,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       kill_vote: { allowSelf: true },
     },
     [Role.WolfKing]: { kill_vote: { allowSelf: true } },
+    [Role.WolfWitch]: { kill_vote: { allowSelf: true } },
     [Role.WhiteWolfKing]: { kill_vote: { allowSelf: true } },
     [Role.HiddenWolf]: { kill_vote: { allowSelf: true } },
     [Role.Gargoyle]: { kill_vote: { allowSelf: true } },
@@ -130,6 +132,9 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
           (tool) =>
             (this.getRule(ctx.actorRole, tool)?.allowSelf || id !== ctx.actorId) &&
             luckyAllowed(tool, id) &&
+            (tool !== "inspect_night_identity" ||
+              ctx.actorRole !== Role.WolfWitch ||
+              ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp !== "wolf") &&
             (tool !== "awakened_guard" ||
               awakenedGuard?.kind !== "guard" ||
               awakenedGuard.lastGuardDay !== (ctx.day ?? 1) - 1 ||

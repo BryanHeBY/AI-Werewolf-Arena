@@ -160,3 +160,22 @@ test("action copying rejects accessors without executing their side effects", as
     name: "Error",
   });
 });
+
+test("death-action candidate IDs survive strict request serialization", async () => {
+  const { trace, request } = fixture();
+  request.allowedTools = ["shoot"];
+  request.context.stage = "hunter_shot";
+  request.context.turn_constraints.required_any_tools = ["shoot"];
+  request.context.shoot_candidates = [2, 3];
+  await trace.decide(request, {
+    getAction: async () => ({ name: "shoot", args: { target_id: 2 } }),
+  });
+  expect(trace.build().decisions[0]!.request.context.shoot_candidates).toEqual([2, 3]);
+});
+for (const invalid of [0, -1, 1.5, Number.MAX_SAFE_INTEGER + 1])
+  test(`strict request serialization rejects invalid death-action candidate ${invalid}`, async () => {
+    const { trace, request } = fixture();
+    request.context.shoot_candidates = [invalid];
+    await trace.decide(request, { getAction: async () => action });
+    expect(() => trace.build()).toThrow("reproduction_record_invalid");
+  });

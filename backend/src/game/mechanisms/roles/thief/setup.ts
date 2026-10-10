@@ -25,8 +25,13 @@ export function projectThiefChoices(world: World, actorId: number) {
   const s = shared.initialIdentityRequestChoices(world, actorId, "thief");
   return s ? { required: s.mustChoose, cards: s.cards } : undefined;
 }
-export class ThiefSetupWindow extends shared.InitialIdentitySetupWindow {
+/** Instantiate lazily: catalog imports this module while the shared setup is still evaluating. */
+export class ThiefSetupWindow {
+  private readonly window: shared.InitialIdentitySetupWindow;
   constructor(world: World, gateway: ToolGateway, events: GameEvent[]) {
-    super(world, gateway, events, "thief");
+    this.window = new shared.InitialIdentitySetupWindow(world, gateway, events, "thief");
+  }
+  execute(...args: Parameters<shared.InitialIdentitySetupWindow["execute"]>): Promise<boolean> {
+    return this.window.execute(...args);
   }
 }

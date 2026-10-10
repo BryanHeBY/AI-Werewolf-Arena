@@ -169,6 +169,7 @@ export async function runTransportGame(
               });
             } catch (error) {
               failures.push(String(error));
+              console.error("[fixture_protocol_failure]", String(error));
               return Response.json(
                 { error: { message: "fixture_protocol_failure" } },
                 { status: 400 },

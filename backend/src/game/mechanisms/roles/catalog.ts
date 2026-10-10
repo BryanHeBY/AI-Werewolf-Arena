@@ -1,4 +1,5 @@
 import { DEMON_HUNTER_ROLE_PROFILE } from "./demon_hunter/profile";
+import { PURE_WHITE_ROLE_PROFILE, WOLF_WITCH_ROLE_PROFILE } from "./pure_white/profile";
 import { GHOST_BRIDE_ROLE_PROFILE } from "./ghost_bride/profile";
 import { LONELY_GIRL_ROLE_PROFILE } from "./lonely_girl/profile";
 import { WILD_CHILD_ROLE_PROFILE } from "./wild_child/profile";
@@ -41,6 +42,8 @@ import { DEBATER_ROLE_PROFILE } from "./debater/profile";
 import { CUPID_ROLE_PROFILE } from "./cupid/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
+  PURE_WHITE_ROLE_PROFILE,
+  WOLF_WITCH_ROLE_PROFILE,
   DEMON_HUNTER_ROLE_PROFILE,
   GHOST_BRIDE_ROLE_PROFILE,
   WILD_CHILD_ROLE_PROFILE,

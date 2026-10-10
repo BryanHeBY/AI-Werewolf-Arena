@@ -53,3 +53,5 @@ game-catalog 拥有稳定 ID/名称/状态，game-text 拥有双语文案。新�
 2026-10-10接续状态：千面人、孤独少女与鬼魂新娘也已有限implemented，P9a五角色技术功能闭环；当前23verified/8implemented/33planned。Ghost新源码全量证据见[完整验收](../reviews/p9-ghost-bride.md)，首批猎魔人来源规则候选继续审查；P9b–f/P10与用户最终验收未关闭。上段5/36保留原阶段时点。
 
 2026-10-10 猎魔人完整交付：四个有限板子现为 implemented，当前 23 verified、9 implemented、32 planned；完整证据见[验收](../reviews/p9-demon-hunter.md)。上方 8/33 保留此前时点。按用户最新要求，由主任务亲自研究、设计和编写补丁，Codex 仅执行明确命令及只读审查。下一对纯白之女与狼巫仍为规则草案，不计已实现。
+
+2026-10-10 纯白之女／狼巫功能门禁通过：当前 23 verified、11 implemented、30 planned。四个公开预设、160 局严格模拟、双语成功和失败传输均通过；最终后端 3941 项、394536 次断言、269 文件，前端 395 项、4274 次断言、52 文件，Chromium 188 项均零失败。引擎及测试指纹前后一致，独立审查未发现可复现 P1/P2。见 [纯白验收](../reviews/p9-pure-white.md)。P9/P10 和用户验收仍开放。

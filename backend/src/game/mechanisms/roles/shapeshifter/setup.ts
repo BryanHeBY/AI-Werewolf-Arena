@@ -25,8 +25,13 @@ export function projectShapeshifterChoices(world: World, actorId: number) {
   const s = shared.initialIdentityRequestChoices(world, actorId, "shapeshifter");
   return s;
 }
-export class ShapeshifterSetupWindow extends shared.InitialIdentitySetupWindow {
+/** Instantiate lazily: catalog imports this module while the shared setup is still evaluating. */
+export class ShapeshifterSetupWindow {
+  private readonly window: shared.InitialIdentitySetupWindow;
   constructor(world: World, gateway: ToolGateway, events: GameEvent[]) {
-    super(world, gateway, events, "shapeshifter");
+    this.window = new shared.InitialIdentitySetupWindow(world, gateway, events, "shapeshifter");
+  }
+  execute(...args: Parameters<shared.InitialIdentitySetupWindow["execute"]>): Promise<boolean> {
+    return this.window.execute(...args);
   }
 }

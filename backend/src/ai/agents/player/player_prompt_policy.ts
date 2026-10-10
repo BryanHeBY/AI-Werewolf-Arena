@@ -446,13 +446,23 @@ export class PlayerPromptPolicy {
   }
 
   buildBoardInfo(): string {
-    const info = buildBoardInfoPrompt({
+    let info = buildBoardInfoPrompt({
       locale: this.locale,
       totalPlayers: this.publicBoardSize,
       roleCounts: this.publicRoleCounts,
       roleLabel: (role) => this.options.roleCatalog.label(role, this.locale),
       roleSkillBrief: (role) => this.options.roleCatalog.skillBrief(role, this.locale),
     });
+    if (this.options.boardConfig?.pureWhite) {
+      info +=
+        "\n" +
+        text(
+          this.locale,
+          this.options.boardConfig.pureWhite.eliminationPriority === "awa_wolf_priority_v1"
+            ? "prompt.board.pure_white.wolf_priority"
+            : "prompt.board.pure_white.good_priority",
+        );
+    }
     return initialIdentityCandidateCounts(this.world)
       ? info +
           "\n" +
@@ -622,6 +632,7 @@ export class PlayerPromptPolicy {
     const firstDaySheriffTiming =
       day === 1 &&
       this.options.boardConfig?.enableSheriff === true &&
+      this.options.boardConfig.pureWhite === undefined &&
       [
         "sheriff_nomination",
         "sheriff_campaign_speech",

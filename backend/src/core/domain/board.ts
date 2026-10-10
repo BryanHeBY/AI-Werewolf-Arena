@@ -115,6 +115,8 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
+  pureWhite?: { policy: "awa_pure_white_night_v1"; eliminationPriority: EliminationPriority };
+  wolfWitch?: { policy: "awa_pure_white_night_v1" };
   demonHunter?: { policy: "awa_netease_demon_hunter_v1" };
   events?: { pack: (typeof EVENT_PACK_IDS)[number] };
   wildChild?: { policy: "awa_lui_meme_wild_child_v1" };

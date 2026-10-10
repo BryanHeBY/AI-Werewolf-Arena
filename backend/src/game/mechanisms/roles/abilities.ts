@@ -32,17 +32,25 @@ export interface NightAbilityStates {
   potion: WitchState;
   dream: DreamerState;
 }
-export type RoleInspectionPolicy = "gargoyle" | "psychic" | "mirror";
+export type RoleInspectionPolicy = "gargoyle" | "psychic" | "mirror" | "pure_white" | "wolf_witch";
 export const ROLE_INSPECTION_POLICY_ROLES: Readonly<Record<RoleInspectionPolicy, Role>> = {
   gargoyle: Role.Gargoyle,
   psychic: Role.Psychic,
   mirror: Role.MirrorGirl,
+  pure_white: Role.PureWhiteGirl,
+  wolf_witch: Role.WolfWitch,
 };
 export function roleInspectionPolicy(state: RoleInspectionState): RoleInspectionPolicy {
   if (state.inspectionPolicy !== undefined && !INSPECTION_POLICIES.includes(state.inspectionPolicy))
     throw new Error("role_inspection_configuration_policy_invalid");
   const policy = state.policy === undefined ? "gargoyle" : state.policy;
-  if (policy !== "gargoyle" && policy !== "psychic" && policy !== "mirror")
+  if (
+    policy !== "gargoyle" &&
+    policy !== "psychic" &&
+    policy !== "mirror" &&
+    policy !== "pure_white" &&
+    policy !== "wolf_witch"
+  )
     throw new Error("role_inspection_policy_invalid");
   return policy;
 }

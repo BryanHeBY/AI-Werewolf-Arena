@@ -10,6 +10,7 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  inspect_night_identity: { target_id: EntityId | null; abstain: boolean };
   demon_hunt: { target_id: EntityId | null; abstain: boolean };
   choose_bridegroom: { target_id: EntityId };
   choose_wedding_witness: { target_id: EntityId };
@@ -63,6 +64,7 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "inspect_night_identity",
   "demon_hunt",
   "choose_bridegroom",
   "choose_wedding_witness",
@@ -138,6 +140,8 @@ export interface TurnConstraints {
 }
 
 export const ACTION_STAGES = [
+  "pure_white_girl",
+  "wolf_witch",
   "demon_hunter",
   "ghost_bride_groom",
   "ghost_bride_chat",
@@ -214,6 +218,8 @@ export interface ActionRequestExtras {
   death_phase?: Phase;
   death_sources?: DeathCause[];
   death_action_id?: number;
+  /** Private legal targets for this death-action request; not a public death announcement. */
+  shoot_candidates?: readonly EntityId[];
   sheriff_candidates?: EntityId[];
   badge_candidates?: readonly EntityId[];
   exile_candidates?: EntityId[];

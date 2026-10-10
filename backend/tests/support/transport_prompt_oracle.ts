@@ -9,6 +9,8 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  pure_white_girl: ["纯白之女查验", "Pure White Girl inspection"],
+  wolf_witch: ["狼巫查验", "Wolf Witch inspection"],
   demon_hunter: ["猎魔人选择", "Demon Hunter choice"],
   ghost_bride_groom: ["鬼魂新娘选择新郎", "Ghost Bride chooses Groom"],
   ghost_bride_chat: ["情侣私聊", "Partner chat"],
@@ -361,7 +363,7 @@ export function assertTransportEvents(
         "wolf_discussion_ended",
         "wolf_kill_vote_cast",
       ].includes(type) &&
-      !["wolf", "wolf_king", "white_wolf_king", "wolf_beauty"].includes(role)
+      !["wolf", "wolf_king", "white_wolf_king", "wolf_beauty", "wolf_witch"].includes(role)
     )
       throw new Error("fixture_wolf_information_exposed");
   }

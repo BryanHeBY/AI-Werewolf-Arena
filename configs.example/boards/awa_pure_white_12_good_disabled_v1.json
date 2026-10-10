@@ -1,0 +1,95 @@
+{
+  "version": 2,
+  "id": "awa_pure_white_12_good_disabled_v1",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 12,
+    "roleSetups": [
+      {
+        "role": "wolf",
+        "count": 3
+      },
+      {
+        "role": "wolf_witch",
+        "count": 1
+      },
+      {
+        "role": "villager",
+        "count": 4
+      },
+      {
+        "role": "pure_white_girl",
+        "count": 1
+      },
+      {
+        "role": "witch",
+        "count": 1
+      },
+      {
+        "role": "hunter",
+        "count": 1
+      },
+      {
+        "role": "guard",
+        "count": 1
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": ["slaughter_side"],
+    "hooks": {
+      "onDaybreak": false,
+      "onPreElection": true,
+      "onPreVote": true,
+      "onPerSpeechGap": false
+    }
+  },
+  "mechanisms": {
+    "disclosure": {
+      "deathRevealPolicy": "awa_hidden_v1"
+    },
+    "lastWords": {
+      "policy": "awa_initial_wave_v1"
+    },
+    "sheriff": {
+      "enabled": true,
+      "electionPolicy": "awa_nomination_offstage_pk_v1",
+      "badgePolicy": "awa_holder_choice_v1",
+      "voteWeight": 1.5,
+      "tieBreaker": "no_elimination"
+    },
+    "voting": {
+      "exilePolicy": "awa_one_pk_v1"
+    },
+    "selfDestruct": {
+      "enabledWindows": ["on_pre_election", "on_pre_vote"]
+    },
+    "tieBreaker": {
+      "exileVote": "no_elimination",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "wolf_witch": {
+      "policy": "awa_pure_white_night_v1"
+    },
+    "pure_white_girl": {
+      "policy": "awa_pure_white_night_v1",
+      "eliminationPriority": "awa_good_priority_v1"
+    },
+    "witch": {
+      "selfHeal": "disabled",
+      "knifeVisibility": "awa_with_heal_v1",
+      "potionPolicy": "awa_one_native_v1"
+    },
+    "hunter": {
+      "deathActionPolicy": "awa_knife_or_exile_v1"
+    },
+    "guard": {
+      "repeatPolicy": "netease_consecutive_nights_v1"
+    }
+  }
+}

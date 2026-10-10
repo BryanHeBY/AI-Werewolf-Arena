@@ -13,6 +13,8 @@ export const DEFAULT_INSPECTION_POLICIES = {
   gargoyle: "awa_unique_required_v1",
   psychic: "awa_repeat_optional_v1",
   mirror: "awa_unique_optional_v1",
+  pure_white: "awa_repeat_optional_v1",
+  wolf_witch: "awa_repeat_optional_v1",
 } as const;
 /** Instance identity controls scheduling. Configured target/action policy never changes it. */
 export function inspectionPolicy(

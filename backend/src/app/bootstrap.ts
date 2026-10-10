@@ -1,4 +1,7 @@
 import { installDemonHunter } from "../game/mechanisms/roles/demon_hunter/authority";
+import { isPureWhitePreset } from "@ai-werewolf-arena/game-text";
+import { WinConditionRegistry as PureWhiteWinRegistry } from "../game/mechanisms/registries/win_condition_registry";
+import { createEliminationWinConditionSpecs } from "../game/mechanisms/win_conditions/default_specs";
 import { assertDemonHunterPreset } from "../game/mechanisms/roles/demon_hunter/preset";
 import { installGhostBride } from "../game/mechanisms/roles/ghost_bride/authority";
 import { assertGhostBridePreset } from "../game/mechanisms/roles/ghost_bride/preset";
@@ -70,7 +73,13 @@ export function bootstrapGame(
 
   const roleRegistry = createDefaultRoleRegistry();
   const damageResolutionSystem = new DamageResolutionSystem();
-  const conditionRegistry = new ConditionRegistry(getDefaultWinConditionRegistry());
+  const conditionRegistry = new ConditionRegistry(
+    config.pureWhite
+      ? new PureWhiteWinRegistry(
+          createEliminationWinConditionSpecs(config.pureWhite.eliminationPriority),
+        )
+      : getDefaultWinConditionRegistry(),
+  );
   const toolGateway = new ToolGateway();
 
   const phaseManager = new PhaseManager(
@@ -159,6 +168,15 @@ function buildRoleDeck(
   fixedRoles: readonly Role[] | undefined,
   random: RandomSource,
 ): Role[] {
+  if (
+    (config.pureWhite ||
+      config.wolfWitch ||
+      config.roleSetups.some(
+        (row) => (row.role === Role.PureWhiteGirl || row.role === Role.WolfWitch) && row.count > 0,
+      )) &&
+    !isPureWhitePreset(config)
+  )
+    throw new Error("pure_white_preset_invalid");
   if (
     config.roleSetups.some((row) => row.role === Role.DemonHunter && row.count > 0) ||
     config.demonHunter

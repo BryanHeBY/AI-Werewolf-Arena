@@ -1,8 +1,8 @@
 # 可配置角色目标目录
 
-返回 [实施路线](roadmap.md)。本目录共 **64 项定义**，基础7项与P5狼王/白狼王/骑士/守墓人与P6摄梦人/狼美人/熊/隐狼/石像鬼与P7通灵师/机械狼/奇迹商人/混血儿/魔镜少女/觉醒隐狼/黑市商人已验证，共23项；咒狐、丘比特、杠精、盗贼、野孩子、千面人、孤独少女、鬼魂新娘与猎魔人已implemented并完成各自本批功能门禁，见[鬼魂新娘验收](reviews/p9-ghost-bride.md)/[孤独少女验收](reviews/p9-lonely-girl.md)/[千面人验收](reviews/p9-shapeshifter.md)/[咒狐验收](reviews/p8-cursed-fox.md)/[丘比特验收](reviews/p8-cupid.md)/[杠精验收](reviews/p8-debater.md)/[盗贼验收](reviews/p9-thief.md)/[野孩子验收](reviews/p9-wild-child.md)，剩余32项为目标。已有实现仅表示当前 AWA 版本，不能表示其他同名版本均受支持。
+返回 [实施路线](roadmap.md)。本目录共 **64 项定义**，基础7项与P5狼王/白狼王/骑士/守墓人与P6摄梦人/狼美人/熊/隐狼/石像鬼与P7通灵师/机械狼/奇迹商人/混血儿/魔镜少女/觉醒隐狼/黑市商人已验证，共23项；咒狐、丘比特、杠精、盗贼、野孩子、千面人、孤独少女、鬼魂新娘与猎魔人已implemented并完成各自本批功能门禁，见[鬼魂新娘验收](reviews/p9-ghost-bride.md)/[孤独少女验收](reviews/p9-lonely-girl.md)/[千面人验收](reviews/p9-shapeshifter.md)/[咒狐验收](reviews/p8-cursed-fox.md)/[丘比特验收](reviews/p8-cupid.md)/[杠精验收](reviews/p8-debater.md)/[盗贼验收](reviews/p9-thief.md)/[野孩子验收](reviews/p9-wild-child.md)，剩余30项为目标。已有实现仅表示当前 AWA 版本，不能表示其他同名版本均受支持。
 
-猎魔人四个有限板子的实现和最新完整门禁见[猎魔人验收](reviews/p9-demon-hunter.md)。当前状态为 23 verified、9 implemented、32 planned。
+猎魔人四个有限板子的实现和最新完整门禁见[猎魔人验收](reviews/p9-demon-hunter.md)。当前代码目录为 23 verified、11 implemented、30 planned；纯白之女与狼巫的有限板子已通过本批完整功能门禁，见[纯白验收](reviews/p9-pure-white.md)；P9/P10 总体验收仍开放。
 
 ## 使用与冻结要求
 
@@ -74,8 +74,8 @@
 | #   | 计划 ID            | 中文     | English          | 机制标签               | 阶段 / 来源                                                                                           |
 | --- | ------------------ | -------- | ---------------- | ---------------------- | ----------------------------------------------------------------------------------------------------- |
 | 30  | `demon_hunter`     | 猎魔人   | Demon Hunter     | 夜间对决、伤害资格     | implemented；P9b / [规则卡](rules/awa-netease-demon-hunter-v1.md)、[验收](reviews/p9-demon-hunter.md) |
-| 31  | `pure_white_girl`  | 纯白之女 | Pure White Girl  | 查验与伤害             | P9 / [S01][cards]                                                                                     |
-| 32  | `wolf_witch`       | 狼巫     | Wolf Witch       | 狼队身份查验           | P9 / [S01][cards]                                                                                     |
+| 31  | `pure_white_girl`  | 纯白之女 | Pure White Girl  | 查验与伤害             | implemented；P9b / [规则卡](rules/awa-pure-white-night-v1.md)、[验收](reviews/p9-pure-white.md)       |
+| 32  | `wolf_witch`       | 狼巫     | Wolf Witch       | 狼队身份查验           | implemented；P9b / [规则卡](rules/awa-pure-white-night-v1.md)、[验收](reviews/p9-pure-white.md)       |
 | 33  | `evil_knight`      | 恶夜骑士 | Dark Knight      | 夜间免疫、反伤         | P9 / [S01][cards]                                                                                     |
 | 34  | `red_moon_apostle` | 赤月使徒 | Red Moon Apostle | 自爆、封夜、特殊死亡   | P9 / [S01][cards]                                                                                     |
 | 35  | `alchemist`        | 炼金魔女 | Alchemist        | 刀口约束、特殊救人流程 | P9 / [S17][mist]                                                                                      |

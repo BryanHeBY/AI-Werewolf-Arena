@@ -279,7 +279,21 @@ export class PhaseManager {
     this.setPhase(phase);
   }
 
+  private readonly pureWhiteStartedDays = new Set<number>();
+
   async runSingleCycle(
+    actionProvider: ActionProvider,
+    maxDays: number = 20,
+  ): Promise<RuntimeSnapshot> {
+    if (this.config.pureWhite && !this.state.gameOver) {
+      if (this.pureWhiteStartedDays.has(this.state.day))
+        throw new Error("pure_white_cycle_reentry");
+      this.pureWhiteStartedDays.add(this.state.day);
+    }
+    return this.runSingleCycleInternal(actionProvider, maxDays);
+  }
+
+  private async runSingleCycleInternal(
     actionProvider: ActionProvider,
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
@@ -386,7 +400,8 @@ export class PhaseManager {
     }
     const ownsWedding = weddingSetup(this.world) !== null;
     const ownsDemon = demonHunterActorId(this.world) !== null;
-    if (ownsWedding || ownsDemon) {
+    const ownsPureWhite = this.config.pureWhite !== undefined;
+    if (ownsWedding || ownsDemon || ownsPureWhite) {
       try {
         this.assertDemonReadable();
 
@@ -466,10 +481,18 @@ export class PhaseManager {
             id,
             proposedSources[id]!.filter(
               (cause) =>
-                cause !== DeathCause.WolfKill ||
-                (ownsWedding
-                  ? weddingKnifeCurrent(this.world, nightDay, id)
-                  : night.demonWolfSourceCurrent?.(id) === true),
+                (cause !== DeathCause.WolfKill ||
+                  (ownsWedding
+                    ? weddingKnifeCurrent(this.world, nightDay, id)
+                    : ownsDemon
+                      ? night.demonWolfSourceCurrent?.(id) === true
+                      : true)) &&
+                ((cause !== DeathCause.PureWhiteInspection &&
+                  cause !== DeathCause.WolfWitchInspection) ||
+                  night.inspectionAttacks?.some(
+                    (attack) =>
+                      attack.target.id === id && attack.cause === cause && attack.isCurrent(),
+                  ) === true),
             ),
           ]),
         );
@@ -547,7 +570,11 @@ export class PhaseManager {
       }
     }
     const firstDaySheriffBeforeNightInfo =
-      !ownsWedding && !ownsDemon && this.state.day === 1 && this.config.enableSheriff === true;
+      !ownsWedding &&
+      !ownsDemon &&
+      !ownsPureWhite &&
+      this.state.day === 1 &&
+      this.config.enableSheriff === true;
 
     this.setPhase(Phase.Day);
     const cycleDay = this.state.day,
@@ -557,7 +584,7 @@ export class PhaseManager {
       this.state.phase === Phase.Day &&
       !this.state.gameOver &&
       this.phaseRevision === dayRevision;
-    let nightSettled = ownsWedding || ownsDemon;
+    let nightSettled = ownsWedding || ownsDemon || ownsPureWhite;
     const settleNight = async (blast?: { deaths: number[]; sources: DeathSources }) => {
       if (nightSettled) return this.state.gameOver;
       nightSettled = true;

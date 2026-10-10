@@ -526,6 +526,7 @@ export class DeathResolution {
           death_phase: deathPhase,
           death_sources: [...(sources[actorId] ?? [])],
           death_action_id: permit.id,
+          shoot_candidates: [...targets.keys()].filter((id) => id !== actorId),
           ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
         },
       });

@@ -1,4 +1,5 @@
 import { isDemonHunterPreset } from "../../game/mechanisms/roles/demon_hunter/preset";
+import { isPureWhitePreset } from "@ai-werewolf-arena/game-text";
 import { isGhostBridePreset } from "@ai-werewolf-arena/game-text";
 /** The single public board format. Unknown fields and unregistered roles fail closed. */
 import { supportsWallRoles } from "../../game/mechanisms/events/wall_notes/authority";
@@ -274,6 +275,8 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
       config = contribution.apply(config, defaults);
     }
   }
+  if ((seen.has("pure_white_girl") || seen.has("wolf_witch")) && !isPureWhitePreset(config))
+    fail("board_config_pure_white_preset_invalid", "board");
   if (seen.has("demon_hunter") && !isDemonHunterPreset(config))
     fail("board_config_demon_hunter_preset_invalid", "board");
   if (

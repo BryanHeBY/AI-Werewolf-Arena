@@ -25,6 +25,8 @@ export enum Role {
   WildChild = "wild_child",
   LonelyGirl = "lonely_girl",
   DemonHunter = "demon_hunter",
+  PureWhiteGirl = "pure_white_girl",
+  WolfWitch = "wolf_witch",
   GhostBride = "ghost_bride",
   HiddenWolf = "hidden_wolf",
   Gargoyle = "gargoyle",

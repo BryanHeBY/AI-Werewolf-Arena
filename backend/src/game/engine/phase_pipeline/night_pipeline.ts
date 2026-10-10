@@ -110,6 +110,7 @@ export type NightPipelineResult =
       damage: DamageResolutionResult;
       dreamFrame: DreamNightFrame;
       demonSources?: object;
+      inspectionAttacks?: readonly import("../../../core/domain/night_effects").NightInspectionAttack[];
       demonWolfSourceCurrent?: (targetId: number) => boolean;
       demonKnifeProtection?: Readonly<{
         targetId: number;
@@ -354,6 +355,7 @@ export class NightPipeline {
         immuneNightTargets: dreamFrame.immuneNightTargets(this.world),
         consecutiveDeaths: dreamFrame.consecutiveDeaths(this.world),
         poisonClaims: stageState.poisonClaims,
+        inspectionAttacks: stageState.inspectionAttacks,
         foxInspections: stageState.foxInspections,
         wolfImmuneTargets: this.getAliveByRole(Role.CursedFox),
         guardClaims: stageState.guardClaims,
@@ -404,6 +406,7 @@ export class NightPipeline {
         damage,
         dreamFrame,
         deathLives,
+        inspectionAttacks: stageState.inspectionAttacks,
         foxInspections: stageState.foxInspections,
         ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
       };

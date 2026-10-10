@@ -31,23 +31,9 @@ for (const locale of ["zh-CN", "en"] as const)
         await fs.readFile(path.join(game.recordDir, "logic_ops.json")),
       );
     expect(report.games).toHaveLength(100);
-    // A blind Hunter can legally attempt a target whose Night death is still private.
-    // Preserve that rejection and verify it exactly; never reveal hidden life to the bot.
-    expect(report.rejects).toBe(1);
-    const rejected = report.games.filter((g) => g.rejects);
-    expect(rejected.map((g) => [g.seed, g.rejects])).toEqual([["ghost-observed:43", 1]]);
-    const operations = JSON.parse(
-      await fs.readFile(path.join(rejected[0]!.recordDir, "logic_ops.json"), "utf8"),
-    );
-    expect(operations.ops.filter((o: { status: string }) => o.status === "rejected")).toMatchObject(
-      [
-        {
-          op: "validate_tool_call",
-          input: { tool: "shoot", args: { target_id: 5 } },
-          reason: "shoot_target",
-        },
-      ],
-    );
+    // The private per-actor shooting candidate list excludes co-night deaths without exposing roles or causes.
+    expect(report.rejects).toBe(0);
+    expect(report.games.filter((game) => game.rejects)).toEqual([]);
     expect(report.fallbacks).toBe(0);
     expect(report.naturallyFinished).toBe(100);
     await fs.writeFile(`/tmp/awa-p9-ghost-bride-observed-${locale}.json`, JSON.stringify(report));

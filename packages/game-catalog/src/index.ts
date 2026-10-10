@@ -265,17 +265,17 @@ export const ROLE_DEFINITIONS = [
   {
     id: "pure_white_girl",
     names: { "zh-CN": "纯白之女", en: "Pure White Girl" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-pure-white-night-v1.md",
     mechanismSummary: "查验与伤害",
   },
   {
     id: "wolf_witch",
     names: { "zh-CN": "狼巫", en: "Wolf Witch" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-pure-white-night-v1.md",
     mechanismSummary: "狼队身份查验",
   },
   {

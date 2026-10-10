@@ -96,6 +96,24 @@ export const check_identity: ObservedToolHandler = (context) => {
 
 import { inspectionRepeats } from "../../../../game/mechanisms/roles/role_inspection/policies";
 
+export const inspect_night_identity: ObservedToolHandler = ({
+  ownState,
+  others,
+  teammateIds,
+  pick,
+  style,
+}) => {
+  const targets =
+    ownState.roleInspection?.policy === "wolf_witch"
+      ? others.filter((id) => !teammateIds.includes(id))
+      : others;
+  const target = style === "conservative" ? undefined : pick(targets);
+  return {
+    name: "inspect_night_identity",
+    args: { target_id: target ?? null, abstain: target === undefined },
+  };
+};
+
 export const inspect_role: ObservedToolHandler = (context) => {
   const { request, ownState, others, pick, style } = context;
   if (style === "conservative" && request.context.turn_constraints.min_valid_actions === 0)
@@ -163,8 +181,10 @@ export const use_potion: ObservedToolHandler = (context) => {
 };
 
 export const shoot: ObservedToolHandler = (context) => {
-  const { others, pick } = context;
-  const target = pick(others);
+  const { others, pick, request } = context;
+  const target = pick(
+    [...(request.context.shoot_candidates ?? others)].filter((id) => id !== request.actorId),
+  );
   return { name: "shoot", args: { target_id: target ?? null } };
 };
 

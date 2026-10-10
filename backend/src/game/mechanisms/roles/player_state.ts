@@ -59,7 +59,7 @@ export interface PlayerWitchState {
 }
 export interface PlayerRoleInspectionState {
   inspectionPolicy?: import("../../../core/domain/board").InspectionPolicy;
-  policy?: "gargoyle" | "psychic" | "mirror";
+  policy?: "gargoyle" | "psychic" | "mirror" | "pure_white" | "wolf_witch";
   lastTarget: number | null;
   lastDay: number | null;
   history: Array<{
@@ -239,7 +239,13 @@ export function projectRoleInspectionState(state: unknown): PlayerRoleInspection
     inspectionPolicy === "awa_unique_optional_v1"
       ? { inspectionPolicy }
       : {}),
-    ...(policy === "gargoyle" || policy === "psychic" || policy === "mirror" ? { policy } : {}),
+    ...(policy === "gargoyle" ||
+    policy === "psychic" ||
+    policy === "mirror" ||
+    policy === "pure_white" ||
+    policy === "wolf_witch"
+      ? { policy }
+      : {}),
     lastTarget: positiveOrNull(playerDataField(state, "lastTarget")),
     lastDay: positiveOrNull(playerDataField(state, "lastDay")),
     history: rows(playerDataField(state, "history")).flatMap((row) => {

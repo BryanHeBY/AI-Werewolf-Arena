@@ -27,6 +27,13 @@ const strategies = z.enum(["min_id", "min_seat", "no_elimination", "no_kill"]);
 
 /** Internal board shape shared by reverse configuration writing and reproduction. No defaults are added here. */
 export const boardConfigSchema = z.strictObject({
+  pureWhite: z
+    .strictObject({
+      policy: z.literal("awa_pure_white_night_v1"),
+      eliminationPriority: z.enum(["awa_good_priority_v1", "awa_wolf_priority_v1"]),
+    })
+    .optional(),
+  wolfWitch: z.strictObject({ policy: z.literal("awa_pure_white_night_v1") }).optional(),
   demonHunter: z.strictObject({ policy: z.literal("awa_netease_demon_hunter_v1") }).optional(),
   ghostBride: z.strictObject({ policy: z.literal("awa_melbourne_ghost_bride_v1") }).optional(),
   events: z.strictObject({ pack: z.enum(EVENT_PACK_IDS) }).optional(),
