@@ -1,60 +1,79 @@
+import { types } from "node:util";
 import { text, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { PromptRenderable, StatusMark } from "../model";
-
-/**
- * 状态印记组件：
- * 用于承载当回合临时效果（守护、狼刀、解药、毒药），由结算系统统一消费。
- */
+interface MarkStorage {
+  marks: Set<StatusMark>;
+  revisions: Map<StatusMark, number>;
+}
+const markOrigins = new WeakMap<object, MarkStorage>();
+const nativeHas = Set.prototype.has,
+  nativeAdd = Set.prototype.add,
+  nativeDelete = Set.prototype.delete,
+  nativeClear = Set.prototype.clear,
+  nativeValues = Set.prototype.values;
+const nativeSize = Object.getOwnPropertyDescriptor(Set.prototype, "size")!.get!;
+export interface StatusMarkSnapshot {
+  readonly revision: number;
+  readonly present: boolean;
+}
+function storage(component: object): MarkStorage {
+  const original = !types.isProxy(component) && markOrigins.get(component);
+  if (!original) throw new Error("status_marks_component_invalid");
+  return original;
+}
+/** Inspect only factory storage; no getter or Proxy and no writable Set escapes. */
+export function statusMarkSnapshot(
+  component: unknown,
+  mark: StatusMark,
+): Readonly<StatusMarkSnapshot> | null {
+  if (!component || typeof component !== "object" || types.isProxy(component)) return null;
+  const original = markOrigins.get(component);
+  // A legacy-looking shadow is foreign data; it never becomes the real private storage.
+  if (!original || Object.getOwnPropertyDescriptor(component, "marks")) return null;
+  return Object.freeze({
+    revision: original.revisions.get(mark) ?? 0,
+    present: nativeHas.call(original.marks, mark),
+  });
+}
+function revise(original: MarkStorage, mark: StatusMark): void {
+  original.revisions.set(mark, (original.revisions.get(mark) ?? 0) + 1);
+}
+/** Temporary protection and damage marks with a factory-owned mutation ledger. */
 export class StatusMarksComponent implements PromptRenderable {
-  private marks: Set<StatusMark>;
-
   constructor(
     initialMarks: StatusMark[] = [],
     private readonly locale: Locale = "zh-CN",
   ) {
-    this.marks = new Set(initialMarks);
+    const original: MarkStorage = { marks: new Set(), revisions: new Map() };
+    markOrigins.set(this, original);
+    for (const mark of initialMarks) {
+      nativeAdd.call(original.marks, mark);
+      revise(original, mark);
+    }
   }
-
-  /**
-   * 添加指定状态印记。
-   */
   add(mark: StatusMark): void {
-    this.marks.add(mark);
+    const original = storage(this);
+    nativeAdd.call(original.marks, mark);
+    revise(original, mark);
   }
-
-  /**
-   * 判断是否存在指定状态印记。
-   */
   has(mark: StatusMark): boolean {
-    return this.marks.has(mark);
+    return nativeHas.call(storage(this).marks, mark);
   }
-
-  /**
-   * 移除指定状态印记。
-   */
   remove(mark: StatusMark): void {
-    this.marks.delete(mark);
+    const original = storage(this);
+    nativeDelete.call(original.marks, mark);
+    revise(original, mark);
   }
-
-  /**
-   * 清空当前全部状态印记。
-   */
   clear(): void {
-    this.marks.clear();
+    const original = storage(this);
+    nativeClear.call(original.marks);
+    for (const mark of Object.values(StatusMark)) revise(original, mark);
   }
-
-  /**
-   * 返回当前全部状态印记列表。
-   */
   values(): StatusMark[] {
-    return [...this.marks];
+    return Array.from(nativeValues.call(storage(this).marks));
   }
-
-  /**
-   * 将状态印记渲染为可读文本片段。
-   */
   renderPrompt(locale: Locale = this.locale): string {
-    if (this.marks.size === 0) return text(locale, "component.marks_none");
+    if (nativeSize.call(storage(this).marks) === 0) return text(locale, "component.marks_none");
     return text(locale, "component.marks", {
       marks: this.values()
         .map((mark) => text(locale, `component.mark.${mark}` as MessageKey))
@@ -62,10 +81,6 @@ export class StatusMarksComponent implements PromptRenderable {
     });
   }
 }
-
-/**
- * 创建状态印记组件。
- */
 export function createStatusMarksComponent(locale: Locale = "zh-CN"): StatusMarksComponent {
   return new StatusMarksComponent([], locale);
 }

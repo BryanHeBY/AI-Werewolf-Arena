@@ -1,0 +1,13 @@
+# P9b 猎魔人规范请求与独立毒印贡献桥接
+
+接a88395f。本笔仍未注册Demon profile，未连接实际Witch/猎魔人controller、伤害抑制、录制或Tape。当前仅规范请求兼容性和源印记归属桥接，23verified/8implemented/33planned保持，不用桥接测试冒充完整角色。
+
+实际GameActionRequestFactory的requiresAction是输入参数，canonical context不含同名字段；Demon绑定依据min1/max1/required_any、严格error/noFallback核验必答，删掉虚构context字段要求。两个真实factory回归分别验证规范空事件与300条真实公开事件请求；request独立数组上限16384，state/tool仍默认256且严格形状未放宽。现有生产bootstrap的模块初始化入口被沿用，旧直接factory import候选引发既有依赖环初始化错误的日志保留；没有改生产模块顺序或放宽规则。
+
+StatusMarks真实Set现仅存模块私有WeakMap，所有有效读写使用捕获原生Set方法，逐mark版本与实际add/remove/clear同步。组件没有原Set属性，values仅副本；外来legacy marks shadow/getter不被读取且snapshot拒绝。TypeScript private可被描述符取Set的旧候选已修，Object.freeze(Set)不能解决其内容可改，因此未采用。
+
+poison_contribution仅捕获原组件一次真实native add，commit要求确切Poison版本+1且存在，不写mark。Damage消费/清mark前seal，将原native贡献与unknown之前已存在、之后再加、替换组件、移除后重加分开；原印记消失不会补毒，未知印记不会借毒免被抹掉。seal不可重复，冻结快照不受后续普通清mark影响。贡献证明本身不授予原生Witch权限，仍须与已授权的原生消费proof配对后才能抑制伤害。它目前没有进入DamageResolutionSystem算法，也没有自动给任何Role通用免毒。
+
+三组只读review复验关闭原Set直写/revision绕过，未发现本批剩余阻断。最新六文件218 pass/576断言/0 fail；完整engine1828 pass/17866断言/82文件/0 fail。日志/tmp/awa-p9-demon-source-bridge2.log与engine2.log；type2/lint2/build2 exit0，局部format/diff通过。首次engine1从repo根错误启动，两份Thief/Shapeshifter公开示例牌组路径ENOENT，1826pass/2fail；保持日志并从项目脚本规定backend cwd重跑全部，未修改案例或降低断言。
+
+接下来真实Witch目标/请求及mark证明配对、合法heal/pass/Seer库存同步审计、Night→PM完整源冻结/死亡链/胜利、God/本人字段、strict Tape和四板实际通路仍需贯通并验证。仅main本地提交，无push/部署/真实模型/用户configs或秘密操作，总体待最终验收。

@@ -16,6 +16,9 @@ import {
   deferRequestDelivery,
   bindRequestDeliveryGuard,
   type BoardConfig,
+  type ActionStage,
+  type ToolName,
+  type GameEvent,
   type RoleComponent,
   type AliveComponent,
 } from "../../../src/core";
@@ -838,3 +841,54 @@ for (const revoked of [false, true])
     expect(captureDemonNativePoison(f.world, 5, f.ability, 6)).toBeNull();
     expect(demonHunterAuditPlayer(f.world, 5)).toEqual(consumed);
   });
+
+test("the actual factory canonical required request binds without an invented requiresAction context field", async () => {
+  // The production bootstrap is the established initialization entry for the factory's role dependencies.
+  await import("../../../src/app/bootstrap");
+  const { GameActionRequestFactory } =
+    await import("../../../src/game/engine/action_request_factory");
+  const f = fixture();
+  beginDemonHunterNight(f.world, 2, () => true);
+  const scope = openDemonHunterTurn(f.world);
+  const request = new GameActionRequestFactory(f.world, [], 2).create({
+    phase: Phase.Night,
+    actorId: 6,
+    allowedTools: ["demon_hunt" as ToolName],
+    stage: "demon_hunter" as ActionStage,
+    requiresAction: true,
+    summary: { key: "request.summary.night_action" },
+    context: { allow_fallback: false, action_failure_policy: "error" },
+  });
+  expect(Object.hasOwn(request.context, "requiresAction")).toBe(false);
+  expect(request.context.turn_constraints.min_valid_actions).toBe(1);
+  bindDemonHunterRequest(f.world, request);
+  expect(demonHunterRequestScope(f.world, request)).toBe(scope);
+  expect(commitDemonHunt(f.world, scope, hunt(null))).toEqual({ day: 2, targetId: null });
+});
+
+test("a real long canonical visible history remains authorized without relaxing state or tool data limits", async () => {
+  await import("../../../src/app/bootstrap");
+  const { GameActionRequestFactory } =
+    await import("../../../src/game/engine/action_request_factory");
+  const f = fixture();
+  beginDemonHunterNight(f.world, 2, () => true);
+  const scope = openDemonHunterTurn(f.world);
+  const events: GameEvent[] = Array.from({ length: 300 }, (_, i) => ({
+    timestamp: i,
+    type: "day_speech",
+    payload: { actorId: 3, text: `speech ${i}` },
+  }));
+  const request = new GameActionRequestFactory(f.world, events, 2).create({
+    phase: Phase.Night,
+    actorId: 6,
+    allowedTools: ["demon_hunt" as ToolName],
+    stage: "demon_hunter" as ActionStage,
+    requiresAction: true,
+    summary: { key: "request.summary.night_action" },
+    context: { allow_fallback: false, action_failure_policy: "error" },
+  });
+  expect(request.context.visible_events).toHaveLength(300);
+  bindDemonHunterRequest(f.world, request);
+  expect(demonHunterRequestScope(f.world, request)).toBe(scope);
+  expect(commitDemonHunt(f.world, scope, hunt(1))).toEqual({ day: 2, targetId: 1 });
+});

@@ -16,7 +16,12 @@ export function ownDemonData(value: unknown, key: string): unknown {
   return descriptor && "value" in descriptor ? descriptor.value : undefined;
 }
 /** Inspect only plain own data; original runtime identities are never reconstructed from this copy. */
-export function demonSnapshot(value: unknown, seen = new Set<object>(), depth = 0): unknown {
+export function demonSnapshot(
+  value: unknown,
+  seen = new Set<object>(),
+  depth = 0,
+  arrayLimit = 256,
+): unknown {
   if (
     value === null ||
     ["string", "boolean"].includes(typeof value) ||
@@ -40,7 +45,7 @@ export function demonSnapshot(value: unknown, seen = new Set<object>(), depth = 
       if (!("value" in d) || !d.enumerable) throw new Error("demon_hunter_data_invalid");
       Object.defineProperty(result, key, {
         enumerable: true,
-        value: demonSnapshot(d.value, seen, depth + 1),
+        value: demonSnapshot(d.value, seen, depth + 1, arrayLimit),
       });
     }
     if (!array) return result;
@@ -48,7 +53,7 @@ export function demonSnapshot(value: unknown, seen = new Set<object>(), depth = 
     if (
       !Number.isSafeInteger(length) ||
       length < 0 ||
-      length > 256 ||
+      length > arrayLimit ||
       Object.keys(result).length !== length ||
       !Array.from({ length }, (_, i) => Object.hasOwn(result, i)).every(Boolean)
     )

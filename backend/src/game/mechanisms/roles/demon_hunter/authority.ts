@@ -81,7 +81,14 @@ export interface DemonHunterRequest {
   actorId: number;
   phase: Phase;
   allowedTools: readonly string[];
-  context: { day: number; stage: string; [key: string]: unknown };
+  context: {
+    day: number;
+    stage: string;
+    turn_constraints?: unknown;
+    allow_fallback?: boolean;
+    action_failure_policy?: string;
+    requiresAction?: boolean;
+  };
   deadlineAtMs?: number;
 }
 const bindings = new WeakMap<World, Binding>(),
@@ -324,7 +331,12 @@ export function openDemonHunterTurn(world: World): object {
 }
 function requestData(request: DemonHunterRequest): string | null {
   try {
-    const { deadlineAtMs: _deadline, ...rest } = demonSnapshot(request) as Record<string, unknown>;
+    const { deadlineAtMs: _deadline, ...rest } = demonSnapshot(
+      request,
+      new Set<object>(),
+      0,
+      16384,
+    ) as Record<string, unknown>;
     return JSON.stringify(rest);
   } catch {
     return null;
@@ -355,7 +367,7 @@ export function bindDemonHunterRequest(world: World, request: DemonHunterRequest
   const t = bindings.get(world)?.active?.turn;
   if (!t || t.request || !liveNight(t.night)) return;
   try {
-    const p = demonSnapshot(request) as DemonHunterRequest,
+    const p = demonSnapshot(request, new Set<object>(), 0, 16384) as DemonHunterRequest,
       constraints = p.context.turn_constraints as Record<string, unknown> | undefined,
       encoded = requestData(request);
     if (
@@ -363,7 +375,6 @@ export function bindDemonHunterRequest(world: World, request: DemonHunterRequest
       p.phase !== Phase.Night ||
       p.context.day !== t.night.day ||
       p.context.stage !== "demon_hunter" ||
-      p.context.requiresAction !== true ||
       !Array.isArray(p.allowedTools) ||
       p.allowedTools.length !== 1 ||
       p.allowedTools[0] !== "demon_hunt" ||
