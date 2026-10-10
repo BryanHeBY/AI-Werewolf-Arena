@@ -16,6 +16,11 @@ import type { NightAbility } from "../abilities";
 import { getNightmareShadowState, nightmareFearTargets, type NightmareShadowState } from "./state";
 
 function stateIdentity(state: NightmareShadowState): string {
+  const history: Array<[number, EntityId | null]> = [];
+  for (let i = 0; i < state.history.length; i++) {
+    const entry = state.history[i]!;
+    history.push([entry.day, entry.targetId]);
+  }
   return JSON.stringify([
     state.policy,
     state.fearActionPolicy,
@@ -23,10 +28,7 @@ function stateIdentity(state: NightmareShadowState): string {
     state.packReady,
     state.lastDay,
     state.lastTarget,
-    Array.prototype.map.call(state.history, (entry: { day: number; targetId: EntityId | null }) => [
-      entry.day,
-      entry.targetId,
-    ]),
+    history,
   ]);
 }
 function authority(ability: NightAbility): string {

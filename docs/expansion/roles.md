@@ -1,8 +1,8 @@
 # 可配置角色目标目录
 
-返回 [实施路线](roadmap.md)。本目录共 **64 项定义**：23 verified、13 implemented、28 planned，合计 36 项已达到各自有限范围内的技术门禁。已有实现仅表示当前 AWA 版本，不代表其他同名版本均受支持；P9/P10 和用户总体验收仍开放。
+返回 [实施路线](roadmap.md)。本目录共 **64 项定义**：23 verified、14 implemented、27 planned，合计 37 项已达到各自有限范围内的技术门禁。已有实现仅表示当前 AWA 版本，不代表其他同名版本均受支持；P9/P10 和用户总体验收仍开放。
 
-基础七项及 P5–P7 的十六项为 verified。咒狐、丘比特、杠精、盗贼、野孩子、千面人、孤独少女、鬼魂新娘、猎魔人、纯白之女、狼巫、恶夜骑士、噩梦之影登记 implemented。各角色来源、支持组合和验证边界见各自规则卡与验收记录；最新交付见[恶夜骑士验收](reviews/p9-evil-knight.md)、[噩梦之影验收](reviews/p9-nightmare.md)。
+基础七项及 P5–P7 的十六项为 verified。咒狐、丘比特、杠精、盗贼、野孩子、千面人、孤独少女、鬼魂新娘、猎魔人、纯白之女、狼巫、恶夜骑士、噩梦之影、赤月使徒登记 implemented。各角色来源、支持组合和验证边界见各自规则卡与验收记录；最新交付见[恶夜骑士验收](reviews/p9-evil-knight.md)、[噩梦之影验收](reviews/p9-nightmare.md)、[赤月使徒验收](reviews/p9-red-moon.md)。
 
 ## 使用与冻结要求
 
@@ -77,7 +77,7 @@
 | 31  | `pure_white_girl`  | 纯白之女 | Pure White Girl  | 查验与伤害             | implemented；P9b / [规则卡](rules/awa-pure-white-night-v1.md)、[验收](reviews/p9-pure-white.md)              |
 | 32  | `wolf_witch`       | 狼巫     | Wolf Witch       | 狼队身份查验           | implemented；P9b / [规则卡](rules/awa-pure-white-night-v1.md)、[验收](reviews/p9-pure-white.md)              |
 | 33  | `evil_knight`      | 恶夜骑士 | Dark Knight      | 夜间免疫、反伤         | `implemented`；P9 / [规则卡](rules/awa-evil-knight-v1.md) / [验收](reviews/p9-evil-knight.md) / [S01][cards] |
-| 34  | `red_moon_apostle` | 赤月使徒 | Red Moon Apostle | 自爆、封夜、特殊死亡   | P9 / [S01][cards]                                                                                            |
+| 34  | `red_moon_apostle` | 赤月使徒 | Red Moon Apostle | 自爆、封夜、特殊死亡   | P9b implemented / [规则卡](rules/awa-red-moon-demon-v1.md) / [验收](reviews/p9-red-moon.md)                  |
 | 35  | `alchemist`        | 炼金魔女 | Alchemist        | 刀口约束、特殊救人流程 | P9 / [S17][mist]                                                                                             |
 | 36  | `raven_claw_wolf`  | 狼鸦之爪 | Raven-Claw Wolf  | 解封、特殊攻击         | P9 / [S17][mist]                                                                                             |
 | 37  | `radiant_count`    | 流光伯爵 | Radiant Count    | 保护范围和限制         | P9 / [S01][cards]                                                                                            |

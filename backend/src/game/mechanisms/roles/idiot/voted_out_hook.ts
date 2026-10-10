@@ -1,3 +1,4 @@
+import { commitDemonIdiotReveal, demonIdiotRevealed } from "../demon_hunter/authority";
 /** 文件说明：白痴被放逐时翻牌免死的钩子实现。 */
 import { AliveComponent } from "../../../../core/domain/components/alive";
 import { BadgeComponent } from "../../../../core/domain/components/badge";
@@ -24,16 +25,17 @@ export function idiotVotedOutHook(
   if (roleComp.role !== Role.Idiot) {
     return null;
   }
-  if (getIdiotState(roleComp)?.revealed) {
+  if (demonIdiotRevealed(world, targetId) ?? getIdiotState(roleComp)?.revealed) {
     return { prevented: true, removed: [], reason: "idiot_already_revealed" };
   }
 
-  setIdiotState(roleComp, { revealed: true });
-
-  const voting = world.getComponent<VotingRightComponent>(targetId, COMPONENT.VotingRight);
-  if (voting) {
-    voting.canVote = false;
-    voting.weight = 0;
+  if (!commitDemonIdiotReveal(world, targetId)) {
+    setIdiotState(roleComp, { revealed: true });
+    const voting = world.getComponent<VotingRightComponent>(targetId, COMPONENT.VotingRight);
+    if (voting) {
+      voting.canVote = false;
+      voting.weight = 0;
+    }
   }
 
   const badge = world.getComponent<BadgeComponent>(targetId, COMPONENT.Badge);

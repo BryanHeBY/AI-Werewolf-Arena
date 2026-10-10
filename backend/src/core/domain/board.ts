@@ -115,6 +115,7 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
+  redMoon?: { policy: "awa_red_moon_demon_v1"; lastWolfBlastPolicy: "ends_game" | "forbidden" };
   nightmareShadow?: {
     policy: "awa_nightmare_dreamer_v1";
     fearActionPolicy: "optional" | "required_when_legal";

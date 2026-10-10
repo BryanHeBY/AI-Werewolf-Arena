@@ -1,3 +1,4 @@
+import { isRedMoonBoard } from "../../mechanisms/roles/demon_hunter/authority";
 import {
   assertNightmareRosterCurrent,
   isNightmareBoard,
@@ -454,7 +455,9 @@ export class NightPipeline {
       summary: { key: "request.summary.night_action" },
       context: {
         ...extraContext,
-        ...(isEvilKnightBoard(this.world) || isNightmareBoard(this.world)
+        ...(isEvilKnightBoard(this.world) ||
+        isNightmareBoard(this.world) ||
+        isRedMoonBoard(this.world)
           ? { action_failure_policy: "error" as const, allow_fallback: false }
           : {}),
       },

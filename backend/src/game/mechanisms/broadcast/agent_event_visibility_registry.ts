@@ -8,6 +8,9 @@ import { World } from "../../../core/domain/world";
 type AgentEventVisibilityRule = (world: World, event: GameEvent, actorId: EntityId) => boolean;
 
 const PUBLIC_EVENT_TYPES = new Set([
+  "red_moon_night_sealed",
+  "red_moon_exile_delayed",
+  "red_moon_delay_expired",
   "wall_notes_started",
   "wall_notes_published",
   "wall_notes_canceled",

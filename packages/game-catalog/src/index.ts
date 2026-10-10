@@ -289,9 +289,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "red_moon_apostle",
     names: { "zh-CN": "赤月使徒", en: "Red Moon Apostle" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-red-moon-demon-v1.md",
     mechanismSummary: "自爆、封夜、特殊死亡",
   },
   {

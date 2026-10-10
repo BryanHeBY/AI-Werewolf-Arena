@@ -1,3 +1,4 @@
+import type { RedMoonNextNightFact, RedMoonExpiryFact } from "@ai-werewolf-arena/game-text";
 import type {
   DemonHunterChoiceFact,
   DemonHunterCancelFact,
@@ -45,6 +46,9 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  red_moon_night_sealed: RedMoonNextNightFact;
+  red_moon_exile_delayed: RedMoonNextNightFact;
+  red_moon_delay_expired: RedMoonExpiryFact;
   nightmare_fear_committed: { actorId: EntityId; day: number; targetId: EntityId | null };
   demon_hunter_chosen: DemonHunterChoiceFact;
   demon_hunter_cancelled: DemonHunterCancelFact;

@@ -1,3 +1,4 @@
+import { redMoonEventLabel } from "@ai-werewolf-arena/game-text";
 import { nightmareEventLabel } from "@ai-werewolf-arena/game-text";
 import { demonHunterEventLabel } from "@ai-werewolf-arena/game-text";
 import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-text";
@@ -42,6 +43,8 @@ export function eventLabel(
   if (!fact) return text(locale, "replay.unknown");
   event = fact.event;
   const p = event.payload;
+  const redMoon = redMoonEventLabel(event.type, p, locale);
+  if (redMoon !== null) return redMoon;
   const black = blackMarketEventLabel(event.type, p, locale);
   if (black !== null) return black;
   const deathAbility = deathAbilityEventLabel(event.type, p, locale);

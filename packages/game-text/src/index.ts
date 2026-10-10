@@ -1,3 +1,4 @@
+import { readRedMoonNextNightFact, readRedMoonExpiryFact } from "./red-moon";
 import { readWildChildEventFact, readWildChildPlayerFact } from "./wild-child";
 export {
   readWildChildEventFact,
@@ -816,3 +817,24 @@ export function nightmareEventLabel(
 
 export * from "./red-moon";
 export * from "./red-moon-preset";
+
+export function redMoonEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale = "zh-CN",
+): string | null {
+  const next = readRedMoonNextNightFact(type, payload);
+  if (next)
+    return text(
+      locale,
+      type === "red_moon_night_sealed" ? "console.red_moon.seal" : "console.red_moon.exile",
+      {
+        actor: next.actorId,
+        night: next.night,
+      },
+    );
+  const expiry = readRedMoonExpiryFact(type, payload);
+  return expiry
+    ? text(locale, "console.red_moon.expiry", { actor: expiry.actorId, day: expiry.day })
+    : null;
+}

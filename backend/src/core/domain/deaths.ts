@@ -11,6 +11,7 @@ export enum DeathCause {
   DemonHuntBacklash = "demon_hunt_backlash",
   Shot = "shot",
   Exile = "exile",
+  RedMoonExpiry = "red_moon_expiry",
   SelfDestruct = "self_destruct",
   WhiteWolfBlast = "white_wolf_blast",
   Lovers = "lovers",

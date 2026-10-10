@@ -1,3 +1,5 @@
+import { RED_MOON_ROLE } from "../mechanisms/roles/red_moon_apostle/state";
+import { demonRedMoonCanBlast } from "../mechanisms/roles/demon_hunter/authority";
 import { canRoleSelfDestruct } from "../mechanisms/roles/self_destruct_capability";
 import { getDefaultRoleCatalog } from "../mechanisms/roles/catalog";
 import {
@@ -60,7 +62,12 @@ export class SelfDestructWindow {
             ? "self_destruct"
             : null;
         if (!tool) return null;
-        if (tool === "self_destruct" && !canRoleSelfDestruct(role, getDefaultRoleCatalog()))
+        if (
+          tool === "self_destruct" &&
+          (String(role.role) === RED_MOON_ROLE
+            ? !demonRedMoonCanBlast(this.world, actorId)
+            : !canRoleSelfDestruct(role, getDefaultRoleCatalog()))
+        )
           return null;
         const resource =
           tool === "self_destruct_with_target" ? getWhiteWolfKingState(role) : undefined;
@@ -107,6 +114,8 @@ export class SelfDestructWindow {
         pick.life.version === undefined ||
         aliveLifeVersion(pick.life.alive) !== pick.life.version
       )
+        return false;
+      if (String(pick.role.role) === RED_MOON_ROLE && !demonRedMoonCanBlast(this.world, actorId))
         return false;
       if (
         pick.choice.kind === "white_wolf_king" &&

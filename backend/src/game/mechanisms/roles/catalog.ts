@@ -1,3 +1,4 @@
+import { RED_MOON_ROLE_PROFILE } from "./red_moon_apostle/profile";
 import { NIGHTMARE_SHADOW_ROLE_PROFILE } from "./nightmare_shadow/profile";
 import { EVIL_KNIGHT_ROLE_PROFILE } from "./evil_knight/profile";
 import { DEMON_HUNTER_ROLE_PROFILE } from "./demon_hunter/profile";
@@ -44,6 +45,7 @@ import { DEBATER_ROLE_PROFILE } from "./debater/profile";
 import { CUPID_ROLE_PROFILE } from "./cupid/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
+  RED_MOON_ROLE_PROFILE,
   NIGHTMARE_SHADOW_ROLE_PROFILE,
   EVIL_KNIGHT_ROLE_PROFILE,
   PURE_WHITE_ROLE_PROFILE,

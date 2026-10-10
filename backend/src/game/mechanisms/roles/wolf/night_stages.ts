@@ -1,3 +1,4 @@
+import { isRedMoonBoard } from "../demon_hunter/authority";
 import { nightmareKnifeBlocked, isNightmareBoard } from "../nightmare_shadow/night_frame";
 import { wolfKnifeTargetAllowed } from "./target_policy";
 import { isEvilKnightBoard } from "../evil_knight/night_frame";
@@ -75,23 +76,33 @@ const wolfDiscussionStage: NightStageHandler = {
         if (!actorCurrent() || !wolfChatParticipants(ctx.world, ctx.roleCatalog).includes(wolfId))
           continue;
         if (action?.name !== "speak_to_wolves") {
-          if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+          if (
+            isEvilKnightBoard(ctx.world) ||
+            isNightmareBoard(ctx.world) ||
+            isRedMoonBoard(ctx.world)
+          )
             throw new Error(
               isNightmareBoard(ctx.world)
                 ? "nightmare_wolf_chat_action_missing"
-                : "evil_knight_wolf_chat_action_missing",
+                : isRedMoonBoard(ctx.world)
+                  ? "red_moon_wolf_chat_action_missing"
+                  : "evil_knight_wolf_chat_action_missing",
             );
           continue;
         }
 
         if (
-          (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world)) &&
+          (isEvilKnightBoard(ctx.world) ||
+            isNightmareBoard(ctx.world) ||
+            isRedMoonBoard(ctx.world)) &&
           (typeof action.args?.text !== "string" || typeof action.args?.end_chat !== "boolean")
         ) {
           throw new Error(
             isNightmareBoard(ctx.world)
               ? "nightmare_wolf_chat_action_invalid"
-              : "evil_knight_wolf_chat_action_invalid",
+              : isRedMoonBoard(ctx.world)
+                ? "red_moon_wolf_chat_action_invalid"
+                : "evil_knight_wolf_chat_action_invalid",
           );
         }
         const result = ctx.toolGateway.validateAndSanitize(ctx.world, wolfId, action, {
@@ -101,11 +112,17 @@ const wolfDiscussionStage: NightStageHandler = {
         if (!actorCurrent() || !wolfChatParticipants(ctx.world, ctx.roleCatalog).includes(wolfId))
           continue;
         if (!result.ok || !result.sanitizedCall) {
-          if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+          if (
+            isEvilKnightBoard(ctx.world) ||
+            isNightmareBoard(ctx.world) ||
+            isRedMoonBoard(ctx.world)
+          )
             throw new Error(
               isNightmareBoard(ctx.world)
                 ? "nightmare_wolf_chat_action_invalid"
-                : "evil_knight_wolf_chat_action_invalid",
+                : isRedMoonBoard(ctx.world)
+                  ? "red_moon_wolf_chat_action_invalid"
+                  : "evil_knight_wolf_chat_action_invalid",
             );
           continue;
         }
@@ -202,11 +219,17 @@ const wolfKillVoteStage: NightStageHandler = {
         if (!ctx.isCurrent()) return;
         if (!actorCurrent()) break;
         if (action?.name !== "kill_vote") {
-          if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+          if (
+            isEvilKnightBoard(ctx.world) ||
+            isNightmareBoard(ctx.world) ||
+            isRedMoonBoard(ctx.world)
+          )
             throw new Error(
               isNightmareBoard(ctx.world)
                 ? "nightmare_wolf_action_missing"
-                : "evil_knight_wolf_action_missing",
+                : isRedMoonBoard(ctx.world)
+                  ? "red_moon_wolf_action_missing"
+                  : "evil_knight_wolf_action_missing",
             );
           retryReason = "no_valid_kill_vote_tool_call";
           if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {
@@ -244,11 +267,17 @@ const wolfKillVoteStage: NightStageHandler = {
             snapshot.version !== undefined &&
             aliveLifeVersion(snapshot.life) === snapshot.version);
         if (!result.ok || !result.sanitizedCall || !targetCurrent) {
-          if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+          if (
+            isEvilKnightBoard(ctx.world) ||
+            isNightmareBoard(ctx.world) ||
+            isRedMoonBoard(ctx.world)
+          )
             throw new Error(
               isNightmareBoard(ctx.world)
                 ? "nightmare_wolf_action_invalid"
-                : "evil_knight_wolf_action_invalid",
+                : isRedMoonBoard(ctx.world)
+                  ? "red_moon_wolf_action_invalid"
+                  : "evil_knight_wolf_action_invalid",
             );
           retryReason = "invalid_kill_vote_arguments";
           if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {
@@ -282,11 +311,17 @@ const wolfKillVoteStage: NightStageHandler = {
       if (!actorCurrent() || !wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId))
         continue;
       if (!voteResolved) {
-        if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
+        if (
+          isEvilKnightBoard(ctx.world) ||
+          isNightmareBoard(ctx.world) ||
+          isRedMoonBoard(ctx.world)
+        )
           throw new Error(
             isNightmareBoard(ctx.world)
               ? "nightmare_wolf_action_missing"
-              : "evil_knight_wolf_action_missing",
+              : isRedMoonBoard(ctx.world)
+                ? "red_moon_wolf_action_missing"
+                : "evil_knight_wolf_action_missing",
           );
         voteResolved = {
           abstain: true,

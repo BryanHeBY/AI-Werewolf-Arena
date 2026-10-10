@@ -1,3 +1,7 @@
+import {
+  demonRedMoonExpiry,
+  commitDemonRedMoonTransition,
+} from "../mechanisms/roles/demon_hunter/authority";
 import { StatusMark } from "../../core";
 import { statusMarkSnapshot } from "../../core/domain/components/status_marks";
 import {
@@ -566,6 +570,51 @@ export class PhaseManager {
         );
         this.assertDemonReadable();
         if (!nightIsCurrent()) return this.getSnapshot();
+        const expiryActor = ownsDemon ? demonRedMoonExpiry(this.world, nightDay) : null;
+        // The delayed last wolf still participates in the ordinary night's victory decision.
+        const beforeExpiryResult =
+          expiryActor === null
+            ? null
+            : this.conditionRegistry.evaluateMany(
+                this.world,
+                this.resolveWinConditions(),
+                "night_settled",
+              );
+        if (expiryActor !== null && !beforeExpiryResult) {
+          await this.deathResolution.resolve(
+            [expiryActor],
+            { [expiryActor]: [DeathCause.RedMoonExpiry] },
+            actionProvider,
+            Phase.Night,
+            Phase.Night,
+            {},
+            { nightOriginIds: [expiryActor], isCurrent: nightIsCurrent },
+          );
+          this.assertDemonReadable();
+          if (!nightIsCurrent()) return this.getSnapshot();
+          if (
+            this.world.getComponent<import("../../core/domain/components/alive").AliveComponent>(
+              expiryActor,
+              COMPONENT.Alive,
+            )?.alive !== false
+          )
+            throw new Error("red_moon_expiry_death_unsettled");
+          if (!commitDemonRedMoonTransition(this.world, expiryActor, "expire", nightDay))
+            throw new Error("red_moon_expiry_commit_revoked");
+          const fact = { actorId: expiryActor, day: nightDay };
+          this.events.push({
+            timestamp: Date.now(),
+            type: "red_moon_delay_expired",
+            payload: fact,
+          });
+          safeRecordLogicOp({
+            scope: "resolution",
+            op: "red_moon_expiry_settled",
+            phase: Phase.Night,
+            status: "ok",
+            output: { ...fact, cause: DeathCause.RedMoonExpiry },
+          });
+        }
         const completeDeaths = [
           ...deaths,
           ...[...livingBeforeChain]
@@ -579,6 +628,14 @@ export class PhaseManager {
             .map(([id]) => id),
         ];
         this.emitNightResolved(completeDeaths);
+        if (beforeExpiryResult) {
+          this.sealResult(
+            replaceWithFoxVictory(this.world, beforeExpiryResult),
+            "night_settled",
+            this.state.phase,
+          );
+          return this.getSnapshot();
+        }
         if (this.checkAndSealResult("night_settled")) return this.getSnapshot();
       } finally {
         closeDemonHunterNight(this.world);

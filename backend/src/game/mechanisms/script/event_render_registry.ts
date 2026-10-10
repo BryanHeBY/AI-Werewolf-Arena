@@ -1,3 +1,4 @@
+import { redMoonEventLabel } from "@ai-werewolf-arena/game-text";
 import { nightmareEventLabel } from "@ai-werewolf-arena/game-text";
 import { demonHunterEventLabel } from "@ai-werewolf-arena/game-text";
 import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-text";
@@ -560,6 +561,8 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const redMoon = redMoonEventLabel(event.type, event.payload, locale);
+    if (redMoon !== null) return redMoon;
     const nightmare = nightmareEventLabel(event.type, event.payload, locale);
     if (nightmare !== null) return nightmare;
     const demon = demonHunterEventLabel(event.type, event.payload, locale);

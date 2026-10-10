@@ -1,3 +1,4 @@
+import { validateRedMoonRecord } from "./red_moon_record";
 import { validateDemonNativeStocks } from "./demon_hunter_stocks";
 import { z } from "zod";
 import {
@@ -60,6 +61,7 @@ function assert(value: unknown): asserts value {
 const isFact = (type: string) => (DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(type);
 /** Independent serialized causal audit. Cancellation labels never authorize an effect override. */
 export function validateDemonHunterRecord(record: ReproductionRecord): void {
+  const redMoon = validateRedMoonRecord(record);
   const board = record.metadata.normalizedBoard,
     owns = board.roleSetups.some((r) => r.role === Role.DemonHunter && r.count > 0),
     artifacts =
@@ -95,8 +97,27 @@ export function validateDemonHunterRecord(record: ReproductionRecord): void {
   assert(
     board.roleSetups.every((r) => players.filter((p) => p.role === r.role).length === r.count),
   );
-  for (const p of players) assert(p.camp === (p.role === Role.Wolf ? Camp.Wolf : Camp.Good));
-  validateDemonNativeStocks(record);
+  for (const p of players)
+    assert(
+      p.camp ===
+        (p.role === Role.Wolf || String(p.role) === "red_moon_apostle" ? Camp.Wolf : Camp.Good),
+    );
+  for (const cp of record.checkpoints) {
+    assert(
+      cp.players.length === ids.size && new Set(cp.players.map((p) => p.id)).size === ids.size,
+    );
+    for (const p of cp.players) {
+      const initial = original.get(p.id);
+      assert(
+        initial &&
+          p.role === initial.role &&
+          p.camp === initial.camp &&
+          equal(p.victory, { affiliations: [{ kind: "faction", faction: initial.camp }] }),
+      );
+      if (p.id !== actorId) assert(!Object.hasOwn(p.privateState, "demonHunter"));
+    }
+  }
+  validateDemonNativeStocks(record, redMoon);
   for (const decision of record.decisions) {
     for (const event of decision.request.context.visible_events) {
       if (!isFact(event.type)) continue;
@@ -243,7 +264,10 @@ export function validateDemonHunterRecord(record: ReproductionRecord): void {
     previous = source.day;
     const prior = record.checkpoints.find((cp) => cp.cycle === source.day - 1);
     assert(prior);
-    const eligible = source.day >= 2 && prior.players.find((p) => p.id === actorId)?.alive;
+    const eligible =
+      source.day >= 2 &&
+      prior.players.find((p) => p.id === actorId)?.alive &&
+      !redMoon?.sealedNights.has(source.day);
     assert(Boolean(c) === Boolean(eligible));
     if (faultId) {
       assert(
@@ -314,9 +338,15 @@ export function validateDemonHunterRecord(record: ReproductionRecord): void {
       );
     const publicNight = publicNights.get(source.day);
     if (publicNight) {
-      const completeDeaths = [...new Set([...source.deaths, ...publicNight.shots])].sort(
-        (a, b) => a - b,
-      );
+      const completeDeaths = [
+        ...new Set([
+          ...source.deaths,
+          ...publicNight.shots,
+          ...(redMoon?.expiredNights.has(source.day)
+            ? [redMoon.expiredNights.get(source.day)!]
+            : []),
+        ]),
+      ].sort((a, b) => a - b);
       assert(
         equal(
           [...publicNight.deaths].sort((a, b) => a - b),
@@ -375,19 +405,6 @@ export function validateDemonHunterRecord(record: ReproductionRecord): void {
   const last = record.checkpoints.at(-1)!;
   if (last.complete) assert(!plan || faults.length === plan.steps.length);
   for (const cp of record.checkpoints) {
-    assert(
-      cp.players.length === ids.size && new Set(cp.players.map((p) => p.id)).size === ids.size,
-    );
-    for (const p of cp.players) {
-      const initial = original.get(p.id);
-      assert(
-        initial &&
-          p.role === initial.role &&
-          p.camp === initial.camp &&
-          equal(p.victory, { affiliations: [{ kind: "faction", faction: initial.camp }] }),
-      );
-      if (p.id !== actorId) assert(!Object.hasOwn(p.privateState, "demonHunter"));
-    }
     const state = readDemonHunterState(
       cp.players.find((p) => p.id === actorId)!.privateState.demonHunter,
     );

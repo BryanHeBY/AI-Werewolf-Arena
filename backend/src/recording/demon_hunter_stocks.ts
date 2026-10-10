@@ -1,3 +1,4 @@
+import type { RedMoonRecordAudit } from "./red_moon_record";
 import { readDemonHunterState } from "@ai-werewolf-arena/game-text";
 import { Role, Camp } from "../core/domain";
 import type { ReproductionRecord, RecordedCheckpoint } from "./reproduction";
@@ -32,15 +33,38 @@ function native(role: Role, kind: string, state: Record<string, unknown>) {
   };
 }
 /** Computes each finite original inventory from accepted decisions; CP values never refresh this ledger. */
-export function validateDemonNativeStocks(record: ReproductionRecord): void {
-  for (const cp of record.checkpoints) validateCheckpoint(record, cp);
+export function validateDemonNativeStocks(
+  record: ReproductionRecord,
+  redMoon: RedMoonRecordAudit | null = null,
+): void {
+  for (const cp of record.checkpoints) validateCheckpoint(record, cp, redMoon);
 }
-function validateCheckpoint(record: ReproductionRecord, cp: RecordedCheckpoint): void {
+function validateCheckpoint(
+  record: ReproductionRecord,
+  cp: RecordedCheckpoint,
+  redMoon: RedMoonRecordAudit | null,
+): void {
   const original = new Map(record.metadata.players.map((p) => [p.id, p]));
   for (const p of cp.players) {
     const initial = original.get(p.id);
     assert(initial);
     if (cp.cycle === 0) assert(cp.complete && p.alive);
+    if (String(initial.role) === "red_moon_apostle") {
+      assert(
+        redMoon && stable(p.privateState) === stable({ redMoon: redMoon.stateAt(cp.eventCount) }),
+      );
+      continue;
+    }
+    if (initial.role === Role.Idiot) {
+      if (redMoon?.idiotRevealedAt(cp.eventCount))
+        assert(p.vote.canVote === false && p.vote.weight === 0);
+      assert(
+        redMoon &&
+          stable(p.privateState) ===
+            stable({ idiot: { revealed: redMoon.idiotRevealedAt(cp.eventCount) } }),
+      );
+      continue;
+    }
     if (initial.role === Role.DemonHunter) {
       assert(
         Object.keys(p.privateState).length === 1 && Object.hasOwn(p.privateState, "demonHunter"),

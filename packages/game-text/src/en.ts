@@ -324,6 +324,13 @@ export const en = Object.freeze({
   "death.wolf_witch_inspection": "Wolf Witch inspection",
   "death.demon_hunt": "Demon Hunt",
   "death.demon_hunt_backlash": "Demon Hunt backlash",
+  "death.red_moon_expiry": "Red Moon delayed death",
+  "console.red_moon.seal":
+    "Red Moon Apostle #{actor} self-destructed; good abilities are sealed on night {night}.",
+  "console.red_moon.exile":
+    "Red Moon Apostle #{actor} was exiled; death is delayed until night {night} settles.",
+  "console.red_moon.expiry":
+    "On night {day}, Red Moon Apostle #{actor}'s delayed death took effect.",
   "death.fox_inspection": "Cursed Fox inspection",
   "reason.cursed_fox_survived_faction_elimination":
     "Cursed Fox survives an ordinary faction elimination and wins alone",
@@ -505,6 +512,14 @@ export const en = Object.freeze({
     "Role inspection ability for this turn: choose another living player ID absent from this instance's history; your true identity/faction does not change. Once per instance per night; never repeat a recorded ID, even after revival. Report the rule-defined role label and respect explicit disguises. Only you receive the report; the target is not notified. Invalid/revoked actions do not spend resources; no eligible targets means no invented result. Transfers preserve history/resources under explicit policy; new instances use their own history.",
   "console.nightmare.own": "Your fear choice on night {day}: {target}",
   "console.nightmare.pass": "pass",
+  "role.red_moon_apostle.brief":
+    "You are the Red Moon Apostle, a werewolf. Self-destruction seals good players' abilities for the next night. If exiled as the last living werewolf, your death is deferred until the next dawn.",
+  "role.red_moon_apostle.state":
+    "Self-destruction day: {blastDay}; deferred-exile day: {exileDay}.",
+  "role.red_moon_apostle.last_wolf_forbidden":
+    "This board forbids self-destruction by the last living werewolf.",
+  "role.red_moon_apostle.last_wolf_ends":
+    "The last living werewolf may self-destruct, but the game ends immediately under the victory rules once no werewolves remain.",
   "role.nightmare.brief":
     "Wolf faction. Act first each night to silence one player for that night; fearing a wolf blocks the entire pack attack. Pack identities are hidden until the first fear commits.",
   "role.nightmare.state":
@@ -523,6 +538,9 @@ export const en = Object.freeze({
     "Submit only fear, choosing a current legal target or an explicitly permitted pass. A missing response is never a pass.",
   "stage.nightmare_fear": "Nightmare fear",
   "replay.stage.nightmare_fear": "Fear action",
+  "replay.stage.red_moon_night_sealed": "Red Moon night seal",
+  "replay.stage.red_moon_exile_delayed": "Red Moon deferred exile",
+  "replay.stage.red_moon_delay_expired": "Red Moon expiry",
   "replay.stage.nightmare_fear_committed": "Fear choice",
   "error.nightmare_unavailable":
     "Fear is unavailable, already committed, or owned by another actor.",

@@ -279,6 +279,10 @@ export const zhCN = Object.freeze({
   "death.wolf_witch_inspection": "狼巫验杀",
   "death.demon_hunt": "猎魔致死",
   "death.demon_hunt_backlash": "猎魔反噬",
+  "death.red_moon_expiry": "赤月延期到期",
+  "console.red_moon.seal": "{actor}号赤月使徒自爆，第{night}夜好人技能被封印。",
+  "console.red_moon.exile": "{actor}号赤月使徒被放逐，延迟至第{night}夜结算后死亡。",
+  "console.red_moon.expiry": "第{day}夜，{actor}号赤月使徒的延期到期，现已死亡。",
   "death.fox_inspection": "查验咒狐致死",
   "reason.cursed_fox_survived_faction_elimination": "普通阵营全灭时咒狐存活独胜",
   "death.black_market_backlash": "黑市反噬",
@@ -436,6 +440,12 @@ export const zhCN = Object.freeze({
     "本轮具体角色查验能力：选其它存活未验player ID，不改变你的真实身份/阵营。每实例每夜一次，history中同ID不可再验（复活也不重置）；结果为规则role标签，尊重明确伪装。只给你报告，目标无通知；非法/撤权不耗用，无可选目标不伪造结果。转移按明确政策保history/资源，新实例按自己的history。",
   "console.nightmare.own": "你第{day}夜的恐惧选择：{target}",
   "console.nightmare.pass": "弃用",
+  "role.red_moon_apostle.brief":
+    "你是赤月使徒，属于狼人阵营。自爆后下一夜封锁好人技能；作为最后一名狼人被放逐时，延迟至下一天亮出局。",
+  "role.red_moon_apostle.state": "自爆日期：{blastDay}；延迟放逐日期：{exileDay}。",
+  "role.red_moon_apostle.last_wolf_forbidden": "本板禁止最后一名狼人自爆。",
+  "role.red_moon_apostle.last_wolf_ends":
+    "本板允许最后一名狼人自爆，但无存活狼人后立即按胜利规则结束游戏。",
   "role.nightmare.brief":
     "狼人阵营。每夜先恐惧一名玩家，使其当夜不能行动；恐惧狼人则整队不能袭击。首夜恐惧前不与狼队互认。",
   "role.nightmare.state":
@@ -450,6 +460,9 @@ export const zhCN = Object.freeze({
     "本轮只能提交 fear，按当前候选和板子策略选择目标或明确弃用，不能用缺失响应代替弃用。",
   "stage.nightmare_fear": "噩梦之影恐惧",
   "replay.stage.nightmare_fear": "恐惧行动",
+  "replay.stage.red_moon_night_sealed": "赤月封夜",
+  "replay.stage.red_moon_exile_delayed": "赤月延期放逐",
+  "replay.stage.red_moon_delay_expired": "赤月到期死亡",
   "replay.stage.nightmare_fear_committed": "恐惧选择",
   "error.nightmare_unavailable": "本夜恐惧不可用、已提交或不属于当前行动者。",
   "error.nightmare_target": "恐惧目标或弃用不符合本板策略。",

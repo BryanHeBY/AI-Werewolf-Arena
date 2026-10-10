@@ -1,3 +1,5 @@
+import { RED_MOON_ROLE } from "../roles/red_moon_apostle/state";
+import { commitDemonRedMoonBlast } from "../roles/demon_hunter/authority";
 import { canRoleSelfDestruct } from "../roles/self_destruct_capability";
 import {
   weddingMember,
@@ -48,14 +50,28 @@ export function commitSelfDestructSelection(
   const deaths = [choice.actorId],
     sources: DeathSources = { [choice.actorId]: [DeathCause.SelfDestruct] };
   if (choice.kind === "ordinary") {
-    if (choice.targetId !== null || !canRoleSelfDestruct(role, getDefaultRoleCatalog()))
+    const redMoon = String(role.role) === RED_MOON_ROLE;
+    if (
+      choice.targetId !== null ||
+      (redMoon
+        ? ![ActionWindow.OnPreElection, ActionWindow.OnPreVote].includes(window)
+        : !canRoleSelfDestruct(role, getDefaultRoleCatalog()))
+    )
       return null;
+    const moon = redMoon ? commitDemonRedMoonBlast(world, choice.actorId) : null;
+    if (redMoon && !moon) return null;
     if (ownsWedding) swallowWeddingBadges(world, events);
     events.push({
       timestamp: Date.now(),
       type: "wolf_self_destruct",
       payload: { wolfId: choice.actorId, window },
     });
+    if (moon?.sealsNight)
+      events.push({
+        timestamp: Date.now(),
+        type: "red_moon_night_sealed",
+        payload: { actorId: choice.actorId, day: moon.day, night: moon.day + 1 },
+      });
   } else if (choice.kind === "white_wolf_king") {
     const state = getWhiteWolfKingState(role);
     if (role.role !== Role.WhiteWolfKing || state?.canDetonate !== true) return null;

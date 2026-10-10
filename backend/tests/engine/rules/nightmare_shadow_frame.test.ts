@@ -17,7 +17,7 @@ import {
   nightmarePackReady,
   assertNightmareRosterCurrent,
 } from "../../../src/game/mechanisms/roles/nightmare_shadow/night_frame";
-function fixture(required = false) {
+function fixture(required = false, constructorLocation?: "own" | "inherited") {
   const state = freshNightmareShadowState(required ? "required_when_legal" : "optional");
   const roles = new Map<number, RoleComponent>([
     [
@@ -43,6 +43,16 @@ function fixture(required = false) {
           ? lives.get(id)
           : undefined,
   } as unknown as World;
+  if (constructorLocation) {
+    const owner =
+      constructorLocation === "own" ? state.history : (Object.create(Array.prototype) as object);
+    Object.defineProperty(owner, "constructor", {
+      get() {
+        throw new Error("nightmare_frame_constructor_getter_executed");
+      },
+    });
+    if (constructorLocation === "inherited") Object.setPrototypeOf(state.history, owner);
+  }
   installNightmareBoard(world);
   return { world, state, roles, lives };
 }
@@ -149,3 +159,17 @@ test("state toJSON is not invoked by authority checks", () => {
   commitNightmareFear(world, 1, 1, 3);
   expect(calls).toBe(0);
 });
+
+for (const location of ["own", "inherited"] as const)
+  test(`nightmare frame ignores ${location} history constructor accessors`, () => {
+    const { world, state } = fixture(false, location);
+    expect(beginNightmareNight(world, 1)).toBe(1);
+    commitNightmareFear(world, 1, 1, 2);
+    expect(state.history.length).toBe(1);
+    expect(state.history[0]).toEqual({ day: 1, targetId: 2 });
+    expect(() => assertNightmareRosterCurrent(world)).not.toThrow();
+    expect(beginNightmareNight(world, 2)).toBe(1);
+    commitNightmareFear(world, 1, 2, 3);
+    expect(state.history.length).toBe(2);
+    expect(() => assertNightmareRosterCurrent(world)).not.toThrow();
+  });

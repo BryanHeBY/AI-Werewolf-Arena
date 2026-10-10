@@ -1,3 +1,4 @@
+import { isRedMoonPreset } from "./red-moon-preset";
 import { copyEventData } from "./event-data";
 import { DEMON_HUNTER_POLICY } from "./demon-hunter";
 function exactDemonData(value: unknown, keys: readonly string[]): value is Record<string, unknown> {
@@ -21,6 +22,7 @@ function equals(value: unknown, expected: Record<string, unknown>): boolean {
 }
 /** Finite normalized four-board boundary; registration never authorizes other role combinations. */
 export function isDemonHunterPreset(input: unknown): boolean {
+  if (isRedMoonPreset(input)) return true;
   try {
     const c = copyEventData(input) as Record<string, any>;
     const required = [

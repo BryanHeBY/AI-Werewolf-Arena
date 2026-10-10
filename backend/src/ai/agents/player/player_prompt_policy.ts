@@ -1,3 +1,4 @@
+import { getRedMoonState } from "../../../game/mechanisms/roles/red_moon_apostle/state";
 import { getNightmareShadowState } from "../../../game/mechanisms/roles/nightmare_shadow/state";
 import { getEvilKnightState } from "../../../game/mechanisms/roles/evil_knight/state";
 import { projectDemonHunter } from "../../../game/mechanisms/roles/demon_hunter/authority";
@@ -193,8 +194,23 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    const redMoon = getRedMoonState(role);
+    if (redMoon)
+      ownState.redMoon = {
+        policy: redMoon.policy,
+        lastWolfBlastPolicy: redMoon.lastWolfBlastPolicy,
+        blastDay: redMoon.blastDay,
+        exileDay: redMoon.exileDay,
+        expirySettled: redMoon.expirySettled,
+      };
+
     const nightmare = getNightmareShadowState(role);
-    if (nightmare)
+    if (nightmare) {
+      const history: Array<{ day: number; targetId: number | null }> = [];
+      for (let i = 0; i < nightmare.history.length; i++) {
+        const entry = nightmare.history[i]!;
+        history.push({ day: entry.day, targetId: entry.targetId });
+      }
       ownState.nightmare = {
         policy: nightmare.policy,
         fearActionPolicy: nightmare.fearActionPolicy,
@@ -202,14 +218,9 @@ export class PlayerPromptPolicy {
         packReady: nightmare.packReady,
         lastDay: nightmare.lastDay,
         lastTarget: nightmare.lastTarget,
-        history: Array.prototype.map.call(
-          nightmare.history,
-          (entry: { day: number; targetId: number | null }) => ({
-            day: entry.day,
-            targetId: entry.targetId,
-          }),
-        ) as Array<{ day: number; targetId: number | null }>,
+        history,
       };
+    }
     const evilKnight = getEvilKnightState(role);
     if (evilKnight)
       ownState.evilKnight = {

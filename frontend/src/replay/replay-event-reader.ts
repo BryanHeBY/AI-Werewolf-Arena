@@ -1,3 +1,4 @@
+import { readRedMoonNextNightFact, readRedMoonExpiryFact } from "@ai-werewolf-arena/game-text";
 import { readNightmareFearFact, readNightmareOwnFearFact } from "@ai-werewolf-arena/game-text";
 import {
   DEMON_HUNTER_EVENT_TYPES,
@@ -46,6 +47,9 @@ export interface ReadReplayEvent {
 
 // Required references are event-specific. Unknown extension fields never imply player membership.
 const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
+  red_moon_night_sealed: ["actorId"],
+  red_moon_exile_delayed: ["actorId"],
+  red_moon_delay_expired: ["actorId"],
   nightmare_fear_committed: [],
   demon_hunter_chosen: [],
   demon_hunter_cancelled: ["actorId", "targetId"],
@@ -229,6 +233,9 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if (type === "red_moon_night_sealed" || type === "red_moon_exile_delayed")
+    return !!readRedMoonNextNightFact(type, p);
+  if (type === "red_moon_delay_expired") return !!readRedMoonExpiryFact(type, p);
   if (type === "nightmare_fear_committed")
     return !!(readNightmareFearFact(type, p) ?? readNightmareOwnFearFact(type, p));
   if ((DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(type))
@@ -373,6 +380,21 @@ export function readReplayEvent(
     const safe = readReplayEventEnvelope(event);
     if (!safe) return null;
     const p = safe.payload;
+    if (
+      ["red_moon_night_sealed", "red_moon_exile_delayed", "red_moon_delay_expired"].includes(
+        safe.type,
+      )
+    ) {
+      if (p.day !== safe.day) return null;
+      if (
+        safe.type === "red_moon_delay_expired"
+          ? safe.phase !== "night"
+          : safe.type === "red_moon_exile_delayed"
+            ? safe.phase !== "voting"
+            : !["day", "voting"].includes(safe.phase)
+      )
+        return null;
+    }
     const related = new Set<number>();
     const id = (value: unknown): value is number =>
       typeof value === "number" &&
@@ -507,7 +529,14 @@ export function readReplayEvent(
       )
         return null;
     }
+    if (safe.type === "red_moon_night_sealed" || safe.type === "red_moon_exile_delayed")
+      effects.push({
+        kind: "role_revealed",
+        playerId: p.actorId as number,
+        role: "red_moon_apostle",
+      });
     const dead: number[] = [];
+    if (safe.type === "red_moon_delay_expired") dead.push(p.actorId as number);
     if (safe.type === "night_resolved" || safe.type === "additional_deaths")
       dead.push(...(p.deaths as number[]));
     if (safe.type === "voted_out") dead.push(p.target as number);

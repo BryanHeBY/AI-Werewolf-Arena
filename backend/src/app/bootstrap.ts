@@ -1,3 +1,4 @@
+import { isRedMoonPreset } from "@ai-werewolf-arena/game-text";
 import { isNightmarePreset } from "@ai-werewolf-arena/game-text";
 import { installNightmareBoard } from "../game/mechanisms/roles/nightmare_shadow/night_frame";
 import { isEvilKnightPreset } from "@ai-werewolf-arena/game-text";
@@ -174,6 +175,12 @@ function buildRoleDeck(
   fixedRoles: readonly Role[] | undefined,
   random: RandomSource,
 ): Role[] {
+  if (
+    (config.redMoon ||
+      config.roleSetups.some((row) => row.role === Role.RedMoonApostle && row.count > 0)) &&
+    !isRedMoonPreset(config)
+  )
+    throw new Error("red_moon_preset_invalid");
   if (
     (config.nightmareShadow ||
       config.roleSetups.some((row) => row.role === Role.NightmareShadow && row.count > 0)) &&

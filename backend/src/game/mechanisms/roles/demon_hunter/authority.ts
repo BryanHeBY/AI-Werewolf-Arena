@@ -1,3 +1,4 @@
+import { RED_MOON_ROLE, getRedMoonState } from "../red_moon_apostle/state";
 import { types } from "node:util";
 import {
   COMPONENT,
@@ -233,7 +234,7 @@ function demonVoteJson(vote: unknown): string | null {
     canVote = ownDemonData(vote, "canVote");
   return typeof weight === "number" &&
     Number.isFinite(weight) &&
-    weight > 0 &&
+    (weight > 0 || (weight === 0 && canVote === false)) &&
     typeof canVote === "boolean"
     ? JSON.stringify({ weight, canVote })
     : null;
@@ -328,7 +329,11 @@ export function installDemonHunter(world: World, config: BoardConfig): void {
     !configJson ||
     config.roleSetups.length !== Object.keys(counts).length ||
     config.roleSetups.some((entry) => counts[entry.role] !== entry.count) ||
-    [...players.values()].some((p) => p.camp !== (p.kind === Role.Wolf ? Camp.Wolf : Camp.Good))
+    [...players.values()].some(
+      (p) =>
+        p.camp !==
+        (p.kind === Role.Wolf || String(p.kind) === "red_moon_apostle" ? Camp.Wolf : Camp.Good),
+    )
   )
     throw new Error("demon_hunter_initial_state_invalid");
   bindings.set(world, {
@@ -370,7 +375,7 @@ export function beginDemonHunterNight(world: World, day: number, isCurrent: () =
     frozen: false,
     turn: null,
     opened: false,
-    requiresChoice: day >= 2 && targets.has(b.actorId),
+    requiresChoice: day >= 2 && targets.has(b.actorId) && !demonRedMoonNightSealed(world, day),
     witchOpened: false,
     choice: null,
   };
@@ -399,7 +404,7 @@ function liveNight(n: Night): boolean {
 }
 export function openDemonHunterTurn(world: World): object {
   const n = bindings.get(world)?.active;
-  if (!n || n.day < 2 || n.opened || n.turn || n.choice || !liveNight(n))
+  if (!n || !n.requiresChoice || n.day < 2 || n.opened || n.turn || n.choice || !liveNight(n))
     throw new Error("demon_hunter_turn_unavailable");
   const scope = Object.freeze({}),
     turn: Turn = { night: n, scope, request: null, requestJson: null, deadline: null };
@@ -787,6 +792,7 @@ export function openDemonWitchTurnFrame(world: World): Readonly<DemonWitchTurnFr
     p = b && [...b.players.values()].find((p) => p.kind === Role.Witch),
     ability = p && ownDemonData(ownDemonData(p.privateState, "abilities"), "native:potion");
   if (!b || !n || !p || !ability || typeof ability !== "object" || n.witchOpened) return null;
+  if (demonRedMoonNightSealed(world, n.day)) return null;
   const current = () =>
     !n.closed &&
     !n.frozen &&
@@ -912,7 +918,10 @@ export function openDemonWitchTurnFrame(world: World): Readonly<DemonWitchTurnFr
 export function demonWitchRequiredThisNight(world: World): boolean {
   const n = bindings.get(world)?.active;
   if (!n || n.closed || n.frozen) throw new Error("demon_hunter_freeze_unavailable");
-  return [...n.binding.players.values()].some((p) => p.kind === Role.Witch && n.targets.has(p.id));
+  return (
+    !demonRedMoonNightSealed(world, n.day) &&
+    [...n.binding.players.values()].some((p) => p.kind === Role.Witch && n.targets.has(p.id))
+  );
 }
 
 export function demonHunterNeedsTurn(world: World, day: number): boolean {
@@ -948,7 +957,10 @@ export function demonOriginalWolfSourceCurrent(
     n.isCurrent() &&
     validBinding(n.binding) &&
     actorIds.length > 0 &&
-    actorIds.every((id) => n.binding.players.get(id)?.kind === Role.Wolf && targetCurrent(n, id))
+    actorIds.every((id) => {
+      const kind = n.binding.players.get(id)?.kind;
+      return (kind === Role.Wolf || kind === Role.RedMoonApostle) && targetCurrent(n, id);
+    })
   );
 }
 
@@ -1028,6 +1040,7 @@ export function openDemonNativeNightFrame(
   const n = b.active,
     p = b.players.get(actorId),
     id = `native:${kind}`;
+  if (n && demonRedMoonNightSealed(world, n.day)) return null;
   const role = kind === "seer_check" ? Role.Seer : Role.Guard;
   const originalJson = p?.auditPrivateJson;
   const original = originalJson ? (JSON.parse(originalJson) as Record<string, unknown>) : null;
@@ -1432,9 +1445,213 @@ export function demonNativeNightActor(
   const p = [...b.players.values()].find(
     (p) => p.kind === (kind === "seer_check" ? Role.Seer : Role.Guard),
   );
-  if (!p || !n.targets.has(p.id)) return null;
+  if (!p || !n.targets.has(p.id) || demonRedMoonNightSealed(world, n.day)) return null;
   const ability = ownDemonData(ownDemonData(p.privateState, "abilities"), `native:${kind}`);
   if (!ability || typeof ability !== "object")
     throw new Error("demon_hunter_native_night_unavailable");
   return { actorId: p.id, ability };
+}
+
+/** Finite audit transition for the native Red Moon state; never adopts arbitrary live inventory. */
+export function commitDemonRedMoonTransition(
+  world: World,
+  actorId: number,
+  kind: "blast" | "exile" | "expire",
+  day: number,
+): boolean {
+  const b = bindings.get(world),
+    p = b?.players.get(actorId);
+  const n = kind === "expire" ? b?.active : b?.nights.get(day);
+  if (
+    !b ||
+    !p ||
+    !n ||
+    n.day !== day ||
+    !validBinding(b) ||
+    String(p.kind) !== RED_MOON_ROLE ||
+    ![...b.players.values()].every((player) => originalLife(player, world)) ||
+    demonJson(p.privateState) !== p.auditPrivateJson
+  )
+    return false;
+  const state = getRedMoonState(p.role);
+  if (!state || !writableDemonFields(state, ["blastDay", "exileDay", "expirySettled"]))
+    return false;
+  const original = JSON.parse(p.auditPrivateJson) as Record<string, unknown>;
+  const next = { ...state };
+  if (kind === "expire") {
+    if (n.closed || !n.frozen || state.exileDay !== day - 1 || state.expirySettled) return false;
+    next.expirySettled = true;
+  } else {
+    if (
+      b.active ||
+      !n.closed ||
+      !n.frozen ||
+      [...b.nights.keys()].some((d) => d > day) ||
+      !originalLife(p, world, true) ||
+      state.blastDay !== null ||
+      state.exileDay !== null
+    )
+      return false;
+    const wolves = [...b.players.values()].filter(
+      (player) => player.camp === Camp.Wolf && originalLife(player, world, true),
+    ).length;
+    if (kind === "blast") {
+      if (wolves === 1 && state.lastWolfBlastPolicy === "forbidden") return false;
+      next.blastDay = day;
+    } else if (kind === "exile") {
+      if (wolves !== 1) return false;
+      next.exileDay = day;
+    } else return false;
+  }
+  const expected = JSON.stringify({ ...original, redMoon: next });
+  state.blastDay = next.blastDay;
+  state.exileDay = next.exileDay;
+  state.expirySettled = next.expirySettled;
+  if (demonJson(p.privateState) !== expected) throw new Error("red_moon_state_commit_failed");
+  p.auditPrivateJson = expected;
+  return true;
+}
+
+/** Original self-destructed Red Moon suppresses good actions for exactly the next night. */
+export function demonRedMoonNightSealed(world: World, day: number): boolean {
+  const b = bindings.get(world);
+  if (!b) return false;
+  const p = [...b.players.values()].find((p) => String(p.kind) === RED_MOON_ROLE);
+  if (!p) return false;
+  if (!validBinding(b) || ![...b.players.values()].every((p) => originalLife(p, world)))
+    throw new Error("red_moon_original_state_revoked");
+  const state = getRedMoonState(p.role);
+  if (!state || demonJson(p.privateState) !== p.auditPrivateJson)
+    throw new Error("red_moon_original_state_revoked");
+  const sealed = Number.isSafeInteger(day) && day > 1 && state.blastDay === day - 1;
+  if (sealed && originalLife(p, world, true)) throw new Error("red_moon_blast_death_unsettled");
+  return sealed;
+}
+
+/** Preserve both private-stock and public-vote audit when the finite board's Idiot reveals. */
+export function commitDemonIdiotReveal(world: World, actorId: number): boolean {
+  const b = bindings.get(world);
+  if (!b) return false;
+  const p = b.players.get(actorId),
+    cp = p?.checkpoint;
+  if (
+    !p ||
+    !cp ||
+    p.kind !== Role.Idiot ||
+    !validBinding(b) ||
+    !originalLife(p, world, true) ||
+    demonJson(p.privateState) !== p.auditPrivateJson ||
+    world.getComponent(actorId, COMPONENT.VotingRight) !== cp.vote ||
+    demonVoteJson(cp.vote) !== cp.voteJson ||
+    !writableDemonFields(p.privateState, ["idiot"]) ||
+    !writableDemonFields(cp.vote, ["canVote", "weight"])
+  )
+    throw new Error("demon_hunter_idiot_state_revoked");
+  const before = ownDemonData(p.privateState, "idiot");
+  if (!exactDemonData(before, ["revealed"]) || ownDemonData(before, "revealed") !== false)
+    throw new Error("demon_hunter_idiot_state_revoked");
+  // Validate the subsequent synchronous badge handoff before consuming reveal.
+  openDemonBadgeFrame(world);
+  const next = { revealed: true };
+  const original = JSON.parse(p.auditPrivateJson) as Record<string, unknown>;
+  const expectedPrivate = JSON.stringify({ ...original, idiot: next });
+  const expectedVote = JSON.stringify({ ...JSON.parse(cp.voteJson), canVote: false, weight: 0 });
+  p.privateState.idiot = next;
+  (cp.vote as VotingRightComponent).canVote = false;
+  (cp.vote as VotingRightComponent).weight = 0;
+  if (demonJson(p.privateState) !== expectedPrivate || demonVoteJson(cp.vote) !== expectedVote)
+    throw new Error("demon_hunter_idiot_commit_failed");
+  p.privateRefs = p.privateRefs.map(
+    ([key, value]) => [key, key === "idiot" ? next : value] as const,
+  );
+  p.inventoryRefs = p.inventoryRefs.map(
+    ([path, value]) => [path, path.length === 1 && path[0] === "idiot" ? next : value] as const,
+  );
+  p.auditPrivateJson = expectedPrivate;
+  cp.voteJson = expectedVote;
+  return true;
+}
+
+/** Read the committed Idiot state before any legacy state getter can run. */
+export function demonIdiotRevealed(world: World, actorId: number): boolean | null {
+  const b = bindings.get(world);
+  if (!b) return null;
+  const p = b.players.get(actorId),
+    cp = p?.checkpoint;
+  if (
+    !p ||
+    !cp ||
+    p.kind !== Role.Idiot ||
+    !validBinding(b) ||
+    !originalLife(p, world, true) ||
+    demonJson(p.privateState) !== p.auditPrivateJson ||
+    world.getComponent(actorId, COMPONENT.VotingRight) !== cp.vote ||
+    demonVoteJson(cp.vote) !== cp.voteJson
+  )
+    throw new Error("demon_hunter_idiot_state_revoked");
+  const state = ownDemonData(p.privateState, "idiot");
+  const revealed = ownDemonData(state, "revealed");
+  if (!exactDemonData(state, ["revealed"]) || typeof revealed !== "boolean")
+    throw new Error("demon_hunter_idiot_state_revoked");
+  return revealed;
+}
+
+/** Latest settled night is the only source of the finite board's current day. */
+export function demonRedMoonDay(world: World, actorId: number): number | null {
+  const b = bindings.get(world),
+    p = b?.players.get(actorId);
+  if (!b || !p || String(p.kind) !== RED_MOON_ROLE) return null;
+  demonHunterCheckpointPlayers(world, true);
+  if (b.active || !originalLife(p, world, true)) return null;
+  const day = [...b.nights.keys()].at(-1);
+  const n = day === undefined ? null : b.nights.get(day);
+  return n?.closed && n.frozen ? n.day : null;
+}
+export function demonRedMoonCanBlast(world: World, actorId: number): boolean {
+  if (demonRedMoonDay(world, actorId) === null) return false;
+  const b = bindings.get(world)!,
+    p = b.players.get(actorId)!;
+  const state = getRedMoonState(p.role);
+  if (!state || state.blastDay !== null || state.exileDay !== null) return false;
+  const wolves = [...b.players.values()].filter(
+    (player) => player.camp === Camp.Wolf && originalLife(player, world, true),
+  ).length;
+  return wolves > 1 || state.lastWolfBlastPolicy === "ends_game";
+}
+export function commitDemonRedMoonBlast(
+  world: World,
+  actorId: number,
+): { day: number; sealsNight: boolean } | null {
+  const day = demonRedMoonDay(world, actorId);
+  if (day === null || !demonRedMoonCanBlast(world, actorId)) return null;
+  const b = bindings.get(world)!;
+  const wolves = [...b.players.values()].filter(
+    (player) => player.camp === Camp.Wolf && originalLife(player, world, true),
+  ).length;
+  if (!commitDemonRedMoonTransition(world, actorId, "blast", day)) return null;
+  return { day, sealsNight: wolves > 1 };
+}
+
+/** A delayed living last wolf expires only after ordinary sources have been settled. */
+export function demonRedMoonExpiry(world: World, day: number): number | null {
+  const b = bindings.get(world);
+  if (!b) return null;
+  const p = [...b.players.values()].find((player) => String(player.kind) === RED_MOON_ROLE);
+  if (!p) return null;
+  demonHunterCheckpointPlayers(world, true);
+  const n = b.active;
+  if (!n || n.day !== day || n.closed || !n.frozen)
+    throw new Error("red_moon_expiry_phase_invalid");
+  const state = getRedMoonState(p.role);
+  if (!state) throw new Error("red_moon_original_state_revoked");
+  return state.exileDay === day - 1 && !state.expirySettled && originalLife(p, world, true)
+    ? p.id
+    : null;
+}
+
+export function isRedMoonBoard(world: World): boolean {
+  const b = bindings.get(world);
+  if (!b || ![...b.players.values()].some((p) => p.kind === Role.RedMoonApostle)) return false;
+  if (!validBinding(b)) throw new Error("red_moon_original_state_revoked");
+  return true;
 }

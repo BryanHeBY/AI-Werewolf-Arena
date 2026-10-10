@@ -379,6 +379,7 @@ export function assertTransportEvents(
         "wolf_witch",
         "evil_knight",
         "nightmare",
+        "red_moon_apostle",
       ].includes(role)
     )
       throw new Error("fixture_wolf_information_exposed");
