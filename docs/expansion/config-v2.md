@@ -2,7 +2,7 @@
 
 ## 板子格式
 
-正常入口只读取 `boards/<id>.json`，ID 必须与文件名一致。当前格式 `version: 2`，规则集 `{ "id": "awa_classic", "version": "1.0.0" }`。基础七角色已关闭规则差异，在[P4声明验收范围](reviews/p4-activation.md)内登记 verified；当前36计划角色仍不授予运行许可。
+正常入口只读取 `boards/<id>.json`，ID 必须与文件名一致。当前格式 `version: 2`，规则集 `{ "id": "awa_classic", "version": "1.0.0" }`。基础七角色已关闭规则差异，在[P4声明验收范围](reviews/p4-activation.md)内登记 verified；当前33计划角色仍不授予运行许可。
 
 必需结构：`board.size`、`board.roleSetups`、`rules.winConditions`、完整 `rules.hooks`、`mechanisms.sheriff`、`mechanisms.selfDestruct.enabledWindows`、`mechanisms.tieBreaker`。角色参数放 `roles.<id>`，由注册 profile 的 schema 严格验证；当前女巫支持 `selfHeal`。
 
@@ -69,7 +69,7 @@ bun run --cwd backend config:check --configs-dir ../configs --game-config-name t
 
 只输出板子、规则/参数/字段来源、玩家名字、Agent名称/类型/模型、是否有私有人格、限制与执行支持状态。不输出 profile/provider 对象、env、命令参数、URL、认证和人格文本；JSON错误也不回显原输入片段。失败以 `code` 和已确认安全的 `path` 输出，例如 `roles.witch.selfHela`；任意异常只给稳定错误码。没有文件或遇到旧格式明确失败，不搜索其他路径或静默用内置板子替代。
 
-P5狼王/白狼王/骑士/守墓人已按独立卡与通路验收注册；当前23项verified与5项implemented可在各自有限组合运行，36项planned仍拒绝。新自爆选择/API边界见[白狼王契约](white-wolf-king.md)。
+P5狼王/白狼王/骑士/守墓人已按独立卡与通路验收注册；当前23项verified与8项implemented可在各自有限组合运行，33项planned仍拒绝。新自爆选择/API边界见[白狼王契约](white-wolf-king.md)。
 
 骑士的三种离散发言窗口/default及[]关闭见[接入契约](knight.md)。公开six/twelve_player_knight板子与games可加载，普通/觉醒分别登记，额外参数与未注册角色仍拒绝。
 
@@ -108,3 +108,7 @@ P7通灵师按[规则与契约](psychic.md)启用，roles.psychic支持inspectio
 ## P9a 孤独少女有限来源配置
 
 `roles.lonely_girl.policy=awa_netease_lonely_girl_v1`，省略参数等价唯一默认。最多一Girl、City、N>=6、七基础角色、至少普通Wolf与非GirlGood；标准N牌，拒绝Hybrid/Cupid/Thief/Shape/WildChild及其它扩展/event pack。首夜普通技能前必选另一原活人，独立个人胜利归属跟随原真实Camp；原Girl/Good民边及库存不变。本人只知对象号码，无对象身份/归属字段，终局获胜名单允许必然推断。来源及AWA补全分别见[规则卡](rules/awa-netease-lonely-girl-v1.md)/[验收](reviews/p9-lonely-girl.md)。公开例 `configs.example/boards/awa_netease_lonely_girl_{6,12}_v1.json`，不覆盖用户configs。
+
+## P9a 鬼魂新娘有限来源配置
+
+`roles.ghost_bride.policy=awa_melbourne_ghost_bride_v1`，唯一精确12牌与three_factions_elimination；所有normalized参数固定并在共享preset、公共schema、bootstrap及strict Tape一致拒绝表外组合。原Role/Camp/库存保持，独立三人Third胜利与逐夜唯一刀owner，完整Night死亡公开后判胜。公开例 `configs.example/boards/awa_melbourne_ghost_bride_12_v1.json` 已实际解析/初始化；具名AWA改编和隐私矩阵见[规则卡](rules/awa-melbourne-ghost-bride-v1.md)/[验收](reviews/p9-ghost-bride.md)。当前23verified/8implemented/33planned；不覆盖用户configs。

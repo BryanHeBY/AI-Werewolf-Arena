@@ -59,7 +59,11 @@ for (const unsupported of Object.values(Role).filter(
     expect(() =>
       parseBoardDefinition(boardDefinitionFromConfig("mechanical_unsupported", config)),
     ).toThrow("board_config_role_combination_not_supported");
-    expect(() => bootstrapGame(config)).toThrow("role_combination_not_supported");
+    expect(() => bootstrapGame(config)).toThrow(
+      unsupported === Role.GhostBride
+        ? "ghost_bride_preset_invalid"
+        : "role_combination_not_supported",
+    );
     try {
       parseBoardDefinition(boardDefinitionFromConfig("mechanical_unsupported", config));
       throw new Error("expected unsupported board");

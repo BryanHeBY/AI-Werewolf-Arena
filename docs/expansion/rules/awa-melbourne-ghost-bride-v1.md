@@ -18,11 +18,11 @@
 
 原factory opaque request绑定World/config/actor/tool/day/phase/setup generation、pending窗口与原组件，不靠模型stage或复制metadata授权；deadline克隆仅沿明确继承。提交前与await/gateway后重验，死亡后复活/同号新主体/跨World/旧窗口/重复票均拒绝。聊天用已提交pair授权，提交和投递前重验发送/接收原life版本与Role/privateState、owner、World/day/phase；任一失效不写新message，首夜不依赖尚无的group。
 
-God setup精确 `{policy,status,actorId,groomId,witnessId,witnessVotes}`，未提交id为null，votes是0/1/2个精确 `{actorId,targetId}`；status为pending/active/paired/complete/failed/cancelled，active不写成功checkpoint。Bride状态精确 `{policy,remaining:0|1,groomId:整数|null}`。pending无pair/票、Bride1/null；paired有原pair、Bride0/原Groom、二人Third、无Witness；complete同号两票/完整三人group。closed保留真实前缀：无pair、pair+0票、pair+1票、pair+2份不一致票均可失败，但不得有完整group。外层RecordedCheckpoint.complete=false与status failed/cancelled配对，不给setup schema额外complete字段。失败finally关闭全部窗口和传输回合，保原失败；不能重新setup/投票/自爆/判胜/下一日推进，半pair不能当ready。不读取外来getter或把替换state写成成功。
+God setup精确 `{policy,status,actorId,groomId,witnessId,witnessVotes}`，未提交id为null，votes是0/1/2个精确 `{actorId,targetId}`；status为pending/active/paired/complete/failed/cancelled，active不写成功checkpoint。Bride状态精确 `{policy,remaining:0|1,groomId:整数|null}`。pending无pair/票、Bride1/null；paired有原pair、Bride0/原Groom、二人Third、无Witness；complete同号两票/完整三人group。closed保留真实前缀：无pair、pair+0票、pair+1票、pair+2份不一致票均可失败，但不得有完整group。婚礼setup未完成时失败的外层RecordedCheckpoint.complete=false与status failed/cancelled配对，不给setup schema额外complete字段。失败finally关闭全部窗口和传输回合，保原失败；不能重新setup/投票/自爆/判胜/下一日推进，半pair不能当ready。不读取外来getter或把替换state写成成功。
 
 ## 夜序、秘密与唯一刀
 
-首夜：Night→Bride选Groom→两条顺序情侣聊天→Bride提名/Groom同意Witness→complete→capture唯一knife owner→Guard→普通Wolf或独立继承刀→Witch→Seer→完整源闭包→逐波标死/固定遗言/徽/死亡枪与新增波→全链PM判胜；未终局才天亮/首日Sheriff/Day/Voting。后夜：Night入口capture一次owner→两活情侣顺序各一条chat→Guard→唯一knife→Witch→Seer→同样死亡链与收尾。Hunter夜晚确认仅本人原库存状态提示，不增加空动作。来源夜末上警仪式改成AWA夜伤后活人竞选，明确流程改编。
+首夜：Night→Bride选Groom→两条顺序情侣聊天→Bride提名/Groom同意Witness→complete→capture唯一knife owner→Guard→普通Wolf或独立继承刀→Witch→Seer→完整源闭包→逐波标死/固定遗言/徽/死亡枪与新增波→night_resolved完整死亡ID（含终局）→全链PM判胜；未终局才天亮/首日Sheriff/Day/Voting。后夜：Night入口capture一次owner→两活情侣顺序各一条chat→Guard→唯一knife→Witch→Seer→同样死亡链、公共完整死亡发布与收尾。Hunter夜晚确认仅本人原库存状态提示，不增加空动作。来源夜末上警仪式改成AWA夜伤后活人竞选，明确流程改编。
 
 单身Wolf严格为group外原普通Wolf。原Wolf Groom/Witness离开普通互认/夜聊/刀/自爆；保原身份查验与历史记忆，退出产生的推断允许。自爆在request、validator和commit三处拒绝，不能只改wolf_team。情侣/Witness不加入普通wolfKnifeHolders，不用wolfTeamEvent广播继承票，只复用伤害处理。native神职原技能库存保持，第三方Goal不剥除技能。
 
@@ -57,10 +57,10 @@ Bride Seer查验固定Good，其它婚礼成员按原角色truth，原Wolf仍Wol
 
 God见完整pair/group/双票/每夜owner/伤害来源/Goal。情侣本人见原身份库存、伙伴号、自身Third目标、完整已提交Witness号、合法chat；Groom见首票提名，Bride在complete见一致结果，不开放Groom原raw decision。Witness见自身原身份/库存/Third目标、情侣两号和本人是否继承刀，不见聊天/原两票/双方原角色库存。普通Wolf只有有效普通队友/普通包，无婚礼fact；历史授权内容保留。逐knownWolfTeammates、native projectLover、工具、target候选、DTO/提示/Observed/private录制与sharedframe核验，不只过滤新事件。不向unknown补原角色。
 
-独立strict typed full/lean fact与setup owner，不夹Cupid/Hybrid/Lonely或基础旧档。中途未finalized仅上次CP events可落后decisions，不能消费为完整Tape；成功须双份同代同号原决定、一次完整group、各夜唯一owner/single knife、原roster/Goal/库存、完整CP矩阵；失败partial保真实pair/票前缀、无group、native决定0。同步改fact/state/Goal、foreign request/life、伪complete/重复票/无capture继承刀、跨preset/无owner混挂均拒绝。
+独立strict typed full/lean fact与setup owner，不夹Cupid/Hybrid/Lonely或基础旧档。中途未finalized仅上次CP events可落后decisions，不能消费为完整Tape；成功须双份同代同号原决定、一次完整group、各夜唯一owner/single knife、原roster/Goal/库存、完整CP矩阵；婚礼setup未完成的失败partial保真实pair/票前缀、无group、native决定0；setup已complete后原生技能失败则保完整group、setup complete、真实原生决定及实际已消费库存，只有外层CP complete=false，不能伪装为未完成婚礼。同步改fact/state/Goal、foreign request/life、伪complete/重复票/无capture继承刀、跨preset/无owner混挂均拒绝。
 
 ## 人工预期与实施门槛
 
 三方各独胜/清一方仍继续/全灭draw；Groom与Witness同为原Wolf、神职×神职原库存实际扣付；双同意、分歧、缺一票、第一票后目标/票者/阶段晚撤权和半pair失败partialTape；三刀owner有刀/弃刀/保护、晚撤权不降级/不补刀、末singleWolf白天死次夜继承；两条chat及Witness0可见；全部独立根/双根/复合源/枪链与吞徽；opaque/deadline/跨World/getter0；God/两情侣/Witness/普通Wolf四scope双语真实档、strict private读档、Studio/sharedframe及坏档。
 
-实施贯通schema→原生实例→窗口/阶段→权限/晚撤权→伤害/完整胜利→DTO/受限bot/双语→God/本人record→strict Tape→前端。实际SDK HTTP/ACP子进程MCP/mixed双语整局逐Tape、严格失败partialTape、受限Observed、1000World分别产生证据；三组源码复核与所有离线门禁闭合后才登记implemented。本卡仅冻结规则，未启用/未验证功能，当前目录23verified/7implemented/34planned；总体P9/P10待最终验收。
+实施贯通schema→原生实例→窗口/阶段→权限/晚撤权→伤害/完整胜利→DTO/受限bot/双语→God/本人record→strict Tape→前端。实际SDK HTTP/ACP子进程MCP/mixed双语整局逐Tape、严格失败partialTape、受限Observed、1000World分别产生证据；三组源码复核与所有离线门禁闭合后才登记implemented。规则及实际通路已贯通，技术门禁与三组只读复核见[完整功能验收](../reviews/p9-ghost-bride.md)。当前目录23verified/8implemented/33planned；P9a五角色已技术交付，P9其余/P10及用户总体最终验收继续。

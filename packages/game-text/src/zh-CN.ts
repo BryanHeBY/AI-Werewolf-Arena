@@ -1,5 +1,46 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "console.ghost_bride_pair_chosen": "鬼魂新娘{bride}号与{groom}号成为情侣。",
+  "replay.stage.ghost_bride_pair_chosen": "\u5a5a\u793c\u4e8b\u5b9e",
+  "console.ghost_bride_group_chosen": "婚礼三方：新娘{bride}号、新郎{groom}号、证婚人{witness}号。",
+  "replay.stage.ghost_bride_group_chosen": "\u5a5a\u793c\u4e8b\u5b9e",
+  "console.ghost_bride_witness_vote": "God：{actor}号第{vote}次提名证婚人{target}号。",
+  "replay.stage.ghost_bride_witness_vote": "\u5a5a\u793c\u4e8b\u5b9e",
+  "console.ghost_bride_partner_chat": "情侣私聊：{actor}号向{recipient}号发送：{body}",
+  "replay.stage.ghost_bride_partner_chat": "\u5a5a\u793c\u4e8b\u5b9e",
+  "console.ghost_bride_knife_captured": "God：第{day}夜婚礼板刀权为{owner}，参与者{actors}。",
+  "replay.stage.ghost_bride_knife_captured": "\u5a5a\u793c\u4e8b\u5b9e",
+  "console.ghost_bride_knife_vote": "婚礼刀票：{actor}号选择{target}。",
+  "replay.stage.ghost_bride_knife_vote": "\u5a5a\u793c\u4e8b\u5b9e",
+  "console.ghost_bride_knife_resolved": "第{day}夜婚礼刀票结论：{target}。",
+  "replay.stage.ghost_bride_knife_resolved": "\u5a5a\u793c\u4e8b\u5b9e",
+  "console.ghost_bride_partner_death": "God：{actor}号死亡牵连情侣{target}号。",
+  "replay.stage.ghost_bride_partner_death": "\u5a5a\u793c\u4e8b\u5b9e",
+  "wedding.owner.ordinary_pack": "单身狼群",
+  "wedding.owner.pair": "情侣",
+  "wedding.owner.witness": "证婚人",
+  "wedding.owner.none": "无刀权",
+  "role.ghost_bride.brief":
+    "墨尔本赛事AWA三方适配：首夜选择新郎，共同确认证婚人。保留原身份库存，婚礼三人独立胜利；情侣互认与私聊，一人死亡另一人殉情。普通单身狼清空后情侣继承刀，情侣均死后证婚人继承。",
+  "role.ghost_bride.state":
+    "鬼魂新娘本人首夜机会：{state}。新郎与证婚人保留原身份和原生库存，不向你披露。",
+  "prompt.status.wedding":
+    "本人的婚礼关系和独立第三方目标：{state}。胜利需清除其余两个阵营；情侣殉情不能开枪。此处只含授权编号和本人刀权，不提供伙伴或证婚人的底牌、库存。",
+  "action.choose_bridegroom.hint": "首夜必须选择另一名活人作为新郎；不能弃选、重选或默认代选。",
+  "action.choose_wedding_witness.hint":
+    "证婚人必须是情侣以外活人。新娘先提名，新郎必须提交同一编号确认；不一致会使首夜设置失败，不能回退代选。",
+  "action.speak_to_partner.hint":
+    "对原伴侣发送本次唯一私聊；必须提交text，空字符串是明确跳过。证婚人不接收聊天。",
+  "action.wedding_kill_vote.hint":
+    "继承刀权者必须提交规范刀票：选择整数target_id且abstain=false，或target_id=null且abstain=true；情侣不能选双方，证婚人不能选自己。",
+  "error.ghost_bride_unavailable": "当前婚礼原生命、请求预算或共同授权已失效。",
+  "error.ghost_bride_choice": "必须提交本回合授权的规范婚礼选择，不可默认代选。",
+  "stage.ghost_bride_groom": "鬼魂新娘选择新郎",
+  "stage.ghost_bride_chat": "情侣私聊",
+  "stage.ghost_bride_witness": "共同选择证婚人",
+  "stage.ghost_bride_knife": "婚礼继承夜刀",
+  "reason.three_factions_eliminated": "唯一存活阵营已清除另外两方",
+  "reason.three_factions_all_dead": "三个阵营均已淘汰",
   "role.lonely_girl.brief":
     "首夜先选择另一活人为崇拜对象，个人胜利跟随其选择时真实阵营；自身仍是好人民边，无狼互认、夜聊、刀或自爆。你不知道对象身份，对象不知道被崇拜。AWA策略固定胜利归属，死亡不撤销。",
   "role.lonely_girl.state": "孤独少女私有选择状态：{state}；目标身份和冻结归属不会直接告知本人。",
@@ -522,6 +563,7 @@ export const zhCN = Object.freeze({
   "reason.runtime_timeout": "达到运行期限",
   "reason.in_progress": "进行中",
   "reason.completed": "已完成",
+  "rule.three_factions_elimination": "三方灭绝：完整死亡链后唯一存活阵营获胜，全部灭绝为无获胜方",
   "rule.slaughter_side": "屠边：神民任一边全灭则狼人胜，狼人全灭则好人胜",
   "rule.slaughter_city": "屠城：好人全灭则狼人胜，狼人全灭则好人胜",
   "rule.wolf_reach_half": "狼人达半：存活狼人数量大于等于存活好人数量时，狼人立即获胜",

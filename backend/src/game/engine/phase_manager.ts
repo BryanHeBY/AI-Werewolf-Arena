@@ -1,3 +1,13 @@
+import { GhostBrideSetupWindow } from "../mechanisms/roles/ghost_bride/setup";
+import {
+  weddingSetup,
+  ghostBrideReady,
+  hasActiveGhostBride,
+  hasGhostBrideNightCommit,
+  weddingAssignment,
+  closeWeddingNight,
+  weddingKnifeCurrent,
+} from "../mechanisms/roles/ghost_bride/authority";
 import { LonelyGirlSetupWindow } from "../mechanisms/roles/lonely_girl/setup";
 import {
   lonelyGirlReady,
@@ -222,6 +232,12 @@ export class PhaseManager {
    */
   jumpTo(phase: Phase): void {
     if (
+      hasActiveGhostBride(this.world) ||
+      !ghostBrideReady(this.world) ||
+      (!this.state.gameOver && hasGhostBrideNightCommit(this.world, this.state.day))
+    )
+      throw new Error("ghost_bride_phase_reentry");
+    if (
       hasActiveLonelyGirl(this.world) ||
       !lonelyGirlReady(this.world) ||
       (!this.state.gameOver && hasLonelyGirlNightCommit(this.world, this.state.day))
@@ -235,6 +251,13 @@ export class PhaseManager {
     actionProvider: ActionProvider,
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
+    const wedding = weddingSetup(this.world);
+    if (
+      hasActiveGhostBride(this.world) ||
+      (wedding && wedding.status !== "pending" && !ghostBrideReady(this.world)) ||
+      (!this.state.gameOver && hasGhostBrideNightCommit(this.world, this.state.day))
+    )
+      throw new Error("ghost_bride_cycle_reentry");
     if (
       hasActiveLonelyGirl(this.world) ||
       (!this.state.gameOver && hasLonelyGirlNightCommit(this.world, this.state.day))
@@ -296,14 +319,84 @@ export class PhaseManager {
       ).execute(this.config, actionProvider, nightDay, nightIsCurrent);
       if (!ready || !nightIsCurrent()) return this.getSnapshot();
     }
+    if (!ghostBrideReady(this.world)) {
+      const ready = await new GhostBrideSetupWindow(
+        this.world,
+        this.toolGateway,
+        this.events,
+      ).execute(this.config, actionProvider, nightDay, nightIsCurrent);
+      if (!ready || !nightIsCurrent()) return this.getSnapshot();
+    }
     const bearFrame = BearNightFrame.capture(this.world, nightDay);
     const night = await this.nightPipeline.execute(this.config, actionProvider, this.state.day, {
       previousExile: this.previousExile,
       isCurrent: nightIsCurrent,
     });
-    if (night.interrupted || !nightIsCurrent()) return this.getSnapshot();
+    if (night.interrupted || !nightIsCurrent()) {
+      closeWeddingNight(this.world);
+      return this.getSnapshot();
+    }
+    const ownsWedding = weddingSetup(this.world) !== null;
+    if (ownsWedding) {
+      try {
+        const deaths = night.damage.deaths.filter((id) => {
+          const scope = night.deathLives.get(id);
+          return (
+            scope &&
+            this.world.getComponent(id, COMPONENT.Alive) === scope.life &&
+            scope.life.alive &&
+            aliveLifeVersion(scope.life) === scope.version
+          );
+        });
+        const sources: DeathSources = Object.fromEntries(
+          deaths.map((id) => [
+            id,
+            (night.damage.deathSources[id] ?? []).filter(
+              (cause) =>
+                cause !== DeathCause.WolfKill || weddingKnifeCurrent(this.world, nightDay, id),
+            ),
+          ]),
+        );
+        for (let i = deaths.length - 1; i >= 0; i--)
+          if (!sources[deaths[i]!]!.length) deaths.splice(i, 1);
+        const livingBeforeChain = new Map(
+          this.world.getAliveEntityIds().map((id) => {
+            const life = this.world.getComponent<
+              import("../../core/domain/components/alive").AliveComponent
+            >(id, COMPONENT.Alive)!;
+            return [id, { life, version: aliveLifeVersion(life) }] as const;
+          }),
+        );
+        await this.deathResolution.resolve(
+          deaths,
+          sources,
+          actionProvider,
+          Phase.Night,
+          Phase.Night,
+          {},
+          { nightOriginIds: deaths, isCurrent: nightIsCurrent },
+        );
+        if (!nightIsCurrent()) return this.getSnapshot();
+        const completeDeaths = [
+          ...deaths,
+          ...[...livingBeforeChain]
+            .filter(
+              ([id, scope]) =>
+                !deaths.includes(id) &&
+                this.world.getComponent(id, COMPONENT.Alive) === scope.life &&
+                !scope.life.alive &&
+                aliveLifeVersion(scope.life) === scope.version! + 1,
+            )
+            .map(([id]) => id),
+        ];
+        this.emitNightResolved(completeDeaths);
+        if (this.checkAndSealResult("night_settled")) return this.getSnapshot();
+      } finally {
+        closeWeddingNight(this.world);
+      }
+    }
     const firstDaySheriffBeforeNightInfo =
-      this.state.day === 1 && this.config.enableSheriff === true;
+      !ownsWedding && this.state.day === 1 && this.config.enableSheriff === true;
 
     this.setPhase(Phase.Day);
     const cycleDay = this.state.day,
@@ -313,7 +406,7 @@ export class PhaseManager {
       this.state.phase === Phase.Day &&
       !this.state.gameOver &&
       this.phaseRevision === dayRevision;
-    let nightSettled = false;
+    let nightSettled = ownsWedding;
     const settleNight = async (blast?: { deaths: number[]; sources: DeathSources }) => {
       if (nightSettled) return this.state.gameOver;
       nightSettled = true;
@@ -550,6 +643,7 @@ export class PhaseManager {
 
   private sealResult(decision: WinDecision, checkpoint: VictoryCheckpoint, phase: Phase): void {
     if (this.state.gameOver) return;
+    if (weddingSetup(this.world)) weddingAssignment(this.world);
     const outcome = readGameOutcome(decision.outcome, this.world.entityIds());
     const winner =
       outcome.kind === "victory" && outcome.primary.kind === "faction"
@@ -589,6 +683,13 @@ export class PhaseManager {
    * 解析板子胜利条件配置，兼容旧字段 winCondition。
    */
   private resolveWinConditions(): WinCondition[] {
+    if (weddingSetup(this.world)) {
+      const conditions =
+        this.config.winConditions ?? (this.config.winCondition ? [this.config.winCondition] : []);
+      if (conditions.length !== 1 || conditions[0] !== WinCondition.ThreeFactionsElimination)
+        throw new Error("ghost_bride_win_condition_invalid");
+      return [WinCondition.ThreeFactionsElimination];
+    }
     if (Array.isArray(this.config.winConditions) && this.config.winConditions.length > 0) {
       return this.config.winConditions;
     }

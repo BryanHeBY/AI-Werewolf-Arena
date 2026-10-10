@@ -4,7 +4,11 @@ import path from "node:path";
 import { SessionRecordManager } from "../../src/recording/session_recorder";
 import { ReplaySessionAggregate } from "../../src/recording/session_aggregate";
 import { createReplayDocument } from "../../src/recording/replay_document";
-import { readReplayDocument, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
+import {
+  readReplayDocument,
+  readVictoryResult,
+  readVictoryPoint,
+} from "@ai-werewolf-arena/replay-contract";
 import { Camp, Phase, type GameResult } from "../../src/core";
 import { outcomeLabel, outcomeWinnersLabel, victoryPointLabel } from "@ai-werewolf-arena/game-text";
 import { getDefaultScriptEventRenderRegistry } from "../../src/game";
@@ -341,4 +345,16 @@ test("explicit terminal getters cannot become sealed victories during cloning, w
     events: [{ ...event, payload: { winner: "good", decidedAt: { day: 2 } } }],
   };
   expect(readReplayDocument(malformed).events[0].payload).toEqual(malformed.events[0].payload);
+});
+
+test("settled Night victory accepts the completed Night phase and legacy Day phase, retaining other phase constraints", () => {
+  for (const phase of ["night", "day"] as const)
+    expect(readVictoryPoint({ day: 1, phase, checkpoint: "night_settled" }).phase).toBe(phase);
+  for (const [checkpoint, phase] of [
+    ["night_settled", "voting"],
+    ["exile_settled", "night"],
+    ["max_days_reached", "day"],
+    ["day_interrupted", "night"],
+  ])
+    expect(() => readVictoryPoint({ day: 1, phase, checkpoint })).toThrow();
 });

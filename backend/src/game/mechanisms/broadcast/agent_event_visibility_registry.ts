@@ -1,3 +1,4 @@
+import { GHOST_BRIDE_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
 /** 文件说明：领域事件到玩家 Agent 视角的显式可见性白名单。 */
 import { EntityId, GameEvent, WOLF_TEAM_EVENT_TYPES } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
@@ -103,7 +104,10 @@ export class AgentEventVisibilityRegistry {
   constructor(private readonly rules: Record<string, AgentEventVisibilityRule> = DEFAULT_RULES) {}
 
   canView(world: World, event: GameEvent, actorId: EntityId): boolean {
-    if (WOLVES_ONLY_EVENT_TYPES.has(event.type)) {
+    if (
+      WOLVES_ONLY_EVENT_TYPES.has(event.type) ||
+      (GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type)
+    ) {
       // Missing historical authorization fails closed. Current identities never
       // grant access to past chat or revoke an event already addressed to a player.
       return "audience" in event && event.audience.includes(actorId);

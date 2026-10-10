@@ -1,3 +1,8 @@
+import {
+  weddingMember,
+  weddingSetup,
+  ghostBrideReady,
+} from "../mechanisms/roles/ghost_bride/authority";
 import { AliveComponent, aliveLifeVersion } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
 import { RoleComponent } from "../../core/domain/components/role";
@@ -41,6 +46,11 @@ export class SelfDestructWindow {
       this.world.getAliveEntityIds().map(async (actorId) => {
         const role = this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
         if (!role) return null;
+        if (
+          weddingSetup(this.world) &&
+          (!ghostBrideReady(this.world) || weddingMember(this.world, role))
+        )
+          return null;
         const tools = this.roleRegistry.getAllowedTools(role.role);
         const tool = tools.includes("self_destruct_with_target")
           ? "self_destruct_with_target"
@@ -85,6 +95,8 @@ export class SelfDestructWindow {
       const { actorId, targetId } = pick.choice;
       if (
         !isCurrent() ||
+        (weddingSetup(this.world) &&
+          (!ghostBrideReady(this.world) || weddingMember(this.world, pick.role))) ||
         this.world.getComponent(actorId, COMPONENT.Role) !== pick.role ||
         this.world.getComponent(actorId, COMPONENT.Alive) !== pick.life.alive ||
         !pick.life.alive.alive ||

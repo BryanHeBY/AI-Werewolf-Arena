@@ -1,4 +1,10 @@
 import {
+  weddingMember,
+  weddingSetup,
+  ghostBrideReady,
+  swallowWeddingBadges,
+} from "../roles/ghost_bride/authority";
+import {
   ActionWindow,
   Phase,
   Role,
@@ -29,6 +35,15 @@ export function commitSelfDestructSelection(
   const role = world.getComponent<RoleComponent>(choice.actorId, COMPONENT.Role);
   if (!role || !world.getComponent<{ alive: boolean }>(choice.actorId, COMPONENT.Alive)?.alive)
     return null;
+  const ownsWedding = weddingSetup(world) !== null;
+  if (
+    ownsWedding &&
+    (!ghostBrideReady(world) ||
+      role.role !== Role.Wolf ||
+      weddingMember(world, role) ||
+      ![ActionWindow.OnPreElection, ActionWindow.OnPreVote].includes(window))
+  )
+    return null;
   const deaths = [choice.actorId],
     sources: DeathSources = { [choice.actorId]: [DeathCause.SelfDestruct] };
   if (choice.kind === "ordinary") {
@@ -37,6 +52,7 @@ export function commitSelfDestructSelection(
       getDefaultRoleCatalog().get(role.role)?.canSelfDestruct !== true
     )
       return null;
+    if (ownsWedding) swallowWeddingBadges(world, events);
     events.push({
       timestamp: Date.now(),
       type: "wolf_self_destruct",

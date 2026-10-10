@@ -233,9 +233,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "ghost_bride",
     names: { "zh-CN": "鬼魂新娘", en: "Ghost Bride" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-melbourne-ghost-bride-v1.md",
     mechanismSummary: "伴侣、第三方目标",
   },
   {

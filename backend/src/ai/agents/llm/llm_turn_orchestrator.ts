@@ -1,3 +1,4 @@
+import { inheritGhostBrideDeadlineRequest } from "../../../game/mechanisms/roles/ghost_bride/authority";
 import { inheritLonelyGirlDeadlineRequest } from "../../../game/mechanisms/roles/lonely_girl/lifecycle";
 import { inheritWildChildDeadlineRequest } from "../../../game/mechanisms/roles/wild_child/lifecycle";
 import { inheritInitialIdentityDeadlineRequest } from "../../../game/mechanisms/roles/initial_identity/setup";
@@ -74,6 +75,7 @@ export class LlmTurnOrchestrator {
     inheritInitialIdentityDeadlineRequest(request, bounded);
     inheritWildChildDeadlineRequest(request, bounded);
     inheritLonelyGirlDeadlineRequest(request, bounded);
+    inheritGhostBrideDeadlineRequest(request, bounded);
     const controller = new AbortController();
     this.controllers.add(controller);
     const timer = setTimeout(

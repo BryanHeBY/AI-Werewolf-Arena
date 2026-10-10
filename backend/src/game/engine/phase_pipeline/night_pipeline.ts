@@ -1,4 +1,12 @@
 import {
+  captureWeddingKnife,
+  closeWeddingNight,
+  weddingSetup,
+  ghostBrideReady,
+  hasActiveGhostBride,
+} from "../../mechanisms/roles/ghost_bride/authority";
+import { discardStaleWeddingKnife } from "../../mechanisms/roles/ghost_bride/night_stages";
+import {
   lonelyGirlReady,
   hasActiveLonelyGirl,
   openLonelyGirlNight,
@@ -118,6 +126,8 @@ export class NightPipeline {
     day: number,
     options: NightPipelineOptions = {},
   ): Promise<NightPipelineResult> {
+    if (hasActiveGhostBride(this.world) || !ghostBrideReady(this.world))
+      throw new Error("ghost_bride_setup_before_night_required");
     if (hasActiveLonelyGirl(this.world) || !lonelyGirlReady(this.world))
       throw new Error("lonely_girl_setup_before_night_required");
     if (hasActiveWildChild(this.world) || !wildChildReady(this.world))
@@ -129,7 +139,18 @@ export class NightPipeline {
     const closeLonelyGirlNight = openLonelyGirlNight(this.world, day);
     const closeWildChildNight = openWildChildNight(this.world, day, this.events);
     const closeThiefNight = openInitialIdentityNight(this.world, day);
+    const ownsWedding = weddingSetup(this.world) !== null;
+    let weddingHandedOff = false;
     try {
+      if (ownsWedding) {
+        const capture = captureWeddingKnife(this.world, day, isCurrent);
+        this.events.push({
+          timestamp: Date.now(),
+          type: "ghost_bride_knife_captured",
+          payload: { ...capture, actorIds: [...capture.actorIds] },
+          audience: Object.freeze([]),
+        });
+      }
       if (hasFoxInspectionNightCommit(this.world, day))
         throw new Error("fox_inspection_night_reentry_after_commit");
       if (hasDreamNightCommit(this.world, day)) throw new Error("dream_night_reentry_after_commit");
@@ -204,12 +225,15 @@ export class NightPipeline {
       for (const stage of this.stageRegistry.getStages(config, this.world)) {
         if (!isCurrent()) return { interrupted: true };
         discardStaleWolfKnife(this.world, stageState);
+        if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
         await stage.execute(stageCtx);
         if (!isCurrent()) return { interrupted: true };
         discardStaleWolfKnife(this.world, stageState);
+        if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
       }
 
       discardStaleWolfKnife(this.world, stageState);
+      if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
       const dreamFrame = new DreamNightFrame(stageState.dreamLinks);
       const damage = this.damageResolutionSystem.resolve(this.world, {
         protectedTargets: dreamFrame.protectedTargets(this.world),
@@ -255,6 +279,7 @@ export class NightPipeline {
           return [id, { life, version: aliveLifeVersion(life) }] as const;
         }),
       );
+      weddingHandedOff = ownsWedding;
       return {
         interrupted: false,
         summary,
@@ -264,6 +289,7 @@ export class NightPipeline {
         foxInspections: stageState.foxInspections,
       };
     } finally {
+      if (ownsWedding && !weddingHandedOff) closeWeddingNight(this.world);
       closeThiefNight();
       closeWildChildNight();
       closeLonelyGirlNight();

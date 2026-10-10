@@ -487,3 +487,7 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 ## P9a 鬼魂新娘录制提交边界
 
 接515c882基础，原request/合法deadline clone的交付检查与opaque scope延迟结算已贯通：provider返回仍pending，同步域提交才action；首票后到期、拒绝或关窗error，真实分歧两票保留action，chat最后投递成功/失败当回合结算。三路原审查者报告全部复验关闭，见[提交边界审查](reviews/p9-ghost-bride-delivery.md)。受影响engine/recording/runtime Tape共1730/17677/87文件零失败，check/lint/format/backend build通过；真实普通六人partial Tape仅证明通用失败路径，尚非Ghost实际整局/Tape。角色仍planned、目录23verified/7implemented/34planned，不以基础推断角色完成；立即继续runtime与完整通路，总体待用户最终验收。
+
+## P9a 第五项：鬼魂新娘（2026-10-10）
+
+精确12人来源AWA三方板、首夜共同婚礼/两条私聊、原身份库存/独立目标、逐夜普通包→情侣→证婚人唯一刀、复合殉情/枪及吞徽、完整Night死亡公开后封盘已交付。三组只读复验关闭；24真实双语三transport完整局/Tape、8严格失败partialTape、200受限Observed逐Tape与1000独立World（逐局公开死亡ID投影等于真实Alive）分别验证。最终全backend **3315/329141/246文件**、frontend **364/3862/48文件**、完整Chromium **172/172**均0失败，check/lint/format及双端build通过。Observed仅每语言seed43一次blind Hunter合法拒绝，fallback0，不以隐藏Alive喂bot。见[规则卡](rules/awa-melbourne-ghost-bride-v1.md)/[验收](reviews/p9-ghost-bride.md)。P9a五角色技术功能完成，23verified/8implemented/33planned；继续猎魔人/P9b–f/P10，总体待用户最终验收。没有push/真实模型/用户configs或秘密操作。

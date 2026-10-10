@@ -24,6 +24,7 @@ export enum Role {
   Shapeshifter = "shapeshifter",
   WildChild = "wild_child",
   LonelyGirl = "lonely_girl",
+  GhostBride = "ghost_bride",
   HiddenWolf = "hidden_wolf",
   Gargoyle = "gargoyle",
   Psychic = "psychic",
@@ -68,6 +69,7 @@ export enum StatusMark {
 }
 
 export enum WinCondition {
+  ThreeFactionsElimination = "three_factions_elimination",
   SlaughterCity = "slaughter_city",
   SlaughterSide = "slaughter_side",
   WolfReachHalf = "wolf_reach_half",

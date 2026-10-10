@@ -1,3 +1,4 @@
+import { GHOST_BRIDE_EVENT_TYPES, readGhostBrideEventFact } from "@ai-werewolf-arena/game-text";
 import { readLonelyGirlEventFact } from "@ai-werewolf-arena/game-text";
 import {
   WILD_CHILD_EVENT_TYPES,
@@ -39,6 +40,12 @@ export interface ReadReplayEvent {
 
 // Required references are event-specific. Unknown extension fields never imply player membership.
 const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
+  ghost_bride_pair_chosen: ["brideId", "groomId"],
+  ghost_bride_group_chosen: ["brideId", "groomId", "witnessId"],
+  ghost_bride_witness_vote: ["actorId", "targetId"],
+  ghost_bride_partner_chat: ["actorId", "recipientId"],
+  ghost_bride_knife_vote: ["actorId"],
+  ghost_bride_partner_death: ["actorId", "targetId"],
   lonely_girl_admired_chosen: ["actorId", "targetId"],
   wild_child_model_chosen: ["actorId", "targetId"],
   wild_child_model_eliminated: ["actorId", "targetId"],
@@ -126,6 +133,8 @@ const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
   black_market_trade_skipped: ["actorId"],
 };
 const ID_LISTS: Readonly<Record<string, string>> = {
+  ghost_bride_knife_captured: "actorIds",
+  ghost_bride_knife_resolved: "actorIds",
   cupid_lovers_chosen: "pairIds",
   cupid_relation_resolved: "pairIds",
   night_resolved: "deaths",
@@ -138,6 +147,8 @@ const ID_LISTS: Readonly<Record<string, string>> = {
   sheriff_withdraw_summary: "withdrawn",
 };
 const NULLABLE_TARGETS = new Set([
+  "ghost_bride_knife_vote",
+  "ghost_bride_knife_resolved",
   "charm_applied",
   "white_wolf_king_self_destruct",
   "mechanical_guard_chosen",
@@ -206,6 +217,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if ((GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(type))
+    return !!readGhostBrideEventFact(type, p);
   if ((WILD_CHILD_EVENT_TYPES as readonly string[]).includes(type))
     return !!(readWildChildEventFact(type, p) ?? readWildChildPlayerFact(type, p));
   if (type === "lonely_girl_admired_chosen") return !!readLonelyGirlEventFact(type, p);
@@ -374,6 +387,24 @@ export function readReplayEvent(
     if (!validKnownFields(safe.type, p)) return null;
     if (safe.type === "lonely_girl_admired_chosen" && (safe.day !== 1 || safe.phase !== "night"))
       return null;
+    if ((GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(safe.type)) {
+      if (
+        p.day !== safe.day ||
+        (safe.type === "ghost_bride_partner_death"
+          ? p.phase !== safe.phase
+          : safe.phase !== "night")
+      )
+        return null;
+      if (
+        [
+          "ghost_bride_pair_chosen",
+          "ghost_bride_group_chosen",
+          "ghost_bride_witness_vote",
+        ].includes(safe.type) &&
+        safe.day !== 1
+      )
+        return null;
+    }
     for (const key of REQUIRED_IDS[safe.type] ?? []) add(p[key]);
     if (safe.type === "wall_note_order_recorded")
       for (const row of p.rows as Array<{ actorId: number }>) add(row.actorId);

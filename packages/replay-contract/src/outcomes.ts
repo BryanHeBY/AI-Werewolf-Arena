@@ -155,7 +155,7 @@ export function readVictoryPoint(value: unknown): VictoryPoint {
     )
       return fail();
     if (
-      (point.checkpoint === "night_settled" && point.phase !== "day") ||
+      (point.checkpoint === "night_settled" && !["night", "day"].includes(point.phase as string)) ||
       (point.checkpoint === "exile_settled" && point.phase !== "voting") ||
       (point.checkpoint === "max_days_reached" && point.phase !== "night") ||
       (point.checkpoint === "day_interrupted" && point.phase === "night")

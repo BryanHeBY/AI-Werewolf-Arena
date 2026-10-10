@@ -49,3 +49,5 @@ game-catalog 拥有稳定 ID/名称/状态，game-text 拥有双语文案。新�
 ## 当前里程碑
 
 执行范围契约已更新；P8咒狐首批City有限组合已启用（implemented），来源、三组审查/复查、实际SDK/ACP/MCP/Tape、1000seed及全量门禁见[角色验收](../reviews/p8-cursed-fox.md)。丘比特有限双来源策略也已启用（implemented），见[规则卡](../rules/sourced-cupid-v1.md)/[验收](../reviews/p8-cupid.md)；杠精也已implemented，具名AWA发言窗口适配及实际匿名表决/临时禁票/警徽闭环见[规则卡](../rules/awa-melbourne-debater-v1.md)/[本批验收](../reviews/p8-debater.md)。盗贼也已有限implemented，真实N+2发牌/原生身份首次启用见[规则卡](../rules/lui-meme-thief-v1.md)/[验收](../reviews/p9-thief.md)。野孩子也已有限implemented，见[规则卡](../rules/awa-lui-meme-wild-child-v1.md)/[验收](../reviews/p9-wild-child.md)。当前23verified/5implemented/36planned。首组匿名墙事件/纸条已有限implemented并完成三组复查和最终全量门禁，见[规则卡](../rules/awa-wall-notes-v1.md)/[验收](../reviews/p8-wall-notes.md)；P9/P10仍推进。后续状态以 progress.md、规则卡、角色目录与按源码记录的验收为准。
+
+2026-10-10接续状态：千面人、孤独少女与鬼魂新娘也已有限implemented，P9a五角色技术功能闭环；当前23verified/8implemented/33planned。Ghost新源码全量证据见[完整验收](../reviews/p9-ghost-bride.md)，首批猎魔人来源规则候选继续审查；P9b–f/P10与用户最终验收未关闭。上段5/36保留原阶段时点。

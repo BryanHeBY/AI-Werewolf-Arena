@@ -1,3 +1,4 @@
+import { types } from "node:util";
 import {
   GHOST_BRIDE_POLICY,
   GHOST_BRIDE_ROLE,
@@ -36,11 +37,11 @@ import { assertGhostBridePreset } from "./preset";
 
 /** Read own data only: substituted getters never execute during rejection or auditing. */
 function data(value: unknown, key: string): unknown {
-  if (!value || typeof value !== "object") return undefined;
+  if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const d = Object.getOwnPropertyDescriptor(value, key);
   return d && Object.hasOwn(d, "value") ? d.value : undefined;
 }
-function snapshot(value: unknown, depth = 0): unknown {
+function snapshot(value: unknown, depth = 0, arrayLimit = 128): unknown {
   if (
     value === null ||
     ["string", "boolean"].includes(typeof value) ||
@@ -50,6 +51,7 @@ function snapshot(value: unknown, depth = 0): unknown {
   if (
     !value ||
     typeof value !== "object" ||
+    types.isProxy(value) ||
     depth > 12 ||
     Object.getOwnPropertySymbols(value).length
   )
@@ -64,13 +66,16 @@ function snapshot(value: unknown, depth = 0): unknown {
     if (array && key === "length") continue;
     if (!d.enumerable || !Object.hasOwn(d, "value"))
       throw new Error("ghost_bride_authority_accessor");
-    Object.defineProperty(result, key, { value: snapshot(d.value, depth + 1), enumerable: true });
+    Object.defineProperty(result, key, {
+      value: snapshot(d.value, depth + 1, arrayLimit),
+      enumerable: true,
+    });
   }
   if (!array) return result;
   const length = fields.length?.value;
   if (
     !Number.isSafeInteger(length) ||
-    length > 128 ||
+    length > arrayLimit ||
     Object.keys(result).length !== length ||
     !Array.from({ length }, (_, i) => Object.hasOwn(result, i)).every(Boolean)
   )
@@ -94,6 +99,7 @@ interface Participant {
   stateRefs: ReadonlyArray<readonly [string, unknown]>;
   initialPrivateState: unknown;
   expectedPrivateJson: string;
+  auditPrivateJson: string;
   life: AliveComponent;
   version: number;
   aliveDescriptor: PropertyDescriptor;
@@ -219,6 +225,7 @@ function capture(world: World, id: number): Participant {
     stateRefs: Object.entries(state),
     initialPrivateState: snapshot(state),
     expectedPrivateJson: privateJson,
+    auditPrivateJson: privateJson,
     affiliations,
     victoryJson,
     version,
@@ -242,6 +249,7 @@ function sameBody(b: Binding, p: Participant, mustLive = false): boolean {
   return (!mustLive || alive) && aliveLifeVersion(p.life) === p.version + (alive ? 0 : 1);
 }
 function sameIdentity(b: Binding, p: Participant): boolean {
+  if (types.isProxy(p.state)) return false;
   const fields = Object.getOwnPropertyDescriptors(p.state);
   return (
     b.world.getComponent(p.id, COMPONENT.Role) === p.role &&
@@ -271,13 +279,18 @@ function validBinding(b: Binding, setup = false): boolean {
     s.groomId === expectedGroom &&
     s.remaining === expectedRemaining &&
     data(b.participants.get(b.actorId)?.state, "ghostBride") === b.state &&
-    [...b.participants.values()].every(
-      (p) =>
-        sameBody(b, p, setup) &&
-        sameIdentity(b, p) &&
-        json(p.state) !== null &&
-        (!setup || json(p.state) === p.expectedPrivateJson),
-    )
+    [...b.participants.values()].every((p) => {
+      const encoded = json(p.state);
+      if (
+        !sameBody(b, p, setup) ||
+        !sameIdentity(b, p) ||
+        encoded === null ||
+        (setup && encoded !== p.expectedPrivateJson)
+      )
+        return false;
+      p.auditPrivateJson = encoded;
+      return true;
+    })
   );
 }
 function writable(state: object, key: string): boolean {
@@ -569,15 +582,24 @@ const stages: Record<TurnKind, string> = {
 };
 function requestData(request: WeddingRequest): string | null {
   try {
-    const { deadlineAtMs: _deadline, ...rest } = snapshot(request) as Record<string, unknown>;
+    const { deadlineAtMs: _deadline, ...rest } = snapshot(request, 0, 16384) as Record<
+      string,
+      unknown
+    >;
     return JSON.stringify(rest);
   } catch {
     return null;
   }
 }
 export function bindGhostBrideRequest(world: World, request: WeddingRequest): void {
-  const t = bindings.get(world)?.turn,
-    p = snapshot(request) as WeddingRequest & { context: Record<string, unknown> };
+  const t = bindings.get(world)?.turn;
+  if (!t) return;
+  let p: WeddingRequest & { context: Record<string, unknown> };
+  try {
+    p = snapshot(request, 0, 16384) as WeddingRequest & { context: Record<string, unknown> };
+  } catch {
+    return;
+  }
   const constraints = data(p.context, "turn_constraints") as Record<string, unknown> | undefined,
     encoded = requestData(request);
   if (
@@ -924,10 +946,16 @@ export function weddingFactionResult(
       : [],
   };
 }
-export function weddingAuditPlayer(world: World, id: number) {
+export function weddingAuditPlayer(world: World, id: number, failedCycle = false) {
   const b = bindings.get(world),
     p = b?.participants.get(id);
-  if (!b || !p || (b.status !== "failed" && b.status !== "cancelled")) return null;
+  if (!b || !p || (!failedCycle && b.status !== "failed" && b.status !== "cancelled")) return null;
+  // Refresh each still-owned plain stock independently: another participant may have failed.
+  // json reads descriptors only, so foreign getters/proxies keep the last safe snapshot.
+  if (sameBody(b, p) && sameIdentity(b, p)) {
+    const encoded = json(p.state);
+    if (encoded !== null) p.auditPrivateJson = encoded;
+  }
   const alive = p.aliveDescriptor.get
     ? p.aliveDescriptor.get.call(p.life) === true
     : p.aliveDescriptor.value === true;
@@ -944,7 +972,7 @@ export function weddingAuditPlayer(world: World, id: number) {
               groomId: b.pair?.groomId ?? null,
             },
           }
-        : snapshot(p.initialPrivateState),
+        : (JSON.parse(p.auditPrivateJson) as Record<string, unknown>),
     victory: JSON.parse(p.victoryJson) as VictoryComponent["affiliations"],
   };
 }
@@ -1073,4 +1101,79 @@ export function weddingActorView(world: World, actorId: number): WeddingActorVie
         canKnife,
       }
     : null;
+}
+
+/** Pure preflight over the same original body/request target proof used at commit. */
+export function canSubmitWeddingTool(
+  world: World,
+  actorId: number,
+  phase: Phase,
+  day: number,
+  scope: object | undefined,
+  value: unknown,
+): boolean {
+  const t = scope && turns.get(scope),
+    call = readWeddingTool(value);
+  if (
+    !t ||
+    !call ||
+    call.name !== t.tool ||
+    !authorizedWeddingTurn(world, actorId, phase, day, scope)
+  )
+    return false;
+  if (call.name === "speak_to_partner")
+    return targetCurrent(
+      t,
+      t.actorId === t.binding.actorId ? t.binding.pair!.groomId : t.binding.actorId,
+    );
+  const id = call.args.target_id;
+  if (id === null) return call.name === "kill_vote" || call.name === "wedding_kill_vote";
+  if (!targetCurrent(t, id)) return false;
+  if (call.name === "choose_bridegroom") return id !== t.binding.actorId;
+  if (call.name === "choose_wedding_witness")
+    return id !== t.binding.actorId && id !== t.binding.pair!.groomId;
+  const owner = t.binding.activeNight!.capture.owner;
+  return owner === "pair"
+    ? ![t.binding.actorId, t.binding.pair!.groomId].includes(id)
+    : owner !== "witness" || id !== actorId;
+}
+export function weddingBrideState(world: World, actorId: number): GhostBrideState | null {
+  const b = bindings.get(world);
+  if (!b || actorId !== b.actorId) return null;
+  if (!validBinding(b)) throw new Error("ghost_bride_authority_invalid");
+  return readGhostBrideState(b.state);
+}
+
+const swallowedBadges = new WeakSet<World>();
+export function weddingBadgeSwallowed(world: World): boolean {
+  return swallowedBadges.has(world);
+}
+export function swallowWeddingBadges(
+  world: World,
+  events: import("../../../../core/domain").GameEvent[],
+): void {
+  const b = bindings.get(world);
+  if (!b || !ghostBrideReady(world)) throw new Error("ghost_bride_badge_authority_invalid");
+  swallowedBadges.add(world);
+  for (const id of world.entityIds()) {
+    const badge = world.getComponent<
+      import("../../../../core/domain/components/badge").BadgeComponent
+    >(id, COMPONENT.Badge);
+    const vote = world.getComponent<
+      import("../../../../core/domain/components/voting_right").VotingRightComponent
+    >(id, COMPONENT.VotingRight);
+    if (badge) {
+      if (badge.isSheriff && !badge.destroyed)
+        events.push({
+          timestamp: Date.now(),
+          type: "sheriff_badge_destroyed",
+          payload: { targetId: id, reason: "ghost_bride_single_wolf_blast" },
+        });
+      badge.isSheriff = false;
+      badge.destroyed = true;
+      badge.voteWeight = 1;
+      delete badge.handoffPolicy;
+    }
+    if (vote) vote.weight = vote.canVote ? 1 : 0;
+  }
 }

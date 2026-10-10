@@ -36,6 +36,8 @@ export interface PlayerObservation {
   deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];
   ownState: {
+    ghostBride?: import("@ai-werewolf-arena/game-text").GhostBrideState;
+    wedding?: import("../../../game/mechanisms/roles/ghost_bride/authority").WeddingActorView;
     lonelyGirl?: import("../../../game/mechanisms/roles/lonely_girl/state").LonelyGirlState;
     wildChild?: import("../../../game/mechanisms/roles/wild_child/state").WildChildState;
     thief?: import("../../../game/mechanisms/roles/thief/state").ThiefState & {

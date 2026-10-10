@@ -1,3 +1,4 @@
+import { weddingFactionResult } from "../roles/ghost_bride/authority";
 /** 文件说明：内置胜利条件规格实现。 */
 import { cupidCityDecision } from "../roles/cupid/victory";
 import { COMPONENT } from "../../../core/domain/components/names";
@@ -86,6 +87,21 @@ function evaluateWolfReachHalf(world: World): WinDecision | null {
 
 /** 默认胜利条件规格集合。 */
 export const DEFAULT_WIN_CONDITION_SPECS: WinConditionSpec[] = [
+  {
+    id: WinCondition.ThreeFactionsElimination,
+    checkpoints: ["night_settled", "exile_settled", "day_interrupted"],
+    evaluate: (world) => {
+      const result = weddingFactionResult(world);
+      if (!result) return null;
+      return result.faction === null
+        ? { winner: null, reason: "three_factions_all_dead", outcome: { kind: "no_winner" } }
+        : victoryDecision(
+            world,
+            { kind: "faction", faction: result.faction },
+            "three_factions_eliminated",
+          );
+    },
+  },
   {
     id: WinCondition.SlaughterCity,
     evaluate: evaluateSlaughterCity,

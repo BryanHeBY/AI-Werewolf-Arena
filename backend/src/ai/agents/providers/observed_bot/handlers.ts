@@ -1,3 +1,9 @@
+import {
+  choose_bridegroom,
+  speak_to_partner,
+  choose_wedding_witness,
+  wedding_kill_vote,
+} from "./wedding";
 import type { ObservedToolEntry } from "./context";
 import {
   choose_badge_successor,
@@ -48,6 +54,10 @@ import {
 
 /** Preserve protocol-independent priority and RNG order for strict Tape reproducibility. */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
+  { tool: "choose_bridegroom", decide: choose_bridegroom },
+  { tool: "speak_to_partner", decide: speak_to_partner },
+  { tool: "choose_wedding_witness", decide: choose_wedding_witness },
+  { tool: "wedding_kill_vote", decide: wedding_kill_vote },
   { tool: "choose_admired_player", decide: choose_admired_player },
   { tool: "choose_wild_model", decide: choose_wild_model },
   { tool: "choose_thief_card", decide: choose_thief_card },

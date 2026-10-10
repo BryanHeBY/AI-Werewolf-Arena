@@ -1,3 +1,4 @@
+import { isGhostBridePreset } from "@ai-werewolf-arena/game-text";
 /** The single public board format. Unknown fields and unregistered roles fail closed. */
 import { supportsWallRoles } from "../../game/mechanisms/events/wall_notes/authority";
 import { z } from "zod";
@@ -272,6 +273,12 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
       config = contribution.apply(config, defaults);
     }
   }
+  if (
+    (seen.has("ghost_bride") ||
+      definition.rules.winConditions.includes(WinCondition.ThreeFactionsElimination)) &&
+    !isGhostBridePreset(config)
+  )
+    fail("board_config_ghost_bride_preset_invalid", "board");
   const fieldSources: Record<string, "explicit" | "default"> = {};
   const recordSources = (value: unknown, original: unknown, prefix: string) => {
     if (value && typeof value === "object" && !Array.isArray(value)) {

@@ -1,3 +1,4 @@
+import { weddingMember, ghostBrideReady, weddingSetup } from "./ghost_bride/authority";
 import { initialIdentitySetupReady } from "./initial_identity/deal";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
@@ -26,6 +27,8 @@ export function wolfTeamPermissions(
 ): WolfTeamPermissions {
   if (world && !initialIdentitySetupReady(world)) return NO_ACCESS;
   if (!role || role.camp !== Camp.Wolf) return NO_ACCESS;
+  if (world && weddingSetup(world) && (!ghostBrideReady(world) || weddingMember(world, role)))
+    return NO_ACCESS;
   const permissions = catalog.get(role.role)?.wolfTeam;
   return typeof permissions === "function" ? permissions(role, world) : (permissions ?? NO_ACCESS);
 }

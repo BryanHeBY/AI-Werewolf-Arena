@@ -1,3 +1,4 @@
+import { GHOST_BRIDE_ROLE_PROFILE } from "./ghost_bride/profile";
 import { LONELY_GIRL_ROLE_PROFILE } from "./lonely_girl/profile";
 import { WILD_CHILD_ROLE_PROFILE } from "./wild_child/profile";
 import { SHAPESHIFTER_ROLE_PROFILE } from "./shapeshifter/profile";
@@ -39,6 +40,7 @@ import { DEBATER_ROLE_PROFILE } from "./debater/profile";
 import { CUPID_ROLE_PROFILE } from "./cupid/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
+  GHOST_BRIDE_ROLE_PROFILE,
   WILD_CHILD_ROLE_PROFILE,
   LONELY_GIRL_ROLE_PROFILE,
   THIEF_ROLE_PROFILE,

@@ -1,3 +1,5 @@
+import { installGhostBride } from "../game/mechanisms/roles/ghost_bride/authority";
+import { assertGhostBridePreset } from "../game/mechanisms/roles/ghost_bride/preset";
 import { installLonelyGirl } from "../game/mechanisms/roles/lonely_girl/lifecycle";
 import { installWildChild } from "../game/mechanisms/roles/wild_child/lifecycle";
 import { installInitialRoster } from "../core/domain/initial_roster";
@@ -140,6 +142,7 @@ function createPlayers(
   if (config.roleSetups.some((row) => row.role === Role.Shapeshifter && row.count === 1))
     installShapeshifterDeal(world, roles, ids);
   installInitialRoster(world);
+  if (roles.includes(Role.GhostBride)) installGhostBride(world, config);
   installWildChild(world, config);
   installLonelyGirl(world, config);
   return ids;
@@ -150,6 +153,14 @@ function buildRoleDeck(
   fixedRoles: readonly Role[] | undefined,
   random: RandomSource,
 ): Role[] {
+  const ownsGhost = config.roleSetups.some((row) => row.role === Role.GhostBride && row.count > 0);
+  if (
+    ownsGhost ||
+    config.ghostBride ||
+    config.winConditions?.includes(WinCondition.ThreeFactionsElimination) ||
+    config.winCondition === WinCondition.ThreeFactionsElimination
+  )
+    assertGhostBridePreset(config);
   const deck: Role[] = [];
   for (const setup of config.roleSetups) {
     for (let i = 0; i < setup.count; i++) {

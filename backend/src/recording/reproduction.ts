@@ -1,4 +1,10 @@
 import {
+  GHOST_BRIDE_EVENT_TYPES,
+  GHOST_BRIDE_POLICY,
+  readWeddingSetup,
+} from "@ai-werewolf-arena/game-text";
+import { validateGhostBrideRecord } from "./ghost_bride_record";
+import {
   readLonelyGirlEventFact,
   readLonelyGirlChoiceTool,
   LONELY_GIRL_POLICY,
@@ -132,6 +138,7 @@ export interface RecordedPlayerState {
   victory: { affiliations: VictoryAffiliation[] };
 }
 export interface RecordedCheckpoint {
+  ghostBrideSetup?: import("@ai-werewolf-arena/game-text").WeddingSetup;
   lonelyGirlSetup?: {
     policy: "awa_netease_lonely_girl_v1";
     status: "pending" | "complete" | "cancelled" | "failed";
@@ -223,6 +230,7 @@ const requestSchema = z.strictObject({
   actionWindow: z.enum(ActionWindow).optional(),
   allowedTools: z.array(z.enum(TOOL_NAMES)),
   context: z.strictObject({
+    proposedWitnessId: positive.optional(),
     action_failure_policy: z.literal("error").optional(),
     allow_fallback: z.boolean().optional(),
     day: positive,
@@ -477,6 +485,19 @@ const schema = z.strictObject({
           snapshot: snapshotSchema,
           thiefSetup: thiefSetupSchema.optional(),
           shapeshifterSetup: shapeshifterSetupSchema.optional(),
+          ghostBrideSetup: z
+            .strictObject({
+              policy: z.literal(GHOST_BRIDE_POLICY),
+              status: z.enum(["pending", "active", "paired", "complete", "failed", "cancelled"]),
+              actorId: positive,
+              groomId: positive.nullable(),
+              witnessId: positive.nullable(),
+              witnessVotes: z
+                .array(z.strictObject({ actorId: positive, targetId: positive }))
+                .max(2),
+            })
+            .refine((value) => readWeddingSetup(value) !== null)
+            .optional(),
           lonelyGirlSetup: z
             .strictObject({
               policy: z.literal(LONELY_GIRL_POLICY),
@@ -527,7 +548,8 @@ const schema = z.strictObject({
       .superRefine((event, ctx) => {
         if (
           event.audience !== undefined &&
-          !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type)
+          !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
+          !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type)
         ) {
           ctx.addIssue({ code: "custom", message: "reproduction_event_audience_invalid" });
         }
@@ -569,6 +591,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   validateInitialIdentityRecord(result);
   validateWildChildRecord(result);
   validateLonelyGirlRecord(result);
+  validateGhostBrideRecord(result);
   return result;
 }
 

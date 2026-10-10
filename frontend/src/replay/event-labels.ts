@@ -1,3 +1,4 @@
+import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-text";
 import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-text";
 import { wildChildEventLabel } from "@ai-werewolf-arena/game-text";
 import { shapeshifterEventLabel } from "@ai-werewolf-arena/game-text";
@@ -45,6 +46,8 @@ export function eventLabel(
   if (deathAbility !== null) return deathAbility;
   const awakened = awakenedEventLabel(event.type, p, locale);
   if (awakened !== null) return awakened;
+  const wedding = ghostBrideEventLabel(event.type, p, locale);
+  if (wedding !== null) return wedding;
   const lonely = lonelyGirlEventLabel(event.type, p, locale);
   if (lonely) return lonely;
   const wild = wildChildEventLabel(event.type, p, locale);

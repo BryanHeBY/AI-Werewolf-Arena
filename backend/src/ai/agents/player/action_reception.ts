@@ -1,3 +1,8 @@
+import {
+  ghostBrideRequestScope,
+  weddingSetup,
+} from "../../../game/mechanisms/roles/ghost_bride/authority";
+import { readWeddingTool } from "@ai-werewolf-arena/game-text";
 import { lonelyGirlRequestScope } from "../../../game/mechanisms/roles/lonely_girl/lifecycle";
 import { readLonelyGirlTool } from "../../../game/mechanisms/roles/lonely_girl/state";
 import { wildChildRequestScope } from "../../../game/mechanisms/roles/wild_child/lifecycle";
@@ -85,14 +90,26 @@ export class ActionReception {
     const wildCall =
       tool === "choose_wild_model" ? readWildChildTool({ name: tool, args: rawArgs }) : null;
     if (tool === "choose_wild_model" && !wildCall) return fail(RuleError.WildChildChoice);
+    const weddingTool =
+      [
+        "choose_bridegroom",
+        "choose_wedding_witness",
+        "speak_to_partner",
+        "wedding_kill_vote",
+      ].includes(tool) ||
+      (tool === "kill_vote" && weddingSetup(this.world) !== null);
+    const weddingCall = weddingTool ? readWeddingTool({ name: tool, args: rawArgs }) : null;
+    if (weddingTool && !weddingCall) return fail(RuleError.GhostBrideChoice);
     const input = (
-      wildCall
-        ? wildCall.args
-        : initialChoice
-          ? { slot: thiefSlot }
-          : wallCall
-            ? wallCall.args
-            : { ...rawArgs }
+      weddingCall
+        ? weddingCall.args
+        : wildCall
+          ? wildCall.args
+          : initialChoice
+            ? { slot: thiefSlot }
+            : wallCall
+              ? wallCall.args
+              : { ...rawArgs }
     ) as Record<string, unknown>;
     const properties = spec.parameters.properties as
       Record<string, { type?: string | string[] }> | undefined;
@@ -145,6 +162,7 @@ export class ActionReception {
       thiefScope: thiefRequestScope(this.world, request),
       shapeshifterScope: shapeshifterRequestScope(this.world, request),
       lonelyGirlScope: lonelyGirlRequestScope(this.world, request),
+      ghostBrideScope: ghostBrideRequestScope(this.world, request),
       wildChildScope: wildChildRequestScope(this.world, request),
       wallScope: wallRequestScope(this.world, request),
       wallId: request.context.wall_id,

@@ -1,0 +1,260 @@
+{
+  "cycle": 6,
+  "complete": true,
+  "snapshot": {
+    "day": 6,
+    "phase": "game_over",
+    "gameOver": true,
+    "result": {
+      "winner": "third_party",
+      "reason": "three_factions_eliminated",
+      "outcome": {
+        "kind": "victory",
+        "primary": { "kind": "faction", "faction": "third_party", "winningPlayerIds": [1, 2, 3] },
+        "additional": [],
+        "winningPlayerIds": [1, 2, 3]
+      },
+      "decidedAt": { "day": 6, "phase": "night", "checkpoint": "night_settled" }
+    }
+  },
+  "ghostBrideSetup": {
+    "policy": "awa_melbourne_ghost_bride_v1",
+    "status": "complete",
+    "actorId": 1,
+    "groomId": 2,
+    "witnessId": 3,
+    "witnessVotes": [
+      { "actorId": 1, "targetId": 3 },
+      { "actorId": 2, "targetId": 3 }
+    ]
+  },
+  "players": [
+    {
+      "id": 1,
+      "seat": 1,
+      "name": "玩家1",
+      "role": "ghost_bride",
+      "camp": "third_party",
+      "alive": false,
+      "privateState": {
+        "ghostBride": { "policy": "awa_melbourne_ghost_bride_v1", "remaining": 0, "groomId": 2 }
+      },
+      "victory": { "affiliations": [{ "kind": "faction", "faction": "third_party" }] },
+      "vote": { "weight": 1, "canVote": true },
+      "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+      "marks": []
+    },
+    {
+      "id": 2,
+      "seat": 2,
+      "name": "玩家2",
+      "role": "wolf",
+      "camp": "wolf",
+      "alive": false,
+      "privateState": {},
+      "victory": { "affiliations": [{ "kind": "faction", "faction": "third_party" }] },
+      "vote": { "weight": 1, "canVote": true },
+      "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+      "marks": []
+    },
+    {
+      "id": 3,
+      "seat": 3,
+      "name": "玩家3",
+      "role": "wolf",
+      "camp": "wolf",
+      "alive": true,
+      "privateState": {},
+      "victory": { "affiliations": [{ "kind": "faction", "faction": "third_party" }] },
+      "vote": { "weight": 1, "canVote": true },
+      "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+      "marks": []
+    },
+    {
+      "id": 4,
+      "seat": 4,
+      "name": "玩家4",
+      "role": "wolf",
+      "camp": "wolf",
+      "alive": false,
+      "privateState": {},
+      "victory": { "affiliations": [{ "kind": "faction", "faction": "wolf" }] },
+      "vote": { "weight": 1, "canVote": true },
+      "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+      "marks": []
+    },
+    {
+      "id": 5,
+      "seat": 5,
+      "name": "玩家5",
+      "role": "villager",
+      "camp": "good",
+      "alive": false,
+      "privateState": {},
+      "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+      "vote": { "weight": 1, "canVote": true },
+      "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+      "marks": []
+    },
+    {
+      "id": 6,
+      "seat": 6,
+      "name": "玩家6",
+      "role": "villager",
+      "camp": "good",
+      "alive": false,
+      "privateState": {},
+      "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+      "vote": { "weight": 1, "canVote": true },
+      "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+      "marks": []
+    },
+    {
+      "id": 7,
+      "seat": 7,
+      "name": "玩家7",
+      "role": "villager",
+      "camp": "good",
+      "alive": false,
+      "privateState": {},
+      "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+      "vote": { "weight": 1, "canVote": true },
+      "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+      "marks": []
+    },
+    {
+      "id": 8,
+      "seat": 8,
+      "name": "玩家8",
+      "role": "villager",
+      "camp": "good",
+      "alive": false,
+      "privateState": {},
+      "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+      "vote": { "weight": 1, "canVote": true },
+      "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+      "marks": []
+    },
+    {
+      "id": 9,
+      "seat": 9,
+      "name": "玩家9",
+      "role": "seer",
+      "camp": "good",
+      "alive": false,
+      "privateState": {
+        "abilities": {
+          "native:seer_check": {
+            "id": "native:seer_check",
+            "kind": "seer_check",
+            "state": {
+              "lastTarget": 3,
+              "lastIsWerewolf": true,
+              "lastResult": { "kind": "camp", "camp": "wolf" },
+              "history": [
+                {
+                  "targetId": 1,
+                  "isWerewolf": false,
+                  "result": { "kind": "camp", "camp": "good" }
+                },
+                { "targetId": 3, "isWerewolf": true, "result": { "kind": "camp", "camp": "wolf" } },
+                { "targetId": 3, "isWerewolf": true, "result": { "kind": "camp", "camp": "wolf" } },
+                { "targetId": 3, "isWerewolf": true, "result": { "kind": "camp", "camp": "wolf" } }
+              ]
+            },
+            "source": { "kind": "native", "role": "seer" },
+            "sourceDisclosed": true,
+            "startsOnDay": 1,
+            "maxUses": null,
+            "uses": 4,
+            "lastUsedDay": 4,
+            "disabled": false
+          }
+        }
+      },
+      "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+      "vote": { "weight": 1, "canVote": true },
+      "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+      "marks": []
+    },
+    {
+      "id": 10,
+      "seat": 10,
+      "name": "玩家10",
+      "role": "witch",
+      "camp": "good",
+      "alive": false,
+      "privateState": {
+        "abilities": {
+          "native:potion": {
+            "id": "native:potion",
+            "kind": "potion",
+            "state": {
+              "heal": 1,
+              "poison": 1,
+              "selfHealRule": "disabled",
+              "canSelfHeal": false,
+              "healUsedThisNight": false,
+              "poisonUsedThisNight": false
+            },
+            "source": { "kind": "native", "role": "witch" },
+            "sourceDisclosed": true,
+            "startsOnDay": 1,
+            "maxUses": null,
+            "uses": 0,
+            "lastUsedDay": 4,
+            "disabled": false
+          }
+        }
+      },
+      "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+      "vote": { "weight": 1, "canVote": true },
+      "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+      "marks": []
+    },
+    {
+      "id": 11,
+      "seat": 11,
+      "name": "玩家11",
+      "role": "hunter",
+      "camp": "good",
+      "alive": false,
+      "privateState": {
+        "hunter": { "canShoot": false, "deathActionPolicy": "awa_knife_or_exile_v1" }
+      },
+      "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+      "vote": { "weight": 1, "canVote": true },
+      "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+      "marks": []
+    },
+    {
+      "id": 12,
+      "seat": 12,
+      "name": "玩家12",
+      "role": "guard",
+      "camp": "good",
+      "alive": false,
+      "privateState": {
+        "abilities": {
+          "native:guard": {
+            "id": "native:guard",
+            "kind": "guard",
+            "state": { "lastTarget": null, "repeatPolicy": "netease_consecutive_nights_v1" },
+            "source": { "kind": "native", "role": "guard" },
+            "sourceDisclosed": true,
+            "startsOnDay": 1,
+            "maxUses": null,
+            "uses": 0,
+            "lastUsedDay": 6,
+            "disabled": false
+          }
+        }
+      },
+      "victory": { "affiliations": [{ "kind": "faction", "faction": "good" }] },
+      "vote": { "weight": 1, "canVote": true },
+      "badge": { "isSheriff": false, "destroyed": false, "voteWeight": 1.5 },
+      "marks": []
+    }
+  ],
+  "eventCount": 160
+}

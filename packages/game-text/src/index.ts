@@ -714,3 +714,44 @@ export function lonelyGirlEventLabel(
 }
 
 export * from "./ghost-bride";
+
+export * from "./ghost-bride-preset";
+
+import { readGhostBrideEventFact } from "./ghost-bride";
+export function ghostBrideEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale,
+): string | null {
+  const p = readGhostBrideEventFact(type, payload);
+  if (!p) return null;
+  const none = text(locale, "replay.none");
+  const parameters: Record<string, string | number> = {
+    bride: Number(p.brideId ?? 0),
+    groom: Number(p.groomId ?? 0),
+    witness: Number(p.witnessId ?? 0),
+    actor: Number(p.actorId ?? 0),
+    recipient: Number(p.recipientId ?? 0),
+    target: p.targetId === null ? none : Number(p.targetId ?? 0),
+    vote: Number(p.voteIndex ?? 0),
+    day: Number(p.day),
+    body: String(p.text ?? ""),
+    owner: p.owner ? text(locale, `wedding.owner.${p.owner}` as MessageKey) : none,
+    actors: Array.isArray(p.actorIds) ? p.actorIds.join(", ") : none,
+  };
+  const names: Record<string, string[]> = {
+    ghost_bride_pair_chosen: ["bride", "groom"],
+    ghost_bride_group_chosen: ["bride", "groom", "witness"],
+    ghost_bride_witness_vote: ["actor", "vote", "target"],
+    ghost_bride_partner_chat: ["actor", "recipient", "body"],
+    ghost_bride_knife_captured: ["day", "owner", "actors"],
+    ghost_bride_knife_vote: ["actor", "target"],
+    ghost_bride_knife_resolved: ["day", "target"],
+    ghost_bride_partner_death: ["actor", "target"],
+  };
+  return text(
+    locale,
+    `console.${type}` as MessageKey,
+    Object.fromEntries(names[type]!.map((name) => [name, parameters[name]!])),
+  );
+}

@@ -1,3 +1,4 @@
+import { weddingBadgeSwallowed } from "../roles/ghost_bride/authority";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { IdentityComponent } from "../../../core/domain/entities/player";
@@ -35,7 +36,7 @@ interface SheriffVote {
 }
 
 export async function electSheriffIfNeeded(input: SheriffElectionInput): Promise<EntityId | null> {
-  if (!current(input)) return null;
+  if (!current(input) || weddingBadgeSwallowed(input.world)) return null;
   const { world, events, day, enableSheriff, config } = input;
   const currentSheriff = findSheriffId(world, input.roleCatalog);
   if (!enableSheriff || day !== 1 || currentSheriff !== null) return currentSheriff;
@@ -425,6 +426,7 @@ async function collectSheriffVotes(
 }
 
 function current(input: SheriffElectionInput): boolean {
+  if (weddingBadgeSwallowed(input.world)) return false;
   return input.isCurrent?.() ?? true;
 }
 

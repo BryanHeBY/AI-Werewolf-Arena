@@ -1,4 +1,8 @@
 import {
+  weddingSetup,
+  weddingAuditPlayer,
+} from "../../game/mechanisms/roles/ghost_bride/authority";
+import {
   projectLonelyGirl,
   projectLonelyGirlSetup,
   projectLonelyGirlVictory,
@@ -92,11 +96,13 @@ export function captureCheckpoint(
   eventCount: number,
   failure?: unknown,
 ): RecordedCheckpoint {
+  const ghostBrideSetup = weddingSetup(world);
   const lonelyGirlSetup = projectLonelyGirlSetup(world);
   const thiefSetup = projectThiefSetup(world),
     shapeshifterSetup = projectShapeshifterSetup(world);
   return {
     ...(lonelyGirlSetup ? { lonelyGirlSetup } : {}),
+    ...(ghostBrideSetup ? { ghostBrideSetup } : {}),
     ...(thiefSetup ? { thiefSetup } : {}),
     ...(shapeshifterSetup ? { shapeshifterSetup } : {}),
     cycle,
@@ -111,7 +117,8 @@ export function captureCheckpoint(
       const role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
       const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge)!;
       const vote = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight)!;
-      const audit = projectLonelyGirlAuditPlayer(world, id);
+      const weddingAudit = weddingAuditPlayer(world, id, !complete);
+      const audit = weddingAudit ?? projectLonelyGirlAuditPlayer(world, id);
       const wall = projectWallNote(world, id);
       const wallNote = wall
         ? {
@@ -154,6 +161,7 @@ export function captureCheckpoint(
             }
           : {}),
         victory:
+          (weddingAudit ? { affiliations: weddingAudit.victory } : null) ??
           projectLonelyGirlVictory(world, id) ??
           structuredClone(world.getComponent<VictoryComponent>(id, COMPONENT.Victory)!),
         vote: { weight: vote.weight, canVote: vote.canVote },

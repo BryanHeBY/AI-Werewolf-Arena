@@ -1,3 +1,4 @@
+import { GHOST_BRIDE_EVENT_TYPES, readGhostBrideEventFact } from "@ai-werewolf-arena/game-text";
 import { readLonelyGirlEventFact } from "@ai-werewolf-arena/game-text";
 import { WILD_CHILD_EVENT_TYPES, readWildChildEventFact } from "@ai-werewolf-arena/game-text";
 import { SHAPESHIFTER_EVENT_TYPES, readShapeshifterEventFact } from "@ai-werewolf-arena/game-text";
@@ -63,6 +64,11 @@ export function buildAgentVisibleEvent(
   if (
     (SHAPESHIFTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
     !readShapeshifterEventFact(event.type, event.payload)
+  )
+    return null;
+  if (
+    (GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
+    !readGhostBrideEventFact(event.type, event.payload)
   )
     return null;
   const visibility = getDefaultAgentEventVisibilityRegistry();

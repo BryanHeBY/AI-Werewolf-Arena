@@ -24,7 +24,7 @@ CLI目录、能力授权、独立玩家/展示DTO、统一回放事实reader、�
 
 ## 当前 P8–P10 接续（024a933之后）
 
-用户已验收上一批整改并授权普通推送，远端main核验为024a933；随后明确授权完成全部剩余任务。当前持续实施41角色、有限事件/道具与P10，具体约束见[p8-p10-continuation.md](p8-p10-continuation.md)。下方未验收/未push及P8–P10未开始说明保留对应历史批次语境，不代表本次授权边界。咒狐、丘比特、杠精、盗贼、野孩子、千面人和孤独少女有限组合已启用并登记implemented，其余34项planned尚未启用；后续门禁按新源码独立记录；不将历史2389/223/82当未来角色验收。
+用户已验收上一批整改并授权普通推送，远端main核验为024a933；随后明确授权完成全部剩余任务。当前持续实施41角色、有限事件/道具与P10，具体约束见[p8-p10-continuation.md](p8-p10-continuation.md)。下方未验收/未push及P8–P10未开始说明保留对应历史批次语境，不代表本次授权边界。咒狐、丘比特、杠精、盗贼、野孩子、千面人、孤独少女与鬼魂新娘有限组合已启用并登记implemented，其余33项planned尚未启用；后续门禁按新源码独立记录；不将历史2389/223/82当未来角色验收。
 
 ## P9a 孤独少女（2026-10-09）
 
@@ -142,3 +142,7 @@ Chromium完整门禁在`90cb845`完成；其后`52103ea`仅改变后端警徽请
 ## P9a 第二项：野孩子（2026-10-09）
 
 唯一来源AWA适配首夜必选榜样、实际完整死亡波次转真实阵营/胜利、下一实际Night才双向狼队权限、原始roster与严格因果Tape已贯通。47核心/309断言、60实际双语三transport完整局及逐Tape、8真实严格失败partial Tape、200受限观察局逐Tape、1000独立World自然局（788转换/678实际activation）分别验证。三组已报告问题修复并由原审查者复验闭合。冻结源码后全backend **2932/281583/229文件**、frontend **277/2696/42文件**、完整Chromium **128/128**均0失败；type/lint/format与双端build通过，双语12人实际PNG/shared frame已目检。见[规则卡](../rules/awa-lui-meme-wild-child-v1.md)/[验收](../reviews/p9-wild-child.md)。当前23verified/5implemented/36planned；main本地commit，继续千面人/P9/P10，总体待用户最终验收，无push/真实模型/用户configs或秘密操作。
+
+## P9a 第五项：鬼魂新娘（2026-10-10）
+
+唯一Melbourne来源AWA精确12人三方板implemented；首夜原请求共同婚礼、私聊/证婚人、原身份库存和独立胜利、普通狼/情侣/证婚人逐夜唯一刀owner、复合殉情/枪源、吞徽与完整Night终局闭环。严格God/四scope投影、CP安全库存/零getter和Proxy、实际provider失败/accepted提交边界及strict Tape贯通，三组报告修复复验关闭。见[规则卡](../rules/awa-melbourne-ghost-bride-v1.md)/[完整验收](../reviews/p9-ghost-bride.md)。最终全backend **3315/329141/246文件**、frontend **364/3862/48文件**、Chromium **172/172**均0失败；check/lint/format及双端build通过。24真实双语三transport完整局逐Tape、8严格失败partialTape、200受限Observed逐Tape、1000独立World及终局公开死亡逐人等于真实Alive分别记录。Observed每语言seed43一次盲枪合法拒绝精确断言，不冒零reject，fallback为0。P9a五角色技术功能已交付，目录23verified/8implemented/33planned；猎魔人规则候选审查继续，P9b–f/P10和总体用户验收保持开放。仅main本地commit，无push/部署/真实模型或用户configs/秘密操作。

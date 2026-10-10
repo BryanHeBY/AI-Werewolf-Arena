@@ -10,6 +10,10 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  choose_bridegroom: { target_id: EntityId };
+  choose_wedding_witness: { target_id: EntityId };
+  speak_to_partner: { text: string };
+  wedding_kill_vote: { target_id: EntityId | null; abstain: boolean };
   choose_wild_model: { target_id: EntityId };
   choose_thief_card: { slot: 0 | 1 };
   choose_shapeshifter_card: { slot: 0 | 1 };
@@ -58,6 +62,10 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "choose_bridegroom",
+  "choose_wedding_witness",
+  "speak_to_partner",
+  "wedding_kill_vote",
   "choose_wild_model",
   "choose_thief_card",
   "choose_shapeshifter_card",
@@ -128,6 +136,10 @@ export interface TurnConstraints {
 }
 
 export const ACTION_STAGES = [
+  "ghost_bride_groom",
+  "ghost_bride_chat",
+  "ghost_bride_witness",
+  "ghost_bride_knife",
   ...Object.values(ActionWindow),
   ...Object.values(KnightDuelWindow),
   "wolf_discussion",
@@ -182,6 +194,7 @@ export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */
 export interface ActionRequestExtras {
+  proposedWitnessId?: EntityId;
   /** Explicit strict turns distinguish a clean optional wait from a failed submission/transport. */
   action_failure_policy?: "error";
   /** Some mandatory choices must fail explicitly instead of accepting a fabricated fallback. */

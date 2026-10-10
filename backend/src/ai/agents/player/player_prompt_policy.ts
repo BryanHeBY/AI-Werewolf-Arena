@@ -1,3 +1,7 @@
+import {
+  weddingActorView,
+  weddingBrideState,
+} from "../../../game/mechanisms/roles/ghost_bride/authority";
 import { projectLonelyGirl } from "../../../game/mechanisms/roles/lonely_girl/lifecycle";
 import { projectWildChild } from "../../../game/mechanisms/roles/wild_child/lifecycle";
 import { initialIdentityCandidateCounts } from "../../../game/mechanisms/roles/initial_identity/deal";
@@ -210,6 +214,12 @@ export class PlayerPromptPolicy {
     if (role?.role === Role.BlackMarketMerchant) {
       const state = getBlackMarketState(role);
       if (state) ownState.blackMarket = projectBlackMarketState(state);
+    }
+    const wedding = weddingActorView(this.world, request.actorId);
+    if (wedding) ownState.wedding = wedding;
+    if (role?.role === Role.GhostBride) {
+      const brideState = weddingBrideState(this.world, request.actorId);
+      if (brideState) ownState.ghostBride = brideState;
     }
     if (role?.role === Role.LonelyGirl) ownState.lonelyGirl = projectLonelyGirl(this.world, role);
     if (role?.role === Role.WildChild) ownState.wildChild = projectWildChild(this.world, role);
@@ -462,6 +472,11 @@ export class PlayerPromptPolicy {
 
   private statusDirective(request: ActionRequest, role?: RoleComponent): string | undefined {
     const lines: string[] = [];
+    const weddingView = weddingActorView(this.world, request.actorId);
+    if (weddingView)
+      lines.push(
+        text(this.locale, "prompt.status.wedding", { state: JSON.stringify(weddingView) }),
+      );
     if (role?.role === Role.LonelyGirl)
       lines.push(
         text(this.locale, "prompt.status.lonely_girl", {

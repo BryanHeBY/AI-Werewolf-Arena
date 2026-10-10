@@ -1,5 +1,7 @@
 /** Stable rule failures; human messages belong to game-text. */
 export enum RuleError {
+  GhostBrideUnavailable = "ghost_bride_unavailable",
+  GhostBrideChoice = "ghost_bride_choice",
   LonelyGirlUnavailable = "lonely_girl_unavailable",
   LonelyGirlChoice = "lonely_girl_choice",
   WildChildUnavailable = "wild_child_unavailable",

@@ -198,3 +198,64 @@ export function readWeddingTool(value: unknown): WeddingTool | null {
       : null;
   return null;
 }
+
+export const GHOST_BRIDE_EVENT_TYPES = [
+  "ghost_bride_pair_chosen",
+  "ghost_bride_witness_vote",
+  "ghost_bride_group_chosen",
+  "ghost_bride_partner_chat",
+  "ghost_bride_knife_captured",
+  "ghost_bride_knife_vote",
+  "ghost_bride_knife_resolved",
+  "ghost_bride_partner_death",
+] as const;
+export function readGhostBrideEventFact(
+  type: string,
+  value: unknown,
+): Record<string, unknown> | null {
+  const p = record(value);
+  if (!p || p.policy !== GHOST_BRIDE_POLICY || !groupId(p.groupId)) return null;
+  if (type === "ghost_bride_pair_chosen") return readWeddingPair(p) ? p : null;
+  if (type === "ghost_bride_group_chosen") return readWeddingGroup(p) ? p : null;
+  if (type === "ghost_bride_knife_captured") return readWeddingKnifeCapture(p) ? p : null;
+  if (type === "ghost_bride_witness_vote")
+    return exact(p, ["policy", "groupId", "day", "actorId", "targetId", "voteIndex"]) &&
+      p.day === 1 &&
+      id(p.actorId) &&
+      id(p.targetId) &&
+      p.actorId !== p.targetId &&
+      (p.voteIndex === 1 || p.voteIndex === 2)
+      ? p
+      : null;
+  if (type === "ghost_bride_partner_chat")
+    return exact(p, ["policy", "groupId", "day", "actorId", "recipientId", "text"]) &&
+      id(p.day) &&
+      id(p.actorId) &&
+      id(p.recipientId) &&
+      p.actorId !== p.recipientId &&
+      typeof p.text === "string"
+      ? p
+      : null;
+  if (type === "ghost_bride_knife_vote")
+    return exact(p, ["policy", "groupId", "day", "owner", "actorId", "targetId", "abstain"]) &&
+      id(p.day) &&
+      id(p.actorId) &&
+      ["ordinary_pack", "pair", "witness"].includes(p.owner as string) &&
+      ((p.targetId === null && p.abstain === true) || (id(p.targetId) && p.abstain === false))
+      ? p
+      : null;
+  if (type === "ghost_bride_knife_resolved") {
+    const { targetId, ...capture } = p;
+    return readWeddingKnifeCapture(capture) && (targetId === null || id(targetId)) ? p : null;
+  }
+  if (type === "ghost_bride_partner_death")
+    return exact(p, ["policy", "groupId", "day", "actorId", "targetId", "phase"]) &&
+      id(p.day) &&
+      id(p.actorId) &&
+      id(p.targetId) &&
+      p.actorId !== p.targetId &&
+      ["night", "day", "voting"].includes(p.phase as string)
+      ? p
+      : null;
+  return null;
+}

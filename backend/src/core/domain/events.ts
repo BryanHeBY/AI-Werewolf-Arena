@@ -1,3 +1,4 @@
+import type { WeddingPair, WeddingGroup, WeddingKnifeCapture } from "@ai-werewolf-arena/game-text";
 import type { DeathCause } from "./deaths";
 import type { ActionWindow, Camp, EntityId, Phase, PotionType, Role } from "./identity";
 import type { InspectionResult, RoleId } from "@ai-werewolf-arena/game-catalog";
@@ -39,6 +40,43 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  ghost_bride_pair_chosen: WeddingPair;
+  ghost_bride_group_chosen: WeddingGroup;
+  ghost_bride_knife_captured: WeddingKnifeCapture;
+  ghost_bride_witness_vote: {
+    policy: "awa_melbourne_ghost_bride_v1";
+    groupId: string;
+    day: 1;
+    actorId: EntityId;
+    targetId: EntityId;
+    voteIndex: 1 | 2;
+  };
+  ghost_bride_partner_chat: {
+    policy: "awa_melbourne_ghost_bride_v1";
+    groupId: string;
+    day: number;
+    actorId: EntityId;
+    recipientId: EntityId;
+    text: string;
+  };
+  ghost_bride_knife_vote: {
+    policy: "awa_melbourne_ghost_bride_v1";
+    groupId: string;
+    day: number;
+    owner: "ordinary_pack" | "pair" | "witness";
+    actorId: EntityId;
+    targetId: EntityId | null;
+    abstain: boolean;
+  };
+  ghost_bride_knife_resolved: WeddingKnifeCapture & { targetId: EntityId | null };
+  ghost_bride_partner_death: {
+    policy: "awa_melbourne_ghost_bride_v1";
+    groupId: string;
+    day: number;
+    actorId: EntityId;
+    targetId: EntityId;
+    phase: Phase;
+  };
   lonely_girl_admired_chosen: {
     policy: "awa_netease_lonely_girl_v1";
     actorId: EntityId;
@@ -378,9 +416,21 @@ export const WOLF_TEAM_EVENT_TYPES = [
 ] as const;
 export type WolfTeamEventType = (typeof WOLF_TEAM_EVENT_TYPES)[number];
 
+export type WeddingEventType =
+  | "ghost_bride_pair_chosen"
+  | "ghost_bride_group_chosen"
+  | "ghost_bride_knife_captured"
+  | "ghost_bride_witness_vote"
+  | "ghost_bride_partner_chat"
+  | "ghost_bride_knife_vote"
+  | "ghost_bride_knife_resolved"
+  | "ghost_bride_partner_death";
+
 export type GameEvent = {
   [K in keyof EventPayloadMap]: EventBase<K, EventPayloadMap[K]> &
-    (K extends WolfTeamEventType ? { readonly audience: readonly EntityId[] } : {});
+    (K extends WolfTeamEventType | WeddingEventType
+      ? { readonly audience: readonly EntityId[] }
+      : {});
 }[keyof EventPayloadMap];
 
 /** Projected protocol; payload is intentionally open because projection/parsing is a wire boundary. */

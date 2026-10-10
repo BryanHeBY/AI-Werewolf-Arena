@@ -1,3 +1,4 @@
+import { weddingBadgeSwallowed } from "../roles/ghost_bride/authority";
 /** 文件说明：警徽流转、销毁与授予逻辑。 */
 import { AliveComponent } from "../../../core/domain/components/alive";
 import { BadgeComponent } from "../../../core/domain/components/badge";
@@ -23,7 +24,7 @@ export function assignSheriff(
   config?: BoardConfig,
   catalog?: RoleCatalog,
 ): boolean {
-  if (!canBeSheriff(world, sheriffId, catalog)) return false;
+  if (weddingBadgeSwallowed(world) || !canBeSheriff(world, sheriffId, catalog)) return false;
   const weight = config?.sheriff?.voteWeight ?? SHERIFF_VOTE_WEIGHT;
   for (const id of world.getAliveEntityIds()) {
     const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge);

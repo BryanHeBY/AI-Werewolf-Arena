@@ -113,6 +113,7 @@ export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
   events?: { pack: (typeof EVENT_PACK_IDS)[number] };
   wildChild?: { policy: "awa_lui_meme_wild_child_v1" };
+  ghostBride?: { policy: "awa_melbourne_ghost_bride_v1" };
   lonelyGirl?: { policy: "awa_netease_lonely_girl_v1" };
   thief?: { policy: "lui_meme_thief_two_extra_villagers_v1" };
   shapeshifter?: { policy: "awa_netease_shapeshifter_two_extra_villagers_v1" };

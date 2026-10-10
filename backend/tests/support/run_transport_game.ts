@@ -258,7 +258,14 @@ export async function runTransportGame(
         .filter((entry) => entry !== undefined);
       assertTransportEvents(plan.eventRole ?? plan.role, events, actor);
       const rounds = view.timeline.filter((entry) => entry.kind === "turn");
-      expect(rounds).toHaveLength(plan.turns.length);
+      expect(
+        rounds,
+        JSON.stringify({
+          actor,
+          planned: plan.turns.map((r) => [r.day, r.stage]),
+          actual: rounds.map((r) => [r.day, r.stage]),
+        }),
+      ).toHaveLength(plan.turns.length);
       for (const round of rounds)
         if (round.kind === "turn")
           expect(

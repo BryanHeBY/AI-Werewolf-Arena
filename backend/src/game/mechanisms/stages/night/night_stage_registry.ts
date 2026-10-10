@@ -1,3 +1,4 @@
+import { WEDDING_CHAT_STAGE, WEDDING_KNIFE_STAGE } from "../../roles/ghost_bride/night_stages";
 /** 文件说明：根据板子角色集合构建夜间阶段列表。 */
 import { BoardConfig, Role } from "../../../../core/domain/model";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../roles/catalog";
@@ -94,6 +95,13 @@ export class NightStageRegistry {
       if (!dedup.has(stage.id)) {
         dedup.set(stage.id, stage);
       }
+    }
+    if (roleSet.has(Role.GhostBride)) {
+      dedup.delete("wolf_kill_vote");
+      dedup.set(WEDDING_CHAT_STAGE.id, WEDDING_CHAT_STAGE);
+      dedup.set(WEDDING_KNIFE_STAGE.id, WEDDING_KNIFE_STAGE);
+      const chat = dedup.get("wolf_discussion");
+      if (chat) dedup.set(chat.id, { ...chat, priority: 350 });
     }
     return Array.from(dedup.values()).sort((a, b) => {
       const diff = a.priority - b.priority;

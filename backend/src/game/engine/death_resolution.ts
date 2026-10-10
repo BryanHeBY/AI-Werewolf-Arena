@@ -1,3 +1,5 @@
+import { expandWeddingDeaths, weddingGroup } from "../mechanisms/roles/ghost_bride/authority";
+import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-text";
 import {
   recordWildChildDeathCommit,
   resolveWildChildDeathWave,
@@ -57,6 +59,30 @@ interface DeathWaveActions {
 
 /** Resolves successive death waves without advancing the current action phase. */
 export class DeathResolution {
+  private expandWeddingWave(
+    ids: number[],
+    sources: DeathSources,
+    seen: ReadonlySet<number>,
+    nightOrigin: Set<number>,
+  ): number[] {
+    const before = new Set(ids);
+    for (const edge of expandWeddingDeaths(this.world, ids, sources, seen, nightOrigin)) {
+      const group = weddingGroup(this.world)!;
+      this.events.push({
+        timestamp: Date.now(),
+        type: "ghost_bride_partner_death",
+        payload: {
+          policy: GHOST_BRIDE_POLICY,
+          groupId: group.groupId,
+          day: this.state.day,
+          phase: this.state.phase,
+          ...edge,
+        },
+        audience: Object.freeze([]),
+      });
+    }
+    return ids.filter((id) => !before.has(id));
+  }
   private readonly lastWordsMechanism = getDefaultLastWordsMechanism();
   private readonly settledLives = new Map<
     EntityId,
@@ -113,6 +139,7 @@ export class DeathResolution {
     const initialPhases: Record<EntityId, Phase> = structuredClone(deathPhases);
     const nightOrigin = new Set(nightEffects?.nightOriginIds ?? []);
     if (!isCurrent()) return;
+    const weddingInitial = this.expandWeddingWave(pending, allSources, seen, nightOrigin);
     const linkedInitial = expandLoversWave(
       this.world,
       pending,
@@ -122,15 +149,19 @@ export class DeathResolution {
       seen,
       nightEffects?.dreams,
     );
-    for (const id of linkedInitial) {
+    for (const id of [...linkedInitial, ...weddingInitial]) {
       seen.add(id);
       initialPhases[id] = nightOrigin.has(id) ? Phase.Night : phase;
     }
-    if (linkedInitial.length)
+    const publicLinkedInitial = [
+      ...linkedInitial,
+      ...(phase === Phase.Night ? [] : weddingInitial),
+    ];
+    if (publicLinkedInitial.length)
       this.events.push({
         timestamp: Date.now(),
         type: "additional_deaths",
-        payload: { deaths: linkedInitial },
+        payload: { deaths: publicLinkedInitial },
       });
     let firstBatch = true;
     const gunsToExpire: ReturnType<typeof firstDeathGuns> = [];
@@ -304,6 +335,7 @@ export class DeathResolution {
                     ];
                     nightOrigin.add(id);
                   }
+                this.expandWeddingWave(proposed, proposedSources, seen, nightOrigin);
                 expandLoversWave(
                   this.world,
                   proposed,

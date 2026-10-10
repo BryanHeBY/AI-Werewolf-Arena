@@ -1,3 +1,4 @@
+import { bindGhostBrideRequest } from "../mechanisms/roles/ghost_bride/authority";
 import { bindLonelyGirlRequest } from "../mechanisms/roles/lonely_girl/lifecycle";
 import { bindWildChildRequest } from "../mechanisms/roles/wild_child/lifecycle";
 import { bindInitialIdentityRequest } from "../mechanisms/roles/initial_identity/setup";
@@ -63,6 +64,16 @@ export class GameActionRequestFactory {
     if (input.stage === "thief" || input.stage === "shapeshifter")
       bindInitialIdentityRequest(this.world, request);
     if (input.stage === "wall_notes") bindWallRequest(this.world, request);
+    if (
+      [
+        "ghost_bride_groom",
+        "ghost_bride_chat",
+        "ghost_bride_witness",
+        "ghost_bride_knife",
+        "wolf_vote",
+      ].includes(input.stage)
+    )
+      bindGhostBrideRequest(this.world, request);
     return request;
   }
 }

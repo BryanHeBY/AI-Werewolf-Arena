@@ -1,6 +1,53 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "console.ghost_bride_pair_chosen": "Ghost Bride {bride} and player {groom} are partners.",
+  "replay.stage.ghost_bride_pair_chosen": "Wedding fact",
+  "console.ghost_bride_group_chosen":
+    "Wedding group: bride {bride}, groom {groom}, witness {witness}.",
+  "replay.stage.ghost_bride_group_chosen": "Wedding fact",
+  "console.ghost_bride_witness_vote":
+    "God: player {actor} cast wedding witness vote {vote} for {target}.",
+  "replay.stage.ghost_bride_witness_vote": "Wedding fact",
+  "console.ghost_bride_partner_chat": "Partner chat: {actor} to {recipient}: {body}",
+  "replay.stage.ghost_bride_partner_chat": "Wedding fact",
+  "console.ghost_bride_knife_captured":
+    "God: wedding knife on night {day} belongs to {owner}; actors {actors}.",
+  "replay.stage.ghost_bride_knife_captured": "Wedding fact",
+  "console.ghost_bride_knife_vote": "Wedding knife vote: {actor} chose {target}.",
+  "replay.stage.ghost_bride_knife_vote": "Wedding fact",
+  "console.ghost_bride_knife_resolved": "Wedding knife result on night {day}: {target}.",
+  "replay.stage.ghost_bride_knife_resolved": "Wedding fact",
+  "console.ghost_bride_partner_death": "God: death of {actor} caused partner {target} to die.",
+  "replay.stage.ghost_bride_partner_death": "Wedding fact",
+  "wedding.owner.ordinary_pack": "single wolf pack",
+  "wedding.owner.pair": "partners",
+  "wedding.owner.witness": "witness",
+  "wedding.owner.none": "no knife owner",
+  "role.ghost_bride.brief":
+    "AWA adaptation of the Melbourne three-faction setup: choose a Groom on night one and jointly confirm a Witness. Native roles and stocks stay unchanged; the wedding trio wins independently. Partners recognize and privately chat with each other; one death takes the other. After all single wolves die, the living pair inherits the knife; after both partners die, the Witness inherits it.",
+  "role.ghost_bride.state":
+    "Your Ghost Bride opening resource: {state}. Groom and Witness retain their native roles and stocks without disclosing them to you.",
+  "prompt.status.wedding":
+    "Your authorized wedding relation and independent third-party goal: {state}. Eliminate both other factions to win. A partner dying of grief cannot shoot. Only authorized IDs and your knife eligibility appear here, with no partner or Witness role or stock disclosure.",
+  "action.choose_bridegroom.hint":
+    "On night one choose another living player as Groom. Selection is mandatory, final, and has no default fallback.",
+  "action.choose_wedding_witness.hint":
+    "Choose a living player outside the couple as Witness. Bride proposes first; Groom must submit the same ID to confirm. Disagreement fails setup without a fallback.",
+  "action.speak_to_partner.hint":
+    "Send the one authorized message to your original partner. Submit text; an empty string explicitly passes. Witness never receives partner chat.",
+  "action.wedding_kill_vote.hint":
+    "The inherited knife requires an integer target_id with abstain=false, or target_id=null with abstain=true. Neither partner may target the couple; Witness may not target self.",
+  "error.ghost_bride_unavailable":
+    "The original wedding life, request budget, or joint authorization is no longer valid.",
+  "error.ghost_bride_choice":
+    "Submit only the canonical wedding choice authorized for this turn; no default selection is permitted.",
+  "stage.ghost_bride_groom": "Ghost Bride chooses Groom",
+  "stage.ghost_bride_chat": "Partner chat",
+  "stage.ghost_bride_witness": "Joint Witness choice",
+  "stage.ghost_bride_knife": "Inherited wedding knife",
+  "reason.three_factions_eliminated": "The sole surviving faction eliminated both others",
+  "reason.three_factions_all_dead": "All three factions were eliminated",
   "role.lonely_girl.brief":
     "Before other first-night actions choose another living player to admire. Your personal victory follows their true faction at that choice; you remain a Good civilian with no pack recognition, wolf chat, knife or self-destruct. You do not learn their identity; they are not told they are admired. The AWA policy freezes membership, which survives death.",
   "role.lonely_girl.state":
@@ -598,6 +645,8 @@ export const en = Object.freeze({
   "reason.runtime_timeout": "Runtime deadline reached",
   "reason.in_progress": "In progress",
   "reason.completed": "Completed",
+  "rule.three_factions_elimination":
+    "Three factions: the sole surviving faction wins after the full death chain; all dead is a draw",
   "rule.slaughter_side":
     "Side elimination: wolves win when all good special roles or all villagers are eliminated; good wins when all wolves are eliminated",
   "rule.slaughter_city":

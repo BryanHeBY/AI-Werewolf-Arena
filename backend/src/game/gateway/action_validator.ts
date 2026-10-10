@@ -18,11 +18,14 @@ import { World } from "../../core/domain/world";
  * 动作校验上下文。
  */
 export interface ValidationContext {
+  /** Owned transactional controllers record validation only after the actual commit. */
+  deferOperation?: boolean;
   day?: number;
   thiefScope?: object;
   shapeshifterScope?: object;
   wildChildScope?: object;
   lonelyGirlScope?: object;
+  ghostBrideScope?: object;
   wallScope?: object;
   wallId?: string;
   itemInstanceId?: string;
@@ -56,7 +59,7 @@ export class ActionValidator {
     context: ValidationContext,
   ): ToolValidationResult<T> {
     const reject = (violation: RuleViolation): ToolValidationResult<T> => {
-      if (this.recordOperations)
+      if (this.recordOperations && context.deferOperation !== true)
         safeRecordLogicOp({
           scope: "gateway",
           op: "validate_tool_call",
@@ -73,7 +76,7 @@ export class ActionValidator {
       return toolFailure(world.locale, violation.code, violation.message);
     };
     const accept = (): ToolValidationResult<T> => {
-      if (this.recordOperations)
+      if (this.recordOperations && context.deferOperation !== true)
         safeRecordLogicOp({
           scope: "gateway",
           op: "validate_tool_call",
@@ -130,6 +133,7 @@ export class ActionValidator {
       shapeshifterScope: context.shapeshifterScope,
       wildChildScope: context.wildChildScope,
       lonelyGirlScope: context.lonelyGirlScope,
+      ghostBrideScope: context.ghostBrideScope,
       wallScope: context.wallScope,
       wallId: context.wallId,
       itemInstanceId: context.itemInstanceId,

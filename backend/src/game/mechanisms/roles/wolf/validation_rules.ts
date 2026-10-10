@@ -1,3 +1,9 @@
+import {
+  weddingMember,
+  weddingSetup,
+  ghostBrideReady,
+  canSubmitWeddingTool,
+} from "../ghost_bride/authority";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：狼人工具校验规则。 */
 import { ActionWindow, Phase } from "../../../../core/domain/model";
@@ -13,7 +19,11 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
     if (phase !== Phase.Night) return { code: RuleError.WolfChatPhase };
     return null;
   },
-  kill_vote: ({ world, role, roleCatalog, toolCall, phase }) => {
+  kill_vote: ({ world, actorId, day, ghostBrideScope, role, roleCatalog, toolCall, phase }) => {
+    if (weddingSetup(world))
+      return canSubmitWeddingTool(world, actorId, phase, day ?? 0, ghostBrideScope, toolCall)
+        ? null
+        : { code: RuleError.GhostBrideUnavailable };
     if (!wolfTeamPermissions(role, roleCatalog, world).canVoteForKill) {
       return { code: RuleError.WolfKillPermission };
     }
@@ -29,7 +39,17 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
     }
     return null;
   },
-  self_destruct: ({ role, roleCatalog, phase, actionWindow, allowSelfDestruct, toolCall }) => {
+  self_destruct: ({
+    world,
+    role,
+    roleCatalog,
+    phase,
+    actionWindow,
+    allowSelfDestruct,
+    toolCall,
+  }) => {
+    if (weddingSetup(world) && (!ghostBrideReady(world) || weddingMember(world, role)))
+      return { code: RuleError.WolfBlastOnly };
     if (roleCatalog.get(role.role)?.canSelfDestruct !== true) {
       return { code: RuleError.WolfBlastOnly };
     }
