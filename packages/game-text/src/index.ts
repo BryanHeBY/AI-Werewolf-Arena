@@ -1,3 +1,4 @@
+import { readOrderPrinceChoiceFact } from "./order-prince";
 import { readRedMoonNextNightFact, readRedMoonExpiryFact } from "./red-moon";
 import { readWildChildEventFact, readWildChildPlayerFact } from "./wild-child";
 export {
@@ -862,4 +863,30 @@ export function magicianEventLabel(
   return full
     ? text(locale, "console.magician.exchange", { actor: full.actorId, day: full.day, pair })
     : text(locale, "console.magician.own", { day: fact.day, pair });
+}
+
+export * from "./order-prince";
+import { readOrderPrinceRevoteFact } from "./order-prince";
+export function orderPrinceEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale = "zh-CN",
+): string | null {
+  if (type === "order_prince_choice_committed") {
+    const fact = readOrderPrinceChoiceFact(type, payload);
+    return fact
+      ? text(locale, "event.order_prince_choice_committed", {
+          day: fact.day,
+          choice: text(
+            locale,
+            fact.activate ? "console.order_prince.activate" : "console.order_prince.decline",
+          ),
+        })
+      : text(locale, "replay.unknown");
+  }
+  if (type !== "order_prince_revote_started") return null;
+  const fact = readOrderPrinceRevoteFact(type, payload);
+  return fact
+    ? text(locale, "event.order_prince_revote_started", { actor: fact.actorId })
+    : text(locale, "replay.unknown");
 }

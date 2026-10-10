@@ -1,3 +1,5 @@
+import { readOrderPrinceChoiceFact } from "@ai-werewolf-arena/game-text";
+import { readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-text";
 import {
   readMagicianExchangeFact,
   readMagicianOwnExchangeFact,
@@ -192,6 +194,8 @@ const NO_IDS = new Set([
   "god_private_game_info",
 ]);
 export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([
+  "order_prince_choice_committed",
+  "order_prince_revote_started",
   "magician_exchange_committed",
   "death_shot_missed",
   ...new Set([...Object.keys(REQUIRED_IDS), ...Object.keys(ID_LISTS), ...SUMMARIES, ...NO_IDS]),
@@ -240,6 +244,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if (type === "order_prince_choice_committed") return !!readOrderPrinceChoiceFact(type, p);
+  if (type === "order_prince_revote_started") return !!readOrderPrinceRevoteFact(type, p);
   if (type === "magician_exchange_committed")
     return !!(readMagicianExchangeFact(type, p) ?? readMagicianOwnExchangeFact(type, p));
   if (type === "death_shot_missed") return !!readDeathShotMissFact(type, p);
@@ -439,6 +445,14 @@ export function readReplayEvent(
       if (p.pair !== null) list(p.pair);
     }
     if (safe.type === "death_shot_missed") add(p.actorId);
+    if (safe.type === "order_prince_choice_committed") {
+      if (safe.phase !== "voting" || p.day !== safe.day) return null;
+      add(p.actorId);
+    }
+    if (safe.type === "order_prince_revote_started") {
+      if (safe.phase !== "voting") return null;
+      add(p.actorId);
+    }
     if (safe.type === "nightmare_fear_committed") {
       if (p.day !== safe.day || safe.phase !== "night") return null;
       if (Object.hasOwn(p, "actorId")) add(p.actorId);
@@ -527,6 +541,8 @@ export function readReplayEvent(
         camp: p.camp as string,
       });
     }
+    if (safe.type === "order_prince_revote_started")
+      effects.push({ kind: "role_revealed", playerId: p.actorId as number, role: "order_prince" });
     if (safe.type === "debater_revealed")
       effects.push({ kind: "role_revealed", playerId: p.actorId as number, role: "debater" });
     if (safe.type === "player_role_revealed" && isRoleId(p.role)) {

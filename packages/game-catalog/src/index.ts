@@ -377,9 +377,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "order_prince",
     names: { "zh-CN": "定序王子", en: "Order Prince" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-order-prince-first-ballot-v1.md",
     mechanismSummary: "限次重投与发言",
   },
   {

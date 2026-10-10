@@ -525,6 +525,31 @@ export const en = Object.freeze({
   "console.shot.missed": "Player {actor} fires, causing no additional death.",
   "role.magician.heal_rule":
     "Witch self-heal permission is based on the original knife number: she cannot heal when that number is herself; an allowed heal of another number still works when exchanged onto herself.",
+  "event.order_prince_choice_committed": "Day {day}: your choice was recorded: {choice}.",
+  "console.order_prince.activate": "activate the reset",
+  "console.order_prince.decline": "decline",
+  "stage.order_prince_choice": "Order Prince choice",
+  "stage.order_prince_speech": "Order Prince speech",
+  "stage.order_prince_revote": "Restarted exile vote",
+  "role.order_prince.brief":
+    "Good faction, god role. After the first exile ballot each day and before exile resolution, you may reveal and restart the vote once per game. Give an extra speech, then all currently eligible voters vote again. No self-destruct window opens during this speech. The old ballot causes no exile and the sheriff badge stays. A tied or all-abstention first ballot is eligible; PK and restarted ballots cannot trigger the skill again. Explicitly activate or decline.",
+  "action.reset_exile_vote.hint":
+    "reset_exile_vote: activate=true spends your once-per-game skill; activate=false explicitly declines.",
+  "action.reset_exile_vote.directive":
+    "Submit only reset_exile_vote with an explicit activate boolean. Missing, failed or timed-out responses never count as declining.",
+  "error.order_prince_unavailable":
+    "The reset is unavailable, spent, or outside your current first-ballot choice.",
+  "request.summary.order_prince_choice":
+    "The first exile ballot is public. Decide whether to spend your one-use vote reset.",
+  "request.summary.order_prince_speech":
+    "You have activated the reset. Give your extra speech before the new ballot. Self-destruct is unavailable here.",
+  "replay.stage.order_prince_choice_committed": "Order Prince choice receipt",
+  "replay.stage.order_prince_revote_started": "Order Prince vote reset",
+  "replay.stage.order_prince_choice": "Order Prince choice",
+  "replay.stage.order_prince_speech": "Order Prince speech",
+  "replay.stage.order_prince_revote": "Restarted exile vote",
+  "event.order_prince_revote_started":
+    "Player {actor} reveals as the Order Prince, voids this ballot and starts a new vote.",
   "role.magician.brief":
     "Good faction, god role. Act first each eligible night to exchange the effective targets of night skills for two distinct legal living numbers. Each number can be used only once per game; you may include yourself or explicitly pass. Persistent seats and identities do not move. The Witch still sees the original knife target.",
   "role.magician.first_night": "Exchanges are available starting on night {day}.",

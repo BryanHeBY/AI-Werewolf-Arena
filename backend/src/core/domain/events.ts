@@ -193,6 +193,8 @@ export interface EventPayloadMap {
   lover_recognized: { actorId: EntityId; partnerId: EntityId };
   cupid_relation_resolved: import("./components/lovers").LoversComponent;
   lovers_death: { actorId: EntityId; targetId: EntityId };
+  order_prince_choice_committed: { actorId: EntityId; day: number; activate: boolean };
+  order_prince_revote_started: { actorId: EntityId };
   player_role_revealed: { playerId: EntityId; role: RoleId };
   sheriff_pk_started: { candidates: EntityId[] };
   exile_pk_started: { candidates: EntityId[] };
@@ -452,6 +454,7 @@ export type GameEvent = {
       | WeddingEventType
       | "nightmare_fear_committed"
       | "magician_exchange_committed"
+      | "order_prince_choice_committed"
       | "demon_hunter_chosen"
       | "demon_hunter_cancelled"
       | "demon_hunter_poison_immune"

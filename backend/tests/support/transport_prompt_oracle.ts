@@ -10,6 +10,11 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  exile_pk_speech: ["放逐PK发言", "Exile PK speeches"],
+  exile_pk_vote: ["放逐PK重投", "Exile PK revote"],
+  order_prince_choice: ["定序王子选择", "Order Prince choice"],
+  order_prince_speech: ["定序王子发言", "Order Prince speech"],
+  order_prince_revote: ["定序重投", "Restarted exile vote"],
   magician_exchange: ["魔术师交换", "Magician exchange"],
   pure_white_girl: ["纯白之女查验", "Pure White Girl inspection"],
   wolf_witch: ["狼巫查验", "Wolf Witch inspection"],

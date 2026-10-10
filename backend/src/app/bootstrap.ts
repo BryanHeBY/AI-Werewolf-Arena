@@ -1,3 +1,4 @@
+import { installOrderPrinceBoard } from "../game/mechanisms/roles/order_prince/authority";
 import { isMagicianPreset } from "@ai-werewolf-arena/game-text";
 import { installMagicianBoard } from "../game/mechanisms/roles/magician/night_frame";
 import { isRedMoonPreset } from "@ai-werewolf-arena/game-text";
@@ -164,6 +165,7 @@ function createPlayers(
     installShapeshifterDeal(world, roles, ids);
   installInitialRoster(world);
   if (roles.includes(Role.Magician)) installMagicianBoard(world);
+  if (roles.includes(Role.OrderPrince)) installOrderPrinceBoard(world);
   if (roles.includes(Role.EvilKnight)) installEvilKnightBoard(world);
   if (roles.includes(Role.NightmareShadow)) installNightmareBoard(world);
   if (roles.includes(Role.DemonHunter)) installDemonHunter(world, config);

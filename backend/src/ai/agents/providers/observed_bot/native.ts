@@ -240,3 +240,11 @@ export const swapTargets: ObservedToolHandler = ({ ownState, request, knownAlive
     return { name: "swap_targets", args: { first_id: null, second_id: null, abstain: true } };
   return { name: "swap_targets", args: { first_id: first, second_id: second, abstain: false } };
 };
+
+export const resetExileVote: ObservedToolHandler = ({ ownState }) => {
+  if (!ownState.orderPrince) throw new Error("order_prince_observed_state_missing");
+  return {
+    name: "reset_exile_vote",
+    args: { activate: !ownState.orderPrince.history.some((row) => row.activate) },
+  };
+};

@@ -1,8 +1,7 @@
+import { sanitizeSpeechText } from "../../utils/speech_text";
 import { EntityId, ToolCall, ToolValidationResult } from "../../core/domain/model";
 import { World } from "../../core/domain/world";
 import { ActionValidator, type ValidationContext } from "./action_validator";
-
-const RESERVED_PREFIX = /^(\s*\[(上帝|法官|系统|God|Judge|System)\]\s*)+/gi;
 
 /**
  * ToolGateway 负责两件事：
@@ -29,7 +28,7 @@ export class ToolGateway {
     if (call.name === "speak") {
       const raw = call.args.text;
       // 防止模型伪造系统身份前缀，避免污染公共上下文。
-      const text = raw.replace(RESERVED_PREFIX, "").trim();
+      const text = sanitizeSpeechText(raw);
       return {
         ...call,
         args: {
@@ -40,7 +39,7 @@ export class ToolGateway {
     }
     if (call.name === "speak_to_wolves") {
       const raw = call.args.text;
-      const text = raw.replace(RESERVED_PREFIX, "").trim();
+      const text = sanitizeSpeechText(raw);
       return {
         ...call,
         args: {

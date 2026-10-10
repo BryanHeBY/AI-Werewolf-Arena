@@ -10,6 +10,7 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  reset_exile_vote: { activate: boolean };
   swap_targets: { first_id: EntityId | null; second_id: EntityId | null; abstain: boolean };
   fear: { target_id: EntityId | null; abstain: boolean };
   inspect_night_identity: { target_id: EntityId | null; abstain: boolean };
@@ -66,6 +67,7 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "reset_exile_vote",
   "swap_targets",
   "fear",
   "inspect_night_identity",
@@ -144,6 +146,9 @@ export interface TurnConstraints {
 }
 
 export const ACTION_STAGES = [
+  "order_prince_choice",
+  "order_prince_speech",
+  "order_prince_revote",
   "magician_exchange",
   "nightmare_fear",
   "pure_white_girl",

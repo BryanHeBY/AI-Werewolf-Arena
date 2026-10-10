@@ -1,3 +1,5 @@
+import { readOrderPrinceChoiceFact } from "@ai-werewolf-arena/game-text";
+import { readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-text";
 import { readMagicianExchangeFact, readDeathShotMissFact } from "@ai-werewolf-arena/game-text";
 import { readRedMoonNextNightFact, readRedMoonExpiryFact } from "@ai-werewolf-arena/game-text";
 import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
@@ -98,6 +100,16 @@ export function buildAgentVisibleEvent(
   )
     return null;
   if (event.type === "death_shot_missed" && !readDeathShotMissFact(event.type, event.payload))
+    return null;
+  if (
+    event.type === "order_prince_revote_started" &&
+    !readOrderPrinceRevoteFact(event.type, event.payload)
+  )
+    return null;
+  if (
+    event.type === "order_prince_choice_committed" &&
+    !readOrderPrinceChoiceFact(event.type, event.payload)
+  )
     return null;
   const visibility = getDefaultAgentEventVisibilityRegistry();
   if (!visibility.canView(world, event, actorId)) {

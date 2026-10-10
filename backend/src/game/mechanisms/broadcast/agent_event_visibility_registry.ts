@@ -1,3 +1,4 @@
+import { readOrderPrinceChoiceFact } from "@ai-werewolf-arena/game-text";
 import { readMagicianExchangeFact, readDeathShotMissFact } from "@ai-werewolf-arena/game-text";
 import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
 import { demonHunterActorId } from "../roles/demon_hunter/authority";
@@ -15,6 +16,7 @@ const PUBLIC_EVENT_TYPES = new Set([
   "wall_notes_started",
   "wall_notes_published",
   "wall_notes_canceled",
+  "order_prince_revote_started",
   "debater_revealed",
   "debate_started",
   "debate_speech",
@@ -110,6 +112,16 @@ export class AgentEventVisibilityRegistry {
   constructor(private readonly rules: Record<string, AgentEventVisibilityRule> = DEFAULT_RULES) {}
 
   canView(world: World, event: GameEvent, actorId: EntityId): boolean {
+    if (event.type === "order_prince_choice_committed") {
+      const fact = readOrderPrinceChoiceFact(event.type, event.payload);
+      return (
+        !!fact &&
+        Array.isArray(event.audience) &&
+        event.audience.length === 1 &&
+        event.audience[0] === actorId &&
+        fact.actorId === actorId
+      );
+    }
     if (event.type === "death_shot_missed")
       return !!readDeathShotMissFact(event.type, event.payload);
     if (event.type === "magician_exchange_committed") {

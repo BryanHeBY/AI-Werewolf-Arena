@@ -30,6 +30,7 @@ export enum Role {
   EvilKnight = "evil_knight",
   NightmareShadow = "nightmare",
   RedMoonApostle = "red_moon_apostle",
+  OrderPrince = "order_prince",
   Magician = "magician",
   GhostBride = "ghost_bride",
   HiddenWolf = "hidden_wolf",

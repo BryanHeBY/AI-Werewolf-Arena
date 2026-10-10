@@ -451,6 +451,28 @@ export const zhCN = Object.freeze({
   "console.shot.missed": "{actor}号开枪，未产生额外死亡。",
   "role.magician.heal_rule":
     "女巫是否能主动自救按原始刀口号码判定：原刀口为自己时不能开解药；原刀口为别人时，解药交换到自己仍生效。",
+  "event.order_prince_choice_committed": "第 {day} 天，你已选择：{choice}。",
+  "console.order_prince.activate": "发动重投",
+  "console.order_prince.decline": "不发动",
+  "stage.order_prince_choice": "定序王子选择",
+  "stage.order_prince_speech": "定序王子发言",
+  "stage.order_prince_revote": "定序重投",
+  "role.order_prince.brief":
+    "好人神职。每天第一次放逐投票结束、放逐结算前，你可以翻牌发动一次重投；整局限一次。发动后先额外发言，再由当前合法选民重新投票；发言期间不可自爆。原票不再导致出局，警徽保留。首轮平票或全体弃票也可发动，PK 轮与重投轮不能再次发动。必须明确选择发动或不发动。",
+  "action.reset_exile_vote.hint":
+    "reset_exile_vote：activate=true 发动并消耗整局唯一技能；activate=false 明确不发动。",
+  "action.reset_exile_vote.directive":
+    "本轮只能提交 reset_exile_vote，必须明确给出 activate。缺失、失败或超时不能视为不发动。",
+  "error.order_prince_unavailable": "重投技能不可用、已消耗或不属于当前首轮选择窗口。",
+  "request.summary.order_prince_choice": "首轮放逐票已公布。请选择是否发动一次性重投技能。",
+  "request.summary.order_prince_speech":
+    "你已发动重投。请进行额外发言，随后重新投票；本窗口不能自爆。",
+  "replay.stage.order_prince_choice_committed": "定序王子选择记录",
+  "replay.stage.order_prince_revote_started": "定序王子发动重投",
+  "replay.stage.order_prince_choice": "定序王子选择",
+  "replay.stage.order_prince_speech": "定序王子发言",
+  "replay.stage.order_prince_revote": "定序重投",
+  "event.order_prince_revote_started": "{actor} 号翻牌为定序王子，废止本轮票并发动重投。",
   "role.magician.brief":
     "好人神职。每夜先选择两个不同的合法存活编号，交换它们当夜技能的生效目标；每个编号整局只能参与一次交换，可以选择自己，也可以明确弃用。交换不改变持久座位或身份。女巫仍获知原始刀口。",
   "role.magician.first_night": "本板从第{day}夜起可以交换。",

@@ -1,3 +1,5 @@
+import { assertOrderPrinceOriginalCurrent } from "../../mechanisms/roles/order_prince/authority";
+import { runOrderPrinceChoice } from "../../mechanisms/roles/order_prince/voting_window";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { IdentityComponent } from "../../../core/domain/entities/player";
@@ -9,6 +11,7 @@ import {
   EntityId,
   GameEvent,
   Phase,
+  Role,
   TieBreakerStrategy,
   VoteRecord,
   VotingSummary,
@@ -33,6 +36,8 @@ export interface VotingPipelineResult {
 }
 
 export interface VotingPipelineOptions {
+  strictRequired?: boolean;
+  orderPrinceRevote?: boolean;
   /** 当前日次由 PhaseManager 显式传入，不能从事件历史反推。 */
   day: number;
   isCurrent?: () => boolean;
@@ -144,6 +149,36 @@ export class VotingPipeline {
     if (options.isCurrent?.() === false)
       return { summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] };
     let { tally, publicVotes } = this.recordVotesInSeatOrder(voteResults, options.day);
+    if (config.roleSetups.some((setup) => setup.role === Role.OrderPrince && setup.count > 0)) {
+      const restarted = await runOrderPrinceChoice(
+        this.world,
+        requests,
+        actionProvider,
+        this.toolGateway,
+        this.events,
+        options.day,
+        () => options.isCurrent?.() !== false,
+      );
+      if (restarted) {
+        const previousCurrent = options.isCurrent;
+        options = {
+          ...options,
+          strictRequired: true,
+          orderPrinceRevote: true,
+          isCurrent: () => {
+            assertOrderPrinceOriginalCurrent(this.world);
+            if (previousCurrent?.() === false) throw new Error("order_prince_revote_stale");
+            return true;
+          },
+        };
+        const freshVoters = this.world
+          .getAliveEntityIds()
+          .filter((id) => canVoteExile(this.world, id, options.day));
+        const fresh = await this.collectVotes(freshVoters, requests, actionProvider, options);
+        if (options.isCurrent?.() === false) throw new Error("order_prince_revote_stale");
+        ({ tally, publicVotes } = this.recordVotesInSeatOrder(fresh, options.day, true));
+      }
+    }
     const pk = config.voting?.exilePolicy === "awa_one_pk_v1";
     const maximum = Math.max(
       0,
@@ -177,7 +212,10 @@ export class VotingPipeline {
             removed: [],
           };
         const life = captureNightLife(this.world, actorId);
-        if (!life || !canBeExiled(this.world, actorId)) continue;
+        if (!life || !canBeExiled(this.world, actorId)) {
+          if (options.strictRequired) throw new Error("order_prince_pk_candidate_stale");
+          continue;
+        }
         const request = requests.create({
           phase: Phase.Voting,
           actorId,
@@ -185,7 +223,14 @@ export class VotingPipeline {
           stage: "exile_pk_speech",
           requiresAction: true,
           summary: { key: "request.summary.exile_pk" },
-          context: { exile_candidates: tied, round: 2, max_rounds: 2 },
+          context: {
+            exile_candidates: tied,
+            round: 2,
+            max_rounds: 2,
+            ...(options.strictRequired
+              ? { action_failure_policy: "error", allow_fallback: false }
+              : {}),
+          },
         });
         const action = await actionProvider.getAction(request);
         if (options.isCurrent?.() === false)
@@ -198,12 +243,19 @@ export class VotingPipeline {
           action?.name !== "speak" ||
           !livingNightLife(this.world, life) ||
           !canBeExiled(this.world, actorId)
-        )
+        ) {
+          if (options.strictRequired) throw new Error("order_prince_pk_speech_missing_or_stale");
           continue;
+        }
         const result = this.toolGateway.validateAndSanitize(this.world, actorId, action, {
           phase: Phase.Voting,
           day: options.day,
         });
+        if (
+          options.strictRequired &&
+          (!result.ok || !result.sanitizedCall || !livingNightLife(this.world, life))
+        )
+          throw new Error("order_prince_pk_speech_invalid");
         if (result.ok && result.sanitizedCall && livingNightLife(this.world, life))
           this.events.push({
             timestamp: Date.now(),
@@ -228,7 +280,11 @@ export class VotingPipeline {
           interrupted: false,
           removed: [],
         };
-      ({ tally, publicVotes } = this.recordVotesInSeatOrder(results, options.day));
+      ({ tally, publicVotes } = this.recordVotesInSeatOrder(
+        results,
+        options.day,
+        options.strictRequired,
+      ));
       round = 2;
     }
 
@@ -339,11 +395,15 @@ export class VotingPipeline {
     options: VotingPipelineOptions,
     candidates?: EntityId[],
   ): Promise<CollectedVote | null> {
-    const current = () =>
-      options.isCurrent?.() !== false &&
-      livingNightLife(this.world, voterLife) &&
-      canVoteExile(this.world, voterId, options.day) &&
-      !candidates?.includes(voterId);
+    const current = () => {
+      const valid =
+        options.isCurrent?.() !== false &&
+        livingNightLife(this.world, voterLife) &&
+        canVoteExile(this.world, voterId, options.day) &&
+        !candidates?.includes(voterId);
+      if (!valid && options.strictRequired) throw new Error("order_prince_revote_actor_stale");
+      return valid;
+    };
     const maxRetries = VotingPipeline.MAX_VOTE_RETRIES;
     let retryReason = "";
     const recordRetry = (attempt: number) =>
@@ -363,12 +423,19 @@ export class VotingPipeline {
         phase: Phase.Voting,
         actorId: voterId,
         allowedTools: ["vote"],
-        stage: candidates ? "exile_pk_vote" : "voting",
+        stage: candidates
+          ? "exile_pk_vote"
+          : options.orderPrinceRevote
+            ? "order_prince_revote"
+            : "voting",
         requiresAction: true,
         summary: { key: "request.summary.exile_vote" },
-        ...(candidates
-          ? { context: { exile_candidates: candidates, round: 2, max_rounds: 2 } }
-          : {}),
+        context: {
+          ...(candidates ? { exile_candidates: candidates, round: 2, max_rounds: 2 } : {}),
+          ...(options.strictRequired
+            ? { action_failure_policy: "error", allow_fallback: false }
+            : {}),
+        },
       });
       const request =
         attempt === 1
@@ -427,6 +494,7 @@ export class VotingPipeline {
     }
 
     if (!current()) return null;
+    if (options.strictRequired) throw new Error("order_prince_revote_action_missing_or_invalid");
     // Exhausted requests become an explicit abstention when the gateway accepts it.
     const repaired = this.toolGateway.validateAndSanitize(
       this.world,
@@ -459,6 +527,7 @@ export class VotingPipeline {
   private recordVotesInSeatOrder(
     votes: Array<CollectedVote | null>,
     day: number,
+    strictRequired = false,
   ): {
     tally: Record<number, number>;
     publicVotes: VoteRecord[];
@@ -473,8 +542,10 @@ export class VotingPipeline {
         (!vote.abstain && (!vote.targetLife || !livingNightLife(this.world, vote.targetLife))) ||
         !canVoteExile(this.world, voterId, day) ||
         (!vote.abstain && vote.targetId !== null && !canBeExiled(this.world, vote.targetId))
-      )
+      ) {
+        if (strictRequired) throw new Error("order_prince_revote_ballot_stale");
         continue;
+      }
       let weight = 0;
       if (!vote.abstain && vote.targetId !== null) {
         const voting = this.world.getComponent<VotingRightComponent>(

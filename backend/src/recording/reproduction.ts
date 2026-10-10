@@ -1,3 +1,5 @@
+import { readOrderPrinceChoiceFact, readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-text";
+import { validateOrderPrinceRecord } from "./order_prince_record";
 import {
   readNightmareFearFact,
   readMagicianExchangeFact,
@@ -559,6 +561,16 @@ const schema = z.strictObject({
           .optional(),
       })
       .superRefine((event, ctx) => {
+        if (event.type === "order_prince_choice_committed") {
+          const fact = readOrderPrinceChoiceFact(event.type, event.payload);
+          if (!fact || event.audience?.length !== 1 || event.audience[0] !== fact.actorId)
+            ctx.addIssue({ code: "custom", message: "reproduction_order_prince_audience_invalid" });
+        }
+        if (
+          event.type === "order_prince_revote_started" &&
+          (!readOrderPrinceRevoteFact(event.type, event.payload) || event.audience !== undefined)
+        )
+          ctx.addIssue({ code: "custom", message: "reproduction_order_prince_reveal_invalid" });
         if (event.type === "magician_exchange_committed") {
           const fact = readMagicianExchangeFact(event.type, event.payload);
           if (!fact || event.audience?.length !== 1 || event.audience[0] !== fact.actorId)
@@ -581,6 +593,7 @@ const schema = z.strictObject({
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
           event.type !== "nightmare_fear_committed" &&
+          event.type !== "order_prince_choice_committed" &&
           event.type !== "magician_exchange_committed"
         ) {
           ctx.addIssue({ code: "custom", message: "reproduction_event_audience_invalid" });
@@ -626,6 +639,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   validateGhostBrideRecord(result);
   validateDemonHunterRecord(result);
   validateMagicianRecord(result);
+  validateOrderPrinceRecord(result);
   return result;
 }
 

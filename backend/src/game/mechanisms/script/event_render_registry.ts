@@ -1,3 +1,4 @@
+import { orderPrinceEventLabel } from "@ai-werewolf-arena/game-text";
 import { magicianEventLabel } from "@ai-werewolf-arena/game-text";
 import { redMoonEventLabel } from "@ai-werewolf-arena/game-text";
 import { nightmareEventLabel } from "@ai-werewolf-arena/game-text";
@@ -562,6 +563,8 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const prince = orderPrinceEventLabel(event.type, event.payload, locale);
+    if (prince !== null) return prince;
     const magician = magicianEventLabel(event.type, event.payload, locale);
     if (magician !== null) return magician;
     const redMoon = redMoonEventLabel(event.type, event.payload, locale);
@@ -617,6 +620,13 @@ export class ScriptEventRenderRegistry {
     printPrivateEvents: boolean,
     locale: Locale = "zh-CN",
   ): ScriptLiveRender[] {
+    const prince = orderPrinceEventLabel(event.type, event.payload, locale);
+    if (prince !== null)
+      return event.type === "order_prince_choice_committed"
+        ? printPrivateEvents
+          ? [{ kind: "god", text: prince }]
+          : []
+        : [{ kind: "system", text: prince }];
     const magician = magicianEventLabel(event.type, event.payload, locale);
     if (magician !== null)
       return event.type === "death_shot_missed"
