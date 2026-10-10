@@ -1,3 +1,9 @@
+import {
+  readTricksterExchangeFact,
+  readTricksterSkipFact,
+  readExileMappingFact,
+} from "@ai-werewolf-arena/game-text";
+import { validateTricksterRecord } from "./trickster_record";
 import { readOrderPrinceChoiceFact, readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-text";
 import { validateOrderPrinceRecord } from "./order_prince_record";
 import {
@@ -278,6 +284,8 @@ const requestSchema = z.strictObject({
     death_phase: z.enum(Phase).optional(),
     death_sources: z.array(z.enum(DeathCause)).optional(),
     death_action_id: positive.optional(),
+    trickster_candidates: z.array(positive).optional(),
+    trickster_may_pass: z.boolean().optional(),
     swap_candidates: z.array(positive).optional(),
     shoot_candidates: z.array(positive).optional(),
     sheriff_candidates: z.array(positive).optional(),
@@ -561,6 +569,22 @@ const schema = z.strictObject({
           .optional(),
       })
       .superRefine((event, ctx) => {
+        if (
+          event.type === "trickster_exchange_committed" ||
+          event.type === "trickster_exchange_skipped"
+        ) {
+          const fact =
+            event.type === "trickster_exchange_committed"
+              ? readTricksterExchangeFact(event.type, event.payload)
+              : readTricksterSkipFact(event.type, event.payload);
+          if (!fact || event.audience?.length !== 1 || event.audience[0] !== fact.actorId)
+            ctx.addIssue({ code: "custom", message: "reproduction_trickster_audience_invalid" });
+        }
+        if (
+          event.type === "exile_target_mapped" &&
+          (!readExileMappingFact(event.type, event.payload) || event.audience !== undefined)
+        )
+          ctx.addIssue({ code: "custom", message: "reproduction_trickster_mapping_invalid" });
         if (event.type === "order_prince_choice_committed") {
           const fact = readOrderPrinceChoiceFact(event.type, event.payload);
           if (!fact || event.audience?.length !== 1 || event.audience[0] !== fact.actorId)
@@ -593,6 +617,8 @@ const schema = z.strictObject({
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
           event.type !== "nightmare_fear_committed" &&
+          event.type !== "trickster_exchange_committed" &&
+          event.type !== "trickster_exchange_skipped" &&
           event.type !== "order_prince_choice_committed" &&
           event.type !== "magician_exchange_committed"
         ) {
@@ -638,6 +664,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   validateLonelyGirlRecord(result);
   validateGhostBrideRecord(result);
   validateDemonHunterRecord(result);
+  validateTricksterRecord(result);
   validateMagicianRecord(result);
   validateOrderPrinceRecord(result);
   return result;

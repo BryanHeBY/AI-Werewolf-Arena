@@ -27,6 +27,7 @@ const strategies = z.enum(["min_id", "min_seat", "no_elimination", "no_kill"]);
 
 /** Internal board shape shared by reverse configuration writing and reproduction. No defaults are added here. */
 export const boardConfigSchema = z.strictObject({
+  trickster: z.strictObject({ policy: z.literal("awa_trickster_exile_v1") }).optional(),
   orderPrince: z.strictObject({ policy: z.literal("awa_order_prince_first_ballot_v1") }).optional(),
   magician: z
     .strictObject({

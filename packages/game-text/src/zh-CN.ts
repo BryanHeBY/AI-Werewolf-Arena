@@ -457,6 +457,28 @@ export const zhCN = Object.freeze({
   "stage.order_prince_choice": "定序王子选择",
   "stage.order_prince_speech": "定序王子发言",
   "stage.order_prince_revote": "定序重投",
+  "role.trickster.brief":
+    "狼人。狼队讨论前，选择两个不同且从未用过的存活编号（可选自己），只交换随后白天最终有效的放逐结果。身份、座位和原票不变。每个编号整局用一次；可明确空过，但不能连续两夜主动空过。合法编号不足两个时由引擎跳过耗尽技能。与魔术师同对时双方效果抵消，已用编号不返还。提交后的效果不因自己正常死亡回滚；映射对象已死时不额外放逐任何人。",
+  "action.swap_exile_targets.hint":
+    "swap_exile_targets：first_id、second_id 选两个不同且未用过的合法存活编号，abstain=false；允许主动空过时两目标同时为 null，abstain=true。",
+  "action.swap_exile_targets.directive":
+    "仅提交 swap_exile_targets，不能连续两夜主动空过。缺失、非法或晚到回应视为失败，不自动空过。",
+  "error.trickster_unavailable": "诡术师选择不可用或不属于当前行动窗口。",
+  "error.trickster_target":
+    "须选择两个不同的合法未用编号；主动空过须两目标为 null 且本夜允许空过。",
+  "stage.trickster_exchange": "诡术师交换",
+  "replay.stage.trickster_exchange": "诡术师交换",
+  "replay.stage.trickster_exchange_committed": "诡术师选择",
+  "replay.stage.trickster_exchange_skipped": "诡术师跳过选择",
+  "replay.stage.exile_target_mapped": "最终放逐映射",
+  "role.magician.trickster_rule":
+    "若本板含诡术师，同夜选择完全相同的编号对会抵消双方效果，但不返还双方已用编号。",
+  "event.trickster_exchange_committed": "{actor}号第{day}夜的放逐交换选择：{pair}。",
+  "event.trickster_skipped_dead": "第{day}夜，{actor}号已死，不产生新的放逐交换。",
+  "event.trickster_skipped_exhausted": "第{day}夜，{actor}号未用存活编号不足两个，跳过交换。",
+  "event.exile_target_mapped": "原票目标为{requested}号，实际放逐目标为{effective}号。",
+  "event.exile_mapping_missed":
+    "原票目标为{requested}号，映射目标{effective}号已死，本次不额外放逐。",
   "role.order_prince.brief":
     "好人神职。每天第一次放逐投票结束、放逐结算前，你可以翻牌发动一次重投；整局限一次。发动后先额外发言，再由当前合法选民重新投票；发言期间不可自爆。原票不再导致出局，警徽保留。首轮平票或全体弃票也可发动，PK 轮与重投轮不能再次发动。必须明确选择发动或不发动。",
   "action.reset_exile_vote.hint":

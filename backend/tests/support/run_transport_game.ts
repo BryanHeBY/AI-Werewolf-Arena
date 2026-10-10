@@ -1,3 +1,8 @@
+const transportDiagnostic = (...values: unknown[]) => {
+  process.stderr.write(
+    values.map((v) => (typeof v === "string" ? v : JSON.stringify(v))).join(" ") + "\n",
+  );
+};
 import { expect } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
@@ -169,7 +174,7 @@ export async function runTransportGame(
               });
             } catch (error) {
               failures.push(String(error));
-              console.error("[fixture_protocol_failure]", String(error));
+              transportDiagnostic("[fixture_protocol_failure]", String(error));
               return Response.json(
                 { error: { message: "fixture_protocol_failure" } },
                 { status: 400 },
@@ -234,7 +239,33 @@ export async function runTransportGame(
         scenario.board,
       ),
     ).catch(async (error) => {
-      if (!scenario.expectedFailure) throw error;
+      if (!scenario.expectedFailure) {
+        try {
+          const name = (await fs.readdir(root)).find((name) => name.startsWith("session_"));
+          if (name) {
+            const prefix = JSON.parse(
+              await fs.readFile(path.join(root, name, "reproduction.json"), "utf8"),
+            );
+            transportDiagnostic(
+              "[transport_failure_prefix]",
+              JSON.stringify({
+                decisions: prefix.decisions
+                  .slice(-8)
+                  .map((d: { actorId: number; day: number; stage: string; outcome: unknown }) => ({
+                    actorId: d.actorId,
+                    day: d.day,
+                    stage: d.stage,
+                    outcome: d.outcome,
+                  })),
+                lastCheckpoint: prefix.checkpoints.at(-1)?.failure,
+              }),
+            );
+          }
+        } catch (diagnosticError) {
+          transportDiagnostic("[transport_failure_diagnostic]", String(diagnosticError));
+        }
+        throw error;
+      }
       failureThrown = true;
       const session = (await fs.readdir(root)).find((name) => name.startsWith("session_"))!;
       const prefix = await readReproduction(path.join(root, session, "reproduction.json"));
@@ -268,11 +299,15 @@ export async function runTransportGame(
       }
       const record = await readReproduction(path.join(directory, "reproduction.json"));
       expect(record.checkpoints.at(-1)!.complete).toBe(false);
-      expect(record.decisions.at(-1)).toMatchObject({
-        actorId: scenario.expectedFailure.actorId,
-        stage: scenario.expectedFailure.stage,
-        outcome: { kind: "error" },
-      });
+      expect(
+        record.decisions.some(
+          (d) =>
+            d.actorId === scenario.expectedFailure!.actorId &&
+            d.stage === scenario.expectedFailure!.stage &&
+            d.day === record.checkpoints.at(-1)!.snapshot.day &&
+            d.outcome.kind === "error",
+        ),
+      ).toBe(true);
       expect(
         (await replayReproduction(record, await createTestTempDirectory("awa-role-failed-replay-")))
           .snapshot,

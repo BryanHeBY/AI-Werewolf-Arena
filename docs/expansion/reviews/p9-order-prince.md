@@ -38,3 +38,7 @@ PK 发言审计严格限定 Voting 阶段，避免误判次日普通发言；部
 ## 最终执行结果
 
 目录校验 4 pass / 0 fail，226 assertions；完整前端 unit 426 pass / 0 fail，4669 assertions，57 文件；Chromium 210 passed，单 worker、零重试。双端 build、类型、lint、格式与 diff 检查全部 exit 0，300 个前端及共享输入文件 SHA-256 前后完全一致。P9c 全量、P10 与 T6 仍未关闭。
+
+## 后续范围更新：2026-10-11
+
+本页保留该批独立板历史验收范围。后续 awa_trickster_12_v1 已另行支持魔术师、诡术师、定序王子精确组合，证据见 [诡术之境验收](p9-trickster.md)。不将后续结果回填为此前已通过。

@@ -1,3 +1,8 @@
+import {
+  readTricksterExchangeFact,
+  readTricksterSkipFact,
+  readExileMappingFact,
+} from "./trickster";
 import { readOrderPrinceChoiceFact } from "./order-prince";
 import { readRedMoonNextNightFact, readRedMoonExpiryFact } from "./red-moon";
 import { readWildChildEventFact, readWildChildPlayerFact } from "./wild-child";
@@ -889,4 +894,46 @@ export function orderPrinceEventLabel(
   return fact
     ? text(locale, "event.order_prince_revote_started", { actor: fact.actorId })
     : text(locale, "replay.unknown");
+}
+
+export * from "./trickster-preset";
+
+export * from "./trickster";
+export function tricksterEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale = "zh-CN",
+): string | null {
+  if (type === "trickster_exchange_committed") {
+    const f = readTricksterExchangeFact(type, payload);
+    return f
+      ? text(locale, "event.trickster_exchange_committed", {
+          actor: f.actorId,
+          day: f.day,
+          pair: f.pair ? f.pair.join(", ") : text(locale, "console.magician.pass"),
+        })
+      : text(locale, "replay.unknown");
+  }
+  if (type === "trickster_exchange_skipped") {
+    const f = readTricksterSkipFact(type, payload);
+    return f
+      ? text(
+          locale,
+          f.reason === "dead"
+            ? "event.trickster_skipped_dead"
+            : "event.trickster_skipped_exhausted",
+          { actor: f.actorId, day: f.day },
+        )
+      : text(locale, "replay.unknown");
+  }
+  if (type === "exile_target_mapped") {
+    const f = readExileMappingFact(type, payload);
+    return f
+      ? text(locale, f.missed ? "event.exile_mapping_missed" : "event.exile_target_mapped", {
+          requested: f.requestedId,
+          effective: f.effectiveId,
+        })
+      : text(locale, "replay.unknown");
+  }
+  return null;
 }

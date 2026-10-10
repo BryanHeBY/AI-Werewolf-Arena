@@ -1,3 +1,7 @@
+import {
+  finishTricksterNight,
+  abortTricksterNight,
+} from "../mechanisms/roles/trickster/night_frame";
 import { abortMagicianNight, closeMagicianNight } from "../mechanisms/roles/magician/night_frame";
 import {
   demonRedMoonExpiry,
@@ -720,8 +724,10 @@ export class PhaseManager {
           deathPhases,
           { dreams: night.dreamFrame, nightOriginIds: nightDeaths, isCurrent: dayIsCurrent },
         );
+        if (this.config.trickster && dayIsCurrent()) finishTricksterNight(this.world, cycleDay);
         if (this.config.magician && dayIsCurrent()) closeMagicianNight(this.world, cycleDay);
       } finally {
+        if (this.config.trickster) abortTricksterNight(this.world);
         if (this.config.magician) abortMagicianNight(this.world);
       }
       if (!dayIsCurrent()) return this.state.gameOver;
@@ -836,7 +842,10 @@ export class PhaseManager {
 
     let beautyCandidate: BeautyExileCandidate | null = null;
     if (votingResult.removed.length > 0) {
-      const target = votingResult.summary.target;
+      const target =
+        votingResult.summary.effectiveTarget === undefined
+          ? votingResult.summary.target
+          : votingResult.summary.effectiveTarget;
       if (target !== null && votingResult.removed.includes(target))
         beautyCandidate = captureBeautyExile(this.world, target);
       this.previousExile =

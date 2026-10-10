@@ -18,6 +18,8 @@ export const MAGICIAN_ROLE_PROFILE: RoleProfile = {
   maxCount: 1,
   supportedWinConditions: [WinCondition.SlaughterSide],
   supportedBoardRoles: [
+    Role.Trickster,
+    Role.OrderPrince,
     Role.Wolf,
     Role.WolfKing,
     Role.Villager,
@@ -36,6 +38,7 @@ export const MAGICIAN_ROLE_PROFILE: RoleProfile = {
     const state = getMagicianState(role);
     return [
       text(locale, "role.magician.brief"),
+      text(locale, "role.magician.trickster_rule"),
       text(locale, "role.magician.heal_rule"),
       text(locale, "role.magician.first_night", { day: state?.firstNight ?? 1 }),
       text(

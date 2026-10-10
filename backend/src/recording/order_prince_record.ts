@@ -1,3 +1,4 @@
+import { isTricksterPreset, readExileMappingFact } from "@ai-werewolf-arena/game-text";
 import { sanitizeSpeechText } from "../utils/speech_text";
 import { readOrderPrinceChoiceFact, readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, Phase, WinCondition } from "../core/domain";
@@ -54,11 +55,15 @@ export function validateOrderPrinceRecord(record: ReproductionRecord): void {
     return;
   }
   const expected = { wolf: 4, villager: 4, seer: 1, witch: 1, hunter: 1, order_prince: 1 };
+  const tricksterBoard = isTricksterPreset(board);
   check(
-    board.boardSize === 12 &&
-      board.roleSetups.length === 6 &&
-      equal(Object.fromEntries(board.roleSetups.map((r) => [r.role, r.count])), expected),
+    tricksterBoard ||
+      (board.boardSize === 12 &&
+        board.roleSetups.length === 6 &&
+        equal(Object.fromEntries(board.roleSetups.map((r) => [r.role, r.count])), expected)),
   );
+  const mappedDays = new Set<number>();
+  const rawFinalTargets = new Map<number, number | null>();
   check(
     board.orderPrince?.policy === policy &&
       equal(board.winConditions, [WinCondition.SlaughterSide]) &&
@@ -237,6 +242,7 @@ export function validateOrderPrinceRecord(record: ReproductionRecord): void {
       votes = [];
       candidates = null;
       finalTarget = null;
+      rawFinalTargets.set(day, null);
     }
     if (e.type === "day_speech" && reset && e.payload.actorId === actor && !speech) {
       const ds = record.decisions.filter((d) => d.day === day && d.stage === "order_prince_speech");
@@ -269,6 +275,7 @@ export function validateOrderPrinceRecord(record: ReproductionRecord): void {
       if (alive.has(actor) && !spent) check(facts.has(day));
       if (reset) check(speech);
       finalTarget = e.payload.target as number | null;
+      rawFinalTargets.set(day, finalTarget);
     }
     if (e.type === "exile_pk_started") {
       const top = uniqueTop().top;
@@ -285,8 +292,26 @@ export function validateOrderPrinceRecord(record: ReproductionRecord): void {
       candidates = top;
       votes = [];
       finalTarget = null;
+      rawFinalTargets.set(day, null);
+    }
+    if (e.type === "exile_target_mapped") {
+      const f = readExileMappingFact(e.type, e.payload);
+      check(
+        tricksterBoard &&
+          f &&
+          phase === Phase.Voting &&
+          e.audience === undefined &&
+          !mappedDays.has(day) &&
+          finalTarget !== null &&
+          f.requestedId === finalTarget &&
+          original.has(f.effectiveId) &&
+          f.missed === !alive.has(f.effectiveId),
+      );
+      mappedDays.add(day);
+      finalTarget = f.missed ? null : f.effectiveId;
     }
     if (e.type === "voted_out") {
+      if (tricksterBoard) check(mappedDays.has(day));
       check(
         typeof e.payload.target === "number" &&
           e.payload.target === finalTarget &&
@@ -315,6 +340,11 @@ export function validateOrderPrinceRecord(record: ReproductionRecord): void {
     living.push([...alive]);
     sheriffPrefixes.push(sheriff);
   }
+  if (tricksterBoard)
+    for (const [n, target] of rawFinalTargets) {
+      if (target !== null && record.checkpoints.some((cp) => cp.complete && cp.cycle >= n))
+        check(mappedDays.has(n));
+    }
   for (const [day, fact] of facts) if (fact.activate) check(resetDays.has(day));
   const checkpointed = Math.max(0, ...record.checkpoints.map((c) => c.cycle));
   for (const d of record.decisions) {

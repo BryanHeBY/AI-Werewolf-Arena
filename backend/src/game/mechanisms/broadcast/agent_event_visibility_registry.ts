@@ -1,3 +1,8 @@
+import {
+  readTricksterExchangeFact,
+  readTricksterSkipFact,
+  readExileMappingFact,
+} from "@ai-werewolf-arena/game-text";
 import { readOrderPrinceChoiceFact } from "@ai-werewolf-arena/game-text";
 import { readMagicianExchangeFact, readDeathShotMissFact } from "@ai-werewolf-arena/game-text";
 import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
@@ -112,6 +117,23 @@ export class AgentEventVisibilityRegistry {
   constructor(private readonly rules: Record<string, AgentEventVisibilityRule> = DEFAULT_RULES) {}
 
   canView(world: World, event: GameEvent, actorId: EntityId): boolean {
+    if (
+      event.type === "trickster_exchange_committed" ||
+      event.type === "trickster_exchange_skipped"
+    ) {
+      const f =
+        readTricksterExchangeFact(event.type, event.payload) ??
+        readTricksterSkipFact(event.type, event.payload);
+      return (
+        !!f &&
+        Array.isArray(event.audience) &&
+        event.audience.length === 1 &&
+        event.audience[0] === actorId &&
+        f.actorId === actorId
+      );
+    }
+    if (event.type === "exile_target_mapped")
+      return !!readExileMappingFact(event.type, event.payload);
     if (event.type === "order_prince_choice_committed") {
       const fact = readOrderPrinceChoiceFact(event.type, event.payload);
       return (

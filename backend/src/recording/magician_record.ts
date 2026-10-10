@@ -1,3 +1,4 @@
+import { readTricksterExchangeFact } from "@ai-werewolf-arena/game-text";
 import {
   isMagicianPreset,
   readMagicianExchangeFact,
@@ -87,8 +88,9 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
   let day = 1,
     phase: Phase = Phase.Night;
   nightAlive.set(1, [...alive]);
+  const cancelled = new Set<number>();
   const swap = (id: number, n: number) => {
-    const pair = facts.get(n)?.pair;
+    const pair = cancelled.has(n) ? null : facts.get(n)?.pair;
     return pair ? (id === pair[0] ? pair[1] : id === pair[1] ? pair[0] : id) : id;
   };
   const shotDecision = (id: number) =>
@@ -157,6 +159,11 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
         }
       history.push({ day, pair: fact.pair });
       facts.set(day, { pair: fact.pair, index });
+    }
+    if (e.type === "trickster_exchange_committed") {
+      const f = readTricksterExchangeFact(e.type, e.payload);
+      assert(f && f.day === day && phase === Phase.Night && !resolvedNights.has(day));
+      if (f.pair && equal(f.pair, facts.get(day)?.pair)) cancelled.add(day);
     }
     if (e.type === "wolf_kill_vote_cast") {
       const id = e.payload.actorId,

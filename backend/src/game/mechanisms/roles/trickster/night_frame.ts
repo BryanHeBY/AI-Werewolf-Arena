@@ -293,3 +293,11 @@ export function abortTricksterNight(world: World): void {
   const n = boards.get(world)?.night;
   if (n && !n.finished) n.closed = true;
 }
+
+export function tricksterActorId(world: World): number {
+  return requireBoard(world).actorId;
+}
+
+export function tricksterPackReady(world: World): boolean {
+  return requireBoard(world).state.history.length > 0;
+}

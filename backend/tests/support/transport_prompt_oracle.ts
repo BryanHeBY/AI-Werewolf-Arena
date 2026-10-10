@@ -1,4 +1,8 @@
-import { readNightmareOwnFearFact } from "@ai-werewolf-arena/game-text";
+import {
+  readNightmareOwnFearFact,
+  readTricksterExchangeFact,
+  readTricksterSkipFact,
+} from "@ai-werewolf-arena/game-text";
 import type { ActorTransportPlan, PlannedTurn } from "./foundation_transport_plan";
 
 export function assertTransportIdentity(plan: ActorTransportPlan, content: string): void {
@@ -15,6 +19,7 @@ const stages: Record<string, [string, string]> = {
   order_prince_choice: ["定序王子选择", "Order Prince choice"],
   order_prince_speech: ["定序王子发言", "Order Prince speech"],
   order_prince_revote: ["定序重投", "Restarted exile vote"],
+  trickster_exchange: ["诡术师交换", "Trickster exchange"],
   magician_exchange: ["魔术师交换", "Magician exchange"],
   pure_white_girl: ["纯白之女查验", "Pure White Girl inspection"],
   wolf_witch: ["狼巫查验", "Wolf Witch inspection"],
@@ -97,6 +102,14 @@ export function assertTransportPrompt(
     if (!content.includes(marker)) throw new Error("fixture_required_turn_marker_missing");
   for (const marker of turn.forbiddenPromptMarkers ?? [])
     if (content.includes(marker)) throw new Error("fixture_premature_marker_exposed");
+  if (turn.currentTeammateIds !== undefined) {
+    const ids = turn.currentTeammateIds.join(", ") || (plan.locale === "en" ? "None" : "无");
+    const marker =
+      plan.locale === "en"
+        ? `Wolf teammate identities revealed for this turn, excluding yourself: ${ids}.`
+        : `本轮规则告知你的狼人队友编号（不含本人）：${ids}。`;
+    if (!content.includes(marker)) throw new Error("fixture_current_teammate_knowledge_mismatch");
+  }
   if (turn.hybridChoice !== undefined) {
     const state = turn.hybridChoice
       ? { remaining: 0, choice: { day: 1, targetId: turn.hybridChoice.targetId } }
@@ -285,6 +298,19 @@ export function assertTransportEvents(
 ) {
   for (const [, type, payload] of events) {
     if (
+      type === "trickster_exchange_committed" &&
+      (role !== "trickster" ||
+        payload.actorId !== actorId ||
+        !readTricksterExchangeFact(type, payload))
+    )
+      throw new Error("fixture_trickster_private_information_exposed");
+    if (
+      type === "trickster_exchange_skipped" &&
+      (role !== "trickster" || payload.actorId !== actorId || !readTricksterSkipFact(type, payload))
+    )
+      throw new Error("fixture_trickster_private_information_exposed");
+
+    if (
       type === "nightmare_fear_committed" &&
       (role !== "nightmare" || !readNightmareOwnFearFact(type, payload))
     )
@@ -386,6 +412,7 @@ export function assertTransportEvents(
         "evil_knight",
         "nightmare",
         "red_moon_apostle",
+        "trickster",
       ].includes(role)
     )
       throw new Error("fixture_wolf_information_exposed");

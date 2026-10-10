@@ -30,6 +30,8 @@ export interface DaySummary {
 }
 
 export interface VotingSummary {
+  /** Actual exile outcome; target remains the public ballot winner. */
+  effectiveTarget?: EntityId | null;
   tally: Record<number, number>;
   target: EntityId | null;
   removed: EntityId[];

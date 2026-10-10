@@ -1,3 +1,5 @@
+import { isTricksterPreset } from "@ai-werewolf-arena/game-text";
+import { installTricksterBoard } from "../game/mechanisms/roles/trickster/night_frame";
 import { installOrderPrinceBoard } from "../game/mechanisms/roles/order_prince/authority";
 import { isMagicianPreset } from "@ai-werewolf-arena/game-text";
 import { installMagicianBoard } from "../game/mechanisms/roles/magician/night_frame";
@@ -164,6 +166,7 @@ function createPlayers(
   if (config.roleSetups.some((row) => row.role === Role.Shapeshifter && row.count === 1))
     installShapeshifterDeal(world, roles, ids);
   installInitialRoster(world);
+  if (roles.includes(Role.Trickster)) installTricksterBoard(world);
   if (roles.includes(Role.Magician)) installMagicianBoard(world);
   if (roles.includes(Role.OrderPrince)) installOrderPrinceBoard(world);
   if (roles.includes(Role.EvilKnight)) installEvilKnightBoard(world);
@@ -180,6 +183,12 @@ function buildRoleDeck(
   fixedRoles: readonly Role[] | undefined,
   random: RandomSource,
 ): Role[] {
+  if (
+    (config.trickster ||
+      config.roleSetups.some((row) => row.role === Role.Trickster && row.count > 0)) &&
+    !isTricksterPreset(config)
+  )
+    throw new Error("trickster_preset_invalid");
   if (
     (config.magician ||
       config.roleSetups.some((row) => row.role === Role.Magician && row.count > 0)) &&

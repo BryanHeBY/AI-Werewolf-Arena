@@ -1,5 +1,7 @@
 /** Stable rule failures; human messages belong to game-text. */
 export enum RuleError {
+  TricksterUnavailable = "trickster_unavailable",
+  TricksterTarget = "trickster_target",
   OrderPrinceUnavailable = "order_prince_unavailable",
   MagicianUnavailable = "magician_unavailable",
   MagicianTarget = "magician_target",

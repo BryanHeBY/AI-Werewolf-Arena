@@ -1,3 +1,8 @@
+import {
+  readTricksterExchangeFact,
+  readTricksterSkipFact,
+  readExileMappingFact,
+} from "@ai-werewolf-arena/game-text";
 import { readOrderPrinceChoiceFact } from "@ai-werewolf-arena/game-text";
 import { readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-text";
 import { readMagicianExchangeFact, readDeathShotMissFact } from "@ai-werewolf-arena/game-text";
@@ -110,6 +115,18 @@ export function buildAgentVisibleEvent(
     event.type === "order_prince_choice_committed" &&
     !readOrderPrinceChoiceFact(event.type, event.payload)
   )
+    return null;
+  if (
+    event.type === "trickster_exchange_committed" &&
+    !readTricksterExchangeFact(event.type, event.payload)
+  )
+    return null;
+  if (
+    event.type === "trickster_exchange_skipped" &&
+    !readTricksterSkipFact(event.type, event.payload)
+  )
+    return null;
+  if (event.type === "exile_target_mapped" && !readExileMappingFact(event.type, event.payload))
     return null;
   const visibility = getDefaultAgentEventVisibilityRegistry();
   if (!visibility.canView(world, event, actorId)) {

@@ -248,3 +248,24 @@ export const resetExileVote: ObservedToolHandler = ({ ownState }) => {
     args: { activate: !ownState.orderPrince.history.some((row) => row.activate) },
   };
 };
+
+export const swapExileTargets: ObservedToolHandler = ({
+  ownState,
+  request,
+  knownAliveIds,
+  pick,
+}) => {
+  const state = ownState.trickster;
+  if (!state) throw new Error("trickster_observed_state_missing");
+  const used = new Set(state.history.flatMap((row) => row.pair ?? []));
+  const candidates = request.context.trickster_candidates;
+  if (!candidates) throw new Error("trickster_candidates_missing");
+  const targets = knownAliveIds.filter((id) => !used.has(id) && candidates.includes(id));
+  const first = pick(targets),
+    second = pick(targets.filter((id) => id !== first));
+  if (first == null || second == null) throw new Error("trickster_target_invalid");
+  return {
+    name: "swap_exile_targets",
+    args: { first_id: first, second_id: second, abstain: false },
+  };
+};

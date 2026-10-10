@@ -10,6 +10,7 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  swap_exile_targets: { first_id: EntityId | null; second_id: EntityId | null; abstain: boolean };
   reset_exile_vote: { activate: boolean };
   swap_targets: { first_id: EntityId | null; second_id: EntityId | null; abstain: boolean };
   fear: { target_id: EntityId | null; abstain: boolean };
@@ -67,6 +68,7 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "swap_exile_targets",
   "reset_exile_vote",
   "swap_targets",
   "fear",
@@ -146,6 +148,7 @@ export interface TurnConstraints {
 }
 
 export const ACTION_STAGES = [
+  "trickster_exchange",
   "order_prince_choice",
   "order_prince_speech",
   "order_prince_revote",
@@ -212,6 +215,8 @@ export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */
 export interface ActionRequestExtras {
+  trickster_candidates?: readonly EntityId[];
+  trickster_may_pass?: boolean;
   /** Private unused living choices for the original magician only. */
   swap_candidates?: readonly EntityId[];
   proposedWitnessId?: EntityId;

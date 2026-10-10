@@ -1,3 +1,4 @@
+import { tricksterEventLabel } from "@ai-werewolf-arena/game-text";
 import { orderPrinceEventLabel } from "@ai-werewolf-arena/game-text";
 import { magicianEventLabel } from "@ai-werewolf-arena/game-text";
 import { redMoonEventLabel } from "@ai-werewolf-arena/game-text";
@@ -47,6 +48,8 @@ export function eventLabel(
   const p = event.payload;
   const prince = orderPrinceEventLabel(event.type, p, locale);
   if (prince !== null) return prince;
+  const trickster = tricksterEventLabel(event.type, p, locale);
+  if (trickster !== null) return trickster;
   const magician = magicianEventLabel(event.type, p, locale);
   if (magician !== null) return magician;
   const redMoon = redMoonEventLabel(event.type, p, locale);

@@ -46,6 +46,13 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  trickster_exchange_committed: {
+    actorId: EntityId;
+    day: number;
+    pair: [EntityId, EntityId] | null;
+  };
+  trickster_exchange_skipped: { actorId: EntityId; day: number; reason: "exhausted" | "dead" };
+  exile_target_mapped: { requestedId: EntityId; effectiveId: EntityId; missed: boolean };
   death_shot_missed: { actorId: EntityId; reason: "no_effect" };
   magician_exchange_committed: {
     actorId: EntityId;
@@ -453,6 +460,8 @@ export type GameEvent = {
       | WolfTeamEventType
       | WeddingEventType
       | "nightmare_fear_committed"
+      | "trickster_exchange_committed"
+      | "trickster_exchange_skipped"
       | "magician_exchange_committed"
       | "order_prince_choice_committed"
       | "demon_hunter_chosen"

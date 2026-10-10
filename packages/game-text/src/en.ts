@@ -531,6 +531,31 @@ export const en = Object.freeze({
   "stage.order_prince_choice": "Order Prince choice",
   "stage.order_prince_speech": "Order Prince speech",
   "stage.order_prince_revote": "Restarted exile vote",
+  "role.trickster.brief":
+    "Werewolf. Before pack discussion, choose two distinct unused living numbers, including yourself if desired, to exchange only the next day's final exile outcome. Seats, identities and ballots stay unchanged. Each number is used once; you may explicitly pass, but never on consecutive nights. With fewer than two legal numbers the engine skips the exhausted skill. An identical Magician pair cancels both effects without refunding numbers. Submitted effects survive your ordinary death; an already-dead mapped target causes no additional exile.",
+  "action.swap_exile_targets.hint":
+    "swap_exile_targets: first_id and second_id must be distinct legal unused living numbers, with abstain=false. A permitted explicit pass sets both to null and abstain=true.",
+  "action.swap_exile_targets.directive":
+    "Submit only swap_exile_targets. Do not pass on consecutive nights. Missing, invalid or late responses fail rather than becoming passes.",
+  "error.trickster_unavailable":
+    "The Trickster choice is unavailable or outside your current turn.",
+  "error.trickster_target":
+    "Choose two distinct legal unused numbers; passing requires two null targets and permission to pass.",
+  "stage.trickster_exchange": "Trickster exchange",
+  "replay.stage.trickster_exchange": "Trickster exchange",
+  "replay.stage.trickster_exchange_committed": "Trickster choice",
+  "replay.stage.trickster_exchange_skipped": "Trickster skipped choice",
+  "replay.stage.exile_target_mapped": "Final exile mapping",
+  "role.magician.trickster_rule":
+    "If this board includes a Trickster, identical pairs cancel both effects without refunding either role's used numbers.",
+  "event.trickster_exchange_committed":
+    "Player {actor}'s night {day} exile exchange choice: {pair}.",
+  "event.trickster_skipped_dead": "Night {day}: player {actor} is dead; no new exile exchange.",
+  "event.trickster_skipped_exhausted":
+    "Night {day}: player {actor} has fewer than two unused living numbers; the exchange is skipped.",
+  "event.exile_target_mapped": "Ballot winner: {requested}; actual exile target: {effective}.",
+  "event.exile_mapping_missed":
+    "Ballot winner: {requested}; mapped target {effective} is already dead. Nobody else is exiled.",
   "role.order_prince.brief":
     "Good faction, god role. After the first exile ballot each day and before exile resolution, you may reveal and restart the vote once per game. Give an extra speech, then all currently eligible voters vote again. No self-destruct window opens during this speech. The old ballot causes no exile and the sheriff badge stays. A tied or all-abstention first ballot is eligible; PK and restarted ballots cannot trigger the skill again. Explicitly activate or decline.",
   "action.reset_exile_vote.hint":

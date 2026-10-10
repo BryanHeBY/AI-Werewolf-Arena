@@ -361,9 +361,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "trickster",
     names: { "zh-CN": "诡术师", en: "Trickster" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-trickster-exile-v1.md",
     mechanismSummary: "号码映射及公开结果",
   },
   {

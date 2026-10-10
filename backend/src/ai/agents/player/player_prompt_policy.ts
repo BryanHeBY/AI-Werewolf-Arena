@@ -1,3 +1,4 @@
+import { projectTricksterState } from "../../../game/mechanisms/roles/trickster/state";
 import { projectOrderPrinceState } from "../../../game/mechanisms/roles/order_prince/state";
 import { projectMagicianState } from "../../../game/mechanisms/roles/magician/state";
 import { getRedMoonState } from "../../../game/mechanisms/roles/red_moon_apostle/state";
@@ -196,6 +197,8 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    const trickster = projectTricksterState(role);
+    if (trickster) ownState.trickster = trickster;
     const prince = projectOrderPrinceState(role);
     if (prince) ownState.orderPrince = prince;
     const magician = projectMagicianState(role);

@@ -1,6 +1,7 @@
 import { ActionWindow, PotionType } from "../../src/core";
 import type { ActionStage, Role, ToolCall } from "../../src/core";
 export interface PlannedTurn {
+  currentTeammateIds?: number[];
   terminalFailure?: "missing" | "late";
   hybridChoice?: { targetId: number } | null;
   mechanicalStatus?: {

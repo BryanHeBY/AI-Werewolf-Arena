@@ -115,6 +115,7 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
+  trickster?: { policy: "awa_trickster_exile_v1" };
   orderPrince?: { policy: "awa_order_prince_first_ballot_v1" };
   magician?: {
     policy: "awa_magician_wolf_king_v1";

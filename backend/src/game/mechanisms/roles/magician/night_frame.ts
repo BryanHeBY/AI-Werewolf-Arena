@@ -1,3 +1,4 @@
+import { matchingExchangePairs } from "../trickster/exile_mapping";
 import { types } from "node:util";
 import { COMPONENT, type RoleComponent, type World } from "../../../../core";
 import {
@@ -274,6 +275,7 @@ export function resolveMagicianNightTarget(
     : requestedId;
   const effective = b.players.get(effectiveId)!;
   if (kind === "night_action" && !effective.life.alive) throw new Error("magician_target_invalid");
+  const nightPair = n.pair;
   const requestedVersion = aliveLifeVersion(original.life)!;
   const scope: NightLifeScope = Object.freeze({
     id: effectiveId,
@@ -289,6 +291,7 @@ export function resolveMagicianNightTarget(
         return (
           requireBoard(world) === b &&
           b.night === n &&
+          n.pair === nightPair &&
           !n.closed &&
           originalPlayer(world, original) &&
           originalPlayer(world, effective) &&
@@ -329,4 +332,18 @@ export function magicianChoicePending(world: World, actorId: number, day: number
 export function abortMagicianNight(world: World): void {
   const n = boards.get(world)?.night;
   if (n) n.closed = true;
+}
+
+/** Cancel only the current matching pair; committed number consumption stays in history. */
+export function cancelMagicianExchangeIfMatching(
+  world: World,
+  day: number,
+  pair: readonly [number, number],
+): boolean {
+  const b = requireBoard(world),
+    n = b.night;
+  if (!n || n.day !== day || n.closed || !n.committed) throw new Error("magician_night_unsettled");
+  if (!n.pair || !matchingExchangePairs(n.pair, pair)) return false;
+  n.pair = null;
+  return true;
 }

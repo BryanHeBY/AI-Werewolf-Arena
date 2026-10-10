@@ -1,3 +1,4 @@
+import { TRICKSTER_ROLE_PROFILE } from "./trickster/profile";
 import { ORDER_PRINCE_ROLE_PROFILE } from "./order_prince/profile";
 import { MAGICIAN_ROLE_PROFILE } from "./magician/profile";
 import { RED_MOON_ROLE_PROFILE } from "./red_moon_apostle/profile";
@@ -47,6 +48,7 @@ import { DEBATER_ROLE_PROFILE } from "./debater/profile";
 import { CUPID_ROLE_PROFILE } from "./cupid/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
+  TRICKSTER_ROLE_PROFILE,
   ORDER_PRINCE_ROLE_PROFILE,
   MAGICIAN_ROLE_PROFILE,
   RED_MOON_ROLE_PROFILE,

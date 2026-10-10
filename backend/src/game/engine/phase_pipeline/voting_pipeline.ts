@@ -1,3 +1,4 @@
+import { resolveTricksterExile } from "../../mechanisms/roles/trickster/night_frame";
 import { assertOrderPrinceOriginalCurrent } from "../../mechanisms/roles/order_prince/authority";
 import { runOrderPrinceChoice } from "../../mechanisms/roles/order_prince/voting_window";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
@@ -326,16 +327,22 @@ export class VotingPipeline {
       };
     }
 
-    const votedOut = this.eventRegistry.onVotedOut(this.world, target, this.events);
+    const mapped = config.trickster ? resolveTricksterExile(this.world, options.day, target) : null;
+    if (mapped)
+      this.events.push({ timestamp: Date.now(), type: "exile_target_mapped", payload: mapped });
+    const effectiveTarget = mapped?.effectiveId ?? target;
+    const votedOut = mapped?.missed
+      ? { removed: [] }
+      : this.eventRegistry.onVotedOut(this.world, effectiveTarget, this.events);
     const removed = [...votedOut.removed];
 
-    if (removed.includes(target)) {
+    if (removed.includes(effectiveTarget)) {
       // 只有真正出局才广播 voted_out；白痴翻牌由事件总线单独广播。
       this.events.push({
         timestamp: Date.now(),
         type: "voted_out",
         payload: {
-          target,
+          target: effectiveTarget,
         },
       });
     }
@@ -344,6 +351,7 @@ export class VotingPipeline {
       summary: {
         tally,
         target,
+        ...(mapped ? { effectiveTarget: mapped.missed ? null : effectiveTarget } : {}),
         removed,
       },
       interrupted: false,
