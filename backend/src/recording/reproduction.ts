@@ -1,3 +1,5 @@
+import { validateDemonHunterRecord } from "./demon_hunter_record";
+import { readFaultPlan, type FaultPlan } from "../core/domain/fault_plan";
 import { DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
 import {
   GHOST_BRIDE_EVENT_TYPES,
@@ -109,6 +111,7 @@ export interface ReproductionMetadata {
   maxDays: number;
   dealMode: "random" | "fixed";
   initialDeal?: Role[];
+  faultPlan?: FaultPlan;
   players: Array<{
     id: number;
     name: string;
@@ -436,6 +439,7 @@ const schema = z.strictObject({
     maxDays: positive,
     dealMode: z.enum(["random", "fixed"]),
     initialDeal: z.array(z.enum(Role)).min(3).max(130).optional(),
+    faultPlan: z.unknown().transform(readFaultPlan).optional(),
     players: z
       .array(
         z.strictObject({
@@ -594,6 +598,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   validateWildChildRecord(result);
   validateLonelyGirlRecord(result);
   validateGhostBrideRecord(result);
+  validateDemonHunterRecord(result);
   return result;
 }
 

@@ -1,5 +1,12 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "role.demon_hunter.brief":
+    "网易角色规则的具名有限AWA板适配：从第二夜起每夜可选择另一名存活玩家或明确弃猎。目标为真实狼人则次日目标死亡；目标为好人则自己反噬死亡。免疫原生女巫毒药，守卫和救药不阻挡猎杀或反噬。不会向你反馈目标阵营或毒免结果。",
+  "role.demon_hunter.state":
+    "你的原生猎魔历史：{state}。每个符合条件的新夜晚可作一次新选择，没有总次数库存限制，可在以后夜晚再次选择过去目标。",
+  "action.demon_hunt.hint":
+    "从第二夜起必须规范回复：另一名存活玩家整数target_id与abstain=false，或target_id=null与abstain=true。不能选自己或死亡者；失败不补默认动作。",
+  "stage.demon_hunter": "猎魔人选择",
   "console.demon_hunter.chosen": "God：猎魔人{actor}号第{day}夜选择{target}。",
   "console.demon_hunter.own": "第{day}夜你的猎魔选择：{target}。",
   "console.demon_hunter.cancelled":

@@ -206,6 +206,9 @@ export function beginGameReproduction(
     locale: options.locale,
     maxDays: options.maxDays,
     dealMode: context.dealMode,
+    ...(context.phaseManager.getFaultPlan()
+      ? { faultPlan: context.phaseManager.getFaultPlan() }
+      : {}),
     ...(initialIdentityDeal(context.world)
       ? { initialDeal: [...initialIdentityDeal(context.world)!] }
       : {}),

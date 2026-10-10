@@ -1,6 +1,10 @@
 import { types } from "node:util";
 import type { RoleComponent } from "../../../../core";
-import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-text";
+import {
+  DEMON_HUNTER_POLICY,
+  readDemonHunterState as readState,
+  readDemonHuntTool as readTool,
+} from "@ai-werewolf-arena/game-text";
 export { DEMON_HUNTER_POLICY };
 export const DEMON_HUNTER_ROLE = "demon_hunter" as const;
 export interface DemonHunterChoice {
@@ -88,26 +92,7 @@ export function freshDemonHunterState(): DemonHunterState {
 }
 export function readDemonHunterState(value: unknown): DemonHunterState | null {
   try {
-    const s = demonSnapshot(value);
-    if (
-      !exactDemonData(s, ["policy", "history"]) ||
-      s.policy !== DEMON_HUNTER_POLICY ||
-      !Array.isArray(s.history)
-    )
-      return null;
-    let previous = 1;
-    for (const choice of s.history) {
-      if (
-        !exactDemonData(choice, ["day", "targetId"]) ||
-        !Number.isSafeInteger(choice.day) ||
-        (choice.day as number) <= previous ||
-        (choice.targetId !== null &&
-          (!Number.isSafeInteger(choice.targetId) || (choice.targetId as number) < 1))
-      )
-        return null;
-      previous = choice.day as number;
-    }
-    return s as unknown as DemonHunterState;
+    return readState(demonSnapshot(value));
   } catch {
     return null;
   }
@@ -122,21 +107,7 @@ export interface DemonHuntTool {
 }
 export function readDemonHuntTool(value: unknown): DemonHuntTool | null {
   try {
-    const call = demonSnapshot(value);
-    if (
-      !exactDemonData(call, ["name", "args"]) ||
-      call.name !== "demon_hunt" ||
-      !exactDemonData(call.args, ["target_id", "abstain"])
-    )
-      return null;
-    const { target_id: target, abstain } = call.args;
-    if (
-      target === null
-        ? abstain !== true
-        : !Number.isSafeInteger(target) || (target as number) < 1 || abstain !== false
-    )
-      return null;
-    return call as unknown as DemonHuntTool;
+    return readTool(demonSnapshot(value));
   } catch {
     return null;
   }

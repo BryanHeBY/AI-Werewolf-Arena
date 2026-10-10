@@ -1,3 +1,8 @@
+export const demon_hunt: ObservedToolHandler = ({ ownState, request, others, pick, style }) => {
+  if (!ownState.demonHunter || request.context.day < 2) return null;
+  const target = style === "conservative" ? undefined : pick(others);
+  return { name: "demon_hunt", args: { target_id: target ?? null, abstain: target === undefined } };
+};
 export const choose_admired_player: ObservedToolHandler = ({
   knownAliveIds,
   request,

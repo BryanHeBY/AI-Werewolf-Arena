@@ -10,6 +10,7 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  demon_hunt: { target_id: EntityId | null; abstain: boolean };
   choose_bridegroom: { target_id: EntityId };
   choose_wedding_witness: { target_id: EntityId };
   speak_to_partner: { text: string };
@@ -62,6 +63,7 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "demon_hunt",
   "choose_bridegroom",
   "choose_wedding_witness",
   "speak_to_partner",
@@ -136,6 +138,7 @@ export interface TurnConstraints {
 }
 
 export const ACTION_STAGES = [
+  "demon_hunter",
   "ghost_bride_groom",
   "ghost_bride_chat",
   "ghost_bride_witness",

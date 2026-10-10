@@ -1,3 +1,5 @@
+import { installDemonHunter } from "../game/mechanisms/roles/demon_hunter/authority";
+import { assertDemonHunterPreset } from "../game/mechanisms/roles/demon_hunter/preset";
 import { installGhostBride } from "../game/mechanisms/roles/ghost_bride/authority";
 import { assertGhostBridePreset } from "../game/mechanisms/roles/ghost_bride/preset";
 import { installLonelyGirl } from "../game/mechanisms/roles/lonely_girl/lifecycle";
@@ -49,6 +51,8 @@ export interface BootstrapOptions {
   random?: RandomSource;
   /** Controller fixture only: exact deck multiplicities are still validated. */
   fixedRoles?: readonly Role[];
+  /** Explicit offline causal test input, never a board or model parameter. */
+  faultPlan?: unknown;
 }
 
 /**
@@ -77,6 +81,7 @@ export function bootstrapGame(
     conditionRegistry,
     damageResolutionSystem,
     random,
+    { faultPlan: options.faultPlan },
   );
 
   return {
@@ -142,6 +147,7 @@ function createPlayers(
   if (config.roleSetups.some((row) => row.role === Role.Shapeshifter && row.count === 1))
     installShapeshifterDeal(world, roles, ids);
   installInitialRoster(world);
+  if (roles.includes(Role.DemonHunter)) installDemonHunter(world, config);
   if (roles.includes(Role.GhostBride)) installGhostBride(world, config);
   installWildChild(world, config);
   installLonelyGirl(world, config);
@@ -153,6 +159,11 @@ function buildRoleDeck(
   fixedRoles: readonly Role[] | undefined,
   random: RandomSource,
 ): Role[] {
+  if (
+    config.roleSetups.some((row) => row.role === Role.DemonHunter && row.count > 0) ||
+    config.demonHunter
+  )
+    assertDemonHunterPreset(config);
   const ownsGhost = config.roleSetups.some((row) => row.role === Role.GhostBride && row.count > 0);
   if (
     ownsGhost ||

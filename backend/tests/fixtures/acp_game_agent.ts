@@ -69,7 +69,11 @@ try {
       const prompt = String(request.params.prompt[0].text);
       trace.prompts.push(prompt);
       if (/(?:Current turn ID: |当前回合 ID：)t\d+/.test(prompt)) {
-        const turn = plan.turns[trace.consumed];
+        const last = plan.turns.at(-1);
+        const turn =
+          plan.turns[
+            last?.terminalFailure ? Math.min(trace.consumed, plan.turns.length - 1) : trace.consumed
+          ];
         if (!turn) throw new Error("fixture_extra_turn");
         const turnId = assertTransportPrompt(plan, turn, prompt);
         const batch = prompt.split("\n").find((line) => line.includes('{"events":'));
@@ -94,6 +98,10 @@ try {
           )
             throw new Error("fixture_invalid_action_not_rejected");
           trace.rejected++;
+        }
+        if (turn.terminalFailure === "late") {
+          await save();
+          await new Promise((resolve) => setTimeout(resolve, 1500));
         }
         if (turn.action) {
           const result = await client!.callTool({

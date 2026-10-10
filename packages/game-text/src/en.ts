@@ -1,6 +1,13 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "role.demon_hunter.brief":
+    "NetEase rule adapted to the named finite AWA board: from night two, choose at most one other living player each night or explicitly abstain. A true wolf dies at dawn; hunting a Good player kills you instead. Native Witch poison cannot kill you. Guard and Heal do not stop hunt or backlash. No target camp or poison outcome is disclosed to you.",
+  "role.demon_hunter.state":
+    "Your original hunt history: {state}. Each new eligible night permits one new choice, with no total stock limit; a past target may be chosen again.",
+  "action.demon_hunt.hint":
+    "From night two submit exactly target_id as another living player's integer ID with abstain=false, or target_id=null with abstain=true. This required response has no fallback; self and dead targets are forbidden.",
+  "stage.demon_hunter": "Demon Hunter choice",
   "console.demon_hunter.chosen": "God: Demon Hunter {actor} chose {target} on night {day}.",
   "console.demon_hunter.own": "Your hunt choice on night {day}: {target}.",
   "console.demon_hunter.cancelled":

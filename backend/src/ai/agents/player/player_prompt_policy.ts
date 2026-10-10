@@ -1,3 +1,4 @@
+import { projectDemonHunter } from "../../../game/mechanisms/roles/demon_hunter/authority";
 import {
   weddingActorView,
   weddingBrideState,
@@ -221,6 +222,8 @@ export class PlayerPromptPolicy {
       const brideState = weddingBrideState(this.world, request.actorId);
       if (brideState) ownState.ghostBride = brideState;
     }
+    if (role?.role === Role.DemonHunter)
+      ownState.demonHunter = projectDemonHunter(this.world, role);
     if (role?.role === Role.LonelyGirl) ownState.lonelyGirl = projectLonelyGirl(this.world, role);
     if (role?.role === Role.WildChild) ownState.wildChild = projectWildChild(this.world, role);
     if (role?.role === Role.Hybrid) {

@@ -111,6 +111,7 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
+  demonHunter?: { policy: "awa_netease_demon_hunter_v1" };
   events?: { pack: (typeof EVENT_PACK_IDS)[number] };
   wildChild?: { policy: "awa_lui_meme_wild_child_v1" };
   ghostBride?: { policy: "awa_melbourne_ghost_bride_v1" };

@@ -62,7 +62,9 @@ for (const unsupported of Object.values(Role).filter(
     expect(() => bootstrapGame(config)).toThrow(
       unsupported === Role.GhostBride
         ? "ghost_bride_preset_invalid"
-        : "role_combination_not_supported",
+        : unsupported === Role.DemonHunter
+          ? "demon_hunter_preset_invalid"
+          : "role_combination_not_supported",
     );
     try {
       parseBoardDefinition(boardDefinitionFromConfig("mechanical_unsupported", config));

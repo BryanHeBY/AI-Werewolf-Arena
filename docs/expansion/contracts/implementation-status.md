@@ -154,3 +154,7 @@ Chromium完整门禁在`90cb845`完成；其后`52103ea`仅改变后端警徽请
 ## P9b 猎魔人既定 FaultPlan 实际边界（2026-10-10）
 
 独立冻结输入在真实choice后/来源冻结前创建原actor或target替换Alive，mandatory fault_applied录制后由引擎自行取消，保持history/accepted op/原生消费。closing/closed录制静默漏录已修并复验。定向48/203/2文件、受影响回归2386/22774/132文件均0失败，后端source+tests type/lint/boundary/i18n/build及局部格式通过，三组只读报告已闭合。见[有限故障边界](../reviews/p9-demon-hunter-fault-engine.md)。metadata/Replay严格Tape与公开四板仍是已知必要依赖，角色planned，继续实施，不新增故障操作。
+
+## P9b 猎魔人完整功能闭环（2026-10-10）
+
+此前两个猎魔人阶段段落记录其历史未完成依赖；本批已完成公开四板、实际完整 SDK/ACP/MCP 通路、有限 FaultPlan 的严格 Tape、本人投影与中英展示。完整后端 3794/384095/260 文件、前端 389/4060、Chromium 184，均零失败；两份独立只读复核无 P1/P2。见[完整验收](../reviews/p9-demon-hunter.md)。当前 23 verified、9 implemented、32 planned，P9/P10 及用户总体验收未关闭。

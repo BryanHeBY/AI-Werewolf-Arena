@@ -34,6 +34,7 @@ import {
   mechanical_attack,
 } from "./copied";
 import {
+  demon_hunt,
   choose_admired_player,
   choose_wild_model,
   choose_thief_card,
@@ -58,6 +59,7 @@ export const observedToolHandlers: readonly ObservedToolEntry[] = [
   { tool: "speak_to_partner", decide: speak_to_partner },
   { tool: "choose_wedding_witness", decide: choose_wedding_witness },
   { tool: "wedding_kill_vote", decide: wedding_kill_vote },
+  { tool: "demon_hunt", decide: demon_hunt },
   { tool: "choose_admired_player", decide: choose_admired_player },
   { tool: "choose_wild_model", decide: choose_wild_model },
   { tool: "choose_thief_card", decide: choose_thief_card },

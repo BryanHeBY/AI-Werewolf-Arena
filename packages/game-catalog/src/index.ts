@@ -257,9 +257,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "demon_hunter",
     names: { "zh-CN": "猎魔人", en: "Demon Hunter" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-netease-demon-hunter-v1.md",
     mechanismSummary: "夜间对决、伤害资格",
   },
   {

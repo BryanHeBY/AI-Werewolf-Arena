@@ -527,3 +527,7 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 ## P9b 猎魔人有限原生库存与 CP
 
 Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster/Role/Camp/Victory/生命与失败前缀CP接入；真实授徽/移徽/毁徽也同步缓存，全roster核对后整体提交。Gateway晚getter读取顺序、CP合法徽章前缀/未授权刷新及optional handoffPolicy getter的已复现缺陷经三组复验关闭。84 pass/488断言/3文件定向，2321 pass/22435断言/130文件影响回归（engine、recording、AI agents/integrations及runtime Recorder），均0失败；backend type7、lintdeps3/boundaries3/i18n3/build3、局部format/diff通过。见[本批审查与有限验收终点](reviews/p9-demon-hunter-native-stock.md)。这是猎魔人strict Tape必要依赖，不是通用沙箱；继续Guard来源、有限strict运输、FaultPlan/Tape、公开四板及既定完整门禁，角色仍planned，整体待用户验收。
+
+## 2026-10-10 猎魔人完整功能收尾
+
+猎魔人四个有限板子已 implemented，包含公开配置、实际请求与资源、来源结算、严格 Tape、玩家投影及双语回放。最终完整后端 3794 通过、前端 389 通过、Chromium 184 通过，均无失败；两份独立只读复核未发现 P1/P2。原机械狼组合测试的精确错误码预期已修正并全量重跑。详见[验收](reviews/p9-demon-hunter.md)。当前 23 verified、9 implemented、32 planned；纯白之女与狼巫仍只有规则草案，P9 其余任务及 P10 持续推进。仅 main 本地提交，不自动推送。

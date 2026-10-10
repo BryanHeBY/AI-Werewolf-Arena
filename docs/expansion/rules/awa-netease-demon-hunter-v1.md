@@ -65,3 +65,7 @@ source/Replay同一engine边界都真正以World操作新建Alive组件，记录
 ## 有限原生夜间严格交付与 Guard 来源
 
 四板原Seer/Guard采用真实Factory error/noFallback请求；Seer精确整数且必答，Guard只接受整数/false或null/true。原scope和最早deadline约束实际提交，成功后保存真实库存并确认receipt。Guard实际单次贡献在普通Damage清印记前封存，冻结时复验原source/target，撤权不退款；独立未知贡献及清印记后当前factory marks保留。普通刀按有效Guard/Heal重新计算同守同救，hunt/反噬仍绕过。以上为有限交付工程补全，不变更网易角色规则，不开放其它板变体。
+
+## 2026-10-10 完整实现状态
+
+上文 planned 与候选阶段说明保留对应历史时点。四个有限板子的公开装配、严格录制和 Tape、双语展示及完整门禁现已闭合，角色为 implemented；详见[完整验收](../reviews/p9-demon-hunter.md)。当前目录 23 verified、9 implemented、32 planned，不表示其它组合、P9/P10 或最终用户验收完成。

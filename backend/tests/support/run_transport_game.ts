@@ -22,6 +22,7 @@ import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import type { ReplayManifest, ReplayPlayerView } from "../../src/recording/contracts";
 
 export interface TransportGameScenario {
+  expectedFailure?: { actorId: number; stage: string };
   board: ResolvedBoardDefinition;
   seed: string;
   eventRoles?: readonly Role[];
@@ -75,7 +76,12 @@ export async function runTransportGame(
               const actor = Number(/^synthetic-player-(\d+)$/.exec(body.model)?.[1]);
               if (transportKind(actor) !== "llm") throw new Error("fixture_wrong_transport");
               const plan = plans.get(actor)!,
-                index = counts.get(actor) ?? 0,
+                index = Math.min(
+                  counts.get(actor) ?? 0,
+                  scenario.expectedFailure?.actorId === actor
+                    ? plan.turns.length - 1
+                    : Number.MAX_SAFE_INTEGER,
+                ),
                 turn = plan.turns[index];
               if (!turn) throw new Error("fixture_extra_turn");
               const prompt = [...body.messages]
@@ -124,6 +130,8 @@ export async function runTransportGame(
                 counts.set(actor, index + 1);
                 attempts.delete(actor);
               }
+              if (turn.terminalFailure === "late")
+                await new Promise((resolve) => setTimeout(resolve, 1500));
               return Response.json({
                 id: "synthetic-role-game",
                 object: "chat.completion",
@@ -209,6 +217,7 @@ export async function runTransportGame(
       },
       debugSummary: { agent: { enabled: false } },
     });
+    let failureThrown = false;
     const result = await runGame(
       resolveGameSetup(
         runtime,
@@ -216,14 +225,21 @@ export async function runTransportGame(
           recordRootDir: root,
           maxDays: 8,
           maxRuntimeMs: 120000,
-          llmTimeoutMs: 10000,
+          llmTimeoutMs: scenario.expectedFailure ? 1000 : 10000,
           streamEvents: false,
           printThinking: false,
           color: false,
         },
         scenario.board,
       ),
-    );
+    ).catch(async (error) => {
+      if (!scenario.expectedFailure) throw error;
+      failureThrown = true;
+      const session = (await fs.readdir(root)).find((name) => name.startsWith("session_"))!;
+      const prefix = await readReproduction(path.join(root, session, "reproduction.json"));
+      return { snapshot: prefix.checkpoints.at(-1)!.snapshot, eventCount: prefix.events.length };
+    });
+    expect(failureThrown).toBe(Boolean(scenario.expectedFailure));
     expect(failures).toEqual([]);
     const session = (await fs.readdir(root)).find((name) => name.startsWith("session_"))!,
       directory = path.join(root, session);
@@ -238,6 +254,66 @@ export async function runTransportGame(
     expect(manifest.game_result).toEqual(result.snapshot.result ?? undefined);
     expect(replay.result.decision).toEqual(result.snapshot.result ?? undefined);
     const views: ReplayPlayerView[] = [];
+    if (scenario.expectedFailure) {
+      for (const actor of plans.keys()) {
+        const view: ReplayPlayerView = JSON.parse(
+          await fs.readFile(path.join(directory, `players/player_${actor}.json`), "utf8"),
+        );
+        assertReplayPlayerView(view);
+        views.push(view);
+        for (const row of view.timeline)
+          if (row.kind === "turn")
+            expect(row.delta_messages.some((m) => m.kind === "fallback")).toBe(false);
+      }
+      const record = await readReproduction(path.join(directory, "reproduction.json"));
+      expect(record.checkpoints.at(-1)!.complete).toBe(false);
+      expect(record.decisions.at(-1)).toMatchObject({
+        actorId: scenario.expectedFailure.actorId,
+        stage: scenario.expectedFailure.stage,
+        outcome: { kind: "error" },
+      });
+      expect(
+        (await replayReproduction(record, await createTestTempDirectory("awa-role-failed-replay-")))
+          .snapshot,
+      ).toEqual(record.checkpoints.at(-1)!.snapshot);
+      for (const actor of plans.keys()) {
+        if (transportKind(actor) !== "acp" || !plans.get(actor)!.turns.length) continue;
+        const trace = JSON.parse(
+          await fs.readFile(
+            path.join(directory, `acp-workspaces/player-${actor}/game-fixture.json`),
+            "utf8",
+          ),
+        );
+        acpTraces.push({ actor, trace });
+        expect(trace.failure).toBe("");
+        expect(trace.schemaChecked && trace.initializationSeen).toBe(true);
+        // Process-group signals are asynchronous; permit a bounded kernel-exit gap.
+        for (const pid of [trace.agentPid, trace.mcpPid]) {
+          let alive = true;
+          for (let attempt = 0; attempt < 100 && alive; attempt++) {
+            try {
+              process.kill(pid, 0);
+            } catch (error) {
+              expect((error as NodeJS.ErrnoException).code).toBe("ESRCH");
+              alive = false;
+            }
+            if (alive) await new Promise((resolve) => setTimeout(resolve, 10));
+          }
+          expect(alive).toBe(false);
+        }
+      }
+      return {
+        result,
+        record,
+        replay,
+        manifest,
+        views,
+        sdkPrompts,
+        acpTraces,
+        rejected,
+        directory,
+      };
+    }
     for (const [actor, plan] of plans) {
       const view: ReplayPlayerView = JSON.parse(
         await fs.readFile(path.join(directory, `players/player_${actor}.json`), "utf8"),

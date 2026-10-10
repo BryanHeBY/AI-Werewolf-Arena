@@ -9,6 +9,7 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  demon_hunter: ["猎魔人选择", "Demon Hunter choice"],
   ghost_bride_groom: ["鬼魂新娘选择新郎", "Ghost Bride chooses Groom"],
   ghost_bride_chat: ["情侣私聊", "Partner chat"],
   ghost_bride_witness: ["共同选择证婚人", "Joint Witness choice"],

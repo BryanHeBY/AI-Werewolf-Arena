@@ -1,3 +1,4 @@
+import { isDemonHunterPreset } from "../../game/mechanisms/roles/demon_hunter/preset";
 import { isGhostBridePreset } from "@ai-werewolf-arena/game-text";
 /** The single public board format. Unknown fields and unregistered roles fail closed. */
 import { supportsWallRoles } from "../../game/mechanisms/events/wall_notes/authority";
@@ -273,6 +274,8 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
       config = contribution.apply(config, defaults);
     }
   }
+  if (seen.has("demon_hunter") && !isDemonHunterPreset(config))
+    fail("board_config_demon_hunter_preset_invalid", "board");
   if (
     (seen.has("ghost_bride") ||
       definition.rules.winConditions.includes(WinCondition.ThreeFactionsElimination)) &&

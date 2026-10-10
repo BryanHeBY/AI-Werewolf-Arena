@@ -92,3 +92,56 @@ export function readDemonHunterPlayerFact(
     ? (p as unknown as DemonHunterPlayerFact)
     : null;
 }
+
+export interface DemonHunterState {
+  policy: typeof DEMON_HUNTER_POLICY;
+  history: Array<{ day: number; targetId: number | null }>;
+}
+export interface DemonHuntTool {
+  name: "demon_hunt";
+  args: { target_id: number | null; abstain: boolean };
+}
+export function readDemonHunterState(value: unknown): DemonHunterState | null {
+  const p = data(value);
+  if (
+    !p ||
+    !keys(p, ["policy", "history"]) ||
+    p.policy !== DEMON_HUNTER_POLICY ||
+    !Array.isArray(p.history)
+  )
+    return null;
+  let previous = 1;
+  for (const row of p.history) {
+    if (
+      !row ||
+      typeof row !== "object" ||
+      Array.isArray(row) ||
+      !keys(row, ["day", "targetId"]) ||
+      !positive(row.day) ||
+      row.day <= previous ||
+      (row.targetId !== null && !positive(row.targetId))
+    )
+      return null;
+    previous = row.day;
+  }
+  return p as unknown as DemonHunterState;
+}
+export function readDemonHuntTool(value: unknown): DemonHuntTool | null {
+  const p = data(value);
+  if (
+    !p ||
+    !keys(p, ["name", "args"]) ||
+    p.name !== "demon_hunt" ||
+    !p.args ||
+    typeof p.args !== "object" ||
+    Array.isArray(p.args)
+  )
+    return null;
+  const args = p.args as Record<string, unknown>;
+  return keys(args, ["target_id", "abstain"]) &&
+    (args.target_id === null
+      ? args.abstain === true
+      : positive(args.target_id) && args.abstain === false)
+    ? (p as unknown as DemonHuntTool)
+    : null;
+}

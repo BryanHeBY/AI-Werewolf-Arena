@@ -110,7 +110,9 @@ export function demonHunterFixture(
     config = demonHunterBoard(size, goal),
     deck = demonHunterDeck(size);
   const catalog = new RoleCatalog([
-    ...getDefaultRoleCatalog().all(),
+    ...getDefaultRoleCatalog()
+      .all()
+      .filter((p) => p.role !== Role.DemonHunter),
     {
       role: DEMON_HUNTER_ROLE as Role,
       camp: Camp.Good,

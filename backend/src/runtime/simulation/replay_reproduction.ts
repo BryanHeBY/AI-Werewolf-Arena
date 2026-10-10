@@ -277,6 +277,7 @@ export async function replayReproduction(
   const context = bootstrapGame(board, {
     random,
     locale: record.metadata.locale,
+    ...(record.metadata.faultPlan ? { faultPlan: record.metadata.faultPlan } : {}),
     ...(record.metadata.dealMode === "fixed"
       ? {
           fixedRoles:
@@ -338,6 +339,14 @@ export async function replayReproduction(
         let cycleFailure: unknown;
         try {
           await context.phaseManager.runSingleCycle(provider, record.metadata.maxDays);
+          // Success must validate the original roster and lawful inventories too.
+          captureCheckpoint(
+            context.world,
+            context.phaseManager.getSnapshot(),
+            checkpoint.cycle,
+            true,
+            context.phaseManager.getEvents().length,
+          );
           complete = true;
         } catch (error) {
           if (error instanceof ReproductionMismatchError || checkpoint.complete) throw error;
@@ -363,6 +372,7 @@ export async function replayReproduction(
       }
       await provider.waitForSettlements();
       provider.assertConsumed();
+      if (record.checkpoints.at(-1)!.complete) context.phaseManager.assertFaultPlanConsumed();
       requireMatch(
         stableJson(normalizedEvents(context.phaseManager.getEvents())) ===
           stableJson(normalizedEvents(record.events)),
@@ -389,7 +399,7 @@ export async function replayReproduction(
             context.world,
             context.phaseManager.getSnapshot(),
             0,
-            true,
+            record.checkpoints.at(-1)!.complete,
             0,
           ).players.map((player, index) => ({
             player_id: player.id,
