@@ -1,4 +1,5 @@
 /** 文件说明：预言家夜间查验阶段处理。 */
+import { openDemonNativeNightFrame } from "../demon_hunter/authority";
 import { seerTargetAllowed } from "./target_policy";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
@@ -32,6 +33,7 @@ const seerCheckStage: NightStageHandler = {
           () => ctx.isCurrent() && ctx.currentDay() === day,
         );
       if (!scope?.isEligible()) continue;
+      const nativeFrame = openDemonNativeNightFrame(ctx.world, seerId, ability, "seer_check", day);
       const targets = new Map(
         ctx.world.getAliveEntityIds().map((id) => [id, captureNightLife(ctx.world, id)]),
       );
@@ -63,8 +65,12 @@ const seerCheckStage: NightStageHandler = {
         ability_id: ability.id,
         requiresAction: ability.state.actionPolicy !== "awa_optional_v1",
       });
+      if (nativeFrame && !nativeFrame.isCurrent())
+        throw new Error("demon_hunter_native_seer_stock_revoked");
       if (!scope.isEligible()) continue;
       const action = await ctx.actionProvider.getAction(req);
+      if (nativeFrame && !nativeFrame.isCurrent())
+        throw new Error("demon_hunter_native_seer_stock_revoked");
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;
       if (action?.name !== "check_identity") {
@@ -76,6 +82,8 @@ const seerCheckStage: NightStageHandler = {
         day: ctx.currentDay(),
         abilityId: ability.id,
       });
+      if (nativeFrame && !nativeFrame.isCurrent())
+        throw new Error("demon_hunter_native_seer_stock_revoked");
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;
       if (!result.ok || !result.sanitizedCall) {
@@ -87,6 +95,8 @@ const seerCheckStage: NightStageHandler = {
       if (!target || !livingNightLife(ctx.world, target) || !identities.get(targetId)?.isCurrent())
         continue;
       const inspection = resolveInspection(ctx.world, targetId, "camp", ctx.roleCatalog);
+      if (nativeFrame && !nativeFrame.isCurrent())
+        throw new Error("demon_hunter_native_seer_stock_revoked");
       if (!ctx.isCurrent()) return;
       if (
         !scope.isEligible() ||
@@ -101,7 +111,10 @@ const seerCheckStage: NightStageHandler = {
       const seerRole = ctx.world.getComponent<RoleComponent>(seerId, COMPONENT.Role);
       if (!activeNightAbility(seerRole, "seer_check", ctx.currentDay(), ability.id)) continue;
       const seerState = seerRole ? getSeerState(seerRole, ability.id) : undefined;
-      if (seerState) {
+      if (nativeFrame) {
+        if (!nativeFrame.commitSeer(targetId, inspection))
+          throw new Error("demon_hunter_native_seer_commit_revoked");
+      } else if (seerState) {
         seerState.lastTarget = targetId;
         seerState.lastIsWerewolf = isWerewolf;
         seerState.lastResult = { ...inspection };
@@ -110,7 +123,7 @@ const seerCheckStage: NightStageHandler = {
 
       commitFoxInspection(ctx.world, ctx.state, target, day, () => scope.isOwnerCurrent(true));
       ctx.state.seerChecks.push({ seerId, targetId, isWerewolf, result: { ...inspection } });
-      recordNightAbilityUse(ability, ctx.currentDay(), true);
+      if (!nativeFrame) recordNightAbilityUse(ability, ctx.currentDay(), true);
       recordOwnNightAction(ctx.world, seerId, day, "check", targetId, false);
       ctx.events.push({
         timestamp: Date.now(),

@@ -1,3 +1,4 @@
+import { openDemonHunterStockFrame } from "./demon_hunter/authority";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import { AliveComponent, aliveLifeVersion } from "../../../core/domain/components/alive";
 import { COMPONENT } from "../../../core/domain/components/names";
@@ -94,9 +95,14 @@ export async function resolveDeathShots(
       world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)?.alive !== false
     )
       continue;
+    const stock = rules.role === "hunter" ? openDemonHunterStockFrame(world, actorId, state) : null;
+    const consume = () => {
+      if (stock) stock.consume();
+      else state.canShoot = false;
+    };
     const sources = deathSources[actorId] ?? [];
     if (sources.includes(DeathCause.Poison)) {
-      state.canShoot = false;
+      consume();
       if (rules.poisonEvent) events.push(rules.poisonEvent(actorId));
       continue;
     }
@@ -107,7 +113,7 @@ export async function resolveDeathShots(
       !rules.permits(sources) ||
       (policy !== undefined && !permitsDeathShot(sources, policy))
     ) {
-      state.canShoot = false;
+      consume();
       continue;
     }
     const actorLife = world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)!;
@@ -119,6 +125,7 @@ export async function resolveDeathShots(
     );
     const selected = await choose(actorId);
     if (context?.isCurrent && !context.isCurrent()) break;
+    if (stock && !stock.isCurrent()) throw new Error("demon_hunter_native_hunter_stock_revoked");
     const currentRole = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
     if (
       currentRole !== role ||
@@ -142,7 +149,7 @@ export async function resolveDeathShots(
     )
       continue;
     if (selected.kind === "pass") {
-      state.canShoot = false;
+      consume();
       continue;
     }
     const targetScope = selected.targetScope ?? targets.get(selected.targetId);
@@ -152,7 +159,7 @@ export async function resolveDeathShots(
       !livingNightLife(world, targetScope)
     )
       continue;
-    state.canShoot = false;
+    consume();
     if (context?.nightEffect && context.blocksNightShot(selected.targetId)) {
       events.push({
         timestamp: Date.now(),

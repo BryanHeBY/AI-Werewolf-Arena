@@ -10,6 +10,11 @@ import {
   bindRequestDeliveryGuard,
   settleRequestDelivery,
   type AliveComponent,
+  type IdentityComponent,
+  type BadgeComponent,
+  type VotingRightComponent,
+  type StatusMarksComponent,
+  StatusMark,
   type RoleComponent,
   type CampComponent,
   type VictoryComponent,
@@ -29,6 +34,7 @@ import {
   type DemonHunterChoice,
   type DemonHunterState,
 } from "./state";
+import { statusMarkSnapshot } from "../../../../core/domain/components/status_marks";
 import { assertDemonHunterPreset } from "./preset";
 import type { FaultDecisionBoundary } from "../../../engine/fault_plan";
 interface Participant {
@@ -47,6 +53,16 @@ interface Participant {
   lifeDescriptor: PropertyDescriptor;
   initialVersion: number;
   auditPrivateJson: string;
+  checkpoint: {
+    identity: object;
+    seat: number;
+    name: string;
+    badge: object;
+    vote: object;
+    marks: StatusMarksComponent;
+    badgeJson: string;
+    voteJson: string;
+  } | null;
 }
 interface Binding {
   world: World;
@@ -164,6 +180,64 @@ function originalIdentity(p: Participant, world: World): boolean {
     demonJson(p.affiliations) === p.victoryJson
   );
 }
+function captureDemonCheckpointMetadata(world: World, id: number): Participant["checkpoint"] {
+  const identity = world.getComponent<IdentityComponent>(id, COMPONENT.Identity),
+    badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge),
+    vote = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight),
+    marks = world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks);
+  const seat = ownDemonData(identity, "seat"),
+    name = ownDemonData(identity, "name"),
+    badgeJson = demonBadgeJson(badge),
+    voteJson = demonVoteJson(vote);
+  if (
+    !identity ||
+    !badge ||
+    !vote ||
+    !marks ||
+    !Number.isSafeInteger(seat) ||
+    (seat as number) < 1 ||
+    typeof name !== "string" ||
+    !badgeJson ||
+    !voteJson ||
+    !Object.values(StatusMark).every((mark) => statusMarkSnapshot(marks, mark))
+  )
+    return null;
+  return { identity, seat: seat as number, name, badge, vote, marks, badgeJson, voteJson };
+}
+function demonBadgeJson(badge: unknown): string | null {
+  if (!badge || typeof badge !== "object" || types.isProxy(badge)) return null;
+  const optional = Object.getOwnPropertyDescriptor(badge, "handoffPolicy");
+  if (optional && !("value" in optional)) return null;
+  const isSheriff = ownDemonData(badge, "isSheriff"),
+    destroyed = ownDemonData(badge, "destroyed"),
+    voteWeight = ownDemonData(badge, "voteWeight"),
+    handoffPolicy = ownDemonData(badge, "handoffPolicy");
+  return typeof isSheriff === "boolean" &&
+    typeof destroyed === "boolean" &&
+    typeof voteWeight === "number" &&
+    Number.isFinite(voteWeight) &&
+    voteWeight > 0 &&
+    (handoffPolicy === undefined ||
+      handoffPolicy === "awa_next_seat_v1" ||
+      handoffPolicy === "awa_holder_choice_v1")
+    ? JSON.stringify({
+        isSheriff,
+        destroyed,
+        voteWeight,
+        ...(handoffPolicy === undefined ? {} : { handoffPolicy }),
+      })
+    : null;
+}
+function demonVoteJson(vote: unknown): string | null {
+  const weight = ownDemonData(vote, "weight"),
+    canVote = ownDemonData(vote, "canVote");
+  return typeof weight === "number" &&
+    Number.isFinite(weight) &&
+    weight > 0 &&
+    typeof canVote === "boolean"
+    ? JSON.stringify({ weight, canVote })
+    : null;
+}
 function capture(world: World, id: number): Participant {
   const role = world.getComponent<RoleComponent>(id, COMPONENT.Role),
     campComponent = world.getComponent<CampComponent>(id, COMPONENT.Camp),
@@ -213,6 +287,7 @@ function capture(world: World, id: number): Participant {
     privateRefs: Object.entries(privateState),
     inventoryRefs: inventoryReferences(privateState),
     auditPrivateJson: privateJson,
+    checkpoint: captureDemonCheckpointMetadata(world, id),
   };
   if (!originalLife(p, world, true)) throw new Error("demon_hunter_original_life_invalid");
   return p;
@@ -881,6 +956,7 @@ export function demonOriginalWolfSourceCurrent(
 export function assertDemonNightReadable(world: World): void {
   const b = bindings.get(world);
   if (!b) return;
+  assertDemonBadgeReadable(world);
   if (
     !validBinding(b) ||
     ![...b.players.values()].every((p) => {
@@ -923,4 +999,412 @@ export function demonOriginalWolfTargetCurrent(
     validBinding(n.binding) &&
     targetCurrent(n, targetId)
   );
+}
+
+/** Finite native Seer/Guard commits compute the next stock from the last lawful snapshot. */
+export interface DemonNativeNightFrame {
+  readonly isCurrent: () => boolean;
+  readonly commitSeer: (targetId: number, result: unknown) => boolean;
+  readonly commitGuard: (targetId: number | null) => boolean;
+}
+const nativeArrayPush = Array.prototype.push;
+function writableDemonFields(value: object, fields: readonly string[]): boolean {
+  return fields.every((key) => {
+    const descriptor = Object.getOwnPropertyDescriptor(value, key);
+    return !!descriptor && "value" in descriptor && descriptor.writable === true;
+  });
+}
+export function openDemonNativeNightFrame(
+  world: World,
+  actorId: number,
+  ability: object,
+  kind: "seer_check" | "guard",
+  day: number,
+): Readonly<DemonNativeNightFrame> | null {
+  const b = bindings.get(world);
+  if (!b) return null;
+  const n = b.active,
+    p = b.players.get(actorId),
+    id = `native:${kind}`;
+  const role = kind === "seer_check" ? Role.Seer : Role.Guard;
+  const originalJson = p?.auditPrivateJson;
+  const original = originalJson ? (JSON.parse(originalJson) as Record<string, unknown>) : null;
+  const abilities = original?.abilities as Record<string, unknown> | undefined;
+  const snapshot = abilities?.[id] as Record<string, unknown> | undefined;
+  const state = snapshot?.state as Record<string, unknown> | undefined;
+  const originalState = ownDemonData(ability, "state");
+  if (
+    !n ||
+    n.day !== day ||
+    !p ||
+    p.kind !== role ||
+    !snapshot ||
+    !state ||
+    ownDemonData(ownDemonData(p.privateState, "abilities"), id) !== ability ||
+    !originalState ||
+    typeof originalState !== "object" ||
+    !exactDemonData(snapshot, [
+      "id",
+      "kind",
+      "state",
+      "source",
+      "sourceDisclosed",
+      "startsOnDay",
+      "maxUses",
+      "uses",
+      "lastUsedDay",
+      "disabled",
+    ]) ||
+    snapshot.id !== id ||
+    snapshot.kind !== kind ||
+    snapshot.sourceDisclosed !== true ||
+    snapshot.startsOnDay !== 1 ||
+    snapshot.maxUses !== null ||
+    snapshot.disabled !== false ||
+    demonJson(snapshot.source) !== demonJson({ kind: "native", role }) ||
+    !Number.isSafeInteger(snapshot.uses) ||
+    (snapshot.uses as number) < 0 ||
+    (snapshot.lastUsedDay !== null &&
+      (!Number.isSafeInteger(snapshot.lastUsedDay) ||
+        (snapshot.lastUsedDay as number) < 1 ||
+        (snapshot.lastUsedDay as number) >= day)) ||
+    (kind === "seer_check"
+      ? !exactDemonData(state, ["lastTarget", "lastIsWerewolf", "lastResult", "history"]) ||
+        !Array.isArray(state.history) ||
+        state.history.length !== snapshot.uses
+      : !exactDemonData(state, ["lastTarget", "repeatPolicy"]) ||
+        state.repeatPolicy !== "netease_consecutive_nights_v1")
+  )
+    throw new Error("demon_hunter_native_night_stock_invalid");
+  let committed = false;
+  const writable = () =>
+    writableDemonFields(ability, ["uses", "lastUsedDay"]) &&
+    writableDemonFields(
+      originalState,
+      kind === "guard" ? ["lastTarget"] : ["lastTarget", "lastIsWerewolf", "lastResult"],
+    ) &&
+    (kind !== "seer_check" ||
+      (() => {
+        const history = ownDemonData(originalState, "history");
+        return (
+          Array.isArray(history) &&
+          !types.isProxy(history) &&
+          Object.isExtensible(history) &&
+          writableDemonFields(history, ["length"])
+        );
+      })());
+  const current = () =>
+    !committed &&
+    !n.closed &&
+    !n.frozen &&
+    b.active === n &&
+    n.isCurrent() &&
+    validBinding(b) &&
+    targetCurrent(n, actorId) &&
+    demonJson(p.privateState) === originalJson &&
+    writable();
+  if (!current()) throw new Error("demon_hunter_native_night_stock_revoked");
+  const commit = (targetId: number | null, inspection?: unknown) => {
+    if (!current() || (targetId !== null && !targetCurrent(n, targetId))) return false;
+    let nextState: Record<string, unknown>;
+    if (kind === "seer_check") {
+      if (targetId === null) return false;
+      const result = { kind: "camp", camp: b.players.get(targetId)!.camp };
+      if (demonJson(inspection) !== demonJson(result)) return false;
+      const row = { targetId, isWerewolf: result.camp === Camp.Wolf, result: { ...result } };
+      nextState = {
+        ...state,
+        lastTarget: targetId,
+        lastIsWerewolf: row.isWerewolf,
+        lastResult: { ...result },
+        history: [...(state.history as unknown[]), row],
+      };
+      const liveState = originalState as Record<string, unknown>;
+      liveState.lastTarget = targetId;
+      liveState.lastIsWerewolf = row.isWerewolf;
+      liveState.lastResult = { ...result };
+      nativeArrayPush.call(ownDemonData(originalState, "history"), row);
+    } else {
+      if (targetId !== null && snapshot.lastUsedDay === day - 1 && state.lastTarget === targetId)
+        return false;
+      nextState = { ...state, lastTarget: targetId };
+      (originalState as Record<string, unknown>).lastTarget = targetId;
+    }
+    const nextAbility = {
+      ...snapshot,
+      state: nextState,
+      uses: (snapshot.uses as number) + (targetId === null ? 0 : 1),
+      lastUsedDay: day,
+    };
+    (ability as Record<string, unknown>).uses = nextAbility.uses;
+    (ability as Record<string, unknown>).lastUsedDay = day;
+    const json = JSON.stringify({ ...original, abilities: { ...abilities, [id]: nextAbility } });
+    if (demonJson(p.privateState) !== json)
+      throw new Error("demon_hunter_native_night_commit_failed");
+    committed = true;
+    p.auditPrivateJson = json;
+    return true;
+  };
+  return Object.freeze({
+    isCurrent: current,
+    commitSeer: (targetId: number, result: unknown) =>
+      kind === "seer_check" && commit(targetId, result),
+    commitGuard: (targetId: number | null) => kind === "guard" && commit(targetId),
+  });
+}
+
+/** Hunter consumption is a synchronous stock transition, including pass and forbidden causes. */
+export function openDemonHunterStockFrame(
+  world: World,
+  actorId: number,
+  state: object,
+): Readonly<{ isCurrent: () => boolean; consume: () => void }> | null {
+  const b = bindings.get(world);
+  if (!b) return null;
+  const p = b.players.get(actorId);
+  if (
+    !p ||
+    p.kind !== Role.Hunter ||
+    ownDemonData(p.privateState, "hunter") !== state ||
+    !validBinding(b) ||
+    !originalLife(p, world) ||
+    p.lifeDescriptor.get!.call(p.life) !== false ||
+    demonJson(p.privateState) !== p.auditPrivateJson ||
+    !writableDemonFields(state, ["canShoot"])
+  )
+    throw new Error("demon_hunter_native_hunter_stock_revoked");
+  const originalJson = p.auditPrivateJson,
+    original = JSON.parse(originalJson),
+    hunter = original.hunter;
+  if (
+    !exactDemonData(hunter, ["canShoot", "deathActionPolicy"]) ||
+    typeof hunter.canShoot !== "boolean" ||
+    hunter.deathActionPolicy !== "awa_knife_or_exile_v1"
+  )
+    throw new Error("demon_hunter_native_hunter_stock_invalid");
+  let committed = false;
+  const isCurrent = () =>
+    !committed &&
+    validBinding(b) &&
+    originalLife(p, world) &&
+    p.lifeDescriptor.get!.call(p.life) === false &&
+    demonJson(p.privateState) === originalJson &&
+    writableDemonFields(state, ["canShoot"]);
+  return Object.freeze({
+    isCurrent,
+    consume: () => {
+      if (
+        committed ||
+        !validBinding(b) ||
+        !originalLife(p, world) ||
+        p.lifeDescriptor.get!.call(p.life) !== false ||
+        demonJson(p.privateState) !== originalJson ||
+        !writableDemonFields(state, ["canShoot"])
+      )
+        throw new Error("demon_hunter_native_hunter_stock_revoked");
+      (state as Record<string, unknown>).canShoot = false;
+      const json = JSON.stringify({ ...original, hunter: { ...hunter, canShoot: false } });
+      if (demonJson(p.privateState) !== json)
+        throw new Error("demon_hunter_native_hunter_commit_failed");
+      committed = true;
+      p.auditPrivateJson = json;
+    },
+  });
+}
+
+/** Original roster and committed stocks survive foreign replacement during a failed cycle. */
+export function demonHunterCheckpointPlayers(world: World, complete: boolean) {
+  const b = bindings.get(world);
+  if (!b) return null;
+  if (
+    complete &&
+    (!validBinding(b) ||
+      ![...b.players.values()].every(
+        (p) => originalLife(p, world) && demonJson(p.privateState) === p.auditPrivateJson,
+      ))
+  )
+    throw new Error("demon_hunter_checkpoint_original_state_revoked");
+  return [...b.players.values()].map((p) => {
+    const cp = p.checkpoint;
+    if (!cp) throw new Error("demon_hunter_checkpoint_metadata_missing");
+    const currentBadge = demonBadgeJson(cp.badge),
+      currentVote = demonVoteJson(cp.vote);
+    const originalMetadata =
+      world.getComponent(p.id, COMPONENT.Identity) === cp.identity &&
+      ownDemonData(cp.identity, "seat") === cp.seat &&
+      ownDemonData(cp.identity, "name") === cp.name &&
+      world.getComponent(p.id, COMPONENT.Badge) === cp.badge &&
+      world.getComponent(p.id, COMPONENT.VotingRight) === cp.vote &&
+      world.getComponent(p.id, COMPONENT.StatusMarks) === cp.marks;
+    const marks = Object.values(StatusMark).map(
+      (mark) => [mark, statusMarkSnapshot(cp.marks, mark)] as const,
+    );
+    if (complete) {
+      if (
+        !originalMetadata ||
+        !currentBadge ||
+        !currentVote ||
+        currentBadge !== cp.badgeJson ||
+        currentVote !== cp.voteJson ||
+        marks.some(([, snapshot]) => !snapshot)
+      )
+        throw new Error("demon_hunter_checkpoint_metadata_revoked");
+    }
+    return {
+      id: p.id,
+      seat: cp.seat,
+      name: cp.name,
+      role: p.kind,
+      camp: p.camp,
+      alive: p.lifeDescriptor.get!.call(p.life) === true,
+      privateState: JSON.parse(p.auditPrivateJson) as Record<string, unknown>,
+      victory: { affiliations: JSON.parse(p.victoryJson) as VictoryComponent["affiliations"] },
+      vote: JSON.parse(cp.voteJson) as { weight: number; canVote: boolean },
+      badge: JSON.parse(cp.badgeJson) as {
+        isSheriff: boolean;
+        destroyed: boolean;
+        voteWeight: number;
+        handoffPolicy?: import("../../../../core/domain/board").SheriffBadgePolicy;
+      },
+      marks: marks.flatMap(([mark, snapshot]) => (snapshot?.present ? [mark] : [])),
+    };
+  });
+}
+
+/** Permission callbacks inspect descriptors before any legacy gun policy/state read. */
+export function demonHunterNativeGunCurrent(world: World, actorId: number): boolean {
+  const b = bindings.get(world);
+  if (!b) return true;
+  const p = b.players.get(actorId);
+  return (
+    !!p &&
+    p.kind === Role.Hunter &&
+    validBinding(b) &&
+    originalLife(p, world) &&
+    p.lifeDescriptor.get!.call(p.life) === false &&
+    demonJson(p.privateState) === p.auditPrivateJson
+  );
+}
+
+/** Badge writes on the finite board are cached at the actual synchronous commit, never by failed CP refresh. */
+export function openDemonBadgeFrame(world: World): Readonly<{
+  commit: (
+    change:
+      | { kind: "assign"; sheriffId: number; weight: number; policy: string | undefined }
+      | {
+          kind: "handoff";
+          fromId: number;
+          toId: number | null;
+          weight: number;
+          policy: string | undefined;
+        },
+  ) => void;
+}> | null {
+  const b = bindings.get(world);
+  if (!b) return null;
+  if (!validBinding(b)) throw new Error("demon_hunter_badge_original_state_revoked");
+  const before = new Map(
+    [...b.players.values()].map((p) => {
+      const cp = p.checkpoint;
+      if (
+        !cp ||
+        world.getComponent(p.id, COMPONENT.Badge) !== cp.badge ||
+        world.getComponent(p.id, COMPONENT.VotingRight) !== cp.vote ||
+        !originalLife(p, world) ||
+        demonBadgeJson(cp.badge) !== cp.badgeJson ||
+        demonVoteJson(cp.vote) !== cp.voteJson ||
+        !writableDemonFields(cp.badge, ["isSheriff", "destroyed", "voteWeight"]) ||
+        !writableDemonFields(cp.vote, ["weight"]) ||
+        !Object.isExtensible(cp.badge) ||
+        Object.getOwnPropertyDescriptor(cp.badge, "handoffPolicy")?.configurable === false
+      )
+        throw new Error("demon_hunter_badge_stock_revoked");
+      return [
+        p.id,
+        {
+          cp,
+          badge: JSON.parse(cp.badgeJson),
+          vote: JSON.parse(cp.voteJson),
+          alive: p.lifeDescriptor.get!.call(p.life) === true,
+        },
+      ] as const;
+    }),
+  );
+  let committed = false;
+  return Object.freeze({
+    commit: (change) => {
+      if (committed || !validBinding(b) || change.weight !== 1.5 || change.policy !== undefined)
+        throw new Error("demon_hunter_badge_commit_invalid");
+      const expected = new Map(
+        [...before].map(([id, item]) => [id, { badge: { ...item.badge }, vote: { ...item.vote } }]),
+      );
+      if (change.kind === "assign") {
+        if (!before.get(change.sheriffId)?.alive)
+          throw new Error("demon_hunter_badge_commit_invalid");
+        for (const [id, item] of before)
+          if (item.alive) {
+            const next = expected.get(id)!;
+            next.badge.isSheriff = id === change.sheriffId;
+            next.badge.destroyed = false;
+            next.badge.voteWeight = change.weight;
+            delete next.badge.handoffPolicy;
+            if (next.vote.canVote) next.vote.weight = id === change.sheriffId ? change.weight : 1;
+          }
+      } else {
+        const from = expected.get(change.fromId);
+        if (
+          !from ||
+          !from.badge.isSheriff ||
+          from.badge.destroyed ||
+          change.toId === change.fromId ||
+          (change.toId !== null && !before.get(change.toId)?.alive)
+        )
+          throw new Error("demon_hunter_badge_commit_invalid");
+        from.badge.isSheriff = false;
+        from.badge.destroyed = true;
+        from.vote.weight = from.vote.canVote ? 1 : 0;
+        if (change.toId !== null) {
+          const next = expected.get(change.toId)!;
+          next.badge.isSheriff = true;
+          next.badge.destroyed = false;
+          next.badge.voteWeight = change.weight;
+          delete next.badge.handoffPolicy;
+          next.vote.weight = change.weight;
+        }
+      }
+      for (const [id, next] of expected) {
+        const cp = before.get(id)!.cp;
+        if (
+          world.getComponent(id, COMPONENT.Badge) !== cp.badge ||
+          world.getComponent(id, COMPONENT.VotingRight) !== cp.vote ||
+          demonBadgeJson(cp.badge) !== JSON.stringify(next.badge) ||
+          demonVoteJson(cp.vote) !== JSON.stringify(next.vote)
+        )
+          throw new Error("demon_hunter_badge_commit_revoked");
+      }
+      committed = true;
+      for (const [id, next] of expected) {
+        const cp = before.get(id)!.cp;
+        cp.badgeJson = JSON.stringify(next.badge);
+        cp.voteJson = JSON.stringify(next.vote);
+      }
+    },
+  });
+}
+
+/** Optional native badge metadata must distinguish absence from a rejected accessor. */
+export function assertDemonBadgeReadable(world: World): void {
+  const b = bindings.get(world);
+  if (!b) return;
+  for (const p of b.players.values()) {
+    const cp = p.checkpoint;
+    if (!cp) continue;
+    if (
+      world.getComponent(p.id, COMPONENT.Badge) !== cp.badge ||
+      world.getComponent(p.id, COMPONENT.VotingRight) !== cp.vote ||
+      !demonBadgeJson(cp.badge) ||
+      !demonVoteJson(cp.vote)
+    )
+      throw new Error("demon_hunter_badge_unreadable");
+  }
 }

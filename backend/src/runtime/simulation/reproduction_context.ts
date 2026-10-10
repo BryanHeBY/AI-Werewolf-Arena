@@ -1,3 +1,4 @@
+import { demonHunterCheckpointPlayers } from "../../game/mechanisms/roles/demon_hunter/authority";
 import {
   weddingSetup,
   weddingAuditPlayer,
@@ -112,68 +113,70 @@ export function captureCheckpoint(
     ...(!complete
       ? { failure: { name: recordedErrorName(failure), code: "cycle_failed" as const } }
       : {}),
-    players: world.entityIds().map((id) => {
-      const identity = world.getComponent<IdentityComponent>(id, COMPONENT.Identity)!;
-      const role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
-      const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge)!;
-      const vote = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight)!;
-      const weddingAudit = weddingAuditPlayer(world, id, !complete);
-      const audit = weddingAudit ?? projectLonelyGirlAuditPlayer(world, id);
-      const wall = projectWallNote(world, id);
-      const wallNote = wall
-        ? {
-            instanceId: wall.instanceId,
-            source: { ...wall.source },
-            remaining: wall.remaining,
-            expired: wall.expired,
-          }
-        : undefined;
-      return {
-        id,
-        seat: identity.seat,
-        name: identity.name,
-        role: audit?.role ?? role.role,
-        camp: audit?.camp ?? role.camp,
-        alive: audit?.alive ?? world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive,
-        privateState:
-          audit?.privateState ??
-          (projectLonelyGirl(world, role)
-            ? { lonelyGirl: projectLonelyGirl(world, role) }
-            : structuredClone(role.privateState)),
-        ...(wallNote ? { wallNote } : {}),
-        ...(world.getComponent(id, COMPONENT.DebatePenalty)
+    players:
+      demonHunterCheckpointPlayers(world, complete) ??
+      world.entityIds().map((id) => {
+        const identity = world.getComponent<IdentityComponent>(id, COMPONENT.Identity)!;
+        const role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+        const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge)!;
+        const vote = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight)!;
+        const weddingAudit = weddingAuditPlayer(world, id, !complete);
+        const audit = weddingAudit ?? projectLonelyGirlAuditPlayer(world, id);
+        const wall = projectWallNote(world, id);
+        const wallNote = wall
           ? {
-              debatePenalty: structuredClone(
-                world.getComponent<
-                  import("../../core/domain/components/debate_penalty").DebatePenaltyComponent
-                >(id, COMPONENT.DebatePenalty)!,
-              ),
+              instanceId: wall.instanceId,
+              source: { ...wall.source },
+              remaining: wall.remaining,
+              expired: wall.expired,
             }
-          : {}),
-        ...(world.getComponent(id, COMPONENT.Lovers)
-          ? {
-              lovers: structuredClone(
-                world.getComponent<import("../../core/domain/components/lovers").LoversComponent>(
-                  id,
-                  COMPONENT.Lovers,
-                )!,
-              ),
-            }
-          : {}),
-        victory:
-          (weddingAudit ? { affiliations: weddingAudit.victory } : null) ??
-          projectLonelyGirlVictory(world, id) ??
-          structuredClone(world.getComponent<VictoryComponent>(id, COMPONENT.Victory)!),
-        vote: { weight: vote.weight, canVote: vote.canVote },
-        badge: {
-          isSheriff: badge.isSheriff,
-          destroyed: badge.destroyed,
-          voteWeight: badge.voteWeight,
-          ...(badge.handoffPolicy ? { handoffPolicy: badge.handoffPolicy } : {}),
-        },
-        marks: world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!.values(),
-      };
-    }),
+          : undefined;
+        return {
+          id,
+          seat: identity.seat,
+          name: identity.name,
+          role: audit?.role ?? role.role,
+          camp: audit?.camp ?? role.camp,
+          alive: audit?.alive ?? world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive,
+          privateState:
+            audit?.privateState ??
+            (projectLonelyGirl(world, role)
+              ? { lonelyGirl: projectLonelyGirl(world, role) }
+              : structuredClone(role.privateState)),
+          ...(wallNote ? { wallNote } : {}),
+          ...(world.getComponent(id, COMPONENT.DebatePenalty)
+            ? {
+                debatePenalty: structuredClone(
+                  world.getComponent<
+                    import("../../core/domain/components/debate_penalty").DebatePenaltyComponent
+                  >(id, COMPONENT.DebatePenalty)!,
+                ),
+              }
+            : {}),
+          ...(world.getComponent(id, COMPONENT.Lovers)
+            ? {
+                lovers: structuredClone(
+                  world.getComponent<import("../../core/domain/components/lovers").LoversComponent>(
+                    id,
+                    COMPONENT.Lovers,
+                  )!,
+                ),
+              }
+            : {}),
+          victory:
+            (weddingAudit ? { affiliations: weddingAudit.victory } : null) ??
+            projectLonelyGirlVictory(world, id) ??
+            structuredClone(world.getComponent<VictoryComponent>(id, COMPONENT.Victory)!),
+          vote: { weight: vote.weight, canVote: vote.canVote },
+          badge: {
+            isSheriff: badge.isSheriff,
+            destroyed: badge.destroyed,
+            voteWeight: badge.voteWeight,
+            ...(badge.handoffPolicy ? { handoffPolicy: badge.handoffPolicy } : {}),
+          },
+          marks: world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!.values(),
+        };
+      }),
   };
 }
 

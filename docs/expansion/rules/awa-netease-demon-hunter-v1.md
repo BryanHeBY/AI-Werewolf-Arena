@@ -57,3 +57,7 @@ source/Replay同一engine边界都真正以World操作新建Alive组件，记录
 ## 结构化事实工程实现
 
 实际域提交后`demon_hunter_chosen`为God完整选择，只有原Demon获policy/day/targetId本人投影。真实来源冻结后`demon_hunter_cancelled`与`demon_hunter_poison_immune`只入God；`demon_hunter_sources_frozen`为God逻辑op，先于任何Alive修改，记录实际根及毒/救覆盖。上述名称、严格字段reader、双语显示与录制scope属于AWA工程实现，非官方事件协议。结构reader不替代strict Tape因果审计。
+
+## 有限原生库存 CP 工程实现
+
+四板原Seer/Guard/Hunter的合法同步动作分别计算并立即缓存下一原生库存；原Witch和Demon既有提交缓存保持。CP读取原安装roster/Role/Camp/Victory/捕获Alive accessor和合法库存缓存，失败不刷新mutable inventory。实际授徽/移徽/毁徽计算并整体保存合法Badge/Vote前缀；成功CP也只核对缓存，不收养任意live修改。optional handoffPolicy的accessor不能充当缺省。此项服务正常/失败/迟到与strict Tape核对，不扩大角色规则或故障输入范围。

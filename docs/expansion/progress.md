@@ -523,3 +523,7 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 ## P9b 猎魔人 God / 本人事实候选
 
 真实域提交选择、来源冻结撤权/原生毒免及God source op已贯通；原Demon仅见lean choice，普通人/Witch无来源结果。shared严格双语reader、script/Agent feed、真实六份录制档案与前端无状态副作用，经三组只读复核关闭。61/366定向、2207/20457/115文件后端回归、371/3946/49文件前端全unit与双端type/lint/build、局部format/diff通过，见[本批审查](reviews/p9-demon-hunter-facts.md)。继续原生库存CP/faultPlan/strict Tape/公开四板及完整门禁，角色仍planned，不将结构reader当因果Tape验收。
+
+## P9b 猎魔人有限原生库存与 CP
+
+Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster/Role/Camp/Victory/生命与失败前缀CP接入；真实授徽/移徽/毁徽也同步缓存，全roster核对后整体提交。Gateway晚getter读取顺序、CP合法徽章前缀/未授权刷新及optional handoffPolicy getter的已复现缺陷经三组复验关闭。84 pass/488断言/3文件定向，2321 pass/22435断言/130文件影响回归（engine、recording、AI agents/integrations及runtime Recorder），均0失败；backend type7、lintdeps3/boundaries3/i18n3/build3、局部format/diff通过。见[本批审查与有限验收终点](reviews/p9-demon-hunter-native-stock.md)。这是猎魔人strict Tape必要依赖，不是通用沙箱；继续Guard来源、有限strict运输、FaultPlan/Tape、公开四板及既定完整门禁，角色仍planned，整体待用户验收。

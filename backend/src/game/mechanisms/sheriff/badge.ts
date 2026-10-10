@@ -1,3 +1,4 @@
+import { openDemonBadgeFrame, assertDemonBadgeReadable } from "../roles/demon_hunter/authority";
 import { weddingBadgeSwallowed } from "../roles/ghost_bride/authority";
 /** 文件说明：警徽流转、销毁与授予逻辑。 */
 import { AliveComponent } from "../../../core/domain/components/alive";
@@ -24,7 +25,9 @@ export function assignSheriff(
   config?: BoardConfig,
   catalog?: RoleCatalog,
 ): boolean {
+  assertDemonBadgeReadable(world);
   if (weddingBadgeSwallowed(world) || !canBeSheriff(world, sheriffId, catalog)) return false;
+  const frame = openDemonBadgeFrame(world);
   const weight = config?.sheriff?.voteWeight ?? SHERIFF_VOTE_WEIGHT;
   for (const id of world.getAliveEntityIds()) {
     const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge);
@@ -39,6 +42,13 @@ export function assignSheriff(
     const voting = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight);
     if (voting?.canVote) voting.weight = id === sheriffId ? weight : 1;
   }
+  frame?.commit({
+    kind: "assign",
+    sheriffId,
+    weight,
+    policy:
+      config?.sheriff?.badgePolicy === "awa_holder_choice_v1" ? "awa_holder_choice_v1" : undefined,
+  });
   return true;
 }
 
@@ -49,6 +59,7 @@ export function transferOrDestroySheriffBadge(
   events: GameEvent[],
   catalog?: RoleCatalog,
 ): SheriffBadgeTransferResult | null {
+  assertDemonBadgeReadable(world);
   const badge = world.getComponent<BadgeComponent>(fromId, COMPONENT.Badge);
   if (!badge?.isSheriff || badge.destroyed) return null;
   return commitSheriffBadgeChoice(
@@ -72,8 +83,10 @@ export function commitSheriffBadgeChoice(
   targetId: EntityId | null,
   catalog?: RoleCatalog,
 ): SheriffBadgeTransferResult | null {
+  assertDemonBadgeReadable(world);
   const badge = world.getComponent<BadgeComponent>(fromId, COMPONENT.Badge);
   if (!badge?.isSheriff || badge.destroyed) return null;
+  const frame = openDemonBadgeFrame(world);
   const weight = badge.voteWeight ?? SHERIFF_VOTE_WEIGHT;
   const policy = badge.handoffPolicy;
   const nextSheriffId =
@@ -82,6 +95,7 @@ export function commitSheriffBadgeChoice(
   badge.destroyed = true;
   resetVotingWeight(world, fromId);
   if (nextSheriffId === null) {
+    frame?.commit({ kind: "handoff", fromId, toId: null, weight, policy });
     events.push({
       timestamp: Date.now(),
       type: "sheriff_badge_destroyed",
@@ -99,6 +113,7 @@ export function commitSheriffBadgeChoice(
   }
   const nextVoting = world.getComponent<VotingRightComponent>(nextSheriffId, COMPONENT.VotingRight);
   if (nextVoting) nextVoting.weight = weight;
+  frame?.commit({ kind: "handoff", fromId, toId: nextSheriffId, weight, policy });
   events.push({
     timestamp: Date.now(),
     type: "sheriff_badge_transferred",
@@ -118,6 +133,7 @@ export function badgeSuccessorEligible(
   id: EntityId,
   catalog?: RoleCatalog,
 ): boolean {
+  assertDemonBadgeReadable(world);
   return (
     id !== fromId &&
     canBeSheriff(world, id, catalog) &&
@@ -132,6 +148,7 @@ function pickNextSheriffCandidate(
   fromId: EntityId,
   catalog?: RoleCatalog,
 ): EntityId | null {
+  assertDemonBadgeReadable(world);
   const candidates = world
     .getAliveEntityIds()
     .filter((id) => badgeSuccessorEligible(world, fromId, id, catalog));
@@ -144,6 +161,7 @@ function pickNextSheriffCandidate(
 }
 
 export function findSheriffId(world: World, catalog?: RoleCatalog): EntityId | null {
+  assertDemonBadgeReadable(world);
   return (
     world.getAliveEntityIds().find((id) => {
       const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge);

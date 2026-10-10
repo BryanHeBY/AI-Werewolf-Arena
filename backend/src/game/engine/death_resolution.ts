@@ -1,3 +1,4 @@
+import { demonHunterNativeGunCurrent } from "../mechanisms/roles/demon_hunter/authority";
 import { expandWeddingDeaths, weddingGroup } from "../mechanisms/roles/ghost_bride/authority";
 import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-text";
 import {
@@ -465,6 +466,7 @@ export class DeathResolution {
             ? getWolfKingState(role)
             : undefined
         : undefined;
+    const nativeHunter = role?.role === Role.Hunter;
     const nativePolicy = nativeState?.deathActionPolicy ?? "awa_qualified_sources_v1";
     const causeIdentity = JSON.stringify(sources[actorId] ?? []);
     const nativeCurrent = () =>
@@ -481,7 +483,10 @@ export class DeathResolution {
     const gunCurrent = gun
       ? captureDeathGun(this.world, actorId, gun, actions.day, isCurrent).isEligible
       : isCurrent;
-    const permissionCurrent = () => gunCurrent() && nativeCurrent();
+    const permissionCurrent = () =>
+      (!nativeHunter || demonHunterNativeGunCurrent(this.world, actorId)) &&
+      gunCurrent() &&
+      nativeCurrent();
     const eligible = () => permissionCurrent() && (!nativeState || nativeState.canShoot);
     if (!eligible()) return { kind: "invalid" };
     const permit = this.world.openDeathAction(
