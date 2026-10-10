@@ -499,3 +499,7 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 ## P9b 猎魔人有限故障输入与严格数据底座
 
 75结构/实际组件替换测试、145断言及后端静态/构建通过；三组只读复验关闭getter/Proxy、非法边界重试和记录异常假完成。见[本笔审查](reviews/p9-demon-hunter-data-foundation.md)。独立faultPlan未接runtime/record/Tape，state/preset不提供原实例权限；角色仍planned、23verified/8implemented/33planned，继续原请求/原生毒源和完整角色实施。
+
+## P9b 猎魔人原实例/逐夜授权与原生毒源
+
+接40b91c0，原请求及原始生命/嵌套库存授权、一次域提交/晚撤权、同步只读审计、不可退款native Witch毒源和完整集合batch冻结原语完成，三组只读报告逐项修正复查关闭。148 pass/427断言、backend type/lint/build及局部format/diff通过，见[本笔审查](reviews/p9-demon-hunter-authority.md)。仍未注册或接实际阶段/伤害/录制/Tape，目录23verified/8implemented/33planned不变；继续完整Demon运行通路，不把原语算角色功能完成，总体待用户最终验收。
