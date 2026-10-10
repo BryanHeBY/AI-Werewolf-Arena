@@ -1,4 +1,8 @@
 import {
+  readWolfSorcererExchangeFact,
+  readWolfSorcererSkipFact,
+} from "@ai-werewolf-arena/game-text";
+import {
   readTricksterExchangeFact,
   readTricksterSkipFact,
   readExileMappingFact,
@@ -199,6 +203,8 @@ const NO_IDS = new Set([
   "god_private_game_info",
 ]);
 export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([
+  "wolf_sorcerer_exchange_committed",
+  "wolf_sorcerer_exchange_skipped",
   "trickster_exchange_committed",
   "trickster_exchange_skipped",
   "exile_target_mapped",
@@ -252,6 +258,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if (type === "wolf_sorcerer_exchange_committed") return !!readWolfSorcererExchangeFact(type, p);
+  if (type === "wolf_sorcerer_exchange_skipped") return !!readWolfSorcererSkipFact(type, p);
   if (type === "trickster_exchange_committed") return !!readTricksterExchangeFact(type, p);
   if (type === "trickster_exchange_skipped") return !!readTricksterSkipFact(type, p);
   if (type === "exile_target_mapped") return !!readExileMappingFact(type, p);
@@ -456,6 +464,14 @@ export function readReplayEvent(
       if (p.pair !== null) list(p.pair);
     }
     if (safe.type === "death_shot_missed") add(p.actorId);
+    if (
+      safe.type === "wolf_sorcerer_exchange_committed" ||
+      safe.type === "wolf_sorcerer_exchange_skipped"
+    ) {
+      if (safe.phase !== "night" || p.day !== safe.day) return null;
+      add(p.actorId);
+      if (Array.isArray(p.pair)) for (const id of p.pair) add(id);
+    }
     if (
       safe.type === "trickster_exchange_committed" ||
       safe.type === "trickster_exchange_skipped"

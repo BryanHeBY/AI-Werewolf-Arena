@@ -1,3 +1,5 @@
+import { isWolfSorcererPreset } from "@ai-werewolf-arena/game-text";
+import { installWolfSorcererBoard } from "../game/mechanisms/roles/wolf_sorcerer/night_frame";
 import { isTricksterPreset } from "@ai-werewolf-arena/game-text";
 import { installTricksterBoard } from "../game/mechanisms/roles/trickster/night_frame";
 import { installOrderPrinceBoard } from "../game/mechanisms/roles/order_prince/authority";
@@ -168,6 +170,7 @@ function createPlayers(
   installInitialRoster(world);
   if (roles.includes(Role.Trickster)) installTricksterBoard(world);
   if (roles.includes(Role.Magician)) installMagicianBoard(world);
+  if (roles.includes(Role.WolfSorcerer)) installWolfSorcererBoard(world);
   if (roles.includes(Role.OrderPrince)) installOrderPrinceBoard(world);
   if (roles.includes(Role.EvilKnight)) installEvilKnightBoard(world);
   if (roles.includes(Role.NightmareShadow)) installNightmareBoard(world);
@@ -189,6 +192,12 @@ function buildRoleDeck(
     !isTricksterPreset(config)
   )
     throw new Error("trickster_preset_invalid");
+  if (
+    (config.wolfSorcerer ||
+      config.roleSetups.some((row) => row.role === Role.WolfSorcerer && row.count > 0)) &&
+    !isWolfSorcererPreset(config)
+  )
+    throw new Error("wolf_sorcerer_preset_invalid");
   if (
     (config.magician ||
       config.roleSetups.some((row) => row.role === Role.Magician && row.count > 0)) &&

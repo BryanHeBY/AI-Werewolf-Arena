@@ -1,3 +1,4 @@
+import { wolfSorcererEventLabel } from "@ai-werewolf-arena/game-text";
 import { tricksterEventLabel } from "@ai-werewolf-arena/game-text";
 import { orderPrinceEventLabel } from "@ai-werewolf-arena/game-text";
 import { magicianEventLabel } from "@ai-werewolf-arena/game-text";
@@ -564,6 +565,8 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const sorcerer = wolfSorcererEventLabel(event.type, event.payload, locale);
+    if (sorcerer !== null) return sorcerer;
     const trickster = tricksterEventLabel(event.type, event.payload, locale);
     if (trickster !== null) return trickster;
     const prince = orderPrinceEventLabel(event.type, event.payload, locale);
@@ -623,6 +626,8 @@ export class ScriptEventRenderRegistry {
     printPrivateEvents: boolean,
     locale: Locale = "zh-CN",
   ): ScriptLiveRender[] {
+    const sorcerer = wolfSorcererEventLabel(event.type, event.payload, locale);
+    if (sorcerer !== null) return [{ kind: "system", text: sorcerer }];
     const trickster = tricksterEventLabel(event.type, event.payload, locale);
     if (trickster !== null) return [{ kind: "system", text: trickster }];
     const prince = orderPrinceEventLabel(event.type, event.payload, locale);

@@ -1,3 +1,4 @@
+import { isWolfSorcererPreset } from "./wolf-sorcerer-preset";
 import { isTricksterPreset } from "./trickster-preset";
 import { copyEventData } from "./event-data";
 const deck: Readonly<Record<string, number>> = {
@@ -21,6 +22,7 @@ function exact(v: unknown, expected: Record<string, unknown>): boolean {
 }
 /** Finite native twelve-player board. Gun eligibility is AWA, not LAL day-only. */
 export function isMagicianPreset(input: unknown): boolean {
+  if (isWolfSorcererPreset(input)) return true;
   if (isTricksterPreset(input)) return true;
   try {
     const c = copyEventData(input);

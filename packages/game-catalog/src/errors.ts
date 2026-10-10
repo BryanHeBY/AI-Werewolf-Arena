@@ -1,5 +1,7 @@
 /** Stable rule failures; human messages belong to game-text. */
 export enum RuleError {
+  WolfSorcererUnavailable = "wolf_sorcerer_unavailable",
+  WolfSorcererTarget = "wolf_sorcerer_target",
   TricksterUnavailable = "trickster_unavailable",
   TricksterTarget = "trickster_target",
   OrderPrinceUnavailable = "order_prince_unavailable",

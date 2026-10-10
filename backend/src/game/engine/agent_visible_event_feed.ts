@@ -1,4 +1,8 @@
 import {
+  readWolfSorcererExchangeFact,
+  readWolfSorcererSkipFact,
+} from "@ai-werewolf-arena/game-text";
+import {
   readTricksterExchangeFact,
   readTricksterSkipFact,
   readExileMappingFact,
@@ -127,6 +131,16 @@ export function buildAgentVisibleEvent(
   )
     return null;
   if (event.type === "exile_target_mapped" && !readExileMappingFact(event.type, event.payload))
+    return null;
+  if (
+    event.type === "wolf_sorcerer_exchange_committed" &&
+    !readWolfSorcererExchangeFact(event.type, event.payload)
+  )
+    return null;
+  if (
+    event.type === "wolf_sorcerer_exchange_skipped" &&
+    !readWolfSorcererSkipFact(event.type, event.payload)
+  )
     return null;
   const visibility = getDefaultAgentEventVisibilityRegistry();
   if (!visibility.canView(world, event, actorId)) {

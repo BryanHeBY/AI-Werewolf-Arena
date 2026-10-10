@@ -531,6 +531,28 @@ export const en = Object.freeze({
   "stage.order_prince_choice": "Order Prince choice",
   "stage.order_prince_speech": "Order Prince speech",
   "stage.order_prince_revote": "Restarted exile vote",
+  "role.wolf_sorcerer.brief":
+    "Werewolf seat mapper. After the Magician and before pack actions, explicitly choose two distinct unused living numbers or pass. Each of your numbers can be used once. Your swap moves the occupants of the already-swapped positions; overlapping pairs form an ordered cycle, while identical pairs cancel effects without refunding resources. Identities, public seats and daytime ballots remain unchanged. No pack knowledge or action before your first eligible choice.",
+  "role.wolf_sorcerer.first_night": "Your first exchange night is {day}.",
+  "action.swap_night_seats.hint":
+    "swap_night_seats: two distinct legal first_id/second_id with abstain=false; to pass, both targets must be null and abstain=true.",
+  "action.swap_night_seats.directive":
+    "Submit only swap_night_seats. Missing, invalid and late required choices fail; they are not automatic passes.",
+  "error.wolf_sorcerer_unavailable": "The Wolf Sorcerer exchange is unavailable in this turn.",
+  "error.wolf_sorcerer_target":
+    "Choose two distinct unused living numbers, or explicitly pass with both targets null.",
+  "stage.wolf_sorcerer_exchange": "Wolf Sorcerer exchange",
+  "replay.stage.wolf_sorcerer_exchange": "Wolf Sorcerer exchange",
+  "replay.stage.wolf_sorcerer_exchange_committed": "Wolf Sorcerer choice",
+  "replay.stage.wolf_sorcerer_exchange_skipped": "Wolf Sorcerer skipped choice",
+  "event.wolf_sorcerer_exchange_committed": "Player {actor}'s night {day} seat exchange: {pair}.",
+  "event.wolf_sorcerer_skipped_dead": "Night {day}: player {actor} is dead; no new seat exchange.",
+  "event.wolf_sorcerer_skipped_not_started":
+    "Night {day}: player {actor}'s seat exchange has not started.",
+  "event.wolf_sorcerer_skipped_exhausted":
+    "Night {day}: player {actor} has fewer than two unused living numbers; the exchange is skipped.",
+  "role.magician.sorcerer_rule":
+    "On the Wolf Sorcerer board, their later swap exchanges occupants of positions after your swap. Identical pairs cancel effects but never refund either inventory.",
   "role.trickster.brief":
     "Werewolf. Before pack discussion, choose two distinct unused living numbers, including yourself if desired, to exchange only the next day's final exile outcome. Seats, identities and ballots stay unchanged. Each number is used once; you may explicitly pass, but never on consecutive nights. With fewer than two legal numbers the engine skips the exhausted skill. An identical Magician pair cancels both effects without refunding numbers. Submitted effects survive your ordinary death; an already-dead mapped target causes no additional exile.",
   "action.swap_exile_targets.hint":

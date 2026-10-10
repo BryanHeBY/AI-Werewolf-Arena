@@ -1,3 +1,4 @@
+import { isWolfSorcererBoard, resolveWolfSorcererNightTarget } from "../wolf_sorcerer/night_frame";
 import { matchingExchangePairs } from "../trickster/exile_mapping";
 import { types } from "node:util";
 import { COMPONENT, type RoleComponent, type World } from "../../../../core";
@@ -264,15 +265,26 @@ export function resolveMagicianNightTarget(
   if (!n || n.day !== day || n.closed || !n.committed) throw new Error("magician_night_unsettled");
   const original = b.players.get(requestedId);
   if (!original || !original.life.alive) throw new Error("magician_target_invalid");
-  const pair =
-    kind === "death_shot" && b.state.deathShotTargetPolicy === "original" ? null : n.pair;
+  const originalShot = kind === "death_shot" && b.state.deathShotTargetPolicy === "original";
+  // A second swap exchanges occupants of positions; resolve W(raw) before M.
+  // Intermediate occupants may already be dead in a night death-shot chain.
+  const second = isWolfSorcererBoard(world)
+    ? resolveWolfSorcererNightTarget(
+        world,
+        day,
+        requestedId,
+        originalShot ? "original" : "intermediate",
+      )
+    : null;
+  const intermediateId = second?.effectiveId ?? requestedId;
+  const pair = originalShot ? null : n.pair;
   const effectiveId = pair
-    ? requestedId === pair[0]
+    ? intermediateId === pair[0]
       ? pair[1]
-      : requestedId === pair[1]
+      : intermediateId === pair[1]
         ? pair[0]
-        : requestedId
-    : requestedId;
+        : intermediateId
+    : intermediateId;
   const effective = b.players.get(effectiveId)!;
   if (kind === "night_action" && !effective.life.alive) throw new Error("magician_target_invalid");
   const nightPair = n.pair;
@@ -292,6 +304,7 @@ export function resolveMagicianNightTarget(
           requireBoard(world) === b &&
           b.night === n &&
           n.pair === nightPair &&
+          (!second || second.isCurrent()) &&
           !n.closed &&
           originalPlayer(world, original) &&
           originalPlayer(world, effective) &&

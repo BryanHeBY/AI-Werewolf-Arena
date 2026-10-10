@@ -1,4 +1,9 @@
 import {
+  readWolfSorcererExchangeFact,
+  readWolfSorcererSkipFact,
+} from "@ai-werewolf-arena/game-text";
+import { validateWolfSorcererRecord } from "./wolf_sorcerer_record";
+import {
   readTricksterExchangeFact,
   readTricksterSkipFact,
   readExileMappingFact,
@@ -284,6 +289,7 @@ const requestSchema = z.strictObject({
     death_phase: z.enum(Phase).optional(),
     death_sources: z.array(z.enum(DeathCause)).optional(),
     death_action_id: positive.optional(),
+    sorcerer_candidates: z.array(positive).optional(),
     trickster_candidates: z.array(positive).optional(),
     trickster_may_pass: z.boolean().optional(),
     swap_candidates: z.array(positive).optional(),
@@ -570,6 +576,20 @@ const schema = z.strictObject({
       })
       .superRefine((event, ctx) => {
         if (
+          event.type === "wolf_sorcerer_exchange_committed" ||
+          event.type === "wolf_sorcerer_exchange_skipped"
+        ) {
+          const fact =
+            event.type === "wolf_sorcerer_exchange_committed"
+              ? readWolfSorcererExchangeFact(event.type, event.payload)
+              : readWolfSorcererSkipFact(event.type, event.payload);
+          if (!fact || event.audience?.length !== 1 || event.audience[0] !== fact.actorId)
+            ctx.addIssue({
+              code: "custom",
+              message: "reproduction_wolf_sorcerer_audience_invalid",
+            });
+        }
+        if (
           event.type === "trickster_exchange_committed" ||
           event.type === "trickster_exchange_skipped"
         ) {
@@ -617,6 +637,8 @@ const schema = z.strictObject({
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
           event.type !== "nightmare_fear_committed" &&
+          event.type !== "wolf_sorcerer_exchange_committed" &&
+          event.type !== "wolf_sorcerer_exchange_skipped" &&
           event.type !== "trickster_exchange_committed" &&
           event.type !== "trickster_exchange_skipped" &&
           event.type !== "order_prince_choice_committed" &&
@@ -664,6 +686,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   validateLonelyGirlRecord(result);
   validateGhostBrideRecord(result);
   validateDemonHunterRecord(result);
+  validateWolfSorcererRecord(result);
   validateTricksterRecord(result);
   validateMagicianRecord(result);
   validateOrderPrinceRecord(result);

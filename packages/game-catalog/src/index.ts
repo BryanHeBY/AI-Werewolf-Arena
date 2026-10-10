@@ -369,9 +369,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "wolf_sorcerer",
     names: { "zh-CN": "狼术师", en: "Wolf Sorcerer" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-wolf-sorcerer-seats-v1.md",
     mechanismSummary: "狼队目标/座位映射",
   },
   {

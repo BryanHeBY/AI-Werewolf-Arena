@@ -1,3 +1,4 @@
+import { readWolfSorcererExchangeFact } from "@ai-werewolf-arena/game-text";
 import { readTricksterExchangeFact } from "@ai-werewolf-arena/game-text";
 import {
   isMagicianPreset,
@@ -88,10 +89,25 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
   let day = 1,
     phase: Phase = Phase.Night;
   nightAlive.set(1, [...alive]);
+  const sorcererPairs = new Map<number, [number, number] | null>();
   const cancelled = new Set<number>();
   const swap = (id: number, n: number) => {
+    const sorcerer = sorcererPairs.get(n);
+    const intermediate = sorcerer
+      ? id === sorcerer[0]
+        ? sorcerer[1]
+        : id === sorcerer[1]
+          ? sorcerer[0]
+          : id
+      : id;
     const pair = cancelled.has(n) ? null : facts.get(n)?.pair;
-    return pair ? (id === pair[0] ? pair[1] : id === pair[1] ? pair[0] : id) : id;
+    return pair
+      ? intermediate === pair[0]
+        ? pair[1]
+        : intermediate === pair[1]
+          ? pair[0]
+          : intermediate
+      : intermediate;
   };
   const shotDecision = (id: number) =>
     record.decisions.filter(
@@ -159,6 +175,17 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
         }
       history.push({ day, pair: fact.pair });
       facts.set(day, { pair: fact.pair, index });
+    }
+    if (e.type === "wolf_sorcerer_exchange_committed") {
+      const f = readWolfSorcererExchangeFact(e.type, e.payload);
+      assert(
+        f &&
+          f.day === day &&
+          phase === Phase.Night &&
+          !resolvedNights.has(day) &&
+          !sorcererPairs.has(day),
+      );
+      sorcererPairs.set(day, f.pair);
     }
     if (e.type === "trickster_exchange_committed") {
       const f = readTricksterExchangeFact(e.type, e.payload);
@@ -307,7 +334,10 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
             config.deathShotTargetPolicy === "exchanged",
         );
         assert(
-          mapped !== raw && !alive.has(mapped) && !candidates.includes(mapped) && facts.has(day),
+          mapped !== raw &&
+            !alive.has(mapped) &&
+            !candidates.includes(mapped) &&
+            (facts.has(day) || sorcererPairs.has(day)),
         );
       } else {
         assert(e.payload.targetId === mapped && alive.has(mapped));

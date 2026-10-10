@@ -560,3 +560,7 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 诡术师、魔术师、定序王子精确十二人组合已贯通夜间私有选择、同对抵消、资源消耗、最终有效放逐映射及严格失败前缀，提供 awa_trickster_12_v1 公开配置。双语 World、SDK/ACP/mixed、录像重放/篡改拒绝与界面证据见 [本批验收](reviews/p9-trickster.md)。
 
 本批功能登记后 23 verified、17 implemented、24 planned，40/64。P9c 阶段全量、其余角色和 P10 仍开放；历史条目保留当时范围与数量。main 本地线性提交，不推送。
+
+## 2026-10-11 狼术师有限魔幻对决板
+
+公开 awa_wolf_sorcerer_12_v1，独立双层号码库存与 M(W(number)) 有序映射。分层功能证据见 [狼术师验收](reviews/p9-wolf-sorcerer.md)。目录 23 verified、18 implemented、23 planned，41/64。P9c 其余角色、P10 与用户总体验收仍开放。

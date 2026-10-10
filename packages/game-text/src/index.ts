@@ -1,3 +1,4 @@
+import { readWolfSorcererExchangeFact, readWolfSorcererSkipFact } from "./wolf-sorcerer";
 import {
   readTricksterExchangeFact,
   readTricksterSkipFact,
@@ -933,6 +934,40 @@ export function tricksterEventLabel(
           requested: f.requestedId,
           effective: f.effectiveId,
         })
+      : text(locale, "replay.unknown");
+  }
+  return null;
+}
+
+export * from "./wolf-sorcerer-preset";
+export * from "./wolf-sorcerer";
+export function wolfSorcererEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale = "zh-CN",
+): string | null {
+  if (type === "wolf_sorcerer_exchange_committed") {
+    const f = readWolfSorcererExchangeFact(type, payload);
+    return f
+      ? text(locale, "event.wolf_sorcerer_exchange_committed", {
+          actor: f.actorId,
+          day: f.day,
+          pair: f.pair ? f.pair.join(", ") : text(locale, "console.magician.pass"),
+        })
+      : text(locale, "replay.unknown");
+  }
+  if (type === "wolf_sorcerer_exchange_skipped") {
+    const f = readWolfSorcererSkipFact(type, payload);
+    return f
+      ? text(
+          locale,
+          f.reason === "dead"
+            ? "event.wolf_sorcerer_skipped_dead"
+            : f.reason === "not_started"
+              ? "event.wolf_sorcerer_skipped_not_started"
+              : "event.wolf_sorcerer_skipped_exhausted",
+          { actor: f.actorId, day: f.day },
+        )
       : text(locale, "replay.unknown");
   }
   return null;

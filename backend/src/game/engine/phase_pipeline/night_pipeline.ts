@@ -1,4 +1,8 @@
 import {
+  assertWolfSorcererRosterCurrent,
+  abortWolfSorcererNight,
+} from "../../mechanisms/roles/wolf_sorcerer/night_frame";
+import {
   assertTricksterRosterCurrent,
   abortTricksterNight,
 } from "../../mechanisms/roles/trickster/night_frame";
@@ -200,6 +204,7 @@ export class NightPipeline {
       }
       const assertReadable = () => {
         if (config.trickster) assertTricksterRosterCurrent(this.world);
+        if (config.wolfSorcerer) assertWolfSorcererRosterCurrent(this.world);
         if (config.magician) assertMagicianRosterCurrent(this.world);
         assertNightmareRosterCurrent(this.world);
         assertEvilKnightRosterCurrent(this.world);
@@ -446,6 +451,7 @@ export class NightPipeline {
       };
     } finally {
       if (config.trickster && !magicianHandedOff) abortTricksterNight(this.world);
+      if (config.wolfSorcerer && !magicianHandedOff) abortWolfSorcererNight(this.world);
       if (config.magician && !magicianHandedOff) abortMagicianNight(this.world);
       if (demonAcquired && !demonHandedOff) closeDemonHunterNight(this.world);
       if (ownsWedding && !weddingHandedOff) closeWeddingNight(this.world);

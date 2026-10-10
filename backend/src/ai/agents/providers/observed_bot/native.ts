@@ -269,3 +269,18 @@ export const swapExileTargets: ObservedToolHandler = ({
     args: { first_id: first, second_id: second, abstain: false },
   };
 };
+
+export const swapNightSeats: ObservedToolHandler = ({ ownState, request, knownAliveIds, pick }) => {
+  const state = ownState.wolfSorcerer;
+  if (!state) throw new Error("wolf_sorcerer_observed_state_missing");
+  const used = new Set(state.history.flatMap((row) => row.pair ?? [])),
+    candidates = request.context.sorcerer_candidates;
+  const targets = knownAliveIds.filter(
+    (id) => !used.has(id) && (!candidates || candidates.includes(id)),
+  );
+  const first = pick(targets),
+    second = first == null ? null : pick(targets.filter((id) => id !== first));
+  return first == null || second == null
+    ? { name: "swap_night_seats", args: { first_id: null, second_id: null, abstain: true } }
+    : { name: "swap_night_seats", args: { first_id: first, second_id: second, abstain: false } };
+};

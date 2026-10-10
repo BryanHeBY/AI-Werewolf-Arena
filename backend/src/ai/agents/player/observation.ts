@@ -36,6 +36,7 @@ export interface PlayerObservation {
   deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];
   ownState: {
+    wolfSorcerer?: import("../../../game/mechanisms/roles/wolf_sorcerer/state").WolfSorcererState;
     trickster?: import("../../../game/mechanisms/roles/trickster/state").TricksterState;
     orderPrince?: import("../../../game/mechanisms/roles/order_prince/state").OrderPrinceState;
     magician?: import("../../../game/mechanisms/roles/magician/state").MagicianState;

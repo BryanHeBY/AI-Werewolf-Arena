@@ -1,4 +1,8 @@
 import {
+  readWolfSorcererExchangeFact,
+  readWolfSorcererSkipFact,
+} from "@ai-werewolf-arena/game-text";
+import {
   readTricksterExchangeFact,
   readTricksterSkipFact,
   readExileMappingFact,
@@ -117,6 +121,21 @@ export class AgentEventVisibilityRegistry {
   constructor(private readonly rules: Record<string, AgentEventVisibilityRule> = DEFAULT_RULES) {}
 
   canView(world: World, event: GameEvent, actorId: EntityId): boolean {
+    if (
+      event.type === "wolf_sorcerer_exchange_committed" ||
+      event.type === "wolf_sorcerer_exchange_skipped"
+    ) {
+      const f =
+        readWolfSorcererExchangeFact(event.type, event.payload) ??
+        readWolfSorcererSkipFact(event.type, event.payload);
+      return (
+        !!f &&
+        Array.isArray(event.audience) &&
+        event.audience.length === 1 &&
+        event.audience[0] === actorId &&
+        f.actorId === actorId
+      );
+    }
     if (
       event.type === "trickster_exchange_committed" ||
       event.type === "trickster_exchange_skipped"

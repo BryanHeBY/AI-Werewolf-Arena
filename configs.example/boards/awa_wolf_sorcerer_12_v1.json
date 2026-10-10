@@ -1,0 +1,97 @@
+{
+  "version": 2,
+  "id": "awa_wolf_sorcerer_12_v1",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 12,
+    "roleSetups": [
+      {
+        "role": "wolf",
+        "count": 3
+      },
+      {
+        "role": "villager",
+        "count": 4
+      },
+      {
+        "role": "psychic",
+        "count": 1
+      },
+      {
+        "role": "witch",
+        "count": 1
+      },
+      {
+        "role": "magician",
+        "count": 1
+      },
+      {
+        "role": "wolf_sorcerer",
+        "count": 1
+      },
+      {
+        "role": "hunter",
+        "count": 1
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": ["slaughter_side"],
+    "hooks": {
+      "onDaybreak": false,
+      "onPreElection": true,
+      "onPreVote": true,
+      "onPerSpeechGap": false
+    }
+  },
+  "mechanisms": {
+    "disclosure": {
+      "deathRevealPolicy": "awa_hidden_v1"
+    },
+    "lastWords": {
+      "policy": "awa_initial_wave_v1"
+    },
+    "sheriff": {
+      "enabled": true,
+      "electionPolicy": "awa_nomination_offstage_pk_v1",
+      "badgePolicy": "awa_holder_choice_v1",
+      "voteWeight": 1.5,
+      "tieBreaker": "no_elimination"
+    },
+    "voting": {
+      "exilePolicy": "awa_one_pk_v1"
+    },
+    "selfDestruct": {
+      "enabledWindows": ["on_pre_election", "on_pre_vote"]
+    },
+    "tieBreaker": {
+      "exileVote": "no_elimination",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "witch": {
+      "selfHeal": "disabled",
+      "knifeVisibility": "awa_with_heal_v1",
+      "potionPolicy": "awa_one_native_v1"
+    },
+    "magician": {
+      "policy": "awa_magician_wolf_king_v1",
+      "firstNight": 2,
+      "deathShotTargetPolicy": "original"
+    },
+    "psychic": {
+      "inspectionPolicy": "awa_repeat_optional_v1"
+    },
+    "hunter": {
+      "deathActionPolicy": "awa_qualified_sources_v1"
+    },
+    "wolf_sorcerer": {
+      "policy": "awa_wolf_sorcerer_seats_v1",
+      "firstNight": 2
+    }
+  }
+}

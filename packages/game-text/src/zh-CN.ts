@@ -457,6 +457,25 @@ export const zhCN = Object.freeze({
   "stage.order_prince_choice": "定序王子选择",
   "stage.order_prince_speech": "定序王子发言",
   "stage.order_prince_revote": "定序重投",
+  "role.wolf_sorcerer.brief":
+    "狼人座位映射者。魔术师之后、狼队行动之前，明确选择两个不同的未用存活编号或空过。每个号码自己整局只能使用一次。你的换位交换魔术师换位之后的座位占用者；重叠配对形成有序循环，相同配对抵消效果但不退还双方资源。身份、公开座位、白天票面不变。首次合法行动开始前不获知队友，也不参加狼队行动。",
+  "role.wolf_sorcerer.first_night": "你的首次交换夜为第{day}夜。",
+  "action.swap_night_seats.hint":
+    "swap_night_seats：first_id、second_id 为两个不同合法编号且 abstain=false；空过须两目标均为 null 且 abstain=true。",
+  "action.swap_night_seats.directive":
+    "只提交 swap_night_seats。缺失、非法、晚到的必需选择失败，不自动空过。",
+  "error.wolf_sorcerer_unavailable": "狼术师交换不属于当前可用行动窗口。",
+  "error.wolf_sorcerer_target": "请选择两个不同的未用存活编号，或用两个 null 目标明确空过。",
+  "stage.wolf_sorcerer_exchange": "狼术师交换",
+  "replay.stage.wolf_sorcerer_exchange": "狼术师交换",
+  "replay.stage.wolf_sorcerer_exchange_committed": "狼术师选择",
+  "replay.stage.wolf_sorcerer_exchange_skipped": "狼术师跳过选择",
+  "event.wolf_sorcerer_exchange_committed": "{actor}号第{day}夜的座位交换：{pair}。",
+  "event.wolf_sorcerer_skipped_dead": "第{day}夜，{actor}号已死，不产生新的座位交换。",
+  "event.wolf_sorcerer_skipped_not_started": "第{day}夜，{actor}号尚未到首次座位交换夜。",
+  "event.wolf_sorcerer_skipped_exhausted": "第{day}夜，{actor}号未用存活号码不足两个，跳过交换。",
+  "role.magician.sorcerer_rule":
+    "狼术师组合中，后手换位交换你换位之后的座位占用者。相同号码对抵消效果，但不退还双方号码资源。",
   "role.trickster.brief":
     "狼人。狼队讨论前，选择两个不同且从未用过的存活编号（可选自己），只交换随后白天最终有效的放逐结果。身份、座位和原票不变。每个编号整局用一次；可明确空过，但不能连续两夜主动空过。合法编号不足两个时由引擎跳过耗尽技能。与魔术师同对时双方效果抵消，已用编号不返还。提交后的效果不因自己正常死亡回滚；映射对象已死时不额外放逐任何人。",
   "action.swap_exile_targets.hint":

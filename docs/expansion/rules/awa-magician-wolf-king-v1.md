@@ -46,3 +46,7 @@ LAL 主办方板型：https://werewolves.games/lang-wang-mo-shu-shi/ ，十二�
 ## 后续组合范围
 
 上述排除项描述原狼王魔术师独立板。另一个经过单独冻结与验证的公开板型 awa_trickster_12_v1 支持魔术师、诡术师、定序王子组合，规则见 [诡术之境契约](awa-trickster-exile-v1.md)。仅相同无序号码对抵消，资源不退还；该组合不包含狼王，不扩大其他未验混合板支持。
+
+## 狼术师组合范围
+
+另支持 awa_wolf_sorcerer_12_v1 有限十二人板。采用 [狼术师契约](awa-wolf-sorcerer-seats-v1.md) 的有序 M(W(number)) 映射，不能套用诡术师仅同对抵消的规则。此板无狼王，夜死猎人枪口 original/exchanged 显式配置。
