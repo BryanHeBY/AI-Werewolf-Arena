@@ -1,3 +1,4 @@
+import { demonHunterIsGod } from "../roles/demon_hunter/authority";
 import { weddingFactionResult } from "../roles/ghost_bride/authority";
 /** 文件说明：内置胜利条件规格实现。 */
 import { cupidCityDecision } from "../roles/cupid/victory";
@@ -38,7 +39,7 @@ function statAlive(world: World): AliveStat {
     if (roleComp.camp === Camp.Good) {
       stat.good += 1;
       const profile = getDefaultRoleCatalog().get(roleComp.role);
-      if (profile?.goodSide === "god") stat.gods += 1;
+      if (profile?.goodSide === "god" || demonHunterIsGod(world, roleComp)) stat.gods += 1;
       else if (profile?.goodSide === "villager") stat.villagers += 1;
     }
   }

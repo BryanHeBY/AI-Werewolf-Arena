@@ -1,4 +1,15 @@
 import {
+  demonHunterActorId,
+  assertDemonNightReadable,
+  beginDemonHunterNight,
+  closeDemonHunterNight,
+  originalDemonNightLives,
+  demonOriginalWolfSourceCurrent,
+  demonOriginalWolfTargetCurrent,
+} from "../../mechanisms/roles/demon_hunter/authority";
+import { demonWitchMarksSafe } from "../../mechanisms/roles/demon_hunter/native_potion_requests";
+import { sealDeliveredDemonWitchSources } from "../../mechanisms/roles/demon_hunter/native_potion_controller";
+import {
   captureWeddingKnife,
   closeWeddingNight,
   weddingSetup,
@@ -24,7 +35,10 @@ import {
 } from "../../mechanisms/roles/initial_identity/deal";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
-import { StatusMarksComponent } from "../../../core/domain/components/status_marks";
+import {
+  StatusMarksComponent,
+  statusMarkSnapshot,
+} from "../../../core/domain/components/status_marks";
 import {
   ActionProvider,
   ActionRequest,
@@ -38,6 +52,7 @@ import {
   Phase,
   Role,
   TieBreakerStrategy,
+  StatusMark,
 } from "../../../core/domain/model";
 import {
   DamageResolutionResult,
@@ -56,6 +71,7 @@ import { createRandom, shuffled, type RandomSource } from "../../../core/domain/
 import { DreamNightFrame, hasDreamNightCommit } from "../../mechanisms/roles/dreamer/night_frame";
 import { discardStaleWolfKnife } from "../../mechanisms/roles/wolf/knife_scope";
 import { hasRoleInspectionNightCommit } from "../../mechanisms/roles/role_inspection/night_scope";
+import { livingNightLife } from "../../../core/domain/night_effects";
 import { AliveComponent, aliveLifeVersion } from "../../../core/domain/components/alive";
 import { hasMechanicalNightCommit } from "../../mechanisms/roles/mechanical_wolf/night_scope";
 import { hasBlackMarketNightCommit } from "../../mechanisms/roles/black_market_merchant/night_stage";
@@ -89,6 +105,14 @@ export type NightPipelineResult =
       summary: NightSummary;
       damage: DamageResolutionResult;
       dreamFrame: DreamNightFrame;
+      demonSources?: object;
+      demonWolfSourceCurrent?: (targetId: number) => boolean;
+      demonKnifeProtection?: Readonly<{
+        targetId: number;
+        wolf: boolean;
+        guard: boolean;
+        heal: boolean;
+      }>;
       foxInspections?: readonly import("../../../core/domain/night_effects").NightFoxInspectionClaim[];
       deathLives: ReadonlyMap<EntityId, { life: AliveComponent; version: number | undefined }>;
     }
@@ -140,8 +164,32 @@ export class NightPipeline {
     const closeWildChildNight = openWildChildNight(this.world, day, this.events);
     const closeThiefNight = openInitialIdentityNight(this.world, day);
     const ownsWedding = weddingSetup(this.world) !== null;
-    let weddingHandedOff = false;
+    const ownsDemon = demonHunterActorId(this.world) !== null;
+    let weddingHandedOff = false,
+      demonHandedOff = false,
+      demonAcquired = false;
     try {
+      if (ownsDemon) {
+        beginDemonHunterNight(this.world, day, isCurrent);
+        demonAcquired = true;
+      }
+      const assertReadable = () => {
+        if (!ownsDemon) return;
+        assertDemonNightReadable(this.world);
+        if (!this.world.entityIds().every((id) => demonWitchMarksSafe(this.world, id)))
+          throw new Error("demon_hunter_unreadable_marks");
+      };
+      assertReadable();
+      const nativeProvider = ownsDemon
+        ? {
+            getAction: async (request: ActionRequest) => {
+              assertReadable();
+              const action = await actionProvider.getAction(request);
+              assertReadable();
+              return action;
+            },
+          }
+        : actionProvider;
       if (ownsWedding) {
         const capture = captureWeddingKnife(this.world, day, isCurrent);
         this.events.push({
@@ -206,7 +254,7 @@ export class NightPipeline {
         roleCatalog: this.stageRegistry.roleCatalog,
         toolGateway: this.toolGateway,
         events: this.events,
-        actionProvider,
+        actionProvider: nativeProvider,
         currentDay: () => day,
         makeRequest: (
           actorId: EntityId,
@@ -224,9 +272,11 @@ export class NightPipeline {
 
       for (const stage of this.stageRegistry.getStages(config, this.world)) {
         if (!isCurrent()) return { interrupted: true };
+        assertReadable();
         discardStaleWolfKnife(this.world, stageState);
         if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
         await stage.execute(stageCtx);
+        assertReadable();
         if (!isCurrent()) return { interrupted: true };
         discardStaleWolfKnife(this.world, stageState);
         if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
@@ -234,6 +284,35 @@ export class NightPipeline {
 
       discardStaleWolfKnife(this.world, stageState);
       if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
+      const demonSources = ownsDemon ? sealDeliveredDemonWitchSources(this.world, day) : undefined;
+      const demonWolfActors = [...(stageState.wolfTargetVoters ?? [])];
+      const knifeScope = stageState.wolfTargetScope;
+      const demonWolfTarget = knifeScope?.targetId;
+      const demonWolfSourceCurrent = ownsDemon
+        ? (targetId: number) =>
+            targetId === demonWolfTarget &&
+            demonOriginalWolfSourceCurrent(this.world, day, demonWolfActors) &&
+            demonOriginalWolfTargetCurrent(this.world, day, targetId)
+        : undefined;
+      const demonKnifeProtection =
+        ownsDemon && knifeScope
+          ? Object.freeze({
+              targetId: knifeScope.targetId,
+              wolf: statusMarkSnapshot(knifeScope.marks, StatusMark.WolfKillMark)?.present === true,
+              guard:
+                statusMarkSnapshot(knifeScope.marks, StatusMark.GuardMark)?.present === true &&
+                (!(stageState.guardClaims ?? []).some(
+                  (claim) => claim.target.id === knifeScope.targetId,
+                ) ||
+                  (stageState.guardClaims ?? []).some(
+                    (claim) =>
+                      claim.target.id === knifeScope.targetId &&
+                      claim.marks === knifeScope.marks &&
+                      livingNightLife(this.world, claim.target),
+                  )),
+              heal: statusMarkSnapshot(knifeScope.marks, StatusMark.HealMark)?.present === true,
+            })
+          : undefined;
       const dreamFrame = new DreamNightFrame(stageState.dreamLinks);
       const damage = this.damageResolutionSystem.resolve(this.world, {
         protectedTargets: dreamFrame.protectedTargets(this.world),
@@ -248,6 +327,7 @@ export class NightPipeline {
         mechanicalEffects: stageState.mechanicalEffects,
         awakenedEffects: stageState.awakenedEffects,
       });
+      assertReadable();
       for (const reflection of damage.poisonReflections ?? [])
         this.events.push({
           timestamp: Date.now(),
@@ -273,13 +353,16 @@ export class NightPipeline {
         interruptedBySelfDestruct: false,
       };
 
-      const deathLives = new Map(
-        damage.deaths.map((id) => {
-          const life = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
-          return [id, { life, version: aliveLifeVersion(life) }] as const;
-        }),
-      );
+      const deathLives = ownsDemon
+        ? originalDemonNightLives(this.world)
+        : new Map(
+            damage.deaths.map((id) => {
+              const life = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+              return [id, { life, version: aliveLifeVersion(life) }] as const;
+            }),
+          );
       weddingHandedOff = ownsWedding;
+      demonHandedOff = ownsDemon;
       return {
         interrupted: false,
         summary,
@@ -287,8 +370,10 @@ export class NightPipeline {
         dreamFrame,
         deathLives,
         foxInspections: stageState.foxInspections,
+        ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
       };
     } finally {
+      if (demonAcquired && !demonHandedOff) closeDemonHunterNight(this.world);
       if (ownsWedding && !weddingHandedOff) closeWeddingNight(this.world);
       closeThiefNight();
       closeWildChildNight();

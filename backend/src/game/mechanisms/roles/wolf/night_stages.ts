@@ -124,8 +124,12 @@ const wolfKillVoteStage: NightStageHandler = {
   priority: 400,
   async execute(ctx): Promise<void> {
     ctx.state.wolfVotes = {};
-    const acceptedTargets: Array<{ targetId: EntityId; life: AliveComponent; version: number }> =
-      [];
+    const acceptedTargets: Array<{
+      actorId: EntityId;
+      targetId: EntityId;
+      life: AliveComponent;
+      version: number;
+    }> = [];
     // 顺序收集狼刀票，统一在阶段末做多数决结算，避免中途状态污染。
     const knifeHolders = wolfKnifeHolders(ctx.world, ctx.roleCatalog);
     // Preserve the ordinary pack's existing order; knife-only roles are independent.
@@ -255,7 +259,8 @@ const wolfKillVoteStage: NightStageHandler = {
       const abstain = voteResolved.abstain;
       const targetId = voteResolved.targetId;
       if (!abstain && targetId !== null) {
-        if (voteResolved.targetLife) acceptedTargets.push({ targetId, ...voteResolved.targetLife });
+        if (voteResolved.targetLife)
+          acceptedTargets.push({ actorId: wolfId, targetId, ...voteResolved.targetLife });
       }
       ctx.events.push(
         wolfTeamEvent(ctx.world, ctx.roleCatalog, {
@@ -288,6 +293,9 @@ const wolfKillVoteStage: NightStageHandler = {
         ctx.state.wolfVotes[target.targetId] = (ctx.state.wolfVotes[target.targetId] ?? 0) + 1;
     const wolfTarget = ctx.pickMajorityTarget(ctx.state.wolfVotes);
     ctx.state.wolfTarget = wolfTarget;
+    ctx.state.wolfTargetVoters = acceptedTargets
+      .filter((target) => target.targetId === wolfTarget)
+      .map((target) => target.actorId);
     safeRecordLogicOp({
       scope: "phase_pipeline",
       op: "wolf_kill_vote_resolved",

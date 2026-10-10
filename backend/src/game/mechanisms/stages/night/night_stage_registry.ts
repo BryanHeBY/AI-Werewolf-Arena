@@ -1,3 +1,5 @@
+import { demonHunterActorId } from "../../roles/demon_hunter/authority";
+import { DEMON_HUNTER_NIGHT_STAGE } from "../../roles/demon_hunter/night_stages";
 import { WEDDING_CHAT_STAGE, WEDDING_KNIFE_STAGE } from "../../roles/ghost_bride/night_stages";
 /** 文件说明：根据板子角色集合构建夜间阶段列表。 */
 import { BoardConfig, Role } from "../../../../core/domain/model";
@@ -50,6 +52,7 @@ export class NightStageRegistry {
         if (ability.kind === "role_check") hasRoleChecks = true;
       }
     const collected: NightStageHandler[] = [];
+    if (world && demonHunterActorId(world) !== null) collected.push(DEMON_HUNTER_NIGHT_STAGE);
     if (
       [...roleSet].some((role) =>
         this.roleCatalog.get(role)?.possibleDeathAbilities?.includes("gun"),

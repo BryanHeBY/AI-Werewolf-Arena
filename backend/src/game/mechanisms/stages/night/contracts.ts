@@ -41,6 +41,8 @@ export interface NightStageState {
   wolfVotes: Record<number, number>;
   wolfTarget: EntityId | null;
   wolfTargetScope?: WolfKnifeTargetScope;
+  /** Actual voters contributing to the selected ordinary knife, independent of target tally keys. */
+  wolfTargetVoters?: EntityId[];
   seerChecks: NightSummary["seerChecks"];
   dreamLinks: DreamNightLink[];
   poisonClaims?: NightPoisonClaim[];

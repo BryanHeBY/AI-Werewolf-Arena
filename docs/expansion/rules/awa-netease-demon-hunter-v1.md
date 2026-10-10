@@ -49,3 +49,7 @@ request/deadline只约束provider交付与同步choice commit，提交成功即�
 验收使用可选严格版本化 `faultPlan`，独立夹具开局前给定，同一不可变输入进入source录制与Replay。精确 `{version:"awa_fault_plan_v1",steps:[{id,at:{day,point:"before_night_source_freeze",afterDecision:{actorId,stage:"demon_hunter",turn:1}},mutation:{kind:"replace_alive_component",playerId,alive:true}}]}`；初版仅此具名操作，只允许提交后原actor/target等已有真实玩家，禁止脚本/回调/任意字段路径。输入属于明确离线验收故障边界，不是公开board参数，不是模型工具。
 
 source/Replay同一engine边界都真正以World操作新建Alive组件，记录fault_applied独立op，每步仅执行一次；未知步骤、错边界/目标、重复/未消费均拒绝。引擎随后自行复验生成取消与CP，不直接修改proof结果。独立oracle要求原action/op/history保留、取消一次、猎杀伤害为零、原生消费保留；严格比较请求/事件/CP/ops及故障消费。删fault、改时点/玩家、删取消、伪取消、取消与猎杀伤害并存坏档均拒绝。该证据明确称fault-plan Tape，与默认纯action Tape分开；不能由取消fact反推或补造faultPlan。
+
+## 实际夜链来源工程补全
+
+原Witch救药也绑定实际单次HealMark贡献与原source/target生命；后续撤权保留真实消费，撤销失效救药贡献，独立未知Heal不因此删除。普通刀按冻结时有效Guard/Heal矩阵重算，同守同救在救药撤权后回到有效Guard保护。刀源绑定真实贡献投票者、多数决目标及原目标生命，通用其它WolfKillMark不能借票权成为原生刀。本段及跨await安全复验是AWA交付补全，不是官方卡牌补充规则；不授权新救药、赠予或免伤变体。

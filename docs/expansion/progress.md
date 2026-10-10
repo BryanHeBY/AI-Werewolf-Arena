@@ -515,3 +515,7 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 ## P9b 猎魔人实际原生女巫来源
 
 实际Witch规范请求／严格交付、有限合法reset／none／heal／poison原库存与即时审计、原目标与实际Poison贡献及controller ledger的seal／freeze桥接候选完成；三组审查阻断已按反例修正。168／903定向（12个实际SDK／ACP provider类双语stub交付fallback0）、2144／19999／112文件回归及backend type／lint／build、局部format／diff通过，见[本笔来源桥接](reviews/p9-demon-hunter-native-potion.md)。仍未公开注册或接Night／PM／完整HTTP／Tape，不计完整角色交付；继续完整夜伤链及最终验收。
+
+## P9b 猎魔人实际夜链候选（2026-10-10）
+
+已接真实NightPipeline→PM来源冻结、原生毒/救贡献、实际狼刀actor与目标、猎杀/反噬复合根、Hunter追加完整夜波和City/Side；严格重入/失败前缀及跨await零getter经三组复验闭合。204／1243定向与2194／20277／113文件回归、backend type/lint/build及局部format/diff通过，见[本批验收](reviews/p9-demon-hunter-night-chain.md)。仍为私有安装候选，继续God/本人facts、原生库存CP、faultPlan录制、strict Tape、公开四板与完整transport/前端门禁，不计完整角色交付。

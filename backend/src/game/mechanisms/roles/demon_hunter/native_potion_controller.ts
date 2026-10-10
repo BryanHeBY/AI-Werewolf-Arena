@@ -43,6 +43,19 @@ import {
   type NativePoisonContributions,
 } from "./poison_contribution";
 
+import {
+  openNativeHealContribution,
+  commitNativeHealContribution,
+  sealNativeHealContribution,
+  lateUnknownHealContribution,
+  type NativeHealContributions,
+} from "./heal_contribution";
+interface DeliveredDemonHeal {
+  readonly claim: Readonly<NightPoisonClaim>;
+  readonly lateUnknown: () => boolean;
+  readonly sealContribution: () => Readonly<NativeHealContributions>;
+}
+const deliveredHeals = new WeakMap<World, Map<number, Readonly<DeliveredDemonHeal>>>();
 export interface DeliveredDemonPoison {
   readonly proof: object | null;
   readonly claim: Readonly<NightPoisonClaim>;
@@ -56,6 +69,8 @@ interface Sealed {
   day: number;
   poison: Readonly<DeliveredDemonPoison> | null;
   contributions: Readonly<NativePoisonContributions> | null;
+  heal: Readonly<DeliveredDemonHeal> | null;
+  healContributions: Readonly<NativeHealContributions> | null;
   frozen: boolean;
 }
 const sealedSources = new WeakMap<object, Sealed>();
@@ -157,6 +172,10 @@ export async function executeDemonWitchTurn(input: {
       potion === PotionType.Poison && marks
         ? openNativePoisonContribution(world, targetId, marks)
         : null;
+    const healContribution =
+      potion === PotionType.Heal && marks
+        ? openNativeHealContribution(world, targetId, marks)
+        : null;
     recordNightAbilityUse(ability, day, potion !== PotionType.None);
     if (potion !== PotionType.None) {
       nativeAddMark.call(
@@ -170,6 +189,24 @@ export async function executeDemonWitchTurn(input: {
     if (!frame.commit(potion)) throw new Error("demon_hunter_native_witch_commit_failed");
     // Cache real consumption before proof/event recording can fail.
     if (contribution) commitNativePoisonContribution(contribution);
+    if (healContribution) {
+      commitNativeHealContribution(healContribution);
+      const heals = deliveredHeals.get(world) ?? new Map<number, Readonly<DeliveredDemonHeal>>();
+      if (heals.has(day)) throw new Error("demon_hunter_native_witch_delivery_reentry");
+      heals.set(
+        day,
+        Object.freeze({
+          claim: Object.freeze({
+            source,
+            target,
+            isCurrent: () => frame.sourceCurrent() && frame.targetCurrent(targetId),
+          }),
+          lateUnknown: () => lateUnknownHealContribution(healContribution),
+          sealContribution: () => sealNativeHealContribution(healContribution),
+        }),
+      );
+      deliveredHeals.set(world, heals);
+    }
     if (native && contribution) {
       const proof = commitDemonNativePoison(native);
       if (!proof) throw new Error("demon_hunter_native_poison_commit_failed");
@@ -236,14 +273,25 @@ export function sealDeliveredDemonWitchSources(world: World, day: number): objec
   if (seen.has(day)) throw new Error("demon_hunter_native_sources_already_sealed");
   const poison = delivered.get(world)?.get(day) ?? null;
   const contributions = poison?.sealContribution() ?? null;
+  const heal = deliveredHeals.get(world)?.get(day) ?? null,
+    healContributions = heal?.sealContribution() ?? null;
   const token = Object.freeze({});
-  sealedSources.set(token, { world, day, poison, contributions, frozen: false });
+  sealedSources.set(token, {
+    world,
+    day,
+    poison,
+    contributions,
+    heal,
+    healContributions,
+    frozen: false,
+  });
   seen.add(day);
   sealedNights.set(world, seen);
   return token;
 }
 export interface DeliveredDemonNightSources extends DemonNightSources {
   readonly poisonOverrides: readonly Readonly<{ targetId: number; poison: boolean }>[];
+  readonly healOverrides: readonly Readonly<{ targetId: number; heal: boolean }>[];
 }
 /** Complete source set comes from the actual controller, never Tape facts or caller-supplied source metadata. */
 export function freezeDeliveredDemonNightSources(
@@ -259,6 +307,8 @@ export function freezeDeliveredDemonNightSources(
     contributions = sealed.contributions;
   const originalSourceCurrent = poison?.claim.isCurrent?.() === true;
   const lateUnknown = poison?.lateUnknown() ?? false;
+  const healCurrent = sealed.heal?.claim.isCurrent?.() === true,
+    lateHeal = sealed.heal?.lateUnknown() ?? false;
   const result = freezeDemonNightSources(world, poison?.proof ? [poison.proof] : [], faultId);
   sealed.frozen = true;
   const immunity =
@@ -268,6 +318,19 @@ export function freezeDeliveredDemonNightSources(
     result.poisonImmunities.length === 1;
   return Object.freeze({
     hunt: result.hunt,
+    healOverrides: Object.freeze(
+      sealed.heal && sealed.healContributions
+        ? [
+            Object.freeze({
+              targetId: sealed.heal.claim.target.id,
+              heal:
+                sealed.healContributions.unknown ||
+                lateHeal ||
+                (sealed.healContributions.native && healCurrent),
+            }),
+          ]
+        : [],
+    ),
     poisonImmunities: Object.freeze(immunity ? [...result.poisonImmunities] : []),
     poisonOverrides: Object.freeze(
       poison && contributions

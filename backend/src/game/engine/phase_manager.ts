@@ -1,3 +1,12 @@
+import {
+  demonHunterActorId,
+  assertDemonOriginalRoster,
+  assertDemonNightReadable,
+  hasDemonNightStarted,
+  closeDemonHunterNight,
+} from "../mechanisms/roles/demon_hunter/authority";
+import { demonWitchMarksSafe } from "../mechanisms/roles/demon_hunter/native_potion_requests";
+import { freezeDeliveredDemonNightSources } from "../mechanisms/roles/demon_hunter/native_potion_controller";
 import { GhostBrideSetupWindow } from "../mechanisms/roles/ghost_bride/setup";
 import {
   weddingSetup,
@@ -231,6 +240,8 @@ export class PhaseManager {
    * 手动跳转阶段（主要用于中断流程控制）。
    */
   jumpTo(phase: Phase): void {
+    if (!this.state.gameOver && hasDemonNightStarted(this.world, this.state.day))
+      throw new Error("demon_hunter_phase_reentry");
     if (
       hasActiveGhostBride(this.world) ||
       !ghostBrideReady(this.world) ||
@@ -251,6 +262,8 @@ export class PhaseManager {
     actionProvider: ActionProvider,
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
+    if (!this.state.gameOver && hasDemonNightStarted(this.world, this.state.day))
+      throw new Error("demon_hunter_cycle_reentry");
     const wedding = weddingSetup(this.world);
     if (
       hasActiveGhostBride(this.world) ||
@@ -275,6 +288,18 @@ export class PhaseManager {
     if (hasActiveWall(this.world)) throw new Error("wall_window_reentry");
     if (this.state.gameOver) {
       return this.getSnapshot();
+    }
+    if (demonHunterActorId(this.world) !== null) {
+      const underlying = actionProvider;
+      const assertReadable = () => this.assertDemonReadable();
+      actionProvider = {
+        getAction: async (request) => {
+          assertReadable();
+          const action = await underlying.getAction(request);
+          assertReadable();
+          return action;
+        },
+      };
     }
 
     if (this.state.day > maxDays) {
@@ -327,33 +352,81 @@ export class PhaseManager {
       ).execute(this.config, actionProvider, nightDay, nightIsCurrent);
       if (!ready || !nightIsCurrent()) return this.getSnapshot();
     }
+    assertDemonOriginalRoster(this.world);
     const bearFrame = BearNightFrame.capture(this.world, nightDay);
     const night = await this.nightPipeline.execute(this.config, actionProvider, this.state.day, {
       previousExile: this.previousExile,
       isCurrent: nightIsCurrent,
     });
     if (night.interrupted || !nightIsCurrent()) {
+      closeDemonHunterNight(this.world);
       closeWeddingNight(this.world);
       return this.getSnapshot();
     }
     const ownsWedding = weddingSetup(this.world) !== null;
-    if (ownsWedding) {
+    const ownsDemon = demonHunterActorId(this.world) !== null;
+    if (ownsWedding || ownsDemon) {
       try {
-        const deaths = night.damage.deaths.filter((id) => {
-          const scope = night.deathLives.get(id);
-          return (
-            scope &&
-            this.world.getComponent(id, COMPONENT.Alive) === scope.life &&
-            scope.life.alive &&
-            aliveLifeVersion(scope.life) === scope.version
-          );
-        });
+        this.assertDemonReadable();
+
+        const demon = ownsDemon
+          ? freezeDeliveredDemonNightSources(this.world, night.demonSources!)
+          : null;
+        const proposedSources: DeathSources = Object.fromEntries(
+          night.damage.deaths.map((id) => [id, [...(night.damage.deathSources[id] ?? [])]]),
+        );
+        if (demon) {
+          for (const override of demon.poisonOverrides) {
+            const causes: DeathCause[] = (proposedSources[override.targetId] ?? []).filter(
+              (cause) => cause !== DeathCause.Poison,
+            );
+            if (override.poison) causes.push(DeathCause.Poison);
+            proposedSources[override.targetId] = causes;
+          }
+          if (night.demonKnifeProtection) {
+            const knife = night.demonKnifeProtection;
+            const heal =
+              demon.healOverrides.find((effect) => effect.targetId === knife.targetId)?.heal ??
+              knife.heal;
+            const causes = (proposedSources[knife.targetId] ?? []).filter(
+              (cause) => cause !== DeathCause.WolfKill,
+            ) as DeathCause[];
+            if (
+              knife.wolf &&
+              knife.guard === heal &&
+              night.demonWolfSourceCurrent?.(knife.targetId)
+            )
+              causes.push(DeathCause.WolfKill);
+            proposedSources[knife.targetId] = causes;
+          }
+          if (demon.hunt.damage) {
+            const { targetId, cause } = demon.hunt.damage;
+            const causes = (proposedSources[targetId] ??= []);
+            causes.push(
+              cause === "demon_hunt" ? DeathCause.DemonHunt : DeathCause.DemonHuntBacklash,
+            );
+          }
+        }
+        const deaths = Object.keys(proposedSources)
+          .map(Number)
+          .filter((id) => {
+            const scope = night.deathLives.get(id);
+            return (
+              scope &&
+              this.world.getComponent(id, COMPONENT.Alive) === scope.life &&
+              scope.life.alive &&
+              aliveLifeVersion(scope.life) === scope.version
+            );
+          });
         const sources: DeathSources = Object.fromEntries(
           deaths.map((id) => [
             id,
-            (night.damage.deathSources[id] ?? []).filter(
+            proposedSources[id]!.filter(
               (cause) =>
-                cause !== DeathCause.WolfKill || weddingKnifeCurrent(this.world, nightDay, id),
+                cause !== DeathCause.WolfKill ||
+                (ownsWedding
+                  ? weddingKnifeCurrent(this.world, nightDay, id)
+                  : night.demonWolfSourceCurrent?.(id) === true),
             ),
           ]),
         );
@@ -376,6 +449,7 @@ export class PhaseManager {
           {},
           { nightOriginIds: deaths, isCurrent: nightIsCurrent },
         );
+        this.assertDemonReadable();
         if (!nightIsCurrent()) return this.getSnapshot();
         const completeDeaths = [
           ...deaths,
@@ -392,11 +466,12 @@ export class PhaseManager {
         this.emitNightResolved(completeDeaths);
         if (this.checkAndSealResult("night_settled")) return this.getSnapshot();
       } finally {
+        closeDemonHunterNight(this.world);
         closeWeddingNight(this.world);
       }
     }
     const firstDaySheriffBeforeNightInfo =
-      !ownsWedding && this.state.day === 1 && this.config.enableSheriff === true;
+      !ownsWedding && !ownsDemon && this.state.day === 1 && this.config.enableSheriff === true;
 
     this.setPhase(Phase.Day);
     const cycleDay = this.state.day,
@@ -406,7 +481,7 @@ export class PhaseManager {
       this.state.phase === Phase.Day &&
       !this.state.gameOver &&
       this.phaseRevision === dayRevision;
-    let nightSettled = ownsWedding;
+    let nightSettled = ownsWedding || ownsDemon;
     const settleNight = async (blast?: { deaths: number[]; sources: DeathSources }) => {
       if (nightSettled) return this.state.gameOver;
       nightSettled = true;
@@ -703,6 +778,13 @@ export class PhaseManager {
   /**
    * 写入夜晚结算公开信息（用于“昨夜死亡/平安夜”广播）。
    */
+  private assertDemonReadable(): void {
+    if (demonHunterActorId(this.world) === null) return;
+    assertDemonNightReadable(this.world);
+    if (!this.world.entityIds().every((id) => demonWitchMarksSafe(this.world, id)))
+      throw new Error("demon_hunter_unreadable_marks");
+  }
+
   private emitNightResolved(deaths: EntityId[]): void {
     this.events.push({
       timestamp: Date.now(),

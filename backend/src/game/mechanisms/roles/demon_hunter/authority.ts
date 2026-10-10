@@ -279,7 +279,7 @@ export function beginDemonHunterNight(world: World, day: number, isCurrent: () =
     b.nights.has(day) ||
     [...b.nights.keys()].some((previous) => previous >= day) ||
     !validBinding(b) ||
-    !originalLife(b.players.get(b.actorId)!, world) ||
+    ![...b.players.values()].every((p) => originalLife(p, world)) ||
     !isCurrent()
   )
     throw new Error("demon_hunter_night_unavailable");
@@ -838,4 +838,89 @@ export function demonWitchRequiredThisNight(world: World): boolean {
   const n = bindings.get(world)?.active;
   if (!n || n.closed || n.frozen) throw new Error("demon_hunter_freeze_unavailable");
   return [...n.binding.players.values()].some((p) => p.kind === Role.Witch && n.targets.has(p.id));
+}
+
+export function demonHunterNeedsTurn(world: World, day: number): boolean {
+  const n = bindings.get(world)?.active;
+  if (!n || n.day !== day || n.closed || n.frozen)
+    throw new Error("demon_hunter_night_unavailable");
+  return n.requiresChoice;
+}
+export function originalDemonNightLives(
+  world: World,
+): ReadonlyMap<number, { life: AliveComponent; version: number }> {
+  const n = bindings.get(world)?.active;
+  if (!n || n.closed) throw new Error("demon_hunter_night_unavailable");
+  return new Map(
+    [...n.targets].map(([id, version]) => [id, { life: n.binding.players.get(id)!.life, version }]),
+  );
+}
+export function demonHunterIsGod(world: World, role: RoleComponent): boolean {
+  const b = bindings.get(world),
+    p = b?.players.get(b.actorId);
+  return !!b && !!p && p.role === role && originalIdentity(p, world);
+}
+export function demonOriginalWolfSourceCurrent(
+  world: World,
+  day: number,
+  actorIds: readonly number[],
+): boolean {
+  const n = bindings.get(world)?.active;
+  return (
+    !!n &&
+    n.day === day &&
+    !n.closed &&
+    n.isCurrent() &&
+    validBinding(n.binding) &&
+    actorIds.length > 0 &&
+    actorIds.every((id) => n.binding.players.get(id)?.kind === Role.Wolf && targetCurrent(n, id))
+  );
+}
+
+/** Before ordinary engine queries, reject foreign/proxy/accessor bodies without reading them. */
+export function assertDemonNightReadable(world: World): void {
+  const b = bindings.get(world);
+  if (!b) return;
+  if (
+    !validBinding(b) ||
+    ![...b.players.values()].every((p) => {
+      const life = world.getComponent<AliveComponent>(p.id, COMPONENT.Alive);
+      if (!life || types.isProxy(life)) return false;
+      const factory = aliveLifeDescriptor(life),
+        current = Object.getOwnPropertyDescriptor(life, "alive");
+      return (
+        !!factory?.get &&
+        !!current &&
+        factory.get === current.get &&
+        factory.set === current.set &&
+        factory.enumerable === current.enumerable &&
+        factory.configurable === current.configurable
+      );
+    })
+  )
+    throw new Error("demon_hunter_unreadable_world");
+}
+export function assertDemonOriginalRoster(world: World): void {
+  const b = bindings.get(world);
+  if (b && (!validBinding(b) || ![...b.players.values()].every((p) => originalLife(p, world))))
+    throw new Error("demon_hunter_original_roster_revoked");
+}
+export function hasDemonNightStarted(world: World, day: number): boolean {
+  return bindings.get(world)?.nights.has(day) === true;
+}
+
+export function demonOriginalWolfTargetCurrent(
+  world: World,
+  day: number,
+  targetId: number,
+): boolean {
+  const n = bindings.get(world)?.active;
+  return (
+    !!n &&
+    n.day === day &&
+    !n.closed &&
+    n.isCurrent() &&
+    validBinding(n.binding) &&
+    targetCurrent(n, targetId)
+  );
 }

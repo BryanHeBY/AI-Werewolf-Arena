@@ -1,3 +1,4 @@
+import { demonHunterActorId, demonWitchRequiredThisNight } from "../demon_hunter/authority";
 /** 文件说明：女巫夜间用药阶段处理。 */
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -26,6 +27,7 @@ const resetNightRoleStateStage: NightStageHandler = {
   id: "reset_night_role_state",
   priority: 100,
   async execute(ctx): Promise<void> {
+    if (demonHunterActorId(ctx.world) !== null) return;
     for (const id of ctx.world.getAliveEntityIds()) {
       const role = ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role);
       for (const ability of allNightAbilities(role)) {
@@ -45,6 +47,20 @@ const witchActionStage: NightStageHandler = {
   id: "witch_action",
   priority: 500,
   async execute(ctx): Promise<void> {
+    if (demonHunterActorId(ctx.world) !== null) {
+      if (!demonWitchRequiredThisNight(ctx.world)) return;
+      const { executeDemonWitchTurn } = await import("../demon_hunter/native_potion_controller");
+      const result = await executeDemonWitchTurn({
+        world: ctx.world,
+        gateway: ctx.toolGateway,
+        events: ctx.events,
+        provider: ctx.actionProvider,
+        day: ctx.currentDay(),
+        wolfTarget: ctx.state.wolfTarget,
+      });
+      if (result.poison) (ctx.state.poisonClaims ??= []).push(result.poison.claim);
+      return;
+    }
     for (const { actorId: witchId, ability } of nightAbilityActors(
       ctx.world,
       "potion",
