@@ -104,6 +104,7 @@ export function demonHunterFixture(
   goal = WinCondition.SlaughterCity,
   locale: "zh-CN" | "en" = "zh-CN",
   damage = new DamageResolutionSystem(),
+  faultPlan?: unknown,
 ) {
   const world = new World(locale),
     config = demonHunterBoard(size, goal),
@@ -151,6 +152,7 @@ export function demonHunterFixture(
     new ConditionRegistry(getDefaultWinConditionRegistry()),
     damage,
     createRandom("demon-night-candidate"),
+    { faultPlan },
   );
   return {
     world,

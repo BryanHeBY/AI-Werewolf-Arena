@@ -150,3 +150,7 @@ Chromium完整门禁在`90cb845`完成；其后`52103ea`仅改变后端警徽请
 ## P9b 猎魔人有限原生夜间交付（2026-10-10）
 
 原Seer/Guard在四种Demon候选板绑定真实Factory请求及严格scope，双语SDK/ACP provider类合法/非法/空回复均不fallback。Guard实际贡献封存与晚撤权保持合法库存；普通刀重算有效Guard/Heal，清印记后独立贡献及当前factory marks保留。51项新测试，定向135/713/4文件、受影响回归2372/22660/131文件均0失败；后端type/lint/dependency/boundary/i18n/build及局部格式通过，三组已报告问题复验关闭。见[本批记录](../reviews/p9-demon-hunter-native-night.md)。HTTP/ACP子进程整局、既定单一FaultPlan与严格Tape、四板公开登记及完整门禁仍是角色验收必要依赖；不新增故障操作。目录23verified/8implemented/33planned，角色继续实施，整体待用户验收。
+
+## P9b 猎魔人既定 FaultPlan 实际边界（2026-10-10）
+
+独立冻结输入在真实choice后/来源冻结前创建原actor或target替换Alive，mandatory fault_applied录制后由引擎自行取消，保持history/accepted op/原生消费。closing/closed录制静默漏录已修并复验。定向48/203/2文件、受影响回归2386/22774/132文件均0失败，后端source+tests type/lint/boundary/i18n/build及局部格式通过，三组只读报告已闭合。见[有限故障边界](../reviews/p9-demon-hunter-fault-engine.md)。metadata/Replay严格Tape与公开四板仍是已知必要依赖，角色planned，继续实施，不新增故障操作。

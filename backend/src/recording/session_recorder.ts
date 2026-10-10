@@ -98,6 +98,12 @@ export class SessionRecordManager {
     this.scheduleFlush();
   }
 
+  /** Required causal input cannot be appended to a closing or finalized recording. */
+  recordRequiredLogicOp(input: ReplayRecordLogicOpInput): void {
+    if (this.closed || this.closing) throw new Error("mandatory_logic_op_recording_closed");
+    this.recordLogicOp(input);
+  }
+
   recordLogicOp(input: ReplayRecordLogicOpInput): void {
     if (this.closed) return;
     this.aggregate.recordLogicOp(input);

@@ -2,6 +2,7 @@ import { StatusMark } from "../../core";
 import { statusMarkSnapshot } from "../../core/domain/components/status_marks";
 import {
   demonHunterActorId,
+  committedDemonFaultBoundary,
   assertDemonOriginalRoster,
   assertDemonNightReadable,
   hasDemonNightStarted,
@@ -50,6 +51,8 @@ import { replaceWithFoxVictory } from "../mechanisms/roles/cursed_fox/victory";
 import { readGameOutcome, readVictoryPoint } from "@ai-werewolf-arena/replay-contract";
 import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-catalog";
 import { text, DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-text";
+import { NightFaultPlan, type FaultPlan } from "./fault_plan";
+import { getSessionRecorder } from "../../recording/recording_context";
 import { safeRecordLogicOp } from "../../recording/session_recorder";
 import {
   ActionProvider,
@@ -112,6 +115,7 @@ export class PhaseManager {
   private readonly deathResolution: DeathResolution;
   private previousExile: ExileFeedback | null = null;
   private phaseRevision = 0;
+  private readonly nightFaultPlan?: NightFaultPlan;
 
   private state: RuntimeSnapshot = {
     day: 1,
@@ -128,7 +132,12 @@ export class PhaseManager {
     private readonly conditionRegistry: ConditionRegistry,
     private readonly damageResolutionSystem: DamageResolutionSystem,
     private readonly random: RandomSource = createRandom(),
+    options: { faultPlan?: unknown } = {},
   ) {
+    if (options.faultPlan !== undefined) {
+      if (demonHunterActorId(world) === null) throw new Error("fault_plan_demon_board_required");
+      this.nightFaultPlan = new NightFaultPlan(world, options.faultPlan);
+    }
     this.eventRegistry = new EventRegistry();
     this.deathResolution = new DeathResolution(
       world,
@@ -224,6 +233,15 @@ export class PhaseManager {
   /**
    * 获取当前运行时快照（浅拷贝）。
    */
+  /** Immutable offline input, separate from board parameters and recorded cancellation facts. */
+  getFaultPlan(): FaultPlan | undefined {
+    return this.nightFaultPlan?.plan;
+  }
+
+  assertFaultPlanConsumed(): void {
+    this.nightFaultPlan?.assertConsumed();
+  }
+
   getSnapshot(): RuntimeSnapshot {
     return structuredClone(this.state);
   }
@@ -372,8 +390,27 @@ export class PhaseManager {
       try {
         this.assertDemonReadable();
 
+        const faults =
+          this.nightFaultPlan?.applyBeforeNightSourceFreeze(
+            nightDay,
+            committedDemonFaultBoundary(this.world),
+            (fault) => {
+              // Mandatory when recording: a failed write must not create an unproven successful Tape.
+              getSessionRecorder()?.recordRequiredLogicOp({
+                scope: "resolution",
+                op: "fault_applied",
+                phase: Phase.Night,
+                status: "ok",
+                input: { version: "awa_fault_plan_v1", step: fault.step },
+                output: {
+                  originalVersion: fault.originalVersion,
+                  replacementVersion: fault.replacementVersion,
+                },
+              });
+            },
+          ) ?? [];
         const demon = ownsDemon
-          ? freezeDeliveredDemonNightSources(this.world, night.demonSources!)
+          ? freezeDeliveredDemonNightSources(this.world, night.demonSources!, faults[0] ?? null)
           : null;
         const proposedSources: DeathSources = Object.fromEntries(
           night.damage.deaths.map((id) => [id, [...(night.damage.deathSources[id] ?? [])]]),
@@ -757,6 +794,7 @@ export class PhaseManager {
 
   private sealResult(decision: WinDecision, checkpoint: VictoryCheckpoint, phase: Phase): void {
     if (this.state.gameOver) return;
+    this.assertFaultPlanConsumed();
     if (weddingSetup(this.world)) weddingAssignment(this.world);
     const outcome = readGameOutcome(decision.outcome, this.world.entityIds());
     const winner =
