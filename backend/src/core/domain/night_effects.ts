@@ -1,3 +1,4 @@
+import type { DeathCause } from "./deaths";
 import { COMPONENT } from "./components/names";
 import { aliveLifeVersion, type AliveComponent } from "./components/alive";
 import type { World } from "./world";
@@ -141,4 +142,12 @@ export function planMechanicalDamage(
     failures,
     reflections,
   };
+}
+
+/** Original owner and target bindings for the finite pure-white inspection rules. */
+export interface NightInspectionAttack {
+  readonly actorId: EntityId;
+  readonly target: NightLifeScope;
+  readonly cause: DeathCause.PureWhiteInspection | DeathCause.WolfWitchInspection;
+  readonly isCurrent: () => boolean;
 }

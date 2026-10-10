@@ -319,6 +319,8 @@ export const en = Object.freeze({
   "console.black_market.result":
     "God Black Market result: player {actor} to player {target}, {skill}, night {day}: {outcome}.",
   "error.black_market_skill": "Choose check, poison or gun as the Black Market gift.",
+  "death.pure_white_inspection": "Pure White inspection",
+  "death.wolf_witch_inspection": "Wolf Witch inspection",
   "death.demon_hunt": "Demon Hunt",
   "death.demon_hunt_backlash": "Demon Hunt backlash",
   "death.fox_inspection": "Cursed Fox inspection",

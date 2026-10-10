@@ -274,6 +274,8 @@ export const zhCN = Object.freeze({
   "console.black_market.result":
     "【上帝黑市结果】第{day}夜{actor}号对{target}号的{skill}：{outcome}。",
   "error.black_market_skill": "黑市礼物只可选择check、poison或gun。",
+  "death.pure_white_inspection": "纯白验杀",
+  "death.wolf_witch_inspection": "狼巫验杀",
   "death.demon_hunt": "猎魔致死",
   "death.demon_hunt_backlash": "猎魔反噬",
   "death.fox_inspection": "查验咒狐致死",
