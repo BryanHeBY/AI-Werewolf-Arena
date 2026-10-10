@@ -813,3 +813,6 @@ export function nightmareEventLabel(
     ? text(locale, "console.nightmare.fear", { actor: full.actorId, day: full.day, target })
     : text(locale, "console.nightmare.own", { day: fact.day, target });
 }
+
+export * from "./red-moon";
+export * from "./red-moon-preset";
