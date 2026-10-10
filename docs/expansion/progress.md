@@ -495,3 +495,7 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 ## P9b 猎魔人规则冻结（2026-10-10）
 
 接f5153b8鬼魂新娘，网易公开卡表num23直接来源与具名AWA补全已分开。四份精确6/12×City/Side板、第二夜规范选择/弃猎、原生Witch毒免、真实Camp猎杀/反噬、整波源授权冻结/Night完整公开后胜利、精确CP/private矩阵及晚取消fault-plan Tape边界经三组只读修正复验闭合。见[规则卡](rules/awa-netease-demon-hunter-v1.md)/[冻结审查](reviews/p9-demon-hunter-rules.md)。尚未注册，23verified/8implemented/33planned不变；立即接续实现，不把文档当角色功能完成。
+
+## P9b 猎魔人有限故障输入与严格数据底座
+
+75结构/实际组件替换测试、145断言及后端静态/构建通过；三组只读复验关闭getter/Proxy、非法边界重试和记录异常假完成。见[本笔审查](reviews/p9-demon-hunter-data-foundation.md)。独立faultPlan未接runtime/record/Tape，state/preset不提供原实例权限；角色仍planned、23verified/8implemented/33planned，继续原请求/原生毒源和完整角色实施。

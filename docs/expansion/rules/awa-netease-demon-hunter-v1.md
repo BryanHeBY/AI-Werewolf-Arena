@@ -30,7 +30,7 @@ CP保持6/12原roster、Role/Camp/Victory/native库存/history；失败安全快
 
 ## 固定normalized配置
 
-Seer awa_alive_v1/awa_required_when_legal_v1；Witch selfHeal disabled/awa_with_heal_v1/awa_one_native_v1；12板Hunter awa_knife_or_exile_v1、Guard netease_consecutive_nights_v1；disclosure awa_hidden_v1、lastWords awa_initial_wave_v1；voting awa_direct_v1，两票tie min_id；Sheriff awa_final_candidates_v1/awa_next_seat_v1/1.5/min_seat，6板disabled、12板enabled，无initialSheriffSeat；hooks只有onPreElection/onPreVote为true，selfDestruct只有这两窗口。缺省经normalize可等价，任何其它normalized值拒绝。唯一Demonpolicy不按其它角色策略重写来源。
+Seer awa_alive_v1/awa_required_when_legal_v1；Witch selfHeal disabled/awa_with_heal_v1/awa_one_native_v1；12板Hunter awa_knife_or_exile_v1、Guard netease_consecutive_nights_v1；disclosure awa_hidden_v1、lastWords awa_initial_wave_v1；voting awa_direct_v1，两票tie min_id；Sheriff awa_final_candidates_v1/awa_next_seat_v1/1.5/min_seat，6板disabled（normalized省略sheriff/sheriffVote与不存在的Hunter/Guard参数）、12板enabled，无initialSheriffSeat；hooks只有onPreElection/onPreVote为true，selfDestruct只有这两窗口。缺省经normalize可等价，任何其它normalized值拒绝。唯一Demonpolicy不按其它角色策略重写来源。
 
 schema→bootstrap/实例→请求/严格preflight→域提交/伤害→DTO/双语→God/本人录制→CP因果→actual strict Tape→四板全部贯通后才启用。复制/赠予/转移不因新角色登记开放。规则卡不能代替角色验收。
 
