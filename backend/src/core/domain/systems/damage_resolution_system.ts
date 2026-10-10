@@ -7,6 +7,8 @@ import {
   livingNightLife,
   type NightPoisonClaim,
   type NightInspectionAttack,
+  type NightRetaliationAttack,
+  type NightImmunityClaim,
   type NightFoxInspectionClaim,
   type NightGuardClaim,
   type NightMechanicalEffects,
@@ -17,6 +19,8 @@ import {
 } from "../night_effects";
 
 export interface NightDamageEffects {
+  nightImmunities?: readonly NightImmunityClaim[];
+  retaliationAttacks?: readonly NightRetaliationAttack[];
   inspectionAttacks?: readonly NightInspectionAttack[];
   protectedTargets?: readonly EntityId[];
   wolfImmuneTargets?: readonly EntityId[];
@@ -101,15 +105,30 @@ export class DamageResolutionSystem {
         .map((claim) => claim.target.id),
     );
     const inspectionSources = new Map<EntityId, Set<DeathCause>>();
-    for (const attack of effects.inspectionAttacks ?? []) {
+    for (const attack of [
+      ...(effects.inspectionAttacks ?? []),
+      ...(effects.retaliationAttacks ?? []).map((effect) => ({
+        ...effect,
+        cause: DeathCause.EvilKnightReflection,
+      })),
+    ]) {
       if (!attack.isCurrent() || !livingNightLife(world, attack.target)) continue;
       const sources = inspectionSources.get(attack.target.id) ?? new Set<DeathCause>();
       sources.add(attack.cause);
       inspectionSources.set(attack.target.id, sources);
     }
 
+    const passiveImmuneTargets = new Set(
+      (effects.nightImmunities ?? [])
+        .filter((claim) => claim.isCurrent() && livingNightLife(world, claim.target))
+        .map((claim) => claim.target.id),
+    );
     for (const entityId of world.getAliveEntityIds()) {
       const marks = world.getComponent<StatusMarksComponent>(entityId, COMPONENT.StatusMarks);
+      if (passiveImmuneTargets.has(entityId)) {
+        marks?.clear();
+        continue;
+      }
       if (
         !marks &&
         !foxInspections.has(entityId) &&

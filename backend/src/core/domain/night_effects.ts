@@ -151,3 +151,16 @@ export interface NightInspectionAttack {
   readonly cause: DeathCause.PureWhiteInspection | DeathCause.WolfWitchInspection;
   readonly isCurrent: () => boolean;
 }
+
+/** Finite evil-knight retaliation, paid at accepted native action and settled at night end. */
+export interface NightRetaliationAttack {
+  readonly actorId: EntityId;
+  readonly target: NightLifeScope;
+  readonly isCurrent: () => boolean;
+}
+
+/** Original life and role authority for persistent passive night immunity. */
+export interface NightImmunityClaim {
+  readonly target: NightLifeScope;
+  readonly isCurrent: () => boolean;
+}

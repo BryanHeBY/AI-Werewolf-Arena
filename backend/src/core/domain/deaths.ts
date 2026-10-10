@@ -4,6 +4,7 @@ import type { NightLifeScope } from "./night_effects";
 export enum DeathCause {
   WolfKill = "wolf_kill",
   Poison = "poison",
+  EvilKnightReflection = "evil_knight_reflection",
   PureWhiteInspection = "pure_white_inspection",
   WolfWitchInspection = "wolf_witch_inspection",
   DemonHunt = "demon_hunt",
