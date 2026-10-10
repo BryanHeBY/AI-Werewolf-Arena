@@ -1,3 +1,4 @@
+import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { nativePotionsCanCombine } from "./policies";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：女巫工具校验规则。 */
@@ -49,7 +50,13 @@ export const WITCH_VALIDATION_RULES: ToolRuleMap = {
       if (witchState.poisonUsedThisNight && !nativePotionsCanCombine(ability!)) {
         return { code: RuleError.TwoPotions };
       }
-      const targetId = toolCall.args.target_id;
+      const requestedId = toolCall.args.target_id;
+      if (!isAliveTarget(world, requestedId)) return { code: RuleError.HealTarget };
+      const mapping = isMagicianBoard(world)
+        ? resolveMagicianNightTarget(world, day ?? 0, requestedId)
+        : null;
+      if (mapping && !mapping.isCurrent()) return { code: RuleError.HealTarget };
+      const targetId = mapping?.effectiveId ?? requestedId;
       if (
         !isAliveTarget(world, targetId) ||
         !world.getComponent<RoleComponent>(targetId, COMPONENT.Role) ||

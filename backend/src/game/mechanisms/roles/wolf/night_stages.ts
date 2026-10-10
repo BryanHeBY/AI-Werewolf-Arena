@@ -1,3 +1,4 @@
+import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { isRedMoonBoard } from "../demon_hunter/authority";
 import { nightmareKnifeBlocked, isNightmareBoard } from "../nightmare_shadow/night_frame";
 import { wolfKnifeTargetAllowed } from "./target_policy";
@@ -79,13 +80,16 @@ const wolfDiscussionStage: NightStageHandler = {
           if (
             isEvilKnightBoard(ctx.world) ||
             isNightmareBoard(ctx.world) ||
+            isMagicianBoard(ctx.world) ||
             isRedMoonBoard(ctx.world)
           )
             throw new Error(
               isNightmareBoard(ctx.world)
                 ? "nightmare_wolf_chat_action_missing"
-                : isRedMoonBoard(ctx.world)
-                  ? "red_moon_wolf_chat_action_missing"
+                : isMagicianBoard(ctx.world) || isRedMoonBoard(ctx.world)
+                  ? isMagicianBoard(ctx.world)
+                    ? "magician_wolf_chat_action_missing"
+                    : "red_moon_wolf_chat_action_missing"
                   : "evil_knight_wolf_chat_action_missing",
             );
           continue;
@@ -94,14 +98,17 @@ const wolfDiscussionStage: NightStageHandler = {
         if (
           (isEvilKnightBoard(ctx.world) ||
             isNightmareBoard(ctx.world) ||
+            isMagicianBoard(ctx.world) ||
             isRedMoonBoard(ctx.world)) &&
           (typeof action.args?.text !== "string" || typeof action.args?.end_chat !== "boolean")
         ) {
           throw new Error(
             isNightmareBoard(ctx.world)
               ? "nightmare_wolf_chat_action_invalid"
-              : isRedMoonBoard(ctx.world)
-                ? "red_moon_wolf_chat_action_invalid"
+              : isMagicianBoard(ctx.world) || isRedMoonBoard(ctx.world)
+                ? isMagicianBoard(ctx.world)
+                  ? "magician_wolf_chat_action_invalid"
+                  : "red_moon_wolf_chat_action_invalid"
                 : "evil_knight_wolf_chat_action_invalid",
           );
         }
@@ -115,13 +122,16 @@ const wolfDiscussionStage: NightStageHandler = {
           if (
             isEvilKnightBoard(ctx.world) ||
             isNightmareBoard(ctx.world) ||
+            isMagicianBoard(ctx.world) ||
             isRedMoonBoard(ctx.world)
           )
             throw new Error(
               isNightmareBoard(ctx.world)
                 ? "nightmare_wolf_chat_action_invalid"
-                : isRedMoonBoard(ctx.world)
-                  ? "red_moon_wolf_chat_action_invalid"
+                : isMagicianBoard(ctx.world) || isRedMoonBoard(ctx.world)
+                  ? isMagicianBoard(ctx.world)
+                    ? "magician_wolf_chat_action_invalid"
+                    : "red_moon_wolf_chat_action_invalid"
                   : "evil_knight_wolf_chat_action_invalid",
             );
           continue;
@@ -222,13 +232,16 @@ const wolfKillVoteStage: NightStageHandler = {
           if (
             isEvilKnightBoard(ctx.world) ||
             isNightmareBoard(ctx.world) ||
+            isMagicianBoard(ctx.world) ||
             isRedMoonBoard(ctx.world)
           )
             throw new Error(
               isNightmareBoard(ctx.world)
                 ? "nightmare_wolf_action_missing"
-                : isRedMoonBoard(ctx.world)
-                  ? "red_moon_wolf_action_missing"
+                : isMagicianBoard(ctx.world) || isRedMoonBoard(ctx.world)
+                  ? isMagicianBoard(ctx.world)
+                    ? "magician_wolf_action_missing"
+                    : "red_moon_wolf_action_missing"
                   : "evil_knight_wolf_action_missing",
             );
           retryReason = "no_valid_kill_vote_tool_call";
@@ -270,13 +283,16 @@ const wolfKillVoteStage: NightStageHandler = {
           if (
             isEvilKnightBoard(ctx.world) ||
             isNightmareBoard(ctx.world) ||
+            isMagicianBoard(ctx.world) ||
             isRedMoonBoard(ctx.world)
           )
             throw new Error(
               isNightmareBoard(ctx.world)
                 ? "nightmare_wolf_action_invalid"
-                : isRedMoonBoard(ctx.world)
-                  ? "red_moon_wolf_action_invalid"
+                : isMagicianBoard(ctx.world) || isRedMoonBoard(ctx.world)
+                  ? isMagicianBoard(ctx.world)
+                    ? "magician_wolf_action_invalid"
+                    : "red_moon_wolf_action_invalid"
                   : "evil_knight_wolf_action_invalid",
             );
           retryReason = "invalid_kill_vote_arguments";
@@ -314,13 +330,16 @@ const wolfKillVoteStage: NightStageHandler = {
         if (
           isEvilKnightBoard(ctx.world) ||
           isNightmareBoard(ctx.world) ||
+          isMagicianBoard(ctx.world) ||
           isRedMoonBoard(ctx.world)
         )
           throw new Error(
             isNightmareBoard(ctx.world)
               ? "nightmare_wolf_action_missing"
-              : isRedMoonBoard(ctx.world)
-                ? "red_moon_wolf_action_missing"
+              : isMagicianBoard(ctx.world) || isRedMoonBoard(ctx.world)
+                ? isMagicianBoard(ctx.world)
+                  ? "magician_wolf_action_missing"
+                  : "red_moon_wolf_action_missing"
                 : "evil_knight_wolf_action_missing",
           );
         voteResolved = {
@@ -399,9 +418,22 @@ const wolfKillVoteStage: NightStageHandler = {
           wolfKnifeTargetAllowed(ctx.world, item.targetId),
       );
       if (target) {
-        const marks = ctx.ensureMarks(wolfTarget);
+        const mapping = isMagicianBoard(ctx.world)
+          ? resolveMagicianNightTarget(ctx.world, ctx.currentDay(), wolfTarget)
+          : null;
+        if (mapping && !mapping.isCurrent()) throw new Error("magician_knife_target_stale");
+        const effectiveId = mapping?.effectiveId ?? wolfTarget;
+        const marks = ctx.ensureMarks(effectiveId);
         marks.add(StatusMark.WolfKillMark);
-        ctx.state.wolfTargetScope = { ...target, marks };
+        ctx.state.wolfTargetScope = mapping
+          ? {
+              ...target,
+              targetId: effectiveId,
+              life: mapping.scope.life,
+              version: mapping.scope.version,
+              marks,
+            }
+          : { ...target, marks };
       }
     }
   },

@@ -1,3 +1,4 @@
+import { swapTargets } from "./native";
 import {
   choose_bridegroom,
   speak_to_partner,
@@ -57,6 +58,7 @@ import {
 
 /** Preserve protocol-independent priority and RNG order for strict Tape reproducibility. */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
+  { tool: "swap_targets", decide: swapTargets },
   { tool: "fear", decide: fear },
   { tool: "choose_bridegroom", decide: choose_bridegroom },
   { tool: "speak_to_partner", decide: speak_to_partner },

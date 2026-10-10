@@ -1,3 +1,4 @@
+import { abortMagicianNight, closeMagicianNight } from "../mechanisms/roles/magician/night_frame";
 import {
   demonRedMoonExpiry,
   commitDemonRedMoonTransition,
@@ -289,14 +290,25 @@ export class PhaseManager {
     actionProvider: ActionProvider,
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
-    if ((this.config.pureWhite || this.config.evilKnight) && !this.state.gameOver) {
+    if (
+      (this.config.pureWhite || this.config.evilKnight || this.config.magician) &&
+      !this.state.gameOver
+    ) {
       if (this.pureWhiteStartedDays.has(this.state.day))
         throw new Error(
-          this.config.evilKnight ? "evil_knight_cycle_reentry" : "pure_white_cycle_reentry",
+          this.config.magician
+            ? "magician_cycle_reentry"
+            : this.config.evilKnight
+              ? "evil_knight_cycle_reentry"
+              : "pure_white_cycle_reentry",
         );
       this.pureWhiteStartedDays.add(this.state.day);
     }
-    return this.runSingleCycleInternal(actionProvider, maxDays);
+    try {
+      return await this.runSingleCycleInternal(actionProvider, maxDays);
+    } finally {
+      if (this.config.magician) abortMagicianNight(this.world);
+    }
   }
 
   private async runSingleCycleInternal(
@@ -698,15 +710,20 @@ export class PhaseManager {
           deathPhases[id] = Phase.Day;
         }
       }
-      await this.deathResolution.resolve(
-        deaths,
-        sources,
-        actionProvider,
-        Phase.Night,
-        Phase.Day,
-        deathPhases,
-        { dreams: night.dreamFrame, nightOriginIds: nightDeaths, isCurrent: dayIsCurrent },
-      );
+      try {
+        await this.deathResolution.resolve(
+          deaths,
+          sources,
+          actionProvider,
+          Phase.Night,
+          Phase.Day,
+          deathPhases,
+          { dreams: night.dreamFrame, nightOriginIds: nightDeaths, isCurrent: dayIsCurrent },
+        );
+        if (this.config.magician && dayIsCurrent()) closeMagicianNight(this.world, cycleDay);
+      } finally {
+        if (this.config.magician) abortMagicianNight(this.world);
+      }
       if (!dayIsCurrent()) return this.state.gameOver;
       bearFrame?.publish(this.world, this.events, dayIsCurrent);
       return this.checkAndSealResult(blast !== undefined ? "day_interrupted" : "night_settled");

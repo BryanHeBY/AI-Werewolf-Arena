@@ -1,3 +1,4 @@
+import { readMagicianExchangeFact, readDeathShotMissFact } from "@ai-werewolf-arena/game-text";
 import { readRedMoonNextNightFact, readRedMoonExpiryFact } from "@ai-werewolf-arena/game-text";
 import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
 import { DEMON_HUNTER_EVENT_TYPES, readDemonHunterEventFact } from "@ai-werewolf-arena/game-text";
@@ -91,6 +92,13 @@ export function buildAgentVisibleEvent(
     return null;
   if (event.type === "red_moon_delay_expired" && !readRedMoonExpiryFact(event.type, event.payload))
     return null;
+  if (
+    event.type === "magician_exchange_committed" &&
+    !readMagicianExchangeFact(event.type, event.payload)
+  )
+    return null;
+  if (event.type === "death_shot_missed" && !readDeathShotMissFact(event.type, event.payload))
+    return null;
   const visibility = getDefaultAgentEventVisibilityRegistry();
   if (!visibility.canView(world, event, actorId)) {
     return null;
@@ -120,6 +128,10 @@ function projectPayload(event: GameEvent): Record<string, unknown> {
       return { actorId: event.payload.actorId, day: event.payload.day, night: event.payload.night };
     case "red_moon_delay_expired":
       return { actorId: event.payload.actorId, day: event.payload.day };
+    case "magician_exchange_committed": {
+      const fact = readMagicianExchangeFact(event.type, event.payload);
+      return fact ? { day: fact.day, pair: fact.pair } : {};
+    }
     case "nightmare_fear_committed":
       return { day: event.payload.day, targetId: event.payload.targetId };
     case "demon_hunter_chosen":

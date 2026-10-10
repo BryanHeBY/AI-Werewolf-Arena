@@ -838,3 +838,28 @@ export function redMoonEventLabel(
     ? text(locale, "console.red_moon.expiry", { actor: expiry.actorId, day: expiry.day })
     : null;
 }
+
+export * from "./magician";
+export * from "./magician-preset";
+
+import {
+  readMagicianExchangeFact,
+  readMagicianOwnExchangeFact,
+  readDeathShotMissFact,
+} from "./magician";
+export function magicianEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale = "zh-CN",
+): string | null {
+  const miss = readDeathShotMissFact(type, payload);
+  if (miss) return text(locale, "console.shot.missed", { actor: miss.actorId });
+  const full = readMagicianExchangeFact(type, payload),
+    own = readMagicianOwnExchangeFact(type, payload),
+    fact = full ?? own;
+  if (!fact) return null;
+  const pair = fact.pair ? fact.pair.join(", ") : text(locale, "console.magician.pass");
+  return full
+    ? text(locale, "console.magician.exchange", { actor: full.actorId, day: full.day, pair })
+    : text(locale, "console.magician.own", { day: fact.day, pair });
+}

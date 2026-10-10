@@ -1,3 +1,6 @@
+import { assertMagicianRosterCurrent } from "../../mechanisms/roles/magician/night_frame";
+import { isMagicianBoard } from "../../mechanisms/roles/magician/night_frame";
+import { abortMagicianNight } from "../../mechanisms/roles/magician/night_frame";
 import { isRedMoonBoard } from "../../mechanisms/roles/demon_hunter/authority";
 import {
   assertNightmareRosterCurrent,
@@ -182,6 +185,7 @@ export class NightPipeline {
     const closeThiefNight = openInitialIdentityNight(this.world, day);
     const ownsWedding = weddingSetup(this.world) !== null;
     const ownsDemon = demonHunterActorId(this.world) !== null;
+    let magicianHandedOff = false;
     let weddingHandedOff = false,
       demonHandedOff = false,
       demonAcquired = false;
@@ -191,6 +195,7 @@ export class NightPipeline {
         demonAcquired = true;
       }
       const assertReadable = () => {
+        if (config.magician) assertMagicianRosterCurrent(this.world);
         assertNightmareRosterCurrent(this.world);
         assertEvilKnightRosterCurrent(this.world);
         if (!ownsDemon) return;
@@ -200,7 +205,10 @@ export class NightPipeline {
       };
       assertReadable();
       const nativeProvider =
-        ownsDemon || isEvilKnightBoard(this.world) || isNightmareBoard(this.world)
+        ownsDemon ||
+        isEvilKnightBoard(this.world) ||
+        isNightmareBoard(this.world) ||
+        config.magician !== undefined
           ? {
               getAction: async (request: ActionRequest) => {
                 assertReadable();
@@ -418,6 +426,7 @@ export class NightPipeline {
           );
       weddingHandedOff = ownsWedding;
       demonHandedOff = ownsDemon;
+      magicianHandedOff = config.magician !== undefined;
       return {
         interrupted: false,
         summary,
@@ -431,6 +440,7 @@ export class NightPipeline {
         ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
       };
     } finally {
+      if (config.magician && !magicianHandedOff) abortMagicianNight(this.world);
       if (demonAcquired && !demonHandedOff) closeDemonHunterNight(this.world);
       if (ownsWedding && !weddingHandedOff) closeWeddingNight(this.world);
       closeThiefNight();
@@ -455,7 +465,8 @@ export class NightPipeline {
       summary: { key: "request.summary.night_action" },
       context: {
         ...extraContext,
-        ...(isEvilKnightBoard(this.world) ||
+        ...(isMagicianBoard(this.world) ||
+        isEvilKnightBoard(this.world) ||
         isNightmareBoard(this.world) ||
         isRedMoonBoard(this.world)
           ? { action_failure_policy: "error" as const, allow_fallback: false }

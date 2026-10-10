@@ -1,4 +1,5 @@
 import { nightmareFearTargets } from "../roles/nightmare_shadow/state";
+import { magicianChoiceTargets } from "../roles/magician/night_frame";
 import { wolfKnifeTargetAllowed } from "../roles/wolf/target_policy";
 import { prohibitsLoversVote } from "../roles/cupid/relation";
 import { seerTargetAllowed } from "../roles/seer/target_policy";
@@ -29,6 +30,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
   private readonly toolRules: Partial<Record<ToolName, TargetRule>> = {
     kill_vote: { allowSelf: false },
     fear: { allowSelf: false },
+    swap_targets: { allowSelf: true },
     guard: { allowSelf: false },
     check_identity: { allowSelf: false },
     inspect_role: { allowSelf: false },
@@ -138,6 +140,8 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
             luckyAllowed(tool, id) &&
             (tool !== "fear" ||
               nightmareFearTargets(ctx.world, ctx.actorId, ctx.day ?? 1).includes(id)) &&
+            (tool !== "swap_targets" ||
+              magicianChoiceTargets(ctx.world, ctx.day ?? 1).includes(id)) &&
             (tool !== "kill_vote" || wolfKnifeTargetAllowed(ctx.world, id)) &&
             (tool !== "inspect_night_identity" ||
               ctx.actorRole !== Role.WolfWitch ||

@@ -46,6 +46,12 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  death_shot_missed: { actorId: EntityId; reason: "no_effect" };
+  magician_exchange_committed: {
+    actorId: EntityId;
+    day: number;
+    pair: [EntityId, EntityId] | null;
+  };
   red_moon_night_sealed: RedMoonNextNightFact;
   red_moon_exile_delayed: RedMoonNextNightFact;
   red_moon_delay_expired: RedMoonExpiryFact;
@@ -445,6 +451,7 @@ export type GameEvent = {
       | WolfTeamEventType
       | WeddingEventType
       | "nightmare_fear_committed"
+      | "magician_exchange_committed"
       | "demon_hunter_chosen"
       | "demon_hunter_cancelled"
       | "demon_hunter_poison_immune"

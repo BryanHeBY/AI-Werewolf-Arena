@@ -36,6 +36,7 @@ export interface PlayerObservation {
   deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];
   ownState: {
+    magician?: import("../../../game/mechanisms/roles/magician/state").MagicianState;
     redMoon?: import("../../../game/mechanisms/roles/red_moon_apostle/state").RedMoonState;
     nightmare?: import("../../../game/mechanisms/roles/nightmare_shadow/state").NightmareShadowState;
     evilKnight?: import("../../../game/mechanisms/roles/evil_knight/state").EvilKnightState;

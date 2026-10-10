@@ -1,3 +1,8 @@
+import {
+  readMagicianExchangeFact,
+  readMagicianOwnExchangeFact,
+  readDeathShotMissFact,
+} from "@ai-werewolf-arena/game-text";
 import { readRedMoonNextNightFact, readRedMoonExpiryFact } from "@ai-werewolf-arena/game-text";
 import { readNightmareFearFact, readNightmareOwnFearFact } from "@ai-werewolf-arena/game-text";
 import {
@@ -187,6 +192,8 @@ const NO_IDS = new Set([
   "god_private_game_info",
 ]);
 export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([
+  "magician_exchange_committed",
+  "death_shot_missed",
   ...new Set([...Object.keys(REQUIRED_IDS), ...Object.keys(ID_LISTS), ...SUMMARIES, ...NO_IDS]),
 ]);
 const KNOWN = new Set(KNOWN_REPLAY_EVENT_TYPES);
@@ -233,6 +240,9 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if (type === "magician_exchange_committed")
+    return !!(readMagicianExchangeFact(type, p) ?? readMagicianOwnExchangeFact(type, p));
+  if (type === "death_shot_missed") return !!readDeathShotMissFact(type, p);
   if (type === "red_moon_night_sealed" || type === "red_moon_exile_delayed")
     return !!readRedMoonNextNightFact(type, p);
   if (type === "red_moon_delay_expired") return !!readRedMoonExpiryFact(type, p);
@@ -423,6 +433,12 @@ export function readReplayEvent(
     };
     if (!KNOWN.has(safe.type)) return { event: safe, relatedPlayerIds: [], effects: [] };
     if (!validKnownFields(safe.type, p)) return null;
+    if (safe.type === "magician_exchange_committed") {
+      if (p.day !== safe.day || safe.phase !== "night") return null;
+      if (Object.hasOwn(p, "actorId")) add(p.actorId);
+      if (p.pair !== null) list(p.pair);
+    }
+    if (safe.type === "death_shot_missed") add(p.actorId);
     if (safe.type === "nightmare_fear_committed") {
       if (p.day !== safe.day || safe.phase !== "night") return null;
       if (Object.hasOwn(p, "actorId")) add(p.actorId);

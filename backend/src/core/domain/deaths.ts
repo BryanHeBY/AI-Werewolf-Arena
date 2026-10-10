@@ -29,7 +29,14 @@ export enum DeathCause {
 }
 export type DeathSources = Record<number, DeathCause[]>;
 export type DeathShotSelection =
-  | { kind: "shot"; targetId: number; deathActionId: number; targetScope?: NightLifeScope }
+  | {
+      kind: "shot";
+      targetId: number;
+      deathActionId: number;
+      targetScope?: NightLifeScope;
+      mappedMiss?: true;
+      mappingCurrent?: () => boolean;
+    }
   | { kind: "pass"; deathActionId: number }
   | { kind: "invalid" };
 

@@ -446,6 +446,28 @@ export const zhCN = Object.freeze({
   "role.red_moon_apostle.last_wolf_forbidden": "本板禁止最后一名狼人自爆。",
   "role.red_moon_apostle.last_wolf_ends":
     "本板允许最后一名狼人自爆，但无存活狼人后立即按胜利规则结束游戏。",
+  "console.magician.pass": "弃用",
+  "console.magician.own": "你第{day}夜的交换选择：{pair}",
+  "console.shot.missed": "{actor}号开枪，未产生额外死亡。",
+  "role.magician.heal_rule":
+    "女巫是否能主动自救按原始刀口号码判定：原刀口为自己时不能开解药；原刀口为别人时，解药交换到自己仍生效。",
+  "role.magician.brief":
+    "好人神职。每夜先选择两个不同的合法存活编号，交换它们当夜技能的生效目标；每个编号整局只能参与一次交换，可以选择自己，也可以明确弃用。交换不改变持久座位或身份。女巫仍获知原始刀口。",
+  "role.magician.first_night": "本板从第{day}夜起可以交换。",
+  "role.magician.shots_exchanged":
+    "本板夜间死亡链中的开枪按当夜交换生效，白天死亡的枪不交换。若映射落点已死，消耗枪但不重复致死。开枪资格仍由原生死因策略决定。",
+  "role.magician.shots_original": "本板死亡后的枪口不参与交换；开枪资格仍由原生死因策略决定。",
+  "action.swap_targets.hint":
+    "swap_targets：选择两个不同且从未用过的合法存活编号，abstain=false；明确弃用时 first_id 和 second_id 都为 null，abstain=true。",
+  "action.swap_targets.directive":
+    "本轮只能提交 swap_targets，选择两个当前合法候选或明确弃用。缺失、失败或超时响应不能作为弃用。",
+  "stage.magician_exchange": "魔术师交换",
+  "replay.stage.magician_exchange": "交换行动",
+  "replay.stage.magician_exchange_committed": "交换选择",
+  "replay.stage.death_shot_missed": "空枪",
+  "error.magician_unavailable": "交换不可用、已经提交或不属于当前行动者。",
+  "error.magician_target": "交换目标须为两个不同且未用过的合法存活编号；弃用须同时清空两个目标。",
+  "console.magician.exchange": "{actor}号第{day}夜的交换选择：{pair}",
   "role.nightmare.brief":
     "狼人阵营。每夜先恐惧一名玩家，使其当夜不能行动；恐惧狼人则整队不能袭击。首夜恐惧前不与狼队互认。",
   "role.nightmare.state":

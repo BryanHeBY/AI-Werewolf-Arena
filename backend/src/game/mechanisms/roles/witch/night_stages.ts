@@ -1,3 +1,4 @@
+import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { isNightmareBoard } from "../nightmare_shadow/night_frame";
 import { commitEvilKnightReflection } from "../evil_knight/state";
 import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../evil_knight/night_frame";
@@ -146,6 +147,7 @@ async function executePotionTurn(
   if (!ctx.isCurrent()) return false;
   if (!scope.isEligible()) return false;
   if (action?.name !== "use_potion") {
+    if (isMagicianBoard(ctx.world)) throw new Error("magician_witch_action_missing");
     if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
       throw new Error(
         isNightmareBoard(ctx.world)
@@ -174,6 +176,7 @@ async function executePotionTurn(
   if (!ctx.isCurrent()) return false;
   if (!scope.isEligible()) return false;
   if (!result.ok || !result.sanitizedCall) {
+    if (isMagicianBoard(ctx.world)) throw new Error("magician_witch_action_invalid");
     if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
       throw new Error(
         isNightmareBoard(ctx.world)
@@ -202,8 +205,19 @@ async function executePotionTurn(
   }
   const targetId = result.sanitizedCall.args.target_id;
   const potion = result.sanitizedCall.args.potion_type;
-  const target = targets.get(targetId);
-  if (potion !== PotionType.None && (!target || !livingNightLife(ctx.world, target))) return false;
+  const requestedTarget = targets.get(targetId);
+  if (
+    potion !== PotionType.None &&
+    (!requestedTarget || !livingNightLife(ctx.world, requestedTarget))
+  )
+    return false;
+  const mapping =
+    potion !== PotionType.None && isMagicianBoard(ctx.world)
+      ? resolveMagicianNightTarget(ctx.world, day, targetId)
+      : null;
+  if (mapping && !mapping.isCurrent()) throw new Error("magician_potion_target_stale");
+  const effectiveId = mapping?.effectiveId ?? targetId;
+  const target = mapping?.scope ?? requestedTarget;
 
   if (potion === "heal") {
     if (
@@ -213,7 +227,7 @@ async function executePotionTurn(
     )
       return false;
     recordNightAbilityUse(ability, day, true);
-    ctx.ensureMarks(targetId).add(StatusMark.HealMark);
+    ctx.ensureMarks(effectiveId).add(StatusMark.HealMark);
     witchState.heal -= 1;
     witchState.healUsedThisNight = true;
     ctx.events.push({
@@ -235,7 +249,7 @@ async function executePotionTurn(
     if (!source || !target) return false;
     recordNightAbilityUse(ability, day, true);
     (ctx.state.poisonClaims ??= []).push({ source, target });
-    ctx.ensureMarks(targetId).add(StatusMark.PoisonMark);
+    ctx.ensureMarks(effectiveId).add(StatusMark.PoisonMark);
     witchState.poison -= 1;
     witchState.poisonUsedThisNight = true;
     if (isEvilKnightBoard(ctx.world)) {

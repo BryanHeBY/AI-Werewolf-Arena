@@ -520,6 +520,31 @@ export const en = Object.freeze({
     "This board forbids self-destruction by the last living werewolf.",
   "role.red_moon_apostle.last_wolf_ends":
     "The last living werewolf may self-destruct, but the game ends immediately under the victory rules once no werewolves remain.",
+  "console.magician.pass": "pass",
+  "console.magician.own": "Your exchange choice on night {day}: {pair}",
+  "console.shot.missed": "Player {actor} fires, causing no additional death.",
+  "role.magician.heal_rule":
+    "Witch self-heal permission is based on the original knife number: she cannot heal when that number is herself; an allowed heal of another number still works when exchanged onto herself.",
+  "role.magician.brief":
+    "Good faction, god role. Act first each eligible night to exchange the effective targets of night skills for two distinct legal living numbers. Each number can be used only once per game; you may include yourself or explicitly pass. Persistent seats and identities do not move. The Witch still sees the original knife target.",
+  "role.magician.first_night": "Exchanges are available starting on night {day}.",
+  "role.magician.shots_exchanged":
+    "Shots in the night-death chain use that night's exchange; shots caused by daytime deaths do not. A mapped target already dead consumes the shot without another death. Original cause-based rules still determine shot eligibility.",
+  "role.magician.shots_original":
+    "Death shots do not use the exchange. Original cause-based rules still determine shot eligibility.",
+  "action.swap_targets.hint":
+    "swap_targets: choose two distinct, unused, legal living numbers with abstain=false. To explicitly pass, set both first_id and second_id to null and abstain=true.",
+  "action.swap_targets.directive":
+    "Submit only swap_targets with two current legal candidates or an explicit pass. Missing, failed, or timed-out responses never count as passing.",
+  "stage.magician_exchange": "Magician exchange",
+  "replay.stage.magician_exchange": "Exchange action",
+  "replay.stage.magician_exchange_committed": "Exchange choice",
+  "replay.stage.death_shot_missed": "Shot with no effect",
+  "error.magician_unavailable":
+    "The exchange is unavailable, already committed, or owned by another actor.",
+  "error.magician_target":
+    "Choose two distinct unused legal living numbers, or clear both targets to pass.",
+  "console.magician.exchange": "Player {actor}'s exchange choice on night {day}: {pair}",
   "role.nightmare.brief":
     "Wolf faction. Act first each night to silence one player for that night; fearing a wolf blocks the entire pack attack. Pack identities are hidden until the first fear commits.",
   "role.nightmare.state":

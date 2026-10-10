@@ -10,6 +10,7 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  swap_targets: { first_id: EntityId | null; second_id: EntityId | null; abstain: boolean };
   fear: { target_id: EntityId | null; abstain: boolean };
   inspect_night_identity: { target_id: EntityId | null; abstain: boolean };
   demon_hunt: { target_id: EntityId | null; abstain: boolean };
@@ -65,6 +66,7 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "swap_targets",
   "fear",
   "inspect_night_identity",
   "demon_hunt",
@@ -142,6 +144,7 @@ export interface TurnConstraints {
 }
 
 export const ACTION_STAGES = [
+  "magician_exchange",
   "nightmare_fear",
   "pure_white_girl",
   "wolf_witch",
@@ -204,6 +207,8 @@ export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */
 export interface ActionRequestExtras {
+  /** Private unused living choices for the original magician only. */
+  swap_candidates?: readonly EntityId[];
   proposedWitnessId?: EntityId;
   /** Explicit strict turns distinguish a clean optional wait from a failed submission/transport. */
   action_failure_policy?: "error";

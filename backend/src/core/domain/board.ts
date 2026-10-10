@@ -115,6 +115,11 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
+  magician?: {
+    policy: "awa_magician_wolf_king_v1";
+    firstNight: 1 | 2;
+    deathShotTargetPolicy: "original" | "exchanged";
+  };
   redMoon?: { policy: "awa_red_moon_demon_v1"; lastWolfBlastPolicy: "ends_game" | "forbidden" };
   nightmareShadow?: {
     policy: "awa_nightmare_dreamer_v1";

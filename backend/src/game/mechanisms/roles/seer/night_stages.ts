@@ -1,3 +1,4 @@
+import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { isNightmareBoard } from "../nightmare_shadow/night_frame";
 import { commitEvilKnightReflection } from "../evil_knight/state";
 import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../evil_knight/night_frame";
@@ -83,6 +84,7 @@ const seerCheckStage: NightStageHandler = {
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;
       if (action?.name !== "check_identity") {
+        if (isMagicianBoard(ctx.world)) throw new Error("magician_seer_action_missing");
         if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
           throw new Error(
             isNightmareBoard(ctx.world)
@@ -100,6 +102,7 @@ const seerCheckStage: NightStageHandler = {
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) continue;
       if (!result.ok || !result.sanitizedCall) {
+        if (isMagicianBoard(ctx.world)) throw new Error("magician_seer_action_invalid");
         if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
           throw new Error(
             isNightmareBoard(ctx.world)
@@ -113,7 +116,14 @@ const seerCheckStage: NightStageHandler = {
       const target = targets.get(targetId);
       if (!target || !livingNightLife(ctx.world, target) || !identities.get(targetId)?.isCurrent())
         continue;
-      const inspection = resolveInspection(ctx.world, targetId, "camp", ctx.roleCatalog);
+      const mapping = isMagicianBoard(ctx.world)
+        ? resolveMagicianNightTarget(ctx.world, day, targetId)
+        : null;
+      const effectiveId = mapping?.effectiveId ?? targetId;
+      const effectiveIdentity = identities.get(effectiveId);
+      if (mapping && (!mapping.isCurrent() || !effectiveIdentity?.isCurrent()))
+        throw new Error("magician_inspection_target_stale");
+      const inspection = resolveInspection(ctx.world, effectiveId, "camp", ctx.roleCatalog);
       if (!ctx.isCurrent()) return;
       if (
         !scope.isEligible() ||
@@ -123,6 +133,8 @@ const seerCheckStage: NightStageHandler = {
         !luckyTargetAllowed(ctx.world, seerId, ability, day, "check", targetId)
       )
         continue;
+      if (mapping && (!mapping.isCurrent() || !effectiveIdentity?.isCurrent()))
+        throw new Error("magician_inspection_target_stale");
       if (!inspection) continue;
       const isWerewolf = inspection.camp === Camp.Wolf;
       const seerRole = ctx.world.getComponent<RoleComponent>(seerId, COMPONENT.Role);

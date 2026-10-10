@@ -1,3 +1,8 @@
+import { assertMagicianRosterCurrent } from "../mechanisms/roles/magician/night_frame";
+import {
+  isMagicianBoard,
+  resolveMagicianNightTarget,
+} from "../mechanisms/roles/magician/night_frame";
 import { nightmareFearBlocks } from "../mechanisms/roles/nightmare_shadow/night_frame";
 import { demonHunterNativeGunCurrent } from "../mechanisms/roles/demon_hunter/authority";
 import { expandWeddingDeaths, weddingGroup } from "../mechanisms/roles/ghost_bride/authority";
@@ -261,6 +266,7 @@ export class DeathResolution {
                   actionProvider,
                   actions,
                   abilityId,
+                  nightOrigin.has(actorId) && !(firstBatch && initialPhases[actorId] === Phase.Day),
                 ),
               this.events,
               (result) => {
@@ -449,6 +455,7 @@ export class DeathResolution {
     actionProvider: ActionProvider,
     actions: DeathWaveActions,
     abilityId?: string,
+    nightExchange: boolean = false,
   ): Promise<DeathShotSelection> {
     if (deathPhase === Phase.Night && nightmareFearBlocks(this.world, actorId, actions.day, true))
       return { kind: "invalid" };
@@ -521,7 +528,8 @@ export class DeathResolution {
         requiresAction: true,
         summary: { key: "request.summary.death_shot" },
         context: {
-          ...(this.config?.evilKnight ||
+          ...(this.config?.magician ||
+          this.config?.evilKnight ||
           abilityId !== undefined ||
           this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role ===
             Role.AwakenedHiddenWolf
@@ -537,7 +545,9 @@ export class DeathResolution {
         },
       });
       if (!eligible()) return { kind: "invalid" };
+      if (this.config?.magician) assertMagicianRosterCurrent(this.world);
       const action = await actionProvider.getAction(request);
+      if (this.config?.magician) assertMagicianRosterCurrent(this.world);
       if (
         !eligible() ||
         !this.world.hasDeathAction(
@@ -551,6 +561,7 @@ export class DeathResolution {
       )
         return { kind: "invalid" };
       if (action?.name !== "shoot") {
+        if (this.config?.magician) throw new Error("magician_shot_action_missing");
         if (this.config?.evilKnight) throw new Error("evil_knight_hunter_action_missing");
         continue;
       }
@@ -573,13 +584,29 @@ export class DeathResolution {
       )
         return { kind: "invalid" };
       if (!validated.ok || !validated.sanitizedCall) {
+        if (this.config?.magician) throw new Error("magician_shot_action_invalid");
         if (this.config?.evilKnight) throw new Error("evil_knight_hunter_action_invalid");
         continue;
       }
       const targetId = validated.sanitizedCall.args.target_id;
       if (targetId === null) return { kind: "pass", deathActionId: permit.id };
       const targetScope = targets.get(targetId);
-      if (!targetScope || !livingNightLife(this.world, targetScope)) continue;
+      if (!targetScope || !livingNightLife(this.world, targetScope)) {
+        if (this.config?.magician) throw new Error("magician_shot_target_stale");
+        continue;
+      }
+      if (nightExchange && isMagicianBoard(this.world)) {
+        const mapped = resolveMagicianNightTarget(this.world, actions.day, targetId, "death_shot");
+        if (!mapped.isCurrent()) throw new Error("magician_shot_target_stale");
+        return {
+          kind: "shot",
+          targetId: mapped.effectiveId,
+          deathActionId: permit.id,
+          targetScope: mapped.scope,
+          mappingCurrent: mapped.isCurrent,
+          ...(!mapped.scope.life.alive ? { mappedMiss: true as const } : {}),
+        };
+      }
       return { kind: "shot", targetId, deathActionId: permit.id, targetScope };
     }
     if (abilityId !== undefined && eligible()) throw new Error("gift_gun_valid_action_missing");

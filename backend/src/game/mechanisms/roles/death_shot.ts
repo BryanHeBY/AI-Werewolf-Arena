@@ -152,7 +152,26 @@ export async function resolveDeathShots(
       consume();
       continue;
     }
+    if (selected.mappingCurrent && !selected.mappingCurrent()) continue;
     const targetScope = selected.targetScope ?? targets.get(selected.targetId);
+    if (selected.mappedMiss) {
+      if (
+        !selected.mappingCurrent ||
+        !targetScope ||
+        targetScope.id !== selected.targetId ||
+        world.getComponent(targetScope.id, COMPONENT.Alive) !== targetScope.life ||
+        targetScope.life.alive ||
+        aliveLifeVersion(targetScope.life) !== targetScope.version
+      )
+        continue;
+      consume();
+      events.push({
+        timestamp: Date.now(),
+        type: "death_shot_missed",
+        payload: { actorId, reason: "no_effect" },
+      });
+      continue;
+    }
     if (
       !targetScope ||
       targetScope.id !== selected.targetId ||

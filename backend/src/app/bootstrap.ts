@@ -1,3 +1,5 @@
+import { isMagicianPreset } from "@ai-werewolf-arena/game-text";
+import { installMagicianBoard } from "../game/mechanisms/roles/magician/night_frame";
 import { isRedMoonPreset } from "@ai-werewolf-arena/game-text";
 import { isNightmarePreset } from "@ai-werewolf-arena/game-text";
 import { installNightmareBoard } from "../game/mechanisms/roles/nightmare_shadow/night_frame";
@@ -161,6 +163,7 @@ function createPlayers(
   if (config.roleSetups.some((row) => row.role === Role.Shapeshifter && row.count === 1))
     installShapeshifterDeal(world, roles, ids);
   installInitialRoster(world);
+  if (roles.includes(Role.Magician)) installMagicianBoard(world);
   if (roles.includes(Role.EvilKnight)) installEvilKnightBoard(world);
   if (roles.includes(Role.NightmareShadow)) installNightmareBoard(world);
   if (roles.includes(Role.DemonHunter)) installDemonHunter(world, config);
@@ -175,6 +178,12 @@ function buildRoleDeck(
   fixedRoles: readonly Role[] | undefined,
   random: RandomSource,
 ): Role[] {
+  if (
+    (config.magician ||
+      config.roleSetups.some((row) => row.role === Role.Magician && row.count > 0)) &&
+    !isMagicianPreset(config)
+  )
+    throw new Error("magician_preset_invalid");
   if (
     (config.redMoon ||
       config.roleSetups.some((row) => row.role === Role.RedMoonApostle && row.count > 0)) &&

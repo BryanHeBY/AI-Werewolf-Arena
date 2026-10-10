@@ -1,5 +1,10 @@
-import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
+import {
+  readNightmareFearFact,
+  readMagicianExchangeFact,
+  readDeathShotMissFact,
+} from "@ai-werewolf-arena/game-text";
 import { validateDemonHunterRecord } from "./demon_hunter_record";
+import { validateMagicianRecord } from "./magician_record";
 import { readFaultPlan, type FaultPlan } from "../core/domain/fault_plan";
 import { DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
 import {
@@ -271,6 +276,7 @@ const requestSchema = z.strictObject({
     death_phase: z.enum(Phase).optional(),
     death_sources: z.array(z.enum(DeathCause)).optional(),
     death_action_id: positive.optional(),
+    swap_candidates: z.array(positive).optional(),
     shoot_candidates: z.array(positive).optional(),
     sheriff_candidates: z.array(positive).optional(),
     exile_candidates: z.array(positive).optional(),
@@ -553,6 +559,16 @@ const schema = z.strictObject({
           .optional(),
       })
       .superRefine((event, ctx) => {
+        if (event.type === "magician_exchange_committed") {
+          const fact = readMagicianExchangeFact(event.type, event.payload);
+          if (!fact || event.audience?.length !== 1 || event.audience[0] !== fact.actorId)
+            ctx.addIssue({ code: "custom", message: "reproduction_magician_audience_invalid" });
+        }
+        if (
+          event.type === "death_shot_missed" &&
+          (!readDeathShotMissFact(event.type, event.payload) || event.audience !== undefined)
+        )
+          ctx.addIssue({ code: "custom", message: "reproduction_magician_shot_miss_invalid" });
         if (event.type === "nightmare_fear_committed") {
           const fact = readNightmareFearFact(event.type, event.payload);
           if (!fact || event.audience?.length !== 1 || event.audience[0] !== fact.actorId)
@@ -564,7 +580,8 @@ const schema = z.strictObject({
           !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
-          event.type !== "nightmare_fear_committed"
+          event.type !== "nightmare_fear_committed" &&
+          event.type !== "magician_exchange_committed"
         ) {
           ctx.addIssue({ code: "custom", message: "reproduction_event_audience_invalid" });
         }
@@ -608,6 +625,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   validateLonelyGirlRecord(result);
   validateGhostBrideRecord(result);
   validateDemonHunterRecord(result);
+  validateMagicianRecord(result);
   return result;
 }
 

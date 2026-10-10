@@ -10,6 +10,7 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  magician_exchange: ["魔术师交换", "Magician exchange"],
   pure_white_girl: ["纯白之女查验", "Pure White Girl inspection"],
   wolf_witch: ["狼巫查验", "Wolf Witch inspection"],
   demon_hunter: ["猎魔人选择", "Demon Hunter choice"],

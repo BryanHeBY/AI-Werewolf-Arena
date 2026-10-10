@@ -1,3 +1,4 @@
+import { projectMagicianState } from "../../../game/mechanisms/roles/magician/state";
 import { getRedMoonState } from "../../../game/mechanisms/roles/red_moon_apostle/state";
 import { getNightmareShadowState } from "../../../game/mechanisms/roles/nightmare_shadow/state";
 import { getEvilKnightState } from "../../../game/mechanisms/roles/evil_knight/state";
@@ -194,6 +195,8 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    const magician = projectMagicianState(role);
+    if (magician) ownState.magician = magician;
     const redMoon = getRedMoonState(role);
     if (redMoon)
       ownState.redMoon = {

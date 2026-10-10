@@ -223,3 +223,20 @@ export const fear: ObservedToolHandler = ({
     style === "conservative" && state.fearActionPolicy === "optional" ? undefined : pick(targets);
   return { name: "fear", args: { target_id: target ?? null, abstain: target === undefined } };
 };
+
+export const swapTargets: ObservedToolHandler = ({ ownState, request, knownAliveIds, pick }) => {
+  const state = ownState.magician;
+  if (!state) throw new Error("magician_observed_state_missing");
+  const used = new Set(state.history.flatMap((row) => row.pair ?? []));
+  const candidates = request.context.swap_candidates;
+  const targets = knownAliveIds.filter(
+    (id) => !used.has(id) && (!candidates || candidates.includes(id)),
+  );
+  if (request.context.day < state.firstNight || targets.length < 2)
+    return { name: "swap_targets", args: { first_id: null, second_id: null, abstain: true } };
+  const first = pick(targets),
+    second = pick(targets.filter((id) => id !== first));
+  if (first == null || second == null)
+    return { name: "swap_targets", args: { first_id: null, second_id: null, abstain: true } };
+  return { name: "swap_targets", args: { first_id: first, second_id: second, abstain: false } };
+};

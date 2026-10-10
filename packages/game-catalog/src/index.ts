@@ -353,9 +353,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "magician",
     names: { "zh-CN": "魔术师", en: "Magician" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-magician-wolf-king-v1.md",
     mechanismSummary: "夜间技能目标映射",
   },
   {
