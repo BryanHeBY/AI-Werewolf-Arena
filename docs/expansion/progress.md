@@ -491,3 +491,7 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 ## P9a 第五项：鬼魂新娘（2026-10-10）
 
 精确12人来源AWA三方板、首夜共同婚礼/两条私聊、原身份库存/独立目标、逐夜普通包→情侣→证婚人唯一刀、复合殉情/枪及吞徽、完整Night死亡公开后封盘已交付。三组只读复验关闭；24真实双语三transport完整局/Tape、8严格失败partialTape、200受限Observed逐Tape与1000独立World（逐局公开死亡ID投影等于真实Alive）分别验证。最终全backend **3315/329141/246文件**、frontend **364/3862/48文件**、完整Chromium **172/172**均0失败，check/lint/format及双端build通过。Observed仅每语言seed43一次blind Hunter合法拒绝，fallback0，不以隐藏Alive喂bot。见[规则卡](rules/awa-melbourne-ghost-bride-v1.md)/[验收](reviews/p9-ghost-bride.md)。P9a五角色技术功能完成，23verified/8implemented/33planned；继续猎魔人/P9b–f/P10，总体待用户最终验收。没有push/真实模型/用户configs或秘密操作。
+
+## P9b 猎魔人规则冻结（2026-10-10）
+
+接f5153b8鬼魂新娘，网易公开卡表num23直接来源与具名AWA补全已分开。四份精确6/12×City/Side板、第二夜规范选择/弃猎、原生Witch毒免、真实Camp猎杀/反噬、整波源授权冻结/Night完整公开后胜利、精确CP/private矩阵及晚取消fault-plan Tape边界经三组只读修正复验闭合。见[规则卡](rules/awa-netease-demon-hunter-v1.md)/[冻结审查](reviews/p9-demon-hunter-rules.md)。尚未注册，23verified/8implemented/33planned不变；立即接续实现，不把文档当角色功能完成。
