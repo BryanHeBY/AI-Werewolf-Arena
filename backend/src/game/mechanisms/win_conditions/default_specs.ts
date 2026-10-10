@@ -1,3 +1,4 @@
+import { ELIMINATION_PRIORITIES, type EliminationPriority } from "../../../core/domain/board";
 import { demonHunterIsGod } from "../roles/demon_hunter/authority";
 import { weddingFactionResult } from "../roles/ghost_bride/authority";
 /** 文件说明：内置胜利条件规格实现。 */
@@ -47,10 +48,16 @@ function statAlive(world: World): AliveStat {
   return stat;
 }
 
-function evaluateSlaughterCity(world: World): WinDecision | null {
+function evaluateSlaughterCity(
+  world: World,
+  priority: EliminationPriority = "awa_good_priority_v1",
+): WinDecision | null {
   const cupid = cupidCityDecision(world);
   if (cupid) return cupid.decision;
   const stat = statAlive(world);
+  if (priority === "awa_wolf_priority_v1" && stat.good === 0) {
+    return victoryDecision(world, { kind: "faction", faction: Camp.Wolf }, "all_good_eliminated");
+  }
   if (stat.wolves === 0) {
     return victoryDecision(world, { kind: "faction", faction: Camp.Good }, "all_wolves_eliminated");
   }
@@ -60,8 +67,18 @@ function evaluateSlaughterCity(world: World): WinDecision | null {
   return null;
 }
 
-function evaluateSlaughterSide(world: World): WinDecision | null {
+function evaluateSlaughterSide(
+  world: World,
+  priority: EliminationPriority = "awa_good_priority_v1",
+): WinDecision | null {
   const stat = statAlive(world);
+  if (priority === "awa_wolf_priority_v1" && (stat.gods === 0 || stat.villagers === 0)) {
+    return victoryDecision(
+      world,
+      { kind: "faction", faction: Camp.Wolf },
+      "slaughter_side_completed",
+    );
+  }
   if (stat.wolves === 0) {
     return victoryDecision(world, { kind: "faction", faction: Camp.Good }, "all_wolves_eliminated");
   }
@@ -105,14 +122,28 @@ export const DEFAULT_WIN_CONDITION_SPECS: WinConditionSpec[] = [
   },
   {
     id: WinCondition.SlaughterCity,
-    evaluate: evaluateSlaughterCity,
+    evaluate: (world) => evaluateSlaughterCity(world),
   },
   {
     id: WinCondition.SlaughterSide,
-    evaluate: evaluateSlaughterSide,
+    evaluate: (world) => evaluateSlaughterSide(world),
   },
   {
     id: WinCondition.WolfReachHalf,
     evaluate: evaluateWolfReachHalf,
   },
 ];
+
+/** Build immutable per-game choices without changing the cached legacy registry. */
+export function createEliminationWinConditionSpecs(
+  priority: EliminationPriority,
+): WinConditionSpec[] {
+  if (!ELIMINATION_PRIORITIES.includes(priority)) throw new Error("elimination_priority_invalid");
+  return DEFAULT_WIN_CONDITION_SPECS.map((spec) => {
+    if (spec.id === WinCondition.SlaughterCity)
+      return { ...spec, evaluate: (world: World) => evaluateSlaughterCity(world, priority) };
+    if (spec.id === WinCondition.SlaughterSide)
+      return { ...spec, evaluate: (world: World) => evaluateSlaughterSide(world, priority) };
+    return spec;
+  });
+}

@@ -8,6 +8,10 @@ import type {
   TieBreakerStrategy,
 } from "./identity";
 
+/** Explicit priority only when both faction elimination goals are met. */
+export const ELIMINATION_PRIORITIES = ["awa_good_priority_v1", "awa_wolf_priority_v1"] as const;
+export type EliminationPriority = (typeof ELIMINATION_PRIORITIES)[number];
+
 export interface HookConfig {
   onDaybreak: boolean;
   onPreElection: boolean;
