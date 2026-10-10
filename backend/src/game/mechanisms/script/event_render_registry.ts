@@ -1,3 +1,4 @@
+import { demonHunterEventLabel } from "@ai-werewolf-arena/game-text";
 import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-text";
 import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-text";
 import { wildChildEventLabel } from "@ai-werewolf-arena/game-text";
@@ -558,6 +559,8 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const demon = demonHunterEventLabel(event.type, event.payload, locale);
+    if (demon !== null) return demon;
     const wedding = ghostBrideEventLabel(event.type, event.payload, locale);
     if (wedding !== null) return wedding;
     const lonely = lonelyGirlEventLabel(event.type, event.payload, locale);
@@ -605,6 +608,8 @@ export class ScriptEventRenderRegistry {
     printPrivateEvents: boolean,
     locale: Locale = "zh-CN",
   ): ScriptLiveRender[] {
+    const demon = demonHunterEventLabel(event.type, event.payload, locale);
+    if (demon !== null) return printPrivateEvents ? [{ kind: "god", text: demon }] : [];
     const wedding = ghostBrideEventLabel(event.type, event.payload, locale);
     if (wedding !== null) return printPrivateEvents ? [{ kind: "god", text: wedding }] : [];
     const lonely = lonelyGirlEventLabel(event.type, event.payload, locale);

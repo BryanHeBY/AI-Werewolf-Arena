@@ -1,3 +1,4 @@
+import { demonHunterActorId } from "../roles/demon_hunter/authority";
 import { GHOST_BRIDE_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
 /** 文件说明：领域事件到玩家 Agent 视角的显式可见性白名单。 */
 import { EntityId, GameEvent, WOLF_TEAM_EVENT_TYPES } from "../../../core/domain/model";
@@ -112,6 +113,19 @@ export class AgentEventVisibilityRegistry {
       // grant access to past chat or revoke an event already addressed to a player.
       return "audience" in event && event.audience.includes(actorId);
     }
+    if (
+      ["demon_hunter_chosen", "demon_hunter_cancelled", "demon_hunter_poison_immune"].includes(
+        event.type,
+      )
+    )
+      return (
+        event.type === "demon_hunter_chosen" &&
+        demonHunterActorId(world) === actorId &&
+        "audience" in event &&
+        event.audience.length === 1 &&
+        event.audience[0] === actorId &&
+        event.payload.actorId === actorId
+      );
     const custom = this.rules[event.type];
     if (custom) return custom(world, event, actorId);
     if (PUBLIC_EVENT_TYPES.has(event.type)) return true;

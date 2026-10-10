@@ -1,6 +1,16 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "console.demon_hunter.chosen": "God: Demon Hunter {actor} chose {target} on night {day}.",
+  "console.demon_hunter.own": "Your hunt choice on night {day}: {target}.",
+  "console.demon_hunter.cancelled":
+    "God: the committed hunt by Demon Hunter {actor} on {target} was revoked on night {day}; fault {fault}.",
+  "console.demon_hunter.poison_immune":
+    "God: Demon Hunter {actor} is immune to this original Witch {witch} toxin contribution on night {day}.",
+  "replay.stage.demon_hunter_chosen": "Hunt choice",
+  "replay.stage.demon_hunter_cancelled": "Revoked hunt",
+  "replay.stage.demon_hunter_poison_immune": "Native toxin immunity",
+
   "console.ghost_bride_pair_chosen": "Ghost Bride {bride} and player {groom} are partners.",
   "replay.stage.ghost_bride_pair_chosen": "Wedding fact",
   "console.ghost_bride_group_chosen":

@@ -1,3 +1,8 @@
+import type {
+  DemonHunterChoiceFact,
+  DemonHunterCancelFact,
+  DemonHunterPoisonImmuneFact,
+} from "@ai-werewolf-arena/game-text";
 import type { WeddingPair, WeddingGroup, WeddingKnifeCapture } from "@ai-werewolf-arena/game-text";
 import type { DeathCause } from "./deaths";
 import type { ActionWindow, Camp, EntityId, Phase, PotionType, Role } from "./identity";
@@ -40,6 +45,9 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  demon_hunter_chosen: DemonHunterChoiceFact;
+  demon_hunter_cancelled: DemonHunterCancelFact;
+  demon_hunter_poison_immune: DemonHunterPoisonImmuneFact;
   ghost_bride_pair_chosen: WeddingPair;
   ghost_bride_group_chosen: WeddingGroup;
   ghost_bride_knife_captured: WeddingKnifeCapture;
@@ -428,7 +436,12 @@ export type WeddingEventType =
 
 export type GameEvent = {
   [K in keyof EventPayloadMap]: EventBase<K, EventPayloadMap[K]> &
-    (K extends WolfTeamEventType | WeddingEventType
+    (K extends
+      | WolfTeamEventType
+      | WeddingEventType
+      | "demon_hunter_chosen"
+      | "demon_hunter_cancelled"
+      | "demon_hunter_poison_immune"
       ? { readonly audience: readonly EntityId[] }
       : {});
 }[keyof EventPayloadMap];

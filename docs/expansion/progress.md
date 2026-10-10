@@ -519,3 +519,7 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 ## P9b 猎魔人实际夜链候选（2026-10-10）
 
 已接真实NightPipeline→PM来源冻结、原生毒/救贡献、实际狼刀actor与目标、猎杀/反噬复合根、Hunter追加完整夜波和City/Side；严格重入/失败前缀及跨await零getter经三组复验闭合。204／1243定向与2194／20277／113文件回归、backend type/lint/build及局部format/diff通过，见[本批验收](reviews/p9-demon-hunter-night-chain.md)。仍为私有安装候选，继续God/本人facts、原生库存CP、faultPlan录制、strict Tape、公开四板与完整transport/前端门禁，不计完整角色交付。
+
+## P9b 猎魔人 God / 本人事实候选
+
+真实域提交选择、来源冻结撤权/原生毒免及God source op已贯通；原Demon仅见lean choice，普通人/Witch无来源结果。shared严格双语reader、script/Agent feed、真实六份录制档案与前端无状态副作用，经三组只读复核关闭。61/366定向、2207/20457/115文件后端回归、371/3946/49文件前端全unit与双端type/lint/build、局部format/diff通过，见[本批审查](reviews/p9-demon-hunter-facts.md)。继续原生库存CP/faultPlan/strict Tape/公开四板及完整门禁，角色仍planned，不将结构reader当因果Tape验收。

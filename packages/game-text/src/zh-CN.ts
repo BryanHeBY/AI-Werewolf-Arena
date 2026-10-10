@@ -1,5 +1,15 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "console.demon_hunter.chosen": "God：猎魔人{actor}号第{day}夜选择{target}。",
+  "console.demon_hunter.own": "第{day}夜你的猎魔选择：{target}。",
+  "console.demon_hunter.cancelled":
+    "God：猎魔人{actor}号第{day}夜对{target}号的已提交猎魔来源撤权；故障编号{fault}。",
+  "console.demon_hunter.poison_immune":
+    "God：第{day}夜猎魔人{actor}号免疫原女巫{witch}号的本次毒药贡献。",
+  "replay.stage.demon_hunter_chosen": "猎魔选择",
+  "replay.stage.demon_hunter_cancelled": "猎魔撤权",
+  "replay.stage.demon_hunter_poison_immune": "原生毒免",
+
   "console.ghost_bride_pair_chosen": "鬼魂新娘{bride}号与{groom}号成为情侣。",
   "replay.stage.ghost_bride_pair_chosen": "\u5a5a\u793c\u4e8b\u5b9e",
   "console.ghost_bride_group_chosen": "婚礼三方：新娘{bride}号、新郎{groom}号、证婚人{witness}号。",

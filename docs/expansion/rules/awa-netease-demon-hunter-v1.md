@@ -53,3 +53,7 @@ source/Replay同一engine边界都真正以World操作新建Alive组件，记录
 ## 实际夜链来源工程补全
 
 原Witch救药也绑定实际单次HealMark贡献与原source/target生命；后续撤权保留真实消费，撤销失效救药贡献，独立未知Heal不因此删除。普通刀按冻结时有效Guard/Heal矩阵重算，同守同救在救药撤权后回到有效Guard保护。刀源绑定真实贡献投票者、多数决目标及原目标生命，通用其它WolfKillMark不能借票权成为原生刀。本段及跨await安全复验是AWA交付补全，不是官方卡牌补充规则；不授权新救药、赠予或免伤变体。
+
+## 结构化事实工程实现
+
+实际域提交后`demon_hunter_chosen`为God完整选择，只有原Demon获policy/day/targetId本人投影。真实来源冻结后`demon_hunter_cancelled`与`demon_hunter_poison_immune`只入God；`demon_hunter_sources_frozen`为God逻辑op，先于任何Alive修改，记录实际根及毒/救覆盖。上述名称、严格字段reader、双语显示与录制scope属于AWA工程实现，非官方事件协议。结构reader不替代strict Tape因果审计。

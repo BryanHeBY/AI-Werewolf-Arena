@@ -8,12 +8,18 @@ export const DEMON_HUNTER_NIGHT_STAGE: NightStageHandler = {
     const day = ctx.currentDay();
     if (!demonHunterNeedsTurn(ctx.world, day)) return;
     const { executeDemonHunterTurn } = await import("./controller");
-    await executeDemonHunterTurn({
+    const fact = await executeDemonHunterTurn({
       world: ctx.world,
       gateway: ctx.toolGateway,
       events: ctx.events,
       provider: ctx.actionProvider,
       day,
+    });
+    ctx.events.push({
+      timestamp: Date.now(),
+      type: "demon_hunter_chosen",
+      payload: fact,
+      audience: Object.freeze([fact.actorId]),
     });
   },
 };

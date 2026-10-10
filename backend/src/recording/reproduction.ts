@@ -1,3 +1,4 @@
+import { DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
 import {
   GHOST_BRIDE_EVENT_TYPES,
   GHOST_BRIDE_POLICY,
@@ -549,7 +550,8 @@ const schema = z.strictObject({
         if (
           event.audience !== undefined &&
           !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
-          !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type)
+          !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
+          !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type)
         ) {
           ctx.addIssue({ code: "custom", message: "reproduction_event_audience_invalid" });
         }

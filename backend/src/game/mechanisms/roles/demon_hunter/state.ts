@@ -1,6 +1,7 @@
 import { types } from "node:util";
 import type { RoleComponent } from "../../../../core";
-export const DEMON_HUNTER_POLICY = "awa_netease_demon_hunter_v1" as const;
+import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-text";
+export { DEMON_HUNTER_POLICY };
 export const DEMON_HUNTER_ROLE = "demon_hunter" as const;
 export interface DemonHunterChoice {
   day: number;

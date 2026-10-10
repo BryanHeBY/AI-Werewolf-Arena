@@ -47,7 +47,8 @@ import { GameActionRequestFactory } from "./action_request_factory";
 import { replaceWithFoxVictory } from "../mechanisms/roles/cursed_fox/victory";
 import { readGameOutcome, readVictoryPoint } from "@ai-werewolf-arena/replay-contract";
 import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-catalog";
-import { text } from "@ai-werewolf-arena/game-text";
+import { text, DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-text";
+import { safeRecordLogicOp } from "../../recording/session_recorder";
 import {
   ActionProvider,
   ActionWindow,
@@ -432,6 +433,38 @@ export class PhaseManager {
         );
         for (let i = deaths.length - 1; i >= 0; i--)
           if (!sources[deaths[i]!]!.length) deaths.splice(i, 1);
+        if (demon) {
+          if (demon.hunt.cancelled)
+            this.events.push({
+              timestamp: Date.now(),
+              type: "demon_hunter_cancelled",
+              payload: { ...demon.hunt.cancelled },
+              audience: Object.freeze([]),
+            });
+          for (const fact of demon.poisonImmunities)
+            this.events.push({
+              timestamp: Date.now(),
+              type: "demon_hunter_poison_immune",
+              payload: { ...fact },
+              audience: Object.freeze([]),
+            });
+          safeRecordLogicOp({
+            scope: "resolution",
+            op: "demon_hunter_sources_frozen",
+            phase: Phase.Night,
+            status: "ok",
+            output: {
+              policy: DEMON_HUNTER_POLICY,
+              day: nightDay,
+              hunt: demon.hunt,
+              poison_immunities: demon.poisonImmunities,
+              poison_overrides: demon.poisonOverrides,
+              heal_overrides: demon.healOverrides,
+              deaths: [...deaths],
+              death_sources: sources,
+            },
+          });
+        }
         const livingBeforeChain = new Map(
           this.world.getAliveEntityIds().map((id) => {
             const life = this.world.getComponent<

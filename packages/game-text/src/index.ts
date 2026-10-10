@@ -755,3 +755,38 @@ export function ghostBrideEventLabel(
     Object.fromEntries(names[type]!.map((name) => [name, parameters[name]!])),
   );
 }
+
+export * from "./demon-hunter";
+import { readDemonHunterEventFact, readDemonHunterPlayerFact } from "./demon-hunter";
+export function demonHunterEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale,
+): string | null {
+  const full = readDemonHunterEventFact(type, payload),
+    own = readDemonHunterPlayerFact(type, payload);
+  if (!full && !own) return null;
+  if (type === "demon_hunter_chosen") {
+    const p = (full ?? own)! as { day: number; targetId: number | null; actorId?: number };
+    return text(locale, full ? "console.demon_hunter.chosen" : "console.demon_hunter.own", {
+      day: p.day,
+      target: p.targetId === null ? text(locale, "replay.none") : p.targetId,
+      ...(full ? { actor: p.actorId! } : {}),
+    });
+  }
+  if (type === "demon_hunter_cancelled") {
+    const p = full as import("./demon-hunter").DemonHunterCancelFact;
+    return text(locale, "console.demon_hunter.cancelled", {
+      actor: p.actorId,
+      day: p.day,
+      target: p.targetId,
+      fault: p.faultId ?? text(locale, "replay.none"),
+    });
+  }
+  const p = full as import("./demon-hunter").DemonHunterPoisonImmuneFact;
+  return text(locale, "console.demon_hunter.poison_immune", {
+    actor: p.actorId,
+    day: p.day,
+    witch: p.witchId,
+  });
+}
