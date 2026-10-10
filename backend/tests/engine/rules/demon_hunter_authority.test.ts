@@ -8,6 +8,9 @@ import {
   WinCondition,
   ActionWindow,
   WitchSelfHealRule,
+  PotionType,
+  StatusMark,
+  StatusMarksComponent,
   createRoleComponent,
   createCampComponent,
   createVictoryComponent,
@@ -55,8 +58,8 @@ import {
   freezeDemonNightSources,
 } from "../../../src/game/mechanisms/roles/demon_hunter/native_poison";
 import { NightFaultPlan } from "../../../src/game/engine/fault_plan";
-function fixture() {
-  const world = new World(),
+function fixture(locale: "zh-CN" | "en" = "zh-CN") {
+  const world = new World(locale),
     roles = [Role.Wolf, Role.Wolf, Role.Villager, Role.Seer, Role.Witch, DEMON_HUNTER_ROLE as Role];
   for (const kind of roles) {
     const id = world.createEntity(),
@@ -1115,3 +1118,743 @@ for (const mode of ["original", "clone", "copied", "string", "extra", "getter", 
     }
     closeDemonHunterTurn(scope);
   });
+
+async function nativeControllerDependencies() {
+  await controllerDependencies();
+  const [{ executeDemonWitchTurn }, { ToolGateway }, requests, recorder] = await Promise.all([
+    import("../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller"),
+    import("../../../src/game/gateway/tool_gateway"),
+    import("../../../src/game/mechanisms/roles/demon_hunter/native_potion_requests"),
+    import("../../../src/recording/session_recorder"),
+  ]);
+  return { executeDemonWitchTurn, gateway: new ToolGateway(), requests, recorder };
+}
+for (const [potion, targetId] of [
+  ["poison", 6],
+  ["poison", 1],
+  ["heal", 3],
+  ["none", 5],
+] as const)
+  test(`actual original Witch ${potion} target ${targetId}: canonical request, real stock, mark and audit commit`, async () => {
+    const f = fixture(),
+      { executeDemonWitchTurn, gateway, recorder } = await nativeControllerDependencies(),
+      events: GameEvent[] = [],
+      receipts: boolean[] = [],
+      spy = spyOn(recorder, "safeRecordLogicOp").mockImplementation(() => {});
+    const marks = new StatusMarksComponent();
+    f.world.addComponent(targetId, COMPONENT.StatusMarks, marks);
+    if (potion === "heal") marks.add(StatusMark.WolfKillMark);
+    beginDemonHunterNight(f.world, 1, () => true);
+    try {
+      const result = await executeDemonWitchTurn({
+        world: f.world,
+        gateway,
+        events,
+        day: 1,
+        wolfTarget: 3,
+        provider: {
+          async getAction(request) {
+            expect(request.actorId).toBe(5);
+            expect(request.context.stage).toBe("witch");
+            expect(request.context.ability_id).toBe("native:potion");
+            expect(request.context.wolf_target).toBe(3);
+            expect(deferRequestDelivery(request, (accepted) => receipts.push(accepted))).toBe(true);
+            expect(receipts).toEqual([]);
+            return {
+              name: "use_potion",
+              args: { target_id: targetId, potion_type: potion as PotionType },
+            };
+          },
+        },
+      });
+      expect(receipts).toEqual([true]);
+      expect(spy).toHaveBeenCalledTimes(1);
+      const audit = demonHunterAuditPlayer(f.world, 5)! as {
+        abilities: Record<string, NightAbility<"potion">>;
+      };
+      expect(audit.abilities["native:potion"]!.state.heal).toBe(potion === "heal" ? 0 : 1);
+      expect(audit.abilities["native:potion"]!.state.poison).toBe(potion === "poison" ? 0 : 1);
+      expect(audit.abilities["native:potion"]!.uses).toBe(potion === "none" ? 0 : 1);
+      expect(audit.abilities["native:potion"]!.lastUsedDay).toBe(1);
+      expect(result.used).toBe(potion !== "none");
+      expect(f.world.getAliveEntityIds()).toEqual([1, 2, 3, 4, 5, 6]);
+      expect(events).toHaveLength(1);
+      expect(events[0]!.payload).toEqual({
+        actorId: 5,
+        targetId,
+        potionType: potion as PotionType,
+      });
+      if (potion === "poison") {
+        expect(result.poison!.claim.source.id).toBe(5);
+        expect(result.poison!.claim.target.id).toBe(targetId);
+        expect(result.poison!.sealContribution()).toEqual({
+          native: true,
+          unknown: false,
+        });
+        const settlement = freezeDemonNightSources(
+          f.world,
+          result.poison!.proof ? [result.poison!.proof] : [],
+        );
+        expect(settlement.poisonImmunities).toEqual(
+          targetId === 6
+            ? [{ policy: "awa_netease_demon_hunter_v1", actorId: 6, day: 1, witchId: 5 }]
+            : [],
+        );
+      }
+      await expect(
+        executeDemonWitchTurn({
+          world: f.world,
+          gateway,
+          events,
+          day: 1,
+          wolfTarget: 3,
+          provider: {
+            async getAction() {
+              throw new Error("must_not_request");
+            },
+          },
+        }),
+      ).rejects.toThrow("demon_hunter_native_witch_unavailable");
+    } finally {
+      spy.mockRestore();
+    }
+  });
+for (const kind of [
+  "string",
+  "extra",
+  "getter",
+  "proxy",
+  "stock_getter",
+  "replace_life",
+  "refund",
+  "throw",
+] as const)
+  test(`actual original Witch ${kind}: zero hostile reads, false receipt, no accepted op or inventory adoption`, async () => {
+    const f = fixture(),
+      { executeDemonWitchTurn, gateway, recorder } = await nativeControllerDependencies(),
+      events: GameEvent[] = [],
+      receipts: boolean[] = [],
+      spy = spyOn(recorder, "safeRecordLogicOp").mockImplementation(() => {});
+    beginDemonHunterNight(f.world, 1, () => true);
+    const before = demonHunterAuditPlayer(f.world, 5);
+    let reads = 0;
+    try {
+      await expect(
+        executeDemonWitchTurn({
+          world: f.world,
+          gateway,
+          events,
+          day: 1,
+          wolfTarget: 3,
+          provider: {
+            async getAction(request) {
+              deferRequestDelivery(request, (accepted) => receipts.push(accepted));
+              const ability = (
+                f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState
+                  .abilities as Record<string, NightAbility<"potion">>
+              )["native:potion"]!;
+              if (kind === "throw") throw new Error("offline_failure");
+              if (kind === "stock_getter")
+                Object.defineProperty(ability.state, "poison", {
+                  get() {
+                    reads++;
+                    return 1;
+                  },
+                  enumerable: true,
+                  configurable: true,
+                });
+              if (kind === "replace_life")
+                f.world.addComponent(5, COMPONENT.Alive, createAliveComponent());
+              if (kind === "refund") ability.state.poison = 2;
+              const args =
+                kind === "string"
+                  ? { target_id: "6", potion_type: "poison" }
+                  : kind === "extra"
+                    ? { target_id: 6, potion_type: "poison", hidden: true }
+                    : kind === "getter"
+                      ? {
+                          get target_id() {
+                            reads++;
+                            return 6;
+                          },
+                          potion_type: "poison",
+                        }
+                      : kind === "proxy"
+                        ? new Proxy(
+                            { target_id: 6, potion_type: "poison" },
+                            {
+                              ownKeys(t) {
+                                reads++;
+                                return Reflect.ownKeys(t);
+                              },
+                              get(t, k) {
+                                reads++;
+                                return Reflect.get(t, k);
+                              },
+                            },
+                          )
+                        : { target_id: 6, potion_type: "poison" };
+              return { name: "use_potion", args } as never;
+            },
+          },
+        }),
+      ).rejects.toThrow();
+      expect(reads).toBe(0);
+      expect(receipts).toEqual([false]);
+      expect(spy).not.toHaveBeenCalled();
+      expect(events).toEqual([]);
+      expect(demonHunterAuditPlayer(f.world, 5)).toEqual(before);
+    } finally {
+      spy.mockRestore();
+    }
+  });
+test("actual original Witch pass → heal → poison: exact cross-night cache and irreversible stock", async () => {
+  const f = fixture(),
+    { executeDemonWitchTurn, gateway } = await nativeControllerDependencies();
+  for (const [day, potion, targetId] of [
+    [1, "none", 5],
+    [2, "heal", 3],
+    [3, "poison", 6],
+  ] as const) {
+    beginDemonHunterNight(f.world, day, () => true);
+    if (potion === "heal") {
+      const marks = new StatusMarksComponent();
+      marks.add(StatusMark.WolfKillMark);
+      f.world.addComponent(3, COMPONENT.StatusMarks, marks);
+    }
+    const result = await executeDemonWitchTurn({
+      world: f.world,
+      gateway,
+      events: [],
+      day,
+      wolfTarget: 3,
+      provider: {
+        async getAction() {
+          return {
+            name: "use_potion",
+            args: { target_id: targetId, potion_type: potion as PotionType },
+          };
+        },
+      },
+    });
+    if (day >= 2) {
+      const scope = openDemonHunterTurn(f.world);
+      const request: DemonHunterRequest = {
+        actorId: 6,
+        phase: Phase.Night,
+        allowedTools: ["demon_hunt"],
+        context: {
+          day,
+          stage: "demon_hunter",
+          allow_fallback: false,
+          action_failure_policy: "error",
+          turn_constraints: {
+            min_valid_actions: 1,
+            max_valid_actions: 1,
+            required_any_tools: ["demon_hunt"],
+          },
+        },
+      };
+      bindDemonHunterRequest(f.world, request);
+      expect(commitDemonHunt(f.world, scope, hunt(null))).toEqual({ day, targetId: null });
+    }
+    if (result.poison?.proof) {
+      expect(result.poison.sealContribution()).toEqual({ native: true, unknown: false });
+      expect(freezeDemonNightSources(f.world, [result.poison.proof]).poisonImmunities).toHaveLength(
+        1,
+      );
+    } else freezeDemonNightSources(f.world, []);
+    closeDemonHunterNight(f.world);
+  }
+  const audit = demonHunterAuditPlayer(f.world, 5) as {
+    abilities: Record<string, NightAbility<"potion">>;
+  };
+  expect(audit.abilities["native:potion"]!.uses).toBe(2);
+  expect(audit.abilities["native:potion"]!.state.heal).toBe(0);
+  expect(audit.abilities["native:potion"]!.state.poison).toBe(0);
+  const ability = (
+    f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState.abilities as Record<
+      string,
+      NightAbility<"potion">
+    >
+  )["native:potion"]!;
+  ability.state.poison = 1;
+  ability.uses = 1;
+  beginDemonHunterNight(f.world, 4, () => true);
+  await expect(
+    executeDemonWitchTurn({
+      world: f.world,
+      gateway,
+      events: [],
+      day: 4,
+      wolfTarget: null,
+      provider: {
+        async getAction() {
+          throw new Error("must_not_request");
+        },
+      },
+    }),
+  ).rejects.toThrow("demon_hunter_native_witch_unavailable");
+  expect(demonHunterAuditPlayer(f.world, 5)).toEqual(audit);
+});
+
+for (const kind of [
+  "native",
+  "unknown_before",
+  "unknown_after",
+  "removed",
+  "removed_readded",
+  "replaced_marks",
+  "source_revoked",
+  "target_revoked",
+  "source_getter",
+] as const)
+  test(`delivered native source ${kind}: paired immunity preserves independent toxins before any Alive write`, async () => {
+    const f = fixture(),
+      { executeDemonWitchTurn, gateway } = await nativeControllerDependencies(),
+      { sealDeliveredDemonWitchSources, freezeDeliveredDemonNightSources } =
+        await import("../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller");
+    const marks = new StatusMarksComponent();
+    f.world.addComponent(6, COMPONENT.StatusMarks, marks);
+    if (kind === "unknown_before") marks.add(StatusMark.PoisonMark);
+    beginDemonHunterNight(f.world, 1, () => true);
+    await executeDemonWitchTurn({
+      world: f.world,
+      gateway,
+      events: [],
+      day: 1,
+      wolfTarget: null,
+      provider: {
+        async getAction() {
+          return { name: "use_potion", args: { target_id: 6, potion_type: PotionType.Poison } };
+        },
+      },
+    });
+    if (kind === "unknown_after") marks.add(StatusMark.PoisonMark);
+    if (kind === "removed" || kind === "removed_readded") marks.remove(StatusMark.PoisonMark);
+    if (kind === "removed_readded") marks.add(StatusMark.PoisonMark);
+    if (kind === "replaced_marks") {
+      const replacement = new StatusMarksComponent();
+      replacement.add(StatusMark.PoisonMark);
+      f.world.addComponent(6, COMPONENT.StatusMarks, replacement);
+    }
+    const token = sealDeliveredDemonWitchSources(f.world, 1);
+    marks.clear(); // Ordinary DamageResolution consumes marks between seal and final source freeze.
+    if (kind === "source_revoked") f.world.addComponent(5, COMPONENT.Alive, createAliveComponent());
+    if (kind === "target_revoked") f.world.addComponent(6, COMPONENT.Alive, createAliveComponent());
+    let reads = 0;
+    if (kind === "source_getter") {
+      const a = (
+        f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState.abilities as Record<
+          string,
+          NightAbility<"potion">
+        >
+      )["native:potion"]!;
+      Object.defineProperty(a.state, "poison", {
+        get() {
+          reads++;
+          return 0;
+        },
+        enumerable: true,
+        configurable: true,
+      });
+    }
+    const result = freezeDeliveredDemonNightSources(f.world, token);
+    const immune = kind === "native" || kind === "unknown_before",
+      unknown = ["unknown_before", "unknown_after", "removed_readded", "replaced_marks"].includes(
+        kind,
+      );
+    expect(result.poisonImmunities).toEqual(
+      immune ? [{ policy: "awa_netease_demon_hunter_v1", actorId: 6, day: 1, witchId: 5 }] : [],
+    );
+    expect(result.poisonOverrides).toEqual([{ targetId: 6, poison: unknown }]);
+    expect(reads).toBe(0);
+    expect(f.world.getAliveEntityIds()).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(
+      (demonHunterAuditPlayer(f.world, 5) as { abilities: Record<string, NightAbility<"potion">> })
+        .abilities["native:potion"]!.state.poison,
+    ).toBe(0);
+    await expect(
+      Promise.resolve().then(() => freezeDeliveredDemonNightSources(f.world, token)),
+    ).rejects.toThrow();
+  });
+test("delivered source seal cannot invent, copy, omit or cross Worlds", async () => {
+  const f = fixture(),
+    other = fixture(),
+    { executeDemonWitchTurn, gateway } = await nativeControllerDependencies(),
+    { sealDeliveredDemonWitchSources, freezeDeliveredDemonNightSources } =
+      await import("../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller");
+  beginDemonHunterNight(f.world, 1, () => true);
+  beginDemonHunterNight(other.world, 1, () => true);
+  expect(() => sealDeliveredDemonWitchSources(f.world, 1)).toThrow(
+    "demon_hunter_native_sources_missing",
+  );
+  await executeDemonWitchTurn({
+    world: f.world,
+    gateway,
+    events: [],
+    day: 1,
+    wolfTarget: null,
+    provider: {
+      async getAction() {
+        return { name: "use_potion", args: { target_id: 6, potion_type: PotionType.Poison } };
+      },
+    },
+  });
+  const token = sealDeliveredDemonWitchSources(f.world, 1);
+  expect(() => freezeDeliveredDemonNightSources(other.world, token)).toThrow(
+    "demon_hunter_native_sources_invalid",
+  );
+  expect(() => freezeDeliveredDemonNightSources(f.world, {})).toThrow(
+    "demon_hunter_native_sources_invalid",
+  );
+  expect(() => sealDeliveredDemonWitchSources(f.world, 1)).toThrow(
+    "demon_hunter_native_sources_already_sealed",
+  );
+  expect(freezeDeliveredDemonNightSources(f.world, token).poisonImmunities).toHaveLength(1);
+});
+for (const kind of [
+  "target_getter",
+  "target_proxy",
+  "marks_add_getter",
+  "marks_has_getter",
+  "stock_readonly",
+  "uses_readonly",
+  "day_readonly",
+  "flag_readonly",
+] as const)
+  test(`actual Witch precommit ${kind}: preflight and controller refuse before first native write`, async () => {
+    const f = fixture(),
+      { executeDemonWitchTurn, gateway, recorder } = await nativeControllerDependencies(),
+      { ActionReception } = await import("../../../src/ai/agents/player/action_reception"),
+      receipts: boolean[] = [],
+      before = demonHunterAuditPlayer(f.world, 5),
+      spy = spyOn(recorder, "safeRecordLogicOp").mockImplementation(() => {});
+    const marks = new StatusMarksComponent();
+    f.world.addComponent(6, COMPONENT.StatusMarks, marks);
+    let reads = 0;
+    beginDemonHunterNight(f.world, 1, () => true);
+    try {
+      await expect(
+        executeDemonWitchTurn({
+          world: f.world,
+          gateway,
+          events: [],
+          day: 1,
+          wolfTarget: null,
+          provider: {
+            async getAction(request) {
+              deferRequestDelivery(request, (ok) => receipts.push(ok));
+              const ability = (
+                f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState
+                  .abilities as Record<string, NightAbility<"potion">>
+              )["native:potion"]!;
+              if (kind === "target_getter")
+                Object.defineProperty(
+                  f.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!,
+                  "alive",
+                  {
+                    get() {
+                      reads++;
+                      return true;
+                    },
+                    configurable: true,
+                    enumerable: true,
+                  },
+                );
+              if (kind === "target_proxy")
+                f.world.addComponent(
+                  6,
+                  COMPONENT.Alive,
+                  new Proxy(createAliveComponent(), {
+                    get(t, k) {
+                      reads++;
+                      return Reflect.get(t, k);
+                    },
+                  }),
+                );
+              if (kind === "marks_add_getter" || kind === "marks_has_getter")
+                Object.defineProperty(marks, kind === "marks_add_getter" ? "add" : "has", {
+                  get() {
+                    reads++;
+                    return () => {};
+                  },
+                  configurable: true,
+                });
+              if (kind === "stock_readonly")
+                Object.defineProperty(ability.state, "poison", { writable: false });
+              if (kind === "uses_readonly")
+                Object.defineProperty(ability, "uses", { writable: false });
+              if (kind === "day_readonly")
+                Object.defineProperty(ability, "lastUsedDay", { writable: false });
+              if (kind === "flag_readonly")
+                Object.defineProperty(ability.state, "poisonUsedThisNight", { writable: false });
+              expect(
+                new ActionReception(f.world).validate(request, "use_potion", {
+                  target_id: 6,
+                  potion_type: PotionType.Poison,
+                }).ok,
+              ).toBe(false);
+              return { name: "use_potion", args: { target_id: 6, potion_type: PotionType.Poison } };
+            },
+          },
+        }),
+      ).rejects.toThrow();
+      expect(reads).toBe(0);
+      expect(receipts).toEqual([false]);
+      expect(spy).not.toHaveBeenCalled();
+      expect(demonHunterAuditPlayer(f.world, 5)).toEqual(before);
+      const ability = (
+        f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState.abilities as Record<
+          string,
+          NightAbility<"potion">
+        >
+      )["native:potion"]!;
+      expect(ability.uses).toBe(0);
+      expect(ability.lastUsedDay).toBeNull();
+      expect(ability.state.poison).toBe(1);
+    } finally {
+      spy.mockRestore();
+    }
+  });
+for (const field of ["phase", "actorId", "allowedTools", "context", "deadlineAtMs"] as const)
+  test(`actual Witch clone invalidates with original ${field} edit`, async () => {
+    const f = fixture(),
+      { executeDemonWitchTurn, gateway, requests } = await nativeControllerDependencies(),
+      { ActionReception } = await import("../../../src/ai/agents/player/action_reception"),
+      receipts: boolean[] = [];
+    beginDemonHunterNight(f.world, 1, () => true);
+    await expect(
+      executeDemonWitchTurn({
+        world: f.world,
+        gateway,
+        events: [],
+        day: 1,
+        wolfTarget: null,
+        provider: {
+          async getAction(request) {
+            const clone = { ...request, deadlineAtMs: Date.now() + 10000 };
+            requests.inheritDemonWitchDeadlineRequest(request, clone);
+            expect(requests.demonWitchRequestCurrent(f.world, clone)).toBe(true);
+            expect(deferRequestDelivery(clone, (ok) => receipts.push(ok))).toBe(true);
+            if (field === "phase") request.phase = Phase.Day;
+            if (field === "actorId") request.actorId = 1;
+            if (field === "allowedTools") request.allowedTools = ["check_identity"];
+            if (field === "context") request.context = { ...request.context };
+            if (field === "deadlineAtMs") request.deadlineAtMs = Date.now() + 20000;
+            expect(requests.demonWitchRequestCurrent(f.world, clone)).toBe(false);
+            expect(() => assertRequestDelivery(clone)).toThrow(
+              "action_request_delivery_authority_revoked",
+            );
+            expect(
+              new ActionReception(f.world).validate(clone, "use_potion", {
+                target_id: 6,
+                potion_type: PotionType.Poison,
+              }).ok,
+            ).toBe(false);
+            return { name: "use_potion", args: { target_id: 6, potion_type: PotionType.Poison } };
+          },
+        },
+      }),
+    ).rejects.toThrow("demon_hunter_native_witch_revoked");
+    expect(receipts).toEqual([false]);
+  });
+test("actual Witch gateway-time body replacement cannot be captured as a new authorized target", async () => {
+  const f = fixture(),
+    { executeDemonWitchTurn, gateway } = await nativeControllerDependencies();
+  beginDemonHunterNight(f.world, 1, () => true);
+  const original = gateway.validateAndSanitize.bind(gateway),
+    spy = spyOn(gateway, "validateAndSanitize").mockImplementation((world, id, call, context) => {
+      const checked = original(world, id, call, context);
+      world.addComponent(6, COMPONENT.Alive, createAliveComponent());
+      return checked;
+    });
+  try {
+    await expect(
+      executeDemonWitchTurn({
+        world: f.world,
+        gateway,
+        events: [],
+        day: 1,
+        wolfTarget: null,
+        provider: {
+          async getAction() {
+            return { name: "use_potion", args: { target_id: 6, potion_type: PotionType.Poison } };
+          },
+        },
+      }),
+    ).rejects.toThrow("demon_hunter_native_witch_invalid");
+    expect(
+      (demonHunterAuditPlayer(f.world, 5) as { abilities: Record<string, NightAbility<"potion">> })
+        .abilities["native:potion"]!.uses,
+    ).toBe(0);
+  } finally {
+    spy.mockRestore();
+  }
+});
+test("delivered source life wrappers are immutable while actual factory Alive remains mutable", async () => {
+  const f = fixture(),
+    { executeDemonWitchTurn, gateway } = await nativeControllerDependencies(),
+    { sealDeliveredDemonWitchSources, freezeDeliveredDemonNightSources } =
+      await import("../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller");
+  beginDemonHunterNight(f.world, 1, () => true);
+  const result = await executeDemonWitchTurn({
+    world: f.world,
+    gateway,
+    events: [],
+    day: 1,
+    wolfTarget: null,
+    provider: {
+      async getAction() {
+        return { name: "use_potion", args: { target_id: 6, potion_type: PotionType.Poison } };
+      },
+    },
+  });
+  expect(Object.isFrozen(result.poison!.claim.source)).toBe(true);
+  expect(Object.isFrozen(result.poison!.claim.target)).toBe(true);
+  expect(() => Object.defineProperty(result.poison!.claim.target, "id", { value: 1 })).toThrow();
+  const token = sealDeliveredDemonWitchSources(f.world, 1),
+    sources = freezeDeliveredDemonNightSources(f.world, token);
+  expect(sources.poisonOverrides).toEqual([{ targetId: 6, poison: false }]);
+  result.poison!.claim.source.life.alive = false;
+  expect(sources.poisonImmunities).toHaveLength(1);
+});
+for (const transport of ["sdk", "acp"] as const)
+  for (const locale of ["zh-CN", "en"] as const)
+    for (const outcome of ["valid", "invalid", "missing"] as const)
+      test(`actual ${transport} provider path/${locale}/${outcome}: Witch commit owns receipt and strict failures never fallback`, async () => {
+        const f = fixture(locale),
+          { executeDemonWitchTurn, gateway } = await nativeControllerDependencies(),
+          { LlmActionProvider } = await import("../../../src/ai/agents/llm/llm_action_provider"),
+          { AcpActionProvider } = await import("../../../src/ai/agents/acp/acp_action_provider");
+        let fallbackCalls = 0,
+          submits = 0;
+        const fallbackProvider = {
+          async getAction() {
+            fallbackCalls++;
+            return null;
+          },
+        };
+        const client: import("../../../src/ai/integrations/llm/transport").ChatModelClient = {
+          async chat() {
+            throw new Error("unexpected_chat");
+          },
+          async runToolLoop<T>(
+            _messages: import("../../../src/ai/integrations/llm/transport").ChatMessage[],
+            _tools: import("../../../src/ai/integrations/llm/transport").ToolSchema[],
+            callbacks: import("../../../src/ai/integrations/llm/transport").ToolLoopCallbacks<T>,
+          ) {
+            if (outcome !== "missing")
+              for (let i = 0; i < (outcome === "valid" ? 1 : 3); i++) {
+                const result = await callbacks.onToolCall({
+                  id: `call-${i}`,
+                  name: "submit_action",
+                  rawArgs: "{}",
+                  args: {
+                    turn_id: "t1",
+                    action: "use_potion",
+                    arguments: {
+                      target_id: outcome === "valid" ? 6 : "6",
+                      potion_type: PotionType.Poison,
+                    },
+                  },
+                });
+                submits++;
+                if (result.finalAction)
+                  return { finalAction: result.finalAction, assistantText: "Done" };
+              }
+            return { finalAction: null, assistantText: "Done" };
+          },
+        };
+        const provider =
+          transport === "sdk"
+            ? new LlmActionProvider(f.world, client, {
+                boardConfig: f.config,
+                fallbackProvider,
+                maxConcurrentRequests: 1,
+                printLlmIo: false,
+                printThinking: false,
+                trace: false,
+                llmTimeoutMs: 1000,
+              })
+            : new AcpActionProvider(f.world, {
+                boardConfig: f.config,
+                fallbackProvider,
+                maxConcurrentRequests: 1,
+                turnTimeoutMs: 1000,
+                printLlmIo: false,
+                printThinking: false,
+                trace: false,
+                sessionFactory: {
+                  async createSession(input) {
+                    return {
+                      sessionId: "demon-witch-stub",
+                      async prompt() {
+                        if (outcome !== "missing")
+                          for (let i = 0; i < (outcome === "valid" ? 1 : 3); i++) {
+                            input.registry.submitAction("demon-witch-stub", {
+                              turn_id: "t1",
+                              action: "use_potion",
+                              arguments: {
+                                target_id: outcome === "valid" ? 6 : "6",
+                                potion_type: PotionType.Poison,
+                              },
+                            });
+                            submits++;
+                          }
+                      },
+                      async cancel() {},
+                      async close() {},
+                    };
+                  },
+                },
+              });
+        beginDemonHunterNight(f.world, 1, () => true);
+        try {
+          const result = executeDemonWitchTurn({
+            world: f.world,
+            gateway,
+            events: [],
+            provider,
+            day: 1,
+            wolfTarget: null,
+          });
+          if (outcome === "valid") expect((await result).used).toBe(true);
+          else await expect(result).rejects.toThrow();
+          expect(fallbackCalls).toBe(0);
+          expect(submits).toBe(outcome === "valid" ? 1 : outcome === "invalid" ? 3 : 0);
+          const audit = demonHunterAuditPlayer(f.world, 5) as {
+            abilities: Record<string, NightAbility<"potion">>;
+          };
+          expect(audit.abilities["native:potion"]!.state.poison).toBe(outcome === "valid" ? 0 : 1);
+          expect(audit.abilities["native:potion"]!.uses).toBe(outcome === "valid" ? 1 : 0);
+        } finally {
+          await provider.close();
+        }
+      });
+test("delivered immunity keeps a new toxin written after ordinary marks consumption", async () => {
+  const f = fixture(),
+    { executeDemonWitchTurn, gateway } = await nativeControllerDependencies(),
+    { sealDeliveredDemonWitchSources, freezeDeliveredDemonNightSources } =
+      await import("../../../src/game/mechanisms/roles/demon_hunter/native_potion_controller");
+  beginDemonHunterNight(f.world, 1, () => true);
+  await executeDemonWitchTurn({
+    world: f.world,
+    gateway,
+    events: [],
+    day: 1,
+    wolfTarget: null,
+    provider: {
+      async getAction() {
+        return { name: "use_potion", args: { target_id: 6, potion_type: PotionType.Poison } };
+      },
+    },
+  });
+  const token = sealDeliveredDemonWitchSources(f.world, 1),
+    marks = f.world.getComponent<StatusMarksComponent>(6, COMPONENT.StatusMarks)!;
+  marks.clear();
+  marks.add(StatusMark.PoisonMark);
+  const result = freezeDeliveredDemonNightSources(f.world, token);
+  expect(result.poisonImmunities).toHaveLength(1);
+  expect(result.poisonOverrides).toEqual([{ targetId: 6, poison: true }]);
+});

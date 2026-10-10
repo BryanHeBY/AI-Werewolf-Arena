@@ -1,6 +1,11 @@
 import {
+  demonWitchRequestTargetCurrent,
+  readDemonPotionTool,
+} from "../../../game/mechanisms/roles/demon_hunter/native_potion_requests";
+import {
   demonHunterRequestScope,
   canSubmitDemonHunt,
+  demonHunterActorId,
 } from "../../../game/mechanisms/roles/demon_hunter/authority";
 import { readDemonHuntTool } from "../../../game/mechanisms/roles/demon_hunter/state";
 import {
@@ -120,18 +125,28 @@ export class ActionReception {
         ))
     )
       return fail(RuleError.ToolMismatch);
+    const demonWitch = tool === "use_potion" && demonHunterActorId(this.world) !== null;
+    const potionCall = demonWitch ? readDemonPotionTool({ name: tool, args: rawArgs }) : null;
+    if (
+      demonWitch &&
+      (!potionCall ||
+        !demonWitchRequestTargetCurrent(this.world, request, potionCall.args.target_id))
+    )
+      return fail(RuleError.ToolMismatch);
     const input = (
-      demonCall
-        ? demonCall.args
-        : weddingCall
-          ? weddingCall.args
-          : wildCall
-            ? wildCall.args
-            : initialChoice
-              ? { slot: thiefSlot }
-              : wallCall
-                ? wallCall.args
-                : { ...rawArgs }
+      potionCall
+        ? potionCall.args
+        : demonCall
+          ? demonCall.args
+          : weddingCall
+            ? weddingCall.args
+            : wildCall
+              ? wildCall.args
+              : initialChoice
+                ? { slot: thiefSlot }
+                : wallCall
+                  ? wallCall.args
+                  : { ...rawArgs }
     ) as Record<string, unknown>;
     const properties = spec.parameters.properties as
       Record<string, { type?: string | string[] }> | undefined;

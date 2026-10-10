@@ -4,6 +4,7 @@ import {
   Camp,
   Phase,
   Role,
+  WitchSelfHealRule,
   aliveLifeDescriptor,
   aliveLifeVersion,
   bindRequestDeliveryGuard,
@@ -21,6 +22,7 @@ import {
   demonJson,
   demonSnapshot,
   ownDemonData,
+  exactDemonData,
   getDemonHunterState,
   readDemonHunterState,
   readDemonHuntTool,
@@ -68,6 +70,7 @@ interface Night {
   turn: Turn | null;
   opened: boolean;
   requiresChoice: boolean;
+  witchOpened: boolean;
   choice: Readonly<DemonHunterChoice> | null;
 }
 interface Turn {
@@ -293,6 +296,7 @@ export function beginDemonHunterNight(world: World, day: number, isCurrent: () =
     turn: null,
     opened: false,
     requiresChoice: day >= 2 && targets.has(b.actorId),
+    witchOpened: false,
     choice: null,
   };
   b.nights.set(day, night);
@@ -689,4 +693,149 @@ export function demonNativePoisonFrame(
       if (isCurrent()) p.auditPrivateJson = demonJson(p.privateState)!;
     },
   });
+}
+
+/** Finite original Witch transaction. Audit changes are computed from the prior committed snapshot. */
+export interface DemonWitchTurnFrame {
+  readonly day: number;
+  readonly witchId: number;
+  readonly demonId: number;
+  readonly ability: object;
+  readonly isCurrent: () => boolean;
+  readonly targetCurrent: (targetId: number) => boolean;
+  readonly sourceCurrent: () => boolean;
+  readonly commit: (potion: "heal" | "poison" | "none") => boolean;
+}
+export function openDemonWitchTurnFrame(world: World): Readonly<DemonWitchTurnFrame> | null {
+  const b = bindings.get(world),
+    n = b?.active,
+    p = b && [...b.players.values()].find((p) => p.kind === Role.Witch),
+    ability = p && ownDemonData(ownDemonData(p.privateState, "abilities"), "native:potion");
+  if (!b || !n || !p || !ability || typeof ability !== "object" || n.witchOpened) return null;
+  const current = () =>
+    !n.closed &&
+    !n.frozen &&
+    b.active === n &&
+    n.isCurrent() &&
+    validBinding(b) &&
+    targetCurrent(n, p.id);
+  if (!current() || demonJson(p.privateState) !== p.auditPrivateJson) return null;
+  const original = demonSnapshot(p.privateState) as Record<string, unknown>,
+    abilities = ownDemonData(original, "abilities") as Record<string, unknown>,
+    snapshot = ownDemonData(abilities, "native:potion") as Record<string, unknown>,
+    state = ownDemonData(snapshot, "state") as Record<string, unknown>;
+  if (
+    !exactDemonData(snapshot, [
+      "id",
+      "kind",
+      "state",
+      "source",
+      "sourceDisclosed",
+      "startsOnDay",
+      "maxUses",
+      "uses",
+      "lastUsedDay",
+      "disabled",
+    ]) ||
+    snapshot.sourceDisclosed !== true ||
+    snapshot.startsOnDay !== 1 ||
+    snapshot.maxUses !== null ||
+    snapshot.disabled !== false ||
+    !state ||
+    snapshot.uses !== 2 - (state.heal as number) - (state.poison as number) ||
+    (snapshot.lastUsedDay !== null &&
+      (!Number.isSafeInteger(snapshot.lastUsedDay) ||
+        (snapshot.lastUsedDay as number) < 1 ||
+        (snapshot.lastUsedDay as number) >= n.day)) ||
+    !state ||
+    ownDemonData(snapshot, "id") !== "native:potion" ||
+    ownDemonData(snapshot, "kind") !== "potion" ||
+    demonJson(ownDemonData(snapshot, "source")) !==
+      demonJson({ kind: "native", role: Role.Witch }) ||
+    Object.keys(state).length !== 6 ||
+    ![0, 1].includes(state.heal as number) ||
+    ![0, 1].includes(state.poison as number) ||
+    state.selfHealRule !== WitchSelfHealRule.Disabled ||
+    state.canSelfHeal !== false ||
+    typeof state.healUsedThisNight !== "boolean" ||
+    typeof state.poisonUsedThisNight !== "boolean"
+  )
+    return null;
+  const originalState = ownDemonData(ability, "state") as Record<string, unknown>;
+  const writable = () =>
+    [
+      ...["heal", "poison", "canSelfHeal", "healUsedThisNight", "poisonUsedThisNight"].map(
+        (key) => [originalState, key] as const,
+      ),
+      [ability, "uses"] as const,
+      [ability, "lastUsedDay"] as const,
+    ].every(([object, key]) => {
+      const d = Object.getOwnPropertyDescriptor(object, key);
+      return !!d && "value" in d && d.writable === true;
+    });
+  if (!writable()) return null;
+  // Reset is itself a finite synchronous transition. It cannot adopt arbitrary live inventory.
+  n.witchOpened = true;
+  const resetState: Record<string, unknown> = {
+    ...state,
+    healUsedThisNight: false,
+    poisonUsedThisNight: false,
+    canSelfHeal: false,
+  };
+  const resetAbility = { ...snapshot, state: resetState };
+  const resetJson = JSON.stringify(resetAbility);
+  originalState.healUsedThisNight = false;
+  originalState.poisonUsedThisNight = false;
+  originalState.canSelfHeal = false;
+  const resetPrivate = { ...original, abilities: { ...abilities, "native:potion": resetAbility } };
+  if (demonJson(p.privateState) !== JSON.stringify(resetPrivate))
+    throw new Error("demon_hunter_native_reset_failed");
+  p.auditPrivateJson = JSON.stringify(resetPrivate);
+  let committed = false,
+    committedJson: string | null = null;
+  return Object.freeze({
+    day: n.day,
+    witchId: p.id,
+    demonId: b.actorId,
+    ability,
+    isCurrent: () =>
+      !committed &&
+      current() &&
+      writable() &&
+      demonJson(ability) === resetJson &&
+      demonJson(p.privateState) === p.auditPrivateJson,
+    targetCurrent: (id: number) => current() && targetCurrent(n, id),
+    sourceCurrent: () => committed && current() && demonJson(p.privateState) === committedJson,
+    commit: (potion: "heal" | "poison" | "none") => {
+      if (committed || !current() || !["heal", "poison", "none"].includes(potion)) return false;
+      const expectedState = { ...resetState };
+      if (potion !== "none") {
+        if ((resetState[potion] as number) < 1) return false;
+        expectedState[potion] = (resetState[potion] as number) - 1;
+        expectedState[potion === "heal" ? "healUsedThisNight" : "poisonUsedThisNight"] = true;
+      }
+      const expectedAbility = {
+        ...resetAbility,
+        state: expectedState,
+        uses: (snapshot.uses as number) + (potion === "none" ? 0 : 1),
+        lastUsedDay: n.day,
+      };
+      const expectedPrivate = {
+        ...original,
+        abilities: { ...abilities, "native:potion": expectedAbility },
+      };
+      const json = JSON.stringify(expectedPrivate);
+      if (demonJson(p.privateState) !== json) return false;
+      committed = true;
+      committedJson = json;
+      p.auditPrivateJson = json;
+      return true;
+    },
+  });
+}
+
+export function demonWitchRequiredThisNight(world: World): boolean {
+  const n = bindings.get(world)?.active;
+  if (!n || n.closed || n.frozen) throw new Error("demon_hunter_freeze_unavailable");
+  return [...n.binding.players.values()].some((p) => p.kind === Role.Witch && n.targets.has(p.id));
 }

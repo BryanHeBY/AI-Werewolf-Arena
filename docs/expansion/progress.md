@@ -511,3 +511,7 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 ## P9b 猎魔人实际 controller 与接收层
 
 真实 factory／gateway／域提交和 receipt／accepted op 顺序已接，ActionReception 严格参数与原请求 scope 透传、runtime／SDK／ACP 截止 clone 继承已补。三组只读复验关闭候选范围阻断；1946 pass／18800断言／92文件引擎＋录制＋既有 transport 回归、backend type／lint／build、局部 format／diff 通过，见[controller 审查](reviews/p9-demon-hunter-controller.md)。仍未公开注册角色，不用注入 candidate 测试冒称完整 Demon transport／Tape；继续真实原生药品来源与整夜结算，总体待用户最终验收。
+
+## P9b 猎魔人实际原生女巫来源
+
+实际Witch规范请求／严格交付、有限合法reset／none／heal／poison原库存与即时审计、原目标与实际Poison贡献及controller ledger的seal／freeze桥接候选完成；三组审查阻断已按反例修正。168／903定向（12个实际SDK／ACP provider类双语stub交付fallback0）、2144／19999／112文件回归及backend type／lint／build、局部format／diff通过，见[本笔来源桥接](reviews/p9-demon-hunter-native-potion.md)。仍未公开注册或接Night／PM／完整HTTP／Tape，不计完整角色交付；继续完整夜伤链及最终验收。
