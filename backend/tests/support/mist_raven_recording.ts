@@ -1,6 +1,14 @@
 import { readFile, rm } from "node:fs/promises";
 import { bootstrapGame } from "../../src/app/bootstrap";
-import { Role, createRandom, type ActionRequest, type ToolCall } from "../../src/core";
+import {
+  ActionWindow,
+  COMPONENT,
+  Role,
+  createRandom,
+  type ActionRequest,
+  type ToolCall,
+  type BadgeComponent,
+} from "../../src/core";
 import { parseBoardDefinition } from "../../src/runtime/config/board_definition";
 import { SessionRecordManager } from "../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../src/recording/recording_context";
@@ -41,7 +49,14 @@ export type MistRecordVariant =
   | "consecutive-heal"
   | "ordinary-double"
   | "mixed-order"
-  | "self-heal";
+  | "self-heal"
+  | "blast-pre-election"
+  | "blast-daybreak"
+  | "blast-speech-gap"
+  | "blast-pre-vote"
+  | "blast-raw-target"
+  | "blast-badge-chain"
+  | "blast-last-wolf";
 export async function mistBoard() {
   return parseBoardDefinition(
     JSON.parse(
@@ -58,8 +73,19 @@ type NightPlan = {
   snake: Array<number | null>;
   extra: Array<number | null>;
   exile: number[];
-  circle: number[];
+  circle: number[] | null;
+  blast?: { day: number; window: ActionWindow };
+  doubleBadge?: boolean;
 };
+const blastPlan = (window: ActionWindow): NightPlan => ({
+  dream: [8, 6, 7],
+  knife: [5, 11, 6],
+  snake: [null, null, 6],
+  extra: [null, null, 3],
+  exile: [12, 12, 9],
+  circle: [5, 6, 11],
+  blast: { day: 1, window },
+});
 /** Handwritten choices for original seats; expected outcomes live separately in the tests. */
 const manualPlans: Record<MistRecordVariant, NightPlan> = {
   linked: {
@@ -134,6 +160,25 @@ const manualPlans: Record<MistRecordVariant, NightPlan> = {
     exile: [12, 10, 9],
     circle: [1, 6, 11],
   },
+  "blast-pre-election": blastPlan(ActionWindow.OnPreElection),
+  "blast-daybreak": blastPlan(ActionWindow.OnDaybreak),
+  "blast-speech-gap": blastPlan(ActionWindow.OnPerSpeechGap),
+  "blast-pre-vote": blastPlan(ActionWindow.OnPreVote),
+  "blast-raw-target": {
+    ...blastPlan(ActionWindow.OnPerSpeechGap),
+    circle: [10, 6, 11],
+    knife: [10, 11, 6],
+  },
+  "blast-badge-chain": { ...blastPlan(ActionWindow.OnPerSpeechGap), doubleBadge: true },
+  "blast-last-wolf": {
+    dream: [8, 7, 6],
+    knife: [11, 9, 2],
+    snake: [null, null, 2],
+    extra: [null, null, null],
+    exile: [12, 12, 9],
+    circle: null,
+    blast: { day: 3, window: ActionWindow.OnDaybreak },
+  },
 };
 /** Literal manual scenarios; this controller is intentionally distinct from an observed player. */
 export function mistAction(q: ActionRequest, variant: MistRecordVariant): ToolCall | null {
@@ -142,8 +187,13 @@ export function mistAction(q: ActionRequest, variant: MistRecordVariant): ToolCa
     index = d - 1,
     plan = manualPlans[variant];
   if (d > 3) throw new Error("mist_fixture_unexpected_day");
+  if (plan.blast && d === plan.blast.day && s === plan.blast.window && q.actorId === 10)
+    return { name: "self_destruct", args: { confirm: true, reason: "Manual blast" } };
   if (s === "alchemist_mist")
-    return { name: "cast_mist", args: { target_ids: d === 1 ? [...plan.circle] : null } };
+    return {
+      name: "cast_mist",
+      args: { target_ids: d === 1 && plan.circle ? [...plan.circle] : null },
+    };
   if (s === "dreamer") return { name: "dream", args: { target_id: plan.dream[index]! } };
   if (s === "wolf_discussion")
     return { name: "speak_to_wolves", args: { text: "End", end_chat: true } };
@@ -153,12 +203,26 @@ export function mistAction(q: ActionRequest, variant: MistRecordVariant): ToolCa
       args: { target_id: plan.knife[index]!, abstain: plan.knife[index] === null },
     };
   if (s === "raven_knife") return { name: "raven_knife", args: { target_id: plan.extra[index]! } };
-  if (s === "seer") return { name: "check_identity", args: { target_id: 9 } };
-  if (s === "sheriff_nomination") return { name: "run_for_sheriff", args: { run: false } };
+  if (s === "seer")
+    return { name: "check_identity", args: { target_id: variant === "blast-last-wolf" ? 10 : 9 } };
+  if (s === "sheriff_nomination")
+    return { name: "run_for_sheriff", args: { run: !!plan.blast && q.actorId === 10 } };
+  if (plan.blast && s === "sheriff_withdraw")
+    return { name: "run_for_sheriff", args: { run: true } };
+  if (plan.blast && s === "sheriff_choose_direction")
+    return { name: "choose_direction", args: { direction: "clockwise" } };
+  if (plan.blast && s === "sheriff_badge_choice")
+    return {
+      name: "choose_badge_successor",
+      args: { target_id: plan.doubleBadge && q.actorId === 10 ? 5 : 6 },
+    };
   if (s === "alchemist_snake")
     return { name: "use_snake", args: { target_id: plan.snake[index]! } };
-  if (s === "day_speech" || s === "last_words") return { name: "speak", args: { text: "Words" } };
+  if (s === "day_speech" || s === "last_words" || (plan.blast && s === "sheriff_campaign_speech"))
+    return { name: "speak", args: { text: "Words" } };
   if (s === "voting") {
+    if (variant === "blast-last-wolf" && d === 2)
+      return { name: "vote", args: { target_id: null, abstain: true } };
     const target = plan.exile[index]!;
     return {
       name: "vote",
@@ -168,13 +232,23 @@ export function mistAction(q: ActionRequest, variant: MistRecordVariant): ToolCa
   return null;
 }
 const cache = new Map<string, Promise<ReproductionRecord>>();
+export interface MistRequestObservation {
+  day: number;
+  stage: ActionRequest["context"]["stage"];
+  actorId: number;
+  aliveIds: number[];
+  sheriffIds: number[];
+  gameOver: boolean;
+  publishedTypes: string[];
+}
 export function mistRecording(
   variant: MistRecordVariant = "linked",
   locale: "en" | "zh-CN" = "en",
   seed = "mist-raven-real-runtime",
+  observe?: (observation: MistRequestObservation) => void,
 ): Promise<ReproductionRecord> {
   const key = variant + locale + seed;
-  if (cache.has(key)) return cache.get(key)!;
+  if (!observe && cache.has(key)) return cache.get(key)!;
   const run = (async () => {
     const board = await mistBoard(),
       config = board.config;
@@ -214,6 +288,22 @@ export function mistRecording(
               getAction: (q) =>
                 trace.decide(q, {
                   async getAction(request) {
+                    if (observe)
+                      observe({
+                        day: request.context.day,
+                        stage: request.context.stage,
+                        actorId: request.actorId,
+                        aliveIds: game.world.getAliveEntityIds(),
+                        sheriffIds: game.world
+                          .getAliveEntityIds()
+                          .filter(
+                            (id) =>
+                              game.world.getComponent<BadgeComponent>(id, COMPONENT.Badge)
+                                ?.isSheriff,
+                          ),
+                        gameOver: game.phaseManager.getSnapshot().gameOver,
+                        publishedTypes: game.phaseManager.getEvents().map((e) => e.type),
+                      });
                     return mistAction(request, variant);
                   },
                 }),
@@ -257,6 +347,6 @@ export function mistRecording(
       await rm(root, { recursive: true, force: true });
     }
   })();
-  cache.set(key, run);
+  if (!observe) cache.set(key, run);
   return run;
 }

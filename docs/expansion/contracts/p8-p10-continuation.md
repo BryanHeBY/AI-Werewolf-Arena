@@ -134,3 +134,7 @@ game-catalog 拥有稳定 ID/名称/状态，game-text 拥有双语文案。新�
 ## P9d 完整梦境交互测试接续
 
 六种梦境交互与首夜自救已补中英真实 finalized Tape，证据见[完整交互](../reviews/p9-mist-raven-complete-interactions.md)；前一条的六交互任务在本切片关闭。当前下一步为四自爆完整局及附加死亡／警徽顺序，然后实际 SDK／ACP／MCP、精确迟到资源、多种子和前端。角色仍 planned，44/64 不变。
+
+## P9d 完整自爆测试接续
+
+四自爆窗口及原刀口自爆、双移徽、末狼延后判胜已升级到双语真实finalized Tape，证据见[完整自爆](../reviews/p9-mist-raven-complete-blast.md)。下一步末神／末民完整终局与后夜非法自救失败前缀，然后新角色实际通信、精确迟到／资源、种子及前端；角色planned，44/64不变。
