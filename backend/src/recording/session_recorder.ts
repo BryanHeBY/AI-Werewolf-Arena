@@ -75,15 +75,22 @@ export class SessionRecordManager {
     return this.store.sessionDir;
   }
 
-  beginReproduction(metadata: ReproductionMetadata): ReproductionTrace {
+  beginReproduction(
+    metadata: ReproductionMetadata,
+    liveEvents?: () => readonly import("../core").GameEvent[],
+  ): ReproductionTrace {
     if (this.closed || this.reproduction)
       throw new Error("reproduction_scope_already_started_or_closed");
     this.aggregate.enableReproduction();
-    this.reproduction = new ReproductionTrace(metadata, () => {
-      if (this.closed) return;
-      this.dirtyReproduction = true;
-      this.scheduleFlush();
-    });
+    this.reproduction = new ReproductionTrace(
+      metadata,
+      () => {
+        if (this.closed) return;
+        this.dirtyReproduction = true;
+        this.scheduleFlush();
+      },
+      liveEvents,
+    );
     return this.reproduction;
   }
 

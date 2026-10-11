@@ -199,40 +199,43 @@ export function beginGameReproduction(
     true,
     context.phaseManager.getEvents().length,
   );
-  const trace = manager.beginReproduction({
-    engine: options.engine,
-    boardId: options.boardId,
-    normalizedBoard: options.boardConfig,
-    locale: options.locale,
-    maxDays: options.maxDays,
-    dealMode: context.dealMode,
-    ...(context.phaseManager.getFaultPlan()
-      ? { faultPlan: context.phaseManager.getFaultPlan() }
-      : {}),
-    ...(initialIdentityDeal(context.world)
-      ? { initialDeal: [...initialIdentityDeal(context.world)!] }
-      : {}),
-    ruleset: RULESET,
-    random: context.random.metadata,
-    players: initial.players.map((player) => {
-      const profile = options.profiles?.get(player.id);
-      return {
-        id: player.id,
-        name: player.name,
-        role: player.role,
-        camp: player.camp,
-        ...(profile
-          ? {
-              agent: {
-                kind: profile.kind,
-                name: profile.name,
-                ...(profile.model ? { model: profile.model } : {}),
-              },
-            }
-          : {}),
-      };
-    }),
-  });
+  const trace = manager.beginReproduction(
+    {
+      engine: options.engine,
+      boardId: options.boardId,
+      normalizedBoard: options.boardConfig,
+      locale: options.locale,
+      maxDays: options.maxDays,
+      dealMode: context.dealMode,
+      ...(context.phaseManager.getFaultPlan()
+        ? { faultPlan: context.phaseManager.getFaultPlan() }
+        : {}),
+      ...(initialIdentityDeal(context.world)
+        ? { initialDeal: [...initialIdentityDeal(context.world)!] }
+        : {}),
+      ruleset: RULESET,
+      random: context.random.metadata,
+      players: initial.players.map((player) => {
+        const profile = options.profiles?.get(player.id);
+        return {
+          id: player.id,
+          name: player.name,
+          role: player.role,
+          camp: player.camp,
+          ...(profile
+            ? {
+                agent: {
+                  kind: profile.kind,
+                  name: profile.name,
+                  ...(profile.model ? { model: profile.model } : {}),
+                },
+              }
+            : {}),
+        };
+      }),
+    },
+    options.boardConfig.radiantEclipse ? () => context.phaseManager.getEvents() : undefined,
+  );
   trace.checkpoint(initial, context.phaseManager.getEvents());
   return trace;
 }

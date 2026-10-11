@@ -1,3 +1,9 @@
+import { validateRadiantEclipseRecord } from "./radiant_eclipse_record";
+import {
+  RADIANT_ECLIPSE_EVENT_TYPES,
+  readRadiantEclipseFact,
+  radiantEclipseAudience,
+} from "@ai-werewolf-arena/game-text";
 import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
 import { validateMistRavenRecord } from "./mist_raven_record";
 import { validateScholarMentorRecord } from "./scholar_mentor_record";
@@ -307,6 +313,8 @@ const requestSchema = z.strictObject({
     death_action_id: positive.optional(),
     modifier_modes: z.array(z.enum(["enhance", "weaken"])).optional(),
     mist_candidates: z.array(positive).optional(),
+    shelter_candidates: z.array(positive).optional(),
+    swallow_candidates: z.array(positive).optional(),
     wolf_kill_candidates: z.array(positive).optional(),
     snake_target: positive.nullable().optional(),
     snake_candidates: z.array(positive).optional(),
@@ -697,6 +705,17 @@ const schema = z.strictObject({
           (!readModifierConflictFact(event.type, event.payload) || event.audience?.length !== 0)
         )
           ctx.addIssue({ code: "custom", message: "reproduction_modifier_conflict_invalid" });
+        if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(event.type)) {
+          const fact = readRadiantEclipseFact(event.type, event.payload),
+            expected = fact ? radiantEclipseAudience(event.type, fact) : null;
+          if (
+            !expected ||
+            !Array.isArray(event.audience) ||
+            event.audience.length !== expected.length ||
+            !expected.every((id, i) => event.audience![i] === id)
+          )
+            ctx.addIssue({ code: "custom", message: "reproduction_radiant_eclipse_fact_invalid" });
+        }
         if ((MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(event.type)) {
           const fact = readMistRavenFact(event.type, event.payload);
           if (
@@ -708,6 +727,7 @@ const schema = z.strictObject({
         }
         if (
           event.audience !== undefined &&
+          !(RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
@@ -771,6 +791,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   validateDemonHunterRecord(result);
   validateScholarMentorRecord(result);
   validateMistRavenRecord(result);
+  validateRadiantEclipseRecord(result);
   validateTimeConsortRecord(result);
   validateWolfSorcererRecord(result);
   validateTricksterRecord(result);
@@ -839,6 +860,7 @@ export class ReproductionTrace {
   constructor(
     private readonly metadata: ReproductionMetadata,
     private readonly onChange: () => void,
+    private readonly liveEvents?: () => readonly GameEvent[],
   ) {
     this.metadata = structuredClone(metadata);
   }
@@ -904,13 +926,20 @@ export class ReproductionTrace {
     operations: ReproductionRecord["operations"];
     termination: { reason: string; winner: Camp | null };
   }): ReproductionRecord {
+    const currentEvents = this.liveEvents?.();
+    if (currentEvents && currentEvents.length < (this.checkpoints.at(-1)?.eventCount ?? 0))
+      throw new Error("reproduction_live_events_before_checkpoint");
     const record = {
       schemaVersion: REPRODUCTION_SCHEMA_VERSION,
       finalized: Boolean(input),
       metadata: this.metadata,
       decisions: this.decisions,
       checkpoints: this.checkpoints,
-      events: this.events,
+      events: currentEvents
+        ? structuredClone(
+            currentEvents.map(({ payload, ...event }) => ({ ...event, payload: { ...payload } })),
+          )
+        : this.events,
       operations: input?.operations ?? [],
       termination: input ? { ...input.termination, errors: this.errors } : null,
     };
