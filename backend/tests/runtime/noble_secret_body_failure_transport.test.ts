@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test";
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
 import type { ActionStage } from "../../src/core";
 import type { PlannedTurn } from "../support/foundation_transport_plan";
 import { nobleTransportScenario } from "../support/noble_secret_body_transport_scenarios";
@@ -68,6 +70,31 @@ for (const [stage, old] of [
             expect(run.record.events.some((e) => e.type === "secret_body_reveal_speech")).toBe(
               false,
             );
+            if (kind === "llm" && mode === "missing" && process.env.AWA_NOBLE_FIXTURES) {
+              const directory = process.env.AWA_NOBLE_FIXTURES,
+                fixture = `noble-failed-reveal-${locale}`;
+              await mkdir(path.join(directory, "player-views"), { recursive: true });
+              await writeFile(
+                path.join(directory, `${fixture}.replay.json`),
+                JSON.stringify(run.replay, null, 2) + "\n",
+              );
+              await writeFile(
+                path.join(directory, `${fixture}.checkpoint.txt`),
+                JSON.stringify(cp, null, 2) + "\n",
+              );
+              for (const [label, old] of [
+                ["body", 5],
+                ["villager", 9],
+              ] as const)
+                await writeFile(
+                  path.join(directory, "player-views", `${fixture}-${label}.player.json`),
+                  JSON.stringify(
+                    run.views.find((v) => v.player_id === scenario.mapping.get(old)),
+                    null,
+                    2,
+                  ) + "\n",
+                );
+            }
           } else {
             expect(
               run.record.events.some(

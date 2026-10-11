@@ -653,6 +653,12 @@ export function readReplayEvent(
     if (ID_LISTS[safe.type]) list(p[ID_LISTS[safe.type]!]);
     if (VOTES.has(safe.type)) vote(p);
     if (SUMMARIES.has(safe.type)) {
+      if (
+        safe.type === "sheriff_vote_summary" &&
+        Object.hasOwn(p, "round") &&
+        (!Number.isSafeInteger(p.round) || Number(p.round) < 1)
+      )
+        return null;
       if (!Array.isArray(p.votes)) return null;
       for (const row of p.votes) vote(row);
       if (Object.hasOwn(p, "winnerId")) add(p.winnerId, true);
@@ -758,6 +764,8 @@ export function readReplayEvent(
     if (dead.length) effects.push({ kind: "deaths", playerIds: dead });
     if (safe.type === "sheriff_elected")
       effects.push({ kind: "sheriff_elected", playerId: p.winnerId as number });
+    if (safe.type === "sheriff_vote_summary" && typeof p.winnerId === "number")
+      effects.push({ kind: "sheriff_elected", playerId: p.winnerId });
     if (safe.type === "sheriff_badge_transferred")
       effects.push({
         kind: "sheriff_transferred",

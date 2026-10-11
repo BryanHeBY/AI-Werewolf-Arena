@@ -64,7 +64,10 @@ export function buildReplayFrame(input: ReplayRenderInput, frame: number) {
     winnerLabel: text(locale, "victory.winner_badge"),
     players: snapshot.players.map((player) => ({
       ...player,
-      roleLabel: roleName(player.role, locale),
+      roleLabel: roleName(
+        player.role === "unknown" && player.publicRole ? player.publicRole : player.role,
+        locale,
+      ),
       sheriffLabel: player.isSheriff ? text(locale, "replay.sheriff") : "",
     })),
   };

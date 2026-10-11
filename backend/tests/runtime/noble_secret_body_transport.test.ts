@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test";
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
 import { nobleTransportScenario } from "../support/noble_secret_body_transport_scenarios";
 import { runTransportGame } from "../support/run_transport_game";
 import { assertNobleTransportWire } from "../support/noble_secret_body_wire_oracle";
@@ -29,6 +31,34 @@ for (const name of [
         assertNobleTransportWire(run);
         assertNobleTransportGolden(run.record, scenario);
         assertNobleKnownAnchors(run, scenario);
+        if (kind === "llm" && process.env.AWA_NOBLE_FIXTURES) {
+          const directory = process.env.AWA_NOBLE_FIXTURES,
+            fixture = `noble-${name}-${locale}`;
+          await mkdir(path.join(directory, "player-views"), { recursive: true });
+          await writeFile(
+            path.join(directory, `${fixture}.replay.json`),
+            JSON.stringify(run.replay, null, 2) + "\n",
+          );
+          await writeFile(
+            path.join(directory, `${fixture}.checkpoint.txt`),
+            JSON.stringify(run.record.checkpoints.at(-1), null, 2) + "\n",
+          );
+          for (const [label, old] of [
+            ["noble", 1],
+            ["body", 5],
+            ["demon", 4],
+            ["pack", 10],
+            ["villager", 9],
+          ] as const)
+            await writeFile(
+              path.join(directory, "player-views", `${fixture}-${label}.player.json`),
+              JSON.stringify(
+                run.views.find((v) => v.player_id === scenario.mapping.get(old)),
+                null,
+                2,
+              ) + "\n",
+            );
+        }
         expect(run.result.snapshot.result?.winner).toBe(scenario.winner);
         expect(run.manifest.players.filter((p) => p.alive).map((p) => p.player_id)).toEqual(
           scenario.alive,

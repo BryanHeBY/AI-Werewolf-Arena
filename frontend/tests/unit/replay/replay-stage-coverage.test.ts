@@ -58,7 +58,19 @@ function eventTypes() {
     (node): node is ts.InterfaceDeclaration =>
       ts.isInterfaceDeclaration(node) && node.name.text === "EventPayloadMap",
   );
-  return declaration.members.map((member) => {
+  const inherited =
+    declaration.heritageClauses?.flatMap((clause) =>
+      clause.types.flatMap((type) => {
+        if (type.expression.getText() !== "NobleSecretBodyPayloadMap")
+          throw new Error("event_parent_contract_unknown");
+        return find(
+          source("packages/game-text/src/noble-secret-body.ts"),
+          (node): node is ts.InterfaceDeclaration =>
+            ts.isInterfaceDeclaration(node) && node.name.text === "NobleSecretBodyPayloadMap",
+        ).members;
+      }),
+    ) ?? [];
+  return [...declaration.members, ...inherited].map((member) => {
     if (!member.name || !(ts.isIdentifier(member.name) || ts.isStringLiteral(member.name)))
       throw new Error("event_name_not_literal");
     return member.name.text;
