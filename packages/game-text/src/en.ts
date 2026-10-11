@@ -1,6 +1,7 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "death.radiant_backlash": "Radiant backlash",
   "replay.stage.alchemist_mist_chosen": "Mist choice",
   "replay.stage.alchemist_mist_skipped": "Skipped Mist request",
   "replay.stage.alchemist_snake_chosen": "Snake healing choice",

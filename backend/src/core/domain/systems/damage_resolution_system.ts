@@ -15,10 +15,13 @@ import {
   type NightPoisonReflection,
   type NightMerchantBacklash,
   type NightBlackMarketBacklash,
+  type NightRadiantBacklash,
   type NightAwakenedEffects,
 } from "../night_effects";
 
 export interface NightDamageEffects {
+  radiantShelters?: readonly NightImmunityClaim[];
+  radiantBacklashes?: readonly NightRadiantBacklash[];
   modifierDeaths?: readonly import("../night_effects").NightLifeScope[];
   nightImmunities?: readonly NightImmunityClaim[];
   retaliationAttacks?: readonly NightRetaliationAttack[];
@@ -94,6 +97,11 @@ export class DamageResolutionSystem {
         ?.filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
         .map((effect) => effect.target.id),
     );
+    const radiantBacklashes = new Set(
+      effects.radiantBacklashes
+        ?.filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
+        .map((effect) => effect.target.id),
+    );
     const backlashTargets = new Set(
       effects.merchantBacklashes
         ?.filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
@@ -120,7 +128,7 @@ export class DamageResolutionSystem {
     }
 
     const passiveImmuneTargets = new Set(
-      (effects.nightImmunities ?? [])
+      [...(effects.nightImmunities ?? []), ...(effects.radiantShelters ?? [])]
         .filter((claim) => claim.isCurrent() && livingNightLife(world, claim.target))
         .map((claim) => claim.target.id),
     );
@@ -140,7 +148,12 @@ export class DamageResolutionSystem {
         !mechanical.failures.has(entityId) &&
         !mechanical.reflectedPoisonTargets.has(entityId)
       ) {
-        if (!backlashTargets.has(entityId) && !blackBacklashes.has(entityId)) continue;
+        if (
+          !backlashTargets.has(entityId) &&
+          !blackBacklashes.has(entityId) &&
+          !radiantBacklashes.has(entityId)
+        )
+          continue;
       }
 
       const sources: DeathCause[] = [...(inspectionSources.get(entityId) ?? [])];
@@ -208,6 +221,8 @@ export class DamageResolutionSystem {
         sources.push(DeathCause.BlackMarketBacklash);
       if (backlashTargets.has(entityId) && !dreamProtected)
         sources.push(DeathCause.MerchantBacklash);
+      if (radiantBacklashes.has(entityId) && !dreamProtected)
+        sources.push(DeathCause.RadiantBacklash);
       if (effects.consecutiveDeaths?.includes(entityId)) sources.push(DeathCause.Dream);
 
       if (

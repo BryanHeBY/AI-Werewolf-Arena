@@ -1,5 +1,6 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "death.radiant_backlash": "流光反噬",
   "replay.stage.alchemist_mist_chosen": "雾选择",
   "replay.stage.alchemist_mist_skipped": "跳过雾请求",
   "replay.stage.alchemist_snake_chosen": "蛇救治选择",

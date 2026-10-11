@@ -36,6 +36,11 @@ export interface NightBlackMarketBacklash {
   readonly target: NightLifeScope;
   readonly isCurrent: () => boolean;
 }
+/** Swallowing backlash is a separate attack, never a merchant effect or dream death. */
+export interface NightRadiantBacklash {
+  readonly target: NightLifeScope;
+  readonly isCurrent: () => boolean;
+}
 export function captureNightLife(world: World, id: EntityId): NightLifeScope | null {
   const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive),
     version = life && aliveLifeVersion(life);

@@ -3,6 +3,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import { DeathCause, type EntityId, type GameEvent } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
 import type { DamageResolutionResult } from "../../../../core/domain/systems/damage_resolution_system";
+import type { NightImmunityClaim } from "../../../../core/domain/night_effects";
 
 export interface DreamNightLink {
   actorId: EntityId;
@@ -31,7 +32,33 @@ export function hasDreamNightCommit(world: World, day: number): boolean {
 export class DreamNightFrame {
   private readonly reasons = new Map<EntityId, DreamReason[]>();
   private readonly emitted = new Set<string>();
-  constructor(private readonly links: readonly DreamNightLink[]) {}
+  private readonly shelters: readonly NightImmunityClaim[];
+  constructor(
+    private readonly links: readonly DreamNightLink[],
+    shelters: readonly NightImmunityClaim[] = [],
+  ) {
+    // Capture target bindings; the original owner can still revoke its paid claim.
+    this.shelters = shelters.map((claim) => ({
+      target: { id: claim.target.id, life: claim.target.life, version: claim.target.version },
+      isCurrent: claim.isCurrent.bind(claim),
+    }));
+  }
+
+  private sheltered(
+    world: World,
+    targetId: EntityId,
+    eligibleDead: ReadonlySet<EntityId> = new Set(),
+  ): boolean {
+    return this.shelters.some(
+      ({ target, isCurrent }) =>
+        target.id === targetId &&
+        isCurrent() &&
+        world.getComponent(targetId, COMPONENT.Alive) === target.life &&
+        (target.life.alive
+          ? aliveLifeVersion(target.life) === target.version
+          : eligibleDead.has(targetId) && aliveLifeVersion(target.life) === target.version + 1),
+    );
+  }
 
   private targetCurrent(world: World, link: DreamNightLink): boolean {
     return (
@@ -95,7 +122,12 @@ export class DreamNightFrame {
   consecutiveDeaths(world: World): EntityId[] {
     const deaths = new Set<EntityId>();
     for (const link of this.links)
-      if (link.consecutive && this.targetCurrent(world, link) && this.actorCurrent(world, link)) {
+      if (
+        link.consecutive &&
+        this.targetCurrent(world, link) &&
+        this.actorCurrent(world, link) &&
+        !this.sheltered(world, link.targetId)
+      ) {
         deaths.add(link.targetId);
         this.reason(link, "consecutive");
       }
@@ -134,6 +166,7 @@ export class DreamNightFrame {
         if (
           deaths.has(link.actorId) &&
           this.actorCurrent(world, link) &&
+          !this.sheltered(world, link.targetId, eligibleDead) &&
           (this.targetCurrent(world, link) || this.targetDeathCurrent(world, link, eligibleDead))
         ) {
           added.add(link.targetId);
