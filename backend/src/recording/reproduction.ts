@@ -1,4 +1,5 @@
 import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
+import { validateMistRavenRecord } from "./mist_raven_record";
 import { validateScholarMentorRecord } from "./scholar_mentor_record";
 import {
   readModifierChoiceFact,
@@ -769,6 +770,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   validateGhostBrideRecord(result);
   validateDemonHunterRecord(result);
   validateScholarMentorRecord(result);
+  validateMistRavenRecord(result);
   validateTimeConsortRecord(result);
   validateWolfSorcererRecord(result);
   validateTricksterRecord(result);
