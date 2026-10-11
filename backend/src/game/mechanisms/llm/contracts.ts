@@ -20,6 +20,8 @@ export interface ToolRepairPack {
 
 /** 可行动目标提示上下文。 */
 export interface TargetHintContext {
+  modifierCandidates?: readonly EntityId[];
+  modifierBonusCandidates?: readonly EntityId[];
   actorId: EntityId;
   day?: number;
   actorRole?: Role;

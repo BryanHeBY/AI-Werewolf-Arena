@@ -1,3 +1,8 @@
+import {
+  readModifierChoiceFact,
+  readModifierSkipFact,
+  readModifierBonusFact,
+} from "@ai-werewolf-arena/game-text";
 import { readTimeConsortChoiceFact, readTimeConsortSkipFact } from "@ai-werewolf-arena/game-text";
 import {
   readWolfSorcererExchangeFact,
@@ -11,6 +16,9 @@ import {
 import type { ActorTransportPlan, PlannedTurn } from "./foundation_transport_plan";
 
 export function assertTransportIdentity(plan: ActorTransportPlan, content: string): void {
+  for (const marker of plan.requiredSystemMarkers ?? []) {
+    if (!content.includes(marker)) throw new Error("fixture_system_rules_missing:" + marker);
+  }
   if (plan.expectedTeammateIds === undefined) return;
   const ids = plan.expectedTeammateIds.join(", ") || (plan.locale === "en" ? "None" : "无"),
     marker =
@@ -19,6 +27,8 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  scholar_mentor_choice: ["学者／导师施法", "Scholar / Mentor modifier"],
+  scholar_mentor_bonus: ["强化额外行动", "Enhanced bonus action"],
   exile_pk_speech: ["放逐PK发言", "Exile PK speeches"],
   exile_pk_vote: ["放逐PK重投", "Exile PK revote"],
   order_prince_choice: ["定序王子选择", "Order Prince choice"],
@@ -304,6 +314,38 @@ export function assertTransportEvents(
   actorId: number,
 ) {
   for (const [, type, payload] of events) {
+    if (type === "modifier_conflict_resolved") throw new Error("fixture_modifier_conflict_exposed");
+    if (
+      type === "modifier_choice_committed" &&
+      (!["day_scholar", "night_mentor"].includes(role) ||
+        payload.actorId !== actorId ||
+        !readModifierChoiceFact(type, payload))
+    )
+      throw new Error("fixture_modifier_choice_exposed");
+    if (
+      type === "modifier_choice_skipped" &&
+      (!["day_scholar", "night_mentor"].includes(role) ||
+        payload.actorId !== actorId ||
+        !readModifierSkipFact(type, payload))
+    )
+      throw new Error("fixture_modifier_skip_exposed");
+    if (
+      type === "modifier_bonus_resolved" &&
+      (payload.actorId !== actorId || !readModifierBonusFact(type, payload))
+    )
+      throw new Error("fixture_modifier_bonus_exposed");
+    if (
+      role === "night_mentor" &&
+      [
+        "wolf_tactical_order",
+        "wolf_discussion",
+        "wolf_discussion_ended",
+        "wolf_kill_vote_cast",
+      ].includes(type) &&
+      (type !== "wolf_kill_vote_cast" || payload.actorId !== actorId)
+    )
+      throw new Error("fixture_mentor_pack_information_exposed");
+
     if (type === "time_consort_reflected")
       throw new Error("fixture_time_consort_reflection_exposed");
     if (
@@ -452,6 +494,7 @@ export function assertTransportEvents(
         "trickster",
         "time_wolf_consort",
         "wolf_sorcerer",
+        "night_mentor",
       ].includes(role)
     )
       throw new Error("fixture_wolf_information_exposed");

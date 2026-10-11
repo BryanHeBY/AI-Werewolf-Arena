@@ -46,6 +46,30 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  modifier_choice_committed: {
+    actorId: EntityId;
+    day: number;
+    mode: "enhance" | "weaken" | null;
+    targetId: EntityId | null;
+  };
+  modifier_choice_skipped: {
+    actorId: EntityId;
+    day: number;
+    reason: "first_night" | "exhausted" | "dead";
+  };
+  modifier_conflict_resolved: {
+    day: number;
+    kind: "same_good" | "both_wolves";
+    targetId: EntityId;
+  };
+  modifier_bonus_resolved: {
+    actorId: EntityId;
+    day: number;
+    kind: "check" | "guard" | "poison" | "kill";
+    targetId: EntityId | null;
+    abstain: boolean;
+    isWerewolf?: boolean;
+  };
   time_consort_lock_committed: { actorId: EntityId; day: number; targetId: EntityId | null };
   time_consort_lock_skipped: { actorId: EntityId; day: number; reason: "exhausted" | "dead" };
   time_consort_reflected: {
@@ -480,6 +504,10 @@ export type GameEvent = {
       | WolfTeamEventType
       | WeddingEventType
       | "nightmare_fear_committed"
+      | "modifier_choice_committed"
+      | "modifier_choice_skipped"
+      | "modifier_conflict_resolved"
+      | "modifier_bonus_resolved"
       | "time_consort_lock_committed"
       | "time_consort_lock_skipped"
       | "time_consort_reflected"

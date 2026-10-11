@@ -558,6 +558,57 @@ export const en = Object.freeze({
   "replay.stage.time_consort_lock_committed": "Lock choice",
   "replay.stage.time_consort_lock_skipped": "Skipped lock",
   "replay.stage.time_consort_reflected": "Lock reflection",
+  "prompt.config.scholar_mentor":
+    "Scholar / Mentor rules: apply immunity before conflicts. Both casters are immune; Villagers have no skill to modify. A valid cast on an immune player, a Villager, or a conflicting target still spends its charge; explicit passes do not. Two effective casts on the same good player cancel both effects and cause death at dawn, while native actions still proceed. Two effective casts on ordinary wolves cancel both effects and kill the Mentor at dawn. Enhancement gives the Seer one extra inspection, the Guard one extra guard, the Witch one independent bonus poison (no refill of heal or native potions), or the selected ordinary wolf one individual extra knife. Bonuses last only this night and cannot repeat their corresponding native target; bonus guard ignores and does not overwrite native previous-target history. Weakening blocks the Seer or Guard native skill for the night. Weakening the Witch blocks only poison and preserves heal; weakening any ordinary wolf blocks the entire pack knife that night. A Witch with heal sees all actual knife targets but still has only one heal. Neither caster learns the other choice; the Mentor inherits the knife only when the sole living wolf at night start.",
+  "role.day_scholar.brief":
+    "Day Scholar is good. From night two, enhance or weaken one living player, with one charge of each for the entire game, or pass. You do not learn the other caster's choice. Two casts on the same good player cause death at dawn but do not cancel their native night action.",
+  "role.night_mentor.brief":
+    "Night Mentor is a wolf. The pack recognizes you, but you do not know the pack, cannot join wolf chat or self-destruct. You inherit the knife only when you are the sole wolf at night start. From night two, you have one enhance and one weaken charge. If both casts target ordinary wolves, both effects are cancelled and you die at dawn.",
+  "action.modify_skill.hint":
+    "Use enhance, weaken, or null for mode. To pass, both mode and target_id must be null. Each mode has one charge for the entire game.",
+  "action.modify_skill.directive":
+    "Choose this night's enhancement, weakening, or pass. Use only an available mode and a listed living target.",
+  "action.bonus_action.hint":
+    "kind must match the request. A bonus action cannot repeat the corresponding native target tonight. To pass, set abstain=true and target_id=null.",
+  "action.bonus_action.directive":
+    "You have one bonus action for this night only. It is separate from native uses and potions and does not refill permanent resources. Choose a listed target or explicitly pass.",
+  "error.modifier_unavailable": "This modifier or bonus action is unavailable.",
+  "error.modifier_target": "Invalid modifier mode, resource, or target.",
+  "prompt.stage.modifier_choice":
+    "Remaining modes: {modes}. Select one mode and one legal target, or set both to null to pass.",
+  "prompt.stage.modifier_bonus":
+    "This bonus action is {kind}. Use the supplied candidates; do not repeat this night's corresponding native target.",
+  "prompt.stage.wolf_targets":
+    "Actual wolf attack targets tonight: {targets}. Healing can rescue at most one player.",
+  "stage.scholar_mentor_choice": "Scholar / Mentor modifier",
+  "stage.scholar_mentor_bonus": "Enhanced bonus action",
+  "replay.stage.scholar_mentor_choice": "Scholar / Mentor modifier",
+  "replay.stage.scholar_mentor_bonus": "Enhanced bonus action",
+  "replay.stage.modifier_choice_committed": "Modifier choice",
+  "replay.stage.modifier_choice_skipped": "Skipped modifier",
+  "replay.stage.modifier_conflict_resolved": "Modifier conflict",
+  "replay.stage.modifier_bonus_resolved": "Bonus action result",
+  "prompt.stage.modifier_poison_blocked":
+    "Your native poison is weakened tonight and cannot be used. Healing follows its normal rules; you may explicitly use no potion.",
+  "modifier.pass": "pass",
+  "modifier.enhance": "enhance",
+  "modifier.weaken": "weaken",
+  "modifier.first_night": "unavailable on the first night",
+  "modifier.dead": "dead",
+  "modifier.exhausted": "charges exhausted",
+  "modifier.same_good": "both modifiers targeted the same good player",
+  "modifier.both_wolves": "both modifiers targeted werewolves",
+  "modifier.check": "bonus inspection",
+  "modifier.guard": "bonus guard",
+  "modifier.poison": "bonus poison",
+  "modifier.kill": "bonus wolf attack",
+  "modifier.result_wolf": "; result: werewolf camp",
+  "modifier.result_good": "; result: good camp",
+  "event.modifier_choice": "Night {day}: player {actor} chose {mode}; target: {target}.",
+  "event.modifier_skip": "Night {day}: player {actor} skipped their modifier: {reason}.",
+  "event.modifier_conflict":
+    "Night {day}: modifier conflict ({kind}); player {target} is scheduled to die at dawn.",
+  "event.modifier_bonus": "Night {day}: player {actor}'s {skill} target: {target}",
   "role.wolf_sorcerer.brief":
     "Werewolf seat mapper. After the Magician and before pack actions, explicitly choose two distinct unused living numbers or pass. Each of your numbers can be used once. Your swap moves the occupants of the already-swapped positions; overlapping pairs form an ordered cycle, while identical pairs cancel effects without refunding resources. Identities, public seats and daytime ballots remain unchanged. No pack knowledge or action before your first eligible choice.",
   "role.wolf_sorcerer.first_night": "Your first exchange night is {day}.",

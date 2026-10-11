@@ -1,4 +1,8 @@
 import {
+  closeScholarMentorNight,
+  abortScholarMentorNight,
+} from "../mechanisms/roles/scholar_mentor/night_frame";
+import {
   closeTimeConsortNight,
   abortTimeConsortNight,
 } from "../mechanisms/roles/time_wolf_consort/night_frame";
@@ -320,6 +324,7 @@ export class PhaseManager {
       return await this.runSingleCycleInternal(actionProvider, maxDays);
     } finally {
       if (this.config.timeConsort) abortTimeConsortNight(this.world);
+      if (this.config.scholarMentor) abortScholarMentorNight(this.world);
       if (this.config.wolfSorcerer) abortWolfSorcererNight(this.world);
       if (this.config.magician) abortMagicianNight(this.world);
     }
@@ -739,11 +744,14 @@ export class PhaseManager {
           closeWolfSorcererNight(this.world, cycleDay);
         if (this.config.magician && dayIsCurrent()) closeMagicianNight(this.world, cycleDay);
         if (this.config.timeConsort && dayIsCurrent()) closeTimeConsortNight(this.world, cycleDay);
+        if (this.config.scholarMentor && dayIsCurrent())
+          closeScholarMentorNight(this.world, cycleDay);
       } finally {
         if (this.config.trickster) abortTricksterNight(this.world);
         if (this.config.wolfSorcerer) abortWolfSorcererNight(this.world);
         if (this.config.magician) abortMagicianNight(this.world);
         if (this.config.timeConsort) abortTimeConsortNight(this.world);
+        if (this.config.scholarMentor) abortScholarMentorNight(this.world);
       }
       if (!dayIsCurrent()) return this.state.gameOver;
       bearFrame?.publish(this.world, this.events, dayIsCurrent);

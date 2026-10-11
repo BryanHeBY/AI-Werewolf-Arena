@@ -1,4 +1,10 @@
 import {
+  readModifierChoiceFact,
+  readModifierSkipFact,
+  readModifierConflictFact,
+  readModifierBonusFact,
+} from "./scholar-mentor";
+import {
   readTimeConsortChoiceFact,
   readTimeConsortSkipFact,
   readTimeConsortReflectionFact,
@@ -1030,3 +1036,83 @@ export function timeConsortEventLabel(
   }
   return null;
 }
+
+export function scholarMentorEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale = "zh-CN",
+): string | null {
+  if (type === "modifier_choice_committed") {
+    const f = readModifierChoiceFact(type, payload);
+    return f
+      ? text(locale, "event.modifier_choice", {
+          actor: f.actorId,
+          day: f.day,
+          mode:
+            f.mode === null
+              ? text(locale, "modifier.pass")
+              : text(locale, f.mode === "enhance" ? "modifier.enhance" : "modifier.weaken"),
+          target: f.targetId ?? text(locale, "modifier.pass"),
+        })
+      : text(locale, "replay.unknown");
+  }
+  if (type === "modifier_choice_skipped") {
+    const f = readModifierSkipFact(type, payload);
+    return f
+      ? text(locale, "event.modifier_skip", {
+          actor: f.actorId,
+          day: f.day,
+          reason: text(
+            locale,
+            f.reason === "first_night"
+              ? "modifier.first_night"
+              : f.reason === "dead"
+                ? "modifier.dead"
+                : "modifier.exhausted",
+          ),
+        })
+      : text(locale, "replay.unknown");
+  }
+  if (type === "modifier_conflict_resolved") {
+    const f = readModifierConflictFact(type, payload);
+    return f
+      ? text(locale, "event.modifier_conflict", {
+          day: f.day,
+          target: f.targetId,
+          kind: text(
+            locale,
+            f.kind === "same_good" ? "modifier.same_good" : "modifier.both_wolves",
+          ),
+        })
+      : text(locale, "replay.unknown");
+  }
+  if (type === "modifier_bonus_resolved") {
+    const f = readModifierBonusFact(type, payload);
+    if (!f) return text(locale, "replay.unknown");
+    const skill = text(
+      locale,
+      f.kind === "check"
+        ? "modifier.check"
+        : f.kind === "guard"
+          ? "modifier.guard"
+          : f.kind === "poison"
+            ? "modifier.poison"
+            : "modifier.kill",
+    );
+    return (
+      text(locale, "event.modifier_bonus", {
+        actor: f.actorId,
+        day: f.day,
+        skill,
+        target: f.targetId ?? text(locale, "modifier.pass"),
+      }) +
+      (f.kind === "check" && !f.abstain
+        ? text(locale, f.isWerewolf ? "modifier.result_wolf" : "modifier.result_good")
+        : "")
+    );
+  }
+  return null;
+}
+
+export * from "./scholar-mentor";
+export * from "./scholar-mentor-preset";

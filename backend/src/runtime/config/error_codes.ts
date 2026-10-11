@@ -1,6 +1,18 @@
 import { BoardConfigurationError } from "./board_definition";
 /** Only known machine IDs may cross configuration CLI error boundaries. */
 export const CONFIG_ERROR_CODES = [
+  "board_config_trickster_preset_invalid",
+  "board_config_scholar_mentor_preset_invalid",
+  "board_config_time_consort_preset_invalid",
+  "board_config_wolf_sorcerer_preset_invalid",
+  "board_config_magician_preset_invalid",
+  "board_config_red_moon_preset_invalid",
+  "board_config_nightmare_preset_invalid",
+  "board_config_evil_knight_preset_invalid",
+  "board_config_pure_white_preset_invalid",
+  "board_config_demon_hunter_preset_invalid",
+  "board_config_ghost_bride_preset_invalid",
+  "board_config_role_win_condition_not_supported",
   "board_config_disabled_mechanism_parameters",
   "board_config_duplicate_role",
   "board_config_duplicate_win_condition",

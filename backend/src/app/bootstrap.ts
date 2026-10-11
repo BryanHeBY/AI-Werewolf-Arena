@@ -1,24 +1,16 @@
-import { isTimeConsortPreset } from "@ai-werewolf-arena/game-text";
+import { boardPresetViolation } from "../game/mechanisms/roles/board_presets";
+import { installScholarMentorBoard } from "../game/mechanisms/roles/scholar_mentor/night_frame";
 import { installTimeConsortBoard } from "../game/mechanisms/roles/time_wolf_consort/night_frame";
-import { isWolfSorcererPreset } from "@ai-werewolf-arena/game-text";
 import { installWolfSorcererBoard } from "../game/mechanisms/roles/wolf_sorcerer/night_frame";
-import { isTricksterPreset } from "@ai-werewolf-arena/game-text";
 import { installTricksterBoard } from "../game/mechanisms/roles/trickster/night_frame";
 import { installOrderPrinceBoard } from "../game/mechanisms/roles/order_prince/authority";
-import { isMagicianPreset } from "@ai-werewolf-arena/game-text";
 import { installMagicianBoard } from "../game/mechanisms/roles/magician/night_frame";
-import { isRedMoonPreset } from "@ai-werewolf-arena/game-text";
-import { isNightmarePreset } from "@ai-werewolf-arena/game-text";
 import { installNightmareBoard } from "../game/mechanisms/roles/nightmare_shadow/night_frame";
-import { isEvilKnightPreset } from "@ai-werewolf-arena/game-text";
 import { installEvilKnightBoard } from "../game/mechanisms/roles/evil_knight/night_frame";
 import { installDemonHunter } from "../game/mechanisms/roles/demon_hunter/authority";
-import { isPureWhitePreset } from "@ai-werewolf-arena/game-text";
 import { WinConditionRegistry as PureWhiteWinRegistry } from "../game/mechanisms/registries/win_condition_registry";
 import { createEliminationWinConditionSpecs } from "../game/mechanisms/win_conditions/default_specs";
-import { assertDemonHunterPreset } from "../game/mechanisms/roles/demon_hunter/preset";
 import { installGhostBride } from "../game/mechanisms/roles/ghost_bride/authority";
-import { assertGhostBridePreset } from "../game/mechanisms/roles/ghost_bride/preset";
 import { installLonelyGirl } from "../game/mechanisms/roles/lonely_girl/lifecycle";
 import { installWildChild } from "../game/mechanisms/roles/wild_child/lifecycle";
 import { installInitialRoster } from "../core/domain/initial_roster";
@@ -170,6 +162,8 @@ function createPlayers(
   if (config.roleSetups.some((row) => row.role === Role.Shapeshifter && row.count === 1))
     installShapeshifterDeal(world, roles, ids);
   installInitialRoster(world);
+  if (roles.includes(Role.DayScholar) || roles.includes(Role.NightMentor))
+    installScholarMentorBoard(world);
   if (roles.includes(Role.TimeWolfConsort)) installTimeConsortBoard(world);
   if (roles.includes(Role.Trickster)) installTricksterBoard(world);
   if (roles.includes(Role.Magician)) installMagicianBoard(world);
@@ -189,70 +183,8 @@ function buildRoleDeck(
   fixedRoles: readonly Role[] | undefined,
   random: RandomSource,
 ): Role[] {
-  if (
-    (config.trickster ||
-      config.roleSetups.some((row) => row.role === Role.Trickster && row.count > 0)) &&
-    !isTricksterPreset(config)
-  )
-    throw new Error("trickster_preset_invalid");
-  if (
-    (config.timeConsort ||
-      config.roleSetups.some((row) => row.role === Role.TimeWolfConsort && row.count > 0)) &&
-    !isTimeConsortPreset(config)
-  )
-    throw new Error("time_consort_preset_invalid");
-  if (
-    (config.wolfSorcerer ||
-      config.roleSetups.some((row) => row.role === Role.WolfSorcerer && row.count > 0)) &&
-    !isWolfSorcererPreset(config)
-  )
-    throw new Error("wolf_sorcerer_preset_invalid");
-  if (
-    (config.magician ||
-      config.roleSetups.some((row) => row.role === Role.Magician && row.count > 0)) &&
-    !isMagicianPreset(config)
-  )
-    throw new Error("magician_preset_invalid");
-  if (
-    (config.redMoon ||
-      config.roleSetups.some((row) => row.role === Role.RedMoonApostle && row.count > 0)) &&
-    !isRedMoonPreset(config)
-  )
-    throw new Error("red_moon_preset_invalid");
-  if (
-    (config.nightmareShadow ||
-      config.roleSetups.some((row) => row.role === Role.NightmareShadow && row.count > 0)) &&
-    !isNightmarePreset(config)
-  )
-    throw new Error("nightmare_preset_invalid");
-  if (
-    (config.evilKnight ||
-      config.roleSetups.some((row) => row.role === Role.EvilKnight && row.count > 0)) &&
-    !isEvilKnightPreset(config)
-  )
-    throw new Error("evil_knight_preset_invalid");
-  if (
-    (config.pureWhite ||
-      config.wolfWitch ||
-      config.roleSetups.some(
-        (row) => (row.role === Role.PureWhiteGirl || row.role === Role.WolfWitch) && row.count > 0,
-      )) &&
-    !isPureWhitePreset(config)
-  )
-    throw new Error("pure_white_preset_invalid");
-  if (
-    config.roleSetups.some((row) => row.role === Role.DemonHunter && row.count > 0) ||
-    config.demonHunter
-  )
-    assertDemonHunterPreset(config);
-  const ownsGhost = config.roleSetups.some((row) => row.role === Role.GhostBride && row.count > 0);
-  if (
-    ownsGhost ||
-    config.ghostBride ||
-    config.winConditions?.includes(WinCondition.ThreeFactionsElimination) ||
-    config.winCondition === WinCondition.ThreeFactionsElimination
-  )
-    assertGhostBridePreset(config);
+  const presetViolation = boardPresetViolation(config);
+  if (presetViolation) throw new Error(presetViolation);
   const deck: Role[] = [];
   for (const setup of config.roleSetups) {
     for (let i = 0; i < setup.count; i++) {

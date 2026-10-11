@@ -115,6 +115,7 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
+  scholarMentor?: { policy: "awa_scholar_mentor_twelve_v1" };
   timeConsort?: {
     policy: "awa_time_consort_reflection_v1";
     reflectionScope: "whole_night" | "first_effect";

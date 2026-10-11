@@ -1,3 +1,7 @@
+import {
+  isScholarMentorBoard,
+  recordScholarMentorNativeTarget,
+} from "../scholar_mentor/night_frame";
 import { isTimeConsortBoard, resolveTimeConsortTarget } from "../time_wolf_consort/night_frame";
 import { commitTimeConsortEffect } from "../time_wolf_consort/effects";
 import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../evil_knight/night_frame";
@@ -54,16 +58,19 @@ const guardActionStage: NightStageHandler = {
         continue;
       const req = ctx.makeRequest(guardId, ["guard"], { stage: "guard", ability_id: ability.id });
       if (!scope.isEligible()) {
+        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_guard_scope_stale");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_scope_stale");
         continue;
       }
       const action = await ctx.actionProvider.getAction(req);
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) {
+        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_guard_scope_stale");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_scope_stale");
         continue;
       }
       if (action?.name !== "guard") {
+        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_guard_action_missing");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_action_missing");
         if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_guard_action_missing");
         continue;
@@ -76,10 +83,12 @@ const guardActionStage: NightStageHandler = {
       });
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) {
+        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_guard_scope_stale");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_scope_stale");
         continue;
       }
       if (!result.ok || !result.sanitizedCall) {
+        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_guard_action_invalid");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_action_invalid");
         if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_guard_action_invalid");
         safeRecordLogicOp({
@@ -139,6 +148,8 @@ const guardActionStage: NightStageHandler = {
         guardState.lastTarget = targetId;
       }
       recordNightAbilityUse(ability, ctx.currentDay(), !abstain);
+      if (isScholarMentorBoard(ctx.world))
+        recordScholarMentorNativeTarget(ctx.world, day, guardId, "guard", targetId);
       if (!abstain && targetId !== null)
         recordOwnNightAction(ctx.world, guardId, day, "guard", targetId, false);
     }

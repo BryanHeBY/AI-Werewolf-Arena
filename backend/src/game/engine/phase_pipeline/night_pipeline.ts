@@ -1,3 +1,9 @@
+import {
+  isScholarMentorBoard,
+  assertScholarMentorRosterCurrent,
+  abortScholarMentorNight,
+} from "../../mechanisms/roles/scholar_mentor/night_frame";
+import { assertScholarMentorBonusEffects } from "../../mechanisms/roles/scholar_mentor/night_stages";
 import { isTimeConsortBoard } from "../../mechanisms/roles/time_wolf_consort/night_frame";
 import {
   assertTimeConsortRosterCurrent,
@@ -200,6 +206,7 @@ export class NightPipeline {
     const ownsDemon = demonHunterActorId(this.world) !== null;
     let magicianHandedOff = false;
     let timeConsortHandedOff = false;
+    let scholarMentorHandedOff = false;
     let weddingHandedOff = false,
       demonHandedOff = false,
       demonAcquired = false;
@@ -212,6 +219,7 @@ export class NightPipeline {
         if (config.trickster) assertTricksterRosterCurrent(this.world);
         if (config.wolfSorcerer) assertWolfSorcererRosterCurrent(this.world);
         if (config.timeConsort) assertTimeConsortRosterCurrent(this.world);
+        if (config.scholarMentor) assertScholarMentorRosterCurrent(this.world);
         if (config.magician) assertMagicianRosterCurrent(this.world);
         assertNightmareRosterCurrent(this.world);
         assertEvilKnightRosterCurrent(this.world);
@@ -225,7 +233,8 @@ export class NightPipeline {
         ownsDemon ||
         isEvilKnightBoard(this.world) ||
         isNightmareBoard(this.world) ||
-        config.magician !== undefined
+        config.magician !== undefined ||
+        config.scholarMentor !== undefined
           ? {
               getAction: async (request: ActionRequest) => {
                 assertReadable();
@@ -321,7 +330,9 @@ export class NightPipeline {
         assertReadable();
         discardStaleWolfKnife(this.world, stageState);
         if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
+        if (config.scholarMentor) assertScholarMentorBonusEffects(stageCtx);
         await stage.execute(stageCtx);
+        if (config.scholarMentor) assertScholarMentorBonusEffects(stageCtx);
         assertEvilKnightRosterCurrent(this.world);
         assertReadable();
         if (!isCurrent()) return { interrupted: true };
@@ -391,7 +402,9 @@ export class NightPipeline {
             })
           : undefined;
       const dreamFrame = new DreamNightFrame(stageState.dreamLinks);
+      if (config.scholarMentor) assertScholarMentorBonusEffects(stageCtx);
       const damage = this.damageResolutionSystem.resolve(this.world, {
+        modifierDeaths: stageState.modifierDeaths,
         protectedTargets: dreamFrame.protectedTargets(this.world),
         immuneNightTargets: dreamFrame.immuneNightTargets(this.world),
         consecutiveDeaths: dreamFrame.consecutiveDeaths(this.world),
@@ -445,6 +458,7 @@ export class NightPipeline {
       demonHandedOff = ownsDemon;
       magicianHandedOff = config.magician !== undefined;
       timeConsortHandedOff = config.timeConsort !== undefined;
+      scholarMentorHandedOff = config.scholarMentor !== undefined;
       return {
         interrupted: false,
         summary,
@@ -462,6 +476,7 @@ export class NightPipeline {
       if (config.wolfSorcerer && !magicianHandedOff) abortWolfSorcererNight(this.world);
       if (config.magician && !magicianHandedOff) abortMagicianNight(this.world);
       if (config.timeConsort && !timeConsortHandedOff) abortTimeConsortNight(this.world);
+      if (config.scholarMentor && !scholarMentorHandedOff) abortScholarMentorNight(this.world);
       if (demonAcquired && !demonHandedOff) closeDemonHunterNight(this.world);
       if (ownsWedding && !weddingHandedOff) closeWeddingNight(this.world);
       closeThiefNight();
@@ -486,7 +501,8 @@ export class NightPipeline {
       summary: { key: "request.summary.night_action" },
       context: {
         ...extraContext,
-        ...(isTimeConsortBoard(this.world) ||
+        ...(isScholarMentorBoard(this.world) ||
+        isTimeConsortBoard(this.world) ||
         isMagicianBoard(this.world) ||
         isEvilKnightBoard(this.world) ||
         isNightmareBoard(this.world) ||

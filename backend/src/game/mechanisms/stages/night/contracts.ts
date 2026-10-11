@@ -37,6 +37,13 @@ export interface WolfKnifeTargetScope {
 
 /** 夜间阶段共享状态。 */
 export interface NightStageState {
+  modifierDeaths?: import("../../../../core/domain/night_effects").NightLifeScope[];
+  modifierKnifeTargets?: EntityId[];
+  modifierBonusEffects?: Array<{
+    kind: import("../../roles/scholar_mentor/night_frame").ModifierBonusKind;
+    receipt: import("../../roles/scholar_mentor/night_frame").ModifierBonusReceipt;
+    marks?: ReturnType<NightStageContext["ensureMarks"]>;
+  }>;
   wolfChatOrder: EntityId[];
   endedWolves: Set<EntityId>;
   wolfVotes: Record<number, number>;

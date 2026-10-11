@@ -1,3 +1,8 @@
+import {
+  readModifierChoiceFact,
+  readModifierSkipFact,
+  readModifierBonusFact,
+} from "@ai-werewolf-arena/game-text";
 import { readTimeConsortChoiceFact, readTimeConsortSkipFact } from "@ai-werewolf-arena/game-text";
 import {
   readWolfSorcererExchangeFact,
@@ -122,6 +127,24 @@ export class AgentEventVisibilityRegistry {
   constructor(private readonly rules: Record<string, AgentEventVisibilityRule> = DEFAULT_RULES) {}
 
   canView(world: World, event: GameEvent, actorId: EntityId): boolean {
+    if (event.type === "modifier_conflict_resolved") return false;
+    if (
+      event.type === "modifier_choice_committed" ||
+      event.type === "modifier_choice_skipped" ||
+      event.type === "modifier_bonus_resolved"
+    ) {
+      const fact =
+        readModifierChoiceFact(event.type, event.payload) ??
+        readModifierSkipFact(event.type, event.payload) ??
+        readModifierBonusFact(event.type, event.payload);
+      return (
+        !!fact &&
+        Array.isArray(event.audience) &&
+        event.audience.length === 1 &&
+        event.audience[0] === actorId &&
+        fact.actorId === actorId
+      );
+    }
     if (event.type === "time_consort_reflected") return false;
     if (
       event.type === "time_consort_lock_committed" ||

@@ -4,7 +4,14 @@ import { parseReproductionRecord, type ReproductionRecord } from "../../src/reco
 import type { PlannedTurn } from "../support/foundation_transport_plan";
 import { timeConsortScenario } from "../support/time_consort_transport_scenarios";
 import { runTransportGame } from "../support/run_transport_game";
-for (const stage of ["time_consort_lock", "guard", "witch", "seer"] as const)
+for (const stage of [
+  "time_consort_lock",
+  "wolf_discussion",
+  "guard",
+  "wolf_vote",
+  "witch",
+  "seer",
+] as const)
   for (const failure of ["missing", "late", "invalid"] as const) {
     if (failure === "invalid" && stage !== "time_consort_lock") continue;
     for (const transport of ["llm", "acp"] as const)
@@ -14,7 +21,9 @@ for (const stage of ["time_consort_lock", "guard", "witch", "seer"] as const)
           for (const locale of ["zh-CN", "en"] as const) {
             const scenario = timeConsortScenario("whole_night"),
               actorId =
-                stage === "time_consort_lock"
+                stage === "time_consort_lock" ||
+                stage === "wolf_discussion" ||
+                stage === "wolf_vote"
                   ? scenario.consort
                   : stage === "guard"
                     ? scenario.guard
@@ -68,7 +77,9 @@ for (const stage of ["time_consort_lock", "guard", "witch", "seer"] as const)
             const state = cp.players.find((p) => p.id === scenario.consort)!.privateState
               .timeConsort as { history: unknown[]; triggeredDay: number | null };
             expect(state.history).toHaveLength(stage === "time_consort_lock" ? 0 : 1);
-            expect(state.triggeredDay).toBe(stage === "witch" || stage === "seer" ? 1 : null);
+            expect(state.triggeredDay).toBe(
+              stage === "wolf_vote" || stage === "witch" || stage === "seer" ? 1 : null,
+            );
             expect(
               run.record.decisions.some(
                 (d) => d.actorId === actorId && d.stage === stage && d.outcome.kind === "error",

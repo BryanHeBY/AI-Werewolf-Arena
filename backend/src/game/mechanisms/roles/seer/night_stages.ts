@@ -1,3 +1,7 @@
+import {
+  isScholarMentorBoard,
+  recordScholarMentorNativeTarget,
+} from "../scholar_mentor/night_frame";
 import { isTimeConsortBoard, resolveTimeConsortTarget } from "../time_wolf_consort/night_frame";
 import { commitTimeConsortEffect } from "../time_wolf_consort/effects";
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
@@ -82,16 +86,19 @@ const seerCheckStage: NightStageHandler = {
         requiresAction: ability.state.actionPolicy !== "awa_optional_v1",
       });
       if (!scope.isEligible()) {
+        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_scope_stale");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_scope_stale");
         continue;
       }
       const action = await ctx.actionProvider.getAction(req);
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) {
+        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_scope_stale");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_scope_stale");
         continue;
       }
       if (action?.name !== "check_identity") {
+        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_action_missing");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_action_missing");
         if (isMagicianBoard(ctx.world)) throw new Error("magician_seer_action_missing");
         if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
@@ -110,10 +117,12 @@ const seerCheckStage: NightStageHandler = {
       });
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) {
+        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_scope_stale");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_scope_stale");
         continue;
       }
       if (!result.ok || !result.sanitizedCall) {
+        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_action_invalid");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_action_invalid");
         if (isMagicianBoard(ctx.world)) throw new Error("magician_seer_action_invalid");
         if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
@@ -171,6 +180,8 @@ const seerCheckStage: NightStageHandler = {
       commitFoxInspection(ctx.world, ctx.state, target, day, () => scope.isOwnerCurrent(true));
       ctx.state.seerChecks.push({ seerId, targetId, isWerewolf, result: { ...inspection } });
       recordNightAbilityUse(ability, ctx.currentDay(), true);
+      if (isScholarMentorBoard(ctx.world))
+        recordScholarMentorNativeTarget(ctx.world, day, seerId, "check", targetId);
       if (isEvilKnightBoard(ctx.world)) {
         if (ability.source.kind !== "native" || ability.source.role !== Role.Seer)
           throw new Error("evil_knight_seer_source_invalid");

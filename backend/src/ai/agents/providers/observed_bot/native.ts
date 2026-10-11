@@ -149,7 +149,9 @@ export const use_potion: ObservedToolHandler = (context) => {
   const witch = ability?.kind === "potion" ? ability.state : ownState.witch;
   const both =
     ability?.source.kind === "native" && witch?.potionPolicy === "awa_both_native_experimental_v1";
-  const knife = request.context.wolf_target;
+  const knife =
+    request.context.wolf_targets?.find((id) => id !== actor || witch?.canSelfHeal) ??
+    request.context.wolf_target;
   if (
     style !== "conservative" &&
     witch &&
@@ -166,6 +168,7 @@ export const use_potion: ObservedToolHandler = (context) => {
     style !== "conservative" &&
     witch &&
     witch.poison > 0 &&
+    request.context.modifier_poison_blocked !== true &&
     !witch.poisonUsedThisNight &&
     (both || !witch.healUsedThisNight) &&
     request.context.day > 1
@@ -299,4 +302,25 @@ export const lockTime: ObservedToolHandler = ({ ownState, request, knownAliveIds
   return target == null
     ? { name: "lock_time", args: { target_id: null, abstain: true } }
     : { name: "lock_time", args: { target_id: target, abstain: false } };
+};
+
+export const modifySkill: ObservedToolHandler = ({ ownState, request, knownAliveIds, pick }) => {
+  const state = ownState.scholarMentor,
+    modes = request.context.modifier_modes,
+    candidates = request.context.modifier_candidates;
+  if (!state || !modes || !candidates) throw new Error("scholar_mentor_observation_missing");
+  const allowed = modes.filter((mode) => state.remaining[mode] === 1);
+  const targets = candidates.filter((id) => knownAliveIds.includes(id) && id !== request.actorId);
+  const mode = allowed[pick(allowed.map((_, i) => i)) ?? -1],
+    target = pick(targets);
+  if (!mode || target == null)
+    return { name: "modify_skill", args: { mode: null, target_id: null } };
+  return { name: "modify_skill", args: { mode, target_id: target } };
+};
+export const bonusAction: ObservedToolHandler = ({ request, knownAliveIds, pick }) => {
+  const kind = request.context.modifier_bonus_kind,
+    candidates = request.context.modifier_bonus_candidates;
+  if (!kind || !candidates) throw new Error("scholar_mentor_bonus_observation_missing");
+  const target = pick(candidates.filter((id) => knownAliveIds.includes(id))) ?? null;
+  return { name: "bonus_action", args: { kind, target_id: target, abstain: target === null } };
 };

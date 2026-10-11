@@ -1,3 +1,10 @@
+import { validateScholarMentorRecord } from "./scholar_mentor_record";
+import {
+  readModifierChoiceFact,
+  readModifierSkipFact,
+  readModifierBonusFact,
+  readModifierConflictFact,
+} from "@ai-werewolf-arena/game-text";
 import {
   readTimeConsortChoiceFact,
   readTimeConsortSkipFact,
@@ -295,6 +302,12 @@ const requestSchema = z.strictObject({
     death_phase: z.enum(Phase).optional(),
     death_sources: z.array(z.enum(DeathCause)).optional(),
     death_action_id: positive.optional(),
+    modifier_modes: z.array(z.enum(["enhance", "weaken"])).optional(),
+    modifier_candidates: z.array(positive).optional(),
+    modifier_bonus_kind: z.enum(["check", "guard", "poison", "kill"]).optional(),
+    modifier_bonus_candidates: z.array(positive).optional(),
+    wolf_targets: z.array(positive).optional(),
+    modifier_poison_blocked: z.boolean().optional(),
     consort_candidates: z.array(positive).optional(),
     sorcerer_candidates: z.array(positive).optional(),
     trickster_candidates: z.array(positive).optional(),
@@ -656,11 +669,36 @@ const schema = z.strictObject({
         }
 
         if (
+          [
+            "modifier_choice_committed",
+            "modifier_choice_skipped",
+            "modifier_bonus_resolved",
+          ].includes(event.type)
+        ) {
+          const fact =
+            event.type === "modifier_choice_committed"
+              ? readModifierChoiceFact(event.type, event.payload)
+              : event.type === "modifier_choice_skipped"
+                ? readModifierSkipFact(event.type, event.payload)
+                : readModifierBonusFact(event.type, event.payload);
+          if (!fact || event.audience?.length !== 1 || event.audience[0] !== fact.actorId)
+            ctx.addIssue({ code: "custom", message: "reproduction_modifier_owner_invalid" });
+        }
+        if (
+          event.type === "modifier_conflict_resolved" &&
+          (!readModifierConflictFact(event.type, event.payload) || event.audience?.length !== 0)
+        )
+          ctx.addIssue({ code: "custom", message: "reproduction_modifier_conflict_invalid" });
+        if (
           event.audience !== undefined &&
           !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
           event.type !== "nightmare_fear_committed" &&
+          event.type !== "modifier_choice_committed" &&
+          event.type !== "modifier_choice_skipped" &&
+          event.type !== "modifier_conflict_resolved" &&
+          event.type !== "modifier_bonus_resolved" &&
           event.type !== "time_consort_lock_committed" &&
           event.type !== "time_consort_lock_skipped" &&
           event.type !== "time_consort_reflected" &&
@@ -713,6 +751,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   validateLonelyGirlRecord(result);
   validateGhostBrideRecord(result);
   validateDemonHunterRecord(result);
+  validateScholarMentorRecord(result);
   validateTimeConsortRecord(result);
   validateWolfSorcererRecord(result);
   validateTricksterRecord(result);

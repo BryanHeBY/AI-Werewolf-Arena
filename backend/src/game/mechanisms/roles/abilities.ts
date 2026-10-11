@@ -1,3 +1,4 @@
+import { scholarMentorBlocks } from "./scholar_mentor/night_frame";
 import { nightmareFearBlocks } from "./nightmare_shadow/night_frame";
 import { INSPECTION_POLICIES } from "../../../core/domain/board";
 import { nativePotionSecondTurn } from "./witch/policies";
@@ -264,6 +265,11 @@ export function nightAbilityActors<K extends NightAbilityKind>(
   return world
     .getAliveEntityIds()
     .filter((actorId) => !nightmareFearBlocks(world, actorId, day))
+    .filter(
+      (actorId) =>
+        (kind !== "guard" && kind !== "seer_check") ||
+        !scholarMentorBlocks(world, day, actorId, kind === "guard" ? "guard" : "check"),
+    )
     .flatMap((actorId) =>
       allNightAbilities(world.getComponent<RoleComponent>(actorId, COMPONENT.Role))
         .filter(

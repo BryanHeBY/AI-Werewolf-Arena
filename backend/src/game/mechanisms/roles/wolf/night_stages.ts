@@ -1,3 +1,9 @@
+import { isTimeConsortBoard } from "../time_wolf_consort/night_frame";
+import {
+  isScholarMentorBoard,
+  scholarMentorKnifeEligible,
+  recordScholarMentorNativeTarget,
+} from "../scholar_mentor/night_frame";
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { isRedMoonBoard } from "../demon_hunter/authority";
 import { nightmareKnifeBlocked, isNightmareBoard } from "../nightmare_shadow/night_frame";
@@ -15,6 +21,17 @@ import type { NightStageContext } from "../../stages/night/contracts";
 
 const WOLF_DISCUSSION_MAX_ROUNDS = 3;
 const WOLF_KILL_VOTE_MAX_RETRIES = 3;
+
+/** Keep named board errors while applying one failure policy to chat and knife requests. */
+function strictWolfFailurePrefix(ctx: NightStageContext): string | null {
+  if (isScholarMentorBoard(ctx.world)) return "scholar_mentor";
+  if (isTimeConsortBoard(ctx.world)) return "time_consort";
+  if (isNightmareBoard(ctx.world)) return "nightmare";
+  if (isMagicianBoard(ctx.world)) return "magician";
+  if (isRedMoonBoard(ctx.world)) return "red_moon";
+  if (isEvilKnightBoard(ctx.world)) return "evil_knight";
+  return null;
+}
 
 function captureActorScope(ctx: NightStageContext, actorId: EntityId): () => boolean {
   const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
@@ -77,40 +94,16 @@ const wolfDiscussionStage: NightStageHandler = {
         if (!actorCurrent() || !wolfChatParticipants(ctx.world, ctx.roleCatalog).includes(wolfId))
           continue;
         if (action?.name !== "speak_to_wolves") {
-          if (
-            isEvilKnightBoard(ctx.world) ||
-            isNightmareBoard(ctx.world) ||
-            isMagicianBoard(ctx.world) ||
-            isRedMoonBoard(ctx.world)
-          )
-            throw new Error(
-              isNightmareBoard(ctx.world)
-                ? "nightmare_wolf_chat_action_missing"
-                : isMagicianBoard(ctx.world) || isRedMoonBoard(ctx.world)
-                  ? isMagicianBoard(ctx.world)
-                    ? "magician_wolf_chat_action_missing"
-                    : "red_moon_wolf_chat_action_missing"
-                  : "evil_knight_wolf_chat_action_missing",
-            );
+          if (strictWolfFailurePrefix(ctx))
+            throw new Error(`${strictWolfFailurePrefix(ctx)}_wolf_chat_action_missing`);
           continue;
         }
 
         if (
-          (isEvilKnightBoard(ctx.world) ||
-            isNightmareBoard(ctx.world) ||
-            isMagicianBoard(ctx.world) ||
-            isRedMoonBoard(ctx.world)) &&
+          strictWolfFailurePrefix(ctx) &&
           (typeof action.args?.text !== "string" || typeof action.args?.end_chat !== "boolean")
         ) {
-          throw new Error(
-            isNightmareBoard(ctx.world)
-              ? "nightmare_wolf_chat_action_invalid"
-              : isMagicianBoard(ctx.world) || isRedMoonBoard(ctx.world)
-                ? isMagicianBoard(ctx.world)
-                  ? "magician_wolf_chat_action_invalid"
-                  : "red_moon_wolf_chat_action_invalid"
-                : "evil_knight_wolf_chat_action_invalid",
-          );
+          throw new Error(`${strictWolfFailurePrefix(ctx)}_wolf_chat_action_invalid`);
         }
         const result = ctx.toolGateway.validateAndSanitize(ctx.world, wolfId, action, {
           phase: req.phase,
@@ -119,21 +112,8 @@ const wolfDiscussionStage: NightStageHandler = {
         if (!actorCurrent() || !wolfChatParticipants(ctx.world, ctx.roleCatalog).includes(wolfId))
           continue;
         if (!result.ok || !result.sanitizedCall) {
-          if (
-            isEvilKnightBoard(ctx.world) ||
-            isNightmareBoard(ctx.world) ||
-            isMagicianBoard(ctx.world) ||
-            isRedMoonBoard(ctx.world)
-          )
-            throw new Error(
-              isNightmareBoard(ctx.world)
-                ? "nightmare_wolf_chat_action_invalid"
-                : isMagicianBoard(ctx.world) || isRedMoonBoard(ctx.world)
-                  ? isMagicianBoard(ctx.world)
-                    ? "magician_wolf_chat_action_invalid"
-                    : "red_moon_wolf_chat_action_invalid"
-                  : "evil_knight_wolf_chat_action_invalid",
-            );
+          if (strictWolfFailurePrefix(ctx))
+            throw new Error(`${strictWolfFailurePrefix(ctx)}_wolf_chat_action_invalid`);
           continue;
         }
         if (result.sanitizedCall.args.end_chat) {
@@ -229,21 +209,8 @@ const wolfKillVoteStage: NightStageHandler = {
         if (!ctx.isCurrent()) return;
         if (!actorCurrent()) break;
         if (action?.name !== "kill_vote") {
-          if (
-            isEvilKnightBoard(ctx.world) ||
-            isNightmareBoard(ctx.world) ||
-            isMagicianBoard(ctx.world) ||
-            isRedMoonBoard(ctx.world)
-          )
-            throw new Error(
-              isNightmareBoard(ctx.world)
-                ? "nightmare_wolf_action_missing"
-                : isMagicianBoard(ctx.world) || isRedMoonBoard(ctx.world)
-                  ? isMagicianBoard(ctx.world)
-                    ? "magician_wolf_action_missing"
-                    : "red_moon_wolf_action_missing"
-                  : "evil_knight_wolf_action_missing",
-            );
+          if (strictWolfFailurePrefix(ctx))
+            throw new Error(`${strictWolfFailurePrefix(ctx)}_wolf_action_missing`);
           retryReason = "no_valid_kill_vote_tool_call";
           if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {
             safeRecordLogicOp({
@@ -280,21 +247,8 @@ const wolfKillVoteStage: NightStageHandler = {
             snapshot.version !== undefined &&
             aliveLifeVersion(snapshot.life) === snapshot.version);
         if (!result.ok || !result.sanitizedCall || !targetCurrent) {
-          if (
-            isEvilKnightBoard(ctx.world) ||
-            isNightmareBoard(ctx.world) ||
-            isMagicianBoard(ctx.world) ||
-            isRedMoonBoard(ctx.world)
-          )
-            throw new Error(
-              isNightmareBoard(ctx.world)
-                ? "nightmare_wolf_action_invalid"
-                : isMagicianBoard(ctx.world) || isRedMoonBoard(ctx.world)
-                  ? isMagicianBoard(ctx.world)
-                    ? "magician_wolf_action_invalid"
-                    : "red_moon_wolf_action_invalid"
-                  : "evil_knight_wolf_action_invalid",
-            );
+          if (strictWolfFailurePrefix(ctx))
+            throw new Error(`${strictWolfFailurePrefix(ctx)}_wolf_action_invalid`);
           retryReason = "invalid_kill_vote_arguments";
           if (attempt <= WOLF_KILL_VOTE_MAX_RETRIES) {
             safeRecordLogicOp({
@@ -327,21 +281,8 @@ const wolfKillVoteStage: NightStageHandler = {
       if (!actorCurrent() || !wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId))
         continue;
       if (!voteResolved) {
-        if (
-          isEvilKnightBoard(ctx.world) ||
-          isNightmareBoard(ctx.world) ||
-          isMagicianBoard(ctx.world) ||
-          isRedMoonBoard(ctx.world)
-        )
-          throw new Error(
-            isNightmareBoard(ctx.world)
-              ? "nightmare_wolf_action_missing"
-              : isMagicianBoard(ctx.world) || isRedMoonBoard(ctx.world)
-                ? isMagicianBoard(ctx.world)
-                  ? "magician_wolf_action_missing"
-                  : "red_moon_wolf_action_missing"
-                : "evil_knight_wolf_action_missing",
-          );
+        if (strictWolfFailurePrefix(ctx))
+          throw new Error(`${strictWolfFailurePrefix(ctx)}_wolf_action_missing`);
         voteResolved = {
           abstain: true,
           targetId: null,
@@ -398,6 +339,13 @@ const wolfKillVoteStage: NightStageHandler = {
         ctx.state.wolfVotes[target.targetId] = (ctx.state.wolfVotes[target.targetId] ?? 0) + 1;
     const wolfTarget = ctx.pickMajorityTarget(ctx.state.wolfVotes);
     ctx.state.wolfTarget = wolfTarget;
+    if (isScholarMentorBoard(ctx.world)) {
+      const actor = ctx.world
+        .getAliveEntityIds()
+        .find((id) => scholarMentorKnifeEligible(ctx.world, ctx.currentDay(), id));
+      if (actor !== undefined)
+        recordScholarMentorNativeTarget(ctx.world, ctx.currentDay(), actor, "kill", wolfTarget);
+    }
     ctx.state.wolfTargetVoters = acceptedTargets
       .filter((target) => target.targetId === wolfTarget)
       .map((target) => target.actorId);

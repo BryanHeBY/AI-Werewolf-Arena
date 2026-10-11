@@ -1,3 +1,4 @@
+import { modifySkill, bonusAction } from "./native";
 import { lockTime } from "./native";
 import { swapNightSeats } from "./native";
 import { resetExileVote, swapTargets, swapExileTargets } from "./native";
@@ -60,6 +61,8 @@ import {
 
 /** Preserve protocol-independent priority and RNG order for strict Tape reproducibility. */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
+  { tool: "modify_skill", decide: modifySkill },
+  { tool: "bonus_action", decide: bonusAction },
   { tool: "reset_exile_vote", decide: resetExileVote },
   { tool: "swap_exile_targets", decide: swapExileTargets },
   { tool: "lock_time", decide: lockTime },

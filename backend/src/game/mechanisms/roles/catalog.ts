@@ -1,3 +1,4 @@
+import { SCHOLAR_ROLE_PROFILE, MENTOR_ROLE_PROFILE } from "./scholar_mentor/profile";
 import { TIME_CONSORT_ROLE_PROFILE } from "./time_wolf_consort/profile";
 import { WOLF_SORCERER_ROLE_PROFILE } from "./wolf_sorcerer/profile";
 import { TRICKSTER_ROLE_PROFILE } from "./trickster/profile";
@@ -50,6 +51,8 @@ import { DEBATER_ROLE_PROFILE } from "./debater/profile";
 import { CUPID_ROLE_PROFILE } from "./cupid/profile";
 
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
+  SCHOLAR_ROLE_PROFILE,
+  MENTOR_ROLE_PROFILE,
   TIME_CONSORT_ROLE_PROFILE,
   WOLF_SORCERER_ROLE_PROFILE,
   TRICKSTER_ROLE_PROFILE,

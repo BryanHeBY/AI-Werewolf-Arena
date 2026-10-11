@@ -1,3 +1,8 @@
+import {
+  isScholarMentorBoard,
+  scholarMentorBlocks,
+  recordScholarMentorNativeTarget,
+} from "../scholar_mentor/night_frame";
 import { isTimeConsortBoard, resolveTimeConsortTarget } from "../time_wolf_consort/night_frame";
 import { commitTimeConsortEffect } from "../time_wolf_consort/effects";
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
@@ -141,20 +146,48 @@ async function executePotionTurn(
   const attribution = ability.source.kind === "native" ? {} : { abilityId: ability.id };
   const req = ctx.makeRequest(witchId, ["use_potion"], {
     stage: "witch",
+    ...(isScholarMentorBoard(ctx.world)
+      ? {
+          modifier_poison_blocked: scholarMentorBlocks(
+            ctx.world,
+            ctx.currentDay(),
+            witchId,
+            "poison",
+          ),
+        }
+      : {}),
     ability_id: ability.id,
-    ...(witchKnifeVisible(ability) ? { wolf_target: ctx.state.wolfTarget } : {}),
+    ...(witchKnifeVisible(ability)
+      ? {
+          wolf_target: ctx.state.wolfTarget,
+          ...(isScholarMentorBoard(ctx.world)
+            ? {
+                wolf_targets: [
+                  ...new Set(
+                    [ctx.state.wolfTarget, ...(ctx.state.modifierKnifeTargets ?? [])].filter(
+                      (id): id is number => id !== null,
+                    ),
+                  ),
+                ],
+              }
+            : {}),
+        }
+      : {}),
   });
   if (!scope.isEligible()) {
+    if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_scope_stale");
     if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_scope_stale");
     return false;
   }
   const action = await ctx.actionProvider.getAction(req);
   if (!ctx.isCurrent()) return false;
   if (!scope.isEligible()) {
+    if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_scope_stale");
     if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_scope_stale");
     return false;
   }
   if (action?.name !== "use_potion") {
+    if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_action_missing");
     if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_action_missing");
     if (isMagicianBoard(ctx.world)) throw new Error("magician_witch_action_missing");
     if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
@@ -184,10 +217,12 @@ async function executePotionTurn(
   });
   if (!ctx.isCurrent()) return false;
   if (!scope.isEligible()) {
+    if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_scope_stale");
     if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_scope_stale");
     return false;
   }
   if (!result.ok || !result.sanitizedCall) {
+    if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_action_invalid");
     if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_action_invalid");
     if (isMagicianBoard(ctx.world)) throw new Error("magician_witch_action_invalid");
     if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
@@ -300,5 +335,13 @@ async function executePotionTurn(
     });
   }
   if (potion === PotionType.None) recordNightAbilityUse(ability, day, false);
+  if (isScholarMentorBoard(ctx.world))
+    recordScholarMentorNativeTarget(
+      ctx.world,
+      day,
+      witchId,
+      "poison",
+      potion === PotionType.Poison ? targetId : null,
+    );
   return potion !== PotionType.None;
 }

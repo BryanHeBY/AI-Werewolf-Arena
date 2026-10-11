@@ -1,3 +1,4 @@
+import { scholarMentorBlocks } from "../scholar_mentor/night_frame";
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { nativePotionsCanCombine } from "./policies";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
@@ -69,6 +70,8 @@ export const WITCH_VALIDATION_RULES: ToolRuleMap = {
       return null;
     }
     if (toolCall.args.potion_type === PotionType.Poison) {
+      if (scholarMentorBlocks(world, day ?? 1, actorId, "poison"))
+        return { code: RuleError.ModifierUnavailable };
       if (witchState.poison <= 0 || witchState.poisonUsedThisNight) {
         return { code: RuleError.PoisonUnavailable };
       }

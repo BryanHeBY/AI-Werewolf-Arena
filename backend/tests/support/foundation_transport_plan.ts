@@ -42,6 +42,7 @@ export interface ActorTransportPlan {
   expectedPersona?: string | null;
   forbiddenPersonas?: string[];
   expectedIdentityMarker?: string;
+  requiredSystemMarkers?: string[];
   expectedTeammateIds?: number[];
   requiredCurrentMarkers?: string[];
   forbiddenCurrentMarkers?: string[];

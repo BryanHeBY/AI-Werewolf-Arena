@@ -38,6 +38,7 @@ export interface TransportGameScenario {
     locale: "zh-CN" | "en",
   ) => Pick<
     ActorTransportPlan,
+    | "requiredSystemMarkers"
     | "expectedIdentityMarker"
     | "expectedTeammateIds"
     | "requiredCurrentMarkers"

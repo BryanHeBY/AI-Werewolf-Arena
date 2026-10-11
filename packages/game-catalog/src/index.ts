@@ -393,17 +393,17 @@ export const ROLE_DEFINITIONS = [
   {
     id: "day_scholar",
     names: { "zh-CN": "白昼学者", en: "Day Scholar" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-scholar-mentor-twelve-v1.md",
     mechanismSummary: "技能增幅/削弱",
   },
   {
     id: "night_mentor",
     names: { "zh-CN": "寂夜导师", en: "Night Mentor" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-scholar-mentor-twelve-v1.md",
     mechanismSummary: "技能增幅/削弱",
   },
   {

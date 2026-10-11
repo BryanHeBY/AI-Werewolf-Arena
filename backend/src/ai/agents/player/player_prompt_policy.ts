@@ -1,3 +1,5 @@
+import { readModifierState } from "../../../game/mechanisms/roles/scholar_mentor/state";
+import { scholarMentorStateForRole } from "../../../game/mechanisms/roles/scholar_mentor/night_frame";
 import { projectTimeConsortState } from "../../../game/mechanisms/roles/time_wolf_consort/state";
 import { projectWolfSorcererState } from "../../../game/mechanisms/roles/wolf_sorcerer/state";
 import { projectTricksterState } from "../../../game/mechanisms/roles/trickster/state";
@@ -199,6 +201,8 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    const modifier = readModifierState(scholarMentorStateForRole(role));
+    if (modifier) ownState.scholarMentor = modifier;
     const timeConsort = projectTimeConsortState(role, request.context.day);
     if (timeConsort) ownState.timeConsort = timeConsort;
     const wolfSorcerer = projectWolfSorcererState(role);
@@ -472,6 +476,9 @@ export class PlayerPromptPolicy {
       stageContextHint:
         [
           this.stageContextHint(request),
+          request.context.modifier_poison_blocked === true
+            ? text(this.locale, "prompt.stage.modifier_poison_blocked")
+            : undefined,
           request.context.retry_notice !== undefined
             ? request.context.retry_notice
             : request.context.retry_notice_message
@@ -481,6 +488,8 @@ export class PlayerPromptPolicy {
           .filter(Boolean)
           .join(" ") || undefined,
       actionableIdsHint: this.options.targetHintRegistry.buildActionableIdsHint({
+        modifierCandidates: request.context.modifier_candidates,
+        modifierBonusCandidates: request.context.modifier_bonus_candidates,
         actorId: request.actorId,
         day: request.context.day,
         actorRole: targetRuleRole,
@@ -711,6 +720,14 @@ export class PlayerPromptPolicy {
         .filter(Boolean)
         .join(" ");
     }
+    if (stage === "scholar_mentor_choice")
+      return text(this.locale, "prompt.stage.modifier_choice", {
+        modes: (request.context.modifier_modes ?? []).join(", "),
+      });
+    if (stage === "scholar_mentor_bonus")
+      return text(this.locale, "prompt.stage.modifier_bonus", {
+        kind: request.context.modifier_bonus_kind ?? "",
+      });
     if (stage !== "witch") {
       const onlySelfDestruct =
         Object.values(ActionWindow).includes(stage as ActionWindow) &&
@@ -728,6 +745,12 @@ export class PlayerPromptPolicy {
           })
         : undefined;
     }
+    if (request.context.wolf_targets !== undefined)
+      return request.context.wolf_targets.length
+        ? text(this.locale, "prompt.stage.wolf_targets", {
+            targets: request.context.wolf_targets.join(", "),
+          })
+        : text(this.locale, "prompt.stage.no_wolf_target");
     if (typeof request.context.wolf_target === "number") {
       return text(this.locale, "prompt.stage.wolf_target", { target: request.context.wolf_target });
     }

@@ -1,5 +1,7 @@
 /** Stable rule failures; human messages belong to game-text. */
 export enum RuleError {
+  ModifierUnavailable = "modifier_unavailable",
+  ModifierTarget = "modifier_target",
   TimeConsortUnavailable = "time_consort_unavailable",
   TimeConsortTarget = "time_consort_target",
   WolfSorcererUnavailable = "wolf_sorcerer_unavailable",

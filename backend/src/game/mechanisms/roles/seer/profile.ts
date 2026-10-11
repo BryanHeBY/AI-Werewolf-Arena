@@ -1,3 +1,4 @@
+import { scholarMentorBlocks } from "../scholar_mentor/night_frame";
 import { z } from "zod";
 import {
   SEER_TARGET_POLICIES,
@@ -81,6 +82,8 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
       if (!ability) return { code: RuleError.SeerOnly };
       if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
       if (toolCall.name !== "check_identity") return { code: RuleError.ToolMismatch };
+      if (scholarMentorBlocks(world, day ?? 1, actorId, "check"))
+        return { code: RuleError.ModifierUnavailable };
       if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.CheckTarget };
       if (!seerTargetAllowed(ability.state, actorId, toolCall.args.target_id))
         return { code: RuleError.SeerTargetPolicy };

@@ -10,6 +10,12 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  modify_skill: { mode: "enhance" | "weaken" | null; target_id: EntityId | null };
+  bonus_action: {
+    kind: "check" | "guard" | "poison" | "kill";
+    target_id: EntityId | null;
+    abstain: boolean;
+  };
   lock_time: { target_id: EntityId | null; abstain: boolean };
   swap_night_seats: { first_id: EntityId | null; second_id: EntityId | null; abstain: boolean };
   swap_exile_targets: { first_id: EntityId | null; second_id: EntityId | null; abstain: boolean };
@@ -70,6 +76,8 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "modify_skill",
+  "bonus_action",
   "lock_time",
   "swap_night_seats",
   "swap_exile_targets",
@@ -152,6 +160,8 @@ export interface TurnConstraints {
 }
 
 export const ACTION_STAGES = [
+  "scholar_mentor_choice",
+  "scholar_mentor_bonus",
   "time_consort_lock",
   "wolf_sorcerer_exchange",
   "trickster_exchange",
@@ -221,6 +231,12 @@ export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */
 export interface ActionRequestExtras {
+  modifier_poison_blocked?: boolean;
+  modifier_modes?: readonly ("enhance" | "weaken")[];
+  modifier_candidates?: readonly EntityId[];
+  modifier_bonus_kind?: "check" | "guard" | "poison" | "kill";
+  modifier_bonus_candidates?: readonly EntityId[];
+  wolf_targets?: readonly EntityId[];
   consort_candidates?: readonly EntityId[];
   sorcerer_candidates?: readonly EntityId[];
   trickster_candidates?: readonly EntityId[];

@@ -1,4 +1,10 @@
 import {
+  readModifierChoiceFact,
+  readModifierSkipFact,
+  readModifierConflictFact,
+  readModifierBonusFact,
+} from "@ai-werewolf-arena/game-text";
+import {
   readTimeConsortChoiceFact,
   readTimeConsortSkipFact,
   readTimeConsortReflectionFact,
@@ -208,6 +214,10 @@ const NO_IDS = new Set([
   "god_private_game_info",
 ]);
 export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([
+  "modifier_choice_committed",
+  "modifier_choice_skipped",
+  "modifier_conflict_resolved",
+  "modifier_bonus_resolved",
   "time_consort_lock_committed",
   "time_consort_lock_skipped",
   "time_consort_reflected",
@@ -266,6 +276,10 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if (type === "modifier_choice_committed") return !!readModifierChoiceFact(type, p);
+  if (type === "modifier_choice_skipped") return !!readModifierSkipFact(type, p);
+  if (type === "modifier_conflict_resolved") return !!readModifierConflictFact(type, p);
+  if (type === "modifier_bonus_resolved") return !!readModifierBonusFact(type, p);
   if (type === "time_consort_lock_committed") return !!readTimeConsortChoiceFact(type, p);
   if (type === "time_consort_lock_skipped") return !!readTimeConsortSkipFact(type, p);
   if (type === "time_consort_reflected") return !!readTimeConsortReflectionFact(type, p);
@@ -469,6 +483,20 @@ export function readReplayEvent(
     };
     if (!KNOWN.has(safe.type)) return { event: safe, relatedPlayerIds: [], effects: [] };
     if (!validKnownFields(safe.type, p)) return null;
+    if (
+      [
+        "modifier_choice_committed",
+        "modifier_choice_skipped",
+        "modifier_conflict_resolved",
+        "modifier_bonus_resolved",
+      ].includes(safe.type)
+    ) {
+      if (safe.phase !== "night" || p.day !== safe.day) return null;
+      if (safe.type !== "modifier_conflict_resolved") add(p.actorId);
+      if (safe.type === "modifier_choice_committed" || safe.type === "modifier_bonus_resolved")
+        add(p.targetId, true);
+      if (safe.type === "modifier_conflict_resolved") add(p.targetId);
+    }
     if (safe.type === "magician_exchange_committed") {
       if (p.day !== safe.day || safe.phase !== "night") return null;
       if (Object.hasOwn(p, "actorId")) add(p.actorId);

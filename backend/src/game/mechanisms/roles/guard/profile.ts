@@ -1,3 +1,4 @@
+import { scholarMentorBlocks } from "../scholar_mentor/night_frame";
 import { z } from "zod";
 import { GUARD_REPEAT_POLICIES } from "../../../../core/domain/board";
 import { guardTargetRepeated } from "./repeat_policy";
@@ -55,6 +56,8 @@ export const GUARD_ROLE_PROFILE: RoleProfile = {
       if (!ability) return { code: RuleError.GuardOnly };
       if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
       if (toolCall.name !== "guard") return { code: RuleError.ToolMismatch };
+      if (scholarMentorBlocks(world, day ?? 1, actorId, "guard"))
+        return { code: RuleError.ModifierUnavailable };
       if (toolCall.args.abstain) return null;
       if (toolCall.args.target_id === null) return { code: RuleError.GuardTarget };
       if (guardTargetRepeated(ability, day ?? 1, toolCall.args.target_id))

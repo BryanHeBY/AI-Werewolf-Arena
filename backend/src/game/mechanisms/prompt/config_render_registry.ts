@@ -24,6 +24,7 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
     const healRule = config.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled;
     return [
       text(locale, "prompt.config.title"),
+      ...(config.scholarMentor ? [text(locale, "prompt.config.scholar_mentor")] : []),
       text(locale, "prompt.config.win", { rules: winConditions }),
       text(locale, "prompt.config.sheriff", {
         rules: sheriffEnabled

@@ -82,6 +82,21 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
   };
 
   buildActionableIdsHint(ctx: TargetHintContext): string | undefined {
+    if (ctx.allowedTools.includes("modify_skill") || ctx.allowedTools.includes("bonus_action")) {
+      const candidates = ctx.allowedTools.includes("modify_skill")
+        ? ctx.modifierCandidates
+        : ctx.modifierBonusCandidates;
+      if (candidates === undefined) throw new Error("scholar_mentor_candidates_missing");
+      const alive = new Set(ctx.world.getAliveEntityIds()),
+        ids = [...new Set(candidates)].filter((id) => alive.has(id)).sort((a, b) => a - b);
+      return ids.length
+        ? text(
+            ctx.world.locale,
+            ids.includes(ctx.actorId) ? "prompt.targets.self" : "prompt.targets.others",
+            { ids: ids.join(", ") },
+          )
+        : text(ctx.world.locale, "prompt.targets.none");
+    }
     if (ctx.allowedTools.includes("challenge") && ctx.debateTargetId !== undefined)
       return text(ctx.world.locale, "prompt.targets.debate", { target: ctx.debateTargetId });
     if (ctx.allowedTools.includes("choose_lovers"))

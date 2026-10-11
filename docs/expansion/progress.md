@@ -568,3 +568,9 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 ## 2026-10-11 蚀时狼妃有限永序之轮板
 
 公开 awa_time_consort_12_v1，whole_night 与 first_effect 两种显式 AWA 反弹范围。功能与分层证据见 [蚀时狼妃验收](reviews/p9-time-consort.md)。目录 23 verified、19 implemented、22 planned，42/64。P9c 其余角色、P9d–P9f、P10 与用户总体验收仍开放。
+
+## 2026-10-11 白昼学者／寂夜导师有限十二人板
+
+效果矩阵、冲突先后、导师刀权、独立额外行动及原生库存、严格失败前缀与双语完整闭环通过。三组独立审查修正复验及同源门禁见[学者导师验收](reviews/p9-scholar-mentor.md)。后端有效覆盖 5025 项／360 文件，首次分片有 1 fail、唯一失败整文件串行 32 项复跑通过；时序、前端 498 项、Chromium 232 项均零失败，静态检查及双端构建通过，1357 输入指纹前后一致。
+
+当前 23 verified、21 implemented、20 planned，44/64。P9c 角色数量已齐，公共提示／配置与独立录制账本的已知补充继续处理；P9d–P9f、P10、T6 授权范围及用户总体验收仍开放。仅 main 本地提交，不推送。

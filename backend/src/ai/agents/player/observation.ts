@@ -36,6 +36,7 @@ export interface PlayerObservation {
   deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];
   ownState: {
+    scholarMentor?: import("../../../game/mechanisms/roles/scholar_mentor/state").ModifierState;
     timeConsort?: NonNullable<
       ReturnType<
         typeof import("../../../game/mechanisms/roles/time_wolf_consort/state").projectTimeConsortState

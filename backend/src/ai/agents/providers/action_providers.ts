@@ -1,3 +1,4 @@
+import { scholarMentorBonusTargets } from "../../../game/mechanisms/roles/scholar_mentor/night_frame";
 import { prohibitsLoversVote } from "../../../game/mechanisms/roles/cupid/relation";
 import { text } from "@ai-werewolf-arena/game-text";
 import { COMPONENT } from "../../../core/domain/components/names";
@@ -203,6 +204,13 @@ export class BaselineBotActionProvider implements ActionProvider {
               : bound?.kind === "dream"
                 ? Role.Dreamer
                 : role.role;
+    if (request.allowedTools.includes("bonus_action") && request.context.modifier_bonus_kind) {
+      const kind = request.context.modifier_bonus_kind,
+        target =
+          scholarMentorBonusTargets(this.world, request.context.day, request.actorId, kind)[0] ??
+          null;
+      return { name: "bonus_action", args: { kind, target_id: target, abstain: target === null } };
+    }
     const roleProfile = this.roleCatalog.get(abilityRole);
     if (roleProfile?.baselineAction) {
       const action = roleProfile.baselineAction(

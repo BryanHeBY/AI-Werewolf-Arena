@@ -1,3 +1,4 @@
+import { scholarMentorPackBlocked } from "./scholar_mentor/night_frame";
 import { nightmareKnifeBlocked } from "./nightmare_shadow/night_frame";
 import { weddingMember, ghostBrideReady, weddingSetup } from "./ghost_bride/authority";
 import { initialIdentitySetupReady } from "./initial_identity/deal";
@@ -33,7 +34,9 @@ export function wolfTeamPermissions(
   const permissions = catalog.get(role.role)?.wolfTeam;
   const result =
     typeof permissions === "function" ? permissions(role, world) : (permissions ?? NO_ACCESS);
-  return world && nightmareKnifeBlocked(world) ? { ...result, canVoteForKill: false } : result;
+  return world && (nightmareKnifeBlocked(world) || scholarMentorPackBlocked(world))
+    ? { ...result, canVoteForKill: false }
+    : result;
 }
 
 export function knownWolfTeammates(

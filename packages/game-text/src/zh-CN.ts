@@ -482,6 +482,55 @@ export const zhCN = Object.freeze({
   "replay.stage.time_consort_lock_committed": "封锁选择",
   "replay.stage.time_consort_lock_skipped": "跳过封锁",
   "replay.stage.time_consort_reflected": "封锁反弹",
+  "prompt.config.scholar_mentor":
+    "学者／导师规则：先判定免疫再判定冲突；两名施法者均免疫，村民没有可增减的技能。对免疫者、村民或发生冲突的合法施法仍消耗次数，明确空过不消耗。同一好人被两次有效施法会在黎明死亡，两效果取消但原生行动照常；两次有效施法均落在普通狼人时两效果取消、导师黎明死亡。增强预言家增加一次查验，增强守卫增加一次守护，增强女巫增加一瓶独立额外毒药（不补解药或原药库存），增强普通狼人由该狼人独自追加一刀。额外行动仅当夜有效，不能重复对应原生行动的目标；额外守护不受原生上一目标限制，也不改写该历史。削弱预言家或守卫会封锁其本夜原生技能；削弱女巫只禁毒药，保留解药；削弱任一普通狼人封锁全队本夜狼刀。女巫有解药时可见全部实际刀口，但仍只可用一瓶解药。双方不知道对方的选择；导师仅在夜初成为唯一存活狼人时继承刀权。",
+  "role.day_scholar.brief":
+    "白昼学者属于好人阵营。从第二夜起，每夜可增强或削弱一名存活玩家，整局增强、削弱各一次，也可空过。你不知道另一位施法者的选择；同一好人被两次施法会在天亮死亡，原生夜间行动仍完成。",
+  "role.night_mentor.brief":
+    "寂夜导师属于狼人阵营，其他狼人认识你，但你不认识狼队、不参与狼聊且不能自爆。仅当夜初只剩你一名狼人时获得刀权。从第二夜起，增强、削弱各可使用一次；两次施法都落在普通狼人时，两种效果取消，你在天亮死亡。",
+  "action.modify_skill.hint":
+    "mode 为 enhance、weaken 或 null；空过时 mode 和 target_id 都为 null。每种模式整局仅一次。",
+  "action.modify_skill.directive":
+    "现在选择本夜的增强、削弱或空过。只能选择请求列出的模式和存活目标。",
+  "action.bonus_action.hint":
+    "kind 必须与请求一致；额外行动不能重复本夜对应原生行动的目标。空过时 abstain=true、target_id=null。",
+  "action.bonus_action.directive":
+    "你获得一次仅本夜有效的额外行动。它独立于原生次数和药剂，不会恢复永久资源。选择候选目标或明确空过。",
+  "error.modifier_unavailable": "当前不能使用此增减益或额外行动。",
+  "error.modifier_target": "增减益模式、资源或目标不合法。",
+  "prompt.stage.modifier_choice":
+    "剩余可用模式：{modes}。只能选择一个模式与一个合法目标；空过时两项均为 null。",
+  "prompt.stage.modifier_bonus":
+    "本次额外行动类型为 {kind}。只能使用给出的候选；不能重复本夜对应原生行动的目标。",
+  "prompt.stage.wolf_targets": "今晚实际狼刀目标：{targets}。解药至多救一人。",
+  "stage.scholar_mentor_choice": "学者／导师施法",
+  "stage.scholar_mentor_bonus": "强化额外行动",
+  "replay.stage.scholar_mentor_choice": "学者／导师施法",
+  "replay.stage.scholar_mentor_bonus": "强化额外行动",
+  "replay.stage.modifier_choice_committed": "强化／削弱选择",
+  "replay.stage.modifier_choice_skipped": "跳过施法",
+  "replay.stage.modifier_conflict_resolved": "双施法冲突",
+  "replay.stage.modifier_bonus_resolved": "额外行动结果",
+  "prompt.stage.modifier_poison_blocked":
+    "你本夜的原生毒药被削弱，不能使用毒药；解药仍按原规则使用，也可明确不用药。",
+  "modifier.pass": "空过",
+  "modifier.enhance": "强化",
+  "modifier.weaken": "削弱",
+  "modifier.first_night": "首夜不能施法",
+  "modifier.dead": "已死亡",
+  "modifier.exhausted": "次数耗尽",
+  "modifier.same_good": "同一好人承受双施法",
+  "modifier.both_wolves": "双方均对狼人施法",
+  "modifier.check": "额外查验",
+  "modifier.guard": "额外守护",
+  "modifier.poison": "额外毒药",
+  "modifier.kill": "额外狼刀",
+  "modifier.result_wolf": "；查验结果：狼人阵营",
+  "modifier.result_good": "；查验结果：好人阵营",
+  "event.modifier_choice": "第 {day} 夜，{actor} 号选择{mode}，目标：{target}。",
+  "event.modifier_skip": "第 {day} 夜，{actor} 号跳过施法：{reason}。",
+  "event.modifier_conflict": "第 {day} 夜发生冲突：{kind}；{target} 号将在黎明结算死亡。",
+  "event.modifier_bonus": "第 {day} 夜，{actor} 号的{skill}目标：{target}",
   "role.wolf_sorcerer.brief":
     "狼人座位映射者。魔术师之后、狼队行动之前，明确选择两个不同的未用存活编号或空过。每个号码自己整局只能使用一次。你的换位交换魔术师换位之后的座位占用者；重叠配对形成有序循环，相同配对抵消效果但不退还双方资源。身份、公开座位、白天票面不变。首次合法行动开始前不获知队友，也不参加狼队行动。",
   "role.wolf_sorcerer.first_night": "你的首次交换夜为第{day}夜。",

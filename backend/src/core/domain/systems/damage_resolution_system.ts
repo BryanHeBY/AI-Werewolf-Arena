@@ -19,6 +19,7 @@ import {
 } from "../night_effects";
 
 export interface NightDamageEffects {
+  modifierDeaths?: readonly import("../night_effects").NightLifeScope[];
   nightImmunities?: readonly NightImmunityClaim[];
   retaliationAttacks?: readonly NightRetaliationAttack[];
   inspectionAttacks?: readonly NightInspectionAttack[];
@@ -209,6 +210,12 @@ export class DamageResolutionSystem {
         sources.push(DeathCause.MerchantBacklash);
       if (effects.consecutiveDeaths?.includes(entityId)) sources.push(DeathCause.Dream);
 
+      if (
+        effects.modifierDeaths?.some(
+          (target) => target.id === entityId && livingNightLife(world, target),
+        )
+      )
+        sources.push(DeathCause.Ability);
       if (sources.length > 0) {
         deaths.push(entityId);
         deathSources[entityId] = sources;

@@ -1,8 +1,4 @@
-import { isNightmarePreset } from "@ai-werewolf-arena/game-text";
-import { isEvilKnightPreset } from "@ai-werewolf-arena/game-text";
-import { isDemonHunterPreset } from "../../game/mechanisms/roles/demon_hunter/preset";
-import { isPureWhitePreset } from "@ai-werewolf-arena/game-text";
-import { isGhostBridePreset } from "@ai-werewolf-arena/game-text";
+import { boardPresetViolation } from "../../game/mechanisms/roles/board_presets";
 /** The single public board format. Unknown fields and unregistered roles fail closed. */
 import { supportsWallRoles } from "../../game/mechanisms/events/wall_notes/authority";
 import { z } from "zod";
@@ -277,20 +273,8 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
       config = contribution.apply(config, defaults);
     }
   }
-  if (seen.has("nightmare") && !isNightmarePreset(config))
-    fail("board_config_nightmare_preset_invalid", "board");
-  if (seen.has("evil_knight") && !isEvilKnightPreset(config))
-    fail("board_config_evil_knight_preset_invalid", "board");
-  if ((seen.has("pure_white_girl") || seen.has("wolf_witch")) && !isPureWhitePreset(config))
-    fail("board_config_pure_white_preset_invalid", "board");
-  if (seen.has("demon_hunter") && !isDemonHunterPreset(config))
-    fail("board_config_demon_hunter_preset_invalid", "board");
-  if (
-    (seen.has("ghost_bride") ||
-      definition.rules.winConditions.includes(WinCondition.ThreeFactionsElimination)) &&
-    !isGhostBridePreset(config)
-  )
-    fail("board_config_ghost_bride_preset_invalid", "board");
+  const presetViolation = boardPresetViolation(config);
+  if (presetViolation) fail(`board_config_${presetViolation}`, "board");
   const fieldSources: Record<string, "explicit" | "default"> = {};
   const recordSources = (value: unknown, original: unknown, prefix: string) => {
     if (value && typeof value === "object" && !Array.isArray(value)) {
