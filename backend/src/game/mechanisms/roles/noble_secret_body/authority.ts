@@ -1,0 +1,598 @@
+import { types } from "node:util";
+import { COMPONENT } from "../../../../core/domain/components/names";
+import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { World } from "../../../../core/domain/world";
+import { Camp, Role } from "../../../../core/domain/identity";
+import {
+  aliveLifeDescriptor,
+  aliveLifeVersion,
+  type AliveComponent,
+} from "../../../../core/domain/components/alive";
+import {
+  readNobleState,
+  readSecretBodyState,
+  chooseServant,
+  chooseBodyTarget,
+  endServant,
+  spendBodyForNight,
+  revealBodyByExile,
+  type NobleState,
+  type SecretBodyState,
+} from "./state";
+import { planSecretBodyBlock, copySecretBodySources, type SecretBodySources } from "./damage";
+const invalid = Symbol("invalid_noble_body_owner");
+function own(value: unknown, key: PropertyKey): unknown {
+  if (!value || typeof value !== "object" || types.isProxy(value)) return invalid;
+  const field = Object.getOwnPropertyDescriptor(value, key);
+  return field && "value" in field ? field.value : field ? invalid : undefined;
+}
+const identityKeys = ["id", "seat", "name", "sessionId"] as const;
+interface OriginalPlayer {
+  readonly id: number;
+  readonly role: RoleComponent;
+  readonly kind: unknown;
+  readonly camp: unknown;
+  readonly privateState: Record<string, unknown>;
+  readonly identity: unknown;
+  readonly identityValues: readonly unknown[];
+  readonly campComponent: unknown;
+  readonly victory: unknown;
+  readonly victoryValues: string;
+  readonly life: AliveComponent;
+  readonly version: number;
+}
+function factoryLife(life: AliveComponent): boolean {
+  if (types.isProxy(life)) return false;
+  const original = aliveLifeDescriptor(life),
+    current = Object.getOwnPropertyDescriptor(life, "alive");
+  return (
+    !!original &&
+    !!current &&
+    original.get === current.get &&
+    original.set === current.set &&
+    original.enumerable === current.enumerable &&
+    original.configurable === current.configurable
+  );
+}
+function victoryJson(value: unknown): string | null {
+  const affiliations = own(value, "affiliations");
+  if (types.isProxy(affiliations) || !Array.isArray(affiliations)) return null;
+  const fields: Record<string, PropertyDescriptor> = Object.getOwnPropertyDescriptors(
+      affiliations as object,
+    ),
+    length: unknown = fields.length?.value;
+  if (
+    typeof length !== "number" ||
+    !Number.isSafeInteger(length) ||
+    length < 0 ||
+    Reflect.ownKeys(fields).length !== length + 1
+  )
+    return null;
+  const entries: unknown[] = [];
+  for (let i = 0; i < length; i++) {
+    const field = fields[String(i)];
+    if (!field || !("value" in field)) return null;
+    const raw = field.value;
+    if (!raw || typeof raw !== "object" || types.isProxy(raw) || Array.isArray(raw)) return null;
+    const row = Object.getOwnPropertyDescriptors(raw),
+      data: Record<string, unknown> = {};
+    for (const key of Reflect.ownKeys(row)) {
+      if (
+        typeof key !== "string" ||
+        !("value" in row[key]!) ||
+        !["string", "number"].includes(typeof row[key]!.value)
+      )
+        return null;
+      data[key] = row[key]!.value;
+    }
+    entries.push(data);
+  }
+  return JSON.stringify(entries);
+}
+function capture(world: World, id: number): OriginalPlayer {
+  const role = world.getComponent<RoleComponent>(id, COMPONENT.Role),
+    life = world.getComponent<AliveComponent>(id, COMPONENT.Alive),
+    identity = world.getComponent(id, COMPONENT.Identity),
+    victory = world.getComponent(id, COMPONENT.Victory);
+  const privateState = own(role, "privateState"),
+    kind = own(role, "role"),
+    camp = own(role, "camp"),
+    campComponent = world.getComponent(id, COMPONENT.Camp),
+    identityValues = identityKeys.map((k) => own(identity, k)),
+    victoryValues = victoryJson(victory);
+  const [identityId, seat, name, sessionId] = identityValues;
+  if (
+    !role ||
+    !Object.values(Role).includes(kind as Role) ||
+    ![Camp.Good, Camp.Wolf].includes(camp as Camp) ||
+    own(campComponent, "camp") !== camp ||
+    identityId !== id ||
+    !Number.isSafeInteger(seat) ||
+    (seat as number) < 1 ||
+    typeof name !== "string" ||
+    !name.trim() ||
+    typeof sessionId !== "string" ||
+    !sessionId.trim() ||
+    !life ||
+    !factoryLife(life) ||
+    !life.alive ||
+    aliveLifeVersion(life) === undefined ||
+    !privateState ||
+    typeof privateState !== "object" ||
+    types.isProxy(privateState) ||
+    Array.isArray(privateState) ||
+    victoryValues === null ||
+    victoryValues !== JSON.stringify([{ kind: "faction", faction: camp }])
+  )
+    throw Error("noble_body_initial_binding_invalid");
+  return {
+    id,
+    role,
+    kind,
+    camp,
+    privateState: privateState as Record<string, unknown>,
+    identity,
+    identityValues,
+    campComponent,
+    victory,
+    victoryValues,
+    life,
+    version: aliveLifeVersion(life)!,
+  };
+}
+function playerCurrent(world: World, p: OriginalPlayer, living = false): boolean {
+  if (
+    world.getComponent(p.id, COMPONENT.Role) !== p.role ||
+    own(p.role, "role") !== p.kind ||
+    own(p.role, "camp") !== p.camp ||
+    own(p.role, "privateState") !== p.privateState ||
+    world.getComponent(p.id, COMPONENT.Identity) !== p.identity ||
+    identityKeys.some((k, i) => own(p.identity, k) !== p.identityValues[i]) ||
+    world.getComponent(p.id, COMPONENT.Camp) !== p.campComponent ||
+    own(p.campComponent, "camp") !== p.camp ||
+    world.getComponent(p.id, COMPONENT.Victory) !== p.victory ||
+    victoryJson(p.victory) !== p.victoryValues ||
+    world.getComponent(p.id, COMPONENT.Alive) !== p.life ||
+    !factoryLife(p.life)
+  )
+    return false;
+  const version = aliveLifeVersion(p.life);
+  return p.life.alive ? version === p.version : !living && version === p.version + 1;
+}
+interface ContractBinding {
+  readonly target: OriginalPlayer;
+  readonly createdNight: number;
+  readonly expiresNight: number;
+  readonly id: string;
+}
+interface ChoiceLease {
+  opened: boolean;
+  committed: boolean;
+}
+interface Night {
+  readonly day: number;
+  readonly isCurrent: () => boolean;
+  status: "open" | "normal" | "aborted";
+  readonly body: ChoiceLease;
+  readonly noble: ChoiceLease;
+  readonly requiresBody: boolean;
+  readonly requiresNoble: boolean;
+  bodyTarget: OriginalPlayer | null;
+  bodyResolved: boolean;
+  expiryProcessed: boolean;
+}
+interface Owner {
+  readonly world: World;
+  readonly players: ReadonlyMap<number, OriginalPlayer>;
+  readonly noble: OriginalPlayer;
+  readonly body: OriginalPlayer;
+  readonly nobleState: NobleState;
+  readonly bodyState: SecretBodyState;
+  nobleJson: string;
+  bodyJson: string;
+  readonly contracts: Map<string, ContractBinding>;
+  readonly nights: Map<number, Night>;
+  active: Night | null;
+  checkingController: boolean;
+}
+const owners = new WeakMap<World, Owner>();
+function canonicalState(owner: Owner): boolean {
+  return (
+    own(owner.noble.privateState, "noble") === owner.nobleState &&
+    own(owner.body.privateState, "secretBody") === owner.bodyState &&
+    JSON.stringify(readNobleState(owner.nobleState)) === owner.nobleJson &&
+    JSON.stringify(readSecretBodyState(owner.bodyState)) === owner.bodyJson
+  );
+}
+function requireOwner(world: World): Owner {
+  const owner = owners.get(world);
+  if (
+    !owner ||
+    owner.checkingController ||
+    world.entityIds().length !== owner.players.size ||
+    [...owner.players.values()].some((p) => !playerCurrent(world, p)) ||
+    !canonicalState(owner)
+  )
+    throw Error("noble_body_owner_revoked");
+  return owner;
+}
+function checkController(owner: Owner, isCurrent: () => boolean): boolean {
+  if (owner.checkingController) throw Error("noble_body_controller_reentry");
+  owner.checkingController = true;
+  try {
+    return isCurrent();
+  } finally {
+    owner.checkingController = false;
+  }
+}
+function requireNight(
+  world: World,
+  day: number,
+  allowNormal = false,
+): { owner: Owner; night: Night } {
+  const owner = requireOwner(world),
+    night = owner.nights.get(day);
+  if (
+    !night ||
+    (night.status !== "open" && !(allowNormal && night.status === "normal")) ||
+    !checkController(owner, night.isCurrent)
+  )
+    throw Error("noble_body_night_unavailable");
+  // The controller callback may synchronously cancel or change the owner.
+  requireOwner(world);
+  if (night.status !== "open" && !(allowNormal && night.status === "normal"))
+    throw Error("noble_body_night_unavailable");
+  return { owner, night };
+}
+function writeState<T extends NobleState | SecretBodyState>(current: T, next: T): void {
+  const keys = Reflect.ownKeys(current),
+    descriptors = Object.getOwnPropertyDescriptors(current);
+  if (
+    Object.getPrototypeOf(current) !== Object.prototype ||
+    keys.some(
+      (k) =>
+        typeof k !== "string" ||
+        !("value" in descriptors[k]!) ||
+        descriptors[k]!.writable !== true ||
+        descriptors[k]!.configurable !== true,
+    ) ||
+    keys.length !== Object.keys(next).length
+  )
+    throw Error("noble_body_state_write_revoked");
+  for (const key of keys as Array<keyof T>)
+    Object.defineProperty(current, key, { ...descriptors[key as string]!, value: next[key] });
+}
+function commitNoble(owner: Owner, next: NobleState): void {
+  writeState(owner.nobleState, next);
+  owner.nobleJson = JSON.stringify(next);
+}
+function commitBody(owner: Owner, next: SecretBodyState): void {
+  writeState(owner.bodyState, next);
+  owner.bodyJson = JSON.stringify(next);
+}
+/** Exact role/preset qualification is the bootstrap caller's responsibility. This captures
+ * original native state objects once; it never initializes or grants replacement resources. */
+export function installNobleBodyAuthority(world: World, nobleId: number, bodyId: number): void {
+  if (owners.has(world)) throw Error("noble_body_already_installed");
+  const players = new Map(world.entityIds().map((id) => [id, capture(world, id)])),
+    noble = players.get(nobleId),
+    body = players.get(bodyId);
+  const nobleState = noble && own(noble.privateState, "noble"),
+    bodyState = body && own(body.privateState, "secretBody"),
+    nobleData = readNobleState(nobleState),
+    bodyData = readSecretBodyState(bodyState);
+  if (
+    !noble ||
+    !body ||
+    noble === body ||
+    noble.camp !== Camp.Wolf ||
+    body.camp !== Camp.Good ||
+    !nobleData ||
+    nobleData.contracts.length ||
+    nobleData.lastChoice !== null ||
+    !bodyData ||
+    bodyData.body.kind !== "intact" ||
+    bodyData.lastChoice !== null
+  )
+    throw Error("noble_body_initial_state_invalid");
+  owners.set(world, {
+    world,
+    players,
+    noble,
+    body,
+    nobleState: nobleState as NobleState,
+    bodyState: bodyState as SecretBodyState,
+    nobleJson: JSON.stringify(nobleData),
+    bodyJson: JSON.stringify(bodyData),
+    contracts: new Map(),
+    nights: new Map(),
+    active: null,
+    checkingController: false,
+  });
+}
+function mayBegin(owner: Owner, day: number): boolean {
+  return (
+    !owner.active &&
+    !owner.nobleState.contracts.some((c) => c.status.kind === "pending" && c.expiresNight < day) &&
+    ![...owner.nights.keys()].some((previous) => previous >= day) &&
+    [...owner.nights.values()].every(
+      (n) => n.status !== "normal" || (n.bodyResolved && n.expiryProcessed),
+    )
+  );
+}
+export function beginNobleBodyNight(world: World, day: number, isCurrent: () => boolean): void {
+  const owner = requireOwner(world);
+  if (
+    !Number.isSafeInteger(day) ||
+    day < 1 ||
+    day >= Number.MAX_SAFE_INTEGER - 1 ||
+    !mayBegin(owner, day) ||
+    typeof isCurrent !== "function" ||
+    types.isProxy(isCurrent) ||
+    !checkController(owner, isCurrent)
+  )
+    throw Error("noble_body_night_unavailable");
+  requireOwner(world);
+  if (!mayBegin(owner, day)) throw Error("noble_body_night_unavailable");
+  const night: Night = {
+    day,
+    isCurrent,
+    status: "open",
+    body: { opened: false, committed: false },
+    noble: { opened: false, committed: false },
+    requiresBody: playerCurrent(world, owner.body, true) && owner.bodyState.body.kind === "intact",
+    requiresNoble:
+      day >= 2 &&
+      playerCurrent(world, owner.noble, true) &&
+      !owner.nobleState.contracts.some((c) => c.status.kind === "pending"),
+    bodyTarget: null,
+    bodyResolved: false,
+    expiryProcessed: false,
+  };
+  owner.nights.set(day, night);
+  owner.active = night;
+}
+function choiceLease(world: World, day: number, kind: "body" | "noble") {
+  const { owner, night } = requireNight(world, day),
+    actor = owner[kind],
+    lease = night[kind];
+  if (!playerCurrent(world, actor, true) || lease.opened || lease.committed)
+    throw Error("noble_body_choice_unavailable");
+  if (
+    kind === "noble" &&
+    (!night.requiresNoble ||
+      day < 2 ||
+      owner.nobleState.contracts.some((c) => c.status.kind === "pending"))
+  )
+    throw Error("night_noble_unavailable");
+  if (kind === "body" && (!night.requiresBody || owner.bodyState.body.kind !== "intact"))
+    throw Error("secret_body_unavailable");
+  lease.opened = true;
+  const eligible = () => {
+    try {
+      const current = requireNight(world, day);
+      return (
+        current.night === night &&
+        lease.opened &&
+        !lease.committed &&
+        playerCurrent(world, actor, true)
+      );
+    } catch {
+      return false;
+    }
+  };
+  return { owner, night, lease, eligible };
+}
+export function openServantChoice(world: World, day: number) {
+  const { owner, night, lease, eligible } = choiceLease(world, day, "noble");
+  return Object.freeze({
+    isCurrent: eligible,
+    commit(targetId: number | null) {
+      if (!eligible()) throw Error("night_noble_choice_revoked");
+      const next = chooseServant(
+        owner.nobleState,
+        day,
+        targetId,
+        owner.noble.id,
+        [...owner.players.values()].filter((p) => playerCurrent(world, p, true)).map((p) => p.id),
+      );
+      const target = targetId === null ? null : owner.players.get(targetId)!;
+      commitNoble(owner, next);
+      lease.committed = true;
+      if (target)
+        owner.contracts.set(
+          `servant:night:${day}`,
+          Object.freeze({
+            target,
+            createdNight: day,
+            expiresNight: day + 1,
+            id: `servant:night:${day}`,
+          }),
+        );
+      return Object.freeze({
+        actorId: owner.noble.id,
+        day,
+        targetId,
+        contractId: target ? `servant:night:${day}` : null,
+      });
+    },
+  });
+}
+export function openSecretBodyChoice(world: World, day: number) {
+  const { owner, night, lease, eligible } = choiceLease(world, day, "body");
+  return Object.freeze({
+    isCurrent: eligible,
+    commit(targetId: number | null) {
+      if (!eligible()) throw Error("secret_body_choice_revoked");
+      const next = chooseBodyTarget(
+        owner.bodyState,
+        day,
+        targetId,
+        [...owner.players.values()].filter((p) => playerCurrent(world, p, true)).map((p) => p.id),
+      );
+      commitBody(owner, next);
+      night.bodyTarget = targetId === null ? null : owner.players.get(targetId)!;
+      lease.committed = true;
+      return Object.freeze({ actorId: owner.body.id, day, targetId });
+    },
+  });
+}
+/** Hunt qualification remains owned by the delivered Demon action. This synchronous
+ * exception closes the original contract; it does not itself deal or cancel other damage. */
+export function clearServantFromHunt(
+  world: World,
+  day: number,
+  targetId: number,
+): Readonly<{ contractId: string; targetId: number }> | null {
+  const { owner } = requireNight(world, day),
+    contract = owner.nobleState.contracts.find(
+      (c) => c.status.kind === "pending" && c.targetId === targetId,
+    );
+  if (!contract) return null;
+  const binding = owner.contracts.get(contract.id);
+  if (!binding || !playerCurrent(world, binding.target, true))
+    throw Error("night_noble_contract_revoked");
+  commitNoble(owner, endServant(owner.nobleState, contract.id, day, "cleared"));
+  return Object.freeze({ contractId: contract.id, targetId });
+}
+/** The caller records expiry and its returned proposal together, before any actual night damage. */
+export function expireServantAtNightEnd(
+  world: World,
+  day: number,
+): Readonly<{ contractId: string; targetId: number; cause: "servant_expiry" }> | null {
+  const { owner, night } = requireNight(world, day);
+  if (night.expiryProcessed) throw Error("night_noble_expiry_already_processed");
+  const contract = owner.nobleState.contracts.find(
+    (c) => c.status.kind === "pending" && c.expiresNight === day,
+  );
+  if (!contract) {
+    night.expiryProcessed = true;
+    return null;
+  }
+  const binding = owner.contracts.get(contract.id);
+  if (!binding || !playerCurrent(world, binding.target, true))
+    throw Error("night_noble_contract_revoked");
+  commitNoble(owner, endServant(owner.nobleState, contract.id, day, "expired"));
+  night.expiryProcessed = true;
+  return Object.freeze({
+    contractId: contract.id,
+    targetId: contract.targetId,
+    cause: "servant_expiry" as const,
+  });
+}
+/** Called at the actual original-life death commit, before last words or badge awaits. */
+export function closeServantForDeath(
+  world: World,
+  day: number,
+  targetId: number,
+): Readonly<{ contractId: string; targetId: number }> | null {
+  const owner = requireOwner(world),
+    contract = owner.nobleState.contracts.find(
+      (c) => c.status.kind === "pending" && c.targetId === targetId,
+    );
+  if (!contract) return null;
+  const binding = owner.contracts.get(contract.id);
+  if (
+    !binding ||
+    !playerCurrent(world, binding.target) ||
+    binding.target.life.alive ||
+    aliveLifeVersion(binding.target.life) !== binding.target.version + 1
+  )
+    throw Error("night_noble_death_not_committed");
+  commitNoble(owner, endServant(owner.nobleState, contract.id, day, "target_dead"));
+  return Object.freeze({ contractId: contract.id, targetId });
+}
+/** Only a paid, original-body choice can consume the one body. The controller supplies
+ * FINAL valid sources and pairs this returned receipt with its actual damage commit. */
+export function resolveSecretBodyDamage(world: World, day: number, sources: SecretBodySources) {
+  const originalOwner = owners.get(world),
+    originalNight = originalOwner?.nights.get(day);
+  // A callback's recursive attempt must neither consume nor abort the outer settlement.
+  if (originalOwner?.checkingController) throw Error("noble_body_controller_reentry");
+  try {
+    const { owner, night } = requireNight(world, day, true);
+    if (night.status !== "normal") throw Error("secret_body_damage_before_action_close");
+    if (night.bodyResolved) throw Error("secret_body_damage_already_processed");
+    if (!night.body.committed || owner.bodyState.body.kind !== "intact") {
+      const unchanged = Object.freeze({ blocked: null, sources: copySecretBodySources(sources) });
+      night.bodyResolved = true;
+      return unchanged;
+    }
+    if (
+      !playerCurrent(world, owner.body) ||
+      (night.bodyTarget && !playerCurrent(world, night.bodyTarget))
+    )
+      throw Error("secret_body_paid_binding_revoked");
+    const plan = planSecretBodyBlock(owner.body.id, night.bodyTarget?.id ?? null, sources);
+    if (plan.blocked)
+      commitBody(owner, spendBodyForNight(owner.bodyState, day, owner.body.id, plan.blocked));
+    night.bodyResolved = true;
+    return plan;
+  } catch (error) {
+    if (originalNight?.status === "normal" && !originalNight.bodyResolved)
+      originalNight.status = "aborted";
+    throw error;
+  }
+}
+export function closeNobleBodyNight(world: World, day: number, status: "normal" | "aborted"): void {
+  const owner = owners.get(world),
+    night = owner?.nights.get(day);
+  if (
+    !owner ||
+    owner.checkingController ||
+    !night ||
+    !["normal", "aborted"].includes(status) ||
+    (night.status !== "open" &&
+      !(
+        status === "aborted" &&
+        !night.bodyResolved &&
+        ["normal", "aborted"].includes(night.status)
+      ))
+  )
+    throw Error("noble_body_night_unavailable");
+  if (
+    status === "normal" &&
+    (!night.expiryProcessed ||
+      (night.requiresBody && !night.body.committed) ||
+      (night.requiresNoble && !night.noble.committed))
+  )
+    throw Error("noble_body_night_incomplete");
+  night.status = status;
+  if (owner.active === night) owner.active = null;
+}
+/** Active-life exile qualification belongs to VotingPipeline, with a dedicated reveal speech. */
+export function consumeSecretBodyExile(
+  world: World,
+  day: number,
+): Readonly<{ actorId: number; day: number }> {
+  const owner = requireOwner(world),
+    night = owner.nights.get(day);
+  if (
+    owner.active ||
+    !night ||
+    night.status !== "normal" ||
+    !night.bodyResolved ||
+    [...owner.nights.keys()].some((previous) => previous > day) ||
+    !playerCurrent(world, owner.body, true)
+  )
+    throw Error("secret_body_exile_owner_revoked");
+  commitBody(owner, revealBodyByExile(owner.bodyState, day));
+  return Object.freeze({ actorId: owner.body.id, day });
+}
+export function snapshotNobleBodyAuthority(world: World) {
+  const owner = requireOwner(world);
+  return {
+    nobleId: owner.noble.id,
+    bodyId: owner.body.id,
+    noble: readNobleState(owner.nobleState)!,
+    body: readSecretBodyState(owner.bodyState)!,
+    nights: [...owner.nights.values()].map((n) => ({
+      day: n.day,
+      status: n.status,
+      bodyChosen: n.body.committed,
+      nobleChosen: n.noble.committed,
+      expiryProcessed: n.expiryProcessed,
+      bodyResolved: n.bodyResolved,
+    })),
+  };
+}

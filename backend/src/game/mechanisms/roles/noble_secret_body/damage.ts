@@ -13,16 +13,7 @@ export type SecretBodySources = Readonly<Record<string, readonly SecretBodyCause
 function playerId(value: number): boolean {
   return Number.isSafeInteger(value) && value > 0 && value < Number.MAX_SAFE_INTEGER;
 }
-export function planSecretBodyBlock(
-  actorId: number,
-  selectedId: number | null,
-  sources: SecretBodySources,
-): Readonly<{
-  blocked: Readonly<{ targetId: number; cause: SecretBodyCause }> | null;
-  sources: SecretBodySources;
-}> {
-  if (!playerId(actorId) || (selectedId !== null && !playerId(selectedId)))
-    throw new Error("secret_body_target_invalid");
+function snapshotSources(sources: SecretBodySources): Record<string, SecretBodyCause[]> {
   const copied: Record<string, SecretBodyCause[]> = {};
   if (
     !sources ||
@@ -71,6 +62,26 @@ export function planSecretBodyBlock(
     }
     if (causes.length) copied[key] = causes;
   }
+  return copied;
+}
+/** Preserve all validated finite sources when there is no paid protection. */
+export function copySecretBodySources(sources: SecretBodySources): SecretBodySources {
+  const copied = snapshotSources(sources);
+  return Object.freeze(
+    Object.fromEntries(Object.entries(copied).map(([key, value]) => [key, Object.freeze(value)])),
+  );
+}
+export function planSecretBodyBlock(
+  actorId: number,
+  selectedId: number | null,
+  sources: SecretBodySources,
+): Readonly<{
+  blocked: Readonly<{ targetId: number; cause: SecretBodyCause }> | null;
+  sources: SecretBodySources;
+}> {
+  if (!playerId(actorId) || (selectedId !== null && !playerId(selectedId)))
+    throw new Error("secret_body_target_invalid");
+  const copied = snapshotSources(sources);
   const preferred = selectedId ?? actorId;
   const targetId = copied[String(preferred)]?.length ? preferred : actorId;
   const causes = copied[String(targetId)] ?? [];
