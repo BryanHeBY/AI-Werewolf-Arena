@@ -4,7 +4,7 @@
 
 ## 来源与差异
 
-网易卡牌静态数据（2026-10-10 GET 200，SHA256 e1884729ff09aea650ba16e2c3cf94f0bd60e97263a267e2addc5626bd07bf3c）：https://langrensha.res.netease.com/pc/gw/201905091509/js/kapaiData_02806e2.js ，魔术师 type=2/num=2。支持每夜先手交换两人的号码且仅当夜有效。
+网易卡牌静态数据（2026-10-11 从官网首页复核地址并 GET 200，SHA256 e1884729ff09aea650ba16e2c3cf94f0bd60e97263a267e2addc5626bd07bf3c）：https://langrensha.res.netease.com/pc/gw/20190509150909/js/kapaiData_02806e2.js ，魔术师 type=2/num=2。支持每夜先手交换两人的号码且仅当夜有效。此前文档 URL 的目录末尾漏写 `09`，本次修正链接，数据哈希未变。
 Melbourne Masters 自有版型图鉴：https://melbournemasters.org/setups/roles/魔术师 ，说明每号码整局仅用一次，并列出部分板型从第二夜开始。该页面集合多个板型，不能混为单一官方规则。
 LAL 主办方板型：https://werewolves.games/lang-wang-mo-shu-shi/ ，十二人三普通狼、狼王、四民、预女猎术。
 补充说明：https://bkso.baidu.com/item/魔术师/22371602?fromModule=lemma_inlink ，自身可被交换、女巫获知原始刀口。

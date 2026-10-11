@@ -78,12 +78,12 @@
 | 32  | `wolf_witch`       | 狼巫     | Wolf Witch       | 狼队身份查验           | implemented；P9b / [规则卡](rules/awa-pure-white-night-v1.md)、[验收](reviews/p9-pure-white.md)              |
 | 33  | `evil_knight`      | 恶夜骑士 | Dark Knight      | 夜间免疫、反伤         | `implemented`；P9 / [规则卡](rules/awa-evil-knight-v1.md) / [验收](reviews/p9-evil-knight.md) / [S01][cards] |
 | 34  | `red_moon_apostle` | 赤月使徒 | Red Moon Apostle | 自爆、封夜、特殊死亡   | P9b implemented / [规则卡](rules/awa-red-moon-demon-v1.md) / [验收](reviews/p9-red-moon.md)                  |
-| 35  | `alchemist`        | 炼金魔女 | Alchemist        | 刀口约束、特殊救人流程 | P9 / [S17][mist]                                                                                             |
-| 36  | `raven_claw_wolf`  | 狼鸦之爪 | Raven-Claw Wolf  | 解封、特殊攻击         | P9 / [S17][mist]                                                                                             |
-| 37  | `radiant_count`    | 流光伯爵 | Radiant Count    | 保护范围和限制         | P9 / [S01][cards]                                                                                            |
-| 38  | `eclipse_maid`     | 蚀日侍女 | Eclipse Maid     | 技能吞噬与临时失效     | P9 / [S01][cards]、[S16][salon]                                                                              |
-| 39  | `night_noble`      | 夜之贵族 | Night Noble      | 持续夜间状态           | P9 / [S18][tournament]；完整技能待核验                                                                       |
-| 40  | `fragrant_phantom` | 寻香魅影 | Fragrant Phantom | 绑定、牵连、接刀       | P9 / [S19][awakenedseer]                                                                                     |
+| 35  | `alchemist`        | 炼金魔女 | Alchemist        | 刀口约束、特殊救人流程 | planned；P9d [实施规则草案](rules/awa-mist-raven-twelve-v1.md)                                               |
+| 36  | `raven_claw_wolf`  | 狼鸦之爪 | Raven-Claw Wolf  | 解封、特殊攻击         | planned；P9d [实施规则草案](rules/awa-mist-raven-twelve-v1.md)                                               |
+| 37  | `radiant_count`    | 流光伯爵 | Radiant Count    | 保护范围和限制         | planned；P9d [实施规则草案](rules/awa-radiant-eclipse-twelve-v1.md)                                          |
+| 38  | `eclipse_maid`     | 蚀日侍女 | Eclipse Maid     | 技能吞噬与临时失效     | planned；P9d [实施规则草案](rules/awa-radiant-eclipse-twelve-v1.md)                                          |
+| 39  | `night_noble`      | 夜之贵族 | Night Noble      | 持续夜间状态           | planned；P9d [实施规则草案](rules/awa-noble-secret-body-twelve-v1.md)                                        |
+| 40  | `fragrant_phantom` | 寻香魅影 | Fragrant Phantom | 绑定、牵连、接刀       | planned；P9d [实施规则草案](rules/awa-fragrant-pair-seer-twelve-v1.md)                                       |
 
 ## 7. 控制与流程变化：8 项
 
@@ -114,8 +114,8 @@
 
 | #   | 计划 ID                | 中文       | English                | 机制标签                 | 阶段 / 来源                                                                                                                                                                                    |
 | --- | ---------------------- | ---------- | ---------------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 56  | `awakened_idiot`       | 觉醒愚者   | Awakened Village Idiot | 秘密之身/伤害替代        | P9 / [S18][tournament]；完整技能待核验                                                                                                                                                         |
-| 57  | `awakened_seer`        | 觉醒预言家 | Awakened Seer          | 双目标信息               | P9 / [S19][awakenedseer]                                                                                                                                                                       |
+| 56  | `awakened_idiot`       | 觉醒愚者   | Awakened Village Idiot | 秘密之身/伤害替代        | planned；P9d 前置项；[实施规则草案](rules/awa-noble-secret-body-twelve-v1.md)                                                                                                                  |
+| 57  | `awakened_seer`        | 觉醒预言家 | Awakened Seer          | 双目标信息               | planned；P9d 前置项；[实施规则草案](rules/awa-fragrant-pair-seer-twelve-v1.md)                                                                                                                 |
 | 58  | `awakened_wolf_king`   | 觉醒狼王   | Awakened Wolf King     | 多次死亡技能、能力转移   | P9 / [S01][cards]                                                                                                                                                                              |
 | 59  | `awakened_hidden_wolf` | 觉醒隐狼   | Awakened Hidden Wolf   | 复制、生效时机、独立狼   | P7；`verified` / [完整验收](reviews/p7-awakened-hidden-wolf.md) / [AWA冻结卡](rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf) / [实现边界](awakened-hidden-wolf.md) / [S10][mirror] |
 | 60  | `awakened_wolf_beauty` | 觉醒狼美人 | Awakened Wolf Beauty   | 替死/关系结算            | P9 / [S16][salon]；采用正式上线版本核验                                                                                                                                                        |
