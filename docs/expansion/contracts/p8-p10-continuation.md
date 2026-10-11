@@ -150,3 +150,7 @@ game-catalog 拥有稳定 ID/名称/状态，game-text 拥有双语文案。新�
 ## P9d 严格失败与精确请求预算接续
 
 runner逐请求预算与资源关闭快照提交 `ea5ebf2`；本批新角色80个双语实际失败局、真正MCP迟到/关闭/旧ID拒绝与物理回收证据见[失败通路](../reviews/p9-mist-raven-failure-transport.md)。普通请求十秒，只有选定请求一秒；生效雾圈通信失败不会被当成全弃刀抽刀。角色仍planned、44/64不变。立即继续20–50固定种子、DTO受限策略有效分支及前端实际fixture/seek/frame/Chromium；其余P9d、P9e、P9f、P10、T6与用户总体验收仍开放。
+
+## P9d 并行自爆记录接续
+
+多种子暴露同批多份自爆意图的记录问题已按唯一最低有效号码修复，并核整个批次（含null）完成、真实资格与未发布因果。三路复查和173项门禁见[并行账本](../reviews/p9-mist-raven-parallel-blast.md)。引擎规则未改变；固定种子/前端交付接续，角色planned、44/64与P9d–P10目标保持。

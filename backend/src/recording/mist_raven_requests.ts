@@ -39,6 +39,59 @@ const stageTools: Record<string, string[]> = {
 export function check(value: unknown): asserts value {
   if (!value) throw new Error("reproduction_mist_raven_invalid");
 }
+/** Archive-only selection: intents share a batch; only its lowest ID is applied. */
+export function selectedMistBlast(
+  decisions: readonly RecordedDecision[],
+  receiverOpenedAfter?: number,
+  eligibleActors?: readonly number[],
+): RecordedDecision | undefined {
+  const choices = decisions.filter(
+    (d) =>
+      d.outcome.kind === "action" &&
+      d.outcome.action?.name === "self_destruct" &&
+      d.outcome.action.args.confirm === true &&
+      (receiverOpenedAfter === undefined ||
+        (d.settleOrder !== undefined && d.settleOrder <= receiverOpenedAfter)),
+  );
+  const first = choices[0];
+  if (!first) return;
+  check(
+    choices.every(
+      (d) =>
+        d.day === first.day &&
+        d.stage === first.stage &&
+        d.turn === first.turn &&
+        d.openedAfterSettlement === first.openedAfterSettlement &&
+        d.request.actionWindow === first.request.actionWindow,
+    ),
+  );
+  check(new Set(choices.map((d) => d.actorId)).size === choices.length);
+  const turns = new Map<number, number>(),
+    batch: RecordedDecision[] = [];
+  for (const d of decisions.filter((d) => d.day === first.day && d.stage === first.stage)) {
+    const turn = (turns.get(d.actorId) ?? 0) + 1;
+    turns.set(d.actorId, turn);
+    check(d.turn === turn && d.request.actionWindow === d.stage);
+    if (turn === first.turn) batch.push(d);
+  }
+  check(
+    batch.every(
+      (d) =>
+        d.openedAfterSettlement === first.openedAfterSettlement &&
+        d.outcome.kind === "action" &&
+        d.settleOrder !== undefined &&
+        (receiverOpenedAfter === undefined || d.settleOrder <= receiverOpenedAfter),
+    ),
+  );
+  if (eligibleActors)
+    check(
+      equal(
+        batch.map((d) => d.actorId).sort((a, b) => a - b),
+        [...eligibleActors].sort((a, b) => a - b),
+      ),
+    );
+  return choices.reduce((a, b) => (a.actorId < b.actorId ? a : b));
+}
 export function equal(a: unknown, b: unknown): boolean {
   const stable = (v: unknown): unknown =>
     Array.isArray(v)
@@ -393,15 +446,14 @@ export function validateMistRavenRequests(input: {
             )
           ]!;
       }
-      const blasts = record.decisions.filter(
-        (b) =>
-          b.day === day &&
-          b.settleOrder !== undefined &&
-          b.settleOrder <= d.openedAfterSettlement &&
-          getCall(b)?.name === "self_destruct",
+      const blasts = record.decisions.filter((b) => b.day === day && b.stage.startsWith("on_"));
+      const blast = selectedMistBlast(
+        blasts,
+        d.openedAfterSettlement,
+        n.start.filter((id) => roster.get(id)?.role === Role.Wolf),
       );
-      check(blasts.length <= 1);
-      const blast = blasts[0];
+      for (const intent of blasts)
+        check(roster.get(intent.actorId)?.role === Role.Wolf && n.start.includes(intent.actorId));
       if (blast) {
         const b = getCall(blast);
         check(

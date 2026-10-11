@@ -7,6 +7,7 @@ import {
   exact,
   ids,
   mistDraw,
+  selectedMistBlast,
   type MistNightRequestEvidence,
 } from "./mist_raven_requests";
 import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
@@ -186,7 +187,7 @@ export function validateMistRavenFeeds(
     if (type === "vote_summary")
       release = Math.max(release, settled(rows(day, [p.round === 2 ? "exile_pk_vote" : "voting"])));
     if (type === "wolf_self_destruct")
-      release = Math.max(release, settled(rows(day, [String(p.window)], Number(p.wolfId))));
+      release = Math.max(release, settled(rows(day, [String(p.window)])));
     if (["sheriff_badge_transferred", "sheriff_badge_destroyed"].includes(type))
       release = Math.max(
         release,
@@ -646,11 +647,19 @@ export function validateMistRavenFeeds(
       return;
     }
     if (e.type === "wolf_self_destruct") {
-      const a = source([String(p.window)], Number(p.wolfId), () => true);
+      const a = source([String(p.window)], Number(p.wolfId), (x) => {
+        const a = call(x);
+        return a?.name === "self_destruct" && a.args.confirm === true;
+      });
+      const selected = selectedMistBlast(
+        rows(factDay, [String(p.window)]),
+        d.openedAfterSettlement,
+      );
       check(
         roster.get(Number(p.wolfId))?.role === Role.Wolf &&
           a?.name === "self_destruct" &&
           a.args.confirm === true &&
+          selected?.actorId === p.wolfId &&
           exact(p, ["wolfId", "window"]),
       );
       return;
@@ -931,10 +940,11 @@ export function validateMistRavenFeeds(
     if (n?.delay ?? (start.includes(alchemist) && stock.healRemaining === 1))
       check(snake?.name === "use_snake");
     const alive = new Set(start);
-    for (const x of before) {
-      const a = call(x);
-      if (a?.name === "self_destruct" && a.args.confirm) alive.delete(x.actorId);
-    }
+    const blast = selectedMistBlast(
+      record.decisions.filter((x) => x.day === number && x.request.actionWindow !== "on_pre_vote"),
+      d.openedAfterSettlement,
+    );
+    if (blast) alive.delete(blast.actorId);
     const causes = new Map<number, string[]>();
     const add = (id: number, cause: string) => {
       if (alive.has(id)) causes.set(id, [...(causes.get(id) ?? []), cause]);

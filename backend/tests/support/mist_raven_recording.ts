@@ -57,6 +57,9 @@ export type MistRecordVariant =
   | "blast-raw-target"
   | "blast-badge-chain"
   | "blast-last-wolf"
+  | "blast-parallel"
+  | "blast-parallel-raw-loser"
+  | "blast-parallel-second-gap"
   | "last-villager-pass"
   | "last-villager-heal"
   | "last-god"
@@ -80,6 +83,8 @@ type NightPlan = {
   circle: number[] | null;
   blast?: { day: number; window: ActionWindow };
   doubleBadge?: boolean;
+  parallelBlast?: boolean;
+  blastRound?: number;
 };
 const blastPlan = (window: ActionWindow): NightPlan => ({
   dream: [8, 6, 7],
@@ -174,6 +179,20 @@ const manualPlans: Record<MistRecordVariant, NightPlan> = {
     knife: [10, 11, 6],
   },
   "blast-badge-chain": { ...blastPlan(ActionWindow.OnPerSpeechGap), doubleBadge: true },
+  "blast-parallel": { ...blastPlan(ActionWindow.OnPerSpeechGap), parallelBlast: true },
+  "blast-parallel-raw-loser": {
+    ...blastPlan(ActionWindow.OnPerSpeechGap),
+    parallelBlast: true,
+    knife: [11, 12, 6],
+    exile: [12, 8, 9],
+  },
+  "blast-parallel-second-gap": {
+    ...blastPlan(ActionWindow.OnPerSpeechGap),
+    parallelBlast: true,
+    blastRound: 2,
+    knife: [11, 12, 6],
+    exile: [12, 8, 9],
+  },
   "blast-last-wolf": {
     dream: [8, 7, 6],
     knife: [11, 9, 2],
@@ -217,13 +236,23 @@ const manualPlans: Record<MistRecordVariant, NightPlan> = {
   },
 };
 /** Literal manual scenarios; this controller is intentionally distinct from an observed player. */
-export function mistAction(q: ActionRequest, variant: MistRecordVariant): ToolCall | null {
+export function mistAction(
+  q: ActionRequest,
+  variant: MistRecordVariant,
+  windowRound = 1,
+): ToolCall | null {
   const s = q.context.stage,
     d = q.context.day,
     index = d - 1,
     plan = manualPlans[variant];
   if (d > plan.knife.length) throw new Error("mist_fixture_unexpected_day");
-  if (plan.blast && d === plan.blast.day && s === plan.blast.window && q.actorId === 10)
+  if (
+    plan.blast &&
+    d === plan.blast.day &&
+    s === plan.blast.window &&
+    windowRound === (plan.blastRound ?? 1) &&
+    (q.actorId === 10 || (plan.parallelBlast && q.actorId === 11))
+  )
     return { name: "self_destruct", args: { confirm: true, reason: "Manual blast" } };
   if (s === "alchemist_mist")
     return {
@@ -310,6 +339,7 @@ export function mistRecording(
         game.phaseManager.getSnapshot().phase,
       );
       let last: RecordedCheckpoint | undefined;
+      const requestCounts = new Map<string, number>();
       await runWithSessionRecorder(manager, async () => {
         const trace = beginGameReproduction(manager, game, {
           engine: await currentEngineVersion(),
@@ -342,7 +372,10 @@ export function mistRecording(
                           gameOver: game.phaseManager.getSnapshot().gameOver,
                           publishedTypes: game.phaseManager.getEvents().map((e) => e.type),
                         });
-                      return mistAction(request, variant);
+                      const key = `${request.actorId}/${request.context.day}/${request.context.stage}`;
+                      const round = (requestCounts.get(key) ?? 0) + 1;
+                      requestCounts.set(key, round);
+                      return mistAction(request, variant, round);
                     },
                   }),
               },

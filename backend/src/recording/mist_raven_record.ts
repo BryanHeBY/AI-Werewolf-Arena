@@ -5,6 +5,7 @@ import {
   exact,
   mistDraw,
   validateMistRavenRequests,
+  selectedMistBlast,
 } from "./mist_raven_requests";
 import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
 import { validateMistRavenFeeds } from "./mist_raven_feed_record";
@@ -840,6 +841,17 @@ export function validateMistRavenRecord(record: ReproductionRecord): void {
     }
     if (e.type === "wolf_self_destruct") {
       const n = requireNight();
+      const selected = selectedMistBlast(
+        record.decisions.filter(
+          (d) =>
+            d.day === n.day &&
+            d.stage === p.window &&
+            alive.has(d.actorId) &&
+            roster.get(d.actorId)?.role === Role.Wolf,
+        ),
+        undefined,
+        [...alive].filter((id) => roster.get(id)?.role === Role.Wolf),
+      );
       check(
         ((phase === Phase.Day &&
           ["on_pre_election", "on_daybreak", "on_per_speech_gap"].includes(p.window as string)) ||
@@ -847,6 +859,7 @@ export function validateMistRavenRecord(record: ReproductionRecord): void {
           !n.blast &&
           typeof p.wolfId === "number" &&
           roster.get(p.wolfId)?.role === Role.Wolf &&
+          selected?.actorId === p.wolfId &&
           alive.has(p.wolfId),
       );
       n.blast = true;
