@@ -126,3 +126,7 @@ game-catalog 拥有稳定 ID/名称/状态，game-text 拥有双语文案。新�
 ## 2026-10-11 P9c 同源阶段验收完成
 
 修正 Prince 旧测试期望及验收输入漏项后，最终 1388 输入指纹前后一致，后端 5159／364 文件、前端 498／63 文件、Chromium 240 项零失败，无重试；静态、smoke 和双端构建通过。首次失败与原始日志、最终命令范围见[阶段验收](../reviews/p9c-stage-acceptance.md)。当前 23 verified、21 implemented、20 planned，44/64；继续 P9d 六项及两个觉醒前置、P9e/P9f 与 P10，不推送。
+
+## P9d 迷雾鸦影观察流功能边界
+
+运行、纯数据副本、独立核心录制及玩家观察账本已按功能提交；最新范围与三路复验见[观察账本](../reviews/p9-mist-raven-player-feed.md)。角色尚 planned、44/64 不变。下一步直接补规则卡六交互／四自爆完整 Tape、新角色双语实际 SDK／ACP／MCP、精确故障请求与物理回收、固定种子自然局和实际前端 fixture／Chromium，完成全部交付后再计入角色目录。P9d 其余板、两个觉醒前置、P9e／P9f、P10 与 T6 授权边界继续开放，main 线性本地提交，不自动推送。

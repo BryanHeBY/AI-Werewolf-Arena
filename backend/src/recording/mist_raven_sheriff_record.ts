@@ -45,7 +45,7 @@ export function createMistSheriffEvidence(record: ReproductionRecord) {
     return typeof abstain === "boolean" &&
       (target === null ||
         (typeof target === "number" && Number.isSafeInteger(target) && target > 0)) &&
-      (abstain || (target !== null && candidates.includes(target)))
+      (abstain ? target === null : target !== null && candidates.includes(target))
       ? { actorId: actor, targetId: target, abstain }
       : null;
   };

@@ -172,6 +172,30 @@ export function validateMistRavenRequests(input: {
           d.request.context.stage === d.stage,
       );
       const c = d.request.context;
+      if (!Object.hasOwn(strictStages, d.stage)) {
+        check(n.start.includes(d.actorId));
+        const voting = ["on_pre_vote", "voting", "exile_pk_vote", "exile_pk_speech"].includes(
+          d.stage,
+        );
+        check(
+          ["last_words", "sheriff_badge_choice"].includes(d.stage)
+            ? [Phase.Day, Phase.Voting].includes(d.request.phase)
+            : d.request.phase === (voting ? Phase.Voting : Phase.Day),
+        );
+        if (d.stage.startsWith("on_")) {
+          check(
+            roster.get(d.actorId)!.role === Role.Wolf &&
+              (d.stage !== "on_pre_election" || day === 1) &&
+              !c.visible_events.some(
+                (e) =>
+                  (e.type === "night_resolved" &&
+                    Array.isArray(e.payload.deaths) &&
+                    e.payload.deaths.includes(d.actorId)) ||
+                  (e.type === "wolf_self_destruct" && e.payload.wolfId === d.actorId),
+              ),
+          );
+        }
+      }
       for (const field of privateFields) {
         const present = Object.hasOwn(c, field),
           belongs =

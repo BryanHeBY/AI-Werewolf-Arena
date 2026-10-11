@@ -7,6 +7,7 @@ import {
   validateMistRavenRequests,
 } from "./mist_raven_requests";
 import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
+import { validateMistRavenFeeds } from "./mist_raven_feed_record";
 import {
   isMistRavenPreset,
   MIST_RAVEN_EVENT_TYPES,
@@ -1051,6 +1052,7 @@ export function validateMistRavenRecord(record: ReproductionRecord): void {
     ravenState: r,
     actors: { alchemist, raven, dreamer, seer },
   });
+  validateMistRavenFeeds(record, nights);
   const resolved = [...nights.values()].filter((n) => n.settled),
     ops = record.operations.filter(
       (o) => o.scope === "resolution" && o.op === "night_damage_resolved",
