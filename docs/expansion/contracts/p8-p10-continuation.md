@@ -130,3 +130,7 @@ game-catalog 拥有稳定 ID/名称/状态，game-text 拥有双语文案。新�
 ## P9d 迷雾鸦影观察流功能边界
 
 运行、纯数据副本、独立核心录制及玩家观察账本已按功能提交；最新范围与三路复验见[观察账本](../reviews/p9-mist-raven-player-feed.md)。角色尚 planned、44/64 不变。下一步直接补规则卡六交互／四自爆完整 Tape、新角色双语实际 SDK／ACP／MCP、精确故障请求与物理回收、固定种子自然局和实际前端 fixture／Chromium，完成全部交付后再计入角色目录。P9d 其余板、两个觉醒前置、P9e／P9f、P10 与 T6 授权边界继续开放，main 线性本地提交，不自动推送。
+
+## P9d 完整梦境交互测试接续
+
+六种梦境交互与首夜自救已补中英真实 finalized Tape，证据见[完整交互](../reviews/p9-mist-raven-complete-interactions.md)；前一条的六交互任务在本切片关闭。当前下一步为四自爆完整局及附加死亡／警徽顺序，然后实际 SDK／ACP／MCP、精确迟到资源、多种子和前端。角色仍 planned，44/64 不变。
