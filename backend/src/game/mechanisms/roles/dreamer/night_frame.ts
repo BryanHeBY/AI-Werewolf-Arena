@@ -11,6 +11,7 @@ export interface DreamNightLink {
   day: number;
   abilityId?: string;
   consecutive: boolean;
+  isCurrent?: () => boolean;
   protectionPolicy?: import("../../../../core/domain/board").DreamProtectionPolicy;
   actorLife: AliveComponent;
   actorVersion: number | undefined;
@@ -83,6 +84,7 @@ export class DreamNightFrame {
   }
   private actorCurrent(world: World, link: DreamNightLink): boolean {
     return (
+      (link.isCurrent?.() ?? true) &&
       world.getComponent(link.actorId, COMPONENT.Alive) === link.actorLife &&
       link.actorVersion !== undefined &&
       aliveLifeVersion(link.actorLife) === link.actorVersion + (link.actorLife.alive ? 0 : 1)

@@ -1,4 +1,5 @@
 import { boardPresetViolation } from "../game/mechanisms/roles/board_presets";
+import { installRadiantEclipseBoard } from "../game/mechanisms/roles/radiant_eclipse/night_frame";
 import { installMistRavenBoard } from "../game/mechanisms/roles/mist_raven/night_frame";
 import { installScholarMentorBoard } from "../game/mechanisms/roles/scholar_mentor/night_frame";
 import { installTimeConsortBoard } from "../game/mechanisms/roles/time_wolf_consort/night_frame";
@@ -165,6 +166,7 @@ function createPlayers(
   installInitialRoster(world);
   if (roles.includes(Role.Alchemist) || roles.includes(Role.RavenClawWolf))
     installMistRavenBoard(world);
+  if (config.radiantEclipse) installRadiantEclipseBoard(world);
   if (roles.includes(Role.DayScholar) || roles.includes(Role.NightMentor))
     installScholarMentorBoard(world);
   if (roles.includes(Role.TimeWolfConsort)) installTimeConsortBoard(world);

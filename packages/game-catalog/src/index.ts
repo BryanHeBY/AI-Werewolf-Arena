@@ -313,17 +313,17 @@ export const ROLE_DEFINITIONS = [
   {
     id: "radiant_count",
     names: { "zh-CN": "流光伯爵", en: "Radiant Count" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-radiant-eclipse-twelve-v1.md",
     mechanismSummary: "保护范围和限制",
   },
   {
     id: "eclipse_maid",
     names: { "zh-CN": "蚀日侍女", en: "Eclipse Maid" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-radiant-eclipse-twelve-v1.md",
     mechanismSummary: "技能吞噬与临时失效",
   },
   {

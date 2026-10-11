@@ -1,4 +1,5 @@
 import { scholarMentorBlocks } from "./scholar_mentor/night_frame";
+import { readShelterState } from "./radiant_eclipse/state";
 import { nightmareFearBlocks } from "./nightmare_shadow/night_frame";
 import { INSPECTION_POLICIES } from "../../../core/domain/board";
 import { nativePotionSecondTurn } from "./witch/policies";
@@ -28,6 +29,7 @@ export { projectRoleInspectionState, projectSeerState, projectWitchState } from 
 import type { World } from "../../../core/domain/world";
 
 export interface NightAbilityStates {
+  shelter: import("./radiant_eclipse/state").ShelterState;
   seer_check: SeerState;
   role_check: RoleInspectionState;
   guard: GuardState;
@@ -58,6 +60,11 @@ export function roleInspectionPolicy(state: RoleInspectionState): RoleInspection
 }
 
 export type NightAbilityKind = keyof NightAbilityStates;
+function projectShelterState(value: unknown) {
+  const state = readShelterState(value);
+  if (!state) throw new Error("radiant_shelter_state_invalid");
+  return state;
+}
 export type AbilitySource =
   | { kind: "native"; role: Role }
   | { kind: "gift"; actorId: EntityId }
@@ -105,6 +112,7 @@ export type AbilityStatus =
   "pending" | "expired" | "disabled" | "spent" | "used_this_night" | "active";
 
 export interface PlayerNightAbilityStates {
+  shelter: import("./radiant_eclipse/state").ShelterState;
   seer_check: PlayerSeerState;
   role_check: PlayerRoleInspectionState;
   guard: PlayerGuardState;
@@ -116,6 +124,8 @@ export function projectNightState(
   ability: NightAbility,
 ): PlayerNightAbilityStates[NightAbilityKind] {
   switch (ability.kind) {
+    case "shelter":
+      return projectShelterState(ability.state);
     case "seer_check":
       return projectSeerState(ability.state);
     case "potion":
@@ -313,6 +323,8 @@ export function projectNightAbility(ability: NightAbility, day: number): PlayerN
     status: abilityStatus(ability, day),
   };
   switch (ability.kind) {
+    case "shelter":
+      return { ...metadata, kind: "shelter", state: projectShelterState(ability.state) };
     case "seer_check":
       return { ...metadata, kind: "seer_check", state: projectSeerState(ability.state) };
     case "potion":

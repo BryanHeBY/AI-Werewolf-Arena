@@ -1,3 +1,4 @@
+import { radiantEclipseEventLabel } from "@ai-werewolf-arena/game-text";
 import { mistRavenEventLabel } from "@ai-werewolf-arena/game-text";
 import { scholarMentorEventLabel } from "@ai-werewolf-arena/game-text";
 import { timeConsortEventLabel } from "@ai-werewolf-arena/game-text";
@@ -50,6 +51,8 @@ export function eventLabel(
   if (!fact) return text(locale, "replay.unknown");
   event = fact.event;
   const p = event.payload;
+  const radiant = radiantEclipseEventLabel(event.type, p, locale);
+  if (radiant !== null) return radiant;
   const mist = mistRavenEventLabel(event.type, p, locale);
   if (mist !== null) return mist;
   const prince = orderPrinceEventLabel(event.type, p, locale);
@@ -202,7 +205,7 @@ export function eventLabel(
       return t("ability.change", {
         actor,
         id: stringValue(p.abilityId),
-        kind: ["seer_check", "role_check", "guard", "potion", "dream"].includes(kind)
+        kind: ["seer_check", "role_check", "guard", "potion", "dream", "shelter"].includes(kind)
           ? t(`ability.kind.${kind}` as MessageKey)
           : kind,
         operation: ["granted", "disabled", "enabled", "transferred_out"].includes(operation)

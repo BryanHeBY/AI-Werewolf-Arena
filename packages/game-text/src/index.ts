@@ -1,3 +1,4 @@
+import { readRadiantEclipseFact } from "./radiant-eclipse";
 import { readMistRavenFact } from "./mist-raven";
 import {
   readModifierChoiceFact,
@@ -1119,6 +1120,7 @@ export function scholarMentorEventLabel(
 export * from "./scholar-mentor";
 export * from "./scholar-mentor-preset";
 
+export { isRadiantEclipsePreset } from "./radiant-eclipse-preset";
 export { isMistRavenPreset } from "./mist-raven-preset";
 
 export * from "./mist-raven";
@@ -1153,4 +1155,34 @@ export function mistRavenEventLabel(
       reason: text(locale, `mist.reason.${fact.reason}`),
     });
   return text(locale, key, { ...common, target: fact.targetId ?? text(locale, "common.none") });
+}
+
+export * from "./radiant-eclipse";
+export function radiantEclipseEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale = "zh-CN",
+): string | null {
+  const fact = readRadiantEclipseFact(type, payload);
+  if (!fact) return null;
+  if ("playerId" in fact) return text(locale, `event.${type}` as MessageKey);
+  if ("status" in fact)
+    return text(
+      locale,
+      fact.status === "committed" ? "event.eclipse_lease_committed" : "event.eclipse_lease_aborted",
+      { day: fact.day },
+    );
+  return text(
+    locale,
+    type === "eclipse_swallowed"
+      ? fact.targetId === null
+        ? "event.eclipse_swallow_passed"
+        : "event.eclipse_swallowed"
+      : fact.targetId === null
+        ? "event.radiant_shelter_passed"
+        : "event.radiant_shelter_used",
+    fact.targetId === null
+      ? { actor: fact.actorId }
+      : { actor: fact.actorId, target: fact.targetId },
+  );
 }

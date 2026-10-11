@@ -83,6 +83,7 @@ import {
   getMerchantState,
   projectMerchantState,
 } from "../../../game/mechanisms/roles/miracle_merchant/state";
+import { readEclipseState } from "../../../game/mechanisms/roles/radiant_eclipse/state";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import {
@@ -299,6 +300,8 @@ export class PlayerPromptPolicy {
       const state = getMerchantState(role);
       if (state) ownState.merchant = projectMerchantState(state);
     }
+    if (role?.role === Role.EclipseMaid)
+      ownState.eclipse = readEclipseState(role.privateState.eclipse);
     const witch = role ? getWitchState(role, request.context.ability_id) : undefined;
     const guard = role ? getGuardState(role, request.context.ability_id) : undefined;
     if (witch) ownState.witch = projectWitchState(witch);
@@ -442,17 +445,19 @@ export class PlayerPromptPolicy {
       ? allNightAbilities(role).find((ability) => ability.id === request.context.ability_id)
       : undefined;
     const targetRuleRole =
-      bound?.kind === "role_check"
-        ? ROLE_INSPECTION_POLICY_ROLES[roleInspectionPolicy(bound.state)]
-        : bound?.kind === "guard"
-          ? Role.Guard
-          : bound?.kind === "potion"
-            ? Role.Witch
-            : bound?.kind === "seer_check"
-              ? Role.Seer
-              : bound?.kind === "dream"
-                ? Role.Dreamer
-                : role?.role;
+      bound?.kind === "shelter"
+        ? Role.RadiantCount
+        : bound?.kind === "role_check"
+          ? ROLE_INSPECTION_POLICY_ROLES[roleInspectionPolicy(bound.state)]
+          : bound?.kind === "guard"
+            ? Role.Guard
+            : bound?.kind === "potion"
+              ? Role.Witch
+              : bound?.kind === "seer_check"
+                ? Role.Seer
+                : bound?.kind === "dream"
+                  ? Role.Dreamer
+                  : role?.role;
     const constraints = resolveTurnConstraints(request);
     const stage = getActionRequestStage(request);
     return buildUserPrompt({
@@ -555,6 +560,11 @@ export class PlayerPromptPolicy {
 
   private statusDirective(request: ActionRequest, role?: RoleComponent): string | undefined {
     const lines: string[] = [];
+    if (role?.role === Role.EclipseMaid) {
+      const state = readEclipseState(role.privateState.eclipse);
+      if (state)
+        lines.push(text(this.locale, "prompt.status.eclipse", { state: JSON.stringify(state) }));
+    }
     const alchemist = projectAlchemist(role),
       raven = projectRaven(role);
     if (alchemist)

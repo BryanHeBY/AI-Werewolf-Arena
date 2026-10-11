@@ -1,3 +1,4 @@
+import { isRadiantEclipseBoard } from "../radiant_eclipse/night_frame";
 import {
   isScholarMentorBoard,
   scholarMentorBlocks,
@@ -78,6 +79,13 @@ const witchActionStage: NightStageHandler = {
       ctx.currentDay(),
     )) {
       if (ability.activation === "lucky" || ability.activation === "black_market") continue;
+      if (
+        isRadiantEclipseBoard(ctx.world) &&
+        ability.source.kind === "copy" &&
+        ability.state.heal === 0 &&
+        ability.state.poison === 0
+      )
+        continue;
       const day = ctx.currentDay();
       const ownership = captureNightAbilityScope(
         ctx.world,
@@ -175,6 +183,7 @@ async function executePotionTurn(
       : {}),
   });
   if (!scope.isEligible()) {
+    if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_witch_scope_stale");
     if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_scope_stale");
     if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_scope_stale");
     return false;
@@ -182,11 +191,13 @@ async function executePotionTurn(
   const action = await ctx.actionProvider.getAction(req);
   if (!ctx.isCurrent()) return false;
   if (!scope.isEligible()) {
+    if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_witch_scope_stale");
     if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_scope_stale");
     if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_scope_stale");
     return false;
   }
   if (action?.name !== "use_potion") {
+    if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_witch_action_missing");
     if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_action_missing");
     if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_action_missing");
     if (isMagicianBoard(ctx.world)) throw new Error("magician_witch_action_missing");
@@ -217,11 +228,13 @@ async function executePotionTurn(
   });
   if (!ctx.isCurrent()) return false;
   if (!scope.isEligible()) {
+    if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_witch_scope_stale");
     if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_scope_stale");
     if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_scope_stale");
     return false;
   }
   if (!result.ok || !result.sanitizedCall) {
+    if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_witch_action_invalid");
     if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_action_invalid");
     if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_action_invalid");
     if (isMagicianBoard(ctx.world)) throw new Error("magician_witch_action_invalid");

@@ -1,3 +1,8 @@
+import {
+  shelterTargets,
+  eclipseSwallowTargets,
+  isRadiantEclipseBoard,
+} from "../roles/radiant_eclipse/night_frame";
 import { nightmareFearTargets } from "../roles/nightmare_shadow/state";
 import { magicianChoiceTargets } from "../roles/magician/night_frame";
 import { wolfKnifeTargetAllowed } from "../roles/wolf/target_policy";
@@ -82,6 +87,14 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
   };
 
   buildActionableIdsHint(ctx: TargetHintContext): string | undefined {
+    if (ctx.allowedTools.includes("cast_shelter") || ctx.allowedTools.includes("swallow_skill")) {
+      const ids = ctx.allowedTools.includes("cast_shelter")
+        ? shelterTargets(ctx.world, ctx.day ?? 1, ctx.actorId, ctx.abilityId!)
+        : eclipseSwallowTargets(ctx.world, ctx.day ?? 1);
+      return ids.length
+        ? text(ctx.world.locale, "prompt.targets.others", { ids: ids.join(", ") })
+        : text(ctx.world.locale, "prompt.targets.none");
+    }
     if (ctx.allowedTools.includes("modify_skill") || ctx.allowedTools.includes("bonus_action")) {
       const candidates = ctx.allowedTools.includes("modify_skill")
         ? ctx.modifierCandidates
@@ -107,7 +120,13 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     if (targetTools.length === 0) {
       return undefined;
     }
-    const allowSelf = targetTools.some((tool) => this.getRule(ctx.actorRole, tool)?.allowSelf);
+    const radiantSelf =
+      isRadiantEclipseBoard(ctx.world) &&
+      (ctx.allowedTools.includes("use_potion") ||
+        ctx.allowedTools.includes("check_identity") ||
+        ctx.allowedTools.includes("kill_vote"));
+    const allowSelf =
+      radiantSelf || targetTools.some((tool) => this.getRule(ctx.actorRole, tool)?.allowSelf);
     const inspection = getRoleInspectionState(
       ctx.world.getComponent<RoleComponent>(ctx.actorId, COMPONENT.Role)!,
       ctx.abilityId,
@@ -151,7 +170,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       .filter((id) =>
         targetTools.some(
           (tool) =>
-            (this.getRule(ctx.actorRole, tool)?.allowSelf || id !== ctx.actorId) &&
+            (radiantSelf || this.getRule(ctx.actorRole, tool)?.allowSelf || id !== ctx.actorId) &&
             luckyAllowed(tool, id) &&
             (tool !== "fear" ||
               nightmareFearTargets(ctx.world, ctx.actorId, ctx.day ?? 1).includes(id)) &&

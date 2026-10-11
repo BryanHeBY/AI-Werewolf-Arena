@@ -1,3 +1,4 @@
+import { hasRadiantNight } from "../mechanisms/roles/radiant_eclipse/night_frame";
 import {
   closeScholarMentorNight,
   abortScholarMentorNight,
@@ -357,6 +358,8 @@ export class PhaseManager {
     actionProvider: ActionProvider,
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
+    if (!this.state.gameOver && hasRadiantNight(this.world, this.state.day))
+      throw new Error("radiant_night_reentry");
     if (!this.state.gameOver && hasDemonNightStarted(this.world, this.state.day))
       throw new Error("demon_hunter_cycle_reentry");
     const wedding = weddingSetup(this.world);

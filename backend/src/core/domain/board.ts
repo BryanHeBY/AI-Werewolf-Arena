@@ -120,6 +120,7 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
+  radiantEclipse?: { policy: "awa_radiant_eclipse_v1" };
   scholarMentor?: { policy: "awa_scholar_mentor_twelve_v1" };
   mistRaven?: { policy: "awa_mist_raven_v1" };
   timeConsort?: {

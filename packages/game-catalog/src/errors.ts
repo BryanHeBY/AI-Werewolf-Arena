@@ -1,5 +1,9 @@
 /** Stable rule failures; human messages belong to game-text. */
 export enum RuleError {
+  RadiantShelterUnavailable = "radiant_shelter_unavailable",
+  RadiantShelterTarget = "radiant_shelter_target",
+  EclipseSwallowUnavailable = "eclipse_swallow_unavailable",
+  EclipseSwallowTarget = "eclipse_swallow_target",
   MistUnavailable = "mist_unavailable",
   MistTarget = "mist_target",
   SnakeUnavailable = "snake_unavailable",

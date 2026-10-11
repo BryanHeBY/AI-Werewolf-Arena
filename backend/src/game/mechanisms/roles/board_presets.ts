@@ -3,6 +3,7 @@ import {
   isOrderPrincePreset,
   isScholarMentorPreset,
   isMistRavenPreset,
+  isRadiantEclipsePreset,
   isTimeConsortPreset,
   isWolfSorcererPreset,
   isMagicianPreset,
@@ -18,6 +19,14 @@ import { isDemonHunterPreset } from "./demon_hunter/preset";
 
 /** Shared finite-board eligibility for configuration checks and direct bootstrap callers. */
 export function boardPresetViolation(config: BoardConfig) {
+  if (
+    (config.radiantEclipse ||
+      config.roleSetups.some(
+        (row) => (row.role === Role.RadiantCount || row.role === Role.EclipseMaid) && row.count > 0,
+      )) &&
+    !isRadiantEclipsePreset(config)
+  )
+    return "radiant_eclipse_preset_invalid";
   if (
     (config.mistRaven ||
       config.roleSetups.some(

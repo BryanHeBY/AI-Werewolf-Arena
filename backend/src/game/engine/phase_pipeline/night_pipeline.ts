@@ -1,4 +1,11 @@
 import {
+  isRadiantEclipseBoard,
+  beginRadiantNight,
+  assertRadiantRosterCurrent,
+  sealRadiantNightEffects,
+  closeRadiantNight,
+} from "../../mechanisms/roles/radiant_eclipse/night_frame";
+import {
   isScholarMentorBoard,
   assertScholarMentorRosterCurrent,
   abortScholarMentorNight,
@@ -217,12 +224,18 @@ export class NightPipeline {
     let magicianHandedOff = false;
     let timeConsortHandedOff = false;
     let scholarMentorHandedOff = false;
+    const ownsRadiant = config.radiantEclipse !== undefined;
+    let radiantAcquired = false;
     const ownsMist = config.mistRaven !== undefined;
     let mistHandedOff = false;
     let weddingHandedOff = false,
       demonHandedOff = false,
       demonAcquired = false;
     try {
+      if (ownsRadiant) {
+        beginRadiantNight(this.world, day);
+        radiantAcquired = true;
+      }
       if (ownsDemon) {
         beginDemonHunterNight(this.world, day, isCurrent);
         demonAcquired = true;
@@ -238,6 +251,7 @@ export class NightPipeline {
           });
       }
       const assertReadable = () => {
+        if (ownsRadiant) assertRadiantRosterCurrent(this.world);
         if (ownsMist) assertMistRosterCurrent(this.world);
         if (config.trickster) assertTricksterRosterCurrent(this.world);
         if (config.wolfSorcerer) assertWolfSorcererRosterCurrent(this.world);
@@ -253,6 +267,7 @@ export class NightPipeline {
       };
       assertReadable();
       const nativeProvider =
+        ownsRadiant ||
         ownsMist ||
         ownsDemon ||
         isEvilKnightBoard(this.world) ||
@@ -429,9 +444,12 @@ export class NightPipeline {
               heal: statusMarkSnapshot(knifeScope.marks, StatusMark.HealMark)?.present === true,
             })
           : undefined;
-      const dreamFrame = new DreamNightFrame(stageState.dreamLinks);
+      const radiantEffects = ownsRadiant ? sealRadiantNightEffects(this.world, day) : undefined;
+      const dreamFrame = new DreamNightFrame(stageState.dreamLinks, radiantEffects?.shelters);
       if (config.scholarMentor) assertScholarMentorBonusEffects(stageCtx);
       const damage = this.damageResolutionSystem.resolve(this.world, {
+        radiantShelters: radiantEffects?.shelters,
+        radiantBacklashes: radiantEffects?.backlashes,
         modifierDeaths: stageState.modifierDeaths,
         protectedTargets: dreamFrame.protectedTargets(this.world),
         immuneNightTargets: dreamFrame.immuneNightTargets(this.world),
@@ -491,6 +509,7 @@ export class NightPipeline {
               return [id, { life, version: aliveLifeVersion(life) }] as const;
             }),
           );
+      if (ownsRadiant) closeRadiantNight(this.world, day, "committed", this.events);
       weddingHandedOff = ownsWedding;
       demonHandedOff = ownsDemon;
       magicianHandedOff = config.magician !== undefined;
@@ -511,6 +530,7 @@ export class NightPipeline {
         ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
       };
     } finally {
+      if (radiantAcquired) closeRadiantNight(this.world, day, "aborted", this.events);
       if (ownsMist && !mistHandedOff) abortMistNight(this.world);
       if (config.trickster && !magicianHandedOff) abortTricksterNight(this.world);
       if (config.wolfSorcerer && !magicianHandedOff) abortWolfSorcererNight(this.world);
@@ -545,7 +565,8 @@ export class NightPipeline {
         (allowedTools.includes("kill_vote") || allowedTools.includes("speak_to_wolves"))
           ? { wolf_kill_candidates: mistKnifeTargets(this.world) ?? this.world.getAliveEntityIds() }
           : {}),
-        ...(isMistRavenBoard(this.world) ||
+        ...(isRadiantEclipseBoard(this.world) ||
+        isMistRavenBoard(this.world) ||
         isScholarMentorBoard(this.world) ||
         isTimeConsortBoard(this.world) ||
         isMagicianBoard(this.world) ||

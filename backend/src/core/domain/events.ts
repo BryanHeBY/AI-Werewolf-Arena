@@ -46,6 +46,28 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  eclipse_swallowed: {
+    actorId: EntityId;
+    day: number;
+    targetId: EntityId | null;
+    roleId: RoleId | null;
+    abilityId: string | null;
+  };
+  eclipse_native_suppressed: { playerId: EntityId; day: number };
+  eclipse_native_restored: { playerId: EntityId; day: number };
+  eclipse_lease_closed: {
+    actorId: EntityId;
+    day: number;
+    targetId: EntityId | null;
+    abilityId: string | null;
+    status: "committed" | "aborted";
+  };
+  radiant_shelter_chosen: {
+    actorId: EntityId;
+    day: number;
+    targetId: EntityId | null;
+    abilityId: string;
+  };
   alchemist_mist_chosen: { actorId: EntityId; day: number; targetIds: EntityId[] | null };
   alchemist_mist_skipped: {
     actorId: EntityId;
@@ -291,7 +313,7 @@ export interface EventPayloadMap {
   ability_changed: {
     actorId: EntityId;
     abilityId: string;
-    kind: "seer_check" | "role_check" | "guard" | "potion" | "dream";
+    kind: "seer_check" | "role_check" | "guard" | "potion" | "dream" | "shelter";
     operation: "granted" | "disabled" | "enabled" | "transferred_out";
     source:
       | { kind: "native"; role: string }
@@ -517,6 +539,11 @@ export type WeddingEventType =
 export type GameEvent = {
   [K in keyof EventPayloadMap]: EventBase<K, EventPayloadMap[K]> &
     (K extends
+      | "eclipse_swallowed"
+      | "eclipse_native_suppressed"
+      | "eclipse_native_restored"
+      | "eclipse_lease_closed"
+      | "radiant_shelter_chosen"
       | WolfTeamEventType
       | WeddingEventType
       | "alchemist_mist_chosen"

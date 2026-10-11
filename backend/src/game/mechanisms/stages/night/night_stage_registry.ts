@@ -21,6 +21,7 @@ import { allDeathGuns } from "../../roles/death_abilities";
 import { DEATH_ABILITY_ACTIVATION_STAGE } from "../../roles/death_ability_activation";
 
 const abilityRole: Record<NightAbilityKind, Role> = {
+  shelter: Role.RadiantCount,
   seer_check: Role.Seer,
   role_check: Role.Gargoyle,
   guard: Role.Guard,

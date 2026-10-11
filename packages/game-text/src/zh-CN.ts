@@ -1,5 +1,41 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "prompt.status.eclipse": "你的吞噬记录：{state}",
+
+  "replay.stage.eclipse_swallowed": "吞噬原生技能",
+  "replay.stage.eclipse_native_suppressed": "原生技能封禁",
+  "replay.stage.eclipse_native_restored": "原生技能恢复",
+  "replay.stage.eclipse_lease_closed": "借用授权关闭",
+  "replay.stage.radiant_shelter_chosen": "流光庇护",
+
+  "role.radiant_count.brief":
+    "你是流光伯爵，属于好人神职。从第二夜起，每夜可选择一名其他存活玩家给予流光庇护，也可明确放弃。庇护免疫该夜的狼刀、毒药及梦游伤害；不能自保，不能连续两夜庇护同一个人。若本夜被蚀日侍女吞噬，你没有原生庇护行动，天亮解除封禁；借用者的选择不会写回你的上一目标。被封禁的夜晚不算一次放弃。 借庇护继承原主上一目标及实际夜序，但不写回借用者的新选择；封禁期间未行动，隔过一夜恢复后可以再次选择原目标。",
+  "role.eclipse_maid.brief":
+    "你是蚀日侍女，属于狼人阵营，与你的狼队共同胜负。你单向知道其他狼人身份，但他们不知道你；你不参与狼聊，不能自爆，只有在真实夜初其余狼人已全部出局时才有狼刀。从第二夜起，每夜可吞噬一名存活好人，也可明确放弃，不能连续两夜吞噬同一个人。被吞者当夜失去原生能力，你获得其当前可借能力并可在相应阶段使用。借用库存独立、不写回原主，不复制历史查验或提示；借药继承当时库存且每夜最多一瓶、不能自救，空库存不发借药行动。借梦的梦游及死亡牵连以你为施法者；借庇护不能保护你自己。吞伯爵或该夜最终受庇护的目标会触发独立流光反噬，但吞噬和借得技能仍有效；摄梦保护可以阻挡反噬，连续梦或梦主死亡的伤害仍另行结算。天亮借用授权结束。 借庇护按继承的上一目标及实际夜序判断连续，使用后不改写伯爵的记录。 借梦继承原主上一梦游目标及实际夜序；梦游可以连续选择同一目标并造成连续梦伤，但不能梦你自己。",
+  "rules.radiant_eclipse":
+    "猎日逐光采用 AWA 十二人版本：流光伯爵与蚀日侍女从第二夜行动，庇护与吞噬各自不能连续两夜选相同目标。侍女先吞噬、原主暂失原生能力，再执行庇护、摄梦、狼聊、狼刀、用药及查验。借用从当前能力白名单快照产生独立库存，不复制私密历史、也不写回原主；借药最多一瓶、禁止自救，原主已耗药不刷新。借梦与牵连以侍女为施法者。庇护免疫狼刀、毒药和梦伤；吞伯爵或本夜受庇护者会反噬，摄梦可挡反噬但不挡连续梦或梦主死亡。临时封禁及借用授权在夜末关闭，已提交效果仍正常结算；失败中止不发布正常恢复、夜死或胜负。 庇护连续限制按本次能力保留或继承的上一目标与实际夜序判断；原主被封禁的夜晚无行动记录，借用选择不写回，不能按全局上一夜庇护目标排除。 借梦继承原主上一目标及实际夜序，允许连续梦并造成独立梦伤，不能梦侍女自己。空借药库存没有借药请求，原生女巫空药流程保留。侍女单向知道狼队、不狼聊、不自爆，只在真实夜初其余狼已全灭时有普通狼刀。",
+  "action.cast_shelter.hint":
+    "调用 cast_shelter，target_id 为一个其他存活玩家编号；不能连续夜重复本次庇护保留或继承的上一目标，明确放弃用 null。",
+  "action.cast_shelter.directive": "请选择本夜流光庇护目标，或明确放弃。",
+  "action.swallow_skill.hint":
+    "调用 swallow_skill，target_id 为一个存活好人且非上一夜吞噬的玩家编号；明确放弃用 null。",
+  "action.swallow_skill.directive": "请选择本夜吞噬目标，或明确放弃。",
+  "stage.radiant_shelter": "流光庇护",
+  "stage.eclipse_swallow": "吞噬技能",
+  "error.radiant_shelter_unavailable": "当前无法进行流光庇护。",
+  "error.radiant_shelter_target":
+    "庇护目标必须是其他存活玩家，且不能连续夜重复本次庇护保留或继承的上一目标。",
+  "error.eclipse_swallow_unavailable": "当前无法吞噬技能。",
+  "error.eclipse_swallow_target": "吞噬目标必须是存活好人，且不能与上一夜相同。",
+  "event.radiant_shelter_used": "{actor}庇护{target}。",
+  "event.radiant_shelter_passed": "{actor}本夜未使用流光庇护。",
+  "event.eclipse_swallowed": "{actor}吞噬{target}的原生技能。",
+  "event.eclipse_swallow_passed": "{actor}本夜未吞噬技能。",
+  "event.eclipse_native_suppressed": "你的原生技能本夜暂时失效；天亮恢复。",
+  "event.eclipse_native_restored": "本夜临时封禁已解除。",
+  "event.eclipse_lease_committed": "第{day}夜借用授权正常关闭。",
+  "event.eclipse_lease_aborted": "第{day}夜借用授权因中止关闭。",
+  "ability.kind.shelter": "流光庇护",
   "death.radiant_backlash": "流光反噬",
   "replay.stage.alchemist_mist_chosen": "雾选择",
   "replay.stage.alchemist_mist_skipped": "跳过雾请求",

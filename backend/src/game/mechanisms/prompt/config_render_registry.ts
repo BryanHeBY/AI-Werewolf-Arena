@@ -24,6 +24,7 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
     const windows = config.selfDestruct?.enabledWindows ?? [];
     const healRule = config.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled;
     return [
+      ...(config.radiantEclipse ? [text(locale, "rules.radiant_eclipse")] : []),
       text(locale, "prompt.config.title"),
       ...(config.scholarMentor ? [text(locale, "prompt.config.scholar_mentor")] : []),
       ...(config.magician

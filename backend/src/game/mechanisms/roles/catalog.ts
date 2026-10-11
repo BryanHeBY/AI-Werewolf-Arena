@@ -51,7 +51,10 @@ import { CURSED_FOX_ROLE_PROFILE } from "./cursed_fox/profile";
 import { DEBATER_ROLE_PROFILE } from "./debater/profile";
 import { CUPID_ROLE_PROFILE } from "./cupid/profile";
 
+import { RADIANT_COUNT_ROLE_PROFILE, ECLIPSE_MAID_ROLE_PROFILE } from "./radiant_eclipse/profile";
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
+  RADIANT_COUNT_ROLE_PROFILE,
+  ECLIPSE_MAID_ROLE_PROFILE,
   ALCHEMIST_ROLE_PROFILE,
   RAVEN_CLAW_ROLE_PROFILE,
   SCHOLAR_ROLE_PROFILE,

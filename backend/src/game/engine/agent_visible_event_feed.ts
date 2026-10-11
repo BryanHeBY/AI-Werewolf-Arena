@@ -1,3 +1,8 @@
+import {
+  RADIANT_ECLIPSE_EVENT_TYPES,
+  readRadiantEclipseFact,
+  radiantEclipseAudience,
+} from "@ai-werewolf-arena/game-text";
 import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
 import { types } from "node:util";
 import {
@@ -116,6 +121,21 @@ export function buildAgentVisibleEvent(
   const detached = snapshotEvent(event);
   if (!detached) return null;
   event = detached;
+  if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(event.type)) {
+    const fact = readRadiantEclipseFact(event.type, event.payload);
+    if (!fact) return null;
+    const expected = radiantEclipseAudience(event.type, fact);
+    if (
+      expected.length !== 1 ||
+      expected[0] !== actorId ||
+      !("audience" in event) ||
+      !Array.isArray(event.audience) ||
+      event.audience.length !== 1 ||
+      event.audience[0] !== actorId
+    )
+      return null;
+    return { seq: visibleSeq, type: event.type, payload: { ...fact } };
+  }
   const mistType = event.type;
   if ((MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(mistType)) {
     try {

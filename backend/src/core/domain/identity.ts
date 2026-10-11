@@ -9,6 +9,8 @@ export enum Camp {
 }
 
 export enum Role {
+  RadiantCount = "radiant_count",
+  EclipseMaid = "eclipse_maid",
   Alchemist = "alchemist",
   RavenClawWolf = "raven_claw_wolf",
   Wolf = "wolf",

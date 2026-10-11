@@ -193,17 +193,19 @@ export class BaselineBotActionProvider implements ActionProvider {
     )
       return null;
     const abilityRole =
-      bound?.kind === "role_check"
-        ? ROLE_INSPECTION_POLICY_ROLES[roleInspectionPolicy(bound.state)]
-        : bound?.kind === "seer_check"
-          ? Role.Seer
-          : bound?.kind === "guard"
-            ? Role.Guard
-            : bound?.kind === "potion"
-              ? Role.Witch
-              : bound?.kind === "dream"
-                ? Role.Dreamer
-                : role.role;
+      bound?.kind === "shelter"
+        ? Role.RadiantCount
+        : bound?.kind === "role_check"
+          ? ROLE_INSPECTION_POLICY_ROLES[roleInspectionPolicy(bound.state)]
+          : bound?.kind === "seer_check"
+            ? Role.Seer
+            : bound?.kind === "guard"
+              ? Role.Guard
+              : bound?.kind === "potion"
+                ? Role.Witch
+                : bound?.kind === "dream"
+                  ? Role.Dreamer
+                  : role.role;
     if (request.allowedTools.includes("bonus_action") && request.context.modifier_bonus_kind) {
       const kind = request.context.modifier_bonus_kind,
         target =

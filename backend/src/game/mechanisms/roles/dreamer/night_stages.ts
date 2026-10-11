@@ -1,3 +1,4 @@
+import { isRadiantEclipseBoard, captureRadiantPaidEffect } from "../radiant_eclipse/night_frame";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Phase } from "../../../../core/domain/model";
@@ -37,23 +38,47 @@ export const DREAMER_NIGHT_STAGE: NightStageHandler = {
       let applied = false;
       const current = () => scope.isEligible();
       for (let attempt = 1; attempt <= 3; attempt++) {
-        if (!current()) break;
+        if (!current()) {
+          if (isRadiantEclipseBoard(ctx.world))
+            throw new Error("radiant_eclipse_dream_scope_stale");
+          break;
+        }
         const request = ctx.makeRequest(actorId, ["dream"], {
           stage: "dreamer",
           ability_id: ability.id,
           ...(attempt === 1 ? {} : { retry_attempt: attempt - 1, retry_max: 2 }),
         });
-        if (!current()) break;
+        if (!current()) {
+          if (isRadiantEclipseBoard(ctx.world))
+            throw new Error("radiant_eclipse_dream_scope_stale");
+          break;
+        }
         const action = await ctx.actionProvider.getAction(request);
-        if (!current()) break;
-        if (action?.name !== "dream") continue;
+        if (!current()) {
+          if (isRadiantEclipseBoard(ctx.world))
+            throw new Error("radiant_eclipse_dream_scope_stale");
+          break;
+        }
+        if (action?.name !== "dream") {
+          if (isRadiantEclipseBoard(ctx.world))
+            throw new Error("radiant_eclipse_dream_action_missing");
+          continue;
+        }
         const validated = ctx.toolGateway.validateAndSanitize(ctx.world, actorId, action, {
           phase: Phase.Night,
           day,
           abilityId: ability.id,
         });
-        if (!current()) break;
-        if (!validated.ok || validated.sanitizedCall?.name !== "dream") continue;
+        if (!current()) {
+          if (isRadiantEclipseBoard(ctx.world))
+            throw new Error("radiant_eclipse_dream_scope_stale");
+          break;
+        }
+        if (!validated.ok || validated.sanitizedCall?.name !== "dream") {
+          if (isRadiantEclipseBoard(ctx.world))
+            throw new Error("radiant_eclipse_dream_action_invalid");
+          continue;
+        }
         const targetId = validated.sanitizedCall.args.target_id,
           target = targets.get(targetId);
         if (
@@ -75,6 +100,7 @@ export const DREAMER_NIGHT_STAGE: NightStageHandler = {
           actorId,
           targetId,
           day,
+          isCurrent: captureRadiantPaidEffect(ctx.world, day, actorId, ability, targetId),
           consecutive,
           protectionPolicy: state.protectionPolicy,
           actorLife,

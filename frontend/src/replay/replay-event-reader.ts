@@ -1,3 +1,4 @@
+import { RADIANT_ECLIPSE_EVENT_TYPES, readRadiantEclipseFact } from "@ai-werewolf-arena/game-text";
 import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
 import {
   readModifierChoiceFact,
@@ -215,6 +216,7 @@ const NO_IDS = new Set([
   "god_private_game_info",
 ]);
 export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([
+  ...RADIANT_ECLIPSE_EVENT_TYPES,
   ...MIST_RAVEN_EVENT_TYPES,
   "modifier_choice_committed",
   "modifier_choice_skipped",
@@ -278,6 +280,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(type))
+    return !!readRadiantEclipseFact(type, p);
   if ((MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(type))
     return !!readMistRavenFact(type, p);
   if (type === "modifier_choice_committed") return !!readModifierChoiceFact(type, p);
@@ -487,6 +491,19 @@ export function readReplayEvent(
     };
     if (!KNOWN.has(safe.type)) return { event: safe, relatedPlayerIds: [], effects: [] };
     if (!validKnownFields(safe.type, p)) return null;
+    if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(safe.type)) {
+      const abortedClose = safe.type === "eclipse_lease_closed" && p.status === "aborted";
+      // An API interruption can move the recorder cursor before this original night's cleanup.
+      if (
+        abortedClose
+          ? !["night", "day", "voting", "game_over"].includes(safe.phase)
+          : p.day !== safe.day || safe.phase !== "night"
+      )
+        return null;
+      if (Object.hasOwn(p, "actorId")) add(p.actorId);
+      if (Object.hasOwn(p, "playerId")) add(p.playerId);
+      if (Object.hasOwn(p, "targetId")) add(p.targetId, true);
+    }
     if ((MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(safe.type)) {
       if (
         p.day !== safe.day ||

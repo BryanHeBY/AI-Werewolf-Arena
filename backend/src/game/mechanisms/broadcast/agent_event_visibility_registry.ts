@@ -1,3 +1,8 @@
+import {
+  RADIANT_ECLIPSE_EVENT_TYPES,
+  readRadiantEclipseFact,
+  radiantEclipseAudience,
+} from "@ai-werewolf-arena/game-text";
 import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
 import {
   readModifierChoiceFact,
@@ -128,6 +133,19 @@ export class AgentEventVisibilityRegistry {
   constructor(private readonly rules: Record<string, AgentEventVisibilityRule> = DEFAULT_RULES) {}
 
   canView(world: World, event: GameEvent, actorId: EntityId): boolean {
+    if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(event.type)) {
+      const fact = readRadiantEclipseFact(event.type, event.payload);
+      if (!fact) return false;
+      const expected = radiantEclipseAudience(event.type, fact);
+      return (
+        expected.length === 1 &&
+        expected[0] === actorId &&
+        "audience" in event &&
+        Array.isArray(event.audience) &&
+        event.audience.length === 1 &&
+        event.audience[0] === actorId
+      );
+    }
     if (
       (MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(event.type) &&
       event.type !== "mist_knife_drawn"

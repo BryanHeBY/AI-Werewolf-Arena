@@ -1,3 +1,4 @@
+import { captureRadiantTurn } from "./radiant_eclipse/night_frame";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
@@ -9,6 +10,8 @@ import { aliveLifeVersion } from "../../../core/domain/components/alive";
 /** A policy edit is an authorization edit, even if the resource object survives. */
 function policyIdentity(ability: NightAbility): string {
   switch (ability.kind) {
+    case "shelter":
+      return JSON.stringify([ability.state.policy]);
     case "seer_check":
       return JSON.stringify([ability.state.targetPolicy, ability.state.actionPolicy]);
     case "potion":
@@ -37,6 +40,7 @@ export function captureNightAbilityScope<K extends NightAbilityKind>(
   const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
     life = captureNightLife(world, actorId);
   if (!role || !life) return null;
+  const radiantCurrent = captureRadiantTurn(world, actorId, ability, day);
   const roleKind = role.role,
     camp = role.camp,
     privateState = role.privateState;
@@ -84,6 +88,7 @@ export function captureNightAbilityScope<K extends NightAbilityKind>(
     life,
     state,
     isOwnerCurrent: ownerCurrent,
-    isEligible: () => ownerCurrent() && activeNightAbility(role, kind, day, id) === ability,
+    isEligible: () =>
+      radiantCurrent() && ownerCurrent() && activeNightAbility(role, kind, day, id) === ability,
   };
 }

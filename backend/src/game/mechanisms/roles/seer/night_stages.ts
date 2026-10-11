@@ -1,3 +1,4 @@
+import { isRadiantEclipseBoard } from "../radiant_eclipse/night_frame";
 import {
   isScholarMentorBoard,
   recordScholarMentorNativeTarget,
@@ -86,6 +87,7 @@ const seerCheckStage: NightStageHandler = {
         requiresAction: ability.state.actionPolicy !== "awa_optional_v1",
       });
       if (!scope.isEligible()) {
+        if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_seer_scope_stale");
         if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_scope_stale");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_scope_stale");
         continue;
@@ -93,11 +95,14 @@ const seerCheckStage: NightStageHandler = {
       const action = await ctx.actionProvider.getAction(req);
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) {
+        if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_seer_scope_stale");
         if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_scope_stale");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_scope_stale");
         continue;
       }
       if (action?.name !== "check_identity") {
+        if (isRadiantEclipseBoard(ctx.world))
+          throw new Error("radiant_eclipse_seer_action_missing");
         if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_action_missing");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_action_missing");
         if (isMagicianBoard(ctx.world)) throw new Error("magician_seer_action_missing");
@@ -117,11 +122,14 @@ const seerCheckStage: NightStageHandler = {
       });
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) {
+        if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_seer_scope_stale");
         if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_scope_stale");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_scope_stale");
         continue;
       }
       if (!result.ok || !result.sanitizedCall) {
+        if (isRadiantEclipseBoard(ctx.world))
+          throw new Error("radiant_eclipse_seer_action_invalid");
         if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_action_invalid");
         if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_action_invalid");
         if (isMagicianBoard(ctx.world)) throw new Error("magician_seer_action_invalid");

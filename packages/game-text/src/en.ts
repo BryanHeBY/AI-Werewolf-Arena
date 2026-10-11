@@ -1,6 +1,42 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "prompt.status.eclipse": "Your swallowing record: {state}",
+  "replay.stage.eclipse_swallowed": "Skill swallowed",
+  "replay.stage.eclipse_native_suppressed": "Native skill suppressed",
+  "replay.stage.eclipse_native_restored": "Native skill restored",
+  "replay.stage.eclipse_lease_closed": "Borrowed authorization closed",
+  "replay.stage.radiant_shelter_chosen": "Radiant shelter",
+  "role.radiant_count.brief":
+    "You are the Radiant Count, a good-side god. From night two, shelter one other living player or explicitly pass. Shelter blocks that night's ordinary wolf knife, poison and dream damage. You cannot shelter yourself or the same player on consecutive nights. If the Eclipse Maid swallows your skill, you have no native shelter action that night; suppression ends at dawn. Her borrowed choice does not change your previous target. A suppressed night is not a recorded pass. Borrowed shelter inherits the owner’s previous target and actual night number, without writing the borrower’s new choice back. After a suppressed night with no native action, you may choose your earlier target again.",
+  "role.eclipse_maid.brief":
+    "You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.",
+  "rules.radiant_eclipse":
+    "This is AWA's twelve-player Radiant Eclipse version. The Count and Maid act from night two; shelter and swallowing each prohibit repeating their own target on consecutive nights. The Maid swallows first and temporarily suppresses the owner's native skill; shelter, dreams, wolf chat, the knife, potions and inspection follow. Borrowing snapshots only permitted current state, creates independent stock, copies no private history and writes nothing back. Borrowed potions allow one bottle, no self-heal and no refresh of spent stock. The Maid is the caster of a borrowed dream and its death link. Shelter blocks the knife, poison and dream damage. Swallowing the Count or a sheltered player causes backlash; dream protection blocks backlash, but consecutive dreams and caster-death links remain separate. Night-end closure removes temporary suppression and borrowed authorization without canceling submitted effects. An aborted night publishes no normal restoration, night deaths or victory. Shelter’s repeat restriction uses its retained or inherited previous target and actual night number. A suppressed native owner records no action, and borrowed choices are not written back; there is no global previous-night shelter target. Borrowed dream inherits the owner’s prior target and actual night number: consecutive targeting is allowed and causes its own dream damage, and the Maid cannot dream herself. Empty borrowed potion stock creates no borrowed turn; the native Witch keeps her existing empty-stock flow. The Maid knows the other wolves, but they do not know her identity. She never joins wolf chat or self-destructs, and gets the ordinary knife only when all other wolves were dead at the actual start of the night.",
+  "action.cast_shelter.hint":
+    "Call cast_shelter with target_id identifying another living player. Do not repeat this shelter skill’s retained or inherited target on consecutive actual nights; use null to explicitly pass.",
+  "action.cast_shelter.directive": "Choose this night's shelter target or explicitly pass.",
+  "action.swallow_skill.hint":
+    "Call swallow_skill with target_id identifying a living good-side player who was not swallowed on the previous night; use null to explicitly pass.",
+  "action.swallow_skill.directive": "Choose this night's swallow target or explicitly pass.",
+  "stage.radiant_shelter": "Radiant shelter",
+  "stage.eclipse_swallow": "Swallow skill",
+  "error.radiant_shelter_unavailable": "Radiant shelter is unavailable now.",
+  "error.radiant_shelter_target":
+    "Shelter another living player without repeating this shelter skill’s retained or inherited target on consecutive actual nights.",
+  "error.eclipse_swallow_unavailable": "Skill swallowing is unavailable now.",
+  "error.eclipse_swallow_target":
+    "Swallow a living good-side player, choosing a different target from the previous night.",
+  "event.radiant_shelter_used": "{actor} shelters {target}.",
+  "event.radiant_shelter_passed": "{actor} passes on shelter this night.",
+  "event.eclipse_swallowed": "{actor} swallows {target}'s native skill.",
+  "event.eclipse_swallow_passed": "{actor} passes on swallowing this night.",
+  "event.eclipse_native_suppressed":
+    "Your native skill is temporarily suppressed for this night; it returns at dawn.",
+  "event.eclipse_native_restored": "This night's temporary suppression has ended.",
+  "event.eclipse_lease_committed": "Borrowed authorization closed normally for night {day}.",
+  "event.eclipse_lease_aborted": "Borrowed authorization closed after night {day} was aborted.",
+  "ability.kind.shelter": "Radiant shelter",
   "death.radiant_backlash": "Radiant backlash",
   "replay.stage.alchemist_mist_chosen": "Mist choice",
   "replay.stage.alchemist_mist_skipped": "Skipped Mist request",
