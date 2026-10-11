@@ -67,6 +67,57 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
   assert(isMagicianPreset(board) && !record.metadata.faultPlan && !record.metadata.initialDeal);
   const config = board.magician!,
     original = new Map(record.metadata.players.map((p) => [p.id, p]));
+  for (const row of board.roleSetups)
+    assert(record.metadata.players.filter((p) => p.role === row.role).length === row.count);
+  for (const player of original.values())
+    assert(
+      player.camp ===
+        ([Role.Wolf, Role.WolfKing, Role.Trickster, Role.WolfSorcerer].includes(player.role)
+          ? Camp.Wolf
+          : Camp.Good),
+    );
+  type Native = {
+    id: string;
+    kind: "seer_check" | "potion";
+    source: { kind: "native"; role: Role };
+    state: Record<string, unknown>;
+    sourceDisclosed: boolean;
+    startsOnDay: number;
+    maxUses: null;
+    uses: number;
+    lastUsedDay: number | null;
+    disabled: boolean;
+  };
+  const native = new Map<number, Native>();
+  for (const p of original.values()) {
+    const kind = p.role === Role.Seer ? "seer_check" : p.role === Role.Witch ? "potion" : null;
+    if (!kind) continue;
+    const state: Record<string, unknown> =
+      kind === "seer_check"
+        ? { lastTarget: null, lastIsWerewolf: null, lastResult: null, history: [] }
+        : {
+            heal: 1,
+            poison: 1,
+            selfHealRule: "disabled",
+            canSelfHeal: false,
+            healUsedThisNight: false,
+            poisonUsedThisNight: false,
+          };
+    native.set(p.id, {
+      id: "native:" + kind,
+      kind,
+      source: { kind: "native", role: p.role },
+      state,
+      sourceDisclosed: true,
+      startsOnDay: 1,
+      maxUses: null,
+      uses: 0,
+      lastUsedDay: null,
+      disabled: false,
+    });
+  }
+  const nativePrefixes = [structuredClone(native)];
+  const nativeTurns = new Set<string>();
   const actors = record.metadata.players.filter((p) => p.role === Role.Magician);
   assert(original.size === 12 && actors.length === 1 && actors[0]!.camp === Camp.Good);
   const actorId = actors[0]!.id,
@@ -85,7 +136,8 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
   let healed: number | null = null,
     poisoned: number | null = null;
   const pendingBlasts = new Set<number>(),
-    resolvedNights = new Set<number>();
+    resolvedNights = new Set<number>(),
+    completedNightActions = new Set<number>();
   let day = 1,
     phase: Phase = Phase.Night;
   nightAlive.set(1, [...alive]);
@@ -128,6 +180,8 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
       );
       day = e.payload.day;
       phase = e.payload.phase as Phase;
+      // First-day sheriff actions precede night_resolved, but follow every night action.
+      if (phase === Phase.Day) completedNightActions.add(day);
       if (phase === Phase.Night) {
         nightAlive.set(day, [...alive]);
         nightOrigins.clear();
@@ -214,6 +268,96 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
             : d.outcome.action.args.target_id === target),
       );
       votes.set(id, target as number | null);
+    }
+    if (
+      e.type === "seer_checked" ||
+      e.type === "witch_potion_used" ||
+      e.type === "witch_potion_skipped"
+    ) {
+      const id = e.payload.actorId;
+      assert(
+        typeof id === "number" &&
+          alive.has(id) &&
+          phase === Phase.Night &&
+          !resolvedNights.has(day),
+      );
+      const ability = native.get(id),
+        isSeer = e.type === "seer_checked",
+        stage = isSeer ? "seer" : "witch";
+      assert(
+        ability &&
+          ability.kind === (isSeer ? "seer_check" : "potion") &&
+          e.payload.abilityId === undefined,
+      );
+      const key = day + ":" + id + ":" + stage;
+      assert(!nativeTurns.has(key));
+      nativeTurns.add(key);
+      const decisions = record.decisions.filter(
+        (d) => d.day === day && d.actorId === id && d.stage === stage,
+      );
+      assert(decisions.length === 1);
+      const d = decisions[0]!;
+      assert(
+        d.outcome.kind === "action" &&
+          d.outcome.action &&
+          d.request.actorId === id &&
+          d.request.context.day === day &&
+          d.request.context.stage === stage &&
+          d.request.phase === Phase.Night,
+      );
+      const action = d.outcome.action;
+      if (isSeer) {
+        for (const [witchId, stock] of native)
+          if (stock.kind === "potion" && nightAlive.get(day)?.includes(witchId))
+            assert(nativeTurns.has(day + ":" + witchId + ":witch"));
+        const target = e.payload.targetId;
+        assert(
+          typeof target === "number" &&
+            alive.has(target) &&
+            action.name === "check_identity" &&
+            action.args.target_id === target,
+        );
+        const result = { kind: "camp", camp: original.get(swap(target, day))!.camp },
+          wolf = result.camp === Camp.Wolf;
+        assert(e.payload.isWerewolf === wolf && equal(e.payload.result, result));
+        ability.state.lastTarget = target;
+        ability.state.lastIsWerewolf = wolf;
+        ability.state.lastResult = { ...result };
+        (ability.state.history as unknown[]).push({
+          targetId: target,
+          isWerewolf: wolf,
+          result: { ...result },
+        });
+        ability.uses++;
+      } else {
+        assert(action.name === "use_potion");
+        ability.state.healUsedThisNight = false;
+        ability.state.poisonUsedThisNight = false;
+        if (e.type === "witch_potion_skipped") assert(action.args.potion_type === "none");
+        else {
+          const kind = e.payload.potionType,
+            target = e.payload.targetId;
+          assert(
+            (kind === "heal" || kind === "poison") &&
+              action.args.potion_type === kind &&
+              action.args.target_id === target &&
+              typeof target === "number" &&
+              alive.has(target),
+          );
+          assert(ability.state[kind] === 1);
+          if (kind === "heal") {
+            const tally = new Map<number, number>();
+            for (const target of votes.values())
+              if (target !== null) tally.set(target, (tally.get(target) ?? 0) + 1);
+            const raw = [...tally].sort(([a, n], [b, m]) => m - n || a - b)[0]?.[0] ?? null;
+            assert(target !== id && target === raw);
+          }
+          ability.state[kind] = 0;
+          ability.state[kind === "heal" ? "healUsedThisNight" : "poisonUsedThisNight"] = true;
+          ability.uses++;
+        }
+      }
+      ability.lastUsedDay = day;
     }
     if (e.type === "witch_potion_used") {
       const id = e.payload.actorId,
@@ -348,14 +492,99 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
       }
       gunEvents.add(id);
     }
+    nativePrefixes.push(structuredClone(native));
     histories.push(structuredClone(history));
     livingPrefixes.push([...alive]);
     gunPrefixes.push([...gunEvents]);
   }
+  for (const night of new Set([...resolvedNights, ...completedNightActions])) {
+    const living = nightAlive.get(night);
+    assert(living);
+    for (const [id, ability] of native)
+      if (living.includes(id)) {
+        const stage = ability.kind === "seer_check" ? "seer" : "witch";
+        assert(nativeTurns.has(night + ":" + id + ":" + stage));
+      }
+  }
   const checkpointedCycle = Math.max(0, ...record.checkpoints.map((cp) => cp.cycle));
   for (const d of record.decisions) {
-    // Provider traces may flush before the engine publishes this cycle\'s event/checkpoint prefix.
-    if (!record.finalized && d.day > checkpointedCycle) continue;
+    const unpublished = !record.finalized && d.day > checkpointedCycle;
+    if (d.request.phase === Phase.Day || d.request.phase === Phase.Voting) {
+      const previous = record.checkpoints.find((cp) => cp.cycle === d.day - 1 && cp.complete);
+      const living =
+        nightAlive.get(d.day) ??
+        (unpublished && previous && !previous.snapshot.gameOver
+          ? previous.players.filter((p) => p.alive).map((p) => p.id)
+          : undefined);
+      assert(living);
+      for (const [id, stock] of native) {
+        if (!living.includes(id)) continue;
+        const stage = stock.kind === "seer_check" ? "seer" : "witch";
+        const prior = record.decisions.filter(
+          (row) => row.day === d.day && row.actorId === id && row.stage === stage,
+        );
+        assert(prior.length === 1);
+        const turn = prior[0]!;
+        assert(
+          turn.outcome.kind === "action" &&
+            turn.outcome.action?.name === (stage === "seer" ? "check_identity" : "use_potion") &&
+            typeof turn.settleOrder === "number" &&
+            turn.settleOrder <= d.openedAfterSettlement,
+        );
+      }
+    }
+    if (
+      d.stage === "seer" ||
+      d.stage === "witch" ||
+      d.request.allowedTools.some((tool) => tool === "check_identity" || tool === "use_potion")
+    ) {
+      assert(d.stage === "seer" || d.stage === "witch");
+      assert(
+        d.request.actorId === d.actorId &&
+          d.request.context.day === d.day &&
+          d.request.context.stage === d.stage &&
+          d.request.phase === Phase.Night,
+      );
+      // A trace can publish the next request before publishing that night's facts.
+      // The previous complete checkpoint still proves its starting live roster.
+      const previous = record.checkpoints.find((cp) => cp.cycle === d.day - 1 && cp.complete);
+      const living =
+        nightAlive.get(d.day) ??
+        (unpublished && previous && !previous.snapshot.gameOver
+          ? previous.players.filter((p) => p.alive).map((p) => p.id)
+          : undefined);
+      assert(living);
+      assert(
+        original.get(d.actorId)?.role === (d.stage === "seer" ? Role.Seer : Role.Witch) &&
+          living.includes(d.actorId),
+      );
+      assert(equal(d.request.allowedTools, [d.stage === "seer" ? "check_identity" : "use_potion"]));
+      if (d.stage === "seer")
+        for (const [witchId, stock] of native)
+          if (stock.kind === "potion" && living.includes(witchId)) {
+            const prior = record.decisions.filter(
+              (row) => row.day === d.day && row.actorId === witchId && row.stage === "witch",
+            );
+            assert(prior.length === 1);
+            const turn = prior[0]!;
+            assert(
+              turn.outcome.kind === "action" &&
+                turn.outcome.action?.name === "use_potion" &&
+                typeof turn.settleOrder === "number" &&
+                turn.settleOrder <= d.openedAfterSettlement,
+            );
+            if (!unpublished) assert(nativeTurns.has(d.day + ":" + witchId + ":witch"));
+          }
+      assert(
+        record.decisions.filter(
+          (row) => row.day === d.day && row.actorId === d.actorId && row.stage === d.stage,
+        ).length === 1,
+      );
+      if (record.checkpoints.some((cp) => cp.complete && cp.cycle >= d.day))
+        assert(nativeTurns.has(d.day + ":" + d.actorId + ":" + d.stage));
+    }
+    // Event-dependent exchange checks wait for this cycle's actual event prefix.
+    if (unpublished) continue;
     if (d.stage === "magician_exchange") {
       assert(
         d.actorId === actorId && d.day >= config.firstNight && d.request.phase === Phase.Night,
@@ -417,6 +646,24 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
           }),
         );
       else assert(!Object.hasOwn(p.privateState, "magician"));
+      const ability = structuredClone(nativePrefixes[cp.eventCount]!.get(id));
+      if (ability) {
+        if (
+          ability.kind === "potion" &&
+          ability.lastUsedDay !== cp.cycle &&
+          nightAlive.get(cp.cycle)?.includes(id) &&
+          record.decisions.some(
+            (d) =>
+              d.day === cp.cycle &&
+              d.request.phase === Phase.Night &&
+              d.stage !== "magician_exchange",
+          )
+        ) {
+          ability.state.healUsedThisNight = false;
+          ability.state.poisonUsedThisNight = false;
+        }
+        assert(equal(p.privateState, { abilities: { [ability.id]: ability } }));
+      }
       if (initial.role === Role.Hunter || initial.role === Role.WolfKing) {
         const key = initial.role === Role.Hunter ? "hunter" : "wolf_king",
           state = p.privateState[key];
