@@ -586,3 +586,7 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 ## 2026-10-11 P9c 同源阶段验收完成
 
 修正 Prince 旧测试期望及验收输入漏项后，最终 1388 输入指纹前后一致，后端 5159／364 文件、前端 498／63 文件、Chromium 240 项零失败，无重试；静态、smoke 和双端构建通过。首次失败与原始日志、最终命令范围见[阶段验收](reviews/p9c-stage-acceptance.md)。当前 23 verified、21 implemented、20 planned，44/64；继续 P9d 六项及两个觉醒前置、P9e/P9f 与 P10，不推送。
+
+## 2026-10-11 P9d 迷雾鸦影授权基础
+
+原生状态、每夜施法者绑定、唯一 NightFrame、Pending 直伤／梦境延后与有限判别器已完成基础切片，三组独立审查反例修正闭合。133 项／7 文件（含旧梦境／死因）通过，类型、lint、格式和必要构建收口见[基础记录](reviews/p9-mist-raven-foundation.md)。两角色继续 planned，44/64 不变；立即接续 profile／真实夜与白天流程、录制、双语通信及帧验收，不能以 helper 当角色完成。
