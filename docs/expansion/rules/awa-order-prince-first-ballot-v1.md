@@ -1,6 +1,6 @@
 # AWA 定序王子有限规则契约
 
-状态：implemented；仅覆盖 awa_order_prince_12_v1 原生十二人板，功能证据见 [本批验收](../reviews/p9-order-prince.md)。P9c/P10 和总体验收仍开放。
+状态：implemented；覆盖 awa_order_prince_12_v1 原生十二人板及下文已交付的有限联合板，功能证据见 [本批验收](../reviews/p9-order-prince.md)。P9c/P10 和总体验收仍开放。
 
 政策 ID：awa_order_prince_first_ballot_v1。角色为好人神职。原生固定身份；不把重投实现为回滚整个 World。
 
@@ -22,5 +22,5 @@
 ## 实现与证据
 
 通过既有 VotingPipeline/DeathResolution/ActionProvider；原生主体与生命版本在 await 前后校验。所有 prompt/event/error 文案集中 game-text。
-提供独立公开预设 awa_order_prince_12_v1（四狼、四民、预言家、女巫、猎人、定序王子）。另支持 [诡术之境有限组合](awa-trickster-exile-v1.md) 的 awa_trickster_12_v1；两者均不代表网易永序之轮整板。
+提供独立公开预设 awa_order_prince_12_v1（四狼、四民、预言家、女巫、猎人、定序王子）。另支持 [诡术之境有限组合](awa-trickster-exile-v1.md) 的 awa_trickster_12_v1；另支持 [永序之轮有限组合](awa-time-consort-reflection-v1.md) 的 awa_time_consort_12_v1。原生板强制精确十二人牌组、屠边和一次 PK，通用警长／钩子选项仍可配置；联合板各自保持严格具名预设。配置预检和 bootstrap 共用最终资格检查，拒绝同一种未支持组合。
 需要原票救己/救他、弃用、首轮平票、PK不触发、禁止重入、警徽票权、晚到选民/目标失效、缺失/超时、确认后失败库存、双语SDK/ACP/失败Tape和真实UI证据。

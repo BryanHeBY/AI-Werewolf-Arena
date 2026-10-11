@@ -1091,6 +1091,29 @@ export const zhCN = Object.freeze({
   "prompt.config.sheriff": "警长机制：{rules}",
   "prompt.config.sheriff_enabled":
     "启用（包含上警、竞选发言、退水、警下投票；警长决定发言方向；警长票权={weight}） 无人上警、所有候选退水或没有有效警长票时不产生警长；退水候选不会自动恢复。",
+  "prompt.config.magician.first_night": "魔术师从第{day}夜起可以交换。",
+  "prompt.config.magician.shots_exchanged":
+    "魔术师的夜间交换影响夜死连锁的枪口；白天死亡的枪口不交换，开枪资格仍按原生死因策略。",
+  "prompt.config.magician.shots_original":
+    "魔术师的交换不影响死亡后的枪口；开枪资格仍按原生死因策略。",
+  "prompt.config.wolf_sorcerer.first_night": "狼术师从第{day}夜起可以交换。",
+  "prompt.config.time_wolf_consort.scope_first_effect":
+    "蚀时狼妃采用首次效果范围：首次反弹后本夜后续技能不再反弹，后续夜失去技能。",
+  "prompt.config.time_wolf_consort.scope_whole_night":
+    "蚀时狼妃采用整夜范围：首次反弹后本夜后续合格技能仍反弹，后续夜失去技能。",
+  "prompt.config.red_moon_apostle.last_wolf_forbidden": "赤月板禁止最后一名狼人自爆。",
+  "prompt.config.red_moon_apostle.last_wolf_ends":
+    "赤月板允许最后一名狼人自爆；完整死亡链结束后按胜利规则判胜。",
+  "prompt.config.nightmare.required": "噩梦之影有合法恐惧目标时必须选择；无合法目标时明确弃用。",
+  "prompt.config.nightmare.optional": "噩梦之影可以明确弃用恐惧；弃用打断连续目标限制。",
+  "prompt.config.nightmare.standard": "噩梦之影可以按普通狼人规则自爆，也能成为狼刀目标。",
+  "prompt.config.nightmare.no_blast": "噩梦之影不能自爆，也不能成为狼刀目标；普通狼人仍可自爆。",
+  "prompt.config.evil_knight.gun_bypasses":
+    "恶夜骑士可被合格的猎人枪杀死，包括夜间死亡连锁中的枪。",
+  "prompt.config.evil_knight.gun_immune":
+    "恶夜骑士免疫夜间死亡连锁的猎人枪；白天放逐引发的猎人枪可将其杀死。",
+  "prompt.config.night_before_sheriff":
+    "本板先完成夜间死亡结算，再开始白天与首日警长选举；已出局玩家不参加选举。",
   "prompt.config.sheriff_timing":
     "首日特殊时序：夜间行动结束后先进行上警报名、警上发言、退水和警下投票；警长投票结束后，才由 night_resolved 公布昨夜死亡或平安夜，再处理首夜遗言、警长定序和常规白天发言。昨夜实际死亡的玩家在公开结算前仍会参与上警流程。",
   "prompt.config.blast": "自爆机制：{rules}",

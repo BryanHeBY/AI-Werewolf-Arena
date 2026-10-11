@@ -1,4 +1,5 @@
 /** Renders normalized board rules without holding mutable language state. */
+import { settlesNightBeforeDay } from "../night_death_timing";
 import { renderDeathActionPolicy } from "../roles/death_action_policy";
 import { renderInspectionPolicy } from "../roles/role_inspection/policies";
 import {
@@ -25,6 +26,70 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
     return [
       text(locale, "prompt.config.title"),
       ...(config.scholarMentor ? [text(locale, "prompt.config.scholar_mentor")] : []),
+      ...(config.magician
+        ? [
+            text(locale, "prompt.config.magician.first_night", { day: config.magician.firstNight }),
+            text(
+              locale,
+              config.magician.deathShotTargetPolicy === "exchanged"
+                ? "prompt.config.magician.shots_exchanged"
+                : "prompt.config.magician.shots_original",
+            ),
+          ]
+        : []),
+      ...(config.wolfSorcerer
+        ? [
+            text(locale, "prompt.config.wolf_sorcerer.first_night", {
+              day: config.wolfSorcerer.firstNight,
+            }),
+          ]
+        : []),
+      ...(config.timeConsort
+        ? [
+            text(
+              locale,
+              config.timeConsort.reflectionScope === "first_effect"
+                ? "prompt.config.time_wolf_consort.scope_first_effect"
+                : "prompt.config.time_wolf_consort.scope_whole_night",
+            ),
+          ]
+        : []),
+      ...(config.redMoon
+        ? [
+            text(
+              locale,
+              config.redMoon.lastWolfBlastPolicy === "forbidden"
+                ? "prompt.config.red_moon_apostle.last_wolf_forbidden"
+                : "prompt.config.red_moon_apostle.last_wolf_ends",
+            ),
+          ]
+        : []),
+      ...(config.nightmareShadow
+        ? [
+            text(
+              locale,
+              config.nightmareShadow.fearActionPolicy === "required_when_legal"
+                ? "prompt.config.nightmare.required"
+                : "prompt.config.nightmare.optional",
+            ),
+            text(
+              locale,
+              config.nightmareShadow.wolfActionPolicy === "standard"
+                ? "prompt.config.nightmare.standard"
+                : "prompt.config.nightmare.no_blast",
+            ),
+          ]
+        : []),
+      ...(config.evilKnight
+        ? [
+            text(
+              locale,
+              config.evilKnight.shotPolicy === "hunter_shot_bypasses"
+                ? "prompt.config.evil_knight.gun_bypasses"
+                : "prompt.config.evil_knight.gun_immune",
+            ),
+          ]
+        : []),
       text(locale, "prompt.config.win", { rules: winConditions }),
       text(locale, "prompt.config.sheriff", {
         rules: sheriffEnabled
@@ -35,7 +100,12 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
       }),
       ...(sheriffEnabled
         ? [
-            text(locale, "prompt.config.sheriff_timing"),
+            text(
+              locale,
+              settlesNightBeforeDay(config)
+                ? "prompt.config.night_before_sheriff"
+                : "prompt.config.sheriff_timing",
+            ),
             text(
               locale,
               config.sheriff?.badgePolicy === "awa_holder_choice_v1"

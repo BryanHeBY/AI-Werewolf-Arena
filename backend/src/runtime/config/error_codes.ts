@@ -1,6 +1,7 @@
 import { BoardConfigurationError } from "./board_definition";
 /** Only known machine IDs may cross configuration CLI error boundaries. */
 export const CONFIG_ERROR_CODES = [
+  "board_config_order_prince_preset_invalid",
   "board_config_trickster_preset_invalid",
   "board_config_scholar_mentor_preset_invalid",
   "board_config_time_consort_preset_invalid",

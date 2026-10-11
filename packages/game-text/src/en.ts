@@ -1245,6 +1245,35 @@ export const en = Object.freeze({
   "prompt.config.sheriff": "Sheriff mechanism: {rules}",
   "prompt.config.sheriff_enabled":
     "Enabled: nomination, campaign speeches, withdrawal and non-candidate voting; the sheriff chooses speaking direction and has vote weight={weight} If nobody runs, all candidates withdraw, or no valid vote is cast, no sheriff is elected; withdrawn candidates are never restored.",
+  "prompt.config.magician.first_night": "Magician exchanges are available starting on night {day}.",
+  "prompt.config.magician.shots_exchanged":
+    "Magician exchanges affect shots in night death chains; daytime death shots are not exchanged. Native death-source eligibility still applies.",
+  "prompt.config.magician.shots_original":
+    "Magician exchanges do not affect death-shot targets. Native death-source eligibility still applies.",
+  "prompt.config.wolf_sorcerer.first_night":
+    "Wolf Sorcerer exchanges are available starting on night {day}.",
+  "prompt.config.time_wolf_consort.scope_first_effect":
+    "Time Wolf Consort reflects only the first eligible effect that night and loses the skill on later nights.",
+  "prompt.config.time_wolf_consort.scope_whole_night":
+    "Time Wolf Consort keeps reflecting eligible effects throughout the first triggered night and loses the skill on later nights.",
+  "prompt.config.red_moon_apostle.last_wolf_forbidden":
+    "The Red Moon board forbids the last living wolf from self-destructing.",
+  "prompt.config.red_moon_apostle.last_wolf_ends":
+    "The Red Moon board allows the last living wolf to self-destruct; victory is judged after the complete death chain.",
+  "prompt.config.nightmare.required":
+    "Nightmare Shadow must choose a legal fear target whenever one exists and explicitly pass otherwise.",
+  "prompt.config.nightmare.optional":
+    "Nightmare Shadow may explicitly pass fear; a pass breaks the consecutive-target restriction.",
+  "prompt.config.nightmare.standard":
+    "Nightmare Shadow may self-destruct under ordinary wolf rules and may be targeted by the pack knife.",
+  "prompt.config.nightmare.no_blast":
+    "Nightmare Shadow cannot self-destruct or be targeted by the pack knife. Ordinary wolves may still self-destruct.",
+  "prompt.config.evil_knight.gun_bypasses":
+    "Dark Knight can be killed by an eligible Hunter shot, including a shot in a night death chain.",
+  "prompt.config.evil_knight.gun_immune":
+    "Dark Knight is immune to Hunter shots in night death chains; shots following daytime exile can kill Dark Knight.",
+  "prompt.config.night_before_sheriff":
+    "This board resolves night deaths before daytime and the first sheriff election; eliminated players do not participate in the election.",
   "prompt.config.sheriff_timing":
     "First-day order: after night actions, collect nominations, campaign speeches, withdrawals and non-candidate votes. After the sheriff vote, night_resolved announces deaths or no deaths, followed by first-night last words, sheriff speaking direction and regular day speeches. Players who actually died overnight still participate in the election before the public night resolution.",
   "prompt.config.blast": "Self-destruction: {rules}",

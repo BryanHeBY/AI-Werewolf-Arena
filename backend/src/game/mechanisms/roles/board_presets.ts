@@ -1,5 +1,6 @@
 import {
   isTricksterPreset,
+  isOrderPrincePreset,
   isScholarMentorPreset,
   isTimeConsortPreset,
   isWolfSorcererPreset,
@@ -88,5 +89,11 @@ export function boardPresetViolation(config: BoardConfig) {
     config.winCondition === WinCondition.ThreeFactionsElimination
   )
     if (!isGhostBridePreset(config)) return "ghost_bride_preset_invalid";
+  if (
+    (config.orderPrince ||
+      config.roleSetups.some((row) => row.role === Role.OrderPrince && row.count > 0)) &&
+    !isOrderPrincePreset(config)
+  )
+    return "order_prince_preset_invalid";
   return null;
 }

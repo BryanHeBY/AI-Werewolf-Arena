@@ -1,3 +1,4 @@
+import { settlesNightBeforeDay } from "../../../game/mechanisms/night_death_timing";
 import { readModifierState } from "../../../game/mechanisms/roles/scholar_mentor/state";
 import { scholarMentorStateForRole } from "../../../game/mechanisms/roles/scholar_mentor/night_frame";
 import { projectTimeConsortState } from "../../../game/mechanisms/roles/time_wolf_consort/state";
@@ -693,7 +694,7 @@ export class PlayerPromptPolicy {
     const firstDaySheriffTiming =
       day === 1 &&
       this.options.boardConfig?.enableSheriff === true &&
-      this.options.boardConfig.pureWhite === undefined &&
+      !settlesNightBeforeDay(this.options.boardConfig) &&
       [
         "sheriff_nomination",
         "sheriff_campaign_speech",

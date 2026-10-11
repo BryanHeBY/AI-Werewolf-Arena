@@ -883,6 +883,7 @@ export function magicianEventLabel(
 }
 
 export * from "./order-prince";
+export * from "./order-prince-preset";
 import { readOrderPrinceRevoteFact } from "./order-prince";
 export function orderPrinceEventLabel(
   type: string,
