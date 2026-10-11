@@ -40,6 +40,10 @@
 
 实际通信切片 `dabb645` 后的空闲 A 审查证实：真实完整 expiry 档案在 GameOver 后追加活村民投票、同步补末 CP 计数和完整公开 feed，turn 1／2 均曾被公共 parser 接受。按开启时点统一拒绝 GameOver 请求，保留正常投票 soft 语义。原输入独立 **3/0/25**，`/tmp/awa-noble-after-game-vote-a-independent-fixed.log`；同原变异维护测试 **3/0/25**，`/tmp/awa-noble-postgame-maintained-final.log`，包含 fresh 自然终局与精确 Tape 正例。未扩展伪造投票情景或复跑通信矩阵；两角色计数不变。
 
+### 后续自爆跳夜检查点修正
+
+终局修复 `8159282` 后的受限观察捕获合法 CP：已完成 Night2、自爆跳过放逐，末 phase_changed 已为 Night3，snapshot.day=3。旧账本对事件日次再加一，误拒此路径。现在从独立事件折叠得到的已完成夜推导下一天，并核对 CP cycle；普通 Voting 路径不变，不拿 CP 自述夜次当 oracle。新增手写四夜真实贵族自爆、paid 契约继续到期、死贵族知情不刷新、自然 Good 与严格 Tape，单项 **1/0/7**；A 独立连维护及两个日次共改反例 **4/0/16**，`/tmp/awa-noble-blast-checkpoint-a-review.log`。相同原输入已迁入两份维护测试；首次模拟误拒和捕获日志保留，未放宽 event／source／资源验证。
+
 复用真实 transport runner，按独立角色相对计划执行 SDK／ACP／mixed × 中文／英文，覆盖四政策、实际通知前后信息边界、严格 missing／late／撤权和资源关闭。补全部人工源组合、选举／自爆及受限观察种子；从真实档案导出 God／各玩家 fixtures，执行 frame／seek、Chromium 与 Remotion，再执行新源码同源完整门禁及独立最终核验，全部通过后才登记 50/64。
 
 当前没有独立 board editor，公共 JSON 往返仍不代表编辑器交付。剩余寻香魅影／觉醒预言家、P9e 六项、P9f 剩六项、P10 长局／64角色22机制矩阵和预算授权范围内的 T6 均保持开放。本批没有真实模型调用或 push。

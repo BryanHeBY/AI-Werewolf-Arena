@@ -30,6 +30,12 @@ export interface NobleLiteralNight {
   potion?: { target: number; type: PotionType };
 }
 export const nobleLiteralPlans: Record<string, readonly NobleLiteralNight[]> = {
+  blast_skips_vote: [
+    { body: 6, servant: null, knife: null, hunt: null, exile: 10 },
+    { body: 7, servant: 6, knife: null, hunt: null, exile: 11 },
+    { body: 6, servant: null, knife: null, hunt: null, exile: 11 },
+    { body: null, servant: null, knife: null, hunt: null, exile: 12 },
+  ],
   expiry: [
     { body: 6, servant: null, knife: null, hunt: null, exile: 10 },
     { body: 7, servant: 6, knife: null, hunt: null, exile: 11 },
@@ -76,6 +82,7 @@ export async function recordNobleLiteral(
     failureStage?: string;
     failureDay?: number;
     badgeChoice?: "missing" | "invalid";
+    blastDay?: number;
   } = {},
 ) {
   const config = nobleSecretBodyTwelveConfig(options.wolf, options.repeat),
@@ -116,6 +123,16 @@ export async function recordNobleLiteral(
                   async getAction(r: ActionRequest): Promise<ToolCall | null> {
                     const n = nobleLiteralPlans[name]![r.context.day - 1];
                     if (!n) throw Error("noble_literal_plan_exhausted");
+                    if (
+                      r.actorId === 1 &&
+                      r.context.day === options.blastDay &&
+                      r.context.stage === "on_pre_vote" &&
+                      r.allowedTools.includes("self_destruct")
+                    )
+                      return {
+                        name: "self_destruct",
+                        args: { confirm: true, reason: "Literal skipped-vote restart." },
+                      };
                     if (
                       r.context.day === (options.failureDay ?? 2) &&
                       r.context.stage === options.failureStage

@@ -941,9 +941,11 @@ export function validateNobleSecretBodyRecord(record: ReproductionRecord): Noble
                 .map((d) => d.settleOrder ?? 0),
             ),
     );
+    const advanced = cp.complete && !cp.snapshot.gameOver && cp.cycle > 0,
+      completedNight = state.nights.at(-1);
+    check(!advanced || (completedNight && completedNight.day === cp.cycle));
     check(
-      cp.snapshot.phase === phase &&
-        cp.snapshot.day === (cp.complete && !cp.snapshot.gameOver && cp.cycle > 0 ? day + 1 : day),
+      cp.snapshot.phase === phase && cp.snapshot.day === (advanced ? completedNight!.day + 1 : day),
     );
     const expected = structuredClone(state),
       n = expected.nights.at(-1);
