@@ -17,6 +17,7 @@ import {
 } from "../../src/runtime/simulation/replay_reproduction";
 import { createTestTempDirectory } from "./temp_directory";
 import type { ActorTransportPlan, PlannedTurn } from "./foundation_transport_plan";
+import { assertSubmitActionWireSchema, type MistWireState } from "./mist_raven_transport_oracle";
 import {
   assertTransportPrompt,
   assertTransportEvents,
@@ -43,6 +44,7 @@ export interface TransportGameScenario {
     | "expectedTeammateIds"
     | "requiredCurrentMarkers"
     | "forbiddenCurrentMarkers"
+    | "mistWire"
   >;
 }
 
@@ -69,6 +71,7 @@ export async function runTransportGame(
     attempts = new Map<number, number>(),
     rejected = new Map<number, number>();
   const failures: string[] = [],
+    wireStates = new Map<number, MistWireState>(),
     sdkPrompts = new Map<number, string[]>(),
     acpTraces: Array<{ actor: number; trace: any }> = [];
   const server =
@@ -89,7 +92,15 @@ export async function runTransportGame(
                     : Number.MAX_SAFE_INTEGER,
                 ),
                 turn = plan.turns[index];
+              if (!wireStates.has(actor)) wireStates.set(actor, {});
               if (!turn) throw new Error("fixture_extra_turn");
+              if (plan.mistWire)
+                assertSubmitActionWireSchema(
+                  body.tools?.find((t: any) => t.function?.name === "submit_action")?.function
+                    .parameters,
+                );
+              wireStates.get(actor)!.currentDay = turn.day;
+              wireStates.get(actor)!.currentRequestOrdinal = index + 1;
               const prompt = [...body.messages]
                 .reverse()
                 .find(
@@ -104,6 +115,8 @@ export async function runTransportGame(
               sdkPrompts.set(actor, history);
               if (locale === "en")
                 expect(JSON.stringify(body.messages)).not.toMatch(/\p{Script=Han}/u);
+              if (locale === "en" && plan.mistWire)
+                expect(JSON.stringify(body.tools)).not.toMatch(/\p{Script=Han}/u);
               expect(body.messages[0].content).toContain(
                 locale === "en" ? "Use English" : "你必须使用中文",
               );
@@ -120,6 +133,8 @@ export async function runTransportGame(
                     plan.eventRole ?? plan.role,
                     [JSON.parse(message.content).event],
                     actor,
+                    plan.mistWire,
+                    wireStates.get(actor),
                   );
                 }
               const attempt = attempts.get(actor) ?? 0,
@@ -288,17 +303,35 @@ export async function runTransportGame(
     expect(replay.result.decision).toEqual(result.snapshot.result ?? undefined);
     const views: ReplayPlayerView[] = [];
     if (scenario.expectedFailure) {
+      const record = await readReproduction(path.join(directory, "reproduction.json"));
       for (const actor of plans.keys()) {
         const view: ReplayPlayerView = JSON.parse(
           await fs.readFile(path.join(directory, `players/player_${actor}.json`), "utf8"),
         );
         assertReplayPlayerView(view);
         views.push(view);
+        const events = view.timeline.flatMap((row) =>
+          row.kind === "event"
+            ? [
+                [row.seq, row.event.type, row.event.payload] as [
+                  number,
+                  string,
+                  Record<string, unknown>,
+                ],
+              ]
+            : [],
+        );
+        const decisions = record.decisions.filter((d) => d.actorId === actor);
+        const plan = plans.get(actor)!;
+        assertTransportEvents(plan.eventRole ?? plan.role, events, actor, plan.mistWire, {
+          currentDay: record.checkpoints.at(-1)!.snapshot.day,
+          currentRequestOrdinal:
+            decisions.length + (decisions.at(-1)?.outcome.kind === "error" ? 0 : 1),
+        });
         for (const row of view.timeline)
           if (row.kind === "turn")
             expect(row.delta_messages.some((m) => m.kind === "fallback")).toBe(false);
       }
-      const record = await readReproduction(path.join(directory, "reproduction.json"));
       expect(record.checkpoints.at(-1)!.complete).toBe(false);
       expect(
         record.decisions.some(
@@ -373,7 +406,10 @@ export async function runTransportGame(
             : undefined,
         )
         .filter((entry) => entry !== undefined);
-      assertTransportEvents(plan.eventRole ?? plan.role, events, actor);
+      assertTransportEvents(plan.eventRole ?? plan.role, events, actor, plan.mistWire, {
+        currentDay: result.snapshot.day,
+        currentRequestOrdinal: plan.turns.length + 1,
+      });
       const rounds = view.timeline.filter((entry) => entry.kind === "turn");
       expect(
         rounds,

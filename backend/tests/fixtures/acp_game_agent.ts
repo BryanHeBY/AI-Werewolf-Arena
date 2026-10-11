@@ -7,6 +7,10 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 import type { AcpMcpServerConfig } from "../../src/ai/integrations/acp/acp_mcp_bridge";
 import type { ActorTransportPlan } from "../support/foundation_transport_plan";
 import {
+  assertSubmitActionWireSchema,
+  type MistWireState,
+} from "../support/mist_raven_transport_oracle";
+import {
   assertTransportPrompt,
   assertTransportEvents,
   assertTransportIdentity,
@@ -28,6 +32,7 @@ const trace = {
   initializationSeen: false,
   failure: "",
 };
+const wireState: MistWireState = {};
 let client: Client | undefined;
 const send = (value: unknown) => process.stdout.write(JSON.stringify(value) + "\n");
 const save = () => writeFile("game-fixture.json", JSON.stringify(trace));
@@ -54,6 +59,14 @@ try {
       });
       await client.connect(transport);
       trace.mcpPid = transport.pid!;
+      if (plan.mistWire) {
+        const listed = await client.listTools();
+        assertSubmitActionWireSchema(
+          listed.tools.find((t) => t.name === "submit_action")?.inputSchema,
+        );
+        if (plan.locale === "en" && /[\u4e00-\u9fff]/.test(JSON.stringify(listed.tools)))
+          throw new Error("fixture_tool_schema_locale_mismatch");
+      }
       const schema = await client.callTool({ name: "get_game_schema", arguments: {} });
       const body = JSON.stringify(schema.structuredContent);
       if (plan.locale === "en" ? /[\u4e00-\u9fff]/.test(body) : !/[\u4e00-\u9fff]/.test(body))
@@ -75,13 +88,21 @@ try {
             last?.terminalFailure ? Math.min(trace.consumed, plan.turns.length - 1) : trace.consumed
           ];
         if (!turn) throw new Error("fixture_extra_turn");
+        wireState.currentDay = turn.day;
+        wireState.currentRequestOrdinal = plan.turns.indexOf(turn) + 1;
         const turnId = assertTransportPrompt(plan, turn, prompt);
         const batch = prompt.split("\n").find((line) => line.includes('{"events":'));
         if (batch) {
           const events = JSON.parse(batch.slice(batch.indexOf('{"events":'))).events as Array<
             [number, string, Record<string, unknown>]
           >;
-          assertTransportEvents(plan.eventRole ?? plan.role, events, plan.actorId);
+          assertTransportEvents(
+            plan.eventRole ?? plan.role,
+            events,
+            plan.actorId,
+            plan.mistWire,
+            wireState,
+          );
           for (const [, type, payload] of events)
             if (type === "seer_checked") trace.visibleSeerTargets.push(payload.targetId as number);
         }

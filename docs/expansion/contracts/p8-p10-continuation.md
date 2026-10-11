@@ -142,3 +142,7 @@ game-catalog 拥有稳定 ID/名称/状态，game-text 拥有双语文案。新�
 ## P9d 延迟胜负测试接续
 
 末神／末民的完整Wolf终局、救回末民后的继续游戏以及后夜非法自救的真实失败Tape已闭合，见[延迟胜负](../reviews/p9-mist-raven-complete-victory.md)。下一步新角色双语实际通信及精确迟到／资源，再做种子和前端；角色仍planned，44/64不变。
+
+## P9d 正常协议通路接续
+
+新角色24个中英SDK／ACP／mixed完整协议局及私有wire授权已交付，见[正常通信](../reviews/p9-mist-raven-normal-transport.md)。立即接续缺失／非法／迟到失败通路，并完成runtime-resources精确请求预算及到达／真正迟到／回收证明；随后种子及前端。正常绿色不关闭上述任务，角色planned、44/64不变。

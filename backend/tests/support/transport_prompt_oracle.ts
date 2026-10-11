@@ -14,6 +14,11 @@ import {
   readTricksterSkipFact,
 } from "@ai-werewolf-arena/game-text";
 import type { ActorTransportPlan, PlannedTurn } from "./foundation_transport_plan";
+import {
+  assertMistTransportEvents,
+  type MistWireExpectations,
+  type MistWireState,
+} from "./mist_raven_transport_oracle";
 
 export function assertTransportIdentity(plan: ActorTransportPlan, content: string): void {
   for (const marker of plan.requiredSystemMarkers ?? []) {
@@ -27,6 +32,9 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  alchemist_mist: ["未明之雾", "Alchemist Mist"],
+  alchemist_snake: ["法老之蛇救治", "Snake healing"],
+  raven_knife: ["狼鸦额外刀", "Raven extra knife"],
   scholar_mentor_choice: ["学者／导师施法", "Scholar / Mentor modifier"],
   scholar_mentor_bonus: ["强化额外行动", "Enhanced bonus action"],
   exile_pk_speech: ["放逐PK发言", "Exile PK speeches"],
@@ -119,6 +127,16 @@ export function assertTransportPrompt(
     if (!content.includes(marker)) throw new Error("fixture_required_turn_marker_missing");
   for (const marker of turn.forbiddenPromptMarkers ?? [])
     if (content.includes(marker)) throw new Error("fixture_premature_marker_exposed");
+  if (plan.mistWire) {
+    const hints: Record<string, [string, string]> = {
+      alchemist_mist: ["cast_mist", "target_ids"],
+      alchemist_snake: ["use_snake", "target_id"],
+      raven_knife: ["raven_knife", "target_id"],
+    };
+    const hint = hints[turn.stage];
+    if (hint && (!content.includes(hint[0]) || !content.includes(`"${hint[1]}"`)))
+      throw new Error("fixture_mist_action_hint_missing");
+  }
   if (turn.currentTeammateIds !== undefined) {
     const ids = turn.currentTeammateIds.join(", ") || (plan.locale === "en" ? "None" : "无");
     const marker =
@@ -312,7 +330,10 @@ export function assertTransportEvents(
   role: string,
   events: Array<[number, string, Record<string, unknown>]>,
   actorId: number,
+  expected?: MistWireExpectations,
+  state?: MistWireState,
 ) {
+  assertMistTransportEvents(role, actorId, events, expected, state);
   for (const [, type, payload] of events) {
     if (type === "modifier_conflict_resolved") throw new Error("fixture_modifier_conflict_exposed");
     if (
@@ -495,6 +516,7 @@ export function assertTransportEvents(
         "time_wolf_consort",
         "wolf_sorcerer",
         "night_mentor",
+        "raven_claw_wolf",
       ].includes(role)
     )
       throw new Error("fixture_wolf_information_exposed");
