@@ -52,15 +52,60 @@ export interface GameRunResult {
   snapshot: RuntimeSnapshot;
   eventCount: number;
 }
+/** Per-run execution dependencies; these are never player DTO or JSON configuration fields. */
+export interface GameRunDependencies {
+  selectRequestDeadline?: (
+    request: Readonly<{
+      actorId: number;
+      day: number;
+      stage: ActionRequest["context"]["stage"];
+      ordinal: number;
+      actorOrdinal: number;
+      retryAttempt: number;
+      nowMs: number;
+    }>,
+  ) => number | undefined;
+  onRuntimeClosed?: (state: PlayerAgentRuntime["runtimeState"]) => void;
+}
 
 class DeadlineAwareActionProvider implements ActionProvider {
+  private ordinal = 0;
+  private readonly actors = new Map<number, number>();
+  private readonly budgets = new Map<string, number>();
   constructor(
     private readonly delegate: ActionProvider,
     private readonly deadlineAtMs: number,
+    private readonly timeoutMs: number,
+    private readonly selectDeadline?: GameRunDependencies["selectRequestDeadline"],
   ) {}
 
   getAction(request: ActionRequest): Promise<ToolCall | null> {
-    const timed = { ...request, deadlineAtMs: this.deadlineAtMs };
+    const nowMs = Date.now(),
+      actorOrdinal = (this.actors.get(request.actorId) ?? 0) + 1;
+    this.actors.set(request.actorId, actorOrdinal);
+    const ordinal = ++this.ordinal;
+    const retryAttempt = request.context.retry_attempt ?? 0;
+    const selected = this.selectDeadline?.({
+      actorId: request.actorId,
+      day: request.context.day,
+      stage: request.context.stage,
+      ordinal,
+      actorOrdinal,
+      retryAttempt,
+      nowMs,
+    });
+    if (selected !== undefined && !Number.isFinite(selected))
+      throw new RangeError("game_request_deadline_invalid");
+    const key = `${request.actorId}/${request.context.day}/${request.context.stage}`;
+    const deadline = Math.min(
+      this.deadlineAtMs,
+      request.deadlineAtMs ?? Infinity,
+      nowMs + this.timeoutMs,
+      selected ?? Infinity,
+      retryAttempt > 0 ? (this.budgets.get(key) ?? Infinity) : Infinity,
+    );
+    this.budgets.set(key, deadline);
+    const timed = { ...request, deadlineAtMs: deadline };
     inheritWallDeadlineRequest(request, timed);
     inheritInitialIdentityDeadlineRequest(request, timed);
     inheritWildChildDeadlineRequest(request, timed);
@@ -73,7 +118,10 @@ class DeadlineAwareActionProvider implements ActionProvider {
 }
 
 /** The caller supplies a fully resolved setup; no configuration I/O happens here. */
-export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> {
+export async function runGame(
+  setup: ResolvedGameSetup,
+  dependencies: GameRunDependencies = {},
+): Promise<GameRunResult> {
   const context = bootstrapGame(setup.boardConfig, {
     random: createRandom(setup.context.seed),
     locale: setup.context.locale,
@@ -198,7 +246,12 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
           return tracked;
         },
       };
-      const provider = new DeadlineAwareActionProvider(decisionProvider, deadlineAtMs);
+      const provider = new DeadlineAwareActionProvider(
+        decisionProvider,
+        deadlineAtMs,
+        options.llmTimeoutMs,
+        dependencies.selectRequestDeadline,
+      );
       log(
         `[run_game] start board=${options.board} replay_session_id=${sessionId} record_dir=${replayManager.sessionDir} · ${text(setup.context.displayLocale, "runtime.start")}`,
         "info",
@@ -286,6 +339,13 @@ export async function runGame(setup: ResolvedGameSetup): Promise<GameRunResult> 
       }
       await closeRuntime();
       await drainActions();
+      if (agentRuntime && dependencies.onRuntimeClosed) {
+        try {
+          dependencies.onRuntimeClosed(structuredClone(agentRuntime.runtimeState));
+        } catch (error) {
+          cleanupFailures.push(error);
+        }
+      }
       for (const error of actionFailures)
         if (!failures.includes(error)) {
           failures.push(error);
