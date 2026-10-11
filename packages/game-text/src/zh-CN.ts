@@ -443,9 +443,9 @@ export const zhCN = Object.freeze({
   "role.red_moon_apostle.brief":
     "你是赤月使徒，属于狼人阵营。自爆后下一夜封锁好人技能；作为最后一名狼人被放逐时，延迟至下一天亮出局。",
   "role.red_moon_apostle.state": "自爆日期：{blastDay}；延迟放逐日期：{exileDay}。",
-  "role.red_moon_apostle.last_wolf_forbidden": "本板禁止最后一名狼人自爆。",
+  "role.red_moon_apostle.last_wolf_forbidden": "你作为最后一名狼人时不能自爆；普通狼人权限不变。",
   "role.red_moon_apostle.last_wolf_ends":
-    "本板允许最后一名狼人自爆，但无存活狼人后立即按胜利规则结束游戏。",
+    "你作为最后一名狼人时可以自爆；完整死亡链结束后按无狼胜利规则判胜，普通狼人权限不变。",
   "console.magician.pass": "弃用",
   "console.magician.own": "你第{day}夜的交换选择：{pair}",
   "console.shot.missed": "{actor}号开枪，未产生额外死亡。",
@@ -1101,9 +1101,10 @@ export const zhCN = Object.freeze({
     "蚀时狼妃采用首次效果范围：首次反弹后本夜后续技能不再反弹，后续夜失去技能。",
   "prompt.config.time_wolf_consort.scope_whole_night":
     "蚀时狼妃采用整夜范围：首次反弹后本夜后续合格技能仍反弹，后续夜失去技能。",
-  "prompt.config.red_moon_apostle.last_wolf_forbidden": "赤月板禁止最后一名狼人自爆。",
+  "prompt.config.red_moon_apostle.last_wolf_forbidden":
+    "赤月使徒作为最后一名狼人时不能自爆；普通狼人权限不变。",
   "prompt.config.red_moon_apostle.last_wolf_ends":
-    "赤月板允许最后一名狼人自爆；完整死亡链结束后按胜利规则判胜。",
+    "赤月使徒作为最后一名狼人时可以自爆；完整死亡链结束后按胜利规则判胜，普通狼人权限不变。",
   "prompt.config.nightmare.required": "噩梦之影有合法恐惧目标时必须选择；无合法目标时明确弃用。",
   "prompt.config.nightmare.optional": "噩梦之影可以明确弃用恐惧；弃用打断连续目标限制。",
   "prompt.config.nightmare.standard": "噩梦之影可以按普通狼人规则自爆，也能成为狼刀目标。",

@@ -162,13 +162,13 @@ const variants = [
   ["awa_time_consort_12_v1", "蚀时狼妃采用整夜范围", "Time Wolf Consort keeps reflecting"],
   [
     "awa_red_moon_12_ends_game_v1",
-    "赤月板允许最后一名狼人自爆",
-    "The Red Moon board allows the last living wolf",
+    "赤月使徒作为最后一名狼人时可以自爆",
+    "Red Moon Apostle may self-destruct as the last living wolf",
   ],
   [
     "awa_red_moon_12_forbidden_v1",
-    "赤月板禁止最后一名狼人自爆",
-    "The Red Moon board forbids the last living wolf",
+    "赤月使徒作为最后一名狼人时不能自爆",
+    "Red Moon Apostle cannot self-destruct as the last living wolf",
   ],
   [
     "awa_nightmare_12_optional_standard_v1",

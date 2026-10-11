@@ -517,9 +517,9 @@ export const en = Object.freeze({
   "role.red_moon_apostle.state":
     "Self-destruction day: {blastDay}; deferred-exile day: {exileDay}.",
   "role.red_moon_apostle.last_wolf_forbidden":
-    "This board forbids self-destruction by the last living werewolf.",
+    "You cannot self-destruct as the last living wolf; ordinary wolves retain their usual permissions.",
   "role.red_moon_apostle.last_wolf_ends":
-    "The last living werewolf may self-destruct, but the game ends immediately under the victory rules once no werewolves remain.",
+    "You may self-destruct as the last living wolf; victory is judged after the complete death chain with no wolves remaining. Ordinary wolves retain their usual permissions.",
   "console.magician.pass": "pass",
   "console.magician.own": "Your exchange choice on night {day}: {pair}",
   "console.shot.missed": "Player {actor} fires, causing no additional death.",
@@ -1257,9 +1257,9 @@ export const en = Object.freeze({
   "prompt.config.time_wolf_consort.scope_whole_night":
     "Time Wolf Consort keeps reflecting eligible effects throughout the first triggered night and loses the skill on later nights.",
   "prompt.config.red_moon_apostle.last_wolf_forbidden":
-    "The Red Moon board forbids the last living wolf from self-destructing.",
+    "Red Moon Apostle cannot self-destruct as the last living wolf; ordinary wolves retain their usual permissions.",
   "prompt.config.red_moon_apostle.last_wolf_ends":
-    "The Red Moon board allows the last living wolf to self-destruct; victory is judged after the complete death chain.",
+    "Red Moon Apostle may self-destruct as the last living wolf; victory is judged after the complete death chain. Ordinary wolves retain their usual permissions.",
   "prompt.config.nightmare.required":
     "Nightmare Shadow must choose a legal fear target whenever one exists and explicitly pass otherwise.",
   "prompt.config.nightmare.optional":

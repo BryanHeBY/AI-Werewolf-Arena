@@ -101,3 +101,20 @@ test("Red Moon rejects an unsupported self-destruct window before consuming stat
   expect(events).toEqual([]);
   expect(demonRedMoonCanBlast(world, 4)).toBe(true);
 });
+
+for (const policy of ["ends_game", "forbidden"] as const)
+  test(policy + ": an ordinary final wolf retains its ordinary blast permission", () => {
+    const { world } = dayWorld(policy);
+    for (const id of [2, 3, 4])
+      world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+    const events: Parameters<typeof commitSelfDestructSelection>[4] = [];
+    const result = commitSelfDestructSelection(
+      world,
+      { kind: "ordinary", actorId: 1, targetId: null },
+      ActionWindow.OnPreElection,
+      Phase.Day,
+      events,
+    );
+    expect(result).toEqual({ deaths: [1], sources: { 1: [DeathCause.SelfDestruct] } });
+    expect(events.map((event) => event.type)).toEqual(["wolf_self_destruct"]);
+  });
