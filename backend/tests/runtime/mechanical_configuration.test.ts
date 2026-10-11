@@ -60,31 +60,33 @@ for (const unsupported of Object.values(Role).filter(
       parseBoardDefinition(boardDefinitionFromConfig("mechanical_unsupported", config)),
     ).toThrow("board_config_role_combination_not_supported");
     expect(() => bootstrapGame(config)).toThrow(
-      unsupported === Role.DayScholar || unsupported === Role.NightMentor
-        ? "scholar_mentor_preset_invalid"
-        : unsupported === Role.TimeWolfConsort
-          ? "time_consort_preset_invalid"
-          : unsupported === Role.WolfSorcerer
-            ? "wolf_sorcerer_preset_invalid"
-            : unsupported === Role.Trickster
-              ? "trickster_preset_invalid"
-              : unsupported === Role.Magician
-                ? "magician_preset_invalid"
-                : unsupported === Role.RedMoonApostle
-                  ? "red_moon_preset_invalid"
-                  : unsupported === Role.NightmareShadow
-                    ? "nightmare_preset_invalid"
-                    : unsupported === Role.EvilKnight
-                      ? "evil_knight_preset_invalid"
-                      : unsupported === Role.OrderPrince
-                        ? "order_prince_preset_invalid"
-                        : unsupported === Role.GhostBride
-                          ? "ghost_bride_preset_invalid"
-                          : unsupported === Role.DemonHunter
-                            ? "demon_hunter_preset_invalid"
-                            : unsupported === Role.PureWhiteGirl || unsupported === Role.WolfWitch
-                              ? "pure_white_preset_invalid"
-                              : "role_combination_not_supported",
+      unsupported === Role.Alchemist || unsupported === Role.RavenClawWolf
+        ? "mist_raven_preset_invalid"
+        : unsupported === Role.DayScholar || unsupported === Role.NightMentor
+          ? "scholar_mentor_preset_invalid"
+          : unsupported === Role.TimeWolfConsort
+            ? "time_consort_preset_invalid"
+            : unsupported === Role.WolfSorcerer
+              ? "wolf_sorcerer_preset_invalid"
+              : unsupported === Role.Trickster
+                ? "trickster_preset_invalid"
+                : unsupported === Role.Magician
+                  ? "magician_preset_invalid"
+                  : unsupported === Role.RedMoonApostle
+                    ? "red_moon_preset_invalid"
+                    : unsupported === Role.NightmareShadow
+                      ? "nightmare_preset_invalid"
+                      : unsupported === Role.EvilKnight
+                        ? "evil_knight_preset_invalid"
+                        : unsupported === Role.OrderPrince
+                          ? "order_prince_preset_invalid"
+                          : unsupported === Role.GhostBride
+                            ? "ghost_bride_preset_invalid"
+                            : unsupported === Role.DemonHunter
+                              ? "demon_hunter_preset_invalid"
+                              : unsupported === Role.PureWhiteGirl || unsupported === Role.WolfWitch
+                                ? "pure_white_preset_invalid"
+                                : "role_combination_not_supported",
     );
     try {
       parseBoardDefinition(boardDefinitionFromConfig("mechanical_unsupported", config));

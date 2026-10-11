@@ -23,6 +23,7 @@ const trace = {
   agentPid: process.pid,
   mcpPid: 0,
   controlUrl: "",
+  controlToken: "",
   locale: "",
   prompts: [] as string[],
   arrivals: [] as Array<{
@@ -44,7 +45,7 @@ const trace = {
 const wireState: MistWireState = {};
 let client: Client | undefined;
 const send = (value: unknown) => process.stdout.write(JSON.stringify(value) + "\n");
-const save = () => writeFile("game-fixture.json", JSON.stringify(trace));
+const save = () => writeFile("game-fixture.json", JSON.stringify(trace), { mode: 0o600 });
 try {
   for await (const line of createInterface({ input: process.stdin })) {
     const request = JSON.parse(line);
@@ -61,6 +62,7 @@ try {
       if (env.AWA_TASK_LOCALE !== plan.locale) throw new Error("fixture_mcp_locale_mismatch");
       trace.locale = env.AWA_TASK_LOCALE;
       trace.controlUrl = env.WEREWOLF_MCP_CONTROL_URL;
+      trace.controlToken = env.WEREWOLF_MCP_TOKEN;
       client = new Client({ name: `synthetic-game-${plan.actorId}`, version: "1.0.0" });
       const transport = new StdioClientTransport({
         command: config.command,
@@ -78,6 +80,14 @@ try {
           throw new Error("fixture_tool_schema_locale_mismatch");
       }
       const schema = await client.callTool({ name: "get_game_schema", arguments: {} });
+      const calibration = schema.structuredContent as Record<string, unknown> | undefined;
+      // session/new has not bound the session yet: session_not_ready proves that
+      // authentication passed, whereas unauthorized must never calibrate ownership.
+      if (
+        schema.isError &&
+        (calibration?.ok !== false || calibration?.error !== "session_not_ready")
+      )
+        throw new Error("fixture_control_owner_calibration_failed");
       const body = JSON.stringify(schema.structuredContent);
       if (plan.locale === "en" ? /[\u4e00-\u9fff]/.test(body) : !/[\u4e00-\u9fff]/.test(body))
         throw new Error("fixture_schema_locale_mismatch");

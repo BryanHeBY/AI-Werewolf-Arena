@@ -6,7 +6,7 @@ const transportDiagnostic = (...values: unknown[]) => {
 import { expect } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { connect } from "node:net";
+import { assertControlOwnerClosed } from "./control_owner_probe";
 import { assertReplayDocument, assertReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
 import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
@@ -27,27 +27,6 @@ import {
 import type { Role } from "../../src/core";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import type { ReplayManifest, ReplayPlayerView } from "../../src/recording/contracts";
-
-/** Direct TCP proof avoids proxy routing and clears its own bounded probe timer/socket. */
-async function assertClosedControl(endpoint: string) {
-  expect(endpoint).toMatch(/^http:\/\/127\.0\.0\.1:\d+$/);
-  const socket = connect({ host: "127.0.0.1", port: Number(new URL(endpoint).port) });
-  const closed = new Promise<void>((resolve) => socket.once("close", () => resolve()));
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  try {
-    const outcome = await new Promise<Error | "connected">((resolve) => {
-      socket.once("error", resolve);
-      socket.once("connect", () => resolve("connected"));
-      timer = setTimeout(() => resolve(new Error("fixture_control_probe_timeout")), 1000);
-    });
-    expect(outcome).toBeInstanceOf(Error);
-    expect((outcome as NodeJS.ErrnoException).code).toBe("ECONNREFUSED");
-  } finally {
-    clearTimeout(timer);
-    socket.destroy();
-    await closed;
-  }
-}
 
 export interface TransportGameScenario {
   expectedFailure?: { actorId: number; stage: string };
@@ -486,7 +465,7 @@ export async function runTransportGame(
           !record.decisions.some((decision) => decision.actorId === actor)
         )
           continue;
-        const trace = JSON.parse(
+        const { controlToken, ...trace } = JSON.parse(
           await fs.readFile(
             path.join(directory, `acp-workspaces/player-${actor}/game-fixture.json`),
             "utf8",
@@ -509,7 +488,7 @@ export async function runTransportGame(
           }
           expect(alive).toBe(false);
         }
-        await assertClosedControl(trace.controlUrl);
+        trace.controlClosure = await assertControlOwnerClosed(trace.controlUrl, controlToken);
       }
       const target = failureTarget!;
       const targetDecisions = record.decisions.filter((d) => d.actorId === target.actorId);
@@ -606,7 +585,7 @@ export async function runTransportGame(
           ).rejects.toMatchObject({ code: "ENOENT" });
           continue; // Lazy sessions do not start for players with no decisions.
         }
-        const trace = JSON.parse(
+        const { controlToken, ...trace } = JSON.parse(
           await fs.readFile(
             path.join(directory, `acp-workspaces/player-${actor}/game-fixture.json`),
             "utf8",
@@ -630,7 +609,7 @@ export async function runTransportGame(
             expect((error as NodeJS.ErrnoException).code).toBe("ESRCH");
           }
         }
-        await assertClosedControl(trace.controlUrl);
+        trace.controlClosure = await assertControlOwnerClosed(trace.controlUrl, controlToken);
       }
     }
     const record = await readReproduction(path.join(directory, "reproduction.json"));
