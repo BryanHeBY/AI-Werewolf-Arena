@@ -38,6 +38,9 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  night_noble: ["设置夜仆", "Choose a servant"],
+  secret_body: ["秘密之身保护", "Secret Body protection"],
+  awakened_idiot_reveal_speech: ["活人翻牌发言", "Living role reveal speech"],
   sheriff_badge_choice: ["警徽移交选择", "Badge successor choice"],
   eclipse_swallow: ["吞噬技能", "Swallow skill"],
   radiant_shelter: ["流光庇护", "Radiant shelter"],
@@ -117,6 +120,11 @@ export function assertTransportPrompt(
   turn: PlannedTurn,
   content: string,
 ): string {
+  if (
+    ["night_noble", "awakened_idiot"].includes(plan.role) &&
+    /night_spent|noble_contract_closed|secret_body_blocked|noble_body_/.test(content)
+  )
+    throw Error("fixture_noble_actual_state_exposed");
   const actorMarker =
     plan.locale === "en"
       ? `[Action prompt] Player ${plan.actorId},`
@@ -377,6 +385,26 @@ export function assertTransportEvents(
 ) {
   assertMistTransportEvents(role, actorId, events, expected, state);
   for (const [, type, payload] of events) {
+    if (
+      type.startsWith("noble_body_") ||
+      ["noble_contract_closed", "secret_body_blocked"].includes(type)
+    )
+      throw Error("fixture_noble_god_fact_exposed");
+    if (
+      [
+        "noble_servant_chosen",
+        "noble_night_notified",
+        "secret_body_chosen",
+        "secret_body_night_notified",
+      ].includes(type)
+    ) {
+      if (
+        payload.actorId !== actorId ||
+        role !== (type.startsWith("noble_") ? "night_noble" : "awakened_idiot") ||
+        (state?.currentDay !== undefined && Number(payload.day) > state.currentDay)
+      )
+        throw Error("fixture_noble_owner_fact_exposed");
+    }
     if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(type)) {
       const fact = readRadiantEclipseFact(type, payload);
       if (!fact || !radiantEclipseAudience(type, fact).includes(actorId))
@@ -572,6 +600,7 @@ export function assertTransportEvents(
         "wolf_sorcerer",
         "night_mentor",
         "raven_claw_wolf",
+        "night_noble",
       ].includes(role)
     )
       throw new Error("fixture_wolf_information_exposed");

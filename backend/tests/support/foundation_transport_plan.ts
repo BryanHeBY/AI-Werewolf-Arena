@@ -36,6 +36,7 @@ export interface PlannedTurn {
   };
 }
 export interface ActorTransportPlan {
+  verifyGameWire?: boolean;
   mistWire?: MistWireExpectations;
   actorId: number;
   role: Role;

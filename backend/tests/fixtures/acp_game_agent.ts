@@ -39,6 +39,7 @@ const trace = {
   consumed: 0,
   visibleSeerTargets: [] as number[],
   schemaChecked: false,
+  activeSchemas: [] as Array<{ actorOrdinal: number; body: unknown }>,
   initializationSeen: false,
   failure: "",
 };
@@ -71,7 +72,7 @@ try {
       });
       await client.connect(transport);
       trace.mcpPid = transport.pid!;
-      if (plan.mistWire) {
+      if (plan.mistWire || plan.verifyGameWire) {
         const listed = await client.listTools();
         assertSubmitActionWireSchema(
           listed.tools.find((t) => t.name === "submit_action")?.inputSchema,
@@ -119,6 +120,14 @@ try {
           arrivedAtMs: Date.now(),
           terminalFailure: turn.terminalFailure,
         });
+        if (plan.verifyGameWire) {
+          const schema = await client!.callTool({ name: "get_game_schema", arguments: {} });
+          if (schema.isError) throw Error("fixture_active_schema_failed");
+          trace.activeSchemas.push({
+            actorOrdinal: plan.turns.indexOf(turn) + 1,
+            body: schema.structuredContent,
+          });
+        }
         const batch = prompt.split("\n").find((line) => line.includes('{"events":'));
         if (batch) {
           const events = JSON.parse(batch.slice(batch.indexOf('{"events":'))).events as Array<

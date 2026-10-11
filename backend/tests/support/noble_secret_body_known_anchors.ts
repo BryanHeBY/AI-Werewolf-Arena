@@ -1,0 +1,81 @@
+import { expect } from "bun:test";
+import { noblePromptStatus, type NobleWireRun } from "./noble_secret_body_wire_oracle";
+import type { nobleTransportScenario } from "./noble_secret_body_transport_scenarios";
+/** Handwritten cross-night checkpoints in actual current prompts, separate from feed folds. */
+export function assertNobleKnownAnchors(
+  run: NobleWireRun,
+  s: ReturnType<typeof nobleTransportScenario>,
+) {
+  const map = (old: number) => s.mapping.get(old)!,
+    rows: Array<{ actor: number; ordinal: number; prompt: string }> = [];
+  for (const w of run.sdkWireMessages) {
+    const prompt = [...w.messages]
+      .reverse()
+      .map((m) => m as { role: string; content: unknown })
+      .find(
+        (m) =>
+          m.role === "user" &&
+          typeof m.content === "string" &&
+          /\[Action prompt\]|\[行动提示\]/.test(m.content),
+      )!.content as string;
+    rows.push({ actor: w.actor, ordinal: w.ordinal, prompt });
+  }
+  for (const { actor, trace } of run.acpTraces) {
+    const prompts = trace.prompts.filter((p) => /(?:Current turn ID: |当前回合 ID：)t\d+/.test(p));
+    for (const [i, prompt] of prompts.entries())
+      rows.push({ actor, ordinal: trace.arrivals[i]!.actorOrdinal, prompt });
+  }
+  const anchor = (old: number, day: number, stage: string, state: Record<string, unknown>) => {
+    let hits = 0;
+    for (const r of rows) {
+      if (r.actor !== map(old)) continue;
+      const d = run.record.decisions.filter((d) => d.actorId === r.actor)[r.ordinal - 1]!;
+      if (d.day !== day || d.stage !== stage) continue;
+      expect(noblePromptStatus(r.prompt)).toEqual(state);
+      hits++;
+    }
+    expect(hits).toBeGreaterThan(0);
+  };
+  const body = (
+    night: number,
+    resource: string,
+    awaiting: boolean,
+    publicRevealDay: number | null = null,
+  ) => ({
+    protectionRepeatPolicy: s.board.config.awakenedIdiot!.protectionRepeatPolicy,
+    lastNotifiedNight: night,
+    lastChoice: { day: s.name === "badge_reveal" ? 1 : 3, targetId: map(6) },
+    resource,
+    publicRevealDay,
+    awaitingNightReport: awaiting,
+  });
+  const noble = (night: number, status: "pending" | "expired" | "cleared", terminal?: number) => ({
+    wolfActionPolicy: s.board.config.nightNoble!.wolfActionPolicy,
+    lastNotifiedNight: night,
+    lastChoice: { day: 2, targetId: map(6) },
+    contracts: [
+      {
+        id: "servant:night:2",
+        targetId: map(6),
+        createdNight: 2,
+        expiresNight: 3,
+        status: status === "pending" ? { kind: status } : { kind: status, day: terminal },
+      },
+    ],
+    awaitingNightReport: false,
+  });
+  if (s.name === "expiry") {
+    anchor(5, 3, "day_speech", body(3, "intact", true));
+    anchor(5, 4, "day_speech", body(4, "spent", true));
+    anchor(1, 3, "wolf_discussion", noble(3, "pending"));
+    anchor(1, 4, "wolf_discussion", noble(4, "expired", 3));
+  }
+  if (s.name === "new_and_old_clear") {
+    anchor(1, 2, "day_speech", { ...noble(2, "pending"), awaitingNightReport: true });
+    anchor(1, 3, "wolf_discussion", noble(3, "cleared", 2));
+  }
+  if (s.name === "badge_reveal") {
+    anchor(5, 1, "awakened_idiot_reveal_speech", body(1, "exile_revealed", false, 1));
+    anchor(5, 2, "day_speech", body(2, "exile_revealed", false, 1));
+  }
+}

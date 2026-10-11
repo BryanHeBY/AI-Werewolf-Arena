@@ -46,6 +46,7 @@ export interface TransportGameScenario {
     | "requiredCurrentMarkers"
     | "forbiddenCurrentMarkers"
     | "mistWire"
+    | "verifyGameWire"
   >;
 }
 
@@ -141,7 +142,7 @@ export async function runTransportGame(
                 turn = plan.turns[index];
               if (!wireStates.has(actor)) wireStates.set(actor, {});
               if (!turn) throw new Error("fixture_extra_turn");
-              if (plan.mistWire)
+              if (plan.mistWire || plan.verifyGameWire)
                 assertSubmitActionWireSchema(
                   body.tools?.find((t: any) => t.function?.name === "submit_action")?.function
                     .parameters,
@@ -166,7 +167,7 @@ export async function runTransportGame(
                 arrivedAtMs: Date.now(),
                 terminalFailure: turn.terminalFailure,
               });
-              if (scenario.board.config.radiantEclipse)
+              if (scenario.board.config.radiantEclipse || scenario.board.config.nobleSecretBody)
                 sdkWireMessages.push({
                   actor,
                   ordinal: index + 1,
@@ -177,7 +178,7 @@ export async function runTransportGame(
               sdkPrompts.set(actor, history);
               if (locale === "en")
                 expect(JSON.stringify(body.messages)).not.toMatch(/\p{Script=Han}/u);
-              if (locale === "en" && plan.mistWire)
+              if (locale === "en" && (plan.mistWire || plan.verifyGameWire))
                 expect(JSON.stringify(body.tools)).not.toMatch(/\p{Script=Han}/u);
               expect(body.messages[0].content).toContain(
                 locale === "en" ? "Use English" : "你必须使用中文",
@@ -315,6 +316,9 @@ export async function runTransportGame(
         agent: id,
         ...(scenario.board.config.radiantEclipse && [4, 7, 8, 9].includes(actor)
           ? { personalityPrompt: `SOURCE_HISTORY_PRIVATE_ACTOR_${actor}` }
+          : {}),
+        ...(scenario.board.config.nobleSecretBody
+          ? { personalityPrompt: `NOBLE_PRIVATE_ACTOR_${actor}` }
           : {}),
       };
       if (transportKind(actor) === "llm")
