@@ -1,4 +1,8 @@
 import {
+  closeTimeConsortNight,
+  abortTimeConsortNight,
+} from "../mechanisms/roles/time_wolf_consort/night_frame";
+import {
   closeWolfSorcererNight,
   abortWolfSorcererNight,
 } from "../mechanisms/roles/wolf_sorcerer/night_frame";
@@ -315,6 +319,7 @@ export class PhaseManager {
     try {
       return await this.runSingleCycleInternal(actionProvider, maxDays);
     } finally {
+      if (this.config.timeConsort) abortTimeConsortNight(this.world);
       if (this.config.wolfSorcerer) abortWolfSorcererNight(this.world);
       if (this.config.magician) abortMagicianNight(this.world);
     }
@@ -733,10 +738,12 @@ export class PhaseManager {
         if (this.config.wolfSorcerer && dayIsCurrent())
           closeWolfSorcererNight(this.world, cycleDay);
         if (this.config.magician && dayIsCurrent()) closeMagicianNight(this.world, cycleDay);
+        if (this.config.timeConsort && dayIsCurrent()) closeTimeConsortNight(this.world, cycleDay);
       } finally {
         if (this.config.trickster) abortTricksterNight(this.world);
         if (this.config.wolfSorcerer) abortWolfSorcererNight(this.world);
         if (this.config.magician) abortMagicianNight(this.world);
+        if (this.config.timeConsort) abortTimeConsortNight(this.world);
       }
       if (!dayIsCurrent()) return this.state.gameOver;
       bearFrame?.publish(this.world, this.events, dayIsCurrent);

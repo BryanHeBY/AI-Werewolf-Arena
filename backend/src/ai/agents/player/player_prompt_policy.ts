@@ -1,3 +1,4 @@
+import { projectTimeConsortState } from "../../../game/mechanisms/roles/time_wolf_consort/state";
 import { projectWolfSorcererState } from "../../../game/mechanisms/roles/wolf_sorcerer/state";
 import { projectTricksterState } from "../../../game/mechanisms/roles/trickster/state";
 import { projectOrderPrinceState } from "../../../game/mechanisms/roles/order_prince/state";
@@ -198,6 +199,8 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    const timeConsort = projectTimeConsortState(role, request.context.day);
+    if (timeConsort) ownState.timeConsort = timeConsort;
     const wolfSorcerer = projectWolfSorcererState(role);
     if (wolfSorcerer) ownState.wolfSorcerer = wolfSorcerer;
     const trickster = projectTricksterState(role);

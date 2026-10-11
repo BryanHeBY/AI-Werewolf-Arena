@@ -15,6 +15,8 @@ export const ORDER_PRINCE_ROLE_PROFILE: RoleProfile = {
   maxCount: 1,
   supportedWinConditions: [WinCondition.SlaughterSide],
   supportedBoardRoles: [
+    Role.TimeWolfConsort,
+    Role.Guard,
     Role.Trickster,
     Role.Magician,
     Role.Wolf,

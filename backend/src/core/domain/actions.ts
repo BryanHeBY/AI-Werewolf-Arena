@@ -10,6 +10,7 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  lock_time: { target_id: EntityId | null; abstain: boolean };
   swap_night_seats: { first_id: EntityId | null; second_id: EntityId | null; abstain: boolean };
   swap_exile_targets: { first_id: EntityId | null; second_id: EntityId | null; abstain: boolean };
   reset_exile_vote: { activate: boolean };
@@ -69,6 +70,7 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "lock_time",
   "swap_night_seats",
   "swap_exile_targets",
   "reset_exile_vote",
@@ -150,6 +152,7 @@ export interface TurnConstraints {
 }
 
 export const ACTION_STAGES = [
+  "time_consort_lock",
   "wolf_sorcerer_exchange",
   "trickster_exchange",
   "order_prince_choice",
@@ -218,6 +221,7 @@ export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */
 export interface ActionRequestExtras {
+  consort_candidates?: readonly EntityId[];
   sorcerer_candidates?: readonly EntityId[];
   trickster_candidates?: readonly EntityId[];
   trickster_may_pass?: boolean;

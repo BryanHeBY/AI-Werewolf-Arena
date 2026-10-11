@@ -531,6 +531,33 @@ export const en = Object.freeze({
   "stage.order_prince_choice": "Order Prince choice",
   "stage.order_prince_speech": "Order Prince speech",
   "stage.order_prince_revote": "Restarted exile vote",
+  "event.time_consort_lock_committed": "Player {actor}'s night {day} lock: {target}.",
+  "event.time_consort_skipped_dead": "Night {day}: player {actor} is dead; no new lock.",
+  "event.time_consort_skipped_exhausted":
+    "Night {day}: player {actor}'s reflection was consumed on an earlier night; no further locks.",
+  "event.time_consort_reflected":
+    "Night {day}: player {actor}'s lock reflects player {source}'s {skill} from player {target} to player {effective}.",
+  "time_consort.skill.check": "inspection",
+  "time_consort.skill.guard": "guard",
+  "time_consort.skill.poison": "poison",
+  "role.time_wolf_consort.brief":
+    "Werewolf. Before good night skills, lock one living player, including yourself, or explicitly pass. Do not lock the same player on consecutive nights. Good inspection, guard and poison aimed at the locked player affect their own caster; heal and wolf attack do not reflect. Only an actual reflection consumes the game-long skill, and exhaustion is disclosed next night. Original requests still govern consecutive-target legality.",
+  "role.time_wolf_consort.scope_whole_night":
+    "Whole-night scope: after the first reflection, later eligible skills still reflect this night; no locks on later nights.",
+  "role.time_wolf_consort.scope_first_effect":
+    "First-effect scope: after the first reflection, later skills do not reflect; no locks on later nights.",
+  "action.lock_time.hint":
+    "lock_time: legal target_id with abstain=false; pass with target_id=null and abstain=true.",
+  "action.lock_time.directive":
+    "Submit only lock_time. Missing, invalid or late choices fail and never become automatic passes.",
+  "error.time_consort_unavailable": "The Time-Wolf Consort cannot lock a target now.",
+  "error.time_consort_target":
+    "Choose a living target different from last night, or explicitly pass.",
+  "stage.time_consort_lock": "Time-Wolf Consort lock",
+  "replay.stage.time_consort_lock": "Time-Wolf Consort lock",
+  "replay.stage.time_consort_lock_committed": "Lock choice",
+  "replay.stage.time_consort_lock_skipped": "Skipped lock",
+  "replay.stage.time_consort_reflected": "Lock reflection",
   "role.wolf_sorcerer.brief":
     "Werewolf seat mapper. After the Magician and before pack actions, explicitly choose two distinct unused living numbers or pass. Each of your numbers can be used once. Your swap moves the occupants of the already-swapped positions; overlapping pairs form an ordered cycle, while identical pairs cancel effects without refunding resources. Identities, public seats and daytime ballots remain unchanged. No pack knowledge or action before your first eligible choice.",
   "role.wolf_sorcerer.first_night": "Your first exchange night is {day}.",

@@ -1,3 +1,4 @@
+import { isTimeConsortPreset } from "@ai-werewolf-arena/game-text";
 import { isTricksterPreset, readExileMappingFact } from "@ai-werewolf-arena/game-text";
 import { sanitizeSpeechText } from "../utils/speech_text";
 import { readOrderPrinceChoiceFact, readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-text";
@@ -57,7 +58,8 @@ export function validateOrderPrinceRecord(record: ReproductionRecord): void {
   const expected = { wolf: 4, villager: 4, seer: 1, witch: 1, hunter: 1, order_prince: 1 };
   const tricksterBoard = isTricksterPreset(board);
   check(
-    tricksterBoard ||
+    isTimeConsortPreset(board) ||
+      tricksterBoard ||
       (board.boardSize === 12 &&
         board.roleSetups.length === 6 &&
         equal(Object.fromEntries(board.roleSetups.map((r) => [r.role, r.count])), expected)),

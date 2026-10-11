@@ -27,6 +27,12 @@ const strategies = z.enum(["min_id", "min_seat", "no_elimination", "no_kill"]);
 
 /** Internal board shape shared by reverse configuration writing and reproduction. No defaults are added here. */
 export const boardConfigSchema = z.strictObject({
+  timeConsort: z
+    .strictObject({
+      policy: z.literal("awa_time_consort_reflection_v1"),
+      reflectionScope: z.enum(["whole_night", "first_effect"]),
+    })
+    .optional(),
   wolfSorcerer: z
     .strictObject({
       policy: z.literal("awa_wolf_sorcerer_seats_v1"),

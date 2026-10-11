@@ -564,3 +564,7 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 ## 2026-10-11 狼术师有限魔幻对决板
 
 公开 awa_wolf_sorcerer_12_v1，独立双层号码库存与 M(W(number)) 有序映射。分层功能证据见 [狼术师验收](reviews/p9-wolf-sorcerer.md)。目录 23 verified、18 implemented、23 planned，41/64。P9c 其余角色、P10 与用户总体验收仍开放。
+
+## 2026-10-11 蚀时狼妃有限永序之轮板
+
+公开 awa_time_consort_12_v1，whole_night 与 first_effect 两种显式 AWA 反弹范围。功能与分层证据见 [蚀时狼妃验收](reviews/p9-time-consort.md)。目录 23 verified、19 implemented、22 planned，42/64。P9c 其余角色、P9d–P9f、P10 与用户总体验收仍开放。

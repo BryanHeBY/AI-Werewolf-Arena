@@ -1,3 +1,8 @@
+import { isTimeConsortBoard } from "../../mechanisms/roles/time_wolf_consort/night_frame";
+import {
+  assertTimeConsortRosterCurrent,
+  abortTimeConsortNight,
+} from "../../mechanisms/roles/time_wolf_consort/night_frame";
 import {
   assertWolfSorcererRosterCurrent,
   abortWolfSorcererNight,
@@ -194,6 +199,7 @@ export class NightPipeline {
     const ownsWedding = weddingSetup(this.world) !== null;
     const ownsDemon = demonHunterActorId(this.world) !== null;
     let magicianHandedOff = false;
+    let timeConsortHandedOff = false;
     let weddingHandedOff = false,
       demonHandedOff = false,
       demonAcquired = false;
@@ -205,6 +211,7 @@ export class NightPipeline {
       const assertReadable = () => {
         if (config.trickster) assertTricksterRosterCurrent(this.world);
         if (config.wolfSorcerer) assertWolfSorcererRosterCurrent(this.world);
+        if (config.timeConsort) assertTimeConsortRosterCurrent(this.world);
         if (config.magician) assertMagicianRosterCurrent(this.world);
         assertNightmareRosterCurrent(this.world);
         assertEvilKnightRosterCurrent(this.world);
@@ -437,6 +444,7 @@ export class NightPipeline {
       weddingHandedOff = ownsWedding;
       demonHandedOff = ownsDemon;
       magicianHandedOff = config.magician !== undefined;
+      timeConsortHandedOff = config.timeConsort !== undefined;
       return {
         interrupted: false,
         summary,
@@ -453,6 +461,7 @@ export class NightPipeline {
       if (config.trickster && !magicianHandedOff) abortTricksterNight(this.world);
       if (config.wolfSorcerer && !magicianHandedOff) abortWolfSorcererNight(this.world);
       if (config.magician && !magicianHandedOff) abortMagicianNight(this.world);
+      if (config.timeConsort && !timeConsortHandedOff) abortTimeConsortNight(this.world);
       if (demonAcquired && !demonHandedOff) closeDemonHunterNight(this.world);
       if (ownsWedding && !weddingHandedOff) closeWeddingNight(this.world);
       closeThiefNight();
@@ -477,7 +486,8 @@ export class NightPipeline {
       summary: { key: "request.summary.night_action" },
       context: {
         ...extraContext,
-        ...(isMagicianBoard(this.world) ||
+        ...(isTimeConsortBoard(this.world) ||
+        isMagicianBoard(this.world) ||
         isEvilKnightBoard(this.world) ||
         isNightmareBoard(this.world) ||
         isRedMoonBoard(this.world)

@@ -1,4 +1,10 @@
 import {
+  readTimeConsortChoiceFact,
+  readTimeConsortSkipFact,
+  readTimeConsortReflectionFact,
+} from "@ai-werewolf-arena/game-text";
+import { validateTimeConsortRecord } from "./time_consort_record";
+import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,
 } from "@ai-werewolf-arena/game-text";
@@ -289,6 +295,7 @@ const requestSchema = z.strictObject({
     death_phase: z.enum(Phase).optional(),
     death_sources: z.array(z.enum(DeathCause)).optional(),
     death_action_id: positive.optional(),
+    consort_candidates: z.array(positive).optional(),
     sorcerer_candidates: z.array(positive).optional(),
     trickster_candidates: z.array(positive).optional(),
     trickster_may_pass: z.boolean().optional(),
@@ -576,6 +583,23 @@ const schema = z.strictObject({
       })
       .superRefine((event, ctx) => {
         if (
+          event.type === "time_consort_lock_committed" ||
+          event.type === "time_consort_lock_skipped"
+        ) {
+          const f =
+            readTimeConsortChoiceFact(event.type, event.payload) ??
+            readTimeConsortSkipFact(event.type, event.payload);
+          if (!f || event.audience?.length !== 1 || event.audience[0] !== f.actorId)
+            ctx.addIssue({ code: "custom", message: "reproduction_time_consort_audience_invalid" });
+        }
+        if (
+          event.type === "time_consort_reflected" &&
+          (!readTimeConsortReflectionFact(event.type, event.payload) ||
+            !Array.isArray(event.audience) ||
+            event.audience.length !== 0)
+        )
+          ctx.addIssue({ code: "custom", message: "reproduction_time_consort_reflection_invalid" });
+        if (
           event.type === "wolf_sorcerer_exchange_committed" ||
           event.type === "wolf_sorcerer_exchange_skipped"
         ) {
@@ -637,6 +661,9 @@ const schema = z.strictObject({
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
           event.type !== "nightmare_fear_committed" &&
+          event.type !== "time_consort_lock_committed" &&
+          event.type !== "time_consort_lock_skipped" &&
+          event.type !== "time_consort_reflected" &&
           event.type !== "wolf_sorcerer_exchange_committed" &&
           event.type !== "wolf_sorcerer_exchange_skipped" &&
           event.type !== "trickster_exchange_committed" &&
@@ -686,6 +713,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   validateLonelyGirlRecord(result);
   validateGhostBrideRecord(result);
   validateDemonHunterRecord(result);
+  validateTimeConsortRecord(result);
   validateWolfSorcererRecord(result);
   validateTricksterRecord(result);
   validateMagicianRecord(result);

@@ -1,3 +1,5 @@
+import { isTimeConsortBoard, resolveTimeConsortTarget } from "../time_wolf_consort/night_frame";
+import { commitTimeConsortEffect } from "../time_wolf_consort/effects";
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { isNightmareBoard } from "../nightmare_shadow/night_frame";
 import { commitEvilKnightReflection } from "../evil_knight/state";
@@ -79,11 +81,18 @@ const seerCheckStage: NightStageHandler = {
         ability_id: ability.id,
         requiresAction: ability.state.actionPolicy !== "awa_optional_v1",
       });
-      if (!scope.isEligible()) continue;
+      if (!scope.isEligible()) {
+        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_scope_stale");
+        continue;
+      }
       const action = await ctx.actionProvider.getAction(req);
       if (!ctx.isCurrent()) return;
-      if (!scope.isEligible()) continue;
+      if (!scope.isEligible()) {
+        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_scope_stale");
+        continue;
+      }
       if (action?.name !== "check_identity") {
+        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_action_missing");
         if (isMagicianBoard(ctx.world)) throw new Error("magician_seer_action_missing");
         if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
           throw new Error(
@@ -100,8 +109,12 @@ const seerCheckStage: NightStageHandler = {
         abilityId: ability.id,
       });
       if (!ctx.isCurrent()) return;
-      if (!scope.isEligible()) continue;
+      if (!scope.isEligible()) {
+        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_scope_stale");
+        continue;
+      }
       if (!result.ok || !result.sanitizedCall) {
+        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_action_invalid");
         if (isMagicianBoard(ctx.world)) throw new Error("magician_seer_action_invalid");
         if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
           throw new Error(
@@ -119,7 +132,12 @@ const seerCheckStage: NightStageHandler = {
       const mapping = isMagicianBoard(ctx.world)
         ? resolveMagicianNightTarget(ctx.world, day, targetId)
         : null;
-      const effectiveId = mapping?.effectiveId ?? targetId;
+      const receipt = isTimeConsortBoard(ctx.world)
+        ? resolveTimeConsortTarget(ctx.world, day, seerId, targetId, "check")
+        : null;
+      if (receipt && (ability.source.kind !== "native" || ability.source.role !== Role.Seer))
+        throw new Error("time_consort_seer_source_invalid");
+      const effectiveId = receipt?.effectiveId ?? mapping?.effectiveId ?? targetId;
       const effectiveIdentity = identities.get(effectiveId);
       if (mapping && (!mapping.isCurrent() || !effectiveIdentity?.isCurrent()))
         throw new Error("magician_inspection_target_stale");
@@ -140,6 +158,9 @@ const seerCheckStage: NightStageHandler = {
       const seerRole = ctx.world.getComponent<RoleComponent>(seerId, COMPONENT.Role);
       if (!activeNightAbility(seerRole, "seer_check", ctx.currentDay(), ability.id)) continue;
       const seerState = seerRole ? getSeerState(seerRole, ability.id) : undefined;
+      if (receipt && (!receipt.isCurrent() || !effectiveIdentity?.isCurrent()))
+        throw new Error("time_consort_inspection_target_stale");
+      commitTimeConsortEffect(ctx, receipt, day, seerId, "check");
       if (seerState) {
         seerState.lastTarget = targetId;
         seerState.lastIsWerewolf = isWerewolf;

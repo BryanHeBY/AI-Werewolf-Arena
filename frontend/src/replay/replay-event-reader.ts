@@ -1,4 +1,9 @@
 import {
+  readTimeConsortChoiceFact,
+  readTimeConsortSkipFact,
+  readTimeConsortReflectionFact,
+} from "@ai-werewolf-arena/game-text";
+import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,
 } from "@ai-werewolf-arena/game-text";
@@ -203,6 +208,9 @@ const NO_IDS = new Set([
   "god_private_game_info",
 ]);
 export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([
+  "time_consort_lock_committed",
+  "time_consort_lock_skipped",
+  "time_consort_reflected",
   "wolf_sorcerer_exchange_committed",
   "wolf_sorcerer_exchange_skipped",
   "trickster_exchange_committed",
@@ -258,6 +266,9 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if (type === "time_consort_lock_committed") return !!readTimeConsortChoiceFact(type, p);
+  if (type === "time_consort_lock_skipped") return !!readTimeConsortSkipFact(type, p);
+  if (type === "time_consort_reflected") return !!readTimeConsortReflectionFact(type, p);
   if (type === "wolf_sorcerer_exchange_committed") return !!readWolfSorcererExchangeFact(type, p);
   if (type === "wolf_sorcerer_exchange_skipped") return !!readWolfSorcererSkipFact(type, p);
   if (type === "trickster_exchange_committed") return !!readTricksterExchangeFact(type, p);
@@ -464,6 +475,22 @@ export function readReplayEvent(
       if (p.pair !== null) list(p.pair);
     }
     if (safe.type === "death_shot_missed") add(p.actorId);
+    if (
+      [
+        "time_consort_lock_committed",
+        "time_consort_lock_skipped",
+        "time_consort_reflected",
+      ].includes(safe.type)
+    ) {
+      if (safe.phase !== "night" || p.day !== safe.day) return null;
+      add(p.actorId);
+      if (safe.type === "time_consort_lock_committed") add(p.targetId, true);
+      if (safe.type === "time_consort_reflected") {
+        add(p.sourceId);
+        add(p.requestedId);
+        add(p.effectiveId);
+      }
+    }
     if (
       safe.type === "wolf_sorcerer_exchange_committed" ||
       safe.type === "wolf_sorcerer_exchange_skipped"

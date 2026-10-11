@@ -385,9 +385,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "time_wolf_consort",
     names: { "zh-CN": "蚀时狼妃", en: "Time-Wolf Consort" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-time-consort-reflection-v1.md",
     mechanismSummary: "反弹与封锁",
   },
   {

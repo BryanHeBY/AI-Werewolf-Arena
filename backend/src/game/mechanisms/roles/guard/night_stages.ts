@@ -1,3 +1,5 @@
+import { isTimeConsortBoard, resolveTimeConsortTarget } from "../time_wolf_consort/night_frame";
+import { commitTimeConsortEffect } from "../time_wolf_consort/effects";
 import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../evil_knight/night_frame";
 /** 文件说明：守卫夜间阶段处理。 */
 import { demonHunterActorId } from "../demon_hunter/authority";
@@ -51,11 +53,18 @@ const guardActionStage: NightStageHandler = {
       )
         continue;
       const req = ctx.makeRequest(guardId, ["guard"], { stage: "guard", ability_id: ability.id });
-      if (!scope.isEligible()) continue;
+      if (!scope.isEligible()) {
+        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_scope_stale");
+        continue;
+      }
       const action = await ctx.actionProvider.getAction(req);
       if (!ctx.isCurrent()) return;
-      if (!scope.isEligible()) continue;
+      if (!scope.isEligible()) {
+        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_scope_stale");
+        continue;
+      }
       if (action?.name !== "guard") {
+        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_action_missing");
         if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_guard_action_missing");
         continue;
       }
@@ -66,8 +75,12 @@ const guardActionStage: NightStageHandler = {
         abilityId: ability.id,
       });
       if (!ctx.isCurrent()) return;
-      if (!scope.isEligible()) continue;
+      if (!scope.isEligible()) {
+        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_scope_stale");
+        continue;
+      }
       if (!result.ok || !result.sanitizedCall) {
+        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_action_invalid");
         if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_guard_action_invalid");
         safeRecordLogicOp({
           scope: "phase_pipeline",
@@ -91,9 +104,15 @@ const guardActionStage: NightStageHandler = {
       )
         continue;
       if (!abstain && targetId !== null) {
-        const marks = ctx.ensureMarks(targetId);
+        const receipt = isTimeConsortBoard(ctx.world)
+          ? resolveTimeConsortTarget(ctx.world, day, guardId, targetId, "guard")
+          : null;
+        if (receipt && (ability.source.kind !== "native" || ability.source.role !== Role.Guard))
+          throw new Error("time_consort_guard_source_invalid");
+        commitTimeConsortEffect(ctx, receipt, day, guardId, "guard");
+        const marks = ctx.ensureMarks(receipt?.effectiveId ?? targetId);
         marks.add(StatusMark.GuardMark);
-        (ctx.state.guardClaims ??= []).push({ target: target!, marks });
+        (ctx.state.guardClaims ??= []).push({ target: receipt?.scope ?? target!, marks });
       }
       ctx.events.push({
         timestamp: Date.now(),

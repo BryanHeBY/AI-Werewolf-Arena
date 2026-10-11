@@ -46,6 +46,16 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  time_consort_lock_committed: { actorId: EntityId; day: number; targetId: EntityId | null };
+  time_consort_lock_skipped: { actorId: EntityId; day: number; reason: "exhausted" | "dead" };
+  time_consort_reflected: {
+    actorId: EntityId;
+    day: number;
+    sourceId: EntityId;
+    requestedId: EntityId;
+    effectiveId: EntityId;
+    kind: "check" | "guard" | "poison";
+  };
   wolf_sorcerer_exchange_committed: {
     actorId: EntityId;
     day: number;
@@ -470,6 +480,9 @@ export type GameEvent = {
       | WolfTeamEventType
       | WeddingEventType
       | "nightmare_fear_committed"
+      | "time_consort_lock_committed"
+      | "time_consort_lock_skipped"
+      | "time_consort_reflected"
       | "wolf_sorcerer_exchange_committed"
       | "wolf_sorcerer_exchange_skipped"
       | "trickster_exchange_committed"

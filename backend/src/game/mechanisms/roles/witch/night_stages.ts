@@ -1,3 +1,5 @@
+import { isTimeConsortBoard, resolveTimeConsortTarget } from "../time_wolf_consort/night_frame";
+import { commitTimeConsortEffect } from "../time_wolf_consort/effects";
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { isNightmareBoard } from "../nightmare_shadow/night_frame";
 import { commitEvilKnightReflection } from "../evil_knight/state";
@@ -142,11 +144,18 @@ async function executePotionTurn(
     ability_id: ability.id,
     ...(witchKnifeVisible(ability) ? { wolf_target: ctx.state.wolfTarget } : {}),
   });
-  if (!scope.isEligible()) return false;
+  if (!scope.isEligible()) {
+    if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_scope_stale");
+    return false;
+  }
   const action = await ctx.actionProvider.getAction(req);
   if (!ctx.isCurrent()) return false;
-  if (!scope.isEligible()) return false;
+  if (!scope.isEligible()) {
+    if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_scope_stale");
+    return false;
+  }
   if (action?.name !== "use_potion") {
+    if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_action_missing");
     if (isMagicianBoard(ctx.world)) throw new Error("magician_witch_action_missing");
     if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
       throw new Error(
@@ -174,8 +183,12 @@ async function executePotionTurn(
     abilityId: ability.id,
   });
   if (!ctx.isCurrent()) return false;
-  if (!scope.isEligible()) return false;
+  if (!scope.isEligible()) {
+    if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_scope_stale");
+    return false;
+  }
   if (!result.ok || !result.sanitizedCall) {
+    if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_action_invalid");
     if (isMagicianBoard(ctx.world)) throw new Error("magician_witch_action_invalid");
     if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
       throw new Error(
@@ -216,8 +229,14 @@ async function executePotionTurn(
       ? resolveMagicianNightTarget(ctx.world, day, targetId)
       : null;
   if (mapping && !mapping.isCurrent()) throw new Error("magician_potion_target_stale");
-  const effectiveId = mapping?.effectiveId ?? targetId;
-  const target = mapping?.scope ?? requestedTarget;
+  const receipt =
+    potion === PotionType.Poison && isTimeConsortBoard(ctx.world)
+      ? resolveTimeConsortTarget(ctx.world, day, witchId, targetId, "poison")
+      : null;
+  if (receipt && (ability.source.kind !== "native" || ability.source.role !== Role.Witch))
+    throw new Error("time_consort_witch_source_invalid");
+  const effectiveId = receipt?.effectiveId ?? mapping?.effectiveId ?? targetId;
+  const target = receipt?.scope ?? mapping?.scope ?? requestedTarget;
 
   if (potion === "heal") {
     if (
@@ -247,6 +266,7 @@ async function executePotionTurn(
     if (!luckyTargetAllowed(ctx.world, witchId, ability, day, "poison", targetId)) return false;
     const source = captureNightLife(ctx.world, witchId);
     if (!source || !target) return false;
+    commitTimeConsortEffect(ctx, receipt, day, witchId, "poison");
     recordNightAbilityUse(ability, day, true);
     (ctx.state.poisonClaims ??= []).push({ source, target });
     ctx.ensureMarks(effectiveId).add(StatusMark.PoisonMark);

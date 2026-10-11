@@ -1,3 +1,4 @@
+import { readTimeConsortChoiceFact, readTimeConsortSkipFact } from "@ai-werewolf-arena/game-text";
 import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,
@@ -121,6 +122,22 @@ export class AgentEventVisibilityRegistry {
   constructor(private readonly rules: Record<string, AgentEventVisibilityRule> = DEFAULT_RULES) {}
 
   canView(world: World, event: GameEvent, actorId: EntityId): boolean {
+    if (event.type === "time_consort_reflected") return false;
+    if (
+      event.type === "time_consort_lock_committed" ||
+      event.type === "time_consort_lock_skipped"
+    ) {
+      const f =
+        readTimeConsortChoiceFact(event.type, event.payload) ??
+        readTimeConsortSkipFact(event.type, event.payload);
+      return (
+        !!f &&
+        Array.isArray(event.audience) &&
+        event.audience.length === 1 &&
+        event.audience[0] === actorId &&
+        f.actorId === actorId
+      );
+    }
     if (
       event.type === "wolf_sorcerer_exchange_committed" ||
       event.type === "wolf_sorcerer_exchange_skipped"

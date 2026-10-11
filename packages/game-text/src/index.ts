@@ -1,3 +1,8 @@
+import {
+  readTimeConsortChoiceFact,
+  readTimeConsortSkipFact,
+  readTimeConsortReflectionFact,
+} from "./time-consort";
 import { readWolfSorcererExchangeFact, readWolfSorcererSkipFact } from "./wolf-sorcerer";
 import {
   readTricksterExchangeFact,
@@ -968,6 +973,59 @@ export function wolfSorcererEventLabel(
               : "event.wolf_sorcerer_skipped_exhausted",
           { actor: f.actorId, day: f.day },
         )
+      : text(locale, "replay.unknown");
+  }
+  return null;
+}
+
+export * from "./time-consort";
+export * from "./time-consort-preset";
+
+export function timeConsortEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale = "zh-CN",
+): string | null {
+  if (type === "time_consort_lock_committed") {
+    const f = readTimeConsortChoiceFact(type, payload);
+    return f
+      ? text(locale, "event.time_consort_lock_committed", {
+          actor: f.actorId,
+          day: f.day,
+          target: f.targetId ?? text(locale, "console.magician.pass"),
+        })
+      : text(locale, "replay.unknown");
+  }
+  if (type === "time_consort_lock_skipped") {
+    const f = readTimeConsortSkipFact(type, payload);
+    return f
+      ? text(
+          locale,
+          f.reason === "dead"
+            ? "event.time_consort_skipped_dead"
+            : "event.time_consort_skipped_exhausted",
+          { actor: f.actorId, day: f.day },
+        )
+      : text(locale, "replay.unknown");
+  }
+  if (type === "time_consort_reflected") {
+    const f = readTimeConsortReflectionFact(type, payload);
+    return f
+      ? text(locale, "event.time_consort_reflected", {
+          actor: f.actorId,
+          day: f.day,
+          source: f.sourceId,
+          target: f.requestedId,
+          effective: f.effectiveId,
+          skill: text(
+            locale,
+            f.kind === "check"
+              ? "time_consort.skill.check"
+              : f.kind === "guard"
+                ? "time_consort.skill.guard"
+                : "time_consort.skill.poison",
+          ),
+        })
       : text(locale, "replay.unknown");
   }
   return null;

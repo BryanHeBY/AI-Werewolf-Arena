@@ -1,3 +1,4 @@
+import { readTimeConsortChoiceFact, readTimeConsortSkipFact } from "@ai-werewolf-arena/game-text";
 import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,
@@ -24,6 +25,7 @@ const stages: Record<string, [string, string]> = {
   order_prince_speech: ["定序王子发言", "Order Prince speech"],
   order_prince_revote: ["定序重投", "Restarted exile vote"],
   trickster_exchange: ["诡术师交换", "Trickster exchange"],
+  time_consort_lock: ["蚀时狼妃封锁", "Time-Wolf Consort lock"],
   wolf_sorcerer_exchange: ["狼术师交换", "Wolf Sorcerer exchange"],
   magician_exchange: ["魔术师交换", "Magician exchange"],
   pure_white_girl: ["纯白之女查验", "Pure White Girl inspection"],
@@ -302,6 +304,22 @@ export function assertTransportEvents(
   actorId: number,
 ) {
   for (const [, type, payload] of events) {
+    if (type === "time_consort_reflected")
+      throw new Error("fixture_time_consort_reflection_exposed");
+    if (
+      type === "time_consort_lock_committed" &&
+      (role !== "time_wolf_consort" ||
+        payload.actorId !== actorId ||
+        !readTimeConsortChoiceFact(type, payload))
+    )
+      throw new Error("fixture_time_consort_private_information_exposed");
+    if (
+      type === "time_consort_lock_skipped" &&
+      (role !== "time_wolf_consort" ||
+        payload.actorId !== actorId ||
+        !readTimeConsortSkipFact(type, payload))
+    )
+      throw new Error("fixture_time_consort_private_information_exposed");
     if (
       type === "wolf_sorcerer_exchange_committed" &&
       (role !== "wolf_sorcerer" ||
@@ -432,6 +450,7 @@ export function assertTransportEvents(
         "nightmare",
         "red_moon_apostle",
         "trickster",
+        "time_wolf_consort",
         "wolf_sorcerer",
       ].includes(role)
     )

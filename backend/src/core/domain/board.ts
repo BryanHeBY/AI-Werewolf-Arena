@@ -115,6 +115,10 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
+  timeConsort?: {
+    policy: "awa_time_consort_reflection_v1";
+    reflectionScope: "whole_night" | "first_effect";
+  };
   wolfSorcerer?: { policy: "awa_wolf_sorcerer_seats_v1"; firstNight: 1 | 2 };
   trickster?: { policy: "awa_trickster_exile_v1" };
   orderPrince?: { policy: "awa_order_prince_first_ballot_v1" };

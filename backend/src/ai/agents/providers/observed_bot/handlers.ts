@@ -1,3 +1,4 @@
+import { lockTime } from "./native";
 import { swapNightSeats } from "./native";
 import { resetExileVote, swapTargets, swapExileTargets } from "./native";
 import {
@@ -61,6 +62,7 @@ import {
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
   { tool: "reset_exile_vote", decide: resetExileVote },
   { tool: "swap_exile_targets", decide: swapExileTargets },
+  { tool: "lock_time", decide: lockTime },
   { tool: "swap_night_seats", decide: swapNightSeats },
   { tool: "swap_targets", decide: swapTargets },
   { tool: "fear", decide: fear },

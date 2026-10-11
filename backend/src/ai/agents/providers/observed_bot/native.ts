@@ -284,3 +284,19 @@ export const swapNightSeats: ObservedToolHandler = ({ ownState, request, knownAl
     ? { name: "swap_night_seats", args: { first_id: null, second_id: null, abstain: true } }
     : { name: "swap_night_seats", args: { first_id: first, second_id: second, abstain: false } };
 };
+
+export const lockTime: ObservedToolHandler = ({ ownState, request, knownAliveIds, pick }) => {
+  const state = ownState.timeConsort;
+  if (!state || state.exhausted) throw new Error("time_consort_observed_state_invalid");
+  const previous = state.history.at(-1),
+    candidates = request.context.consort_candidates;
+  const targets = knownAliveIds.filter(
+    (id) =>
+      (previous?.day !== request.context.day - 1 || previous.targetId !== id) &&
+      (!candidates || candidates.includes(id)),
+  );
+  const target = pick(targets);
+  return target == null
+    ? { name: "lock_time", args: { target_id: null, abstain: true } }
+    : { name: "lock_time", args: { target_id: target, abstain: false } };
+};

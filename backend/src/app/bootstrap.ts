@@ -1,3 +1,5 @@
+import { isTimeConsortPreset } from "@ai-werewolf-arena/game-text";
+import { installTimeConsortBoard } from "../game/mechanisms/roles/time_wolf_consort/night_frame";
 import { isWolfSorcererPreset } from "@ai-werewolf-arena/game-text";
 import { installWolfSorcererBoard } from "../game/mechanisms/roles/wolf_sorcerer/night_frame";
 import { isTricksterPreset } from "@ai-werewolf-arena/game-text";
@@ -168,6 +170,7 @@ function createPlayers(
   if (config.roleSetups.some((row) => row.role === Role.Shapeshifter && row.count === 1))
     installShapeshifterDeal(world, roles, ids);
   installInitialRoster(world);
+  if (roles.includes(Role.TimeWolfConsort)) installTimeConsortBoard(world);
   if (roles.includes(Role.Trickster)) installTricksterBoard(world);
   if (roles.includes(Role.Magician)) installMagicianBoard(world);
   if (roles.includes(Role.WolfSorcerer)) installWolfSorcererBoard(world);
@@ -192,6 +195,12 @@ function buildRoleDeck(
     !isTricksterPreset(config)
   )
     throw new Error("trickster_preset_invalid");
+  if (
+    (config.timeConsort ||
+      config.roleSetups.some((row) => row.role === Role.TimeWolfConsort && row.count > 0)) &&
+    !isTimeConsortPreset(config)
+  )
+    throw new Error("time_consort_preset_invalid");
   if (
     (config.wolfSorcerer ||
       config.roleSetups.some((row) => row.role === Role.WolfSorcerer && row.count > 0)) &&

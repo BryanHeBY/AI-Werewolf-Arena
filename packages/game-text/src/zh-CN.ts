@@ -457,6 +457,31 @@ export const zhCN = Object.freeze({
   "stage.order_prince_choice": "定序王子选择",
   "stage.order_prince_speech": "定序王子发言",
   "stage.order_prince_revote": "定序重投",
+  "event.time_consort_lock_committed": "{actor}号第{day}夜封锁：{target}。",
+  "event.time_consort_skipped_dead": "第{day}夜，{actor}号已死，不产生新的封锁。",
+  "event.time_consort_skipped_exhausted":
+    "第{day}夜，{actor}号的反弹已于此前夜晚生效，本局不再封锁。",
+  "event.time_consort_reflected":
+    "第{day}夜，{actor}号的封锁将{source}号对{target}号的{skill}反弹给{effective}号。",
+  "time_consort.skill.check": "查验",
+  "time_consort.skill.guard": "守护",
+  "time_consort.skill.poison": "毒药",
+  "role.time_wolf_consort.brief":
+    "狼人阵营。每夜在好人技能前封锁一名存活者（可选自己），不能连续两夜封锁同一人，也可明确空过。好人的查验、守护、毒药作用于封锁目标时反弹给施法者自己；解药、狼刀不反弹。仅实际反弹消费整局技能，下一夜才获知耗尽。原请求目标仍用于连续目标限制。",
+  "role.time_wolf_consort.scope_whole_night":
+    "本板采用整夜范围：首次反弹后本夜后续合格技能仍反弹，后续夜失去技能。",
+  "role.time_wolf_consort.scope_first_effect":
+    "本板采用首次效果范围：首次反弹后本夜后续技能不再反弹，后续夜失去技能。",
+  "action.lock_time.hint":
+    "lock_time：合法 target_id 且 abstain=false；空过须 target_id=null 且 abstain=true。",
+  "action.lock_time.directive": "只提交 lock_time。缺失、非法、晚到的选择失败，不自动空过。",
+  "error.time_consort_unavailable": "蚀时狼妃当前不能封锁。",
+  "error.time_consort_target": "请选择存活且与上一夜不同的目标，或明确空过。",
+  "stage.time_consort_lock": "蚀时狼妃封锁",
+  "replay.stage.time_consort_lock": "蚀时狼妃封锁",
+  "replay.stage.time_consort_lock_committed": "封锁选择",
+  "replay.stage.time_consort_lock_skipped": "跳过封锁",
+  "replay.stage.time_consort_reflected": "封锁反弹",
   "role.wolf_sorcerer.brief":
     "狼人座位映射者。魔术师之后、狼队行动之前，明确选择两个不同的未用存活编号或空过。每个号码自己整局只能使用一次。你的换位交换魔术师换位之后的座位占用者；重叠配对形成有序循环，相同配对抵消效果但不退还双方资源。身份、公开座位、白天票面不变。首次合法行动开始前不获知队友，也不参加狼队行动。",
   "role.wolf_sorcerer.first_night": "你的首次交换夜为第{day}夜。",

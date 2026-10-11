@@ -1,8 +1,8 @@
 # 可配置角色目标目录
 
-返回 [实施路线](roadmap.md)。本目录共 **64 项定义**：23 verified、18 implemented、23 planned，合计 41 项已达到各自有限范围内的技术门禁。已有实现仅表示当前 AWA 版本，不代表其他同名版本均受支持；P9/P10 和用户总体验收仍开放。
+返回 [实施路线](roadmap.md)。本目录共 **64 项定义**：23 verified、19 implemented、22 planned，合计 42 项已达到各自有限范围内的技术门禁。已有实现仅表示当前 AWA 版本，不代表其他同名版本均受支持；P9/P10 和用户总体验收仍开放。
 
-基础七项及 P5–P7 的十六项为 verified。咒狐、丘比特、杠精、盗贼、野孩子、千面人、孤独少女、鬼魂新娘、猎魔人、纯白之女、狼巫、恶夜骑士、噩梦之影、赤月使徒、魔术师、定序王子、诡术师、狼术师登记 implemented。各角色来源、支持组合和验证边界见各自规则卡与验收记录；最新交付见[恶夜骑士验收](reviews/p9-evil-knight.md)、[噩梦之影验收](reviews/p9-nightmare.md)、[赤月使徒验收](reviews/p9-red-moon.md)、[魔术师验收](reviews/p9-magician.md)、[定序王子验收](reviews/p9-order-prince.md)、[诡术之境验收](reviews/p9-trickster.md)、[狼术师验收](reviews/p9-wolf-sorcerer.md)。
+基础七项及 P5–P7 的十六项为 verified。咒狐、丘比特、杠精、盗贼、野孩子、千面人、孤独少女、鬼魂新娘、猎魔人、纯白之女、狼巫、恶夜骑士、噩梦之影、赤月使徒、魔术师、定序王子、诡术师、狼术师、蚀时狼妃登记 implemented。各角色来源、支持组合和验证边界见各自规则卡与验收记录；最新交付见[恶夜骑士验收](reviews/p9-evil-knight.md)、[噩梦之影验收](reviews/p9-nightmare.md)、[赤月使徒验收](reviews/p9-red-moon.md)、[魔术师验收](reviews/p9-magician.md)、[定序王子验收](reviews/p9-order-prince.md)、[诡术之境验收](reviews/p9-trickster.md)、[狼术师验收](reviews/p9-wolf-sorcerer.md)、[蚀时狼妃验收](reviews/p9-time-consort.md)。
 
 ## 使用与冻结要求
 
@@ -13,7 +13,7 @@
 - 每项在实现前建立规则卡：来源、发布日期/核验日期、规则集与版本、身份/阵营/计数/胜利目标、互认/夜聊/刀权、动作/资源/时点、所有死因与保护/重定向交互、允许组合、AWA 改编说明、中英提示及期望测试。
 - 有歧义的复制、替死、反伤、保护及判胜，必须选择并记录某个确定版本；未决规则阻止相关角色宣告支持。
 - 基础/觉醒、机械狼/觉醒隐狼、通灵师/魔镜少女分别登记。白痴与愚者的别名、赤月与血月等名称仅在同规则版本下建立映射。
-- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。当前统计以上方目录为准；剩余 23 项为 planned，不能直接用于已支持板子。
+- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。当前统计以上方目录为准；剩余 22 项为 planned，不能直接用于已支持板子。
 
 ## 1. 基础角色：7 项，awa_classic 1.0.0 已验证
 
