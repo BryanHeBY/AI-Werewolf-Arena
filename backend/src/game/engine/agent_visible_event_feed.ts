@@ -1,4 +1,5 @@
 import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
+import { types } from "node:util";
 import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,
@@ -32,6 +33,71 @@ import { World } from "../../core/domain/world";
 import { getDefaultAgentEventVisibilityRegistry } from "../mechanisms";
 import { projectAbilitySource } from "../mechanisms/roles/abilities";
 
+/** Every subsequent reader and permission check sees the same inert envelope. */
+function snapshotEvent(event: GameEvent): GameEvent | null {
+  const ancestors = new Set<object>();
+  const inert = (value: unknown, depth: number): boolean => {
+    // Declared optional fields may be undefined before the JSON wire boundary.
+    if (
+      value === undefined ||
+      value === null ||
+      typeof value === "string" ||
+      typeof value === "boolean"
+    )
+      return true;
+    if (typeof value === "number") return Number.isFinite(value);
+    if (
+      !value ||
+      typeof value !== "object" ||
+      depth > 32 ||
+      types.isProxy(value) ||
+      ancestors.has(value)
+    )
+      return false;
+    const array = Array.isArray(value),
+      proto = Object.getPrototypeOf(value);
+    if (
+      (array ? proto !== Array.prototype : proto !== Object.prototype && proto !== null) ||
+      Object.getOwnPropertySymbols(value).length
+    )
+      return false;
+    const fields = Object.getOwnPropertyDescriptors(value);
+    if (array) {
+      const length = fields.length?.value;
+      if (
+        !Number.isSafeInteger(length) ||
+        length > 1024 ||
+        Object.keys(fields).length !== length + 1 ||
+        !Array.from({ length }, (_, i) => Object.hasOwn(fields, i)).every(Boolean)
+      )
+        return false;
+    }
+    ancestors.add(value);
+    try {
+      return Object.entries(fields).every(
+        ([key, field]) =>
+          (array && key === "length") ||
+          (field.enumerable && Object.hasOwn(field, "value") && inert(field.value, depth + 1)),
+      );
+    } finally {
+      ancestors.delete(value);
+    }
+  };
+  try {
+    if (!inert(event, 0)) return null;
+    const copy = structuredClone(event);
+    return typeof copy.type === "string" &&
+      typeof copy.timestamp === "number" &&
+      copy.payload !== null &&
+      typeof copy.payload === "object" &&
+      !Array.isArray(copy.payload)
+      ? copy
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * 把领域事件投影为指定玩家可见的紧凑结构化事件。
  *
@@ -47,6 +113,9 @@ export function buildAgentVisibleEvent(
   actorId: EntityId,
   visibleSeq: number,
 ): PlayerVisibleEvent | null {
+  const detached = snapshotEvent(event);
+  if (!detached) return null;
+  event = detached;
   const mistType = event.type;
   if ((MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(mistType)) {
     try {

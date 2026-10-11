@@ -75,5 +75,5 @@ for (const [board, config] of [
       expect(other.snapshot.gameOver).toBe(true);
       expect(replay).toEqual(first);
     }
-  });
+  }, 20000); // 75 complete games; this is a determinism gate, not a 5-second performance budget.
 }

@@ -133,7 +133,7 @@ const facts: GameEvent[] = [
     audience: [2],
   },
 ];
-test("one detached fact authorizes and projects even when a foreign array changes its source during reading", () => {
+test("foreign arrays cannot execute descriptor callbacks at the player feed boundary", () => {
   const payload: { actorId: number; day: number; targetIds: number[]; privateCanary?: string } = {
     actorId: 1,
     day: 1,
@@ -148,13 +148,9 @@ test("one detached fact authorizes and projects even when a foreign array change
   });
   const event: GameEvent = { timestamp: 1, type: "alchemist_mist_chosen", payload, audience: [1] };
   const visible = buildAgentVisibleEvent(new World(), event, 1, 1);
-  expect(visible).toEqual({
-    seq: 1,
-    type: "alchemist_mist_chosen",
-    payload: { actorId: 1, day: 1, targetIds: [1, 5, 6] },
-  });
+  expect(visible).toBeNull();
   expect(JSON.stringify(visible)).not.toContain("privateCanary");
-  expect(payload.privateCanary).toBe("hidden-only");
+  expect(payload.privateCanary).toBeUndefined();
 });
 for (const event of facts)
   test(`private ${event.type} stays owner-only and absent from public terminal`, () => {
