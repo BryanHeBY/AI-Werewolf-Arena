@@ -1,0 +1,606 @@
+{
+  "schemaVersion": 2,
+  "locale": "en",
+  "player_id": 3,
+  "role": "seer",
+  "camp": "good",
+  "timeline": [
+    {
+      "seq": 1,
+      "kind": "event",
+      "day": 1,
+      "phase": "night",
+      "stage": "night",
+      "request_id": "1-night-3-event-1",
+      "timestamp": "2026-10-11T18:23:28.611Z",
+      "source_event_seq": 1,
+      "event": {
+        "seq": 1,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "night",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 2,
+      "kind": "event",
+      "day": 1,
+      "phase": "night",
+      "stage": "seer",
+      "request_id": "1-night-3-event-2",
+      "timestamp": "2026-10-11T18:23:28.674Z",
+      "source_event_seq": 2,
+      "event": {
+        "seq": 2,
+        "type": "seer_checked",
+        "payload": {
+          "actorId": 3,
+          "targetId": 1,
+          "isWerewolf": true,
+          "result": {
+            "kind": "camp",
+            "camp": "wolf"
+          }
+        }
+      }
+    },
+    {
+      "seq": 3,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day",
+      "request_id": "1-day-3-event-3",
+      "timestamp": "2026-10-11T18:23:28.675Z",
+      "source_event_seq": 3,
+      "event": {
+        "seq": 3,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "day",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 4,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_nomination_summary",
+      "request_id": "1-day-3-event-4",
+      "timestamp": "2026-10-11T18:23:28.681Z",
+      "source_event_seq": 4,
+      "event": {
+        "seq": 4,
+        "type": "sheriff_nomination_summary",
+        "payload": {
+          "candidates": [5]
+        }
+      }
+    },
+    {
+      "seq": 5,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-5",
+      "timestamp": "2026-10-11T18:23:28.681Z",
+      "source_event_seq": 5,
+      "event": {
+        "seq": 5,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 5,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 6,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_withdraw_summary",
+      "request_id": "1-day-3-event-6",
+      "timestamp": "2026-10-11T18:23:28.682Z",
+      "source_event_seq": 6,
+      "event": {
+        "seq": 6,
+        "type": "sheriff_withdraw_summary",
+        "payload": {
+          "withdrawn": []
+        }
+      }
+    },
+    {
+      "seq": 7,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff",
+      "request_id": "1-day-3-event-7",
+      "timestamp": "2026-10-11T18:23:28.682Z",
+      "source_event_seq": 7,
+      "event": {
+        "seq": 7,
+        "type": "sheriff_candidates_finalized",
+        "payload": {
+          "candidates": [5]
+        }
+      }
+    },
+    {
+      "seq": 8,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_vote_summary",
+      "request_id": "1-day-3-event-8",
+      "timestamp": "2026-10-11T18:23:28.682Z",
+      "source_event_seq": 8,
+      "event": {
+        "seq": 8,
+        "type": "sheriff_vote_summary",
+        "payload": {
+          "votes": [],
+          "winnerId": 5,
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 9,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "night_resolved",
+      "request_id": "1-day-3-event-9",
+      "timestamp": "2026-10-11T18:23:28.683Z",
+      "source_event_seq": 9,
+      "event": {
+        "seq": 9,
+        "type": "night_resolved",
+        "payload": {
+          "deaths": [10]
+        }
+      }
+    },
+    {
+      "seq": 10,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "last_words_granted",
+      "request_id": "1-day-3-event-10",
+      "timestamp": "2026-10-11T18:23:28.684Z",
+      "source_event_seq": 10,
+      "event": {
+        "seq": 10,
+        "type": "last_words_granted",
+        "payload": {
+          "playerId": 10,
+          "phase": "day",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 11,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "last_words_spoken",
+      "request_id": "1-day-3-event-11",
+      "timestamp": "2026-10-11T18:23:28.686Z",
+      "source_event_seq": 11,
+      "event": {
+        "seq": 11,
+        "type": "last_words_spoken",
+        "payload": {
+          "playerId": 10,
+          "phase": "day",
+          "day": 1,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 12,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_direction_chosen",
+      "request_id": "1-day-3-event-12",
+      "timestamp": "2026-10-11T18:23:28.693Z",
+      "source_event_seq": 12,
+      "event": {
+        "seq": 12,
+        "type": "sheriff_direction_chosen",
+        "payload": {
+          "sheriffId": 5,
+          "direction": "clockwise"
+        }
+      }
+    },
+    {
+      "seq": 13,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-13",
+      "timestamp": "2026-10-11T18:23:28.694Z",
+      "source_event_seq": 13,
+      "event": {
+        "seq": 13,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 6,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 14,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-14",
+      "timestamp": "2026-10-11T18:23:28.695Z",
+      "source_event_seq": 14,
+      "event": {
+        "seq": 14,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 7,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 15,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-15",
+      "timestamp": "2026-10-11T18:23:28.695Z",
+      "source_event_seq": 15,
+      "event": {
+        "seq": 15,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 8,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 16,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-16",
+      "timestamp": "2026-10-11T18:23:28.696Z",
+      "source_event_seq": 16,
+      "event": {
+        "seq": 16,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 9,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 17,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-17",
+      "timestamp": "2026-10-11T18:23:28.696Z",
+      "source_event_seq": 17,
+      "event": {
+        "seq": 17,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 11,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 18,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-18",
+      "timestamp": "2026-10-11T18:23:28.697Z",
+      "source_event_seq": 18,
+      "event": {
+        "seq": 18,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 12,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 19,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-19",
+      "timestamp": "2026-10-11T18:23:28.697Z",
+      "source_event_seq": 19,
+      "event": {
+        "seq": 19,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 1,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 20,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-20",
+      "timestamp": "2026-10-11T18:23:28.698Z",
+      "source_event_seq": 20,
+      "event": {
+        "seq": 20,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 2,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 21,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-21",
+      "timestamp": "2026-10-11T18:23:28.698Z",
+      "source_event_seq": 21,
+      "event": {
+        "seq": 21,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 3,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 22,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-22",
+      "timestamp": "2026-10-11T18:23:28.699Z",
+      "source_event_seq": 22,
+      "event": {
+        "seq": 22,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 4,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 23,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-23",
+      "timestamp": "2026-10-11T18:23:28.699Z",
+      "source_event_seq": 23,
+      "event": {
+        "seq": 23,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 5,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 24,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-3-event-24",
+      "timestamp": "2026-10-11T18:23:28.699Z",
+      "source_event_seq": 24,
+      "event": {
+        "seq": 24,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "voting",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 25,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-3-event-25",
+      "timestamp": "2026-10-11T18:23:28.707Z",
+      "source_event_seq": 25,
+      "event": {
+        "seq": 25,
+        "type": "vote_summary",
+        "payload": {
+          "votes": [
+            {
+              "actorId": 1,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 2,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 3,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 4,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 5,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1.5
+            },
+            {
+              "actorId": 6,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 7,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 8,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 9,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 11,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            },
+            {
+              "actorId": 12,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            }
+          ],
+          "target": 11,
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 26,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-3-event-26",
+      "timestamp": "2026-10-11T18:23:28.707Z",
+      "source_event_seq": 26,
+      "event": {
+        "seq": 26,
+        "type": "voted_out",
+        "payload": {
+          "target": 11
+        }
+      }
+    },
+    {
+      "seq": 27,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "last_words_granted",
+      "request_id": "1-voting-3-event-27",
+      "timestamp": "2026-10-11T18:23:28.708Z",
+      "source_event_seq": 27,
+      "event": {
+        "seq": 27,
+        "type": "last_words_granted",
+        "payload": {
+          "playerId": 11,
+          "phase": "voting",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 28,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "last_words_spoken",
+      "request_id": "1-voting-3-event-28",
+      "timestamp": "2026-10-11T18:23:28.708Z",
+      "source_event_seq": 28,
+      "event": {
+        "seq": 28,
+        "type": "last_words_spoken",
+        "payload": {
+          "playerId": 11,
+          "phase": "voting",
+          "day": 1,
+          "text": "Synthetic"
+        }
+      }
+    },
+    {
+      "seq": 29,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "night",
+      "request_id": "2-night-3-event-29",
+      "timestamp": "2026-10-11T18:23:28.716Z",
+      "source_event_seq": 29,
+      "event": {
+        "seq": 29,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "night",
+          "day": 2
+        }
+      }
+    }
+  ]
+}

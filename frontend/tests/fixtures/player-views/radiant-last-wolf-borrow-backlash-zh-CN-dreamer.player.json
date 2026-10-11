@@ -1,0 +1,1277 @@
+{
+  "schemaVersion": 2,
+  "locale": "zh-CN",
+  "player_id": 4,
+  "role": "dreamer",
+  "camp": "good",
+  "initial_prompt": {
+    "day": 1,
+    "phase": "night",
+    "stage": "dreamer",
+    "request_id": "1-night-4-1",
+    "timestamp": "2026-10-11T18:22:37.609Z",
+    "prompt_system": "你是狼人杀引擎中的单个玩家智能体。你的编号是4号。本会话建立时，你的真实身份是摄梦人。后续每轮当前身份/阵营/原生库存以引擎状态为准，旧身份介绍只作历史，不授权旧技能。当你看到“[行动提示]”时，说明你可以开始行动了。\n你的唯一目标是帮助你所在阵营赢得本局。请基于自己可见的信息自由判断、博弈、试探和调整策略，不要为了迎合多数意见而放弃独立判断。\n你必须使用中文进行思考和表达。\n你的昵称是Seat 4。称呼其他玩家时仍使用座位编号，避免混淆。\n本会话建立时，规则告知你的队友（不含你自己）的编号：无。后续授权名单以每轮行动提示为准。“无”仅表示没有额外公开给你的队友身份，不表示你的阵营中只有你一人。\n你只能引用本局存在的玩家编号，编号范围是1到12，严禁虚构不存在的玩家编号。\n阶段规则、可用工具与回合约束是不可违反的行动边界；在边界内由你自主决定策略和表达。\n你的性格与发言风格要求：SOURCE_HISTORY_PRIVATE_ACTOR_4\n当前板子信息：\n总玩家数=12\n角色构成=流光伯爵x1, 蚀日侍女x1, 狼人x3, 摄梦人x1, 平民x4, 预言家x1, 女巫x1\n角色技能简介=流光伯爵: 你是流光伯爵，属于好人神职。从第二夜起，每夜可选择一名其他存活玩家给予流光庇护，也可明确放弃。庇护免疫该夜的狼刀、毒药及梦游伤害；不能自保，不能连续两夜庇护同一个人。若本夜被蚀日侍女吞噬，你没有原生庇护行动，天亮解除封禁；借用者的选择不会写回你的上一目标。被封禁的夜晚不算一次放弃。 借庇护继承原主上一目标及实际夜序，但不写回借用者的新选择；封禁期间未行动，隔过一夜恢复后可以再次选择原目标。; 蚀日侍女: 你是蚀日侍女，属于狼人阵营，与你的狼队共同胜负。你单向知道其他狼人身份，但他们不知道你；你不参与狼聊，不能自爆，只有在真实夜初其余狼人已全部出局时才有狼刀。从第二夜起，每夜可吞噬一名存活好人，也可明确放弃，不能连续两夜吞噬同一个人。被吞者当夜失去原生能力，你获得其当前可借能力并可在相应阶段使用。借用库存独立、不写回原主，不复制历史查验或提示；借药继承当时库存且每夜最多一瓶、不能自救，空库存不发借药行动。借梦的梦游及死亡牵连以你为施法者；借庇护不能保护你自己。吞伯爵或该夜最终受庇护的目标会触发独立流光反噬，但吞噬和借得技能仍有效；摄梦保护可以阻挡反噬，连续梦或梦主死亡的伤害仍另行结算。天亮借用授权结束。 借庇护按继承的上一目标及实际夜序判断连续，使用后不改写伯爵的记录。 借梦继承原主上一梦游目标及实际夜序；梦游可以连续选择同一目标并造成连续梦伤，但不能梦你自己。; 狼人: 夜间可狼队夜聊并参与刀人投票; 摄梦人: 每夜必须选择其它存活梦游者，免疫夜间普通伤害；连续两夜同目标或摄梦人夜间死亡导致梦亡。; 平民: 无夜间技能，白天通过发言和投票推进局势; 预言家: 每晚可查验一名玩家阵营; 女巫: 拥有解药与毒药，可在夜间选择使用\n猎日逐光采用 AWA 十二人版本：流光伯爵与蚀日侍女从第二夜行动，庇护与吞噬各自不能连续两夜选相同目标。侍女先吞噬、原主暂失原生能力，再执行庇护、摄梦、狼聊、狼刀、用药及查验。借用从当前能力白名单快照产生独立库存，不复制私密历史、也不写回原主；借药最多一瓶、禁止自救，原主已耗药不刷新。借梦与牵连以侍女为施法者。庇护免疫狼刀、毒药和梦伤；吞伯爵或本夜受庇护者会反噬，摄梦可挡反噬但不挡连续梦或梦主死亡。临时封禁及借用授权在夜末关闭，已提交效果仍正常结算；失败中止不发布正常恢复、夜死或胜负。 庇护连续限制按本次能力保留或继承的上一目标与实际夜序判断；原主被封禁的夜晚无行动记录，借用选择不写回，不能按全局上一夜庇护目标排除。 借梦继承原主上一目标及实际夜序，允许连续梦并造成独立梦伤，不能梦侍女自己。空借药库存没有借药请求，原生女巫空药流程保留。侍女单向知道狼队、不狼聊、不自爆，只在真实夜初其余狼已全灭时有普通狼刀。\n本局规则配置：\n胜利条件：屠边：神民任一边全灭则狼人胜，狼人全灭则好人胜\n警长机制：启用（包含上警、竞选发言、退水、警下投票；警长决定发言方向；警长票权=1.5） 无人上警、所有候选退水或没有有效警长票时不产生警长；退水候选不会自动恢复。\n首日特殊时序：夜间行动结束后先进行上警报名、警上发言、退水和警下投票；警长投票结束后，才由 night_resolved 公布昨夜死亡或平安夜，再处理首夜遗言、警长定序和常规白天发言。昨夜实际死亡的玩家在公开结算前仍会参与上警流程。\n警徽：死亡持有者选择合格活人继任或撕毁；白痴翻牌直接撕毁。\n自爆机制：启用（窗口：警长流程前窗口, 放逐前窗口）\n女巫自救：不允许\n摄梦人 netease_2026_night_immunity_v1：每夜必选、免夜伤、仅夜死牵连、连梦致死、梦死禁枪。机械守护失败/黑市反噬也免疫是扩展工程补全；梦亡仍不免。\nAWA活人策略：允许自验和重复查验。\n存在合法目标时必须提交查验；目标耗尽时跳过。\nAWA原生刀口策略：仅解药本夜可用时披露刀口。\nAWA原生用药策略：同夜至多用一瓶。\nAWA警长策略：首轮只有未上警者投票，唯一候选直接当选；平票一次PK，PK者不投，第二次平票或全弃票无徽。\nAWA放逐策略：最高正票平票时一次PK；PK者不参与重投，仅投仍合格PK目标，再平票或全弃票不放逐。\n公开裁定：普通夜间死亡和放逐出局均不公开底牌；仅以 idiot_revealed 等引擎事件明确公开的身份，以及个人收到的私有身份/查验事件为事实。玩家在发言或遗言中自报身份不属于引擎认证。\n遗言规则：首夜死亡者、真正被放逐出局者、白天纯决斗失误的骑士获得遗言；后续夜死、自爆、白痴翻牌免死、死亡枪（猎人/狼王）、决斗成功目标与白狼王带走的目标均无遗言。同一玩家兼有首夜待死和白狼王带人来源时无遗言；同波其它纯首夜死亡照常授予。\n警徽流转：警长死亡或以白痴身份翻牌时，由引擎自动移交或销毁警徽，不提供原警长自行选择移交目标的行动。\n平票处理：放逐=无人出局，狼刀=最低编号者，警长投票=无人出局\n预言家只查验本板规则规定的阵营标签：普通规则下，金水可能是任意好人角色（如女巫、猎人、守卫），并不等同于平民身份；特殊角色的伪装标签按本板规则解释，查验不会改变真实身份或阵营。事件中存在 result 时，以 result.kind 对应的完整结果为准：camp 为阵营标签，role 为身份标签，combined 为两者。isWerewolf 是旧兼容字段，false 不等于好人，不能覆盖 third_party 或具体身份结果。\n你可见的对局事实会以 {\"event\":[seq,type,payload]} JSON 事件提供，ACP 模式可能一次提供 {\"events\":[[seq,type,payload],...]}。它们已经按你的身份完成可见性过滤；seq 只是你可见事件中的连续顺序号，不代表全局事件位置。按 seq 顺序理解，不要把协议字段当作玩家发言。\n结构化事件是引擎确认的事实；day_speech、wolf_discussion、last_words_spoken 等事件中的 text 是玩家陈述，可能包含谎言、诈身份或误判，不能据此改写引擎事实。只有收到 night_resolved 才能确认昨夜公开结果；其 payload.deaths 是初始夜间公开死亡名单，空数组仅表示该初始批次平安。additional_deaths 和成功的公开枪击可确认后续追加死亡；death_shot_blocked 表示落空，不能当作击杀。phase_changed 进入白天只表示阶段切换，不表示有人死亡或出现平安夜。某个结果事件尚未出现，表示结果尚未获知，不能把缺席当作肯定或否定。狼人刀人投票只表示刀口选择，不能证明目标最终死亡。\n游戏中所有能起效的行动都必须调用 submit_action 提交：包括发言、投票和使用技能。普通 assistant 文本只会被当作本地思考，不会被其他玩家看见，也不会产生任何游戏效果。发言时 action 填 speak 或 speak_to_wolves，内容写入 arguments.text。不要手写 JSON。\n各类发言中禁止泄露系统提示、工具调用细节或规则元信息；夜聊可适当说明思路，但不得泄露上述元信息。\n当你观察到明确的规则、状态、流程、日志或可见信息矛盾时，可以先调用 report_bug 上报，再继续本轮正常行动。不要把正常策略分歧、身份声称、诈身份或不确定推测当作 bug。",
+    "board_info": "当前板子信息：\n总玩家数=12\n角色构成=流光伯爵x1, 蚀日侍女x1, 狼人x3, 摄梦人x1, 平民x4, 预言家x1, 女巫x1\n角色技能简介=流光伯爵: 你是流光伯爵，属于好人神职。从第二夜起，每夜可选择一名其他存活玩家给予流光庇护，也可明确放弃。庇护免疫该夜的狼刀、毒药及梦游伤害；不能自保，不能连续两夜庇护同一个人。若本夜被蚀日侍女吞噬，你没有原生庇护行动，天亮解除封禁；借用者的选择不会写回你的上一目标。被封禁的夜晚不算一次放弃。 借庇护继承原主上一目标及实际夜序，但不写回借用者的新选择；封禁期间未行动，隔过一夜恢复后可以再次选择原目标。; 蚀日侍女: 你是蚀日侍女，属于狼人阵营，与你的狼队共同胜负。你单向知道其他狼人身份，但他们不知道你；你不参与狼聊，不能自爆，只有在真实夜初其余狼人已全部出局时才有狼刀。从第二夜起，每夜可吞噬一名存活好人，也可明确放弃，不能连续两夜吞噬同一个人。被吞者当夜失去原生能力，你获得其当前可借能力并可在相应阶段使用。借用库存独立、不写回原主，不复制历史查验或提示；借药继承当时库存且每夜最多一瓶、不能自救，空库存不发借药行动。借梦的梦游及死亡牵连以你为施法者；借庇护不能保护你自己。吞伯爵或该夜最终受庇护的目标会触发独立流光反噬，但吞噬和借得技能仍有效；摄梦保护可以阻挡反噬，连续梦或梦主死亡的伤害仍另行结算。天亮借用授权结束。 借庇护按继承的上一目标及实际夜序判断连续，使用后不改写伯爵的记录。 借梦继承原主上一梦游目标及实际夜序；梦游可以连续选择同一目标并造成连续梦伤，但不能梦你自己。; 狼人: 夜间可狼队夜聊并参与刀人投票; 摄梦人: 每夜必须选择其它存活梦游者，免疫夜间普通伤害；连续两夜同目标或摄梦人夜间死亡导致梦亡。; 平民: 无夜间技能，白天通过发言和投票推进局势; 预言家: 每晚可查验一名玩家阵营; 女巫: 拥有解药与毒药，可在夜间选择使用",
+    "prompt_user": ["context_window=0-1/1;event_cursor=0->1"]
+  },
+  "timeline": [
+    {
+      "seq": 1,
+      "kind": "turn",
+      "day": 1,
+      "phase": "night",
+      "stage": "dreamer",
+      "request_id": "1-night-4-1",
+      "timestamp": "2026-10-11T18:22:37.609Z",
+      "turn_seq": 1,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 4号玩家，现在轮到你行动，当前处于夜晚阶段，子阶段是摄梦人行动，目前不是你的发言轮次。\n阶段规则：本轮必须且只能调用dream，选择一名其它存活玩家，不能主动弃权。 当前日次：第1天。 本轮规则告知你的狼人队友编号（不含本人）：无。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：摄梦人；阵营：好人。获得能力不自动改变身份或阵营。 能力 native:dream：梦游；状态=已生效；剩余使用次数=不限次数；本人资源与记录={\"protectionPolicy\":\"netease_2026_night_immunity_v1\",\"lastTarget\":null,\"lastDay\":null,\"history\":[]} 本轮只执行引擎指定的能力 native:dream；不要在工具参数中增加能力编号。 本轮梦能力规则：必须选择其它存活玩家，目标不直接收到通知。阻止其普通狼刀、毒和夜间来源死亡枪；同一能力相邻两夜同目标会梦亡，施梦者夜间死亡会牵连当夜目标，梦亡不被本梦/守卫/解药救回且禁死亡枪。白天普通死/枪无梦牵连或保护。每能力每夜一次；参考本实例lastTarget/lastDay判断连续，能力不改变你的身份。 摄梦人 netease_2026_night_immunity_v1：每夜必选、免夜伤、仅夜死牵连、连梦致死、梦死禁枪。机械守护失败/黑市反噬也免疫是扩展工程补全；梦亡仍不免。 你的私有状态：你的底牌是【摄梦人】，好人神职。每夜必须选择其它存活玩家梦游，目标不知道被选择；连续两夜同目标会梦亡，你夜间死亡也会牵连当夜目标。白天普通死亡不保留梦关系。 摄梦人 netease_2026_night_immunity_v1：每夜必选、免夜伤、仅夜死牵连、连梦致死、梦死禁枪。机械守护失败/黑市反噬也免疫是扩展工程补全；梦亡仍不免。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：dream。 夜间行动阶段需完成一次有效动作。 你当前可以提交的行动有：dream, report_bug，其中有效行动有：dream。\n行动参数提示：dream args: {\"target_id\":number}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（存活且不含你自己）：1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12。 dream：target_id为其它存活编号，必填，不能为自己或null；夜间梦保护不免重复梦亡。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t1，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t1；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "dream",
+          "args": {
+            "target_id": 1
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"dream\",\"args\":{\"target_id\":1}}}"
+        }
+      ]
+    },
+    {
+      "seq": 2,
+      "kind": "turn",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_nomination",
+      "request_id": "1-day-4-2",
+      "timestamp": "2026-10-11T18:22:37.664Z",
+      "turn_seq": 2,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 4号玩家，现在轮到你行动，当前处于白天阶段，子阶段是上警报名，目前不是你的发言轮次。 这是上警报名阶段，不是退水阶段：run=true 表示报名上警，run=false 表示不上警；所有玩家的报名基于同一信息快照并行收集。 首日警长流程发生在昨夜结果公开之前：此时尚未通过 night_resolved 公布死亡或平安夜，任何玩家仍能参与上警都不能证明其最终存活。不要根据狼人刀口、进入白天、结果尚未播报或其他玩家的说法，擅自断定昨夜结果。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 当前日次：第1天。 本轮规则告知你的狼人队友编号（不含本人）：无。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：摄梦人；阵营：好人。获得能力不自动改变身份或阵营。 能力 native:dream：梦游；状态=本夜机会已结束；剩余使用次数=不限次数；本人资源与记录={\"protectionPolicy\":\"netease_2026_night_immunity_v1\",\"lastTarget\":1,\"lastDay\":1,\"history\":[{\"day\":1,\"targetId\":1}]} 你的私有状态：你的底牌是【摄梦人】，好人神职。每夜必须选择其它存活玩家梦游，目标不知道被选择；连续两夜同目标会梦亡，你夜间死亡也会牵连当夜目标。白天普通死亡不保留梦关系。 摄梦人 netease_2026_night_immunity_v1：每夜必选、免夜伤、仅夜死牵连、连梦致死、梦死禁枪。机械守护失败/黑市反噬也免疫是扩展工程补全；梦亡仍不免。 最近梦游选择：第1夜的1号；相邻下一夜再选同一目标会梦亡。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：run_for_sheriff。 上警声明阶段必须明确是否报名上警。 你当前可以提交的行动有：run_for_sheriff, report_bug，其中有效行动有：run_for_sheriff。\n行动参数提示：run_for_sheriff args: {\"run\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t2，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t2；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "run_for_sheriff",
+          "args": {
+            "run": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"run_for_sheriff\",\"args\":{\"run\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 3,
+      "kind": "turn",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-4-3",
+      "timestamp": "2026-10-11T18:22:37.696Z",
+      "turn_seq": 3,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 4号玩家，现在轮到你行动，当前处于白天阶段，子阶段是白天发言，目前是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 当前日次：第1天。 本轮规则告知你的狼人队友编号（不含本人）：无。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：摄梦人；阵营：好人。获得能力不自动改变身份或阵营。 能力 native:dream：梦游；状态=本夜机会已结束；剩余使用次数=不限次数；本人资源与记录={\"protectionPolicy\":\"netease_2026_night_immunity_v1\",\"lastTarget\":1,\"lastDay\":1,\"history\":[{\"day\":1,\"targetId\":1}]} 你的私有状态：你的底牌是【摄梦人】，好人神职。每夜必须选择其它存活玩家梦游，目标不知道被选择；连续两夜同目标会梦亡，你夜间死亡也会牵连当夜目标。白天普通死亡不保留梦关系。 摄梦人 netease_2026_night_immunity_v1：每夜必选、免夜伤、仅夜死牵连、连梦致死、梦死禁枪。机械守护失败/黑市反噬也免疫是扩展工程补全；梦亡仍不免。 最近梦游选择：第1夜的1号；相邻下一夜再选同一目标会梦亡。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：speak。 白天发言阶段必须完成一次发言动作。 你当前可以提交的行动有：speak, report_bug，其中有效行动有：speak。\n行动参数提示：speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t3，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t3；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak",
+          "args": {
+            "text": "Speech"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Speech\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 4,
+      "kind": "turn",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-4-4",
+      "timestamp": "2026-10-11T18:22:37.764Z",
+      "turn_seq": 4,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 4号玩家，现在轮到你行动，当前处于投票阶段，子阶段是放逐投票，目前不是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 当前日次：第1天。 本轮规则告知你的狼人队友编号（不含本人）：无。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：摄梦人；阵营：好人。获得能力不自动改变身份或阵营。 能力 native:dream：梦游；状态=本夜机会已结束；剩余使用次数=不限次数；本人资源与记录={\"protectionPolicy\":\"netease_2026_night_immunity_v1\",\"lastTarget\":1,\"lastDay\":1,\"history\":[{\"day\":1,\"targetId\":1}]} 你的私有状态：你的底牌是【摄梦人】，好人神职。每夜必须选择其它存活玩家梦游，目标不知道被选择；连续两夜同目标会梦亡，你夜间死亡也会牵连当夜目标。白天普通死亡不保留梦关系。 摄梦人 netease_2026_night_immunity_v1：每夜必选、免夜伤、仅夜死牵连、连梦致死、梦死禁枪。机械守护失败/黑市反噬也免疫是扩展工程补全；梦亡仍不免。 最近梦游选择：第1夜的1号；相邻下一夜再选同一目标会梦亡。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：vote。 放逐投票阶段必须完成一次投票动作（可弃票）。 你当前可以提交的行动有：vote, report_bug，其中有效行动有：vote。\n行动参数提示：vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（存活且不含你自己）：1, 3, 5, 6, 7, 8, 9, 10, 11, 12。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t4，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t4；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "vote",
+          "args": {
+            "target_id": 3,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":3,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 5,
+      "kind": "turn",
+      "day": 2,
+      "phase": "night",
+      "stage": "dreamer",
+      "request_id": "2-night-4-5",
+      "timestamp": "2026-10-11T18:22:37.799Z",
+      "turn_seq": 5,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 4号玩家，现在轮到你行动，当前处于夜晚阶段，子阶段是摄梦人行动，目前不是你的发言轮次。\n阶段规则：本轮必须且只能调用dream，选择一名其它存活玩家，不能主动弃权。 当前日次：第2天。 本轮规则告知你的狼人队友编号（不含本人）：无。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：摄梦人；阵营：好人。获得能力不自动改变身份或阵营。 能力 native:dream：梦游；状态=已生效；剩余使用次数=不限次数；本人资源与记录={\"protectionPolicy\":\"netease_2026_night_immunity_v1\",\"lastTarget\":1,\"lastDay\":1,\"history\":[{\"day\":1,\"targetId\":1}]} 本轮只执行引擎指定的能力 native:dream；不要在工具参数中增加能力编号。 本轮梦能力规则：必须选择其它存活玩家，目标不直接收到通知。阻止其普通狼刀、毒和夜间来源死亡枪；同一能力相邻两夜同目标会梦亡，施梦者夜间死亡会牵连当夜目标，梦亡不被本梦/守卫/解药救回且禁死亡枪。白天普通死/枪无梦牵连或保护。每能力每夜一次；参考本实例lastTarget/lastDay判断连续，能力不改变你的身份。 摄梦人 netease_2026_night_immunity_v1：每夜必选、免夜伤、仅夜死牵连、连梦致死、梦死禁枪。机械守护失败/黑市反噬也免疫是扩展工程补全；梦亡仍不免。 你的私有状态：你的底牌是【摄梦人】，好人神职。每夜必须选择其它存活玩家梦游，目标不知道被选择；连续两夜同目标会梦亡，你夜间死亡也会牵连当夜目标。白天普通死亡不保留梦关系。 摄梦人 netease_2026_night_immunity_v1：每夜必选、免夜伤、仅夜死牵连、连梦致死、梦死禁枪。机械守护失败/黑市反噬也免疫是扩展工程补全；梦亡仍不免。 最近梦游选择：第1夜的1号；相邻下一夜再选同一目标会梦亡。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：dream。 夜间行动阶段需完成一次有效动作。 你当前可以提交的行动有：dream, report_bug，其中有效行动有：dream。\n行动参数提示：dream args: {\"target_id\":number}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（存活且不含你自己）：1, 5, 6, 7, 8, 9, 10, 11, 12。 dream：target_id为其它存活编号，必填，不能为自己或null；夜间梦保护不免重复梦亡。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t5，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t5；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "dream",
+          "args": {
+            "target_id": 5
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"dream\",\"args\":{\"target_id\":5}}}"
+        }
+      ]
+    },
+    {
+      "seq": 6,
+      "kind": "turn",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-4-6",
+      "timestamp": "2026-10-11T18:22:37.837Z",
+      "turn_seq": 6,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 4号玩家，现在轮到你行动，当前处于白天阶段，子阶段是白天发言，目前是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 当前日次：第2天。 本轮规则告知你的狼人队友编号（不含本人）：无。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：摄梦人；阵营：好人。获得能力不自动改变身份或阵营。 能力 native:dream：梦游；状态=本夜机会已结束；剩余使用次数=不限次数；本人资源与记录={\"protectionPolicy\":\"netease_2026_night_immunity_v1\",\"lastTarget\":5,\"lastDay\":2,\"history\":[{\"day\":1,\"targetId\":1},{\"day\":2,\"targetId\":5}]} 你的私有状态：你的底牌是【摄梦人】，好人神职。每夜必须选择其它存活玩家梦游，目标不知道被选择；连续两夜同目标会梦亡，你夜间死亡也会牵连当夜目标。白天普通死亡不保留梦关系。 摄梦人 netease_2026_night_immunity_v1：每夜必选、免夜伤、仅夜死牵连、连梦致死、梦死禁枪。机械守护失败/黑市反噬也免疫是扩展工程补全；梦亡仍不免。 最近梦游选择：第2夜的5号；相邻下一夜再选同一目标会梦亡。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：speak。 白天发言阶段必须完成一次发言动作。 你当前可以提交的行动有：speak, report_bug，其中有效行动有：speak。\n行动参数提示：speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t6，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t6；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak",
+          "args": {
+            "text": "Speech"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Speech\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 7,
+      "kind": "turn",
+      "day": 2,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "2-voting-4-7",
+      "timestamp": "2026-10-11T18:22:37.885Z",
+      "turn_seq": 7,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 4号玩家，现在轮到你行动，当前处于投票阶段，子阶段是放逐投票，目前不是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 当前日次：第2天。 本轮规则告知你的狼人队友编号（不含本人）：无。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：摄梦人；阵营：好人。获得能力不自动改变身份或阵营。 能力 native:dream：梦游；状态=本夜机会已结束；剩余使用次数=不限次数；本人资源与记录={\"protectionPolicy\":\"netease_2026_night_immunity_v1\",\"lastTarget\":5,\"lastDay\":2,\"history\":[{\"day\":1,\"targetId\":1},{\"day\":2,\"targetId\":5}]} 你的私有状态：你的底牌是【摄梦人】，好人神职。每夜必须选择其它存活玩家梦游，目标不知道被选择；连续两夜同目标会梦亡，你夜间死亡也会牵连当夜目标。白天普通死亡不保留梦关系。 摄梦人 netease_2026_night_immunity_v1：每夜必选、免夜伤、仅夜死牵连、连梦致死、梦死禁枪。机械守护失败/黑市反噬也免疫是扩展工程补全；梦亡仍不免。 最近梦游选择：第2夜的5号；相邻下一夜再选同一目标会梦亡。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：vote。 放逐投票阶段必须完成一次投票动作（可弃票）。 你当前可以提交的行动有：vote, report_bug，其中有效行动有：vote。\n行动参数提示：vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（存活且不含你自己）：1, 5, 6, 7, 8, 9, 10, 12。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t7，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t7；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "vote",
+          "args": {
+            "target_id": null,
+            "abstain": true
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":null,\"abstain\":true}}}"
+        }
+      ]
+    },
+    {
+      "seq": 8,
+      "kind": "turn",
+      "day": 3,
+      "phase": "night",
+      "stage": "dreamer",
+      "request_id": "3-night-4-8",
+      "timestamp": "2026-10-11T18:22:37.917Z",
+      "turn_seq": 8,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 4号玩家，现在轮到你行动，当前处于夜晚阶段，子阶段是摄梦人行动，目前不是你的发言轮次。\n阶段规则：本轮必须且只能调用dream，选择一名其它存活玩家，不能主动弃权。 当前日次：第3天。 本轮规则告知你的狼人队友编号（不含本人）：无。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：摄梦人；阵营：好人。获得能力不自动改变身份或阵营。 能力 native:dream：梦游；状态=已生效；剩余使用次数=不限次数；本人资源与记录={\"protectionPolicy\":\"netease_2026_night_immunity_v1\",\"lastTarget\":5,\"lastDay\":2,\"history\":[{\"day\":1,\"targetId\":1},{\"day\":2,\"targetId\":5}]} 本轮只执行引擎指定的能力 native:dream；不要在工具参数中增加能力编号。 本轮梦能力规则：必须选择其它存活玩家，目标不直接收到通知。阻止其普通狼刀、毒和夜间来源死亡枪；同一能力相邻两夜同目标会梦亡，施梦者夜间死亡会牵连当夜目标，梦亡不被本梦/守卫/解药救回且禁死亡枪。白天普通死/枪无梦牵连或保护。每能力每夜一次；参考本实例lastTarget/lastDay判断连续，能力不改变你的身份。 摄梦人 netease_2026_night_immunity_v1：每夜必选、免夜伤、仅夜死牵连、连梦致死、梦死禁枪。机械守护失败/黑市反噬也免疫是扩展工程补全；梦亡仍不免。 你的私有状态：你的底牌是【摄梦人】，好人神职。每夜必须选择其它存活玩家梦游，目标不知道被选择；连续两夜同目标会梦亡，你夜间死亡也会牵连当夜目标。白天普通死亡不保留梦关系。 摄梦人 netease_2026_night_immunity_v1：每夜必选、免夜伤、仅夜死牵连、连梦致死、梦死禁枪。机械守护失败/黑市反噬也免疫是扩展工程补全；梦亡仍不免。 最近梦游选择：第2夜的5号；相邻下一夜再选同一目标会梦亡。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：dream。 夜间行动阶段需完成一次有效动作。 你当前可以提交的行动有：dream, report_bug，其中有效行动有：dream。\n行动参数提示：dream args: {\"target_id\":number}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（存活且不含你自己）：1, 5, 6, 7, 8, 9, 10, 12。 dream：target_id为其它存活编号，必填，不能为自己或null；夜间梦保护不免重复梦亡。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t8，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t8；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "dream",
+          "args": {
+            "target_id": 6
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"dream\",\"args\":{\"target_id\":6}}}"
+        }
+      ]
+    },
+    {
+      "seq": 9,
+      "kind": "event",
+      "day": 1,
+      "phase": "night",
+      "stage": "night",
+      "request_id": "1-night-4-event-1",
+      "timestamp": "2026-10-11T18:22:37.573Z",
+      "source_event_seq": 1,
+      "event": {
+        "seq": 1,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "night",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 10,
+      "kind": "event",
+      "day": 1,
+      "phase": "night",
+      "stage": "dreamer",
+      "request_id": "1-night-4-event-2",
+      "timestamp": "2026-10-11T18:22:37.609Z",
+      "source_event_seq": 2,
+      "event": {
+        "seq": 2,
+        "type": "dream_applied",
+        "payload": {
+          "actorId": 4,
+          "targetId": 1,
+          "day": 1,
+          "consecutive": false
+        }
+      }
+    },
+    {
+      "seq": 11,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day",
+      "request_id": "1-day-4-event-3",
+      "timestamp": "2026-10-11T18:22:37.643Z",
+      "source_event_seq": 3,
+      "event": {
+        "seq": 3,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "day",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 12,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_nomination_summary",
+      "request_id": "1-day-4-event-4",
+      "timestamp": "2026-10-11T18:22:37.678Z",
+      "source_event_seq": 4,
+      "event": {
+        "seq": 4,
+        "type": "sheriff_nomination_summary",
+        "payload": {
+          "candidates": []
+        }
+      }
+    },
+    {
+      "seq": 13,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_withdraw_summary",
+      "request_id": "1-day-4-event-5",
+      "timestamp": "2026-10-11T18:22:37.678Z",
+      "source_event_seq": 5,
+      "event": {
+        "seq": 5,
+        "type": "sheriff_withdraw_summary",
+        "payload": {
+          "withdrawn": []
+        }
+      }
+    },
+    {
+      "seq": 14,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff",
+      "request_id": "1-day-4-event-6",
+      "timestamp": "2026-10-11T18:22:37.678Z",
+      "source_event_seq": 6,
+      "event": {
+        "seq": 6,
+        "type": "sheriff_candidates_finalized",
+        "payload": {
+          "candidates": []
+        }
+      }
+    },
+    {
+      "seq": 15,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_vote_summary",
+      "request_id": "1-day-4-event-7",
+      "timestamp": "2026-10-11T18:22:37.678Z",
+      "source_event_seq": 7,
+      "event": {
+        "seq": 7,
+        "type": "sheriff_vote_summary",
+        "payload": {
+          "votes": [],
+          "winnerId": null,
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 16,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "night_resolved",
+      "request_id": "1-day-4-event-8",
+      "timestamp": "2026-10-11T18:22:37.678Z",
+      "source_event_seq": 8,
+      "event": {
+        "seq": 8,
+        "type": "night_resolved",
+        "payload": {
+          "deaths": [2]
+        }
+      }
+    },
+    {
+      "seq": 17,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "last_words_granted",
+      "request_id": "1-day-4-event-9",
+      "timestamp": "2026-10-11T18:22:37.678Z",
+      "source_event_seq": 9,
+      "event": {
+        "seq": 9,
+        "type": "last_words_granted",
+        "payload": {
+          "playerId": 2,
+          "phase": "day",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 18,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "last_words_spoken",
+      "request_id": "1-day-4-event-10",
+      "timestamp": "2026-10-11T18:22:37.682Z",
+      "source_event_seq": 10,
+      "event": {
+        "seq": 10,
+        "type": "last_words_spoken",
+        "payload": {
+          "playerId": 2,
+          "phase": "day",
+          "day": 1,
+          "text": "Words"
+        }
+      }
+    },
+    {
+      "seq": 19,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-4-event-11",
+      "timestamp": "2026-10-11T18:22:37.686Z",
+      "source_event_seq": 11,
+      "event": {
+        "seq": 11,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 1,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 20,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-4-event-12",
+      "timestamp": "2026-10-11T18:22:37.690Z",
+      "source_event_seq": 12,
+      "event": {
+        "seq": 12,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 3,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 21,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-4-event-13",
+      "timestamp": "2026-10-11T18:22:37.696Z",
+      "source_event_seq": 13,
+      "event": {
+        "seq": 13,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 4,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 22,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-4-event-14",
+      "timestamp": "2026-10-11T18:22:37.700Z",
+      "source_event_seq": 14,
+      "event": {
+        "seq": 14,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 5,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 23,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-4-event-15",
+      "timestamp": "2026-10-11T18:22:37.709Z",
+      "source_event_seq": 15,
+      "event": {
+        "seq": 15,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 6,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 24,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-4-event-16",
+      "timestamp": "2026-10-11T18:22:37.713Z",
+      "source_event_seq": 16,
+      "event": {
+        "seq": 16,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 7,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 25,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-4-event-17",
+      "timestamp": "2026-10-11T18:22:37.724Z",
+      "source_event_seq": 17,
+      "event": {
+        "seq": 17,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 8,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 26,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-4-event-18",
+      "timestamp": "2026-10-11T18:22:37.728Z",
+      "source_event_seq": 18,
+      "event": {
+        "seq": 18,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 9,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 27,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-4-event-19",
+      "timestamp": "2026-10-11T18:22:37.733Z",
+      "source_event_seq": 19,
+      "event": {
+        "seq": 19,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 10,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 28,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-4-event-20",
+      "timestamp": "2026-10-11T18:22:37.737Z",
+      "source_event_seq": 20,
+      "event": {
+        "seq": 20,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 11,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 29,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-4-event-21",
+      "timestamp": "2026-10-11T18:22:37.741Z",
+      "source_event_seq": 21,
+      "event": {
+        "seq": 21,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 12,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 30,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-4-event-22",
+      "timestamp": "2026-10-11T18:22:37.741Z",
+      "source_event_seq": 22,
+      "event": {
+        "seq": 22,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "voting",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 31,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-4-event-23",
+      "timestamp": "2026-10-11T18:22:37.779Z",
+      "source_event_seq": 23,
+      "event": {
+        "seq": 23,
+        "type": "vote_summary",
+        "payload": {
+          "votes": [
+            {
+              "actorId": 1,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 3,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            },
+            {
+              "actorId": 4,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 5,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 6,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 7,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 8,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 9,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 10,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 11,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 12,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            }
+          ],
+          "target": 3,
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 32,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-4-event-24",
+      "timestamp": "2026-10-11T18:22:37.779Z",
+      "source_event_seq": 24,
+      "event": {
+        "seq": 24,
+        "type": "voted_out",
+        "payload": {
+          "target": 3
+        }
+      }
+    },
+    {
+      "seq": 33,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "last_words_granted",
+      "request_id": "1-voting-4-event-25",
+      "timestamp": "2026-10-11T18:22:37.779Z",
+      "source_event_seq": 25,
+      "event": {
+        "seq": 25,
+        "type": "last_words_granted",
+        "payload": {
+          "playerId": 3,
+          "phase": "voting",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 34,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "last_words_spoken",
+      "request_id": "1-voting-4-event-26",
+      "timestamp": "2026-10-11T18:22:37.784Z",
+      "source_event_seq": 26,
+      "event": {
+        "seq": 26,
+        "type": "last_words_spoken",
+        "payload": {
+          "playerId": 3,
+          "phase": "voting",
+          "day": 1,
+          "text": "Words"
+        }
+      }
+    },
+    {
+      "seq": 35,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "night",
+      "request_id": "2-night-4-event-27",
+      "timestamp": "2026-10-11T18:22:37.785Z",
+      "source_event_seq": 27,
+      "event": {
+        "seq": 27,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "night",
+          "day": 2
+        }
+      }
+    },
+    {
+      "seq": 36,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "dreamer",
+      "request_id": "2-night-4-event-28",
+      "timestamp": "2026-10-11T18:22:37.799Z",
+      "source_event_seq": 28,
+      "event": {
+        "seq": 28,
+        "type": "dream_applied",
+        "payload": {
+          "actorId": 4,
+          "targetId": 5,
+          "day": 2,
+          "consecutive": false
+        }
+      }
+    },
+    {
+      "seq": 37,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day",
+      "request_id": "2-day-4-event-29",
+      "timestamp": "2026-10-11T18:22:37.828Z",
+      "source_event_seq": 29,
+      "event": {
+        "seq": 29,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "day",
+          "day": 2
+        }
+      }
+    },
+    {
+      "seq": 38,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "night_resolved",
+      "request_id": "2-day-4-event-30",
+      "timestamp": "2026-10-11T18:22:37.828Z",
+      "source_event_seq": 30,
+      "event": {
+        "seq": 30,
+        "type": "night_resolved",
+        "payload": {
+          "deaths": [11]
+        }
+      }
+    },
+    {
+      "seq": 39,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-4-event-31",
+      "timestamp": "2026-10-11T18:22:37.832Z",
+      "source_event_seq": 31,
+      "event": {
+        "seq": 31,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 1,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 40,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-4-event-32",
+      "timestamp": "2026-10-11T18:22:37.837Z",
+      "source_event_seq": 32,
+      "event": {
+        "seq": 32,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 4,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 41,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-4-event-33",
+      "timestamp": "2026-10-11T18:22:37.841Z",
+      "source_event_seq": 33,
+      "event": {
+        "seq": 33,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 5,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 42,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-4-event-34",
+      "timestamp": "2026-10-11T18:22:37.845Z",
+      "source_event_seq": 34,
+      "event": {
+        "seq": 34,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 6,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 43,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-4-event-35",
+      "timestamp": "2026-10-11T18:22:37.850Z",
+      "source_event_seq": 35,
+      "event": {
+        "seq": 35,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 7,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 44,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-4-event-36",
+      "timestamp": "2026-10-11T18:22:37.854Z",
+      "source_event_seq": 36,
+      "event": {
+        "seq": 36,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 8,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 45,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-4-event-37",
+      "timestamp": "2026-10-11T18:22:37.865Z",
+      "source_event_seq": 37,
+      "event": {
+        "seq": 37,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 9,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 46,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-4-event-38",
+      "timestamp": "2026-10-11T18:22:37.870Z",
+      "source_event_seq": 38,
+      "event": {
+        "seq": 38,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 10,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 47,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-4-event-39",
+      "timestamp": "2026-10-11T18:22:37.874Z",
+      "source_event_seq": 39,
+      "event": {
+        "seq": 39,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 12,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 48,
+      "kind": "event",
+      "day": 2,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "2-voting-4-event-40",
+      "timestamp": "2026-10-11T18:22:37.874Z",
+      "source_event_seq": 40,
+      "event": {
+        "seq": 40,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "voting",
+          "day": 2
+        }
+      }
+    },
+    {
+      "seq": 49,
+      "kind": "event",
+      "day": 2,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "2-voting-4-event-41",
+      "timestamp": "2026-10-11T18:22:37.899Z",
+      "source_event_seq": 41,
+      "event": {
+        "seq": 41,
+        "type": "vote_summary",
+        "payload": {
+          "votes": [
+            {
+              "actorId": 1,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            },
+            {
+              "actorId": 4,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            },
+            {
+              "actorId": 5,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            },
+            {
+              "actorId": 6,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            },
+            {
+              "actorId": 7,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            },
+            {
+              "actorId": 8,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            },
+            {
+              "actorId": 9,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            },
+            {
+              "actorId": 10,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            },
+            {
+              "actorId": 12,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            }
+          ],
+          "target": null,
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 50,
+      "kind": "event",
+      "day": 3,
+      "phase": "night",
+      "stage": "night",
+      "request_id": "3-night-4-event-42",
+      "timestamp": "2026-10-11T18:22:37.900Z",
+      "source_event_seq": 42,
+      "event": {
+        "seq": 42,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "night",
+          "day": 3
+        }
+      }
+    },
+    {
+      "seq": 51,
+      "kind": "event",
+      "day": 3,
+      "phase": "night",
+      "stage": "dreamer",
+      "request_id": "3-night-4-event-43",
+      "timestamp": "2026-10-11T18:22:37.917Z",
+      "source_event_seq": 43,
+      "event": {
+        "seq": 43,
+        "type": "dream_applied",
+        "payload": {
+          "actorId": 4,
+          "targetId": 6,
+          "day": 3,
+          "consecutive": false
+        }
+      }
+    },
+    {
+      "seq": 52,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "day",
+      "request_id": "3-day-4-event-44",
+      "timestamp": "2026-10-11T18:22:37.957Z",
+      "source_event_seq": 44,
+      "event": {
+        "seq": 44,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "day",
+          "day": 3
+        }
+      }
+    },
+    {
+      "seq": 53,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "night_resolved",
+      "request_id": "3-day-4-event-45",
+      "timestamp": "2026-10-11T18:22:37.957Z",
+      "source_event_seq": 45,
+      "event": {
+        "seq": 45,
+        "type": "night_resolved",
+        "payload": {
+          "deaths": [1, 10]
+        }
+      }
+    },
+    {
+      "seq": 54,
+      "kind": "event",
+      "day": 3,
+      "phase": "game_over",
+      "stage": "game_over",
+      "request_id": "3-game_over-4-event-46",
+      "timestamp": "2026-10-11T18:22:37.957Z",
+      "source_event_seq": 46,
+      "event": {
+        "seq": 46,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "game_over",
+          "day": 3,
+          "winner": "good",
+          "reason": "all_wolves_eliminated",
+          "outcome": {
+            "kind": "victory",
+            "primary": {
+              "kind": "faction",
+              "faction": "good",
+              "winningPlayerIds": [1, 4, 5, 6, 7, 8, 9, 12]
+            },
+            "additional": [],
+            "winningPlayerIds": [1, 4, 5, 6, 7, 8, 9, 12]
+          },
+          "decidedAt": {
+            "day": 3,
+            "phase": "day",
+            "checkpoint": "night_settled"
+          }
+        }
+      }
+    },
+    {
+      "seq": 55,
+      "kind": "event",
+      "day": 3,
+      "phase": "game_over",
+      "stage": "game_over",
+      "request_id": "3-game_over-4-event-47",
+      "timestamp": "2026-10-11T18:22:37.957Z",
+      "source_event_seq": 47,
+      "event": {
+        "seq": 47,
+        "type": "game_over",
+        "payload": {
+          "winner": "good",
+          "reason": "all_wolves_eliminated",
+          "outcome": {
+            "kind": "victory",
+            "primary": {
+              "kind": "faction",
+              "faction": "good",
+              "winningPlayerIds": [1, 4, 5, 6, 7, 8, 9, 12]
+            },
+            "additional": [],
+            "winningPlayerIds": [1, 4, 5, 6, 7, 8, 9, 12]
+          },
+          "decidedAt": {
+            "day": 3,
+            "phase": "day",
+            "checkpoint": "night_settled"
+          }
+        }
+      }
+    }
+  ]
+}

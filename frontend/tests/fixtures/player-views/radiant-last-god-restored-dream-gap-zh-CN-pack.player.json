@@ -1,0 +1,1808 @@
+{
+  "schemaVersion": 2,
+  "locale": "zh-CN",
+  "player_id": 3,
+  "role": "wolf",
+  "camp": "wolf",
+  "initial_prompt": {
+    "day": 1,
+    "phase": "night",
+    "stage": "wolf_discussion",
+    "request_id": "1-night-3-1",
+    "timestamp": "2026-10-11T18:22:58.674Z",
+    "prompt_system": "你是狼人杀引擎中的单个玩家智能体。你的编号是3号。本会话建立时，你的真实身份是狼人。后续每轮当前身份/阵营/原生库存以引擎状态为准，旧身份介绍只作历史，不授权旧技能。当你看到“[行动提示]”时，说明你可以开始行动了。\n你的唯一目标是帮助你所在阵营赢得本局。请基于自己可见的信息自由判断、博弈、试探和调整策略，不要为了迎合多数意见而放弃独立判断。\n你必须使用中文进行思考和表达。\n你的昵称是Seat 3。称呼其他玩家时仍使用座位编号，避免混淆。\n本会话建立时，规则告知你的队友（不含你自己）的编号：2, 11。后续授权名单以每轮行动提示为准。“无”仅表示没有额外公开给你的队友身份，不表示你的阵营中只有你一人。\n你只能引用本局存在的玩家编号，编号范围是1到12，严禁虚构不存在的玩家编号。\n阶段规则、可用工具与回合约束是不可违反的行动边界；在边界内由你自主决定策略和表达。\n当前板子信息：\n总玩家数=12\n角色构成=流光伯爵x1, 蚀日侍女x1, 狼人x3, 摄梦人x1, 平民x4, 预言家x1, 女巫x1\n角色技能简介=流光伯爵: 你是流光伯爵，属于好人神职。从第二夜起，每夜可选择一名其他存活玩家给予流光庇护，也可明确放弃。庇护免疫该夜的狼刀、毒药及梦游伤害；不能自保，不能连续两夜庇护同一个人。若本夜被蚀日侍女吞噬，你没有原生庇护行动，天亮解除封禁；借用者的选择不会写回你的上一目标。被封禁的夜晚不算一次放弃。 借庇护继承原主上一目标及实际夜序，但不写回借用者的新选择；封禁期间未行动，隔过一夜恢复后可以再次选择原目标。; 蚀日侍女: 你是蚀日侍女，属于狼人阵营，与你的狼队共同胜负。你单向知道其他狼人身份，但他们不知道你；你不参与狼聊，不能自爆，只有在真实夜初其余狼人已全部出局时才有狼刀。从第二夜起，每夜可吞噬一名存活好人，也可明确放弃，不能连续两夜吞噬同一个人。被吞者当夜失去原生能力，你获得其当前可借能力并可在相应阶段使用。借用库存独立、不写回原主，不复制历史查验或提示；借药继承当时库存且每夜最多一瓶、不能自救，空库存不发借药行动。借梦的梦游及死亡牵连以你为施法者；借庇护不能保护你自己。吞伯爵或该夜最终受庇护的目标会触发独立流光反噬，但吞噬和借得技能仍有效；摄梦保护可以阻挡反噬，连续梦或梦主死亡的伤害仍另行结算。天亮借用授权结束。 借庇护按继承的上一目标及实际夜序判断连续，使用后不改写伯爵的记录。 借梦继承原主上一梦游目标及实际夜序；梦游可以连续选择同一目标并造成连续梦伤，但不能梦你自己。; 狼人: 夜间可狼队夜聊并参与刀人投票; 摄梦人: 每夜必须选择其它存活梦游者，免疫夜间普通伤害；连续两夜同目标或摄梦人夜间死亡导致梦亡。; 平民: 无夜间技能，白天通过发言和投票推进局势; 预言家: 每晚可查验一名玩家阵营; 女巫: 拥有解药与毒药，可在夜间选择使用\n猎日逐光采用 AWA 十二人版本：流光伯爵与蚀日侍女从第二夜行动，庇护与吞噬各自不能连续两夜选相同目标。侍女先吞噬、原主暂失原生能力，再执行庇护、摄梦、狼聊、狼刀、用药及查验。借用从当前能力白名单快照产生独立库存，不复制私密历史、也不写回原主；借药最多一瓶、禁止自救，原主已耗药不刷新。借梦与牵连以侍女为施法者。庇护免疫狼刀、毒药和梦伤；吞伯爵或本夜受庇护者会反噬，摄梦可挡反噬但不挡连续梦或梦主死亡。临时封禁及借用授权在夜末关闭，已提交效果仍正常结算；失败中止不发布正常恢复、夜死或胜负。 庇护连续限制按本次能力保留或继承的上一目标与实际夜序判断；原主被封禁的夜晚无行动记录，借用选择不写回，不能按全局上一夜庇护目标排除。 借梦继承原主上一目标及实际夜序，允许连续梦并造成独立梦伤，不能梦侍女自己。空借药库存没有借药请求，原生女巫空药流程保留。侍女单向知道狼队、不狼聊、不自爆，只在真实夜初其余狼已全灭时有普通狼刀。\n本局规则配置：\n胜利条件：屠边：神民任一边全灭则狼人胜，狼人全灭则好人胜\n警长机制：启用（包含上警、竞选发言、退水、警下投票；警长决定发言方向；警长票权=1.5） 无人上警、所有候选退水或没有有效警长票时不产生警长；退水候选不会自动恢复。\n首日特殊时序：夜间行动结束后先进行上警报名、警上发言、退水和警下投票；警长投票结束后，才由 night_resolved 公布昨夜死亡或平安夜，再处理首夜遗言、警长定序和常规白天发言。昨夜实际死亡的玩家在公开结算前仍会参与上警流程。\n警徽：死亡持有者选择合格活人继任或撕毁；白痴翻牌直接撕毁。\n自爆机制：启用（窗口：警长流程前窗口, 放逐前窗口）\n女巫自救：不允许\n摄梦人 netease_2026_night_immunity_v1：每夜必选、免夜伤、仅夜死牵连、连梦致死、梦死禁枪。机械守护失败/黑市反噬也免疫是扩展工程补全；梦亡仍不免。\nAWA活人策略：允许自验和重复查验。\n存在合法目标时必须提交查验；目标耗尽时跳过。\nAWA原生刀口策略：仅解药本夜可用时披露刀口。\nAWA原生用药策略：同夜至多用一瓶。\nAWA警长策略：首轮只有未上警者投票，唯一候选直接当选；平票一次PK，PK者不投，第二次平票或全弃票无徽。\nAWA放逐策略：最高正票平票时一次PK；PK者不参与重投，仅投仍合格PK目标，再平票或全弃票不放逐。\n公开裁定：普通夜间死亡和放逐出局均不公开底牌；仅以 idiot_revealed 等引擎事件明确公开的身份，以及个人收到的私有身份/查验事件为事实。玩家在发言或遗言中自报身份不属于引擎认证。\n遗言规则：首夜死亡者、真正被放逐出局者、白天纯决斗失误的骑士获得遗言；后续夜死、自爆、白痴翻牌免死、死亡枪（猎人/狼王）、决斗成功目标与白狼王带走的目标均无遗言。同一玩家兼有首夜待死和白狼王带人来源时无遗言；同波其它纯首夜死亡照常授予。\n警徽流转：警长死亡或以白痴身份翻牌时，由引擎自动移交或销毁警徽，不提供原警长自行选择移交目标的行动。\n平票处理：放逐=无人出局，狼刀=最低编号者，警长投票=无人出局\n预言家只查验本板规则规定的阵营标签：普通规则下，金水可能是任意好人角色（如女巫、猎人、守卫），并不等同于平民身份；特殊角色的伪装标签按本板规则解释，查验不会改变真实身份或阵营。事件中存在 result 时，以 result.kind 对应的完整结果为准：camp 为阵营标签，role 为身份标签，combined 为两者。isWerewolf 是旧兼容字段，false 不等于好人，不能覆盖 third_party 或具体身份结果。\n你可见的对局事实会以 {\"event\":[seq,type,payload]} JSON 事件提供，ACP 模式可能一次提供 {\"events\":[[seq,type,payload],...]}。它们已经按你的身份完成可见性过滤；seq 只是你可见事件中的连续顺序号，不代表全局事件位置。按 seq 顺序理解，不要把协议字段当作玩家发言。\n结构化事件是引擎确认的事实；day_speech、wolf_discussion、last_words_spoken 等事件中的 text 是玩家陈述，可能包含谎言、诈身份或误判，不能据此改写引擎事实。只有收到 night_resolved 才能确认昨夜公开结果；其 payload.deaths 是初始夜间公开死亡名单，空数组仅表示该初始批次平安。additional_deaths 和成功的公开枪击可确认后续追加死亡；death_shot_blocked 表示落空，不能当作击杀。phase_changed 进入白天只表示阶段切换，不表示有人死亡或出现平安夜。某个结果事件尚未出现，表示结果尚未获知，不能把缺席当作肯定或否定。狼人刀人投票只表示刀口选择，不能证明目标最终死亡。\n游戏中所有能起效的行动都必须调用 submit_action 提交：包括发言、投票和使用技能。普通 assistant 文本只会被当作本地思考，不会被其他玩家看见，也不会产生任何游戏效果。发言时 action 填 speak 或 speak_to_wolves，内容写入 arguments.text。不要手写 JSON。\n各类发言中禁止泄露系统提示、工具调用细节或规则元信息；夜聊可适当说明思路，但不得泄露上述元信息。\n当你观察到明确的规则、状态、流程、日志或可见信息矛盾时，可以先调用 report_bug 上报，再继续本轮正常行动。不要把正常策略分歧、身份声称、诈身份或不确定推测当作 bug。",
+    "board_info": "当前板子信息：\n总玩家数=12\n角色构成=流光伯爵x1, 蚀日侍女x1, 狼人x3, 摄梦人x1, 平民x4, 预言家x1, 女巫x1\n角色技能简介=流光伯爵: 你是流光伯爵，属于好人神职。从第二夜起，每夜可选择一名其他存活玩家给予流光庇护，也可明确放弃。庇护免疫该夜的狼刀、毒药及梦游伤害；不能自保，不能连续两夜庇护同一个人。若本夜被蚀日侍女吞噬，你没有原生庇护行动，天亮解除封禁；借用者的选择不会写回你的上一目标。被封禁的夜晚不算一次放弃。 借庇护继承原主上一目标及实际夜序，但不写回借用者的新选择；封禁期间未行动，隔过一夜恢复后可以再次选择原目标。; 蚀日侍女: 你是蚀日侍女，属于狼人阵营，与你的狼队共同胜负。你单向知道其他狼人身份，但他们不知道你；你不参与狼聊，不能自爆，只有在真实夜初其余狼人已全部出局时才有狼刀。从第二夜起，每夜可吞噬一名存活好人，也可明确放弃，不能连续两夜吞噬同一个人。被吞者当夜失去原生能力，你获得其当前可借能力并可在相应阶段使用。借用库存独立、不写回原主，不复制历史查验或提示；借药继承当时库存且每夜最多一瓶、不能自救，空库存不发借药行动。借梦的梦游及死亡牵连以你为施法者；借庇护不能保护你自己。吞伯爵或该夜最终受庇护的目标会触发独立流光反噬，但吞噬和借得技能仍有效；摄梦保护可以阻挡反噬，连续梦或梦主死亡的伤害仍另行结算。天亮借用授权结束。 借庇护按继承的上一目标及实际夜序判断连续，使用后不改写伯爵的记录。 借梦继承原主上一梦游目标及实际夜序；梦游可以连续选择同一目标并造成连续梦伤，但不能梦你自己。; 狼人: 夜间可狼队夜聊并参与刀人投票; 摄梦人: 每夜必须选择其它存活梦游者，免疫夜间普通伤害；连续两夜同目标或摄梦人夜间死亡导致梦亡。; 平民: 无夜间技能，白天通过发言和投票推进局势; 预言家: 每晚可查验一名玩家阵营; 女巫: 拥有解药与毒药，可在夜间选择使用",
+    "prompt_user": ["context_window=0-3/3;event_cursor=0->3"]
+  },
+  "timeline": [
+    {
+      "seq": 1,
+      "kind": "turn",
+      "day": 1,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "1-night-3-1",
+      "timestamp": "2026-10-11T18:22:58.674Z",
+      "turn_seq": 1,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于夜晚阶段，子阶段是狼人交流，目前是你的发言轮次。\n阶段规则：当前是【狼人交流阶段】：只能调用 speak_to_wolves。若你本人不再参加本夜后续夜聊，请设置 end_chat=true；这不会结束其他狼人的发言。本阶段不会完成刀人。 当前日次：第1天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：speak_to_wolves。 夜间行动阶段需完成一次有效动作。 你当前可以提交的行动有：speak_to_wolves, report_bug，其中有效行动有：speak_to_wolves。\n行动参数提示：speak_to_wolves args: {\"text\":\"...\",\"end_chat\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若使用 speak_to_wolves，end_chat=true 只表示你本人不再参加本夜后续夜聊，不会强制结束其他狼人的发言；全员结束后夜聊才会提前结束。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t1，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t1；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak_to_wolves",
+          "args": {
+            "text": "End",
+            "end_chat": true
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak_to_wolves\",\"args\":{\"text\":\"End\",\"end_chat\":true}}}"
+        }
+      ]
+    },
+    {
+      "seq": 2,
+      "kind": "turn",
+      "day": 1,
+      "phase": "night",
+      "stage": "wolf_vote",
+      "request_id": "1-night-3-2",
+      "timestamp": "2026-10-11T18:22:58.684Z",
+      "turn_seq": 2,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于夜晚阶段，子阶段是狼人刀人投票，目前不是你的发言轮次。\n阶段规则：当前是【狼人刀人投票阶段】：必须调用 kill_vote；若本轮决定不刀，请设置 abstain=true 且 target_id=null。 当前日次：第1天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：kill_vote。 夜间行动阶段需完成一次有效动作。 你当前可以提交的行动有：kill_vote, report_bug，其中有效行动有：kill_vote。\n行动参数提示：kill_vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（含你自己）：1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t2，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t2；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "kill_vote",
+          "args": {
+            "target_id": 8,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"kill_vote\",\"args\":{\"target_id\":8,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 3,
+      "kind": "turn",
+      "day": 1,
+      "phase": "day",
+      "stage": "on_pre_election",
+      "request_id": "1-day-3-3",
+      "timestamp": "2026-10-11T18:22:58.699Z",
+      "turn_seq": 3,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于白天阶段，子阶段是警长流程前窗口，目前不是你的发言轮次。 这是公开自爆窗口，只有 self_destruct 会改变对局；发言、投票和其他行动都不允许。若不自爆，直接结束本次回应，不提交行动。report_bug 只报告问题。\n阶段规则：自爆需谨慎！！！当前是【狼人自爆窗口】：self_destruct 是唯一会改变局面的动作，仅在局势极端不利时使用，且必须携带 confirm=true 才会生效。 当前日次：第1天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少0次、最多1次有效行动。 自爆窗口可选择执行自爆，也可直接结束回合。 你当前可以提交的行动有：self_destruct, report_bug，其中有效行动有：self_destruct。\n行动参数提示：self_destruct args: {\"reason\":\"...\",\"confirm\":true}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t3，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t3；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "assistant_output",
+          "content": "No action"
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"none\",\"final_action\":null}"
+        }
+      ]
+    },
+    {
+      "seq": 4,
+      "kind": "turn",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_nomination",
+      "request_id": "1-day-3-4",
+      "timestamp": "2026-10-11T18:22:58.709Z",
+      "turn_seq": 4,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于白天阶段，子阶段是上警报名，目前不是你的发言轮次。 这是上警报名阶段，不是退水阶段：run=true 表示报名上警，run=false 表示不上警；所有玩家的报名基于同一信息快照并行收集。 首日警长流程发生在昨夜结果公开之前：此时尚未通过 night_resolved 公布死亡或平安夜，任何玩家仍能参与上警都不能证明其最终存活。不要根据狼人刀口、进入白天、结果尚未播报或其他玩家的说法，擅自断定昨夜结果。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 当前日次：第1天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：run_for_sheriff。 上警声明阶段必须明确是否报名上警。 你当前可以提交的行动有：run_for_sheriff, report_bug，其中有效行动有：run_for_sheriff。\n行动参数提示：run_for_sheriff args: {\"run\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t4，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t4；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "run_for_sheriff",
+          "args": {
+            "run": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"run_for_sheriff\",\"args\":{\"run\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 5,
+      "kind": "turn",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-5",
+      "timestamp": "2026-10-11T18:22:58.735Z",
+      "turn_seq": 5,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于白天阶段，子阶段是白天发言，目前是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 当前日次：第1天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：speak。 白天发言阶段必须完成一次发言动作。 你当前可以提交的行动有：speak, report_bug，其中有效行动有：speak。\n行动参数提示：speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t5，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t5；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak",
+          "args": {
+            "text": "Speech"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Speech\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 6,
+      "kind": "turn",
+      "day": 1,
+      "phase": "voting",
+      "stage": "on_pre_vote",
+      "request_id": "1-voting-3-6",
+      "timestamp": "2026-10-11T18:22:58.772Z",
+      "turn_seq": 6,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于投票阶段，子阶段是放逐前窗口，目前不是你的发言轮次。 这是公开自爆窗口，只有 self_destruct 会改变对局；发言、投票和其他行动都不允许。若不自爆，直接结束本次回应，不提交行动。report_bug 只报告问题。\n阶段规则：自爆需谨慎！！！当前是【狼人自爆窗口】：self_destruct 是唯一会改变局面的动作，仅在局势极端不利时使用，且必须携带 confirm=true 才会生效。 当前日次：第1天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少0次、最多1次有效行动。 放逐前自爆窗口可选择执行自爆，也可结束回合。 你当前可以提交的行动有：self_destruct, report_bug，其中有效行动有：self_destruct。\n行动参数提示：self_destruct args: {\"reason\":\"...\",\"confirm\":true}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t6，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t6；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "assistant_output",
+          "content": "No action"
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"none\",\"final_action\":null}"
+        }
+      ]
+    },
+    {
+      "seq": 7,
+      "kind": "turn",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-3-7",
+      "timestamp": "2026-10-11T18:22:58.785Z",
+      "turn_seq": 7,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于投票阶段，子阶段是放逐投票，目前不是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 当前日次：第1天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：vote。 放逐投票阶段必须完成一次投票动作（可弃票）。 你当前可以提交的行动有：vote, report_bug，其中有效行动有：vote。\n行动参数提示：vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（存活且不含你自己）：1, 2, 4, 5, 6, 7, 9, 10, 11, 12。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t7，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t7；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "vote",
+          "args": {
+            "target_id": 7,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":7,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 8,
+      "kind": "turn",
+      "day": 2,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "2-night-3-8",
+      "timestamp": "2026-10-11T18:22:58.836Z",
+      "turn_seq": 8,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于夜晚阶段，子阶段是狼人交流，目前是你的发言轮次。\n阶段规则：当前是【狼人交流阶段】：只能调用 speak_to_wolves。若你本人不再参加本夜后续夜聊，请设置 end_chat=true；这不会结束其他狼人的发言。本阶段不会完成刀人。 当前日次：第2天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：speak_to_wolves。 夜间行动阶段需完成一次有效动作。 你当前可以提交的行动有：speak_to_wolves, report_bug，其中有效行动有：speak_to_wolves。\n行动参数提示：speak_to_wolves args: {\"text\":\"...\",\"end_chat\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若使用 speak_to_wolves，end_chat=true 只表示你本人不再参加本夜后续夜聊，不会强制结束其他狼人的发言；全员结束后夜聊才会提前结束。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t8，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t8；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak_to_wolves",
+          "args": {
+            "text": "End",
+            "end_chat": true
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak_to_wolves\",\"args\":{\"text\":\"End\",\"end_chat\":true}}}"
+        }
+      ]
+    },
+    {
+      "seq": 9,
+      "kind": "turn",
+      "day": 2,
+      "phase": "night",
+      "stage": "wolf_vote",
+      "request_id": "2-night-3-9",
+      "timestamp": "2026-10-11T18:22:58.848Z",
+      "turn_seq": 9,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于夜晚阶段，子阶段是狼人刀人投票，目前不是你的发言轮次。\n阶段规则：当前是【狼人刀人投票阶段】：必须调用 kill_vote；若本轮决定不刀，请设置 abstain=true 且 target_id=null。 当前日次：第2天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：kill_vote。 夜间行动阶段需完成一次有效动作。 你当前可以提交的行动有：kill_vote, report_bug，其中有效行动有：kill_vote。\n行动参数提示：kill_vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（含你自己）：1, 2, 3, 4, 5, 6, 9, 10, 11, 12。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t9，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t9；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "kill_vote",
+          "args": {
+            "target_id": 9,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"kill_vote\",\"args\":{\"target_id\":9,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 10,
+      "kind": "turn",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-3-10",
+      "timestamp": "2026-10-11T18:22:58.860Z",
+      "turn_seq": 10,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于白天阶段，子阶段是白天发言，目前是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 当前日次：第2天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：speak。 白天发言阶段必须完成一次发言动作。 你当前可以提交的行动有：speak, report_bug，其中有效行动有：speak。\n行动参数提示：speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t10，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t10；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak",
+          "args": {
+            "text": "Speech"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Speech\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 11,
+      "kind": "turn",
+      "day": 2,
+      "phase": "voting",
+      "stage": "on_pre_vote",
+      "request_id": "2-voting-3-11",
+      "timestamp": "2026-10-11T18:22:58.912Z",
+      "turn_seq": 11,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于投票阶段，子阶段是放逐前窗口，目前不是你的发言轮次。 这是公开自爆窗口，只有 self_destruct 会改变对局；发言、投票和其他行动都不允许。若不自爆，直接结束本次回应，不提交行动。report_bug 只报告问题。\n阶段规则：自爆需谨慎！！！当前是【狼人自爆窗口】：self_destruct 是唯一会改变局面的动作，仅在局势极端不利时使用，且必须携带 confirm=true 才会生效。 当前日次：第2天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少0次、最多1次有效行动。 放逐前自爆窗口可选择执行自爆，也可结束回合。 你当前可以提交的行动有：self_destruct, report_bug，其中有效行动有：self_destruct。\n行动参数提示：self_destruct args: {\"reason\":\"...\",\"confirm\":true}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t11，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t11；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "assistant_output",
+          "content": "No action"
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"none\",\"final_action\":null}"
+        }
+      ]
+    },
+    {
+      "seq": 12,
+      "kind": "turn",
+      "day": 2,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "2-voting-3-12",
+      "timestamp": "2026-10-11T18:22:58.928Z",
+      "turn_seq": 12,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于投票阶段，子阶段是放逐投票，目前不是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 当前日次：第2天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：vote。 放逐投票阶段必须完成一次投票动作（可弃票）。 你当前可以提交的行动有：vote, report_bug，其中有效行动有：vote。\n行动参数提示：vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（存活且不含你自己）：1, 2, 4, 5, 6, 10, 11, 12。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t12，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t12；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "vote",
+          "args": {
+            "target_id": 2,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":2,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 13,
+      "kind": "turn",
+      "day": 3,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "3-night-3-13",
+      "timestamp": "2026-10-11T18:22:58.968Z",
+      "turn_seq": 13,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于夜晚阶段，子阶段是狼人交流，目前是你的发言轮次。\n阶段规则：当前是【狼人交流阶段】：只能调用 speak_to_wolves。若你本人不再参加本夜后续夜聊，请设置 end_chat=true；这不会结束其他狼人的发言。本阶段不会完成刀人。 当前日次：第3天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：speak_to_wolves。 夜间行动阶段需完成一次有效动作。 你当前可以提交的行动有：speak_to_wolves, report_bug，其中有效行动有：speak_to_wolves。\n行动参数提示：speak_to_wolves args: {\"text\":\"...\",\"end_chat\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若使用 speak_to_wolves，end_chat=true 只表示你本人不再参加本夜后续夜聊，不会强制结束其他狼人的发言；全员结束后夜聊才会提前结束。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t13，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t13；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak_to_wolves",
+          "args": {
+            "text": "End",
+            "end_chat": true
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak_to_wolves\",\"args\":{\"text\":\"End\",\"end_chat\":true}}}"
+        }
+      ]
+    },
+    {
+      "seq": 14,
+      "kind": "turn",
+      "day": 3,
+      "phase": "night",
+      "stage": "wolf_vote",
+      "request_id": "3-night-3-14",
+      "timestamp": "2026-10-11T18:22:59.005Z",
+      "turn_seq": 14,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 3号玩家，现在轮到你行动，当前处于夜晚阶段，子阶段是狼人刀人投票，目前不是你的发言轮次。\n阶段规则：当前是【狼人刀人投票阶段】：必须调用 kill_vote；若本轮决定不刀，请设置 abstain=true 且 target_id=null。 当前日次：第3天。 本轮规则告知你的狼人队友编号（不含本人）：2, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：狼人；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：你的底牌是【狼人】。你可以参与夜间战术交流和刀人投票。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：kill_vote。 夜间行动阶段需完成一次有效动作。 你当前可以提交的行动有：kill_vote, report_bug，其中有效行动有：kill_vote。\n行动参数提示：kill_vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（含你自己）：1, 3, 4, 5, 6, 10, 11, 12。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t14，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t14；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "kill_vote",
+          "args": {
+            "target_id": 4,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"kill_vote\",\"args\":{\"target_id\":4,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 15,
+      "kind": "event",
+      "day": 1,
+      "phase": "night",
+      "stage": "night",
+      "request_id": "1-night-3-event-1",
+      "timestamp": "2026-10-11T18:22:58.623Z",
+      "source_event_seq": 1,
+      "event": {
+        "seq": 1,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "night",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 16,
+      "kind": "event",
+      "day": 1,
+      "phase": "night",
+      "stage": "wolf_tactical_order",
+      "request_id": "1-night-3-event-2",
+      "timestamp": "2026-10-11T18:22:58.665Z",
+      "source_event_seq": 2,
+      "event": {
+        "seq": 2,
+        "type": "wolf_tactical_order",
+        "payload": {
+          "order": [2, 3, 11]
+        }
+      }
+    },
+    {
+      "seq": 17,
+      "kind": "event",
+      "day": 1,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "1-night-3-event-3",
+      "timestamp": "2026-10-11T18:22:58.670Z",
+      "source_event_seq": 3,
+      "event": {
+        "seq": 3,
+        "type": "wolf_discussion_ended",
+        "payload": {
+          "actorId": 2,
+          "reason": "End",
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 18,
+      "kind": "event",
+      "day": 1,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "1-night-3-event-4",
+      "timestamp": "2026-10-11T18:22:58.675Z",
+      "source_event_seq": 4,
+      "event": {
+        "seq": 4,
+        "type": "wolf_discussion_ended",
+        "payload": {
+          "actorId": 3,
+          "reason": "End",
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 19,
+      "kind": "event",
+      "day": 1,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "1-night-3-event-5",
+      "timestamp": "2026-10-11T18:22:58.678Z",
+      "source_event_seq": 5,
+      "event": {
+        "seq": 5,
+        "type": "wolf_discussion_ended",
+        "payload": {
+          "actorId": 11,
+          "reason": "End",
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 20,
+      "kind": "event",
+      "day": 1,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "1-night-3-event-6",
+      "timestamp": "2026-10-11T18:22:58.681Z",
+      "source_event_seq": 6,
+      "event": {
+        "seq": 6,
+        "type": "wolf_kill_vote_cast",
+        "payload": {
+          "actorId": 2,
+          "abstain": false,
+          "targetId": 8
+        }
+      }
+    },
+    {
+      "seq": 21,
+      "kind": "event",
+      "day": 1,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "1-night-3-event-7",
+      "timestamp": "2026-10-11T18:22:58.684Z",
+      "source_event_seq": 7,
+      "event": {
+        "seq": 7,
+        "type": "wolf_kill_vote_cast",
+        "payload": {
+          "actorId": 3,
+          "abstain": false,
+          "targetId": 8
+        }
+      }
+    },
+    {
+      "seq": 22,
+      "kind": "event",
+      "day": 1,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "1-night-3-event-8",
+      "timestamp": "2026-10-11T18:22:58.686Z",
+      "source_event_seq": 8,
+      "event": {
+        "seq": 8,
+        "type": "wolf_kill_vote_cast",
+        "payload": {
+          "actorId": 11,
+          "abstain": false,
+          "targetId": 8
+        }
+      }
+    },
+    {
+      "seq": 23,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day",
+      "request_id": "1-day-3-event-9",
+      "timestamp": "2026-10-11T18:22:58.694Z",
+      "source_event_seq": 9,
+      "event": {
+        "seq": 9,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "day",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 24,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_nomination_summary",
+      "request_id": "1-day-3-event-10",
+      "timestamp": "2026-10-11T18:22:58.721Z",
+      "source_event_seq": 10,
+      "event": {
+        "seq": 10,
+        "type": "sheriff_nomination_summary",
+        "payload": {
+          "candidates": []
+        }
+      }
+    },
+    {
+      "seq": 25,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_withdraw_summary",
+      "request_id": "1-day-3-event-11",
+      "timestamp": "2026-10-11T18:22:58.721Z",
+      "source_event_seq": 11,
+      "event": {
+        "seq": 11,
+        "type": "sheriff_withdraw_summary",
+        "payload": {
+          "withdrawn": []
+        }
+      }
+    },
+    {
+      "seq": 26,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff",
+      "request_id": "1-day-3-event-12",
+      "timestamp": "2026-10-11T18:22:58.721Z",
+      "source_event_seq": 12,
+      "event": {
+        "seq": 12,
+        "type": "sheriff_candidates_finalized",
+        "payload": {
+          "candidates": []
+        }
+      }
+    },
+    {
+      "seq": 27,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_vote_summary",
+      "request_id": "1-day-3-event-13",
+      "timestamp": "2026-10-11T18:22:58.721Z",
+      "source_event_seq": 13,
+      "event": {
+        "seq": 13,
+        "type": "sheriff_vote_summary",
+        "payload": {
+          "votes": [],
+          "winnerId": null,
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 28,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "night_resolved",
+      "request_id": "1-day-3-event-14",
+      "timestamp": "2026-10-11T18:22:58.721Z",
+      "source_event_seq": 14,
+      "event": {
+        "seq": 14,
+        "type": "night_resolved",
+        "payload": {
+          "deaths": [8]
+        }
+      }
+    },
+    {
+      "seq": 29,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "last_words_granted",
+      "request_id": "1-day-3-event-15",
+      "timestamp": "2026-10-11T18:22:58.721Z",
+      "source_event_seq": 15,
+      "event": {
+        "seq": 15,
+        "type": "last_words_granted",
+        "payload": {
+          "playerId": 8,
+          "phase": "day",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 30,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "last_words_spoken",
+      "request_id": "1-day-3-event-16",
+      "timestamp": "2026-10-11T18:22:58.725Z",
+      "source_event_seq": 16,
+      "event": {
+        "seq": 16,
+        "type": "last_words_spoken",
+        "payload": {
+          "playerId": 8,
+          "phase": "day",
+          "day": 1,
+          "text": "Words"
+        }
+      }
+    },
+    {
+      "seq": 31,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-17",
+      "timestamp": "2026-10-11T18:22:58.728Z",
+      "source_event_seq": 17,
+      "event": {
+        "seq": 17,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 1,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 32,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-18",
+      "timestamp": "2026-10-11T18:22:58.732Z",
+      "source_event_seq": 18,
+      "event": {
+        "seq": 18,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 2,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 33,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-19",
+      "timestamp": "2026-10-11T18:22:58.735Z",
+      "source_event_seq": 19,
+      "event": {
+        "seq": 19,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 3,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 34,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-20",
+      "timestamp": "2026-10-11T18:22:58.738Z",
+      "source_event_seq": 20,
+      "event": {
+        "seq": 20,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 4,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 35,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-21",
+      "timestamp": "2026-10-11T18:22:58.741Z",
+      "source_event_seq": 21,
+      "event": {
+        "seq": 21,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 5,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 36,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-22",
+      "timestamp": "2026-10-11T18:22:58.744Z",
+      "source_event_seq": 22,
+      "event": {
+        "seq": 22,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 6,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 37,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-23",
+      "timestamp": "2026-10-11T18:22:58.747Z",
+      "source_event_seq": 23,
+      "event": {
+        "seq": 23,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 7,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 38,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-24",
+      "timestamp": "2026-10-11T18:22:58.750Z",
+      "source_event_seq": 24,
+      "event": {
+        "seq": 24,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 9,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 39,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-25",
+      "timestamp": "2026-10-11T18:22:58.755Z",
+      "source_event_seq": 25,
+      "event": {
+        "seq": 25,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 10,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 40,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-26",
+      "timestamp": "2026-10-11T18:22:58.762Z",
+      "source_event_seq": 26,
+      "event": {
+        "seq": 26,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 11,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 41,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-3-event-27",
+      "timestamp": "2026-10-11T18:22:58.766Z",
+      "source_event_seq": 27,
+      "event": {
+        "seq": 27,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 12,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 42,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-3-event-28",
+      "timestamp": "2026-10-11T18:22:58.766Z",
+      "source_event_seq": 28,
+      "event": {
+        "seq": 28,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "voting",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 43,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-3-event-29",
+      "timestamp": "2026-10-11T18:22:58.804Z",
+      "source_event_seq": 29,
+      "event": {
+        "seq": 29,
+        "type": "vote_summary",
+        "payload": {
+          "votes": [
+            {
+              "actorId": 1,
+              "targetId": 7,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 2,
+              "targetId": 7,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 3,
+              "targetId": 7,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 4,
+              "targetId": 7,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 5,
+              "targetId": 7,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 6,
+              "targetId": 7,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 7,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            },
+            {
+              "actorId": 9,
+              "targetId": 7,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 10,
+              "targetId": 7,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 11,
+              "targetId": 7,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 12,
+              "targetId": 7,
+              "abstain": false,
+              "weight": 1
+            }
+          ],
+          "target": 7,
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 44,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-3-event-30",
+      "timestamp": "2026-10-11T18:22:58.804Z",
+      "source_event_seq": 30,
+      "event": {
+        "seq": 30,
+        "type": "voted_out",
+        "payload": {
+          "target": 7
+        }
+      }
+    },
+    {
+      "seq": 45,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "last_words_granted",
+      "request_id": "1-voting-3-event-31",
+      "timestamp": "2026-10-11T18:22:58.804Z",
+      "source_event_seq": 31,
+      "event": {
+        "seq": 31,
+        "type": "last_words_granted",
+        "payload": {
+          "playerId": 7,
+          "phase": "voting",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 46,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "last_words_spoken",
+      "request_id": "1-voting-3-event-32",
+      "timestamp": "2026-10-11T18:22:58.808Z",
+      "source_event_seq": 32,
+      "event": {
+        "seq": 32,
+        "type": "last_words_spoken",
+        "payload": {
+          "playerId": 7,
+          "phase": "voting",
+          "day": 1,
+          "text": "Words"
+        }
+      }
+    },
+    {
+      "seq": 47,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "night",
+      "request_id": "2-night-3-event-33",
+      "timestamp": "2026-10-11T18:22:58.809Z",
+      "source_event_seq": 33,
+      "event": {
+        "seq": 33,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "night",
+          "day": 2
+        }
+      }
+    },
+    {
+      "seq": 48,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "wolf_tactical_order",
+      "request_id": "2-night-3-event-34",
+      "timestamp": "2026-10-11T18:22:58.823Z",
+      "source_event_seq": 34,
+      "event": {
+        "seq": 34,
+        "type": "wolf_tactical_order",
+        "payload": {
+          "order": [11, 2, 3]
+        }
+      }
+    },
+    {
+      "seq": 49,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "2-night-3-event-35",
+      "timestamp": "2026-10-11T18:22:58.827Z",
+      "source_event_seq": 35,
+      "event": {
+        "seq": 35,
+        "type": "wolf_discussion_ended",
+        "payload": {
+          "actorId": 11,
+          "reason": "End",
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 50,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "2-night-3-event-36",
+      "timestamp": "2026-10-11T18:22:58.831Z",
+      "source_event_seq": 36,
+      "event": {
+        "seq": 36,
+        "type": "wolf_discussion_ended",
+        "payload": {
+          "actorId": 2,
+          "reason": "End",
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 51,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "2-night-3-event-37",
+      "timestamp": "2026-10-11T18:22:58.836Z",
+      "source_event_seq": 37,
+      "event": {
+        "seq": 37,
+        "type": "wolf_discussion_ended",
+        "payload": {
+          "actorId": 3,
+          "reason": "End",
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 52,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "2-night-3-event-38",
+      "timestamp": "2026-10-11T18:22:58.840Z",
+      "source_event_seq": 38,
+      "event": {
+        "seq": 38,
+        "type": "wolf_kill_vote_cast",
+        "payload": {
+          "actorId": 11,
+          "abstain": false,
+          "targetId": 9
+        }
+      }
+    },
+    {
+      "seq": 53,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "2-night-3-event-39",
+      "timestamp": "2026-10-11T18:22:58.844Z",
+      "source_event_seq": 39,
+      "event": {
+        "seq": 39,
+        "type": "wolf_kill_vote_cast",
+        "payload": {
+          "actorId": 2,
+          "abstain": false,
+          "targetId": 9
+        }
+      }
+    },
+    {
+      "seq": 54,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "2-night-3-event-40",
+      "timestamp": "2026-10-11T18:22:58.848Z",
+      "source_event_seq": 40,
+      "event": {
+        "seq": 40,
+        "type": "wolf_kill_vote_cast",
+        "payload": {
+          "actorId": 3,
+          "abstain": false,
+          "targetId": 9
+        }
+      }
+    },
+    {
+      "seq": 55,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day",
+      "request_id": "2-day-3-event-41",
+      "timestamp": "2026-10-11T18:22:58.849Z",
+      "source_event_seq": 41,
+      "event": {
+        "seq": 41,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "day",
+          "day": 2
+        }
+      }
+    },
+    {
+      "seq": 56,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "night_resolved",
+      "request_id": "2-day-3-event-42",
+      "timestamp": "2026-10-11T18:22:58.849Z",
+      "source_event_seq": 42,
+      "event": {
+        "seq": 42,
+        "type": "night_resolved",
+        "payload": {
+          "deaths": [9]
+        }
+      }
+    },
+    {
+      "seq": 57,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-3-event-43",
+      "timestamp": "2026-10-11T18:22:58.853Z",
+      "source_event_seq": 43,
+      "event": {
+        "seq": 43,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 1,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 58,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-3-event-44",
+      "timestamp": "2026-10-11T18:22:58.856Z",
+      "source_event_seq": 44,
+      "event": {
+        "seq": 44,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 2,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 59,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-3-event-45",
+      "timestamp": "2026-10-11T18:22:58.860Z",
+      "source_event_seq": 45,
+      "event": {
+        "seq": 45,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 3,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 60,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-3-event-46",
+      "timestamp": "2026-10-11T18:22:58.874Z",
+      "source_event_seq": 46,
+      "event": {
+        "seq": 46,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 4,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 61,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-3-event-47",
+      "timestamp": "2026-10-11T18:22:58.886Z",
+      "source_event_seq": 47,
+      "event": {
+        "seq": 47,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 5,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 62,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-3-event-48",
+      "timestamp": "2026-10-11T18:22:58.891Z",
+      "source_event_seq": 48,
+      "event": {
+        "seq": 48,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 6,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 63,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-3-event-49",
+      "timestamp": "2026-10-11T18:22:58.895Z",
+      "source_event_seq": 49,
+      "event": {
+        "seq": 49,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 10,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 64,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-3-event-50",
+      "timestamp": "2026-10-11T18:22:58.900Z",
+      "source_event_seq": 50,
+      "event": {
+        "seq": 50,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 11,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 65,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-3-event-51",
+      "timestamp": "2026-10-11T18:22:58.904Z",
+      "source_event_seq": 51,
+      "event": {
+        "seq": 51,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 12,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 66,
+      "kind": "event",
+      "day": 2,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "2-voting-3-event-52",
+      "timestamp": "2026-10-11T18:22:58.904Z",
+      "source_event_seq": 52,
+      "event": {
+        "seq": 52,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "voting",
+          "day": 2
+        }
+      }
+    },
+    {
+      "seq": 67,
+      "kind": "event",
+      "day": 2,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "2-voting-3-event-53",
+      "timestamp": "2026-10-11T18:22:58.940Z",
+      "source_event_seq": 53,
+      "event": {
+        "seq": 53,
+        "type": "vote_summary",
+        "payload": {
+          "votes": [
+            {
+              "actorId": 1,
+              "targetId": 2,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 2,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            },
+            {
+              "actorId": 3,
+              "targetId": 2,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 4,
+              "targetId": 2,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 5,
+              "targetId": 2,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 6,
+              "targetId": 2,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 10,
+              "targetId": 2,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 11,
+              "targetId": 2,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 12,
+              "targetId": 2,
+              "abstain": false,
+              "weight": 1
+            }
+          ],
+          "target": 2,
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 68,
+      "kind": "event",
+      "day": 2,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "2-voting-3-event-54",
+      "timestamp": "2026-10-11T18:22:58.940Z",
+      "source_event_seq": 54,
+      "event": {
+        "seq": 54,
+        "type": "voted_out",
+        "payload": {
+          "target": 2
+        }
+      }
+    },
+    {
+      "seq": 69,
+      "kind": "event",
+      "day": 2,
+      "phase": "voting",
+      "stage": "last_words_granted",
+      "request_id": "2-voting-3-event-55",
+      "timestamp": "2026-10-11T18:22:58.940Z",
+      "source_event_seq": 55,
+      "event": {
+        "seq": 55,
+        "type": "last_words_granted",
+        "payload": {
+          "playerId": 2,
+          "phase": "voting",
+          "day": 2
+        }
+      }
+    },
+    {
+      "seq": 70,
+      "kind": "event",
+      "day": 2,
+      "phase": "voting",
+      "stage": "last_words_spoken",
+      "request_id": "2-voting-3-event-56",
+      "timestamp": "2026-10-11T18:22:58.945Z",
+      "source_event_seq": 56,
+      "event": {
+        "seq": 56,
+        "type": "last_words_spoken",
+        "payload": {
+          "playerId": 2,
+          "phase": "voting",
+          "day": 2,
+          "text": "Words"
+        }
+      }
+    },
+    {
+      "seq": 71,
+      "kind": "event",
+      "day": 3,
+      "phase": "night",
+      "stage": "night",
+      "request_id": "3-night-3-event-57",
+      "timestamp": "2026-10-11T18:22:58.946Z",
+      "source_event_seq": 57,
+      "event": {
+        "seq": 57,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "night",
+          "day": 3
+        }
+      }
+    },
+    {
+      "seq": 72,
+      "kind": "event",
+      "day": 3,
+      "phase": "night",
+      "stage": "wolf_tactical_order",
+      "request_id": "3-night-3-event-58",
+      "timestamp": "2026-10-11T18:22:58.957Z",
+      "source_event_seq": 58,
+      "event": {
+        "seq": 58,
+        "type": "wolf_tactical_order",
+        "payload": {
+          "order": [11, 3]
+        }
+      }
+    },
+    {
+      "seq": 73,
+      "kind": "event",
+      "day": 3,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "3-night-3-event-59",
+      "timestamp": "2026-10-11T18:22:58.962Z",
+      "source_event_seq": 59,
+      "event": {
+        "seq": 59,
+        "type": "wolf_discussion_ended",
+        "payload": {
+          "actorId": 11,
+          "reason": "End",
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 74,
+      "kind": "event",
+      "day": 3,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "3-night-3-event-60",
+      "timestamp": "2026-10-11T18:22:58.968Z",
+      "source_event_seq": 60,
+      "event": {
+        "seq": 60,
+        "type": "wolf_discussion_ended",
+        "payload": {
+          "actorId": 3,
+          "reason": "End",
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 75,
+      "kind": "event",
+      "day": 3,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "3-night-3-event-61",
+      "timestamp": "2026-10-11T18:22:58.973Z",
+      "source_event_seq": 61,
+      "event": {
+        "seq": 61,
+        "type": "wolf_kill_vote_cast",
+        "payload": {
+          "actorId": 11,
+          "abstain": false,
+          "targetId": 4
+        }
+      }
+    },
+    {
+      "seq": 76,
+      "kind": "event",
+      "day": 3,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "3-night-3-event-62",
+      "timestamp": "2026-10-11T18:22:59.005Z",
+      "source_event_seq": 62,
+      "event": {
+        "seq": 62,
+        "type": "wolf_kill_vote_cast",
+        "payload": {
+          "actorId": 3,
+          "abstain": false,
+          "targetId": 4
+        }
+      }
+    },
+    {
+      "seq": 77,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "day",
+      "request_id": "3-day-3-event-63",
+      "timestamp": "2026-10-11T18:22:59.006Z",
+      "source_event_seq": 63,
+      "event": {
+        "seq": 63,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "day",
+          "day": 3
+        }
+      }
+    },
+    {
+      "seq": 78,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "night_resolved",
+      "request_id": "3-day-3-event-64",
+      "timestamp": "2026-10-11T18:22:59.006Z",
+      "source_event_seq": 64,
+      "event": {
+        "seq": 64,
+        "type": "night_resolved",
+        "payload": {
+          "deaths": [4, 1]
+        }
+      }
+    },
+    {
+      "seq": 79,
+      "kind": "event",
+      "day": 3,
+      "phase": "game_over",
+      "stage": "game_over",
+      "request_id": "3-game_over-3-event-65",
+      "timestamp": "2026-10-11T18:22:59.006Z",
+      "source_event_seq": 65,
+      "event": {
+        "seq": 65,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "game_over",
+          "day": 3,
+          "winner": "wolf",
+          "reason": "slaughter_side_completed",
+          "outcome": {
+            "kind": "victory",
+            "primary": {
+              "kind": "faction",
+              "faction": "wolf",
+              "winningPlayerIds": [2, 3, 10, 11]
+            },
+            "additional": [],
+            "winningPlayerIds": [2, 3, 10, 11]
+          },
+          "decidedAt": {
+            "day": 3,
+            "phase": "day",
+            "checkpoint": "night_settled"
+          }
+        }
+      }
+    },
+    {
+      "seq": 80,
+      "kind": "event",
+      "day": 3,
+      "phase": "game_over",
+      "stage": "game_over",
+      "request_id": "3-game_over-3-event-66",
+      "timestamp": "2026-10-11T18:22:59.006Z",
+      "source_event_seq": 66,
+      "event": {
+        "seq": 66,
+        "type": "game_over",
+        "payload": {
+          "winner": "wolf",
+          "reason": "slaughter_side_completed",
+          "outcome": {
+            "kind": "victory",
+            "primary": {
+              "kind": "faction",
+              "faction": "wolf",
+              "winningPlayerIds": [2, 3, 10, 11]
+            },
+            "additional": [],
+            "winningPlayerIds": [2, 3, 10, 11]
+          },
+          "decidedAt": {
+            "day": 3,
+            "phase": "day",
+            "checkpoint": "night_settled"
+          }
+        }
+      }
+    }
+  ]
+}

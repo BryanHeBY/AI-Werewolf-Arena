@@ -1,0 +1,1204 @@
+{
+  "schemaVersion": 2,
+  "perspective": "god",
+  "sessionId": "game",
+  "meta": {
+    "board": "awa_radiant_eclipse_12_v1",
+    "locale": "zh-CN",
+    "startedAt": "2026-10-11T18:23:28.947Z",
+    "endedAt": "2026-10-11T18:23:29.011Z"
+  },
+  "result": {
+    "winner": null,
+    "reason": "runtime_error"
+  },
+  "players": [
+    {
+      "player_id": 1,
+      "role": "eclipse_maid",
+      "camp": "wolf"
+    },
+    {
+      "player_id": 2,
+      "role": "radiant_count",
+      "camp": "good"
+    },
+    {
+      "player_id": 3,
+      "role": "seer",
+      "camp": "good"
+    },
+    {
+      "player_id": 4,
+      "role": "witch",
+      "camp": "good"
+    },
+    {
+      "player_id": 5,
+      "role": "dreamer",
+      "camp": "good"
+    },
+    {
+      "player_id": 6,
+      "role": "villager",
+      "camp": "good"
+    },
+    {
+      "player_id": 7,
+      "role": "villager",
+      "camp": "good"
+    },
+    {
+      "player_id": 8,
+      "role": "villager",
+      "camp": "good"
+    },
+    {
+      "player_id": 9,
+      "role": "villager",
+      "camp": "good"
+    },
+    {
+      "player_id": 10,
+      "role": "wolf",
+      "camp": "wolf"
+    },
+    {
+      "player_id": 11,
+      "role": "wolf",
+      "camp": "wolf"
+    },
+    {
+      "player_id": 12,
+      "role": "wolf",
+      "camp": "wolf"
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "timestamp": "2026-10-11T18:23:28.947Z",
+      "phase": "night",
+      "day": 1,
+      "stage": "god_private_game_info",
+      "type": "god_private_game_info",
+      "payload": {
+        "boardSize": 12,
+        "players": [
+          {
+            "id": 1,
+            "seat": 1,
+            "name": "玩家1",
+            "role": "eclipse_maid",
+            "camp": "wolf"
+          },
+          {
+            "id": 2,
+            "seat": 2,
+            "name": "玩家2",
+            "role": "radiant_count",
+            "camp": "good"
+          },
+          {
+            "id": 3,
+            "seat": 3,
+            "name": "玩家3",
+            "role": "seer",
+            "camp": "good"
+          },
+          {
+            "id": 4,
+            "seat": 4,
+            "name": "玩家4",
+            "role": "witch",
+            "camp": "good"
+          },
+          {
+            "id": 5,
+            "seat": 5,
+            "name": "玩家5",
+            "role": "dreamer",
+            "camp": "good"
+          },
+          {
+            "id": 6,
+            "seat": 6,
+            "name": "玩家6",
+            "role": "villager",
+            "camp": "good"
+          },
+          {
+            "id": 7,
+            "seat": 7,
+            "name": "玩家7",
+            "role": "villager",
+            "camp": "good"
+          },
+          {
+            "id": 8,
+            "seat": 8,
+            "name": "玩家8",
+            "role": "villager",
+            "camp": "good"
+          },
+          {
+            "id": 9,
+            "seat": 9,
+            "name": "玩家9",
+            "role": "villager",
+            "camp": "good"
+          },
+          {
+            "id": 10,
+            "seat": 10,
+            "name": "玩家10",
+            "role": "wolf",
+            "camp": "wolf"
+          },
+          {
+            "id": 11,
+            "seat": 11,
+            "name": "玩家11",
+            "role": "wolf",
+            "camp": "wolf"
+          },
+          {
+            "id": 12,
+            "seat": 12,
+            "name": "玩家12",
+            "role": "wolf",
+            "camp": "wolf"
+          }
+        ]
+      }
+    },
+    {
+      "seq": 2,
+      "timestamp": "2026-10-11T18:23:28.947Z",
+      "phase": "night",
+      "day": 1,
+      "stage": "night",
+      "type": "phase_changed",
+      "payload": {
+        "phase": "night",
+        "day": 1
+      }
+    },
+    {
+      "seq": 3,
+      "timestamp": "2026-10-11T18:23:28.977Z",
+      "phase": "night",
+      "day": 1,
+      "stage": "dreamer",
+      "type": "dream_applied",
+      "payload": {
+        "actorId": 5,
+        "targetId": 6,
+        "day": 1,
+        "consecutive": false
+      }
+    },
+    {
+      "seq": 4,
+      "timestamp": "2026-10-11T18:23:28.977Z",
+      "phase": "night",
+      "day": 1,
+      "stage": "wolf_tactical_order",
+      "type": "wolf_tactical_order",
+      "payload": {
+        "order": [
+          11,
+          10,
+          12
+        ]
+      }
+    },
+    {
+      "seq": 5,
+      "timestamp": "2026-10-11T18:23:28.977Z",
+      "phase": "night",
+      "day": 1,
+      "stage": "wolf_discussion",
+      "type": "wolf_discussion_ended",
+      "payload": {
+        "actorId": 11,
+        "reason": "End",
+        "round": 1
+      }
+    },
+    {
+      "seq": 6,
+      "timestamp": "2026-10-11T18:23:28.978Z",
+      "phase": "night",
+      "day": 1,
+      "stage": "wolf_discussion",
+      "type": "wolf_discussion_ended",
+      "payload": {
+        "actorId": 10,
+        "reason": "End",
+        "round": 1
+      }
+    },
+    {
+      "seq": 7,
+      "timestamp": "2026-10-11T18:23:28.978Z",
+      "phase": "night",
+      "day": 1,
+      "stage": "wolf_discussion",
+      "type": "wolf_discussion_ended",
+      "payload": {
+        "actorId": 12,
+        "reason": "End",
+        "round": 1
+      }
+    },
+    {
+      "seq": 8,
+      "timestamp": "2026-10-11T18:23:28.978Z",
+      "phase": "night",
+      "day": 1,
+      "stage": "wolf_discussion",
+      "type": "wolf_kill_vote_cast",
+      "payload": {
+        "actorId": 11,
+        "abstain": false,
+        "targetId": 10
+      }
+    },
+    {
+      "seq": 9,
+      "timestamp": "2026-10-11T18:23:28.978Z",
+      "phase": "night",
+      "day": 1,
+      "stage": "wolf_discussion",
+      "type": "wolf_kill_vote_cast",
+      "payload": {
+        "actorId": 10,
+        "abstain": false,
+        "targetId": 10
+      }
+    },
+    {
+      "seq": 10,
+      "timestamp": "2026-10-11T18:23:28.979Z",
+      "phase": "night",
+      "day": 1,
+      "stage": "wolf_discussion",
+      "type": "wolf_kill_vote_cast",
+      "payload": {
+        "actorId": 12,
+        "abstain": false,
+        "targetId": 10
+      }
+    },
+    {
+      "seq": 11,
+      "timestamp": "2026-10-11T18:23:28.979Z",
+      "phase": "night",
+      "day": 1,
+      "stage": "witch",
+      "type": "witch_potion_skipped",
+      "payload": {
+        "actorId": 4,
+        "targetId": 4,
+        "potionType": "none"
+      }
+    },
+    {
+      "seq": 12,
+      "timestamp": "2026-10-11T18:23:28.980Z",
+      "phase": "night",
+      "day": 1,
+      "stage": "seer",
+      "type": "seer_checked",
+      "payload": {
+        "actorId": 3,
+        "targetId": 1,
+        "isWerewolf": true,
+        "result": {
+          "kind": "camp",
+          "camp": "wolf"
+        }
+      }
+    },
+    {
+      "seq": 13,
+      "timestamp": "2026-10-11T18:23:28.980Z",
+      "phase": "night",
+      "day": 1,
+      "stage": "eclipse_lease_closed",
+      "type": "eclipse_lease_closed",
+      "payload": {
+        "actorId": 1,
+        "day": 1,
+        "targetId": null,
+        "abilityId": null,
+        "status": "committed"
+      }
+    },
+    {
+      "seq": 14,
+      "timestamp": "2026-10-11T18:23:28.980Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "day",
+      "type": "phase_changed",
+      "payload": {
+        "phase": "day",
+        "day": 1
+      }
+    },
+    {
+      "seq": 15,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_candidate_declared",
+      "payload": {
+        "actorId": 1,
+        "run": false
+      }
+    },
+    {
+      "seq": 16,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_candidate_declared",
+      "payload": {
+        "actorId": 2,
+        "run": false
+      }
+    },
+    {
+      "seq": 17,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_candidate_declared",
+      "payload": {
+        "actorId": 3,
+        "run": false
+      }
+    },
+    {
+      "seq": 18,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_candidate_declared",
+      "payload": {
+        "actorId": 4,
+        "run": false
+      }
+    },
+    {
+      "seq": 19,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_candidate_declared",
+      "payload": {
+        "actorId": 5,
+        "run": true
+      }
+    },
+    {
+      "seq": 20,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_candidate_declared",
+      "payload": {
+        "actorId": 6,
+        "run": false
+      }
+    },
+    {
+      "seq": 21,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_candidate_declared",
+      "payload": {
+        "actorId": 7,
+        "run": false
+      }
+    },
+    {
+      "seq": 22,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_candidate_declared",
+      "payload": {
+        "actorId": 8,
+        "run": false
+      }
+    },
+    {
+      "seq": 23,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_candidate_declared",
+      "payload": {
+        "actorId": 9,
+        "run": false
+      }
+    },
+    {
+      "seq": 24,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_candidate_declared",
+      "payload": {
+        "actorId": 10,
+        "run": false
+      }
+    },
+    {
+      "seq": 25,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_candidate_declared",
+      "payload": {
+        "actorId": 11,
+        "run": false
+      }
+    },
+    {
+      "seq": 26,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_candidate_declared",
+      "payload": {
+        "actorId": 12,
+        "run": false
+      }
+    },
+    {
+      "seq": 27,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff_nomination_summary",
+      "type": "sheriff_nomination_summary",
+      "payload": {
+        "candidates": [
+          5
+        ]
+      }
+    },
+    {
+      "seq": 28,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "day_speech",
+      "type": "day_speech",
+      "payload": {
+        "actorId": 5,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 29,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff_withdraw_summary",
+      "type": "sheriff_withdraw_summary",
+      "payload": {
+        "withdrawn": []
+      }
+    },
+    {
+      "seq": 30,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_candidates_finalized",
+      "payload": {
+        "candidates": [
+          5
+        ]
+      }
+    },
+    {
+      "seq": 31,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff_vote_summary",
+      "type": "sheriff_vote_summary",
+      "payload": {
+        "votes": [],
+        "winnerId": 5,
+        "round": 1
+      }
+    },
+    {
+      "seq": 32,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff",
+      "type": "sheriff_elected",
+      "payload": {
+        "winnerId": 5,
+        "candidates": [
+          5
+        ],
+        "tally": {
+          "5": 0
+        }
+      }
+    },
+    {
+      "seq": 33,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "night_resolved",
+      "type": "night_resolved",
+      "payload": {
+        "deaths": [
+          10
+        ]
+      }
+    },
+    {
+      "seq": 34,
+      "timestamp": "2026-10-11T18:23:28.983Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "last_words_granted",
+      "type": "last_words_granted",
+      "payload": {
+        "playerId": 10,
+        "phase": "day",
+        "day": 1
+      }
+    },
+    {
+      "seq": 35,
+      "timestamp": "2026-10-11T18:23:28.984Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "last_words_spoken",
+      "type": "last_words_spoken",
+      "payload": {
+        "playerId": 10,
+        "phase": "day",
+        "day": 1,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 36,
+      "timestamp": "2026-10-11T18:23:28.985Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "sheriff_direction_chosen",
+      "type": "sheriff_direction_chosen",
+      "payload": {
+        "sheriffId": 5,
+        "direction": "clockwise"
+      }
+    },
+    {
+      "seq": 37,
+      "timestamp": "2026-10-11T18:23:28.985Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "day_speech",
+      "type": "day_speech",
+      "payload": {
+        "actorId": 6,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 38,
+      "timestamp": "2026-10-11T18:23:28.985Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "day_speech",
+      "type": "day_speech",
+      "payload": {
+        "actorId": 7,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 39,
+      "timestamp": "2026-10-11T18:23:28.986Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "day_speech",
+      "type": "day_speech",
+      "payload": {
+        "actorId": 8,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 40,
+      "timestamp": "2026-10-11T18:23:28.986Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "day_speech",
+      "type": "day_speech",
+      "payload": {
+        "actorId": 9,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 41,
+      "timestamp": "2026-10-11T18:23:28.987Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "day_speech",
+      "type": "day_speech",
+      "payload": {
+        "actorId": 11,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 42,
+      "timestamp": "2026-10-11T18:23:28.987Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "day_speech",
+      "type": "day_speech",
+      "payload": {
+        "actorId": 12,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 43,
+      "timestamp": "2026-10-11T18:23:28.987Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "day_speech",
+      "type": "day_speech",
+      "payload": {
+        "actorId": 1,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 44,
+      "timestamp": "2026-10-11T18:23:28.988Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "day_speech",
+      "type": "day_speech",
+      "payload": {
+        "actorId": 2,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 45,
+      "timestamp": "2026-10-11T18:23:28.988Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "day_speech",
+      "type": "day_speech",
+      "payload": {
+        "actorId": 3,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 46,
+      "timestamp": "2026-10-11T18:23:28.989Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "day_speech",
+      "type": "day_speech",
+      "payload": {
+        "actorId": 4,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 47,
+      "timestamp": "2026-10-11T18:23:28.989Z",
+      "phase": "day",
+      "day": 1,
+      "stage": "day_speech",
+      "type": "day_speech",
+      "payload": {
+        "actorId": 5,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 48,
+      "timestamp": "2026-10-11T18:23:28.989Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "phase_changed",
+      "payload": {
+        "phase": "voting",
+        "day": 1
+      }
+    },
+    {
+      "seq": 49,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "vote_cast",
+      "payload": {
+        "actorId": 1,
+        "targetId": 11,
+        "abstain": false,
+        "weight": 1
+      }
+    },
+    {
+      "seq": 50,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "vote_cast",
+      "payload": {
+        "actorId": 2,
+        "targetId": 11,
+        "abstain": false,
+        "weight": 1
+      }
+    },
+    {
+      "seq": 51,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "vote_cast",
+      "payload": {
+        "actorId": 3,
+        "targetId": 11,
+        "abstain": false,
+        "weight": 1
+      }
+    },
+    {
+      "seq": 52,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "vote_cast",
+      "payload": {
+        "actorId": 4,
+        "targetId": 11,
+        "abstain": false,
+        "weight": 1
+      }
+    },
+    {
+      "seq": 53,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "vote_cast",
+      "payload": {
+        "actorId": 5,
+        "targetId": 11,
+        "abstain": false,
+        "weight": 1.5
+      }
+    },
+    {
+      "seq": 54,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "vote_cast",
+      "payload": {
+        "actorId": 6,
+        "targetId": 11,
+        "abstain": false,
+        "weight": 1
+      }
+    },
+    {
+      "seq": 55,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "vote_cast",
+      "payload": {
+        "actorId": 7,
+        "targetId": 11,
+        "abstain": false,
+        "weight": 1
+      }
+    },
+    {
+      "seq": 56,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "vote_cast",
+      "payload": {
+        "actorId": 8,
+        "targetId": 11,
+        "abstain": false,
+        "weight": 1
+      }
+    },
+    {
+      "seq": 57,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "vote_cast",
+      "payload": {
+        "actorId": 9,
+        "targetId": 11,
+        "abstain": false,
+        "weight": 1
+      }
+    },
+    {
+      "seq": 58,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "vote_cast",
+      "payload": {
+        "actorId": 11,
+        "targetId": null,
+        "abstain": true,
+        "weight": 0
+      }
+    },
+    {
+      "seq": 59,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "vote_cast",
+      "payload": {
+        "actorId": 12,
+        "targetId": 11,
+        "abstain": false,
+        "weight": 1
+      }
+    },
+    {
+      "seq": 60,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "vote_summary",
+      "payload": {
+        "votes": [
+          {
+            "actorId": 1,
+            "targetId": 11,
+            "abstain": false,
+            "weight": 1
+          },
+          {
+            "actorId": 2,
+            "targetId": 11,
+            "abstain": false,
+            "weight": 1
+          },
+          {
+            "actorId": 3,
+            "targetId": 11,
+            "abstain": false,
+            "weight": 1
+          },
+          {
+            "actorId": 4,
+            "targetId": 11,
+            "abstain": false,
+            "weight": 1
+          },
+          {
+            "actorId": 5,
+            "targetId": 11,
+            "abstain": false,
+            "weight": 1.5
+          },
+          {
+            "actorId": 6,
+            "targetId": 11,
+            "abstain": false,
+            "weight": 1
+          },
+          {
+            "actorId": 7,
+            "targetId": 11,
+            "abstain": false,
+            "weight": 1
+          },
+          {
+            "actorId": 8,
+            "targetId": 11,
+            "abstain": false,
+            "weight": 1
+          },
+          {
+            "actorId": 9,
+            "targetId": 11,
+            "abstain": false,
+            "weight": 1
+          },
+          {
+            "actorId": 11,
+            "targetId": null,
+            "abstain": true,
+            "weight": 0
+          },
+          {
+            "actorId": 12,
+            "targetId": 11,
+            "abstain": false,
+            "weight": 1
+          }
+        ],
+        "tally": {
+          "11": 10.5
+        },
+        "target": 11,
+        "round": 1
+      }
+    },
+    {
+      "seq": 61,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "voting",
+      "type": "voted_out",
+      "payload": {
+        "target": 11
+      }
+    },
+    {
+      "seq": 62,
+      "timestamp": "2026-10-11T18:23:28.993Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "last_words_granted",
+      "type": "last_words_granted",
+      "payload": {
+        "playerId": 11,
+        "phase": "voting",
+        "day": 1
+      }
+    },
+    {
+      "seq": 63,
+      "timestamp": "2026-10-11T18:23:28.994Z",
+      "phase": "voting",
+      "day": 1,
+      "stage": "last_words_spoken",
+      "type": "last_words_spoken",
+      "payload": {
+        "playerId": 11,
+        "phase": "voting",
+        "day": 1,
+        "text": "Synthetic"
+      }
+    },
+    {
+      "seq": 64,
+      "timestamp": "2026-10-11T18:23:28.999Z",
+      "phase": "night",
+      "day": 2,
+      "stage": "night",
+      "type": "phase_changed",
+      "payload": {
+        "phase": "night",
+        "day": 2
+      }
+    },
+    {
+      "seq": 65,
+      "timestamp": "2026-10-11T18:23:29.004Z",
+      "phase": "night",
+      "day": 2,
+      "stage": "ability_changed",
+      "type": "ability_changed",
+      "payload": {
+        "actorId": 1,
+        "abilityId": "copy:eclipse:night:2",
+        "kind": "potion",
+        "operation": "granted",
+        "source": {
+          "kind": "copy",
+          "actorId": 4,
+          "abilityId": "native:potion"
+        },
+        "sourceDisclosed": true,
+        "startsOnDay": 2,
+        "expiresAfterDay": 2,
+        "maxUses": null
+      }
+    },
+    {
+      "seq": 66,
+      "timestamp": "2026-10-11T18:23:29.004Z",
+      "phase": "night",
+      "day": 2,
+      "stage": "eclipse_swallowed",
+      "type": "eclipse_swallowed",
+      "payload": {
+        "actorId": 1,
+        "day": 2,
+        "targetId": 4,
+        "roleId": "witch",
+        "abilityId": "copy:eclipse:night:2"
+      }
+    },
+    {
+      "seq": 67,
+      "timestamp": "2026-10-11T18:23:29.004Z",
+      "phase": "night",
+      "day": 2,
+      "stage": "eclipse_native_suppressed",
+      "type": "eclipse_native_suppressed",
+      "payload": {
+        "playerId": 4,
+        "day": 2
+      }
+    },
+    {
+      "seq": 68,
+      "timestamp": "2026-10-11T18:23:29.005Z",
+      "phase": "night",
+      "day": 2,
+      "stage": "radiant_shelter_chosen",
+      "type": "radiant_shelter_chosen",
+      "payload": {
+        "actorId": 2,
+        "day": 2,
+        "targetId": 12,
+        "abilityId": "native:shelter"
+      }
+    },
+    {
+      "seq": 69,
+      "timestamp": "2026-10-11T18:23:29.006Z",
+      "phase": "night",
+      "day": 2,
+      "stage": "dreamer",
+      "type": "dream_applied",
+      "payload": {
+        "actorId": 5,
+        "targetId": 7,
+        "day": 2,
+        "consecutive": false
+      }
+    },
+    {
+      "seq": 70,
+      "timestamp": "2026-10-11T18:23:29.006Z",
+      "phase": "night",
+      "day": 2,
+      "stage": "wolf_tactical_order",
+      "type": "wolf_tactical_order",
+      "payload": {
+        "order": [
+          12
+        ]
+      }
+    },
+    {
+      "seq": 71,
+      "timestamp": "2026-10-11T18:23:29.007Z",
+      "phase": "night",
+      "day": 2,
+      "stage": "wolf_discussion",
+      "type": "wolf_discussion_ended",
+      "payload": {
+        "actorId": 12,
+        "reason": "End",
+        "round": 1
+      }
+    },
+    {
+      "seq": 72,
+      "timestamp": "2026-10-11T18:23:29.008Z",
+      "phase": "night",
+      "day": 2,
+      "stage": "wolf_discussion",
+      "type": "wolf_kill_vote_cast",
+      "payload": {
+        "actorId": 12,
+        "abstain": false,
+        "targetId": 8
+      }
+    },
+    {
+      "seq": 73,
+      "timestamp": "2026-10-11T18:23:29.009Z",
+      "phase": "night",
+      "day": 2,
+      "stage": "witch",
+      "type": "witch_potion_used",
+      "payload": {
+        "actorId": 1,
+        "abilityId": "copy:eclipse:night:2",
+        "targetId": 12,
+        "potionType": "poison"
+      }
+    },
+    {
+      "seq": 74,
+      "timestamp": "2026-10-11T18:23:29.010Z",
+      "phase": "night",
+      "day": 2,
+      "stage": "eclipse_lease_closed",
+      "type": "eclipse_lease_closed",
+      "payload": {
+        "actorId": 1,
+        "day": 2,
+        "targetId": 4,
+        "abilityId": "copy:eclipse:night:2",
+        "status": "aborted"
+      }
+    }
+  ]
+}

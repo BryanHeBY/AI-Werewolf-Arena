@@ -1,0 +1,2477 @@
+{
+  "schemaVersion": 2,
+  "locale": "en",
+  "player_id": 10,
+  "role": "eclipse_maid",
+  "camp": "wolf",
+  "initial_prompt": {
+    "day": 1,
+    "phase": "day",
+    "stage": "sheriff_nomination",
+    "request_id": "1-day-10-1",
+    "timestamp": "2026-10-11T18:23:16.240Z",
+    "prompt_system": "You are one player agent in the Werewolf engine. Your seat is 10. At session creation, your true role is Eclipse Maid. On every later turn the engine current identity, faction and native stock are authoritative; old role introductions are historical and grant no old skill. When you receive [Action prompt], you may act.\nYour goal is to help your team win this game. Use information visible to you to judge, negotiate, probe and adjust your strategy. Keep your own judgment even when the majority disagrees.\nUse English for your reasoning and expression.\nYour nickname is Seat 10. Refer to other players by seat number to avoid confusion.\nTeammates whose identities are revealed when this session is established, excluding yourself: 2, 3, 11. Use each turn's action prompt for updated authorization. None means no additional teammate identity is revealed, not that you are the only member of your team.\nOnly refer to player IDs that exist in this game, from 1 to 12. Do not invent other IDs.\nFollow phase rules, allowed tools and turn constraints. Choose your strategy and expression within those boundaries.\nCurrent board:\nTotal players=12\nRole lineup=Radiant Countx1, Eclipse Maidx1, Werewolfx3, Dreamerx1, Villagerx4, Seerx1, Witchx1\nRole skill briefs=Radiant Count: You are the Radiant Count, a good-side god. From night two, shelter one other living player or explicitly pass. Shelter blocks that night's ordinary wolf knife, poison and dream damage. You cannot shelter yourself or the same player on consecutive nights. If the Eclipse Maid swallows your skill, you have no native shelter action that night; suppression ends at dawn. Her borrowed choice does not change your previous target. A suppressed night is not a recorded pass. Borrowed shelter inherits the owner’s previous target and actual night number, without writing the borrower’s new choice back. After a suppressed night with no native action, you may choose your earlier target again.; Eclipse Maid: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.; Werewolf: Participates in wolf discussion and the collective kill vote at night; Dreamer: Must choose another living sleepwalker each night. Ordinary night damage is blocked; consecutive nights or the Dreamer's night death causes dream death.; Villager: Has no night skill; influences the game through daytime speech and voting; Seer: May inspect one player's alignment each night; Witch: Has one antidote and one poison and may choose a potion at night\nThis is AWA's twelve-player Radiant Eclipse version. The Count and Maid act from night two; shelter and swallowing each prohibit repeating their own target on consecutive nights. The Maid swallows first and temporarily suppresses the owner's native skill; shelter, dreams, wolf chat, the knife, potions and inspection follow. Borrowing snapshots only permitted current state, creates independent stock, copies no private history and writes nothing back. Borrowed potions allow one bottle, no self-heal and no refresh of spent stock. The Maid is the caster of a borrowed dream and its death link. Shelter blocks the knife, poison and dream damage. Swallowing the Count or a sheltered player causes backlash; dream protection blocks backlash, but consecutive dreams and caster-death links remain separate. Night-end closure removes temporary suppression and borrowed authorization without canceling submitted effects. An aborted night publishes no normal restoration, night deaths or victory. Shelter’s repeat restriction uses its retained or inherited previous target and actual night number. A suppressed native owner records no action, and borrowed choices are not written back; there is no global previous-night shelter target. Borrowed dream inherits the owner’s prior target and actual night number: consecutive targeting is allowed and causes its own dream damage, and the Maid cannot dream herself. Empty borrowed potion stock creates no borrowed turn; the native Witch keeps her existing empty-stock flow. The Maid knows the other wolves, but they do not know her identity. She never joins wolf chat or self-destructs, and gets the ordinary knife only when all other wolves were dead at the actual start of the night.\nRules for this game:\nWin conditions: Side elimination: wolves win when all good special roles or all villagers are eliminated; good wins when all wolves are eliminated\nSheriff mechanism: Enabled: nomination, campaign speeches, withdrawal and non-candidate voting; the sheriff chooses speaking direction and has vote weight=1.5 If nobody runs, all candidates withdraw, or no valid vote is cast, no sheriff is elected; withdrawn candidates are never restored.\nFirst-day order: after night actions, collect nominations, campaign speeches, withdrawals and non-candidate votes. After the sheriff vote, night_resolved announces deaths or no deaths, followed by first-night last words, sheriff speaking direction and regular day speeches. Players who actually died overnight still participate in the election before the public night resolution.\nBadge: the deceased holder chooses an eligible living successor or destroys it; revealed Idiots destroy it directly.\nSelf-destruction: Enabled (windows: Before sheriff election, Before exile voting)\nWitch self-healing: Disallowed\nDreamer netease_2026_night_immunity_v1: mandatory nightly choice, night immunity, night-death linkage, consecutive dream death and no dream-death guns. Immunity to mechanical guard failure/Black Market backlash is an extension engineering completion. Dream deaths remain lethal.\nAWA living-target policy: self-inspection and repeat inspection are legal.\nAn inspection is required while a legal target exists; skip when targets are exhausted.\nAWA native knife disclosure: reveal the wolf target only while heal is usable tonight.\nAWA native potion policy: at most one potion per night.\nAWA sheriff policy: only non-nominees vote first; a sole candidate wins directly. One PK on a tie; PK candidates cannot vote. Another tie or all abstentions leaves no badge.\nAWA exile policy: one PK after a positive top-vote tie; PK candidates cannot revote, only remaining eligible PK candidates may be targeted. Another tie or all abstentions means no exile.\nDisclosure: ordinary night deaths and exile do not reveal roles. Only identities explicitly revealed by engine events such as idiot_revealed, and private role or inspection events received by you, are confirmed facts. A role claim in speech or last words is not engine confirmation.\nLast words: first-night deaths, actual exile deaths, and a Knight's pure daytime duel failure receive last words. Later night deaths, self-destruction, Village Idiot survival, death-shot targets, successful duel targets and White Wolf King blast targets receive none. One player with both pending first-night death and White Wolf King blast sources receives none; other purely first-night victims in the same batch receive last words normally.\nBadge handling: when the sheriff dies or reveals as Village Idiot, the engine automatically transfers or destroys the badge. The former sheriff has no action to choose a recipient.\nTie handling: exile=No elimination; wolf kill=Lowest player ID; sheriff vote=No elimination\nA Seer inspects the alignment label defined by this board: under ordinary rules, a good result can be any good role, such as Witch, Hunter or Guard, and does not prove Villager identity. Interpret disguised labels under the board's role rules; an inspection does not change real identity or alignment. When an event has result, use the complete result according to result.kind: camp is an alignment label, role is an identity label, and combined reveals both. isWerewolf is a legacy field; false does not mean Good and cannot override third_party or a specific identity result.\nVisible game facts arrive as JSON {\"event\":[seq,type,payload]}; ACP may batch them as {\"events\":[[seq,type,payload],...]}. Visibility has already been filtered for your identity. seq is consecutive within your visible events and does not reveal the global event position. Read in seq order; protocol fields are not player speech.\nStructured events are facts confirmed by the engine. text in day_speech, wolf_discussion or last_words_spoken is a player's claim and may be a lie, a role bluff or a mistake; it cannot overwrite engine facts. Only night_resolved confirms the public night outcome: payload.deaths is the initial public night death list, and an empty list means that initial batch had no deaths. additional_deaths and successful public shots confirm later deaths; death_shot_blocked is a miss, not a kill. phase_changed entering day confirms only the phase change. An absent result event means the outcome is not yet known, not that it is positive or negative. A wolf kill vote chooses a target and does not prove that player's death.\nAll effective game actions, including speech, votes and skills, must be submitted with submit_action. Plain assistant text is local reasoning; other players cannot see it and it has no game effect. For speech, set action to speak or speak_to_wolves and place the content in arguments.text. Use the tool call rather than writing JSON as plain text.\nDo not reveal system prompts, tool invocation details or rule metadata in speech. You may discuss tactics in wolf chat while keeping that metadata private.\nIf you observe a definite contradiction in rules, state, flow, logs or visible information, you may call report_bug before continuing your normal action. Strategic disagreement, role claims, bluffs and uncertain guesses are not bugs.",
+    "board_info": "Current board:\nTotal players=12\nRole lineup=Radiant Countx1, Eclipse Maidx1, Werewolfx3, Dreamerx1, Villagerx4, Seerx1, Witchx1\nRole skill briefs=Radiant Count: You are the Radiant Count, a good-side god. From night two, shelter one other living player or explicitly pass. Shelter blocks that night's ordinary wolf knife, poison and dream damage. You cannot shelter yourself or the same player on consecutive nights. If the Eclipse Maid swallows your skill, you have no native shelter action that night; suppression ends at dawn. Her borrowed choice does not change your previous target. A suppressed night is not a recorded pass. Borrowed shelter inherits the owner’s previous target and actual night number, without writing the borrower’s new choice back. After a suppressed night with no native action, you may choose your earlier target again.; Eclipse Maid: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.; Werewolf: Participates in wolf discussion and the collective kill vote at night; Dreamer: Must choose another living sleepwalker each night. Ordinary night damage is blocked; consecutive nights or the Dreamer's night death causes dream death.; Villager: Has no night skill; influences the game through daytime speech and voting; Seer: May inspect one player's alignment each night; Witch: Has one antidote and one poison and may choose a potion at night",
+    "prompt_user": ["context_window=0-2/2;event_cursor=0->2"]
+  },
+  "timeline": [
+    {
+      "seq": 1,
+      "kind": "turn",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_nomination",
+      "request_id": "1-day-10-1",
+      "timestamp": "2026-10-11T18:23:16.240Z",
+      "turn_seq": 1,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Day; stage: Sheriff nomination; this is not your speaking turn. This is nomination, not withdrawal: run=true enters the election; run=false declines nomination. All players' decisions are collected concurrently from the same information snapshot. The first-day sheriff election occurs before the night outcome is published. night_resolved has not yet announced deaths or no deaths. Participation in the election does not prove a player's survival. Do not infer the night outcome from the wolf target, entering day, an absent announcement or other players' claims.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[]} Current game day: 1. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: run_for_sheriff. State whether you enter the sheriff election. Allowed submissions: run_for_sheriff, report_bug. Effective game actions: run_for_sheriff.\nAction arguments: run_for_sheriff args: {\"run\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t1, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t1. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "run_for_sheriff",
+          "args": {
+            "run": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"run_for_sheriff\",\"args\":{\"run\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 2,
+      "kind": "turn",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-10-2",
+      "timestamp": "2026-10-11T18:23:16.278Z",
+      "turn_seq": 2,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Day; stage: Day speech; this is your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[]} Current game day: 1. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: speak. Complete one speech action in the day speech stage. Allowed submissions: speak, report_bug. Effective game actions: speak.\nAction arguments: speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t2, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t2. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak",
+          "args": {
+            "text": "Speech"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Speech\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 3,
+      "kind": "turn",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-10-3",
+      "timestamp": "2026-10-11T18:23:16.330Z",
+      "turn_seq": 3,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Voting; stage: Exile vote; this is not your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[]} Current game day: 1. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: vote. Complete one exile vote action; you may abstain. Allowed submissions: vote, report_bug. Effective game actions: vote.\nAction arguments: vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 3, 4, 5, 6, 7, 8, 9, 11, 12. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t3, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t3. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "vote",
+          "args": {
+            "target_id": 3,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":3,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 4,
+      "kind": "turn",
+      "day": 2,
+      "phase": "night",
+      "stage": "eclipse_swallow",
+      "request_id": "2-night-10-4",
+      "timestamp": "2026-10-11T18:23:16.342Z",
+      "turn_seq": 4,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Night; stage: Swallow skill; this is not your speaking turn.\nStage rules: Choose this night's swallow target or explicitly pass. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[]} Current game day: 2. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: swallow_skill. Complete one valid action in the night action stage. Allowed submissions: swallow_skill, report_bug. Effective game actions: swallow_skill.\nAction arguments: swallow_skill args: {\"target_id\":number|null}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 4, 5, 6, 7, 8, 9, 12. Call swallow_skill with target_id identifying a living good-side player who was not swallowed on the previous night; use null to explicitly pass. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t4, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t4. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "swallow_skill",
+          "args": {
+            "target_id": 7
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"swallow_skill\",\"args\":{\"target_id\":7}}}"
+        }
+      ]
+    },
+    {
+      "seq": 5,
+      "kind": "turn",
+      "day": 2,
+      "phase": "night",
+      "stage": "witch",
+      "request_id": "2-night-10-5",
+      "timestamp": "2026-10-11T18:23:16.364Z",
+      "turn_seq": 5,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Night; stage: Witch action; this is not your speaking turn. This night's wolf target revealed to you is player 6.\nStage rules: This is the Witch stage: submit use_potion. To use no potion tonight, submit use_potion with potion_type=\"none\". Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[{\"day\":2,\"targetId\":7,\"roleId\":\"witch\",\"abilityId\":\"copy:eclipse:night:2\"}]} Current game day: 2. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Ability copy:eclipse:night:2: Potion use; status=Effective; uses remaining=Unlimited; your resources and records={\"knifeVisibility\":\"awa_with_heal_v1\",\"potionPolicy\":\"awa_one_native_v1\",\"heal\":1,\"poison\":1,\"selfHealRule\":\"disabled\",\"canSelfHeal\":false,\"healUsedThisNight\":false,\"poisonUsedThisNight\":false} This turn executes only the engine-bound ability copy:eclipse:night:2; do not add an ability ID to tool arguments. Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: use_potion. Complete one valid action in the night action stage. Allowed submissions: use_potion, report_bug. Effective game actions: use_potion.\nAction arguments: use_potion args: {\"target_id\":number,\"potion_type\":\"heal\"|\"poison\"|\"none\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (including yourself): 1, 4, 5, 6, 7, 8, 9, 10, 11, 12. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t5, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t5. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "use_potion",
+          "args": {
+            "target_id": 11,
+            "potion_type": "poison"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"use_potion\",\"args\":{\"target_id\":11,\"potion_type\":\"poison\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 6,
+      "kind": "turn",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-10-6",
+      "timestamp": "2026-10-11T18:23:16.404Z",
+      "turn_seq": 6,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Day; stage: Day speech; this is your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[{\"day\":2,\"targetId\":7,\"roleId\":\"witch\",\"abilityId\":\"copy:eclipse:night:2\"}]} Current game day: 2. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Ability copy:eclipse:night:2: Potion use; status=Blocked; uses remaining=Unlimited; your resources and records={\"knifeVisibility\":\"awa_with_heal_v1\",\"potionPolicy\":\"awa_one_native_v1\",\"heal\":1,\"poison\":0,\"selfHealRule\":\"disabled\",\"canSelfHeal\":false,\"healUsedThisNight\":false,\"poisonUsedThisNight\":true} Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: speak. Complete one speech action in the day speech stage. Allowed submissions: speak, report_bug. Effective game actions: speak.\nAction arguments: speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t6, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t6. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak",
+          "args": {
+            "text": "Speech"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Speech\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 7,
+      "kind": "turn",
+      "day": 2,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "2-voting-10-7",
+      "timestamp": "2026-10-11T18:23:16.449Z",
+      "turn_seq": 7,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Voting; stage: Exile vote; this is not your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[{\"day\":2,\"targetId\":7,\"roleId\":\"witch\",\"abilityId\":\"copy:eclipse:night:2\"}]} Current game day: 2. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Ability copy:eclipse:night:2: Potion use; status=Blocked; uses remaining=Unlimited; your resources and records={\"knifeVisibility\":\"awa_with_heal_v1\",\"potionPolicy\":\"awa_one_native_v1\",\"heal\":1,\"poison\":0,\"selfHealRule\":\"disabled\",\"canSelfHeal\":false,\"healUsedThisNight\":false,\"poisonUsedThisNight\":true} Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: vote. Complete one exile vote action; you may abstain. Allowed submissions: vote, report_bug. Effective game actions: vote.\nAction arguments: vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 4, 5, 7, 8, 9, 11, 12. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t7, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t7. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "vote",
+          "args": {
+            "target_id": 12,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":12,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 8,
+      "kind": "turn",
+      "day": 3,
+      "phase": "night",
+      "stage": "eclipse_swallow",
+      "request_id": "3-night-10-8",
+      "timestamp": "2026-10-11T18:23:16.464Z",
+      "turn_seq": 8,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Night; stage: Swallow skill; this is not your speaking turn.\nStage rules: Choose this night's swallow target or explicitly pass. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[{\"day\":2,\"targetId\":7,\"roleId\":\"witch\",\"abilityId\":\"copy:eclipse:night:2\"}]} Current game day: 3. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Ability copy:eclipse:night:2: Potion use; status=Blocked; uses remaining=Unlimited; your resources and records={\"knifeVisibility\":\"awa_with_heal_v1\",\"potionPolicy\":\"awa_one_native_v1\",\"heal\":1,\"poison\":0,\"selfHealRule\":\"disabled\",\"canSelfHeal\":false,\"healUsedThisNight\":false,\"poisonUsedThisNight\":false} Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: swallow_skill. Complete one valid action in the night action stage. Allowed submissions: swallow_skill, report_bug. Effective game actions: swallow_skill.\nAction arguments: swallow_skill args: {\"target_id\":number|null}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 4, 5, 8, 9. Call swallow_skill with target_id identifying a living good-side player who was not swallowed on the previous night; use null to explicitly pass. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t8, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t8. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "swallow_skill",
+          "args": {
+            "target_id": 9
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"swallow_skill\",\"args\":{\"target_id\":9}}}"
+        }
+      ]
+    },
+    {
+      "seq": 9,
+      "kind": "turn",
+      "day": 3,
+      "phase": "night",
+      "stage": "radiant_shelter",
+      "request_id": "3-night-10-9",
+      "timestamp": "2026-10-11T18:23:16.469Z",
+      "turn_seq": 9,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Night; stage: Radiant shelter; this is not your speaking turn.\nStage rules: Choose this night's shelter target or explicitly pass. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[{\"day\":2,\"targetId\":7,\"roleId\":\"witch\",\"abilityId\":\"copy:eclipse:night:2\"},{\"day\":3,\"targetId\":9,\"roleId\":\"radiant_count\",\"abilityId\":\"copy:eclipse:night:3\"}]} Current game day: 3. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Ability copy:eclipse:night:2: Potion use; status=Blocked; uses remaining=Unlimited; your resources and records={\"knifeVisibility\":\"awa_with_heal_v1\",\"potionPolicy\":\"awa_one_native_v1\",\"heal\":1,\"poison\":0,\"selfHealRule\":\"disabled\",\"canSelfHeal\":false,\"healUsedThisNight\":false,\"poisonUsedThisNight\":false} Ability copy:eclipse:night:3: Radiant shelter; status=Effective; uses remaining=Unlimited; your resources and records={\"policy\":\"awa_radiant_eclipse_v1\",\"lastTarget\":11,\"lastDay\":2} This turn executes only the engine-bound ability copy:eclipse:night:3; do not add an ability ID to tool arguments. Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: cast_shelter. Complete one valid action in the night action stage. Allowed submissions: cast_shelter, report_bug. Effective game actions: cast_shelter.\nAction arguments: cast_shelter args: {\"target_id\":number|null}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 4, 5, 7, 8, 9. Call cast_shelter with target_id identifying another living player. Do not repeat this shelter skill’s retained or inherited target on consecutive actual nights; use null to explicitly pass. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t9, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t9. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "cast_shelter",
+          "args": {
+            "target_id": 4
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"cast_shelter\",\"args\":{\"target_id\":4}}}"
+        }
+      ]
+    },
+    {
+      "seq": 10,
+      "kind": "turn",
+      "day": 3,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "3-day-10-10",
+      "timestamp": "2026-10-11T18:23:16.552Z",
+      "turn_seq": 10,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Day; stage: Day speech; this is your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[{\"day\":2,\"targetId\":7,\"roleId\":\"witch\",\"abilityId\":\"copy:eclipse:night:2\"},{\"day\":3,\"targetId\":9,\"roleId\":\"radiant_count\",\"abilityId\":\"copy:eclipse:night:3\"}]} Current game day: 3. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Ability copy:eclipse:night:2: Potion use; status=Blocked; uses remaining=Unlimited; your resources and records={\"knifeVisibility\":\"awa_with_heal_v1\",\"potionPolicy\":\"awa_one_native_v1\",\"heal\":1,\"poison\":0,\"selfHealRule\":\"disabled\",\"canSelfHeal\":false,\"healUsedThisNight\":false,\"poisonUsedThisNight\":false} Ability copy:eclipse:night:3: Radiant shelter; status=Blocked; uses remaining=Unlimited; your resources and records={\"policy\":\"awa_radiant_eclipse_v1\",\"lastTarget\":4,\"lastDay\":3} Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: speak. Complete one speech action in the day speech stage. Allowed submissions: speak, report_bug. Effective game actions: speak.\nAction arguments: speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t10, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t10. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak",
+          "args": {
+            "text": "Speech"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Speech\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 11,
+      "kind": "turn",
+      "day": 3,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "3-voting-10-11",
+      "timestamp": "2026-10-11T18:23:16.592Z",
+      "turn_seq": 11,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Voting; stage: Exile vote; this is not your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[{\"day\":2,\"targetId\":7,\"roleId\":\"witch\",\"abilityId\":\"copy:eclipse:night:2\"},{\"day\":3,\"targetId\":9,\"roleId\":\"radiant_count\",\"abilityId\":\"copy:eclipse:night:3\"}]} Current game day: 3. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Ability copy:eclipse:night:2: Potion use; status=Blocked; uses remaining=Unlimited; your resources and records={\"knifeVisibility\":\"awa_with_heal_v1\",\"potionPolicy\":\"awa_one_native_v1\",\"heal\":1,\"poison\":0,\"selfHealRule\":\"disabled\",\"canSelfHeal\":false,\"healUsedThisNight\":false,\"poisonUsedThisNight\":false} Ability copy:eclipse:night:3: Radiant shelter; status=Blocked; uses remaining=Unlimited; your resources and records={\"policy\":\"awa_radiant_eclipse_v1\",\"lastTarget\":4,\"lastDay\":3} Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: vote. Complete one exile vote action; you may abstain. Allowed submissions: vote, report_bug. Effective game actions: vote.\nAction arguments: vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 4, 5, 7, 8, 9, 11. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t11, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t11. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "vote",
+          "args": {
+            "target_id": 11,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":11,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 12,
+      "kind": "turn",
+      "day": 4,
+      "phase": "night",
+      "stage": "eclipse_swallow",
+      "request_id": "4-night-10-12",
+      "timestamp": "2026-10-11T18:23:16.604Z",
+      "turn_seq": 12,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Night; stage: Swallow skill; this is not your speaking turn.\nStage rules: Choose this night's swallow target or explicitly pass. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[{\"day\":2,\"targetId\":7,\"roleId\":\"witch\",\"abilityId\":\"copy:eclipse:night:2\"},{\"day\":3,\"targetId\":9,\"roleId\":\"radiant_count\",\"abilityId\":\"copy:eclipse:night:3\"}]} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Ability copy:eclipse:night:2: Potion use; status=Blocked; uses remaining=Unlimited; your resources and records={\"knifeVisibility\":\"awa_with_heal_v1\",\"potionPolicy\":\"awa_one_native_v1\",\"heal\":1,\"poison\":0,\"selfHealRule\":\"disabled\",\"canSelfHeal\":false,\"healUsedThisNight\":false,\"poisonUsedThisNight\":false} Ability copy:eclipse:night:3: Radiant shelter; status=Blocked; uses remaining=Unlimited; your resources and records={\"policy\":\"awa_radiant_eclipse_v1\",\"lastTarget\":4,\"lastDay\":3} Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: swallow_skill. Complete one valid action in the night action stage. Allowed submissions: swallow_skill, report_bug. Effective game actions: swallow_skill.\nAction arguments: swallow_skill args: {\"target_id\":number|null}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 4, 5, 7, 8. Call swallow_skill with target_id identifying a living good-side player who was not swallowed on the previous night; use null to explicitly pass. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t12, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t12. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "swallow_skill",
+          "args": {
+            "target_id": 8
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"swallow_skill\",\"args\":{\"target_id\":8}}}"
+        }
+      ]
+    },
+    {
+      "seq": 13,
+      "kind": "turn",
+      "day": 4,
+      "phase": "night",
+      "stage": "wolf_vote",
+      "request_id": "4-night-10-13",
+      "timestamp": "2026-10-11T18:23:16.624Z",
+      "turn_seq": 13,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Night; stage: Wolf kill vote; this is not your speaking turn.\nStage rules: This is the wolf kill vote: submit kill_vote. To abstain, set abstain=true and target_id=null. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[{\"day\":2,\"targetId\":7,\"roleId\":\"witch\",\"abilityId\":\"copy:eclipse:night:2\"},{\"day\":3,\"targetId\":9,\"roleId\":\"radiant_count\",\"abilityId\":\"copy:eclipse:night:3\"},{\"day\":4,\"targetId\":8,\"roleId\":\"seer\",\"abilityId\":\"copy:eclipse:night:4\"}]} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Ability copy:eclipse:night:2: Potion use; status=Blocked; uses remaining=Unlimited; your resources and records={\"knifeVisibility\":\"awa_with_heal_v1\",\"potionPolicy\":\"awa_one_native_v1\",\"heal\":1,\"poison\":0,\"selfHealRule\":\"disabled\",\"canSelfHeal\":false,\"healUsedThisNight\":false,\"poisonUsedThisNight\":false} Ability copy:eclipse:night:3: Radiant shelter; status=Blocked; uses remaining=Unlimited; your resources and records={\"policy\":\"awa_radiant_eclipse_v1\",\"lastTarget\":4,\"lastDay\":3} Ability copy:eclipse:night:4: Alignment inspection; status=Effective; uses remaining=Unlimited; your resources and records={\"targetPolicy\":\"awa_alive_v1\",\"actionPolicy\":\"awa_required_when_legal_v1\",\"lastTarget\":null,\"lastIsWerewolf\":null,\"lastResult\":null,\"history\":[]} Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: kill_vote. Complete one valid action in the night action stage. Allowed submissions: kill_vote, report_bug. Effective game actions: kill_vote.\nAction arguments: kill_vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (including yourself): 1, 4, 5, 7, 8, 9, 10. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t13, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t13. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "kill_vote",
+          "args": {
+            "target_id": 4,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"kill_vote\",\"args\":{\"target_id\":4,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 14,
+      "kind": "turn",
+      "day": 4,
+      "phase": "night",
+      "stage": "seer",
+      "request_id": "4-night-10-14",
+      "timestamp": "2026-10-11T18:23:16.663Z",
+      "turn_seq": 14,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Night; stage: Seer action; this is not your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[{\"day\":2,\"targetId\":7,\"roleId\":\"witch\",\"abilityId\":\"copy:eclipse:night:2\"},{\"day\":3,\"targetId\":9,\"roleId\":\"radiant_count\",\"abilityId\":\"copy:eclipse:night:3\"},{\"day\":4,\"targetId\":8,\"roleId\":\"seer\",\"abilityId\":\"copy:eclipse:night:4\"}]} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Ability copy:eclipse:night:2: Potion use; status=Blocked; uses remaining=Unlimited; your resources and records={\"knifeVisibility\":\"awa_with_heal_v1\",\"potionPolicy\":\"awa_one_native_v1\",\"heal\":1,\"poison\":0,\"selfHealRule\":\"disabled\",\"canSelfHeal\":false,\"healUsedThisNight\":false,\"poisonUsedThisNight\":false} Ability copy:eclipse:night:3: Radiant shelter; status=Blocked; uses remaining=Unlimited; your resources and records={\"policy\":\"awa_radiant_eclipse_v1\",\"lastTarget\":4,\"lastDay\":3} Ability copy:eclipse:night:4: Alignment inspection; status=Effective; uses remaining=Unlimited; your resources and records={\"targetPolicy\":\"awa_alive_v1\",\"actionPolicy\":\"awa_required_when_legal_v1\",\"lastTarget\":null,\"lastIsWerewolf\":null,\"lastResult\":null,\"history\":[]} This turn executes only the engine-bound ability copy:eclipse:night:4; do not add an ability ID to tool arguments. Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: check_identity. Complete one valid action in the night action stage. Allowed submissions: check_identity, report_bug. Effective game actions: check_identity.\nAction arguments: check_identity args: {\"target_id\":number}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (including yourself): 1, 4, 5, 7, 8, 9, 10. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t14, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t14. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "check_identity",
+          "args": {
+            "target_id": 9
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"check_identity\",\"args\":{\"target_id\":9}}}"
+        }
+      ]
+    },
+    {
+      "seq": 15,
+      "kind": "turn",
+      "day": 4,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "4-day-10-15",
+      "timestamp": "2026-10-11T18:23:16.722Z",
+      "turn_seq": 15,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Day; stage: Day speech; this is your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[{\"day\":2,\"targetId\":7,\"roleId\":\"witch\",\"abilityId\":\"copy:eclipse:night:2\"},{\"day\":3,\"targetId\":9,\"roleId\":\"radiant_count\",\"abilityId\":\"copy:eclipse:night:3\"},{\"day\":4,\"targetId\":8,\"roleId\":\"seer\",\"abilityId\":\"copy:eclipse:night:4\"}]} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Ability copy:eclipse:night:2: Potion use; status=Blocked; uses remaining=Unlimited; your resources and records={\"knifeVisibility\":\"awa_with_heal_v1\",\"potionPolicy\":\"awa_one_native_v1\",\"heal\":1,\"poison\":0,\"selfHealRule\":\"disabled\",\"canSelfHeal\":false,\"healUsedThisNight\":false,\"poisonUsedThisNight\":false} Ability copy:eclipse:night:3: Radiant shelter; status=Blocked; uses remaining=Unlimited; your resources and records={\"policy\":\"awa_radiant_eclipse_v1\",\"lastTarget\":4,\"lastDay\":3} Ability copy:eclipse:night:4: Alignment inspection; status=Blocked; uses remaining=Unlimited; your resources and records={\"targetPolicy\":\"awa_alive_v1\",\"actionPolicy\":\"awa_required_when_legal_v1\",\"lastTarget\":9,\"lastIsWerewolf\":false,\"lastResult\":{\"kind\":\"camp\",\"camp\":\"good\"},\"history\":[{\"targetId\":9,\"isWerewolf\":false,\"result\":{\"kind\":\"camp\",\"camp\":\"good\"}}]} Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: speak. Complete one speech action in the day speech stage. Allowed submissions: speak, report_bug. Effective game actions: speak.\nAction arguments: speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t15, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t15. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak",
+          "args": {
+            "text": "Speech"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Speech\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 16,
+      "kind": "turn",
+      "day": 4,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "4-voting-10-16",
+      "timestamp": "2026-10-11T18:23:16.813Z",
+      "turn_seq": 16,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Voting; stage: Exile vote; this is not your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[{\"day\":2,\"targetId\":7,\"roleId\":\"witch\",\"abilityId\":\"copy:eclipse:night:2\"},{\"day\":3,\"targetId\":9,\"roleId\":\"radiant_count\",\"abilityId\":\"copy:eclipse:night:3\"},{\"day\":4,\"targetId\":8,\"roleId\":\"seer\",\"abilityId\":\"copy:eclipse:night:4\"}]} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Ability copy:eclipse:night:2: Potion use; status=Blocked; uses remaining=Unlimited; your resources and records={\"knifeVisibility\":\"awa_with_heal_v1\",\"potionPolicy\":\"awa_one_native_v1\",\"heal\":1,\"poison\":0,\"selfHealRule\":\"disabled\",\"canSelfHeal\":false,\"healUsedThisNight\":false,\"poisonUsedThisNight\":false} Ability copy:eclipse:night:3: Radiant shelter; status=Blocked; uses remaining=Unlimited; your resources and records={\"policy\":\"awa_radiant_eclipse_v1\",\"lastTarget\":4,\"lastDay\":3} Ability copy:eclipse:night:4: Alignment inspection; status=Blocked; uses remaining=Unlimited; your resources and records={\"targetPolicy\":\"awa_alive_v1\",\"actionPolicy\":\"awa_required_when_legal_v1\",\"lastTarget\":9,\"lastIsWerewolf\":false,\"lastResult\":{\"kind\":\"camp\",\"camp\":\"good\"},\"history\":[{\"targetId\":9,\"isWerewolf\":false,\"result\":{\"kind\":\"camp\",\"camp\":\"good\"}}]} Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: vote. Complete one exile vote action; you may abstain. Allowed submissions: vote, report_bug. Effective game actions: vote.\nAction arguments: vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 4, 5, 7, 8, 9. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t16, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t16. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "vote",
+          "args": {
+            "target_id": null,
+            "abstain": true
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":null,\"abstain\":true}}}"
+        }
+      ]
+    },
+    {
+      "seq": 17,
+      "kind": "turn",
+      "day": 4,
+      "phase": "voting",
+      "stage": "last_words",
+      "request_id": "4-voting-10-17",
+      "timestamp": "2026-10-11T18:23:16.820Z",
+      "turn_seq": 17,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 10, it is your turn. Phase: Voting; stage: Last words; this is your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your swallowing record: {\"policy\":\"awa_radiant_eclipse_v1\",\"history\":[{\"day\":2,\"targetId\":7,\"roleId\":\"witch\",\"abilityId\":\"copy:eclipse:night:2\"},{\"day\":3,\"targetId\":9,\"roleId\":\"radiant_count\",\"abilityId\":\"copy:eclipse:night:3\"},{\"day\":4,\"targetId\":8,\"roleId\":\"seer\",\"abilityId\":\"copy:eclipse:night:4\"}]} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 2, 3, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Eclipse Maid; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Ability copy:eclipse:night:2: Potion use; status=Blocked; uses remaining=Unlimited; your resources and records={\"knifeVisibility\":\"awa_with_heal_v1\",\"potionPolicy\":\"awa_one_native_v1\",\"heal\":1,\"poison\":0,\"selfHealRule\":\"disabled\",\"canSelfHeal\":false,\"healUsedThisNight\":false,\"poisonUsedThisNight\":false} Ability copy:eclipse:night:3: Radiant shelter; status=Blocked; uses remaining=Unlimited; your resources and records={\"policy\":\"awa_radiant_eclipse_v1\",\"lastTarget\":4,\"lastDay\":3} Ability copy:eclipse:night:4: Alignment inspection; status=Blocked; uses remaining=Unlimited; your resources and records={\"targetPolicy\":\"awa_alive_v1\",\"actionPolicy\":\"awa_required_when_legal_v1\",\"lastTarget\":9,\"lastIsWerewolf\":false,\"lastResult\":{\"kind\":\"camp\",\"camp\":\"good\"},\"history\":[{\"targetId\":9,\"isWerewolf\":false,\"result\":{\"kind\":\"camp\",\"camp\":\"good\"}}]} Your private state: You are the Eclipse Maid, on the wolf side and sharing its victory. You know the other wolves, but they do not know you. You never join wolf chat or self-destruct. You gain the ordinary knife only when every other wolf was already dead at the actual start of the night. From night two, swallow one living good-side player or explicitly pass; you cannot swallow the same player on consecutive nights. The target loses their native skill for that night. You borrow its currently available state and act in its normal stage. Borrowed stocks are independent and never written back; old inspection results and prompt history are not copied. Borrowed potions use the current stock, at most one per night, with no self-heal; empty stock creates no borrowed potion turn. You are the caster and death-link owner of a borrowed dream, and borrowed shelter cannot protect yourself. Swallowing the Count or that night's sheltered player causes separate radiant backlash; swallowing and the borrowed skill still take effect. Dream protection can block backlash, while consecutive-dream and caster-death damage are resolved separately. Borrowed authorization ends at dawn. Borrowed shelter checks consecutive nights using the inherited previous target and actual night number; your use does not change the Count’s record. Borrowed dream inherits the owner’s previous dream target and actual night number. Repeating that target on consecutive nights is allowed and causes consecutive-dream damage; you cannot dream yourself.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: speak. Complete one speech action for your last words. Allowed submissions: speak, report_bug. Effective game actions: speak.\nAction arguments: speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t17, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t17. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak",
+          "args": {
+            "text": "Words"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Words\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 18,
+      "kind": "event",
+      "day": 1,
+      "phase": "night",
+      "stage": "night",
+      "request_id": "1-night-10-event-1",
+      "timestamp": "2026-10-11T18:23:16.149Z",
+      "source_event_seq": 1,
+      "event": {
+        "seq": 1,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "night",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 19,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day",
+      "request_id": "1-day-10-event-2",
+      "timestamp": "2026-10-11T18:23:16.213Z",
+      "source_event_seq": 2,
+      "event": {
+        "seq": 2,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "day",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 20,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_nomination_summary",
+      "request_id": "1-day-10-event-3",
+      "timestamp": "2026-10-11T18:23:16.242Z",
+      "source_event_seq": 3,
+      "event": {
+        "seq": 3,
+        "type": "sheriff_nomination_summary",
+        "payload": {
+          "candidates": [4]
+        }
+      }
+    },
+    {
+      "seq": 21,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-10-event-4",
+      "timestamp": "2026-10-11T18:23:16.245Z",
+      "source_event_seq": 4,
+      "event": {
+        "seq": 4,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 4,
+          "text": "Campaign"
+        }
+      }
+    },
+    {
+      "seq": 22,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_withdraw_summary",
+      "request_id": "1-day-10-event-5",
+      "timestamp": "2026-10-11T18:23:16.249Z",
+      "source_event_seq": 5,
+      "event": {
+        "seq": 5,
+        "type": "sheriff_withdraw_summary",
+        "payload": {
+          "withdrawn": []
+        }
+      }
+    },
+    {
+      "seq": 23,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff",
+      "request_id": "1-day-10-event-6",
+      "timestamp": "2026-10-11T18:23:16.249Z",
+      "source_event_seq": 6,
+      "event": {
+        "seq": 6,
+        "type": "sheriff_candidates_finalized",
+        "payload": {
+          "candidates": [4]
+        }
+      }
+    },
+    {
+      "seq": 24,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_vote_summary",
+      "request_id": "1-day-10-event-7",
+      "timestamp": "2026-10-11T18:23:16.249Z",
+      "source_event_seq": 7,
+      "event": {
+        "seq": 7,
+        "type": "sheriff_vote_summary",
+        "payload": {
+          "votes": [],
+          "winnerId": 4,
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 25,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "night_resolved",
+      "request_id": "1-day-10-event-8",
+      "timestamp": "2026-10-11T18:23:16.249Z",
+      "source_event_seq": 8,
+      "event": {
+        "seq": 8,
+        "type": "night_resolved",
+        "payload": {
+          "deaths": [2]
+        }
+      }
+    },
+    {
+      "seq": 26,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "last_words_granted",
+      "request_id": "1-day-10-event-9",
+      "timestamp": "2026-10-11T18:23:16.249Z",
+      "source_event_seq": 9,
+      "event": {
+        "seq": 9,
+        "type": "last_words_granted",
+        "payload": {
+          "playerId": 2,
+          "phase": "day",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 27,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "last_words_spoken",
+      "request_id": "1-day-10-event-10",
+      "timestamp": "2026-10-11T18:23:16.253Z",
+      "source_event_seq": 10,
+      "event": {
+        "seq": 10,
+        "type": "last_words_spoken",
+        "payload": {
+          "playerId": 2,
+          "phase": "day",
+          "day": 1,
+          "text": "Words"
+        }
+      }
+    },
+    {
+      "seq": 28,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "sheriff_direction_chosen",
+      "request_id": "1-day-10-event-11",
+      "timestamp": "2026-10-11T18:23:16.256Z",
+      "source_event_seq": 11,
+      "event": {
+        "seq": 11,
+        "type": "sheriff_direction_chosen",
+        "payload": {
+          "sheriffId": 4,
+          "direction": "clockwise"
+        }
+      }
+    },
+    {
+      "seq": 29,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-10-event-12",
+      "timestamp": "2026-10-11T18:23:16.259Z",
+      "source_event_seq": 12,
+      "event": {
+        "seq": 12,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 5,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 30,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-10-event-13",
+      "timestamp": "2026-10-11T18:23:16.263Z",
+      "source_event_seq": 13,
+      "event": {
+        "seq": 13,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 6,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 31,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-10-event-14",
+      "timestamp": "2026-10-11T18:23:16.266Z",
+      "source_event_seq": 14,
+      "event": {
+        "seq": 14,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 7,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 32,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-10-event-15",
+      "timestamp": "2026-10-11T18:23:16.269Z",
+      "source_event_seq": 15,
+      "event": {
+        "seq": 15,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 8,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 33,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-10-event-16",
+      "timestamp": "2026-10-11T18:23:16.273Z",
+      "source_event_seq": 16,
+      "event": {
+        "seq": 16,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 9,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 34,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-10-event-17",
+      "timestamp": "2026-10-11T18:23:16.278Z",
+      "source_event_seq": 17,
+      "event": {
+        "seq": 17,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 10,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 35,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-10-event-18",
+      "timestamp": "2026-10-11T18:23:16.285Z",
+      "source_event_seq": 18,
+      "event": {
+        "seq": 18,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 11,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 36,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-10-event-19",
+      "timestamp": "2026-10-11T18:23:16.294Z",
+      "source_event_seq": 19,
+      "event": {
+        "seq": 19,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 12,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 37,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-10-event-20",
+      "timestamp": "2026-10-11T18:23:16.298Z",
+      "source_event_seq": 20,
+      "event": {
+        "seq": 20,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 1,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 38,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-10-event-21",
+      "timestamp": "2026-10-11T18:23:16.302Z",
+      "source_event_seq": 21,
+      "event": {
+        "seq": 21,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 3,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 39,
+      "kind": "event",
+      "day": 1,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "1-day-10-event-22",
+      "timestamp": "2026-10-11T18:23:16.305Z",
+      "source_event_seq": 22,
+      "event": {
+        "seq": 22,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 4,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 40,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-10-event-23",
+      "timestamp": "2026-10-11T18:23:16.305Z",
+      "source_event_seq": 23,
+      "event": {
+        "seq": 23,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "voting",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 41,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-10-event-24",
+      "timestamp": "2026-10-11T18:23:16.332Z",
+      "source_event_seq": 24,
+      "event": {
+        "seq": 24,
+        "type": "vote_summary",
+        "payload": {
+          "votes": [
+            {
+              "actorId": 1,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 3,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            },
+            {
+              "actorId": 4,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1.5
+            },
+            {
+              "actorId": 5,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 6,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 7,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 8,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 9,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 10,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 11,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 12,
+              "targetId": 3,
+              "abstain": false,
+              "weight": 1
+            }
+          ],
+          "target": 3,
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 42,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "1-voting-10-event-25",
+      "timestamp": "2026-10-11T18:23:16.332Z",
+      "source_event_seq": 25,
+      "event": {
+        "seq": 25,
+        "type": "voted_out",
+        "payload": {
+          "target": 3
+        }
+      }
+    },
+    {
+      "seq": 43,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "last_words_granted",
+      "request_id": "1-voting-10-event-26",
+      "timestamp": "2026-10-11T18:23:16.332Z",
+      "source_event_seq": 26,
+      "event": {
+        "seq": 26,
+        "type": "last_words_granted",
+        "payload": {
+          "playerId": 3,
+          "phase": "voting",
+          "day": 1
+        }
+      }
+    },
+    {
+      "seq": 44,
+      "kind": "event",
+      "day": 1,
+      "phase": "voting",
+      "stage": "last_words_spoken",
+      "request_id": "1-voting-10-event-27",
+      "timestamp": "2026-10-11T18:23:16.336Z",
+      "source_event_seq": 27,
+      "event": {
+        "seq": 27,
+        "type": "last_words_spoken",
+        "payload": {
+          "playerId": 3,
+          "phase": "voting",
+          "day": 1,
+          "text": "Words"
+        }
+      }
+    },
+    {
+      "seq": 45,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "night",
+      "request_id": "2-night-10-event-28",
+      "timestamp": "2026-10-11T18:23:16.338Z",
+      "source_event_seq": 28,
+      "event": {
+        "seq": 28,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "night",
+          "day": 2
+        }
+      }
+    },
+    {
+      "seq": 46,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "ability_changed",
+      "request_id": "2-night-10-event-29",
+      "timestamp": "2026-10-11T18:23:16.342Z",
+      "source_event_seq": 29,
+      "event": {
+        "seq": 29,
+        "type": "ability_changed",
+        "payload": {
+          "actorId": 10,
+          "abilityId": "copy:eclipse:night:2",
+          "kind": "potion",
+          "operation": "granted",
+          "source": {
+            "kind": "copy",
+            "actorId": 7,
+            "abilityId": "native:potion"
+          },
+          "startsOnDay": 2,
+          "expiresAfterDay": 2,
+          "maxUses": null
+        }
+      }
+    },
+    {
+      "seq": 47,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "eclipse_swallowed",
+      "request_id": "2-night-10-event-30",
+      "timestamp": "2026-10-11T18:23:16.342Z",
+      "source_event_seq": 30,
+      "event": {
+        "seq": 30,
+        "type": "eclipse_swallowed",
+        "payload": {
+          "actorId": 10,
+          "day": 2,
+          "targetId": 7,
+          "roleId": "witch",
+          "abilityId": "copy:eclipse:night:2"
+        }
+      }
+    },
+    {
+      "seq": 48,
+      "kind": "event",
+      "day": 2,
+      "phase": "night",
+      "stage": "witch",
+      "request_id": "2-night-10-event-31",
+      "timestamp": "2026-10-11T18:23:16.364Z",
+      "source_event_seq": 31,
+      "event": {
+        "seq": 31,
+        "type": "witch_potion_used",
+        "payload": {
+          "actorId": 10,
+          "abilityId": "copy:eclipse:night:2",
+          "targetId": 11,
+          "potionType": "poison"
+        }
+      }
+    },
+    {
+      "seq": 49,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day",
+      "request_id": "2-day-10-event-32",
+      "timestamp": "2026-10-11T18:23:16.368Z",
+      "source_event_seq": 32,
+      "event": {
+        "seq": 32,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "day",
+          "day": 2
+        }
+      }
+    },
+    {
+      "seq": 50,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "night_resolved",
+      "request_id": "2-day-10-event-33",
+      "timestamp": "2026-10-11T18:23:16.368Z",
+      "source_event_seq": 33,
+      "event": {
+        "seq": 33,
+        "type": "night_resolved",
+        "payload": {
+          "deaths": [6]
+        }
+      }
+    },
+    {
+      "seq": 51,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "sheriff_direction_chosen",
+      "request_id": "2-day-10-event-34",
+      "timestamp": "2026-10-11T18:23:16.373Z",
+      "source_event_seq": 34,
+      "event": {
+        "seq": 34,
+        "type": "sheriff_direction_chosen",
+        "payload": {
+          "sheriffId": 4,
+          "direction": "clockwise"
+        }
+      }
+    },
+    {
+      "seq": 52,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-10-event-35",
+      "timestamp": "2026-10-11T18:23:16.377Z",
+      "source_event_seq": 35,
+      "event": {
+        "seq": 35,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 5,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 53,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-10-event-36",
+      "timestamp": "2026-10-11T18:23:16.380Z",
+      "source_event_seq": 36,
+      "event": {
+        "seq": 36,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 7,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 54,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-10-event-37",
+      "timestamp": "2026-10-11T18:23:16.384Z",
+      "source_event_seq": 37,
+      "event": {
+        "seq": 37,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 8,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 55,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-10-event-38",
+      "timestamp": "2026-10-11T18:23:16.399Z",
+      "source_event_seq": 38,
+      "event": {
+        "seq": 38,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 9,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 56,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-10-event-39",
+      "timestamp": "2026-10-11T18:23:16.404Z",
+      "source_event_seq": 39,
+      "event": {
+        "seq": 39,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 10,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 57,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-10-event-40",
+      "timestamp": "2026-10-11T18:23:16.408Z",
+      "source_event_seq": 40,
+      "event": {
+        "seq": 40,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 11,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 58,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-10-event-41",
+      "timestamp": "2026-10-11T18:23:16.412Z",
+      "source_event_seq": 41,
+      "event": {
+        "seq": 41,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 12,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 59,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-10-event-42",
+      "timestamp": "2026-10-11T18:23:16.422Z",
+      "source_event_seq": 42,
+      "event": {
+        "seq": 42,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 1,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 60,
+      "kind": "event",
+      "day": 2,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "2-day-10-event-43",
+      "timestamp": "2026-10-11T18:23:16.426Z",
+      "source_event_seq": 43,
+      "event": {
+        "seq": 43,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 4,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 61,
+      "kind": "event",
+      "day": 2,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "2-voting-10-event-44",
+      "timestamp": "2026-10-11T18:23:16.426Z",
+      "source_event_seq": 44,
+      "event": {
+        "seq": 44,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "voting",
+          "day": 2
+        }
+      }
+    },
+    {
+      "seq": 62,
+      "kind": "event",
+      "day": 2,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "2-voting-10-event-45",
+      "timestamp": "2026-10-11T18:23:16.453Z",
+      "source_event_seq": 45,
+      "event": {
+        "seq": 45,
+        "type": "vote_summary",
+        "payload": {
+          "votes": [
+            {
+              "actorId": 1,
+              "targetId": 12,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 4,
+              "targetId": 12,
+              "abstain": false,
+              "weight": 1.5
+            },
+            {
+              "actorId": 5,
+              "targetId": 12,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 7,
+              "targetId": 12,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 8,
+              "targetId": 12,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 9,
+              "targetId": 12,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 10,
+              "targetId": 12,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 11,
+              "targetId": 12,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 12,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            }
+          ],
+          "target": 12,
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 63,
+      "kind": "event",
+      "day": 2,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "2-voting-10-event-46",
+      "timestamp": "2026-10-11T18:23:16.453Z",
+      "source_event_seq": 46,
+      "event": {
+        "seq": 46,
+        "type": "voted_out",
+        "payload": {
+          "target": 12
+        }
+      }
+    },
+    {
+      "seq": 64,
+      "kind": "event",
+      "day": 2,
+      "phase": "voting",
+      "stage": "last_words_granted",
+      "request_id": "2-voting-10-event-47",
+      "timestamp": "2026-10-11T18:23:16.453Z",
+      "source_event_seq": 47,
+      "event": {
+        "seq": 47,
+        "type": "last_words_granted",
+        "payload": {
+          "playerId": 12,
+          "phase": "voting",
+          "day": 2
+        }
+      }
+    },
+    {
+      "seq": 65,
+      "kind": "event",
+      "day": 2,
+      "phase": "voting",
+      "stage": "last_words_spoken",
+      "request_id": "2-voting-10-event-48",
+      "timestamp": "2026-10-11T18:23:16.457Z",
+      "source_event_seq": 48,
+      "event": {
+        "seq": 48,
+        "type": "last_words_spoken",
+        "payload": {
+          "playerId": 12,
+          "phase": "voting",
+          "day": 2,
+          "text": "Words"
+        }
+      }
+    },
+    {
+      "seq": 66,
+      "kind": "event",
+      "day": 3,
+      "phase": "night",
+      "stage": "night",
+      "request_id": "3-night-10-event-49",
+      "timestamp": "2026-10-11T18:23:16.458Z",
+      "source_event_seq": 49,
+      "event": {
+        "seq": 49,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "night",
+          "day": 3
+        }
+      }
+    },
+    {
+      "seq": 67,
+      "kind": "event",
+      "day": 3,
+      "phase": "night",
+      "stage": "ability_changed",
+      "request_id": "3-night-10-event-50",
+      "timestamp": "2026-10-11T18:23:16.464Z",
+      "source_event_seq": 50,
+      "event": {
+        "seq": 50,
+        "type": "ability_changed",
+        "payload": {
+          "actorId": 10,
+          "abilityId": "copy:eclipse:night:3",
+          "kind": "shelter",
+          "operation": "granted",
+          "source": {
+            "kind": "copy",
+            "actorId": 9,
+            "abilityId": "native:shelter"
+          },
+          "startsOnDay": 3,
+          "expiresAfterDay": 3,
+          "maxUses": null
+        }
+      }
+    },
+    {
+      "seq": 68,
+      "kind": "event",
+      "day": 3,
+      "phase": "night",
+      "stage": "eclipse_swallowed",
+      "request_id": "3-night-10-event-51",
+      "timestamp": "2026-10-11T18:23:16.464Z",
+      "source_event_seq": 51,
+      "event": {
+        "seq": 51,
+        "type": "eclipse_swallowed",
+        "payload": {
+          "actorId": 10,
+          "day": 3,
+          "targetId": 9,
+          "roleId": "radiant_count",
+          "abilityId": "copy:eclipse:night:3"
+        }
+      }
+    },
+    {
+      "seq": 69,
+      "kind": "event",
+      "day": 3,
+      "phase": "night",
+      "stage": "radiant_shelter_chosen",
+      "request_id": "3-night-10-event-52",
+      "timestamp": "2026-10-11T18:23:16.470Z",
+      "source_event_seq": 52,
+      "event": {
+        "seq": 52,
+        "type": "radiant_shelter_chosen",
+        "payload": {
+          "actorId": 10,
+          "day": 3,
+          "targetId": 4,
+          "abilityId": "copy:eclipse:night:3"
+        }
+      }
+    },
+    {
+      "seq": 70,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "day",
+      "request_id": "3-day-10-event-53",
+      "timestamp": "2026-10-11T18:23:16.496Z",
+      "source_event_seq": 53,
+      "event": {
+        "seq": 53,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "day",
+          "day": 3
+        }
+      }
+    },
+    {
+      "seq": 71,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "night_resolved",
+      "request_id": "3-day-10-event-54",
+      "timestamp": "2026-10-11T18:23:16.496Z",
+      "source_event_seq": 54,
+      "event": {
+        "seq": 54,
+        "type": "night_resolved",
+        "payload": {
+          "deaths": []
+        }
+      }
+    },
+    {
+      "seq": 72,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "sheriff_direction_chosen",
+      "request_id": "3-day-10-event-55",
+      "timestamp": "2026-10-11T18:23:16.527Z",
+      "source_event_seq": 55,
+      "event": {
+        "seq": 55,
+        "type": "sheriff_direction_chosen",
+        "payload": {
+          "sheriffId": 4,
+          "direction": "clockwise"
+        }
+      }
+    },
+    {
+      "seq": 73,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "3-day-10-event-56",
+      "timestamp": "2026-10-11T18:23:16.533Z",
+      "source_event_seq": 56,
+      "event": {
+        "seq": 56,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 5,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 74,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "3-day-10-event-57",
+      "timestamp": "2026-10-11T18:23:16.538Z",
+      "source_event_seq": 57,
+      "event": {
+        "seq": 57,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 7,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 75,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "3-day-10-event-58",
+      "timestamp": "2026-10-11T18:23:16.543Z",
+      "source_event_seq": 58,
+      "event": {
+        "seq": 58,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 8,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 76,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "3-day-10-event-59",
+      "timestamp": "2026-10-11T18:23:16.547Z",
+      "source_event_seq": 59,
+      "event": {
+        "seq": 59,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 9,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 77,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "3-day-10-event-60",
+      "timestamp": "2026-10-11T18:23:16.552Z",
+      "source_event_seq": 60,
+      "event": {
+        "seq": 60,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 10,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 78,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "3-day-10-event-61",
+      "timestamp": "2026-10-11T18:23:16.557Z",
+      "source_event_seq": 61,
+      "event": {
+        "seq": 61,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 11,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 79,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "3-day-10-event-62",
+      "timestamp": "2026-10-11T18:23:16.561Z",
+      "source_event_seq": 62,
+      "event": {
+        "seq": 62,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 1,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 80,
+      "kind": "event",
+      "day": 3,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "3-day-10-event-63",
+      "timestamp": "2026-10-11T18:23:16.566Z",
+      "source_event_seq": 63,
+      "event": {
+        "seq": 63,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 4,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 81,
+      "kind": "event",
+      "day": 3,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "3-voting-10-event-64",
+      "timestamp": "2026-10-11T18:23:16.566Z",
+      "source_event_seq": 64,
+      "event": {
+        "seq": 64,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "voting",
+          "day": 3
+        }
+      }
+    },
+    {
+      "seq": 82,
+      "kind": "event",
+      "day": 3,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "3-voting-10-event-65",
+      "timestamp": "2026-10-11T18:23:16.593Z",
+      "source_event_seq": 65,
+      "event": {
+        "seq": 65,
+        "type": "vote_summary",
+        "payload": {
+          "votes": [
+            {
+              "actorId": 1,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 4,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1.5
+            },
+            {
+              "actorId": 5,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 7,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 8,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 9,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 10,
+              "targetId": 11,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 11,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            }
+          ],
+          "target": 11,
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 83,
+      "kind": "event",
+      "day": 3,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "3-voting-10-event-66",
+      "timestamp": "2026-10-11T18:23:16.593Z",
+      "source_event_seq": 66,
+      "event": {
+        "seq": 66,
+        "type": "voted_out",
+        "payload": {
+          "target": 11
+        }
+      }
+    },
+    {
+      "seq": 84,
+      "kind": "event",
+      "day": 3,
+      "phase": "voting",
+      "stage": "last_words_granted",
+      "request_id": "3-voting-10-event-67",
+      "timestamp": "2026-10-11T18:23:16.593Z",
+      "source_event_seq": 67,
+      "event": {
+        "seq": 67,
+        "type": "last_words_granted",
+        "payload": {
+          "playerId": 11,
+          "phase": "voting",
+          "day": 3
+        }
+      }
+    },
+    {
+      "seq": 85,
+      "kind": "event",
+      "day": 3,
+      "phase": "voting",
+      "stage": "last_words_spoken",
+      "request_id": "3-voting-10-event-68",
+      "timestamp": "2026-10-11T18:23:16.598Z",
+      "source_event_seq": 68,
+      "event": {
+        "seq": 68,
+        "type": "last_words_spoken",
+        "payload": {
+          "playerId": 11,
+          "phase": "voting",
+          "day": 3,
+          "text": "Words"
+        }
+      }
+    },
+    {
+      "seq": 86,
+      "kind": "event",
+      "day": 4,
+      "phase": "night",
+      "stage": "night",
+      "request_id": "4-night-10-event-69",
+      "timestamp": "2026-10-11T18:23:16.599Z",
+      "source_event_seq": 69,
+      "event": {
+        "seq": 69,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "night",
+          "day": 4
+        }
+      }
+    },
+    {
+      "seq": 87,
+      "kind": "event",
+      "day": 4,
+      "phase": "night",
+      "stage": "ability_changed",
+      "request_id": "4-night-10-event-70",
+      "timestamp": "2026-10-11T18:23:16.604Z",
+      "source_event_seq": 70,
+      "event": {
+        "seq": 70,
+        "type": "ability_changed",
+        "payload": {
+          "actorId": 10,
+          "abilityId": "copy:eclipse:night:4",
+          "kind": "seer_check",
+          "operation": "granted",
+          "source": {
+            "kind": "copy",
+            "actorId": 8,
+            "abilityId": "native:seer_check"
+          },
+          "startsOnDay": 4,
+          "expiresAfterDay": 4,
+          "maxUses": null
+        }
+      }
+    },
+    {
+      "seq": 88,
+      "kind": "event",
+      "day": 4,
+      "phase": "night",
+      "stage": "eclipse_swallowed",
+      "request_id": "4-night-10-event-71",
+      "timestamp": "2026-10-11T18:23:16.604Z",
+      "source_event_seq": 71,
+      "event": {
+        "seq": 71,
+        "type": "eclipse_swallowed",
+        "payload": {
+          "actorId": 10,
+          "day": 4,
+          "targetId": 8,
+          "roleId": "seer",
+          "abilityId": "copy:eclipse:night:4"
+        }
+      }
+    },
+    {
+      "seq": 89,
+      "kind": "event",
+      "day": 4,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "4-night-10-event-72",
+      "timestamp": "2026-10-11T18:23:16.624Z",
+      "source_event_seq": 72,
+      "event": {
+        "seq": 72,
+        "type": "wolf_kill_vote_cast",
+        "payload": {
+          "actorId": 10,
+          "abstain": false,
+          "targetId": 4
+        }
+      }
+    },
+    {
+      "seq": 90,
+      "kind": "event",
+      "day": 4,
+      "phase": "night",
+      "stage": "seer",
+      "request_id": "4-night-10-event-73",
+      "timestamp": "2026-10-11T18:23:16.663Z",
+      "source_event_seq": 73,
+      "event": {
+        "seq": 73,
+        "type": "seer_checked",
+        "payload": {
+          "actorId": 10,
+          "abilityId": "copy:eclipse:night:4",
+          "targetId": 9,
+          "isWerewolf": false,
+          "result": {
+            "kind": "camp",
+            "camp": "good"
+          }
+        }
+      }
+    },
+    {
+      "seq": 91,
+      "kind": "event",
+      "day": 4,
+      "phase": "day",
+      "stage": "day",
+      "request_id": "4-day-10-event-74",
+      "timestamp": "2026-10-11T18:23:16.663Z",
+      "source_event_seq": 74,
+      "event": {
+        "seq": 74,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "day",
+          "day": 4
+        }
+      }
+    },
+    {
+      "seq": 92,
+      "kind": "event",
+      "day": 4,
+      "phase": "day",
+      "stage": "night_resolved",
+      "request_id": "4-day-10-event-75",
+      "timestamp": "2026-10-11T18:23:16.663Z",
+      "source_event_seq": 75,
+      "event": {
+        "seq": 75,
+        "type": "night_resolved",
+        "payload": {
+          "deaths": []
+        }
+      }
+    },
+    {
+      "seq": 93,
+      "kind": "event",
+      "day": 4,
+      "phase": "day",
+      "stage": "sheriff_direction_chosen",
+      "request_id": "4-day-10-event-76",
+      "timestamp": "2026-10-11T18:23:16.687Z",
+      "source_event_seq": 76,
+      "event": {
+        "seq": 76,
+        "type": "sheriff_direction_chosen",
+        "payload": {
+          "sheriffId": 4,
+          "direction": "clockwise"
+        }
+      }
+    },
+    {
+      "seq": 94,
+      "kind": "event",
+      "day": 4,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "4-day-10-event-77",
+      "timestamp": "2026-10-11T18:23:16.692Z",
+      "source_event_seq": 77,
+      "event": {
+        "seq": 77,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 5,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 95,
+      "kind": "event",
+      "day": 4,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "4-day-10-event-78",
+      "timestamp": "2026-10-11T18:23:16.697Z",
+      "source_event_seq": 78,
+      "event": {
+        "seq": 78,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 7,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 96,
+      "kind": "event",
+      "day": 4,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "4-day-10-event-79",
+      "timestamp": "2026-10-11T18:23:16.703Z",
+      "source_event_seq": 79,
+      "event": {
+        "seq": 79,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 8,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 97,
+      "kind": "event",
+      "day": 4,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "4-day-10-event-80",
+      "timestamp": "2026-10-11T18:23:16.708Z",
+      "source_event_seq": 80,
+      "event": {
+        "seq": 80,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 9,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 98,
+      "kind": "event",
+      "day": 4,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "4-day-10-event-81",
+      "timestamp": "2026-10-11T18:23:16.722Z",
+      "source_event_seq": 81,
+      "event": {
+        "seq": 81,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 10,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 99,
+      "kind": "event",
+      "day": 4,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "4-day-10-event-82",
+      "timestamp": "2026-10-11T18:23:16.727Z",
+      "source_event_seq": 82,
+      "event": {
+        "seq": 82,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 1,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 100,
+      "kind": "event",
+      "day": 4,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "4-day-10-event-83",
+      "timestamp": "2026-10-11T18:23:16.740Z",
+      "source_event_seq": 83,
+      "event": {
+        "seq": 83,
+        "type": "day_speech",
+        "payload": {
+          "actorId": 4,
+          "text": "Speech"
+        }
+      }
+    },
+    {
+      "seq": 101,
+      "kind": "event",
+      "day": 4,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "4-voting-10-event-84",
+      "timestamp": "2026-10-11T18:23:16.740Z",
+      "source_event_seq": 84,
+      "event": {
+        "seq": 84,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "voting",
+          "day": 4
+        }
+      }
+    },
+    {
+      "seq": 102,
+      "kind": "event",
+      "day": 4,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "4-voting-10-event-85",
+      "timestamp": "2026-10-11T18:23:16.813Z",
+      "source_event_seq": 85,
+      "event": {
+        "seq": 85,
+        "type": "vote_summary",
+        "payload": {
+          "votes": [
+            {
+              "actorId": 1,
+              "targetId": 10,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 4,
+              "targetId": 10,
+              "abstain": false,
+              "weight": 1.5
+            },
+            {
+              "actorId": 5,
+              "targetId": 10,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 7,
+              "targetId": 10,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 8,
+              "targetId": 10,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 9,
+              "targetId": 10,
+              "abstain": false,
+              "weight": 1
+            },
+            {
+              "actorId": 10,
+              "targetId": null,
+              "abstain": true,
+              "weight": 0
+            }
+          ],
+          "target": 10,
+          "round": 1
+        }
+      }
+    },
+    {
+      "seq": 103,
+      "kind": "event",
+      "day": 4,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "4-voting-10-event-86",
+      "timestamp": "2026-10-11T18:23:16.813Z",
+      "source_event_seq": 86,
+      "event": {
+        "seq": 86,
+        "type": "voted_out",
+        "payload": {
+          "target": 10
+        }
+      }
+    },
+    {
+      "seq": 104,
+      "kind": "event",
+      "day": 4,
+      "phase": "voting",
+      "stage": "last_words_granted",
+      "request_id": "4-voting-10-event-87",
+      "timestamp": "2026-10-11T18:23:16.813Z",
+      "source_event_seq": 87,
+      "event": {
+        "seq": 87,
+        "type": "last_words_granted",
+        "payload": {
+          "playerId": 10,
+          "phase": "voting",
+          "day": 4
+        }
+      }
+    },
+    {
+      "seq": 105,
+      "kind": "event",
+      "day": 4,
+      "phase": "voting",
+      "stage": "last_words_spoken",
+      "request_id": "4-voting-10-event-88",
+      "timestamp": "2026-10-11T18:23:16.820Z",
+      "source_event_seq": 88,
+      "event": {
+        "seq": 88,
+        "type": "last_words_spoken",
+        "payload": {
+          "playerId": 10,
+          "phase": "voting",
+          "day": 4,
+          "text": "Words"
+        }
+      }
+    },
+    {
+      "seq": 106,
+      "kind": "event",
+      "day": 4,
+      "phase": "game_over",
+      "stage": "game_over",
+      "request_id": "4-game_over-10-event-89",
+      "timestamp": "2026-10-11T18:23:16.820Z",
+      "source_event_seq": 89,
+      "event": {
+        "seq": 89,
+        "type": "phase_changed",
+        "payload": {
+          "phase": "game_over",
+          "day": 4,
+          "winner": "good",
+          "reason": "all_wolves_eliminated",
+          "outcome": {
+            "kind": "victory",
+            "primary": {
+              "kind": "faction",
+              "faction": "good",
+              "winningPlayerIds": [1, 4, 5, 6, 7, 8, 9, 12]
+            },
+            "additional": [],
+            "winningPlayerIds": [1, 4, 5, 6, 7, 8, 9, 12]
+          },
+          "decidedAt": {
+            "day": 4,
+            "phase": "voting",
+            "checkpoint": "exile_settled"
+          }
+        }
+      }
+    },
+    {
+      "seq": 107,
+      "kind": "event",
+      "day": 4,
+      "phase": "game_over",
+      "stage": "game_over",
+      "request_id": "4-game_over-10-event-90",
+      "timestamp": "2026-10-11T18:23:16.820Z",
+      "source_event_seq": 90,
+      "event": {
+        "seq": 90,
+        "type": "game_over",
+        "payload": {
+          "winner": "good",
+          "reason": "all_wolves_eliminated",
+          "outcome": {
+            "kind": "victory",
+            "primary": {
+              "kind": "faction",
+              "faction": "good",
+              "winningPlayerIds": [1, 4, 5, 6, 7, 8, 9, 12]
+            },
+            "additional": [],
+            "winningPlayerIds": [1, 4, 5, 6, 7, 8, 9, 12]
+          },
+          "decidedAt": {
+            "day": 4,
+            "phase": "voting",
+            "checkpoint": "exile_settled"
+          }
+        }
+      }
+    }
+  ]
+}
