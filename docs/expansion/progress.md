@@ -634,3 +634,7 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 ## P9d 受限观察固定种子接续
 
 50固定seed两语100真实完整局自然结束、零拒绝/回退且逐局严格Tape；消费/保留/后夜消费及保守弃刀抽刀群体覆盖已审查，见[观察模拟](reviews/p9-mist-raven-observed-simulation.md)。额外seed6只做重复摘要，未夸大严格重放数量。接续实际前端fixtures/私有与非owner视角/逐帧seek/Chromium，角色planned、44/64不变，其余P9d–P10继续，不推送。
+
+## P9d 迷雾鸦影前端功能接续
+
+26实际完成局生成26 replay/CP与104真实玩家档；138新单测、666前端全量、34两语Chromium通过，私有最小frame、夜公告、双徽/并行败选原刀口/末狼与精确seek证据见[前端验收](reviews/p9-mist-raven-frontend.md)。工作台仍God-only，未将席位过滤冒充权限。当前正式44/64仍保留，随后登记与同源全支持门禁，余P9d–P10继续，不推送。

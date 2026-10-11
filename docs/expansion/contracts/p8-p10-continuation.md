@@ -158,3 +158,7 @@ runner逐请求预算与资源关闭快照提交 `ea5ebf2`；本批新角色80�
 ## P9d 受限观察固定种子接续
 
 50固定seed两语100局完成实际录制与严格重放；DTO隔离、有效消费/保留/后夜计数、全弃刀与第2夜抽刀群体证据见[观察模拟](../reviews/p9-mist-raven-observed-simulation.md)。下一步真实前端fixture和God/owner/非owner授权、frame/seek/Chromium，不能把当前God工作台席位筛选称作玩家视角。角色planned、44/64仍保持，所有后续任务继续。
+
+## P9d 迷雾鸦影前端功能接续
+
+真实God/owner/非owner档、公告和双徽字面状态、逐事件frame及exact seek完成；26God+6最小private+2双徽浏览器全绿，前端全量666项，见[前端功能](../reviews/p9-mist-raven-frontend.md)。当前仍44/64，角色登记与同源支持范围门禁立即接续；God-only导入边界与其余P9d–P10任务保持。

@@ -1,4 +1,5 @@
-import { readFile, rm } from "node:fs/promises";
+import { readFile, rm, mkdir, copyFile, writeFile } from "node:fs/promises";
+import path from "node:path";
 import { bootstrapGame } from "../../src/app/bootstrap";
 import {
   ActionWindow,
@@ -311,9 +312,10 @@ export function mistRecording(
   locale: "en" | "zh-CN" = "en",
   seed = "mist-raven-real-runtime",
   observe?: (observation: MistRequestObservation) => void,
+  artifactDirectory?: string,
 ): Promise<ReproductionRecord> {
   const key = variant + locale + seed;
-  if (!observe && cache.has(key)) return cache.get(key)!;
+  if (!observe && !artifactDirectory && cache.has(key)) return cache.get(key)!;
   const run = (async () => {
     const board = await mistBoard(),
       config = board.config;
@@ -429,11 +431,33 @@ export function mistRecording(
       const replay = await replayReproduction(record, root);
       if (JSON.stringify(replay.snapshot) !== JSON.stringify(record.checkpoints.at(-1)!.snapshot))
         throw new Error("mist_fixture_replay_changed_snapshot");
+      if (artifactDirectory) {
+        const name = `mist-manual-${variant}-${locale}`;
+        await mkdir(path.join(artifactDirectory, "player-views"), { recursive: true });
+        await copyFile(
+          path.join(manager.sessionDir, "replay.json"),
+          path.join(artifactDirectory, name + ".replay.json"),
+        );
+        await writeFile(
+          path.join(artifactDirectory, name + ".checkpoint.txt"),
+          JSON.stringify(record.checkpoints.at(-1), null, 2) + "\n",
+        );
+        for (const [label, actor] of [
+          ["alchemist", 1],
+          ["raven", 9],
+          ["pack", 10],
+          ["villager", 5],
+        ] as const)
+          await copyFile(
+            path.join(manager.sessionDir, `players/player_${actor}.json`),
+            path.join(artifactDirectory, "player-views", `${name}-${label}.player.json`),
+          );
+      }
       return record;
     } finally {
       await rm(root, { recursive: true, force: true });
     }
   })();
-  if (!observe) cache.set(key, run);
+  if (!observe && !artifactDirectory) cache.set(key, run);
   return run;
 }

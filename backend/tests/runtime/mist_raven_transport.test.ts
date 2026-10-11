@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test";
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
 import { mistTransportScenario } from "../support/mist_raven_transport_scenarios";
 import { runTransportGame } from "../support/run_transport_game";
 for (const variant of ["linked", "saved-dreamer", "protected-heal", "draw"] as const)
@@ -36,6 +38,33 @@ for (const variant of ["linked", "saved-dreamer", "protected-heal", "draw"] as c
           expect(
             view.timeline.some((t) => t.kind === "event" && t.event.type === "raven_unsealed"),
           ).toBe(view.player_id === scenario.raven);
+        }
+        if (kind === "llm" && process.env.AWA_MIST_RAVEN_FIXTURES) {
+          const directory = process.env.AWA_MIST_RAVEN_FIXTURES;
+          await mkdir(path.join(directory, "player-views"), { recursive: true });
+          const name = `mist-normal-${variant}-${locale}`;
+          await writeFile(
+            path.join(directory, name + ".replay.json"),
+            JSON.stringify(run.replay, null, 2) + "\n",
+          );
+          await writeFile(
+            path.join(directory, name + ".checkpoint.txt"),
+            JSON.stringify(run.record.checkpoints.at(-1), null, 2) + "\n",
+          );
+          for (const [label, actor] of [
+            ["alchemist", scenario.alchemist],
+            ["raven", scenario.raven],
+            ["pack", 5],
+            ["villager", 2],
+          ] as const)
+            await writeFile(
+              path.join(directory, "player-views", `${name}-${label}.player.json`),
+              JSON.stringify(
+                run.views.find((v) => v.player_id === actor),
+                null,
+                2,
+              ) + "\n",
+            );
         }
       }
       expect(runs[0]!.result).toEqual(runs[1]!.result);

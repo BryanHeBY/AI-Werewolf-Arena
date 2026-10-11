@@ -1,0 +1,525 @@
+{
+  "cycle": 3,
+  "complete": true,
+  "snapshot": {
+    "day": 3,
+    "phase": "game_over",
+    "gameOver": true,
+    "result": {
+      "winner": "good",
+      "reason": "all_wolves_eliminated",
+      "outcome": {
+        "kind": "victory",
+        "primary": {
+          "kind": "faction",
+          "faction": "good",
+          "winningPlayerIds": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        "additional": [],
+        "winningPlayerIds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "decidedAt": {
+        "day": 3,
+        "phase": "voting",
+        "checkpoint": "exile_settled"
+      }
+    }
+  },
+  "players": [
+    {
+      "id": 1,
+      "seat": 1,
+      "name": "玩家1",
+      "role": "alchemist",
+      "camp": "good",
+      "alive": true,
+      "privateState": {
+        "alchemist": {
+          "policy": "awa_mist_raven_v1",
+          "mistRemaining": 0,
+          "healRemaining": 0,
+          "mistHistory": [
+            {
+              "day": 1,
+              "targetIds": [
+                5,
+                6,
+                11
+              ]
+            }
+          ],
+          "healHistory": [
+            {
+              "day": 1,
+              "targetId": null
+            },
+            {
+              "day": 2,
+              "targetId": null
+            },
+            {
+              "day": 3,
+              "targetId": 6
+            }
+          ]
+        }
+      },
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5,
+        "handoffPolicy": "awa_holder_choice_v1"
+      },
+      "marks": []
+    },
+    {
+      "id": 2,
+      "seat": 2,
+      "name": "玩家2",
+      "role": "seer",
+      "camp": "good",
+      "alive": true,
+      "privateState": {
+        "abilities": {
+          "native:seer_check": {
+            "id": "native:seer_check",
+            "kind": "seer_check",
+            "state": {
+              "lastTarget": 9,
+              "lastIsWerewolf": true,
+              "lastResult": {
+                "kind": "camp",
+                "camp": "wolf"
+              },
+              "history": [
+                {
+                  "targetId": 9,
+                  "isWerewolf": true,
+                  "result": {
+                    "kind": "camp",
+                    "camp": "wolf"
+                  }
+                },
+                {
+                  "targetId": 9,
+                  "isWerewolf": true,
+                  "result": {
+                    "kind": "camp",
+                    "camp": "wolf"
+                  }
+                },
+                {
+                  "targetId": 9,
+                  "isWerewolf": true,
+                  "result": {
+                    "kind": "camp",
+                    "camp": "wolf"
+                  }
+                }
+              ]
+            },
+            "source": {
+              "kind": "native",
+              "role": "seer"
+            },
+            "sourceDisclosed": true,
+            "startsOnDay": 1,
+            "maxUses": null,
+            "uses": 3,
+            "lastUsedDay": 3,
+            "disabled": false
+          }
+        }
+      },
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5,
+        "handoffPolicy": "awa_holder_choice_v1"
+      },
+      "marks": []
+    },
+    {
+      "id": 3,
+      "seat": 3,
+      "name": "玩家3",
+      "role": "dreamer",
+      "camp": "good",
+      "alive": false,
+      "privateState": {
+        "abilities": {
+          "native:dream": {
+            "id": "native:dream",
+            "kind": "dream",
+            "state": {
+              "lastTarget": 7,
+              "lastDay": 3,
+              "history": [
+                {
+                  "day": 1,
+                  "targetId": 8
+                },
+                {
+                  "day": 2,
+                  "targetId": 6
+                },
+                {
+                  "day": 3,
+                  "targetId": 7
+                }
+              ],
+              "protectionPolicy": "netease_2026_night_immunity_v1"
+            },
+            "source": {
+              "kind": "native",
+              "role": "dreamer"
+            },
+            "sourceDisclosed": true,
+            "startsOnDay": 1,
+            "maxUses": null,
+            "uses": 3,
+            "lastUsedDay": 3,
+            "disabled": false
+          }
+        }
+      },
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5,
+        "handoffPolicy": "awa_holder_choice_v1"
+      },
+      "marks": []
+    },
+    {
+      "id": 4,
+      "seat": 4,
+      "name": "玩家4",
+      "role": "idiot",
+      "camp": "good",
+      "alive": true,
+      "privateState": {
+        "idiot": {
+          "revealed": false
+        }
+      },
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5,
+        "handoffPolicy": "awa_holder_choice_v1"
+      },
+      "marks": []
+    },
+    {
+      "id": 5,
+      "seat": 5,
+      "name": "玩家5",
+      "role": "villager",
+      "camp": "good",
+      "alive": true,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5,
+        "handoffPolicy": "awa_holder_choice_v1"
+      },
+      "marks": []
+    },
+    {
+      "id": 6,
+      "seat": 6,
+      "name": "玩家6",
+      "role": "villager",
+      "camp": "good",
+      "alive": true,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1.5,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": true,
+        "destroyed": false,
+        "voteWeight": 1.5,
+        "handoffPolicy": "awa_holder_choice_v1"
+      },
+      "marks": []
+    },
+    {
+      "id": 7,
+      "seat": 7,
+      "name": "玩家7",
+      "role": "villager",
+      "camp": "good",
+      "alive": false,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5,
+        "handoffPolicy": "awa_holder_choice_v1"
+      },
+      "marks": []
+    },
+    {
+      "id": 8,
+      "seat": 8,
+      "name": "玩家8",
+      "role": "villager",
+      "camp": "good",
+      "alive": false,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5,
+        "handoffPolicy": "awa_holder_choice_v1"
+      },
+      "marks": []
+    },
+    {
+      "id": 9,
+      "seat": 9,
+      "name": "玩家9",
+      "role": "raven_claw_wolf",
+      "camp": "wolf",
+      "alive": false,
+      "privateState": {
+        "ravenClaw": {
+          "policy": "awa_mist_raven_v1",
+          "awakenedDay": 2,
+          "knownTeammateIds": [
+            12
+          ],
+          "extraRemaining": 0,
+          "extraHistory": [
+            {
+              "day": 2,
+              "targetId": null
+            },
+            {
+              "day": 3,
+              "targetId": 3
+            }
+          ]
+        }
+      },
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "wolf"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5,
+        "handoffPolicy": "awa_holder_choice_v1"
+      },
+      "marks": []
+    },
+    {
+      "id": 10,
+      "seat": 10,
+      "name": "玩家10",
+      "role": "wolf",
+      "camp": "wolf",
+      "alive": false,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "wolf"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": true,
+        "voteWeight": 1.5,
+        "handoffPolicy": "awa_holder_choice_v1"
+      },
+      "marks": []
+    },
+    {
+      "id": 11,
+      "seat": 11,
+      "name": "玩家11",
+      "role": "wolf",
+      "camp": "wolf",
+      "alive": false,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "wolf"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5,
+        "handoffPolicy": "awa_holder_choice_v1"
+      },
+      "marks": []
+    },
+    {
+      "id": 12,
+      "seat": 12,
+      "name": "玩家12",
+      "role": "wolf",
+      "camp": "wolf",
+      "alive": false,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "wolf"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5,
+        "handoffPolicy": "awa_holder_choice_v1"
+      },
+      "marks": []
+    }
+  ],
+  "eventCount": 114
+}
