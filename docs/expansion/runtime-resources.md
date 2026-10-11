@@ -115,3 +115,15 @@ Tape 是含牌面/privateState/完整请求的私有复现资料；错误证据�
 Runner 失败场景通过真实十二人阶段验证：一名等待、两名分别抛TypeError/RangeError；关闭释放空结果或合法迟到动作，都不能产生晚到提名验证。另叠加清理和最终写盘错误，四个原异常同时保留；关闭一次、决定无pending、失败Tape严格重放与无晚写均验证。并行放逐中取消后的本地retry也经独立审查验证无新模型、无计票终局、严格重放。
 
 本节完成A02的资源/混合/并发收尾门槛。M21日志开关的跨传输输出语义已专项核对，详见 [运行日志矩阵](runtime-display.md#p4-m21sdk--acp-日志开关)。G01–G04规则/权限基础已交付；后续角色与P10发布级长局/组合矩阵继续按路线推进。
+
+## P10 待执行的夹具与资源验收（2026-10-11）
+
+本节为追加验收要求，尚未登记为实现或通过。只读审查发现失败通路夹具当前把整局所有回合压到 1000ms，普通请求的初始化／排队可能先超时；历史串行复跑通过不足以证明某一次失败的根因。后续按两笔可构建边界落实：
+
+1. **精确失败回合**：普通回合保留 10000ms，仅字面计划中的 late 回合按 actor、day、stage、引擎请求序号收紧至 1000ms；与原请求及整局 deadline 取最早值，重试不刷新。选择器只属于该局测试依赖，不进入玩家 DTO／JSON 配置，不使用全局 spy。沿用 runner 唯一 deadline clone 和全部 authority inheritance。missing 走现有有限重试／prompt 完成失败，不普遍缩短正常请求。
+2. **到达与迟到证据**：late 夹具等待约 2200ms，睡前记录精确 actor/day/stage/ordinal/turnId/arrivalAt/mode；必须在 deadline 前实际到达指定回合，前置普通行动无 error/fallback。未到达不能当 late 成功。SDK 自建 timer/handler 必须 finally 取消或排空。加入普通 1.2–1.5 秒请求成功、同 actor/stage 前一夜不误收紧，以及 required retry 共用绝对截止时间的判例。
+3. **物理回收与迟到提交分开**：实际 ACP 游戏超时后会回收进程，迟到脚本未必能到达 MCP；只能据此声明指定请求到达、超时未生效与回收。另用测试持有的真实 stdio MCP 客户端，在 registry timeout/close 后提交原 turnId，核验结构化 turn_not_open_or_session_invalid、状态及库存不变，再关闭 MCP/监听器。不能为了迟到提交验收绕过游戏 owner 的进程回收。
+4. **合并资源证据**：每局关闭后 readonly runtimeState 的 scheduler active/queued、turn/registry pending、pool creating/sessions/retiring 均归零且 closed；另外核实真实 ACP/MCP/子孙进程 ESRCH、监听端口失联、真实 SDK HTTP abort、测试自建 timers 清理。逻辑零计数不代替物理证明。
+5. **长局与并行**：同进程连续长局逐局归零；同一 test 内完全 await Promise.all 两局，避免全局临时目录 afterEach 与 test.concurrent 相互清理。再在隔离进程保存预热后的 FD/子孙/RSS 趋势、录制字节及重放耗时。记录固定 seed、代码输入指纹、命令、首次失败与复跑。独立字面长局 oracle 要自然终局，现有 maxDays=8 的短脚本或 max_days 退出不能称完整长局；测试累计提示／日志内存也不能直接当生产泄漏。
+
+复用现有 acp_resource_ownership、mcp_control_ownership、llm_turn_budget、strict_mcp_wire、action_reception_transport 判例及同一 factory；不建立第二套资源管理框架。阶段全量保持源码不变，实施本节会另生成新源码门禁证据。真实模型 T6 仍遵守明确隔离配置和预算的授权边界。
