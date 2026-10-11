@@ -1,4 +1,5 @@
 import {
+  isNobleSecretBodyPreset,
   isTricksterPreset,
   isOrderPrincePreset,
   isScholarMentorPreset,
@@ -19,6 +20,16 @@ import { isDemonHunterPreset } from "./demon_hunter/preset";
 
 /** Shared finite-board eligibility for configuration checks and direct bootstrap callers. */
 export function boardPresetViolation(config: BoardConfig) {
+  if (
+    (config.nobleSecretBody ||
+      config.nightNoble ||
+      config.awakenedIdiot ||
+      config.roleSetups.some(
+        (row) => [Role.NightNoble, Role.AwakenedIdiot].includes(row.role) && row.count > 0,
+      )) &&
+    !isNobleSecretBodyPreset(config)
+  )
+    return "noble_secret_body_preset_invalid";
   if (
     (config.radiantEclipse ||
       config.roleSetups.some(

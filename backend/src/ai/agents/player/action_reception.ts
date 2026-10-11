@@ -1,3 +1,4 @@
+import { nobleBodyRequestScope } from "../../../game/mechanisms/roles/noble_secret_body/requests";
 import {
   demonWitchRequestTargetCurrent,
   demonWitchRequestCurrent,
@@ -214,6 +215,7 @@ export class ActionReception {
       lonelyGirlScope: lonelyGirlRequestScope(this.world, request),
       ghostBrideScope: ghostBrideRequestScope(this.world, request),
       demonHunterScope: demonHunterRequestScope(this.world, request),
+      nobleBodyScope: nobleBodyRequestScope(this.world, request),
       wildChildScope: wildChildRequestScope(this.world, request),
       wallScope: wallRequestScope(this.world, request),
       wallId: request.context.wall_id,

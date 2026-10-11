@@ -1,3 +1,4 @@
+import type { NobleSecretBodyPayloadMap } from "@ai-werewolf-arena/game-text";
 import type { RedMoonNextNightFact, RedMoonExpiryFact } from "@ai-werewolf-arena/game-text";
 import type {
   DemonHunterChoiceFact,
@@ -45,7 +46,7 @@ export interface ExileFeedback {
   result: Extract<InspectionResult, { kind: "camp" }>;
 }
 
-export interface EventPayloadMap {
+export interface EventPayloadMap extends NobleSecretBodyPayloadMap {
   eclipse_swallowed: {
     actorId: EntityId;
     day: number;
@@ -544,6 +545,12 @@ export type GameEvent = {
       | "eclipse_native_restored"
       | "eclipse_lease_closed"
       | "radiant_shelter_chosen"
+      | "noble_servant_chosen"
+      | "secret_body_chosen"
+      | "noble_contract_closed"
+      | "secret_body_blocked"
+      | "noble_night_notified"
+      | "secret_body_night_notified"
       | WolfTeamEventType
       | WeddingEventType
       | "alchemist_mist_chosen"

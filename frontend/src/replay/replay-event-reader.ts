@@ -1,3 +1,7 @@
+import {
+  NOBLE_SECRET_BODY_EVENT_TYPES,
+  readNobleSecretBodyFact,
+} from "@ai-werewolf-arena/game-text";
 import { RADIANT_ECLIPSE_EVENT_TYPES, readRadiantEclipseFact } from "@ai-werewolf-arena/game-text";
 import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
 import {
@@ -216,6 +220,7 @@ const NO_IDS = new Set([
   "god_private_game_info",
 ]);
 export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([
+  ...NOBLE_SECRET_BODY_EVENT_TYPES,
   ...RADIANT_ECLIPSE_EVENT_TYPES,
   ...MIST_RAVEN_EVENT_TYPES,
   "modifier_choice_committed",
@@ -280,6 +285,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if ((NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(type))
+    return !!readNobleSecretBodyFact(type, p);
   if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(type))
     return !!readRadiantEclipseFact(type, p);
   if ((MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(type))
@@ -491,6 +498,26 @@ export function readReplayEvent(
     };
     if (!KNOWN.has(safe.type)) return { event: safe, relatedPlayerIds: [], effects: [] };
     if (!validKnownFields(safe.type, p)) return null;
+    if ((NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(safe.type)) {
+      if (p.day !== safe.day) return null;
+      if (safe.type === "noble_contract_closed" && p.status === "target_dead") {
+        if (!["night", "day", "voting"].includes(safe.phase)) return null;
+      } else if (
+        safe.phase !==
+        (["secret_body_revealed", "secret_body_reveal_speech"].includes(safe.type)
+          ? "voting"
+          : "night")
+      )
+        return null;
+      add(p.actorId);
+      if (Object.hasOwn(p, "targetId")) add(p.targetId, true);
+      if (record(p.lastChoice)) add(p.lastChoice.targetId, true);
+      if (Array.isArray(p.contracts))
+        for (const c of p.contracts) {
+          if (!record(c)) return null;
+          add(c.targetId);
+        }
+    }
     if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(safe.type)) {
       const abortedClose = safe.type === "eclipse_lease_closed" && p.status === "aborted";
       // An API interruption can move the recorder cursor before this original night's cleanup.
@@ -669,6 +696,12 @@ export function readReplayEvent(
         camp: p.camp as string,
       });
     }
+    if (safe.type === "secret_body_revealed")
+      effects.push({
+        kind: "role_revealed",
+        playerId: p.actorId as number,
+        role: "awakened_idiot",
+      });
     if (safe.type === "order_prince_revote_started")
       effects.push({ kind: "role_revealed", playerId: p.actorId as number, role: "order_prince" });
     if (safe.type === "debater_revealed")

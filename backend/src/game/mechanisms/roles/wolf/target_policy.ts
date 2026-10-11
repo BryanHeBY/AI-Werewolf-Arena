@@ -1,3 +1,4 @@
+import { readNobleState } from "../noble_secret_body/state";
 import { getNightmareShadowState } from "../nightmare_shadow/state";
 import { isMistRavenBoard, mistKnifeTargets } from "../mist_raven/night_frame";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -9,6 +10,9 @@ export function wolfKnifeTargetAllowed(world: World, id: EntityId): boolean {
   const circle = isMistRavenBoard(world) ? mistKnifeTargets(world) : null;
   return (
     (circle === null || circle.includes(id)) &&
+    (world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role !== Role.NightNoble ||
+      readNobleState(world.getComponent<RoleComponent>(id, COMPONENT.Role)?.privateState.noble)
+        ?.wolfActionPolicy === "standard") &&
     world.getAliveEntityIds().includes(id) &&
     world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role !== Role.EvilKnight &&
     (world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role !== Role.NightmareShadow ||

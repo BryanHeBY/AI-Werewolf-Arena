@@ -17,6 +17,8 @@ export const DEMON_HUNTER_ROLE_PROFILE: RoleProfile = {
   canSelfDestruct: false,
   supportedWinConditions: [WinCondition.SlaughterCity, WinCondition.SlaughterSide],
   supportedBoardRoles: [
+    Role.NightNoble,
+    Role.AwakenedIdiot,
     Role.RedMoonApostle,
     Role.Idiot,
     Role.DemonHunter,

@@ -1,5 +1,6 @@
 /** Stable rule failures; human messages belong to game-text. */
 export enum RuleError {
+  NobleBodyUnavailable = "noble_body_unavailable",
   RadiantShelterUnavailable = "radiant_shelter_unavailable",
   RadiantShelterTarget = "radiant_shelter_target",
   EclipseSwallowUnavailable = "eclipse_swallow_unavailable",

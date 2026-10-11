@@ -15,6 +15,7 @@ export interface ValidationRuleContext {
   lonelyGirlScope?: object;
   ghostBrideScope?: object;
   demonHunterScope?: object;
+  nobleBodyScope?: object;
   wallScope?: object;
   wallId?: string;
   itemInstanceId?: string;

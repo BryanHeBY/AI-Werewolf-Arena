@@ -1,5 +1,44 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "role.night_noble.brief":
+    "夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。",
+  "role.awakened_idiot.brief":
+    "你有一份秘密之身。持有时每夜可选择存活玩家（含自己）或明确不指定；目标无有效夜伤时转护自己，只抵消一个有效来源。实际抵伤后身体耗尽，下一夜才统一告知是否耗身，不获知实际抵伤对象或来源。未耗身时免一次放逐，公开翻牌并发言，仍保留投票、竞选和警徽；下次可被放逐。连续目标限制依公开政策。",
+  "action.choose_servant.hint": "选择其他活人作为夜仆，或明确使用null空过。",
+  "action.choose_servant.directive": "用choose_servant提交一次选择。",
+  "action.protect_secret_body.hint": "选择名单内活人保护（可选自己），或用null仅保留自护机会。",
+  "action.protect_secret_body.directive": "用protect_secret_body提交一次保护选择。",
+  "error.noble_body_unavailable": "当前请求、阶段或目标不允许该行动。",
+  "stage.night_noble": "设置夜仆",
+  "stage.secret_body": "秘密之身保护",
+  "stage.awakened_idiot_reveal_speech": "活人翻牌发言",
+  "request.summary.secret_body_reveal": "角色已公开且仍存活；请完成一次翻牌发言。",
+  "prompt.status.noble": "你的已告知夜仆状态（隐藏终态延至下一夜）：{state}",
+  "prompt.status.secret_body": "你的已告知身体状态（夜间耗身延至下一夜告知）：{state}",
+  "prompt.config.noble_standard": "贵族可按普通狼人规则自爆、成为狼刀目标。",
+  "prompt.config.noble_restricted": "贵族不能自爆，任何狼刀都不能选择贵族；狼聊、刀票和互认保留。",
+  "prompt.config.body_nonconsecutive":
+    "秘密之身不能连续两夜主动指定同一人；明确null打断连续，自动自护不改主动目标。",
+  "prompt.config.body_repeat": "秘密之身允许连续主动保护同一人（AWA重复保护变体）。",
+  "event.noble_servant_chosen": "{actor}号第{day}夜选择夜仆：{target}。",
+  "event.secret_body_chosen": "{actor}号第{day}夜主动保护选择：{target}。",
+  "event.noble_contract_closed":
+    "[God] 第{day}夜／日夜仆契约{contract}结束，目标{target}，终态{status}。",
+  "event.secret_body_blocked": "[God] {actor}号第{day}夜消耗秘密之身，对{target}抵消来源{cause}。",
+  "event.noble_night_notified": "{actor}号第{day}夜获知自己的夜仆状态：{state}",
+  "event.secret_body_night_notified": "{actor}号第{day}夜获知身体状态：{resource}。",
+  "event.secret_body_revealed":
+    "{actor}号翻牌为觉醒愚者，消耗身体免除本次放逐；仍存活，投票与警徽资格保留。",
+  "event.secret_body_reveal_speech": "[活人翻牌发言][{actor}] {text}",
+  "replay.stage.noble_servant_chosen": "夜仆选择",
+  "replay.stage.secret_body_chosen": "秘密之身选择",
+  "replay.stage.noble_contract_closed": "夜仆契约终结",
+  "replay.stage.secret_body_blocked": "秘密之身抵伤",
+  "replay.stage.noble_night_notified": "夜仆状态通知",
+  "replay.stage.secret_body_night_notified": "身体状态通知",
+  "replay.stage.secret_body_revealed": "活人翻牌",
+  "replay.stage.secret_body_reveal_speech": "翻牌发言",
+
   "prompt.status.eclipse": "你的吞噬记录：{state}",
 
   "replay.stage.eclipse_swallowed": "吞噬原生技能",

@@ -36,6 +36,8 @@ export interface PlayerObservation {
   deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];
   ownState: {
+    nightNoble?: import("../../../game/mechanisms/roles/noble_secret_body/player_projection").NoblePlayerState;
+    secretBody?: import("../../../game/mechanisms/roles/noble_secret_body/player_projection").SecretBodyPlayerState;
     eclipse?: import("../../../game/mechanisms/roles/radiant_eclipse/state").EclipseState;
     alchemist?: import("../../../game/mechanisms/roles/mist_raven/player_projection").PlayerAlchemistState;
     ravenClaw?: import("../../../game/mechanisms/roles/mist_raven/player_projection").PlayerRavenState;

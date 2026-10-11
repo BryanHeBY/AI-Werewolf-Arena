@@ -10,6 +10,8 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  choose_servant: { target_id: EntityId | null };
+  protect_secret_body: { target_id: EntityId | null };
   cast_shelter: { target_id: EntityId | null };
   swallow_skill: { target_id: EntityId | null };
   cast_mist: { target_ids: EntityId[] | null };
@@ -81,6 +83,8 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "choose_servant",
+  "protect_secret_body",
   "cast_shelter",
   "swallow_skill",
   "cast_mist",
@@ -170,6 +174,9 @@ export interface TurnConstraints {
 }
 
 export const ACTION_STAGES = [
+  "night_noble",
+  "secret_body",
+  "awakened_idiot_reveal_speech",
   "radiant_shelter",
   "eclipse_swallow",
   "alchemist_mist",
@@ -246,6 +253,8 @@ export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */
 export interface ActionRequestExtras {
+  servant_candidates?: readonly EntityId[];
+  secret_body_candidates?: readonly EntityId[];
   shelter_candidates?: readonly EntityId[];
   swallow_candidates?: readonly EntityId[];
   mist_candidates?: readonly EntityId[];

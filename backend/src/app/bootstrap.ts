@@ -1,3 +1,4 @@
+import { installNobleBodyAuthority } from "../game/mechanisms/roles/noble_secret_body/authority";
 import { boardPresetViolation } from "../game/mechanisms/roles/board_presets";
 import { installRadiantEclipseBoard } from "../game/mechanisms/roles/radiant_eclipse/night_frame";
 import { installMistRavenBoard } from "../game/mechanisms/roles/mist_raven/night_frame";
@@ -24,6 +25,7 @@ import { createAliveComponent } from "../core/domain/components/alive";
 import { createBadgeComponent } from "../core/domain/components/badge";
 import { createCampComponent } from "../core/domain/components/camp";
 import { COMPONENT } from "../core/domain/components/names";
+import type { RoleComponent } from "../core/domain/components/role";
 import { createRoleComponent } from "../core/domain/components/role";
 import { createStatusMarksComponent } from "../core/domain/components/status_marks";
 import { createVotingRightComponent } from "../core/domain/components/voting_right";
@@ -176,6 +178,16 @@ function createPlayers(
   if (roles.includes(Role.OrderPrince)) installOrderPrinceBoard(world);
   if (roles.includes(Role.EvilKnight)) installEvilKnightBoard(world);
   if (roles.includes(Role.NightmareShadow)) installNightmareBoard(world);
+  if (config.nobleSecretBody)
+    installNobleBodyAuthority(
+      world,
+      ids.find(
+        (id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.NightNoble,
+      )!,
+      ids.find(
+        (id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.AwakenedIdiot,
+      )!,
+    );
   if (roles.includes(Role.DemonHunter)) installDemonHunter(world, config);
   if (roles.includes(Role.GhostBride)) installGhostBride(world, config);
   installWildChild(world, config);

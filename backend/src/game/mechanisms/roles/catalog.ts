@@ -1,3 +1,4 @@
+import { NIGHT_NOBLE_ROLE_PROFILE, AWAKENED_IDIOT_ROLE_PROFILE } from "./noble_secret_body/profile";
 import { SCHOLAR_ROLE_PROFILE, MENTOR_ROLE_PROFILE } from "./scholar_mentor/profile";
 import { ALCHEMIST_ROLE_PROFILE, RAVEN_CLAW_ROLE_PROFILE } from "./mist_raven/profile";
 import { TIME_CONSORT_ROLE_PROFILE } from "./time_wolf_consort/profile";
@@ -53,6 +54,8 @@ import { CUPID_ROLE_PROFILE } from "./cupid/profile";
 
 import { RADIANT_COUNT_ROLE_PROFILE, ECLIPSE_MAID_ROLE_PROFILE } from "./radiant_eclipse/profile";
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
+  NIGHT_NOBLE_ROLE_PROFILE,
+  AWAKENED_IDIOT_ROLE_PROFILE,
   RADIANT_COUNT_ROLE_PROFILE,
   ECLIPSE_MAID_ROLE_PROFILE,
   ALCHEMIST_ROLE_PROFILE,

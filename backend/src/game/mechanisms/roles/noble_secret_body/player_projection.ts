@@ -1,20 +1,8 @@
 import { Phase } from "../../../../core/domain/identity";
-import type { BodyRepeatPolicy, NightChoice, NobleWolfPolicy, ServantContract } from "./state";
+import type { NightChoice } from "./state";
 
-/** Knowledge contains no actual blocking target/cause or unannounced contract transition. */
-export interface SecretBodyKnowledge {
-  readonly protectionRepeatPolicy: BodyRepeatPolicy;
-  readonly lastNotifiedNight: number;
-  readonly resource: "intact" | "spent" | "exile_revealed";
-  readonly publicRevealDay: number | null;
-  readonly lastChoice: NightChoice | null;
-}
-export interface NobleKnowledge {
-  readonly wolfActionPolicy: NobleWolfPolicy;
-  readonly lastNotifiedNight: number;
-  readonly lastChoice: NightChoice | null;
-  readonly contracts: readonly ServantContract[];
-}
+import type { SecretBodyKnowledge, NobleKnowledge } from "@ai-werewolf-arena/game-text";
+export type { SecretBodyKnowledge, NobleKnowledge } from "@ai-werewolf-arena/game-text";
 export type SecretBodyPlayerState = Readonly<
   SecretBodyKnowledge & { awaitingNightReport: boolean }
 >;

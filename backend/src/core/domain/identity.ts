@@ -9,6 +9,8 @@ export enum Camp {
 }
 
 export enum Role {
+  NightNoble = "night_noble",
+  AwakenedIdiot = "awakened_idiot",
   RadiantCount = "radiant_count",
   EclipseMaid = "eclipse_maid",
   Alchemist = "alchemist",

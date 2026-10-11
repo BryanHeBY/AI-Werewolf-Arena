@@ -27,6 +27,7 @@ export interface ValidationContext {
   lonelyGirlScope?: object;
   ghostBrideScope?: object;
   demonHunterScope?: object;
+  nobleBodyScope?: object;
   wallScope?: object;
   wallId?: string;
   itemInstanceId?: string;
@@ -136,6 +137,7 @@ export class ActionValidator {
       lonelyGirlScope: context.lonelyGirlScope,
       ghostBrideScope: context.ghostBrideScope,
       demonHunterScope: context.demonHunterScope,
+      nobleBodyScope: context.nobleBodyScope,
       wallScope: context.wallScope,
       wallId: context.wallId,
       itemInstanceId: context.itemInstanceId,

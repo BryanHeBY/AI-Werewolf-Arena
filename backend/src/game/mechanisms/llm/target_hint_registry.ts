@@ -1,3 +1,4 @@
+import { nobleBodyChoiceTargets } from "../roles/noble_secret_body/authority";
 import {
   shelterTargets,
   eclipseSwallowTargets,
@@ -33,6 +34,8 @@ interface TargetRule {
  */
 export class DefaultTargetHintRegistry implements TargetHintRegistry {
   private readonly toolRules: Partial<Record<ToolName, TargetRule>> = {
+    choose_servant: { allowSelf: false },
+    protect_secret_body: { allowSelf: true },
     kill_vote: { allowSelf: false },
     fear: { allowSelf: false },
     swap_targets: { allowSelf: true },
@@ -64,6 +67,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
   };
 
   private readonly roleOverrides: Partial<Record<Role, Partial<Record<ToolName, TargetRule>>>> = {
+    [Role.NightNoble]: { kill_vote: { allowSelf: true } },
     [Role.Wolf]: {
       // 狼人策略中可允许自刀，提示层保留自己编号避免“无效 self target”误判。
       kill_vote: { allowSelf: true },
@@ -87,6 +91,25 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
   };
 
   buildActionableIdsHint(ctx: TargetHintContext): string | undefined {
+    if (
+      ctx.allowedTools.includes("choose_servant") ||
+      ctx.allowedTools.includes("protect_secret_body")
+    ) {
+      const ids = nobleBodyChoiceTargets(
+        ctx.world,
+        ctx.day ?? 1,
+        ctx.allowedTools.includes("choose_servant") ? "noble" : "body",
+      );
+      return ids.length
+        ? text(
+            ctx.world.locale,
+            ctx.allowedTools.includes("protect_secret_body")
+              ? "prompt.targets.self"
+              : "prompt.targets.others",
+            { ids: ids.join(", ") },
+          )
+        : text(ctx.world.locale, "prompt.targets.none");
+    }
     if (ctx.allowedTools.includes("cast_shelter") || ctx.allowedTools.includes("swallow_skill")) {
       const ids = ctx.allowedTools.includes("cast_shelter")
         ? shelterTargets(ctx.world, ctx.day ?? 1, ctx.actorId, ctx.abilityId!)

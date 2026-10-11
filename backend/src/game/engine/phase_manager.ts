@@ -1,3 +1,12 @@
+import {
+  abortNobleBodyNight,
+  expireServantAtNightEnd,
+  closeNobleBodyNight,
+  resolveSecretBodyDamage,
+  checkpointNobleBodyAuthority,
+} from "../mechanisms/roles/noble_secret_body/authority";
+import { appendNobleContractClosure } from "../mechanisms/roles/noble_secret_body/facts";
+import type { SecretBodySources } from "../mechanisms/roles/noble_secret_body/damage";
 import { hasRadiantNight } from "../mechanisms/roles/radiant_eclipse/night_frame";
 import {
   closeScholarMentorNight,
@@ -461,6 +470,7 @@ export class PhaseManager {
       isCurrent: nightIsCurrent,
     });
     if (night.interrupted || !nightIsCurrent()) {
+      if (this.config.nobleSecretBody) abortNobleBodyNight(this.world, nightDay);
       closeDemonHunterNight(this.world);
       closeWeddingNight(this.world);
       return this.getSnapshot();
@@ -533,6 +543,21 @@ export class PhaseManager {
             );
           }
         }
+        if (this.config.nobleSecretBody) {
+          if (demon?.hunt.servantCleared)
+            this.events.push({
+              timestamp: Date.now(),
+              type: "noble_contract_closed",
+              payload: demon.hunt.servantCleared,
+              audience: Object.freeze([]),
+            });
+          const expiry = expireServantAtNightEnd(this.world, nightDay);
+          if (expiry) {
+            appendNobleContractClosure(this.world, nightDay, expiry, this.events, Phase.Night);
+            (proposedSources[expiry.targetId] ??= []).push(DeathCause.ServantExpiry);
+          }
+          closeNobleBodyNight(this.world, nightDay, "normal");
+        }
         const deaths = Object.keys(proposedSources)
           .map(Number)
           .filter((id) => {
@@ -570,6 +595,43 @@ export class PhaseManager {
         );
         for (let i = deaths.length - 1; i >= 0; i--)
           if (!sources[deaths[i]!]!.length) deaths.splice(i, 1);
+        if (this.config.nobleSecretBody) {
+          const final = resolveSecretBodyDamage(this.world, nightDay, sources as SecretBodySources);
+          for (const id of Object.keys(sources)) delete sources[Number(id)];
+          for (const [id, causes] of Object.entries(final.sources))
+            sources[Number(id)] = causes.map((c) => c as DeathCause);
+          deaths.splice(0, deaths.length, ...Object.keys(sources).map(Number));
+          if (final.blocked) {
+            const actorId = checkpointNobleBodyAuthority(this.world, true).bodyId,
+              payload = {
+                policy: "awa_noble_secret_body_v1" as const,
+                actorId,
+                day: nightDay,
+                ...final.blocked,
+              };
+            this.events.push({
+              timestamp: Date.now(),
+              type: "secret_body_blocked",
+              payload,
+              audience: Object.freeze([]),
+            });
+            getSessionRecorder()?.recordRequiredLogicOp({
+              scope: "resolution",
+              op: "secret_body_blocked",
+              actorId,
+              phase: Phase.Night,
+              status: "ok",
+              output: payload,
+            });
+          }
+          safeRecordLogicOp({
+            scope: "resolution",
+            op: "night_damage_resolved",
+            phase: Phase.Night,
+            status: "ok",
+            output: { deaths: [...deaths], death_sources: sources },
+          });
+        }
         if (demon) {
           if (demon.hunt.cancelled)
             this.events.push({
@@ -699,6 +761,7 @@ export class PhaseManager {
         }
         if (this.checkAndSealResult("night_settled")) return this.getSnapshot();
       } finally {
+        if (this.config.nobleSecretBody) abortNobleBodyNight(this.world, nightDay);
         closeDemonHunterNight(this.world);
         closeWeddingNight(this.world);
       }

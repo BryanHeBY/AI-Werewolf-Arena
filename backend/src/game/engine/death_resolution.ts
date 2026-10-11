@@ -1,3 +1,8 @@
+import {
+  isNobleBodyBoard,
+  closeServantForDeath,
+} from "../mechanisms/roles/noble_secret_body/authority";
+import { appendNobleContractClosure } from "../mechanisms/roles/noble_secret_body/facts";
 import { assertMagicianRosterCurrent } from "../mechanisms/roles/magician/night_frame";
 import {
   isMagicianBoard,
@@ -742,6 +747,17 @@ export class DeathResolution {
       const firstSettlement = !this.isSettledLife(id);
       if (firstSettlement) recordWildChildDeathCommit(this.world, id);
       alive.alive = false;
+      if (firstSettlement && isNobleBodyBoard(this.world)) {
+        const closed = closeServantForDeath(this.world, this.state.day, id);
+        if (closed)
+          appendNobleContractClosure(
+            this.world,
+            this.state.day,
+            closed,
+            this.events,
+            this.state.phase,
+          );
+      }
       const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role;
       if (reveal && firstSettlement && isRoleId(role))
         this.events.push({

@@ -189,6 +189,8 @@ interface Night {
   bodyTarget: OriginalPlayer | null;
   bodyResolved: boolean;
   expiryProcessed: boolean;
+  revealOpened: boolean;
+  revealCompleted: boolean;
 }
 interface Owner {
   readonly world: World;
@@ -380,6 +382,8 @@ export function beginNobleBodyNight(
     bodyTarget: null,
     bodyResolved: false,
     expiryProcessed: false,
+    revealOpened: false,
+    revealCompleted: false,
   };
   owner.nights.set(day, night);
   owner.active = night;
@@ -685,13 +689,15 @@ export function getNobleBodyPlayerState(world: World, actorId: number, phase: Ph
     };
   return null;
 }
-export function snapshotNobleBodyAuthority(world: World) {
-  const owner = requireOwner(world);
+/** Failure checkpoints use only committed canonical snapshots, never replacement state. */
+export function checkpointNobleBodyAuthority(world: World, complete: boolean) {
+  const owner = complete ? requireOwner(world) : owners.get(world);
+  if (!owner) throw Error("noble_body_owner_unavailable");
   return {
     nobleId: owner.noble.id,
     bodyId: owner.body.id,
-    noble: readNobleState(owner.nobleState)!,
-    body: readSecretBodyState(owner.bodyState)!,
+    noble: JSON.parse(owner.nobleJson) as NobleState,
+    body: JSON.parse(owner.bodyJson) as SecretBodyState,
     knowledge: {
       noble: copyNobleKnowledge(owner.nobleKnowledge),
       body: copySecretBodyKnowledge(owner.bodyKnowledge),
@@ -708,6 +714,109 @@ export function snapshotNobleBodyAuthority(world: World) {
       nobleChosen: n.noble.committed,
       expiryProcessed: n.expiryProcessed,
       bodyResolved: n.bodyResolved,
+      revealOpened: n.revealOpened,
+      revealCompleted: n.revealCompleted,
     })),
   };
+}
+
+export function snapshotNobleBodyAuthority(world: World) {
+  return checkpointNobleBodyAuthority(world, true);
+}
+export function isNobleBodyBoard(world: World): boolean {
+  return owners.has(world);
+}
+export function assertNobleBodyRosterCurrent(world: World): void {
+  requireOwner(world);
+}
+export function nobleBodyChoiceActor(
+  world: World,
+  day: number,
+  kind: "body" | "noble",
+): number | null {
+  const { owner, night } = requireNight(world, day);
+  const lease = night[kind];
+  return (kind === "body" ? night.requiresBody : night.requiresNoble) &&
+    !lease.opened &&
+    !lease.committed &&
+    playerCurrent(world, owner[kind], true)
+    ? owner[kind].id
+    : null;
+}
+export function nobleBodyChoiceTargets(
+  world: World,
+  day: number,
+  kind: "body" | "noble",
+): readonly number[] {
+  const { owner, night } = requireNight(world, day);
+  if (
+    !(kind === "body" ? night.requiresBody : night.requiresNoble) ||
+    !playerCurrent(world, owner[kind], true)
+  )
+    throw Error("noble_body_choice_unavailable");
+  const last = owner.bodyState.lastChoice;
+  return Object.freeze(
+    [...owner.players.values()]
+      .filter(
+        (p) =>
+          playerCurrent(world, p, true) &&
+          (kind === "noble"
+            ? p.id !== owner.noble.id
+            : !(
+                owner.bodyState.protectionRepeatPolicy === "awa_nonconsecutive_nights_v1" &&
+                last?.day === day - 1 &&
+                last.targetId === p.id
+              )),
+      )
+      .map((p) => p.id),
+  );
+}
+
+export function abortNobleBodyNight(world: World, day: number): void {
+  const owner = owners.get(world),
+    night = owner?.nights.get(day);
+  if (night && (night.status === "open" || (night.status === "normal" && !night.bodyResolved)))
+    closeNobleBodyNight(world, day, "aborted");
+}
+
+export function openSecretBodyRevealSpeech(world: World, day: number, isCurrent: () => boolean) {
+  const owner = requireOwner(world),
+    night = owner.nights.get(day);
+  const valid = () => {
+    try {
+      requireOwner(world);
+      const available =
+        !owner.active &&
+        night?.status === "normal" &&
+        night.bodyResolved &&
+        !night.revealCompleted &&
+        ![...owner.nights.keys()].some((d) => d > day) &&
+        playerCurrent(world, owner.body, true) &&
+        owner.bodyState.body.kind === "exile_revealed" &&
+        owner.bodyState.body.day === day;
+      if (!available || !checkController(owner, isCurrent)) return false;
+      requireOwner(world);
+      return (
+        !owner.active &&
+        night.status === "normal" &&
+        !night.revealCompleted &&
+        playerCurrent(world, owner.body, true)
+      );
+    } catch {
+      return false;
+    }
+  };
+  if (!night || night.revealOpened || !valid())
+    throw Error("secret_body_reveal_speech_unavailable");
+  night.revealOpened = true;
+  return Object.freeze({
+    actorId: owner.body.id,
+    isCurrent: valid,
+    commit(text: string) {
+      if (!valid() || typeof text !== "string" || !text.trim() || text.length > 8192)
+        throw Error("secret_body_reveal_speech_unavailable");
+      night.revealCompleted = true;
+      return Object.freeze({ actorId: owner.body.id, day, text });
+    },
+  });
 }

@@ -1,3 +1,8 @@
+import {
+  NOBLE_SECRET_BODY_EVENT_TYPES,
+  readNobleSecretBodyFact,
+  nobleSecretBodyVisibility,
+} from "@ai-werewolf-arena/game-text";
 import { validateRadiantEclipseRecord } from "./radiant_eclipse_record";
 import {
   RADIANT_ECLIPSE_EVENT_TYPES,
@@ -705,6 +710,22 @@ const schema = z.strictObject({
           (!readModifierConflictFact(event.type, event.payload) || event.audience?.length !== 0)
         )
           ctx.addIssue({ code: "custom", message: "reproduction_modifier_conflict_invalid" });
+        if ((NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(event.type)) {
+          const fact = readNobleSecretBodyFact(event.type, event.payload),
+            visibility = nobleSecretBodyVisibility(event.type);
+          if (
+            !fact ||
+            (visibility === "god"
+              ? event.audience?.length !== 0
+              : visibility === "actor"
+                ? event.audience?.length !== 1 || event.audience[0] !== fact.actorId
+                : event.audience !== undefined)
+          )
+            ctx.addIssue({
+              code: "custom",
+              message: "reproduction_noble_secret_body_fact_invalid",
+            });
+        }
         if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(event.type)) {
           const fact = readRadiantEclipseFact(event.type, event.payload),
             expected = fact ? radiantEclipseAudience(event.type, fact) : null;
@@ -727,6 +748,7 @@ const schema = z.strictObject({
         }
         if (
           event.audience !== undefined &&
+          !(NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&

@@ -1,3 +1,4 @@
+import { readNobleSecretBodyFact } from "./noble-secret-body";
 import { readRadiantEclipseFact } from "./radiant-eclipse";
 import { readMistRavenFact } from "./mist-raven";
 import {
@@ -1185,4 +1186,38 @@ export function radiantEclipseEventLabel(
       ? { actor: fact.actorId }
       : { actor: fact.actorId, target: fact.targetId },
   );
+}
+
+export { isNobleSecretBodyPreset } from "./noble-secret-body-preset";
+
+export * from "./noble-secret-body";
+
+export function nobleSecretBodyEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale = "zh-CN",
+): string | null {
+  const f = readNobleSecretBodyFact(type, payload);
+  if (!f) return null;
+  const key = `event.${type}` as MessageKey;
+  if (type === "secret_body_revealed") return text(locale, key, { actor: f.actorId });
+  if ("text" in f) return text(locale, key, { actor: f.actorId, text: f.text });
+  if ("resource" in f)
+    return text(locale, key, { actor: f.actorId, day: f.day, resource: f.resource });
+  if ("contracts" in f)
+    return text(locale, key, { actor: f.actorId, day: f.day, state: JSON.stringify(f.contracts) });
+  if ("status" in f)
+    return text(locale, key, {
+      day: f.day,
+      contract: f.contractId,
+      target: f.targetId,
+      status: f.status,
+    });
+  if ("cause" in f)
+    return text(locale, key, { actor: f.actorId, day: f.day, target: f.targetId, cause: f.cause });
+  return text(locale, key, {
+    actor: f.actorId,
+    day: f.day,
+    target: ("targetId" in f ? f.targetId : null) ?? text(locale, "common.none"),
+  });
 }

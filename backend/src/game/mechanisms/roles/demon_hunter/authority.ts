@@ -1,3 +1,11 @@
+import { recordNobleContractClosure } from "../noble_secret_body/facts";
+import type { NobleContractClosedFact } from "@ai-werewolf-arena/game-text";
+import {
+  isNobleBodyBoard,
+  assertNobleBodyRosterCurrent,
+  checkpointNobleBodyAuthority,
+  clearServantFromHunt,
+} from "../noble_secret_body/authority";
 import { RED_MOON_ROLE, getRedMoonState } from "../red_moon_apostle/state";
 import { types } from "node:util";
 import {
@@ -54,6 +62,7 @@ interface Participant {
   lifeDescriptor: PropertyDescriptor;
   initialVersion: number;
   auditPrivateJson: string;
+  delegatedKey: "noble" | "secretBody" | null;
   checkpoint: {
     identity: object;
     seat: number;
@@ -272,6 +281,12 @@ function capture(world: World, id: number): Participant {
     victoryJson !== demonJson([{ kind: "faction", faction: camp }])
   )
     throw new Error("demon_hunter_original_player_invalid");
+  const delegatedKey =
+    isNobleBodyBoard(world) && kind === Role.NightNoble
+      ? "noble"
+      : isNobleBodyBoard(world) && kind === Role.AwakenedIdiot
+        ? "secretBody"
+        : null;
   const p: Participant = {
     id,
     role,
@@ -286,17 +301,57 @@ function capture(world: World, id: number): Participant {
     initialVersion: version,
     privateState: privateState as RoleComponent["privateState"],
     privateRefs: Object.entries(privateState),
-    inventoryRefs: inventoryReferences(privateState),
+    inventoryRefs: inventoryReferences(privateState).filter(
+      ([path]) => path.length === 1 || path[0] !== delegatedKey,
+    ),
+    delegatedKey,
     auditPrivateJson: privateJson,
     checkpoint: captureDemonCheckpointMetadata(world, id),
   };
   if (!originalLife(p, world, true)) throw new Error("demon_hunter_original_life_invalid");
   return p;
 }
+function delegatedCurrent(b: Binding): boolean {
+  if (!b.config.nobleSecretBody) return true;
+  try {
+    assertNobleBodyRosterCurrent(b.world);
+    const owned = checkpointNobleBodyAuthority(b.world, true);
+    return (
+      b.players.get(owned.nobleId)?.kind === Role.NightNoble &&
+      b.players.get(owned.bodyId)?.kind === Role.AwakenedIdiot
+    );
+  } catch {
+    return false;
+  }
+}
+/** The two native subtrees belong exclusively to their domain owner. Other private
+ * keys remain compared with the original synchronous Demon snapshot. */
+function privateAuditCurrent(b: Binding, p: Participant): boolean {
+  const current = demonJson(p.privateState);
+  if (!current) return false;
+  if (!p.delegatedKey) return current === p.auditPrivateJson;
+  if (!delegatedCurrent(b)) return false;
+  const actual = JSON.parse(current),
+    expected = JSON.parse(p.auditPrivateJson);
+  delete actual[p.delegatedKey];
+  delete expected[p.delegatedKey];
+  return JSON.stringify(actual) === JSON.stringify(expected);
+}
+function committedPrivate(b: Binding, p: Participant, complete = false): Record<string, unknown> {
+  const cached = JSON.parse(p.auditPrivateJson) as Record<string, unknown>;
+  if (p.delegatedKey) {
+    const owned = checkpointNobleBodyAuthority(b.world, complete);
+    if (p.id !== (p.delegatedKey === "noble" ? owned.nobleId : owned.bodyId))
+      throw Error("demon_hunter_delegated_actor_invalid");
+    cached[p.delegatedKey] = p.delegatedKey === "noble" ? owned.noble : owned.body;
+  }
+  return cached;
+}
 function validBinding(b: Binding): boolean {
   const state = readDemonHunterState(b.state);
   return (
     bindings.get(b.world) === b &&
+    delegatedCurrent(b) &&
     b.world.entityIds().length === b.players.size &&
     demonJson(b.config) === b.configJson &&
     !!state &&
@@ -312,6 +367,15 @@ function validBinding(b: Binding): boolean {
 export function installDemonHunter(world: World, config: BoardConfig): void {
   if (bindings.has(world)) throw new Error("demon_hunter_already_installed");
   assertDemonHunterPreset(config);
+  if (config.nobleSecretBody) {
+    if (!isNobleBodyBoard(world)) throw Error("demon_hunter_initial_state_invalid");
+    const owned = checkpointNobleBodyAuthority(world, true);
+    if (
+      ownDemonData(world.getComponent(owned.nobleId, COMPONENT.Role), "role") !== Role.NightNoble ||
+      ownDemonData(world.getComponent(owned.bodyId, COMPONENT.Role), "role") !== Role.AwakenedIdiot
+    )
+      throw Error("demon_hunter_initial_state_invalid");
+  }
   const players = new Map(world.entityIds().map((id) => [id, capture(world, id)])),
     actors = [...players.values()].filter((p) => String(p.kind) === DEMON_HUNTER_ROLE),
     actor = actors[0],
@@ -332,7 +396,9 @@ export function installDemonHunter(world: World, config: BoardConfig): void {
     [...players.values()].some(
       (p) =>
         p.camp !==
-        (p.kind === Role.Wolf || String(p.kind) === "red_moon_apostle" ? Camp.Wolf : Camp.Good),
+        ([Role.Wolf, Role.RedMoonApostle, Role.NightNoble].includes(p.kind)
+          ? Camp.Wolf
+          : Camp.Good),
     )
   )
     throw new Error("demon_hunter_initial_state_invalid");
@@ -641,6 +707,7 @@ export function committedDemonFaultBoundary(world: World): FaultDecisionBoundary
     : null;
 }
 export interface DemonHuntSettlement {
+  readonly servantCleared?: Readonly<NobleContractClosedFact>;
   readonly choice: Readonly<DemonHunterChoice> | null;
   readonly damage: Readonly<{
     targetId: number;
@@ -664,15 +731,21 @@ export function freezeDemonHunt(
   if (!n || n.closed || n.frozen) throw new Error("demon_hunter_freeze_unavailable");
   const choice = n.choice;
   if (n.requiresChoice && !choice) throw new Error("demon_hunter_required_choice_missing");
+  let servantCleared: DemonHuntSettlement["servantCleared"];
   let damage: DemonHuntSettlement["damage"] = null,
     cancelled: DemonHuntSettlement["cancelled"] = null;
   if (choice?.targetId !== null && choice) {
     if (liveNight(n) && targetCurrent(n, choice.targetId)) {
       const target = n.binding.players.get(choice.targetId)!;
-      damage = Object.freeze({
-        targetId: target.camp === Camp.Wolf ? target.id : n.binding.actorId,
-        cause: target.camp === Camp.Wolf ? "demon_hunt" : "demon_hunt_backlash",
-      });
+      const cleared = n.binding.config.nobleSecretBody
+        ? clearServantFromHunt(world, n.day, choice.targetId)
+        : null;
+      if (cleared) servantCleared = recordNobleContractClosure(world, n.day, cleared, Phase.Night);
+      if (!servantCleared)
+        damage = Object.freeze({
+          targetId: target.camp === Camp.Wolf ? target.id : n.binding.actorId,
+          cause: target.camp === Camp.Wolf ? "demon_hunt" : "demon_hunt_backlash",
+        });
     } else
       cancelled = Object.freeze({
         policy: DEMON_HUNTER_POLICY,
@@ -684,7 +757,12 @@ export function freezeDemonHunt(
       });
   }
   n.frozen = true;
-  return Object.freeze({ choice, damage, cancelled });
+  return Object.freeze({
+    choice,
+    damage,
+    cancelled,
+    ...(servantCleared ? { servantCleared } : {}),
+  });
 }
 export function closeDemonHunterNight(world: World): void {
   const b = bindings.get(world),
@@ -709,8 +787,9 @@ export function demonHunterAuditPlayer(
   world: World,
   id: number,
 ): Record<string, unknown> | undefined {
-  const p = bindings.get(world)?.players.get(id);
-  return p ? (JSON.parse(p.auditPrivateJson) as Record<string, unknown>) : undefined;
+  const b = bindings.get(world),
+    p = b?.players.get(id);
+  return b && p ? committedPrivate(b, p) : undefined;
 }
 export function demonHunterFreezeDay(world: World): number {
   const n = bindings.get(world)?.active;
@@ -800,7 +879,7 @@ export function openDemonWitchTurnFrame(world: World): Readonly<DemonWitchTurnFr
     n.isCurrent() &&
     validBinding(b) &&
     targetCurrent(n, p.id);
-  if (!current() || demonJson(p.privateState) !== p.auditPrivateJson) return null;
+  if (!current() || !privateAuditCurrent(b, p)) return null;
   const original = demonSnapshot(p.privateState) as Record<string, unknown>,
     abilities = ownDemonData(original, "abilities") as Record<string, unknown>,
     snapshot = ownDemonData(abilities, "native:potion") as Record<string, unknown>,
@@ -884,7 +963,7 @@ export function openDemonWitchTurnFrame(world: World): Readonly<DemonWitchTurnFr
       current() &&
       writable() &&
       demonJson(ability) === resetJson &&
-      demonJson(p.privateState) === p.auditPrivateJson,
+      privateAuditCurrent(b, p),
     targetCurrent: (id: number) => current() && targetCurrent(n, id),
     sourceCurrent: () => committed && current() && demonJson(p.privateState) === committedJson,
     commit: (potion: "heal" | "poison" | "none") => {
@@ -959,7 +1038,11 @@ export function demonOriginalWolfSourceCurrent(
     actorIds.length > 0 &&
     actorIds.every((id) => {
       const kind = n.binding.players.get(id)?.kind;
-      return (kind === Role.Wolf || kind === Role.RedMoonApostle) && targetCurrent(n, id);
+      return (
+        kind !== undefined &&
+        [Role.Wolf, Role.RedMoonApostle, Role.NightNoble].includes(kind) &&
+        targetCurrent(n, id)
+      );
     })
   );
 }
@@ -1170,7 +1253,7 @@ export function openDemonNativeNightFrame(
       n.isCurrent() &&
       validBinding(b) &&
       targetCurrent(n, actorId) &&
-      demonJson(p.privateState) === p.auditPrivateJson,
+      privateAuditCurrent(b, p),
     isCurrent: current,
     commitSeer: (targetId: number, result: unknown) =>
       kind === "seer_check" && commit(targetId, result),
@@ -1194,7 +1277,7 @@ export function openDemonHunterStockFrame(
     !validBinding(b) ||
     !originalLife(p, world) ||
     p.lifeDescriptor.get!.call(p.life) !== false ||
-    demonJson(p.privateState) !== p.auditPrivateJson ||
+    !privateAuditCurrent(b, p) ||
     !writableDemonFields(state, ["canShoot"])
   )
     throw new Error("demon_hunter_native_hunter_stock_revoked");
@@ -1244,9 +1327,7 @@ export function demonHunterCheckpointPlayers(world: World, complete: boolean) {
   if (
     complete &&
     (!validBinding(b) ||
-      ![...b.players.values()].every(
-        (p) => originalLife(p, world) && demonJson(p.privateState) === p.auditPrivateJson,
-      ))
+      ![...b.players.values()].every((p) => originalLife(p, world) && privateAuditCurrent(b, p)))
   )
     throw new Error("demon_hunter_checkpoint_original_state_revoked");
   return [...b.players.values()].map((p) => {
@@ -1282,7 +1363,7 @@ export function demonHunterCheckpointPlayers(world: World, complete: boolean) {
       role: p.kind,
       camp: p.camp,
       alive: p.lifeDescriptor.get!.call(p.life) === true,
-      privateState: JSON.parse(p.auditPrivateJson) as Record<string, unknown>,
+      privateState: committedPrivate(b, p, complete),
       victory: { affiliations: JSON.parse(p.victoryJson) as VictoryComponent["affiliations"] },
       vote: JSON.parse(cp.voteJson) as { weight: number; canVote: boolean },
       badge: JSON.parse(cp.badgeJson) as {
@@ -1307,7 +1388,7 @@ export function demonHunterNativeGunCurrent(world: World, actorId: number): bool
     validBinding(b) &&
     originalLife(p, world) &&
     p.lifeDescriptor.get!.call(p.life) === false &&
-    demonJson(p.privateState) === p.auditPrivateJson
+    privateAuditCurrent(b, p)
   );
 }
 
@@ -1358,7 +1439,12 @@ export function openDemonBadgeFrame(world: World): Readonly<{
   let committed = false;
   return Object.freeze({
     commit: (change) => {
-      if (committed || !validBinding(b) || change.weight !== 1.5 || change.policy !== undefined)
+      if (
+        committed ||
+        !validBinding(b) ||
+        change.weight !== 1.5 ||
+        change.policy !== (b.config.nobleSecretBody ? "awa_holder_choice_v1" : undefined)
+      )
         throw new Error("demon_hunter_badge_commit_invalid");
       const expected = new Map(
         [...before].map(([id, item]) => [id, { badge: { ...item.badge }, vote: { ...item.vote } }]),
@@ -1372,7 +1458,8 @@ export function openDemonBadgeFrame(world: World): Readonly<{
             next.badge.isSheriff = id === change.sheriffId;
             next.badge.destroyed = false;
             next.badge.voteWeight = change.weight;
-            delete next.badge.handoffPolicy;
+            if (change.policy) next.badge.handoffPolicy = change.policy;
+            else delete next.badge.handoffPolicy;
             if (next.vote.canVote) next.vote.weight = id === change.sheriffId ? change.weight : 1;
           }
       } else {
@@ -1393,7 +1480,8 @@ export function openDemonBadgeFrame(world: World): Readonly<{
           next.badge.isSheriff = true;
           next.badge.destroyed = false;
           next.badge.voteWeight = change.weight;
-          delete next.badge.handoffPolicy;
+          if (change.policy) next.badge.handoffPolicy = change.policy;
+          else delete next.badge.handoffPolicy;
           next.vote.weight = change.weight;
         }
       }
@@ -1470,7 +1558,7 @@ export function commitDemonRedMoonTransition(
     !validBinding(b) ||
     String(p.kind) !== RED_MOON_ROLE ||
     ![...b.players.values()].every((player) => originalLife(player, world)) ||
-    demonJson(p.privateState) !== p.auditPrivateJson
+    !privateAuditCurrent(b, p)
   )
     return false;
   const state = getRedMoonState(p.role);
@@ -1521,8 +1609,7 @@ export function demonRedMoonNightSealed(world: World, day: number): boolean {
   if (!validBinding(b) || ![...b.players.values()].every((p) => originalLife(p, world)))
     throw new Error("red_moon_original_state_revoked");
   const state = getRedMoonState(p.role);
-  if (!state || demonJson(p.privateState) !== p.auditPrivateJson)
-    throw new Error("red_moon_original_state_revoked");
+  if (!state || !privateAuditCurrent(b, p)) throw new Error("red_moon_original_state_revoked");
   const sealed = Number.isSafeInteger(day) && day > 1 && state.blastDay === day - 1;
   if (sealed && originalLife(p, world, true)) throw new Error("red_moon_blast_death_unsettled");
   return sealed;
@@ -1540,7 +1627,7 @@ export function commitDemonIdiotReveal(world: World, actorId: number): boolean {
     p.kind !== Role.Idiot ||
     !validBinding(b) ||
     !originalLife(p, world, true) ||
-    demonJson(p.privateState) !== p.auditPrivateJson ||
+    !privateAuditCurrent(b, p) ||
     world.getComponent(actorId, COMPONENT.VotingRight) !== cp.vote ||
     demonVoteJson(cp.vote) !== cp.voteJson ||
     !writableDemonFields(p.privateState, ["idiot"]) ||
@@ -1584,7 +1671,7 @@ export function demonIdiotRevealed(world: World, actorId: number): boolean | nul
     p.kind !== Role.Idiot ||
     !validBinding(b) ||
     !originalLife(p, world, true) ||
-    demonJson(p.privateState) !== p.auditPrivateJson ||
+    !privateAuditCurrent(b, p) ||
     world.getComponent(actorId, COMPONENT.VotingRight) !== cp.vote ||
     demonVoteJson(cp.vote) !== cp.voteJson
   )

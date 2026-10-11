@@ -1,3 +1,14 @@
+import {
+  checkpointNobleBodyAuthority,
+  consumeSecretBodyExile,
+} from "../../mechanisms/roles/noble_secret_body/authority";
+import {
+  openNobleBodyRevealRequest,
+  nobleBodyRequestScope,
+  commitNobleBodyRevealSpeech,
+  closeNobleBodyRequest,
+} from "../../mechanisms/roles/noble_secret_body/requests";
+import { getSessionRecorder } from "../../../recording/recording_context";
 import { resolveTricksterExile } from "../../mechanisms/roles/trickster/night_frame";
 import { assertOrderPrinceOriginalCurrent } from "../../mechanisms/roles/order_prince/authority";
 import { runOrderPrinceChoice } from "../../mechanisms/roles/order_prince/voting_window";
@@ -331,6 +342,70 @@ export class VotingPipeline {
     if (mapped)
       this.events.push({ timestamp: Date.now(), type: "exile_target_mapped", payload: mapped });
     const effectiveTarget = mapped?.effectiveId ?? target;
+    if (config.nobleSecretBody) {
+      const owned = checkpointNobleBodyAuthority(this.world, true);
+      if (effectiveTarget === owned.bodyId && owned.body.body.kind === "intact") {
+        const receipt = consumeSecretBodyExile(this.world, options.day),
+          payload = { policy: "awa_noble_secret_body_v1" as const, ...receipt };
+        this.events.push({ timestamp: Date.now(), type: "secret_body_revealed", payload });
+        getSessionRecorder()?.recordRequiredLogicOp({
+          scope: "resolution",
+          op: "secret_body_revealed",
+          actorId: receipt.actorId,
+          phase: Phase.Voting,
+          status: "ok",
+          output: payload,
+        });
+        const request = requests.create({
+            actorId: receipt.actorId,
+            phase: Phase.Voting,
+            allowedTools: ["speak"],
+            stage: "awakened_idiot_reveal_speech",
+            requiresAction: true,
+            summary: { key: "request.summary.secret_body_reveal" },
+            context: { allow_fallback: false, action_failure_policy: "error" },
+          }),
+          scope = openNobleBodyRevealRequest(
+            this.world,
+            options.day,
+            request,
+            options.isCurrent ?? (() => true),
+          );
+        try {
+          const action = await actionProvider.getAction(request);
+          if (nobleBodyRequestScope(this.world, request) !== scope || action?.name !== "speak")
+            throw Error("secret_body_reveal_speech_required");
+          const valid = this.toolGateway.validateAndSanitize(this.world, receipt.actorId, action, {
+            phase: Phase.Voting,
+            day: options.day,
+            deferOperation: true,
+          });
+          if (
+            !valid.ok ||
+            !valid.sanitizedCall ||
+            nobleBodyRequestScope(this.world, request) !== scope
+          )
+            throw Error("secret_body_reveal_speech_required");
+          const spoken = commitNobleBodyRevealSpeech(this.world, scope, valid.sanitizedCall);
+          this.events.push({
+            timestamp: Date.now(),
+            type: "secret_body_reveal_speech",
+            payload: { policy: "awa_noble_secret_body_v1", ...spoken },
+          });
+          safeRecordLogicOp({
+            scope: "gateway",
+            op: "validate_tool_call",
+            actorId: receipt.actorId,
+            phase: Phase.Voting,
+            status: "ok",
+            input: { tool: "speak", args: { text: spoken.text } },
+          });
+        } finally {
+          closeNobleBodyRequest(scope);
+        }
+        return { summary: { tally, target, removed: [] }, removed: [], interrupted: false };
+      }
+    }
     const votedOut = mapped?.missed
       ? { removed: [] }
       : this.eventRegistry.onVotedOut(this.world, effectiveTarget, this.events);

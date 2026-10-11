@@ -1,4 +1,11 @@
 import {
+  beginNobleBodyNight,
+  abortNobleBodyNight,
+  assertNobleBodyRosterCurrent,
+  isNobleBodyBoard,
+} from "../../mechanisms/roles/noble_secret_body/authority";
+import { appendNobleBodyNotices } from "../../mechanisms/roles/noble_secret_body/facts";
+import {
   isRadiantEclipseBoard,
   beginRadiantNight,
   assertRadiantRosterCurrent,
@@ -224,6 +231,9 @@ export class NightPipeline {
     let magicianHandedOff = false;
     let timeConsortHandedOff = false;
     let scholarMentorHandedOff = false;
+    const ownsNoble = config.nobleSecretBody !== undefined;
+    let nobleHandedOff = false,
+      nobleAcquired = false;
     const ownsRadiant = config.radiantEclipse !== undefined;
     let radiantAcquired = false;
     const ownsMist = config.mistRaven !== undefined;
@@ -232,6 +242,11 @@ export class NightPipeline {
       demonHandedOff = false,
       demonAcquired = false;
     try {
+      if (ownsNoble) {
+        const notices = beginNobleBodyNight(this.world, day, isCurrent);
+        nobleAcquired = true;
+        appendNobleBodyNotices(this.events, notices);
+      }
       if (ownsRadiant) {
         beginRadiantNight(this.world, day);
         radiantAcquired = true;
@@ -251,6 +266,7 @@ export class NightPipeline {
           });
       }
       const assertReadable = () => {
+        if (ownsNoble) assertNobleBodyRosterCurrent(this.world);
         if (ownsRadiant) assertRadiantRosterCurrent(this.world);
         if (ownsMist) assertMistRosterCurrent(this.world);
         if (config.trickster) assertTricksterRosterCurrent(this.world);
@@ -482,7 +498,7 @@ export class NightPipeline {
         ];
       }
       if (!mist?.delayEligible) dreamFrame.expandInitialDamage(this.world, damage);
-      if (!mist?.delayEligible)
+      if (!mist?.delayEligible && !ownsNoble)
         safeRecordLogicOp({
           scope: "resolution",
           op: "night_damage_resolved",
@@ -510,6 +526,7 @@ export class NightPipeline {
             }),
           );
       if (ownsRadiant) closeRadiantNight(this.world, day, "committed", this.events);
+      nobleHandedOff = ownsNoble;
       weddingHandedOff = ownsWedding;
       demonHandedOff = ownsDemon;
       magicianHandedOff = config.magician !== undefined;
@@ -530,6 +547,7 @@ export class NightPipeline {
         ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
       };
     } finally {
+      if (nobleAcquired && !nobleHandedOff) abortNobleBodyNight(this.world, day);
       if (radiantAcquired) closeRadiantNight(this.world, day, "aborted", this.events);
       if (ownsMist && !mistHandedOff) abortMistNight(this.world);
       if (config.trickster && !magicianHandedOff) abortTricksterNight(this.world);
@@ -565,7 +583,8 @@ export class NightPipeline {
         (allowedTools.includes("kill_vote") || allowedTools.includes("speak_to_wolves"))
           ? { wolf_kill_candidates: mistKnifeTargets(this.world) ?? this.world.getAliveEntityIds() }
           : {}),
-        ...(isRadiantEclipseBoard(this.world) ||
+        ...(isNobleBodyBoard(this.world) ||
+        isRadiantEclipseBoard(this.world) ||
         isMistRavenBoard(this.world) ||
         isScholarMentorBoard(this.world) ||
         isTimeConsortBoard(this.world) ||

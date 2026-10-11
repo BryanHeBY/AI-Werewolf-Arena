@@ -1,6 +1,55 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "role.night_noble.brief":
+    "You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.",
+  "role.awakened_idiot.brief":
+    "You have one Secret Body. While intact, each night choose a living player (including yourself), or explicitly leave the target unspecified. If that target has no effective harm, protection falls back to yourself; it cancels exactly one effective source. An actual block spends the body; only whether it was spent is announced next night, never the actual target or cause. An intact body cancels one exile, reveals your role and grants a reveal speech. You remain alive with voting, candidacy and badge rights; a later exile can kill you. Repeated targets follow the public policy.",
+  "action.choose_servant.hint":
+    "Choose another living player as servant, or explicitly pass with null.",
+  "action.choose_servant.directive": "Submit one choice with choose_servant.",
+  "action.protect_secret_body.hint":
+    "Choose a listed living target (self allowed), or null for self fallback only.",
+  "action.protect_secret_body.directive": "Submit one protection choice with protect_secret_body.",
+  "error.noble_body_unavailable": "This request, phase or target does not permit the action.",
+  "stage.night_noble": "Choose a servant",
+  "stage.secret_body": "Secret Body protection",
+  "stage.awakened_idiot_reveal_speech": "Living role reveal speech",
+  "request.summary.secret_body_reveal":
+    "Your role is public and you remain alive. Complete one reveal speech.",
+  "prompt.status.noble":
+    "Your last announced servant state (hidden terminal changes arrive next night): {state}",
+  "prompt.status.secret_body":
+    "Your last announced body state (night consumption is announced next night): {state}",
+  "prompt.config.noble_standard":
+    "The Noble can blast and can be a pack knife target under ordinary wolf rules.",
+  "prompt.config.noble_restricted":
+    "The Noble cannot blast or be any wolf knife target; chat, knife votes and pack recognition remain.",
+  "prompt.config.body_nonconsecutive":
+    "Secret Body cannot actively choose the same target on consecutive nights. Explicit null breaks the sequence; fallback does not change the active target.",
+  "prompt.config.body_repeat":
+    "Secret Body may actively protect the same player on consecutive nights (AWA repeat variant).",
+  "event.noble_servant_chosen": "Player {actor} chose a servant on night {day}: {target}.",
+  "event.secret_body_chosen": "Player {actor} chose a protection target on night {day}: {target}.",
+  "event.noble_contract_closed":
+    "[God] Servant contract {contract} closed on day/night {day}, target {target}, status {status}.",
+  "event.secret_body_blocked":
+    "[God] Player {actor} spent Secret Body on night {day}, blocking {cause} against {target}.",
+  "event.noble_night_notified": "Player {actor} received servant state on night {day}: {state}",
+  "event.secret_body_night_notified":
+    "Player {actor} received body state on night {day}: {resource}.",
+  "event.secret_body_revealed":
+    "Player {actor} revealed as the Awakened Village Idiot and spent the body to cancel this exile. They remain alive with voting and badge rights.",
+  "event.secret_body_reveal_speech": "[Living reveal speech][{actor}] {text}",
+  "replay.stage.noble_servant_chosen": "Servant choice",
+  "replay.stage.secret_body_chosen": "Secret Body choice",
+  "replay.stage.noble_contract_closed": "Servant contract closed",
+  "replay.stage.secret_body_blocked": "Secret Body block",
+  "replay.stage.noble_night_notified": "Servant notification",
+  "replay.stage.secret_body_night_notified": "Body notification",
+  "replay.stage.secret_body_revealed": "Living role reveal",
+  "replay.stage.secret_body_reveal_speech": "Reveal speech",
+
   "prompt.status.eclipse": "Your swallowing record: {state}",
   "replay.stage.eclipse_swallowed": "Skill swallowed",
   "replay.stage.eclipse_native_suppressed": "Native skill suppressed",

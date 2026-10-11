@@ -1,3 +1,7 @@
+import {
+  isNobleBodyBoard,
+  getNobleBodyPlayerState,
+} from "../../../game/mechanisms/roles/noble_secret_body/authority";
 import { settlesNightBeforeDay } from "../../../game/mechanisms/night_death_timing";
 import {
   projectAlchemist,
@@ -207,6 +211,11 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    if (isNobleBodyBoard(this.world)) {
+      const known = getNobleBodyPlayerState(this.world, request.actorId, request.phase);
+      if (known?.kind === "night_noble") ownState.nightNoble = known.state;
+      if (known?.kind === "secret_body") ownState.secretBody = known.state;
+    }
     const alchemist = projectAlchemist(role),
       raven = projectRaven(role);
     if (alchemist) ownState.alchemist = alchemist;
@@ -560,6 +569,17 @@ export class PlayerPromptPolicy {
 
   private statusDirective(request: ActionRequest, role?: RoleComponent): string | undefined {
     const lines: string[] = [];
+    if (isNobleBodyBoard(this.world)) {
+      const known = getNobleBodyPlayerState(this.world, request.actorId, request.phase);
+      if (known)
+        lines.push(
+          text(
+            this.locale,
+            known.kind === "night_noble" ? "prompt.status.noble" : "prompt.status.secret_body",
+            { state: JSON.stringify(known.state) },
+          ),
+        );
+    }
     if (role?.role === Role.EclipseMaid) {
       const state = readEclipseState(role.privateState.eclipse);
       if (state)

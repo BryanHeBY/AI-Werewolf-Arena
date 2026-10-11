@@ -1,3 +1,4 @@
+import { isNobleBodyBoard } from "../noble_secret_body/authority";
 import { isRadiantEclipseBoard } from "../radiant_eclipse/night_frame";
 import { isTimeConsortBoard } from "../time_wolf_consort/night_frame";
 import { isMistRavenBoard, mistKnifeTargets, originalMistTarget } from "../mist_raven/night_frame";
@@ -26,6 +27,7 @@ const WOLF_KILL_VOTE_MAX_RETRIES = 3;
 
 /** Keep named board errors while applying one failure policy to chat and knife requests. */
 function strictWolfFailurePrefix(ctx: NightStageContext): string | null {
+  if (isNobleBodyBoard(ctx.world)) return "noble_secret_body";
   if (isRadiantEclipseBoard(ctx.world)) return "radiant_eclipse";
   if (isMistRavenBoard(ctx.world)) return "mist";
   if (isScholarMentorBoard(ctx.world)) return "scholar_mentor";

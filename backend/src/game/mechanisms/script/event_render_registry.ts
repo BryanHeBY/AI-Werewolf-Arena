@@ -1,3 +1,4 @@
+import { nobleSecretBodyEventLabel, nobleSecretBodyVisibility } from "@ai-werewolf-arena/game-text";
 import { radiantEclipseEventLabel } from "@ai-werewolf-arena/game-text";
 import { mistRavenEventLabel } from "@ai-werewolf-arena/game-text";
 import { scholarMentorEventLabel } from "@ai-werewolf-arena/game-text";
@@ -569,6 +570,8 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const noble = nobleSecretBodyEventLabel(event.type, event.payload, locale);
+    if (noble !== null) return noble;
     const radiant = radiantEclipseEventLabel(event.type, event.payload, locale);
     if (radiant !== null) return radiant;
     const mist = mistRavenEventLabel(event.type, event.payload, locale);
@@ -638,6 +641,15 @@ export class ScriptEventRenderRegistry {
     printPrivateEvents: boolean,
     locale: Locale = "zh-CN",
   ): ScriptLiveRender[] {
+    const noble = nobleSecretBodyEventLabel(event.type, event.payload, locale);
+    if (noble !== null) {
+      const visibility = nobleSecretBodyVisibility(event.type);
+      return visibility === "public"
+        ? [{ kind: "system", text: noble }]
+        : printPrivateEvents
+          ? [{ kind: visibility === "actor" ? "private" : "god", text: noble }]
+          : [];
+    }
     const radiant = radiantEclipseEventLabel(event.type, event.payload, locale);
     if (radiant !== null) return printPrivateEvents ? [{ kind: "god", text: radiant }] : [];
     const mist = mistRavenEventLabel(event.type, event.payload, locale);
