@@ -2,6 +2,7 @@ import { ActionWindow, PotionType } from "../../src/core";
 import type { ActionStage, Role, ToolCall } from "../../src/core";
 import type { MistWireExpectations } from "./mist_raven_transport_oracle";
 export interface PlannedTurn {
+  responseDelayMs?: number;
   currentTeammateIds?: number[];
   terminalFailure?: "missing" | "late";
   hybridChoice?: { targetId: number } | null;

@@ -6,11 +6,12 @@ const transportDiagnostic = (...values: unknown[]) => {
 import { expect } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { connect } from "node:net";
 import { assertReplayDocument, assertReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
 import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
 import type { ResolvedBoardDefinition } from "../../src/runtime/config/board_definition";
-import { runGame } from "../../src/runtime/game_runner";
+import { runGame, type GameRunDependencies } from "../../src/runtime/game_runner";
 import {
   readReproduction,
   replayReproduction,
@@ -26,6 +27,27 @@ import {
 import type { Role } from "../../src/core";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import type { ReplayManifest, ReplayPlayerView } from "../../src/recording/contracts";
+
+/** Direct TCP proof avoids proxy routing and clears its own bounded probe timer/socket. */
+async function assertClosedControl(endpoint: string) {
+  expect(endpoint).toMatch(/^http:\/\/127\.0\.0\.1:\d+$/);
+  const socket = connect({ host: "127.0.0.1", port: Number(new URL(endpoint).port) });
+  const closed = new Promise<void>((resolve) => socket.once("close", () => resolve()));
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    const outcome = await new Promise<Error | "connected">((resolve) => {
+      socket.once("error", resolve);
+      socket.once("connect", () => resolve("connected"));
+      timer = setTimeout(() => resolve(new Error("fixture_control_probe_timeout")), 1000);
+    });
+    expect(outcome).toBeInstanceOf(Error);
+    expect((outcome as NodeJS.ErrnoException).code).toBe("ECONNREFUSED");
+  } finally {
+    clearTimeout(timer);
+    socket.destroy();
+    await closed;
+  }
+}
 
 export interface TransportGameScenario {
   expectedFailure?: { actorId: number; stage: string };
@@ -74,6 +96,51 @@ export async function runTransportGame(
     wireStates = new Map<number, MistWireState>(),
     sdkPrompts = new Map<number, string[]>(),
     acpTraces: Array<{ actor: number; trace: any }> = [];
+  const deadlines: Array<
+    Parameters<NonNullable<GameRunDependencies["selectRequestDeadline"]>>[0] & {
+      deadlineAtMs: number;
+    }
+  > = [];
+  const arrivals: Array<{
+    actorId: number;
+    day: number;
+    stage: string;
+    actorOrdinal: number;
+    turnId: string;
+    arrivedAtMs: number;
+    terminalFailure?: string;
+  }> = [];
+  const delayedResponses: Array<{
+    actorId: number;
+    actorOrdinal: number;
+    completed: boolean;
+    cancelledBy?: "client" | "fixture_cleanup";
+  }> = [];
+  const pendingDelays = new Set<() => void>();
+  let cleanupStarted = false;
+  let closedState: Parameters<NonNullable<GameRunDependencies["onRuntimeClosed"]>>[0] | undefined;
+  const failedPlan = scenario.expectedFailure && plans.get(scenario.expectedFailure.actorId)!;
+  const failedIndex = failedPlan
+    ? failedPlan.turns.findIndex(
+        (t) => t.stage === scenario.expectedFailure!.stage && t.terminalFailure !== undefined,
+      )
+    : -1;
+  if (scenario.expectedFailure && failedIndex < 0)
+    throw new Error("fixture_failure_target_missing");
+  const failureTarget = failedPlan && {
+    actorId: failedPlan.actorId,
+    actorOrdinal: failedIndex + 1,
+    day: failedPlan.turns[failedIndex]!.day,
+    stage: failedPlan.turns[failedIndex]!.stage,
+    mode: failedPlan.turns[failedIndex]!.terminalFailure,
+  };
+  const diagnostics = {
+    deadlines,
+    arrivals,
+    delayedResponses,
+    pendingDelays: 0,
+    closedState: undefined as typeof closedState,
+  };
   const server =
     kind !== "acp"
       ? Bun.serve({
@@ -110,6 +177,15 @@ export async function runTransportGame(
                     /(?:\[Action prompt\]|\[行动提示\])/.test(message.content),
                 )?.content;
               const turnId = assertTransportPrompt(plan, turn, prompt);
+              arrivals.push({
+                actorId: actor,
+                day: turn.day,
+                stage: turn.stage,
+                actorOrdinal: index + 1,
+                turnId,
+                arrivedAtMs: Date.now(),
+                terminalFailure: turn.terminalFailure,
+              });
               const history = sdkPrompts.get(actor) ?? [];
               history.push(prompt);
               sdkPrompts.set(actor, history);
@@ -151,9 +227,7 @@ export async function runTransportGame(
                 counts.set(actor, index + 1);
                 attempts.delete(actor);
               }
-              if (turn.terminalFailure === "late")
-                await new Promise((resolve) => setTimeout(resolve, 1500));
-              return Response.json({
+              const response = {
                 id: "synthetic-role-game",
                 object: "chat.completion",
                 created: 1,
@@ -187,7 +261,39 @@ export async function runTransportGame(
                   },
                 ],
                 usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
-              });
+              };
+              const delayMs = turn.terminalFailure === "late" ? 2200 : turn.responseDelayMs;
+              if (!delayMs) return Response.json(response);
+              const observation = {
+                actorId: actor,
+                actorOrdinal: index + 1,
+                completed: false,
+              } as (typeof delayedResponses)[number];
+              delayedResponses.push(observation);
+              let timer: ReturnType<typeof setTimeout>;
+              const cancel = () => {
+                clearTimeout(timer);
+                observation.cancelledBy = cleanupStarted ? "fixture_cleanup" : "client";
+                pendingDelays.delete(cancel);
+              };
+              return new Response(
+                new ReadableStream<Uint8Array>({
+                  start(controller) {
+                    const json = JSON.stringify(response),
+                      encoder = new TextEncoder();
+                    controller.enqueue(encoder.encode(json.slice(0, 1)));
+                    pendingDelays.add(cancel);
+                    timer = setTimeout(() => {
+                      pendingDelays.delete(cancel);
+                      observation.completed = true;
+                      controller.enqueue(encoder.encode(json.slice(1)));
+                      controller.close();
+                    }, delayMs);
+                  },
+                  cancel,
+                }),
+                { headers: { "content-type": "application/json" } },
+              );
             } catch (error) {
               failures.push(String(error));
               transportDiagnostic("[fixture_protocol_failure]", String(error));
@@ -247,13 +353,30 @@ export async function runTransportGame(
           recordRootDir: root,
           maxDays: 8,
           maxRuntimeMs: 120000,
-          llmTimeoutMs: scenario.expectedFailure ? 1000 : 10000,
+          llmTimeoutMs: 10000,
           streamEvents: false,
           printThinking: false,
           color: false,
         },
         scenario.board,
       ),
+      {
+        selectRequestDeadline(request) {
+          const targeted =
+            failureTarget?.mode === "late" &&
+            request.actorId === failureTarget.actorId &&
+            request.day === failureTarget.day &&
+            request.stage === failureTarget.stage &&
+            request.actorOrdinal === failureTarget.actorOrdinal;
+          const deadlineAtMs = request.nowMs + (targeted ? 1000 : 10000);
+          deadlines.push({ ...request, deadlineAtMs });
+          return deadlineAtMs;
+        },
+        onRuntimeClosed(state) {
+          closedState = state;
+          diagnostics.closedState = state;
+        },
+      },
     ).catch(async (error) => {
       if (!scenario.expectedFailure) {
         try {
@@ -288,6 +411,17 @@ export async function runTransportGame(
       return { snapshot: prefix.checkpoints.at(-1)!.snapshot, eventCount: prefix.events.length };
     });
     expect(failureThrown).toBe(Boolean(scenario.expectedFailure));
+    expect(closedState?.closed).toBe(true);
+    for (const state of [closedState?.sdk, ...(closedState?.acp ?? [])]) {
+      if (!state) continue;
+      expect(state.closed).toBe(true);
+      expect(state.turns).toBe(0);
+      expect(state.scheduler).toEqual({ closed: true, active: 0, queued: 0 });
+    }
+    for (const state of closedState?.acp ?? []) {
+      expect(state.registry).toEqual({ closed: true, pending: 0 });
+      expect(state.pool).toEqual({ closed: true, sessions: 0, creating: 0, retiring: 0 });
+    }
     expect(failures).toEqual([]);
     const session = (await fs.readdir(root)).find((name) => name.startsWith("session_"))!,
       directory = path.join(root, session);
@@ -375,8 +509,46 @@ export async function runTransportGame(
           }
           expect(alive).toBe(false);
         }
+        await assertClosedControl(trace.controlUrl);
+      }
+      const target = failureTarget!;
+      const targetDecisions = record.decisions.filter((d) => d.actorId === target.actorId);
+      expect(targetDecisions[target.actorOrdinal - 1]).toMatchObject({
+        day: target.day,
+        stage: target.stage,
+        outcome: { kind: "error" },
+      });
+      expect(
+        targetDecisions.slice(0, target.actorOrdinal - 1).every((d) => d.outcome.kind === "action"),
+      ).toBe(true);
+      const targetArrivals =
+        transportKind(target.actorId) === "llm"
+          ? arrivals.filter((a) => a.actorId === target.actorId)
+          : acpTraces.find((t) => t.actor === target.actorId)!.trace.arrivals;
+      const arrival = targetArrivals.find(
+        (a: (typeof arrivals)[number]) =>
+          a.day === target.day &&
+          a.stage === target.stage &&
+          a.actorOrdinal === target.actorOrdinal,
+      );
+      expect(arrival).toBeDefined();
+      const targetDeadline = deadlines.find(
+        (d) => d.actorId === target.actorId && d.actorOrdinal === target.actorOrdinal,
+      )!;
+      expect(arrival.arrivedAtMs).toBeGreaterThanOrEqual(targetDeadline.nowMs);
+      expect(arrival.arrivedAtMs).toBeLessThan(targetDeadline.deadlineAtMs);
+      expect(deadlines.filter((d) => d.deadlineAtMs - d.nowMs === 1000)).toHaveLength(
+        target.mode === "late" ? 1 : 0,
+      );
+      if (target.mode === "late" && transportKind(target.actorId) === "llm") {
+        expect(
+          delayedResponses.find(
+            (d) => d.actorId === target.actorId && d.actorOrdinal === target.actorOrdinal,
+          ),
+        ).toMatchObject({ completed: false, cancelledBy: "client" });
       }
       return {
+        diagnostics,
         result,
         record,
         replay,
@@ -458,6 +630,7 @@ export async function runTransportGame(
             expect((error as NodeJS.ErrnoException).code).toBe("ESRCH");
           }
         }
+        await assertClosedControl(trace.controlUrl);
       }
     }
     const record = await readReproduction(path.join(directory, "reproduction.json"));
@@ -482,8 +655,22 @@ export async function runTransportGame(
       await createTestTempDirectory("awa-role-replayed-"),
     );
     expect(reproduction.snapshot).toEqual(result.snapshot);
-    return { result, record, replay, manifest, views, sdkPrompts, acpTraces, rejected, directory };
+    return {
+      result,
+      record,
+      replay,
+      manifest,
+      views,
+      sdkPrompts,
+      acpTraces,
+      rejected,
+      directory,
+      diagnostics,
+    };
   } finally {
+    cleanupStarted = true;
     server?.stop(true);
+    for (const cancel of [...pendingDelays]) cancel();
+    diagnostics.pendingDelays = pendingDelays.size;
   }
 }

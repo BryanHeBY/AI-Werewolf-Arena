@@ -22,8 +22,17 @@ const plan: ActorTransportPlan = JSON.parse(
 const trace = {
   agentPid: process.pid,
   mcpPid: 0,
+  controlUrl: "",
   locale: "",
   prompts: [] as string[],
+  arrivals: [] as Array<{
+    day: number;
+    stage: string;
+    actorOrdinal: number;
+    turnId: string;
+    arrivedAtMs: number;
+    terminalFailure?: string;
+  }>,
   submitted: 0,
   rejected: 0,
   consumed: 0,
@@ -51,6 +60,7 @@ try {
       const env = Object.fromEntries(config.env.map((entry) => [entry.name, entry.value]));
       if (env.AWA_TASK_LOCALE !== plan.locale) throw new Error("fixture_mcp_locale_mismatch");
       trace.locale = env.AWA_TASK_LOCALE;
+      trace.controlUrl = env.WEREWOLF_MCP_CONTROL_URL;
       client = new Client({ name: `synthetic-game-${plan.actorId}`, version: "1.0.0" });
       const transport = new StdioClientTransport({
         command: config.command,
@@ -91,6 +101,14 @@ try {
         wireState.currentDay = turn.day;
         wireState.currentRequestOrdinal = plan.turns.indexOf(turn) + 1;
         const turnId = assertTransportPrompt(plan, turn, prompt);
+        trace.arrivals.push({
+          day: turn.day,
+          stage: turn.stage,
+          actorOrdinal: plan.turns.indexOf(turn) + 1,
+          turnId,
+          arrivedAtMs: Date.now(),
+          terminalFailure: turn.terminalFailure,
+        });
         const batch = prompt.split("\n").find((line) => line.includes('{"events":'));
         if (batch) {
           const events = JSON.parse(batch.slice(batch.indexOf('{"events":'))).events as Array<
@@ -120,9 +138,11 @@ try {
             throw new Error("fixture_invalid_action_not_rejected");
           trace.rejected++;
         }
-        if (turn.terminalFailure === "late") {
+        if (turn.terminalFailure === "late" || turn.responseDelayMs) {
           await save();
-          await new Promise((resolve) => setTimeout(resolve, 1500));
+          await new Promise((resolve) =>
+            setTimeout(resolve, turn.terminalFailure === "late" ? 2200 : turn.responseDelayMs),
+          );
         }
         if (turn.action) {
           const result = await client!.callTool({

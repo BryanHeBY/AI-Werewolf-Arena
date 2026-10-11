@@ -622,3 +622,7 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 ## P9d 迷雾鸦影正常实际通信
 
 四字面场景×SDK／ACP／mixed×两语24完整协议局、实际身份／schema／私密目标及历史授权通过；三路原反例修正关闭，最终33项／14217断言绿色，旧正常与缺失通路兼容通过。证据见[正常通信切片](reviews/p9-mist-raven-normal-transport.md)。新角色严格失败、精确迟到／资源、种子及前端继续；两角色planned，44/64不变，不推送。
+
+## P9d 严格失败与精确请求预算接续
+
+逐请求预算及关闭资源快照已提交 `ea5ebf2`；80个双语新角色失败局、生效雾圈失败不能触发随机刀、真正2200ms MCP迟到/关闭/旧ID拒绝、SDK取消及ACP进程/监听回收见[失败通路验收](reviews/p9-mist-raven-failure-transport.md)。下一步受限观察固定种子及真实前端fixture/seek/frame/Chromium。角色仍planned，正式44/64不变；其余P9d–P10与T6继续，main本地提交、不推送。

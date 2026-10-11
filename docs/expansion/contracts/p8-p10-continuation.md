@@ -146,3 +146,7 @@ game-catalog 拥有稳定 ID/名称/状态，game-text 拥有双语文案。新�
 ## P9d 正常协议通路接续
 
 新角色24个中英SDK／ACP／mixed完整协议局及私有wire授权已交付，见[正常通信](../reviews/p9-mist-raven-normal-transport.md)。立即接续缺失／非法／迟到失败通路，并完成runtime-resources精确请求预算及到达／真正迟到／回收证明；随后种子及前端。正常绿色不关闭上述任务，角色planned、44/64不变。
+
+## P9d 严格失败与精确请求预算接续
+
+runner逐请求预算与资源关闭快照提交 `ea5ebf2`；本批新角色80个双语实际失败局、真正MCP迟到/关闭/旧ID拒绝与物理回收证据见[失败通路](../reviews/p9-mist-raven-failure-transport.md)。普通请求十秒，只有选定请求一秒；生效雾圈通信失败不会被当成全弃刀抽刀。角色仍planned、44/64不变。立即继续20–50固定种子、DTO受限策略有效分支及前端实际fixture/seek/frame/Chromium；其余P9d、P9e、P9f、P10、T6与用户总体验收仍开放。
