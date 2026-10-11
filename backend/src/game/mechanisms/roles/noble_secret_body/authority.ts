@@ -2,7 +2,7 @@ import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { World } from "../../../../core/domain/world";
-import { Camp, Role } from "../../../../core/domain/identity";
+import { Camp, Role, Phase } from "../../../../core/domain/identity";
 import {
   aliveLifeDescriptor,
   aliveLifeVersion,
@@ -20,6 +20,15 @@ import {
   type SecretBodyState,
 } from "./state";
 import { planSecretBodyBlock, copySecretBodySources, type SecretBodySources } from "./damage";
+import {
+  copyNobleKnowledge,
+  copySecretBodyKnowledge,
+  projectNobleKnowledge,
+  projectSecretBodyKnowledge,
+  type NobleKnowledge,
+  type SecretBodyKnowledge,
+  type NobleBodyNightNotice,
+} from "./player_projection";
 const invalid = Symbol("invalid_noble_body_owner");
 function own(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return invalid;
@@ -194,6 +203,9 @@ interface Owner {
   readonly nights: Map<number, Night>;
   active: Night | null;
   checkingController: boolean;
+  nobleKnowledge: NobleKnowledge;
+  bodyKnowledge: SecretBodyKnowledge;
+  readonly notices: NobleBodyNightNotice[];
 }
 const owners = new WeakMap<World, Owner>();
 function canonicalState(owner: Owner): boolean {
@@ -308,6 +320,20 @@ export function installNobleBodyAuthority(world: World, nobleId: number, bodyId:
     nights: new Map(),
     active: null,
     checkingController: false,
+    nobleKnowledge: copyNobleKnowledge({
+      wolfActionPolicy: nobleData.wolfActionPolicy,
+      lastNotifiedNight: 0,
+      lastChoice: null,
+      contracts: [],
+    }),
+    bodyKnowledge: copySecretBodyKnowledge({
+      protectionRepeatPolicy: bodyData.protectionRepeatPolicy,
+      lastNotifiedNight: 0,
+      lastChoice: null,
+      resource: "intact",
+      publicRevealDay: null,
+    }),
+    notices: [],
   });
 }
 function mayBegin(owner: Owner, day: number): boolean {
@@ -320,7 +346,13 @@ function mayBegin(owner: Owner, day: number): boolean {
     )
   );
 }
-export function beginNobleBodyNight(world: World, day: number, isCurrent: () => boolean): void {
+/** Returns synchronous notification receipts, even when no skill request follows.
+ * The controller must append these to the private feed before issuing any night request. */
+export function beginNobleBodyNight(
+  world: World,
+  day: number,
+  isCurrent: () => boolean,
+): readonly NobleBodyNightNotice[] {
   const owner = requireOwner(world);
   if (
     !Number.isSafeInteger(day) ||
@@ -351,6 +383,48 @@ export function beginNobleBodyNight(world: World, day: number, isCurrent: () => 
   };
   owner.nights.set(day, night);
   owner.active = night;
+  const notices: NobleBodyNightNotice[] = [];
+  if (playerCurrent(world, owner.noble, true)) {
+    owner.nobleKnowledge = copyNobleKnowledge({
+      wolfActionPolicy: owner.nobleState.wolfActionPolicy,
+      lastNotifiedNight: day,
+      lastChoice: owner.nobleState.lastChoice,
+      contracts: owner.nobleState.contracts,
+    });
+    notices.push(
+      Object.freeze({
+        kind: "night_noble",
+        actorId: owner.noble.id,
+        day,
+        known: copyNobleKnowledge(owner.nobleKnowledge),
+      }),
+    );
+  }
+  if (playerCurrent(world, owner.body, true)) {
+    owner.bodyKnowledge = copySecretBodyKnowledge({
+      protectionRepeatPolicy: owner.bodyState.protectionRepeatPolicy,
+      lastNotifiedNight: day,
+      lastChoice: owner.bodyState.lastChoice,
+      resource:
+        owner.bodyState.body.kind === "intact"
+          ? "intact"
+          : owner.bodyState.body.kind === "exile_revealed"
+            ? "exile_revealed"
+            : "spent",
+      publicRevealDay:
+        owner.bodyState.body.kind === "exile_revealed" ? owner.bodyState.body.day : null,
+    });
+    notices.push(
+      Object.freeze({
+        kind: "secret_body",
+        actorId: owner.body.id,
+        day,
+        known: copySecretBodyKnowledge(owner.bodyKnowledge),
+      }),
+    );
+  }
+  owner.notices.push(...notices);
+  return Object.freeze(notices);
 }
 function choiceLease(world: World, day: number, kind: "body" | "noble") {
   const { owner, night } = requireNight(world, day),
@@ -399,6 +473,14 @@ export function openServantChoice(world: World, day: number) {
       const target = targetId === null ? null : owner.players.get(targetId)!;
       commitNoble(owner, next);
       lease.committed = true;
+      const created = next.contracts.find((c) => c.createdNight === day);
+      owner.nobleKnowledge = copyNobleKnowledge({
+        ...owner.nobleKnowledge,
+        lastChoice: next.lastChoice,
+        contracts: created
+          ? [...owner.nobleKnowledge.contracts, created]
+          : owner.nobleKnowledge.contracts,
+      });
       if (target)
         owner.contracts.set(
           `servant:night:${day}`,
@@ -431,6 +513,10 @@ export function openSecretBodyChoice(world: World, day: number) {
         [...owner.players.values()].filter((p) => playerCurrent(world, p, true)).map((p) => p.id),
       );
       commitBody(owner, next);
+      owner.bodyKnowledge = copySecretBodyKnowledge({
+        ...owner.bodyKnowledge,
+        lastChoice: next.lastChoice,
+      });
       night.bodyTarget = targetId === null ? null : owner.players.get(targetId)!;
       lease.committed = true;
       return Object.freeze({ actorId: owner.body.id, day, targetId });
@@ -577,7 +663,27 @@ export function consumeSecretBodyExile(
   )
     throw Error("secret_body_exile_owner_revoked");
   commitBody(owner, revealBodyByExile(owner.bodyState, day));
+  owner.bodyKnowledge = copySecretBodyKnowledge({
+    ...owner.bodyKnowledge,
+    resource: "exile_revealed",
+    publicRevealDay: day,
+  });
   return Object.freeze({ actorId: owner.body.id, day });
+}
+/** The sole player boundary; no actual inventory or hidden terminal state is consulted. */
+export function getNobleBodyPlayerState(world: World, actorId: number, phase: Phase) {
+  const owner = requireOwner(world);
+  if (actorId === owner.body.id)
+    return {
+      kind: "secret_body" as const,
+      state: projectSecretBodyKnowledge(owner.bodyKnowledge, phase),
+    };
+  if (actorId === owner.noble.id)
+    return {
+      kind: "night_noble" as const,
+      state: projectNobleKnowledge(owner.nobleKnowledge, phase),
+    };
+  return null;
 }
 export function snapshotNobleBodyAuthority(world: World) {
   const owner = requireOwner(world);
@@ -586,6 +692,15 @@ export function snapshotNobleBodyAuthority(world: World) {
     bodyId: owner.body.id,
     noble: readNobleState(owner.nobleState)!,
     body: readSecretBodyState(owner.bodyState)!,
+    knowledge: {
+      noble: copyNobleKnowledge(owner.nobleKnowledge),
+      body: copySecretBodyKnowledge(owner.bodyKnowledge),
+    },
+    notices: owner.notices.map((n) =>
+      n.kind === "night_noble"
+        ? { ...n, known: copyNobleKnowledge(n.known) }
+        : { ...n, known: copySecretBodyKnowledge(n.known) },
+    ),
     nights: [...owner.nights.values()].map((n) => ({
       day: n.day,
       status: n.status,
