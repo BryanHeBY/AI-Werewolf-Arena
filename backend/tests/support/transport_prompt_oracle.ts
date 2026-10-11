@@ -1,3 +1,9 @@
+import { isDeepStrictEqual } from "node:util";
+import {
+  RADIANT_ECLIPSE_EVENT_TYPES,
+  readRadiantEclipseFact,
+  radiantEclipseAudience,
+} from "@ai-werewolf-arena/game-text";
 import {
   readModifierChoiceFact,
   readModifierSkipFact,
@@ -32,6 +38,9 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  sheriff_badge_choice: ["警徽移交选择", "Badge successor choice"],
+  eclipse_swallow: ["吞噬技能", "Swallow skill"],
+  radiant_shelter: ["流光庇护", "Radiant shelter"],
   alchemist_mist: ["未明之雾", "Alchemist Mist"],
   alchemist_snake: ["法老之蛇救治", "Snake healing"],
   raven_knife: ["狼鸦额外刀", "Raven extra knife"],
@@ -123,6 +132,39 @@ export function assertTransportPrompt(
     if (!content.includes(marker)) throw new Error("fixture_private_marker_missing");
   for (const marker of plan.forbiddenCurrentMarkers ?? [])
     if (content.includes(marker)) throw new Error("fixture_private_marker_exposed");
+  if (turn.radiantBorrow) {
+    const { id, state } = turn.radiantBorrow;
+    const bound =
+      plan.locale === "en"
+        ? `This turn executes only the engine-bound ability ${id}; do not add an ability ID to tool arguments.`
+        : `本轮只执行引擎指定的能力 ${id}；不要在工具参数中增加能力编号。`;
+    const boundLines = content.match(
+      plan.locale === "en"
+        ? /This turn executes only the engine-bound ability [^;]+; do not add an ability ID to tool arguments\./g
+        : /本轮只执行引擎指定的能力 [^；]+；不要在工具参数中增加能力编号。/g,
+    );
+    if (boundLines?.length !== 1 || boundLines[0] !== bound)
+      throw Error("fixture_radiant_bound_mismatch");
+    const prefix = plan.locale === "en" ? `Ability ${id}:` : `能力 ${id}：`;
+    const segments = content.split(prefix);
+    if (segments.length !== 2) throw Error("fixture_radiant_summary_missing");
+    const json = segments[1]!.split(
+      plan.locale === "en" ? "your resources and records=" : "本人资源与记录=",
+    )[1];
+    if (!json) throw Error("fixture_radiant_state_missing");
+    let actual: unknown;
+    for (let end = 1; end <= json.length; end++) {
+      if (json[end - 1] !== "}") continue;
+      try {
+        actual = JSON.parse(json.slice(0, end));
+        break;
+      } catch {
+        /* nested object is incomplete */
+      }
+    }
+
+    if (!isDeepStrictEqual(actual, state)) throw Error("fixture_radiant_borrow_state_mismatch");
+  }
   for (const marker of turn.requiredPromptMarkers ?? [])
     if (!content.includes(marker)) throw new Error("fixture_required_turn_marker_missing");
   for (const marker of turn.forbiddenPromptMarkers ?? [])
@@ -335,6 +377,13 @@ export function assertTransportEvents(
 ) {
   assertMistTransportEvents(role, actorId, events, expected, state);
   for (const [, type, payload] of events) {
+    if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(type)) {
+      const fact = readRadiantEclipseFact(type, payload);
+      if (!fact || !radiantEclipseAudience(type, fact).includes(actorId))
+        throw Error("fixture_radiant_private_fact_exposed");
+    }
+    if (type === "ability_changed" && payload.actorId !== actorId)
+      throw Error("fixture_other_ability_change_exposed");
     if (type === "modifier_conflict_resolved") throw new Error("fixture_modifier_conflict_exposed");
     if (
       type === "modifier_choice_committed" &&
@@ -486,7 +535,13 @@ export function assertTransportEvents(
     )
       throw new Error("fixture_other_private_skill_exposed");
     if (
-      ["hidden_wolf", "gargoyle", "mechanical_wolf", "awakened_hidden_wolf"].includes(role) &&
+      [
+        "hidden_wolf",
+        "gargoyle",
+        "mechanical_wolf",
+        "awakened_hidden_wolf",
+        "eclipse_maid",
+      ].includes(role) &&
       [
         "wolf_tactical_order",
         "wolf_discussion",

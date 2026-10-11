@@ -1,3 +1,4 @@
+import { castShelter, swallowSkill } from "./radiant_eclipse";
 import { modifySkill, bonusAction } from "./native";
 import { castMist, useSnake, ravenKnife } from "./mist_raven";
 import { lockTime } from "./native";
@@ -62,6 +63,8 @@ import {
 
 /** Preserve protocol-independent priority and RNG order for strict Tape reproducibility. */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
+  { tool: "cast_shelter", decide: castShelter },
+  { tool: "swallow_skill", decide: swallowSkill },
   { tool: "cast_mist", decide: castMist },
   { tool: "use_snake", decide: useSnake },
   { tool: "raven_knife", decide: ravenKnife },

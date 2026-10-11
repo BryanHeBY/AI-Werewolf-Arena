@@ -74,6 +74,7 @@ export async function runTransportGame(
   const failures: string[] = [],
     wireStates = new Map<number, MistWireState>(),
     sdkPrompts = new Map<number, string[]>(),
+    sdkWireMessages: Array<{ actor: number; ordinal: number; messages: unknown[] }> = [],
     acpTraces: Array<{ actor: number; trace: any }> = [];
   const deadlines: Array<
     Parameters<NonNullable<GameRunDependencies["selectRequestDeadline"]>>[0] & {
@@ -165,6 +166,12 @@ export async function runTransportGame(
                 arrivedAtMs: Date.now(),
                 terminalFailure: turn.terminalFailure,
               });
+              if (scenario.board.config.radiantEclipse)
+                sdkWireMessages.push({
+                  actor,
+                  ordinal: index + 1,
+                  messages: structuredClone(body.messages),
+                });
               const history = sdkPrompts.get(actor) ?? [];
               history.push(prompt);
               sdkPrompts.set(actor, history);
@@ -303,7 +310,13 @@ export async function runTransportGame(
     };
     for (const [actor, plan] of plans) {
       const id = `actor-${actor}`;
-      players[String(actor)] = { name: plan.expectedName, agent: id };
+      players[String(actor)] = {
+        name: plan.expectedName,
+        agent: id,
+        ...(scenario.board.config.radiantEclipse && [4, 7, 8, 9].includes(actor)
+          ? { personalityPrompt: `SOURCE_HISTORY_PRIVATE_ACTOR_${actor}` }
+          : {}),
+      };
       if (transportKind(actor) === "llm")
         agents[id] = { kind: "llm", provider: "sdk", model: `synthetic-player-${actor}` };
       else {
@@ -534,6 +547,7 @@ export async function runTransportGame(
         manifest,
         views,
         sdkPrompts,
+        sdkWireMessages,
         acpTraces,
         rejected,
         directory,
@@ -641,6 +655,7 @@ export async function runTransportGame(
       manifest,
       views,
       sdkPrompts,
+      sdkWireMessages,
       acpTraces,
       rejected,
       directory,

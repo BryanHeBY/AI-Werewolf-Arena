@@ -61,6 +61,8 @@ function branchCounts(events: readonly GameEvent[]): Record<string, number> {
           : event.type;
     counts[key] = (counts[key] ?? 0) + 1;
     if (
+      event.type === "radiant_shelter_chosen" ||
+      event.type === "eclipse_swallowed" ||
       event.type === "alchemist_mist_chosen" ||
       event.type === "alchemist_snake_chosen" ||
       event.type === "raven_knife_chosen"
