@@ -1029,7 +1029,7 @@ export function validateNobleSecretBodyRecord(record: ReproductionRecord): Noble
     );
 
     const o = d.openedAtEventCount === undefined ? undefined : openingAt.get(d.openedAtEventCount);
-    check(o && o.day === d.day && d.request.phase === o.phase);
+    check(o && o.phase !== Phase.GameOver && o.day === d.day && d.request.phase === o.phase);
     if (["secret_body", "night_noble"].includes(d.stage)) {
       const body = d.stage === "secret_body",
         actor = body ? bodyId : nobleId,

@@ -36,6 +36,10 @@
 
 ## 下一步
 
+### 后续终局请求资格修正
+
+实际通信切片 `dabb645` 后的空闲 A 审查证实：真实完整 expiry 档案在 GameOver 后追加活村民投票、同步补末 CP 计数和完整公开 feed，turn 1／2 均曾被公共 parser 接受。按开启时点统一拒绝 GameOver 请求，保留正常投票 soft 语义。原输入独立 **3/0/25**，`/tmp/awa-noble-after-game-vote-a-independent-fixed.log`；同原变异维护测试 **3/0/25**，`/tmp/awa-noble-postgame-maintained-final.log`，包含 fresh 自然终局与精确 Tape 正例。未扩展伪造投票情景或复跑通信矩阵；两角色计数不变。
+
 复用真实 transport runner，按独立角色相对计划执行 SDK／ACP／mixed × 中文／英文，覆盖四政策、实际通知前后信息边界、严格 missing／late／撤权和资源关闭。补全部人工源组合、选举／自爆及受限观察种子；从真实档案导出 God／各玩家 fixtures，执行 frame／seek、Chromium 与 Remotion，再执行新源码同源完整门禁及独立最终核验，全部通过后才登记 50/64。
 
 当前没有独立 board editor，公共 JSON 往返仍不代表编辑器交付。剩余寻香魅影／觉醒预言家、P9e 六项、P9f 剩六项、P10 长局／64角色22机制矩阵和预算授权范围内的 T6 均保持开放。本批没有真实模型调用或 push。
