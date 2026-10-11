@@ -1,6 +1,6 @@
 # P9c 阶段全量收口
 
-当前为执行记录，最终全量尚未通过；角色目录仍 44/64，P9d–P9f、P10 与 T6 范围保持开放。本轮不推送。
+P9c 最终同源阶段门禁通过；角色目录仍 44/64，P9d–P9f、P10 与 T6 范围保持开放。本轮不推送。
 
 ## 初次完整后端与修正
 
@@ -16,4 +16,16 @@
 
 独立 A 审查发现初始 fingerprint 漏掉实际被门禁读取的 root bunfig.toml 与 docs/expansion/i18n-source-exceptions.json；初次运行中它们未修改且等于 HEAD，但仍不能宣称初始清单涵盖全部输入。最终 driver 补入这两个文件及影响枚举／格式检查的 .gitignore，重新执行完整阶段门禁，不把初次通过分片冒充新指纹的全量。
 
-最终证据预定在 `/tmp/awa-p9c-final-accepted`，同一冻结版本执行全部后端、7 文件串行时序、smoke、完整前端单测及 Chromium、双端构建与 root check/lint/format/diff；实际结果和前后输入指纹待完成后登记。review_configuration_closure 负责文件覆盖与清单复核，review_scholar_rules 负责规则及错误优先级，review_scholar_delivery 负责最终范围与交付证据。主任务保留日志、修正实现／夹具，不由审查代理改仓库。
+最终证据在 `/tmp/awa-p9c-final-accepted`，基线 HEAD `1035cd9`。1388 项输入清单 SHA256 前后均为 `132720fe1a96d535252ff9696819980a12cdf2889f12dd0e446768f6c118ac45`；本次零失败，无重试。源码、测试、公开配置及实际构建／门禁输入完整纳入，文档叙述不参与执行指纹。未来炼金／狼鸦候选仅在 `/tmp` 准备，没有混入本次已支持功能的验收。
+
+| 门禁                   | 实际结果                                     |
+| ---------------------- | -------------------------------------------- |
+| 后端三个互斥文件分片   | 1647/0、1848/0、1622/0；357 文件             |
+| 后端时序文件串行       | 42/0、231 断言、7 文件                       |
+| 后端完整有效覆盖       | 5159 pass、0 fail、503019 断言、364 唯一文件 |
+| 前端单元               | 498 pass、0 fail、5014 断言、63 文件         |
+| Chromium 全量          | 240 pass、0 fail；单 worker、零 retry        |
+| root check/lint/format | 全部 exit 0                                  |
+| diff、smoke、双端构建  | 全部 exit 0                                  |
+
+review_configuration_closure 负责文件覆盖与清单复核，review_scholar_rules 负责规则及错误优先级，review_scholar_delivery 负责最终范围与交付证据；原功能的 R/A/T/L/D 问题已在各笔记录中闭合。主任务保留日志、修正实现／夹具，不由审查代理改仓库。上述结果证明 P9c 已支持范围的技术回归，不扩大角色组合、不冒称真实模型 T6 或 P10 发布验收。
