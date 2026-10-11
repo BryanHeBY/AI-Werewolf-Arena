@@ -1,6 +1,6 @@
 # P9c 魔术师有限板规则
 
-状态：implemented；限定下述十二人原生板及四个公开预设。功能提交证据见 [本批验收](../reviews/p9-magician.md)，P9c 阶段全量与 P10 总体验收仍开放。
+状态：implemented；限定下述十二人原生板。原四个公开预设的功能提交证据见 [本批验收](../reviews/p9-magician.md)，另四个具名白天狼王政策预设见[资格策略验收](../reviews/p9-wolf-king-day-policy.md)。P9c 阶段全量与 P10 总体验收仍开放。
 
 ## 来源与差异
 
@@ -35,7 +35,7 @@ LAL 主办方板型：https://werewolves.games/lang-wang-mo-shu-shi/ ，十二�
 
 ## 原生枪资格与首日结算的已核对约束
 
-现有引擎 awa_qualified_sources_v1 / awa_knife_or_exile_v1 均允许狼刀死亡开枪，按死因而非昼夜判定。首批魔术师板明确沿用 AWA 原生枪资格，LAL 来源仅支持阵容/基本夜序，不宣称复刻其“狼王所有夜死禁枪”规则。枪资格与魔术师枪口映射为独立维度；LAL day-only 资格差异需作为后续原生枪配置补齐，在 P10 规则映射中保持未支持标记，不能让 deathShotTargetPolicy 冒充这项支持。
+现有引擎 awa_qualified_sources_v1 / awa_knife_or_exile_v1 均允许狼刀死亡开枪，按死因而非昼夜判定。原四份魔术师板沿用 AWA 原生枪资格，LAL 来源仅支持阵容/基本夜序。另四份 N1/N2 × original/exchanged 预设显式选择原生狼王 awa_day_deaths_v1，要求合格死因且来源 Day/Voting；纯夜死及其枪链不得借当前 Day 或目标映射取得资格。见[白天策略](awa-wolf-king-day-deaths-v1.md)。仍保留 AWA 末狼先完成死亡链的行为，不宣称复刻完整 LAL 规则。猎人、复制和赠枪不继承此原生狼王配置。
 普通板首日警长先于夜死亡公布，夜枪可能在当前 Day 阶段执行；交换判定使用独立 nightOrigin 来源及追加死亡传播，不能仅看当前 phase 或第一波 deathPhase；混入白天自爆的 deaths 不换位。保留帧至 settleNight 完整死亡链结束；异常/中断也关闭，不在 NightPipeline 返回时清理。
 
 ## 女巫自救的号码语义

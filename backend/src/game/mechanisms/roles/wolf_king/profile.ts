@@ -21,7 +21,8 @@ export const WOLF_KING_ROLE_PROFILE: RoleProfile = {
   init: (role, ctx) => {
     setWolfKingState(role, {
       canShoot: true,
-      ...(ctx.boardConfig?.wolfKing?.deathActionPolicy === "awa_knife_or_exile_v1"
+      ...(ctx.boardConfig?.wolfKing?.deathActionPolicy !== undefined &&
+      ctx.boardConfig.wolfKing.deathActionPolicy !== "awa_qualified_sources_v1"
         ? { deathActionPolicy: ctx.boardConfig.wolfKing.deathActionPolicy }
         : {}),
     });
@@ -29,7 +30,8 @@ export const WOLF_KING_ROLE_PROFILE: RoleProfile = {
   renderPrompt: (role, locale = "zh-CN") =>
     text(
       locale,
-      getWolfKingState(role)?.deathActionPolicy === "awa_knife_or_exile_v1"
+      (getWolfKingState(role)?.deathActionPolicy ?? "awa_qualified_sources_v1") !==
+        "awa_qualified_sources_v1"
         ? "role.wolf_king.configured_state"
         : "role.wolf_king.state",
       {

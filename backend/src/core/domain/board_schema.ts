@@ -8,6 +8,7 @@ import {
   DEATH_REVEAL_POLICIES,
   LAST_WORDS_POLICIES,
   DEATH_ACTION_POLICIES,
+  WOLF_KING_DEATH_ACTION_POLICIES,
   INSPECTION_POLICIES,
   GUARD_REPEAT_POLICIES,
   HIDDEN_WOLF_CAMP_INSPECTION_POLICIES,
@@ -113,7 +114,9 @@ export const boardConfigSchema = z.strictObject({
   voting: z.strictObject({ exilePolicy: z.enum(EXILE_VOTE_POLICIES) }).optional(),
   knight: z.strictObject({ enabledWindows: z.array(z.enum(KnightDuelWindow)) }).optional(),
   hunter: z.strictObject({ deathActionPolicy: z.enum(DEATH_ACTION_POLICIES) }).optional(),
-  wolfKing: z.strictObject({ deathActionPolicy: z.enum(DEATH_ACTION_POLICIES) }).optional(),
+  wolfKing: z
+    .strictObject({ deathActionPolicy: z.enum(WOLF_KING_DEATH_ACTION_POLICIES) })
+    .optional(),
   gargoyle: z.strictObject({ inspectionPolicy: z.enum(INSPECTION_POLICIES) }).optional(),
   psychic: z.strictObject({ inspectionPolicy: z.enum(INSPECTION_POLICIES) }).optional(),
   mirrorGirl: z.strictObject({ inspectionPolicy: z.enum(INSPECTION_POLICIES) }).optional(),

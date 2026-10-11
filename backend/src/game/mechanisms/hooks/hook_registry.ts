@@ -3,6 +3,7 @@ import {
   EntityId,
   GameEvent,
   type DeathSources,
+  type Phase,
   type DeathShotSelection,
 } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
@@ -31,6 +32,7 @@ export interface DeathHookResult {
   charmLinks?: Array<{ binding: CharmBinding; nightEffect: boolean }>;
 }
 export interface DeathHookContext {
+  readonly deathOriginPhase?: Phase;
   nativeHunterShotTargets?: ReadonlySet<EntityId>;
   day?: number;
   deferShotCommit?: boolean;

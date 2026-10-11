@@ -287,6 +287,8 @@ export const en = Object.freeze({
     "Configured AWA inspection: another living target not in this instance’s lifetime history; history never resets. A clean tool-free pass closes this night without spending. Invalid replies are not a pass. Reports use the current rule role label.",
   "role.death_action.qualified":
     "Configured native gun: every nonempty death source must be knife, exile, shot or White Wolf blast; poison and every other or unknown source veto it. Copies and gifts keep their own policy.",
+  "role.death_action.day_deaths":
+    "Configured AWA native Wolf King gun: only deaths originating in Day or Voting qualify, with every nonempty source being knife, exile, shot or White Wolf blast. Night deaths announced by day, night-origin shot chains, missing origin, poison and other sources do not qualify. Even the last wolf completes death chains before victory; this is not the full LAL ruleset. Copies and gifts keep their own policy.",
   "role.death_action.knife_exile":
     "Configured AWA native gun: every nonempty death source must be knife or exile; shot, blast, poison and every other or unknown source veto it. Copies and gifts keep their own policy.",
 

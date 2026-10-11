@@ -107,11 +107,13 @@ export async function resolveDeathShots(
       continue;
     }
     const policy = rules.policy?.(state);
+    const deathPhase = context?.deathOriginPhase;
+    const nightEffect = context?.nightEffect;
     const causeIdentity = JSON.stringify(sources);
     if (
       !state.canShoot ||
       !rules.permits(sources) ||
-      (policy !== undefined && !permitsDeathShot(sources, policy))
+      (policy !== undefined && !permitsDeathShot(sources, policy, deathPhase))
     ) {
       consume();
       continue;
@@ -134,9 +136,12 @@ export async function resolveDeathShots(
       currentRole.privateState !== privateState ||
       rules.state(currentRole) !== state ||
       rules.policy?.(state) !== policy ||
+      context?.deathOriginPhase !== deathPhase ||
+      context?.nightEffect !== nightEffect ||
       JSON.stringify(deathSources[actorId] ?? []) !== causeIdentity ||
       !rules.permits(deathSources[actorId] ?? []) ||
-      (policy !== undefined && !permitsDeathShot(deathSources[actorId] ?? [], policy)) ||
+      (policy !== undefined &&
+        !permitsDeathShot(deathSources[actorId] ?? [], policy, deathPhase)) ||
       !state.canShoot ||
       world.getComponent(actorId, COMPONENT.Alive) !== actorLife ||
       actorLife.alive ||
@@ -203,6 +208,10 @@ export async function resolveDeathShots(
           role.privateState === privateState &&
           rules.state(role) === state &&
           rules.policy?.(state) === policy &&
+          context?.deathOriginPhase === deathPhase &&
+          context?.nightEffect === nightEffect &&
+          (policy === undefined ||
+            permitsDeathShot(deathSources[actorId] ?? [], policy, deathPhase)) &&
           world.getComponent(actorId, COMPONENT.Alive) === actorLife &&
           !actorLife.alive &&
           aliveLifeVersion(actorLife) === actorVersion &&

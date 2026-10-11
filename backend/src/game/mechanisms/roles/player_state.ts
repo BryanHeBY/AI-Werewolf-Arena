@@ -8,7 +8,7 @@ export interface PlayerGuardState {
   repeatPolicy?: GuardRepeatPolicy;
 }
 export interface PlayerHunterState {
-  deathActionPolicy?: import("../../../core/domain/board").DeathActionPolicy;
+  deathActionPolicy?: import("../../../core/domain/board").HunterDeathActionPolicy;
   canShoot: boolean;
 }
 export interface PlayerWolfKingState {
@@ -131,7 +131,12 @@ export function projectHunterState(state: unknown): PlayerHunterState {
   return projectGunState(state);
 }
 export function projectWolfKingState(state: unknown): PlayerWolfKingState {
-  return projectGunState(state);
+  return {
+    ...projectGunState(state),
+    ...(playerDataField(state, "deathActionPolicy") === "awa_day_deaths_v1"
+      ? { deathActionPolicy: "awa_day_deaths_v1" as const }
+      : {}),
+  };
 }
 export function projectWhiteWolfKingState(state: unknown): PlayerWhiteWolfKingState {
   return { canDetonate: playerDataField(state, "canDetonate") === true };

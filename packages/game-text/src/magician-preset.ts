@@ -20,7 +20,7 @@ function exact(v: unknown, expected: Record<string, unknown>): boolean {
     Object.entries(expected).every(([k, x]) => Object.hasOwn(v, k) && v[k] === x)
   );
 }
-/** Finite native twelve-player board. Gun eligibility is AWA, not LAL day-only. */
+/** Finite native twelve-player board; gun eligibility and night target mapping are independent. */
 export function isMagicianPreset(input: unknown): boolean {
   if (isWolfSorcererPreset(input)) return true;
   if (isTricksterPreset(input)) return true;
@@ -89,7 +89,8 @@ export function isMagicianPreset(input: unknown): boolean {
       return false;
     if (
       !exact(c.hunter, { deathActionPolicy: "awa_qualified_sources_v1" }) ||
-      !exact(c.wolfKing, { deathActionPolicy: "awa_qualified_sources_v1" }) ||
+      (!exact(c.wolfKing, { deathActionPolicy: "awa_qualified_sources_v1" }) &&
+        !exact(c.wolfKing, { deathActionPolicy: "awa_day_deaths_v1" })) ||
       !exact(c.seer, {
         targetPolicy: "awa_alive_v1",
         actionPolicy: "awa_required_when_legal_v1",

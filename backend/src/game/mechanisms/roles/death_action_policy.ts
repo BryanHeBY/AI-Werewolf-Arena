@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
   DEATH_ACTION_POLICIES,
+  WOLF_KING_DEATH_ACTION_POLICIES,
   type BoardConfig,
   type DeathActionPolicy,
 } from "../../../core/domain/board";
@@ -11,7 +12,9 @@ export function deathActionConfiguration(
   key: "hunter" | "wolfKing",
 ): NonNullable<RoleProfile["configuration"]> {
   const schema = z.strictObject({
-    deathActionPolicy: z.enum(DEATH_ACTION_POLICIES).default(DEFAULT_DEATH_ACTION_POLICY),
+    deathActionPolicy: z
+      .enum(key === "wolfKing" ? WOLF_KING_DEATH_ACTION_POLICIES : DEATH_ACTION_POLICIES)
+      .default(DEFAULT_DEATH_ACTION_POLICY),
   });
   return {
     schema,
@@ -26,8 +29,10 @@ export function renderDeathActionPolicy(
 ): string {
   return text(
     locale,
-    policy === "awa_knife_or_exile_v1"
-      ? "role.death_action.knife_exile"
-      : "role.death_action.qualified",
+    policy === "awa_day_deaths_v1"
+      ? "role.death_action.day_deaths"
+      : policy === "awa_knife_or_exile_v1"
+        ? "role.death_action.knife_exile"
+        : "role.death_action.qualified",
   );
 }

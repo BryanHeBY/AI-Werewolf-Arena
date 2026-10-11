@@ -258,6 +258,8 @@ export interface ActionRequestExtras {
   wolf_target?: EntityId | null;
   trigger?: string;
   death_phase?: Phase;
+  /** Native Wolf King policy origin; legacy death_phase remains the original wave annotation. */
+  death_origin_phase?: Phase;
   death_sources?: DeathCause[];
   death_action_id?: number;
   /** Private legal targets for this death-action request; not a public death announcement. */

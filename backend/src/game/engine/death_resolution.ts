@@ -161,6 +161,9 @@ export class DeathResolution {
       seen.add(id);
       initialPhases[id] = nightOrigin.has(id) ? Phase.Night : phase;
     }
+    const originPhases = new Map(
+      pending.map((id) => [id, initialPhases[id] ?? (nightOrigin.has(id) ? Phase.Night : phase)]),
+    );
     const publicLinkedInitial = [
       ...linkedInitial,
       ...(phase === Phase.Night ? [] : weddingInitial),
@@ -247,6 +250,9 @@ export class DeathResolution {
         const next = new Set<EntityId>();
         for (const deadId of pending) {
           if (!isCurrent()) return;
+          // Origin belongs to this death, independently of the current action phase.
+          const sourcePhase =
+            originPhases.get(deadId) ?? (nightOrigin.has(deadId) ? Phase.Night : deathPhase);
           const actions: DeathWaveActions = {
             phase: resolutionPhase,
             day: resolutionDay,
@@ -262,6 +268,7 @@ export class DeathResolution {
                 this.collectDeathShot(
                   actorId,
                   firstBatch ? (initialPhases[actorId] ?? deathPhase) : deathPhase,
+                  sourcePhase,
                   allSources,
                   actionProvider,
                   actions,
@@ -385,6 +392,7 @@ export class DeathResolution {
                   }
                   seen.add(id);
                   allSources[id] = [...new Set(proposedSources[id] ?? [])];
+                  originPhases.set(id, sourcePhase);
                   this.markPlayersDead([id], false, gunsToExpire, revealCurrent());
                   newlyMarked = true;
                   if (shot) {
@@ -421,19 +429,20 @@ export class DeathResolution {
                 nightEffects?.dreams?.recordDeaths([...next, ...linked], this.events);
                 for (const permit of actions.permits.splice(0)) permit.close();
               },
-              {
+              Object.freeze({
                 day: resolutionDay,
                 nativeHunterShotTargets,
                 deferShotCommit: true,
+                deathOriginPhase: sourcePhase,
                 nightEffect: nightOrigin.has(deadId),
-                blocksNightShot: (targetId) =>
+                blocksNightShot: (targetId: EntityId) =>
                   (nightEffects?.blocksPassiveNightShot?.(targetId) ?? false) ||
                   (nightEffects?.dreams?.blocksNightShot(this.world, targetId) ?? false),
-                blocksNightCharm: (targetId) =>
+                blocksNightCharm: (targetId: EntityId) =>
                   nightEffects?.dreams?.blocksNightCharm(this.world, targetId, seen) ?? false,
                 eligibleDead: seen,
                 isCurrent,
-              },
+              }),
             );
           } finally {
             for (const permit of actions.permits) permit.close();
@@ -451,6 +460,7 @@ export class DeathResolution {
   private async collectDeathShot(
     actorId: EntityId,
     deathPhase: Phase,
+    deathOriginPhase: Phase,
     sources: DeathSources,
     actionProvider: ActionProvider,
     actions: DeathWaveActions,
@@ -491,7 +501,7 @@ export class DeathResolution {
             : undefined) === nativeState &&
         (nativeState.deathActionPolicy ?? "awa_qualified_sources_v1") === nativePolicy &&
         JSON.stringify(sources[actorId] ?? []) === causeIdentity &&
-        permitsDeathShot(sources[actorId] ?? [], nativePolicy));
+        permitsDeathShot(sources[actorId] ?? [], nativePolicy, deathOriginPhase));
     const gunCurrent = gun
       ? captureDeathGun(this.world, actorId, gun, actions.day, isCurrent).isEligible
       : isCurrent;
@@ -538,6 +548,7 @@ export class DeathResolution {
           ...(abilityId === undefined ? {} : { ability_id: abilityId }),
           trigger: "on_death",
           death_phase: deathPhase,
+          ...(nativePolicy === "awa_day_deaths_v1" ? { death_origin_phase: deathOriginPhase } : {}),
           death_sources: [...(sources[actorId] ?? [])],
           death_action_id: permit.id,
           shoot_candidates: [...targets.keys()].filter((id) => id !== actorId),

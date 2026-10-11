@@ -41,7 +41,7 @@ export interface GuardState {
 
 /** 猎人私有状态。 */
 export interface HunterState {
-  deathActionPolicy?: import("../../../core/domain/board").DeathActionPolicy;
+  deathActionPolicy?: import("../../../core/domain/board").HunterDeathActionPolicy;
   canShoot: boolean;
 }
 export interface WolfKingState {

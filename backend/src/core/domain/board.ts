@@ -77,7 +77,12 @@ export type SeerActionPolicy = (typeof SEER_ACTION_POLICIES)[number];
 export const DEFAULT_SEER_ACTION_POLICY: SeerActionPolicy = "awa_required_when_legal_v1";
 
 export const DEATH_ACTION_POLICIES = ["awa_qualified_sources_v1", "awa_knife_or_exile_v1"] as const;
-export type DeathActionPolicy = (typeof DEATH_ACTION_POLICIES)[number];
+export type HunterDeathActionPolicy = (typeof DEATH_ACTION_POLICIES)[number];
+export const WOLF_KING_DEATH_ACTION_POLICIES = [
+  ...DEATH_ACTION_POLICIES,
+  "awa_day_deaths_v1",
+] as const;
+export type DeathActionPolicy = (typeof WOLF_KING_DEATH_ACTION_POLICIES)[number];
 export const INSPECTION_POLICIES = [
   "awa_unique_required_v1",
   "awa_repeat_optional_v1",
@@ -163,7 +168,7 @@ export interface BoardConfig {
   sheriff?: SheriffConfig;
   witch?: WitchConfig;
   seer?: { targetPolicy: SeerTargetPolicy; actionPolicy: SeerActionPolicy };
-  hunter?: { deathActionPolicy: DeathActionPolicy };
+  hunter?: { deathActionPolicy: HunterDeathActionPolicy };
   wolfKing?: { deathActionPolicy: DeathActionPolicy };
   gargoyle?: { inspectionPolicy: InspectionPolicy };
   psychic?: { inspectionPolicy: InspectionPolicy };

@@ -1,3 +1,4 @@
+import { Phase } from "./identity";
 import type { DeathActionPolicy } from "./board";
 import type { NightLifeScope } from "./night_effects";
 /** Death facts are distinct from transient protection/damage marks. */
@@ -43,8 +44,16 @@ export type DeathShotSelection =
 export function permitsDeathShot(
   sources: readonly DeathCause[],
   policy: DeathActionPolicy = "awa_qualified_sources_v1",
+  deathPhase?: Phase,
 ): boolean {
-  if (policy !== "awa_qualified_sources_v1" && policy !== "awa_knife_or_exile_v1") return false;
+  if (policy === "awa_day_deaths_v1" && deathPhase !== Phase.Day && deathPhase !== Phase.Voting)
+    return false;
+  if (
+    policy !== "awa_qualified_sources_v1" &&
+    policy !== "awa_knife_or_exile_v1" &&
+    policy !== "awa_day_deaths_v1"
+  )
+    return false;
   return (
     sources.length > 0 &&
     sources.every(
@@ -53,7 +62,7 @@ export function permitsDeathShot(
         source === DeathCause.MechanicalKnife ||
         source === DeathCause.AwakenedHiddenKnife ||
         source === DeathCause.Exile ||
-        (policy === "awa_qualified_sources_v1" &&
+        (policy !== "awa_knife_or_exile_v1" &&
           (source === DeathCause.Shot || source === DeathCause.WhiteWolfBlast)),
     )
   );

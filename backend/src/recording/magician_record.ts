@@ -6,8 +6,9 @@ import {
   readMagicianOwnExchangeFact,
   readDeathShotMissFact,
 } from "@ai-werewolf-arena/game-text";
-import { Camp, Role, Phase, DeathCause, permitsDeathShot } from "../core/domain";
+import { Camp, Role, Phase, DeathCause } from "../core/domain";
 import type { RecordedDecision, ReproductionRecord } from "./reproduction";
+import { inferMagicianGunSources } from "./magician_action_evidence";
 const exchange = "magician_exchange_committed",
   miss = "death_shot_missed";
 function assert(value: unknown): asserts value {
@@ -131,6 +132,29 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
   const nightAlive = new Map<number, number[]>(),
     nightOrigins = new Set<number>(),
     gunEvents = new Set<number>();
+  // Independent evidence ledger: never reuse the engine's eligibility predicate.
+  const deathFacts = new Map<number, { day: number; phase: Phase; sources: DeathCause[] }>();
+  const gunPolicy = (id: number) =>
+    original.get(id)?.role === Role.WolfKing
+      ? (board.wolfKing?.deathActionPolicy ?? "awa_qualified_sources_v1")
+      : (board.hunter?.deathActionPolicy ?? "awa_qualified_sources_v1");
+  const qualified = (id: number, sources: readonly DeathCause[], origin: Phase): boolean => {
+    const policy = gunPolicy(id);
+    if (policy === "awa_day_deaths_v1" && origin !== Phase.Day && origin !== Phase.Voting)
+      return false;
+    return (
+      sources.length > 0 &&
+      sources.every(
+        (source) =>
+          source === DeathCause.WolfKill ||
+          source === DeathCause.MechanicalKnife ||
+          source === DeathCause.AwakenedHiddenKnife ||
+          source === DeathCause.Exile ||
+          (policy !== "awa_knife_or_exile_v1" &&
+            (source === DeathCause.Shot || source === DeathCause.WhiteWolfBlast)),
+      )
+    );
+  };
   const causes = new Map<number, DeathCause[]>(),
     votes = new Map<number, number | null>();
   let healed: number | null = null,
@@ -424,6 +448,7 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
           ...expected.get(id)!,
           ...(pendingBlasts.has(id) ? [DeathCause.SelfDestruct] : []),
         ]);
+        deathFacts.set(id, { day, phase: Phase.Night, sources: [...causes.get(id)!] });
       }
     }
     if (e.type === "voted_out" || e.type === "wolf_self_destruct") {
@@ -433,6 +458,11 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
       alive.delete(id);
       nightOrigins.delete(id);
       causes.set(id, [e.type === "voted_out" ? DeathCause.Exile : DeathCause.SelfDestruct]);
+      deathFacts.set(id, {
+        day,
+        phase: e.type === "voted_out" ? Phase.Voting : Phase.Day,
+        sources: [...causes.get(id)!],
+      });
     }
     if (e.type === "hunter_shot" || e.type === "wolf_king_shot" || e.type === miss) {
       const id = e.type === "hunter_shot" ? e.payload.hunterId : e.payload.actorId;
@@ -446,7 +476,7 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
               : original.get(id)?.role),
       );
       assert(original.get(id)?.role === Role.Hunter || original.get(id)?.role === Role.WolfKing);
-      assert(permitsDeathShot(causes.get(id) ?? [], "awa_qualified_sources_v1"));
+      assert(qualified(id, causes.get(id) ?? [], nightOrigins.has(id) ? Phase.Night : Phase.Day));
       const ds = shotDecision(id);
       assert(ds.length === 1);
       const d = ds[0]!;
@@ -487,6 +517,11 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
         assert(e.payload.targetId === mapped && alive.has(mapped));
         alive.delete(mapped);
         causes.set(mapped, [DeathCause.Shot]);
+        deathFacts.set(mapped, {
+          day,
+          phase: nightOrigins.has(id) ? Phase.Night : phase,
+          sources: [DeathCause.Shot],
+        });
         if (nightOrigins.has(id)) nightOrigins.add(mapped);
         else nightOrigins.delete(mapped);
       }
@@ -507,8 +542,72 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
       }
   }
   const checkpointedCycle = Math.max(0, ...record.checkpoints.map((cp) => cp.cycle));
+  const requestedGuns = new Set<number>();
   for (const d of record.decisions) {
     const unpublished = !record.finalized && d.day > checkpointedCycle;
+    if (
+      ["hunter_shot", "death_shot"].includes(d.stage) ||
+      d.request.allowedTools.includes("shoot")
+    ) {
+      assert(!requestedGuns.has(d.actorId));
+      requestedGuns.add(d.actorId);
+      const fact = deathFacts.get(d.actorId),
+        role = original.get(d.actorId)?.role;
+      assert(role === Role.Hunter || role === Role.WolfKing);
+      assert(
+        d.stage === (role === Role.Hunter ? "hunter_shot" : "death_shot") &&
+          d.request.actorId === d.actorId &&
+          d.request.context.day === d.day &&
+          d.request.context.stage === d.stage &&
+          equal(d.request.allowedTools, ["shoot"]),
+      );
+      const sources = d.request.context.death_sources;
+      const previous = record.checkpoints.find((cp) => cp.cycle === d.day - 1 && cp.complete);
+      const living =
+        nightAlive.get(d.day) ?? previous?.players.filter((p) => p.alive).map((p) => p.id);
+      assert(living && Array.isArray(sources) && d.request.context.ability_id === undefined);
+      const inferred = inferMagicianGunSources(record, d, living);
+      assert(inferred && equal([...sources].sort(), [...inferred.sources].sort()));
+      const origin = inferred.origin;
+      assert(qualified(d.actorId, sources, origin));
+      assert(
+        origin === Phase.Night
+          ? d.request.phase === Phase.Night || d.request.phase === Phase.Day
+          : d.request.phase === origin,
+      );
+      const legacyPhase = sources.includes(DeathCause.Shot) ? d.request.phase : origin;
+      assert(d.request.context.death_phase === legacyPhase);
+      if (gunPolicy(d.actorId) === "awa_day_deaths_v1")
+        assert(d.request.context.death_origin_phase === origin);
+      else if (d.request.context.death_origin_phase !== undefined)
+        assert(d.request.context.death_origin_phase === origin);
+      // The factory still supplies its visible death announcement; actions prove its content.
+      assert(
+        d.request.context.visible_events.some(
+          (e) =>
+            (sources.includes(DeathCause.Exile) &&
+              e.type === "voted_out" &&
+              e.payload.target === d.actorId) ||
+            (sources.includes(DeathCause.WolfKill) &&
+              e.type === "night_resolved" &&
+              Array.isArray(e.payload.deaths) &&
+              e.payload.deaths.includes(d.actorId)) ||
+            (sources.includes(DeathCause.Shot) &&
+              (e.type === "hunter_shot" ||
+                e.type === "wolf_king_shot" ||
+                e.type === "player_shot") &&
+              e.payload.targetId === d.actorId),
+        ),
+      );
+      if (fact)
+        assert(
+          fact.day === d.day &&
+            qualified(d.actorId, fact.sources, fact.phase) &&
+            origin === fact.phase &&
+            equal([...sources].sort(), [...fact.sources].sort()),
+        );
+      else assert(unpublished);
+    }
     if (d.request.phase === Phase.Day || d.request.phase === Phase.Voting) {
       const previous = record.checkpoints.find((cp) => cp.cycle === d.day - 1 && cp.complete);
       const living =
@@ -671,7 +770,12 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
         const stock = state as Record<string, unknown>;
         assert(
           Object.keys(p.privateState).length === 1 &&
-            Object.keys(stock).length === 1 &&
+            Object.keys(stock).sort().join(",") ===
+              (gunPolicy(id) === "awa_qualified_sources_v1"
+                ? "canShoot"
+                : "canShoot,deathActionPolicy") &&
+            (gunPolicy(id) === "awa_qualified_sources_v1" ||
+              stock.deathActionPolicy === gunPolicy(id)) &&
             typeof stock.canShoot === "boolean",
         );
         const decisions = record.decisions.filter(

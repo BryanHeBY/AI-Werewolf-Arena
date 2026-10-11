@@ -300,6 +300,7 @@ const requestSchema = z.strictObject({
     wolf_target: positive.nullable().optional(),
     trigger: z.string().optional(),
     death_phase: z.enum(Phase).optional(),
+    death_origin_phase: z.enum(Phase).optional(),
     death_sources: z.array(z.enum(DeathCause)).optional(),
     death_action_id: positive.optional(),
     modifier_modes: z.array(z.enum(["enhance", "weaken"])).optional(),
