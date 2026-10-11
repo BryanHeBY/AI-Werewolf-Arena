@@ -1,4 +1,5 @@
 import { castShelter, swallowSkill } from "./radiant_eclipse";
+import { chooseServant, protectSecretBody } from "./noble_secret_body";
 import { modifySkill, bonusAction } from "./native";
 import { castMist, useSnake, ravenKnife } from "./mist_raven";
 import { lockTime } from "./native";
@@ -63,6 +64,8 @@ import {
 
 /** Preserve protocol-independent priority and RNG order for strict Tape reproducibility. */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
+  { tool: "choose_servant", decide: chooseServant },
+  { tool: "protect_secret_body", decide: protectSecretBody },
   { tool: "cast_shelter", decide: castShelter },
   { tool: "swallow_skill", decide: swallowSkill },
   { tool: "cast_mist", decide: castMist },

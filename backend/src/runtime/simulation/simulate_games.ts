@@ -60,6 +60,18 @@ function branchCounts(events: readonly GameEvent[]): Record<string, number> {
           ? `${event.type}.${event.payload.abstain ? "skip" : "protect"}`
           : event.type;
     counts[key] = (counts[key] ?? 0) + 1;
+    if (event.type === "noble_servant_chosen" || event.type === "secret_body_chosen") {
+      const choice = `${event.type}.${event.payload.targetId === null ? "pass" : "select"}`;
+      counts[choice] = (counts[choice] ?? 0) + 1;
+    }
+    if (event.type === "noble_contract_closed") {
+      const terminal = `${event.type}.${event.payload.status}`;
+      counts[terminal] = (counts[terminal] ?? 0) + 1;
+    }
+    if (event.type === "secret_body_blocked") {
+      const cause = `${event.type}.${event.payload.cause}`;
+      counts[cause] = (counts[cause] ?? 0) + 1;
+    }
     if (
       event.type === "radiant_shelter_chosen" ||
       event.type === "eclipse_swallowed" ||
