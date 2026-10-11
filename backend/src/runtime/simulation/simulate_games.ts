@@ -60,6 +60,22 @@ function branchCounts(events: readonly GameEvent[]): Record<string, number> {
           ? `${event.type}.${event.payload.abstain ? "skip" : "protect"}`
           : event.type;
     counts[key] = (counts[key] ?? 0) + 1;
+    if (
+      event.type === "alchemist_mist_chosen" ||
+      event.type === "alchemist_snake_chosen" ||
+      event.type === "raven_knife_chosen"
+    ) {
+      const spent =
+        event.type === "alchemist_mist_chosen"
+          ? event.payload.targetIds !== null
+          : event.payload.targetId !== null;
+      const outcome = `${event.type}.${spent ? "spend" : "pass"}`;
+      counts[outcome] = (counts[outcome] ?? 0) + 1;
+      if (spent && event.payload.day > 1) {
+        const delayed = `${event.type}.later_spend`;
+        counts[delayed] = (counts[delayed] ?? 0) + 1;
+      }
+    }
   }
   return counts;
 }

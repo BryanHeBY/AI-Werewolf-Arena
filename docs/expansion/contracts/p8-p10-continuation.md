@@ -154,3 +154,7 @@ runner逐请求预算与资源关闭快照提交 `ea5ebf2`；本批新角色80�
 ## P9d 并行自爆记录接续
 
 多种子暴露同批多份自爆意图的记录问题已按唯一最低有效号码修复，并核整个批次（含null）完成、真实资格与未发布因果。三路复查和173项门禁见[并行账本](../reviews/p9-mist-raven-parallel-blast.md)。引擎规则未改变；固定种子/前端交付接续，角色planned、44/64与P9d–P10目标保持。
+
+## P9d 受限观察固定种子接续
+
+50固定seed两语100局完成实际录制与严格重放；DTO隔离、有效消费/保留/后夜计数、全弃刀与第2夜抽刀群体证据见[观察模拟](../reviews/p9-mist-raven-observed-simulation.md)。下一步真实前端fixture和God/owner/非owner授权、frame/seek/Chromium，不能把当前God工作台席位筛选称作玩家视角。角色planned、44/64仍保持，所有后续任务继续。

@@ -6,7 +6,10 @@ export const speak_to_wolves: ObservedToolHandler = (context) => {
 };
 
 export const kill_vote: ObservedToolHandler = (context) => {
-  const { teammateIds, others, pick, request } = context;
+  const { teammateIds, others, pick, request, style } = context;
+  // This candidate field is explicit only on the finite Mist Raven board.
+  if (request.context.wolf_kill_candidates !== undefined && style === "conservative")
+    return { name: "kill_vote", args: { target_id: null, abstain: true } };
   const target =
     request.context.wolf_kill_candidates !== undefined
       ? pick([...request.context.wolf_kill_candidates])

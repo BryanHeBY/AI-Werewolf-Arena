@@ -630,3 +630,7 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 ## P9d 并行自爆记录接续
 
 固定种子暴露的并行自爆意图/实际选择混淆已修复，六个中英人工完整局与未发布同批因果/身份反例通过三路复查；173项受影响门禁全绿，见[并行自爆账本](reviews/p9-mist-raven-parallel-blast.md)。引擎规则不变，角色仍planned、44/64。接续固定种子受限观察与实际前端交付，不推送。
+
+## P9d 受限观察固定种子接续
+
+50固定seed两语100真实完整局自然结束、零拒绝/回退且逐局严格Tape；消费/保留/后夜消费及保守弃刀抽刀群体覆盖已审查，见[观察模拟](reviews/p9-mist-raven-observed-simulation.md)。额外seed6只做重复摘要，未夸大严格重放数量。接续实际前端fixtures/私有与非owner视角/逐帧seek/Chromium，角色planned、44/64不变，其余P9d–P10继续，不推送。
