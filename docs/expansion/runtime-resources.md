@@ -118,6 +118,8 @@ Runner 失败场景通过真实十二人阶段验证：一名等待、两名分�
 
 ## P10 待执行的夹具与资源验收（2026-10-11）
 
+**当前接续状态**：下段保留提出要求时的历史起点。第 1–4 项已具备 [逐请求预算](reviews/p10-request-budget.md)、[迷雾实际失败／到达／MCP 与物理回收](reviews/p9-mist-raven-failure-transport.md) 证据；普通请求十秒，只有字面选定回合一秒，重试共用绝对截止时间。监听器用 [原会话所有权检查](reviews/p10-control-owner-probe.md) 区分真正关闭与不同 owner 复用端口，不能再以纯 TCP connected 单独判泄漏。对应同源全量门禁见[迷雾完整验收](reviews/p9-mist-raven-stage-acceptance.md)。第 5 项发布级长局／并行 FD、子孙、RSS 趋势仍待完成；T6 仍需要明确隔离配置与预算，不因当前局部回收绿色而关闭 P10。
+
 本节为追加验收要求，尚未登记为实现或通过。只读审查发现失败通路夹具当前把整局所有回合压到 1000ms，普通请求的初始化／排队可能先超时；历史串行复跑通过不足以证明某一次失败的根因。后续按两笔可构建边界落实：
 
 1. **精确失败回合**：普通回合保留 10000ms，仅字面计划中的 late 回合按 actor、day、stage、引擎请求序号收紧至 1000ms；与原请求及整局 deadline 取最早值，重试不刷新。选择器只属于该局测试依赖，不进入玩家 DTO／JSON 配置，不使用全局 spy。沿用 runner 唯一 deadline clone 和全部 authority inheritance。missing 走现有有限重试／prompt 完成失败，不普遍缩短正常请求。

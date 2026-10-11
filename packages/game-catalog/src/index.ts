@@ -297,17 +297,17 @@ export const ROLE_DEFINITIONS = [
   {
     id: "alchemist",
     names: { "zh-CN": "炼金魔女", en: "Alchemist" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-mist-raven-twelve-v1.md",
     mechanismSummary: "刀口约束、特殊救人流程",
   },
   {
     id: "raven_claw_wolf",
     names: { "zh-CN": "狼鸦之爪", en: "Raven-Claw Wolf" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-mist-raven-twelve-v1.md",
     mechanismSummary: "解封、特殊攻击",
   },
   {
