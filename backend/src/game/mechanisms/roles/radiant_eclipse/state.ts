@@ -1,6 +1,10 @@
 import { types } from "node:util";
 
 export const RADIANT_ECLIPSE_POLICY = "awa_radiant_eclipse_v1" as const;
+export interface EclipseSuppression {
+  policy: typeof RADIANT_ECLIPSE_POLICY;
+  day: number;
+}
 export interface ShelterState {
   policy: typeof RADIANT_ECLIPSE_POLICY;
   lastTarget: number | null;

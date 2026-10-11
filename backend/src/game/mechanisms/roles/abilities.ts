@@ -89,6 +89,8 @@ type NightAbilityUnion = {
     uses: number;
     lastUsedDay: number | null;
     disabled: boolean;
+    /** A finite night lease owns this blocker independently of persistent disablement. */
+    nightSuppression?: import("./radiant_eclipse/state").EclipseSuppression;
     /** Miracle gifts act in their own late slot; ordinary instances omit this policy. */
     activation?: "lucky" | "black_market";
     /** An actual death permanently expires a lucky gift, including after transfer/revival. */
@@ -165,8 +167,14 @@ export function allNightAbilities(role: RoleComponent | undefined): NightAbility
     : [];
 }
 
+/** Malformed or accessor blockers stay disabled without executing foreign getters. */
+function nightAbilityDisabled(ability: NightAbility): boolean {
+  const blocker = Object.getOwnPropertyDescriptor(ability, "nightSuppression");
+  return ability.disabled || (!!blocker && (!("value" in blocker) || blocker.value !== undefined));
+}
+
 export function abilityStatus(ability: NightAbility, day: number): AbilityStatus {
-  if (ability.disabled || ability.deathExpired) return "disabled";
+  if (nightAbilityDisabled(ability) || ability.deathExpired) return "disabled";
   if (day < ability.startsOnDay) return "pending";
   if (ability.expiresAfterDay !== undefined && day > ability.expiresAfterDay) return "expired";
   if (ability.maxUses !== null && ability.uses >= ability.maxUses) return "spent";
@@ -281,7 +289,10 @@ export function nightAbilityActors<K extends NightAbilityKind>(
 }
 
 export type PlayerNightAbility = {
-  [K in NightAbilityKind]: Omit<NightAbility<K>, "source" | "sourceDisclosed" | "state"> & {
+  [K in NightAbilityKind]: Omit<
+    NightAbility<K>,
+    "source" | "sourceDisclosed" | "state" | "nightSuppression"
+  > & {
     state: PlayerNightAbilityStates[K];
     source: AbilitySource | { kind: AbilitySource["kind"] };
     status: AbilityStatus;
@@ -296,7 +307,7 @@ export function projectNightAbility(ability: NightAbility, day: number): PlayerN
     maxUses: ability.maxUses,
     uses: ability.uses,
     lastUsedDay: ability.lastUsedDay,
-    disabled: ability.disabled,
+    disabled: nightAbilityDisabled(ability),
     ...(ability.activation === undefined ? {} : { activation: ability.activation }),
     ...(ability.deathExpired === undefined ? {} : { deathExpired: ability.deathExpired }),
     status: abilityStatus(ability, day),
