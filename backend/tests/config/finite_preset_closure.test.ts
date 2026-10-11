@@ -12,6 +12,7 @@ import { checkConfig } from "../../src/runtime/cli/check_config";
 import { createTestTempDirectory } from "../support/temp_directory";
 
 const cases = [
+  ["awa_mist_raven_12_v1", "mist_raven"],
   ["awa_trickster_12_v1", "trickster"],
   ["awa_scholar_mentor_12_v1", "scholar_mentor"],
   ["awa_time_consort_12_v1", "time_consort"],
