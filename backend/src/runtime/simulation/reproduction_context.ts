@@ -1,3 +1,9 @@
+import { nobleBodyCheckpointSchema } from "../../recording/noble_secret_body_checkpoint";
+import {
+  checkpointNobleBodyAuthority,
+  isNobleBodyBoard,
+} from "../../game/mechanisms/roles/noble_secret_body/authority";
+import { getSessionRecorder } from "../../recording/recording_context";
 import { demonHunterCheckpointPlayers } from "../../game/mechanisms/roles/demon_hunter/authority";
 import {
   weddingSetup,
@@ -96,12 +102,23 @@ export function captureCheckpoint(
   complete: boolean,
   eventCount: number,
   failure?: unknown,
+  cursors?: { settlementCount: number; decisionCount: number },
 ): RecordedCheckpoint {
   const ghostBrideSetup = weddingSetup(world);
   const lonelyGirlSetup = projectLonelyGirlSetup(world);
   const thiefSetup = projectThiefSetup(world),
     shapeshifterSetup = projectShapeshifterSetup(world);
   return {
+    ...(isNobleBodyBoard(world)
+      ? {
+          nobleBody: nobleBodyCheckpointSchema.parse(checkpointNobleBodyAuthority(world, complete)),
+          operationCount: getSessionRecorder()?.reproductionOperationCount ?? 0,
+          settlementCount:
+            cursors?.settlementCount ?? getSessionRecorder()?.reproductionSettlementCount ?? 0,
+          decisionCount:
+            cursors?.decisionCount ?? getSessionRecorder()?.reproductionDecisionCount ?? 0,
+        }
+      : {}),
     ...(lonelyGirlSetup ? { lonelyGirlSetup } : {}),
     ...(ghostBrideSetup ? { ghostBrideSetup } : {}),
     ...(thiefSetup ? { thiefSetup } : {}),
@@ -234,7 +251,9 @@ export function beginGameReproduction(
         };
       }),
     },
-    options.boardConfig.radiantEclipse ? () => context.phaseManager.getEvents() : undefined,
+    options.boardConfig.radiantEclipse || options.boardConfig.nobleSecretBody
+      ? () => context.phaseManager.getEvents()
+      : undefined,
   );
   trace.checkpoint(initial, context.phaseManager.getEvents());
   return trace;

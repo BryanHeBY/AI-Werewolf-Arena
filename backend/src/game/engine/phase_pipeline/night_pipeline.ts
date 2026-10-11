@@ -1,4 +1,5 @@
 import {
+  checkpointNobleBodyAuthority,
   beginNobleBodyNight,
   abortNobleBodyNight,
   assertNobleBodyRosterCurrent,
@@ -123,6 +124,7 @@ import {
   NightStageRegistry,
   NightStageState,
 } from "../../mechanisms";
+import { getSessionRecorder } from "../../../recording/recording_context";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { GameActionRequestFactory } from "../action_request_factory";
 import { createRandom, shuffled, type RandomSource } from "../../../core/domain/random";
@@ -246,6 +248,25 @@ export class NightPipeline {
         const notices = beginNobleBodyNight(this.world, day, isCurrent);
         nobleAcquired = true;
         appendNobleBodyNotices(this.events, notices);
+        const payload = {
+          policy: "awa_noble_secret_body_v1" as const,
+          actorId: checkpointNobleBodyAuthority(this.world, true).nobleId,
+          day,
+          notifiedActorIds: notices.map((n) => n.actorId),
+        };
+        this.events.push({
+          timestamp: Date.now(),
+          type: "noble_body_night_opened",
+          payload,
+          audience: Object.freeze([]),
+        });
+        getSessionRecorder()?.recordRequiredLogicOp({
+          scope: "phase_pipeline",
+          op: "noble_body_night_opened",
+          phase: Phase.Night,
+          status: "ok",
+          output: payload,
+        });
       }
       if (ownsRadiant) {
         beginRadiantNight(this.world, day);
@@ -482,6 +503,26 @@ export class NightPipeline {
         mechanicalEffects: stageState.mechanicalEffects,
         awakenedEffects: stageState.awakenedEffects,
       });
+      if (ownsNoble) {
+        const payload = {
+          policy: "awa_noble_secret_body_v1" as const,
+          actorId: checkpointNobleBodyAuthority(this.world, false).bodyId,
+          day,
+        };
+        this.events.push({
+          timestamp: Date.now(),
+          type: "noble_body_native_damage_committed",
+          payload,
+          audience: Object.freeze([]),
+        });
+        getSessionRecorder()?.recordRequiredLogicOp({
+          scope: "resolution",
+          op: "noble_body_native_damage_committed",
+          phase: Phase.Night,
+          status: "ok",
+          output: payload,
+        });
+      }
       assertReadable();
       for (const reflection of damage.poisonReflections ?? [])
         this.events.push({

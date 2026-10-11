@@ -1,3 +1,4 @@
+import { getSessionRecorder } from "../../recording/recording_context";
 import {
   isNobleBodyBoard,
   closeServantForDeath,
@@ -186,7 +187,13 @@ export class DeathResolution {
       while (pending.length > 0) {
         if (!isCurrent()) return;
         const deathPhase = firstBatch ? phase : this.state.phase;
-        this.markPlayersDead(pending, true, gunsToExpire, revealPolicy === "netease_2017_open_v1");
+        this.markPlayersDead(
+          pending,
+          true,
+          gunsToExpire,
+          revealPolicy === "netease_2017_open_v1",
+          allSources,
+        );
         resolveWildChildDeathWave(
           this.world,
           pending,
@@ -398,7 +405,7 @@ export class DeathResolution {
                   seen.add(id);
                   allSources[id] = [...new Set(proposedSources[id] ?? [])];
                   originPhases.set(id, sourcePhase);
-                  this.markPlayersDead([id], false, gunsToExpire, revealCurrent());
+                  this.markPlayersDead([id], false, gunsToExpire, revealCurrent(), allSources);
                   newlyMarked = true;
                   if (shot) {
                     if (shot.event.type === "hunter_shot") nativeHunterShotTargets.add(id);
@@ -738,6 +745,7 @@ export class DeathResolution {
     refreshInheritance = true,
     gunsToExpire: ReturnType<typeof firstDeathGuns> = [],
     reveal = false,
+    sources: DeathSources = {},
   ): void {
     for (const id of playerIds) {
       const alive = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive);
@@ -749,6 +757,30 @@ export class DeathResolution {
       alive.alive = false;
       if (firstSettlement && isNobleBodyBoard(this.world)) {
         const closed = closeServantForDeath(this.world, this.state.day, id);
+        const payload = {
+          policy: "awa_noble_secret_body_v1" as const,
+          actorId: id,
+          day: this.state.day,
+          causes: [...(sources[id] ?? [])],
+        };
+        this.events.push({
+          timestamp: Date.now(),
+          type: "noble_body_death_committed",
+          payload,
+          audience: Object.freeze([]),
+        });
+        getSessionRecorder()?.recordRequiredLogicOp({
+          scope: "resolution",
+          op: "noble_body_death_committed",
+          phase: this.state.phase,
+          status: "ok",
+          output: {
+            policy: payload.policy,
+            playerId: id,
+            day: payload.day,
+            causes: payload.causes,
+          },
+        });
         if (closed)
           appendNobleContractClosure(
             this.world,

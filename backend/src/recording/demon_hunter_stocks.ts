@@ -1,3 +1,4 @@
+import type { NobleRecordAudit } from "./noble_secret_body_record";
 import type { RedMoonRecordAudit } from "./red_moon_record";
 import { readDemonHunterState } from "@ai-werewolf-arena/game-text";
 import { Role, Camp } from "../core/domain";
@@ -36,19 +37,34 @@ function native(role: Role, kind: string, state: Record<string, unknown>) {
 export function validateDemonNativeStocks(
   record: ReproductionRecord,
   redMoon: RedMoonRecordAudit | null = null,
+  noble: NobleRecordAudit | null = null,
 ): void {
-  for (const cp of record.checkpoints) validateCheckpoint(record, cp, redMoon);
+  for (const cp of record.checkpoints) validateCheckpoint(record, cp, redMoon, noble);
 }
 function validateCheckpoint(
   record: ReproductionRecord,
   cp: RecordedCheckpoint,
   redMoon: RedMoonRecordAudit | null,
+  noble: NobleRecordAudit | null,
 ): void {
   const original = new Map(record.metadata.players.map((p) => [p.id, p]));
   for (const p of cp.players) {
     const initial = original.get(p.id);
     assert(initial);
     if (cp.cycle === 0) assert(cp.complete && p.alive);
+    if (initial.role === Role.NightNoble || initial.role === Role.AwakenedIdiot) {
+      assert(noble);
+      const expected = noble.at(cp);
+      assert(
+        stable(p.privateState) ===
+          stable(
+            initial.role === Role.NightNoble
+              ? { noble: expected.noble }
+              : { secretBody: expected.body },
+          ),
+      );
+      continue;
+    }
     if (String(initial.role) === "red_moon_apostle") {
       assert(
         redMoon && stable(p.privateState) === stable({ redMoon: redMoon.stateAt(cp.eventCount) }),

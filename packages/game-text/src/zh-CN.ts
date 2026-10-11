@@ -1,5 +1,16 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "event.noble_body_night_opened": "[God] 第{day}夜所有权已打开。",
+  "event.noble_body_knife_committed": "[God] 第{day}夜狼刀标记已提交：{target}",
+  "event.noble_body_native_damage_committed": "[God] 第{day}夜原生伤害已结算，刀药标记已清除。",
+  "replay.stage.noble_body_knife_committed": "狼刀标记提交",
+  "replay.stage.noble_body_native_damage_committed": "原生伤害结算提交",
+  "event.noble_body_sources_committed": "[God] 第{day}夜有效来源已提交：{state}",
+  "event.noble_body_death_committed": "[God] 第{day}夜／日{actor}号实际死亡：{causes}",
+  "replay.stage.noble_body_night_opened": "夜间所有权提交",
+  "replay.stage.noble_body_sources_committed": "有效夜伤提交",
+  "replay.stage.noble_body_death_committed": "实际死亡提交",
+
   "role.night_noble.brief":
     "夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。",
   "role.awakened_idiot.brief":

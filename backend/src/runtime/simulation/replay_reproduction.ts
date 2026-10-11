@@ -55,6 +55,14 @@ class RecordedActions implements ActionProvider {
   private readonly consumed = new Set<string>();
   private readonly openings = new Map<number, Set<string>>();
   private nextSettlement = 1;
+  private eventCursor?: () => number;
+  setEventCursor(cursor: () => number): void {
+    if (this.eventCursor) throw Error("reproduction_provider_cursor_already_bound");
+    this.eventCursor = cursor;
+  }
+  get cursors() {
+    return { settlementCount: this.nextSettlement - 1, decisionCount: this.consumed.size };
+  }
   private settlementScheduled = false;
   private deadlockTimer?: ReturnType<typeof setTimeout>;
   private readonly total: number;
@@ -113,6 +121,11 @@ class RecordedActions implements ActionProvider {
       decision!.openedAfterSettlement === this.nextSettlement - 1,
       "reproduction_opening_boundary_mismatch",
     );
+    if (decision!.openedAtEventCount !== undefined)
+      requireMatch(
+        this.eventCursor?.() === decision!.openedAtEventCount,
+        "reproduction_request_event_boundary_mismatch",
+      );
     this.consumed.add(key);
     return new Promise((resolve, reject) => {
       this.pending.set(decision!.settleOrder!, { decision: decision!, resolve, reject });
@@ -293,6 +306,7 @@ export async function replayReproduction(
       stableJson(record.metadata.initialDeal ?? null),
     "reproduction_initial_deal_mismatch",
   );
+  if (board.nobleSecretBody) provider.setEventCursor(() => context.phaseManager.getEvents().length);
   const initial = captureCheckpoint(
     context.world,
     context.phaseManager.getSnapshot(),
@@ -326,6 +340,8 @@ export async function replayReproduction(
     recordRoot,
     displayLocale ?? record.metadata.locale,
   );
+  if (board.nobleSecretBody)
+    manager.setReplayEventCursor(() => context.phaseManager.getEvents().length);
   const recorder = new GameEventRecorder(
     { world: context.world, replayManager: manager },
     context.phaseManager.getSnapshot().phase,
@@ -363,6 +379,7 @@ export async function replayReproduction(
           complete,
           context.phaseManager.getEvents().length,
           cycleFailure,
+          provider.cursors,
         );
         requireMatch(
           stableJson(actual) === stableJson(checkpoint),

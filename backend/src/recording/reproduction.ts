@@ -1,3 +1,5 @@
+import { validateNobleSecretBodyRecord } from "./noble_secret_body_record";
+import { nobleBodyCheckpointSchema } from "./noble_secret_body_checkpoint";
 import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
@@ -187,6 +189,10 @@ export interface RecordedPlayerState {
   victory: { affiliations: VictoryAffiliation[] };
 }
 export interface RecordedCheckpoint {
+  nobleBody?: import("./noble_secret_body_checkpoint").RecordedNobleBodyState;
+  operationCount?: number;
+  settlementCount?: number;
+  decisionCount?: number;
   ghostBrideSetup?: import("@ai-werewolf-arena/game-text").WeddingSetup;
   lonelyGirlSetup?: {
     policy: "awa_netease_lonely_girl_v1";
@@ -222,6 +228,7 @@ export interface RecordedDecision {
   request: Omit<ActionRequest, "deadlineAtMs">;
   settleOrder?: number;
   openedAfterSettlement: number;
+  openedAtEventCount?: number;
   outcome:
     | { kind: "pending" }
     | { kind: "action"; action: ToolCall | null }
@@ -245,6 +252,7 @@ export interface ReproductionRecord {
     scope: string;
     op: string;
     actor_id?: number;
+    event_count?: number;
     phase?: string;
     status: string;
     reason?: string;
@@ -318,6 +326,8 @@ const requestSchema = z.strictObject({
     death_action_id: positive.optional(),
     modifier_modes: z.array(z.enum(["enhance", "weaken"])).optional(),
     mist_candidates: z.array(positive).optional(),
+    servant_candidates: z.array(positive).optional(),
+    secret_body_candidates: z.array(positive).optional(),
     shelter_candidates: z.array(positive).optional(),
     swallow_candidates: z.array(positive).optional(),
     wolf_kill_candidates: z.array(positive).optional(),
@@ -532,6 +542,7 @@ const schema = z.strictObject({
       request: requestSchema,
       settleOrder: positive.optional(),
       openedAfterSettlement: nonnegative,
+      openedAtEventCount: nonnegative.optional(),
       outcome: z.discriminatedUnion("kind", [
         z.strictObject({ kind: z.literal("pending") }),
         z.strictObject({
@@ -550,6 +561,10 @@ const schema = z.strictObject({
     .array(
       z
         .strictObject({
+          nobleBody: nobleBodyCheckpointSchema.optional(),
+          operationCount: nonnegative.optional(),
+          settlementCount: nonnegative.optional(),
+          decisionCount: nonnegative.optional(),
           cycle: nonnegative,
           complete: z.boolean(),
           snapshot: snapshotSchema,
@@ -778,6 +793,7 @@ const schema = z.strictObject({
       scope: z.string(),
       op: z.string(),
       actor_id: positive.optional(),
+      event_count: nonnegative.optional(),
       phase: z.string().optional(),
       status: z.string(),
       reason: z.string().optional(),
@@ -810,7 +826,8 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   validateWildChildRecord(result);
   validateLonelyGirlRecord(result);
   validateGhostBrideRecord(result);
-  validateDemonHunterRecord(result);
+  const noble = validateNobleSecretBodyRecord(result);
+  validateDemonHunterRecord(result, noble);
   validateScholarMentorRecord(result);
   validateMistRavenRecord(result);
   validateRadiantEclipseRecord(result);
@@ -887,6 +904,17 @@ export class ReproductionTrace {
     this.metadata = structuredClone(metadata);
   }
 
+  get settlementCount(): number {
+    return this.settled;
+  }
+  get decisionCount(): number {
+    return this.decisions.length;
+  }
+  get nobleEventCursor(): number | undefined {
+    return this.metadata.normalizedBoard.nobleSecretBody
+      ? (this.liveEvents?.().length ?? this.events.length)
+      : undefined;
+  }
   async decide(request: ActionRequest, provider: ActionProvider): Promise<ToolCall | null> {
     const key = `${request.actorId}/${request.context.day}/${request.context.stage}`;
     const turn = (this.turns.get(key) ?? 0) + 1;
@@ -898,6 +926,7 @@ export class ReproductionTrace {
       turn,
       request: normalizedRequest(request),
       openedAfterSettlement: this.settled,
+      ...(this.nobleEventCursor === undefined ? {} : { openedAtEventCount: this.nobleEventCursor }),
       outcome: { kind: "pending" },
     };
     this.decisions.push(entry);
@@ -937,7 +966,13 @@ export class ReproductionTrace {
   checkpoint(checkpoint: RecordedCheckpoint, events: readonly GameEvent[]): void {
     if (events.length !== checkpoint.eventCount)
       throw new Error("reproduction_checkpoint_events_mismatch");
-    this.checkpoints.push(structuredClone(checkpoint));
+    this.checkpoints.push(
+      structuredClone(
+        checkpoint.nobleBody
+          ? { ...checkpoint, settlementCount: this.settled, decisionCount: this.decisions.length }
+          : checkpoint,
+      ),
+    );
     this.events = structuredClone(
       events.map(({ payload, ...event }) => ({ ...event, payload: { ...payload } })),
     );

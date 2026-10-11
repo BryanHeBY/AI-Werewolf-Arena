@@ -96,6 +96,7 @@ export class ReplaySessionAggregate {
       timestamp: toIso(Date.now()),
       scope: input.scope,
       op: input.op,
+      ...(input.eventCount !== undefined ? { event_count: input.eventCount } : {}),
       ...(input.actorId !== undefined ? { actor_id: input.actorId } : {}),
       ...(input.phase ? { phase: input.phase } : {}),
       ...(input.input ? { input: safeReplayJson(input.input) as Record<string, unknown> } : {}),
@@ -203,6 +204,9 @@ export class ReplaySessionAggregate {
   }
   normalizedPlayerViews(): ReplayPlayerView[] {
     return this.playerIds().map((id) => this.normalizedPlayerView(id)!);
+  }
+  get reproductionOperationCount(): number {
+    return this.logicOps.filter((op) => op.scope !== "llm_action_provider").length;
   }
   debugSummaryInput() {
     return {

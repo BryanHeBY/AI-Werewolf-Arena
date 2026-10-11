@@ -100,6 +100,7 @@ export interface ReplayLogicOp {
   scope: "phase_pipeline" | "gateway" | "registry" | "resolution" | "llm_action_provider";
   op: string;
   actor_id?: number;
+  event_count?: number;
   phase?: string;
   input?: Record<string, unknown>;
   output?: Record<string, unknown>;
@@ -170,6 +171,7 @@ export interface ReplayRecordPublicEventInput {
 
 /** 记录逻辑操作输入结构。 */
 export interface ReplayRecordLogicOpInput {
+  eventCount?: number;
   scope: ReplayLogicOp["scope"];
   op: string;
   actorId?: number;

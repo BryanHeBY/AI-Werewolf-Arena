@@ -1,4 +1,4 @@
-import { isNobleBodyBoard } from "../noble_secret_body/authority";
+import { checkpointNobleBodyAuthority, isNobleBodyBoard } from "../noble_secret_body/authority";
 import { isRadiantEclipseBoard } from "../radiant_eclipse/night_frame";
 import { isTimeConsortBoard } from "../time_wolf_consort/night_frame";
 import { isMistRavenBoard, mistKnifeTargets, originalMistTarget } from "../mist_raven/night_frame";
@@ -15,6 +15,7 @@ import { isEvilKnightBoard } from "../evil_knight/night_frame";
 /** 文件说明：狼人夜聊与刀人投票阶段处理。 */
 import { EntityId, Phase, StatusMark } from "../../../../core/domain/model";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
+import { getSessionRecorder } from "../../../../recording/recording_context";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { wolfChatParticipants, wolfKnifeHolders, wolfTeamEvent } from "../wolf_team";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -433,6 +434,28 @@ const wolfKillVoteStage: NightStageHandler = {
             }
           : { ...target, marks };
       }
+    }
+    if (isNobleBodyBoard(ctx.world)) {
+      const actorId = checkpointNobleBodyAuthority(ctx.world, false).nobleId;
+      const payload = {
+        policy: "awa_noble_secret_body_v1" as const,
+        actorId,
+        day: ctx.currentDay(),
+        targetId: wolfTarget,
+      };
+      ctx.events.push({
+        timestamp: Date.now(),
+        type: "noble_body_knife_committed",
+        payload,
+        audience: Object.freeze([]),
+      });
+      getSessionRecorder()?.recordRequiredLogicOp({
+        scope: "phase_pipeline",
+        op: "noble_body_knife_committed",
+        phase: Phase.Night,
+        status: "ok",
+        output: payload,
+      });
     }
   },
 };

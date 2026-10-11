@@ -1,6 +1,19 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "event.noble_body_night_opened": "[God] Night {day} ownership opened.",
+  "event.noble_body_knife_committed": "[God] Night {day} wolf knife mark committed: {target}",
+  "event.noble_body_native_damage_committed":
+    "[God] Night {day} native damage resolved; knife and potion marks cleared.",
+  "replay.stage.noble_body_knife_committed": "Wolf knife mark commit",
+  "replay.stage.noble_body_native_damage_committed": "Native damage resolution commit",
+  "event.noble_body_sources_committed": "[God] Night {day} effective sources committed: {state}",
+  "event.noble_body_death_committed":
+    "[God] Player {actor} actually died on day/night {day}: {causes}",
+  "replay.stage.noble_body_night_opened": "Night ownership commit",
+  "replay.stage.noble_body_sources_committed": "Effective night damage commit",
+  "replay.stage.noble_body_death_committed": "Actual death commit",
+
   "role.night_noble.brief":
     "You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.",
   "role.awakened_idiot.brief":

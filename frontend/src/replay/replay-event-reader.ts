@@ -500,7 +500,10 @@ export function readReplayEvent(
     if (!validKnownFields(safe.type, p)) return null;
     if ((NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(safe.type)) {
       if (p.day !== safe.day) return null;
-      if (safe.type === "noble_contract_closed" && p.status === "target_dead") {
+      if (
+        safe.type === "noble_body_death_committed" ||
+        (safe.type === "noble_contract_closed" && p.status === "target_dead")
+      ) {
         if (!["night", "day", "voting"].includes(safe.phase)) return null;
       } else if (
         safe.phase !==
@@ -510,6 +513,11 @@ export function readReplayEvent(
       )
         return null;
       add(p.actorId);
+      if (Array.isArray(p.notifiedActorIds)) list(p.notifiedActorIds);
+      if (Array.isArray(p.deaths)) list(p.deaths);
+      if (record(p.deathSources)) for (const id of Object.keys(p.deathSources)) add(Number(id));
+      if (record(p.blocked)) add(p.blocked.targetId);
+
       if (Object.hasOwn(p, "targetId")) add(p.targetId, true);
       if (record(p.lastChoice)) add(p.lastChoice.targetId, true);
       if (Array.isArray(p.contracts))

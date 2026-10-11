@@ -1,3 +1,4 @@
+import type { NobleRecordAudit } from "./noble_secret_body_record";
 import { validateRedMoonRecord } from "./red_moon_record";
 import { validateDemonNativeStocks } from "./demon_hunter_stocks";
 import { z } from "zod";
@@ -34,6 +35,7 @@ const rootCauses = [
   DeathCause.Poison,
   DeathCause.DemonHunt,
   DeathCause.DemonHuntBacklash,
+  DeathCause.ServantExpiry,
 ] as const;
 const frozenSchema = z.strictObject({
   policy: z.literal(DEMON_HUNTER_POLICY),
@@ -44,6 +46,7 @@ const frozenSchema = z.strictObject({
       .strictObject({ targetId: positive, cause: z.enum(["demon_hunt", "demon_hunt_backlash"]) })
       .nullable(),
     cancelled: cancel.nullable(),
+    servantCleared: z.record(z.string(), z.json()).optional(),
   }),
   poison_immunities: z.array(immune).max(1),
   poison_overrides: z.array(z.strictObject({ targetId: positive, poison: z.boolean() })).max(1),
@@ -60,7 +63,10 @@ function assert(value: unknown): asserts value {
 }
 const isFact = (type: string) => (DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(type);
 /** Independent serialized causal audit. Cancellation labels never authorize an effect override. */
-export function validateDemonHunterRecord(record: ReproductionRecord): void {
+export function validateDemonHunterRecord(
+  record: ReproductionRecord,
+  noble: NobleRecordAudit | null = null,
+): void {
   const redMoon = validateRedMoonRecord(record);
   const board = record.metadata.normalizedBoard,
     owns = board.roleSetups.some((r) => r.role === Role.DemonHunter && r.count > 0),
@@ -100,7 +106,9 @@ export function validateDemonHunterRecord(record: ReproductionRecord): void {
   for (const p of players)
     assert(
       p.camp ===
-        (p.role === Role.Wolf || String(p.role) === "red_moon_apostle" ? Camp.Wolf : Camp.Good),
+        ([Role.Wolf, Role.RedMoonApostle, Role.NightNoble].includes(p.role)
+          ? Camp.Wolf
+          : Camp.Good),
     );
   for (const cp of record.checkpoints) {
     assert(
@@ -117,7 +125,7 @@ export function validateDemonHunterRecord(record: ReproductionRecord): void {
       if (p.id !== actorId) assert(!Object.hasOwn(p.privateState, "demonHunter"));
     }
   }
-  validateDemonNativeStocks(record, redMoon);
+  validateDemonNativeStocks(record, redMoon, noble);
   for (const decision of record.decisions) {
     for (const event of decision.request.context.visible_events) {
       if (!isFact(event.type)) continue;
@@ -294,7 +302,9 @@ export function validateDemonHunterRecord(record: ReproductionRecord): void {
           : original.get(c.targetId)!.camp === Camp.Wolf
             ? { targetId: c.targetId, cause: "demon_hunt" }
             : { targetId: actorId, cause: "demon_hunt_backlash" };
-      assert(equal(source.hunt.damage, damage));
+      const n = noble?.nights.get(source.day);
+      assert(equal(source.hunt.damage, n ? n.huntDamage : damage));
+      assert(equal(source.hunt.servantCleared ?? null, n?.clear ?? null));
     }
     if (source.hunt.cancelled) expectedCancel.push(source.hunt.cancelled);
     assert(
@@ -302,6 +312,12 @@ export function validateDemonHunterRecord(record: ReproductionRecord): void {
         (id) => /^(0|[1-9][0-9]*)$/.test(id) && ids.has(Number(id)),
       ),
     );
+    if (!noble)
+      assert(
+        source.hunt.servantCleared === undefined &&
+          !Object.values(source.death_sources).some((c) => c.includes(DeathCause.ServantExpiry)),
+      );
+    else assert(equal(source.death_sources, noble.nights.get(source.day)?.final));
     const roots = new Map(
       Object.entries(source.death_sources)
         .filter(([, causes]) => causes.length > 0)
@@ -326,7 +342,7 @@ export function validateDemonHunterRecord(record: ReproductionRecord): void {
                 : DeathCause.DemonHuntBacklash),
         );
     }
-    if (source.hunt.damage)
+    if (source.hunt.damage && !noble)
       assert(
         roots
           .get(source.hunt.damage.targetId)

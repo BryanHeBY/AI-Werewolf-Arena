@@ -1200,6 +1200,15 @@ export function nobleSecretBodyEventLabel(
   const f = readNobleSecretBodyFact(type, payload);
   if (!f) return null;
   const key = `event.${type}` as MessageKey;
+  if (type === "noble_body_native_damage_committed") return text(locale, key, { day: f.day });
+  if (type === "noble_body_knife_committed" && "targetId" in f)
+    return text(locale, key, { day: f.day, target: f.targetId ?? text(locale, "common.none") });
+  if ("notifiedActorIds" in f) return text(locale, key, { day: f.day });
+  if ("deathSources" in f)
+    return text(locale, key, { day: f.day, state: JSON.stringify(f.deathSources) });
+  if ("causes" in f)
+    return text(locale, key, { actor: f.actorId, day: f.day, causes: f.causes.join(", ") });
+
   if (type === "secret_body_revealed") return text(locale, key, { actor: f.actorId });
   if ("text" in f) return text(locale, key, { actor: f.actorId, text: f.text });
   if ("resource" in f)

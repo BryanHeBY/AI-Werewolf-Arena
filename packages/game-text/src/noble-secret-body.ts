@@ -34,6 +34,15 @@ export type NobleContractClosedFact = Base & {
     { status: "expired"; proposedCause: "servant_expiry" } | { status: "cleared" | "target_dead" }
   );
 export interface NobleSecretBodyPayloadMap {
+  noble_body_knife_committed: Base & { targetId: number | null };
+  noble_body_native_damage_committed: Base;
+  noble_body_night_opened: Base & { notifiedActorIds: number[] };
+  noble_body_death_committed: Base & { causes: string[] };
+  noble_body_sources_committed: Base & {
+    blocked: { targetId: number; cause: string } | null;
+    deaths: number[];
+    deathSources: Record<string, string[]>;
+  };
   noble_servant_chosen: Base & { targetId: number | null; contractId: string | null };
   secret_body_chosen: Base & { targetId: number | null };
   noble_contract_closed: NobleContractClosedFact;
@@ -47,6 +56,11 @@ export interface NobleSecretBodyPayloadMap {
   secret_body_reveal_speech: Base & { text: string };
 }
 export const NOBLE_SECRET_BODY_EVENT_TYPES = Object.freeze([
+  "noble_body_knife_committed",
+  "noble_body_native_damage_committed",
+  "noble_body_night_opened",
+  "noble_body_death_committed",
+  "noble_body_sources_committed",
   "noble_servant_chosen",
   "secret_body_chosen",
   "noble_contract_closed",
@@ -121,6 +135,68 @@ export function readNobleSecretBodyFact(
       return null;
     let valid = false;
     switch (type) {
+      case "noble_body_knife_committed":
+        valid = keys(p, [...base, "targetId"]) && (p.targetId === null || id(p.targetId));
+        break;
+      case "noble_body_native_damage_committed":
+        valid = keys(p, base);
+        break;
+      case "noble_body_night_opened":
+        valid =
+          keys(p, [...base, "notifiedActorIds"]) &&
+          Array.isArray(p.notifiedActorIds) &&
+          p.notifiedActorIds.every(id) &&
+          new Set(p.notifiedActorIds).size === p.notifiedActorIds.length;
+        break;
+      case "noble_body_death_committed":
+        valid =
+          keys(p, [...base, "causes"]) &&
+          Array.isArray(p.causes) &&
+          p.causes.length > 0 &&
+          new Set(p.causes).size === p.causes.length &&
+          p.causes.every((c) =>
+            [
+              "wolf_kill",
+              "poison",
+              "demon_hunt",
+              "demon_hunt_backlash",
+              "servant_expiry",
+              "exile",
+              "self_destruct",
+            ].includes(c as string),
+          );
+        break;
+      case "noble_body_sources_committed": {
+        const allowed = [
+          "wolf_kill",
+          "poison",
+          "demon_hunt",
+          "demon_hunt_backlash",
+          "servant_expiry",
+        ];
+        valid =
+          keys(p, [...base, "blocked", "deaths", "deathSources"]) &&
+          Array.isArray(p.deaths) &&
+          p.deaths.every(id) &&
+          new Set(p.deaths).size === p.deaths.length &&
+          record(p.deathSources) &&
+          Object.entries(p.deathSources).every(
+            ([key, value]) =>
+              /^[1-9][0-9]*$/.test(key) &&
+              id(Number(key)) &&
+              Array.isArray(value) &&
+              value.length > 0 &&
+              new Set(value).size === value.length &&
+              value.every((c) => allowed.includes(c as string)),
+          ) &&
+          Object.keys(p.deathSources).length === p.deaths.length &&
+          p.deaths.every((i) => Object.hasOwn(p.deathSources as object, String(i))) &&
+          (p.blocked === null ||
+            (keys(p.blocked, ["targetId", "cause"]) &&
+              id(p.blocked.targetId) &&
+              allowed.includes(p.blocked.cause as string)));
+        break;
+      }
       case "noble_servant_chosen":
         valid =
           keys(p, [...base, "targetId", "contractId"]) &&
@@ -220,7 +296,12 @@ export function readNobleSecretBodyFact(
   }
 }
 export function nobleSecretBodyVisibility(type: string): "god" | "actor" | "public" | null {
-  if (type === "noble_contract_closed" || type === "secret_body_blocked") return "god";
+  if (
+    type === "noble_contract_closed" ||
+    type === "secret_body_blocked" ||
+    type.startsWith("noble_body_")
+  )
+    return "god";
   if (type === "secret_body_revealed" || type === "secret_body_reveal_speech") return "public";
   return (NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(type) ? "actor" : null;
 }

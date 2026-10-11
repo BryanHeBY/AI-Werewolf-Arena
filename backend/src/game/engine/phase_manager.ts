@@ -624,6 +624,27 @@ export class PhaseManager {
               output: payload,
             });
           }
+          const committed = {
+            policy: "awa_noble_secret_body_v1" as const,
+            actorId: checkpointNobleBodyAuthority(this.world, true).bodyId,
+            day: nightDay,
+            blocked: final.blocked,
+            deaths: [...deaths],
+            deathSources: sources,
+          };
+          this.events.push({
+            timestamp: Date.now(),
+            type: "noble_body_sources_committed",
+            payload: committed,
+            audience: Object.freeze([]),
+          });
+          getSessionRecorder()?.recordRequiredLogicOp({
+            scope: "resolution",
+            op: "noble_body_sources_committed",
+            phase: Phase.Night,
+            status: "ok",
+            output: committed,
+          });
           safeRecordLogicOp({
             scope: "resolution",
             op: "night_damage_resolved",

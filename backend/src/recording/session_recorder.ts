@@ -41,6 +41,18 @@ export class SessionRecordManager {
   private finalization: Promise<DebugSummaryInput> | null = null;
   private reproduction?: ReproductionTrace;
   private dirtyReproduction = false;
+  private replayEventCursor?: () => number;
+  setReplayEventCursor(cursor: () => number): void {
+    if (this.replayEventCursor || this.reproduction)
+      throw Error("reproduction_event_cursor_already_bound");
+    this.replayEventCursor = cursor;
+  }
+  get reproductionSettlementCount(): number {
+    return this.reproduction?.settlementCount ?? 0;
+  }
+  get reproductionDecisionCount(): number {
+    return this.reproduction?.decisionCount ?? 0;
+  }
   private readonly mandatoryFlushFailures: unknown[] = [];
 
   private constructor(
@@ -70,6 +82,10 @@ export class SessionRecordManager {
 
   get sessionId(): string {
     return this.aggregate.sessionMeta.sessionId;
+  }
+  /** Exactly the operation stream serialized into a reproduction, excluding AI diagnostics. */
+  get reproductionOperationCount(): number {
+    return this.aggregate.reproductionOperationCount;
   }
   get sessionDir(): string {
     return this.store.sessionDir;
@@ -113,7 +129,8 @@ export class SessionRecordManager {
 
   recordLogicOp(input: ReplayRecordLogicOpInput): void {
     if (this.closed) return;
-    this.aggregate.recordLogicOp(input);
+    const eventCount = this.reproduction?.nobleEventCursor ?? this.replayEventCursor?.();
+    this.aggregate.recordLogicOp(eventCount === undefined ? input : { ...input, eventCount });
     this.dirtyLogicOps = true;
     this.scheduleFlush();
   }
