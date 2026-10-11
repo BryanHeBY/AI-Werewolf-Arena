@@ -6,6 +6,7 @@ import { WOLF_LLM_REPAIR_PACK } from "./llm_repair";
 import { WOLF_NIGHT_STAGES } from "./night_stages";
 import { WOLF_TOOL_SPECS, WOLF_STAGE_DIRECTIVES } from "./tool_specs";
 import { WOLF_VALIDATION_RULES } from "./validation_rules";
+import { isMistRavenBoard, mistKnifeTargets } from "../mist_raven/night_frame";
 
 /** 狼人角色配置。 */
 export const WOLF_ROLE_PROFILE: RoleProfile = {
@@ -21,7 +22,14 @@ export const WOLF_ROLE_PROFILE: RoleProfile = {
   validationRules: WOLF_VALIDATION_RULES,
   nightStages: WOLF_NIGHT_STAGES,
   llmRepair: WOLF_LLM_REPAIR_PACK,
-  baselineAction: (_roleComp, request, _pickAliveNotSelf, pickAliveByCamp, locale = "zh-CN") => {
+  baselineAction: (
+    _roleComp,
+    request,
+    _pickAliveNotSelf,
+    pickAliveByCamp,
+    locale = "zh-CN",
+    world,
+  ) => {
     if (request.allowedTools.includes("speak_to_wolves")) {
       return {
         name: "speak_to_wolves",
@@ -32,6 +40,11 @@ export const WOLF_ROLE_PROFILE: RoleProfile = {
       };
     }
     if (request.allowedTools.includes("kill_vote")) {
+      const circle = world && isMistRavenBoard(world) ? mistKnifeTargets(world) : null;
+      if (circle !== null) {
+        const target = circle[0] ?? null;
+        return { name: "kill_vote", args: { target_id: target, abstain: target === null } };
+      }
       const target = pickAliveByCamp("good");
       if (target !== null) {
         return { name: "kill_vote", args: { target_id: target, abstain: false } };

@@ -1,3 +1,4 @@
+import { mistRavenEventLabel } from "@ai-werewolf-arena/game-text";
 import { scholarMentorEventLabel } from "@ai-werewolf-arena/game-text";
 import { timeConsortEventLabel } from "@ai-werewolf-arena/game-text";
 import { wolfSorcererEventLabel } from "@ai-werewolf-arena/game-text";
@@ -49,6 +50,8 @@ export function eventLabel(
   if (!fact) return text(locale, "replay.unknown");
   event = fact.event;
   const p = event.payload;
+  const mist = mistRavenEventLabel(event.type, p, locale);
+  if (mist !== null) return mist;
   const prince = orderPrinceEventLabel(event.type, p, locale);
   if (prince !== null) return prince;
   const trickster = tricksterEventLabel(event.type, p, locale);

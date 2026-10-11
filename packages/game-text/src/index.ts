@@ -1,3 +1,4 @@
+import { readMistRavenFact } from "./mist-raven";
 import {
   readModifierChoiceFact,
   readModifierSkipFact,
@@ -1119,3 +1120,37 @@ export * from "./scholar-mentor";
 export * from "./scholar-mentor-preset";
 
 export { isMistRavenPreset } from "./mist-raven-preset";
+
+export * from "./mist-raven";
+export function mistRavenEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale = "zh-CN",
+): string | null {
+  const fact = readMistRavenFact(type, payload);
+  if (!fact) return null;
+  const key = `event.${type}` as MessageKey;
+  if ("candidates" in fact)
+    return text(locale, key, {
+      day: fact.day,
+      candidates: fact.candidates.join(", ") || text(locale, "common.none"),
+      target: fact.targetId ?? text(locale, "common.none"),
+    });
+  const common = { day: fact.day, actor: fact.actorId };
+  if ("targetIds" in fact)
+    return text(locale, key, {
+      ...common,
+      targets: fact.targetIds?.join(", ") ?? text(locale, "common.none"),
+    });
+  if ("knownTeammateIds" in fact)
+    return text(locale, key, {
+      ...common,
+      teammates: fact.knownTeammateIds.join(", ") || text(locale, "common.none"),
+    });
+  if ("reason" in fact)
+    return text(locale, key, {
+      ...common,
+      reason: text(locale, `mist.reason.${fact.reason}`),
+    });
+  return text(locale, key, { ...common, target: fact.targetId ?? text(locale, "common.none") });
+}

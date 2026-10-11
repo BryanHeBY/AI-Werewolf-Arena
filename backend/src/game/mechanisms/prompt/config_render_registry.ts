@@ -102,9 +102,11 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
         ? [
             text(
               locale,
-              settlesNightBeforeDay(config)
-                ? "prompt.config.night_before_sheriff"
-                : "prompt.config.sheriff_timing",
+              config.mistRaven
+                ? "prompt.config.mist_raven_timing"
+                : settlesNightBeforeDay(config)
+                  ? "prompt.config.night_before_sheriff"
+                  : "prompt.config.sheriff_timing",
             ),
             text(
               locale,

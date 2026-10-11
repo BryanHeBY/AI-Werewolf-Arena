@@ -102,8 +102,33 @@ for (const locale of ["zh-CN", "en"] as const)
           locale === "en"
             ? "After the sheriff vote, night_resolved"
             : "警长投票结束后，才由 night_resolved";
-        expect(summary.includes(first), name).toBe(before);
-        expect(summary.includes(after), name).toBe(!before);
+        if (name === "awa_mist_raven_12_v1.json") {
+          // This board has an explicit resource-dependent schedule every night.
+          // The public rule describes both branches without revealing current stock.
+          expect(summary.includes(first), name).toBe(false);
+          expect(summary.includes(after), name).toBe(false);
+          const markers =
+            locale === "en"
+              ? [
+                  "on every night",
+                  "Alchemist starts alive with Snake unspent",
+                  "daytime speeches precede",
+                  "Use the ordinary night death order only",
+                  "first commits the blast death and badge",
+                  "never reopens",
+                ]
+              : [
+                  "每夜若夜初炼金存活且蛇未用",
+                  "白天发言后私下决定蛇",
+                  "只有条件不满足才按普通夜死顺序",
+                  "先提交自爆死亡与警徽",
+                  "不会因放逐前自爆重开",
+                ];
+          for (const marker of markers) expect(summary, name).toContain(marker);
+        } else {
+          expect(summary.includes(first), name).toBe(before);
+          expect(summary.includes(after), name).toBe(!before);
+        }
         const game = bootstrapGame(board, { locale });
         const policy = new PlayerPromptPolicy(game.world, {
           boardConfig: board,

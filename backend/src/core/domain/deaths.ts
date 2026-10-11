@@ -3,6 +3,7 @@ import type { DeathActionPolicy } from "./board";
 import type { NightLifeScope } from "./night_effects";
 /** Death facts are distinct from transient protection/damage marks. */
 export enum DeathCause {
+  RavenClawKnife = "raven_claw_knife",
   WolfKill = "wolf_kill",
   Poison = "poison",
   EvilKnightReflection = "evil_knight_reflection",

@@ -49,6 +49,17 @@ export function knownWolfTeammates(
     catalog,
     world,
   );
+  if (viewer === NO_ACCESS) return [];
+  const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+  const snapshot = role?.camp === Camp.Wolf && catalog.get(role.role)?.knownTeammates;
+  if (snapshot)
+    return [...new Set(snapshot(role!, world))]
+      .filter(
+        (id) =>
+          id !== actorId &&
+          world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf,
+      )
+      .sort((a, b) => a - b);
   if (viewer.recognizes === "none") return [];
   // Identity knowledge is independent of unannounced deaths.
   return world

@@ -1,3 +1,4 @@
+import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
 import {
   readModifierChoiceFact,
   readModifierSkipFact,
@@ -127,6 +128,22 @@ export class AgentEventVisibilityRegistry {
   constructor(private readonly rules: Record<string, AgentEventVisibilityRule> = DEFAULT_RULES) {}
 
   canView(world: World, event: GameEvent, actorId: EntityId): boolean {
+    if (
+      (MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(event.type) &&
+      event.type !== "mist_knife_drawn"
+    ) {
+      const fact = readMistRavenFact(event.type, event.payload);
+      return (
+        !!fact &&
+        "actorId" in fact &&
+        fact.actorId === actorId &&
+        "audience" in event &&
+        event.audience?.length === 1 &&
+        event.audience[0] === actorId
+      );
+    }
+    if (event.type === "mist_knife_drawn" && !readMistRavenFact(event.type, event.payload))
+      return false;
     if (event.type === "modifier_conflict_resolved") return false;
     if (
       event.type === "modifier_choice_committed" ||

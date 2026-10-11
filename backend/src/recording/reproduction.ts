@@ -1,3 +1,4 @@
+import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
 import { validateScholarMentorRecord } from "./scholar_mentor_record";
 import {
   readModifierChoiceFact,
@@ -304,6 +305,11 @@ const requestSchema = z.strictObject({
     death_sources: z.array(z.enum(DeathCause)).optional(),
     death_action_id: positive.optional(),
     modifier_modes: z.array(z.enum(["enhance", "weaken"])).optional(),
+    mist_candidates: z.array(positive).optional(),
+    wolf_kill_candidates: z.array(positive).optional(),
+    snake_target: positive.nullable().optional(),
+    snake_candidates: z.array(positive).optional(),
+    raven_candidates: z.array(positive).optional(),
     modifier_candidates: z.array(positive).optional(),
     modifier_bonus_kind: z.enum(["check", "guard", "poison", "kill"]).optional(),
     modifier_bonus_candidates: z.array(positive).optional(),
@@ -690,8 +696,18 @@ const schema = z.strictObject({
           (!readModifierConflictFact(event.type, event.payload) || event.audience?.length !== 0)
         )
           ctx.addIssue({ code: "custom", message: "reproduction_modifier_conflict_invalid" });
+        if ((MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(event.type)) {
+          const fact = readMistRavenFact(event.type, event.payload);
+          if (
+            !fact ||
+            ("actorId" in fact &&
+              (event.audience?.length !== 1 || event.audience[0] !== fact.actorId))
+          )
+            ctx.addIssue({ code: "custom", message: "reproduction_mist_raven_fact_invalid" });
+        }
         if (
           event.audience !== undefined &&
+          !(MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(WOLF_TEAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&

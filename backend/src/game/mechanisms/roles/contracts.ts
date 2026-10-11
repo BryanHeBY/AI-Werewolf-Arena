@@ -51,6 +51,8 @@ export interface RoleProfile {
     | { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean }
     | ((role: RoleComponent) => { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean });
   wolfTeam?: WolfTeamPermissions | ((role: RoleComponent, world?: World) => WolfTeamPermissions);
+  /** Explicit retained knowledge for sourced roles whose team is learned only at a particular time. */
+  knownTeammates?: (role: RoleComponent, world: World) => readonly number[];
   /** Explicit public self-destruct capability, independent of faction/knife access. */
   canSelfDestruct?: boolean | ((role: RoleComponent) => boolean);
   inspectionLabels?:

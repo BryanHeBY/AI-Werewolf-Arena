@@ -1,5 +1,11 @@
 /** Stable rule failures; human messages belong to game-text. */
 export enum RuleError {
+  MistUnavailable = "mist_unavailable",
+  MistTarget = "mist_target",
+  SnakeUnavailable = "snake_unavailable",
+  SnakeTarget = "snake_target",
+  RavenKnifeUnavailable = "raven_knife_unavailable",
+  RavenKnifeTarget = "raven_knife_target",
   ModifierUnavailable = "modifier_unavailable",
   ModifierTarget = "modifier_target",
   TimeConsortUnavailable = "time_consort_unavailable",

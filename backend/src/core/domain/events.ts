@@ -46,6 +46,21 @@ export interface ExileFeedback {
 }
 
 export interface EventPayloadMap {
+  alchemist_mist_chosen: { actorId: EntityId; day: number; targetIds: EntityId[] | null };
+  alchemist_mist_skipped: {
+    actorId: EntityId;
+    day: number;
+    reason: "dead" | "spent" | "no_targets";
+  };
+  alchemist_snake_chosen: { actorId: EntityId; day: number; targetId: EntityId | null };
+  raven_unsealed: { actorId: EntityId; day: number; awakened: true; knownTeammateIds: EntityId[] };
+  raven_knife_chosen: { actorId: EntityId; day: number; targetId: EntityId | null };
+  raven_knife_skipped: {
+    actorId: EntityId;
+    day: number;
+    reason: "dead" | "sealed" | "spent" | "no_targets";
+  };
+  mist_knife_drawn: { day: number; candidates: EntityId[]; targetId: EntityId | null };
   modifier_choice_committed: {
     actorId: EntityId;
     day: number;
@@ -481,6 +496,7 @@ export interface EventPayloadMap {
 }
 
 export const WOLF_TEAM_EVENT_TYPES = [
+  "mist_knife_drawn",
   "wolf_tactical_order",
   "wolf_discussion",
   "wolf_discussion_ended",
@@ -503,6 +519,12 @@ export type GameEvent = {
     (K extends
       | WolfTeamEventType
       | WeddingEventType
+      | "alchemist_mist_chosen"
+      | "alchemist_mist_skipped"
+      | "alchemist_snake_chosen"
+      | "raven_unsealed"
+      | "raven_knife_chosen"
+      | "raven_knife_skipped"
       | "nightmare_fear_committed"
       | "modifier_choice_committed"
       | "modifier_choice_skipped"

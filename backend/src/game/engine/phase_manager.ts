@@ -3,6 +3,13 @@ import {
   abortScholarMentorNight,
 } from "../mechanisms/roles/scholar_mentor/night_frame";
 import {
+  assertMistRosterCurrent,
+  closeMistNight,
+  abortMistNight,
+} from "../mechanisms/roles/mist_raven/night_frame";
+import { MistPendingNight } from "../mechanisms/roles/mist_raven/pending_night";
+import { decideSnake } from "../mechanisms/roles/mist_raven/snake_window";
+import {
   closeTimeConsortNight,
   abortTimeConsortNight,
 } from "../mechanisms/roles/time_wolf_consort/night_frame";
@@ -136,6 +143,7 @@ export class PhaseManager {
   private readonly deathResolution: DeathResolution;
   private previousExile: ExileFeedback | null = null;
   private phaseRevision = 0;
+  private mistPending: MistPendingNight | null = null;
   private readonly nightFaultPlan?: NightFaultPlan;
 
   private state: RuntimeSnapshot = {
@@ -282,6 +290,12 @@ export class PhaseManager {
    * 手动跳转阶段（主要用于中断流程控制）。
    */
   jumpTo(phase: Phase): void {
+    if (
+      this.config.mistRaven &&
+      !this.state.gameOver &&
+      this.pureWhiteStartedDays.has(this.state.day)
+    )
+      throw new Error("mist_phase_reentry");
     if (!this.state.gameOver && hasDemonNightStarted(this.world, this.state.day))
       throw new Error("demon_hunter_phase_reentry");
     if (
@@ -307,22 +321,31 @@ export class PhaseManager {
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
     if (
-      (this.config.pureWhite || this.config.evilKnight || this.config.magician) &&
+      (this.config.mistRaven ||
+        this.config.pureWhite ||
+        this.config.evilKnight ||
+        this.config.magician) &&
       !this.state.gameOver
     ) {
       if (this.pureWhiteStartedDays.has(this.state.day))
         throw new Error(
-          this.config.magician
-            ? "magician_cycle_reentry"
-            : this.config.evilKnight
-              ? "evil_knight_cycle_reentry"
-              : "pure_white_cycle_reentry",
+          this.config.mistRaven
+            ? "mist_cycle_reentry"
+            : this.config.magician
+              ? "magician_cycle_reentry"
+              : this.config.evilKnight
+                ? "evil_knight_cycle_reentry"
+                : "pure_white_cycle_reentry",
         );
       this.pureWhiteStartedDays.add(this.state.day);
     }
     try {
       return await this.runSingleCycleInternal(actionProvider, maxDays);
     } finally {
+      if (this.config.mistRaven) {
+        this.mistPending?.abort();
+        abortMistNight(this.world);
+      }
       if (this.config.timeConsort) abortTimeConsortNight(this.world);
       if (this.config.scholarMentor) abortScholarMentorNight(this.world);
       if (this.config.wolfSorcerer) abortWolfSorcererNight(this.world);
@@ -384,6 +407,10 @@ export class PhaseManager {
     }
 
     this.setPhase(Phase.Night);
+    if (this.config.mistRaven) {
+      this.mistPending?.abort();
+      this.mistPending = null;
+    }
     const nightDay = this.state.day,
       nightRevision = this.phaseRevision;
     const nightIsCurrent = () =>
@@ -690,6 +717,63 @@ export class PhaseManager {
       !this.state.gameOver &&
       this.phaseRevision === dayRevision;
     let nightSettled = ownsWedding || ownsDemon || ownsPureWhite || ownsEvilKnight;
+    if (night.mistDelay) {
+      assertMistRosterCurrent(this.world);
+      for (const [id, scope] of night.deathLives) {
+        if (
+          this.world.getComponent(id, COMPONENT.Alive) !== scope.life ||
+          !scope.life.alive ||
+          scope.version === undefined ||
+          aliveLifeVersion(scope.life) !== scope.version
+        )
+          throw new Error("mist_pending_life_stale");
+      }
+      this.mistPending = new MistPendingNight(
+        this.world,
+        cycleDay,
+        night.summary.wolfTarget,
+        night.damage,
+        night.dreamFrame,
+      );
+    }
+    const settleMist = async (alreadyClaimed = false, interrupted = false): Promise<boolean> => {
+      if (nightSettled) return this.state.gameOver;
+      const pending = this.mistPending;
+      if (!pending) throw new Error("mist_pending_night_missing");
+      const current = () => dayIsCurrent() && pending === this.mistPending;
+      if (!alreadyClaimed) pending.claim(current);
+      const healed = await decideSnake(
+        this.world,
+        this.events,
+        this.toolGateway,
+        actionProvider,
+        pending,
+        current,
+      );
+      const damage = pending.prepareFinalDamage(healed, current);
+      safeRecordLogicOp({
+        scope: "resolution",
+        op: "night_damage_resolved",
+        phase: Phase.Night,
+        status: "ok",
+        output: { deaths: damage.deaths, death_sources: damage.deathSources },
+      });
+      this.emitNightResolved(damage.deaths);
+      await this.deathResolution.resolve(
+        damage.deaths,
+        damage.deathSources,
+        actionProvider,
+        Phase.Night,
+        Phase.Day,
+        {},
+        { dreams: night.dreamFrame, nightOriginIds: damage.deaths, isCurrent: current },
+      );
+      assertMistRosterCurrent(this.world);
+      pending.finish(current);
+      closeMistNight(this.world, cycleDay);
+      nightSettled = true;
+      return this.checkAndSealResult(interrupted ? "day_interrupted" : "night_settled");
+    };
     const settleNight = async (blast?: { deaths: number[]; sources: DeathSources }) => {
       if (nightSettled) return this.state.gameOver;
       nightSettled = true;
@@ -746,7 +830,9 @@ export class PhaseManager {
         if (this.config.timeConsort && dayIsCurrent()) closeTimeConsortNight(this.world, cycleDay);
         if (this.config.scholarMentor && dayIsCurrent())
           closeScholarMentorNight(this.world, cycleDay);
+        if (this.config.mistRaven && dayIsCurrent()) closeMistNight(this.world, cycleDay);
       } finally {
+        if (this.config.mistRaven) abortMistNight(this.world);
         if (this.config.trickster) abortTricksterNight(this.world);
         if (this.config.wolfSorcerer) abortWolfSorcererNight(this.world);
         if (this.config.magician) abortMagicianNight(this.world);
@@ -757,7 +843,8 @@ export class PhaseManager {
       bearFrame?.publish(this.world, this.events, dayIsCurrent);
       return this.checkAndSealResult(blast !== undefined ? "day_interrupted" : "night_settled");
     };
-    if (!firstDaySheriffBeforeNightInfo && (await settleNight())) return this.getSnapshot();
+    if (!night.mistDelay && !firstDaySheriffBeforeNightInfo && (await settleNight()))
+      return this.getSnapshot();
 
     const dayResult = await this.dayPipeline.execute(this.config, actionProvider, {
       day: cycleDay,
@@ -779,7 +866,19 @@ export class PhaseManager {
           this.events,
         );
         if (!blast) return false;
-        if (!nightSettled) await settleNight(blast);
+        if (!nightSettled && this.mistPending) {
+          this.mistPending.claim(dayIsCurrent);
+          await this.deathResolution.resolve(
+            blast.deaths,
+            blast.sources,
+            actionProvider,
+            Phase.Day,
+            Phase.Day,
+            {},
+            { isCurrent: dayIsCurrent },
+          );
+          if (dayIsCurrent()) await settleMist(true, true);
+        } else if (!nightSettled) await settleNight(blast);
         else
           await this.deathResolution.resolve(
             blast.deaths,
@@ -790,7 +889,9 @@ export class PhaseManager {
           );
         return true;
       },
-      ...(firstDaySheriffBeforeNightInfo ? { afterSheriffElection: () => settleNight() } : {}),
+      ...(firstDaySheriffBeforeNightInfo && !night.mistDelay
+        ? { afterSheriffElection: () => settleNight() }
+        : {}),
       commitKnightDuel: async (choice) => {
         if (!dayIsCurrent() || !nightSettled) return "rejected";
         const duel = commitKnightDuel(this.world, choice, Phase.Day, this.events);
@@ -807,6 +908,8 @@ export class PhaseManager {
         return duel.endsDay ? "night" : "continue";
       },
     });
+
+    if (night.mistDelay && !nightSettled && dayIsCurrent()) await settleMist();
 
     if (this.state.gameOver || !dayIsCurrent()) return this.getSnapshot();
     if (dayResult.interrupted) {

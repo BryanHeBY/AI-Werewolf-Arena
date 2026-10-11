@@ -1,0 +1,90 @@
+{
+  "version": 2,
+  "id": "awa_mist_raven_12_v1",
+  "ruleset": {
+    "id": "awa_classic",
+    "version": "1.0.0"
+  },
+  "board": {
+    "size": 12,
+    "roleSetups": [
+      {
+        "role": "wolf",
+        "count": 3
+      },
+      {
+        "role": "raven_claw_wolf",
+        "count": 1
+      },
+      {
+        "role": "villager",
+        "count": 4
+      },
+      {
+        "role": "seer",
+        "count": 1
+      },
+      {
+        "role": "alchemist",
+        "count": 1
+      },
+      {
+        "role": "dreamer",
+        "count": 1
+      },
+      {
+        "role": "idiot",
+        "count": 1
+      }
+    ]
+  },
+  "rules": {
+    "winConditions": ["slaughter_side"],
+    "hooks": {
+      "onDaybreak": true,
+      "onPreElection": true,
+      "onPreVote": true,
+      "onPerSpeechGap": true
+    }
+  },
+  "mechanisms": {
+    "disclosure": {
+      "deathRevealPolicy": "awa_hidden_v1"
+    },
+    "lastWords": {
+      "policy": "awa_initial_wave_v1"
+    },
+    "sheriff": {
+      "enabled": true,
+      "electionPolicy": "awa_nomination_offstage_pk_v1",
+      "badgePolicy": "awa_holder_choice_v1",
+      "voteWeight": 1.5,
+      "tieBreaker": "no_elimination"
+    },
+    "voting": {
+      "exilePolicy": "awa_one_pk_v1"
+    },
+    "selfDestruct": {
+      "enabledWindows": ["on_pre_election", "on_daybreak", "on_per_speech_gap", "on_pre_vote"]
+    },
+    "tieBreaker": {
+      "exileVote": "no_elimination",
+      "wolfKillVote": "min_id"
+    }
+  },
+  "roles": {
+    "alchemist": {
+      "policy": "awa_mist_raven_v1"
+    },
+    "raven_claw_wolf": {
+      "policy": "awa_mist_raven_v1"
+    },
+    "seer": {
+      "targetPolicy": "awa_alive_v1",
+      "actionPolicy": "awa_required_when_legal_v1"
+    },
+    "dreamer": {
+      "protectionPolicy": "netease_2026_night_immunity_v1"
+    }
+  }
+}

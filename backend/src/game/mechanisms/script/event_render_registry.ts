@@ -1,3 +1,4 @@
+import { mistRavenEventLabel } from "@ai-werewolf-arena/game-text";
 import { scholarMentorEventLabel } from "@ai-werewolf-arena/game-text";
 import { timeConsortEventLabel } from "@ai-werewolf-arena/game-text";
 import { wolfSorcererEventLabel } from "@ai-werewolf-arena/game-text";
@@ -567,6 +568,8 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const mist = mistRavenEventLabel(event.type, event.payload, locale);
+    if (mist !== null) return mist;
     const modifier = scholarMentorEventLabel(event.type, event.payload, locale);
     if (modifier !== null) return modifier;
     const consort = timeConsortEventLabel(event.type, event.payload, locale);
@@ -632,6 +635,8 @@ export class ScriptEventRenderRegistry {
     printPrivateEvents: boolean,
     locale: Locale = "zh-CN",
   ): ScriptLiveRender[] {
+    const mist = mistRavenEventLabel(event.type, event.payload, locale);
+    if (mist !== null) return printPrivateEvents ? [{ kind: "god", text: mist }] : [];
     const modifier = scholarMentorEventLabel(event.type, event.payload, locale);
     if (modifier !== null) return printPrivateEvents ? [{ kind: "god", text: modifier }] : [];
     const consort = timeConsortEventLabel(event.type, event.payload, locale);

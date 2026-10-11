@@ -1,3 +1,4 @@
+import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
 import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,
@@ -46,6 +47,30 @@ export function buildAgentVisibleEvent(
   actorId: EntityId,
   visibleSeq: number,
 ): PlayerVisibleEvent | null {
+  const mistType = event.type;
+  if ((MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(mistType)) {
+    try {
+      // Authorization and output use one detached fact. Never validate one object
+      // and then clone a mutable source again after a foreign descriptor callback.
+      const audience = "audience" in event ? structuredClone(event.audience) : null;
+      if (
+        !Array.isArray(audience) ||
+        !audience.every((id) => Number.isSafeInteger(id) && id > 0) ||
+        new Set(audience).size !== audience.length
+      )
+        return null;
+      const fact = readMistRavenFact(mistType, event.payload);
+      if (
+        !fact ||
+        !audience.includes(actorId) ||
+        ("actorId" in fact && (fact.actorId !== actorId || audience.length !== 1))
+      )
+        return null;
+      return { seq: visibleSeq, type: mistType, payload: { ...fact } };
+    } catch {
+      return null;
+    }
+  }
   if (
     event.type === "lonely_girl_admired_chosen" &&
     !readLonelyGirlEventFact(event.type, event.payload)

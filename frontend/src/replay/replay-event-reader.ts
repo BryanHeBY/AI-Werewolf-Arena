@@ -1,3 +1,4 @@
+import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
 import {
   readModifierChoiceFact,
   readModifierSkipFact,
@@ -214,6 +215,7 @@ const NO_IDS = new Set([
   "god_private_game_info",
 ]);
 export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([
+  ...MIST_RAVEN_EVENT_TYPES,
   "modifier_choice_committed",
   "modifier_choice_skipped",
   "modifier_conflict_resolved",
@@ -276,6 +278,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if ((MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(type))
+    return !!readMistRavenFact(type, p);
   if (type === "modifier_choice_committed") return !!readModifierChoiceFact(type, p);
   if (type === "modifier_choice_skipped") return !!readModifierSkipFact(type, p);
   if (type === "modifier_conflict_resolved") return !!readModifierConflictFact(type, p);
@@ -483,6 +487,18 @@ export function readReplayEvent(
     };
     if (!KNOWN.has(safe.type)) return { event: safe, relatedPlayerIds: [], effects: [] };
     if (!validKnownFields(safe.type, p)) return null;
+    if ((MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(safe.type)) {
+      if (
+        p.day !== safe.day ||
+        safe.phase !== (safe.type === "alchemist_snake_chosen" ? "day" : "night")
+      )
+        return null;
+      if (Object.hasOwn(p, "actorId")) add(p.actorId);
+      if (Object.hasOwn(p, "targetId")) add(p.targetId, true);
+      if (p.targetIds !== undefined && p.targetIds !== null) list(p.targetIds);
+      if (p.knownTeammateIds !== undefined) list(p.knownTeammateIds);
+      if (p.candidates !== undefined) list(p.candidates);
+    }
     if (
       [
         "modifier_choice_committed",

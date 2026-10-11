@@ -1,6 +1,72 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "replay.stage.alchemist_mist_chosen": "Mist choice",
+  "replay.stage.alchemist_mist_skipped": "Skipped Mist request",
+  "replay.stage.alchemist_snake_chosen": "Snake healing choice",
+  "replay.stage.raven_unsealed": "Raven unsealed",
+  "replay.stage.raven_knife_chosen": "Extra knife choice",
+  "replay.stage.raven_knife_skipped": "Skipped extra knife request",
+  "replay.stage.mist_knife_drawn": "Mist knife draw",
+  "prompt.config.mist_raven_timing":
+    "Mist/Raven timing: on every night when the Alchemist starts alive with Snake unspent, daytime speeches precede the private Snake decision and final night death announcement and commitment. On day one, sheriff election precedes those speeches. Use the ordinary night death order only when this condition is unmet. A daytime blast with a pending night first commits the blast death and badge, then Snake and pending night deaths, then victory. A completed healing window never reopens for a pre-vote blast. These are rule conditions, not disclosure of current charges.",
+  "event.alchemist_mist_chosen": "Night {day}: player {actor} chose Mist targets: {targets}.",
+  "event.alchemist_mist_skipped": "Night {day}: no Mist request for player {actor}: {reason}.",
+  "event.alchemist_snake_chosen":
+    "Before night {day} settlement: player {actor} chose Snake target: {target}.",
+  "event.raven_unsealed":
+    "Night {day}: Raven {actor} unsealed; known teammate snapshot: {teammates}.",
+  "event.raven_knife_chosen": "Night {day}: player {actor} chose extra knife target: {target}.",
+  "event.raven_knife_skipped": "Night {day}: no extra knife request for player {actor}: {reason}.",
+  "event.mist_knife_drawn":
+    "Night {day}: all pack voters explicitly passed. Mist candidates: {candidates}; engine-drawn target: {target}.",
+  "mist.reason.dead": "dead",
+  "mist.reason.spent": "charge spent",
+  "mist.reason.no_targets": "no legal target",
+  "mist.reason.sealed": "still sealed",
+  "prompt.status.alchemist": "Your Alchemist charges and committed history: {state}",
+  "prompt.status.raven": "Your seal, extra knife charge and known teammate snapshot: {state}",
+  "prompt.stage.wolf_kill_candidates":
+    "Legal ordinary pack knife candidates tonight: {candidates}. These are candidates, not confirmed attacks or deaths. Vote within this list or explicitly pass; with Mist, all explicit passes cause an engine draw.",
+  "death.raven_claw_knife": "Raven penetrating extra knife",
+  "replay.stage.alchemist_mist": "Alchemist Mist",
+  "replay.stage.alchemist_snake": "Snake healing",
+  "replay.stage.raven_knife": "Raven extra knife",
+  "prompt.stage.snake":
+    "Original ordinary knife target: {target}. Legal healing target: {candidates}; an empty set still requires explicit target_id:null. Normally decide after speeches; a blast requires an immediate decision after actual death and badge handling.",
+  "prompt.stage.mist":
+    "Living Mist candidates: {candidates}. Choose three distinct IDs including yourself or wolves, or explicit null to keep the charge.",
+  "prompt.stage.raven_knife":
+    "Extra knife candidates: {candidates}. Mist does not restrict this attack; self-targeting is forbidden; explicit null keeps it.",
+
+  "request.summary.alchemist_snake": "Decide Snake healing for this pending night",
+  "stage.alchemist_mist": "Alchemist Mist",
+  "stage.alchemist_snake": "Snake healing",
+  "stage.raven_knife": "Raven extra knife",
+
+  "role.alchemist.brief":
+    "You are the Alchemist, a good god. Mist and Snake each have one charge and can both be used for the same night. Before pack chat choose three distinct living players, including yourself or wolves, to restrict the ordinary pack knife; an explicit pass costs nothing. While Snake remains, normally after daytime speeches you privately learn the original pack target and may remove its ordinary knife damage. Self-healing is allowed only for night one; you may pay even if hidden protection already blocked the knife. Snake never removes Raven’s penetrating extra knife or consecutive dream damage. Night deaths are delayed only if you were alive at this night’s start with Snake unspent; otherwise use the ordinary order. A blast interrupts this schedule: its actual death and badge are committed first, then decide healing immediately using only information already available, settle full night deaths and judge victory.",
+  "role.raven_claw_wolf.brief":
+    "You are the Raven Claw Wolf. The pack recognizes you, but while sealed you know no teammates and cannot chat or cast the ordinary knife vote. You can never self-destruct. You permanently unseal only at a real night start with fewer than three living wolves, learning only teammates alive then; keep their identities if they later die without receiving earlier dead identities or old chat. Once unsealed join ordinary pack chat and voting. You also have one optional independent extra knife against another living original body, even outside Mist. It penetrates this board’s dream protection and Snake, but killing the Dreamer still causes the genuine dream link.",
+  "action.cast_mist.hint":
+    "cast_mist: target_ids is three distinct living player IDs, or null for an explicit pass.",
+  "action.cast_mist.directive":
+    "Submit cast_mist exactly once. Yourself and wolves are legal; a missing response is not a pass.",
+  "action.use_snake.hint":
+    "use_snake: target_id is this pending night’s original ordinary knife target, or null to pass.",
+  "action.use_snake.directive":
+    "Normally decide privately after daytime speeches. If a blast interrupts, decide immediately after its actual death and badge handling, using only information already available. Choose the legal original knife target or explicit null; no legal target still requires a pass.",
+  "action.raven_knife.hint":
+    "raven_knife: target_id is another living player, or null to keep the extra knife.",
+  "action.raven_knife.directive":
+    "The extra knife ignores Mist. Explicit null keeps the charge; self-targeting is forbidden.",
+  "error.mist_unavailable": "Mist is unavailable for this turn.",
+  "error.mist_target": "Choose exactly three distinct legal living IDs, or explicitly pass.",
+  "error.snake_unavailable": "The unique Snake healing window is not open.",
+  "error.snake_target": "Heal only the allowed original knife target, or explicitly pass.",
+  "error.raven_knife_unavailable": "The Raven extra knife is unavailable.",
+  "error.raven_knife_target": "Choose another legal living player, or explicitly keep the charge.",
+
   "role.demon_hunter.brief":
     "NetEase rule adapted to the named finite AWA board: from night two, choose at most one other living player each night or explicitly abstain. A true wolf dies at dawn; hunting a Good player kills you instead. Native Witch poison cannot kill you. Guard and Heal do not stop hunt or backlash. No target camp or poison outcome is disclosed to you.",
   "role.demon_hunter.state":

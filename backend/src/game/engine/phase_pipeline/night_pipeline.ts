@@ -3,6 +3,14 @@ import {
   assertScholarMentorRosterCurrent,
   abortScholarMentorNight,
 } from "../../mechanisms/roles/scholar_mentor/night_frame";
+import {
+  mistKnifeTargets,
+  isMistRavenBoard,
+  beginMistNight,
+  assertMistRosterCurrent,
+  handOffMistNight,
+  abortMistNight,
+} from "../../mechanisms/roles/mist_raven/night_frame";
 import { assertScholarMentorBonusEffects } from "../../mechanisms/roles/scholar_mentor/night_stages";
 import { isTimeConsortBoard } from "../../mechanisms/roles/time_wolf_consort/night_frame";
 import {
@@ -88,6 +96,7 @@ import {
   Role,
   TieBreakerStrategy,
   StatusMark,
+  DeathCause,
 } from "../../../core/domain/model";
 import {
   DamageResolutionResult,
@@ -140,6 +149,7 @@ export type NightPipelineResult =
       summary: NightSummary;
       damage: DamageResolutionResult;
       dreamFrame: DreamNightFrame;
+      mistDelay?: boolean;
       demonSources?: object;
       retaliationAttacks?: readonly import("../../../core/domain/night_effects").NightRetaliationAttack[];
       evilKnightBindings?: NightStageState["evilKnightBindings"];
@@ -207,6 +217,8 @@ export class NightPipeline {
     let magicianHandedOff = false;
     let timeConsortHandedOff = false;
     let scholarMentorHandedOff = false;
+    const ownsMist = config.mistRaven !== undefined;
+    let mistHandedOff = false;
     let weddingHandedOff = false,
       demonHandedOff = false,
       demonAcquired = false;
@@ -215,7 +227,18 @@ export class NightPipeline {
         beginDemonHunterNight(this.world, day, isCurrent);
         demonAcquired = true;
       }
+      if (ownsMist) {
+        const unsealed = beginMistNight(this.world, day);
+        if (unsealed)
+          this.events.push({
+            timestamp: Date.now(),
+            type: "raven_unsealed",
+            payload: { ...unsealed, day, awakened: true },
+            audience: Object.freeze([unsealed.actorId]),
+          });
+      }
       const assertReadable = () => {
+        if (ownsMist) assertMistRosterCurrent(this.world);
         if (config.trickster) assertTricksterRosterCurrent(this.world);
         if (config.wolfSorcerer) assertWolfSorcererRosterCurrent(this.world);
         if (config.timeConsort) assertTimeConsortRosterCurrent(this.world);
@@ -230,6 +253,7 @@ export class NightPipeline {
       };
       assertReadable();
       const nativeProvider =
+        ownsMist ||
         ownsDemon ||
         isEvilKnightBoard(this.world) ||
         isNightmareBoard(this.world) ||
@@ -319,6 +343,10 @@ export class NightPipeline {
         ensureMarks: (entityId: EntityId) => this.ensureMarks(entityId),
         pickMajorityTarget: (votes: Record<number, number>) =>
           this.pickMajorityTarget(votes, config.tieBreaker?.wolfKillVote ?? "min_id"),
+        pickMistKnife: (ids: readonly EntityId[]) =>
+          ids.length
+            ? ids[Math.floor(this.random.fork(`day:${day}:mist-knife`).next() * ids.length)]!
+            : null,
         shuffleWolves: (ids: EntityId[]) =>
           shuffled(ids, this.random.fork(`day:${day}:wolf-order`)),
         state: stageState,
@@ -427,17 +455,26 @@ export class NightPipeline {
           type: "mechanical_poison_reflected",
           payload: { ...reflection, day },
         });
-      dreamFrame.expandInitialDamage(this.world, damage);
-      safeRecordLogicOp({
-        scope: "resolution",
-        op: "night_damage_resolved",
-        phase: Phase.Night,
-        status: "ok",
-        output: {
-          deaths: damage.deaths,
-          death_sources: damage.deathSources,
-        },
-      });
+      const mist = ownsMist ? handOffMistNight(this.world, day, stageState.wolfTarget) : null;
+      if (mist?.extra && livingNightLife(this.world, mist.extra)) {
+        const id = mist.extra.id;
+        if (!damage.deaths.includes(id)) damage.deaths.push(id);
+        damage.deathSources[id] = [
+          ...new Set([...(damage.deathSources[id] ?? []), DeathCause.RavenClawKnife]),
+        ];
+      }
+      if (!mist?.delayEligible) dreamFrame.expandInitialDamage(this.world, damage);
+      if (!mist?.delayEligible)
+        safeRecordLogicOp({
+          scope: "resolution",
+          op: "night_damage_resolved",
+          phase: Phase.Night,
+          status: "ok",
+          output: {
+            deaths: damage.deaths,
+            death_sources: damage.deathSources,
+          },
+        });
 
       const summary: NightSummary = {
         wolfTarget: stageState.wolfTarget,
@@ -449,7 +486,7 @@ export class NightPipeline {
       const deathLives = ownsDemon
         ? originalDemonNightLives(this.world)
         : new Map(
-            damage.deaths.map((id) => {
+            (mist?.delayEligible ? this.world.getAliveEntityIds() : damage.deaths).map((id) => {
               const life = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
               return [id, { life, version: aliveLifeVersion(life) }] as const;
             }),
@@ -459,11 +496,13 @@ export class NightPipeline {
       magicianHandedOff = config.magician !== undefined;
       timeConsortHandedOff = config.timeConsort !== undefined;
       scholarMentorHandedOff = config.scholarMentor !== undefined;
+      mistHandedOff = ownsMist;
       return {
         interrupted: false,
         summary,
         damage,
         dreamFrame,
+        ...(mist ? { mistDelay: mist.delayEligible } : {}),
         deathLives,
         retaliationAttacks: stageState.retaliationAttacks,
         evilKnightBindings: stageState.evilKnightBindings,
@@ -472,6 +511,7 @@ export class NightPipeline {
         ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
       };
     } finally {
+      if (ownsMist && !mistHandedOff) abortMistNight(this.world);
       if (config.trickster && !magicianHandedOff) abortTricksterNight(this.world);
       if (config.wolfSorcerer && !magicianHandedOff) abortWolfSorcererNight(this.world);
       if (config.magician && !magicianHandedOff) abortMagicianNight(this.world);
@@ -501,7 +541,12 @@ export class NightPipeline {
       summary: { key: "request.summary.night_action" },
       context: {
         ...extraContext,
-        ...(isScholarMentorBoard(this.world) ||
+        ...(isMistRavenBoard(this.world) &&
+        (allowedTools.includes("kill_vote") || allowedTools.includes("speak_to_wolves"))
+          ? { wolf_kill_candidates: mistKnifeTargets(this.world) ?? this.world.getAliveEntityIds() }
+          : {}),
+        ...(isMistRavenBoard(this.world) ||
+        isScholarMentorBoard(this.world) ||
         isTimeConsortBoard(this.world) ||
         isMagicianBoard(this.world) ||
         isEvilKnightBoard(this.world) ||

@@ -1,4 +1,8 @@
 import { settlesNightBeforeDay } from "../../../game/mechanisms/night_death_timing";
+import {
+  projectAlchemist,
+  projectRaven,
+} from "../../../game/mechanisms/roles/mist_raven/player_projection";
 import { readModifierState } from "../../../game/mechanisms/roles/scholar_mentor/state";
 import { scholarMentorStateForRole } from "../../../game/mechanisms/roles/scholar_mentor/night_frame";
 import { projectTimeConsortState } from "../../../game/mechanisms/roles/time_wolf_consort/state";
@@ -202,6 +206,10 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    const alchemist = projectAlchemist(role),
+      raven = projectRaven(role);
+    if (alchemist) ownState.alchemist = alchemist;
+    if (raven) ownState.ravenClaw = raven;
     const modifier = readModifierState(scholarMentorStateForRole(role));
     if (modifier) ownState.scholarMentor = modifier;
     const timeConsort = projectTimeConsortState(role, request.context.day);
@@ -547,6 +555,14 @@ export class PlayerPromptPolicy {
 
   private statusDirective(request: ActionRequest, role?: RoleComponent): string | undefined {
     const lines: string[] = [];
+    const alchemist = projectAlchemist(role),
+      raven = projectRaven(role);
+    if (alchemist)
+      lines.push(
+        text(this.locale, "prompt.status.alchemist", { state: JSON.stringify(alchemist) }),
+      );
+    if (raven)
+      lines.push(text(this.locale, "prompt.status.raven", { state: JSON.stringify(raven) }));
     const weddingView = weddingActorView(this.world, request.actorId);
     if (weddingView)
       lines.push(
@@ -689,6 +705,25 @@ export class PlayerPromptPolicy {
   }
 
   private stageContextHint(request: ActionRequest): string | undefined {
+    if (request.context.wolf_kill_candidates !== undefined)
+      return text(this.locale, "prompt.stage.wolf_kill_candidates", {
+        candidates:
+          request.context.wolf_kill_candidates.join(", ") || text(this.locale, "common.none"),
+      });
+    if (request.context.stage === "alchemist_snake")
+      return text(this.locale, "prompt.stage.snake", {
+        target: request.context.snake_target ?? text(this.locale, "common.none"),
+        candidates:
+          (request.context.snake_candidates ?? []).join(", ") || text(this.locale, "common.none"),
+      });
+    if (request.context.stage === "alchemist_mist")
+      return text(this.locale, "prompt.stage.mist", {
+        candidates: (request.context.mist_candidates ?? []).join(", "),
+      });
+    if (request.context.stage === "raven_knife")
+      return text(this.locale, "prompt.stage.raven_knife", {
+        candidates: (request.context.raven_candidates ?? []).join(", "),
+      });
     const stage = getActionRequestStage(request);
     const day = getActionRequestDay(request);
     const firstDaySheriffTiming =

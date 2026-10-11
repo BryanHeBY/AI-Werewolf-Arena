@@ -1,4 +1,5 @@
 import { modifySkill, bonusAction } from "./native";
+import { castMist, useSnake, ravenKnife } from "./mist_raven";
 import { lockTime } from "./native";
 import { swapNightSeats } from "./native";
 import { resetExileVote, swapTargets, swapExileTargets } from "./native";
@@ -61,6 +62,9 @@ import {
 
 /** Preserve protocol-independent priority and RNG order for strict Tape reproducibility. */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
+  { tool: "cast_mist", decide: castMist },
+  { tool: "use_snake", decide: useSnake },
+  { tool: "raven_knife", decide: ravenKnife },
   { tool: "modify_skill", decide: modifySkill },
   { tool: "bonus_action", decide: bonusAction },
   { tool: "reset_exile_vote", decide: resetExileVote },

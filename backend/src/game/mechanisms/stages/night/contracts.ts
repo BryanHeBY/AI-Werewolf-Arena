@@ -91,6 +91,8 @@ export interface NightStageContext {
   getAliveByRole(role: Role): EntityId[];
   ensureMarks(entityId: EntityId): StatusMarksComponent;
   pickMajorityTarget(votes: Record<number, number>): EntityId | null;
+  /** Finite mist-board fallback after all voters explicitly passed; named reproducible stream. */
+  pickMistKnife?(ids: readonly EntityId[]): EntityId | null;
   shuffleWolves(ids: EntityId[]): EntityId[];
   state: NightStageState;
 }

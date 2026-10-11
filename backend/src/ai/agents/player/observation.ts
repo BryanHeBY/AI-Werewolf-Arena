@@ -36,6 +36,8 @@ export interface PlayerObservation {
   deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];
   ownState: {
+    alchemist?: import("../../../game/mechanisms/roles/mist_raven/player_projection").PlayerAlchemistState;
+    ravenClaw?: import("../../../game/mechanisms/roles/mist_raven/player_projection").PlayerRavenState;
     scholarMentor?: import("../../../game/mechanisms/roles/scholar_mentor/state").ModifierState;
     timeConsort?: NonNullable<
       ReturnType<

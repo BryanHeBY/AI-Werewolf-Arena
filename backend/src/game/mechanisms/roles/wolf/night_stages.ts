@@ -1,4 +1,5 @@
 import { isTimeConsortBoard } from "../time_wolf_consort/night_frame";
+import { isMistRavenBoard, mistKnifeTargets, originalMistTarget } from "../mist_raven/night_frame";
 import {
   isScholarMentorBoard,
   scholarMentorKnifeEligible,
@@ -24,6 +25,7 @@ const WOLF_KILL_VOTE_MAX_RETRIES = 3;
 
 /** Keep named board errors while applying one failure policy to chat and knife requests. */
 function strictWolfFailurePrefix(ctx: NightStageContext): string | null {
+  if (isMistRavenBoard(ctx.world)) return "mist";
   if (isScholarMentorBoard(ctx.world)) return "scholar_mentor";
   if (isTimeConsortBoard(ctx.world)) return "time_consort";
   if (isNightmareBoard(ctx.world)) return "nightmare";
@@ -175,10 +177,20 @@ const wolfKillVoteStage: NightStageHandler = {
       ...ctx.state.wolfChatOrder.filter((id) => knifeHolders.includes(id)),
       ...knifeHolders.filter((id) => !ctx.state.wolfChatOrder.includes(id)),
     ];
+    const mistVoteScopes = isMistRavenBoard(ctx.world)
+      ? new Map(voteOrder.map((id) => [id, captureActorScope(ctx, id)] as const))
+      : null;
+    const explicitPasses = new Set<EntityId>();
     for (const wolfId of voteOrder) {
-      if (!wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId)) continue;
+      if (!wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId)) {
+        if (mistVoteScopes) throw new Error("mist_wolf_actor_stale");
+        continue;
+      }
       const actorCurrent = captureActorScope(ctx, wolfId);
-      if (!actorCurrent()) continue;
+      if (!actorCurrent()) {
+        if (mistVoteScopes) throw new Error("mist_wolf_actor_stale");
+        continue;
+      }
       let voteResolved: {
         abstain: boolean;
         targetId: EntityId | null;
@@ -278,8 +290,10 @@ const wolfKillVoteStage: NightStageHandler = {
         };
         break;
       }
-      if (!actorCurrent() || !wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId))
+      if (!actorCurrent() || !wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(wolfId)) {
+        if (mistVoteScopes) throw new Error("mist_wolf_actor_stale");
         continue;
+      }
       if (!voteResolved) {
         if (strictWolfFailurePrefix(ctx))
           throw new Error(`${strictWolfFailurePrefix(ctx)}_wolf_action_missing`);
@@ -303,6 +317,7 @@ const wolfKillVoteStage: NightStageHandler = {
 
       const abstain = voteResolved.abstain;
       const targetId = voteResolved.targetId;
+      if (abstain && targetId === null) explicitPasses.add(wolfId);
       if (!abstain && targetId !== null) {
         if (voteResolved.targetLife)
           acceptedTargets.push({ actorId: wolfId, targetId, ...voteResolved.targetLife });
@@ -329,15 +344,42 @@ const wolfKillVoteStage: NightStageHandler = {
       });
     }
 
-    for (const target of acceptedTargets)
-      if (
+    if (mistVoteScopes)
+      for (const [id, current] of mistVoteScopes)
+        if (!current() || !wolfKnifeHolders(ctx.world, ctx.roleCatalog).includes(id))
+          throw new Error("mist_wolf_actor_stale");
+    for (const target of acceptedTargets) {
+      const current =
         ctx.world.getComponent(target.targetId, COMPONENT.Alive) === target.life &&
         target.life.alive &&
         aliveLifeVersion(target.life) === target.version &&
-        wolfKnifeTargetAllowed(ctx.world, target.targetId)
-      )
+        wolfKnifeTargetAllowed(ctx.world, target.targetId);
+      if (!current && mistVoteScopes) throw new Error("mist_wolf_target_stale");
+      if (current)
         ctx.state.wolfVotes[target.targetId] = (ctx.state.wolfVotes[target.targetId] ?? 0) + 1;
-    const wolfTarget = ctx.pickMajorityTarget(ctx.state.wolfVotes);
+    }
+    let wolfTarget = ctx.pickMajorityTarget(ctx.state.wolfVotes);
+    let mistRandomScope: import("../../../../core/domain/night_effects").NightLifeScope | null =
+      null;
+    if (isMistRavenBoard(ctx.world) && wolfTarget === null) {
+      const circle = mistKnifeTargets(ctx.world);
+      if (circle !== null) {
+        if (voteOrder.length === 0 || explicitPasses.size !== voteOrder.length)
+          throw new Error("mist_knife_requires_explicit_passes");
+        if (!ctx.pickMistKnife) throw new Error("mist_knife_rng_missing");
+        wolfTarget = ctx.pickMistKnife(circle);
+        mistRandomScope =
+          wolfTarget === null ? null : originalMistTarget(ctx.world, ctx.currentDay(), wolfTarget);
+        if (wolfTarget !== null && !mistRandomScope) throw new Error("mist_knife_target_stale");
+        ctx.events.push(
+          wolfTeamEvent(ctx.world, ctx.roleCatalog, {
+            timestamp: Date.now(),
+            type: "mist_knife_drawn",
+            payload: { day: ctx.currentDay(), candidates: [...circle], targetId: wolfTarget },
+          }),
+        );
+      }
+    }
     ctx.state.wolfTarget = wolfTarget;
     if (isScholarMentorBoard(ctx.world)) {
       const actor = ctx.world
@@ -357,14 +399,18 @@ const wolfKillVoteStage: NightStageHandler = {
       output: { tally: ctx.state.wolfVotes, wolf_target: wolfTarget },
     });
     if (wolfTarget !== null) {
-      const target = acceptedTargets.find(
-        (item) =>
-          item.targetId === wolfTarget &&
-          ctx.world.getComponent(item.targetId, COMPONENT.Alive) === item.life &&
-          item.life.alive &&
-          aliveLifeVersion(item.life) === item.version &&
-          wolfKnifeTargetAllowed(ctx.world, item.targetId),
-      );
+      const target =
+        (mistRandomScope
+          ? { targetId: wolfTarget, life: mistRandomScope.life, version: mistRandomScope.version }
+          : undefined) ??
+        acceptedTargets.find(
+          (item) =>
+            item.targetId === wolfTarget &&
+            ctx.world.getComponent(item.targetId, COMPONENT.Alive) === item.life &&
+            item.life.alive &&
+            aliveLifeVersion(item.life) === item.version &&
+            wolfKnifeTargetAllowed(ctx.world, item.targetId),
+        );
       if (target) {
         const mapping = isMagicianBoard(ctx.world)
           ? resolveMagicianNightTarget(ctx.world, ctx.currentDay(), wolfTarget)

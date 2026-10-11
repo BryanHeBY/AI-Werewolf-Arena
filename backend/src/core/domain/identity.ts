@@ -9,6 +9,8 @@ export enum Camp {
 }
 
 export enum Role {
+  Alchemist = "alchemist",
+  RavenClawWolf = "raven_claw_wolf",
   Wolf = "wolf",
   WolfKing = "wolf_king",
   WhiteWolfKing = "white_wolf_king",

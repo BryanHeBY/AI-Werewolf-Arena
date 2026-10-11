@@ -10,6 +10,9 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  cast_mist: { target_ids: EntityId[] | null };
+  use_snake: { target_id: EntityId | null };
+  raven_knife: { target_id: EntityId | null };
   modify_skill: { mode: "enhance" | "weaken" | null; target_id: EntityId | null };
   bonus_action: {
     kind: "check" | "guard" | "poison" | "kill";
@@ -76,6 +79,9 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "cast_mist",
+  "use_snake",
+  "raven_knife",
   "modify_skill",
   "bonus_action",
   "lock_time",
@@ -160,6 +166,9 @@ export interface TurnConstraints {
 }
 
 export const ACTION_STAGES = [
+  "alchemist_mist",
+  "alchemist_snake",
+  "raven_knife",
   "scholar_mentor_choice",
   "scholar_mentor_bonus",
   "time_consort_lock",
@@ -231,6 +240,11 @@ export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */
 export interface ActionRequestExtras {
+  mist_candidates?: readonly EntityId[];
+  wolf_kill_candidates?: readonly EntityId[];
+  snake_target?: EntityId | null;
+  snake_candidates?: readonly EntityId[];
+  raven_candidates?: readonly EntityId[];
   modifier_poison_blocked?: boolean;
   modifier_modes?: readonly ("enhance" | "weaken")[];
   modifier_candidates?: readonly EntityId[];

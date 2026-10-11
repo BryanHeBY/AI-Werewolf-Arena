@@ -1,5 +1,65 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "replay.stage.alchemist_mist_chosen": "雾选择",
+  "replay.stage.alchemist_mist_skipped": "跳过雾请求",
+  "replay.stage.alchemist_snake_chosen": "蛇救治选择",
+  "replay.stage.raven_unsealed": "狼鸦解封",
+  "replay.stage.raven_knife_chosen": "额外刀选择",
+  "replay.stage.raven_knife_skipped": "跳过额外刀请求",
+  "replay.stage.mist_knife_drawn": "雾内随机刀",
+  "prompt.config.mist_raven_timing":
+    "迷雾鸦影时序：每夜若夜初炼金存活且蛇未用，白天发言后私下决定蛇，然后公布并提交最终夜死；首日发言前先完成警长流程。只有条件不满足才按普通夜死顺序。若仍有待定夜而白天自爆，先提交自爆死亡与警徽，再决定蛇及待定夜死，之后判胜；已完成的救治窗口不会因放逐前自爆重开。此为条件规则，不公开当前药量。",
+  "event.alchemist_mist_chosen": "第 {day} 夜，{actor} 号的未明之雾选择：{targets}。",
+  "event.alchemist_mist_skipped": "第 {day} 夜，{actor} 号未请求雾：{reason}。",
+  "event.alchemist_snake_chosen": "第 {day} 夜结算前，{actor} 号的法老之蛇选择：{target}。",
+  "event.raven_unsealed": "第 {day} 夜，{actor} 号狼鸦解封；已知队友快照：{teammates}。",
+  "event.raven_knife_chosen": "第 {day} 夜，{actor} 号的额外刀选择：{target}。",
+  "event.raven_knife_skipped": "第 {day} 夜，{actor} 号未请求额外刀：{reason}。",
+  "event.mist_knife_drawn":
+    "第 {day} 夜，狼队全员明确弃刀；雾内候选 {candidates}，引擎抽取刀口：{target}。",
+  "mist.reason.dead": "已死亡",
+  "mist.reason.spent": "资源耗尽",
+  "mist.reason.no_targets": "没有合法目标",
+  "mist.reason.sealed": "尚未解封",
+  "prompt.status.alchemist": "你的炼金资源与已提交历史：{state}",
+  "prompt.status.raven": "你的封印、额外刀资源与已知队友快照：{state}",
+  "prompt.stage.wolf_kill_candidates":
+    "本夜普通狼刀合法候选：{candidates}。这些是候选，并不表示已被刀或死亡。只能在候选中投刀，或明确弃刀；有雾时全员明确弃刀将由引擎抽签。",
+  "death.raven_claw_knife": "狼鸦穿透额外刀",
+  "replay.stage.alchemist_mist": "未明之雾",
+  "replay.stage.alchemist_snake": "法老之蛇救治",
+  "replay.stage.raven_knife": "狼鸦额外刀",
+  "prompt.stage.snake":
+    "本夜原普通刀口：{target}。可救目标：{candidates}；无合法目标也要明确 target_id:null。通常在发言后决定；自爆中断时在实际死亡及警徽处理后立即决定。",
+  "prompt.stage.mist":
+    "未明之雾可选存活号码：{candidates}。选三个不同号码（可含自己和狼人），或明确 null 保留。",
+  "prompt.stage.raven_knife":
+    "狼鸦额外刀可选号码：{candidates}。不受雾圈限制，不能选自己，或明确 null 保留。",
+
+  "request.summary.alchemist_snake": "决定本夜法老之蛇救治",
+  "stage.alchemist_mist": "未明之雾",
+  "stage.alchemist_snake": "法老之蛇救治",
+  "stage.raven_knife": "狼鸦额外刀",
+
+  "role.alchemist.brief":
+    "你是炼金魔女，好人神职。未明之雾和法老之蛇各一次，可同夜使用。夜间先选三个不同存活号码圈住普通狼刀，可含自己和狼人；明确空过不消耗。还有蛇时，天亮后通常在发言结束时私下获知本夜原普通刀口并决定救治，仅首夜能自救；保护已挡刀仍可付药。蛇只去普通刀伤害，无法救狼鸦穿透刀或连续梦。仅本夜初你存活且蛇未用时，夜死才延迟到唯一救治后公布；否则按普通顺序。自爆中断时，自爆死亡及警徽先于救治，夜死和连锁完成后才判胜。",
+  "role.raven_claw_wolf.brief":
+    "你是狼鸦之爪，狼人阵营。狼队知道你，封印时你不知道队友且不能狼聊或普通投刀；永远不能自爆。只在真实夜初活狼少于三人时永久解封，知道当刻仍存活队友，之后保留已知死队友，不补发此前死狼或狼聊。解封后参与狼聊和普通投刀，并可保留或使用一次独立额外刀；目标必须是其他存活原生命，圈外也可，穿透本板梦保护和蛇救治，仍可引起摄梦死亡牵连。",
+  "action.cast_mist.hint": "cast_mist：target_ids 为三个不同存活号码，或 null 明确弃用。",
+  "action.cast_mist.directive":
+    "本次仅提交一次 cast_mist，可包含自己或狼人；不能用缺失回复代替弃用。",
+  "action.use_snake.hint": "use_snake：target_id 为本夜原普通刀口，或 null 明确弃药。",
+  "action.use_snake.directive":
+    "通常在白天发言结束后私下救治；自爆中断时，在自爆实际死亡和警徽处理后立即决定，只依据已经发生的信息。只救合法原刀口，或明确 null；没有合法对象也必须明确弃药。",
+  "action.raven_knife.hint": "raven_knife：target_id 为其他存活号码，或 null 保留额外刀。",
+  "action.raven_knife.directive": "额外刀不受雾圈限制，明确 null 保留次数；不能自刀。",
+  "error.mist_unavailable": "当前不能使用未明之雾。",
+  "error.mist_target": "请选择三个不同的合法存活号码，或明确弃用。",
+  "error.snake_unavailable": "当前不在唯一法老之蛇救治窗口。",
+  "error.snake_target": "只能救治允许的本夜原刀口，或明确弃药。",
+  "error.raven_knife_unavailable": "当前不能使用狼鸦额外刀。",
+  "error.raven_knife_target": "请选择其他合法存活号码，或明确保留。",
+
   "role.demon_hunter.brief":
     "网易角色规则的具名有限AWA板适配：从第二夜起每夜可选择另一名存活玩家或明确弃猎。目标为真实狼人则次日目标死亡；目标为好人则自己反噬死亡。免疫原生女巫毒药，守卫和救药不阻挡猎杀或反噬。不会向你反馈目标阵营或毒免结果。",
   "role.demon_hunter.state":

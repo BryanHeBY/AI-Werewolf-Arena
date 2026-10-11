@@ -6,8 +6,11 @@ export const speak_to_wolves: ObservedToolHandler = (context) => {
 };
 
 export const kill_vote: ObservedToolHandler = (context) => {
-  const { teammateIds, others, pick } = context;
-  const target = pick(others.filter((id) => !teammateIds.includes(id)));
+  const { teammateIds, others, pick, request } = context;
+  const target =
+    request.context.wolf_kill_candidates !== undefined
+      ? pick([...request.context.wolf_kill_candidates])
+      : pick(others.filter((id) => !teammateIds.includes(id)));
   return {
     name: "kill_vote",
     args: { target_id: target ?? null, abstain: target === undefined },

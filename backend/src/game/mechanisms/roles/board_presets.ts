@@ -2,6 +2,7 @@ import {
   isTricksterPreset,
   isOrderPrincePreset,
   isScholarMentorPreset,
+  isMistRavenPreset,
   isTimeConsortPreset,
   isWolfSorcererPreset,
   isMagicianPreset,
@@ -17,6 +18,14 @@ import { isDemonHunterPreset } from "./demon_hunter/preset";
 
 /** Shared finite-board eligibility for configuration checks and direct bootstrap callers. */
 export function boardPresetViolation(config: BoardConfig) {
+  if (
+    (config.mistRaven ||
+      config.roleSetups.some(
+        (row) => (row.role === Role.Alchemist || row.role === Role.RavenClawWolf) && row.count > 0,
+      )) &&
+    !isMistRavenPreset(config)
+  )
+    return "mist_raven_preset_invalid";
   if (
     (config.trickster ||
       config.roleSetups.some((row) => row.role === Role.Trickster && row.count > 0)) &&
