@@ -56,7 +56,11 @@ export type MistRecordVariant =
   | "blast-pre-vote"
   | "blast-raw-target"
   | "blast-badge-chain"
-  | "blast-last-wolf";
+  | "blast-last-wolf"
+  | "last-villager-pass"
+  | "last-villager-heal"
+  | "last-god"
+  | "last-god-illegal-self";
 export async function mistBoard() {
   return parseBoardDefinition(
     JSON.parse(
@@ -179,6 +183,38 @@ const manualPlans: Record<MistRecordVariant, NightPlan> = {
     circle: null,
     blast: { day: 3, window: ActionWindow.OnDaybreak },
   },
+  "last-villager-pass": {
+    dream: [1, 2, 1],
+    knife: [5, 7, 8],
+    snake: [null, null, null],
+    extra: [null, null, null],
+    exile: [6, 4, 12],
+    circle: [5, 6, 7],
+  },
+  "last-villager-heal": {
+    dream: [1, 2, 1, 2],
+    knife: [5, 7, 8, 8],
+    snake: [null, null, 8, null],
+    extra: [null, null, null, null],
+    exile: [6, 4, 12, 12],
+    circle: [5, 6, 7],
+  },
+  "last-god": {
+    dream: [5, 5, 5],
+    knife: [2, 4, 1],
+    snake: [null, null, null],
+    extra: [null, null, null],
+    exile: [3, 6, 12],
+    circle: [2, 4, 1],
+  },
+  "last-god-illegal-self": {
+    dream: [5, 5, 5],
+    knife: [2, 4, 1],
+    snake: [null, null, 1],
+    extra: [null, null, null],
+    exile: [3, 6, 12],
+    circle: [2, 4, 1],
+  },
 };
 /** Literal manual scenarios; this controller is intentionally distinct from an observed player. */
 export function mistAction(q: ActionRequest, variant: MistRecordVariant): ToolCall | null {
@@ -186,7 +222,7 @@ export function mistAction(q: ActionRequest, variant: MistRecordVariant): ToolCa
     d = q.context.day,
     index = d - 1,
     plan = manualPlans[variant];
-  if (d > 3) throw new Error("mist_fixture_unexpected_day");
+  if (d > plan.knife.length) throw new Error("mist_fixture_unexpected_day");
   if (plan.blast && d === plan.blast.day && s === plan.blast.window && q.actorId === 10)
     return { name: "self_destruct", args: { confirm: true, reason: "Manual blast" } };
   if (s === "alchemist_mist")
@@ -283,51 +319,69 @@ export function mistRecording(
           maxDays: 8,
         });
         for (let cycle = 1; cycle <= 8 && !game.phaseManager.getSnapshot().gameOver; cycle++) {
-          await game.phaseManager.runSingleCycle(
-            {
-              getAction: (q) =>
-                trace.decide(q, {
-                  async getAction(request) {
-                    if (observe)
-                      observe({
-                        day: request.context.day,
-                        stage: request.context.stage,
-                        actorId: request.actorId,
-                        aliveIds: game.world.getAliveEntityIds(),
-                        sheriffIds: game.world
-                          .getAliveEntityIds()
-                          .filter(
-                            (id) =>
-                              game.world.getComponent<BadgeComponent>(id, COMPONENT.Badge)
-                                ?.isSheriff,
-                          ),
-                        gameOver: game.phaseManager.getSnapshot().gameOver,
-                        publishedTypes: game.phaseManager.getEvents().map((e) => e.type),
-                      });
-                    return mistAction(request, variant);
-                  },
-                }),
-            },
-            8,
-          );
+          let cycleFailure: unknown;
+          try {
+            await game.phaseManager.runSingleCycle(
+              {
+                getAction: (q) =>
+                  trace.decide(q, {
+                    async getAction(request) {
+                      if (observe)
+                        observe({
+                          day: request.context.day,
+                          stage: request.context.stage,
+                          actorId: request.actorId,
+                          aliveIds: game.world.getAliveEntityIds(),
+                          sheriffIds: game.world
+                            .getAliveEntityIds()
+                            .filter(
+                              (id) =>
+                                game.world.getComponent<BadgeComponent>(id, COMPONENT.Badge)
+                                  ?.isSheriff,
+                            ),
+                          gameOver: game.phaseManager.getSnapshot().gameOver,
+                          publishedTypes: game.phaseManager.getEvents().map((e) => e.type),
+                        });
+                      return mistAction(request, variant);
+                    },
+                  }),
+              },
+              8,
+            );
+          } catch (error) {
+            if (
+              variant !== "last-god-illegal-self" ||
+              cycle !== 3 ||
+              !(error instanceof Error) ||
+              error.message !== "snake_action_invalid"
+            )
+              throw error;
+            cycleFailure = error;
+            trace.noteFailure("cycle", error);
+          }
           last = captureCheckpoint(
             game.world,
             game.phaseManager.getSnapshot(),
             cycle,
-            true,
+            cycleFailure === undefined,
             game.phaseManager.getEvents().length,
+            cycleFailure,
           );
           trace.checkpoint(last, game.phaseManager.getEvents());
           events.flush(game.phaseManager.getEvents());
+          if (cycleFailure) break;
         }
         const snapshot = game.phaseManager.getSnapshot();
-        if (!snapshot.gameOver || snapshot.result?.reason === "max_days_reached")
+        const failed = variant === "last-god-illegal-self";
+        if (failed && (last?.complete || snapshot.gameOver))
+          throw new Error("mist_fixture_failed_to_fail");
+        if (!failed && (!snapshot.gameOver || snapshot.result?.reason === "max_days_reached"))
           throw new Error("mist_fixture_failed_to_end_naturally");
         await manager.finalize({
           endedAtIso: new Date().toISOString(),
           winner: snapshot.result?.winner ?? null,
-          finishReason: snapshot.result!.reason,
-          gameResult: snapshot.result!,
+          finishReason: failed ? "runtime_error" : snapshot.result!.reason,
+          ...(snapshot.result ? { gameResult: snapshot.result } : {}),
           players: last!.players.map((p) => ({
             player_id: p.id,
             role: p.role,

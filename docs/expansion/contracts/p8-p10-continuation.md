@@ -138,3 +138,7 @@ game-catalog 拥有稳定 ID/名称/状态，game-text 拥有双语文案。新�
 ## P9d 完整自爆测试接续
 
 四自爆窗口及原刀口自爆、双移徽、末狼延后判胜已升级到双语真实finalized Tape，证据见[完整自爆](../reviews/p9-mist-raven-complete-blast.md)。下一步末神／末民完整终局与后夜非法自救失败前缀，然后新角色实际通信、精确迟到／资源、种子及前端；角色planned，44/64不变。
+
+## P9d 延迟胜负测试接续
+
+末神／末民的完整Wolf终局、救回末民后的继续游戏以及后夜非法自救的真实失败Tape已闭合，见[延迟胜负](../reviews/p9-mist-raven-complete-victory.md)。下一步新角色双语实际通信及精确迟到／资源，再做种子和前端；角色仍planned，44/64不变。
