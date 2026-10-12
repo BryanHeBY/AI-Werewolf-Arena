@@ -73946,13 +73946,355 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/death_chain.test.ts",
+      "to": "backend/tests/unit/mechanisms/ordered-death-waves.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "04373f330fa8ba7d96810852f53e12ee4664611465f1a5aa4cb3540f099bbdb7",
+      "candidateSha256": "a48e942520990fe9635fe96ebc093829f008f736b23df62d02789ff1998364e2",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 7276,
+          "end": 7324,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 7177,
+          "end": 7229,
+          "original": "../../../src/game/mechanisms/roles/hunter/death_hook",
+          "value": "../../../src/game/mechanisms/roles/hunter/death_hook",
+          "originalResolved": "backend/src/game/mechanisms/roles/hunter/death_hook.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/hunter/death_hook.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 650,
+          "end": 710,
+          "original": "../../../src/game/mechanisms/last_words/last_words_mechanism",
+          "value": "../../../src/game/mechanisms/last_words/last_words_mechanism",
+          "originalResolved": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+          "expectedResolved": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 563,
+          "end": 611,
+          "original": "../../../src/game/mechanisms/hooks/hook_registry",
+          "value": "../../../src/game/mechanisms/hooks/hook_registry",
+          "originalResolved": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/hooks/hook_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 492,
+          "end": 530,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 421,
+          "end": 460,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 346,
+          "end": 387,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 265,
+          "end": 310,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 209,
+          "end": 226,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/game/mechanisms/roles/hunter/death_hook.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/roles/hunter/death_hook\")",
+          "currentExpression": "import(\"../../../src/game/mechanisms/roles/hunter/death_hook\")",
+          "currentHead": "../../../src/game/mechanisms/roles/hunter/death_hook",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/game/mechanisms/roles/private_state.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/roles/private_state\")",
+          "currentExpression": "import(\"../../../src/game/mechanisms/roles/private_state\")",
+          "currentHead": "../../../src/game/mechanisms/roles/private_state",
+          "kind": "dynamic-module-path"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "19d2517858ec5414aba1530c4c5af02869f9813a7c8e03572dc5a1edc567e1eb",
+          "title": "zh-CN: a whole wave is dead before last words; badge precedes guns and additional deaths receive no last words",
+          "occurrence": 1
+        },
+        {
+          "id": "1a49a7f55ce3e5109f381ef00becfb5dd75c02f7cbc8e6c93c31fd27ed0129d5",
+          "title": "en: a whole wave is dead before last words; badge precedes guns and additional deaths receive no last words",
+          "occurrence": 1
+        },
+        {
+          "id": "95671eead2eec772b456ea0fa5bf6109218a4eba84e3ad5bc75c67984b2899ee",
+          "title": "zh-CN: the same life is settled once; revival allows a new death and cyclic proposals terminate",
+          "occurrence": 1
+        },
+        {
+          "id": "8e3ea4568deceb908f1694f59cbdb4cfb50f4cb2d48ca8d89583443cb057ee0b",
+          "title": "en: the same life is settled once; revival allows a new death and cyclic proposals terminate",
+          "occurrence": 1
+        },
+        {
+          "id": "768280ce5d8ebc4cf3e5f99937a110eaaca001d0de80691c6946f371387b4c2e",
+          "title": "last words require explicit initial-night or exile facts; voting self-destruction and shot deaths remain silent",
+          "occurrence": 1
+        },
+        {
+          "id": "01c8cb9e804a397921fe3c950706109d059d077ca1aab40dcdcabd4a0f09da3d",
+          "title": "multiple hooks retain compound causes without aliasing their returned source arrays",
+          "occurrence": 1
+        },
+        {
+          "id": "255c86403a781ec76f198bb2566d3e8bebcfb7cfa96c62ec290d97edb349d374",
+          "title": "a later hook failure keeps a completed gun death, original error and closed action windows",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Camp,\n  DeathCause,\n  Phase,\n  Role,\n  WinCondition,\n  type ActionRequest,\n  type GameEvent,\n  type RoleComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, DeathCause, Phase, Role, type ActionRequest, type GameEvent, type RoleComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "WinCondition",
+              "imported": "WinCondition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/death_chain.test.ts",
+      "to": "backend/tests/scenarios/mechanisms/exile-blast-death-chain.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "04373f330fa8ba7d96810852f53e12ee4664611465f1a5aa4cb3540f099bbdb7",
+      "candidateSha256": "1002a804b5130c613a25cd13a799c07907cfbace74bdaa44441f08fa3cd7673a",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 237,
+          "end": 282,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 181,
+          "end": 198,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "fc83a853d8924e91afaabc79c9eb7fb3417f2497650c947f960f2f7a5e2889df",
+          "title": "zh-CN: real exile settles words, badge, gun, the shot sheriff's badge and then victory",
+          "occurrence": 1
+        },
+        {
+          "id": "87d54ba9b12a3f5c4a958d3e3a02f9ba829e076ee071ee9f346b135b092a034e",
+          "title": "en: real exile settles words, badge, gun, the shot sheriff's badge and then victory",
+          "occurrence": 1
+        },
+        {
+          "id": "fe4e515316edc89ccb6096713d32e6d27d25df18e5b76b5cbc59258b756befa0",
+          "title": "zh-CN: concurrent default self-destruction picks one wolf, settles the badge without last words, enters night and later ends naturally",
+          "occurrence": 1
+        },
+        {
+          "id": "0c8a83efff4ebf5bbd36c5418798dd9426d5640b163c508ae651a910a795c2fc",
+          "title": "en: concurrent default self-destruction picks one wolf, settles the badge without last words, enters night and later ends naturally",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Camp,\n  DeathCause,\n  Phase,\n  Role,\n  WinCondition,\n  type ActionRequest,\n  type GameEvent,\n  type RoleComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Camp, Phase, Role, WinCondition, type ActionRequest } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/death_resolution",
+          "originalImport": "import { DeathResolution } from \"../../../src/game/engine/death_resolution\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DeathResolution",
+              "imported": "DeathResolution",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/event_registry",
+          "originalImport": "import { EventRegistry } from \"../../../src/game/engine/event_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "EventRegistry",
+              "imported": "EventRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/hooks/hook_registry",
+          "originalImport": "import { HookRegistry } from \"../../../src/game/mechanisms/hooks/hook_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "HookRegistry",
+              "imported": "HookRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/last_words/last_words_mechanism",
+          "originalImport": "import { LastWordsMechanism } from \"../../../src/game/mechanisms/last_words/last_words_mechanism\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "LastWordsMechanism",
+              "imported": "LastWordsMechanism",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 531,
-    "targetFiles": 568,
-    "mappingEntries": 568,
-    "baselineCases": 6643,
+    "sourceFiles": 532,
+    "targetFiles": 570,
+    "mappingEntries": 570,
+    "baselineCases": 6654,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
