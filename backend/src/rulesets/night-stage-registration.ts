@@ -1,12 +1,14 @@
 /**
  * Owns explicit compatibility and Ghost Bride replacement registration policies.
  * Inputs are already collected handler references and compiler-provided wedding
- * handlers; outputs are the registered Map or a named conflicting-handler error.
+ * handlers; outputs are the registered Map, owned replacement refs or a named conflict.
  * Profile and compiler reservations share only the same original handler for an
  * observed ID. No duplicate priority/execute getters, actor queries or coercion
- * run here; declared replacements preserve their original four-step order.
+ * run here; declared replacements preserve their original four-step order. Clone
+ * refs are captured at the original argument position and recorded after set succeeds.
  */
 import type { NightStageHandler } from "../game/mechanisms/stages/night/contracts";
+import type { GhostStageRegistrationChange } from "./night-stage-plan-contracts";
 
 export const NIGHT_STAGE_SHARING = Object.freeze({
   compatibility: "same-original-handler-reference",
@@ -50,7 +52,8 @@ export function applyGhostBrideStageRegistration(
   registered: Map<string, NightStageHandler>,
   weddingChat: NightStageHandler,
   weddingKnife: NightStageHandler,
-): void {
+): readonly GhostStageRegistrationChange[] {
+  const changes: GhostStageRegistrationChange[] = [];
   for (const operation of GHOST_BRIDE_STAGE_OPERATIONS) {
     switch (operation.kind) {
       case "remove":
@@ -59,13 +62,25 @@ export function applyGhostBrideStageRegistration(
       case "install": {
         const stage = operation.source === "wedding-chat" ? weddingChat : weddingKnife;
         registered.set(stage.id, stage);
+        changes.push(Object.freeze({ handler: stage, operation: operation.source }));
         break;
       }
       case "reprioritize-if-present": {
         const chat = registered.get(operation.id);
-        if (chat) registered.set(chat.id, { ...chat, priority: operation.priority });
+        if (chat) {
+          let replacement: NightStageHandler = chat;
+          registered.set(chat.id, (replacement = { ...chat, priority: operation.priority }));
+          changes.push(
+            Object.freeze({
+              handler: replacement,
+              original: chat,
+              operation: "ordinary-chat-priority",
+            }),
+          );
+        }
         break;
       }
     }
   }
+  return Object.freeze(changes);
 }

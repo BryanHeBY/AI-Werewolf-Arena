@@ -35,3 +35,15 @@
 鬼新娘的冻结声明只有原四项有限操作：移除普通狼刀、安装婚礼聊天、安装婚礼刀、已有普通狼聊改 priority 350。原 map/ID/getter/spread 顺序及没有普通狼聊时的行为保持，不建立泛型替换图。
 
 15 项局部、87 次断言，以及原 Ghost 实际阶段一项、3 次断言通过。必要类型、四个职责头、源程序逆向映射及独立原输入探针通过。C21 snapshot/opaque 与原角色、当前能力、clock/RNG 查询保持。十份原工具声明及七项实际阶段/工具关系只构成有限静态证据；完整工具 schema/动态 actor 一致性检查和完整 RulePlan 仍是后续要求，C22 尚不登记全部完成。
+
+## C21 实际执行项与来源
+
+流水线现在遍历 `plan.entries`，每项仍调用原 `entry.handler.execute(ctx)`，receiver、全部原循环正文及 getPlan 的读取时点保持。不是只建立一份未被消费的 metadata。旧 stages 仍保兼容；普通数组的成员加强政策不再扩大。
+
+默认收集在原 role pack 的一次 spread 完成后，仅查看自己的新增数字索引，记录已观察到的 profile 角色或 compiler reservation。共享 handler 合并所有来源。Ghost 仍在原 Map set 的参数求值位置取得原本创建的 clone，set 完成后关联旧引用来源和有限替换操作；不再读 handler ID、priority、foreign pack，也不推测 ability ID 或当前 actor 资格。
+
+来源关联属于 registry 的每个返回数组，用私有 WeakMap 管理，没有全局 currentPlan，也不为标签保留 World。虚方法覆盖、未观察引用或外来角色明确给 unknown。snapshot 项和自己的来源数据冻结，原 handler/World/能力仍是原对象。
+
+opaque 项只包装刚从原 iterator 拉取的 handler，下次 foreign pull 仍在本次 handler 执行之后。yield-throw 与 next 依赖前次提交的两个既有反例保留已付前缀。
+
+八项新增和六项既有注册测试共 14 项、71 次断言通过，原真实中途赠技场景一项、两次断言通过；一次有限类型检查通过。源码逆映射核对原 getStages、Ghost 操作、既有 helper 与流水线全正文，五个职责头通过。本批不冻结 BoardConfig，不新增 checkpoint revision，不声明完整 tool schema 或判胜检查点；完整 RulePlan 仍继续。

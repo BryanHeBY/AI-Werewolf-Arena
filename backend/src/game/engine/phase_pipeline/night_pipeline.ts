@@ -5,6 +5,8 @@
  * collapse paid effects into unsourced marks.
  * Safe native stage arrays use frozen plan membership; opaque custom sources keep
  * their original lazy iteration. Handlers retain their receiver and query actors live.
+ * The loop consumes execution entries with observed source metadata; no source label
+ * grants actor eligibility or moves the original stage commitment boundaries.
  * The context query getter captures its current World before the stage's day argument;
  * actor qualification remains read-only and never moves into pipeline lifecycle commits.
  */
@@ -477,7 +479,8 @@ export class NightPipeline {
         state: stageState,
       };
 
-      for (const stage of this.stageRegistry.getPlan(config, this.world).stages) {
+      for (const entry of this.stageRegistry.getPlan(config, this.world).entries) {
+        const stage = entry.handler;
         assertEvilKnightRosterCurrent(this.world);
         if (!isCurrent())
           return attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver);

@@ -163,3 +163,5 @@
 - C12 radiant-recording causal recording：4原文件/62旧IDs实际完整录制/复现场景迁移；20whole程序/44callbacks/73relative imports保真，Root独立actualGit全部语句/105完整import语法/同目标/361unique IDs复核0；20heads0与一次finite20 types0，不跑games/full。原beforeAll与两top-level await保持全因果场景，不做会触发对局的发现；原literal/fixture字段保持，支持模块oracle欠项不据迁移关闭。mapping现470source/476target/5747IDs。
 
 - C12 mist-blast causal recording：2原文件/30旧IDs实际完整录制/复现场景迁移；20whole程序/44callbacks/73relative imports保真，Root独立actualGit全部语句/105完整import语法/同目标/361unique IDs复核0；20heads0与一次finite20 types0，不跑games/full。原beforeAll与两top-level await保持全因果场景，不做会触发对局的发现；原literal/fixture字段保持，支持模块oracle欠项不据迁移关闭。mapping现472source/478target/5777IDs。
+
+- C21执行来源：实际pipeline遍历entries并以原handler receiver执行，来源只由一次foreignpack spread后own slots与原Ghost set clone观测；私有per-return WeakMap无World/actor/currentPlan，opaque next仍在前次execute后。独立7源码逆向/原helpers0、5heads/newdeps0；new8+原6registration14/0/71、原真实lateGift1/0/2，finite types实际exit0。原规则闭包/getter/loop/排序不变，完整参数/tool/revision/winner RulePlan仍pending。
