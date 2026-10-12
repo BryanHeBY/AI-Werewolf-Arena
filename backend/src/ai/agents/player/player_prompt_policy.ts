@@ -3,6 +3,7 @@
  * request and prompt policy options; outputs preserve player knowledge, role text and board
  * context. It never commits submitted actions or changes role state.
  */
+import { getWhiteWolfKingState } from "../../../game/mechanisms/roles/white_wolf_king/ports";
 import { isAnimalDreamBoard } from "../../../game/mechanisms/roles/animal_dream/authority";
 import {
   animalFoxKnowledge,
@@ -136,7 +137,6 @@ import {
   getGuardState,
   getHunterState,
   getWolfKingState,
-  getWhiteWolfKingState,
   getKnightState,
   getGravekeeperState,
   getDreamerState,

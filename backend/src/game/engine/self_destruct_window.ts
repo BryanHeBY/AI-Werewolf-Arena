@@ -27,7 +27,7 @@ import { RoleRegistry } from "../../core/domain/registries/role_registry";
 import { World } from "../../core/domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
 import { GameActionRequestFactory } from "./action_request_factory";
-import { getWhiteWolfKingState } from "../mechanisms/roles/private_state";
+import { getWhiteWolfKingState } from "../mechanisms/roles/white_wolf_king/ports";
 
 /** Collect choices concurrently, then commit only the lowest-ID still-valid choice. */
 export class SelfDestructWindow {

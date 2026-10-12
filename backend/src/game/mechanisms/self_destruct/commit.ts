@@ -24,7 +24,7 @@ import {
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import type { World } from "../../../core/domain/world";
-import { getWhiteWolfKingState } from "../roles/private_state";
+import { getWhiteWolfKingState, consumeWhiteWolfDetonation } from "../roles/white_wolf_king/ports";
 import { getDefaultRoleCatalog } from "../roles/catalog";
 
 /** Commits only this public ability's resource/event/facts; the resolver owns death writes. */
@@ -88,7 +88,7 @@ export function commitSelfDestructSelection(
       deaths.push(choice.targetId);
       sources[choice.targetId] = [DeathCause.WhiteWolfBlast];
     }
-    state.canDetonate = false;
+    consumeWhiteWolfDetonation(state);
     events.push({
       timestamp: Date.now(),
       type: "white_wolf_king_self_destruct",

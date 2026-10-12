@@ -19,3 +19,9 @@
 Knight 的公开状态字段 `canDuel` 为只读类型视图，仍是原 privateState 对象，没有 runtime freeze 或 clone。日间窗口通过机制公共 port 读取资格及引用；实际 duel commit 完成原校验后，调用 feature 内的 `consumeKnightDuel` 执行原唯一消费写入。该命令不重新获取状态、不重新检查候选、不发布事件，也不提前标死；后续发布失败仍保留已付库存。
 
 原 commit 全文仅替换该赋值为具体 owner 命令；窗口运行正文及原状态声明仅 readonly 类型标记以外保持。新增三个有限单元测试覆盖发布失败、资源 setter 拒绝及 captured slot 不得再次读取，15 次断言通过；只读字段的编译负例和原 Knight/投影消费者的有限类型检查通过。原存档的 `knight.canDuel` 字段及玩家 DTO 不变，复杂机制的 schema/编码贡献仍按后续切片收口。
+
+## White Wolf King 消费写权
+
+公开原生状态 `canDetonate` 为只读字段，保留原 privateState 引用。窗口、提示和实际自爆提交通过白狼王公共 port 读取；提交完成原目标校验和 death proposal 构造后，调用具体 `consumeWhiteWolfDetonation` 执行原一次 false 写入，随后才发布原事件。失败不重查状态、不退款、不改变最终死亡或窗口撤权。
+
+原四份完整非 import 正文只允许该赋值和 readonly 类型标记的明确映射；六个职责头通过。两项发布/setter 失败测试、10 次断言与原消费者有限类型检查通过。独立八个 fresh 原/现 commit/window/prompt/catalog import 同成功及同出口，公共 port 与旧桥的函数引用一致。外部 checkpoint 与玩家 DTO 保持原字段，不混合普通枪或 Demon sealed stock。
