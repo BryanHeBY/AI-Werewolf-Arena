@@ -1282,3 +1282,16 @@ export function fragrantPairEventLabel(
     targets: f.pairIds?.join(", ") ?? text(locale, "fragrant.choice.pass"),
   });
 }
+
+export {
+  ANIMAL_DREAM_POLICY,
+  CAT_SKIPPED_VOTE_POLICIES,
+  PUFFER_BALLOT_POLICIES,
+  BEAR_SIGNAL_POLICIES,
+  isAnimalDreamPreset,
+} from "./animal-dream-preset";
+export type {
+  CatSkippedVotePolicy,
+  PufferBallotPolicy,
+  BearSignalPolicy,
+} from "./animal-dream-preset";
