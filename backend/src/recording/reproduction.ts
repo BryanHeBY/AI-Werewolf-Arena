@@ -82,22 +82,22 @@ import {
   GHOST_BRIDE_EVENT_TYPES,
   GHOST_BRIDE_POLICY,
   readWeddingSetup,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { validateGhostBrideRecord } from "./ghost_bride_record";
 import {
   readLonelyGirlEventFact,
   readLonelyGirlChoiceTool,
   LONELY_GIRL_POLICY,
-} from "@ai-werewolf-arena/game-text";
-import { readShapeshifterChoiceTool } from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
+import { readShapeshifterChoiceTool } from "@ai-werewolf-arena/game-contract/facts/shapeshifter";
 import {
   SHAPESHIFTER_EVENT_TYPES,
   readShapeshifterEventFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/shapeshifter";
 import {
   readWildChildEventFact,
   WILD_CHILD_EVENT_TYPES,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/wild-child";
 import { CUPID_POLICIES } from "../core/domain/board";
 import { boardConfigSchema } from "../core/domain/board_schema";
 import { dictionaries, text, type MessageKey } from "@ai-werewolf-arena/game-text";

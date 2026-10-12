@@ -17,12 +17,20 @@
     "./facts/nightmare": "./src/facts/nightmare.ts",
     "./facts/red-moon": "./src/facts/red-moon.ts",
     "./facts/demon-hunter": "./src/facts/demon-hunter.ts",
+    "./actions": "./src/actions.ts",
     "./facts/radiant-eclipse": "./src/facts/radiant-eclipse.ts",
     "./facts/mist-raven": "./src/facts/mist-raven.ts",
     "./facts/noble-secret-body": "./src/facts/noble-secret-body.ts",
     "./facts/fragrant-pair-seer": "./src/facts/fragrant-pair-seer.ts",
     "./facts/animal-dream": "./src/facts/animal-dream.ts",
-    "./actions": "./src/actions.ts"
+    "./facts/cupid": "./src/facts/cupid.ts",
+    "./facts/debate": "./src/facts/debate.ts",
+    "./facts/ghost-bride": "./src/facts/ghost-bride.ts",
+    "./facts/thief": "./src/facts/thief.ts",
+    "./facts/shapeshifter": "./src/facts/shapeshifter.ts",
+    "./facts/wild-child": "./src/facts/wild-child.ts",
+    "./facts/lonely-girl": "./src/facts/lonely-girl.ts",
+    "./facts/wall-notes": "./src/facts/wall-notes.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
@@ -48,12 +56,20 @@
       "facts/nightmare": ["src/facts/nightmare.ts"],
       "facts/red-moon": ["src/facts/red-moon.ts"],
       "facts/demon-hunter": ["src/facts/demon-hunter.ts"],
+      "actions": ["src/actions.ts"],
       "facts/radiant-eclipse": ["src/facts/radiant-eclipse.ts"],
       "facts/mist-raven": ["src/facts/mist-raven.ts"],
       "facts/noble-secret-body": ["src/facts/noble-secret-body.ts"],
       "facts/fragrant-pair-seer": ["src/facts/fragrant-pair-seer.ts"],
       "facts/animal-dream": ["src/facts/animal-dream.ts"],
-      "actions": ["src/actions.ts"]
+      "facts/cupid": ["src/facts/cupid.ts"],
+      "facts/debate": ["src/facts/debate.ts"],
+      "facts/ghost-bride": ["src/facts/ghost-bride.ts"],
+      "facts/thief": ["src/facts/thief.ts"],
+      "facts/shapeshifter": ["src/facts/shapeshifter.ts"],
+      "facts/wild-child": ["src/facts/wild-child.ts"],
+      "facts/lonely-girl": ["src/facts/lonely-girl.ts"],
+      "facts/wall-notes": ["src/facts/wall-notes.ts"]
     }
   }
 }

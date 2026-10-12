@@ -58,32 +58,32 @@ import {
 import {
   GHOST_BRIDE_EVENT_TYPES,
   readGhostBrideEventFact,
-} from "@ai-werewolf-arena/game-text";
-import { readLonelyGirlEventFact } from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
+import { readLonelyGirlEventFact } from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
 import {
   WILD_CHILD_EVENT_TYPES,
   readWildChildEventFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/wild-child";
 import {
   SHAPESHIFTER_EVENT_TYPES,
   readShapeshifterEventFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/shapeshifter";
 import {
   THIEF_EVENT_TYPES,
   readThiefEventFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/thief";
 import {
   WALL_EVENT_TYPES,
   readWallEventFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import {
   readCupidEventFact,
   CUPID_EVENT_TYPES,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/cupid";
 import {
   readDebateEventFact,
   DEBATE_EVENT_TYPES,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/debate";
 import { EntityId, GameEvent, PlayerVisibleEvent } from "../../core/domain/model";
 import { World } from "../../core/domain/world";
 import { getDefaultAgentEventVisibilityRegistry } from "../mechanisms";

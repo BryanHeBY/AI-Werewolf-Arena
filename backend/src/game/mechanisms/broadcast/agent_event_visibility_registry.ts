@@ -55,7 +55,7 @@ import {
 } from "@ai-werewolf-arena/game-contract/facts/magician";
 import { readNightmareFearFact } from "@ai-werewolf-arena/game-contract/facts/nightmare";
 import { demonHunterActorId } from "../roles/demon_hunter/authority";
-import { GHOST_BRIDE_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
+import { GHOST_BRIDE_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 /** 文件说明：领域事件到玩家 Agent 视角的显式可见性白名单。 */
 import { EntityId, GameEvent, WOLF_TEAM_EVENT_TYPES } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";

@@ -89,6 +89,14 @@
       "exports": "named unchanged fact, knowledge, audience and inert reader exports",
       "currentConsumers": "game-text labels, remaining feature imports and existing application tests",
       "exit": "C44 after all remaining consumers use public contract; runtime resources and Node hostile-object ingress remain outside DTOs"
+    },
+    {
+      "id": "text-relation-identity-item-facts",
+      "path": "packages/game-text/src/{cupid,debate,ghost-bride,thief,shapeshifter,wild-child,lonely-girl,wall-notes}.ts",
+      "owner": "game-contract/facts",
+      "exports": "named original DTOs, fact/tool readers and pure JSON template",
+      "currentConsumers": "remaining feature imports, game-text labels and original application tests",
+      "exit": "C44 after direct public contract imports; never moves actual resources or runtime identity"
     }
   ]
 }

@@ -1,9 +1,15 @@
+/**
+ * Responsibility: independently verify Ghost Bride wedding and knife evidence.
+ * Input: archived actions, event prefixes and checkpoints; output: reconstructed
+ * audit data or the original archive rejection. Actual wedding groups, live knife
+ * rights and role resources remain domain-owned; this verifier never calls the
+ * production resolution or creates runtime permission from a serialized record.
+ */
 import { z } from "zod";
 import {
   GHOST_BRIDE_POLICY,
   GHOST_BRIDE_GOAL,
   GHOST_BRIDE_EVENT_TYPES,
-  isGhostBridePreset,
   readGhostBrideState,
   readGhostBrideEventFact,
   readWeddingPair,
@@ -15,7 +21,8 @@ import {
   type WeddingGroup,
   type WeddingKnifeCapture,
   type WeddingVote,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
+import { isGhostBridePreset } from "@ai-werewolf-arena/game-text";
 import { Role, Camp, Phase } from "../core/domain";
 import type { ReproductionRecord, RecordedCheckpoint, RecordedDecision } from "./reproduction";
 const setupStages = [

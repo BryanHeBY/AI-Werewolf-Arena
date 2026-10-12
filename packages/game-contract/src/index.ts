@@ -54,6 +54,8 @@ export type { LoversComponent } from "./cupid-relation";
 
 export { boardConfigSchema } from "./board-schema";
 
+export * from "./actions";
+
 export * from "./facts/nightmare";
 
 export * from "./facts/red-moon";
@@ -70,4 +72,18 @@ export * from "./facts/fragrant-pair-seer";
 
 export * from "./facts/animal-dream";
 
-export * from "./actions";
+export * from "./facts/cupid";
+
+export * from "./facts/debate";
+
+export * from "./facts/ghost-bride";
+
+export * from "./facts/thief";
+
+export * from "./facts/shapeshifter";
+
+export * from "./facts/wild-child";
+
+export * from "./facts/lonely-girl";
+
+export * from "./facts/wall-notes";
