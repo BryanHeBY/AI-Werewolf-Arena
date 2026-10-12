@@ -77051,13 +77051,593 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/bear.test.ts",
+      "to": "backend/tests/unit/features/bear/captured-public-sample.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "cff4994a33471c5b8d084e6953d6c01aadcbf319591eccf34bd73724d912f183",
+      "candidateSha256": "3a92e5f4ce62c3506884b1976611efeccc09bd9953b8c47e618cacee25cd98ef",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1254,
+          "end": 1300,
+          "original": "../../../src/ai/agents/player/action_reception",
+          "value": "../../../../src/ai/agents/player/action_reception",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1168,
+          "end": 1218,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1101,
+          "end": 1129,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 892,
+          "end": 941,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 805,
+          "end": 845,
+          "original": "../../../src/core/domain/entities/player",
+          "value": "../../../../src/core/domain/entities/player",
+          "originalResolved": "backend/src/core/domain/entities/player.ts",
+          "expectedResolved": "backend/src/core/domain/entities/player.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 722,
+          "end": 762,
+          "original": "../../../src/core/domain/components/role",
+          "value": "../../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 641,
+          "end": 682,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 558,
+          "end": 600,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 455,
+          "end": 503,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 371,
+          "end": 422,
+          "original": "../../../src/game/mechanisms/roles/bear/night_frame",
+          "value": "../../../../src/game/mechanisms/roles/bear/night_frame",
+          "originalResolved": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/bear/night_frame.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 291,
+          "end": 336,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 235,
+          "end": 252,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "ad1e43a5c78046589c512dff82e35bfca7fb68ad7777d853aa279b7a3e80ca22",
+          "title": "right: night-start adjacency uses the unique living seat ring and publishes only the public boolean",
+          "occurrence": 1
+        },
+        {
+          "id": "93a34e44befdebff476828770210cee6c91c653cadccd31cfbee6bd91a22458a",
+          "title": "left: night-start adjacency uses the unique living seat ring and publishes only the public boolean",
+          "occurrence": 1
+        },
+        {
+          "id": "c49c0f2eb369f71b1db2e1dfd705e73b9411533e15f83203141cf4ddbbb5f742",
+          "title": "both: night-start adjacency uses the unique living seat ring and publishes only the public boolean",
+          "occurrence": 1
+        },
+        {
+          "id": "44e7078e795dc6d6f98497a572417efa90b388868838a30fd8288f6cf8ff3f68",
+          "title": "quiet: night-start adjacency uses the unique living seat ring and publishes only the public boolean",
+          "occurrence": 1
+        },
+        {
+          "id": "0a17ccc927da8eb116da9374a6a0be66a171f093e26857660f8b79015756fbc5",
+          "title": "dead_skip: night-start adjacency uses the unique living seat ring and publishes only the public boolean",
+          "occurrence": 1
+        },
+        {
+          "id": "52a9ec34a77abd1e31216fcb8ddfeab3743d495fafb35bd74cb8fe3f47bb1ba2",
+          "title": "seat_order: night-start adjacency uses the unique living seat ring and publishes only the public boolean",
+          "occurrence": 1
+        },
+        {
+          "id": "83c102446cd45bb015b6f3a482e14f77134e7a1952ab490212b47421f01a4197",
+          "title": "single: night-start adjacency uses the unique living seat ring and publishes only the public boolean",
+          "occurrence": 1
+        },
+        {
+          "id": "b5e9749a79a0cb85f5dcce075ff52d9b83c64a36f89dc97a40a0b8c6284df153",
+          "title": "empty: night-start adjacency uses the unique living seat ring and publishes only the public boolean",
+          "occurrence": 1
+        },
+        {
+          "id": "30c515dcda3656c28ffefa68cd17ea2b15a1fd8260c9d4777c91f7e0af09329d",
+          "title": "Bear sensing requires true Wolf faction, ignores Seer disguise, and respects its independent explicit role policy",
+          "occurrence": 1
+        },
+        {
+          "id": "c23e46b826d0428317e1a443d1fe4a7df4598050b9a2aea9f52fbbe6df42c8bc",
+          "title": "clock: a revoked original Bear sample cannot publish or mutate old/new state",
+          "occurrence": 1
+        },
+        {
+          "id": "0374e4b6945e45a38a377413bb06051edef2c4a6586333c07a7f66c4559c6b0f",
+          "title": "life_replace: a revoked original Bear sample cannot publish or mutate old/new state",
+          "occurrence": 1
+        },
+        {
+          "id": "78dfa1f278eda988378b8012154525d83d3397e9c510e72fea13312764bd4681",
+          "title": "revive: a revoked original Bear sample cannot publish or mutate old/new state",
+          "occurrence": 1
+        },
+        {
+          "id": "59942d11d954aa4ec5e475725a9b645718d709ea2316841f0bd7488455370508",
+          "title": "role_replace: a revoked original Bear sample cannot publish or mutate old/new state",
+          "occurrence": 1
+        },
+        {
+          "id": "539d76617c11615ba58d123c8297efc0219cee71e8cac8468ec4da384b07f430",
+          "title": "state_replace: a revoked original Bear sample cannot publish or mutate old/new state",
+          "occurrence": 1
+        },
+        {
+          "id": "98037f6dce81dcdb5214f3081b3c01473bcc59edfed908cecf80cbdc81ad2605",
+          "title": "faction: a revoked original Bear sample cannot publish or mutate old/new state",
+          "occurrence": 1
+        },
+        {
+          "id": "3621c3911a95cd62a8b85d478fa3d73d98752126d4c14905e8a98f7cdf693563",
+          "title": "a sampled neighbor's later death does not resample; next night skips its dead seat and duplicate publication changes nothing",
+          "occurrence": 1
+        },
+        {
+          "id": "3e85064b912ce322b4f0baf43c7253c1e60fd7406e666d3b8a5d8bc2a03f79df",
+          "title": "a manager frame belongs to its original World even if another controller reuses the same component references",
+          "occurrence": 1
+        },
+        {
+          "id": "b9cfb4428ca4ab55cdf985defe92f60bd9661a19d46b0b8bc1fd5be1f0dc4ae4",
+          "title": "night role/state/faction or seat changes of neighbors do not rewrite the captured sample",
+          "occurrence": 1
+        },
+        {
+          "id": "bcd120fb0d0dcfe99e558f018f76ab74c5ad2c7d910a7497f7d90ed1da0031e3",
+          "title": "dead/false: the original dead Bear announces quiet, but a revived life never inherits that sample",
+          "occurrence": 1
+        },
+        {
+          "id": "7815a36eb44adf083cdf44d4e88f7677c271a3af29e0e20091b1b387ec2a122c",
+          "title": "dead/true: the original dead Bear announces quiet, but a revived life never inherits that sample",
+          "occurrence": 1
+        },
+        {
+          "id": "62baf2ad136a12f02ba7727d202aabaaccc70cf9442f70c3e54135c153ef55c5",
+          "title": "zh-CN: no active Bear tool or pack permission, no pending observation/history, and only already-public history reaches its own prompt",
+          "occurrence": 1
+        },
+        {
+          "id": "5e67a4dd9f80aa30b53c86899adc19559c169da2f8c87b24eedfd88c75125815",
+          "title": "en: no active Bear tool or pack permission, no pending observation/history, and only already-public history reaches its own prompt",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { PotionType } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Role,\n  Camp,\n  Phase,\n  WinCondition,\n  COMPONENT,\n  ActionWindow,\n  type BoardConfig,\n  type RoleComponent,\n  type ActionRequest,\n  type ToolCall,\n  type GameEvent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role, Camp, Phase, WinCondition, COMPONENT, type BoardConfig, type RoleComponent, type ActionRequest, type GameEvent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "ActionWindow",
+              "imported": "ActionWindow",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/bear.test.ts",
+      "to": "backend/tests/scenarios/features/bear/native-night-announcement.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "cff4994a33471c5b8d084e6953d6c01aadcbf319591eccf34bd73724d912f183",
+      "candidateSha256": "d8ba573b95bb3326c7ef7add79afe1a5e3df6af2de01b3f5b67d0b1c56f1beb6",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 423,
+          "end": 471,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 345,
+          "end": 390,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 289,
+          "end": 306,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 120,
+          "end": 146,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 28,
+          "end": 45,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "7e1fe57223f7db0215206ae754519060488ed96fec2c6bb8d13632ef38d9c59a",
+          "title": "real night last wolf death keeps its original positive sample, publishes after original words, and only then seals the victory",
+          "occurrence": 1
+        },
+        {
+          "id": "93f5b48fdb67ed3e54d17ce951937de1410e40e0e5a3326fcd12cce70e1e5230",
+          "title": "knife: a Bear killed anywhere in the real night wave announces quiet after the whole chain",
+          "occurrence": 1
+        },
+        {
+          "id": "aee327d00b0134d00baee5c1a70a6dc798a4ad3a10c0afdae3aa4997158a013c",
+          "title": "poison: a Bear killed anywhere in the real night wave announces quiet after the whole chain",
+          "occurrence": 1
+        },
+        {
+          "id": "48e1f274215c866cd756ef21178902f41157920e91dbf57bc4e0fdf00ec32f31",
+          "title": "dream: a Bear killed anywhere in the real night wave announces quiet after the whole chain",
+          "occurrence": 1
+        },
+        {
+          "id": "9b4f857f5ed2a581f7bc88deafbb73a8d52b81d839cdb5f69937e75a207ee7d9",
+          "title": "charm: a Bear killed anywhere in the real night wave announces quiet after the whole chain",
+          "occurrence": 1
+        },
+        {
+          "id": "8de478f1da3cfd124a14d24ef535e9643af9d7c2db2db669599bc8b42a96a3f0",
+          "title": "night_shot: a Bear killed anywhere in the real night wave announces quiet after the whole chain",
+          "occurrence": 1
+        },
+        {
+          "id": "0cd8e6ba749252d49050ad98a57787054a95bf1d1c5d5dd378e5d4aa8c7d52eb",
+          "title": "wolf_discussion: real asynchronous same-phase revision prevents all late announcements/history",
+          "occurrence": 1
+        },
+        {
+          "id": "19ec1267792a998d419a14dce91d1fb7f6046e687b705daf96c41ae9aa5cbda1",
+          "title": "last_words: real asynchronous same-phase revision prevents all late announcements/history",
+          "occurrence": 1
+        },
+        {
+          "id": "6f3d6653cb4b5159f5742bbbe00226b3d6e16c839d575a0ae0e6e8d5653b7880",
+          "title": "sheriff_nomination: real asynchronous same-phase revision prevents all late announcements/history",
+          "occurrence": 1
+        },
+        {
+          "id": "cb17c6e812712db8d23ce770b593de178cda26dea4930bcd64c4e1b041d2d5a3",
+          "title": "sheriff_campaign_speech: real asynchronous same-phase revision prevents all late announcements/history",
+          "occurrence": 1
+        },
+        {
+          "id": "a8907a654dc9e2238f011d7f86243d152cbfc7ff69abd647d1f8c2038e3110e5",
+          "title": "sheriff_withdraw: real asynchronous same-phase revision prevents all late announcements/history",
+          "occurrence": 1
+        },
+        {
+          "id": "13f2c7bcc9963fa181154c916311da49d7d7736f5321688e85314b34707315af",
+          "title": "sheriff_vote: real asynchronous same-phase revision prevents all late announcements/history",
+          "occurrence": 1
+        },
+        {
+          "id": "5a20261c056aa05a06e1109bbeae91d4f29c142af5127b016d4f666518a69a3f",
+          "title": "first-day early White blast announces quiet after merged Night/Day deaths before interrupted judgment",
+          "occurrence": 1
+        },
+        {
+          "id": "0fb5427c22ba250b103d34c06b9d9a92f0e1a9302975a8bebe43b2978fe3cabe",
+          "title": "night Wolf King gun kills the only good special role: complete its badge chain, announce quiet, then ordinary Good victory",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Role,\n  Camp,\n  Phase,\n  WinCondition,\n  COMPONENT,\n  ActionWindow,\n  type BoardConfig,\n  type RoleComponent,\n  type ActionRequest,\n  type ToolCall,\n  type GameEvent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role, Camp, WinCondition, COMPONENT, ActionWindow, type BoardConfig, type RoleComponent, type ActionRequest, type ToolCall } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/bear/night_frame",
+          "originalImport": "import { BearNightFrame } from \"../../../src/game/mechanisms/roles/bear/night_frame\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "BearNightFrame",
+              "imported": "BearNightFrame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/catalog",
+          "originalImport": "import { getDefaultRoleCatalog, RoleCatalog } from \"../../../src/game/mechanisms/roles/catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "RoleCatalog",
+              "imported": "RoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import { createAliveComponent } from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/role",
+          "originalImport": "import { createRoleComponent } from \"../../../src/core/domain/components/role\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createRoleComponent",
+              "imported": "createRoleComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/entities/player",
+          "originalImport": "import type { IdentityComponent } from \"../../../src/core/domain/entities/player\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "IdentityComponent",
+              "imported": "IdentityComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/agent_visible_event_feed",
+          "originalImport": "import { buildAgentVisibleEventFeed } from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "buildAgentVisibleEventFeed",
+              "imported": "buildAgentVisibleEventFeed",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import {\n  getDefaultToolSpecRegistry,\n  getDefaultTargetHintRegistry,\n  getDefaultPhaseStageLocalizationRegistry,\n  getDefaultConfigRenderRegistry,\n} from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultToolSpecRegistry",
+              "imported": "getDefaultToolSpecRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultTargetHintRegistry",
+              "imported": "getDefaultTargetHintRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultPhaseStageLocalizationRegistry",
+              "imported": "getDefaultPhaseStageLocalizationRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/player_prompt_policy",
+          "originalImport": "import { PlayerPromptPolicy } from \"../../../src/ai/agents/player/player_prompt_policy\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PlayerPromptPolicy",
+              "imported": "PlayerPromptPolicy",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/action_reception",
+          "originalImport": "import { ActionReception } from \"../../../src/ai/agents/player/action_reception\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionReception",
+              "imported": "ActionReception",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 537,
-    "targetFiles": 580,
-    "mappingEntries": 580,
-    "baselineCases": 6753,
+    "sourceFiles": 538,
+    "targetFiles": 582,
+    "mappingEntries": 582,
+    "baselineCases": 6789,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
