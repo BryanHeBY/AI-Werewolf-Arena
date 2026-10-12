@@ -78590,13 +78590,501 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/phases/self_destruct_windows.test.ts",
+      "to": "backend/tests/unit/mechanisms/self-destruct-window-boundaries.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "efce5935e88eac3285d9380e53719b9391ab6eecb03cbb667fc438c8eafaa5bf",
+      "candidateSha256": "7990897d4f5e1fabf7a375099ac1329cef37e7381589d9c1e151b12eb8b88e4a",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 727,
+          "end": 779,
+          "original": "../../../src/runtime/scenarios/board_config_resolver",
+          "value": "../../../src/runtime/scenarios/board_config_resolver",
+          "originalResolved": "backend/src/runtime/scenarios/board_config_resolver.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/board_config_resolver.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 647,
+          "end": 688,
+          "original": "../../../src/runtime/config/migrate_board",
+          "value": "../../../src/runtime/config/migrate_board",
+          "originalResolved": "backend/src/runtime/config/migrate_board.ts",
+          "expectedResolved": "backend/src/runtime/config/migrate_board.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 580,
+          "end": 608,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 496,
+          "end": 534,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 417,
+          "end": 464,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 327,
+          "end": 372,
+          "original": "../../../src/game/engine/self_destruct_window",
+          "value": "../../../src/game/engine/self_destruct_window",
+          "originalResolved": "backend/src/game/engine/self_destruct_window.ts",
+          "expectedResolved": "backend/src/game/engine/self_destruct_window.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 235,
+          "end": 288,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 171,
+          "end": 188,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b2bc999a73c43ee89620ed0ee0d582209f425c4a844bc01b9034c07838bf1349",
+          "title": "new overrides preserve explicit empty windows while legacy conversion preserves historically effective defaults and ignores unsupported declarations",
+          "occurrence": 1
+        },
+        {
+          "id": "8fa09c561433f20cedccca4c3e3ba4919885372112d6e507269d158ce4521969",
+          "title": "zh-CN: completed concurrent choices cannot apply to changed lives, identities or phases",
+          "occurrence": 1
+        },
+        {
+          "id": "7f855d862ae4909cd6d2aa247bbe84145d95eadc5905ff05dde920cb3779a81d",
+          "title": "en: completed concurrent choices cannot apply to changed lives, identities or phases",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  ActionWindow,\n  Camp,\n  COMPONENT,\n  DeathCause,\n  Phase,\n  Role,\n  PotionType,\n  WinCondition,\n  type ActionRequest,\n  type GameEvent,\n  type ToolCall,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { ActionWindow, COMPONENT, Phase, Role, type GameEvent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "WinCondition",
+              "imported": "WinCondition",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/day_pipeline",
+          "originalImport": "import { DayPipeline } from \"../../../src/game/engine/phase_pipeline/day_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DayPipeline",
+              "imported": "DayPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  boardDefinitionFromConfig,\n  parseBoardDefinition,\n} from \"../../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "parseBoardDefinition",
+              "imported": "parseBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/phases/self_destruct_windows.test.ts",
+      "to": "backend/tests/scenarios/mechanisms/self-destruct-window-cycles.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "efce5935e88eac3285d9380e53719b9391ab6eecb03cbb667fc438c8eafaa5bf",
+      "candidateSha256": "d1f1c573229bd0e307eb8c9d5ad2dee103c14f8174e9f548eed42de724fddba0",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 675,
+          "end": 719,
+          "original": "../../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 574,
+          "end": 602,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 490,
+          "end": 528,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 406,
+          "end": 458,
+          "original": "../../../src/game/engine/phase_pipeline/day_pipeline",
+          "value": "../../../src/game/engine/phase_pipeline/day_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/day_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 329,
+          "end": 374,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 273,
+          "end": 290,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "415f343255d16d6c5f05702d5a2b4754839b1670e882160d6502e4ecfd0c42f3",
+          "title": "zh-CN/on_daybreak: actual cycle opens at its declared point, interrupts and ends naturally",
+          "occurrence": 1
+        },
+        {
+          "id": "427cfe18ef7dfcf2fcd0994e59b53b0da0c60653f4694ca0947c46a12ef68592",
+          "title": "zh-CN/on_pre_election: actual cycle opens at its declared point, interrupts and ends naturally",
+          "occurrence": 1
+        },
+        {
+          "id": "61ab5843f4855a4a97560626e85727b6c3672aa7537ab461d1194900ea42afff",
+          "title": "zh-CN/on_pre_vote: actual cycle opens at its declared point, interrupts and ends naturally",
+          "occurrence": 1
+        },
+        {
+          "id": "a13ed7d9ebc397540b021ac55d376dfeaa7b55faac3e110568b158a9506146d1",
+          "title": "zh-CN/on_per_speech_gap: actual cycle opens at its declared point, interrupts and ends naturally",
+          "occurrence": 1
+        },
+        {
+          "id": "46e0d4b1ae30b836a21be42e620f634f79fcbfc4d44f3ebaac6fb6dd4a956902",
+          "title": "en/on_daybreak: actual cycle opens at its declared point, interrupts and ends naturally",
+          "occurrence": 1
+        },
+        {
+          "id": "5849767f2510a7564ffface4850666bddad4e708c260ff84d474344230b57276",
+          "title": "en/on_pre_election: actual cycle opens at its declared point, interrupts and ends naturally",
+          "occurrence": 1
+        },
+        {
+          "id": "5bd5558587af564da70e316add60c0d0761f509e94f545d17a47ce034826a3a9",
+          "title": "en/on_pre_vote: actual cycle opens at its declared point, interrupts and ends naturally",
+          "occurrence": 1
+        },
+        {
+          "id": "0009ddda91c7b778debf0bf67d8bfe5f0b9921ee475f813e49d8f923412a1a58",
+          "title": "en/on_per_speech_gap: actual cycle opens at its declared point, interrupts and ends naturally",
+          "occurrence": 1
+        },
+        {
+          "id": "d50f3bbd80bda2b5e80355855dda72f168dcbd3c1cf49ba7bb058a8a9585ee0e",
+          "title": "zh-CN: pre-election blast settles pending night deaths and last-god gun before winning, even with compound poison",
+          "occurrence": 1
+        },
+        {
+          "id": "8947a4e82240b894f6afa5afc4e0b44cbc21c2dda2555d6f6c9b88a49d1aeb62",
+          "title": "zh-CN: pre-election blast settles pending night deaths and last-god gun before winning, even with compound poison",
+          "occurrence": 2
+        },
+        {
+          "id": "d9deae565f1b8dcc6a8e4162275b90fbdfdd90011c2ef1d15614887211366145",
+          "title": "en: pre-election blast settles pending night deaths and last-god gun before winning, even with compound poison",
+          "occurrence": 1
+        },
+        {
+          "id": "1ee1f1d508df867ec99a6c3d7d82c0ea6567ddd9b25fe899489f06f80b48bf27",
+          "title": "en: pre-election blast settles pending night deaths and last-god gun before winning, even with compound poison",
+          "occurrence": 2
+        },
+        {
+          "id": "4ffa249066000fc4fd9c96e092216fa48357c9e2c28c194da40d2cb8c4850533",
+          "title": "zh-CN: pre-election window is skipped when no election occurs",
+          "occurrence": 1
+        },
+        {
+          "id": "389058cbb2313bc8398f64ece8d3c127257a541698ebcfaab0cdcda95ff84130",
+          "title": "en: pre-election window is skipped when no election occurs",
+          "occurrence": 1
+        },
+        {
+          "id": "3ecdb91c76956039254146ae3fd59cdf91d2f823f5e255187a572f81c8666170",
+          "title": "zh-CN/on_daybreak: hooks and explicit empty configuration gate execution and wrong phases reject",
+          "occurrence": 1
+        },
+        {
+          "id": "6b3a82a171a3e16252069c24c145c878dda204f5653d1dc9f6bbb3d751817059",
+          "title": "zh-CN/on_pre_election: hooks and explicit empty configuration gate execution and wrong phases reject",
+          "occurrence": 1
+        },
+        {
+          "id": "bcce2a03e747f980a1abd1e26b71b55b8a8551e4fcf1435bcc3390a78612c7ee",
+          "title": "zh-CN/on_pre_vote: hooks and explicit empty configuration gate execution and wrong phases reject",
+          "occurrence": 1
+        },
+        {
+          "id": "05bf9b01c290e6a0cfa630026e1053b2b0147dd69097d0f39462d48429e6ff51",
+          "title": "zh-CN/on_per_speech_gap: hooks and explicit empty configuration gate execution and wrong phases reject",
+          "occurrence": 1
+        },
+        {
+          "id": "82f29d6be80e1cd804bd44695b1d179eb5fd55c92f83d3707716903e5cfcc65b",
+          "title": "en/on_daybreak: hooks and explicit empty configuration gate execution and wrong phases reject",
+          "occurrence": 1
+        },
+        {
+          "id": "580d24410398e6443473ef115ef7f7e0a0c0383bfb996f365c0d7eee30cae909",
+          "title": "en/on_pre_election: hooks and explicit empty configuration gate execution and wrong phases reject",
+          "occurrence": 1
+        },
+        {
+          "id": "72c1a7cf4aa43025789b8e98fb3c1e7e07f483cabf650179b6556e216adc157c",
+          "title": "en/on_pre_vote: hooks and explicit empty configuration gate execution and wrong phases reject",
+          "occurrence": 1
+        },
+        {
+          "id": "7907e50d601206f299ae0ad6171c73d85239289cc2c574e3aaff80ee50baa45b",
+          "title": "en/on_per_speech_gap: hooks and explicit empty configuration gate execution and wrong phases reject",
+          "occurrence": 1
+        },
+        {
+          "id": "0eb4e7854be0e66572826cb7db0156287b2493f6d683c571f44a6ad966178963",
+          "title": "zh-CN: a public committed blast is already a real death before another microtask can change the phase",
+          "occurrence": 1
+        },
+        {
+          "id": "8f7c6387e0d4ca13d8cf2cf72f581e3f78145a89c4e0a3c9e86534869a5cca65",
+          "title": "en: a public committed blast is already a real death before another microtask can change the phase",
+          "occurrence": 1
+        },
+        {
+          "id": "8b9636729bad649429123740e7422c28f02bb562ec9d358533b74b12482bbfa1",
+          "title": "zh-CN: declining earlier speech gaps still permits a blast after the final speech",
+          "occurrence": 1
+        },
+        {
+          "id": "d6725fc7b8483c6021bbdc56424af9f21c9a5ae99ec61381246b2d6e8dc6cce4",
+          "title": "en: declining earlier speech gaps still permits a blast after the final speech",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalImport": "import { twelvePlayerStandardConfig } from \"../../../src/runtime/scenarios/twelve_player_standard\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "twelvePlayerStandardConfig",
+              "imported": "twelvePlayerStandardConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/self_destruct_window",
+          "originalImport": "import { SelfDestructWindow } from \"../../../src/game/engine/self_destruct_window\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SelfDestructWindow",
+              "imported": "SelfDestructWindow",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/action_request_factory",
+          "originalImport": "import { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameActionRequestFactory",
+              "imported": "GameActionRequestFactory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/config/migrate_board",
+          "originalImport": "import { convertLegacyBoard } from \"../../../src/runtime/config/migrate_board\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "convertLegacyBoard",
+              "imported": "convertLegacyBoard",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/scenarios/board_config_resolver",
+          "originalImport": "import { resolveBoardConfig } from \"../../../src/runtime/scenarios/board_config_resolver\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "resolveBoardConfig",
+              "imported": "resolveBoardConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 541,
-    "targetFiles": 587,
-    "mappingEntries": 587,
-    "baselineCases": 6809,
+    "sourceFiles": 542,
+    "targetFiles": 589,
+    "mappingEntries": 589,
+    "baselineCases": 6838,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
