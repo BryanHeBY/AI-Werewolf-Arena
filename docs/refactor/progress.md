@@ -6,7 +6,7 @@
 | ---------------------- | ------ | ------------------------------------------------------------------------------------ |
 | P0 基线与契约          | 已完成 | C01 `144f48b` 已提交；C02 `aba9347`；C03 `b56d282`；七样例、89行静态台账与三方向审查 |
 | P1 依赖与共享契约      | 已完成 | C04–C09 数据/支持职责与 public consumer 闭合；零基础包循环，兼容桥按 C44 退出        |
-| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；C11首69单测/C12首89场景进程，余tests/support继续             |
+| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；C11累计188单测/C12累计89场景进程，余mixed tests/support继续  |
 | P3 状态与请求授权      | 进行中 | C16生产读取/C18传播/F02/C19完成；Seer/Fragrant试点，其余状态继续                     |
 | P4 规则计划与生命周期  | 进行中 | C21原阶段编译owner迁rulesets；immutable计划/C22–C24继续                              |
 | P5 效果、死亡与判胜    | 待执行 | C25–C29                                                                              |
@@ -91,3 +91,5 @@
 - C21准备：existing夜间闭包/动态能力/排序完整算法迁rulesets真实owner，pipeline直连、旧入口named同class/singleton。两全程序/实际bindings/identity Root+独立0，source类型0，原7selected/0/138；无actorfreeze/IO/fixedpoint改写。immutable RulePlan、显式合法duplicate/replacement及未知冲突政策仍下一slice。
 
 - C12后80真实场景：1009旧IDs、499relative modules+21目录/board scope literals、679targets保持，80head/0。Root逐actualGit与明确edit重放原全文核0，80 scopedtypes0；代表3文件/12cases仅skip加载，exit1非testpass。implicitindex真实TS5097修回原目录形式，未放宽tsconfig；统一mapping237files/3212IDs，全游戏后置。
+
+- C11后119实际单元：1217旧IDs、686relative bindings与26位置锚点保持，whole program/标题/全部array矩阵逐字证据与119head均0漂移。只跑一次119file类型0；3代表文件38case skip-only发现非testpass。独立source/职责审查通过后提交；统一mapping356files/4429IDs，剩余237mixed tests与support继续。
