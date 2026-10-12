@@ -78055,13 +78055,397 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/phases/sheriff_pipeline.test.ts",
+      "to": "backend/tests/unit/mechanisms/sheriff-badge-lifecycle.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "ae3dc118396bc0739995fe8b3e477e455447f2407bccbed535b4c51f2ea6d4f3",
+      "candidateSha256": "13460fc3feface7da22ae339cd1906e190d4f5b40a7a534565a7b94d4c6f1f84",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 778,
+          "end": 831,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 693,
+          "end": 731,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 622,
+          "end": 661,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 547,
+          "end": 588,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 481,
+          "end": 511,
+          "original": "../../../src/core/domain/model",
+          "value": "../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 403,
+          "end": 443,
+          "original": "../../../src/core/domain/components/role",
+          "value": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 321,
+          "end": 369,
+          "original": "../../../src/core/domain/components/voting_right",
+          "value": "../../../src/core/domain/components/voting_right",
+          "originalResolved": "backend/src/core/domain/components/voting_right.ts",
+          "expectedResolved": "backend/src/core/domain/components/voting_right.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 239,
+          "end": 280,
+          "original": "../../../src/core/domain/components/badge",
+          "value": "../../../src/core/domain/components/badge",
+          "originalResolved": "backend/src/core/domain/components/badge.ts",
+          "expectedResolved": "backend/src/core/domain/components/badge.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 163,
+          "end": 204,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 87,
+          "end": 128,
+          "original": "../../../src/core/domain/components/names",
+          "value": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 31,
+          "end": 57,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b77f1decf7b42451196cf64614b75b99f7f952243e3f5af6d7052995f54cd876",
+          "title": "sheriff pipeline > no initial sheriff before election",
+          "occurrence": 1
+        },
+        {
+          "id": "fd30883b53950b23f491da9696c4d1886c9b39933aaa79866f8942745e31616f",
+          "title": "sheriff pipeline > initial sheriff assignment emits a canonical replay election event",
+          "occurrence": 1
+        },
+        {
+          "id": "6de1850bb95f46755b27431ef401cc599a20ceb8ea7654c529518e1b89fe0d74",
+          "title": "sheriff pipeline > sheriff voted out triggers badge transfer to next alive voter",
+          "occurrence": 1
+        },
+        {
+          "id": "a626be1d818c5d3694be3d5bbfddb3bf118a81aed062e13ec5c15ef02fa06cdb",
+          "title": "sheriff pipeline > sheriff badge is destroyed when no valid transfer candidate",
+          "occurrence": 1
+        },
+        {
+          "id": "d3f04a9771ab2b2a1cccb9a469988d41567c6775277230da9e077859fea527e0",
+          "title": "sheriff pipeline > idiot sheriff reveal also triggers transfer or destroy",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core/domain/model",
+          "originalImport": "import {\n  ActionProvider,\n  ActionRequest,\n  ToolCall,\n  DeathCause,\n  Phase,\n} from \"../../../src/core/domain/model\";",
+          "currentImportBeforeRebase": "import { DeathCause, Phase } from \"../../../src/core/domain/model\";",
+          "droppedBindings": [
+            {
+              "name": "ActionProvider",
+              "imported": "ActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/day_pipeline",
+          "originalImport": "import { DayPipeline } from \"../../../src/game/engine/phase_pipeline/day_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DayPipeline",
+              "imported": "DayPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import { createDefaultRoleRegistry } from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createDefaultRoleRegistry",
+              "imported": "createDefaultRoleRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/phases/sheriff_pipeline.test.ts",
+      "to": "backend/tests/scenarios/mechanisms/day-one-sheriff-pipeline.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "ae3dc118396bc0739995fe8b3e477e455447f2407bccbed535b4c51f2ea6d4f3",
+      "candidateSha256": "d21cb70eaa6b29b328f53d7d0a978ea84f36f3bca3df0368417ef307251c1796",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 429,
+          "end": 482,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 354,
+          "end": 382,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 270,
+          "end": 308,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 186,
+          "end": 238,
+          "original": "../../../src/game/engine/phase_pipeline/day_pipeline",
+          "value": "../../../src/game/engine/phase_pipeline/day_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/day_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 124,
+          "end": 154,
+          "original": "../../../src/core/domain/model",
+          "value": "../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 31,
+          "end": 57,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "e51dbf1a67ef5a74c2418aa9a636e2ac8827bce4db119e1dacc6a80dd878a0ae",
+          "title": "sheriff pipeline > day pipeline elects sheriff on day 1",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core/domain/components/names",
+          "originalImport": "import { COMPONENT } from \"../../../src/core/domain/components/names\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import { AliveComponent } from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/badge",
+          "originalImport": "import { BadgeComponent } from \"../../../src/core/domain/components/badge\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "BadgeComponent",
+              "imported": "BadgeComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/voting_right",
+          "originalImport": "import { VotingRightComponent } from \"../../../src/core/domain/components/voting_right\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "VotingRightComponent",
+              "imported": "VotingRightComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/role",
+          "originalImport": "import { RoleComponent } from \"../../../src/core/domain/components/role\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/model",
+          "originalImport": "import {\n  ActionProvider,\n  ActionRequest,\n  ToolCall,\n  DeathCause,\n  Phase,\n} from \"../../../src/core/domain/model\";",
+          "currentImportBeforeRebase": "import { ActionProvider, ActionRequest, ToolCall, Phase } from \"../../../src/core/domain/model\";",
+          "droppedBindings": [
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/death_resolution",
+          "originalImport": "import { DeathResolution } from \"../../../src/game/engine/death_resolution\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DeathResolution",
+              "imported": "DeathResolution",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/event_registry",
+          "originalImport": "import { EventRegistry } from \"../../../src/game/engine/event_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "EventRegistry",
+              "imported": "EventRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 539,
-    "targetFiles": 584,
-    "mappingEntries": 584,
-    "baselineCases": 6797,
+    "sourceFiles": 540,
+    "targetFiles": 586,
+    "mappingEntries": 586,
+    "baselineCases": 6803,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
