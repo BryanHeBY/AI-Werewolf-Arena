@@ -8,7 +8,7 @@
  */
 import { expect, test } from "bun:test";
 import { Phase } from "../../../../src/core/domain/identity";
-import { nobleBodyAuthorityFixture } from "../../../support/noble_secret_body_authority";
+import { nobleBodyAuthorityFixture } from "../../../support/features/noble-secret-body/drivers/authority";
 import {
   beginNobleBodyNight,
   openSecretBodyChoice,

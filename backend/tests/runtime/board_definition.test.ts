@@ -9,7 +9,7 @@ import { describeResolvedSetup } from "../../src/runtime/config/describe_setup";
 import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
 import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
 import { migrateBoards, migrateBoardSource } from "../../src/runtime/cli/migrate_configs";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 async function definition() {
   return JSON.parse(

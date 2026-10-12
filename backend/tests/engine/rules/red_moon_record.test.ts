@@ -1,6 +1,6 @@
 import { validateDemonHunterRecord } from "../../../src/recording/demon_hunter_record";
 import { expect, test } from "bun:test";
-import { redMoonCandidateWorld } from "../../support/red_moon_candidate_world";
+import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 import { COMPONENT, type RoleComponent } from "../../../src/core";
 import type { ReproductionRecord } from "../../../src/recording/reproduction";
 import { validateRedMoonRecord } from "../../../src/recording/red_moon_record";

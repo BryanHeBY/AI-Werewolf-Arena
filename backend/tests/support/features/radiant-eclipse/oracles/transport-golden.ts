@@ -1,5 +1,13 @@
+/**
+ * Owns test oracle support: Independent Radiant/Eclipse terminal and causal-event literal assertions over completed transport runs.
+ * Inputs are actual wire messages, request prefixes, snapshots or a former
+ * local endpoint plus explicit expectations; outputs are the original assertions
+ * and rejection diagnostics. Unit/integration/scenario tests retain their
+ * independent literal markers and recorded prefixes as the oracle. No expected
+ * result is regenerated from production role, observation or board algorithms.
+ */
 import { expect } from "bun:test";
-import type { ReproductionRecord } from "../../src/recording/reproduction";
+import type { ReproductionRecord } from "../../../../../src/recording/reproduction";
 export function assertRadiantTransportGolden(record: ReproductionRecord, name: string) {
   const ability = (cycle: number, actor: number, id: string) => {
     const player = record.checkpoints

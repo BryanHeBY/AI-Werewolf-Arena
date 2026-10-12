@@ -7,7 +7,7 @@ import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mv
 import { grantNightAbility } from "../../../src/game/mechanisms/roles/ability_changes";
 import { createPlayerAgentRuntime } from "../../../src/runtime/player_agent_factory";
 import type { ResolvedAgentRuntimeProfile } from "../../../src/runtime/config/contracts";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 import type { ActorTransportPlan } from "../../support/foundation_transport_plan";
 import { assertTransportPrompt } from "../../support/transport_prompt_oracle";
 for (const locale of ["zh-CN", "en"] as const)

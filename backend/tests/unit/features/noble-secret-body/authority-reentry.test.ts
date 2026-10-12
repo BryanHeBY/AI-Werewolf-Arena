@@ -9,7 +9,7 @@
 import { World } from "../../../../src/core/domain/world";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { expect, test } from "bun:test";
-import { nobleBodyAuthorityFixture } from "../../../support/noble_secret_body_authority";
+import { nobleBodyAuthorityFixture } from "../../../support/features/noble-secret-body/drivers/authority";
 import {
   installNobleBodyAuthority,
   beginNobleBodyNight,

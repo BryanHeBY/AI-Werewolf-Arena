@@ -8,7 +8,7 @@
 import { expect, test } from "bun:test";
 import { isDemonHunterPreset, isRedMoonPreset } from "../../../src/rulesets";
 import { COMPONENT, type RoleComponent } from "../../../src/core";
-import { redMoonCandidateWorld } from "../../support/red_moon_candidate_world";
+import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state";
 import {

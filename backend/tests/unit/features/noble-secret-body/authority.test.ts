@@ -11,7 +11,7 @@ import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import { createRoleComponent } from "../../../../src/core/domain/components/role";
 import { Role, Camp } from "../../../../src/core/domain/identity";
-import { nobleBodyAuthorityFixture } from "../../../support/noble_secret_body_authority";
+import { nobleBodyAuthorityFixture } from "../../../support/features/noble-secret-body/drivers/authority";
 import {
   beginNobleBodyNight,
   openSecretBodyChoice,

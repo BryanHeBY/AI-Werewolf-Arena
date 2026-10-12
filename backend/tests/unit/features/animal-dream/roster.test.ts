@@ -13,7 +13,7 @@ import { createAliveComponent } from "../../../../src/core/domain/components/ali
 import type { CampComponent } from "../../../../src/core/domain/components/camp";
 import type { RoleComponent } from "../../../../src/core/domain/components/role";
 import type { IdentityComponent } from "../../../../src/core/domain/entities/player";
-import { animalRosterFixture, animalInternalConfig } from "../../../engine/animal_dream_fixture";
+import { animalRosterFixture, animalInternalConfig } from "../../../support/features/animal-dream/builders/roster";
 import {
   installAnimalRoster,
   animalRosterCurrent,

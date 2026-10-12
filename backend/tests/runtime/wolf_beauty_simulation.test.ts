@@ -5,7 +5,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 import path from "node:path";
 for (const id of ["six_player_wolf_beauty", "twelve_player_wolf_beauty"] as const)
   test(`${id}: restricted-observation seeds receive real charm choices/deaths and each complete game strictly replays`, async () => {

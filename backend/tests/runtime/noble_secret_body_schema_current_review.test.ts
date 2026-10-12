@@ -2,7 +2,7 @@ import { expect, test } from "bun:test";
 import {
   assertNobleTransportWire,
   type NobleWireRun,
-} from "../support/noble_secret_body_wire_oracle";
+} from "../support/features/noble-secret-body/oracles/wire";
 
 // Literal owner notice and initial state: this unit tests the actual-wire checker,
 // not the record parser. No World/projector is consulted to derive the expected input.

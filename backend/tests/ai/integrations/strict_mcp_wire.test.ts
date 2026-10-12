@@ -11,7 +11,7 @@ import { getGuardState } from "../../../src/game/mechanisms/roles/private_state"
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const roles = [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager];
 const modes = [

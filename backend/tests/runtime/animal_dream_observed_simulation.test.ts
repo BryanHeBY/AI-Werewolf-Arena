@@ -6,7 +6,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 for (const skipped of ["wait", "skip"])
   for (const ballot of ["first", "final"])
     for (const locale of ["zh-CN", "en"] as const)

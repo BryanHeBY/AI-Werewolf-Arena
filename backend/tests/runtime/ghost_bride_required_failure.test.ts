@@ -11,7 +11,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 import { ghostBrideScenario } from "../support/ghost_bride_scenarios";
 for (const transport of ["sdk", "acp"] as const)
   for (const locale of ["zh-CN", "en"] as const)

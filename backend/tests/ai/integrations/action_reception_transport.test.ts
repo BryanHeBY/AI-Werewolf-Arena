@@ -40,7 +40,7 @@ import type {
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const roles = [
   Role.Wolf,

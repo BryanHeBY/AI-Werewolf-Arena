@@ -9,7 +9,7 @@ import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mv
 import { describeError } from "../../../src/utils/error_diagnostic";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const roles = [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager];
 const request = (strict: boolean): ActionRequest => ({

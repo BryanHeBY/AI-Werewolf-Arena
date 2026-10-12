@@ -1,15 +1,23 @@
-import { World } from "../../src/core/domain/world";
-import { COMPONENT } from "../../src/core/domain/components/names";
-import { Role, Camp } from "../../src/core/domain/identity";
-import { createRoleComponent } from "../../src/core/domain/components/role";
-import { createAliveComponent, type AliveComponent } from "../../src/core/domain/components/alive";
-import { createCampComponent } from "../../src/core/domain/components/camp";
-import { createVictoryComponent } from "../../src/core/domain/components/victory";
-import { createIdentityComponent } from "../../src/core/domain/entities/player";
+/**
+ * Owns test driver support: Raw subsystem World fixture plus bounded Noble Body night choices, damage and closure controls; no whole game or transport.
+ * Inputs are supplied script steps, callbacks or fixture resource requests;
+ * outputs are the original controlled traces, handles and boundary responses.
+ * Unit and scenario tests keep their supplied literal actions and failure
+ * expectations as the oracle. Driver ownership, cleanup and error policy never
+ * change during this relocation; no billed model is introduced.
+ */
+import { World } from "../../../../../src/core/domain/world";
+import { COMPONENT } from "../../../../../src/core/domain/components/names";
+import { Role, Camp } from "../../../../../src/core/domain/identity";
+import { createRoleComponent } from "../../../../../src/core/domain/components/role";
+import { createAliveComponent, type AliveComponent } from "../../../../../src/core/domain/components/alive";
+import { createCampComponent } from "../../../../../src/core/domain/components/camp";
+import { createVictoryComponent } from "../../../../../src/core/domain/components/victory";
+import { createIdentityComponent } from "../../../../../src/core/domain/entities/player";
 import {
   createNobleState,
   createSecretBodyState,
-} from "../../src/game/mechanisms/roles/noble_secret_body/state";
+} from "../../../../../src/game/mechanisms/roles/noble_secret_body/state";
 import {
   installNobleBodyAuthority,
   beginNobleBodyNight,
@@ -18,7 +26,7 @@ import {
   expireServantAtNightEnd,
   resolveSecretBodyDamage,
   closeNobleBodyNight,
-} from "../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../../../src/game/mechanisms/roles/noble_secret_body/authority";
 /** Explicit subsystem fixture. Surrogate existing cards prove original-object ownership;
  * this does not register the two planned roles or pretend to run their game rules. */
 export function nobleBodyAuthorityFixture() {

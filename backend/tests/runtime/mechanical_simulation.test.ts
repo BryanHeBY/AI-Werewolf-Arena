@@ -6,7 +6,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 for (const id of ["six_player_mechanical_wolf", "twelve_player_mechanical_wolf"] as const)
   test(`${id}: restricted-observation mechanical seeds naturally finish with active learning, skill/mode and exact Tape`, async () => {

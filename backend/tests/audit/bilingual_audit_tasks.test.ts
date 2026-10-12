@@ -16,7 +16,7 @@ import {
 } from "../../src/ai/audit/audit_tool_protocol";
 import type { DebugSummaryPipelineInput } from "../../src/audit/pipeline";
 import type { ReplayManifest } from "../../src/recording/contracts";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 const han = /[\u4e00-\u9fff]/;
 const manifest: ReplayManifest = {

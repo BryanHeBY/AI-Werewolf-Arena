@@ -2,7 +2,7 @@
 // This file runs before each test file
 
 import { afterAll, afterEach, beforeEach, jest } from "bun:test";
-import { cleanupTestTempDirectories } from "./support/temp_directory";
+import { cleanupTestTempDirectories } from "./support/drivers/temp-directories";
 
 // Global test timeout
 jest.setTimeout(10000);

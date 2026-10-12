@@ -8,7 +8,7 @@ import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
 import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
 import { runGame } from "../../src/runtime/game_runner";
 import * as factory from "../../src/runtime/player_agent_factory";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 for (const seed of ["recorded-seed", undefined]) {
   test(`runner saves ${seed ? "configured" : "generated"} seed and reproduces the deal without publishing RNG metadata`, async () => {

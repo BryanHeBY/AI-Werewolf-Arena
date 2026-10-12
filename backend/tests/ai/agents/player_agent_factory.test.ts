@@ -2,7 +2,7 @@ import { describe, expect, spyOn, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { tmpdir } from "node:os";
 import * as path from "node:path";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { createPlayerAgentRuntime } from "../../../src/runtime/player_agent_factory";
 import { ResolvedAgentRuntimeProfile } from "../../../src/runtime/config/contracts";

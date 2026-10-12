@@ -4,7 +4,7 @@ import { AcpAuditAgentExecutor } from "../../../src/ai/audit/acp_audit_runner";
 import type { AuditToolContext } from "../../../src/ai/audit/audit_tool_protocol";
 import type { AcpSession } from "../../../src/ai/integrations/acp/session";
 import type { ResolvedAgentRuntimeProfile } from "../../../src/runtime/config/contracts";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const profile: ResolvedAgentRuntimeProfile = {
   name: "synthetic",

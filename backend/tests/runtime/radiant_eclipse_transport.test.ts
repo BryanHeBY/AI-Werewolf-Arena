@@ -1,7 +1,7 @@
-import { assertRadiantTransportGolden } from "../support/radiant_eclipse_transport_golden";
+import { assertRadiantTransportGolden } from "../support/features/radiant-eclipse/oracles/transport-golden";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { assertRadiantTransportWire } from "../support/radiant_eclipse_wire_oracle";
+import { assertRadiantTransportWire } from "../support/features/radiant-eclipse/oracles/wire";
 import { expect, test } from "bun:test";
 import { radiantTransportScenario } from "../support/radiant_eclipse_transport_scenarios";
 import { runTransportGame } from "../support/run_transport_game";

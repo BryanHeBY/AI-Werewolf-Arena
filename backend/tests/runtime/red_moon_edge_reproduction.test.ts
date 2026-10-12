@@ -17,7 +17,7 @@ import {
 import { parseReproductionRecord, type RecordedCheckpoint } from "../../src/recording/reproduction";
 import { GameEventRecorder } from "../../src/runtime/game_event_recorder";
 import { demonNightChoice } from "../support/demon_hunter_scenarios";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 let version: ReturnType<typeof currentEngineVersion> | undefined;
 for (const mode of ["poison", "hunt", "normal_exile", "last_blast", "idiot", "badge"] as const)
   for (const policy of ["ends_game", "forbidden"] as const)

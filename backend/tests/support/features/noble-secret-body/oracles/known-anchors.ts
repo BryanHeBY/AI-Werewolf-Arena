@@ -1,6 +1,14 @@
+/**
+ * Owns test oracle support: Handwritten cross-night knowledge anchors in actual current Noble/Body prompts, separate from production projection.
+ * Inputs are actual wire messages, request prefixes, snapshots or a former
+ * local endpoint plus explicit expectations; outputs are the original assertions
+ * and rejection diagnostics. Unit/integration/scenario tests retain their
+ * independent literal markers and recorded prefixes as the oracle. No expected
+ * result is regenerated from production role, observation or board algorithms.
+ */
 import { expect } from "bun:test";
-import { noblePromptStatus, type NobleWireRun } from "./noble_secret_body_wire_oracle";
-import type { nobleTransportScenario } from "./noble_secret_body_transport_scenarios";
+import { noblePromptStatus, type NobleWireRun } from "./wire";
+import type { nobleTransportScenario } from "../../../noble_secret_body_transport_scenarios";
 /** Handwritten cross-night checkpoints in actual current prompts, separate from feed folds. */
 export function assertNobleKnownAnchors(
   run: NobleWireRun,

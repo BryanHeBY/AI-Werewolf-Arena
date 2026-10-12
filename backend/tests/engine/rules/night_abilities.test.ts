@@ -738,7 +738,7 @@ test("explicit undefined optional fields normalize into a serializable CP/Tape w
   const { beginGameReproduction, currentEngineVersion } =
     await import("../../../src/runtime/simulation/reproduction_context");
   const { parseReproductionRecord } = await import("../../../src/recording/reproduction");
-  const { createTestTempDirectory } = await import("../../support/temp_directory");
+  const { createTestTempDirectory } = await import("../../support/drivers/temp-directories");
   const { setSeerState } = await import("../../../src/game/mechanisms/roles/private_state");
   const context = fixture(),
     events: GameEvent[] = [];

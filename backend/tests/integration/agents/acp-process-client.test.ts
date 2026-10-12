@@ -12,7 +12,7 @@ import { promises as fs } from "node:fs";
 import * as path from "node:path";
 import { AcpProcessClient } from "../../../src/ai/integrations/acp/acp_process_client";
 import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 describe("AcpProcessClient initialization deadlines", () => {
   test("terminates a real child when ACP initialization never responds", async () => {

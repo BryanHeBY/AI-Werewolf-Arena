@@ -12,7 +12,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 import {
   beginGameReproduction,
   captureCheckpoint,

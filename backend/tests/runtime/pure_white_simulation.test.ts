@@ -11,7 +11,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 for (const priority of ["awa_wolf_priority_v1", "awa_good_priority_v1"] as const)
   for (const selfHeal of [WitchSelfHealRule.Disabled, WitchSelfHealRule.FirstNightOnly])
     for (const locale of ["zh-CN", "en"] as const)

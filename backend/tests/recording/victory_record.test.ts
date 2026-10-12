@@ -13,7 +13,7 @@ import { Camp, Phase, type GameResult } from "../../src/core";
 import { outcomeLabel, outcomeWinnersLabel, victoryPointLabel } from "@ai-werewolf-arena/game-text";
 import { getDefaultScriptEventRenderRegistry } from "../../src/game";
 import { auditSummaryHeader } from "../../src/audit/summary_format";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 const players = [1, 2, 3, 4, 5, 6].map((id) => ({
   player_id: id,

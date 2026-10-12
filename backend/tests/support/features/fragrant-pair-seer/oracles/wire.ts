@@ -1,5 +1,13 @@
+/**
+ * Owns test oracle support: Independent Fragrant Pair serialized request-prefix, schema and knowledge checks from original literal status markers and parsed decisions.
+ * Inputs are actual wire messages, request prefixes, snapshots or a former
+ * local endpoint plus explicit expectations; outputs are the original assertions
+ * and rejection diagnostics. Unit/integration/scenario tests retain their
+ * independent literal markers and recorded prefixes as the oracle. No expected
+ * result is regenerated from production role, observation or board algorithms.
+ */
 import { isDeepStrictEqual as equal } from "node:util";
-import type { RecordedDecision, ReproductionRecord } from "../../src/recording/reproduction";
+import type { RecordedDecision, ReproductionRecord } from "../../../../../src/recording/reproduction";
 type Tuple = [number, string, Record<string, unknown>];
 export type FragrantWireRun = {
   record: ReproductionRecord;

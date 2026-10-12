@@ -5,7 +5,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 import path from "node:path";
 for (const id of ["six_player_knight", "twelve_player_knight"] as const)
   test(`${id}: restricted-observation seeds really duel targets and every outcome strictly replays`, async () => {

@@ -1,4 +1,12 @@
-import type { ActionProvider, ActionRequest, ActionStage, ToolCall } from "../../src/core";
+/**
+ * Owns test driver support: Strict supplied action-script execution and consumed-step trace; caller-owned literal steps remain the oracle.
+ * Inputs are supplied script steps, callbacks or fixture resource requests;
+ * outputs are the original controlled traces, handles and boundary responses.
+ * Unit and scenario tests keep their supplied literal actions and failure
+ * expectations as the oracle. Driver ownership, cleanup and error policy never
+ * change during this relocation; no billed model is introduced.
+ */
+import type { ActionProvider, ActionRequest, ActionStage, ToolCall } from "../../../src/core";
 
 export interface ScriptStep {
   actorId: number;

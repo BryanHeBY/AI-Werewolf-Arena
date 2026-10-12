@@ -12,7 +12,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 const boards = [
   ...CUPID_CASES.map((name) => ({ name, board: cupidScenario(name).board })),
   ...(["netease_2017_cupid_follows_lovers_v1", "lui_meme_lovers_only_v1"] as const).map(

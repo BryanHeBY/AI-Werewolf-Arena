@@ -10,7 +10,7 @@ import { expect, test } from "bun:test";
 import { Phase } from "../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
-import { nobleBodyAuthorityFixture } from "../../../support/noble_secret_body_authority";
+import { nobleBodyAuthorityFixture } from "../../../support/features/noble-secret-body/drivers/authority";
 import {
   beginNobleBodyNight,
   openSecretBodyChoice,

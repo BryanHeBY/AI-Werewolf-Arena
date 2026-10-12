@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../src/app/bootstrap";
-import { animalInternalConfig } from "../engine/animal_dream_fixture";
+import { animalInternalConfig } from "../support/features/animal-dream/builders/roster";
 import { captureCheckpoint } from "../../src/runtime/simulation/reproduction_context";
 import { parseReproductionRecord } from "../../src/recording/reproduction";
 import { GameActionRequestFactory } from "../../src/game/engine/action_request_factory";

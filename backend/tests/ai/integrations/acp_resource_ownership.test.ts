@@ -12,7 +12,7 @@ import type {
 } from "../../../src/ai/integrations/acp/acp_mcp_bridge";
 import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
 import { Phase, type ActionRequest } from "../../../src/core";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const fixture = path.resolve(import.meta.dir, "../../fixtures/acp_ownership_agent.ts");
 function request(actorId: number): ActionRequest {

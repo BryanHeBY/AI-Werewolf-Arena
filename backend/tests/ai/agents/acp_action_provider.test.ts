@@ -1,14 +1,14 @@
 import { describe, expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import * as path from "node:path";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
 import { AcpSession, AcpSessionFactory } from "../../../src/ai/integrations/acp/session";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { speakRequest } from "../../support/acp_provider_requests";
+import { speakRequest } from "../../support/builders/agents/acp-requests";
 
 describe("AcpActionProvider", () => {
   test("records ACP turns and report_bug with the same replay audit schema", async () => {

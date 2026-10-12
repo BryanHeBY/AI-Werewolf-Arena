@@ -8,7 +8,7 @@ import { PlayerRoundRecorder } from "../../src/ai/agents/player/player_round_rec
 import { SessionRecordManager } from "../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../src/recording/recording_context";
 import { Phase, Role } from "../../src/core";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 async function legacy() {
   return JSON.parse(

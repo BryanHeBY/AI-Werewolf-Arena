@@ -7,7 +7,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 for (const id of ["six_player_mirror_girl", "twelve_player_mirror_girl"])
   test(`${id}: twenty observed seeds exercise real unique reports and optional passes, with exact Tape`, async () => {
     const board = await loadBoardDefinition(

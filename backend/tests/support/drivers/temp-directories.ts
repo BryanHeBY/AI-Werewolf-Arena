@@ -1,3 +1,11 @@
+/**
+ * Owns test driver support: Filesystem fixture directory ownership and cleanup; original prefixes, allocation and tracked lifecycle remain unchanged.
+ * Inputs are supplied script steps, callbacks or fixture resource requests;
+ * outputs are the original controlled traces, handles and boundary responses.
+ * Unit and scenario tests keep their supplied literal actions and failure
+ * expectations as the oracle. Driver ownership, cleanup and error policy never
+ * change during this relocation; no billed model is introduced.
+ */
 import { promises as fs } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";

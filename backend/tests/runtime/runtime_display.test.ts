@@ -9,7 +9,7 @@ import { BaselineBotActionProvider } from "../../src/ai/agents/providers/action_
 import { bootstrapGame } from "../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
 import { Phase, Role, type ActionRequest } from "../../src/core";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 import { migrateBoardSource, migrateBoards } from "../../src/runtime/cli/migrate_configs";
 import { MIGRATION_WARNING_CODES } from "../../src/runtime/config/migrate_board";
 

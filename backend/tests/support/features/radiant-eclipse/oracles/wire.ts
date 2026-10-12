@@ -1,4 +1,12 @@
-import type { ReproductionRecord } from "../../src/recording/reproduction";
+/**
+ * Owns test oracle support: Compare actual serialized transport event prefixes with the independently validated request ledger, never production observation algorithms.
+ * Inputs are actual wire messages, request prefixes, snapshots or a former
+ * local endpoint plus explicit expectations; outputs are the original assertions
+ * and rejection diagnostics. Unit/integration/scenario tests retain their
+ * independent literal markers and recorded prefixes as the oracle. No expected
+ * result is regenerated from production role, observation or board algorithms.
+ */
+import type { ReproductionRecord } from "../../../../../src/recording/reproduction";
 type Tuple = [number, string, Record<string, unknown>];
 /** Compare actual serialized transport events to the independent, strictly validated ledger's
  * request prefix. A final archive alone cannot prove what was sent during an earlier turn. */

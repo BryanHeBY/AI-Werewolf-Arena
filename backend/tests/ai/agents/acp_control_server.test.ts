@@ -6,7 +6,7 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
 import { WerewolfMcpControlServer } from "../../../src/ai/integrations/acp/werewolf_mcp_control";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { speakRequest } from "../../support/acp_provider_requests";
+import { speakRequest } from "../../support/builders/agents/acp-requests";
 
 describe("WerewolfMcpControlServer", () => {
   test("exposes only the current turn through the injected MCP sidecar capability", async () => {

@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 test("boundary checker rejects illegal game engine imports", async () => {
   const root = await createTestTempDirectory("awa-boundary-");

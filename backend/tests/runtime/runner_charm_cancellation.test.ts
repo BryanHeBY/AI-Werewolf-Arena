@@ -15,7 +15,7 @@ import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
 import { COMPONENT, Role, type ToolCall, type World, type RoleComponent } from "../../src/core";
 import { getWolfBeautyState } from "../../src/game/mechanisms/roles/private_state";
 import { activeCharm } from "../../src/game/mechanisms/roles/wolf_beauty/relation";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 import {
   readReproduction,
   replayReproduction,

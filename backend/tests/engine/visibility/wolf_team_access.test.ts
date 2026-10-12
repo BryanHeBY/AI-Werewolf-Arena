@@ -41,7 +41,7 @@ import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/ni
 import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 const role = (world: World, id: number) => world.getComponent<RoleComponent>(id, COMPONENT.Role)!;

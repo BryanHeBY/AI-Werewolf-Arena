@@ -1,5 +1,13 @@
+/**
+ * Owns test oracle support: Independent Noble/Body serialized request-prefix and published-knowledge checks tied to strictly parsed records.
+ * Inputs are actual wire messages, request prefixes, snapshots or a former
+ * local endpoint plus explicit expectations; outputs are the original assertions
+ * and rejection diagnostics. Unit/integration/scenario tests retain their
+ * independent literal markers and recorded prefixes as the oracle. No expected
+ * result is regenerated from production role, observation or board algorithms.
+ */
 import { isDeepStrictEqual } from "node:util";
-import type { RecordedDecision, ReproductionRecord } from "../../src/recording/reproduction";
+import type { RecordedDecision, ReproductionRecord } from "../../../../../src/recording/reproduction";
 type Tuple = [number, string, Record<string, unknown>];
 const protocolDescriptions = {
   en: {

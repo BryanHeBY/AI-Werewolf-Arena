@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import { fragrantTransportScenario } from "../support/fragrant_pair_seer_transport_scenarios";
-import { assertFragrantTransportWire } from "../support/fragrant_pair_seer_wire_oracle";
+import { assertFragrantTransportWire } from "../support/features/fragrant-pair-seer/oracles/wire";
 import { runTransportGame } from "../support/run_transport_game";
 import type { ToolCall } from "../../src/core";
 for (const invalid of ["schema", "domain"] as const)

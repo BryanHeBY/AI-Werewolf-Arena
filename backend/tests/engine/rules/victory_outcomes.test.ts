@@ -324,7 +324,7 @@ test("strict shared outcome readers reject malformed facts and never invoke fore
 test("an executed shared result decoder change invalidates the engine fingerprint without changing the lockfile", async () => {
   const { mkdir, writeFile } = await import("node:fs/promises"),
     path = await import("node:path");
-  const { createTestTempDirectory } = await import("../../support/temp_directory");
+  const { createTestTempDirectory } = await import("../../support/drivers/temp-directories");
   const { currentEngineVersion } =
     await import("../../../src/runtime/simulation/reproduction_context");
   const root = await createTestTempDirectory("awa-fingerprint-");

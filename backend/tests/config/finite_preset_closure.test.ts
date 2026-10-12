@@ -9,7 +9,7 @@ import {
 } from "../../src/runtime/config/board_definition";
 import { configDiagnostic } from "../../src/runtime/config/error_codes";
 import { checkConfig } from "../../src/runtime/cli/check_config";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 const cases = [
   ["awa_mist_raven_12_v1", "mist_raven"],

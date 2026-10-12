@@ -1,4 +1,4 @@
-import { assertRadiantTransportWire } from "../support/radiant_eclipse_wire_oracle";
+import { assertRadiantTransportWire } from "../support/features/radiant-eclipse/oracles/wire";
 import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { Role, PotionType, type ActionStage, type ToolCall } from "../../src/core";

@@ -28,7 +28,7 @@ import {
   demonHunterDeck,
   demonNightChoice,
 } from "../support/demon_hunter_scenarios";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 let version: ReturnType<typeof currentEngineVersion> | undefined;
 type Mode =
   | "normal"

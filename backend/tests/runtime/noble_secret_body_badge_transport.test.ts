@@ -1,8 +1,8 @@
 import { expect, test } from "bun:test";
 import { nobleTransportScenario } from "../support/noble_secret_body_transport_scenarios";
-import { assertNobleTransportWire } from "../support/noble_secret_body_wire_oracle";
-import { assertNobleTransportGolden } from "../support/noble_secret_body_transport_golden";
-import { assertNobleBadgeRules } from "../support/noble_secret_body_badge_prompt";
+import { assertNobleTransportWire } from "../support/features/noble-secret-body/oracles/wire";
+import { assertNobleTransportGolden } from "../support/features/noble-secret-body/oracles/transport-golden";
+import { assertNobleBadgeRules } from "../support/features/noble-secret-body/oracles/badge-prompt";
 import { runTransportGame } from "../support/run_transport_game";
 for (const kind of ["llm", "acp", "mixed"] as const)
   test(`actual Noble holder badge prompt agrees with real action ${kind}`, async () => {

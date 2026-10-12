@@ -7,7 +7,7 @@ import { getSessionRecorder } from "../../src/recording/recording_context";
 import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
 import type { ResolvedGameSetup } from "../../src/runtime/config/resolve_game_setup";
 import { runGame } from "../../src/runtime/game_runner";
-import { cleanupTestTempDirectories, createTestTempDirectory } from "../support/temp_directory";
+import { cleanupTestTempDirectories, createTestTempDirectory } from "../support/drivers/temp-directories";
 
 const restores: Array<() => void> = [];
 afterEach(async () => {

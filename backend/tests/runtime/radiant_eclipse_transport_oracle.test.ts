@@ -4,7 +4,7 @@ import { assertTransportPrompt } from "../support/transport_prompt_oracle";
 import {
   assertRadiantWireEvents,
   assertRadiantTransportWire,
-} from "../support/radiant_eclipse_wire_oracle";
+} from "../support/features/radiant-eclipse/oracles/wire";
 import { radiantRecording } from "../support/radiant_eclipse_recording";
 test("transport mapping matches independent FNV/Mulberry/Fisher literal golden", async () => {
   const s = await radiantTransportScenario();

@@ -12,7 +12,7 @@ import {
   currentEngineVersion,
 } from "../../src/runtime/simulation/reproduction_context";
 import { GameEventRecorder } from "../../src/runtime/game_event_recorder";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 import { BaselineBotActionProvider } from "../../src/ai/agents/providers/action_providers";
 import { runWithSessionRecorder } from "../../src/recording/recording_context";
 import {

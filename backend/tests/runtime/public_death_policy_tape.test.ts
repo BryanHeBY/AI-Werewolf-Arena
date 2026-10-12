@@ -26,7 +26,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 for (const policy of ["awa_initial_wave_v1", "netease_2017_day_and_first_night_v1"] as const)
   for (const deathRevealPolicy of ["awa_hidden_v1", "netease_2017_open_v1"] as const)

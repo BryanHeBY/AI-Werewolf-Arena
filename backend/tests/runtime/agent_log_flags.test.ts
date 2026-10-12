@@ -10,7 +10,7 @@ import { Phase, type ActionRequest } from "../../src/core";
 import type { ResolvedAgentRuntimeProfile } from "../../src/runtime/config/contracts";
 import { SessionRecordManager } from "../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../src/recording/recording_context";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 const request: ActionRequest = {
   actorId: 1,

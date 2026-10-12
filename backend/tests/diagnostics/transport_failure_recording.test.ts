@@ -11,7 +11,7 @@ import type { ChatModelClient } from "../../src/ai/integrations/llm/transport";
 import { AiSdkClient } from "../../src/ai/integrations/llm/ai_sdk_client";
 import { SessionRecordManager } from "../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../src/recording/recording_context";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 import { createAcpConsoleLogger } from "../../src/runtime/console_presenter";
 import { ReplayFileStore } from "../../src/recording/file_store";
 import { Phase, Role, type ActionRequest } from "../../src/core";

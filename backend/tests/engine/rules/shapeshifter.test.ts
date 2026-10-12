@@ -10,7 +10,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 import { expect, spyOn, test } from "bun:test";
 import { shuffled } from "../../../src/core";
 import { shapeshifterScenario } from "../../support/shapeshifter_scenarios";

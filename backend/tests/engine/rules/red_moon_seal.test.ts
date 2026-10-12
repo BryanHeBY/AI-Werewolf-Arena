@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import { COMPONENT, type AliveComponent, type RoleComponent } from "../../../src/core";
-import { redMoonCandidateWorld } from "../../support/red_moon_candidate_world";
+import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 import {
   beginDemonHunterNight,
   closeDemonHunterNight,

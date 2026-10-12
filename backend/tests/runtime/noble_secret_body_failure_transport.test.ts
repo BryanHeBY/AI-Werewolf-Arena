@@ -5,8 +5,8 @@ import type { ActionStage } from "../../src/core";
 import type { PlannedTurn } from "../support/foundation_transport_plan";
 import { nobleTransportScenario } from "../support/noble_secret_body_transport_scenarios";
 import { runTransportGame } from "../support/run_transport_game";
-import { assertNobleTransportWire } from "../support/noble_secret_body_wire_oracle";
-import { assertNobleBadgeRules } from "../support/noble_secret_body_badge_prompt";
+import { assertNobleTransportWire } from "../support/features/noble-secret-body/oracles/wire";
+import { assertNobleBadgeRules } from "../support/features/noble-secret-body/oracles/badge-prompt";
 const rank: Partial<Record<ActionStage, number>> = {
   secret_body: 150,
   wolf_discussion: 200,

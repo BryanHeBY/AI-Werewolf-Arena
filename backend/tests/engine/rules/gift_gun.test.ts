@@ -40,7 +40,7 @@ import { captureNightLife } from "../../../src/core/domain/night_effects";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
 import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";

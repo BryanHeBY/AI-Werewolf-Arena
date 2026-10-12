@@ -7,7 +7,7 @@
  * transport. Support files, fixture bytes, policy and state behavior are retained.
  */
 import { expect, test } from "bun:test";
-import { animalRosterFixture } from "../../../engine/animal_dream_fixture";
+import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import type { VotingRightComponent } from "../../../../src/core/domain/components/voting_right";

@@ -59,3 +59,5 @@
 - C14清单前置：907原文件/48,294,509字节四方同SHA；258suites全pending，未知来源明确。8原局部与4具体反例通过，4项审查问题修正后5原输入独立复核；archive/adapter选择器有实际owner策略。成套物理迁移及原动态loader尚待后续。
 
 - C11前端26组：25事实/投影归前端功能目录，17 Scholar纯reader项归contract；206旧IDs、全部正文/矩阵与50 resolvedimports保留，职责头审查误述修正。必要FE/contract类型0，未重复26suite；统一mapping现108files/1241IDs。
+
+- C13首15支持模块：15 builder/driver/oracle实际归属与162consumer/229modulepaths闭环；独立177原程序/1660旧IDs保真，原3内存文件30/0与必要类型通过。fixture-bound2helper单独待source asset，未造桥；混合支持模块仍待拆。

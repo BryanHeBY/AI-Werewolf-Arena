@@ -11,7 +11,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 for (const shotPolicy of ["night_shot_immune", "hunter_shot_bypasses"] as const)
   for (const selfHeal of [WitchSelfHealRule.Disabled, WitchSelfHealRule.FirstNightOnly])
     for (const locale of ["zh-CN", "en"] as const)

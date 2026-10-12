@@ -1,10 +1,10 @@
 import { expect, test } from "bun:test";
 import { LoopbackMcpControlServer } from "../../../src/ai/integrations/acp/loopback_mcp_control_server";
-import { assertControlOwnerClosed } from "../../support/control_owner_probe";
+import { assertControlOwnerClosed } from "../../support/oracles/control-owner";
 import {
   authenticatedSyntheticModelFetch,
   syntheticModelToken,
-} from "../../support/synthetic_model_fetch";
+} from "../../support/drivers/agents/synthetic-model-fetch";
 
 test("released control port reused by SDK fixture rejects old owner before parsing", async () => {
   const original = new LoopbackMcpControlServer({

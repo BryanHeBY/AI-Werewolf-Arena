@@ -7,7 +7,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 for (const id of ["six_player_psychic", "twelve_player_psychic"] as const)
   test(`${id}: restricted observations exercise real inspection, repeat and pass without hidden truth; every complete game strictly replays`, async () => {
     const board = await loadBoardDefinition(

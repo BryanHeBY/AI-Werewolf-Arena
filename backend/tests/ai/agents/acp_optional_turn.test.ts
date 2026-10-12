@@ -8,7 +8,7 @@ import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provide
 import { Phase, type ActionRequest } from "../../../src/core";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 for (const required of [false, true])
   test(`successful ACP prompt with no tool submission ${required ? "falls back for a required turn" : "honors an optional pass"}`, async () => {

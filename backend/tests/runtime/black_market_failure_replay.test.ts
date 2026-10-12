@@ -13,7 +13,7 @@ import { BaselineBotActionProvider } from "../../src/ai/agents/providers/action_
 import { LlmActionProvider } from "../../src/ai/agents/llm/llm_action_provider";
 import { AcpActionProvider } from "../../src/ai/agents/acp/acp_action_provider";
 import { blackMarketScenario } from "../support/black_market_scenarios";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 for (const transport of ["sdk", "acp"] as const)
   for (const locale of ["zh-CN", "en"] as const)

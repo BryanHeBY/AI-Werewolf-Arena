@@ -20,7 +20,7 @@ import { getDefaultScriptEventRenderRegistry } from "../../../src/game/mechanism
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
 import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 const chosen = { policy: DEMON_HUNTER_POLICY, actorId: 6, day: 2, targetId: 1 },
   own = { policy: DEMON_HUNTER_POLICY, day: 2, targetId: 1 };
 const isDemon = (type: string) => (DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(type);

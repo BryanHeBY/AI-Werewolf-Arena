@@ -6,8 +6,8 @@ const transportDiagnostic = (...values: unknown[]) => {
 import { expect } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { assertControlOwnerClosed } from "./control_owner_probe";
-import { authenticatedSyntheticModelFetch, syntheticModelToken } from "./synthetic_model_fetch";
+import { assertControlOwnerClosed } from "./oracles/control-owner";
+import { authenticatedSyntheticModelFetch, syntheticModelToken } from "./drivers/agents/synthetic-model-fetch";
 import { assertReplayDocument, assertReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
 import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
@@ -17,7 +17,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "./temp_directory";
+import { createTestTempDirectory } from "./drivers/temp-directories";
 import type { ActorTransportPlan, PlannedTurn } from "./foundation_transport_plan";
 import { assertSubmitActionWireSchema, type MistWireState } from "./mist_raven_transport_oracle";
 import {

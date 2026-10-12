@@ -22,7 +22,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 for (const repeatPolicy of ["awa_last_action_v1", "netease_consecutive_nights_v1"] as const)
   test(`${repeatPolicy}: A, no-action, A semantic branch reproduces through the actual Tape`, async () => {

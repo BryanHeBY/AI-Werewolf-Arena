@@ -9,7 +9,7 @@ import {
 } from "../../src/runtime/config/resolve_game_setup";
 import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
 import { resolveBoardConfig } from "../../src/runtime/scenarios/board_config_resolver";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 async function writeRuntimeFiles(
   root: string,

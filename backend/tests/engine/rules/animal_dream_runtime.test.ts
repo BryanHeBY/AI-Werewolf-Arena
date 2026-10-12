@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { animalInternalConfig } from "../animal_dream_fixture";
+import { animalInternalConfig } from "../../support/features/animal-dream/builders/roster";
 import {
   Role,
   Camp,

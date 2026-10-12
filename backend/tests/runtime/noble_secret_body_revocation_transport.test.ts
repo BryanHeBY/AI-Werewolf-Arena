@@ -11,7 +11,7 @@ import { PhaseManager } from "../../src/game/engine/phase_manager";
 import type { PlannedTurn } from "../support/foundation_transport_plan";
 import { nobleTransportScenario } from "../support/noble_secret_body_transport_scenarios";
 import { runTransportGame } from "../support/run_transport_game";
-import { assertNobleTransportWire } from "../support/noble_secret_body_wire_oracle";
+import { assertNobleTransportWire } from "../support/features/noble-secret-body/oracles/wire";
 
 const rank: Partial<Record<ActionStage, number>> = {
   secret_body: 150,

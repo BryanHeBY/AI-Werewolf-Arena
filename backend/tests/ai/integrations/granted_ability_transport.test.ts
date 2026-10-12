@@ -13,7 +13,7 @@ import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_
 import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
 import { createPlayerAgentRuntime } from "../../../src/runtime/player_agent_factory";
 import type { ResolvedAgentRuntimeProfile } from "../../../src/runtime/config/contracts";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 for (const locale of ["zh-CN", "en"] as const)
   for (const kind of ["llm", "acp"] as const)

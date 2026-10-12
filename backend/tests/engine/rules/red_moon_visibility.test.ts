@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { redMoonCandidateWorld } from "../../support/red_moon_candidate_world";
+import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 import type { GameEvent } from "../../../src/core";
 import { buildAgentVisibleEvent } from "../../../src/game/engine/agent_visible_event_feed";
 for (const type of [

@@ -2,7 +2,7 @@ import { beforeAll, test, expect } from "bun:test";
 import {
   assertFragrantTransportWire,
   type FragrantWireRun,
-} from "../support/fragrant_pair_seer_wire_oracle";
+} from "../support/features/fragrant-pair-seer/oracles/wire";
 import { fragrantTransportScenario } from "../support/fragrant_pair_seer_transport_scenarios";
 import { runTransportGame } from "../support/run_transport_game";
 let sdk: FragrantWireRun, acp: FragrantWireRun;

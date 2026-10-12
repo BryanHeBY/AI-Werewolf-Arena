@@ -25,7 +25,7 @@ import {
 } from "../../src/runtime/simulation/replay_reproduction";
 import { parseReproductionRecord } from "../../src/recording/reproduction";
 import { ghostBrideBoard, ghostBrideDeck } from "../support/ghost_bride_scenarios";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 async function recordGame(
   winner: Camp,

@@ -8,7 +8,7 @@ import {
   type RoleComponent,
   type VotingRightComponent,
 } from "../../../src/core";
-import { redMoonCandidateWorld } from "../../support/red_moon_candidate_world";
+import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 import {
   beginDemonHunterNight,
   closeDemonHunterNight,

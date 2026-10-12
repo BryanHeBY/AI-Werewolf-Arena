@@ -14,7 +14,7 @@ import {
   type FragrantRuntimePlan,
 } from "./fragrant_pair_seer_scenarios";
 import { fragrantPairSeerTwelveConfig } from "../../src/runtime/scenarios/fragrant_pair_seer_twelve";
-import { createTestTempDirectory } from "./temp_directory";
+import { createTestTempDirectory } from "./drivers/temp-directories";
 export const fragrantLiteralPlans: Record<string, readonly FragrantRuntimePlan[]> = {
   inherited_gun: [
     { bind: null, knife: 9, poison: 2, exile: 3 },

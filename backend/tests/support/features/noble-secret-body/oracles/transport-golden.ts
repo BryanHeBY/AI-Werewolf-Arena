@@ -1,6 +1,14 @@
+/**
+ * Owns test oracle support: Independent Noble/Body terminal, causality and player-view literal expectations over completed transport runs.
+ * Inputs are actual wire messages, request prefixes, snapshots or a former
+ * local endpoint plus explicit expectations; outputs are the original assertions
+ * and rejection diagnostics. Unit/integration/scenario tests retain their
+ * independent literal markers and recorded prefixes as the oracle. No expected
+ * result is regenerated from production role, observation or board algorithms.
+ */
 import { expect } from "bun:test";
-import type { ReproductionRecord } from "../../src/recording/reproduction";
-import type { nobleTransportScenario } from "./noble_secret_body_transport_scenarios";
+import type { ReproductionRecord } from "../../../../../src/recording/reproduction";
+import type { nobleTransportScenario } from "../../../noble_secret_body_transport_scenarios";
 type Scenario = ReturnType<typeof nobleTransportScenario>;
 type BodySpend = [
   number,

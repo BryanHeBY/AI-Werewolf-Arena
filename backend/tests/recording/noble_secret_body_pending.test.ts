@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import { readFile, writeFile, rm } from "node:fs/promises";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 import { bootstrapGame } from "../../src/app/bootstrap";
 import { Role, COMPONENT, createRandom, type ActionRequest, type ToolCall } from "../../src/core";
 import { nobleSecretBodyTwelveConfig } from "../../src/runtime/scenarios/noble_secret_body_twelve";

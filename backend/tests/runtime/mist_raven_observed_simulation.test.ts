@@ -8,7 +8,7 @@ import {
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
 import { mistBoard } from "../support/mist_raven_recording";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 const languages = new Map<string, SimulationReport>();
 for (const policy of ["mixed", "conservative"] as const)

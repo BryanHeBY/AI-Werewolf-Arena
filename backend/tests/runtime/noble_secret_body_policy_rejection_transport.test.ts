@@ -1,8 +1,8 @@
 import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { nobleTransportScenario } from "../support/noble_secret_body_transport_scenarios";
-import { assertNobleTransportWire } from "../support/noble_secret_body_wire_oracle";
-import { assertNobleTransportGolden } from "../support/noble_secret_body_transport_golden";
+import { assertNobleTransportWire } from "../support/features/noble-secret-body/oracles/wire";
+import { assertNobleTransportGolden } from "../support/features/noble-secret-body/oracles/transport-golden";
 import { runTransportGame } from "../support/run_transport_game";
 for (const boundary of ["nonconsecutive", "restricted_knife"] as const)
   for (const kind of ["llm", "acp", "mixed"] as const)

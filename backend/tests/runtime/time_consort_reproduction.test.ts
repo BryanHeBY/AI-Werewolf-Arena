@@ -26,7 +26,7 @@ import {
 } from "../../src/recording/reproduction";
 
 import { GameEventRecorder } from "../../src/runtime/game_event_recorder";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 import { timeConsortTwelveConfig } from "../../src/runtime/scenarios/time_consort_twelve";
 import { ObservedBot } from "../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../src/ai/agents/providers/observed_players";

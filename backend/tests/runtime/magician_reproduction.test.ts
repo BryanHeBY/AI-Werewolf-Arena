@@ -18,7 +18,7 @@ import {
 } from "../../src/recording/reproduction";
 import { validateMagicianRecord } from "../../src/recording/magician_record";
 import { GameEventRecorder } from "../../src/runtime/game_event_recorder";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 import { magicianScenario } from "../support/magician_transport_scenarios";
 const records = new Map<string, Promise<ReproductionRecord>>();
 let version: ReturnType<typeof currentEngineVersion> | undefined;

@@ -22,7 +22,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 for (const pk of [false, true])
   test(`${pk}: sheriff and exile policies reproduce the actual election and PK Tape`, async () => {

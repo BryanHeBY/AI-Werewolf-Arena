@@ -10,7 +10,7 @@ import { describe, expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { speakRequest } from "../../support/acp_provider_requests";
+import { speakRequest } from "../../support/builders/agents/acp-requests";
 
 describe("AcpTurnRegistry", () => {
   test("rejects stale sessions and tools outside the current turn", async () => {

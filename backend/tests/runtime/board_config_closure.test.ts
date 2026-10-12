@@ -31,7 +31,7 @@ import {
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
 import { convertLegacyBoard } from "../../src/runtime/config/migrate_board";
 import { checkConfig } from "../../src/runtime/cli/check_config";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 const roleIds = [Role.Wolf, Role.Witch, Role.Knight, Role.Villager, Role.Villager, Role.Villager];
 const base: BoardConfig = {

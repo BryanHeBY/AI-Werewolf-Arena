@@ -8,7 +8,7 @@ import {
 } from "@ai-werewolf-arena/replay-contract";
 import { exportReplayBundle } from "../../src/replay/export_replay_bundle";
 import { createReplayDocument } from "../../src/recording/replay_document";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 async function fixture() {
   return JSON.parse(

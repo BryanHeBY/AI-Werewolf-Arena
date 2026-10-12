@@ -3,10 +3,10 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { nobleTransportScenario } from "../support/noble_secret_body_transport_scenarios";
 import { runTransportGame } from "../support/run_transport_game";
-import { assertNobleTransportWire } from "../support/noble_secret_body_wire_oracle";
-import { assertNobleBadgeRules } from "../support/noble_secret_body_badge_prompt";
-import { assertNobleTransportGolden } from "../support/noble_secret_body_transport_golden";
-import { assertNobleKnownAnchors } from "../support/noble_secret_body_known_anchors";
+import { assertNobleTransportWire } from "../support/features/noble-secret-body/oracles/wire";
+import { assertNobleBadgeRules } from "../support/features/noble-secret-body/oracles/badge-prompt";
+import { assertNobleTransportGolden } from "../support/features/noble-secret-body/oracles/transport-golden";
+import { assertNobleKnownAnchors } from "../support/features/noble-secret-body/oracles/known-anchors";
 for (const name of [
   "expiry",
   "new_and_old_clear",

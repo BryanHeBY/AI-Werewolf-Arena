@@ -17,7 +17,7 @@ import {
 } from "../../src/recording/reproduction";
 import { validateOrderPrinceRecord } from "../../src/recording/order_prince_record";
 import { GameEventRecorder } from "../../src/runtime/game_event_recorder";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 import { orderPrinceScenario } from "../support/order_prince_transport_scenarios";
 const records = new Map<string, Promise<ReproductionRecord>>();
 let version: ReturnType<typeof currentEngineVersion> | undefined;

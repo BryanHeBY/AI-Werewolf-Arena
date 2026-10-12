@@ -7,7 +7,7 @@
  * transport. Support files, fixture bytes, policy and state behavior are retained.
  */
 import { expect, test } from "bun:test";
-import { animalRosterFixture, animalInternalConfig } from "../../../engine/animal_dream_fixture";
+import { animalRosterFixture, animalInternalConfig } from "../../../support/features/animal-dream/builders/roster";
 import {
   installAnimalAuthority,
   beginAnimalNight,

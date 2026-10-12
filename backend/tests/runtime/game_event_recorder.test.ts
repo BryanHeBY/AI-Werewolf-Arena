@@ -6,7 +6,7 @@ import { SessionRecordManager } from "../../src/recording/session_recorder";
 import { presentStreamEvents } from "../../src/runtime/console_presenter";
 import { GameEventRecorder } from "../../src/runtime/game_event_recorder";
 import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 test("terminal presentation failure does not replay already recorded events", async () => {
   const root = await createTestTempDirectory("awa-event-recorder-");

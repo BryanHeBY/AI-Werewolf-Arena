@@ -13,7 +13,7 @@ import {
 } from "../../src/runtime/simulation/replay_reproduction";
 import { ReplayFileStore } from "../../src/recording/file_store";
 import { getSessionRecorder } from "../../src/recording/recording_context";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 for (const diskFailure of [false, true])
   for (const lateSuccess of [false, true])

@@ -15,7 +15,7 @@ import * as factory from "../../src/runtime/player_agent_factory";
 import { BaselineBotActionProvider } from "../../src/ai/agents/providers/action_providers";
 import { ReproductionTrace } from "../../src/recording/reproduction";
 import { ObservedBot } from "../../src/ai/agents/providers/observed_bot";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 const fixtures = path.resolve(import.meta.dir, "../../../configs.example");
 

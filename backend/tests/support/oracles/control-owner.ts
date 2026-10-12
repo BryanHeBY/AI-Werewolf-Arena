@@ -1,3 +1,11 @@
+/**
+ * Owns test oracle support: Direct localhost probe of the former control owner; original connection-refused or different-owner response is the independent oracle.
+ * Inputs are actual wire messages, request prefixes, snapshots or a former
+ * local endpoint plus explicit expectations; outputs are the original assertions
+ * and rejection diagnostics. Unit/integration/scenario tests retain their
+ * independent literal markers and recorded prefixes as the oracle. No expected
+ * result is regenerated from production role, observation or board algorithms.
+ */
 import { request } from "node:http";
 
 /** Probe the former owner directly, even if another game reused its released port. */

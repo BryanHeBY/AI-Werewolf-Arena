@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { exportReplayBundle } from "../../src/replay/export_replay_bundle";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 test("exports one offline replay bundle from a recorded session", async () => {
   const root = await createTestTempDirectory("awa-replay-export-");

@@ -4,7 +4,7 @@ import path from "node:path";
 import { migrateBoardSource, migrateBoards } from "../../src/runtime/cli/migrate_configs";
 import { BoardConfigurationError } from "../../src/runtime/config/board_definition";
 import { configDiagnostic } from "../../src/runtime/cli/check_config";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 test("exclusive migration preserves a competing target created after the initial check", async () => {
   const root = await createTestTempDirectory("awa-migration-race-");

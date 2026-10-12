@@ -1,8 +1,8 @@
 import { expect, test } from "bun:test";
 import { nobleTransportScenario } from "../support/noble_secret_body_transport_scenarios";
-import { assertNobleTransportWire } from "../support/noble_secret_body_wire_oracle";
-import { assertNobleTransportGolden } from "../support/noble_secret_body_transport_golden";
-import { assertNobleBadgeRules } from "../support/noble_secret_body_badge_prompt";
+import { assertNobleTransportWire } from "../support/features/noble-secret-body/oracles/wire";
+import { assertNobleTransportGolden } from "../support/features/noble-secret-body/oracles/transport-golden";
+import { assertNobleBadgeRules } from "../support/features/noble-secret-body/oracles/badge-prompt";
 import { runTransportGame } from "../support/run_transport_game";
 for (const wolf of ["standard", "no_blast_no_self_knife"] as const)
   for (const repeat of ["awa_nonconsecutive_nights_v1", "awa_repeat_v1"] as const)

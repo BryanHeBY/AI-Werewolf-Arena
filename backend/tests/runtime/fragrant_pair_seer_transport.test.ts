@@ -1,4 +1,4 @@
-import { assertFragrantTransportWire } from "../support/fragrant_pair_seer_wire_oracle";
+import { assertFragrantTransportWire } from "../support/features/fragrant-pair-seer/oracles/wire";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { expect, test } from "bun:test";

@@ -12,7 +12,7 @@ import { runWithSessionRecorder } from "../../../src/recording/recording_context
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import path from "path";
 import { promises as fs } from "fs";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 import {
   REQUIRED_ACTION_CONSTRAINTS,
   ToolLoopClient,

@@ -11,7 +11,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 test("revoked delivery on a real engine request records an error and reproduces the exact partial cycle without a replay clock", async () => {
   const root = await createTestTempDirectory("awa-delivery-failure-"),

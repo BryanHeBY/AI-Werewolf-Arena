@@ -1,0 +1,3669 @@
+{
+  "schema": "awa-test-support-mappings-v1",
+  "sourceCommit": "dd23d71af8d3457f41617594f3815ec06d7e8f40",
+  "scope": "C13 mechanical support relocation and consumer module paths; source fixture bytes unchanged.",
+  "rows": [
+    {
+      "from": "backend/tests/setup.ts",
+      "to": "backend/tests/setup.ts",
+      "originalSha256": "01f50f3424a4ae9ce548300cf4dcce43879810388aebe80853e5e31e780e6568",
+      "candidateSha256": "a30e6e814c62613964a469034b9c9e72682334aa8f5ce876089421e69c745ec0",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 200,
+          "end": 224,
+          "oldSpecifier": "./support/temp_directory",
+          "newSpecifier": "./support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/unit/features/bear/dawn-frame.test.ts",
+      "to": "backend/tests/unit/features/bear/dawn-frame.test.ts",
+      "originalSha256": "3e9314795b44af883c74f618e3addd11e38b805cbfca85ffc7b014ba308df999",
+      "candidateSha256": "ad66e33ca5a16e0725699d1029b1a9648dba15a5fd6b0dfc8afe5b8754212bc3",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 616,
+          "end": 652,
+          "oldSpecifier": "../../../engine/animal_dream_fixture",
+          "newSpecifier": "../../../support/features/animal-dream/builders/roster",
+          "oldTarget": "backend/tests/engine/animal_dream_fixture.ts",
+          "newTarget": "backend/tests/support/features/animal-dream/builders/roster.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/unit/features/noble-secret-body/authority-reentry.test.ts",
+      "to": "backend/tests/unit/features/noble-secret-body/authority-reentry.test.ts",
+      "originalSha256": "fe46490a9416184244d61ff8cd8c8d3f8b374bd75b96aafd9a144f3e310694df",
+      "candidateSha256": "f85609695d7e06307f6773ded3bf623871fb011580b6fb3930f2c00b71fc37d6",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 787,
+          "end": 831,
+          "oldSpecifier": "../../../support/noble_secret_body_authority",
+          "newSpecifier": "../../../support/features/noble-secret-body/drivers/authority",
+          "oldTarget": "backend/tests/support/noble_secret_body_authority.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/drivers/authority.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/unit/features/noble-secret-body/authority.test.ts",
+      "to": "backend/tests/unit/features/noble-secret-body/authority.test.ts",
+      "originalSha256": "748b76c8f5ec03f20161bc5ce8bae860ed723fc83d6f1e419f1820a7a0a29813",
+      "candidateSha256": "0bea64b900eb04b37485da39e8c5522b6b67b6eaca941f76e7e275a06ed93487",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 956,
+          "end": 1000,
+          "oldSpecifier": "../../../support/noble_secret_body_authority",
+          "newSpecifier": "../../../support/features/noble-secret-body/drivers/authority",
+          "oldTarget": "backend/tests/support/noble_secret_body_authority.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/drivers/authority.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/unit/features/noble-secret-body/notice-snapshots.test.ts",
+      "to": "backend/tests/unit/features/noble-secret-body/notice-snapshots.test.ts",
+      "originalSha256": "bd2e6a37032f835ddbeacbebad6f1fa021463cb119de7506313b30c473ff63d3",
+      "candidateSha256": "77efd9cd91e2f0004f0643ec0652b4781d44f0e83d72a18058dfccb2bbfaa18b",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 883,
+          "end": 927,
+          "oldSpecifier": "../../../support/noble_secret_body_authority",
+          "newSpecifier": "../../../support/features/noble-secret-body/drivers/authority",
+          "oldTarget": "backend/tests/support/noble_secret_body_authority.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/drivers/authority.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/unit/features/noble-secret-body/player-projection.test.ts",
+      "to": "backend/tests/unit/features/noble-secret-body/player-projection.test.ts",
+      "originalSha256": "fb2bcdc970fd5812c6646e2cd4e9c71b7b32d9fc907fc5f844980415aa9ecf96",
+      "candidateSha256": "c2be4fa290de02181a12bb3b9daceafe567aa6741425edf1ffb4671a94246726",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 717,
+          "end": 761,
+          "oldSpecifier": "../../../support/noble_secret_body_authority",
+          "newSpecifier": "../../../support/features/noble-secret-body/drivers/authority",
+          "oldTarget": "backend/tests/support/noble_secret_body_authority.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/drivers/authority.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/unit/features/animal-dream/authority.test.ts",
+      "to": "backend/tests/unit/features/animal-dream/authority.test.ts",
+      "originalSha256": "0da415593739d7e9e548de5bd075385933e802ebb91e75f99e70cf93ed4987b3",
+      "candidateSha256": "55ceb313b4437995a7947f7a08ee738c4395d31eb92640ecdb6e30f40abd1c6a",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 653,
+          "end": 689,
+          "oldSpecifier": "../../../engine/animal_dream_fixture",
+          "newSpecifier": "../../../support/features/animal-dream/builders/roster",
+          "oldTarget": "backend/tests/engine/animal_dream_fixture.ts",
+          "newTarget": "backend/tests/support/features/animal-dream/builders/roster.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/unit/features/animal-dream/request-envelope.test.ts",
+      "to": "backend/tests/unit/features/animal-dream/request-envelope.test.ts",
+      "originalSha256": "35086e956ade2cb139067c7d5629b309dab083c1180c2c9ef25a51a20491f2a5",
+      "candidateSha256": "6edfd37372bfd7c7cd5f0892495cad12f49f682aea49ed7d2c8f976e637ac3a8",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 638,
+          "end": 674,
+          "oldSpecifier": "../../../engine/animal_dream_fixture",
+          "newSpecifier": "../../../support/features/animal-dream/builders/roster",
+          "oldTarget": "backend/tests/engine/animal_dream_fixture.ts",
+          "newTarget": "backend/tests/support/features/animal-dream/builders/roster.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/unit/features/animal-dream/cat-authority.test.ts",
+      "to": "backend/tests/unit/features/animal-dream/cat-authority.test.ts",
+      "originalSha256": "3f4c6f138940616839cf4c92470acd78d9b193aab21ac9990ea920d526e74cd0",
+      "candidateSha256": "437c252cc194d8df0363096f5ed7fa5378ba934c2d689da65a30e3d880bee464",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 635,
+          "end": 671,
+          "oldSpecifier": "../../../engine/animal_dream_fixture",
+          "newSpecifier": "../../../support/features/animal-dream/builders/roster",
+          "oldTarget": "backend/tests/engine/animal_dream_fixture.ts",
+          "newTarget": "backend/tests/support/features/animal-dream/builders/roster.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/unit/features/animal-dream/roster.test.ts",
+      "to": "backend/tests/unit/features/animal-dream/roster.test.ts",
+      "originalSha256": "a0de83fdfbb1dd69c762d562b77e7427b058414953e35238d651feca2a15414f",
+      "candidateSha256": "f96aaaa63c5e855895ed1f8bd4e432ce104bfd50ea30f7b00499f0608f6b90bc",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1126,
+          "end": 1162,
+          "oldSpecifier": "../../../engine/animal_dream_fixture",
+          "newSpecifier": "../../../support/features/animal-dream/builders/roster",
+          "oldTarget": "backend/tests/engine/animal_dream_fixture.ts",
+          "newTarget": "backend/tests/support/features/animal-dream/builders/roster.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/unit/features/animal-dream/puffer-authority.test.ts",
+      "to": "backend/tests/unit/features/animal-dream/puffer-authority.test.ts",
+      "originalSha256": "c16c32da135b4e8482d1924aa40a67fec1403b31a58fbfb462ed624e896f44f3",
+      "candidateSha256": "849347fa88adbb9ff0ae967ffc960b19c0f5bfe4ae568229c22f14002b6ae2a7",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 638,
+          "end": 674,
+          "oldSpecifier": "../../../engine/animal_dream_fixture",
+          "newSpecifier": "../../../support/features/animal-dream/builders/roster",
+          "oldTarget": "backend/tests/engine/animal_dream_fixture.ts",
+          "newTarget": "backend/tests/support/features/animal-dream/builders/roster.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/unit/features/animal-dream/publication.test.ts",
+      "to": "backend/tests/unit/features/animal-dream/publication.test.ts",
+      "originalSha256": "05b3e471401eb2c0ec05b1de1d1fcf5fa8a30356b9f16acc6abc015cfbc49aa0",
+      "candidateSha256": "c60c1c2cf855342131ee0723ee551f2282f8394d0f324c21a56c3d170e6d14c2",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 633,
+          "end": 669,
+          "oldSpecifier": "../../../engine/animal_dream_fixture",
+          "newSpecifier": "../../../support/features/animal-dream/builders/roster",
+          "oldTarget": "backend/tests/engine/animal_dream_fixture.ts",
+          "newTarget": "backend/tests/support/features/animal-dream/builders/roster.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/unit/agents/acp-turn-registry.test.ts",
+      "to": "backend/tests/unit/agents/acp-turn-registry.test.ts",
+      "originalSha256": "f93d087183dc18e9cfa44790871eb0874121f193b7e7e5ab76122a3b1113e20f",
+      "candidateSha256": "598f48363e179ee9053af0b53aeafbc5693ee1515f8da5e21133bccb47d7fbcb",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 873,
+          "end": 908,
+          "oldSpecifier": "../../support/acp_provider_requests",
+          "newSpecifier": "../../support/builders/agents/acp-requests",
+          "oldTarget": "backend/tests/support/acp_provider_requests.ts",
+          "newTarget": "backend/tests/support/builders/agents/acp-requests.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/recording/session_recording.test.ts",
+      "to": "backend/tests/recording/session_recording.test.ts",
+      "originalSha256": "f036ff6357d512d95d5ea8194ac2aff4a1c9d173b4497fa75ae77f7f5e445898",
+      "candidateSha256": "03ccfca134d339d72b6457a4434dd5f81fb22aa70f8b4cbd35809f8b9b3ace0d",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 828,
+          "end": 853,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/recording/victory_record.test.ts",
+      "to": "backend/tests/recording/victory_record.test.ts",
+      "originalSha256": "92f7704b2b8f8c927b00d103d58239bb9d19e30d80b7c1941b82f74b4a79c63d",
+      "candidateSha256": "b7e4bdbf1ea9211962dc8ec8de0209ad0fabdae57290243b67113f4d024526af",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 810,
+          "end": 835,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/recording/noble_secret_body_pending.test.ts",
+      "to": "backend/tests/recording/noble_secret_body_pending.test.ts",
+      "originalSha256": "e54b4372149157a9aa206e20949db4b0ffbb3538406f888f936d5dd0429bfaf3",
+      "candidateSha256": "85f48e41852458e46f49a27af7a001e6d15265450655dfa28ff4cd67a235d68c",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 142,
+          "end": 167,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/recording/animal_dream_initial_review.test.ts",
+      "to": "backend/tests/recording/animal_dream_initial_review.test.ts",
+      "originalSha256": "beca2ccede762d4c27f879adc116634aea14e2cd16de6a3dbd6b717db1c47d0a",
+      "candidateSha256": "32d80e418898138ca8f57bbb52cc8d08ac0d0ee5c0ff379776fe5e064ddaf8fa",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 136,
+          "end": 166,
+          "oldSpecifier": "../engine/animal_dream_fixture",
+          "newSpecifier": "../support/features/animal-dream/builders/roster",
+          "oldTarget": "backend/tests/engine/animal_dream_fixture.ts",
+          "newTarget": "backend/tests/support/features/animal-dream/builders/roster.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/recording/reproduction_persistence.test.ts",
+      "to": "backend/tests/recording/reproduction_persistence.test.ts",
+      "originalSha256": "802d9cbb19dc5b0ed0a3f220751b018405bcfe9be40ca9bfb04ff0c51547d965",
+      "candidateSha256": "bc2d9853a3f1e162b3faabff443d60d90466f5a58bcb9245d9f7582c9684f36a",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 739,
+          "end": 764,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/recording/private_record_contract.test.ts",
+      "to": "backend/tests/recording/private_record_contract.test.ts",
+      "originalSha256": "0fa1477ad5503702f061f5214c104d16438832d3c0960b92c161f638a59c2996",
+      "candidateSha256": "3fb2a03ad70620409f0f08042ab2080628c2aaf9936b4f283d4f37101fdad182",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 685,
+          "end": 710,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/recording/animal_dream_paid_failure.test.ts",
+      "to": "backend/tests/recording/animal_dream_paid_failure.test.ts",
+      "originalSha256": "0fb9f767c1caa0152f6a52d4ac588c64fe5588ea8a0a690596001b6a245e3cb9",
+      "candidateSha256": "294b47494aacdb67c32392077b578be8f7f1cc21f822656f63599e75ecfa4662",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 127,
+          "end": 152,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/recording/animal_dream_cat_failure.test.ts",
+      "to": "backend/tests/recording/animal_dream_cat_failure.test.ts",
+      "originalSha256": "544a0699dbe9b64189732ebe632402af611c9617f34b1b77f7709b66321b3f30",
+      "candidateSha256": "0cabdfcef42b6709b10e4bda6278ff18eeed350709cf568705a4002392f85d4a",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 127,
+          "end": 152,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/replay/replay_bundle_export.test.ts",
+      "to": "backend/tests/replay/replay_bundle_export.test.ts",
+      "originalSha256": "721b3df3440e22ab2496d8a2f3e8684455ae9deba4ee08bf1296cb94b5beb316",
+      "candidateSha256": "c78a70b9b60aaa33a1ef0ab3b555c5c07d95e197d0a1ef5592e156bbaffa982f",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 179,
+          "end": 204,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/replay/replay_version_migration.test.ts",
+      "to": "backend/tests/replay/replay_version_migration.test.ts",
+      "originalSha256": "8091158a339726ed5675975c8377012697fddff10c62bdec8c444544767da2cf",
+      "candidateSha256": "a51771bee90f4faddd0a1402d0efb1172d18bfde377c79286602525487192e35",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 475,
+          "end": 500,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/audit/bilingual_audit_tasks.test.ts",
+      "to": "backend/tests/audit/bilingual_audit_tasks.test.ts",
+      "originalSha256": "9db0d59a7485d7a0e3b240772df59373ef5430b05cda13d367a47cef9b44b2ef",
+      "candidateSha256": "4fcfa5630b86d1e16cb30c6b619babf41b3c2f8df775e6997298203b36d3a5af",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1070,
+          "end": 1095,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/architecture/refactor-characterization.test.ts",
+      "to": "backend/tests/architecture/refactor-characterization.test.ts",
+      "originalSha256": "6ab0539fe3d8b5ae4a4c60207a1f64a7f59d9d8c3d867115ee6625ef11153d33",
+      "candidateSha256": "5cb130d14d3168e8d3259a54dcea6c2c0209df46fda0e0c26f15364a49ca71e4",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1668,
+          "end": 1706,
+          "oldSpecifier": "../support/noble_secret_body_authority",
+          "newSpecifier": "../support/features/noble-secret-body/drivers/authority",
+          "oldTarget": "backend/tests/support/noble_secret_body_authority.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/drivers/authority.ts"
+        },
+        {
+          "kind": "static",
+          "start": 2321,
+          "end": 2351,
+          "oldSpecifier": "../engine/animal_dream_fixture",
+          "newSpecifier": "../support/features/animal-dream/builders/roster",
+          "oldTarget": "backend/tests/engine/animal_dream_fixture.ts",
+          "newTarget": "backend/tests/support/features/animal-dream/builders/roster.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/integration/agents/acp-process-client.test.ts",
+      "to": "backend/tests/integration/agents/acp-process-client.test.ts",
+      "originalSha256": "63b6c0081cdcfacdee85334eb6797a693ed157bfbb18b1d9b9ce66220087b0ab",
+      "candidateSha256": "68bcdea1013bdb079332796f92d2083358ccfa420c3783a13c8f68672035a675",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 879,
+          "end": 907,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/animal_dream_fixture.ts",
+      "to": "backend/tests/support/features/animal-dream/builders/roster.ts",
+      "originalSha256": "4a04bef9df7938fed0825cd9e6c6fc35be23b0a9e7da532619c01084a14509b1",
+      "candidateSha256": "587fd81a7403d016dad5f777e51608a00a6111a467ef4d06f08cc0ab56a93bd5",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 23,
+          "end": 50,
+          "oldSpecifier": "../../src/core/domain/world",
+          "newSpecifier": "../../../../../src/core/domain/world",
+          "oldTarget": "backend/src/core/domain/world.ts",
+          "newTarget": "backend/src/core/domain/world.ts"
+        },
+        {
+          "kind": "static",
+          "start": 81,
+          "end": 111,
+          "oldSpecifier": "../../src/core/domain/identity",
+          "newSpecifier": "../../../../../src/core/domain/identity",
+          "oldTarget": "backend/src/core/domain/identity.ts",
+          "newTarget": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "kind": "static",
+          "start": 141,
+          "end": 179,
+          "oldSpecifier": "../../src/core/domain/components/names",
+          "newSpecifier": "../../../../../src/core/domain/components/names",
+          "oldTarget": "backend/src/core/domain/components/names.ts",
+          "newTarget": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "static",
+          "start": 239,
+          "end": 276,
+          "oldSpecifier": "../../src/core/domain/components/role",
+          "newSpecifier": "../../../../../src/core/domain/components/role",
+          "oldTarget": "backend/src/core/domain/components/role.ts",
+          "newTarget": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "kind": "static",
+          "start": 338,
+          "end": 376,
+          "oldSpecifier": "../../src/core/domain/components/alive",
+          "newSpecifier": "../../../../../src/core/domain/components/alive",
+          "oldTarget": "backend/src/core/domain/components/alive.ts",
+          "newTarget": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "static",
+          "start": 416,
+          "end": 453,
+          "oldSpecifier": "../../src/core/domain/components/camp",
+          "newSpecifier": "../../../../../src/core/domain/components/camp",
+          "oldTarget": "backend/src/core/domain/components/camp.ts",
+          "newTarget": "backend/src/core/domain/components/camp.ts"
+        },
+        {
+          "kind": "static",
+          "start": 500,
+          "end": 545,
+          "oldSpecifier": "../../src/core/domain/components/voting_right",
+          "newSpecifier": "../../../../../src/core/domain/components/voting_right",
+          "oldTarget": "backend/src/core/domain/components/voting_right.ts",
+          "newTarget": "backend/src/core/domain/components/voting_right.ts"
+        },
+        {
+          "kind": "static",
+          "start": 588,
+          "end": 628,
+          "oldSpecifier": "../../src/core/domain/components/victory",
+          "newSpecifier": "../../../../../src/core/domain/components/victory",
+          "oldTarget": "backend/src/core/domain/components/victory.ts",
+          "newTarget": "backend/src/core/domain/components/victory.ts"
+        },
+        {
+          "kind": "static",
+          "start": 672,
+          "end": 709,
+          "oldSpecifier": "../../src/core/domain/entities/player",
+          "newSpecifier": "../../../../../src/core/domain/entities/player",
+          "oldTarget": "backend/src/core/domain/entities/player.ts",
+          "newTarget": "backend/src/core/domain/entities/player.ts"
+        },
+        {
+          "kind": "static",
+          "start": 795,
+          "end": 845,
+          "oldSpecifier": "../../src/game/mechanisms/roles/animal_dream/state",
+          "newSpecifier": "../../../../../src/game/mechanisms/roles/animal_dream/state",
+          "oldTarget": "backend/src/game/mechanisms/roles/animal_dream/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/animal_dream/state.ts"
+        },
+        {
+          "kind": "static",
+          "start": 885,
+          "end": 936,
+          "oldSpecifier": "../../src/game/mechanisms/roles/animal_dream/roster",
+          "newSpecifier": "../../../../../src/game/mechanisms/roles/animal_dream/roster",
+          "oldTarget": "backend/src/game/mechanisms/roles/animal_dream/roster.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/animal_dream/roster.ts"
+        },
+        {
+          "kind": "static",
+          "start": 989,
+          "end": 1034,
+          "oldSpecifier": "../../src/game/mechanisms/roles/private_state",
+          "newSpecifier": "../../../../../src/game/mechanisms/roles/private_state",
+          "oldTarget": "backend/src/game/mechanisms/roles/private_state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/private_state.ts"
+        }
+      ],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/engine/scenarios/foundation_games.test.ts",
+      "to": "backend/tests/engine/scenarios/foundation_games.test.ts",
+      "originalSha256": "acfc6672aa55523cc52b23c7fe93a3f3157cf4743d95482a9e311788c81badad",
+      "candidateSha256": "0771e702e2f9a260ed70f0dc8709ab317db0c8c1ac9876da95df82755a5c6c96",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1732,
+          "end": 1762,
+          "oldSpecifier": "../../support/scripted_players",
+          "newSpecifier": "../../support/drivers/scripted-players",
+          "oldTarget": "backend/tests/support/scripted_players.ts",
+          "newTarget": "backend/tests/support/drivers/scripted-players.ts"
+        },
+        {
+          "kind": "static",
+          "start": 1806,
+          "end": 1834,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/support/noble_secret_body_badge_prompt.ts",
+      "to": "backend/tests/support/features/noble-secret-body/oracles/badge-prompt.ts",
+      "originalSha256": "67e920bfa48757fa06e2da446b996e1e93af601f02d2a3e8180460ab6d0c6de8",
+      "candidateSha256": "9dc184a2e72aa42a6ad6a7acbcaf58c2d1612aa253d6d8f1f079ebc654dd5096",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 146,
+          "end": 177,
+          "oldSpecifier": "./noble_secret_body_wire_oracle",
+          "newSpecifier": "./wire",
+          "oldTarget": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/wire.ts"
+        }
+      ],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/support/fragrant_pair_seer_recording.ts",
+      "to": "backend/tests/support/fragrant_pair_seer_recording.ts",
+      "originalSha256": "bd743ed042b6800424f1e16172afa3866a250438fb3e5d79ae0f6977421074a2",
+      "candidateSha256": "f10e873da1955823e827985850219a7d3bf9b9807dee71913b2f43dc0f2db1e3",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 777,
+          "end": 793,
+          "oldSpecifier": "./temp_directory",
+          "newSpecifier": "./drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/support/temp_directory.ts",
+      "to": "backend/tests/support/drivers/temp-directories.ts",
+      "originalSha256": "367d4f627c46eabbc266ee57fa047f9fdf5077b0892f02acbbaed2adcaceb180",
+      "candidateSha256": "fd42eefec9ee60e77a94aad0e2af6c2720dd48402684ce7673c028a824eb8356",
+      "edges": [],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/support/radiant_eclipse_recording.ts",
+      "to": "backend/tests/support/radiant_eclipse_recording.ts",
+      "originalSha256": "87c94582c7a02e046ffabba17d44550c69520fbc71b9ee0b803fd7decd2752ea",
+      "candidateSha256": "8afea880fff7f1a50efdb40eb3b89c0f293233e3e270ad4b454143f5c21ffcee",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1173,
+          "end": 1189,
+          "oldSpecifier": "./temp_directory",
+          "newSpecifier": "./drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/support/scripted_players.ts",
+      "to": "backend/tests/support/drivers/scripted-players.ts",
+      "originalSha256": "70277833a0712cda6fcbc30951bfced95e33cfef96db117f393ddfb8f781b777",
+      "candidateSha256": "3421afe132366233a62b40cc43635089afa0a58c1dba3cfe29a24380b5fd104e",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 75,
+          "end": 89,
+          "oldSpecifier": "../../src/core",
+          "newSpecifier": "../../../src/core",
+          "oldTarget": "backend/src/core/index.ts",
+          "newTarget": "backend/src/core/index.ts"
+        }
+      ],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+      "to": "backend/tests/support/features/noble-secret-body/oracles/wire.ts",
+      "originalSha256": "ab623caec6278f826e9fdc03afeecc0ee94036c51e948fd40fa6cb41d846db13",
+      "candidateSha256": "af624a47faba6736ecec4dc9c3c537513814795846364bba71796269bf097e74",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 106,
+          "end": 138,
+          "oldSpecifier": "../../src/recording/reproduction",
+          "newSpecifier": "../../../../../src/recording/reproduction",
+          "oldTarget": "backend/src/recording/reproduction.ts",
+          "newTarget": "backend/src/recording/reproduction.ts"
+        }
+      ],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/support/synthetic_model_fetch.ts",
+      "to": "backend/tests/support/drivers/agents/synthetic-model-fetch.ts",
+      "originalSha256": "0d228f07696b4f99979c6f5f6551f2364b08fb7645cb9116b7345f2f795ebe45",
+      "candidateSha256": "d2c121c36e24a5f6b1c2985dc11929b6ac769ae0a03c2713f1433d88f2fbe20d",
+      "edges": [],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/support/radiant_eclipse_transport_golden.ts",
+      "to": "backend/tests/support/features/radiant-eclipse/oracles/transport-golden.ts",
+      "originalSha256": "08dbcd7e25092367844b420e0997f1a8adc09223236c3a75b8c33285a4cfd8fc",
+      "candidateSha256": "bc53b03ca790d676b9ebb7c322f3954cf78f56e38de14c09f288a7d5c620e91d",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 76,
+          "end": 108,
+          "oldSpecifier": "../../src/recording/reproduction",
+          "newSpecifier": "../../../../../src/recording/reproduction",
+          "oldTarget": "backend/src/recording/reproduction.ts",
+          "newTarget": "backend/src/recording/reproduction.ts"
+        }
+      ],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/support/radiant_eclipse_wire_oracle.ts",
+      "to": "backend/tests/support/features/radiant-eclipse/oracles/wire.ts",
+      "originalSha256": "7863dfe2e8e6ce3a8b548a35321704410de6e1b51ce7bbec9c422de3daa4c26d",
+      "candidateSha256": "a1e984500c302f65b6d5ebca11e473485670227911815aa8be79b2f3045009c8",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 41,
+          "end": 73,
+          "oldSpecifier": "../../src/recording/reproduction",
+          "newSpecifier": "../../../../../src/recording/reproduction",
+          "oldTarget": "backend/src/recording/reproduction.ts",
+          "newTarget": "backend/src/recording/reproduction.ts"
+        }
+      ],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/support/control_owner_probe.ts",
+      "to": "backend/tests/support/oracles/control-owner.ts",
+      "originalSha256": "75cbfaaedad5a608dd1836a73afad81a84b96a3b8adb6fa67777b4d2235a7fb7",
+      "candidateSha256": "618f3f52e37fa7391f8c00a431b750ffe7396ee078ce579c707358b9f830d48a",
+      "edges": [],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/support/noble_secret_body_authority.ts",
+      "to": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+      "originalSha256": "627f27da9e22ac28699af711c226f931c0c9499ba1103f959bd4f0e2ab4275f2",
+      "candidateSha256": "d9a1a7ca2be87f649f4477941c4af25e5422699653a8046b6d0c929520c4f32b",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 23,
+          "end": 50,
+          "oldSpecifier": "../../src/core/domain/world",
+          "newSpecifier": "../../../../../src/core/domain/world",
+          "oldTarget": "backend/src/core/domain/world.ts",
+          "newTarget": "backend/src/core/domain/world.ts"
+        },
+        {
+          "kind": "static",
+          "start": 80,
+          "end": 118,
+          "oldSpecifier": "../../src/core/domain/components/names",
+          "newSpecifier": "../../../../../src/core/domain/components/names",
+          "oldTarget": "backend/src/core/domain/components/names.ts",
+          "newTarget": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "static",
+          "start": 149,
+          "end": 179,
+          "oldSpecifier": "../../src/core/domain/identity",
+          "newSpecifier": "../../../../../src/core/domain/identity",
+          "oldTarget": "backend/src/core/domain/identity.ts",
+          "newTarget": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "kind": "static",
+          "start": 219,
+          "end": 256,
+          "oldSpecifier": "../../src/core/domain/components/role",
+          "newSpecifier": "../../../../../src/core/domain/components/role",
+          "oldTarget": "backend/src/core/domain/components/role.ts",
+          "newTarget": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "kind": "static",
+          "start": 318,
+          "end": 356,
+          "oldSpecifier": "../../src/core/domain/components/alive",
+          "newSpecifier": "../../../../../src/core/domain/components/alive",
+          "oldTarget": "backend/src/core/domain/components/alive.ts",
+          "newTarget": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "static",
+          "start": 396,
+          "end": 433,
+          "oldSpecifier": "../../src/core/domain/components/camp",
+          "newSpecifier": "../../../../../src/core/domain/components/camp",
+          "oldTarget": "backend/src/core/domain/components/camp.ts",
+          "newTarget": "backend/src/core/domain/components/camp.ts"
+        },
+        {
+          "kind": "static",
+          "start": 476,
+          "end": 516,
+          "oldSpecifier": "../../src/core/domain/components/victory",
+          "newSpecifier": "../../../../../src/core/domain/components/victory",
+          "oldTarget": "backend/src/core/domain/components/victory.ts",
+          "newTarget": "backend/src/core/domain/components/victory.ts"
+        },
+        {
+          "kind": "static",
+          "start": 560,
+          "end": 597,
+          "oldSpecifier": "../../src/core/domain/entities/player",
+          "newSpecifier": "../../../../../src/core/domain/entities/player",
+          "oldTarget": "backend/src/core/domain/entities/player.ts",
+          "newTarget": "backend/src/core/domain/entities/player.ts"
+        },
+        {
+          "kind": "static",
+          "start": 662,
+          "end": 717,
+          "oldSpecifier": "../../src/game/mechanisms/roles/noble_secret_body/state",
+          "newSpecifier": "../../../../../src/game/mechanisms/roles/noble_secret_body/state",
+          "oldTarget": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts"
+        },
+        {
+          "kind": "static",
+          "start": 911,
+          "end": 970,
+          "oldSpecifier": "../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "newSpecifier": "../../../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "oldTarget": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts"
+        }
+      ],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/support/animal_dream_recording.ts",
+      "to": "backend/tests/support/animal_dream_recording.ts",
+      "originalSha256": "90cde59f0ff10a6187666e35dab8949d0abf36c548e862969688a0ef398a2b17",
+      "candidateSha256": "dc3147eb4a29ad9f5a266022a808361c042136a4ea7c0f45e9abc0f3dc0c07c8",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 744,
+          "end": 760,
+          "oldSpecifier": "./temp_directory",
+          "newSpecifier": "./drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/support/run_transport_game.ts",
+      "to": "backend/tests/support/run_transport_game.ts",
+      "originalSha256": "adfe9811c73cfd982b77b390f910fc214bbff000bdb53f2e7a622505e6688844",
+      "candidateSha256": "7b50c9779271a7deffedd5b2f9c059d77ee0fcb0fb77bbc56775b37b30f35187",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 326,
+          "end": 347,
+          "oldSpecifier": "./control_owner_probe",
+          "newSpecifier": "./oracles/control-owner",
+          "oldTarget": "backend/tests/support/control_owner_probe.ts",
+          "newTarget": "backend/tests/support/oracles/control-owner.ts"
+        },
+        {
+          "kind": "static",
+          "start": 421,
+          "end": 444,
+          "oldSpecifier": "./synthetic_model_fetch",
+          "newSpecifier": "./drivers/agents/synthetic-model-fetch",
+          "oldTarget": "backend/tests/support/synthetic_model_fetch.ts",
+          "newTarget": "backend/tests/support/drivers/agents/synthetic-model-fetch.ts"
+        },
+        {
+          "kind": "static",
+          "start": 1026,
+          "end": 1042,
+          "oldSpecifier": "./temp_directory",
+          "newSpecifier": "./drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/support/red_moon_candidate_world.ts",
+      "to": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+      "originalSha256": "3a3449c3ab500487fca5141f492e2142fcf07217a5a5c82f6df92d1c1ea976ca",
+      "candidateSha256": "ed08ad6db3c5c4127e3eb38f5fa92c022467fcfe75763a24d4b9c3441cdcefbd",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 23,
+          "end": 50,
+          "oldSpecifier": "../../src/core/domain/world",
+          "newSpecifier": "../../../../../src/core/domain/world",
+          "oldTarget": "backend/src/core/domain/world.ts",
+          "newTarget": "backend/src/core/domain/world.ts"
+        },
+        {
+          "kind": "static",
+          "start": 75,
+          "end": 105,
+          "oldSpecifier": "../../src/core/domain/identity",
+          "newSpecifier": "../../../../../src/core/domain/identity",
+          "oldTarget": "backend/src/core/domain/identity.ts",
+          "newTarget": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "kind": "static",
+          "start": 135,
+          "end": 173,
+          "oldSpecifier": "../../src/core/domain/components/names",
+          "newSpecifier": "../../../../../src/core/domain/components/names",
+          "oldTarget": "backend/src/core/domain/components/names.ts",
+          "newTarget": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "static",
+          "start": 213,
+          "end": 250,
+          "oldSpecifier": "../../src/core/domain/components/role",
+          "newSpecifier": "../../../../../src/core/domain/components/role",
+          "oldTarget": "backend/src/core/domain/components/role.ts",
+          "newTarget": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "kind": "static",
+          "start": 291,
+          "end": 329,
+          "oldSpecifier": "../../src/core/domain/components/alive",
+          "newSpecifier": "../../../../../src/core/domain/components/alive",
+          "oldTarget": "backend/src/core/domain/components/alive.ts",
+          "newTarget": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "static",
+          "start": 370,
+          "end": 408,
+          "oldSpecifier": "../../src/core/domain/components/badge",
+          "newSpecifier": "../../../../../src/core/domain/components/badge",
+          "oldTarget": "backend/src/core/domain/components/badge.ts",
+          "newTarget": "backend/src/core/domain/components/badge.ts"
+        },
+        {
+          "kind": "static",
+          "start": 448,
+          "end": 485,
+          "oldSpecifier": "../../src/core/domain/components/camp",
+          "newSpecifier": "../../../../../src/core/domain/components/camp",
+          "oldTarget": "backend/src/core/domain/components/camp.ts",
+          "newTarget": "backend/src/core/domain/components/camp.ts"
+        },
+        {
+          "kind": "static",
+          "start": 532,
+          "end": 577,
+          "oldSpecifier": "../../src/core/domain/components/status_marks",
+          "newSpecifier": "../../../../../src/core/domain/components/status_marks",
+          "oldTarget": "backend/src/core/domain/components/status_marks.ts",
+          "newTarget": "backend/src/core/domain/components/status_marks.ts"
+        },
+        {
+          "kind": "static",
+          "start": 624,
+          "end": 669,
+          "oldSpecifier": "../../src/core/domain/components/voting_right",
+          "newSpecifier": "../../../../../src/core/domain/components/voting_right",
+          "oldTarget": "backend/src/core/domain/components/voting_right.ts",
+          "newTarget": "backend/src/core/domain/components/voting_right.ts"
+        },
+        {
+          "kind": "static",
+          "start": 712,
+          "end": 752,
+          "oldSpecifier": "../../src/core/domain/components/victory",
+          "newSpecifier": "../../../../../src/core/domain/components/victory",
+          "oldTarget": "backend/src/core/domain/components/victory.ts",
+          "newTarget": "backend/src/core/domain/components/victory.ts"
+        },
+        {
+          "kind": "static",
+          "start": 796,
+          "end": 833,
+          "oldSpecifier": "../../src/core/domain/entities/player",
+          "newSpecifier": "../../../../../src/core/domain/entities/player",
+          "oldTarget": "backend/src/core/domain/entities/player.ts",
+          "newTarget": "backend/src/core/domain/entities/player.ts"
+        },
+        {
+          "kind": "static",
+          "start": 874,
+          "end": 910,
+          "oldSpecifier": "../../src/core/domain/initial_roster",
+          "newSpecifier": "../../../../../src/core/domain/initial_roster",
+          "oldTarget": "backend/src/core/domain/initial_roster.ts",
+          "newTarget": "backend/src/core/domain/initial_roster.ts"
+        },
+        {
+          "kind": "static",
+          "start": 965,
+          "end": 1004,
+          "oldSpecifier": "../../src/game/mechanisms/roles/catalog",
+          "newSpecifier": "../../../../../src/game/mechanisms/roles/catalog",
+          "oldTarget": "backend/src/game/mechanisms/roles/catalog.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "static",
+          "start": 1046,
+          "end": 1102,
+          "oldSpecifier": "../../src/game/mechanisms/roles/red_moon_apostle/profile",
+          "newSpecifier": "../../../../../src/game/mechanisms/roles/red_moon_apostle/profile",
+          "oldTarget": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts"
+        },
+        {
+          "kind": "static",
+          "start": 1141,
+          "end": 1195,
+          "oldSpecifier": "../../src/game/mechanisms/roles/demon_hunter/authority",
+          "newSpecifier": "../../../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "oldTarget": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts"
+        },
+        {
+          "kind": "static",
+          "start": 1235,
+          "end": 1278,
+          "oldSpecifier": "../../src/runtime/scenarios/red_moon_twelve",
+          "newSpecifier": "../../../../../src/runtime/scenarios/red_moon_twelve",
+          "oldTarget": "backend/src/runtime/scenarios/red_moon_twelve.ts",
+          "newTarget": "backend/src/runtime/scenarios/red_moon_twelve.ts"
+        },
+        {
+          "kind": "static",
+          "start": 1323,
+          "end": 1377,
+          "oldSpecifier": "../../src/game/mechanisms/roles/red_moon_apostle/state",
+          "newSpecifier": "../../../../../src/game/mechanisms/roles/red_moon_apostle/state",
+          "oldTarget": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts"
+        }
+      ],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/support/acp_provider_requests.ts",
+      "to": "backend/tests/support/builders/agents/acp-requests.ts",
+      "originalSha256": "b130437a6852fb640a95cecd9787fbd5fc22bd32d84e9828c1370204ff0ef5bf",
+      "candidateSha256": "7b1f87ecaa45f4e3ab440cea059d84ada1e722ec407d5680456b2fbb23ab993e",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 43,
+          "end": 70,
+          "oldSpecifier": "../../src/core/domain/model",
+          "newSpecifier": "../../../../src/core/domain/model",
+          "oldTarget": "backend/src/core/domain/model.ts",
+          "newTarget": "backend/src/core/domain/model.ts"
+        }
+      ],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/support/noble_secret_body_recording.ts",
+      "to": "backend/tests/support/noble_secret_body_recording.ts",
+      "originalSha256": "d20559aa6d6511bd23a3a240349a9e52252371731e225b4b31aa32e0f19eeb1f",
+      "candidateSha256": "0a6ff0679e2495e9a823080c6b210ede1577340a02c5eb0e61e42009ec7de608",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 899,
+          "end": 915,
+          "oldSpecifier": "./temp_directory",
+          "newSpecifier": "./drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/support/mist_raven_recording.ts",
+      "to": "backend/tests/support/mist_raven_recording.ts",
+      "originalSha256": "65f4f9bae5b6d7e4893f5e94e2250fbe3963a3e57753369acec8d99ce28fda4c",
+      "candidateSha256": "5b17ea46fa65cf0561621df2cacaa705ccc1eea333abce18e64c3fecb153f312",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1027,
+          "end": 1043,
+          "oldSpecifier": "./temp_directory",
+          "newSpecifier": "./drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/support/noble_secret_body_known_anchors.ts",
+      "to": "backend/tests/support/features/noble-secret-body/oracles/known-anchors.ts",
+      "originalSha256": "c72a4218dc7ca07ab3d6a878b31d424c0eacf3ad4d8593dd0d7eea731a6fcb15",
+      "candidateSha256": "6c6806ca7488327f40d411fdf33e1135e87dab40bbda66ace0a6704d17cd729e",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 89,
+          "end": 120,
+          "oldSpecifier": "./noble_secret_body_wire_oracle",
+          "newSpecifier": "./wire",
+          "oldTarget": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/wire.ts"
+        },
+        {
+          "kind": "static",
+          "start": 168,
+          "end": 207,
+          "oldSpecifier": "./noble_secret_body_transport_scenarios",
+          "newSpecifier": "../../../noble_secret_body_transport_scenarios",
+          "oldTarget": "backend/tests/support/noble_secret_body_transport_scenarios.ts",
+          "newTarget": "backend/tests/support/noble_secret_body_transport_scenarios.ts"
+        }
+      ],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/support/fragrant_pair_seer_wire_oracle.ts",
+      "to": "backend/tests/support/features/fragrant-pair-seer/oracles/wire.ts",
+      "originalSha256": "bd3d9ad5bc53d8156f65aa5c35fe663443bb3932f631f3bb56ea71c40f02ea55",
+      "candidateSha256": "65aaaad21d716d86a6b88750a58b530236049fcc8783a41b0b315ad412977469",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 115,
+          "end": 147,
+          "oldSpecifier": "../../src/recording/reproduction",
+          "newSpecifier": "../../../../../src/recording/reproduction",
+          "oldTarget": "backend/src/recording/reproduction.ts",
+          "newTarget": "backend/src/recording/reproduction.ts"
+        }
+      ],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/diagnostics/transport_failure_recording.test.ts",
+      "to": "backend/tests/diagnostics/transport_failure_recording.test.ts",
+      "originalSha256": "5f301142adc5de6bb6dd35df1da54c07b6e5537d2a9abb5ae206b0d41890b89b",
+      "candidateSha256": "8076671300a5dcce5291e45f06dabc4bc782290baa17eefc173665525cc75bde",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 876,
+          "end": 901,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/support/noble_secret_body_transport_golden.ts",
+      "to": "backend/tests/support/features/noble-secret-body/oracles/transport-golden.ts",
+      "originalSha256": "8ace1fa6630de7f28f4eaaf8ea440ce6cdbd8db28842257627c27cc1c328bc24",
+      "candidateSha256": "b4c12f2e1655334541ed0f493f4730cc403cc412dac59bddbc1a746f290032f9",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 76,
+          "end": 108,
+          "oldSpecifier": "../../src/recording/reproduction",
+          "newSpecifier": "../../../../../src/recording/reproduction",
+          "oldTarget": "backend/src/recording/reproduction.ts",
+          "newTarget": "backend/src/recording/reproduction.ts"
+        },
+        {
+          "kind": "static",
+          "start": 156,
+          "end": 195,
+          "oldSpecifier": "./noble_secret_body_transport_scenarios",
+          "newSpecifier": "../../../noble_secret_body_transport_scenarios",
+          "oldTarget": "backend/tests/support/noble_secret_body_transport_scenarios.ts",
+          "newTarget": "backend/tests/support/noble_secret_body_transport_scenarios.ts"
+        }
+      ],
+      "headAdded": true
+    },
+    {
+      "from": "backend/tests/config/finite_preset_closure.test.ts",
+      "to": "backend/tests/config/finite_preset_closure.test.ts",
+      "originalSha256": "0ddc6a4f26e5cda6c8cd01349388b1b9b9954dde3da0d6979c76db170b45a8de",
+      "candidateSha256": "72b4edacb5b8af1440868b68694ac4d00ca5ce8b991c36a13776a1e5db87f27e",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 510,
+          "end": 535,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/noble_secret_body_future_history_review.test.ts",
+      "to": "backend/tests/runtime/noble_secret_body_future_history_review.test.ts",
+      "originalSha256": "cf283e84a667dd58f946869b7a907dacda45c8a209912d9248da3c9bb83f6cfa",
+      "candidateSha256": "beb26c4c51bc27a527e8cb3fad5324578e01475f69bc447656cd5e373d5ab8db",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 107,
+          "end": 147,
+          "oldSpecifier": "../support/noble_secret_body_wire_oracle",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/wire",
+          "oldTarget": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/wire.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/runtime_config.test.ts",
+      "to": "backend/tests/runtime/runtime_config.test.ts",
+      "originalSha256": "03b5729f89ca0b62b42a1d2ec612771da67bba1951702b5a2559b32cc86b65cd",
+      "candidateSha256": "d9f98ca7400a6a4374566d8dca7f6280637614bb31e7e7cd9f65d75154061200",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 586,
+          "end": 611,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/mirror_simulation.test.ts",
+      "to": "backend/tests/runtime/mirror_simulation.test.ts",
+      "originalSha256": "b17ce8ff75ff5ed9b53a366bca8a4487f7d2135775236de05f1fb48a4bc6d392",
+      "candidateSha256": "b2a53c18ed8fa278d4c86591d04549cf3e85753816da311964ae64f2f068ef7a",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 444,
+          "end": 469,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/animal_dream_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/animal_dream_observed_simulation.test.ts",
+      "originalSha256": "e8db2e991f64608d4d6537f9d3937da6cd153b7f94acf981033c56370883d2d9",
+      "candidateSha256": "8b8df67e7c2ec2458d51f5d7fdcc1f79d4f777e9d8903c1dc3c56b8ac6fa25b9",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 385,
+          "end": 410,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_failed_archive.test.ts",
+      "to": "backend/tests/runtime/radiant_eclipse_failed_archive.test.ts",
+      "originalSha256": "9049468c39d969c3e5d7b09da8add964d22718149fd1d0c741e73369bbc7d6ec",
+      "candidateSha256": "153458780345d2b58bde9766859b2f469c8ba4cbbcae0c4ba8dd1996c8fadda2",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 248,
+          "end": 273,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/knight_simulation.test.ts",
+      "to": "backend/tests/runtime/knight_simulation.test.ts",
+      "originalSha256": "fb787dfd9deae0ec1a605fb475e869ebfdccc054ea3708f1e04d6b384e33b02a",
+      "candidateSha256": "f26945ba227be492e85d2b3e9f5616ab571bcbadaba114f41a6a1e830e0a4a9d",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 355,
+          "end": 380,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/thief_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/thief_observed_simulation.test.ts",
+      "originalSha256": "aac7bbc3204add3a4040b63b01021b3e28d48abbdabb74fac0aea9fcceeffda7",
+      "candidateSha256": "8a508edfd83de0de6252e1ecb187884954b34028a9b5b3fb64a0264a7c8c13ff",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 554,
+          "end": 579,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/strict_failure_replay.test.ts",
+      "to": "backend/tests/runtime/strict_failure_replay.test.ts",
+      "originalSha256": "ca98e58eae3d95ee4ebc5e4f72281fa8dacd1d8b26676c91abad8016691e814f",
+      "candidateSha256": "0537e1e21e8c396f77e4cd0c8c54a5e586f14d1026619dae1037975ae3372d27",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 883,
+          "end": 908,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/visibility/wolf_team_access.test.ts",
+      "to": "backend/tests/engine/visibility/wolf_team_access.test.ts",
+      "originalSha256": "d8132184f5b5fcbc50dd36db9298c6f7165019b7113441ba0099ad4a417efde6",
+      "candidateSha256": "2dfd660a1c6d74ac476caf5652d24fe9fc2f7aca0f87455da713b813a768b390",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 2078,
+          "end": 2106,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/night_abilities.test.ts",
+      "to": "backend/tests/engine/rules/night_abilities.test.ts",
+      "originalSha256": "6aad8076fb9eb714937cf28014f12d207abbdd1fcf8f259580a313d4e3d7e6db",
+      "candidateSha256": "61a91995b082c8752ba2880be292f3d11e50b9d5de24830f97686e13b9c6c9aa",
+      "edges": [
+        {
+          "kind": "dynamic",
+          "start": 26966,
+          "end": 26994,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/demon_hunter_fault_runtime.test.ts",
+      "to": "backend/tests/engine/rules/demon_hunter_fault_runtime.test.ts",
+      "originalSha256": "eb8f31de5e6b5965d7e8224517570d0e395e56afae79f8690bf86c8054af54da",
+      "candidateSha256": "7110d5e05534802e1eee73b25953d08db6a01b03763fe3d0b747c21ba9d92fcd",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 716,
+          "end": 744,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/victory_outcomes.test.ts",
+      "to": "backend/tests/engine/rules/victory_outcomes.test.ts",
+      "originalSha256": "983149294803088ca0bfc62efcca19df6d59d44764429c09ef87ad88b2518c75",
+      "candidateSha256": "bc2fc184401d5bc33cd29168c77624208abea569dc7edcd3ce295b2b99b95de5",
+      "edges": [
+        {
+          "kind": "dynamic",
+          "start": 13164,
+          "end": 13192,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/gift_gun.test.ts",
+      "to": "backend/tests/engine/rules/gift_gun.test.ts",
+      "originalSha256": "df4c9cad97f8c1edeeb77a4ab39ecffc3db0e92fe5b50a651e87048404e01641",
+      "candidateSha256": "fd74717b5809efa16e2c05b9117c67d4ab770ff9a4bf983afcd7b462541b36cb",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1911,
+          "end": 1939,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_transport_oracle.test.ts",
+      "to": "backend/tests/runtime/radiant_eclipse_transport_oracle.test.ts",
+      "originalSha256": "7a9c238dce8aa2a29a39858b9913f77dff33bf297dc47240da123a32a2106d4b",
+      "candidateSha256": "88f6de30392bc5a50ea303a7e24fbe00353395a36a70b12e6081e493e0d0a627",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 282,
+          "end": 320,
+          "oldSpecifier": "../support/radiant_eclipse_wire_oracle",
+          "newSpecifier": "../support/features/radiant-eclipse/oracles/wire",
+          "oldTarget": "backend/tests/support/radiant_eclipse_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/radiant-eclipse/oracles/wire.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/demon_hunter_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/demon_hunter_observed_simulation.test.ts",
+      "originalSha256": "866fa523159010a12e0accf49570608af7e2588afdcbe80c7af14ab357abd1b0",
+      "candidateSha256": "250506ea26badf1b103740ff33658eb35493b40154ad34393ce3323a6ab6b646",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 572,
+          "end": 597,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/hybrid_simulation.test.ts",
+      "to": "backend/tests/runtime/hybrid_simulation.test.ts",
+      "originalSha256": "04dbbe59c327b21c76e0cf839eef4dc6f491bf06aa56dd4ad09012e50ab0a4e8",
+      "candidateSha256": "a391ca91068c0123583b5707e5b7aef613bac21f445289995e5bcc0a19f91156",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 424,
+          "end": 449,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/noble_secret_body_badge_transport.test.ts",
+      "to": "backend/tests/runtime/noble_secret_body_badge_transport.test.ts",
+      "originalSha256": "cce0e8cf1112256592772c22c0341a33eaa8eab33ff75c29ee65dd54739ca632",
+      "candidateSha256": "fc5e3b10d2f7f5f29a0ec8dc035e7a564ce5b6fba852d2f8a87f2d0ab677bcfc",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 174,
+          "end": 214,
+          "oldSpecifier": "../support/noble_secret_body_wire_oracle",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/wire",
+          "oldTarget": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/wire.ts"
+        },
+        {
+          "kind": "static",
+          "start": 261,
+          "end": 306,
+          "oldSpecifier": "../support/noble_secret_body_transport_golden",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/transport-golden",
+          "oldTarget": "backend/tests/support/noble_secret_body_transport_golden.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/transport-golden.ts"
+        },
+        {
+          "kind": "static",
+          "start": 348,
+          "end": 389,
+          "oldSpecifier": "../support/noble_secret_body_badge_prompt",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/badge-prompt",
+          "oldTarget": "backend/tests/support/noble_secret_body_badge_prompt.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/badge-prompt.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/gargoyle_simulation.test.ts",
+      "to": "backend/tests/runtime/gargoyle_simulation.test.ts",
+      "originalSha256": "b182897c4f0af057aa332189929729880027270efda7605c2cb009a06d600737",
+      "candidateSha256": "f882e0145982b1dac73f90476626b08411a1abb5e3b6462d09653a5433c67f11",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 355,
+          "end": 380,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/game_lifecycle.test.ts",
+      "to": "backend/tests/runtime/game_lifecycle.test.ts",
+      "originalSha256": "a85ce37374c71c1523d8917d118d12b7d1ea71b030b63b5a8b32f6a268343851",
+      "candidateSha256": "9391ffe084f3d1e2982664ca913d9a195cef621908fc44cd9f66f0ad1f2db36c",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 633,
+          "end": 658,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/nightmare_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/nightmare_observed_simulation.test.ts",
+      "originalSha256": "d07db6c303e5dd67ede87590cff0efbbbf4fb459cc8495c379986df4226d28fc",
+      "candidateSha256": "dfb57d111a12bb55f1cf07169ee1f67e96e93428dc03f02a1fe790deaee69d29",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 575,
+          "end": 600,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/time_consort_reproduction.test.ts",
+      "to": "backend/tests/runtime/time_consort_reproduction.test.ts",
+      "originalSha256": "b6cec15a8f9033b14691cd4b3b7f9b758ee537384a7ba0d48c9f9872fdd73e02",
+      "candidateSha256": "70c8950f09a73d08a856601ba8ab0546b9774fbc10065e6e66aaf4580345883c",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1004,
+          "end": 1029,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/wild_child_failure_tape.test.ts",
+      "to": "backend/tests/runtime/wild_child_failure_tape.test.ts",
+      "originalSha256": "2a1481aadc0db8402794dbe696ee165d2c17341d0e0474cb7f7fabaa98fd5916",
+      "candidateSha256": "3dbb4995b1c055624580ae589d0f8e3c2b0cf5b6064b4b37923b9011e4bbc914",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 720,
+          "end": 745,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/noble_secret_body_window_transport.test.ts",
+      "to": "backend/tests/runtime/noble_secret_body_window_transport.test.ts",
+      "originalSha256": "1bd31a1a09b314c110a31a65e38a68db6a20e70318ec2ff3b34b03fb21354300",
+      "candidateSha256": "312004e4debc86b63b0f6b6606e30fd4bbed41ab9784ee8c9e6de07091144ddd",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 214,
+          "end": 254,
+          "oldSpecifier": "../support/noble_secret_body_wire_oracle",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/wire",
+          "oldTarget": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/wire.ts"
+        },
+        {
+          "kind": "static",
+          "start": 301,
+          "end": 346,
+          "oldSpecifier": "../support/noble_secret_body_transport_golden",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/transport-golden",
+          "oldTarget": "backend/tests/support/noble_secret_body_transport_golden.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/transport-golden.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/runtime_display.test.ts",
+      "to": "backend/tests/runtime/runtime_display.test.ts",
+      "originalSha256": "7c2929f9ac16af9b35482da14d71da231b47c0577a58499de87cef1dc4cacf32",
+      "candidateSha256": "c1153f571cdb1d0c8bebe6cfa566e767b4615b2127d6294bca1e35338abaabd7",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 750,
+          "end": 775,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/wolf_beauty_simulation.test.ts",
+      "to": "backend/tests/runtime/wolf_beauty_simulation.test.ts",
+      "originalSha256": "a1c382ea9a524489f37eae1898b38758dd0404811c45e7920f00e831d4ad26d8",
+      "candidateSha256": "7d7c30a7ea45a9b5d1d777112546e239fcc870146ec5c7dbe025a7bc29378c67",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 355,
+          "end": 380,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/fragrant_pair_seer_rejection_transport.test.ts",
+      "to": "backend/tests/runtime/fragrant_pair_seer_rejection_transport.test.ts",
+      "originalSha256": "8c0ea0c87583a61d37053b08a52a50041c99f369428f0d045d6714de9e1909b7",
+      "candidateSha256": "0830f4bb6d0df1d4b9b9780ad7f4b9221e5c5b1e8ece987abc5b05f5ac9dda6b",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 181,
+          "end": 222,
+          "oldSpecifier": "../support/fragrant_pair_seer_wire_oracle",
+          "newSpecifier": "../support/features/fragrant-pair-seer/oracles/wire",
+          "oldTarget": "backend/tests/support/fragrant_pair_seer_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/fragrant-pair-seer/oracles/wire.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/trickster_reproduction.test.ts",
+      "to": "backend/tests/runtime/trickster_reproduction.test.ts",
+      "originalSha256": "be2c5e2262ea54f67df5242efc21070e5f6ff05d48b2e3b90cbe9d6f6a8485dd",
+      "candidateSha256": "a616da3cfe864507e737e9f7ea4930225f300ce3e7abfd4b93ccc3f45e10fa2f",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 855,
+          "end": 880,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/board_config_closure.test.ts",
+      "to": "backend/tests/runtime/board_config_closure.test.ts",
+      "originalSha256": "ff79d5b1c379d0644e6044338e805dbf9a572a0cabcdc205ec65d1653931545f",
+      "candidateSha256": "4b9e32f5772ac04e95e0c479a0f08de5e1fc5a7d715ca11669d8d5ef31041ff0",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1624,
+          "end": 1649,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/badge_policy_tape.test.ts",
+      "to": "backend/tests/runtime/badge_policy_tape.test.ts",
+      "originalSha256": "9e43621792bf1ae0853d8adcb165fef075c354a8074cc17996ffddcaa4aee4ce",
+      "candidateSha256": "ff196de2d728c51f52b682708ca1075701ba305f5fbd0c6530337759d8ff7fe8",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 859,
+          "end": 884,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/demon_hunter_reproduction.test.ts",
+      "to": "backend/tests/runtime/demon_hunter_reproduction.test.ts",
+      "originalSha256": "a0192bc367aba04aafcc93f7f6b8b55104b981732266fb4aef1e5ada4a5e6376",
+      "candidateSha256": "c2ee46506af5e0eb9700c8cad2a9d4026ac79746919cb1f4610547ecb602d4b2",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1015,
+          "end": 1040,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/noble_secret_body_policy_transport.test.ts",
+      "to": "backend/tests/runtime/noble_secret_body_policy_transport.test.ts",
+      "originalSha256": "adbb38dc921443289a905f3135d944604aa5391d63b86fda9352511d9de06667",
+      "candidateSha256": "2a15c1c5fbea7b099279636c4a162f4da96cb146c083f8c2522dfbd5c4d9eac6",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 174,
+          "end": 214,
+          "oldSpecifier": "../support/noble_secret_body_wire_oracle",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/wire",
+          "oldTarget": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/wire.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/config_failure_safety.test.ts",
+      "to": "backend/tests/runtime/config_failure_safety.test.ts",
+      "originalSha256": "70fc3153f912e3e3e42c1d06dd409691345c92c1f087281d56e70973a4da794a",
+      "candidateSha256": "d3982b60de17e41d231a3020e960e91e50e6f52fee29b879b6d0d0cecf9116ea",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 406,
+          "end": 431,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/guard_policy_tape.test.ts",
+      "to": "backend/tests/runtime/guard_policy_tape.test.ts",
+      "originalSha256": "9bd42bc111fbf24428854af5971076a61062f0af73664141746f61b3e39d3086",
+      "candidateSha256": "f10788093fa9e71aa266c07a488979806224227071d60228420b14c36fa847d2",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 859,
+          "end": 884,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/shapeshifter_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/shapeshifter_observed_simulation.test.ts",
+      "originalSha256": "1247c124322c9b5b6a403b00707b73bf14ee4f304386314ac2aa565223438068",
+      "candidateSha256": "aa6176224f1153016e909f5cb664db0e3ad698aaeb2e42761aa13a2cd0f134db",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 554,
+          "end": 579,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/observed_simulation.test.ts",
+      "to": "backend/tests/runtime/observed_simulation.test.ts",
+      "originalSha256": "e51f65b67971aa7d38c571169a420fd6f5f4245273009e4db08de469b4d57ac0",
+      "candidateSha256": "f153b7755a2ac1f6eaac97efccb495ed47d663b1e71d74139afad83cf27407b0",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 505,
+          "end": 530,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/red_moon_reproduction.test.ts",
+      "to": "backend/tests/runtime/red_moon_reproduction.test.ts",
+      "originalSha256": "f17f108bc46a58e386d57836920c8f1efb2a614cb3448e05523a5fc2fbc52b12",
+      "candidateSha256": "eaa88e3c6e175cc7f78c6eb14524cfce185e9e9b401fcb91b1f1a4ffa4c0574b",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1016,
+          "end": 1041,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/runner_charm_cancellation.test.ts",
+      "to": "backend/tests/runtime/runner_charm_cancellation.test.ts",
+      "originalSha256": "93adf8a894f379cf3c832453ac8d1e3fb9045c41e9d1daa620ab07d227a65aec",
+      "candidateSha256": "f667743ca076853e9c6b2208b675038aa4f56f1253056d92d291328427fcc5bd",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1049,
+          "end": 1074,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/seer_default_tape.test.ts",
+      "to": "backend/tests/runtime/seer_default_tape.test.ts",
+      "originalSha256": "49d44b4653b89b0b85f188e033244481901092a132477edc1c40e14f6f844993",
+      "candidateSha256": "3845d79742552e831e98faf875034a2b129625eb0bd5a5de4b50553452572aed",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1055,
+          "end": 1080,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/evil_knight_simulation.test.ts",
+      "to": "backend/tests/runtime/evil_knight_simulation.test.ts",
+      "originalSha256": "0eb165194edf3a2ed79ac37c6cf8250a760cf47ec2adaace5d22b159cd70e054",
+      "candidateSha256": "8f092b84d9cfe01961041bcbdace90cec0972ef0ec1ff986746def3ef1a55ba4",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 554,
+          "end": 579,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/dreamer_simulation.test.ts",
+      "to": "backend/tests/runtime/dreamer_simulation.test.ts",
+      "originalSha256": "2d2b8f079cfb3cad5e1fb6f8f18a3668eae869dbf486788f06cd6262669d031a",
+      "candidateSha256": "9968a19b9b286ee902e221c455990828ca7b61d1e3f306b1728b12e8e1705c40",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 355,
+          "end": 380,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/wild_child_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/wild_child_observed_simulation.test.ts",
+      "originalSha256": "ffdf00bb6f9a1ed546ba62fa730e57dc84af053cb6c0d06705e0f704e9f4b3f2",
+      "candidateSha256": "49d0521992f1b75da05e330f5453f2c00b7a3799e7ce40c63aceed7eaeae33e0",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 554,
+          "end": 579,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/lonely_girl_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/lonely_girl_observed_simulation.test.ts",
+      "originalSha256": "28efb163eee36565112a2ead1af9413b692d02858258d856dc6ba1580aec14d5",
+      "candidateSha256": "95adeecd4649cdd32b00969900778927ddc97826ac9ee6fc87c82fc3726afe63",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 554,
+          "end": 579,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/hidden_wolf_simulation.test.ts",
+      "to": "backend/tests/runtime/hidden_wolf_simulation.test.ts",
+      "originalSha256": "6764d7636de4530ffab8a0afd6c58edf71979d229d9f2673bf9084fcdd854559",
+      "candidateSha256": "533e3f3c31eecfe989ea284c4b900f2726a626ff3a6551dac18fd97b595c92bc",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 355,
+          "end": 380,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/white_wolf_king_simulation.test.ts",
+      "to": "backend/tests/runtime/white_wolf_king_simulation.test.ts",
+      "originalSha256": "45ec8b105525afd1bd21d371b5599b5b531499551704364edd8d8e4c37003da7",
+      "candidateSha256": "9ca6046451708b34ce5739a193be13dccda788c06ee36da6d4f37f2becb6b3e3",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 355,
+          "end": 380,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/wall_notes_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/wall_notes_observed_simulation.test.ts",
+      "originalSha256": "1909b495ec526a01cec6893aabe080c7efa76b580e318dc53197b8691202ad34",
+      "candidateSha256": "0bbb170ef6011ca976addb11a37d3f5340ffce03148f7cb77ad478b8ff3ed0f5",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 554,
+          "end": 579,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/pure_white_simulation.test.ts",
+      "to": "backend/tests/runtime/pure_white_simulation.test.ts",
+      "originalSha256": "3d167283757adef6046f5a7e5bb6458bce756cb3806c85ee933eac34e0df1acc",
+      "candidateSha256": "9b53072eb8d8b84ec3f6992a3691f4c727ff50832fe47d44203a37912f9d754c",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 552,
+          "end": 577,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/order_prince_reproduction.test.ts",
+      "to": "backend/tests/runtime/order_prince_reproduction.test.ts",
+      "originalSha256": "ab7fa616037cdd871c5b60ca70256c7e190b61b8a82ed801b8b4889aed9f5262",
+      "candidateSha256": "20a4f70bd44126b815abe8bb82c221afd4080a0aad6ee1f8c99175b98879686b",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 939,
+          "end": 964,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/noble_secret_body_failure_transport.test.ts",
+      "to": "backend/tests/runtime/noble_secret_body_failure_transport.test.ts",
+      "originalSha256": "5b314ef69bb655c8e3d095516d9874582bf12633af1b09bc53bdc90fb91bd785",
+      "candidateSha256": "1f52b4064648f578f9473775834e4df0a300cd8586bd3052faf1820e1957d7ef",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 447,
+          "end": 487,
+          "oldSpecifier": "../support/noble_secret_body_wire_oracle",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/wire",
+          "oldTarget": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/wire.ts"
+        },
+        {
+          "kind": "static",
+          "start": 529,
+          "end": 570,
+          "oldSpecifier": "../support/noble_secret_body_badge_prompt",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/badge-prompt",
+          "oldTarget": "backend/tests/support/noble_secret_body_badge_prompt.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/badge-prompt.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_failure_transport.test.ts",
+      "to": "backend/tests/runtime/radiant_eclipse_failure_transport.test.ts",
+      "originalSha256": "f1f242f305c3e304e36f1738959431c1ac774d4b4951773a94dce25a30ce0fed",
+      "candidateSha256": "88875577caf6526b7476cef5aacf06afbf06130c99f4042629b9be0ab7f82058",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 44,
+          "end": 82,
+          "oldSpecifier": "../support/radiant_eclipse_wire_oracle",
+          "newSpecifier": "../support/features/radiant-eclipse/oracles/wire",
+          "oldTarget": "backend/tests/support/radiant_eclipse_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/radiant-eclipse/oracles/wire.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/historical_role_policies.test.ts",
+      "to": "backend/tests/runtime/historical_role_policies.test.ts",
+      "originalSha256": "bbec860750449b3f2cdaed398b5d90f9d36dddd7532fb0168db3c87031ac747e",
+      "candidateSha256": "17a4d7423c8ca9e7f0a240acf23cbe677dfb147becede03ed6968c8e7b3f0f9f",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1056,
+          "end": 1081,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/radiant_eclipse_observed_simulation.test.ts",
+      "originalSha256": "584d2e8ef9709e58388e107b1f18e2c44e8f5a55c86d3e5dedcc9acf70be634d",
+      "candidateSha256": "2428997c5d8e3ee2a46a185f129ea2a6b8ee1fa1261887b90031b649696235cf",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 545,
+          "end": 570,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/black_market_simulation.test.ts",
+      "to": "backend/tests/runtime/black_market_simulation.test.ts",
+      "originalSha256": "72d5c87735c5e6f35e88ecae7d05854a92cb2dd757e23c9068743ad485a29cde",
+      "candidateSha256": "f7c3135f42aa1f3cf2a24515ac707b9022fc027520254edaedf577520e48da1e",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 431,
+          "end": 456,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/gift_gun_runtime.test.ts",
+      "to": "backend/tests/ai/integrations/gift_gun_runtime.test.ts",
+      "originalSha256": "51fcf878d87548fd3f6318677c6642f971a753881f28338fde8ee5b99366983b",
+      "candidateSha256": "bcbbb6ffa1d9a12c1f5d04290504c01d9ed318bb6e48fa90e5e266b632128f58",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1137,
+          "end": 1165,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/control_owner_probe.test.ts",
+      "to": "backend/tests/ai/integrations/control_owner_probe.test.ts",
+      "originalSha256": "aa9adc1a226ccf84eab70b20612a7619ed75c1bff5dd770bc5723f416269f2cd",
+      "candidateSha256": "771314f24191b72e3b5b978fad3f3de5a0c4d3791da8d545992777cac81be0df",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 288,
+          "end": 321,
+          "oldSpecifier": "../../support/control_owner_probe",
+          "newSpecifier": "../../support/oracles/control-owner",
+          "oldTarget": "backend/tests/support/control_owner_probe.ts",
+          "newTarget": "backend/tests/support/oracles/control-owner.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/gargoyle_ability_transport.test.ts",
+      "to": "backend/tests/ai/integrations/gargoyle_ability_transport.test.ts",
+      "originalSha256": "104fea477991053f47b98e04ec538558775c8ad2a64f9981530f49aa142dd82b",
+      "candidateSha256": "336dd4acace793577fbecc4c71edc61e860332ea13e89460ec6d94af365762f2",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 645,
+          "end": 673,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/granted_ability_transport.test.ts",
+      "to": "backend/tests/ai/integrations/granted_ability_transport.test.ts",
+      "originalSha256": "ad69d76f719cbeaf7177ecc3b770e5229dd9af7723510a7d670a8ea06f12a2c1",
+      "candidateSha256": "fb4fce6b5641b84bc248795c23207205d99e76997221920539827a3f1db43785",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1154,
+          "end": 1182,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/acp_resource_ownership.test.ts",
+      "to": "backend/tests/ai/integrations/acp_resource_ownership.test.ts",
+      "originalSha256": "c555ca21159130575346b884244952fa49fc1d0aede627a72842bf2a8cb4ba96",
+      "candidateSha256": "07d72d592e095e1af5d26f1260b9a1cca41b8a468e108d0b4e80da55cdd5ae66",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 837,
+          "end": 865,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/strict_mcp_wire.test.ts",
+      "to": "backend/tests/ai/integrations/strict_mcp_wire.test.ts",
+      "originalSha256": "ad2c71472370ebfb0988d2b2804b51e64478ff72fe271f68a805bd2c2c1a654b",
+      "candidateSha256": "cd49a1d878dce3b534af5250bfc9f7efa8571411b4a60132397a0bd63dbba78e",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1011,
+          "end": 1039,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/synthetic_model_owner.test.ts",
+      "to": "backend/tests/ai/integrations/synthetic_model_owner.test.ts",
+      "originalSha256": "831026d9a121c70856b74c51b5a50c87c85bdda359311b97292087d92b9aacac",
+      "candidateSha256": "b29a130bc7eca05b50518553c18246db941253245fb1f27cecadb22f170502cf",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 188,
+          "end": 221,
+          "oldSpecifier": "../../support/control_owner_probe",
+          "newSpecifier": "../../support/oracles/control-owner",
+          "oldTarget": "backend/tests/support/control_owner_probe.ts",
+          "newTarget": "backend/tests/support/oracles/control-owner.ts"
+        },
+        {
+          "kind": "static",
+          "start": 300,
+          "end": 335,
+          "oldSpecifier": "../../support/synthetic_model_fetch",
+          "newSpecifier": "../../support/drivers/agents/synthetic-model-fetch",
+          "oldTarget": "backend/tests/support/synthetic_model_fetch.ts",
+          "newTarget": "backend/tests/support/drivers/agents/synthetic-model-fetch.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/dream_ability_transport.test.ts",
+      "to": "backend/tests/ai/integrations/dream_ability_transport.test.ts",
+      "originalSha256": "bdbc9b74b24d508ec35902b55ee947b36e9575b70ae7b6773ea661c1581787a8",
+      "candidateSha256": "af88109e4e1ba05697e9dee62fb3c5a21f22635465dba8040608f02ffafe83d0",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 645,
+          "end": 673,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/hybrid_required_choice.test.ts",
+      "to": "backend/tests/ai/integrations/hybrid_required_choice.test.ts",
+      "originalSha256": "a965518ccd936655c9ffc1ef70cd02b24325456edb9e1ea8b16bdd1bb256c2ae",
+      "candidateSha256": "1112909ea89e5fabe29670dd89eea27e282201f97b94347bcb28e6759bfe5820",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1059,
+          "end": 1087,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/action_reception_transport.test.ts",
+      "to": "backend/tests/ai/integrations/action_reception_transport.test.ts",
+      "originalSha256": "eb503f882f2a1a1d6cfb438f7b266f795029304e5cc1927144c4c637ac3c1306",
+      "candidateSha256": "453d68e8fd48c7d25e65f8d5c3b16b135f540db174d519705a43338de97ffe46",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 2006,
+          "end": 2034,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/psychic_ability_transport.test.ts",
+      "to": "backend/tests/ai/integrations/psychic_ability_transport.test.ts",
+      "originalSha256": "dafc24a2b9285b4829566e2bac084c3c12c70d9404f074aa48be143eceb995da",
+      "candidateSha256": "26254099619fc0126b4ef4f5f65e5f502f88716df8a970859d0084cdf069b6c1",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 645,
+          "end": 673,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/audit/acp_audit_ownership.test.ts",
+      "to": "backend/tests/ai/audit/acp_audit_ownership.test.ts",
+      "originalSha256": "79ce91339927a35bc8d70a06b7cc175dde90438593d67642e8014a7e1c9076ee",
+      "candidateSha256": "c484f76f4fb347c74963deefacfd3269dfabfd486325805e72cb5a505749b68b",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 441,
+          "end": 469,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/agents/strict_turn_policy.test.ts",
+      "to": "backend/tests/ai/agents/strict_turn_policy.test.ts",
+      "originalSha256": "bb4d37f1ce1d9a7fcdb0f35f4ca24f55400e9cf0e0d08a74255f5cad76c0abdf",
+      "candidateSha256": "197d199ef4fee4d2ca23540a2e53aa28bf125036cbfe02fb21277ec267473d55",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 886,
+          "end": 914,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/agents/player_agent_factory.test.ts",
+      "to": "backend/tests/ai/agents/player_agent_factory.test.ts",
+      "originalSha256": "e27ba610241cfd0a555044180778712fe69129dc39ad9e9fc7eb0e4c6ac5b1c9",
+      "candidateSha256": "1927c2a61b53ff7a62337f3f4e06b69fd2b58ba991a9b1c84aa44b3c876524c9",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 210,
+          "end": 238,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/agents/acp_action_provider.test.ts",
+      "to": "backend/tests/ai/agents/acp_action_provider.test.ts",
+      "originalSha256": "ad8e4a9ca665c067b926e149794ce216a77172305636ede839ce3dd8bd35ec8e",
+      "candidateSha256": "fd53facbd4776724d265d163caa83efaff43b249520c25ee17cb610c96d6b7b5",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 169,
+          "end": 197,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "static",
+          "start": 711,
+          "end": 746,
+          "oldSpecifier": "../../support/acp_provider_requests",
+          "newSpecifier": "../../support/builders/agents/acp-requests",
+          "oldTarget": "backend/tests/support/acp_provider_requests.ts",
+          "newTarget": "backend/tests/support/builders/agents/acp-requests.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/agents/acp_optional_turn.test.ts",
+      "to": "backend/tests/ai/agents/acp_optional_turn.test.ts",
+      "originalSha256": "11dd68c611acbaf71a0eeaa97fd786ccbaffdaa1efc1fccc65622bb437d172ad",
+      "candidateSha256": "77e1a37dc559bf9c6d2ac66c5212a01d2aa17b61c6a492f3cdcca187ad5e4969",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 658,
+          "end": 686,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/agents/llm_action_provider_audit.test.ts",
+      "to": "backend/tests/ai/agents/llm_action_provider_audit.test.ts",
+      "originalSha256": "10e6b9a16c604797fff0f8f8d35d538eadd841bc47f2c2b2ee91f62ac13208e0",
+      "candidateSha256": "c97478617a8516f22bfd25cc8bde514e2e740b559c9b4730e28a8620b64eee40",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 746,
+          "end": 774,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/agents/llm_action_provider_protocol.test.ts",
+      "to": "backend/tests/ai/agents/llm_action_provider_protocol.test.ts",
+      "originalSha256": "ec9e46bf00f4593fee964175b30f4ff73009bf83cd9074d2a9e964496bbf53c4",
+      "candidateSha256": "edc6637119342203184e17a40514dd5de4c4f7326d9c8f1a43df2fa79f1a0528",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 972,
+          "end": 1000,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/ai/agents/acp_control_server.test.ts",
+      "to": "backend/tests/ai/agents/acp_control_server.test.ts",
+      "originalSha256": "44ad051192f0d879fe0a13203bf4c7fdf2c9343654c2924ec8c65aeb16870b27",
+      "candidateSha256": "08554aedc2b3695b59a173de603e2ef3b81dd09aaff148f6c671e72d4dda1ddd",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 594,
+          "end": 629,
+          "oldSpecifier": "../../support/acp_provider_requests",
+          "newSpecifier": "../../support/builders/agents/acp-requests",
+          "oldTarget": "backend/tests/support/acp_provider_requests.ts",
+          "newTarget": "backend/tests/support/builders/agents/acp-requests.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/demon_hunter_facts.test.ts",
+      "to": "backend/tests/engine/rules/demon_hunter_facts.test.ts",
+      "originalSha256": "06281f32fe7d738c60622b01dad827f5b40360b68d969b736e36fa0fbe720aca",
+      "candidateSha256": "414831e6588c7646158a021cd462be156e966b074ef2d2437c571e90faaa10c2",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 934,
+          "end": 962,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/red_moon_seal.test.ts",
+      "to": "backend/tests/engine/rules/red_moon_seal.test.ts",
+      "originalSha256": "f5b4a974a82bcfd6982c8402d0a09ca70ec35be144e87cce26cf41e18c2f8dd4",
+      "candidateSha256": "6ed45f68ce656802d927e5033a26e4b7f555ac05dcaa4a9ba1b811f62db33cec",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 168,
+          "end": 206,
+          "oldSpecifier": "../../support/red_moon_candidate_world",
+          "newSpecifier": "../../support/features/red-moon/builders/candidate-world",
+          "oldTarget": "backend/tests/support/red_moon_candidate_world.ts",
+          "newTarget": "backend/tests/support/features/red-moon/builders/candidate-world.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/red_moon_audit.test.ts",
+      "to": "backend/tests/engine/rules/red_moon_audit.test.ts",
+      "originalSha256": "2894deabdfb73647a6afecf15d7d3d797e016a6534fed6fb80a15165978882c4",
+      "candidateSha256": "409085fdceff1b8d2f5595bc481c37894675f9bb5b3e3b325bb921f0c43949a5",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 430,
+          "end": 468,
+          "oldSpecifier": "../../support/red_moon_candidate_world",
+          "newSpecifier": "../../support/features/red-moon/builders/candidate-world",
+          "oldTarget": "backend/tests/support/red_moon_candidate_world.ts",
+          "newTarget": "backend/tests/support/features/red-moon/builders/candidate-world.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/red_moon_record.test.ts",
+      "to": "backend/tests/engine/rules/red_moon_record.test.ts",
+      "originalSha256": "bd531617cbe851ebcf5c32db76e74a35da8f7dd222279e4d3083c134dc4008fa",
+      "candidateSha256": "63368fc51a3cd01f95461fb6cc0d1240f9c30a928db7b2326618d1f232be6fad",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 168,
+          "end": 206,
+          "oldSpecifier": "../../support/red_moon_candidate_world",
+          "newSpecifier": "../../support/features/red-moon/builders/candidate-world",
+          "oldTarget": "backend/tests/support/red_moon_candidate_world.ts",
+          "newTarget": "backend/tests/support/features/red-moon/builders/candidate-world.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/red_moon_candidate.test.ts",
+      "to": "backend/tests/engine/rules/red_moon_candidate.test.ts",
+      "originalSha256": "1a0aca317179c76050e63f1e6983085c76f9eb195a5e7b770d8fb79a9ec36fd0",
+      "candidateSha256": "1c71d344e2b90b2933c8f1b25ac2ccbce89f71231d58a2455cb74f02b3abfcdb",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 637,
+          "end": 675,
+          "oldSpecifier": "../../support/red_moon_candidate_world",
+          "newSpecifier": "../../support/features/red-moon/builders/candidate-world",
+          "oldTarget": "backend/tests/support/red_moon_candidate_world.ts",
+          "newTarget": "backend/tests/support/features/red-moon/builders/candidate-world.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/animal_dream_runtime.test.ts",
+      "to": "backend/tests/engine/rules/animal_dream_runtime.test.ts",
+      "originalSha256": "ac2703e6f4761a475c3e126382ffbdfa7208fda093f0e087ddfafaf5c725c294",
+      "candidateSha256": "29937d71debd40c29972ab111835f8331a1d3964a88164db64711e1807a6fa3f",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 139,
+          "end": 162,
+          "oldSpecifier": "../animal_dream_fixture",
+          "newSpecifier": "../../support/features/animal-dream/builders/roster",
+          "oldTarget": "backend/tests/engine/animal_dream_fixture.ts",
+          "newTarget": "backend/tests/support/features/animal-dream/builders/roster.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/red_moon_expiry.test.ts",
+      "to": "backend/tests/engine/rules/red_moon_expiry.test.ts",
+      "originalSha256": "3a0e957e5914ea50c8d3c8b35c983715ebccd7e2ae95cc980d634d45d46230fa",
+      "candidateSha256": "63b55b5f1c979c1f2f0bf706209eba6a5a46d88b090bafc40c3e897634d10652",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 148,
+          "end": 186,
+          "oldSpecifier": "../../support/red_moon_candidate_world",
+          "newSpecifier": "../../support/features/red-moon/builders/candidate-world",
+          "oldTarget": "backend/tests/support/red_moon_candidate_world.ts",
+          "newTarget": "backend/tests/support/features/red-moon/builders/candidate-world.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/red_moon_day_actions.test.ts",
+      "to": "backend/tests/engine/rules/red_moon_day_actions.test.ts",
+      "originalSha256": "bde3feb8f2862b2f3715bffc1683c4ba624b1a4987f36b154e9eb47069171a73",
+      "candidateSha256": "e4bbc0d912b8b8f12a6709927abc79a6fba8da35c123dc6db9514e4dd65a797e",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 181,
+          "end": 219,
+          "oldSpecifier": "../../support/red_moon_candidate_world",
+          "newSpecifier": "../../support/features/red-moon/builders/candidate-world",
+          "oldTarget": "backend/tests/support/red_moon_candidate_world.ts",
+          "newTarget": "backend/tests/support/features/red-moon/builders/candidate-world.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/thief.test.ts",
+      "to": "backend/tests/engine/rules/thief.test.ts",
+      "originalSha256": "97aca74c31fa50355ec0fc335f71877f1cb1ca276ed2379507a223400dd7d9d4",
+      "candidateSha256": "ba7a9ea3a0505efd31a15056804ba3d4c6482118ecc5d882d90477251ca414db",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 693,
+          "end": 721,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/reproduction_replay.test.ts",
+      "to": "backend/tests/runtime/reproduction_replay.test.ts",
+      "originalSha256": "9158d55c1c8074a6dc35781c2fcd0acfaed3ec3b79c43f87a88e460ffe61c100",
+      "candidateSha256": "a7b5e437435a2a789541d4b298fea987547ea231a53968d9a1094efa4b950a3e",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1020,
+          "end": 1045,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/noble_secret_body_wire_oracle_review.test.ts",
+      "to": "backend/tests/runtime/noble_secret_body_wire_oracle_review.test.ts",
+      "originalSha256": "d9e665a3d0d90ebe00bd1350ca1872c53ec7b948b9b0af882ccbe8ebf0019b63",
+      "candidateSha256": "5e1408dc54ae7f5a4bc72784c6cdd09f7353f2b280b341eb375227bdcac66ace",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 107,
+          "end": 147,
+          "oldSpecifier": "../support/noble_secret_body_wire_oracle",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/wire",
+          "oldTarget": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/wire.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/lonely_girl_required_failure.test.ts",
+      "to": "backend/tests/runtime/lonely_girl_required_failure.test.ts",
+      "originalSha256": "ea7cb4574c03d6072ce27f0f48457c84afc5708f0b492771a0f7ab1e3ca577e0",
+      "candidateSha256": "97bc5f9daa1f245e541b129f18b23090388bcf58e4baaa6a2207a13be66e49f6",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 720,
+          "end": 745,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/red_moon_visibility.test.ts",
+      "to": "backend/tests/engine/rules/red_moon_visibility.test.ts",
+      "originalSha256": "f2e9af4816408b35639f9f303de1c7a045ae5afad931184d4ec9101d82385581",
+      "candidateSha256": "9052f9afaea80ea210e01999a4b4570db901fc9e33a402e97f4d494f79941678",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 80,
+          "end": 118,
+          "oldSpecifier": "../../support/red_moon_candidate_world",
+          "newSpecifier": "../../support/features/red-moon/builders/candidate-world",
+          "oldTarget": "backend/tests/support/red_moon_candidate_world.ts",
+          "newTarget": "backend/tests/support/features/red-moon/builders/candidate-world.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_transport.test.ts",
+      "to": "backend/tests/runtime/radiant_eclipse_transport.test.ts",
+      "originalSha256": "09376bb4b29097b636bc56a28c8f86474fc5b66245435d642127d72e67472347",
+      "candidateSha256": "5235bf933307cf052e3f0d19b4a1560fca0d19b1210ed22efe761a986f47ce93",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 46,
+          "end": 89,
+          "oldSpecifier": "../support/radiant_eclipse_transport_golden",
+          "newSpecifier": "../support/features/radiant-eclipse/oracles/transport-golden",
+          "oldTarget": "backend/tests/support/radiant_eclipse_transport_golden.ts",
+          "newTarget": "backend/tests/support/features/radiant-eclipse/oracles/transport-golden.ts"
+        },
+        {
+          "kind": "static",
+          "start": 219,
+          "end": 257,
+          "oldSpecifier": "../support/radiant_eclipse_wire_oracle",
+          "newSpecifier": "../support/features/radiant-eclipse/oracles/wire",
+          "oldTarget": "backend/tests/support/radiant_eclipse_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/radiant-eclipse/oracles/wire.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/ghost_bride_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/ghost_bride_observed_simulation.test.ts",
+      "originalSha256": "8096f726bd89e67293ed8f1808d8efc0bfdef76968e32e2bcbffbc51b648ba59",
+      "candidateSha256": "3eee32ab854dedfa43d956c9dfff6ee78d1308754bb6f2fd6b459a446aab4a95",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 523,
+          "end": 548,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/fragrant_pair_seer_transport.test.ts",
+      "to": "backend/tests/runtime/fragrant_pair_seer_transport.test.ts",
+      "originalSha256": "412c30a7360d28ac163e96918ee19983b68ad08c623a05afff2d8da10a9b9dc5",
+      "candidateSha256": "df23ce992e61c7877e552d2c75b56e228c8599926dc234c8d0d04ecc384f2878",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 45,
+          "end": 86,
+          "oldSpecifier": "../support/fragrant_pair_seer_wire_oracle",
+          "newSpecifier": "../support/features/fragrant-pair-seer/oracles/wire",
+          "oldTarget": "backend/tests/support/fragrant_pair_seer_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/fragrant-pair-seer/oracles/wire.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/ghost_bride_reproduction.test.ts",
+      "to": "backend/tests/runtime/ghost_bride_reproduction.test.ts",
+      "originalSha256": "e2694fd28e5f578f41f204e27234d2efdbef2d2dba846d2c2c276e7667677230",
+      "candidateSha256": "6535baae846a55f15e9c557e123df01db49cbc6d4a8fc7332aa89d7295ac2347",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 990,
+          "end": 1015,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/gravekeeper_simulation.test.ts",
+      "to": "backend/tests/runtime/gravekeeper_simulation.test.ts",
+      "originalSha256": "bda57dfd4ac66f848141be8d24f19ad83e1fd36b3197f9e1f80044c4c729c6fa",
+      "candidateSha256": "4085af17b61697775bc4bcd4c3f51ad6923f18f446a49b5fd7aa167ebe43e712",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 355,
+          "end": 380,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/debater_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/debater_observed_simulation.test.ts",
+      "originalSha256": "5bca4a5189f547cab60cee36a002b358a53624b465807c1679134c15fa883bdc",
+      "candidateSha256": "d5b394b3a2a2a7f9e8f1bc5e5906b45e01a8f0aa6e94a163ef4ca3eae32c74aa",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 572,
+          "end": 597,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/game_event_recorder.test.ts",
+      "to": "backend/tests/runtime/game_event_recorder.test.ts",
+      "originalSha256": "b96ba4ca1927cb40b75fd43701f7b5baa3e27a15d943d3d4588a2f0797fc8112",
+      "candidateSha256": "b407e40723a41dc37ce16366b4a23960847aaba8264ff3568c6ebd11a81ad747",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 549,
+          "end": 574,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/configured_role_policy_tape.test.ts",
+      "to": "backend/tests/runtime/configured_role_policy_tape.test.ts",
+      "originalSha256": "e1ab7d0245de53e280fcf8258bc4d7d4cbe45e3e57ef5e5f808ce17f9ddb6c28",
+      "candidateSha256": "f48a55d0e7246c861ff8c70abb1f3f7d6e70b4c68dd42da70144cee344ef6416",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1210,
+          "end": 1235,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/wolf_king_simulation.test.ts",
+      "to": "backend/tests/runtime/wolf_king_simulation.test.ts",
+      "originalSha256": "75fd2c9d1852152c3bea14702e7ee6af7759fea2d325ed5e8d6a437b7a1a2afd",
+      "candidateSha256": "e7eb106aacf37ab1a455a92db8b4c2908557cd02319a934d76719f7a6c973b6f",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 355,
+          "end": 380,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/public_death_policy_tape.test.ts",
+      "to": "backend/tests/runtime/public_death_policy_tape.test.ts",
+      "originalSha256": "5c8f3260df9d38eed52facb0409933bdd38d8f7c5237b7e24cd3d3f57e46795d",
+      "candidateSha256": "a30466b018a47759b68f87e80c5e8840a97d41834ee9e9cc7867981d89b45be7",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 973,
+          "end": 998,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/agent_log_flags.test.ts",
+      "to": "backend/tests/runtime/agent_log_flags.test.ts",
+      "originalSha256": "97ddf3223cd1724faba7be3de1688bc2522bcb38b04b3b678f9f9d4d1bf31ec5",
+      "candidateSha256": "ff9064aeb361a5e92e05717e343648804b031e92e42313d4da705e375ca45639",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 820,
+          "end": 845,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/simulation_display_locale.test.ts",
+      "to": "backend/tests/runtime/simulation_display_locale.test.ts",
+      "originalSha256": "96a1ac72e66c883a8e9be73e5238764b9a3ab3d600fb8003cb162b24be917bd4",
+      "candidateSha256": "4d352f6344cbf9a5bbd56ae8689a3930bf99755ca554299c1314aba3ee284f8f",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 439,
+          "end": 464,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/noble_secret_body_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/noble_secret_body_observed_simulation.test.ts",
+      "originalSha256": "f3167f013c15b4136ac539294e75cdf569f4d37c8dbba122218d01db6fb4822c",
+      "candidateSha256": "12995bda148caa3909561a1da88769ec294b88999d6da4479b36b96e66d4de3a",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 656,
+          "end": 681,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/awakened_simulation.test.ts",
+      "to": "backend/tests/runtime/awakened_simulation.test.ts",
+      "originalSha256": "4ac02dced35ceac49987dd4df53826d44aa7838215c205e895c4890e4c6d58ef",
+      "candidateSha256": "69fb3ccff7523af5c4838c635fac30fd75bce2a2ffcc5092d1a1861467cef88c",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 490,
+          "end": 515,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/psychic_simulation.test.ts",
+      "to": "backend/tests/runtime/psychic_simulation.test.ts",
+      "originalSha256": "d9991b78912bfca66dc5f7110ed33cca70fdc0c02e39de99233c4a01a2e951c1",
+      "candidateSha256": "83c0093cf8d04f7a81075a0234f498496b90e3bda7652c7df154bd0209ea6322",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 444,
+          "end": 469,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/fragrant_pair_seer_failure_transport.test.ts",
+      "to": "backend/tests/runtime/fragrant_pair_seer_failure_transport.test.ts",
+      "originalSha256": "c054d4bd188fe5b3921dab8b840050d1a6ea434bcb5c351bdbdaabeba84d5b6c",
+      "candidateSha256": "19a3a122387ebe33e7f92edc9d1c3489c3c5c388e4f0d66a39c80848cfb12fc0",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 45,
+          "end": 86,
+          "oldSpecifier": "../support/fragrant_pair_seer_wire_oracle",
+          "newSpecifier": "../support/features/fragrant-pair-seer/oracles/wire",
+          "oldTarget": "backend/tests/support/fragrant_pair_seer_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/fragrant-pair-seer/oracles/wire.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/merchant_simulation.test.ts",
+      "to": "backend/tests/runtime/merchant_simulation.test.ts",
+      "originalSha256": "8715d6597fdbc6bfcc10649aec568d156ec04d345197c6924f756ec9d3c798a6",
+      "candidateSha256": "9573a6ec1c65e02e81fdc4582b041643d1ead06e818f93de916fb9ae1279b86a",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 385,
+          "end": 410,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/bilingual_game_execution.test.ts",
+      "to": "backend/tests/runtime/bilingual_game_execution.test.ts",
+      "originalSha256": "1cb206e8c6ea77f60840b464beca710c717cdc69a63a85ab69ff734dbb2e6b13",
+      "candidateSha256": "196af232e95ba6c7e239e9b70b28182b531d113f31c62689a95dd6faf996534e",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 662,
+          "end": 687,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/request_delivery_failure_replay.test.ts",
+      "to": "backend/tests/runtime/request_delivery_failure_replay.test.ts",
+      "originalSha256": "ecec50dfef606fbb80b065df07acd6bd28fe0d3c04e45f3a3ece67e198f732a5",
+      "candidateSha256": "a0f8a1453dfe0f4af709410b8eae46a06841bfe92358a0726625b6083600e9c1",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 698,
+          "end": 723,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/engine/rules/shapeshifter.test.ts",
+      "to": "backend/tests/engine/rules/shapeshifter.test.ts",
+      "originalSha256": "4e04f8656303229cb220d4259737fec79e96b2f6cc989c886e9493a9fe7ca25a",
+      "candidateSha256": "ee6ce63fb6c1cf72179dc8081da9fd1b8d52c3021d0e609edadec88f7aee7e6c",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 693,
+          "end": 721,
+          "oldSpecifier": "../../support/temp_directory",
+          "newSpecifier": "../../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/cupid_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/cupid_observed_simulation.test.ts",
+      "originalSha256": "caa88f9e092b25792ce04e3ced47c21473033e1b48cfae4c5533ca24c69a7318",
+      "candidateSha256": "7993e41806c61b62d7078bc48be1f5857e3d71e678aeeee8976dd400d3c30b79",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 585,
+          "end": 610,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/magician_reproduction.test.ts",
+      "to": "backend/tests/runtime/magician_reproduction.test.ts",
+      "originalSha256": "a5c2ddd5430682ca11e2cb64ea34c5788c3030dcd62207b3115d78d0acd58cd4",
+      "candidateSha256": "7d44311a8493fa45ef6218848c8543a80f3e0f62ceedb4cadb6aa498532b3a19",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 965,
+          "end": 990,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/board_definition.test.ts",
+      "to": "backend/tests/runtime/board_definition.test.ts",
+      "originalSha256": "ecdb48b9373d8e2a06d44a94396c829984959c3fef86d45765013d3566fa9616",
+      "candidateSha256": "e8a82bff3287bce4e5343e6efe3c75ac4bc5873f1d7ab229a4aeb600ffba7776",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 825,
+          "end": 850,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/ghost_bride_required_failure.test.ts",
+      "to": "backend/tests/runtime/ghost_bride_required_failure.test.ts",
+      "originalSha256": "e845816d406dd5293beaa838ffb8fe6c18401fd44d863cb76cd6f5889f88369c",
+      "candidateSha256": "bc24c66da13c6540b5e0f6473d7aa6a8d869d599047cc3df5f2e011fd6c7b1aa",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 720,
+          "end": 745,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/awa_preset_tape.test.ts",
+      "to": "backend/tests/runtime/awa_preset_tape.test.ts",
+      "originalSha256": "dd3987ac3ccd9a05bdefec5b67879abcd1753d2f6e9b7c192cbdc8e10cf85ba8",
+      "candidateSha256": "463fd14d6e397794acddb395c018e31c9d40686ad3b9be8a0061c5e50cc43761",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 903,
+          "end": 928,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/runner_concurrent_failures.test.ts",
+      "to": "backend/tests/runtime/runner_concurrent_failures.test.ts",
+      "originalSha256": "f83d0c7dd2a51259e28194c6aa858bd99fab1999e0ff5b347c6502cf5b5330a5",
+      "candidateSha256": "ecba5516f18a9af02363d966966de96745d6c15fb843bcd577b7af4003c63935",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 883,
+          "end": 908,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/black_market_failure_replay.test.ts",
+      "to": "backend/tests/runtime/black_market_failure_replay.test.ts",
+      "originalSha256": "60a57f73d1e833801cfd2bfbc18f6bb9595546943c2e19cefa3ae8b7852bf063",
+      "candidateSha256": "3dbdc2272903331a7b0270a72109c0c1ebb91c4d44449f47d3d53d0aadfa6987",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 890,
+          "end": 915,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/runner_random_recording.test.ts",
+      "to": "backend/tests/runtime/runner_random_recording.test.ts",
+      "originalSha256": "ca85abe85bf834fa575da10a522838bfd1bf991568a8194bf7e8d1015f822232",
+      "candidateSha256": "1ad623cfa7c51feeac363bd9445d4f457709067dad180b8e24ae391dae516eaa",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 689,
+          "end": 714,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/noble_secret_body_revocation_transport.test.ts",
+      "to": "backend/tests/runtime/noble_secret_body_revocation_transport.test.ts",
+      "originalSha256": "0d2f49cf04ed36bdae552c00a6c4bcea079b0dc1c485ca44e3153643258707cb",
+      "candidateSha256": "bfe0db774d056eefea414cc7bf94249cf71decd3372b024fb3363215a08bfba5",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 594,
+          "end": 634,
+          "oldSpecifier": "../support/noble_secret_body_wire_oracle",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/wire",
+          "oldTarget": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/wire.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/red_moon_edge_reproduction.test.ts",
+      "to": "backend/tests/runtime/red_moon_edge_reproduction.test.ts",
+      "originalSha256": "84f791e64eb3489d5c008f884117ffe5789363cf6d976389cb46ac9a2a87b6eb",
+      "candidateSha256": "670636c4f8e4202d6ab5977bc334395e9b27cfccc1b66d639b33355b757afe82",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 1016,
+          "end": 1041,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/bear_simulation.test.ts",
+      "to": "backend/tests/runtime/bear_simulation.test.ts",
+      "originalSha256": "d06a5de7b429d0688f73f56d5ddbd7f82cf182be0279fc5584379176086a89da",
+      "candidateSha256": "715123466b596ee1238032d3cc00037986e12cc7c7952372664df0a5afec46a6",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 355,
+          "end": 380,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/noble_secret_body_schema_current_review.test.ts",
+      "to": "backend/tests/runtime/noble_secret_body_schema_current_review.test.ts",
+      "originalSha256": "61b1e6ce740a860975c256cf636ad027755c345212d0533c39744e491dd9e76b",
+      "candidateSha256": "8a227b5685842302065f0d792a4d61a9c565a93560b348fc4b8f40336b0cfc62",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 107,
+          "end": 147,
+          "oldSpecifier": "../support/noble_secret_body_wire_oracle",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/wire",
+          "oldTarget": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/wire.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/wolf_sorcerer_reproduction.test.ts",
+      "to": "backend/tests/runtime/wolf_sorcerer_reproduction.test.ts",
+      "originalSha256": "b5956899748db6b387d44ac21d62282b90feca335c4c9d7ded12f413c87558df",
+      "candidateSha256": "7acfe5c17f7fac65ca698de172433e8151eecbf764eab8bb4ab90d42178b93c4",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 942,
+          "end": 967,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/import_boundaries.test.ts",
+      "to": "backend/tests/runtime/import_boundaries.test.ts",
+      "originalSha256": "d89c2e8cf864c45469c6368f84e0d28ec72b7c1401d8bcdbac7b58d453f6dd2b",
+      "candidateSha256": "3a5cc2d55fe08628e213592c99c6a2d0cf12dc9cd36807f472025338fa9f58e8",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 154,
+          "end": 179,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/mist_raven_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/mist_raven_observed_simulation.test.ts",
+      "originalSha256": "269c802043f7dab52d217592ac72bede5998128c73d61a6a638c4b0cb7db3e42",
+      "candidateSha256": "30a0bc44628d7337c04138ac0945c3a5b0e68f9b158b691c523f184d2b54016c",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 524,
+          "end": 549,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/mechanical_simulation.test.ts",
+      "to": "backend/tests/runtime/mechanical_simulation.test.ts",
+      "originalSha256": "ac68411d71f18feef8f50e4a1516f8ecfc1b69e64e0417b1f8d41e73934910b1",
+      "candidateSha256": "0f2a1788ba6c754658d940bce41deef0de7b143f956fbf06a62d1fe227058f56",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 385,
+          "end": 410,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/runner_execution_dependencies.test.ts",
+      "to": "backend/tests/runtime/runner_execution_dependencies.test.ts",
+      "originalSha256": "30874f06c089f15ed1c6eeb829c1c850dae1f24c6cce8aab16ad7b919f17d40a",
+      "candidateSha256": "21ef8c2f69f07f8a925d3465adf430e8583fa727c21d4599a2beba1fbec9798d",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 480,
+          "end": 505,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/pk_policy_tape.test.ts",
+      "to": "backend/tests/runtime/pk_policy_tape.test.ts",
+      "originalSha256": "9a972169ea047246b5baf45ab3c24df4127611ebec3edaad84fa0e0026215a56",
+      "candidateSha256": "693984692d620f0cc606f65b9a50d2fd7c84651cb9cd381663331a7b0448adf8",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 859,
+          "end": 884,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/noble_secret_body_pass_repeat_transport.test.ts",
+      "to": "backend/tests/runtime/noble_secret_body_pass_repeat_transport.test.ts",
+      "originalSha256": "1e4ee9602959d1277d35f0fda11ab3aba726ca872a2d69572303fd5c1c4aa43e",
+      "candidateSha256": "ac04b8f8d0909ef442e6c09ab9041abd222d6fb60b914632f7e41fde60b08759",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 174,
+          "end": 214,
+          "oldSpecifier": "../support/noble_secret_body_wire_oracle",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/wire",
+          "oldTarget": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/wire.ts"
+        },
+        {
+          "kind": "static",
+          "start": 261,
+          "end": 306,
+          "oldSpecifier": "../support/noble_secret_body_transport_golden",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/transport-golden",
+          "oldTarget": "backend/tests/support/noble_secret_body_transport_golden.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/transport-golden.ts"
+        },
+        {
+          "kind": "static",
+          "start": 348,
+          "end": 389,
+          "oldSpecifier": "../support/noble_secret_body_badge_prompt",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/badge-prompt",
+          "oldTarget": "backend/tests/support/noble_secret_body_badge_prompt.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/badge-prompt.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/noble_secret_body_transport.test.ts",
+      "to": "backend/tests/runtime/noble_secret_body_transport.test.ts",
+      "originalSha256": "91258fefbee4bdfba8bc5d3ae16bb1178743da42003349e3c7c5f40565115404",
+      "candidateSha256": "dee0611269a3ce99d619ae96fd495389011b5f481a41fb5714434b8daa6bad2d",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 323,
+          "end": 363,
+          "oldSpecifier": "../support/noble_secret_body_wire_oracle",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/wire",
+          "oldTarget": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/wire.ts"
+        },
+        {
+          "kind": "static",
+          "start": 405,
+          "end": 446,
+          "oldSpecifier": "../support/noble_secret_body_badge_prompt",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/badge-prompt",
+          "oldTarget": "backend/tests/support/noble_secret_body_badge_prompt.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/badge-prompt.ts"
+        },
+        {
+          "kind": "static",
+          "start": 493,
+          "end": 538,
+          "oldSpecifier": "../support/noble_secret_body_transport_golden",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/transport-golden",
+          "oldTarget": "backend/tests/support/noble_secret_body_transport_golden.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/transport-golden.ts"
+        },
+        {
+          "kind": "static",
+          "start": 582,
+          "end": 624,
+          "oldSpecifier": "../support/noble_secret_body_known_anchors",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/known-anchors",
+          "oldTarget": "backend/tests/support/noble_secret_body_known_anchors.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/known-anchors.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/noble_secret_body_policy_rejection_transport.test.ts",
+      "to": "backend/tests/runtime/noble_secret_body_policy_rejection_transport.test.ts",
+      "originalSha256": "3d8096e3fae9769babf81eeccd38e311df53e9e1eca2405111bde966d7da671e",
+      "candidateSha256": "d43fdaa7fb620c9a21a03e78964be40b832642e66b1e48e5047be5e34b83d872",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 235,
+          "end": 275,
+          "oldSpecifier": "../support/noble_secret_body_wire_oracle",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/wire",
+          "oldTarget": "backend/tests/support/noble_secret_body_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/wire.ts"
+        },
+        {
+          "kind": "static",
+          "start": 322,
+          "end": 367,
+          "oldSpecifier": "../support/noble_secret_body_transport_golden",
+          "newSpecifier": "../support/features/noble-secret-body/oracles/transport-golden",
+          "oldTarget": "backend/tests/support/noble_secret_body_transport_golden.ts",
+          "newTarget": "backend/tests/support/features/noble-secret-body/oracles/transport-golden.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/fragrant_pair_seer_wire_review.test.ts",
+      "to": "backend/tests/runtime/fragrant_pair_seer_wire_review.test.ts",
+      "originalSha256": "2b2a4c43cfc120e49ca35216f6c5230514f07a09b40e8916091b5ca98ca5cff4",
+      "candidateSha256": "a5abcf4dc0e24dd038179d875828eaa9865f7838313941387753e6f6de661f2a",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 124,
+          "end": 165,
+          "oldSpecifier": "../support/fragrant_pair_seer_wire_oracle",
+          "newSpecifier": "../support/features/fragrant-pair-seer/oracles/wire",
+          "oldTarget": "backend/tests/support/fragrant_pair_seer_wire_oracle.ts",
+          "newTarget": "backend/tests/support/features/fragrant-pair-seer/oracles/wire.ts"
+        }
+      ],
+      "headAdded": false
+    },
+    {
+      "from": "backend/tests/runtime/fragrant_pair_seer_observed_simulation.test.ts",
+      "to": "backend/tests/runtime/fragrant_pair_seer_observed_simulation.test.ts",
+      "originalSha256": "4f7faca00db0882953b77779e8162f6264adcd35978639d734b9eafa9c64fdfa",
+      "candidateSha256": "ead1b55b325be82eb4ccf697bae3e2fbbd86e47764a0905c433b8041dfe9905f",
+      "edges": [
+        {
+          "kind": "static",
+          "start": 515,
+          "end": 540,
+          "oldSpecifier": "../support/temp_directory",
+          "newSpecifier": "../support/drivers/temp-directories",
+          "oldTarget": "backend/tests/support/temp_directory.ts",
+          "newTarget": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "headAdded": false
+    }
+  ],
+  "counts": {
+    "support": 15,
+    "consumers": 162,
+    "files": 177,
+    "moduleSpecifiers": 229,
+    "dynamicSpecifierExceptions": 2,
+    "originalCaseIds": 1660,
+    "uniqueCaseIds": 1660,
+    "headerViolations": 0,
+    "failures": 0
+  }
+}

@@ -18,7 +18,7 @@ import {
 } from "../../src/recording/reproduction";
 
 import { GameEventRecorder } from "../../src/runtime/game_event_recorder";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 import { wolfSorcererTwelveConfig } from "../../src/runtime/scenarios/wolf_sorcerer_twelve";
 import { ObservedBot } from "../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../src/ai/agents/providers/observed_players";

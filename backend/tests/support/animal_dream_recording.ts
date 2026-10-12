@@ -16,7 +16,7 @@ import {
   animalGolden,
   type AnimalPlan,
 } from "./animal_dream_scenarios";
-import { createTestTempDirectory } from "./temp_directory";
+import { createTestTempDirectory } from "./drivers/temp-directories";
 export async function recordAnimalLiteral(
   name: AnimalPlan = "fox_beauty",
   locale: "zh-CN" | "en" = "zh-CN",

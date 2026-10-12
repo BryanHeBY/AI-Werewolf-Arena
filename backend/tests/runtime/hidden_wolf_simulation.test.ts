@@ -5,7 +5,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 import path from "node:path";
 for (const id of ["six_player_hidden_wolf", "twelve_player_hidden_wolf"] as const)
   test(`${id}: restricted-observation seeds inherit real knives without pack chat and every complete game strictly replays`, async () => {

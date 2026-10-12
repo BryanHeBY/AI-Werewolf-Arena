@@ -2,7 +2,7 @@ import { expect, test } from "bun:test";
 import {
   assertNobleTransportWire,
   type NobleWireRun,
-} from "../support/noble_secret_body_wire_oracle";
+} from "../support/features/noble-secret-body/oracles/wire";
 
 // Pure oracle fixtures, not purported full engine records. Handwritten inputs
 // model the already independently validated feed at three body turns. No

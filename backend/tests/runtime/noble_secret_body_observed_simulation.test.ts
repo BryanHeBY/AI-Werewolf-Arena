@@ -12,7 +12,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 const languages = new Map<string, SimulationReport>(),
   summary = (r: SimulationReport) => r.games.map(({ recordDir: _, ...g }) => g);
 for (const wolf of ["standard", "no_blast_no_self_knife"] as const)

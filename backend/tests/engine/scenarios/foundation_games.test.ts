@@ -40,8 +40,8 @@ import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
 import type { ReplayPlayerView } from "../../../src/recording/contracts";
-import { StrictScriptedPlayers, type ScriptStep } from "../../support/scripted_players";
-import { createTestTempDirectory } from "../../support/temp_directory";
+import { StrictScriptedPlayers, type ScriptStep } from "../../support/drivers/scripted-players";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 function plan() {
   const steps: ScriptStep[] = [];

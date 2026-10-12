@@ -20,7 +20,7 @@ import {
 import { parseReproductionRecord } from "../../src/recording/reproduction";
 import { replayReproduction } from "../../src/runtime/simulation/replay_reproduction";
 import { demonNightChoice } from "./demon_hunter_scenarios";
-import { createTestTempDirectory } from "./temp_directory";
+import { createTestTempDirectory } from "./drivers/temp-directories";
 export interface NobleLiteralNight {
   body: number | null;
   servant: number | null;

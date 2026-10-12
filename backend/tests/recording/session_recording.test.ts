@@ -9,7 +9,7 @@ import { COMPONENT } from "../../src/core/domain/components/names";
 import { SessionRecordManager, safeRecordLogicOp } from "../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../src/recording/recording_context";
 import { buildDebugSummaryMarkdown } from "../../src/audit/debug_summary_generator";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 async function finalizeManager(
   manager: SessionRecordManager,

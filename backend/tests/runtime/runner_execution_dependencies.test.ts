@@ -5,7 +5,7 @@ import { runGame, type GameRunDependencies } from "../../src/runtime/game_runner
 import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
 import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
 import { readReproduction } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 
 async function setup(maxRuntimeMs: number) {
   const root = await createTestTempDirectory("awa-run-dependencies-");

@@ -12,7 +12,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/temp_directory";
+import { createTestTempDirectory } from "../support/drivers/temp-directories";
 for (const size of [6, 12] as const)
   for (const goal of [WinCondition.SlaughterCity, WinCondition.SlaughterSide])
     for (const locale of ["zh-CN", "en"] as const)

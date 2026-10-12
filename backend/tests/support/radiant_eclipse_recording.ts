@@ -25,7 +25,7 @@ import {
 } from "../../src/runtime/simulation/reproduction_context";
 import { replayReproduction } from "../../src/runtime/simulation/replay_reproduction";
 import { GameEventRecorder } from "../../src/runtime/game_event_recorder";
-import { createTestTempDirectory } from "./temp_directory";
+import { createTestTempDirectory } from "./drivers/temp-directories";
 
 /** Literal four-night plan: every wolf is exiled through real ballots. No state injection. */
 export function radiantManualAction(

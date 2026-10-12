@@ -28,7 +28,7 @@ import { LlmObserver } from "../../src/ai/agents/player/player_observer";
 import { FallbackActionPolicy } from "../../src/ai/agents/llm/fallback_action_policy";
 import { AcpTurnRegistry } from "../../src/ai/integrations/acp/acp_turn_registry";
 import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
-import { nobleBodyAuthorityFixture } from "../support/noble_secret_body_authority";
+import { nobleBodyAuthorityFixture } from "../support/features/noble-secret-body/drivers/authority";
 import {
   beginNobleBodyNight,
   nobleBodyChoiceTargets,
@@ -47,7 +47,7 @@ import {
   captureAnimalRequestEnvelope,
   inheritAnimalRequestEnvelope,
 } from "../../src/game/mechanisms/roles/animal_dream/request_envelope";
-import { animalRosterFixture } from "../engine/animal_dream_fixture";
+import { animalRosterFixture } from "../support/features/animal-dream/builders/roster";
 
 function wolfRequest(): ActionRequest {
   return {

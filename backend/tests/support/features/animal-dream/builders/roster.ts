@@ -1,19 +1,26 @@
-import { World } from "../../src/core/domain/world";
-import { Role, Camp } from "../../src/core/domain/identity";
-import { COMPONENT } from "../../src/core/domain/components/names";
-import { createRoleComponent, type RoleComponent } from "../../src/core/domain/components/role";
-import { createAliveComponent, type AliveComponent } from "../../src/core/domain/components/alive";
-import { createCampComponent } from "../../src/core/domain/components/camp";
-import { createVotingRightComponent } from "../../src/core/domain/components/voting_right";
-import { createVictoryComponent } from "../../src/core/domain/components/victory";
-import { createIdentityComponent } from "../../src/core/domain/entities/player";
+/**
+ * Owns test builder support: Raw Animal Dream World, original role objects and initial roster; no phase pipeline, transport, recording or oracle calculation.
+ * Inputs are original configs, raw component objects and caller-supplied fields;
+ * outputs are the original explicit fixture values. Unit and scenario tests use
+ * unchanged handwritten literals and identity snapshots as the independent oracle.
+ * This builder never runs a whole game, transport or production rule verifier.
+ */
+import { World } from "../../../../../src/core/domain/world";
+import { Role, Camp } from "../../../../../src/core/domain/identity";
+import { COMPONENT } from "../../../../../src/core/domain/components/names";
+import { createRoleComponent, type RoleComponent } from "../../../../../src/core/domain/components/role";
+import { createAliveComponent, type AliveComponent } from "../../../../../src/core/domain/components/alive";
+import { createCampComponent } from "../../../../../src/core/domain/components/camp";
+import { createVotingRightComponent } from "../../../../../src/core/domain/components/voting_right";
+import { createVictoryComponent } from "../../../../../src/core/domain/components/victory";
+import { createIdentityComponent } from "../../../../../src/core/domain/entities/player";
 import {
   freshFoxCubState,
   freshPufferfishState,
   freshWhiteCatState,
-} from "../../src/game/mechanisms/roles/animal_dream/state";
-import { installAnimalRoster } from "../../src/game/mechanisms/roles/animal_dream/roster";
-import { setWolfBeautyState, setBearState } from "../../src/game/mechanisms/roles/private_state";
+} from "../../../../../src/game/mechanisms/roles/animal_dream/state";
+import { installAnimalRoster } from "../../../../../src/game/mechanisms/roles/animal_dream/roster";
+import { setWolfBeautyState, setBearState } from "../../../../../src/game/mechanisms/roles/private_state";
 
 export const animalInternalConfig = () => ({
   boardSize: 12,
