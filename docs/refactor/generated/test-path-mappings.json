@@ -74288,13 +74288,418 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/wolf_king.test.ts",
+      "to": "backend/tests/unit/features/wolf-king/native-shot-authority.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "6a3e80de04a1ac119c67086696162582fdfb70b8707ed38333c92f1a08fb754b",
+      "candidateSha256": "7aceadb2afa609bbf218404d87ccb8e2b85c8a0517c85639366faf4696aaa310",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1166,
+          "end": 1236,
+          "original": "../../../src/game/mechanisms/broadcast/agent_event_visibility_registry",
+          "value": "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry",
+          "originalResolved": "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1067,
+          "end": 1117,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 982,
+          "end": 1028,
+          "original": "../../../src/ai/agents/player/action_reception",
+          "value": "../../../../src/ai/agents/player/action_reception",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 908,
+          "end": 946,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 837,
+          "end": 876,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 762,
+          "end": 803,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 678,
+          "end": 726,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 572,
+          "end": 600,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 320,
+          "end": 365,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 264,
+          "end": 281,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "fdb0b234f148a903c8721fd2f2c30914f73b6a8b529630cae5fa0cfd4078eb27",
+          "title": "zh-CN: explicit wolf-king cause table and one-shot/pass/invalid consumption use a real permit",
+          "occurrence": 1
+        },
+        {
+          "id": "e7517990dd6991f74435878636c8cefc4d7f962a7df310997c5d36778ed43dda",
+          "title": "en: explicit wolf-king cause table and one-shot/pass/invalid consumption use a real permit",
+          "occurrence": 1
+        },
+        {
+          "id": "32843084dc0fa7de036b07eb02cacb4a8023258231d03d2b145e987e20a7d285",
+          "title": "zh-CN: Hunter and Wolf King own independent shoot rules, living shooters and fake stage metadata cannot act",
+          "occurrence": 1
+        },
+        {
+          "id": "5a71282d7461ef0d07d5de0d532c94a9084fd1c2cae58ef20b074e0b7ed048df",
+          "title": "en: Hunter and Wolf King own independent shoot rules, living shooters and fake stage metadata cannot act",
+          "occurrence": 1
+        },
+        {
+          "id": "607e32f6d0b34bc9c4ac6af18766b780b8f20b25a515c7b0cb5413575e43ada8",
+          "title": "zh-CN: the central resolver settles Wolf King to Hunter to Seer without extra words and leaves victory to PhaseManager",
+          "occurrence": 1
+        },
+        {
+          "id": "bfd3f5dc52ca06919a88a770e24e4895d8d1457f8b692de3d391cf536cc0c3ee",
+          "title": "en: the central resolver settles Wolf King to Hunter to Seer without extra words and leaves victory to PhaseManager",
+          "occurrence": 1
+        },
+        {
+          "id": "7768462778384d88ad0f273a595a5d0d70df5e753fa011c438a6f0520f073d0e",
+          "title": "zh-CN: wolf pack and private shot resources remain separate; public shot updates observed deaths",
+          "occurrence": 1
+        },
+        {
+          "id": "daabb0138a01a48a9c58014228f2d68513f50ecf14560c271ed3fa51ecf53c27",
+          "title": "en: wolf pack and private shot resources remain separate; public shot updates observed deaths",
+          "occurrence": 1
+        },
+        {
+          "id": "c8c4f7818641d71e1c08b02e4eece9635d6740145f78a625300cb6b313b730b1",
+          "title": "zh-CN: late choices after role/resource/life/window replacement cannot spend a wolf-king shot",
+          "occurrence": 1
+        },
+        {
+          "id": "3967127e887ec240d07042208d1874abb07bc960db5039a7161034dca90b3ca8",
+          "title": "en: late choices after role/resource/life/window replacement cannot spend a wolf-king shot",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/wolf_king.test.ts",
+      "to": "backend/tests/scenarios/features/wolf-king/final-blast-badge.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "6a3e80de04a1ac119c67086696162582fdfb70b8707ed38333c92f1a08fb754b",
+      "candidateSha256": "16ca783b76926e1b32f0bf751b829482378d932b57ee3f45fea35f019aac7046",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 333,
+          "end": 381,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 251,
+          "end": 296,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 195,
+          "end": 212,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "ec340674d9c6e62998b910bd07327ee82542fab00eeb05cc2cc2bd17c1f7b38d",
+          "title": "zh-CN: a last Wolf King's ordinary self-destruct has no gun and settles its badge before one victory",
+          "occurrence": 1
+        },
+        {
+          "id": "8829d1c988990f4643d0cfe62496baf397276f3a70b4af86b9c3bf51ef5cceb5",
+          "title": "en: a last Wolf King's ordinary self-destruct has no gun and settles its badge before one victory",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Camp,\n  Role,\n  Phase,\n  DeathCause,\n  WinCondition,\n  ActionWindow,\n  type RoleComponent,\n  type GameEvent,\n  type ActionRequest,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Camp, Role, Phase, WinCondition, ActionWindow, type RoleComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import {\n  getDefaultRoleCatalog,\n  knownWolfTeammates,\n  getDefaultToolSpecRegistry,\n  getDefaultTargetHintRegistry,\n  getDefaultConfigRenderRegistry,\n  getDefaultPhaseStageLocalizationRegistry,\n} from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "knownWolfTeammates",
+              "imported": "knownWolfTeammates",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultToolSpecRegistry",
+              "imported": "getDefaultToolSpecRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultTargetHintRegistry",
+              "imported": "getDefaultTargetHintRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultPhaseStageLocalizationRegistry",
+              "imported": "getDefaultPhaseStageLocalizationRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import {\n  getWolfKingState,\n  setWolfKingState,\n  getHunterState,\n} from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": "import { getWolfKingState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "droppedBindings": [
+            {
+              "name": "setWolfKingState",
+              "imported": "setWolfKingState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getHunterState",
+              "imported": "getHunterState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/death_resolution",
+          "originalImport": "import { DeathResolution } from \"../../../src/game/engine/death_resolution\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DeathResolution",
+              "imported": "DeathResolution",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/event_registry",
+          "originalImport": "import { EventRegistry } from \"../../../src/game/engine/event_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "EventRegistry",
+              "imported": "EventRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/action_reception",
+          "originalImport": "import { ActionReception } from \"../../../src/ai/agents/player/action_reception\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionReception",
+              "imported": "ActionReception",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/player_prompt_policy",
+          "originalImport": "import { PlayerPromptPolicy } from \"../../../src/ai/agents/player/player_prompt_policy\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PlayerPromptPolicy",
+              "imported": "PlayerPromptPolicy",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/broadcast/agent_event_visibility_registry",
+          "originalImport": "import { AgentEventVisibilityRegistry } from \"../../../src/game/mechanisms/broadcast/agent_event_visibility_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AgentEventVisibilityRegistry",
+              "imported": "AgentEventVisibilityRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 532,
-    "targetFiles": 570,
-    "mappingEntries": 570,
-    "baselineCases": 6654,
+    "sourceFiles": 533,
+    "targetFiles": 572,
+    "mappingEntries": 572,
+    "baselineCases": 6666,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
