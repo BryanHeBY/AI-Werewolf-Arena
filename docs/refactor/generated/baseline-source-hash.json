@@ -1,0 +1,2321 @@
+{
+  "schema": "awa-refactor-inventory-v1",
+  "generatedBy": "tooling/refactor/inventory.ts",
+  "source": "immutable public Git blobs; optional byte-matched frozen offline test evidence",
+  "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+  "publicInputsHash": "99d11ed8ac9e1d0c320cba632df978becf8d82e8c5a95c6775a683c436221724",
+  "owner": "backend/src/runtime/simulation/reproduction_context.ts:currentEngineVersion",
+  "algorithm": "sha256(path UTF-8 + NUL + bytes + NUL), recursive lexical traversal for each root in declared order",
+  "roots": [
+    "backend/src/core",
+    "backend/src/game",
+    "backend/src/app",
+    "packages/game-catalog/src",
+    "packages/game-text/src",
+    "packages/replay-contract/src"
+  ],
+  "extensions": [".ts"],
+  "sourceHash": "b603ece35929ad44b8dae7caf3738d8e2ca41e9f5ffd3020c3b105d1db55c8e0",
+  "lockHash": "a1b89a515c7c53f434767790fd01be93bccfa6461e6a1deb15c3a139db95f074",
+  "covered": [
+    {
+      "path": "backend/src/core/domain/action_request_context.ts",
+      "sha256": "24f415fe9c56568e30f1926b7859d258d44fb219c7698b80dd171e71ae2f0ad4"
+    },
+    {
+      "path": "backend/src/core/domain/actions.ts",
+      "sha256": "fa10dcd6470e080e6e7ee4f61f1d777fe5c3da01711e316f04620063c5803ccd"
+    },
+    {
+      "path": "backend/src/core/domain/board.ts",
+      "sha256": "c536029c97d8c363f7100d47ded0db6a77b77ff886bc21586a9272b0aa529186"
+    },
+    {
+      "path": "backend/src/core/domain/board_schema.ts",
+      "sha256": "1d0710eb1756d513ed6ff8e666f3f37a94f40fc3677efe9e4284069151a6c051"
+    },
+    {
+      "path": "backend/src/core/domain/components/alive.ts",
+      "sha256": "b87b65c4fb91d2be2f03ff3fbe266c889fd51940f0fa35735ab97a45d6c60c12"
+    },
+    {
+      "path": "backend/src/core/domain/components/badge.ts",
+      "sha256": "6079e78098378aea1455bf9564bf8bcfccc499c7fb0af0cb1fb3534f472a0f51"
+    },
+    {
+      "path": "backend/src/core/domain/components/camp.ts",
+      "sha256": "b5e9f1267a58df6242e6836b905d0e2f37febd1ab65c3dcc9ef8938d53ff8591"
+    },
+    {
+      "path": "backend/src/core/domain/components/debate_penalty.ts",
+      "sha256": "9d2ef82453b63fe5c528b273ffa6a8d0abaa50b7fb3c00efe8ef54eb1b4f7413"
+    },
+    {
+      "path": "backend/src/core/domain/components/lovers.ts",
+      "sha256": "b0ff2c0f116822f8032c6a4fba03b46fd63fde2a0c06cc322c2230ff74bd2fed"
+    },
+    {
+      "path": "backend/src/core/domain/components/names.ts",
+      "sha256": "70ceb0f50294e93066c8c72f538bf29727fa17dc944ea76db26aae5ad0ae027d"
+    },
+    {
+      "path": "backend/src/core/domain/components/role.ts",
+      "sha256": "85831473a51299cddda913247d1b3485bd3b3992cf4c5ca686233592f76e042d"
+    },
+    {
+      "path": "backend/src/core/domain/components/status_marks.ts",
+      "sha256": "c7ec6c8682e087e54d1f6fbe97cd7c31b0a8da2cf5109dc69b10696f3acbfe4b"
+    },
+    {
+      "path": "backend/src/core/domain/components/victory.ts",
+      "sha256": "2fb9b1fa2d6972997bf6d0a2fef4a535a6be63767dff9122a46370d0ca5e1cbe"
+    },
+    {
+      "path": "backend/src/core/domain/components/voting_right.ts",
+      "sha256": "1e7d0d5ea23b215220d1375d7e5509cd3513375579b88bfe76b76d1bd9c348f3"
+    },
+    {
+      "path": "backend/src/core/domain/components/wall_note.ts",
+      "sha256": "020282e6d03672541d9f8e7c927965f10e79eed5f821689656d96170a86326b7"
+    },
+    {
+      "path": "backend/src/core/domain/deaths.ts",
+      "sha256": "8d119204ca03c456384fa3d7fd0b278d1a3d8f8025af330b222682f2a32962cc"
+    },
+    {
+      "path": "backend/src/core/domain/entities/player.ts",
+      "sha256": "049fcd5d8650a7c2b01ecf5974f5b1849f1fa870967a3131e0d15f1310a72e1b"
+    },
+    {
+      "path": "backend/src/core/domain/events.ts",
+      "sha256": "8ecb6a64079f4a5b744951289bfa9c02d64f15991e6cc356a492f08b14d8987f"
+    },
+    {
+      "path": "backend/src/core/domain/fault_plan.ts",
+      "sha256": "f2cfd37f1e9ade7dfa5e9470498e28a6109d09dd6517390b9aede084e652d4be"
+    },
+    {
+      "path": "backend/src/core/domain/identity.ts",
+      "sha256": "7053291858f979e105efcf7f1fbb0952b70b0713fb6ca766b9e41eb8cecca3a7"
+    },
+    {
+      "path": "backend/src/core/domain/index.ts",
+      "sha256": "30a2459ed737ca148df2269dc62c71a36a88d1fe42d04d1ccc4c8e74293c58f7"
+    },
+    {
+      "path": "backend/src/core/domain/initial_roster.ts",
+      "sha256": "10680824c64fb9184567c439e8ffcc05f805da4ecbb7266c8ef3db4e5a1ccd8e"
+    },
+    {
+      "path": "backend/src/core/domain/model.ts",
+      "sha256": "2296ef3bb84963b5a7130db5c7f0ace0245abb42fb0d30a58e038d53881951f1"
+    },
+    {
+      "path": "backend/src/core/domain/night_effects.ts",
+      "sha256": "1d3b6d9206949c3f81c398698cd3a46197386db2de5593482360590d2134f553"
+    },
+    {
+      "path": "backend/src/core/domain/plain_data.ts",
+      "sha256": "f7d6eadcc86bfe4ca3582c385649b8388911cd78520bc65bedce640039d07517"
+    },
+    {
+      "path": "backend/src/core/domain/random.ts",
+      "sha256": "2eec2533e42c3da6bfd945ae14839ad7424d3cb3b84e76a5c36d55495a9d86a4"
+    },
+    {
+      "path": "backend/src/core/domain/registries/condition_registry.ts",
+      "sha256": "bd0c5f773b9b4cb9a6c35aa22202264435221ab072f47933f48cd1b0f89d453d"
+    },
+    {
+      "path": "backend/src/core/domain/registries/phase_registry.ts",
+      "sha256": "13cbbfc58e2c31a7bbe18c76eeb42455d30824a059079161635a31423d3baf67"
+    },
+    {
+      "path": "backend/src/core/domain/registries/role_registry.ts",
+      "sha256": "bc68678a6799ec67f0da5771ef978c5e5614540304cdbeda7ace6d918924c26d"
+    },
+    {
+      "path": "backend/src/core/domain/request_delivery.ts",
+      "sha256": "cc66716e601ec4fa43c0a2730f737667e8273aa8b8dd7b89016205e27f0a5a49"
+    },
+    {
+      "path": "backend/src/core/domain/results.ts",
+      "sha256": "16261e13932e5d4af81675bfcb6f426bdbd1798491dffdd2c2f18b66264fbe99"
+    },
+    {
+      "path": "backend/src/core/domain/systems/damage_resolution_system.ts",
+      "sha256": "faaa80b2a84089b4d62667f13debaad2e5791248b25fc2a536907bccc7ca7f79"
+    },
+    {
+      "path": "backend/src/core/domain/systems/win_condition_system.ts",
+      "sha256": "d2aebf9eef81f9aefb39cd3cd1d50cd8af151be507b234bcf60463c802d617c8"
+    },
+    {
+      "path": "backend/src/core/domain/world.ts",
+      "sha256": "7db4f18de5ddfee79c85ff91af480c93e088630beb2ca9fafcdbc12efdc286f0"
+    },
+    {
+      "path": "backend/src/core/index.ts",
+      "sha256": "9371814a6c7c65e479c12fbd2f89bc6185fb2db5fe94569127fa358f290428a4"
+    },
+    {
+      "path": "backend/src/game/engine/action_request_factory.ts",
+      "sha256": "7e3fc948819267d9da14fe9f43d44894f26f878cb18996119daf957bd9833356"
+    },
+    {
+      "path": "backend/src/game/engine/agent_visible_event_feed.ts",
+      "sha256": "f01f5137f60952e2f7d06647f5f2de223d4a1d40aef84a19c6b0a8597029430c"
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "95a8b59aabc76b27342000b5d19fc12b636f10d2ea22f20294b34932e6b0caf0"
+    },
+    {
+      "path": "backend/src/game/engine/event_registry.ts",
+      "sha256": "91c4e897d10b60ade396943f43f5b0fce63be36b28a75e6864b71ed0657e5048"
+    },
+    {
+      "path": "backend/src/game/engine/fault_plan.ts",
+      "sha256": "d294b1120997cd65f9f6bef8fb2010c7e1575e70d3aca39dd40182e43f7fa6b1"
+    },
+    {
+      "path": "backend/src/game/engine/hooks/on_daybreak.ts",
+      "sha256": "327f50b56f2cfe3dbcf83b37e09279e3ea9333b295c83c9ee7559356e371cf2c"
+    },
+    {
+      "path": "backend/src/game/engine/hooks/on_per_speech_gap.ts",
+      "sha256": "6f9c97cd790567f294556d9d1adc5f7f48d82a8938cc85e1ce7155691e820117"
+    },
+    {
+      "path": "backend/src/game/engine/hooks/on_pre_election.ts",
+      "sha256": "04e11cde5a4d1199a267b2218c53f8119db1c977746f96ef54643702e6a05abc"
+    },
+    {
+      "path": "backend/src/game/engine/hooks/on_pre_vote.ts",
+      "sha256": "f578b4bca0216cf549c88dc8660b8696425955c9a51f90d7b43d1904ac9fce02"
+    },
+    {
+      "path": "backend/src/game/engine/index.ts",
+      "sha256": "7c78faabfb2e67632bf3c34befbcfacb07d43e335b07938bfb60dfad0a587a07"
+    },
+    {
+      "path": "backend/src/game/engine/knight_duel_window.ts",
+      "sha256": "caa0b85fa9a2799427fc9990a97260d9f33af48b44f2475d726ef1fd7fa00d31"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "78d025730c2f9c35b4783d8d55b99562f67b997300a9b66caa64c171abf8f145"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+      "sha256": "498e1a5682d9ac0ea9abccaddd1ac726a0846c2fb7891d222764d0a646cd5888"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "1d09fedea57466f585fb9a439c27bf80c34500ba5755629dbd898ea7ef09ae91"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "sha256": "c664ec8b3261cfe0212b5e11e10eb936ee6621793b03c2b89bc27737e9d914dd"
+    },
+    {
+      "path": "backend/src/game/engine/self_destruct_window.ts",
+      "sha256": "2efe9464e91dd2cd20e8eaed9c9baf9d1b503460c692535ea09168c3f332cb21"
+    },
+    {
+      "path": "backend/src/game/engine/turn_constraints_context.ts",
+      "sha256": "e4303433d2062a1794510324a011992c4765f1f7942ec273684b004ad09361fb"
+    },
+    {
+      "path": "backend/src/game/gateway/action_validator.ts",
+      "sha256": "d034a6a98bb6c9bb25c12c217d13f3558a3574e66aac78dc78c529dbaaec416a"
+    },
+    {
+      "path": "backend/src/game/gateway/index.ts",
+      "sha256": "9341e1369bd475b392b779218e9b9fb8ad1960e217e7b52b13d5652cf7979c7e"
+    },
+    {
+      "path": "backend/src/game/gateway/tool_gateway.ts",
+      "sha256": "06cdb687a636a1a0c49653138658d8ef7ccffc721a1db7ec504597c656840227"
+    },
+    {
+      "path": "backend/src/game/index.ts",
+      "sha256": "718bd9215c0309daa902d3596a2bae9a1d3a4fb5a848754c5bc7505ecdcb33db"
+    },
+    {
+      "path": "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts",
+      "sha256": "dd3aa850f7bcba3deba33ad64b9829ad0017bdb0fd446abb5cc9ade28079e7c0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/broadcast/visibility_registry.ts",
+      "sha256": "2a56ff49e4991c7c631447295ac9873694f2c2fee1a403efb7c093a6a07313d3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/common/llm_repair.ts",
+      "sha256": "71644d023c8f3dc6f632126bf22d4220b03f255260f79dc0fe9fe0f56dee1505"
+    },
+    {
+      "path": "backend/src/game/mechanisms/common/participation.ts",
+      "sha256": "8420d3624e168685695a9edebe0541dd4f33fc78e3fb058758c91dcf667cdd51"
+    },
+    {
+      "path": "backend/src/game/mechanisms/common/tool_specs.ts",
+      "sha256": "0a9c380126b68603df25f0a55d5b5dee6141474f718edccfce8b9139dcdfa75b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/common/validation_rules.ts",
+      "sha256": "cfe0dbb6017ebaba0a8c108fa55eca8f4e002767b2f0e02d23bcd371c8971bbd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/config/contracts.ts",
+      "sha256": "8300895784fc473fb6e7cce7c59f3eabc1defbc685b6f72348aade1b38010858"
+    },
+    {
+      "path": "backend/src/game/mechanisms/config/normalizer_registry.ts",
+      "sha256": "8fdfc82c48dbf4b6890145edc8383a860fa0d15be930fd4946019469ca69923a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/contracts.ts",
+      "sha256": "8cbf551218571121d61b871ef5ccdaff6105d771b19ebc32e67c1cee32a511c8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "4a8ada41e655e15ec1dc1c050169eecc2117da5c105d35b8e826439e3ad4ea50"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/window.ts",
+      "sha256": "3e3fd6e59a5843e0b720cb0b6076aacae35497c0e5296b0ceb809c682c23c076"
+    },
+    {
+      "path": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+      "sha256": "fff200d33dfb3b840632188ec819e66d352dcdfb456f50e3a88b9aeca09771d0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/index.ts",
+      "sha256": "dfdb54f409ae1661e907f90c5cbc2e43d6f466f3c78003a8cb1238218b51e25d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/last_words/event_presenters.ts",
+      "sha256": "9346f2a11601bc999036b6f88460b030d5dd286175f88d28f451868dfbab8f75"
+    },
+    {
+      "path": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+      "sha256": "9f4f8e1ed99328c9b501e09d9b2594295b75df0019105278bdf7552baafead41"
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/contracts.ts",
+      "sha256": "c8954fb01fba08783ee61fff592e57f4ac6f39451e8ba437902ce9ae4728a272"
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/helpers.ts",
+      "sha256": "952f520db0ff8c7a2f37137b2b2434f0c52b48b4fd0df303f0dc768afde16651"
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+      "sha256": "1e700349034cfd507144693d0239d0aa656ff32af55491c445a66c8865a3ffb4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/tool_call_repair_registry.ts",
+      "sha256": "c930318a14fbec33d9e2bb6c75efbdc2589c5051c8a9089dbc7be80e5a93b65f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/night_death_timing.ts",
+      "sha256": "43c091812f8fc7d4da02bac6def868cb47cd2d4fcc3d81e892bfb30a8577ade3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+      "sha256": "622d8cf9a937559acfc7daeae9c468e34a97046028f5facceb2d2dd5367f6c87"
+    },
+    {
+      "path": "backend/src/game/mechanisms/registries/tool_spec_registry.ts",
+      "sha256": "16f3968d9c4b14e2e87b1a73824b64649b56a4216e45b67a334f1d40a9668900"
+    },
+    {
+      "path": "backend/src/game/mechanisms/registries/win_condition_registry.ts",
+      "sha256": "643727120ffa1827db8e3c48c6867c19b78d6f8743ec24d8aba17963d045412c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "c0750c0d2e1744b6d0901546002315cd9e89c105364de77c8ab27c44ad7b0e99"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "e741b3b505c79d77c35c84eeb171e0c570d2b1830df918d39c236accb96b6230"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "sha256": "4e01a92e01af9ce3d8a3a789ce9efd36d2e51e6de8770a8f0fc8c0fef04cf184"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+      "sha256": "ddb1274cbabf4aabf881449ef1abf235a7446177d405a7b09ceac1a169729403"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+      "sha256": "7637a7bc0cbc6dc122f477e8fc3a503beae0c38d033b37323cdc9a3cf46f9ce2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/night_stages.ts",
+      "sha256": "0c4361f14bf8ec99c592c6e322ba5066cabc3e59bac47f581864ef6c67a1ee33"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/profile.ts",
+      "sha256": "bba64d12535b8c67535621a8566585429e54037326651b0677a23331d598f5c0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/puffer_window.ts",
+      "sha256": "bf476b88e87b2d25fd8d08cbf95fe1e32b0db468c8404f69aadbc01d5bc4c46d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/request_envelope.ts",
+      "sha256": "f2753b3b0fabf403fdae1176eafe1cb661579f3920882e6b2720d75af66982af"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/requests.ts",
+      "sha256": "9ecf2b47698bef94078fd3b4f3648bd103a2c18ce8c12f5ff7b6fef5607a4eed"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/roster.ts",
+      "sha256": "3ecbd8d87d52a073797d58d8f21bb89c8dcc3c9032da44c8eb2557355973244b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/state.ts",
+      "sha256": "90291ce2770f0e06a158ae7dbbc664048a7a7cad7d4ffaf0a72cbc36e2bbeaba"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/death_hook.ts",
+      "sha256": "f66367e9f14429642564b0e9e00b33a8b5c73bbc369fe1c747b235b05f7cb080"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/inheritance.ts",
+      "sha256": "ba5e8187d08afd58d60e286c3cfd5329fb45d9abec847a686a6bf57a7f112abe"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+      "sha256": "8b24f76c7cf23f40acca588535e4bd2f39ddc10a595a0a7220499033a93f1614"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "sha256": "2761e22939809dc013602241aef8f27d6e8a8348a89bf1e092ecc7b19f0ee191"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+      "sha256": "b920f6b188cd639e6a516220f6a692455ad75024da3c98b4d6e3952fb25059cd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/rules.ts",
+      "sha256": "f0a4d2098140562d881e56c7596a2b57f6df87cb751f58abcf0f74f3d64b8669"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+      "sha256": "fc1aa1bd81acd15cda44b0369dbfe3c0cccdbd99d77801531440a8b9898134f1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/tool_names.ts",
+      "sha256": "4606455eae95362ef54bcc58d1295c615562d6b362c6c2ef5eac4cb0217b6ca9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/tool_specs.ts",
+      "sha256": "6a03509b4f8cec561e7c96e44f39f9c50fe3c95bc54d7ecb59159a73968f919d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "sha256": "abd100c6cdeac6b62c8e0a1c4a2f63671bf3f643ca9e7f0981979b6dcbbecfab"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+      "sha256": "ba64b3582cc9373b279ea512da6ee6bbbde059191fb015e5038c702674042f88"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "f549415f8ba1fdc37fb6d26fe844dce52a164cd241b946968e14834aa54530a4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+      "sha256": "6c5a12d0a3918229c8a562d4c8052777184e25eea386d75b6522ffa622e1b915"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+      "sha256": "7fd099ca425b38fdf94cf8356a94671d8678c927a86c096b291bd3650fd36fca"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/board_presets.ts",
+      "sha256": "a2f7ef28f0c7b7ee0e1b13a1d3d7976434c962fa966ad44b68e9a41147ea39d3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/catalog.ts",
+      "sha256": "2d15924d2540775d1767272df9e9740d5daf2be72d7d79a9e6179971379aeb1e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/contracts.ts",
+      "sha256": "56a392ea26094ff732007fda5a4e4ff7acb7fd86826d1b9625bf37d667ac1d35"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "sha256": "f6de372b8b7f11c61e77152100d21f94c16ee21aa1f170f047402bba710d7471"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "sha256": "746c780778126f016a19874a5e21a3fd321f2dee26fd133e22ffc047d5f636a4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+      "sha256": "086091823da90845deb322b6172d9bc32257c7e911203370f372cc4c70a00370"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state.ts",
+      "sha256": "145ec9d5cd23a1a38cbef662ef38c7509fe8e1b24f91b08ef028fb811ef11164"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/victory.ts",
+      "sha256": "b434ccd3e792dee58413eab8269473baf3aca23c71411026d220fc4e7c988af6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts",
+      "sha256": "ba2c177aba9c0cd9ac78f6c3220543f8d4d2e99cee9a2cbb680a74d029b167ab"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/profile.ts",
+      "sha256": "e958ba3a2ba4ef6948fc5a0a5c5b3c3f3d82d449b6fa929538897adf6b34e85d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cursed_fox/victory.ts",
+      "sha256": "dc06d667d74256a65a9a4616884d1aeb82cda565f1019724c99ea61d878c896e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+      "sha256": "9a838c72ed971181dc5e1f979aa9b73586cb14978d582bfe179a3963ecc4af2c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_ability_activation.ts",
+      "sha256": "2aebcd7efcccb2f4db0c369145dec91a92dc4dde62aa62f008c2e0143243fcda"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_action_policy.ts",
+      "sha256": "73f385fb2b976d8a4500319901a14f1dc993c59a7d8c4895da9a82e04b060669"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_shot.ts",
+      "sha256": "1fb33a1956c87cc8401ffe3b9a4dfe7aefa65bf65a914a7401a3b6c204dc219c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+      "sha256": "b2ccb85cc837d2aa655cd93c7646965c37bf815b99e8f371fdbb2cd874f09406"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "sha256": "d789e5e57b6d47fe62ff61d372f5255230d6a54887d5699cb4cb3e7791d59888"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "sha256": "5282fe2326b0cdf8fed6e8427d9400b2b847fcfc631031b6f0fe83a3a3f63bb1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "sha256": "4c199c9846585502d77d9e42c4c0cefaa956021ecb159516053f8c5cf02e5fe5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "d9d294799bf87f494b681f56ed27397ff218702d616a7fd4d1d8bd0358932a53"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/controller.ts",
+      "sha256": "f57c4f7cf745fb01aa0c91766474644e2603946b589ed70a8df0461a8d415a58"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/guard_contribution.ts",
+      "sha256": "cb43b97eb1df5ccaa54b36faf023ae2f90de787aa292a10a2ab065093837469e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/heal_contribution.ts",
+      "sha256": "834ed90db2d0a7e6635f713a03ffde168322233704f5fe9fdfa3c8bc4740a249"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_night_controller.ts",
+      "sha256": "60d4adcc07c7e95b551f94017d5e905e8a3a1dc982b13f0008761073fdbd21a5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_poison.ts",
+      "sha256": "44e595b67c88701a3b326ae29c25a3a30247546b04bd6d953c982be1cb67ea0f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "sha256": "11a29cd9606700c558861394fa279a220c15bf03739d14bd3a148c85ea53cafd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "sha256": "f977739d0442fa11c2bc0eb112650ba8e2f6532545b165b7726844c6a4eff1da"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/night_stages.ts",
+      "sha256": "e3f77e55164daecfa38b8044e2e95a3c8feb18ca22b27cdf90e4743ecbb6f1ee"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/poison_contribution.ts",
+      "sha256": "0846902ed221487ec489face6b4d0277b2216e73ce4471c23287712070de5601"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/preset.ts",
+      "sha256": "3d99c6f5712d715ca37c522dc1803a6993fdd107c1e2f1f8d04ce7f465d8a009"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/profile.ts",
+      "sha256": "961dc8920d3cde45ba298cdc91f950bf0c03f8d2e910bba8aa832fba2191c687"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "sha256": "8aed96dc9a2de5effdc7d0e30db404c84eff4f79625d0bcb2dbcb709c6156697"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/validation_rules.ts",
+      "sha256": "7fbe0192ee016e88f6c34042e609649f4c632c48ff0dedaa1756f43240b37550"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+      "sha256": "01d3710325fbef5ce92d2c4407306e44ef3adc255a025ddaa245db5e08f31631"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "sha256": "73387c03c16801b424640f708200573b5829bcbc0b3bcc85d425e8854f89a15d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/profile.ts",
+      "sha256": "53abb6d0464743cc2cd9f39d01e09b6a67cde28582ea2af7c8a87afc277d8110"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/night_frame.ts",
+      "sha256": "8d2d9d45df301e81cdd91ce771efa00c1cb05507348e739c01b2a72667f3bad3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/profile.ts",
+      "sha256": "ea06e0fcf2866c4f9fdff75be9758bc7e2251213e90f3856595a69944b45c1fd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+      "sha256": "56dbe29bdde755494b0ca3c9666481737d9ad286c7205f240125c93409c58b65"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+      "sha256": "f35742c92cb16ad73669d7b45a3fd59054c7e5cbc309561506edcc02ad9f9413"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/knowledge.ts",
+      "sha256": "b4c12e1a65e962c9fcf0f897ae81ee1a670040bffdae593291932e8369388dfa"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/night_stages.ts",
+      "sha256": "f0f06560342b016cf8ddecf1960a4c622339e0f8d46d88b6623cfbbffefeab65"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/profile.ts",
+      "sha256": "de9730f62ef5dcc094c4fbf7676c90b7ce04860e5f344d9567aee829d39e8484"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/requests.ts",
+      "sha256": "fa5bf9707bc239387e398f3aeaf3c5b59bc4d37aa09d5aeaf938417996c735d2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "sha256": "6851c82a57e2bc95cbc13d8cce9f86722202a981c6e60a614dff0a87c6c556c6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/target_scope.ts",
+      "sha256": "caf2305ea1ac13d07525dac952ec264814b1a29bf7036da56b71fcf5c1f6f84e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+      "sha256": "b86d7ab46ab776fc6be0129a326451562c09ce6df5272c20fdf449b262c01198"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+      "sha256": "b9678c7b84e902591804221819ad13333cd52a8835df7d3717b2e06855c13a5b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "ed13951c9b3e92ad99b532543e1b87c7da70c62abc46ed188dcfaa8339f92689"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts",
+      "sha256": "91515df03ea5def5f616e6a8855d71699569ff1e6c228c014cf6c817da30231e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/preset.ts",
+      "sha256": "aa95e63834f8a53660c49470c5da7910cfa39f4e4a32096f5a222d1b7daf820f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/profile.ts",
+      "sha256": "0efec82caccaa7146faf99a7e5715bc2ce74909460a9b15e79a489cbb2b20779"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "sha256": "0ef9ad882cb286b1c559182aaa2221736e2fe9219a4337b345e311b209b8a343"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gift_gun_death_hook.ts",
+      "sha256": "c19d3899a3d81a7f89879eb16ca3adb0023d568fb58babff43822e69ffef7618"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+      "sha256": "abbbb2e0e335d8d6f704cf04ca52ffd0818bcde87b7289a3ea08d1b301955723"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/profile.ts",
+      "sha256": "8573f3d218ddb36fb4af28ce7a7e485bd49eeff36b740cc841101f50c15fbf27"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/event_presenters.ts",
+      "sha256": "059889a0ed1bbca4e15e3da63a530f6e6d747a85c414d644bae5ddcd1da35d8b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/night_stages.ts",
+      "sha256": "366146a72947ca4289b12090ef0a3caf90f47dfd2ca3256030b4a083713d356d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/phase_stage_localization.ts",
+      "sha256": "17ce7cc5ea9d8a056789aaaf66c4ec0260395654f2b3448c739b1825af3c1e8e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/profile.ts",
+      "sha256": "61a8af08b0a9c9c2af50d294dc6ccad5dd9c1770ffe47cba977f8181d199c9af"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/repeat_policy.ts",
+      "sha256": "3d14e0b2fc5a7ef2a82d0637e5e8a038477ef5416cd859976d14492dd74bc1eb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/tool_specs.ts",
+      "sha256": "277789507b134e550dd2adf3c2a67f73e7be2ae73bc744f2988ac6e90c45a01e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts",
+      "sha256": "d95ea0d6ceddea76f901e4124e44aca0cf529c7cfd5906add4fa8f01dac1f5b4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hidden_wolf/profile.ts",
+      "sha256": "a264afbb6ff9a1634dfede960040a52f54428656fe97384d33cb51a91ca5a8b7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/death_hook.ts",
+      "sha256": "5bc4c4ba4f244ec0d828b6de0fafabb6997ca0f57627b019adda153d8fbfcabe"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/event_presenters.ts",
+      "sha256": "b612490d2ddde52ef28b40d20bb2beab3110450099e95b7f33b42f2b1c501310"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/phase_stage_localization.ts",
+      "sha256": "e4c3c56863b9863d43954171a22b4e51566ea884e65972c91d62dd1145451bb8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/profile.ts",
+      "sha256": "3fb09dbd11b688842abd8fa62857d8b24212d622193b3f6a7515d6a634f011ba"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/tool_specs.ts",
+      "sha256": "7319b514c275d147fea96d43a904726e8df5d6d8bb1e6a86ed6569da09aa351f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "sha256": "4c6f071f7b1854bcebb7593ccf43604722d61913e5e2a2fdfce231bf162842ce"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "sha256": "03bfca0c1974f27ff99edf060598e8fd6741c919a0428d9e7d030bff239a3cbd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+      "sha256": "30cef3c419e230ba491494b1e8fd05d8cb28c7e634bfee64321a9859476f29df"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/event_presenters.ts",
+      "sha256": "22c0f42c5c5c04e695c2f47ab0cef2b79d0a3e0a775eafd8fc829fffbdf4f3f0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/profile.ts",
+      "sha256": "d323d11e8d21b6ef72b8fb394d4f30dc07a015ce45c85265ba9898cb6d37e157"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/voted_out_hook.ts",
+      "sha256": "1147603987f9e334c6fdacc6d0c4a80aa85d9a164c302e5e3bcbb52c5a6b192b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+      "sha256": "552a74b371327e25effd12ba041ec8c112dc0f8e4cfa64be6648e8a253ebd434"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "sha256": "79c53f7a1deca35c7e19e60808ce18570e0e55924a3db7b40264878bab5df8d6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "24f9beb4f9f43b524aaa13ddf5e1f5842931aec7792ebf7b17cfa550b318b36e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/inspection.ts",
+      "sha256": "09407599be4e26d3a33e0c0614e0a96b55013098fdcf7f312bec1c001f184df6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/commit.ts",
+      "sha256": "1d468b18ed76fde7cb773e24ed57589e901271b403a7f3c3cb8294b1ac7b6dcb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/profile.ts",
+      "sha256": "819886eaa7595a0d34e8647a18b27979a9286c7145e3def9173cd6e9f5b14b40"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "473186326fe45e042038b2fe9193b3ebecdf323d762df4eda1274b07ea276616"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/profile.ts",
+      "sha256": "9ca32a63fc6a41a044821568b884c3d070bff83692e1d0bc5854d40551570d5a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "sha256": "abde9bdbd9119d5c6fd4125546d5991ed759e93e18c9041d7f461e6a86e8a9e0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "sha256": "7ec13856f1cb71903cbe14ff8d9c1f341d1ebafe283f07682a3b8b15ccd1bdf5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "sha256": "24cc5145a2372c78510409a9245c1b8daf6e6ec3db4503cc8afc5fa2530a566c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_stages.ts",
+      "sha256": "3177d1388aad89b62df70ae33c553a0fc6d62d1bf98e70b09553ab688b4c7997"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/profile.ts",
+      "sha256": "d91cd1a88fd013b952de3ea1dff46e6fa9f85215a8fa4b42c6e2cd881deddc51"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state.ts",
+      "sha256": "dc7b0fa43471297e927c0681652d555fe00e4ff3ac59a04bfdb581e5f3d43a74"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/death_hook.ts",
+      "sha256": "4bc52802b767a48764ee8483e4bf5d02edd69a8dcf2a4152e8b3ab48c868209d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/inheritance.ts",
+      "sha256": "649924647dededb90fa030e26267924ffe7581cabef88b1576bd2c21e5ac09f5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+      "sha256": "0eb64455bf641e9e72e7fdf2c0275d01e9ba56c253c2daa96ecca4692389c76a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+      "sha256": "70e46787c5a16baf514a42b0144c5c258480f2f3c6229840df15a867422b0770"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/profile.ts",
+      "sha256": "96037a5ba323f654b1ca86ca807bca446c93abc5d10c5278ea35bf6b1ccbe7c4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/rules.ts",
+      "sha256": "df15014e2e6cb75552749076b3ead7d730199b54acebb73270931bf3f97b8f0c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+      "sha256": "7c267e08bcca37c1b6393e5abd5a4ade554e0dc8c2123e49cca53de920d14a7d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/tool_names.ts",
+      "sha256": "c74ecad0abfd4f4c5b029c5a7ec7462aeb136130939c782d115fc20a10e92272"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/tool_specs.ts",
+      "sha256": "93ac332f0fdde904039aaeac4026559727db038e6d473ec524794ca923148e97"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/lucky_stage.ts",
+      "sha256": "1a8941cc306e0f4f3ba28d22dcfe84776fa035c4e2f8d31fd3e25795f0a5069c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "7bfed6e71c592439474cd4b653138344181d86786c06d5e8980376f880480913"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+      "sha256": "9ee7c34d5af996049ebf5aac1b031a9a43a2679b0cc99070e5c1e64b8b45e458"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+      "sha256": "4cd28528237f66dc52bb0eb4541f4c2f88c8360dee541c3c3b42177330e44034"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "sha256": "6d65cffedcf8bc6b66744fc1755c59550a955965191dc63df92c607973fe3999"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/caster_authority.ts",
+      "sha256": "bb7787698d1b138f0e3a33a46671e9766c184c566cf72985c44f50cd27bedd12"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "sha256": "a29660aa462a9b1d7af1987b20acf216e289d0c26fd4d06e3ce12e4469f63c9e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_stages.ts",
+      "sha256": "b3897a377d79d55be4f9d1cabe22b5e4b05cae7005638ee96ce56f27a8b43fcd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/pending_night.ts",
+      "sha256": "31d3b8d3a3edaa496281cded6ac22b26b950426e4a104b3e78533e751ed30a56"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "sha256": "761593228dd6512b7b8d7e813cf48f04809db1f648796576cb983fa30d787669"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+      "sha256": "721e0ca506b4d119d884adf1de4dcdf516336d893c9ed738fb3e99a3b69bcdd6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+      "sha256": "3d8d60b5ba133b1088146b327bb7d8708a3055d62c9d7a9675d054d888fa1b56"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+      "sha256": "b13a5cc8f7538971d6c712a4d266c78522daf4ce12b0cc7b7f6c880d214fa3be"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night_action_history.ts",
+      "sha256": "fa729a345b4a7b7387e6a1a51bfadfeee8db4037c31dd95365398d19e9c35346"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+      "sha256": "c1e9754b11893f844b63fa8bdb80ab27489e8883d174f25d84e77e6645da29ae"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+      "sha256": "c266ff879d662632a203e6179cc953db546413b8a2385d150bf6f80bab2a7b16"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+      "sha256": "a13f4cd7f306f7780db80e3e558d15ee4cfbb1df58946ed19cf88cfe38656b06"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+      "sha256": "b6ab0dd6fb046c6dfdeea1313120af063785b84a8b3fef55384926c990dbcb7e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "sha256": "4657adb5c34cfbfcd70a4c3bb817cb67e0c522d376eb1a1ff74e30baa2fbeb8b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/damage.ts",
+      "sha256": "a21fe89e98389dac1a3f68384bf0b7a56bc87cf8427d8c630cfa10a5be34d0b6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+      "sha256": "7dfdefcc8629f7b62706cf8b4b87e74dcc373cf469bfbd6018de2327fb091439"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night_stages.ts",
+      "sha256": "654b16899aaab1e68bcb659a75222d1dc3dc620c96b0ec4d5aee8838ae7b3689"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "sha256": "51848a9796194d62523676b6addf26aff7533d893bac944c7ee1bdbb54404b26"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/profile.ts",
+      "sha256": "62f245444ef461a14d528c45ba0227c86f82350c1464f697cef194b1bc7b5860"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/requests.ts",
+      "sha256": "a0dd99b5157176908cad7b3a8e49e294347ae95cca0983fa403999a8fd012fbb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "sha256": "63376b41dfee162aec50fddaba7acf638d9507f6fbcc25facaae23563243ca84"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "sha256": "ea15f781da9fdc9a986c489caa6fe47261b2b56ef3fc3c98c58ef500abceb2f3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/profile.ts",
+      "sha256": "916f44cd93bc1e3724787dba49714123804f824ac52813359123d8cea95c37f0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+      "sha256": "1f54491ad5a28576a88605b0b2325973e34a3bf5c98f217135174081ec869b0a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/voting_window.ts",
+      "sha256": "23e4740dd8ad47716256139c861bc9fae3b1dd78716426ed5a55c56e2d9825d5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/original_player_scope.ts",
+      "sha256": "d37726b3f22deb4900284fa83eed239b62fd0196aed844f3996d354f80aadafb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/permissions.ts",
+      "sha256": "a41ca2eb154c0f1ec145c31705b2858089d117f79ca5f56c4f24c5ea0d9ce587"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/player_extended_state.ts",
+      "sha256": "ff7649267d0a7684326bc2b30d32ef1143c699a6072a832f1d665c8f68da1a36"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/player_state.ts",
+      "sha256": "f0111c4b104dd3c099f5c20304509ccc4e0bf02aadb2aee0fdbaff19ba20af8c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/private_state.ts",
+      "sha256": "fc7bba0d353ec67c868c5cdc03ada7ee5e354929f0dd8d5b19b1bcdd8f0fdeb6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/psychic/profile.ts",
+      "sha256": "5b8525d40eb7f5f3ed7ea25ee77fb9879fd6f2e274cbd4f6834a983cdb359e0c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "sha256": "1508fbf0b270c6007ac226b4343c12bb57ef55c00781e202fba199611e5fefbb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/profile.ts",
+      "sha256": "a7becbe67abd6121bbf05a414487397f7f83d9e91209a18c552bd77dd18aeb9c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+      "sha256": "cd0531c0dd7d4d3d8468330af177c9de3452094812b68c6d2dc7dfd367411a23"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts",
+      "sha256": "670acf9e9a77d8043477118d04b95511579ce935cf495482a14323409f7ad880"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "d65e41c478f43035e05c6e6fd1f860006442876c97a772a80c91adc3814de67b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+      "sha256": "84d4cf4a1324bb0e4a090d90e8b03ccdf42a543372b5f6967d210bbf049d9d4c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+      "sha256": "311212ac6010bb9c8a75523352289742bcefdac00be0a1fb3996a958cbe6dd65"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+      "sha256": "18326a1e712fa0223f1ef238cd8e2a6d0a5f422e66c241939b35ddc8e495b82c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "sha256": "e6f6a1259b9e6da16ede6aba5c99829ac9e866d346cf05a9a82f79fa2433dcac"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+      "sha256": "8288c93656f1df5fcd7da1c405af11514119a5f4ac7a6966ec30d3204bb4d5a2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+      "sha256": "27ce42edfc1c53408483592558e86f6202c7fe3c39ed05ef4c3720ae8e00d25b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+      "sha256": "39d03bc26798b57ac9b1fa923ad23d41d3d7e7480b999c6401b2853afd01d6de"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+      "sha256": "9767bd37f72a2d79ce2fc55ee540d70d54101d67c409c642d3f533ca1cbc58f5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+      "sha256": "60fdf69cfeae45b8c69ee056e237c97cd85c7f50d393a44962722ee381c555e5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "sha256": "36611ee18597aa6c024ea6fc2a6665c8fe7c7266fed32f280dd678472a262b0c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "sha256": "7ea25d722a0c368958c2e05d51966031675663398ff8b65648bf98ba19defd32"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "sha256": "20a4b1b8070aebf23e23a852188b73371829fb49b834f2c6ffee036075f4351d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+      "sha256": "b57b33446e34e159b6e47077187e30f47f366168b4ab484867e758a86486e38f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+      "sha256": "af18c399cfe0660619ca984acbdd6efb17428d51c5b9fdb46c948d656c0d6f26"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/profile.ts",
+      "sha256": "e13fc5daadef6a5f09499f4041fd1430bab5dc7c998a9e7e0fbd15a00bea537f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+      "sha256": "ecfae15b855efe44909f5514d76ca071a418d4067cbb3df8c25f3ff8b2f14d7b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/event_presenters.ts",
+      "sha256": "04e26b463cfad102ee76f30cf3f3c735e64303ef261da14c631a2c20ed3b85fc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+      "sha256": "d547055c06833e853a8a28d1494c000e92ec2f2b96713580345192d218fcd2f8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/phase_stage_localization.ts",
+      "sha256": "91cfb143a8aa96fc23f71bce2f3de99095a6d1861f2bac806277f6e372c226cb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+      "sha256": "9dd9fb493cc518f30071ec08bff6eae4f45b1bc156e0c3ec3e98b92838f504c0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/target_policy.ts",
+      "sha256": "0d263f4483c38b94895b426c04d1f863cf3f1badc0b6ff850e2bed97b881bb52"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/tool_specs.ts",
+      "sha256": "6776dab95a3702006f0de8cfacc03d5f1f5ef4c79e2c2eec494286ae4d5e0b6b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+      "sha256": "89fa007ca3929abbaadf3b7870997316b0856bed5aa26029d2f42e7ddf99cc49"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "sha256": "c8b16b4a6a9dc16800b1afe3203c3b7bca523e483f532ff0d489d6900e4f8521"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/profile.ts",
+      "sha256": "9765a769e91f41d15d3b6999fe4efe005ab30b7fdbb0f12b9d89ca4daf3206fe"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "sha256": "34eeb0bd0fb815c117a98d23b4281d5424b98c1846c245de5046fc2c2d1baee0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "sha256": "8b1f66f287a823177464b3aaaea8b3a3c5dcbd93f1c6d7245d8b368f8006d063"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "sha256": "709ab407961bc13de1b04dadf5bbdc4cd7e5fdec1430f3c82cb6384021b60122"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/profile.ts",
+      "sha256": "f36189211eaf77acfd82ed23c421a8c4f9948e3657ffb8044434c3c6692781f3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "sha256": "eaa7a17a14da803ae8b70c8432acb1b972f697ec5a00e34121a4bce36b19e7bc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "sha256": "196621806cf96f3ea59776da313268e879981fdb9bab68cb45155d8962aa04d8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/effects.ts",
+      "sha256": "61ef19f60a4d801257571bb96b227db79d7bb7a985624ed422e93891191caada"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "sha256": "954983b0c131caae2f111dfb484595047603cc47540a88050df7e84815825a09"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_stages.ts",
+      "sha256": "03e0a77cbfabe604f601d5aa675f23ce3f1e10cd8f6a07b0f6a99bd1e3e992ef"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/profile.ts",
+      "sha256": "7bd50d07706855b6c19a8e7653dd701d466440fcbe0e3bfd601db6a83b0dfc77"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+      "sha256": "d331612b3e463395f5fc7edc6a76c7024bd5c763b51b1c87c1ff8cbcc82db433"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/exile_mapping.ts",
+      "sha256": "c2ba07a5a689a47f0f7316e62d97cb0f944c8ad0d3323540b7b76b29e6337dbe"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night_frame.ts",
+      "sha256": "b12075bfa8e673030990ef32bc63c242f57759799819c72b4deafc930a3bd2ad"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night_stages.ts",
+      "sha256": "6d6d8aca5df7e994ea05d1857a742914e743de5c19147af1682f597a4a9756cb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/profile.ts",
+      "sha256": "bd579618f4460086280f7a60c043ea9301db8774636ea62395aa3c7f8aa4c6a6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/state.ts",
+      "sha256": "fd25d1c4ad60e09d99708b1e620d7f6ca92d8a09a59facf7c6b48f91b222b4e7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/villager/profile.ts",
+      "sha256": "c7f5d899d44a703aa3c9604fa770a0e0d70834edd4babdf9d25fd602e3521e4f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+      "sha256": "fe85c8145abfb3dc22d0c1ce859cff4300d16bf68738e146980e547400c91ab2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "0bd5fe971c2ed494cf989ef09f023def0e6c28cd5831daafd352e8149e8c0f0e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+      "sha256": "f7516360b615dce4f60c51faefecf353cb5c53ccb6fdc837b44f7a4f64828273"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "sha256": "dbf3b38e39b844b6cf60cd897d1380562379aaacb4425bee17ca0ad6c143120b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "sha256": "30ef46c2ff0a463a6a50f90bb13045a87607bb13554378d3ac76eb1707e34327"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/config_normalizer.ts",
+      "sha256": "752570c38c6866c7e4bff5d810fd9ccb49e4b61ec8318329aef7a343ab70313b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/event_presenters.ts",
+      "sha256": "6526b446735603ea8b92b91d6dbaf2bf006a3497fa446b5afa7cecf612a9e7e3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/llm_repair.ts",
+      "sha256": "374a203a34db9d16839e27e3e5003a129976b360fc4555ca91810a3d0c57ce31"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+      "sha256": "f11bd64454c35783b379ff909f9ba562ee59f54902d99f6722944587fd1e67ec"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/phase_stage_localization.ts",
+      "sha256": "c7ef8e50d62ccd7f4f6e1973218469349b24bf0e399656e6a3a4de188731f43b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/policies.ts",
+      "sha256": "73cfb6429b98b81d79a826db9705dab959b07daeb6b29a082c846356f96ec54f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/profile.ts",
+      "sha256": "3c10c3d099885bb91349fd7db287e406dfce9c539ebfdb3c3655ef6baf75c12d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/tool_specs.ts",
+      "sha256": "117486e224e29904bf7be88d048f0c7f024178c19dc5acb39d135f1634154f18"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+      "sha256": "86d424131523a5defc6a3a2d1ee0d3a101ac06fe4352ce19eed28d3098ee63a0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/event_presenters.ts",
+      "sha256": "7c5467901a0aaf2f30779e4ad9fba930bd19cbd413f90d1d7c58aa7ea32ebf59"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/knife_scope.ts",
+      "sha256": "60c5bb81639ea85fe0ef7a6fb1f72914d98a1e80784348f224bfabf2aa42fbea"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/llm_repair.ts",
+      "sha256": "3be706dced9ab3299d2ac442e5cfb1ed1ec8ef4a1e927ae5b39815a2324d3923"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+      "sha256": "0bac1ba62c5e59a0dd7a979b42257147160444579103caa7fa1e0a962fa527ed"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/phase_stage_localization.ts",
+      "sha256": "86d2f11d907d678d47e6c187560d9917a7fbb29ef77c7fd20ab264236292d5fa"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/profile.ts",
+      "sha256": "bd456fdd5544f7f1c9cf24c332113e2beb62d5be0fe75449ba6160f685873c5f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/target_policy.ts",
+      "sha256": "d8491c4d8139b502ec3d5fe838a3b75ab317992952a338eea7ff109629feab1b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/tool_specs.ts",
+      "sha256": "e9eb18adca972be2f2af71ebda6144e7cb53a4445e0920a9feff8a9bd613995d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/validation_rules.ts",
+      "sha256": "412384398aa8436a81716d6a63501dd2c231e4a46e80aef60caef8c30956dd7e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/death_hook.ts",
+      "sha256": "c0d38bf6cbc409fdb93dac17c1519a38e0a020b013b050812b5abfdb25e237f2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/night_stages.ts",
+      "sha256": "d2733430dfd0aab719179aebbe1bc6cbe6ffa6f84f9ae313dc7f12f4290ab157"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "sha256": "3967c9d932d792a765ccb67a50fe187d3a6f015d40148b7745be174537bbf2da"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "sha256": "29c5a691801466ea9276a853d1ac333780e8db084e92505257b2069539233fb5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/profile.ts",
+      "sha256": "428d76df02877fa048c3d4e4312d52935e10830da81182f5e4a8b7738deec12a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "sha256": "407aad52371dc7e888ec529a768307f7398952428a99f351594703f58ac95510"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_stages.ts",
+      "sha256": "40debb7ed73ad3656ca8a7fd6674f7db920c6129ab8284c88777b576a2e9b7eb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/profile.ts",
+      "sha256": "a38bbc3d8175c44d606c03484a9d2b4550062b09202d23e176a292ff5875fcd9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/seat_mapping.ts",
+      "sha256": "07631a14a16f28654cb45fae5548227a3269399ed31aabeacc2b47e6c39da834"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state.ts",
+      "sha256": "31242d9a5caee966884b2dede54fecd1b4cbd942609b2418b0be49309a7a2814"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+      "sha256": "f90de21bc5b6ff9f4d0aec98b25883a58aa168a102a896ad95c0e879972e79c1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/script/contracts.ts",
+      "sha256": "e4cac78ad5738500021300a3554ff5144f224a53642bd9133d9fc028ea7ac6c8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/script/event_render_registry.ts",
+      "sha256": "7aa786f3007cc5a1062d436c44cc34fdabbca4468824c5d4099acc8e5a502e40"
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "sha256": "1b16d4285f0be81865ab8e0ff6a84834c046e7bd0f714729e8b5b48ccf3d0b17"
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/config_normalizer.ts",
+      "sha256": "280b3ba6ab87e00e2fa6095e355605a6d2ac347ca80a27e68aa4529da44482b4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/shared/phase_stage_localization_registry.ts",
+      "sha256": "cef2b66f757f555986eb2c8d1a754fc306f79f56ca4959d2eedbff9fcc802021"
+    },
+    {
+      "path": "backend/src/game/mechanisms/shared/text_localization_registry.ts",
+      "sha256": "15d2028c271178ff7545339bd1a8f7bf29d66345d53b927af0d6c9d47d3c8557"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge.ts",
+      "sha256": "4b462ad0cbf033e1043721a7783e9dd7a288145433b394cbf1b0df4c1b7e0997"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+      "sha256": "20ab2415f2899bb394e1e3a185650b851c4f98affe729b3951b0f956a727f2a4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/config_normalizer.ts",
+      "sha256": "bef16c8700565722600bc3716067a48890dcd8f2d9572cdd4d852e2e05b54413"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/election.ts",
+      "sha256": "5e5855ed553898ffa614ddb36a456828613981af613472f035cfec196b7444f5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/event_presenters.ts",
+      "sha256": "23b3de138bb7d0f30c265e77d24cc3d2db14b97f5fd8e9e000e69cae8bd92722"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/llm_repair.ts",
+      "sha256": "9184819470aff4716a04a72f105cccc3a543df303a6cdc5440b66185ca710e64"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/phase_stage_localization.ts",
+      "sha256": "31fa40560f4d7788275f0e6813a15e4e477589936357ef1cfc2e8fc233c01d64"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/speaking_order.ts",
+      "sha256": "c7e49c02b70ff2cee55e360ec573aa29ade1331739e1f6011cc9d933108e924a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/tool_specs.ts",
+      "sha256": "f3a15be1c30174aaa2da2be3e58819428bf9525684e7e3dc842cce3fbe695287"
+    },
+    {
+      "path": "backend/src/game/mechanisms/sheriff/validation_rules.ts",
+      "sha256": "249766404109da8dfe771b8797b2314eaf0d23b25951f035f1c5a3e0e2795092"
+    },
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "sha256": "0115f84dd386994d90f4389923d9f3989c6e9c01610b7fe0d8d17ebed53fb690"
+    },
+    {
+      "path": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+      "sha256": "4c8ea97f36d20e917481f31623cf0fbddfdc4965e5ed70d08dca76978c7ae4c0"
+    },
+    {
+      "path": "backend/src/game/mechanisms/validation/contracts.ts",
+      "sha256": "d8c91267be8a6cca17e380a0661b41effa691b3f5ca5930d545349fe58e5754a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+      "sha256": "dc47e063a2650902d360128c6aa925cf5ceab4b8ca8547b373738117a0edac68"
+    },
+    {
+      "path": "backend/src/game/mechanisms/win_conditions/contracts.ts",
+      "sha256": "4cbdbd2812a730b6ff8d9d5da3c70fc9db7eb55297a655ac5b0aad9a427dd341"
+    },
+    {
+      "path": "backend/src/game/mechanisms/win_conditions/default_specs.ts",
+      "sha256": "aab16005e5982a8b711c0080e2073815daea7a1d6dda81dd46d412b65726d94e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/win_conditions/results.ts",
+      "sha256": "f8134d27b40e81db78bf85b7e878c860125abfdce3dccb96c0753eb2179e3ccc"
+    },
+    {
+      "path": "backend/src/app/bootstrap.ts",
+      "sha256": "59336703ca99963417d72556f714be422f30cb5324594e11f92450fecbf04f96"
+    },
+    {
+      "path": "backend/src/app/index.ts",
+      "sha256": "287c6d63932f87594624cc01551d47269a9ec6a00dbb08c556d301c884e1d33d"
+    },
+    {
+      "path": "packages/game-catalog/src/errors.ts",
+      "sha256": "e19c7b567e0239298ff7661126cef61a7d6833d8af4b00791046665c93817107"
+    },
+    {
+      "path": "packages/game-catalog/src/index.ts",
+      "sha256": "186cc4249fdc06d8faf07f0363c258c78877ecac0438dab6128e8cc42818e716"
+    },
+    {
+      "path": "packages/game-catalog/src/inspection.ts",
+      "sha256": "d6310c038b2bae13fe26d29600c39effc255700e34674bf2b1a96230a656d028"
+    },
+    {
+      "path": "packages/game-catalog/src/outcomes.ts",
+      "sha256": "9a273403624154a9776af1e7919736524a830231fae637b8af587500759fc43a"
+    },
+    {
+      "path": "packages/game-text/src/animal-dream-preset.ts",
+      "sha256": "15da385c0ed4effc3c853844e3ad8f013f303fd84e8efa0fc17ea7465531508c"
+    },
+    {
+      "path": "packages/game-text/src/animal-dream.ts",
+      "sha256": "f8ba37e8c8d2e6c26999799e5b0120ad00ee28b57b233364cbd4f84c943448f8"
+    },
+    {
+      "path": "packages/game-text/src/cupid.ts",
+      "sha256": "187f12a6250e62ecb3d963501995d601ef71cc429af950971e251b4ef1cb745f"
+    },
+    {
+      "path": "packages/game-text/src/debate.ts",
+      "sha256": "24e646b374da773b2010b8e79721d431b38013709890f4420b85fbe33eeaefb9"
+    },
+    {
+      "path": "packages/game-text/src/demon-hunter-preset.ts",
+      "sha256": "bfa9072d3ece330557b9d002098d3d39fadefc2250a7eb92c7b875b893c20df1"
+    },
+    {
+      "path": "packages/game-text/src/demon-hunter.ts",
+      "sha256": "1c33d424eca72b155241c4b52a42f5b3057f5f67758a40b3fc11b1a25906d956"
+    },
+    {
+      "path": "packages/game-text/src/en.ts",
+      "sha256": "c833691d569b7d8f827f8434140e806e827fd9ddf4d2e105df33b04e19a0eb10"
+    },
+    {
+      "path": "packages/game-text/src/event-data.ts",
+      "sha256": "45add95046d3269de42e17c56b8c536efa9d63b9cf7c3537b101470ca7076057"
+    },
+    {
+      "path": "packages/game-text/src/evil-knight-preset.ts",
+      "sha256": "8a155427c14a4414fc46246648ce676769ed51ac52d46bae5f2661cdc033a5a6"
+    },
+    {
+      "path": "packages/game-text/src/fragrant-pair-seer-preset.ts",
+      "sha256": "94e0cd4c7a6f6f1d4ec354b0d692e2bf5ae328ef3c8e0cbb1015ccc70a53789e"
+    },
+    {
+      "path": "packages/game-text/src/fragrant-pair-seer.ts",
+      "sha256": "2f3863d7604833baddcedd513a61cffca751cc07bd6d8e9c5afae6f1edfcaa58"
+    },
+    {
+      "path": "packages/game-text/src/ghost-bride-preset.ts",
+      "sha256": "01d31981a0b392c638f685247341d7d21c729f67f0d85219c6870b87d56e5c71"
+    },
+    {
+      "path": "packages/game-text/src/ghost-bride.ts",
+      "sha256": "f5522df414248a9b32c28ab6e3e2390e7b9ffd58e42fbfe24b8ca885f4d41e72"
+    },
+    {
+      "path": "packages/game-text/src/index.ts",
+      "sha256": "7c6dd50368466cd26c9aa43250121dec78014138951bfe582e57882bd410616d"
+    },
+    {
+      "path": "packages/game-text/src/lonely-girl.ts",
+      "sha256": "dee69b1f2218e2aae6921679c0e561725a21940820aab01a982e0dc1131e4857"
+    },
+    {
+      "path": "packages/game-text/src/magician-preset.ts",
+      "sha256": "a783c92ec99faf1a5da2198bcc7c31817925a9a77a4af97d47d26650cfadc219"
+    },
+    {
+      "path": "packages/game-text/src/magician.ts",
+      "sha256": "4b3bd4a06111cd3c50d9bd90c35d61e6854e68baaf68cefd7249218aafbef2c6"
+    },
+    {
+      "path": "packages/game-text/src/mist-raven-preset.ts",
+      "sha256": "6979fd6f3faad85a4176a309db68d0827f4bd693f1b43c7a92ce6fb1882650e4"
+    },
+    {
+      "path": "packages/game-text/src/mist-raven.ts",
+      "sha256": "8f7f7654a075724da00e85760cfe3577f6d8307b1a598e25f2d03de43a842d71"
+    },
+    {
+      "path": "packages/game-text/src/nightmare-preset.ts",
+      "sha256": "a8117600d99cbf5b104d4a7fb631a2d1bb48a9a4cd889279622820f0e524fbe3"
+    },
+    {
+      "path": "packages/game-text/src/nightmare.ts",
+      "sha256": "2041e34d2dffcd093b3a7e3e4b80c550b99e5ecbc37bdc1233e3bc2ebca0ac52"
+    },
+    {
+      "path": "packages/game-text/src/noble-secret-body-preset.ts",
+      "sha256": "c71ddedb899fe75fbc912dfeba029a3a2898b326acad5ebc25e06afc7f0b59dc"
+    },
+    {
+      "path": "packages/game-text/src/noble-secret-body.ts",
+      "sha256": "e1eb0eba59d53e9706e8c9a80b0bf04daddca1f5d291f67ee0b4fb97093a4c20"
+    },
+    {
+      "path": "packages/game-text/src/order-prince-preset.ts",
+      "sha256": "483a750d5c7a3de65c7b848052e45101e4b90610990389784a5cb30ba0481118"
+    },
+    {
+      "path": "packages/game-text/src/order-prince.ts",
+      "sha256": "33894cd38ba050cdb0061759ed19fdf9addbfc57fbb88ebae1bc0d05f4a0669a"
+    },
+    {
+      "path": "packages/game-text/src/pure-white-preset.ts",
+      "sha256": "41f9ad9a38c91469f5f131eff64d71264f8120cc708de592cd66c43376bdbed2"
+    },
+    {
+      "path": "packages/game-text/src/radiant-eclipse-preset.ts",
+      "sha256": "8a0bb80308ba3797d94a0058e35159d7ab7fa0fc09fda143e3674ee66a62ca00"
+    },
+    {
+      "path": "packages/game-text/src/radiant-eclipse.ts",
+      "sha256": "8f4522cd6a9ad4cee47fb8b2073151bc085b5c3cc2764d8b1c3fd24cd3f6e85d"
+    },
+    {
+      "path": "packages/game-text/src/red-moon-preset.ts",
+      "sha256": "7748473d59962cef71d8354bd97e4105f627674f7ef89fdacf25dd579f5dc808"
+    },
+    {
+      "path": "packages/game-text/src/red-moon.ts",
+      "sha256": "0e5b1d8aa62d23d1a1aab7dadc7a4604494f0eefc679f8939b6be9c5ea90b563"
+    },
+    {
+      "path": "packages/game-text/src/scholar-mentor-preset.ts",
+      "sha256": "4bda3fcbb9d20396b3993707213718f1ea1adafe746003107a951c75006ad7d2"
+    },
+    {
+      "path": "packages/game-text/src/scholar-mentor.ts",
+      "sha256": "be80662c7b64ae174d5d167a5828e12742a2a8d7c03089494f564bc87949a002"
+    },
+    {
+      "path": "packages/game-text/src/shapeshifter.ts",
+      "sha256": "d410b514dc93470cddd6dcf0a7234b8f5f8c313b88925b25b47f211d65689fe2"
+    },
+    {
+      "path": "packages/game-text/src/thief.ts",
+      "sha256": "84c00cf96c7863b4884c609a0547da13cd30f9503bb502bf59d20f6cd925892c"
+    },
+    {
+      "path": "packages/game-text/src/time-consort-preset.ts",
+      "sha256": "6002804e9362ba6afe70fdbba1739a5909f5277c9ff4995f2477354fbfe42371"
+    },
+    {
+      "path": "packages/game-text/src/time-consort.ts",
+      "sha256": "4a779ec2323f2b91ce806ab3a44b76ffa8f01cc086b8d9ba3725355abeaa1741"
+    },
+    {
+      "path": "packages/game-text/src/trickster-preset.ts",
+      "sha256": "34ed433439c23257abde99f00a633b22ac361e71a115414c5ef0a373f900df60"
+    },
+    {
+      "path": "packages/game-text/src/trickster.ts",
+      "sha256": "003575457f3711ba9b216e18cb6a5bf9c3494d683910c810abbb177bf594682b"
+    },
+    {
+      "path": "packages/game-text/src/wall-notes.ts",
+      "sha256": "88d85cd06f60c43c776cd3003dbe805020bc84ee32416b33e3f45ea173d86e2d"
+    },
+    {
+      "path": "packages/game-text/src/wild-child.ts",
+      "sha256": "4ccc2860f441550a05d63ee7c6fec7b4049eb7558f83b4ffb9b008b902afc180"
+    },
+    {
+      "path": "packages/game-text/src/wolf-sorcerer-preset.ts",
+      "sha256": "e72fcf5a5a1a4de723eed7729192c31c1c220f14ad2b1699a83ef0490a01984a"
+    },
+    {
+      "path": "packages/game-text/src/wolf-sorcerer.ts",
+      "sha256": "d3663e3b15ba261cfce97531be7fd0836ebb6f315b53a57741ccf77018ff1df2"
+    },
+    {
+      "path": "packages/game-text/src/zh-CN.ts",
+      "sha256": "75e28001797fdae7a4e27cb2c90653b70bc229cabd670d53856c15c5a2bec3cd"
+    },
+    {
+      "path": "packages/replay-contract/src/error_diagnostic.ts",
+      "sha256": "a98f94f49bd0c4ac8cbda7d5eba3f87284f5048e5d4e73e0bad477d070ce21eb"
+    },
+    {
+      "path": "packages/replay-contract/src/gravekeeper.ts",
+      "sha256": "aedb83e4acfec1525b66a191a2d68bff2541e7e9ebe27c28d3aa8c576dc91b4c"
+    },
+    {
+      "path": "packages/replay-contract/src/index.ts",
+      "sha256": "3175325339f8b3fdf8ff3994bb68e309b0b716d8133ec2d64727862c9f3ed69b"
+    },
+    {
+      "path": "packages/replay-contract/src/inspection.ts",
+      "sha256": "39874b59d0b80598ed0a3f544270c66f8330f6b40bf7e9213e61cac947252cc4"
+    },
+    {
+      "path": "packages/replay-contract/src/legacy_aliases.ts",
+      "sha256": "09edf029b87e5556f04901059dfb3ef2bc9ade19e0a52ec47bb31957091549a1"
+    },
+    {
+      "path": "packages/replay-contract/src/legacy_role_aliases.ts",
+      "sha256": "1c40752bd122f36e813c9fed3e4e0dda77d936b3cbaef469fc420c78fc3dda72"
+    },
+    {
+      "path": "packages/replay-contract/src/outcomes.ts",
+      "sha256": "07e534a89efab0712177035835e9182678b88f5d4d0f4478d7cff448cd7bda32"
+    },
+    {
+      "path": "packages/replay-contract/src/player_record.ts",
+      "sha256": "314ec187b9df31cf967fc2576ddfcc9d49d68eb6127951cb58d2f9ea514350b2"
+    },
+    {
+      "path": "packages/replay-contract/src/validation.ts",
+      "sha256": "801bab4e4606507513bb0f98cfc1dc053b3d189c5cef5427d0002eaf3c61d7d5"
+    }
+  ],
+  "uncoveredSource": [
+    {
+      "path": "backend/src/ai/agents/acp/acp_action_provider.ts",
+      "sha256": "ea652ccccbdd500e68028f2b4060f6163206a9418dc92b420fb983b772450bb6"
+    },
+    {
+      "path": "backend/src/ai/agents/acp/session_pool.ts",
+      "sha256": "8283436c1fed361ba7dfe60b1af1fac89969f350909f7ccb293f7d516a00d58b"
+    },
+    {
+      "path": "backend/src/ai/agents/game_tool_protocol.ts",
+      "sha256": "a1ec4970e010967d17d6e2c156169042e888c7b0e7aef48f4cd583d42959c2bb"
+    },
+    {
+      "path": "backend/src/ai/agents/index.ts",
+      "sha256": "93599c3d2df788db03dd809b432d7a15ca36b5cc9943a67823c7acfdad45cb72"
+    },
+    {
+      "path": "backend/src/ai/agents/llm/fallback_action_policy.ts",
+      "sha256": "1b6149312305020288c7b3f4026e175e4d6351d64eb057b24e0c8d90240443b7"
+    },
+    {
+      "path": "backend/src/ai/agents/llm/llm_action_provider.ts",
+      "sha256": "048f0226f4c3d06c55df6362a88b4f11abc77edbd7b6332bab640f4d5dccbd05"
+    },
+    {
+      "path": "backend/src/ai/agents/llm/llm_turn_orchestrator.ts",
+      "sha256": "c8cc47003f2eb267d7f78158b3e3c30085b6965c97d4170da7e8a9d20dfb47fa"
+    },
+    {
+      "path": "backend/src/ai/agents/llm/player_prompt_session.ts",
+      "sha256": "dec89c618cbe1ddbe04be00e457205b3d1939df8205c180e8194a44b1b99e271"
+    },
+    {
+      "path": "backend/src/ai/agents/llm/sdk_game_tool_loop.ts",
+      "sha256": "769106459b34559f7ae28f0f45d71d69ab0baf50438d17b17819ac3332931d40"
+    },
+    {
+      "path": "backend/src/ai/agents/player/action_reception.ts",
+      "sha256": "847ef39a73f9f45656d568906089a73a62f9282385869d8a8cf5f34fdccfe30e"
+    },
+    {
+      "path": "backend/src/ai/agents/player/contracts.ts",
+      "sha256": "3e4655a63ceb6b4d8a5ee42b5ade92295850a944171beb85a86097cb38d955bd"
+    },
+    {
+      "path": "backend/src/ai/agents/player/observation.ts",
+      "sha256": "2df86b349e94d1629347d584acbd94c63727b9b8246e4b1ce4283bb99d5eb9cf"
+    },
+    {
+      "path": "backend/src/ai/agents/player/player_observer.ts",
+      "sha256": "5343c08c94d32ec74603f08bb8730885ea17a7e4f1da14de9c12764fd1d2ddaf"
+    },
+    {
+      "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+      "sha256": "f59f2b30cb87308bbc809d0752f7da1b2491cc6581dbdc7a94f643397e4367fc"
+    },
+    {
+      "path": "backend/src/ai/agents/player/player_round_recorder.ts",
+      "sha256": "a0cc18256867933c11dbf78e316cd60825bc365a10f5dce6d3ed11361a45f306"
+    },
+    {
+      "path": "backend/src/ai/agents/player/prompt_templates.ts",
+      "sha256": "1816603120905552e5fc27670f120d3831d345b374f1a3feb4bfd0391361c05d"
+    },
+    {
+      "path": "backend/src/ai/agents/player/turn_constraints.ts",
+      "sha256": "040890ef5cbf4157750ccfa2184cdc2a30c595888787e3e32213a43e825c0034"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/action_providers.ts",
+      "sha256": "a15f1bb5bc6cdd9157a9c508ed484761334684c65e9fa4886069421ab720e1b7"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot.ts",
+      "sha256": "f7e54d6f11f9bae6132d6542849882976c0ca110f40351b42d8fc2b7cbcd48ab"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/context.ts",
+      "sha256": "65d49e456ae1f59ee905496ef120cd745e18e100df0602457b1c0ff3b263698c"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/copied.ts",
+      "sha256": "0051a9b86bc4bb9f49be04fd854343286ff9863a3ebef68195e28973ef28c542"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/fragrant_pair_seer.ts",
+      "sha256": "a49d9403027ddd6cb4991a3607e848cb7187fbfddb69cfc6fb013d7582d4c1df"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/granted.ts",
+      "sha256": "a8c003e2c8fcc1683f111108276d6ffe6b052ce526c24a643fbb5cb0341b9ab2"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/handlers.ts",
+      "sha256": "1b5fa046abb831fab826ddf4f980808a5dfeee7f570103ad55e2bd11367283e1"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/mist_raven.ts",
+      "sha256": "b72f40cfbcae00e487d66f85897d2e7b1b024d24cf43f51d3c9ea5e9744320a4"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/native.ts",
+      "sha256": "fb6f493a9936aa06f68a9a35a5ba0502e6acf01ba3564d722765cb77290c2efb"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/noble_secret_body.ts",
+      "sha256": "0122b9d97614b6937087bea780952a3188a990da1dd7248fa1561f1d3099d2e3"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/public.ts",
+      "sha256": "3bbbe074761421b08c4d17aa3a28bba3f687cd0e7d59f1029744b12d4c33fb20"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/radiant_eclipse.ts",
+      "sha256": "6456f9a1e7c680bf03d28e82d63fb756dda7a19185ea1383512d7ae2d7745959"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/wedding.ts",
+      "sha256": "5a7e8aa714f176c4dda6367c113b8ecd23eb3d09e5f4d4c2973d31da39bffc04"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/wolf.ts",
+      "sha256": "bc9f5643c1c21b811ef6553e99cdfbfd622a476bd7030574a2bca21348a0afec"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_players.ts",
+      "sha256": "949fa6439151fb56887f16ba41483f43dce3e7deb517a4f472e3c3434c0b97c0"
+    },
+    {
+      "path": "backend/src/ai/agents/reporting/bug_report_service.ts",
+      "sha256": "842d3e61be0b37c0afb04ee88d9cade6a0d00c171b8dcf8ddcbcec6ce4dddcb9"
+    },
+    {
+      "path": "backend/src/ai/agents/reporting/index.ts",
+      "sha256": "4c8b742003aaf7b7e0b8ccb5ad4bd227fad595b38e8a566fc6e2a9d06f949431"
+    },
+    {
+      "path": "backend/src/ai/agents/visible_event_protocol.ts",
+      "sha256": "05846d57bf7b7198bca6f2b77529725a657a2eb287ea8b24a8e6d408d3ceb2b2"
+    },
+    {
+      "path": "backend/src/ai/audit/acp_audit_runner.ts",
+      "sha256": "bc1eda95709c33d59371b3568360641b6eaf5fcfd81beec0c07bbf1c73f5e355"
+    },
+    {
+      "path": "backend/src/ai/audit/audit_mcp_control.ts",
+      "sha256": "92526116518d673d51a8ba735c7e994b1b0f6927939c1eff8b1ea28a6344a34e"
+    },
+    {
+      "path": "backend/src/ai/audit/audit_mcp_server.ts",
+      "sha256": "9122911fda70d2939a395b6c464106faf6b1f34577431c0198808fb88c3069d7"
+    },
+    {
+      "path": "backend/src/ai/audit/audit_tool_protocol.ts",
+      "sha256": "f2fba9b089a9b68cae84db5f5b593f05a3e6c6e990574bcfbcece75eaccf47d3"
+    },
+    {
+      "path": "backend/src/ai/audit/contracts.ts",
+      "sha256": "1ab4b790ad21463caec3f2cac08ef12bd914f7b30f439a7ff7bb5135372a494d"
+    },
+    {
+      "path": "backend/src/ai/audit/executor_factory.ts",
+      "sha256": "d50c48b053e4ce0267735707ca1b720ea15073d287a2a5b1707ee066bd9478f0"
+    },
+    {
+      "path": "backend/src/ai/audit/index.ts",
+      "sha256": "b3167a0cb1281f84b31407f3333faf33e088727be6a1611446ed6d16f4340c06"
+    },
+    {
+      "path": "backend/src/ai/audit/prompts.ts",
+      "sha256": "e7726caa752100e9d014905a495c60d8a9d96209d4aa5052ea9cb56327de134e"
+    },
+    {
+      "path": "backend/src/ai/audit/sdk_audit_runner.ts",
+      "sha256": "cc6b3db997b5cc7bb8ac55c37921eaec5c3378a06ac3e4b76a18a6f1fd6367b6"
+    },
+    {
+      "path": "backend/src/ai/index.ts",
+      "sha256": "620a9703d227b545d8115c8dc892e2048aaa8b99ebc7328cc5fee5364560bf26"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+      "sha256": "e0c6e52fe2d745f8834bff296f09aab4b42191a8ec88b1771ee9e1b914058679"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/acp_process_client.ts",
+      "sha256": "c6bf0310d6185b23de36b1e3b000ac371645aef688cb265670bd82f27835faae"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/acp_session_config.ts",
+      "sha256": "6a32d6f78c1953151ec2f1715464e4b9a577170b6d0ca55f35f1e1f0c15dc0c2"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+      "sha256": "65f3abeadc9eeb22b4279967982f383e07d8782ae38501b2591781a42bbc237f"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/index.ts",
+      "sha256": "8d442d19979f36dc2596a86a5bb06ef98cbc3bb00d231e5d779632f4963bdd0d"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/loopback_mcp_control_server.ts",
+      "sha256": "2c1520e36d8cf8db218c9397c4fc1ba40b8d0d4c1f785974fef05b57f3de52e6"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/session.ts",
+      "sha256": "9e12e82f73e54a6be571cc496c93556fb2134725244fa1883e547aa709936729"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/session_lifecycle.ts",
+      "sha256": "0fc596a875d4362717d491fee1e6f03bc784ba727a2caf437df6f012e26a5c7f"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/task_locale.ts",
+      "sha256": "3f5ede9f0f0005585af6b3045954f6ea4c4655f12e72e0ac98683d6e33990ef5"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+      "sha256": "988d305c4bcc2df466f4ba51abc456e65503c686f30ff7d1e4e2c52d64ea00a0"
+    },
+    {
+      "path": "backend/src/ai/integrations/acp/werewolf_mcp_server.ts",
+      "sha256": "7a5b3e6036a1fc67d9dee1e9a2f54817208a8f3d46f814ed2c4310c10dc0ce5b"
+    },
+    {
+      "path": "backend/src/ai/integrations/index.ts",
+      "sha256": "97d08009a6696017070bd76116cdf2c0eaeff65cab722740ce7c4678ed4d302e"
+    },
+    {
+      "path": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+      "sha256": "84a2be7d152ee15fd54a9fc25168eb08aa350ac9e5f88c5d976ab98087c8e1be"
+    },
+    {
+      "path": "backend/src/ai/integrations/llm/transport.ts",
+      "sha256": "f86c02d9f61f9696c1907523b75f7c64ea3f4017fed95ff2f71dbd29c1cd5777"
+    },
+    {
+      "path": "backend/src/ai/runtime/agent_turn_executor.ts",
+      "sha256": "23332331421a8bb000267c7cddd350749940154ca1387e11a1b6bc3c1375cb33"
+    },
+    {
+      "path": "backend/src/ai/runtime/index.ts",
+      "sha256": "151b633b3a40a1ffe218c9a22ca5160186db5c4eb10ebea955fc1cb540cf4914"
+    },
+    {
+      "path": "backend/src/ai/runtime/request_scheduler.ts",
+      "sha256": "d0b2d25514bf158bc5ec00bce9e95f120d1d3f1293a5363ff657ee73417f3915"
+    },
+    {
+      "path": "backend/src/ai/runtime/turn_deadline.ts",
+      "sha256": "f6861c90cf71d56d11b067c839f2cf2eb580e7e3c39e4d9020bd2abf186afd51"
+    },
+    {
+      "path": "backend/src/audit/contracts.ts",
+      "sha256": "ad71b93402d5ef78c1f969539d8405f524ef6ef567478cac6fec03c569b7e6a7"
+    },
+    {
+      "path": "backend/src/audit/debug_summary_generator.ts",
+      "sha256": "dbce2d4f5b7ce8859cc5c58f8e5012c79b1808ec8d78c8d2c6d47ce7812a8ea7"
+    },
+    {
+      "path": "backend/src/audit/deterministic_checks.ts",
+      "sha256": "8fbe9da151d8b133b1f59b98cbdaa8b4b01d6e425ab8839302385d56a14fca6e"
+    },
+    {
+      "path": "backend/src/audit/evidence_policy.ts",
+      "sha256": "a0a67e267269316b6acfaa6eed2ee784fc250e6ff0cb93d90e19683b5cacc877"
+    },
+    {
+      "path": "backend/src/audit/fallback_summary_renderer.ts",
+      "sha256": "ce57dbcf366e503fb1442b500f328aa6cc77f093ca98fa40b56a0f2cc3c152ae"
+    },
+    {
+      "path": "backend/src/audit/payload_builder.ts",
+      "sha256": "73dd3d65d9845eb1f594f59c857bf4b89351583206d5320dd271d718dd3ad6c8"
+    },
+    {
+      "path": "backend/src/audit/pipeline.ts",
+      "sha256": "c028e4373e7d76fc38ac03bef0cd8396ec2b95085dd430ebdacc1f04c02d6351"
+    },
+    {
+      "path": "backend/src/audit/summary_format.ts",
+      "sha256": "9295df681e9848d89975523ff127442a6f755a4087e71e97fe452d34d2a56ecd"
+    },
+    {
+      "path": "backend/src/audit/summary_renderer.ts",
+      "sha256": "fc650e92f6654b5c69d40e1762288e65a7ee1c552131638548a425b7c268e14b"
+    },
+    {
+      "path": "backend/src/audit/task_runner.ts",
+      "sha256": "939675415d89eac521135e58b22501e7c55c4374055a5c5e824053fac9db527d"
+    },
+    {
+      "path": "backend/src/index.ts",
+      "sha256": "17df87affc972717b1574a562dad1b35ede3f297f55ce5269c8abfbf02d76a4f"
+    },
+    {
+      "path": "backend/src/recording/animal_dream_checkpoint.ts",
+      "sha256": "cc14ed49a6e5f31a5bb182c791b8c278a54a59a220530a637b493fc74dc11753"
+    },
+    {
+      "path": "backend/src/recording/animal_dream_feed_record.ts",
+      "sha256": "faadb830a5436db294add81ee0d17c89fc3bbaeeef065ec1e4db52eba2da71f1"
+    },
+    {
+      "path": "backend/src/recording/animal_dream_record.ts",
+      "sha256": "dc63c66d2121eda560697494eef730a4cd7c0a68ed1ecfef50e642bff79ecba0"
+    },
+    {
+      "path": "backend/src/recording/contracts.ts",
+      "sha256": "3f1dbb05ad9aa12c9cd0ff58336b2d786e598aeadb596726bc6baa482326c935"
+    },
+    {
+      "path": "backend/src/recording/demon_hunter_record.ts",
+      "sha256": "3f697fc823c3a3d7032d2cfe8a66aea8bbb2d57080942e0de9645ac734f72739"
+    },
+    {
+      "path": "backend/src/recording/demon_hunter_stocks.ts",
+      "sha256": "246e3f5c9c87070ec10abe1768ee1e913d5cbd853709e5b27bf016e984b8fe6c"
+    },
+    {
+      "path": "backend/src/recording/file_store.ts",
+      "sha256": "acd34fdedf86c60105559d6270daea94524e25d86279ac93e196f66f97b2dfc6"
+    },
+    {
+      "path": "backend/src/recording/fragrant_pair_seer_checkpoint.ts",
+      "sha256": "715dafeb4c07253fddbb9edd3687ba26ed8992bb8c2c88137433a530add000cf"
+    },
+    {
+      "path": "backend/src/recording/fragrant_pair_seer_feed_record.ts",
+      "sha256": "d21af07d1fe96216f327ffefc82846096f80395200e444156b615e1940fa6a6c"
+    },
+    {
+      "path": "backend/src/recording/fragrant_pair_seer_record.ts",
+      "sha256": "782b479c6c20869b43e62a527a267f3c8a5cbacbbdc8627c7d5f671bd8214e7c"
+    },
+    {
+      "path": "backend/src/recording/ghost_bride_record.ts",
+      "sha256": "4082a8505a3f73a175b26f996347dfac40f14b515aa066b52915de350af21af1"
+    },
+    {
+      "path": "backend/src/recording/magician_action_evidence.ts",
+      "sha256": "f6437d93233207afa68380ba1fb3d06f6f9add1b3ba4e8ed5df8038086b7c7a3"
+    },
+    {
+      "path": "backend/src/recording/magician_record.ts",
+      "sha256": "56472758763f744ae362ac997302a53972ffcbc209fb78e2ae4ca0a345bc6c11"
+    },
+    {
+      "path": "backend/src/recording/mist_raven_feed_record.ts",
+      "sha256": "c831242f1bff828a720b713d2e77d07d5c4f102ad99942e33dfbeaa0865ca986"
+    },
+    {
+      "path": "backend/src/recording/mist_raven_record.ts",
+      "sha256": "7e09b47a27a6d6022d3ac56578741a5c861b0616797ae1b1dbff24c35a800982"
+    },
+    {
+      "path": "backend/src/recording/mist_raven_requests.ts",
+      "sha256": "1ce41807e4cb4ee4f258f88b46caf41923c6d51dd25ca65f9d412a616239a6f0"
+    },
+    {
+      "path": "backend/src/recording/mist_raven_sheriff_record.ts",
+      "sha256": "570298ca3bc449c409e32900931384e4658e66582b87f2537c05715a2092c09e"
+    },
+    {
+      "path": "backend/src/recording/noble_secret_body_checkpoint.ts",
+      "sha256": "8bc3901708ab47dd0f63ae661f25d523949325f0894db39ca704de2d9db4a9be"
+    },
+    {
+      "path": "backend/src/recording/noble_secret_body_record.ts",
+      "sha256": "c6d800f96bf0e9c69969f31f37eda41e6610460ca597a7af5f6709cb6f33f386"
+    },
+    {
+      "path": "backend/src/recording/order_prince_record.ts",
+      "sha256": "95032e83fb4ac61c64f55e5bf812305becaf0d3c9ca83551cef9d684d6a29718"
+    },
+    {
+      "path": "backend/src/recording/radiant_eclipse_night_requests.ts",
+      "sha256": "de1be7b37abcdcd9d991b3737469e9132331f33e97114fa624ad1ac49568263a"
+    },
+    {
+      "path": "backend/src/recording/radiant_eclipse_record.ts",
+      "sha256": "124e8d7094a72ea31f4fbe40fbe605a56e016e3bf2632203f511c01785ed1281"
+    },
+    {
+      "path": "backend/src/recording/radiant_eclipse_requests.ts",
+      "sha256": "1a0c7dceb7b60479f053c8962b7b4318365f81e50d77f947c3ac35ce7fd6d670"
+    },
+    {
+      "path": "backend/src/recording/recording_context.ts",
+      "sha256": "dbdd2745ed7c419a7a253f0ed0e0378706c0dd97511b9f410066b398dd2b8e6a"
+    },
+    {
+      "path": "backend/src/recording/red_moon_record.ts",
+      "sha256": "bf2be7045e642ce003824d7cd69a38e688bf540c9308710414882ba14a42e762"
+    },
+    {
+      "path": "backend/src/recording/replay_document.ts",
+      "sha256": "646948d1b0df6b1ba3c2ed8138bff306cf656d2e8824c44ee66c22521cffd042"
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "ed2f076e90295fb878b638d41ea8ca086a4353f56ab37813acea8e5e37edbc5d"
+    },
+    {
+      "path": "backend/src/recording/scholar_mentor_record.ts",
+      "sha256": "8a90f8a364f01dfa1b7b2aeebd70739fcbd7d48bb10e1048cf70b5c37c1378fb"
+    },
+    {
+      "path": "backend/src/recording/session_aggregate.ts",
+      "sha256": "45b895c064d7a32954edd45705877de89547d85d8063562a6211034465efd9a7"
+    },
+    {
+      "path": "backend/src/recording/session_recorder.ts",
+      "sha256": "bf162f9b635391f9569af076e92eb3b0e68ee048e1a72abe0378cee21829e0e5"
+    },
+    {
+      "path": "backend/src/recording/time_consort_record.ts",
+      "sha256": "637eb2b0056d80da19b6c35625f3f138d047fa225923a0d6cf0bed02909fa827"
+    },
+    {
+      "path": "backend/src/recording/trickster_record.ts",
+      "sha256": "a035914fe3b8a2a6441c0326e75885b9cfd99ee540d751da3632b8bbab8e2180"
+    },
+    {
+      "path": "backend/src/recording/wolf_sorcerer_record.ts",
+      "sha256": "52819b581c5026d278e64936ec030dc09a8eadecdfa6a625930e66998e4d08e6"
+    },
+    {
+      "path": "backend/src/replay/export_replay_bundle.ts",
+      "sha256": "d36b939db7653c8d895aded4eb00bc2dd32bc6cedac5841bbf9e8f5aef10e9a5"
+    },
+    {
+      "path": "backend/src/run-game-smoke.ts",
+      "sha256": "90772766d55abd29b285691fc58e4cdc0f0aa9ff8ce302cd8f57e8d3b9907cc5"
+    },
+    {
+      "path": "backend/src/runtime/cli/check_config.ts",
+      "sha256": "d1921d3be5da4240c1a17817101e8a22db27e7afe9b8598fc63669b1999b3029"
+    },
+    {
+      "path": "backend/src/runtime/cli/config_directory.ts",
+      "sha256": "02596121a0bc79701a409bbee07efd166c39629fc6ac5a9da362f5c2f2d5726d"
+    },
+    {
+      "path": "backend/src/runtime/cli/display.ts",
+      "sha256": "cdcee1a436762d3f7aa427a2af7f951d0467cbd82a89b07246f9349b9fa4119d"
+    },
+    {
+      "path": "backend/src/runtime/cli/error_codes.ts",
+      "sha256": "8b39aeffc48ebcd7712ebbff241153ccd9ed21030e5fcf3af18a2cbb18c7345d"
+    },
+    {
+      "path": "backend/src/runtime/cli/migrate_configs.ts",
+      "sha256": "aa58151bc7efe6b0b9824ac52ad00222ac0917eaa4b4c50989736fcdf229480a"
+    },
+    {
+      "path": "backend/src/runtime/cli/replay_actions.ts",
+      "sha256": "aec82d37abf844fc960bb759e01ee8a8c16169328c5dd2ce227f948ec37a5727"
+    },
+    {
+      "path": "backend/src/runtime/cli/run_game.ts",
+      "sha256": "bc54b468587adbb545e94aa84b3a3d5f8097a8c08631ae34fb0e3c93f22baf29"
+    },
+    {
+      "path": "backend/src/runtime/cli/simulate.ts",
+      "sha256": "f8798b36b6cab07c8f50d808cd555918a78152926072cfcf956e36b11f8f4790"
+    },
+    {
+      "path": "backend/src/runtime/config/board_definition.ts",
+      "sha256": "5b100f5d31126003d6aef102cbcf0716c0194258c6d16e2f16a50381725cf412"
+    },
+    {
+      "path": "backend/src/runtime/config/contracts.ts",
+      "sha256": "e50f8f8759bbd9e5570bbeeff6bb76e24c49a75a172ee1623c47ee326622faf7"
+    },
+    {
+      "path": "backend/src/runtime/config/describe_setup.ts",
+      "sha256": "29fb8ee7da15b00567a77b52c2008dc09695b1933ac4b8bb197b2736ff5b6e61"
+    },
+    {
+      "path": "backend/src/runtime/config/error_codes.ts",
+      "sha256": "dc9e7abcb4f5c78347547e2c1debd5a2c0a183de943cf276d1c7332114dfc09a"
+    },
+    {
+      "path": "backend/src/runtime/config/load_board_definition.ts",
+      "sha256": "9e659d4e4f23da457671d269345a83d09805021fbbb6d1500bad086deff1d2ad"
+    },
+    {
+      "path": "backend/src/runtime/config/load_board_override.ts",
+      "sha256": "b68798077ab395fb1392776464c2df6384e175030b72778b69872e38688297fe"
+    },
+    {
+      "path": "backend/src/runtime/config/load_config.ts",
+      "sha256": "02d8fd36cac6136444bccb5dda9d72ec3d9c91c2c69cb25ae7ce322269b1819c"
+    },
+    {
+      "path": "backend/src/runtime/config/migrate_board.ts",
+      "sha256": "e711c3b0991701a99eca238ec6002193a652a091720b933307ff60631a2fc6db"
+    },
+    {
+      "path": "backend/src/runtime/config/parse_config.ts",
+      "sha256": "5eb8cdc627bae584e5d6737f76d5dbc1d95f8e136e3f1970522f7722f2c6199f"
+    },
+    {
+      "path": "backend/src/runtime/config/resolve_game_setup.ts",
+      "sha256": "f0d2d96987c0eb9392071bdc2095fb208bf67fbf9b3cffe74b459d5f25622e57"
+    },
+    {
+      "path": "backend/src/runtime/console_presenter.ts",
+      "sha256": "b5b592e1949f1dadab2253f1bd110897449d2c23f7f5bf15f4d38ab85c177072"
+    },
+    {
+      "path": "backend/src/runtime/game_event_recorder.ts",
+      "sha256": "ffca4c856f86943463efe412fa8124b263f3671fe618acb9d85a9c0be11b536a"
+    },
+    {
+      "path": "backend/src/runtime/game_runner.ts",
+      "sha256": "fea493aeec5f61eece18dc8eb3889a119f72c3cbe471007c530ebd02605ddd1c"
+    },
+    {
+      "path": "backend/src/runtime/player_agent_factory.ts",
+      "sha256": "c49c68c746d3253fe6bb0dcbcb0e0ae1a39fa278664ecbc11c7e6a3ddbc71814"
+    },
+    {
+      "path": "backend/src/runtime/run_mock_game.ts",
+      "sha256": "aa6fdb73a768e3a2f9438e1fe5c58d8a35d0467b8e25a8115c6cb61635c5a581"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/animal_dream_twelve.ts",
+      "sha256": "b1fc9a1649249aef396dc185337171b6d7563cc4d9edc9c8f6e5e7a1d276ffc2"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/board_config_resolver.ts",
+      "sha256": "239aab3aaeaf0d407dcadd6ff1b9cbb54ef9e71d571481e8017141b587d1d72b"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/evil_knight_twelve.ts",
+      "sha256": "133fb24d1ee53f28d5df24351707d9d8a60b2334e7b182a1d67c84e9d53a7e84"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts",
+      "sha256": "aef1f6265f463008f656ce412f2826dac4ed5cee1c09cde130fda9946dee9e95"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/index.ts",
+      "sha256": "ff8d747458b5ab9dc651a1f5be0638dde8d7fc857597f4abab416192222dfed3"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/magician_twelve.ts",
+      "sha256": "dce2c6ecb96cffb3b49fb32581b62ede0fbdc06793edb2732792b8a2f4679c3a"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/nightmare_twelve.ts",
+      "sha256": "6edc70412b2bc32260987c7d617a644cb328d4970dc122243c802ac558fdf9b6"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+      "sha256": "f65da392707c878f7e62faf752c53e50e2f1c08b09414b46f436819099198816"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/order_prince_twelve.ts",
+      "sha256": "4800cf332df699672a9dbcde7ec18e8b2a33cd7f41196399c8e63c2496a3eb79"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/pure_white_twelve.ts",
+      "sha256": "3bcd05b16770d0748cf3cfafd43aefb9c4e2df4cfb6b5cca10259c0ee1d7d95f"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/red_moon_twelve.ts",
+      "sha256": "aa124d97db8e8b9df3f7e3d571ff3f416bece468aec6b334a0cdab6a5e74aa2c"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/scholar_mentor_twelve.ts",
+      "sha256": "104bb7d587506401ac64a9a30c035d8da0646d3638f020b82f79db71914373bd"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/six_player_mvp.ts",
+      "sha256": "d0d537c761fb4272397898319eb05f63f1fc4c6dbec7888a74bb2ac4bb53fa34"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/time_consort_twelve.ts",
+      "sha256": "d9809928cc91bc7e3aeb623852a95d3beba2188e375d62418e689d56bc7dd88e"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/trickster_twelve.ts",
+      "sha256": "666377038d345ecc01aa32e8ced1bde0010c2214bc65338da89c1dff70e83f57"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+      "sha256": "aa801e2ce517e9c6f49b7b7ab01ac234d63fc717db77d3b17b535f857538452b"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/wolf_sorcerer_twelve.ts",
+      "sha256": "ca47cedf92af14d874886ba20ae51c64282bb6feb3b93bef3c4ad1e2dea7f942"
+    },
+    {
+      "path": "backend/src/runtime/simulation/replay_reproduction.ts",
+      "sha256": "c0b9a3fb0090be16bdf02915410a808f66d025a2f0ba7f907334c62da84d76f7"
+    },
+    {
+      "path": "backend/src/runtime/simulation/reproduction_context.ts",
+      "sha256": "dcb10c9b7a1eee8c6f9fb121da93d035aa5468507504cf16ceed6cd4c741633a"
+    },
+    {
+      "path": "backend/src/runtime/simulation/simulate_games.ts",
+      "sha256": "b4c30e1276b68805f2f03724850e0f0b0ad559ffb1b9573ada9b0a0d197631d1"
+    },
+    {
+      "path": "backend/src/utils/ansi.ts",
+      "sha256": "f7bab253e12169b1dc755b2c91f0c95ed381c9bcb5adcfa0363bf98472a48851"
+    },
+    {
+      "path": "backend/src/utils/error_diagnostic.ts",
+      "sha256": "3768225e93cc8e266a0756081e4c5914c4c2de870ec198a7d88b512eabd92f4c"
+    },
+    {
+      "path": "backend/src/utils/speech_text.ts",
+      "sha256": "d3e1a47d3b0d7e8cee3e91f5f3c07d7aa3ebe4d8562a4a0f7fa9a6fe102bfd94"
+    },
+    {
+      "path": "frontend/src/App.tsx",
+      "sha256": "0921d773062ae8a4a1e70b6ba1e24fc0ca25e0408108bd46564529a267016af2"
+    },
+    {
+      "path": "frontend/src/main.tsx",
+      "sha256": "e48136501547a36a8f654409c582a9c67733289781e66579ff07d115f936e50a"
+    },
+    {
+      "path": "frontend/src/replay/EventTimeline.tsx",
+      "sha256": "b38a38e830ed49ff6fdb6c6e1e5b55b2e31b5ef9d17b4cbd823b3ace3c4d5fda"
+    },
+    {
+      "path": "frontend/src/replay/PlayerSeats.tsx",
+      "sha256": "c8a459b3dbeba61d5791455db9935dbc940bd3d738dadee7a5e3b83a612c2be0"
+    },
+    {
+      "path": "frontend/src/replay/ReplayComposition.tsx",
+      "sha256": "f955d23a9aa28f28d1af2d745e78b372e6de5e625b970be3e62967f3ea6b74ef"
+    },
+    {
+      "path": "frontend/src/replay/ReplayDisplayControls.tsx",
+      "sha256": "5208a5c287795d911f1357d0c850e022ac71fc88f0b3b69d55ea53c3dd9dbc78"
+    },
+    {
+      "path": "frontend/src/replay/ReplayStage.tsx",
+      "sha256": "d07e849120aeb4e5d7512e4dce88198e5feb52acda8c51b747d96872676a803a"
+    },
+    {
+      "path": "frontend/src/replay/ReplayWorkspace.tsx",
+      "sha256": "73daf5c18e428f32622fa81b104d94525a5220cf10b5b9160bdb9184ffbcd938"
+    },
+    {
+      "path": "frontend/src/replay/event-labels.ts",
+      "sha256": "b350a2cabcdeb63717623901b62d08b6d5ed76567e5b8439eb38ec9f204631b2"
+    },
+    {
+      "path": "frontend/src/replay/offline-replay.ts",
+      "sha256": "a1531a71cccdc18be0dbf303d51e42aa0d2967d8e7d822d4f0974691f0a4791b"
+    },
+    {
+      "path": "frontend/src/replay/remotion-entry.tsx",
+      "sha256": "ce510c4b28de22e57ff8c80b8b0b56730b8e168188c4aa1a3c27b0abe7ed6fd2"
+    },
+    {
+      "path": "frontend/src/replay/replay-display.ts",
+      "sha256": "2f0200c635d50079f29f9cfd71e8a02658fddc4c6265330691a46d2038a297c5"
+    },
+    {
+      "path": "frontend/src/replay/replay-event-reader.ts",
+      "sha256": "af26db7bbb6de3939c38adfad251854d77a31ac9a88737bd0baa56344c47fb2d"
+    },
+    {
+      "path": "frontend/src/replay/replay-frame.ts",
+      "sha256": "64c8bde06caa26682c052ff5d10c15b084fca3d514f4d2ea95fc1ad140b5588c"
+    },
+    {
+      "path": "frontend/src/replay/replay-localization.ts",
+      "sha256": "8c837ede6bd079ade567edb47e93d6f31418c21cc39913425b9e5cbc702d6b6c"
+    },
+    {
+      "path": "frontend/src/replay/replay-presentation.ts",
+      "sha256": "ba5171c191e8619f184c311b5547576cd70e3fd4ecf91c1c0520aed43195eb25"
+    },
+    {
+      "path": "frontend/src/replay/replay-projection.ts",
+      "sha256": "1c291ce2a3b14ebea6fc6c6a4cdbeebf03583430e01b0515e33d168e47957359"
+    },
+    {
+      "path": "frontend/src/replay/useReplayPlayback.ts",
+      "sha256": "343ea3baef5e4eb79bb84730f95b399efc345e21cd3bd988be116ac97db0d937"
+    }
+  ],
+  "boundary": "Current engine hash is not a whole-build hash; runtime, AI, recording, audit and frontend source outside the six roots are explicitly enumerated."
+}
