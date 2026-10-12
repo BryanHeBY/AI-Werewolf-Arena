@@ -131,6 +131,20 @@ import {
   type BeautyExileCandidate,
 } from "../mechanisms/roles/wolf_beauty/relation";
 import { BearNightFrame } from "../mechanisms/roles/bear/night_frame";
+import type { AliveComponent } from "../../core/domain/components/alive";
+import {
+  beginAnimalExileUnit,
+  prepareAnimalCatExpiry,
+  closeAnimalExileUnit,
+  animalPufferReaction,
+  animalAuthoritySnapshot,
+  abortAnimalGame,
+} from "../mechanisms/roles/animal_dream/authority";
+import {
+  appendAnimalFact,
+  appendAnimalBeautyNotice,
+  noteAnimalBearPublication,
+} from "../mechanisms/roles/animal_dream/facts";
 import { refreshHiddenWolfInheritance } from "../mechanisms/roles/hidden_wolf/inheritance";
 import { refreshGargoyleInheritance } from "../mechanisms/roles/gargoyle/inheritance";
 import { refreshMechanicalInheritance } from "../mechanisms/roles/mechanical_wolf/inheritance";
@@ -340,7 +354,8 @@ export class PhaseManager {
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
     if (
-      (this.config.fragrantPairSeer ||
+      (this.config.animalDream ||
+        this.config.fragrantPairSeer ||
         this.config.mistRaven ||
         this.config.pureWhite ||
         this.config.evilKnight ||
@@ -349,21 +364,31 @@ export class PhaseManager {
     ) {
       if (this.pureWhiteStartedDays.has(this.state.day))
         throw new Error(
-          this.config.fragrantPairSeer
-            ? "fragrant_cycle_reentry"
-            : this.config.mistRaven
-              ? "mist_cycle_reentry"
-              : this.config.magician
-                ? "magician_cycle_reentry"
-                : this.config.evilKnight
-                  ? "evil_knight_cycle_reentry"
-                  : "pure_white_cycle_reentry",
+          this.config.animalDream
+            ? "animal_cycle_reentry"
+            : this.config.fragrantPairSeer
+              ? "fragrant_cycle_reentry"
+              : this.config.mistRaven
+                ? "mist_cycle_reentry"
+                : this.config.magician
+                  ? "magician_cycle_reentry"
+                  : this.config.evilKnight
+                    ? "evil_knight_cycle_reentry"
+                    : "pure_white_cycle_reentry",
         );
       this.pureWhiteStartedDays.add(this.state.day);
     }
+    const startedDay = this.state.day;
+    let completed = false;
     try {
-      return await this.runSingleCycleInternal(actionProvider, maxDays);
+      const result = await this.runSingleCycleInternal(actionProvider, maxDays);
+      completed = this.state.gameOver || this.state.day > startedDay;
+      return result;
+    } catch (error) {
+      if (this.config.animalDream) abortAnimalGame(this.world);
+      throw error;
     } finally {
+      if (this.config.animalDream && !completed) abortAnimalGame(this.world);
       if (this.config.mistRaven) {
         this.mistPending?.abort();
         abortMistNight(this.world);
@@ -476,7 +501,12 @@ export class PhaseManager {
       if (!ready || !nightIsCurrent()) return this.getSnapshot();
     }
     assertDemonOriginalRoster(this.world);
-    const bearFrame = BearNightFrame.capture(this.world, nightDay);
+    const bearFrame = BearNightFrame.capture(
+      this.world,
+      nightDay,
+      undefined,
+      this.config.bear?.signalPolicy,
+    );
     const night = await this.nightPipeline.execute(this.config, actionProvider, this.state.day, {
       previousExile: this.previousExile,
       isCurrent: nightIsCurrent,
@@ -873,7 +903,10 @@ export class PhaseManager {
       nightSettled = true;
       return this.checkAndSealResult(interrupted ? "day_interrupted" : "night_settled");
     };
-    const settleNight = async (blast?: { deaths: number[]; sources: DeathSources }) => {
+    const settleNight = async (
+      blast?: { deaths: number[]; sources: DeathSources },
+      animalSkip?: object,
+    ) => {
       if (nightSettled) return this.state.gameOver;
       nightSettled = true;
       const retainedSources: DeathSources = Object.fromEntries(
@@ -899,7 +932,8 @@ export class PhaseManager {
           aliveLifeVersion(scope.life) === scope.version
         );
       });
-      if (!this.config.fragrantPairSeer) this.emitNightResolved(nightDeaths);
+      if (!this.config.fragrantPairSeer && !this.config.animalDream)
+        this.emitNightResolved(nightDeaths);
       const sources: DeathSources = Object.fromEntries(
         nightDeaths.map((id) => [id, [...(retainedSources[id] ?? [])]]),
       );
@@ -924,8 +958,25 @@ export class PhaseManager {
             dreams: night.dreamFrame,
             nightOriginIds: nightDeaths,
             isCurrent: dayIsCurrent,
-            ...(this.config.fragrantPairSeer
-              ? { onInitialWaveCommitted: () => this.emitNightResolved(nightDeaths) }
+            ...(animalSkip ? { animalUnit: animalSkip } : {}),
+            ...(this.config.fragrantPairSeer || this.config.animalDream
+              ? {
+                  onInitialWaveCommitted: (
+                    actualIds: readonly number[],
+                    actualSources?: DeathSources,
+                  ) =>
+                    this.emitNightResolved(
+                      this.config.animalDream
+                        ? nightDeaths.filter(
+                            (id) =>
+                              actualIds.includes(id) &&
+                              (retainedSources[id] ?? []).some((c) =>
+                                (actualSources?.[id] ?? []).includes(c),
+                              ),
+                          )
+                        : nightDeaths,
+                    ),
+                }
               : {}),
           },
         );
@@ -946,7 +997,22 @@ export class PhaseManager {
         if (this.config.scholarMentor) abortScholarMentorNight(this.world);
       }
       if (!dayIsCurrent()) return this.state.gameOver;
+      if (animalSkip) {
+        closeAnimalExileUnit(this.world, animalSkip);
+        const u = animalAuthoritySnapshot(this.world)!.unit!;
+        appendAnimalFact(this.world, this.events, "animal_unit_completed", {
+          policy: "awa_animal_dream_v1",
+          day: cycleDay,
+          unit: u.number,
+          kind: u.kind,
+        });
+      }
+      const bearStart = this.events.length;
       bearFrame?.publish(this.world, this.events, dayIsCurrent);
+      if (this.config.animalDream) {
+        noteAnimalBearPublication(this.world, this.events, bearStart);
+        appendAnimalBeautyNotice(this.world, this.events, cycleDay);
+      }
       return this.checkAndSealResult(blast !== undefined ? "day_interrupted" : "night_settled");
     };
     if (!night.mistDelay && !firstDaySheriffBeforeNightInfo && (await settleNight()))
@@ -972,6 +1038,9 @@ export class PhaseManager {
           this.events,
         );
         if (!blast) return false;
+        const animalSkip = this.config.animalDream
+          ? beginAnimalExileUnit(this.world, cycleDay, "skipped_day", dayIsCurrent)
+          : undefined;
         if (!nightSettled && this.mistPending) {
           this.mistPending.claim(dayIsCurrent);
           await this.deathResolution.resolve(
@@ -984,15 +1053,28 @@ export class PhaseManager {
             { isCurrent: dayIsCurrent },
           );
           if (dayIsCurrent()) await settleMist(true, true);
-        } else if (!nightSettled) await settleNight(blast);
-        else
+        } else if (!nightSettled) await settleNight(blast, animalSkip);
+        else {
           await this.deathResolution.resolve(
             blast.deaths,
             blast.sources,
             actionProvider,
             Phase.Day,
             Phase.Day,
+            {},
+            { isCurrent: dayIsCurrent, ...(animalSkip ? { animalUnit: animalSkip } : {}) },
           );
+          if (animalSkip) {
+            closeAnimalExileUnit(this.world, animalSkip);
+            const u = animalAuthoritySnapshot(this.world)!.unit!;
+            appendAnimalFact(this.world, this.events, "animal_unit_completed", {
+              policy: "awa_animal_dream_v1",
+              day: cycleDay,
+              unit: u.number,
+              kind: u.kind,
+            });
+          }
+        }
         return true;
       },
       ...(firstDaySheriffBeforeNightInfo && !night.mistDelay
@@ -1048,6 +1130,9 @@ export class PhaseManager {
           this.events,
         );
         if (!blast) return false;
+        const animalSkip = this.config.animalDream
+          ? beginAnimalExileUnit(this.world, cycleDay, "skipped_day", votingIsCurrent)
+          : undefined;
         await this.deathResolution.resolve(
           blast.deaths,
           blast.sources,
@@ -1055,8 +1140,18 @@ export class PhaseManager {
           Phase.Voting,
           Phase.Voting,
           {},
-          { isCurrent: votingIsCurrent },
+          { isCurrent: votingIsCurrent, ...(animalSkip ? { animalUnit: animalSkip } : {}) },
         );
+        if (animalSkip) {
+          closeAnimalExileUnit(this.world, animalSkip);
+          const u = animalAuthoritySnapshot(this.world)!.unit!;
+          appendAnimalFact(this.world, this.events, "animal_unit_completed", {
+            policy: "awa_animal_dream_v1",
+            day: cycleDay,
+            unit: u.number,
+            kind: u.kind,
+          });
+        }
         return true;
       },
     });
@@ -1073,7 +1168,40 @@ export class PhaseManager {
     }
 
     let beautyCandidate: BeautyExileCandidate | null = null;
-    if (votingResult.removed.length > 0) {
+    if (votingResult.animalUnit) {
+      const sources: DeathSources = {};
+      for (const id of votingResult.removed) sources[id] = [DeathCause.Exile];
+      for (const id of votingResult.animalRetaliation ?? [])
+        sources[id] = [...new Set([...(sources[id] ?? []), DeathCause.PufferRetaliation])];
+      const ids = [
+        ...new Set([...votingResult.removed, ...(votingResult.animalRetaliation ?? [])]),
+      ];
+      await this.deathResolution.resolve(
+        ids,
+        sources,
+        actionProvider,
+        Phase.Voting,
+        Phase.Voting,
+        {},
+        { isCurrent: votingIsCurrent, animalUnit: votingResult.animalUnit },
+      );
+      if (!votingIsCurrent()) return this.getSnapshot();
+      closeAnimalExileUnit(this.world, votingResult.animalUnit);
+      const u = animalAuthoritySnapshot(this.world)!.unit!;
+      appendAnimalFact(this.world, this.events, "animal_unit_completed", {
+        policy: "awa_animal_dream_v1",
+        day: cycleDay,
+        unit: u.number,
+        kind: u.kind,
+      });
+      const target = votingResult.summary.target;
+      this.previousExile =
+        target !== null &&
+        sources[target]?.includes(DeathCause.Exile) &&
+        this.world.getComponent<AliveComponent>(target, COMPONENT.Alive)?.alive === false
+          ? captureExileFeedback(this.world, target, cycleDay)
+          : null;
+    } else if (votingResult.removed.length > 0) {
       const target =
         votingResult.summary.effectiveTarget === undefined
           ? votingResult.summary.target

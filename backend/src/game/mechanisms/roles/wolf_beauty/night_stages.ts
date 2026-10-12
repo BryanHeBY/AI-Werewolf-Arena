@@ -5,12 +5,15 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { getWolfBeautyState } from "../private_state";
 import { bindCharm } from "./relation";
+import { animalBeautyCharmAllowed, isAnimalDreamBoard } from "../animal_dream/authority";
+import { appendAnimalBeautyNotice } from "../animal_dream/facts";
 
 export const WOLF_BEAUTY_CHARM_STAGE: NightStageHandler = {
   id: "wolf_beauty_charm",
   priority: 450,
   async execute(ctx) {
     const day = ctx.currentDay();
+    if (!animalBeautyCharmAllowed(ctx.world, day)) return;
     for (const actorId of ctx.getAliveByRole(Role.WolfBeauty)) {
       if (!ctx.isCurrent()) return;
       const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!,
@@ -33,6 +36,7 @@ export const WOLF_BEAUTY_CHARM_STAGE: NightStageHandler = {
       );
       const current = () =>
         ctx.isCurrent() &&
+        animalBeautyCharmAllowed(ctx.world, day) &&
         ctx.world.getComponent(actorId, COMPONENT.Role) === role &&
         role.role === Role.WolfBeauty &&
         role.camp === Camp.Wolf &&
@@ -74,6 +78,7 @@ export const WOLF_BEAUTY_CHARM_STAGE: NightStageHandler = {
         type: "charm_applied",
         payload: { actorId, targetId, day },
       });
+      if (isAnimalDreamBoard(ctx.world)) appendAnimalBeautyNotice(ctx.world, ctx.events, day);
     }
   },
 };

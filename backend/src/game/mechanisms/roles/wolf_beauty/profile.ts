@@ -11,6 +11,9 @@ import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";
 import { WOLF_BEAUTY_CHARM_STAGE } from "./night_stages";
 import { wolfBeautyDeathHook } from "./death_hook";
+import { animalBeautyCharmAllowed, isAnimalDreamBoard } from "../animal_dream/authority";
+import { animalBeautyKnowledge } from "../animal_dream/facts";
+import { COMPONENT } from "../../../../core/domain/components/names";
 
 const parameters = z.strictObject({
   deathLinkPolicy: z.enum(BEAUTY_DEATH_LINK_POLICIES).default("awa_exile_poison_v1"),
@@ -33,14 +36,22 @@ export const WOLF_BEAUTY_ROLE_PROFILE: RoleProfile = {
         : {}),
     });
   },
-  renderPrompt: (role, locale = "zh-CN") => {
-    const state = getWolfBeautyState(role);
+  renderPrompt: (role, locale = "zh-CN", world) => {
+    const state =
+      world && isAnimalDreamBoard(world)
+        ? animalBeautyKnowledge(
+            world,
+            world.entityIds().find((id) => world.getComponent(id, COMPONENT.Role) === role)!,
+          )
+        : getWolfBeautyState(role);
     return (
       text(locale, "role.wolf_beauty.state") +
       " " +
       text(
         locale,
-        state?.deathLinkPolicy === "heroes_s7_2017_exile_hunter_v1"
+        state &&
+          "deathLinkPolicy" in state &&
+          state.deathLinkPolicy === "heroes_s7_2017_exile_hunter_v1"
           ? "role.wolf_beauty.link_s7"
           : "role.wolf_beauty.link_awa",
       ) +
@@ -90,6 +101,7 @@ export const WOLF_BEAUTY_ROLE_PROFILE: RoleProfile = {
         role.role !== Role.WolfBeauty ||
         role.camp !== Camp.Wolf ||
         !state ||
+        !animalBeautyCharmAllowed(world, day ?? 0) ||
         state.lastActedDay === day
       )
         return { code: RuleError.CharmUnavailable };

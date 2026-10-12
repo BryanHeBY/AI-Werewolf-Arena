@@ -1,3 +1,32 @@
+import { animalCheckpointSchema } from "../../recording/animal_dream_checkpoint";
+import {
+  animalAuthoritySnapshot,
+  isAnimalDreamBoard,
+} from "../../game/mechanisms/roles/animal_dream/authority";
+import {
+  animalOriginalAuditPlayer,
+  animalOriginalAuditIds,
+} from "../../game/mechanisms/roles/animal_dream/roster";
+import { snapshotPlainData } from "../../core/domain/plain_data";
+import { aliveLifeDescriptor } from "../../core/domain/components/alive";
+function auditData(value: unknown, keys: readonly string[]): unknown {
+  if (!value || typeof value !== "object") throw Error("animal_audit_data_invalid");
+  const descriptors = Object.fromEntries(
+    keys.flatMap((key) => {
+      const d = Object.getOwnPropertyDescriptor(value, key);
+      return d ? [[key, d]] : [];
+    }),
+  );
+  if (Object.values(descriptors).some((d) => !("value" in d)))
+    throw Error("animal_audit_data_invalid");
+  return snapshotPlainData(
+    Object.fromEntries(
+      Object.entries(descriptors)
+        .filter(([, d]) => d.value !== undefined)
+        .map(([key, d]) => [key, d.value]),
+    ),
+  );
+}
 import { fragrantCheckpointSchema } from "../../recording/fragrant_pair_seer_checkpoint";
 import {
   fragrantAuthoritySnapshot,
@@ -110,11 +139,16 @@ export function captureCheckpoint(
   failure?: unknown,
   cursors?: { settlementCount: number; decisionCount: number },
 ): RecordedCheckpoint {
+  const animal = isAnimalDreamBoard(world) ? animalAuthoritySnapshot(world, complete) : null;
+  if (isAnimalDreamBoard(world) && !animal) throw Error("animal_checkpoint_unavailable");
   const ghostBrideSetup = weddingSetup(world);
   const lonelyGirlSetup = projectLonelyGirlSetup(world);
   const thiefSetup = projectThiefSetup(world),
     shapeshifterSetup = projectShapeshifterSetup(world);
   return {
+    ...(isAnimalDreamBoard(world)
+      ? { animalDream: animalCheckpointSchema.parse(animalAuthoritySnapshot(world, complete)) }
+      : {}),
     ...(isFragrantPairBoard(world)
       ? { fragrantPair: fragrantCheckpointSchema.parse(fragrantAuthoritySnapshot(world, complete)) }
       : {}),
@@ -123,7 +157,7 @@ export function captureCheckpoint(
           nobleBody: nobleBodyCheckpointSchema.parse(checkpointNobleBodyAuthority(world, complete)),
         }
       : {}),
-    ...(isNobleBodyBoard(world) || isFragrantPairBoard(world)
+    ...(isAnimalDreamBoard(world) || isNobleBodyBoard(world) || isFragrantPairBoard(world)
       ? {
           operationCount: getSessionRecorder()?.reproductionOperationCount ?? 0,
           settlementCount:
@@ -145,11 +179,23 @@ export function captureCheckpoint(
       : {}),
     players:
       demonHunterCheckpointPlayers(world, complete) ??
-      world.entityIds().map((id) => {
-        const identity = world.getComponent<IdentityComponent>(id, COMPONENT.Identity)!;
-        const role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
-        const badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge)!;
-        const vote = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight)!;
+      (animalOriginalAuditIds(world) ?? world.entityIds()).map((id) => {
+        const original = animal ? animalOriginalAuditPlayer(world, id) : null;
+        const identity = original
+          ? (JSON.parse(original.identityJson) as IdentityComponent)
+          : world.getComponent<IdentityComponent>(id, COMPONENT.Identity)!;
+        const role = original?.scope.role ?? world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+        const badge = original
+          ? (auditData(original.audit.badge, [
+              "isSheriff",
+              "destroyed",
+              "voteWeight",
+              "handoffPolicy",
+            ]) as BadgeComponent)
+          : world.getComponent<BadgeComponent>(id, COMPONENT.Badge)!;
+        const vote = original
+          ? (auditData(original.audit.vote, ["weight", "canVote"]) as VotingRightComponent)
+          : world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight)!;
         const weddingAudit = weddingAuditPlayer(world, id, !complete);
         const audit = weddingAudit ?? projectLonelyGirlAuditPlayer(world, id);
         const wall = projectWallNote(world, id);
@@ -165,10 +211,21 @@ export function captureCheckpoint(
           id,
           seat: identity.seat,
           name: identity.name,
-          role: audit?.role ?? role.role,
-          camp: audit?.camp ?? role.camp,
-          alive: audit?.alive ?? world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive,
+          role: (original?.scope.roleId as RoleComponent["role"]) ?? audit?.role ?? role.role,
+          camp: original?.scope.campValue ?? audit?.camp ?? role.camp,
+          alive: original
+            ? aliveLifeDescriptor(original.scope.life)!.get!.call(original.scope.life)
+            : (audit?.alive ?? world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive),
           privateState:
+            (animal && original
+              ? id === animal.foxId
+                ? { foxCub: animal.fox }
+                : id === animal.catId
+                  ? { whiteCat: animal.cat }
+                  : id === animal.pufferId
+                    ? { pufferfish: animal.puffer }
+                    : (snapshotPlainData(original.privateState) as Record<string, unknown>)
+              : null) ??
             fragrantCheckpointPrivateState(world, id, complete) ??
             audit?.privateState ??
             (projectLonelyGirl(world, role)
@@ -195,6 +252,7 @@ export function captureCheckpoint(
               }
             : {}),
           victory:
+            (original ? (JSON.parse(original.victoryJson) as VictoryComponent) : null) ??
             (weddingAudit ? { affiliations: weddingAudit.victory } : null) ??
             projectLonelyGirlVictory(world, id) ??
             structuredClone(world.getComponent<VictoryComponent>(id, COMPONENT.Victory)!),
@@ -205,7 +263,10 @@ export function captureCheckpoint(
             voteWeight: badge.voteWeight,
             ...(badge.handoffPolicy ? { handoffPolicy: badge.handoffPolicy } : {}),
           },
-          marks: world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!.values(),
+          marks: (
+            (original?.audit.marks as StatusMarksComponent | undefined) ??
+            world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!
+          ).values(),
         };
       }),
   };
@@ -267,7 +328,8 @@ export function beginGameReproduction(
     },
     options.boardConfig.radiantEclipse ||
       options.boardConfig.nobleSecretBody ||
-      options.boardConfig.fragrantPairSeer
+      options.boardConfig.fragrantPairSeer ||
+      options.boardConfig.animalDream
       ? () => context.phaseManager.getEvents()
       : undefined,
   );

@@ -595,14 +595,19 @@ export function filterAnimalLethalWave(
     !["night", "day", "voting"].includes(phase) ||
     (owner.unit?.value.day === day && owner.unit.status !== "open") ||
     (phase === "voting" &&
-      (!owner.unit ||
-        owner.unit.value.kind !== "exile" ||
-        owner.unit.value.day !== day ||
-        owner.unit.status !== "open"))
+      (!owner.unit || owner.unit.value.day !== day || owner.unit.status !== "open"))
   )
     throw Error("animal_death_scope_unavailable");
   const ids = snapshotPlainData(rawIds) as number[],
     sources = snapshotPlainData(rawSources) as Record<number, string[]>;
+  if (
+    owner.unit?.value.day === day &&
+    owner.unit.value.kind === "skipped_day" &&
+    Object.values(sources).some((causes) =>
+      causes.some((c) => c === "exile" || c === "puffer_retaliation"),
+    )
+  )
+    throw Error("animal_death_scope_unavailable");
   if (
     !Array.isArray(ids) ||
     new Set(ids).size !== ids.length ||
@@ -1020,6 +1025,51 @@ export function commitAnimalPufferKnifeDeath(
 export function animalBeautyLinkBlocked(world: World, day: number): boolean {
   const owner = currentOwner(world);
   return owners.has(world) && (!owner || owner.beautyLinkBlockedDay === day);
+}
+export function isAnimalDreamBoard(world: World): boolean {
+  return owners.has(world);
+}
+export function abortAnimalGame(world: World): void {
+  const owner = owners.get(world);
+  if (owner) stop(owner);
+}
+export function animalFoxChoiceActor(world: World, day: number): number | null {
+  const owner = currentOwner(world),
+    night = owner?.night;
+  return owner &&
+    night?.day === day &&
+    night.status === "open" &&
+    night.requiresFox &&
+    !night.fox.closed &&
+    !night.fox.paid &&
+    animalOriginalPlayer(world, owner.fox.actor.scope.id)
+    ? owner.fox.actor.scope.id
+    : null;
+}
+export function animalFoxChoiceCandidates(world: World, day: number): readonly number[] {
+  if (animalFoxChoiceActor(world, day) === null) return Object.freeze([]);
+  return Object.freeze(
+    world
+      .entityIds()
+      .filter((id) => animalOriginalPlayer(world, id))
+      .sort((a, b) => a - b),
+  );
+}
+/** Runtime permission only, never a player's published knowledge or a hit receipt. */
+export function animalPackKnifeBlocked(world: World): boolean {
+  if (!owners.has(world)) return false;
+  const owner = currentOwner(world);
+  return !owner || owner.night?.status !== "open" || owner.effect?.knifeBlocked === true;
+}
+export function animalBeautyCharmAllowed(world: World, day: number): boolean {
+  if (!owners.has(world)) return true;
+  const owner = currentOwner(world);
+  return (
+    !!owner &&
+    owner.night?.day === day &&
+    owner.night.status === "open" &&
+    owner.effect?.beautyBlocked !== true
+  );
 }
 /** God-only paid effect. Actor prompts use a separate publication-aware knowledge projection. */
 export function animalFoxEffect(world: World): Readonly<FoxEffect> | null {

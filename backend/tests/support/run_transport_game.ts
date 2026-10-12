@@ -172,7 +172,8 @@ export async function runTransportGame(
               if (
                 scenario.board.config.radiantEclipse ||
                 scenario.board.config.nobleSecretBody ||
-                scenario.board.config.fragrantPairSeer
+                scenario.board.config.fragrantPairSeer ||
+                scenario.board.config.animalDream
               )
                 sdkWireMessages.push({
                   actor,
@@ -312,7 +313,7 @@ export async function runTransportGame(
       type: "acp",
       transport: "stdio",
       command: process.execPath,
-      args: [path.resolve(process.cwd(), "tests/fixtures/acp_game_agent.ts")],
+      args: [path.resolve(import.meta.dir, "../fixtures/acp_game_agent.ts")],
       maxConcurrentRequests: 2,
     };
     for (const [actor, plan] of plans) {
@@ -401,6 +402,23 @@ export async function runTransportGame(
                 lastCheckpoint: prefix.checkpoints.at(-1)?.failure,
               }),
             );
+            if (scenario.board.config.animalDream) {
+              for (const actor of plans.keys()) {
+                if (transportKind(actor) !== "acp") continue;
+                const trace = await fs
+                  .readFile(
+                    path.join(root, name, `acp-workspaces/player-${actor}/game-fixture.json`),
+                    "utf8",
+                  )
+                  .then((value) => JSON.parse(value))
+                  .catch(() => null);
+                if (trace?.failure)
+                  transportDiagnostic("[animal_fixture_failure]", {
+                    actor,
+                    failure: trace.failure,
+                  });
+              }
+            }
           }
         } catch (diagnosticError) {
           transportDiagnostic("[transport_failure_diagnostic]", String(diagnosticError));

@@ -1,4 +1,9 @@
 import {
+  ANIMAL_DREAM_EVENT_TYPES,
+  readAnimalDreamFact,
+  animalDreamFactAudience,
+} from "@ai-werewolf-arena/game-text";
+import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
   nobleSecretBodyVisibility,
@@ -143,6 +148,22 @@ export class AgentEventVisibilityRegistry {
   constructor(private readonly rules: Record<string, AgentEventVisibilityRule> = DEFAULT_RULES) {}
 
   canView(world: World, event: GameEvent, actorId: EntityId): boolean {
+    if ((ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(event.type)) {
+      const f = readAnimalDreamFact(event.type, event.payload),
+        v = f && animalDreamFactAudience(f.type);
+      return (
+        !!f &&
+        (v === "public"
+          ? !("audience" in event)
+          : v === "actor" &&
+            "actorId" in f.payload &&
+            f.payload.actorId === actorId &&
+            "audience" in event &&
+            Array.isArray(event.audience) &&
+            event.audience.length === 1 &&
+            event.audience[0] === actorId)
+      );
+    }
     if ((FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(event.type)) {
       const fact = readFragrantPairFact(event.type, event.payload);
       return (

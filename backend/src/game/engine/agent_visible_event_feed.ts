@@ -1,4 +1,9 @@
 import {
+  ANIMAL_DREAM_EVENT_TYPES,
+  readAnimalDreamFact,
+  animalDreamFactAudience,
+} from "@ai-werewolf-arena/game-text";
+import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
   nobleSecretBodyVisibility,
@@ -131,6 +136,23 @@ export function buildAgentVisibleEvent(
   const detached = snapshotEvent(event);
   if (!detached) return null;
   event = detached;
+  if ((ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(event.type)) {
+    const f = readAnimalDreamFact(event.type, event.payload),
+      visibility = f && animalDreamFactAudience(f.type);
+    if (!f || visibility === "god") return null;
+    if (
+      visibility === "actor" &&
+      (!("actorId" in f.payload) ||
+        f.payload.actorId !== actorId ||
+        !("audience" in event) ||
+        !Array.isArray(event.audience) ||
+        event.audience.length !== 1 ||
+        event.audience[0] !== actorId)
+    )
+      return null;
+    if (visibility === "public" && "audience" in event) return null;
+    return { seq: visibleSeq, type: f.type, payload: { ...f.payload } };
+  }
   if ((FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(event.type)) {
     const fact = readFragrantPairFact(event.type, event.payload);
     if (

@@ -1,5 +1,59 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "replay.stage.animal_night_opened": "实际开夜",
+  "replay.stage.animal_fox_chosen": "子狐选择",
+  "replay.stage.animal_fox_effect": "子狐实际效果",
+  "replay.stage.animal_knife_notified": "本人刀权通知",
+  "replay.stage.animal_beauty_notified": "本人狼美人知情",
+  "replay.stage.animal_cat_revealed": "白猫活人翻牌",
+  "replay.stage.animal_puffer_revealed": "河豚身份公布",
+  "replay.stage.animal_puffer_decided": "河豚反击决定",
+  "replay.stage.animal_puffer_targets": "河豚原选民全集",
+  "replay.stage.animal_wave_prepared": "致死提案",
+  "replay.stage.animal_wave_committed": "实际死亡波",
+  "replay.stage.animal_cat_expiry_prepared": "白猫到期提案",
+  "replay.stage.animal_unit_completed": "实际放逐单位完成",
+  "event.animal_night_opened": "第{day}夜动物梦境实际开夜。",
+  "event.animal_fox_chosen": "{actor}号第{day}夜子狐选择：{state}。",
+  "event.animal_fox_effect": "第{day}夜子狐实际效果：{state}。",
+  "event.animal_knife_notified": "{actor}号第{day}夜已授权刀权通知：{state}。",
+  "event.animal_beauty_notified": "{actor}号第{day}轮已知狼美人状态：{state}。",
+  "event.animal_cat_revealed": "{actor}号公开白猫身份，首次延期后仍存活。",
+  "event.animal_puffer_revealed": "{actor}号公开河豚身份。",
+  "event.animal_puffer_decided": "{actor}号第{day}轮河豚反击决定：{state}。",
+  "event.animal_puffer_targets": "第{day}轮河豚实际反击目标全集：{state}。",
+  "event.animal_wave_prepared": "第{day}轮动物梦境致死提案：{state}。",
+  "event.animal_wave_committed": "第{day}轮动物梦境实际死亡波：{state}。",
+  "event.animal_cat_expiry_prepared": "{actor}号白猫第{day}轮到期提案：{state}。",
+  "event.animal_unit_completed": "第{day}轮动物梦境实际放逐单位完成：{state}。",
+  "error.animal_action_unavailable":
+    "本次动物角色行动不可用、已失效或参数不合法；请只在原行动提示有效时提交允许的参数。",
+  "role.white_cat.brief":
+    "白猫是好人神职。首次致死会亮牌延寿，仍可投票和持有警徽；延迟至规定的下一放逐单位后真正死亡，反复受击不刷新期限。",
+  "role.fox_cub.brief":
+    "子狐是好人神职。次夜起整局一次迷惑任意原活人，可自选；null明确空过不耗次数。命中狼阵营取消整队当夜普通刀，命中狼美人另清魅惑。本人的反馈不透露命中或阵营。",
+  "role.pufferfish.brief":
+    "河豚是好人神职。最终放逐票后整局一次反击由引擎确定的全部原投票人；只决定activate，false不耗次数。真实刀死时另封锁当日狼美人牵连，主动库存和被动独立。",
+  "action.fox_distract.hint":
+    'fox_distract args: {"target_id":number|null}。候选含自己；null为明确空过。',
+  "action.fox_distract.directive":
+    "选择一个原活人进行迷惑，或明确提交target_id=null空过；必须作出决定，反馈不公开是否命中。",
+  "action.puffer_retaliate.hint":
+    'puffer_retaliate args: {"activate":boolean}。只提交是否发动，目标全集由引擎确定，不可挑选子集。',
+  "action.puffer_retaliate.directive":
+    "决定是否发动对本轮规定原投票人的反击；必须提交activate=true或false，false保留次数。",
+  "stage.fox_distract": "子狐迷惑",
+  "stage.puffer_reaction": "河豚票后反击",
+  "prompt.stage.fox_candidates": "本次可选原活人（含自己）：{ids}；null明确空过。",
+  "role.bear.dawn_brief":
+    "熊在真实天亮完整死亡链后，按当时仍存活的座位邻居取样并匿名公告；延期仍活的白猫保留邻位。",
+  "prompt.status.animal": "你的已公布动物角色知情：{state}。尚未公布的后台效果不是玩家知识。",
+  "animal.policy.cat_wait": "自爆跳票不计单位，等待下一次实际放逐结束",
+  "animal.policy.cat_skip": "自爆跳过白天结束也计到期单位",
+  "animal.policy.puffer_first": "始终反击首轮投给河豚的完整原选民，包括发生PK时",
+  "animal.policy.puffer_final": "反击最后完成票轮的完整原选民，PK全弃时不退回首轮",
+  "rules.animal_dream":
+    "动物梦境原生十二人：整条死亡链结束才判胜，同时屠边采用狼优先；白猫跳票策略={catPolicy}，河豚票轮策略={ballotPolicy}，熊显式天亮取样。",
   "ability.kind.pair_check": "双目标查验",
   "stage.fragrant_bind": "寻香绑定",
   "prompt.stage.fragrant_pair_candidates":

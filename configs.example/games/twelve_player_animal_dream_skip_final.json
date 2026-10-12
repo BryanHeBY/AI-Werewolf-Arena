@@ -1,0 +1,15 @@
+{
+  "board": "twelve_player_animal_dream_skip_final",
+  "agent": "deepseek_v4_flash",
+  "maxDays": 30,
+  "maxRuntimeMs": 1800000,
+  "llmTimeoutMs": 45000,
+  "trace": false,
+  "printAllEvents": false,
+  "printChat": false,
+  "streamEvents": true,
+  "color": true,
+  "printLlmIo": false,
+  "printThinking": false,
+  "printPrivateEvents": false
+}

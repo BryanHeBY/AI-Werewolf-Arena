@@ -1,4 +1,5 @@
 import type { NobleSecretBodyPayloadMap } from "@ai-werewolf-arena/game-text";
+import type { AnimalDreamPayloadMap } from "@ai-werewolf-arena/game-text";
 import type { FragrantPairPayloadMap } from "@ai-werewolf-arena/game-text";
 import type { RedMoonNextNightFact, RedMoonExpiryFact } from "@ai-werewolf-arena/game-text";
 import type {
@@ -47,7 +48,8 @@ export interface ExileFeedback {
   result: Extract<InspectionResult, { kind: "camp" }>;
 }
 
-export interface EventPayloadMap extends NobleSecretBodyPayloadMap, FragrantPairPayloadMap {
+export interface EventPayloadMap
+  extends NobleSecretBodyPayloadMap, FragrantPairPayloadMap, AnimalDreamPayloadMap {
   eclipse_swallowed: {
     actorId: EntityId;
     day: number;
@@ -541,6 +543,7 @@ export type WeddingEventType =
 export type GameEvent = {
   [K in keyof EventPayloadMap]: EventBase<K, EventPayloadMap[K]> &
     (K extends
+      | Exclude<keyof AnimalDreamPayloadMap, "animal_cat_revealed" | "animal_puffer_revealed">
       | "eclipse_swallowed"
       | "eclipse_native_suppressed"
       | "eclipse_native_restored"

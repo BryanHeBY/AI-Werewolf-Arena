@@ -195,6 +195,24 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
             ),
           ]
         : []),
+      ...(config.animalDream
+        ? [
+            text(locale, "rules.animal_dream", {
+              catPolicy: text(
+                locale,
+                config.whiteCat!.skippedVotePolicy === "awa_wait_for_actual_exile_v1"
+                  ? "animal.policy.cat_wait"
+                  : "animal.policy.cat_skip",
+              ),
+              ballotPolicy: text(
+                locale,
+                config.pufferfish!.ballotPolicy === "awa_first_ballot_v1"
+                  ? "animal.policy.puffer_first"
+                  : "animal.policy.puffer_final",
+              ),
+            }),
+          ]
+        : []),
       ...(config.roleSetups.some((entry) => entry.role === Role.Seer && entry.count > 0)
         ? [
             text(

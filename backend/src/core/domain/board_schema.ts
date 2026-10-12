@@ -1,5 +1,10 @@
 import { z } from "zod";
 import {
+  CAT_SKIPPED_VOTE_POLICIES,
+  PUFFER_BALLOT_POLICIES,
+  BEAR_SIGNAL_POLICIES,
+} from "@ai-werewolf-arena/game-text";
+import {
   EVENT_PACK_IDS,
   CUPID_POLICIES,
   DEBATER_POLICIES,
@@ -28,6 +33,15 @@ const strategies = z.enum(["min_id", "min_seat", "no_elimination", "no_kill"]);
 
 /** Internal board shape shared by reverse configuration writing and reproduction. No defaults are added here. */
 export const boardConfigSchema = z.strictObject({
+  animalDream: z
+    .strictObject({
+      policy: z.literal("awa_animal_dream_v1"),
+      eliminationPriority: z.literal("awa_wolf_priority_v1"),
+    })
+    .optional(),
+  whiteCat: z.strictObject({ skippedVotePolicy: z.enum(CAT_SKIPPED_VOTE_POLICIES) }).optional(),
+  pufferfish: z.strictObject({ ballotPolicy: z.enum(PUFFER_BALLOT_POLICIES) }).optional(),
+  bear: z.strictObject({ signalPolicy: z.enum(BEAR_SIGNAL_POLICIES) }).optional(),
   fragrantPairSeer: z.strictObject({ policy: z.literal("awa_fragrant_pair_seer_v1") }).optional(),
   nobleSecretBody: z.strictObject({ policy: z.literal("awa_noble_secret_body_v1") }).optional(),
   nightNoble: z

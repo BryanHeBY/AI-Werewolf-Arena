@@ -1,4 +1,5 @@
 import { installNobleBodyAuthority } from "../game/mechanisms/roles/noble_secret_body/authority";
+import { installAnimalAuthority } from "../game/mechanisms/roles/animal_dream/authority";
 import { boardPresetViolation } from "../game/mechanisms/roles/board_presets";
 import { installRadiantEclipseBoard } from "../game/mechanisms/roles/radiant_eclipse/night_frame";
 import { installMistRavenBoard } from "../game/mechanisms/roles/mist_raven/night_frame";
@@ -84,9 +85,11 @@ export function bootstrapGame(
   const roleRegistry = createDefaultRoleRegistry();
   const damageResolutionSystem = new DamageResolutionSystem();
   const conditionRegistry = new ConditionRegistry(
-    config.pureWhite
+    config.pureWhite || config.animalDream
       ? new PureWhiteWinRegistry(
-          createEliminationWinConditionSpecs(config.pureWhite.eliminationPriority),
+          createEliminationWinConditionSpecs(
+            config.pureWhite?.eliminationPriority ?? "awa_wolf_priority_v1",
+          ),
         )
       : getDefaultWinConditionRegistry(),
   );
@@ -166,6 +169,7 @@ function createPlayers(
   if (config.roleSetups.some((row) => row.role === Role.Shapeshifter && row.count === 1))
     installShapeshifterDeal(world, roles, ids);
   installInitialRoster(world);
+  if (config.animalDream) installAnimalAuthority(world, config);
   if (roles.includes(Role.Alchemist) || roles.includes(Role.RavenClawWolf))
     installMistRavenBoard(world);
   if (config.radiantEclipse) installRadiantEclipseBoard(world);

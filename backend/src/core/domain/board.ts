@@ -1,5 +1,10 @@
 import { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 import type {
+  CatSkippedVotePolicy,
+  PufferBallotPolicy,
+  BearSignalPolicy,
+} from "@ai-werewolf-arena/game-text";
+import type {
   ActionWindow,
   KnightDuelWindow,
   Role,
@@ -120,6 +125,10 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
+  animalDream?: { policy: "awa_animal_dream_v1"; eliminationPriority: "awa_wolf_priority_v1" };
+  whiteCat?: { skippedVotePolicy: CatSkippedVotePolicy };
+  pufferfish?: { ballotPolicy: PufferBallotPolicy };
+  bear?: { signalPolicy: BearSignalPolicy };
   fragrantPairSeer?: { policy: "awa_fragrant_pair_seer_v1" };
   nobleSecretBody?: { policy: "awa_noble_secret_body_v1" };
   nightNoble?: { wolfActionPolicy: "standard" | "no_blast_no_self_knife" };

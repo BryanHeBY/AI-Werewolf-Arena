@@ -1,3 +1,4 @@
+import { ANIMAL_DREAM_EVENT_TYPES, readAnimalDreamFact } from "@ai-werewolf-arena/game-text";
 import { FRAGRANT_PAIR_EVENT_TYPES, readFragrantPairFact } from "@ai-werewolf-arena/game-text";
 import { isDeepStrictEqual } from "node:util";
 import {
@@ -39,6 +40,8 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  fox_distract: ["子狐迷惑", "Fox Cub distraction"],
+  puffer_reaction: ["河豚票后反击", "Pufferfish ballot reaction"],
   fragrant_bind: ["寻香绑定", "Fragrant binding"],
   pair_inspection: ["双目标查验", "Pair inspection"],
   night_noble: ["设置夜仆", "Choose a servant"],
@@ -388,6 +391,40 @@ export function assertTransportEvents(
 ) {
   assertMistTransportEvents(role, actorId, events, expected, state);
   for (const [, type, payload] of events) {
+    if ((ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(type)) {
+      const f = readAnimalDreamFact(type, payload);
+      if (
+        !f ||
+        ![
+          "animal_cat_revealed",
+          "animal_puffer_revealed",
+          "animal_fox_chosen",
+          "animal_knife_notified",
+          "animal_beauty_notified",
+          "animal_puffer_decided",
+        ].includes(type)
+      )
+        throw Error("fixture_animal_god_fact_exposed");
+      if (!type.endsWith("_revealed")) {
+        const expectedRole =
+          type === "animal_fox_chosen"
+            ? "fox_cub"
+            : type === "animal_puffer_decided"
+              ? "pufferfish"
+              : type === "animal_beauty_notified"
+                ? "wolf_beauty"
+                : null;
+        if (
+          payload.actorId !== actorId ||
+          (expectedRole && role !== expectedRole) ||
+          (type === "animal_knife_notified" && !["wolf", "wolf_beauty"].includes(role))
+        )
+          throw Error("fixture_animal_owner_fact_exposed");
+      }
+      if (state?.currentDay !== undefined && f.payload.day > state.currentDay)
+        throw Error("fixture_animal_future_fact_exposed");
+    }
+
     if (
       type.startsWith("noble_body_") ||
       ["noble_contract_closed", "secret_body_blocked"].includes(type)

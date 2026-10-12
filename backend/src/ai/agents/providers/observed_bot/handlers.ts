@@ -65,6 +65,25 @@ import {
 
 /** Preserve protocol-independent priority and RNG order for strict Tape reproducibility. */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
+  {
+    tool: "fox_distract",
+    decide: ({ request, pick, style, random }) => ({
+      name: "fox_distract",
+      args: {
+        target_id:
+          style === "conservative" || (style === "random" && random.next() < 0.35)
+            ? null
+            : (pick([...(request.context.fox_candidates ?? [])]) ?? null),
+      },
+    }),
+  },
+  {
+    tool: "puffer_retaliate",
+    decide: ({ style, random }) => ({
+      name: "puffer_retaliate",
+      args: { activate: style !== "conservative" && (style !== "random" || random.next() >= 0.5) },
+    }),
+  },
   { tool: "bind_fragrant_pair", decide: bindFragrantPair },
   { tool: "check_pair", decide: inspectPair },
   { tool: "choose_servant", decide: chooseServant },

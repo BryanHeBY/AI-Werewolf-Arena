@@ -1,4 +1,5 @@
 import {
+  isAnimalDreamPreset,
   isFragrantPairSeerPreset,
   isNobleSecretBodyPreset,
   isTricksterPreset,
@@ -21,6 +22,19 @@ import { isDemonHunterPreset } from "./demon_hunter/preset";
 
 /** Shared finite-board eligibility for configuration checks and direct bootstrap callers. */
 export function boardPresetViolation(config: BoardConfig) {
+  if (
+    (config.animalDream ||
+      config.bear?.signalPolicy === "netease_dawn_live_v1" ||
+      config.whiteCat ||
+      config.pufferfish ||
+      config.roleSetups.some(
+        (row) => [Role.WhiteCat, Role.FoxCub, Role.Pufferfish].includes(row.role) && row.count > 0,
+      )) &&
+    !isAnimalDreamPreset(config)
+  )
+    return "animal_dream_preset_invalid";
+  if (config.bear && !config.roleSetups.some((row) => row.role === Role.Bear && row.count > 0))
+    return "bear_role_required";
   if (
     (config.fragrantPairSeer ||
       config.roleSetups.some(

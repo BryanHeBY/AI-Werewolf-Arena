@@ -62,11 +62,11 @@ export function validateNobleSecretBodyRecord(record: ReproductionRecord): Noble
           (o) =>
             o.op.startsWith("noble_") ||
             o.op.startsWith("secret_body_") ||
-            (!board.fragrantPairSeer && o.event_count !== undefined),
+            (!board.fragrantPairSeer && !board.animalDream && o.event_count !== undefined),
         ) &&
         !record.decisions.some(
           (d) =>
-            (!board.fragrantPairSeer && d.openedAtEventCount !== undefined) ||
+            (!board.fragrantPairSeer && !board.animalDream && d.openedAtEventCount !== undefined) ||
             ["secret_body", "night_noble", "awakened_idiot_reveal_speech"].includes(d.stage) ||
             d.request.allowedTools.some((t) =>
               ["choose_servant", "protect_secret_body"].includes(t),
@@ -84,6 +84,7 @@ export function validateNobleSecretBodyRecord(record: ReproductionRecord): Noble
         (cp) =>
           cp.nobleBody ||
           (!board.fragrantPairSeer &&
+            !board.animalDream &&
             (cp.operationCount !== undefined ||
               cp.settlementCount !== undefined ||
               cp.decisionCount !== undefined)),

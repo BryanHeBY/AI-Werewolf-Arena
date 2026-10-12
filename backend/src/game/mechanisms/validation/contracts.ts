@@ -17,6 +17,7 @@ export interface ValidationRuleContext {
   demonHunterScope?: object;
   nobleBodyScope?: object;
   fragrantPairScope?: object;
+  animalScope?: object;
   wallScope?: object;
   wallId?: string;
   itemInstanceId?: string;

@@ -3,6 +3,12 @@ import {
   consumeSecretBodyExile,
 } from "../../mechanisms/roles/noble_secret_body/authority";
 import {
+  beginAnimalExileUnit,
+  recordAnimalBallotRound,
+  sealAnimalBallots,
+} from "../../mechanisms/roles/animal_dream/authority";
+import { runAnimalPufferChoice } from "../../mechanisms/roles/animal_dream/puffer_window";
+import {
   openNobleBodyRevealRequest,
   nobleBodyRequestScope,
   commitNobleBodyRevealSpeech,
@@ -41,6 +47,8 @@ import { canBeExiled, canVoteExile } from "../../mechanisms/common/participation
  * 投票流水线执行结果。
  */
 export interface VotingPipelineResult {
+  animalUnit?: object;
+  animalRetaliation?: readonly number[];
   summary: VotingSummary;
   interrupted: boolean;
   removed: EntityId[];
@@ -152,6 +160,14 @@ export class VotingPipeline {
 
     if (options.isCurrent && !options.isCurrent())
       return { summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] };
+    const animalUnit = config.animalDream
+      ? beginAnimalExileUnit(
+          this.world,
+          options.day,
+          "exile",
+          () => options.isCurrent?.() !== false,
+        )
+      : undefined;
     const voters = this.world
       .getAliveEntityIds()
       .filter((id) => canVoteExile(this.world, id, options.day));
@@ -161,6 +177,7 @@ export class VotingPipeline {
     if (options.isCurrent?.() === false)
       return { summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] };
     let { tally, publicVotes } = this.recordVotesInSeatOrder(voteResults, options.day);
+    if (animalUnit) recordAnimalBallotRound(this.world, animalUnit, 1, publicVotes);
     if (config.roleSetups.some((setup) => setup.role === Role.OrderPrince && setup.count > 0)) {
       const restarted = await runOrderPrinceChoice(
         this.world,
@@ -298,6 +315,7 @@ export class VotingPipeline {
         options.strictRequired,
       ));
       round = 2;
+      if (animalUnit) recordAnimalBallotRound(this.world, animalUnit, 2, publicVotes, candidates);
     }
 
     const target = this.pickMajorityTarget(
@@ -326,6 +344,18 @@ export class VotingPipeline {
         target,
       },
     });
+    let animalRetaliation: readonly number[] = [];
+    if (animalUnit) {
+      sealAnimalBallots(this.world, animalUnit);
+      animalRetaliation = await runAnimalPufferChoice(
+        this.world,
+        this.events,
+        actionProvider,
+        this.toolGateway,
+        options.day,
+        animalUnit,
+      );
+    }
     if (target === null) {
       return {
         summary: {
@@ -335,6 +365,7 @@ export class VotingPipeline {
         },
         interrupted: false,
         removed: [],
+        ...(animalUnit ? { animalUnit, animalRetaliation } : {}),
       };
     }
 
@@ -411,7 +442,7 @@ export class VotingPipeline {
       : this.eventRegistry.onVotedOut(this.world, effectiveTarget, this.events);
     const removed = [...votedOut.removed];
 
-    if (removed.includes(effectiveTarget)) {
+    if (removed.includes(effectiveTarget) && !animalUnit) {
       // 只有真正出局才广播 voted_out；白痴翻牌由事件总线单独广播。
       this.events.push({
         timestamp: Date.now(),
@@ -431,6 +462,7 @@ export class VotingPipeline {
       },
       interrupted: false,
       removed,
+      ...(animalUnit ? { animalUnit, animalRetaliation } : {}),
     };
   }
 

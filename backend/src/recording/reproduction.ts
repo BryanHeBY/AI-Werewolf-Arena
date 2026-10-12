@@ -1,3 +1,11 @@
+import { animalCheckpointSchema } from "./animal_dream_checkpoint";
+import { validateAnimalDreamRecord } from "./animal_dream_record";
+import {
+  ANIMAL_DREAM_EVENT_TYPES,
+  readAnimalDreamFact,
+  animalDreamFactAudience,
+  type AnimalDreamEventType,
+} from "@ai-werewolf-arena/game-text";
 import { validateFragrantPairRecord } from "./fragrant_pair_seer_record";
 import {
   FRAGRANT_PAIR_EVENT_TYPES,
@@ -196,6 +204,7 @@ export interface RecordedPlayerState {
   victory: { affiliations: VictoryAffiliation[] };
 }
 export interface RecordedCheckpoint {
+  animalDream?: import("./animal_dream_checkpoint").RecordedAnimalState;
   fragrantPair?: import("./fragrant_pair_seer_checkpoint").RecordedFragrantState;
   nobleBody?: import("./noble_secret_body_checkpoint").RecordedNobleBodyState;
   operationCount?: number;
@@ -353,6 +362,7 @@ const requestSchema = z.strictObject({
     trickster_may_pass: z.boolean().optional(),
     swap_candidates: z.array(positive).optional(),
     shoot_candidates: z.array(positive).optional(),
+    fox_candidates: z.array(positive).optional(),
     fragrant_pair_candidates: z.array(positive).optional(),
     pair_check_candidates: z.array(positive).optional(),
     sheriff_candidates: z.array(positive).optional(),
@@ -571,6 +581,7 @@ const schema = z.strictObject({
     .array(
       z
         .strictObject({
+          animalDream: animalCheckpointSchema.optional(),
           nobleBody: nobleBodyCheckpointSchema.optional(),
           fragrantPair: fragrantCheckpointSchema.optional(),
           operationCount: nonnegative.optional(),
@@ -736,6 +747,21 @@ const schema = z.strictObject({
           (!readModifierConflictFact(event.type, event.payload) || event.audience?.length !== 0)
         )
           ctx.addIssue({ code: "custom", message: "reproduction_modifier_conflict_invalid" });
+        if ((ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(event.type)) {
+          const fact = readAnimalDreamFact(event.type, event.payload),
+            audience = animalDreamFactAudience(event.type as AnimalDreamEventType);
+          if (
+            !fact ||
+            (audience === "public"
+              ? event.audience !== undefined
+              : audience === "god"
+                ? event.audience?.length !== 0
+                : event.audience?.length !== 1 ||
+                  event.audience[0] !==
+                    ("actorId" in fact.payload ? fact.payload.actorId : undefined))
+          )
+            ctx.addIssue({ code: "custom", message: "reproduction_animal_fact_invalid" });
+        }
         if ((FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(event.type)) {
           const fact = readFragrantPairFact(event.type, event.payload),
             visibility = fragrantPairVisibility(event.type);
@@ -785,6 +811,7 @@ const schema = z.strictObject({
         }
         if (
           event.audience !== undefined &&
+          !(ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(event.type) &&
@@ -849,6 +876,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   validateWildChildRecord(result);
   validateLonelyGirlRecord(result);
   validateGhostBrideRecord(result);
+  validateAnimalDreamRecord(result);
   validateFragrantPairRecord(result);
   const noble = validateNobleSecretBodyRecord(result);
   validateDemonHunterRecord(result, noble);
@@ -936,7 +964,8 @@ export class ReproductionTrace {
   }
   get ownedEventCursor(): number | undefined {
     return this.metadata.normalizedBoard.nobleSecretBody ||
-      this.metadata.normalizedBoard.fragrantPairSeer
+      this.metadata.normalizedBoard.fragrantPairSeer ||
+      this.metadata.normalizedBoard.animalDream
       ? (this.liveEvents?.().length ?? this.events.length)
       : undefined;
   }
@@ -993,7 +1022,7 @@ export class ReproductionTrace {
       throw new Error("reproduction_checkpoint_events_mismatch");
     this.checkpoints.push(
       structuredClone(
-        checkpoint.nobleBody || checkpoint.fragrantPair
+        checkpoint.animalDream || checkpoint.nobleBody || checkpoint.fragrantPair
           ? { ...checkpoint, settlementCount: this.settled, decisionCount: this.decisions.length }
           : checkpoint,
       ),

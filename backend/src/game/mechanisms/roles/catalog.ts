@@ -1,5 +1,10 @@
 import { NIGHT_NOBLE_ROLE_PROFILE, AWAKENED_IDIOT_ROLE_PROFILE } from "./noble_secret_body/profile";
 import {
+  WHITE_CAT_ROLE_PROFILE,
+  FOX_CUB_ROLE_PROFILE,
+  PUFFERFISH_ROLE_PROFILE,
+} from "./animal_dream/profile";
+import {
   FRAGRANT_PHANTOM_ROLE_PROFILE,
   AWAKENED_SEER_ROLE_PROFILE,
 } from "./fragrant_pair_seer/profile";
@@ -58,6 +63,9 @@ import { CUPID_ROLE_PROFILE } from "./cupid/profile";
 
 import { RADIANT_COUNT_ROLE_PROFILE, ECLIPSE_MAID_ROLE_PROFILE } from "./radiant_eclipse/profile";
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
+  WHITE_CAT_ROLE_PROFILE,
+  FOX_CUB_ROLE_PROFILE,
+  PUFFERFISH_ROLE_PROFILE,
   FRAGRANT_PHANTOM_ROLE_PROFILE,
   AWAKENED_SEER_ROLE_PROFILE,
   NIGHT_NOBLE_ROLE_PROFILE,

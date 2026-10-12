@@ -1,6 +1,14 @@
 import { getSessionRecorder } from "../../recording/recording_context";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
 import {
+  isAnimalDreamBoard,
+  filterAnimalLethalWave,
+  prepareAnimalCatExpiry,
+  animalAuthoritySnapshot,
+  commitAnimalPufferKnifeDeath,
+} from "../mechanisms/roles/animal_dream/authority";
+import { appendAnimalFact } from "../mechanisms/roles/animal_dream/facts";
+import {
   isFragrantPairBoard,
   prepareFragrantDeathWave,
   commitFragrantDeathWave,
@@ -219,7 +227,8 @@ export class DeathResolution {
       blocksPassiveNightShot?: (targetId: EntityId) => boolean;
       nightOriginIds?: readonly EntityId[];
       isCurrent?: () => boolean;
-      onInitialWaveCommitted?: (deaths: readonly EntityId[]) => GameEvent;
+      onInitialWaveCommitted?: (deaths: readonly EntityId[], sources?: DeathSources) => GameEvent;
+      animalUnit?: object;
     },
   ): Promise<void> {
     const resolutionPhase = this.state.phase;
@@ -238,6 +247,69 @@ export class DeathResolution {
       this.config?.disclosure?.deathRevealPolicy === revealPolicy;
     const lastWordsCurrent = () =>
       isCurrent() && (this.config?.lastWords?.policy ?? "awa_initial_wave_v1") === lastWordsPolicy;
+    const ownsAnimal = isAnimalDreamBoard(this.world);
+    const prepareAnimal = (
+      ids: EntityId[],
+      waveSources: DeathSources,
+      sourcePhase: Phase,
+    ): EntityId[] => {
+      if (!ownsAnimal) return ids;
+      const proposed = [...ids],
+        filtered = filterAnimalLethalWave(
+          this.world,
+          resolutionDay,
+          sourcePhase as "night" | "day" | "voting",
+          ids,
+          waveSources,
+          nightEffects?.animalUnit ?? isCurrent,
+        );
+      appendAnimalFact(this.world, this.events, "animal_wave_prepared", {
+        policy: "awa_animal_dream_v1",
+        day: resolutionDay,
+        phase: sourcePhase as "night" | "day" | "voting",
+        proposedIds: proposed,
+        blockedCatId: filtered.blockedCatId,
+      });
+      if (filtered.revealedCatId !== null)
+        appendAnimalFact(this.world, this.events, "animal_cat_revealed", {
+          policy: "awa_animal_dream_v1",
+          day: resolutionDay,
+          actorId: filtered.revealedCatId,
+        });
+      const actual = [...filtered.deaths],
+        cat = filtered.blockedCatId,
+        currentCatSources =
+          cat === null
+            ? []
+            : (waveSources[cat] ?? []).filter(
+                (c) => c === DeathCause.Exile || c === DeathCause.PufferRetaliation,
+              );
+      if (cat !== null) delete waveSources[cat];
+      if (nightEffects?.animalUnit && !animalAuthoritySnapshot(this.world)!.unit!.expiryPrepared) {
+        const expiry = prepareAnimalCatExpiry(this.world, nightEffects.animalUnit);
+        if (expiry !== null) {
+          const u = animalAuthoritySnapshot(this.world)!.unit!;
+          appendAnimalFact(this.world, this.events, "animal_cat_expiry_prepared", {
+            policy: "awa_animal_dream_v1",
+            day: resolutionDay,
+            actorId: expiry,
+            unit: u.number,
+            unitKind: u.kind,
+          });
+          if (!actual.includes(expiry)) actual.push(expiry);
+          waveSources[expiry] = [
+            ...new Set([
+              ...(waveSources[expiry] ?? []),
+              ...currentCatSources,
+              DeathCause.WhiteCatExpiry,
+            ]),
+          ];
+        }
+      }
+      return actual;
+    };
+    const preparedSources: DeathSources = structuredClone(sources);
+    deadIds = prepareAnimal(deadIds, preparedSources, phase);
     const seen = new Set<EntityId>(
       deadIds.filter((id) => {
         return (
@@ -247,7 +319,7 @@ export class DeathResolution {
       }),
     );
     let pending = [...seen];
-    const allSources: DeathSources = structuredClone(sources);
+    const allSources: DeathSources = preparedSources;
     const nativeHunterShotTargets = new Set<EntityId>();
     const initialPhases: Record<EntityId, Phase> = structuredClone(deathPhases);
     const nightOrigin = new Set(nightEffects?.nightOriginIds ?? []);
@@ -300,7 +372,7 @@ export class DeathResolution {
 
     try {
       if (pending.length === 0 && nightEffects?.onInitialWaveCommitted && isCurrent())
-        nightEffects.onInitialWaveCommitted([]);
+        nightEffects.onInitialWaveCommitted([], {});
       while (pending.length > 0) {
         if (!isCurrent()) return;
         const deathPhase = firstBatch ? phase : this.state.phase;
@@ -310,6 +382,7 @@ export class DeathResolution {
           gunsToExpire,
           revealPolicy === "netease_2017_open_v1",
           allSources,
+          nightEffects?.animalUnit ?? isCurrent,
         );
         if (firstBatch && fragrantInitial) {
           commitFragrantDeathWave(this.world, fragrantInitial);
@@ -325,8 +398,31 @@ export class DeathResolution {
             firstBatch,
           );
         if (firstBatch && nightEffects?.onInitialWaveCommitted) {
-          const event = nightEffects.onInitialWaveCommitted(pending);
+          const event = nightEffects.onInitialWaveCommitted(pending, allSources);
           this.publishFragrantWave(fragrantInitial, event);
+        }
+        if (ownsAnimal && firstBatch) {
+          for (const id of pending)
+            if (
+              this.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role ===
+                Role.Pufferfish &&
+              (allSources[id] ?? []).includes(DeathCause.WolfKill)
+            )
+              appendAnimalFact(this.world, this.events, "animal_puffer_revealed", {
+                policy: "awa_animal_dream_v1",
+                day: resolutionDay,
+                actorId: id,
+                reason: "knife_death",
+              });
+          appendAnimalFact(this.world, this.events, "animal_wave_committed", {
+            policy: "awa_animal_dream_v1",
+            day: resolutionDay,
+            phase: deathPhase as "night" | "day" | "voting",
+            deaths: [...pending],
+            deathSources: Object.fromEntries(
+              pending.map((id) => [String(id), [...(allSources[id] ?? [])]]),
+            ),
+          });
         }
         if (
           firstBatch &&
@@ -570,6 +666,11 @@ export class DeathResolution {
                       continue;
                     }
                     if (!this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)) continue;
+                    if (
+                      ownsAnimal &&
+                      !prepareAnimal([id], proposedSources, sourcePhase).includes(id)
+                    )
+                      continue;
                     let shot = shots.get(id);
                     if (
                       shot &&
@@ -586,7 +687,22 @@ export class DeathResolution {
                     seen.add(id);
                     allSources[id] = [...new Set(proposedSources[id] ?? [])];
                     originPhases.set(id, ownsFragrant ? this.state.phase : sourcePhase);
-                    this.markPlayersDead([id], false, gunsToExpire, revealCurrent(), allSources);
+                    this.markPlayersDead(
+                      [id],
+                      false,
+                      gunsToExpire,
+                      revealCurrent(),
+                      allSources,
+                      nightEffects?.animalUnit ?? isCurrent,
+                    );
+                    if (ownsAnimal)
+                      appendAnimalFact(this.world, this.events, "animal_wave_committed", {
+                        policy: "awa_animal_dream_v1",
+                        day: resolutionDay,
+                        phase: sourcePhase as "night" | "day" | "voting",
+                        deaths: [id],
+                        deathSources: { [String(id)]: [...(allSources[id] ?? [])] },
+                      });
                     newlyMarked = true;
                     marked.push(id);
                     if (shot) {
@@ -945,6 +1061,7 @@ export class DeathResolution {
     gunsToExpire: ReturnType<typeof firstDeathGuns> = [],
     reveal = false,
     sources: DeathSources = {},
+    animalScope?: object | (() => boolean),
   ): void {
     for (const id of playerIds) {
       const alive = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive);
@@ -954,6 +1071,31 @@ export class DeathResolution {
       const firstSettlement = !this.isSettledLife(id);
       if (firstSettlement) recordWildChildDeathCommit(this.world, id);
       alive.alive = false;
+      if (firstSettlement && isAnimalDreamBoard(this.world)) {
+        if (
+          (sources[id] ?? []).includes(DeathCause.WolfKill) &&
+          this.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Pufferfish
+        ) {
+          commitAnimalPufferKnifeDeath(
+            this.world,
+            this.state.day,
+            sources[id] ?? [],
+            animalScope ?? (() => !this.state.gameOver),
+          );
+        }
+        if ((sources[id] ?? []).includes(DeathCause.Exile))
+          this.events.push({ timestamp: Date.now(), type: "voted_out", payload: { target: id } });
+        else if (
+          (sources[id] ?? []).some(
+            (c) => c === DeathCause.PufferRetaliation || c === DeathCause.WhiteCatExpiry,
+          )
+        )
+          this.events.push({
+            timestamp: Date.now(),
+            type: "additional_deaths",
+            payload: { deaths: [id] },
+          });
+      }
       if (firstSettlement && isNobleBodyBoard(this.world)) {
         const closed = closeServantForDeath(this.world, this.state.day, id);
         const payload = {

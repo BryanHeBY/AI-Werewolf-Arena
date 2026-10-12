@@ -1,5 +1,11 @@
 import { inheritNobleBodyDeadlineRequest } from "../game/mechanisms/roles/noble_secret_body/requests";
 import { inheritFragrantPairDeadlineRequest } from "../game/mechanisms/roles/fragrant_pair_seer/requests";
+import { inheritAnimalDeadlineRequest } from "../game/mechanisms/roles/animal_dream/requests";
+import {
+  animalOriginalAuditIds,
+  animalOriginalAuditPlayer,
+} from "../game/mechanisms/roles/animal_dream/roster";
+import { aliveLifeDescriptor } from "../core/domain/components/alive";
 import { inheritDemonWitchDeadlineRequest } from "../game/mechanisms/roles/demon_hunter/native_potion_requests";
 import { inheritDemonHunterDeadlineRequest } from "../game/mechanisms/roles/demon_hunter/authority";
 import { inheritGhostBrideDeadlineRequest } from "../game/mechanisms/roles/ghost_bride/authority";
@@ -117,6 +123,7 @@ class DeadlineAwareActionProvider implements ActionProvider {
     inheritDemonWitchDeadlineRequest(request, timed);
     inheritNobleBodyDeadlineRequest(request, timed);
     inheritFragrantPairDeadlineRequest(request, timed);
+    inheritAnimalDeadlineRequest(request, timed);
     return this.delegate.getAction(timed);
   }
 }
@@ -424,6 +431,19 @@ function selectPlayerProfiles(
 }
 
 function replayPlayers(world: World) {
+  const originalIds = animalOriginalAuditIds(world);
+  if (originalIds)
+    return originalIds.map((id) => {
+      const original = animalOriginalAuditPlayer(world, id)!,
+        identity = JSON.parse(original.identityJson);
+      return {
+        player_id: id,
+        role: original.scope.roleId,
+        camp: original.scope.campValue,
+        alive: aliveLifeDescriptor(original.scope.life)!.get!.call(original.scope.life),
+        name: identity.name,
+      };
+    });
   const initial = initialIdentityDeal(world);
   return world.entityIds().map((id, index) => {
     const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);

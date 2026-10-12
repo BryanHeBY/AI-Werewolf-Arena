@@ -4,6 +4,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { DeathHook } from "../../hooks/hook_registry";
 import { activeCharm, permitsCharm } from "./relation";
+import { animalBeautyLinkBlocked } from "../animal_dream/authority";
 
 export const wolfBeautyDeathHook: DeathHook = async (
   world,
@@ -15,6 +16,7 @@ export const wolfBeautyDeathHook: DeathHook = async (
 ) => {
   const result: Awaited<ReturnType<DeathHook>> = { extraDeaths: [], extraDeathSources: {} };
   for (const actorId of ids) {
+    if (animalBeautyLinkBlocked(world, context?.day ?? 0)) continue;
     if (context?.isCurrent && !context.isCurrent()) break;
     if (
       world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role !== Role.WolfBeauty ||

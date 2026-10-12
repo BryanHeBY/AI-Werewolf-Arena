@@ -1,3 +1,11 @@
+import { isAnimalDreamBoard } from "../../../game/mechanisms/roles/animal_dream/authority";
+import {
+  animalFoxKnowledge,
+  animalPufferKnowledge,
+  animalCatKnowledge,
+  animalBeautyKnowledge,
+  animalBearKnowledge,
+} from "../../../game/mechanisms/roles/animal_dream/facts";
 import {
   isNobleBodyBoard,
   getNobleBodyPlayerState,
@@ -328,13 +336,26 @@ export class PlayerPromptPolicy {
       if (state) ownState.hunter = projectHunterState(state);
     }
     if (role?.role === Role.WolfBeauty) {
-      const state = getWolfBeautyState(role);
-      if (state) ownState.wolfBeauty = projectWolfBeautyState(state);
+      if (isAnimalDreamBoard(this.world))
+        ownState.wolfBeauty = animalBeautyKnowledge(this.world, request.actorId);
+      else {
+        const state = getWolfBeautyState(role);
+        if (state) ownState.wolfBeauty = projectWolfBeautyState(state);
+      }
     }
     if (role?.role === Role.Bear) {
-      const state = getBearState(role);
-      if (state) ownState.bear = projectBearState(state);
+      if (isAnimalDreamBoard(this.world)) ownState.bear = animalBearKnowledge(this.world);
+      else {
+        const state = getBearState(role);
+        if (state) ownState.bear = projectBearState(state);
+      }
     }
+    if (role?.role === Role.FoxCub)
+      ownState.foxCub = animalFoxKnowledge(this.world, request.actorId);
+    if (role?.role === Role.WhiteCat)
+      ownState.whiteCat = animalCatKnowledge(this.world, request.actorId);
+    if (role?.role === Role.Pufferfish)
+      ownState.pufferfish = animalPufferKnowledge(this.world, request.actorId);
     if (role?.role === Role.HiddenWolf) {
       const state = getHiddenWolfState(role);
       ownState.hiddenWolf = {
@@ -543,7 +564,10 @@ export class PlayerPromptPolicy {
       totalPlayers: this.publicBoardSize,
       roleCounts: this.publicRoleCounts,
       roleLabel: (role) => this.options.roleCatalog.label(role, this.locale),
-      roleSkillBrief: (role) => this.options.roleCatalog.skillBrief(role, this.locale),
+      roleSkillBrief: (role) =>
+        role === Role.Bear && isAnimalDreamBoard(this.world)
+          ? text(this.locale, "role.bear.dawn_brief")
+          : this.options.roleCatalog.skillBrief(role, this.locale),
     });
     if (this.options.boardConfig?.pureWhite) {
       info +=
@@ -577,6 +601,18 @@ export class PlayerPromptPolicy {
 
   private statusDirective(request: ActionRequest, role?: RoleComponent): string | undefined {
     const lines: string[] = [];
+    if (isAnimalDreamBoard(this.world)) {
+      const state =
+        role?.role === Role.FoxCub
+          ? animalFoxKnowledge(this.world, request.actorId)
+          : role?.role === Role.Pufferfish
+            ? animalPufferKnowledge(this.world, request.actorId)
+            : role?.role === Role.WhiteCat
+              ? animalCatKnowledge(this.world, request.actorId)
+              : null;
+      if (state)
+        lines.push(text(this.locale, "prompt.status.animal", { state: JSON.stringify(state) }));
+    }
     if (role?.role === Role.FragrantPhantom && isFragrantPairBoard(this.world)) {
       const known = fragrantPlayerKnowledge(this.world, request.phase, request.context.day);
       if (known.actorId === request.actorId)
@@ -748,6 +784,10 @@ export class PlayerPromptPolicy {
   }
 
   private stageContextHint(request: ActionRequest): string | undefined {
+    if (request.context.fox_candidates)
+      return text(this.locale, "prompt.stage.fox_candidates", {
+        ids: request.context.fox_candidates.join(", "),
+      });
     const pairCandidates =
       request.context.fragrant_pair_candidates ?? request.context.pair_check_candidates;
     if (pairCandidates)

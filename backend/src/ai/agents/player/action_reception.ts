@@ -1,4 +1,5 @@
 import { nobleBodyRequestScope } from "../../../game/mechanisms/roles/noble_secret_body/requests";
+import { animalRequestScope } from "../../../game/mechanisms/roles/animal_dream/requests";
 import { fragrantPairRequestScope } from "../../../game/mechanisms/roles/fragrant_pair_seer/requests";
 import {
   demonWitchRequestTargetCurrent,
@@ -218,6 +219,7 @@ export class ActionReception {
       demonHunterScope: demonHunterRequestScope(this.world, request),
       nobleBodyScope: nobleBodyRequestScope(this.world, request),
       fragrantPairScope: fragrantPairRequestScope(this.world, request),
+      animalScope: animalRequestScope(this.world, request),
       wildChildScope: wildChildRequestScope(this.world, request),
       wallScope: wallRequestScope(this.world, request),
       wallId: request.context.wall_id,

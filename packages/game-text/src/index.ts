@@ -1,4 +1,6 @@
 import { readNobleSecretBodyFact } from "./noble-secret-body";
+import { readAnimalDreamFact } from "./animal-dream";
+export * from "./animal-dream";
 import { readFragrantPairFact } from "./fragrant-pair-seer";
 import { readRadiantEclipseFact } from "./radiant-eclipse";
 import { readMistRavenFact } from "./mist-raven";
@@ -1295,3 +1297,32 @@ export type {
   PufferBallotPolicy,
   BearSignalPolicy,
 } from "./animal-dream-preset";
+
+/** Shared labels validate the complete finite fact before reading any field. */
+export function animalDreamEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale = "zh-CN",
+): string | null {
+  const fact = readAnimalDreamFact(type, payload);
+  if (!fact) return null;
+  const p = fact.payload;
+  if (fact.type === "animal_night_opened")
+    return text(locale, "event.animal_night_opened", { day: p.day });
+  if (fact.type === "animal_cat_revealed" || fact.type === "animal_puffer_revealed")
+    return text(locale, `event.${fact.type}`, { actor: "actorId" in p ? p.actorId : "" });
+  return text(locale, `event.${fact.type}`, {
+    day: p.day,
+    ...("actorId" in p &&
+    [
+      "animal_fox_chosen",
+      "animal_knife_notified",
+      "animal_beauty_notified",
+      "animal_puffer_decided",
+      "animal_cat_expiry_prepared",
+    ].includes(fact.type)
+      ? { actor: p.actorId }
+      : {}),
+    state: JSON.stringify(p),
+  });
+}

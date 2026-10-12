@@ -1,6 +1,67 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "replay.stage.animal_night_opened": "Actual night opening",
+  "replay.stage.animal_fox_chosen": "Fox choice",
+  "replay.stage.animal_fox_effect": "Actual Fox effect",
+  "replay.stage.animal_knife_notified": "Own knife permission",
+  "replay.stage.animal_beauty_notified": "Own Wolf Beauty knowledge",
+  "replay.stage.animal_cat_revealed": "Living White Cat reveal",
+  "replay.stage.animal_puffer_revealed": "Pufferfish reveal",
+  "replay.stage.animal_puffer_decided": "Pufferfish decision",
+  "replay.stage.animal_puffer_targets": "Complete Pufferfish voters",
+  "replay.stage.animal_wave_prepared": "Lethal proposals",
+  "replay.stage.animal_wave_committed": "Actual death wave",
+  "replay.stage.animal_cat_expiry_prepared": "White Cat expiry proposal",
+  "replay.stage.animal_unit_completed": "Actual exile unit completed",
+  "event.animal_night_opened": "Animal Dream actually opened night {day}.",
+  "event.animal_fox_chosen": "Player {actor}, night {day} Fox choice: {state}.",
+  "event.animal_fox_effect": "Night {day} actual Fox effect: {state}.",
+  "event.animal_knife_notified": "Player {actor}, night {day} authorized knife notice: {state}.",
+  "event.animal_beauty_notified": "Player {actor}, cycle {day} known Wolf Beauty state: {state}.",
+  "event.animal_cat_revealed":
+    "Player {actor} reveals White Cat and remains alive after its first deferral.",
+  "event.animal_puffer_revealed": "Player {actor} reveals Pufferfish.",
+  "event.animal_puffer_decided": "Player {actor}, cycle {day} Pufferfish decision: {state}.",
+  "event.animal_puffer_targets":
+    "Cycle {day} complete actual Pufferfish retaliation targets: {state}.",
+  "event.animal_wave_prepared": "Cycle {day} Animal Dream lethal proposals: {state}.",
+  "event.animal_wave_committed": "Cycle {day} Animal Dream actual death wave: {state}.",
+  "event.animal_cat_expiry_prepared":
+    "Player {actor}, cycle {day} White Cat expiry proposal: {state}.",
+  "event.animal_unit_completed": "Cycle {day} Animal Dream actual exile unit completed: {state}.",
+  "error.animal_action_unavailable":
+    "This animal-role action is unavailable, expired, or has invalid arguments. Submit only the permitted arguments while the original action prompt is valid.",
+  "role.white_cat.brief":
+    "White Cat is a good special role. Its first lethal proposal reveals it and defers death while it remains alive, able to vote and hold the badge. It expires after the designated next exile unit; further attacks do not reset the clock.",
+  "role.fox_cub.brief":
+    "Fox Cub is a good special role. From Night 2, it has one whole-game distraction of any original living player, including itself; null is an explicit free pass. A wolf hit disables the whole pack's ordinary knife for that night, and a Wolf Beauty hit also clears charm. Your feedback never identifies a hit or faction.",
+  "role.pufferfish.brief":
+    "Pufferfish is a good special role. After the final exile ballot it may once retaliate against the complete original voter set selected by the engine. Submit only activate; false preserves the use. An actual knife death independently blocks Wolf Beauty's link that day.",
+  "action.fox_distract.hint":
+    'fox_distract args: {"target_id":number|null}. Candidates include yourself; null explicitly passes.',
+  "action.fox_distract.directive":
+    "Choose an original living player to distract, or explicitly submit target_id=null to pass. A decision is required and its feedback does not reveal a hit.",
+  "action.puffer_retaliate.hint":
+    'puffer_retaliate args: {"activate":boolean}. Decide only whether to activate; the engine owns the complete target set and no subset is allowed.',
+  "action.puffer_retaliate.directive":
+    "Decide whether to retaliate against the prescribed original voters. Submit activate=true or false; false preserves the use.",
+  "stage.fox_distract": "Fox Cub distraction",
+  "stage.puffer_reaction": "Pufferfish ballot reaction",
+  "prompt.stage.fox_candidates":
+    "Original living candidates, including yourself: {ids}; null explicitly passes.",
+  "role.bear.dawn_brief":
+    "At actual dawn after the complete death chain, Bear samples its currently living seat neighbors and publishes an anonymous signal. A deferred but living White Cat retains its seat.",
+  "prompt.status.animal":
+    "Your published animal-role knowledge: {state}. Unpublished backend effects are not player knowledge.",
+  "animal.policy.cat_wait": "Skipped votes do not count; wait for the next actual exile unit",
+  "animal.policy.cat_skip": "A self-destruct that ends the day also counts as an expiry unit",
+  "animal.policy.puffer_first":
+    "Retaliate against the full original first-round voters, including when PK occurs",
+  "animal.policy.puffer_final":
+    "Use the full final-round voters; an empty PK round never falls back to round one",
+  "rules.animal_dream":
+    "Native twelve-player Animal Dream: judge only after the full death chain, with wolf priority for simultaneous side elimination. Cat skipped-vote policy={catPolicy}; Puffer ballot policy={ballotPolicy}; Bear explicitly samples at dawn.",
   "ability.kind.pair_check": "Pair inspection",
   "stage.fragrant_bind": "Fragrant binding",
   "prompt.stage.fragrant_pair_candidates":

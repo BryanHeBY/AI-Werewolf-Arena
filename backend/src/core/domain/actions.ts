@@ -10,6 +10,8 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  fox_distract: { target_id: EntityId | null };
+  puffer_retaliate: { activate: boolean };
   bind_fragrant_pair: { target_ids: readonly [EntityId, EntityId] | null };
   check_pair: { target_ids: readonly [EntityId, EntityId] };
   choose_servant: { target_id: EntityId | null };
@@ -85,6 +87,8 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "fox_distract",
+  "puffer_retaliate",
   "bind_fragrant_pair",
   "check_pair",
   "choose_servant",
@@ -178,6 +182,8 @@ export interface TurnConstraints {
 }
 
 export const ACTION_STAGES = [
+  "fox_distract",
+  "puffer_reaction",
   "fragrant_bind",
   "pair_inspection",
   "night_noble",
@@ -259,6 +265,7 @@ export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */
 export interface ActionRequestExtras {
+  fox_candidates?: readonly EntityId[];
   fragrant_pair_candidates?: readonly EntityId[];
   pair_check_candidates?: readonly EntityId[];
   servant_candidates?: readonly EntityId[];

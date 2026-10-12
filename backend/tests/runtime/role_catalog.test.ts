@@ -15,6 +15,9 @@ test("shared catalog distinguishes planned definitions from registered roles", (
       .map((item) => String(item.id))
       .sort(),
   ).toEqual(Object.values(Role).sort());
+  expect(ROLE_DEFINITIONS.filter((item) => item.status !== "planned")).toHaveLength(55);
+  for (const role of [Role.WhiteCat, Role.FoxCub, Role.Pufferfish])
+    expect(ROLE_DEFINITIONS.find((item) => item.id === role)?.status).toBe("implemented");
   expect(
     getDefaultRoleCatalog()
       .all()

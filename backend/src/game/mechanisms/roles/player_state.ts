@@ -31,6 +31,8 @@ export interface PlayerDreamerState {
   history: Array<{ day: number; targetId: number }>;
 }
 export interface PlayerWolfBeautyState {
+  charmAllowed?: boolean;
+  linkAllowed?: boolean;
   deathLinkPolicy?: import("../../../core/domain/board").BeautyDeathLinkPolicy;
   targetId: number | null;
   lastActedDay: number | null;

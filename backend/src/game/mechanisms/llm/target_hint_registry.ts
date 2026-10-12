@@ -34,6 +34,7 @@ interface TargetRule {
  */
 export class DefaultTargetHintRegistry implements TargetHintRegistry {
   private readonly toolRules: Partial<Record<ToolName, TargetRule>> = {
+    fox_distract: { allowSelf: true },
     bind_fragrant_pair: { allowSelf: true },
     check_pair: { allowSelf: true },
     choose_servant: { allowSelf: false },

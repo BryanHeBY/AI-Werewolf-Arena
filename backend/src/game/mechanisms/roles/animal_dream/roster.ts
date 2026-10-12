@@ -31,6 +31,7 @@ export interface AnimalOriginalPlayer {
   readonly identityJson: string;
   readonly victory: unknown;
   readonly victoryJson: string;
+  readonly audit: { vote: unknown; badge: unknown; marks: unknown };
 }
 interface Roster {
   readonly players: ReadonlyMap<number, AnimalOriginalPlayer>;
@@ -107,6 +108,11 @@ function capture(world: World, id: number): AnimalOriginalPlayer {
     identityJson,
     victory,
     victoryJson,
+    audit: {
+      vote: world.getComponent(id, COMPONENT.VotingRight),
+      badge: world.getComponent(id, COMPONENT.Badge),
+      marks: world.getComponent(id, COMPONENT.StatusMarks),
+    },
   });
 }
 /** Fixed original identities only. Resource objects and real unit/phase leases belong to the board owner. */
@@ -195,4 +201,11 @@ export function animalRosterPolicies(world: World) {
   return (
     roster && { skippedVotePolicy: roster.skippedVotePolicy, ballotPolicy: roster.ballotPolicy }
   );
+}
+/** Failure recording retains the installed bodies; it never grants an action lease. */
+export function animalOriginalAuditPlayer(world: World, id: number): AnimalOriginalPlayer | null {
+  return rosters.get(world)?.players.get(id) ?? null;
+}
+export function animalOriginalAuditIds(world: World): number[] | null {
+  return rosters.has(world) ? [...rosters.get(world)!.players.keys()] : null;
 }

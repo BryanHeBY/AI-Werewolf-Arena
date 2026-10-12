@@ -1,0 +1,35 @@
+import type { BoardConfig } from "../../core/domain/board";
+export const animalDreamTwelveConfig = {
+  boardSize: 12,
+  enableSheriff: true,
+  animalDream: { policy: "awa_animal_dream_v1", eliminationPriority: "awa_wolf_priority_v1" },
+  whiteCat: { skippedVotePolicy: "awa_wait_for_actual_exile_v1" },
+  pufferfish: { ballotPolicy: "awa_final_ballot_v1" },
+  bear: { signalPolicy: "netease_dawn_live_v1" },
+  wolfBeauty: { deathLinkPolicy: "awa_exile_poison_v1" },
+  roleSetups: [
+    { role: "wolf", count: 3 },
+    { role: "wolf_beauty", count: 1 },
+    { role: "villager", count: 4 },
+    { role: "white_cat", count: 1 },
+    { role: "fox_cub", count: 1 },
+    { role: "bear", count: 1 },
+    { role: "pufferfish", count: 1 },
+  ],
+  winConditions: ["slaughter_side"],
+  hooks: { onDaybreak: false, onPreElection: true, onPreVote: true, onPerSpeechGap: false },
+  selfDestruct: { enabledWindows: ["on_pre_election", "on_pre_vote"] },
+  tieBreaker: {
+    sheriffVote: "no_elimination",
+    wolfKillVote: "min_id",
+    exileVote: "no_elimination",
+  },
+  voting: { exilePolicy: "awa_one_pk_v1" },
+  disclosure: { deathRevealPolicy: "awa_hidden_v1" },
+  lastWords: { policy: "awa_initial_wave_v1" },
+  sheriff: {
+    electionPolicy: "awa_nomination_offstage_pk_v1",
+    badgePolicy: "awa_holder_choice_v1",
+    voteWeight: 1.5,
+  },
+} as unknown as BoardConfig;

@@ -306,7 +306,7 @@ export async function replayReproduction(
       stableJson(record.metadata.initialDeal ?? null),
     "reproduction_initial_deal_mismatch",
   );
-  if (board.nobleSecretBody || board.fragrantPairSeer)
+  if (board.animalDream || board.nobleSecretBody || board.fragrantPairSeer)
     provider.setEventCursor(() => context.phaseManager.getEvents().length);
   const initial = captureCheckpoint(
     context.world,
@@ -341,7 +341,7 @@ export async function replayReproduction(
     recordRoot,
     displayLocale ?? record.metadata.locale,
   );
-  if (board.nobleSecretBody || board.fragrantPairSeer)
+  if (board.animalDream || board.nobleSecretBody || board.fragrantPairSeer)
     manager.setReplayEventCursor(() => context.phaseManager.getEvents().length);
   const recorder = new GameEventRecorder(
     { world: context.world, replayManager: manager },

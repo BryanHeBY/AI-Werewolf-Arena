@@ -95,6 +95,9 @@ export interface PlayerObservation {
     dreamer?: PlayerDreamerState;
     wolfBeauty?: PlayerWolfBeautyState;
     bear?: PlayerBearState;
+    foxCub?: { remaining: 0 | 1; lastChoice: { day: number; targetId: number | null } | null };
+    pufferfish?: { remaining: 0 | 1; lastDecision: { day: number; activate: boolean } | null };
+    whiteCat?: { revealed: boolean };
     hiddenWolf?: PlayerHiddenWolfState;
     gargoyle?: { hasInheritedKnife: boolean; canVoteForKill: boolean };
     roleInspection?: PlayerRoleInspectionState;
