@@ -1,23 +1,30 @@
+/**
+ * Configuration integration tests verify public Noble/Body examples, config-check files and bootstrap rejection agree without partial entity installation.
+ * Input: Original wolf/body policy matrix, public board JSON and temporary runtime/game/board trees.
+ * Output and oracle: Literal normalized/roundtrip/diagnostic fields and zero entity creation preserve validation order; source configurations and fixture bytes are unchanged.
+ */
 import { fileURLToPath } from "node:url";
 import { expect, test, spyOn } from "bun:test";
 import { readFile, mkdtemp, mkdir, writeFile, rm } from "node:fs/promises";
 import { join } from "node:path";
-import { bootstrapGame } from "../../src/app/bootstrap";
-import { World } from "../../src/core";
+import { bootstrapGame } from "../../../src/app/bootstrap";
+import { World } from "../../../src/core";
 import {
   parseBoardDefinition,
   boardDefinitionFromConfig,
-} from "../../src/runtime/config/board_definition";
-import { configDiagnostic, CONFIG_ERROR_CODES } from "../../src/runtime/config/error_codes";
-import { checkConfig } from "../../src/runtime/cli/check_config";
+} from "../../../src/runtime/config/board_definition";
+import { configDiagnostic } from "../../../src/runtime/config/error_codes";
+import { checkConfig } from "../../../src/runtime/cli/check_config";
 
-const root = fileURLToPath(new URL("../../../configs.example/boards", import.meta.url));
+const root = fileURLToPath(new URL("../../../../configs.example/boards", import.meta.url));
+
 const variants = [
   ["standard", "nonconsecutive", "awa_nonconsecutive_nights_v1"],
   ["standard", "repeat", "awa_repeat_v1"],
   ["no_blast_no_self_knife", "nonconsecutive", "awa_nonconsecutive_nights_v1"],
   ["no_blast_no_self_knife", "repeat", "awa_repeat_v1"],
 ] as const;
+
 for (const [wolf, suffix, body] of variants)
   test(`public actual CLI check / named diagnostic / no partial native installation ${wolf}/${suffix}`, async () => {
     const id = `awa_noble_secret_body_12_${wolf}_${suffix}_v1`,
@@ -82,26 +89,3 @@ for (const [wolf, suffix, body] of variants)
       await rm(temp, { recursive: true, force: true });
     }
   });
-test("public role policy enums and unknown keys fail before normalization can silently accept them", async () => {
-  const baseline = JSON.parse(
-    await readFile(join(root, "awa_noble_secret_body_12_standard_nonconsecutive_v1.json"), "utf8"),
-  );
-  for (const change of [
-    (r: any) => (r.roles.night_noble.wolfActionPolicy = "all_wolves_disabled"),
-    (r: any) => (r.roles.awakened_idiot.protectionRepeatPolicy = "unlimited"),
-    (r: any) => (r.roles.night_noble.extraCanary = "private-not-for-errors"),
-  ]) {
-    const raw = structuredClone(baseline);
-    change(raw);
-    let error: unknown;
-    try {
-      parseBoardDefinition(raw);
-    } catch (e) {
-      error = e;
-    }
-    const diagnostic = configDiagnostic(error);
-    expect(diagnostic.code).toBe("board_config_invalid_field");
-    expect(JSON.stringify(diagnostic)).not.toContain("private-not-for-errors");
-  }
-  expect(CONFIG_ERROR_CODES).toContain("board_config_noble_secret_body_preset_invalid");
-});

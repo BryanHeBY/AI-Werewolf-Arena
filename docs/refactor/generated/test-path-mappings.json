@@ -64741,13 +64741,284 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. Bilingual schema shared request remains a single integration allocation. Guard fixture cast changes raw type syntax only; whole callback emitted bytes remain exact.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 82 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/config/noble_secret_body_cli_review.test.ts",
+      "to": "backend/tests/unit/configuration/noble-secret-body-policy-keys.test.ts",
+      "sourceCommit": "ff8ebd7f309936a1b68eca77a8200c5b1181d264",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "de0e2c75ae2a6028cb408b5091c98c14fb128fa888ba0e7ade50e6f0ea428294",
+      "candidateSha256": "87cb1379d7ee37e4e153f8cdbf6c6b9e89c97dc0c91ab479c03c895ea1e8e991",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-url-anchor",
+          "start": 374,
+          "end": 405,
+          "original": "../../../configs.example/boards",
+          "value": "../../../../configs.example/boards",
+          "originalResolved": "configs.example/boards"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 298,
+          "end": 334,
+          "original": "../../src/runtime/config/error_codes",
+          "value": "../../../src/runtime/config/error_codes",
+          "originalResolved": "backend/src/runtime/config/error_codes.ts",
+          "expectedResolved": "backend/src/runtime/config/error_codes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 200,
+          "end": 241,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "configs.example/boards",
+          "originalExpression": "new URL(\"../../../configs.example/boards\", import.meta.url)",
+          "currentHead": "../../../../configs.example/boards"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "81bf4b0d2e53b70375acc975dd1df24cafaf0509889a1804a8a6fec0ebc261fb",
+          "title": "public role policy enums and unknown keys fail before normalization can silently accept them",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { expect, test, spyOn } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile, mkdtemp, mkdir, writeFile, rm } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": "import { readFile } from \"node:fs/promises\";",
+          "droppedBindings": [
+            {
+              "name": "mkdtemp",
+              "imported": "mkdtemp",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "mkdir",
+              "imported": "mkdir",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "writeFile",
+              "imported": "writeFile",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "rm",
+              "imported": "rm",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/app/bootstrap",
+          "originalImport": "import { bootstrapGame } from \"../../src/app/bootstrap\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bootstrapGame",
+              "imported": "bootstrapGame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import { World } from \"../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "World",
+              "imported": "World",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  parseBoardDefinition,\n  boardDefinitionFromConfig,\n} from \"../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": "import { parseBoardDefinition } from \"../../src/runtime/config/board_definition\";",
+          "droppedBindings": [
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/cli/check_config",
+          "originalImport": "import { checkConfig } from \"../../src/runtime/cli/check_config\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "checkConfig",
+              "imported": "checkConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. Bilingual schema shared request remains a single integration allocation. Guard fixture cast changes raw type syntax only; whole callback emitted bytes remain exact.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 82 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/config/noble_secret_body_cli_review.test.ts",
+      "to": "backend/tests/integration/cli/noble-secret-body-validation.test.ts",
+      "sourceCommit": "ff8ebd7f309936a1b68eca77a8200c5b1181d264",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "de0e2c75ae2a6028cb408b5091c98c14fb128fa888ba0e7ade50e6f0ea428294",
+      "candidateSha256": "34a2ee11807b39444d83f9b44e450a8fbcee294542a2a850b335d56fb48ec47d",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-url-anchor",
+          "start": 587,
+          "end": 618,
+          "original": "../../../configs.example/boards",
+          "value": "../../../../configs.example/boards",
+          "originalResolved": "configs.example/boards"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 513,
+          "end": 547,
+          "original": "../../src/runtime/cli/check_config",
+          "value": "../../../src/runtime/cli/check_config",
+          "originalResolved": "backend/src/runtime/cli/check_config.ts",
+          "expectedResolved": "backend/src/runtime/cli/check_config.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 445,
+          "end": 481,
+          "original": "../../src/runtime/config/error_codes",
+          "value": "../../../src/runtime/config/error_codes",
+          "originalResolved": "backend/src/runtime/config/error_codes.ts",
+          "expectedResolved": "backend/src/runtime/config/error_codes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 367,
+          "end": 408,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 280,
+          "end": 294,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 231,
+          "end": 254,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "configs.example/boards",
+          "originalExpression": "new URL(\"../../../configs.example/boards\", import.meta.url)",
+          "currentHead": "../../../../configs.example/boards"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "76287c563275400a39bbe08c3008cb1a95eafb0c225fda1a7db003d1514d9a0d",
+          "title": "public actual CLI check / named diagnostic / no partial native installation standard/nonconsecutive",
+          "occurrence": 1
+        },
+        {
+          "id": "cb840e22bd8f7b5188830eccdeaf2e206e347dfd92ab863ab76e223eeb3697c2",
+          "title": "public actual CLI check / named diagnostic / no partial native installation standard/repeat",
+          "occurrence": 1
+        },
+        {
+          "id": "ed46b3a25944143c652f4c5a46cee8eea775b42a822496c5fef482ebe6849844",
+          "title": "public actual CLI check / named diagnostic / no partial native installation no_blast_no_self_knife/nonconsecutive",
+          "occurrence": 1
+        },
+        {
+          "id": "684ec38fd2da42eccc6dfc5db1327c47a64e4dc6467db3e2e0968476d9164fe3",
+          "title": "public actual CLI check / named diagnostic / no partial native installation no_blast_no_self_knife/repeat",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../src/runtime/config/error_codes",
+          "originalImport": "import { configDiagnostic, CONFIG_ERROR_CODES } from \"../../src/runtime/config/error_codes\";",
+          "currentImportBeforeRebase": "import { configDiagnostic } from \"../../src/runtime/config/error_codes\";",
+          "droppedBindings": [
+            {
+              "name": "CONFIG_ERROR_CODES",
+              "imported": "CONFIG_ERROR_CODES",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. Bilingual schema shared request remains a single integration allocation. Guard fixture cast changes raw type syntax only; whole callback emitted bytes remain exact.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 82 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 508,
-    "targetFiles": 518,
-    "mappingEntries": 518,
-    "baselineCases": 6378,
+    "sourceFiles": 509,
+    "targetFiles": 520,
+    "mappingEntries": 520,
+    "baselineCases": 6383,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
