@@ -1,18 +1,16 @@
 /**
- * Runtime factory integration verify SDK/ACP selection, mixed routing and cleanup ownership.
- * Input: Resolved actor/provider bindings, injected client/close failures and temporary workspaces.
- * Output and independent oracle: Selected strategy, immutable budget/binding behavior, scheduler counts and preserved cleanup error identities.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Filesystem integration tests verify ACP/mixed player factory workspace initialization, routing, binding snapshots and cleanup failures.
+ * Input: Original actual temporary roots, literal profiles and callback-scoped prototype spies or held SDK responses.
+ * Output and oracle: Workspace stat/write results, scheduler states and exact original cleanup error identities retain ownership; no billed model or game cycle is run.
  */
 import { describe, expect, spyOn, test } from "bun:test";
 import { promises as fs } from "node:fs";
-import { tmpdir } from "node:os";
 import * as path from "node:path";
-import { createTestTempDirectory } from "../../support/drivers/temp-directories";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { createPlayerAgentRuntime } from "../../../src/runtime/player_agent_factory";
-import { ResolvedAgentRuntimeProfile } from "../../../src/runtime/config/contracts";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { createPlayerAgentRuntime } from "../../../../src/runtime/player_agent_factory";
+import { ResolvedAgentRuntimeProfile } from "../../../../src/runtime/config/contracts";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 
 function baseOptions(profilesByActor: Map<number, ResolvedAgentRuntimeProfile>, root: string) {
   const context = bootstrapGame(sixPlayerMvpConfig);
@@ -52,14 +50,6 @@ const acpProfile: ResolvedAgentRuntimeProfile = {
 };
 
 describe("createPlayerAgentRuntime", () => {
-  test("selects the SDK strategy without exposing client construction", async () => {
-    const runtime = await createPlayerAgentRuntime(
-      baseOptions(new Map([[1, llmProfile]]), path.join(tmpdir(), "unused-sdk-workspace")),
-    );
-    expect(runtime.kind).toBe("llm");
-    expect(typeof runtime.provider.getAction).toBe("function");
-    await runtime.close();
-  });
 
   test("selects ACP and owns its workspace lifecycle boundary", async () => {
     const root = await createTestTempDirectory("awa-player-factory-");
@@ -100,8 +90,8 @@ describe("createPlayerAgentRuntime", () => {
 });
 
 test("mixed close preserves SDK and ACP cleanup errors without skipping another owner", async () => {
-  const { LlmActionProvider } = await import("../../../src/ai/agents/llm/llm_action_provider");
-  const { AcpActionProvider } = await import("../../../src/ai/agents/acp/acp_action_provider");
+  const { LlmActionProvider } = await import("../../../../src/ai/agents/llm/llm_action_provider");
+  const { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
   const sdkError = new Error("sdk-close"),
     acpError = new Error("acp-close");
   const sdk = spyOn(LlmActionProvider.prototype, "close").mockRejectedValue(sdkError);
@@ -130,32 +120,8 @@ test("mixed close preserves SDK and ACP cleanup errors without skipping another 
   }
 });
 
-test("ACP providers accept the same strict positive concurrency field as SDK providers", async () => {
-  const { parseRuntimeConfig } = await import("../../../src/runtime/config/parse_config");
-  const input = (limit: unknown) => ({
-    providers: {
-      default: "acp",
-      items: {
-        acp: {
-          type: "acp",
-          transport: "stdio",
-          command: "/bin/false",
-          maxConcurrentRequests: limit,
-        },
-      },
-    },
-    agents: { default: "acp", items: { acp: { kind: "acp", provider: "acp" } } },
-    game: {},
-  });
-  expect(parseRuntimeConfig(input(2)).providers.items.acp.maxConcurrentRequests).toBe(2);
-  for (const value of [0, -1, 1.5, "2", Infinity])
-    expect(() => parseRuntimeConfig(input(value))).toThrow(
-      "runtime_config_positive_integer_invalid",
-    );
-});
-
 test("factory snapshots caller bindings and provider budgets for the lifetime of this game", async () => {
-  const { AiSdkClient } = await import("../../../src/ai/integrations/llm/ai_sdk_client");
+  const { AiSdkClient } = await import("../../../../src/ai/integrations/llm/ai_sdk_client");
   let ready!: () => void,
     release!: () => void,
     started = 0;
@@ -236,7 +202,7 @@ test("factory snapshots caller bindings and provider budgets for the lifetime of
 });
 
 test("same provider name requires one consistent configuration, and partial initialization preserves both errors", async () => {
-  const { LlmActionProvider } = await import("../../../src/ai/agents/llm/llm_action_provider");
+  const { LlmActionProvider } = await import("../../../../src/ai/agents/llm/llm_action_provider");
   const { promises: files } = await import("node:fs");
   const root = await createTestTempDirectory("awa-partial-runtime-");
   await expect(

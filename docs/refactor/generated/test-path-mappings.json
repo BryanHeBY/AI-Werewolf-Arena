@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "588e755418b124b5e415c98d9cd78a6afb3b7e63",
+  "observedSourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -66252,13 +66252,309 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 426 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/player_agent_factory.test.ts",
+      "to": "backend/tests/unit/agents/player-factory-selection.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "c05e8acaeb64cddefbd8fa9ff225de7cea178bd63121b5dc1bdf87751c79a71f",
+      "candidateSha256": "b9eba05e872e2fbbad69b46c8d46a0452fd141442cc3747d3305d889abdf85f1",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 1599,
+          "end": 1639,
+          "original": "../../../src/runtime/config/parse_config",
+          "value": "../../../src/runtime/config/parse_config",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 387,
+          "end": 432,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 311,
+          "end": 348,
+          "original": "../../../src/runtime/config/contracts",
+          "value": "../../../src/runtime/config/contracts",
+          "originalResolved": "backend/src/runtime/config/contracts.ts",
+          "expectedResolved": "backend/src/runtime/config/contracts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 222,
+          "end": 263,
+          "original": "../../../src/runtime/player_agent_factory",
+          "value": "../../../src/runtime/player_agent_factory",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 151,
+          "end": 177,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/runtime/config/parse_config.ts",
+          "originalExpression": "import(\"../../../src/runtime/config/parse_config\")",
+          "currentExpression": "import(\"../../../src/runtime/config/parse_config\")",
+          "currentHead": "../../../src/runtime/config/parse_config",
+          "kind": "dynamic-module-path"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "121d18499917ef4c3620f2758c072211d3246d8723c00e95c67ff2de74ab1873",
+          "title": "createPlayerAgentRuntime > selects the SDK strategy without exposing client construction",
+          "occurrence": 1
+        },
+        {
+          "id": "9ad85229affd0250ad154ddc1c30e7ad8e600eb8bf4602ed15794e998556f6fc",
+          "title": "ACP providers accept the same strict positive concurrency field as SDK providers",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { describe, expect, spyOn, test } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { describe, expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:fs",
+          "originalImport": "import { promises as fs } from \"node:fs\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "fs",
+              "imported": "promises",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/player_agent_factory.test.ts",
+      "to": "backend/tests/integration/filesystem/agents/player-factory-lifecycle.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "c05e8acaeb64cddefbd8fa9ff225de7cea178bd63121b5dc1bdf87751c79a71f",
+      "candidateSha256": "ab8c80fa8a64fa710157dd6228f9335e5284efd08641c57aad7119b70bfcb6b1",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 6896,
+          "end": 6942,
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 4247,
+          "end": 4293,
+          "original": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "value": "../../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+          "expectedResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 3204,
+          "end": 3250,
+          "original": "../../../src/ai/agents/acp/acp_action_provider",
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 3108,
+          "end": 3154,
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 484,
+          "end": 529,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 408,
+          "end": 445,
+          "original": "../../../src/runtime/config/contracts",
+          "value": "../../../../src/runtime/config/contracts",
+          "originalResolved": "backend/src/runtime/config/contracts.ts",
+          "expectedResolved": "backend/src/runtime/config/contracts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 319,
+          "end": 360,
+          "original": "../../../src/runtime/player_agent_factory",
+          "value": "../../../../src/runtime/player_agent_factory",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 248,
+          "end": 274,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 176,
+          "end": 214,
+          "original": "../../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "originalExpression": "import(\"../../../src/ai/agents/llm/llm_action_provider\")",
+          "currentExpression": "import(\"../../../../src/ai/agents/llm/llm_action_provider\")",
+          "currentHead": "../../../../src/ai/agents/llm/llm_action_provider",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "originalExpression": "import(\"../../../src/ai/agents/acp/acp_action_provider\")",
+          "currentExpression": "import(\"../../../../src/ai/agents/acp/acp_action_provider\")",
+          "currentHead": "../../../../src/ai/agents/acp/acp_action_provider",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+          "originalExpression": "import(\"../../../src/ai/integrations/llm/ai_sdk_client\")",
+          "currentExpression": "import(\"../../../../src/ai/integrations/llm/ai_sdk_client\")",
+          "currentHead": "../../../../src/ai/integrations/llm/ai_sdk_client",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "originalExpression": "import(\"../../../src/ai/agents/llm/llm_action_provider\")",
+          "currentExpression": "import(\"../../../../src/ai/agents/llm/llm_action_provider\")",
+          "currentHead": "../../../../src/ai/agents/llm/llm_action_provider",
+          "kind": "dynamic-module-path"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "7d1f1e2e7d53645b0938c57c72d5941ec93361e93ac7e2e1e55f749c80cf1d22",
+          "title": "createPlayerAgentRuntime > selects ACP and owns its workspace lifecycle boundary",
+          "occurrence": 1
+        },
+        {
+          "id": "05754f527c49004c44d2dc283e19c607ec1b93b8ad261a73fc5daa22778d6cc6",
+          "title": "createPlayerAgentRuntime > routes mixed transports by the configured actor and closes both owners",
+          "occurrence": 1
+        },
+        {
+          "id": "973925fe283b71933ca84b867dbe4a8f07bdbe4b50185ddd1c563d02a0a0a79e",
+          "title": "mixed close preserves SDK and ACP cleanup errors without skipping another owner",
+          "occurrence": 1
+        },
+        {
+          "id": "e6fd5caf52e3fd1f552d39d8af7b5603d7eea421ef9171fdfd1774afdb44cfa5",
+          "title": "factory snapshots caller bindings and provider budgets for the lifetime of this game",
+          "occurrence": 1
+        },
+        {
+          "id": "fa2ccadbf7bc16324257a389407ae28857138ef99962ed961c1158597182740f",
+          "title": "same provider name requires one consistent configuration, and partial initialization preserves both errors",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:os",
+          "originalImport": "import { tmpdir } from \"node:os\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "tmpdir",
+              "imported": "tmpdir",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 513,
-    "targetFiles": 528,
-    "mappingEntries": 528,
-    "baselineCases": 6422,
+    "sourceFiles": 514,
+    "targetFiles": 530,
+    "mappingEntries": 530,
+    "baselineCases": 6429,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
