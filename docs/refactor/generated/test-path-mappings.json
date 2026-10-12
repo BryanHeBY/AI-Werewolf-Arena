@@ -78439,13 +78439,164 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/phases/night_wolf_tactical_loop.test.ts",
+      "to": "backend/tests/scenarios/engine/wolf-night-tactical-loop.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "50f19321aff94c2696054a696d3f7998dd29ae18ad9305267f7250df00503824",
+      "candidateSha256": "e522ba6deec8d628d065410c509820e137b2ba3a1dde9c0d5f2c93ad4546170b",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 908,
+          "end": 961,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 813,
+          "end": 861,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 742,
+          "end": 780,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 656,
+          "end": 710,
+          "original": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "value": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 573,
+          "end": 622,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 469,
+          "end": 526,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 396,
+          "end": 426,
+          "original": "../../../src/core/domain/model",
+          "value": "../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 219,
+          "end": 259,
+          "original": "../../../src/core/domain/components/role",
+          "value": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 144,
+          "end": 185,
+          "original": "../../../src/core/domain/components/names",
+          "value": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 88,
+          "end": 114,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 32,
+          "end": 54,
+          "original": "../night_stage_fixture",
+          "value": "../../engine/night_stage_fixture",
+          "originalResolved": "backend/tests/engine/night_stage_fixture.ts",
+          "expectedResolved": "backend/tests/engine/night_stage_fixture.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "a571a4bcf6c32177bc57af4476c526d2111c6dd9a09c825c308228c0a0271b53",
+          "title": "night wolf tactical loop > wolf discussion order repeats for three rounds and majority decides kill target",
+          "occurrence": 1
+        },
+        {
+          "id": "753f3564f9afaffc7bd2c59193ab943464ff5e35d35d079b4c6bfd50575d5a1c",
+          "title": "night wolf tactical loop > wolf can end discussion early and is skipped in later rounds",
+          "occurrence": 1
+        },
+        {
+          "id": "d3c33ec3df65e23623690fd3a7b54f3ac831f446d2f22c185c1abb42643ca911",
+          "title": "night wolf tactical loop > guard mark cancels wolf kill while poison still kills",
+          "occurrence": 1
+        },
+        {
+          "id": "3157bf749b59674fc7d4aa0131e2e87f5dbdb68ec471d56dde0abe109b808568",
+          "title": "night wolf tactical loop > seer check result is persisted into seer private state",
+          "occurrence": 1
+        },
+        {
+          "id": "95fe5d9d84a08b847217078b301ff64777e26f4820c72d25046e0d200e37ce0c",
+          "title": "night wolf tactical loop > wolf abstain kill vote should produce no wolf target and no wolf night death",
+          "occurrence": 1
+        },
+        {
+          "id": "8f3dd253279938248a1a2dabe989d4b4e81958cd3ed1540a9130b952dcb9eb4c",
+          "title": "night wolf tactical loop > wolf kill vote should retry up to three times before accepting valid action",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 540,
-    "targetFiles": 586,
-    "mappingEntries": 586,
-    "baselineCases": 6803,
+    "sourceFiles": 541,
+    "targetFiles": 587,
+    "mappingEntries": 587,
+    "baselineCases": 6809,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

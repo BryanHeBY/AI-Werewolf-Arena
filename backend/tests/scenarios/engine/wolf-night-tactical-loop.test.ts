@@ -1,4 +1,9 @@
-import { completedNight } from "../night_stage_fixture";
+/**
+ * Night scenarios verify complete pipeline wolf discussion/votes, Guard/poison settlement, Seer state and bounded retries.
+ * Input: All original local provider classes and public twelve-player configuration variants.
+ * Output and oracle: Exact request order, targets, deaths and private result assertions remain unchanged; the whole night flow is retained as scenario coverage without model calls.
+ */
+import { completedNight } from "../../engine/night_stage_fixture";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { RoleComponent } from "../../../src/core/domain/components/role";
