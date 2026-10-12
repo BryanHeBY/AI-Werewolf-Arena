@@ -70543,13 +70543,925 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/diagnostics/transport_failure_recording.test.ts",
+      "to": "backend/tests/unit/diagnostics/opaque-error-warnings.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "23385d4c5fc77ee8390cf78c8a3c3f56e914db859b8bc3eda3e94e3bbcf46e21",
+      "candidateSha256": "5e88fe6abe017b020f2b40fe94189afb5f909d4af28f2cdbe8a33ad6b66745b0",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 249,
+          "end": 281,
+          "original": "../../src/utils/error_diagnostic",
+          "value": "../../../src/utils/error_diagnostic",
+          "originalResolved": "backend/src/utils/error_diagnostic.ts",
+          "expectedResolved": "backend/src/utils/error_diagnostic.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 185,
+          "end": 215,
+          "original": "../../src/recording/file_store",
+          "value": "../../../src/recording/file_store",
+          "originalResolved": "backend/src/recording/file_store.ts",
+          "expectedResolved": "backend/src/recording/file_store.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 114,
+          "end": 149,
+          "original": "../../src/runtime/console_presenter",
+          "value": "../../../src/runtime/console_presenter",
+          "originalResolved": "backend/src/runtime/console_presenter.ts",
+          "expectedResolved": "backend/src/runtime/console_presenter.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "928bc107c51e9d69835dd771e9e4a2a5d7881c5ccee2389f6034f99e7dc73afe",
+          "title": "ACP error updates and file warnings drop opaque provider fields, keeping model text untouched",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:fs",
+          "originalImport": "import { promises as fs } from \"node:fs\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "fs",
+              "imported": "promises",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "originalImport": "import { assertReplayPlayerView } from \"@ai-werewolf-arena/replay-contract\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "assertReplayPlayerView",
+              "imported": "assertReplayPlayerView",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/app/bootstrap",
+          "originalImport": "import { bootstrapGame } from \"../../src/app/bootstrap\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bootstrapGame",
+              "imported": "bootstrapGame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/agents/llm/llm_action_provider",
+          "originalImport": "import { LlmActionProvider } from \"../../src/ai/agents/llm/llm_action_provider\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "LlmActionProvider",
+              "imported": "LlmActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/agents/acp/acp_action_provider",
+          "originalImport": "import { AcpActionProvider } from \"../../src/ai/agents/acp/acp_action_provider\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AcpActionProvider",
+              "imported": "AcpActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/integrations/llm/transport",
+          "originalImport": "import type { ChatModelClient } from \"../../src/ai/integrations/llm/transport\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ChatModelClient",
+              "imported": "ChatModelClient",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/integrations/llm/ai_sdk_client",
+          "originalImport": "import { AiSdkClient } from \"../../src/ai/integrations/llm/ai_sdk_client\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AiSdkClient",
+              "imported": "AiSdkClient",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import { Phase, Role, type ActionRequest } from \"../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/diagnostics/transport_failure_recording.test.ts",
+      "to": "backend/tests/integration/filesystem/recording/safe-transport-fallback.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "23385d4c5fc77ee8390cf78c8a3c3f56e914db859b8bc3eda3e94e3bbcf46e21",
+      "candidateSha256": "0c3ef3bed14b23405f88c0e8e8d847dc0e127dd254f87da2fbfb3bc153cf3445",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 5889,
+          "end": 5916,
+          "original": "../../src/audit/task_runner",
+          "value": "../../../../src/audit/task_runner",
+          "originalResolved": "backend/src/audit/task_runner.ts",
+          "expectedResolved": "backend/src/audit/task_runner.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 954,
+          "end": 968,
+          "original": "../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 872,
+          "end": 902,
+          "original": "../../src/recording/file_store",
+          "value": "../../../../src/recording/file_store",
+          "originalResolved": "backend/src/recording/file_store.ts",
+          "expectedResolved": "backend/src/recording/file_store.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 801,
+          "end": 836,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 720,
+          "end": 757,
+          "original": "../../src/recording/recording_context",
+          "value": "../../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 641,
+          "end": 677,
+          "original": "../../src/recording/session_recorder",
+          "value": "../../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 561,
+          "end": 600,
+          "original": "../../src/ai/integrations/llm/transport",
+          "value": "../../../../src/ai/integrations/llm/transport",
+          "originalResolved": "backend/src/ai/integrations/llm/transport.ts",
+          "expectedResolved": "backend/src/ai/integrations/llm/transport.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 477,
+          "end": 520,
+          "original": "../../src/ai/agents/acp/acp_action_provider",
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 396,
+          "end": 439,
+          "original": "../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 316,
+          "end": 358,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 254,
+          "end": 277,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/audit/task_runner.ts",
+          "originalExpression": "import(\"../../src/audit/task_runner\")",
+          "currentExpression": "import(\"../../../../src/audit/task_runner\")",
+          "currentHead": "../../../../src/audit/task_runner",
+          "kind": "dynamic-module-path"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "97ba03ef599a0b5b7882eeae5c5d815ec45355862d0b6ed6239891503bbb0ec6",
+          "title": "llm/zh-CN: provider failure keeps safe facts, original prompts and the existing fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "d5f79ccbbdd868c0d08653efdae5c8cbb154749617777fed6334d04c5bdfcaff",
+          "title": "acp/zh-CN: provider failure keeps safe facts, original prompts and the existing fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "073b7dbe7de3240121328f067729a8296b6739c6cadb4541d518a1f01a637e9f",
+          "title": "llm/en: provider failure keeps safe facts, original prompts and the existing fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "005ea30821a3b1d3dc96ae2cb41bb4a2dd435ebe2711446e02932fcf6677c7c8",
+          "title": "acp/en: provider failure keeps safe facts, original prompts and the existing fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "239dd5f0f663d19bf1b811c5c06504890fcbe6cbc268519084a09101adc60e43",
+          "title": "recording and inspection warning language is transient display context, not game metadata",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../src/ai/integrations/llm/ai_sdk_client",
+          "originalImport": "import { AiSdkClient } from \"../../src/ai/integrations/llm/ai_sdk_client\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AiSdkClient",
+              "imported": "AiSdkClient",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/console_presenter",
+          "originalImport": "import { createAcpConsoleLogger } from \"../../src/runtime/console_presenter\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAcpConsoleLogger",
+              "imported": "createAcpConsoleLogger",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/utils/error_diagnostic",
+          "originalImport": "import { describeError } from \"../../src/utils/error_diagnostic\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "describeError",
+              "imported": "describeError",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/diagnostics/transport_failure_recording.test.ts",
+      "to": "backend/tests/integration/agents/llm/private-http-failure.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "23385d4c5fc77ee8390cf78c8a3c3f56e914db859b8bc3eda3e94e3bbcf46e21",
+      "candidateSha256": "fbc1addfbdf2ed81f70fb8a24ac2e565363aa27629f98576419530f3dbf8ea4c",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 686,
+          "end": 700,
+          "original": "../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 605,
+          "end": 640,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 524,
+          "end": 561,
+          "original": "../../src/recording/recording_context",
+          "value": "../../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 445,
+          "end": 481,
+          "original": "../../src/recording/session_recorder",
+          "value": "../../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 361,
+          "end": 404,
+          "original": "../../src/ai/integrations/llm/ai_sdk_client",
+          "value": "../../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+          "expectedResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 286,
+          "end": 329,
+          "original": "../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 206,
+          "end": 248,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 144,
+          "end": 167,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "2218b8c543262e25994860ad850154d89af57ccf916f9451363809da906df124",
+          "title": "actual installed SDK HTTP error metadata is safe in private replay and terminal diagnostics",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "ai",
+          "originalImport": "import { RetryError } from \"ai\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "RetryError",
+              "imported": "RetryError",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "originalImport": "import { assertReplayPlayerView } from \"@ai-werewolf-arena/replay-contract\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "assertReplayPlayerView",
+              "imported": "assertReplayPlayerView",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/agents/acp/acp_action_provider",
+          "originalImport": "import { AcpActionProvider } from \"../../src/ai/agents/acp/acp_action_provider\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AcpActionProvider",
+              "imported": "AcpActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/integrations/llm/transport",
+          "originalImport": "import type { ChatModelClient } from \"../../src/ai/integrations/llm/transport\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ChatModelClient",
+              "imported": "ChatModelClient",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/console_presenter",
+          "originalImport": "import { createAcpConsoleLogger } from \"../../src/runtime/console_presenter\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAcpConsoleLogger",
+              "imported": "createAcpConsoleLogger",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/file_store",
+          "originalImport": "import { ReplayFileStore } from \"../../src/recording/file_store\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ReplayFileStore",
+              "imported": "ReplayFileStore",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import { Phase, Role, type ActionRequest } from \"../../src/core\";",
+          "currentImportBeforeRebase": "import { Phase, type ActionRequest } from \"../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/utils/error_diagnostic",
+          "originalImport": "import { describeError } from \"../../src/utils/error_diagnostic\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "describeError",
+              "imported": "describeError",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/diagnostics/transport_failure_recording.test.ts",
+      "to": "backend/tests/integration/cli/provider-load-errors.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "23385d4c5fc77ee8390cf78c8a3c3f56e914db859b8bc3eda3e94e3bbcf46e21",
+      "candidateSha256": "1ed91d1a73642ab150df822ddb4ba8bd81d5ffdcc9cb3396fb8b5fb34c07eb7f",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-directory-anchor",
+          "start": 1741,
+          "end": 1774,
+          "original": "../../src/runtime/cli/run_game.ts",
+          "value": "../../../src/runtime/cli/run_game.ts",
+          "originalResolved": "backend/src/runtime/cli/run_game.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 762,
+          "end": 803,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 415,
+          "end": 449,
+          "original": "../../src/runtime/cli/check_config",
+          "value": "../../../src/runtime/cli/check_config",
+          "originalResolved": "backend/src/runtime/cli/check_config.ts",
+          "expectedResolved": "backend/src/runtime/cli/check_config.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 154,
+          "end": 189,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/runtime/cli/check_config.ts",
+          "originalExpression": "import(\"../../src/runtime/cli/check_config\")",
+          "currentExpression": "import(\"../../../src/runtime/cli/check_config\")",
+          "currentHead": "../../../src/runtime/cli/check_config",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/runtime/config/board_definition.ts",
+          "originalExpression": "import(\"../../src/runtime/config/board_definition\")",
+          "currentExpression": "import(\"../../../src/runtime/config/board_definition\")",
+          "currentHead": "../../../src/runtime/config/board_definition",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/runtime/cli/run_game.ts",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../src/runtime/cli/run_game.ts\")",
+          "currentExpression": "path.resolve(import.meta.dir, \"../../../src/runtime/cli/run_game.ts\")",
+          "currentHead": "../../../src/runtime/cli/run_game.ts",
+          "kind": "public-directory-anchor"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "d5a2a62c208663da89c62e374c813d79d6fc8e00771615f69af5d3c73341cd99",
+          "title": "game CLI rejects invalid provider configuration without exposing JSON or a second uncaught exception",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "ai",
+          "originalImport": "import { RetryError } from \"ai\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "RetryError",
+              "imported": "RetryError",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "originalImport": "import { assertReplayPlayerView } from \"@ai-werewolf-arena/replay-contract\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "assertReplayPlayerView",
+              "imported": "assertReplayPlayerView",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/app/bootstrap",
+          "originalImport": "import { bootstrapGame } from \"../../src/app/bootstrap\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bootstrapGame",
+              "imported": "bootstrapGame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/agents/llm/llm_action_provider",
+          "originalImport": "import { LlmActionProvider } from \"../../src/ai/agents/llm/llm_action_provider\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "LlmActionProvider",
+              "imported": "LlmActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/agents/acp/acp_action_provider",
+          "originalImport": "import { AcpActionProvider } from \"../../src/ai/agents/acp/acp_action_provider\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AcpActionProvider",
+              "imported": "AcpActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/integrations/llm/transport",
+          "originalImport": "import type { ChatModelClient } from \"../../src/ai/integrations/llm/transport\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ChatModelClient",
+              "imported": "ChatModelClient",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/integrations/llm/ai_sdk_client",
+          "originalImport": "import { AiSdkClient } from \"../../src/ai/integrations/llm/ai_sdk_client\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AiSdkClient",
+              "imported": "AiSdkClient",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/console_presenter",
+          "originalImport": "import { createAcpConsoleLogger } from \"../../src/runtime/console_presenter\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAcpConsoleLogger",
+              "imported": "createAcpConsoleLogger",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/file_store",
+          "originalImport": "import { ReplayFileStore } from \"../../src/recording/file_store\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ReplayFileStore",
+              "imported": "ReplayFileStore",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import { Phase, Role, type ActionRequest } from \"../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/utils/error_diagnostic",
+          "originalImport": "import { describeError } from \"../../src/utils/error_diagnostic\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "describeError",
+              "imported": "describeError",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 523,
-    "targetFiles": 550,
-    "mappingEntries": 550,
-    "baselineCases": 6576,
+    "sourceFiles": 524,
+    "targetFiles": 554,
+    "mappingEntries": 554,
+    "baselineCases": 6584,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

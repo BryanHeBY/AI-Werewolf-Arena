@@ -237,3 +237,5 @@
 - 当前台账追加已commit参数owner cb2957ac：仅config state一格pending→partial，90rows/900cells现45partial855pending，0complete/N/A；独立数据/原input/真实writer证据随source提交，完整RulePlan与其他机制边界不关闭，冻结基线SHA保持。
 
 - C12 mixed8e runtime-config：1原file→2targets/12旧IDs实际分层；overall8→18/59IDs，44callbacks42raw+2仅3dynamic+1sameCLIpath，26helpers原raw、全部arrays/loops原raw、114relative/18heads0。Root与独立审actualGit/所有setup/原ID单一owner/路径及heads0；必要hook/fixtureloader不丢。原import pruning103=85whole+18partial，author590unique removed/0add，审查时593额外3仅并行C23真实新leaves，两个snapshot分开保。finite18 session7207实际closed0，不跑tests/discovery/game。caseSplit/selected程序保真，不宣wholefile或全importinitorder；mapping现523source/550target/6576IDs。
+
+- C12 mixed8e transport-failure-recording：1原file→4targets/8旧IDs实际分层；overall8→18/59IDs，44callbacks42raw+2仅3dynamic+1sameCLIpath，26helpers原raw、全部arrays/loops原raw、114relative/18heads0。Root与独立审actualGit/所有setup/原ID单一owner/路径及heads0；必要hook/fixtureloader不丢。原import pruning103=85whole+18partial，author590unique removed/0add，审查时593额外3仅并行C23真实新leaves，两个snapshot分开保。finite18 session7207实际closed0，不跑tests/discovery/game。caseSplit/selected程序保真，不宣wholefile或全importinitorder；mapping现524source/554target/6584IDs。
