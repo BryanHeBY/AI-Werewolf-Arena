@@ -1460,8 +1460,6 @@ export const en = Object.freeze({
     "Disclosure: ordinary night deaths and exile do not reveal roles. Only identities explicitly revealed by engine events such as idiot_revealed, and private role or inspection events received by you, are confirmed facts. A role claim in speech or last words is not engine confirmation.",
   "prompt.config.last_words":
     "Last words: first-night deaths, actual exile deaths, and a Knight's pure daytime duel failure receive last words. Later night deaths, self-destruction, Village Idiot survival, death-shot targets, successful duel targets and White Wolf King blast targets receive none. One player with both pending first-night death and White Wolf King blast sources receives none; other purely first-night victims in the same batch receive last words normally.",
-  "prompt.config.badge":
-    "Badge handling: when the sheriff dies or reveals as Village Idiot, the engine automatically transfers or destroys the badge. The former sheriff has no action to choose a recipient.",
   "prompt.config.ties": "Tie handling: exile={exile}; wolf kill={wolf}{sheriff}",
   "prompt.config.sheriff_tie": "; sheriff vote={tie}",
   "action.wolf_discussion.directive":
@@ -1968,7 +1966,8 @@ export const en = Object.freeze({
   "error.badge_choice_target": "Choose an eligible living player in the handoff list.",
   "stage.sheriff_badge_choice": "Badge successor choice",
   "request.summary.badge_choice": "Choose a listed successor, or use null to destroy the badge.",
-  "prompt.config.badge_next": "Badge: transfer automatically by living seat order after death.",
+  "prompt.config.badge_next":
+    "Badge: transfer automatically by living seat order after death; revealed Village Idiots destroy it directly. The former sheriff has no action to choose a recipient.",
   "prompt.config.badge_choice":
     "Badge: the deceased holder chooses an eligible living successor or destroys it; revealed Idiots destroy it directly.",
 } satisfies Record<MessageKey, string>);

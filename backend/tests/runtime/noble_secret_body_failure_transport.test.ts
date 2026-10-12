@@ -6,6 +6,7 @@ import type { PlannedTurn } from "../support/foundation_transport_plan";
 import { nobleTransportScenario } from "../support/noble_secret_body_transport_scenarios";
 import { runTransportGame } from "../support/run_transport_game";
 import { assertNobleTransportWire } from "../support/noble_secret_body_wire_oracle";
+import { assertNobleBadgeRules } from "../support/noble_secret_body_badge_prompt";
 const rank: Partial<Record<ActionStage, number>> = {
   secret_body: 150,
   wolf_discussion: 200,
@@ -56,6 +57,7 @@ for (const [stage, old] of [
             ),
             cp = run.record.checkpoints.at(-1)!;
           assertNobleTransportWire(run);
+          assertNobleBadgeRules(run, locale);
           expect(cp.complete).toBe(false);
           expect(cp.snapshot.gameOver).toBe(false);
           expect(run.record.termination!.reason).toBe("runtime_error");

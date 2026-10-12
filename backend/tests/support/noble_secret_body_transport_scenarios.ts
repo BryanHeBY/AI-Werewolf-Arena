@@ -18,6 +18,23 @@ import type { TransportGameScenario } from "./run_transport_game";
 
 /** Literal role-relative expectations. Neither decisions nor expected damage query World. */
 const plans = {
+  pass_breaks_repeat: {
+    body: [6, null, 6, 5],
+    servant: [null, null, null, null],
+    knife: [null, null, null, null],
+    hunt: [null, null, null, null],
+    exile: [10, 11, 12, 1],
+    deaths: [[], [], [], []],
+    alive: [
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 12],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      [2, 3, 4, 5, 6, 7, 8, 9],
+    ],
+    bodyActive: [true, true, true, true],
+    nobleActive: [false, true, true, true],
+    sheriff: null,
+  },
   noble_pre_election_blast: {
     blast: { day: 1, stage: "on_pre_election", actor: 1 },
     body: [6, 7, 6, 7],

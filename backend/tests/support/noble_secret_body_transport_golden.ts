@@ -18,6 +18,7 @@ const finals: Record<
   Scenario["name"],
   { body: null | BodySpend | "revealed"; contracts: Contract[] }
 > = {
+  pass_breaks_repeat: { body: null, contracts: [] },
   noble_pre_election_blast: { body: null, contracts: [] },
   noble_pre_vote_blast: { body: [3, 6, "servant_expiry"], contracts: [[2, 6, "expired", 3]] },
   ordinary_pre_election_blast: { body: null, contracts: [] },

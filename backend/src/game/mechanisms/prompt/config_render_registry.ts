@@ -307,7 +307,6 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
             }),
           ]
         : []),
-      ...(sheriffEnabled ? [text(locale, "prompt.config.badge")] : []),
       text(locale, "prompt.config.ties", {
         exile: term("tie", config.tieBreaker?.exileVote ?? "min_id", locale),
         wolf: term("tie", config.tieBreaker?.wolfKillVote ?? "min_id", locale),

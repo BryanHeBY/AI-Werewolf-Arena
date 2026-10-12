@@ -1,12 +1,12 @@
 {
   "schemaVersion": 2,
   "perspective": "god",
-  "sessionId": "session_1791760721818_6imipu",
+  "sessionId": "session_1791766284233_0dzh5z",
   "meta": {
     "board": "awa_noble_secret_body_12_v1",
     "locale": "en",
-    "startedAt": "2026-10-11T23:18:41.818Z",
-    "endedAt": "2026-10-11T23:18:43.095Z"
+    "startedAt": "2026-10-12T00:51:24.233Z",
+    "endedAt": "2026-10-12T00:51:25.885Z"
   },
   "result": {
     "winner": "good",
@@ -126,7 +126,7 @@
   "events": [
     {
       "seq": 1,
-      "timestamp": "2026-10-11T23:18:41.818Z",
+      "timestamp": "2026-10-12T00:51:24.233Z",
       "phase": "night",
       "day": 1,
       "stage": "god_private_game_info",
@@ -223,7 +223,7 @@
     },
     {
       "seq": 2,
-      "timestamp": "2026-10-11T23:18:41.818Z",
+      "timestamp": "2026-10-12T00:51:24.233Z",
       "phase": "night",
       "day": 1,
       "stage": "night",
@@ -235,7 +235,7 @@
     },
     {
       "seq": 3,
-      "timestamp": "2026-10-11T23:18:41.849Z",
+      "timestamp": "2026-10-12T00:51:24.267Z",
       "phase": "night",
       "day": 1,
       "stage": "noble_night_notified",
@@ -252,7 +252,7 @@
     },
     {
       "seq": 4,
-      "timestamp": "2026-10-11T23:18:41.849Z",
+      "timestamp": "2026-10-12T00:51:24.267Z",
       "phase": "night",
       "day": 1,
       "stage": "secret_body_night_notified",
@@ -270,7 +270,7 @@
     },
     {
       "seq": 5,
-      "timestamp": "2026-10-11T23:18:41.849Z",
+      "timestamp": "2026-10-12T00:51:24.267Z",
       "phase": "night",
       "day": 1,
       "stage": "noble_body_night_opened",
@@ -287,7 +287,7 @@
     },
     {
       "seq": 6,
-      "timestamp": "2026-10-11T23:18:41.856Z",
+      "timestamp": "2026-10-12T00:51:24.278Z",
       "phase": "night",
       "day": 1,
       "stage": "secret_body_chosen",
@@ -301,7 +301,7 @@
     },
     {
       "seq": 7,
-      "timestamp": "2026-10-11T23:18:41.857Z",
+      "timestamp": "2026-10-12T00:51:24.278Z",
       "phase": "night",
       "day": 1,
       "stage": "wolf_tactical_order",
@@ -317,7 +317,7 @@
     },
     {
       "seq": 8,
-      "timestamp": "2026-10-11T23:18:41.860Z",
+      "timestamp": "2026-10-12T00:51:24.283Z",
       "phase": "night",
       "day": 1,
       "stage": "wolf_discussion",
@@ -330,7 +330,7 @@
     },
     {
       "seq": 9,
-      "timestamp": "2026-10-11T23:18:41.863Z",
+      "timestamp": "2026-10-12T00:51:24.288Z",
       "phase": "night",
       "day": 1,
       "stage": "wolf_discussion",
@@ -343,7 +343,7 @@
     },
     {
       "seq": 10,
-      "timestamp": "2026-10-11T23:18:41.866Z",
+      "timestamp": "2026-10-12T00:51:24.293Z",
       "phase": "night",
       "day": 1,
       "stage": "wolf_discussion",
@@ -356,7 +356,7 @@
     },
     {
       "seq": 11,
-      "timestamp": "2026-10-11T23:18:41.869Z",
+      "timestamp": "2026-10-12T00:51:24.298Z",
       "phase": "night",
       "day": 1,
       "stage": "wolf_discussion",
@@ -369,7 +369,7 @@
     },
     {
       "seq": 12,
-      "timestamp": "2026-10-11T23:18:41.873Z",
+      "timestamp": "2026-10-12T00:51:24.303Z",
       "phase": "night",
       "day": 1,
       "stage": "wolf_discussion",
@@ -382,7 +382,7 @@
     },
     {
       "seq": 13,
-      "timestamp": "2026-10-11T23:18:41.876Z",
+      "timestamp": "2026-10-12T00:51:24.307Z",
       "phase": "night",
       "day": 1,
       "stage": "wolf_discussion",
@@ -395,7 +395,7 @@
     },
     {
       "seq": 14,
-      "timestamp": "2026-10-11T23:18:41.880Z",
+      "timestamp": "2026-10-12T00:51:24.312Z",
       "phase": "night",
       "day": 1,
       "stage": "wolf_discussion",
@@ -408,7 +408,7 @@
     },
     {
       "seq": 15,
-      "timestamp": "2026-10-11T23:18:41.883Z",
+      "timestamp": "2026-10-12T00:51:24.316Z",
       "phase": "night",
       "day": 1,
       "stage": "wolf_discussion",
@@ -421,7 +421,7 @@
     },
     {
       "seq": 16,
-      "timestamp": "2026-10-11T23:18:41.883Z",
+      "timestamp": "2026-10-12T00:51:24.317Z",
       "phase": "night",
       "day": 1,
       "stage": "noble_body_knife_committed",
@@ -435,7 +435,7 @@
     },
     {
       "seq": 17,
-      "timestamp": "2026-10-11T23:18:41.889Z",
+      "timestamp": "2026-10-12T00:51:24.325Z",
       "phase": "night",
       "day": 1,
       "stage": "witch",
@@ -448,7 +448,7 @@
     },
     {
       "seq": 18,
-      "timestamp": "2026-10-11T23:18:41.896Z",
+      "timestamp": "2026-10-12T00:51:24.333Z",
       "phase": "night",
       "day": 1,
       "stage": "seer",
@@ -465,7 +465,7 @@
     },
     {
       "seq": 19,
-      "timestamp": "2026-10-11T23:18:41.896Z",
+      "timestamp": "2026-10-12T00:51:24.334Z",
       "phase": "night",
       "day": 1,
       "stage": "noble_body_native_damage_committed",
@@ -478,7 +478,7 @@
     },
     {
       "seq": 20,
-      "timestamp": "2026-10-11T23:18:41.897Z",
+      "timestamp": "2026-10-12T00:51:24.334Z",
       "phase": "night",
       "day": 1,
       "stage": "noble_body_sources_committed",
@@ -494,7 +494,7 @@
     },
     {
       "seq": 21,
-      "timestamp": "2026-10-11T23:18:41.897Z",
+      "timestamp": "2026-10-12T00:51:24.335Z",
       "phase": "night",
       "day": 1,
       "stage": "night_resolved",
@@ -505,7 +505,7 @@
     },
     {
       "seq": 22,
-      "timestamp": "2026-10-11T23:18:41.897Z",
+      "timestamp": "2026-10-12T00:51:24.335Z",
       "phase": "day",
       "day": 1,
       "stage": "day",
@@ -517,7 +517,7 @@
     },
     {
       "seq": 23,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff",
@@ -529,7 +529,7 @@
     },
     {
       "seq": 24,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff",
@@ -541,7 +541,7 @@
     },
     {
       "seq": 25,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff",
@@ -553,7 +553,7 @@
     },
     {
       "seq": 26,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff",
@@ -565,7 +565,7 @@
     },
     {
       "seq": 27,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff",
@@ -577,7 +577,7 @@
     },
     {
       "seq": 28,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff",
@@ -589,7 +589,7 @@
     },
     {
       "seq": 29,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff",
@@ -601,7 +601,7 @@
     },
     {
       "seq": 30,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff",
@@ -613,7 +613,7 @@
     },
     {
       "seq": 31,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff",
@@ -625,7 +625,7 @@
     },
     {
       "seq": 32,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff",
@@ -637,7 +637,7 @@
     },
     {
       "seq": 33,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff",
@@ -649,7 +649,7 @@
     },
     {
       "seq": 34,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff",
@@ -661,7 +661,7 @@
     },
     {
       "seq": 35,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff_nomination_summary",
@@ -672,7 +672,7 @@
     },
     {
       "seq": 36,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff_withdraw_summary",
@@ -683,7 +683,7 @@
     },
     {
       "seq": 37,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff",
@@ -694,7 +694,7 @@
     },
     {
       "seq": 38,
-      "timestamp": "2026-10-11T23:18:41.936Z",
+      "timestamp": "2026-10-12T00:51:24.397Z",
       "phase": "day",
       "day": 1,
       "stage": "sheriff_vote_summary",
@@ -707,7 +707,7 @@
     },
     {
       "seq": 39,
-      "timestamp": "2026-10-11T23:18:41.946Z",
+      "timestamp": "2026-10-12T00:51:24.403Z",
       "phase": "day",
       "day": 1,
       "stage": "day_speech",
@@ -719,7 +719,7 @@
     },
     {
       "seq": 40,
-      "timestamp": "2026-10-11T23:18:41.957Z",
+      "timestamp": "2026-10-12T00:51:24.409Z",
       "phase": "day",
       "day": 1,
       "stage": "day_speech",
@@ -731,7 +731,7 @@
     },
     {
       "seq": 41,
-      "timestamp": "2026-10-11T23:18:41.960Z",
+      "timestamp": "2026-10-12T00:51:24.415Z",
       "phase": "day",
       "day": 1,
       "stage": "day_speech",
@@ -743,7 +743,7 @@
     },
     {
       "seq": 42,
-      "timestamp": "2026-10-11T23:18:41.963Z",
+      "timestamp": "2026-10-12T00:51:24.420Z",
       "phase": "day",
       "day": 1,
       "stage": "day_speech",
@@ -755,7 +755,7 @@
     },
     {
       "seq": 43,
-      "timestamp": "2026-10-11T23:18:41.966Z",
+      "timestamp": "2026-10-12T00:51:24.425Z",
       "phase": "day",
       "day": 1,
       "stage": "day_speech",
@@ -767,7 +767,7 @@
     },
     {
       "seq": 44,
-      "timestamp": "2026-10-11T23:18:41.969Z",
+      "timestamp": "2026-10-12T00:51:24.430Z",
       "phase": "day",
       "day": 1,
       "stage": "day_speech",
@@ -779,7 +779,7 @@
     },
     {
       "seq": 45,
-      "timestamp": "2026-10-11T23:18:41.972Z",
+      "timestamp": "2026-10-12T00:51:24.435Z",
       "phase": "day",
       "day": 1,
       "stage": "day_speech",
@@ -791,7 +791,7 @@
     },
     {
       "seq": 46,
-      "timestamp": "2026-10-11T23:18:41.975Z",
+      "timestamp": "2026-10-12T00:51:24.441Z",
       "phase": "day",
       "day": 1,
       "stage": "day_speech",
@@ -803,7 +803,7 @@
     },
     {
       "seq": 47,
-      "timestamp": "2026-10-11T23:18:41.978Z",
+      "timestamp": "2026-10-12T00:51:24.446Z",
       "phase": "day",
       "day": 1,
       "stage": "day_speech",
@@ -815,7 +815,7 @@
     },
     {
       "seq": 48,
-      "timestamp": "2026-10-11T23:18:41.982Z",
+      "timestamp": "2026-10-12T00:51:24.453Z",
       "phase": "day",
       "day": 1,
       "stage": "day_speech",
@@ -827,7 +827,7 @@
     },
     {
       "seq": 49,
-      "timestamp": "2026-10-11T23:18:41.986Z",
+      "timestamp": "2026-10-12T00:51:24.459Z",
       "phase": "day",
       "day": 1,
       "stage": "day_speech",
@@ -839,7 +839,7 @@
     },
     {
       "seq": 50,
-      "timestamp": "2026-10-11T23:18:41.990Z",
+      "timestamp": "2026-10-12T00:51:24.465Z",
       "phase": "day",
       "day": 1,
       "stage": "day_speech",
@@ -851,7 +851,7 @@
     },
     {
       "seq": 51,
-      "timestamp": "2026-10-11T23:18:41.990Z",
+      "timestamp": "2026-10-12T00:51:24.465Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -863,7 +863,7 @@
     },
     {
       "seq": 52,
-      "timestamp": "2026-10-11T23:18:42.038Z",
+      "timestamp": "2026-10-12T00:51:24.543Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -877,7 +877,7 @@
     },
     {
       "seq": 53,
-      "timestamp": "2026-10-11T23:18:42.038Z",
+      "timestamp": "2026-10-12T00:51:24.543Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -891,7 +891,7 @@
     },
     {
       "seq": 54,
-      "timestamp": "2026-10-11T23:18:42.038Z",
+      "timestamp": "2026-10-12T00:51:24.543Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -905,7 +905,7 @@
     },
     {
       "seq": 55,
-      "timestamp": "2026-10-11T23:18:42.038Z",
+      "timestamp": "2026-10-12T00:51:24.543Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -919,7 +919,7 @@
     },
     {
       "seq": 56,
-      "timestamp": "2026-10-11T23:18:42.038Z",
+      "timestamp": "2026-10-12T00:51:24.544Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -933,7 +933,7 @@
     },
     {
       "seq": 57,
-      "timestamp": "2026-10-11T23:18:42.038Z",
+      "timestamp": "2026-10-12T00:51:24.544Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -947,7 +947,7 @@
     },
     {
       "seq": 58,
-      "timestamp": "2026-10-11T23:18:42.038Z",
+      "timestamp": "2026-10-12T00:51:24.544Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -961,7 +961,7 @@
     },
     {
       "seq": 59,
-      "timestamp": "2026-10-11T23:18:42.039Z",
+      "timestamp": "2026-10-12T00:51:24.544Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -975,7 +975,7 @@
     },
     {
       "seq": 60,
-      "timestamp": "2026-10-11T23:18:42.039Z",
+      "timestamp": "2026-10-12T00:51:24.544Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -989,7 +989,7 @@
     },
     {
       "seq": 61,
-      "timestamp": "2026-10-11T23:18:42.039Z",
+      "timestamp": "2026-10-12T00:51:24.544Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -1003,7 +1003,7 @@
     },
     {
       "seq": 62,
-      "timestamp": "2026-10-11T23:18:42.039Z",
+      "timestamp": "2026-10-12T00:51:24.544Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -1017,7 +1017,7 @@
     },
     {
       "seq": 63,
-      "timestamp": "2026-10-11T23:18:42.039Z",
+      "timestamp": "2026-10-12T00:51:24.544Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -1031,7 +1031,7 @@
     },
     {
       "seq": 64,
-      "timestamp": "2026-10-11T23:18:42.039Z",
+      "timestamp": "2026-10-12T00:51:24.545Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -1120,7 +1120,7 @@
     },
     {
       "seq": 65,
-      "timestamp": "2026-10-11T23:18:42.039Z",
+      "timestamp": "2026-10-12T00:51:24.545Z",
       "phase": "voting",
       "day": 1,
       "stage": "voting",
@@ -1131,7 +1131,7 @@
     },
     {
       "seq": 66,
-      "timestamp": "2026-10-11T23:18:42.040Z",
+      "timestamp": "2026-10-12T00:51:24.545Z",
       "phase": "voting",
       "day": 1,
       "stage": "noble_body_death_committed",
@@ -1147,7 +1147,7 @@
     },
     {
       "seq": 67,
-      "timestamp": "2026-10-11T23:18:42.040Z",
+      "timestamp": "2026-10-12T00:51:24.545Z",
       "phase": "voting",
       "day": 1,
       "stage": "last_words_granted",
@@ -1160,7 +1160,7 @@
     },
     {
       "seq": 68,
-      "timestamp": "2026-10-11T23:18:42.044Z",
+      "timestamp": "2026-10-12T00:51:24.551Z",
       "phase": "voting",
       "day": 1,
       "stage": "last_words_spoken",
@@ -1174,7 +1174,7 @@
     },
     {
       "seq": 69,
-      "timestamp": "2026-10-11T23:18:42.045Z",
+      "timestamp": "2026-10-12T00:51:24.552Z",
       "phase": "night",
       "day": 2,
       "stage": "night",
@@ -1186,7 +1186,7 @@
     },
     {
       "seq": 70,
-      "timestamp": "2026-10-11T23:18:42.045Z",
+      "timestamp": "2026-10-12T00:51:24.552Z",
       "phase": "night",
       "day": 2,
       "stage": "noble_night_notified",
@@ -1203,7 +1203,7 @@
     },
     {
       "seq": 71,
-      "timestamp": "2026-10-11T23:18:42.045Z",
+      "timestamp": "2026-10-12T00:51:24.552Z",
       "phase": "night",
       "day": 2,
       "stage": "secret_body_night_notified",
@@ -1224,7 +1224,7 @@
     },
     {
       "seq": 72,
-      "timestamp": "2026-10-11T23:18:42.045Z",
+      "timestamp": "2026-10-12T00:51:24.552Z",
       "phase": "night",
       "day": 2,
       "stage": "noble_body_night_opened",
@@ -1241,7 +1241,7 @@
     },
     {
       "seq": 73,
-      "timestamp": "2026-10-11T23:18:42.054Z",
+      "timestamp": "2026-10-12T00:51:24.567Z",
       "phase": "night",
       "day": 2,
       "stage": "secret_body_chosen",
@@ -1255,7 +1255,7 @@
     },
     {
       "seq": 74,
-      "timestamp": "2026-10-11T23:18:42.055Z",
+      "timestamp": "2026-10-12T00:51:24.568Z",
       "phase": "night",
       "day": 2,
       "stage": "wolf_tactical_order",
@@ -1270,7 +1270,7 @@
     },
     {
       "seq": 75,
-      "timestamp": "2026-10-11T23:18:42.080Z",
+      "timestamp": "2026-10-12T00:51:24.574Z",
       "phase": "night",
       "day": 2,
       "stage": "wolf_discussion",
@@ -1283,7 +1283,7 @@
     },
     {
       "seq": 76,
-      "timestamp": "2026-10-11T23:18:42.085Z",
+      "timestamp": "2026-10-12T00:51:24.581Z",
       "phase": "night",
       "day": 2,
       "stage": "wolf_discussion",
@@ -1296,7 +1296,7 @@
     },
     {
       "seq": 77,
-      "timestamp": "2026-10-11T23:18:42.090Z",
+      "timestamp": "2026-10-12T00:51:24.587Z",
       "phase": "night",
       "day": 2,
       "stage": "wolf_discussion",
@@ -1309,7 +1309,7 @@
     },
     {
       "seq": 78,
-      "timestamp": "2026-10-11T23:18:42.095Z",
+      "timestamp": "2026-10-12T00:51:24.615Z",
       "phase": "night",
       "day": 2,
       "stage": "wolf_discussion",
@@ -1322,7 +1322,7 @@
     },
     {
       "seq": 79,
-      "timestamp": "2026-10-11T23:18:42.101Z",
+      "timestamp": "2026-10-12T00:51:24.621Z",
       "phase": "night",
       "day": 2,
       "stage": "wolf_discussion",
@@ -1335,7 +1335,7 @@
     },
     {
       "seq": 80,
-      "timestamp": "2026-10-11T23:18:42.106Z",
+      "timestamp": "2026-10-12T00:51:24.627Z",
       "phase": "night",
       "day": 2,
       "stage": "wolf_discussion",
@@ -1348,7 +1348,7 @@
     },
     {
       "seq": 81,
-      "timestamp": "2026-10-11T23:18:42.106Z",
+      "timestamp": "2026-10-12T00:51:24.627Z",
       "phase": "night",
       "day": 2,
       "stage": "noble_body_knife_committed",
@@ -1362,7 +1362,7 @@
     },
     {
       "seq": 82,
-      "timestamp": "2026-10-11T23:18:42.123Z",
+      "timestamp": "2026-10-12T00:51:24.638Z",
       "phase": "night",
       "day": 2,
       "stage": "noble_servant_chosen",
@@ -1377,7 +1377,7 @@
     },
     {
       "seq": 83,
-      "timestamp": "2026-10-11T23:18:42.132Z",
+      "timestamp": "2026-10-12T00:51:24.650Z",
       "phase": "night",
       "day": 2,
       "stage": "witch",
@@ -1390,7 +1390,7 @@
     },
     {
       "seq": 84,
-      "timestamp": "2026-10-11T23:18:42.142Z",
+      "timestamp": "2026-10-12T00:51:24.660Z",
       "phase": "night",
       "day": 2,
       "stage": "seer",
@@ -1407,7 +1407,7 @@
     },
     {
       "seq": 85,
-      "timestamp": "2026-10-11T23:18:42.151Z",
+      "timestamp": "2026-10-12T00:51:24.671Z",
       "phase": "night",
       "day": 2,
       "stage": "demon_hunter_chosen",
@@ -1421,7 +1421,7 @@
     },
     {
       "seq": 86,
-      "timestamp": "2026-10-11T23:18:42.151Z",
+      "timestamp": "2026-10-12T00:51:24.672Z",
       "phase": "night",
       "day": 2,
       "stage": "noble_body_native_damage_committed",
@@ -1434,7 +1434,7 @@
     },
     {
       "seq": 87,
-      "timestamp": "2026-10-11T23:18:42.152Z",
+      "timestamp": "2026-10-12T00:51:24.673Z",
       "phase": "night",
       "day": 2,
       "stage": "noble_contract_closed",
@@ -1452,7 +1452,7 @@
     },
     {
       "seq": 88,
-      "timestamp": "2026-10-11T23:18:42.152Z",
+      "timestamp": "2026-10-12T00:51:24.674Z",
       "phase": "night",
       "day": 2,
       "stage": "noble_body_sources_committed",
@@ -1468,7 +1468,7 @@
     },
     {
       "seq": 89,
-      "timestamp": "2026-10-11T23:18:42.153Z",
+      "timestamp": "2026-10-12T00:51:24.681Z",
       "phase": "night",
       "day": 2,
       "stage": "night_resolved",
@@ -1479,7 +1479,7 @@
     },
     {
       "seq": 90,
-      "timestamp": "2026-10-11T23:18:42.153Z",
+      "timestamp": "2026-10-12T00:51:24.681Z",
       "phase": "day",
       "day": 2,
       "stage": "day",
@@ -1491,7 +1491,7 @@
     },
     {
       "seq": 91,
-      "timestamp": "2026-10-11T23:18:42.157Z",
+      "timestamp": "2026-10-12T00:51:24.687Z",
       "phase": "day",
       "day": 2,
       "stage": "day_speech",
@@ -1503,7 +1503,7 @@
     },
     {
       "seq": 92,
-      "timestamp": "2026-10-11T23:18:42.162Z",
+      "timestamp": "2026-10-12T00:51:24.694Z",
       "phase": "day",
       "day": 2,
       "stage": "day_speech",
@@ -1515,7 +1515,7 @@
     },
     {
       "seq": 93,
-      "timestamp": "2026-10-11T23:18:42.166Z",
+      "timestamp": "2026-10-12T00:51:24.699Z",
       "phase": "day",
       "day": 2,
       "stage": "day_speech",
@@ -1527,7 +1527,7 @@
     },
     {
       "seq": 94,
-      "timestamp": "2026-10-11T23:18:42.170Z",
+      "timestamp": "2026-10-12T00:51:24.705Z",
       "phase": "day",
       "day": 2,
       "stage": "day_speech",
@@ -1539,7 +1539,7 @@
     },
     {
       "seq": 95,
-      "timestamp": "2026-10-11T23:18:42.178Z",
+      "timestamp": "2026-10-12T00:51:24.711Z",
       "phase": "day",
       "day": 2,
       "stage": "day_speech",
@@ -1551,7 +1551,7 @@
     },
     {
       "seq": 96,
-      "timestamp": "2026-10-11T23:18:42.214Z",
+      "timestamp": "2026-10-12T00:51:24.749Z",
       "phase": "day",
       "day": 2,
       "stage": "day_speech",
@@ -1563,7 +1563,7 @@
     },
     {
       "seq": 97,
-      "timestamp": "2026-10-11T23:18:42.219Z",
+      "timestamp": "2026-10-12T00:51:24.761Z",
       "phase": "day",
       "day": 2,
       "stage": "day_speech",
@@ -1575,7 +1575,7 @@
     },
     {
       "seq": 98,
-      "timestamp": "2026-10-11T23:18:42.224Z",
+      "timestamp": "2026-10-12T00:51:24.768Z",
       "phase": "day",
       "day": 2,
       "stage": "day_speech",
@@ -1587,7 +1587,7 @@
     },
     {
       "seq": 99,
-      "timestamp": "2026-10-11T23:18:42.228Z",
+      "timestamp": "2026-10-12T00:51:24.774Z",
       "phase": "day",
       "day": 2,
       "stage": "day_speech",
@@ -1599,7 +1599,7 @@
     },
     {
       "seq": 100,
-      "timestamp": "2026-10-11T23:18:42.232Z",
+      "timestamp": "2026-10-12T00:51:24.779Z",
       "phase": "day",
       "day": 2,
       "stage": "day_speech",
@@ -1611,7 +1611,7 @@
     },
     {
       "seq": 101,
-      "timestamp": "2026-10-11T23:18:42.237Z",
+      "timestamp": "2026-10-12T00:51:24.784Z",
       "phase": "day",
       "day": 2,
       "stage": "day_speech",
@@ -1623,7 +1623,7 @@
     },
     {
       "seq": 102,
-      "timestamp": "2026-10-11T23:18:42.237Z",
+      "timestamp": "2026-10-12T00:51:24.784Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1635,7 +1635,7 @@
     },
     {
       "seq": 103,
-      "timestamp": "2026-10-11T23:18:42.292Z",
+      "timestamp": "2026-10-12T00:51:24.843Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1649,7 +1649,7 @@
     },
     {
       "seq": 104,
-      "timestamp": "2026-10-11T23:18:42.293Z",
+      "timestamp": "2026-10-12T00:51:24.843Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1663,7 +1663,7 @@
     },
     {
       "seq": 105,
-      "timestamp": "2026-10-11T23:18:42.293Z",
+      "timestamp": "2026-10-12T00:51:24.843Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1677,7 +1677,7 @@
     },
     {
       "seq": 106,
-      "timestamp": "2026-10-11T23:18:42.293Z",
+      "timestamp": "2026-10-12T00:51:24.843Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1691,7 +1691,7 @@
     },
     {
       "seq": 107,
-      "timestamp": "2026-10-11T23:18:42.293Z",
+      "timestamp": "2026-10-12T00:51:24.843Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1705,7 +1705,7 @@
     },
     {
       "seq": 108,
-      "timestamp": "2026-10-11T23:18:42.294Z",
+      "timestamp": "2026-10-12T00:51:24.844Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1719,7 +1719,7 @@
     },
     {
       "seq": 109,
-      "timestamp": "2026-10-11T23:18:42.294Z",
+      "timestamp": "2026-10-12T00:51:24.844Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1733,7 +1733,7 @@
     },
     {
       "seq": 110,
-      "timestamp": "2026-10-11T23:18:42.294Z",
+      "timestamp": "2026-10-12T00:51:24.844Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1747,7 +1747,7 @@
     },
     {
       "seq": 111,
-      "timestamp": "2026-10-11T23:18:42.294Z",
+      "timestamp": "2026-10-12T00:51:24.844Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1761,7 +1761,7 @@
     },
     {
       "seq": 112,
-      "timestamp": "2026-10-11T23:18:42.294Z",
+      "timestamp": "2026-10-12T00:51:24.845Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1775,7 +1775,7 @@
     },
     {
       "seq": 113,
-      "timestamp": "2026-10-11T23:18:42.295Z",
+      "timestamp": "2026-10-12T00:51:24.845Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1789,7 +1789,7 @@
     },
     {
       "seq": 114,
-      "timestamp": "2026-10-11T23:18:42.295Z",
+      "timestamp": "2026-10-12T00:51:24.845Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1872,7 +1872,7 @@
     },
     {
       "seq": 115,
-      "timestamp": "2026-10-11T23:18:42.295Z",
+      "timestamp": "2026-10-12T00:51:24.845Z",
       "phase": "voting",
       "day": 2,
       "stage": "voting",
@@ -1883,7 +1883,7 @@
     },
     {
       "seq": 116,
-      "timestamp": "2026-10-11T23:18:42.295Z",
+      "timestamp": "2026-10-12T00:51:24.845Z",
       "phase": "voting",
       "day": 2,
       "stage": "noble_body_death_committed",
@@ -1899,7 +1899,7 @@
     },
     {
       "seq": 117,
-      "timestamp": "2026-10-11T23:18:42.296Z",
+      "timestamp": "2026-10-12T00:51:24.846Z",
       "phase": "voting",
       "day": 2,
       "stage": "last_words_granted",
@@ -1912,7 +1912,7 @@
     },
     {
       "seq": 118,
-      "timestamp": "2026-10-11T23:18:42.301Z",
+      "timestamp": "2026-10-12T00:51:24.911Z",
       "phase": "voting",
       "day": 2,
       "stage": "last_words_spoken",
@@ -1926,7 +1926,7 @@
     },
     {
       "seq": 119,
-      "timestamp": "2026-10-11T23:18:42.302Z",
+      "timestamp": "2026-10-12T00:51:24.913Z",
       "phase": "night",
       "day": 3,
       "stage": "night",
@@ -1938,7 +1938,7 @@
     },
     {
       "seq": 120,
-      "timestamp": "2026-10-11T23:18:42.303Z",
+      "timestamp": "2026-10-12T00:51:24.913Z",
       "phase": "night",
       "day": 3,
       "stage": "noble_night_notified",
@@ -1969,7 +1969,7 @@
     },
     {
       "seq": 121,
-      "timestamp": "2026-10-11T23:18:42.303Z",
+      "timestamp": "2026-10-12T00:51:24.913Z",
       "phase": "night",
       "day": 3,
       "stage": "secret_body_night_notified",
@@ -1990,7 +1990,7 @@
     },
     {
       "seq": 122,
-      "timestamp": "2026-10-11T23:18:42.303Z",
+      "timestamp": "2026-10-12T00:51:24.913Z",
       "phase": "night",
       "day": 3,
       "stage": "noble_body_night_opened",
@@ -2007,7 +2007,7 @@
     },
     {
       "seq": 123,
-      "timestamp": "2026-10-11T23:18:42.313Z",
+      "timestamp": "2026-10-12T00:51:24.927Z",
       "phase": "night",
       "day": 3,
       "stage": "secret_body_chosen",
@@ -2021,7 +2021,7 @@
     },
     {
       "seq": 124,
-      "timestamp": "2026-10-11T23:18:42.314Z",
+      "timestamp": "2026-10-12T00:51:24.928Z",
       "phase": "night",
       "day": 3,
       "stage": "wolf_tactical_order",
@@ -2035,7 +2035,7 @@
     },
     {
       "seq": 125,
-      "timestamp": "2026-10-11T23:18:42.378Z",
+      "timestamp": "2026-10-12T00:51:24.936Z",
       "phase": "night",
       "day": 3,
       "stage": "wolf_discussion",
@@ -2048,7 +2048,7 @@
     },
     {
       "seq": 126,
-      "timestamp": "2026-10-11T23:18:42.385Z",
+      "timestamp": "2026-10-12T00:51:24.944Z",
       "phase": "night",
       "day": 3,
       "stage": "wolf_discussion",
@@ -2061,7 +2061,7 @@
     },
     {
       "seq": 127,
-      "timestamp": "2026-10-11T23:18:42.391Z",
+      "timestamp": "2026-10-12T00:51:24.953Z",
       "phase": "night",
       "day": 3,
       "stage": "wolf_discussion",
@@ -2074,7 +2074,7 @@
     },
     {
       "seq": 128,
-      "timestamp": "2026-10-11T23:18:42.397Z",
+      "timestamp": "2026-10-12T00:51:24.961Z",
       "phase": "night",
       "day": 3,
       "stage": "wolf_discussion",
@@ -2087,7 +2087,7 @@
     },
     {
       "seq": 129,
-      "timestamp": "2026-10-11T23:18:42.397Z",
+      "timestamp": "2026-10-12T00:51:24.962Z",
       "phase": "night",
       "day": 3,
       "stage": "noble_body_knife_committed",
@@ -2101,7 +2101,7 @@
     },
     {
       "seq": 130,
-      "timestamp": "2026-10-11T23:18:42.409Z",
+      "timestamp": "2026-10-12T00:51:24.976Z",
       "phase": "night",
       "day": 3,
       "stage": "noble_servant_chosen",
@@ -2116,7 +2116,7 @@
     },
     {
       "seq": 131,
-      "timestamp": "2026-10-11T23:18:42.420Z",
+      "timestamp": "2026-10-12T00:51:24.990Z",
       "phase": "night",
       "day": 3,
       "stage": "witch",
@@ -2129,7 +2129,7 @@
     },
     {
       "seq": 132,
-      "timestamp": "2026-10-11T23:18:42.432Z",
+      "timestamp": "2026-10-12T00:51:25.011Z",
       "phase": "night",
       "day": 3,
       "stage": "seer",
@@ -2146,7 +2146,7 @@
     },
     {
       "seq": 133,
-      "timestamp": "2026-10-11T23:18:42.444Z",
+      "timestamp": "2026-10-12T00:51:25.092Z",
       "phase": "night",
       "day": 3,
       "stage": "demon_hunter_chosen",
@@ -2160,7 +2160,7 @@
     },
     {
       "seq": 134,
-      "timestamp": "2026-10-11T23:18:42.444Z",
+      "timestamp": "2026-10-12T00:51:25.093Z",
       "phase": "night",
       "day": 3,
       "stage": "noble_body_native_damage_committed",
@@ -2173,7 +2173,7 @@
     },
     {
       "seq": 135,
-      "timestamp": "2026-10-11T23:18:42.445Z",
+      "timestamp": "2026-10-12T00:51:25.094Z",
       "phase": "night",
       "day": 3,
       "stage": "noble_body_sources_committed",
@@ -2189,7 +2189,7 @@
     },
     {
       "seq": 136,
-      "timestamp": "2026-10-11T23:18:42.446Z",
+      "timestamp": "2026-10-12T00:51:25.096Z",
       "phase": "night",
       "day": 3,
       "stage": "night_resolved",
@@ -2200,7 +2200,7 @@
     },
     {
       "seq": 137,
-      "timestamp": "2026-10-11T23:18:42.446Z",
+      "timestamp": "2026-10-12T00:51:25.096Z",
       "phase": "day",
       "day": 3,
       "stage": "day",
@@ -2212,7 +2212,7 @@
     },
     {
       "seq": 138,
-      "timestamp": "2026-10-11T23:18:42.452Z",
+      "timestamp": "2026-10-12T00:51:25.102Z",
       "phase": "day",
       "day": 3,
       "stage": "day_speech",
@@ -2224,7 +2224,7 @@
     },
     {
       "seq": 139,
-      "timestamp": "2026-10-11T23:18:42.457Z",
+      "timestamp": "2026-10-12T00:51:25.109Z",
       "phase": "day",
       "day": 3,
       "stage": "day_speech",
@@ -2236,7 +2236,7 @@
     },
     {
       "seq": 140,
-      "timestamp": "2026-10-11T23:18:42.462Z",
+      "timestamp": "2026-10-12T00:51:25.126Z",
       "phase": "day",
       "day": 3,
       "stage": "day_speech",
@@ -2248,7 +2248,7 @@
     },
     {
       "seq": 141,
-      "timestamp": "2026-10-11T23:18:42.467Z",
+      "timestamp": "2026-10-12T00:51:25.133Z",
       "phase": "day",
       "day": 3,
       "stage": "day_speech",
@@ -2260,7 +2260,7 @@
     },
     {
       "seq": 142,
-      "timestamp": "2026-10-11T23:18:42.478Z",
+      "timestamp": "2026-10-12T00:51:25.141Z",
       "phase": "day",
       "day": 3,
       "stage": "day_speech",
@@ -2272,7 +2272,7 @@
     },
     {
       "seq": 143,
-      "timestamp": "2026-10-11T23:18:42.556Z",
+      "timestamp": "2026-10-12T00:51:25.147Z",
       "phase": "day",
       "day": 3,
       "stage": "day_speech",
@@ -2284,7 +2284,7 @@
     },
     {
       "seq": 144,
-      "timestamp": "2026-10-11T23:18:42.562Z",
+      "timestamp": "2026-10-12T00:51:25.154Z",
       "phase": "day",
       "day": 3,
       "stage": "day_speech",
@@ -2296,7 +2296,7 @@
     },
     {
       "seq": 145,
-      "timestamp": "2026-10-11T23:18:42.567Z",
+      "timestamp": "2026-10-12T00:51:25.161Z",
       "phase": "day",
       "day": 3,
       "stage": "day_speech",
@@ -2308,7 +2308,7 @@
     },
     {
       "seq": 146,
-      "timestamp": "2026-10-11T23:18:42.573Z",
+      "timestamp": "2026-10-12T00:51:25.168Z",
       "phase": "day",
       "day": 3,
       "stage": "day_speech",
@@ -2320,7 +2320,7 @@
     },
     {
       "seq": 147,
-      "timestamp": "2026-10-11T23:18:42.577Z",
+      "timestamp": "2026-10-12T00:51:25.175Z",
       "phase": "day",
       "day": 3,
       "stage": "day_speech",
@@ -2332,7 +2332,7 @@
     },
     {
       "seq": 148,
-      "timestamp": "2026-10-11T23:18:42.577Z",
+      "timestamp": "2026-10-12T00:51:25.175Z",
       "phase": "voting",
       "day": 3,
       "stage": "voting",
@@ -2344,7 +2344,7 @@
     },
     {
       "seq": 149,
-      "timestamp": "2026-10-11T23:18:42.633Z",
+      "timestamp": "2026-10-12T00:51:25.346Z",
       "phase": "voting",
       "day": 3,
       "stage": "voting",
@@ -2358,7 +2358,7 @@
     },
     {
       "seq": 150,
-      "timestamp": "2026-10-11T23:18:42.633Z",
+      "timestamp": "2026-10-12T00:51:25.346Z",
       "phase": "voting",
       "day": 3,
       "stage": "voting",
@@ -2372,7 +2372,7 @@
     },
     {
       "seq": 151,
-      "timestamp": "2026-10-11T23:18:42.633Z",
+      "timestamp": "2026-10-12T00:51:25.346Z",
       "phase": "voting",
       "day": 3,
       "stage": "voting",
@@ -2386,7 +2386,7 @@
     },
     {
       "seq": 152,
-      "timestamp": "2026-10-11T23:18:42.634Z",
+      "timestamp": "2026-10-12T00:51:25.347Z",
       "phase": "voting",
       "day": 3,
       "stage": "voting",
@@ -2400,7 +2400,7 @@
     },
     {
       "seq": 153,
-      "timestamp": "2026-10-11T23:18:42.634Z",
+      "timestamp": "2026-10-12T00:51:25.347Z",
       "phase": "voting",
       "day": 3,
       "stage": "voting",
@@ -2414,7 +2414,7 @@
     },
     {
       "seq": 154,
-      "timestamp": "2026-10-11T23:18:42.634Z",
+      "timestamp": "2026-10-12T00:51:25.347Z",
       "phase": "voting",
       "day": 3,
       "stage": "voting",
@@ -2428,7 +2428,7 @@
     },
     {
       "seq": 155,
-      "timestamp": "2026-10-11T23:18:42.635Z",
+      "timestamp": "2026-10-12T00:51:25.348Z",
       "phase": "voting",
       "day": 3,
       "stage": "voting",
@@ -2442,7 +2442,7 @@
     },
     {
       "seq": 156,
-      "timestamp": "2026-10-11T23:18:42.635Z",
+      "timestamp": "2026-10-12T00:51:25.348Z",
       "phase": "voting",
       "day": 3,
       "stage": "voting",
@@ -2456,7 +2456,7 @@
     },
     {
       "seq": 157,
-      "timestamp": "2026-10-11T23:18:42.635Z",
+      "timestamp": "2026-10-12T00:51:25.348Z",
       "phase": "voting",
       "day": 3,
       "stage": "voting",
@@ -2470,7 +2470,7 @@
     },
     {
       "seq": 158,
-      "timestamp": "2026-10-11T23:18:42.636Z",
+      "timestamp": "2026-10-12T00:51:25.349Z",
       "phase": "voting",
       "day": 3,
       "stage": "voting",
@@ -2484,7 +2484,7 @@
     },
     {
       "seq": 159,
-      "timestamp": "2026-10-11T23:18:42.636Z",
+      "timestamp": "2026-10-12T00:51:25.349Z",
       "phase": "voting",
       "day": 3,
       "stage": "voting",
@@ -2561,7 +2561,7 @@
     },
     {
       "seq": 160,
-      "timestamp": "2026-10-11T23:18:42.636Z",
+      "timestamp": "2026-10-12T00:51:25.349Z",
       "phase": "voting",
       "day": 3,
       "stage": "voting",
@@ -2572,7 +2572,7 @@
     },
     {
       "seq": 161,
-      "timestamp": "2026-10-11T23:18:42.636Z",
+      "timestamp": "2026-10-12T00:51:25.350Z",
       "phase": "voting",
       "day": 3,
       "stage": "noble_body_death_committed",
@@ -2588,7 +2588,7 @@
     },
     {
       "seq": 162,
-      "timestamp": "2026-10-11T23:18:42.637Z",
+      "timestamp": "2026-10-12T00:51:25.350Z",
       "phase": "voting",
       "day": 3,
       "stage": "last_words_granted",
@@ -2601,7 +2601,7 @@
     },
     {
       "seq": 163,
-      "timestamp": "2026-10-11T23:18:42.643Z",
+      "timestamp": "2026-10-12T00:51:25.357Z",
       "phase": "voting",
       "day": 3,
       "stage": "last_words_spoken",
@@ -2615,7 +2615,7 @@
     },
     {
       "seq": 164,
-      "timestamp": "2026-10-11T23:18:42.645Z",
+      "timestamp": "2026-10-12T00:51:25.359Z",
       "phase": "night",
       "day": 4,
       "stage": "night",
@@ -2627,7 +2627,7 @@
     },
     {
       "seq": 165,
-      "timestamp": "2026-10-11T23:18:42.645Z",
+      "timestamp": "2026-10-12T00:51:25.360Z",
       "phase": "night",
       "day": 4,
       "stage": "noble_night_notified",
@@ -2667,7 +2667,7 @@
     },
     {
       "seq": 166,
-      "timestamp": "2026-10-11T23:18:42.645Z",
+      "timestamp": "2026-10-12T00:51:25.360Z",
       "phase": "night",
       "day": 4,
       "stage": "secret_body_night_notified",
@@ -2688,7 +2688,7 @@
     },
     {
       "seq": 167,
-      "timestamp": "2026-10-11T23:18:42.645Z",
+      "timestamp": "2026-10-12T00:51:25.360Z",
       "phase": "night",
       "day": 4,
       "stage": "noble_body_night_opened",
@@ -2705,7 +2705,7 @@
     },
     {
       "seq": 168,
-      "timestamp": "2026-10-11T23:18:42.659Z",
+      "timestamp": "2026-10-12T00:51:25.376Z",
       "phase": "night",
       "day": 4,
       "stage": "secret_body_chosen",
@@ -2719,7 +2719,7 @@
     },
     {
       "seq": 169,
-      "timestamp": "2026-10-11T23:18:42.661Z",
+      "timestamp": "2026-10-12T00:51:25.377Z",
       "phase": "night",
       "day": 4,
       "stage": "wolf_tactical_order",
@@ -2733,7 +2733,7 @@
     },
     {
       "seq": 170,
-      "timestamp": "2026-10-11T23:18:42.766Z",
+      "timestamp": "2026-10-12T00:51:25.396Z",
       "phase": "night",
       "day": 4,
       "stage": "wolf_discussion",
@@ -2746,7 +2746,7 @@
     },
     {
       "seq": 171,
-      "timestamp": "2026-10-11T23:18:42.781Z",
+      "timestamp": "2026-10-12T00:51:25.405Z",
       "phase": "night",
       "day": 4,
       "stage": "wolf_discussion",
@@ -2759,7 +2759,7 @@
     },
     {
       "seq": 172,
-      "timestamp": "2026-10-11T23:18:42.789Z",
+      "timestamp": "2026-10-12T00:51:25.544Z",
       "phase": "night",
       "day": 4,
       "stage": "wolf_discussion",
@@ -2772,7 +2772,7 @@
     },
     {
       "seq": 173,
-      "timestamp": "2026-10-11T23:18:42.797Z",
+      "timestamp": "2026-10-12T00:51:25.553Z",
       "phase": "night",
       "day": 4,
       "stage": "wolf_discussion",
@@ -2785,7 +2785,7 @@
     },
     {
       "seq": 174,
-      "timestamp": "2026-10-11T23:18:42.798Z",
+      "timestamp": "2026-10-12T00:51:25.555Z",
       "phase": "night",
       "day": 4,
       "stage": "noble_body_knife_committed",
@@ -2799,7 +2799,7 @@
     },
     {
       "seq": 175,
-      "timestamp": "2026-10-11T23:18:42.812Z",
+      "timestamp": "2026-10-12T00:51:25.573Z",
       "phase": "night",
       "day": 4,
       "stage": "witch",
@@ -2812,7 +2812,7 @@
     },
     {
       "seq": 176,
-      "timestamp": "2026-10-11T23:18:42.825Z",
+      "timestamp": "2026-10-12T00:51:25.589Z",
       "phase": "night",
       "day": 4,
       "stage": "seer",
@@ -2829,7 +2829,7 @@
     },
     {
       "seq": 177,
-      "timestamp": "2026-10-11T23:18:42.838Z",
+      "timestamp": "2026-10-12T00:51:25.604Z",
       "phase": "night",
       "day": 4,
       "stage": "demon_hunter_chosen",
@@ -2843,7 +2843,7 @@
     },
     {
       "seq": 178,
-      "timestamp": "2026-10-11T23:18:42.839Z",
+      "timestamp": "2026-10-12T00:51:25.604Z",
       "phase": "night",
       "day": 4,
       "stage": "noble_body_native_damage_committed",
@@ -2856,7 +2856,7 @@
     },
     {
       "seq": 179,
-      "timestamp": "2026-10-11T23:18:42.841Z",
+      "timestamp": "2026-10-12T00:51:25.607Z",
       "phase": "night",
       "day": 4,
       "stage": "noble_contract_closed",
@@ -2874,7 +2874,7 @@
     },
     {
       "seq": 180,
-      "timestamp": "2026-10-11T23:18:42.841Z",
+      "timestamp": "2026-10-12T00:51:25.607Z",
       "phase": "night",
       "day": 4,
       "stage": "noble_body_sources_committed",
@@ -2896,7 +2896,7 @@
     },
     {
       "seq": 181,
-      "timestamp": "2026-10-11T23:18:42.843Z",
+      "timestamp": "2026-10-12T00:51:25.609Z",
       "phase": "night",
       "day": 4,
       "stage": "noble_body_death_committed",
@@ -2912,7 +2912,7 @@
     },
     {
       "seq": 182,
-      "timestamp": "2026-10-11T23:18:42.844Z",
+      "timestamp": "2026-10-12T00:51:25.610Z",
       "phase": "night",
       "day": 4,
       "stage": "night_resolved",
@@ -2925,7 +2925,7 @@
     },
     {
       "seq": 183,
-      "timestamp": "2026-10-11T23:18:42.844Z",
+      "timestamp": "2026-10-12T00:51:25.610Z",
       "phase": "day",
       "day": 4,
       "stage": "day",
@@ -2937,7 +2937,7 @@
     },
     {
       "seq": 184,
-      "timestamp": "2026-10-11T23:18:42.864Z",
+      "timestamp": "2026-10-12T00:51:25.620Z",
       "phase": "day",
       "day": 4,
       "stage": "day_speech",
@@ -2949,7 +2949,7 @@
     },
     {
       "seq": 185,
-      "timestamp": "2026-10-11T23:18:42.996Z",
+      "timestamp": "2026-10-12T00:51:25.628Z",
       "phase": "day",
       "day": 4,
       "stage": "day_speech",
@@ -2961,7 +2961,7 @@
     },
     {
       "seq": 186,
-      "timestamp": "2026-10-11T23:18:43.004Z",
+      "timestamp": "2026-10-12T00:51:25.635Z",
       "phase": "day",
       "day": 4,
       "stage": "day_speech",
@@ -2973,7 +2973,7 @@
     },
     {
       "seq": 187,
-      "timestamp": "2026-10-11T23:18:43.011Z",
+      "timestamp": "2026-10-12T00:51:25.642Z",
       "phase": "day",
       "day": 4,
       "stage": "day_speech",
@@ -2985,7 +2985,7 @@
     },
     {
       "seq": 188,
-      "timestamp": "2026-10-11T23:18:43.016Z",
+      "timestamp": "2026-10-12T00:51:25.787Z",
       "phase": "day",
       "day": 4,
       "stage": "day_speech",
@@ -2997,7 +2997,7 @@
     },
     {
       "seq": 189,
-      "timestamp": "2026-10-11T23:18:43.022Z",
+      "timestamp": "2026-10-12T00:51:25.796Z",
       "phase": "day",
       "day": 4,
       "stage": "day_speech",
@@ -3009,7 +3009,7 @@
     },
     {
       "seq": 190,
-      "timestamp": "2026-10-11T23:18:43.028Z",
+      "timestamp": "2026-10-12T00:51:25.803Z",
       "phase": "day",
       "day": 4,
       "stage": "day_speech",
@@ -3021,7 +3021,7 @@
     },
     {
       "seq": 191,
-      "timestamp": "2026-10-11T23:18:43.033Z",
+      "timestamp": "2026-10-12T00:51:25.811Z",
       "phase": "day",
       "day": 4,
       "stage": "day_speech",
@@ -3033,7 +3033,7 @@
     },
     {
       "seq": 192,
-      "timestamp": "2026-10-11T23:18:43.033Z",
+      "timestamp": "2026-10-12T00:51:25.811Z",
       "phase": "voting",
       "day": 4,
       "stage": "voting",
@@ -3045,7 +3045,7 @@
     },
     {
       "seq": 193,
-      "timestamp": "2026-10-11T23:18:43.078Z",
+      "timestamp": "2026-10-12T00:51:25.860Z",
       "phase": "voting",
       "day": 4,
       "stage": "voting",
@@ -3059,7 +3059,7 @@
     },
     {
       "seq": 194,
-      "timestamp": "2026-10-11T23:18:43.079Z",
+      "timestamp": "2026-10-12T00:51:25.861Z",
       "phase": "voting",
       "day": 4,
       "stage": "voting",
@@ -3073,7 +3073,7 @@
     },
     {
       "seq": 195,
-      "timestamp": "2026-10-11T23:18:43.079Z",
+      "timestamp": "2026-10-12T00:51:25.861Z",
       "phase": "voting",
       "day": 4,
       "stage": "voting",
@@ -3087,7 +3087,7 @@
     },
     {
       "seq": 196,
-      "timestamp": "2026-10-11T23:18:43.080Z",
+      "timestamp": "2026-10-12T00:51:25.862Z",
       "phase": "voting",
       "day": 4,
       "stage": "voting",
@@ -3101,7 +3101,7 @@
     },
     {
       "seq": 197,
-      "timestamp": "2026-10-11T23:18:43.080Z",
+      "timestamp": "2026-10-12T00:51:25.862Z",
       "phase": "voting",
       "day": 4,
       "stage": "voting",
@@ -3115,7 +3115,7 @@
     },
     {
       "seq": 198,
-      "timestamp": "2026-10-11T23:18:43.081Z",
+      "timestamp": "2026-10-12T00:51:25.862Z",
       "phase": "voting",
       "day": 4,
       "stage": "voting",
@@ -3129,7 +3129,7 @@
     },
     {
       "seq": 199,
-      "timestamp": "2026-10-11T23:18:43.081Z",
+      "timestamp": "2026-10-12T00:51:25.863Z",
       "phase": "voting",
       "day": 4,
       "stage": "voting",
@@ -3143,7 +3143,7 @@
     },
     {
       "seq": 200,
-      "timestamp": "2026-10-11T23:18:43.081Z",
+      "timestamp": "2026-10-12T00:51:25.863Z",
       "phase": "voting",
       "day": 4,
       "stage": "voting",
@@ -3157,7 +3157,7 @@
     },
     {
       "seq": 201,
-      "timestamp": "2026-10-11T23:18:43.082Z",
+      "timestamp": "2026-10-12T00:51:25.864Z",
       "phase": "voting",
       "day": 4,
       "stage": "voting",
@@ -3222,7 +3222,7 @@
     },
     {
       "seq": 202,
-      "timestamp": "2026-10-11T23:18:43.082Z",
+      "timestamp": "2026-10-12T00:51:25.864Z",
       "phase": "voting",
       "day": 4,
       "stage": "voting",
@@ -3233,7 +3233,7 @@
     },
     {
       "seq": 203,
-      "timestamp": "2026-10-11T23:18:43.082Z",
+      "timestamp": "2026-10-12T00:51:25.864Z",
       "phase": "voting",
       "day": 4,
       "stage": "noble_body_death_committed",
@@ -3249,7 +3249,7 @@
     },
     {
       "seq": 204,
-      "timestamp": "2026-10-11T23:18:43.083Z",
+      "timestamp": "2026-10-12T00:51:25.865Z",
       "phase": "voting",
       "day": 4,
       "stage": "last_words_granted",
@@ -3262,7 +3262,7 @@
     },
     {
       "seq": 205,
-      "timestamp": "2026-10-11T23:18:43.090Z",
+      "timestamp": "2026-10-12T00:51:25.877Z",
       "phase": "voting",
       "day": 4,
       "stage": "last_words_spoken",
@@ -3276,7 +3276,7 @@
     },
     {
       "seq": 206,
-      "timestamp": "2026-10-11T23:18:43.090Z",
+      "timestamp": "2026-10-12T00:51:25.877Z",
       "phase": "game_over",
       "day": 4,
       "stage": "game_over",
@@ -3323,7 +3323,7 @@
     },
     {
       "seq": 207,
-      "timestamp": "2026-10-11T23:18:43.090Z",
+      "timestamp": "2026-10-12T00:51:25.877Z",
       "phase": "game_over",
       "day": 4,
       "stage": "game_over",

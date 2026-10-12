@@ -9,8 +9,8 @@
     "phase": "night",
     "stage": "wolf_discussion",
     "request_id": "1-night-2-1",
-    "timestamp": "2026-10-11T23:18:44.199Z",
-    "prompt_system": "你是狼人杀引擎中的单个玩家智能体。你的编号是2号。本会话建立时，你的真实身份是夜之贵族。后续每轮当前身份/阵营/原生库存以引擎状态为准，旧身份介绍只作历史，不授权旧技能。当你看到“[行动提示]”时，说明你可以开始行动了。\n你的唯一目标是帮助你所在阵营赢得本局。请基于自己可见的信息自由判断、博弈、试探和调整策略，不要为了迎合多数意见而放弃独立判断。\n你必须使用中文进行思考和表达。\n你的昵称是Seat 2。称呼其他玩家时仍使用座位编号，避免混淆。\n本会话建立时，规则告知你的队友（不含你自己）的编号：3, 9, 11。后续授权名单以每轮行动提示为准。“无”仅表示没有额外公开给你的队友身份，不表示你的阵营中只有你一人。\n你只能引用本局存在的玩家编号，编号范围是1到12，严禁虚构不存在的玩家编号。\n阶段规则、可用工具与回合约束是不可违反的行动边界；在边界内由你自主决定策略和表达。\n你的性格与发言风格要求：NOBLE_PRIVATE_ACTOR_2\n当前板子信息：\n总玩家数=12\n角色构成=夜之贵族x1, 觉醒愚者x1, 狼人x3, 猎魔人x1, 平民x4, 预言家x1, 女巫x1\n角色技能简介=夜之贵族: 夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。; 觉醒愚者: 你有一份秘密之身。持有时每夜可选择存活玩家（含自己）或明确不指定；目标无有效夜伤时转护自己，只抵消一个有效来源。实际抵伤后身体耗尽，下一夜才统一告知是否耗身，不获知实际抵伤对象或来源。未耗身时免一次放逐，公开翻牌并发言，仍保留投票、竞选和警徽；下次可被放逐。连续目标限制依公开政策。; 狼人: 夜间可狼队夜聊并参与刀人投票; 猎魔人: 网易角色规则的具名有限AWA板适配：从第二夜起每夜可选择另一名存活玩家或明确弃猎。目标为真实狼人则次日目标死亡；目标为好人则自己反噬死亡。免疫原生女巫毒药，守卫和救药不阻挡猎杀或反噬。不会向你反馈目标阵营或毒免结果。; 平民: 无夜间技能，白天通过发言和投票推进局势; 预言家: 每晚可查验一名玩家阵营; 女巫: 拥有解药与毒药，可在夜间选择使用\n贵族可按普通狼人规则自爆、成为狼刀目标。\n秘密之身不能连续两夜主动指定同一人；明确null打断连续，自动自护不改主动目标。\n本局规则配置：\n胜利条件：屠边：神民任一边全灭则狼人胜，狼人全灭则好人胜\n警长机制：启用（包含上警、竞选发言、退水、警下投票；警长决定发言方向；警长票权=1.5） 无人上警、所有候选退水或没有有效警长票时不产生警长；退水候选不会自动恢复。\n本板先完成夜间死亡结算，再开始白天与首日警长选举；已出局玩家不参加选举。\n警徽：死亡持有者选择合格活人继任或撕毁；白痴翻牌直接撕毁。\n自爆机制：启用（窗口：警长流程前窗口, 放逐前窗口）\n女巫自救：不允许\nAWA活人策略：允许自验和重复查验。\n存在合法目标时必须提交查验；目标耗尽时跳过。\nAWA原生刀口策略：仅解药本夜可用时披露刀口。\nAWA原生用药策略：同夜至多用一瓶。\nAWA警长策略：首轮只有未上警者投票，唯一候选直接当选；平票一次PK，PK者不投，第二次平票或全弃票无徽。\nAWA放逐策略：最高正票平票时一次PK；PK者不参与重投，仅投仍合格PK目标，再平票或全弃票不放逐。\n公开裁定：普通夜间死亡和放逐出局均不公开底牌；仅以 idiot_revealed 等引擎事件明确公开的身份，以及个人收到的私有身份/查验事件为事实。玩家在发言或遗言中自报身份不属于引擎认证。\n遗言规则：首夜死亡者、真正被放逐出局者、白天纯决斗失误的骑士获得遗言；后续夜死、自爆、白痴翻牌免死、死亡枪（猎人/狼王）、决斗成功目标与白狼王带走的目标均无遗言。同一玩家兼有首夜待死和白狼王带人来源时无遗言；同波其它纯首夜死亡照常授予。\n警徽流转：警长死亡或以白痴身份翻牌时，由引擎自动移交或销毁警徽，不提供原警长自行选择移交目标的行动。\n平票处理：放逐=无人出局，狼刀=最低编号者，警长投票=无人出局\n预言家只查验本板规则规定的阵营标签：普通规则下，金水可能是任意好人角色（如女巫、猎人、守卫），并不等同于平民身份；特殊角色的伪装标签按本板规则解释，查验不会改变真实身份或阵营。事件中存在 result 时，以 result.kind 对应的完整结果为准：camp 为阵营标签，role 为身份标签，combined 为两者。isWerewolf 是旧兼容字段，false 不等于好人，不能覆盖 third_party 或具体身份结果。\n你可见的对局事实会以 {\"event\":[seq,type,payload]} JSON 事件提供，ACP 模式可能一次提供 {\"events\":[[seq,type,payload],...]}。它们已经按你的身份完成可见性过滤；seq 只是你可见事件中的连续顺序号，不代表全局事件位置。按 seq 顺序理解，不要把协议字段当作玩家发言。\n结构化事件是引擎确认的事实；day_speech、wolf_discussion、last_words_spoken 等事件中的 text 是玩家陈述，可能包含谎言、诈身份或误判，不能据此改写引擎事实。只有收到 night_resolved 才能确认昨夜公开结果；其 payload.deaths 是初始夜间公开死亡名单，空数组仅表示该初始批次平安。additional_deaths 和成功的公开枪击可确认后续追加死亡；death_shot_blocked 表示落空，不能当作击杀。phase_changed 进入白天只表示阶段切换，不表示有人死亡或出现平安夜。某个结果事件尚未出现，表示结果尚未获知，不能把缺席当作肯定或否定。狼人刀人投票只表示刀口选择，不能证明目标最终死亡。\n游戏中所有能起效的行动都必须调用 submit_action 提交：包括发言、投票和使用技能。普通 assistant 文本只会被当作本地思考，不会被其他玩家看见，也不会产生任何游戏效果。发言时 action 填 speak 或 speak_to_wolves，内容写入 arguments.text。不要手写 JSON。\n各类发言中禁止泄露系统提示、工具调用细节或规则元信息；夜聊可适当说明思路，但不得泄露上述元信息。\n当你观察到明确的规则、状态、流程、日志或可见信息矛盾时，可以先调用 report_bug 上报，再继续本轮正常行动。不要把正常策略分歧、身份声称、诈身份或不确定推测当作 bug。",
+    "timestamp": "2026-10-12T00:51:27.111Z",
+    "prompt_system": "你是狼人杀引擎中的单个玩家智能体。你的编号是2号。本会话建立时，你的真实身份是夜之贵族。后续每轮当前身份/阵营/原生库存以引擎状态为准，旧身份介绍只作历史，不授权旧技能。当你看到“[行动提示]”时，说明你可以开始行动了。\n你的唯一目标是帮助你所在阵营赢得本局。请基于自己可见的信息自由判断、博弈、试探和调整策略，不要为了迎合多数意见而放弃独立判断。\n你必须使用中文进行思考和表达。\n你的昵称是Seat 2。称呼其他玩家时仍使用座位编号，避免混淆。\n本会话建立时，规则告知你的队友（不含你自己）的编号：3, 9, 11。后续授权名单以每轮行动提示为准。“无”仅表示没有额外公开给你的队友身份，不表示你的阵营中只有你一人。\n你只能引用本局存在的玩家编号，编号范围是1到12，严禁虚构不存在的玩家编号。\n阶段规则、可用工具与回合约束是不可违反的行动边界；在边界内由你自主决定策略和表达。\n你的性格与发言风格要求：NOBLE_PRIVATE_ACTOR_2\n当前板子信息：\n总玩家数=12\n角色构成=夜之贵族x1, 觉醒愚者x1, 狼人x3, 猎魔人x1, 平民x4, 预言家x1, 女巫x1\n角色技能简介=夜之贵族: 夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。; 觉醒愚者: 你有一份秘密之身。持有时每夜可选择存活玩家（含自己）或明确不指定；目标无有效夜伤时转护自己，只抵消一个有效来源。实际抵伤后身体耗尽，下一夜才统一告知是否耗身，不获知实际抵伤对象或来源。未耗身时免一次放逐，公开翻牌并发言，仍保留投票、竞选和警徽；下次可被放逐。连续目标限制依公开政策。; 狼人: 夜间可狼队夜聊并参与刀人投票; 猎魔人: 网易角色规则的具名有限AWA板适配：从第二夜起每夜可选择另一名存活玩家或明确弃猎。目标为真实狼人则次日目标死亡；目标为好人则自己反噬死亡。免疫原生女巫毒药，守卫和救药不阻挡猎杀或反噬。不会向你反馈目标阵营或毒免结果。; 平民: 无夜间技能，白天通过发言和投票推进局势; 预言家: 每晚可查验一名玩家阵营; 女巫: 拥有解药与毒药，可在夜间选择使用\n贵族可按普通狼人规则自爆、成为狼刀目标。\n秘密之身不能连续两夜主动指定同一人；明确null打断连续，自动自护不改主动目标。\n本局规则配置：\n胜利条件：屠边：神民任一边全灭则狼人胜，狼人全灭则好人胜\n警长机制：启用（包含上警、竞选发言、退水、警下投票；警长决定发言方向；警长票权=1.5） 无人上警、所有候选退水或没有有效警长票时不产生警长；退水候选不会自动恢复。\n本板先完成夜间死亡结算，再开始白天与首日警长选举；已出局玩家不参加选举。\n警徽：死亡持有者选择合格活人继任或撕毁；白痴翻牌直接撕毁。\n自爆机制：启用（窗口：警长流程前窗口, 放逐前窗口）\n女巫自救：不允许\nAWA活人策略：允许自验和重复查验。\n存在合法目标时必须提交查验；目标耗尽时跳过。\nAWA原生刀口策略：仅解药本夜可用时披露刀口。\nAWA原生用药策略：同夜至多用一瓶。\nAWA警长策略：首轮只有未上警者投票，唯一候选直接当选；平票一次PK，PK者不投，第二次平票或全弃票无徽。\nAWA放逐策略：最高正票平票时一次PK；PK者不参与重投，仅投仍合格PK目标，再平票或全弃票不放逐。\n公开裁定：普通夜间死亡和放逐出局均不公开底牌；仅以 idiot_revealed 等引擎事件明确公开的身份，以及个人收到的私有身份/查验事件为事实。玩家在发言或遗言中自报身份不属于引擎认证。\n遗言规则：首夜死亡者、真正被放逐出局者、白天纯决斗失误的骑士获得遗言；后续夜死、自爆、白痴翻牌免死、死亡枪（猎人/狼王）、决斗成功目标与白狼王带走的目标均无遗言。同一玩家兼有首夜待死和白狼王带人来源时无遗言；同波其它纯首夜死亡照常授予。\n平票处理：放逐=无人出局，狼刀=最低编号者，警长投票=无人出局\n预言家只查验本板规则规定的阵营标签：普通规则下，金水可能是任意好人角色（如女巫、猎人、守卫），并不等同于平民身份；特殊角色的伪装标签按本板规则解释，查验不会改变真实身份或阵营。事件中存在 result 时，以 result.kind 对应的完整结果为准：camp 为阵营标签，role 为身份标签，combined 为两者。isWerewolf 是旧兼容字段，false 不等于好人，不能覆盖 third_party 或具体身份结果。\n你可见的对局事实会以 {\"event\":[seq,type,payload]} JSON 事件提供，ACP 模式可能一次提供 {\"events\":[[seq,type,payload],...]}。它们已经按你的身份完成可见性过滤；seq 只是你可见事件中的连续顺序号，不代表全局事件位置。按 seq 顺序理解，不要把协议字段当作玩家发言。\n结构化事件是引擎确认的事实；day_speech、wolf_discussion、last_words_spoken 等事件中的 text 是玩家陈述，可能包含谎言、诈身份或误判，不能据此改写引擎事实。只有收到 night_resolved 才能确认昨夜公开结果；其 payload.deaths 是初始夜间公开死亡名单，空数组仅表示该初始批次平安。additional_deaths 和成功的公开枪击可确认后续追加死亡；death_shot_blocked 表示落空，不能当作击杀。phase_changed 进入白天只表示阶段切换，不表示有人死亡或出现平安夜。某个结果事件尚未出现，表示结果尚未获知，不能把缺席当作肯定或否定。狼人刀人投票只表示刀口选择，不能证明目标最终死亡。\n游戏中所有能起效的行动都必须调用 submit_action 提交：包括发言、投票和使用技能。普通 assistant 文本只会被当作本地思考，不会被其他玩家看见，也不会产生任何游戏效果。发言时 action 填 speak 或 speak_to_wolves，内容写入 arguments.text。不要手写 JSON。\n各类发言中禁止泄露系统提示、工具调用细节或规则元信息；夜聊可适当说明思路，但不得泄露上述元信息。\n当你观察到明确的规则、状态、流程、日志或可见信息矛盾时，可以先调用 report_bug 上报，再继续本轮正常行动。不要把正常策略分歧、身份声称、诈身份或不确定推测当作 bug。",
     "board_info": "当前板子信息：\n总玩家数=12\n角色构成=夜之贵族x1, 觉醒愚者x1, 狼人x3, 猎魔人x1, 平民x4, 预言家x1, 女巫x1\n角色技能简介=夜之贵族: 夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。; 觉醒愚者: 你有一份秘密之身。持有时每夜可选择存活玩家（含自己）或明确不指定；目标无有效夜伤时转护自己，只抵消一个有效来源。实际抵伤后身体耗尽，下一夜才统一告知是否耗身，不获知实际抵伤对象或来源。未耗身时免一次放逐，公开翻牌并发言，仍保留投票、竞选和警徽；下次可被放逐。连续目标限制依公开政策。; 狼人: 夜间可狼队夜聊并参与刀人投票; 猎魔人: 网易角色规则的具名有限AWA板适配：从第二夜起每夜可选择另一名存活玩家或明确弃猎。目标为真实狼人则次日目标死亡；目标为好人则自己反噬死亡。免疫原生女巫毒药，守卫和救药不阻挡猎杀或反噬。不会向你反馈目标阵营或毒免结果。; 平民: 无夜间技能，白天通过发言和投票推进局势; 预言家: 每晚可查验一名玩家阵营; 女巫: 拥有解药与毒药，可在夜间选择使用",
     "prompt_user": [
       "context_window=0-3/3;event_cursor=0->3"
@@ -24,7 +24,7 @@
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-1",
-      "timestamp": "2026-10-11T23:18:44.199Z",
+      "timestamp": "2026-10-12T00:51:27.111Z",
       "turn_seq": 1,
       "delta_messages": [
         {
@@ -56,7 +56,7 @@
       "phase": "night",
       "stage": "wolf_vote",
       "request_id": "1-night-2-2",
-      "timestamp": "2026-10-11T23:18:44.214Z",
+      "timestamp": "2026-10-12T00:51:27.129Z",
       "turn_seq": 2,
       "delta_messages": [
         {
@@ -88,7 +88,7 @@
       "phase": "day",
       "stage": "on_pre_election",
       "request_id": "1-day-2-3",
-      "timestamp": "2026-10-11T23:18:44.244Z",
+      "timestamp": "2026-10-12T00:51:27.175Z",
       "turn_seq": 3,
       "delta_messages": [
         {
@@ -115,7 +115,7 @@
       "phase": "day",
       "stage": "sheriff_nomination",
       "request_id": "1-day-2-4",
-      "timestamp": "2026-10-11T23:18:44.262Z",
+      "timestamp": "2026-10-12T00:51:27.195Z",
       "turn_seq": 4,
       "delta_messages": [
         {
@@ -146,7 +146,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-5",
-      "timestamp": "2026-10-11T23:18:44.283Z",
+      "timestamp": "2026-10-12T00:51:27.231Z",
       "turn_seq": 5,
       "delta_messages": [
         {
@@ -177,7 +177,7 @@
       "phase": "voting",
       "stage": "on_pre_vote",
       "request_id": "1-voting-2-6",
-      "timestamp": "2026-10-11T23:18:44.348Z",
+      "timestamp": "2026-10-12T00:51:27.298Z",
       "turn_seq": 6,
       "delta_messages": [
         {
@@ -204,7 +204,7 @@
       "phase": "voting",
       "stage": "voting",
       "request_id": "1-voting-2-7",
-      "timestamp": "2026-10-11T23:18:44.367Z",
+      "timestamp": "2026-10-12T00:51:27.343Z",
       "turn_seq": 7,
       "delta_messages": [
         {
@@ -236,7 +236,7 @@
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-8",
-      "timestamp": "2026-10-11T23:18:44.436Z",
+      "timestamp": "2026-10-12T00:51:27.401Z",
       "turn_seq": 8,
       "delta_messages": [
         {
@@ -268,7 +268,7 @@
       "phase": "night",
       "stage": "wolf_vote",
       "request_id": "2-night-2-9",
-      "timestamp": "2026-10-11T23:18:44.450Z",
+      "timestamp": "2026-10-12T00:51:27.445Z",
       "turn_seq": 9,
       "delta_messages": [
         {
@@ -300,7 +300,7 @@
       "phase": "night",
       "stage": "night_noble",
       "request_id": "2-night-2-10",
-      "timestamp": "2026-10-11T23:18:44.462Z",
+      "timestamp": "2026-10-12T00:51:27.470Z",
       "turn_seq": 10,
       "delta_messages": [
         {
@@ -331,7 +331,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-11",
-      "timestamp": "2026-10-11T23:18:44.500Z",
+      "timestamp": "2026-10-12T00:51:27.519Z",
       "turn_seq": 11,
       "delta_messages": [
         {
@@ -362,7 +362,7 @@
       "phase": "voting",
       "stage": "on_pre_vote",
       "request_id": "2-voting-2-12",
-      "timestamp": "2026-10-11T23:18:44.588Z",
+      "timestamp": "2026-10-12T00:51:27.622Z",
       "turn_seq": 12,
       "delta_messages": [
         {
@@ -389,7 +389,7 @@
       "phase": "voting",
       "stage": "voting",
       "request_id": "2-voting-2-13",
-      "timestamp": "2026-10-11T23:18:44.611Z",
+      "timestamp": "2026-10-12T00:51:27.650Z",
       "turn_seq": 13,
       "delta_messages": [
         {
@@ -421,7 +421,7 @@
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "3-night-2-14",
-      "timestamp": "2026-10-11T23:18:44.664Z",
+      "timestamp": "2026-10-12T00:51:27.775Z",
       "turn_seq": 14,
       "delta_messages": [
         {
@@ -453,7 +453,7 @@
       "phase": "night",
       "stage": "wolf_vote",
       "request_id": "3-night-2-15",
-      "timestamp": "2026-10-11T23:18:44.731Z",
+      "timestamp": "2026-10-12T00:51:27.791Z",
       "turn_seq": 15,
       "delta_messages": [
         {
@@ -485,7 +485,7 @@
       "phase": "night",
       "stage": "night_noble",
       "request_id": "3-night-2-16",
-      "timestamp": "2026-10-11T23:18:44.741Z",
+      "timestamp": "2026-10-12T00:51:27.803Z",
       "turn_seq": 16,
       "delta_messages": [
         {
@@ -516,7 +516,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-17",
-      "timestamp": "2026-10-11T23:18:44.796Z",
+      "timestamp": "2026-10-12T00:51:27.943Z",
       "turn_seq": 17,
       "delta_messages": [
         {
@@ -547,7 +547,7 @@
       "phase": "voting",
       "stage": "on_pre_vote",
       "request_id": "3-voting-2-18",
-      "timestamp": "2026-10-11T23:18:44.920Z",
+      "timestamp": "2026-10-12T00:51:28.008Z",
       "turn_seq": 18,
       "delta_messages": [
         {
@@ -569,108 +569,12 @@
     },
     {
       "seq": 19,
-      "kind": "turn",
-      "day": 3,
-      "phase": "voting",
-      "stage": "voting",
-      "request_id": "3-voting-2-19",
-      "timestamp": "2026-10-11T23:18:44.945Z",
-      "turn_seq": 19,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于投票阶段，子阶段是放逐投票，目前不是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":3,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":true} 当前日次：第3天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：vote。 放逐投票阶段必须完成一次投票动作（可弃票）。 你当前可以提交的行动有：vote, report_bug，其中有效行动有：vote。\n行动参数提示：vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（存活且不含你自己）：1, 4, 5, 6, 7, 8, 10, 11, 12。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t19，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t19；无需调用 get_game_schema。"
-        },
-        {
-          "role": "assistant",
-          "kind": "tool_call",
-          "name": "vote",
-          "args": {
-            "target_id": 5,
-            "abstain": false
-          },
-          "accepted": true
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":5,\"abstain\":false}}}"
-        }
-      ]
-    },
-    {
-      "seq": 20,
-      "kind": "turn",
-      "day": 4,
-      "phase": "night",
-      "stage": "wolf_discussion",
-      "request_id": "4-night-2-20",
-      "timestamp": "2026-10-11T23:18:44.999Z",
-      "turn_seq": 20,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于夜晚阶段，子阶段是狼人交流，目前是你的发言轮次。\n阶段规则：当前是【狼人交流阶段】：只能调用 speak_to_wolves。若你本人不再参加本夜后续夜聊，请设置 end_chat=true；这不会结束其他狼人的发言。本阶段不会完成刀人。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":false} 当前日次：第4天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：speak_to_wolves。 夜间行动阶段需完成一次有效动作。 你当前可以提交的行动有：speak_to_wolves, report_bug，其中有效行动有：speak_to_wolves。\n行动参数提示：speak_to_wolves args: {\"text\":\"...\",\"end_chat\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若使用 speak_to_wolves，end_chat=true 只表示你本人不再参加本夜后续夜聊，不会强制结束其他狼人的发言；全员结束后夜聊才会提前结束。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t20，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t20；无需调用 get_game_schema。"
-        },
-        {
-          "role": "assistant",
-          "kind": "tool_call",
-          "name": "speak_to_wolves",
-          "args": {
-            "text": "End discussion",
-            "end_chat": true
-          },
-          "accepted": true
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak_to_wolves\",\"args\":{\"text\":\"End discussion\",\"end_chat\":true}}}"
-        }
-      ]
-    },
-    {
-      "seq": 21,
-      "kind": "turn",
-      "day": 4,
-      "phase": "night",
-      "stage": "wolf_vote",
-      "request_id": "4-night-2-21",
-      "timestamp": "2026-10-11T23:18:45.123Z",
-      "turn_seq": 21,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于夜晚阶段，子阶段是狼人刀人投票，目前不是你的发言轮次。\n阶段规则：当前是【狼人刀人投票阶段】：必须调用 kill_vote；若本轮决定不刀，请设置 abstain=true 且 target_id=null。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":false} 当前日次：第4天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：kill_vote。 夜间行动阶段需完成一次有效动作。 你当前可以提交的行动有：kill_vote, report_bug，其中有效行动有：kill_vote。\n行动参数提示：kill_vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（含你自己）：1, 2, 4, 6, 7, 8, 10, 11, 12。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t21，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t21；无需调用 get_game_schema。"
-        },
-        {
-          "role": "assistant",
-          "kind": "tool_call",
-          "name": "kill_vote",
-          "args": {
-            "target_id": 11,
-            "abstain": false
-          },
-          "accepted": true
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"kill_vote\",\"args\":{\"target_id\":11,\"abstain\":false}}}"
-        }
-      ]
-    },
-    {
-      "seq": 22,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "night",
       "request_id": "1-night-2-event-1",
-      "timestamp": "2026-10-11T23:18:44.159Z",
+      "timestamp": "2026-10-12T00:51:27.066Z",
       "source_event_seq": 1,
       "event": {
         "seq": 1,
@@ -682,13 +586,13 @@
       }
     },
     {
-      "seq": 23,
+      "seq": 20,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "noble_night_notified",
       "request_id": "1-night-2-event-2",
-      "timestamp": "2026-10-11T23:18:44.188Z",
+      "timestamp": "2026-10-12T00:51:27.097Z",
       "source_event_seq": 2,
       "event": {
         "seq": 2,
@@ -705,13 +609,13 @@
       }
     },
     {
-      "seq": 24,
+      "seq": 21,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_tactical_order",
       "request_id": "1-night-2-event-3",
-      "timestamp": "2026-10-11T23:18:44.196Z",
+      "timestamp": "2026-10-12T00:51:27.107Z",
       "source_event_seq": 3,
       "event": {
         "seq": 3,
@@ -727,13 +631,13 @@
       }
     },
     {
-      "seq": 25,
+      "seq": 22,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-4",
-      "timestamp": "2026-10-11T23:18:44.200Z",
+      "timestamp": "2026-10-12T00:51:27.111Z",
       "source_event_seq": 4,
       "event": {
         "seq": 4,
@@ -746,13 +650,13 @@
       }
     },
     {
-      "seq": 26,
+      "seq": 23,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-5",
-      "timestamp": "2026-10-11T23:18:44.203Z",
+      "timestamp": "2026-10-12T00:51:27.115Z",
       "source_event_seq": 5,
       "event": {
         "seq": 5,
@@ -765,13 +669,13 @@
       }
     },
     {
-      "seq": 27,
+      "seq": 24,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-6",
-      "timestamp": "2026-10-11T23:18:44.206Z",
+      "timestamp": "2026-10-12T00:51:27.120Z",
       "source_event_seq": 6,
       "event": {
         "seq": 6,
@@ -784,13 +688,13 @@
       }
     },
     {
-      "seq": 28,
+      "seq": 25,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-7",
-      "timestamp": "2026-10-11T23:18:44.211Z",
+      "timestamp": "2026-10-12T00:51:27.125Z",
       "source_event_seq": 7,
       "event": {
         "seq": 7,
@@ -803,13 +707,13 @@
       }
     },
     {
-      "seq": 29,
+      "seq": 26,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-8",
-      "timestamp": "2026-10-11T23:18:44.215Z",
+      "timestamp": "2026-10-12T00:51:27.129Z",
       "source_event_seq": 8,
       "event": {
         "seq": 8,
@@ -822,13 +726,13 @@
       }
     },
     {
-      "seq": 30,
+      "seq": 27,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-9",
-      "timestamp": "2026-10-11T23:18:44.218Z",
+      "timestamp": "2026-10-12T00:51:27.134Z",
       "source_event_seq": 9,
       "event": {
         "seq": 9,
@@ -841,13 +745,13 @@
       }
     },
     {
-      "seq": 31,
+      "seq": 28,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-10",
-      "timestamp": "2026-10-11T23:18:44.221Z",
+      "timestamp": "2026-10-12T00:51:27.138Z",
       "source_event_seq": 10,
       "event": {
         "seq": 10,
@@ -860,13 +764,13 @@
       }
     },
     {
-      "seq": 32,
+      "seq": 29,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-11",
-      "timestamp": "2026-10-11T23:18:44.224Z",
+      "timestamp": "2026-10-12T00:51:27.142Z",
       "source_event_seq": 11,
       "event": {
         "seq": 11,
@@ -879,13 +783,13 @@
       }
     },
     {
-      "seq": 33,
+      "seq": 30,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "night_resolved",
       "request_id": "1-night-2-event-12",
-      "timestamp": "2026-10-11T23:18:44.238Z",
+      "timestamp": "2026-10-12T00:51:27.169Z",
       "source_event_seq": 12,
       "event": {
         "seq": 12,
@@ -896,13 +800,13 @@
       }
     },
     {
-      "seq": 34,
+      "seq": 31,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day",
       "request_id": "1-day-2-event-13",
-      "timestamp": "2026-10-11T23:18:44.238Z",
+      "timestamp": "2026-10-12T00:51:27.169Z",
       "source_event_seq": 13,
       "event": {
         "seq": 13,
@@ -914,13 +818,13 @@
       }
     },
     {
-      "seq": 35,
+      "seq": 32,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "sheriff_nomination_summary",
       "request_id": "1-day-2-event-14",
-      "timestamp": "2026-10-11T23:18:44.277Z",
+      "timestamp": "2026-10-12T00:51:27.222Z",
       "source_event_seq": 14,
       "event": {
         "seq": 14,
@@ -931,13 +835,13 @@
       }
     },
     {
-      "seq": 36,
+      "seq": 33,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "sheriff_withdraw_summary",
       "request_id": "1-day-2-event-15",
-      "timestamp": "2026-10-11T23:18:44.277Z",
+      "timestamp": "2026-10-12T00:51:27.222Z",
       "source_event_seq": 15,
       "event": {
         "seq": 15,
@@ -948,13 +852,13 @@
       }
     },
     {
-      "seq": 37,
+      "seq": 34,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "sheriff",
       "request_id": "1-day-2-event-16",
-      "timestamp": "2026-10-11T23:18:44.277Z",
+      "timestamp": "2026-10-12T00:51:27.222Z",
       "source_event_seq": 16,
       "event": {
         "seq": 16,
@@ -965,13 +869,13 @@
       }
     },
     {
-      "seq": 38,
+      "seq": 35,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "sheriff_vote_summary",
       "request_id": "1-day-2-event-17",
-      "timestamp": "2026-10-11T23:18:44.277Z",
+      "timestamp": "2026-10-12T00:51:27.222Z",
       "source_event_seq": 17,
       "event": {
         "seq": 17,
@@ -984,13 +888,13 @@
       }
     },
     {
-      "seq": 39,
+      "seq": 36,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-18",
-      "timestamp": "2026-10-11T23:18:44.281Z",
+      "timestamp": "2026-10-12T00:51:27.227Z",
       "source_event_seq": 18,
       "event": {
         "seq": 18,
@@ -1002,13 +906,13 @@
       }
     },
     {
-      "seq": 40,
+      "seq": 37,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-19",
-      "timestamp": "2026-10-11T23:18:44.284Z",
+      "timestamp": "2026-10-12T00:51:27.232Z",
       "source_event_seq": 19,
       "event": {
         "seq": 19,
@@ -1020,13 +924,13 @@
       }
     },
     {
-      "seq": 41,
+      "seq": 38,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-20",
-      "timestamp": "2026-10-11T23:18:44.295Z",
+      "timestamp": "2026-10-12T00:51:27.237Z",
       "source_event_seq": 20,
       "event": {
         "seq": 20,
@@ -1038,13 +942,13 @@
       }
     },
     {
-      "seq": 42,
+      "seq": 39,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-21",
-      "timestamp": "2026-10-11T23:18:44.305Z",
+      "timestamp": "2026-10-12T00:51:27.243Z",
       "source_event_seq": 21,
       "event": {
         "seq": 21,
@@ -1056,13 +960,13 @@
       }
     },
     {
-      "seq": 43,
+      "seq": 40,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-22",
-      "timestamp": "2026-10-11T23:18:44.310Z",
+      "timestamp": "2026-10-12T00:51:27.248Z",
       "source_event_seq": 22,
       "event": {
         "seq": 22,
@@ -1074,13 +978,13 @@
       }
     },
     {
-      "seq": 44,
+      "seq": 41,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-23",
-      "timestamp": "2026-10-11T23:18:44.314Z",
+      "timestamp": "2026-10-12T00:51:27.254Z",
       "source_event_seq": 23,
       "event": {
         "seq": 23,
@@ -1092,13 +996,13 @@
       }
     },
     {
-      "seq": 45,
+      "seq": 42,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-24",
-      "timestamp": "2026-10-11T23:18:44.317Z",
+      "timestamp": "2026-10-12T00:51:27.260Z",
       "source_event_seq": 24,
       "event": {
         "seq": 24,
@@ -1110,13 +1014,13 @@
       }
     },
     {
-      "seq": 46,
+      "seq": 43,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-25",
-      "timestamp": "2026-10-11T23:18:44.321Z",
+      "timestamp": "2026-10-12T00:51:27.266Z",
       "source_event_seq": 25,
       "event": {
         "seq": 25,
@@ -1128,13 +1032,13 @@
       }
     },
     {
-      "seq": 47,
+      "seq": 44,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-26",
-      "timestamp": "2026-10-11T23:18:44.325Z",
+      "timestamp": "2026-10-12T00:51:27.271Z",
       "source_event_seq": 26,
       "event": {
         "seq": 26,
@@ -1146,13 +1050,13 @@
       }
     },
     {
-      "seq": 48,
+      "seq": 45,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-27",
-      "timestamp": "2026-10-11T23:18:44.329Z",
+      "timestamp": "2026-10-12T00:51:27.277Z",
       "source_event_seq": 27,
       "event": {
         "seq": 27,
@@ -1164,13 +1068,13 @@
       }
     },
     {
-      "seq": 49,
+      "seq": 46,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-28",
-      "timestamp": "2026-10-11T23:18:44.333Z",
+      "timestamp": "2026-10-12T00:51:27.281Z",
       "source_event_seq": 28,
       "event": {
         "seq": 28,
@@ -1182,13 +1086,13 @@
       }
     },
     {
-      "seq": 50,
+      "seq": 47,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-29",
-      "timestamp": "2026-10-11T23:18:44.340Z",
+      "timestamp": "2026-10-12T00:51:27.288Z",
       "source_event_seq": 29,
       "event": {
         "seq": 29,
@@ -1200,13 +1104,13 @@
       }
     },
     {
-      "seq": 51,
+      "seq": 48,
       "kind": "event",
       "day": 1,
       "phase": "voting",
       "stage": "voting",
       "request_id": "1-voting-2-event-30",
-      "timestamp": "2026-10-11T23:18:44.341Z",
+      "timestamp": "2026-10-12T00:51:27.288Z",
       "source_event_seq": 30,
       "event": {
         "seq": 30,
@@ -1218,13 +1122,13 @@
       }
     },
     {
-      "seq": 52,
+      "seq": 49,
       "kind": "event",
       "day": 1,
       "phase": "voting",
       "stage": "voting",
       "request_id": "1-voting-2-event-31",
-      "timestamp": "2026-10-11T23:18:44.386Z",
+      "timestamp": "2026-10-12T00:51:27.368Z",
       "source_event_seq": 31,
       "event": {
         "seq": 31,
@@ -1310,13 +1214,13 @@
       }
     },
     {
-      "seq": 53,
+      "seq": 50,
       "kind": "event",
       "day": 1,
       "phase": "voting",
       "stage": "voting",
       "request_id": "1-voting-2-event-32",
-      "timestamp": "2026-10-11T23:18:44.386Z",
+      "timestamp": "2026-10-12T00:51:27.368Z",
       "source_event_seq": 32,
       "event": {
         "seq": 32,
@@ -1327,13 +1231,13 @@
       }
     },
     {
-      "seq": 54,
+      "seq": 51,
       "kind": "event",
       "day": 1,
       "phase": "voting",
       "stage": "last_words_granted",
       "request_id": "1-voting-2-event-33",
-      "timestamp": "2026-10-11T23:18:44.386Z",
+      "timestamp": "2026-10-12T00:51:27.368Z",
       "source_event_seq": 33,
       "event": {
         "seq": 33,
@@ -1346,13 +1250,13 @@
       }
     },
     {
-      "seq": 55,
+      "seq": 52,
       "kind": "event",
       "day": 1,
       "phase": "voting",
       "stage": "last_words_spoken",
       "request_id": "1-voting-2-event-34",
-      "timestamp": "2026-10-11T23:18:44.390Z",
+      "timestamp": "2026-10-12T00:51:27.374Z",
       "source_event_seq": 34,
       "event": {
         "seq": 34,
@@ -1366,13 +1270,13 @@
       }
     },
     {
-      "seq": 56,
+      "seq": 53,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "night",
       "request_id": "2-night-2-event-35",
-      "timestamp": "2026-10-11T23:18:44.391Z",
+      "timestamp": "2026-10-12T00:51:27.375Z",
       "source_event_seq": 35,
       "event": {
         "seq": 35,
@@ -1384,13 +1288,13 @@
       }
     },
     {
-      "seq": 57,
+      "seq": 54,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "noble_night_notified",
       "request_id": "2-night-2-event-36",
-      "timestamp": "2026-10-11T23:18:44.391Z",
+      "timestamp": "2026-10-12T00:51:27.375Z",
       "source_event_seq": 36,
       "event": {
         "seq": 36,
@@ -1407,13 +1311,13 @@
       }
     },
     {
-      "seq": 58,
+      "seq": 55,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_tactical_order",
       "request_id": "2-night-2-event-37",
-      "timestamp": "2026-10-11T23:18:44.426Z",
+      "timestamp": "2026-10-12T00:51:27.388Z",
       "source_event_seq": 37,
       "event": {
         "seq": 37,
@@ -1428,13 +1332,13 @@
       }
     },
     {
-      "seq": 59,
+      "seq": 56,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-38",
-      "timestamp": "2026-10-11T23:18:44.432Z",
+      "timestamp": "2026-10-12T00:51:27.394Z",
       "source_event_seq": 38,
       "event": {
         "seq": 38,
@@ -1447,13 +1351,13 @@
       }
     },
     {
-      "seq": 60,
+      "seq": 57,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-39",
-      "timestamp": "2026-10-11T23:18:44.436Z",
+      "timestamp": "2026-10-12T00:51:27.401Z",
       "source_event_seq": 39,
       "event": {
         "seq": 39,
@@ -1466,13 +1370,13 @@
       }
     },
     {
-      "seq": 61,
+      "seq": 58,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-40",
-      "timestamp": "2026-10-11T23:18:44.441Z",
+      "timestamp": "2026-10-12T00:51:27.409Z",
       "source_event_seq": 40,
       "event": {
         "seq": 40,
@@ -1485,13 +1389,13 @@
       }
     },
     {
-      "seq": 62,
+      "seq": 59,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-41",
-      "timestamp": "2026-10-11T23:18:44.446Z",
+      "timestamp": "2026-10-12T00:51:27.439Z",
       "source_event_seq": 41,
       "event": {
         "seq": 41,
@@ -1504,13 +1408,13 @@
       }
     },
     {
-      "seq": 63,
+      "seq": 60,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-42",
-      "timestamp": "2026-10-11T23:18:44.450Z",
+      "timestamp": "2026-10-12T00:51:27.446Z",
       "source_event_seq": 42,
       "event": {
         "seq": 42,
@@ -1523,13 +1427,13 @@
       }
     },
     {
-      "seq": 64,
+      "seq": 61,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-43",
-      "timestamp": "2026-10-11T23:18:44.455Z",
+      "timestamp": "2026-10-12T00:51:27.460Z",
       "source_event_seq": 43,
       "event": {
         "seq": 43,
@@ -1542,13 +1446,13 @@
       }
     },
     {
-      "seq": 65,
+      "seq": 62,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "noble_servant_chosen",
       "request_id": "2-night-2-event-44",
-      "timestamp": "2026-10-11T23:18:44.463Z",
+      "timestamp": "2026-10-12T00:51:27.472Z",
       "source_event_seq": 44,
       "event": {
         "seq": 44,
@@ -1563,13 +1467,13 @@
       }
     },
     {
-      "seq": 66,
+      "seq": 63,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "night_resolved",
       "request_id": "2-night-2-event-45",
-      "timestamp": "2026-10-11T23:18:44.491Z",
+      "timestamp": "2026-10-12T00:51:27.506Z",
       "source_event_seq": 45,
       "event": {
         "seq": 45,
@@ -1580,13 +1484,13 @@
       }
     },
     {
-      "seq": 67,
+      "seq": 64,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day",
       "request_id": "2-day-2-event-46",
-      "timestamp": "2026-10-11T23:18:44.491Z",
+      "timestamp": "2026-10-12T00:51:27.506Z",
       "source_event_seq": 46,
       "event": {
         "seq": 46,
@@ -1598,13 +1502,13 @@
       }
     },
     {
-      "seq": 68,
+      "seq": 65,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-47",
-      "timestamp": "2026-10-11T23:18:44.496Z",
+      "timestamp": "2026-10-12T00:51:27.512Z",
       "source_event_seq": 47,
       "event": {
         "seq": 47,
@@ -1616,13 +1520,13 @@
       }
     },
     {
-      "seq": 69,
+      "seq": 66,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-48",
-      "timestamp": "2026-10-11T23:18:44.500Z",
+      "timestamp": "2026-10-12T00:51:27.520Z",
       "source_event_seq": 48,
       "event": {
         "seq": 48,
@@ -1634,13 +1538,13 @@
       }
     },
     {
-      "seq": 70,
+      "seq": 67,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-49",
-      "timestamp": "2026-10-11T23:18:44.504Z",
+      "timestamp": "2026-10-12T00:51:27.525Z",
       "source_event_seq": 49,
       "event": {
         "seq": 49,
@@ -1652,13 +1556,13 @@
       }
     },
     {
-      "seq": 71,
+      "seq": 68,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-50",
-      "timestamp": "2026-10-11T23:18:44.508Z",
+      "timestamp": "2026-10-12T00:51:27.531Z",
       "source_event_seq": 50,
       "event": {
         "seq": 50,
@@ -1670,13 +1574,13 @@
       }
     },
     {
-      "seq": 72,
+      "seq": 69,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-51",
-      "timestamp": "2026-10-11T23:18:44.512Z",
+      "timestamp": "2026-10-12T00:51:27.536Z",
       "source_event_seq": 51,
       "event": {
         "seq": 51,
@@ -1688,13 +1592,13 @@
       }
     },
     {
-      "seq": 73,
+      "seq": 70,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-52",
-      "timestamp": "2026-10-11T23:18:44.516Z",
+      "timestamp": "2026-10-12T00:51:27.583Z",
       "source_event_seq": 52,
       "event": {
         "seq": 52,
@@ -1706,13 +1610,13 @@
       }
     },
     {
-      "seq": 74,
+      "seq": 71,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-53",
-      "timestamp": "2026-10-11T23:18:44.519Z",
+      "timestamp": "2026-10-12T00:51:27.590Z",
       "source_event_seq": 53,
       "event": {
         "seq": 53,
@@ -1724,13 +1628,13 @@
       }
     },
     {
-      "seq": 75,
+      "seq": 72,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-54",
-      "timestamp": "2026-10-11T23:18:44.524Z",
+      "timestamp": "2026-10-12T00:51:27.596Z",
       "source_event_seq": 54,
       "event": {
         "seq": 54,
@@ -1742,13 +1646,13 @@
       }
     },
     {
-      "seq": 76,
+      "seq": 73,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-55",
-      "timestamp": "2026-10-11T23:18:44.569Z",
+      "timestamp": "2026-10-12T00:51:27.602Z",
       "source_event_seq": 55,
       "event": {
         "seq": 55,
@@ -1760,13 +1664,13 @@
       }
     },
     {
-      "seq": 77,
+      "seq": 74,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-56",
-      "timestamp": "2026-10-11T23:18:44.574Z",
+      "timestamp": "2026-10-12T00:51:27.607Z",
       "source_event_seq": 56,
       "event": {
         "seq": 56,
@@ -1778,13 +1682,13 @@
       }
     },
     {
-      "seq": 78,
+      "seq": 75,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-57",
-      "timestamp": "2026-10-11T23:18:44.578Z",
+      "timestamp": "2026-10-12T00:51:27.612Z",
       "source_event_seq": 57,
       "event": {
         "seq": 57,
@@ -1796,13 +1700,13 @@
       }
     },
     {
-      "seq": 79,
+      "seq": 76,
       "kind": "event",
       "day": 2,
       "phase": "voting",
       "stage": "voting",
       "request_id": "2-voting-2-event-58",
-      "timestamp": "2026-10-11T23:18:44.578Z",
+      "timestamp": "2026-10-12T00:51:27.612Z",
       "source_event_seq": 58,
       "event": {
         "seq": 58,
@@ -1814,13 +1718,13 @@
       }
     },
     {
-      "seq": 80,
+      "seq": 77,
       "kind": "event",
       "day": 2,
       "phase": "voting",
       "stage": "voting",
       "request_id": "2-voting-2-event-59",
-      "timestamp": "2026-10-11T23:18:44.630Z",
+      "timestamp": "2026-10-12T00:51:27.674Z",
       "source_event_seq": 59,
       "event": {
         "seq": 59,
@@ -1900,13 +1804,13 @@
       }
     },
     {
-      "seq": 81,
+      "seq": 78,
       "kind": "event",
       "day": 2,
       "phase": "voting",
       "stage": "voting",
       "request_id": "2-voting-2-event-60",
-      "timestamp": "2026-10-11T23:18:44.630Z",
+      "timestamp": "2026-10-12T00:51:27.675Z",
       "source_event_seq": 60,
       "event": {
         "seq": 60,
@@ -1917,13 +1821,13 @@
       }
     },
     {
-      "seq": 82,
+      "seq": 79,
       "kind": "event",
       "day": 2,
       "phase": "voting",
       "stage": "last_words_granted",
       "request_id": "2-voting-2-event-61",
-      "timestamp": "2026-10-11T23:18:44.631Z",
+      "timestamp": "2026-10-12T00:51:27.675Z",
       "source_event_seq": 61,
       "event": {
         "seq": 61,
@@ -1936,13 +1840,13 @@
       }
     },
     {
-      "seq": 83,
+      "seq": 80,
       "kind": "event",
       "day": 2,
       "phase": "voting",
       "stage": "last_words_spoken",
       "request_id": "2-voting-2-event-62",
-      "timestamp": "2026-10-11T23:18:44.636Z",
+      "timestamp": "2026-10-12T00:51:27.682Z",
       "source_event_seq": 62,
       "event": {
         "seq": 62,
@@ -1956,13 +1860,13 @@
       }
     },
     {
-      "seq": 84,
+      "seq": 81,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "night",
       "request_id": "3-night-2-event-63",
-      "timestamp": "2026-10-11T23:18:44.637Z",
+      "timestamp": "2026-10-12T00:51:27.684Z",
       "source_event_seq": 63,
       "event": {
         "seq": 63,
@@ -1974,13 +1878,13 @@
       }
     },
     {
-      "seq": 85,
+      "seq": 82,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "noble_night_notified",
       "request_id": "3-night-2-event-64",
-      "timestamp": "2026-10-11T23:18:44.637Z",
+      "timestamp": "2026-10-12T00:51:27.684Z",
       "source_event_seq": 64,
       "event": {
         "seq": 64,
@@ -2011,13 +1915,13 @@
       }
     },
     {
-      "seq": 86,
+      "seq": 83,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "wolf_tactical_order",
       "request_id": "3-night-2-event-65",
-      "timestamp": "2026-10-11T23:18:44.654Z",
+      "timestamp": "2026-10-12T00:51:27.762Z",
       "source_event_seq": 65,
       "event": {
         "seq": 65,
@@ -2031,13 +1935,13 @@
       }
     },
     {
-      "seq": 87,
+      "seq": 84,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "3-night-2-event-66",
-      "timestamp": "2026-10-11T23:18:44.660Z",
+      "timestamp": "2026-10-12T00:51:27.769Z",
       "source_event_seq": 66,
       "event": {
         "seq": 66,
@@ -2050,13 +1954,13 @@
       }
     },
     {
-      "seq": 88,
+      "seq": 85,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "3-night-2-event-67",
-      "timestamp": "2026-10-11T23:18:44.665Z",
+      "timestamp": "2026-10-12T00:51:27.776Z",
       "source_event_seq": 67,
       "event": {
         "seq": 67,
@@ -2069,13 +1973,13 @@
       }
     },
     {
-      "seq": 89,
+      "seq": 86,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "3-night-2-event-68",
-      "timestamp": "2026-10-11T23:18:44.725Z",
+      "timestamp": "2026-10-12T00:51:27.784Z",
       "source_event_seq": 68,
       "event": {
         "seq": 68,
@@ -2088,13 +1992,13 @@
       }
     },
     {
-      "seq": 90,
+      "seq": 87,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "3-night-2-event-69",
-      "timestamp": "2026-10-11T23:18:44.732Z",
+      "timestamp": "2026-10-12T00:51:27.792Z",
       "source_event_seq": 69,
       "event": {
         "seq": 69,
@@ -2107,13 +2011,13 @@
       }
     },
     {
-      "seq": 91,
+      "seq": 88,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "noble_servant_chosen",
       "request_id": "3-night-2-event-70",
-      "timestamp": "2026-10-11T23:18:44.744Z",
+      "timestamp": "2026-10-12T00:51:27.806Z",
       "source_event_seq": 70,
       "event": {
         "seq": 70,
@@ -2128,13 +2032,13 @@
       }
     },
     {
-      "seq": 92,
+      "seq": 89,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "night_resolved",
       "request_id": "3-night-2-event-71",
-      "timestamp": "2026-10-11T23:18:44.787Z",
+      "timestamp": "2026-10-12T00:51:27.851Z",
       "source_event_seq": 71,
       "event": {
         "seq": 71,
@@ -2145,13 +2049,13 @@
       }
     },
     {
-      "seq": 93,
+      "seq": 90,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day",
       "request_id": "3-day-2-event-72",
-      "timestamp": "2026-10-11T23:18:44.787Z",
+      "timestamp": "2026-10-12T00:51:27.851Z",
       "source_event_seq": 72,
       "event": {
         "seq": 72,
@@ -2163,13 +2067,13 @@
       }
     },
     {
-      "seq": 94,
+      "seq": 91,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-73",
-      "timestamp": "2026-10-11T23:18:44.792Z",
+      "timestamp": "2026-10-12T00:51:27.858Z",
       "source_event_seq": 73,
       "event": {
         "seq": 73,
@@ -2181,13 +2085,13 @@
       }
     },
     {
-      "seq": 95,
+      "seq": 92,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-74",
-      "timestamp": "2026-10-11T23:18:44.797Z",
+      "timestamp": "2026-10-12T00:51:27.944Z",
       "source_event_seq": 74,
       "event": {
         "seq": 74,
@@ -2199,13 +2103,13 @@
       }
     },
     {
-      "seq": 96,
+      "seq": 93,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-75",
-      "timestamp": "2026-10-11T23:18:44.801Z",
+      "timestamp": "2026-10-12T00:51:27.951Z",
       "source_event_seq": 75,
       "event": {
         "seq": 75,
@@ -2217,13 +2121,13 @@
       }
     },
     {
-      "seq": 97,
+      "seq": 94,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-76",
-      "timestamp": "2026-10-11T23:18:44.806Z",
+      "timestamp": "2026-10-12T00:51:27.958Z",
       "source_event_seq": 76,
       "event": {
         "seq": 76,
@@ -2235,13 +2139,13 @@
       }
     },
     {
-      "seq": 98,
+      "seq": 95,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-77",
-      "timestamp": "2026-10-11T23:18:44.811Z",
+      "timestamp": "2026-10-12T00:51:27.965Z",
       "source_event_seq": 77,
       "event": {
         "seq": 77,
@@ -2253,13 +2157,13 @@
       }
     },
     {
-      "seq": 99,
+      "seq": 96,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-78",
-      "timestamp": "2026-10-11T23:18:44.815Z",
+      "timestamp": "2026-10-12T00:51:27.972Z",
       "source_event_seq": 78,
       "event": {
         "seq": 78,
@@ -2271,13 +2175,13 @@
       }
     },
     {
-      "seq": 100,
+      "seq": 97,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-79",
-      "timestamp": "2026-10-11T23:18:44.821Z",
+      "timestamp": "2026-10-12T00:51:27.979Z",
       "source_event_seq": 79,
       "event": {
         "seq": 79,
@@ -2289,13 +2193,13 @@
       }
     },
     {
-      "seq": 101,
+      "seq": 98,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-80",
-      "timestamp": "2026-10-11T23:18:44.900Z",
+      "timestamp": "2026-10-12T00:51:27.985Z",
       "source_event_seq": 80,
       "event": {
         "seq": 80,
@@ -2307,13 +2211,13 @@
       }
     },
     {
-      "seq": 102,
+      "seq": 99,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-81",
-      "timestamp": "2026-10-11T23:18:44.906Z",
+      "timestamp": "2026-10-12T00:51:27.992Z",
       "source_event_seq": 81,
       "event": {
         "seq": 81,
@@ -2325,13 +2229,13 @@
       }
     },
     {
-      "seq": 103,
+      "seq": 100,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-82",
-      "timestamp": "2026-10-11T23:18:44.912Z",
+      "timestamp": "2026-10-12T00:51:27.998Z",
       "source_event_seq": 82,
       "event": {
         "seq": 82,
@@ -2343,13 +2247,13 @@
       }
     },
     {
-      "seq": 104,
+      "seq": 101,
       "kind": "event",
       "day": 3,
       "phase": "voting",
       "stage": "voting",
       "request_id": "3-voting-2-event-83",
-      "timestamp": "2026-10-11T23:18:44.912Z",
+      "timestamp": "2026-10-12T00:51:27.998Z",
       "source_event_seq": 83,
       "event": {
         "seq": 83,
@@ -2361,13 +2265,230 @@
       }
     },
     {
+      "seq": 102,
+      "kind": "turn",
+      "day": 3,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "3-voting-2-19",
+      "timestamp": "2026-10-12T00:51:28.160Z",
+      "turn_seq": 19,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于投票阶段，子阶段是放逐投票，目前不是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":3,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":true} 当前日次：第3天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：vote。 放逐投票阶段必须完成一次投票动作（可弃票）。 你当前可以提交的行动有：vote, report_bug，其中有效行动有：vote。\n行动参数提示：vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（存活且不含你自己）：1, 4, 5, 6, 7, 8, 10, 11, 12。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t19，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t19；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "vote",
+          "args": {
+            "target_id": 5,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":5,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 103,
+      "kind": "turn",
+      "day": 4,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "4-night-2-20",
+      "timestamp": "2026-10-12T00:51:28.354Z",
+      "turn_seq": 20,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于夜晚阶段，子阶段是狼人交流，目前是你的发言轮次。\n阶段规则：当前是【狼人交流阶段】：只能调用 speak_to_wolves。若你本人不再参加本夜后续夜聊，请设置 end_chat=true；这不会结束其他狼人的发言。本阶段不会完成刀人。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":false} 当前日次：第4天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：speak_to_wolves。 夜间行动阶段需完成一次有效动作。 你当前可以提交的行动有：speak_to_wolves, report_bug，其中有效行动有：speak_to_wolves。\n行动参数提示：speak_to_wolves args: {\"text\":\"...\",\"end_chat\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若使用 speak_to_wolves，end_chat=true 只表示你本人不再参加本夜后续夜聊，不会强制结束其他狼人的发言；全员结束后夜聊才会提前结束。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t20，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t20；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak_to_wolves",
+          "args": {
+            "text": "End discussion",
+            "end_chat": true
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak_to_wolves\",\"args\":{\"text\":\"End discussion\",\"end_chat\":true}}}"
+        }
+      ]
+    },
+    {
+      "seq": 104,
+      "kind": "turn",
+      "day": 4,
+      "phase": "night",
+      "stage": "wolf_vote",
+      "request_id": "4-night-2-21",
+      "timestamp": "2026-10-12T00:51:28.373Z",
+      "turn_seq": 21,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于夜晚阶段，子阶段是狼人刀人投票，目前不是你的发言轮次。\n阶段规则：当前是【狼人刀人投票阶段】：必须调用 kill_vote；若本轮决定不刀，请设置 abstain=true 且 target_id=null。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":false} 当前日次：第4天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：kill_vote。 夜间行动阶段需完成一次有效动作。 你当前可以提交的行动有：kill_vote, report_bug，其中有效行动有：kill_vote。\n行动参数提示：kill_vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（含你自己）：1, 2, 4, 6, 7, 8, 10, 11, 12。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t21，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t21；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "kill_vote",
+          "args": {
+            "target_id": 11,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"kill_vote\",\"args\":{\"target_id\":11,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
       "seq": 105,
+      "kind": "turn",
+      "day": 4,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "4-day-2-22",
+      "timestamp": "2026-10-12T00:51:28.594Z",
+      "turn_seq": 22,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于白天阶段，子阶段是白天发言，目前是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":true} 当前日次：第4天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：speak。 白天发言阶段必须完成一次发言动作。 你当前可以提交的行动有：speak, report_bug，其中有效行动有：speak。\n行动参数提示：speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t22，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t22；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak",
+          "args": {
+            "text": "Literal public speech"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Literal public speech\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 106,
+      "kind": "turn",
+      "day": 4,
+      "phase": "voting",
+      "stage": "on_pre_vote",
+      "request_id": "4-voting-2-23",
+      "timestamp": "2026-10-12T00:51:28.651Z",
+      "turn_seq": 23,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于投票阶段，子阶段是放逐前窗口，目前不是你的发言轮次。 这是公开自爆窗口，只有 self_destruct 会改变对局；发言、投票和其他行动都不允许。若不自爆，直接结束本次回应，不提交行动。report_bug 只报告问题。\n阶段规则：自爆需谨慎！！！当前是【狼人自爆窗口】：self_destruct 是唯一会改变局面的动作，仅在局势极端不利时使用，且必须携带 confirm=true 才会生效。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":true} 当前日次：第4天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少0次、最多1次有效行动。 放逐前自爆窗口可选择执行自爆，也可结束回合。 你当前可以提交的行动有：self_destruct, report_bug，其中有效行动有：self_destruct。\n行动参数提示：self_destruct args: {\"reason\":\"...\",\"confirm\":true}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t23，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t23；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "assistant_output",
+          "content": "No action"
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"none\",\"final_action\":null}"
+        }
+      ]
+    },
+    {
+      "seq": 107,
+      "kind": "turn",
+      "day": 4,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "4-voting-2-24",
+      "timestamp": "2026-10-12T00:51:28.682Z",
+      "turn_seq": 24,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于投票阶段，子阶段是放逐投票，目前不是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":true} 当前日次：第4天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：vote。 放逐投票阶段必须完成一次投票动作（可弃票）。 你当前可以提交的行动有：vote, report_bug，其中有效行动有：vote。\n行动参数提示：vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（存活且不含你自己）：1, 4, 6, 7, 8, 10, 12。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t24，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t24；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "vote",
+          "args": {
+            "target_id": null,
+            "abstain": true
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":null,\"abstain\":true}}}"
+        }
+      ]
+    },
+    {
+      "seq": 108,
+      "kind": "turn",
+      "day": 4,
+      "phase": "voting",
+      "stage": "last_words",
+      "request_id": "4-voting-2-25",
+      "timestamp": "2026-10-12T00:51:28.861Z",
+      "turn_seq": 25,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于投票阶段，子阶段是遗言，目前是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":true} 当前日次：第4天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：speak。 遗言阶段必须完成一次发言动作。 你当前可以提交的行动有：speak, report_bug，其中有效行动有：speak。\n行动参数提示：speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t25，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t25；无需调用 get_game_schema。"
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak",
+          "args": {
+            "text": "Literal last words"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Literal last words\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 109,
       "kind": "event",
       "day": 3,
       "phase": "voting",
       "stage": "voting",
       "request_id": "3-voting-2-event-84",
-      "timestamp": "2026-10-11T23:18:44.964Z",
+      "timestamp": "2026-10-12T00:51:28.192Z",
       "source_event_seq": 84,
       "event": {
         "seq": 84,
@@ -2441,13 +2562,13 @@
       }
     },
     {
-      "seq": 106,
+      "seq": 110,
       "kind": "event",
       "day": 3,
       "phase": "voting",
       "stage": "voting",
       "request_id": "3-voting-2-event-85",
-      "timestamp": "2026-10-11T23:18:44.964Z",
+      "timestamp": "2026-10-12T00:51:28.193Z",
       "source_event_seq": 85,
       "event": {
         "seq": 85,
@@ -2458,13 +2579,13 @@
       }
     },
     {
-      "seq": 107,
+      "seq": 111,
       "kind": "event",
       "day": 3,
       "phase": "voting",
       "stage": "last_words_granted",
       "request_id": "3-voting-2-event-86",
-      "timestamp": "2026-10-11T23:18:44.965Z",
+      "timestamp": "2026-10-12T00:51:28.194Z",
       "source_event_seq": 86,
       "event": {
         "seq": 86,
@@ -2477,13 +2598,13 @@
       }
     },
     {
-      "seq": 108,
+      "seq": 112,
       "kind": "event",
       "day": 3,
       "phase": "voting",
       "stage": "last_words_spoken",
       "request_id": "3-voting-2-event-87",
-      "timestamp": "2026-10-11T23:18:44.970Z",
+      "timestamp": "2026-10-12T00:51:28.202Z",
       "source_event_seq": 87,
       "event": {
         "seq": 87,
@@ -2497,13 +2618,13 @@
       }
     },
     {
-      "seq": 109,
+      "seq": 113,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "night",
       "request_id": "4-night-2-event-88",
-      "timestamp": "2026-10-11T23:18:44.972Z",
+      "timestamp": "2026-10-12T00:51:28.204Z",
       "source_event_seq": 88,
       "event": {
         "seq": 88,
@@ -2515,13 +2636,13 @@
       }
     },
     {
-      "seq": 110,
+      "seq": 114,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "noble_night_notified",
       "request_id": "4-night-2-event-89",
-      "timestamp": "2026-10-11T23:18:44.972Z",
+      "timestamp": "2026-10-12T00:51:28.204Z",
       "source_event_seq": 89,
       "event": {
         "seq": 89,
@@ -2561,13 +2682,13 @@
       }
     },
     {
-      "seq": 111,
+      "seq": 115,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "wolf_tactical_order",
       "request_id": "4-night-2-event-90",
-      "timestamp": "2026-10-11T23:18:44.986Z",
+      "timestamp": "2026-10-12T00:51:28.220Z",
       "source_event_seq": 90,
       "event": {
         "seq": 90,
@@ -2581,13 +2702,13 @@
       }
     },
     {
-      "seq": 112,
+      "seq": 116,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "4-night-2-event-91",
-      "timestamp": "2026-10-11T23:18:44.992Z",
+      "timestamp": "2026-10-12T00:51:28.228Z",
       "source_event_seq": 91,
       "event": {
         "seq": 91,
@@ -2600,13 +2721,13 @@
       }
     },
     {
-      "seq": 113,
+      "seq": 117,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "4-night-2-event-92",
-      "timestamp": "2026-10-11T23:18:45.000Z",
+      "timestamp": "2026-10-12T00:51:28.355Z",
       "source_event_seq": 92,
       "event": {
         "seq": 92,
@@ -2619,13 +2740,13 @@
       }
     },
     {
-      "seq": 114,
+      "seq": 118,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "4-night-2-event-93",
-      "timestamp": "2026-10-11T23:18:45.116Z",
+      "timestamp": "2026-10-12T00:51:28.365Z",
       "source_event_seq": 93,
       "event": {
         "seq": 93,
@@ -2638,13 +2759,13 @@
       }
     },
     {
-      "seq": 115,
+      "seq": 119,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "4-night-2-event-94",
-      "timestamp": "2026-10-11T23:18:45.124Z",
+      "timestamp": "2026-10-12T00:51:28.374Z",
       "source_event_seq": 94,
       "event": {
         "seq": 94,
@@ -2657,13 +2778,13 @@
       }
     },
     {
-      "seq": 116,
+      "seq": 120,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "night_resolved",
       "request_id": "4-night-2-event-95",
-      "timestamp": "2026-10-11T23:18:45.172Z",
+      "timestamp": "2026-10-12T00:51:28.447Z",
       "source_event_seq": 95,
       "event": {
         "seq": 95,
@@ -2676,13 +2797,13 @@
       }
     },
     {
-      "seq": 117,
+      "seq": 121,
       "kind": "event",
       "day": 4,
       "phase": "day",
       "stage": "day",
       "request_id": "4-day-2-event-96",
-      "timestamp": "2026-10-11T23:18:45.172Z",
+      "timestamp": "2026-10-12T00:51:28.447Z",
       "source_event_seq": 96,
       "event": {
         "seq": 96,
@@ -2694,13 +2815,13 @@
       }
     },
     {
-      "seq": 118,
+      "seq": 122,
       "kind": "event",
       "day": 4,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-97",
-      "timestamp": "2026-10-11T23:18:45.179Z",
+      "timestamp": "2026-10-12T00:51:28.455Z",
       "source_event_seq": 97,
       "event": {
         "seq": 97,
@@ -2712,134 +2833,13 @@
       }
     },
     {
-      "seq": 119,
-      "kind": "turn",
-      "day": 4,
-      "phase": "day",
-      "stage": "day_speech",
-      "request_id": "4-day-2-22",
-      "timestamp": "2026-10-11T23:18:45.206Z",
-      "turn_seq": 22,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于白天阶段，子阶段是白天发言，目前是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":true} 当前日次：第4天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：speak。 白天发言阶段必须完成一次发言动作。 你当前可以提交的行动有：speak, report_bug，其中有效行动有：speak。\n行动参数提示：speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t22，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t22；无需调用 get_game_schema。"
-        },
-        {
-          "role": "assistant",
-          "kind": "tool_call",
-          "name": "speak",
-          "args": {
-            "text": "Literal public speech"
-          },
-          "accepted": true
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Literal public speech\"}}}"
-        }
-      ]
-    },
-    {
-      "seq": 120,
-      "kind": "turn",
-      "day": 4,
-      "phase": "voting",
-      "stage": "on_pre_vote",
-      "request_id": "4-voting-2-23",
-      "timestamp": "2026-10-11T23:18:45.374Z",
-      "turn_seq": 23,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于投票阶段，子阶段是放逐前窗口，目前不是你的发言轮次。 这是公开自爆窗口，只有 self_destruct 会改变对局；发言、投票和其他行动都不允许。若不自爆，直接结束本次回应，不提交行动。report_bug 只报告问题。\n阶段规则：自爆需谨慎！！！当前是【狼人自爆窗口】：self_destruct 是唯一会改变局面的动作，仅在局势极端不利时使用，且必须携带 confirm=true 才会生效。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":true} 当前日次：第4天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少0次、最多1次有效行动。 放逐前自爆窗口可选择执行自爆，也可结束回合。 你当前可以提交的行动有：self_destruct, report_bug，其中有效行动有：self_destruct。\n行动参数提示：self_destruct args: {\"reason\":\"...\",\"confirm\":true}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t23，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t23；无需调用 get_game_schema。"
-        },
-        {
-          "role": "assistant",
-          "kind": "assistant_output",
-          "content": "No action"
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"none\",\"final_action\":null}"
-        }
-      ]
-    },
-    {
-      "seq": 121,
-      "kind": "turn",
-      "day": 4,
-      "phase": "voting",
-      "stage": "voting",
-      "request_id": "4-voting-2-24",
-      "timestamp": "2026-10-11T23:18:45.408Z",
-      "turn_seq": 24,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于投票阶段，子阶段是放逐投票，目前不是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":true} 当前日次：第4天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：vote。 放逐投票阶段必须完成一次投票动作（可弃票）。 你当前可以提交的行动有：vote, report_bug，其中有效行动有：vote。\n行动参数提示：vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; 可行动ID（存活且不含你自己）：1, 4, 6, 7, 8, 10, 12。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t24，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t24；无需调用 get_game_schema。"
-        },
-        {
-          "role": "assistant",
-          "kind": "tool_call",
-          "name": "vote",
-          "args": {
-            "target_id": null,
-            "abstain": true
-          },
-          "accepted": true
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":null,\"abstain\":true}}}"
-        }
-      ]
-    },
-    {
-      "seq": 122,
-      "kind": "turn",
-      "day": 4,
-      "phase": "voting",
-      "stage": "last_words",
-      "request_id": "4-voting-2-25",
-      "timestamp": "2026-10-11T23:18:45.439Z",
-      "turn_seq": 25,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[行动提示] 2号玩家，现在轮到你行动，当前处于投票阶段，子阶段是遗言，目前是你的发言轮次。\n阶段规则：请严格区分当前阶段职责，只执行本轮工具对应动作。 你的已告知夜仆状态（隐藏终态延至下一夜）：{\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":11},\"contracts\":[{\"id\":\"servant:night:2\",\"targetId\":5,\"createdNight\":2,\"expiresNight\":3,\"status\":{\"kind\":\"cleared\",\"day\":2}},{\"id\":\"servant:night:3\",\"targetId\":11,\"createdNight\":3,\"expiresNight\":4,\"status\":{\"kind\":\"pending\"}}],\"awaitingNightReport\":true} 当前日次：第4天。 本轮规则告知你的狼人队友编号（不含本人）：3, 9, 11。此前获知的身份属于历史信息，不因本轮名单改变而消失。 本轮身份：夜之贵族；阵营：狼人。获得能力不自动改变身份或阵营。 你的私有状态：夜之贵族属于狼队，互知身份、参加狼聊与刀票。从第二夜起可选择其他活人作为夜仆或明确空过；有待到期夜仆时不能再选。夜仆在下一夜结算到期，猎魔命中夜仆只解除契约。契约终态于下一夜告知。自爆及刀口资格依本板公开政策。\n本轮结束前需满足：最少1次、最多1次有效行动 且需命中工具：speak。 遗言阶段必须完成一次发言动作。 你当前可以提交的行动有：speak, report_bug，其中有效行动有：speak。\n行动参数提示：speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}。 若你观察到明确的规则、状态、流程、日志或可见信息矛盾，可先调用 report_bug 上报，再继续本轮正常行动。请在 message 中说明观察到的现象、应有状态和矛盾原因；正常策略分歧、身份声称、诈身份或信息不足不是 bug。 请通过 submit_action 提交游戏行动，turn_id 必须为 t25，action 必须是本轮列出的有效行动工具名，arguments 填该行动的参数。可先调用 report_bug 上报明确矛盾，其 turn_id 同样必须为 t25；无需调用 get_game_schema。"
-        },
-        {
-          "role": "assistant",
-          "kind": "tool_call",
-          "name": "speak",
-          "args": {
-            "text": "Literal last words"
-          },
-          "accepted": true
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Literal last words\"}}}"
-        }
-      ]
-    },
-    {
       "seq": 123,
       "kind": "event",
       "day": 4,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-98",
-      "timestamp": "2026-10-11T23:18:45.206Z",
+      "timestamp": "2026-10-12T00:51:28.595Z",
       "source_event_seq": 98,
       "event": {
         "seq": 98,
@@ -2857,7 +2857,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-99",
-      "timestamp": "2026-10-11T23:18:45.213Z",
+      "timestamp": "2026-10-12T00:51:28.605Z",
       "source_event_seq": 99,
       "event": {
         "seq": 99,
@@ -2875,7 +2875,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-100",
-      "timestamp": "2026-10-11T23:18:45.342Z",
+      "timestamp": "2026-10-12T00:51:28.614Z",
       "source_event_seq": 100,
       "event": {
         "seq": 100,
@@ -2893,7 +2893,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-101",
-      "timestamp": "2026-10-11T23:18:45.351Z",
+      "timestamp": "2026-10-12T00:51:28.621Z",
       "source_event_seq": 101,
       "event": {
         "seq": 101,
@@ -2911,7 +2911,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-102",
-      "timestamp": "2026-10-11T23:18:45.357Z",
+      "timestamp": "2026-10-12T00:51:28.629Z",
       "source_event_seq": 102,
       "event": {
         "seq": 102,
@@ -2929,7 +2929,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-103",
-      "timestamp": "2026-10-11T23:18:45.362Z",
+      "timestamp": "2026-10-12T00:51:28.635Z",
       "source_event_seq": 103,
       "event": {
         "seq": 103,
@@ -2947,7 +2947,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-104",
-      "timestamp": "2026-10-11T23:18:45.368Z",
+      "timestamp": "2026-10-12T00:51:28.642Z",
       "source_event_seq": 104,
       "event": {
         "seq": 104,
@@ -2965,7 +2965,7 @@
       "phase": "voting",
       "stage": "voting",
       "request_id": "4-voting-2-event-105",
-      "timestamp": "2026-10-11T23:18:45.368Z",
+      "timestamp": "2026-10-12T00:51:28.642Z",
       "source_event_seq": 105,
       "event": {
         "seq": 105,
@@ -2983,7 +2983,7 @@
       "phase": "voting",
       "stage": "voting",
       "request_id": "4-voting-2-event-106",
-      "timestamp": "2026-10-11T23:18:45.431Z",
+      "timestamp": "2026-10-12T00:51:28.850Z",
       "source_event_seq": 106,
       "event": {
         "seq": 106,
@@ -3051,7 +3051,7 @@
       "phase": "voting",
       "stage": "voting",
       "request_id": "4-voting-2-event-107",
-      "timestamp": "2026-10-11T23:18:45.432Z",
+      "timestamp": "2026-10-12T00:51:28.851Z",
       "source_event_seq": 107,
       "event": {
         "seq": 107,
@@ -3068,7 +3068,7 @@
       "phase": "voting",
       "stage": "last_words_granted",
       "request_id": "4-voting-2-event-108",
-      "timestamp": "2026-10-11T23:18:45.433Z",
+      "timestamp": "2026-10-12T00:51:28.852Z",
       "source_event_seq": 108,
       "event": {
         "seq": 108,
@@ -3087,7 +3087,7 @@
       "phase": "voting",
       "stage": "last_words_spoken",
       "request_id": "4-voting-2-event-109",
-      "timestamp": "2026-10-11T23:18:45.440Z",
+      "timestamp": "2026-10-12T00:51:28.862Z",
       "source_event_seq": 109,
       "event": {
         "seq": 109,
@@ -3107,7 +3107,7 @@
       "phase": "game_over",
       "stage": "game_over",
       "request_id": "4-game_over-2-event-110",
-      "timestamp": "2026-10-11T23:18:45.440Z",
+      "timestamp": "2026-10-12T00:51:28.863Z",
       "source_event_seq": 110,
       "event": {
         "seq": 110,
@@ -3160,7 +3160,7 @@
       "phase": "game_over",
       "stage": "game_over",
       "request_id": "4-game_over-2-event-111",
-      "timestamp": "2026-10-11T23:18:45.440Z",
+      "timestamp": "2026-10-12T00:51:28.863Z",
       "source_event_seq": 111,
       "event": {
         "seq": 111,

@@ -9,8 +9,8 @@
     "phase": "night",
     "stage": "wolf_discussion",
     "request_id": "1-night-2-1",
-    "timestamp": "2026-10-11T23:18:50.890Z",
-    "prompt_system": "You are one player agent in the Werewolf engine. Your seat is 2. At session creation, your true role is Night Noble. On every later turn the engine current identity, faction and native stock are authoritative; old role introductions are historical and grant no old skill. When you receive [Action prompt], you may act.\nYour goal is to help your team win this game. Use information visible to you to judge, negotiate, probe and adjust your strategy. Keep your own judgment even when the majority disagrees.\nUse English for your reasoning and expression.\nYour nickname is Seat 2. Refer to other players by seat number to avoid confusion.\nTeammates whose identities are revealed when this session is established, excluding yourself: 3, 9, 11. Use each turn's action prompt for updated authorization. None means no additional teammate identity is revealed, not that you are the only member of your team.\nOnly refer to player IDs that exist in this game, from 1 to 12. Do not invent other IDs.\nFollow phase rules, allowed tools and turn constraints. Choose your strategy and expression within those boundaries.\nYour personality and speaking style: NOBLE_PRIVATE_ACTOR_2\nCurrent board:\nTotal players=12\nRole lineup=Night Noblex1, Awakened Village Idiotx1, Werewolfx3, Demon Hunterx1, Villagerx4, Seerx1, Witchx1\nRole skill briefs=Night Noble: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.; Awakened Village Idiot: You have one Secret Body. While intact, each night choose a living player (including yourself), or explicitly leave the target unspecified. If that target has no effective harm, protection falls back to yourself; it cancels exactly one effective source. An actual block spends the body; only whether it was spent is announced next night, never the actual target or cause. An intact body cancels one exile, reveals your role and grants a reveal speech. You remain alive with voting, candidacy and badge rights; a later exile can kill you. Repeated targets follow the public policy.; Werewolf: Participates in wolf discussion and the collective kill vote at night; Demon Hunter: NetEase rule adapted to the named finite AWA board: from night two, choose at most one other living player each night or explicitly abstain. A true wolf dies at dawn; hunting a Good player kills you instead. Native Witch poison cannot kill you. Guard and Heal do not stop hunt or backlash. No target camp or poison outcome is disclosed to you.; Villager: Has no night skill; influences the game through daytime speech and voting; Seer: May inspect one player's alignment each night; Witch: Has one antidote and one poison and may choose a potion at night\nThe Noble can blast and can be a pack knife target under ordinary wolf rules.\nSecret Body cannot actively choose the same target on consecutive nights. Explicit null breaks the sequence; fallback does not change the active target.\nRules for this game:\nWin conditions: Side elimination: wolves win when all good special roles or all villagers are eliminated; good wins when all wolves are eliminated\nSheriff mechanism: Enabled: nomination, campaign speeches, withdrawal and non-candidate voting; the sheriff chooses speaking direction and has vote weight=1.5 If nobody runs, all candidates withdraw, or no valid vote is cast, no sheriff is elected; withdrawn candidates are never restored.\nThis board resolves night deaths before daytime and the first sheriff election; eliminated players do not participate in the election.\nBadge: the deceased holder chooses an eligible living successor or destroys it; revealed Idiots destroy it directly.\nSelf-destruction: Enabled (windows: Before sheriff election, Before exile voting)\nWitch self-healing: Disallowed\nAWA living-target policy: self-inspection and repeat inspection are legal.\nAn inspection is required while a legal target exists; skip when targets are exhausted.\nAWA native knife disclosure: reveal the wolf target only while heal is usable tonight.\nAWA native potion policy: at most one potion per night.\nAWA sheriff policy: only non-nominees vote first; a sole candidate wins directly. One PK on a tie; PK candidates cannot vote. Another tie or all abstentions leaves no badge.\nAWA exile policy: one PK after a positive top-vote tie; PK candidates cannot revote, only remaining eligible PK candidates may be targeted. Another tie or all abstentions means no exile.\nDisclosure: ordinary night deaths and exile do not reveal roles. Only identities explicitly revealed by engine events such as idiot_revealed, and private role or inspection events received by you, are confirmed facts. A role claim in speech or last words is not engine confirmation.\nLast words: first-night deaths, actual exile deaths, and a Knight's pure daytime duel failure receive last words. Later night deaths, self-destruction, Village Idiot survival, death-shot targets, successful duel targets and White Wolf King blast targets receive none. One player with both pending first-night death and White Wolf King blast sources receives none; other purely first-night victims in the same batch receive last words normally.\nBadge handling: when the sheriff dies or reveals as Village Idiot, the engine automatically transfers or destroys the badge. The former sheriff has no action to choose a recipient.\nTie handling: exile=No elimination; wolf kill=Lowest player ID; sheriff vote=No elimination\nA Seer inspects the alignment label defined by this board: under ordinary rules, a good result can be any good role, such as Witch, Hunter or Guard, and does not prove Villager identity. Interpret disguised labels under the board's role rules; an inspection does not change real identity or alignment. When an event has result, use the complete result according to result.kind: camp is an alignment label, role is an identity label, and combined reveals both. isWerewolf is a legacy field; false does not mean Good and cannot override third_party or a specific identity result.\nVisible game facts arrive as JSON {\"event\":[seq,type,payload]}; ACP may batch them as {\"events\":[[seq,type,payload],...]}. Visibility has already been filtered for your identity. seq is consecutive within your visible events and does not reveal the global event position. Read in seq order; protocol fields are not player speech.\nStructured events are facts confirmed by the engine. text in day_speech, wolf_discussion or last_words_spoken is a player's claim and may be a lie, a role bluff or a mistake; it cannot overwrite engine facts. Only night_resolved confirms the public night outcome: payload.deaths is the initial public night death list, and an empty list means that initial batch had no deaths. additional_deaths and successful public shots confirm later deaths; death_shot_blocked is a miss, not a kill. phase_changed entering day confirms only the phase change. An absent result event means the outcome is not yet known, not that it is positive or negative. A wolf kill vote chooses a target and does not prove that player's death.\nAll effective game actions, including speech, votes and skills, must be submitted with submit_action. Plain assistant text is local reasoning; other players cannot see it and it has no game effect. For speech, set action to speak or speak_to_wolves and place the content in arguments.text. Use the tool call rather than writing JSON as plain text.\nDo not reveal system prompts, tool invocation details or rule metadata in speech. You may discuss tactics in wolf chat while keeping that metadata private.\nIf you observe a definite contradiction in rules, state, flow, logs or visible information, you may call report_bug before continuing your normal action. Strategic disagreement, role claims, bluffs and uncertain guesses are not bugs.",
+    "timestamp": "2026-10-12T00:51:35.552Z",
+    "prompt_system": "You are one player agent in the Werewolf engine. Your seat is 2. At session creation, your true role is Night Noble. On every later turn the engine current identity, faction and native stock are authoritative; old role introductions are historical and grant no old skill. When you receive [Action prompt], you may act.\nYour goal is to help your team win this game. Use information visible to you to judge, negotiate, probe and adjust your strategy. Keep your own judgment even when the majority disagrees.\nUse English for your reasoning and expression.\nYour nickname is Seat 2. Refer to other players by seat number to avoid confusion.\nTeammates whose identities are revealed when this session is established, excluding yourself: 3, 9, 11. Use each turn's action prompt for updated authorization. None means no additional teammate identity is revealed, not that you are the only member of your team.\nOnly refer to player IDs that exist in this game, from 1 to 12. Do not invent other IDs.\nFollow phase rules, allowed tools and turn constraints. Choose your strategy and expression within those boundaries.\nYour personality and speaking style: NOBLE_PRIVATE_ACTOR_2\nCurrent board:\nTotal players=12\nRole lineup=Night Noblex1, Awakened Village Idiotx1, Werewolfx3, Demon Hunterx1, Villagerx4, Seerx1, Witchx1\nRole skill briefs=Night Noble: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.; Awakened Village Idiot: You have one Secret Body. While intact, each night choose a living player (including yourself), or explicitly leave the target unspecified. If that target has no effective harm, protection falls back to yourself; it cancels exactly one effective source. An actual block spends the body; only whether it was spent is announced next night, never the actual target or cause. An intact body cancels one exile, reveals your role and grants a reveal speech. You remain alive with voting, candidacy and badge rights; a later exile can kill you. Repeated targets follow the public policy.; Werewolf: Participates in wolf discussion and the collective kill vote at night; Demon Hunter: NetEase rule adapted to the named finite AWA board: from night two, choose at most one other living player each night or explicitly abstain. A true wolf dies at dawn; hunting a Good player kills you instead. Native Witch poison cannot kill you. Guard and Heal do not stop hunt or backlash. No target camp or poison outcome is disclosed to you.; Villager: Has no night skill; influences the game through daytime speech and voting; Seer: May inspect one player's alignment each night; Witch: Has one antidote and one poison and may choose a potion at night\nThe Noble can blast and can be a pack knife target under ordinary wolf rules.\nSecret Body cannot actively choose the same target on consecutive nights. Explicit null breaks the sequence; fallback does not change the active target.\nRules for this game:\nWin conditions: Side elimination: wolves win when all good special roles or all villagers are eliminated; good wins when all wolves are eliminated\nSheriff mechanism: Enabled: nomination, campaign speeches, withdrawal and non-candidate voting; the sheriff chooses speaking direction and has vote weight=1.5 If nobody runs, all candidates withdraw, or no valid vote is cast, no sheriff is elected; withdrawn candidates are never restored.\nThis board resolves night deaths before daytime and the first sheriff election; eliminated players do not participate in the election.\nBadge: the deceased holder chooses an eligible living successor or destroys it; revealed Idiots destroy it directly.\nSelf-destruction: Enabled (windows: Before sheriff election, Before exile voting)\nWitch self-healing: Disallowed\nAWA living-target policy: self-inspection and repeat inspection are legal.\nAn inspection is required while a legal target exists; skip when targets are exhausted.\nAWA native knife disclosure: reveal the wolf target only while heal is usable tonight.\nAWA native potion policy: at most one potion per night.\nAWA sheriff policy: only non-nominees vote first; a sole candidate wins directly. One PK on a tie; PK candidates cannot vote. Another tie or all abstentions leaves no badge.\nAWA exile policy: one PK after a positive top-vote tie; PK candidates cannot revote, only remaining eligible PK candidates may be targeted. Another tie or all abstentions means no exile.\nDisclosure: ordinary night deaths and exile do not reveal roles. Only identities explicitly revealed by engine events such as idiot_revealed, and private role or inspection events received by you, are confirmed facts. A role claim in speech or last words is not engine confirmation.\nLast words: first-night deaths, actual exile deaths, and a Knight's pure daytime duel failure receive last words. Later night deaths, self-destruction, Village Idiot survival, death-shot targets, successful duel targets and White Wolf King blast targets receive none. One player with both pending first-night death and White Wolf King blast sources receives none; other purely first-night victims in the same batch receive last words normally.\nTie handling: exile=No elimination; wolf kill=Lowest player ID; sheriff vote=No elimination\nA Seer inspects the alignment label defined by this board: under ordinary rules, a good result can be any good role, such as Witch, Hunter or Guard, and does not prove Villager identity. Interpret disguised labels under the board's role rules; an inspection does not change real identity or alignment. When an event has result, use the complete result according to result.kind: camp is an alignment label, role is an identity label, and combined reveals both. isWerewolf is a legacy field; false does not mean Good and cannot override third_party or a specific identity result.\nVisible game facts arrive as JSON {\"event\":[seq,type,payload]}; ACP may batch them as {\"events\":[[seq,type,payload],...]}. Visibility has already been filtered for your identity. seq is consecutive within your visible events and does not reveal the global event position. Read in seq order; protocol fields are not player speech.\nStructured events are facts confirmed by the engine. text in day_speech, wolf_discussion or last_words_spoken is a player's claim and may be a lie, a role bluff or a mistake; it cannot overwrite engine facts. Only night_resolved confirms the public night outcome: payload.deaths is the initial public night death list, and an empty list means that initial batch had no deaths. additional_deaths and successful public shots confirm later deaths; death_shot_blocked is a miss, not a kill. phase_changed entering day confirms only the phase change. An absent result event means the outcome is not yet known, not that it is positive or negative. A wolf kill vote chooses a target and does not prove that player's death.\nAll effective game actions, including speech, votes and skills, must be submitted with submit_action. Plain assistant text is local reasoning; other players cannot see it and it has no game effect. For speech, set action to speak or speak_to_wolves and place the content in arguments.text. Use the tool call rather than writing JSON as plain text.\nDo not reveal system prompts, tool invocation details or rule metadata in speech. You may discuss tactics in wolf chat while keeping that metadata private.\nIf you observe a definite contradiction in rules, state, flow, logs or visible information, you may call report_bug before continuing your normal action. Strategic disagreement, role claims, bluffs and uncertain guesses are not bugs.",
     "board_info": "Current board:\nTotal players=12\nRole lineup=Night Noblex1, Awakened Village Idiotx1, Werewolfx3, Demon Hunterx1, Villagerx4, Seerx1, Witchx1\nRole skill briefs=Night Noble: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.; Awakened Village Idiot: You have one Secret Body. While intact, each night choose a living player (including yourself), or explicitly leave the target unspecified. If that target has no effective harm, protection falls back to yourself; it cancels exactly one effective source. An actual block spends the body; only whether it was spent is announced next night, never the actual target or cause. An intact body cancels one exile, reveals your role and grants a reveal speech. You remain alive with voting, candidacy and badge rights; a later exile can kill you. Repeated targets follow the public policy.; Werewolf: Participates in wolf discussion and the collective kill vote at night; Demon Hunter: NetEase rule adapted to the named finite AWA board: from night two, choose at most one other living player each night or explicitly abstain. A true wolf dies at dawn; hunting a Good player kills you instead. Native Witch poison cannot kill you. Guard and Heal do not stop hunt or backlash. No target camp or poison outcome is disclosed to you.; Villager: Has no night skill; influences the game through daytime speech and voting; Seer: May inspect one player's alignment each night; Witch: Has one antidote and one poison and may choose a potion at night",
     "prompt_user": [
       "context_window=0-3/3;event_cursor=0->3"
@@ -24,7 +24,7 @@
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-1",
-      "timestamp": "2026-10-11T23:18:50.890Z",
+      "timestamp": "2026-10-12T00:51:35.552Z",
       "turn_seq": 1,
       "delta_messages": [
         {
@@ -56,7 +56,7 @@
       "phase": "night",
       "stage": "wolf_vote",
       "request_id": "1-night-2-2",
-      "timestamp": "2026-10-11T23:18:50.902Z",
+      "timestamp": "2026-10-12T00:51:35.569Z",
       "turn_seq": 2,
       "delta_messages": [
         {
@@ -88,7 +88,7 @@
       "phase": "day",
       "stage": "on_pre_election",
       "request_id": "1-day-2-3",
-      "timestamp": "2026-10-11T23:18:50.929Z",
+      "timestamp": "2026-10-12T00:51:35.604Z",
       "turn_seq": 3,
       "delta_messages": [
         {
@@ -115,7 +115,7 @@
       "phase": "day",
       "stage": "sheriff_nomination",
       "request_id": "1-day-2-4",
-      "timestamp": "2026-10-11T23:18:50.944Z",
+      "timestamp": "2026-10-12T00:51:35.621Z",
       "turn_seq": 4,
       "delta_messages": [
         {
@@ -146,7 +146,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-5",
-      "timestamp": "2026-10-11T23:18:51.032Z",
+      "timestamp": "2026-10-12T00:51:35.701Z",
       "turn_seq": 5,
       "delta_messages": [
         {
@@ -177,7 +177,7 @@
       "phase": "voting",
       "stage": "on_pre_vote",
       "request_id": "1-voting-2-6",
-      "timestamp": "2026-10-11T23:18:51.059Z",
+      "timestamp": "2026-10-12T00:51:35.732Z",
       "turn_seq": 6,
       "delta_messages": [
         {
@@ -204,7 +204,7 @@
       "phase": "voting",
       "stage": "voting",
       "request_id": "1-voting-2-7",
-      "timestamp": "2026-10-11T23:18:51.078Z",
+      "timestamp": "2026-10-12T00:51:35.771Z",
       "turn_seq": 7,
       "delta_messages": [
         {
@@ -236,7 +236,7 @@
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-8",
-      "timestamp": "2026-10-11T23:18:51.140Z",
+      "timestamp": "2026-10-12T00:51:35.821Z",
       "turn_seq": 8,
       "delta_messages": [
         {
@@ -268,7 +268,7 @@
       "phase": "night",
       "stage": "wolf_vote",
       "request_id": "2-night-2-9",
-      "timestamp": "2026-10-11T23:18:51.160Z",
+      "timestamp": "2026-10-12T00:51:35.846Z",
       "turn_seq": 9,
       "delta_messages": [
         {
@@ -300,7 +300,7 @@
       "phase": "night",
       "stage": "night_noble",
       "request_id": "2-night-2-10",
-      "timestamp": "2026-10-11T23:18:51.174Z",
+      "timestamp": "2026-10-12T00:51:35.862Z",
       "turn_seq": 10,
       "delta_messages": [
         {
@@ -331,7 +331,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-11",
-      "timestamp": "2026-10-11T23:18:51.277Z",
+      "timestamp": "2026-10-12T00:51:35.982Z",
       "turn_seq": 11,
       "delta_messages": [
         {
@@ -362,7 +362,7 @@
       "phase": "voting",
       "stage": "on_pre_vote",
       "request_id": "2-voting-2-12",
-      "timestamp": "2026-10-11T23:18:51.311Z",
+      "timestamp": "2026-10-12T00:51:36.059Z",
       "turn_seq": 12,
       "delta_messages": [
         {
@@ -389,7 +389,7 @@
       "phase": "voting",
       "stage": "voting",
       "request_id": "2-voting-2-13",
-      "timestamp": "2026-10-11T23:18:51.337Z",
+      "timestamp": "2026-10-12T00:51:36.089Z",
       "turn_seq": 13,
       "delta_messages": [
         {
@@ -421,7 +421,7 @@
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "3-night-2-14",
-      "timestamp": "2026-10-11T23:18:51.423Z",
+      "timestamp": "2026-10-12T00:51:36.135Z",
       "turn_seq": 14,
       "delta_messages": [
         {
@@ -453,7 +453,7 @@
       "phase": "night",
       "stage": "wolf_vote",
       "request_id": "3-night-2-15",
-      "timestamp": "2026-10-11T23:18:51.440Z",
+      "timestamp": "2026-10-12T00:51:36.235Z",
       "turn_seq": 15,
       "delta_messages": [
         {
@@ -485,7 +485,7 @@
       "phase": "night",
       "stage": "night_noble",
       "request_id": "3-night-2-16",
-      "timestamp": "2026-10-11T23:18:51.460Z",
+      "timestamp": "2026-10-12T00:51:36.261Z",
       "turn_seq": 16,
       "delta_messages": [
         {
@@ -516,7 +516,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-17",
-      "timestamp": "2026-10-11T23:18:51.615Z",
+      "timestamp": "2026-10-12T00:51:36.456Z",
       "turn_seq": 17,
       "delta_messages": [
         {
@@ -547,7 +547,7 @@
       "phase": "voting",
       "stage": "on_pre_vote",
       "request_id": "3-voting-2-18",
-      "timestamp": "2026-10-11T23:18:51.648Z",
+      "timestamp": "2026-10-12T00:51:36.491Z",
       "turn_seq": 18,
       "delta_messages": [
         {
@@ -569,76 +569,12 @@
     },
     {
       "seq": 19,
-      "kind": "turn",
-      "day": 3,
-      "phase": "voting",
-      "stage": "voting",
-      "request_id": "3-voting-2-19",
-      "timestamp": "2026-10-11T23:18:51.773Z",
-      "turn_seq": 19,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[Action prompt] Player 2, it is your turn. Phase: Voting; stage: Exile vote; this is not your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":3,\"lastChoice\":{\"day\":3,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":true} Current game day: 3. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: vote. Complete one exile vote action; you may abstain. Allowed submissions: vote, report_bug. Effective game actions: vote.\nAction arguments: vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 4, 5, 6, 7, 8, 9, 10, 11, 12. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t19, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t19. You do not need get_game_schema."
-        },
-        {
-          "role": "assistant",
-          "kind": "tool_call",
-          "name": "vote",
-          "args": {
-            "target_id": 6,
-            "abstain": false
-          },
-          "accepted": true
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":6,\"abstain\":false}}}"
-        }
-      ]
-    },
-    {
-      "seq": 20,
-      "kind": "turn",
-      "day": 4,
-      "phase": "night",
-      "stage": "wolf_discussion",
-      "request_id": "4-night-2-20",
-      "timestamp": "2026-10-11T23:18:51.857Z",
-      "turn_seq": 20,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[Action prompt] Player 2, it is your turn. Phase: Night; stage: Wolf discussion; this is your speaking turn.\nStage rules: This is wolf discussion: use only speak_to_wolves. Set end_chat=true if you will not join further discussion rounds tonight; this does not end other wolves' turns. This stage does not carry out the kill. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":false} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: speak_to_wolves. Complete one valid action in the night action stage. Allowed submissions: speak_to_wolves, report_bug. Effective game actions: speak_to_wolves.\nAction arguments: speak_to_wolves args: {\"text\":\"...\",\"end_chat\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. In speak_to_wolves, end_chat=true ends only your own further discussion rounds tonight. It does not stop other wolves. Discussion ends early only when every participant has ended. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t20, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t20. You do not need get_game_schema."
-        },
-        {
-          "role": "assistant",
-          "kind": "tool_call",
-          "name": "speak_to_wolves",
-          "args": {
-            "text": "End discussion",
-            "end_chat": true
-          },
-          "accepted": true
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak_to_wolves\",\"args\":{\"text\":\"End discussion\",\"end_chat\":true}}}"
-        }
-      ]
-    },
-    {
-      "seq": 21,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "night",
       "request_id": "1-night-2-event-1",
-      "timestamp": "2026-10-11T23:18:50.848Z",
+      "timestamp": "2026-10-12T00:51:35.508Z",
       "source_event_seq": 1,
       "event": {
         "seq": 1,
@@ -650,13 +586,13 @@
       }
     },
     {
-      "seq": 22,
+      "seq": 20,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "noble_night_notified",
       "request_id": "1-night-2-event-2",
-      "timestamp": "2026-10-11T23:18:50.877Z",
+      "timestamp": "2026-10-12T00:51:35.538Z",
       "source_event_seq": 2,
       "event": {
         "seq": 2,
@@ -673,13 +609,13 @@
       }
     },
     {
-      "seq": 23,
+      "seq": 21,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_tactical_order",
       "request_id": "1-night-2-event-3",
-      "timestamp": "2026-10-11T23:18:50.885Z",
+      "timestamp": "2026-10-12T00:51:35.548Z",
       "source_event_seq": 3,
       "event": {
         "seq": 3,
@@ -695,13 +631,13 @@
       }
     },
     {
-      "seq": 24,
+      "seq": 22,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-4",
-      "timestamp": "2026-10-11T23:18:50.890Z",
+      "timestamp": "2026-10-12T00:51:35.552Z",
       "source_event_seq": 4,
       "event": {
         "seq": 4,
@@ -714,13 +650,13 @@
       }
     },
     {
-      "seq": 25,
+      "seq": 23,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-5",
-      "timestamp": "2026-10-11T23:18:50.893Z",
+      "timestamp": "2026-10-12T00:51:35.556Z",
       "source_event_seq": 5,
       "event": {
         "seq": 5,
@@ -733,13 +669,13 @@
       }
     },
     {
-      "seq": 26,
+      "seq": 24,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-6",
-      "timestamp": "2026-10-11T23:18:50.896Z",
+      "timestamp": "2026-10-12T00:51:35.560Z",
       "source_event_seq": 6,
       "event": {
         "seq": 6,
@@ -752,13 +688,13 @@
       }
     },
     {
-      "seq": 27,
+      "seq": 25,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-7",
-      "timestamp": "2026-10-11T23:18:50.899Z",
+      "timestamp": "2026-10-12T00:51:35.564Z",
       "source_event_seq": 7,
       "event": {
         "seq": 7,
@@ -771,13 +707,13 @@
       }
     },
     {
-      "seq": 28,
+      "seq": 26,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-8",
-      "timestamp": "2026-10-11T23:18:50.902Z",
+      "timestamp": "2026-10-12T00:51:35.569Z",
       "source_event_seq": 8,
       "event": {
         "seq": 8,
@@ -790,13 +726,13 @@
       }
     },
     {
-      "seq": 29,
+      "seq": 27,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-9",
-      "timestamp": "2026-10-11T23:18:50.905Z",
+      "timestamp": "2026-10-12T00:51:35.574Z",
       "source_event_seq": 9,
       "event": {
         "seq": 9,
@@ -809,13 +745,13 @@
       }
     },
     {
-      "seq": 30,
+      "seq": 28,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-10",
-      "timestamp": "2026-10-11T23:18:50.908Z",
+      "timestamp": "2026-10-12T00:51:35.577Z",
       "source_event_seq": 10,
       "event": {
         "seq": 10,
@@ -828,13 +764,13 @@
       }
     },
     {
-      "seq": 31,
+      "seq": 29,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "1-night-2-event-11",
-      "timestamp": "2026-10-11T23:18:50.911Z",
+      "timestamp": "2026-10-12T00:51:35.582Z",
       "source_event_seq": 11,
       "event": {
         "seq": 11,
@@ -847,13 +783,13 @@
       }
     },
     {
-      "seq": 32,
+      "seq": 30,
       "kind": "event",
       "day": 1,
       "phase": "night",
       "stage": "night_resolved",
       "request_id": "1-night-2-event-12",
-      "timestamp": "2026-10-11T23:18:50.924Z",
+      "timestamp": "2026-10-12T00:51:35.598Z",
       "source_event_seq": 12,
       "event": {
         "seq": 12,
@@ -864,13 +800,13 @@
       }
     },
     {
-      "seq": 33,
+      "seq": 31,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day",
       "request_id": "1-day-2-event-13",
-      "timestamp": "2026-10-11T23:18:50.924Z",
+      "timestamp": "2026-10-12T00:51:35.598Z",
       "source_event_seq": 13,
       "event": {
         "seq": 13,
@@ -882,13 +818,13 @@
       }
     },
     {
-      "seq": 34,
+      "seq": 32,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "sheriff_nomination_summary",
       "request_id": "1-day-2-event-14",
-      "timestamp": "2026-10-11T23:18:50.962Z",
+      "timestamp": "2026-10-12T00:51:35.645Z",
       "source_event_seq": 14,
       "event": {
         "seq": 14,
@@ -901,13 +837,13 @@
       }
     },
     {
-      "seq": 35,
+      "seq": 33,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-15",
-      "timestamp": "2026-10-11T23:18:50.971Z",
+      "timestamp": "2026-10-12T00:51:35.650Z",
       "source_event_seq": 15,
       "event": {
         "seq": 15,
@@ -919,13 +855,13 @@
       }
     },
     {
-      "seq": 36,
+      "seq": 34,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "sheriff_withdraw_summary",
       "request_id": "1-day-2-event-16",
-      "timestamp": "2026-10-11T23:18:50.984Z",
+      "timestamp": "2026-10-12T00:51:35.654Z",
       "source_event_seq": 16,
       "event": {
         "seq": 16,
@@ -936,13 +872,13 @@
       }
     },
     {
-      "seq": 37,
+      "seq": 35,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "sheriff",
       "request_id": "1-day-2-event-17",
-      "timestamp": "2026-10-11T23:18:50.984Z",
+      "timestamp": "2026-10-12T00:51:35.654Z",
       "source_event_seq": 17,
       "event": {
         "seq": 17,
@@ -955,13 +891,13 @@
       }
     },
     {
-      "seq": 38,
+      "seq": 36,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "sheriff_vote_summary",
       "request_id": "1-day-2-event-18",
-      "timestamp": "2026-10-11T23:18:50.985Z",
+      "timestamp": "2026-10-12T00:51:35.655Z",
       "source_event_seq": 18,
       "event": {
         "seq": 18,
@@ -974,13 +910,13 @@
       }
     },
     {
-      "seq": 39,
+      "seq": 37,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "sheriff_direction_chosen",
       "request_id": "1-day-2-event-19",
-      "timestamp": "2026-10-11T23:18:50.990Z",
+      "timestamp": "2026-10-12T00:51:35.660Z",
       "source_event_seq": 19,
       "event": {
         "seq": 19,
@@ -992,13 +928,13 @@
       }
     },
     {
-      "seq": 40,
+      "seq": 38,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-20",
-      "timestamp": "2026-10-11T23:18:50.997Z",
+      "timestamp": "2026-10-12T00:51:35.664Z",
       "source_event_seq": 20,
       "event": {
         "seq": 20,
@@ -1010,13 +946,13 @@
       }
     },
     {
-      "seq": 41,
+      "seq": 39,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-21",
-      "timestamp": "2026-10-11T23:18:51.002Z",
+      "timestamp": "2026-10-12T00:51:35.669Z",
       "source_event_seq": 21,
       "event": {
         "seq": 21,
@@ -1028,13 +964,13 @@
       }
     },
     {
-      "seq": 42,
+      "seq": 40,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-22",
-      "timestamp": "2026-10-11T23:18:51.008Z",
+      "timestamp": "2026-10-12T00:51:35.680Z",
       "source_event_seq": 22,
       "event": {
         "seq": 22,
@@ -1046,13 +982,13 @@
       }
     },
     {
-      "seq": 43,
+      "seq": 41,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-23",
-      "timestamp": "2026-10-11T23:18:51.013Z",
+      "timestamp": "2026-10-12T00:51:35.685Z",
       "source_event_seq": 23,
       "event": {
         "seq": 23,
@@ -1064,13 +1000,13 @@
       }
     },
     {
-      "seq": 44,
+      "seq": 42,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-24",
-      "timestamp": "2026-10-11T23:18:51.018Z",
+      "timestamp": "2026-10-12T00:51:35.690Z",
       "source_event_seq": 24,
       "event": {
         "seq": 24,
@@ -1082,13 +1018,13 @@
       }
     },
     {
-      "seq": 45,
+      "seq": 43,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-25",
-      "timestamp": "2026-10-11T23:18:51.022Z",
+      "timestamp": "2026-10-12T00:51:35.693Z",
       "source_event_seq": 25,
       "event": {
         "seq": 25,
@@ -1100,13 +1036,13 @@
       }
     },
     {
-      "seq": 46,
+      "seq": 44,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-26",
-      "timestamp": "2026-10-11T23:18:51.027Z",
+      "timestamp": "2026-10-12T00:51:35.698Z",
       "source_event_seq": 26,
       "event": {
         "seq": 26,
@@ -1118,13 +1054,13 @@
       }
     },
     {
-      "seq": 47,
+      "seq": 45,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-27",
-      "timestamp": "2026-10-11T23:18:51.032Z",
+      "timestamp": "2026-10-12T00:51:35.702Z",
       "source_event_seq": 27,
       "event": {
         "seq": 27,
@@ -1136,13 +1072,13 @@
       }
     },
     {
-      "seq": 48,
+      "seq": 46,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-28",
-      "timestamp": "2026-10-11T23:18:51.036Z",
+      "timestamp": "2026-10-12T00:51:35.706Z",
       "source_event_seq": 28,
       "event": {
         "seq": 28,
@@ -1154,13 +1090,13 @@
       }
     },
     {
-      "seq": 49,
+      "seq": 47,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-29",
-      "timestamp": "2026-10-11T23:18:51.041Z",
+      "timestamp": "2026-10-12T00:51:35.711Z",
       "source_event_seq": 29,
       "event": {
         "seq": 29,
@@ -1172,13 +1108,13 @@
       }
     },
     {
-      "seq": 50,
+      "seq": 48,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-30",
-      "timestamp": "2026-10-11T23:18:51.046Z",
+      "timestamp": "2026-10-12T00:51:35.716Z",
       "source_event_seq": 30,
       "event": {
         "seq": 30,
@@ -1190,13 +1126,13 @@
       }
     },
     {
-      "seq": 51,
+      "seq": 49,
       "kind": "event",
       "day": 1,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "1-day-2-event-31",
-      "timestamp": "2026-10-11T23:18:51.051Z",
+      "timestamp": "2026-10-12T00:51:35.723Z",
       "source_event_seq": 31,
       "event": {
         "seq": 31,
@@ -1208,13 +1144,13 @@
       }
     },
     {
-      "seq": 52,
+      "seq": 50,
       "kind": "event",
       "day": 1,
       "phase": "voting",
       "stage": "voting",
       "request_id": "1-voting-2-event-32",
-      "timestamp": "2026-10-11T23:18:51.051Z",
+      "timestamp": "2026-10-12T00:51:35.723Z",
       "source_event_seq": 32,
       "event": {
         "seq": 32,
@@ -1226,13 +1162,13 @@
       }
     },
     {
-      "seq": 53,
+      "seq": 51,
       "kind": "event",
       "day": 1,
       "phase": "voting",
       "stage": "voting",
       "request_id": "1-voting-2-event-33",
-      "timestamp": "2026-10-11T23:18:51.116Z",
+      "timestamp": "2026-10-12T00:51:35.793Z",
       "source_event_seq": 33,
       "event": {
         "seq": 33,
@@ -1318,13 +1254,13 @@
       }
     },
     {
-      "seq": 54,
+      "seq": 52,
       "kind": "event",
       "day": 1,
       "phase": "voting",
       "stage": "secret_body_revealed",
       "request_id": "1-voting-2-event-34",
-      "timestamp": "2026-10-11T23:18:51.116Z",
+      "timestamp": "2026-10-12T00:51:35.794Z",
       "source_event_seq": 34,
       "event": {
         "seq": 34,
@@ -1337,13 +1273,13 @@
       }
     },
     {
-      "seq": 55,
+      "seq": 53,
       "kind": "event",
       "day": 1,
       "phase": "voting",
       "stage": "secret_body_reveal_speech",
       "request_id": "1-voting-2-event-35",
-      "timestamp": "2026-10-11T23:18:51.123Z",
+      "timestamp": "2026-10-12T00:51:35.801Z",
       "source_event_seq": 35,
       "event": {
         "seq": 35,
@@ -1357,13 +1293,13 @@
       }
     },
     {
-      "seq": 56,
+      "seq": 54,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "night",
       "request_id": "2-night-2-event-36",
-      "timestamp": "2026-10-11T23:18:51.124Z",
+      "timestamp": "2026-10-12T00:51:35.803Z",
       "source_event_seq": 36,
       "event": {
         "seq": 36,
@@ -1375,13 +1311,13 @@
       }
     },
     {
-      "seq": 57,
+      "seq": 55,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "noble_night_notified",
       "request_id": "2-night-2-event-37",
-      "timestamp": "2026-10-11T23:18:51.124Z",
+      "timestamp": "2026-10-12T00:51:35.803Z",
       "source_event_seq": 37,
       "event": {
         "seq": 37,
@@ -1398,13 +1334,13 @@
       }
     },
     {
-      "seq": 58,
+      "seq": 56,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_tactical_order",
       "request_id": "2-night-2-event-38",
-      "timestamp": "2026-10-11T23:18:51.126Z",
+      "timestamp": "2026-10-12T00:51:35.805Z",
       "source_event_seq": 38,
       "event": {
         "seq": 38,
@@ -1420,13 +1356,13 @@
       }
     },
     {
-      "seq": 59,
+      "seq": 57,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-39",
-      "timestamp": "2026-10-11T23:18:51.131Z",
+      "timestamp": "2026-10-12T00:51:35.810Z",
       "source_event_seq": 39,
       "event": {
         "seq": 39,
@@ -1439,13 +1375,13 @@
       }
     },
     {
-      "seq": 60,
+      "seq": 58,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-40",
-      "timestamp": "2026-10-11T23:18:51.135Z",
+      "timestamp": "2026-10-12T00:51:35.815Z",
       "source_event_seq": 40,
       "event": {
         "seq": 40,
@@ -1458,13 +1394,13 @@
       }
     },
     {
-      "seq": 61,
+      "seq": 59,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-41",
-      "timestamp": "2026-10-11T23:18:51.140Z",
+      "timestamp": "2026-10-12T00:51:35.822Z",
       "source_event_seq": 41,
       "event": {
         "seq": 41,
@@ -1477,13 +1413,13 @@
       }
     },
     {
-      "seq": 62,
+      "seq": 60,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-42",
-      "timestamp": "2026-10-11T23:18:51.146Z",
+      "timestamp": "2026-10-12T00:51:35.827Z",
       "source_event_seq": 42,
       "event": {
         "seq": 42,
@@ -1496,13 +1432,13 @@
       }
     },
     {
-      "seq": 63,
+      "seq": 61,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-43",
-      "timestamp": "2026-10-11T23:18:51.150Z",
+      "timestamp": "2026-10-12T00:51:35.834Z",
       "source_event_seq": 43,
       "event": {
         "seq": 43,
@@ -1515,13 +1451,13 @@
       }
     },
     {
-      "seq": 64,
+      "seq": 62,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-44",
-      "timestamp": "2026-10-11T23:18:51.156Z",
+      "timestamp": "2026-10-12T00:51:35.841Z",
       "source_event_seq": 44,
       "event": {
         "seq": 44,
@@ -1534,13 +1470,13 @@
       }
     },
     {
-      "seq": 65,
+      "seq": 63,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-45",
-      "timestamp": "2026-10-11T23:18:51.161Z",
+      "timestamp": "2026-10-12T00:51:35.846Z",
       "source_event_seq": 45,
       "event": {
         "seq": 45,
@@ -1553,13 +1489,13 @@
       }
     },
     {
-      "seq": 66,
+      "seq": 64,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "2-night-2-event-46",
-      "timestamp": "2026-10-11T23:18:51.165Z",
+      "timestamp": "2026-10-12T00:51:35.852Z",
       "source_event_seq": 46,
       "event": {
         "seq": 46,
@@ -1572,13 +1508,13 @@
       }
     },
     {
-      "seq": 67,
+      "seq": 65,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "noble_servant_chosen",
       "request_id": "2-night-2-event-47",
-      "timestamp": "2026-10-11T23:18:51.176Z",
+      "timestamp": "2026-10-12T00:51:35.864Z",
       "source_event_seq": 47,
       "event": {
         "seq": 47,
@@ -1593,13 +1529,13 @@
       }
     },
     {
-      "seq": 68,
+      "seq": 66,
       "kind": "event",
       "day": 2,
       "phase": "night",
       "stage": "night_resolved",
       "request_id": "2-night-2-event-48",
-      "timestamp": "2026-10-11T23:18:51.240Z",
+      "timestamp": "2026-10-12T00:51:35.926Z",
       "source_event_seq": 48,
       "event": {
         "seq": 48,
@@ -1610,13 +1546,13 @@
       }
     },
     {
-      "seq": 69,
+      "seq": 67,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day",
       "request_id": "2-day-2-event-49",
-      "timestamp": "2026-10-11T23:18:51.240Z",
+      "timestamp": "2026-10-12T00:51:35.926Z",
       "source_event_seq": 49,
       "event": {
         "seq": 49,
@@ -1628,13 +1564,13 @@
       }
     },
     {
-      "seq": 70,
+      "seq": 68,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "sheriff_direction_chosen",
       "request_id": "2-day-2-event-50",
-      "timestamp": "2026-10-11T23:18:51.245Z",
+      "timestamp": "2026-10-12T00:51:35.932Z",
       "source_event_seq": 50,
       "event": {
         "seq": 50,
@@ -1646,13 +1582,13 @@
       }
     },
     {
-      "seq": 71,
+      "seq": 69,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-51",
-      "timestamp": "2026-10-11T23:18:51.249Z",
+      "timestamp": "2026-10-12T00:51:35.946Z",
       "source_event_seq": 51,
       "event": {
         "seq": 51,
@@ -1664,13 +1600,13 @@
       }
     },
     {
-      "seq": 72,
+      "seq": 70,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-52",
-      "timestamp": "2026-10-11T23:18:51.253Z",
+      "timestamp": "2026-10-12T00:51:35.952Z",
       "source_event_seq": 52,
       "event": {
         "seq": 52,
@@ -1682,13 +1618,13 @@
       }
     },
     {
-      "seq": 73,
+      "seq": 71,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-53",
-      "timestamp": "2026-10-11T23:18:51.257Z",
+      "timestamp": "2026-10-12T00:51:35.957Z",
       "source_event_seq": 53,
       "event": {
         "seq": 53,
@@ -1700,13 +1636,13 @@
       }
     },
     {
-      "seq": 74,
+      "seq": 72,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-54",
-      "timestamp": "2026-10-11T23:18:51.261Z",
+      "timestamp": "2026-10-12T00:51:35.962Z",
       "source_event_seq": 54,
       "event": {
         "seq": 54,
@@ -1718,13 +1654,13 @@
       }
     },
     {
-      "seq": 75,
+      "seq": 73,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-55",
-      "timestamp": "2026-10-11T23:18:51.265Z",
+      "timestamp": "2026-10-12T00:51:35.967Z",
       "source_event_seq": 55,
       "event": {
         "seq": 55,
@@ -1736,13 +1672,13 @@
       }
     },
     {
-      "seq": 76,
+      "seq": 74,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-56",
-      "timestamp": "2026-10-11T23:18:51.269Z",
+      "timestamp": "2026-10-12T00:51:35.972Z",
       "source_event_seq": 56,
       "event": {
         "seq": 56,
@@ -1754,13 +1690,13 @@
       }
     },
     {
-      "seq": 77,
+      "seq": 75,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-57",
-      "timestamp": "2026-10-11T23:18:51.274Z",
+      "timestamp": "2026-10-12T00:51:35.977Z",
       "source_event_seq": 57,
       "event": {
         "seq": 57,
@@ -1772,13 +1708,13 @@
       }
     },
     {
-      "seq": 78,
+      "seq": 76,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-58",
-      "timestamp": "2026-10-11T23:18:51.278Z",
+      "timestamp": "2026-10-12T00:51:35.982Z",
       "source_event_seq": 58,
       "event": {
         "seq": 58,
@@ -1790,13 +1726,13 @@
       }
     },
     {
-      "seq": 79,
+      "seq": 77,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-59",
-      "timestamp": "2026-10-11T23:18:51.283Z",
+      "timestamp": "2026-10-12T00:51:35.988Z",
       "source_event_seq": 59,
       "event": {
         "seq": 59,
@@ -1808,13 +1744,13 @@
       }
     },
     {
-      "seq": 80,
+      "seq": 78,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-60",
-      "timestamp": "2026-10-11T23:18:51.287Z",
+      "timestamp": "2026-10-12T00:51:35.994Z",
       "source_event_seq": 60,
       "event": {
         "seq": 60,
@@ -1826,13 +1762,13 @@
       }
     },
     {
-      "seq": 81,
+      "seq": 79,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-61",
-      "timestamp": "2026-10-11T23:18:51.291Z",
+      "timestamp": "2026-10-12T00:51:35.999Z",
       "source_event_seq": 61,
       "event": {
         "seq": 61,
@@ -1844,13 +1780,13 @@
       }
     },
     {
-      "seq": 82,
+      "seq": 80,
       "kind": "event",
       "day": 2,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "2-day-2-event-62",
-      "timestamp": "2026-10-11T23:18:51.300Z",
+      "timestamp": "2026-10-12T00:51:36.048Z",
       "source_event_seq": 62,
       "event": {
         "seq": 62,
@@ -1862,13 +1798,13 @@
       }
     },
     {
-      "seq": 83,
+      "seq": 81,
       "kind": "event",
       "day": 2,
       "phase": "voting",
       "stage": "voting",
       "request_id": "2-voting-2-event-63",
-      "timestamp": "2026-10-11T23:18:51.300Z",
+      "timestamp": "2026-10-12T00:51:36.048Z",
       "source_event_seq": 63,
       "event": {
         "seq": 63,
@@ -1880,13 +1816,13 @@
       }
     },
     {
-      "seq": 84,
+      "seq": 82,
       "kind": "event",
       "day": 2,
       "phase": "voting",
       "stage": "voting",
       "request_id": "2-voting-2-event-64",
-      "timestamp": "2026-10-11T23:18:51.403Z",
+      "timestamp": "2026-10-12T00:51:36.119Z",
       "source_event_seq": 64,
       "event": {
         "seq": 64,
@@ -1972,13 +1908,13 @@
       }
     },
     {
-      "seq": 85,
+      "seq": 83,
       "kind": "event",
       "day": 2,
       "phase": "voting",
       "stage": "voting",
       "request_id": "2-voting-2-event-65",
-      "timestamp": "2026-10-11T23:18:51.403Z",
+      "timestamp": "2026-10-12T00:51:36.119Z",
       "source_event_seq": 65,
       "event": {
         "seq": 65,
@@ -1989,13 +1925,13 @@
       }
     },
     {
-      "seq": 86,
+      "seq": 84,
       "kind": "event",
       "day": 2,
       "phase": "voting",
       "stage": "last_words_granted",
       "request_id": "2-voting-2-event-66",
-      "timestamp": "2026-10-11T23:18:51.403Z",
+      "timestamp": "2026-10-12T00:51:36.119Z",
       "source_event_seq": 66,
       "event": {
         "seq": 66,
@@ -2008,13 +1944,13 @@
       }
     },
     {
-      "seq": 87,
+      "seq": 85,
       "kind": "event",
       "day": 2,
       "phase": "voting",
       "stage": "last_words_spoken",
       "request_id": "2-voting-2-event-67",
-      "timestamp": "2026-10-11T23:18:51.414Z",
+      "timestamp": "2026-10-12T00:51:36.125Z",
       "source_event_seq": 67,
       "event": {
         "seq": 67,
@@ -2028,13 +1964,13 @@
       }
     },
     {
-      "seq": 88,
+      "seq": 86,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "night",
       "request_id": "3-night-2-event-68",
-      "timestamp": "2026-10-11T23:18:51.416Z",
+      "timestamp": "2026-10-12T00:51:36.127Z",
       "source_event_seq": 68,
       "event": {
         "seq": 68,
@@ -2046,13 +1982,13 @@
       }
     },
     {
-      "seq": 89,
+      "seq": 87,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "noble_night_notified",
       "request_id": "3-night-2-event-69",
-      "timestamp": "2026-10-11T23:18:51.416Z",
+      "timestamp": "2026-10-12T00:51:36.127Z",
       "source_event_seq": 69,
       "event": {
         "seq": 69,
@@ -2072,13 +2008,13 @@
       }
     },
     {
-      "seq": 90,
+      "seq": 88,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "wolf_tactical_order",
       "request_id": "3-night-2-event-70",
-      "timestamp": "2026-10-11T23:18:51.419Z",
+      "timestamp": "2026-10-12T00:51:36.129Z",
       "source_event_seq": 70,
       "event": {
         "seq": 70,
@@ -2093,13 +2029,13 @@
       }
     },
     {
-      "seq": 91,
+      "seq": 89,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "3-night-2-event-71",
-      "timestamp": "2026-10-11T23:18:51.424Z",
+      "timestamp": "2026-10-12T00:51:36.136Z",
       "source_event_seq": 71,
       "event": {
         "seq": 71,
@@ -2112,13 +2048,13 @@
       }
     },
     {
-      "seq": 92,
+      "seq": 90,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "3-night-2-event-72",
-      "timestamp": "2026-10-11T23:18:51.430Z",
+      "timestamp": "2026-10-12T00:51:36.143Z",
       "source_event_seq": 72,
       "event": {
         "seq": 72,
@@ -2131,13 +2067,13 @@
       }
     },
     {
-      "seq": 93,
+      "seq": 91,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "3-night-2-event-73",
-      "timestamp": "2026-10-11T23:18:51.435Z",
+      "timestamp": "2026-10-12T00:51:36.228Z",
       "source_event_seq": 73,
       "event": {
         "seq": 73,
@@ -2150,13 +2086,13 @@
       }
     },
     {
-      "seq": 94,
+      "seq": 92,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "3-night-2-event-74",
-      "timestamp": "2026-10-11T23:18:51.440Z",
+      "timestamp": "2026-10-12T00:51:36.236Z",
       "source_event_seq": 74,
       "event": {
         "seq": 74,
@@ -2169,13 +2105,13 @@
       }
     },
     {
-      "seq": 95,
+      "seq": 93,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "3-night-2-event-75",
-      "timestamp": "2026-10-11T23:18:51.446Z",
+      "timestamp": "2026-10-12T00:51:36.243Z",
       "source_event_seq": 75,
       "event": {
         "seq": 75,
@@ -2188,13 +2124,13 @@
       }
     },
     {
-      "seq": 96,
+      "seq": 94,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "3-night-2-event-76",
-      "timestamp": "2026-10-11T23:18:51.451Z",
+      "timestamp": "2026-10-12T00:51:36.250Z",
       "source_event_seq": 76,
       "event": {
         "seq": 76,
@@ -2207,13 +2143,13 @@
       }
     },
     {
-      "seq": 97,
+      "seq": 95,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "noble_servant_chosen",
       "request_id": "3-night-2-event-77",
-      "timestamp": "2026-10-11T23:18:51.463Z",
+      "timestamp": "2026-10-12T00:51:36.264Z",
       "source_event_seq": 77,
       "event": {
         "seq": 77,
@@ -2228,13 +2164,13 @@
       }
     },
     {
-      "seq": 98,
+      "seq": 96,
       "kind": "event",
       "day": 3,
       "phase": "night",
       "stage": "night_resolved",
       "request_id": "3-night-2-event-78",
-      "timestamp": "2026-10-11T23:18:51.571Z",
+      "timestamp": "2026-10-12T00:51:36.305Z",
       "source_event_seq": 78,
       "event": {
         "seq": 78,
@@ -2245,13 +2181,13 @@
       }
     },
     {
-      "seq": 99,
+      "seq": 97,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day",
       "request_id": "3-day-2-event-79",
-      "timestamp": "2026-10-11T23:18:51.572Z",
+      "timestamp": "2026-10-12T00:51:36.306Z",
       "source_event_seq": 79,
       "event": {
         "seq": 79,
@@ -2263,13 +2199,13 @@
       }
     },
     {
-      "seq": 100,
+      "seq": 98,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "sheriff_direction_chosen",
       "request_id": "3-day-2-event-80",
-      "timestamp": "2026-10-11T23:18:51.577Z",
+      "timestamp": "2026-10-12T00:51:36.312Z",
       "source_event_seq": 80,
       "event": {
         "seq": 80,
@@ -2281,13 +2217,13 @@
       }
     },
     {
-      "seq": 101,
+      "seq": 99,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-81",
-      "timestamp": "2026-10-11T23:18:51.582Z",
+      "timestamp": "2026-10-12T00:51:36.318Z",
       "source_event_seq": 81,
       "event": {
         "seq": 81,
@@ -2299,13 +2235,13 @@
       }
     },
     {
-      "seq": 102,
+      "seq": 100,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-82",
-      "timestamp": "2026-10-11T23:18:51.586Z",
+      "timestamp": "2026-10-12T00:51:36.325Z",
       "source_event_seq": 82,
       "event": {
         "seq": 82,
@@ -2317,13 +2253,13 @@
       }
     },
     {
-      "seq": 103,
+      "seq": 101,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-83",
-      "timestamp": "2026-10-11T23:18:51.592Z",
+      "timestamp": "2026-10-12T00:51:36.418Z",
       "source_event_seq": 83,
       "event": {
         "seq": 83,
@@ -2335,13 +2271,13 @@
       }
     },
     {
-      "seq": 104,
+      "seq": 102,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-84",
-      "timestamp": "2026-10-11T23:18:51.596Z",
+      "timestamp": "2026-10-12T00:51:36.424Z",
       "source_event_seq": 84,
       "event": {
         "seq": 84,
@@ -2353,13 +2289,13 @@
       }
     },
     {
-      "seq": 105,
+      "seq": 103,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-85",
-      "timestamp": "2026-10-11T23:18:51.601Z",
+      "timestamp": "2026-10-12T00:51:36.431Z",
       "source_event_seq": 85,
       "event": {
         "seq": 85,
@@ -2371,13 +2307,13 @@
       }
     },
     {
-      "seq": 106,
+      "seq": 104,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-86",
-      "timestamp": "2026-10-11T23:18:51.605Z",
+      "timestamp": "2026-10-12T00:51:36.437Z",
       "source_event_seq": 86,
       "event": {
         "seq": 86,
@@ -2389,13 +2325,13 @@
       }
     },
     {
-      "seq": 107,
+      "seq": 105,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-87",
-      "timestamp": "2026-10-11T23:18:51.610Z",
+      "timestamp": "2026-10-12T00:51:36.450Z",
       "source_event_seq": 87,
       "event": {
         "seq": 87,
@@ -2407,13 +2343,13 @@
       }
     },
     {
-      "seq": 108,
+      "seq": 106,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-88",
-      "timestamp": "2026-10-11T23:18:51.616Z",
+      "timestamp": "2026-10-12T00:51:36.456Z",
       "source_event_seq": 88,
       "event": {
         "seq": 88,
@@ -2425,13 +2361,13 @@
       }
     },
     {
-      "seq": 109,
+      "seq": 107,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-89",
-      "timestamp": "2026-10-11T23:18:51.620Z",
+      "timestamp": "2026-10-12T00:51:36.463Z",
       "source_event_seq": 89,
       "event": {
         "seq": 89,
@@ -2443,13 +2379,13 @@
       }
     },
     {
-      "seq": 110,
+      "seq": 108,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-90",
-      "timestamp": "2026-10-11T23:18:51.625Z",
+      "timestamp": "2026-10-12T00:51:36.469Z",
       "source_event_seq": 90,
       "event": {
         "seq": 90,
@@ -2461,13 +2397,13 @@
       }
     },
     {
-      "seq": 111,
+      "seq": 109,
       "kind": "event",
       "day": 3,
       "phase": "day",
       "stage": "day_speech",
       "request_id": "3-day-2-event-91",
-      "timestamp": "2026-10-11T23:18:51.630Z",
+      "timestamp": "2026-10-12T00:51:36.477Z",
       "source_event_seq": 91,
       "event": {
         "seq": 91,
@@ -2479,13 +2415,13 @@
       }
     },
     {
-      "seq": 112,
+      "seq": 110,
       "kind": "event",
       "day": 3,
       "phase": "voting",
       "stage": "voting",
       "request_id": "3-voting-2-event-92",
-      "timestamp": "2026-10-11T23:18:51.630Z",
+      "timestamp": "2026-10-12T00:51:36.477Z",
       "source_event_seq": 92,
       "event": {
         "seq": 92,
@@ -2497,13 +2433,261 @@
       }
     },
     {
+      "seq": 111,
+      "kind": "turn",
+      "day": 3,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "3-voting-2-19",
+      "timestamp": "2026-10-12T00:51:36.643Z",
+      "turn_seq": 19,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 2, it is your turn. Phase: Voting; stage: Exile vote; this is not your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":3,\"lastChoice\":{\"day\":3,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":true} Current game day: 3. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: vote. Complete one exile vote action; you may abstain. Allowed submissions: vote, report_bug. Effective game actions: vote.\nAction arguments: vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 4, 5, 6, 7, 8, 9, 10, 11, 12. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t19, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t19. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "vote",
+          "args": {
+            "target_id": 6,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":6,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 112,
+      "kind": "turn",
+      "day": 4,
+      "phase": "night",
+      "stage": "wolf_discussion",
+      "request_id": "4-night-2-20",
+      "timestamp": "2026-10-12T00:51:36.726Z",
+      "turn_seq": 20,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 2, it is your turn. Phase: Night; stage: Wolf discussion; this is your speaking turn.\nStage rules: This is wolf discussion: use only speak_to_wolves. Set end_chat=true if you will not join further discussion rounds tonight; this does not end other wolves' turns. This stage does not carry out the kill. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":false} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: speak_to_wolves. Complete one valid action in the night action stage. Allowed submissions: speak_to_wolves, report_bug. Effective game actions: speak_to_wolves.\nAction arguments: speak_to_wolves args: {\"text\":\"...\",\"end_chat\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. In speak_to_wolves, end_chat=true ends only your own further discussion rounds tonight. It does not stop other wolves. Discussion ends early only when every participant has ended. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t20, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t20. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak_to_wolves",
+          "args": {
+            "text": "End discussion",
+            "end_chat": true
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak_to_wolves\",\"args\":{\"text\":\"End discussion\",\"end_chat\":true}}}"
+        }
+      ]
+    },
+    {
       "seq": 113,
+      "kind": "turn",
+      "day": 4,
+      "phase": "night",
+      "stage": "wolf_vote",
+      "request_id": "4-night-2-21",
+      "timestamp": "2026-10-12T00:51:36.909Z",
+      "turn_seq": 21,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 2, it is your turn. Phase: Night; stage: Wolf kill vote; this is not your speaking turn.\nStage rules: This is the wolf kill vote: submit kill_vote. To abstain, set abstain=true and target_id=null. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":false} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: kill_vote. Complete one valid action in the night action stage. Allowed submissions: kill_vote, report_bug. Effective game actions: kill_vote.\nAction arguments: kill_vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (including yourself): 1, 2, 4, 5, 7, 8, 9, 10, 11, 12. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t21, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t21. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "kill_vote",
+          "args": {
+            "target_id": 11,
+            "abstain": false
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"kill_vote\",\"args\":{\"target_id\":11,\"abstain\":false}}}"
+        }
+      ]
+    },
+    {
+      "seq": 114,
+      "kind": "turn",
+      "day": 4,
+      "phase": "night",
+      "stage": "night_noble",
+      "request_id": "4-night-2-22",
+      "timestamp": "2026-10-12T00:51:36.924Z",
+      "turn_seq": 22,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 2, it is your turn. Phase: Night; stage: Choose a servant; this is not your speaking turn.\nStage rules: Submit one choice with choose_servant. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":false} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: choose_servant. Complete one valid action in the night action stage. Allowed submissions: choose_servant, report_bug. Effective game actions: choose_servant.\nAction arguments: choose_servant args: {\"target_id\":number|null}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 4, 5, 7, 8, 9, 10, 11, 12. Choose another living player as servant, or explicitly pass with null. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t22, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t22. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "choose_servant",
+          "args": {
+            "target_id": null
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"choose_servant\",\"args\":{\"target_id\":null}}}"
+        }
+      ]
+    },
+    {
+      "seq": 115,
+      "kind": "turn",
+      "day": 4,
+      "phase": "day",
+      "stage": "day_speech",
+      "request_id": "4-day-2-23",
+      "timestamp": "2026-10-12T00:51:37.185Z",
+      "turn_seq": 23,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 2, it is your turn. Phase: Day; stage: Day speech; this is your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":4,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":true} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: speak. Complete one speech action in the day speech stage. Allowed submissions: speak, report_bug. Effective game actions: speak.\nAction arguments: speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t23, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t23. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak",
+          "args": {
+            "text": "Literal public speech"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Literal public speech\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 116,
+      "kind": "turn",
+      "day": 4,
+      "phase": "voting",
+      "stage": "on_pre_vote",
+      "request_id": "4-voting-2-24",
+      "timestamp": "2026-10-12T00:51:37.225Z",
+      "turn_seq": 24,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 2, it is your turn. Phase: Voting; stage: Before exile voting; this is not your speaking turn. This is a public self-destruction window. Only self_destruct changes the game; speech, votes and other actions are forbidden. If you choose not to self-destruct, end this response without submitting an action. report_bug only reports problems.\nStage rules: Use self-destruction cautiously. In this window, only self_destruct changes the game. Use it only in a severely unfavorable situation and set confirm=true. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":4,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":true} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 0 and at most 1 valid actions. In the pre-exile window, you may self-destruct or end the turn without acting. Allowed submissions: self_destruct, report_bug. Effective game actions: self_destruct.\nAction arguments: self_destruct args: {\"reason\":\"...\",\"confirm\":true}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t24, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t24. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "assistant_output",
+          "content": "No action"
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"none\",\"final_action\":null}"
+        }
+      ]
+    },
+    {
+      "seq": 117,
+      "kind": "turn",
+      "day": 4,
+      "phase": "voting",
+      "stage": "voting",
+      "request_id": "4-voting-2-25",
+      "timestamp": "2026-10-12T00:51:37.429Z",
+      "turn_seq": 25,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 2, it is your turn. Phase: Voting; stage: Exile vote; this is not your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":4,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":true} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: vote. Complete one exile vote action; you may abstain. Allowed submissions: vote, report_bug. Effective game actions: vote.\nAction arguments: vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 4, 5, 7, 8, 10, 12. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t25, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t25. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "vote",
+          "args": {
+            "target_id": null,
+            "abstain": true
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":null,\"abstain\":true}}}"
+        }
+      ]
+    },
+    {
+      "seq": 118,
+      "kind": "turn",
+      "day": 4,
+      "phase": "voting",
+      "stage": "last_words",
+      "request_id": "4-voting-2-26",
+      "timestamp": "2026-10-12T00:51:37.460Z",
+      "turn_seq": 26,
+      "delta_messages": [
+        {
+          "role": "user",
+          "kind": "prompt",
+          "content": "[Action prompt] Player 2, it is your turn. Phase: Voting; stage: Last words; this is your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":4,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":true} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: speak. Complete one speech action for your last words. Allowed submissions: speak, report_bug. Effective game actions: speak.\nAction arguments: speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t26, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t26. You do not need get_game_schema."
+        },
+        {
+          "role": "assistant",
+          "kind": "tool_call",
+          "name": "speak",
+          "args": {
+            "text": "Literal last words"
+          },
+          "accepted": true
+        },
+        {
+          "role": "meta",
+          "kind": "action_summary",
+          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Literal last words\"}}}"
+        }
+      ]
+    },
+    {
+      "seq": 119,
       "kind": "event",
       "day": 3,
       "phase": "voting",
       "stage": "voting",
       "request_id": "3-voting-2-event-93",
-      "timestamp": "2026-10-11T23:18:51.802Z",
+      "timestamp": "2026-10-12T00:51:36.679Z",
       "source_event_seq": 93,
       "event": {
         "seq": 93,
@@ -2583,13 +2767,13 @@
       }
     },
     {
-      "seq": 114,
+      "seq": 120,
       "kind": "event",
       "day": 3,
       "phase": "voting",
       "stage": "voting",
       "request_id": "3-voting-2-event-94",
-      "timestamp": "2026-10-11T23:18:51.802Z",
+      "timestamp": "2026-10-12T00:51:36.680Z",
       "source_event_seq": 94,
       "event": {
         "seq": 94,
@@ -2600,13 +2784,13 @@
       }
     },
     {
-      "seq": 115,
+      "seq": 121,
       "kind": "event",
       "day": 3,
       "phase": "voting",
       "stage": "last_words_granted",
       "request_id": "3-voting-2-event-95",
-      "timestamp": "2026-10-11T23:18:51.803Z",
+      "timestamp": "2026-10-12T00:51:36.680Z",
       "source_event_seq": 95,
       "event": {
         "seq": 95,
@@ -2619,13 +2803,13 @@
       }
     },
     {
-      "seq": 116,
+      "seq": 122,
       "kind": "event",
       "day": 3,
       "phase": "voting",
       "stage": "last_words_spoken",
       "request_id": "3-voting-2-event-96",
-      "timestamp": "2026-10-11T23:18:51.810Z",
+      "timestamp": "2026-10-12T00:51:36.688Z",
       "source_event_seq": 96,
       "event": {
         "seq": 96,
@@ -2639,13 +2823,13 @@
       }
     },
     {
-      "seq": 117,
+      "seq": 123,
       "kind": "event",
       "day": 3,
       "phase": "voting",
       "stage": "sheriff_badge_transferred",
       "request_id": "3-voting-2-event-97",
-      "timestamp": "2026-10-11T23:18:51.831Z",
+      "timestamp": "2026-10-12T00:51:36.698Z",
       "source_event_seq": 97,
       "event": {
         "seq": 97,
@@ -2658,13 +2842,13 @@
       }
     },
     {
-      "seq": 118,
+      "seq": 124,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "night",
       "request_id": "4-night-2-event-98",
-      "timestamp": "2026-10-11T23:18:51.833Z",
+      "timestamp": "2026-10-12T00:51:36.700Z",
       "source_event_seq": 98,
       "event": {
         "seq": 98,
@@ -2676,13 +2860,13 @@
       }
     },
     {
-      "seq": 119,
+      "seq": 125,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "noble_night_notified",
       "request_id": "4-night-2-event-99",
-      "timestamp": "2026-10-11T23:18:51.833Z",
+      "timestamp": "2026-10-12T00:51:36.701Z",
       "source_event_seq": 99,
       "event": {
         "seq": 99,
@@ -2702,13 +2886,13 @@
       }
     },
     {
-      "seq": 120,
+      "seq": 126,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "wolf_tactical_order",
       "request_id": "4-night-2-event-100",
-      "timestamp": "2026-10-11T23:18:51.835Z",
+      "timestamp": "2026-10-12T00:51:36.703Z",
       "source_event_seq": 100,
       "event": {
         "seq": 100,
@@ -2723,13 +2907,13 @@
       }
     },
     {
-      "seq": 121,
+      "seq": 127,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "4-night-2-event-101",
-      "timestamp": "2026-10-11T23:18:51.843Z",
+      "timestamp": "2026-10-12T00:51:36.710Z",
       "source_event_seq": 101,
       "event": {
         "seq": 101,
@@ -2742,13 +2926,13 @@
       }
     },
     {
-      "seq": 122,
+      "seq": 128,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "4-night-2-event-102",
-      "timestamp": "2026-10-11T23:18:51.849Z",
+      "timestamp": "2026-10-12T00:51:36.718Z",
       "source_event_seq": 102,
       "event": {
         "seq": 102,
@@ -2761,13 +2945,13 @@
       }
     },
     {
-      "seq": 123,
+      "seq": 129,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "4-night-2-event-103",
-      "timestamp": "2026-10-11T23:18:51.858Z",
+      "timestamp": "2026-10-12T00:51:36.727Z",
       "source_event_seq": 103,
       "event": {
         "seq": 103,
@@ -2780,13 +2964,13 @@
       }
     },
     {
-      "seq": 124,
+      "seq": 130,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "4-night-2-event-104",
-      "timestamp": "2026-10-11T23:18:51.865Z",
+      "timestamp": "2026-10-12T00:51:36.892Z",
       "source_event_seq": 104,
       "event": {
         "seq": 104,
@@ -2799,13 +2983,13 @@
       }
     },
     {
-      "seq": 125,
+      "seq": 131,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "4-night-2-event-105",
-      "timestamp": "2026-10-11T23:18:51.872Z",
+      "timestamp": "2026-10-12T00:51:36.902Z",
       "source_event_seq": 105,
       "event": {
         "seq": 105,
@@ -2818,197 +3002,13 @@
       }
     },
     {
-      "seq": 126,
-      "kind": "turn",
-      "day": 4,
-      "phase": "night",
-      "stage": "wolf_vote",
-      "request_id": "4-night-2-21",
-      "timestamp": "2026-10-11T23:18:52.010Z",
-      "turn_seq": 21,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[Action prompt] Player 2, it is your turn. Phase: Night; stage: Wolf kill vote; this is not your speaking turn.\nStage rules: This is the wolf kill vote: submit kill_vote. To abstain, set abstain=true and target_id=null. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":false} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: kill_vote. Complete one valid action in the night action stage. Allowed submissions: kill_vote, report_bug. Effective game actions: kill_vote.\nAction arguments: kill_vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (including yourself): 1, 2, 4, 5, 7, 8, 9, 10, 11, 12. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t21, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t21. You do not need get_game_schema."
-        },
-        {
-          "role": "assistant",
-          "kind": "tool_call",
-          "name": "kill_vote",
-          "args": {
-            "target_id": 11,
-            "abstain": false
-          },
-          "accepted": true
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"kill_vote\",\"args\":{\"target_id\":11,\"abstain\":false}}}"
-        }
-      ]
-    },
-    {
-      "seq": 127,
-      "kind": "turn",
-      "day": 4,
-      "phase": "night",
-      "stage": "night_noble",
-      "request_id": "4-night-2-22",
-      "timestamp": "2026-10-11T23:18:52.025Z",
-      "turn_seq": 22,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[Action prompt] Player 2, it is your turn. Phase: Night; stage: Choose a servant; this is not your speaking turn.\nStage rules: Submit one choice with choose_servant. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":3,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":false} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: choose_servant. Complete one valid action in the night action stage. Allowed submissions: choose_servant, report_bug. Effective game actions: choose_servant.\nAction arguments: choose_servant args: {\"target_id\":number|null}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 4, 5, 7, 8, 9, 10, 11, 12. Choose another living player as servant, or explicitly pass with null. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t22, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t22. You do not need get_game_schema."
-        },
-        {
-          "role": "assistant",
-          "kind": "tool_call",
-          "name": "choose_servant",
-          "args": {
-            "target_id": null
-          },
-          "accepted": true
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"choose_servant\",\"args\":{\"target_id\":null}}}"
-        }
-      ]
-    },
-    {
-      "seq": 128,
-      "kind": "turn",
-      "day": 4,
-      "phase": "day",
-      "stage": "day_speech",
-      "request_id": "4-day-2-23",
-      "timestamp": "2026-10-11T23:18:52.253Z",
-      "turn_seq": 23,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[Action prompt] Player 2, it is your turn. Phase: Day; stage: Day speech; this is your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":4,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":true} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: speak. Complete one speech action in the day speech stage. Allowed submissions: speak, report_bug. Effective game actions: speak.\nAction arguments: speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t23, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t23. You do not need get_game_schema."
-        },
-        {
-          "role": "assistant",
-          "kind": "tool_call",
-          "name": "speak",
-          "args": {
-            "text": "Literal public speech"
-          },
-          "accepted": true
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Literal public speech\"}}}"
-        }
-      ]
-    },
-    {
-      "seq": 129,
-      "kind": "turn",
-      "day": 4,
-      "phase": "voting",
-      "stage": "on_pre_vote",
-      "request_id": "4-voting-2-24",
-      "timestamp": "2026-10-11T23:18:52.282Z",
-      "turn_seq": 24,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[Action prompt] Player 2, it is your turn. Phase: Voting; stage: Before exile voting; this is not your speaking turn. This is a public self-destruction window. Only self_destruct changes the game; speech, votes and other actions are forbidden. If you choose not to self-destruct, end this response without submitting an action. report_bug only reports problems.\nStage rules: Use self-destruction cautiously. In this window, only self_destruct changes the game. Use it only in a severely unfavorable situation and set confirm=true. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":4,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":true} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 0 and at most 1 valid actions. In the pre-exile window, you may self-destruct or end the turn without acting. Allowed submissions: self_destruct, report_bug. Effective game actions: self_destruct.\nAction arguments: self_destruct args: {\"reason\":\"...\",\"confirm\":true}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t24, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t24. You do not need get_game_schema."
-        },
-        {
-          "role": "assistant",
-          "kind": "assistant_output",
-          "content": "No action"
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"none\",\"final_action\":null}"
-        }
-      ]
-    },
-    {
-      "seq": 130,
-      "kind": "turn",
-      "day": 4,
-      "phase": "voting",
-      "stage": "voting",
-      "request_id": "4-voting-2-25",
-      "timestamp": "2026-10-11T23:18:52.308Z",
-      "turn_seq": 25,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[Action prompt] Player 2, it is your turn. Phase: Voting; stage: Exile vote; this is not your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":4,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":true} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: vote. Complete one exile vote action; you may abstain. Allowed submissions: vote, report_bug. Effective game actions: vote.\nAction arguments: vote args: {\"target_id\":number|null,\"abstain\":true|false}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}; Actionable IDs (alive, excluding yourself): 1, 4, 5, 7, 8, 10, 12. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t25, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t25. You do not need get_game_schema."
-        },
-        {
-          "role": "assistant",
-          "kind": "tool_call",
-          "name": "vote",
-          "args": {
-            "target_id": null,
-            "abstain": true
-          },
-          "accepted": true
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"vote\",\"args\":{\"target_id\":null,\"abstain\":true}}}"
-        }
-      ]
-    },
-    {
-      "seq": 131,
-      "kind": "turn",
-      "day": 4,
-      "phase": "voting",
-      "stage": "last_words",
-      "request_id": "4-voting-2-26",
-      "timestamp": "2026-10-11T23:18:52.338Z",
-      "turn_seq": 26,
-      "delta_messages": [
-        {
-          "role": "user",
-          "kind": "prompt",
-          "content": "[Action prompt] Player 2, it is your turn. Phase: Voting; stage: Last words; this is your speaking turn.\nStage rules: Follow this stage's responsibilities and perform only actions allowed this turn. Your last announced servant state (hidden terminal changes arrive next night): {\"wolfActionPolicy\":\"standard\",\"lastNotifiedNight\":4,\"lastChoice\":{\"day\":4,\"targetId\":null},\"contracts\":[],\"awaitingNightReport\":true} Current game day: 4. Wolf teammate identities revealed for this turn, excluding yourself: 3, 9, 11. Previously learned identities remain historical information even if this turn's list changes. Current role: Night Noble; alignment: Werewolves. Gaining an ability does not automatically change identity or alignment. Your private state: You belong to the wolf pack: mutual recognition, chat and knife voting remain. From night two, choose another living player as a servant or explicitly pass. A pending servant occupies the slot until the following night settlement. A Demon Hunter hunting the servant only clears the contract. Terminal contract status is announced to you next night. Blast and knife-target eligibility follow the public board policy.\nBefore ending, provide at least 1 and at most 1 valid actions; at least one must use: speak. Complete one speech action for your last words. Allowed submissions: speak, report_bug. Effective game actions: speak.\nAction arguments: speak args: {\"text\":\"...\"}; report_bug args: {\"category\":\"flow|rule|state|logging|other\",\"severity\":\"low|medium|high|critical\",\"message\":\"...\"}. If you observe a definite rule, state, flow, log or visibility contradiction, you may call report_bug before your normal action. In message, explain the observation, expected state and contradiction. Strategy disagreements, role claims, bluffs and insufficient information are not bugs. Submit your game action with submit_action. turn_id must be t26, action must be an effective action name listed for this turn, and arguments must contain that action's parameters. You may first report a definite contradiction with report_bug using the same turn_id t26. You do not need get_game_schema."
-        },
-        {
-          "role": "assistant",
-          "kind": "tool_call",
-          "name": "speak",
-          "args": {
-            "text": "Literal last words"
-          },
-          "accepted": true
-        },
-        {
-          "role": "meta",
-          "kind": "action_summary",
-          "content": "{\"action_mode\":\"tool_call\",\"final_action\":{\"name\":\"speak\",\"args\":{\"text\":\"Literal last words\"}}}"
-        }
-      ]
-    },
-    {
       "seq": 132,
       "kind": "event",
       "day": 4,
       "phase": "night",
       "stage": "wolf_discussion",
       "request_id": "4-night-2-event-106",
-      "timestamp": "2026-10-11T23:18:52.011Z",
+      "timestamp": "2026-10-12T00:51:36.911Z",
       "source_event_seq": 106,
       "event": {
         "seq": 106,
@@ -3027,7 +3027,7 @@
       "phase": "night",
       "stage": "noble_servant_chosen",
       "request_id": "4-night-2-event-107",
-      "timestamp": "2026-10-11T23:18:52.035Z",
+      "timestamp": "2026-10-12T00:51:36.927Z",
       "source_event_seq": 107,
       "event": {
         "seq": 107,
@@ -3048,7 +3048,7 @@
       "phase": "night",
       "stage": "night_resolved",
       "request_id": "4-night-2-event-108",
-      "timestamp": "2026-10-11T23:18:52.082Z",
+      "timestamp": "2026-10-12T00:51:36.984Z",
       "source_event_seq": 108,
       "event": {
         "seq": 108,
@@ -3068,7 +3068,7 @@
       "phase": "day",
       "stage": "day",
       "request_id": "4-day-2-event-109",
-      "timestamp": "2026-10-11T23:18:52.082Z",
+      "timestamp": "2026-10-12T00:51:36.984Z",
       "source_event_seq": 109,
       "event": {
         "seq": 109,
@@ -3086,7 +3086,7 @@
       "phase": "day",
       "stage": "sheriff_direction_chosen",
       "request_id": "4-day-2-event-110",
-      "timestamp": "2026-10-11T23:18:52.088Z",
+      "timestamp": "2026-10-12T00:51:37.146Z",
       "source_event_seq": 110,
       "event": {
         "seq": 110,
@@ -3104,7 +3104,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-111",
-      "timestamp": "2026-10-11T23:18:52.094Z",
+      "timestamp": "2026-10-12T00:51:37.162Z",
       "source_event_seq": 111,
       "event": {
         "seq": 111,
@@ -3122,7 +3122,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-112",
-      "timestamp": "2026-10-11T23:18:52.241Z",
+      "timestamp": "2026-10-12T00:51:37.170Z",
       "source_event_seq": 112,
       "event": {
         "seq": 112,
@@ -3140,7 +3140,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-113",
-      "timestamp": "2026-10-11T23:18:52.248Z",
+      "timestamp": "2026-10-12T00:51:37.178Z",
       "source_event_seq": 113,
       "event": {
         "seq": 113,
@@ -3158,7 +3158,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-114",
-      "timestamp": "2026-10-11T23:18:52.254Z",
+      "timestamp": "2026-10-12T00:51:37.186Z",
       "source_event_seq": 114,
       "event": {
         "seq": 114,
@@ -3176,7 +3176,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-115",
-      "timestamp": "2026-10-11T23:18:52.259Z",
+      "timestamp": "2026-10-12T00:51:37.195Z",
       "source_event_seq": 115,
       "event": {
         "seq": 115,
@@ -3194,7 +3194,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-116",
-      "timestamp": "2026-10-11T23:18:52.264Z",
+      "timestamp": "2026-10-12T00:51:37.202Z",
       "source_event_seq": 116,
       "event": {
         "seq": 116,
@@ -3212,7 +3212,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-117",
-      "timestamp": "2026-10-11T23:18:52.270Z",
+      "timestamp": "2026-10-12T00:51:37.209Z",
       "source_event_seq": 117,
       "event": {
         "seq": 117,
@@ -3230,7 +3230,7 @@
       "phase": "day",
       "stage": "day_speech",
       "request_id": "4-day-2-event-118",
-      "timestamp": "2026-10-11T23:18:52.276Z",
+      "timestamp": "2026-10-12T00:51:37.217Z",
       "source_event_seq": 118,
       "event": {
         "seq": 118,
@@ -3248,7 +3248,7 @@
       "phase": "voting",
       "stage": "voting",
       "request_id": "4-voting-2-event-119",
-      "timestamp": "2026-10-11T23:18:52.276Z",
+      "timestamp": "2026-10-12T00:51:37.217Z",
       "source_event_seq": 119,
       "event": {
         "seq": 119,
@@ -3266,7 +3266,7 @@
       "phase": "voting",
       "stage": "voting",
       "request_id": "4-voting-2-event-120",
-      "timestamp": "2026-10-11T23:18:52.326Z",
+      "timestamp": "2026-10-12T00:51:37.451Z",
       "source_event_seq": 120,
       "event": {
         "seq": 120,
@@ -3334,7 +3334,7 @@
       "phase": "voting",
       "stage": "voting",
       "request_id": "4-voting-2-event-121",
-      "timestamp": "2026-10-11T23:18:52.326Z",
+      "timestamp": "2026-10-12T00:51:37.452Z",
       "source_event_seq": 121,
       "event": {
         "seq": 121,
@@ -3351,7 +3351,7 @@
       "phase": "voting",
       "stage": "last_words_granted",
       "request_id": "4-voting-2-event-122",
-      "timestamp": "2026-10-11T23:18:52.327Z",
+      "timestamp": "2026-10-12T00:51:37.452Z",
       "source_event_seq": 122,
       "event": {
         "seq": 122,
@@ -3370,7 +3370,7 @@
       "phase": "voting",
       "stage": "last_words_spoken",
       "request_id": "4-voting-2-event-123",
-      "timestamp": "2026-10-11T23:18:52.340Z",
+      "timestamp": "2026-10-12T00:51:37.461Z",
       "source_event_seq": 123,
       "event": {
         "seq": 123,
@@ -3390,7 +3390,7 @@
       "phase": "game_over",
       "stage": "game_over",
       "request_id": "4-game_over-2-event-124",
-      "timestamp": "2026-10-11T23:18:52.340Z",
+      "timestamp": "2026-10-12T00:51:37.461Z",
       "source_event_seq": 124,
       "event": {
         "seq": 124,
@@ -3443,7 +3443,7 @@
       "phase": "game_over",
       "stage": "game_over",
       "request_id": "4-game_over-2-event-125",
-      "timestamp": "2026-10-11T23:18:52.340Z",
+      "timestamp": "2026-10-12T00:51:37.461Z",
       "source_event_seq": 125,
       "event": {
         "seq": 125,

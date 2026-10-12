@@ -1283,8 +1283,6 @@ export const zhCN = Object.freeze({
     "公开裁定：普通夜间死亡和放逐出局均不公开底牌；仅以 idiot_revealed 等引擎事件明确公开的身份，以及个人收到的私有身份/查验事件为事实。玩家在发言或遗言中自报身份不属于引擎认证。",
   "prompt.config.last_words":
     "遗言规则：首夜死亡者、真正被放逐出局者、白天纯决斗失误的骑士获得遗言；后续夜死、自爆、白痴翻牌免死、死亡枪（猎人/狼王）、决斗成功目标与白狼王带走的目标均无遗言。同一玩家兼有首夜待死和白狼王带人来源时无遗言；同波其它纯首夜死亡照常授予。",
-  "prompt.config.badge":
-    "警徽流转：警长死亡或以白痴身份翻牌时，由引擎自动移交或销毁警徽，不提供原警长自行选择移交目标的行动。",
   "prompt.config.ties": "平票处理：放逐={exile}，狼刀={wolf}{sheriff}",
   "prompt.config.sheriff_tie": "，警长投票={tie}",
   "action.wolf_discussion.directive":
@@ -1755,7 +1753,8 @@ export const zhCN = Object.freeze({
   "error.badge_choice_target": "只能向名单内合格活人移交警徽。",
   "stage.sheriff_badge_choice": "警徽移交选择",
   "request.summary.badge_choice": "选择名单内继任者，或用null撕毁警徽。",
-  "prompt.config.badge_next": "警徽：出局后按存活座位顺序自动移交。",
+  "prompt.config.badge_next":
+    "警徽：出局后按存活座位顺序自动移交；白痴翻牌直接撕毁。不提供原警长自行选择移交目标的行动。",
   "prompt.config.badge_choice": "警徽：死亡持有者选择合格活人继任或撕毁；白痴翻牌直接撕毁。",
 } as const);
 

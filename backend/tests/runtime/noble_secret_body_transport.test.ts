@@ -4,6 +4,7 @@ import path from "node:path";
 import { nobleTransportScenario } from "../support/noble_secret_body_transport_scenarios";
 import { runTransportGame } from "../support/run_transport_game";
 import { assertNobleTransportWire } from "../support/noble_secret_body_wire_oracle";
+import { assertNobleBadgeRules } from "../support/noble_secret_body_badge_prompt";
 import { assertNobleTransportGolden } from "../support/noble_secret_body_transport_golden";
 import { assertNobleKnownAnchors } from "../support/noble_secret_body_known_anchors";
 for (const name of [
@@ -29,6 +30,7 @@ for (const name of [
       for (const locale of ["en", "zh-CN"] as const) {
         const run = await runTransportGame(scenario, kind, locale);
         assertNobleTransportWire(run);
+        assertNobleBadgeRules(run, locale);
         assertNobleTransportGolden(run.record, scenario);
         assertNobleKnownAnchors(run, scenario);
         if (kind === "llm" && process.env.AWA_NOBLE_FIXTURES) {
