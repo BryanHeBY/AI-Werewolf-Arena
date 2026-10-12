@@ -10,6 +10,8 @@ import { aliveLifeVersion } from "../../../core/domain/components/alive";
 /** A policy edit is an authorization edit, even if the resource object survives. */
 function policyIdentity(ability: NightAbility): string {
   switch (ability.kind) {
+    case "pair_check":
+      return JSON.stringify([ability.state.policy]);
     case "shelter":
       return JSON.stringify([ability.state.policy]);
     case "seer_check":

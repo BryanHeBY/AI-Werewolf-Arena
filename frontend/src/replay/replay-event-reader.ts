@@ -2,6 +2,7 @@ import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
 } from "@ai-werewolf-arena/game-text";
+import { FRAGRANT_PAIR_EVENT_TYPES, readFragrantPairFact } from "@ai-werewolf-arena/game-text";
 import { RADIANT_ECLIPSE_EVENT_TYPES, readRadiantEclipseFact } from "@ai-werewolf-arena/game-text";
 import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
 import {
@@ -220,6 +221,7 @@ const NO_IDS = new Set([
   "god_private_game_info",
 ]);
 export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([
+  ...FRAGRANT_PAIR_EVENT_TYPES,
   ...NOBLE_SECRET_BODY_EVENT_TYPES,
   ...RADIANT_ECLIPSE_EVENT_TYPES,
   ...MIST_RAVEN_EVENT_TYPES,
@@ -285,6 +287,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if ((FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(type))
+    return !!readFragrantPairFact(type, p);
   if ((NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(type))
     return !!readNobleSecretBodyFact(type, p);
   if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(type))
@@ -498,6 +502,27 @@ export function readReplayEvent(
     };
     if (!KNOWN.has(safe.type)) return { event: safe, relatedPlayerIds: [], effects: [] };
     if (!validKnownFields(safe.type, p)) return null;
+    if ((FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(safe.type)) {
+      if (
+        p.day !== safe.day ||
+        (["fragrant_link_triggered", "fragrant_wave_committed"].includes(safe.type)
+          ? !["night", "day", "voting"].includes(safe.phase)
+          : safe.phase !== "night")
+      )
+        return null;
+      add(p.actorId);
+      if (Array.isArray(p.deaths)) list(p.deaths);
+      if (p.pairIds !== null && p.pairIds !== undefined) list(p.pairIds);
+      if (p.targetIds !== undefined) list(p.targetIds);
+      if (p.rootId !== undefined) add(p.rootId);
+      if (p.addedTargetId !== undefined) add(p.addedTargetId, true);
+      if (record(p.known)) {
+        add(p.known.knownWolfId);
+        if (record(p.known.lastChoice) && p.known.lastChoice.pairIds !== null)
+          list(p.known.lastChoice.pairIds);
+        if (record(p.known.activeBinding)) list(p.known.activeBinding.pairIds);
+      }
+    }
     if ((NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(safe.type)) {
       if (p.day !== safe.day) return null;
       if (

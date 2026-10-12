@@ -120,6 +120,7 @@ export type DebaterPolicy = (typeof DEBATER_POLICIES)[number];
 
 export { EVENT_PACK_IDS } from "@ai-werewolf-arena/game-catalog";
 export interface BoardConfig {
+  fragrantPairSeer?: { policy: "awa_fragrant_pair_seer_v1" };
   nobleSecretBody?: { policy: "awa_noble_secret_body_v1" };
   nightNoble?: { wolfActionPolicy: "standard" | "no_blast_no_self_knife" };
   awakenedIdiot?: { protectionRepeatPolicy: "awa_nonconsecutive_nights_v1" | "awa_repeat_v1" };

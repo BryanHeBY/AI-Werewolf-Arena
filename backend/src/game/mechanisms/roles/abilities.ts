@@ -1,4 +1,5 @@
 import { scholarMentorBlocks } from "./scholar_mentor/night_frame";
+import { readPairSeerState, type PairSeerState } from "./fragrant_pair_seer/state";
 import { readShelterState } from "./radiant_eclipse/state";
 import { nightmareFearBlocks } from "./nightmare_shadow/night_frame";
 import { INSPECTION_POLICIES } from "../../../core/domain/board";
@@ -29,6 +30,7 @@ export { projectRoleInspectionState, projectSeerState, projectWitchState } from 
 import type { World } from "../../../core/domain/world";
 
 export interface NightAbilityStates {
+  pair_check: PairSeerState;
   shelter: import("./radiant_eclipse/state").ShelterState;
   seer_check: SeerState;
   role_check: RoleInspectionState;
@@ -63,6 +65,11 @@ export type NightAbilityKind = keyof NightAbilityStates;
 function projectShelterState(value: unknown) {
   const state = readShelterState(value);
   if (!state) throw new Error("radiant_shelter_state_invalid");
+  return state;
+}
+function projectPairState(value: unknown): PairSeerState {
+  const state = readPairSeerState(value);
+  if (!state) throw Error("fragrant_pair_state_invalid");
   return state;
 }
 export type AbilitySource =
@@ -112,6 +119,7 @@ export type AbilityStatus =
   "pending" | "expired" | "disabled" | "spent" | "used_this_night" | "active";
 
 export interface PlayerNightAbilityStates {
+  pair_check: PairSeerState;
   shelter: import("./radiant_eclipse/state").ShelterState;
   seer_check: PlayerSeerState;
   role_check: PlayerRoleInspectionState;
@@ -124,6 +132,8 @@ export function projectNightState(
   ability: NightAbility,
 ): PlayerNightAbilityStates[NightAbilityKind] {
   switch (ability.kind) {
+    case "pair_check":
+      return projectPairState(ability.state);
     case "shelter":
       return projectShelterState(ability.state);
     case "seer_check":
@@ -235,7 +245,11 @@ export function installNativeAbility<K extends NightAbilityKind>(
   kind: K,
   state: NightAbilityStates[K],
 ): NightAbilityStates[K] {
-  const ownedState = copyAbilityData(state);
+  if (kind === "pair_check" && role.role !== Role.AwakenedSeer)
+    throw Error("ability_pair_native_role_invalid");
+  const ownedState = (
+    kind === "pair_check" ? copyAbilityData(projectPairState(state)) : copyAbilityData(state)
+  ) as NightAbilityStates[K];
   if (kind === "role_check") roleInspectionPolicy(ownedState as RoleInspectionState);
   const stored = (role.privateState.abilities ??= {}) as Record<string, NightAbility>;
   const retired = (role.privateState.retiredAbilityIds ?? []) as string[];
@@ -323,6 +337,8 @@ export function projectNightAbility(ability: NightAbility, day: number): PlayerN
     status: abilityStatus(ability, day),
   };
   switch (ability.kind) {
+    case "pair_check":
+      return { ...metadata, kind: "pair_check", state: projectPairState(ability.state) };
     case "shelter":
       return { ...metadata, kind: "shelter", state: projectShelterState(ability.state) };
     case "seer_check":

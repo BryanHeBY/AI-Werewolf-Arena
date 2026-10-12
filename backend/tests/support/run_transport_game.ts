@@ -169,7 +169,11 @@ export async function runTransportGame(
                 arrivedAtMs: Date.now(),
                 terminalFailure: turn.terminalFailure,
               });
-              if (scenario.board.config.radiantEclipse || scenario.board.config.nobleSecretBody)
+              if (
+                scenario.board.config.radiantEclipse ||
+                scenario.board.config.nobleSecretBody ||
+                scenario.board.config.fragrantPairSeer
+              )
                 sdkWireMessages.push({
                   actor,
                   ordinal: index + 1,

@@ -1,4 +1,5 @@
 import { nobleSecretBodyEventLabel, nobleSecretBodyVisibility } from "@ai-werewolf-arena/game-text";
+import { fragrantPairEventLabel, fragrantPairVisibility } from "@ai-werewolf-arena/game-text";
 import { radiantEclipseEventLabel } from "@ai-werewolf-arena/game-text";
 import { mistRavenEventLabel } from "@ai-werewolf-arena/game-text";
 import { scholarMentorEventLabel } from "@ai-werewolf-arena/game-text";
@@ -570,6 +571,8 @@ export class ScriptEventRenderRegistry {
   }
 
   toJudgeLine(event: GameEvent, locale: Locale = "zh-CN"): string | null {
+    const fragrant = fragrantPairEventLabel(event.type, event.payload, locale);
+    if (fragrant !== null) return fragrant;
     const noble = nobleSecretBodyEventLabel(event.type, event.payload, locale);
     if (noble !== null) return noble;
     const radiant = radiantEclipseEventLabel(event.type, event.payload, locale);
@@ -641,6 +644,16 @@ export class ScriptEventRenderRegistry {
     printPrivateEvents: boolean,
     locale: Locale = "zh-CN",
   ): ScriptLiveRender[] {
+    const fragrant = fragrantPairEventLabel(event.type, event.payload, locale);
+    if (fragrant !== null)
+      return printPrivateEvents
+        ? [
+            {
+              kind: fragrantPairVisibility(event.type) === "actor" ? "private" : "god",
+              text: fragrant,
+            },
+          ]
+        : [];
     const noble = nobleSecretBodyEventLabel(event.type, event.payload, locale);
     if (noble !== null) {
       const visibility = nobleSecretBodyVisibility(event.type);

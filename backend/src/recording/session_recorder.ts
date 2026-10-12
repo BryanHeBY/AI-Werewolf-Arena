@@ -129,7 +129,7 @@ export class SessionRecordManager {
 
   recordLogicOp(input: ReplayRecordLogicOpInput): void {
     if (this.closed) return;
-    const eventCount = this.reproduction?.nobleEventCursor ?? this.replayEventCursor?.();
+    const eventCount = this.reproduction?.ownedEventCursor ?? this.replayEventCursor?.();
     this.aggregate.recordLogicOp(eventCount === undefined ? input : { ...input, eventCount });
     this.dirtyLogicOps = true;
     this.scheduleFlush();

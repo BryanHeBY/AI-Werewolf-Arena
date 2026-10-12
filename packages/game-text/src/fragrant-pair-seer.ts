@@ -14,6 +14,11 @@ export interface FragrantKnowledge {
   used: boolean;
   knifeNotices: readonly { day: number; eligible: boolean }[];
 }
+export interface FragrantPlayerState extends FragrantKnowledge {
+  actorId: number;
+  hasInheritedKnife: boolean;
+  canVoteForKill: boolean;
+}
 const id = (v: unknown): v is number =>
   typeof v === "number" && Number.isSafeInteger(v) && v > 0 && v < Number.MAX_SAFE_INTEGER - 1;
 const exact = (v: unknown, keys: readonly string[]): v is Record<string, unknown> =>
@@ -122,6 +127,13 @@ export function readPairCheckFact(value: unknown): PairCheckFact | null {
 }
 type Base = { policy: typeof FRAGRANT_PAIR_POLICY; actorId: number; day: number };
 export interface FragrantPairPayloadMap {
+  fragrant_night_opened: Base & { knowledgeDrawCount: 0 | 1 };
+  fragrant_wave_committed: Base & {
+    deaths: number[];
+    deathSources: Record<string, string[]>;
+    deathPhases: Record<string, "night" | "day" | "voting">;
+    initialWave: boolean;
+  };
   fragrant_pair_chosen: Base & { pairIds: FragrantPair | null };
   fragrant_pair_inspected: Base & { targetIds: FragrantPair; containsWerewolf: boolean };
   fragrant_night_notified: Base & { known: FragrantKnowledge };
@@ -140,6 +152,8 @@ export interface FragrantPairPayloadMap {
   };
 }
 export const FRAGRANT_PAIR_EVENT_TYPES = Object.freeze([
+  "fragrant_wave_committed",
+  "fragrant_night_opened",
   "fragrant_pair_chosen",
   "fragrant_pair_inspected",
   "fragrant_night_notified",
@@ -147,6 +161,21 @@ export const FRAGRANT_PAIR_EVENT_TYPES = Object.freeze([
   "fragrant_link_triggered",
 ] as const);
 export type FragrantPairEventType = keyof FragrantPairPayloadMap;
+/** Parsing a God fact never grants a player's visibility. */
+export function fragrantPairVisibility(type: string): "actor" | "god" | null {
+  if (
+    type === "fragrant_wave_committed" ||
+    type === "fragrant_night_opened" ||
+    type === "fragrant_binding_expired" ||
+    type === "fragrant_link_triggered"
+  )
+    return "god";
+  return ["fragrant_pair_chosen", "fragrant_pair_inspected", "fragrant_night_notified"].includes(
+    type,
+  )
+    ? "actor"
+    : null;
+}
 export function readFragrantPairFact<T extends FragrantPairEventType>(
   type: T,
   value: unknown,
@@ -168,6 +197,55 @@ export function readFragrantPairFact(
     if (f.policy !== FRAGRANT_PAIR_POLICY || !id(f.actorId) || !id(f.day)) return null;
     let valid = false;
     switch (type) {
+      case "fragrant_night_opened":
+        valid =
+          exact(f, [...base, "knowledgeDrawCount"]) &&
+          f.knowledgeDrawCount === (f.day === 1 ? 1 : 0);
+        break;
+      case "fragrant_wave_committed": {
+        const ids = f.deaths,
+          sources = f.deathSources,
+          phases = f.deathPhases;
+        valid =
+          exact(f, [...base, "deaths", "deathSources", "deathPhases", "initialWave"]) &&
+          Array.isArray(ids) &&
+          ids.length > 0 &&
+          ids.every(id) &&
+          new Set(ids).size === ids.length &&
+          typeof f.initialWave === "boolean" &&
+          !!sources &&
+          typeof sources === "object" &&
+          !Array.isArray(sources) &&
+          !!phases &&
+          typeof phases === "object" &&
+          !Array.isArray(phases) &&
+          Object.keys(sources).length === ids.length &&
+          Object.keys(phases).length === ids.length &&
+          ids.every((n) => {
+            const causes = (sources as Record<string, unknown>)[String(n)],
+              origin = (phases as Record<string, unknown>)[String(n)];
+            return (
+              Array.isArray(causes) &&
+              causes.length > 0 &&
+              new Set(causes).size === causes.length &&
+              causes.every(
+                (c) =>
+                  typeof c === "string" &&
+                  [
+                    "wolf_kill",
+                    "poison",
+                    "exile",
+                    "self_destruct",
+                    "shot",
+                    "fragrant_link",
+                  ].includes(c),
+              ) &&
+              typeof origin === "string" &&
+              ["night", "day", "voting"].includes(origin)
+            );
+          });
+        break;
+      }
       case "fragrant_pair_chosen":
         valid = exact(f, [...base, "pairIds"]) && (f.pairIds === null || pair(f.pairIds));
         break;

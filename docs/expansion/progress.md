@@ -1,6 +1,6 @@
 # 实施进度
 
-**当前：50/64，23 verified、27 implemented、14 planned。** 贵族／觉醒愚者四组合完整技术验收及三路复核闭环，后端6353／前端872／Chromium324零失败、13门禁退出0、2200输入四方同字节；见[正式验收](reviews/p9-noble-secret-body-stage-acceptance.md)。立即继续寻香魅影／觉醒预言家、P9e六项、P9f余六项及P10；不推送。下方切片保留各历史时点，48/64不再代表当前目录。
+**当前：52/64，23 verified、29 implemented、12 planned。** 寻香魅影／觉醒预言家完整验收及三路复核闭环，后端6589／前端936／Chromium342零失败、16门禁退出0、2310输入四方同字节；见[正式验收](reviews/p9-fragrant-pair-stage-acceptance.md)。P9d及两个觉醒前置已齐，立即继续P9e六项、P9f余六项及P10，不推送。下方切片保留各历史时点。
 
 记录切片（历史时点）：觉醒之夜独立记录账本／严格 Tape 与失败游标已完成候选验证，见[记录审查](reviews/p9-noble-secret-body-recording.md)。贵族／觉醒愚者仍 planned，正式 **48/64**；实际通信、受限观察、前端和同源完整验收接续中。
 
@@ -684,3 +684,7 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 组件 owner、真实开夜占有／抽样失败不重领、夜初刀权通知、单向租约撤权及跨昼夜已付关系、实际全波 receipt 与同周期公开知情凭据完成，49维护测试通过；三路原反例和后复验见[owner基础审查](reviews/p9-fragrant-pair-authority-foundation.md)。fixture 使用已有身份占位，不冒称原生角色、普通能力或真实 PM／传输／Tape 已接通。正式50/64不变，两角色仍planned；独立双查能力／请求、实际夜序与死亡链、全部交付继续，main本地功能提交、不推送。
 
 共享policy／Pair／knowledge schema及五类严格事实已建立，领域保留原始Node边界和状态推进，避免重复schema；首夜刀权历史漏洞三路复验关闭，55维护测试通过，范围与有意历史上限变化见[共享协议审查](reviews/p9-fragrant-pair-shared-contract.md)。尚未注册事件／角色／工具或渲染，正式50/64不变；实际原生双查能力／严格请求、完整机制与交付继续。
+
+## P9d 寻香识命完整技术验收
+
+寻香魅影与觉醒预言家登记implemented，限定精确原生十二人板；原生双查、随机狼知识、独立刀权、跨昼夜绑定／一次牵连、真实死亡链、canonical失败CP及独立知情／请求／库存账本贯通。72本机SDK／ACP／mixed双语完整局、32严格失败局、8拒绝更正局及真正迟到MCP、40受限观察／逐局Tape、60实际档／最小玩家movie及双语PNG交付。第七轮6589backend／936frontend／342Chromium、16门禁全部通过，2310公开输入四方同字节；原六轮失败及独立审计如实见[正式验收](reviews/p9-fragrant-pair-stage-acceptance.md)。P9e六项、P9f余六项与P10接续，52/64，main本地提交不推送；临时下一批规则／状态预审尚不计入角色实现。

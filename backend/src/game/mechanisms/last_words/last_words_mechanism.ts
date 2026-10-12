@@ -10,6 +10,11 @@ import {
   type DeathSources,
 } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
+import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
+export interface LastWordsGrantContext {
+  policy: typeof FRAGRANT_PAIR_POLICY;
+  initialWave: boolean;
+}
 
 /** 遗言机制：判定是否可遗言并写入遗言授权事件。 */
 export class LastWordsMechanism {
@@ -18,6 +23,7 @@ export class LastWordsMechanism {
     day: number,
     sources: readonly DeathCause[],
     policy: LastWordsPolicy = "awa_initial_wave_v1",
+    context?: LastWordsGrantContext,
   ): boolean {
     if (policy === "netease_2017_day_and_first_night_v1") {
       if (!sources.length || sources.some((source) => !Object.values(DeathCause).includes(source)))
@@ -43,6 +49,9 @@ export class LastWordsMechanism {
         sources.some(
           (source) =>
             source === DeathCause.WolfKill ||
+            (source === DeathCause.FragrantLink &&
+              context?.policy === FRAGRANT_PAIR_POLICY &&
+              context.initialWave) ||
             source === DeathCause.AwakenedHiddenKnife ||
             source === DeathCause.Poison ||
             source === DeathCause.Dream ||
@@ -64,6 +73,7 @@ export class LastWordsMechanism {
     sources: DeathSources,
     deathPhases: Readonly<Record<EntityId, Phase>> = {},
     policy: LastWordsPolicy = "awa_initial_wave_v1",
+    context?: LastWordsGrantContext,
   ): void {
     for (const deadId of deadIds) {
       if (
@@ -72,6 +82,7 @@ export class LastWordsMechanism {
           day,
           sources[deadId] ?? [],
           policy,
+          context,
         )
       ) {
         continue;

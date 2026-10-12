@@ -7,6 +7,13 @@ import {
 } from "../../mechanisms/roles/noble_secret_body/authority";
 import { appendNobleBodyNotices } from "../../mechanisms/roles/noble_secret_body/facts";
 import {
+  isFragrantPairBoard,
+  beginFragrantNight,
+  closeFragrantNight,
+  fragrantAuthoritySnapshot,
+} from "../../mechanisms/roles/fragrant_pair_seer/authority";
+import { FRAGRANT_PAIR_POLICY } from "../../mechanisms/roles/fragrant_pair_seer/state";
+import {
   isRadiantEclipseBoard,
   beginRadiantNight,
   assertRadiantRosterCurrent,
@@ -127,7 +134,12 @@ import {
 import { getSessionRecorder } from "../../../recording/recording_context";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { GameActionRequestFactory } from "../action_request_factory";
-import { createRandom, shuffled, type RandomSource } from "../../../core/domain/random";
+import {
+  createRandom,
+  shuffled,
+  randomDraws,
+  type RandomSource,
+} from "../../../core/domain/random";
 import { DreamNightFrame, hasDreamNightCommit } from "../../mechanisms/roles/dreamer/night_frame";
 import { discardStaleWolfKnife } from "../../mechanisms/roles/wolf/knife_scope";
 import { hasRoleInspectionNightCommit } from "../../mechanisms/roles/role_inspection/night_scope";
@@ -234,6 +246,9 @@ export class NightPipeline {
     let timeConsortHandedOff = false;
     let scholarMentorHandedOff = false;
     const ownsNoble = config.nobleSecretBody !== undefined;
+    const ownsFragrant = config.fragrantPairSeer !== undefined;
+    let fragrantAcquired = false,
+      fragrantClosed = false;
     let nobleHandedOff = false,
       nobleAcquired = false;
     const ownsRadiant = config.radiantEclipse !== undefined;
@@ -244,6 +259,63 @@ export class NightPipeline {
       demonHandedOff = false,
       demonAcquired = false;
     try {
+      if (ownsFragrant) {
+        const before = fragrantAuthoritySnapshot(this.world),
+          notice = beginFragrantNight(
+            this.world,
+            day,
+            randomDraws(this.random.fork("fragrant-known-wolf")),
+            isCurrent,
+          ),
+          after = fragrantAuthoritySnapshot(this.world);
+        fragrantAcquired = true;
+        this.events.push({
+          timestamp: Date.now(),
+          type: "fragrant_night_opened",
+          payload: {
+            policy: FRAGRANT_PAIR_POLICY,
+            actorId: after.phantomId,
+            day,
+            knowledgeDrawCount: day === 1 ? 1 : 0,
+          },
+          audience: Object.freeze([]),
+        });
+        for (const old of before.fragrant.bindings.filter((b) => b.status.kind === "pending")) {
+          if (after.fragrant.bindings.find((b) => b.id === old.id)?.status.kind === "expired")
+            this.events.push({
+              timestamp: Date.now(),
+              type: "fragrant_binding_expired",
+              payload: {
+                policy: FRAGRANT_PAIR_POLICY,
+                actorId: this.world.getEntityIdsByRole(Role.FragrantPhantom)[0]!,
+                day,
+                bindingId: old.id,
+                createdNight: old.createdNight,
+                pairIds: old.pairIds,
+              },
+              audience: Object.freeze([]),
+            });
+        }
+        if (notice)
+          this.events.push({
+            timestamp: Date.now(),
+            type: "fragrant_night_notified",
+            payload: { policy: FRAGRANT_PAIR_POLICY, ...notice },
+            audience: Object.freeze([notice.actorId]),
+          });
+        getSessionRecorder()?.recordRequiredLogicOp({
+          scope: "phase_pipeline",
+          op: "fragrant_night_opened",
+          phase: Phase.Night,
+          status: "ok",
+          output: {
+            policy: FRAGRANT_PAIR_POLICY,
+            day,
+            notice,
+            knowledgeDrawCount: day === 1 ? 1 : 0,
+          },
+        });
+      }
       if (ownsNoble) {
         const notices = beginNobleBodyNight(this.world, day, isCurrent);
         nobleAcquired = true;
@@ -287,6 +359,7 @@ export class NightPipeline {
           });
       }
       const assertReadable = () => {
+        if (ownsFragrant) fragrantAuthoritySnapshot(this.world);
         if (ownsNoble) assertNobleBodyRosterCurrent(this.world);
         if (ownsRadiant) assertRadiantRosterCurrent(this.world);
         if (ownsMist) assertMistRosterCurrent(this.world);
@@ -567,6 +640,10 @@ export class NightPipeline {
             }),
           );
       if (ownsRadiant) closeRadiantNight(this.world, day, "committed", this.events);
+      if (ownsFragrant) {
+        closeFragrantNight(this.world, day, "normal");
+        fragrantClosed = true;
+      }
       nobleHandedOff = ownsNoble;
       weddingHandedOff = ownsWedding;
       demonHandedOff = ownsDemon;
@@ -588,6 +665,7 @@ export class NightPipeline {
         ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
       };
     } finally {
+      if (fragrantAcquired && !fragrantClosed) closeFragrantNight(this.world, day, "aborted");
       if (nobleAcquired && !nobleHandedOff) abortNobleBodyNight(this.world, day);
       if (radiantAcquired) closeRadiantNight(this.world, day, "aborted", this.events);
       if (ownsMist && !mistHandedOff) abortMistNight(this.world);
@@ -624,7 +702,9 @@ export class NightPipeline {
         (allowedTools.includes("kill_vote") || allowedTools.includes("speak_to_wolves"))
           ? { wolf_kill_candidates: mistKnifeTargets(this.world) ?? this.world.getAliveEntityIds() }
           : {}),
-        ...(isNobleBodyBoard(this.world) ||
+        ...((isFragrantPairBoard(this.world) &&
+          (allowedTools.includes("kill_vote") || allowedTools.includes("speak_to_wolves"))) ||
+        isNobleBodyBoard(this.world) ||
         isRadiantEclipseBoard(this.world) ||
         isMistRavenBoard(this.world) ||
         isScholarMentorBoard(this.world) ||

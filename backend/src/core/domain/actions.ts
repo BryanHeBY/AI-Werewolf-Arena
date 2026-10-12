@@ -10,6 +10,8 @@ import type { PlayerVisibleEvent } from "./events";
 import type { DeathCause } from "./deaths";
 
 export interface ToolArgMap {
+  bind_fragrant_pair: { target_ids: readonly [EntityId, EntityId] | null };
+  check_pair: { target_ids: readonly [EntityId, EntityId] };
   choose_servant: { target_id: EntityId | null };
   protect_secret_body: { target_id: EntityId | null };
   cast_shelter: { target_id: EntityId | null };
@@ -83,6 +85,8 @@ export interface ToolArgMap {
 
 export type ToolName = keyof ToolArgMap;
 export const TOOL_NAMES = [
+  "bind_fragrant_pair",
+  "check_pair",
   "choose_servant",
   "protect_secret_body",
   "cast_shelter",
@@ -174,6 +178,8 @@ export interface TurnConstraints {
 }
 
 export const ACTION_STAGES = [
+  "fragrant_bind",
+  "pair_inspection",
   "night_noble",
   "secret_body",
   "awakened_idiot_reveal_speech",
@@ -253,6 +259,8 @@ export const DEATH_SHOT_STAGES: readonly ActionStage[] = ["hunter_shot", "death_
 
 /** Mechanism-owned additions; the request factory supplies common context fields. */
 export interface ActionRequestExtras {
+  fragrant_pair_candidates?: readonly EntityId[];
+  pair_check_candidates?: readonly EntityId[];
   servant_candidates?: readonly EntityId[];
   secret_body_candidates?: readonly EntityId[];
   shelter_candidates?: readonly EntityId[];

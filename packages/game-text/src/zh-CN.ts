@@ -1,5 +1,47 @@
 /** Built-in text only. Player names, personas, speech and model output are never translated here. */
 export const zhCN = Object.freeze({
+  "ability.kind.pair_check": "双目标查验",
+  "stage.fragrant_bind": "寻香绑定",
+  "prompt.stage.fragrant_pair_candidates":
+    "本次允许的原存活候选号码：{ids}；选择两个不同号码。只有绑定可以显式target_ids=null空过。",
+  "rules.fragrant_pair_seer":
+    "本局为AWA寻香识命十二人原生板：寻香魅影、三普狼、四村民、觉醒预言家、女巫、猎人、守卫，固定屠边且全狼出局优先。普狼互认且不认识魅影，魅影不狼聊、不自爆；首夜仅获知一名随机原始普狼，其余三狼真实夜初已全灭才接普通刀。魅影可每夜绑定两个不同存活号码或空过，覆盖当夜及白天，下一真实夜到期；空过不续旧对，真实死亡牵连整局只触发一次，施法者首次死亡不倒销已付关系。两端独立同波死亡不增加死因但消耗技能。牵连猎人不能枪，独立合格死因保留。首夜初始夜波牵连两端均有遗言；次夜夜死无遗言，放逐仅根目标有遗言，枪链无追加遗言。全波标死后，先所有遗言、再所有警徽、再枪链，全部结束才判胜；末狼和末神同时死亡时好人胜。觉醒预言家每夜必须选两个不同存活号码（可含自身、可重复往夜目标），只知其中是否至少一狼，结果不报数量或单体身份。夜序：实际开夜/到期/知识/刀权冻结、药重置、绑定、普狼聊、守卫、刀、女巫、双查、常规伤害；首日警长先于夜死公布。守卫连续真实夜不可同守、可自守空守；女巫禁自救、仅持解药见原刀口、一夜一药。所有新增行动及狼聊/刀严格失败不回退，合法空过必须明确提交。",
+  "stage.pair_inspection": "双目标查验",
+  "event.fragrant_pair_chosen": "{actor}号第{day}夜绑定选择：{targets}。",
+  "event.fragrant_night_opened": "[God] 寻香板第{day}轮实际开夜。",
+  "replay.stage.fragrant_night_opened": "实际开夜",
+  "event.fragrant_wave_committed": "[God] {actor}号所在寻香板第{day}轮实际死亡波：{deaths}。",
+  "replay.stage.fragrant_wave_committed": "实际死亡波提交",
+  "event.fragrant_pair_inspected": "{actor}号第{day}夜查验{first}、{second}号：{result}。",
+  "event.fragrant_night_notified": "{actor}号第{day}夜已知寻香状态：{state}。",
+  "event.fragrant_binding_expired":
+    "[God] {actor}号第{created}夜绑定的{first}、{second}号在第{day}夜到期。",
+  "event.fragrant_link_triggered":
+    "[God] {actor}号第{day}轮绑定{first}、{second}号已触发；根死亡{root}，追加{added}。",
+  "fragrant.result.true": "至少一名真实狼人",
+  "fragrant.result.false": "均非狼人",
+  "fragrant.choice.pass": "本夜未建立绑定",
+  "fragrant.trigger.no_addition": "两端已独立进入同波，不追加死亡或死因",
+  "replay.stage.fragrant_pair_chosen": "寻香绑定选择",
+  "replay.stage.fragrant_pair_inspected": "双目标结果",
+  "replay.stage.fragrant_night_notified": "寻香夜初通知",
+  "replay.stage.fragrant_binding_expired": "绑定到期",
+  "replay.stage.fragrant_link_triggered": "实际牵连结算",
+  "prompt.status.fragrant":
+    "你的已授权寻香知识、绑定历史和刀权状态：{state}。只使用这些已知事实，不推断尚未公布的后台结算。",
+  "error.fragrant_pair_unavailable": "当前请求、原角色能力、阶段、目标对或期限不允许该行动。",
+  "role.fragrant_phantom.brief":
+    "你是寻香魅影，属于狼人阵营并共享狼人胜利，但始终不参加普通狼聊，也不能自爆。首夜随机获知一个原始普通狼号码，该知识在其死亡后仍保留；不会因此知道其它狼。只有其它三个原始狼在真实夜初已全部死亡时，你本夜才有普通狼刀权，夜中死亡不补发刀。首夜起，尚未触发时每夜可绑定两名不同存活玩家（可含自己）或明确空过。绑定覆盖当夜和接下来白天，下一真实夜初到期；空过不延续旧对。选择不消耗次数，整局真实死亡牵连只触发一次：一端出局时，另一原生命若尚未进入同波则追加死亡；两端已独立同波死亡时不追加死因，但仍消费。已付关系可在原施法者首次死亡后触发。仅因牵连出局的猎人不能开枪；独立合格死因不被覆盖。关系知情只随真实已公布死亡更新，不能用待公布信息发言。",
+  "role.awakened_seer.brief":
+    "你是觉醒预言家，好人神职。首夜起每夜从存活候选中选择两个不同号码；允许含自己，也可跨夜重复目标或整对。至少两名候选时必须选择，不能空过、重复同号码或只交一个。唯一结果是这两人中是否至少有一个真实狼人（布尔值）；不返回狼人数量、哪个是狼、单体阵营或具体角色。仅你本人获知目标对和结果，目标和其它玩家不会收到。你可以结合自己的已知身份推理，但协议仍只有一个聚合结果。",
+  "action.bind_fragrant_pair.hint":
+    "绑定两个不同存活号码或明确空过：target_ids=[号码,号码] 或 null。",
+  "action.bind_fragrant_pair.directive":
+    "以 bind_fragrant_pair 提交两个不同合法号码，或 target_ids=null 明确空过；不要返回单体选择或延续旧绑定。",
+  "action.check_pair.hint":
+    "双目标查验：target_ids=[两个不同的存活号码]；允许包含自己，不允许空过。",
+  "action.check_pair.directive":
+    "以 check_pair 提交恰好两个不同合法号码；结果只有是否含狼的一个布尔值，不请求单体身份。",
   "event.noble_body_night_opened": "[God] 第{day}夜所有权已打开。",
   "event.noble_body_knife_committed": "[God] 第{day}夜狼刀标记已提交：{target}",
   "event.noble_body_native_damage_committed": "[God] 第{day}夜原生伤害已结算，刀药标记已清除。",

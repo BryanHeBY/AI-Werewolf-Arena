@@ -1,3 +1,10 @@
+import { validateFragrantPairRecord } from "./fragrant_pair_seer_record";
+import {
+  FRAGRANT_PAIR_EVENT_TYPES,
+  readFragrantPairFact,
+  fragrantPairVisibility,
+} from "@ai-werewolf-arena/game-text";
+import { fragrantCheckpointSchema } from "./fragrant_pair_seer_checkpoint";
 import { validateNobleSecretBodyRecord } from "./noble_secret_body_record";
 import { nobleBodyCheckpointSchema } from "./noble_secret_body_checkpoint";
 import {
@@ -189,6 +196,7 @@ export interface RecordedPlayerState {
   victory: { affiliations: VictoryAffiliation[] };
 }
 export interface RecordedCheckpoint {
+  fragrantPair?: import("./fragrant_pair_seer_checkpoint").RecordedFragrantState;
   nobleBody?: import("./noble_secret_body_checkpoint").RecordedNobleBodyState;
   operationCount?: number;
   settlementCount?: number;
@@ -345,6 +353,8 @@ const requestSchema = z.strictObject({
     trickster_may_pass: z.boolean().optional(),
     swap_candidates: z.array(positive).optional(),
     shoot_candidates: z.array(positive).optional(),
+    fragrant_pair_candidates: z.array(positive).optional(),
+    pair_check_candidates: z.array(positive).optional(),
     sheriff_candidates: z.array(positive).optional(),
     exile_candidates: z.array(positive).optional(),
     badge_candidates: z.array(positive).optional(),
@@ -562,6 +572,7 @@ const schema = z.strictObject({
       z
         .strictObject({
           nobleBody: nobleBodyCheckpointSchema.optional(),
+          fragrantPair: fragrantCheckpointSchema.optional(),
           operationCount: nonnegative.optional(),
           settlementCount: nonnegative.optional(),
           decisionCount: nonnegative.optional(),
@@ -725,6 +736,17 @@ const schema = z.strictObject({
           (!readModifierConflictFact(event.type, event.payload) || event.audience?.length !== 0)
         )
           ctx.addIssue({ code: "custom", message: "reproduction_modifier_conflict_invalid" });
+        if ((FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(event.type)) {
+          const fact = readFragrantPairFact(event.type, event.payload),
+            visibility = fragrantPairVisibility(event.type);
+          if (
+            !fact ||
+            (visibility === "god"
+              ? event.audience?.length !== 0
+              : event.audience?.length !== 1 || event.audience[0] !== fact.actorId)
+          )
+            ctx.addIssue({ code: "custom", message: "reproduction_fragrant_fact_invalid" });
+        }
         if ((NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(event.type)) {
           const fact = readNobleSecretBodyFact(event.type, event.payload),
             visibility = nobleSecretBodyVisibility(event.type);
@@ -763,6 +785,7 @@ const schema = z.strictObject({
         }
         if (
           event.audience !== undefined &&
+          !(FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(event.type) &&
           !(MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(event.type) &&
@@ -826,6 +849,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   validateWildChildRecord(result);
   validateLonelyGirlRecord(result);
   validateGhostBrideRecord(result);
+  validateFragrantPairRecord(result);
   const noble = validateNobleSecretBodyRecord(result);
   validateDemonHunterRecord(result, noble);
   validateScholarMentorRecord(result);
@@ -910,8 +934,9 @@ export class ReproductionTrace {
   get decisionCount(): number {
     return this.decisions.length;
   }
-  get nobleEventCursor(): number | undefined {
-    return this.metadata.normalizedBoard.nobleSecretBody
+  get ownedEventCursor(): number | undefined {
+    return this.metadata.normalizedBoard.nobleSecretBody ||
+      this.metadata.normalizedBoard.fragrantPairSeer
       ? (this.liveEvents?.().length ?? this.events.length)
       : undefined;
   }
@@ -926,7 +951,7 @@ export class ReproductionTrace {
       turn,
       request: normalizedRequest(request),
       openedAfterSettlement: this.settled,
-      ...(this.nobleEventCursor === undefined ? {} : { openedAtEventCount: this.nobleEventCursor }),
+      ...(this.ownedEventCursor === undefined ? {} : { openedAtEventCount: this.ownedEventCursor }),
       outcome: { kind: "pending" },
     };
     this.decisions.push(entry);
@@ -968,7 +993,7 @@ export class ReproductionTrace {
       throw new Error("reproduction_checkpoint_events_mismatch");
     this.checkpoints.push(
       structuredClone(
-        checkpoint.nobleBody
+        checkpoint.nobleBody || checkpoint.fragrantPair
           ? { ...checkpoint, settlementCount: this.settled, decisionCount: this.decisions.length }
           : checkpoint,
       ),

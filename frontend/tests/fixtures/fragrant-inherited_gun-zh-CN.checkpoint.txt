@@ -1,0 +1,603 @@
+{
+  "fragrantPair": {
+    "phantomId": 10,
+    "seerId": 4,
+    "fragrant": {
+      "policy": "awa_fragrant_pair_seer_v1",
+      "knownWolfId": 12,
+      "knowledgeNight": 1,
+      "lastChoice": {
+        "day": 3,
+        "pairIds": [
+          3,
+          10
+        ]
+      },
+      "bindings": [
+        {
+          "id": "fragrant:night:3",
+          "createdNight": 3,
+          "expiresNight": 4,
+          "pairIds": [
+            3,
+            10
+          ],
+          "status": {
+            "kind": "triggered",
+            "day": 3
+          }
+        }
+      ],
+      "trigger": {
+        "bindingId": "fragrant:night:3",
+        "day": 3,
+        "rootId": 10,
+        "addedTargetId": 3
+      }
+    },
+    "pairSeer": {
+      "policy": "awa_fragrant_pair_seer_v1",
+      "history": [
+        {
+          "day": 1,
+          "targetIds": [
+            1,
+            4
+          ],
+          "containsWerewolf": true
+        }
+      ]
+    },
+    "known": {
+      "knownWolfId": 12,
+      "lastOpenedNight": 3,
+      "lastChoice": {
+        "day": 3,
+        "pairIds": [
+          3,
+          10
+        ]
+      },
+      "activeBinding": null,
+      "used": true,
+      "knifeNotices": [
+        {
+          "day": 1,
+          "eligible": false
+        },
+        {
+          "day": 2,
+          "eligible": false
+        },
+        {
+          "day": 3,
+          "eligible": true
+        }
+      ]
+    },
+    "nights": [
+      {
+        "day": 1,
+        "status": "normal",
+        "knife": false,
+        "bindCommitted": true,
+        "pairCommitted": true
+      },
+      {
+        "day": 2,
+        "status": "normal",
+        "knife": false,
+        "bindCommitted": true,
+        "pairCommitted": false
+      },
+      {
+        "day": 3,
+        "status": "normal",
+        "knife": true,
+        "bindCommitted": true,
+        "pairCommitted": false
+      }
+    ]
+  },
+  "operationCount": 124,
+  "settlementCount": 77,
+  "decisionCount": 77,
+  "cycle": 3,
+  "complete": true,
+  "snapshot": {
+    "day": 3,
+    "phase": "game_over",
+    "gameOver": true,
+    "result": {
+      "winner": "good",
+      "reason": "all_wolves_eliminated",
+      "outcome": {
+        "kind": "victory",
+        "primary": {
+          "kind": "faction",
+          "faction": "good",
+          "winningPlayerIds": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            9,
+            11
+          ]
+        },
+        "additional": [],
+        "winningPlayerIds": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9,
+          11
+        ]
+      },
+      "decidedAt": {
+        "day": 3,
+        "phase": "day",
+        "checkpoint": "night_settled"
+      }
+    }
+  },
+  "players": [
+    {
+      "id": 1,
+      "seat": 1,
+      "name": "Seat 1",
+      "role": "wolf",
+      "camp": "wolf",
+      "alive": false,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "wolf"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5
+      },
+      "marks": []
+    },
+    {
+      "id": 2,
+      "seat": 2,
+      "name": "Seat 2",
+      "role": "hunter",
+      "camp": "good",
+      "alive": false,
+      "privateState": {
+        "hunter": {
+          "canShoot": false
+        }
+      },
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5
+      },
+      "marks": []
+    },
+    {
+      "id": 3,
+      "seat": 3,
+      "name": "Seat 3",
+      "role": "guard",
+      "camp": "good",
+      "alive": false,
+      "privateState": {
+        "abilities": {
+          "native:guard": {
+            "id": "native:guard",
+            "kind": "guard",
+            "state": {
+              "lastTarget": null,
+              "repeatPolicy": "netease_consecutive_nights_v1"
+            },
+            "source": {
+              "kind": "native",
+              "role": "guard"
+            },
+            "sourceDisclosed": true,
+            "startsOnDay": 1,
+            "maxUses": null,
+            "uses": 0,
+            "lastUsedDay": 3,
+            "disabled": false
+          }
+        }
+      },
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5
+      },
+      "marks": []
+    },
+    {
+      "id": 4,
+      "seat": 4,
+      "name": "Seat 4",
+      "role": "awakened_seer",
+      "camp": "good",
+      "alive": false,
+      "privateState": {
+        "abilities": {
+          "native:pair_check": {
+            "id": "native:pair_check",
+            "kind": "pair_check",
+            "state": {
+              "policy": "awa_fragrant_pair_seer_v1",
+              "history": [
+                {
+                  "day": 1,
+                  "targetIds": [
+                    1,
+                    4
+                  ],
+                  "containsWerewolf": true
+                }
+              ]
+            },
+            "source": {
+              "kind": "native",
+              "role": "awakened_seer"
+            },
+            "sourceDisclosed": true,
+            "startsOnDay": 1,
+            "maxUses": null,
+            "uses": 1,
+            "lastUsedDay": 1,
+            "disabled": false
+          }
+        },
+        "pairSeer": {
+          "policy": "awa_fragrant_pair_seer_v1",
+          "history": [
+            {
+              "day": 1,
+              "targetIds": [
+                1,
+                4
+              ],
+              "containsWerewolf": true
+            }
+          ]
+        }
+      },
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5
+      },
+      "marks": []
+    },
+    {
+      "id": 5,
+      "seat": 5,
+      "name": "Seat 5",
+      "role": "villager",
+      "camp": "good",
+      "alive": true,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5
+      },
+      "marks": []
+    },
+    {
+      "id": 6,
+      "seat": 6,
+      "name": "Seat 6",
+      "role": "witch",
+      "camp": "good",
+      "alive": false,
+      "privateState": {
+        "abilities": {
+          "native:potion": {
+            "id": "native:potion",
+            "kind": "potion",
+            "state": {
+              "heal": 1,
+              "poison": 0,
+              "selfHealRule": "disabled",
+              "canSelfHeal": false,
+              "healUsedThisNight": false,
+              "poisonUsedThisNight": false
+            },
+            "source": {
+              "kind": "native",
+              "role": "witch"
+            },
+            "sourceDisclosed": true,
+            "startsOnDay": 1,
+            "maxUses": null,
+            "uses": 1,
+            "lastUsedDay": 2,
+            "disabled": false
+          }
+        }
+      },
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5
+      },
+      "marks": []
+    },
+    {
+      "id": 7,
+      "seat": 7,
+      "name": "Seat 7",
+      "role": "villager",
+      "camp": "good",
+      "alive": true,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5
+      },
+      "marks": []
+    },
+    {
+      "id": 8,
+      "seat": 8,
+      "name": "Seat 8",
+      "role": "wolf",
+      "camp": "wolf",
+      "alive": false,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "wolf"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5
+      },
+      "marks": []
+    },
+    {
+      "id": 9,
+      "seat": 9,
+      "name": "Seat 9",
+      "role": "villager",
+      "camp": "good",
+      "alive": true,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5
+      },
+      "marks": []
+    },
+    {
+      "id": 10,
+      "seat": 10,
+      "name": "Seat 10",
+      "role": "fragrant_phantom",
+      "camp": "wolf",
+      "alive": false,
+      "privateState": {
+        "fragrant": {
+          "policy": "awa_fragrant_pair_seer_v1",
+          "knownWolfId": 12,
+          "knowledgeNight": 1,
+          "lastChoice": {
+            "day": 3,
+            "pairIds": [
+              3,
+              10
+            ]
+          },
+          "bindings": [
+            {
+              "id": "fragrant:night:3",
+              "createdNight": 3,
+              "expiresNight": 4,
+              "pairIds": [
+                3,
+                10
+              ],
+              "status": {
+                "kind": "triggered",
+                "day": 3
+              }
+            }
+          ],
+          "trigger": {
+            "bindingId": "fragrant:night:3",
+            "day": 3,
+            "rootId": 10,
+            "addedTargetId": 3
+          }
+        }
+      },
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "wolf"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5
+      },
+      "marks": []
+    },
+    {
+      "id": 11,
+      "seat": 11,
+      "name": "Seat 11",
+      "role": "villager",
+      "camp": "good",
+      "alive": true,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "good"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5
+      },
+      "marks": []
+    },
+    {
+      "id": 12,
+      "seat": 12,
+      "name": "Seat 12",
+      "role": "wolf",
+      "camp": "wolf",
+      "alive": false,
+      "privateState": {},
+      "victory": {
+        "affiliations": [
+          {
+            "kind": "faction",
+            "faction": "wolf"
+          }
+        ]
+      },
+      "vote": {
+        "weight": 1,
+        "canVote": true
+      },
+      "badge": {
+        "isSheriff": false,
+        "destroyed": false,
+        "voteWeight": 1.5
+      },
+      "marks": []
+    }
+  ],
+  "eventCount": 113
+}

@@ -36,6 +36,7 @@ export interface PlayerObservation {
   deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];
   ownState: {
+    fragrantPhantom?: import("@ai-werewolf-arena/game-text").FragrantPlayerState;
     nightNoble?: import("../../../game/mechanisms/roles/noble_secret_body/player_projection").NoblePlayerState;
     secretBody?: import("../../../game/mechanisms/roles/noble_secret_body/player_projection").SecretBodyPlayerState;
     eclipse?: import("../../../game/mechanisms/roles/radiant_eclipse/state").EclipseState;

@@ -3,6 +3,7 @@ import type { DeathActionPolicy } from "./board";
 import type { NightLifeScope } from "./night_effects";
 /** Death facts are distinct from transient protection/damage marks. */
 export enum DeathCause {
+  FragrantLink = "fragrant_link",
   ServantExpiry = "servant_expiry",
   RadiantBacklash = "radiant_backlash",
   RavenClawKnife = "raven_claw_knife",

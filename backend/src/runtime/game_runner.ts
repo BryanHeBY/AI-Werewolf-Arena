@@ -1,4 +1,5 @@
 import { inheritNobleBodyDeadlineRequest } from "../game/mechanisms/roles/noble_secret_body/requests";
+import { inheritFragrantPairDeadlineRequest } from "../game/mechanisms/roles/fragrant_pair_seer/requests";
 import { inheritDemonWitchDeadlineRequest } from "../game/mechanisms/roles/demon_hunter/native_potion_requests";
 import { inheritDemonHunterDeadlineRequest } from "../game/mechanisms/roles/demon_hunter/authority";
 import { inheritGhostBrideDeadlineRequest } from "../game/mechanisms/roles/ghost_bride/authority";
@@ -115,6 +116,7 @@ class DeadlineAwareActionProvider implements ActionProvider {
     inheritDemonHunterDeadlineRequest(request, timed);
     inheritDemonWitchDeadlineRequest(request, timed);
     inheritNobleBodyDeadlineRequest(request, timed);
+    inheritFragrantPairDeadlineRequest(request, timed);
     return this.delegate.getAction(timed);
   }
 }

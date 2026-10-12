@@ -1,3 +1,9 @@
+import { fragrantCheckpointSchema } from "../../recording/fragrant_pair_seer_checkpoint";
+import {
+  fragrantAuthoritySnapshot,
+  fragrantCheckpointPrivateState,
+  isFragrantPairBoard,
+} from "../../game/mechanisms/roles/fragrant_pair_seer/authority";
 import { nobleBodyCheckpointSchema } from "../../recording/noble_secret_body_checkpoint";
 import {
   checkpointNobleBodyAuthority,
@@ -109,9 +115,16 @@ export function captureCheckpoint(
   const thiefSetup = projectThiefSetup(world),
     shapeshifterSetup = projectShapeshifterSetup(world);
   return {
+    ...(isFragrantPairBoard(world)
+      ? { fragrantPair: fragrantCheckpointSchema.parse(fragrantAuthoritySnapshot(world, complete)) }
+      : {}),
     ...(isNobleBodyBoard(world)
       ? {
           nobleBody: nobleBodyCheckpointSchema.parse(checkpointNobleBodyAuthority(world, complete)),
+        }
+      : {}),
+    ...(isNobleBodyBoard(world) || isFragrantPairBoard(world)
+      ? {
           operationCount: getSessionRecorder()?.reproductionOperationCount ?? 0,
           settlementCount:
             cursors?.settlementCount ?? getSessionRecorder()?.reproductionSettlementCount ?? 0,
@@ -156,6 +169,7 @@ export function captureCheckpoint(
           camp: audit?.camp ?? role.camp,
           alive: audit?.alive ?? world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive,
           privateState:
+            fragrantCheckpointPrivateState(world, id, complete) ??
             audit?.privateState ??
             (projectLonelyGirl(world, role)
               ? { lonelyGirl: projectLonelyGirl(world, role) }
@@ -251,7 +265,9 @@ export function beginGameReproduction(
         };
       }),
     },
-    options.boardConfig.radiantEclipse || options.boardConfig.nobleSecretBody
+    options.boardConfig.radiantEclipse ||
+      options.boardConfig.nobleSecretBody ||
+      options.boardConfig.fragrantPairSeer
       ? () => context.phaseManager.getEvents()
       : undefined,
   );

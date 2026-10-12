@@ -1,4 +1,5 @@
 import {
+  isFragrantPairSeerPreset,
   isNobleSecretBodyPreset,
   isTricksterPreset,
   isOrderPrincePreset,
@@ -20,6 +21,15 @@ import { isDemonHunterPreset } from "./demon_hunter/preset";
 
 /** Shared finite-board eligibility for configuration checks and direct bootstrap callers. */
 export function boardPresetViolation(config: BoardConfig) {
+  if (
+    (config.fragrantPairSeer ||
+      config.roleSetups.some(
+        (row) =>
+          (row.role === Role.FragrantPhantom || row.role === Role.AwakenedSeer) && row.count > 0,
+      )) &&
+    !isFragrantPairSeerPreset(config)
+  )
+    return "fragrant_pair_seer_preset_invalid";
   if (
     (config.nobleSecretBody ||
       config.nightNoble ||

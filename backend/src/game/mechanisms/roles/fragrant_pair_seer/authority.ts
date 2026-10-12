@@ -1,10 +1,12 @@
 import { types } from "node:util";
+import type { FragrantPlayerState } from "@ai-werewolf-arena/game-text";
 import type { World } from "../../../../core/domain/world";
 import type { GameEvent } from "../../../../core/domain/events";
 import type { RandomDraws } from "../../../../core/domain/random";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Camp, Role, Phase } from "../../../../core/domain/identity";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
+import { recordNightAbilityUse, abilityStatus, type NightAbility } from "../abilities";
 import {
   capturePairTarget,
   pairTargetCurrent,
@@ -44,7 +46,7 @@ function own(value: unknown, key: PropertyKey): unknown {
 }
 function plainJson(value: unknown): string | null {
   try {
-    return JSON.stringify(snapshotPlainData(value));
+    return JSON.stringify(snapshotPlainData(value, new Set(), 0, 65536));
   } catch {
     return null;
   }
@@ -178,6 +180,10 @@ interface Owner {
   readonly wolves: readonly OriginalPlayer[];
   readonly fragrant: FragrantState;
   readonly pairState: PairSeerState;
+  readonly pairAbility: NightAbility<"pair_check">;
+  readonly pairSource: NightAbility<"pair_check">["source"];
+  readonly abilities: unknown;
+  pairAbilityJson: string;
   fragrantJson: string;
   pairJson: string;
   knowledge: FragrantKnowledge;
@@ -197,6 +203,11 @@ function requireOwner(world: World): Owner {
     [...o.players.values()].some((p) => !original(world, p)) ||
     own(o.phantom.privateState, "fragrant") !== o.fragrant ||
     own(o.seer.privateState, "pairSeer") !== o.pairState ||
+    own(o.seer.privateState, "abilities") !== o.abilities ||
+    plainJson(o.pairAbility) !== o.pairAbilityJson ||
+    o.pairAbility.source !== o.pairSource ||
+    own(o.abilities, o.pairAbility.id) !== o.pairAbility ||
+    o.pairAbility.state !== o.pairState ||
     JSON.stringify(readFragrantState(o.fragrant)) !== o.fragrantJson ||
     JSON.stringify(readPairSeerState(o.pairState)) !== o.pairJson
   )
@@ -253,7 +264,7 @@ function commitState(o: Owner, next: FragrantState): void {
   write(o.fragrant, next);
   o.fragrantJson = JSON.stringify(next);
 }
-/** Bootstrap separately qualifies the exact finite preset. No replacement resources are granted. */
+/** The owner requires the complete original native roster. No replacement resources are granted. */
 export function installFragrantPairAuthority(
   world: World,
   events: GameEvent[],
@@ -274,11 +285,39 @@ export function installFragrantPairAuthority(
     pairState = seer && own(seer.privateState, "pairSeer"),
     f = readFragrantState(fragrant),
     s = readPairSeerState(pairState),
+    rawPairAbility = seer && own(own(seer.privateState, "abilities"), "native:pair_check"),
+    pairAbilityJson = plainJson(rawPairAbility),
+    pairAbility = rawPairAbility as NightAbility<"pair_check"> | undefined,
     wolves = [...players.values()].filter((p) => p.target.roleId === Role.Wolf);
+  const counts = new Map<Role, number>([
+    [Role.FragrantPhantom, 1],
+    [Role.Wolf, 3],
+    [Role.Villager, 4],
+    [Role.AwakenedSeer, 1],
+    [Role.Witch, 1],
+    [Role.Hunter, 1],
+    [Role.Guard, 1],
+  ]);
+  const nativeRoster =
+    players.size === 12 &&
+    [...counts].every(
+      ([role, count]) =>
+        [...players.values()].filter((p) => p.target.roleId === role).length === count,
+    ) &&
+    [...players.values()].every(
+      (p) =>
+        p.target.campValue ===
+        (p.target.roleId === Role.Wolf || p.target.roleId === Role.FragrantPhantom
+          ? Camp.Wolf
+          : Camp.Good),
+    );
   if (
+    !nativeRoster ||
     !phantom ||
     !seer ||
     phantom === seer ||
+    phantom.target.roleId !== Role.FragrantPhantom ||
+    seer.target.roleId !== Role.AwakenedSeer ||
     phantom.target.campValue !== Camp.Wolf ||
     seer.target.campValue !== Camp.Good ||
     wolves.length !== 3 ||
@@ -289,7 +328,25 @@ export function installFragrantPairAuthority(
     f.bindings.length ||
     f.trigger ||
     !s ||
-    s.history.length
+    s.history.length ||
+    !pairAbility ||
+    pairAbilityJson === null ||
+    pairAbility.state !== pairState ||
+    pairAbility.kind !== "pair_check" ||
+    pairAbility.id !== "native:pair_check" ||
+    pairAbility.source.kind !== "native" ||
+    pairAbility.source.role !== Role.AwakenedSeer ||
+    pairAbility.uses !== 0 ||
+    pairAbility.lastUsedDay !== null ||
+    pairAbility.startsOnDay !== 1 ||
+    pairAbility.maxUses !== null ||
+    pairAbility.disabled !== false ||
+    pairAbility.sourceDisclosed !== true ||
+    pairAbility.activation !== undefined ||
+    pairAbility.expiresAfterDay !== undefined ||
+    pairAbility.deathExpired !== undefined ||
+    pairAbility.nightSuppression !== undefined ||
+    pairAbilityJson === null
   )
     throw Error("fragrant_initial_state_invalid");
   owners.set(world, {
@@ -301,6 +358,10 @@ export function installFragrantPairAuthority(
     wolves,
     fragrant: fragrant as FragrantState,
     pairState: pairState as PairSeerState,
+    pairAbility,
+    pairSource: pairAbility.source,
+    abilities: own(seer.privateState, "abilities"),
+    pairAbilityJson,
     fragrantJson: JSON.stringify(f),
     pairJson: JSON.stringify(s),
     knowledge: freshFragrantKnowledge(),
@@ -391,7 +452,17 @@ export function beginFragrantNight(
     throw error;
   }
 }
-function openChoice(world: World, day: number, kind: "bind" | "pair") {
+function openChoice(
+  world: World,
+  day: number,
+  kind: "bind" | "pair",
+  requestCurrent?: () => boolean,
+) {
+  if (
+    requestCurrent !== undefined &&
+    (typeof requestCurrent !== "function" || types.isProxy(requestCurrent))
+  )
+    throw Error("fragrant_choice_unavailable");
   const { owner: o, night } = requireNight(world, day),
     actor = kind === "bind" ? o.phantom : o.seer,
     lease = night[kind];
@@ -410,12 +481,22 @@ function openChoice(world: World, day: number, kind: "bind" | "pair") {
     if (lease.revoked || lease.committed) return false;
     try {
       const current = requireNight(world, day);
-      const eligible =
+      let eligible =
         current.owner === o &&
         current.night === night &&
         !lease.committed &&
         original(world, actor, true) &&
         candidates.every((t) => pairTargetCurrent(world, t));
+      if (eligible && requestCurrent) {
+        eligible = controlled(o, requestCurrent);
+        requireOwner(world);
+        eligible &&=
+          o.active === night &&
+          night.status === "open" &&
+          !lease.committed &&
+          original(world, actor, true) &&
+          candidates.every((t) => pairTargetCurrent(world, t));
+      }
       if (!eligible) lease.revoked = true;
       return eligible;
     } catch {
@@ -432,8 +513,28 @@ function openChoice(world: World, day: number, kind: "bind" | "pair") {
   };
   return { o, night, lease, candidates, isCurrent, targets };
 }
-export function openFragrantBindChoice(world: World, day: number) {
-  const c = openChoice(world, day, "bind");
+export function fragrantChoiceActor(
+  world: World,
+  day: number,
+  kind: "bind" | "pair",
+): number | null {
+  const { owner, night } = requireNight(world, day),
+    actor = kind === "bind" ? owner.phantom : owner.seer;
+  return (kind === "bind" ? night.requiresBind : night.requiresPair) &&
+    !night[kind].committed &&
+    !night[kind].revoked &&
+    original(world, actor, true)
+    ? actor.target.id
+    : null;
+}
+export function fragrantChoiceCandidates(world: World, day: number): readonly number[] {
+  const { owner } = requireNight(world, day);
+  return [...owner.players.values()]
+    .filter((p) => original(world, p, true))
+    .map((p) => p.target.id);
+}
+export function openFragrantBindChoice(world: World, day: number, requestCurrent?: () => boolean) {
+  const c = openChoice(world, day, "bind", requestCurrent);
   return Object.freeze({
     isCurrent: c.isCurrent,
     candidates: Object.freeze(c.candidates.map((t) => t.id)),
@@ -452,8 +553,8 @@ export function openFragrantBindChoice(world: World, day: number) {
     },
   });
 }
-export function openPairCheckChoice(world: World, day: number) {
-  const c = openChoice(world, day, "pair");
+export function openPairCheckChoice(world: World, day: number, requestCurrent?: () => boolean) {
+  const c = openChoice(world, day, "pair", requestCurrent);
   return Object.freeze({
     isCurrent: c.isCurrent,
     candidates: Object.freeze(c.candidates.map((t) => t.id)),
@@ -465,8 +566,13 @@ export function openPairCheckChoice(world: World, day: number) {
       if (result === null) throw Error("fragrant_pair_check_revoked");
       const next = appendPairCheck(c.o.pairState, day, pair, result);
       if (!c.isCurrent()) throw Error("fragrant_pair_check_revoked");
+      if (abilityStatus(c.o.pairAbility, day) !== "active")
+        throw Error("fragrant_pair_check_revoked");
+      assertWritable(c.o.pairAbility, c.o.pairAbility);
       write(c.o.pairState, next);
       c.o.pairJson = JSON.stringify(next);
+      recordNightAbilityUse(c.o.pairAbility, day, true);
+      c.o.pairAbilityJson = plainJson(c.o.pairAbility)!;
       c.lease.committed = true;
       return Object.freeze({
         actorId: c.o.seer.target.id,
@@ -478,9 +584,17 @@ export function openPairCheckChoice(world: World, day: number) {
   });
 }
 export function closeFragrantNight(world: World, day: number, status: "normal" | "aborted"): void {
+  if (status === "aborted") {
+    const owned = owners.get(world),
+      night = owned?.nights.get(day);
+    if (owned && night?.status === "open") {
+      night.status = "aborted";
+      if (owned.active === night) owned.active = null;
+    }
+    return;
+  }
   const o = requireOwner(world),
     n = o.nights.get(day);
-  if (status === "aborted" && n?.status === "aborted") return;
   if (!n || n.day !== day || n.status !== "open") throw Error("fragrant_night_unavailable");
   if (status === "normal") {
     requireNight(world, day);
@@ -500,11 +614,37 @@ export function fragrantKnifeEligible(world: World, actorId: number, day: number
     return false;
   }
 }
-export function fragrantPlayerKnowledge(world: World) {
+export function fragrantRoleKnifeEligible(world: World, role: PairTargetScope["role"]): boolean {
+  const o = owners.get(world);
+  return (
+    !!o &&
+    o.phantom.target.role === role &&
+    !!o.active &&
+    fragrantKnifeEligible(world, o.phantom.target.id, o.active.day)
+  );
+}
+/** Historical single-ID knowledge; this never returns the private original ordinary-wolf roster. */
+export function fragrantKnownWolfIds(
+  world: World,
+  role: PairTargetScope["role"],
+): readonly number[] {
+  const o = requireOwner(world);
+  return o.phantom.target.role !== role || o.knowledge.knownWolfId === null
+    ? []
+    : [o.knowledge.knownWolfId];
+}
+export function fragrantPlayerKnowledge(
+  world: World,
+  phase?: Phase,
+  day?: number,
+): FragrantPlayerState {
   const o = requireOwner(world),
-    canVoteForKill = o.active
-      ? fragrantKnifeEligible(world, o.phantom.target.id, o.active.day)
-      : false;
+    canVoteForKill =
+      o.active &&
+      (phase === undefined || phase === Phase.Night) &&
+      (day === undefined || day === o.active.day)
+        ? fragrantKnifeEligible(world, o.phantom.target.id, o.active.day)
+        : false;
   requireOwner(world);
   const known = readFragrantKnowledge(o.knowledge)!;
   return {
@@ -583,9 +723,9 @@ export function prepareFragrantDeathWave(
   return receipt;
 }
 export function cancelFragrantDeathWave(world: World, receipt: FragrantWaveReceipt): void {
-  const o = requireOwner(world),
+  const o = owners.get(world),
     p = waves.get(receipt);
-  if (!p || p.owner !== o || p.committed || o.pendingWave !== receipt)
+  if (!o || !p || p.owner !== o || p.committed || o.pendingWave !== receipt)
     throw Error("fragrant_death_wave_revoked");
   o.pendingWave = null;
   waves.delete(receipt);
@@ -629,14 +769,18 @@ export function publishFragrantDeathWave(
     p.owner !== o ||
     !p.committed ||
     !feed ||
-    index < p.eventStart ||
+    index < 0 ||
+    (index < p.eventStart &&
+      own(event, "type") !== "voted_out" &&
+      own(event, "type") !== "wolf_self_destruct") ||
     p.prefix.some((e, i) => feed[i] !== e)
   )
     throw Error("fragrant_death_publication_invalid");
-  const phases = phaseFacts(feed.slice(0, index + 1));
+  const phases = phaseFacts(feed.slice(0, Math.max(index + 1, p.eventStart)));
   if (
     !phases ||
     (phases.at(-1)?.day ?? receipt.day) !== receipt.day ||
+    (phaseFacts(feed.slice(0, index + 1))?.at(-1)?.day ?? receipt.day) !== receipt.day ||
     p.phases.some((fact, i) => JSON.stringify(phases[i]) !== JSON.stringify(fact))
   )
     throw Error("fragrant_death_publication_invalid");
@@ -648,17 +792,50 @@ export function publishFragrantDeathWave(
     !Object.hasOwn(fact, "timestamp") ||
     !Object.hasOwn(fact, "payload") ||
     typeof fact.type !== "string" ||
-    !["night_resolved", "additional_deaths"].includes(fact.type) ||
+    ![
+      "night_resolved",
+      "additional_deaths",
+      "voted_out",
+      "hunter_shot",
+      "wolf_self_destruct",
+    ].includes(fact.type) ||
     typeof fact.timestamp !== "number" ||
     !Number.isFinite(fact.timestamp) ||
     !payload ||
     typeof payload !== "object" ||
     Array.isArray(payload) ||
-    Object.keys(payload).length !== 1 ||
-    !Object.hasOwn(payload, "deaths")
+    (fact.type === "wolf_self_destruct"
+      ? Object.keys(payload).length !== 2 ||
+        !Object.hasOwn(payload, "wolfId") ||
+        !Object.hasOwn(payload, "window") ||
+        o.players.get(Number(own(payload, "wolfId")))?.target.roleId !== Role.Wolf ||
+        (own(payload, "window") !== "on_pre_election" && own(payload, "window") !== "on_pre_vote")
+      : fact.type === "hunter_shot"
+        ? Object.keys(payload).length !== 2 ||
+          !Object.hasOwn(payload, "hunterId") ||
+          !Object.hasOwn(payload, "targetId") ||
+          own(payload, "hunterId") !== o.players.get(Number(own(payload, "hunterId")))?.target.id ||
+          o.players.get(Number(own(payload, "hunterId")))?.target.roleId !== Role.Hunter
+        : Object.keys(payload).length !== 1 ||
+          !Object.hasOwn(payload, fact.type === "voted_out" ? "target" : "deaths"))
   )
     throw Error("fragrant_death_publication_invalid");
-  const ids = (payload as { deaths: unknown }).deaths;
+  const publicPhase = phaseFacts(feed.slice(0, index + 1))?.at(-1)?.phase;
+  if (
+    (fact.type === "wolf_self_destruct" &&
+      publicPhase !== (own(payload, "window") === "on_pre_election" ? Phase.Day : Phase.Voting)) ||
+    (fact.type === "voted_out" && publicPhase !== Phase.Voting) ||
+    (fact.type === "hunter_shot" && publicPhase !== Phase.Day && publicPhase !== Phase.Voting)
+  )
+    throw Error("fragrant_death_publication_invalid");
+  const ids =
+    fact.type === "wolf_self_destruct"
+      ? [own(payload, "wolfId")]
+      : fact.type === "voted_out"
+        ? [own(payload, "target")]
+        : fact.type === "hunter_shot"
+          ? [own(payload, "targetId")]
+          : (payload as { deaths: unknown }).deaths;
   if (
     !Array.isArray(ids) ||
     !ids.length ||
@@ -670,16 +847,24 @@ export function publishFragrantDeathWave(
         !original(world, o.players.get(Number(id))!) ||
         o.players.get(Number(id))!.target.life.alive,
     ) ||
-    !receipt.pairIds.some((id) => ids.includes(id))
+    !receipt.pairIds.some((id) => ids.includes(id)) ||
+    ((fact.type === "voted_out" ||
+      fact.type === "hunter_shot" ||
+      fact.type === "wolf_self_destruct") &&
+      !ids.includes(receipt.rootId))
   )
     throw Error("fragrant_death_publication_invalid");
   o.knowledge = knowFragrantPublishedDeaths(o.knowledge, receipt.day, ids);
 }
-export function fragrantAuthoritySnapshot(world: World) {
-  const o = requireOwner(world);
+export function fragrantAuthoritySnapshot(world: World, complete = true) {
+  // Failed checkpoints retain the original owner, even after a replacement revoked it.
+  const o = complete ? requireOwner(world) : owners.get(world);
+  if (!o) throw Error("fragrant_owner_missing");
   return {
-    fragrant: readFragrantState(o.fragrant)!,
-    pairSeer: readPairSeerState(o.pairState)!,
+    phantomId: o.phantom.target.id,
+    seerId: o.seer.target.id,
+    fragrant: JSON.parse(o.fragrantJson) as FragrantState,
+    pairSeer: JSON.parse(o.pairJson) as PairSeerState,
     known: readFragrantKnowledge(o.knowledge)!,
     nights: [...o.nights.values()].map((n) => ({
       day: n.day,
@@ -689,4 +874,17 @@ export function fragrantAuthoritySnapshot(world: World) {
       pairCommitted: n.pair.committed,
     })),
   };
+}
+
+/** The two owner-managed private stores are reconstructed from committed receipts. */
+export function fragrantCheckpointPrivateState(world: World, id: number, complete: boolean) {
+  const o = owners.get(world);
+  if (!o || (id !== o.phantom.target.id && id !== o.seer.target.id)) return undefined;
+  if (complete) requireOwner(world);
+  return id === o.phantom.target.id
+    ? { fragrant: JSON.parse(o.fragrantJson) as FragrantState }
+    : {
+        abilities: { "native:pair_check": JSON.parse(o.pairAbilityJson) },
+        pairSeer: JSON.parse(o.pairJson) as PairSeerState,
+      };
 }

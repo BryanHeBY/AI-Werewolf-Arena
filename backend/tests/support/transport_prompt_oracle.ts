@@ -1,3 +1,4 @@
+import { FRAGRANT_PAIR_EVENT_TYPES, readFragrantPairFact } from "@ai-werewolf-arena/game-text";
 import { isDeepStrictEqual } from "node:util";
 import {
   RADIANT_ECLIPSE_EVENT_TYPES,
@@ -38,6 +39,8 @@ export function assertTransportIdentity(plan: ActorTransportPlan, content: strin
 }
 
 const stages: Record<string, [string, string]> = {
+  fragrant_bind: ["寻香绑定", "Fragrant binding"],
+  pair_inspection: ["双目标查验", "Pair inspection"],
   night_noble: ["设置夜仆", "Choose a servant"],
   secret_body: ["秘密之身保护", "Secret Body protection"],
   awakened_idiot_reveal_speech: ["活人翻牌发言", "Living role reveal speech"],
@@ -405,6 +408,21 @@ export function assertTransportEvents(
       )
         throw Error("fixture_noble_owner_fact_exposed");
     }
+    if ((FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(type)) {
+      const fact = readFragrantPairFact(type, payload);
+      if (
+        !fact ||
+        !["fragrant_pair_chosen", "fragrant_pair_inspected", "fragrant_night_notified"].includes(
+          type,
+        ) ||
+        fact.actorId !== actorId ||
+        (type === "fragrant_pair_inspected"
+          ? role !== "awakened_seer"
+          : role !== "fragrant_phantom") ||
+        (state?.currentDay !== undefined && fact.day > state.currentDay)
+      )
+        throw Error("fixture_fragrant_owner_fact_exposed");
+    }
     if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(type)) {
       const fact = readRadiantEclipseFact(type, payload);
       if (!fact || !radiantEclipseAudience(type, fact).includes(actorId))
@@ -601,8 +619,20 @@ export function assertTransportEvents(
         "night_mentor",
         "raven_claw_wolf",
         "night_noble",
+        "fragrant_phantom",
       ].includes(role)
     )
       throw new Error("fixture_wolf_information_exposed");
+    if (
+      role === "fragrant_phantom" &&
+      [
+        "wolf_tactical_order",
+        "wolf_discussion",
+        "wolf_discussion_ended",
+        "wolf_kill_vote_cast",
+      ].includes(type) &&
+      (type !== "wolf_kill_vote_cast" || payload.actorId !== actorId)
+    )
+      throw new Error("fixture_fragrant_pack_information_exposed");
   }
 }

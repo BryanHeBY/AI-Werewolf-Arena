@@ -24,6 +24,7 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
     const windows = config.selfDestruct?.enabledWindows ?? [];
     const healRule = config.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled;
     return [
+      ...(config.fragrantPairSeer ? [text(locale, "rules.fragrant_pair_seer")] : []),
       ...(config.nobleSecretBody
         ? [
             text(

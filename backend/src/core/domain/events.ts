@@ -1,4 +1,5 @@
 import type { NobleSecretBodyPayloadMap } from "@ai-werewolf-arena/game-text";
+import type { FragrantPairPayloadMap } from "@ai-werewolf-arena/game-text";
 import type { RedMoonNextNightFact, RedMoonExpiryFact } from "@ai-werewolf-arena/game-text";
 import type {
   DemonHunterChoiceFact,
@@ -46,7 +47,7 @@ export interface ExileFeedback {
   result: Extract<InspectionResult, { kind: "camp" }>;
 }
 
-export interface EventPayloadMap extends NobleSecretBodyPayloadMap {
+export interface EventPayloadMap extends NobleSecretBodyPayloadMap, FragrantPairPayloadMap {
   eclipse_swallowed: {
     actorId: EntityId;
     day: number;
@@ -314,7 +315,7 @@ export interface EventPayloadMap extends NobleSecretBodyPayloadMap {
   ability_changed: {
     actorId: EntityId;
     abilityId: string;
-    kind: "seer_check" | "role_check" | "guard" | "potion" | "dream" | "shelter";
+    kind: "pair_check" | "seer_check" | "role_check" | "guard" | "potion" | "dream" | "shelter";
     operation: "granted" | "disabled" | "enabled" | "transferred_out";
     source:
       | { kind: "native"; role: string }
@@ -547,6 +548,13 @@ export type GameEvent = {
       | "radiant_shelter_chosen"
       | "noble_body_night_opened"
       | "noble_body_knife_committed"
+      | "fragrant_pair_chosen"
+      | "fragrant_wave_committed"
+      | "fragrant_night_opened"
+      | "fragrant_pair_inspected"
+      | "fragrant_night_notified"
+      | "fragrant_binding_expired"
+      | "fragrant_link_triggered"
       | "noble_body_native_damage_committed"
       | "noble_body_sources_committed"
       | "noble_body_death_committed"

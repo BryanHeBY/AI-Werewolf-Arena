@@ -1,4 +1,5 @@
 import { nobleSecretBodyEventLabel } from "@ai-werewolf-arena/game-text";
+import { fragrantPairEventLabel } from "@ai-werewolf-arena/game-text";
 import { radiantEclipseEventLabel } from "@ai-werewolf-arena/game-text";
 import { mistRavenEventLabel } from "@ai-werewolf-arena/game-text";
 import { scholarMentorEventLabel } from "@ai-werewolf-arena/game-text";
@@ -52,6 +53,8 @@ export function eventLabel(
   if (!fact) return text(locale, "replay.unknown");
   event = fact.event;
   const p = event.payload;
+  const fragrant = fragrantPairEventLabel(event.type, p, locale);
+  if (fragrant !== null) return fragrant;
   const noble = nobleSecretBodyEventLabel(event.type, p, locale);
   if (noble !== null) return noble;
   const radiant = radiantEclipseEventLabel(event.type, p, locale);

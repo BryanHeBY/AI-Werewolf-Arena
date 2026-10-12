@@ -34,6 +34,8 @@ interface TargetRule {
  */
 export class DefaultTargetHintRegistry implements TargetHintRegistry {
   private readonly toolRules: Partial<Record<ToolName, TargetRule>> = {
+    bind_fragrant_pair: { allowSelf: true },
+    check_pair: { allowSelf: true },
     choose_servant: { allowSelf: false },
     protect_secret_body: { allowSelf: true },
     kill_vote: { allowSelf: false },
@@ -67,6 +69,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
   };
 
   private readonly roleOverrides: Partial<Record<Role, Partial<Record<ToolName, TargetRule>>>> = {
+    [Role.FragrantPhantom]: { kill_vote: { allowSelf: true } },
     [Role.NightNoble]: { kill_vote: { allowSelf: true } },
     [Role.Wolf]: {
       // 狼人策略中可允许自刀，提示层保留自己编号避免“无效 self target”误判。

@@ -2,6 +2,10 @@ import {
   isNobleBodyBoard,
   getNobleBodyPlayerState,
 } from "../../../game/mechanisms/roles/noble_secret_body/authority";
+import {
+  isFragrantPairBoard,
+  fragrantPlayerKnowledge,
+} from "../../../game/mechanisms/roles/fragrant_pair_seer/authority";
 import { settlesNightBeforeDay } from "../../../game/mechanisms/night_death_timing";
 import {
   projectAlchemist,
@@ -211,6 +215,10 @@ export class PlayerPromptPolicy {
       }
     }
     const ownState: PlayerObservation["ownState"] = {};
+    if (role?.role === Role.FragrantPhantom && isFragrantPairBoard(this.world)) {
+      const known = fragrantPlayerKnowledge(this.world, request.phase, request.context.day);
+      if (known.actorId === request.actorId) ownState.fragrantPhantom = known;
+    }
     if (isNobleBodyBoard(this.world)) {
       const known = getNobleBodyPlayerState(this.world, request.actorId, request.phase);
       if (known?.kind === "night_noble") ownState.nightNoble = known.state;
@@ -569,6 +577,11 @@ export class PlayerPromptPolicy {
 
   private statusDirective(request: ActionRequest, role?: RoleComponent): string | undefined {
     const lines: string[] = [];
+    if (role?.role === Role.FragrantPhantom && isFragrantPairBoard(this.world)) {
+      const known = fragrantPlayerKnowledge(this.world, request.phase, request.context.day);
+      if (known.actorId === request.actorId)
+        lines.push(text(this.locale, "prompt.status.fragrant", { state: JSON.stringify(known) }));
+    }
     if (isNobleBodyBoard(this.world)) {
       const known = getNobleBodyPlayerState(this.world, request.actorId, request.phase);
       if (known)
@@ -735,6 +748,12 @@ export class PlayerPromptPolicy {
   }
 
   private stageContextHint(request: ActionRequest): string | undefined {
+    const pairCandidates =
+      request.context.fragrant_pair_candidates ?? request.context.pair_check_candidates;
+    if (pairCandidates)
+      return text(this.locale, "prompt.stage.fragrant_pair_candidates", {
+        ids: pairCandidates.join(", "),
+      });
     if (request.context.wolf_kill_candidates !== undefined)
       return text(this.locale, "prompt.stage.wolf_kill_candidates", {
         candidates:

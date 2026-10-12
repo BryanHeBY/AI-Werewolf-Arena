@@ -117,6 +117,8 @@ import { DeathResolution } from "./death_resolution";
 import { EventRegistry } from "./event_registry";
 import { DayPipeline } from "./phase_pipeline/day_pipeline";
 import { NightPipeline } from "./phase_pipeline/night_pipeline";
+import { installFragrantPairAuthority } from "../mechanisms/roles/fragrant_pair_seer/authority";
+import { Role } from "../../core/domain/identity";
 import { VotingPipeline } from "./phase_pipeline/voting_pipeline";
 import { RoleRegistry } from "../../core/domain/registries/role_registry";
 import { COMPONENT } from "../../core/domain/components/names";
@@ -173,6 +175,13 @@ export class PhaseManager {
     private readonly random: RandomSource = createRandom(),
     options: { faultPlan?: unknown } = {},
   ) {
+    if (config.fragrantPairSeer)
+      installFragrantPairAuthority(
+        world,
+        this.events,
+        world.getEntityIdsByRole(Role.FragrantPhantom)[0]!,
+        world.getEntityIdsByRole(Role.AwakenedSeer)[0]!,
+      );
     if (options.faultPlan !== undefined) {
       if (demonHunterActorId(world) === null) throw new Error("fault_plan_demon_board_required");
       this.nightFaultPlan = new NightFaultPlan(world, options.faultPlan);
@@ -331,7 +340,8 @@ export class PhaseManager {
     maxDays: number = 20,
   ): Promise<RuntimeSnapshot> {
     if (
-      (this.config.mistRaven ||
+      (this.config.fragrantPairSeer ||
+        this.config.mistRaven ||
         this.config.pureWhite ||
         this.config.evilKnight ||
         this.config.magician) &&
@@ -339,13 +349,15 @@ export class PhaseManager {
     ) {
       if (this.pureWhiteStartedDays.has(this.state.day))
         throw new Error(
-          this.config.mistRaven
-            ? "mist_cycle_reentry"
-            : this.config.magician
-              ? "magician_cycle_reentry"
-              : this.config.evilKnight
-                ? "evil_knight_cycle_reentry"
-                : "pure_white_cycle_reentry",
+          this.config.fragrantPairSeer
+            ? "fragrant_cycle_reentry"
+            : this.config.mistRaven
+              ? "mist_cycle_reentry"
+              : this.config.magician
+                ? "magician_cycle_reentry"
+                : this.config.evilKnight
+                  ? "evil_knight_cycle_reentry"
+                  : "pure_white_cycle_reentry",
         );
       this.pureWhiteStartedDays.add(this.state.day);
     }
@@ -887,7 +899,7 @@ export class PhaseManager {
           aliveLifeVersion(scope.life) === scope.version
         );
       });
-      this.emitNightResolved(nightDeaths);
+      if (!this.config.fragrantPairSeer) this.emitNightResolved(nightDeaths);
       const sources: DeathSources = Object.fromEntries(
         nightDeaths.map((id) => [id, [...(retainedSources[id] ?? [])]]),
       );
@@ -908,7 +920,14 @@ export class PhaseManager {
           Phase.Night,
           Phase.Day,
           deathPhases,
-          { dreams: night.dreamFrame, nightOriginIds: nightDeaths, isCurrent: dayIsCurrent },
+          {
+            dreams: night.dreamFrame,
+            nightOriginIds: nightDeaths,
+            isCurrent: dayIsCurrent,
+            ...(this.config.fragrantPairSeer
+              ? { onInitialWaveCommitted: () => this.emitNightResolved(nightDeaths) }
+              : {}),
+          },
         );
         if (this.config.trickster && dayIsCurrent()) finishTricksterNight(this.world, cycleDay);
         if (this.config.wolfSorcerer && dayIsCurrent())
@@ -1202,14 +1221,16 @@ export class PhaseManager {
       throw new Error("demon_hunter_unreadable_marks");
   }
 
-  private emitNightResolved(deaths: EntityId[]): void {
-    this.events.push({
+  private emitNightResolved(deaths: EntityId[]): GameEvent {
+    const event: GameEvent = {
       timestamp: Date.now(),
       type: "night_resolved",
       payload: {
         deaths: [...deaths],
       },
-    });
+    };
+    this.events.push(event);
+    return event;
   }
 
   /**

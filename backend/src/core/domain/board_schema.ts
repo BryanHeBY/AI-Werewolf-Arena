@@ -28,6 +28,7 @@ const strategies = z.enum(["min_id", "min_seat", "no_elimination", "no_kill"]);
 
 /** Internal board shape shared by reverse configuration writing and reproduction. No defaults are added here. */
 export const boardConfigSchema = z.strictObject({
+  fragrantPairSeer: z.strictObject({ policy: z.literal("awa_fragrant_pair_seer_v1") }).optional(),
   nobleSecretBody: z.strictObject({ policy: z.literal("awa_noble_secret_body_v1") }).optional(),
   nightNoble: z
     .strictObject({ wolfActionPolicy: z.enum(["standard", "no_blast_no_self_knife"]) })

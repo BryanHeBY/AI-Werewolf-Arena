@@ -63,6 +63,7 @@ export function grantNightAbility<K extends NightAbilityKind>(
   input: AbilityGrant<K>,
   events: GameEvent[],
 ): NightAbility<K> {
+  if (input.kind === "pair_check") throw Error("ability_pair_native_only");
   if (input.source.kind !== "gift" && input.source.kind !== "copy")
     throw new Error("ability_grant_source_invalid");
   const ability = copyAbilityData({
@@ -82,6 +83,7 @@ function installAbility(
   events: GameEvent[],
 ): NightAbility {
   const input = ability;
+  if (input.kind === "pair_check") throw Error("ability_pair_native_only");
   if (input.kind === "role_check") roleInspectionPolicy(input.state);
   if (
     input.kind === "dream" &&
@@ -221,6 +223,7 @@ export function transferNightAbility<K extends NightAbilityKind>(
   const source = roleOf(world, fromId),
     ability = allNightAbilities(source).find((ability) => ability.id === id);
   if (!ability) throw new Error("ability_instance_missing");
+  if (ability.kind === "pair_check") throw Error("ability_pair_native_only");
   if (!options || options.kind !== ability.kind || typeof options.statePolicy !== "function")
     throw new Error("ability_transfer_policy_required");
   const black = ability.activation === "black_market",

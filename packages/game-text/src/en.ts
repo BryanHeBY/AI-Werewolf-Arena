@@ -1,6 +1,53 @@
 import type { MessageKey } from "./zh-CN";
 
 export const en = Object.freeze({
+  "ability.kind.pair_check": "Pair inspection",
+  "stage.fragrant_bind": "Fragrant binding",
+  "prompt.stage.fragrant_pair_candidates":
+    "Original living candidate IDs for this request: {ids}. Choose two distinct IDs. Only binding allows an explicit target_ids=null pass.",
+  "rules.fragrant_pair_seer":
+    "This is AWA's native twelve-player Fragrant Phantom / Awakened Seer board: one Phantom, three ordinary wolves, four Villagers, and the Awakened Seer, Witch, Hunter and Guard. Slaughter-side victory checks all wolves eliminated first. Ordinary wolves know each other, never the Phantom. The Phantom never chats with wolves or self-destructs, learns only one random original ordinary wolf on night one, and gets an ordinary knife only if all three were already dead at the actual night opening. Each night it may bind two distinct living IDs or explicitly pass. The relation lasts through night and day, expires at the next actual opening, and is never extended by a pass. Actual linkage triggers once; the caster's first death does not revoke a paid relation. Two independent deaths in the same wave consume it without a false added cause. Link-only Hunters cannot shoot; independent qualified causes remain. Both linked endpoints in the first night's initial wave receive last words. Later night deaths receive none; exile grants only the root's words; gun chains grant no additional words. Mark the whole wave, then all words, all badges, all guns and later waves before one victory check. If the last wolf and last god die together, good wins. The Awakened Seer must choose two distinct living IDs each night, allowing self and earlier targets; the sole result is a contains-wolf boolean, never a count or individual identity. Night order: actual opening/expiry/knowledge/knife freeze, potion reset, binding, ordinary wolf chat, Guard, knife, Witch, pair check and normal damage. First-day Sheriff election precedes the death announcement. Guard cannot repeat a target on consecutive actual nights, may self-guard or pass. Witch cannot self-heal, sees the original knife only while holding heal, and uses at most one bottle per night. New actions and wolf chat/knife fail strictly without fallback; a legal pass must be explicitly submitted.",
+  "stage.pair_inspection": "Pair inspection",
+  "event.fragrant_pair_chosen": "Player {actor}, night {day} binding choice: {targets}.",
+  "event.fragrant_night_opened": "[God] The Fragrant board actually opened night {day}.",
+  "replay.stage.fragrant_night_opened": "Actual night opening",
+  "event.fragrant_wave_committed":
+    "[God] Player {actor}'s fragrance board, cycle {day} actual death wave: {deaths}.",
+  "replay.stage.fragrant_wave_committed": "Actual death wave commit",
+  "event.fragrant_pair_inspected":
+    "Player {actor} checked {first} and {second} on night {day}: {result}.",
+  "event.fragrant_night_notified":
+    "Player {actor}, night {day} authorized fragrance state: {state}.",
+  "event.fragrant_binding_expired":
+    "[God] Player {actor}'s night {created} binding of {first} and {second} expired at night {day}.",
+  "event.fragrant_link_triggered":
+    "[God] Player {actor}'s cycle {day} binding of {first} and {second} triggered; root {root}, added {added}.",
+  "fragrant.result.true": "at least one true wolf",
+  "fragrant.result.false": "neither is a wolf",
+  "fragrant.choice.pass": "no binding established tonight",
+  "fragrant.trigger.no_addition":
+    "both already independent deaths in the wave; no added death or cause",
+  "replay.stage.fragrant_pair_chosen": "Fragrant binding choice",
+  "replay.stage.fragrant_pair_inspected": "Pair inspection result",
+  "replay.stage.fragrant_night_notified": "Fragrance night notice",
+  "replay.stage.fragrant_binding_expired": "Binding expiry",
+  "replay.stage.fragrant_link_triggered": "Actual death linkage",
+  "prompt.status.fragrant":
+    "Your authorized fragrance knowledge, binding history and knife permission: {state}. Use these known facts only; do not assume unpublished backend settlement.",
+  "error.fragrant_pair_unavailable":
+    "The current request, original native ability, phase, target pair or deadline does not permit this action.",
+  "role.fragrant_phantom.brief":
+    "You are the Fragrant Phantom, on the wolf side and sharing its victory. You never join ordinary wolf chat or self-destruct. On the first night you learn one randomly selected original ordinary wolf; this historical knowledge remains after their death and reveals no other wolves. You gain an ordinary knife vote only if all three other original wolves were already dead at the actual night opening; deaths during the night never grant another knife. From night one, before the skill triggers, choose two distinct living players, including yourself if desired, or explicitly pass. A paid binding lasts through that night and the following day, expiring at the next actual night opening. Passing never extends the old pair. Choosing does not spend the skill; actual death linkage triggers once per game. If one endpoint actually dies, add the other original life only if it is not already an independent death in that wave. Both independent deaths still consume the trigger without adding a false cause. A paid relation survives its original caster's first death. A Hunter killed only by this link cannot shoot; an independent qualified cause remains intact. Your knowledge updates only from actual published deaths; never speak using pending private settlement.",
+  "role.awakened_seer.brief":
+    "You are the Awakened Seer, a good-side god. From night one, choose two distinct living candidate IDs each night. Self-targeting and repeated targets or pairs on later nights are allowed. With at least two candidates you must choose both: no pass, duplicate ID or single target. The only result is a boolean saying whether at least one member is truly on the wolf side. It reveals no count, individual wolf, individual alignment or exact role. Only you learn the pair and result; neither target nor any other player is notified. You may reason using your own known identity, but the protocol still returns one aggregate boolean.",
+  "action.bind_fragrant_pair.hint":
+    "Bind two distinct living IDs, or explicitly pass: target_ids=[ID,ID] or null.",
+  "action.bind_fragrant_pair.directive":
+    "Use bind_fragrant_pair with two distinct legal IDs, or target_ids=null to explicitly pass. Do not submit one target or extend an old binding.",
+  "action.check_pair.hint":
+    "Pair inspection: target_ids=[two distinct living IDs]. Self-targeting is allowed; passing is not.",
+  "action.check_pair.directive":
+    "Use check_pair with exactly two distinct legal IDs. The result is one contains-wolf boolean; do not request individual identities.",
   "event.noble_body_night_opened": "[God] Night {day} ownership opened.",
   "event.noble_body_knife_committed": "[God] Night {day} wolf knife mark committed: {target}",
   "event.noble_body_native_damage_committed":

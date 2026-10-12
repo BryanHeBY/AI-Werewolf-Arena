@@ -1,3 +1,4 @@
+import { bindFragrantPair, inspectPair } from "./fragrant_pair_seer";
 import { castShelter, swallowSkill } from "./radiant_eclipse";
 import { chooseServant, protectSecretBody } from "./noble_secret_body";
 import { modifySkill, bonusAction } from "./native";
@@ -64,6 +65,8 @@ import {
 
 /** Preserve protocol-independent priority and RNG order for strict Tape reproducibility. */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
+  { tool: "bind_fragrant_pair", decide: bindFragrantPair },
+  { tool: "check_pair", decide: inspectPair },
   { tool: "choose_servant", decide: chooseServant },
   { tool: "protect_secret_body", decide: protectSecretBody },
   { tool: "cast_shelter", decide: castShelter },

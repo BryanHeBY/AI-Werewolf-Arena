@@ -1,4 +1,5 @@
 import { readNobleSecretBodyFact } from "./noble-secret-body";
+import { readFragrantPairFact } from "./fragrant-pair-seer";
 import { readRadiantEclipseFact } from "./radiant-eclipse";
 import { readMistRavenFact } from "./mist-raven";
 import {
@@ -1232,3 +1233,52 @@ export function nobleSecretBodyEventLabel(
 }
 
 export * from "./fragrant-pair-seer";
+
+export { isFragrantPairSeerPreset } from "./fragrant-pair-seer-preset";
+export function fragrantPairEventLabel(
+  type: string,
+  payload: unknown,
+  locale: Locale = "zh-CN",
+): string | null {
+  const f = readFragrantPairFact(type, payload);
+  if (!f) return null;
+  const base = { actor: f.actorId, day: f.day };
+  if ("knowledgeDrawCount" in f) return text(locale, "event.fragrant_night_opened", { day: f.day });
+  if ("deaths" in f)
+    return text(locale, "event.fragrant_wave_committed", {
+      actor: f.actorId,
+      day: f.day,
+      deaths: f.deaths.join(", "),
+    });
+  if ("known" in f)
+    return text(locale, "event.fragrant_night_notified", {
+      ...base,
+      state: JSON.stringify(f.known),
+    });
+  if ("containsWerewolf" in f)
+    return text(locale, "event.fragrant_pair_inspected", {
+      ...base,
+      first: f.targetIds[0],
+      second: f.targetIds[1],
+      result: text(locale, f.containsWerewolf ? "fragrant.result.true" : "fragrant.result.false"),
+    });
+  if ("rootId" in f)
+    return text(locale, "event.fragrant_link_triggered", {
+      ...base,
+      first: f.pairIds[0],
+      second: f.pairIds[1],
+      root: f.rootId,
+      added: f.addedTargetId ?? text(locale, "fragrant.trigger.no_addition"),
+    });
+  if ("createdNight" in f)
+    return text(locale, "event.fragrant_binding_expired", {
+      ...base,
+      created: f.createdNight,
+      first: f.pairIds[0],
+      second: f.pairIds[1],
+    });
+  return text(locale, "event.fragrant_pair_chosen", {
+    ...base,
+    targets: f.pairIds?.join(", ") ?? text(locale, "fragrant.choice.pass"),
+  });
+}

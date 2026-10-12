@@ -337,9 +337,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "fragrant_phantom",
     names: { "zh-CN": "寻香魅影", en: "Fragrant Phantom" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-fragrant-pair-seer-twelve-v1.md",
     mechanismSummary: "绑定、牵连、接刀",
   },
   {
@@ -473,9 +473,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "awakened_seer",
     names: { "zh-CN": "觉醒预言家", en: "Awakened Seer" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-fragrant-pair-seer-twelve-v1.md",
     mechanismSummary: "双目标信息",
   },
   {

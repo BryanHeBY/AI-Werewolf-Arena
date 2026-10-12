@@ -1,5 +1,6 @@
 /** Stable rule failures; human messages belong to game-text. */
 export enum RuleError {
+  FragrantPairUnavailable = "fragrant_pair_unavailable",
   NobleBodyUnavailable = "noble_body_unavailable",
   RadiantShelterUnavailable = "radiant_shelter_unavailable",
   RadiantShelterTarget = "radiant_shelter_target",

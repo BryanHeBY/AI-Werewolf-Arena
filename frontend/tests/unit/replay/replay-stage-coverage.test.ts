@@ -53,6 +53,10 @@ function enumValues(name: string): string[] {
   });
 }
 function eventTypes() {
+  const parentContracts: Readonly<Record<string, string>> = {
+    NobleSecretBodyPayloadMap: "packages/game-text/src/noble-secret-body.ts",
+    FragrantPairPayloadMap: "packages/game-text/src/fragrant-pair-seer.ts",
+  };
   const declaration = find(
     source("backend/src/core/domain/events.ts"),
     (node): node is ts.InterfaceDeclaration =>
@@ -61,12 +65,12 @@ function eventTypes() {
   const inherited =
     declaration.heritageClauses?.flatMap((clause) =>
       clause.types.flatMap((type) => {
-        if (type.expression.getText() !== "NobleSecretBodyPayloadMap")
-          throw new Error("event_parent_contract_unknown");
+        const name = type.expression.getText();
+        if (!Object.hasOwn(parentContracts, name)) throw new Error("event_parent_contract_unknown");
         return find(
-          source("packages/game-text/src/noble-secret-body.ts"),
+          source(parentContracts[name]!),
           (node): node is ts.InterfaceDeclaration =>
-            ts.isInterfaceDeclaration(node) && node.name.text === "NobleSecretBodyPayloadMap",
+            ts.isInterfaceDeclaration(node) && node.name.text === name,
         ).members;
       }),
     ) ?? [];
@@ -117,6 +121,8 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(stages).toContain("after_speeches");
     expect(stages).toContain("mechanical_mimic_skipped");
     expect(stages).toContain("merchant_trade_skipped");
+    expect(stages).toContain("fragrant_night_opened");
+    expect(stages).toContain("fragrant_pair_inspected");
     const missing = stages.filter(
       (stage) =>
         !Object.hasOwn(dictionaries[locale], `replay.stage.${stage}`) &&

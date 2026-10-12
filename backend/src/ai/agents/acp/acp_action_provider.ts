@@ -1,4 +1,5 @@
 import { inheritNobleBodyDeadlineRequest } from "../../../game/mechanisms/roles/noble_secret_body/requests";
+import { inheritFragrantPairDeadlineRequest } from "../../../game/mechanisms/roles/fragrant_pair_seer/requests";
 import { inheritDemonWitchDeadlineRequest } from "../../../game/mechanisms/roles/demon_hunter/native_potion_requests";
 import { inheritDemonHunterDeadlineRequest } from "../../../game/mechanisms/roles/demon_hunter/authority";
 import { inheritGhostBrideDeadlineRequest } from "../../../game/mechanisms/roles/ghost_bride/authority";
@@ -177,6 +178,7 @@ export class AcpActionProvider implements ActionProvider {
     inheritDemonHunterDeadlineRequest(request, bounded);
     inheritDemonWitchDeadlineRequest(request, bounded);
     inheritNobleBodyDeadlineRequest(request, bounded);
+    inheritFragrantPairDeadlineRequest(request, bounded);
     const controller = new AbortController();
     this.controllers.set(request.actorId, controller);
     const timer = setTimeout(

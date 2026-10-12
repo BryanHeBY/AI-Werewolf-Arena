@@ -1,4 +1,14 @@
 import { getSessionRecorder } from "../../recording/recording_context";
+import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
+import {
+  isFragrantPairBoard,
+  prepareFragrantDeathWave,
+  commitFragrantDeathWave,
+  publishFragrantDeathWave,
+  cancelFragrantDeathWave,
+  fragrantAuthoritySnapshot,
+  type FragrantWaveReceipt,
+} from "../mechanisms/roles/fragrant_pair_seer/authority";
 import {
   isNobleBodyBoard,
   closeServantForDeath,
@@ -40,6 +50,7 @@ import type { RoleComponent } from "../../core/domain/components/role";
 import { World } from "../../core/domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
 import { getDefaultLastWordsMechanism } from "../mechanisms/last_words/last_words_mechanism";
+import type { LastWordsGrantContext } from "../mechanisms/last_words/last_words_mechanism";
 import { resolveSheriffBadge } from "../mechanisms/sheriff/badge_choice";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { EventRegistry } from "./event_registry";
@@ -72,6 +83,91 @@ interface DeathWaveActions {
 
 /** Resolves successive death waves without advancing the current action phase. */
 export class DeathResolution {
+  /** All inert actual facts precede fallible recording, so a failed prefix remains auditable. */
+  private recordFragrantWave(
+    receipt: FragrantWaveReceipt | null,
+    ids: readonly number[],
+    sources: DeathSources,
+    origins: ReadonlyMap<number, Phase>,
+    initialWave: boolean,
+  ): void {
+    const actorId = this.world.getEntityIdsByRole(Role.FragrantPhantom)[0]!,
+      phases: Record<string, "night" | "day" | "voting"> = {};
+    for (const id of ids) {
+      const origin = origins.get(id) ?? this.state.phase;
+      if (origin === Phase.GameOver) throw Error("fragrant_death_origin_invalid");
+      phases[String(id)] = origin;
+    }
+    const wave = {
+      policy: FRAGRANT_PAIR_POLICY,
+      actorId,
+      day: this.state.day,
+      deaths: [...ids],
+      deathSources: Object.fromEntries(ids.map((id) => [String(id), [...(sources[id] ?? [])]])),
+      deathPhases: phases,
+      initialWave,
+    };
+    this.events.push({
+      timestamp: Date.now(),
+      type: "fragrant_wave_committed",
+      payload: wave,
+      audience: Object.freeze([]),
+    });
+    const rootPhase = receipt ? phases[String(receipt.rootId)]! : null,
+      link = receipt && {
+        policy: FRAGRANT_PAIR_POLICY,
+        actorId,
+        day: receipt.day,
+        bindingId: `fragrant:night:${receipt.day}`,
+        pairIds: receipt.pairIds,
+        rootId: receipt.rootId,
+        addedTargetId: receipt.addedTargetId,
+        rootPhase: rootPhase!,
+        initialWave,
+      };
+    if (link)
+      this.events.push({
+        timestamp: Date.now(),
+        type: "fragrant_link_triggered",
+        payload: link,
+        audience: Object.freeze([]),
+      });
+    // A public root may precede this wave (exile) or its recording (gun).
+    if (receipt) {
+      const publicRoot = [...this.events]
+        .reverse()
+        .find(
+          (e) =>
+            (e.type === "wolf_self_destruct" && e.payload.wolfId === receipt.rootId) ||
+            (e.type === "voted_out" && e.payload.target === receipt.rootId) ||
+            (e.type === "hunter_shot" && e.payload.targetId === receipt.rootId),
+        );
+      if (publicRoot) publishFragrantDeathWave(this.world, receipt, publicRoot);
+    }
+    getSessionRecorder()?.recordRequiredLogicOp({
+      scope: "resolution",
+      op: "fragrant_wave_committed",
+      phase: this.state.phase,
+      status: "ok",
+      output: wave,
+    });
+    if (link)
+      getSessionRecorder()?.recordRequiredLogicOp({
+        scope: "resolution",
+        op: "fragrant_link_triggered",
+        phase: this.state.phase,
+        status: "ok",
+        output: link,
+      });
+  }
+  private publishFragrantWave(receipt: FragrantWaveReceipt | null, event: GameEvent): void {
+    if (
+      receipt &&
+      (event.type === "night_resolved" || event.type === "additional_deaths") &&
+      event.payload.deaths.some((id) => receipt.pairIds.includes(id))
+    )
+      publishFragrantDeathWave(this.world, receipt, event);
+  }
   private expandWeddingWave(
     ids: number[],
     sources: DeathSources,
@@ -123,17 +219,20 @@ export class DeathResolution {
       blocksPassiveNightShot?: (targetId: EntityId) => boolean;
       nightOriginIds?: readonly EntityId[];
       isCurrent?: () => boolean;
+      onInitialWaveCommitted?: (deaths: readonly EntityId[]) => GameEvent;
     },
   ): Promise<void> {
     const resolutionPhase = this.state.phase;
     const resolutionDay = this.state.day;
     const lastWordsPolicy = this.config?.lastWords?.policy ?? "awa_initial_wave_v1";
     const revealPolicy = this.config?.disclosure?.deathRevealPolicy ?? "awa_hidden_v1";
+    const ownsFragrant = isFragrantPairBoard(this.world);
     const isCurrent = () =>
       this.state.phase === resolutionPhase &&
       this.state.day === resolutionDay &&
       !this.state.gameOver &&
-      (nightEffects?.isCurrent?.() ?? true);
+      (nightEffects?.isCurrent?.() ?? true) &&
+      (!ownsFragrant || !!fragrantAuthoritySnapshot(this.world));
     const revealCurrent = () =>
       revealPolicy === "netease_2017_open_v1" &&
       this.config?.disclosure?.deathRevealPolicy === revealPolicy;
@@ -167,6 +266,21 @@ export class DeathResolution {
       seen.add(id);
       initialPhases[id] = nightOrigin.has(id) ? Phase.Night : phase;
     }
+    const fragrantInitial = ownsFragrant
+      ? prepareFragrantDeathWave(this.world, resolutionDay, pending)
+      : null;
+    const fragrantRootPhase = fragrantInitial
+      ? (initialPhases[fragrantInitial.rootId] ??
+        (nightOrigin.has(fragrantInitial.rootId) ? Phase.Night : phase))
+      : phase;
+    if (fragrantInitial?.addedTargetId !== null && fragrantInitial?.addedTargetId !== undefined) {
+      const id = fragrantInitial.addedTargetId;
+      pending.push(id);
+      seen.add(id);
+      allSources[id] = [DeathCause.FragrantLink];
+      initialPhases[id] = fragrantRootPhase;
+      if (fragrantRootPhase === Phase.Night) nightOrigin.add(id);
+    }
     const originPhases = new Map(
       pending.map((id) => [id, initialPhases[id] ?? (nightOrigin.has(id) ? Phase.Night : phase)]),
     );
@@ -174,16 +288,19 @@ export class DeathResolution {
       ...linkedInitial,
       ...(phase === Phase.Night ? [] : weddingInitial),
     ];
-    if (publicLinkedInitial.length)
+    if (publicLinkedInitial.length && !ownsFragrant)
       this.events.push({
         timestamp: Date.now(),
         type: "additional_deaths",
         payload: { deaths: publicLinkedInitial },
       });
     let firstBatch = true;
+    let fragrantInitialCommitted = false;
     const gunsToExpire: ReturnType<typeof firstDeathGuns> = [];
 
     try {
+      if (pending.length === 0 && nightEffects?.onInitialWaveCommitted && isCurrent())
+        nightEffects.onInitialWaveCommitted([]);
       while (pending.length > 0) {
         if (!isCurrent()) return;
         const deathPhase = firstBatch ? phase : this.state.phase;
@@ -194,6 +311,36 @@ export class DeathResolution {
           revealPolicy === "netease_2017_open_v1",
           allSources,
         );
+        if (firstBatch && fragrantInitial) {
+          commitFragrantDeathWave(this.world, fragrantInitial);
+          fragrantInitialCommitted = true;
+        }
+        // Later gun waves were already marked and recorded in the gun callback.
+        if (ownsFragrant && firstBatch)
+          this.recordFragrantWave(
+            firstBatch ? fragrantInitial : null,
+            pending,
+            allSources,
+            originPhases,
+            firstBatch,
+          );
+        if (firstBatch && nightEffects?.onInitialWaveCommitted) {
+          const event = nightEffects.onInitialWaveCommitted(pending);
+          this.publishFragrantWave(fragrantInitial, event);
+        }
+        if (
+          firstBatch &&
+          fragrantInitial?.addedTargetId !== null &&
+          fragrantInitial?.addedTargetId !== undefined
+        ) {
+          const event: GameEvent = {
+            timestamp: Date.now(),
+            type: "additional_deaths",
+            payload: { deaths: [fragrantInitial.addedTargetId] },
+          };
+          this.events.push(event);
+          this.publishFragrantWave(fragrantInitial, event);
+        }
         resolveWildChildDeathWave(
           this.world,
           pending,
@@ -212,6 +359,9 @@ export class DeathResolution {
             : Object.fromEntries(
                 pending.map((id) => [id, nightOrigin.has(id) ? Phase.Night : deathPhase]),
               );
+          const wordsContext: LastWordsGrantContext | undefined = ownsFragrant
+            ? { policy: FRAGRANT_PAIR_POLICY, initialWave: firstBatch }
+            : undefined;
           this.lastWordsMechanism.recordLastWordsGranted(
             this.world,
             pending,
@@ -222,6 +372,7 @@ export class DeathResolution {
             allSources,
             wordsPhases,
             lastWordsPolicy,
+            wordsContext,
           );
           await this.collectLastWords(
             pending,
@@ -232,6 +383,7 @@ export class DeathResolution {
             wordsPhases,
             lastWordsCurrent,
             lastWordsPolicy,
+            wordsContext,
           );
         }
         if (!isCurrent()) return;
@@ -314,6 +466,7 @@ export class DeathResolution {
                 const linked = new Set<EntityId>(),
                   publicLinked: EntityId[] = [];
                 let newlyMarked = false;
+                const marked: number[] = [];
                 const charmBindings: CharmBinding[] = [];
                 for (const proposal of result.charmLinks ?? []) {
                   const binding = proposal.binding;
@@ -373,73 +526,115 @@ export class DeathResolution {
                   seen,
                   nightEffects?.dreams,
                 );
-                for (const id of proposed) {
-                  if (next.has(id)) {
-                    allSources[id] = [
-                      ...new Set([...(allSources[id] ?? []), ...(proposedSources[id] ?? [])]),
-                    ];
-                    continue;
-                  }
-                  if (seen.has(id) || this.isSettledLife(id)) {
-                    if ((proposedSources[id] ?? []).includes(DeathCause.Lovers))
-                      allSources[id] = [...new Set([...(allSources[id] ?? []), DeathCause.Lovers])];
-                    if (linked.has(id))
-                      allSources[id] = [...new Set([...(allSources[id] ?? []), DeathCause.Dream])];
-                    if (charmTargets.has(id))
-                      allSources[id] = [...new Set([...(allSources[id] ?? []), DeathCause.Charm])];
-                    continue;
-                  }
-                  if (!this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)) continue;
-                  let shot = shots.get(id);
-                  if (
-                    shot &&
-                    (!livingNightLife(this.world, shot.targetScope) || shot.isCurrent?.() === false)
-                  ) {
-                    proposedSources[id] = (proposedSources[id] ?? []).filter(
-                      (cause) => cause !== DeathCause.Shot,
-                    );
-                    shots.delete(id);
-                    shot = undefined;
-                    if (!proposedSources[id].length) continue;
-                  }
-                  seen.add(id);
-                  allSources[id] = [...new Set(proposedSources[id] ?? [])];
-                  originPhases.set(id, sourcePhase);
-                  this.markPlayersDead([id], false, gunsToExpire, revealCurrent(), allSources);
-                  newlyMarked = true;
-                  if (shot) {
-                    if (shot.event.type === "hunter_shot") nativeHunterShotTargets.add(id);
-                    this.events.push(shot.event);
-                  }
-                  if (
-                    charmTargets.has(id) ||
-                    (linked.has(id) && !result.extraDeaths.includes(id)) ||
-                    (!shot && !(proposedSources[id] ?? []).includes(DeathCause.Shot))
-                  )
-                    publicLinked.push(id);
-                  next.add(id);
+                const fragrantRoots = ownsFragrant
+                  ? proposed.filter(
+                      (id) =>
+                        !next.has(id) &&
+                        !seen.has(id) &&
+                        !this.isSettledLife(id) &&
+                        this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)?.alive,
+                    )
+                  : [];
+                const fragrantGun = ownsFragrant
+                  ? prepareFragrantDeathWave(this.world, resolutionDay, fragrantRoots)
+                  : null;
+                if (
+                  fragrantGun?.addedTargetId !== null &&
+                  fragrantGun?.addedTargetId !== undefined
+                ) {
+                  proposed.push(fragrantGun.addedTargetId);
+                  proposedSources[fragrantGun.addedTargetId] = [DeathCause.FragrantLink];
                 }
-                if (newlyMarked) {
-                  refreshHiddenWolfInheritance(this.world, this.events, this.state.day);
-                  refreshGargoyleInheritance(this.world, this.events, this.state.day);
-                  refreshMechanicalInheritance(this.world, this.state.day, this.events);
-                  refreshAwakenedInheritance(this.world, this.state.day, this.events);
-                }
-                if (publicLinked.length)
-                  this.events.push({
-                    timestamp: Date.now(),
-                    type: "additional_deaths",
-                    payload: { deaths: publicLinked },
-                  });
-                for (const binding of charmBindings)
-                  if (commitCharmDeath(this.world, binding))
-                    this.events.push({
+                let fragrantGunCommitted = false;
+                try {
+                  for (const id of proposed) {
+                    if (next.has(id)) {
+                      allSources[id] = [
+                        ...new Set([...(allSources[id] ?? []), ...(proposedSources[id] ?? [])]),
+                      ];
+                      continue;
+                    }
+                    if (seen.has(id) || this.isSettledLife(id)) {
+                      if ((proposedSources[id] ?? []).includes(DeathCause.Lovers))
+                        allSources[id] = [
+                          ...new Set([...(allSources[id] ?? []), DeathCause.Lovers]),
+                        ];
+                      if (linked.has(id))
+                        allSources[id] = [
+                          ...new Set([...(allSources[id] ?? []), DeathCause.Dream]),
+                        ];
+                      if (charmTargets.has(id))
+                        allSources[id] = [
+                          ...new Set([...(allSources[id] ?? []), DeathCause.Charm]),
+                        ];
+                      continue;
+                    }
+                    if (!this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)) continue;
+                    let shot = shots.get(id);
+                    if (
+                      shot &&
+                      (!livingNightLife(this.world, shot.targetScope) ||
+                        (!fragrantGun && shot.isCurrent?.() === false))
+                    ) {
+                      proposedSources[id] = (proposedSources[id] ?? []).filter(
+                        (cause) => cause !== DeathCause.Shot,
+                      );
+                      shots.delete(id);
+                      shot = undefined;
+                      if (!proposedSources[id].length) continue;
+                    }
+                    seen.add(id);
+                    allSources[id] = [...new Set(proposedSources[id] ?? [])];
+                    originPhases.set(id, ownsFragrant ? this.state.phase : sourcePhase);
+                    this.markPlayersDead([id], false, gunsToExpire, revealCurrent(), allSources);
+                    newlyMarked = true;
+                    marked.push(id);
+                    if (shot) {
+                      if (shot.event.type === "hunter_shot") nativeHunterShotTargets.add(id);
+                      this.events.push(shot.event);
+                    }
+                    if (
+                      charmTargets.has(id) ||
+                      (linked.has(id) && !result.extraDeaths.includes(id)) ||
+                      (!shot && !(proposedSources[id] ?? []).includes(DeathCause.Shot))
+                    )
+                      publicLinked.push(id);
+                    next.add(id);
+                  }
+                  if (newlyMarked) {
+                    if (fragrantGun) {
+                      commitFragrantDeathWave(this.world, fragrantGun);
+                      fragrantGunCommitted = true;
+                    }
+                    if (ownsFragrant)
+                      this.recordFragrantWave(fragrantGun, marked, allSources, originPhases, false);
+                    refreshHiddenWolfInheritance(this.world, this.events, this.state.day);
+                    refreshGargoyleInheritance(this.world, this.events, this.state.day);
+                    refreshMechanicalInheritance(this.world, this.state.day, this.events);
+                    refreshAwakenedInheritance(this.world, this.state.day, this.events);
+                  }
+                  if (publicLinked.length) {
+                    const event: GameEvent = {
                       timestamp: Date.now(),
-                      type: "charm_death",
-                      payload: { actorId: binding.actorId, targetId: binding.targetId },
-                    });
-                nightEffects?.dreams?.recordDeaths([...next, ...linked], this.events);
-                for (const permit of actions.permits.splice(0)) permit.close();
+                      type: "additional_deaths",
+                      payload: { deaths: publicLinked },
+                    };
+                    this.events.push(event);
+                    this.publishFragrantWave(fragrantGun, event);
+                  }
+                  for (const binding of charmBindings)
+                    if (commitCharmDeath(this.world, binding))
+                      this.events.push({
+                        timestamp: Date.now(),
+                        type: "charm_death",
+                        payload: { actorId: binding.actorId, targetId: binding.targetId },
+                      });
+                  nightEffects?.dreams?.recordDeaths([...next, ...linked], this.events);
+                  for (const permit of actions.permits.splice(0)) permit.close();
+                } finally {
+                  if (fragrantGun && !fragrantGunCommitted)
+                    cancelFragrantDeathWave(this.world, fragrantGun);
+                }
               },
               Object.freeze({
                 day: resolutionDay,
@@ -465,6 +660,8 @@ export class DeathResolution {
         firstBatch = false;
       }
     } finally {
+      if (fragrantInitial && !fragrantInitialCommitted)
+        cancelFragrantDeathWave(this.world, fragrantInitial);
       finishDeathGuns(gunsToExpire, this.events);
     }
   }
@@ -655,6 +852,7 @@ export class DeathResolution {
     deathPhases: Readonly<Record<EntityId, Phase>>,
     scopeCurrent: () => boolean = () => true,
     policy: LastWordsPolicy = "awa_initial_wave_v1",
+    wordsContext?: LastWordsGrantContext,
   ): Promise<void> {
     const requests = new GameActionRequestFactory(this.world, this.events, this.state.day);
     const day = this.state.day;
@@ -666,6 +864,7 @@ export class DeathResolution {
           day,
           sources[deadId] ?? [],
           policy,
+          wordsContext,
         )
       )
         continue;

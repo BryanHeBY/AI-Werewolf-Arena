@@ -4,6 +4,11 @@ import {
   nobleSecretBodyVisibility,
 } from "@ai-werewolf-arena/game-text";
 import {
+  FRAGRANT_PAIR_EVENT_TYPES,
+  readFragrantPairFact,
+  fragrantPairVisibility,
+} from "@ai-werewolf-arena/game-text";
+import {
   RADIANT_ECLIPSE_EVENT_TYPES,
   readRadiantEclipseFact,
   radiantEclipseAudience,
@@ -138,6 +143,18 @@ export class AgentEventVisibilityRegistry {
   constructor(private readonly rules: Record<string, AgentEventVisibilityRule> = DEFAULT_RULES) {}
 
   canView(world: World, event: GameEvent, actorId: EntityId): boolean {
+    if ((FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(event.type)) {
+      const fact = readFragrantPairFact(event.type, event.payload);
+      return (
+        !!fact &&
+        fragrantPairVisibility(event.type) === "actor" &&
+        fact.actorId === actorId &&
+        "audience" in event &&
+        Array.isArray(event.audience) &&
+        event.audience.length === 1 &&
+        event.audience[0] === actorId
+      );
+    }
     if ((NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(event.type)) {
       const fact = readNobleSecretBodyFact(event.type, event.payload),
         visibility = nobleSecretBodyVisibility(event.type);

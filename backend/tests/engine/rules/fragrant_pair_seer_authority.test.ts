@@ -1,5 +1,4 @@
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
 import { Role, Camp, Phase } from "../../../src/core/domain/identity";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import {
@@ -11,12 +10,12 @@ import { createCampComponent } from "../../../src/core/domain/components/camp";
 import { createIdentityComponent } from "../../../src/core/domain/entities/player";
 import { createVictoryComponent } from "../../../src/core/domain/components/victory";
 import type { GameEvent } from "../../../src/core/domain/events";
+import { freshPairSeerState } from "../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
 import {
-  freshFragrantState,
-  freshPairSeerState,
-} from "../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
+  installNativeAbility,
+  findNightAbility,
+} from "../../../src/game/mechanisms/roles/abilities";
 import {
-  installFragrantPairAuthority,
   beginFragrantNight,
   openFragrantBindChoice,
   openPairCheckChoice,
@@ -30,78 +29,8 @@ import {
   publishFragrantDeathWave,
 } from "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
 
-/** Component owner fixture only. Existing identities stand in for not-yet-registered profiles;
- * this deliberately does not qualify or run a native preset, pipeline, transport or replay. */
-function fixture() {
-  const world = new World(),
-    events: GameEvent[] = [];
-  const roles = [
-    Role.NightNoble,
-    Role.Wolf,
-    Role.Wolf,
-    Role.Wolf,
-    Role.Seer,
-    Role.Witch,
-    Role.Hunter,
-    Role.Guard,
-    Role.Villager,
-    Role.Villager,
-    Role.Villager,
-    Role.Villager,
-  ];
-  for (const [index, roleId] of roles.entries()) {
-    const id = world.createEntity(),
-      camp = index < 4 ? Camp.Wolf : Camp.Good,
-      role = createRoleComponent(roleId, camp);
-    if (id === 1) role.privateState.fragrant = freshFragrantState();
-    if (id === 5) role.privateState.pairSeer = freshPairSeerState();
-    world.addComponent(id, COMPONENT.Role, role);
-    world.addComponent(id, COMPONENT.Camp, createCampComponent(camp));
-    world.addComponent(id, COMPONENT.Alive, createAliveComponent());
-    world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, id, `p${id}`));
-    world.addComponent(
-      id,
-      COMPONENT.Victory,
-      createVictoryComponent([{ kind: "faction", faction: camp }]),
-    );
-  }
-  installFragrantPairAuthority(world, events, 1, 5);
-  let current = true,
-    draws = 0;
-  const random = {
-      next: () => {
-        draws++;
-        return 0.5;
-      },
-    },
-    isCurrent = () => current;
-  const open = (day = 1) => beginFragrantNight(world, day, random, isCurrent);
-  const kill = (...ids: number[]) => {
-    for (const id of ids) world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
-  };
-  const role = (id: number) => world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
-  const choices = (pair: number[] | null = [9, 10]) => {
-    openFragrantBindChoice(world, 1).commit(pair);
-    openPairCheckChoice(world, 1).commit([5, 6]);
-  };
-  return {
-    world,
-    events,
-    open,
-    kill,
-    role,
-    choices,
-    random,
-    isCurrent,
-    stale: () => {
-      current = false;
-    },
-    fresh: () => {
-      current = true;
-    },
-    draws: () => draws,
-  };
-}
+import { fragrantPairOwnerFixture as fixture } from "../fragrant_pair_seer_fixture";
+
 test("real open pays singleton once; duplicate entry and aborted continuation do not redraw", () => {
   const f = fixture(),
     notice = f.open()!;
@@ -164,7 +93,50 @@ test("pair check returns exactly one boolean and normalized identities, no per-t
     policy: "awa_fragrant_pair_seer_v1",
     history: [{ day: 1, targetIds: [2, 6], containsWerewolf: true }],
   });
+  expect(findNightAbility(f.role(5), "pair_check")).toMatchObject({ uses: 1, lastUsedDay: 1 });
   expect(() => openPairCheckChoice(f.world, 1)).toThrow();
+});
+test("pair history and its only common resource reject late counter edits atomically", () => {
+  const f = fixture();
+  f.open();
+  const lease = openPairCheckChoice(f.world, 1),
+    ability = findNightAbility(f.role(5), "pair_check")!;
+  ability.uses = 1;
+  expect(lease.isCurrent()).toBe(false);
+  expect(() => lease.commit([5, 6])).toThrow();
+  expect(f.role(5).privateState.pairSeer).toEqual(freshPairSeerState());
+});
+test("nonwritable common counters cannot leave a paid half-history", () => {
+  const f = fixture();
+  f.open();
+  const lease = openPairCheckChoice(f.world, 1),
+    ability = findNightAbility(f.role(5), "pair_check")!;
+  Object.freeze(ability);
+  expect(() => lease.commit([5, 6])).toThrow("fragrant_state_write_revoked");
+  expect(f.role(5).privateState.pairSeer).toEqual(freshPairSeerState());
+  expect(ability.uses).toBe(0);
+  expect(ability.lastUsedDay).toBeNull();
+});
+test("same-value common source replacement revokes owner and retains empty history", () => {
+  const f = fixture();
+  f.open();
+  const lease = openPairCheckChoice(f.world, 1),
+    ability = findNightAbility(f.role(5), "pair_check")!;
+  ability.source = { ...ability.source };
+  expect(lease.isCurrent()).toBe(false);
+  expect(() => lease.commit([5, 6])).toThrow();
+  expect(f.role(5).privateState.pairSeer).toEqual(freshPairSeerState());
+  expect(ability.uses).toBe(0);
+});
+test("initial native disabled must be the boolean false rather than any falsy value", () => {
+  for (const disabled of [null, 0, ""])
+    expect(() =>
+      fixture((role) => {
+        Object.defineProperty(findNightAbility(role, "pair_check")!, "disabled", {
+          value: disabled,
+        });
+      }),
+    ).toThrow("fragrant_initial_state_invalid");
 });
 for (const field of ["life", "role", "camp", "actorState"] as const)
   test(`late ${field} replacement revokes complete pair and leaves original history empty`, () => {
