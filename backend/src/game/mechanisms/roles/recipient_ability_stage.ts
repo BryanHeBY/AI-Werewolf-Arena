@@ -21,6 +21,7 @@ import { captureNightAbilityScope } from "./ability_scope";
 import { luckyTargetAllowed, recordOwnNightAction } from "./night_action_history";
 import { resolveInspection } from "./inspection";
 import { recordRecipientSeerInspection } from "./seer/state";
+import { recordRecipientGuardTarget } from "./guard/ports";
 
 type RecipientPolicy = "lucky" | "black_market";
 const committed = new WeakMap<World, Map<RecipientPolicy, Set<number>>>();
@@ -191,7 +192,7 @@ export function recipientAbilityStage(
               const marks = ctx.ensureMarks(target.id);
               marks.add(StatusMark.GuardMark);
               (ctx.state.guardClaims ??= []).push({ target, marks });
-              ability.state.lastTarget = target.id;
+              recordRecipientGuardTarget(ability, target);
               ctx.events.push({
                 timestamp: Date.now(),
                 type: "guard_applied",

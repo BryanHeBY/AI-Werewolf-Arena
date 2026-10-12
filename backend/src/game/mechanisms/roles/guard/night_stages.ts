@@ -19,7 +19,7 @@ import { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, Role, StatusMark } from "../../../../core/domain/model";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { NightStageHandler } from "../../stages/night/contracts";
-import { getGuardState } from "../private_state";
+import { getGuardState, recordGuardTarget } from "./state";
 import { activeNightAbility, recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
@@ -148,7 +148,7 @@ const guardActionStage: NightStageHandler = {
       const role = ctx.world.getComponent(guardId, COMPONENT.Role);
       const guardState = role ? getGuardState(role, ability.id) : undefined;
       if (guardState) {
-        guardState.lastTarget = targetId;
+        recordGuardTarget(guardState, targetId);
       }
       recordNightAbilityUse(ability, ctx.currentDay(), !abstain);
       if (isScholarMentorBoard(ctx.world))

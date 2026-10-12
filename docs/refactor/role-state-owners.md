@@ -31,3 +31,9 @@ Knight 的公开状态字段 `canDuel` 为只读类型视图，仍是原 private
 两种资源各自的 `hasInheritedKnife` 是只读事实字段。原 inheritance 协调者完成原存活狼、阵营、角色及已继承检查后，调用各自具体 owner 命令写 true，再发布原事实。两个命令不重查、不变阵营、不返回当前刀权；Gargoyle 的当前刀权仍另检查已完成查验，Mechanical/Awakened 的学习资源不接这组命令。
 
 原四份完整非 import 正文只映射两个赋值及 readonly 标记；setter/getter 逐字保留，同槽和同引用不变。四项发布失败/多个存活狼的有限测试、18 次断言与原 Hidden/Gargoyle 消费者有限类型检查通过。独立八个 fresh 原/现 inheritance/catalog/bootstrap import 同成功、同出口，五个职责头通过。没有回滚已继承事实、提前死亡或修改存档。
+
+## Guard 普通 lastTarget 写权
+
+原 native captured-state 与 recipient 两条 lastTarget 写入归 Guard owner，公开读取字段只读。Native 仍在原 marks/claims、事件和 logic op 之后、ability use 之前写入；recipient 仍在原 marks/claims 之后、事件之前写入。Recipient 命令先取得原 ability.state 的赋值引用，再读 target.id，target getter 更换 slot 不能把已选择的写入转移到新对象。Demon sealed 第三 writer 与原生/赠予库存政策保持原 owner。
+
+原三份完整非 import 正文经明确调用/type 标记逆向一致，五个职责头通过。三项 getter 换槽/抛错、setter 拒绝测试、13 次断言及原 repeat/night abilities 消费者有限类型检查通过。独立直接比较固定 Git 赋值与新 helper 的三种错误/引用前缀，并核八个 fresh stage/recipient/catalog/bootstrap import 同成功及同出口。没有新重查、clone、refund、use accounting 或归档字段。
