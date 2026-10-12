@@ -16,17 +16,17 @@ import {
   FRAGRANT_PAIR_POLICY,
 } from "../../mechanisms/roles/fragrant_pair_seer/ports";
 import {
+  NobleNightUnit,
+  createNobleNightAbortReceiver,
+  attachNobleNightReceiver,
   checkpointNobleBodyAuthority,
-  beginNobleBodyNight,
-  abortNobleBodyNight,
   assertNobleBodyRosterCurrent,
   isNobleBodyBoard,
-} from "../../mechanisms/roles/noble_secret_body/authority";
+} from "../../mechanisms/roles/noble_secret_body/ports";
 import {
   AnimalNightUnit,
   animalAuthoritySnapshot,
 } from "../../mechanisms/roles/animal_dream/ports";
-import { appendNobleBodyNotices } from "../../mechanisms/roles/noble_secret_body/facts";
 import {
   isRadiantEclipseBoard,
   beginRadiantNight,
@@ -250,7 +250,8 @@ export class NightPipeline {
     if (hasActiveInitialIdentitySetup(this.world) || !initialIdentitySetupReady(this.world))
       throw new Error(`${initialIdentityKind(this.world) ?? "thief"}_setup_before_night_required`);
     const isCurrent = options.isCurrent ?? (() => true);
-    if (!isCurrent()) return { interrupted: true };
+    if (!isCurrent())
+      return attachNobleNightReceiver({ interrupted: true }, createNobleNightAbortReceiver());
     const closeLonelyGirlNight = openLonelyGirlNight(this.world, day);
     const closeWildChildNight = openWildChildNight(this.world, day, this.events);
     const closeThiefNight = openInitialIdentityNight(this.world, day);
@@ -302,8 +303,26 @@ export class NightPipeline {
       },
       day,
     );
-    let nobleHandedOff = false,
-      nobleAcquired = false;
+    const nobleNight = new NobleNightUnit(
+      {
+        get world() {
+          return pipeline.world;
+        },
+        get events() {
+          return pipeline.events;
+        },
+        recordOpening(payload) {
+          getSessionRecorder()?.recordRequiredLogicOp({
+            scope: "phase_pipeline",
+            op: "noble_body_night_opened",
+            phase: Phase.Night,
+            status: "ok",
+            output: payload,
+          });
+        },
+      },
+      day,
+    );
     const ownsRadiant = config.radiantEclipse !== undefined;
     let radiantAcquired = false;
     const ownsMist = config.mistRaven !== undefined;
@@ -314,30 +333,7 @@ export class NightPipeline {
     try {
       if (ownsAnimal) animalNight.open(isCurrent);
       if (ownsFragrant) fragrantNight.open(isCurrent);
-      if (ownsNoble) {
-        const notices = beginNobleBodyNight(this.world, day, isCurrent);
-        nobleAcquired = true;
-        appendNobleBodyNotices(this.events, notices);
-        const payload = {
-          policy: "awa_noble_secret_body_v1" as const,
-          actorId: checkpointNobleBodyAuthority(this.world, true).nobleId,
-          day,
-          notifiedActorIds: notices.map((n) => n.actorId),
-        };
-        this.events.push({
-          timestamp: Date.now(),
-          type: "noble_body_night_opened",
-          payload,
-          audience: Object.freeze([]),
-        });
-        getSessionRecorder()?.recordRequiredLogicOp({
-          scope: "phase_pipeline",
-          op: "noble_body_night_opened",
-          phase: Phase.Night,
-          status: "ok",
-          output: payload,
-        });
-      }
+      if (ownsNoble) nobleNight.open(isCurrent);
       if (ownsRadiant) {
         beginRadiantNight(this.world, day);
         radiantAcquired = true;
@@ -483,7 +479,8 @@ export class NightPipeline {
 
       for (const stage of this.stageRegistry.getPlan(config, this.world).stages) {
         assertEvilKnightRosterCurrent(this.world);
-        if (!isCurrent()) return { interrupted: true };
+        if (!isCurrent())
+          return attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver);
         assertReadable();
         discardStaleWolfKnife(this.world, stageState);
         if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
@@ -492,7 +489,8 @@ export class NightPipeline {
         if (config.scholarMentor) assertScholarMentorBonusEffects(stageCtx);
         assertEvilKnightRosterCurrent(this.world);
         assertReadable();
-        if (!isCurrent()) return { interrupted: true };
+        if (!isCurrent())
+          return attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver);
         discardStaleWolfKnife(this.world, stageState);
         if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
       }
@@ -646,30 +644,33 @@ export class NightPipeline {
       if (ownsRadiant) closeRadiantNight(this.world, day, "committed", this.events);
       if (ownsAnimal) animalNight.closeNormally();
       if (ownsFragrant) fragrantNight.closeNormally();
-      nobleHandedOff = ownsNoble;
+      if (ownsNoble) nobleNight.transferToManager();
       weddingHandedOff = ownsWedding;
       demonHandedOff = ownsDemon;
       magicianHandedOff = config.magician !== undefined;
       timeConsortHandedOff = config.timeConsort !== undefined;
       scholarMentorHandedOff = config.scholarMentor !== undefined;
       mistHandedOff = ownsMist;
-      return {
-        interrupted: false,
-        summary,
-        damage,
-        dreamFrame,
-        ...(mist ? { mistDelay: mist.delayEligible } : {}),
-        deathLives,
-        retaliationAttacks: stageState.retaliationAttacks,
-        evilKnightBindings: stageState.evilKnightBindings,
-        inspectionAttacks: stageState.inspectionAttacks,
-        foxInspections: stageState.foxInspections,
-        ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
-      };
+      return attachNobleNightReceiver(
+        {
+          interrupted: false,
+          summary,
+          damage,
+          dreamFrame,
+          ...(mist ? { mistDelay: mist.delayEligible } : {}),
+          deathLives,
+          retaliationAttacks: stageState.retaliationAttacks,
+          evilKnightBindings: stageState.evilKnightBindings,
+          inspectionAttacks: stageState.inspectionAttacks,
+          foxInspections: stageState.foxInspections,
+          ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
+        },
+        nobleNight.receiver,
+      );
     } finally {
       animalNight.abortIfOwned();
       fragrantNight.abortIfOwned();
-      if (nobleAcquired && !nobleHandedOff) abortNobleBodyNight(this.world, day);
+      nobleNight.abortIfOwned();
       if (radiantAcquired) closeRadiantNight(this.world, day, "aborted", this.events);
       if (ownsMist && !mistHandedOff) abortMistNight(this.world);
       if (config.trickster && !magicianHandedOff) abortTricksterNight(this.world);

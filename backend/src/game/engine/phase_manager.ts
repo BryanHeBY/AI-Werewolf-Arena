@@ -6,13 +6,12 @@
  * further cycle work.
  */
 import {
-  abortNobleBodyNight,
+  nobleNightReceiver,
   expireServantAtNightEnd,
-  closeNobleBodyNight,
   resolveSecretBodyDamage,
   checkpointNobleBodyAuthority,
-} from "../mechanisms/roles/noble_secret_body/authority";
-import { appendNobleContractClosure } from "../mechanisms/roles/noble_secret_body/facts";
+  appendNobleContractClosure,
+} from "../mechanisms/roles/noble_secret_body/ports";
 import type { SecretBodySources } from "../mechanisms/roles/noble_secret_body/damage";
 import { hasRadiantNight } from "../mechanisms/roles/radiant_eclipse/night_frame";
 import {
@@ -519,7 +518,7 @@ export class PhaseManager {
       isCurrent: nightIsCurrent,
     });
     if (night.interrupted || !nightIsCurrent()) {
-      if (this.config.nobleSecretBody) abortNobleBodyNight(this.world, nightDay);
+      if (this.config.nobleSecretBody) nobleNightReceiver(night).abort(this.world, nightDay);
       closeDemonHunterNight(this.world);
       closeWeddingNight(this.world);
       return this.getSnapshot();
@@ -605,7 +604,7 @@ export class PhaseManager {
             appendNobleContractClosure(this.world, nightDay, expiry, this.events, Phase.Night);
             (proposedSources[expiry.targetId] ??= []).push(DeathCause.ServantExpiry);
           }
-          closeNobleBodyNight(this.world, nightDay, "normal");
+          nobleNightReceiver(night).closeNormally(this.world, nightDay);
         }
         const deaths = Object.keys(proposedSources)
           .map(Number)
@@ -824,7 +823,7 @@ export class PhaseManager {
         }
         if (this.checkAndSealResult("night_settled")) return this.getSnapshot();
       } finally {
-        if (this.config.nobleSecretBody) abortNobleBodyNight(this.world, nightDay);
+        if (this.config.nobleSecretBody) nobleNightReceiver(night).abort(this.world, nightDay);
         closeDemonHunterNight(this.world);
         closeWeddingNight(this.world);
       }

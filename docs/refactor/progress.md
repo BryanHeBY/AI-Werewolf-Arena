@@ -153,3 +153,5 @@
 - C12 relations-affiliation recorded games：4原文件/117旧IDs实际完整录制/复现场景迁移；20whole程序/24callbacks/70relative imports保真，Root独立actualGit全部语句/113完整import语法/同目标/522unique IDs复核0；20heads0与一次finite20 types0，不跑games/full。原literal survivor与scenario计划保持，支持模块oracle欠项不据迁移关闭。mapping现448source/454target/5329IDs。
 
 - C12 native-actions-bilingual recorded games：4原文件/87旧IDs实际完整录制/复现场景迁移；20whole程序/24callbacks/70relative imports保真，Root独立actualGit全部语句/113完整import语法/同目标/522unique IDs复核0；20heads0与一次finite20 types0，不跑games/full。原literal survivor与scenario计划保持，支持模块oracle欠项不据迁移关闭。mapping现452source/458target/5416IDs。
+
+- C23 Noble真实night handoff：unit持原acquired/transfer、原位置Symbol receiver交manager三site、early abort-only不提前config/World读；normal后abort仍由bodyResolved authority判断，原finally次序/returngetter失败前缀保。独立7whole source/authority/facts/damage逆映射0、cold8同exports、7heads0；new10unit/0/60+actualN1lategetter1/0/4+原managerN2two/0/12，finite4files types0。初fixture/potiondelivery省略红保留仅修test；内部ownSymbol反射新增明示，JSON/spread/Tape形状无新增字段。完整Noble矩阵仍partial。

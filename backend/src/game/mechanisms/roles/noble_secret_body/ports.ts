@@ -1,5 +1,5 @@
 /**
- * Owns Noble's public read-only ordinary knife target contribution.
+ * Owns Noble's public ordinary knife query and exposes its concrete night handoff ports.
  * Input is a target ID bound to the original World; output retains the original
  * role/policy allowance. When queried, the conditional second Role lookup and
  * field failures keep their order. Binding never reads state or grants World,
@@ -22,3 +22,24 @@ export function bindNobleKnifeTargetQuery(world: World): NobleKnifeTargetQuery {
         ?.wolfActionPolicy === "standard",
   });
 }
+
+export {
+  NobleNightUnit,
+  createNobleNightAbortReceiver,
+  attachNobleNightReceiver,
+  nobleNightReceiver,
+} from "./night-lifecycle";
+export type {
+  NobleNightAbortReceiver,
+  NobleNightReceiver,
+  NobleNightRuntime,
+  NobleOpeningFact,
+} from "./night-lifecycle";
+export {
+  checkpointNobleBodyAuthority,
+  assertNobleBodyRosterCurrent,
+  isNobleBodyBoard,
+  expireServantAtNightEnd,
+  resolveSecretBodyDamage,
+} from "./authority";
+export { appendNobleContractClosure } from "./facts";
