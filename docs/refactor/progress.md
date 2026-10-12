@@ -207,3 +207,5 @@
 - 当前台账补五已commit子项：四普通history owner与Radiant acquired lifecycle，独立actual ancestor/source/docs/remaining delta0，90rows900cells=44partial856pending/0complete/N/A，冻结基线60f1eb79原bytes保持；历史42/43统计不改为当前。其他写权/schema/codec/租借边界仍待完成，不把本笔作为P3/P4闭合。
 
 - C12 mixed4b acp-action-provider：1原file→2targets/3旧IDs按实际层分配；mixed4b overall4→8/39IDs、14callbacks=12raw+2directory literal spans、4helper/43relative/8heads0、426unused public modules删0必需setup丢失，独立actualGit/物理路径/语法/单一case分配审通过。原source WIP类型红保留，Root一次combined18有限项目actualexit0，不重复测试/HTTP/ACP/CLI/game。caseSplit/selectedprogram与loadset裁剪分开证明，不称wholefile/evalorder等价；mapping现510source/522target/6386IDs。
+
+- C12 mixed4b bilingual-audit-tasks：1原file→2targets/8旧IDs按实际层分配；mixed4b overall4→8/39IDs、14callbacks=12raw+2directory literal spans、4helper/43relative/8heads0、426unused public modules删0必需setup丢失，独立actualGit/物理路径/语法/单一case分配审通过。原source WIP类型红保留，Root一次combined18有限项目actualexit0，不重复测试/HTTP/ACP/CLI/game。caseSplit/selectedprogram与loadset裁剪分开证明，不称wholefile/evalorder等价；mapping现511source/524target/6394IDs。

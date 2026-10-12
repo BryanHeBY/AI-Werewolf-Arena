@@ -1,31 +1,24 @@
 /**
- * Audit integration verify bilingual audit tasks, retry language and evidence filtering.
- * Input: Literal task contexts, concurrent retry callbacks and local synthetic ACP execution.
- * Output and independent oracle: Handwritten audit headings, original speech, context exclusions and locale-specific final summary.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Unit tests verify audit prompts, parallel retry locale and evidence filtering preserve original player facts and speech.
+ * Input: Literal manifest/task contexts, a local inert executor and nonglobal Han regexp.
+ * Output and oracle: Handwritten headings/messages, explicit retry/context counts and diagnostic exclusion retain task semantics; no session directory, listener or audit subprocess is created.
  */
-import { acpAdapterEntry } from "../support/fixtures/manifest";
-import { auditSummaryFixture } from "../support/builders/audit-summary";
-import { buildDebugSummaryMarkdown } from "../../src/audit/debug_summary_generator";
+import { auditSummaryFixture } from "../../support/builders/audit-summary";
 import { expect, test } from "bun:test";
-import { readFile, readdir } from "node:fs/promises";
-import path from "node:path";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
-import { auditSystemPrompt, auditTurnPrompt } from "../../src/ai/audit/prompts";
-import { AcpAuditAgentExecutor } from "../../src/ai/audit/acp_audit_runner";
-import { AuditTaskRunner } from "../../src/audit/task_runner";
-import { AuditSummaryRenderer } from "../../src/audit/summary_renderer";
-import { AuditEvidencePolicy } from "../../src/audit/evidence_policy";
-import { buildAuditTasks } from "../../src/audit/payload_builder";
+import { auditSystemPrompt, auditTurnPrompt } from "../../../src/ai/audit/prompts";
+import { AuditTaskRunner } from "../../../src/audit/task_runner";
+import { AuditSummaryRenderer } from "../../../src/audit/summary_renderer";
+import { AuditEvidencePolicy } from "../../../src/audit/evidence_policy";
+import { buildAuditTasks } from "../../../src/audit/payload_builder";
 import {
   AuditToolTurnRegistry,
   type AuditToolContext,
-} from "../../src/ai/audit/audit_tool_protocol";
-import type { DebugSummaryPipelineInput } from "../../src/audit/pipeline";
-import type { ReplayManifest } from "../../src/recording/contracts";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+} from "../../../src/ai/audit/audit_tool_protocol";
+import type { DebugSummaryPipelineInput } from "../../../src/audit/pipeline";
+import type { ReplayManifest } from "../../../src/recording/contracts";
 
 const han = /[\u4e00-\u9fff]/;
+
 const manifest: ReplayManifest = {
   session_id: "synthetic-audit",
   board: "six_player_mvp",
@@ -226,145 +219,4 @@ test("audit getContext excludes transport exceptions and arbitrary diagnostics i
     }
     expect(input).toEqual(before);
   }
-});
-
-for (const locale of ["zh-CN", "en"] as const)
-  for (const mode of ["inspect", "summarize"] as const)
-    test(`actual ACP and injected MCP audit ${locale}/${mode} preserve prompt language, payload and process cleanup`, async () => {
-      const workspace = await createTestTempDirectory("awa-audit-locale-");
-      const entry = acpAdapterEntry("audit");
-      const executor = new AcpAuditAgentExecutor({
-        workspaceRoot: workspace,
-        profile: {
-          kind: "acp",
-          name: "synthetic",
-          providerName: "synthetic",
-          provider: {
-            type: "acp",
-            transport: "stdio",
-            env: {},
-            sessionConfigOptions: {},
-            command: process.execPath,
-            args: [entry],
-          },
-        },
-      });
-      const payload =
-        mode === "inspect" ? { events: [{ seq: 7, text: "Original 玩家原话" }] } : { findings: [] };
-      let result;
-      try {
-        result = await executor.runTurn(
-          { mode, locale, taskName: "local-audit", source: "synthetic", payload },
-          { timeoutMs: 4000 },
-        );
-      } finally {
-        await executor.close();
-      }
-      expect(result?.kind).toBe(mode === "inspect" ? "findings" : "summary");
-      if (result?.kind === "findings") expect(result.notes).toEqual(["Original 模型说明"]);
-      if (result?.kind === "summary") expect(result.markdown).toContain("Original 模型报告");
-      const trace = JSON.parse(
-        await readFile(path.join(workspace, "local-audit-1/audit-fixture.json"), "utf8"),
-      );
-      expect(trace.locale).toBe(locale);
-      expect(trace.prompts.length).toBe(2);
-      expect(trace.prompts[0]).toContain(
-        locale === "en" ? "no turn_id is valid yet" : "尚无有效 turn_id",
-      );
-      expect(trace.prompts[1]).toContain("a1");
-      expect(JSON.stringify(trace.prompts)).not.toContain("Original 玩家原话");
-      if (locale === "en") expect(JSON.stringify(trace.prompts)).not.toMatch(han);
-      expect(trace.context.context).toEqual({
-        mode,
-        task_name: "local-audit",
-        source: "synthetic",
-        payload,
-      });
-      expect(trace.stale.error).toBe("audit_turn_not_open_or_session_invalid");
-      if (locale === "en") expect(trace.stale.message).not.toMatch(han);
-      expect(trace.submission).toEqual({ ok: true, accepted: true });
-      expect(typeof trace.agentPid).toBe("number");
-      expect(trace.agentPid).toBeGreaterThan(0);
-      expect(typeof trace.mcpPid).toBe("number");
-      expect(trace.mcpPid).toBeGreaterThan(0);
-      expect(() => process.kill(trace.agentPid, 0)).toThrow();
-      expect(() => process.kill(trace.mcpPid, 0)).toThrow();
-    });
-
-test("complete synthetic generator and pipeline preserve separate inspection and summary languages and close all child processes", async () => {
-  await Promise.all(
-    (["zh-CN", "en"] as const).map(async (locale) => {
-      const displayLocale = locale === "en" ? "zh-CN" : "en";
-      const sessionDir = await createTestTempDirectory("awa-audit-pipeline-locale-");
-      const profile = {
-        kind: "acp" as const,
-        name: "synthetic",
-        providerName: "synthetic",
-        provider: {
-          type: "acp" as const,
-          transport: "stdio" as const,
-          env: {},
-          sessionConfigOptions: {},
-          command: process.execPath,
-          args: [acpAdapterEntry("audit")],
-        },
-      };
-      const markdown = await buildDebugSummaryMarkdown(
-        {
-          locale,
-          displayLocale,
-          manifest,
-          sessionDir,
-          publicEvents: [],
-          logicOps: [],
-          playerViews: [],
-          reports: [
-            {
-              report_id: "synthetic",
-              timestamp: "2026-10-08T00:00:00.000Z",
-              day: 1,
-              phase: "day",
-              stage: "day_speech",
-              actor_id: 1,
-              actor_role: "wolf",
-              actor_camp: "wolf",
-              category: "flow",
-              severity: "high",
-              message: "Original 报告",
-              evidence_event_seq: [],
-              status: "open",
-            },
-          ],
-        },
-        {
-          profile,
-          timeoutMs: 4000,
-          maxAttempts: 1,
-          concurrency: 2,
-          publicMaxItems: 10,
-          maxItems: 10,
-          playerMaxItems: 10,
-        },
-      );
-      expect(markdown).toBe(auditSummaryFixture(displayLocale, undefined, "Original 模型报告"));
-      const root = path.join(sessionDir, "audit-workspaces");
-      const tasks = await readdir(root);
-      expect(tasks.length).toBe(4);
-      for (const task of tasks) {
-        const trace = JSON.parse(
-          await readFile(path.join(root, task, "audit-fixture.json"), "utf8"),
-        );
-        expect(trace.locale).toBe(task.startsWith("agent_summary-") ? displayLocale : locale);
-        expect(trace.context.context.mode).toBe(
-          task.startsWith("agent_summary-") ? "summarize" : "inspect",
-        );
-        expect(typeof trace.agentPid).toBe("number");
-        expect(trace.agentPid).toBeGreaterThan(0);
-        expect(typeof trace.mcpPid).toBe("number");
-        expect(trace.mcpPid).toBeGreaterThan(0);
-        expect(() => process.kill(trace.agentPid, 0)).toThrow();
-        expect(() => process.kill(trace.mcpPid, 0)).toThrow();
-      }
-    }),
-  );
 });

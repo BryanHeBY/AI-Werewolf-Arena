@@ -65253,13 +65253,446 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 426 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/audit/bilingual_audit_tasks.test.ts",
+      "to": "backend/tests/unit/audit/task-locale-and-evidence.test.ts",
+      "sourceCommit": "588e755418b124b5e415c98d9cd78a6afb3b7e63",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "52045d8aaf800465375643d23d3efbff09a1d5a6b0af657e63bb629d1a743ca9",
+      "candidateSha256": "bb742e880558da99d44aa365836eee567305b892c4cfd9ec2916b062d764945a",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 689,
+          "end": 718,
+          "original": "../../src/recording/contracts",
+          "value": "../../../src/recording/contracts",
+          "originalResolved": "backend/src/recording/contracts.ts",
+          "expectedResolved": "backend/src/recording/contracts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 625,
+          "end": 649,
+          "original": "../../src/audit/pipeline",
+          "value": "../../../src/audit/pipeline",
+          "originalResolved": "backend/src/audit/pipeline.ts",
+          "expectedResolved": "backend/src/audit/pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 536,
+          "end": 574,
+          "original": "../../src/ai/audit/audit_tool_protocol",
+          "value": "../../../src/ai/audit/audit_tool_protocol",
+          "originalResolved": "backend/src/ai/audit/audit_tool_protocol.ts",
+          "expectedResolved": "backend/src/ai/audit/audit_tool_protocol.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 435,
+          "end": 466,
+          "original": "../../src/audit/payload_builder",
+          "value": "../../../src/audit/payload_builder",
+          "originalResolved": "backend/src/audit/payload_builder.ts",
+          "expectedResolved": "backend/src/audit/payload_builder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 368,
+          "end": 399,
+          "original": "../../src/audit/evidence_policy",
+          "value": "../../../src/audit/evidence_policy",
+          "originalResolved": "backend/src/audit/evidence_policy.ts",
+          "expectedResolved": "backend/src/audit/evidence_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 296,
+          "end": 328,
+          "original": "../../src/audit/summary_renderer",
+          "value": "../../../src/audit/summary_renderer",
+          "originalResolved": "backend/src/audit/summary_renderer.ts",
+          "expectedResolved": "backend/src/audit/summary_renderer.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 228,
+          "end": 255,
+          "original": "../../src/audit/task_runner",
+          "value": "../../../src/audit/task_runner",
+          "originalResolved": "backend/src/audit/task_runner.ts",
+          "expectedResolved": "backend/src/audit/task_runner.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 166,
+          "end": 192,
+          "original": "../../src/ai/audit/prompts",
+          "value": "../../../src/ai/audit/prompts",
+          "originalResolved": "backend/src/ai/audit/prompts.ts",
+          "expectedResolved": "backend/src/ai/audit/prompts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 37,
+          "end": 70,
+          "original": "../support/builders/audit-summary",
+          "value": "../../support/builders/audit-summary",
+          "originalResolved": "backend/tests/support/builders/audit-summary.ts",
+          "expectedResolved": "backend/tests/support/builders/audit-summary.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "038660f1fb4f217fd20f2e78e83a24cb4a252bf52c57c80191c58a389aa0827c",
+          "title": "shared audit prompts localize both modes without requesting actions during ACP initialization",
+          "occurrence": 1
+        },
+        {
+          "id": "4d84dedb3fc99a6cae39d98be902fda608801a85287307e390b98925b15ae96c",
+          "title": "inspection task locales survive parallel retries while final summary has its own language",
+          "occurrence": 1
+        },
+        {
+          "id": "37a70d07c95bdf40e4e57f488bb075a19dbe296b31267c659ee21f5fae3760c0",
+          "title": "audit getContext excludes transport exceptions and arbitrary diagnostics in both languages while preserving game facts and original speech",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../support/fixtures/manifest",
+          "originalImport": "import { acpAdapterEntry } from \"../support/fixtures/manifest\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "acpAdapterEntry",
+              "imported": "acpAdapterEntry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/audit/debug_summary_generator",
+          "originalImport": "import { buildDebugSummaryMarkdown } from \"../../src/audit/debug_summary_generator\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "buildDebugSummaryMarkdown",
+              "imported": "buildDebugSummaryMarkdown",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile, readdir } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "readdir",
+              "imported": "readdir",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "originalImport": "import type { Locale } from \"@ai-werewolf-arena/game-catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Locale",
+              "imported": "Locale",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/audit/acp_audit_runner",
+          "originalImport": "import { AcpAuditAgentExecutor } from \"../../src/ai/audit/acp_audit_runner\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AcpAuditAgentExecutor",
+              "imported": "AcpAuditAgentExecutor",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 426 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/audit/bilingual_audit_tasks.test.ts",
+      "to": "backend/tests/integration/agents/audit/bilingual-task-processes.test.ts",
+      "sourceCommit": "588e755418b124b5e415c98d9cd78a6afb3b7e63",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "52045d8aaf800465375643d23d3efbff09a1d5a6b0af657e63bb629d1a743ca9",
+      "candidateSha256": "da671fda3849742b39b96538e23cc719a268fe19c58c5b09a5daac17816d65be",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 534,
+          "end": 569,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 461,
+          "end": 490,
+          "original": "../../src/recording/contracts",
+          "value": "../../../../src/recording/contracts",
+          "originalResolved": "backend/src/recording/contracts.ts",
+          "expectedResolved": "backend/src/recording/contracts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 386,
+          "end": 421,
+          "original": "../../src/ai/audit/acp_audit_runner",
+          "value": "../../../../src/ai/audit/acp_audit_runner",
+          "originalResolved": "backend/src/ai/audit/acp_audit_runner.ts",
+          "expectedResolved": "backend/src/ai/audit/acp_audit_runner.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 180,
+          "end": 219,
+          "original": "../../src/audit/debug_summary_generator",
+          "value": "../../../../src/audit/debug_summary_generator",
+          "originalResolved": "backend/src/audit/debug_summary_generator.ts",
+          "expectedResolved": "backend/src/audit/debug_summary_generator.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 101,
+          "end": 134,
+          "original": "../support/builders/audit-summary",
+          "value": "../../../support/builders/audit-summary",
+          "originalResolved": "backend/tests/support/builders/audit-summary.ts",
+          "expectedResolved": "backend/tests/support/builders/audit-summary.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 33,
+          "end": 61,
+          "original": "../support/fixtures/manifest",
+          "value": "../../../support/fixtures/manifest",
+          "originalResolved": "backend/tests/support/fixtures/manifest.ts",
+          "expectedResolved": "backend/tests/support/fixtures/manifest.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "aa645dfda365a531e5857ad40d12953811655ba8da7201a08125c4e138fce830",
+          "title": "actual ACP and injected MCP audit zh-CN/inspect preserve prompt language, payload and process cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "466ec882409e54eda9a264827dce688f2b38aeb981eb1658466891af32aa454a",
+          "title": "actual ACP and injected MCP audit zh-CN/summarize preserve prompt language, payload and process cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "2001593835ee059437f4663954ebe5336262ca26a91fe48f35edbff4a9c0609a",
+          "title": "actual ACP and injected MCP audit en/inspect preserve prompt language, payload and process cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "8acb3cc6b719f596a49b6f85910f12607438f8cc34d1caae3a0a435b3399e82e",
+          "title": "actual ACP and injected MCP audit en/summarize preserve prompt language, payload and process cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "2925c78c69644e1567fe5321b8519831b008d5f42f61f7efae30f0bd3a728e78",
+          "title": "complete synthetic generator and pipeline preserve separate inspection and summary languages and close all child processes",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "originalImport": "import type { Locale } from \"@ai-werewolf-arena/game-catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Locale",
+              "imported": "Locale",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/audit/prompts",
+          "originalImport": "import { auditSystemPrompt, auditTurnPrompt } from \"../../src/ai/audit/prompts\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "auditSystemPrompt",
+              "imported": "auditSystemPrompt",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "auditTurnPrompt",
+              "imported": "auditTurnPrompt",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/audit/task_runner",
+          "originalImport": "import { AuditTaskRunner } from \"../../src/audit/task_runner\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AuditTaskRunner",
+              "imported": "AuditTaskRunner",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/audit/summary_renderer",
+          "originalImport": "import { AuditSummaryRenderer } from \"../../src/audit/summary_renderer\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AuditSummaryRenderer",
+              "imported": "AuditSummaryRenderer",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/audit/evidence_policy",
+          "originalImport": "import { AuditEvidencePolicy } from \"../../src/audit/evidence_policy\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AuditEvidencePolicy",
+              "imported": "AuditEvidencePolicy",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/audit/payload_builder",
+          "originalImport": "import { buildAuditTasks } from \"../../src/audit/payload_builder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "buildAuditTasks",
+              "imported": "buildAuditTasks",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/audit/audit_tool_protocol",
+          "originalImport": "import {\n  AuditToolTurnRegistry,\n  type AuditToolContext,\n} from \"../../src/ai/audit/audit_tool_protocol\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AuditToolTurnRegistry",
+              "imported": "AuditToolTurnRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "AuditToolContext",
+              "imported": "AuditToolContext",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/audit/pipeline",
+          "originalImport": "import type { DebugSummaryPipelineInput } from \"../../src/audit/pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DebugSummaryPipelineInput",
+              "imported": "DebugSummaryPipelineInput",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 426 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 510,
-    "targetFiles": 522,
-    "mappingEntries": 522,
-    "baselineCases": 6386,
+    "sourceFiles": 511,
+    "targetFiles": 524,
+    "mappingEntries": 524,
+    "baselineCases": 6394,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
