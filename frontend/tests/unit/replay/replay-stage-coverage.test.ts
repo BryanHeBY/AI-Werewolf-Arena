@@ -54,6 +54,7 @@ function enumValues(name: string): string[] {
 }
 function eventTypes() {
   const parentContracts: Readonly<Record<string, string>> = {
+    AnimalDreamPayloadMap: "packages/game-text/src/animal-dream.ts",
     NobleSecretBodyPayloadMap: "packages/game-text/src/noble-secret-body.ts",
     FragrantPairPayloadMap: "packages/game-text/src/fragrant-pair-seer.ts",
   };

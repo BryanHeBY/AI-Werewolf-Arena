@@ -1,3 +1,4 @@
+import { ANIMAL_DREAM_EVENT_TYPES, readAnimalDreamFact } from "@ai-werewolf-arena/game-text";
 import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
@@ -221,6 +222,7 @@ const NO_IDS = new Set([
   "god_private_game_info",
 ]);
 export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([
+  ...ANIMAL_DREAM_EVENT_TYPES,
   ...FRAGRANT_PAIR_EVENT_TYPES,
   ...NOBLE_SECRET_BODY_EVENT_TYPES,
   ...RADIANT_ECLIPSE_EVENT_TYPES,
@@ -287,6 +289,8 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 
 function validKnownFields(type: string, p: Record<string, unknown>): boolean {
+  if ((ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(type))
+    return !!readAnimalDreamFact(type, p);
   if ((FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(type))
     return !!readFragrantPairFact(type, p);
   if ((NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(type))
@@ -502,6 +506,51 @@ export function readReplayEvent(
     };
     if (!KNOWN.has(safe.type)) return { event: safe, relatedPlayerIds: [], effects: [] };
     if (!validKnownFields(safe.type, p)) return null;
+    if ((ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(safe.type)) {
+      if (
+        safe.type === "animal_puffer_revealed" &&
+        p.reason === "retaliation" &&
+        safe.phase !== "voting"
+      )
+        return null;
+      if (p.day !== safe.day || !["night", "day", "voting"].includes(safe.phase)) return null;
+      // A night-origin wave is announced after the day phase starts; payload.phase is its origin.
+      if (
+        Object.hasOwn(p, "phase") &&
+        (p.phase === "voting"
+          ? safe.phase !== "voting"
+          : p.phase === "night"
+            ? !["night", "day"].includes(safe.phase)
+            : !["day", "voting"].includes(safe.phase))
+      )
+        return null;
+      if (
+        [
+          "animal_night_opened",
+          "animal_fox_chosen",
+          "animal_fox_effect",
+          "animal_knife_notified",
+        ].includes(safe.type) &&
+        safe.phase !== "night"
+      )
+        return null;
+      if (
+        ["animal_puffer_decided", "animal_puffer_targets"].includes(safe.type) &&
+        safe.phase !== "voting"
+      )
+        return null;
+      if (
+        ["animal_unit_completed", "animal_cat_expiry_prepared"].includes(safe.type) &&
+        safe.phase === "night"
+      )
+        return null;
+      if (Object.hasOwn(p, "actorId")) add(p.actorId);
+      if (Object.hasOwn(p, "targetId")) add(p.targetId, true);
+      if (Object.hasOwn(p, "blockedCatId")) add(p.blockedCatId, true);
+      for (const key of ["targetIds", "proposedIds", "deaths"])
+        if (Object.hasOwn(p, key)) list(p[key]);
+      if (Array.isArray(p.history)) for (const row of p.history) add(row.targetId, true);
+    }
     if ((FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(safe.type)) {
       if (
         p.day !== safe.day ||
@@ -715,6 +764,12 @@ export function readReplayEvent(
     if (safe.type === "knight_duel" && p.result !== "wolf" && p.result !== "not_wolf") return null;
     if (safe.type === "phase_changed" && typeof p.phase !== "string") return null;
     const effects: ReplayEffect[] = [];
+    if (safe.type === "animal_cat_revealed" || safe.type === "animal_puffer_revealed")
+      effects.push({
+        kind: "role_revealed",
+        playerId: p.actorId as number,
+        role: safe.type === "animal_cat_revealed" ? "white_cat" : "pufferfish",
+      });
     if (safe.type === "wild_child_transformed") {
       if (p.day !== safe.day) return null;
       effects.push({ kind: "camp_changed", playerId: p.actorId as number, camp: "wolf" });
