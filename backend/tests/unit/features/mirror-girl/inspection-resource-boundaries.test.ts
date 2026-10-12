@@ -1,6 +1,11 @@
-import { nightStageContext } from "../night_stage_fixture";
+/**
+ * Unit tests verify Mirror Girl direct inspection preserves identity, unique-target knowledge and independent copied/gifted/transferred resources.
+ * Input: All original locale/change/point matrices, local role/life edits and bounded inspection/reception contexts.
+ * Output and oracle: Exact report/counter/privacy/closure and committed-prefix early reentry refusals remain unchanged; no complete NightPipeline or PM cycle runs.
+ */
+import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   Camp,
   COMPONENT,
@@ -11,51 +16,48 @@ import {
   type BoardConfig,
   type GameEvent,
   type RoleComponent,
-} from "../../../src/core";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../../src/core";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import {
   findNightAbility,
   allNightAbilities,
   projectNightAbility,
   roleInspectionPolicy,
-} from "../../../src/game/mechanisms/roles/abilities";
+} from "../../../../src/game/mechanisms/roles/abilities";
 import {
   grantNightAbility,
   transferNightAbility,
   setNightAbilityEnabled,
-} from "../../../src/game/mechanisms/roles/ability_changes";
-import { freshMirrorInspectionState } from "../../../src/game/mechanisms/roles/mirror_girl/profile";
-import {
-  MIRROR_INSPECTION_STAGE,
-  ROLE_INSPECTION_STAGE,
-  PSYCHIC_INSPECTION_STAGE,
-} from "../../../src/game/mechanisms/roles/role_inspection/night_stages";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { resolveInspection } from "../../../src/game/mechanisms/roles/inspection";
+} from "../../../../src/game/mechanisms/roles/ability_changes";
+import { freshMirrorInspectionState } from "../../../../src/game/mechanisms/roles/mirror_girl/profile";
+import { MIRROR_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/night_stages";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import {
   canGargoyleKnife,
   refreshGargoyleInheritance,
-} from "../../../src/game/mechanisms/roles/gargoyle/inheritance";
-import { refreshHiddenWolfInheritance } from "../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
-import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
-import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../src/ai/agents/player/action_reception";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
+} from "../../../../src/game/mechanisms/roles/gargoyle/inheritance";
+import { refreshHiddenWolfInheritance } from "../../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
+import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
+import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../src/game/mechanisms";
-import { hasRoleInspectionNightCommit } from "../../../src/game/mechanisms/roles/role_inspection/night_scope";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
+} from "../../../../src/game/mechanisms";
+import { hasRoleInspectionNightCommit } from "../../../../src/game/mechanisms/roles/role_inspection/night_scope";
+import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 
 const deck = [Role.MirrorGirl, Role.Wolf, Role.HiddenWolf, Role.Witch, Role.Guard, Role.Villager];
+
 const board = (roles = deck): BoardConfig => ({
   ...sixPlayerMvpConfig,
   boardSize: roles.length,
@@ -66,13 +68,17 @@ const board = (roles = deck): BoardConfig => ({
   winConditions: [WinCondition.SlaughterCity],
   selfDestruct: { enabledWindows: [] },
 });
+
 const fixture = (locale: "zh-CN" | "en" = "en", roles = deck) => ({
   ...bootstrapGame(board(roles), { fixedRoles: roles, locale }),
   config: board(roles),
 });
+
 const role = (game: ReturnType<typeof fixture>, id = 1) =>
   game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+
 const native = (game: ReturnType<typeof fixture>) => findNightAbility(role(game), "role_check")!;
+
 function context(
   game: ReturnType<typeof fixture>,
   events: GameEvent[],
@@ -110,6 +116,7 @@ function context(
     },
   });
 }
+
 const policy = (game: ReturnType<typeof fixture>) =>
   new PlayerPromptPolicy(game.world, {
     boardConfig: game.config,
@@ -506,7 +513,7 @@ test("a gifted Mirror instance runs without a Mirror entity and cannot replace n
 
 test("actual role-check capabilities collect all policy handlers even when an injected role catalog omits a Gargoyle profile", async () => {
   const game = fixture(),
-    { RoleCatalog } = await import("../../../src/game/mechanisms/roles/catalog");
+    { RoleCatalog } = await import("../../../../src/game/mechanisms/roles/catalog");
   const minimal = new RoleCatalog([
     getDefaultRoleCatalog().require(Role.Wolf),
     getDefaultRoleCatalog().require(Role.Villager),
@@ -574,7 +581,7 @@ for (const point of ["gateway", "label"] as const)
       };
     }
     if (point === "label") {
-      const { RoleCatalog } = await import("../../../src/game/mechanisms/roles/catalog");
+      const { RoleCatalog } = await import("../../../../src/game/mechanisms/roles/catalog");
       ctx.roleCatalog = new RoleCatalog(
         getDefaultRoleCatalog()
           .all()

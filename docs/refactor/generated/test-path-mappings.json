@@ -84342,13 +84342,394 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/mirror_girl.test.ts",
+      "to": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sourceCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "0a9bbaf87256bab3b0a01bf8c01f24ea810d80f8a012efc19aecf7ca42f20867",
+      "candidateSha256": "93d5091f0bbf82a75e74c74de0efb9d2c521fdffe40408eda7b271727a6f995b",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 22285,
+          "end": 22327,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 19929,
+          "end": 19971,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 2464,
+          "end": 2521,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 2367,
+          "end": 2421,
+          "original": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "value": "../../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 2271,
+          "end": 2333,
+          "original": "../../../src/game/mechanisms/roles/role_inspection/night_scope",
+          "value": "../../../../src/game/mechanisms/roles/role_inspection/night_scope",
+          "originalResolved": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 2194,
+          "end": 2222,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1985,
+          "end": 2034,
+          "original": "../../../src/ai/agents/providers/action_providers",
+          "value": "../../../../src/ai/agents/providers/action_providers",
+          "originalResolved": "backend/src/ai/agents/providers/action_providers.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/action_providers.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1889,
+          "end": 1939,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1801,
+          "end": 1850,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1708,
+          "end": 1754,
+          "original": "../../../src/ai/agents/player/action_reception",
+          "value": "../../../../src/ai/agents/player/action_reception",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1634,
+          "end": 1672,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1555,
+          "end": 1602,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1459,
+          "end": 1510,
+          "original": "../../../src/game/mechanisms/stages/night/contracts",
+          "value": "../../../../src/game/mechanisms/stages/night/contracts",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/contracts.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/contracts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1354,
+          "end": 1416,
+          "original": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "value": "../../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1257,
+          "end": 1315,
+          "original": "../../../src/game/mechanisms/roles/hidden_wolf/inheritance",
+          "value": "../../../../src/game/mechanisms/roles/hidden_wolf/inheritance",
+          "originalResolved": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1153,
+          "end": 1208,
+          "original": "../../../src/game/mechanisms/roles/gargoyle/inheritance",
+          "value": "../../../../src/game/mechanisms/roles/gargoyle/inheritance",
+          "originalResolved": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1038,
+          "end": 1083,
+          "original": "../../../src/game/mechanisms/roles/inspection",
+          "value": "../../../../src/game/mechanisms/roles/inspection",
+          "originalResolved": "backend/src/game/mechanisms/roles/inspection.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/inspection.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 958,
+          "end": 1000,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 853,
+          "end": 916,
+          "original": "../../../src/game/mechanisms/roles/role_inspection/night_stages",
+          "value": "../../../../src/game/mechanisms/roles/role_inspection/night_stages",
+          "originalResolved": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 755,
+          "end": 809,
+          "original": "../../../src/game/mechanisms/roles/mirror_girl/profile",
+          "value": "../../../../src/game/mechanisms/roles/mirror_girl/profile",
+          "originalResolved": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 658,
+          "end": 708,
+          "original": "../../../src/game/mechanisms/roles/ability_changes",
+          "value": "../../../../src/game/mechanisms/roles/ability_changes",
+          "originalResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ability_changes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 523,
+          "end": 567,
+          "original": "../../../src/game/mechanisms/roles/abilities",
+          "value": "../../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 370,
+          "end": 415,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 314,
+          "end": 331,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 132,
+          "end": 158,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 35,
+          "end": 57,
+          "original": "../night_stage_fixture",
+          "value": "../../../engine/night_stage_fixture",
+          "originalResolved": "backend/tests/engine/night_stage_fixture.ts",
+          "expectedResolved": "backend/tests/engine/night_stage_fixture.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/game/mechanisms/roles/catalog.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/roles/catalog\")",
+          "currentExpression": "import(\"../../../../src/game/mechanisms/roles/catalog\")",
+          "currentHead": "../../../../src/game/mechanisms/roles/catalog",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/game/mechanisms/roles/catalog.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/roles/catalog\")",
+          "currentExpression": "import(\"../../../../src/game/mechanisms/roles/catalog\")",
+          "currentHead": "../../../../src/game/mechanisms/roles/catalog",
+          "kind": "dynamic-module-path"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "5a9b2552f1623497094206180400a4b3d140d9bff11225418d96f3ae71a7ed19",
+          "title": "zh-CN: native Mirror keeps Good identity and specific-role privacy while repeats stay forbidden after target/owner revival and role changes",
+          "occurrence": 1
+        },
+        {
+          "id": "37501d058141d1f411dad0b6c723b1be145099bc2b56110cc955561da90994bd",
+          "title": "en: native Mirror keeps Good identity and specific-role privacy while repeats stay forbidden after target/owner revival and role changes",
+          "occurrence": 1
+        },
+        {
+          "id": "c431383c2db5e5f4fa98d52c121df71f1e1973d1475f5f1f15d0b72c199648e2",
+          "title": "Hidden role labels change after inheritance but a previous Mirror report is immutable and its stable ID cannot be rechecked",
+          "occurrence": 1
+        },
+        {
+          "id": "1ad9f83467e1ee4fc11bd09a6d2d10fd87c31e24d6cf64e6d1cb6c1d3a081488",
+          "title": "Mirror pass and later exhausted target set close the night without consuming or changing old reports; invalid replies still fail",
+          "occurrence": 1
+        },
+        {
+          "id": "c3af6807b8816626283e0602f54edcee0cc1143f6fd1ed08d49ab72e6203ab15",
+          "title": "three policy instances on one Villager use distinct slots, counters and histories, and only Spirit Seer repeats",
+          "occurrence": 1
+        },
+        {
+          "id": "220b8879564a0569fa374aa40e63c8e0a0f481a9408100eaafadc444b67b8646",
+          "title": "fresh Mirror copy/gift reject inherited or private state, while transfer preserves complete knowledge and the closed night",
+          "occurrence": 1
+        },
+        {
+          "id": "296fd4f1422b580aae59b47947e4da896800467e9f6be34e2d279a05a18dad17",
+          "title": "zh-CN: binding a Mirror instance uses Mirror target/baseline/prompt rules and strips unknown state from both DTO locations and prompt",
+          "occurrence": 1
+        },
+        {
+          "id": "3b3404ee4a5f183105548f2df9f3dd53c678c83880a5cc561ab87102e726d195",
+          "title": "en: binding a Mirror instance uses Mirror target/baseline/prompt rules and strips unknown state from both DTO locations and prompt",
+          "occurrence": 1
+        },
+        {
+          "id": "c64085113015d5c9bb9ed12e5ac926ad5022aeea0215971dcab19a4d129fe310",
+          "title": "a gifted Mirror instance runs without a Mirror entity and cannot replace native Gargoyle knife completion",
+          "occurrence": 1
+        },
+        {
+          "id": "327ef3e4ab9722ad5351c7fe8ce146d9b1b8169f7726e9be3e9e92f677741f5e",
+          "title": "actual role-check capabilities collect all policy handlers even when an injected role catalog omits a Gargoyle profile",
+          "occurrence": 1
+        },
+        {
+          "id": "49b2d40af08c9d9b0c45d76a3eea1aa55a971ed8c4f71b70f31f998cbed7f8c3",
+          "title": "Mirror legal closure registers the shared commit and prevents full night reentry",
+          "occurrence": 1
+        },
+        {
+          "id": "41396de6e0bafea743ce36ae2644fc5ee33241ab7f92e643a58ea64cfd1c8287",
+          "title": "gateway: Mirror rechecks the last unique target and closes an exhausted set without inventing a report or use",
+          "occurrence": 1
+        },
+        {
+          "id": "497654aaa6fb0ff69acaf733d8c30fb957c57c82bfcb952fc9d90d78cdeffa10",
+          "title": "label: Mirror rechecks the last unique target and closes an exhausted set without inventing a report or use",
+          "occurrence": 1
+        },
+        {
+          "id": "7625e369c25097af9880caecb61414a648e1e22c5c27b645eb946469aed46c62",
+          "title": "cancel_null: a stale Mirror response cannot consume, report or close a new scope",
+          "occurrence": 1
+        },
+        {
+          "id": "13c0a3fc8e7199b59a718fc54ccb74f7df1031891c2301368c824b845d5ec6f3",
+          "title": "actor_revive: a stale Mirror response cannot consume, report or close a new scope",
+          "occurrence": 1
+        },
+        {
+          "id": "43a9021b4eb28291882499342f4f39432286907649249b7271381a24846e778b",
+          "title": "target_revive: a stale Mirror response cannot consume, report or close a new scope",
+          "occurrence": 1
+        },
+        {
+          "id": "bc053cb71fc0dccb886a2de690a040c6d878a8a926e49907cdf2b7529073913f",
+          "title": "state: a stale Mirror response cannot consume, report or close a new scope",
+          "occurrence": 1
+        },
+        {
+          "id": "5ce81f8dff4222b49b26d206532f17920dbdb67a1951b3be659bfb5ab0e639d1",
+          "title": "policy: a stale Mirror response cannot consume, report or close a new scope",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/game/mechanisms/roles/role_inspection/night_stages",
+          "originalImport": "import {\n  MIRROR_INSPECTION_STAGE,\n  ROLE_INSPECTION_STAGE,\n  PSYCHIC_INSPECTION_STAGE,\n} from \"../../../src/game/mechanisms/roles/role_inspection/night_stages\";",
+          "currentImportBeforeRebase": "import { MIRROR_INSPECTION_STAGE } from \"../../../src/game/mechanisms/roles/role_inspection/night_stages\";",
+          "droppedBindings": [
+            {
+              "name": "ROLE_INSPECTION_STAGE",
+              "imported": "ROLE_INSPECTION_STAGE",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "PSYCHIC_INSPECTION_STAGE",
+              "imported": "PSYCHIC_INSPECTION_STAGE",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 551,
-    "targetFiles": 606,
-    "mappingEntries": 606,
-    "baselineCases": 7064,
+    "sourceFiles": 552,
+    "targetFiles": 607,
+    "mappingEntries": 607,
+    "baselineCases": 7082,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
