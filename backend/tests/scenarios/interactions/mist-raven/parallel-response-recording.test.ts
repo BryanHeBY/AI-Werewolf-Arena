@@ -1,9 +1,14 @@
+/**
+ * Interaction scenarios verify Mist/Raven parallel blast responses preserve accepted and unpublished Snake prefixes.
+ * Input: Original recording variants, copied unpublished response mutations and controlled mistPrefix driver calls.
+ * Output and oracle: Explicit raw response, consumption and malformed-prefix rejection retain both original parallel owners; no response is synthesized or removed to repair the expected record.
+ */
 import { expect, test } from "bun:test";
-import { Camp, ActionWindow } from "../../src/core";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
-import { mistRecording } from "../support/mist_raven_recording";
-import type { ReproductionRecord } from "../../src/recording/reproduction";
-import { mistPrefix } from "../support/mist_raven_prefix";
+import { Camp, ActionWindow } from "../../../../src/core";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { mistRecording } from "../../../support/mist_raven_recording";
+import type { ReproductionRecord } from "../../../../src/recording/reproduction";
+import { mistPrefix } from "../../../support/mist_raven_prefix";
 for (const variant of [
   "blast-parallel",
   "blast-parallel-raw-loser",

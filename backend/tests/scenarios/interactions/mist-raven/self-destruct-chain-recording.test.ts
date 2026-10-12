@@ -1,10 +1,15 @@
+/**
+ * Interaction scenarios verify Mist/Raven self-destruct chains preserve delivered resources, death order and queued-night recording.
+ * Input: Original recording variants, locale matrix and controlled blast responses on actual games.
+ * Output and oracle: Literal event/role/checkpoint assertions retain chain-final outcomes and action replay; the original variant tables and archived fixtures are unchanged.
+ */
 import { expect, test } from "bun:test";
-import { ActionWindow, Camp, Phase } from "../../src/core";
+import { ActionWindow, Camp, Phase } from "../../../../src/core";
 import {
   mistRecording,
   type MistRecordVariant,
   type MistRequestObservation,
-} from "../support/mist_raven_recording";
+} from "../../../support/mist_raven_recording";
 const cases: Array<{ variant: MistRecordVariant; window: ActionWindow; day: number }> = [
   { variant: "blast-pre-election", window: ActionWindow.OnPreElection, day: 1 },
   { variant: "blast-daybreak", window: ActionWindow.OnDaybreak, day: 1 },

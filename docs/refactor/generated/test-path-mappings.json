@@ -57813,13 +57813,267 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mist_raven_complete_blast.test.ts",
+      "to": "backend/tests/scenarios/interactions/mist-raven/self-destruct-chain-recording.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "Actual mistRecording/mistPrefix preserves self-destruct/death/last-word/queued-night timing or parallel Snake response prefixes and copied unpublished-response forgeries; all callbacks remain actual driven scenarios.",
+      "originalSha256": "02a8b1979192fddf685a4a11a4ac2d652f97b7479f9c3dafb67e362c8b4eb1a0",
+      "candidateSha256": "6bbefb611a76975263f66e0c3f3700920251cca0d485125e168cb43f4a2eb8eb",
+      "moduleAndLocationEdits": [
+        {
+          "start": 192,
+          "end": 223,
+          "value": "../../../support/mist_raven_recording",
+          "kind": "module-specifier",
+          "original": "../support/mist_raven_recording",
+          "originalResolved": "backend/tests/support/mist_raven_recording.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_recording.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 84,
+          "end": 98,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "9fb513454fd5b41b1e7ec670a30be818c723fca41d12187cbe87e1ae2fca7c70",
+          "title": "Mist real complete blast recording and exact Tape blast-pre-election/en",
+          "occurrence": 1
+        },
+        {
+          "id": "b43f4ddeb1400685c988122ef57aa0b67dcd6b47dc506d4f80f9fa57409a7d5e",
+          "title": "Mist real complete blast recording and exact Tape blast-pre-election/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "4820dbb6644678ca0f52fc6b8f056cfb85e0739cbb609c7fed374cc89c14f2a8",
+          "title": "Mist real complete blast recording and exact Tape blast-daybreak/en",
+          "occurrence": 1
+        },
+        {
+          "id": "054c59769a1369ea6bf7b837017a93a847a75e2c4033d9b5b46bd8ee00e053a9",
+          "title": "Mist real complete blast recording and exact Tape blast-daybreak/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "9926c4ce30e2fea71bc847902d696cc01756df31194bbe5211d9155eaa0fc3ff",
+          "title": "Mist real complete blast recording and exact Tape blast-speech-gap/en",
+          "occurrence": 1
+        },
+        {
+          "id": "31051cb9c475ec36596f23912c062ddc1abd9caef93666665ef82c6a98d9cc5c",
+          "title": "Mist real complete blast recording and exact Tape blast-speech-gap/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "a13a30f5c46b05de772219fd39a3fa6caa2120090c0f52ba1deb05a6c4ba2850",
+          "title": "Mist real complete blast recording and exact Tape blast-pre-vote/en",
+          "occurrence": 1
+        },
+        {
+          "id": "8fdbd2ccbb4f6a6c4b45b056d2bc1419c6ce33a2c811c73a12de2864154851dd",
+          "title": "Mist real complete blast recording and exact Tape blast-pre-vote/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "97bf577551e329afb89399fcee9920b9da20f2a346d9a2e0ec9ced425c6b97e8",
+          "title": "Mist real complete blast recording and exact Tape blast-raw-target/en",
+          "occurrence": 1
+        },
+        {
+          "id": "b936eb1e0ac8316ee4b5cda9e090114715c5c42b98cfa4b634ffa100478754c8",
+          "title": "Mist real complete blast recording and exact Tape blast-raw-target/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "bb6b68bee4e438a6048d99a51d4699ca2ca973a03426b9a127e6152de461237e",
+          "title": "Mist real complete blast recording and exact Tape blast-badge-chain/en",
+          "occurrence": 1
+        },
+        {
+          "id": "440221a144ce68cc7dae590f083c9e58b70a94ae9d3f9330233c3f75eba71831",
+          "title": "Mist real complete blast recording and exact Tape blast-badge-chain/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "d5fc15f256cf9084cd1f89f6eb6b006826b66f314d1231d94f895641d100c725",
+          "title": "Mist real complete blast recording and exact Tape blast-last-wolf/en",
+          "occurrence": 1
+        },
+        {
+          "id": "1872ba6a68ac5f9af08f3e0720b8f77c7d1527d5cc07d61000815cf7be59272a",
+          "title": "Mist real complete blast recording and exact Tape blast-last-wolf/zh-CN",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mist_raven_parallel_blast.test.ts",
+      "to": "backend/tests/scenarios/interactions/mist-raven/parallel-response-recording.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "Actual mistRecording/mistPrefix preserves self-destruct/death/last-word/queued-night timing or parallel Snake response prefixes and copied unpublished-response forgeries; all callbacks remain actual driven scenarios.",
+      "originalSha256": "058999ada8bf0b2976e263f04492822810dc74633d2c0469a871633c7812a4d9",
+      "candidateSha256": "0ffa2a299cd1178e4179b9bf637cc9f640704072480ebf5349b9f4414f54c3e3",
+      "moduleAndLocationEdits": [
+        {
+          "start": 339,
+          "end": 367,
+          "value": "../../../support/mist_raven_prefix",
+          "kind": "module-specifier",
+          "original": "../support/mist_raven_prefix",
+          "originalResolved": "backend/tests/support/mist_raven_prefix.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_prefix.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 276,
+          "end": 308,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 201,
+          "end": 232,
+          "value": "../../../support/mist_raven_recording",
+          "kind": "module-specifier",
+          "original": "../support/mist_raven_recording",
+          "originalResolved": "backend/tests/support/mist_raven_recording.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_recording.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 135,
+          "end": 167,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 77,
+          "end": 91,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "cb1806d9288ef450e099816a0bb63421504d872221ca6bf497005d147f9d7670",
+          "title": "Mist complete concurrent blast intents commit only lowest ID/blast-parallel/en",
+          "occurrence": 1
+        },
+        {
+          "id": "c505bb0f210bf6a7ee7bc4d8189d3ffc6dede39b1db552c204cc6fa5161e24bd",
+          "title": "Mist complete concurrent blast intents commit only lowest ID/blast-parallel/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "9aad2fcd570ef1012b970dbfd85d1de33555386f6e30063a3a1c8a918be04a3d",
+          "title": "Mist complete concurrent blast intents commit only lowest ID/blast-parallel-raw-loser/en",
+          "occurrence": 1
+        },
+        {
+          "id": "3643483dd7dc23f91d586832d93cc79ad70f90d7c94d1e83a5883fb1608b7ab2",
+          "title": "Mist complete concurrent blast intents commit only lowest ID/blast-parallel-raw-loser/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "9ee8b16570aa891e7141c379fa0013f841150af6e813d50b3de9ca9aa72b3633",
+          "title": "Mist complete concurrent blast intents commit only lowest ID/blast-parallel-second-gap/en",
+          "occurrence": 1
+        },
+        {
+          "id": "ee56f6d10c7183ac573e85bd2697d8ef9357c9f8dc090d04c51c644e21613e80",
+          "title": "Mist complete concurrent blast intents commit only lowest ID/blast-parallel-second-gap/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "b17451febebcdb30fced7baf55f410fa6193fa62050ff96613495ca0fcbda6da",
+          "title": "Mist unpublished parallel Snake prefix preserves the completed null response",
+          "occurrence": 1
+        },
+        {
+          "id": "92bfdce2cc3ef40dd7cc32b9fdcae9cfc810d31f4ed2c202a4bac627523d7168",
+          "title": "Mist unpublished Snake rejects incomplete blast batch 11/pending",
+          "occurrence": 1
+        },
+        {
+          "id": "bba86b1cbd8ca779b6527fd9697dfb343d53acc7e45f587f5966835f7a4b6d99",
+          "title": "Mist unpublished Snake rejects incomplete blast batch 11/error",
+          "occurrence": 1
+        },
+        {
+          "id": "144c4b11ee755f362dd152356e211b7f97b3a1f2ae97f0b7cd37bd0bb67caeaa",
+          "title": "Mist unpublished Snake rejects incomplete blast batch 12/pending",
+          "occurrence": 1
+        },
+        {
+          "id": "ff773b92bdc632afcf8c6daa8f79da0ae24427ca953517cef141a6dbc418272b",
+          "title": "Mist unpublished Snake rejects incomplete blast batch 12/error",
+          "occurrence": 1
+        },
+        {
+          "id": "d91bfbcbac17d1b02fd5499e1ca4cc5f5dbc7a8744a45df57d6a2a376a674469",
+          "title": "Mist unpublished blast batch identity cannot omit a peer/wrong-window",
+          "occurrence": 1
+        },
+        {
+          "id": "6233b9a8a9896ff54f7b5a9de0c22cd0d69bf1477b1f6e7269f93c3a04e5d821",
+          "title": "Mist unpublished blast batch identity cannot omit a peer/missing-window",
+          "occurrence": 1
+        },
+        {
+          "id": "39157c93b24af386fdf8137a170a21b5746dd7feef66775d66551b6b1d4dd92e",
+          "title": "Mist unpublished blast batch identity cannot omit a peer/pending-other-round",
+          "occurrence": 1
+        },
+        {
+          "id": "b20ef79d738af6442c31334ea305b653c73d23384ab2d1ef2feef1d3b4952570",
+          "title": "Mist unpublished blast batch identity cannot omit a peer/pending-other-opening",
+          "occurrence": 1
+        },
+        {
+          "id": "b956bcdb37a6486c8b2981471d983d8aeed139e7a43ea3a8ca2e742b7945df76",
+          "title": "Mist unpublished Snake cannot follow only the winner's response",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 470,
-    "targetFiles": 476,
-    "mappingEntries": 476,
-    "baselineCases": 5747,
+    "sourceFiles": 472,
+    "targetFiles": 478,
+    "mappingEntries": 478,
+    "baselineCases": 5777,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
