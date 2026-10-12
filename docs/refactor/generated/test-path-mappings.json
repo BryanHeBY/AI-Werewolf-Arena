@@ -74693,13 +74693,652 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/wolf_king_day_policy.test.ts",
+      "to": "backend/tests/unit/features/wolf-king/day-origin-policy.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "38982def554a005070391e67a87183b0af729def1a5c58941a10373d6e41e0d2",
+      "candidateSha256": "0209488cfb61b2769a1c6a2975d1c44f76364587861c751f9b3c4bb915cfaad5",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1407,
+          "end": 1457,
+          "original": "../../../src/game/mechanisms/roles/death_abilities",
+          "value": "../../../../src/game/mechanisms/roles/death_abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/death_abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/death_abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1302,
+          "end": 1360,
+          "original": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "value": "../../../../src/game/mechanisms/prompt/config_render_registry",
+          "originalResolved": "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/prompt/config_render_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1199,
+          "end": 1251,
+          "original": "../../../src/game/mechanisms/roles/wolf_king/profile",
+          "value": "../../../../src/game/mechanisms/roles/wolf_king/profile",
+          "originalResolved": "backend/src/game/mechanisms/roles/wolf_king/profile.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/wolf_king/profile.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1109,
+          "end": 1156,
+          "original": "../../../src/game/mechanisms/roles/player_state",
+          "value": "../../../../src/game/mechanisms/roles/player_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/player_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/player_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 995,
+          "end": 1043,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 920,
+          "end": 958,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 840,
+          "end": 888,
+          "original": "../../../src/game/mechanisms/hooks/hook_registry",
+          "value": "../../../../src/game/mechanisms/hooks/hook_registry",
+          "originalResolved": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/hooks/hook_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 740,
+          "end": 779,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 665,
+          "end": 706,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 592,
+          "end": 629,
+          "original": "../../../src/core/domain/board_schema",
+          "value": "../../../../src/core/domain/board_schema",
+          "originalResolved": "backend/src/core/domain/board_schema.ts",
+          "expectedResolved": "backend/src/core/domain/board_schema.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 510,
+          "end": 554,
+          "original": "../../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 391,
+          "end": 437,
+          "original": "../../../src/runtime/scenarios/magician_twelve",
+          "value": "../../../../src/runtime/scenarios/magician_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/magician_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/magician_twelve.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 305,
+          "end": 350,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 249,
+          "end": 266,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "729a80ae38d6e654bcb43db13a0a5ef0b6fd6401a17045f6f5aafad9fddf0ca4",
+          "title": "Wolf King day policy uses both an explicit origin and the complete qualified cause list",
+          "occurrence": 1
+        },
+        {
+          "id": "cf9e1616c4758fffb690fd84492b77043a0c3030938f4853530913b37a6a12ad",
+          "title": "Wolf King policy roundtrips; Hunter rejects it in public and internal schemas",
+          "occurrence": 1
+        },
+        {
+          "id": "b910706bccbbbe8fdb9fffe756a1b2b097015eaea494f8898eb4ba02b2c15ccf",
+          "title": "only Wolf King DTO carries the new policy and no private property accessor is evaluated",
+          "occurrence": 1
+        },
+        {
+          "id": "8d8dec49d3c7ae4f8b95a5c589f4f4063d476429f2d301117fdd28424e947375",
+          "title": "configured personal and public rules explain the AWA day policy/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "4c00a9293a11dc184456e15d2673202efa904718070839bd0b82eec32c95b659",
+          "title": "configured personal and public rules explain the AWA day policy/en",
+          "occurrence": 1
+        },
+        {
+          "id": "848a6883d230b3f4db99b28d5366558584fc5839f71a479e92c80c815cfeecae",
+          "title": "night source remains night when announced during Day/awa_qualified_sources_v1",
+          "occurrence": 1
+        },
+        {
+          "id": "8108b516f736d3941165bc939548bd22ea0342ee06e62676e157b9ce98a5ecac",
+          "title": "night source remains night when announced during Day/awa_day_deaths_v1",
+          "occurrence": 1
+        },
+        {
+          "id": "a63df957fc320b4d29869d8242f6c153c8da40c7713ec51d3303d4804812fd8a",
+          "title": "a night-origin Hunter shot cannot grant the new Wolf King a daytime gun",
+          "occurrence": 1
+        },
+        {
+          "id": "9b91f3d1e965eb7501fdcfa603147176f01249689821b1649ef8d12d7a768de9",
+          "title": "explicit daytime eligibility retains the pending night's protection in later waves/awa_qualified_sources_v1/day",
+          "occurrence": 1
+        },
+        {
+          "id": "abc68845672de976501b1215cfb1e521c29038affd6661a0bd559d4ba2068c24",
+          "title": "explicit daytime eligibility retains the pending night's protection in later waves/awa_qualified_sources_v1/voting",
+          "occurrence": 1
+        },
+        {
+          "id": "6ef36bd1b4827a9ce74064a79ad43fca8b811c8ecda603ce2d360d46f5e8af20",
+          "title": "explicit daytime eligibility retains the pending night's protection in later waves/awa_day_deaths_v1/day",
+          "occurrence": 1
+        },
+        {
+          "id": "ed41ee2c14d1182eceda4bda26af10d79745c069a38837375018218fd265c14e",
+          "title": "explicit daytime eligibility retains the pending night's protection in later waves/awa_day_deaths_v1/voting",
+          "occurrence": 1
+        },
+        {
+          "id": "8e2de7c9e1d4bdd5c0cb0e11f2563ecbcd74283bbf24e45cbea5bf674f581854",
+          "title": "same-wave night Hunter and daytime Wolf King keep separate protection semantics",
+          "occurrence": 1
+        },
+        {
+          "id": "b7928e6eb574db9533c0fa1b05700dedc281ea248962fa51e335d074eea1e12a",
+          "title": "a mixed-origin Hunter grants daytime Wolf King eligibility while retaining night protection",
+          "occurrence": 1
+        },
+        {
+          "id": "91aa6a508c9caa56c332d7c09d828c38fca49667b117ac58b51d8ed7a8257a65",
+          "title": "day origin cannot override a poison component",
+          "occurrence": 1
+        },
+        {
+          "id": "83cedf3985162768dc3f05c86c326c8ea6e46b38928cc3cddabd41350bae0a2f",
+          "title": "native authority is revoked on policy change/await",
+          "occurrence": 1
+        },
+        {
+          "id": "8527adcbee0b74ad5e2dc06227e02a50fdc075be8fb44a7bb1a628531b716f05",
+          "title": "native authority is revoked on cause change/await",
+          "occurrence": 1
+        },
+        {
+          "id": "7705478f35ca0e8e8ca0fe9b4a1c14f9f2e471e67a67072d1f1fb8eb29a5ab84",
+          "title": "native authority is revoked on policy change/deferred",
+          "occurrence": 1
+        },
+        {
+          "id": "2a6cbe08f9def90e141cb51d9274e0d5c074a66f2b7db2efb6e5e942edd1e69f",
+          "title": "native authority is revoked on cause change/deferred",
+          "occurrence": 1
+        },
+        {
+          "id": "b6514874be8fcde37c2d033794134310d0a855ff3ee8820e087cf72f48a3bdd2",
+          "title": "resolver-owned origin cannot be rewritten through a hook context",
+          "occurrence": 1
+        },
+        {
+          "id": "2a293804ea2419a5a9ba684bafef54bdd51467f8238ec515efbe7762a135878d",
+          "title": "legacy direct hook origin mutation invalidates its result/await",
+          "occurrence": 1
+        },
+        {
+          "id": "c7dd185f27e35429cd86276dbb16c0ff50a9f2a267bf453f11736988c67aa3b6",
+          "title": "legacy direct hook origin mutation invalidates its result/deferred",
+          "occurrence": 1
+        },
+        {
+          "id": "96d8cc416a86c91a60b89a1872088cbfb2a4131f9a9de39542a532312e779a08",
+          "title": "direct hooks with no origin reject only the new policy",
+          "occurrence": 1
+        },
+        {
+          "id": "e4301cbe9fa73d4d11f2134f274f8628174e5754c0a3cb90303f5a708b5b1330",
+          "title": "a legal good recipient's gifted gun keeps night eligibility under the Wolf King day policy",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  DeathCause,\n  Phase,\n  Role,\n  PotionType,\n  ActionWindow,\n  WinCondition,\n  Camp,\n  permitsDeathShot,\n  createRandom,\n  type BoardConfig,\n  type DeathActionPolicy,\n  type RoleComponent,\n  type GameEvent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, DeathCause, Phase, Role, permitsDeathShot, type BoardConfig, type DeathActionPolicy, type RoleComponent, type GameEvent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionWindow",
+              "imported": "ActionWindow",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "WinCondition",
+              "imported": "WinCondition",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "createRandom",
+              "imported": "createRandom",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/wolf_king_day_policy.test.ts",
+      "to": "backend/tests/scenarios/features/wolf-king/copied-gun-and-mixed-origin.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "38982def554a005070391e67a87183b0af729def1a5c58941a10373d6e41e0d2",
+      "candidateSha256": "e887e3bc0b7f05d13aa9f60c4cfbc36c743ed18578cb0b9a4d7383821e40c273",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "import-type-module-specifier",
+          "start": 1153,
+          "end": 1170,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "typeOnly": true
+        },
+        {
+          "kind": "import-type-module-specifier",
+          "start": 1093,
+          "end": 1110,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "typeOnly": true
+        },
+        {
+          "kind": "module-specifier",
+          "start": 276,
+          "end": 321,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 220,
+          "end": 237,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "kind": "type-module-path",
+          "anchor": "backend/src/core/index.ts",
+          "originalExpression": "import(\"../../../src/core\").ActionRequest",
+          "currentExpression": "import(\"../../../../src/core\").ActionRequest",
+          "currentHead": "../../../../src/core",
+          "typeOnly": true
+        },
+        {
+          "kind": "type-module-path",
+          "anchor": "backend/src/core/index.ts",
+          "originalExpression": "import(\"../../../src/core\").ToolCall",
+          "currentExpression": "import(\"../../../../src/core\").ToolCall",
+          "currentHead": "../../../../src/core",
+          "typeOnly": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "e3f4b6e9848fc89fd199aa3a861986b725055fa8e3a81b843fdb138996fcc268",
+          "title": "native Wolf King config does not become the copied gun policy/mechanical_wolf",
+          "occurrence": 1
+        },
+        {
+          "id": "13820c5dab7087171dedab68695ee330363ef5eb45d6902b1b57a0d1756fe8c7",
+          "title": "native Wolf King config does not become the copied gun policy/awakened_hidden_wolf",
+          "occurrence": 1
+        },
+        {
+          "id": "05e9260a758d6bee01cf83a220d65eb512712781e8d07b4f4b633e3f53214887",
+          "title": "actual last-wolf mixed night knife and daytime blast finishes both guns before victory/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "da87485319fdc06638aeabe5f5070d7803f0c05c03eb429413c9c2d11e9845c0",
+          "title": "actual last-wolf mixed night knife and daytime blast finishes both guns before victory/en",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  DeathCause,\n  Phase,\n  Role,\n  PotionType,\n  ActionWindow,\n  WinCondition,\n  Camp,\n  permitsDeathShot,\n  createRandom,\n  type BoardConfig,\n  type DeathActionPolicy,\n  type RoleComponent,\n  type GameEvent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { DeathCause, Phase, Role, PotionType, ActionWindow, WinCondition, Camp, createRandom, type BoardConfig } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "permitsDeathShot",
+              "imported": "permitsDeathShot",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "DeathActionPolicy",
+              "imported": "DeathActionPolicy",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/scenarios/magician_twelve",
+          "originalImport": "import { magicianTwelveConfig } from \"../../../src/runtime/scenarios/magician_twelve\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "magicianTwelveConfig",
+              "imported": "magicianTwelveConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  boardDefinitionFromConfig,\n  parseBoardDefinition,\n} from \"../../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "parseBoardDefinition",
+              "imported": "parseBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/board_schema",
+          "originalImport": "import { boardConfigSchema } from \"../../../src/core/domain/board_schema\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "boardConfigSchema",
+              "imported": "boardConfigSchema",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/death_resolution",
+          "originalImport": "import { DeathResolution } from \"../../../src/game/engine/death_resolution\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DeathResolution",
+              "imported": "DeathResolution",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/event_registry",
+          "originalImport": "import { EventRegistry } from \"../../../src/game/engine/event_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "EventRegistry",
+              "imported": "EventRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/hooks/hook_registry",
+          "originalImport": "import {\n  HookRegistry,\n  type DeathHookContext,\n} from \"../../../src/game/mechanisms/hooks/hook_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "HookRegistry",
+              "imported": "HookRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "DeathHookContext",
+              "imported": "DeathHookContext",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import { getWolfKingState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getWolfKingState",
+              "imported": "getWolfKingState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/player_state",
+          "originalImport": "import {\n  projectHunterState,\n  projectWolfKingState,\n} from \"../../../src/game/mechanisms/roles/player_state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "projectHunterState",
+              "imported": "projectHunterState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "projectWolfKingState",
+              "imported": "projectWolfKingState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/wolf_king/profile",
+          "originalImport": "import { WOLF_KING_ROLE_PROFILE } from \"../../../src/game/mechanisms/roles/wolf_king/profile\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "WOLF_KING_ROLE_PROFILE",
+              "imported": "WOLF_KING_ROLE_PROFILE",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "originalImport": "import { getDefaultConfigRenderRegistry } from \"../../../src/game/mechanisms/prompt/config_render_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/death_abilities",
+          "originalImport": "import { grantDeathGun, armDeathGun } from \"../../../src/game/mechanisms/roles/death_abilities\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "grantDeathGun",
+              "imported": "grantDeathGun",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "armDeathGun",
+              "imported": "armDeathGun",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 533,
-    "targetFiles": 572,
-    "mappingEntries": 572,
-    "baselineCases": 6666,
+    "sourceFiles": 534,
+    "targetFiles": 574,
+    "mappingEntries": 574,
+    "baselineCases": 6694,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
