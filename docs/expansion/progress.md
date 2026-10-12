@@ -696,3 +696,5 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 共用原玩家作用域从寻香目录纯迁移至中性roles模块，旧函数别名／唯一WeakMap和双目标聚合保持，原维护73／436、类型／lint及R/A逐字节／运行alias复核通过，见[迁移](reviews/p9e-original-player-scope-move.md)。helper只证明原生命和Role/Camp，不代替下一owner的其它资源、阶段与永久撤权；52/64不变。
 
 动物板原牌池／原体证明已补真实十二人counts/camps、72根组件全局独立、身份／Victory／private容器和观察到漂移后的永久撤权。维护15／30、A独立7／36及R原样复核通过，范围见[原体底座](reviews/p9e-animal-roster-foundation.md)；资源对象、夜／日unit、deadline及实际角色运行继续下一owner，52/64不变。
+
+三份原资源 owner、预约真实开夜、Fox 同步付款及固定期限／单向撤销的 opaque 请求凭据完成；回调快照漏 alias、末回调撤旧授权及开夜生命变化反例修复。最终维护60／151断言、R独立5／24、A独立15／47及双端类型／backend lint通过，见[资源与请求底座](reviews/p9e-animal-authority-foundation.md)。无实际请求 envelope、角色注册或对局验收声明，52/64不变；接续Cat真实单位／死亡过滤、Puffer原票、许可／知情和全部交付。

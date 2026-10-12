@@ -12,6 +12,7 @@ import {
   freshWhiteCatState,
 } from "../../src/game/mechanisms/roles/animal_dream/state";
 import { installAnimalRoster } from "../../src/game/mechanisms/roles/animal_dream/roster";
+import { setWolfBeautyState, setBearState } from "../../src/game/mechanisms/roles/private_state";
 
 export const animalInternalConfig = () => ({
   boardSize: 12,
@@ -48,7 +49,13 @@ export const animalInternalConfig = () => ({
   },
 });
 /** Raw component fixture: no Profile initialization, public board loading, PM, transport or replay. */
-export function animalRosterFixture(beforeInstall?: (world: World) => void) {
+export function animalRosterFixture(
+  beforeInstall?: (world: World) => void,
+  install: (
+    world: World,
+    config: ReturnType<typeof animalInternalConfig>,
+  ) => void = installAnimalRoster,
+) {
   const world = new World(),
     roles = [
       "wolf_beauty",
@@ -71,6 +78,9 @@ export function animalRosterFixture(beforeInstall?: (world: World) => void) {
     if (roleId === "white_cat") role.privateState.whiteCat = freshWhiteCatState();
     if (roleId === "fox_cub") role.privateState.foxCub = freshFoxCubState();
     if (roleId === "pufferfish") role.privateState.pufferfish = freshPufferfishState();
+    if (roleId === "wolf_beauty")
+      setWolfBeautyState(role, { targetId: null, lastActedDay: null, history: [] });
+    if (roleId === "bear") setBearState(role, { history: [] });
     world.addComponent(id, COMPONENT.Role, role);
     world.addComponent(id, COMPONENT.Camp, createCampComponent(camp));
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
@@ -83,7 +93,7 @@ export function animalRosterFixture(beforeInstall?: (world: World) => void) {
   }
   beforeInstall?.(world);
   const config = animalInternalConfig();
-  installAnimalRoster(world, config);
+  install(world, config);
   return {
     world,
     config,
