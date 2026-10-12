@@ -63911,13 +63911,443 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. Bilingual schema shared request remains a single integration allocation. Guard fixture cast changes raw type syntax only; whole callback emitted bytes remain exact.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 82 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/bilingual_rejections.test.ts",
+      "to": "backend/tests/unit/agents/protocol/rejection-messages.test.ts",
+      "sourceCommit": "ff8ebd7f309936a1b68eca77a8200c5b1181d264",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "d1cff2e1d0878d47ed74e5f2e572031a0ab7735e592816be12462648d1c58cab",
+      "candidateSha256": "afec7901e6babf9aa292d81935e5e824f098558a9e4eb0e359bd98aa24fe82a8",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1059,
+          "end": 1109,
+          "original": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "value": "../../../../src/ai/integrations/acp/acp_turn_registry",
+          "originalResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 978,
+          "end": 1023,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 891,
+          "end": 939,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 750,
+          "end": 819,
+          "original": "../../../src/game/mechanisms/validation/tool_validation_rule_registry",
+          "value": "../../../../src/game/mechanisms/validation/tool_validation_rule_registry",
+          "originalResolved": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 661,
+          "end": 703,
+          "original": "../../../src/game/gateway/action_validator",
+          "value": "../../../../src/game/gateway/action_validator",
+          "originalResolved": "backend/src/game/gateway/action_validator.ts",
+          "expectedResolved": "backend/src/game/gateway/action_validator.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 587,
+          "end": 625,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 502,
+          "end": 555,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 438,
+          "end": 455,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 257,
+          "end": 283,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b861feaf4014e74f41761577956f3bba0fb7f929ed78b1ac7d4a501584fbb86b",
+          "title": "every declared rule code has an explicit bilingual explanation",
+          "occurrence": 1
+        },
+        {
+          "id": "dc1414527acd5896ffac556414bc2d7f03a166e69bee14e45ce851442638da57",
+          "title": "generic failure builders need no turn context and old error-only ACP callbacks gain a local explanation",
+          "occurrence": 1
+        },
+        {
+          "id": "824c083e176cb342a301b27069b048053f73b01a595218702ad11fe1aa6ac7ec",
+          "title": "gateway refusals have language-neutral codes and never change private resources or state",
+          "occurrence": 1
+        },
+        {
+          "id": "e9813e43c343831ce028e71d01e4afad662dc0c0e404f04856cac9f0b6790082",
+          "title": "explicit injected rule errors stay raw; an empty custom error keeps its existing accept behavior",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [
+        {
+          "kind": "approved-test-mutable-cast",
+          "start": 7718,
+          "end": 7792,
+          "original": "getGuardState(game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!",
+          "value": "(getGuardState(game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)! as { lastTarget: number | null })",
+          "originalInput": "getGuardState(game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget = 2;",
+          "authorization": "Root message permits one explicit test-only mutable cast using60846ea6 precedent; full callback emission proof required, production remains readonly."
+        }
+      ],
+      "importPruning": [
+        {
+          "specifier": "../../../src/ai/agents/llm/llm_action_provider",
+          "originalImport": "import { LlmActionProvider } from \"../../../src/ai/agents/llm/llm_action_provider\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "LlmActionProvider",
+              "imported": "LlmActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalImport": "import { AiSdkClient } from \"../../../src/ai/integrations/llm/ai_sdk_client\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AiSdkClient",
+              "imported": "AiSdkClient",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "originalImport": "import { WerewolfMcpControlServer } from \"../../../src/ai/integrations/acp/werewolf_mcp_control\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "WerewolfMcpControlServer",
+              "imported": "WerewolfMcpControlServer",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. Bilingual schema shared request remains a single integration allocation. Guard fixture cast changes raw type syntax only; whole callback emitted bytes remain exact.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 82 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/bilingual_rejections.test.ts",
+      "to": "backend/tests/integration/agents/protocol/rejection-wire.test.ts",
+      "sourceCommit": "ff8ebd7f309936a1b68eca77a8200c5b1181d264",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "d1cff2e1d0878d47ed74e5f2e572031a0ab7735e592816be12462648d1c58cab",
+      "candidateSha256": "936d761d598fcefd471ce2ad0b31b7549c3fe6d12e9dc6408afd10a76382b047",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 749,
+          "end": 802,
+          "original": "../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "value": "../../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "originalResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 654,
+          "end": 704,
+          "original": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "value": "../../../../src/ai/integrations/acp/acp_turn_registry",
+          "originalResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 572,
+          "end": 618,
+          "original": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "value": "../../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+          "expectedResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 494,
+          "end": 540,
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 411,
+          "end": 456,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 324,
+          "end": 372,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 237,
+          "end": 290,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 173,
+          "end": 190,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "683627dded9b35a88de805cb80483f2507e0d32d708725767b1fcd3a6fe5e60c",
+          "title": "actual SDK zh-CN corrects stale turn and unavailable potion from structured refusal",
+          "occurrence": 1
+        },
+        {
+          "id": "9389b546dd09c0ce4112a0624f3244eacf1e4caebe1e34b0b9a87186d5060885",
+          "title": "actual SDK en corrects stale turn and unavailable potion from structured refusal",
+          "occurrence": 1
+        },
+        {
+          "id": "4c1428b8d3d1796f8c726996d2c8609ed7a1bc941342b414285c86525dd536af",
+          "title": "loopback zh-CN rejects unauthorized and malformed requests without returning internal exceptions",
+          "occurrence": 1
+        },
+        {
+          "id": "1a7b9813fbdc4fb62d98918a11338e06444eae18e7a0381775c525e981ec119b",
+          "title": "loopback en rejects unauthorized and malformed requests without returning internal exceptions",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "originalImport": "import { RuleError, type Locale } from \"@ai-werewolf-arena/game-catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "RuleError",
+              "imported": "RuleError",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Locale",
+              "imported": "Locale",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "originalImport": "import {\n  dictionaries,\n  errorMessage,\n  placeholders,\n  toolFailure,\n} from \"@ai-werewolf-arena/game-text\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "dictionaries",
+              "imported": "dictionaries",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "errorMessage",
+              "imported": "errorMessage",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "placeholders",
+              "imported": "placeholders",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "toolFailure",
+              "imported": "toolFailure",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Phase,\n  PotionType,\n  Role,\n  type ToolCall,\n  type RoleComponent,\n  type AliveComponent,\n  type VotingRightComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Phase, PotionType, Role, type RoleComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "VotingRightComponent",
+              "imported": "VotingRightComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/action_validator",
+          "originalImport": "import { ActionValidator } from \"../../../src/game/gateway/action_validator\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionValidator",
+              "imported": "ActionValidator",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/validation/tool_validation_rule_registry",
+          "originalImport": "import { ToolValidationRuleRegistry } from \"../../../src/game/mechanisms/validation/tool_validation_rule_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolValidationRuleRegistry",
+              "imported": "ToolValidationRuleRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import {\n  getGuardState,\n  getHunterState,\n  getWitchState,\n} from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": "import { getWitchState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "droppedBindings": [
+            {
+              "name": "getGuardState",
+              "imported": "getGuardState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getHunterState",
+              "imported": "getHunterState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. Bilingual schema shared request remains a single integration allocation. Guard fixture cast changes raw type syntax only; whole callback emitted bytes remain exact.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 82 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 506,
-    "targetFiles": 514,
-    "mappingEntries": 514,
-    "baselineCases": 6362,
+    "sourceFiles": 507,
+    "targetFiles": 516,
+    "mappingEntries": 516,
+    "baselineCases": 6370,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
