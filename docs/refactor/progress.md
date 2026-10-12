@@ -141,3 +141,5 @@
 - C12 FS-runtime-integration：3原文件/3targets/16旧IDs实际职责归属；19→20总体126bindings/53callbacks/210IDs逐actualGit保真，18whole与1case split分别证明。独立审通过，finite20 types0、原4短case/0/62共用证据，无重复transport/full。 mapping现419source/424target/4729IDs。
 
 - C12 causal-failure：12原文件/12targets/152旧IDs实际职责归属；19→20总体126bindings/53callbacks/210IDs逐actualGit保真，18whole与1case split分别证明。独立审通过，finite20 types0、原4短case/0/62共用证据，无重复transport/full。 mapping现431source/436target/4881IDs。
+
+- C12 inspection-split：1原文件/2targets/13旧IDs实际职责归属；19→20总体126bindings/53callbacks/210IDs逐actualGit保真，18whole与1case split分别证明。独立审通过，finite20 types0、原4短case/0/62共用证据，无重复transport/full。inspection两组loadset539→538/539、十unused声明删且无必需setup丢失，保原literal/matrix，原render oracle debt仍pending。 mapping现432source/438target/4894IDs。

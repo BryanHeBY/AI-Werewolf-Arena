@@ -51151,13 +51151,404 @@
       "targetRunner": "backend-scenarios",
       "fixturesChanged": false,
       "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/engine/rules/inspection_results.test.ts",
+      "to": "backend/tests/unit/engine/visibility/inspection-result-contract.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Seven bounded projection/reader/strict legacy/own-data/detached-vote cases; none executes a night. Existing localized render expected values use production text/inspectionLabel helpers and retain that limited presentation-oracle debt.",
+      "originalSha256": "eddb42edced52a862f50b2700e5db7f1a54750095b2a3b59543a7b49197e7bdf",
+      "candidateSha256": "7a79a4fff5401198bd558ba62d0b1b8f63e27353e9dda361f1334130c13f5f6f",
+      "moduleAndLocationEdits": [
+        {
+          "start": 781,
+          "end": 838,
+          "original": "../../../src/game/mechanisms/script/event_render_registry",
+          "value": "../../../../src/game/mechanisms/script/event_render_registry",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/script/event_render_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/script/event_render_registry.ts"
+        },
+        {
+          "start": 680,
+          "end": 725,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "start": 592,
+          "end": 641,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "start": 500,
+          "end": 545,
+          "original": "../../../src/game/mechanisms/roles/inspection",
+          "value": "../../../../src/game/mechanisms/roles/inspection",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/roles/inspection.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/inspection.ts"
+        },
+        {
+          "start": 420,
+          "end": 462,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "start": 348,
+          "end": 365,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "start": 244,
+          "end": 270,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "caa36a3c406e673d9b8e84d3ffde4f1f7e073cf7f9507fc9c4d81a7ca291cb7f",
+          "title": "zh-CN: camp/role/combined projections are exact detached labels, independent of real identity and wolf permissions",
+          "occurrence": 1
+        },
+        {
+          "id": "6c12be2bde69faaa7388ba17ec9d99b6f023040b7479056c78031ad4b2a4e844",
+          "title": "en: camp/role/combined projections are exact detached labels, independent of real identity and wolf permissions",
+          "occurrence": 1
+        },
+        {
+          "id": "907ec5675a657759aa9443dfe362e9d0f898f51fc88899e2f61c208fb399cc90",
+          "title": "serialized readers preserve legitimate legacy booleans and never replace unknown or malformed typed results with a Good guess",
+          "occurrence": 1
+        },
+        {
+          "id": "d4795ab7e99d75a3534873cd00ff0e45a0083634b1565d83e152ec44f33dedcc",
+          "title": "unknown result decoding reads only own data, never evaluates changing/inherited getters, and handles throwing Proxy traps",
+          "occurrence": 1
+        },
+        {
+          "id": "8d7b8622e96b983dad762e9682d174d8a74de1cd5caae7d4d4b1273762469500",
+          "title": "zh-CN: terminal old/manual result compatibility is strict and never guesses Good for missing or invalid evidence",
+          "occurrence": 1
+        },
+        {
+          "id": "4fb464f7d305019e4a0b39eb6108bfe392b237767fb95b15ebb44572805f1925",
+          "title": "en: terminal old/manual result compatibility is strict and never guesses Good for missing or invalid evidence",
+          "occurrence": 1
+        },
+        {
+          "id": "425193743da083c5d8732fffb8cd498b9f490460c7570dc4c1b5b7e5cc02a8e1",
+          "title": "nested public vote evidence is detached from the authority before being given to a decision provider",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "fixturesChanged": false,
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "importPruning": [
+        {
+          "originalImport": "import { completedNight } from \"../night_stage_fixture\";",
+          "specifier": "../night_stage_fixture",
+          "droppedLocalBindings": [
+            "completedNight"
+          ],
+          "reason": "Entire import declaration is unused in this split target. Retained imports preserve all original bindings and type/value identity; no partial import printer rewrite."
+        },
+        {
+          "originalImport": "import { getSeerState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "droppedLocalBindings": [
+            "getSeerState"
+          ],
+          "reason": "Entire import declaration is unused in this split target. Retained imports preserve all original bindings and type/value identity; no partial import printer rewrite."
+        },
+        {
+          "originalImport": "import { NightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+          "specifier": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "droppedLocalBindings": [
+            "NightStageRegistry"
+          ],
+          "reason": "Entire import declaration is unused in this split target. Retained imports preserve all original bindings and type/value identity; no partial import printer rewrite."
+        },
+        {
+          "originalImport": "import { NightPipeline } from \"../../../src/game/engine/phase_pipeline/night_pipeline\";",
+          "specifier": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "droppedLocalBindings": [
+            "NightPipeline"
+          ],
+          "reason": "Entire import declaration is unused in this split target. Retained imports preserve all original bindings and type/value identity; no partial import printer rewrite."
+        },
+        {
+          "originalImport": "import { DamageResolutionSystem } from \"../../../src/core/domain/systems/damage_resolution_system\";",
+          "specifier": "../../../src/core/domain/systems/damage_resolution_system",
+          "droppedLocalBindings": [
+            "DamageResolutionSystem"
+          ],
+          "reason": "Entire import declaration is unused in this split target. Retained imports preserve all original bindings and type/value identity; no partial import printer rewrite."
+        },
+        {
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "droppedLocalBindings": [
+            "ToolGateway"
+          ],
+          "reason": "Entire import declaration is unused in this split target. Retained imports preserve all original bindings and type/value identity; no partial import printer rewrite."
+        },
+        {
+          "originalImport": "import { ActionValidator } from \"../../../src/game/gateway/action_validator\";",
+          "specifier": "../../../src/game/gateway/action_validator",
+          "droppedLocalBindings": [
+            "ActionValidator"
+          ],
+          "reason": "Entire import declaration is unused in this split target. Retained imports preserve all original bindings and type/value identity; no partial import printer rewrite."
+        },
+        {
+          "originalImport": "import { ToolValidationRuleRegistry } from \"../../../src/game/mechanisms/validation/tool_validation_rule_registry\";",
+          "specifier": "../../../src/game/mechanisms/validation/tool_validation_rule_registry",
+          "droppedLocalBindings": [
+            "ToolValidationRuleRegistry"
+          ],
+          "reason": "Entire import declaration is unused in this split target. Retained imports preserve all original bindings and type/value identity; no partial import printer rewrite."
+        }
+      ],
+      "splitLiteralSetup": {
+        "fixedRolesLiteral": "const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];",
+        "fixedRolesSha256": "17abcd0010774373deeae2058e70328e1fc3f562df3b4440f9cea8b547a86f9d",
+        "outerLocaleHeader": "for (const locale of [\"zh-CN\", \"en\"] as const) ",
+        "campHeader": null,
+        "limit": "Only original immutable literal is copied; each callback owns fresh state/world/catalog. Outer body partitions existing registrations, not parameter values or callback programs."
+      },
+      "loadSetProof": "Original539; unit538 excluding unused night-stage fixture; scenario539. No deleted required test setup; immutable literal setup copied only."
+    },
+    {
+      "from": "backend/tests/engine/rules/inspection_results.test.ts",
+      "to": "backend/tests/scenarios/interactions/inspection/seer-private-history.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Six locale×camp cases execute actual NightPipeline wolf discussion/kill/guard/seer, then check literal private result/history/feed and terminal privacy. Whole original locale/camp matrix and callbacks are preserved, with no cross-case mutable state.",
+      "originalSha256": "eddb42edced52a862f50b2700e5db7f1a54750095b2a3b59543a7b49197e7bdf",
+      "candidateSha256": "7298bfd28fea1eb550aaa9e59be99f03401a19dcf5e37e9d6388f164e82b6221",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1287,
+          "end": 1344,
+          "original": "../../../src/game/mechanisms/script/event_render_registry",
+          "value": "../../../../src/game/mechanisms/script/event_render_registry",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/script/event_render_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/script/event_render_registry.ts"
+        },
+        {
+          "start": 1186,
+          "end": 1231,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "start": 1098,
+          "end": 1147,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "start": 982,
+          "end": 1051,
+          "original": "../../../src/game/mechanisms/validation/tool_validation_rule_registry",
+          "value": "../../../../src/game/mechanisms/validation/tool_validation_rule_registry",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts"
+        },
+        {
+          "start": 893,
+          "end": 935,
+          "original": "../../../src/game/gateway/action_validator",
+          "value": "../../../../src/game/gateway/action_validator",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/gateway/action_validator.ts",
+          "expectedResolved": "backend/src/game/gateway/action_validator.ts"
+        },
+        {
+          "start": 819,
+          "end": 857,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "start": 730,
+          "end": 787,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../../src/core/domain/systems/damage_resolution_system",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "start": 633,
+          "end": 687,
+          "original": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "value": "../../../../src/game/engine/phase_pipeline/night_pipeline",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+        },
+        {
+          "start": 537,
+          "end": 599,
+          "original": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "value": "../../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts"
+        },
+        {
+          "start": 450,
+          "end": 498,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "start": 375,
+          "end": 417,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "start": 303,
+          "end": 320,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "start": 199,
+          "end": 225,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "start": 32,
+          "end": 54,
+          "original": "../night_stage_fixture",
+          "value": "../../../engine/night_stage_fixture",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/engine/night_stage_fixture.ts",
+          "expectedResolved": "backend/tests/engine/night_stage_fixture.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "d7bbad5d8eeb0084d652c0b5697615c3600651a69d0e426522fe297e35ef076e",
+          "title": "zh-CN: actual seer stage records only its authorized good label and detached private history",
+          "occurrence": 1
+        },
+        {
+          "id": "e309a1d2837195b9ad1571d95780e50e009cd33a35c338f1423d2030d1a4d445",
+          "title": "zh-CN: actual seer stage records only its authorized wolf label and detached private history",
+          "occurrence": 1
+        },
+        {
+          "id": "84338895350b9b8c0f8fa28deed60c4db6377f7d3c22002c4033ccba305b89ba",
+          "title": "zh-CN: actual seer stage records only its authorized third_party label and detached private history",
+          "occurrence": 1
+        },
+        {
+          "id": "a3009b568a7e5f4ce51b50e07fb9e6b40513c151e8891b9540e7143539c01278",
+          "title": "en: actual seer stage records only its authorized good label and detached private history",
+          "occurrence": 1
+        },
+        {
+          "id": "34df2575b1243dc5cd0516a5db5a98a8c313b17e463267536c54b0aa999aee15",
+          "title": "en: actual seer stage records only its authorized wolf label and detached private history",
+          "occurrence": 1
+        },
+        {
+          "id": "5e60faf618698ca9a4caeaa57ee69cc6b5a215ddc545dd10867d4ea82c2ffef6",
+          "title": "en: actual seer stage records only its authorized third_party label and detached private history",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "fixturesChanged": false,
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "importPruning": [
+        {
+          "originalImport": "import { readInspectionResult, readSeerInspectionResult } from \"@ai-werewolf-arena/replay-contract\";",
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "droppedLocalBindings": [
+            "readInspectionResult",
+            "readSeerInspectionResult"
+          ],
+          "reason": "Entire import declaration is unused in this split target. Retained imports preserve all original bindings and type/value identity; no partial import printer rewrite."
+        },
+        {
+          "originalImport": "import { resolveInspection } from \"../../../src/game/mechanisms/roles/inspection\";",
+          "specifier": "../../../src/game/mechanisms/roles/inspection",
+          "droppedLocalBindings": [
+            "resolveInspection"
+          ],
+          "reason": "Entire import declaration is unused in this split target. Retained imports preserve all original bindings and type/value identity; no partial import printer rewrite."
+        }
+      ],
+      "splitLiteralSetup": {
+        "fixedRolesLiteral": "const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];",
+        "fixedRolesSha256": "17abcd0010774373deeae2058e70328e1fc3f562df3b4440f9cea8b547a86f9d",
+        "outerLocaleHeader": "for (const locale of [\"zh-CN\", \"en\"] as const) ",
+        "campHeader": "for (const inspectedCamp of [Camp.Good, Camp.Wolf, Camp.ThirdParty])\n    ",
+        "limit": "Only original immutable literal is copied; each callback owns fresh state/world/catalog. Outer body partitions existing registrations, not parameter values or callback programs."
+      },
+      "loadSetProof": "Original539; unit538 excluding unused night-stage fixture; scenario539. No deleted required test setup; immutable literal setup copied only."
     }
   ],
   "counts": {
-    "sourceFiles": 431,
-    "targetFiles": 436,
-    "mappingEntries": 436,
-    "baselineCases": 4881,
+    "sourceFiles": 432,
+    "targetFiles": 438,
+    "mappingEntries": 438,
+    "baselineCases": 4894,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
