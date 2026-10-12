@@ -1,29 +1,52 @@
+/**
+ * Integration tests: Exercises actual MCP submissions while controlled Fragrant game
+ * prefixes hold a role turn. Literal late/closed/stale receipts and original stock/state
+ * expectations check retained wire capability after revocation. Existing literal
+ * expectations and independently supplied fixture plans remain the oracle;
+ * transport/recording setup is local and no billed model session is started.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   COMPONENT,
   type ActionRequest,
   type RoleComponent,
   type ToolCall,
-} from "../../../src/core";
-import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
-import { WerewolfMcpControlServer } from "../../../src/ai/integrations/acp/werewolf_mcp_control";
-import { MIST_ROLES, mistBoard } from "../../support/mist_raven_recording";
-import { fixtureObject } from "../../support/fixture_values";
+} from "../../../../src/core";
+import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
+import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
+import {
+  fragrantRuntimeGame,
+  fragrantRuntimeAction,
+} from "../../../support/fragrant_pair_seer_scenarios";
+import { inheritFragrantPairDeadlineRequest } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/requests";
+import { fixtureObject } from "../../../support/fixture_values";
 
 // The retained client/control belong to this adversarial test, not a provider session.
 // Real runner tests separately prove provider-owned transport/process reclamation.
-for (const stage of ["alchemist_mist", "alchemist_snake", "raven_knife"] as const)
+for (const boundary of [
+  {
+    stage: "fragrant_bind",
+    day: 1,
+    actor: 1,
+    action: { name: "bind_fragrant_pair", args: { target_ids: [5, 6] } },
+  },
+  {
+    stage: "pair_inspection",
+    day: 1,
+    actor: 9,
+    action: { name: "check_pair", args: { target_ids: [9, 2] } },
+  },
+] as const)
   for (const locale of ["en", "zh-CN"] as const)
-    test(`Mist real MCP late/closed/stale submission ${stage}/${locale}`, async () => {
-      const board = await mistBoard(),
-        game = bootstrapGame(board.config, { fixedRoles: MIST_ROLES, locale });
+    test(`Fragrant real MCP late/closed/stale submission ${boundary.stage}/D${boundary.day}/P${boundary.actor}/${locale}`, async () => {
+      const game = fragrantRuntimeGame(locale);
+      const manual = { getAction: fragrantRuntimeAction };
       const registry = new AcpTurnRegistry(game.world),
         control = new WerewolfMcpControlServer(registry);
-      const client = new Client({ name: "retained-mist-client", version: "1" });
+      const client = new Client({ name: "retained-fragrant-client", version: "1" });
       let transport: StdioClientTransport | undefined;
       let pid: number | undefined;
       let captured!: (request: ActionRequest) => void, release!: () => void;
@@ -45,49 +68,20 @@ for (const stage of ["alchemist_mist", "alchemist_snake", "raven_knife"] as cons
         pid = transport.pid ?? undefined;
         expect(Number.isSafeInteger(pid) && pid! > 0).toBe(true);
         cycle = (async () => {
-          for (let day = 1; day <= 2; day++)
+          for (let day = 1; day <= boundary.day; day++)
             await game.phaseManager.runSingleCycle(
               {
                 async getAction(request) {
-                  if (request.context.stage === stage) {
+                  if (
+                    request.context.stage === boundary.stage &&
+                    request.context.day === boundary.day &&
+                    request.actorId === boundary.actor
+                  ) {
                     captured(request);
                     await released;
                     throw stop;
                   }
-                  const tool = request.allowedTools[0];
-                  switch (tool) {
-                    case "cast_mist":
-                      return { name: tool, args: { target_ids: null } };
-                    case "dream":
-                      return { name: tool, args: { target_id: request.context.day === 1 ? 8 : 5 } };
-                    case "speak_to_wolves":
-                      return { name: tool, args: { text: "Done", end_chat: true } };
-                    case "kill_vote":
-                      return {
-                        name: tool,
-                        args: { target_id: request.context.day === 1 ? 11 : 3, abstain: false },
-                      };
-                    case "check_identity":
-                      return { name: tool, args: { target_id: 9 } };
-                    case "run_for_sheriff":
-                      return { name: tool, args: { run: false } };
-                    case "speak":
-                      return { name: tool, args: { text: "Words" } };
-                    case "use_snake":
-                      return { name: tool, args: { target_id: null } };
-                    case "vote":
-                      return {
-                        name: tool,
-                        args: {
-                          target_id: request.actorId === 12 ? null : 12,
-                          abstain: request.actorId === 12,
-                        },
-                      };
-                    case "self_destruct":
-                      return null;
-                    default:
-                      throw new Error("fixture_unplanned_held_stage:" + request.context.stage);
-                  }
+                  return manual.getAction(request);
                 },
               },
               8,
@@ -104,16 +98,13 @@ for (const stage of ["alchemist_mist", "alchemist_snake", "raven_knife"] as cons
         const role = game.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role)!;
         const state = structuredClone(role.privateState),
           events = structuredClone(game.phaseManager.getEvents());
-        const action: ToolCall =
-          stage === "alchemist_mist"
-            ? { name: "cast_mist", args: { target_ids: [5, 6, 7] } }
-            : stage === "alchemist_snake"
-              ? { name: "use_snake", args: { target_id: null } }
-              : { name: "raven_knife", args: { target_id: 5 } };
-        const pending = registry.openTurn(
-          { ...request, deadlineAtMs: Date.now() + 1000 },
-          "retained",
-        );
+        const action: ToolCall = boundary.action;
+        const prior = registry.openTurn(request, "retained");
+        registry.closeTurn("retained");
+        expect(await prior.action).toBeNull();
+        const tight = { ...request, deadlineAtMs: Date.now() + 1000 };
+        inheritFragrantPairDeadlineRequest(request, tight);
+        const pending = registry.openTurn(tight, "retained");
         const submit = async (turnId: string) => {
           const result = await client.callTool({
             name: "submit_action",
@@ -122,6 +113,7 @@ for (const stage of ["alchemist_mist", "alchemist_snake", "raven_knife"] as cons
           if (locale === "en") expect(JSON.stringify(result)).not.toMatch(/\p{Script=Han}/u);
           return fixtureObject(result.structuredContent);
         };
+        expect(await submit(prior.turnId)).toMatchObject({ ok: false, error: "turn_id_mismatch" });
         expect(registry.snapshot.pending).toBe(1);
         await new Promise((resolve) => setTimeout(resolve, 2200));
         expect(await submit(pending.turnId)).toMatchObject({
@@ -136,39 +128,14 @@ for (const stage of ["alchemist_mist", "alchemist_snake", "raven_knife"] as cons
           ok: false,
           error: "turn_not_open_or_session_invalid",
         });
-        const next = registry.openTurn(
-          { ...request, deadlineAtMs: Date.now() + 10000 },
-          "retained",
-        );
-        expect(await submit(pending.turnId)).toMatchObject({
-          ok: false,
-          error: "turn_id_mismatch",
-        });
-        expect(registry.snapshot.pending).toBe(1);
-        expect(await submit(next.turnId)).toMatchObject({ ok: true, accepted: true });
-        expect(await next.action).toEqual(action);
-        expect(role.privateState).toEqual(state); // Reception never performs engine effects.
-        expect(game.phaseManager.getEvents()).toEqual(events);
-        const locallyClosed = registry.openTurn(
-          { ...request, deadlineAtMs: Date.now() + 10000 },
-          "retained",
-        );
+        const locallyClosed = registry.openTurn(tight, "retained");
         registry.closeTurn("retained");
         expect(await locallyClosed.action).toBeNull();
         expect(await submit(locallyClosed.turnId)).toMatchObject({
           ok: false,
           error: "turn_not_open_or_session_invalid",
         });
-        const globallyClosed = registry.openTurn(
-          { ...request, deadlineAtMs: Date.now() + 10000 },
-          "retained",
-        );
         registry.close();
-        expect(await globallyClosed.action).toBeNull();
-        expect(await submit(globallyClosed.turnId)).toMatchObject({
-          ok: false,
-          error: "turn_not_open_or_session_invalid",
-        });
         expect(registry.snapshot).toEqual({ closed: true, pending: 0 });
       } finally {
         registry.close();

@@ -1,25 +1,26 @@
 /**
- * Real process/loopback integration verify ACP process-group and MCP listener ownership across players.
- * Input: Local executable fixture agents, shared remote session IDs, deadlines and injected controls.
- * Output and independent oracle: Native PID liveness, unreachable former endpoints and empty pool/registry state after owned cleanup.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Integration tests: Exercises actual ACP fixture processes and injected MCP listeners.
+ * Original identities, timeout/process-group termination and listener-reachability
+ * assertions check duplicate remote IDs and non-cooperative cleanup. Existing literal
+ * expectations and independently supplied fixture plans remain the oracle;
+ * transport/recording setup is local and no billed model session is started.
  */
-import { acpAdapterEntry } from "../../support/fixtures/manifest";
+import { acpAdapterEntry } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile } from "node:fs/promises";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { AcpProcessClient } from "../../../src/ai/integrations/acp/acp_process_client";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import { WerewolfMcpControlServer } from "../../../src/ai/integrations/acp/werewolf_mcp_control";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { AcpProcessClient } from "../../../../src/ai/integrations/acp/acp_process_client";
+import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
+import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
 import type {
   AcpMcpBridgeFactory,
   AcpMcpServerConfig,
-} from "../../../src/ai/integrations/acp/acp_mcp_bridge";
-import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
-import { Phase, type ActionRequest } from "../../../src/core";
-import { createTestTempDirectory } from "../../support/drivers/temp-directories";
+} from "../../../../src/ai/integrations/acp/acp_mcp_bridge";
+import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
+import { Phase, type ActionRequest } from "../../../../src/core";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 const fixture = acpAdapterEntry("ownership");
 function request(actorId: number): ActionRequest {
@@ -177,7 +178,7 @@ test("graceful close of a non-cooperative ACP prompt escalates to process-group 
 });
 
 test("separate ACP providers progress independently under their own limits", async () => {
-  const { createPlayerAgentRuntime } = await import("../../../src/runtime/player_agent_factory");
+  const { createPlayerAgentRuntime } = await import("../../../../src/runtime/player_agent_factory");
   const root = await createTestTempDirectory("awa-acp-independent-"),
     game = bootstrapGame(sixPlayerMvpConfig, { locale: "en" });
   let ready!: () => void;

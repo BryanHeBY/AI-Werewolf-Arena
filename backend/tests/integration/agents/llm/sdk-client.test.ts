@@ -1,5 +1,12 @@
+/**
+ * Integration tests: Exercises the installed AI SDK against a test-owned localhost HTTP
+ * server. Literal request/response and tool-callback expectations check provider options,
+ * accepted actions and safe failure categories; no external model is contacted. Existing
+ * literal expectations and independently supplied fixture plans remain the oracle;
+ * transport/recording setup is local and no billed model session is started.
+ */
 import { describe, expect, test } from "bun:test";
-import { AiSdkClient } from "../../../src/ai/integrations/llm/ai_sdk_client";
+import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
 
 describe("AiSdkClient with the installed AI SDK", () => {
   test("sends chat messages through an OpenAI-compatible provider", async () => {

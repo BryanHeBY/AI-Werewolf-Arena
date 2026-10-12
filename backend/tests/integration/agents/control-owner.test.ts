@@ -1,8 +1,9 @@
 /**
- * Local network oracle integration verify former control-owner closure and same-port replacement detection.
- * Input: Bound/unbound listeners, explicit synthetic owner tokens and malformed local responses.
- * Output and independent oracle: Connection refusal or different-owner rejection, exact fail-closed diagnostics and bounded socket cleanup.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Integration tests: Exercises real localhost control-owner probes, same-port replacements
+ * and response failures. Connection/refusal and owner-token expectations check closure
+ * independently of a resource owners self-reported state. Existing literal expectations
+ * and independently supplied fixture plans remain the oracle; transport/recording setup is
+ * local and no billed model session is started.
  */
 import { expect, test } from "bun:test";
 import { createServer, type Server } from "node:http";

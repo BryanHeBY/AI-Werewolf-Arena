@@ -1,18 +1,19 @@
 /**
- * Local transport integration verify the injected current-turn MCP sidecar boundary.
- * Input: A real loopback control listener, stdio MCP client and bound speak request.
- * Output and independent oracle: Exact exposed tool names, read-only acceptance receipts and the selected action; clients/listener close in finally.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Integration tests: Exercises the actual game MCP control listener and stdio sidecar from
+ * an in-memory turn. Literal tool/schema/receipt expectations check session binding and
+ * current-turn submission; the process owns only the injected game capability. Existing
+ * literal expectations and independently supplied fixture plans remain the oracle;
+ * transport/recording setup is local and no billed model session is started.
  */
 import { describe, expect, test } from "bun:test";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import * as path from "node:path";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
-import { WerewolfMcpControlServer } from "../../../src/ai/integrations/acp/werewolf_mcp_control";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { speakRequest } from "../../support/builders/agents/acp-requests";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
+import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { speakRequest } from "../../../support/builders/agents/acp-requests";
 
 describe("WerewolfMcpControlServer", () => {
   test("exposes only the current turn through the injected MCP sidecar capability", async () => {

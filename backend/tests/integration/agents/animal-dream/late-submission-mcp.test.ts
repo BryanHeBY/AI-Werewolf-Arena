@@ -1,3 +1,10 @@
+/**
+ * Integration tests: Exercises actual MCP submissions while controlled Animal game
+ * prefixes hold a role turn. Literal late/closed/stale receipts and original stock/state
+ * assertions check that retained wire capability cannot commit again. Existing literal
+ * expectations and independently supplied fixture plans remain the oracle;
+ * transport/recording setup is local and no billed model session is started.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
@@ -7,39 +14,38 @@ import {
   type ActionRequest,
   type RoleComponent,
   type ToolCall,
-} from "../../../src/core";
-import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
-import { WerewolfMcpControlServer } from "../../../src/ai/integrations/acp/werewolf_mcp_control";
-import {
-  fragrantRuntimeGame,
-  fragrantRuntimeAction,
-} from "../../support/fragrant_pair_seer_scenarios";
-import { inheritFragrantPairDeadlineRequest } from "../../../src/game/mechanisms/roles/fragrant_pair_seer/requests";
-import { fixtureObject } from "../../support/fixture_values";
+} from "../../../../src/core";
+import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
+import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
+import { animalGame, animalAction } from "../../../support/animal_dream_scenarios";
+import { inheritAnimalDeadlineRequest } from "../../../../src/game/mechanisms/roles/animal_dream/requests";
+import { fixtureObject } from "../../../support/fixture_values";
 
 // The retained client/control belong to this adversarial test, not a provider session.
 // Real runner tests separately prove provider-owned transport/process reclamation.
 for (const boundary of [
   {
-    stage: "fragrant_bind",
-    day: 1,
-    actor: 1,
-    action: { name: "bind_fragrant_pair", args: { target_ids: [5, 6] } },
+    stage: "fox_distract",
+    day: 2,
+    actor: 10,
+    plan: "fox_beauty",
+    action: { name: "fox_distract", args: { target_id: 1 } },
   },
   {
-    stage: "pair_inspection",
+    stage: "puffer_reaction",
     day: 1,
-    actor: 9,
-    action: { name: "check_pair", args: { target_ids: [9, 2] } },
+    actor: 12,
+    plan: "full_retaliation",
+    action: { name: "puffer_retaliate", args: { activate: true } },
   },
 ] as const)
   for (const locale of ["en", "zh-CN"] as const)
-    test(`Fragrant real MCP late/closed/stale submission ${boundary.stage}/D${boundary.day}/P${boundary.actor}/${locale}`, async () => {
-      const game = fragrantRuntimeGame(locale);
-      const manual = { getAction: fragrantRuntimeAction };
+    test(`Animal real MCP late/closed/stale submission ${boundary.stage}/D${boundary.day}/P${boundary.actor}/${locale}`, async () => {
+      const game = animalGame(locale);
+      const manual = { getAction: (r: ActionRequest) => animalAction(r, boundary.plan) };
       const registry = new AcpTurnRegistry(game.world),
         control = new WerewolfMcpControlServer(registry);
-      const client = new Client({ name: "retained-fragrant-client", version: "1" });
+      const client = new Client({ name: "retained-animal-client", version: "1" });
       let transport: StdioClientTransport | undefined;
       let pid: number | undefined;
       let captured!: (request: ActionRequest) => void, release!: () => void;
@@ -49,7 +55,7 @@ for (const boundary of [
       let cycle: Promise<void> | undefined;
       try {
         const config = await control.start(process.execPath, [
-          path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
+          path.resolve(import.meta.dir, "../../../../src/ai/integrations/acp/werewolf_mcp_server.ts"),
         ]);
         control.bindSession("retained");
         transport = new StdioClientTransport({
@@ -96,7 +102,7 @@ for (const boundary of [
         registry.closeTurn("retained");
         expect(await prior.action).toBeNull();
         const tight = { ...request, deadlineAtMs: Date.now() + 1000 };
-        inheritFragrantPairDeadlineRequest(request, tight);
+        inheritAnimalDeadlineRequest(request, tight);
         const pending = registry.openTurn(tight, "retained");
         const submit = async (turnId: string) => {
           const result = await client.callTool({

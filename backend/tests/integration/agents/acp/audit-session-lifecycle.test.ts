@@ -1,16 +1,17 @@
 /**
- * Audit lifecycle integration verify ACP audit session creation, cancellation and late reclamation.
- * Input: Injected audit session factories, pending prompts, controlled failures and temporary workspaces.
- * Output and independent oracle: Original error identity/order, forced-close counts and zero remaining executor resources.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Integration tests: Exercises actual audit workspaces with controlled ACP session
+ * creation, hung prompts and close failures. Original error identities, forced-close
+ * counts and executor snapshots check cancellation and late reclamation. Existing literal
+ * expectations and independently supplied fixture plans remain the oracle;
+ * transport/recording setup is local and no billed model session is started.
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
-import { AcpAuditAgentExecutor } from "../../../src/ai/audit/acp_audit_runner";
-import type { AuditToolContext } from "../../../src/ai/audit/audit_tool_protocol";
-import type { AcpSession } from "../../../src/ai/integrations/acp/session";
-import type { ResolvedAgentRuntimeProfile } from "../../../src/runtime/config/contracts";
-import { createTestTempDirectory } from "../../support/drivers/temp-directories";
+import { AcpAuditAgentExecutor } from "../../../../src/ai/audit/acp_audit_runner";
+import type { AuditToolContext } from "../../../../src/ai/audit/audit_tool_protocol";
+import type { AcpSession } from "../../../../src/ai/integrations/acp/session";
+import type { ResolvedAgentRuntimeProfile } from "../../../../src/runtime/config/contracts";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 const profile: ResolvedAgentRuntimeProfile = {
   name: "synthetic",

@@ -1,28 +1,29 @@
 /**
- * Agent runtime/recording integration verify separate native and gifted gun stock across both transports.
- * Input: Bound native/gifted requests, synthetic SDK/ACP agents and temporary session records.
- * Output and independent oracle: Literal per-source inventory, prompt boundaries, accepted action records and native child/MCP cleanup evidence.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Integration tests: Exercises actual runtime transports, separate native/gift gun stocks,
+ * recording and MCP cleanup. Literal instance, prompt, file and original-identity
+ * assertions check that a granted gun cannot borrow another stock. Existing literal
+ * expectations and independently supplied fixture plans remain the oracle;
+ * transport/recording setup is local and no billed model session is started.
  */
-import { acpAdapterEntry } from "../../support/fixtures/manifest";
+import { acpAdapterEntry } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, DeathCause, Phase, Role, type GameEvent } from "../../../src/core";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { createPlayerAgentRuntime } from "../../../src/runtime/player_agent_factory";
-import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
-import { resolveAgentProfileByName } from "../../../src/runtime/config/resolve_game_setup";
-import { grantDeathGun, armDeathGun } from "../../../src/game/mechanisms/roles/death_abilities";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { createTestTempDirectory } from "../../support/drivers/temp-directories";
-import type { ActorTransportPlan, PlannedTurn } from "../../support/foundation_transport_plan";
-import { assertTransportPrompt } from "../../support/transport_prompt_oracle";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { COMPONENT, DeathCause, Phase, Role, type GameEvent } from "../../../../src/core";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { createPlayerAgentRuntime } from "../../../../src/runtime/player_agent_factory";
+import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
+import { resolveAgentProfileByName } from "../../../../src/runtime/config/resolve_game_setup";
+import { grantDeathGun, armDeathGun } from "../../../../src/game/mechanisms/roles/death_abilities";
+import { DeathResolution } from "../../../../src/game/engine/death_resolution";
+import { EventRegistry } from "../../../../src/game/engine/event_registry";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
+import type { ActorTransportPlan, PlannedTurn } from "../../../support/foundation_transport_plan";
+import { assertTransportPrompt } from "../../../support/transport_prompt_oracle";
 
 for (const locale of ["zh-CN", "en"] as const)
   for (const transport of ["llm", "acp"] as const)

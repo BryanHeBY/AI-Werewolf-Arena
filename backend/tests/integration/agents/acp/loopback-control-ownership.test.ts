@@ -1,5 +1,12 @@
+/**
+ * Integration tests: Exercises the real loopback MCP control listener across startup/close
+ * and owner rebinding. Literal terminal error and listening snapshots check permanent
+ * closure and the original single owner. Existing literal expectations and independently
+ * supplied fixture plans remain the oracle; transport/recording setup is local and no
+ * billed model session is started.
+ */
 import { expect, test } from "bun:test";
-import { LoopbackMcpControlServer } from "../../../src/ai/integrations/acp/loopback_mcp_control_server";
+import { LoopbackMcpControlServer } from "../../../../src/ai/integrations/acp/loopback_mcp_control_server";
 function control() {
   return new LoopbackMcpControlServer({
     serverName: "synthetic",

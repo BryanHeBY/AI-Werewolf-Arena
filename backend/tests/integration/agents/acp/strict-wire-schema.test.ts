@@ -1,23 +1,24 @@
 /**
- * Real stdio MCP integration verify canonical schemas and current-turn failure attribution.
- * Input: Local MCP clients, bound requests, synthetic ACP sessions and temporary player records.
- * Output and independent oracle: Exact schema/turn diagnostics and report attribution; cleanup verifies no surviving child/control resource.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Integration tests: Exercises actual production stdio MCP schema and turn error
+ * attribution. Literal bilingual fields and accepted/rejected receipts check canonical
+ * submission shape and current-turn failure ownership. Existing literal expectations and
+ * independently supplied fixture plans remain the oracle; transport/recording setup is
+ * local and no billed model session is started.
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "../../../src/core";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import { WerewolfMcpControlServer } from "../../../src/ai/integrations/acp/werewolf_mcp_control";
-import { gameToolProtocol } from "../../../src/ai/agents/game_tool_protocol";
-import { getGuardState } from "../../../src/game/mechanisms/roles/private_state";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { createTestTempDirectory } from "../../support/drivers/temp-directories";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "../../../../src/core";
+import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
+import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
+import { gameToolProtocol } from "../../../../src/ai/agents/game_tool_protocol";
+import { getGuardState } from "../../../../src/game/mechanisms/roles/private_state";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 const roles = [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager];
 const modes = [

@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v1",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "02b3fe39b20b27f0f114db4d242ab56e02b8543d",
+  "observedSourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -42520,11 +42520,2307 @@
       "targetRunner": "backend-unit",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/acp_control_server.test.ts",
+      "to": "backend/tests/integration/agents/acp/game-control-mcp.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "3dfc6cb9fbbbaa86e3f13dbacaeb2fb0cc82a7ab512c600dd14669cdfa4a7472",
+      "candidateSha256": "8b55675b692bbb7977308810047375f8ca01c2f0a781909a2805809b3e2d00cf",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1004,
+          "end": 1046,
+          "value": "../../../support/builders/agents/acp-requests",
+          "kind": "module-specifier",
+          "original": "../../support/builders/agents/acp-requests",
+          "originalResolved": "backend/tests/support/builders/agents/acp-requests.ts",
+          "expectedResolved": "backend/tests/support/builders/agents/acp-requests.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 926,
+          "end": 971,
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 834,
+          "end": 887,
+          "value": "../../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "originalResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 739,
+          "end": 789,
+          "value": "../../../../src/ai/integrations/acp/acp_turn_registry",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "originalResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 677,
+          "end": 703,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "56cca2444569cb5a722230b884aaa2bc557dbcdf1a86a990a2700f71afce1c67",
+          "title": "WerewolfMcpControlServer > exposes only the current turn through the injected MCP sidecar capability",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/acp_optional_turn.test.ts",
+      "to": "backend/tests/integration/agents/acp/optional-turn-recording.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "ab1826fe6b0befa5380ef5be076003286972e923680a7a78e0b9d17b89b4ad13",
+      "candidateSha256": "f626148de60ea9f20c036daee22bd0e71a71649e6e464a6a89b44470fb512437",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1062,
+          "end": 1100,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 978,
+          "end": 1018,
+          "value": "../../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 896,
+          "end": 935,
+          "value": "../../../../src/recording/session_recorder",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 838,
+          "end": 855,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 746,
+          "end": 792,
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/acp/acp_action_provider",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 663,
+          "end": 708,
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 598,
+          "end": 624,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 434,
+          "end": 451,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "c9df3f2b5eede974476ddf8693e7232194b6e98618619f5d7dee0c9f6cfd5a50",
+          "title": "successful ACP prompt with no tool submission honors an optional pass",
+          "occurrence": 1
+        },
+        {
+          "id": "0344fcb8987e57e662d83837bc0e6ea68f52dd78866b4e50ed610e385f449e59",
+          "title": "successful ACP prompt with no tool submission falls back for a required turn",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/llm_action_provider_audit.test.ts",
+      "to": "backend/tests/integration/agents/llm/bug-report-recording.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "299cf2e66c0b05fc89a642cf9737de3e60e3b1538882ebfbd9376fbbbe91eb64",
+      "candidateSha256": "7492b41479a335a954952139816315126e5d123eb185120f32c59d51271fc451",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1337,
+          "end": 1371,
+          "value": "../../../support/llm_provider_clients",
+          "kind": "module-specifier",
+          "original": "../../support/llm_provider_clients",
+          "originalResolved": "backend/tests/support/llm_provider_clients.ts",
+          "expectedResolved": "backend/tests/support/llm_provider_clients.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1153,
+          "end": 1191,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1008,
+          "end": 1047,
+          "value": "../../../../src/recording/session_recorder",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 927,
+          "end": 967,
+          "value": "../../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 838,
+          "end": 884,
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 755,
+          "end": 800,
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 686,
+          "end": 716,
+          "value": "../../../../src/core/domain/model",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 620,
+          "end": 660,
+          "value": "../../../../src/core/domain/components/role",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 545,
+          "end": 586,
+          "value": "../../../../src/core/domain/components/names",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 489,
+          "end": 515,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "264507f7bf86216c22fb12de16a0889afcbedf8cb795a689e41cb458ec172d6a",
+          "title": "LlmActionProvider audit > should accept report_bug as optional tool and continue to final action",
+          "occurrence": 1
+        },
+        {
+          "id": "e5d43e8ca24ab303a8641b63be07fd6adf071d75b0a1e81d8c72b490ff42ef17",
+          "title": "LlmActionProvider audit > should rate-limit duplicated report_bug in same stage",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/audit/acp_audit_ownership.test.ts",
+      "to": "backend/tests/integration/agents/acp/audit-session-lifecycle.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "382149f84b99bdd36ca693b4e19acd1e39c5ee8eb3258df8a3d6a16b32285e2e",
+      "candidateSha256": "b11bcaaa521b072a2fa948364f098ab544cffdcb0cacc6604e059b216458fd64",
+      "moduleAndLocationEdits": [
+        {
+          "start": 861,
+          "end": 899,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 780,
+          "end": 817,
+          "value": "../../../../src/runtime/config/contracts",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/config/contracts",
+          "originalResolved": "backend/src/runtime/config/contracts.ts",
+          "expectedResolved": "backend/src/runtime/config/contracts.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 687,
+          "end": 727,
+          "value": "../../../../src/ai/integrations/acp/session",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/session",
+          "originalResolved": "backend/src/ai/integrations/acp/session.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/session.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 610,
+          "end": 651,
+          "value": "../../../../src/ai/audit/audit_tool_protocol",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/audit/audit_tool_protocol",
+          "originalResolved": "backend/src/ai/audit/audit_tool_protocol.ts",
+          "expectedResolved": "backend/src/ai/audit/audit_tool_protocol.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 530,
+          "end": 568,
+          "value": "../../../../src/ai/audit/acp_audit_runner",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/audit/acp_audit_runner",
+          "originalResolved": "backend/src/ai/audit/acp_audit_runner.ts",
+          "expectedResolved": "backend/src/ai/audit/acp_audit_runner.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "270aa78e8523387587268d9b0e152df7483fa045218bf20c33606a35bd399769",
+          "title": "audit prompt and cleanup errors retain both original identities",
+          "occurrence": 1
+        },
+        {
+          "id": "1a8ff260f292a809fa06668c96511e78bcaf237c07f63dcf12f107d80e849aa8",
+          "title": "audit owns late session reclamation failure after its caller has timed out",
+          "occurrence": 1
+        },
+        {
+          "id": "2fd0c88708f9fff8c1ab754976d797c5399a1ceb50a50c45369382fbd0eb02d9",
+          "title": "audit close cancels an open prompt and waits for session retirement",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/acp_resource_ownership.test.ts",
+      "to": "backend/tests/integration/agents/acp/process-session-ownership.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "13218eb4aa44d5a07e3b2e06f4a05160085ec3d592b5d7cb4098790e2b09b11f",
+      "candidateSha256": "8a0ec561ea64c9b423589605a3843c5af910a2555063c406c240365b513ee152",
+      "moduleAndLocationEdits": [
+        {
+          "start": 7137,
+          "end": 7178,
+          "value": "../../../../src/runtime/player_agent_factory",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/player_agent_factory",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1335,
+          "end": 1373,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1274,
+          "end": 1291,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1178,
+          "end": 1228,
+          "value": "../../../../src/ai/integrations/acp/acp_turn_registry",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "originalResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1095,
+          "end": 1142,
+          "value": "../../../../src/ai/integrations/acp/acp_mcp_bridge",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/acp_mcp_bridge",
+          "originalResolved": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 972,
+          "end": 1025,
+          "value": "../../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "originalResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 881,
+          "end": 927,
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/acp/acp_action_provider",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 792,
+          "end": 843,
+          "value": "../../../../src/ai/integrations/acp/acp_process_client",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/acp_process_client",
+          "originalResolved": "backend/src/ai/integrations/acp/acp_process_client.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/acp_process_client.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 710,
+          "end": 755,
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 645,
+          "end": 671,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 464,
+          "end": 495,
+          "value": "../../../support/fixtures/manifest",
+          "kind": "module-specifier",
+          "original": "../../support/fixtures/manifest",
+          "originalResolved": "backend/tests/support/fixtures/manifest.ts",
+          "expectedResolved": "backend/tests/support/fixtures/manifest.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "56229a927b01aeb6e0ece88d3b3af85b9ad3fbe72e865779e1ec9d8117c29b06",
+          "title": "zh-CN: identical remote ACP session IDs do not collide across players; actual agents and MCPs are reclaimed",
+          "occurrence": 1
+        },
+        {
+          "id": "8c81034fb925c18f637aadbf562cebe57d80cbfe1266ac415f042ab763d97243",
+          "title": "en: identical remote ACP session IDs do not collide across players; actual agents and MCPs are reclaimed",
+          "occurrence": 1
+        },
+        {
+          "id": "d5f9ebf7e9f2ea14de8c636b1f26d4f0d25373daf9dc09bfab26558104127470",
+          "title": "initialization timeout kills the real process group and closes its already allocated MCP listener",
+          "occurrence": 1
+        },
+        {
+          "id": "5b11403ba97f705089c749b9a6d3a9ab9a83746a2dbec81d599e3f6f39c9ce52",
+          "title": "graceful close of a non-cooperative ACP prompt escalates to process-group kill and releases injected MCP",
+          "occurrence": 1
+        },
+        {
+          "id": "6e08005355e0645286d3258f8ea2da158332128398fe9654a3e56b79a2e8cef7",
+          "title": "separate ACP providers progress independently under their own limits",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/ai_sdk_client.test.ts",
+      "to": "backend/tests/integration/agents/llm/sdk-client.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "cca96ec3cae3def81d8f073b829f184b5c2d3efc792c7880e92bccebe895fd3e",
+      "candidateSha256": "772e2704dbef4ebcc30030dcaf29fcf58c0936a168416387d98e3dbd58651eca",
+      "moduleAndLocationEdits": [
+        {
+          "start": 80,
+          "end": 126,
+          "value": "../../../../src/ai/integrations/llm/ai_sdk_client",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+          "expectedResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "36c6f5b18858d77168e51cd8c4893d17654f3bf434fe1e77fb2ec0b28bd500e9",
+          "title": "AiSdkClient with the installed AI SDK > sends chat messages through an OpenAI-compatible provider",
+          "occurrence": 1
+        },
+        {
+          "id": "1dacbaba43367865774cbe37d75f5866f680de5f87b5df5a167871aa285f0748",
+          "title": "AiSdkClient with the installed AI SDK > uses native Anthropic thinking options when requested",
+          "occurrence": 1
+        },
+        {
+          "id": "bffa69de61358e05964603e2e88eea0890f27f6a8b941740e8814f52d7c4fde0",
+          "title": "AiSdkClient with the installed AI SDK > executes a model tool call and stops after the domain accepts it",
+          "occurrence": 1
+        },
+        {
+          "id": "9e71e8df9e392d2a5a1a449f236167e4c55087cd9d2947f0d4ceec8762b55278",
+          "title": "AiSdkClient with the installed AI SDK > does not retry a rejected request that the SDK marks non-retryable",
+          "occurrence": 1
+        },
+        {
+          "id": "95a306b20b73124a2cded4a5572b4e1fdd48a451bafc1baf4ccf465a39788121",
+          "title": "AiSdkClient with the installed AI SDK > returns a required-tool non-action to the game retry policy",
+          "occurrence": 1
+        },
+        {
+          "id": "253ec78db9452f93fef418200127ba0f7a35f9eee77222f2ec3d932efed923d3",
+          "title": "historical tool messages use a neutral machine tag without changing original contents",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/animal_dream_late_mcp.test.ts",
+      "to": "backend/tests/integration/agents/animal-dream/late-submission-mcp.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "14a9f13a73452c9550563046a67329fa3e3aa15b8c6bf258f1a2ea843155bbce",
+      "candidateSha256": "51d786ed4acbd4f9dc6eb441aa8470208b39b3c7d500e9a6556efa9cae5d9df9",
+      "moduleAndLocationEdits": [
+        {
+          "start": 2347,
+          "end": 2402,
+          "value": "../../../../src/ai/integrations/acp/werewolf_mcp_server.ts",
+          "kind": "location-directory-prefix",
+          "original": "../../../src/ai/integrations/acp/werewolf_mcp_server.ts",
+          "originalResolved": "backend/src/ai/integrations/acp/werewolf_mcp_server.ts"
+        },
+        {
+          "start": 733,
+          "end": 761,
+          "value": "../../../support/fixture_values",
+          "kind": "module-specifier",
+          "original": "../../support/fixture_values",
+          "originalResolved": "backend/tests/support/fixture_values.ts",
+          "expectedResolved": "backend/tests/support/fixture_values.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 643,
+          "end": 699,
+          "value": "../../../../src/game/mechanisms/roles/animal_dream/requests",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/animal_dream/requests",
+          "originalResolved": "backend/src/game/mechanisms/roles/animal_dream/requests.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/animal_dream/requests.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 558,
+          "end": 594,
+          "value": "../../../support/animal_dream_scenarios",
+          "kind": "module-specifier",
+          "original": "../../support/animal_dream_scenarios",
+          "originalResolved": "backend/tests/support/animal_dream_scenarios.ts",
+          "expectedResolved": "backend/tests/support/animal_dream_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 460,
+          "end": 513,
+          "value": "../../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "originalResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 365,
+          "end": 415,
+          "value": "../../../../src/ai/integrations/acp/acp_turn_registry",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "originalResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 312,
+          "end": 329,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [
+        {
+          "originalArray": "[\n          path.resolve(import.meta.dir, \"../../../src/ai/integrations/acp/werewolf_mcp_server.ts\"),\n        ]",
+          "line": 50,
+          "exactPathEdits": [
+            {
+              "start": 2347,
+              "end": 2402,
+              "value": "../../../../src/ai/integrations/acp/werewolf_mcp_server.ts",
+              "kind": "location-directory-prefix",
+              "original": "../../../src/ai/integrations/acp/werewolf_mcp_server.ts",
+              "originalResolved": "backend/src/ai/integrations/acp/werewolf_mcp_server.ts"
+            }
+          ]
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "37551df1e32d057d349ecabddf21a21ca999e57df0ffbddac5bf1a2251b04d2a",
+          "title": "Animal real MCP late/closed/stale submission fox_distract/D2/P10/en",
+          "occurrence": 1
+        },
+        {
+          "id": "d42fecf75a67c2df158caa7ddfdec9e3eaf1b9eee5d61b9329caa4aa141cc6b8",
+          "title": "Animal real MCP late/closed/stale submission fox_distract/D2/P10/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "f4b5c1c6bc00b1e79f265fd768c9756bb372e9ade6c580ecfcd37b6754070d59",
+          "title": "Animal real MCP late/closed/stale submission puffer_reaction/D1/P12/en",
+          "occurrence": 1
+        },
+        {
+          "id": "f38b1aff94f9e9a6caf46fdc84e1cc5c9fab9c9a559fa627b85dcd269230d9a9",
+          "title": "Animal real MCP late/closed/stale submission puffer_reaction/D1/P12/zh-CN",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/control_owner_probe.test.ts",
+      "to": "backend/tests/integration/agents/control-owner.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "6ceedef2856f364e9c77c59eee29bbd0967355bf28e3e1ee5a3213fac0d7c23e",
+      "candidateSha256": "f1d113d93d6b27b921ac60a08e4cf7f0aa876e6914816ea2088bbfc3568ce98a",
+      "moduleAndLocationEdits": [
+        {
+          "start": 724,
+          "end": 759,
+          "value": "../../support/oracles/control-owner",
+          "kind": "module-specifier",
+          "original": "../../support/oracles/control-owner",
+          "originalResolved": "backend/tests/support/oracles/control-owner.ts",
+          "expectedResolved": "backend/tests/support/oracles/control-owner.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 619,
+          "end": 679,
+          "value": "../../../src/ai/integrations/acp/loopback_mcp_control_server",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/loopback_mcp_control_server",
+          "originalResolved": "backend/src/ai/integrations/acp/loopback_mcp_control_server.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/loopback_mcp_control_server.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "03c2ed43326e3c9f71216a26cc3cf37e8ad6dd291aa997860f3d04b2c4dbb04f",
+          "title": "owner probe rejects both an unbound and bound original listener, then proves closure",
+          "occurrence": 1
+        },
+        {
+          "id": "3b3e839a0af82abe7d35eeabb9dfb74521b7a471c4d57adc0f80ea535bcf357a",
+          "title": "same-port replacement is distinguished from a still reachable original owner",
+          "occurrence": 1
+        },
+        {
+          "id": "fcf17885e434925213e2185c97c36295e32ac7d505f4d1f78fe1b4b6a90827a1",
+          "title": "owner probe fails closed for dispatch failure",
+          "occurrence": 1
+        },
+        {
+          "id": "fc4ab1af7b95595da5dd9ed878238d8677b4e080915a6bb10d97f40c0fb95caf",
+          "title": "owner probe fails closed for cleared session",
+          "occurrence": 1
+        },
+        {
+          "id": "8a05282ecf87102f514eed3793c8317839217717e2cf36e689443f98058f460d",
+          "title": "owner probe fails closed for wrong route",
+          "occurrence": 1
+        },
+        {
+          "id": "13028cd57c0244f414d58611602234cd2c8d0b7aeb388478a7622ab9ab26b73a",
+          "title": "owner probe fails closed for redirect",
+          "occurrence": 1
+        },
+        {
+          "id": "17f9a9d1574588329519bce3d52f9a6a731495d4ec854bd2df4c070201e93059",
+          "title": "owner probe fails closed for not JSON",
+          "occurrence": 1
+        },
+        {
+          "id": "e1fa07cb2fdd07fd74f565066ac830567d4bfcbc56d2e0cf54ab4c6ca08de5a3",
+          "title": "owner probe fails closed for wrong error",
+          "occurrence": 1
+        },
+        {
+          "id": "ad2575ce512d6efc0df58222773282d937cbce33b7746cef1e753d13b8d96f50",
+          "title": "owner probe fails closed for wrong success flag",
+          "occurrence": 1
+        },
+        {
+          "id": "98f2a85cd9f1b4746656b7c88c1dcc07f47082d4bc7947c5b5bbc8a5f50e0db7",
+          "title": "owner probe fails closed for oversized",
+          "occurrence": 1
+        },
+        {
+          "id": "5e8741e850d97f2740d2ec584f3036d0cc517988424f205c6d9370115944f1e3",
+          "title": "owner probe bounds and rejects hang, then releases its socket",
+          "occurrence": 1
+        },
+        {
+          "id": "b0492a584b994c9f049619fd46c186484e79ddd4a8017f3194b3e8720c1df513",
+          "title": "owner probe bounds and rejects reset, then releases its socket",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/dream_ability_transport.test.ts",
+      "to": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "d22cd432fa69a7b8b9132a437c31e503ccc7a10ca5d0223fb1eaff510d7417f1",
+      "candidateSha256": "815108d3d5987a88825808cf55738151b5fce1bc8c0f6cea55694fc568a803e3",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1222,
+          "end": 1261,
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "original": "../../support/foundation_transport_plan",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1140,
+          "end": 1178,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1059,
+          "end": 1096,
+          "value": "../../../../src/runtime/config/contracts",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/config/contracts",
+          "originalResolved": "backend/src/runtime/config/contracts.ts",
+          "expectedResolved": "backend/src/runtime/config/contracts.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 965,
+          "end": 1006,
+          "value": "../../../../src/runtime/player_agent_factory",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/player_agent_factory",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 870,
+          "end": 920,
+          "value": "../../../../src/game/mechanisms/roles/ability_changes",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/ability_changes",
+          "originalResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 787,
+          "end": 832,
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 731,
+          "end": 748,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 653,
+          "end": 679,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 461,
+          "end": 492,
+          "value": "../../../support/fixtures/manifest",
+          "kind": "module-specifier",
+          "original": "../../support/fixtures/manifest",
+          "originalResolved": "backend/tests/support/fixtures/manifest.ts",
+          "expectedResolved": "backend/tests/support/fixtures/manifest.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "95da047894c7a73db87129ecf2818a949edd2f20a2dc1abd133ad613011d1895",
+          "title": "zh-CN/llm: actual factory transport gives a gifted Villager full dream rules while retaining identity and read-only receipt",
+          "occurrence": 1
+        },
+        {
+          "id": "a0bd8ef8779762859d00f551a7a901b05ed7b5cc98c6d795396512a8717e4bcc",
+          "title": "zh-CN/acp: actual factory transport gives a gifted Villager full dream rules while retaining identity and read-only receipt",
+          "occurrence": 1
+        },
+        {
+          "id": "fa70264acb4eca622c63f15e3091ba149df73f44ce6d02c08825db87156bcd09",
+          "title": "en/llm: actual factory transport gives a gifted Villager full dream rules while retaining identity and read-only receipt",
+          "occurrence": 1
+        },
+        {
+          "id": "5799ebe81a06ff75173fea31c206ccbbd0c105e7997911443f506a2b4eacf85b",
+          "title": "en/acp: actual factory transport gives a gifted Villager full dream rules while retaining identity and read-only receipt",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/fragrant_pair_seer_late_mcp.test.ts",
+      "to": "backend/tests/integration/agents/fragrant-pair-seer/late-submission-mcp.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "d68657fb33a6a3e064fbbdca1242d0e79ffdb44b5e9a6b686b0c1483e9f2b46b",
+      "candidateSha256": "90b9aca4eec1305616c8e348ccef46ddeda9d4572a86a1bc5f6d2665701f149f",
+      "moduleAndLocationEdits": [
+        {
+          "start": 774,
+          "end": 802,
+          "value": "../../../support/fixture_values",
+          "kind": "module-specifier",
+          "original": "../../support/fixture_values",
+          "originalResolved": "backend/tests/support/fixture_values.ts",
+          "expectedResolved": "backend/tests/support/fixture_values.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 678,
+          "end": 740,
+          "value": "../../../../src/game/mechanisms/roles/fragrant_pair_seer/requests",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/fragrant_pair_seer/requests",
+          "originalResolved": "backend/src/game/mechanisms/roles/fragrant_pair_seer/requests.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/fragrant_pair_seer/requests.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 581,
+          "end": 623,
+          "value": "../../../support/fragrant_pair_seer_scenarios",
+          "kind": "module-specifier",
+          "original": "../../support/fragrant_pair_seer_scenarios",
+          "originalResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts",
+          "expectedResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 460,
+          "end": 513,
+          "value": "../../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "originalResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 365,
+          "end": 415,
+          "value": "../../../../src/ai/integrations/acp/acp_turn_registry",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "originalResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 312,
+          "end": 329,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "061e1084d21566742f5bfb7919dba72596eff2ca630377842faf070a8d4ee77a",
+          "title": "Fragrant real MCP late/closed/stale submission fragrant_bind/D1/P1/en",
+          "occurrence": 1
+        },
+        {
+          "id": "5e384c5ed180c94f5be63da9e82451613b94484ebd02a4a483cdca30321f1f41",
+          "title": "Fragrant real MCP late/closed/stale submission fragrant_bind/D1/P1/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "9d61ba1a4d2f18f1afbb81e7647aa2455ac1415157863450b23b530fd06bd0ab",
+          "title": "Fragrant real MCP late/closed/stale submission pair_inspection/D1/P9/en",
+          "occurrence": 1
+        },
+        {
+          "id": "e1b7c4a4c85cc2892e41fd0297c0ec6c251f5230d636a93df59ec52e264064ab",
+          "title": "Fragrant real MCP late/closed/stale submission pair_inspection/D1/P9/zh-CN",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/gargoyle_ability_transport.test.ts",
+      "to": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "8ccacbcf2438c3bca296896a63f2b8b1d4679d6c5b00897589dfccb952a09d07",
+      "candidateSha256": "90920b45804eb273678b13ab331ff06acde6ef9917f56d66ce1a30483365a485",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1230,
+          "end": 1269,
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "original": "../../support/foundation_transport_plan",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1148,
+          "end": 1186,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1067,
+          "end": 1104,
+          "value": "../../../../src/runtime/config/contracts",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/config/contracts",
+          "originalResolved": "backend/src/runtime/config/contracts.ts",
+          "expectedResolved": "backend/src/runtime/config/contracts.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 973,
+          "end": 1014,
+          "value": "../../../../src/runtime/player_agent_factory",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/player_agent_factory",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 878,
+          "end": 928,
+          "value": "../../../../src/game/mechanisms/roles/ability_changes",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/ability_changes",
+          "originalResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 795,
+          "end": 840,
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 739,
+          "end": 756,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 661,
+          "end": 687,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 469,
+          "end": 500,
+          "value": "../../../support/fixtures/manifest",
+          "kind": "module-specifier",
+          "original": "../../support/fixtures/manifest",
+          "originalResolved": "backend/tests/support/fixtures/manifest.ts",
+          "expectedResolved": "backend/tests/support/fixtures/manifest.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "8732f5ac76f715cc5f4acd636554495621fa3cefeab0d6b314412f1a9868308c",
+          "title": "zh-CN/llm: actual factory transport gives a gifted Villager full role inspection rules while retaining identity and read-only receipt",
+          "occurrence": 1
+        },
+        {
+          "id": "094ffe993310bc27f9e28b057c2556cc9de5714dd9f33e69d09b23fe0d6beb47",
+          "title": "zh-CN/acp: actual factory transport gives a gifted Villager full role inspection rules while retaining identity and read-only receipt",
+          "occurrence": 1
+        },
+        {
+          "id": "d132296366a342ba1b5b7679d4fc8a5ac190aa18f66e8e95ed1fd14007df7c9f",
+          "title": "en/llm: actual factory transport gives a gifted Villager full role inspection rules while retaining identity and read-only receipt",
+          "occurrence": 1
+        },
+        {
+          "id": "0842c1d5b1245b63a729005f6ad2a57d55aed12a5116945a6155ebaa493844bd",
+          "title": "en/acp: actual factory transport gives a gifted Villager full role inspection rules while retaining identity and read-only receipt",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/gift_gun_runtime.test.ts",
+      "to": "backend/tests/integration/agents/granted-abilities/gun-runtime.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "82ff3f07a736fa8a624fd922c8ebc63d105d4ff8472f0a55337973636e6c6e70",
+      "candidateSha256": "46ce3c89aa64c3357522617427e9460dc7d3c958dee42229149a5641b02b1448",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1817,
+          "end": 1854,
+          "value": "../../../support/transport_prompt_oracle",
+          "kind": "module-specifier",
+          "original": "../../support/transport_prompt_oracle",
+          "originalResolved": "backend/tests/support/transport_prompt_oracle.ts",
+          "expectedResolved": "backend/tests/support/transport_prompt_oracle.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1736,
+          "end": 1775,
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "original": "../../support/foundation_transport_plan",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1641,
+          "end": 1679,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1557,
+          "end": 1597,
+          "value": "../../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1475,
+          "end": 1514,
+          "value": "../../../../src/recording/session_recorder",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1396,
+          "end": 1434,
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "kind": "module-specifier",
+          "original": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1325,
+          "end": 1364,
+          "value": "../../../../src/game/engine/event_registry",
+          "kind": "module-specifier",
+          "original": "../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1250,
+          "end": 1291,
+          "value": "../../../../src/game/engine/death_resolution",
+          "kind": "module-specifier",
+          "original": "../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1164,
+          "end": 1214,
+          "value": "../../../../src/game/mechanisms/roles/death_abilities",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/death_abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/death_abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/death_abilities.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1071,
+          "end": 1117,
+          "value": "../../../../src/runtime/config/resolve_game_setup",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/config/resolve_game_setup",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 985,
+          "end": 1025,
+          "value": "../../../../src/runtime/config/parse_config",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/config/parse_config",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 905,
+          "end": 946,
+          "value": "../../../../src/runtime/player_agent_factory",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/player_agent_factory",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 815,
+          "end": 860,
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 759,
+          "end": 776,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 662,
+          "end": 688,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 470,
+          "end": 501,
+          "value": "../../../support/fixtures/manifest",
+          "kind": "module-specifier",
+          "original": "../../support/fixtures/manifest",
+          "originalResolved": "backend/tests/support/fixtures/manifest.ts",
+          "expectedResolved": "backend/tests/support/fixtures/manifest.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "cd21cea5f242fcd18d00ffdb83301fdfb4215430ad276756c4a4347693665877",
+          "title": "zh-CN/llm/double: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "6dcafd628457afded428ecbf80a21f5043680fefeb9649038e6869e736f5d81e",
+          "title": "zh-CN/llm/pass: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "b8d7f1780795d1271cd725d0627f9836527f6dfb61c60390b17421cdce336518",
+          "title": "zh-CN/llm/villager: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "e071d0127d16191e95a73bbcf0097abe2645d2f321ac7b481491ab6c98c41551",
+          "title": "zh-CN/llm/invalid: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "d64996af55adf47a3ed1197cf6f6926cdb76e60176e61254861c3ed4d62dd6c3",
+          "title": "zh-CN/acp/double: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "c5a1ff41a8a01687e29b3332babfd65b5698f3d844e94eb472acbceeb0ba21e1",
+          "title": "zh-CN/acp/pass: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "ba08c0063102d49d61c1de657c8616ced6050618f6b9c0ea84781fa9369fb1d1",
+          "title": "zh-CN/acp/villager: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "972684c23932851ea1d263c919fa4347c6d05e23fac1ee7d1fbc6d967dfb1535",
+          "title": "zh-CN/acp/invalid: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "b074faed03b12748a74ad9fef1c925aa87ec3fab33f7b7d0ea0755f2efcf9e88",
+          "title": "en/llm/double: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "b5ad2a5aaa940da34f08955a8749d1ebdf303d9c0d9367ecee35be227df0b0b3",
+          "title": "en/llm/pass: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "5aaf6c0d6e8b9f860fed4bfd83bf2f67dda45cf042e3a96c3865c1f241e3ec8d",
+          "title": "en/llm/villager: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "48c2b4be8ec68dea34cf40e79c68611e4c8643023bae50909202cc12f431aacc",
+          "title": "en/llm/invalid: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "e7bb8004fbbb64cd98e997d470ef967457fd65d8f4a5967adcb660d6c6907764",
+          "title": "en/acp/double: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "149a83bd0f60cf17f66a03a7ba23972782c0293d8465c41c1c092b0a9def30ab",
+          "title": "en/acp/pass: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "b8e236f4de4f62f1b5a9aa93c9ffe3abb230eb0900b10178407a1c99b5584618",
+          "title": "en/acp/villager: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "662c33d6e97c36562a989a211134c68f1d5fad9bf20f83c0f8538c64b190fd6f",
+          "title": "en/acp/invalid: actual runtime serializes separate native/gift stocks, bound prompts, records and MCP cleanup",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/granted_ability_transport.test.ts",
+      "to": "backend/tests/integration/agents/granted-abilities/inspection-transport.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "691fa2b2e7d409271cb04cc92512f10572bc5c5e298cff4af094ab58a3ced22e",
+      "candidateSha256": "725bebb247d1bfd3b2901b43414c8b3b7559bec4f838b3da497e07f15b9484e9",
+      "moduleAndLocationEdits": [
+        {
+          "start": 8995,
+          "end": 9048,
+          "value": "../../../../src/runtime/scenarios/twelve_player_standard",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 8807,
+          "end": 8855,
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1676,
+          "end": 1714,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1595,
+          "end": 1632,
+          "value": "../../../../src/runtime/config/contracts",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/config/contracts",
+          "originalResolved": "backend/src/runtime/config/contracts.ts",
+          "expectedResolved": "backend/src/runtime/config/contracts.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1501,
+          "end": 1542,
+          "value": "../../../../src/runtime/player_agent_factory",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/player_agent_factory",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1407,
+          "end": 1456,
+          "value": "../../../../src/ai/agents/providers/action_providers",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/action_providers",
+          "originalResolved": "backend/src/ai/agents/providers/action_providers.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/action_providers.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1304,
+          "end": 1361,
+          "value": "../../../../src/core/domain/systems/damage_resolution_system",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1223,
+          "end": 1261,
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "kind": "module-specifier",
+          "original": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1137,
+          "end": 1191,
+          "value": "../../../../src/game/engine/phase_pipeline/night_pipeline",
+          "kind": "module-specifier",
+          "original": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1059,
+          "end": 1103,
+          "value": "../../../../src/game/mechanisms/roles/abilities",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 971,
+          "end": 1021,
+          "value": "../../../../src/game/mechanisms/roles/ability_changes",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/ability_changes",
+          "originalResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 888,
+          "end": 933,
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 832,
+          "end": 849,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 728,
+          "end": 754,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 550,
+          "end": 567,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 488,
+          "end": 519,
+          "value": "../../../support/fixtures/manifest",
+          "kind": "module-specifier",
+          "original": "../../support/fixtures/manifest",
+          "originalResolved": "backend/tests/support/fixtures/manifest.ts",
+          "expectedResolved": "backend/tests/support/fixtures/manifest.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "bb9115349c62b9f0048ffb40183715373d4e1ffaa7ca26523d3daeaf16644b69",
+          "title": "zh-CN/llm: a Villager's granted inspection crosses the actual transport and is applied only to its bound instance",
+          "occurrence": 1
+        },
+        {
+          "id": "952d8e5d6bd3b99453f26faa82f1f601ea5382759c872888b81f09fe22b69725",
+          "title": "zh-CN/acp: a Villager's granted inspection crosses the actual transport and is applied only to its bound instance",
+          "occurrence": 1
+        },
+        {
+          "id": "246ac342648e3f5ae3d64368bd097b96cf06e19b41a7c5b0d3576d36dfffa2fe",
+          "title": "en/llm: a Villager's granted inspection crosses the actual transport and is applied only to its bound instance",
+          "occurrence": 1
+        },
+        {
+          "id": "f9782b78805f7ecb925bdf79601f6640c1ce31d5ef88a59265e6acd143e74ab2",
+          "title": "en/acp: a Villager's granted inspection crosses the actual transport and is applied only to its bound instance",
+          "occurrence": 1
+        },
+        {
+          "id": "379d065d62573cc2f0355885c2bee13e3149f114326c7a39f35112617035cf8c",
+          "title": "zh-CN/llm: the actual Witch agent receives an unknown current knife after its antidote is exhausted",
+          "occurrence": 1
+        },
+        {
+          "id": "af2058edd92dcdb154ab55aa13b2d06ab6fd9f71e49b23bdae54db5140f60b69",
+          "title": "zh-CN/acp: the actual Witch agent receives an unknown current knife after its antidote is exhausted",
+          "occurrence": 1
+        },
+        {
+          "id": "dee961b0b39d59b5cbe11791a38a770defdc2120d506c2462a77fd6aad36fc6c",
+          "title": "en/llm: the actual Witch agent receives an unknown current knife after its antidote is exhausted",
+          "occurrence": 1
+        },
+        {
+          "id": "75b3a804597d0b0d2b8cecf1638722c3ab76b1710900a21e34ca3371c5053a96",
+          "title": "en/acp: the actual Witch agent receives an unknown current knife after its antidote is exhausted",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/mcp_control_ownership.test.ts",
+      "to": "backend/tests/integration/agents/acp/loopback-control-ownership.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "8dc2671d9c085d371ec7c602a9ac1be7185ed02b5e02020144803df9116c4c93",
+      "candidateSha256": "17d4d670fdac9c322f80342b5af49cd19ca813d156e8295c31159cbd55dbcb42",
+      "moduleAndLocationEdits": [
+        {
+          "start": 83,
+          "end": 143,
+          "value": "../../../../src/ai/integrations/acp/loopback_mcp_control_server",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/loopback_mcp_control_server",
+          "originalResolved": "backend/src/ai/integrations/acp/loopback_mcp_control_server.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/loopback_mcp_control_server.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "7eeef73eaea69b9928f67492e71ae4a6ea42cf23acff68e19fcae43e210b5e99",
+          "title": "MCP close during listen startup releases the server and permanently prevents restart/binding",
+          "occurrence": 1
+        },
+        {
+          "id": "ff2711a2a663c864dfcac8f99318543e516c7839ef0f408d21dc84f776a96d7e",
+          "title": "one MCP control cannot be rebound to a different owner",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/mist_raven_late_mcp.test.ts",
+      "to": "backend/tests/integration/agents/mist-raven/late-submission-mcp.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "844a5da1116639746ee0bc8d3096d40968ef52a1f26c36f9b3fab5ccbd22c21c",
+      "candidateSha256": "b8e1281f594691bc90002ba6649b429f96ada4587894794e907f770d550aaf5d",
+      "moduleAndLocationEdits": [
+        {
+          "start": 683,
+          "end": 711,
+          "value": "../../../support/fixture_values",
+          "kind": "module-specifier",
+          "original": "../../support/fixture_values",
+          "originalResolved": "backend/tests/support/fixture_values.ts",
+          "expectedResolved": "backend/tests/support/fixture_values.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 615,
+          "end": 649,
+          "value": "../../../support/mist_raven_recording",
+          "kind": "module-specifier",
+          "original": "../../support/mist_raven_recording",
+          "originalResolved": "backend/tests/support/mist_raven_recording.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_recording.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 520,
+          "end": 573,
+          "value": "../../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "originalResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 425,
+          "end": 475,
+          "value": "../../../../src/ai/integrations/acp/acp_turn_registry",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "originalResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 372,
+          "end": 389,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 252,
+          "end": 278,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "06f6e9aff88b640eb7f3920177773ee0b36c880804c09d4128f55a3331824945",
+          "title": "Mist real MCP late/closed/stale submission alchemist_mist/en",
+          "occurrence": 1
+        },
+        {
+          "id": "429756a3ef918bea9094484aa178666f3b2911a186bf3d8406f4348fdb3d1804",
+          "title": "Mist real MCP late/closed/stale submission alchemist_mist/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "047b4ace5c43cce3cde0f4e884ba86ebe32ee9e33231e8e503fc7ab05a8102b0",
+          "title": "Mist real MCP late/closed/stale submission alchemist_snake/en",
+          "occurrence": 1
+        },
+        {
+          "id": "0d990dfded8562dc51f64469651120a4c3e1b6506ff3b76f624e89ad6ce53d09",
+          "title": "Mist real MCP late/closed/stale submission alchemist_snake/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "b266de6b9e6c639f70503317b9aff3780f9252ba41f8e0d92d5663a04cc89651",
+          "title": "Mist real MCP late/closed/stale submission raven_knife/en",
+          "occurrence": 1
+        },
+        {
+          "id": "41e712e6a3a48269d75b07380f5a45bebf09c35bee308be37e62bc19d3da679f",
+          "title": "Mist real MCP late/closed/stale submission raven_knife/zh-CN",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/psychic_ability_transport.test.ts",
+      "to": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "58b183ae1cf3e1d4a20f70ab35d4f6702310f208dd873b6e7e66d0b0237070d2",
+      "candidateSha256": "16cd91524b5cea61600e4137b833ccbbaa2810ec71c8a5e29a8473328c18b8cd",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1297,
+          "end": 1334,
+          "value": "../../../support/transport_prompt_oracle",
+          "kind": "module-specifier",
+          "original": "../../support/transport_prompt_oracle",
+          "originalResolved": "backend/tests/support/transport_prompt_oracle.ts",
+          "expectedResolved": "backend/tests/support/transport_prompt_oracle.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1216,
+          "end": 1255,
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "original": "../../support/foundation_transport_plan",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1134,
+          "end": 1172,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1053,
+          "end": 1090,
+          "value": "../../../../src/runtime/config/contracts",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/config/contracts",
+          "originalResolved": "backend/src/runtime/config/contracts.ts",
+          "expectedResolved": "backend/src/runtime/config/contracts.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 959,
+          "end": 1000,
+          "value": "../../../../src/runtime/player_agent_factory",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/player_agent_factory",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 864,
+          "end": 914,
+          "value": "../../../../src/game/mechanisms/roles/ability_changes",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/ability_changes",
+          "originalResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 781,
+          "end": 826,
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 725,
+          "end": 742,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 647,
+          "end": 673,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 455,
+          "end": 486,
+          "value": "../../../support/fixtures/manifest",
+          "kind": "module-specifier",
+          "original": "../../support/fixtures/manifest",
+          "originalResolved": "backend/tests/support/fixtures/manifest.ts",
+          "expectedResolved": "backend/tests/support/fixtures/manifest.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "aaa7eb988e796c3237ce31eda7ca96c1282f66074b853f033badc0813a214ce7",
+          "title": "zh-CN/llm: a real gifted Villager uses each bound inspection policy without identity or prompt contamination",
+          "occurrence": 1
+        },
+        {
+          "id": "f313ab28a9f094e2864314114d32d8186b5da251f2a99e639a5f465db62e80c7",
+          "title": "zh-CN/acp: a real gifted Villager uses each bound inspection policy without identity or prompt contamination",
+          "occurrence": 1
+        },
+        {
+          "id": "61cfe376f7c01bbeb3d92b29ab0ec72a9fdc83e98981e326f69e8c18fcbc9edd",
+          "title": "en/llm: a real gifted Villager uses each bound inspection policy without identity or prompt contamination",
+          "occurrence": 1
+        },
+        {
+          "id": "626951e5a00c37ca2992ec512cbf6af9a5f9b877c0aadeb0cc56a833603fc24d",
+          "title": "en/acp: a real gifted Villager uses each bound inspection policy without identity or prompt contamination",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/radiant_eclipse_late_mcp.test.ts",
+      "to": "backend/tests/integration/agents/radiant-eclipse/late-submission-mcp.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "c0653a49ac9222c566214a860d5aa9844870d61c7cda4894a2844309cf6c07e0",
+      "candidateSha256": "ca1131c94ae5d34f36b6f2157d699a180ca60d5ceeeed697894505115f20127d",
+      "moduleAndLocationEdits": [
+        {
+          "start": 721,
+          "end": 749,
+          "value": "../../../support/fixture_values",
+          "kind": "module-specifier",
+          "original": "../../support/fixture_values",
+          "originalResolved": "backend/tests/support/fixture_values.ts",
+          "expectedResolved": "backend/tests/support/fixture_values.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 648,
+          "end": 687,
+          "value": "../../../support/radiant_eclipse_recording",
+          "kind": "module-specifier",
+          "original": "../../support/radiant_eclipse_recording",
+          "originalResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 579,
+          "end": 608,
+          "value": "../../../support/radiant_eclipse",
+          "kind": "module-specifier",
+          "original": "../../support/radiant_eclipse",
+          "originalResolved": "backend/tests/support/radiant_eclipse.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 474,
+          "end": 527,
+          "value": "../../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "originalResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 379,
+          "end": 429,
+          "value": "../../../../src/ai/integrations/acp/acp_turn_registry",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "originalResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 326,
+          "end": 343,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "749da78ec44907bb4f3e162299774afcb4670f1dcd10e9fe10e5523510a4abb8",
+          "title": "Radiant real MCP late/closed/stale submission eclipse_swallow/D2/P1/en",
+          "occurrence": 1
+        },
+        {
+          "id": "3f1a3e7ab2530817c06ac1165e78f5a9e6ce098f98100bf6917862c1f4a89591",
+          "title": "Radiant real MCP late/closed/stale submission eclipse_swallow/D2/P1/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "6dda198d53f5eae63e52305efd691f63b52598aad9ea6cd4187fd6168cf6e780",
+          "title": "Radiant real MCP late/closed/stale submission radiant_shelter/D2/P2/en",
+          "occurrence": 1
+        },
+        {
+          "id": "692b7e99c2875f34c9482246ead48b052c9e20e6636b7a5739f2bc3da7d5415b",
+          "title": "Radiant real MCP late/closed/stale submission radiant_shelter/D2/P2/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "b503385f6d97ff7eec17cf66673485fe402e262ba26090d5c3bc62f31bed40cf",
+          "title": "Radiant real MCP late/closed/stale submission witch/D2/P1/en",
+          "occurrence": 1
+        },
+        {
+          "id": "bf35b9e16ae47b74e9ef966e663b66b78d9aa56699dcf17b7a870bb988068e79",
+          "title": "Radiant real MCP late/closed/stale submission witch/D2/P1/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "d70d8bcea12def37cd526f4e01da4e1330b22946a4ea61e86610597247f62d47",
+          "title": "Radiant real MCP late/closed/stale submission dreamer/D2/P1/en",
+          "occurrence": 1
+        },
+        {
+          "id": "22b9754f1396b3cee5fc4ff9eeef1660898b26f3eb6bb1bb08ccf86c160b5e54",
+          "title": "Radiant real MCP late/closed/stale submission dreamer/D2/P1/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "be562a9b26ac7e4fd0b9b7d1d4c1c2364902876236612a0e1681372af32aa966",
+          "title": "Radiant real MCP late/closed/stale submission radiant_shelter/D3/P1/en",
+          "occurrence": 1
+        },
+        {
+          "id": "839fae34b713758ce2a886a4be65928bc9300212f3ffab42b89f43b876232850",
+          "title": "Radiant real MCP late/closed/stale submission radiant_shelter/D3/P1/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "e634297dd1109c6d6fabd8bb08da6bca075267b7c33b46c4d6085df531ed5dd0",
+          "title": "Radiant real MCP late/closed/stale submission seer/D4/P1/en",
+          "occurrence": 1
+        },
+        {
+          "id": "66c9c28d084747ff221a89cb7bc094fb079e9f4bf3b47a091caa01f56c09186c",
+          "title": "Radiant real MCP late/closed/stale submission seer/D4/P1/zh-CN",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/strict_mcp_wire.test.ts",
+      "to": "backend/tests/integration/agents/acp/strict-wire-schema.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "66a77b3d0bbb494724ac4ea482cd5aa0ea710f87f757971e1ea22db94e5e8536",
+      "candidateSha256": "65e479b795c4dbe3d37064c3173831a1366e286bdf9c9dc01e3b8d701c665c66",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1432,
+          "end": 1470,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1348,
+          "end": 1388,
+          "value": "../../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1266,
+          "end": 1305,
+          "value": "../../../../src/recording/session_recorder",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1180,
+          "end": 1225,
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1093,
+          "end": 1141,
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1018,
+          "end": 1059,
+          "value": "../../../../src/ai/agents/game_tool_protocol",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/game_tool_protocol",
+          "originalResolved": "backend/src/ai/agents/game_tool_protocol.ts",
+          "expectedResolved": "backend/src/ai/agents/game_tool_protocol.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 928,
+          "end": 981,
+          "value": "../../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "originalResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 837,
+          "end": 883,
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/acp/acp_action_provider",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 782,
+          "end": 799,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 673,
+          "end": 699,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "30b1b04bc38bab8eb75d518251e4a8be54a9f3f3bbdfc8dfea3a6a4563327d86",
+          "title": "zh-CN/missing_arguments: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        },
+        {
+          "id": "fb45d849e1590ddf5e02a2832824af157083e9176e53103f5c010a799cfb65c1",
+          "title": "zh-CN/invalid_action_type: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        },
+        {
+          "id": "bcc39972892e8df0749437b573b66123ce07d9a159e6301411a1b664b9f21747",
+          "title": "zh-CN/reject3: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        },
+        {
+          "id": "7b14343949325490adcfda54cec80defba207aeb7152021b5d10c9c46a72a8af",
+          "title": "zh-CN/correct_after_two: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        },
+        {
+          "id": "0cf23baecfcc9bd645e7f8bea9ae0af56dcd3f3820a5af3144ffabdc05c34161",
+          "title": "zh-CN/stale_turn: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        },
+        {
+          "id": "4f1629181760da7c292024fee58b7e6f865893bcecb24856e6022ca19cef6b60",
+          "title": "zh-CN/helper_errors: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        },
+        {
+          "id": "a1cd741da3e8df0201cdedb394455b9c5a272058f07a4083d054988b584408ce",
+          "title": "zh-CN/helper_wait: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        },
+        {
+          "id": "f6f63fbc258331b5606c13cc210d68ebf77c7c1cc9bc86c412baf76966cb2034",
+          "title": "en/missing_arguments: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        },
+        {
+          "id": "56ad801d2b017cf5d29872d900772229de22feef9288608b58c6cf55fbf8c857",
+          "title": "en/invalid_action_type: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        },
+        {
+          "id": "20c0a15e52d344060a9086fd4b3dc1c074c183ec2540e81454f436c8232265de",
+          "title": "en/reject3: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        },
+        {
+          "id": "8ee036f4ea2de465aa0e83121b3e1ac66c73e86d92a5c21b9268d1a8d37efd76",
+          "title": "en/correct_after_two: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        },
+        {
+          "id": "65c90b8636f0ad4d87daa740a4793dcb7aab68bae3fec0e6a2895eb151ea0a6e",
+          "title": "en/stale_turn: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        },
+        {
+          "id": "44bf3233936d20869e4da568639da3c715af589dd9b980d32d7c027415207e00",
+          "title": "en/helper_errors: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        },
+        {
+          "id": "4891b5690ea18895dcf52c9a1b9cf16882c173f53105b2c4b0075690d558cc91",
+          "title": "en/helper_wait: production stdio MCP preserves canonical schema and attributes only current-turn submission failures",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/synthetic_model_owner.test.ts",
+      "to": "backend/tests/integration/agents/llm/synthetic-http-ownership.test.ts",
+      "sourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+      "reason": "C12 actual local transport, workspace and recording integration boundary; whole source preserves only explicitly registered module/location literals and precise leading responsibility comments. One process argv path is an explicit array-byte exception; parameter and non-path arrays retain exact original bytes.",
+      "originalSha256": "4e6452004604e7bdc3bad104c483c346c7559a7b0b455992ed59162bf04ee809",
+      "candidateSha256": "bea03baeb208ebbe4ed4fc357e9f411f300fac532275d81503e52dc15b06daee",
+      "moduleAndLocationEdits": [
+        {
+          "start": 746,
+          "end": 796,
+          "value": "../../../support/drivers/agents/synthetic-model-fetch",
+          "kind": "module-specifier",
+          "original": "../../support/drivers/agents/synthetic-model-fetch",
+          "originalResolved": "backend/tests/support/drivers/agents/synthetic-model-fetch.ts",
+          "expectedResolved": "backend/tests/support/drivers/agents/synthetic-model-fetch.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 632,
+          "end": 667,
+          "value": "../../../support/oracles/control-owner",
+          "kind": "module-specifier",
+          "original": "../../support/oracles/control-owner",
+          "originalResolved": "backend/tests/support/oracles/control-owner.ts",
+          "expectedResolved": "backend/tests/support/oracles/control-owner.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 527,
+          "end": 587,
+          "value": "../../../../src/ai/integrations/acp/loopback_mcp_control_server",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/acp/loopback_mcp_control_server",
+          "originalResolved": "backend/src/ai/integrations/acp/loopback_mcp_control_server.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/loopback_mcp_control_server.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "registeredArrayPathExceptions": [],
+      "baselineCases": [
+        {
+          "id": "30b3d537888aa0d5b91553eb510fef73361b0e4c4070852fe747472a85db4d0e",
+          "title": "released control port reused by SDK fixture rejects old owner before parsing",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "files": 356,
-    "baselineCases": 4429,
+    "files": 375,
+    "baselineCases": 4539,
     "fixtureByteChanges": 0
   }
 }

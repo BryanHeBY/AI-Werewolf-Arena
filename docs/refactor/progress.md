@@ -94,7 +94,8 @@
 
 - C11后119实际单元：1217旧IDs、686relative bindings与26位置锚点保持，whole program/标题/全部array矩阵逐字证据与119head均0漂移。只跑一次119file类型0；3代表文件38case skip-only发现非testpass。独立source/职责审查通过后提交；统一mapping356files/4429IDs，剩余237mixed tests与support继续。
 
-
 - C21成员计划：原getStages虚方法一次、普通dense array冻结members/meta、foreign opaque保留lazy；独立原yield-throw/conditional-next红prefix修复，不通过文档排除。9new/0/63与必要source/newtest types0，旧9sourceproof/receiver/liveactors保真；原数组append old2/new1明列政策加强。完整RulePlan与duplicate/replacement/C22仍继续。
 
 - C17基础角色数据/访问：14实际feature leaf、15types/28native accessors、13profile+ability真实consumer；十private槽同ref、四ability安装copy/选择保持。57源码保真项、30heads0，source types0，原catalog/Seer8/0/293；独立实际Git/顺序/导入审查后提交。writer/lifecycle/schema/CP贡献仍后续，C17/C20全机制未完成。
+
+- C12真实Agent integration19：110旧IDs、140module bindings、1实际MCP argv路径保持同目标；唯一argv数组raw字节例外明确，其余标题/参数矩阵/wholeprogram精确保真。19head/0、一次finite types0、独立actualGit审查0；原HTTP单例sandbox EPERM红保留，Root同localhost case1/0/6。统一mapping375files/4539IDs，不重复完整transport/对局。

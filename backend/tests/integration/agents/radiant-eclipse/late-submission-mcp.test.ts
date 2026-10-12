@@ -1,44 +1,80 @@
+/**
+ * Integration tests: Exercises actual MCP submissions against held Radiant Eclipse role
+ * turns. Literal closure/staleness receipts and original paid effects/stocks check that
+ * retained wire capability cannot commit into another generation. Existing literal
+ * expectations and independently supplied fixture plans remain the oracle;
+ * transport/recording setup is local and no billed model session is started.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import {
   COMPONENT,
+  PotionType,
   type ActionRequest,
   type RoleComponent,
   type ToolCall,
-} from "../../../src/core";
-import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
-import { WerewolfMcpControlServer } from "../../../src/ai/integrations/acp/werewolf_mcp_control";
-import { animalGame, animalAction } from "../../support/animal_dream_scenarios";
-import { inheritAnimalDeadlineRequest } from "../../../src/game/mechanisms/roles/animal_dream/requests";
-import { fixtureObject } from "../../support/fixture_values";
+} from "../../../../src/core";
+import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
+import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
+import { radiantFixture, radiantProvider } from "../../../support/radiant_eclipse";
+import { radiantManualAction } from "../../../support/radiant_eclipse_recording";
+import { fixtureObject } from "../../../support/fixture_values";
 
 // The retained client/control belong to this adversarial test, not a provider session.
 // Real runner tests separately prove provider-owned transport/process reclamation.
 for (const boundary of [
   {
-    stage: "fox_distract",
+    stage: "eclipse_swallow",
     day: 2,
-    actor: 10,
-    plan: "fox_beauty",
-    action: { name: "fox_distract", args: { target_id: 1 } },
+    actor: 1,
+    plan: "independent-stock-card16-card17",
+    action: { name: "swallow_skill", args: { target_id: 4 } },
   },
   {
-    stage: "puffer_reaction",
-    day: 1,
-    actor: 12,
-    plan: "full_retaliation",
-    action: { name: "puffer_retaliate", args: { activate: true } },
+    stage: "radiant_shelter",
+    day: 2,
+    actor: 2,
+    plan: "independent-stock-card16-card17",
+    action: { name: "cast_shelter", args: { target_id: 12 } },
+  },
+  {
+    stage: "witch",
+    day: 2,
+    actor: 1,
+    plan: "independent-stock-card16-card17",
+    action: { name: "use_potion", args: { target_id: 12, potion_type: PotionType.Poison } },
+  },
+  {
+    stage: "dreamer",
+    day: 2,
+    actor: 1,
+    plan: "borrowed-dream-death-badge-words",
+    action: { name: "dream", args: { target_id: 7 } },
+  },
+  {
+    stage: "radiant_shelter",
+    day: 3,
+    actor: 1,
+    plan: "independent-stock-card16-card17",
+    action: { name: "cast_shelter", args: { target_id: 5 } },
+  },
+  {
+    stage: "seer",
+    day: 4,
+    actor: 1,
+    plan: "independent-stock-card16-card17",
+    action: { name: "check_identity", args: { target_id: 2 } },
   },
 ] as const)
   for (const locale of ["en", "zh-CN"] as const)
-    test(`Animal real MCP late/closed/stale submission ${boundary.stage}/D${boundary.day}/P${boundary.actor}/${locale}`, async () => {
-      const game = animalGame(locale);
-      const manual = { getAction: (r: ActionRequest) => animalAction(r, boundary.plan) };
+    test(`Radiant real MCP late/closed/stale submission ${boundary.stage}/D${boundary.day}/P${boundary.actor}/${locale}`, async () => {
+      const game = await radiantFixture(locale);
+      const manual = radiantProvider([], {}, (q) => radiantManualAction(q, boundary.plan));
       const registry = new AcpTurnRegistry(game.world),
         control = new WerewolfMcpControlServer(registry);
-      const client = new Client({ name: "retained-animal-client", version: "1" });
+      const client = new Client({ name: "retained-radiant-client", version: "1" });
       let transport: StdioClientTransport | undefined;
       let pid: number | undefined;
       let captured!: (request: ActionRequest) => void, release!: () => void;
@@ -48,7 +84,7 @@ for (const boundary of [
       let cycle: Promise<void> | undefined;
       try {
         const config = await control.start(process.execPath, [
-          path.resolve(import.meta.dir, "../../../src/ai/integrations/acp/werewolf_mcp_server.ts"),
+          path.resolve(process.cwd(), "src/ai/integrations/acp/werewolf_mcp_server.ts"),
         ]);
         control.bindSession("retained");
         transport = new StdioClientTransport({
@@ -91,12 +127,10 @@ for (const boundary of [
         const state = structuredClone(role.privateState),
           events = structuredClone(game.phaseManager.getEvents());
         const action: ToolCall = boundary.action;
-        const prior = registry.openTurn(request, "retained");
-        registry.closeTurn("retained");
-        expect(await prior.action).toBeNull();
-        const tight = { ...request, deadlineAtMs: Date.now() + 1000 };
-        inheritAnimalDeadlineRequest(request, tight);
-        const pending = registry.openTurn(tight, "retained");
+        const pending = registry.openTurn(
+          { ...request, deadlineAtMs: Date.now() + 1000 },
+          "retained",
+        );
         const submit = async (turnId: string) => {
           const result = await client.callTool({
             name: "submit_action",
@@ -105,7 +139,6 @@ for (const boundary of [
           if (locale === "en") expect(JSON.stringify(result)).not.toMatch(/\p{Script=Han}/u);
           return fixtureObject(result.structuredContent);
         };
-        expect(await submit(prior.turnId)).toMatchObject({ ok: false, error: "turn_id_mismatch" });
         expect(registry.snapshot.pending).toBe(1);
         await new Promise((resolve) => setTimeout(resolve, 2200));
         expect(await submit(pending.turnId)).toMatchObject({
@@ -120,14 +153,39 @@ for (const boundary of [
           ok: false,
           error: "turn_not_open_or_session_invalid",
         });
-        const locallyClosed = registry.openTurn(tight, "retained");
+        const next = registry.openTurn(
+          { ...request, deadlineAtMs: Date.now() + 10000 },
+          "retained",
+        );
+        expect(await submit(pending.turnId)).toMatchObject({
+          ok: false,
+          error: "turn_id_mismatch",
+        });
+        expect(registry.snapshot.pending).toBe(1);
+        expect(await submit(next.turnId)).toMatchObject({ ok: true, accepted: true });
+        expect(await next.action).toEqual(action);
+        expect(role.privateState).toEqual(state); // Reception never performs engine effects.
+        expect(game.phaseManager.getEvents()).toEqual(events);
+        const locallyClosed = registry.openTurn(
+          { ...request, deadlineAtMs: Date.now() + 10000 },
+          "retained",
+        );
         registry.closeTurn("retained");
         expect(await locallyClosed.action).toBeNull();
         expect(await submit(locallyClosed.turnId)).toMatchObject({
           ok: false,
           error: "turn_not_open_or_session_invalid",
         });
+        const globallyClosed = registry.openTurn(
+          { ...request, deadlineAtMs: Date.now() + 10000 },
+          "retained",
+        );
         registry.close();
+        expect(await globallyClosed.action).toBeNull();
+        expect(await submit(globallyClosed.turnId)).toMatchObject({
+          ok: false,
+          error: "turn_not_open_or_session_invalid",
+        });
         expect(registry.snapshot).toEqual({ closed: true, pending: 0 });
       } finally {
         registry.close();

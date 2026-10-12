@@ -1,20 +1,21 @@
 /**
- * Agent/recording integration verify tool-less ACP completion for required versus optional turns.
- * Input: Injected session/fallback callbacks, literal requests and temporary player records.
- * Output and independent oracle: Required fallback versus optional null, session close counts and saved fallback entries.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Integration tests: Exercises real session recording with a synthetic ACP prompt that
+ * submits no tool. Required/optional literal results and persisted audit fields check
+ * intentional waiting versus fallback without calling an ACP model. Existing literal
+ * expectations and independently supplied fixture plans remain the oracle;
+ * transport/recording setup is local and no billed model session is started.
  */
-import { ActionWindow } from "../../../src/core";
+import { ActionWindow } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import { Phase, type ActionRequest } from "../../../src/core";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { createTestTempDirectory } from "../../support/drivers/temp-directories";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
+import { Phase, type ActionRequest } from "../../../../src/core";
+import { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 for (const required of [false, true])
   test(`successful ACP prompt with no tool submission ${required ? "falls back for a required turn" : "honors an optional pass"}`, async () => {

@@ -1,16 +1,17 @@
 /**
- * Local HTTP ownership integration verify authentication before payload parsing on a reused synthetic model port.
- * Input: A retired MCP endpoint, replacement loopback model server and its distinct fixture token.
- * Output and independent oracle: Old-owner unauthorized response, no handler parsing and successful different-owner closure classification.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Integration tests: Exercises a test-owned synthetic SDK HTTP endpoint after its control
+ * port is reused. Literal old-owner rejection before payload parsing checks authenticated
+ * endpoint ownership without an external model. Existing literal expectations and
+ * independently supplied fixture plans remain the oracle; transport/recording setup is
+ * local and no billed model session is started.
  */
 import { expect, test } from "bun:test";
-import { LoopbackMcpControlServer } from "../../../src/ai/integrations/acp/loopback_mcp_control_server";
-import { assertControlOwnerClosed } from "../../support/oracles/control-owner";
+import { LoopbackMcpControlServer } from "../../../../src/ai/integrations/acp/loopback_mcp_control_server";
+import { assertControlOwnerClosed } from "../../../support/oracles/control-owner";
 import {
   authenticatedSyntheticModelFetch,
   syntheticModelToken,
-} from "../../support/drivers/agents/synthetic-model-fetch";
+} from "../../../support/drivers/agents/synthetic-model-fetch";
 
 test("released control port reused by SDK fixture rejects old owner before parsing", async () => {
   const original = new LoopbackMcpControlServer({
