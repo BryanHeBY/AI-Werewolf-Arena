@@ -80555,13 +80555,338 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/lucky_abilities.test.ts",
+      "to": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "e865df15b6b4251f0bbcbfd36cc4f08b00ca91f5e8d5d3a5f1a6d1090fdd50c2",
+      "candidateSha256": "45ffe0255ab3c91c7bb9265159dfc06d62181881688c9b3e98ea31d560f7ef52",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 2126,
+          "end": 2154,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1916,
+          "end": 1966,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1838,
+          "end": 1877,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1763,
+          "end": 1804,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1679,
+          "end": 1727,
+          "original": "../../../src/core/domain/components/status_marks",
+          "value": "../../../src/core/domain/components/status_marks",
+          "originalResolved": "backend/src/core/domain/components/status_marks.ts",
+          "expectedResolved": "backend/src/core/domain/components/status_marks.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1597,
+          "end": 1638,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1499,
+          "end": 1556,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1405,
+          "end": 1456,
+          "original": "../../../src/game/mechanisms/stages/night/contracts",
+          "value": "../../../src/game/mechanisms/stages/night/contracts",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/contracts.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/contracts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1324,
+          "end": 1362,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1245,
+          "end": 1292,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1158,
+          "end": 1200,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1054,
+          "end": 1116,
+          "original": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "value": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 952,
+          "end": 1015,
+          "original": "../../../src/game/mechanisms/roles/miracle_merchant/lucky_stage",
+          "value": "../../../src/game/mechanisms/roles/miracle_merchant/lucky_stage",
+          "originalResolved": "backend/src/game/mechanisms/roles/miracle_merchant/lucky_stage.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/miracle_merchant/lucky_stage.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 857,
+          "end": 912,
+          "original": "../../../src/game/mechanisms/roles/night_action_history",
+          "value": "../../../src/game/mechanisms/roles/night_action_history",
+          "originalResolved": "backend/src/game/mechanisms/roles/night_action_history.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/night_action_history.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 728,
+          "end": 772,
+          "original": "../../../src/game/mechanisms/roles/abilities",
+          "value": "../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 600,
+          "end": 650,
+          "original": "../../../src/game/mechanisms/roles/ability_changes",
+          "value": "../../../src/game/mechanisms/roles/ability_changes",
+          "originalResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ability_changes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 464,
+          "end": 509,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 408,
+          "end": 425,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 222,
+          "end": 248,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 130,
+          "end": 147,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 44,
+          "end": 99,
+          "original": "../../../src/game/mechanisms/roles/night-ability-actors",
+          "value": "../../../src/game/mechanisms/roles/night-ability-actors",
+          "originalResolved": "backend/src/game/mechanisms/roles/night-ability-actors.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f7a4c3c7208c8dd68318d7bff49a2d012d14ae67bd925159f9d8b5e09dd40a78",
+          "title": "Lucky check acts only in late slot, shares actor target limits with native check, and preserves independent resources",
+          "occurrence": 1
+        },
+        {
+          "id": "6d5a0136d4994c8f0a4d2c89c44a4e700388a6c3cdd556b9b7217c6c74430bf4",
+          "title": "native Witch heal and Lucky poison have independent bottles; Lucky waits then uses exactly once without knife information",
+          "occurrence": 1
+        },
+        {
+          "id": "cb8dc3f8a35843bf5bfc1a0d149ebcb266eb897340137a208431edb5b8773271",
+          "title": "Guard's next native turn rejects both its own prior native and Lucky targets, even after the Lucky instance transfers away",
+          "occurrence": 1
+        },
+        {
+          "id": "64ff2e70d112c86b823320119e0370ef13d71a035d507e8314cefe529725cbd1",
+          "title": "Lucky actual death permanently expires an unused gift, and neither revival, enable, transfer nor copying restores it",
+          "occurrence": 1
+        },
+        {
+          "id": "a861d7fc700d3d741ea273358e254fb22b33ad48539f7b5ac94c4b4d769c5f99",
+          "title": "seer_check/actor_life: ordinary awaited skills never populate Lucky target history through a stale scope",
+          "occurrence": 1
+        },
+        {
+          "id": "b01c5655dbdf512df3f708c551678352a4f925ab088dc189ce9a37de1054e1bd",
+          "title": "seer_check/state: ordinary awaited skills never populate Lucky target history through a stale scope",
+          "occurrence": 1
+        },
+        {
+          "id": "c4c72fffcc6dbce482e398c05468cb472718ab8b7b01daf6ac58ec7a20767364",
+          "title": "seer_check/activation: ordinary awaited skills never populate Lucky target history through a stale scope",
+          "occurrence": 1
+        },
+        {
+          "id": "b29134d463274844d2f27c914532c647315f4ef417eef703fdb9e70aab71ba81",
+          "title": "seer_check/id: ordinary awaited skills never populate Lucky target history through a stale scope",
+          "occurrence": 1
+        },
+        {
+          "id": "bab7e494a678a234cf7debdf9de18bfca5f07ce400efb9a5869d85679907e648",
+          "title": "seer_check/target_life: ordinary awaited skills never populate Lucky target history through a stale scope",
+          "occurrence": 1
+        },
+        {
+          "id": "3c66e15b4ca5e910f6e4304cc2924df99414ed05afb441fa7b8ae8b51d0d39d8",
+          "title": "seer_check/gateway_target: ordinary awaited skills never populate Lucky target history through a stale scope",
+          "occurrence": 1
+        },
+        {
+          "id": "77a30867c6a8bdb6ffff1514e31436742f3c7858bd8d27c598662e5d1e9da345",
+          "title": "guard/actor_life: ordinary awaited skills never populate Lucky target history through a stale scope",
+          "occurrence": 1
+        },
+        {
+          "id": "c604e4565195cb007fbcea22ed4559c8addaf790d500b91527ccd14869e2d262",
+          "title": "guard/state: ordinary awaited skills never populate Lucky target history through a stale scope",
+          "occurrence": 1
+        },
+        {
+          "id": "043222be332b655b470995649e0ad6a6fb4b631e00578d0c98ed3a1d2f150648",
+          "title": "guard/activation: ordinary awaited skills never populate Lucky target history through a stale scope",
+          "occurrence": 1
+        },
+        {
+          "id": "12242b1aaf602f986a689b3232963757c8ddd99b518590c6385f57b92cee0e9f",
+          "title": "guard/id: ordinary awaited skills never populate Lucky target history through a stale scope",
+          "occurrence": 1
+        },
+        {
+          "id": "adb89991f96ebdf99215908630553dff05238270d894cb0424db96ebd07f7c34",
+          "title": "guard/target_life: ordinary awaited skills never populate Lucky target history through a stale scope",
+          "occurrence": 1
+        },
+        {
+          "id": "e467e379604672f292e49f558dce8a511ee697151c245b17eb5c51a603088f1c",
+          "title": "guard/gateway_target: ordinary awaited skills never populate Lucky target history through a stale scope",
+          "occurrence": 1
+        },
+        {
+          "id": "64ef59a17dfcbe9f8dd94b04c704baf94c5b346ae51a4c620a4d253adb93fdf8",
+          "title": "a successful gateway cannot bypass a new same-actor target constraint at actual Lucky commitment",
+          "occurrence": 1
+        },
+        {
+          "id": "d51c1213cdd1bdc57db216b4b0f4b40c721bccbd5d0fb4b30fd0ce3f48fdca46",
+          "title": "an already committed ordinary guard protects its original target after caster death, but never a replacement target life",
+          "occurrence": 1
+        },
+        {
+          "id": "1cd6a7137f41e3511212b681b576fee2b15d983f888844ff864add8a1d33ea7a",
+          "title": "zh-CN: Lucky poison prompt is optional, names no Witch turn, and none-self remains possible outside poison target IDs",
+          "occurrence": 1
+        },
+        {
+          "id": "edb51c9b6e32db9e245ce8b794f6d1613292638031a9e74d58061eaa5fbbd1b7",
+          "title": "en: Lucky poison prompt is optional, names no Witch turn, and none-self remains possible outside poison target IDs",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Role,\n  Camp,\n  Phase,\n  WinCondition,\n  WitchSelfHealRule,\n  StatusMark,\n  DeathCause,\n  type ActionRequest,\n  type GameEvent,\n  type RoleComponent,\n  type BoardConfig,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Role, Camp, Phase, WinCondition, WitchSelfHealRule, StatusMark, DeathCause, type GameEvent, type RoleComponent, type BoardConfig } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 544,
-    "targetFiles": 593,
-    "mappingEntries": 593,
-    "baselineCases": 6897,
+    "sourceFiles": 545,
+    "targetFiles": 594,
+    "mappingEntries": 594,
+    "baselineCases": 6917,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

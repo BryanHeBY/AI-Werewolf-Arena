@@ -1,28 +1,13 @@
 /**
- * Mechanism integration tests for Lucky and ordinary ability resources, late timing and actor-local target history.
- * Inputs are literal rosters, actions and targeted owner/life edits; outputs are
- * checked against the original explicit resource, event and rejection assertions.
- * Controlled contexts bind read-only actor queries at the original World read
- * position. No billed agent, fixture rewrite or production-generated oracle runs.
+ * Unit tests verify bounded Lucky/native skill resources, target history, transfer/expiry and late-scope commitment.
+ * Input: All original direct stage/death operations, literal rosters/actions and controlled owner/life changes.
+ * Output and oracle: Exact independent bottles, stock/history, protection and optional prompt assertions remain unchanged; no complete NightPipeline or PM cycle runs.
  */
 import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import {
-  COMPONENT,
-  Role,
-  Camp,
-  Phase,
-  WinCondition,
-  WitchSelfHealRule,
-  StatusMark,
-  DeathCause,
-  type ActionRequest,
-  type GameEvent,
-  type RoleComponent,
-  type BoardConfig,
-} from "../../../src/core";
+import { COMPONENT, Role, Camp, Phase, WinCondition, WitchSelfHealRule, StatusMark, DeathCause, type GameEvent, type RoleComponent, type BoardConfig } from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   grantNightAbility,
@@ -59,6 +44,7 @@ import {
 } from "../../../src/game/mechanisms";
 
 const deck = [Role.Wolf, Role.WolfKing, Role.Seer, Role.Witch, Role.Guard, Role.Villager];
+
 const config: BoardConfig = {
   ...sixPlayerMvpConfig,
   roleSetups: [...new Set(deck)].map((role) => ({
@@ -68,10 +54,14 @@ const config: BoardConfig = {
   winConditions: [WinCondition.SlaughterCity],
   selfDestruct: { enabledWindows: [] },
 };
+
 const fixture = () => bootstrapGame(config, { fixedRoles: deck });
+
 const role = (game: ReturnType<typeof fixture>, id: number) =>
   game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+
 const seer = () => ({ lastTarget: null, lastIsWerewolf: null, lastResult: null, history: [] });
+
 const potion = () => ({
   heal: 0,
   poison: 1,
@@ -80,6 +70,7 @@ const potion = () => ({
   healUsedThisNight: false,
   poisonUsedThisNight: false,
 });
+
 function context(
   game: ReturnType<typeof fixture>,
   day: number,
@@ -126,6 +117,7 @@ function context(
     },
   };
 }
+
 const ordinary = (id: string) =>
   new NightStageRegistry().getStages(config).find((s) => s.id === id)!;
 
