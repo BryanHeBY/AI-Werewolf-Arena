@@ -1,15 +1,22 @@
+/**
+ * Browser integration tests render recorded Scholar Mentor bonus and conflict
+ * fixtures in both locales. Archive events and literal frame assertions check
+ * that bonuses preserve seats and same-good or both-wolf conflicts stay pending
+ * until dawn. These tests play settled inputs without choosing a mentor.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { eventLabel } from "../../src/replay/event-labels";
 for (const locale of ["zh-CN", "en"] as const)
   test("Scholar Mentor bonuses do not announce deaths early/" + locale, async ({ page }) => {
-    const base = "../fixtures/scholar-mentor-" + locale;
+    const base = "frontend/tests/fixtures/scholar-mentor-" + locale;
     const replay = readReplayDocument(
-      JSON.parse(readFileSync(new URL(base + ".replay.json", import.meta.url), "utf8")),
+      JSON.parse(readFileSync(frontendFixtureURL(base + ".replay.json"), "utf8")),
     );
     const cp = JSON.parse(
-      readFileSync(new URL(base + ".checkpoint.txt", import.meta.url), "utf8"),
+      readFileSync(frontendFixtureURL(base + ".checkpoint.txt"), "utf8"),
     ) as { players: Array<{ id: number; role: string; alive: boolean }> };
     await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
     await page.goto("/");
@@ -59,12 +66,12 @@ for (const variant of ["same-good", "both-wolves"] as const)
     test(
       "Scholar Mentor conflict remains pending until dawn/" + variant + "/" + locale,
       async ({ page }) => {
-        const base = "../fixtures/scholar-mentor-" + variant + "-" + locale;
+        const base = "frontend/tests/fixtures/scholar-mentor-" + variant + "-" + locale;
         const replay = readReplayDocument(
-          JSON.parse(readFileSync(new URL(base + ".replay.json", import.meta.url), "utf8")),
+          JSON.parse(readFileSync(frontendFixtureURL(base + ".replay.json"), "utf8")),
         );
         const cp = JSON.parse(
-          readFileSync(new URL(base + ".checkpoint.txt", import.meta.url), "utf8"),
+          readFileSync(frontendFixtureURL(base + ".checkpoint.txt"), "utf8"),
         ) as { players: Array<{ id: number; role: string; alive: boolean }> };
         await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
         await page.goto("/");

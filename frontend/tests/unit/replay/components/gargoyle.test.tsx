@@ -16,8 +16,8 @@ import {
   FRAMES_PER_EVENT,
 } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
-import king from "../../../fixtures/gargoyle-king-link.replay.json";
-import twelve from "../../../fixtures/gargoyle-twelve.replay.json";
+import king from "../../../fixtures/six-player-gargoyle-king-link/gargoyle-king-link/zh-CN/god.replay.json";
+import twelve from "../../../fixtures/twelve-player-gargoyle-twelve/gargoyle-twelve/en/god.replay.json";
 for (const locale of ["zh-CN", "en"] as const)
   for (const large of [false, true])
     test(`${locale}/${large}: actual Gargoyle inheritance changes no seat/identity and the later real death preserves membership and pure frames`, () => {

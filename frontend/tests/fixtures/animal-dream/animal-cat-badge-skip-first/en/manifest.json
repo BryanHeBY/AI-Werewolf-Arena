@@ -1,0 +1,883 @@
+{
+  "schema": "awa-fixture-manifests-v2",
+  "generatedBy": "tooling/refactor/fixture-manifest.ts",
+  "baseline": {
+    "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+    "inventoryPath": "docs/refactor/generated/baseline-fixtures.json",
+    "inventorySha256": "b3506ca7aca8abda98e1936c02cc35be58c5b0b024da0b80ad97284cf67f6915"
+  },
+  "coverage": {
+    "expectedFiles": 5,
+    "exactBytesFiles": 5,
+    "mechanicalSourceFiles": 0,
+    "originalBytes": 360276,
+    "currentBytes": 360276
+  },
+  "policy": "The public table covers904 byte-identical JSON archives and3 mechanically equivalent source fixtures. Immutable original identities/digests are separate from current paths/digests. Source programs include import binding identity and preserve RPC/action matrices; helpers are independently recorded source assets. No archive, game rule, prompt or action content is regenerated; acceptance stays pending-review.",
+  "files": [
+    {
+      "originPath": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+      "currentPath": "frontend/tests/fixtures/animal-dream/animal-cat-badge-skip-first/en/god.replay.json",
+      "sha256": "b8a06533781cf18d4a75288c783a5141a6220ab7ea355da9ddcdb39f641ad58b",
+      "bytes": 68008,
+      "owner": "frontend",
+      "kind": "god-replay",
+      "suiteId": "fixture:frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "observed",
+          "value": "animal_dream",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+              "pointer": "/meta/board",
+              "detail": "Literal serialized board; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_animal_dream_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+              "pointer": "/events/189/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+              "pointer": "/meta/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "bear",
+              "camp": "good"
+            },
+            {
+              "playerId": 2,
+              "role": "wolf_beauty",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 3,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 4,
+              "role": "fox_cub",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 6,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 8,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "pufferfish",
+              "camp": "good"
+            },
+            {
+              "playerId": 10,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 11,
+              "role": "white_cat",
+              "camp": "good"
+            },
+            {
+              "playerId": 12,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+            "sha256": "b8a06533781cf18d4a75288c783a5141a6220ab7ea355da9ddcdb39f641ad58b"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "b8a06533781cf18d4a75288c783a5141a6220ab7ea355da9ddcdb39f641ad58b",
+      "currentBytes": 68008
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-cat.player.json",
+      "currentPath": "frontend/tests/fixtures/animal-dream/animal-cat-badge-skip-first/en/players/11-white-cat.player.json",
+      "sha256": "ea2093d4f79bc79bf5e2bff284fef8c031557f66e73e8cfc0880b9a3df7afae1",
+      "bytes": 65343,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_animal_dream_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-cat.player.json",
+              "pointer": "/timeline/13/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-cat.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 11,
+              "role": "white_cat",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-cat.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-cat.player.json",
+            "sha256": "ea2093d4f79bc79bf5e2bff284fef8c031557f66e73e8cfc0880b9a3df7afae1"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-cat.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "ea2093d4f79bc79bf5e2bff284fef8c031557f66e73e8cfc0880b9a3df7afae1",
+      "currentBytes": 65343
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-fox.player.json",
+      "currentPath": "frontend/tests/fixtures/animal-dream/animal-cat-badge-skip-first/en/players/4-fox-cub.player.json",
+      "sha256": "1eebde349a2bcf83531140047fa8a16c90bc6204336d2a5b4e5f2e4d8e9b3abd",
+      "bytes": 81422,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_animal_dream_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-fox.player.json",
+              "pointer": "/timeline/77/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-fox.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 4,
+              "role": "fox_cub",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-fox.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-fox.player.json",
+            "sha256": "1eebde349a2bcf83531140047fa8a16c90bc6204336d2a5b4e5f2e4d8e9b3abd"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-fox.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "1eebde349a2bcf83531140047fa8a16c90bc6204336d2a5b4e5f2e4d8e9b3abd",
+      "currentBytes": 81422
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-puffer.player.json",
+      "currentPath": "frontend/tests/fixtures/animal-dream/animal-cat-badge-skip-first/en/players/9-pufferfish.player.json",
+      "sha256": "dbdc8ea608a7d90f75c3275cb0fcbd48d21255030f4ac970e65fa8aac9749771",
+      "bytes": 70094,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_animal_dream_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-puffer.player.json",
+              "pointer": "/timeline/15/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-puffer.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 9,
+              "role": "pufferfish",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-puffer.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-puffer.player.json",
+            "sha256": "dbdc8ea608a7d90f75c3275cb0fcbd48d21255030f4ac970e65fa8aac9749771"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-puffer.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "dbdc8ea608a7d90f75c3275cb0fcbd48d21255030f4ac970e65fa8aac9749771",
+      "currentBytes": 70094
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-villager.player.json",
+      "currentPath": "frontend/tests/fixtures/animal-dream/animal-cat-badge-skip-first/en/players/3-villager.player.json",
+      "sha256": "7852cf21eb3602f44079871a39bdf9defd2c2c70f70f00d2fb12f7b6244da345",
+      "bytes": 75409,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_animal_dream_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-villager.player.json",
+              "pointer": "/timeline/18/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-villager.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 3,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-villager.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-villager.player.json",
+            "sha256": "7852cf21eb3602f44079871a39bdf9defd2c2c70f70f00d2fb12f7b6244da345"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-villager.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "7852cf21eb3602f44079871a39bdf9defd2c2c70f70f00d2fb12f7b6244da345",
+      "currentBytes": 75409
+    }
+  ],
+  "suites": [
+    {
+      "suiteId": "fixture:frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+      "anchorOriginPath": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+      "owner": "frontend",
+      "kind": "recorded-archive",
+      "files": [
+        "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+        "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-cat.player.json",
+        "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-fox.player.json",
+        "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-puffer.player.json",
+        "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-villager.player.json"
+      ],
+      "metadata": {
+        "board": {
+          "state": "observed",
+          "value": "animal_dream",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+              "pointer": "/meta/board",
+              "detail": "Literal serialized board; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_animal_dream_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+              "pointer": "/events/189/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-cat.player.json",
+              "pointer": "/timeline/13/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-fox.player.json",
+              "pointer": "/timeline/77/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-puffer.player.json",
+              "pointer": "/timeline/15/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-villager.player.json",
+              "pointer": "/timeline/18/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+              "pointer": "/meta/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-cat.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-fox.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-puffer.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-villager.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "bear",
+              "camp": "good"
+            },
+            {
+              "playerId": 2,
+              "role": "wolf_beauty",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 3,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 4,
+              "role": "fox_cub",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 6,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 8,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "pufferfish",
+              "camp": "good"
+            },
+            {
+              "playerId": 10,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 11,
+              "role": "white_cat",
+              "camp": "good"
+            },
+            {
+              "playerId": 12,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-cat.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-fox.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-puffer.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-villager.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+            "sha256": "b8a06533781cf18d4a75288c783a5141a6220ab7ea355da9ddcdb39f641ad58b"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-cat.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-fox.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-puffer.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-villager.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "membership": [
+        {
+          "originPath": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+          "state": "standalone",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+              "pointer": "",
+              "detail": "Standalone identity anchor; no cross-file relationship was asserted."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-cat.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-cat.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-fox.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-fox.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-puffer.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-puffer.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-villager.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/animal-cat_badge-skip-first-en-villager.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        }
+      ],
+      "acceptance": {
+        "status": "pending-review",
+        "evidence": [
+          {
+            "kind": "baseline-byte-match",
+            "reference": "docs/refactor/generated/baseline-fixtures.json",
+            "detail": "Every JSON member matches immutable Git and current byte digest/size; no golden was regenerated."
+          },
+          {
+            "kind": "metadata-association",
+            "reference": "frontend/tests/fixtures/animal-cat_badge-skip-first-en.replay.json",
+            "detail": "Membership evidence identifies literal associations or explicit standalone status; this pure description does not verify caller-supplied byte hashes or infer passed test status."
+          }
+        ],
+        "unresolved": [
+          "seed: No seed is serialized; producer defaults are not evidence of the original invocation.",
+          "build: No literal build is recorded in this artifact.",
+          "Grouping and exact byte preservation are inventory evidence; independent scenario/consumer acceptance has not been assigned."
+        ]
+      }
+    }
+  ],
+  "sourceAssets": [
+    {
+      "originPath": "backend/tests/support/audit_summary_fixture.ts",
+      "currentPath": "backend/tests/support/builders/audit-summary.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "94b0a770d66434ff7ed0e2b662e4cbe615542c0ee12769ca2efc5ed3dc9a0928",
+      "originalBytes": 811,
+      "currentSha256": "0dcf1764ed975f4dba71f037bb96632b74e3f90b16f0a0c981b0daf916c63ab1",
+      "currentBytes": 1154,
+      "programSha256": "507a479dd2a872a501474a2bfd51e4d171363c3a3c174e8873f76bd0089bfa70",
+      "moduleBindingsSha256": "32b415306130f31a5b5fb54705bddd6184eee7cf63cd9da9edcd2ae974423343",
+      "kind": "test-support"
+    },
+    {
+      "originPath": "backend/tests/support/mist_raven_transport_oracle.ts",
+      "currentPath": "backend/tests/support/features/mist-raven/oracles/transport.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "7d0b2f1c81660679baf2d66d203f6a4cdfca762de927b9aba789a579beace085",
+      "originalBytes": 7318,
+      "currentSha256": "c42ff8470c11486792ba21ad70140b8a109a23d35e311b66cf934a9181fcbe02",
+      "currentBytes": 7676,
+      "programSha256": "8584a8fe074819232521336ff6cb089cb1c96c7e4d800ebd581392324513ba9d",
+      "moduleBindingsSha256": "0ac37de3b9f45e877a4cbd0c5bbbf8425fb3fc0dec4a6ddb06db234edc870dd7",
+      "kind": "test-support"
+    }
+  ],
+  "derivedManifests": []
+}

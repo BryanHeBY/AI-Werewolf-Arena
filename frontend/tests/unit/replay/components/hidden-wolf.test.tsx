@@ -16,8 +16,8 @@ import {
   FRAMES_PER_EVENT,
 } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
-import king from "../../../fixtures/hidden-wolf-king-link.replay.json";
-import twelve from "../../../fixtures/hidden-wolf-twelve.replay.json";
+import king from "../../../fixtures/six-player-hidden-wolf-king-link/hidden-wolf-king-link/zh-CN/god.replay.json";
+import twelve from "../../../fixtures/twelve-player-hidden-wolf-twelve/hidden-wolf-twelve/zh-CN/god.replay.json";
 for (const locale of ["zh-CN", "en"] as const)
   for (const large of [false, true])
     test(`${locale}/${large}: actual Hidden Wolf inheritance changes no seat/identity and the later real death preserves membership and pure frames`, () => {

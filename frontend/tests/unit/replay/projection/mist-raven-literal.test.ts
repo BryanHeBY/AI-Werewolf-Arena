@@ -5,6 +5,7 @@
  * Handwritten expectations and immutable fixture bytes are independent oracles.
  * Actual fixture lookup remains an input source; no live game executes here.
  */
+import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { test, expect } from "bun:test";
 import { readFileSync } from "node:fs";
 import {
@@ -17,7 +18,7 @@ const load = (v: string, l: string) =>
   readReplayDocument(
     JSON.parse(
       readFileSync(
-        new URL(`../../../fixtures/mist-manual-${v}-${l}.replay.json`, import.meta.url),
+        frontendFixtureURL(`frontend/tests/fixtures/mist-manual-${v}-${l}.replay.json`),
         "utf8",
       ),
     ),

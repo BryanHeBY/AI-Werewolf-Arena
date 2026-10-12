@@ -17,9 +17,9 @@ import {
   FRAMES_PER_EVENT,
 } from "../../../../src/replay/replay-frame";
 import { EventTimeline } from "../../../../src/replay/EventTimeline";
-import merchant from "../../../fixtures/merchant-twelve.replay.json";
-import blackMarket from "../../../fixtures/black-market-late_hold.replay.json";
-import blackCheck from "../../../fixtures/black-market-check_duplicate.replay.json";
+import merchant from "../../../fixtures/twelve-player-merchant-twelve/merchant-twelve/en/god.replay.json";
+import blackMarket from "../../../fixtures/six-black-late-hold/black-market-late-hold/en/god.replay.json";
+import blackCheck from "../../../fixtures/six-black-check-duplicate/black-market-check-duplicate/en/god.replay.json";
 
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: both gift origins use neutral action stages in timeline and video while preserving archived event IDs`, () => {

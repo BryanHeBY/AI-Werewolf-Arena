@@ -1,10 +1,18 @@
+/**
+ * Browser integration tests exercise replay loading, playback, seeking, seat
+ * focus, display locale and time zone through the workspace UI. Recorded role
+ * archives and explicit malformed or modified literals supply the assertions
+ * for event timing, identity visibility, errors and terminal winners. The
+ * browser consumes those inputs without invoking a model or game engine.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { lonelyGirlEventLabel, shapeshifterEventLabel } from "@ai-werewolf-arena/game-text";
 import { expect, test } from "@playwright/test";
 import { wildChildEventLabel } from "@ai-werewolf-arena/game-text";
 import { readFileSync } from "node:fs";
 const original = JSON.parse(
-  readFileSync(new URL("../fixtures/sample.replay.json", import.meta.url), "utf8"),
+  readFileSync(frontendFixtureURL("frontend/tests/fixtures/sample.replay.json"), "utf8"),
 );
 
 for (const locale of ["zh-CN", "en"] as const)
@@ -14,10 +22,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(
-            `../fixtures/black-market-${backlash ? "twelve_backlash" : "twelve_gun"}.replay.json`,
-            import.meta.url,
-          ),
+          frontendFixtureURL(`frontend/tests/fixtures/black-market-${backlash ? "twelve_backlash" : "twelve_gun"}.replay.json`),
           "utf8",
         ),
       );
@@ -62,7 +67,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(`../fixtures/gift-gun-last-${first}.replay.json`, import.meta.url),
+          frontendFixtureURL(`frontend/tests/fixtures/gift-gun-last-${first}.replay.json`),
           "utf8",
         ),
       );
@@ -107,7 +112,7 @@ for (const locale of ["zh-CN", "en"] as const)
       page,
     }) => {
       const replay = JSON.parse(
-        readFileSync(new URL(`../fixtures/awakened-${kind}.replay.json`, import.meta.url), "utf8"),
+        readFileSync(frontendFixtureURL(`frontend/tests/fixtures/awakened-${kind}.replay.json`), "utf8"),
       );
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
@@ -168,7 +173,7 @@ for (const locale of ["zh-CN", "en"] as const)
     page,
   }) => {
     const replay = JSON.parse(
-      readFileSync(new URL("../fixtures/mirror-twelve.replay.json", import.meta.url), "utf8"),
+      readFileSync(frontendFixtureURL("frontend/tests/fixtures/mirror-twelve.replay.json"), "utf8"),
     );
     replay.meta.locale = locale;
     const shot = replay.events.find((event: { type: string }) => event.type === "hunter_shot");
@@ -346,7 +351,7 @@ for (const locale of ["zh-CN", "en"] as const)
     page,
   }) => {
     const victory = JSON.parse(
-      readFileSync(new URL("../fixtures/victory.replay.json", import.meta.url), "utf8"),
+      readFileSync(frontendFixtureURL("frontend/tests/fixtures/victory.replay.json"), "utf8"),
     );
     victory.meta.locale = locale;
     await page.route("**/api/replay", (route) => route.fulfill({ json: victory }));
@@ -380,7 +385,7 @@ for (const locale of ["zh-CN", "en"] as const)
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: malformed victory never invents an unknown winning player`, async ({ page }) => {
     const victory = JSON.parse(
-      readFileSync(new URL("../fixtures/victory.replay.json", import.meta.url), "utf8"),
+      readFileSync(frontendFixtureURL("frontend/tests/fixtures/victory.replay.json"), "utf8"),
     );
     victory.meta.locale = locale;
     delete victory.result.decision;
@@ -415,7 +420,7 @@ for (const locale of ["zh-CN", "en"] as const)
     page,
   }) => {
     const replay = JSON.parse(
-      readFileSync(new URL("../fixtures/wolf-king.replay.json", import.meta.url), "utf8"),
+      readFileSync(frontendFixtureURL("frontend/tests/fixtures/wolf-king.replay.json"), "utf8"),
     );
     replay.meta.locale = locale;
     await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
@@ -439,7 +444,7 @@ for (const locale of ["zh-CN", "en"] as const)
     page,
   }) => {
     const replay = JSON.parse(
-      readFileSync(new URL("../fixtures/white-wolf-king.replay.json", import.meta.url), "utf8"),
+      readFileSync(frontendFixtureURL("frontend/tests/fixtures/white-wolf-king.replay.json"), "utf8"),
     );
     replay.meta.locale = locale;
     await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
@@ -467,7 +472,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(`../fixtures/${miss ? "knight-miss" : "knight"}.replay.json`, import.meta.url),
+          frontendFixtureURL(`frontend/tests/fixtures/${miss ? "knight-miss" : "knight"}.replay.json`),
           "utf8",
         ),
       );
@@ -513,7 +518,7 @@ for (const locale of ["zh-CN", "en"] as const)
     page,
   }) => {
     const replay = JSON.parse(
-      readFileSync(new URL("../fixtures/gravekeeper.replay.json", import.meta.url), "utf8"),
+      readFileSync(frontendFixtureURL("frontend/tests/fixtures/gravekeeper.replay.json"), "utf8"),
     );
     replay.meta.locale = locale;
     await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
@@ -552,7 +557,7 @@ for (const locale of ["zh-CN", "en"] as const)
       page,
     }) => {
       const replay = JSON.parse(
-        readFileSync(new URL(`../fixtures/dreamer-${kind}.replay.json`, import.meta.url), "utf8"),
+        readFileSync(frontendFixtureURL(`frontend/tests/fixtures/dreamer-${kind}.replay.json`), "utf8"),
       );
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
@@ -580,10 +585,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(
-            `../fixtures/wolf-beauty-${special ? "last-god" : "blocked"}.replay.json`,
-            import.meta.url,
-          ),
+          frontendFixtureURL(`frontend/tests/fixtures/wolf-beauty-${special ? "last-god" : "blocked"}.replay.json`),
           "utf8",
         ),
       );
@@ -627,10 +629,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(
-            `../fixtures/bear-${badge ? "king-badge" : "neighbor-update"}.replay.json`,
-            import.meta.url,
-          ),
+          frontendFixtureURL(`frontend/tests/fixtures/bear-${badge ? "king-badge" : "neighbor-update"}.replay.json`),
           "utf8",
         ),
       );
@@ -671,10 +670,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(
-            `../fixtures/hidden-wolf-${large ? "twelve" : "king-link"}.replay.json`,
-            import.meta.url,
-          ),
+          frontendFixtureURL(`frontend/tests/fixtures/hidden-wolf-${large ? "twelve" : "king-link"}.replay.json`),
           "utf8",
         ),
       );
@@ -720,10 +716,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(
-            `../fixtures/gargoyle-${large ? "twelve" : "king-link"}.replay.json`,
-            import.meta.url,
-          ),
+          frontendFixtureURL(`frontend/tests/fixtures/gargoyle-${large ? "twelve" : "king-link"}.replay.json`),
           "utf8",
         ),
       );
@@ -766,7 +759,7 @@ for (const locale of ["zh-CN", "en"] as const)
     page,
   }) => {
     const replay = JSON.parse(
-      readFileSync(new URL("../fixtures/gargoyle-twelve.replay.json", import.meta.url), "utf8"),
+      readFileSync(frontendFixtureURL("frontend/tests/fixtures/gargoyle-twelve.replay.json"), "utf8"),
     );
     replay.meta.locale = locale;
     await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
@@ -785,7 +778,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(`../fixtures/psychic-${large ? "twelve" : "skip"}.replay.json`, import.meta.url),
+          frontendFixtureURL(`frontend/tests/fixtures/psychic-${large ? "twelve" : "skip"}.replay.json`),
           "utf8",
         ),
       );
@@ -822,10 +815,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(
-            `../fixtures/mechanical-${large ? "twelve" : "reflection"}.replay.json`,
-            import.meta.url,
-          ),
+          frontendFixtureURL(`frontend/tests/fixtures/mechanical-${large ? "twelve" : "reflection"}.replay.json`),
           "utf8",
         ),
       );
@@ -867,10 +857,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(
-            `../fixtures/merchant-${large ? "twelve" : "dream"}.replay.json`,
-            import.meta.url,
-          ),
+          frontendFixtureURL(`frontend/tests/fixtures/merchant-${large ? "twelve" : "dream"}.replay.json`),
           "utf8",
         ),
       );
@@ -915,10 +902,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(
-            `../fixtures/hybrid-${large ? "twelve_wolf_win" : "wolf_win"}.replay.json`,
-            import.meta.url,
-          ),
+          frontendFixtureURL(`frontend/tests/fixtures/hybrid-${large ? "twelve_wolf_win" : "wolf_win"}.replay.json`),
           "utf8",
         ),
       );
@@ -968,10 +952,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(
-            `../fixtures/mirror-${large ? "twelve" : "exhausted"}.replay.json`,
-            import.meta.url,
-          ),
+          frontendFixtureURL(`frontend/tests/fixtures/mirror-${large ? "twelve" : "exhausted"}.replay.json`),
           "utf8",
         ),
       );
@@ -1118,7 +1099,7 @@ for (const locale of ["zh-CN", "en"] as const)
       page,
     }) => {
       const replay = JSON.parse(
-        readFileSync(new URL(`../fixtures/fox-${kind}.replay.json`, import.meta.url), "utf8"),
+        readFileSync(frontendFixtureURL(`frontend/tests/fixtures/fox-${kind}.replay.json`), "utf8"),
       );
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
@@ -1161,7 +1142,7 @@ for (const locale of ["zh-CN", "en"] as const)
       page,
     }) => {
       const replay = JSON.parse(
-        readFileSync(new URL(`../fixtures/cupid-${kind}.replay.json`, import.meta.url), "utf8"),
+        readFileSync(frontendFixtureURL(`frontend/tests/fixtures/cupid-${kind}.replay.json`), "utf8"),
       );
       replay.meta.locale = locale;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
@@ -1208,7 +1189,7 @@ for (const size of [6, 12])
       }) => {
         const replay = JSON.parse(
           readFileSync(
-            new URL(`../fixtures/debater-${size}-${outcome}.replay.json`, import.meta.url),
+            frontendFixtureURL(`frontend/tests/fixtures/debater-${size}-${outcome}.replay.json`),
             "utf8",
           ),
         );
@@ -1252,7 +1233,7 @@ for (const size of [6, 12])
       }) => {
         const replay = JSON.parse(
           readFileSync(
-            new URL(`../fixtures/wall-${size}-${mode}.replay.json`, import.meta.url),
+            frontendFixtureURL(`frontend/tests/fixtures/wall-${size}-${mode}.replay.json`),
             "utf8",
           ),
         );
@@ -1299,7 +1280,7 @@ for (const name of ["6-seer", "6-hunter", "12-both0", "12-keep"])
       page,
     }) => {
       const replay = JSON.parse(
-        readFileSync(new URL(`../fixtures/thief-${name}.replay.json`, import.meta.url), "utf8"),
+        readFileSync(frontendFixtureURL(`frontend/tests/fixtures/thief-${name}.replay.json`), "utf8"),
       );
       replay.meta.locale = locale;
       const index = replay.events.findIndex(
@@ -1342,7 +1323,7 @@ for (const name of ["6-wolf_exile", "6-hunter_chain", "12-good_knife", "6-same_w
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(`../fixtures/wild-child-${name}.replay.json`, import.meta.url),
+          frontendFixtureURL(`frontend/tests/fixtures/wild-child-${name}.replay.json`),
           "utf8",
         ),
       );
@@ -1400,7 +1381,7 @@ for (const name of ["6-seer", "6-hunter", "12-both0", "12-one1"])
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(`../fixtures/shapeshifter-${name}.replay.json`, import.meta.url),
+          frontendFixtureURL(`frontend/tests/fixtures/shapeshifter-${name}.replay.json`),
           "utf8",
         ),
       );
@@ -1451,14 +1432,14 @@ for (const name of ["6-seer", "12-one1"])
       const privateView = readReplayPlayerView(
           JSON.parse(
             readFileSync(
-              new URL(`../fixtures/player-views/shapeshifter-${name}.player.json`, import.meta.url),
+              frontendFixtureURL(`frontend/tests/fixtures/player-views/shapeshifter-${name}.player.json`),
               "utf8",
             ),
           ),
         ),
         god = JSON.parse(
           readFileSync(
-            new URL(`../fixtures/shapeshifter-${name}.replay.json`, import.meta.url),
+            frontendFixtureURL(`frontend/tests/fixtures/shapeshifter-${name}.replay.json`),
             "utf8",
           ),
         );
@@ -1528,7 +1509,7 @@ for (const name of ["6-good_dead", "6-hunter_chain", "6-wolf_needs_girl", "12-wo
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(`../fixtures/lonely-girl-${name}.replay.json`, import.meta.url),
+          frontendFixtureURL(`frontend/tests/fixtures/lonely-girl-${name}.replay.json`),
           "utf8",
         ),
       );
@@ -1579,14 +1560,14 @@ for (const name of ["6-good_dead", "12-wolf_win"])
       const view = readReplayPlayerView(
           JSON.parse(
             readFileSync(
-              new URL(`../fixtures/player-views/lonely-girl-${name}.player.json`, import.meta.url),
+              frontendFixtureURL(`frontend/tests/fixtures/player-views/lonely-girl-${name}.player.json`),
               "utf8",
             ),
           ),
         ),
         god = JSON.parse(
           readFileSync(
-            new URL(`../fixtures/lonely-girl-${name}.replay.json`, import.meta.url),
+            frontendFixtureURL(`frontend/tests/fixtures/lonely-girl-${name}.replay.json`),
             "utf8",
           ),
         ),

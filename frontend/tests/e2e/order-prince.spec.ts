@@ -1,3 +1,10 @@
+/**
+ * Browser integration tests seek recorded Order Prince day-one and day-two
+ * reveal fixtures in both locales. Archive captions and literal seat assertions
+ * check preserved life and the reset exile before terminal winners; the tests
+ * render recorded decisions rather than selecting a reveal policy.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
@@ -8,12 +15,12 @@ for (const variant of ["day1", "day2"] as const)
     test(
       "Order Prince reveal preserves life and resets exile/" + variant + "/" + locale,
       async ({ page }) => {
-        const base = "../fixtures/order-prince-" + variant + "-" + locale;
+        const base = "frontend/tests/fixtures/order-prince-" + variant + "-" + locale;
         const replay = readReplayDocument(
-          JSON.parse(readFileSync(new URL(base + ".replay.json", import.meta.url), "utf8")),
+          JSON.parse(readFileSync(frontendFixtureURL(base + ".replay.json"), "utf8")),
         );
         const cp = JSON.parse(
-          readFileSync(new URL(base + ".checkpoint.txt", import.meta.url), "utf8"),
+          readFileSync(frontendFixtureURL(base + ".checkpoint.txt"), "utf8"),
         ) as { players: Array<{ id: number; role: string; alive: boolean }> };
         const prince = cp.players.find((p) => p.role === "order_prince")!.id;
         await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));

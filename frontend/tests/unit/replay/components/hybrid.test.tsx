@@ -16,9 +16,9 @@ import {
   FRAMES_PER_EVENT,
 } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
-import wolf from "../../../fixtures/hybrid-wolf_win.replay.json";
-import good from "../../../fixtures/hybrid-good_dead.replay.json";
-import twelve from "../../../fixtures/hybrid-twelve_wolf_win.replay.json";
+import wolf from "../../../fixtures/six-player-hybrid-wolf-win/hybrid-wolf-win/en/god.replay.json";
+import good from "../../../fixtures/six-player-hybrid-good-dead/hybrid-good-dead/en/god.replay.json";
+import twelve from "../../../fixtures/twelve-player-hybrid-twelve-wolf-win/hybrid-twelve-wolf-win/en/god.replay.json";
 
 for (const locale of ["zh-CN", "en"] as const)
   for (const resolved of [false, true])

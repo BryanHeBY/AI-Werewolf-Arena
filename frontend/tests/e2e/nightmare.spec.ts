@@ -1,3 +1,10 @@
+/**
+ * Browser integration tests render a recorded Nightmare fear and Hunter-shot
+ * fixture in both locales. Archived events and literal seat/winner assertions
+ * check that fear does not kill a seat and the terminal shot remains visible;
+ * the tests only play and seek the recorded replay.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -9,7 +16,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const replay = readReplayDocument(
       JSON.parse(
         readFileSync(
-          new URL(`../fixtures/nightmare-${locale}.replay.json`, import.meta.url),
+          frontendFixtureURL(`frontend/tests/fixtures/nightmare-${locale}.replay.json`),
           "utf8",
         ),
       ),

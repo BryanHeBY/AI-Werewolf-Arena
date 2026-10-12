@@ -1,9 +1,16 @@
+/**
+ * Browser integration tests render actual Demon Hunter God and owner-view
+ * fixtures across board sizes, win policies and locales. Archive/checkpoint
+ * facts and literal winner assertions check choice timing, hidden identities
+ * and the terminal Hunter death chain without executing a duel or rule engine.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { eventLabel } from "../../src/replay/event-labels";
 import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 const read = (name: string) =>
-  JSON.parse(readFileSync(new URL(`../fixtures/${name}`, import.meta.url), "utf8"));
+  JSON.parse(readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}`), "utf8"));
 for (const size of [6, 12])
   for (const goal of ["slaughter_city", "slaughter_side"])
     for (const locale of ["zh-CN", "en"] as const)

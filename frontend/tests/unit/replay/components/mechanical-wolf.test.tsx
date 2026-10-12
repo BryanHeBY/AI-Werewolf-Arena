@@ -16,9 +16,9 @@ import {
   FRAMES_PER_EVENT,
 } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
-import reflection from "../../../fixtures/mechanical-reflection.replay.json";
-import twelve from "../../../fixtures/mechanical-twelve.replay.json";
-import failure from "../../../fixtures/mechanical-guard-failure.replay.json";
+import reflection from "../../../fixtures/six-player-mechanical-reflection/mechanical-reflection/zh-CN/god.replay.json";
+import twelve from "../../../fixtures/twelve-player-mechanical-twelve/mechanical-twelve/en/god.replay.json";
+import failure from "../../../fixtures/six-player-mechanical-guard-failure/mechanical-guard-failure/zh-CN/god.replay.json";
 
 for (const locale of ["zh-CN", "en"] as const)
   for (const kind of ["reflection", "mimic", "failure"] as const)

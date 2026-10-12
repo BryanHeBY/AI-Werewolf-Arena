@@ -1,10 +1,18 @@
+/**
+ * Browser integration tests seek recorded Noble secret-body God and owner-view
+ * fixtures in both locales. Archived facts and literal expectations check
+ * failed reveals, next-night notices, badge ownership and authorized movie
+ * inputs at each frame, without resolving concealment or exposing other
+ * players' private identities.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { createReplayRenderInput } from "../../src/replay/replay-frame";
 import { eventLabel } from "../../src/replay/event-labels";
 const load = (name: string, suffix: string) =>
-  JSON.parse(readFileSync(new URL(`../fixtures/${name}${suffix}`, import.meta.url), "utf8"));
+  JSON.parse(readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}${suffix}`), "utf8"));
 
 for (const locale of ["en", "zh-CN"] as const)
   test(`Noble actual failed reveal retains alive badge without winner ${locale}`, async ({

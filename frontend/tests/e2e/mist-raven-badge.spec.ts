@@ -1,3 +1,10 @@
+/**
+ * Browser integration tests seek and rewind a recorded Mist Raven badge chain
+ * in both locales. Literal expected badge holders and archived event captions
+ * check each handoff frame and the absence of premature winners; no badge
+ * transfer or game rule is performed by this test.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -7,10 +14,7 @@ for (const locale of ["en", "zh-CN"] as const)
     const r = readReplayDocument(
       JSON.parse(
         readFileSync(
-          new URL(
-            `../fixtures/mist-manual-blast-badge-chain-${locale}.replay.json`,
-            import.meta.url,
-          ),
+          frontendFixtureURL(`frontend/tests/fixtures/mist-manual-blast-badge-chain-${locale}.replay.json`),
           "utf8",
         ),
       ),

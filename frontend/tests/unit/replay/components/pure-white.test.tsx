@@ -16,8 +16,8 @@ import {
   FRAMES_PER_EVENT,
 } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
-import wolf from "../../../fixtures/pure-white-wolf.replay.json";
-import good from "../../../fixtures/pure-white-good.replay.json";
+import wolf from "../../../fixtures/pure-white-transport-wolf/pure-white-wolf/zh-CN/god.replay.json";
+import good from "../../../fixtures/pure-white-transport-good/pure-white-good/zh-CN/god.replay.json";
 for (const locale of ["zh-CN", "en"] as const)
   for (const kind of ["wolf", "good"] as const)
     test(`${locale}/${kind}: inspection is private knowledge, not premature death, and dead faction members win`, () => {

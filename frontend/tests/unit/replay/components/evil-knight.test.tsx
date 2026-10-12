@@ -5,6 +5,7 @@
  * frame assertions. Handwritten visibility/state expectations and immutable
  * archives are independent oracles. No live game or model transport executes.
  */
+import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -19,7 +20,7 @@ import {
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
 const kinds = ["night_immune_wolf", "shot_bypass_good", "day_shot_good"] as const;
 const load = (name: string): unknown =>
-  JSON.parse(readFileSync(new URL("../../../fixtures/" + name, import.meta.url), "utf8"));
+  JSON.parse(readFileSync(frontendFixtureURL("frontend/tests/fixtures/" + name), "utf8"));
 for (const kind of kinds)
   for (const locale of ["zh-CN", "en"] as const) {
     test(`evil knight ${kind}/${locale}: real archive, private reports and exact final checkpoint`, () => {

@@ -16,7 +16,7 @@ import {
   FRAMES_PER_EVENT,
 } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
-import twelve from "../../../fixtures/mirror-twelve.replay.json";
+import twelve from "../../../fixtures/twelve-player-mirror-twelve/mirror-twelve/en/god.replay.json";
 
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: a neutral shot preserves legacy God seats and renders without a gun-owner role label`, () => {

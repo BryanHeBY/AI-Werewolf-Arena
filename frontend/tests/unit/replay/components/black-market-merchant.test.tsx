@@ -13,11 +13,11 @@ import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
 import { createReplayRenderInput, FRAMES_PER_EVENT } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
 import { renderToStaticMarkup } from "react-dom/server";
-import gun from "../../../fixtures/black-market-twelve_gun.replay.json";
-import backlash from "../../../fixtures/black-market-twelve_backlash.replay.json";
-import lastGod from "../../../fixtures/black-market-last_god.replay.json";
-import check from "../../../fixtures/black-market-check_duplicate.replay.json";
-import late from "../../../fixtures/black-market-late_hold.replay.json";
+import gun from "../../../fixtures/twelve-black-twelve-gun/black-market-twelve-gun/en/god.replay.json";
+import backlash from "../../../fixtures/twelve-black-twelve-backlash/black-market-twelve-backlash/en/god.replay.json";
+import lastGod from "../../../fixtures/six-black-last-god/black-market-last-god/en/god.replay.json";
+import check from "../../../fixtures/six-black-check-duplicate/black-market-check-duplicate/en/god.replay.json";
+import late from "../../../fixtures/six-black-late-hold/black-market-late-hold/en/god.replay.json";
 for (const locale of ["zh-CN", "en"] as const) {
   test(`${locale}: actual Black choice and God outcome never change original role or prematurely kill`, () => {
     for (const raw of [gun, backlash]) {

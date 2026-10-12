@@ -22,6 +22,6 @@ System/user提示、assistant思考、工具参数/result以及发言仍为原�
 
 ## 验证
 
-合成legacy-player-view.json同时包含中文/英文phase、未知phase/day异常及与术语同形的原文。人工断言只元字段转换、源输入不变、未来版本和嵌套坏类型拒绝。真实中英PlayerRoundRecorder→record作用域→文件保存检查schema/locale、机器phase/stage/request_id与原文。
+合成`packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-.player.json`同时包含中文/英文phase、未知phase/day异常及与术语同形的原文。人工断言只元字段转换、源输入不变、未来版本和嵌套坏类型拒绝。真实中英PlayerRoundRecorder→record作用域→文件保存检查schema/locale、机器phase/stage/request_id与原文。
 
 工厂两locale生成的request结构完全一致；实际提示渲染语言不同、约束值不变，自定/spread/empty原文覆盖与消息引用深拷贝有独立回归。录制/完整对局/离线复现、真实SDK/ACP/MCP仍回归，严格Tape中坏消息引用也有真实parse拒绝。英文runner与内部英文复现已随P3实际通路/整局验收开放；I04/运行说明与诊断已交付，当前证据见[p3-activation](reviews/p3-activation.md)。

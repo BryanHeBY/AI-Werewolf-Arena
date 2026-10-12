@@ -16,9 +16,9 @@ import {
   FRAMES_PER_EVENT,
 } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
-import poison from "../../../fixtures/merchant-poison.replay.json";
-import dream from "../../../fixtures/merchant-dream.replay.json";
-import twelve from "../../../fixtures/merchant-twelve.replay.json";
+import poison from "../../../fixtures/six-player-merchant-poison/merchant-poison/zh-CN/god.replay.json";
+import dream from "../../../fixtures/six-player-merchant-dream/merchant-dream/en/god.replay.json";
+import twelve from "../../../fixtures/twelve-player-merchant-twelve/merchant-twelve/en/god.replay.json";
 for (const locale of ["zh-CN", "en"] as const)
   for (const outcome of [false, true])
     test(`${locale}/${outcome}: real Merchant choice and God backlash proposal are labels, not premature deaths`, () => {

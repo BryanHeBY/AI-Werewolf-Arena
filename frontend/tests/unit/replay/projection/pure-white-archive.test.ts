@@ -8,12 +8,12 @@
 import { expect, test } from "bun:test";
 import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
-import wolf from "../../../fixtures/pure-white-wolf.replay.json";
-import good from "../../../fixtures/pure-white-good.replay.json";
-import wolfCheckpoint from "../../../fixtures/checkpoints/pure-white-wolf.json";
-import goodCheckpoint from "../../../fixtures/checkpoints/pure-white-good.json";
-import wolfViews from "../../../fixtures/player-views/pure-white-wolf.json";
-import goodViews from "../../../fixtures/player-views/pure-white-good.json";
+import wolf from "../../../fixtures/pure-white-transport-wolf/pure-white-wolf/zh-CN/god.replay.json";
+import good from "../../../fixtures/pure-white-transport-good/pure-white-good/zh-CN/god.replay.json";
+import wolfCheckpoint from "../../../fixtures/pure-white-transport-wolf/pure-white-wolf/zh-CN/checkpoint.json";
+import goodCheckpoint from "../../../fixtures/pure-white-transport-good/pure-white-good/zh-CN/checkpoint.json";
+import wolfViews from "../../../fixtures/pure-white-transport-wolf/pure-white-wolf/zh-CN/players/all.player-views.json";
+import goodViews from "../../../fixtures/pure-white-transport-good/pure-white-good/zh-CN/players/all.player-views.json";
 for (const kind of ["wolf", "good"] as const)
   test(`${kind}: frontend projection matches actual engine checkpoint and each owner sees only their inspection`, () => {
     const replay = readReplayDocument(kind === "wolf" ? wolf : good);

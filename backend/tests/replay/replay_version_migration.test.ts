@@ -19,7 +19,7 @@ import { createTestTempDirectory } from "../support/drivers/temp-directories";
 async function fixture() {
   return JSON.parse(
     await readFile(
-      path.resolve(process.cwd(), "../packages/replay-contract/fixtures/legacy-localized.json"),
+      path.resolve(process.cwd(), "../packages/replay-contract/fixtures/synthetic/legacy-localized/locale-unrecorded/god.replay.json"),
       "utf8",
     ),
   );

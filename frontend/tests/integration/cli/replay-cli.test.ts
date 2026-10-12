@@ -54,7 +54,7 @@ test("actual frontend commands render English failures without opening a browser
         "--locale",
         "en",
         "--input",
-        "tests/fixtures/sample.replay.json",
+        "tests/fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json",
         "--output",
         "/tmp/unused-frame.png",
         "--frame=-1",

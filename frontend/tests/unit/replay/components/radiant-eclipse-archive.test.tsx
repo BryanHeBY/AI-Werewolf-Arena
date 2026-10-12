@@ -5,6 +5,7 @@
  * frame assertions. Handwritten visibility/state expectations and immutable
  * archives are independent oracles. No live game or model transport executes.
  */
+import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -28,7 +29,7 @@ const names = [
   "one-zero-borrow-heal",
 ];
 const load = (name: string, suffix: string) =>
-  JSON.parse(readFileSync(new URL(`../../../fixtures/${name}${suffix}`, import.meta.url), "utf8"));
+  JSON.parse(readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}${suffix}`), "utf8"));
 const privateFact = (type: string) =>
   type.startsWith("eclipse_") || type === "radiant_shelter_chosen";
 const dead = (snapshot: ReturnType<typeof buildReplaySnapshot>) =>

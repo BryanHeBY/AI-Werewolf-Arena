@@ -5,6 +5,7 @@
  * frame assertions. Handwritten visibility/state expectations and immutable
  * archives are independent oracles. No live game or model transport executes.
  */
+import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -21,7 +22,7 @@ for (const name of ["6-good_dead", "6-hunter_chain", "6-wolf_needs_girl", "12-wo
         const god = readReplayDocument(
           JSON.parse(
             readFileSync(
-              new URL(`../../../fixtures/lonely-girl-${name}.replay.json`, import.meta.url),
+              frontendFixtureURL(`frontend/tests/fixtures/lonely-girl-${name}.replay.json`),
               "utf8",
             ),
           ),
@@ -29,10 +30,7 @@ for (const name of ["6-good_dead", "6-hunter_chain", "6-wolf_needs_girl", "12-wo
         const view = readReplayPlayerView(
           JSON.parse(
             readFileSync(
-              new URL(
-                `../../../fixtures/player-views/lonely-girl-${name}.player.json`,
-                import.meta.url,
-              ),
+              frontendFixtureURL(`frontend/tests/fixtures/player-views/lonely-girl-${name}.player.json`),
               "utf8",
             ),
           ),

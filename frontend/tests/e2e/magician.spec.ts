@@ -1,3 +1,10 @@
+/**
+ * Browser integration tests render recorded Magician fixtures for original
+ * and exchanged gun targets in both locales. The archive event order supplies
+ * the assertions for unchanged seats, night-miss captions and terminal winners;
+ * the browser exercises replay frames rather than resolving game actions.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -7,12 +14,12 @@ for (const policy of ["original", "exchanged"] as const)
     test(`Magician exchange preserves seats and night miss causes no extra death/${policy}/${locale}`, async ({
       page,
     }) => {
-      const base = "../fixtures/magician-" + policy + "-" + locale;
+      const base = "frontend/tests/fixtures/magician-" + policy + "-" + locale;
       const replay = readReplayDocument(
-        JSON.parse(readFileSync(new URL(base + ".replay.json", import.meta.url), "utf8")),
+        JSON.parse(readFileSync(frontendFixtureURL(base + ".replay.json"), "utf8")),
       );
       const cp = JSON.parse(
-        readFileSync(new URL(base + ".checkpoint.txt", import.meta.url), "utf8"),
+        readFileSync(frontendFixtureURL(base + ".checkpoint.txt"), "utf8"),
       ) as { players: Array<{ id: number; role: string; alive: boolean }> };
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");

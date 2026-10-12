@@ -15,8 +15,8 @@ import {
   readReplayDocument,
   readReplayPlayerView,
 } from "@ai-werewolf-arena/replay-contract";
-import legacyGod from "../fixtures/legacy-localized.json";
-import legacyPlayer from "../fixtures/legacy-player-view.json";
+import legacyGod from "../fixtures/synthetic/legacy-localized/locale-unrecorded/god.replay.json";
+import legacyPlayer from "../fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-.player.json";
 
 describe("replay public package contract", () => {
   test("legacy God metadata converts while archived user text and unknown facts remain raw", () => {

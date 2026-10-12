@@ -5,6 +5,7 @@
  * frame assertions. Handwritten visibility/state expectations and immutable
  * archives are independent oracles. No live game or model transport executes.
  */
+import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -20,7 +21,7 @@ for (const name of ["6-seer", "6-hunter", "12-both0", "12-one1"])
       const doc = readReplayDocument(
           JSON.parse(
             readFileSync(
-              new URL(`../../../fixtures/shapeshifter-${name}.replay.json`, import.meta.url),
+              frontendFixtureURL(`frontend/tests/fixtures/shapeshifter-${name}.replay.json`),
               "utf8",
             ),
           ),
@@ -66,10 +67,7 @@ for (const name of ["6-seer", "6-hunter", "12-both0", "12-one1"])
       const view = readReplayPlayerView(
           JSON.parse(
             readFileSync(
-              new URL(
-                `../../../fixtures/player-views/shapeshifter-${name}.player.json`,
-                import.meta.url,
-              ),
+              frontendFixtureURL(`frontend/tests/fixtures/player-views/shapeshifter-${name}.player.json`),
               "utf8",
             ),
           ),
@@ -77,7 +75,7 @@ for (const name of ["6-seer", "6-hunter", "12-both0", "12-one1"])
         god = readReplayDocument(
           JSON.parse(
             readFileSync(
-              new URL(`../../../fixtures/shapeshifter-${name}.replay.json`, import.meta.url),
+              frontendFixtureURL(`frontend/tests/fixtures/shapeshifter-${name}.replay.json`),
               "utf8",
             ),
           ),

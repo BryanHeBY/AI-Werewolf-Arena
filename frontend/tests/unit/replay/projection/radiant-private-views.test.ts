@@ -5,14 +5,15 @@
  * Handwritten expectations and immutable fixture bytes are independent oracles.
  * Actual fixture lookup remains an input source; no live game executes here.
  */
+import { frontendFixtureURL, frontendFixtureArtifacts } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { isDeepStrictEqual } from "node:util";
 import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
 import { buildReplayFrame, createReplayRenderInput } from "../../../../src/replay/replay-frame";
-const root = new URL("../../../fixtures/", import.meta.url).pathname;
-const read = (n: string) => JSON.parse(readFileSync(root + n, "utf8"));
+
+const read = (n: string) => JSON.parse(readFileSync(frontendFixtureURL("frontend/tests/fixtures/" + n), "utf8"));
 const load = (n: string) => readReplayDocument(read(n + ".replay.json"));
 const dead = (s: ReturnType<typeof buildReplaySnapshot>) =>
   s.players.filter((p) => !p.alive).map((p) => p.playerId);
@@ -30,7 +31,7 @@ const privateByActor = new Set([
   "dream_applied",
 ]);
 test("all 112 real owner archives preserve exact private actor and source facts", () => {
-  const files = readdirSync(root + "player-views/").filter(
+  const files = frontendFixtureArtifacts("player-view").map((file) => file.originPath.slice("frontend/tests/fixtures/player-views/".length)).filter(
     (n) => n.startsWith("radiant-") && n.endsWith(".player.json"),
   );
   expect(files).toHaveLength(112);

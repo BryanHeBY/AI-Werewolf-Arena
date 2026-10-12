@@ -31,7 +31,7 @@ bun run --cwd frontend build
 
 ```bash
 bun run --cwd frontend replay:render -- --input ../record/session_<id> --output /tmp/game.en.mp4 --locale en --time-zone UTC
-bun run --cwd frontend replay:render -- --input tests/fixtures/sample.replay.json --output /tmp/frame.zh.png --locale zh-CN --time-zone Asia/Shanghai --frame 100 --browser /usr/bin/chromium
+bun run --cwd frontend replay:render -- --input tests/fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json --output /tmp/frame.zh.png --locale zh-CN --time-zone Asia/Shanghai --frame 100 --browser /usr/bin/chromium
 ```
 
 输出PNG或H.264 MP4，已有目标和源文件不覆盖。语言/日期/历史字段、渲染参数、独占发布与资源关闭详见[展示契约](../docs/expansion/replay-display.md)。本地已有浏览器可设置`PLAYWRIGHT_CHROMIUM_EXECUTABLE=/usr/bin/chromium`运行`test:e2e`；缺省使用Playwright安装的浏览器。

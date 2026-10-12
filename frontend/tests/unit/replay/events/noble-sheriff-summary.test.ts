@@ -5,6 +5,7 @@
  * Handwritten expectations and immutable fixture bytes are independent oracles.
  * Actual fixture lookup remains an input source; no live game executes here.
  */
+import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument, type ReplayEvent } from "@ai-werewolf-arena/replay-contract";
@@ -34,7 +35,7 @@ function input(locale: "en" | "zh-CN", events: ReplayEvent[]) {
   const base = readReplayDocument(
     JSON.parse(
       readFileSync(
-        new URL(`../../../fixtures/noble-badge_reveal-${locale}.replay.json`, import.meta.url),
+        frontendFixtureURL(`frontend/tests/fixtures/noble-badge_reveal-${locale}.replay.json`),
         "utf8",
       ),
     ),

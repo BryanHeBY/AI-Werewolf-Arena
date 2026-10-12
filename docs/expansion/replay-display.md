@@ -28,7 +28,7 @@ bun run --cwd frontend replay:render -- \
   --locale en --time-zone UTC
 
 bun run --cwd frontend replay:render -- \
-  --input tests/fixtures/sample.replay.json \
+  --input tests/fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json \
   --output /tmp/game.zh.png \
   --locale zh-CN --time-zone Asia/Shanghai --frame 100 \
   --browser /usr/bin/chromium

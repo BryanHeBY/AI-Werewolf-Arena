@@ -13,8 +13,8 @@ import { eventLabel } from "../../../../src/replay/event-labels";
 import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
 import { createReplayRenderInput, FRAMES_PER_EVENT } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
-import wolf from "../../../fixtures/gift-gun-last-wolf.replay.json";
-import god from "../../../fixtures/gift-gun-last-god.replay.json";
+import wolf from "../../../fixtures/controlled-gift-gun/gift-gun-last-wolf/en/god.replay.json";
+import god from "../../../fixtures/controlled-gift-gun/gift-gun-last-god/en/god.replay.json";
 
 for (const locale of ["zh-CN", "en"] as const)
   for (const first of ["wolf", "god"] as const)

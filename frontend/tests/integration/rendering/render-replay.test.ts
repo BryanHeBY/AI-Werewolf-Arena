@@ -6,6 +6,7 @@
  * ownership is tested with a fake rendering adapter; no real browser or model
  * is launched. Each test removes only its owned /tmp fixtures.
  */
+import { frontendFixtureURL } from "../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { mkdtemp, copyFile, readFile, writeFile, symlink, link, rm } from "node:fs/promises";
 import os from "node:os";
@@ -16,7 +17,7 @@ test("render entry rejects invalid inputs and output aliases before starting bro
   const root = await mkdtemp(path.join(os.tmpdir(), "awa-render-guard-"));
   try {
     const input = path.join(root, "replay.json");
-    await copyFile(new URL("../../fixtures/sample.replay.json", import.meta.url), input);
+    await copyFile(frontendFixtureURL("frontend/tests/fixtures/sample.replay.json"), input);
     const before = await readFile(input, "utf8");
     const output = path.join(root, "existing.png");
     await writeFile(output, "keep output");
@@ -66,7 +67,7 @@ async function renderFixture(job: {
   const root = await mkdtemp(path.join(os.tmpdir(), "awa-render-owner-"));
   const source = path.join(root, "source.json");
   const target = path.join(root, "target.png");
-  await copyFile(new URL("../../fixtures/sample.replay.json", import.meta.url), source);
+  await copyFile(frontendFixtureURL("frontend/tests/fixtures/sample.replay.json"), source);
   const original = await readFile(source, "utf8");
   const calls: string[] = [];
   let temporary = "";

@@ -1,3 +1,10 @@
+/**
+ * Browser integration tests render recorded Evil Knight inspection and gun
+ * policy fixtures in both locales. Assertions seek the recorded inspection,
+ * shot and terminal frames to check labels, living seats and winner timing;
+ * these tests consume settled archives without executing a game.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -10,7 +17,7 @@ for (const kind of ["night_immune_wolf", "shot_bypass_good", "day_shot_good"] as
       const replay = readReplayDocument(
         JSON.parse(
           readFileSync(
-            new URL(`../fixtures/evil-knight-${kind}-${locale}.replay.json`, import.meta.url),
+            frontendFixtureURL(`frontend/tests/fixtures/evil-knight-${kind}-${locale}.replay.json`),
             "utf8",
           ),
         ),

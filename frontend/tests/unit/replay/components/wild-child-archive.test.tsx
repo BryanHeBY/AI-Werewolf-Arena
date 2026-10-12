@@ -5,6 +5,7 @@
  * frame assertions. Handwritten visibility/state expectations and immutable
  * archives are independent oracles. No live game or model transport executes.
  */
+import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -19,7 +20,7 @@ for (const name of ["6-wolf_exile", "6-hunter_chain", "12-good_knife", "6-same_w
       const doc = readReplayDocument(
           JSON.parse(
             readFileSync(
-              new URL(`../../../fixtures/wild-child-${name}.replay.json`, import.meta.url),
+              frontendFixtureURL(`frontend/tests/fixtures/wild-child-${name}.replay.json`),
               "utf8",
             ),
           ),

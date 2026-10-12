@@ -33,4 +33,4 @@ ReplayFinalizeMeta.gameResult可携带实际封盘；aggregate严格读取/复�
 
 [主档实际落盘判例](../../backend/tests/recording/victory_record.test.ts)两语五种结果核对game_result与public decision、清理错误后胜利保留、原文/副本/投影与getter/未知成员反例；[前端帧判例](../../frontend/tests/unit/replay/victory-display.test.tsx)核对结果、timeline、dead winner、无提前标记、静态markup、同帧确定性和legacy不推断。
 
-[展示夹具](../../frontend/tests/fixtures/victory.replay.json)是三人合成个人+关系双胜，只用于展示验收；实际基础/四窗口完整SDK/ACP/混合对局及严格Tape验证真实引擎的阵营结果记录。真实Chromium交互与中英PNG/英文MP4在本批审查中记录，不用纯函数断言冒充浏览器或视频产物。
+[展示夹具](../../frontend/tests/fixtures/synthetic-victory-display/victory/zh-CN/god.replay.json)是三人合成个人+关系双胜，只用于展示验收；实际基础/四窗口完整SDK/ACP/混合对局及严格Tape验证真实引擎的阵营结果记录。真实Chromium交互与中英PNG/英文MP4在本批审查中记录，不用纯函数断言冒充浏览器或视频产物。

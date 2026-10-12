@@ -16,8 +16,8 @@ import {
   FRAMES_PER_EVENT,
 } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
-import blocked from "../../../fixtures/wolf-beauty-blocked.replay.json";
-import lastGod from "../../../fixtures/wolf-beauty-last-god.replay.json";
+import blocked from "../../../fixtures/six-player-wolf-beauty-night-dream-block/wolf-beauty-blocked/zh-CN/god.replay.json";
+import lastGod from "../../../fixtures/six-player-wolf-beauty-last-god/wolf-beauty-last-god/zh-CN/god.replay.json";
 for (const locale of ["zh-CN", "en"] as const)
   for (const special of [false, true])
     test(`${locale}/${special}: actual Beauty protection/last-god archive keeps actual lives and dead winner membership in the pure frame`, () => {

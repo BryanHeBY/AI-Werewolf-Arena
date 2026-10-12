@@ -5,6 +5,7 @@
  * frame assertions. Handwritten visibility/state expectations and immutable
  * archives are independent oracles. No live game or model transport executes.
  */
+import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -19,7 +20,7 @@ for (const locale of ["zh-CN", "en"] as const)
       const document = readReplayDocument(
           JSON.parse(
             readFileSync(
-              new URL(`../../../fixtures/fox-${kind}.replay.json`, import.meta.url),
+              frontendFixtureURL(`frontend/tests/fixtures/fox-${kind}.replay.json`),
               "utf8",
             ),
           ),

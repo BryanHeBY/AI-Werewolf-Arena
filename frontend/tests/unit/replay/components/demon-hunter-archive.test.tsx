@@ -5,6 +5,7 @@
  * frame assertions. Handwritten visibility/state expectations and immutable
  * archives are independent oracles. No live game or model transport executes.
  */
+import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -14,7 +15,7 @@ import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
 import { createReplayRenderInput, buildReplayFrame } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
 const read = (file: string) =>
-  JSON.parse(readFileSync(new URL(`../../../fixtures/${file}`, import.meta.url), "utf8"));
+  JSON.parse(readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${file}`), "utf8"));
 for (const size of [6, 12])
   for (const goal of ["slaughter_city", "slaughter_side"])
     for (const scope of ["god", "owner"])

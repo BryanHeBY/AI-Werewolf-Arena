@@ -5,6 +5,7 @@
  * frame assertions. Handwritten visibility/state expectations and immutable
  * archives are independent oracles. No live game or model transport executes.
  */
+import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -21,7 +22,7 @@ for (const kind of ["good", "wolf", "pair", "witness"])
         const god = readReplayDocument(
           JSON.parse(
             readFileSync(
-              new URL(`../../../fixtures/ghost-bride-${kind}.replay.json`, import.meta.url),
+              frontendFixtureURL(`frontend/tests/fixtures/ghost-bride-${kind}.replay.json`),
               "utf8",
             ),
           ),
@@ -32,10 +33,7 @@ for (const kind of ["good", "wolf", "pair", "witness"])
             : readReplayPlayerView(
                 JSON.parse(
                   readFileSync(
-                    new URL(
-                      `../../../fixtures/player-views/ghost-bride-${kind}-${actor}.player.json`,
-                      import.meta.url,
-                    ),
+                    frontendFixtureURL(`frontend/tests/fixtures/player-views/ghost-bride-${kind}-${actor}.player.json`),
                     "utf8",
                   ),
                 ),
@@ -120,7 +118,7 @@ for (const kind of ["night-win", "all-dead"])
       const replay = readReplayDocument(
         JSON.parse(
           readFileSync(
-            new URL(`../../../fixtures/ghost-bride-${kind}.replay.json`, import.meta.url),
+            frontendFixtureURL(`frontend/tests/fixtures/ghost-bride-${kind}.replay.json`),
             "utf8",
           ),
         ),
@@ -128,7 +126,7 @@ for (const kind of ["night-win", "all-dead"])
       replay.meta.locale = locale;
       const cp = JSON.parse(
         readFileSync(
-          new URL(`../../../fixtures/checkpoints/ghost-bride-${kind}.json`, import.meta.url),
+          frontendFixtureURL(`frontend/tests/fixtures/checkpoints/ghost-bride-${kind}.json`),
           "utf8",
         ),
       );

@@ -40,4 +40,4 @@ bun run --cwd backend run --configs-dir ../configs.example --game-config-name tw
 
 原80＋本54＝134实际通路完整局，不是134外部模型局。另两板各16个显式active风格受限观察seed，真实技能分支/零修复与逐局重放，动作只用本人DTO与具名RNG；初版混合风格六人16seed没有实际白爆，未放宽分支断言，改为明确主动风格和可首日施放的有界概率策略，再保留实际分支门槛。
 
-公开[前端夹具](../../frontend/tests/fixtures/white-wolf-king.replay.json)来自实际SDK完整局，中英单测/真实Chromium/Remotion帧核对双人同一事实死亡、追枪、null标签及终局时点。规则/实现/文档三路复查与最终门槛见[审查记录](reviews/p5-white-wolf-king.md)；P5骑士/守墓人、后续55项与P10外部模型质量仍待完成。
+公开[前端夹具](../../frontend/tests/fixtures/six-player-white-wolf-king/white-wolf-king/en/god.replay.json)来自实际SDK完整局，中英单测/真实Chromium/Remotion帧核对双人同一事实死亡、追枪、null标签及终局时点。规则/实现/文档三路复查与最终门槛见[审查记录](reviews/p5-white-wolf-king.md)；P5骑士/守墓人、后续55项与P10外部模型质量仍待完成。

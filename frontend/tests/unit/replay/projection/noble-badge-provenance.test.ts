@@ -5,6 +5,7 @@
  * Handwritten expectations and immutable fixture bytes are independent oracles.
  * Actual fixture lookup remains an input source; no live game executes here.
  */
+import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { test, expect } from "bun:test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
@@ -14,14 +15,14 @@ import { createReplayRenderInput, buildReplayFrame } from "../../../../src/repla
 // into the private movie. The God roster supplies only public seat/name fields.
 for (const locale of ["en", "zh-CN"] as const) {
   test(`actual villager movie reveals the live Body only after public fact/${locale}`, () => {
-    const root = new URL("../../../fixtures/", import.meta.url).pathname;
+    
     const god = readReplayDocument(
-      JSON.parse(readFileSync(root + `noble-badge_reveal-${locale}.replay.json`, "utf8")),
+      JSON.parse(readFileSync(frontendFixtureURL("frontend/tests/fixtures/" + `noble-badge_reveal-${locale}.replay.json`), "utf8")),
     );
     const owner = readReplayPlayerView(
       JSON.parse(
         readFileSync(
-          root + `player-views/noble-badge_reveal-${locale}-villager.player.json`,
+          frontendFixtureURL("frontend/tests/fixtures/" + `player-views/noble-badge_reveal-${locale}-villager.player.json`),
           "utf8",
         ),
       ),

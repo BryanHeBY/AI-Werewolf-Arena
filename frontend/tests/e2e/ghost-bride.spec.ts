@@ -1,10 +1,18 @@
+/**
+ * Browser integration tests render actual Ghost Bride God and owner-view
+ * fixtures across partner, witness and terminal-night outcomes. Archive and
+ * checkpoint facts supply assertions for native identities, private marriage
+ * visibility, deaths and three-faction winners in both locales. Rendering
+ * consumes those settled records without resolving marriage or victory.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-text";
 import { eventLabel } from "../../src/replay/event-labels";
 const read = (name: string) =>
-  JSON.parse(readFileSync(new URL(`../fixtures/${name}`, import.meta.url), "utf8"));
+  JSON.parse(readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}`), "utf8"));
 for (const kind of ["good", "wolf", "pair", "witness"])
   for (const locale of ["zh-CN", "en"] as const)
     test(`${kind}/${locale}: actual Ghost Bride God archive preserves native partner identities and terminal three-faction winners`, async ({

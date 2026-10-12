@@ -1,3 +1,10 @@
+/**
+ * Browser integration tests build minimal render inputs from actual Radiant
+ * Eclipse maid, count, witch, pack and villager player-view fixtures. Assertions
+ * seek and rewind owner-visible events in both locales, checking labels and
+ * identity masking without importing the God archive's private knowledge.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
@@ -12,13 +19,13 @@ for (const actor of ["maid", "count", "witch", "pack", "villager"] as const)
       const name = `radiant-independent-stock-card16-card17-${locale}`;
       const god = readReplayDocument(
         JSON.parse(
-          readFileSync(new URL(`../fixtures/${name}.replay.json`, import.meta.url), "utf8"),
+          readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}.replay.json`), "utf8"),
         ),
       );
       const view = readReplayPlayerView(
         JSON.parse(
           readFileSync(
-            new URL(`../fixtures/player-views/${name}-${actor}.player.json`, import.meta.url),
+            frontendFixtureURL(`frontend/tests/fixtures/player-views/${name}-${actor}.player.json`),
             "utf8",
           ),
         ),

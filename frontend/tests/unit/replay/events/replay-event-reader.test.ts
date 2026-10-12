@@ -5,9 +5,10 @@
  * Handwritten expectations and immutable fixture bytes are independent oracles.
  * Actual fixture lookup remains an input source; no live game executes here.
  */
+import { frontendFixtureURL, frontendFixtureArtifacts } from "../../../support/fixtures/manifest";
 import { buildPresentationReplay } from "../../../../src/replay/replay-presentation";
 import { expect, test } from "bun:test";
-import { readdirSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import {
   readReplayDocument,
   type ReplayDocument,
@@ -43,11 +44,11 @@ const replay = (fact: ReplayEvent): ReplayDocument => ({
 });
 
 test("all archived known events remain readable through the common fact reader", () => {
-  const fixtures = new URL("../../../fixtures/", import.meta.url);
   const rejected: string[] = [];
   let count = 0;
-  for (const name of readdirSync(fixtures).filter((name) => name.endsWith(".json"))) {
-    const raw = readReplayDocument(JSON.parse(readFileSync(new URL(name, fixtures), "utf8")));
+  for (const artifact of frontendFixtureArtifacts("god-replay")) {
+    const name = artifact.originPath.slice("frontend/tests/fixtures/".length);
+    const raw = readReplayDocument(JSON.parse(readFileSync(frontendFixtureURL(artifact.originPath), "utf8")));
     const ids = raw.players.map((player) => player.player_id);
     for (const fact of raw.events) {
       count++;

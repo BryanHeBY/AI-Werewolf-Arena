@@ -1,3 +1,10 @@
+/**
+ * Browser integration tests render the actual paid-but-aborted Radiant Eclipse
+ * archive in both locales. Recorded events supply captions and literal absence
+ * assertions check that neither night two nor a winner is announced. The test
+ * only renders the incomplete record and does not resume its game.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -10,7 +17,7 @@ for (const locale of ["en", "zh-CN"] as const)
     const replay = readReplayDocument(
       JSON.parse(
         readFileSync(
-          new URL(`../fixtures/radiant-failed-paid-potion-${locale}.replay.json`, import.meta.url),
+          frontendFixtureURL(`frontend/tests/fixtures/radiant-failed-paid-potion-${locale}.replay.json`),
           "utf8",
         ),
       ),

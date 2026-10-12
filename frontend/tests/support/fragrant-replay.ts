@@ -1,3 +1,12 @@
+/**
+ * Provides Fragrant replay fixtures to unit and browser integration tests.
+ * Inputs are registered archive names/suffixes and an owner player-view name;
+ * outputs are freshly parsed files or a masked replay assembled from that
+ * owner's exported events. This test-support loader owns filesystem reads and
+ * fixture selection only, with no production visibility projection or rule
+ * execution.
+ */
+import { frontendFixtureURL } from "./fixtures/manifest";
 import { readFileSync } from "node:fs";
 import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 export const fragrantNames = [
@@ -8,7 +17,7 @@ export const fragrantNames = [
   "same_wave",
 ] as const;
 export const loadFragrant = (name: string, suffix: string) =>
-  JSON.parse(readFileSync(new URL(`../fixtures/${name}${suffix}`, import.meta.url), "utf8"));
+  JSON.parse(readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}${suffix}`), "utf8"));
 /** Only actual exported player events enter a masked rendering input. */
 export function fragrantPrivateReplay(name: string, owner: string) {
   const god = readReplayDocument(loadFragrant(name, ".replay.json")),

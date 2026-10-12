@@ -1,3 +1,10 @@
+/**
+ * Browser integration tests render recorded Red Moon expiry, knife and blast
+ * fixtures in both locales. Archived reveal/death events and literal seat
+ * assertions check public captions and terminal winners at their frames; the
+ * browser displays the lifecycle without applying its production rules.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -6,12 +13,12 @@ import { eventLabel } from "../../src/replay/event-labels";
 for (const mode of ["expire", "knife", "blast"] as const)
   for (const locale of ["zh-CN", "en"] as const)
     test("Red Moon public reveal and death lifecycle " + mode + "/" + locale, async ({ page }) => {
-      const base = "../fixtures/red-moon-" + mode + "-" + locale;
+      const base = "frontend/tests/fixtures/red-moon-" + mode + "-" + locale;
       const replay = readReplayDocument(
-        JSON.parse(readFileSync(new URL(base + ".replay.json", import.meta.url), "utf8")),
+        JSON.parse(readFileSync(frontendFixtureURL(base + ".replay.json"), "utf8")),
       );
       const checkpoint = JSON.parse(
-        readFileSync(new URL(base + ".checkpoint.txt", import.meta.url), "utf8"),
+        readFileSync(frontendFixtureURL(base + ".checkpoint.txt"), "utf8"),
       ) as { players: Array<{ id: number; role: string; alive: boolean }> };
       const actor = checkpoint.players.find((p) => p.role === "red_moon_apostle")!.id;
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));

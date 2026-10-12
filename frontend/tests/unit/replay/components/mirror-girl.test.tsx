@@ -16,10 +16,10 @@ import {
   FRAMES_PER_EVENT,
 } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
-import skip from "../../../fixtures/mirror-skip.replay.json";
-import exhausted from "../../../fixtures/mirror-exhausted.replay.json";
-import twelve from "../../../fixtures/mirror-twelve.replay.json";
-import king from "../../../fixtures/mirror-king_badge.replay.json";
+import skip from "../../../fixtures/six-player-mirror-skip/mirror-skip/en/god.replay.json";
+import exhausted from "../../../fixtures/six-player-mirror-exhausted/mirror-exhausted/en/god.replay.json";
+import twelve from "../../../fixtures/twelve-player-mirror-twelve/mirror-twelve/en/god.replay.json";
+import king from "../../../fixtures/six-player-mirror-king-badge/mirror-king-badge/en/god.replay.json";
 
 for (const locale of ["zh-CN", "en"] as const)
   for (const empty of [false, true])

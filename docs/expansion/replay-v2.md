@@ -30,6 +30,6 @@ P3已交付公开/私有writer-reader、机器phase/stage和MessageRef、语言/
 
 ## 验证
 
-`packages/replay-contract/fixtures/legacy-localized.json`是手工合成旧档：同时含精确别名、未知角色/阶段、用户名“玩家1”、与结果原因同形的夜聊理由和原话。验证转换前后字段/事件数/顺序/序号不丢，用户原文与未知值不变，输入不变；v2不做旧版猜测，未来或畸形版本拒绝。
+`packages/replay-contract/fixtures/synthetic/legacy-localized/locale-unrecorded/god.replay.json`是手工合成旧档：同时含精确别名、未知角色/阶段、用户名“玩家1”、与结果原因同形的夜聊理由和原话。验证转换前后字段/事件数/顺序/序号不丢，用户原文与未知值不变，输入不变；v2不做旧版猜测，未来或畸形版本拒绝。
 
 后端导出与浏览器实际加载同一fixture，原文件字节保持不变。当前引擎完整对局、模拟、内部动作复现以及前端投影/播放测试继续回归，必要workspace依赖仅新增内部game-catalog链接。

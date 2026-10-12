@@ -16,8 +16,8 @@ import {
   FRAMES_PER_EVENT,
 } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
-import skip from "../../../fixtures/psychic-skip.replay.json";
-import twelve from "../../../fixtures/psychic-twelve.replay.json";
+import skip from "../../../fixtures/six-player-psychic-six-skip/psychic-skip/zh-CN/god.replay.json";
+import twelve from "../../../fixtures/twelve-player-psychic-twelve/psychic-twelve/en/god.replay.json";
 for (const locale of ["zh-CN", "en"] as const)
   for (const large of [false, true])
     test(`${locale}/${large}: actual Spirit Seer pass/repeat events change no seat and remain pure in timeline/video`, () => {

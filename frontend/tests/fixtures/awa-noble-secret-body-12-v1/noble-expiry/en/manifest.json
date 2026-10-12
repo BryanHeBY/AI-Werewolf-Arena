@@ -1,0 +1,1157 @@
+{
+  "schema": "awa-fixture-manifests-v2",
+  "generatedBy": "tooling/refactor/fixture-manifest.ts",
+  "baseline": {
+    "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+    "inventoryPath": "docs/refactor/generated/baseline-fixtures.json",
+    "inventorySha256": "b3506ca7aca8abda98e1936c02cc35be58c5b0b024da0b80ad97284cf67f6915"
+  },
+  "coverage": {
+    "expectedFiles": 7,
+    "exactBytesFiles": 7,
+    "mechanicalSourceFiles": 0,
+    "originalBytes": 560295,
+    "currentBytes": 560295
+  },
+  "policy": "The public table covers904 byte-identical JSON archives and3 mechanically equivalent source fixtures. Immutable original identities/digests are separate from current paths/digests. Source programs include import binding identity and preserve RPC/action matrices; helpers are independently recorded source assets. No archive, game rule, prompt or action content is regenerated; acceptance stays pending-review.",
+  "files": [
+    {
+      "originPath": "frontend/tests/fixtures/noble-expiry-en.checkpoint.txt",
+      "currentPath": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-expiry/en/checkpoint.json",
+      "sha256": "743b65003fb82c8e21a55922e457dbe6ca45eb6f2f9aaeef9210750c2ba62fd9",
+      "bytes": 16936,
+      "owner": "frontend",
+      "kind": "checkpoint",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-expiry-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_netease_demon_hunter_v1",
+            "awa_noble_secret_body_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.checkpoint.txt",
+              "pointer": "/players/5/privateState/secretBody/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.checkpoint.txt",
+              "pointer": "/players/3/privateState/demonHunter/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "unknown",
+          "reason": "No literal locale is recorded in this artifact."
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 2,
+              "role": "night_noble",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 3,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 4,
+              "role": "demon_hunter",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "awakened_idiot",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 8,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 10,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 11,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 12,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.checkpoint.txt",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/noble-expiry-en.checkpoint.txt",
+            "sha256": "743b65003fb82c8e21a55922e457dbe6ca45eb6f2f9aaeef9210750c2ba62fd9"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "unknown",
+          "reason": "No schemaVersion is serialized; legacy status does not identify a build."
+        }
+      },
+      "currentSha256": "743b65003fb82c8e21a55922e457dbe6ca45eb6f2f9aaeef9210750c2ba62fd9",
+      "currentBytes": 16936
+    },
+    {
+      "originPath": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+      "currentPath": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-expiry/en/god.replay.json",
+      "sha256": "20178e763a6e4ecd8cf23d0bb743e38ae30d3241c3ad7c688350e7b244190381",
+      "bytes": 72541,
+      "owner": "frontend",
+      "kind": "god-replay",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-expiry-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "observed",
+          "value": "awa_noble_secret_body_12_v1",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+              "pointer": "/meta/board",
+              "detail": "Literal serialized board; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_netease_demon_hunter_v1",
+            "awa_noble_secret_body_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+              "pointer": "/events/200/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+              "pointer": "/events/174/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+              "pointer": "/meta/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 2,
+              "role": "night_noble",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 3,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 4,
+              "role": "demon_hunter",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "awakened_idiot",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 8,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 10,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 11,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 12,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+            "sha256": "20178e763a6e4ecd8cf23d0bb743e38ae30d3241c3ad7c688350e7b244190381"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "20178e763a6e4ecd8cf23d0bb743e38ae30d3241c3ad7c688350e7b244190381",
+      "currentBytes": 72541
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/noble-expiry-en-body.player.json",
+      "currentPath": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-expiry/en/players/6-awakened-idiot.player.json",
+      "sha256": "0a7e712817380a6213812a316711e6fc2a865eb8303f54ac899f1c67e8df3a6b",
+      "bytes": 93972,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-expiry-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_noble_secret_body_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-body.player.json",
+              "pointer": "/timeline/80/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-body.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 6,
+              "role": "awakened_idiot",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-body.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/noble-expiry-en-body.player.json",
+            "sha256": "0a7e712817380a6213812a316711e6fc2a865eb8303f54ac899f1c67e8df3a6b"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-body.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "0a7e712817380a6213812a316711e6fc2a865eb8303f54ac899f1c67e8df3a6b",
+      "currentBytes": 93972
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/noble-expiry-en-demon.player.json",
+      "currentPath": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-expiry/en/players/4-demon-hunter.player.json",
+      "sha256": "45442f1e98ba7445816ed3d9b65dd9da6f08333302f930cd7180bff30a521efc",
+      "bytes": 83763,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-expiry-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_netease_demon_hunter_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-demon.player.json",
+              "pointer": "/timeline/76/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-demon.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 4,
+              "role": "demon_hunter",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-demon.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/noble-expiry-en-demon.player.json",
+            "sha256": "45442f1e98ba7445816ed3d9b65dd9da6f08333302f930cd7180bff30a521efc"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-demon.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "45442f1e98ba7445816ed3d9b65dd9da6f08333302f930cd7180bff30a521efc",
+      "currentBytes": 83763
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/noble-expiry-en-noble.player.json",
+      "currentPath": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-expiry/en/players/2-night-noble.player.json",
+      "sha256": "1e58dc346dcbb0b42e9853b45f6e401dcc8011faff28867afc0fa2b960290fe3",
+      "bytes": 145424,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-expiry-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_noble_secret_body_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-noble.player.json",
+              "pointer": "/timeline/115/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-noble.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 2,
+              "role": "night_noble",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-noble.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/noble-expiry-en-noble.player.json",
+            "sha256": "1e58dc346dcbb0b42e9853b45f6e401dcc8011faff28867afc0fa2b960290fe3"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-noble.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "1e58dc346dcbb0b42e9853b45f6e401dcc8011faff28867afc0fa2b960290fe3",
+      "currentBytes": 145424
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/noble-expiry-en-pack.player.json",
+      "currentPath": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-expiry/en/players/3-wolf.player.json",
+      "sha256": "a30a1f4e5067680cbc1e70ce78d3712c09b392c2f99de126e15f49a5a75c9237",
+      "bytes": 74813,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-expiry-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-pack.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 3,
+              "role": "wolf",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-pack.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/noble-expiry-en-pack.player.json",
+            "sha256": "a30a1f4e5067680cbc1e70ce78d3712c09b392c2f99de126e15f49a5a75c9237"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-pack.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "a30a1f4e5067680cbc1e70ce78d3712c09b392c2f99de126e15f49a5a75c9237",
+      "currentBytes": 74813
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/noble-expiry-en-villager.player.json",
+      "currentPath": "frontend/tests/fixtures/awa-noble-secret-body-12-v1/noble-expiry/en/players/12-villager.player.json",
+      "sha256": "07f69a28a9c7ed02033617c5e1a01e0211177194e5dc59225bdbded1adebd867",
+      "bytes": 72846,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/noble-expiry-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-villager.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 12,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-villager.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/noble-expiry-en-villager.player.json",
+            "sha256": "07f69a28a9c7ed02033617c5e1a01e0211177194e5dc59225bdbded1adebd867"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-villager.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "07f69a28a9c7ed02033617c5e1a01e0211177194e5dc59225bdbded1adebd867",
+      "currentBytes": 72846
+    }
+  ],
+  "suites": [
+    {
+      "suiteId": "fixture:frontend/tests/fixtures/noble-expiry-en.replay.json",
+      "anchorOriginPath": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+      "owner": "frontend",
+      "kind": "recorded-archive",
+      "files": [
+        "frontend/tests/fixtures/noble-expiry-en.checkpoint.txt",
+        "frontend/tests/fixtures/noble-expiry-en.replay.json",
+        "frontend/tests/fixtures/player-views/noble-expiry-en-body.player.json",
+        "frontend/tests/fixtures/player-views/noble-expiry-en-demon.player.json",
+        "frontend/tests/fixtures/player-views/noble-expiry-en-noble.player.json",
+        "frontend/tests/fixtures/player-views/noble-expiry-en-pack.player.json",
+        "frontend/tests/fixtures/player-views/noble-expiry-en-villager.player.json"
+      ],
+      "metadata": {
+        "board": {
+          "state": "observed",
+          "value": "awa_noble_secret_body_12_v1",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+              "pointer": "/meta/board",
+              "detail": "Literal serialized board; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_netease_demon_hunter_v1",
+            "awa_noble_secret_body_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+              "pointer": "/events/200/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+              "pointer": "/events/174/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.checkpoint.txt",
+              "pointer": "/players/5/privateState/secretBody/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.checkpoint.txt",
+              "pointer": "/players/3/privateState/demonHunter/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-body.player.json",
+              "pointer": "/timeline/80/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-demon.player.json",
+              "pointer": "/timeline/76/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-noble.player.json",
+              "pointer": "/timeline/115/event/payload/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+              "pointer": "/meta/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-body.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-demon.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-noble.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-pack.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-villager.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 2,
+              "role": "night_noble",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 3,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 4,
+              "role": "demon_hunter",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "awakened_idiot",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 8,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 10,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 11,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 12,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.checkpoint.txt",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-body.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-demon.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-noble.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-pack.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-villager.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+            "sha256": "20178e763a6e4ecd8cf23d0bb743e38ae30d3241c3ad7c688350e7b244190381"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-body.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-demon.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-noble.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-pack.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-villager.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "membership": [
+        {
+          "originPath": "frontend/tests/fixtures/noble-expiry-en.checkpoint.txt",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.checkpoint.txt",
+              "pointer": "",
+              "detail": "Basename only locates candidates; recorded eventCount, complete actor roster and literal terminal result agree, or the explicit cycle_failed/runtime_error nonterminal snapshot and last event day/phase agree. This compares archives and never predicts a rule outcome."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+          "state": "standalone",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+              "pointer": "",
+              "detail": "Standalone identity anchor; no cross-file relationship was asserted."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/noble-expiry-en-body.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-body.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/noble-expiry-en-demon.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-demon.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/noble-expiry-en-noble.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-noble.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/noble-expiry-en-pack.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-pack.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/noble-expiry-en-villager.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/noble-expiry-en-villager.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        }
+      ],
+      "acceptance": {
+        "status": "pending-review",
+        "evidence": [
+          {
+            "kind": "baseline-byte-match",
+            "reference": "docs/refactor/generated/baseline-fixtures.json",
+            "detail": "Every JSON member matches immutable Git and current byte digest/size; no golden was regenerated."
+          },
+          {
+            "kind": "metadata-association",
+            "reference": "frontend/tests/fixtures/noble-expiry-en.replay.json",
+            "detail": "Membership evidence identifies literal associations or explicit standalone status; this pure description does not verify caller-supplied byte hashes or infer passed test status."
+          }
+        ],
+        "unresolved": [
+          "seed: No seed is serialized; producer defaults are not evidence of the original invocation.",
+          "build: No literal build is recorded in this artifact.",
+          "Grouping and exact byte preservation are inventory evidence; independent scenario/consumer acceptance has not been assigned."
+        ]
+      }
+    }
+  ],
+  "sourceAssets": [
+    {
+      "originPath": "backend/tests/support/audit_summary_fixture.ts",
+      "currentPath": "backend/tests/support/builders/audit-summary.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "94b0a770d66434ff7ed0e2b662e4cbe615542c0ee12769ca2efc5ed3dc9a0928",
+      "originalBytes": 811,
+      "currentSha256": "0dcf1764ed975f4dba71f037bb96632b74e3f90b16f0a0c981b0daf916c63ab1",
+      "currentBytes": 1154,
+      "programSha256": "507a479dd2a872a501474a2bfd51e4d171363c3a3c174e8873f76bd0089bfa70",
+      "moduleBindingsSha256": "32b415306130f31a5b5fb54705bddd6184eee7cf63cd9da9edcd2ae974423343",
+      "kind": "test-support"
+    },
+    {
+      "originPath": "backend/tests/support/mist_raven_transport_oracle.ts",
+      "currentPath": "backend/tests/support/features/mist-raven/oracles/transport.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "7d0b2f1c81660679baf2d66d203f6a4cdfca762de927b9aba789a579beace085",
+      "originalBytes": 7318,
+      "currentSha256": "c42ff8470c11486792ba21ad70140b8a109a23d35e311b66cf934a9181fcbe02",
+      "currentBytes": 7676,
+      "programSha256": "8584a8fe074819232521336ff6cb089cb1c96c7e4d800ebd581392324513ba9d",
+      "moduleBindingsSha256": "0ac37de3b9f45e877a4cbd0c5bbbf8425fb3fc0dec4a6ddb06db234edc870dd7",
+      "kind": "test-support"
+    }
+  ],
+  "derivedManifests": []
+}

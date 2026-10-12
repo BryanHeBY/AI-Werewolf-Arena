@@ -16,8 +16,8 @@ import {
   FRAMES_PER_EVENT,
 } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
-import update from "../../../fixtures/bear-neighbor-update.replay.json";
-import king from "../../../fixtures/bear-king-badge.replay.json";
+import update from "../../../fixtures/six-player-bear-neighbor-update/bear-neighbor-update/zh-CN/god.replay.json";
+import king from "../../../fixtures/six-player-bear-king-badge/bear-king-badge/zh-CN/god.replay.json";
 for (const locale of ["zh-CN", "en"] as const)
   for (const badge of [false, true])
     test(`${locale}/${badge}: actual anonymous Bear announcements never change life/badge state and remain identical in timeline and pure video frame`, () => {

@@ -231,7 +231,7 @@ test("localizes the final winner and reason", () => {
 
 test("browser loader converts legacy metadata and keeps unknown fields and player prose", async () => {
   const raw = await Bun.file(
-    new URL("../../../../../packages/replay-contract/fixtures/legacy-localized.json", import.meta.url),
+    new URL("../../../../../packages/replay-contract/fixtures/synthetic/legacy-localized/locale-unrecorded/god.replay.json", import.meta.url),
   ).text();
   const replay = parseOfflineReplayJson(raw);
   expect(replay.schemaVersion).toBe(2);

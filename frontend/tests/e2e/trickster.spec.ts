@@ -1,3 +1,10 @@
+/**
+ * Browser integration tests render recorded Trickster mapped, cancelled and
+ * PK exile fixtures in both locales. Archived events and literal seat assertions
+ * check actual exile targets, dead-target misses and terminal winners; replay
+ * seeking does not perform target mapping or vote settlement.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -7,12 +14,12 @@ for (const variant of ["mapped", "cancel", "pk"] as const)
     test(
       "Trickster actual exile and dead-target miss/" + variant + "/" + locale,
       async ({ page }) => {
-        const base = "../fixtures/trickster-" + variant + "-" + locale;
+        const base = "frontend/tests/fixtures/trickster-" + variant + "-" + locale;
         const replay = readReplayDocument(
-          JSON.parse(readFileSync(new URL(base + ".replay.json", import.meta.url), "utf8")),
+          JSON.parse(readFileSync(frontendFixtureURL(base + ".replay.json"), "utf8")),
         );
         const cp = JSON.parse(
-          readFileSync(new URL(base + ".checkpoint.txt", import.meta.url), "utf8"),
+          readFileSync(frontendFixtureURL(base + ".checkpoint.txt"), "utf8"),
         ) as { players: Array<{ id: number; role: string; alive: boolean }> };
         await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
         await page.goto("/");

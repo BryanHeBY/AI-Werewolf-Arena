@@ -1,3 +1,10 @@
+/**
+ * Browser integration tests seek and rewind actual Radiant Eclipse replay
+ * fixtures for borrowing, potion, restoration and linked-death outcomes in both
+ * locales. Archive events and literal frame assertions check night disclosure,
+ * seat changes and terminal winners without executing the recorded mechanics.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -20,11 +27,11 @@ for (const variant of cases)
       const name = `radiant-${variant}-${locale}`;
       const replay = readReplayDocument(
         JSON.parse(
-          readFileSync(new URL(`../fixtures/${name}.replay.json`, import.meta.url), "utf8"),
+          readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}.replay.json`), "utf8"),
         ),
       );
       const cp = JSON.parse(
-        readFileSync(new URL(`../fixtures/${name}.checkpoint.txt`, import.meta.url), "utf8"),
+        readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}.checkpoint.txt`), "utf8"),
       ) as { players: Array<{ id: number; alive: boolean }> };
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");

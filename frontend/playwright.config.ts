@@ -1,3 +1,9 @@
+/**
+ * Defines browser integration discovery and Chromium/Vite startup from CI and
+ * launch environment inputs. Outputs the Playwright configuration and a local
+ * server command using the registered sample archive. It owns test transport
+ * setup only; replay rendering and game rules remain in their application owners.
+ */
 import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
@@ -25,7 +31,7 @@ export default defineConfig({
   ],
   webServer: {
     command:
-      "AWA_REPLAY_INPUT=tests/fixtures/sample.replay.json bun --no-env-file ./node_modules/vite/bin/vite.js --host 127.0.0.1 --port 4173",
+      "AWA_REPLAY_INPUT=tests/fixtures/six-player-mvp/sample/locale-unrecorded/god.replay.json bun --no-env-file ./node_modules/vite/bin/vite.js --host 127.0.0.1 --port 4173",
     url: "http://127.0.0.1:4173/src/main.tsx",
     reuseExistingServer: !process.env.CI,
     timeout: 120000,

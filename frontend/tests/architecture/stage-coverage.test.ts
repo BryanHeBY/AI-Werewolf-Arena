@@ -12,6 +12,7 @@
  * output: coverage assertions. Literal expected stages and complete set equality
  * are the oracle; no backend game or rule settlement is executed by this test.
  */
+import { frontendFixtureURL, frontendFixtureArtifacts } from "../support/fixtures/manifest";
 import {
   Phase,
   ActionWindow,
@@ -19,7 +20,7 @@ import {
   ACTION_STAGES,
 } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import ts from "typescript";
 import { dictionaries } from "@ai-werewolf-arena/game-text";
 import { stageName } from "../../src/replay/replay-localization";
@@ -112,9 +113,8 @@ function currentStageIds(): string[] {
     ...runtimeStageIds,
     ...eventTypes(),
   ]);
-  const fixtures = new URL("frontend/tests/fixtures/", root);
-  for (const file of readdirSync(fixtures).filter((file) => file.endsWith(".json"))) {
-    const replay = JSON.parse(readFileSync(new URL(file, fixtures), "utf8")) as {
+  for (const artifact of frontendFixtureArtifacts("god-replay")) {
+    const replay = JSON.parse(readFileSync(frontendFixtureURL(artifact.originPath), "utf8")) as {
       events: { type: string; stage?: string }[];
     };
     for (const event of replay.events) stages.add(event.stage ?? event.type);

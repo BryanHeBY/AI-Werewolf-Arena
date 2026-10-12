@@ -1,0 +1,1298 @@
+{
+  "schema": "awa-fixture-manifests-v2",
+  "generatedBy": "tooling/refactor/fixture-manifest.ts",
+  "baseline": {
+    "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+    "inventoryPath": "docs/refactor/generated/baseline-fixtures.json",
+    "inventorySha256": "b3506ca7aca8abda98e1936c02cc35be58c5b0b024da0b80ad97284cf67f6915"
+  },
+  "coverage": {
+    "expectedFiles": 9,
+    "exactBytesFiles": 9,
+    "mechanicalSourceFiles": 0,
+    "originalBytes": 759024,
+    "currentBytes": 759024
+  },
+  "policy": "The public table covers904 byte-identical JSON archives and3 mechanically equivalent source fixtures. Immutable original identities/digests are separate from current paths/digests. Source programs include import binding identity and preserve RPC/action matrices; helpers are independently recorded source assets. No archive, game rule, prompt or action content is regenerated; acceptance stays pending-review.",
+  "files": [
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-count.player.json",
+      "currentPath": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-independent-stock-card16-card17/en/players/9-radiant-count.player.json",
+      "sha256": "75347fadca0646722a1d37877716cf2f4539e9626b09a658fca4038bd478b6c2",
+      "bytes": 91041,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-count.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 9,
+              "role": "radiant_count",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-count.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-count.player.json",
+            "sha256": "75347fadca0646722a1d37877716cf2f4539e9626b09a658fca4038bd478b6c2"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-count.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "75347fadca0646722a1d37877716cf2f4539e9626b09a658fca4038bd478b6c2",
+      "currentBytes": 91041
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-dreamer.player.json",
+      "currentPath": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-independent-stock-card16-card17/en/players/4-dreamer.player.json",
+      "sha256": "1f02c3048a85eb808e0abca8f13a67192a05ad8f616f4a19b64b116d2e4e84f2",
+      "bytes": 123250,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-dreamer.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 4,
+              "role": "dreamer",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-dreamer.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-dreamer.player.json",
+            "sha256": "1f02c3048a85eb808e0abca8f13a67192a05ad8f616f4a19b64b116d2e4e84f2"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-dreamer.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "1f02c3048a85eb808e0abca8f13a67192a05ad8f616f4a19b64b116d2e4e84f2",
+      "currentBytes": 123250
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-maid.player.json",
+      "currentPath": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-independent-stock-card16-card17/en/players/10-eclipse-maid.player.json",
+      "sha256": "1399ed50c367ddcf539152162d9f0f7cbfd8c8c3828e279b385b4b526941c763",
+      "bytes": 137299,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-maid.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 10,
+              "role": "eclipse_maid",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-maid.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-maid.player.json",
+            "sha256": "1399ed50c367ddcf539152162d9f0f7cbfd8c8c3828e279b385b4b526941c763"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-maid.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "1399ed50c367ddcf539152162d9f0f7cbfd8c8c3828e279b385b4b526941c763",
+      "currentBytes": 137299
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-pack.player.json",
+      "currentPath": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-independent-stock-card16-card17/en/players/3-wolf.player.json",
+      "sha256": "2eefeb74fa6d36ff04cba365e641d5d01eefd8abff37b27414267ec00918ef5c",
+      "bytes": 76169,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-pack.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 3,
+              "role": "wolf",
+              "camp": "wolf"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-pack.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-pack.player.json",
+            "sha256": "2eefeb74fa6d36ff04cba365e641d5d01eefd8abff37b27414267ec00918ef5c"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-pack.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "2eefeb74fa6d36ff04cba365e641d5d01eefd8abff37b27414267ec00918ef5c",
+      "currentBytes": 76169
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-seer.player.json",
+      "currentPath": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-independent-stock-card16-card17/en/players/8-seer.player.json",
+      "sha256": "5f54ee57a1132f25870dc48ce879f1fa80c360e5c172ec45b279bf13c5e83a44",
+      "bytes": 93191,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-seer.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 8,
+              "role": "seer",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-seer.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-seer.player.json",
+            "sha256": "5f54ee57a1132f25870dc48ce879f1fa80c360e5c172ec45b279bf13c5e83a44"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-seer.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "5f54ee57a1132f25870dc48ce879f1fa80c360e5c172ec45b279bf13c5e83a44",
+      "currentBytes": 93191
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-villager.player.json",
+      "currentPath": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-independent-stock-card16-card17/en/players/1-villager.player.json",
+      "sha256": "3d85cfe8c23f6711d0eeddf33286d572a647a45d332255789d36d98b9b09df94",
+      "bytes": 75061,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-villager.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-villager.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-villager.player.json",
+            "sha256": "3d85cfe8c23f6711d0eeddf33286d572a647a45d332255789d36d98b9b09df94"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-villager.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "3d85cfe8c23f6711d0eeddf33286d572a647a45d332255789d36d98b9b09df94",
+      "currentBytes": 75061
+    },
+    {
+      "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-witch.player.json",
+      "currentPath": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-independent-stock-card16-card17/en/players/7-witch.player.json",
+      "sha256": "379464049fa0e34579a95db0f7cba87b00baa1cc97e5f9b6dfbb01225a18bc31",
+      "bytes": 89418,
+      "owner": "frontend",
+      "kind": "player-view",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-witch.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 7,
+              "role": "witch",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-witch.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-witch.player.json",
+            "sha256": "379464049fa0e34579a95db0f7cba87b00baa1cc97e5f9b6dfbb01225a18bc31"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-witch.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "379464049fa0e34579a95db0f7cba87b00baa1cc97e5f9b6dfbb01225a18bc31",
+      "currentBytes": 89418
+    },
+    {
+      "originPath": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.checkpoint.txt",
+      "currentPath": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-independent-stock-card16-card17/en/checkpoint.json",
+      "sha256": "f2ca1249a66f0191206b781e8e1f36dac11c3183b4f4057aafee6f6f273bdefe",
+      "bytes": 14389,
+      "owner": "frontend",
+      "kind": "checkpoint",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "unknown",
+          "reason": "No literal board is recorded in this artifact."
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_radiant_eclipse_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.checkpoint.txt",
+              "pointer": "/players/9/privateState/abilities/copy:eclipse:night:3/state/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "unknown",
+          "reason": "No literal locale is recorded in this artifact."
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 2,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 3,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 4,
+              "role": "dreamer",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 8,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "radiant_count",
+              "camp": "good"
+            },
+            {
+              "playerId": 10,
+              "role": "eclipse_maid",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 11,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 12,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.checkpoint.txt",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.checkpoint.txt",
+            "sha256": "f2ca1249a66f0191206b781e8e1f36dac11c3183b4f4057aafee6f6f273bdefe"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "unknown",
+          "reason": "No schemaVersion is serialized; legacy status does not identify a build."
+        }
+      },
+      "currentSha256": "f2ca1249a66f0191206b781e8e1f36dac11c3183b4f4057aafee6f6f273bdefe",
+      "currentBytes": 14389
+    },
+    {
+      "originPath": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+      "currentPath": "frontend/tests/fixtures/awa-radiant-eclipse-12-v1/radiant-independent-stock-card16-card17/en/god.replay.json",
+      "sha256": "6a9de8683649014adf49546c8d5524aec08dea38fb699dd185e39807ba4a35ae",
+      "bytes": 59206,
+      "owner": "frontend",
+      "kind": "god-replay",
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+      "metadata": {
+        "board": {
+          "state": "observed",
+          "value": "awa_radiant_eclipse_12_v1",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+              "pointer": "/meta/board",
+              "detail": "Literal serialized board; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "policy": {
+          "state": "unknown",
+          "reason": "No literal policy identity is serialized; a board name is not policy evidence."
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+              "pointer": "/meta/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 2,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 3,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 4,
+              "role": "dreamer",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 8,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "radiant_count",
+              "camp": "good"
+            },
+            {
+              "playerId": 10,
+              "role": "eclipse_maid",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 11,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 12,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+            "sha256": "6a9de8683649014adf49546c8d5524aec08dea38fb699dd185e39807ba4a35ae"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "currentSha256": "6a9de8683649014adf49546c8d5524aec08dea38fb699dd185e39807ba4a35ae",
+      "currentBytes": 59206
+    }
+  ],
+  "suites": [
+    {
+      "suiteId": "fixture:frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+      "anchorOriginPath": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+      "owner": "frontend",
+      "kind": "recorded-archive",
+      "files": [
+        "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-count.player.json",
+        "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-dreamer.player.json",
+        "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-maid.player.json",
+        "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-pack.player.json",
+        "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-seer.player.json",
+        "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-villager.player.json",
+        "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-witch.player.json",
+        "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.checkpoint.txt",
+        "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json"
+      ],
+      "metadata": {
+        "board": {
+          "state": "observed",
+          "value": "awa_radiant_eclipse_12_v1",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+              "pointer": "/meta/board",
+              "detail": "Literal serialized board; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "policy": {
+          "state": "observed",
+          "value": [
+            "awa_radiant_eclipse_v1"
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.checkpoint.txt",
+              "pointer": "/players/9/privateState/abilities/copy:eclipse:night:3/state/policy",
+              "detail": "Literal serialized policy; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "seed": {
+          "state": "unknown",
+          "reason": "No seed is serialized; producer defaults are not evidence of the original invocation."
+        },
+        "locale": {
+          "state": "observed",
+          "value": "en",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+              "pointer": "/meta/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-count.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-dreamer.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-maid.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-pack.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-seer.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-villager.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-witch.player.json",
+              "pointer": "/locale",
+              "detail": "Literal serialized locale; not inferred from a filename or production rule."
+            }
+          ]
+        },
+        "actors": {
+          "state": "observed",
+          "value": [
+            {
+              "playerId": 1,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 2,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 3,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 4,
+              "role": "dreamer",
+              "camp": "good"
+            },
+            {
+              "playerId": 5,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 6,
+              "role": "villager",
+              "camp": "good"
+            },
+            {
+              "playerId": 7,
+              "role": "witch",
+              "camp": "good"
+            },
+            {
+              "playerId": 8,
+              "role": "seer",
+              "camp": "good"
+            },
+            {
+              "playerId": 9,
+              "role": "radiant_count",
+              "camp": "good"
+            },
+            {
+              "playerId": 10,
+              "role": "eclipse_maid",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 11,
+              "role": "wolf",
+              "camp": "wolf"
+            },
+            {
+              "playerId": 12,
+              "role": "villager",
+              "camp": "good"
+            }
+          ],
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-count.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-dreamer.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-maid.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-pack.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-seer.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-villager.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-witch.player.json",
+              "pointer": "/player_id",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            },
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.checkpoint.txt",
+              "pointer": "/players",
+              "detail": "Literal actor id, role and camp, preserving serialized identities."
+            }
+          ]
+        },
+        "source": {
+          "state": "observed",
+          "value": {
+            "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+            "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+            "sha256": "6a9de8683649014adf49546c8d5524aec08dea38fb699dd185e39807ba4a35ae"
+          },
+          "evidence": [
+            {
+              "path": "docs/refactor/generated/baseline-fixtures.json",
+              "pointer": "/files",
+              "detail": "Frozen public Git origin and exact artifact byte digest; this does not identify a producer build."
+            }
+          ]
+        },
+        "build": {
+          "state": "unknown",
+          "reason": "No literal build is recorded in this artifact."
+        },
+        "formatVersion": {
+          "state": "observed",
+          "value": 2,
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-count.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-dreamer.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-maid.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-pack.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-seer.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-villager.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            },
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-witch.player.json",
+              "pointer": "/schemaVersion",
+              "detail": "Serialized format version, not a producer build version."
+            }
+          ]
+        }
+      },
+      "membership": [
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-count.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-count.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-dreamer.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-dreamer.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-maid.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-maid.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-pack.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-pack.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-seer.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-seer.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-villager.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-villager.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-witch.player.json",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/player-views/radiant-independent-stock-card16-card17-en-witch.player.json",
+              "pointer": "",
+              "detail": "Each actor shares literal event timestamp, type and payload with exactly one god archive; actor id/role/camp and recorded locale agree. No filename or production projection supplies the match."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.checkpoint.txt",
+          "state": "literal-associated",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.checkpoint.txt",
+              "pointer": "",
+              "detail": "Basename only locates candidates; recorded eventCount, complete actor roster and literal terminal result agree, or the explicit cycle_failed/runtime_error nonterminal snapshot and last event day/phase agree. This compares archives and never predicts a rule outcome."
+            }
+          ]
+        },
+        {
+          "originPath": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+          "state": "standalone",
+          "evidence": [
+            {
+              "path": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+              "pointer": "",
+              "detail": "Standalone identity anchor; no cross-file relationship was asserted."
+            }
+          ]
+        }
+      ],
+      "acceptance": {
+        "status": "pending-review",
+        "evidence": [
+          {
+            "kind": "baseline-byte-match",
+            "reference": "docs/refactor/generated/baseline-fixtures.json",
+            "detail": "Every JSON member matches immutable Git and current byte digest/size; no golden was regenerated."
+          },
+          {
+            "kind": "metadata-association",
+            "reference": "frontend/tests/fixtures/radiant-independent-stock-card16-card17-en.replay.json",
+            "detail": "Membership evidence identifies literal associations or explicit standalone status; this pure description does not verify caller-supplied byte hashes or infer passed test status."
+          }
+        ],
+        "unresolved": [
+          "seed: No seed is serialized; producer defaults are not evidence of the original invocation.",
+          "build: No literal build is recorded in this artifact.",
+          "Grouping and exact byte preservation are inventory evidence; independent scenario/consumer acceptance has not been assigned."
+        ]
+      }
+    }
+  ],
+  "sourceAssets": [
+    {
+      "originPath": "backend/tests/support/audit_summary_fixture.ts",
+      "currentPath": "backend/tests/support/builders/audit-summary.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "94b0a770d66434ff7ed0e2b662e4cbe615542c0ee12769ca2efc5ed3dc9a0928",
+      "originalBytes": 811,
+      "currentSha256": "0dcf1764ed975f4dba71f037bb96632b74e3f90b16f0a0c981b0daf916c63ab1",
+      "currentBytes": 1154,
+      "programSha256": "507a479dd2a872a501474a2bfd51e4d171363c3a3c174e8873f76bd0089bfa70",
+      "moduleBindingsSha256": "32b415306130f31a5b5fb54705bddd6184eee7cf63cd9da9edcd2ae974423343",
+      "kind": "test-support"
+    },
+    {
+      "originPath": "backend/tests/support/mist_raven_transport_oracle.ts",
+      "currentPath": "backend/tests/support/features/mist-raven/oracles/transport.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "7d0b2f1c81660679baf2d66d203f6a4cdfca762de927b9aba789a579beace085",
+      "originalBytes": 7318,
+      "currentSha256": "c42ff8470c11486792ba21ad70140b8a109a23d35e311b66cf934a9181fcbe02",
+      "currentBytes": 7676,
+      "programSha256": "8584a8fe074819232521336ff6cb089cb1c96c7e4d800ebd581392324513ba9d",
+      "moduleBindingsSha256": "0ac37de3b9f45e877a4cbd0c5bbbf8425fb3fc0dec4a6ddb06db234edc870dd7",
+      "kind": "test-support"
+    }
+  ],
+  "derivedManifests": []
+}

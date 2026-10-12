@@ -1,3 +1,10 @@
+/**
+ * Browser integration tests build minimal render inputs from actual Mist
+ * Raven alchemist, raven and villager player-view fixtures. Assertions seek
+ * and rewind the owner-visible events in both locales, checking private labels,
+ * hidden identities and winner timing without adding God-view information.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
@@ -12,13 +19,13 @@ for (const actor of ["alchemist", "raven", "villager"] as const)
       const name = `mist-normal-linked-${locale}`;
       const god = readReplayDocument(
         JSON.parse(
-          readFileSync(new URL(`../fixtures/${name}.replay.json`, import.meta.url), "utf8"),
+          readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}.replay.json`), "utf8"),
         ),
       );
       const view = readReplayPlayerView(
         JSON.parse(
           readFileSync(
-            new URL(`../fixtures/player-views/${name}-${actor}.player.json`, import.meta.url),
+            frontendFixtureURL(`frontend/tests/fixtures/player-views/${name}-${actor}.player.json`),
             "utf8",
           ),
         ),

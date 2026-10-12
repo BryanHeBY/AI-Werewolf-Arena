@@ -1,3 +1,10 @@
+/**
+ * Browser integration tests seek and rewind actual Mist Raven replay fixtures
+ * for linked deaths, saved/protected targets and manual outcomes in both
+ * locales. Archived events and literal frame assertions check night disclosure,
+ * seat changes and winner timing without replaying the game mechanics.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
@@ -26,11 +33,11 @@ for (const variant of cases)
       const name = `mist-${variant}-${locale}`;
       const replay = readReplayDocument(
         JSON.parse(
-          readFileSync(new URL(`../fixtures/${name}.replay.json`, import.meta.url), "utf8"),
+          readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}.replay.json`), "utf8"),
         ),
       );
       const cp = JSON.parse(
-        readFileSync(new URL(`../fixtures/${name}.checkpoint.txt`, import.meta.url), "utf8"),
+        readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}.checkpoint.txt`), "utf8"),
       ) as { players: Array<{ id: number; alive: boolean }> };
       await page.route("**/api/replay", (route) => route.fulfill({ json: replay }));
       await page.goto("/");

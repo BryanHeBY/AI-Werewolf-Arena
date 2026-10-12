@@ -1,3 +1,10 @@
+/**
+ * Browser integration tests render recorded Pure White good- and wolf-target
+ * fixtures in both locales. Archived inspection/death order and literal winner
+ * counts supply the assertions for simultaneous deaths and terminal timing;
+ * no inspection or death settlement runs in these replay tests.
+ */
+import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { eventLabel } from "../../src/replay/event-labels";
@@ -8,7 +15,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }) => {
       const replay = JSON.parse(
         readFileSync(
-          new URL(`../fixtures/pure-white-${kind}.replay.json`, import.meta.url),
+          frontendFixtureURL(`frontend/tests/fixtures/pure-white-${kind}.replay.json`),
           "utf8",
         ),
       );

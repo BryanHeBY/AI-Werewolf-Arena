@@ -17,11 +17,11 @@ import {
   FRAMES_PER_EVENT,
 } from "../../../../src/replay/replay-frame";
 import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
-import twelve from "../../../fixtures/awakened-twelve.replay.json";
-import guard from "../../../fixtures/awakened-guard.replay.json";
-import mirror from "../../../fixtures/awakened-mirror.replay.json";
-import held from "../../../fixtures/awakened-extra_hold.replay.json";
-import firstGun from "../../../fixtures/awakened-hunter_first.replay.json";
+import twelve from "../../../fixtures/twelve-player-awakened-twelve/awakened-twelve/en/god.replay.json";
+import guard from "../../../fixtures/six-player-awakened-guard/awakened-guard/en/god.replay.json";
+import mirror from "../../../fixtures/six-player-awakened-mirror/awakened-mirror/en/god.replay.json";
+import held from "../../../fixtures/six-player-awakened-extra-hold/awakened-extra-hold/en/god.replay.json";
+import firstGun from "../../../fixtures/six-player-awakened-hunter-first/awakened-hunter-first/en/god.replay.json";
 
 for (const locale of ["zh-CN", "en"] as const) {
   test(`${locale}: actual Awakened learning and readiness retain the true Wolf seat without death or victory`, () => {
