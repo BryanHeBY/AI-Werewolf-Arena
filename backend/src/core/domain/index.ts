@@ -1,10 +1,14 @@
 /**
- * domain 层统一导出入口。
+ * Public domain boundary for engine, feature and application consumers.
+ * Exports existing World storage, component factories, runtime permission ports
+ * and domain declarations. The typed component map relates names to original
+ * stored objects; exports never serialize handles or replace their owners.
  */
 export * from "./model";
 export * from "./action_request_context";
 export * from "./random";
 export { World } from "./world";
+export type { ComponentMap, ComponentWrite } from "./component-map";
 
 export * from "./components/alive";
 export * from "./components/badge";

@@ -1,3 +1,11 @@
+/**
+ * Scenario/unit ownership tests for noble secret body runtime ownership review.
+ * Input: original fixed game actions and deliberate malformed or foreign
+ * component replacements; output: unchanged state, rejection and life/lease
+ * assertions. Literal expected prefixes and guard failures are independent
+ * oracles. Explicit unknown writes are privileged negative-test injection;
+ * production's typed default slot relation is never relaxed for these inputs.
+ */
 // Independent readonly reviewer cases; original inputs retained.
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -113,7 +121,7 @@ for (const kind of ["original-getter", "foreign-state", "foreign-role"] as const
       });
     if (kind === "foreign-state") role.privateState.secretBody = foreign;
     if (kind === "foreign-role")
-      g.world.addComponent(5, COMPONENT.Role, {
+      g.world.addComponent<unknown>(5, COMPONENT.Role, {
         get privateState() {
           reads++;
           throw Error("foreign role getter");

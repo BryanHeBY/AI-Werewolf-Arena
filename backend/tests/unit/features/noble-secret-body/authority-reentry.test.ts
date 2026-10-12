@@ -385,7 +385,7 @@ for (const [name, affiliations] of [
 ] as const)
   test(`initial Victory rejects ${name}`, () => {
     const world = uninstalled();
-    world.addComponent(3, COMPONENT.Victory, { affiliations });
+    world.addComponent<unknown>(3, COMPONENT.Victory, { affiliations });
     expect(() => commit(world)).toThrow();
   });
 test("finite noble-body owner rejects empty Victory without changing shared generic membership schema", () => {

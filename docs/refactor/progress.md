@@ -7,7 +7,7 @@
 | P0 基线与契约          | 已完成 | C01 `144f48b` 已提交；C02 `aba9347`；C03 `b56d282`；七样例、89行静态台账与三方向审查 |
 | P1 依赖与共享契约      | 已完成 | C04–C09 数据/支持职责与 public consumer 闭合；零基础包循环，兼容桥按 C44 退出        |
 | P2 测试、fixture、词典 | 进行中 | C10 真实分层入口；C11 首69单测、C12 首9场景/进程；C15 完成，C13/C14 及余项继续       |
-| P3 状态与请求授权      | 待执行 | C16–C20、条件 C18a                                                                   |
+| P3 状态与请求授权      | 进行中 | C16 组件名/类型基础与原引用保真；实际 state slots、统一传播及 F02 继续               |
 | P4 规则计划与生命周期  | 待执行 | C21–C24                                                                              |
 | P5 效果、死亡与判胜    | 待执行 | C25–C29                                                                              |
 | P6 能力、观察与展示    | 待执行 | C30–C36、C33a                                                                        |
@@ -63,3 +63,5 @@
 - C13首15支持模块：15 builder/driver/oracle实际归属与162consumer/229modulepaths闭环；独立177原程序/1660旧IDs保真，原3内存文件30/0与必要类型通过。fixture-bound2helper单独待source asset，未造桥；混合支持模块仍待拆。
 
 - C11前端剩49：39实际SSR文件与事件/投影/数据按责任归属，2结构测试default入口闭合；962原IDs与21files/28URI基址保真，独立审查通过，结构原4/0/549与FE必要类型0。统一mapping157files/2203IDs，未重复49/Chromium。
+
+- C16基础：11 typed组件映射/default slot约束，17World方法与全module typeerase原byte；独立验证真实错槽/两向RoleCamp及customextras、3运行项通过。backend源码0，9负例/10explicitunknown注入原JS保持后tests0；legacy只显式T、C44退出，全consumer/state迁移尚未完成。

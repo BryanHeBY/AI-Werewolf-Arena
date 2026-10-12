@@ -1,3 +1,11 @@
+/**
+ * Scenario/unit ownership tests for white wolf king.
+ * Input: original fixed game actions and deliberate malformed or foreign
+ * component replacements; output: unchanged state, rejection and life/lease
+ * assertions. Literal expected prefixes and guard failures are independent
+ * oracles. Explicit unknown writes are privileged negative-test injection;
+ * production's typed default slot relation is never relaxed for these inputs.
+ */
 import { Camp } from "../../../src/core";
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
@@ -238,7 +246,7 @@ for (const locale of ["zh-CN", "en"] as const)
                 alive.alive = true;
               }
               if (change === "target_component")
-                world.addComponent(3, COMPONENT.Alive, { alive: true });
+                world.addComponent<unknown>(3, COMPONENT.Alive, { alive: true });
               if (change === "resource")
                 setWhiteWolfKingState(role(world, 1), { canDetonate: true });
               if (change === "role") role(world, 1).role = Role.Wolf;

@@ -1,0 +1,139 @@
+{
+  "schema": "awa-component-negative-injection-migration-v1",
+  "sourceCommit": "6612052",
+  "scope": "Compile-only named privileged negative tests; original inputs and type-erased modules unchanged. C44 removes legacy overload usage.",
+  "rows": [
+    {
+      "file": "backend/tests/engine/rules/demon_hunter_runtime.test.ts",
+      "calls": [
+        {
+          "line": 252,
+          "column": 15
+        }
+      ],
+      "addedExplicitUnknownTypeArgs": 1,
+      "originalSha256": "7d4ab8e625279dcfe1287ca80cb8057eeac59190fc22d51fabf784b9cd40cfa8",
+      "candidateSha256": "4e42cc8d15c4a6a1d9f66aaff6acb377a2061d1dddedeb1e90d1df36cfff302b",
+      "typeErasedProgramExact": true,
+      "exit": "C44 converts these named privileged negative injections when legacy generic overloads leave production"
+    },
+    {
+      "file": "backend/tests/engine/rules/demon_hunter_stock.test.ts",
+      "calls": [
+        {
+          "line": 228,
+          "column": 34
+        }
+      ],
+      "addedExplicitUnknownTypeArgs": 1,
+      "originalSha256": "a6832dbb1909f0b79e9ba20a9a9685826865bce27bd30734a94baa69d8954f68",
+      "candidateSha256": "2a766bf35311dccf5d1587b81246d66240275b6239eaf69532ac3250870466fc",
+      "typeErasedProgramExact": true,
+      "exit": "C44 converts these named privileged negative injections when legacy generic overloads leave production"
+    },
+    {
+      "file": "backend/tests/engine/rules/noble_secret_body_runtime_ownership_review.test.ts",
+      "calls": [
+        {
+          "line": 116,
+          "column": 15
+        }
+      ],
+      "addedExplicitUnknownTypeArgs": 1,
+      "originalSha256": "e663a60c1ca99d3b25a204103b8459840c386b91bdb0f7351c9590563eac4d87",
+      "candidateSha256": "a17132024b988a31e7bed5a5e8a2694572fcdf203a82327f0e8c0921fdcbc4fc",
+      "typeErasedProgramExact": true,
+      "exit": "C44 converts these named privileged negative injections when legacy generic overloads leave production"
+    },
+    {
+      "file": "backend/tests/engine/rules/shapeshifter.test.ts",
+      "calls": [
+        {
+          "line": 433,
+          "column": 47
+        }
+      ],
+      "addedExplicitUnknownTypeArgs": 1,
+      "originalSha256": "ee6ce63fb6c1cf72179dc8081da9fd1b8d52c3021d0e609edadec88f7aee7e6c",
+      "candidateSha256": "c3df520f51ac428f806c2dce7746a06924ebb1869bedebd1dd048b1b582b2bb7",
+      "typeErasedProgramExact": true,
+      "exit": "C44 converts these named privileged negative injections when legacy generic overloads leave production"
+    },
+    {
+      "file": "backend/tests/engine/rules/thief.test.ts",
+      "calls": [
+        {
+          "line": 369,
+          "column": 47
+        }
+      ],
+      "addedExplicitUnknownTypeArgs": 1,
+      "originalSha256": "ba7a9ea3a0505efd31a15056804ba3d4c6482118ecc5d882d90477251ca414db",
+      "candidateSha256": "1413b72776a4cb72e064314c8227ae995ae3c0964aba48b102661115b8acda18",
+      "typeErasedProgramExact": true,
+      "exit": "C44 converts these named privileged negative injections when legacy generic overloads leave production"
+    },
+    {
+      "file": "backend/tests/engine/rules/white_wolf_king.test.ts",
+      "calls": [
+        {
+          "line": 241,
+          "column": 56
+        }
+      ],
+      "addedExplicitUnknownTypeArgs": 1,
+      "originalSha256": "e1b679f26889787dc1be7227cef327a6bef7557b293068a0cdd35614885b941f",
+      "candidateSha256": "a18d10ac9a611f989425d10c9f535f67df346d631f5110a3cf4672e9de88ae56",
+      "typeErasedProgramExact": true,
+      "exit": "C44 converts these named privileged negative injections when legacy generic overloads leave production"
+    },
+    {
+      "file": "backend/tests/unit/features/animal-dream/roster.test.ts",
+      "calls": [
+        {
+          "line": 82,
+          "column": 40
+        },
+        {
+          "line": 85,
+          "column": 40
+        }
+      ],
+      "addedExplicitUnknownTypeArgs": 2,
+      "originalSha256": "f96aaaa63c5e855895ed1f8bd4e432ce104bfd50ea30f7b00499f0608f6b90bc",
+      "candidateSha256": "b1585cdb136a50d8a6ed0db8569cf9085ce452fbbb3fa8ee964474b1c42bbbec",
+      "typeErasedProgramExact": true,
+      "exit": "C44 converts these named privileged negative injections when legacy generic overloads leave production"
+    },
+    {
+      "file": "backend/tests/unit/features/noble-secret-body/authority-reentry.test.ts",
+      "calls": [
+        {
+          "line": 388,
+          "column": 11
+        }
+      ],
+      "addedExplicitUnknownTypeArgs": 1,
+      "originalSha256": "f85609695d7e06307f6773ded3bf623871fb011580b6fb3930f2c00b71fc37d6",
+      "candidateSha256": "9e3e0f792da911ecd13bb3941ef4a78893c2f7aef31213cc1180654584361a8b",
+      "typeErasedProgramExact": true,
+      "exit": "C44 converts these named privileged negative injections when legacy generic overloads leave production"
+    },
+    {
+      "file": "backend/tests/unit/features/noble-secret-body/notice-snapshots.test.ts",
+      "calls": [
+        {
+          "line": 289,
+          "column": 51
+        }
+      ],
+      "addedExplicitUnknownTypeArgs": 1,
+      "originalSha256": "77efd9cd91e2f0004f0643ec0652b4781d44f0e83d72a18058dfccb2bbfaa18b",
+      "candidateSha256": "00e86f642ff071212a95c9bdfc4cc0682699c222e39a31f31684cd6d5b9818c5",
+      "typeErasedProgramExact": true,
+      "exit": "C44 converts these named privileged negative injections when legacy generic overloads leave production"
+    }
+  ],
+  "files": 9,
+  "calls": 10
+}

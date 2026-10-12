@@ -1,5 +1,8 @@
 /**
- * ECS 组件名称统一常量，避免字符串硬编码导致拼写错误。
+ * Owns the existing ordered identifiers for the eleven domain component slots.
+ * Inputs are the established ECS names; output is the unchanged runtime object
+ * and closed ComponentName union consumed by World and the typed component map.
+ * This registry never creates components, validates values or writes World state.
  */
 export const COMPONENT = {
   Identity: "IdentityComponent",

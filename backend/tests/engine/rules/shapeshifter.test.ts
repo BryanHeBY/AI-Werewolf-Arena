@@ -1,3 +1,11 @@
+/**
+ * Scenario/unit ownership tests for shapeshifter.
+ * Input: original fixed game actions and deliberate malformed or foreign
+ * component replacements; output: unchanged state, rejection and life/lease
+ * assertions. Literal expected prefixes and guard failures are independent
+ * oracles. Explicit unknown writes are privileged negative-test injection;
+ * production's typed default slot relation is never relaxed for these inputs.
+ */
 import path from "node:path";
 import { promises as fs } from "node:fs";
 import * as runtimeFactory from "../../../src/runtime/player_agent_factory";
@@ -430,7 +438,7 @@ for (const [label, mutate] of [
   [
     "camp component",
     (g: Fixture) => {
-      g.world.addComponent(1, COMPONENT.Camp, { camp: Camp.Good });
+      g.world.addComponent<unknown>(1, COMPONENT.Camp, { camp: Camp.Good });
     },
   ],
   [

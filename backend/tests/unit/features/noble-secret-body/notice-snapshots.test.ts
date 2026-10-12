@@ -286,7 +286,7 @@ for (const alteration of ["replacement", "revive", "identity"] as const)
       f.life(2).alive = true;
     }
     if (alteration === "identity")
-      f.world.addComponent(2, COMPONENT.Identity, {
+      f.world.addComponent<unknown>(2, COMPONENT.Identity, {
         ...f.world.getComponent<object>(2, COMPONENT.Identity),
       });
     expect(() => getNobleBodyPlayerState(f.world, 2, Phase.Day)).toThrow(

@@ -1,3 +1,11 @@
+/**
+ * Scenario/unit ownership tests for demon hunter runtime.
+ * Input: original fixed game actions and deliberate malformed or foreign
+ * component replacements; output: unchanged state, rejection and life/lease
+ * assertions. Literal expected prefixes and guard failures are independent
+ * oracles. Explicit unknown writes are privileged negative-test injection;
+ * production's typed default slot relation is never relaxed for these inputs.
+ */
 import { expect, test, spyOn } from "bun:test";
 import {
   COMPONENT,
@@ -249,7 +257,7 @@ for (const phase of [
     await f.phaseManager.runSingleCycle(provider(f), 10);
     let reads = 0;
     const revoke = () =>
-      f.world.addComponent(3, COMPONENT.Alive, {
+      f.world.addComponent<unknown>(3, COMPONENT.Alive, {
         get alive() {
           reads++;
           throw new Error("foreign_alive_read");

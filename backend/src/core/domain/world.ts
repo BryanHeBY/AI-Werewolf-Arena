@@ -1,5 +1,15 @@
+/**
+ * Owns entity IDs, component Maps and transient original-life death permissions.
+ * Inputs are existing entity/slot operations and lifecycle callbacks; outputs
+ * are the original mutable component references, selections and permission IDs.
+ * Only this World writes its stores; factories and role owners retain their
+ * value/state checks. Typed default calls add no runtime guard, copy or freeze.
+ * Explicit legacy generics temporarily retain unchecked typing until C44 removes
+ * that escape; stale life/currentness still revokes death permissions as before.
+ */
 import { EntityId, Phase, Role } from "./model";
 import { COMPONENT, ComponentName } from "./components/names";
+import type { ComponentMap, ComponentWrite } from "./component-map";
 import { AliveComponent, aliveLifeVersion } from "./components/alive";
 import { RoleComponent } from "./components/role";
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
@@ -155,6 +165,17 @@ export class World {
     return [...this.entities].sort((a, b) => a - b);
   }
 
+  addComponent<K extends ComponentName, C extends ComponentWrite<NoInfer<K>>>(
+    entityId: EntityId,
+    name: K,
+    component: C,
+  ): void;
+  /** @deprecated C44: explicit legacy type arguments bypass the slot relation. */
+  addComponent<T = never>(
+    entityId: EntityId,
+    name: ComponentName,
+    component: NoInfer<T>,
+  ): void;
   addComponent<T>(entityId: EntityId, name: ComponentName, component: T): void {
     if (!this.hasEntity(entityId)) {
       throw new Error(`Entity ${entityId} does not exist`);
@@ -165,6 +186,12 @@ export class World {
     store.set(entityId, component);
   }
 
+  getComponent<K extends ComponentName>(
+    entityId: EntityId,
+    name: K,
+  ): ComponentMap[K] | undefined;
+  /** @deprecated C44: explicit legacy type arguments bypass the slot relation. */
+  getComponent<T = never>(entityId: EntityId, name: ComponentName): NoInfer<T> | undefined;
   getComponent<T>(entityId: EntityId, name: ComponentName): T | undefined {
     const store = this.stores.get(name);
     return store?.get(entityId) as T | undefined;

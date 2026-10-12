@@ -1,3 +1,11 @@
+/**
+ * Scenario/unit ownership tests for demon hunter stock.
+ * Input: original fixed game actions and deliberate malformed or foreign
+ * component replacements; output: unchanged state, rejection and life/lease
+ * assertions. Literal expected prefixes and guard failures are independent
+ * oracles. Explicit unknown writes are privileged negative-test injection;
+ * production's typed default slot relation is never relaxed for these inputs.
+ */
 import { expect, test, spyOn } from "bun:test";
 import {
   COMPONENT,
@@ -225,7 +233,7 @@ test("failed CP uses original roster/life/inventory despite added entity, compon
         },
       },
     );
-    f.world.addComponent(4, key, foreign);
+    f.world.addComponent<unknown>(4, key, foreign);
   }
   f.world.createEntity();
   const cp = captureCheckpoint(

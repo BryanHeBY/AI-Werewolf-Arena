@@ -79,10 +79,10 @@ const invalid: Record<string, (w: ReturnType<typeof animalRosterFixture>["world"
     w.getComponent<CampComponent>(10, COMPONENT.Camp)!.camp = Camp.Wolf;
   },
   "shared life": (w) => {
-    w.addComponent(6, COMPONENT.Alive, w.getComponent(5, COMPONENT.Alive));
+    w.addComponent<unknown>(6, COMPONENT.Alive, w.getComponent(5, COMPONENT.Alive));
   },
   "Role and Camp alias": (w) => {
-    w.addComponent(10, COMPONENT.Camp, w.getComponent(10, COMPONENT.Role));
+    w.addComponent<unknown>(10, COMPONENT.Camp, w.getComponent(10, COMPONENT.Role));
   },
   "shared private container": (w) => {
     w.getComponent<RoleComponent>(6, COMPONENT.Role)!.privateState = w.getComponent<RoleComponent>(
