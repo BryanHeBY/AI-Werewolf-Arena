@@ -329,9 +329,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "night_noble",
     names: { "zh-CN": "夜之贵族", en: "Night Noble" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-noble-secret-body-twelve-v1.md",
     mechanismSummary: "持续夜间状态",
   },
   {
@@ -465,9 +465,9 @@ export const ROLE_DEFINITIONS = [
   {
     id: "awakened_idiot",
     names: { "zh-CN": "觉醒愚者", en: "Awakened Village Idiot" },
-    status: "planned",
+    status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: null,
+    ruleCardRef: "docs/expansion/rules/awa-noble-secret-body-twelve-v1.md",
     mechanismSummary: "秘密之身/伤害替代",
   },
   {

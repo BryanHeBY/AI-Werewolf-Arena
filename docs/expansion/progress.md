@@ -1,6 +1,8 @@
 # 实施进度
 
-最新切片：觉醒之夜独立记录账本／严格 Tape 与失败游标已完成候选验证，见[记录审查](reviews/p9-noble-secret-body-recording.md)。贵族／觉醒愚者仍 planned，正式 **48/64**；实际通信、受限观察、前端和同源完整验收接续中。
+**当前：50/64，23 verified、27 implemented、14 planned。** 贵族／觉醒愚者四组合完整技术验收及三路复核闭环，后端6353／前端872／Chromium324零失败、13门禁退出0、2200输入四方同字节；见[正式验收](reviews/p9-noble-secret-body-stage-acceptance.md)。立即继续寻香魅影／觉醒预言家、P9e六项、P9f余六项及P10；不推送。下方切片保留各历史时点，48/64不再代表当前目录。
+
+记录切片（历史时点）：觉醒之夜独立记录账本／严格 Tape 与失败游标已完成候选验证，见[记录审查](reviews/p9-noble-secret-body-recording.md)。贵族／觉醒愚者仍 planned，正式 **48/64**；实际通信、受限观察、前端和同源完整验收接续中。
 
 实际通信切片已补15个人工族、四政策及八必答阶段失败，SDK／ACP／mixed双语与消息／知情审查见[传输审查](reviews/p9-noble-secret-body-transport.md)。计数仍48/64；完整窗口／撤权、受限观察、前端及最终同源门禁尚待收尾。
 

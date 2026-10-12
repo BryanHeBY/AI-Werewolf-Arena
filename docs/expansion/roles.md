@@ -1,8 +1,8 @@
 # 可配置角色目标目录
 
-返回 [实施路线](roadmap.md)。本目录共 **64 项定义**：23 verified、25 implemented、16 planned，合计 48 项已达到各自有限范围内的技术门禁。已有实现仅表示当前 AWA 版本，不代表其他同名版本均受支持；P9/P10 和用户总体验收仍开放。
+返回 [实施路线](roadmap.md)。本目录共 **64 项定义**：23 verified、27 implemented、14 planned，合计 50 项已达到各自有限范围内的技术门禁。已有实现仅表示当前 AWA 版本，不代表其他同名版本均受支持；P9/P10 和用户总体验收仍开放。
 
-基础七项及 P5–P7 的十六项为 verified。咒狐、丘比特、杠精、盗贼、野孩子、千面人、孤独少女、鬼魂新娘、猎魔人、纯白之女、狼巫、恶夜骑士、噩梦之影、赤月使徒、魔术师、定序王子、诡术师、狼术师、蚀时狼妃、白昼学者、寂夜导师、炼金魔女、狼鸦之爪、流光伯爵、蚀日侍女登记 implemented。各角色来源、支持组合和验证边界见各自规则卡与验收记录；最新交付见[恶夜骑士验收](reviews/p9-evil-knight.md)、[噩梦之影验收](reviews/p9-nightmare.md)、[赤月使徒验收](reviews/p9-red-moon.md)、[魔术师验收](reviews/p9-magician.md)、[定序王子验收](reviews/p9-order-prince.md)、[诡术之境验收](reviews/p9-trickster.md)、[狼术师验收](reviews/p9-wolf-sorcerer.md)、[蚀时狼妃验收](reviews/p9-time-consort.md)、[学者导师验收](reviews/p9-scholar-mentor.md)、[迷雾鸦影验收](reviews/p9-mist-raven-stage-acceptance.md)、[猎日逐光验收](reviews/p9-radiant-eclipse-stage-acceptance.md)。
+基础七项及 P5–P7 的十六项为 verified。咒狐、丘比特、杠精、盗贼、野孩子、千面人、孤独少女、鬼魂新娘、猎魔人、纯白之女、狼巫、恶夜骑士、噩梦之影、赤月使徒、魔术师、定序王子、诡术师、狼术师、蚀时狼妃、白昼学者、寂夜导师、炼金魔女、狼鸦之爪、流光伯爵、蚀日侍女、夜之贵族、觉醒愚者登记 implemented。各角色来源、支持组合和验证边界见各自规则卡与验收记录；最新交付见[恶夜骑士验收](reviews/p9-evil-knight.md)、[噩梦之影验收](reviews/p9-nightmare.md)、[赤月使徒验收](reviews/p9-red-moon.md)、[魔术师验收](reviews/p9-magician.md)、[定序王子验收](reviews/p9-order-prince.md)、[诡术之境验收](reviews/p9-trickster.md)、[狼术师验收](reviews/p9-wolf-sorcerer.md)、[蚀时狼妃验收](reviews/p9-time-consort.md)、[学者导师验收](reviews/p9-scholar-mentor.md)、[迷雾鸦影验收](reviews/p9-mist-raven-stage-acceptance.md)、[猎日逐光验收](reviews/p9-radiant-eclipse-stage-acceptance.md)、[觉醒之夜验收](reviews/p9-noble-secret-body-stage-acceptance.md)。
 
 ## 使用与冻结要求
 
@@ -13,7 +13,7 @@
 - 每项在实现前建立规则卡：来源、发布日期/核验日期、规则集与版本、身份/阵营/计数/胜利目标、互认/夜聊/刀权、动作/资源/时点、所有死因与保护/重定向交互、允许组合、AWA 改编说明、中英提示及期望测试。
 - 有歧义的复制、替死、反伤、保护及判胜，必须选择并记录某个确定版本；未决规则阻止相关角色宣告支持。
 - 基础/觉醒、机械狼/觉醒隐狼、通灵师/魔镜少女分别登记。白痴与愚者的别名、赤月与血月等名称仅在同规则版本下建立映射。
-- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。当前统计以上方目录为准；剩余 16 项为 planned，不能直接用于已支持板子。
+- 实现状态采用 `planned`、`rules_frozen`、`implemented`、`verified`；后两项不能省略规则来源和测试链接。当前统计以上方目录为准；剩余 14 项为 planned，不能直接用于已支持板子。
 
 ## 1. 基础角色：7 项，awa_classic 1.0.0 已验证
 
@@ -71,19 +71,19 @@
 
 ## 6. 进阶攻防：11 项
 
-| #   | 计划 ID            | 中文     | English          | 机制标签               | 阶段 / 来源                                                                                                               |
-| --- | ------------------ | -------- | ---------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| 30  | `demon_hunter`     | 猎魔人   | Demon Hunter     | 夜间对决、伤害资格     | implemented；P9b / [规则卡](rules/awa-netease-demon-hunter-v1.md)、[验收](reviews/p9-demon-hunter.md)                     |
-| 31  | `pure_white_girl`  | 纯白之女 | Pure White Girl  | 查验与伤害             | implemented；P9b / [规则卡](rules/awa-pure-white-night-v1.md)、[验收](reviews/p9-pure-white.md)                           |
-| 32  | `wolf_witch`       | 狼巫     | Wolf Witch       | 狼队身份查验           | implemented；P9b / [规则卡](rules/awa-pure-white-night-v1.md)、[验收](reviews/p9-pure-white.md)                           |
-| 33  | `evil_knight`      | 恶夜骑士 | Dark Knight      | 夜间免疫、反伤         | `implemented`；P9 / [规则卡](rules/awa-evil-knight-v1.md) / [验收](reviews/p9-evil-knight.md) / [S01][cards]              |
-| 34  | `red_moon_apostle` | 赤月使徒 | Red Moon Apostle | 自爆、封夜、特殊死亡   | P9b implemented / [规则卡](rules/awa-red-moon-demon-v1.md) / [验收](reviews/p9-red-moon.md)                               |
-| 35  | `alchemist`        | 炼金魔女 | Alchemist        | 刀口约束、特殊救人流程 | implemented；P9d [规则卡](rules/awa-mist-raven-twelve-v1.md)、[验收](reviews/p9-mist-raven-stage-acceptance.md)           |
-| 36  | `raven_claw_wolf`  | 狼鸦之爪 | Raven-Claw Wolf  | 解封、特殊攻击         | implemented；P9d [规则卡](rules/awa-mist-raven-twelve-v1.md)、[验收](reviews/p9-mist-raven-stage-acceptance.md)           |
-| 37  | `radiant_count`    | 流光伯爵 | Radiant Count    | 保护范围和限制         | implemented；P9d [规则卡](rules/awa-radiant-eclipse-twelve-v1.md)、[验收](reviews/p9-radiant-eclipse-stage-acceptance.md) |
-| 38  | `eclipse_maid`     | 蚀日侍女 | Eclipse Maid     | 技能吞噬与临时失效     | implemented；P9d [规则卡](rules/awa-radiant-eclipse-twelve-v1.md)、[验收](reviews/p9-radiant-eclipse-stage-acceptance.md) |
-| 39  | `night_noble`      | 夜之贵族 | Night Noble      | 持续夜间状态           | planned；P9d [实施规则草案](rules/awa-noble-secret-body-twelve-v1.md)                                                     |
-| 40  | `fragrant_phantom` | 寻香魅影 | Fragrant Phantom | 绑定、牵连、接刀       | planned；P9d [实施规则草案](rules/awa-fragrant-pair-seer-twelve-v1.md)                                                    |
+| #   | 计划 ID            | 中文     | English          | 机制标签               | 阶段 / 来源                                                                                                                   |
+| --- | ------------------ | -------- | ---------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| 30  | `demon_hunter`     | 猎魔人   | Demon Hunter     | 夜间对决、伤害资格     | implemented；P9b / [规则卡](rules/awa-netease-demon-hunter-v1.md)、[验收](reviews/p9-demon-hunter.md)                         |
+| 31  | `pure_white_girl`  | 纯白之女 | Pure White Girl  | 查验与伤害             | implemented；P9b / [规则卡](rules/awa-pure-white-night-v1.md)、[验收](reviews/p9-pure-white.md)                               |
+| 32  | `wolf_witch`       | 狼巫     | Wolf Witch       | 狼队身份查验           | implemented；P9b / [规则卡](rules/awa-pure-white-night-v1.md)、[验收](reviews/p9-pure-white.md)                               |
+| 33  | `evil_knight`      | 恶夜骑士 | Dark Knight      | 夜间免疫、反伤         | `implemented`；P9 / [规则卡](rules/awa-evil-knight-v1.md) / [验收](reviews/p9-evil-knight.md) / [S01][cards]                  |
+| 34  | `red_moon_apostle` | 赤月使徒 | Red Moon Apostle | 自爆、封夜、特殊死亡   | P9b implemented / [规则卡](rules/awa-red-moon-demon-v1.md) / [验收](reviews/p9-red-moon.md)                                   |
+| 35  | `alchemist`        | 炼金魔女 | Alchemist        | 刀口约束、特殊救人流程 | implemented；P9d [规则卡](rules/awa-mist-raven-twelve-v1.md)、[验收](reviews/p9-mist-raven-stage-acceptance.md)               |
+| 36  | `raven_claw_wolf`  | 狼鸦之爪 | Raven-Claw Wolf  | 解封、特殊攻击         | implemented；P9d [规则卡](rules/awa-mist-raven-twelve-v1.md)、[验收](reviews/p9-mist-raven-stage-acceptance.md)               |
+| 37  | `radiant_count`    | 流光伯爵 | Radiant Count    | 保护范围和限制         | implemented；P9d [规则卡](rules/awa-radiant-eclipse-twelve-v1.md)、[验收](reviews/p9-radiant-eclipse-stage-acceptance.md)     |
+| 38  | `eclipse_maid`     | 蚀日侍女 | Eclipse Maid     | 技能吞噬与临时失效     | implemented；P9d [规则卡](rules/awa-radiant-eclipse-twelve-v1.md)、[验收](reviews/p9-radiant-eclipse-stage-acceptance.md)     |
+| 39  | `night_noble`      | 夜之贵族 | Night Noble      | 持续夜间状态           | implemented；P9d [规则卡](rules/awa-noble-secret-body-twelve-v1.md)／[验收](reviews/p9-noble-secret-body-stage-acceptance.md) |
+| 40  | `fragrant_phantom` | 寻香魅影 | Fragrant Phantom | 绑定、牵连、接刀       | planned；P9d [实施规则草案](rules/awa-fragrant-pair-seer-twelve-v1.md)                                                        |
 
 ## 7. 控制与流程变化：8 项
 
@@ -114,7 +114,7 @@
 
 | #   | 计划 ID                | 中文       | English                | 机制标签                 | 阶段 / 来源                                                                                                                                                                                    |
 | --- | ---------------------- | ---------- | ---------------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 56  | `awakened_idiot`       | 觉醒愚者   | Awakened Village Idiot | 秘密之身/伤害替代        | planned；P9d 前置项；[实施规则草案](rules/awa-noble-secret-body-twelve-v1.md)                                                                                                                  |
+| 56  | `awakened_idiot`       | 觉醒愚者   | Awakened Village Idiot | 秘密之身/伤害替代        | implemented；P9d 前置项；[规则卡](rules/awa-noble-secret-body-twelve-v1.md)／[验收](reviews/p9-noble-secret-body-stage-acceptance.md)                                                          |
 | 57  | `awakened_seer`        | 觉醒预言家 | Awakened Seer          | 双目标信息               | planned；P9d 前置项；[实施规则草案](rules/awa-fragrant-pair-seer-twelve-v1.md)                                                                                                                 |
 | 58  | `awakened_wolf_king`   | 觉醒狼王   | Awakened Wolf King     | 多次死亡技能、能力转移   | P9 / [S01][cards]                                                                                                                                                                              |
 | 59  | `awakened_hidden_wolf` | 觉醒隐狼   | Awakened Hidden Wolf   | 复制、生效时机、独立狼   | P7；`verified` / [完整验收](reviews/p7-awakened-hidden-wolf.md) / [AWA冻结卡](rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf) / [实现边界](awakened-hidden-wolf.md) / [S10][mirror] |
