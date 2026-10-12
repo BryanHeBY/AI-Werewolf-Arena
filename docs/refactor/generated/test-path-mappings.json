@@ -64341,13 +64341,413 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. Bilingual schema shared request remains a single integration allocation. Guard fixture cast changes raw type syntax only; whole callback emitted bytes remain exact.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 82 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/bilingual_tool_protocol.test.ts",
+      "to": "backend/tests/unit/agents/protocol/tool-descriptions.test.ts",
+      "sourceCommit": "ff8ebd7f309936a1b68eca77a8200c5b1181d264",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "8879a98a90f8b3581cb66be1b6c79643556c1daea7325d23c4f3ea52289c5d88",
+      "candidateSha256": "e2563c34f0eb27ef8c8bcbae312ec4b4472b0de7702ae6669e3dc58df22b6461",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 483,
+          "end": 528,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 418,
+          "end": 444,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 340,
+          "end": 384,
+          "original": "../../../src/ai/integrations/acp/task_locale",
+          "value": "../../../../src/ai/integrations/acp/task_locale",
+          "originalResolved": "backend/src/ai/integrations/acp/task_locale.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/task_locale.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 259,
+          "end": 309,
+          "original": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "value": "../../../../src/ai/integrations/acp/acp_turn_registry",
+          "originalResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 182,
+          "end": 223,
+          "original": "../../../src/ai/audit/audit_tool_protocol",
+          "value": "../../../../src/ai/audit/audit_tool_protocol",
+          "originalResolved": "backend/src/ai/audit/audit_tool_protocol.ts",
+          "expectedResolved": "backend/src/ai/audit/audit_tool_protocol.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 75,
+          "end": 116,
+          "original": "../../../src/ai/agents/game_tool_protocol",
+          "value": "../../../../src/ai/agents/game_tool_protocol",
+          "originalResolved": "backend/src/ai/agents/game_tool_protocol.ts",
+          "expectedResolved": "backend/src/ai/agents/game_tool_protocol.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "634f719de889f433bd73e3c455a112722eb9ba8281b0c4ed8182c38d4678ed01",
+          "title": "locale changes every protocol and nested parameter description without changing constraints",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@modelcontextprotocol/sdk/client/index.js",
+          "originalImport": "import { Client } from \"@modelcontextprotocol/sdk/client/index.js\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Client",
+              "imported": "Client",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@modelcontextprotocol/sdk/client/stdio.js",
+          "originalImport": "import { StdioClientTransport } from \"@modelcontextprotocol/sdk/client/stdio.js\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "StdioClientTransport",
+              "imported": "StdioClientTransport",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/audit/audit_mcp_control",
+          "originalImport": "import { AuditMcpControlServer } from \"../../../src/ai/audit/audit_mcp_control\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AuditMcpControlServer",
+              "imported": "AuditMcpControlServer",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "originalImport": "import { WerewolfMcpControlServer } from \"../../../src/ai/integrations/acp/werewolf_mcp_control\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "WerewolfMcpControlServer",
+              "imported": "WerewolfMcpControlServer",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalImport": "import { AiSdkClient } from \"../../../src/ai/integrations/llm/ai_sdk_client\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AiSdkClient",
+              "imported": "AiSdkClient",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/llm/llm_action_provider",
+          "originalImport": "import { LlmActionProvider } from \"../../../src/ai/agents/llm/llm_action_provider\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "LlmActionProvider",
+              "imported": "LlmActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/audit/sdk_audit_runner",
+          "originalImport": "import { SdkAuditAgentExecutor } from \"../../../src/ai/audit/sdk_audit_runner\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SdkAuditAgentExecutor",
+              "imported": "SdkAuditAgentExecutor",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { Phase, type ActionRequest } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "originalImport": "import { errorMessage } from \"@ai-werewolf-arena/game-text\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "errorMessage",
+              "imported": "errorMessage",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. Bilingual schema shared request remains a single integration allocation. Guard fixture cast changes raw type syntax only; whole callback emitted bytes remain exact.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 82 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/bilingual_tool_protocol.test.ts",
+      "to": "backend/tests/integration/agents/protocol/bilingual-sdk-mcp.test.ts",
+      "sourceCommit": "ff8ebd7f309936a1b68eca77a8200c5b1181d264",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "8879a98a90f8b3581cb66be1b6c79643556c1daea7325d23c4f3ea52289c5d88",
+      "candidateSha256": "4cdc143fea4765e509b3d8f1f05c32f8683c08bd65a2b9badb1af4e9022b5597",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1100,
+          "end": 1117,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1009,
+          "end": 1054,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 944,
+          "end": 970,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 872,
+          "end": 910,
+          "original": "../../../src/ai/audit/sdk_audit_runner",
+          "value": "../../../../src/ai/audit/sdk_audit_runner",
+          "originalResolved": "backend/src/ai/audit/sdk_audit_runner.ts",
+          "expectedResolved": "backend/src/ai/audit/sdk_audit_runner.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 784,
+          "end": 830,
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 700,
+          "end": 746,
+          "original": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "value": "../../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+          "expectedResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 615,
+          "end": 668,
+          "original": "../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "value": "../../../../src/ai/integrations/acp/werewolf_mcp_control",
+          "originalResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/werewolf_mcp_control.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 520,
+          "end": 570,
+          "original": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "value": "../../../../src/ai/integrations/acp/acp_turn_registry",
+          "originalResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 445,
+          "end": 484,
+          "original": "../../../src/ai/audit/audit_mcp_control",
+          "value": "../../../../src/ai/audit/audit_mcp_control",
+          "originalResolved": "backend/src/ai/audit/audit_mcp_control.ts",
+          "expectedResolved": "backend/src/ai/audit/audit_mcp_control.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 362,
+          "end": 403,
+          "original": "../../../src/ai/audit/audit_tool_protocol",
+          "value": "../../../../src/ai/audit/audit_tool_protocol",
+          "originalResolved": "backend/src/ai/audit/audit_tool_protocol.ts",
+          "expectedResolved": "backend/src/ai/audit/audit_tool_protocol.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 255,
+          "end": 296,
+          "original": "../../../src/ai/agents/game_tool_protocol",
+          "value": "../../../../src/ai/agents/game_tool_protocol",
+          "originalResolved": "backend/src/ai/agents/game_tool_protocol.ts",
+          "expectedResolved": "backend/src/ai/agents/game_tool_protocol.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "2f3dc8225018b0b822ad6fd47a41b078ea9d4c42877f65a5766ecd432ad61af7",
+          "title": "real game/audit MCP subprocesses preserve simultaneous task locales and authorization",
+          "occurrence": 1
+        },
+        {
+          "id": "9bbb1fd12b2e6f1ba8f80a95d44d7cdac0f14b7f931526045500a23221f1a863",
+          "title": "game/game actual SDK HTTP request carries zh-CN descriptions and stable submission fields",
+          "occurrence": 1
+        },
+        {
+          "id": "28a77697703a6f4e62a79a4871b4de82eb0a9ee8138233043e2acbd817931af1",
+          "title": "audit/inspect actual SDK HTTP request carries zh-CN descriptions and stable submission fields",
+          "occurrence": 1
+        },
+        {
+          "id": "dd5b9b1d9a281fac9f45edcf23ef6f5b590bd6961f2ee6ca00d43b42e35ba1f6",
+          "title": "audit/summarize actual SDK HTTP request carries zh-CN descriptions and stable submission fields",
+          "occurrence": 1
+        },
+        {
+          "id": "d3bf394030b84b2eaaa3bd489aa0f84eca7a72382196a61ab03eaf8c5c64102f",
+          "title": "game/game actual SDK HTTP request carries en descriptions and stable submission fields",
+          "occurrence": 1
+        },
+        {
+          "id": "c393f379c79c8ec89015a0b9cb566cdf1e7ea2cc897665443ce03e4cbc9c8940",
+          "title": "audit/inspect actual SDK HTTP request carries en descriptions and stable submission fields",
+          "occurrence": 1
+        },
+        {
+          "id": "488cf3a2b8b7e20de616fabfc5d0f7c27ec109447d0a1a000ce3db04344d56e1",
+          "title": "audit/summarize actual SDK HTTP request carries en descriptions and stable submission fields",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/ai/integrations/acp/task_locale",
+          "originalImport": "import { taskLocale } from \"../../../src/ai/integrations/acp/task_locale\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "taskLocale",
+              "imported": "taskLocale",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "originalImport": "import type { Locale } from \"@ai-werewolf-arena/game-text\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Locale",
+              "imported": "Locale",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. Bilingual schema shared request remains a single integration allocation. Guard fixture cast changes raw type syntax only; whole callback emitted bytes remain exact.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 82 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 507,
-    "targetFiles": 516,
-    "mappingEntries": 516,
-    "baselineCases": 6370,
+    "sourceFiles": 508,
+    "targetFiles": 518,
+    "mappingEntries": 518,
+    "baselineCases": 6378,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

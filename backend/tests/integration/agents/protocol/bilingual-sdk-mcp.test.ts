@@ -1,66 +1,27 @@
+/**
+ * Transport integration tests verify real SDK HTTP and game/audit MCP subprocesses preserve bilingual schemas and authorization.
+ * Input: The original locale/kind/mode matrix, local client/control resources and one retained shared request object.
+ * Output and oracle: Literal descriptions, submission fields, responses and resource cleanup preserve native protocols; shared request setup is not duplicated across transport cases or unit files.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import { gameToolProtocol } from "../../../src/ai/agents/game_tool_protocol";
+import { gameToolProtocol } from "../../../../src/ai/agents/game_tool_protocol";
 import {
   auditToolProtocol,
   AuditToolTurnRegistry,
-} from "../../../src/ai/audit/audit_tool_protocol";
-import { AuditMcpControlServer } from "../../../src/ai/audit/audit_mcp_control";
-import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
-import { WerewolfMcpControlServer } from "../../../src/ai/integrations/acp/werewolf_mcp_control";
-import { taskLocale } from "../../../src/ai/integrations/acp/task_locale";
-import { AiSdkClient } from "../../../src/ai/integrations/llm/ai_sdk_client";
-import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
-import { SdkAuditAgentExecutor } from "../../../src/ai/audit/sdk_audit_runner";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { Phase, type ActionRequest } from "../../../src/core";
+} from "../../../../src/ai/audit/audit_tool_protocol";
+import { AuditMcpControlServer } from "../../../../src/ai/audit/audit_mcp_control";
+import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
+import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
+import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
+import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
+import { SdkAuditAgentExecutor } from "../../../../src/ai/audit/sdk_audit_runner";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { Phase, type ActionRequest } from "../../../../src/core";
 import { errorMessage } from "@ai-werewolf-arena/game-text";
-import type { Locale } from "@ai-werewolf-arena/game-text";
-
-function withoutDescriptions(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(withoutDescriptions);
-  if (value && typeof value === "object")
-    return Object.fromEntries(
-      Object.entries(value)
-        .filter(([key]) => key !== "description")
-        .map(([key, child]) => [key, withoutDescriptions(child)]),
-    );
-  return value;
-}
-
-test("locale changes every protocol and nested parameter description without changing constraints", () => {
-  for (const build of [gameToolProtocol, auditToolProtocol]) {
-    const chinese = build("zh-CN");
-    const english = build("en");
-    expect(chinese.specs.map((spec) => spec.name)).toEqual(english.specs.map((spec) => spec.name));
-    for (let index = 0; index < chinese.specs.length; index++) {
-      expect(withoutDescriptions(chinese.specs[index].parameters)).toEqual(
-        withoutDescriptions(english.specs[index].parameters),
-      );
-      expect(english.specs[index].description).not.toMatch(/[\u4e00-\u9fff]/);
-      expect(JSON.stringify(english.specs[index].parameters)).not.toMatch(/[\u4e00-\u9fff]/);
-    }
-    expect(JSON.stringify(english.schema)).not.toMatch(/[\u4e00-\u9fff]/);
-    expect(JSON.stringify(chinese.schema)).toMatch(/[\u4e00-\u9fff]/);
-  }
-  const nested = auditToolProtocol("en").specs.find(
-    (spec) => spec.name === "submit_audit_findings",
-  )!.parameters as any;
-  expect(nested.properties.findings.items.properties.evidence.description).toContain(
-    "authorized context",
-  );
-  expect(taskLocale({})).toBe("zh-CN");
-  expect(taskLocale({ AWA_TASK_LOCALE: "en" })).toBe("en");
-  expect(() => taskLocale({ AWA_TASK_LOCALE: "en-US" })).toThrow("acp_task_locale_invalid");
-  expect(
-    () =>
-      new AcpTurnRegistry(bootstrapGame(sixPlayerMvpConfig, { locale: "en-US" as Locale }).world),
-  ).toThrow("game_locale_invalid");
-  expect(() => new AuditToolTurnRegistry("en-US" as Locale)).toThrow("audit_task_locale_invalid");
-});
 
 const request: ActionRequest = {
   actorId: 1,

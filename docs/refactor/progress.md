@@ -199,3 +199,5 @@
 - C12 mixed llm-action-provider-protocol：1原file→3targets/10旧IDs按实际unit/FS/HTTP/MCP/CLI分配；mixed4整体21callbacks=20raw+1授权Guard cast emitted全同、9helper(2URL例外)/69relative/31uniqueIDs保，独立原Git/完整setup/loadset82删unused模块0必需初始化丢失；finite9 types0，无测试/discovery。caseSplit与selected程序保真单列不称wholefile；mapping现506source/514target/6362IDs。
 
 - C12 mixed bilingual-rejections：1原file→2targets/8旧IDs按实际unit/FS/HTTP/MCP/CLI分配；mixed4整体21callbacks=20raw+1授权Guard cast emitted全同、9helper(2URL例外)/69relative/31uniqueIDs保，独立原Git/完整setup/loadset82删unused模块0必需初始化丢失；finite9 types0，无测试/discovery。caseSplit与selected程序保真单列不称wholefile；mapping现507source/516target/6370IDs。
+
+- C12 mixed bilingual-tool-protocol：1原file→2targets/8旧IDs按实际unit/FS/HTTP/MCP/CLI分配；mixed4整体21callbacks=20raw+1授权Guard cast emitted全同、9helper(2URL例外)/69relative/31uniqueIDs保，独立原Git/完整setup/loadset82删unused模块0必需初始化丢失；finite9 types0，无测试/discovery。caseSplit与selected程序保真单列不称wholefile；mapping现508source/518target/6378IDs。
