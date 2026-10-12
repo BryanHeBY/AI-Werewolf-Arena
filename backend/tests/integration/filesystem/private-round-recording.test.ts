@@ -1,0 +1,88 @@
+/**
+ * Filesystem integration tests own actual PlayerRoundRecorder, recording scope and
+ * session-file output for both locales. Literal bounded requests and original
+ * prompt/thought text supply input; exact v2 phase/stage/schema and saved-string
+ * assertions remain the oracle. Temporary directory ownership and finalize order stay
+ * inside each case.
+ */
+import { expect, test } from "bun:test";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { assertReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
+import { bootstrapGame } from "../../../src/app/bootstrap";
+import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { PlayerRoundRecorder } from "../../../src/ai/agents/player/player_round_recorder";
+import { SessionRecordManager } from "../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../src/recording/recording_context";
+import { Phase, Role } from "../../../src/core";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
+
+for (const locale of ["zh-CN", "en"] as const)
+  test(`actual player round writes v2 ${locale} machine phase/stage and original text`, async () => {
+    const root = await createTestTempDirectory("awa-private-v2-");
+    const { world } = bootstrapGame(sixPlayerMvpConfig, {
+      locale,
+      fixedRoles: [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager],
+    });
+    const manager = await SessionRecordManager.create(
+      {
+        sessionId: "private-v2",
+        locale,
+        board: "synthetic",
+        startedAtIso: "2026-10-08T00:00:00.000Z",
+      },
+      root,
+    );
+    await runWithSessionRecorder(manager, async () => {
+      new PlayerRoundRecorder(world).record(
+        {
+          actorId: 1,
+          phase: Phase.Night,
+          allowedTools: ["speak_to_wolves"],
+          context: {
+            day: 1,
+            stage: "wolf_discussion",
+            visible_events: [],
+            turn_constraints: {
+              min_valid_actions: 1,
+              max_valid_actions: 1,
+              summary_message: { key: "request.summary.night_action" },
+            },
+          },
+        },
+        {
+          systemPrompt: "Original 系统",
+          userPrompt: "Original 当前提示",
+          messages: [],
+          isInitialRound: true,
+          eventCursorBefore: 0,
+          eventCursorAfter: 0,
+          contextWindowStart: 0,
+          contextWindowEnd: 0,
+          contextWindowTotal: 0,
+          turnId: "t1",
+        },
+        { actionMode: "none", toolCalls: [], thinkingText: "Original 思考" },
+      );
+      await manager.finalize({
+        endedAtIso: "2026-10-08T00:01:00.000Z",
+        winner: null,
+        finishReason: "completed",
+        players: [],
+      });
+    });
+    const view = JSON.parse(
+      await readFile(path.join(root, "private-v2/players/player_1.json"), "utf8"),
+    );
+    assertReplayPlayerView(view);
+    expect(view.schemaVersion).toBe(2);
+    expect(view.locale).toBe(locale);
+    expect(view.initial_prompt!.phase).toBe("night");
+    expect(view.initial_prompt!.stage).toBe("wolf_discussion");
+    expect(view.timeline[0].phase).toBe("night");
+    expect(view.timeline[0].stage).toBe("wolf_discussion");
+    expect(view.timeline[0].request_id).toBe("1-night-1-1");
+    expect(view.initial_prompt!.prompt_system).toBe("Original 系统");
+    expect(JSON.stringify(view)).toContain("Original 思考");
+    expect(JSON.stringify(view)).toContain("Original 当前提示");
+  });

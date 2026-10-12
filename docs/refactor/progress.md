@@ -107,3 +107,5 @@
 - C12独立seed模拟8：46旧IDs、53relative bindings与原完整seed/policy/i18n矩阵保持；Scholar实际40seed头修准确，Demon125seed来源保留。8heads/0、一次finite types0、独立actualGit/目标/body审查0；不重跑20/40/125 World批次。统一mapping383files/4585IDs，剩余100mixed/1847与110其它/1680继续。
 
 - C23寻香具体night unit：原acquired/closed与opening/normal/abort归单机制owner，World/events委托每读、lazy RNG原位、requiredrecord仍enginecallback，finally顺序/paid前缀不变。5AST/4heads0、独立8源项/cold6同exports；新4/0/24+原N1knife1/0/6。固定Gitd3c6f1d+C23三src的667source isolatedtypes0，排除未提交C24 context候选且红harnesslog保留；全C23仍继续。
+
+- C12 mixed首5→10：29旧IDs逐一唯一归属、25callbacks/3audit describes/forOf/6纯helper原文保持，32retained targets/10heads0。独立13省模块+484依赖图核无必需setup丢失，明确SDK等loadset减少非整import同序。9短reader/vector/0/77，C24真实接线finite23含本10通过、原4context红保留。mapping升级v2区分388source/393target/4614IDs，wholefile与selectedcases保真分别记录。

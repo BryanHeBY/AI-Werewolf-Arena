@@ -1,8 +1,8 @@
 {
-  "schema": "awa-test-path-mappings-v1",
+  "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "da0222d37aae0ac3c9585bf51ab508ef33df8cf1",
+  "observedSourceCommit": "a828601d09710658dd93a0bb2a7a61e9de975df1",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -45704,11 +45704,1257 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/llm_turn_budget.test.ts",
+      "to": "backend/tests/unit/agents/llm/turn-budget.test.ts",
+      "sourceCommit": "a828601d09710658dd93a0bb2a7a61e9de975df1",
+      "reason": "C12 explicit per-case split of a mixed suite; each original resolved ID enters exactly one target. Selected callbacks, describe/forOf contexts and necessary fresh-input helpers remain exact; unused import pruning and module path edits are explicit. This does not claim whole original file or complete import load set preservation.",
+      "originalSha256": "c25be3b84db828df7879679b3ae9482f09ba664620f0c30dde113e35b412ed65",
+      "candidateSha256": "029fb2fa73767e0698d11b80cd7cec0fcd64f99b5d706fa00dc81ee566a1b412",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 334,
+          "end": 351,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 227,
+          "end": 273,
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 144,
+          "end": 189,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 79,
+          "end": 105,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "caseStatementMappings": [
+        {
+          "title": "\"queue time belongs to the turn deadline: expired waiter is removed and never starts a model request\"",
+          "describePrefix": [],
+          "oldIds": ["466e33e6a03675e51931b741649b493c02dbbcb29f71f70079d959310b33e823"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "a484d6af091b85a00ca568def27449e897edc0d56857d6f903f6a1aa3a2598c8"
+        },
+        {
+          "title": "\"required-action retries share one budget instead of resetting timeout for each attempt\"",
+          "describePrefix": [],
+          "oldIds": ["2c7cd11e555371c1e55a03f0f581f4a8237d7e2486fe5050ef31deb8789e69e2"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "0b57dafde14a7a9efc20d949bcbf16564ea0fcde11517499e9fc52789c30d41b"
+        },
+        {
+          "title": "\"provider close aborts active and queued turns without fallback, waits for owners, and rejects future work\"",
+          "describePrefix": [],
+          "oldIds": ["3c6d7a9a54ee0f223a0bdf236c7ac653f2a69fe87b98447f249f39b60eb9a9c4"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "c3050b8c9f3e64cdb4b9d1a43ef6443cb34d586bedeccc82086f7bc290b33af2"
+        },
+        {
+          "title": "`close cancels hung fallback; late ${outcome} has no action or fallback logs`",
+          "describePrefix": [],
+          "oldIds": [
+            "fed7dc5e9461516e2d381ffa7ff20c63b155282eefa78ed7f622ddd5b985dabb",
+            "6e7c345f56100f65b2023050b25466bb43ccfc9c72c6b12723e3dc278ea5c55a"
+          ],
+          "oldIdCount": 2,
+          "originalCallbackSha256": "566907d6715780492ab65b2a1d6eafd096ddf843892f5227704a9c54246f6668"
+        },
+        {
+          "title": "\"hanging asynchronous fallback uses the remaining turn deadline and a real fallback failure propagates once\"",
+          "describePrefix": [],
+          "oldIds": ["630f894373d400bbf057f05b55d7d71cb1aec3f5455b289b8d41ec07892352b5"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "5f4abd8fa2ef02c5dd80b4fd1ee25dcf4e507a91fa267dae6786ddbec97e98f6"
+        },
+        {
+          "title": "`an injected fallback ${kind} remains the original failure, not the owner's cancellation`",
+          "describePrefix": [],
+          "oldIds": [
+            "ccabcea9a4caf206e43aa020b5b474596a78622fbb02af45392d468bf8744482",
+            "24b456abb602d57e26f169538400cabfd74dc88d7e87a1bd1c0af66ccd9e88b1"
+          ],
+          "oldIdCount": 2,
+          "originalCallbackSha256": "8a5884683489a5cc84cdd0d92376915614cd33c499d3a2dbcf832b89bee65637"
+        },
+        {
+          "title": "\"close preserves an already rejected turn error while releasing all logical owners\"",
+          "describePrefix": [],
+          "oldIds": ["8ab1aba429b7eb30f1c2e464661a6d5ce386c742f68c117c142c6d052fa355b2"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "02cb8b774710e0fbcdeae810f5cbd3d9f4dfc93907ab9a8b921a378c6ec7cea6"
+        },
+        {
+          "title": "\"closing during successful action finalization cannot return the selected action\"",
+          "describePrefix": [],
+          "oldIds": ["13df8ba4688b424665bc845ffc94f5e2662389d0fc05882b5ea0e7a78e126a78"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "6a6800fd6d9e9b99aa044dffdc3684e34ec4f82514d676c837600130b3258efc"
+        }
+      ],
+      "necessaryHelperStatements": [
+        {
+          "kind": "FunctionDeclaration",
+          "text": "function request(actorId: number, deadlineAtMs?: number): ActionRequest {\n  return {\n    actorId,\n    phase: Phase.Day,\n    allowedTools: [\"speak\"],\n    deadlineAtMs,\n    context: {\n      day: 1,\n      stage: \"day_speech\",\n      visible_events: [],\n      turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },\n    },\n  };\n}",
+          "sha256": "51635638e64e11fd5c0f12735806d2f213db0f329afd1c5d668596c2e88716bb"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "text": "function submission(messages: Array<{ content: string }>, text = \"accepted\") {\n  return {\n    id: \"synthetic\",\n    name: \"submit_action\",\n    rawArgs: \"{}\",\n    args: {\n      turn_id: messages.at(-1)!.content.match(/turn_id must be (t\\d+)/)![1],\n      action: \"speak\",\n      arguments: { text },\n    },\n  };\n}",
+          "sha256": "aac7b774ec80c6bc0d1f97167b494b80a4a47051318370cc07b76583bbae5f64"
+        }
+      ],
+      "importPruning": [
+        {
+          "specifier": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalImport": "import { AiSdkClient } from \"../../../src/ai/integrations/llm/ai_sdk_client\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AiSdkClient",
+              "imported": "AiSdkClient",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "466e33e6a03675e51931b741649b493c02dbbcb29f71f70079d959310b33e823",
+          "title": "queue time belongs to the turn deadline: expired waiter is removed and never starts a model request",
+          "occurrence": 1
+        },
+        {
+          "id": "2c7cd11e555371c1e55a03f0f581f4a8237d7e2486fe5050ef31deb8789e69e2",
+          "title": "required-action retries share one budget instead of resetting timeout for each attempt",
+          "occurrence": 1
+        },
+        {
+          "id": "3c6d7a9a54ee0f223a0bdf236c7ac653f2a69fe87b98447f249f39b60eb9a9c4",
+          "title": "provider close aborts active and queued turns without fallback, waits for owners, and rejects future work",
+          "occurrence": 1
+        },
+        {
+          "id": "fed7dc5e9461516e2d381ffa7ff20c63b155282eefa78ed7f622ddd5b985dabb",
+          "title": "close cancels hung fallback; late resolve has no action or fallback logs",
+          "occurrence": 1
+        },
+        {
+          "id": "6e7c345f56100f65b2023050b25466bb43ccfc9c72c6b12723e3dc278ea5c55a",
+          "title": "close cancels hung fallback; late reject has no action or fallback logs",
+          "occurrence": 1
+        },
+        {
+          "id": "630f894373d400bbf057f05b55d7d71cb1aec3f5455b289b8d41ec07892352b5",
+          "title": "hanging asynchronous fallback uses the remaining turn deadline and a real fallback failure propagates once",
+          "occurrence": 1
+        },
+        {
+          "id": "ccabcea9a4caf206e43aa020b5b474596a78622fbb02af45392d468bf8744482",
+          "title": "an injected fallback TimeoutError remains the original failure, not the owner's cancellation",
+          "occurrence": 1
+        },
+        {
+          "id": "24b456abb602d57e26f169538400cabfd74dc88d7e87a1bd1c0af66ccd9e88b1",
+          "title": "an injected fallback AbortError remains the original failure, not the owner's cancellation",
+          "occurrence": 1
+        },
+        {
+          "id": "8ab1aba429b7eb30f1c2e464661a6d5ce386c742f68c117c142c6d052fa355b2",
+          "title": "close preserves an already rejected turn error while releasing all logical owners",
+          "occurrence": 1
+        },
+        {
+          "id": "13df8ba4688b424665bc845ffc94f5e2662389d0fc05882b5ea0e7a78e126a78",
+          "title": "closing during successful action finalization cannot return the selected action",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/llm_turn_budget.test.ts",
+      "to": "backend/tests/integration/agents/llm/provider-http-cancellation.test.ts",
+      "sourceCommit": "a828601d09710658dd93a0bb2a7a61e9de975df1",
+      "reason": "C12 explicit per-case split of a mixed suite; each original resolved ID enters exactly one target. Selected callbacks, describe/forOf contexts and necessary fresh-input helpers remain exact; unused import pruning and module path edits are explicit. This does not claim whole original file or complete import load set preservation.",
+      "originalSha256": "c25be3b84db828df7879679b3ae9482f09ba664620f0c30dde113e35b412ed65",
+      "candidateSha256": "1c551fa7983a5727c08672229f3f061ef6bb7f2bf318f73fe60f19b0448c899a",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 390,
+          "end": 407,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 298,
+          "end": 344,
+          "original": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "value": "../../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 220,
+          "end": 266,
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 137,
+          "end": 182,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "caseStatementMappings": [
+        {
+          "title": "\"real SDK HTTP response is cancelled when the owning provider closes\"",
+          "describePrefix": [],
+          "oldIds": ["3894ca108c8cd79ad63d10df8d2433ac9ed795db8d13483f585c63f857113ae6"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "55156cdc77d5c912b7d9ae53e5a61b5bd9ebf07f3e0d69d12008f9a0a2e9f0b4"
+        }
+      ],
+      "necessaryHelperStatements": [
+        {
+          "kind": "FunctionDeclaration",
+          "text": "function request(actorId: number, deadlineAtMs?: number): ActionRequest {\n  return {\n    actorId,\n    phase: Phase.Day,\n    allowedTools: [\"speak\"],\n    deadlineAtMs,\n    context: {\n      day: 1,\n      stage: \"day_speech\",\n      visible_events: [],\n      turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },\n    },\n  };\n}",
+          "sha256": "51635638e64e11fd5c0f12735806d2f213db0f329afd1c5d668596c2e88716bb"
+        }
+      ],
+      "importPruning": [
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { expect, spyOn, test } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { Phase, type ActionRequest, type ToolCall } from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Phase, type ActionRequest } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "3894ca108c8cd79ad63d10df8d2433ac9ed795db8d13483f585c63f857113ae6",
+          "title": "real SDK HTTP response is cancelled when the owning provider closes",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/audit/audit_agent_executor.test.ts",
+      "to": "backend/tests/unit/agents/audit/tool-turn-contract.test.ts",
+      "sourceCommit": "a828601d09710658dd93a0bb2a7a61e9de975df1",
+      "reason": "C12 explicit per-case split of a mixed suite; each original resolved ID enters exactly one target. Selected callbacks, describe/forOf contexts and necessary fresh-input helpers remain exact; unused import pruning and module path edits are explicit. This does not claim whole original file or complete import load set preservation.",
+      "originalSha256": "3eb1a3b7faca780d0586fac0af7decd61b59b7f683ebca6e3ac753a38feb0bbd",
+      "candidateSha256": "b1921b7f3a89eec02b50231f16e1dfe958d4f7c32f1424945b399dbbf8b7af2a",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 215,
+          "end": 253,
+          "original": "../../../src/ai/audit/sdk_audit_runner",
+          "value": "../../../../src/ai/audit/sdk_audit_runner",
+          "originalResolved": "backend/src/ai/audit/sdk_audit_runner.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 132,
+          "end": 173,
+          "original": "../../../src/ai/audit/audit_tool_protocol",
+          "value": "../../../../src/ai/audit/audit_tool_protocol",
+          "originalResolved": "backend/src/ai/audit/audit_tool_protocol.ts"
+        }
+      ],
+      "caseStatementMappings": [
+        {
+          "title": "\"isolates sessions, enforces modes, and owns finding source\"",
+          "describePrefix": ["\"AuditToolTurnRegistry\""],
+          "oldIds": ["f91b366606fb7543ba3e7030f52794b7eb7bad5671ae16741082039887ae9545"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "6ffeccbbc97502215d16a9556e051fd9951cf79866db1e5a937fec2f0e8d2132"
+        },
+        {
+          "title": "\"uses the same semantic tools without embedding audit payload in prompts\"",
+          "describePrefix": ["\"SdkAuditAgentExecutor\""],
+          "oldIds": ["ceafe046549727a25adf0647c616a1f8807392677d43154afa79b47e4c35a909"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "b14dab084d60c0c204df674705094e9027e842a55b869bece1da2fba27ab906e"
+        }
+      ],
+      "necessaryHelperStatements": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/ai/audit/audit_mcp_control",
+          "originalImport": "import { AuditMcpControlServer } from \"../../../src/ai/audit/audit_mcp_control\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AuditMcpControlServer",
+              "imported": "AuditMcpControlServer",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "@modelcontextprotocol/sdk/client/index.js",
+          "originalImport": "import { Client } from \"@modelcontextprotocol/sdk/client/index.js\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Client",
+              "imported": "Client",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "@modelcontextprotocol/sdk/client/stdio.js",
+          "originalImport": "import { StdioClientTransport } from \"@modelcontextprotocol/sdk/client/stdio.js\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "StdioClientTransport",
+              "imported": "StdioClientTransport",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "node:path",
+          "originalImport": "import * as path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "namespace",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "f91b366606fb7543ba3e7030f52794b7eb7bad5671ae16741082039887ae9545",
+          "title": "AuditToolTurnRegistry > isolates sessions, enforces modes, and owns finding source",
+          "occurrence": 1
+        },
+        {
+          "id": "ceafe046549727a25adf0647c616a1f8807392677d43154afa79b47e4c35a909",
+          "title": "SdkAuditAgentExecutor > uses the same semantic tools without embedding audit payload in prompts",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/audit/audit_agent_executor.test.ts",
+      "to": "backend/tests/integration/agents/audit/tool-mcp-contract.test.ts",
+      "sourceCommit": "a828601d09710658dd93a0bb2a7a61e9de975df1",
+      "reason": "C12 explicit per-case split of a mixed suite; each original resolved ID enters exactly one target. Selected callbacks, describe/forOf contexts and necessary fresh-input helpers remain exact; unused import pruning and module path edits are explicit. This does not claim whole original file or complete import load set preservation.",
+      "originalSha256": "3eb1a3b7faca780d0586fac0af7decd61b59b7f683ebca6e3ac753a38feb0bbd",
+      "candidateSha256": "25c7ad7d09eef090b6ce228ee997444f6f0f1f95737dc4f1e78bcf38cbc51e3c",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 173,
+          "end": 212,
+          "original": "../../../src/ai/audit/audit_mcp_control",
+          "value": "../../../../src/ai/audit/audit_mcp_control",
+          "originalResolved": "backend/src/ai/audit/audit_mcp_control.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 90,
+          "end": 131,
+          "original": "../../../src/ai/audit/audit_tool_protocol",
+          "value": "../../../../src/ai/audit/audit_tool_protocol",
+          "originalResolved": "backend/src/ai/audit/audit_tool_protocol.ts"
+        }
+      ],
+      "caseStatementMappings": [
+        {
+          "title": "\"exposes the same semantic audit contract and resolves a registry turn\"",
+          "describePrefix": ["\"Audit ACP MCP bridge\""],
+          "oldIds": ["536030bfc40a4f60aa1dae9752a3656a7b1a4052808136ef75597aff5b022d22"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "84e600149c0eb5ba980f14a77deddb58dfa4e4e4a4438feea1ae04436db6670a"
+        }
+      ],
+      "necessaryHelperStatements": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/ai/audit/audit_tool_protocol",
+          "originalImport": "import {\n  AUDIT_TOOL_SPECS,\n  AuditSubmission,\n  AuditToolTurnRegistry,\n} from \"../../../src/ai/audit/audit_tool_protocol\";",
+          "currentImportBeforeRebase": "import { AuditToolTurnRegistry } from \"../../../src/ai/audit/audit_tool_protocol\";",
+          "droppedBindings": [
+            {
+              "name": "AUDIT_TOOL_SPECS",
+              "imported": "AUDIT_TOOL_SPECS",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "AuditSubmission",
+              "imported": "AuditSubmission",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "../../../src/ai/audit/sdk_audit_runner",
+          "originalImport": "import { SdkAuditAgentExecutor } from \"../../../src/ai/audit/sdk_audit_runner\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SdkAuditAgentExecutor",
+              "imported": "SdkAuditAgentExecutor",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "536030bfc40a4f60aa1dae9752a3656a7b1a4052808136ef75597aff5b022d22",
+          "title": "Audit ACP MCP bridge > exposes the same semantic audit contract and resolves a registry turn",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/private_record_contract.test.ts",
+      "to": "backend/tests/unit/recording/private-archive-reader.test.ts",
+      "sourceCommit": "a828601d09710658dd93a0bb2a7a61e9de975df1",
+      "reason": "C12 explicit per-case split of a mixed suite; each original resolved ID enters exactly one target. Selected callbacks, describe/forOf contexts and necessary fresh-input helpers remain exact; unused import pruning and module path edits are explicit. This does not claim whole original file or complete import load set preservation.",
+      "originalSha256": "bf30958a021d2a49209059620117b7e0a6c1c45bed9073946006284fca65c506",
+      "candidateSha256": "86bed9e49c769ddec9cb5189d0253e0f87c3cc17e1565c4cece28445d2911708",
+      "moduleAndLocationEdits": [],
+      "caseStatementMappings": [
+        {
+          "title": "\"private record reader converts only metadata paths and leaves prompts/events/tool results original\"",
+          "describePrefix": [],
+          "oldIds": ["f0d3ce33d5dcb7bd638560b18ee577c01169c572b329b24d15dcc97c08ae095c"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "7de6a6879b3c18e5c51f36607ef563cfde83b27a6928ecf86fc08a996a23e4bd"
+        },
+        {
+          "title": "\"private record versions and nested shapes fail explicitly\"",
+          "describePrefix": [],
+          "oldIds": ["afaaf841ab002db93e743519e9943b9c98eccd4ff04875180bea2dccfc25a01d"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "3b4802cb3752626fd6ef6d5d687f6c7c739b8ac8e21bdd0f3424efcda125bca0"
+        }
+      ],
+      "necessaryHelperStatements": [
+        {
+          "kind": "FunctionDeclaration",
+          "text": "async function legacy() {\n  return JSON.parse(\n    await readFile(\n      path.resolve(process.cwd(), \"../packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-localized-role.player.json\"),\n      \"utf8\",\n    ),\n  );\n}",
+          "sha256": "e8e27f7847f3fe920171acdee4c6f41f123dd3173720282bc91d79541a4d3841"
+        }
+      ],
+      "importPruning": [
+        {
+          "specifier": "../../src/app/bootstrap",
+          "originalImport": "import { bootstrapGame } from \"../../src/app/bootstrap\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bootstrapGame",
+              "imported": "bootstrapGame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "../../src/ai/agents/player/player_round_recorder",
+          "originalImport": "import { PlayerRoundRecorder } from \"../../src/ai/agents/player/player_round_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PlayerRoundRecorder",
+              "imported": "PlayerRoundRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import { Phase, Role } from \"../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "f0d3ce33d5dcb7bd638560b18ee577c01169c572b329b24d15dcc97c08ae095c",
+          "title": "private record reader converts only metadata paths and leaves prompts/events/tool results original",
+          "occurrence": 1
+        },
+        {
+          "id": "afaaf841ab002db93e743519e9943b9c98eccd4ff04875180bea2dccfc25a01d",
+          "title": "private record versions and nested shapes fail explicitly",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/private_record_contract.test.ts",
+      "to": "backend/tests/integration/filesystem/private-round-recording.test.ts",
+      "sourceCommit": "a828601d09710658dd93a0bb2a7a61e9de975df1",
+      "reason": "C12 explicit per-case split of a mixed suite; each original resolved ID enters exactly one target. Selected callbacks, describe/forOf contexts and necessary fresh-input helpers remain exact; unused import pruning and module path edits are explicit. This does not claim whole original file or complete import load set preservation.",
+      "originalSha256": "bf30958a021d2a49209059620117b7e0a6c1c45bed9073946006284fca65c506",
+      "candidateSha256": "3992b3b16efa87749cc4adc6ffe98ce721fa45e5e6e3c97b82055fa7a092eb92",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 663,
+          "end": 698,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 605,
+          "end": 619,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 536,
+          "end": 573,
+          "original": "../../src/recording/recording_context",
+          "value": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 457,
+          "end": 493,
+          "original": "../../src/recording/session_recorder",
+          "value": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 368,
+          "end": 416,
+          "original": "../../src/ai/agents/player/player_round_recorder",
+          "value": "../../../src/ai/agents/player/player_round_recorder",
+          "originalResolved": "backend/src/ai/agents/player/player_round_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 286,
+          "end": 328,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 224,
+          "end": 247,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "caseStatementMappings": [
+        {
+          "title": "`actual player round writes v2 ${locale} machine phase/stage and original text`",
+          "describePrefix": [],
+          "oldIds": [
+            "e65d8bf58191189ca256d7b2c1cdd843925ff1ed131d438fbe412ed19dc09a75",
+            "07d246f8f8276f115d6d2e46bdb4c743b1984b7ac28bcf2c33776204d8bb2339"
+          ],
+          "oldIdCount": 2,
+          "originalCallbackSha256": "a08c71faeac3c6d4b0400b9e84b94ed7c5d40cebeb224d233767dd94a95fbb42"
+        }
+      ],
+      "necessaryHelperStatements": [],
+      "importPruning": [
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "originalImport": "import { assertReplayPlayerView, readReplayPlayerView } from \"@ai-werewolf-arena/replay-contract\";",
+          "currentImportBeforeRebase": "import { assertReplayPlayerView } from \"@ai-werewolf-arena/replay-contract\";",
+          "droppedBindings": [
+            {
+              "name": "readReplayPlayerView",
+              "imported": "readReplayPlayerView",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "e65d8bf58191189ca256d7b2c1cdd843925ff1ed131d438fbe412ed19dc09a75",
+          "title": "actual player round writes v2 zh-CN machine phase/stage and original text",
+          "occurrence": 1
+        },
+        {
+          "id": "07d246f8f8276f115d6d2e46bdb4c743b1984b7ac28bcf2c33776204d8bb2339",
+          "title": "actual player round writes v2 en machine phase/stage and original text",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/replay/replay_version_migration.test.ts",
+      "to": "backend/tests/unit/recording/replay-version-reader.test.ts",
+      "sourceCommit": "a828601d09710658dd93a0bb2a7a61e9de975df1",
+      "reason": "C12 explicit per-case split of a mixed suite; each original resolved ID enters exactly one target. Selected callbacks, describe/forOf contexts and necessary fresh-input helpers remain exact; unused import pruning and module path edits are explicit. This does not claim whole original file or complete import load set preservation.",
+      "originalSha256": "5feb57d3deea4ae2fab248393158bca4d758c13fa093eff475cb0cd8f1ce774f",
+      "candidateSha256": "1ba8cb71b23f1812cd96559555eb980aecae72623586bf3b81f3e0430d3ddbdb",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 287,
+          "end": 322,
+          "original": "../../src/recording/replay_document",
+          "value": "../../../src/recording/replay_document",
+          "originalResolved": "backend/src/recording/replay_document.ts"
+        }
+      ],
+      "caseStatementMappings": [
+        {
+          "title": "\"legacy normalization follows explicit metadata paths, preserving unknown IDs and original text\"",
+          "describePrefix": [],
+          "oldIds": ["07de3edcf71f5cdd4eadaafcdd2dad93e76376c0ac6f38d46b5a1ea1f444812b"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "9ee3975f8ff437458f9bca1492dfbb5f6b85497790ec7710727eabb3d4b6b11b"
+        },
+        {
+          "title": "\"future/malformed version values fail before legacy conversion and canonical v2 is not guessed\"",
+          "describePrefix": [],
+          "oldIds": ["1200f96323f9dab23312f2005ef2bff610d4e57ce8d5dab13b7eb3aaa6d67238"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "9e2d621b51f4876bc4a3d3a64fa4a7e6385dbed1c4cf2d3db596a0e357177049"
+        },
+        {
+          "title": "\"new writer emits an explicit version and supplied game locale while excluding private metadata\"",
+          "describePrefix": [],
+          "oldIds": ["7c0d85261832feebfaf17d68e396006017fb66f8b908dfce1e2b437a90b9cafa"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "57550faee907402c819bc3f3462e1e9628cef80c41174ad1260f19e12b9f18c9"
+        },
+        {
+          "title": "\"declared phase and initial-role paths normalize while their other content stays original\"",
+          "describePrefix": [],
+          "oldIds": ["039757451fa502df1f36fbf1f2dd5a4ca2918442c96949f41bdadb8729c92606"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "d3341ac71e6e3fa52482ba71b01afe136cc6f2a619912f24f580bb449216cd13"
+        },
+        {
+          "title": "\"English archived payload metadata follows the same exact path contract\"",
+          "describePrefix": [],
+          "oldIds": ["ea018748a888327b40b7ae42b7d3de14673c0db612ac96aa19fd5b196138f41a"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "1eaf14d6226bf567120a47259610493c72844ddb7634d41659770b4f7f38d561"
+        }
+      ],
+      "necessaryHelperStatements": [
+        {
+          "kind": "FunctionDeclaration",
+          "text": "async function fixture() {\n  return JSON.parse(\n    await readFile(\n      path.resolve(process.cwd(), \"../packages/replay-contract/fixtures/synthetic/legacy-localized/locale-unrecorded/god.replay.json\"),\n      \"utf8\",\n    ),\n  );\n}",
+          "sha256": "3d57d9f0fcce28e8b36820634cec88c64fa92f98bceb4b2fbca819429604cd9d"
+        }
+      ],
+      "importPruning": [
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile, writeFile, mkdir, link, symlink } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": "import { readFile } from \"node:fs/promises\";",
+          "droppedBindings": [
+            {
+              "name": "writeFile",
+              "imported": "writeFile",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "mkdir",
+              "imported": "mkdir",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "link",
+              "imported": "link",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "symlink",
+              "imported": "symlink",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "../../src/replay/export_replay_bundle",
+          "originalImport": "import { exportReplayBundle } from \"../../src/replay/export_replay_bundle\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "exportReplayBundle",
+              "imported": "exportReplayBundle",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "07de3edcf71f5cdd4eadaafcdd2dad93e76376c0ac6f38d46b5a1ea1f444812b",
+          "title": "legacy normalization follows explicit metadata paths, preserving unknown IDs and original text",
+          "occurrence": 1
+        },
+        {
+          "id": "1200f96323f9dab23312f2005ef2bff610d4e57ce8d5dab13b7eb3aaa6d67238",
+          "title": "future/malformed version values fail before legacy conversion and canonical v2 is not guessed",
+          "occurrence": 1
+        },
+        {
+          "id": "7c0d85261832feebfaf17d68e396006017fb66f8b908dfce1e2b437a90b9cafa",
+          "title": "new writer emits an explicit version and supplied game locale while excluding private metadata",
+          "occurrence": 1
+        },
+        {
+          "id": "039757451fa502df1f36fbf1f2dd5a4ca2918442c96949f41bdadb8729c92606",
+          "title": "declared phase and initial-role paths normalize while their other content stays original",
+          "occurrence": 1
+        },
+        {
+          "id": "ea018748a888327b40b7ae42b7d3de14673c0db612ac96aa19fd5b196138f41a",
+          "title": "English archived payload metadata follows the same exact path contract",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/replay/replay_version_migration.test.ts",
+      "to": "backend/tests/integration/filesystem/replay-version-migration.test.ts",
+      "sourceCommit": "a828601d09710658dd93a0bb2a7a61e9de975df1",
+      "reason": "C12 explicit per-case split of a mixed suite; each original resolved ID enters exactly one target. Selected callbacks, describe/forOf contexts and necessary fresh-input helpers remain exact; unused import pruning and module path edits are explicit. This does not claim whole original file or complete import load set preservation.",
+      "originalSha256": "5feb57d3deea4ae2fab248393158bca4d758c13fa093eff475cb0cd8f1ce774f",
+      "candidateSha256": "62b7a101278a51def7f41238ef858831230562ac001d21fc1496ac9595c6bdec",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 339,
+          "end": 374,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 258,
+          "end": 295,
+          "original": "../../src/replay/export_replay_bundle",
+          "value": "../../../src/replay/export_replay_bundle",
+          "originalResolved": "backend/src/replay/export_replay_bundle.ts"
+        }
+      ],
+      "caseStatementMappings": [
+        {
+          "title": "\"the existing exporter uses the same reader and writes v2 without rewriting the archived source\"",
+          "describePrefix": [],
+          "oldIds": ["11e1fbb1c95b6073789dbdc45bef731faf930e05556a9b49db19ac3ae6061029"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "ffac2198003812b065bb35c18204c1cb7cd16b622ba67e4cc043d9dca2e4adb3"
+        },
+        {
+          "title": "\"export refuses direct and filesystem aliases of its source\"",
+          "describePrefix": [],
+          "oldIds": ["02239f5fa02b28b327bc6c9826d17633d9c27952bd7f0445d7c82a1541be50f2"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "4a979b6222bae083d663648ecfa06f48aaa3b10f06a1f344ad2cf18f0060b805"
+        }
+      ],
+      "necessaryHelperStatements": [
+        {
+          "kind": "FunctionDeclaration",
+          "text": "async function fixture() {\n  return JSON.parse(\n    await readFile(\n      path.resolve(process.cwd(), \"../packages/replay-contract/fixtures/synthetic/legacy-localized/locale-unrecorded/god.replay.json\"),\n      \"utf8\",\n    ),\n  );\n}",
+          "sha256": "3d57d9f0fcce28e8b36820634cec88c64fa92f98bceb4b2fbca819429604cd9d"
+        }
+      ],
+      "importPruning": [
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "originalImport": "import {\n  assertReplayDocument,\n  readReplayDocument,\n  ReplayDocumentValidationError,\n} from \"@ai-werewolf-arena/replay-contract\";",
+          "currentImportBeforeRebase": "import { readReplayDocument } from \"@ai-werewolf-arena/replay-contract\";",
+          "droppedBindings": [
+            {
+              "name": "assertReplayDocument",
+              "imported": "assertReplayDocument",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ReplayDocumentValidationError",
+              "imported": "ReplayDocumentValidationError",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "../../src/recording/replay_document",
+          "originalImport": "import { createReplayDocument } from \"../../src/recording/replay_document\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createReplayDocument",
+              "imported": "createReplayDocument",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "11e1fbb1c95b6073789dbdc45bef731faf930e05556a9b49db19ac3ae6061029",
+          "title": "the existing exporter uses the same reader and writes v2 without rewriting the archived source",
+          "occurrence": 1
+        },
+        {
+          "id": "02239f5fa02b28b327bc6c9826d17633d9c27952bd7f0445d7c82a1541be50f2",
+          "title": "export refuses direct and filesystem aliases of its source",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/phases/game_randomness.test.ts",
+      "to": "backend/tests/unit/domain/random-vectors-and-deal.test.ts",
+      "sourceCommit": "a828601d09710658dd93a0bb2a7a61e9de975df1",
+      "reason": "C12 explicit per-case split of a mixed suite; each original resolved ID enters exactly one target. Selected callbacks, describe/forOf contexts and necessary fresh-input helpers remain exact; unused import pruning and module path edits are explicit. This does not claim whole original file or complete import load set preservation.",
+      "originalSha256": "a53a2b63930eace52429b71cd63bec4413fdef6644f226e70bc0b4d3344ba947",
+      "candidateSha256": "6f640734454e6e5f573f0568122672bdb3f334ff13671bba8d21901585a61804",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 292,
+          "end": 337,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 222,
+          "end": 253,
+          "original": "../../../src/core/domain/random",
+          "value": "../../../src/core/domain/random",
+          "originalResolved": "backend/src/core/domain/random.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 154,
+          "end": 171,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "caseStatementMappings": [
+        {
+          "title": "\"named random streams have frozen versioned vectors and do not consume their parent\"",
+          "describePrefix": [],
+          "oldIds": ["5736c48a8fe94c973f23164b07a24e548a6bda7019540f0fafe7c3673b58375e"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "a38151346f5c6cce25e1d60ae7f66b252f39bb2a9d0c78712b58b33915711388"
+        },
+        {
+          "title": "\"fixed role fixtures preserve deck counts and never bypass board rules\"",
+          "describePrefix": [],
+          "oldIds": ["a6f5dc3008c3b6876eb6551cc317591abf2b5974d0ab3cb5cead32f26b5bebca"],
+          "oldIdCount": 1,
+          "originalCallbackSha256": "9bcfcf6bfdd63e0f662ed1f73bf1c54f498e83bc6da1c6eea8f38a6fd89f3fcb"
+        }
+      ],
+      "necessaryHelperStatements": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/ai/agents/providers/action_providers",
+          "originalImport": "import { BaselineBotActionProvider } from \"../../../src/ai/agents/providers/action_providers\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "BaselineBotActionProvider",
+              "imported": "BaselineBotActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalImport": "import { twelvePlayerStandardConfig } from \"../../../src/runtime/scenarios/twelve_player_standard\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "twelvePlayerStandardConfig",
+              "imported": "twelvePlayerStandardConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "5736c48a8fe94c973f23164b07a24e548a6bda7019540f0fafe7c3673b58375e",
+          "title": "named random streams have frozen versioned vectors and do not consume their parent",
+          "occurrence": 1
+        },
+        {
+          "id": "a6f5dc3008c3b6876eb6551cc317591abf2b5974d0ab3cb5cead32f26b5bebca",
+          "title": "fixed role fixtures preserve deck counts and never bypass board rules",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/phases/game_randomness.test.ts",
+      "to": "backend/tests/scenarios/simulation/interleaved-determinism.test.ts",
+      "sourceCommit": "a828601d09710658dd93a0bb2a7a61e9de975df1",
+      "reason": "C12 explicit per-case split of a mixed suite; each original resolved ID enters exactly one target. Selected callbacks, describe/forOf contexts and necessary fresh-input helpers remain exact; unused import pruning and module path edits are explicit. This does not claim whole original file or complete import load set preservation.",
+      "originalSha256": "a53a2b63930eace52429b71cd63bec4413fdef6644f226e70bc0b4d3344ba947",
+      "candidateSha256": "c6da3fa5a1807f652dad841b3988527316164a5a685be9bddc17ac526be6ac23",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 388,
+          "end": 441,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 296,
+          "end": 341,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 208,
+          "end": 257,
+          "original": "../../../src/ai/agents/providers/action_providers",
+          "value": "../../../src/ai/agents/providers/action_providers",
+          "originalResolved": "backend/src/ai/agents/providers/action_providers.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 131,
+          "end": 162,
+          "original": "../../../src/core/domain/random",
+          "value": "../../../src/core/domain/random",
+          "originalResolved": "backend/src/core/domain/random.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "caseStatementMappings": [
+        {
+          "title": "`${board}: 25 seeds reproduce complete engine games even with other games interleaved`",
+          "describePrefix": [],
+          "oldIds": [
+            "ffe02cf1be40aa7d32df8bc5f0cbe881e80827939c119d69d8f7f5118c934f88",
+            "a08b51e73ad151b5f15f7c5882b56b3de06887197397eb47e9970eb81061d5c3"
+          ],
+          "oldIdCount": 2,
+          "originalCallbackSha256": "54e8c5e016cf1745c92a9113c1492820b87f099f88bc3f7b83772d0ff0469168"
+        }
+      ],
+      "necessaryHelperStatements": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { COMPONENT, Role, type RoleComponent } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        },
+        {
+          "specifier": "../../../src/core/domain/random",
+          "originalImport": "import { createRandom, RANDOM_ALGORITHM } from \"../../../src/core/domain/random\";",
+          "currentImportBeforeRebase": "import { createRandom } from \"../../../src/core/domain/random\";",
+          "droppedBindings": [
+            {
+              "name": "RANDOM_ALGORITHM",
+              "imported": "RANDOM_ALGORITHM",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ],
+          "exception": "Unused import binding/declaration in this split output only; source import semantics in retained cases are unchanged."
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "ffe02cf1be40aa7d32df8bc5f0cbe881e80827939c119d69d8f7f5118c934f88",
+          "title": "six: 25 seeds reproduce complete engine games even with other games interleaved",
+          "occurrence": 1
+        },
+        {
+          "id": "a08b51e73ad151b5f15f7c5882b56b3de06887197397eb47e9970eb81061d5c3",
+          "title": "twelve: 25 seeds reproduce complete engine games even with other games interleaved",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "files": 383,
-    "baselineCases": 4585,
+    "sourceFiles": 388,
+    "targetFiles": 393,
+    "mappingEntries": 393,
+    "baselineCases": 4614,
     "fixtureByteChanges": 0
-  }
+  },
+  "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
 }

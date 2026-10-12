@@ -1,20 +1,19 @@
 /**
- * Version/export integration verify legacy normalization only at declared metadata paths.
- * Input: Immutable archived documents, malformed versions and temporary direct/hard/symbolic output aliases.
- * Output and independent oracle: Original user/event bytes, explicit v2 fields and refusal to overwrite source aliases.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Unit tests own explicit legacy/canonical replay metadata paths, malformed versions and
+ * the pure new-version writer shape. Fresh immutable public archive reads and literal
+ * mutations supply input; original user text, unknown IDs, private-metadata omission and
+ * detached-output assertions remain the oracle. No archive is rewritten or exported to
+ * disk.
  */
 import { expect, test } from "bun:test";
-import { readFile, writeFile, mkdir, link, symlink } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import {
   assertReplayDocument,
   readReplayDocument,
   ReplayDocumentValidationError,
 } from "@ai-werewolf-arena/replay-contract";
-import { exportReplayBundle } from "../../src/replay/export_replay_bundle";
-import { createReplayDocument } from "../../src/recording/replay_document";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+import { createReplayDocument } from "../../../src/recording/replay_document";
 
 async function fixture() {
   return JSON.parse(
@@ -72,24 +71,6 @@ test("future/malformed version values fail before legacy conversion and canonica
   const parsed = readReplayDocument(v2);
   parsed.events[0].payload.actorId = 999;
   expect(v2.events[0].payload.actorId).toBe(1);
-});
-
-test("the existing exporter uses the same reader and writes v2 without rewriting the archived source", async () => {
-  const root = await createTestTempDirectory("awa-replay-version-");
-  await mkdir(path.join(root, "legacy"));
-  const old = await fixture();
-  const raw = JSON.stringify(old);
-  const input = path.join(root, "legacy/replay.json");
-  await writeFile(input, raw);
-  const out = path.join(root, "exported/replay.json");
-  const result = await exportReplayBundle({
-    recordRoot: root,
-    sessionId: "legacy",
-    outputFile: out,
-  });
-  expect(result).toEqual(readReplayDocument(old));
-  expect(JSON.parse(await readFile(out, "utf8"))).toEqual(result);
-  expect(await readFile(input, "utf8")).toBe(raw);
 });
 
 test("new writer emits an explicit version and supplied game locale while excluding private metadata", () => {
@@ -162,26 +143,6 @@ test("declared phase and initial-role paths normalize while their other content 
   expect(result.events[1].payload.players).toEqual([
     { id: 1, role: "wolf", camp: "wolf", name: "狼人", text: "狼人" },
   ]);
-});
-
-test("export refuses direct and filesystem aliases of its source", async () => {
-  const root = await createTestTempDirectory("awa-replay-source-guard-");
-  await mkdir(path.join(root, "legacy"));
-  const input = path.join(root, "legacy/replay.json");
-  const raw = JSON.stringify(await fixture());
-  await writeFile(input, raw);
-  const hard = path.join(root, "hard.json");
-  const soft = path.join(root, "soft.json");
-  await link(input, hard);
-  await symlink(input, soft);
-  for (const outputFile of [input, hard, soft])
-    await expect(
-      exportReplayBundle({ recordRoot: root, sessionId: "legacy", outputFile }),
-    ).rejects.toThrow("replay_export_overwrites_source");
-  await expect(
-    exportReplayBundle({ recordRoot: root, sessionId: "/legacy", outputFile: input }),
-  ).rejects.toThrow("replay_export_overwrites_source");
-  expect(await readFile(input, "utf8")).toBe(raw);
 });
 
 test("English archived payload metadata follows the same exact path contract", async () => {

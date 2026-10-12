@@ -1,9 +1,14 @@
+/**
+ * Unit tests own LLM turn deadlines, queue/retry/fallback cancellation and original
+ * cleanup error identity with held inert callbacks. Inputs are the original bounded
+ * request and synthetic tool submissions; literal lease, result and log assertions remain
+ * the oracle. This suite starts no HTTP server or model.
+ */
 import { expect, spyOn, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
-import { AiSdkClient } from "../../../src/ai/integrations/llm/ai_sdk_client";
-import { Phase, type ActionRequest, type ToolCall } from "../../../src/core";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
+import { Phase, type ActionRequest, type ToolCall } from "../../../../src/core";
 
 function request(actorId: number, deadlineAtMs?: number): ActionRequest {
   return {
@@ -19,6 +24,7 @@ function request(actorId: number, deadlineAtMs?: number): ActionRequest {
     },
   };
 }
+
 function submission(messages: Array<{ content: string }>, text = "accepted") {
   return {
     id: "synthetic",
@@ -167,70 +173,6 @@ test("provider close aborts active and queued turns without fallback, waits for 
     ).toolResult,
   ).toMatchObject({ ok: false, error: "turn_not_open_or_session_invalid" });
   await provider.close();
-});
-
-test("real SDK HTTP response is cancelled when the owning provider closes", async () => {
-  const game = bootstrapGame(sixPlayerMvpConfig, { locale: "en" });
-  let began!: () => void, cancelled!: () => void;
-  const ready = new Promise<void>((resolve) => {
-    began = resolve;
-  });
-  const ended = new Promise<void>((resolve) => {
-    cancelled = resolve;
-  });
-  const server = Bun.serve({
-    hostname: "127.0.0.1",
-    port: 0,
-    async fetch(input) {
-      await input.json();
-      began();
-      return new Response(
-        new ReadableStream({
-          start(controller) {
-            controller.enqueue(new TextEncoder().encode("{"));
-          },
-          cancel() {
-            cancelled();
-          },
-        }),
-        { headers: { "content-type": "application/json" } },
-      );
-    },
-  });
-  const provider = new LlmActionProvider(
-    game.world,
-    new AiSdkClient({
-      apiKey: "synthetic-only",
-      baseURL: `${server.url.origin}/v1`,
-      model: "synthetic",
-    }),
-    {
-      llmTimeoutMs: 5000,
-      fallbackProvider: {
-        async getAction() {
-          throw new Error("unexpected_fallback");
-        },
-      },
-    },
-  );
-  let timer: NodeJS.Timeout | undefined;
-  try {
-    const pending = provider.getAction(request(1));
-    await ready;
-    await provider.close();
-    expect(await pending).toBeNull();
-    await Promise.race([
-      ended,
-      new Promise<never>((_, reject) => {
-        timer = setTimeout(() => reject(new Error("HTTP_response_not_cancelled")), 2000);
-      }),
-    ]);
-    expect(provider.runtimeState.scheduler.active).toBe(0);
-  } finally {
-    if (timer) clearTimeout(timer);
-    await provider.close();
-    server.stop(true);
-  }
 });
 
 for (const outcome of ["resolve", "reject"] as const)
