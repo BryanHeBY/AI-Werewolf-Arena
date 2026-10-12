@@ -45,3 +45,11 @@ export * from "./facts/trickster";
 export * from "./facts/order-prince";
 
 export * from "./facts/magician";
+
+export * from "./board-policy-identifiers";
+
+export * from "./boards";
+
+export type { LoversComponent } from "./cupid-relation";
+
+export { boardConfigSchema } from "./board-schema";

@@ -1,15 +1,29 @@
+/**
+ * Responsibility: validate the existing finite animal dream board configuration.
+ * Input: inert candidate board data; output: the unchanged support verdict.
+ * This temporary text-owned support implementation checks composition and policy
+ * shape; it does not apply effects or grant player actions. Stable policy IDs are
+ * contract-owned, and this algorithm moves to rulesets under C09 independently
+ * of archive verification. Domain state and rendering are outside this module.
+ */
 import { copyEventData } from "./event-data";
 
-export const ANIMAL_DREAM_POLICY = "awa_animal_dream_v1" as const;
-export const CAT_SKIPPED_VOTE_POLICIES = [
-  "awa_wait_for_actual_exile_v1",
-  "awa_expire_on_skipped_day_v1",
-] as const;
-export const PUFFER_BALLOT_POLICIES = ["awa_final_ballot_v1", "awa_first_ballot_v1"] as const;
-export const BEAR_SIGNAL_POLICIES = ["awa_night_open_v1", "netease_dawn_live_v1"] as const;
-export type CatSkippedVotePolicy = (typeof CAT_SKIPPED_VOTE_POLICIES)[number];
-export type PufferBallotPolicy = (typeof PUFFER_BALLOT_POLICIES)[number];
-export type BearSignalPolicy = (typeof BEAR_SIGNAL_POLICIES)[number];
+import {
+  ANIMAL_DREAM_POLICY,
+  CAT_SKIPPED_VOTE_POLICIES,
+  PUFFER_BALLOT_POLICIES,
+} from "@ai-werewolf-arena/game-contract";
+export {
+  ANIMAL_DREAM_POLICY,
+  CAT_SKIPPED_VOTE_POLICIES,
+  PUFFER_BALLOT_POLICIES,
+  BEAR_SIGNAL_POLICIES,
+} from "@ai-werewolf-arena/game-contract";
+export type {
+  CatSkippedVotePolicy,
+  PufferBallotPolicy,
+  BearSignalPolicy,
+} from "@ai-werewolf-arena/game-contract";
 
 const deck: Readonly<Record<string, number>> = {
   wolf: 3,

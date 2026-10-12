@@ -11,7 +11,9 @@
     "./facts/wolf-sorcerer": "./src/facts/wolf-sorcerer.ts",
     "./facts/trickster": "./src/facts/trickster.ts",
     "./facts/order-prince": "./src/facts/order-prince.ts",
-    "./facts/magician": "./src/facts/magician.ts"
+    "./facts/magician": "./src/facts/magician.ts",
+    "./boards": "./src/boards.ts",
+    "./board-schema": "./src/board-schema.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
@@ -21,6 +23,9 @@
     "bun-types": "^1.4.2",
     "typescript": "^5.9.3"
   },
+  "dependencies": {
+    "zod": "^4.6.5"
+  },
   "typesVersions": {
     "*": {
       "facts/scholar-mentor": ["src/facts/scholar-mentor.ts"],
@@ -28,7 +33,9 @@
       "facts/wolf-sorcerer": ["src/facts/wolf-sorcerer.ts"],
       "facts/trickster": ["src/facts/trickster.ts"],
       "facts/order-prince": ["src/facts/order-prince.ts"],
-      "facts/magician": ["src/facts/magician.ts"]
+      "facts/magician": ["src/facts/magician.ts"],
+      "boards": ["src/boards.ts"],
+      "board-schema": ["src/board-schema.ts"]
     }
   }
 }

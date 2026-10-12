@@ -1,5 +1,15 @@
+/**
+ * Responsibility: validate the existing finite evil knight board configuration.
+ * Input: inert candidate board data; output: the unchanged support verdict.
+ * This temporary text-owned support implementation checks composition and policy
+ * shape; it does not apply effects or grant player actions. Stable policy IDs are
+ * contract-owned, and this algorithm moves to rulesets under C09 independently
+ * of archive verification. Domain state and rendering are outside this module.
+ */
 import { copyEventData } from "./event-data";
-export const EVIL_KNIGHT_POLICY = "awa_evil_knight_v1" as const;
+import { EVIL_KNIGHT_POLICY } from "@ai-werewolf-arena/game-contract";
+export { EVIL_KNIGHT_POLICY } from "@ai-werewolf-arena/game-contract";
+
 function exact(value: unknown, expected: Record<string, unknown>): boolean {
   return (
     !!value &&
