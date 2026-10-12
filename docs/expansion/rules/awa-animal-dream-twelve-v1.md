@@ -1,6 +1,6 @@
 # AWA 动物梦境原生十二人规则卡
 
-版本 `1.0.0`，联合规则 `awa_animal_dream_v1`。本卡为经三路预审的实施目标；白猫、子狐、河豚仍为 planned，实际对局与交付门禁完成后再登记 implemented。
+版本 `1.0.0`，联合规则 `awa_animal_dream_v1`。白猫、子狐、河豚已在本卡限定组合登记 implemented；四政策、真实执行／记录／双语接入／前端及全支持门禁见[完整验收](../reviews/p9e-animal-dream-acceptance.md)。其它同名平台细则与混搭不受此登记承诺。
 
 ## 来源与裁定归属
 

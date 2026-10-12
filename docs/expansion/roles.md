@@ -1,6 +1,6 @@
 # 可配置角色目标目录
 
-返回 [实施路线](roadmap.md)。本目录共 **64 项定义**：23 verified、29 implemented、12 planned，合计 52 项已达到各自有限范围内的技术门禁。已有实现仅表示当前 AWA 版本，不代表其他同名版本均受支持；P9/P10 和用户总体验收仍开放。
+返回 [实施路线](roadmap.md)。本目录共 **64 项定义**：23 verified、32 implemented、9 planned，合计 55 项已达到各自有限范围内的技术门禁。已有实现仅表示当前 AWA 版本，不代表其他同名版本均受支持；P9/P10 和用户总体验收仍开放；原长期目标已暂停，三角色[收口验收](reviews/p9e-animal-dream-acceptance.md)后等待重构指令。
 
 基础七项及 P5–P7 的十六项为 verified。咒狐、丘比特、杠精、盗贼、野孩子、千面人、孤独少女、鬼魂新娘、猎魔人、纯白之女、狼巫、恶夜骑士、噩梦之影、赤月使徒、魔术师、定序王子、诡术师、狼术师、蚀时狼妃、白昼学者、寂夜导师、炼金魔女、狼鸦之爪、流光伯爵、蚀日侍女、夜之贵族、觉醒愚者、寻香魅影、觉醒预言家登记 implemented。各角色来源、支持组合和验证边界见各自规则卡与验收记录；最新交付见[恶夜骑士验收](reviews/p9-evil-knight.md)、[噩梦之影验收](reviews/p9-nightmare.md)、[赤月使徒验收](reviews/p9-red-moon.md)、[魔术师验收](reviews/p9-magician.md)、[定序王子验收](reviews/p9-order-prince.md)、[诡术之境验收](reviews/p9-trickster.md)、[狼术师验收](reviews/p9-wolf-sorcerer.md)、[蚀时狼妃验收](reviews/p9-time-consort.md)、[学者导师验收](reviews/p9-scholar-mentor.md)、[迷雾鸦影验收](reviews/p9-mist-raven-stage-acceptance.md)、[猎日逐光验收](reviews/p9-radiant-eclipse-stage-acceptance.md)、[觉醒之夜验收](reviews/p9-noble-secret-body-stage-acceptance.md)、[寻香识命验收](reviews/p9-fragrant-pair-stage-acceptance.md)。
 
@@ -100,15 +100,15 @@
 
 ## 8. 娱乐与流程互动：7 项
 
-| #   | 计划 ID         | 中文     | English         | 机制标签             | 阶段 / 来源                                                               |
-| --- | --------------- | -------- | --------------- | -------------------- | ------------------------------------------------------------------------- |
-| 49  | `debater`       | 杠精     | Debater         | 挑战、辩论、投票资格 | P8 / [S24][debater]                                                       |
-| 50  | `silence_elder` | 禁言长老 | Silencing Elder | 表达权限与翻译       | P9 / [S25][silence]                                                       |
-| 51  | `crow`          | 乌鸦     | Crow            | 额外放逐票           | P9 / [S01][cards]                                                         |
-| 52  | `white_cat`     | 白猫     | White Cat       | 延迟死亡             | planned；P9e [规则卡](rules/awa-animal-dream-twelve-v1.md) / [S01][cards] |
-| 53  | `fox_cub`       | 子狐     | Fox Cub         | 迷惑及目标交互       | planned；P9e [规则卡](rules/awa-animal-dream-twelve-v1.md) / [S01][cards] |
-| 54  | `pufferfish`    | 河豚     | Pufferfish      | 投票反击、特殊死亡   | planned；P9e [规则卡](rules/awa-animal-dream-twelve-v1.md) / [S01][cards] |
-| 55  | `warden`        | 典狱长   | Warden          | 秘密交易/背叛决策    | P9 / [S26][warden]                                                        |
+| #   | 计划 ID         | 中文     | English         | 机制标签             | 阶段 / 来源                                                                   |
+| --- | --------------- | -------- | --------------- | -------------------- | ----------------------------------------------------------------------------- |
+| 49  | `debater`       | 杠精     | Debater         | 挑战、辩论、投票资格 | P8 / [S24][debater]                                                           |
+| 50  | `silence_elder` | 禁言长老 | Silencing Elder | 表达权限与翻译       | P9 / [S25][silence]                                                           |
+| 51  | `crow`          | 乌鸦     | Crow            | 额外放逐票           | P9 / [S01][cards]                                                             |
+| 52  | `white_cat`     | 白猫     | White Cat       | 延迟死亡             | implemented；P9e [规则卡](rules/awa-animal-dream-twelve-v1.md) / [S01][cards] |
+| 53  | `fox_cub`       | 子狐     | Fox Cub         | 迷惑及目标交互       | implemented；P9e [规则卡](rules/awa-animal-dream-twelve-v1.md) / [S01][cards] |
+| 54  | `pufferfish`    | 河豚     | Pufferfish      | 投票反击、特殊死亡   | implemented；P9e [规则卡](rules/awa-animal-dream-twelve-v1.md) / [S01][cards] |
+| 55  | `warden`        | 典狱长   | Warden          | 秘密交易/背叛决策    | P9 / [S26][warden]                                                            |
 
 ## 9. 本次觉醒目标子集：9 项
 

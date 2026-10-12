@@ -180,3 +180,7 @@ runner逐请求预算与资源关闭快照提交 `ea5ebf2`；本批新角色80�
 贵族／觉醒愚者登记implemented，当前23 verified、27 implemented、14 planned，50/64。四项政策组合、猎魔夜仆例外、单来源抵伤、公开活人翻牌、延期知情与原生命撤权、真实SDK／ACP／mixed双语及独立Tape均闭环；最后警徽提示、空过重选和模拟端点所有权发现由原审查者修后复验。第四轮6353后端／872前端／324Chromium零失败、1历史导出条件skip，13门禁退出0，2200公开输入before／after／on-exit／当前四方字节一致。原三轮失败保持独立；范围和指纹见[验收](../reviews/p9-noble-secret-body-stage-acceptance.md)。
 
 继续寻香魅影／觉醒预言家，再P9e六项和P9f余六项，P10及T6授权边界保持。P10同时收口公开ACP文件／环境隔离：裸进程cwd不构成边界，不能由wireDTO正确推断任意coding-agent进程隔离。原用户私人launcher没有读取或改写，不据此声称发生泄漏；合成canary和可复现公开启动路径将补验证。只在main按功能本地提交，不push。
+
+## 2026-10-12：暂停与本轮三角色收口
+
+用户明确暂停原完整扩展目标，准备大规模重构；随后限定要求白猫、子狐、河豚完整实现、审查与测试后才收口。该限定任务已完成，详见[动物梦境验收](../reviews/p9e-animal-dream-acceptance.md)，55/64、23verified/32implemented/9planned。原目标保持paused；剩余P9e三项、P9f六项及P10/T6等待新指令。此前“持续推进”的授权以本次暂停为最新边界，本轮不自动推送或启动重构。
