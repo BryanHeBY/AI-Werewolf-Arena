@@ -1,6 +1,10 @@
-// Independent readonly reviewer cases; original inputs retained.
+/**
+ * Noble prompt scenarios verify actual spent/intact and pending/cleared histories preserve the same legal-day information and errors.
+ * Input: Original locale, resource-history and scripted action matrices plus later-world God-fact audience probes.
+ * Output and oracle: Literal hidden stock/status checks, exact sample equality and forbidden visibility preserve causal assertions; no golden or profile is rewritten.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   Phase,
   Role,
@@ -8,26 +12,26 @@ import {
   createRandom,
   type ActionRequest,
   type RoleComponent,
-} from "../../../src/core";
-import { nobleSecretBodyTwelveConfig } from "../../../src/runtime/scenarios/noble_secret_body_twelve";
-import { demonNightChoice } from "../../support/demon_hunter_scenarios";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
+} from "../../../../src/core";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultRoleCatalog,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../src/game/mechanisms";
-import { ActionReception } from "../../../src/ai/agents/player/action_reception";
-import { gameToolProtocol } from "../../../src/ai/agents/game_tool_protocol";
-import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
+} from "../../../../src/game/mechanisms";
+import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { gameToolProtocol } from "../../../../src/ai/agents/game_tool_protocol";
+import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
 import {
   buildAgentVisibleEvent,
   buildAgentVisibleEventFeed,
-} from "../../../src/game/engine/agent_visible_event_feed";
-import { AgentEventVisibilityRegistry } from "../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
-import { snapshotNobleBodyAuthority } from "../../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../../src/game/engine/agent_visible_event_feed";
+import { AgentEventVisibilityRegistry } from "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
+import { snapshotNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
 import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
@@ -51,6 +55,7 @@ function setup(locale: "zh-CN" | "en") {
   });
   return { ...g, config, policy };
 }
+
 async function run(locale: "zh-CN" | "en", kind: "body" | "noble", changed: boolean) {
   const g = setup(locale),
     samples: any[] = [];
@@ -129,6 +134,7 @@ async function run(locale: "zh-CN" | "en", kind: "body" | "noble", changed: bool
       expect(readNobleSecretBodyFact(e.type, e.payload)).not.toBeNull();
   return { g, sample: samples[0], actual: snapshotNobleBodyAuthority(g.world) };
 }
+
 for (const locale of ["zh-CN", "en"] as const) {
   test(`real PM ${locale}: spent/intact same legal-day prompt, observation, ability lists, schemas, unqualified errors`, async () => {
     const a = await run(locale, "body", false),
@@ -158,6 +164,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     });
   });
 }
+
 test("God facts remain null even with forged owner/team/target audience and later-world rebuild", async () => {
   const { g } = await run("en", "body", true),
     registry = new AgentEventVisibilityRegistry();
@@ -196,55 +203,4 @@ test("God facts remain null even with forged owner/team/target audience and late
         expect(buildAgentVisibleEvent(g.world, e, actor, 1)).toBeNull();
         expect(buildAgentVisibleEventFeed(g.world, [e], actor)).toEqual([]);
       }
-});
-test("flat nested known contract is accepted; private snapshots whitelist source and authorization", () => {
-  const g = setup("en"),
-    registry = new AgentEventVisibilityRegistry();
-  const e = {
-    timestamp: 1,
-    type: "noble_night_notified",
-    payload: {
-      policy: NOBLE_SECRET_BODY_POLICY,
-      actorId: 1,
-      day: 3,
-      wolfActionPolicy: "standard",
-      lastNotifiedNight: 3,
-      lastChoice: { day: 2, targetId: 6 },
-      contracts: [
-        {
-          id: "servant:night:2",
-          targetId: 6,
-          createdNight: 2,
-          expiresNight: 3,
-          status: { kind: "cleared", day: 2 },
-        },
-      ],
-    },
-    audience: [1],
-  } as any;
-  expect(readNobleSecretBodyFact(e.type, e.payload)).not.toBeNull();
-  expect(buildAgentVisibleEvent(g.world, e, 1, 1)?.payload).toEqual(e.payload);
-  for (const actor of [2, 4, 5, 6, 10]) {
-    expect(registry.canView(g.world, e, actor)).toBe(false);
-    expect(buildAgentVisibleEvent(g.world, e, actor, 1)).toBeNull();
-  }
-  for (const audience of [[], [6], [1, 6], [1, 1]])
-    expect(buildAgentVisibleEvent(g.world, { ...e, audience }, 1, 1)).toBeNull();
-  for (const key of ["cause", "camp", "source", "rawUses", "lastUsedDay"]) {
-    const f = structuredClone(e);
-    f.payload.contracts[0].status[key] = "CANARY";
-    expect(readNobleSecretBodyFact(f.type, f.payload)).toBeNull();
-    expect(buildAgentVisibleEvent(g.world, f, 1, 1)).toBeNull();
-  }
-  let getters = 0;
-  const f = structuredClone(e);
-  Object.defineProperty(f.payload.contracts[0].status, "kind", {
-    enumerable: true,
-    get() {
-      getters++;
-      return "cleared";
-    },
-  });
-  expect(buildAgentVisibleEvent(g.world, f, 1, 1)).toBeNull();
-  expect(getters).toBe(0);
 });

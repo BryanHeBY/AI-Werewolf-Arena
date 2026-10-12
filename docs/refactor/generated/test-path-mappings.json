@@ -72806,13 +72806,381 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/noble_secret_body_prompt_review.test.ts",
+      "to": "backend/tests/unit/features/noble-secret-body/private-contract-projection.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "6387ef7c3feb62117034053b94130ef42284ec61e3a9fee2b984a280775ac101",
+      "candidateSha256": "b768ccf72a73bf4c9504bde1a36445dec8ff919622b88c363ae6636dad24bba1",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 700,
+          "end": 770,
+          "original": "../../../src/game/mechanisms/broadcast/agent_event_visibility_registry",
+          "value": "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry",
+          "originalResolved": "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 602,
+          "end": 651,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 531,
+          "end": 559,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 296,
+          "end": 346,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 202,
+          "end": 257,
+          "original": "../../../src/runtime/scenarios/noble_secret_body_twelve",
+          "value": "../../../../src/runtime/scenarios/noble_secret_body_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 137,
+          "end": 154,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "5132b595bf6ab01f590ec2fdfc72d5d1bcbbe048d08805057c6e37178717f0fd",
+          "title": "flat nested known contract is accepted; private snapshots whitelist source and authorization",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Phase,\n  Role,\n  COMPONENT,\n  createRandom,\n  type ActionRequest,\n  type RoleComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role, createRandom } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/demon_hunter_scenarios",
+          "originalImport": "import { demonNightChoice } from \"../../support/demon_hunter_scenarios\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "demonNightChoice",
+              "imported": "demonNightChoice",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/action_reception",
+          "originalImport": "import { ActionReception } from \"../../../src/ai/agents/player/action_reception\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionReception",
+              "imported": "ActionReception",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/game_tool_protocol",
+          "originalImport": "import { gameToolProtocol } from \"../../../src/ai/agents/game_tool_protocol\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "gameToolProtocol",
+              "imported": "gameToolProtocol",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "originalImport": "import { AcpTurnRegistry } from \"../../../src/ai/integrations/acp/acp_turn_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AcpTurnRegistry",
+              "imported": "AcpTurnRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/agent_visible_event_feed",
+          "originalImport": "import {\n  buildAgentVisibleEvent,\n  buildAgentVisibleEventFeed,\n} from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "currentImportBeforeRebase": "import { buildAgentVisibleEvent } from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "droppedBindings": [
+            {
+              "name": "buildAgentVisibleEventFeed",
+              "imported": "buildAgentVisibleEventFeed",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "originalImport": "import { snapshotNobleBodyAuthority } from \"../../../src/game/mechanisms/roles/noble_secret_body/authority\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "snapshotNobleBodyAuthority",
+              "imported": "snapshotNobleBodyAuthority",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "originalImport": "import {\n  NOBLE_SECRET_BODY_EVENT_TYPES,\n  readNobleSecretBodyFact,\n  NOBLE_SECRET_BODY_POLICY,\n} from \"@ai-werewolf-arena/game-text\";",
+          "currentImportBeforeRebase": "import { readNobleSecretBodyFact, NOBLE_SECRET_BODY_POLICY } from \"@ai-werewolf-arena/game-text\";",
+          "droppedBindings": [
+            {
+              "name": "NOBLE_SECRET_BODY_EVENT_TYPES",
+              "imported": "NOBLE_SECRET_BODY_EVENT_TYPES",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/noble_secret_body_prompt_review.test.ts",
+      "to": "backend/tests/scenarios/features/noble-secret-body/legal-day-prompt-history.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "6387ef7c3feb62117034053b94130ef42284ec61e3a9fee2b984a280775ac101",
+      "candidateSha256": "cb3128a6f16c5212c288675ea5587d9f7244a13a986362e37e0a4da4cf1a5fef",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1240,
+          "end": 1302,
+          "original": "../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "value": "../../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1123,
+          "end": 1193,
+          "original": "../../../src/game/mechanisms/broadcast/agent_event_visibility_registry",
+          "value": "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry",
+          "originalResolved": "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1025,
+          "end": 1074,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 899,
+          "end": 949,
+          "original": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "value": "../../../../src/ai/integrations/acp/acp_turn_registry",
+          "originalResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/acp_turn_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 822,
+          "end": 863,
+          "original": "../../../src/ai/agents/game_tool_protocol",
+          "value": "../../../../src/ai/agents/game_tool_protocol",
+          "originalResolved": "backend/src/ai/agents/game_tool_protocol.ts",
+          "expectedResolved": "backend/src/ai/agents/game_tool_protocol.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 739,
+          "end": 785,
+          "original": "../../../src/ai/agents/player/action_reception",
+          "value": "../../../../src/ai/agents/player/action_reception",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 675,
+          "end": 703,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 440,
+          "end": 490,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 365,
+          "end": 401,
+          "original": "../../support/demon_hunter_scenarios",
+          "value": "../../../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 273,
+          "end": 328,
+          "original": "../../../src/runtime/scenarios/noble_secret_body_twelve",
+          "value": "../../../../src/runtime/scenarios/noble_secret_body_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 208,
+          "end": 225,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "cbd2f41d4fce3ea1a47560e07d0621079109db88d3753fa0930a627cea94942d",
+          "title": "real PM zh-CN: spent/intact same legal-day prompt, observation, ability lists, schemas, unqualified errors",
+          "occurrence": 1
+        },
+        {
+          "id": "e80f4dfbee4bdc8ad934e3184e3e29982335b1c01123ee8953dd88efc06ea849",
+          "title": "real PM en: spent/intact same legal-day prompt, observation, ability lists, schemas, unqualified errors",
+          "occurrence": 1
+        },
+        {
+          "id": "e3e7340498ad0ea93c86946f27a13398667137bbd1d2a76f5a047e99669da73d",
+          "title": "real PM zh-CN: pending/cleared same day owner prompt and receiver errors",
+          "occurrence": 1
+        },
+        {
+          "id": "96c5153f3ebcf0ed45706a3baa0120bd2c8317b146dccaf20dae841fd4ec504e",
+          "title": "real PM en: pending/cleared same day owner prompt and receiver errors",
+          "occurrence": 1
+        },
+        {
+          "id": "74351f12816efd1136be757322c6db66d5bbe78c3526e0076e56430098be77d1",
+          "title": "God facts remain null even with forged owner/team/target audience and later-world rebuild",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 528,
-    "targetFiles": 562,
-    "mappingEntries": 562,
-    "baselineCases": 6606,
+    "sourceFiles": 529,
+    "targetFiles": 564,
+    "mappingEntries": 564,
+    "baselineCases": 6612,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
