@@ -1,8 +1,15 @@
+/**
+ * Assembles witch native potion configuration, state initialization, prompt text, tools, night stages and production fallback.
+ * Inputs are role initialization/configuration and existing runtime contexts; output is
+ * a RoleProfile contribution. Native state access delegates to its owning feature leaf.
+ * Existing validation, lifecycle and effect ordering remain their specific contributions;
+ * This module does not own archive encoding or create a second state store.
+ */
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：女巫角色 profile。 */
 import { Camp, PotionType, Role, WitchSelfHealRule } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
-import { getWitchState, setWitchState } from "../private_state";
+import { getWitchState, setWitchState } from "./state";
 import { WITCH_LLM_REPAIR_PACK } from "./llm_repair";
 import { WITCH_NIGHT_STAGES } from "./night_stages";
 import { WITCH_TOOL_SPECS, WITCH_STAGE_DIRECTIVES } from "./tool_specs";

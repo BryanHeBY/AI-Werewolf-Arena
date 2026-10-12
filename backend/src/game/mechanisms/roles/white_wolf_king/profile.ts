@@ -1,9 +1,16 @@
+/**
+ * Assembles white wolf king wolf profile inheritance, detonation state and configured self-destruct contributions.
+ * Inputs are role initialization/configuration and existing runtime contexts; output is
+ * a RoleProfile contribution. Native state access delegates to its owning feature leaf.
+ * Existing validation, lifecycle and effect ordering remain their specific contributions;
+ * This module does not own archive encoding or create a second state store.
+ */
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Role, ActionWindow, Phase } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
 import { WOLF_ROLE_PROFILE } from "../wolf/profile";
-import { getWhiteWolfKingState, setWhiteWolfKingState } from "../private_state";
+import { getWhiteWolfKingState, setWhiteWolfKingState } from "./state";
 import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";
 

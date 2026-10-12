@@ -1,8 +1,15 @@
+/**
+ * Assembles wolf king wolf profile inheritance, native shooting state, death policy and death-shot hook.
+ * Inputs are role initialization/configuration and existing runtime contexts; output is
+ * a RoleProfile contribution. Native state access delegates to its owning feature leaf.
+ * Existing validation, lifecycle and effect ordering remain their specific contributions;
+ * This module does not own archive encoding or create a second state store.
+ */
 import { deathActionConfiguration, renderDeathActionPolicy } from "../death_action_policy";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Role, permitsDeathShot } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
-import { getWolfKingState, setWolfKingState } from "../private_state";
+import { getWolfKingState, setWolfKingState } from "./state";
 import {
   resolveDeathShots,
   DEATH_SHOT_TOOL_SPECS,

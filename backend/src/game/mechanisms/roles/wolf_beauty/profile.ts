@@ -1,10 +1,17 @@
+/**
+ * Assembles wolf beauty wolf profile inheritance, charm policy/state, relation contributions and animal-board known-history prompts.
+ * Inputs are role initialization/configuration and existing runtime contexts; output is
+ * a RoleProfile contribution. Native state access delegates to its owning feature leaf.
+ * Existing validation, lifecycle and effect ordering remain their specific contributions;
+ * This module does not own archive encoding or create a second state store.
+ */
 import { z } from "zod";
 import { BEAUTY_DEATH_LINK_POLICIES } from "../../../../core/domain/board";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Role, Camp, Phase } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
-import { getWolfBeautyState, setWolfBeautyState } from "../private_state";
+import { getWolfBeautyState, setWolfBeautyState } from "./state";
 import { WOLF_ROLE_PROFILE } from "../wolf/profile";
 import { WOLF_VALIDATION_RULES } from "../wolf/validation_rules";
 import { isAliveTarget } from "../../validation/contracts";

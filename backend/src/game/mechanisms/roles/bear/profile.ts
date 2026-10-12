@@ -1,8 +1,15 @@
+/**
+ * Assembles bear native roar history, prompt text and neighbor-information contributions.
+ * Inputs are role initialization/configuration and existing runtime contexts; output is
+ * a RoleProfile contribution. Native state access delegates to its owning feature leaf.
+ * Existing validation, lifecycle and effect ordering remain their specific contributions;
+ * This module does not own archive encoding or create a second state store.
+ */
 import { z } from "zod";
 import { roleName, text, BEAR_SIGNAL_POLICIES } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
-import { getBearState, setBearState } from "../private_state";
+import { getBearState, setBearState } from "./state";
 import { isAnimalDreamBoard } from "../animal_dream/authority";
 import { animalBearKnowledge } from "../animal_dream/facts";
 const parameters = z.strictObject({ signalPolicy: z.enum(BEAR_SIGNAL_POLICIES).optional() });

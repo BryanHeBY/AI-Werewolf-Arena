@@ -13,7 +13,10 @@ import { INSPECTION_POLICIES } from "../../../core/domain/board";
 import { nativePotionSecondTurn } from "./witch/policies";
 import { Role, type EntityId, type EventPayloadMap } from "../../../core/domain/model";
 import type { RoleComponent } from "../../../core/domain/components/role";
-import type { GuardState, WitchState, DreamerState, RoleInspectionState } from "./private_state";
+import type { GuardState } from "./guard/state";
+import type { WitchState } from "./witch/state";
+import type { DreamerState } from "./dreamer/state";
+import type { RoleInspectionState } from "./role_inspection/state";
 import type { SeerState } from "./seer/state-contracts";
 import { COMPONENT } from "../../../core/domain/components/names";
 import {

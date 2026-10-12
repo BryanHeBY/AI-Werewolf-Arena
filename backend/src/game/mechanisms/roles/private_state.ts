@@ -1,236 +1,37 @@
 /**
- * Defines existing private role-state contracts and legacy accessors.
- * Inputs are role components and state values; outputs preserve stored references
- * or the existing ability owner's installation copies. Seer data/access ownership
- * now belongs to its named feature leaves; this facade never keeps a second slot
- * or changes ability lifetime, use counts, authorization or player projection.
+ * Named compatibility exports for feature-owned role state shapes and accessors.
+ * Inputs and outputs retain the original private-state slots or ability-owned references.
+ * No state is stored here; each feature leaf owns its data and native installation access.
+ * Existing commands, lease checks, inventory, projection and checkpoint encoding remain
+ * their current owners until those separate migrations; this facade exits in C44.
  */
-import type { HiddenWolfCampInspectionPolicy } from "../../../core/domain/board";
-/** 文件说明：角色私有状态的统一读写封装。 */
-import { EntityId, WitchSelfHealRule, type GuardRepeatPolicy } from "../../../core/domain/model";
-import { RoleComponent } from "../../../core/domain/components/role";
-import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
-import type { ExileFeedback } from "../../../core/domain/events";
-import { findNightAbility, installNativeAbility, type RoleInspectionPolicy } from "./abilities";
 export type { SeerState } from "./seer/state-contracts";
 export { getSeerState, setSeerState } from "./seer/state";
-
-const PRIVATE_STATE_KEYS = {
-  hunter: "hunter",
-  wolfKing: "wolf_king",
-  whiteWolfKing: "white_wolf_king",
-  knight: "knight",
-  gravekeeper: "gravekeeper",
-  wolfBeauty: "wolf_beauty",
-  bear: "bear",
-  hiddenWolf: "hidden_wolf",
-  gargoyle: "gargoyle",
-  idiot: "idiot",
-} as const;
-
-/** 女巫私有状态。 */
-export interface WitchState {
-  knifeVisibility?: import("../../../core/domain/board").WitchKnifeVisibilityPolicy;
-  potionPolicy?: import("../../../core/domain/board").WitchPotionPolicy;
-  /** Terminal pass or completed second turn, never exposed through the player DTO. */
-  potionTurnClosedDay?: number;
-  heal: number;
-  poison: number;
-  selfHealRule: WitchSelfHealRule;
-  canSelfHeal: boolean;
-  healUsedThisNight: boolean;
-  poisonUsedThisNight: boolean;
-}
-
-/** 守卫私有状态。 */
-export interface GuardState {
-  lastTarget: EntityId | null;
-  repeatPolicy?: GuardRepeatPolicy;
-}
-
-/** 猎人私有状态。 */
-export interface HunterState {
-  deathActionPolicy?: import("../../../core/domain/board").HunterDeathActionPolicy;
-  canShoot: boolean;
-}
-export interface WolfKingState {
-  deathActionPolicy?: import("../../../core/domain/board").DeathActionPolicy;
-  canShoot: boolean;
-}
-export interface WhiteWolfKingState {
-  canDetonate: boolean;
-}
-export interface KnightState {
-  canDuel: boolean;
-}
-export interface GravekeeperReport extends ExileFeedback {
-  receivedDay: number;
-}
-export interface GravekeeperState {
-  history: GravekeeperReport[];
-}
-export interface DreamerState {
-  protectionPolicy?: import("../../../core/domain/board").DreamProtectionPolicy;
-  lastTarget: EntityId | null;
-  lastDay: number | null;
-  history: Array<{ day: number; targetId: EntityId }>;
-}
-export interface WolfBeautyState {
-  deathLinkPolicy?: import("../../../core/domain/board").BeautyDeathLinkPolicy;
-  targetId: EntityId | null;
-  lastActedDay: number | null;
-  history: Array<{ day: number; targetId: EntityId | null }>;
-}
-export interface BearState {
-  history: Array<{ day: number; roared: boolean }>;
-}
-export interface HiddenWolfState {
-  hasInheritedKnife: boolean;
-  campInspection?: HiddenWolfCampInspectionPolicy;
-}
-export interface GargoyleState {
-  hasInheritedKnife: boolean;
-}
-export interface RoleInspectionState {
-  inspectionPolicy?: import("../../../core/domain/board").InspectionPolicy;
-  policy?: RoleInspectionPolicy;
-  lastTarget: EntityId | null;
-  lastDay: number | null;
-  history: Array<{
-    day: number;
-    targetId: EntityId;
-    result: Extract<InspectionResult, { kind: "role" }>;
-  }>;
-}
-
-/** 白痴私有状态。 */
-export interface IdiotState {
-  revealed: boolean;
-}
-
-function getState<T>(roleComp: RoleComponent, key: string): T | undefined {
-  return roleComp.privateState[key] as T | undefined;
-}
-
-function setState<T>(roleComp: RoleComponent, key: string, value: T): T {
-  roleComp.privateState[key] = value as unknown;
-  return value;
-}
-
-/** 写入女巫私有状态。 */
-export function setWitchState(roleComp: RoleComponent, state: WitchState): WitchState {
-  return installNativeAbility(roleComp, "potion", state);
-}
-
-/** 读取女巫私有状态。 */
-export function getWitchState(roleComp: RoleComponent, abilityId?: string): WitchState | undefined {
-  return findNightAbility(roleComp, "potion", abilityId)?.state;
-}
-
-/** 写入守卫私有状态。 */
-export function setGuardState(roleComp: RoleComponent, state: GuardState): GuardState {
-  return installNativeAbility(roleComp, "guard", state);
-}
-
-/** 读取守卫私有状态。 */
-export function getGuardState(roleComp: RoleComponent, abilityId?: string): GuardState | undefined {
-  return findNightAbility(roleComp, "guard", abilityId)?.state;
-}
-
-/** 写入猎人私有状态。 */
-export function setHunterState(roleComp: RoleComponent, state: HunterState): HunterState {
-  return setState(roleComp, PRIVATE_STATE_KEYS.hunter, state);
-}
-
-/** 读取猎人私有状态。 */
-export function getHunterState(roleComp: RoleComponent): HunterState | undefined {
-  return getState(roleComp, PRIVATE_STATE_KEYS.hunter);
-}
-export function setWolfKingState(roleComp: RoleComponent, state: WolfKingState): WolfKingState {
-  return setState(roleComp, PRIVATE_STATE_KEYS.wolfKing, state);
-}
-export function getWolfKingState(roleComp: RoleComponent): WolfKingState | undefined {
-  return getState(roleComp, PRIVATE_STATE_KEYS.wolfKing);
-}
-export function setWhiteWolfKingState(
-  roleComp: RoleComponent,
-  state: WhiteWolfKingState,
-): WhiteWolfKingState {
-  return setState(roleComp, PRIVATE_STATE_KEYS.whiteWolfKing, state);
-}
-export function getWhiteWolfKingState(roleComp: RoleComponent): WhiteWolfKingState | undefined {
-  return getState(roleComp, PRIVATE_STATE_KEYS.whiteWolfKing);
-}
-export function setKnightState(roleComp: RoleComponent, state: KnightState): KnightState {
-  return setState(roleComp, PRIVATE_STATE_KEYS.knight, state);
-}
-export function getKnightState(roleComp: RoleComponent): KnightState | undefined {
-  return getState(roleComp, PRIVATE_STATE_KEYS.knight);
-}
-export function setGravekeeperState(
-  roleComp: RoleComponent,
-  state: GravekeeperState,
-): GravekeeperState {
-  return setState(roleComp, PRIVATE_STATE_KEYS.gravekeeper, state);
-}
-export function getGravekeeperState(roleComp: RoleComponent): GravekeeperState | undefined {
-  return getState(roleComp, PRIVATE_STATE_KEYS.gravekeeper);
-}
-export function setDreamerState(roleComp: RoleComponent, state: DreamerState): DreamerState {
-  return installNativeAbility(roleComp, "dream", state);
-}
-export function getDreamerState(
-  roleComp: RoleComponent,
-  abilityId?: string,
-): DreamerState | undefined {
-  return findNightAbility(roleComp, "dream", abilityId)?.state;
-}
-export function setWolfBeautyState(
-  roleComp: RoleComponent,
-  state: WolfBeautyState,
-): WolfBeautyState {
-  return setState(roleComp, PRIVATE_STATE_KEYS.wolfBeauty, state);
-}
-export function getWolfBeautyState(roleComp: RoleComponent): WolfBeautyState | undefined {
-  return getState(roleComp, PRIVATE_STATE_KEYS.wolfBeauty);
-}
-export function setBearState(role: RoleComponent, state: BearState): BearState {
-  return setState(role, PRIVATE_STATE_KEYS.bear, state);
-}
-export function getBearState(role: RoleComponent): BearState | undefined {
-  return getState(role, PRIVATE_STATE_KEYS.bear);
-}
-export function setHiddenWolfState(role: RoleComponent, state: HiddenWolfState): HiddenWolfState {
-  return setState(role, PRIVATE_STATE_KEYS.hiddenWolf, state);
-}
-export function getHiddenWolfState(role: RoleComponent): HiddenWolfState | undefined {
-  return getState(role, PRIVATE_STATE_KEYS.hiddenWolf);
-}
-export function setGargoyleState(role: RoleComponent, state: GargoyleState): GargoyleState {
-  return setState(role, PRIVATE_STATE_KEYS.gargoyle, state);
-}
-export function getGargoyleState(role: RoleComponent): GargoyleState | undefined {
-  return getState(role, PRIVATE_STATE_KEYS.gargoyle);
-}
-export function setRoleInspectionState(
-  role: RoleComponent,
-  state: RoleInspectionState,
-): RoleInspectionState {
-  return installNativeAbility(role, "role_check", state);
-}
-export function getRoleInspectionState(
-  role: RoleComponent,
-  abilityId?: string,
-): RoleInspectionState | undefined {
-  return findNightAbility(role, "role_check", abilityId)?.state;
-}
-
-/** 写入白痴私有状态。 */
-export function setIdiotState(roleComp: RoleComponent, state: IdiotState): IdiotState {
-  return setState(roleComp, PRIVATE_STATE_KEYS.idiot, state);
-}
-
-/** 读取白痴私有状态。 */
-export function getIdiotState(roleComp: RoleComponent): IdiotState | undefined {
-  return getState(roleComp, PRIVATE_STATE_KEYS.idiot);
-}
+export type { WitchState } from "./witch/state";
+export { getWitchState, setWitchState } from "./witch/state";
+export type { GuardState } from "./guard/state";
+export { getGuardState, setGuardState } from "./guard/state";
+export type { DreamerState } from "./dreamer/state";
+export { getDreamerState, setDreamerState } from "./dreamer/state";
+export type { RoleInspectionState } from "./role_inspection/state";
+export { getRoleInspectionState, setRoleInspectionState } from "./role_inspection/state";
+export type { HunterState } from "./hunter/state";
+export { getHunterState, setHunterState } from "./hunter/state";
+export type { WolfKingState } from "./wolf_king/state";
+export { getWolfKingState, setWolfKingState } from "./wolf_king/state";
+export type { WhiteWolfKingState } from "./white_wolf_king/state";
+export { getWhiteWolfKingState, setWhiteWolfKingState } from "./white_wolf_king/state";
+export type { KnightState } from "./knight/state";
+export { getKnightState, setKnightState } from "./knight/state";
+export type { GravekeeperReport, GravekeeperState } from "./gravekeeper/state";
+export { getGravekeeperState, setGravekeeperState } from "./gravekeeper/state";
+export type { WolfBeautyState } from "./wolf_beauty/state";
+export { getWolfBeautyState, setWolfBeautyState } from "./wolf_beauty/state";
+export type { BearState } from "./bear/state";
+export { getBearState, setBearState } from "./bear/state";
+export type { HiddenWolfState } from "./hidden_wolf/state";
+export { getHiddenWolfState, setHiddenWolfState } from "./hidden_wolf/state";
+export type { GargoyleState } from "./gargoyle/state";
+export { getGargoyleState, setGargoyleState } from "./gargoyle/state";
+export type { IdiotState } from "./idiot/state";
+export { getIdiotState, setIdiotState } from "./idiot/state";

@@ -1,9 +1,16 @@
+/**
+ * Assembles hunter death-action policy, native shooting state, tools, death hook and production fallback.
+ * Inputs are role initialization/configuration and existing runtime contexts; output is
+ * a RoleProfile contribution. Native state access delegates to its owning feature leaf.
+ * Existing validation, lifecycle and effect ordering remain their specific contributions;
+ * This module does not own archive encoding or create a second state store.
+ */
 import { deathActionConfiguration, renderDeathActionPolicy } from "../death_action_policy";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：猎人角色 profile。 */
 import { Camp, Role } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
-import { getHunterState, setHunterState } from "../private_state";
+import { getHunterState, setHunterState } from "./state";
 import { hunterDeathHook } from "./death_hook";
 import { HUNTER_TOOL_SPECS } from "./tool_specs";
 import { DEATH_SHOT_REPAIR, validateDeathShot } from "../death_shot";

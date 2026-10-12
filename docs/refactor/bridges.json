@@ -150,6 +150,15 @@
       "currentConsumers": "remaining mechanics aggregates and original tests; production NightPipeline directly imports the ruleset compiler",
       "exit": "C44 after public aggregates and remaining test consumers import the ruleset public owner",
       "runtime": "same class and lazy default singleton; closure/dedup/explicit Ghost replacement/ordering body unchanged"
+    },
+    {
+      "id": "native-role-state-accessors",
+      "path": "backend/src/game/mechanisms/roles/private_state.ts",
+      "owner": "14 feature state leaves; role-inspection/ports is its cross-feature entry",
+      "exports": "15 remaining state types and 28 exact native getter/setter accessors",
+      "currentConsumers": "remaining mechanism, projection, agent, recording and test consumers through the named compatibility facade; 13 native profiles and ability instance types use real owners",
+      "exit": "C44 after actual consumers use feature public owners; mutation/lifecycle/schema/checkpoint contributions remain separate C17/C20 work",
+      "runtime": "same ten privateState string slots and object references; four ability installations retain existing copying/selection; no second store or algorithm"
     }
   ]
 }

@@ -1,9 +1,16 @@
+/**
+ * Assembles gravekeeper native exile-report history, prompt formatting and the feedback-stage contribution.
+ * Inputs are role initialization/configuration and existing runtime contexts; output is
+ * a RoleProfile contribution. Native state access delegates to its owning feature leaf.
+ * Existing validation, lifecycle and effect ordering remain their specific contributions;
+ * This module does not own archive encoding or create a second state store.
+ */
 import { z } from "zod";
 import { inspectionLabel, roleName, text } from "@ai-werewolf-arena/game-text";
 import { readGravekeeperReport } from "@ai-werewolf-arena/replay-contract";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
-import { getGravekeeperState, setGravekeeperState } from "../private_state";
+import { getGravekeeperState, setGravekeeperState } from "./state";
 import { GRAVEKEEPER_FEEDBACK_STAGE } from "./feedback";
 
 export const GRAVEKEEPER_ROLE_PROFILE: RoleProfile = {

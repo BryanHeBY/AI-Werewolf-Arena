@@ -1,9 +1,16 @@
+/**
+ * Assembles hidden wolf wolf profile inheritance, private knife-inheritance state and camp-inspection configuration.
+ * Inputs are role initialization/configuration and existing runtime contexts; output is
+ * a RoleProfile contribution. Native state access delegates to its owning feature leaf.
+ * Existing validation, lifecycle and effect ordering remain their specific contributions;
+ * This module does not own archive encoding or create a second state store.
+ */
 import { HIDDEN_WOLF_CAMP_INSPECTION_POLICIES } from "../../../../core/domain/board";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
-import { getHiddenWolfState, setHiddenWolfState } from "../private_state";
+import { getHiddenWolfState, setHiddenWolfState } from "./state";
 import { WOLF_ROLE_PROFILE } from "../wolf/profile";
 import { canHiddenWolfKnife } from "./inheritance";
 

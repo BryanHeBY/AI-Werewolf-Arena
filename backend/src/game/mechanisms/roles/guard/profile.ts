@@ -1,3 +1,10 @@
+/**
+ * Assembles guard repeat policy, native state, validation, night stages, repair and production fallback.
+ * Inputs are role initialization/configuration and existing runtime contexts; output is
+ * a RoleProfile contribution. Native state access delegates to its owning feature leaf.
+ * Existing validation, lifecycle and effect ordering remain their specific contributions;
+ * This module does not own archive encoding or create a second state store.
+ */
 import { scholarMentorBlocks } from "../scholar_mentor/night_frame";
 import { z } from "zod";
 import { GUARD_REPEAT_POLICIES } from "../../../../core/domain/board";
@@ -7,7 +14,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：守卫角色 profile。 */
 import { Camp, Role, Phase } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";
-import { getGuardState, setGuardState } from "../private_state";
+import { getGuardState, setGuardState } from "./state";
 import { numberOrNull } from "../../llm/helpers";
 import { GUARD_NIGHT_STAGES } from "./night_stages";
 import { GUARD_TOOL_SPECS } from "./tool_specs";

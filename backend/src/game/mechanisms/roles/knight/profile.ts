@@ -1,9 +1,16 @@
+/**
+ * Assembles knight duel state, tool validation and the role's daytime action contributions.
+ * Inputs are role initialization/configuration and existing runtime contexts; output is
+ * a RoleProfile contribution. Native state access delegates to its owning feature leaf.
+ * Existing validation, lifecycle and effect ordering remain their specific contributions;
+ * This module does not own archive encoding or create a second state store.
+ */
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Role, Camp, Phase, KnightDuelWindow } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
-import { getKnightState, setKnightState } from "../private_state";
+import { getKnightState, setKnightState } from "./state";
 import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";
 

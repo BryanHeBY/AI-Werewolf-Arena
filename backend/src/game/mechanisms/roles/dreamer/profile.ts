@@ -1,3 +1,10 @@
+/**
+ * Assembles dreamer protection policy, native dream state, target validation, stage hints and production fallback.
+ * Inputs are role initialization/configuration and existing runtime contexts; output is
+ * a RoleProfile contribution. Native state access delegates to its owning feature leaf.
+ * Existing validation, lifecycle and effect ordering remain their specific contributions;
+ * This module does not own archive encoding or create a second state store.
+ */
 import { z } from "zod";
 import { DREAM_PROTECTION_POLICIES } from "../../../../core/domain/board";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
@@ -5,7 +12,7 @@ import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, Phase } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
 import { activeNightAbility } from "../abilities";
-import { getDreamerState, setDreamerState } from "../private_state";
+import { getDreamerState, setDreamerState } from "./state";
 import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";
 import { DREAMER_NIGHT_STAGE } from "./night_stages";
