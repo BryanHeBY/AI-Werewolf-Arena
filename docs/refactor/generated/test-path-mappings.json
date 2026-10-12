@@ -81679,13 +81679,757 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/public_death_policies.test.ts",
+      "to": "backend/tests/unit/mechanisms/public-death-policy-boundaries.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "40340d3b551a58790ccfec85df82f898383578b0a564874c74282906c0220fdc",
+      "candidateSha256": "7f159ad72b45eb8aa7517f2d467e2a3a87fdd7034c27fb4e1bedebd051a9e019",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1165,
+          "end": 1206,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1066,
+          "end": 1124,
+          "original": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "value": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "originalResolved": "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/prompt/config_render_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 966,
+          "end": 1015,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 881,
+          "end": 919,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 810,
+          "end": 849,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 735,
+          "end": 776,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 639,
+          "end": 699,
+          "original": "../../../src/game/mechanisms/last_words/last_words_mechanism",
+          "value": "../../../src/game/mechanisms/last_words/last_words_mechanism",
+          "originalResolved": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+          "expectedResolved": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 563,
+          "end": 600,
+          "original": "../../../src/core/domain/board_schema",
+          "value": "../../../src/core/domain/board_schema",
+          "originalResolved": "backend/src/core/domain/board_schema.ts",
+          "expectedResolved": "backend/src/core/domain/board_schema.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 481,
+          "end": 525,
+          "original": "../../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 363,
+          "end": 408,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 307,
+          "end": 324,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 171,
+          "end": 197,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 42,
+          "end": 89,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "0d6f85d51ddad25b1ec08c8ac15de5cf449d9d59dd7147d0fe17988efb4966dc",
+          "title": "public policy defaults normalize omitted, empty and explicit fields and reverse old boards identically",
+          "occurrence": 1
+        },
+        {
+          "id": "b78dc586c7de84a94b71904052debc28ad5f48de47030bbf4075656e7734a781",
+          "title": "day/1: 2017 last words use death time for every known cause and reject unknown/empty",
+          "occurrence": 1
+        },
+        {
+          "id": "2a41885bbbb65a2eaad3cedf4f2397566b22c5df23766f4bccae832d938eb60f",
+          "title": "day/2: 2017 last words use death time for every known cause and reject unknown/empty",
+          "occurrence": 1
+        },
+        {
+          "id": "47f6c21552201957a3575b286aa6642b0611e3da850f75fc9c30447117dbb1c4",
+          "title": "voting/1: 2017 last words use death time for every known cause and reject unknown/empty",
+          "occurrence": 1
+        },
+        {
+          "id": "9d9ce25721bca8fe7fa55642ba228de78a786bc7c2bd8a59dd8581766dc7a016",
+          "title": "voting/2: 2017 last words use death time for every known cause and reject unknown/empty",
+          "occurrence": 1
+        },
+        {
+          "id": "562e62b4442114d9c5365887f4ca3ddaad4215056099c18f617b4af822643261",
+          "title": "night/1: 2017 last words use death time for every known cause and reject unknown/empty",
+          "occurrence": 1
+        },
+        {
+          "id": "af68595b2e7ab5076af0eedcb3b40c0cf6a6f010686dc33bff000b59026dbf34",
+          "title": "night/2: 2017 last words use death time for every known cause and reject unknown/empty",
+          "occurrence": 1
+        },
+        {
+          "id": "227881c69e44f851d18b7e7143b9ee6fecff26959bc2a5ca18711e8f13b25e56",
+          "title": "awa_initial_wave_v1/1: actual night-origin three-wave gun chain has no duplicate grants or reveals",
+          "occurrence": 1
+        },
+        {
+          "id": "2208cc9b16fd1178c245ee8458d05e0bfbcd24ede13e1eb030b19a7a34517a5f",
+          "title": "awa_initial_wave_v1/2: actual night-origin three-wave gun chain has no duplicate grants or reveals",
+          "occurrence": 1
+        },
+        {
+          "id": "bd39705971aee9e9f853352458bad3e5e0dfa06fef2d7d7f9e2b42d4468b9927",
+          "title": "netease_2017_day_and_first_night_v1/1: actual night-origin three-wave gun chain has no duplicate grants or reveals",
+          "occurrence": 1
+        },
+        {
+          "id": "827b068a8dbda389ef17b6d1d7bb3b7067f9bb8f0f10356c335d5769b30bb88d",
+          "title": "netease_2017_day_and_first_night_v1/2: actual night-origin three-wave gun chain has no duplicate grants or reveals",
+          "occurrence": 1
+        },
+        {
+          "id": "4aefd2ca1ef03a940d9a47a4fae81f6a975354b61a3db3dd39ee50326e3e9344",
+          "title": "daytime shot chains receive last words in every wave; mixed night/day first wave is classified per player",
+          "occurrence": 1
+        },
+        {
+          "id": "48567a05c1168bd3021243f703c85aac52cddbb0c793ce5f0c0fd8ed70c2febd",
+          "title": "hidden policy leaves no public role event; open wire excludes resources and repeat settlement only reveals a new life",
+          "occurrence": 1
+        },
+        {
+          "id": "4b8a6c9bf4962ea930510513084de19a232d61c1297061808091c268c374db29",
+          "title": "construction: last words policy changes revoke provider/commit and close death permission",
+          "occurrence": 1
+        },
+        {
+          "id": "84e11c80d5c56bb611edf3c6ace4f81b46f38a26ea31e4f2445fc4bb1245c0cb",
+          "title": "await: last words policy changes revoke provider/commit and close death permission",
+          "occurrence": 1
+        },
+        {
+          "id": "f31b23cc9eb2a5818570027ceed27b854570ad05259589ccde76399aa5544574",
+          "title": "gateway: last words policy changes revoke provider/commit and close death permission",
+          "occurrence": 1
+        },
+        {
+          "id": "217a9f42337c89fd58af03a679c5f5b8b3f424532a753729d66de22293f37004",
+          "title": "zh-CN: rules distinguish configured public policies without changing default prose",
+          "occurrence": 1
+        },
+        {
+          "id": "b6fd9a7e15eadef8c77ce1e51e5b1f410c894f36cd7a69ec61d9f239441b5867",
+          "title": "en: rules distinguish configured public policies without changing default prose",
+          "occurrence": 1
+        },
+        {
+          "id": "a29b39b9327a83d6693fb1f8565395c2a82b76a33e8f8405a2648b31dda381b2",
+          "title": "removing open-card policy during a pending action stops later wave disclosure",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  DeathCause,\n  Phase,\n  Role,\n  WinCondition,\n  type GameEvent,\n  type BoardConfig,\n  type ActionProvider,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, DeathCause, Phase, Role, type GameEvent, type BoardConfig, type ActionProvider } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "WinCondition",
+              "imported": "WinCondition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/public_death_policies.test.ts",
+      "to": "backend/tests/scenarios/mechanisms/pending-card-and-idiot-exile.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "40340d3b551a58790ccfec85df82f898383578b0a564874c74282906c0220fdc",
+      "candidateSha256": "2577ab9979937a4e5d16b396e6a9986835e8ecf9a4660f2c1e744f3553af81d7",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 458,
+          "end": 496,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 387,
+          "end": 426,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 312,
+          "end": 353,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 231,
+          "end": 276,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 175,
+          "end": 192,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b42954521398334c59789ba48a6cc327daf3cd7499f76a9bfb8d17b8556b2648",
+          "title": "first-day election sees no premature role card for pending night deaths",
+          "occurrence": 1
+        },
+        {
+          "id": "070152f08e48fb67c196697bc5cc1038f47c48ae23aa25823616c7b89ae0f780",
+          "title": "actual surviving Village Idiot exile gets its special reveal but no death card or last words",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/game/engine/action_request_factory",
+          "originalImport": "import { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameActionRequestFactory",
+              "imported": "GameActionRequestFactory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { expect, test, spyOn } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  DeathCause,\n  Phase,\n  Role,\n  WinCondition,\n  type GameEvent,\n  type BoardConfig,\n  type ActionProvider,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Phase, Role, type GameEvent, type BoardConfig } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "WinCondition",
+              "imported": "WinCondition",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionProvider",
+              "imported": "ActionProvider",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  boardDefinitionFromConfig,\n  parseBoardDefinition,\n} from \"../../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "parseBoardDefinition",
+              "imported": "parseBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/board_schema",
+          "originalImport": "import { boardConfigSchema } from \"../../../src/core/domain/board_schema\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "boardConfigSchema",
+              "imported": "boardConfigSchema",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/last_words/last_words_mechanism",
+          "originalImport": "import { LastWordsMechanism } from \"../../../src/game/mechanisms/last_words/last_words_mechanism\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "LastWordsMechanism",
+              "imported": "LastWordsMechanism",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/agent_visible_event_feed",
+          "originalImport": "import { buildAgentVisibleEventFeed } from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "buildAgentVisibleEventFeed",
+              "imported": "buildAgentVisibleEventFeed",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "originalImport": "import { getDefaultConfigRenderRegistry } from \"../../../src/game/mechanisms/prompt/config_render_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import { createAliveComponent } from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/public_death_policies.test.ts",
+      "to": "backend/tests/integration/filesystem/configuration/public-death-example.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "40340d3b551a58790ccfec85df82f898383578b0a564874c74282906c0220fdc",
+      "candidateSha256": "bba2b6e433c3ebdab2efecc9e5cbe918c19b57c7f834b827e974c24034b3b8e9",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-url-anchor",
+          "start": 478,
+          "end": 547,
+          "original": "../../../../configs.example/boards/netease_2017_open_clause_6_v1.json",
+          "value": "../../../../../configs.example/boards/netease_2017_open_clause_6_v1.json",
+          "originalResolved": "configs.example/boards/netease_2017_open_clause_6_v1.json"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 135,
+          "end": 179,
+          "original": "../../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 77,
+          "end": 94,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "configs.example/boards/netease_2017_open_clause_6_v1.json",
+          "originalExpression": "new URL(\n        \"../../../../configs.example/boards/netease_2017_open_clause_6_v1.json\",\n        import.meta.url,\n      )",
+          "currentExpression": "new URL(\n        \"../../../../../configs.example/boards/netease_2017_open_clause_6_v1.json\",\n        import.meta.url,\n      )",
+          "currentHead": "../../../../../configs.example/boards/netease_2017_open_clause_6_v1.json",
+          "kind": "public-url-anchor"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "236da9c5c6d25d67c8e4008efa86b88f682ef605f04a0fb105a0d669abd3253a",
+          "title": "source-scoped six-player example strictly resolves the documented clauses and role counts",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/game/engine/action_request_factory",
+          "originalImport": "import { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameActionRequestFactory",
+              "imported": "GameActionRequestFactory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { expect, test, spyOn } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/app/bootstrap",
+          "originalImport": "import { bootstrapGame } from \"../../../src/app/bootstrap\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bootstrapGame",
+              "imported": "bootstrapGame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  DeathCause,\n  Phase,\n  Role,\n  WinCondition,\n  type GameEvent,\n  type BoardConfig,\n  type ActionProvider,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role, WinCondition } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "BoardConfig",
+              "imported": "BoardConfig",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ActionProvider",
+              "imported": "ActionProvider",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  boardDefinitionFromConfig,\n  parseBoardDefinition,\n} from \"../../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": "import { parseBoardDefinition } from \"../../../src/runtime/config/board_definition\";",
+          "droppedBindings": [
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/board_schema",
+          "originalImport": "import { boardConfigSchema } from \"../../../src/core/domain/board_schema\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "boardConfigSchema",
+              "imported": "boardConfigSchema",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/last_words/last_words_mechanism",
+          "originalImport": "import { LastWordsMechanism } from \"../../../src/game/mechanisms/last_words/last_words_mechanism\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "LastWordsMechanism",
+              "imported": "LastWordsMechanism",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/death_resolution",
+          "originalImport": "import { DeathResolution } from \"../../../src/game/engine/death_resolution\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DeathResolution",
+              "imported": "DeathResolution",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/event_registry",
+          "originalImport": "import { EventRegistry } from \"../../../src/game/engine/event_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "EventRegistry",
+              "imported": "EventRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/agent_visible_event_feed",
+          "originalImport": "import { buildAgentVisibleEventFeed } from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "buildAgentVisibleEventFeed",
+              "imported": "buildAgentVisibleEventFeed",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "originalImport": "import { getDefaultConfigRenderRegistry } from \"../../../src/game/mechanisms/prompt/config_render_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import { createAliveComponent } from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 547,
-    "targetFiles": 597,
-    "mappingEntries": 597,
-    "baselineCases": 6952,
+    "sourceFiles": 548,
+    "targetFiles": 600,
+    "mappingEntries": 600,
+    "baselineCases": 6974,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

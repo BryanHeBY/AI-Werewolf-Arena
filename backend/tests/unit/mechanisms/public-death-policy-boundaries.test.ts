@@ -1,16 +1,12 @@
+/**
+ * Unit tests verify public death/last-word policy normalization, bounded wave disclosure and changed-policy revocation.
+ * Input: Original phase/day/policy/mutation/locale tables and controlled direct DeathResolution operations.
+ * Output and oracle: Exact field defaults, reveal/grant ordering, original life identity and no late permission assertions remain unchanged; no PM cycle or public file load executes.
+ */
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import {
-  COMPONENT,
-  DeathCause,
-  Phase,
-  Role,
-  WinCondition,
-  type GameEvent,
-  type BoardConfig,
-  type ActionProvider,
-} from "../../../src/core";
+import { COMPONENT, DeathCause, Phase, Role, type GameEvent, type BoardConfig, type ActionProvider } from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   boardDefinitionFromConfig,
@@ -26,8 +22,11 @@ import { getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms/pro
 import { createAliveComponent } from "../../../src/core/domain/components/alive";
 
 const roles = [Role.Wolf, Role.Hunter, Role.WolfKing, Role.Villager, Role.Villager, Role.Villager];
+
 const newWords = "netease_2017_day_and_first_night_v1" as const;
+
 const open = "netease_2017_open_v1" as const;
+
 function fixture(
   policy: "awa_initial_wave_v1" | typeof newWords = newWords,
   reveal: "awa_hidden_v1" | typeof open = open,
@@ -58,6 +57,7 @@ function fixture(
   );
   return { ...game, config, events, state, gateway, resolver };
 }
+
 const speak: ActionProvider = {
   async getAction() {
     return { name: "speak", args: { text: "words" } };
@@ -315,106 +315,4 @@ test("removing open-card policy during a pending action stops later wave disclos
   expect(
     f.events.filter((e) => e.type === "last_words_spoken").map((e) => e.payload.playerId),
   ).toEqual([2, 3, 4]);
-});
-
-test("first-day election sees no premature role card for pending night deaths", async () => {
-  const f = fixture();
-  f.config.enableSheriff = true;
-  const game = bootstrapGame(f.config, { fixedRoles: roles });
-  const stop = new Error("election_barrier");
-  let election = false;
-  await expect(
-    game.phaseManager.runSingleCycle(
-      {
-        async getAction(req) {
-          if (req.context.stage?.startsWith("sheriff")) {
-            election = true;
-            expect(
-              req.context.visible_events?.some((event) => event.type === "player_role_revealed"),
-            ).toBe(false);
-            expect(game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive).toBe(
-              true,
-            );
-            throw stop;
-          }
-          if (req.allowedTools.includes("speak_to_wolves"))
-            return { name: "speak_to_wolves", args: { text: "End", end_chat: true } };
-          if (req.allowedTools.includes("kill_vote"))
-            return { name: "kill_vote", args: { target_id: 2, abstain: false } };
-          throw new Error("unexpected before election");
-        },
-      },
-      2,
-    ),
-  ).rejects.toBe(stop);
-  expect(election).toBe(true);
-  expect(game.phaseManager.getEvents().some((event) => event.type === "player_role_revealed")).toBe(
-    false,
-  );
-});
-
-test("actual surviving Village Idiot exile gets its special reveal but no death card or last words", async () => {
-  const config: BoardConfig = {
-    ...sixPlayerMvpConfig,
-    lastWords: { policy: newWords },
-    disclosure: { deathRevealPolicy: open },
-    roleSetups: [
-      { role: Role.Wolf, count: 1 },
-      { role: Role.Idiot, count: 1 },
-      { role: Role.Seer, count: 1 },
-      { role: Role.Villager, count: 3 },
-    ],
-  };
-  const game = bootstrapGame(config, {
-    fixedRoles: [Role.Wolf, Role.Idiot, Role.Seer, Role.Villager, Role.Villager, Role.Villager],
-  });
-  await game.phaseManager.runSingleCycle(
-    {
-      async getAction(req) {
-        if (req.allowedTools.includes("speak_to_wolves"))
-          return { name: "speak_to_wolves", args: { text: "End", end_chat: true } };
-        if (req.allowedTools.includes("kill_vote"))
-          return { name: "kill_vote", args: { target_id: null, abstain: true } };
-        if (req.allowedTools.includes("check_identity"))
-          return { name: "check_identity", args: { target_id: 4 } };
-        if (req.allowedTools.includes("speak")) return { name: "speak", args: { text: "Raw" } };
-        if (req.allowedTools.includes("vote"))
-          return { name: "vote", args: { target_id: 2, abstain: false } };
-        throw new Error("unexpected idiot phase");
-      },
-    },
-    2,
-  );
-  expect(game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive).toBe(true);
-  expect(
-    game.phaseManager.getEvents().filter((event) => event.type === "idiot_revealed"),
-  ).toHaveLength(1);
-  expect(
-    game.phaseManager
-      .getEvents()
-      .filter(
-        (event) => event.type === "player_role_revealed" || event.type === "last_words_granted",
-      ),
-  ).toEqual([]);
-});
-
-test("source-scoped six-player example strictly resolves the documented clauses and role counts", async () => {
-  const raw = JSON.parse(
-    await Bun.file(
-      new URL(
-        "../../../../configs.example/boards/netease_2017_open_clause_6_v1.json",
-        import.meta.url,
-      ),
-    ).text(),
-  );
-  const result = parseBoardDefinition(raw, "netease_2017_open_clause_6_v1");
-  expect(result.config.lastWords).toEqual({ policy: newWords });
-  expect(result.config.disclosure).toEqual({ deathRevealPolicy: open });
-  expect(result.config.roleSetups).toEqual([
-    { role: Role.Wolf, count: 2 },
-    { role: Role.Seer, count: 1 },
-    { role: Role.Hunter, count: 1 },
-    { role: Role.Villager, count: 2 },
-  ]);
-  expect(result.config.winConditions).toEqual([WinCondition.SlaughterCity]);
 });
