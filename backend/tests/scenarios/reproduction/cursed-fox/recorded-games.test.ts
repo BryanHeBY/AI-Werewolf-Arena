@@ -1,7 +1,12 @@
+/**
+ * Reproduction scenarios verify Cursed Fox complete recorded games preserve inspection interactions and chain-final individual or faction victory.
+ * Input: Original knife, inspection, dream, mirror, lucky and king-chain transport/locale matrices with a literal result table.
+ * Output and oracle: Handwritten death/survivor/winner facts and private-view assertions remain causal with the actual replay; no engine run generates expected terminal data.
+ */
 import { expect, test } from "bun:test";
-import { Camp, DeathCause, Phase } from "../../src/core";
-import { FOX_CASES, foxScenario } from "../support/cursed_fox_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { Camp, DeathCause, Phase } from "../../../../src/core";
+import { FOX_CASES, foxScenario } from "../../../support/cursed_fox_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 import { promises as fs } from "node:fs";
 const expectations = {
   knife: { night: [], alive: [1, 2, 4, 5, 6], foxWins: true },

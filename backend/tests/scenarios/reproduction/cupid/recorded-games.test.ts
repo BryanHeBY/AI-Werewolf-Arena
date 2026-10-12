@@ -1,7 +1,12 @@
+/**
+ * Reproduction scenarios verify Cupid complete recorded games retain private recognition, heartbreak chains and declared group or faction winners.
+ * Input: Original policy/scenario/transport/locale matrices and handwritten survivor, death-wave, checkpoint and winning-member facts.
+ * Output and oracle: Explicit relationship visibility and chain-final result assertions preserve exact action replay; the declared winner table is independent of observed engine output.
+ */
 import { expect, test } from "bun:test";
-import { Camp, Phase } from "../../src/core";
-import { CUPID_CASES, cupidScenario } from "../support/cupid_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { Camp, Phase } from "../../../../src/core";
+import { CUPID_CASES, cupidScenario } from "../../../support/cupid_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 import { promises as fs } from "node:fs";
 const manual = {
   mixed_netease: {

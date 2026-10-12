@@ -1,12 +1,17 @@
-import { Camp, DeathCause, Phase } from "../../src/core";
+/**
+ * Reproduction scenarios verify Wolf Beauty complete recorded games preserve charm, coupled deaths and private state through final settlement.
+ * Input: Original scenario/transport/locale matrices and handwritten charm choices, extra death waves, survivors and last-word facts.
+ * Output and oracle: Literal effect, privacy and chain-final outcome assertions remain attached to exact action replay; no production result is reused to manufacture expected state.
+ */
+import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import {
   BEAUTY_CASES,
   wolfBeautyScenario,
   type BeautyScenario,
-} from "../support/wolf_beauty_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+} from "../../../support/wolf_beauty_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 const facts: Record<
   BeautyScenario,
   {

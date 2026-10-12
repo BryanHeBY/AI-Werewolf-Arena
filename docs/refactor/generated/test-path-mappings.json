@@ -53706,13 +53706,786 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/cupid_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/cupid/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify hand-written recognition/privacy/heartbreak chains and explicit faction/group winners.",
+      "originalSha256": "73a6ae0f46aac2f68897dea6bcd8fc13105a23295baa120259107a819bf6abfc",
+      "candidateSha256": "597d00ea055fc7b9842ac82c7d1b93e476abb6bae7c718bacbf5aa089eb3f0e6",
+      "moduleAndLocationEdits": [
+        {
+          "start": 194,
+          "end": 223,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 131,
+          "end": 157,
+          "value": "../../../support/cupid_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/cupid_scenarios",
+          "originalResolved": "backend/tests/support/cupid_scenarios.ts",
+          "expectedResolved": "backend/tests/support/cupid_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 70,
+          "end": 84,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "c927f891182a77f59d816db0c112963eaa991829b50dafc749e8002244e86676",
+          "title": "mixed_netease/llm: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0bba8db074d01054c4161f3a2b368af4bddcb33d158f85c16b7aee8033b8da33",
+          "title": "mixed_netease/acp: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6b60f7d396b1555bc7e273be34c31ea64a3f0d36ef0049fbbdac227e5c40bb64",
+          "title": "mixed_netease/mixed: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ee3076d6d88283c1ab76dccb20f13d65a0e92181d0effaf7606aa103d5f20a3a",
+          "title": "mixed_lui/llm: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f5e34990341d8c00a048ebc3cd30267d616b083a39df39b12e84d0ab4175725d",
+          "title": "mixed_lui/acp: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "fa1c9755af1959453baeb469942de189209d239d62b7e1e665b8ea9501d74eb5",
+          "title": "mixed_lui/mixed: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "21dc47ea76675e93ad8668e485b688ca6c6d9b96ab863e84b2bbc7cae67ca331",
+          "title": "wolves_netease/llm: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f0e4e152a070dab495758fd3a32413a8ac24d290c4da865f4cbf90dcad6ce5eb",
+          "title": "wolves_netease/acp: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ed29e1a3c055e632ef7213f3b21718599d0e8bec5a7bd593017f8a785f1ac399",
+          "title": "wolves_netease/mixed: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "72b9db9593fd933de82e0c4bc70ab4136960c12d54aaf9193f6244aa3b09face",
+          "title": "wolves_lui/llm: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6e4ef2488ecb399ec902afa6a15fffda62f265c04f33958a7a9fa96c460b2230",
+          "title": "wolves_lui/acp: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "7cbf32b8cc638c5637f108d03c540478e88b96b8753a4839327e79d22144823b",
+          "title": "wolves_lui/mixed: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a33bd1d3524522eabe1626af0a1cdc49e28e424b3fc1db5ddf557434f59aec73",
+          "title": "root_hunter/llm: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "25fc0458b1647e6e95593054e0896347eb08e06099613a8ca94b32a92545793f",
+          "title": "root_hunter/acp: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1c14641739accc8d910c2f9196cf7ef7ecbd6d0dc154dd3ca39baa792fa6a245",
+          "title": "root_hunter/mixed: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "745008a96c4fc5ff13395b9301fbd971bad9ace6f7a0c22e766688242500c1aa",
+          "title": "heartbreak_hunter/llm: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "63a051d0a750b9757b59fc1ec8eee88d2d925b90647716875ed224340bd2fbd5",
+          "title": "heartbreak_hunter/acp: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0ef1ba11536abf44fad0db07d67cd6e3244a4a68a0fad4e37c5fa56caf3efcb9",
+          "title": "heartbreak_hunter/mixed: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a86b9708b8936880cbab4bec7056912bf9c145472fc9f7448c4505b4d80aeda0",
+          "title": "two_sources/llm: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0e3d9ce132d0b0bb8bc8ebc631a9585cff7ea7fb711c685a03d9b2ebd480bb74",
+          "title": "two_sources/acp: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e43807b8bd60175a6afaf6ab19f3b3f52af768de1b14e1158f9a281c6fabd024",
+          "title": "two_sources/mixed: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "690c216d34bd323c4749e39b5c9593b058d6a0fd66251314ce2d41626c5bc2d2",
+          "title": "dream_chain/llm: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1a05441ec7eb72fb558e9091c48a216845b86209eaad699044ab164320a95790",
+          "title": "dream_chain/acp: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "594d35cd7fdd7b0a2560e6e6118863e578ba68255ec8dded588d0a78d69a2d93",
+          "title": "dream_chain/mixed: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "14a5992d0df45e7ebeb8ca3c5598c77493d6134da6332121cae725fff1c01920",
+          "title": "beauty_poison/llm: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a449dbefda80c7eeb2f9f8b5cc98b61a6285cea8e7788f3b076df831d72ff0de",
+          "title": "beauty_poison/acp: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "cb623cd9ff4f754b545c84eda0a8e86bb86ffc21502d609901452da1b2f2a3c3",
+          "title": "beauty_poison/mixed: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "19af56fa70f0d07dbcc45838c99d9eee5749cbe21751f92762af0ebb7fce2469",
+          "title": "shot_chain/llm: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "edef2680a18046a72b3cce8665194c83450db29509062b6bdb3e3f736d853d77",
+          "title": "shot_chain/acp: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "9fdd3d70726197a9eba3af3e5acf1bd4a00de67cb016e69ff63cc2070968da37",
+          "title": "shot_chain/mixed: complete bilingual SDK/ACP-MCP, private recognition, chain-final winners and strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/cursed_fox_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/cursed-fox/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify literal knife/inspection/dream/mirror/lucky/king-chain table and explicit individual or faction outcome.",
+      "originalSha256": "6affab973028c955e487082a3abd1f04c801ddf914e722228e0653c08fa18dff",
+      "candidateSha256": "0a08cefc1fddb28ed922f920053c269247cd88a4c4e74f808d387457b05bd98a",
+      "moduleAndLocationEdits": [
+        {
+          "start": 207,
+          "end": 236,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 139,
+          "end": 170,
+          "value": "../../../support/cursed_fox_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/cursed_fox_scenarios",
+          "originalResolved": "backend/tests/support/cursed_fox_scenarios.ts",
+          "expectedResolved": "backend/tests/support/cursed_fox_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 82,
+          "end": 96,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f1ba2d8eab491294817cf5f3f34f9cc351adbc9a1bd582f79200f3beb0f6e944",
+          "title": "knife/llm: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "e72636d1f0c54ee3b9176f2a148e7627ca67240f573060e91121bc0534323e50",
+          "title": "knife/acp: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "b711f69fb134ac3a3d7300cb7cc1ed534717dacac7cfcb2c10b59779e8681b7e",
+          "title": "knife/mixed: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "891e522b3198abedc81cf953bbb7a4934a8d804a8a17dde078a92d081e4ff206",
+          "title": "inspection/llm: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "3792b3c06397f204d31137745155913a5384849b50e00076656a5967199bb5eb",
+          "title": "inspection/acp: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "4ec47295a7c02f79b57c7d907a3d7b5a73eec7f9220f122c2289cf3786626409",
+          "title": "inspection/mixed: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "581782aed88681abe72051a46d22b58a719bbf0aed4f4063257d74e0fde98a3c",
+          "title": "poison_inspection/llm: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "08357acb1e4b40dc30d5d7305736e0df82b6bc94a276744a09edadc2f04e644f",
+          "title": "poison_inspection/acp: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "f942d809ca5a7ea096f1f8d44780dfc0ab49eba8338b90abf51aa143b97fef06",
+          "title": "poison_inspection/mixed: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "d6c0d4ef3f761c27ea66471da0ebe86630bf96bfe3764c25982f66e4bd0678fc",
+          "title": "dream/llm: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "0e4d0a313ae563feb58a3101f9148d3899b90b08f09ab85db76a0a075254d227",
+          "title": "dream/acp: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "520b49814062ce9121c36799544f076af0112161a6c161bace21889386b20a45",
+          "title": "dream/mixed: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "943ef19f1109691e45fe9b87e97a0f3daa9ad179ca0850eb9ed45747bad496b9",
+          "title": "mirror/llm: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "4e7c03dd6478d3f04fb70174d45929d53b3c2e2b6eef495a5e2bf093fb2308a2",
+          "title": "mirror/acp: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "522cff0d06be534d71d9b3e8fa95870688c79c03e88c0cfa66e0f33f3705aae4",
+          "title": "mirror/mixed: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "e52c10eaf0cc167f18848ac4f8d3a5fd2cf28a493b668681ed9396e389dcf5d9",
+          "title": "lucky/llm: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "b1f6b4857938e4bd26025d2cd91ee2d7fe51094f16c56ce58d4d8546d0ee87c9",
+          "title": "lucky/acp: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "ce3e13603b4f1b658461769c5b37c9ae12171e0b229f1668acec6bbdf184a393",
+          "title": "lucky/mixed: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "551e2d24edadec0529dda15acfa727b6aab15f7141cda26983a2a8bb329f38d8",
+          "title": "fox_lucky/llm: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "591e32b3f9872652842cfc054285bbbaf395843f54d2bb17db2a3e08fee40bf2",
+          "title": "fox_lucky/acp: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "e2553b8c78f8ff72b197f21a294eabc35699b95ce4bfbd7c0803ae60a1e65960",
+          "title": "fox_lucky/mixed: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "ba983c1376139a94fa1ffd85243c3d03cae17355990051a5b1742d0dc2e4f1c9",
+          "title": "king_chain/llm: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "121e747422581ba93564064fc283c9aefef931ce408beaaf3f06564df54d252f",
+          "title": "king_chain/acp: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        },
+        {
+          "id": "39c5fb9176f4b3f3f9e8c1033b552bf1c266b0f75ea1e23792d376f75ff533d4",
+          "title": "king_chain/mixed: actual bilingual SDK, ACP/MCP complete games and strict Tape keep Fox effects and chain-final individual winners",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/hybrid_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/hybrid/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify independent literal selection/secret faction/member/death facts, not engine-chosen camp as an oracle.",
+      "originalSha256": "e4d7fb6f81ffee62c59283399b54e4e3731ec83c9fec3006d8fd4fdf06a3e84c",
+      "candidateSha256": "69d3dfbcc72020c125a655718d876aad3661f3eb1538d1998f807ee7776fc3fe",
+      "moduleAndLocationEdits": [
+        {
+          "start": 276,
+          "end": 305,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 212,
+          "end": 239,
+          "value": "../../../support/hybrid_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/hybrid_scenarios",
+          "originalResolved": "backend/tests/support/hybrid_scenarios.ts",
+          "expectedResolved": "backend/tests/support/hybrid_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "d78208eae5b0df572fb3d8198a9a9d4b3e462af73ac4240999e0b8ed773bbf09",
+          "title": "good_alive/llm: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "868e77d7a0a9a2b8d19482cc2d0e5e476dd23b8317c4b3b7750959d63b9585c2",
+          "title": "good_alive/acp: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "4e8c06f0f5904d91dafd01b582f7b8cc778027a60528be0edf6bd23740d40c2d",
+          "title": "good_alive/mixed: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "8abec4233f51458233093f7be8e535bf08ae3355aaa61bdbe46e2580157849f9",
+          "title": "wolf_alive/llm: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "fb01024ccd0b18f4c1595afc310d4b30e3989daf87c035c7eca194d1167d8d70",
+          "title": "wolf_alive/acp: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "a6dae012825b9eaf872fff1dd1fec0765c1a9b339cc5fc39f150e7709a02c20c",
+          "title": "wolf_alive/mixed: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "7251ae0602eac5071d2bd422dc44d97f7289cd842302e5d7fd714b7bb403b875",
+          "title": "good_dead/llm: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "3191dadcc945ad971722a50fc0cd06efe44041c1277f5d361161f80b2267189a",
+          "title": "good_dead/acp: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "78ce4e5103aee5d4c1b3032a2ff4d791105d2d3f9a8e7ef99b3e3b07bf9d06e8",
+          "title": "good_dead/mixed: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "cea21fbd93717a403eda7e7fb562bed7a113777907ffd08601bdd128f049210a",
+          "title": "wolf_dead/llm: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "8c30519044a9831ec393d02aac4a0948541cc798d7211afbde2c021e777fdf20",
+          "title": "wolf_dead/acp: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "4aff4e5efdd4a9413946872d9b5668b95d631543834f1fcbb7807423d9ef3eba",
+          "title": "wolf_dead/mixed: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "a5a11124b9bc3089fbb4f7ceb411dcf8433fc7a04e3a30898ec44d0f3583b993",
+          "title": "wolf_win/llm: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "908e0418c80597c3cf1ba361bb857a757a8a3699db03081b8047b85b578b103a",
+          "title": "wolf_win/acp: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "f2c553894c462a82af234c4426e6cbd9f4efd93eaae760b4a8f94b0de73d2ac5",
+          "title": "wolf_win/mixed: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "365d3fabc03721bc998f82d9d38de0252e94b6165cef6d208bc9b6b82d8d2036",
+          "title": "hidden/llm: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "975699bbe983ce049be820020b7ac94fe936a91637d5a6515e334141fc5cc3ad",
+          "title": "hidden/acp: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "7e52b0d67a7985e6647a6d52c3537494ae7b425d1457c9eedcba55c67c3254f7",
+          "title": "hidden/mixed: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "f8c1d7eb8568fc8ae4be71dd81e731dd07487712200e63b88467931148796084",
+          "title": "twelve_good/llm: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "a7b492db4bed2ccede76f1b9593d04732175d99377f48855853c238e41318bb9",
+          "title": "twelve_good/acp: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "996e3e8a1fe559c849059bea23c4d6223f89763d8b58116af9e78f563d4718e0",
+          "title": "twelve_good/mixed: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "e2b5714c92848a965c27c1289188868f7f1fd62b6d8311cc8322cc9a88f3f1b6",
+          "title": "twelve_wolf/llm: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "7f8cd0210095201ada2bf542678eaa77fc37b60f523a81904bf8866de2b3fe3a",
+          "title": "twelve_wolf/acp: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "d1dc6fdbf2df21f9512e8a09615d01911406a898d711fc4d492fc678a3c689f0",
+          "title": "twelve_wolf/mixed: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "28b541cfb7f8f480048107dd460896a24aba774c11afc85b0cb9d28e1dad8893",
+          "title": "twelve_wolf_win/llm: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "0d74a5e3220868800665512641d9fe25977fd1ca62fd9963bfab6d0f6418296b",
+          "title": "twelve_wolf_win/acp: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        },
+        {
+          "id": "6cfc125f826c462ac562633efa298b74fca3b1581b38970d0edf4e5f4bee319f",
+          "title": "twelve_wolf_win/mixed: bilingual real Hybrid selection separates identity, secret affiliation and exact terminal members",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/wolf_beauty_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/wolf-beauty/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify handwritten charm/death coupling/words/visibility and terminal facts.",
+      "originalSha256": "1c01dbac919778719788fe953d19645d953e715c3dec04236c419c9c092bb0af",
+      "candidateSha256": "95ec2d6c169c8be8b0f3cf183275979ee0a4c40194994190eba5ecbdcb12ceb9",
+      "moduleAndLocationEdits": [
+        {
+          "start": 292,
+          "end": 321,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 223,
+          "end": 255,
+          "value": "../../../support/wolf_beauty_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/wolf_beauty_scenarios",
+          "originalResolved": "backend/tests/support/wolf_beauty_scenarios.ts",
+          "expectedResolved": "backend/tests/support/wolf_beauty_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "ba9e36605ef3acb7759e87b6c0f0e8c2f1fa266b3a07c82dfe5926eb3211fb60",
+          "title": "exile/llm: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "b4f5f9e6e20e4780b026810114f972cf0f7cd8bb1c1e7af05d506bd7a0dc51b7",
+          "title": "exile/acp: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "8d5834a11f89a76923fe31a664f5a61d0b744b3ae436957ac79b1b9f8208d4a0",
+          "title": "exile/mixed: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "f79ba2fbe91d8cc12008f66a89ae08bd7854de7c430d06a9815c8fc41c89edc9",
+          "title": "poison/llm: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "204317cf401ad203eca1c61f7a977939365f29bd67bc9594c5ae7645b60816ed",
+          "title": "poison/acp: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "c314b4117a45dd6c3d21c9672569b746a7604d5c2abc1bb73007fd06a749818d",
+          "title": "poison/mixed: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "9ba50fb4bc32c4592ee2b62352b84c67f3745bccb0302434a76151eb9a754198",
+          "title": "duel/llm: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "4f0b5a58015a906fda2d7de0406fdb230ae56e54571a906af7987683702a5515",
+          "title": "duel/acp: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "8dfb73a8aa3dca0aec19ee4c9d8e92af2854090fed5dbc63bbac5abc569018ff",
+          "title": "duel/mixed: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "432b51e307e23b332d0d048272ff113a19f29a4f28776903a716a352190d1e07",
+          "title": "night_dream_block/llm: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "5d152978c4ab0b6fbacb73c1fe2264f17550ec59741378e7d1d28937e7726bdd",
+          "title": "night_dream_block/acp: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "e241d19199e037e0713dcd9b630479c035555a05b45c31ac9319963eecb94f77",
+          "title": "night_dream_block/mixed: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "e596085c9bea0affa18f44fcffe34d7f24325bc7edea459190860cebdbd3c055",
+          "title": "night_dream_chain/llm: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "a0372465f81eb92cc9aac48ae5d40a8a1e5b0c8deeedada5f1e1d7ffd94bc264",
+          "title": "night_dream_chain/acp: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "30dfc8a295993f46f0f89da8f79aff824118c5b6886477baeeb1d55ba2988e50",
+          "title": "night_dream_chain/mixed: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "861a8c67aacbe77093683320b1474e2a547dc081ce3a5ecc8f1d50398a09ef9e",
+          "title": "same_wave/llm: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "3afcf482dfc845d0a6e1522d7121816a46d55ebf255e30d130e55ba32514b87e",
+          "title": "same_wave/acp: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "be82fe9fd9383e184742718edfc4ef88f8d77b4c3b188ac13dbabf24358faa1a",
+          "title": "same_wave/mixed: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "a3d8c4bae66e2dd58a88e6779af94dedb0fce4de8455424ec2c6825053d1f313",
+          "title": "last_god/llm: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "32e4d6c063ad9d0bcbc851638fd293a01152fb0eb065fdbd94b0501768aad825",
+          "title": "last_god/acp: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "5306f3856d292fa576628a666db64114cd1791b39e5574d2521e4233e814d5c9",
+          "title": "last_god/mixed: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "626360808f621394bc93ba50d352c6555637b49ebacbb337c1757abc83859471",
+          "title": "last_villager/llm: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "90aa4b2f171ebb0778e727c63d28240e49191efabb7dd809584914e35db184a6",
+          "title": "last_villager/acp: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "90946720f0dd1873c790477e7eec5dbf1fa7f5c3e3251fa165d6e94b3d27265b",
+          "title": "last_villager/mixed: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "ffb5d7b75291571089fdad0810e022e12993a730524b3626c5ef82c4da821a24",
+          "title": "city_first/llm: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "aac662a526b35dc7f7cd2aca5591e69360dfb6a94a738a19bb0ba738ac9e2ac5",
+          "title": "city_first/acp: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "5d77cc16eb12b7849398422f23f72fe51668b7e5f762fae9289d3ddf95ac2b15",
+          "title": "city_first/mixed: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "fe672a5aac1496edd7191c52b1f8dcf0736801752077a76ad92448b59903eed3",
+          "title": "side_first/llm: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "798734162342b51b8c64413f42ef0a9e11880df4a6578662621c94996581c334",
+          "title": "side_first/acp: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "5ed742796739acc6c6bf895f49d9ea47ce318c68e407ff8f3b967f2830aff044",
+          "title": "side_first/mixed: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "3a6a49df8ec1cc6f34c3cfe343fabd4e45ecb7a4034e03e33652348eae73da59",
+          "title": "skip/llm: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "e7174df74f2b7950b3425c05cfc906ca7e9cf87093b372ef69aed08d73c789ca",
+          "title": "skip/acp: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "5f32676ac7a6b9433f8d495e4009e03b9b6ec3d47e5ef20998e52149672f3217",
+          "title": "skip/mixed: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "cd36c7486dd54c2fe8b9dc7ad5221be07b127b67549a6a46e90fff6c23e458d2",
+          "title": "twelve/llm: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "82fa879da2d4030e1ed9d6456a09eef0ac19ebc06fdd9969c0afd82ff28ee8bd",
+          "title": "twelve/acp: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "9c6635e9e17c6b24037fbed6027fd36502ed3e58ce35b2f6ca184fdbcd398f5b",
+          "title": "twelve/mixed: actual bilingual Beauty complete games preserve literal effects, private state and strict replay",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 444,
-    "targetFiles": 450,
-    "mappingEntries": 450,
-    "baselineCases": 5212,
+    "sourceFiles": 448,
+    "targetFiles": 454,
+    "mappingEntries": 454,
+    "baselineCases": 5329,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

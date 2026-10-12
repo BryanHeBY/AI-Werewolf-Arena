@@ -1,8 +1,13 @@
-import { Camp, DeathCause, Phase } from "../../src/core";
+/**
+ * Reproduction scenarios verify Hybrid complete recorded games keep chosen secret affiliation separate from identity and declared terminal membership.
+ * Input: Original scenario/transport/locale matrices and independent literal selection, target, survivor, faction and winner facts.
+ * Output and oracle: Explicit private selection and outcome/member assertions preserve exact replay; observed engine camp never supplies the expected faction table.
+ */
+import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { HYBRID_CASES, hybridScenario, type HybridScenario } from "../support/hybrid_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { HYBRID_CASES, hybridScenario, type HybridScenario } from "../../../support/hybrid_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 
 /** Independent literal end states; never derived from observed engine winners or chosen camp. */
 const facts: Record<
