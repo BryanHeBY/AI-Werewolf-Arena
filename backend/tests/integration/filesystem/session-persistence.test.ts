@@ -1,21 +1,20 @@
 /**
- * Session recording integration verify public/player timelines, manifests and scoped recorder isolation.
- * Input: Literal events/rounds/reports, temporary files, concurrent scopes and write failures.
- * Output and independent oracle: Original file/schema fields, stage sequence, deterministic debug text and warning/error behavior.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Filesystem integration tests verify SessionRecordManager persists public/player timelines, manifests, debug summaries and isolated recording scopes.
+ * Input: Original literal event/round/report records, temporary stores, concurrent scopes and injected write failures.
+ * Output and oracle: Explicit stored fields, stage sequences, debug text and warning behavior are read from real files; existing fixture archives are not rewritten.
  */
 import { promises as fs } from "fs";
 import path from "path";
-import { Camp, Phase } from "../../src/core/domain/model";
-import { bootstrapGame } from "../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
-import { buildAgentVisibleEvent } from "../../src/game/engine/agent_visible_event_feed";
-import { getDefaultScriptEventRenderRegistry } from "../../src/game/mechanisms/script/event_render_registry";
-import { COMPONENT } from "../../src/core/domain/components/names";
-import { SessionRecordManager, safeRecordLogicOp } from "../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../src/recording/recording_context";
-import { buildDebugSummaryMarkdown } from "../../src/audit/debug_summary_generator";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+import { Camp, Phase } from "../../../src/core/domain/model";
+import { bootstrapGame } from "../../../src/app/bootstrap";
+import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { buildAgentVisibleEvent } from "../../../src/game/engine/agent_visible_event_feed";
+import { getDefaultScriptEventRenderRegistry } from "../../../src/game/mechanisms/script/event_render_registry";
+import { COMPONENT } from "../../../src/core/domain/components/names";
+import { SessionRecordManager, safeRecordLogicOp } from "../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../src/recording/recording_context";
+import { buildDebugSummaryMarkdown } from "../../../src/audit/debug_summary_generator";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 async function finalizeManager(
   manager: SessionRecordManager,

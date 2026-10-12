@@ -1,19 +1,18 @@
 /**
- * Game lifecycle integration verify failed games finalize partial archives and release recording ownership.
- * Input: Real runner with injected phase/finalization failures and temporary output directories.
- * Output and independent oracle: Original primary/persistence error identities, sealed partial replay and released active recorder.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Filesystem integration tests verify a failed runner seals its partial archive and releases the active recording scope.
+ * Input: The real runner, mocked phase/finalization failures, original restoration hooks and temporary output directories.
+ * Output and oracle: Literal partial replay contents and original primary/persistence error identities retain finalization order; no successful model-driven game is required.
  */
 import { afterEach, expect, spyOn, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { PhaseManager } from "../../src/game/engine/phase_manager";
-import { ReplayFileStore } from "../../src/recording/file_store";
-import { getSessionRecorder } from "../../src/recording/recording_context";
-import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
-import type { ResolvedGameSetup } from "../../src/runtime/config/resolve_game_setup";
-import { runGame } from "../../src/runtime/game_runner";
-import { cleanupTestTempDirectories, createTestTempDirectory } from "../support/drivers/temp-directories";
+import { PhaseManager } from "../../../src/game/engine/phase_manager";
+import { ReplayFileStore } from "../../../src/recording/file_store";
+import { getSessionRecorder } from "../../../src/recording/recording_context";
+import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";
+import type { ResolvedGameSetup } from "../../../src/runtime/config/resolve_game_setup";
+import { runGame } from "../../../src/runtime/game_runner";
+import { cleanupTestTempDirectories, createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const restores: Array<() => void> = [];
 afterEach(async () => {

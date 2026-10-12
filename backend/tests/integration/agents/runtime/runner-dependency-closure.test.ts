@@ -1,17 +1,16 @@
 /**
- * Runner dependency integration verify detached closed snapshots and selected-deadline failure order.
- * Input: Injected deadline selector, closed observer callbacks and temporary runner archives.
- * Output and independent oracle: Original selector/observer errors, zero model opening for nonfinite deadlines and drained scheduler snapshots.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Runner integration tests verify selected-deadline failures and closed observers retain their original errors after runtime owners drain.
+ * Input: The actual runner, injected selectors/observers and temporary termination archives.
+ * Output and oracle: Explicit drained scheduler snapshots, zero opened turns for invalid deadlines and recorded primary/cleanup errors preserve one lifecycle boundary; no billed model is invoked.
  */
 import { expect, test } from "bun:test";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import { runGame, type GameRunDependencies } from "../../src/runtime/game_runner";
-import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
-import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
-import { readReproduction } from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+import { runGame, type GameRunDependencies } from "../../../../src/runtime/game_runner";
+import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
+import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
+import { readReproduction } from "../../../../src/runtime/simulation/replay_reproduction";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 async function setup(maxRuntimeMs: number) {
   const root = await createTestTempDirectory("awa-run-dependencies-");

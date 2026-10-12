@@ -49345,13 +49345,342 @@
       "targetRunner": "backend-unit",
       "fixturesChanged": false,
       "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/recording/session_recording.test.ts",
+      "to": "backend/tests/integration/filesystem/session-persistence.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "All ten callbacks create actual temporary SessionRecordManager stores, flush/finalize/read files or inject write failures; public/player timelines, debug text, manifests and async scope separation retain one persistence owner.",
+      "originalSha256": "b11a89699b179511be4771e6fda9f5165167aefe42a02b62534811c8801f70b6",
+      "candidateSha256": "67ef2908ce6b912c689a2632a7d4af9ea7434640fafe29886fb580291c2d6933",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1250,
+          "end": 1285,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "start": 1167,
+          "end": 1206,
+          "original": "../../src/audit/debug_summary_generator",
+          "value": "../../../src/audit/debug_summary_generator",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/audit/debug_summary_generator.ts",
+          "expectedResolved": "backend/src/audit/debug_summary_generator.ts"
+        },
+        {
+          "start": 1084,
+          "end": 1121,
+          "original": "../../src/recording/recording_context",
+          "value": "../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "start": 1005,
+          "end": 1041,
+          "original": "../../src/recording/session_recorder",
+          "value": "../../../src/recording/session_recorder",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "start": 907,
+          "end": 945,
+          "original": "../../src/core/domain/components/names",
+          "value": "../../../src/core/domain/components/names",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "start": 823,
+          "end": 877,
+          "original": "../../src/game/mechanisms/script/event_render_registry",
+          "value": "../../../src/game/mechanisms/script/event_render_registry",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/script/event_render_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/script/event_render_registry.ts"
+        },
+        {
+          "start": 721,
+          "end": 767,
+          "original": "../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../src/game/engine/agent_visible_event_feed",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "start": 636,
+          "end": 678,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "start": 574,
+          "end": 597,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "start": 513,
+          "end": 540,
+          "original": "../../src/core/domain/model",
+          "value": "../../../src/core/domain/model",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "1a5705d117586c017fef763fca46ec9eeade6cf4542d7781597bfeb222a41e45",
+          "title": "SessionRecordManager > should persist timeline and player files during game before finalize",
+          "occurrence": 1
+        },
+        {
+          "id": "209f938303e547d5727ffdc327853cf240b1ce8a61a70c9dd30edfbff7af3fa1",
+          "title": "SessionRecordManager > should record structured player event stage without mixing",
+          "occurrence": 1
+        },
+        {
+          "id": "26d09135f2be92fe9b6e40da671a658027fe2b72b3ac115fec827c6f6181c481",
+          "title": "SessionRecordManager > should create session folder and persist replay json files",
+          "occurrence": 1
+        },
+        {
+          "id": "a2a6ec36fa4a1d05a76f83e7bee404f8a7f85b2576290b8811610339c9ec833c",
+          "title": "SessionRecordManager > should not emit TODO section when there are no debug reports",
+          "occurrence": 1
+        },
+        {
+          "id": "7b589f6781ea15bddb2de7e3430e3781f922d06ada053018bd373cfd29bf4dfe",
+          "title": "SessionRecordManager > should emit TODO from auto scan even when report_bug is empty",
+          "occurrence": 1
+        },
+        {
+          "id": "84e65a3dbb1d55f7ace8fd1c5306ea4dcd2021c104ab0fc890544f0db839861a",
+          "title": "SessionRecordManager > should ignore strategy-only report_bug messages in debug summary",
+          "occurrence": 1
+        },
+        {
+          "id": "fcf8445a0bd4559a42bf6aca9cc3e545a5782ab59f7274bfcd0fc59a9fe7a131",
+          "title": "SessionRecordManager > should not promote unverified flow reports without timeline anomalies",
+          "occurrence": 1
+        },
+        {
+          "id": "195d0a1078938db1aa42231a580c13f1eb0032cfdee586260646ef616f31e0e4",
+          "title": "SessionRecordManager > should detect timeline metadata mismatch in deterministic summary when reports are empty",
+          "occurrence": 1
+        },
+        {
+          "id": "8911107b7975cbb49551adfa5323773e2c0f08ee9d00ee8012399dcadc6acca9",
+          "title": "SessionRecordManager > should keep main flow when write fails and only warn",
+          "occurrence": 1
+        },
+        {
+          "id": "6884b75ecd68ce30e2433f0e41d98ba14797e1ee94629aa1302fb49d4be004d0",
+          "title": "SessionRecordManager > isolates concurrent scoped recorders without cross-talk",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/game_lifecycle.test.ts",
+      "to": "backend/tests/integration/filesystem/runner-recording-lifecycle.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Actual runner scope with mocked cycle errors and native finalization writes: partial replay closure, persistence/primary error ordering and active-recorder release are causally asserted. Keep restores/afterEach and writer fixture whole.",
+      "originalSha256": "4b2d2286f1600d6a9ff23e25c38b37670f0ed3dcfe71464949bd844dd655db61",
+      "candidateSha256": "446657ffe95d131dc164bba8186f0bc62a3e89af9a85fdd52446ae2e549b442b",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1061,
+          "end": 1096,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "start": 960,
+          "end": 989,
+          "original": "../../src/runtime/game_runner",
+          "value": "../../../src/runtime/game_runner",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/game_runner.ts",
+          "expectedResolved": "backend/src/runtime/game_runner.ts"
+        },
+        {
+          "start": 889,
+          "end": 932,
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "value": "../../../src/runtime/config/resolve_game_setup",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts"
+        },
+        {
+          "start": 803,
+          "end": 846,
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "value": "../../../src/runtime/config/resolve_game_setup",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts"
+        },
+        {
+          "start": 729,
+          "end": 766,
+          "original": "../../src/recording/recording_context",
+          "value": "../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "start": 660,
+          "end": 690,
+          "original": "../../src/recording/file_store",
+          "value": "../../../src/recording/file_store",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/recording/file_store.ts",
+          "expectedResolved": "backend/src/recording/file_store.ts"
+        },
+        {
+          "start": 589,
+          "end": 624,
+          "original": "../../src/game/engine/phase_manager",
+          "value": "../../../src/game/engine/phase_manager",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/engine/phase_manager.ts",
+          "expectedResolved": "backend/src/game/engine/phase_manager.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "581520a6a3339ec2b128d0c08d0e1e2359413d46b4c65aa38d1b1205dbbe6c6a",
+          "title": "a failed game seals its partial replay and releases the active recorder",
+          "occurrence": 1
+        },
+        {
+          "id": "6bd8b0e9f5b4065ea6c9118dc1380d17f4385db2a5dcf416eadfb1585042bf52",
+          "title": "failure to persist the final replay rejects the game result",
+          "occurrence": 1
+        },
+        {
+          "id": "95d7db83c7b836f15c489eedb765ac3b4adaae0766e5a80ac94e2d44208dbed8",
+          "title": "a finalization failure does not hide the original game error",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/runner_execution_dependencies.test.ts",
+      "to": "backend/tests/integration/agents/runtime/runner-dependency-closure.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Actual runner and saved termination with injected selected-deadline/closed observers. Literal drained SDK snapshot, primary/cleanup errors and model-turn-not-open counters form one dependency-lifecycle boundary, not a full successful game.",
+      "originalSha256": "8aa49e1b23f86e5b515ad42b78be557d6aa3dd01d8dfe696bdd68aee298e7e55",
+      "candidateSha256": "be11e83e3005f4083dfc3ad31070dfec40c20772cd24848d4da9b2a2fbea2e36",
+      "moduleAndLocationEdits": [
+        {
+          "start": 911,
+          "end": 946,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "start": 819,
+          "end": 867,
+          "original": "../../src/runtime/simulation/replay_reproduction",
+          "value": "../../../../src/runtime/simulation/replay_reproduction",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "expectedResolved": "backend/src/runtime/simulation/replay_reproduction.ts"
+        },
+        {
+          "start": 745,
+          "end": 782,
+          "original": "../../src/runtime/config/parse_config",
+          "value": "../../../../src/runtime/config/parse_config",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts"
+        },
+        {
+          "start": 663,
+          "end": 706,
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "value": "../../../../src/runtime/config/resolve_game_setup",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts"
+        },
+        {
+          "start": 597,
+          "end": 626,
+          "original": "../../src/runtime/game_runner",
+          "value": "../../../../src/runtime/game_runner",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/game_runner.ts",
+          "expectedResolved": "backend/src/runtime/game_runner.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "4e3e19b4549e530ea461d4462b17caaa343f72414df91c6f919c5687d78f0243",
+          "title": "runner reports one detached closed snapshot after actions and schedulers drain",
+          "occurrence": 1
+        },
+        {
+          "id": "1fa33dec3f30b8cc433b165148014260f85eb6a5418ad36f58db9284bce57045",
+          "title": "runner preserves selector failure plus closed observer failure in both thrown result and persisted termination",
+          "occurrence": 1
+        },
+        {
+          "id": "afd3a22bfafa5de84ea2d5865173dd7900accad80d607bd2046532208451a638",
+          "title": "nonfinite selected deadline fails before opening a model turn and still closes the runtime",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
     }
   ],
   "counts": {
-    "sourceFiles": 416,
-    "targetFiles": 421,
-    "mappingEntries": 421,
-    "baselineCases": 4713,
+    "sourceFiles": 419,
+    "targetFiles": 424,
+    "mappingEntries": 424,
+    "baselineCases": 4729,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
