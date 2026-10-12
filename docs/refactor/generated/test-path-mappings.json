@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "a828601d09710658dd93a0bb2a7a61e9de975df1",
+  "observedSourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -46947,13 +46947,247 @@
       "targetRunner": "backend-scenarios",
       "selectedCaseStatementsAndHelpersPreserved": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/config/finite_preset_closure.test.ts",
+      "to": "backend/tests/integration/cli/finite-preset-validation.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Real checkConfig reads a temporary public runtime/game/board tree; literal finite-preset rejection codes must match direct bootstrap.",
+      "originalSha256": "59a92dfc042d57264e89a2456ec3b2202e17e2c7813dd06cbb56688c69860256",
+      "candidateSha256": "4ab523b25f7b6311893ac50ac198ca78df0c96d62162ee0986bcd1642db9e937",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1813,
+          "end": 1845,
+          "value": "../../../../configs.example/boards/",
+          "kind": "location-url-head",
+          "original": "../../../configs.example/boards/",
+          "originalResolved": "configs.example/boards/"
+        },
+        {
+          "start": 912,
+          "end": 947,
+          "value": "../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 834,
+          "end": 868,
+          "value": "../../../src/runtime/cli/check_config",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/cli/check_config",
+          "originalResolved": "backend/src/runtime/cli/check_config.ts",
+          "expectedResolved": "backend/src/runtime/cli/check_config.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 766,
+          "end": 802,
+          "value": "../../../src/runtime/config/error_codes",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/error_codes",
+          "originalResolved": "backend/src/runtime/config/error_codes.ts",
+          "expectedResolved": "backend/src/runtime/config/error_codes.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 688,
+          "end": 729,
+          "value": "../../../src/runtime/config/board_definition",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 597,
+          "end": 620,
+          "value": "../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [
+        {
+          "kind": "new-URL",
+          "originalExpression": "new URL(`../../../configs.example/boards/${id}.json`, import.meta.url)",
+          "anchor": "configs.example/boards/",
+          "currentHead": "../../../../configs.example/boards/"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "ca3d91da709e40450c35b389f9a9fe41e9ad9cf0ceb7928d880d42d33e474460",
+          "title": "mist_raven: config check and bootstrap reject the same unsupported combination",
+          "occurrence": 1
+        },
+        {
+          "id": "171a59e65dd780516c61c4506a43a2e70216c7c0c526c69f15b7168561d8ebb8",
+          "title": "trickster: config check and bootstrap reject the same unsupported combination",
+          "occurrence": 1
+        },
+        {
+          "id": "6c7f50b3029c779ac0a104f36d4768e58e83dc122fd972a0ed4a6f18ef690176",
+          "title": "scholar_mentor: config check and bootstrap reject the same unsupported combination",
+          "occurrence": 1
+        },
+        {
+          "id": "deb81d9db411288b8bd5826ef8bb8ca5f065bc591c0dc9e921400a92b30b4ac5",
+          "title": "time_consort: config check and bootstrap reject the same unsupported combination",
+          "occurrence": 1
+        },
+        {
+          "id": "0a8bc106b6c058a8758b4db8355fdd57fb57f7ae31549222696a85b1b7d85276",
+          "title": "wolf_sorcerer: config check and bootstrap reject the same unsupported combination",
+          "occurrence": 1
+        },
+        {
+          "id": "c23ed40186d5bca95a9bfd4c1971123ac1bd6f512f099d0ce2d0a6236ce5ed31",
+          "title": "magician: config check and bootstrap reject the same unsupported combination",
+          "occurrence": 1
+        },
+        {
+          "id": "38ca386797a2b53bf792d8a6e870d761f23aa161fae13677e3374e14dc045cea",
+          "title": "red_moon: config check and bootstrap reject the same unsupported combination",
+          "occurrence": 1
+        },
+        {
+          "id": "47610993c54b0a9185ddb883f30a61b29adedec3425e4fc92aa66d41ef6783a3",
+          "title": "nightmare: config check and bootstrap reject the same unsupported combination",
+          "occurrence": 1
+        },
+        {
+          "id": "76c4cafa7f3500e984a67cb1b4c101ac5a70c9bacdb6b978cae2b8c782b5be8c",
+          "title": "evil_knight: config check and bootstrap reject the same unsupported combination",
+          "occurrence": 1
+        },
+        {
+          "id": "ff4694d27801234b778b9df5e6ea98becad586f0d5571e99e7a4378234f8a29b",
+          "title": "pure_white: config check and bootstrap reject the same unsupported combination",
+          "occurrence": 1
+        },
+        {
+          "id": "bd510d12930862fecd97a0a27475aca46e3d32c5006245c2cb1927e6096367f3",
+          "title": "demon_hunter: config check and bootstrap reject the same unsupported combination",
+          "occurrence": 1
+        },
+        {
+          "id": "3fc80590681107cfc4eedc7919a8d1906f54277fd5fead45351f988a88eba066",
+          "title": "ghost_bride: config check and bootstrap reject the same unsupported combination",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/config_failure_safety.test.ts",
+      "to": "backend/tests/integration/cli/config-publication-failures.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Actual filesystem migration publication/race/rollback plus config CLI children; exact original bytes/backups and error identities own the primary boundary.",
+      "originalSha256": "62713e174df8c4d46f27ac28e553d40ada1ba0bd594eb4cf73021287807a5bb6",
+      "candidateSha256": "77df61155ae80b3d465ce90bc1c19cffe5b8ec05770e52f7ca8d6f88da71da51",
+      "moduleAndLocationEdits": [
+        {
+          "start": 4995,
+          "end": 5032,
+          "value": "../../../src/runtime/cli/check_config.ts",
+          "kind": "location-directory-prefix",
+          "original": "../../src/runtime/cli/check_config.ts",
+          "originalResolved": "backend/src/runtime/cli/check_config.ts"
+        },
+        {
+          "start": 859,
+          "end": 894,
+          "value": "../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 781,
+          "end": 815,
+          "value": "../../../src/runtime/cli/check_config",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/cli/check_config",
+          "originalResolved": "backend/src/runtime/cli/check_config.ts",
+          "expectedResolved": "backend/src/runtime/cli/check_config.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 703,
+          "end": 744,
+          "value": "../../../src/runtime/config/board_definition",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 622,
+          "end": 659,
+          "value": "../../../src/runtime/cli/migrate_configs",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/cli/migrate_configs",
+          "originalResolved": "backend/src/runtime/cli/migrate_configs.ts",
+          "expectedResolved": "backend/src/runtime/cli/migrate_configs.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [
+        {
+          "kind": "directory-anchor",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../src/runtime/cli/check_config.ts\")",
+          "anchor": "backend/src/runtime/cli/check_config.ts",
+          "currentHead": "../../../src/runtime/cli/check_config.ts"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "649449f90a67fb2ee723fbdd53e51884add78dd7e3f3e629483ff082804fafb5",
+          "title": "exclusive migration preserves a competing target created after the initial check",
+          "occurrence": 1
+        },
+        {
+          "id": "3f8d55c37e988f864e7fc1d02af7a3079e4f6ac90904571c6fe8ad3fe143282f",
+          "title": "single-source migration keeps the original and aggregates publication and rollback errors",
+          "occurrence": 1
+        },
+        {
+          "id": "ff9ef98b65f979c98cdbbbab6c549e71bb072f9495704cae5f8b3724c9bfb238",
+          "title": "a failed later board publication restores earlier boards and retains backups",
+          "occurrence": 1
+        },
+        {
+          "id": "271eb285640df54cd406ffca4e436a0133cc6d1857fc29954bcfa9bc41dff253",
+          "title": "configuration CLI preserves safe locations and never prints raw provider JSON",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 388,
-    "targetFiles": 393,
-    "mappingEntries": 393,
-    "baselineCases": 4614,
+    "sourceFiles": 390,
+    "targetFiles": 395,
+    "mappingEntries": 395,
+    "baselineCases": 4630,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

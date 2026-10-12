@@ -1,21 +1,20 @@
 /**
- * Configuration integration verify public config-check and bootstrap agree on unsupported finite combinations.
- * Input: Literal malformed board variants and a temporary public config tree.
- * Output and independent oracle: Same declared rejection codes/paths at both entrances; no model or complete game is run.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Configuration integration tests verify the public config checker and bootstrap reject the same unsupported finite presets.
+ * Input: The original twelve malformed board combinations and temporary public config files.
+ * Output and oracle: Literal diagnostic codes and paths agree at the two entrances; no game cycle or provider request is executed.
  */
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { bootstrapGame } from "../../src/app/bootstrap";
+import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   parseBoardDefinition,
   type BoardDefinition,
-} from "../../src/runtime/config/board_definition";
-import { configDiagnostic } from "../../src/runtime/config/error_codes";
-import { checkConfig } from "../../src/runtime/cli/check_config";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+} from "../../../src/runtime/config/board_definition";
+import { configDiagnostic } from "../../../src/runtime/config/error_codes";
+import { checkConfig } from "../../../src/runtime/cli/check_config";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const cases = [
   ["awa_mist_raven_12_v1", "mist_raven"],
@@ -35,7 +34,7 @@ const cases = [
 for (const [id, preset] of cases) {
   test(`${preset}: config check and bootstrap reject the same unsupported combination`, async () => {
     const raw: BoardDefinition = JSON.parse(
-      readFileSync(new URL(`../../../configs.example/boards/${id}.json`, import.meta.url), "utf8"),
+      readFileSync(new URL(`../../../../configs.example/boards/${id}.json`, import.meta.url), "utf8"),
     );
     const config = parseBoardDefinition(raw).config;
     expect(() => bootstrapGame(config)).not.toThrow();

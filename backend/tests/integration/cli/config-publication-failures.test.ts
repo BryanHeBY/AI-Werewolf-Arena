@@ -1,16 +1,15 @@
 /**
- * Filesystem migration failure integration verify exclusive config publication and rollback preserve competing inputs.
- * Input: Temporary source/target files, injected write/restore races and migration CLI children.
- * Output and independent oracle: Original file bytes/backups plus exact primary/rollback error identities; no real user configuration is changed.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * CLI and filesystem integration tests verify exclusive configuration publication, rollback and child-process failures.
+ * Input: Temporary board files, injected publication/restore races and the real public config-check entry point.
+ * Output and oracle: Original competing file bytes, backup contents and exact primary/rollback errors remain intact; user configuration is never changed.
  */
 import { expect, test, spyOn } from "bun:test";
 import * as fs from "node:fs/promises";
 import path from "node:path";
-import { migrateBoardSource, migrateBoards } from "../../src/runtime/cli/migrate_configs";
-import { BoardConfigurationError } from "../../src/runtime/config/board_definition";
-import { configDiagnostic } from "../../src/runtime/cli/check_config";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+import { migrateBoardSource, migrateBoards } from "../../../src/runtime/cli/migrate_configs";
+import { BoardConfigurationError } from "../../../src/runtime/config/board_definition";
+import { configDiagnostic } from "../../../src/runtime/cli/check_config";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 test("exclusive migration preserves a competing target created after the initial check", async () => {
   const root = await createTestTempDirectory("awa-migration-race-");
@@ -110,7 +109,7 @@ test("configuration CLI preserves safe locations and never prints raw provider J
     path.join(root, "runtime/providers.json"),
     '{"key":"PRIVATE_SECRET_FRAGMENT",INVALID}',
   );
-  const command = path.resolve(import.meta.dir, "../../src/runtime/cli/check_config.ts");
+  const command = path.resolve(import.meta.dir, "../../../src/runtime/cli/check_config.ts");
   const run = async (args: string[]) => {
     const process = Bun.spawn([Bun.env.BUN_RUNTIME_EXECUTABLE ?? "bun", command, ...args], {
       stdout: "pipe",
