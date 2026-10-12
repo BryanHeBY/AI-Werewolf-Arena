@@ -66950,13 +66950,489 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mechanical_configuration.test.ts",
+      "to": "backend/tests/unit/configuration/mechanical-composition.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "602c36757e9c57b49687135765b4c13d0380ef83ac7651a26166bf1f2b3b3ae4",
+      "candidateSha256": "8b3bddcb05e5f5b3e249c8de86fa268c4fb75312989595614e90e6434c41e010",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 414,
+          "end": 450,
+          "original": "../../src/runtime/config/error_codes",
+          "value": "../../../src/runtime/config/error_codes",
+          "originalResolved": "backend/src/runtime/config/error_codes.ts",
+          "expectedResolved": "backend/src/runtime/config/error_codes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 335,
+          "end": 377,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 282,
+          "end": 296,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 198,
+          "end": 239,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 102,
+          "end": 125,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b7fee23a9ffed11a793a8447e52462f0a2a63d90b0981bed3c3b656028a4132a",
+          "title": "fragrant_phantom: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "ae7f27e9646874f64ada209279789dbdff814519e633a4e17b4a445e4af3e18c",
+          "title": "awakened_seer: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "0d0bd655b8a8fce0d8896b14ce9f0b5e6e944573d1d5cf54e8816b683cb5da3d",
+          "title": "night_noble: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "1058ee912dfd202826a54fc5694aa6392db500e670ac6cdc75aaf6831d65e276",
+          "title": "awakened_idiot: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "329848b68def665c0cf381104a8b8dac40115d084bcbf496cd01eae061412a15",
+          "title": "radiant_count: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "66c9b97727bc3dd36efd210abb44d12d317199e89a04209e56d8586152b79798",
+          "title": "eclipse_maid: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "b7d9089db9da851cfcd95c451ab65636c3015b5a01e15440e6d82e3bc33f8c5c",
+          "title": "alchemist: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "83b134e52d1c235163419eeea8541cf21567453628550eb147d3e66e1c707047",
+          "title": "raven_claw_wolf: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "5f2fa685558f0645b4ad20c11eac2fb69cedac07734b14dfbf550cea8c5597dc",
+          "title": "wolf_king: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "e9bacf2ce87fd4074bc27f08e5ae7ecb20c9e7f38ba2934662b5904103afa03d",
+          "title": "white_wolf_king: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "445ac2ad512266e5cb4b86c0fd10a49cf8511e2299fb162c101751a51d030175",
+          "title": "knight: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "e87303251a68b877d0f813b2f856416eab26729f17415ef24d3c36b4472f34d9",
+          "title": "gravekeeper: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "f7e93b1e914c9691888f79dd76b19fd993f8b7e9af3bad96f6fa80ce7c670b5e",
+          "title": "dreamer: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "28449c2c28f5625d4d690d7ac2b4b1137f1ba8e9440b4abf4031161d92704689",
+          "title": "wolf_beauty: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "4cceac046244ffdf804c06ce6a0c8c05ee9b7d18b0869051a07e9d5519feba67",
+          "title": "bear: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "02c4791c01fc63abf4180e08a127d888365561de75d9a6bb2901285e2f826356",
+          "title": "white_cat: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "de0b61aabea47a114db622939786cb15b4ae063805ef791a64548b82bc87b4f4",
+          "title": "fox_cub: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "1ccfb5daaf6c8ff055acaf6492b8f7779669cdff321c14d819f8ed2d68723fab",
+          "title": "pufferfish: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "63f4414441aa54a8ee1251b05c3021b016606644b3402ef0eb11c69f1698fde6",
+          "title": "cursed_fox: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "a2172daf59099f6d270345bbeb0b67f2c990bef2e4a15cb984384f11a53aed4f",
+          "title": "cupid: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "c54452047a72263d45ccd868b71bed6f8cdc679d550e8ab04a653ae307b372b6",
+          "title": "debater: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "0799984c01cc0141fe95eadfd10c53ff1ccb22c2cee2310182a61bc4c7ead70d",
+          "title": "thief: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "9d85749510e298014b5e2bd730787e9c145743ae22235453253fd83b3650e691",
+          "title": "shapeshifter: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "55ef3a71b55679c70489fec1ff71a3132929b5dbc4051aaff3c5ca94c8eec640",
+          "title": "wild_child: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "4ac92cde1d154a2aa3bee7c9583129c5e5e1d76b79b07d0a2c9156b619a8cad7",
+          "title": "lonely_girl: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "69fa7d04f362b4387a8ab13b25875c1d6d7f9d6d72cef0c789290710c5acfb57",
+          "title": "demon_hunter: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "91322000c0dd672759bd0acd327748ba61e6831b3cbd74c846075495c2a91dd5",
+          "title": "pure_white_girl: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "7630d8e4b1f80aec80856ed23a910ce413d608a4a76d930fb8f1dfbe0b5351bc",
+          "title": "wolf_witch: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "665ad1db8d8a02cf992394bf026ffc3c1f3578edb6a6f2e4b2f7f0c7c4bd89e0",
+          "title": "evil_knight: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "ef5df00eb099ace383829018f53f537c74e5844753ad250352d8c7c8341ec3cc",
+          "title": "nightmare: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "f94edbcabde24adb792732d082034d3233bd0e7efe190858d1f5252233ae71a3",
+          "title": "red_moon_apostle: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "6576bc3081f510dccab8d6dc066d36ffe910b970430fcd7166a1183238561659",
+          "title": "day_scholar: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "76619b88ee7deccf67439bcbe4a071d0634a41528924ead958a51f4be4da039f",
+          "title": "night_mentor: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "44cf873bdea597b65f135a8ce6541e66d3fbe5848c2bbcfb74e190de396119dd",
+          "title": "time_wolf_consort: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "4e9f7e763bb9fd6cae37c90f90ec8c706b987b9a3199373ea59334cc7520a2fa",
+          "title": "wolf_sorcerer: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "e3b526c86a36e785eed222320ff3784b955d24f25302bece08dd392b1255c9aa",
+          "title": "trickster: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "c12dc807a83fca2244df18827648f47aa2d6847545532b7245d9aff08cc02339",
+          "title": "order_prince: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "9b0c54428494ce1a8ad32ebfdc6c1d095435f6ef984a240b5100fbb820918371",
+          "title": "magician: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "82ae5b722492f73af2347704b1509079dade9f9a5c9470e549d62caf1cfdade3",
+          "title": "ghost_bride: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "2142dce9a2370396ba6a7641e7023772d992fb7c967996d372f140b30ede7be8",
+          "title": "hidden_wolf: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "36c1514c193ca06566dfa07b26b2db4ab66209cac488ddb416723ce27295b531",
+          "title": "gargoyle: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "b8bad4429d2b50ba20215239d08581d871298767b7f97fc5f85ae7b9a00d8de6",
+          "title": "mirror_girl: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "1c48a0563ae1262728e6aeaf4d9da47985b2615ce75dc1ef84e02871b81831db",
+          "title": "awakened_hidden_wolf: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "5a65c5ba9e41692d8f0a9c3b038d67c64e720c2d5f340806e2bc205ce315fc3f",
+          "title": "miracle_merchant: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "77a83e9a9c93fdf696293c15a10d139252b514ef1cba28923a4cf5ea31289936",
+          "title": "black_market_merchant: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "f132579bf99f58cb3a3869885df1a2e98b4a60b0be44ea97f31a3de6b3000083",
+          "title": "hybrid: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "aad8a19fd05071f6fcf9534e409a283e35c82b2f921b4e9061d5ccdba6657454",
+          "title": "seer: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "01dccc94078f6e32712cb66175e75a1597ec64a3c8214a78ea06e67e5c3425fe",
+          "title": "idiot: parse and direct bootstrap reject a board outside mechanical learning scope before play",
+          "occurrence": 1
+        },
+        {
+          "id": "19fdc3f6c6b75e868471f6af8906970e7d579a96a2a785f5b55c0d52d8d1a715",
+          "title": "both entrypoints enforce one native mechanical wolf",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/load_board_definition",
+          "originalImport": "import { loadBoardDefinition } from \"../../src/runtime/config/load_board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "loadBoardDefinition",
+              "imported": "loadBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mechanical_configuration.test.ts",
+      "to": "backend/tests/integration/filesystem/configuration/mechanical-examples.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "602c36757e9c57b49687135765b4c13d0380ef83ac7651a26166bf1f2b3b3ae4",
+      "candidateSha256": "bc5a87568173bf23796276766d7489a0f9664f5485771dd0499471630ba1c56b",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-directory-anchor",
+          "start": 621,
+          "end": 645,
+          "original": "../../../configs.example",
+          "value": "../../../../../configs.example",
+          "originalResolved": "configs.example"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 363,
+          "end": 377,
+          "original": "../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 292,
+          "end": 338,
+          "original": "../../src/runtime/config/load_board_definition",
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 211,
+          "end": 252,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 147,
+          "end": 170,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "configs.example",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../../configs.example\")",
+          "currentExpression": "path.resolve(import.meta.dir, \"../../../../../configs.example\")",
+          "currentHead": "../../../../../configs.example",
+          "kind": "public-directory-anchor"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "a7fb713a45bef614388823b28030b165f9db22620d1bdec74876efa982d9bf8f",
+          "title": "six_player_mechanical_wolf: public board and game examples load with the complete finite learning role set",
+          "occurrence": 1
+        },
+        {
+          "id": "0790852c3dcbc0fd719c7544b937e2ab73904c30ada0d3c380b4f58cfd2e6cdf",
+          "title": "twelve_player_mechanical_wolf: public board and game examples load with the complete finite learning role set",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  parseBoardDefinition,\n  boardDefinitionFromConfig,\n} from \"../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": "import { parseBoardDefinition } from \"../../src/runtime/config/board_definition\";",
+          "droppedBindings": [
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import { Role, type BoardConfig } from \"../../src/core\";",
+          "currentImportBeforeRebase": "import { Role } from \"../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "BoardConfig",
+              "imported": "BoardConfig",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/error_codes",
+          "originalImport": "import { configDiagnostic } from \"../../src/runtime/config/error_codes\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "configDiagnostic",
+              "imported": "configDiagnostic",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 515,
-    "targetFiles": 532,
-    "mappingEntries": 532,
-    "baselineCases": 6444,
+    "sourceFiles": 516,
+    "targetFiles": 534,
+    "mappingEntries": 534,
+    "baselineCases": 6495,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

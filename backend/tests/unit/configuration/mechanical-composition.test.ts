@@ -1,38 +1,18 @@
+/**
+ * Unit tests verify Mechanical Wolf count and finite learning scope reject unsupported board compositions before play.
+ * Input: Original Role-filtered unsupported-role matrix and duplicate count through public normalization and direct bootstrap.
+ * Output and oracle: Exact policy-specific diagnostic codes preserve the original assertions; no public example file, transport or complete game is loaded.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
-import { readFile } from "node:fs/promises";
-import { bootstrapGame } from "../../src/app/bootstrap";
+import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   parseBoardDefinition,
   boardDefinitionFromConfig,
-} from "../../src/runtime/config/board_definition";
-import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
-import { Role, type BoardConfig } from "../../src/core";
-import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
-import { configDiagnostic } from "../../src/runtime/config/error_codes";
-
-for (const id of ["six_player_mechanical_wolf", "twelve_player_mechanical_wolf"])
-  test(`${id}: public board and game examples load with the complete finite learning role set`, async () => {
-    const root = path.resolve(import.meta.dir, "../../../configs.example"),
-      board = await loadBoardDefinition(root, id);
-    expect(board.config.boardSize).toBe(id.startsWith("six") ? 6 : 12);
-    expect(board.config.roleSetups.find((s) => s.role === Role.MechanicalWolf)?.count).toBe(1);
-    expect(board.definition.roles.mechanical_wolf).toEqual({});
-    expect(JSON.parse(await readFile(path.join(root, "games", `${id}.json`), "utf8")).board).toBe(
-      id,
-    );
-    expect(() => bootstrapGame(board.config)).not.toThrow();
-    for (const value of [
-      { skill: "guard" },
-      { mode: "kill" },
-      { recognizePack: true },
-      { arbitrary: 1 },
-    ]) {
-      const invalid = structuredClone(board.definition);
-      invalid.roles.mechanical_wolf = value;
-      expect(() => parseBoardDefinition(invalid)).toThrow("board_config_invalid_field");
-    }
-  });
+} from "../../../src/runtime/config/board_definition";
+import { Role, type BoardConfig } from "../../../src/core";
+import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { configDiagnostic } from "../../../src/runtime/config/error_codes";
 
 for (const unsupported of Object.values(Role).filter(
   (role) =>

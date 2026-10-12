@@ -217,3 +217,5 @@
 - C12 mixed5c player-agent-factory：1原file→2targets/7旧IDs按实际层分配；mixed5c overall5→10/97IDs、19callbacks=11raw+8path spans、7helper/55relative/10heads0、64unused public modules删0必需setup丢失，独立actualGit/物理路径/语法/单一case分配审通过。原source WIP类型红保留，Root一次combined18有限项目actualexit0，不重复测试/HTTP/ACP/CLI/game。caseSplit/selectedprogram与loadset裁剪分开证明，不称wholefile/evalorder等价；mapping现514source/530target/6429IDs。
 
 - C12 mixed5c agent-log-flags：1原file→2targets/15旧IDs按实际层分配；mixed5c overall5→10/97IDs、19callbacks=11raw+8path spans、7helper/55relative/10heads0、64unused public modules删0必需setup丢失，独立actualGit/物理路径/语法/单一case分配审通过。原source WIP类型红保留，Root一次combined18有限项目actualexit0，不重复测试/HTTP/ACP/CLI/game。caseSplit/selectedprogram与loadset裁剪分开证明，不称wholefile/evalorder等价；mapping现515source/532target/6444IDs。
+
+- C12 mixed5c mechanical-configuration：1原file→2targets/51旧IDs按实际层分配；mixed5c overall5→10/97IDs、19callbacks=11raw+8path spans、7helper/55relative/10heads0、64unused public modules删0必需setup丢失，独立actualGit/物理路径/语法/单一case分配审通过。原source WIP类型红保留，Root一次combined18有限项目actualexit0，不重复测试/HTTP/ACP/CLI/game。caseSplit/selectedprogram与loadset裁剪分开证明，不称wholefile/evalorder等价；mapping现516source/534target/6495IDs。
