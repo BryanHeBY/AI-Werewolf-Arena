@@ -10,6 +10,8 @@
  * normal completion retains both inner and outer abort and pending-object order.
  * Time Consort and Scholar/Mentor keep separate currentness checks and repeated
  * terminal reads; frame authority alone decides whether a closed night may restart.
+ * Exchange-family terminal ports retain separate normal/finally sites. Trickster
+ * finish keeps the Day exile mapping open and has no new outer-cycle abort.
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bindBoardParameters } from "../../rulesets/board-parameters";
@@ -27,15 +29,9 @@ import { assertMistRosterCurrent, mistNightTerminal } from "../mechanisms/roles/
 import { MistPendingNight } from "../mechanisms/roles/mist_raven/pending_night";
 import { decideSnake } from "../mechanisms/roles/mist_raven/snake_window";
 import { timeConsortNightTerminal } from "../mechanisms/roles/time_wolf_consort/ports";
-import {
-  closeWolfSorcererNight,
-  abortWolfSorcererNight,
-} from "../mechanisms/roles/wolf_sorcerer/night_frame";
-import {
-  finishTricksterNight,
-  abortTricksterNight,
-} from "../mechanisms/roles/trickster/night_frame";
-import { abortMagicianNight, closeMagicianNight } from "../mechanisms/roles/magician/night_frame";
+import { wolfSorcererNightTerminal } from "../mechanisms/roles/wolf_sorcerer/ports";
+import { tricksterNightTerminal } from "../mechanisms/roles/trickster/ports";
+import { magicianNightTerminal } from "../mechanisms/roles/magician/ports";
 import {
   demonRedMoonExpiry,
   commitDemonRedMoonTransition,
@@ -402,8 +398,8 @@ export class PhaseManager {
       }
       if (this.config.timeConsort) timeConsortNightTerminal.abort(this.world);
       if (this.config.scholarMentor) scholarMentorNightTerminal.abort(this.world);
-      if (this.config.wolfSorcerer) abortWolfSorcererNight(this.world);
-      if (this.config.magician) abortMagicianNight(this.world);
+      if (this.config.wolfSorcerer) wolfSorcererNightTerminal.abort(this.world);
+      if (this.config.magician) magicianNightTerminal.abort(this.world);
     }
   }
 
@@ -980,10 +976,12 @@ export class PhaseManager {
               : {}),
           },
         );
-        if (this.config.trickster && dayIsCurrent()) finishTricksterNight(this.world, cycleDay);
+        if (this.config.trickster && dayIsCurrent())
+          tricksterNightTerminal.finishNormally(this.world, cycleDay);
         if (this.config.wolfSorcerer && dayIsCurrent())
-          closeWolfSorcererNight(this.world, cycleDay);
-        if (this.config.magician && dayIsCurrent()) closeMagicianNight(this.world, cycleDay);
+          wolfSorcererNightTerminal.closeNormally(this.world, cycleDay);
+        if (this.config.magician && dayIsCurrent())
+          magicianNightTerminal.closeNormally(this.world, cycleDay);
         if (this.config.timeConsort && dayIsCurrent())
           timeConsortNightTerminal.closeNormally(this.world, cycleDay);
         if (this.config.scholarMentor && dayIsCurrent())
@@ -992,9 +990,9 @@ export class PhaseManager {
           mistNightTerminal.closeNormally(this.world, cycleDay);
       } finally {
         if (this.config.mistRaven) mistNightTerminal.abort(this.world);
-        if (this.config.trickster) abortTricksterNight(this.world);
-        if (this.config.wolfSorcerer) abortWolfSorcererNight(this.world);
-        if (this.config.magician) abortMagicianNight(this.world);
+        if (this.config.trickster) tricksterNightTerminal.abort(this.world);
+        if (this.config.wolfSorcerer) wolfSorcererNightTerminal.abort(this.world);
+        if (this.config.magician) magicianNightTerminal.abort(this.world);
         if (this.config.timeConsort) timeConsortNightTerminal.abort(this.world);
         if (this.config.scholarMentor) scholarMentorNightTerminal.abort(this.world);
       }

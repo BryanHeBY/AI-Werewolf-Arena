@@ -15,6 +15,8 @@
  * handoff remains earlier, and configured failure cleanup does not require acquisition.
  * Time Consort and Scholar/Mentor retain stage-owned priority-50 opening; their
  * concrete units only own the original late cleanup transfer and failure abort.
+ * The three exchange families keep one Magician-configured transfer value; their
+ * original configured cleanup branches read its shared ownership before World.
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bindBoardParameters } from "../../../rulesets/board-parameters";
@@ -62,15 +64,17 @@ import {
 } from "../../mechanisms/roles/time_wolf_consort/ports";
 import {
   assertWolfSorcererRosterCurrent,
-  abortWolfSorcererNight,
-} from "../../mechanisms/roles/wolf_sorcerer/night_frame";
+  WolfSorcererNightUnit,
+} from "../../mechanisms/roles/wolf_sorcerer/ports";
 import {
   assertTricksterRosterCurrent,
-  abortTricksterNight,
-} from "../../mechanisms/roles/trickster/night_frame";
-import { assertMagicianRosterCurrent } from "../../mechanisms/roles/magician/night_frame";
-import { isMagicianBoard } from "../../mechanisms/roles/magician/night_frame";
-import { abortMagicianNight } from "../../mechanisms/roles/magician/night_frame";
+  TricksterNightUnit,
+} from "../../mechanisms/roles/trickster/ports";
+import {
+  assertMagicianRosterCurrent,
+  isMagicianBoard,
+  MagicianNightUnit,
+} from "../../mechanisms/roles/magician/ports";
 import { isRedMoonBoard } from "../../mechanisms/roles/demon_hunter/authority";
 import {
   assertNightmareRosterCurrent,
@@ -270,7 +274,27 @@ export class NightPipeline {
     const closeThiefNight = openInitialIdentityNight(this.world, day);
     const ownsWedding = weddingSetup(this.world) !== null;
     const ownsDemon = demonHunterActorId(this.world) !== null;
-    let magicianHandedOff = false;
+    const magicianNight = new MagicianNightUnit({
+      get world() {
+        return pipeline.world;
+      },
+    });
+    const wolfSorcererNight = new WolfSorcererNightUnit(
+      {
+        get world() {
+          return pipeline.world;
+        },
+      },
+      magicianNight.cleanupOwnership,
+    );
+    const tricksterNight = new TricksterNightUnit(
+      {
+        get world() {
+          return pipeline.world;
+        },
+      },
+      magicianNight.cleanupOwnership,
+    );
     const timeConsortNight = new TimeConsortNightUnit({
       get world() {
         return pipeline.world;
@@ -679,7 +703,7 @@ export class NightPipeline {
       if (ownsNoble) nobleNight.transferToManager();
       weddingHandedOff = ownsWedding;
       demonHandedOff = ownsDemon;
-      magicianHandedOff = config.magician !== undefined;
+      magicianNight.transferToManager(config.magician !== undefined);
       timeConsortNight.transferToManager(config.timeConsort !== undefined);
       scholarMentorNight.transferToManager(config.scholarMentor !== undefined);
       mistNight.transferToManager(ownsMist);
@@ -705,9 +729,9 @@ export class NightPipeline {
       nobleNight.abortIfOwned();
       radiantNight.abortIfAcquired();
       if (ownsMist) mistNight.abortIfOwned();
-      if (config.trickster && !magicianHandedOff) abortTricksterNight(this.world);
-      if (config.wolfSorcerer && !magicianHandedOff) abortWolfSorcererNight(this.world);
-      if (config.magician && !magicianHandedOff) abortMagicianNight(this.world);
+      if (config.trickster) tricksterNight.abortIfOwned();
+      if (config.wolfSorcerer) wolfSorcererNight.abortIfOwned();
+      if (config.magician) magicianNight.abortIfOwned();
       if (config.timeConsort) timeConsortNight.abortIfOwned();
       if (config.scholarMentor) scholarMentorNight.abortIfOwned();
       if (demonAcquired && !demonHandedOff) closeDemonHunterNight(this.world);
