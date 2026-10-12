@@ -674,3 +674,7 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 ## 2026-10-12 P9d 觉醒之夜实际运行候选
 
 贵族／觉醒愚者接入默认profile、公开四组合、严格请求及最早期限、真实猎魔清约／最终单源抵傷、actual死亡关闭、活人翻牌与strict speech；共享事实／知情提示及前端身份effect贯通。三组原反例复验关闭，新增backend64／1119断言及frontend5／32断言通过，受影响原生猎魔／赤月和既有基础回归通过，详见[运行切片](reviews/p9-noble-secret-body-runtime.md)。角色仍planned、正式48/64；立即接续独立录制／CP知识、完整实传／故障、观察／实际玩家前端及本板同源全量，不将本批当完整角色验收，不推送。
+
+## P9d 寻香识命基础接续
+
+固定夜序、唯一随机路径及知情／刀权发布契约提交ed27a6c；纯状态、知情journal及双目标原Alive／Role／独立Camp基础已迁入并三路复核，18项通过，见[基础审查](reviews/p9-fragrant-pair-state-foundation.md)。两角色仍planned，正式50/64不变；唯一World owner、独立双查能力／请求、绑定和完整死亡链及交付继续。
