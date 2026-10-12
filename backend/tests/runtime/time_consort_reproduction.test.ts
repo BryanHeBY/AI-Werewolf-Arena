@@ -1,3 +1,9 @@
+/**
+ * Time Consort recording/verifier scenarios verify reflection scope, resources and independent death causality.
+ * Input: Fixed native games, adopted scope policies and explicit record/inventory/death mutations.
+ * Output and independent oracle: Handwritten result/resource checkpoints and precise rejection of forged causal tapes.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { validateTimeConsortRecord } from "../../src/recording/time_consort_record";
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

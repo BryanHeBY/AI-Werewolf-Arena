@@ -1,3 +1,9 @@
+/**
+ * Failed-archive integration verify paid Radiant borrowed potion remains after abort without false disclosure.
+ * Input: The existing recording driver, controlled provider failure and real saved replay/checkpoints.
+ * Output and independent oracle: Literal paid stock, absent invented night facts and exact original failed archive fields.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";

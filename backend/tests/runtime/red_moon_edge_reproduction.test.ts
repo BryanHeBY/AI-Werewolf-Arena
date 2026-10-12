@@ -1,3 +1,9 @@
+/**
+ * Red Moon edge recording/verifier scenarios verify last-side death, delayed expiry and seal edge cases.
+ * Input: Fixed native scripts, both last-wolf policies/locales and independently mutated checkpoints.
+ * Output and independent oracle: Manual terminal/death/resource prefix and exact replay, with forged causal state rejected.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../src/app/bootstrap";

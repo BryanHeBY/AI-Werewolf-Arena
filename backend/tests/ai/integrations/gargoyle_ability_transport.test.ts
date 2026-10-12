@@ -1,3 +1,9 @@
+/**
+ * Real agent transport integration verify gifted Gargoyle inspection rules without changing a Villager identity.
+ * Input: Factory-created SDK/ACP agents, synthetic HTTP/child scripts and a bound inspection source.
+ * Output and independent oracle: Literal inspection prompt markers, original card identity, selected tool and reclaimed processes.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";

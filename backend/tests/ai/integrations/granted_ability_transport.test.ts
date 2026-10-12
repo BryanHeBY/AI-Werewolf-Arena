@@ -1,3 +1,9 @@
+/**
+ * Real agent transport integration verify bound granted inspection and exhausted Witch knife visibility.
+ * Input: Factory agents, synthetic model/child scripts and explicit granted/native ability state.
+ * Output and independent oracle: Literal source-bound actions, unknown exhausted-antidote knife prompt and unchanged identity; test-owned transports are closed.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import path from "node:path";

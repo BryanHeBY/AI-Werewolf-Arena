@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify positive and quiet Bear signals under limited knowledge.
+ * Input: Fixed observation seeds and existing Bear boards.
+ * Output and independent oracle: Actual positive/quiet skill coverage, natural results and exact complete-game replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
 import { simulateGames } from "../../src/runtime/simulation/simulate_games";

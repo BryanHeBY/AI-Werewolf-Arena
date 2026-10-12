@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Knight actual duels and accepted outcomes.
+ * Input: Existing boards, restricted player observations and fixed seed recordings.
+ * Output and independent oracle: Executed duel coverage, natural finish and exact original checkpoint replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
 import { simulateGames } from "../../src/runtime/simulation/simulate_games";

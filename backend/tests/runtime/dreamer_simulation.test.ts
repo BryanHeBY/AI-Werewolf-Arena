@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Dreamer actual actions and linked deaths.
+ * Input: Existing boards, restricted robot seeds and persisted complete games.
+ * Output and independent oracle: Literal dream skill coverage and exact strict replay without hidden World data in bot inputs.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
 import { simulateGames } from "../../src/runtime/simulation/simulate_games";

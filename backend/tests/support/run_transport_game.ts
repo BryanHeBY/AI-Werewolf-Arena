@@ -1,3 +1,9 @@
+/**
+ * Full-game transport test support verify own synthetic model HTTP, ACP children and real runner recording.
+ * Input: Supplied literal TransportGameScenario, transport kind/locale and per-player action scripts.
+ * Output and independent oracle: Outputs actual SDK/MCP traces, player/public archives and strict replay; handwritten prompt/terminal oracles stay separate from execution and fixture bytes are never rewritten.
+ * The driver owns its allocated recorder/transport lifetime; callers own expected rules and all production state writers remain unchanged.
+ */
 const transportDiagnostic = (...values: unknown[]) => {
   process.stderr.write(
     values.map((v) => (typeof v === "string" ? v : JSON.stringify(v))).join(" ") + "\n",

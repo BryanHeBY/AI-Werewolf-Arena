@@ -1,3 +1,9 @@
+/**
+ * Engine scenario tests verify Animal Dream actual cycles, death-unit expiry and Fox/Beauty interactions.
+ * Input: Fixed Animal rosters, explicit actions, policy variants and original-life replacements.
+ * Output and independent oracle: Handwritten life/badge/death order, cancelled knife/Beauty state and one-time expiry assertions.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { animalInternalConfig } from "../../support/features/animal-dream/builders/roster";

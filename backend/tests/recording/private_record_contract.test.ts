@@ -1,3 +1,9 @@
+/**
+ * Private-record parsing/writer integration verify explicit version conversion leaves user and tool content unchanged.
+ * Input: Legacy player views, nested malformed versions and actual round-recorder writes.
+ * Output and independent oracle: Literal metadata-only normalization, original text/events/results and versioned player JSON fields.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";

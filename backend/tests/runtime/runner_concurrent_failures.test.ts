@@ -1,3 +1,9 @@
+/**
+ * Concurrent runner failure integration verify drain/cancel/close preserve every original failure.
+ * Input: Held parallel actions, optional disk write failure and actual runner cleanup.
+ * Output and independent oracle: Literal close-once counters, original aggregate error identities and replayable accepted prefixes.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { readFile, readdir } from "node:fs/promises";

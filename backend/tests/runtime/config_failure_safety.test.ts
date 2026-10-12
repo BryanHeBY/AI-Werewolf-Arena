@@ -1,3 +1,9 @@
+/**
+ * Filesystem migration failure integration verify exclusive config publication and rollback preserve competing inputs.
+ * Input: Temporary source/target files, injected write/restore races and migration CLI children.
+ * Output and independent oracle: Original file bytes/backups plus exact primary/rollback error identities; no real user configuration is changed.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test, spyOn } from "bun:test";
 import * as fs from "node:fs/promises";
 import path from "node:path";

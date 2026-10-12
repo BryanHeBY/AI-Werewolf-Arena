@@ -1,3 +1,9 @@
+/**
+ * Display/CLI integration verify bilingual safe command failures and unchanged original content.
+ * Input: Actual local CLI children, literal observer payloads and temporary public configs.
+ * Output and independent oracle: Handwritten labels/error JSON/warning keys, role/tool text bytes and absence of private values in display.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

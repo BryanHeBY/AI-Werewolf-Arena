@@ -1,3 +1,9 @@
+/**
+ * Event recorder integration verify one-time persistence despite presenter failure and neutral gun stages.
+ * Input: Original World/events, temporary recorder and a throwing terminal presenter.
+ * Output and independent oracle: Literal cursor/record counts and same player shot stage while God retains native source identity.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { Phase } from "../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../src/app/bootstrap";

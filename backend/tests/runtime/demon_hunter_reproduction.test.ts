@@ -1,3 +1,9 @@
+/**
+ * Engine recording/replay scenarios verify complete and faulted Demon Hunter causal tapes.
+ * Input: Literal choices, fixed RNG, executed fault plans and real recorder/checkpoints.
+ * Output and independent oracle: Handwritten poison/hunt/terminal prefixes and rejection of forged fault labels or coherent archive mutants.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../src/app/bootstrap";

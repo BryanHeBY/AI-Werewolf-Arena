@@ -1,3 +1,9 @@
+/**
+ * Real transport failure scenarios verify Radiant borrowed/native choice failure boundaries.
+ * Input: Fixed feature scenarios, precise fail/cancel plans and synthetic SDK/ACP wires.
+ * Output and independent oracle: Manual stock/source/prefix assertions, expected refusals and no falsely committed night disclosure.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { assertRadiantTransportWire } from "../support/features/radiant-eclipse/oracles/wire";
 import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";

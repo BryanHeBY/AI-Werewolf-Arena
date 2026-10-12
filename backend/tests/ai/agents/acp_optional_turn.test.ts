@@ -1,3 +1,9 @@
+/**
+ * Agent/recording integration verify tool-less ACP completion for required versus optional turns.
+ * Input: Injected session/fallback callbacks, literal requests and temporary player records.
+ * Output and independent oracle: Required fallback versus optional null, session close counts and saved fallback entries.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { ActionWindow } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

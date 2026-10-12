@@ -1,3 +1,9 @@
+/**
+ * Wire-oracle unit tests verify future Noble owner state cannot enter an earlier prompt.
+ * Input: Handwritten three-turn feed/status fixtures and a valid future-state mutation.
+ * Output and independent oracle: Explicit current-prefix rejection, no production fold/projector or purported full game record.
+ * This boundary never substitutes an unrelated full game or production reducer for its explicit oracle.
+ */
 import { expect, test } from "bun:test";
 import {
   assertNobleTransportWire,

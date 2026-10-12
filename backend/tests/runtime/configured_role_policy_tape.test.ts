@@ -1,3 +1,9 @@
+/**
+ * Complete policy Tape scenarios verify configured inspection and death-action rules execute through real chains.
+ * Input: Public policy boards, explicit actions, original native sources and scoped recordings.
+ * Output and independent oracle: Literal eligible requests/death sequence and exact strict Tape for both locales.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { bootstrapGame } from "../../src/app/bootstrap";

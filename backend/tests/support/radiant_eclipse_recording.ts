@@ -1,3 +1,9 @@
+/**
+ * Radiant recording scenario support verify drive shelter/borrow/native plans and collect original checkpoints.
+ * Input: Declared board/policy/locale inputs, caller provider/failure hooks and temporary recorder.
+ * Output and independent oracle: Outputs actual records/events/replay evidence; original independent stock/death expectations are retained rather than recomputed from production projection.
+ * The driver owns its allocated recorder/transport lifetime; callers own expected rules and all production state writers remain unchanged.
+ */
 import { radiantFullPlans, type RadiantFullPlanName } from "./radiant_eclipse_full_plans";
 import { readFile, rm, mkdir, copyFile } from "node:fs/promises";
 import path from "node:path";

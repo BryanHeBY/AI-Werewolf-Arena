@@ -1,3 +1,9 @@
+/**
+ * Checkpoint verifier tests verify Animal CP0 baseline versus forged opening/ownership counters.
+ * Input: A real bootstrap checkpoint and explicit malformed record mutations.
+ * Output and independent oracle: Original zero counters, metadata camp/identity and causal opening rejection; no settled Fox action is invented.
+ * This boundary never substitutes an unrelated full game or production reducer for its explicit oracle.
+ */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../src/app/bootstrap";
 import { animalInternalConfig } from "../support/features/animal-dream/builders/roster";

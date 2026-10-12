@@ -1,3 +1,9 @@
+/**
+ * Wire-oracle unit tests verify Noble feed/schema/history calibration accepts only entitled knowledge.
+ * Input: Handwritten valid SDK/ACP feed fixtures and explicit missing/extra/currentness mutations.
+ * Output and independent oracle: Independent literal state/protocol markers and precise rejection errors; no model or World game executes.
+ * This boundary never substitutes an unrelated full game or production reducer for its explicit oracle.
+ */
 import { expect, test } from "bun:test";
 import {
   assertNobleTransportWire,

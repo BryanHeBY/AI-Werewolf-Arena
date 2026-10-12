@@ -1,3 +1,9 @@
+/**
+ * Fact/engine integration verify Demon Hunter God facts and limited owner knowledge.
+ * Input: Literal malformed fact DTOs plus actual first/second-night fixtures and scoped recording.
+ * Output and independent oracle: Exact God/owner field sets, zero accessor reads and manually expected source immunity visibility.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test, spyOn } from "bun:test";
 import {
   DEMON_HUNTER_POLICY,

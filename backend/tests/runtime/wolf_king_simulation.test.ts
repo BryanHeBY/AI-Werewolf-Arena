@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Wolf King original death shot is actually exercised.
+ * Input: Restricted-observation fixed seeds and original runtime records.
+ * Output and independent oracle: Real shot coverage, natural terminal state and exact strict reproduction.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
 import { simulateGames } from "../../src/runtime/simulation/simulate_games";

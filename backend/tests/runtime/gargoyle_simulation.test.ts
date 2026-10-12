@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Gargoyle copied skills and late knife without pack knowledge.
+ * Input: Fixed restricted-observation seeds and declared Gargoyle boards.
+ * Output and independent oracle: Independent identity/chat/knife checkpoints, natural outcomes and exact whole-game replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
 import { simulateGames } from "../../src/runtime/simulation/simulate_games";

@@ -1,3 +1,9 @@
+/**
+ * Real transport revocation scenarios verify replaced original Noble/Body life cancels outstanding requests.
+ * Input: Actual turn openings, controlled original-role/life replacement and late model responses.
+ * Output and independent oracle: No consumed/committed choice after revocation and original literal partial checkpoint/wire outcome.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, spyOn, test } from "bun:test";
 import {
   COMPONENT,

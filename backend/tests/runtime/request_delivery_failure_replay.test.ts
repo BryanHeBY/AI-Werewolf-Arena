@@ -1,3 +1,9 @@
+/**
+ * Delivery failure/replay integration verify revoked actual request records an error before settlement.
+ * Input: A bound real engine request, injected currentness failure and runner recording.
+ * Output and independent oracle: Literal decision_failed partial cycle, unchanged stock/no fake night result and exact replay without a synthetic replay clock.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test, spyOn } from "bun:test";
 import path from "node:path";
 import { readdir } from "node:fs/promises";

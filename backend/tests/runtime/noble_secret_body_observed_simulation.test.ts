@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Noble wolf/body policies and declared learned state.
+ * Input: Restricted DTO robots, fixed seeds, policy/style/locale variants and captured records.
+ * Output and independent oracle: Independent policy/resource/death membership checks and exact strict Tape replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";

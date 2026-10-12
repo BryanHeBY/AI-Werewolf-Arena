@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Hidden Wolf activation and late knife without pack chat.
+ * Input: Declared policy boards, fixed restricted-observation seeds and records.
+ * Output and independent oracle: Literal original-role/knife/chat conditions, natural finish and exact action replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
 import { simulateGames } from "../../src/runtime/simulation/simulate_games";

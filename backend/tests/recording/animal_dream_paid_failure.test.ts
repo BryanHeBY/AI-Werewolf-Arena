@@ -1,3 +1,9 @@
+/**
+ * Recording failure scenarios verify paid Fox/Puffer stock survives settlement recording failure.
+ * Input: Actual phase cycles, resource choices, failing recorder hooks and checkpoint snapshots.
+ * Output and independent oracle: Literal paid stock, stopped unit/night, no false publication and independently rejected archive mutants.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { createTestTempDirectory } from "../support/drivers/temp-directories";

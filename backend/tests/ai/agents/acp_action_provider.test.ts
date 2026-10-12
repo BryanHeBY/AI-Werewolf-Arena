@@ -1,3 +1,9 @@
+/**
+ * Agent/recording integration verify ACP turn recording, session-bound MCP submission and required-action fallback.
+ * Input: Stub ACP sessions, bootstrap requests, report callbacks and a temporary session directory.
+ * Output and independent oracle: Literal submit/report receipts, fallback counts and persisted player/audit JSON.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { describe, expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import * as path from "node:path";

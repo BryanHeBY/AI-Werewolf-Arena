@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Lonely Girl original admired relation and knowledge.
+ * Input: Twenty seeds per declared board/locale with restricted robot requests.
+ * Output and independent oracle: Literal relation/action coverage, natural recorded finish and strict Tape equality.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

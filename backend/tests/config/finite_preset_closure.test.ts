@@ -1,3 +1,9 @@
+/**
+ * Configuration integration verify public config-check and bootstrap agree on unsupported finite combinations.
+ * Input: Literal malformed board variants and a temporary public config tree.
+ * Output and independent oracle: Same declared rejection codes/paths at both entrances; no model or complete game is run.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";

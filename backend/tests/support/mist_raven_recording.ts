@@ -1,3 +1,9 @@
+/**
+ * Mist recording scenario support verify drive adopted timing policies and original explicit night actions.
+ * Input: Existing board/locale/action inputs, fixed RNG, scoped recorder and observer/failure callbacks.
+ * Output and independent oracle: Outputs actual archives, checkpoint snapshots and strict replay; original literal expected source/resource state is not generated from a role reducer.
+ * The driver owns its allocated recorder/transport lifetime; callers own expected rules and all production state writers remain unchanged.
+ */
 import { readFile, rm, mkdir, copyFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { bootstrapGame } from "../../src/app/bootstrap";

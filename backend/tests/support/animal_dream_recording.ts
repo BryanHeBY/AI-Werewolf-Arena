@@ -1,3 +1,9 @@
+/**
+ * Animal recording scenario support verify execute literal Animal plans and collect strict reproduction artifacts.
+ * Input: Original plan/locale/policy/failure-stage inputs, fixed role objects and scoped temporary recording.
+ * Output and independent oracle: Outputs actual events/checkpoints/files and replay result; animalGolden handwritten expectations remain the independent oracle, never regenerated.
+ * The driver owns its allocated recorder/transport lifetime; callers own expected rules and all production state writers remain unchanged.
+ */
 import { readFile } from "node:fs/promises";
 import { SessionRecordManager } from "../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../src/recording/recording_context";

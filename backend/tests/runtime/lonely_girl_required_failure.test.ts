@@ -1,3 +1,9 @@
+/**
+ * Runner failure/replay scenarios verify Lonely Girl failed required setup never switches a card.
+ * Input: Injected provider failures, real runner and partial recorder output.
+ * Output and independent oracle: No fallback/card swap, original state snapshots and exact accepted-prefix replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { promises as fs } from "node:fs";

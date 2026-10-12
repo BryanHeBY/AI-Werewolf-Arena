@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Ghost Bride full three-faction games under limited observations.
+ * Input: One hundred fixed robot seeds per locale and captured per-game archives.
+ * Output and independent oracle: Natural finish, explicit relationship/membership checks and strict replay of every record.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

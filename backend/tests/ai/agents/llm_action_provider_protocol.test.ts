@@ -1,3 +1,9 @@
+/**
+ * Native SDK protocol integration verify native tool callbacks, shared submit_action and corrective required-tool retry.
+ * Input: Mock tool-loop callbacks plus real synthetic loopback SDK responses and temporary records.
+ * Output and independent oracle: Literal callback arguments, turn-ID feedback, retry messages and final actions; the synthetic server is test-owned.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { describe, expect, test } from "bun:test";
 import { PotionType } from "../../../src/core";
 import { bootstrapGame } from "../../../src/app/bootstrap";

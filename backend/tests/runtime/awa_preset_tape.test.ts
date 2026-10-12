@@ -1,3 +1,9 @@
+/**
+ * Complete scripted Tape scenarios verify AWA election/exile PK and night badge choice together.
+ * Input: Public preset, fixed actions/RNG, both locales and real phase-manager records.
+ * Output and independent oracle: Handwritten election/death/badge sequence and exact strict replay, not generated golden replacement.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile } from "node:fs/promises";

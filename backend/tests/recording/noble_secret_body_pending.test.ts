@@ -1,3 +1,9 @@
+/**
+ * Live recording/replay integration verify pending Noble/Body decisions autosave an exact unresolved prefix.
+ * Input: Real bounded night requests, held provider completion and temporary archive writes.
+ * Output and independent oracle: Literal pending outcome, actor feed and accepted finalized Tape; provider return is not treated as domain settlement.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { readFile, writeFile, rm } from "node:fs/promises";
 import { createTestTempDirectory } from "../support/drivers/temp-directories";

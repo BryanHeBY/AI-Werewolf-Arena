@@ -1,3 +1,9 @@
+/**
+ * Agent runtime/recording integration verify separate native and gifted gun stock across both transports.
+ * Input: Bound native/gifted requests, synthetic SDK/ACP agents and temporary session records.
+ * Output and independent oracle: Literal per-source inventory, prompt boundaries, accepted action records and native child/MCP cleanup evidence.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";

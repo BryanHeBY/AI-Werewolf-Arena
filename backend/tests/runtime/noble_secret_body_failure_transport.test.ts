@@ -1,3 +1,9 @@
+/**
+ * Real transport failure scenarios verify Noble/Body required stages preserve exact failed prefixes.
+ * Input: Literal bind/protect failure plans and actual synthetic SDK/ACP runs.
+ * Output and independent oracle: Manual pending/paid state, no invented terminal action and matching wire/player/checkpoint evidence.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";

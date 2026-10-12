@@ -1,3 +1,9 @@
+/**
+ * Configuration contribution integration verify registered board fields round-trip and reach their runtime/prompt consumers.
+ * Input: Public example boards, explicit rule/window variants and temporary check inputs.
+ * Output and independent oracle: Literal registered/default field values, bilingual prompt markers and rejection of ownerless internal fields.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, spyOn, test } from "bun:test";
 import { readdir, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";

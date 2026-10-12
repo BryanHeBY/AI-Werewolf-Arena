@@ -1,3 +1,9 @@
+/**
+ * Complete badge Tape scenarios verify actual deceased-holder badge choice and reproduction.
+ * Input: Fixed scripts, original deaths/holder choices and scoped checkpoints.
+ * Output and independent oracle: Independent successor/destruction outcomes and exact strict replay of badge decisions.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { bootstrapGame } from "../../src/app/bootstrap";

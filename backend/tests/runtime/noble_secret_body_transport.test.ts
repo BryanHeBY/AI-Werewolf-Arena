@@ -1,3 +1,9 @@
+/**
+ * Complete real-transport scenarios verify Noble/Body death, expiry and cross-night player knowledge.
+ * Input: Literal named scenarios over synthetic SDK/ACP/mixed agents and both locales.
+ * Output and independent oracle: Independent terminal/death/badge goldens, handwritten knowledge anchors and actual serialized prefixes.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";

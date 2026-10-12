@@ -1,3 +1,9 @@
+/**
+ * Runner failure/replay scenarios verify Ghost Bride required provider failures close original setup.
+ * Input: Injected runtime errors/nulls, real game runner and recorded accepted prefixes.
+ * Output and independent oracle: Zero fallback/card swap, original identity/stock and exact partial Tape replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { promises as fs } from "node:fs";

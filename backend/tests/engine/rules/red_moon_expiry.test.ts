@@ -1,3 +1,9 @@
+/**
+ * Domain lifecycle tests verify Red Moon delayed expiry after the next source freeze.
+ * Input: Captured candidate World, next-night boundaries and prior ordinary damage.
+ * Output and independent oracle: One expiry at the permitted day, no duplicate death and explicit closed/wrong-night rejection.
+ * This boundary never substitutes an unrelated full game or production reducer for its explicit oracle.
+ */
 import { expect, test } from "bun:test";
 import { COMPONENT, type AliveComponent } from "../../../src/core";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";

@@ -1,3 +1,9 @@
+/**
+ * Archive verifier unit tests verify Red Moon serialized blast, sealed decisions and delayed expiry.
+ * Input: Handwritten causal record fragments and independently mutated event/checkpoint sequences.
+ * Output and independent oracle: Literal accepted/rejected adjacency, source/day and ordinary-settlement conditions; no engine game is executed.
+ * This boundary never substitutes an unrelated full game or production reducer for its explicit oracle.
+ */
 import { validateDemonHunterRecord } from "../../../src/recording/demon_hunter_record";
 import { expect, test } from "bun:test";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";

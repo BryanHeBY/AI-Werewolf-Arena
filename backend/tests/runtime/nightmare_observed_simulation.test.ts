@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Nightmare fear and wolf action policy combinations.
+ * Input: Public fear/wolf policy variants, limited observations and per-game recordings.
+ * Output and independent oracle: Actual fear ordering, natural terminal checkpoints and exact strict replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { parseReproductionRecord } from "../../src/recording/reproduction";
 import { expect, test } from "bun:test";
 import path from "node:path";

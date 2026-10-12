@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Gravekeeper real passive exile feedback.
+ * Input: Declared boards, limited player observations and recorded fixed-seed games.
+ * Output and independent oracle: Feedback skill coverage, natural outcomes and exact complete checkpoint replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
 import { simulateGames } from "../../src/runtime/simulation/simulate_games";

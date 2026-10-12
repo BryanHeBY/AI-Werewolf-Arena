@@ -1,3 +1,9 @@
+/**
+ * Real SDK/MCP integration verify equal business receipts and current permission checks on both wires.
+ * Input: Synthetic localhost model HTTP, stdio MCP, original World fixtures and explicit invalid/corrected submissions.
+ * Output and independent oracle: Literal accepted/rejected receipts, open-turn correction, unchanged resource snapshots and actor-scoped prompt knowledge.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { text } from "@ai-werewolf-arena/game-text";

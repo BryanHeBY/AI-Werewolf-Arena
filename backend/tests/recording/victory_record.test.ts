@@ -1,3 +1,9 @@
+/**
+ * Victory record integration verify sealed explicit winner decisions survive publication/cleanup boundaries.
+ * Input: Literal result decisions, malformed/getter variants and session/replay writers.
+ * Output and independent oracle: Independent winner memberships, unknown malformed display, preserved decision JSON and original cleanup failures.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";

@@ -1,3 +1,9 @@
+/**
+ * Local transport integration verify the injected current-turn MCP sidecar boundary.
+ * Input: A real loopback control listener, stdio MCP client and bound speak request.
+ * Output and independent oracle: Exact exposed tool names, read-only acceptance receipts and the selected action; clients/listener close in finally.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { describe, expect, test } from "bun:test";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";

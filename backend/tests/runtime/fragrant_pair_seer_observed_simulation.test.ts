@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Fragrant pair choices and known-state delivery.
+ * Input: Twenty fixed limited-observation seeds per locale with declared board rules.
+ * Output and independent oracle: Natural terminal outcomes, independent final memberships and exact saved checkpoint replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import {

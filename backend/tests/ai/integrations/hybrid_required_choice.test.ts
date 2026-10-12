@@ -1,3 +1,9 @@
+/**
+ * Failure scenario integration verify required Hybrid choices reject transport failures without fallback.
+ * Input: Real synthetic SDK/ACP paths, failing required requests and a scoped reproduction recorder.
+ * Output and independent oracle: Zero fallback/consumption, literal failure decision/checkpoint fields and exact partial replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Role, WinCondition, type RoleComponent } from "../../../src/core";

@@ -1,3 +1,9 @@
+/**
+ * Game lifecycle integration verify failed games finalize partial archives and release recording ownership.
+ * Input: Real runner with injected phase/finalization failures and temporary output directories.
+ * Output and independent oracle: Original primary/persistence error identities, sealed partial replay and released active recorder.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { afterEach, expect, spyOn, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

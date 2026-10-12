@@ -1,3 +1,9 @@
+/**
+ * Fragrant recording scenario support verify execute literal binding/pair-check plans with owned recording.
+ * Input: Original plan/locale/actions, fixed roles/RNG and optional controlled failures.
+ * Output and independent oracle: Outputs actual Trace/events/checkpoints and strict replay; literal expected pair/stock/death states remain caller-owned oracles.
+ * The driver owns its allocated recorder/transport lifetime; callers own expected rules and all production state writers remain unchanged.
+ */
 import { readFile, rm } from "node:fs/promises";
 import { SessionRecordManager } from "../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../src/recording/recording_context";

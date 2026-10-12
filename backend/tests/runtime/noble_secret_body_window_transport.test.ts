@@ -1,3 +1,9 @@
+/**
+ * Complete real-transport scenarios verify live Noble windows close at original interruptions.
+ * Input: Fixed interruption scenarios and synthetic agents with original owned requests.
+ * Output and independent oracle: Literal blast/death order, no stale later decisions and exact terminal/wire oracles.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { Phase } from "../../src/core";
 import { nobleTransportScenario } from "../support/noble_secret_body_transport_scenarios";

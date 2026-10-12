@@ -1,3 +1,9 @@
+/**
+ * Audit integration verify bilingual audit tasks, retry language and evidence filtering.
+ * Input: Literal task contexts, concurrent retry callbacks and local synthetic ACP execution.
+ * Output and independent oracle: Handwritten audit headings, original speech, context exclusions and locale-specific final summary.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { auditSummaryFixture } from "../support/audit_summary_fixture";
 import { buildDebugSummaryMarkdown } from "../../src/audit/debug_summary_generator";
 import { expect, test } from "bun:test";

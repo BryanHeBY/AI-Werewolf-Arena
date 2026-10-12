@@ -1,3 +1,9 @@
+/**
+ * Domain authority tests verify Red Moon blast, last-wolf qualification and exile deferral.
+ * Input: Raw candidate World, explicit policy variants and opened/closed Demon nights.
+ * Output and independent oracle: Literal one-time blast/seal, live-roster qualification and rejection of wrong/repeated transitions.
+ * This boundary never substitutes an unrelated full game or production reducer for its explicit oracle.
+ */
 import { assignSheriff } from "../../../src/game/mechanisms/sheriff/badge";
 import type { BadgeComponent } from "../../../src/core";
 import { freezeDemonHunt } from "../../../src/game/mechanisms/roles/demon_hunter/authority";

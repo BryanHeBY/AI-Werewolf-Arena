@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify foundation boards finish from player-limited DTO decisions.
+ * Input: Twenty-five fixed seeds per board and original per-game session archives.
+ * Output and independent oracle: Actual skill coverage, no repairs, validated public documents and exact complete replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";

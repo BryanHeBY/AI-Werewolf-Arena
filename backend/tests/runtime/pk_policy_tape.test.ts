@@ -1,3 +1,9 @@
+/**
+ * Complete PK policy Tape scenarios verify sheriff and exile election/PK policy combinations.
+ * Input: Explicit PK variants, literal action scripts and original recorder checkpoints.
+ * Output and independent oracle: Manual nomination/vote/death sequence and exact strict replay of the executed policy.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { bootstrapGame } from "../../src/app/bootstrap";

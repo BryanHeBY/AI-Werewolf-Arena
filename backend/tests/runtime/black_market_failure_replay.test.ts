@@ -1,3 +1,9 @@
+/**
+ * Runner failure/replay scenarios verify Black Market required trade fails without hidden stock consumption.
+ * Input: Injected runtime provider failures, real runner lifecycle and partial session files.
+ * Output and independent oracle: Literal unchanged inventory, refusal evidence and exact replay of the accepted partial prefix.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { readFile, readdir } from "node:fs/promises";

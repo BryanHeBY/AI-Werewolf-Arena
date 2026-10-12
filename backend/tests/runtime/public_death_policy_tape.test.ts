@@ -1,3 +1,9 @@
+/**
+ * Complete public-death policy Tape scenarios verify role disclosure, last words and death-chain publication.
+ * Input: Declared public policies, fixed scripts, both locales and actual phase-manager records.
+ * Output and independent oracle: Literal disclosure/word/death order plus exact strict replay, without fabricated archived role knowledge.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { bootstrapGame } from "../../src/app/bootstrap";

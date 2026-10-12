@@ -65,3 +65,5 @@
 - C11前端剩49：39实际SSR文件与事件/投影/数据按责任归属，2结构测试default入口闭合；962原IDs与21files/28URI基址保真，独立审查通过，结构原4/0/549与FE必要类型0。统一mapping157files/2203IDs，未重复49/Chromium。
 
 - C16基础：11 typed组件映射/default slot约束，17World方法与全module typeerase原byte；独立验证真实错槽/两向RoleCamp及customextras、3运行项通过。backend源码0，9负例/10explicitunknown注入原JS保持后tests0；legacy只显式T、C44退出，全consumer/state迁移尚未完成。
+
+- C13消费者职责头收口：145原程序/imports/fixture逐字保持，仅补真实139测试/preload与6记录driver职责；actual comment checker145/0，Root14跨层抽审及全部原文独立核对通过。未重复全量测试。

@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Mist/Raven policy timing and published knowledge.
+ * Input: Explicit policy boards, restricted DTO robots and fixed seed archives.
+ * Output and independent oracle: Independent resource/knowledge/terminal checks and strict replay of untouched original records.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";

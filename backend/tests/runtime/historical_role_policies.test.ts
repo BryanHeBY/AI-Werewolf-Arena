@@ -1,3 +1,9 @@
+/**
+ * Historical-policy domain/scenario integration verify adopted Beauty/Dreamer suppression and compound death sources.
+ * Input: Explicit policy variants, captured original lives, independent DTO mutations and recorded full chains.
+ * Output and independent oracle: Handwritten native Hunter attribution, scope revocation and lethal compound-cause outcomes.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { bootstrapGame } from "../../src/app/bootstrap";

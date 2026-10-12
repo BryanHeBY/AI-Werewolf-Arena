@@ -1,3 +1,9 @@
+/**
+ * Runner cancellation scenarios verify Charm recording failure does not consume a null/late cancellation.
+ * Input: Injected factory/action/recording callbacks, actual runner and held late/null Charm return.
+ * Output and independent oracle: Original paid-state snapshots, absence of consuming skip and matching exact partial replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { PotionType } from "../../src/core/domain/identity";
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";

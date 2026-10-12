@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Psychic unique inspection, repeat and optional pass.
+ * Input: Restricted observations, existing boards and recorded fixed seed games.
+ * Output and independent oracle: Real inspection coverage, no hidden-pack input and exact original checkpoint replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { fixtureNumber } from "../support/fixture_values";
 import { expect, test } from "bun:test";
 import path from "node:path";

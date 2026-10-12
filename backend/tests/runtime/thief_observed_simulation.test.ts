@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Thief optional choice and original initial-role setup.
+ * Input: Twenty restricted robot seeds per board/locale with preserved action records.
+ * Output and independent oracle: Literal setup choices, no repaired terminal result and exact strict reproduction.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

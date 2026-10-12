@@ -1,3 +1,9 @@
+/**
+ * Session recording integration verify public/player timelines, manifests and scoped recorder isolation.
+ * Input: Literal events/rounds/reports, temporary files, concurrent scopes and write failures.
+ * Output and independent oracle: Original file/schema fields, stage sequence, deterministic debug text and warning/error behavior.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { promises as fs } from "fs";
 import path from "path";
 import { Camp, Phase } from "../../src/core/domain/model";

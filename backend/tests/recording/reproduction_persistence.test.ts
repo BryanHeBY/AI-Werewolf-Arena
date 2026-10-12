@@ -1,3 +1,9 @@
+/**
+ * Filesystem recording lifecycle integration verify mandatory persistence, pending prefix ordering and failure aggregation.
+ * Input: Controlled strict-write delays/errors, real checkpoints and temporary session files.
+ * Output and independent oracle: Original error identities, no finalization of pending decisions, no late overwrite and exact fixed-deal replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, spyOn, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";

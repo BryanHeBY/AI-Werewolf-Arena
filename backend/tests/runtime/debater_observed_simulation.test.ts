@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Debater challenges, ballots and natural termination.
+ * Input: Declared boards, restricted robot requests and twenty per-game seed records.
+ * Output and independent oracle: Literal debate action coverage, no repaired finish and exact checkpoint/Tape reproduction.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Evil Knight shot/self-heal policy branches.
+ * Input: Public policy variants, limited observations and fixed seed recordings.
+ * Output and independent oracle: Declared immunity/bypass outcomes, natural finish and exact per-game Tape.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import {

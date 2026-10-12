@@ -1,3 +1,9 @@
+/**
+ * Runner failure/replay scenarios verify strict action failure preserves request policy and refusal evidence.
+ * Input: Injected SDK/ACP provider failures, real runner and partial recorder files.
+ * Output and independent oracle: Original stock/state, no fallback-derived success and exact accepted-prefix Tape.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { readFile, readdir } from "node:fs/promises";

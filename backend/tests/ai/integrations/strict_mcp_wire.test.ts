@@ -1,3 +1,9 @@
+/**
+ * Real stdio MCP integration verify canonical schemas and current-turn failure attribution.
+ * Input: Local MCP clients, bound requests, synthetic ACP sessions and temporary player records.
+ * Output and independent oracle: Exact schema/turn diagnostics and report attribution; cleanup verifies no surviving child/control resource.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";

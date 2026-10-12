@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Cupid policy branches and relationship winner membership.
+ * Input: Twenty restricted-observation seeds per policy/locale with individual recordings.
+ * Output and independent oracle: Handwritten relationship/member outcomes, recorded choices and exact complete-game replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

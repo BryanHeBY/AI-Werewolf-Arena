@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Demon Hunter board sizes/goals under limited player input.
+ * Input: Twenty-five fixed seeds per size/goal/locale and simulation records.
+ * Output and independent oracle: Native hunt coverage, natural terminal checkpoints and independent strict replay of every game.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

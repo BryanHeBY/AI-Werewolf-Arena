@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Wild Child chosen model, death and transformation.
+ * Input: Twenty limited-observation seeds per board/locale with original role metadata.
+ * Output and independent oracle: Literal model/transformation/knife coverage, natural terminal result and exact strict reproduction.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

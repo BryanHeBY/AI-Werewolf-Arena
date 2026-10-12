@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Radiant shelter/borrow policies and restricted player state.
+ * Input: Fixed seeds, public policy variants and recorded observation-limited robot games.
+ * Output and independent oracle: Independent inventory/decision/terminal checkpoints and exact strict reproduction.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";

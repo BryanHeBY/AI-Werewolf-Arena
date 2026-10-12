@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Mechanical Wolf learning, mode and copied inventory.
+ * Input: Fixed limited-observation seeds and recorded original-role snapshots.
+ * Output and independent oracle: Real mimic/skill/mode coverage, natural terminal result and strict whole-game replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";

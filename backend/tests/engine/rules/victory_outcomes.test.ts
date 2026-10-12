@@ -1,3 +1,9 @@
+/**
+ * Victory domain/engine integration verify explicit faction, individual and relationship winner membership.
+ * Input: Literal memberships, original roster/state variants and scripted terminal cycles.
+ * Output and independent oracle: Handwritten winner union/priority, survival-independent membership and checkpoint/record agreement.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {

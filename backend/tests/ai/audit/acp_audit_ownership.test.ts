@@ -1,3 +1,9 @@
+/**
+ * Audit lifecycle integration verify ACP audit session creation, cancellation and late reclamation.
+ * Input: Injected audit session factories, pending prompts, controlled failures and temporary workspaces.
+ * Output and independent oracle: Original error identity/order, forced-close counts and zero remaining executor resources.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { AcpAuditAgentExecutor } from "../../../src/ai/audit/acp_audit_runner";

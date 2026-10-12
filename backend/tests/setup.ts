@@ -1,3 +1,9 @@
+/**
+ * Backend test preload support verify test-local mock reset and tracked temporary-directory retirement.
+ * Input: Bun per-test/after-all hooks and the original shared temporary directory owner.
+ * Output and independent oracle: Outputs reset console/Jest mocks and awaited cleanup; hook order and ten-second default are retained, not a fixture or rule oracle.
+ * The preload changes no production module, callback policy, archived input or expected game result.
+ */
 // Test setup file for AI-Werewolf-Arena backend
 // This file runs before each test file
 

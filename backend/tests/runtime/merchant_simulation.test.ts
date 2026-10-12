@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Merchant gifts/backlashes and recipient Lucky effects.
+ * Input: Own-observation seeds and original native/gifted instances.
+ * Output and independent oracle: Literal grant/backlash/effect coverage and exact per-game checkpoint reproduction.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";

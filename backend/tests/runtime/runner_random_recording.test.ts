@@ -1,3 +1,9 @@
+/**
+ * Runner RNG recording integration verify configured/generated deal seeds stay private but reproducible.
+ * Input: Existing runner setup, injected named root RNG and session recordings.
+ * Output and independent oracle: Literal seed/path metadata and original deal equality, with RNG metadata absent from public replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";

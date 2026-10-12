@@ -1,3 +1,9 @@
+/**
+ * Architecture subprocess tests verify import-boundary checker rejects forbidden engine dependencies.
+ * Input: An isolated synthetic source tree and the actual boundary-check CLI.
+ * Output and independent oracle: Literal nonzero rejection and diagnostic expectations; no application game or live source tree is mutated.
+ * This boundary never substitutes an unrelated full game or production reducer for its explicit oracle.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

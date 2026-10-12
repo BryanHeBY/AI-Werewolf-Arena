@@ -1,3 +1,9 @@
+/**
+ * Complete real-transport scenarios verify Noble deceased-holder badge prompt agrees with actual handoff.
+ * Input: Original badge scenario and synthetic SDK/ACP/mixed runs.
+ * Output and independent oracle: Independent literal badge wording, owner wire prefix and real successor/death facts.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { nobleTransportScenario } from "../support/noble_secret_body_transport_scenarios";
 import { assertNobleTransportWire } from "../support/features/noble-secret-body/oracles/wire";

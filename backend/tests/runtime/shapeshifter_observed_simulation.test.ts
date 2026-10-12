@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Shapeshifter original setup cards and strict recorded choices.
+ * Input: Twenty restricted robot seeds per board/locale and fixed setup inputs.
+ * Output and independent oracle: Literal setup/role decision coverage, natural finish and exact per-game reproduction.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

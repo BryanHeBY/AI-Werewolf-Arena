@@ -1,3 +1,9 @@
+/**
+ * Runner failure/replay scenarios verify Wild Child failed required choice never changes faction.
+ * Input: Injected runtime failures, real setup request and partial recording.
+ * Output and independent oracle: No fallback/model/camp change, original state and exact accepted-prefix Tape.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import path from "node:path";
 import { promises as fs } from "node:fs";
 import { expect, spyOn, test } from "bun:test";

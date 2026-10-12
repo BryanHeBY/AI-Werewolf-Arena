@@ -1,3 +1,9 @@
+/**
+ * Complete real-transport scenarios verify Radiant shelter/borrow/death interaction and viewer knowledge.
+ * Input: Original literal scenarios on synthetic SDK/ACP/mixed transports.
+ * Output and independent oracle: Handwritten terminal/death/stock goldens, current wire prefixes and player visibility.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { assertRadiantTransportGolden } from "../support/features/radiant-eclipse/oracles/transport-golden";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";

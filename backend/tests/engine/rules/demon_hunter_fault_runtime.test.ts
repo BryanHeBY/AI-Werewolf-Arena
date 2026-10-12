@@ -1,3 +1,9 @@
+/**
+ * Fault scenario integration verify Demon Hunter executed fault boundaries and paid-prefix cancellation.
+ * Input: Real phase cycles, committed choices, injected fault/recording hooks and checkpoints.
+ * Output and independent oracle: Literal committed prefixes, one cancellation, absent hunt damage and rejection of unused fabricated faults.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test, spyOn } from "bun:test";
 import {
   COMPONENT,

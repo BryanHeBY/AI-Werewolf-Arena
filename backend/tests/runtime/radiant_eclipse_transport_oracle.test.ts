@@ -1,3 +1,9 @@
+/**
+ * Wire-oracle unit tests verify Radiant transport mapping and request-prefix privacy.
+ * Input: Independent FNV/Mulberry/Fisher literal inputs, validated request records and explicit donor-text mutations.
+ * Output and independent oracle: Manual mapping golden and prefix/inventory/private-text rejection; no production RNG or knowledge algorithm supplies expected output.
+ * This boundary never substitutes an unrelated full game or production reducer for its explicit oracle.
+ */
 import { expect, test } from "bun:test";
 import { radiantTransportScenario } from "../support/radiant_eclipse_transport_scenarios";
 import { assertTransportPrompt } from "../support/transport_prompt_oracle";

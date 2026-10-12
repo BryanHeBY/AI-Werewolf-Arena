@@ -1,3 +1,9 @@
+/**
+ * Complete real-transport scenarios verify Fragrant binding/expiry/death-chain board behavior.
+ * Input: Literal feature scenarios, synthetic SDK/ACP/mixed agents and both languages.
+ * Output and independent oracle: Handwritten terminal/death outcomes, actor visibility and strict actual wire/checkpoint replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { assertFragrantTransportWire } from "../support/features/fragrant-pair-seer/oracles/wire";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";

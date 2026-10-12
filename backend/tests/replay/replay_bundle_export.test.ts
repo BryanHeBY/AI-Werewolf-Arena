@@ -1,3 +1,9 @@
+/**
+ * Filesystem replay export integration verify offline bundle export validates nested source fields.
+ * Input: Temporary recorded sessions, requested output paths and malformed replay documents.
+ * Output and independent oracle: Literal exported bundle/file equality and explicit validation failure; no archived source is rewritten.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { promises as fs } from "fs";
 import path from "path";
 import { exportReplayBundle } from "../../src/replay/export_replay_bundle";

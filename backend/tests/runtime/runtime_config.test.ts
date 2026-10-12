@@ -1,3 +1,9 @@
+/**
+ * Configuration IO/parser integration verify explicit config sources, agent prompts and role/seat overrides.
+ * Input: Temporary provider/agent/game/board files and literal malformed settings.
+ * Output and independent oracle: Original resolved values, strict field/reason limits and no fallback from present invalid overrides.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

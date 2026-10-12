@@ -1,3 +1,9 @@
+/**
+ * Order Prince recording/verifier scenarios verify revote, invalid ballots and voter weight chronology.
+ * Input: Recorded fixed native games and independently edited decision/ballot/checkpoint fragments.
+ * Output and independent oracle: Handwritten winner/death/resource outcomes and strict rejection of forged void/revote weights.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../src/app/bootstrap";

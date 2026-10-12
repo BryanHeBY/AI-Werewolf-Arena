@@ -1,3 +1,9 @@
+/**
+ * Agent logging integration verify IO/thinking/trace flags and close-time suppression on both transports.
+ * Input: Actual SDK/ACP synthetic agents, console spies, late callbacks and saved player rounds.
+ * Output and independent oracle: Literal output prefixes, identical accepted records and no late actions/private round writes after close.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { readFile } from "node:fs/promises";

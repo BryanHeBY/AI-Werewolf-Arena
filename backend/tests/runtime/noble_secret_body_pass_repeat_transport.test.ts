@@ -1,3 +1,9 @@
+/**
+ * Complete real-transport scenarios verify Noble/Body explicit pass resets protection repetition.
+ * Input: Fixed pass/repeat choices and configured policies on synthetic transports.
+ * Output and independent oracle: Handwritten night death/protection sequence, exact checkpoint values and independent badge/wire oracles.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { nobleTransportScenario } from "../support/noble_secret_body_transport_scenarios";
 import { assertNobleTransportWire } from "../support/features/noble-secret-body/oracles/wire";

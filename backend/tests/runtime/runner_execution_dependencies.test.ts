@@ -1,3 +1,9 @@
+/**
+ * Runner dependency integration verify detached closed snapshots and selected-deadline failure order.
+ * Input: Injected deadline selector, closed observer callbacks and temporary runner archives.
+ * Output and independent oracle: Original selector/observer errors, zero model opening for nonfinite deadlines and drained scheduler snapshots.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { readdir } from "node:fs/promises";
 import path from "node:path";

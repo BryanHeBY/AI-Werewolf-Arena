@@ -1,3 +1,9 @@
+/**
+ * Runtime factory integration verify SDK/ACP selection, mixed routing and cleanup ownership.
+ * Input: Resolved actor/provider bindings, injected client/close failures and temporary workspaces.
+ * Output and independent oracle: Selected strategy, immutable budget/binding behavior, scheduler counts and preserved cleanup error identities.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { describe, expect, spyOn, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { tmpdir } from "node:os";

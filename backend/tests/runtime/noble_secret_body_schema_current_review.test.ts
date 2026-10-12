@@ -1,3 +1,9 @@
+/**
+ * Wire-oracle unit tests verify current Noble status and static schema reject extra inventory fields.
+ * Input: Handwritten valid SDK/ACP status/schema/prefix fixtures and exact malformed extensions.
+ * Output and independent oracle: Literal schema equality and current-feed rejection codes, independent of spelling blacklist or runtime schema builder.
+ * This boundary never substitutes an unrelated full game or production reducer for its explicit oracle.
+ */
 import { expect, test } from "bun:test";
 import {
   assertNobleTransportWire,

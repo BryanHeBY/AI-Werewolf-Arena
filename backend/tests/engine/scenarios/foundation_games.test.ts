@@ -1,3 +1,9 @@
+/**
+ * Complete scripted-game scenarios verify foundation six/twelve-player rules and strict request consumption.
+ * Input: Literal action scripts, fixed RNG, locale variants and scoped filesystem recording.
+ * Output and independent oracle: Handwritten deaths/winners/skill order, no missing or duplicate scripted turns and validated player/public files.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { ActionWindow } from "../../../src/core";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";

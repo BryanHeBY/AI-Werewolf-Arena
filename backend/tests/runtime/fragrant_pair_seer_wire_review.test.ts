@@ -1,3 +1,9 @@
+/**
+ * Wire-oracle calibration integration verify Fragrant prompt/identity/schema/history rejection boundaries.
+ * Input: Two real synthetic transport runs followed by explicit independent wire mutations.
+ * Output and independent oracle: Original literal markers and specific oracle error codes; expected records are not regenerated from a production reducer.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { beforeAll, test, expect } from "bun:test";
 import {
   assertFragrantTransportWire,

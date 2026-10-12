@@ -1,3 +1,9 @@
+/**
+ * Night mechanism integration verify independent ability grant, copy, expiry and stage timing.
+ * Input: Explicit native/granted/copied ability instances and recorded night actions.
+ * Output and independent oracle: Literal resource/source separation, unchanged role/camp and actual reserved-stage/request ordering.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { completedNight } from "../night_stage_fixture";
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";

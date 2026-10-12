@@ -1,3 +1,9 @@
+/**
+ * Permission/projection integration verify wolf knowledge, chat and knife rights independent of faction.
+ * Input: Original role/life fixtures, directional knowledge, reception/gateway calls and delayed recordings.
+ * Output and independent oracle: Explicit audience sets, read-only phase/death refusals and absence of hidden audiences on player wire.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { completedNight } from "../night_stage_fixture";
 import { expect, test } from "bun:test";
 import path from "node:path";

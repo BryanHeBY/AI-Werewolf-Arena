@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Animal Dream policy variants over fixed restricted-observation seeds.
+ * Input: Existing Animal boards, explicit Cat/Puffer policies and simulation recordings.
+ * Output and independent oracle: Natural termination, per-game policy/resource checks and exact strict replay of original checkpoints.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";

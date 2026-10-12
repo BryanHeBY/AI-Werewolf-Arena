@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Pure White action priority and self-heal variants.
+ * Input: Public policy boards, restricted robot requests and saved fixed-seed games.
+ * Output and independent oracle: Manual policy/resource branch checks, natural outcomes and exact strict Tape.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import {

@@ -1,3 +1,9 @@
+/**
+ * Simulation/recording integration verify transient display locale does not rewrite game metadata.
+ * Input: Recorder creation spy, actual simulation and offline replay inputs.
+ * Output and independent oracle: Explicit display-versus-game locale assertions; no dictionary or archived field is changed.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, spyOn, test } from "bun:test";
 import { SessionRecordManager } from "../../src/recording/session_recorder";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";

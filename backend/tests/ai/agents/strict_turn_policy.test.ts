@@ -1,3 +1,9 @@
+/**
+ * Provider lifecycle integration verify strict cancellation, protocol errors and deadline delivery.
+ * Input: Controlled SDK/ACP completion callbacks, parse failures, absolute deadlines and recorder spies.
+ * Output and independent oracle: Literal error IDs, fallback/attempt counts, unchanged guard stock and late-record refusal; cleanup errors remain distinct.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "../../../src/core";

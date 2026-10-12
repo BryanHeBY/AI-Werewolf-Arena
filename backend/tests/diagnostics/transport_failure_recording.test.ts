@@ -1,3 +1,9 @@
+/**
+ * Diagnostic/recording integration verify safe transport failure display and saved fallback evidence.
+ * Input: Mock/native SDK HTTP errors, ACP updates, CLI child failures and temporary replay files.
+ * Output and independent oracle: Literal safe diagnostic fields, original model text/prompts and absence of opaque provider payloads.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { RetryError } from "ai";
 import { promises as fs } from "node:fs";

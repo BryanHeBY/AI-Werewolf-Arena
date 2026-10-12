@@ -1,3 +1,9 @@
+/**
+ * Domain/engine integration verify native versus gifted death-gun identity, stock and source scopes.
+ * Input: Original component references, life scopes, bound permits and scripted recorded death chains.
+ * Output and independent oracle: Independent per-source stock and original-object assertions, fresh requests after committed deaths and no foreign-World transfer.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {

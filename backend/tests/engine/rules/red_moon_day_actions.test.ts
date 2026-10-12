@@ -1,3 +1,9 @@
+/**
+ * Domain action integration verify Red Moon self-destruct and last-wolf exile hooks.
+ * Input: Original candidate roles/lives, explicit blast selections and policy variants.
+ * Output and independent oracle: Exact committed death source, public seal and preserved original-life deferral.
+ * This boundary never substitutes an unrelated full game or production reducer for its explicit oracle.
+ */
 import { expect, test } from "bun:test";
 import { COMPONENT, ActionWindow, Phase, DeathCause, type AliveComponent } from "../../../src/core";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";

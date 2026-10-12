@@ -1,3 +1,9 @@
+/**
+ * Reproduction scenario integration verify complete and failed games preserve exact causality.
+ * Input: Observed/scripted actual records, injected parallel/checkpoint/provider faults and malformed versions.
+ * Output and independent oracle: Original event/decision/operation/checkpoint equality, precise first failure and explicit incompatible/mutated archive rejection.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { Role, WitchSelfHealRule } from "../../src/core";
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";

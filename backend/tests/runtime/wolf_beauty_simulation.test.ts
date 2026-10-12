@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Wolf Beauty charm choices and linked deaths.
+ * Input: Existing policy boards, restricted player inputs and recorded seeds.
+ * Output and independent oracle: Actual charm/death coverage, original scope outcomes and exact complete-game replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
 import { simulateGames } from "../../src/runtime/simulation/simulate_games";

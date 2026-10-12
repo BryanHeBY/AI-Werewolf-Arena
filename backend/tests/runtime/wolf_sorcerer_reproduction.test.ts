@@ -1,3 +1,9 @@
+/**
+ * Wolf Sorcerer recording/verifier scenarios verify seat exchange, first-night policies and erased Psychic facts.
+ * Input: Actual fixed-action games, cancellation variants and coherent independently rolled-back record mutants.
+ * Output and independent oracle: Manual causal/resource/terminal outcomes and strict rejection of erased or remapped inspection evidence.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { validateWolfSorcererRecord } from "../../src/recording/wolf_sorcerer_record";
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";

@@ -1,3 +1,9 @@
+/**
+ * Trickster recording/verifier scenarios verify exile target mapping, cancellation and source receipts.
+ * Input: Recorded native fixed actions, both locales and independent mapping/checkpoint deletions.
+ * Output and independent oracle: Manual effective exile/terminal outcomes and strict rejection of missing or wrong mapping receipts.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../src/app/bootstrap";

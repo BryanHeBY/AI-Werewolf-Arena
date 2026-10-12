@@ -1,3 +1,9 @@
+/**
+ * Night mechanism integration verify Red Moon sealed native stages and restored next-night eligibility.
+ * Input: Opened candidate nights, native stage/frame requests and an explicit blast transition.
+ * Output and independent oracle: No sealed requests/stock changes, direct-opening refusal and next-night native eligibility.
+ * This boundary never substitutes an unrelated full game or production reducer for its explicit oracle.
+ */
 import { expect, test } from "bun:test";
 import { COMPONENT, type AliveComponent, type RoleComponent } from "../../../src/core";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";

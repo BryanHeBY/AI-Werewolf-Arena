@@ -1,3 +1,9 @@
+/**
+ * Real agent transport integration verify Psychic inspection policy for a gifted original Villager.
+ * Input: Bound policy variants, factory-created SDK/ACP agents and synthetic local responses.
+ * Output and independent oracle: Independent rule markers and repeat/pass receipts, original identity and no donor prompt contamination.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";

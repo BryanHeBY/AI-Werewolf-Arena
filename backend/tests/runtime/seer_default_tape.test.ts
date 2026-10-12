@@ -1,3 +1,9 @@
+/**
+ * Complete Seer Tape scenarios verify native default target/action policies agree with actual requests.
+ * Input: Public default/override boards, literal choices, fixed RNG and real records.
+ * Output and independent oracle: Independent allowed target/required action sequence and exact strict JSON Tape replay.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { bootstrapGame } from "../../src/app/bootstrap";

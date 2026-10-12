@@ -1,3 +1,9 @@
+/**
+ * Local HTTP ownership integration verify authentication before payload parsing on a reused synthetic model port.
+ * Input: A retired MCP endpoint, replacement loopback model server and its distinct fixture token.
+ * Output and independent oracle: Old-owner unauthorized response, no handler parsing and successful different-owner closure classification.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { LoopbackMcpControlServer } from "../../../src/ai/integrations/acp/loopback_mcp_control_server";
 import { assertControlOwnerClosed } from "../../support/oracles/control-owner";

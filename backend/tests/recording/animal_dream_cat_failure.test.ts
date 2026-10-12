@@ -1,3 +1,9 @@
+/**
+ * Recording failure scenarios verify Cat publication failure preserves the actual paid/expired prefix.
+ * Input: Actual phase manager and trace, controlled publication throws and original Cat lives.
+ * Output and independent oracle: Literal Cat state/version, stopped authority and accepted/rejected partial archives without duplicate death.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { createTestTempDirectory } from "../support/drivers/temp-directories";

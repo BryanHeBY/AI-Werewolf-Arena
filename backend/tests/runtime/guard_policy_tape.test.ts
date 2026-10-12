@@ -1,3 +1,9 @@
+/**
+ * Complete Guard policy Tape scenarios verify A/no-action/A repeat semantics across night boundaries.
+ * Input: Explicit repeat policies, fixed scripts and real phase-manager requests.
+ * Output and independent oracle: Manual permitted/refused guard actions and strict replay of original policy decisions.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { bootstrapGame } from "../../src/app/bootstrap";

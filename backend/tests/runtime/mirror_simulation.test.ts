@@ -1,3 +1,9 @@
+/**
+ * Observed-game scenarios verify Mirror Girl unique reports and optional passes.
+ * Input: Twenty observation-limited seeds and recorded native-role metadata.
+ * Output and independent oracle: Original identity/pack exclusions, real report/pass coverage and exact strict Tape.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { fixtureNumber } from "../support/fixture_values";
 import { expect, test } from "bun:test";
 import path from "node:path";

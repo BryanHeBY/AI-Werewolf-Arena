@@ -1,3 +1,9 @@
+/**
+ * Magician recording/verifier scenarios verify target exchange, night gun and resource chronology.
+ * Input: Actual fixed-action game records, explicit policies and independent causal/inventory mutants.
+ * Output and independent oracle: Handwritten native outcomes and rejected coherent altered decision/checkpoint tapes.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../src/app/bootstrap";

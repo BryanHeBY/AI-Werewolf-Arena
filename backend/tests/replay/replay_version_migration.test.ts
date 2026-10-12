@@ -1,3 +1,9 @@
+/**
+ * Version/export integration verify legacy normalization only at declared metadata paths.
+ * Input: Immutable archived documents, malformed versions and temporary direct/hard/symbolic output aliases.
+ * Output and independent oracle: Original user/event bytes, explicit v2 fields and refusal to overwrite source aliases.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { readFile, writeFile, mkdir, link, symlink } from "node:fs/promises";
 import path from "node:path";

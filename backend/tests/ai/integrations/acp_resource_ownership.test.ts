@@ -1,3 +1,9 @@
+/**
+ * Real process/loopback integration verify ACP process-group and MCP listener ownership across players.
+ * Input: Local executable fixture agents, shared remote session IDs, deadlines and injected controls.
+ * Output and independent oracle: Native PID liveness, unreachable former endpoints and empty pool/registry state after owned cleanup.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile } from "node:fs/promises";

@@ -1,3 +1,9 @@
+/**
+ * Red Moon recording/replay scenarios verify expiry, knife and blast policy tapes.
+ * Input: Actual fixed-action games, both policies/locales and temporary finalized records.
+ * Output and independent oracle: Handwritten state/terminal checkpoints and strict rejection/reproduction of original causal tapes.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../src/app/bootstrap";

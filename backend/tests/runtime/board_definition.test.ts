@@ -1,3 +1,9 @@
+/**
+ * Board configuration integration verify canonical shape, role parameters and opposing-camp setup.
+ * Input: Literal valid/invalid boards, declared implementations and temporary provider/game files.
+ * Output and independent oracle: Exact field-path/rejection expectations, implemented-only semantics and no fallback from invalid files.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { ActionWindow, WinCondition } from "../../src/core/domain/identity";
 import { expect, test } from "bun:test";
 import { readFile, writeFile, mkdir } from "node:fs/promises";

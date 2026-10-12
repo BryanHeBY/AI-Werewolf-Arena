@@ -1,3 +1,9 @@
+/**
+ * Visibility unit tests verify public Red Moon facts contain only canonical fields.
+ * Input: Literal public facts, malformed variants and seat-specific projection inputs.
+ * Output and independent oracle: Identical approved visible fields at every seat and exclusion of malformed/secret additions.
+ * This boundary never substitutes an unrelated full game or production reducer for its explicit oracle.
+ */
 import { expect, test } from "bun:test";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
 import type { GameEvent } from "../../../src/core";

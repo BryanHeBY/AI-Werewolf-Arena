@@ -1,3 +1,9 @@
+/**
+ * Wedding engine/replay scenarios verify full Ghost Bride inventory and precise failed setup/night prefixes.
+ * Input: Scripted three-faction worlds, getter/field/fault mutations and actual recording.
+ * Output and independent oracle: Manual winner/role/goal snapshots, no getter execution and exact causal failure prefixes.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { readFile, writeFile } from "node:fs/promises";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../src/app/bootstrap";

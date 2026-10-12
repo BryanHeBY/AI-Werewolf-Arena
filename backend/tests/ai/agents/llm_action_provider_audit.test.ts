@@ -1,3 +1,9 @@
+/**
+ * Agent/recording integration verify LLM report_bug acceptance and same-stage duplicate suppression.
+ * Input: Injected native-tool clients, optional reports and temporary scoped recorder files.
+ * Output and independent oracle: Literal final action, report counts and dropped-report reason in saved logic operations.
+ * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ */
 import { describe, expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";

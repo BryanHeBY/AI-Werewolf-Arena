@@ -1,3 +1,9 @@
+/**
+ * Noble recording scenario support verify drive literal Noble/Body choices and owned lifecycle recording.
+ * Input: Original plan/locale/stock policies, fixed scripts and scoped temporary session files.
+ * Output and independent oracle: Outputs actual causal records/checkpoints and strict replay; handwritten expected death/resource state remains separate from the driver.
+ * The driver owns its allocated recorder/transport lifetime; callers own expected rules and all production state writers remain unchanged.
+ */
 import { readFile, rm } from "node:fs/promises";
 import { bootstrapGame } from "../../src/app/bootstrap";
 import {
