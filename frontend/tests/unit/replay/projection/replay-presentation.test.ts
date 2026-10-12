@@ -1,6 +1,13 @@
+/**
+ * Unit tests verify timeline presentation and summary-event coalescing.
+ * Input: literal recorded speech, vote and concurrent event sequences.
+ * Output: the original visible-row, summary and ordering assertions.
+ * Handwritten expected event selections are the independent oracle.
+ * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ */
 import { expect, test } from "bun:test";
 import { assertReplayDocument, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { buildPresentationReplay } from "../../../src/replay/replay-presentation";
+import { buildPresentationReplay } from "../../../../src/replay/replay-presentation";
 
 test("collapses concurrent declarations and votes into their summary events", () => {
   const replay: ReplayDocument = {

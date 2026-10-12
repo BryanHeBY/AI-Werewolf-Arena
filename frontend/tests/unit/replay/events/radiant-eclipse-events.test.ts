@@ -1,8 +1,15 @@
+/**
+ * Unit tests verify radiant eclipse fact acceptance, display labels.
+ * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
+ * Output: the original fact acceptance, display labels assertions.
+ * Handwritten field, label and effect expectations are the independent oracle.
+ * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ */
 import { expect, test } from "bun:test";
 import { readRadiantEclipseFact } from "@ai-werewolf-arena/game-text";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
-import { readReplayEvent } from "../../../src/replay/replay-event-reader";
-import { eventLabel } from "../../../src/replay/event-labels";
+import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
+import { eventLabel } from "../../../../src/replay/event-labels";
 const facts = [
   [
     "eclipse_swallowed",

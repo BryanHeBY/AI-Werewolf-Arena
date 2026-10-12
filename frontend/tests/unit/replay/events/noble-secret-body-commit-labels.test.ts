@@ -1,8 +1,15 @@
+/**
+ * Unit tests verify noble secret body commit labels fact acceptance, display labels, event-prefix effects.
+ * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
+ * Output: the original fact acceptance, display labels, event-prefix effects assertions.
+ * Handwritten field, label and effect expectations are the independent oracle.
+ * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ */
 import { expect, test } from "bun:test";
 import { nobleSecretBodyEventLabel } from "@ai-werewolf-arena/game-text";
-import { readReplayEvent } from "../../../src/replay/replay-event-reader";
-import { eventLabel } from "../../../src/replay/event-labels";
-import { buildReplaySnapshot } from "../../../src/replay/replay-projection";
+import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
+import { eventLabel } from "../../../../src/replay/event-labels";
+import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
 const policy = "awa_noble_secret_body_v1";
 for (const f of [
   { type: "noble_body_knife_committed", payload: { policy, actorId: 1, day: 2, targetId: 6 } },

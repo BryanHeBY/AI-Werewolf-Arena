@@ -1,6 +1,13 @@
+/**
+ * Unit tests verify shapeshifter replay fact acceptance and atomic effects.
+ * Input: canonical God/player payloads, malformed fields and event envelopes.
+ * Output: the original canonical fact, rejection and effect assertions.
+ * Handwritten field and no-partial-effect expectations are the independent oracle.
+ * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ */
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
-import { readReplayEvent } from "../../../src/replay/replay-event-reader";
+import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
 const fact = (type: string, payload: Record<string, unknown>): ReplayEvent => ({
   seq: 1,
   timestamp: "2026-10-09T00:00:00Z",

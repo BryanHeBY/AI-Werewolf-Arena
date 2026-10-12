@@ -1,6 +1,13 @@
+/**
+ * Unit tests verify event-prefix seat, life and public-state projection.
+ * Input: literal original rosters, chronological event prefixes and cursor positions.
+ * Output: the original player snapshot and state-boundary assertions.
+ * Handwritten expected players and state transitions are the independent oracle.
+ * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ */
 import { expect, test } from "bun:test";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { buildReplaySnapshot } from "../../../src/replay/replay-projection";
+import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
 
 const replay: ReplayDocument = {
   schemaVersion: 2,

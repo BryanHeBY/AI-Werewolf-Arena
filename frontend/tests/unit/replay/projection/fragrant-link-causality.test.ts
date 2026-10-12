@@ -1,8 +1,15 @@
+/**
+ * Unit tests check Fragrant link publication and reverse-frame causality.
+ * Input: recorded immutable archive fixtures, handwritten link rows and seek positions.
+ * Output: the original life-boundary, private-fact and frame assertions.
+ * Handwritten expected live seats and literal causal boundaries are the independent oracle.
+ * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ */
 import { test, expect } from "bun:test";
-import { fragrantPrivateReplay, loadFragrant } from "../../support/fragrant-replay";
-import { createReplayRenderInput, buildReplayFrame } from "../../../src/replay/replay-frame";
-import { readReplayEvent } from "../../../src/replay/replay-event-reader";
-import { eventLabel } from "../../../src/replay/event-labels";
+import { fragrantPrivateReplay, loadFragrant } from "../../../support/fragrant-replay";
+import { createReplayRenderInput, buildReplayFrame } from "../../../../src/replay/replay-frame";
+import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
+import { eventLabel } from "../../../../src/replay/event-labels";
 for (const locale of ["en", "zh-CN"] as const) {
   test(`literal first link publication and reverse frame ${locale}`, () => {
     const r = loadFragrant(`fragrant-first_link-${locale}`, ".replay.json"),

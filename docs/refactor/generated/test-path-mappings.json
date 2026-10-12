@@ -7023,11 +7023,1680 @@
       "modulePathExceptions": [],
       "resolvedDependencyTargetDrift": 0,
       "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/animal-dream-events.test.ts",
+      "to": "frontend/tests/unit/replay/events/animal-dream-events.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        },
+        {
+          "old": "../../../src/replay/replay-projection",
+          "new": "../../../../src/replay/replay-projection",
+          "resolved": "frontend/src/replay/replay-projection"
+        }
+      ],
+      "originalSha256": "afd28602f137df1944e073860e71403dce82bc510a73dac8232c33dd4a0e7661",
+      "candidateSha256": "2798678e7f89d4add83a181191ef068b481589592d388afa2425bd200ab686a2",
+      "baselineCases": [
+        {
+          "id": "79a98db70d340dbf0b8e770f76f64190d5f2f3693068c99b352e0ee65a8a0ecb",
+          "title": "zh-CN literal animal_night_opened labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "b95d5b93abcf80a4153dc5466f90b8e8fc914ed12e803d069bb8cfa664ab3b13",
+          "title": "zh-CN literal animal_fox_chosen labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "c41e43ede73d5d2b06bdbb6f29dc51c96e3e195f4a1dca2eb753ba6414246981",
+          "title": "zh-CN literal animal_fox_effect labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "39e3034658f9763ac11613405fbe3f5b6d7cd6b36f7824444a1acaa274e6f85f",
+          "title": "zh-CN literal animal_knife_notified labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "ecdac6ea892960f1c0bc1215c1295b91a825dff2a7d40e73ba0dd0ed9a53f78f",
+          "title": "zh-CN literal animal_beauty_notified labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "2f4a3dc6b9d5034dd305d224ab4896c0bc55c49852f5e39269ad3c53e749f204",
+          "title": "zh-CN literal animal_cat_revealed labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "de0c494d96d6614769c7ec6bfe0efd3bf7c2e4272bc8e6148461d01c4261f686",
+          "title": "zh-CN literal animal_puffer_revealed labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "717f0b1ae79f4b43bb395af777319dbd9694ceb0957d1a89cc5ce1d8294fb1b3",
+          "title": "zh-CN literal animal_puffer_decided labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "9362f063afffa98404b613c1f3e4204330f66d7362bff759ffb7846b9c4cc834",
+          "title": "zh-CN literal animal_puffer_targets labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "40141f14a5b3e776173ab72bd08a22139a25284682c522ee13c183a87260cd8a",
+          "title": "zh-CN literal animal_wave_prepared labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "1c15082a00ff7956117721dd1638069283ac82bd703e034ab22319d45e901380",
+          "title": "zh-CN literal animal_wave_committed labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "f6fe11c2d5bb5439e6f9430ef9e8ca10ed3b0d2537f16314f9c98ee83c9d6746",
+          "title": "zh-CN literal animal_cat_expiry_prepared labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "06d18eaa727e6f9aad2276051cfeaf388b25ab63252c212bb82eac44111485ff",
+          "title": "zh-CN literal animal_unit_completed labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "f636f741997ce73a8176e4025b4be647e81fbf14e44c3ffe9a61982c771d73c8",
+          "title": "en literal animal_night_opened labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "dec0f5bf2d08ee96e8b12631fa4fecbf37649c6e869dac8d664eeb4fb69ce480",
+          "title": "en literal animal_fox_chosen labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "2c4c472477ded1dff30dcbea9fdab0be8c180a4a3eab28ae05b4b0728a88ed1a",
+          "title": "en literal animal_fox_effect labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "e985a836d0b614ca84dd20c4eedcd17c96fa7c7cefdde1faa77e862c228b89fe",
+          "title": "en literal animal_knife_notified labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "9432d8e1814ea73728183651e0a18708526440e835e5c9182ebd340934d97660",
+          "title": "en literal animal_beauty_notified labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "8c67335e2e6606118f56e76bc77d75442bf36f8ea52259b32ee0034d213214be",
+          "title": "en literal animal_cat_revealed labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "35920bddc237d8d572fc02853104a058174fa68906859880897656c80e55e22a",
+          "title": "en literal animal_puffer_revealed labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "f0c4cd8655f0a89437e8040deba671376eb6cef7b02331d3f6d290267ae18474",
+          "title": "en literal animal_puffer_decided labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "c945bd71cfae274a6f50d80260cce9c1b5e549b2d4415c7895e98d11334a4eb2",
+          "title": "en literal animal_puffer_targets labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "a4d05292dc4b77303da5251654bd450113cdb764190a62457d36b7589e7814f7",
+          "title": "en literal animal_wave_prepared labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "61b38fd393552f23ecc9f8762c4279d96d4ef1a00b8bbe25a0d7a24a3180112b",
+          "title": "en literal animal_wave_committed labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "99e2f4905faddfbe76e9801b7245a571aa6d012edc8d34c764d3e70e2b626ab6",
+          "title": "en literal animal_cat_expiry_prepared labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "33ca99680b018987b325299917c67d8d395faada26ce0c1d62df0b0527bbdd65",
+          "title": "en literal animal_unit_completed labels across shared/backend/frontend",
+          "occurrence": 1
+        },
+        {
+          "id": "31dd26ad3b8481cd420d190e97e1297fd00bad5633bb9afe740a731fc08f76de",
+          "title": "literal finite facts reject invalid envelope, players and extra private data",
+          "occurrence": 1
+        },
+        {
+          "id": "002f582653b7085f03b23c7c571fcbbf33f52e4d5b625315759558593c7d352d",
+          "title": "Cat/Puffer public reveals only reveal role; God wave and expiry never change alive",
+          "occurrence": 1
+        },
+        {
+          "id": "9c33c14a9dbb2cec3073588ede2583b69afb0425f4b7695353bf0670a66f1443",
+          "title": "retaliation flip cannot publish before final ballots in Night",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/debater-display.test.ts",
+      "to": "frontend/tests/unit/replay/events/debater-display.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        }
+      ],
+      "originalSha256": "d6e4744660f0484025ce01147d2a80d42c6d338e8f47d957654914d62708b174",
+      "candidateSha256": "aff00fa17e914169525d2b11dbdd82a7344d9ce279bef95a6e6e2d47a0dea7ed",
+      "baselineCases": [
+        {
+          "id": "71c416ffda51bd71bf76ad1c174ef2fe45817343cfe2bfe156bf24dcbbabd691",
+          "title": "zh-CN: living revelation and public aggregate, God false/null, unknown voters",
+          "occurrence": 1
+        },
+        {
+          "id": "0732c3adc144823b7011796f8751739a871168e1c0bceaecc57cd1c3d672e68a",
+          "title": "en: living revelation and public aggregate, God false/null, unknown voters",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/demon-hunter-facts.test.ts",
+      "to": "frontend/tests/unit/replay/events/demon-hunter-facts.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        },
+        {
+          "old": "../../../src/replay/replay-projection",
+          "new": "../../../../src/replay/replay-projection",
+          "resolved": "frontend/src/replay/replay-projection"
+        }
+      ],
+      "originalSha256": "c9f3d02d32c575656a005fed73fe0551d90da68cac8a9eb2896100e641ee343c",
+      "candidateSha256": "3c8a4c036fdd57c1b637f4cc37ab96642f25b7836bfd2040384a217c83340ec0",
+      "baselineCases": [
+        {
+          "id": "5a826833879140684039b3ca1d740d7ce8ce9a1fdba2a493cab666bb6e9c3080",
+          "title": "strict frontend God/own fact demon_hunter_chosen/{\"policy\":\"awa_netease_demon_hunter_v1\",\"actorId\":6,\"day\":2,\"targetId\":1}",
+          "occurrence": 1
+        },
+        {
+          "id": "8e28e5fb37ffac46bd861d071604e9d00251059d8c97adb7f04e781392591d21",
+          "title": "strict frontend God/own fact demon_hunter_chosen/{\"policy\":\"awa_netease_demon_hunter_v1\",\"actorId\":6,\"day\":2,\"targetId\":null}",
+          "occurrence": 1
+        },
+        {
+          "id": "8a0ed8f45696bc7e2f59fa56f309f4f2b5ac0530f4d59f49c3eb32f336c95ca8",
+          "title": "strict frontend God/own fact demon_hunter_chosen/{\"policy\":\"awa_netease_demon_hunter_v1\",\"day\":2,\"targetId\":1}",
+          "occurrence": 1
+        },
+        {
+          "id": "5ebfb45c7cc4d616d015ecab234ef07fe639e60e26c839ae1334a947a2db3d12",
+          "title": "strict frontend God/own fact demon_hunter_chosen/{\"policy\":\"awa_netease_demon_hunter_v1\",\"day\":2,\"targetId\":null}",
+          "occurrence": 1
+        },
+        {
+          "id": "321fa940516d6214536127d8dfe7bab782a0bb68d08f41e86666017297c62046",
+          "title": "strict frontend God/own fact demon_hunter_cancelled/{\"policy\":\"awa_netease_demon_hunter_v1\",\"actorId\":6,\"day\":2,\"targetId\":1,\"reason\":\"authority_revoked\",\"faultId\":null}",
+          "occurrence": 1
+        },
+        {
+          "id": "e3b360e134f8728eb214993cfb96f33bdfdf1588151c711b8195ef398faabda5",
+          "title": "strict frontend God/own fact demon_hunter_poison_immune/{\"policy\":\"awa_netease_demon_hunter_v1\",\"actorId\":6,\"day\":1,\"witchId\":5}",
+          "occurrence": 1
+        },
+        {
+          "id": "7f2288d9e9b902849b237e7394e93ff337c6e657ef8143dd846c79cbbcf4f060",
+          "title": "known malformed, absent members and accessors have no partial association or Alive effects",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/ghost-bride-display.test.ts",
+      "to": "frontend/tests/unit/replay/events/ghost-bride-display.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        }
+      ],
+      "originalSha256": "7ab298f98a49e5d94da661d24fe688675c28526f6a80a78bb5b2b2e0565adb1d",
+      "candidateSha256": "a4003f8e72d41166ae03599341dd0a30b84a48e48f85ad2e4f34ba75d8123e59",
+      "baselineCases": [
+        {
+          "id": "5aba6f2176d325edcaff534407b2700601e3fb926c36b0835722baa360740308",
+          "title": "ghost_bride_pair_chosen: strict pure wedding fact links authorized references with zero identity/life/badge effects",
+          "occurrence": 1
+        },
+        {
+          "id": "e1399098a31645142a6105dba6dbdf8322c56e651a164296e77394bb36a69b8b",
+          "title": "ghost_bride_group_chosen: strict pure wedding fact links authorized references with zero identity/life/badge effects",
+          "occurrence": 1
+        },
+        {
+          "id": "1041271e03c766553da246a9b0268ae7166c55f367f047afcdf31494e32ecb62",
+          "title": "ghost_bride_witness_vote: strict pure wedding fact links authorized references with zero identity/life/badge effects",
+          "occurrence": 1
+        },
+        {
+          "id": "7ed01a1af8a600710b7293b1b13045f53fefa63baa22e2b0945f3c318b116387",
+          "title": "ghost_bride_partner_chat: strict pure wedding fact links authorized references with zero identity/life/badge effects",
+          "occurrence": 1
+        },
+        {
+          "id": "43558f31281dc34360ebd78e817d4f0d8f8b9e1ca0335dfd078d46158297d61d",
+          "title": "ghost_bride_knife_captured: strict pure wedding fact links authorized references with zero identity/life/badge effects",
+          "occurrence": 1
+        },
+        {
+          "id": "190e68351fc23f640eb7aebc2926fe0cbf15e9b548bc03fcb3d4395ad052bfbd",
+          "title": "ghost_bride_knife_vote: strict pure wedding fact links authorized references with zero identity/life/badge effects",
+          "occurrence": 1
+        },
+        {
+          "id": "c2117f3e3c3f3f37f10b8a4be37ce2e04dff94755097bfe98b9d298ce7cd7b1d",
+          "title": "ghost_bride_knife_resolved: strict pure wedding fact links authorized references with zero identity/life/badge effects",
+          "occurrence": 1
+        },
+        {
+          "id": "f4813c6e5a65a77b59061ecf6f8e14e467742c075c9ad95e27444da1daee85b5",
+          "title": "ghost_bride_partner_death: strict pure wedding fact links authorized references with zero identity/life/badge effects",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/inspection-results.test.ts",
+      "to": "frontend/tests/unit/replay/events/inspection-results.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        }
+      ],
+      "originalSha256": "c53ce44ae20ea7ca83cd7e43607171e0098c1469451ec47ddfdcdb2534f52fd4",
+      "candidateSha256": "6efa4e8419e5c2c850f37c485d325066652e287e168d4af60e6ae4082532028c",
+      "baselineCases": [
+        {
+          "id": "baccc0c9b1a55c43bcbb5b951977e751e1a276467db79d21b8fb4ef00b0609f7",
+          "title": "zh-CN: timeline/video labels show typed inspection results and compatible old booleans",
+          "occurrence": 1
+        },
+        {
+          "id": "e1f349ea06debdcf3afa49cce0cc01fcab8401b4c6dc1a6bff5a21c951426f4a",
+          "title": "en: timeline/video labels show typed inspection results and compatible old booleans",
+          "occurrence": 1
+        },
+        {
+          "id": "709245ad662495468c446a6e8c21e9360b3de1479a6ea593f47ca68b94aa1b05",
+          "title": "public replay loading keeps the complete typed result and unknown extensions without mutating the source",
+          "occurrence": 1
+        },
+        {
+          "id": "9a95e89a33f8e6202ff2bbcd29890b4328f584001ecebd00b74a09496d97074a",
+          "title": "unknown result fallback does not execute a foreign result accessor",
+          "occurrence": 1
+        },
+        {
+          "id": "6a84b987198a289eedc1c76986a0af73f85e46e9ac0d78702249de2a49ef6fcb",
+          "title": "zh-CN: ability changes share timeline/video text and preserve unknown future fields",
+          "occurrence": 1
+        },
+        {
+          "id": "33933f688489e7e4a3c2dff260862476a65c8a80c67321dc50c1fa78f2365116",
+          "title": "en: ability changes share timeline/video text and preserve unknown future fields",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/magician-facts.test.ts",
+      "to": "frontend/tests/unit/replay/events/magician-facts.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        }
+      ],
+      "originalSha256": "82b78b94d4cd8880bccf8948cea2a9a56f2156f0f8893ebe5fee8f0f70590ac9",
+      "candidateSha256": "c54e5ad27f475f227ae702e6c18fc644f5175968585caa97ae3fe497ef8d1785",
+      "baselineCases": [
+        {
+          "id": "2298bad9a5e3fa255182acdabb6a00cc1e397ef21efb34d8422012b45517ea8f",
+          "title": "Magician private full and own facts have labels without changing identities/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "2318131807b4e3d89255a20355cd4b91bc1b045c1467dc64547a422e2edf81e9",
+          "title": "Magician pass and public missed shot have no extra-death effect/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "4eb08dfc452b5b481f18a9afc584c38c2658c582401e83d71fa9efbe8febe94f",
+          "title": "Magician private full and own facts have labels without changing identities/en",
+          "occurrence": 1
+        },
+        {
+          "id": "c53c35f5f100480680d700c96694568a1d00fbbddc949c8b8d54cf5a1c25c239",
+          "title": "Magician pass and public missed shot have no extra-death effect/en",
+          "occurrence": 1
+        },
+        {
+          "id": "f7cd5d671b7c7365672ef1d1c2f6467f81c61abd472d56da1b53b87392ed2299",
+          "title": "Magician replay rejects malformed, foreign, wrong-night and overexposed facts",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/mist-raven-events.test.ts",
+      "to": "frontend/tests/unit/replay/events/mist-raven-events.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        },
+        {
+          "old": "../../../src/replay/replay-localization",
+          "new": "../../../../src/replay/replay-localization",
+          "resolved": "frontend/src/replay/replay-localization"
+        },
+        {
+          "old": "../../../src/replay/replay-projection",
+          "new": "../../../../src/replay/replay-projection",
+          "resolved": "frontend/src/replay/replay-projection"
+        }
+      ],
+      "originalSha256": "0afcebf2eb93a06cbdbb9d1a2bffa267b507b4f13811cca71537232e16174ac7",
+      "candidateSha256": "632ac77d3a57841fddeddff842b5d73602b2cf7ef5ba8743932ad984e5af8eef",
+      "baselineCases": [
+        {
+          "id": "3101fab9840ac4b958bab886406620f1a3ea8833edfabfa231ff1ca502461f6e",
+          "title": "Mist/Raven private fact alchemist_mist_chosen/zh-CN has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "96eb6aca5485e5461c90876a2d1ffec9a7429113087546c181ced223718e8ee3",
+          "title": "Mist/Raven private fact alchemist_mist_chosen/en has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "d8bd9417e1493722e0f03d510c1dd6bea7ee6ebd2ed5f32df3105565e968a481",
+          "title": "Mist/Raven private fact alchemist_mist_skipped/zh-CN has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "6ceb50a31205ea20c29bd560b485b6cdd216eff1403090e1d56957e999fe2dd1",
+          "title": "Mist/Raven private fact alchemist_mist_skipped/en has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "4cebed61327a5fa20a47e4984f234344cb7e4c15afe7b6a47d10f1be457c429c",
+          "title": "Mist/Raven private fact alchemist_snake_chosen/zh-CN has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "d9d6f4b1bbd8a83099234c2b7c64dad1d1df7d3570cce522afe7872f480b10ba",
+          "title": "Mist/Raven private fact alchemist_snake_chosen/en has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "44389ff0e855f5300fb79c4edc1b01b6229e43353fdbf11232b9a1dae12cbf7e",
+          "title": "Mist/Raven private fact raven_unsealed/zh-CN has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "0bdd6fa7b6fe93b932d1dec866813ec01d2982c07b49918932043351b2abb4b3",
+          "title": "Mist/Raven private fact raven_unsealed/en has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "c7f0489681e682d3bd4712af19b5e97923f9f0b99ffcb05bc9104dbbeac6ecee",
+          "title": "Mist/Raven private fact raven_knife_chosen/zh-CN has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "8e10babf2c29692e3caef849dc8f816b697394c9b747d10e62c2d99f9bb5f3d1",
+          "title": "Mist/Raven private fact raven_knife_chosen/en has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "3791653f0bcfe03c4fcec5624f3c215c2ef8534ab020ee8fa490552ee360621c",
+          "title": "Mist/Raven private fact raven_knife_skipped/zh-CN has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "bf25931430a62319e206f83d71702672ad491dad49c49a27b2a4ca7506440e85",
+          "title": "Mist/Raven private fact raven_knife_skipped/en has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "fa21fa2e77480d4835e0b9058b55212160559c9547b3ee060e92dd603532b7fc",
+          "title": "Mist/Raven private fact mist_knife_drawn/zh-CN has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "ee54cf2fb02fab59210af24c44d035172ae5a04dc43042721a78014ee9408630",
+          "title": "Mist/Raven private fact mist_knife_drawn/en has no early death effect",
+          "occurrence": 1
+        },
+        {
+          "id": "ca0fae8d60b33c2a64c75223d549456f11dbd472aedba4342f9442b323f57901",
+          "title": "invalid Mist/Raven fact is inert alchemist_mist_chosen/{\"actorId\":1,\"day\":2,\"targetIds\":[3,3,4]}",
+          "occurrence": 1
+        },
+        {
+          "id": "c89702b7c4b014e8baff61b6bf7b00944b1e231c4c19062a215ea53d76ac5e51",
+          "title": "invalid Mist/Raven fact is inert alchemist_mist_chosen/{\"actorId\":1,\"day\":2,\"targetIds\":[3,4]}",
+          "occurrence": 1
+        },
+        {
+          "id": "0f6177e0e553bc518aae322f52211e21cc0022254e4b2aaa70234be9885a96d9",
+          "title": "invalid Mist/Raven fact is inert alchemist_mist_chosen/{\"actorId\":1,\"day\":2,\"targetIds\":[3,4,5,6]}",
+          "occurrence": 1
+        },
+        {
+          "id": "4853a9c8af2c226dbb99ed918e4483bb1968c27cf065cab7f4e393ede95326ff",
+          "title": "invalid Mist/Raven fact is inert raven_unsealed/{\"actorId\":2,\"day\":2,\"awakened\":false,\"knownTeammateIds\":[]}",
+          "occurrence": 1
+        },
+        {
+          "id": "12e332eb82e69bcb1a4d19d9fcbf384519d6c929319a4fe18ef92a4cc1032f21",
+          "title": "invalid Mist/Raven fact is inert raven_unsealed/{\"actorId\":2,\"day\":2,\"awakened\":true,\"knownTeammateIds\":[2]}",
+          "occurrence": 1
+        },
+        {
+          "id": "820e12a7a5265bf78c8390b371b3addd8d69bd3cb549652f92a1549d22b5d698",
+          "title": "invalid Mist/Raven fact is inert raven_unsealed/{\"actorId\":2,\"day\":2,\"awakened\":true,\"knownTeammateIds\":[3,4]}",
+          "occurrence": 1
+        },
+        {
+          "id": "cdce96f8c1e3ac65c27144837cc0b15130a026622cb12fe3c434ce64b2c8e498",
+          "title": "invalid Mist/Raven fact is inert raven_knife_chosen/{\"actorId\":2,\"day\":2,\"targetId\":2}",
+          "occurrence": 1
+        },
+        {
+          "id": "64561faf1b8cf10b751cc22b16501c1d8749d43ead9513fda5a3680b64d917db",
+          "title": "invalid Mist/Raven fact is inert alchemist_mist_skipped/{\"actorId\":1,\"day\":2,\"reason\":\"sealed\"}",
+          "occurrence": 1
+        },
+        {
+          "id": "94d60ee4576d80be2761c80d3448216aa4003cc353d0aa155daa1761a4a29493",
+          "title": "invalid Mist/Raven fact is inert alchemist_snake_chosen/{\"actorId\":1,\"day\":2,\"targetId\":1}",
+          "occurrence": 1
+        },
+        {
+          "id": "a87b7d0eda21d9a064a5c7b323fd8ef193e4dce970a67cc0d4292691bd4e6309",
+          "title": "invalid Mist/Raven fact is inert mist_knife_drawn/{\"day\":2,\"candidates\":[3,4,5],\"targetId\":6}",
+          "occurrence": 1
+        },
+        {
+          "id": "9a14a2c996ab011282fe4780045c38bb138f0d537387c31bd16b6d2b9e1c99ec",
+          "title": "invalid Mist/Raven fact is inert mist_knife_drawn/{\"day\":2,\"candidates\":[],\"targetId\":3}",
+          "occurrence": 1
+        },
+        {
+          "id": "b3fe4c96a554a47bfd834cd39e7301d1b54f62e0ef24e8a0c8e029fdb173c224",
+          "title": "invalid Mist/Raven fact is inert mist_knife_drawn/{\"day\":2,\"candidates\":[3,4,5],\"targetId\":null}",
+          "occurrence": 1
+        },
+        {
+          "id": "2c37a47503aa7f6813455d4e14acd590c55c4bdabb182433894a541c29e442a4",
+          "title": "empty mist circle only confirms an empty draw, never a death",
+          "occurrence": 1
+        },
+        {
+          "id": "52b5152a9bb5b0ee7bc7ef994a5007939378250af3f1f35120f2d440ca551b94",
+          "title": "only the first night permits a self-heal fact",
+          "occurrence": 1
+        },
+        {
+          "id": "d9d2060258886f31edd6808a357d35d657c142fa8cc82494c35e8f12d4390b63",
+          "title": "seeking across private knife/Snake facts never substitutes for a public death announcement",
+          "occurrence": 1
+        },
+        {
+          "id": "7c67d35fe6f0257d1f4236f7dffa1e16731f0a242002842679a02f4f92dc642a",
+          "title": "readers detach targets and reject accessors without invoking them",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/nightmare-facts.test.ts",
+      "to": "frontend/tests/unit/replay/events/nightmare-facts.test.ts",
+      "purpose": "canonical God/player fact acceptance and atomic effects",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        }
+      ],
+      "originalSha256": "967cc88bd458192a12118235153ae7105c4c07bf72e5182007df94308d505d13",
+      "candidateSha256": "2a93464dbaf8ec814ff88a1295de794086a7f16b4e51e82ceeb713be3b2f6048",
+      "baselineCases": [
+        {
+          "id": "476a5b1bbebcdd32c094fdec9235a9692174b64b25e639deb835886601b7811f",
+          "title": "nightmare replay accepts canonical full or own fact {\"actorId\":1,\"day\":1,\"targetId\":2}",
+          "occurrence": 1
+        },
+        {
+          "id": "08453f2fe9258fddecd6cafd82b2c7d59036f3694c8047b4f1ef83bb73318d1c",
+          "title": "nightmare replay accepts canonical full or own fact {\"actorId\":1,\"day\":1,\"targetId\":null}",
+          "occurrence": 1
+        },
+        {
+          "id": "e67cd95e08997724403af415a4ae69ab7bd98ca73c45d0581e40856f9e70d276",
+          "title": "nightmare replay accepts canonical full or own fact {\"day\":1,\"targetId\":2}",
+          "occurrence": 1
+        },
+        {
+          "id": "5839c189e995a6272fe7c05d0ad1844c725ce3c6497945b32e59c1adc042764a",
+          "title": "nightmare replay accepts canonical full or own fact {\"day\":1,\"targetId\":null}",
+          "occurrence": 1
+        },
+        {
+          "id": "33b353d968717263220e445d39b193f6e137c84bf216648a47954921f7acf15f",
+          "title": "nightmare replay rejects malformed fact {\"actorId\":1,\"day\":1,\"targetId\":1}",
+          "occurrence": 1
+        },
+        {
+          "id": "aeb839a393f90a8370be9985dcbd6ac7d2df3a2015d2f3d1272ae55c12959ba5",
+          "title": "nightmare replay rejects malformed fact {\"actorId\":0,\"day\":1,\"targetId\":2}",
+          "occurrence": 1
+        },
+        {
+          "id": "84938c9bb9d54ea4fbde968ee695fc44768762e5f35bc7be446f7c6b94e19bae",
+          "title": "nightmare replay rejects malformed fact {\"day\":1,\"targetId\":2,\"wolfBlocked\":true}",
+          "occurrence": 1
+        },
+        {
+          "id": "e8c0f4968406c4f335606c80fd8b49384c305bc15f5158d9fdd8ddb00265ab19",
+          "title": "nightmare replay rejects malformed fact {\"day\":0,\"targetId\":2}",
+          "occurrence": 1
+        },
+        {
+          "id": "506edffae83c59be056be725b2c3485ffb64b3354e9f1b844d82ca20052c5f6b",
+          "title": "nightmare replay rejects malformed fact {\"day\":1,\"targetId\":-1}",
+          "occurrence": 1
+        },
+        {
+          "id": "c553973ef85fe7c9a2449ef4d8de4d2cc66c0dc1c8da03dee39b28152f22d556",
+          "title": "nightmare replay rejects malformed fact {\"day\":1}",
+          "occurrence": 1
+        },
+        {
+          "id": "fcd95e88d054b8ca7e0e165c6d2b61e7fd560cf5f96d1ce64992dc4d564d116a",
+          "title": "nightmare replay requires matching night/day envelope",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/order-prince-facts.test.ts",
+      "to": "frontend/tests/unit/replay/events/order-prince-facts.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        }
+      ],
+      "originalSha256": "74e9b3ec6779918d9ff78d43fe8313ceed2c6af48f67ba05e1effcb11ea7ddf2",
+      "candidateSha256": "4ba65663b31374cdb3a36df868d366d69288fcacf64c5d5e4130cebede2a7a1e",
+      "baselineCases": [
+        {
+          "id": "08814c26171ac4adad25d86efe0bea6c6d4d3e8420532cb27b7b2cced1f8cdb9",
+          "title": "Order Prince reveals without death or badge removal/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "25305a9afc8d5f459763ba1362be154a4b8ce031f5a1f0f553dc8b2716296d9d",
+          "title": "Order Prince reveals without death or badge removal/en",
+          "occurrence": 1
+        },
+        {
+          "id": "f3054b11c9342ef8ccfd97b937ef46e319e1f661f6071d28bc9295905ef04e71",
+          "title": "Order Prince rejects malformed, foreign or wrong-phase facts",
+          "occurrence": 1
+        },
+        {
+          "id": "3cabcad2d2087b779e40fe5dd1fa867445999c293d1ecd19237d61eb841d070a",
+          "title": "Order Prince private choice has no public effects/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "5b078e4443dec0245d8b57b3b9f8adf7b5b7d397f2ef2d4c1240fee43383db47",
+          "title": "Order Prince private choice has no public effects/en",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/radiant-eclipse-events.test.ts",
+      "to": "frontend/tests/unit/replay/events/radiant-eclipse-events.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        }
+      ],
+      "originalSha256": "b4e4b7afa5513a7ba2c96f8dd6236a4bbfb6f1385f2349adc01f547b6ed332db",
+      "candidateSha256": "3461c7ff026fffaf3060a7b74b91332ec7c5dcca115252295d9b94ef657383d5",
+      "baselineCases": [
+        {
+          "id": "204473c46c3f6bded6ea791e287077f7ae95cfa4914799483681dc4c50c0a86b",
+          "title": "Radiant fact literal label and inert shape/eclipse_swallowed/7/en",
+          "occurrence": 1
+        },
+        {
+          "id": "e005fda08fbd4b4cd5a613ea1ad88d38df9b64956aef8262e06a1cc29dc66f97",
+          "title": "Radiant fact literal label and inert shape/eclipse_swallowed/7/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "9108da13835eca6ee9ed0152ad8833ebf5635878d4013032cdddcd1f124265f9",
+          "title": "Radiant fact literal label and inert shape/eclipse_swallowed/none/en",
+          "occurrence": 1
+        },
+        {
+          "id": "e0dd36f71ab058665077a09e4ab550d9e186d0eb14332e6eb7d99f1d6ec8b19d",
+          "title": "Radiant fact literal label and inert shape/eclipse_swallowed/none/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "864bee05b96a5a2cda392700b2022e7b716e7344c0e9f6089bcfc73b8156b41f",
+          "title": "Radiant fact literal label and inert shape/radiant_shelter_chosen/11/en",
+          "occurrence": 1
+        },
+        {
+          "id": "6b3a713a31dfcab427e623a3703f99ee2fc78cfbf3aa15dfbf745a680e2cd4bb",
+          "title": "Radiant fact literal label and inert shape/radiant_shelter_chosen/11/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "7efe02f1b98d9a2f538527499f1c5b9cef660b8c1f9a8ac0138576736e0dbbfa",
+          "title": "Radiant fact literal label and inert shape/radiant_shelter_chosen/none/en",
+          "occurrence": 1
+        },
+        {
+          "id": "70fd9f29606096771d262a0af24dccff41dd68915081d1628b9a581d7e9313d2",
+          "title": "Radiant fact literal label and inert shape/radiant_shelter_chosen/none/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "66caaded84c2776e7e0dd0eb80c449db7a4a9eaf0c39a0ecbe0ad6b3c095b591",
+          "title": "Radiant fact literal label and inert shape/eclipse_native_suppressed/owner/en",
+          "occurrence": 1
+        },
+        {
+          "id": "182ccb82bb79b02baffb4adc7e9492e445dfc952eb6419ac35b8b13a88bbb8cd",
+          "title": "Radiant fact literal label and inert shape/eclipse_native_suppressed/owner/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "4ccac0832b0b7b5c2fc76cab07f599e0d5fc3da300c9f06c864341afdd1c39f0",
+          "title": "Radiant fact literal label and inert shape/eclipse_native_restored/owner/en",
+          "occurrence": 1
+        },
+        {
+          "id": "0726792b346c3c53c4fd9bde7fba8384ff0c2865ab25e6457c452c8509a13230",
+          "title": "Radiant fact literal label and inert shape/eclipse_native_restored/owner/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "d9c47a6efb995b91861eb277b2ffa980b1b378410985c551bbdc592ebcf293c8",
+          "title": "Radiant fact literal label and inert shape/eclipse_lease_closed/7/en",
+          "occurrence": 1
+        },
+        {
+          "id": "0a33379d709d90eb35c1ce3c4e6103957f6a0ec9ec03a89230a08866f535d214",
+          "title": "Radiant fact literal label and inert shape/eclipse_lease_closed/7/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "425f123a70eee6e034042860c6235fb60cde85307778624677febab71dab083d",
+          "title": "Radiant fact literal label and inert shape/eclipse_lease_closed/7/en",
+          "occurrence": 2
+        },
+        {
+          "id": "9a00d277bbd5f9e26425c69ef1092ef2d9fba55e449e602d5fd22e1210f89523",
+          "title": "Radiant fact literal label and inert shape/eclipse_lease_closed/7/zh-CN",
+          "occurrence": 2
+        },
+        {
+          "id": "f3049e902ac42c2f4c35adae3139d6b346b1da8f2ff1c352f6075a58905a4346",
+          "title": "aborted close preserves interruption phase while a normal close remains night-only",
+          "occurrence": 1
+        },
+        {
+          "id": "234b273b380500aeddb4d16d5792df630abfb8b0ea4c6866d578ba70436b4460",
+          "title": "known malformed facts and foreign accessors are inert",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/red-moon-facts.test.ts",
+      "to": "frontend/tests/unit/replay/events/red-moon-facts.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        }
+      ],
+      "originalSha256": "1d0043a64829ccf54be8f8c9f09f34220c11e9d828d43cee23cb2960664d2655",
+      "candidateSha256": "f0227ae002bc243f765ce70bdb9867a78eb1570f672a187ead7bc273f8f5a8b1",
+      "baselineCases": [
+        {
+          "id": "d1c31918890b1f6d78f72be44f050f8024aa15bfc22a509d69fb6b6b6392aa72",
+          "title": "red_moon_night_sealed: reveals identity without premature death",
+          "occurrence": 1
+        },
+        {
+          "id": "d645ccfb660649c58bcd9ea3d7945edd632cdde6ff15df8143f6fa0ab6a4ba7b",
+          "title": "red_moon_exile_delayed: reveals identity without premature death",
+          "occurrence": 1
+        },
+        {
+          "id": "96f37873c4957dc96a3818f8e1254d24c6636c3ff7b675bd5c828f78ffac5612",
+          "title": "Expiry has a death effect only with the matching night envelope",
+          "occurrence": 1
+        },
+        {
+          "id": "fda670ecdd65d0b6a5f97d3beae0687c938ac3b47b8b459183451e2f4b481f2a",
+          "title": "Red Moon replay rejects malformed facts, foreign players and wrong phases",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/scholar-mentor-events.test.ts",
+      "to": "frontend/tests/unit/replay/events/scholar-mentor-events.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        }
+      ],
+      "originalSha256": "f6afe6a04b7096db08aa39a5542f80d2b346a829a1eb7bc2df162e2b811ebbab",
+      "candidateSha256": "763c206905d30e85f32ba96dbf2873c28ef823f4efb4a9d87cb0b35c4bfe7d67",
+      "baselineCases": [
+        {
+          "id": "847deab80e81736ff7c76ed89b2eecec714486f019775bff28dc5c52a0b19747",
+          "title": "Scholar Mentor replay fact/modifier_choice_committed/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "0834341eb5ac99878dacbbc401af80a8bf4661be73db9efc43983637bfaa12b6",
+          "title": "Scholar Mentor replay fact/modifier_choice_committed/en",
+          "occurrence": 1
+        },
+        {
+          "id": "0e0b5378eaa2ea3dd2744219e976698073af7dce5d467753478529d31836d475",
+          "title": "Scholar Mentor replay fact/modifier_choice_skipped/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "a21b71879546b23c9df73e293e23fffc6a03b646e697b146f1342d3a37feffdb",
+          "title": "Scholar Mentor replay fact/modifier_choice_skipped/en",
+          "occurrence": 1
+        },
+        {
+          "id": "9fc2a2e33f1328269108a83a6e6daf8110210baec9cf0dcd28b141ff6fd53ef9",
+          "title": "Scholar Mentor replay fact/modifier_conflict_resolved/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "e097960a42829396434ab3ea3c141d82dbd588fa8221908104359fbff9cec744",
+          "title": "Scholar Mentor replay fact/modifier_conflict_resolved/en",
+          "occurrence": 1
+        },
+        {
+          "id": "14c8f780592d8481658a19bd8e6cc61f28f81901f522889bc044144d30369a93",
+          "title": "Scholar Mentor replay fact/modifier_bonus_resolved/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "c7029db674dc4aae29ce9d703f814d73e3f05841d36e6239c5b43bffedae402b",
+          "title": "Scholar Mentor replay fact/modifier_bonus_resolved/en",
+          "occurrence": 1
+        },
+        {
+          "id": "b06ea23fcabf3981bac14b93b273551c776fc4cde0b7bcc15171d8c171ddf335",
+          "title": "Scholar Mentor replay rejects unknown player references",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/shapeshifter-display.test.ts",
+      "to": "frontend/tests/unit/replay/events/shapeshifter-display.test.ts",
+      "purpose": "canonical God/player fact acceptance and atomic effects",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        }
+      ],
+      "originalSha256": "e2f9652b7c3c6736a8e4d1762eabc1535f2f7ee518d189dc1fccb26127315f33",
+      "candidateSha256": "e7526b0df8a9039dcac05bcbc1b88c3f7c2c18f3ad2dc095661770183507e1a0",
+      "baselineCases": [
+        {
+          "id": "eb964c8e92dd0731289366e6342b560f906cee4d5b95affc4e42ad7960f69601",
+          "title": "Shapeshifter strict initial/choice facts reject malformed rows/getters without partial identity/death effects",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/thief-display.test.ts",
+      "to": "frontend/tests/unit/replay/events/thief-display.test.ts",
+      "purpose": "canonical God/player fact acceptance and atomic effects",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        }
+      ],
+      "originalSha256": "9c4bd076bf6e750beb1e301a348f4f25dad495f35191d11fdf8ec955748b81c4",
+      "candidateSha256": "072ecbd7c412c7e960ef3807017638e293000ff0d52a98c477a4b116b815e070",
+      "baselineCases": [
+        {
+          "id": "69fc30a765045f9dd7b6e64d3d3ef3529612926e4b892bc338fb776173c8169b",
+          "title": "Thief strict initial/choice facts reject malformed rows/getters without partial identity/death effects",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/time-consort.test.ts",
+      "to": "frontend/tests/unit/replay/events/time-consort.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        }
+      ],
+      "originalSha256": "74020f11042af6a72b6ca62fda232505f85718cb1c462632275c69801201e5a0",
+      "candidateSha256": "600b88389b19014e401324975c59ddc8d107659cd37d6f1f71958d69b352cc44",
+      "baselineCases": [
+        {
+          "id": "63722e15346808f1695af5b1a4dff6b506d2f8808a23743bf1b9c35ec6d0fc10",
+          "title": "Consort lock remains descriptive/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "3fad654af90aa5f7e860eb4e7453785a966ed8c9181eecdf71eaa71de1d48842",
+          "title": "Consort skips preserve public state/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "0601dc7d7243f25edcf4ec90e623ba123b5d8a4fee143a1a4b2351ab5bfc560c",
+          "title": "Consort reflections are not immediate deaths/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "41bc14033858479f4241c906e623a19855e69e1bda8cb92e9f0e3a80e163ac45",
+          "title": "Consort lock remains descriptive/en",
+          "occurrence": 1
+        },
+        {
+          "id": "d26e551982ae68297ade17de7fc5fcfb61e44f3517700aac2e826f574fb7298e",
+          "title": "Consort skips preserve public state/en",
+          "occurrence": 1
+        },
+        {
+          "id": "09e86a995a303d017ea53512d6a1b494129ab1b41912dce47694e1e23463a666",
+          "title": "Consort reflections are not immediate deaths/en",
+          "occurrence": 1
+        },
+        {
+          "id": "acc5a8171bab5cc1f1472320fdffe723a2a3c5db94e182d697787f86ecca1f5f",
+          "title": "Consort reader rejects invalid day, scope, target and extra fields",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/trickster-facts.test.ts",
+      "to": "frontend/tests/unit/replay/events/trickster-facts.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        }
+      ],
+      "originalSha256": "8cfd2834a5ef5716bd3dc2ba06bd977257ec2d804997220b0506032c82d4d499",
+      "candidateSha256": "6a702d9016ad9f91ba99356cbaffb839620a1b1c2684a02c99aaa8857d8911ba",
+      "baselineCases": [
+        {
+          "id": "67bdbc2557df6c543f62604b8638ef4bc79cb67a78410a1da4f52e702827cd58",
+          "title": "Trickster mapping describes outcome without creating a death/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "54cf7dc1c92996645c0c4c70f9092d1630ec92bdc1719e45ddcb05024d7129a0",
+          "title": "Trickster private choices remain descriptive facts/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "7b596de56b18a7ca4ffd53ee4220c1a6915742402e2c9ddfb65e52b04e4362ea",
+          "title": "Trickster mapping describes outcome without creating a death/en",
+          "occurrence": 1
+        },
+        {
+          "id": "bba3cafed7b92ce0ec8090e7cce7e9751f00417716607ef8f012f60108545d8c",
+          "title": "Trickster private choices remain descriptive facts/en",
+          "occurrence": 1
+        },
+        {
+          "id": "a84c5be6f3ce96548ae0891b389aba98f51a7aac6341a42b3ce0769ec81ee812",
+          "title": "Trickster rejects malformed, foreign, extra and wrong-phase replay facts",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/wall-display.test.ts",
+      "to": "frontend/tests/unit/replay/events/wall-display.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        }
+      ],
+      "originalSha256": "dcde6ae7eb132586b66473ab2f9b7ebc74278927cf92b8b9e70d836ef2f275d6",
+      "candidateSha256": "637f8564c8a7c8c7324bc41967a975bbaec8732305bfbe71bd4f4340ef7c81e5",
+      "baselineCases": [
+        {
+          "id": "ee348849ac39c30331ca1678b3ffd8db89a83863b20d812b171f7e8966082457",
+          "title": "zh-CN: public note body never creates author/role/death effects; God IDs strict",
+          "occurrence": 1
+        },
+        {
+          "id": "ba300d40b8ebe9df8e82a3f95942c0ba0433f9656849b1e818f004d233cbf2bc",
+          "title": "en: public note body never creates author/role/death effects; God IDs strict",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/wild-child-display.test.ts",
+      "to": "frontend/tests/unit/replay/events/wild-child-display.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        }
+      ],
+      "originalSha256": "d04d837c1a86ba9674d8fa0db3f1bba25c4d94eb762129d6575ea8f055e7df99",
+      "candidateSha256": "09ebbbac3139b730c450d533458b872379055c5515500ec6e1e6e854fb073dd9",
+      "baselineCases": [
+        {
+          "id": "ee92fabf2e02858f0fb51dc718a5d11c0b2e5748daea35c2b1cb8adbc57d54aa",
+          "title": "Wild Child exact God and lean actor transformed facts share label/camp effects with no private cause projection",
+          "occurrence": 1
+        },
+        {
+          "id": "a31302c7820fa9333b28647569d480e8a39f43f65abf52a71f8883d78dbbf22a",
+          "title": "Wild Child God death reader rejects unknown causes, extra IDs and accessors without executing them",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/wolf-sorcerer-events.test.ts",
+      "to": "frontend/tests/unit/replay/events/wolf-sorcerer-events.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        }
+      ],
+      "originalSha256": "8bb4f051d8edc91831a68d72e9fabb47e10dffba54e5dd9481203b2a0251b1b7",
+      "candidateSha256": "c0181ce4a33556d38a5cb239cb881bf7d810009279457b191b6aca85a0e75f17",
+      "baselineCases": [
+        {
+          "id": "0552c62179fe71195b57164d3a2af1e8131e121707b3a58c38d29c71d7c884e8",
+          "title": "Wolf Sorcerer choices are descriptive and never swap public identities/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "d51f021d6ff111cdc11f7cce2101c04304dd8f14acf835c6893c82948b0beb3d",
+          "title": "Wolf Sorcerer skips preserve public replay state/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "ef53e6cefa9a927d95db56ba05f8ed01fc399e0c9e7e23ceb305f976850617ba",
+          "title": "Wolf Sorcerer choices are descriptive and never swap public identities/en",
+          "occurrence": 1
+        },
+        {
+          "id": "ad196a3f3746033c438d1292db4d337d1846a2e1eaf889ad3ad13946fc0c690c",
+          "title": "Wolf Sorcerer skips preserve public replay state/en",
+          "occurrence": 1
+        },
+        {
+          "id": "9da6f17305ee3c619b4c6bb3f15cb049017e986057b616e3ac55d455c19bb6d5",
+          "title": "Wolf Sorcerer reader rejects malformed private choices",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/noble-secret-body-commit-labels.test.ts",
+      "to": "frontend/tests/unit/replay/events/noble-secret-body-commit-labels.test.ts",
+      "purpose": "public event parsing and bilingual labels",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        },
+        {
+          "old": "../../../src/replay/replay-projection",
+          "new": "../../../../src/replay/replay-projection",
+          "resolved": "frontend/src/replay/replay-projection"
+        }
+      ],
+      "originalSha256": "e54287d75aa3b46787962bb5c95cc2057e0591ea6a791397022f0d9175e2a222",
+      "candidateSha256": "ef9657780b60788671d9f63fa0a1c9dbeaff72a4ff0ec48179ca4860c938b43b",
+      "baselineCases": [
+        {
+          "id": "942ca3a7109c08915cfc09e18123d89732bc5d66f93cc85a0caf182fd16421f3",
+          "title": "God commit reader retains Alive and badge noble_body_knife_committed/6",
+          "occurrence": 1
+        },
+        {
+          "id": "09c95d1e56cd075e14880b4beb2821fec5d3e0b5dfc9a22222e27e69c67f7ce0",
+          "title": "God commit reader retains Alive and badge noble_body_knife_committed/null",
+          "occurrence": 1
+        },
+        {
+          "id": "b028123ce36fed665856247905275c5e8b3a76e67ba7817020b381b11c5b1f21",
+          "title": "God commit reader retains Alive and badge noble_body_native_damage_committed/undefined",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/noble-secret-body-cross-review.test.ts",
+      "to": "frontend/tests/unit/replay/events/noble-player-audience.test.ts",
+      "purpose": "noble public/player fact acceptance and association",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        },
+        {
+          "old": "../../../src/replay/replay-projection",
+          "new": "../../../../src/replay/replay-projection",
+          "resolved": "frontend/src/replay/replay-projection"
+        }
+      ],
+      "originalSha256": "a29f5f3840fdbd8bad62dbc78242f79825317297e9eb2f616b69efcae9b20f82",
+      "candidateSha256": "247d0ee1ca7b8ad499cc69a31862586859c116969e4fb8a9f12051374ea031fd",
+      "baselineCases": [
+        {
+          "id": "0e93b2cf6abbca8a589480de284dcfece10cc832040c291dc8afbbfbe6fa3914",
+          "title": "public living reveal decoder produces role-only effect",
+          "occurrence": 1
+        },
+        {
+          "id": "adbaad9fac867193d57bbc6b6367158ae212f17cd0dc03d287c999284a519d28",
+          "title": "public living reveal gets Chinese and English labels",
+          "occurrence": 1
+        },
+        {
+          "id": "4b69367c40d21a158141412fd3cee612a94b3153f1dcf97a8990712be3b2c9cc",
+          "title": "living reveal preserves alive and badge while showing public identity",
+          "occurrence": 1
+        },
+        {
+          "id": "8c866903ecdc5f360ed7b0e0f5b9152476b5b55a12fc299dd3d5cbdf26322384",
+          "title": "choices/closed/block/notices/speech are legal yet never mutate death or badge",
+          "occurrence": 1
+        },
+        {
+          "id": "b288dbbc42e44f3ac9e5fbc80a19e783e9a1961762c28411f0d2ce8954a055d9",
+          "title": "all strict known facts reject wrong public phase or extra fields with no partial effects",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/noble-secret-body-summary-guard-review.test.ts",
+      "to": "frontend/tests/unit/replay/events/noble-summary-descriptors.test.ts",
+      "purpose": "summary descriptor rejection and atomic badge effects",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/replay-projection",
+          "new": "../../../../src/replay/replay-projection",
+          "resolved": "frontend/src/replay/replay-projection"
+        }
+      ],
+      "originalSha256": "3b78e8a0e3d994ae4b2a250fb8490ac417b642fbe3dc9c29087b9f360bc6a731",
+      "candidateSha256": "5243b0cc62186a4ebc3ecdff42c8fbd26d505fd0cf0d2ba0cd2508137e0795e7",
+      "baselineCases": [
+        {
+          "id": "0aa5f91387f0e76708a0c1bcae7d4f67ff28041457d5f5e81705cc1f4f8116f9",
+          "title": "valid public summary gives one badge effect",
+          "occurrence": 1
+        },
+        {
+          "id": "1f8f3404af965fab1ee55ec8d8656dd4f9d6b153d365cdaf3056f05763ffcfe6",
+          "title": "invalid trailing vote does not retain a partial badge effect",
+          "occurrence": 1
+        },
+        {
+          "id": "ee06e5e8761daba9e832cd9fd724dcee58e9b0ab36d303ae931fe3806d19ef2f",
+          "title": "invalid optional extra ID does not retain a partial badge effect",
+          "occurrence": 1
+        },
+        {
+          "id": "cb93a916f121a41b9e1e697884ef4178c71920bc40213ba60fac2c89cb420c00",
+          "title": "numeric and repeated elected summaries are idempotent without role or camp changes",
+          "occurrence": 1
+        },
+        {
+          "id": "4060774530600e16d127f185def5d9a8ea950ee79c80113b42e31ce962e60879",
+          "title": "a malformed known round field cannot assign a new badge",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/replay-presentation.test.ts",
+      "to": "frontend/tests/unit/replay/projection/replay-presentation.test.ts",
+      "purpose": "timeline projection and fact coalescing",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-presentation",
+          "new": "../../../../src/replay/replay-presentation",
+          "resolved": "frontend/src/replay/replay-presentation"
+        }
+      ],
+      "originalSha256": "4f1526484184273ccc4e054283adb3f40a03e08b7f1ef2b1d78b797a3d849614",
+      "candidateSha256": "8edca3daafd44fcafbe353ea7daaec39ba3f40b04e13d26590361be72493d2d6",
+      "baselineCases": [
+        {
+          "id": "e0797ad69e63078d3c4a3777d7e595d493184e8eca1e0a8d3d24f027413cf3f6",
+          "title": "collapses concurrent declarations and votes into their summary events",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/replay-projection.test.ts",
+      "to": "frontend/tests/unit/replay/projection/replay-projection.test.ts",
+      "purpose": "event-prefix seat and life projection",
+      "importPaths": [
+        {
+          "old": "../../../src/replay/replay-projection",
+          "new": "../../../../src/replay/replay-projection",
+          "resolved": "frontend/src/replay/replay-projection"
+        }
+      ],
+      "originalSha256": "5c11fbb9e08b7198a023677287bf60069c5837234c6f6c4cdebfb6b584110fd3",
+      "candidateSha256": "369cb6c2536f50a1bf0d31be66d19f591e9f41a43529d50b33f15278cfa92fc6",
+      "baselineCases": [
+        {
+          "id": "bc110622a96bbe1fd6c24a7ba3f103428a309c239cf6b7a50c76433418ae15cb",
+          "title": "projects live seats from the event history instead of final manifest state",
+          "occurrence": 1
+        },
+        {
+          "id": "4443aafbb1a484f3d65fc854d01814422de8592c6e9f97237b295d2d8a83830c",
+          "title": "projects an initially configured sheriff from the canonical bootstrap event",
+          "occurrence": 1
+        },
+        {
+          "id": "33c4684236a5184d1823998d8d23a9d2cc0c479dc9a1a48916a5f3478cdf0e47",
+          "title": "removes the sheriff badge when the canonical destroy event names targetId",
+          "occurrence": 1
+        },
+        {
+          "id": "ed580c8800447b748ecada35d3779032aee152e910cdfcab164491bd03572c24",
+          "title": "projects self-destruct and hunter-shot targets as dead",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/fragrant-pair-seer-independent.test.ts",
+      "to": "frontend/tests/unit/replay/projection/fragrant-link-causality.test.ts",
+      "purpose": "fragrant link publication and reverse-frame causality",
+      "importPaths": [
+        {
+          "old": "../../support/fragrant-replay",
+          "new": "../../../support/fragrant-replay",
+          "resolved": "frontend/tests/support/fragrant-replay"
+        },
+        {
+          "old": "../../../src/replay/replay-frame",
+          "new": "../../../../src/replay/replay-frame",
+          "resolved": "frontend/src/replay/replay-frame"
+        },
+        {
+          "old": "../../../src/replay/replay-event-reader",
+          "new": "../../../../src/replay/replay-event-reader",
+          "resolved": "frontend/src/replay/replay-event-reader"
+        },
+        {
+          "old": "../../../src/replay/event-labels",
+          "new": "../../../../src/replay/event-labels",
+          "resolved": "frontend/src/replay/event-labels"
+        }
+      ],
+      "originalSha256": "d980ce68279cbf8a8f518062044abb276a9e74f5bdcdf49334410bb2ea70896e",
+      "candidateSha256": "d38deb9520515a8725912a5f4460270b7c6cc1cf22f1eded789580c1601c6dc7",
+      "baselineCases": [
+        {
+          "id": "99c7239d1e2ae20556f7c330bf4778210d6b9383ad3e754c88a49db355af4f6d",
+          "title": "literal first link publication and reverse frame en",
+          "occurrence": 1
+        },
+        {
+          "id": "7a00065f776db469e273de75c98b0d9d938574385aadf01bf725918221ed0a79",
+          "title": "literal gun then link publication en",
+          "occurrence": 1
+        },
+        {
+          "id": "70757b4d6c7c794640dd665c9a5cb99d0f2cc731eed5588d1778532d3281d7dc",
+          "title": "masked roles stay unknown at actual private events phantom/en",
+          "occurrence": 1
+        },
+        {
+          "id": "e89de3a49d627f8c7c8d7ed76b9eb1cc774e721a759705a1c42c0a4d6b9666b6",
+          "title": "masked roles stay unknown at actual private events seer/en",
+          "occurrence": 1
+        },
+        {
+          "id": "39b26df16a6f58c3dfa0017bb380216a324c38c55cc96773d3eb0ec5c8d112c8",
+          "title": "masked roles stay unknown at actual private events villager/en",
+          "occurrence": 1
+        },
+        {
+          "id": "608b24d9a0d24e495adc715e3a2e75d4f382a6f6b4fcccd70317e1f22550d8ae",
+          "title": "masked roles stay unknown at actual private events pack/en",
+          "occurrence": 1
+        },
+        {
+          "id": "38e3755f4aeff1cb9188546a3e847260e36503c045b55d2560ab63f8ce0857fe",
+          "title": "strict reader invalid day/phase/target cannot drive frame en",
+          "occurrence": 1
+        },
+        {
+          "id": "1729ff0dd7bc3d8468c4c78432596a045578cfe04af5b1c9e19ec1c61be892ee",
+          "title": "literal first link publication and reverse frame zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "9d0693bccf90070c7efac94382260048d6bda3c9017acb51293a1139937baa49",
+          "title": "literal gun then link publication zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "12d3b2c003c2673f613a44121c61460ec080875d5823e33689e42b91a9c13993",
+          "title": "masked roles stay unknown at actual private events phantom/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "660d986d8895cea67e2a2049b3fcf0397fcab6969ff99d67c7d00fef51a75ab9",
+          "title": "masked roles stay unknown at actual private events seer/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "975ff6f7ae6fa113ad333b5b3d317b928d2822e6f647918818945af5ecd00970",
+          "title": "masked roles stay unknown at actual private events villager/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "e7b0548c527f65a23f3dc18921acc6a1c2595f46f7f699373ae5bfefb421bd5e",
+          "title": "masked roles stay unknown at actual private events pack/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "2a928ae47077d73e5411647bd408c4cc77fd538ca2f9eb083688624836f8452d",
+          "title": "strict reader invalid day/phase/target cannot drive frame zh-CN",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-unit",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/scholar-mentor-draft.test.ts",
+      "to": "packages/game-contract/tests/unit/facts/scholar-mentor-cases.test.ts",
+      "purpose": "contract-owned Scholar Mentor inert readers",
+      "importPaths": [],
+      "originalSha256": "d83f4ae788edb29708c105c3327c2a033760fae4831c96d3406a671ff1ff5c96",
+      "candidateSha256": "d83f4ae788edb29708c105c3327c2a033760fae4831c96d3406a671ff1ff5c96",
+      "baselineCases": [
+        {
+          "id": "b0f0868c92ae4f2d2a93a72656dadd4eb15fe122db478188c64d88875e9f610a",
+          "title": "modifier_choice_committed round trip and defensive copy",
+          "occurrence": 1
+        },
+        {
+          "id": "9933d30045122132453d62457ddc17c3b03ff9b3d0155ffdb8e79ccd125a1f8b",
+          "title": "modifier_choice_committed rejects extra keys and invalid day",
+          "occurrence": 1
+        },
+        {
+          "id": "53ae98f3aad4cce2242eba91119b397f7f95dc30ef75c8a2e57ace457e505688",
+          "title": "modifier_choice_committed rejects accessors without reading",
+          "occurrence": 1
+        },
+        {
+          "id": "8e4cfa999429e77bd44c8dc2a322a2560320a3b1871bf0581a65bbea125e9680",
+          "title": "modifier_choice_skipped round trip and defensive copy",
+          "occurrence": 1
+        },
+        {
+          "id": "2fcc46ab0a9eb1420a2f673470cbd61177cab287b4f2868b77b79c768490a905",
+          "title": "modifier_choice_skipped rejects extra keys and invalid day",
+          "occurrence": 1
+        },
+        {
+          "id": "9d2d7856723910ff8a5fbc6a1cdaa24ac79e935614c38aa247edbe36b76b714c",
+          "title": "modifier_choice_skipped rejects accessors without reading",
+          "occurrence": 1
+        },
+        {
+          "id": "2c7372378f605710c9bb9cabb29228abee1e9293d9aef788f26153fd61c99077",
+          "title": "modifier_conflict_resolved round trip and defensive copy",
+          "occurrence": 1
+        },
+        {
+          "id": "60eb4e9a2820ed002b5df05ad3b28d6cf319bb4931538ec74c031dfd4dabefab",
+          "title": "modifier_conflict_resolved rejects extra keys and invalid day",
+          "occurrence": 1
+        },
+        {
+          "id": "823665739d7fe577e41ab8cdcdb95836e0ce6cfe4ed8d3edf05b336b1c354b99",
+          "title": "modifier_conflict_resolved rejects accessors without reading",
+          "occurrence": 1
+        },
+        {
+          "id": "f364ae36fe3b1c825e481697ff2c2dcb30b7dd24f48e2797ae13c4fab801dde1",
+          "title": "modifier_bonus_resolved round trip and defensive copy",
+          "occurrence": 1
+        },
+        {
+          "id": "0cfe3bf0807450dff3ea4320d0cba7d65f14796e5d732fee942653783fa40159",
+          "title": "modifier_bonus_resolved rejects extra keys and invalid day",
+          "occurrence": 1
+        },
+        {
+          "id": "947b7a44ad585f5cb55880c7b1a3e2475f002195a77ab19e2c3d8c9a5e190796",
+          "title": "modifier_bonus_resolved rejects accessors without reading",
+          "occurrence": 1
+        },
+        {
+          "id": "f02ae61e48aa09eeb9986d6cfa8fac4fd38a0d925025f5ec2fa219202feafea6",
+          "title": "choice null pair and first-night rejection",
+          "occurrence": 1
+        },
+        {
+          "id": "b587e959104dde67505671d78e08ec2be3e6b6bd4690fd9ba0231503dea140c2",
+          "title": "bonus requires inspection result only for real check",
+          "occurrence": 1
+        },
+        {
+          "id": "7d228bc2411357c334e7a81c1a68efa706f7802c0ddfa6ee1e199be853571f3b",
+          "title": "bonus pass must not leak inspection result",
+          "occurrence": 1
+        },
+        {
+          "id": "121fc90480c7c935066da1253f2a621032d069a169fede115713bd78b73e7aee",
+          "title": "bonus rejects non-string kind without coercion",
+          "occurrence": 1
+        },
+        {
+          "id": "8eaabbdf92dc0dcd8013f9d9326d6b06b38800d9281c965b8a8bc12d64dc5bd3",
+          "title": "skip first-night reason only on day one",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "game-contract",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "files": 82,
-    "baselineCases": 1035,
+    "files": 108,
+    "baselineCases": 1241,
     "fixtureByteChanges": 0
   }
 }

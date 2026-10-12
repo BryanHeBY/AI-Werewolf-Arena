@@ -1,6 +1,13 @@
+/**
+ * Unit tests verify Noble summary descriptor rejection and atomic badge effects.
+ * Input: literal vote summaries, invalid tails and repeated publication rows.
+ * Output: the original rejection, elected badge and idempotence assertions.
+ * Handwritten expected badge effects and public seat state are the independent oracle.
+ * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ */
 import { expect, test } from "bun:test";
-import { readReplayEvent } from "../../../src/replay/replay-event-reader";
-import { buildReplaySnapshot } from "../../../src/replay/replay-projection";
+import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
+import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
 function row(payload: Record<string, unknown>) {
   return {
     seq: 1,

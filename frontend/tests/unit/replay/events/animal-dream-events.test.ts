@@ -1,8 +1,15 @@
+/**
+ * Unit tests verify animal dream fact acceptance, display labels, event-prefix effects.
+ * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
+ * Output: the original fact acceptance, display labels, event-prefix effects assertions.
+ * Handwritten field, label and effect expectations are the independent oracle.
+ * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ */
 import { expect, test } from "bun:test";
 import { animalDreamEventLabel } from "@ai-werewolf-arena/game-text";
-import { readReplayEvent } from "../../../src/replay/replay-event-reader";
-import { eventLabel } from "../../../src/replay/event-labels";
-import { buildReplaySnapshot } from "../../../src/replay/replay-projection";
+import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
+import { eventLabel } from "../../../../src/replay/event-labels";
+import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
 const ids = Array.from({ length: 12 }, (_, i) => i + 1),
   base = { policy: "awa_animal_dream_v1", day: 2 };
 const rows = [

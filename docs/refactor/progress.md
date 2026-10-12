@@ -57,3 +57,5 @@
 - C15词典与扫描：12 owner/1513 keys/403参数定义，3026 literal及两語顺序/descriptor/types保持；三方向审查，scanner真实根/祖先软链漏洞修正，3原canary拒绝。formatter原4/0、必要类型与扫描局部通过，精确例外不放宽。
 
 - C14清单前置：907原文件/48,294,509字节四方同SHA；258suites全pending，未知来源明确。8原局部与4具体反例通过，4项审查问题修正后5原输入独立复核；archive/adapter选择器有实际owner策略。成套物理迁移及原动态loader尚待后续。
+
+- C11前端26组：25事实/投影归前端功能目录，17 Scholar纯reader项归contract；206旧IDs、全部正文/矩阵与50 resolvedimports保留，职责头审查误述修正。必要FE/contract类型0，未重复26suite；统一mapping现108files/1241IDs。

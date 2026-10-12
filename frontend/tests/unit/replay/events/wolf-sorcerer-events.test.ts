@@ -1,7 +1,14 @@
+/**
+ * Unit tests verify wolf sorcerer fact acceptance, display labels.
+ * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
+ * Output: the original fact acceptance, display labels assertions.
+ * Handwritten field, label and effect expectations are the independent oracle.
+ * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ */
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
-import { readReplayEvent } from "../../../src/replay/replay-event-reader";
-import { eventLabel } from "../../../src/replay/event-labels";
+import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
+import { eventLabel } from "../../../../src/replay/event-labels";
 function event(type: string, payload: Record<string, unknown>, phase = "night"): ReplayEvent {
   return {
     seq: 1,
