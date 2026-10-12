@@ -75332,13 +75332,347 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/wolf_knife_lifecycle.test.ts",
+      "to": "backend/tests/unit/mechanisms/wolf-ballot-life-binding.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "cd80f1aac55c89a3fa349510ae35b12d6a98dd39dce8d239cf416e910bec41e7",
+      "candidateSha256": "6f3031e6cc8d30785a033367e0419d3efb9dc856af6071eca9bb8e111bde5eca",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 827,
+          "end": 869,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 733,
+          "end": 785,
+          "original": "../../../src/game/mechanisms/roles/wolf/night_stages",
+          "value": "../../../src/game/mechanisms/roles/wolf/night_stages",
+          "originalResolved": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/wolf/night_stages.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 657,
+          "end": 695,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 577,
+          "end": 625,
+          "original": "../../../src/core/domain/components/status_marks",
+          "value": "../../../src/core/domain/components/status_marks",
+          "originalResolved": "backend/src/core/domain/components/status_marks.ts",
+          "expectedResolved": "backend/src/core/domain/components/status_marks.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 495,
+          "end": 536,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 409,
+          "end": 454,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 353,
+          "end": 370,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 224,
+          "end": 250,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 127,
+          "end": 149,
+          "original": "../night_stage_fixture",
+          "value": "../../engine/night_stage_fixture",
+          "originalResolved": "backend/tests/engine/night_stage_fixture.ts",
+          "expectedResolved": "backend/tests/engine/night_stage_fixture.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 38,
+          "end": 89,
+          "original": "../../../src/game/mechanisms/stages/night/contracts",
+          "value": "../../../src/game/mechanisms/stages/night/contracts",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/contracts.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/contracts.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "43132ff73c9769bdf0d360e6c960ef110228aa258da1b684e1dbe4c38bb137ed",
+          "title": "revive: second ordinary voter cannot redirect an already collected ballot to a new target life",
+          "occurrence": 1
+        },
+        {
+          "id": "5ff5a3e9e27965d89f89155b0a870dba804628bee38de61f5c86c83a04b623fa",
+          "title": "replace_life: second ordinary voter cannot redirect an already collected ballot to a new target life",
+          "occurrence": 1
+        },
+        {
+          "id": "355d7c21409f29ed709829aea2c4feabbd8ecd105897b099821d794e38ef35c6",
+          "title": "revive: a new valid ballot for the same ID counts once without borrowing its old-life ballot",
+          "occurrence": 1
+        },
+        {
+          "id": "f2e80a91e45e33977b28ebd628d30096c15a4b78a29a398370f45d997789ee1b",
+          "title": "replace_life: a new valid ballot for the same ID counts once without borrowing its old-life ballot",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Role,\n  Phase,\n  WinCondition,\n  COMPONENT,\n  type BoardConfig,\n  type RoleComponent,\n  type GameEvent,\n  StatusMark,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role, Phase, WinCondition, COMPONENT, type BoardConfig, type GameEvent, StatusMark } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/wolf_knife_lifecycle.test.ts",
+      "to": "backend/tests/scenarios/mechanisms/pending-knife-life-binding.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "cd80f1aac55c89a3fa349510ae35b12d6a98dd39dce8d239cf416e910bec41e7",
+      "candidateSha256": "da42333ea62cf8bfec576bb947678e38cf33fccaa40260cadf3f5c995102c993",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 308,
+          "end": 349,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 222,
+          "end": 267,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 166,
+          "end": 183,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "e70962db4df39267ea7a6548863de084150880252ccc790185b353299483055d",
+          "title": "revive: later Seer request cannot make Hidden Wolf damage kill a new target life",
+          "occurrence": 1
+        },
+        {
+          "id": "a0f485ec405cc4b9e9f90fad25213ca542a8b36031b6b0f62bbcb78dafafbc5a",
+          "title": "replace_life: later Seer request cannot make Hidden Wolf damage kill a new target life",
+          "occurrence": 1
+        },
+        {
+          "id": "bfefcb1225aa41aa268387fb6f1c05d2346671cc2cc3c5075c54bffc9d6bc85e",
+          "title": "revive: pending first-day knife damage cannot kill a new life replaced during sheriff nominations",
+          "occurrence": 1
+        },
+        {
+          "id": "a90b9775701921be7feea53bb8446eb5ecc0af0176d095586bac1b91c5d2083c",
+          "title": "replace_life: pending first-day knife damage cannot kill a new life replaced during sheriff nominations",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/contracts",
+          "originalImport": "import type { NightStageState } from \"../../../src/game/mechanisms/stages/night/contracts\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightStageState",
+              "imported": "NightStageState",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../night_stage_fixture",
+          "originalImport": "import { nightStageContext } from \"../night_stage_fixture\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "nightStageContext",
+              "imported": "nightStageContext",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Role,\n  Phase,\n  WinCondition,\n  COMPONENT,\n  type BoardConfig,\n  type RoleComponent,\n  type GameEvent,\n  StatusMark,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role, WinCondition, COMPONENT, type BoardConfig } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "StatusMark",
+              "imported": "StatusMark",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/status_marks",
+          "originalImport": "import { StatusMarksComponent } from \"../../../src/core/domain/components/status_marks\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "StatusMarksComponent",
+              "imported": "StatusMarksComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/wolf/night_stages",
+          "originalImport": "import { WOLF_NIGHT_STAGES } from \"../../../src/game/mechanisms/roles/wolf/night_stages\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "WOLF_NIGHT_STAGES",
+              "imported": "WOLF_NIGHT_STAGES",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/catalog",
+          "originalImport": "import { getDefaultRoleCatalog } from \"../../../src/game/mechanisms/roles/catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 534,
-    "targetFiles": 574,
-    "mappingEntries": 574,
-    "baselineCases": 6694,
+    "sourceFiles": 535,
+    "targetFiles": 576,
+    "mappingEntries": 576,
+    "baselineCases": 6702,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
