@@ -1,9 +1,10 @@
 /**
- * Owns Gravekeeper state data and access to its existing private-state slot.
- * Inputs are the role component and native state; outputs retain the exact stored object, including assignment-before-return behavior.
- * Existing mutation commands, lifecycle validation, player projection and checkpoint
- * encoding keep their current responsibilities. This leaf creates no mirror state,
- * consumes no resource and does not decide whether a request is authorized.
+ * Owns Gravekeeper's existing private-state slot and received exile history writes.
+ * Inputs are the original role or captured state, accepted exile fact and received day;
+ * outputs retain the stored reference and original detached report result.
+ * State data keeps received-day reports with their committed exile day, target and label.
+ * The feedback stage owns eligibility, duplicate checks and event publication;
+ * history insertion retains its original getter/spread/throw prefix with no rollback.
  */
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { ExileFeedback } from "@ai-werewolf-arena/game-contract";
@@ -26,4 +27,13 @@ export function setGravekeeperState(
 
 export function getGravekeeperState(roleComp: RoleComponent): GravekeeperState | undefined {
   return roleComp.privateState["gravekeeper"] as GravekeeperState | undefined;
+}
+
+/** The caller retains every preflight and subsequent use/effect/publication operation. */
+export function recordExileFeedback(
+  state: GravekeeperState,
+  fact: ExileFeedback,
+  receivedDay: number,
+): void {
+  state.history.push({ ...fact, receivedDay, result: { ...fact.result } });
 }

@@ -4,7 +4,10 @@
  * records, use counts and optional-completion behavior. It does not unify their distinct failure
  * or target semantics. Its role-check actor list consumes the bound eligibility
  * query without adding new activation or native learning rules.
+ * Ordinary payload history writes delegate to the local state owner at the original
+ * commit position; all checks, use accounting and publication remain in this flow.
  */
+import { recordRoleInspection } from "./state";
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -175,9 +178,7 @@ async function executeInspections(
         !roleInspectionTargets(ctx.world, actorId, state).includes(targetId)
       )
         continue;
-      state.lastTarget = targetId;
-      state.lastDay = day;
-      state.history.push({ day, targetId, result: { ...result } });
+      recordRoleInspection(state, targetId, day, result);
       recordNightAbilityUse(ability, day, true);
       ctx.events.push({
         timestamp: Date.now(),

@@ -3,7 +3,10 @@
  * night-stage requests and validated dream targets; outputs preserve history and sourced dream
  * protection. Actor eligibility is read through the bound night query; it never
  * applies a death wave or refreshes an expired captured target.
+ * Ordinary payload history writes delegate to the local state owner at the original
+ * commit position; all checks, use accounting and publication remain in this flow.
  */
+import { recordDreamSelection } from "./state";
 import { isRadiantEclipseBoard, captureRadiantPaidEffect } from "../radiant_eclipse/night_frame";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -96,9 +99,7 @@ export const DREAMER_NIGHT_STAGE: NightStageHandler = {
         )
           continue;
         const consecutive = state.lastDay === day - 1 && state.lastTarget === targetId;
-        state.lastTarget = targetId;
-        state.lastDay = day;
-        state.history.push({ day, targetId });
+        recordDreamSelection(state, targetId, day);
         recordNightAbilityUse(ability, day, true);
         markDreamNightCommitted(ctx.world, day);
         applied = true;

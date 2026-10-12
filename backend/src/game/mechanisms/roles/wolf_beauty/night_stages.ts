@@ -2,7 +2,10 @@
  * Runs Wolf Beauty charm selection against original actor and target bodies. Inputs are the
  * current night request and validated charm target; outputs are charm binding, history and event
  * effects. A rejected or stale choice never installs a new relation.
+ * Ordinary payload history writes delegate to the local state owner at the original
+ * commit position; all checks, use accounting and publication remain in this flow.
  */
+import { recordCharmSelection } from "./state";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Role, Camp, Phase } from "../../../../core/domain/model";
@@ -74,9 +77,7 @@ export const WOLF_BEAUTY_CHARM_STAGE: NightStageHandler = {
         )
           continue;
       }
-      state.targetId = targetId;
-      state.lastActedDay = day;
-      state.history.push({ day, targetId });
+      recordCharmSelection(state, targetId, day);
       bindCharm(ctx.world, actorId, targetId);
       ctx.events.push({
         timestamp: Date.now(),

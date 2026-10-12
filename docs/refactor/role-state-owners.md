@@ -51,3 +51,11 @@ reset、self-heal refresh、terminal pass/second-turn close、native heal/poison
 两个既有目标谓词归各自机制的公共 port，实际 night stage、profile 与提示候选使用同一函数。删除已无消费者的 target_policy/repeat_policy 叶子；原新鲜自查、重复守护政策、历史/day getter 的短路与错误顺序保持。Guard 没有新增最终提交重查。
 
 七项原程序与既有 Guard 命令比较、七个职责头通过；新增四项、13 次断言及原 Seer await 后自查一项、五次断言通过，一次有限类型检查通过。独立源审和十个原/现 cold entry 的结果、出口相同。本批只整理目标政策归属，完整目标资格和状态编码仍继续。
+
+## 普通选择与反馈历史写入
+
+RoleInspection、Dreamer、Wolf Beauty 的三个原 payload 写入及 Gravekeeper 的单个 history push 归各自既有 state owner。运行流程在原位置调用具体命令，仍使用已经捕获的同一 state/target/day；Gravekeeper 的 fact 不提前展开，history/push 方法查找、fact spread 和两次 result 读取的错误前缀保持。
+
+RoleInspection 的资格复查和 use accounting、Dreamer 的连续目标计算及已付效果、Beauty 的魅惑绑定、Gravekeeper 的资格/去重与所有事件均留在原顺序。命令不再查当前 state、World 或租约，不退款。本笔没有将可写状态类型改成只读，没有引入 schema/codec 或删除旧访问门面；这些权限与格式仍须后续完成。
+
+十二项原程序逆向及八个职责头通过，四个原有限场景、43 次断言和一次有限类型检查通过。独立比较实际 Git 与完整写入/消费者程序、Gravekeeper 两种 getter/spread 成功和失败前缀，十二次 cold entry 原/现相同；Beauty/Gravekeeper 直接 stage 入口的原有 TDZ 保留并明确记录，没有以成功的 bootstrap 入口掩盖它。全量验收集中后置。

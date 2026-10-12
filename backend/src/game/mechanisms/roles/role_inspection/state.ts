@@ -1,9 +1,10 @@
 /**
- * Owns RoleInspection state data and access to its existing ability instance slot.
- * Inputs are the role component and native state; outputs retain the ability owner's installation copy and selected stored reference.
- * Existing mutation commands, lifecycle validation, player projection and checkpoint
- * encoding keep their current responsibilities. This leaf creates no mirror state,
- * consumes no resource and does not decide whether a request is authorized.
+ * Owns RoleInspection native state access and its ordered inspection history writes.
+ * Inputs are an original role/ability or captured state, target, day and role label;
+ * outputs preserve installation copying, selected slot identity and partial writes.
+ * State data retains optional policies, nullable last target/day and role-label history.
+ * Callers retain target/scope validation, use accounting and fact publication;
+ * this owner adds no currentness recheck, resource refund, lifecycle or archive rule.
  */
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "@ai-werewolf-arena/game-contract";
@@ -34,4 +35,16 @@ export function getRoleInspectionState(
   abilityId?: string,
 ): RoleInspectionState | undefined {
   return findNightAbility(role, "role_check", abilityId)?.state;
+}
+
+/** The caller retains every preflight and subsequent use/effect/publication operation. */
+export function recordRoleInspection(
+  state: RoleInspectionState,
+  targetId: EntityId,
+  day: number,
+  result: Extract<InspectionResult, { kind: "role" }>,
+): void {
+  state.lastTarget = targetId;
+  state.lastDay = day;
+  state.history.push({ day, targetId, result: { ...result } });
 }
