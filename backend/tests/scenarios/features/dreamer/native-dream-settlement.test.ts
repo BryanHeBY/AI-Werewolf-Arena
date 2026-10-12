@@ -1,7 +1,12 @@
-import { Camp } from "../../../src/core";
-import { PotionType } from "../../../src/core";
+/**
+ * Dreamer scenarios verify actual night protection/link/gun/word rules, mandatory choices and committed-prefix reentry.
+ * Input: Original locale/case/king matrices, controlled PM or complete NightPipeline actions and literal damage plans.
+ * Output and oracle: Handwritten death/shot/event/result and resource-prefix assertions retain original causality; no new golden or model is introduced.
+ */
+import { Camp } from "../../../../src/core";
+import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   Role,
   Phase,
@@ -11,71 +16,44 @@ import {
   type BoardConfig,
   type RoleComponent,
   type ActionRequest,
-} from "../../../src/core";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../../src/core";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import {
   getDreamerState,
   getHunterState,
   getWolfKingState,
   getWitchState,
-} from "../../../src/game/mechanisms/roles/private_state";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { ActionReception } from "../../../src/ai/agents/player/action_reception";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import {
-  getDefaultRoleCatalog,
-  getDefaultToolSpecRegistry,
-  getDefaultTargetHintRegistry,
-  getDefaultPhaseStageLocalizationRegistry,
-  getDefaultConfigRenderRegistry,
-} from "../../../src/game/mechanisms";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/ability_changes";
-import { sixPlayerMvpConfig as plainBoard } from "../../../src/runtime/scenarios/six_player_mvp";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ActionValidator } from "../../../src/game/gateway/action_validator";
-import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import { DreamNightFrame } from "../../../src/game/mechanisms/roles/dreamer/night_frame";
-import { DeathCause, type GameEvent, type RuntimeSnapshot } from "../../../src/core";
+} from "../../../../src/game/mechanisms/roles/private_state";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 
 const deck = [Role.Dreamer, Role.Wolf, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];
 
-test("a real gateway rule revoking the night-settlement scope cannot commit late last words", async () => {
-  const game = bootstrapGame(config(), { fixedRoles: deck }),
-    events: GameEvent[] = [],
-    state: RuntimeSnapshot = { day: 1, phase: Phase.Day, gameOver: false, result: null };
-  let current = true;
-  const gateway = new ToolGateway(
-    new ActionValidator(
-      new ToolValidationRuleRegistry({
-        speak: () => {
-          current = false;
-          return null;
-        },
-      }),
-    ),
-  );
-  await new DeathResolution(game.world, events, gateway, new EventRegistry(), state).resolve(
-    [4],
-    { 4: [DeathCause.WolfKill] },
-    {
-      async getAction(request) {
-        expect(request.context.stage).toBe("last_words");
-        return { name: "speak", args: { text: "Late last words" } };
-      },
-    },
-    Phase.Night,
-    Phase.Day,
-    {},
-    { dreams: new DreamNightFrame([]), nightOriginIds: [4], isCurrent: () => current },
-  );
-  expect(events.some((event) => event.type === "last_words_spoken")).toBe(false);
-  expect(game.world.activeDeathActionCount).toBe(0);
-  expect(game.world.getAliveEntityIds()).not.toContain(4);
-});
+function config(roles = deck): BoardConfig {
+  return {
+    ...sixPlayerMvpConfig,
+    winConditions: [WinCondition.SlaughterSide],
+    roleSetups: [...new Set(roles)].map((role) => ({
+      role,
+      count: roles.filter((item) => item === role).length,
+    })),
+  };
+}
+
+const role = (game: ReturnType<typeof bootstrapGame>, id: number) =>
+  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+
+type Case =
+  | "protected"
+  | "knife_link"
+  | "saved"
+  | "poison_link"
+  | "gun_blocked"
+  | "gun_link"
+  | "day_gun"
+  | "day_exile";
 
 for (const mode of ["mixed_waves", "compound_body"] as const)
   test(`${mode}: early White blast merges Day deaths with Night roots without granting every shooter night dream effects`, async () => {
@@ -305,118 +283,6 @@ test("a same-wave already dead target receives Dream cause before its later deat
   );
 });
 
-for (const locale of ["zh-CN", "en"] as const)
-  test(`${locale}: a non-Dreamer with an explicitly granted dream receives the bound effect rules and last choice without a false identity`, () => {
-    const fixed = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager],
-      game = bootstrapGame(plainBoard, { fixedRoles: fixed, locale });
-    grantNightAbility(
-      game.world,
-      5,
-      {
-        id: "gift:day-dream",
-        kind: "dream",
-        state: { lastDay: 1, lastTarget: 6, history: [{ day: 1, targetId: 6 }] },
-        source: { kind: "gift", actorId: 3 },
-        startsOnDay: 2,
-        maxUses: 2,
-      },
-      [],
-    );
-    const request: ActionRequest = {
-      actorId: 5,
-      phase: Phase.Night,
-      allowedTools: ["dream"],
-      context: {
-        day: 2,
-        stage: "dreamer",
-        ability_id: "gift:day-dream",
-        visible_events: [],
-        turn_constraints: {},
-      },
-    };
-    const prompt = policy(game, plainBoard).buildUser(request, {
-      turnId: "t1",
-      allowedTools: ["dream"],
-      actionSubmissionHint: "submit",
-    });
-    expect(prompt).toContain(
-      locale === "en" ? "Dream ability rules for this turn:" : "本轮梦能力规则：",
-    );
-    expect(prompt).toContain(locale === "en" ? "night-origin death shots" : "夜间来源死亡枪");
-    expect(prompt).toContain('"lastTarget":6');
-    expect(prompt).toContain('"lastDay":1');
-    expect(prompt).not.toContain(locale === "en" ? "Your role is Dreamer" : "你的底牌是【摄梦人】");
-    expect(policy(game, plainBoard).buildObservation(request).identity.role).toBe(Role.Villager);
-  });
-function config(roles = deck): BoardConfig {
-  return {
-    ...sixPlayerMvpConfig,
-    winConditions: [WinCondition.SlaughterSide],
-    roleSetups: [...new Set(roles)].map((role) => ({
-      role,
-      count: roles.filter((item) => item === role).length,
-    })),
-  };
-}
-const role = (game: ReturnType<typeof bootstrapGame>, id: number) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
-function policy(game: ReturnType<typeof bootstrapGame>, board = config()) {
-  return new PlayerPromptPolicy(game.world, {
-    boardConfig: board,
-    roleCatalog: getDefaultRoleCatalog(),
-    toolSpecRegistry: getDefaultToolSpecRegistry(),
-    targetHintRegistry: getDefaultTargetHintRegistry(),
-    phaseStageLocalizationRegistry: getDefaultPhaseStageLocalizationRegistry(),
-    configRenderRegistry: getDefaultConfigRenderRegistry(),
-  });
-}
-
-for (const locale of ["zh-CN", "en"] as const)
-  test(`${locale}: readonly mandatory dream reception has no target-state leak or early resource consumption`, () => {
-    const game = bootstrapGame(config(), { fixedRoles: deck, locale }),
-      reception = new ActionReception(game.world),
-      request: ActionRequest = {
-        actorId: 1,
-        phase: Phase.Night,
-        allowedTools: ["dream"],
-        context: {
-          day: 1,
-          stage: "dreamer",
-          ability_id: "native:dream",
-          visible_events: [],
-          turn_constraints: {},
-        },
-      };
-    expect(reception.validate(request, "dream", { target_id: 5 }).ok).toBe(true);
-    for (const target_id of [1, 999, 2.5, null])
-      expect(reception.validate(request, "dream", { target_id }).ok).toBe(false);
-    expect(
-      reception.validate({ ...request, phase: Phase.Day }, "dream", { target_id: 5 }),
-    ).toMatchObject({ ok: false, error: "ability_phase" });
-    expect(getDreamerState(role(game, 1))).toEqual({
-      lastTarget: null,
-      lastDay: null,
-      history: [],
-    });
-    const target = policy(game).buildObservation({
-      ...request,
-      actorId: 5,
-      allowedTools: ["speak"],
-      phase: Phase.Day,
-      context: { ...request.context, ability_id: undefined, stage: "day_speech" },
-    });
-    expect(target.ownState.dreamer).toBeUndefined();
-  });
-
-type Case =
-  | "protected"
-  | "knife_link"
-  | "saved"
-  | "poison_link"
-  | "gun_blocked"
-  | "gun_link"
-  | "day_gun"
-  | "day_exile";
 for (const locale of ["zh-CN", "en"] as const)
   for (const kind of [
     "protected",

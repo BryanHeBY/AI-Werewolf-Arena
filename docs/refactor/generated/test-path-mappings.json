@@ -75666,13 +75666,725 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/dreamer.test.ts",
+      "to": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "be88c53e7d5386df3cf0f40d7f543188001cb0bb5f9f1a562aafc0f866083c9c",
+      "candidateSha256": "f6fb33c95390acaee85940eec590db91b06debc3eeb548805f3a289d4526a2d2",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1541,
+          "end": 1558,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1418,
+          "end": 1472,
+          "original": "../../../src/game/mechanisms/roles/dreamer/night_frame",
+          "value": "../../../../src/game/mechanisms/roles/dreamer/night_frame",
+          "originalResolved": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1313,
+          "end": 1382,
+          "original": "../../../src/game/mechanisms/validation/tool_validation_rule_registry",
+          "value": "../../../../src/game/mechanisms/validation/tool_validation_rule_registry",
+          "originalResolved": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1224,
+          "end": 1266,
+          "original": "../../../src/game/gateway/action_validator",
+          "value": "../../../../src/game/gateway/action_validator",
+          "originalResolved": "backend/src/game/gateway/action_validator.ts",
+          "expectedResolved": "backend/src/game/gateway/action_validator.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1149,
+          "end": 1188,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1074,
+          "end": 1115,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 993,
+          "end": 1038,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 890,
+          "end": 940,
+          "original": "../../../src/game/mechanisms/roles/ability_changes",
+          "value": "../../../../src/game/mechanisms/roles/ability_changes",
+          "originalResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ability_changes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 814,
+          "end": 852,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 754,
+          "end": 782,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 519,
+          "end": 569,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 434,
+          "end": 480,
+          "original": "../../../src/ai/agents/player/action_reception",
+          "value": "../../../../src/ai/agents/player/action_reception",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 350,
+          "end": 398,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 269,
+          "end": 314,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 213,
+          "end": 230,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f239fec88d7f0c4df43a325702867d7da6c5d1db31d2fdfcd34fe0485a3dfb87",
+          "title": "a real gateway rule revoking the night-settlement scope cannot commit late last words",
+          "occurrence": 1
+        },
+        {
+          "id": "fc08ade7195ca4b8f31414c879087f2cd67bbb45ce51e8ddbedd9f7ccc7544d9",
+          "title": "zh-CN: a non-Dreamer with an explicitly granted dream receives the bound effect rules and last choice without a false identity",
+          "occurrence": 1
+        },
+        {
+          "id": "2be6343eaa4c880ce1b485c3cd0d2fcb2ab84166f2b40196a40e3588d1ac7c7c",
+          "title": "en: a non-Dreamer with an explicitly granted dream receives the bound effect rules and last choice without a false identity",
+          "occurrence": 1
+        },
+        {
+          "id": "843342ee2caefc7f906b223d5c862fa7595fd6ba7a114380d529fe80276e62a0",
+          "title": "zh-CN: readonly mandatory dream reception has no target-state leak or early resource consumption",
+          "occurrence": 1
+        },
+        {
+          "id": "2ba02c47d2166d5a6642be58ce142880f4a56d814cf0b749a80fba625a8a7376",
+          "title": "en: readonly mandatory dream reception has no target-state leak or early resource consumption",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { Camp } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { PotionType } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Role,\n  Phase,\n  WinCondition,\n  COMPONENT,\n  ActionWindow,\n  type BoardConfig,\n  type RoleComponent,\n  type ActionRequest,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role, Phase, WinCondition, COMPONENT, type BoardConfig, type RoleComponent, type ActionRequest } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "ActionWindow",
+              "imported": "ActionWindow",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import {\n  getDreamerState,\n  getHunterState,\n  getWolfKingState,\n  getWitchState,\n} from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": "import { getDreamerState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "droppedBindings": [
+            {
+              "name": "getHunterState",
+              "imported": "getHunterState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getWolfKingState",
+              "imported": "getWolfKingState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getWitchState",
+              "imported": "getWitchState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/agent_visible_event_feed",
+          "originalImport": "import { buildAgentVisibleEventFeed } from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "buildAgentVisibleEventFeed",
+              "imported": "buildAgentVisibleEventFeed",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalImport": "import { NightPipeline } from \"../../../src/game/engine/phase_pipeline/night_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightPipeline",
+              "imported": "NightPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalImport": "import { DamageResolutionSystem } from \"../../../src/core/domain/systems/damage_resolution_system\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DamageResolutionSystem",
+              "imported": "DamageResolutionSystem",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/dreamer.test.ts",
+      "to": "backend/tests/scenarios/features/dreamer/native-dream-settlement.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "be88c53e7d5386df3cf0f40d7f543188001cb0bb5f9f1a562aafc0f866083c9c",
+      "candidateSha256": "ed5e9e951c47766de04824cae6efeb50a711fa78828c7565a86e7902bdeace2f",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 893,
+          "end": 931,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 804,
+          "end": 861,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 707,
+          "end": 761,
+          "original": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "value": "../../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 624,
+          "end": 673,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 529,
+          "end": 577,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 390,
+          "end": 435,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 334,
+          "end": 351,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 162,
+          "end": 188,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 70,
+          "end": 87,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 22,
+          "end": 39,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "efd6ea2ae189846e2243bbfce7d62837f55784d8508a6b2ee5bc2b8267eac9e6",
+          "title": "mixed_waves: early White blast merges Day deaths with Night roots without granting every shooter night dream effects",
+          "occurrence": 1
+        },
+        {
+          "id": "71bf26cd17a774419eda3b6863f99d39b5f2211500cd37ae8d0223a5ebafd9fe",
+          "title": "compound_body: early White blast merges Day deaths with Night roots without granting every shooter night dream effects",
+          "occurrence": 1
+        },
+        {
+          "id": "b2b7e1ddbc18a0de4ce2ce9dc692b5ac9ab374894f6d3894cbe6114f3786735e",
+          "title": "a committed dream prefix is retained as evidence but same-world same-night reentry after cancellation is explicitly rejected",
+          "occurrence": 1
+        },
+        {
+          "id": "2d72d193878727e98f49f927a5db01e84db42ba6c85f3e5fb066bf1d1ba6ad19",
+          "title": "three invalid choices cannot silently skip a still-authorized mandatory dream",
+          "occurrence": 1
+        },
+        {
+          "id": "80f70ceeea2d647017d5e4dfa8532c9c7774199b8118d9b363e11fcd5a889ed9",
+          "title": "a same-phase jump during a Night-origin death shot revokes the old gun and link without rolling back the valid initial death",
+          "occurrence": 1
+        },
+        {
+          "id": "9b2d47e7ec09bec0ce13417909df6616509873293d27b8ec7c261a820697dff7",
+          "title": "a same-wave already dead target receives Dream cause before its later death hook, so it cannot take a second gun",
+          "occurrence": 1
+        },
+        {
+          "id": "8840a23afddad27618c164aea8c227540d583da4462ca07f13eaf7457625ee7f",
+          "title": "zh-CN/protected: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "31d31b14ae2f77b04201e3a4560961706c18038d9cb75eb801da8814257fc44f",
+          "title": "zh-CN/knife_link: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "605c58a39b3f4c967675dea369b20b727455cbfc09b4f1795178ab8b71e80cb8",
+          "title": "zh-CN/saved: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "11e6b5a2eeb12180ede535f7935d638a46fa6ab545d2b86fe7c45879a2537e72",
+          "title": "zh-CN/poison_link: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "ec00a06a5b2515a7ff1d16bfb99704e0c4a7e60369a373693be7f26adca36e34",
+          "title": "zh-CN/gun_blocked: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "5af6245a78ee7ac93ef7318ce553d7f265699a709e326d3197080e4cf28f2ab6",
+          "title": "zh-CN/gun_link: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "b9ebb1633a599d1c00139de6b9842304d83ca8a5565f97fc1c45dc251c3cdb9a",
+          "title": "zh-CN/day_gun: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "bc0f2f9d7ef1a518bd11ff15554e6f8504fc857b394bdb05b89e2c81e21e81e9",
+          "title": "zh-CN/day_exile: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "80fba5cbc43922b44a1b49f69fba4ea0ff2475915080b431aa5343c010247c84",
+          "title": "en/protected: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "664aea983348c0c53b33ae9760d7f8f67c77f2086be5df883355935b60f8651a",
+          "title": "en/knife_link: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "b07dd96b45a94436520b3941280189106b2c883361f0d6a0611f89db1f91baff",
+          "title": "en/saved: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "e3c1228162c4ba1da6b40cf81d4d351028b10f0439630c038fa806bf4239602c",
+          "title": "en/poison_link: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "8f5d493059b980258d3c8e715564866992a2be144eaceb50f40d1015d6164550",
+          "title": "en/gun_blocked: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "31fcd203b4e7bb52f369e8d29f41820584d8e5f9fde526468741185f85a91b8f",
+          "title": "en/gun_link: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "063e73175c63792d11336cfe7b5aceca84da8dc4483b4e2bf58ed8e4e9b19394",
+          "title": "en/day_gun: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "c5d06be74c8b9dc48ca0efa0cb20b38031e4842ea1ee6b9e7197f4949edff5a0",
+          "title": "en/day_exile: real cycle applies exactly the frozen dream damage, shot, words and day-scope rules",
+          "occurrence": 1
+        },
+        {
+          "id": "76fbfe827a524db367d69108e64ce5ff0ccec0be6a9c93e6568ee7ebffe9a459",
+          "title": "consecutive/false: repeated dream overrides ordinary protection, kills the actual target and forbids death guns",
+          "occurrence": 1
+        },
+        {
+          "id": "d569a6cfb7a3c0c07b4a74ab9bc04037cfca7f55095712a40b68d6c1b698c7ce",
+          "title": "consecutive/true: repeated dream overrides ordinary protection, kills the actual target and forbids death guns",
+          "occurrence": 1
+        },
+        {
+          "id": "b01caef2bfaf8d4eeca1c24f831ac64d36178b180050ae90c026bb1071933917",
+          "title": "two Dreamers form one terminating night chain before judging, with no duplicate death or late gun",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/ai/agents/player/action_reception",
+          "originalImport": "import { ActionReception } from \"../../../src/ai/agents/player/action_reception\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionReception",
+              "imported": "ActionReception",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/player_prompt_policy",
+          "originalImport": "import { PlayerPromptPolicy } from \"../../../src/ai/agents/player/player_prompt_policy\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PlayerPromptPolicy",
+              "imported": "PlayerPromptPolicy",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import {\n  getDefaultRoleCatalog,\n  getDefaultToolSpecRegistry,\n  getDefaultTargetHintRegistry,\n  getDefaultPhaseStageLocalizationRegistry,\n  getDefaultConfigRenderRegistry,\n} from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultToolSpecRegistry",
+              "imported": "getDefaultToolSpecRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultTargetHintRegistry",
+              "imported": "getDefaultTargetHintRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultPhaseStageLocalizationRegistry",
+              "imported": "getDefaultPhaseStageLocalizationRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+          "originalImport": "import { grantNightAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "grantNightAbility",
+              "imported": "grantNightAbility",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig as plainBoard } from \"../../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "plainBoard",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/death_resolution",
+          "originalImport": "import { DeathResolution } from \"../../../src/game/engine/death_resolution\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DeathResolution",
+              "imported": "DeathResolution",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/event_registry",
+          "originalImport": "import { EventRegistry } from \"../../../src/game/engine/event_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "EventRegistry",
+              "imported": "EventRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/action_validator",
+          "originalImport": "import { ActionValidator } from \"../../../src/game/gateway/action_validator\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionValidator",
+              "imported": "ActionValidator",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/validation/tool_validation_rule_registry",
+          "originalImport": "import { ToolValidationRuleRegistry } from \"../../../src/game/mechanisms/validation/tool_validation_rule_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolValidationRuleRegistry",
+              "imported": "ToolValidationRuleRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/dreamer/night_frame",
+          "originalImport": "import { DreamNightFrame } from \"../../../src/game/mechanisms/roles/dreamer/night_frame\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DreamNightFrame",
+              "imported": "DreamNightFrame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { DeathCause, type GameEvent, type RuntimeSnapshot } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "RuntimeSnapshot",
+              "imported": "RuntimeSnapshot",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 535,
-    "targetFiles": 576,
-    "mappingEntries": 576,
-    "baselineCases": 6702,
+    "sourceFiles": 536,
+    "targetFiles": 578,
+    "mappingEntries": 578,
+    "baselineCases": 6732,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
