@@ -1,3 +1,11 @@
+/**
+ * Owns Fragrant's original roster, controller leases, paid relation and publications.
+ * Inputs are original World bodies and scoped night/death choices; outputs are
+ * current permissions, committed receipts and compatible authority snapshots.
+ * Pair payload/audit writes use the captured typed slot owner after the original
+ * checks; lease commitment and later request settlement retain their old order.
+ * Closed or aborted nights never redraw knowledge or refund a paid relation.
+ */
 import { types } from "node:util";
 import type { FragrantPlayerState } from "@ai-werewolf-arena/game-text";
 import type { World } from "../../../../core/domain/world";
@@ -6,7 +14,9 @@ import type { RandomDraws } from "../../../../core/domain/random";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Camp, Role, Phase } from "../../../../core/domain/identity";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
-import { recordNightAbilityUse, abilityStatus, type NightAbility } from "../abilities";
+import { abilityStatus, type NightAbility } from "../abilities";
+import { plainJson, write } from "./owned-state-data";
+import { commitPairStateSlot, type PairStateSlot } from "./pair-state-slot";
 import {
   capturePairTarget,
   pairTargetCurrent,
@@ -43,13 +53,6 @@ function own(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return invalidField;
   const d = Object.getOwnPropertyDescriptor(value, key);
   return d && "value" in d ? d.value : d ? invalidField : undefined;
-}
-function plainJson(value: unknown): string | null {
-  try {
-    return JSON.stringify(snapshotPlainData(value, new Set(), 0, 65536));
-  } catch {
-    return null;
-  }
 }
 function eventFeed(events: GameEvent[]): GameEvent[] | null {
   if (
@@ -171,7 +174,7 @@ interface PaidBinding {
   readonly day: number;
   readonly targets: readonly [PairTargetScope, PairTargetScope];
 }
-interface Owner {
+interface Owner extends PairStateSlot {
   readonly world: World;
   readonly events: GameEvent[];
   readonly players: ReadonlyMap<number, OriginalPlayer>;
@@ -179,13 +182,9 @@ interface Owner {
   readonly seer: OriginalPlayer;
   readonly wolves: readonly OriginalPlayer[];
   readonly fragrant: FragrantState;
-  readonly pairState: PairSeerState;
-  readonly pairAbility: NightAbility<"pair_check">;
   readonly pairSource: NightAbility<"pair_check">["source"];
   readonly abilities: unknown;
-  pairAbilityJson: string;
   fragrantJson: string;
-  pairJson: string;
   knowledge: FragrantKnowledge;
   active: Night | null;
   readonly nights: Map<number, Night>;
@@ -240,25 +239,6 @@ function requireNight(world: World, day: number): { owner: Owner; night: Night }
     if (owner.active === night) owner.active = null;
     throw error;
   }
-}
-function assertWritable(value: object, next: object): void {
-  if (
-    Object.getPrototypeOf(value) !== Object.prototype ||
-    Reflect.ownKeys(value).length !== Object.keys(next).length ||
-    Object.keys(next).some((key) => {
-      const d = Object.getOwnPropertyDescriptor(value, key);
-      return !d || !("value" in d) || !d.writable || !d.configurable;
-    })
-  )
-    throw Error("fragrant_state_write_revoked");
-}
-function write<T extends object>(value: T, next: T): void {
-  assertWritable(value, next);
-  for (const key of Object.keys(next) as Array<keyof T>)
-    Object.defineProperty(value, key, {
-      ...Object.getOwnPropertyDescriptor(value, key),
-      value: next[key],
-    });
 }
 function commitState(o: Owner, next: FragrantState): void {
   write(o.fragrant, next);
@@ -568,11 +548,7 @@ export function openPairCheckChoice(world: World, day: number, requestCurrent?: 
       if (!c.isCurrent()) throw Error("fragrant_pair_check_revoked");
       if (abilityStatus(c.o.pairAbility, day) !== "active")
         throw Error("fragrant_pair_check_revoked");
-      assertWritable(c.o.pairAbility, c.o.pairAbility);
-      write(c.o.pairState, next);
-      c.o.pairJson = JSON.stringify(next);
-      recordNightAbilityUse(c.o.pairAbility, day, true);
-      c.o.pairAbilityJson = plainJson(c.o.pairAbility)!;
+      commitPairStateSlot(c.o, next, day);
       c.lease.committed = true;
       return Object.freeze({
         actorId: c.o.seer.target.id,

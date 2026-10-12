@@ -1,11 +1,18 @@
+/**
+ * Defines Fragrant Phantom and Awakened Seer configuration, tools and role hooks.
+ * Inputs are role components, parameters and current request context; outputs
+ * retain native state initialization, prompts and finite tool/stage registration.
+ * Pair initialization belongs to its concrete slot owner; this profile never
+ * commits inspection history, pays a request or resolves a death wave.
+ */
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, WinCondition } from "../../../../core/domain/identity";
 import type { RoleProfile } from "../contracts";
 import { WOLF_ROLE_PROFILE } from "../wolf/profile";
-import { installNativeAbility } from "../abilities";
-import { freshFragrantState, freshPairSeerState, FRAGRANT_PAIR_POLICY } from "./state";
+import { freshFragrantState, FRAGRANT_PAIR_POLICY } from "./state";
+import { installPairStateSlot } from "./pair-state-slot";
 import { fragrantKnownWolfIds, fragrantRoleKnifeEligible } from "./authority";
 import { canSubmitFragrantPairChoice } from "./requests";
 import { FRAGRANT_BIND_STAGE, PAIR_INSPECTION_STAGE } from "./night_stages";
@@ -105,7 +112,7 @@ export const AWAKENED_SEER_ROLE_PROFILE: RoleProfile = {
   label: roleName("awakened_seer"),
   skillBrief: text("zh-CN", "role.awakened_seer.brief"),
   init: (role) => {
-    role.privateState.pairSeer = installNativeAbility(role, "pair_check", freshPairSeerState());
+    installPairStateSlot(role);
   },
   renderPrompt: (_role, locale = "zh-CN") => text(locale, "role.awakened_seer.brief"),
   toolSpecs: [
