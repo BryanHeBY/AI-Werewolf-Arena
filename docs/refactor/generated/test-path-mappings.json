@@ -56723,13 +56723,635 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/animal_dream_cat_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/animal-dream/cat-death-record-failure.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "Actual recordAnimalLiteral or real PhaseManager+SessionRecordManager produces the source archive; beforeAll shared baselines, paid-prefix/record-failure branches and copied multi-field forgeries remain attached to that actual recorded scenario. No synthetic reader-only baseline replaces it.",
+      "originalSha256": "7af150edb3d872c3f02f8227b7cfd7a36a69ca5925a109fc35b4cb1a3848d77d",
+      "candidateSha256": "a288bf1f3e80b0c14a6b800f0d4bab331eca5c0f4a9e7214a6684e7cd64917d3",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1455,
+          "end": 1493,
+          "value": "../../../../src/core/domain/components/alive",
+          "kind": "module-specifier",
+          "original": "../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1404,
+          "end": 1418,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1268,
+          "end": 1318,
+          "value": "../../../../src/game/mechanisms/roles/animal_dream/facts",
+          "kind": "module-specifier",
+          "original": "../../src/game/mechanisms/roles/animal_dream/facts",
+          "originalResolved": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1175,
+          "end": 1229,
+          "value": "../../../../src/game/mechanisms/roles/animal_dream/authority",
+          "kind": "module-specifier",
+          "original": "../../src/game/mechanisms/roles/animal_dream/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1099,
+          "end": 1131,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1018,
+          "end": 1055,
+          "value": "../../../../src/runtime/game_event_recorder",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/game_event_recorder",
+          "originalResolved": "backend/src/runtime/game_event_recorder.ts",
+          "expectedResolved": "backend/src/runtime/game_event_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 931,
+          "end": 980,
+          "value": "../../../../src/runtime/simulation/reproduction_context",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 804,
+          "end": 841,
+          "value": "../../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "original": "../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 725,
+          "end": 761,
+          "value": "../../../../src/recording/session_recorder",
+          "kind": "module-specifier",
+          "original": "../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 651,
+          "end": 684,
+          "value": "../../../support/animal_dream_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/animal_dream_scenarios",
+          "originalResolved": "backend/tests/support/animal_dream_scenarios.ts",
+          "expectedResolved": "backend/tests/support/animal_dream_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 558,
+          "end": 593,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "49f3e869d8614bb2d9058a40d2ba14f5d19e78c9622ffee5e1787d117d7c84f1",
+          "title": "R actual PM+Trace Cat deferred publication-failure archive",
+          "occurrence": 1
+        },
+        {
+          "id": "86be94f3da5bd206be8e05b937c60cbaeb447658a0fd002a4375a1cc8950e532",
+          "title": "R actual PM+Trace Cat actually_dead publication-failure archive",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/animal_dream_cp_feed_review.test.ts",
+      "to": "backend/tests/scenarios/reproduction/animal-dream/checkpoint-feed-forgery.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "Actual recordAnimalLiteral or real PhaseManager+SessionRecordManager produces the source archive; beforeAll shared baselines, paid-prefix/record-failure branches and copied multi-field forgeries remain attached to that actual recorded scenario. No synthetic reader-only baseline replaces it.",
+      "originalSha256": "27909a303afe77a25680148c4af104e30b2f6c5dc6ce6e21e7da65d36db2419d",
+      "candidateSha256": "95ffe1394145d5d821bca923ef8e805b360b78be1c7230f708665e90f9bda9f7",
+      "moduleAndLocationEdits": [
+        {
+          "start": 166,
+          "end": 198,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 89,
+          "end": 122,
+          "value": "../../../support/animal_dream_recording",
+          "kind": "module-specifier",
+          "original": "../support/animal_dream_recording",
+          "originalResolved": "backend/tests/support/animal_dream_recording.ts",
+          "expectedResolved": "backend/tests/support/animal_dream_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "c68a4f12e0ec5ae234e7c2939bc6994cd02aff7aede9b1e3ec45bcd8911f3436",
+          "title": "A original finalized natural archive remains accepted before CP/feed mutants",
+          "occurrence": 1
+        },
+        {
+          "id": "88dffb254a1b5f91e238c5cecebf209989fd4470097af4d85a7c5e4fae28b53c",
+          "title": "A full feed cannot authorize villager wolf-team order through co-tampered original audience",
+          "occurrence": 1
+        },
+        {
+          "id": "b8a04950469bb827bc0874c9da7ddc52ccac82cc8d88cceefcad50f59647b056",
+          "title": "A terminal complete CP cannot disagree with actual game_over and termination",
+          "occurrence": 1
+        },
+        {
+          "id": "227d72b806dd716695224d435fda50d51cb1c18ff840829da551d2379e6b537f",
+          "title": "A final CP cannot fabricate a living sheriff badge and vote weight absent election",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/animal_dream_paid_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/animal-dream/paid-effect-record-failure.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "Actual recordAnimalLiteral or real PhaseManager+SessionRecordManager produces the source archive; beforeAll shared baselines, paid-prefix/record-failure branches and copied multi-field forgeries remain attached to that actual recorded scenario. No synthetic reader-only baseline replaces it.",
+      "originalSha256": "78d10dcf90d6ab9296d32d225c4ef675df3cdaf94e56cc136fdcb790bea966d4",
+      "candidateSha256": "85e7194c9fab11ea8e400ec6bcddf51d1728d41ddb6054cb287665f0c8e1221d",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1457,
+          "end": 1502,
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "kind": "module-specifier",
+          "original": "../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1404,
+          "end": 1418,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1289,
+          "end": 1339,
+          "value": "../../../../src/game/mechanisms/roles/animal_dream/facts",
+          "kind": "module-specifier",
+          "original": "../../src/game/mechanisms/roles/animal_dream/facts",
+          "originalResolved": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1168,
+          "end": 1222,
+          "value": "../../../../src/game/mechanisms/roles/animal_dream/authority",
+          "kind": "module-specifier",
+          "original": "../../src/game/mechanisms/roles/animal_dream/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1092,
+          "end": 1124,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1011,
+          "end": 1048,
+          "value": "../../../../src/runtime/game_event_recorder",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/game_event_recorder",
+          "originalResolved": "backend/src/runtime/game_event_recorder.ts",
+          "expectedResolved": "backend/src/runtime/game_event_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 924,
+          "end": 973,
+          "value": "../../../../src/runtime/simulation/reproduction_context",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 797,
+          "end": 834,
+          "value": "../../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "original": "../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 718,
+          "end": 754,
+          "value": "../../../../src/recording/session_recorder",
+          "kind": "module-specifier",
+          "original": "../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 644,
+          "end": 677,
+          "value": "../../../support/animal_dream_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/animal_dream_scenarios",
+          "originalResolved": "backend/tests/support/animal_dream_scenarios.ts",
+          "expectedResolved": "backend/tests/support/animal_dream_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 551,
+          "end": 586,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "cbc413b0fc6bc26d56b5ce5b42a60ab926fa36d22a9a41aa7503c718aead0055",
+          "title": "R actual PM+Trace fox: settlement recording failure preserves paid resource without publication",
+          "occurrence": 1
+        },
+        {
+          "id": "018067955adbd92ebbfde90145dde9f3828336b30cfa291a3922df7bf5e5a158",
+          "title": "R actual PM+Trace puffer: settlement recording failure preserves paid resource without publication",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/animal_dream_pk_known_review.test.ts",
+      "to": "backend/tests/scenarios/reproduction/animal-dream/ballot-knowledge-forgery.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "Actual recordAnimalLiteral or real PhaseManager+SessionRecordManager produces the source archive; beforeAll shared baselines, paid-prefix/record-failure branches and copied multi-field forgeries remain attached to that actual recorded scenario. No synthetic reader-only baseline replaces it.",
+      "originalSha256": "48253f5a0751f29f3bfbb60d968fc497afe4998a5eda0841fb4a0741e8e014b8",
+      "candidateSha256": "bbf1c3fb3acd0f25a6ee0f98a36d629b30adf64100b21b85d31e0c9f0dbb3ad1",
+      "moduleAndLocationEdits": [
+        {
+          "start": 166,
+          "end": 198,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 89,
+          "end": 122,
+          "value": "../../../support/animal_dream_recording",
+          "kind": "module-specifier",
+          "original": "../support/animal_dream_recording",
+          "originalResolved": "backend/tests/support/animal_dream_recording.ts",
+          "expectedResolved": "backend/tests/support/animal_dream_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "bb00b666aa9ea236162a5d798af64cd28b6ac77795f19be349d1413687d580c2",
+          "title": "A two real finalized archive baselines still accepted",
+          "occurrence": 1
+        },
+        {
+          "id": "db86737bece1faccf31c634c238c896871a44e6aac0c5291738b279f8789a329",
+          "title": "A Fox cannot settle after all later requests while its paid facts precede them",
+          "occurrence": 1
+        },
+        {
+          "id": "ae56771e45fd1640f133896e0b98db3ec25843f48cc4a8c525050dfb45db7e6d",
+          "title": "A accepted knife operation cannot contradict raw action and public fact",
+          "occurrence": 1
+        },
+        {
+          "id": "aa0c9327763b5a40551e35c36b50b42744db187d865cf4b5b3825c2730f0b911",
+          "title": "A co-tampered original Beauty notice and all its copies cannot grant a cleared binding",
+          "occurrence": 1
+        },
+        {
+          "id": "908dea73afb4ee2c56c3aadf2f34186e17345c88c6f8f27c2eeff26b8a524c93",
+          "title": "A actual PK request must use tied candidates from the real first round",
+          "occurrence": 1
+        },
+        {
+          "id": "19609f442e68040523afda5d2a90f7fc0f8fa92d1590cb367ed7ec24944f60df",
+          "title": "A a real PK candidate cannot replace a permitted revoter in accepted round",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/animal_dream_record.test.ts",
+      "to": "backend/tests/scenarios/reproduction/animal-dream/recorded-outcomes.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "Actual recordAnimalLiteral or real PhaseManager+SessionRecordManager produces the source archive; beforeAll shared baselines, paid-prefix/record-failure branches and copied multi-field forgeries remain attached to that actual recorded scenario. No synthetic reader-only baseline replaces it.",
+      "originalSha256": "961b16cd4607243853292dcb25b80cad195dc8a9bb935b5762ef9d0e6008d233",
+      "candidateSha256": "8ade9e9964d92bc997ab7a87c9b2c23476142e4dbc6b956849b2181b097708cd",
+      "moduleAndLocationEdits": [
+        {
+          "start": 144,
+          "end": 177,
+          "value": "../../../support/animal_dream_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/animal_dream_scenarios",
+          "originalResolved": "backend/tests/support/animal_dream_scenarios.ts",
+          "expectedResolved": "backend/tests/support/animal_dream_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 78,
+          "end": 111,
+          "value": "../../../support/animal_dream_recording",
+          "kind": "module-specifier",
+          "original": "../support/animal_dream_recording",
+          "originalResolved": "backend/tests/support/animal_dream_recording.ts",
+          "expectedResolved": "backend/tests/support/animal_dream_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "bbd3892b9950131f8eb15d39f85e0a302bb5cfd96d813380aadb6a3e4819ec2f",
+          "title": "Animal real Record and exact Tape fox_beauty/false/false",
+          "occurrence": 1
+        },
+        {
+          "id": "c06529653c8996bb9b65a29b13ce2c2aa3b18fbb5c54c807967427488f89db60",
+          "title": "Animal real Record and exact Tape fox_beauty/false/true",
+          "occurrence": 1
+        },
+        {
+          "id": "621d04498ea86bb0508c9a5e3f3a3608351bb15d9d973236de41e773ee89cf75",
+          "title": "Animal real Record and exact Tape fox_beauty/true/false",
+          "occurrence": 1
+        },
+        {
+          "id": "3c8a2c0606e679feeee7edf1ae756c4993fdc87a5f917139b844a252a4e11862",
+          "title": "Animal real Record and exact Tape fox_beauty/true/true",
+          "occurrence": 1
+        },
+        {
+          "id": "49b244abb03f4539781b089103bae98c4c55ce2eb460b393310eede7eb42f497",
+          "title": "Animal real Record and exact Tape cat_badge/false/false",
+          "occurrence": 1
+        },
+        {
+          "id": "de4feb84ac31a450145c53a7dd299c1d81d7ccf4df4068f40f1cc45682794c60",
+          "title": "Animal real Record and exact Tape cat_badge/false/true",
+          "occurrence": 1
+        },
+        {
+          "id": "2d773b7a537a0b156de08abebf12372260f3f5a00807a6f5ea0762ffe18b8c86",
+          "title": "Animal real Record and exact Tape cat_badge/true/false",
+          "occurrence": 1
+        },
+        {
+          "id": "02db4255243ebbc999ec203d481fcc91c5b707e17fe0b299659fd9f9dd66dad6",
+          "title": "Animal real Record and exact Tape cat_badge/true/true",
+          "occurrence": 1
+        },
+        {
+          "id": "27b572b67b7d79056c754f8e4e09b473ffb062adbcc10a0bf3396fcd790089ea",
+          "title": "Animal real Record and exact Tape puffer_knife/false/false",
+          "occurrence": 1
+        },
+        {
+          "id": "b44ba9dced0da176af4212f999e13c6c7c1b16599291fd5c1a3da49775b120d5",
+          "title": "Animal real Record and exact Tape puffer_knife/false/true",
+          "occurrence": 1
+        },
+        {
+          "id": "c7b368a7a8a9d8e94d79be9bea8dcbf0f3e686f3b5bcd77de7c2e36fdcfff709",
+          "title": "Animal real Record and exact Tape puffer_knife/true/false",
+          "occurrence": 1
+        },
+        {
+          "id": "44a473c894916a8f6a9a91fc45fa327820fe5e67b3d9c9db653c26e122f755d6",
+          "title": "Animal real Record and exact Tape puffer_knife/true/true",
+          "occurrence": 1
+        },
+        {
+          "id": "f959a90386225d8ef2edcc757e14d2edc5bd406f9b7ba06f559fc1e8c00c4ab6",
+          "title": "Animal real Record and exact Tape pk/false/false",
+          "occurrence": 1
+        },
+        {
+          "id": "0b761dc753cb919449f07079d52f6c79f70e4fe42101fad1af42d430493c477f",
+          "title": "Animal real Record and exact Tape pk/false/true",
+          "occurrence": 1
+        },
+        {
+          "id": "4b60cfc20c5dd72812c54eff7588f81dfd231cf17072145d346cf76bdf95e3e9",
+          "title": "Animal real Record and exact Tape pk/true/false",
+          "occurrence": 1
+        },
+        {
+          "id": "d28be23112f55c785603f5eb456028a7206385c68fa394065e10e98bca8bb965",
+          "title": "Animal real Record and exact Tape pk/true/true",
+          "occurrence": 1
+        },
+        {
+          "id": "9bd8c203c8ad8042dd279bb09760844c85b33ddd133732199e418bc4ae14d8c5",
+          "title": "Animal real Record and exact Tape last_chain/false/false",
+          "occurrence": 1
+        },
+        {
+          "id": "c004bea5b2dd674c8d8045af9567f4d60cdfcd2fc112c1d9c39f28372ce78945",
+          "title": "Animal real Record and exact Tape last_chain/false/true",
+          "occurrence": 1
+        },
+        {
+          "id": "eafb7f3e160c0ca1dfcdcdaa6a0fb66979ca47176b1329961bb34384ca0a8c61",
+          "title": "Animal real Record and exact Tape last_chain/true/false",
+          "occurrence": 1
+        },
+        {
+          "id": "abf988b98462e08a2ad865784057c3ad2fd3b58cda4872974d7b64d6129cce8f",
+          "title": "Animal real Record and exact Tape last_chain/true/true",
+          "occurrence": 1
+        },
+        {
+          "id": "600027b8d16c9745cdcf180136549a9cec2b0748fc5d60e5eadcb5d20b6f84a4",
+          "title": "Animal real Record and exact Tape full_retaliation/false/false",
+          "occurrence": 1
+        },
+        {
+          "id": "9aff55af4594d8e1932ac19220746ab61f763751cdbdd0551485ea9339cfeb36",
+          "title": "Animal real Record and exact Tape full_retaliation/false/true",
+          "occurrence": 1
+        },
+        {
+          "id": "5fde0145d35dade7607c50674d28f6b7062880f5edd204ce929a985c29c054cd",
+          "title": "Animal real Record and exact Tape full_retaliation/true/false",
+          "occurrence": 1
+        },
+        {
+          "id": "0b77fc47c38ed8229e6a713705125892b66c53604f3b0e5c85b73e408aeb3219",
+          "title": "Animal real Record and exact Tape full_retaliation/true/true",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/animal_dream_source_review.test.ts",
+      "to": "backend/tests/scenarios/reproduction/animal-dream/raw-source-forgery.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "Actual recordAnimalLiteral or real PhaseManager+SessionRecordManager produces the source archive; beforeAll shared baselines, paid-prefix/record-failure branches and copied multi-field forgeries remain attached to that actual recorded scenario. No synthetic reader-only baseline replaces it.",
+      "originalSha256": "cf5a0cc9429ddf8e65aff1b7fa0db31e4b375cdce99249eaa751f1967e0a71ab",
+      "candidateSha256": "fadf46b6cf98b02686685f0cc12e9c8464e66959a5a730b7b01af5757a41fc0e",
+      "moduleAndLocationEdits": [
+        {
+          "start": 166,
+          "end": 198,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 89,
+          "end": 122,
+          "value": "../../../support/animal_dream_recording",
+          "kind": "module-specifier",
+          "original": "../support/animal_dream_recording",
+          "originalResolved": "backend/tests/support/animal_dream_recording.ts",
+          "expectedResolved": "backend/tests/support/animal_dream_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b199862c316f3c97ce1ddb68518ab68ab9d6dfe6263b7daec5a0ae5b06420d08",
+          "title": "A source baseline is a real natural finalized Record+Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1e5e1bf8cb72f8b4efee31b22734057c6ec3d371e45d1340343244ef84b8ff0e",
+          "title": "A raw kill action cannot disagree with accepted vote and lethal wave",
+          "occurrence": 1
+        },
+        {
+          "id": "53b1db761986cf9ee6f9d36057b9ebbd6db80e3ea2d54d79e9f1d9c123c381e5",
+          "title": "A raw public ballot cannot disagree with accepted round",
+          "occurrence": 1
+        },
+        {
+          "id": "abece498b0ff4122606736228f091af91773eac1c126a13db85f4133fcf0d615",
+          "title": "A full finalized archive cannot discard every logic operation",
+          "occurrence": 1
+        },
+        {
+          "id": "47e05f0186c62d2f3712c76f60e11cc828fb8d97d7d498d3e7f3cc862b1a78d7",
+          "title": "A finalized archive cannot contain forged winner-neutral badge state",
+          "occurrence": 1
+        },
+        {
+          "id": "4e03049599db3c89ece912da5347d498169cedc8456735459dc39dafed520a89",
+          "title": "A co-deleted Fox action+published receipt+rolled stock cannot erase mandatory N2 choice",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 460,
-    "targetFiles": 466,
-    "mappingEntries": 466,
-    "baselineCases": 5641,
+    "sourceFiles": 466,
+    "targetFiles": 472,
+    "mappingEntries": 472,
+    "baselineCases": 5685,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

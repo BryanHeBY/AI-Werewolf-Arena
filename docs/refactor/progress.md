@@ -157,3 +157,5 @@
 - C23 Noble真实night handoff：unit持原acquired/transfer、原位置Symbol receiver交manager三site、early abort-only不提前config/World读；normal后abort仍由bodyResolved authority判断，原finally次序/returngetter失败前缀保。独立7whole source/authority/facts/damage逆映射0、cold8同exports、7heads0；new10unit/0/60+actualN1lategetter1/0/4+原managerN2two/0/12，finite4files types0。初fixture/potiondelivery省略红保留仅修test；内部ownSymbol反射新增明示，JSON/spread/Tape形状无新增字段。完整Noble矩阵仍partial。
 
 - C12 identity-relationships causal recording：8原文件/225旧IDs实际完整录制/复现场景迁移；20whole程序/44callbacks/73relative imports保真，Root独立actualGit全部语句/105完整import语法/同目标/361unique IDs复核0；20heads0与一次finite20 types0，不跑games/full。原beforeAll与两top-level await保持全因果场景，不做会触发对局的发现；原literal/fixture字段保持，支持模块oracle欠项不据迁移关闭。mapping现460source/466target/5641IDs。
+
+- C12 animal-recording causal recording：6原文件/44旧IDs实际完整录制/复现场景迁移；20whole程序/44callbacks/73relative imports保真，Root独立actualGit全部语句/105完整import语法/同目标/361unique IDs复核0；20heads0与一次finite20 types0，不跑games/full。原beforeAll与两top-level await保持全因果场景，不做会触发对局的发现；原literal/fixture字段保持，支持模块oracle欠项不据迁移关闭。mapping现466source/472target/5685IDs。

@@ -1,29 +1,28 @@
 /**
- * Recording failure scenarios verify paid Fox/Puffer stock survives settlement recording failure.
- * Input: Actual phase cycles, resource choices, failing recorder hooks and checkpoint snapshots.
- * Output and independent oracle: Literal paid stock, stopped unit/night, no false publication and independently rejected archive mutants.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Failure scenarios verify Animal Dream Fox and Puffer paid effects remain committed when required recording fails.
+ * Input: Original controlled PhaseManager cycles, real session stores and injected post-payment record faults.
+ * Output and oracle: Explicit paid stock/effect, failure-prefix and persisted-finalization assertions retain original commit order; no refund, new golden or repaired action is introduced.
  */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
-import { animalGame, animalBoard, animalAction } from "../support/animal_dream_scenarios";
-import { SessionRecordManager } from "../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../src/recording/recording_context";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
+import { animalGame, animalBoard, animalAction } from "../../../support/animal_dream_scenarios";
+import { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../src/runtime/simulation/reproduction_context";
-import { GameEventRecorder } from "../../src/runtime/game_event_recorder";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
-import { animalAuthoritySnapshot } from "../../src/game/mechanisms/roles/animal_dream/authority";
+} from "../../../../src/runtime/simulation/reproduction_context";
+import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { animalAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
 import {
   animalFoxKnowledge,
   animalPufferKnowledge,
-} from "../../src/game/mechanisms/roles/animal_dream/facts";
-import { COMPONENT, type ActionRequest, type ToolCall } from "../../src/core";
-import { getWolfBeautyState } from "../../src/game/mechanisms/roles/private_state";
+} from "../../../../src/game/mechanisms/roles/animal_dream/facts";
+import { COMPONENT, type ActionRequest, type ToolCall } from "../../../../src/core";
+import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/private_state";
 
 for (const skill of ["fox", "puffer"] as const)
   test(`R actual PM+Trace ${skill}: settlement recording failure preserves paid resource without publication`, async () => {

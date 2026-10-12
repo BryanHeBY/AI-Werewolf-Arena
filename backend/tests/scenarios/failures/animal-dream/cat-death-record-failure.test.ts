@@ -1,26 +1,25 @@
 /**
- * Recording failure scenarios verify Cat publication failure preserves the actual paid/expired prefix.
- * Input: Actual phase manager and trace, controlled publication throws and original Cat lives.
- * Output and independent oracle: Literal Cat state/version, stopped authority and accepted/rejected partial archives without duplicate death.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Failure scenarios verify required recording faults preserve Animal Dream Cat deferred versus actual-death state and the original failure prefix.
+ * Input: Original controlled PhaseManager cycles, real session stores and injected record failures at two Cat death points.
+ * Output and oracle: Explicit Cat/role/death/checkpoint assertions and original error identity remain causal with persisted output; no expected archived fixture is regenerated.
  */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
-import { animalGame, animalBoard, animalAction } from "../support/animal_dream_scenarios";
-import { SessionRecordManager } from "../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../src/recording/recording_context";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
+import { animalGame, animalBoard, animalAction } from "../../../support/animal_dream_scenarios";
+import { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../src/runtime/simulation/reproduction_context";
-import { GameEventRecorder } from "../../src/runtime/game_event_recorder";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
-import { animalAuthoritySnapshot } from "../../src/game/mechanisms/roles/animal_dream/authority";
-import { animalCatKnowledge } from "../../src/game/mechanisms/roles/animal_dream/facts";
-import { COMPONENT, type ActionRequest, type ToolCall, type AliveComponent } from "../../src/core";
-import { aliveLifeVersion } from "../../src/core/domain/components/alive";
+} from "../../../../src/runtime/simulation/reproduction_context";
+import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { animalAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
+import { animalCatKnowledge } from "../../../../src/game/mechanisms/roles/animal_dream/facts";
+import { COMPONENT, type ActionRequest, type ToolCall, type AliveComponent } from "../../../../src/core";
+import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
 for (const point of ["deferred", "actually_dead"] as const)
   test(`R actual PM+Trace Cat ${point} publication-failure archive`, async () => {
     const g = animalGame(),

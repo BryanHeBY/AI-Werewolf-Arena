@@ -1,6 +1,11 @@
+/**
+ * Reproduction scenarios verify Animal Dream paid knowledge and PK ballot forgeries cannot rewrite original accepted actions.
+ * Input: Original beforeAll fox/PK recordings and copied settlement, action, knowledge or revoter mutations.
+ * Output and oracle: Explicit baseline acceptance and forgery rejection retain tied-candidate and paid-fact ordering; both shared source games remain in their original setup phase.
+ */
 import { beforeAll, expect, test } from "bun:test";
-import { recordAnimalLiteral } from "../support/animal_dream_recording";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
+import { recordAnimalLiteral } from "../../../support/animal_dream_recording";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 let source: any, pk: any;
 beforeAll(async () => {
   source = (await recordAnimalLiteral("fox_beauty", "en")).record;

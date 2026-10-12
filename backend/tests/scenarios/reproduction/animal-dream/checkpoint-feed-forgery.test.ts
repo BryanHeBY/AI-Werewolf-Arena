@@ -1,6 +1,11 @@
+/**
+ * Reproduction scenarios verify Animal Dream checkpoint and feed forgeries cannot contradict an actually finalized recorded game.
+ * Input: The original beforeAll game-produced archive and independent copied audience, terminal checkpoint or badge mutations.
+ * Output and oracle: Literal baseline acceptance and forgery rejection preserve the shared causal setup; its generated record is test input rather than independently computed expected state.
+ */
 import { beforeAll, expect, test } from "bun:test";
-import { recordAnimalLiteral } from "../support/animal_dream_recording";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
+import { recordAnimalLiteral } from "../../../support/animal_dream_recording";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 let baseline: any;
 beforeAll(async () => {
   baseline = (await recordAnimalLiteral("fox_beauty", "en")).record;
