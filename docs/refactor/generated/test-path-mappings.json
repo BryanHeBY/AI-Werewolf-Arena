@@ -67426,13 +67426,291 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/merchant_configuration.test.ts",
+      "to": "backend/tests/unit/configuration/miracle-merchant-composition.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "df52927f9c04ac0c5a6c49b6c1fb54867c05f5ca5ab13e45995a1b6de2416e08",
+      "candidateSha256": "199c627a42fa1f8786366ad8dcd53f6ae84bb85ab09ad39ca4bade3d8b61859b",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 414,
+          "end": 450,
+          "original": "../../src/runtime/config/error_codes",
+          "value": "../../../src/runtime/config/error_codes",
+          "originalResolved": "backend/src/runtime/config/error_codes.ts",
+          "expectedResolved": "backend/src/runtime/config/error_codes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 336,
+          "end": 377,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 221,
+          "end": 263,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 159,
+          "end": 182,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 111,
+          "end": 125,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "ff0aa496bfced980cac9c38d50f41a6c3f164acd05cc2a8f7ce0c86b990e9b92",
+          "title": "mechanical_wolf: Miracle board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "e44dc9767e182603e2b128990678ee7d93058e8f7784499332909bb05a7ed595",
+          "title": "psychic: Miracle board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "eeb8d1eb2abe4bfc07cdb102bc5b8db82b3a0bc17fe5a13c3a41de58fb38778e",
+          "title": "gargoyle: Miracle board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "e79ab36c2fb5f41f3d2ded7444480dc6d3edc5b90b9357ee9011f4bb611f3ebe",
+          "title": "bear: Miracle board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "9340229ee98c63c991299e55704fb3ea0b893b151632f4934bcee3fd9c391518",
+          "title": "wolf_beauty: Miracle board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "163a18fca7783f597bf5c050717df6a811ebed0710c25a3320816589921e85ab",
+          "title": "white_wolf_king: Miracle board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "b6c14100a744f6d20110d0bbd9e0e1c4afc6bb12d24bc1d67e3c9863380afc5e",
+          "title": "knight: Miracle board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "9bf5d70ba2affa39016bdcc0aea6a07c61f397d61c6e258a8d34c62a29155b70",
+          "title": "idiot: Miracle board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "8f03d0d7193f4533f71fdf24cc80437333163e02cf69717102415e6c399a1882",
+          "title": "gravekeeper: Miracle board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "aa0e94d180af86a0ccaf651e66c0f53515a705f84ec7cc4ed892d5056778031b",
+          "title": "native merchant count is one in both entrypoints",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/load_board_definition",
+          "originalImport": "import { loadBoardDefinition } from \"../../src/runtime/config/load_board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "loadBoardDefinition",
+              "imported": "loadBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/merchant_configuration.test.ts",
+      "to": "backend/tests/integration/filesystem/configuration/miracle-merchant-examples.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "df52927f9c04ac0c5a6c49b6c1fb54867c05f5ca5ab13e45995a1b6de2416e08",
+      "candidateSha256": "ae8654afcfa24c3b5e6740389cdf02ac782c76d69eedb3d540d162fb63b60098",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-directory-anchor",
+          "start": 615,
+          "end": 639,
+          "original": "../../../configs.example",
+          "value": "../../../../../configs.example",
+          "originalResolved": "configs.example"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 292,
+          "end": 338,
+          "original": "../../src/runtime/config/load_board_definition",
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 211,
+          "end": 252,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 147,
+          "end": 170,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "configs.example",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../../configs.example\")",
+          "currentExpression": "path.resolve(import.meta.dir, \"../../../../../configs.example\")",
+          "currentHead": "../../../../../configs.example",
+          "kind": "public-directory-anchor"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "bc9557a83d2ea88605a7c5b4c7418897026bc7ac67ecb5df9b8c2848d9a8b613",
+          "title": "six_player_miracle_merchant: finite examples load without arbitrary policies and direct bootstrap applies the same count/combination rules",
+          "occurrence": 1
+        },
+        {
+          "id": "5fae2e4bc1d83f3489bdc8cdc4425f283e6c8b6eec17f88acbfeba2354da347d",
+          "title": "twelve_player_miracle_merchant: finite examples load without arbitrary policies and direct bootstrap applies the same count/combination rules",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import { Role, type BoardConfig } from \"../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "BoardConfig",
+              "imported": "BoardConfig",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  parseBoardDefinition,\n  boardDefinitionFromConfig,\n} from \"../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": "import { parseBoardDefinition } from \"../../src/runtime/config/board_definition\";",
+          "droppedBindings": [
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/error_codes",
+          "originalImport": "import { configDiagnostic } from \"../../src/runtime/config/error_codes\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "configDiagnostic",
+              "imported": "configDiagnostic",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 516,
-    "targetFiles": 534,
-    "mappingEntries": 534,
-    "baselineCases": 6495,
+    "sourceFiles": 517,
+    "targetFiles": 536,
+    "mappingEntries": 536,
+    "baselineCases": 6507,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
