@@ -1,5 +1,10 @@
+/**
+ * Interaction scenarios verify ordinary wolf chat, abstention, self-destruct and exile PK branches remain valid inside a Radiant Eclipse recorded game.
+ * Input: Original controlled providers, chat-round/window matrices and existing recording plans.
+ * Output and oracle: Literal request/event counts, death sequences and next-night/terminal checkpoints retain actual causal execution; no unrelated unit or generic vote engine replaces these branches.
+ */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../support/radiant_eclipse_recording";
+import { radiantRecording } from "../../../support/radiant_eclipse_recording";
 for (const rounds of [2, 3])
   test(`ordinary wolves continue ${rounds} real chat rounds and retain Tape`, async () => {
     const r = await radiantRecording({

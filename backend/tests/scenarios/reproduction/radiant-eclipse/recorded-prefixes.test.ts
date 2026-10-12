@@ -1,8 +1,13 @@
-import { Camp } from "../../src/core";
+/**
+ * Reproduction scenarios verify complete and failed Radiant Eclipse recordings preserve exact paid prefixes and reject copied state forgeries.
+ * Input: Original named full plans, locale/failure/action matrices and shared recording helper calls.
+ * Output and oracle: Explicit checkpoint, private-state, publication and malformed-record assertions remain attached to generated game inputs; source archives and expected tables are unchanged.
+ */
+import { Camp } from "../../../../src/core";
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../support/radiant_eclipse_recording";
-import { radiantFullPlans } from "../support/radiant_eclipse_full_plans";
-import { parseReproductionRecord, type ReproductionRecord } from "../../src/recording/reproduction";
+import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { radiantFullPlans } from "../../../support/radiant_eclipse_full_plans";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 const stored = new Map<string, Promise<ReproductionRecord>>();
 function recording(name: string, locale: "zh-CN" | "en") {
   const plan = radiantFullPlans.find((p) => p.name === name)!,

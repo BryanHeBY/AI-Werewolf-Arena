@@ -1,6 +1,11 @@
+/**
+ * Reproduction scenarios verify Radiant Eclipse full and pending request prefixes preserve private knowledge and predecessor settlement authority.
+ * Input: The original top-level awaited full recording, copied pending prefix and named raw/action/source-history forgeries.
+ * Output and oracle: Explicit baseline acceptance and exact rejection code retain the shared game setup and original request sequence; generated records remain inputs, not new expected-rule goldens.
+ */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../support/radiant_eclipse_recording";
-import { parseReproductionRecord, type ReproductionRecord } from "../../src/recording/reproduction";
+import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 const full: ReproductionRecord = await radiantRecording();
 function clone() {
   return structuredClone(full);

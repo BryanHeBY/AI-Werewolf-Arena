@@ -1,6 +1,11 @@
+/**
+ * Reproduction scenarios verify pending or just-settled Radiant Eclipse prefixes remain serializable against their prior complete checkpoint.
+ * Input: The original top-level awaited full recording and exact day/stage/pending prefix matrix.
+ * Output and oracle: Explicit full/prefix parser acceptance preserves source cut positions and setup evaluation timing; no frozen archive or expected action is regenerated.
+ */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../support/radiant_eclipse_recording";
-import { parseReproductionRecord, type ReproductionRecord } from "../../src/recording/reproduction";
+import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 const full: ReproductionRecord = await radiantRecording();
 function prefix(day: number, stage: string, pending: boolean) {
   const r = structuredClone(full),

@@ -57345,13 +57345,481 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_live_prefix.test.ts",
+      "to": "backend/tests/scenarios/reproduction/radiant-eclipse/incremental-live-prefix.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "Actual radiantRecording produces full or interrupted game prefixes, including two top-level await baselines. Original shared baselines, ordinary rule branches, pending/settled prefixes and copied request/checkpoint forgeries remain one recorded scenario contract.",
+      "originalSha256": "cc6571f96541d80f93eac43fd2e53b0ecacd1538766f9f5550381be0f7257898",
+      "candidateSha256": "65670bfba086d12e1b20ed5b5a9ef0646d24e86ada2ae3d8e799083c4d15e772",
+      "moduleAndLocationEdits": [
+        {
+          "start": 180,
+          "end": 212,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 75,
+          "end": 111,
+          "value": "../../../support/radiant_eclipse_recording",
+          "kind": "module-specifier",
+          "original": "../support/radiant_eclipse_recording",
+          "originalResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "4a5bb67e66a4c6e4e5c41f90f69004adfb1d6e7ab879a40a4269359c7ffbfb02",
+          "title": "real N1 dreamer pending prefix with prior checkpoint remains serializable",
+          "occurrence": 1
+        },
+        {
+          "id": "d64001e4cec836f2b755d97de3389e3500ac4772ddf5d0d71505a92b93186b7b",
+          "title": "real N1 dreamer just settled prefix with prior checkpoint remains serializable",
+          "occurrence": 1
+        },
+        {
+          "id": "95591fb2da501626f0b153b1a7a3e56dc763ba3728f239fd152cd0a9b69cd560",
+          "title": "real N1 wolf_discussion pending prefix with prior checkpoint remains serializable",
+          "occurrence": 1
+        },
+        {
+          "id": "c75d734450fe3870343dca5b006de3d3bcfd635adc46200181dd6c101c57aeb2",
+          "title": "real N1 witch pending prefix with prior checkpoint remains serializable",
+          "occurrence": 1
+        },
+        {
+          "id": "0c566d171229b41eee86aba119f36f1833008cc0a976b5eca95fab7e0f0fc991",
+          "title": "real N2 dreamer just settled prefix with prior checkpoint remains serializable",
+          "occurrence": 1
+        },
+        {
+          "id": "757ee9681dc50e04f48843a98f8116d651cb10f8f1ddd26f77797d109e199f03",
+          "title": "real N2 wolf_discussion pending prefix with prior checkpoint remains serializable",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_ordinary_branches.test.ts",
+      "to": "backend/tests/scenarios/interactions/radiant-eclipse/ordinary-rule-branches.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "Actual radiantRecording produces full or interrupted game prefixes, including two top-level await baselines. Original shared baselines, ordinary rule branches, pending/settled prefixes and copied request/checkpoint forgeries remain one recorded scenario contract.",
+      "originalSha256": "6d4acdc7653e93d03f80b6a28dc9ae2a80cd5dddcfba83ee09cb707c70495387",
+      "candidateSha256": "31f52ec7958122194eb253cee5dbe5b9c77aeef3ecd3ff5b7e4ebd47151d5194",
+      "moduleAndLocationEdits": [
+        {
+          "start": 75,
+          "end": 111,
+          "value": "../../../support/radiant_eclipse_recording",
+          "kind": "module-specifier",
+          "original": "../support/radiant_eclipse_recording",
+          "originalResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "e7c85abcc9f486af6107566eb651d76ed4fe0b7b93d64693d2460a323fb2c86e",
+          "title": "ordinary wolves continue 2 real chat rounds and retain Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "03026f9acc166caebce2e0cf175157a813a8f250f6d82b18f7f09766a7afd03b",
+          "title": "ordinary wolves continue 3 real chat rounds and retain Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a8daddc417151841dc6ef24b839f24206d659b5b8b49b6a85dab952f447b4782",
+          "title": "an ordinary wolf abstains with an unused nonnull target",
+          "occurrence": 1
+        },
+        {
+          "id": "f3f7bd5d5889bb8fd1691ce0ea91e7bb234901e6ed1933bba17a4216188c385e",
+          "title": "real ordinary self-blast at on_pre_election preserves queued next-night checkpoint",
+          "occurrence": 1
+        },
+        {
+          "id": "595ad03e27bdd6e567c3f9c82e89ea9700e37878f4b48727275464f1bb9066f0",
+          "title": "real ordinary self-blast at on_pre_vote preserves queued next-night checkpoint",
+          "occurrence": 1
+        },
+        {
+          "id": "d7e2a193bf76a2f44e2678b0b40395dc15a67d6959043e522995dd3679e96c0c",
+          "title": "real one-round exile PK releases the primary tally before PK speeches",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_recording.test.ts",
+      "to": "backend/tests/scenarios/reproduction/radiant-eclipse/recorded-prefixes.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "Actual radiantRecording produces full or interrupted game prefixes, including two top-level await baselines. Original shared baselines, ordinary rule branches, pending/settled prefixes and copied request/checkpoint forgeries remain one recorded scenario contract.",
+      "originalSha256": "a02b42d55cfe53a19430cbd2609ce1ff32d4ef8121b4c0dac13732d41b467a15",
+      "candidateSha256": "da7172985ae7bcde7e7e72128da960834dc455600daacaed86431f1a854d65c7",
+      "moduleAndLocationEdits": [
+        {
+          "start": 293,
+          "end": 325,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 187,
+          "end": 224,
+          "value": "../../../support/radiant_eclipse_full_plans",
+          "kind": "module-specifier",
+          "original": "../support/radiant_eclipse_full_plans",
+          "originalResolved": "backend/tests/support/radiant_eclipse_full_plans.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_full_plans.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 114,
+          "end": 150,
+          "value": "../../../support/radiant_eclipse_recording",
+          "kind": "module-specifier",
+          "original": "../support/radiant_eclipse_recording",
+          "originalResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 22,
+          "end": 36,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "14b90a4a245f85145c5ff6911ada8c8e79865e7cd1df6fa0aa0788f3c9a60b8d",
+          "title": "real recording / independent ledger / exact Tape: last-wolf-borrow-backlash/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "6a73f10059473ce0a2795d35adc27e654d9526bf2770b3ac176efcce1af82696",
+          "title": "real recording / independent ledger / exact Tape: last-wolf-borrow-backlash/en",
+          "occurrence": 1
+        },
+        {
+          "id": "dcf15ce5dbd4838b25e5637a6339cfe008710c3878710cd1ba14fc7e7135db89",
+          "title": "real recording / independent ledger / exact Tape: last-villager-saved-then-double-cause/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "10d2d23ce0a7c39a596974ee455a5854c1bf52773ebc377de2e113912dcfca72",
+          "title": "real recording / independent ledger / exact Tape: last-villager-saved-then-double-cause/en",
+          "occurrence": 1
+        },
+        {
+          "id": "367569fb3cac4d8d8257b456ebd0b49d1aefc1aff5236378e9bcbc0227f6ba18",
+          "title": "real recording / independent ledger / exact Tape: last-god-restored-dream-gap/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "10f5399e89f9dc002f38265febbc46faaca7d73620b943b9992dd06cf49e08f6",
+          "title": "real recording / independent ledger / exact Tape: last-god-restored-dream-gap/en",
+          "occurrence": 1
+        },
+        {
+          "id": "eb0c1e7976500bbc2079aac590e55f8ebd6d70f0f4d737d7aa3eee64f4409687",
+          "title": "real recording / independent ledger / exact Tape: borrowed-dream-death-badge-words/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "c9b64db998832464c18573a05428c5591d2cc88cadc1dbd9f5fd1e5054da9b47",
+          "title": "real recording / independent ledger / exact Tape: borrowed-dream-death-badge-words/en",
+          "occurrence": 1
+        },
+        {
+          "id": "79d5dbfa3c356953a5b631fb7e0b04742c4debc7f108a5cdc7047d282fc058ed",
+          "title": "real recording / independent ledger / exact Tape: independent-stock-card16-card17/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "25712725d30e50e10c85f192fea9d9207050a42ddffbca52b1834e2404e8923e",
+          "title": "real recording / independent ledger / exact Tape: independent-stock-card16-card17/en",
+          "occurrence": 1
+        },
+        {
+          "id": "2d8679e852b6492c9e2de77f26bc773e009a8778e3067fed69afebd40609edd9",
+          "title": "real recording / independent ledger / exact Tape: zero-one-then-empty/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "2c15556ce243b2045bef25aa21149ce3f77a20bc3ad7534e22a94b624f9eef39",
+          "title": "real recording / independent ledger / exact Tape: zero-one-then-empty/en",
+          "occurrence": 1
+        },
+        {
+          "id": "ed2ceb0cf75aacf4e002d629009b55e2d69bebf6515034c009cacb7ca851f71a",
+          "title": "real recording / independent ledger / exact Tape: one-zero-borrow-heal/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "bbb59dcf1fce5c15893147c7c8e779d33f4ecf987e81d7c052ff659794c2cb2d",
+          "title": "real recording / independent ledger / exact Tape: one-zero-borrow-heal/en",
+          "occurrence": 1
+        },
+        {
+          "id": "4acc9ef5265e6e0723987fcefbb67de2af60d16242ab6559d73982d26cb31a71",
+          "title": "real failed eclipse_swallow/zh-CN preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "027de0531403b8c008c4ede7ed93c458eeaa84d2b4371ac86c5add2eeb391a63",
+          "title": "real failed eclipse_swallow/en preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "c6e447ebc90ec39603b47ef9269ee0d8341d0799529dd09510cabdf04ed74d87",
+          "title": "real failed radiant_shelter/zh-CN preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "850b41c4042a80088af428d77b99eb2af73bf9d50c7690e77541f25cf5d0e647",
+          "title": "real failed radiant_shelter/en preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "a64316421dbe9ef674d8721ce92e6d27a7a136e6c291bc268f1ebf158eec3002",
+          "title": "real failed dreamer/zh-CN preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "e3758091e1cfe4b034df6f7b6f8783585e61d8616e213c6d38a08d624f220985",
+          "title": "real failed dreamer/en preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "9f666bf926d97b2d37151fc0b2bb3bbae7b27c5e126a8eec24ee7b38fa0b931b",
+          "title": "real failed wolf_discussion/zh-CN preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "a35880f307987c926fb96c73904905a03ee4ec1a6fb7d3baf1a834f44f6d175f",
+          "title": "real failed wolf_discussion/en preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "3b004502ce0da98c53434c3bd665ad05dcbc40039ea4cb8f094c272d138b0883",
+          "title": "real failed wolf_vote/zh-CN preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "48b3595a6322006c8b4edfcab07e03cbb150bd8023b9ce6fd7bd8c18381a6a7e",
+          "title": "real failed wolf_vote/en preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "cee97bff367c5fa87594d3bcce90c93ddeb14d8d61d6ed8aa2c86afe059e50be",
+          "title": "real failed witch/zh-CN preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "7ae5fdfe766cbc30ff9c4a6f8de98c3d4a9b9d26946ad6d05edc20cafac32280",
+          "title": "real failed witch/en preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "d350ab19a914b2134ede997f24297cbeac582cd70c6c7b0a9b7daf2874c7695d",
+          "title": "real failed seer/zh-CN preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "db807547637429fa4aef362dae6441e619b94037fed2ad9bc94d01ea1e5e1b2d",
+          "title": "real failed seer/en preserves prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "660410e99441925c7b21b01f0a26a1ed3f2086c6c87b9d7fe439cbdeab41057b",
+          "title": "badge soft missing choice destroys badge",
+          "occurrence": 1
+        },
+        {
+          "id": "8be0640cfa3da2d959d83e9259354585238f638ecda1b605e8a72e7d91c74ce6",
+          "title": "badge soft invalid choice destroys badge",
+          "occurrence": 1
+        },
+        {
+          "id": "69255edea1354db5f51a483210d46742583491453adc03af4fcb9b55cef91cd1",
+          "title": "independent archive rejects native policy immutable",
+          "occurrence": 1
+        },
+        {
+          "id": "0225f9f25fc596fa02e79a2a869fa74184f6a51c111859361c9c65687f070147",
+          "title": "independent archive rejects source stock not refreshed",
+          "occurrence": 1
+        },
+        {
+          "id": "4173c5d783a20f091ce98bebdfee4ad7ad82826bc28f8e77fabbfe9dd42e8ed5",
+          "title": "independent archive rejects fresh copy not source history",
+          "occurrence": 1
+        },
+        {
+          "id": "9ef2eb6537116505bea80d8179037daf074f5b07cc54ddd60ff6fd1618050e65",
+          "title": "independent archive rejects closure audience God only",
+          "occurrence": 1
+        },
+        {
+          "id": "0f118737e44fab00d8e9ef67d2220650070ea94a1f71f6b6cf92ffcf927156bb",
+          "title": "independent archive rejects speech text matches real fact",
+          "occurrence": 1
+        },
+        {
+          "id": "2dabb6df8b39e2fd3a1e27b47b0d50c95a805db07b30b6cbde8ea0958a2e8d8c",
+          "title": "independent archive rejects duplicate settlement rejected",
+          "occurrence": 1
+        },
+        {
+          "id": "c0aaa41731c96b497c574e7da8d888817c93eaa025628fe2c908b97be2b8f529",
+          "title": "independent archive rejects unfinalized supplied damage evidence checked",
+          "occurrence": 1
+        },
+        {
+          "id": "c787d2a2b08a9c0797b31043ea272245f18bf515a9ddced796500b177ecc907d",
+          "title": "independent archive rejects no last words after final victory",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_request_review.test.ts",
+      "to": "backend/tests/scenarios/reproduction/radiant-eclipse/request-prefix-forgery.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "Actual radiantRecording produces full or interrupted game prefixes, including two top-level await baselines. Original shared baselines, ordinary rule branches, pending/settled prefixes and copied request/checkpoint forgeries remain one recorded scenario contract.",
+      "originalSha256": "2f56f2d35ef38678ee68c838ac3bda35cc1551a9ca08bb8763308f8c49c5e45b",
+      "candidateSha256": "43d1d4c251ec3a3c7a1dd2eb95d8543e94601078b242e42f3d02efe700cde16c",
+      "moduleAndLocationEdits": [
+        {
+          "start": 180,
+          "end": 212,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 75,
+          "end": 111,
+          "value": "../../../support/radiant_eclipse_recording",
+          "kind": "module-specifier",
+          "original": "../support/radiant_eclipse_recording",
+          "originalResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "dab420168802941a0199f211ef7faef6e117522c0b6d63f6a974cfe0b490963f",
+          "title": "actual finalized four-night and legitimate copied-Witch pending baselines pass",
+          "occurrence": 1
+        },
+        {
+          "id": "db526824bea5e77e86fbddb06cb066a581e0c9c7ac1241dfbd03fd94d1a87a18",
+          "title": "full: unrelated Seer request may not carry private wolf_target",
+          "occurrence": 1
+        },
+        {
+          "id": "34f881c7b1c823d5d7995505f4fda9914a5daeac0a159161d5c676e8ebbfe3cb",
+          "title": "full: exact swallow raw JSON forbids unrecognized properties",
+          "occurrence": 1
+        },
+        {
+          "id": "1246f8ee3d960f881f5faa4570970ce53ea2b6ea46cfad48ee0abe061f0cf580",
+          "title": "full: downstream shelter may not open before swallow settles",
+          "occurrence": 1
+        },
+        {
+          "id": "7ab6832d83fa9611cc1107b2066f8b2c1996bbba67e07424f1f1b124b8f1834a",
+          "title": "pending: a settled predecessor with an illegal dream target cannot authorize a later Witch",
+          "occurrence": 1
+        },
+        {
+          "id": "9de65e1fba1c853ab31982f1672f51e00cd0626aa199f0d31a2c06378b3e4370",
+          "title": "pending: a pending shelter predecessor cannot authorize a later Witch",
+          "occurrence": 1
+        },
+        {
+          "id": "61cd12789a514e1651e361705802ba6a6a6282fee52b5de9c0d0c85d83af843f",
+          "title": "pending: a failed shelter predecessor cannot authorize a later Witch",
+          "occurrence": 1
+        },
+        {
+          "id": "428c4c4e119ab8c1ecac4157a08fc2e9b8549f379319e1ccc06f3b72ffc96e96",
+          "title": "pending: removing the mandatory shelter opportunity cannot leave successors",
+          "occurrence": 1
+        },
+        {
+          "id": "7010ccbba33e27c128758007cf6467761b263ee4b29bba74670f066f77d65ae1",
+          "title": "pending: existing borrowed grant DTO forbids source-history canary fields",
+          "occurrence": 1
+        },
+        {
+          "id": "570266c91dcb012bb7d14cbb0758ef94b4f6dcaad2ffc536893e4193c92417d9",
+          "title": "pending: a potion borrower cannot see an invented own Seer result",
+          "occurrence": 1
+        },
+        {
+          "id": "48889ea301b175a0917f32b3d29f3eb5b08cb934f5efdcbdc6c08eae0371d42e",
+          "title": "pending: future game_over fact cannot be appended to an unfinished Witch view",
+          "occurrence": 1
+        },
+        {
+          "id": "2899e5be7b55cc9e5342ac1588b88486e78504b19a1e5c4725369813cfa26029",
+          "title": "full: wrong borrowed ability ID remains rejected",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 466,
-    "targetFiles": 472,
-    "mappingEntries": 472,
-    "baselineCases": 5685,
+    "sourceFiles": 470,
+    "targetFiles": 476,
+    "mappingEntries": 476,
+    "baselineCases": 5747,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
