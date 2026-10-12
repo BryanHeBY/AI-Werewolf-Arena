@@ -1,45 +1,15 @@
-import type { Camp, EntityId, Phase } from "./identity";
-import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
-import type { GameOutcome, VictoryPoint } from "@ai-werewolf-arena/game-catalog";
-
-export interface GameResult {
-  winner: Camp | null;
-  reason: string;
-  outcome: GameOutcome;
-  decidedAt: VictoryPoint;
-}
-export type WinDecision = Omit<GameResult, "decidedAt">;
-
-export interface SeerCheckResult {
-  seerId: EntityId;
-  targetId: EntityId;
-  isWerewolf: boolean;
-  result: Extract<InspectionResult, { kind: "camp" }>;
-}
-
-export interface NightSummary {
-  wolfTarget: EntityId | null;
-  deaths: EntityId[];
-  seerChecks: SeerCheckResult[];
-  interruptedBySelfDestruct: boolean;
-}
-
-export interface DaySummary {
-  speeches: Array<{ actorId: EntityId; text: string }>;
-  selfDestructBy: EntityId | null;
-}
-
-export interface VotingSummary {
-  /** Actual exile outcome; target remains the public ballot winner. */
-  effectiveTarget?: EntityId | null;
-  tally: Record<number, number>;
-  target: EntityId | null;
-  removed: EntityId[];
-}
-
-export interface RuntimeSnapshot {
-  day: number;
-  phase: Phase;
-  gameOver: boolean;
-  result: GameResult | null;
-}
+/**
+ * Provides the named compatibility exit for core result and summary consumers.
+ * Inputs come from game-contract's sole data owner; outputs preserve existing
+ * public imports and types. This bridge performs no rule calculation, rendering
+ * or additional state write and must disappear after its consumers migrate.
+ */
+export type {
+  GameResult,
+  WinDecision,
+  SeerCheckResult,
+  NightSummary,
+  DaySummary,
+  VotingSummary,
+  RuntimeSnapshot,
+} from "@ai-werewolf-arena/game-contract";

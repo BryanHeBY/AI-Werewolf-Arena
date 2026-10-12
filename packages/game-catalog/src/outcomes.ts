@@ -1,38 +1,17 @@
-/** Language-neutral victory facts. Runtime role state stays in the engine. */
-export const FACTION_IDS = ["good", "wolf", "third_party"] as const;
-export type FactionId = (typeof FACTION_IDS)[number];
-export const VICTORY_CHECKPOINTS = [
-  "night_settled",
-  "day_interrupted",
-  "exile_settled",
-  "max_days_reached",
-] as const;
-export type VictoryCheckpoint = (typeof VICTORY_CHECKPOINTS)[number];
-export interface VictoryPoint {
-  day: number;
-  phase: "night" | "day" | "voting";
-  checkpoint: VictoryCheckpoint;
-}
-export type VictoryAffiliation =
-  | { kind: "faction"; faction: FactionId }
-  | { kind: "individual"; goalId: string }
-  | { kind: "relationship"; groupId: string };
-export type VictoryTarget =
-  | { kind: "faction"; faction: FactionId }
-  | { kind: "individual"; goalId: string; playerId: number }
-  | { kind: "relationship"; groupId: string };
-export type VictoryClaim = VictoryTarget & { winningPlayerIds: number[] };
-export type GameOutcome =
-  | {
-      kind: "victory";
-      primary: VictoryClaim;
-      additional: VictoryClaim[];
-      winningPlayerIds: number[];
-    }
-  | { kind: "no_winner" };
-export interface SealedVictoryResult {
-  winner: FactionId | null;
-  reason: string;
-  outcome: GameOutcome;
-  decidedAt: VictoryPoint;
-}
+/**
+ * Provides the named compatibility exit for catalog victory consumers.
+ * Inputs come from game-contract's sole data owner; outputs preserve existing
+ * public imports and types. This bridge performs no rule calculation, rendering
+ * or additional state write and must disappear after its consumers migrate.
+ */
+export { FACTION_IDS, VICTORY_CHECKPOINTS } from "@ai-werewolf-arena/game-contract";
+export type {
+  FactionId,
+  VictoryCheckpoint,
+  VictoryPoint,
+  VictoryAffiliation,
+  VictoryTarget,
+  VictoryClaim,
+  GameOutcome,
+  SealedVictoryResult,
+} from "@ai-werewolf-arena/game-contract";

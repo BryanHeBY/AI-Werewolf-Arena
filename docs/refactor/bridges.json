@@ -41,6 +41,22 @@
       "currentConsumers": "game-text and replay-contract; backend and frontend identity types/metadata tests",
       "exit": "C44 after direct machine-contract imports replace catalog identity imports",
       "runtime": "metadata names/status remain catalog; IDs and guards are re-exports"
+    },
+    {
+      "id": "catalog-result-data",
+      "path": "packages/game-catalog/src/{outcomes,inspection,errors}.ts",
+      "owner": "game-contract",
+      "exports": "unchanged named public outcome/inspection/error data exports",
+      "currentConsumers": "engine/features, game-text, replay-contract, archives, frontend via catalog public exit",
+      "exit": "C44 after direct contract data imports; catalog names/status remain catalog"
+    },
+    {
+      "id": "core-result-death-data",
+      "path": "backend/src/core/domain/{results,deaths}.ts",
+      "owner": "game-contract",
+      "exports": "GameResult and summaries; DeathCause/DeathSources only",
+      "currentConsumers": "engine and features via core/model or core index; strict recording and tests",
+      "exit": "C44 data bridges; death-shot selection/callbacks and eligibility algorithms stay domain"
     }
   ]
 }

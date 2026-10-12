@@ -1,9 +1,11 @@
-import type { RoleId } from "./index";
-
-/** Rule-revealed labels, which may differ from the target's real identity. */
-export type InspectionCamp = "good" | "wolf" | "third_party";
-export type InspectionResult =
-  | { kind: "camp"; camp: InspectionCamp }
-  | { kind: "role"; role: RoleId }
-  | { kind: "combined"; camp: InspectionCamp; role: RoleId };
-export type InspectionKind = InspectionResult["kind"];
+/**
+ * Provides the named compatibility exit for catalog inspection consumers.
+ * Inputs come from game-contract's sole data owner; outputs preserve existing
+ * public imports and types. This bridge performs no rule calculation, rendering
+ * or additional state write and must disappear after its consumers migrate.
+ */
+export type {
+  InspectionCamp,
+  InspectionResult,
+  InspectionKind,
+} from "@ai-werewolf-arena/game-contract";

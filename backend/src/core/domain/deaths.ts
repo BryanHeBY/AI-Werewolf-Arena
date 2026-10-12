@@ -1,40 +1,18 @@
+/**
+ * Defines runtime death-shot selection and source eligibility for domain callers.
+ * Inputs are original-life handles, cause lists, policy and source phase; outputs
+ * are selection types and the existing permitsDeathShot/permitsHunterShot result.
+ * This module owns the eligibility algorithm and retains its exact order and
+ * rejection policy. Serialized causes come from the contract owner; callbacks
+ * and component references never become archive data or transferable authority.
+ */
 import { Phase } from "./identity";
 import type { DeathActionPolicy } from "./board";
 import type { NightLifeScope } from "./night_effects";
-/** Death facts are distinct from transient protection/damage marks. */
-export enum DeathCause {
-  WhiteCatExpiry = "white_cat_expiry",
-  PufferRetaliation = "puffer_retaliation",
-  FragrantLink = "fragrant_link",
-  ServantExpiry = "servant_expiry",
-  RadiantBacklash = "radiant_backlash",
-  RavenClawKnife = "raven_claw_knife",
-  WolfKill = "wolf_kill",
-  Poison = "poison",
-  EvilKnightReflection = "evil_knight_reflection",
-  PureWhiteInspection = "pure_white_inspection",
-  WolfWitchInspection = "wolf_witch_inspection",
-  DemonHunt = "demon_hunt",
-  DemonHuntBacklash = "demon_hunt_backlash",
-  Shot = "shot",
-  Exile = "exile",
-  RedMoonExpiry = "red_moon_expiry",
-  SelfDestruct = "self_destruct",
-  WhiteWolfBlast = "white_wolf_blast",
-  Lovers = "lovers",
-  Dream = "dream",
-  FoxInspection = "fox_inspection",
-  Charm = "charm",
-  Duel = "duel",
-  DuelFailure = "duel_failure",
-  Ability = "ability",
-  MechanicalKnife = "mechanical_knife",
-  AwakenedHiddenKnife = "awakened_hidden_knife",
-  MechanicalGuardFailure = "mechanical_guard_failure",
-  MerchantBacklash = "merchant_backlash",
-  BlackMarketBacklash = "black_market_backlash",
-}
-export type DeathSources = Record<number, DeathCause[]>;
+import { DeathCause } from "@ai-werewolf-arena/game-contract";
+export { DeathCause } from "@ai-werewolf-arena/game-contract";
+export type { DeathSources } from "@ai-werewolf-arena/game-contract";
+
 export type DeathShotSelection =
   | {
       kind: "shot";
