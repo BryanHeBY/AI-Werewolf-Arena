@@ -1,7 +1,12 @@
+/**
+ * Failure scenarios verify Red Moon deferred-night missing or late responses retain the original interrupted recorded prefix.
+ * Input: Existing Red Moon transport plans and exact day-three actor/stage cutoff across transports and locales.
+ * Output and oracle: Explicit failed decision and absent settlement assertions retain paid deferred state; the existing World-derived plan/alive oracle debt remains unchanged and is not independent coverage.
+ */
 import { expect, test } from "bun:test";
-import { redMoonScenario } from "../support/red_moon_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
-import type { PlannedTurn } from "../support/foundation_transport_plan";
+import { redMoonScenario } from "../../../support/red_moon_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
+import type { PlannedTurn } from "../../../support/foundation_transport_plan";
 for (const stage of ["wolf_vote", "seer"] as const)
   for (const failure of ["missing", "late"] as const)
     for (const transport of ["llm", "acp"] as const)

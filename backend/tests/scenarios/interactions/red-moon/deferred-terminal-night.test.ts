@@ -1,6 +1,11 @@
+/**
+ * Interaction scenarios verify Red Moon deferred last-wolf terminal nights and one-night sealing preserve literal win/expiry policy.
+ * Input: Original ends-game/forbidden and win/expiry matrix, fixed role plans and three actual blast/resume cycles.
+ * Output and oracle: Explicit winners, expiry, request timing and sealed-night counts cover executed phases; no production World generates expected terminal state.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { redMoonTwelveConfig } from "../../../src/runtime/scenarios/red_moon_twelve";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { redMoonTwelveConfig } from "../../../../src/runtime/scenarios/red_moon_twelve";
 import {
   COMPONENT,
   Camp,
@@ -8,9 +13,9 @@ import {
   type ActionRequest,
   type ToolCall,
   type RoleComponent,
-} from "../../../src/core";
-import { demonNightChoice } from "../../support/demon_hunter_scenarios";
-import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state";
+} from "../../../../src/core";
+import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { getRedMoonState } from "../../../../src/game/mechanisms/roles/red_moon_apostle/state";
 function game(policy: "ends_game" | "forbidden" = "ends_game") {
   const config = structuredClone(redMoonTwelveConfig);
   config.redMoon!.lastWolfBlastPolicy = policy;

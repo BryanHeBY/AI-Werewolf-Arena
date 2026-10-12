@@ -1,6 +1,11 @@
+/**
+ * Failure scenarios verify actual Scholar Mentor second-cycle invalid or missing requests preserve the paid choice prefix without bonus settlement.
+ * Input: The original ten failure variants, seeded first cycle and controlled second-cycle native/bonus responses.
+ * Output and oracle: Literal absent bonus/night result and remaining/history values stay attached to the failed phase execution; no expected action is repaired or regenerated.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { scholarMentorTwelveConfig } from "../../../src/runtime/scenarios/scholar_mentor_twelve";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { scholarMentorTwelveConfig } from "../../../../src/runtime/scenarios/scholar_mentor_twelve";
 import {
   COMPONENT,
   Role,
@@ -10,10 +15,10 @@ import {
   type RoleComponent,
   type ActionRequest,
   type ToolCall,
-} from "../../../src/core";
-import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
-import { scholarMentorStateForRole } from "../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
+} from "../../../../src/core";
+import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
 for (const variant of [
   "missing-wolf-chat",
   "invalid-wolf-chat",

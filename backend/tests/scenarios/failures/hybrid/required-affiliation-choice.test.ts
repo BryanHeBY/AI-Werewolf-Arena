@@ -1,33 +1,32 @@
 /**
- * Failure scenario integration verify required Hybrid choices reject transport failures without fallback.
- * Input: Real synthetic SDK/ACP paths, failing required requests and a scoped reproduction recorder.
- * Output and independent oracle: Zero fallback/consumption, literal failure decision/checkpoint fields and exact partial replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Failure scenarios verify real required Hybrid affiliation choices reject SDK or ACP failure without fallback or identity consumption.
+ * Input: Original synthetic provider response matrices, actual phase/recording scope and exact partial reproduction.
+ * Output and oracle: Literal original state, no-consumption/fallback and failed-prefix assertions retain native authority; no live provider credential or repaired choice is used.
  */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Role, WinCondition, type RoleComponent } from "../../../src/core";
-import type { VictoryComponent } from "../../../src/core/domain/components/victory";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { getHybridState } from "../../../src/game/mechanisms/roles/hybrid/state";
-import { AiSdkClient } from "../../../src/ai/integrations/llm/ai_sdk_client";
-import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { COMPONENT, Role, WinCondition, type RoleComponent } from "../../../../src/core";
+import type { VictoryComponent } from "../../../../src/core/domain/components/victory";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { getHybridState } from "../../../../src/game/mechanisms/roles/hybrid/state";
+import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
+import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
+import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
+import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { createTestTempDirectory } from "../../support/drivers/temp-directories";
+import { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../../src/runtime/simulation/reproduction_context";
+} from "../../../../src/runtime/simulation/reproduction_context";
 import {
   readReproduction,
   replayReproduction,
-} from "../../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/runtime/simulation/replay_reproduction";
 
 for (const locale of ["zh-CN", "en"] as const)
   for (const transport of ["sdk", "acp"] as const)

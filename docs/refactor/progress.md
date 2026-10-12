@@ -175,3 +175,5 @@
 - C12 fragrant-recording-wire prefix contracts：2原文件/52旧IDs实际完整录制/复现场景迁移；20whole程序/77recognized callbacks+1curried skipIf/92relative imports保真，Root独立actualGit全部语句/119完整import语法/同目标/297unique IDs复核0；20heads0与一次finite20 types0，不跑games/full。18scenario/2integration按实际边界归属，原beforeAll/cache/独有计划键与opt-in条件保持且不作发现或pass声称；RedMoon派生oracle债务仍pending。mapping现479source/485target/5891IDs。
 
 - C12 mist-prefixes prefix contracts：7原文件/132旧IDs实际完整录制/复现场景迁移；20whole程序/77recognized callbacks+1curried skipIf/92relative imports保真，Root独立actualGit全部语句/119完整import语法/同目标/297unique IDs复核0；20heads0与一次finite20 types0，不跑games/full。18scenario/2integration按实际边界归属，原beforeAll/cache/独有计划键与opt-in条件保持且不作发现或pass声称；RedMoon派生oracle债务仍pending。mapping现486source/492target/6023IDs。
+
+- C12 runtime-domain-boundaries prefix contracts：6原文件/51旧IDs实际完整录制/复现场景迁移；20whole程序/77recognized callbacks+1curried skipIf/92relative imports保真，Root独立actualGit全部语句/119完整import语法/同目标/297unique IDs复核0；20heads0与一次finite20 types0，不跑games/full。18scenario/2integration按实际边界归属，原beforeAll/cache/独有计划键与opt-in条件保持且不作发现或pass声称；RedMoon派生oracle债务仍pending。mapping现492source/498target/6074IDs。

@@ -60045,13 +60045,780 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/hybrid_required_choice.test.ts",
+      "to": "backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Per-file actual boundary: Hybrid strict providers plus real phase/record/replay; Red Moon required and terminal deferred nights; Wolf Sorcerer committed failure prefixes; Scholar actual second-cycle failures. Runner seed file solely checks actual stored/private seed and same-seed deal reconstruction, so integration rather than a full-rule scenario.",
+      "originalSha256": "8c037bf41f10d6ad4888cfd35df5e6d566a004cfd9f10d5066fdae4bab3f10d4",
+      "candidateSha256": "989ba6f4df453dd3bfb28196d637ec3cce80b9e420f770d160781a283b12b388",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1728,
+          "end": 1779,
+          "value": "../../../../src/runtime/simulation/replay_reproduction",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/simulation/replay_reproduction",
+          "originalResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "expectedResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1614,
+          "end": 1666,
+          "value": "../../../../src/runtime/simulation/reproduction_context",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1486,
+          "end": 1524,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1402,
+          "end": 1442,
+          "value": "../../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1320,
+          "end": 1359,
+          "value": "../../../../src/recording/session_recorder",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1155,
+          "end": 1204,
+          "value": "../../../../src/ai/agents/providers/action_providers",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/action_providers",
+          "originalResolved": "backend/src/ai/agents/providers/action_providers.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/action_providers.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1063,
+          "end": 1109,
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/acp/acp_action_provider",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 979,
+          "end": 1025,
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 895,
+          "end": 941,
+          "value": "../../../../src/ai/integrations/llm/ai_sdk_client",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+          "expectedResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 816,
+          "end": 863,
+          "value": "../../../../src/game/mechanisms/roles/hybrid/state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/hybrid/state",
+          "originalResolved": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 736,
+          "end": 781,
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 654,
+          "end": 697,
+          "value": "../../../../src/core/domain/components/victory",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/victory",
+          "originalResolved": "backend/src/core/domain/components/victory.ts",
+          "expectedResolved": "backend/src/core/domain/components/victory.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 595,
+          "end": 612,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 499,
+          "end": 525,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "7ce38bf97fd542e8600a325e64c28b537ce4ee2ad5369b8ad341f6b6ddb71f9d",
+          "title": "zh-CN/sdk/empty: actual failed required Hybrid path never invokes even an injected action fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "ec7ad03caef77e20b0e92386ef667a18dc637168563d8a40d33cbe9bf652f46d",
+          "title": "zh-CN/sdk/transport: actual failed required Hybrid path never invokes even an injected action fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "8b35b479ff5e19a3e64f13e6978943e5a3782f60c41e96f8a93101cf5bdd3fa2",
+          "title": "zh-CN/acp/empty: actual failed required Hybrid path never invokes even an injected action fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "362272f42ac3d6b68b735b948a9f7543783171f97aaf90351d1772b0d4713dea",
+          "title": "zh-CN/acp/transport: actual failed required Hybrid path never invokes even an injected action fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "d85cb853a3ddaf3ccff82a72ed21a6f09f09a3ca3c7115e1a63b2a92c892c59d",
+          "title": "en/sdk/empty: actual failed required Hybrid path never invokes even an injected action fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "72d713ad5ad1b6c2969cba1a29cb464cfdefec3c32999b9fbba3aa25781d9cb3",
+          "title": "en/sdk/transport: actual failed required Hybrid path never invokes even an injected action fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "90af434561f143226585ffb3f06f4fabe09d1060972eb58bc8721158e2b6a8a8",
+          "title": "en/acp/empty: actual failed required Hybrid path never invokes even an injected action fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "83174cf08715e9315ffcc57bac9ce3681e287f45a108ff15e3069d578082aaa6",
+          "title": "en/acp/transport: actual failed required Hybrid path never invokes even an injected action fallback",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/red_moon_required_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/red-moon/deferred-night-response.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Per-file actual boundary: Hybrid strict providers plus real phase/record/replay; Red Moon required and terminal deferred nights; Wolf Sorcerer committed failure prefixes; Scholar actual second-cycle failures. Runner seed file solely checks actual stored/private seed and same-seed deal reconstruction, so integration rather than a full-rule scenario.",
+      "originalSha256": "58d575d856039ea000042fd45a1c8d4b1c3ddc23178e1ae6ee3a828aa2e1ff40",
+      "candidateSha256": "4c9fe942a9c0471b0e33b0394d58db24a23a92b79592ad02b4117cef1e2a3ced",
+      "moduleAndLocationEdits": [
+        {
+          "start": 216,
+          "end": 252,
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "original": "../support/foundation_transport_plan",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 150,
+          "end": 179,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 74,
+          "end": 113,
+          "value": "../../../support/red_moon_transport_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/red_moon_transport_scenarios",
+          "originalResolved": "backend/tests/support/red_moon_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/red_moon_transport_scenarios.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b2693cf8fbbe9f38a405f5881713ecfabc841de2c83d8322b55cdde3f425e20e",
+          "title": "Red Moon deferred-night failure wolf_vote/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "9127457d5af94cfd24a0c55529f312b316a6fde6f77fc80ddef428353cec811e",
+          "title": "Red Moon deferred-night failure wolf_vote/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "73601be86bdbaa0ff2af978bb23f1ef1500c64b309a4dd17c8d5ab1a11d722ef",
+          "title": "Red Moon deferred-night failure wolf_vote/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "013dab04de06fcd707f03408b844423b57a33c84e016af4647fc78af20812b7a",
+          "title": "Red Moon deferred-night failure wolf_vote/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "3c25fc6ec30e0ade93f610340bdf58b5840e17569126dcdc8c0c44bde88f13a8",
+          "title": "Red Moon deferred-night failure seer/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "f12aefa02cbfcb3c14fb93a4d93992091a427deaed274d3075ef5253442fb557",
+          "title": "Red Moon deferred-night failure seer/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "9414f3ecab327cfd52bc9982af8c92c197bb2758227494052d8ffa9974999102",
+          "title": "Red Moon deferred-night failure seer/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "fb44cddba5463dcf9a183fc3b0e4addb1e3d2fddb57d1bbaa665dd19b1ef5d2a",
+          "title": "Red Moon deferred-night failure seer/late/acp",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/runner_random_recording.test.ts",
+      "to": "backend/tests/integration/filesystem/deal-seed-recording.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Per-file actual boundary: Hybrid strict providers plus real phase/record/replay; Red Moon required and terminal deferred nights; Wolf Sorcerer committed failure prefixes; Scholar actual second-cycle failures. Runner seed file solely checks actual stored/private seed and same-seed deal reconstruction, so integration rather than a full-rule scenario.",
+      "originalSha256": "76f206e4b2c9aea0d9d8d9450f5e8f7341e742ff1fd52466769eea9a55177256",
+      "candidateSha256": "77bbc49360c547900d287eceaea64d6eb51c249f75ff2398502d6759e5fde862",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1098,
+          "end": 1133,
+          "value": "../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1016,
+          "end": 1054,
+          "value": "../../../src/runtime/player_agent_factory",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/player_agent_factory",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 958,
+          "end": 987,
+          "value": "../../../src/runtime/game_runner",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/game_runner",
+          "originalResolved": "backend/src/runtime/game_runner.ts",
+          "expectedResolved": "backend/src/runtime/game_runner.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 887,
+          "end": 930,
+          "value": "../../../src/runtime/config/resolve_game_setup",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 813,
+          "end": 850,
+          "value": "../../../src/runtime/config/parse_config",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/parse_config",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 728,
+          "end": 774,
+          "value": "../../../src/ai/agents/providers/action_providers",
+          "kind": "module-specifier",
+          "original": "../../src/ai/agents/providers/action_providers",
+          "originalResolved": "backend/src/ai/agents/providers/action_providers.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/action_providers.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 668,
+          "end": 682,
+          "value": "../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 572,
+          "end": 595,
+          "value": "../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "a8b62d95eb66bd54c98efde2658187b5808a804b4ebdd0141d652741801078bc",
+          "title": "runner saves configured seed and reproduces the deal without publishing RNG metadata",
+          "occurrence": 1
+        },
+        {
+          "id": "9ade78ab17db0678bd91d05b8f193debb37423781f631791cf3a41ae81ae465e",
+          "title": "runner saves generated seed and reproduces the deal without publishing RNG metadata",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/wolf_sorcerer_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/wolf-sorcerer/required-and-late-prefix.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Per-file actual boundary: Hybrid strict providers plus real phase/record/replay; Red Moon required and terminal deferred nights; Wolf Sorcerer committed failure prefixes; Scholar actual second-cycle failures. Runner seed file solely checks actual stored/private seed and same-seed deal reconstruction, so integration rather than a full-rule scenario.",
+      "originalSha256": "21ac40e488f0337c1e902f88dcb9dc336d7e12de8466fac02bdd2476f5fde8cd",
+      "candidateSha256": "6e71940e6517cad0c20583dbff80b85fbe4fbd9584ed9d547a7afa3054577334",
+      "moduleAndLocationEdits": [
+        {
+          "start": 424,
+          "end": 438,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 367,
+          "end": 399,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 287,
+          "end": 323,
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "original": "../support/foundation_transport_plan",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 221,
+          "end": 250,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 140,
+          "end": 184,
+          "value": "../../../support/wolf_sorcerer_transport_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/wolf_sorcerer_transport_scenarios",
+          "originalResolved": "backend/tests/support/wolf_sorcerer_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/wolf_sorcerer_transport_scenarios.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "d8c2f9dd15e2d3623746e9aa2c2ca70706e80876e2fdaef0d797b7a065bba4f7",
+          "title": "Wolf Sorcerer required choice prefix/2/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "6fe87aa463f398d2a1d27b8103d1b13b9dc115e725213802c226e77c918f0d0d",
+          "title": "Wolf Sorcerer required choice prefix/2/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "0fd6efc036e576ab17510102e7b2841116bc4409c347f98bbc0604519eaeea03",
+          "title": "Wolf Sorcerer required choice prefix/2/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "0426330e1e96b70eb43fec2053e1edcb751ea3baa19b864c7832d3f8999bb05a",
+          "title": "Wolf Sorcerer required choice prefix/2/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "8ccc4a76ce4fd48cde568dff823b83de70e90490f2e92d7b82eda7959232ac63",
+          "title": "Wolf Sorcerer required choice prefix/2/invalid/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "6822e05192352394a7c4b7f8ac6976aba9355ec8ddd068bf179ffc5cb6d11b2f",
+          "title": "Wolf Sorcerer required choice prefix/2/invalid/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "a7a81df388833bc1176783c2e4cb7367af46886ee7c7c52280c754f74f702ef0",
+          "title": "Wolf Sorcerer required choice prefix/3/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "65bb0975e5d6bb32aea19491014149ece0c3feb104a7bfe7d7d028c5df7c802f",
+          "title": "Wolf Sorcerer required choice prefix/3/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "e280b3fe09eab98917dde00a4b6e4cd9697225e7a3d020aec08e49c841126d30",
+          "title": "Wolf Sorcerer required choice prefix/3/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "88d33700b7fa10b818a770e4bf8393e396dc2197ab9503e646847fdb5d696aa8",
+          "title": "Wolf Sorcerer required choice prefix/3/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "e434b2caa1bd03bc6e3f17a6208c795f445710299df8bd69627af7ac510baa88",
+          "title": "Wolf Sorcerer required choice prefix/3/invalid/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "b03db9c28bd0dab007bac5abf8102ba6c6b0db3cf25644bde34a79ef5773b2c9",
+          "title": "Wolf Sorcerer required choice prefix/3/invalid/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "1e63919d5fb3c061f32dfad1cb3033c85c77923705d993eba330004c04386510",
+          "title": "Wolf Sorcerer committed prefix survives late witch/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "57fb5cfd315876dfbaa1b6a01c8f19f7d1a3d7d192dc274bc9da1cb60d54ab25",
+          "title": "Wolf Sorcerer committed prefix survives late witch/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "cbbf8c02a55c22216b5764a178102a43d69f8aa3c5e21662ed54a9bede7f5656",
+          "title": "Wolf Sorcerer committed prefix survives late psychic/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "97fc15fb2642004d278f81e96568d7027376333cc07477cba8feb8449ffab26a",
+          "title": "Wolf Sorcerer committed prefix survives late psychic/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "bc8803b1449942ba742547fd10104c3664b930754eac4cb2e27d8b214329899b",
+          "title": "Wolf Sorcerer committed prefix survives late hunter_shot/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "70f8c08b8c2906f695c2eb03ed83e337fd7f44670e29fa7457df3b76e41e5d56",
+          "title": "Wolf Sorcerer committed prefix survives late hunter_shot/acp",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/red_moon_golden_world.test.ts",
+      "to": "backend/tests/scenarios/interactions/red-moon/deferred-terminal-night.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Per-file actual boundary: Hybrid strict providers plus real phase/record/replay; Red Moon required and terminal deferred nights; Wolf Sorcerer committed failure prefixes; Scholar actual second-cycle failures. Runner seed file solely checks actual stored/private seed and same-seed deal reconstruction, so integration rather than a full-rule scenario.",
+      "originalSha256": "a9dcfa867d0411646f01f15f4a6c114c5c1441fc5e14b568e789296c42f58363",
+      "candidateSha256": "38b4bc389f28fd81e06e4a6d042435538b004498a442f2f4b28ef3b9ffc997f6",
+      "moduleAndLocationEdits": [
+        {
+          "start": 426,
+          "end": 483,
+          "value": "../../../../src/game/mechanisms/roles/red_moon_apostle/state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/red_moon_apostle/state",
+          "originalResolved": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 354,
+          "end": 390,
+          "value": "../../../support/demon_hunter_scenarios",
+          "kind": "module-specifier",
+          "original": "../../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 300,
+          "end": 317,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 138,
+          "end": 184,
+          "value": "../../../../src/runtime/scenarios/red_moon_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/red_moon_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/red_moon_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/red_moon_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 72,
+          "end": 98,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "eab97637cb8be93bcd58f3d535e95aa04eb966dce8f81c1394de449187c104f1",
+          "title": "ends_game: deferred last wolf expires without completing a side",
+          "occurrence": 1
+        },
+        {
+          "id": "1448360d4c74df2d2f8caa4823e9c70cb6428e800579c45c35877a76593d41ab",
+          "title": "forbidden: deferred last wolf expires without completing a side",
+          "occurrence": 1
+        },
+        {
+          "id": "5bd68adf18c812d4187cc86e1a121787519f8ff7fa8ae7e884375e763080aea3",
+          "title": "ends_game: deferred last wolf wins with the final knife",
+          "occurrence": 1
+        },
+        {
+          "id": "c418e3907b8eb56dedf9a8ecdbd02385718e918fcb793991c52a4cd4abc407a7",
+          "title": "forbidden: deferred last wolf wins with the final knife",
+          "occurrence": 1
+        },
+        {
+          "id": "27c345e05b0cdc1e9ee9fde1d6782ae42184642c2f88b877b0860fedd0cb9ecd",
+          "title": "A real blast seals only the following night and good native requests resume",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/scholar_mentor_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/scholar-mentor/native-second-cycle-response.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Per-file actual boundary: Hybrid strict providers plus real phase/record/replay; Red Moon required and terminal deferred nights; Wolf Sorcerer committed failure prefixes; Scholar actual second-cycle failures. Runner seed file solely checks actual stored/private seed and same-seed deal reconstruction, so integration rather than a full-rule scenario.",
+      "originalSha256": "aa12c7e6b2ada85b398e55fddaa17ce150336143308f075781759c459abf2a00",
+      "candidateSha256": "f9b6a6e166be834fe4d3dbedd06a6514255cd9c0109dd17e290ece2904c3f5dd",
+      "moduleAndLocationEdits": [
+        {
+          "start": 582,
+          "end": 643,
+          "value": "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/scholar_mentor/night_frame",
+          "originalResolved": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 487,
+          "end": 536,
+          "value": "../../../../src/ai/agents/providers/observed_players",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_players",
+          "originalResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 392,
+          "end": 437,
+          "value": "../../../../src/ai/agents/providers/observed_bot",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_bot",
+          "originalResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 343,
+          "end": 360,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 144,
+          "end": 196,
+          "value": "../../../../src/runtime/scenarios/scholar_mentor_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/scholar_mentor_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/scholar_mentor_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/scholar_mentor_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 72,
+          "end": 98,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "2a5e12f7529e7764fa97d70ba7b9fdee918416100e7e4b5b4d3c3f2dc0793e8f",
+          "title": "Scholar Mentor actual failure/missing-wolf-chat",
+          "occurrence": 1
+        },
+        {
+          "id": "6b41aa59ef796871d33e76fd654e54fdc7d4534c48e6cd9791ffa2e6f36521a6",
+          "title": "Scholar Mentor actual failure/invalid-wolf-chat",
+          "occurrence": 1
+        },
+        {
+          "id": "9d327b6a55f17d4bfaef8f8319fbe0e7ab7def7e033b44351e1797fa4b823461",
+          "title": "Scholar Mentor actual failure/missing-wolf-vote",
+          "occurrence": 1
+        },
+        {
+          "id": "aa800cda255b41cd9d49a94c8c4187852f76d49dddc842416c13d3ff403a9cab",
+          "title": "Scholar Mentor actual failure/invalid-wolf-vote",
+          "occurrence": 1
+        },
+        {
+          "id": "f60b3f67f5dd9468a57207a7c24ef77a1f2f7f6cb04f8ac62a2b6e98ae00dbaf",
+          "title": "Scholar Mentor actual failure/missing-choice",
+          "occurrence": 1
+        },
+        {
+          "id": "f760d00aa1a8f69261e9be487b638d7bbb0a4e56616cf21896bd63d28fae3c16",
+          "title": "Scholar Mentor actual failure/invalid-mode",
+          "occurrence": 1
+        },
+        {
+          "id": "1ec6824ce775f968635ee3750c516c46677d4e87341e2fbd4258c7e2ec4d4f1d",
+          "title": "Scholar Mentor actual failure/invalid-target",
+          "occurrence": 1
+        },
+        {
+          "id": "38b3245d03f52333f4756115a62b2b317c1c60e8393de04b1160d06fa8a3aac7",
+          "title": "Scholar Mentor actual failure/missing-bonus",
+          "occurrence": 1
+        },
+        {
+          "id": "b8b8dac81d1c035c19931dc6d69a1e6f764dfd1bb518e6c21ae5cd966688fc98",
+          "title": "Scholar Mentor actual failure/repeat-bonus",
+          "occurrence": 1
+        },
+        {
+          "id": "8763bee1de63a5ce3f84ba1bca9d5d4d5b696e53a7e904a14bfc426b532af5ea",
+          "title": "Scholar Mentor actual failure/throw-bonus",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 486,
-    "targetFiles": 492,
-    "mappingEntries": 492,
-    "baselineCases": 6023,
+    "sourceFiles": 492,
+    "targetFiles": 498,
+    "mappingEntries": 498,
+    "baselineCases": 6074,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

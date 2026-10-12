@@ -1,10 +1,15 @@
+/**
+ * Failure scenarios verify Wolf Sorcerer required-choice and later-stage failures preserve only the original committed learning prefix.
+ * Input: Original night/failure/transport/locale matrices, controlled plans and copied archived learning-state forgeries.
+ * Output and oracle: Explicit paid-history, unresolved decision and malformed-prefix rejection remain causal with real recordings; no role action or expected record is regenerated.
+ */
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { expect, test } from "bun:test";
-import { wolfSorcererScenario } from "../support/wolf_sorcerer_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
-import type { PlannedTurn } from "../support/foundation_transport_plan";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
-import { Role } from "../../src/core";
+import { wolfSorcererScenario } from "../../../support/wolf_sorcerer_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
+import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { Role } from "../../../../src/core";
 for (const night of [2, 3])
   for (const failure of ["missing", "late", "invalid"] as const)
     for (const transport of ["llm", "acp"] as const)

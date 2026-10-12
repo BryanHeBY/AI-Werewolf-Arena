@@ -1,20 +1,19 @@
 /**
- * Runner RNG recording integration verify configured/generated deal seeds stay private but reproducible.
- * Input: Existing runner setup, injected named root RNG and session recordings.
- * Output and independent oracle: Literal seed/path metadata and original deal equality, with RNG metadata absent from public replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Filesystem integration tests verify configured or generated deal seeds persist privately and reproduce the recorded initial deal.
+ * Input: The actual runner with injected baseline players/root RNG and original temporary manifest/replay stores.
+ * Output and oracle: Literal seed/path/privacy metadata and same-seed deal reconstruction assert persistence, not independently validated RNG or all game rules; source fixtures are unchanged.
  */
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
-import { bootstrapGame } from "../../src/app/bootstrap";
-import { createRandom, RANDOM_ALGORITHM, RANDOM_STREAM_POLICY } from "../../src/core";
-import { BaselineBotActionProvider } from "../../src/ai/agents/providers/action_providers";
-import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
-import { runGame } from "../../src/runtime/game_runner";
-import * as factory from "../../src/runtime/player_agent_factory";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+import { bootstrapGame } from "../../../src/app/bootstrap";
+import { createRandom, RANDOM_ALGORITHM, RANDOM_STREAM_POLICY } from "../../../src/core";
+import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
+import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
+import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";
+import { runGame } from "../../../src/runtime/game_runner";
+import * as factory from "../../../src/runtime/player_agent_factory";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 for (const seed of ["recorded-seed", undefined]) {
   test(`runner saves ${seed ? "configured" : "generated"} seed and reproduces the deal without publishing RNG metadata`, async () => {
