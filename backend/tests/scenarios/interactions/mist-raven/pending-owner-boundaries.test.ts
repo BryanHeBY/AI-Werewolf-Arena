@@ -1,8 +1,12 @@
-// Main task ports the independently reviewed real PM regressions into the maintained suite.
+/**
+ * Interaction scenarios verify Mist/Raven pending owners retain original lives, paid effects and unique Snake authority across failures.
+ * Input: Existing public board bytes, controlled currentness/reentry/life/target mutations and actual phase-cycle replies.
+ * Output and oracle: Explicit original errors, stock, closed windows and unpublished/queued death prefixes preserve owner order; source board bytes and action matrices remain unchanged.
+ */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
 import {
   ActionWindow,
   Role,
@@ -13,15 +17,15 @@ import {
   type ToolCall,
   type AliveComponent,
   type RoleComponent,
-} from "../../../src/core";
+} from "../../../../src/core";
 import {
   beginMistNight,
   snakeWindowTargets,
-} from "../../../src/game/mechanisms/roles/mist_raven/night_frame";
+} from "../../../../src/game/mechanisms/roles/mist_raven/night_frame";
 async function setup() {
   const raw = JSON.parse(
     await readFile(
-      new URL("../../../../configs.example/boards/awa_mist_raven_12_v1.json", import.meta.url),
+      new URL("../../../../../configs.example/boards/awa_mist_raven_12_v1.json", import.meta.url),
       "utf8",
     ),
   );

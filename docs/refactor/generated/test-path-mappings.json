@@ -61907,13 +61907,287 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/mist_raven_runtime.test.ts",
+      "to": "backend/tests/scenarios/interactions/mist-raven/native-night-settlement.test.ts",
+      "sourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+      "reason": "Every test uses public board loading plus real PhaseManager cycles. Pending life/source owner, blast/badge/Snake/death/timing and later-native behavior stay causal with actual effects; no standalone parser unit exists.",
+      "originalSha256": "3494cd1e90abed0d10cd659ffde8eb3c2725f4ac452fd0a8e52e1a1f34f409d4",
+      "candidateSha256": "9425c97c878063aea7bdea2e3f6275bb686280e7a22d64bab166d97e2af04ef0",
+      "moduleAndLocationEdits": [
+        {
+          "start": 524,
+          "end": 584,
+          "value": "../../../../../configs.example/boards/awa_mist_raven_12_v1.json",
+          "kind": "location-url-literal",
+          "original": "../../../../configs.example/boards/awa_mist_raven_12_v1.json",
+          "originalResolved": "configs.example/boards/awa_mist_raven_12_v1.json"
+        },
+        {
+          "start": 417,
+          "end": 434,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 184,
+          "end": 228,
+          "value": "../../../../src/runtime/config/board_definition",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 117,
+          "end": 143,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [
+        {
+          "kind": "new-URL",
+          "originalExpression": "new URL(\"../../../../configs.example/boards/awa_mist_raven_12_v1.json\", import.meta.url)",
+          "anchor": "configs.example/boards/awa_mist_raven_12_v1.json",
+          "currentHead": "../../../../../configs.example/boards/awa_mist_raven_12_v1.json"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "b46fec0ace271a7e0ff29367bf2ecb5f0d2b24526a73dd0e57e33b509c710345",
+          "title": "real first night preserves all doomed speakers until one snake and never repeats damage marks",
+          "occurrence": 1
+        },
+        {
+          "id": "1f79d30d5c3ad0a66e212a6935882ca2404db7112dd0e5202752e566df616aa9",
+          "title": "real on_daybreak blast commits death and badge before its unique snake",
+          "occurrence": 1
+        },
+        {
+          "id": "d61a7a53ec160557544a5ead04bce241387d151b165b56799b11363a01c7b717",
+          "title": "real on_pre_election blast commits death and badge before its unique snake",
+          "occurrence": 1
+        },
+        {
+          "id": "f70c93a85c098498c6608fe629591978881923e5afbd7db18bfb2df2b3b4584a",
+          "title": "real on_pre_vote blast commits death and badge before its unique snake",
+          "occurrence": 1
+        },
+        {
+          "id": "2c04f133476da251df48281808905b64e18054ce2dd56812a261f6c8a9d013f1",
+          "title": "real on_per_speech_gap blast commits death and badge before its unique snake",
+          "occurrence": 1
+        },
+        {
+          "id": "56899cde9a8a345904d2867c2ea06d1e94dbb8f15d2fe92d53b496bc638c47c6",
+          "title": "real all-pass mist draw binds an actual original knife and strikes inside an all-wolf circle",
+          "occurrence": 1
+        },
+        {
+          "id": "b8d9eb68f02082ca0d9adef719a8d96d9d60ffcaa1b6a213f1bbfedf7b4fbddd",
+          "title": "real second-night Raven unseals and penetrates a dream-protected target despite Snake",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/mist_raven_runtime_boundaries.test.ts",
+      "to": "backend/tests/scenarios/interactions/mist-raven/pending-owner-boundaries.test.ts",
+      "sourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+      "reason": "Every test uses public board loading plus real PhaseManager cycles. Pending life/source owner, blast/badge/Snake/death/timing and later-native behavior stay causal with actual effects; no standalone parser unit exists.",
+      "originalSha256": "5a33db04d1727c12c64dc18eb5d45c88530bf92ab8b7a51685c9342f7f9958d6",
+      "candidateSha256": "86bf26a2dd7b6e178f0baf35d3e92bc9b624e68329c09cf290b1a7029797380a",
+      "moduleAndLocationEdits": [
+        {
+          "start": 718,
+          "end": 778,
+          "value": "../../../../../configs.example/boards/awa_mist_raven_12_v1.json",
+          "kind": "location-url-literal",
+          "original": "../../../../configs.example/boards/awa_mist_raven_12_v1.json",
+          "originalResolved": "configs.example/boards/awa_mist_raven_12_v1.json"
+        },
+        {
+          "start": 572,
+          "end": 629,
+          "value": "../../../../src/game/mechanisms/roles/mist_raven/night_frame",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/mist_raven/night_frame",
+          "originalResolved": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 495,
+          "end": 512,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 277,
+          "end": 321,
+          "value": "../../../../src/runtime/config/board_definition",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 210,
+          "end": 236,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [
+        {
+          "kind": "new-URL",
+          "originalExpression": "new URL(\"../../../../configs.example/boards/awa_mist_raven_12_v1.json\", import.meta.url)",
+          "anchor": "configs.example/boards/awa_mist_raven_12_v1.json",
+          "currentHead": "../../../../../configs.example/boards/awa_mist_raven_12_v1.json"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "9d6846b77195aeec8aed1935870323d756bdaa8f11c5cb17c794b36ca61a7665",
+          "title": "real seer 5 original life revoked (false) closes pending",
+          "occurrence": 1
+        },
+        {
+          "id": "bc0fd5a3bfaa6d8c57c0f27491a840f1044555f142ca610317269b4ee32f69e0",
+          "title": "real day_speech 5 original life revoked (false) closes pending",
+          "occurrence": 1
+        },
+        {
+          "id": "d590f24df70e208bd42f2d64afad8e2a1969ed1e040b7cb4e1fb9fc6dbdb6b20",
+          "title": "real alchemist_snake 1 original life revoked (false) closes pending",
+          "occurrence": 1
+        },
+        {
+          "id": "dfe233fc890fad6de460e7738fe98645c81e25ae000751d083534ca8d2a38f8d",
+          "title": "real alchemist_snake 5 original life revoked (true) closes pending",
+          "occurrence": 1
+        },
+        {
+          "id": "e91dd059587208c3fdb47dfbb70ef50fdacd0bddf1c282a62acad3683e2b8c8b",
+          "title": "real pipeline handoff cannot authorize a replacement body",
+          "occurrence": 1
+        },
+        {
+          "id": "0e0cac0c8754f801c108b615807166ada58049a26f302abf05021d4515d0b58b",
+          "title": "real snake owns pending before await; rejected reentry does not abort original owner",
+          "occurrence": 1
+        },
+        {
+          "id": "699624982160179264999a0891752fe185360136676514c0f71abdeffa5794e5",
+          "title": "real provider failure aborts pending and unique snake window without refund or reopening",
+          "occurrence": 1
+        },
+        {
+          "id": "738c3739f0fddf0a826e0defefa3034b0532eadc22a2f7fb175bdd0026bb8a83",
+          "title": "real death-await failure keeps the snake decision committed while aborting owner and closing tokens",
+          "occurrence": 1
+        },
+        {
+          "id": "35b070269c1059a445cfb0340a5467bb666db3f80a526062b3c5c4ede05dd928",
+          "title": "real Dreamer root healing true recomputes linked damage only afterward",
+          "occurrence": 1
+        },
+        {
+          "id": "ba7aa4349339f2494bb11551aab5788196c82fa49c7b1dc7425ff7f1e33afb37",
+          "title": "real Dreamer root healing false recomputes linked damage only afterward",
+          "occurrence": 1
+        },
+        {
+          "id": "41313c05ba2c98bf2a84da2507acbd2b0f263ea60f875a0722eeed77ec0cd258",
+          "title": "real spent Snake returns later nights to ordinary death-before-speech without reopening",
+          "occurrence": 1
+        },
+        {
+          "id": "777f568d856ab72559dcd2d19e3b5b1e0ef4da6d1302e5dea05f4706323e9d7d",
+          "title": "real dead Alchemist does not request Mist or Snake on the next night",
+          "occurrence": 1
+        },
+        {
+          "id": "073f16d2704298ecf6e1ef1366796c4f0e63f23a6b22c005da0e907d8b3addb7",
+          "title": "real last wolf blast remains nonterminal until the original Snake resolves once",
+          "occurrence": 1
+        },
+        {
+          "id": "488e0fea78ae35c503ee3a876dad11b131451888ddd641a656ad864fb8947351",
+          "title": "real Raven badge-await failure preserves spent healing stock and aborted pending owner",
+          "occurrence": 1
+        },
+        {
+          "id": "0de1d5fa36cbfb194421ab93073d4878a219401cc4175fb97de0cb76dada690e",
+          "title": "real blast badge failure aborts an already-claimed owner without opening Snake",
+          "occurrence": 1
+        },
+        {
+          "id": "f3d465471cca903891e0ff689da4a7d3b47a8e5f9577d1b4c4b479f5aa06d2a1",
+          "title": "non-pass target / original voter revocation (target) never becomes random knife",
+          "occurrence": 1
+        },
+        {
+          "id": "2daddb67307215216ff9048d015db3e2717c5f5ea8819085a65b703be82ab878",
+          "title": "non-pass target / original voter revocation (voter) never becomes random knife",
+          "occurrence": 1
+        },
+        {
+          "id": "89e896a400f861d351ea88ada893327a64bc282e45b72420c9db525986554469",
+          "title": "required alchemist_mist missing action preserves strict failure prefix",
+          "occurrence": 1
+        },
+        {
+          "id": "1bdab0a76b6e867a4bd6c07595a73e8b148e1a69ea86d82a9af4d31b2e41a973",
+          "title": "required wolf_discussion missing action preserves strict failure prefix",
+          "occurrence": 1
+        },
+        {
+          "id": "eda902be03a8271f3e74d5f570ebb64572854b63ddbf3d54ca04277fce71484c",
+          "title": "required wolf_vote missing action preserves strict failure prefix",
+          "occurrence": 1
+        },
+        {
+          "id": "976c17aba137ce9d6e4d018e9526692077fdf84169e6070af35d58c8a1e6f325",
+          "title": "required alchemist_snake missing action preserves strict failure prefix",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 497,
-    "targetFiles": 503,
-    "mappingEntries": 503,
-    "baselineCases": 6196,
+    "sourceFiles": 499,
+    "targetFiles": 505,
+    "mappingEntries": 505,
+    "baselineCases": 6224,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

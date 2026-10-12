@@ -1,7 +1,12 @@
+/**
+ * Interaction scenarios verify Mist/Raven actual nights preserve deferred speakers, one Snake decision and original damage timing.
+ * Input: Existing public board bytes, original blast/window/knife plans and first/second-night providers.
+ * Output and oracle: Literal death, badge, speaker and penetrated-dream assertions remain causal with executed cycles; the public board URL resolves to the same source after relocation.
+ */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
 import {
   ActionWindow,
   Role,
@@ -13,12 +18,12 @@ import {
   type AliveComponent,
   type BadgeComponent,
   type RoleComponent,
-} from "../../../src/core";
+} from "../../../../src/core";
 
 async function setup() {
   const raw = JSON.parse(
     await readFile(
-      new URL("../../../../configs.example/boards/awa_mist_raven_12_v1.json", import.meta.url),
+      new URL("../../../../../configs.example/boards/awa_mist_raven_12_v1.json", import.meta.url),
       "utf8",
     ),
   );
