@@ -1,6 +1,6 @@
 {
   "schema": "awa-current-mechanism-migration-v1",
-  "observedCommit": "5a5d5b8d98d87dd6e40b9d462d8aa9a6dd7bd168",
+  "observedCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
   "baseline": {
     "path": "docs/refactor/generated/mechanism-matrix.json",
     "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
@@ -2066,10 +2066,23 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Original coupled Magician cleanup-transfer gate with sole boolean owner, two readonly dependent consumers and unchanged manager terminal sites",
+              "commit": "9695d888",
+              "owners": [
+                "backend/src/game/mechanisms/roles/magician/night-lifecycle.ts",
+                "backend/src/game/mechanisms/roles/magician/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/exchange-night-lifecycle.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Complete all lease/resource/paid-effect/death/current-consumer and old-export lifecycle requirements; the shared-transfer part alone does not close this mechanism.",
+            "Preserve declared activation and cancellation policies, delayed Trickster Day mapping and final same-source acceptance across full supported configurations."
           ]
         },
         "effect": {
@@ -3326,6 +3339,18 @@
               "evidence": [
                 "docs/refactor/seer-state-owner.md"
               ]
+            },
+            {
+              "part": "Owner-defined deeply readonly Seer state read/install outputs and actual public consumer bindings; trusted payload casts stay within owner commands, same live slot and write prefix",
+              "commit": "f6c48778",
+              "owners": [
+                "backend/src/game/mechanisms/roles/seer/state-contracts.ts",
+                "backend/src/game/mechanisms/roles/seer/state.ts",
+                "backend/src/game/mechanisms/roles/seer/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/seer-state-owner.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -3693,10 +3718,23 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Original coupled Magician cleanup-transfer gate with sole boolean owner, two readonly dependent consumers and unchanged manager terminal sites",
+              "commit": "9695d888",
+              "owners": [
+                "backend/src/game/mechanisms/roles/trickster/night-lifecycle.ts",
+                "backend/src/game/mechanisms/roles/trickster/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/exchange-night-lifecycle.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Complete all lease/resource/paid-effect/death/current-consumer and old-export lifecycle requirements; the shared-transfer part alone does not close this mechanism.",
+            "Preserve declared activation and cancellation policies, delayed Trickster Day mapping and final same-source acceptance across full supported configurations."
           ]
         },
         "effect": {
@@ -4424,10 +4462,23 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Original coupled Magician cleanup-transfer gate with sole boolean owner, two readonly dependent consumers and unchanged manager terminal sites",
+              "commit": "9695d888",
+              "owners": [
+                "backend/src/game/mechanisms/roles/wolf_sorcerer/night-lifecycle.ts",
+                "backend/src/game/mechanisms/roles/wolf_sorcerer/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/exchange-night-lifecycle.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Complete all lease/resource/paid-effect/death/current-consumer and old-export lifecycle requirements; the shared-transfer part alone does not close this mechanism.",
+            "Preserve declared activation and cancellation policies, delayed Trickster Day mapping and final same-source acceptance across full supported configurations."
           ]
         },
         "effect": {
@@ -7732,8 +7783,8 @@
     "currentOnlyRows": 1,
     "rows": 90,
     "cells": 900,
-    "pending": 852,
-    "partial": 48,
+    "pending": 849,
+    "partial": 51,
     "complete": 0,
     "not-applicable": 0
   },

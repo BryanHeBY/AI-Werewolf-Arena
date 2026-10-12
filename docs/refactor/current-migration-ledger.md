@@ -18,4 +18,6 @@ Git `588e7554` 检查点补入四类普通选择/反馈历史写入与 Radiant a
 
 Git `cb2957ac` 检查点登记配置行的唯一 World 参数 owner：真实引擎、Agent、模拟与复盘共享只读规则数据，独立 DTO 不授予写权。该项只让配置 state 格从 pending 进入 partial；完整 RulePlan、其他配置边界与最终门禁仍待完成。该检查点共 45 格 partial、855 格 pending，零 complete/N/A；冻结基线矩阵字节未变。
 
-Git `709dc222`、`73943cac`、`5a5d5b8d` 分别登记迷雾、时妃、师徒的 cleanup-transfer 与 manager 终结入口。三格 lifecycle 由 pending 进入 partial；开夜、已付资源、伤害及其他完整生命周期要求未被这些局部交付关闭。当前 48 格 partial、852 格 pending，零 complete/N/A；90 行、900 格和冻结基线保持。
+Git `709dc222`、`73943cac`、`5a5d5b8d` 分别登记迷雾、时妃、师徒的 cleanup-transfer 与 manager 终结入口。三格 lifecycle 由 pending 进入 partial；开夜、已付资源、伤害及其他完整生命周期要求未被这些局部交付关闭。该检查点 48 格 partial、852 格 pending，零 complete/N/A；90 行、900 格和冻结基线保持。
+
+Git `f6c48778` 为既有 Seer state 格追加真实深只读入口子项，原封印写者、通用可写能力句柄和完整 codec 继续待完成。Git `9695d888` 将魔术师、狼巫、捣蛋鬼的原共享交接格登记为 partial；三族开夜、库存、映射和实际终结规则未改变。当前 51 格 partial、849 格 pending，仍零 complete/N/A；不能将局部子项视为整个 P3/P4 或完整机制验收。
