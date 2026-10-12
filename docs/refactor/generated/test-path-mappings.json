@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+  "observedSourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -51542,13 +51542,995 @@
         "limit": "Only original immutable literal is copied; each callback owns fresh state/world/catalog. Outer body partitions existing registrations, not parameter values or callback programs."
       },
       "loadSetProof": "Original539; unit538 excluding unused night-stage fixture; scenario539. No deleted required test setup; immutable literal setup copied only."
+    },
+    {
+      "from": "backend/tests/runtime/bear_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/bear/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify literal anonymous roar/death-chain timing and declared survivors.",
+      "originalSha256": "feea356190d40cba8a03c1545064cb61f46ff1ecf5a3c2baf40d0cbde742b695",
+      "candidateSha256": "43e29ad3d0141d627107627bc0312dbc300561d86285ed70c0c68eda50ac126c",
+      "moduleAndLocationEdits": [
+        {
+          "start": 268,
+          "end": 297,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 206,
+          "end": 231,
+          "value": "../../../support/bear_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/bear_scenarios",
+          "originalResolved": "backend/tests/support/bear_scenarios.ts",
+          "expectedResolved": "backend/tests/support/bear_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "1c260c4be060fae6465fd012464167be30389db11615ec938a5bb292e9124bd5",
+          "title": "positive/llm: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "1dd57101396588a952522fc0be03bbc399add6eb5dcaba2c078d859ccb6487d7",
+          "title": "positive/acp: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "65460ab83ef911cb231a4fa813b55b3a38ee62983a50dc99f1595dc5dc45af20",
+          "title": "positive/mixed: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "5550632bc7544dd77e6f67d84c4a5f4c1c878aa8a1159bf7fef296902635f3ad",
+          "title": "quiet/llm: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "e4a4ce06d4c3e79443fac6dcb7143f78aa793c6c46b61302e8f07b03fc36f4f9",
+          "title": "quiet/acp: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "09dc39aed819dbfe8450b7303baa7715b275321c578d8b9ad7c6b1269348c707",
+          "title": "quiet/mixed: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "40cbc04bf2595d53bfdc78a197537636d4d90df9bfe309d1b3ebcd47069a910a",
+          "title": "neighbor_dead/llm: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "331eb7411a86e88d46485978a8b427566911025b7dd611841fa4ccc78d882176",
+          "title": "neighbor_dead/acp: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "4ed2977360a0a2c66b95669e567d184047d09a5068ba523789892a81d47f2dc7",
+          "title": "neighbor_dead/mixed: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "30c402cd0e6ca5f5a7c0fd79bae0aaca64438e38073180e1c0abfe353e82bb91",
+          "title": "neighbor_update/llm: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "dbdfa475eb5bbb31750992173970bf27f256a0b271e82569e54465410e145ee1",
+          "title": "neighbor_update/acp: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "a48a54d4662a7d071f3bbbf04e72cef8d91b017035ba47b524d20fa5a7975802",
+          "title": "neighbor_update/mixed: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "d6ac53b507fa0d24ebf056ef77ca61d10f6aed83309b2b3280dde50e870488f2",
+          "title": "knife/llm: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "e11c87063261893ff28781e2c0008ec725245765bde48d0a7459e6f8d9346336",
+          "title": "knife/acp: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "9a2daaf3b46a64d347f151fe0bf508bee0a90196283e56a15b652b88baf825a9",
+          "title": "knife/mixed: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "60091d9f783297b79e265a0bdb5611394f5a4f915c7d84213e77d9d20cd27954",
+          "title": "poison/llm: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "fb97970668caba94a07d055af1845df5ccb7ead246bcfffd6e56f562e8e4bc2f",
+          "title": "poison/acp: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "732874fb634aecea3d97c221b51a4e3ebcc5a8ba0459cb689b3a16c651b4a7db",
+          "title": "poison/mixed: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "032e10c0f09390ac841f14cc0fec3167c80ab4a105a452c72e4b071d0785caa3",
+          "title": "dream/llm: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "391e4cf0f192e0778d2e7f76c27d530f7446ead9f6ec839d90f3b445904074d1",
+          "title": "dream/acp: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "64db94683f28ac9f3b48935e29d914f2bf713d84d5a1692beb61cbdf301cb5b3",
+          "title": "dream/mixed: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "50467e63c459c8005f8deb096f76d70493f6940ccb638a5740001ddbc02c8ee4",
+          "title": "charm/llm: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "e53f944fba14d349eec2b4a54039b3dd85057717657cea259d1abe14b4f94aa6",
+          "title": "charm/acp: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "fe1c875c7f5105527db40c91ea99b2fef4bea64f4785b4fc59cb059a992f4fab",
+          "title": "charm/mixed: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "1fb684639e69dcf2e191d3d0eb7e78f177d2d66919dc607dc0616dfc830158fa",
+          "title": "night_shot/llm: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "82f8717ba609feed265b4dd729bc595f14c10135028588f377d026ef6e9007dc",
+          "title": "night_shot/acp: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "30813605b68e3ac92e1bc7bc40b50da7b1aead32a879447907f98ab268363d0a",
+          "title": "night_shot/mixed: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "fd6a93a0ac70c60cbd6a03ec6a597fcf3177f006b003457a2c4322e3c060959e",
+          "title": "king_badge/llm: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "97504b327596c96d268512632c70ee04973e7067e7e1801026c5a86cdf4a6ee7",
+          "title": "king_badge/acp: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "b8858ade6bafe94b2b21d1a2c736d15ccb5c83f24689b6ee2ffe14e6ca721315",
+          "title": "king_badge/mixed: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "9aad14bc08cb00880ddeccd828d1058448b69d0ca5b9c2e8a63dd1f3c19a0b98",
+          "title": "early_white/llm: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "1716831ab1aa95256d79e44d3554b41c6591fc5e482f66fb5438fc3b04b3654e",
+          "title": "early_white/acp: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "03711ab4ca71302dc4f65f5485d52e161c192e60ded74a7b8cace7c592771ac1",
+          "title": "early_white/mixed: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "8e0ea5470206311a2340db99210353f5ea7564c6e22fc94f2277cb943b362680",
+          "title": "day_dead/llm: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "3384d1fe952815a4fc22fdf7e7d9d9c4a3738567072d9d9d68d694f13909e347",
+          "title": "day_dead/acp: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "da1af7d1ce275be1bbb733cf296669d8fdf088881949784121b946d459801142",
+          "title": "day_dead/mixed: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "05f70ea54ea9e90fe13649c3fd203f2ff9f5796f6f58bebf648fa635b7ed7d04",
+          "title": "twelve/llm: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "674ab7c1bad9953120a6ae2977b58197ee2eaae3bbfa0be03480f840981f32dc",
+          "title": "twelve/acp: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "9fefdb913205404fa3e33337a45f3b264d73f29bc0d74254c2c73711c3992e6b",
+          "title": "twelve/mixed: actual bilingual Bear complete games keep anonymous night-start signals, timing, original lives and strict replay",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/gravekeeper_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/gravekeeper/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify passive private grave feedback, literal survivors/words/winners and replay.",
+      "originalSha256": "0dbf0c9ba7e6041726b41042093f38b8bbbd8d42bf8fdae424960921337ea677",
+      "candidateSha256": "5f9f8d927ed3e439dc3d740ecdad04b18d9c9f7adee5815015baef76f6766421",
+      "moduleAndLocationEdits": [
+        {
+          "start": 379,
+          "end": 408,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 310,
+          "end": 342,
+          "value": "../../../support/gravekeeper_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/gravekeeper_scenarios",
+          "originalResolved": "backend/tests/support/gravekeeper_scenarios.ts",
+          "expectedResolved": "backend/tests/support/gravekeeper_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 100,
+          "end": 114,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 31,
+          "end": 56,
+          "value": "../../../support/fixture_values",
+          "kind": "module-specifier",
+          "original": "../support/fixture_values",
+          "originalResolved": "backend/tests/support/fixture_values.ts",
+          "expectedResolved": "backend/tests/support/fixture_values.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "193846f65e0b4ff13cfafa2eda22e854fa68f1d2228721c70298d49d5aa53770",
+          "title": "six/llm: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "5431ab86750a48409d97d86447e7ebd58f77ac307d5eb399c10624c2f249f3c6",
+          "title": "six/acp: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "0b96143a9828e6e16478f90ac24b803fd5ac2c3eaabad9299f87d9cf83ef0de1",
+          "title": "six/mixed: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "478924424ea48166a2afb2c06c1d32e060d9f7dc7d78ac8fc006b93f3ebe1560",
+          "title": "idiot/llm: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "7930cfceaba58b75f2fd0c723d0df8696ad34de1f3a23744cd407b2762820586",
+          "title": "idiot/acp: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "f42d497f5f11b5de865eb2825281e80da4f51c8da1b7ba739f7ee9a576583a23",
+          "title": "idiot/mixed: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "2f41c5c553f71a1a85e0ed425c0d53fb801f670f7b37badda02e47f3129d9391",
+          "title": "blast/llm: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "d47f2db3eed08ecf329652e8e5e6bb0af64de65c0c954ab56252bb916c5d72f9",
+          "title": "blast/acp: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "7405b16aa46991e307cff8f3194ed96f495d9901420bd501746e41af9059393d",
+          "title": "blast/mixed: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "87eec2dbf230ecfbff47c43ef386b825a26c289cbde5d0cd67495a0a8d0fc444",
+          "title": "stale_blast/llm: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "723b65e123956e17b83900a6dee500e710608464af5f730258cd7559e3c42b45",
+          "title": "stale_blast/acp: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "c958ad3a39bce7e768f07fd0fab3080cad53a8b16f31a98454b1ae4449df29ef",
+          "title": "stale_blast/mixed: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "221038d062cbc59a63f2711d1aeb5b0fc69a1dbde15fb8188f98b72a359f0833",
+          "title": "hunter_chain/llm: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "84038e4002f457ef9739708c5da24b32d364f2104614fcbf2ce3e3a6e35892ce",
+          "title": "hunter_chain/acp: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "58918ba967c5de7f597a32d18dd30f4ac5c8f71f8d04adc9430191769a40b725",
+          "title": "hunter_chain/mixed: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "fcd28b40e6a3738af4b251e0ece4be96856ce4adc0f1bfaef1a2db512d53cade",
+          "title": "keeper_exiled/llm: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "e8d4139047dc0c7abb3dba5514a0cceb5bb73dca88dd528749c24345392b17b7",
+          "title": "keeper_exiled/acp: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "ffbb9a52e99273674a5f9c063d5a4189208439c465186f44a94f410d17cca67b",
+          "title": "keeper_exiled/mixed: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "282622e860286f95b99d8dadfe973bef56e364e113a22d7f0be4d095242bdd76",
+          "title": "keeper_night_killed/llm: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "242b37e708d45b171d2f49558356b6df1570a378879c0214ca1fcca4381f89f9",
+          "title": "keeper_night_killed/acp: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "f7c28af77a3b485c137c697a5b493c99cd6582a7736ad9c1a884fa5a0eab66ef",
+          "title": "keeper_night_killed/mixed: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "7d551977038831471c409a96c5158d219c3a14ebd28a4d180dd00f26792c395d",
+          "title": "twelve/llm: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "a83c5c187cd56f4f0a67c2d3b3ba9e5ae7ff6eac8629b21ff1106928e1679a18",
+          "title": "twelve/acp: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "69cf8e76d20f3a3e2a79e1b35d4a60fbaa1c43c62f2d3105e465ca5f11e4a0a6",
+          "title": "twelve/mixed: actual bilingual passive feedback complete games preserve literal outcomes, private prompts and strict replay",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/psychic_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/psychic/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify declared role labels, repeated/pass opportunities, private audience and terminal resource counts.",
+      "originalSha256": "d6312568f8cc20650aeed3807390edeb929fe4fb0a2666bc6787ae34ba5de775",
+      "candidateSha256": "60a2a647bd3eb0088249b14a3df76ebebde87116c09aa1966c4f2bb711522adb",
+      "moduleAndLocationEdits": [
+        {
+          "start": 280,
+          "end": 309,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 215,
+          "end": 243,
+          "value": "../../../support/psychic_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/psychic_scenarios",
+          "originalResolved": "backend/tests/support/psychic_scenarios.ts",
+          "expectedResolved": "backend/tests/support/psychic_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "0a7d80ec8a1bd0204a8c495dd118ec355e9e1985822b92fbe20a865068e3c70a",
+          "title": "six_skip/llm: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "321bd363954d79555aa80ebd4f95e52e2fec16690b3153bf6d0ce6595def3a96",
+          "title": "six_skip/acp: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a460d6d39e2c2626ee88668f8197fa2530bf7ec6f4765ae07203f20e3841780a",
+          "title": "six_skip/mixed: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "208662762374e7b53bad11f17dedb758da44df6dd11304e5a118ea09fc4559d2",
+          "title": "six_repeat/llm: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d8f8afd127fc2750aa3a5d43d246fb348409ff96c7665b2640c8b2bef2b479c2",
+          "title": "six_repeat/acp: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "fc37da9693a943913a5979e5be1cea6698b772affb07941e817fff73b8a94c02",
+          "title": "six_repeat/mixed: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "9252314c2fce1a00cb3cdece2576486e94b92a073e4e59e3bbf5436b829614cb",
+          "title": "six_good/llm: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "34003a5d7779a316ce96f5df9e32ad9d4f2f65b220bf895aef5858acdb76aa8b",
+          "title": "six_good/acp: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e33527d83caa755ff0ef45f5112a383a8db960f16b9d627793120e45b0688855",
+          "title": "six_good/mixed: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "8c2e12dda67da4eff6158fa250c42922fb683fe5dcf2adaa6b0d89edd1769721",
+          "title": "twelve/llm: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0b29e5bf9abae12719e51a9ff9a4e136e6e4a5789b2ddf34a36899f617856428",
+          "title": "twelve/acp: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e842b0e55037b0a173b1e72e58b5c83b8c93394ae21df267ed3eb88178a46a9a",
+          "title": "twelve/mixed: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "29240cac65154db5b07f71c7533723a59d4c80c28588d7ace83a53a8c5b99f60",
+          "title": "king_link/llm: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f64153e50158be949bea7a484aca9da7fc883b0c90d64e6c91851a090f5d93ec",
+          "title": "king_link/acp: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "4fd9f1370c97f46444871963a1e840d0f2bbfcf5f82a702ca06bf1feef3d15f9",
+          "title": "king_link/mixed: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6883a24eb7e2a14cce3c34da9d09b888cce3dd9a0e58bad130f589ea21606af6",
+          "title": "hidden_mask/llm: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a26f04dd283a9e9faa8e67bee0e7248419f5e6e5216b384fbc5c108be4218f1a",
+          "title": "hidden_mask/acp: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0e562f8d8d54f1795afbfd2adf014366870e1566bcc45991be0233514752edb6",
+          "title": "hidden_mask/mixed: actual bilingual Spirit Seer games preserve role labels, repeat/pass opportunities, private audiences and strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mirror_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/mirror-girl/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify literal unique inspection history, pass/no-target states and terminal resources.",
+      "originalSha256": "61622fd08abbf20af4a9e1b29595981b27090a0c19f470cb1c7f289ca6a4e090",
+      "candidateSha256": "defe94486baf3b3ad51f20c3c1d6f3116643e37d29db2f3de7c94297ae714366",
+      "moduleAndLocationEdits": [
+        {
+          "start": 276,
+          "end": 305,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 212,
+          "end": 239,
+          "value": "../../../support/mirror_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/mirror_scenarios",
+          "originalResolved": "backend/tests/support/mirror_scenarios.ts",
+          "expectedResolved": "backend/tests/support/mirror_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "008c0e1456aedc59f307b86f4b0099b9d0893973db41f15ea78f8e7d8ee5c7b6",
+          "title": "skip/llm: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ea0a57b18f583c7d9dfcb6898373d2f16c6543c6e27be907a3b625352b52a491",
+          "title": "skip/acp: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "bc77f6584e5441669cf855d78396b54ed1bd64c85ea0b48f1a6dd908c8f539e4",
+          "title": "skip/mixed: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d8638570d78791c702cbd785be9a765b6e5fbabb000e13b6cff9b9996afe33ad",
+          "title": "unique/llm: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6f0a48cd9c884ef14b26465ba9ff56d6e10a805c5a9ce622d6d5ffcbc02335f3",
+          "title": "unique/acp: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e3ce60e0548c41c1929ff72fa1319fa12dcb950028df17e76d9ddfa5cc9ad5a4",
+          "title": "unique/mixed: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ac173a7653c3f8ce83312a49dc1a9798f3f1e4415aa772b0dce79309dbbdb3e4",
+          "title": "good/llm: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "60f428e1e01cb8582f98d937d8720cf93f09d3e0b20ea7d00cbe8be0459d5d69",
+          "title": "good/acp: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "679ec7bc7288fcbb6911b5204027ef5bca6a3b83dafc71b59918cea4f6cf65fc",
+          "title": "good/mixed: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5d4745159c74cea3c116f4a62d22ceeba0b31d5351ef4b360f8616a483b09d36",
+          "title": "twelve/llm: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5e8c376beeea3242af9dcd7dc31ea0ad4ca0dd7ad724025589953933bb40c57a",
+          "title": "twelve/acp: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1f05380602eaee553c53a0ded584fdd712489cde5536cf6c1a8bfd90719e951d",
+          "title": "twelve/mixed: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d8304d23463a574a0c056782afaaa682ae82dde11f530e56e6043b6603d1a6f2",
+          "title": "king_badge/llm: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "23bc4b1d014c0ecc4a1be5d3ae23010d1eeefa129d71b8e6e9d552821ef78cf9",
+          "title": "king_badge/acp: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5d2fc9da235d58123588209723900b107c8db587a99c698d8cf61b1fa77ee033",
+          "title": "king_badge/mixed: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "b584f100550f2f45d8cbeea369cd151f6f2fd378b13165d7bfc216a2067d6e48",
+          "title": "hidden_before/llm: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d281765f590ec1cddf7e1c2f70db7bf0e839b293e2ec77b31a6f9aebc59030bf",
+          "title": "hidden_before/acp: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1e73ef57595c9d5080a6e102685ffe19d482616d05c4f00e2e7f4645048594a3",
+          "title": "hidden_before/mixed: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "bdebaf53cc7517ae0cd1a289a0d08b75c5655f61154b0d526aba2d018a3b4175",
+          "title": "hidden_after/llm: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3316af6411ce85ed9d501c1517d72f710349330c01bb2edeec83cdaaeabf456b",
+          "title": "hidden_after/acp: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a9bffa8c4b6e2ef12cd414081f05f38df3e1dbd62a78b1b9319928f0f88d082f",
+          "title": "hidden_after/mixed: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "dda932b4f30cf10794f10b178ce052c499ab3580da5b03b1d4efb8e56335e9bc",
+          "title": "exhausted/llm: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "7410c3e4d780a4536bcdb5058687d85a22a47a0c409fc047487684a322befcda",
+          "title": "exhausted/acp: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "4f63a3bcd745ad980a948356acf6c3f9bfd2a45eff7126cad0ed96a5a4d961f1",
+          "title": "exhausted/mixed: real bilingual Mirror games enforce unique history, privacy and exact terminal lifecycle with strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/dreamer_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/dreamer/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify literal dream protection/linked deaths, private prompts and paid resource history.",
+      "originalSha256": "485f0d5795490a47957664bd0bdbd57feadc10f19db1e7e041507319293b18f7",
+      "candidateSha256": "6761201a40cc6a5257d139b97ce64812865abf218f143ece7a9ff2885c02f09d",
+      "moduleAndLocationEdits": [
+        {
+          "start": 280,
+          "end": 309,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 215,
+          "end": 243,
+          "value": "../../../support/dreamer_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/dreamer_scenarios",
+          "originalResolved": "backend/tests/support/dreamer_scenarios.ts",
+          "expectedResolved": "backend/tests/support/dreamer_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "18d85b1f2a99846fe2f312aaa156b2073c70dc76a20774e654514dd5221e047a",
+          "title": "protected/llm: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "af48a55085083329c36c652d540b4883fc0cf6c298124f37b68028fb569f577f",
+          "title": "protected/acp: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "fcddc96d44507b6be1e947b79ed28c42fea26c328cce03539e8649e30d30dfd5",
+          "title": "protected/mixed: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "b0cefbff6df87ea6435ad4d416ad5b6009e0f86f01f9c2372b3cd73941a8185f",
+          "title": "knife_link/llm: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "665388cc4c435ba221f5aeb0190171c6b2acf9adb5388ee3113f173c19cb531f",
+          "title": "knife_link/acp: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "013de5b79774e596cf06a62fc392c36c2c0c8efe59885585a1b410c488030791",
+          "title": "knife_link/mixed: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "2a72e6928fb741a25b8238371c5091f71f0a62cd755d1986889dc9970803cae3",
+          "title": "saved/llm: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "15bfaf9565207dea8b03ac6f57f0aac9e7c03c7fc7b1bb896f6389a631ab46d3",
+          "title": "saved/acp: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "26d95bd6c0bbc8e64a62e79fe531ea121bbfa0bd06ab4e6eb325e2f928e81755",
+          "title": "saved/mixed: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "caa01d9494bf6bbc2c24b6edf362a8a1e6174c68e4b821953fe3ba4971743699",
+          "title": "poison_link/llm: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "51d5f1db6047ed20081b77c67eecd871d48f84a21418087836d5add0c5c29e58",
+          "title": "poison_link/acp: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "fd6fa5422050aa1ab62c96ecd1d5facbf4baeb50a6d8b36300e2f78a22cf43b9",
+          "title": "poison_link/mixed: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "a66938d09c6ed68ad09eb9f084b3c6751b66f1332965905fff93a3379aad50d1",
+          "title": "gun_blocked/llm: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "1390074a2180616acccf8185245f2a63bb1d0a0f3c0a52b2d71bbef14c189bdf",
+          "title": "gun_blocked/acp: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "202bf855d9093dc05d995aafc553b4f6c0eb85ce60fffc16090435193a20410d",
+          "title": "gun_blocked/mixed: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "278c2b49fbf724544ff582da3b1c1e777a4036d9371b532dfae1bd28ce685d1e",
+          "title": "gun_link/llm: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "df49773f2d8f0d55e1f2fb3a1fffb51c127292a17f83a0b04e38a05949d5e427",
+          "title": "gun_link/acp: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "e2cff4e6f358f3bd53b6b52668c7b3a617652e2991b16cd13470b3713e0727c6",
+          "title": "gun_link/mixed: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "8e19741f58b519b37ff1c8d99bdf07d078213174f3214c86078116c158ed9c4f",
+          "title": "consecutive/llm: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "6dcaad20a0814efc11123bf5aa8360dea8d3bbfafba977f1fb0fd4eb3d107ca0",
+          "title": "consecutive/acp: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "cea245a5fe4a596a47cdb7d91427818744e06a9eaffb49fbe94542ebe0433fe5",
+          "title": "consecutive/mixed: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "2cd546c0348679336aa1a71982665d79c8f41b09fdc4dbcb8b651c43bab83570",
+          "title": "king_repeat/llm: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "b9eb3686450d260ca047aa5cb64cb70bececcddf45386abed71406e82cb59210",
+          "title": "king_repeat/acp: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "fd68eb484487d924be287748ac3aae1fac6b8b2c334e95f31e0b2441e67e9620",
+          "title": "king_repeat/mixed: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "f795593706f27930dda21c858a9b59f0290f74b2baff16cd9c6228dacb8d1d58",
+          "title": "twelve/llm: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "57dd739bbb6e3fb2745ad417d014a6ed79396b86545b2397bcb00031ecf804b0",
+          "title": "twelve/acp: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "4172273a3aaf3cff769f92de6e41bd90ab4fec083892e5e5dadc1d80618ed727",
+          "title": "twelve/mixed: actual bilingual dream complete games preserve literal effects, private prompts, resources and strict replay",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/pure_white_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/pure-white/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify literal Pure White/Wolf Witch private results, chain-final settlement and declared result; temporary diagnostic output unchanged.",
+      "originalSha256": "41dae8ee1f4e432f9c43ccd01fefb597aa7b1d1dda7c370e8a447349bd554d82",
+      "candidateSha256": "e32e7428f4d9e08f1d08fcc0bb347020d19dea598831b6b41fb61ea88a7f8851",
+      "moduleAndLocationEdits": [
+        {
+          "start": 246,
+          "end": 275,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 168,
+          "end": 209,
+          "value": "../../../support/pure_white_transport_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/pure_white_transport_scenarios",
+          "originalResolved": "backend/tests/support/pure_white_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/pure_white_transport_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 116,
+          "end": 130,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "000892641bede55dad8623eb03b93bfd190b7ecab980aedb926e3e2b755354af",
+          "title": "pure-white wolf/llm: bilingual real SDK and ACP preserve private inspection and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "770deb9e84d709d83030fd3c2fc845221c3d749ee80a243850cfd175d89dd4d6",
+          "title": "pure-white wolf/acp: bilingual real SDK and ACP preserve private inspection and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "cfc64f3aeb35ed3abf7e2bcb5703bfac0f0da730527b180e111ce9f739530fdd",
+          "title": "pure-white wolf/mixed: bilingual real SDK and ACP preserve private inspection and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "03e4771e7f4b197253a8c6284726968f78fd58d83efdf8af3a4e25b414dae7b4",
+          "title": "pure-white good/llm: bilingual real SDK and ACP preserve private inspection and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f8eaef33161e027b77d52e22472be62c057146cb2fb53bf8f52a50c30931dc33",
+          "title": "pure-white good/acp: bilingual real SDK and ACP preserve private inspection and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "917780bec42d938430c1a36e2173b4544821b7dbc07b099a680903fc87913321",
+          "title": "pure-white good/mixed: bilingual real SDK and ACP preserve private inspection and strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 432,
-    "targetFiles": 438,
-    "mappingEntries": 438,
-    "baselineCases": 4894,
+    "sourceFiles": 438,
+    "targetFiles": 444,
+    "mappingEntries": 444,
+    "baselineCases": 5032,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

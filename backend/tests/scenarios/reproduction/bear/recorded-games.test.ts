@@ -1,8 +1,13 @@
-import { Camp, DeathCause, Phase } from "../../src/core";
+/**
+ * Reproduction scenarios verify Bear complete recorded games retain anonymous night-start signals and original neighboring lives.
+ * Input: Original scenario/transport/locale matrices with handwritten roar, survivor, shot and last-word tables.
+ * Output and oracle: Literal signal timing, death-chain and terminal assertions remain tied to the actual recorded prefix and replay; expected survivors come from the declared table.
+ */
+import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { BEAR_CASES, bearScenario, type BearScenario } from "../support/bear_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { BEAR_CASES, bearScenario, type BearScenario } from "../../../support/bear_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 const facts: Record<
   BearScenario,
   {

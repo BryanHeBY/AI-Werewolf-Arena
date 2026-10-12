@@ -1,5 +1,10 @@
-import { fixtureNumber } from "../support/fixture_values";
-import { Camp, DeathCause, Phase } from "../../src/core";
+/**
+ * Reproduction scenarios verify Gravekeeper complete recorded games preserve passive private grave feedback and original terminal membership.
+ * Input: Original scenario/transport/locale matrices with declared feedback, survivor, last-word and winner tables.
+ * Output and oracle: Explicit private prompts, feedback timing and chain-final result assertions retain the actual action replay; stored source fixtures are only read.
+ */
+import { fixtureNumber } from "../../../support/fixture_values";
+import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import {
@@ -7,8 +12,8 @@ import {
   gravekeeperScenario,
   graveFeedback,
   type GravekeeperScenario,
-} from "../support/gravekeeper_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+} from "../../../support/gravekeeper_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 const expected: {
   [K in GravekeeperScenario]: {
     reports: ReturnType<typeof graveFeedback>[];

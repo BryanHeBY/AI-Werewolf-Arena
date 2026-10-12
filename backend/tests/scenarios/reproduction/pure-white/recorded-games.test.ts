@@ -1,8 +1,13 @@
+/**
+ * Reproduction scenarios verify Pure White and Wolf Witch complete recorded games preserve private inspections and chain-final settlement.
+ * Input: Original good/wolf scenario, transport and locale matrices with declared dead/alive/winner facts.
+ * Output and oracle: Explicit private-result counts, winning members and final checkpoint assertions retain exact replay; original diagnostic temporary file names and contents are unchanged.
+ */
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { Camp, Phase } from "../../src/core";
-import { pureWhiteScenario } from "../support/pure_white_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { Camp, Phase } from "../../../../src/core";
+import { pureWhiteScenario } from "../../../support/pure_white_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 for (const kind of ["wolf", "good"] as const)
   for (const transport of ["llm", "acp", "mixed"] as const)
     test(`pure-white ${kind}/${transport}: bilingual real SDK and ACP preserve private inspection and strict Tape`, async () => {

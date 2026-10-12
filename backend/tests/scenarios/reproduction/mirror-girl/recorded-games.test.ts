@@ -1,8 +1,13 @@
-import { Camp, DeathCause, Phase } from "../../src/core";
+/**
+ * Reproduction scenarios verify Mirror Girl complete recorded games preserve unique inspection history, privacy and terminal resource lifecycle.
+ * Input: Original scenario/transport/locale matrices and handwritten targets, role labels, pass/no-target and survivor facts.
+ * Output and oracle: Explicit private knowledge, opportunity/stock and result assertions retain exact replay; expected history remains the declared table.
+ */
+import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { MIRROR_CASES, mirrorScenario, type MirrorScenario } from "../support/mirror_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { MIRROR_CASES, mirrorScenario, type MirrorScenario } from "../../../support/mirror_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 
 const facts: Record<
   MirrorScenario,
