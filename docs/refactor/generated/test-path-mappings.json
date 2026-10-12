@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+  "observedSourceCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -82423,13 +82423,518 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/awakened_damage.test.ts",
+      "to": "backend/tests/unit/mechanisms/awakened-damage-matrix.test.ts",
+      "sourceCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "4a1ce124bb775b277b058b5c8cd7a38c6065d4fd0157b0ace266219fc6711a59",
+      "candidateSha256": "ad3b112424bb22ccf02680366f0b89b751799c44e7afbe4c4dd0b057ea287bc8",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 852,
+          "end": 897,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 753,
+          "end": 813,
+          "original": "../../../src/game/mechanisms/last_words/last_words_mechanism",
+          "value": "../../../src/game/mechanisms/last_words/last_words_mechanism",
+          "originalResolved": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+          "expectedResolved": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 657,
+          "end": 714,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 576,
+          "end": 614,
+          "original": "../../../src/core/domain/night_effects",
+          "value": "../../../src/core/domain/night_effects",
+          "originalResolved": "backend/src/core/domain/night_effects.ts",
+          "expectedResolved": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 447,
+          "end": 478,
+          "original": "../../../src/core/domain/deaths",
+          "value": "../../../src/core/domain/deaths",
+          "originalResolved": "backend/src/core/domain/deaths.ts",
+          "expectedResolved": "backend/src/core/domain/deaths.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 362,
+          "end": 410,
+          "original": "../../../src/core/domain/components/status_marks",
+          "value": "../../../src/core/domain/components/status_marks",
+          "originalResolved": "backend/src/core/domain/components/status_marks.ts",
+          "expectedResolved": "backend/src/core/domain/components/status_marks.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 280,
+          "end": 321,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 196,
+          "end": 213,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "15178ce666eb91193ea4bf49d7707c25db09b08dbe40e4ab2afa612923eeab26",
+          "title": "none/false: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "1074e983c79a99e7bdc0656c7bac1eba82aee5b4e1d79e25d7a54875a198ca1e",
+          "title": "none/true: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "14e85efa8b890064b897d356fed428c9935b6383ac9f1035d62261c505ab33f8",
+          "title": "guard/false: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "1eb9298914dae654f09dacbb0bd25e0f72ad5af699d2d42f2a05e0ba2f690768",
+          "title": "guard/true: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "ba95ea1cffe73c22dff3172242d74a734e2c27f4127eead8aaf673cd429db79a",
+          "title": "heal/false: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "d96821f84c4e19fdd7f8203fa7e591ea80ed630a389c134c3f195aef8fc32cf4",
+          "title": "heal/true: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "ae64b030d66c7aabe478fbccd1d944ac57520cc3034c115e9415c9706abcdf6d",
+          "title": "both/false: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "5744e823a0769ebde7f30978f61913ff9721bf1bbaebee533e60446bfa2aad10",
+          "title": "both/true: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "ac2eeb5342d8c79e5636406f661bb1e1947de9fc11a644da8c41fca69d497e12",
+          "title": "dream/false: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "25703dfec2f9abc675fc260be9ca66f71bf0eb7dd38012473fb116877dde0648",
+          "title": "dream/true: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "8131ad71767c1179be0c8450b170c2f51ced5d294bb00d6031477bf4080253c1",
+          "title": "awakened/false: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "0f330913b85465c25849d956f5e399d529ad56dfa0dc73c9a4d6822b19448dba",
+          "title": "awakened/true: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "01ece3d79b57fab61e114da8f087106ed87e89332dcfdd117aa7ee07de475ddf",
+          "title": "mechanical/false: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "e089404968f80c011127ce01029e9a85acab0b1091d7ed228d09a9a89e9ded62",
+          "title": "mechanical/true: normal extra knife respects protection without mechanical piercing",
+          "occurrence": 1
+        },
+        {
+          "id": "f156017b84b398958b0fbb36af57c127e1921af86aee77de0b17df53fb445d69",
+          "title": "base and extra knives retain distinct targets and causal facts",
+          "occurrence": 1
+        },
+        {
+          "id": "ca8909caa938a2c0da1b0a7b6521374a5605e707a4fcde6d121d679fd4825734",
+          "title": "false: independent awakened shield absorbs every original poison before mechanical reflection",
+          "occurrence": 1
+        },
+        {
+          "id": "cab76a6bc9339e1f200b3528a2b35280eab4ecc388cc022388e5e607ab959a03",
+          "title": "true: independent awakened shield absorbs every original poison before mechanical reflection",
+          "occurrence": 1
+        },
+        {
+          "id": "b057f182835ca0693f248d76162ef1f1d89e7409b4ad7fc3b41be4b67a0780e8",
+          "title": "reflected toxin is absorbed at the protected caster; other original toxins remain independently lethal",
+          "occurrence": 1
+        },
+        {
+          "id": "91bcad309e6bba0d213652ce96f3d4991a4b3dd4a6a1ce5a0430fd34f524a012",
+          "title": "absorbing one target does not suppress a different target's mechanical reflection",
+          "occurrence": 1
+        },
+        {
+          "id": "51f3bc099c0f68a3ba51ecb0f54ecff5954dec6838c0fd4edff09585cba0bd81",
+          "title": "self poison is absorbed without reflection or returned inventory",
+          "occurrence": 1
+        },
+        {
+          "id": "ae02a0e1f8587bcc67cec066f82308183407140d78011d50553dc170b20d48a1",
+          "title": "mutual poison remains causal per source when only one victim is shielded",
+          "occurrence": 1
+        },
+        {
+          "id": "7cba12e9e6d85cfb9703ce67e3c6d0251cfe80d43ff95652ea092a5fcaec3fcd",
+          "title": "awakened shield also blocks a mechanical extra knife after ordinary Guard and Heal cancel",
+          "occurrence": 1
+        },
+        {
+          "id": "97e4da307aa09c0347a6cb1f9f70e7bbb46620077d561ba193dcdff340fc6ec8",
+          "title": "legacy unclaimed poison marks are blocked by awakened protection",
+          "occurrence": 1
+        },
+        {
+          "id": "34d4e836bd32997678cc01b3b4d9e3e847b614ce59d982424af980f4c1a3e5b6",
+          "title": "replacement: stale shield and knife cannot move to a new target body or regain authorization",
+          "occurrence": 1
+        },
+        {
+          "id": "be477423ee8b6d8c3e12d4e29a343dbb83cee9741f2408e4c855b9274f4e318f",
+          "title": "revival: stale shield and knife cannot move to a new target body or regain authorization",
+          "occurrence": 1
+        },
+        {
+          "id": "627521a4c82a74b060a3d4321cdbe57cc0d2dc326397ec9d38bd3ead6632de94",
+          "title": "cancel: stale shield and knife cannot move to a new target body or regain authorization",
+          "occurrence": 1
+        },
+        {
+          "id": "4561831dd9c12a13ee78663f96e7322138ab3fa6945fd287f01a547241a60d49",
+          "title": "owner cancellation restores ordinary poison and mechanical reflection without refunding any prefix",
+          "occurrence": 1
+        },
+        {
+          "id": "1426ef4cfd0455e3aa2385232629b2edae9e524b702228e4109fca6ea42970ac",
+          "title": "awakened protection does not block dream, merchant backlash or mechanical failure",
+          "occurrence": 1
+        },
+        {
+          "id": "d66841a24fee337311829ca6c3d43cdca522ef1a9448d502b0c3ebd451cc3fe3",
+          "title": "knife protection never suppresses an unblocked poison in a compound assault",
+          "occurrence": 1
+        },
+        {
+          "id": "9bed95cbf62cc771727af923615b8efef8131106f1de9972085afd4595e0f393",
+          "title": "normal extra knife uses ordinary gun permission and first-night last words, with forbidden compounds denied",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalImport": "import { NightPipeline } from \"../../../src/game/engine/phase_pipeline/night_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightPipeline",
+              "imported": "NightPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalImport": "import { NightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightStageRegistry",
+              "imported": "NightStageRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/contracts",
+          "originalImport": "import type { NightStageHandler } from \"../../../src/game/mechanisms/stages/night/contracts\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightStageHandler",
+              "imported": "NightStageHandler",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/awakened_damage.test.ts",
+      "to": "backend/tests/scenarios/engine/awakened-proposal-settlement.test.ts",
+      "sourceCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "4a1ce124bb775b277b058b5c8cd7a38c6065d4fd0157b0ace266219fc6711a59",
+      "candidateSha256": "7178bb838a8def13afcb926781ae1a63fbb371bcc92e66237ac84198264ecc90",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 775,
+          "end": 820,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 698,
+          "end": 736,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 615,
+          "end": 666,
+          "original": "../../../src/game/mechanisms/stages/night/contracts",
+          "value": "../../../src/game/mechanisms/stages/night/contracts",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/contracts.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/contracts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 510,
+          "end": 572,
+          "original": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "value": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 417,
+          "end": 471,
+          "original": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "value": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 326,
+          "end": 383,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 245,
+          "end": 283,
+          "original": "../../../src/core/domain/night_effects",
+          "value": "../../../src/core/domain/night_effects",
+          "originalResolved": "backend/src/core/domain/night_effects.ts",
+          "expectedResolved": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 165,
+          "end": 182,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "519c20705753c76b6b8dc0cf4722cbb3799ae6edc9d776be89e09f63c83465fb",
+          "title": "NightPipeline delivers typed awakened proposals to Damage without exposing runtime scopes in the summary",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  DeathCause,\n  Phase,\n  Role,\n  StatusMark,\n  type BoardConfig,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { DeathCause, Role, StatusMark, type BoardConfig } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import {\n  createAliveComponent,\n  type AliveComponent,\n} from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/status_marks",
+          "originalImport": "import { StatusMarksComponent } from \"../../../src/core/domain/components/status_marks\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "StatusMarksComponent",
+              "imported": "StatusMarksComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/deaths",
+          "originalImport": "import { permitsDeathShot } from \"../../../src/core/domain/deaths\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "permitsDeathShot",
+              "imported": "permitsDeathShot",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/night_effects",
+          "originalImport": "import {\n  captureNightLife,\n  type NightAwakenedEffect,\n  type NightMechanicalEffect,\n} from \"../../../src/core/domain/night_effects\";",
+          "currentImportBeforeRebase": "import { captureNightLife, type NightAwakenedEffect } from \"../../../src/core/domain/night_effects\";",
+          "droppedBindings": [
+            {
+              "name": "NightMechanicalEffect",
+              "imported": "NightMechanicalEffect",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/last_words/last_words_mechanism",
+          "originalImport": "import { LastWordsMechanism } from \"../../../src/game/mechanisms/last_words/last_words_mechanism\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "LastWordsMechanism",
+              "imported": "LastWordsMechanism",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 548,
-    "targetFiles": 600,
-    "mappingEntries": 600,
-    "baselineCases": 6974,
+    "sourceFiles": 549,
+    "targetFiles": 602,
+    "mappingEntries": 602,
+    "baselineCases": 7005,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
