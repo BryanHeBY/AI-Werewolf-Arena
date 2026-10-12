@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+  "observedSourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -58067,13 +58067,618 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/noble_secret_body_blast_checkpoint.test.ts",
+      "to": "backend/tests/scenarios/reproduction/noble-secret-body/self-destruct-checkpoint.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Actual recordNobleLiteral or PhaseManager+SessionRecordManager provides natural/failure/pending source prefixes; beforeAll, private copy helpers and paid/source/cursor/badge/terminal mutations remain one causal recorded suite. Existing dictionary adds use unique test-only plan names and stay in original callbacks/setup.",
+      "originalSha256": "fdf8d66cd2cb66dcf0f26d6bd60e7d246124172bdfe77b823bf9cbb59fa3de20",
+      "candidateSha256": "61609a905eb0653109433d2bfbbfafb4794b76934d5b4b443135caeeb77ceba7",
+      "moduleAndLocationEdits": [
+        {
+          "start": 147,
+          "end": 161,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 77,
+          "end": 115,
+          "value": "../../../support/noble_secret_body_recording",
+          "kind": "module-specifier",
+          "original": "../support/noble_secret_body_recording",
+          "originalResolved": "backend/tests/support/noble_secret_body_recording.ts",
+          "expectedResolved": "backend/tests/support/noble_secret_body_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "5ad0e5787ecb0d7d4131f58732efedd006e316b65145e4a4e965119c181b5027",
+          "title": "actual Noble pre-vote blast checkpoint uses completed night and preserves pending contract",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/noble_secret_body_blast_cursor_review.test.ts",
+      "to": "backend/tests/scenarios/reproduction/noble-secret-body/restart-cursor-forgery.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Actual recordNobleLiteral or PhaseManager+SessionRecordManager provides natural/failure/pending source prefixes; beforeAll, private copy helpers and paid/source/cursor/badge/terminal mutations remain one causal recorded suite. Existing dictionary adds use unique test-only plan names and stay in original callbacks/setup.",
+      "originalSha256": "1fff01ee822184ac6b68f5f9d247d0f7b9ab0b0d9a427a18f040be28fc405965",
+      "candidateSha256": "5b1f6c46f8cc520c607d39e24e704d12059333fd5fd90746a05a59ebe8b4b060",
+      "moduleAndLocationEdits": [
+        {
+          "start": 235,
+          "end": 267,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 152,
+          "end": 166,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 88,
+          "end": 126,
+          "value": "../../../support/noble_secret_body_recording",
+          "kind": "module-specifier",
+          "original": "../support/noble_secret_body_recording",
+          "originalResolved": "backend/tests/support/noble_secret_body_recording.ts",
+          "expectedResolved": "backend/tests/support/noble_secret_body_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "93eff00f28d3b86f3d0414a06826d2e57328bc4c69ff9101dac92c193585c03a",
+          "title": "literal pre-vote blast records completed Night2, actual Night3 restart, then natural completion",
+          "occurrence": 1
+        },
+        {
+          "id": "aaf3828c2fa8525e8b3c37ca892b47074d6fcfbeaeb379a727dafd62d848e496",
+          "title": "wrong restart snapshot day remains rejected",
+          "occurrence": 1
+        },
+        {
+          "id": "1656e96288e018992545c8a4206bde38216e157fcfff58aa78524512a50193e1",
+          "title": "jointly advancing snapshot, cycle and claimed last completed Night cannot rewrite independent archive day",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/noble_secret_body_pending.test.ts",
+      "to": "backend/tests/scenarios/reproduction/noble-secret-body/pending-autosave.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Actual recordNobleLiteral or PhaseManager+SessionRecordManager provides natural/failure/pending source prefixes; beforeAll, private copy helpers and paid/source/cursor/badge/terminal mutations remain one causal recorded suite. Existing dictionary adds use unique test-only plan names and stay in original callbacks/setup.",
+      "originalSha256": "9be05785ca524eec0e2a6d0d446fada07a5ec594a67a34a7464be07869669f7c",
+      "candidateSha256": "444afd1dd716f1d21b53e18cd6dd9034028bb2225ccd5c8c91e057f57820bc35",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1449,
+          "end": 1495,
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "kind": "module-specifier",
+          "original": "../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1358,
+          "end": 1406,
+          "value": "../../../../src/runtime/simulation/replay_reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/simulation/replay_reproduction",
+          "originalResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "expectedResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1287,
+          "end": 1319,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1194,
+          "end": 1243,
+          "value": "../../../../src/runtime/simulation/reproduction_context",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1067,
+          "end": 1104,
+          "value": "../../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "original": "../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 988,
+          "end": 1024,
+          "value": "../../../../src/recording/session_recorder",
+          "kind": "module-specifier",
+          "original": "../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 914,
+          "end": 947,
+          "value": "../../../support/demon_hunter_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 825,
+          "end": 877,
+          "value": "../../../../src/runtime/scenarios/noble_secret_body_twelve",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/scenarios/noble_secret_body_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 763,
+          "end": 777,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 655,
+          "end": 678,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 586,
+          "end": 621,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "2c989144704c4b3436cccb6b8ee65c5fdf967396545017f292ab0800831f320e",
+          "title": "real pending secret_body: live archive autosave, owner feed and finalized exact Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "26b503f8eef21d842c655434e7cae3d97ed07d9234ddecfef37fa57e6c91d29a",
+          "title": "real pending night_noble: live archive autosave, owner feed and finalized exact Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "badd863e1e0ae3d2aa64046d586e7204ed8bb224a45bcb6afc13370e28a84a62",
+          "title": "real pending awakened_idiot_reveal_speech: live archive autosave, owner feed and finalized exact Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/noble_secret_body_post_game_review.test.ts",
+      "to": "backend/tests/scenarios/reproduction/noble-secret-body/terminal-request-forgery.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Actual recordNobleLiteral or PhaseManager+SessionRecordManager provides natural/failure/pending source prefixes; beforeAll, private copy helpers and paid/source/cursor/badge/terminal mutations remain one causal recorded suite. Existing dictionary adds use unique test-only plan names and stay in original callbacks/setup.",
+      "originalSha256": "ec7fba05cf0a1d7288191abe4e774a49b9035f18c36a9f45bb22a15807966df8",
+      "candidateSha256": "b5c1ea92521d3807dcd8fc32806ea5a1decccbdf29d0d70ef0470da721e07dca",
+      "moduleAndLocationEdits": [
+        {
+          "start": 195,
+          "end": 227,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 88,
+          "end": 126,
+          "value": "../../../support/noble_secret_body_recording",
+          "kind": "module-specifier",
+          "original": "../support/noble_secret_body_recording",
+          "originalResolved": "backend/tests/support/noble_secret_body_recording.ts",
+          "expectedResolved": "backend/tests/support/noble_secret_body_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "656867102569a818a999993e11491ae42f467cdc6b605e622697b35b759b46bc",
+          "title": "positive fresh expiry finishes naturally and public parser accepts",
+          "occurrence": 1
+        },
+        {
+          "id": "887f7fdeb010315daeae5fb92c8e893607e7ea541a5dd3d2148b49c9cedfb725",
+          "title": "public parser rejects post-game living villager vote turn 1",
+          "occurrence": 1
+        },
+        {
+          "id": "ab7ccc7701b7de48af06ced8b3ab3c383db085a46d44cb26593fd2d6fae41f22",
+          "title": "public parser rejects post-game living villager vote turn 2",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/noble_secret_body_record.test.ts",
+      "to": "backend/tests/scenarios/reproduction/noble-secret-body/recorded-evidence-forgery.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Actual recordNobleLiteral or PhaseManager+SessionRecordManager provides natural/failure/pending source prefixes; beforeAll, private copy helpers and paid/source/cursor/badge/terminal mutations remain one causal recorded suite. Existing dictionary adds use unique test-only plan names and stay in original callbacks/setup.",
+      "originalSha256": "7a7d39a121ef3d21a9bf9c8a853d71ad8d40a8240868968ef6e42878bdaf660e",
+      "candidateSha256": "ed07abc5fd470918943152580a761e9869324a67f5e8b0a42861ff0b226d582b",
+      "moduleAndLocationEdits": [
+        {
+          "start": 265,
+          "end": 297,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 182,
+          "end": 196,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 107,
+          "end": 145,
+          "value": "../../../support/noble_secret_body_recording",
+          "kind": "module-specifier",
+          "original": "../support/noble_secret_body_recording",
+          "originalResolved": "backend/tests/support/noble_secret_body_recording.ts",
+          "expectedResolved": "backend/tests/support/noble_secret_body_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "1b3f2cb41643cf7530aec9a827f7fba89ee0425fa36c38e6d6bebdbd6a2bc623",
+          "title": "body Night request cannot be relabeled Day with unchanged tool and action",
+          "occurrence": 1
+        },
+        {
+          "id": "ae89aecb1344273b30e44220f7af63b04ec641d1aa81fbd194c4c3c3800ed779",
+          "title": "public speech cannot authorize private inventory metadata through co-tampered feeds",
+          "occurrence": 1
+        },
+        {
+          "id": "6a07ea6bffe50d00488a351d26e7e23b247d1e42baf89b395b5c734d31e34a53",
+          "title": "God source commit cannot acquire actor audience",
+          "occurrence": 1
+        },
+        {
+          "id": "b68e565fcc2666048ad53f0d5a1f1e4fefcbc7ab7b4f8a4ed29edc6e1ed0bf04",
+          "title": "independent domain evidence rejects duplicate noble_body_sources_committed",
+          "occurrence": 1
+        },
+        {
+          "id": "1e5cdd905acf193dc6d882ff624ac6c34abe0433f63da7611a3a33cac35ceb0b",
+          "title": "independent domain evidence rejects duplicate noble_contract_closed",
+          "occurrence": 1
+        },
+        {
+          "id": "02df365ce9706282d043fb3ca6661a82a5c0a171dc530d31e082b2c0fc05fcb8",
+          "title": "failed required Seer cannot be followed by a forged native clear commit",
+          "occurrence": 1
+        },
+        {
+          "id": "bfd3d9b825732640a5efedf76d3ae6b815a129872878af1f74ef72cb02d6c68d",
+          "title": "co-delete native clearing evidence and retain marks cannot forge a completed night",
+          "occurrence": 1
+        },
+        {
+          "id": "2ee8526776d8b05be96caad33c4a0f307b68a779b6392aba138b7fcb1fbcd2ef",
+          "title": "own future body choice cannot enter the prompt that selected it",
+          "occurrence": 1
+        },
+        {
+          "id": "194d54e7af95a29f2486cc02bcc12ee015d2865edfef1adc1514fb112b22e179",
+          "title": "jointly forged audience and feeds cannot authorize a villager wolf tactical order",
+          "occurrence": 1
+        },
+        {
+          "id": "17e811bd75615a2ea9b067d7b86adffb7478317b667a72b1ed8ef9f10d197dcd",
+          "title": "co-delete spent owner notice and rollback every archive view cannot suppress required delivery",
+          "occurrence": 1
+        },
+        {
+          "id": "cba750845456157900826c3b6d7c08c3407c72d588429574575d4e8b4207fab2",
+          "title": "co-tamper known state, notification and feed cannot restore the spent body",
+          "occurrence": 1
+        },
+        {
+          "id": "70c025f98038e4c636e0eb48f38287091b266eb2e21fbe76029965cac461fc4d",
+          "title": "independent Noble literal record and exact Tape expiry",
+          "occurrence": 1
+        },
+        {
+          "id": "4e9981641805297193e2eda5d650773455ce197d3677dc90f2a3bd042571a304",
+          "title": "independent Noble literal record and exact Tape new_and_old_clear",
+          "occurrence": 1
+        },
+        {
+          "id": "7b5c97f7710076e8b860043c7ca29b5b44e5932aeb77be4c76974ef28a12f0c7",
+          "title": "independent Noble literal record and exact Tape two_sources",
+          "occurrence": 1
+        },
+        {
+          "id": "7a083b1a4a94bfeba8b0a378e8d00dc081bc40714b5fd6461018ef9ed95faae1",
+          "title": "independent Noble literal record and exact Tape pending_last_wolf",
+          "occurrence": 1
+        },
+        {
+          "id": "45c679ae6b0fb05811cd0166cb4755b036cf627d14d6a97b5d6a999ecabe1bf0",
+          "title": "independent Noble literal record and exact Tape badge_reveal",
+          "occurrence": 1
+        },
+        {
+          "id": "2caa3271d2d4f29b7e368f9d84ded3f7f64934bd1549fbfc55e28f0464bba79a",
+          "title": "literal native marks before failed Seer paid-poison",
+          "occurrence": 1
+        },
+        {
+          "id": "7130dd12bae5c36dc3513012525821f7253bae417f20bcbf68366f04ef2d85f2",
+          "title": "literal native marks before failed Seer same-knife-poison",
+          "occurrence": 1
+        },
+        {
+          "id": "088aef91a8ddeefb9d376dbf07305a3cc1263abfdd15ffeda0553e163bf90862",
+          "title": "literal native marks before failed Seer same-knife-heal",
+          "occurrence": 1
+        },
+        {
+          "id": "d503cce6b1f2b8d59cee4891a65c80d14b6de1d1b1f4e43b09891ed02d7a5dae",
+          "title": "literal native marks before failed Seer unresolved-demon-poison",
+          "occurrence": 1
+        },
+        {
+          "id": "8635fc73ab6fe6062578fa386c0bb44a410b926fcfc07fb9fdebd24d591746cd",
+          "title": "holder choice independently preserves soft badge destruction missing",
+          "occurrence": 1
+        },
+        {
+          "id": "5f80242a394fc821bd0918ddf091cfce1c5751346fcf545738d4eceb55727a69",
+          "title": "holder choice independently preserves soft badge destruction invalid",
+          "occurrence": 1
+        },
+        {
+          "id": "6ee96d25a840c1198fd35ad15b0ac2575d6224620864fb23c931e616fcd4ec5a",
+          "title": "final checkpoint covers all actual operation records",
+          "occurrence": 1
+        },
+        {
+          "id": "1ae0e5082878f95326a5968607b5ed421a2c8e819c3bc44af8b03d92a0954d43",
+          "title": "final checkpoint covers all actual decision records",
+          "occurrence": 1
+        },
+        {
+          "id": "b6cb95a04ea6cc017193857f157979511362783baf83c5bc22d83b448f216556",
+          "title": "final checkpoint covers all actual settlement records",
+          "occurrence": 1
+        },
+        {
+          "id": "43981b730288a22dc6bcab6b67d3ae1ab0ac4b4275c9310628146d617f38520d",
+          "title": "independent commit evidence rejects noble_body_night_opened/owner",
+          "occurrence": 1
+        },
+        {
+          "id": "50fba3ef532bf829f097891ba6a520c5bedf9c8d193dfc1ab4eeb6c445fa4cbb",
+          "title": "independent commit evidence rejects noble_body_night_opened/phase",
+          "occurrence": 1
+        },
+        {
+          "id": "b731e1403192471f2dbe79dd6b1da1ff3c31399bcb48b9ac254f2c1ed68fd3b4",
+          "title": "independent commit evidence rejects noble_body_night_opened/cursor",
+          "occurrence": 1
+        },
+        {
+          "id": "4ef438609776d77e4e8defb42049505e65575fd2d9ca30e5d6acc80f98f4af9b",
+          "title": "independent commit evidence rejects noble_body_night_opened/payload",
+          "occurrence": 1
+        },
+        {
+          "id": "5d038d6a79d380378cff283872c480d6678b38be9e4f4135ba336dbbeee69d8c",
+          "title": "independent commit evidence rejects noble_body_knife_committed/owner",
+          "occurrence": 1
+        },
+        {
+          "id": "b45aaa57dde88f8d26bb7e7de859caae5c38f72b09c8b21ba614a7aabd84e84f",
+          "title": "independent commit evidence rejects noble_body_knife_committed/phase",
+          "occurrence": 1
+        },
+        {
+          "id": "aac427066b3c2f7e41ddb4cb0b77af3099e654419398156c12a8f0444408a6ba",
+          "title": "independent commit evidence rejects noble_body_knife_committed/cursor",
+          "occurrence": 1
+        },
+        {
+          "id": "181c9d35df71cc0d6443e462a7694755f6beee700c244eac22e62ff5c2d2a459",
+          "title": "independent commit evidence rejects noble_body_knife_committed/payload",
+          "occurrence": 1
+        },
+        {
+          "id": "7d6a0b618a56b97198f5361f316c54402334eeaa5ea3e4153ac385590cd1b864",
+          "title": "independent commit evidence rejects noble_body_native_damage_committed/owner",
+          "occurrence": 1
+        },
+        {
+          "id": "2bc9c84f2f66c94de2e828aa6ee0af3e1717a96c036d1c80ee5202e5ec364e30",
+          "title": "independent commit evidence rejects noble_body_native_damage_committed/phase",
+          "occurrence": 1
+        },
+        {
+          "id": "42db109838a3cf9838ead2714c3b471d9bbd1b69fc1bb6c39a9a63e3f2be580e",
+          "title": "independent commit evidence rejects noble_body_native_damage_committed/cursor",
+          "occurrence": 1
+        },
+        {
+          "id": "5a2685427139efbb0d862d1ebe40533963631538a7e4ac06c8b9041818ec0678",
+          "title": "independent commit evidence rejects noble_body_native_damage_committed/payload",
+          "occurrence": 1
+        },
+        {
+          "id": "35131182e6387b391b04bdbba735e5715d9bedd1a7a99d7ced6b7dd9906f681a",
+          "title": "independent commit evidence rejects noble_body_sources_committed/owner",
+          "occurrence": 1
+        },
+        {
+          "id": "071cf8ffe2bd61e52ac4090712b753a7fb24739120f9acfa01a281c5f489f2b2",
+          "title": "independent commit evidence rejects noble_body_sources_committed/phase",
+          "occurrence": 1
+        },
+        {
+          "id": "bf9942f211e8f2a66f5b4035d1cf28af0d76699c2eea3bfc6a7fd14dc9bc36a0",
+          "title": "independent commit evidence rejects noble_body_sources_committed/cursor",
+          "occurrence": 1
+        },
+        {
+          "id": "e26218bab304b0009a358c07f6de55f0b1068c28a4ced2a2bf1c64a7db154498",
+          "title": "independent commit evidence rejects noble_body_sources_committed/payload",
+          "occurrence": 1
+        },
+        {
+          "id": "b8ecaeeb48bc33a52998eef47aeea703176282a966de90cbc2eabdfbf2ea1aa2",
+          "title": "independent commit evidence rejects noble_body_death_committed/owner",
+          "occurrence": 1
+        },
+        {
+          "id": "5bb9e25b7220fe55f77fd28bf805a247d0508b9027a89a5c4e436ecc3603ad58",
+          "title": "independent commit evidence rejects noble_body_death_committed/phase",
+          "occurrence": 1
+        },
+        {
+          "id": "a972626828e7f620bd4b6a5564b5b9947d7a8c536e14214409e87ba3e639dab4",
+          "title": "independent commit evidence rejects noble_body_death_committed/cursor",
+          "occurrence": 1
+        },
+        {
+          "id": "97c249461960f956f28c70585002c7b57c7e29655717de26b03fce75d1f8b301",
+          "title": "independent commit evidence rejects noble_body_death_committed/payload",
+          "occurrence": 1
+        },
+        {
+          "id": "9ed2585fdbc11e31f17765732f86132137a15fd07978db33db1585a10afbb845",
+          "title": "independent Noble failed prefix and exact Tape secret_body",
+          "occurrence": 1
+        },
+        {
+          "id": "0c660aeed4bdc4e9d207b015055ef9d74954feebea563b2c14348fc1463a0120",
+          "title": "independent Noble failed prefix and exact Tape night_noble",
+          "occurrence": 1
+        },
+        {
+          "id": "da706e04c2a8ebd7c615d6f59589fc3c5e1f77658ce96db25b8022b9ce721b25",
+          "title": "independent Noble failed prefix and exact Tape wolf_discussion",
+          "occurrence": 1
+        },
+        {
+          "id": "d7f71e389d9ddcf714643b8a74d424342032097ea9164919a9349b653aef6e3d",
+          "title": "independent Noble failed prefix and exact Tape wolf_vote",
+          "occurrence": 1
+        },
+        {
+          "id": "418e4559ea869b7f74faa6a0026ac68d2385556e6ccbd7fe3f6f26c383178d0e",
+          "title": "independent Noble failed prefix and exact Tape witch",
+          "occurrence": 1
+        },
+        {
+          "id": "eec89c0b6f1d6ee3afb33c120e502dcf5e7b78c246a67039368578493b1ebd21",
+          "title": "independent Noble failed prefix and exact Tape seer",
+          "occurrence": 1
+        },
+        {
+          "id": "15d14ff129c0c07bbf5c0a243f92c0e97356258ff9d694049e8be37a8c9a6563",
+          "title": "independent Noble failed prefix and exact Tape demon_hunter",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 472,
-    "targetFiles": 478,
-    "mappingEntries": 478,
-    "baselineCases": 5777,
+    "sourceFiles": 477,
+    "targetFiles": 483,
+    "mappingEntries": 483,
+    "baselineCases": 5839,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

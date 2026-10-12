@@ -1,26 +1,25 @@
 /**
- * Live recording/replay integration verify pending Noble/Body decisions autosave an exact unresolved prefix.
- * Input: Real bounded night requests, held provider completion and temporary archive writes.
- * Output and independent oracle: Literal pending outcome, actor feed and accepted finalized Tape; provider return is not treated as domain settlement.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Reproduction scenarios verify pending Noble and Secret Body requests autosave the original unresolved recording prefix.
+ * Input: Actual night cycles, held provider completion and temporary live/finalized stores across the original target-stage matrix.
+ * Output and oracle: Literal pending outcome, authorized owner feed and exact finalized replay distinguish provider return from domain settlement; stored fixture archives are not rewritten.
  */
 import { expect, test } from "bun:test";
 import { readFile, writeFile, rm } from "node:fs/promises";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
-import { bootstrapGame } from "../../src/app/bootstrap";
-import { Role, COMPONENT, createRandom, type ActionRequest, type ToolCall } from "../../src/core";
-import { nobleSecretBodyTwelveConfig } from "../../src/runtime/scenarios/noble_secret_body_twelve";
-import { demonNightChoice } from "../support/demon_hunter_scenarios";
-import { SessionRecordManager } from "../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../src/recording/recording_context";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { Role, COMPONENT, createRandom, type ActionRequest, type ToolCall } from "../../../../src/core";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import {
   beginGameReproduction,
   captureCheckpoint,
   currentEngineVersion,
-} from "../../src/runtime/simulation/reproduction_context";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
-import { replayReproduction } from "../../src/runtime/simulation/replay_reproduction";
-import { buildAgentVisibleEvent } from "../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/runtime/simulation/reproduction_context";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { replayReproduction } from "../../../../src/runtime/simulation/replay_reproduction";
+import { buildAgentVisibleEvent } from "../../../../src/game/engine/agent_visible_event_feed";
 
 for (const target of ["secret_body", "night_noble", "awakened_idiot_reveal_speech"])
   test(`real pending ${target}: live archive autosave, owner feed and finalized exact Tape`, async () => {

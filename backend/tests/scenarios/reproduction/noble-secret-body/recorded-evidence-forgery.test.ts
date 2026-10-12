@@ -1,7 +1,12 @@
+/**
+ * Reproduction scenarios verify actual Noble and Secret Body recordings retain paid source evidence, knowledge and terminal contracts.
+ * Input: Original beforeAll complete/failed games, uniquely named literal plan additions and copied multi-field evidence forgeries.
+ * Output and oracle: Explicit mark, stock, audience, receipt/checkpoint and exact-replay assertions remain causal; original shared plan mutations and callback order are preserved rather than duplicated.
+ */
 import { beforeAll, expect, test } from "bun:test";
-import { nobleLiteralPlans, recordNobleLiteral } from "../support/noble_secret_body_recording";
-import { Camp, PotionType } from "../../src/core";
-import { parseReproductionRecord, type ReproductionRecord } from "../../src/recording/reproduction";
+import { nobleLiteralPlans, recordNobleLiteral } from "../../../support/noble_secret_body_recording";
+import { Camp, PotionType } from "../../../../src/core";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 
 let complete: ReproductionRecord;
 let earlyFailed: ReproductionRecord;

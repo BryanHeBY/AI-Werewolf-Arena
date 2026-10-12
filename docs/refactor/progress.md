@@ -169,3 +169,5 @@
 - Guard旧ActionReception fixture兼容：目标政策后续finite检查实际发现旧seed直接写readonly字段TS2540，明确test-only mutable cast保同stored-state赋值，production读视图不放宽/不改被测路径。整fixture原程序仅该类型映射逆向同，原权限/resource/constraints case通过；该编译红保留，Tool final有限检查继续。
 
 - 当前机制台账追加四已commit子项：Witch普通payload、Seer/Guard目标port、Noble真实handoff；独立delta四cell/source/docs/ancestor pointers0，89baseline+1current-only共900cells，43partial857pending，0complete/N/A。基线SHA60f1eb79原bytes不变；provenance补独立三IteratorClose前缀与cold8同exports证据，未重门禁。
+
+- C12 noble-recording prefix contracts：5原文件/62旧IDs实际完整录制/复现场景迁移；20whole程序/77recognized callbacks+1curried skipIf/92relative imports保真，Root独立actualGit全部语句/119完整import语法/同目标/297unique IDs复核0；20heads0与一次finite20 types0，不跑games/full。18scenario/2integration按实际边界归属，原beforeAll/cache/独有计划键与opt-in条件保持且不作发现或pass声称；RedMoon派生oracle债务仍pending。mapping现477source/483target/5839IDs。

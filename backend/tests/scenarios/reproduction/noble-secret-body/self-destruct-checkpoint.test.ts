@@ -1,6 +1,11 @@
+/**
+ * Reproduction scenarios verify a real Noble pre-vote self-destruct checkpoints the completed night and pending servant contract before restart.
+ * Input: The original controlled Noble recording plan and declared Night2 blast day.
+ * Output and oracle: Literal next-night snapshot, absent vote, preserved contract and terminal replay assertions stay causal with the source game; archive fixtures are unchanged.
+ */
 import { expect, test } from "bun:test";
-import { recordNobleLiteral } from "../support/noble_secret_body_recording";
-import { Phase, Camp } from "../../src/core";
+import { recordNobleLiteral } from "../../../support/noble_secret_body_recording";
+import { Phase, Camp } from "../../../../src/core";
 test("actual Noble pre-vote blast checkpoint uses completed night and preserves pending contract", async () => {
   const { record, replay } = await recordNobleLiteral("blast_skips_vote", "en", { blastDay: 2 }),
     cp = record.checkpoints[2]!;
