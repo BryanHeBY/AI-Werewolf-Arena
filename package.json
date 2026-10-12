@@ -19,16 +19,17 @@
     "test": "bun run test:tooling && bun run test:packages && bun run test:backend && bun run test:frontend",
     "test:backend": "bun --filter ai-werewolf-arena-backend test",
     "test:frontend": "bun --filter ai-werewolf-arena-frontend test",
-    "check": "bun run check:tooling && bun run check:packages && bun run check:backend && bun run check:frontend",
+    "check": "bun run lint:architecture && bun run check:tooling && bun run check:packages && bun run check:backend && bun run check:frontend",
     "lint:backend": "bun run --cwd backend lint:deps && bun run --cwd backend lint:boundaries && bun run --cwd backend lint:i18n",
     "lint:frontend": "bun run --cwd frontend lint",
-    "lint": "bun run lint:backend && bun run lint:frontend",
+    "lint": "bun run lint:architecture && bun run lint:backend && bun run lint:frontend",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check:tooling": "./backend/node_modules/.bin/tsc -p tooling/tsconfig.json --noEmit",
     "test:tooling": "bun --no-env-file test tooling/refactor",
     "check:packages": "bun --filter '@ai-werewolf-arena/*' check",
-    "test:packages": "bun --filter '@ai-werewolf-arena/*' test"
+    "test:packages": "bun --filter '@ai-werewolf-arena/*' test",
+    "lint:architecture": "bun --no-env-file tooling/refactor/architecture/run.ts check"
   },
   "engines": {
     "bun": ">=1.4.2"
