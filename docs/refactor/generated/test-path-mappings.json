@@ -58672,13 +58672,357 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/fragrant_pair_seer_record.test.ts",
+      "to": "backend/tests/scenarios/reproduction/fragrant-pair-seer/recorded-evidence-forgery.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Scenario file keeps three real beforeAll recordings and copied multi-field forgeries. Wire calibration file separately owns actual SDK/ACP wire assertion contract: two generated transport snapshots plus literal identity/schema/history oracle mutations; it belongs integration and does not assert all game rules.",
+      "originalSha256": "a7b30c439422dfe94dd3d12733863603836ae67db7077b9a49747e025e34bde4",
+      "candidateSha256": "468dc62713c43c8bc80d4794071522060675f352e7f6864a98ed802a13712842",
+      "moduleAndLocationEdits": [
+        {
+          "start": 192,
+          "end": 231,
+          "value": "../../../support/fragrant_pair_seer_recording",
+          "kind": "module-specifier",
+          "original": "../support/fragrant_pair_seer_recording",
+          "originalResolved": "backend/tests/support/fragrant_pair_seer_recording.ts",
+          "expectedResolved": "backend/tests/support/fragrant_pair_seer_recording.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 118,
+          "end": 150,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "c4bc2621bc10cca669e2e835d24f4cf6861a901ebe4a5cc622ca23a07dad7d7f",
+          "title": "unchanged actual record inherited accepted",
+          "occurrence": 1
+        },
+        {
+          "id": "09c4ffa3160a90e6adefba186fd2f56b4916757175c2cda7077d6702960ac8fb",
+          "title": "unchanged actual record first accepted",
+          "occurrence": 1
+        },
+        {
+          "id": "3f96bc440243535b0807cfba99d5c1ee104f5fc93dea697e0e67e25cf8948f85",
+          "title": "unchanged actual record expiry accepted",
+          "occurrence": 1
+        },
+        {
+          "id": "b5a7175196314b5278d25b583b343983c21a9a07cf63dcd49ae43e28e823a714",
+          "title": "reject God wave added to initial Phantom feed",
+          "occurrence": 1
+        },
+        {
+          "id": "6aaa2d7cbcc492249afe95c8380ec9143b3abec69af31b65590b25c09df18a50",
+          "title": "reject God real opening added to initial Phantom feed",
+          "occurrence": 1
+        },
+        {
+          "id": "87bc049aebf1f984b6defd7c8441ab5d8c65f1947f985221118fdc6a7d811dd4",
+          "title": "reject future own N3 binding added to N1 feed",
+          "occurrence": 1
+        },
+        {
+          "id": "e58d6561d1509dbbad98dbab767976746bb684f0bb8fa0a27b5840bbaf96ad27",
+          "title": "reject foreign AS aggregate private result added to Phantom feed",
+          "occurrence": 1
+        },
+        {
+          "id": "52b63c93fd7daa9aa6b6176724c6068cf479b40dc50bc76642e5bc433abfdc15",
+          "title": "reject initial owner notice removed and visible seq repaired",
+          "occurrence": 1
+        },
+        {
+          "id": "d4a40135f3e09e8551a99e787fbace6fe04bd397f35eb7d0aa9d74fbcbb47a92",
+          "title": "reject visible sequence repeated",
+          "occurrence": 1
+        },
+        {
+          "id": "e8fe2a25c49130cb3d08a4fb4dac7009a9895c2ce6768607f1998459fb059272",
+          "title": "reject visible sequence reordered",
+          "occurrence": 1
+        },
+        {
+          "id": "be7bf65aa40383034c0d9441f2b9909d9a1b800feaab94e84a0c054be7a27925",
+          "title": "reject pair request lies about phase despite original night opening",
+          "occurrence": 1
+        },
+        {
+          "id": "98306fe45ff9565ea71ff43d0d6e7450a45f8c38ecc747fdef3b975b0ed04b38",
+          "title": "reject CP native pair ability permanently disabled",
+          "occurrence": 1
+        },
+        {
+          "id": "6a035c654bf7a68ca0f24431828a32769b530d4ae7e7f57bac5d6a16162797df",
+          "title": "reject CP native pair ability maxUses changed",
+          "occurrence": 1
+        },
+        {
+          "id": "2b6e7bed8110a2713baac9a5855fbec821466c1e3ee2269a45b7d570a9ab46c7",
+          "title": "reject duplicate error pair request after own pair result",
+          "occurrence": 1
+        },
+        {
+          "id": "fdf7fc37a1679c8b57a6f7bb4b2849692ea1d520f07c3524734410f6825b24a4",
+          "title": "reject duplicate pending pair request after own pair result",
+          "occurrence": 1
+        },
+        {
+          "id": "7223ea686d064d3d8db3874516b3821e1fba8bcdc4117d4cde14640a06460db9",
+          "title": "reject full-night pair decision+event+operations+checkpoint co-delete",
+          "occurrence": 1
+        },
+        {
+          "id": "fe447e7fb96fa8caa745352f3cd656aacf3cee6f024940c9b1173a9fe6925de2",
+          "title": "pair request cannot claim Voting phase while paid Night result survives",
+          "occurrence": 1
+        },
+        {
+          "id": "72e88f9649464077b2ea33dfba68e762c485c3ab037330408e5f6f3759a4a5a2",
+          "title": "pair request cannot open before prior Witch and bind decisions",
+          "occurrence": 1
+        },
+        {
+          "id": "b8cb309b36f1afbc8074f45129e87c6374409a4da47ac84d968f7a9d514394f5",
+          "title": "gun wave cannot claim Voting origin when actually executed in Day",
+          "occurrence": 1
+        },
+        {
+          "id": "dfe467badae3bd25eeeb708211503dd7e35782c23a62c1b5890159e87569da7d",
+          "title": "known winner cannot grant faction outcome to an eliminated Wolf",
+          "occurrence": 1
+        },
+        {
+          "id": "24b010ba84099442a9455faae2ce54ae5e1a22c774ef405693747c629e691190",
+          "title": "resolved mandatory wolf chat decision cannot be deleted while keeping its facts",
+          "occurrence": 1
+        },
+        {
+          "id": "cdb58d5a77e29245503a877b4878e25ebddc756578453eafdfcb745a5ca4133f",
+          "title": "Witch checkpoint cannot refund poison after real N1 poison",
+          "occurrence": 1
+        },
+        {
+          "id": "32a729139a9021856ae59a26f89fc9d977e95787cca04dc1171d6e2686ee72f7",
+          "title": "Hunter checkpoint cannot refund gun after actual terminal shot",
+          "occurrence": 1
+        },
+        {
+          "id": "b4a799c6ae4284a6ef9e1b78d9a8a7e6b2d1f4314f30e6865762589a9400cc63",
+          "title": "final checkpoint cannot be omitted",
+          "occurrence": 1
+        },
+        {
+          "id": "8a3159520d93d754ccb22b97e9ae3434aec5189216483815b6d6455a3fc57293",
+          "title": "terminal checkpoint cycle must equal real completed cycle",
+          "occurrence": 1
+        },
+        {
+          "id": "2ba7492a35fbc3f5073becda02a974b9dd1bcaab06fac8e9564fe1efcc66616e",
+          "title": "settlement orders cannot all be the same future ordinal",
+          "occurrence": 1
+        },
+        {
+          "id": "6137fb6dad84555eb0e42bb02c273e39d5a0abe1af0804cbdc20b443640e5d7d",
+          "title": "failed checkpoint cannot undercount completed operations",
+          "occurrence": 1
+        },
+        {
+          "id": "4d081a816fdd3945c4f556d307d8b088f63ba37c19aa02c2b38c27cc14e9f4df",
+          "title": "failed checkpoint cannot undercount settled decisions",
+          "occurrence": 1
+        },
+        {
+          "id": "ddbd11bff471d0763cf3e004fa0532c2ccd78228265dd71ace55fa2e815c9e47",
+          "title": "required committed operation cannot claim error phase or scope",
+          "occurrence": 1
+        },
+        {
+          "id": "195a04e0142b84f7ed78af7eda68ed5e2c846f65e86041bb83e01aad8ccaa81a",
+          "title": "night-open operation cannot substitute a different private notice",
+          "occurrence": 1
+        },
+        {
+          "id": "75d5e412bcd78bffa59f2cacd8b12d303b192f0f9d69e675339c980e46ebe15d",
+          "title": "orphan domain operation cannot append a fictitious successful binding",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/fragrant_pair_seer_wire_review.test.ts",
+      "to": "backend/tests/integration/agents/fragrant-pair-seer/wire-oracle-calibration.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Scenario file keeps three real beforeAll recordings and copied multi-field forgeries. Wire calibration file separately owns actual SDK/ACP wire assertion contract: two generated transport snapshots plus literal identity/schema/history oracle mutations; it belongs integration and does not assert all game rules.",
+      "originalSha256": "b4dc28e436b78502209e493618919f952754e2b85910dc8b9647b2f99c640425",
+      "candidateSha256": "3a1718f6a1dfa5f6d06ebe58fd17918bad5c03285180322372ee2e7b2fea67f0",
+      "moduleAndLocationEdits": [
+        {
+          "start": 752,
+          "end": 781,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 666,
+          "end": 715,
+          "value": "../../../support/fragrant_pair_seer_transport_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/fragrant_pair_seer_transport_scenarios",
+          "originalResolved": "backend/tests/support/fragrant_pair_seer_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/fragrant_pair_seer_transport_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 569,
+          "end": 620,
+          "value": "../../../support/features/fragrant-pair-seer/oracles/wire",
+          "kind": "module-specifier",
+          "original": "../support/features/fragrant-pair-seer/oracles/wire",
+          "originalResolved": "backend/tests/support/features/fragrant-pair-seer/oracles/wire.ts",
+          "expectedResolved": "backend/tests/support/features/fragrant-pair-seer/oracles/wire.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f5e3a9ebc34f5e6bdea0bc01eaad7a9c1df23633c0391d7f1ccc23871988a499",
+          "title": "two literal wire snapshots are valid",
+          "occurrence": 1
+        },
+        {
+          "id": "3056b05f95d31a437d515dcaa7cc7e00b2375271873352fc144f4c467716c6de",
+          "title": "Phantom initial wrong identity",
+          "occurrence": 1
+        },
+        {
+          "id": "cc6dd54a526eb0766fa074500b94b258ed5f34d98ce3633e1eb39e84db452b94",
+          "title": "AS initial ordinary Seer",
+          "occurrence": 1
+        },
+        {
+          "id": "891e72331f33a7cea99739ee925164290bd39e67540a578502decf2757362b22",
+          "title": "Phantom initial all three wolves",
+          "occurrence": 1
+        },
+        {
+          "id": "bcd058261eb5f1f8cf76fce4f91f0727603e080d88d2e2081d1032fb3e6f4ced",
+          "title": "AS receives singleton teammate",
+          "occurrence": 1
+        },
+        {
+          "id": "9bc9a9200c5c39477d5b8b32a86bc45115b9917d515df44ffd1197ea53d05ee0",
+          "title": "remove complete current knowledge",
+          "occurrence": 1
+        },
+        {
+          "id": "b58d753713d1c9b496ab4c886f88b479d923773f5577af0456f8ebffc9f93a6f",
+          "title": "premature used flag before any public death",
+          "occurrence": 1
+        },
+        {
+          "id": "41355896a3419a1e22a91b4d94bf54d02612f16adea0d7c4d3292958e0ee9e64",
+          "title": "invent night one inherited knife",
+          "occurrence": 1
+        },
+        {
+          "id": "5d893e262bf688abd100170c851d4bab9dce597b261ccfb2a67ebdff26527f5c",
+          "title": "hidden God state plaintext",
+          "occurrence": 1
+        },
+        {
+          "id": "60ab8496ae75124ef5bfee2144c5f6664ec2dd53f47559cfa61c32a331141991",
+          "title": "same-day future pair result before first decision",
+          "occurrence": 1
+        },
+        {
+          "id": "1425b6012c86d1eda2339a1a1ef482f8b14145fa0fbef7bf2e6d4e2548a15c1b",
+          "title": "flip literal two-wolf boolean in emitted event",
+          "occurrence": 1
+        },
+        {
+          "id": "8e6842cb039763dc3cb46e141910d6ebaf809850e033d073e64bfefcec64e157",
+          "title": "alter AS history aggregate in current resources",
+          "occurrence": 1
+        },
+        {
+          "id": "1aec1ecfaaad7a1a780ee4ae0fe600a381583a4903ad0e94065111026ff83e49",
+          "title": "add forbidden per-target camp to resources",
+          "occurrence": 1
+        },
+        {
+          "id": "984983939ca9004bad2514b8458530d0bcf039af41ae05310e9224f7ca08ba44",
+          "title": "drop bind parameter shape",
+          "occurrence": 1
+        },
+        {
+          "id": "ecb3ab966deefe52a1151825955f154de1f161a95c566389fe69cf5119cf9983",
+          "title": "rewrite retained historical status using future used",
+          "occurrence": 1
+        },
+        {
+          "id": "686be322133bc22f78e7da68a8db23be1b065345870c631e50e711739256e4b0",
+          "title": "retained valid future prompt cannot appear earlier",
+          "occurrence": 1
+        },
+        {
+          "id": "da48d95040195dc9204fb2a3552d4aa05f450808a3345407ab9fc9922bac9a59",
+          "title": "delete entire one actor wire",
+          "occurrence": 1
+        },
+        {
+          "id": "2559fce9e412f655b27bda1d8b859ccc542ca73da638ba8f5c92acc128249cfc",
+          "title": "ACP omit mandatory night notice",
+          "occurrence": 1
+        },
+        {
+          "id": "bdf377e4c32eb94b0fc112aa30a77296d30c5129ad8784fcf9f8e0d2f4ced546",
+          "title": "ACP active schema reports game state",
+          "occurrence": 1
+        },
+        {
+          "id": "aef8db3da8dfa42d11496e6a0dde8e1a721a465f4fe90e0445696238c84326f1",
+          "title": "ACP valid schema wrong actorOrdinal",
+          "occurrence": 1
+        },
+        {
+          "id": "8aae693b92b365b33dcc76d707c6875fc911d383a2e873900ba0c11e814f86f2",
+          "title": "foreign owner knowledge injected into ordinary current prompt",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 477,
-    "targetFiles": 483,
-    "mappingEntries": 483,
-    "baselineCases": 5839,
+    "sourceFiles": 479,
+    "targetFiles": 485,
+    "mappingEntries": 485,
+    "baselineCases": 5891,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

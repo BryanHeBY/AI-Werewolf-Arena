@@ -1,16 +1,15 @@
 /**
- * Wire-oracle calibration integration verify Fragrant prompt/identity/schema/history rejection boundaries.
- * Input: Two real synthetic transport runs followed by explicit independent wire mutations.
- * Output and independent oracle: Original literal markers and specific oracle error codes; expected records are not regenerated from a production reducer.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Transport integration tests calibrate Fragrant's independent wire oracle against real SDK and ACP prompt/identity/schema snapshots.
+ * Input: The original two beforeAll transport games and literal copied identity, teammate, private-history or schema mutations.
+ * Output and oracle: Explicit wire acceptance and specific oracle rejection codes preserve the same transcript inputs; this calibration does not claim complete domain-rule coverage.
  */
 import { beforeAll, test, expect } from "bun:test";
 import {
   assertFragrantTransportWire,
   type FragrantWireRun,
-} from "../support/features/fragrant-pair-seer/oracles/wire";
-import { fragrantTransportScenario } from "../support/fragrant_pair_seer_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+} from "../../../support/features/fragrant-pair-seer/oracles/wire";
+import { fragrantTransportScenario } from "../../../support/fragrant_pair_seer_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 let sdk: FragrantWireRun, acp: FragrantWireRun;
 beforeAll(async () => {
   sdk = await runTransportGame(fragrantTransportScenario("expiry"), "llm", "zh-CN");
