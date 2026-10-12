@@ -1,14 +1,11 @@
 /**
- * Mechanism integration tests for Hybrid affiliation choices, original-body authorization and final membership.
- * Inputs are literal rosters, actions and targeted owner/life edits; outputs are
- * checked against the original explicit resource, event and rejection assertions.
- * Controlled contexts bind read-only actor queries at the original World read
- * position. No billed agent, fixture rewrite or production-generated oracle runs.
+ * Unit tests verify Hybrid direct affiliation stage, target-neutral reception and synchronous ownership/choice invariants.
+ * Input: Original locale/target/change matrices, local night contexts and committed-prefix reentry rejection before stages run.
+ * Output and oracle: Exact camp/identity/victory/privacy and stale-choice assertions remain unchanged; the reentry refusal is bounded, with no complete PM cycle.
  */
-import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
-import { PotionType } from "../../../src/core";
+import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   Camp,
   COMPONENT,
@@ -21,44 +18,45 @@ import {
   type GameEvent,
   type RoleComponent,
   type ToolCall,
-} from "../../../src/core";
-import type { VictoryComponent } from "../../../src/core/domain/components/victory";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
-import { ConditionRegistry } from "../../../src/core/domain/registries/condition_registry";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { HYBRID_STAGE } from "../../../src/game/mechanisms/roles/hybrid/night_stage";
+} from "../../../../src/core";
+import type { VictoryComponent } from "../../../../src/core/domain/components/victory";
+import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
+import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { ConditionRegistry } from "../../../../src/core/domain/registries/condition_registry";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { HYBRID_STAGE } from "../../../../src/game/mechanisms/roles/hybrid/night_stage";
 import {
   getHybridState,
   projectHybridState,
-} from "../../../src/game/mechanisms/roles/hybrid/state";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { resolveInspection } from "../../../src/game/mechanisms/roles/inspection";
+} from "../../../../src/game/mechanisms/roles/hybrid/state";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import {
   knownWolfTeammates,
   wolfTeamPermissions,
   wolfChatParticipants,
   wolfKnifeHolders,
-} from "../../../src/game/mechanisms/roles/wolf_team";
-import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
-import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
+} from "../../../../src/game/mechanisms/roles/wolf_team";
+import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
+import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
+import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../src/game/mechanisms";
-import { WinConditionRegistry } from "../../../src/game/mechanisms/registries/win_condition_registry";
-import { getDefaultScriptEventRenderRegistry } from "../../../src/game/mechanisms/script/event_render_registry";
+} from "../../../../src/game/mechanisms";
+import { WinConditionRegistry } from "../../../../src/game/mechanisms/registries/win_condition_registry";
+import { getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechanisms/script/event_render_registry";
 import { hybridEventLabel, text } from "@ai-werewolf-arena/game-text";
 
 const deck = [Role.Hybrid, Role.Wolf, Role.HiddenWolf, Role.Seer, Role.Witch, Role.Villager];
+
 const board = (roles = deck): BoardConfig => ({
   ...sixPlayerMvpConfig,
   boardSize: roles.length,
@@ -69,15 +67,20 @@ const board = (roles = deck): BoardConfig => ({
   winConditions: [WinCondition.SlaughterCity],
   selfDestruct: { enabledWindows: [] },
 });
+
 const fixture = (roles = deck, locale: "zh-CN" | "en" = "en") => {
   const config = board(roles);
   return { ...bootstrapGame(config, { fixedRoles: roles, locale }), config };
 };
+
 const role = (game: ReturnType<typeof fixture>, id = 1) =>
   game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+
 const victory = (game: ReturnType<typeof fixture>, id = 1) =>
   game.world.getComponent<VictoryComponent>(id, COMPONENT.Victory)!;
+
 const choose = (target_id: number): ToolCall => ({ name: "choose_exemplar", args: { target_id } });
+
 function context(
   game: ReturnType<typeof fixture>,
   events: GameEvent[],
@@ -122,6 +125,7 @@ function context(
     },
   };
 }
+
 const policy = (game: ReturnType<typeof fixture>) =>
   new PlayerPromptPolicy(game.world, {
     boardConfig: game.config,
@@ -434,50 +438,6 @@ test("a Wolf-affiliated Hybrid still fills the villager side and true Good count
       outcome: { winningPlayerIds: [4, 5, 6] },
     });
 });
-
-for (const followWolf of [false, true])
-  test(`${followWolf}: actual first-night Hybrid death, last-Wolf self-knife and badge settle before final Good membership`, async () => {
-    const roles = [Role.Hybrid, Role.Wolf, Role.Seer, Role.Witch, Role.Villager, Role.Villager],
-      config = { ...board(roles), enableSheriff: true, initialSheriffSeat: 1 },
-      game = bootstrapGame(config, { fixedRoles: roles }),
-      asks: ActionRequest[] = [];
-    const result = await game.phaseManager.runSingleCycle({
-      async getAction(request): Promise<ToolCall | null> {
-        asks.push(request);
-        if (request.allowedTools.includes("choose_exemplar")) return choose(followWolf ? 2 : 3);
-        if (request.allowedTools.includes("speak_to_wolves"))
-          return { name: "speak_to_wolves", args: { text: "End", end_chat: true } };
-        if (request.allowedTools.includes("kill_vote"))
-          return { name: "kill_vote", args: { target_id: 2, abstain: false } };
-        if (request.allowedTools.includes("check_identity"))
-          return { name: "check_identity", args: { target_id: 1 } };
-        if (request.allowedTools.includes("use_potion"))
-          return { name: "use_potion", args: { target_id: 1, potion_type: PotionType.Poison } };
-        if (request.context.stage === "last_words") return { name: "speak", args: { text: "Raw" } };
-        throw new Error(`unexpected:${request.context.stage}`);
-      },
-    });
-    expect(game.world.getAliveEntityIds()).toEqual([3, 4, 5, 6]);
-    expect(asks.filter((r) => r.context.stage === "last_words").map((r) => r.actorId)).toEqual([
-      1, 2,
-    ]);
-    const events = game.phaseManager.getEvents();
-    expect(
-      events.filter((e) => e.type === "sheriff_badge_transferred").map((e) => e.payload),
-    ).toEqual([{ fromId: 1, toId: 3, reason: "night_death" }]);
-    expect(events.map((e) => e.type).lastIndexOf("last_words_spoken")).toBeLessThan(
-      events.findIndex((e) => e.type === "sheriff_badge_transferred"),
-    );
-    expect(events.findIndex((e) => e.type === "sheriff_badge_transferred")).toBeLessThan(
-      events.findIndex((e) => e.type === "game_over"),
-    );
-    expect(result.result).toMatchObject({
-      winner: Camp.Good,
-      decidedAt: { day: 1, phase: Phase.Day, checkpoint: "night_settled" },
-      outcome: { winningPlayerIds: followWolf ? [3, 4, 5, 6] : [1, 3, 4, 5, 6] },
-    });
-    expect(game.world.activeDeathActionCount).toBe(0);
-  });
 
 test("Hybrid labels are closed, bilingual and private-console gated; choice never implies physical faction change", () => {
   for (const locale of ["zh-CN", "en"] as const) {

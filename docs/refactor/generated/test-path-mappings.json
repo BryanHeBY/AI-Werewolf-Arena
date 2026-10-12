@@ -79706,13 +79706,862 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/hybrid.test.ts",
+      "to": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "8c07ac5dca76a4ed6498ac9fdefb3cb5759a97eb2c547a241b9a83bdfb68b2cc",
+      "candidateSha256": "6dcedf6d23f9d45a7359e4c112b55cc217b2ebbb2206a01c9b2ec915907c1f23",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 2438,
+          "end": 2495,
+          "original": "../../../src/game/mechanisms/script/event_render_registry",
+          "value": "../../../../src/game/mechanisms/script/event_render_registry",
+          "originalResolved": "backend/src/game/mechanisms/script/event_render_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/script/event_render_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 2320,
+          "end": 2382,
+          "original": "../../../src/game/mechanisms/registries/win_condition_registry",
+          "value": "../../../../src/game/mechanisms/registries/win_condition_registry",
+          "originalResolved": "backend/src/game/mechanisms/registries/win_condition_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/registries/win_condition_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 2251,
+          "end": 2279,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 2041,
+          "end": 2091,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1953,
+          "end": 2002,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1859,
+          "end": 1906,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1776,
+          "end": 1814,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1690,
+          "end": 1744,
+          "original": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "value": "../../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1605,
+          "end": 1656,
+          "original": "../../../src/game/mechanisms/stages/night/contracts",
+          "value": "../../../../src/game/mechanisms/stages/night/contracts",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/contracts.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/contracts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1500,
+          "end": 1562,
+          "original": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "value": "../../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1417,
+          "end": 1461,
+          "original": "../../../src/game/mechanisms/roles/wolf_team",
+          "value": "../../../../src/game/mechanisms/roles/wolf_team",
+          "originalResolved": "backend/src/game/mechanisms/roles/wolf_team.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/wolf_team.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1263,
+          "end": 1308,
+          "original": "../../../src/game/mechanisms/roles/inspection",
+          "value": "../../../../src/game/mechanisms/roles/inspection",
+          "originalResolved": "backend/src/game/mechanisms/roles/inspection.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/inspection.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1183,
+          "end": 1225,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1094,
+          "end": 1141,
+          "original": "../../../src/game/mechanisms/roles/hybrid/state",
+          "value": "../../../../src/game/mechanisms/roles/hybrid/state",
+          "originalResolved": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/hybrid/state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 981,
+          "end": 1034,
+          "original": "../../../src/game/mechanisms/roles/hybrid/night_stage",
+          "value": "../../../../src/game/mechanisms/roles/hybrid/night_stage",
+          "originalResolved": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 903,
+          "end": 948,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 810,
+          "end": 864,
+          "original": "../../../src/core/domain/registries/condition_registry",
+          "value": "../../../../src/core/domain/registries/condition_registry",
+          "originalResolved": "backend/src/core/domain/registries/condition_registry.ts",
+          "expectedResolved": "backend/src/core/domain/registries/condition_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 715,
+          "end": 772,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 624,
+          "end": 672,
+          "original": "../../../src/core/domain/components/status_marks",
+          "value": "../../../../src/core/domain/components/status_marks",
+          "originalResolved": "backend/src/core/domain/components/status_marks.ts",
+          "expectedResolved": "backend/src/core/domain/components/status_marks.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 542,
+          "end": 583,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 458,
+          "end": 501,
+          "original": "../../../src/core/domain/components/victory",
+          "value": "../../../../src/core/domain/components/victory",
+          "originalResolved": "backend/src/core/domain/components/victory.ts",
+          "expectedResolved": "backend/src/core/domain/components/victory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 399,
+          "end": 416,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 174,
+          "end": 200,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 44,
+          "end": 99,
+          "original": "../../../src/game/mechanisms/roles/night-ability-actors",
+          "value": "../../../../src/game/mechanisms/roles/night-ability-actors",
+          "originalResolved": "backend/src/game/mechanisms/roles/night-ability-actors.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "15df265a65e308589a4f61a0f9874b739adebbab5ff420f9984d43ae5641bd06",
+          "title": "zh-CN/2: Hybrid commits true camp, keeps Good villager identity and exposes only its own choice",
+          "occurrence": 1
+        },
+        {
+          "id": "ef253ee580947c8eab8f697b7b4ac6b6435daf4bb9e22e200e5b346302e36e14",
+          "title": "zh-CN/3: Hybrid commits true camp, keeps Good villager identity and exposes only its own choice",
+          "occurrence": 1
+        },
+        {
+          "id": "db1d90f7c1514fe65087c7b4de916827516e317d16474b235c261d234fc8d1e6",
+          "title": "zh-CN/4: Hybrid commits true camp, keeps Good villager identity and exposes only its own choice",
+          "occurrence": 1
+        },
+        {
+          "id": "e257bce0d58215bc8da5285b736ba8a0f5b79fa4dfe11bf6bd7d661fb57a47e2",
+          "title": "en/2: Hybrid commits true camp, keeps Good villager identity and exposes only its own choice",
+          "occurrence": 1
+        },
+        {
+          "id": "f2f544a03434fc27bea3e53d0434ecd923b8f59994f178094c5382c39518e07d",
+          "title": "en/3: Hybrid commits true camp, keeps Good villager identity and exposes only its own choice",
+          "occurrence": 1
+        },
+        {
+          "id": "69576905c0be84d32feba0dee68210a4d1290bf8cbd64fd654d4371ed2326a28",
+          "title": "en/4: Hybrid commits true camp, keeps Good villager identity and exposes only its own choice",
+          "occurrence": 1
+        },
+        {
+          "id": "9a854e51cdd52d495a469b0691e697250b4c16e4418d285fb5f9edcb84341e54",
+          "title": "invalid preflights are read-only and camp-neutral; a later valid retry spends exactly once",
+          "occurrence": 1
+        },
+        {
+          "id": "2110d037561d54a96ca33ec5c6169307b28875941b0dbdc662fa1268d880fb2b",
+          "title": "pass: missing required choice fails explicitly without default affiliation",
+          "occurrence": 1
+        },
+        {
+          "id": "325f58ade76692dd25a1110bbe3b0211d95a91e555bbc63599ea4d07a3d90f8c",
+          "title": "dead: missing required choice fails explicitly without default affiliation",
+          "occurrence": 1
+        },
+        {
+          "id": "db96f6ea5f1d566b72e34217dcb332480e3e64a4ec4dee3559e684bb4100dbb3",
+          "title": "no_targets: missing required choice fails explicitly without default affiliation",
+          "occurrence": 1
+        },
+        {
+          "id": "39a6b0aa1851ea7831a7fd9f2ff02020be600001ec7797ce6bef933d5932bc2a",
+          "title": "await/clock: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "3186adf4df2424902c690f99aaf96a5313db0cbd18cb2a1243855e9815ed7647",
+          "title": "await/actor_life: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "6d63f00b534494740e7240283a76d27a89d00c0be6970a27c0f7735823643de1",
+          "title": "await/actor_role: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "5c36df7c1d417351b1df7e51793345c4dd62111fcd9d8e24034910e0127a7c5f",
+          "title": "await/actor_state: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "434a0e0d329e238c7ab70493dde050a86470d12b731cd81765d3e6dcb2188aea",
+          "title": "await/actor_camp: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "8928fe61dbb827a06bb3bffff3d69994aa3f78d5986622df7842176700a1fafe",
+          "title": "await/victory_component: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "1150bdf0837f36a8ce3b20736ae6250f5e1eed8ba4a9e0a06b2dbf62e98a25d8",
+          "title": "await/victory_push: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "c80f702bf295d841555d58201192fd912a38db82f5abbb468cf3a0e05d53c1b5",
+          "title": "await/victory_array: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "0e2448d2b76a611f28324b55d6dafae75a2801ce341dae844790dbb7dffb6d08",
+          "title": "await/target_life: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "b9f95170dcd61c70a20218a3944ef1d026b2e6eb1649c0f13076f55e0515c168",
+          "title": "await/target_role: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "84c45946c626e360278e437a6d388707ae686423ca449f86e33a0d41dea760e5",
+          "title": "await/target_camp: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "bb1b03a05bdfb98a118271be36bd507620352b9e9dccef4b2b1faf37bc99185f",
+          "title": "gateway/clock: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "b4a23013da5c9f076103882d73bff9163399e21441e284ca52460beb1248395d",
+          "title": "gateway/actor_life: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "8f1da1e1df61544ecb5fa285364548953dcbcb2b7eedbd7d3cb356607403e38b",
+          "title": "gateway/actor_role: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "4856199bb67afb05465b12c14f47c2e0f76ba5f867f20cd232022e90fc8e94b2",
+          "title": "gateway/actor_state: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "0e2f591e5b7cf515f4a9a1bc743d393e7bc5338d0c5a081a579ceebe2f88bc62",
+          "title": "gateway/actor_camp: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "2941276a10dd8b943b18cf98acfecac2e6234d35d67ee91848ed5a4cc606d100",
+          "title": "gateway/victory_component: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "f14e70812f601ca2619be98f01d1166bd244d489af28988db8347523d4a4cc91",
+          "title": "gateway/victory_push: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "bb7edf2cbab50f85d9c8edff64d200b0def8b92d2dd7ebe21802f0783e87396c",
+          "title": "gateway/victory_array: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "ab80cbb1895d734fb9289ccb7a99fb80d5b646e8def4209859e2076f038a3a07",
+          "title": "gateway/target_life: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "99fb169307329e0ffc47cc5ce15a7697d1888596a2b7b05854e5984d7415f5ac",
+          "title": "gateway/target_role: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "15f00634e053d0980197aec9091296d085c5a61d7dbc4fa2b69df28adb1bcb03",
+          "title": "gateway/target_camp: stale Hybrid ownership cannot assign a new body or silently reveal target camp",
+          "occurrence": 1
+        },
+        {
+          "id": "372f34b4be4e0e0611758530a9b0df71640bbbfc3869f041a146355f0ca15118",
+          "title": "two pending Hybrid replies have one synchronous winner, and a committed full pipeline reentry is rejected",
+          "occurrence": 1
+        },
+        {
+          "id": "68a67ae259a88f5bdb3edf602277344b76488d497c27d38592205e91993943a8",
+          "title": "a Wolf-affiliated Hybrid still fills the villager side and true Good count; dead affiliation stays in final winners",
+          "occurrence": 1
+        },
+        {
+          "id": "c00c818e9f872551d473af42c21516145b40239a62be964aff1c5953ad89474e",
+          "title": "Hybrid labels are closed, bilingual and private-console gated; choice never implies physical faction change",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { PotionType } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/hybrid.test.ts",
+      "to": "backend/tests/scenarios/features/hybrid/first-night-death-and-winners.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "8c07ac5dca76a4ed6498ac9fdefb3cb5759a97eb2c547a241b9a83bdfb68b2cc",
+      "candidateSha256": "4102c999916950a519b00ae3b993103fb9043234915248f2df6d1dcce5c5c2c8",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 338,
+          "end": 383,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 282,
+          "end": 299,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 120,
+          "end": 146,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 28,
+          "end": 45,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "e6b08cb7bd643b591ad99a60f361892fc720bc602db9c4fc65f356dce4613c51",
+          "title": "false: actual first-night Hybrid death, last-Wolf self-knife and badge settle before final Good membership",
+          "occurrence": 1
+        },
+        {
+          "id": "f78ed4193af2582f530bc44ad70775e20587d2fb2c71468273e8c28c17b48928",
+          "title": "true: actual first-night Hybrid death, last-Wolf self-knife and badge settle before final Good membership",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/game/mechanisms/roles/night-ability-actors",
+          "originalImport": "import { bindNightAbilityActorQuery } from \"../../../src/game/mechanisms/roles/night-ability-actors\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bindNightAbilityActorQuery",
+              "imported": "bindNightAbilityActorQuery",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Camp,\n  COMPONENT,\n  Phase,\n  Role,\n  WinCondition,\n  createVictoryComponent,\n  type ActionRequest,\n  type BoardConfig,\n  type GameEvent,\n  type RoleComponent,\n  type ToolCall,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Camp, COMPONENT, Phase, Role, WinCondition, type ActionRequest, type BoardConfig, type RoleComponent, type ToolCall } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "createVictoryComponent",
+              "imported": "createVictoryComponent",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/victory",
+          "originalImport": "import type { VictoryComponent } from \"../../../src/core/domain/components/victory\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "VictoryComponent",
+              "imported": "VictoryComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import { createAliveComponent } from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/status_marks",
+          "originalImport": "import { StatusMarksComponent } from \"../../../src/core/domain/components/status_marks\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "StatusMarksComponent",
+              "imported": "StatusMarksComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalImport": "import { DamageResolutionSystem } from \"../../../src/core/domain/systems/damage_resolution_system\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DamageResolutionSystem",
+              "imported": "DamageResolutionSystem",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/registries/condition_registry",
+          "originalImport": "import { ConditionRegistry } from \"../../../src/core/domain/registries/condition_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ConditionRegistry",
+              "imported": "ConditionRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/hybrid/night_stage",
+          "originalImport": "import { HYBRID_STAGE } from \"../../../src/game/mechanisms/roles/hybrid/night_stage\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "HYBRID_STAGE",
+              "imported": "HYBRID_STAGE",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/hybrid/state",
+          "originalImport": "import {\n  getHybridState,\n  projectHybridState,\n} from \"../../../src/game/mechanisms/roles/hybrid/state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getHybridState",
+              "imported": "getHybridState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "projectHybridState",
+              "imported": "projectHybridState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/catalog",
+          "originalImport": "import { getDefaultRoleCatalog } from \"../../../src/game/mechanisms/roles/catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/inspection",
+          "originalImport": "import { resolveInspection } from \"../../../src/game/mechanisms/roles/inspection\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "resolveInspection",
+              "imported": "resolveInspection",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/wolf_team",
+          "originalImport": "import {\n  knownWolfTeammates,\n  wolfTeamPermissions,\n  wolfChatParticipants,\n  wolfKnifeHolders,\n} from \"../../../src/game/mechanisms/roles/wolf_team\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "knownWolfTeammates",
+              "imported": "knownWolfTeammates",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "wolfTeamPermissions",
+              "imported": "wolfTeamPermissions",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "wolfChatParticipants",
+              "imported": "wolfChatParticipants",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "wolfKnifeHolders",
+              "imported": "wolfKnifeHolders",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalImport": "import { NightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightStageRegistry",
+              "imported": "NightStageRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/contracts",
+          "originalImport": "import type { NightStageContext } from \"../../../src/game/mechanisms/stages/night/contracts\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightStageContext",
+              "imported": "NightStageContext",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalImport": "import { NightPipeline } from \"../../../src/game/engine/phase_pipeline/night_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightPipeline",
+              "imported": "NightPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/action_request_factory",
+          "originalImport": "import { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameActionRequestFactory",
+              "imported": "GameActionRequestFactory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/agent_visible_event_feed",
+          "originalImport": "import { buildAgentVisibleEventFeed } from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "buildAgentVisibleEventFeed",
+              "imported": "buildAgentVisibleEventFeed",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/player_prompt_policy",
+          "originalImport": "import { PlayerPromptPolicy } from \"../../../src/ai/agents/player/player_prompt_policy\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PlayerPromptPolicy",
+              "imported": "PlayerPromptPolicy",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import {\n  getDefaultConfigRenderRegistry,\n  getDefaultPhaseStageLocalizationRegistry,\n  getDefaultTargetHintRegistry,\n  getDefaultToolSpecRegistry,\n} from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultPhaseStageLocalizationRegistry",
+              "imported": "getDefaultPhaseStageLocalizationRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultTargetHintRegistry",
+              "imported": "getDefaultTargetHintRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultToolSpecRegistry",
+              "imported": "getDefaultToolSpecRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/registries/win_condition_registry",
+          "originalImport": "import { WinConditionRegistry } from \"../../../src/game/mechanisms/registries/win_condition_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "WinConditionRegistry",
+              "imported": "WinConditionRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/script/event_render_registry",
+          "originalImport": "import { getDefaultScriptEventRenderRegistry } from \"../../../src/game/mechanisms/script/event_render_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultScriptEventRenderRegistry",
+              "imported": "getDefaultScriptEventRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "originalImport": "import { hybridEventLabel, text } from \"@ai-werewolf-arena/game-text\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "hybridEventLabel",
+              "imported": "hybridEventLabel",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "text",
+              "imported": "text",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 543,
-    "targetFiles": 591,
-    "mappingEntries": 591,
-    "baselineCases": 6860,
+    "sourceFiles": 544,
+    "targetFiles": 593,
+    "mappingEntries": 593,
+    "baselineCases": 6897,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
