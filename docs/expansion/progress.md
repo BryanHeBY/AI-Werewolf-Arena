@@ -694,3 +694,5 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 原生十二人规则卡、白猫skip政策／河豚首末轮政策四组合及旧熊默认兼容经三路预审冻结，文档提交8b28f30。纯资源／延期时钟、严格own-data与有限规范形状迁入，26维护项／54断言、A独立8／29与类型／lint通过；原三类输入关系反例复核闭合，见[纯基础](reviews/p9e-animal-state-foundation.md)。未注册角色／工具／配置运行，52/64不变；原体owner、真正夜／日单位和死亡链、独立录制／知情／实际传输及前端接续。
 
 共用原玩家作用域从寻香目录纯迁移至中性roles模块，旧函数别名／唯一WeakMap和双目标聚合保持，原维护73／436、类型／lint及R/A逐字节／运行alias复核通过，见[迁移](reviews/p9e-original-player-scope-move.md)。helper只证明原生命和Role/Camp，不代替下一owner的其它资源、阶段与永久撤权；52/64不变。
+
+动物板原牌池／原体证明已补真实十二人counts/camps、72根组件全局独立、身份／Victory／private容器和观察到漂移后的永久撤权。维护15／30、A独立7／36及R原样复核通过，范围见[原体底座](reviews/p9e-animal-roster-foundation.md)；资源对象、夜／日unit、deadline及实际角色运行继续下一owner，52/64不变。
