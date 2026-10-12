@@ -1,7 +1,12 @@
+/**
+ * Failure scenarios verify missing or late required Nightmare fear responses preserve the original partial recorded game.
+ * Input: The original controlled transport plan across LLM/ACP, both locales and required-response failure modes.
+ * Output and oracle: Literal incomplete checkpoint, failed actor/stage and absent fear/night settlement assertions retain the actual prefix; the recorded input is not regenerated as a golden.
+ */
 import { expect, test } from "bun:test";
-import { nightmareScenario } from "../support/nightmare_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
-import type { PlannedTurn } from "../support/foundation_transport_plan";
+import { nightmareScenario } from "../../../support/nightmare_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
+import type { PlannedTurn } from "../../../support/foundation_transport_plan";
 for (const failure of ["missing", "late"] as const)
   for (const transport of ["llm", "acp"] as const)
     test(`nightmare required fear ${failure}/${transport} preserves partial Tape`, async () => {

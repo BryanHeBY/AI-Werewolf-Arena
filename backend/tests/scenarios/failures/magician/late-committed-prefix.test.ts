@@ -1,9 +1,14 @@
-import { parseReproductionRecord } from "../../src/recording/reproduction";
+/**
+ * Failure scenarios verify a paid Magician exchange survives later Witch, death-shot or wolf-discussion interruption.
+ * Input: Original transport plans, late responses and copied original-record gun-stock forgery.
+ * Output and oracle: Explicit exchange/night counts, unconsumed failed gun stock and deterministic forgery rejection retain the played prefix; expected records are not regenerated.
+ */
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 import { expect, test } from "bun:test";
-import { magicianScenario } from "../support/magician_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
-import type { PlannedTurn } from "../support/foundation_transport_plan";
-import { Role } from "../../src/core";
+import { magicianScenario } from "../../../support/magician_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
+import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { Role } from "../../../../src/core";
 for (const boundary of ["witch", "death_shot", "wolf_discussion"] as const)
   for (const transport of ["llm", "acp"] as const)
     test(`Magician late ${boundary}/${transport} preserves committed prefix`, async () => {

@@ -49674,13 +49674,1490 @@
       "targetRunner": "backend-integration",
       "fixturesChanged": false,
       "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/nightmare_required_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/nightmare/required-fear-response.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Real runTransportGame with missing/late fear across LLM/ACP; exact incomplete checkpoint, failed decision, absent fear payment/night resolution remain one failed played prefix.",
+      "originalSha256": "d9453737c5b0b74eb7d761d5818545f4e6de5ad687060186319c2f9aad3032a0",
+      "candidateSha256": "22663334555a184216b1aa766deda1bb24f1ff1669e68b5d3d011e92f79714d2",
+      "moduleAndLocationEdits": [
+        {
+          "start": 219,
+          "end": 255,
+          "original": "../support/foundation_transport_plan",
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts"
+        },
+        {
+          "start": 153,
+          "end": 182,
+          "original": "../support/run_transport_game",
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts"
+        },
+        {
+          "start": 76,
+          "end": 116,
+          "original": "../support/nightmare_transport_scenarios",
+          "value": "../../../support/nightmare_transport_scenarios",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/nightmare_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/nightmare_transport_scenarios.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "60f6e103c9a9bc64eefcfc8cf30fd52012e8ffbc9a397f80a3e773302b9cc2eb",
+          "title": "nightmare required fear missing/llm preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "8fd0e6a5909e18bae445b7d0aa1f8d8537ace35cb605ee272b934bc59e0f3ee7",
+          "title": "nightmare required fear missing/acp preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3e956d27df3c746b7454d8b34f9e49029a1d706a3730ef7d2c0a2fb91d6fc8b7",
+          "title": "nightmare required fear late/llm preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2c6a42f0e9762f3aef2e0646a58b7bf488805ec58701bd35a6ee2ee815ed0c6f",
+          "title": "nightmare required fear late/acp preserves partial Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/ghost_bride_required_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/ghost-bride/required-setup.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Actual strict LLM/ACP providers in a real runner, temporary archive and offline prefix replay. Required bridegroom rejection closes original setup without fallback/native action/card swap; all event/stock/affiliation assertions are literal.",
+      "originalSha256": "e48dfcb43ba23b43db92cf0dea713921197f75768fe5f629fd456bdbe328c506",
+      "candidateSha256": "bee954c55b34aa84338fcef08ad20ecce4a91175408c28ecfb892a3a034b9b87",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1189,
+          "end": 1221,
+          "original": "../support/ghost_bride_scenarios",
+          "value": "../../../support/ghost_bride_scenarios",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/ghost_bride_scenarios.ts",
+          "expectedResolved": "backend/tests/support/ghost_bride_scenarios.ts"
+        },
+        {
+          "start": 1115,
+          "end": 1150,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "start": 1023,
+          "end": 1071,
+          "original": "../../src/runtime/simulation/replay_reproduction",
+          "value": "../../../../src/runtime/simulation/replay_reproduction",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "expectedResolved": "backend/src/runtime/simulation/replay_reproduction.ts"
+        },
+        {
+          "start": 932,
+          "end": 961,
+          "original": "../../src/runtime/game_runner",
+          "value": "../../../../src/runtime/game_runner",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/game_runner.ts",
+          "expectedResolved": "backend/src/runtime/game_runner.ts"
+        },
+        {
+          "start": 861,
+          "end": 904,
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "value": "../../../../src/runtime/config/resolve_game_setup",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts"
+        },
+        {
+          "start": 787,
+          "end": 824,
+          "original": "../../src/runtime/config/parse_config",
+          "value": "../../../../src/runtime/config/parse_config",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts"
+        },
+        {
+          "start": 705,
+          "end": 748,
+          "original": "../../src/ai/agents/acp/acp_action_provider",
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts"
+        },
+        {
+          "start": 624,
+          "end": 667,
+          "original": "../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "start": 548,
+          "end": 586,
+          "original": "../../src/runtime/player_agent_factory",
+          "value": "../../../../src/runtime/player_agent_factory",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f0dd544e2caa2c6a69df21f3d83f604f253a5b4f5ded207237e88f2140faef6f",
+          "title": "sdk/zh-CN/invalid: real strict provider failure closes Ghost Bride without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "25cc687746da21c2d8db13b075f39a03f729d11e6ca7000929846a64a0897449",
+          "title": "sdk/zh-CN/missing: real strict provider failure closes Ghost Bride without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "4eff1226b3be2b10fa8bf2304118fa9d38a4d4c026088f293c3581846b77a501",
+          "title": "sdk/en/invalid: real strict provider failure closes Ghost Bride without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "32632a42f655066631dfeb70cd837e1b6a9efd98b8d748ba8d682a15ccf81d56",
+          "title": "sdk/en/missing: real strict provider failure closes Ghost Bride without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3ede9431beec9af7b9e7ee254ba746468565d7639e3e9ec8360527a273f5470c",
+          "title": "acp/zh-CN/invalid: real strict provider failure closes Ghost Bride without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0dc9aa0325cee61586676650e9a7b7708808a2af090f9a720e0fbd42f406c27b",
+          "title": "acp/zh-CN/missing: real strict provider failure closes Ghost Bride without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ff557c9811a98d8787fb4f9058a0c963b94b716b81fe7726ff34bafbf200583a",
+          "title": "acp/en/invalid: real strict provider failure closes Ghost Bride without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "370ae8a7373ffc42467f0fef8d0e120a565a6126fb9d84dd646d5f350b2b6e65",
+          "title": "acp/en/missing: real strict provider failure closes Ghost Bride without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/lonely_girl_required_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/lonely-girl/required-setup.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Actual strict LLM/ACP providers in a real runner, temporary archive and offline prefix replay. Required admiration rejection preserves failed setup/original stock/affiliation with zero fallback/native action/card swap; keep the entire causal sequence.",
+      "originalSha256": "197687dfaadc4641fe6f62f7be2580ef0b083682f670d1bef1f412b9890021b7",
+      "candidateSha256": "f2886e8c6347ce10bf2d1fe0e50d486001cda286b8dc862c63139ad173995ad9",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1176,
+          "end": 1208,
+          "original": "../support/lonely_girl_scenarios",
+          "value": "../../../support/lonely_girl_scenarios",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/lonely_girl_scenarios.ts",
+          "expectedResolved": "backend/tests/support/lonely_girl_scenarios.ts"
+        },
+        {
+          "start": 1102,
+          "end": 1137,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "start": 1010,
+          "end": 1058,
+          "original": "../../src/runtime/simulation/replay_reproduction",
+          "value": "../../../../src/runtime/simulation/replay_reproduction",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "expectedResolved": "backend/src/runtime/simulation/replay_reproduction.ts"
+        },
+        {
+          "start": 919,
+          "end": 948,
+          "original": "../../src/runtime/game_runner",
+          "value": "../../../../src/runtime/game_runner",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/game_runner.ts",
+          "expectedResolved": "backend/src/runtime/game_runner.ts"
+        },
+        {
+          "start": 848,
+          "end": 891,
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "value": "../../../../src/runtime/config/resolve_game_setup",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts"
+        },
+        {
+          "start": 774,
+          "end": 811,
+          "original": "../../src/runtime/config/parse_config",
+          "value": "../../../../src/runtime/config/parse_config",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts"
+        },
+        {
+          "start": 692,
+          "end": 735,
+          "original": "../../src/ai/agents/acp/acp_action_provider",
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts"
+        },
+        {
+          "start": 611,
+          "end": 654,
+          "original": "../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "start": 535,
+          "end": 573,
+          "original": "../../src/runtime/player_agent_factory",
+          "value": "../../../../src/runtime/player_agent_factory",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "a843823384b5585d4db979dd2740218b4cf07914ccece0899e27f613cad404db",
+          "title": "sdk/zh-CN/invalid: real strict provider failure closes Lonely Girl without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "70427c74a4132b0cdfdc09b994ded7ed352e1703707f04df4b4673a0c2e91e78",
+          "title": "sdk/zh-CN/missing: real strict provider failure closes Lonely Girl without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "495d82919f9b5a217f0d7528a0e43573afdf37bcc16f3a0025dda238d3161e77",
+          "title": "sdk/en/invalid: real strict provider failure closes Lonely Girl without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "28191170e05418420f60f46fa61ba677e261fc63d1844e56f4cf9202f7ebff5c",
+          "title": "sdk/en/missing: real strict provider failure closes Lonely Girl without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e68ee60234240c8a1feb8a4b723cbcf761e293ae4770eb114daf9e77d8627c82",
+          "title": "acp/zh-CN/invalid: real strict provider failure closes Lonely Girl without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f0e73e9980df0573b5b511c68ddccd5ddda39f71d896c21971ed850067f0e4b8",
+          "title": "acp/zh-CN/missing: real strict provider failure closes Lonely Girl without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "fa02cc56861220ea76f785f6ba1133cdcb558a94ee1ba4476543e3bd3ae4a403",
+          "title": "acp/en/invalid: real strict provider failure closes Lonely Girl without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5a1c4e1e0ce99ff54dec02039e326a5eea3473fca403e1bb277db34c7d6a2085",
+          "title": "acp/en/missing: real strict provider failure closes Lonely Girl without fallback or card swap, exact partial Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/magician_required_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/magician/required-swap-response.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Real runTransportGame missing/late required exchange; literal failed checkpoint/decision and absent exchange/night settlement assertions span provider-to-recording.",
+      "originalSha256": "43486760742b639a866fb224fafca72bfb02c7d9c0386751ddb0ebe0ddbf14bb",
+      "candidateSha256": "76e2fe90d0b8d86a746eec9fe7ab1d3ce41b1c8159e8e49f81177b1bc1c96add",
+      "moduleAndLocationEdits": [
+        {
+          "start": 217,
+          "end": 253,
+          "original": "../support/foundation_transport_plan",
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts"
+        },
+        {
+          "start": 151,
+          "end": 180,
+          "original": "../support/run_transport_game",
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts"
+        },
+        {
+          "start": 75,
+          "end": 114,
+          "original": "../support/magician_transport_scenarios",
+          "value": "../../../support/magician_transport_scenarios",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/magician_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/magician_transport_scenarios.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "31982f1e8ee0d94b1610b93089484cc2f568ba0a6a8b63f7a0363827d8eecd52",
+          "title": "Magician required swap missing/llm preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3091dbc1a98d0a249e84e30097748039a664f14d7dedae191374f25b3155f7db",
+          "title": "Magician required swap missing/acp preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "7558f0c83c56af81fa1fbfbdeae8b208cffe314996c9d663df316d41f2ea3c22",
+          "title": "Magician required swap late/llm preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d406949ccd3da881b03a22d285089b7234754f273de3467f7e95cee05c3ef880",
+          "title": "Magician required swap late/acp preserves partial Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/magician_late_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/magician/late-committed-prefix.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Real runTransportGame after paid exchange and later Witch/death-shot/wolf-discussion failure, plus copied archive gun-stock forgery. Whole committed prefix/consumption and deterministic rejection stay causal.",
+      "originalSha256": "5a7d94866d7dcaa1e3775b69407c16d14a9c22327cc06f352565da7e78098928",
+      "candidateSha256": "04d6c6368b026fc060177ed697a86d80912607b14a48a70b6e80aaff0797e7f7",
+      "moduleAndLocationEdits": [
+        {
+          "start": 354,
+          "end": 368,
+          "original": "../../src/core",
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "start": 293,
+          "end": 329,
+          "original": "../support/foundation_transport_plan",
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts"
+        },
+        {
+          "start": 227,
+          "end": 256,
+          "original": "../support/run_transport_game",
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts"
+        },
+        {
+          "start": 151,
+          "end": 190,
+          "original": "../support/magician_transport_scenarios",
+          "value": "../../../support/magician_transport_scenarios",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/magician_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/magician_transport_scenarios.ts"
+        },
+        {
+          "start": 41,
+          "end": 73,
+          "original": "../../src/recording/reproduction",
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b007e146e91afa890d1d3e2764abf5cfa33ba2af67fd6a2dd02cd41f29b34261",
+          "title": "Magician late witch/llm preserves committed prefix",
+          "occurrence": 1
+        },
+        {
+          "id": "14d061e5c9f67f47297a7ef83bd932302e226251d6e20d96d949faabe0cea0a6",
+          "title": "Magician late witch/acp preserves committed prefix",
+          "occurrence": 1
+        },
+        {
+          "id": "c068815ee5c089bb32311c8c7e6ffc5304c80f4529aa95e97d9f9c77cd99f7ee",
+          "title": "Magician late death_shot/llm preserves committed prefix",
+          "occurrence": 1
+        },
+        {
+          "id": "2fc81174824017a231b9a41101a24e29c9c53004ca3b6dce3d64f3ec5da28e89",
+          "title": "Magician late death_shot/acp preserves committed prefix",
+          "occurrence": 1
+        },
+        {
+          "id": "54b2ca3e618f327c8ce144c7b4944dbb70efb6e7bf31f00ab70fd318ad4a9e8d",
+          "title": "Magician late wolf_discussion/llm preserves committed prefix",
+          "occurrence": 1
+        },
+        {
+          "id": "293a198982f03c2a956b542d53dc6620e1d2156b5565838dad485a08b94fc331",
+          "title": "Magician late wolf_discussion/acp preserves committed prefix",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/order_prince_late_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/order-prince/late-committed-prefix.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Real runTransportGame choice/speech/revote interruption; exact already-paid activation/history and no final exile are asserted with a forged history rejected afterward.",
+      "originalSha256": "d3b168f19a966f19ef54a0ad56a9942951b1112fb71052c74f16f8845f52c39b",
+      "candidateSha256": "184784f8d120e26eefebf413efc57bf3e80578d35c1fb850d62faebc618565cb",
+      "moduleAndLocationEdits": [
+        {
+          "start": 304,
+          "end": 336,
+          "original": "../../src/recording/reproduction",
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts"
+        },
+        {
+          "start": 224,
+          "end": 260,
+          "original": "../support/foundation_transport_plan",
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts"
+        },
+        {
+          "start": 158,
+          "end": 187,
+          "original": "../support/run_transport_game",
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts"
+        },
+        {
+          "start": 78,
+          "end": 121,
+          "original": "../support/order_prince_transport_scenarios",
+          "value": "../../../support/order_prince_transport_scenarios",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/order_prince_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/order_prince_transport_scenarios.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "e85764771a9b31adbac8fb935b315d93ce6bb3e052a4eb3c2c5933322b489ed7",
+          "title": "Order Prince late order_prince_choice/llm preserves committed state",
+          "occurrence": 1
+        },
+        {
+          "id": "8a695a973386d26176687580a8f09eae8f94cf629a5d83d44a41be4a672865d4",
+          "title": "Order Prince late order_prince_choice/acp preserves committed state",
+          "occurrence": 1
+        },
+        {
+          "id": "870c6f12d7200649dff920e6f57a09d1b9997c082b13939a49853409558b5fca",
+          "title": "Order Prince late order_prince_speech/llm preserves committed state",
+          "occurrence": 1
+        },
+        {
+          "id": "197c53220f775fbea995c2c1099dc28bae23257fd89ff9f42330d1bb533ec629",
+          "title": "Order Prince late order_prince_speech/acp preserves committed state",
+          "occurrence": 1
+        },
+        {
+          "id": "843a9cf787e505277c7e7df79ceeb649c62a4b906e18d47d3b6eecfb44493a2e",
+          "title": "Order Prince late order_prince_revote/llm preserves committed state",
+          "occurrence": 1
+        },
+        {
+          "id": "0ccfb93e26f8043e215973683386339754f83ab884e75d62eaab7928723402f0",
+          "title": "Order Prince late order_prince_revote/acp preserves committed state",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/pure_white_required_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/pure-white/required-inspection-response.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Real runTransportGame second-night Pure White/Wolf Witch strict missing/invalid/late responses. Exact accepted first-night/death prefix, no forbidden second result, failed decision and no fallback remain one scenario.",
+      "originalSha256": "e32bc9cafaf6bca086e12660138a7f1a4004cec4d997df7ed29825c167324c00",
+      "candidateSha256": "73763d701f0386f92d01f1ef9a7892443fbef4b041b77ca7dfdce1466e86deb4",
+      "moduleAndLocationEdits": [
+        {
+          "start": 281,
+          "end": 317,
+          "original": "../support/foundation_transport_plan",
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts"
+        },
+        {
+          "start": 215,
+          "end": 244,
+          "original": "../support/run_transport_game",
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts"
+        },
+        {
+          "start": 137,
+          "end": 178,
+          "original": "../support/pure_white_transport_scenarios",
+          "value": "../../../support/pure_white_transport_scenarios",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/pure_white_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/pure_white_transport_scenarios.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "322a0453bdf5bbf63a73d19c199748860c75e49169fab157a11aaac7fad9b29b",
+          "title": "pure_white_girl/missing/llm: required response failure preserves exact partial Tape without settlement or fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "3908ed54e8af6aaba45b0692b53b15c68a0a7b07885d771f2f85e18afd1f51dc",
+          "title": "pure_white_girl/missing/acp: required response failure preserves exact partial Tape without settlement or fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "59a74cb7f972f055daffd22df1cbc656f7137857f57d092dbfc42659abca5e2e",
+          "title": "pure_white_girl/invalid/llm: required response failure preserves exact partial Tape without settlement or fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "753af67a9e7473998013199d028d43f895656cbe2af58173b9d10c86ea016282",
+          "title": "pure_white_girl/invalid/acp: required response failure preserves exact partial Tape without settlement or fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "6df7b775e847f668ba93a779a0154cbb9b1244cebddad649ecc87d98092ad891",
+          "title": "pure_white_girl/late/llm: required response failure preserves exact partial Tape without settlement or fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "16bd01c2fc9ea264eaafd272a4da1cb5d376c3e9184cbc6f833a3164a13b39aa",
+          "title": "pure_white_girl/late/acp: required response failure preserves exact partial Tape without settlement or fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "31bae73a80b51af5554ae0436673f9c1eddbb1580604d84005931d29418c9368",
+          "title": "wolf_witch/missing/llm: required response failure preserves exact partial Tape without settlement or fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "08056935012f0439019a94a2931bd32420cec2df5ce3448137ac68ae0e2a277c",
+          "title": "wolf_witch/missing/acp: required response failure preserves exact partial Tape without settlement or fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "6af7bd4bdf74883fad884f8c4549b3ce5ddf2aef3247ea3487e446bfc15b8079",
+          "title": "wolf_witch/invalid/llm: required response failure preserves exact partial Tape without settlement or fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "5fd1544cd67c7aee09c0c135469bb0cbb90527547718cd7d3a31a6f1db94017d",
+          "title": "wolf_witch/invalid/acp: required response failure preserves exact partial Tape without settlement or fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "c262eac55841af6bbc9085b5be289ad296eb5714b5a885840315ebb86e5f0230",
+          "title": "wolf_witch/late/llm: required response failure preserves exact partial Tape without settlement or fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "75583f798bb5ea5bb951567713c9ca54e6e7730390de8d9770380dcf6a65c80c",
+          "title": "wolf_witch/late/acp: required response failure preserves exact partial Tape without settlement or fallback",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/evil_knight_required_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/evil-knight/required-response-prefix.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Real runTransportGame over six required stages and missing/late LLM/ACP responses. Literal prior-night count, failed original actor, incomplete checkpoint and absent fallback constrain the partial prefix.",
+      "originalSha256": "6fc4473eb1dfb801ee30c71e2081362ec39b088bd605c3c05adb2b7dcd247000",
+      "candidateSha256": "d7521e95f5fde2f80c81aa7d6c1b8455d5538744ab554e8c2bf6a6c6f9c86f6f",
+      "moduleAndLocationEdits": [
+        {
+          "start": 261,
+          "end": 297,
+          "original": "../support/foundation_transport_plan",
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts"
+        },
+        {
+          "start": 195,
+          "end": 224,
+          "original": "../support/run_transport_game",
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts"
+        },
+        {
+          "start": 116,
+          "end": 158,
+          "original": "../support/evil_knight_transport_scenarios",
+          "value": "../../../support/evil_knight_transport_scenarios",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/evil_knight_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/evil_knight_transport_scenarios.ts"
+        },
+        {
+          "start": 63,
+          "end": 77,
+          "original": "../../src/core",
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "670e213798aa6e9a7bcd3d28e0399c84ab13153886df66b87453e709f661f064",
+          "title": "evil knight wolf_discussion/missing/llm: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "309bb5aa8e4082266e364be2fb32d79f6a2ac217d269679dd7b2e1ce6fcbb774",
+          "title": "evil knight wolf_discussion/missing/acp: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "c2b9dd3d03ec4017753ada2b91085b49c95bed72bb4a8b9ee739d292681c6a66",
+          "title": "evil knight wolf_discussion/late/llm: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a043a9e83eaf8d8a4e0e5a7e3e94e3415c3c1a17c90b64a8ad95a51ad2ac5f2e",
+          "title": "evil knight wolf_discussion/late/acp: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "7d18073b7aa9d11ecffadbcaf5855e95af49f72621cbf66b4bd2a435d16a18f8",
+          "title": "evil knight guard/missing/llm: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6f8cfbaf442ca8b2686e8d13a42c613471de402274c90da5773ded4f75d543d2",
+          "title": "evil knight guard/missing/acp: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2c88d518b5b4bf696b1c07db512f50e07fbaa2409d5cded187a7f9e04c91c844",
+          "title": "evil knight guard/late/llm: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a18fd62b520e87db673df217001aaf97c578b9a5a2ec4df1523d73f48abf19ef",
+          "title": "evil knight guard/late/acp: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f8ee27891ebbbd6f56018d89922d968afb558c53a6cfd17d13428ec573c962d7",
+          "title": "evil knight wolf_vote/missing/llm: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1f319f087be81b96ff7972623886ca03c15fc2d6dc269a03259012959dfbe67a",
+          "title": "evil knight wolf_vote/missing/acp: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3b91687f9aa86f87d4dc7ed1b78cad25aaadd570ddd1b4c51337c204975c09ec",
+          "title": "evil knight wolf_vote/late/llm: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "7c838799eee4e35ae79f65b00e613ca891019baedc40fbd50c2773398dede255",
+          "title": "evil knight wolf_vote/late/acp: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "c85ffb95e264997397bcff21d60d2280c9a2ca541611a3e2d4af9a6b3c95c540",
+          "title": "evil knight witch/missing/llm: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f1caab906cbd3068ed6155ffed6bacecaea24c80524c90cf10b9880f2299b732",
+          "title": "evil knight witch/missing/acp: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "952a466fbefa3e586ae7df848b4f8ad472e9534b5c5b093057af113b78ba922d",
+          "title": "evil knight witch/late/llm: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "902c9639ac43886c86a58b14a405de0e5851ba101630d528802c70d1ec1835c0",
+          "title": "evil knight witch/late/acp: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "537c0070681cda98e43874b9b9f1a2e8fc171ca37f40010485d5917a3925431f",
+          "title": "evil knight seer/missing/llm: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ad455d976203c61339ddc30f18d6b0fb4ea4967ca821f17e26ddadf42c857591",
+          "title": "evil knight seer/missing/acp: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "30bc08e7bed95c90ddcfd8db68e0f0b8c18447894e1ce628cbe2f4ab89d4d4ef",
+          "title": "evil knight seer/late/llm: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "62f13480a2542f3b5bd686b547130f6dec347556a86dcd09b0d416b214b46451",
+          "title": "evil knight seer/late/acp: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "38780f000e3e8b74592e373eff61ca466bbc460980b1dea9d043cbda5c01f1c4",
+          "title": "evil knight hunter_shot/missing/llm: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "dabd630a3425d7293c60ea60a15152e4608d2040834c7fa15f9dd20fda9d2d48",
+          "title": "evil knight hunter_shot/missing/acp: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ecbd5a8781bfe43eae411cb1f2ef4171706c096859c92bffab2b68008759dcde",
+          "title": "evil knight hunter_shot/late/llm: required failure preserves partial Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "38b0c9d8a4959a2a60af9f847054932f91a6088aa12ade96cffe0ba0011e3ae3",
+          "title": "evil knight hunter_shot/late/acp: required failure preserves partial Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/time_consort_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/time-consort/required-response-prefix.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Real runTransportGame at Consort lock and later night boundaries; literal paid history/trigger timing and exact failure remain together with a forged missing guard/reflection prefix rejected offline.",
+      "originalSha256": "374fdb6631bd98bf47cb946be0f9ff6fdc6963fc4035957ed6111e2f3b2ea845",
+      "candidateSha256": "a5525cb8445244c3b42e9543c05e4c3aa04100e04393472e417f780b4a99ea38",
+      "moduleAndLocationEdits": [
+        {
+          "start": 393,
+          "end": 422,
+          "original": "../support/run_transport_game",
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts"
+        },
+        {
+          "start": 313,
+          "end": 356,
+          "original": "../support/time_consort_transport_scenarios",
+          "value": "../../../support/time_consort_transport_scenarios",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/time_consort_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/time_consort_transport_scenarios.ts"
+        },
+        {
+          "start": 237,
+          "end": 273,
+          "original": "../support/foundation_transport_plan",
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts"
+        },
+        {
+          "start": 168,
+          "end": 200,
+          "original": "../../src/recording/reproduction",
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "51163d147b51b270d5986a3f2dd65e6aff8c7061e58a9a14e868a57527a7e679",
+          "title": "Consort strict failure prefix/time_consort_lock/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "6041a35bfd6a4aef6180e721350fff7daeae23733adb988358472f732d579275",
+          "title": "Consort strict failure prefix/time_consort_lock/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "2883c6262f6e968ecf9f588538a427e7cfd1e65ef3b713e4f46584874fb5197c",
+          "title": "Consort strict failure prefix/time_consort_lock/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "d8b5373065f50e9931064fcd0f55efdc397394a6d3710b4f037927b6cc5243d2",
+          "title": "Consort strict failure prefix/time_consort_lock/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "b8a98192f77f6266de2d4597f89467bbfd5967ff08b3c7be15805a4da10123ad",
+          "title": "Consort strict failure prefix/time_consort_lock/invalid/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "051b8550e59a0282013000aa7f3b32956e178de5149448f178c6307a8e7d9ca1",
+          "title": "Consort strict failure prefix/time_consort_lock/invalid/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "b319ff975693b951f8a3c6450401ab0630750e0e288053e54633cd33ac2a1323",
+          "title": "Consort strict failure prefix/wolf_discussion/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "c3fb4b8eb5df64b28032e5f54158b1b04c7294da2799a4c074b7e262253d5c98",
+          "title": "Consort strict failure prefix/wolf_discussion/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "0947c7b02f8da19771b2fff9de669969e36e0324250d97cd5b841f0d5f89a7a9",
+          "title": "Consort strict failure prefix/wolf_discussion/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "2229795f70c62324340babe720c6384eaf23fc255f376d9544c7651a800a7173",
+          "title": "Consort strict failure prefix/wolf_discussion/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "565d4ae056f3464d91cf14545f2aec3607f70d677e08677be5d3a28ab935bc8e",
+          "title": "Consort strict failure prefix/guard/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "3ca1d60646867f31454b6166582517f46a3774c594ec6fef72427add278e9e85",
+          "title": "Consort strict failure prefix/guard/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "3012b7b6433be04caa92d4e9e7bc61c3de4dafa6a286dee186677892e6e0d5fe",
+          "title": "Consort strict failure prefix/guard/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "15d6b360834af9d3964688c9b82c1f0fd141f4ad2462dbe814051c10224d30d5",
+          "title": "Consort strict failure prefix/guard/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "fa0e25cfe13d36f7eab9f3931aff21250339d77d20dc65c975e0cb633cad4f4e",
+          "title": "Consort strict failure prefix/wolf_vote/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "d3973eb27f0963dc71703b82d260ca6c2d59e7d462728bee2fed63c7c6b2135a",
+          "title": "Consort strict failure prefix/wolf_vote/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "494d5b5b38a390560762a7111ae3310ce7241bafd9c83a0791e3a555a7bd3f97",
+          "title": "Consort strict failure prefix/wolf_vote/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "bc6c0c155e521eab6c2c33d950ccb417251bafb53d92f9b7dcbc3aef9fc243ea",
+          "title": "Consort strict failure prefix/wolf_vote/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "811ce9b796214628388b329962443419e9a050788cf6ab0685548a277a80822f",
+          "title": "Consort strict failure prefix/witch/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "96821f2941fbc728e2247fbac0e91099c9287488a638d1f04db60073a9afee9c",
+          "title": "Consort strict failure prefix/witch/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "c327c30387bc6c6accf9ac0a73625b10cf1000bfc9f16ab27f8f459473b318f5",
+          "title": "Consort strict failure prefix/witch/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "efbb955c8d32ef74c7002cdbabe2d14bb222f5741042e311d382bc38343176df",
+          "title": "Consort strict failure prefix/witch/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "074b7a20084a052caf935636daf9914359c7d79517425c58a484ecb1955e6a9d",
+          "title": "Consort strict failure prefix/seer/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "d96b23b7b789403586fd8cbae81084ea0c94e27bccc5e6540c55cced7b0b26b8",
+          "title": "Consort strict failure prefix/seer/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "be0e3c472c0fb980e372ab24b9a8a5cce44fef6e39a4b6302e44ca4ae95cd6e1",
+          "title": "Consort strict failure prefix/seer/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "0318950ec37674c2ffd9b59002ccef7d909e7564132c55f9526109da2ada655e",
+          "title": "Consort strict failure prefix/seer/late/acp",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/trickster_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/trickster/required-and-late-prefix.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Real runTransportGame required first/second choice and later Witch/Prince failures. Literal exchange/night counts and shared committed Magician/Trickster/Prince histories are followed by a forged-history rejection.",
+      "originalSha256": "c7da21585897a09e927e3251aaee729d9ee4334f9cd0a12ee40cbad1c2ed1874",
+      "candidateSha256": "1d420c2f97e2323404dbb8d6d063055913e61ee2164f683849a18e5802ea3efc",
+      "moduleAndLocationEdits": [
+        {
+          "start": 417,
+          "end": 431,
+          "original": "../../src/core",
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "start": 360,
+          "end": 392,
+          "original": "../../src/recording/reproduction",
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts"
+        },
+        {
+          "start": 280,
+          "end": 316,
+          "original": "../support/foundation_transport_plan",
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts"
+        },
+        {
+          "start": 214,
+          "end": 243,
+          "original": "../support/run_transport_game",
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts"
+        },
+        {
+          "start": 137,
+          "end": 177,
+          "original": "../support/trickster_transport_scenarios",
+          "value": "../../../support/trickster_transport_scenarios",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/trickster_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/trickster_transport_scenarios.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "a1b36ab8e536b8ef7331b4f106e7a4effc011917dea31f2e397bee1f93cbd51c",
+          "title": "Trickster required choice prefix/1/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "39017d7f91a5af60f0e2aba3516d48196eef13e25f6344a7893e262f64793246",
+          "title": "Trickster required choice prefix/1/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "79d2ce0f154435c408209957ea80ba04f3865545d16d7e2a9dc4849f65fd4078",
+          "title": "Trickster required choice prefix/1/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "a1aff331d514844703e3630b764a3ebd1d627f416462210829aac152f0123776",
+          "title": "Trickster required choice prefix/1/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "8d25c9407af1db63e1f4e4c910db47537219423021c9444bca67c60348bacab9",
+          "title": "Trickster required choice prefix/1/invalid/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "eeea0d27c4c3854a51e44848d7451ca10cddbfda41206cf484f4966eabac8352",
+          "title": "Trickster required choice prefix/1/invalid/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "af541151208995ddd00c425eecc366878fb9642d914af5580f8f23128b37d7d7",
+          "title": "Trickster required choice prefix/2/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "55d2330204571e4e4cbacba43e4f67ecbccde26e0d2b25bf5ae4c56939b28ec1",
+          "title": "Trickster required choice prefix/2/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "e3198da7689bcfd57fd8b62809687cec055e75a76a745bd33625f168cc70cfe7",
+          "title": "Trickster required choice prefix/2/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "160ac41110de0c6c0550db07d856294641c12de2001408ba321ce1b83d555b04",
+          "title": "Trickster required choice prefix/2/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "59c57357bcdf27e1ca00ae273865c2785bc46d099aa8c90d9a30acfc2fa1bf85",
+          "title": "Trickster required choice prefix/2/invalid/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "f3ee942825c5c63118915b1f4d766a9ee88b81f5e40d36a9b72e7fa8aed3d6a3",
+          "title": "Trickster required choice prefix/2/invalid/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "a38454f7a5f10485f6db0a4ae2a1a45bee89b2c1203adbf4e2918acdd14d85d8",
+          "title": "Trickster committed prefix survives late witch/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "fadb459c8fef46aaaf69ee239b35bfcdf7d0cc4d172ed621dc47898e005361c5",
+          "title": "Trickster committed prefix survives late witch/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "bbc6cba328c25aff669396aa7ef608f6bf3ab1d851e7277ce0bff4c95f38b3a5",
+          "title": "Trickster committed prefix survives late order_prince_speech/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "d562f5a52300965df1d5147024260e221eb911985022bb0451dc2cf7cbfa4b5e",
+          "title": "Trickster committed prefix survives late order_prince_speech/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "f1cca9a2175c2346cda48b66f762c952a12e70398b163161ee6bc75a5eee9193",
+          "title": "Trickster committed prefix survives late order_prince_revote/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "9f7d6d3583e595acee766e2a56b93aaf7f0c02e9cefa31f8bb447fa973a8c265",
+          "title": "Trickster committed prefix survives late order_prince_revote/acp",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/scholar_mentor_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/scholar-mentor/required-turn-prefix.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Real runTransportGame second-cycle Mentor/bonus/night failures; literal remaining/history and exact failed actor are coupled to cloned original-record impersonator/candidate/paid-guard mutations and independent rejection codes.",
+      "originalSha256": "29bf73cc5dcbbd5271c8270c2cb10db20e892df4fa87ad47dd1ad66032e3cf33",
+      "candidateSha256": "7a03707a48937bd8a8c9574bb38bf1a04c410c1dd65218803f7e9ef5d377c51b",
+      "moduleAndLocationEdits": [
+        {
+          "start": 375,
+          "end": 404,
+          "original": "../support/run_transport_game",
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts"
+        },
+        {
+          "start": 293,
+          "end": 338,
+          "original": "../support/scholar_mentor_transport_scenarios",
+          "value": "../../../support/scholar_mentor_transport_scenarios",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/scholar_mentor_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/scholar_mentor_transport_scenarios.ts"
+        },
+        {
+          "start": 215,
+          "end": 251,
+          "original": "../support/foundation_transport_plan",
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts"
+        },
+        {
+          "start": 146,
+          "end": 178,
+          "original": "../../src/recording/reproduction",
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts"
+        },
+        {
+          "start": 63,
+          "end": 77,
+          "original": "../../src/core",
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "70bb1872731e4c3570276ba005720ef85e94b7b5f50c579447b6aeec007e290d",
+          "title": "Scholar Mentor strict recorded failure/choice/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "117322b26b91c055f98d35be25a31fb58b9e2ca801621b8759ed92f5e7d759e7",
+          "title": "Scholar Mentor strict recorded failure/choice/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "082810876d547a6c0531871481cdb2b7ee5e0184277832646d990e6240e4f4bf",
+          "title": "Scholar Mentor strict recorded failure/choice/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "e427d00415ea88eac8298015820ef296ac2c1e8d03f6a23fc41c4a1e396a877f",
+          "title": "Scholar Mentor strict recorded failure/choice/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "31af0d376e6bfc4299ce3b2f43dd182050a766a055fb0f2b1e2cfd02724d4771",
+          "title": "Scholar Mentor strict recorded failure/wolf_discussion/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "a08ddee79fe6360b0774601b1069d62443e2664658597b5534eb52919ea314b3",
+          "title": "Scholar Mentor strict recorded failure/wolf_discussion/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "5fc674b8e2a3c1878bf4455b429a39f53a2aa1564fe8bb6ba93f8deefa302eb3",
+          "title": "Scholar Mentor strict recorded failure/wolf_discussion/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "d204307b3aa644775372508a0ff4651a6dd01ea5ea1dd4baa9ad34dc9f79afec",
+          "title": "Scholar Mentor strict recorded failure/wolf_discussion/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "0b7e21e9d51cdc164b0c50df658ba00c649b044b7a9295fc62875d6f5557d70e",
+          "title": "Scholar Mentor strict recorded failure/guard/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "4ca50aa6f5e9c32e4c31a73f8b7f4a5803593dd889d80c89d2f101d4b45cc89a",
+          "title": "Scholar Mentor strict recorded failure/guard/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "0d5b202050241cb8a7e887e5f9ca10301f246d3364f00250894638212ba67385",
+          "title": "Scholar Mentor strict recorded failure/guard/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "9054e8696fa6a68f02531c3ba8b5f26f8b59eec52d480c589d7cd6a061217040",
+          "title": "Scholar Mentor strict recorded failure/guard/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "cf4be9bff9f814c2c22eed96ec3f0a2ff194e5383fca1798bcafe09cefce6b1d",
+          "title": "Scholar Mentor strict recorded failure/wolf_vote/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "c3b857c282245e7c5deb784b9de0bbc38ef0d7e60c4bfe7fb27e42b484357292",
+          "title": "Scholar Mentor strict recorded failure/wolf_vote/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "855b57768d3aa45f087704e13d2a75f16dc0d825846b848b29c508e8fae1d0b4",
+          "title": "Scholar Mentor strict recorded failure/wolf_vote/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "dd9c6e26141601f234adb4b16e643b46b89a2a0f82cc3564a9ac859cb4233823",
+          "title": "Scholar Mentor strict recorded failure/wolf_vote/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "9bcab1fa11717594a6e48c9d17b2eec1cdfc49b290d6c51dc38830b4c0f25d86",
+          "title": "Scholar Mentor strict recorded failure/bonus-kill/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "2ff199740769834e63dacfab9e2b639c54dbfe6331906d9902de85b568bab1c8",
+          "title": "Scholar Mentor strict recorded failure/bonus-kill/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "7862ba929642c817339d15d94f24533148eed123c304ce3f97724ef99b8e604c",
+          "title": "Scholar Mentor strict recorded failure/bonus-kill/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "f33f487348ab379770bb9ed1eee43e0f4dc0330c49df882acea091ee6e5ad844",
+          "title": "Scholar Mentor strict recorded failure/bonus-kill/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "79acf45b1a987ba6abe82659e4601e3faffd7f5b75d5382e20490cc761dbbfd3",
+          "title": "Scholar Mentor strict recorded failure/witch/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "31cd220af1665839f238c83a20e5409cdc91fb1c01928507d10e72db12e69c00",
+          "title": "Scholar Mentor strict recorded failure/witch/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "ce5e677737af62fbb7e6e15384fb051e54490015be35e59a45d6322bba43c549",
+          "title": "Scholar Mentor strict recorded failure/witch/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "b51a5f547974d6a15e5dfe20cdd0a6aae3731a60303898e407c843ca669d42e0",
+          "title": "Scholar Mentor strict recorded failure/witch/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "9e3859c40cd3f4effd593267d02b9256b26bc57a175a6f991356290c3b9aec27",
+          "title": "Scholar Mentor strict recorded failure/seer/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "714054ae0a9f9310f5c39ef071c62076ce5b32ecb1ebbaac82209c2f5bb738b7",
+          "title": "Scholar Mentor strict recorded failure/seer/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "6dc8cd13853985c2f932cdd0638e3aa7bc260d6ee7897ccedf5ba70ee3a5f655",
+          "title": "Scholar Mentor strict recorded failure/seer/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "a4c3d5b7a074d1102a27a6b51212ab9b586781cff30f97c04e3b876017520789",
+          "title": "Scholar Mentor strict recorded failure/seer/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "382c541796214e7dcd2815d1c9eb8550b9b76ee8efec17e40fb5f1761040345a",
+          "title": "Scholar Mentor strict recorded failure/bonus-check/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "640f2dc518a26b1b823e47f01e4f7b641e639f6d795df4f590b615fc7aca0af3",
+          "title": "Scholar Mentor strict recorded failure/bonus-check/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "39e1ad7dd815137f62811b318e7e25d71c70eaa1f6965308979416c99a95b447",
+          "title": "Scholar Mentor strict recorded failure/bonus-check/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "4f500679132d0579faf7c6c6b83e2061a5f9254ab47cc26ee97b75388f9b6c63",
+          "title": "Scholar Mentor strict recorded failure/bonus-check/late/acp",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/scholar_mentor_heal_history.test.ts",
+      "to": "backend/tests/scenarios/interactions/scholar-mentor/spent-heal-visibility.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Real complete runTransportGame verifies spent heal suppresses later knife-target disclosure, literal declared winner/alive plan and subsequent forged wolf-target context rejection. Support builder derives expected alive from declared plan IDs, never World execution.",
+      "originalSha256": "17d8ee780d6c56990136d67690daa5d6d1a81440893d46c20d653f1e26b4b323",
+      "candidateSha256": "0808ff92eb23c17799eec535ee819b2d8d016cd3d7463036873de50eb2c012e2",
+      "moduleAndLocationEdits": [
+        {
+          "start": 235,
+          "end": 267,
+          "original": "../../src/recording/reproduction",
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts"
+        },
+        {
+          "start": 162,
+          "end": 191,
+          "original": "../support/run_transport_game",
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts"
+        },
+        {
+          "start": 80,
+          "end": 125,
+          "original": "../support/scholar_mentor_transport_scenarios",
+          "value": "../../../support/scholar_mentor_transport_scenarios",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/scholar_mentor_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/scholar_mentor_transport_scenarios.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "33bb4aa05cbf9e3f62e4629c0001f15f80a59158b2889ca791d2ddad885a0968",
+          "title": "Scholar Mentor spent heal hides later knife targets/llm/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "3e4c202ad4967c5afb98252d79bd2da8751f5695de6f2b5b8a14e941b7c4cf2e",
+          "title": "Scholar Mentor spent heal hides later knife targets/llm/en",
+          "occurrence": 1
+        },
+        {
+          "id": "b848e17b3868de32089ea50fa8d551e6dfe71e44746880bf40d10bcdcd59f7d9",
+          "title": "Scholar Mentor spent heal hides later knife targets/acp/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "4edce2a1289db36471c4d0e97e217ee4baaa717fded418839e252b22d4f6aeef",
+          "title": "Scholar Mentor spent heal hides later knife targets/acp/en",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
     }
   ],
   "counts": {
-    "sourceFiles": 419,
-    "targetFiles": 424,
-    "mappingEntries": 424,
-    "baselineCases": 4729,
+    "sourceFiles": 431,
+    "targetFiles": 436,
+    "mappingEntries": 436,
+    "baselineCases": 4881,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

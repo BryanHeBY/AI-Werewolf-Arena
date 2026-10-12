@@ -1,8 +1,13 @@
+/**
+ * Failure scenarios verify Order Prince interruption retains only the already-paid choice, speech and revote prefix.
+ * Input: Original controlled transport plans, late responses and a copied activation-history forgery.
+ * Output and oracle: Literal incomplete checkpoint, activation/history values and absent final exile are followed by explicit rejection; no generic vote expectation replaces the original policy.
+ */
 import { expect, test } from "bun:test";
-import { orderPrinceScenario } from "../support/order_prince_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
-import type { PlannedTurn } from "../support/foundation_transport_plan";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
+import { orderPrinceScenario } from "../../../support/order_prince_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
+import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 for (const boundary of [
   "order_prince_choice",
   "order_prince_speech",

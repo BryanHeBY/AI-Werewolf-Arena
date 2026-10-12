@@ -1,7 +1,12 @@
+/**
+ * Interaction scenarios verify spent Scholar Mentor heal suppresses later knife-target disclosure throughout a recorded game and replay checks.
+ * Input: The original early-heal transport plan, declared winner/alive expectations and copied later-target context forgery.
+ * Output and oracle: Explicit day-two/day-three privacy fields, original planned result and forgery rejection retain the causal history; expected alive is declared by the plan rather than produced by a second World.
+ */
 import { expect, test } from "bun:test";
-import { scholarMentorScenario } from "../support/scholar_mentor_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
+import { scholarMentorScenario } from "../../../support/scholar_mentor_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 
 for (const transport of ["llm", "acp"] as const)
   for (const locale of ["zh-CN", "en"] as const)

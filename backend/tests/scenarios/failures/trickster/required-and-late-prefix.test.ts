@@ -1,10 +1,15 @@
+/**
+ * Failure scenarios verify Trickster required-choice and later Witch or Prince failures preserve the committed multi-mechanism prefix.
+ * Input: Original first/second-night response matrices, controlled transport plans and copied exchange-history forgery.
+ * Output and oracle: Explicit exchange/night counts and Magician/Trickster/Prince history assertions retain paid state before deterministic rejection; no role settlement algorithm is used as the expected oracle.
+ */
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { expect, test } from "bun:test";
-import { tricksterScenario } from "../support/trickster_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
-import type { PlannedTurn } from "../support/foundation_transport_plan";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
-import { Role } from "../../src/core";
+import { tricksterScenario } from "../../../support/trickster_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
+import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { Role } from "../../../../src/core";
 for (const night of [1, 2])
   for (const failure of ["missing", "late", "invalid"] as const)
     for (const transport of ["llm", "acp"] as const)

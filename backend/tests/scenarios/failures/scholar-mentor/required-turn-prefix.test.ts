@@ -1,9 +1,14 @@
+/**
+ * Failure scenarios verify Scholar Mentor choice, bonus and later night interruptions preserve the exact second-cycle paid prefix.
+ * Input: Original controlled response matrices and copied actor, candidate or paid-guard record forgeries.
+ * Output and oracle: Literal failed actor/cycle, remaining stock and history assertions remain together with explicit forgery rejection; the generated record supplies input rather than new golden output.
+ */
 import { expect, test } from "bun:test";
-import { Role } from "../../src/core";
-import { parseReproductionRecord, type ReproductionRecord } from "../../src/recording/reproduction";
-import type { PlannedTurn } from "../support/foundation_transport_plan";
-import { scholarMentorScenario } from "../support/scholar_mentor_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { Role } from "../../../../src/core";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
+import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { scholarMentorScenario } from "../../../support/scholar_mentor_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 for (const target of [
   "choice",
   "wolf_discussion",

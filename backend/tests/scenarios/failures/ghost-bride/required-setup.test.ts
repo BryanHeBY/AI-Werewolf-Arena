@@ -1,31 +1,30 @@
 /**
- * Runner failure/replay scenarios verify Lonely Girl failed required setup never switches a card.
- * Input: Injected provider failures, real runner and partial recorder output.
- * Output and independent oracle: No fallback/card swap, original state snapshots and exact accepted-prefix replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Failure scenarios verify real strict Ghost Bride providers close required setup without fallback, native action or card swap.
+ * Input: Original invalid/missing SDK or ACP responses, the real runner and temporary partial archives followed by offline replay.
+ * Output and oracle: Literal failed wedding/stock/affiliation values and exact prefix replay preserve original setup ownership; no live provider credential is used.
  */
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { promises as fs } from "node:fs";
-import * as runtimeFactory from "../../src/runtime/player_agent_factory";
-import { LlmActionProvider } from "../../src/ai/agents/llm/llm_action_provider";
-import { AcpActionProvider } from "../../src/ai/agents/acp/acp_action_provider";
-import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
-import { runGame } from "../../src/runtime/game_runner";
+import * as runtimeFactory from "../../../../src/runtime/player_agent_factory";
+import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
+import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
+import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
+import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
+import { runGame } from "../../../../src/runtime/game_runner";
 import {
   readReproduction,
   replayReproduction,
-} from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
-import { lonelyGirlScenario } from "../support/lonely_girl_scenarios";
+} from "../../../../src/runtime/simulation/replay_reproduction";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
+import { ghostBrideScenario } from "../../../support/ghost_bride_scenarios";
 for (const transport of ["sdk", "acp"] as const)
   for (const locale of ["zh-CN", "en"] as const)
     for (const failure of ["invalid", "missing"] as const)
-      test(`${transport}/${locale}/${failure}: real strict provider failure closes Lonely Girl without fallback or card swap, exact partial Tape`, async () => {
-        const scenario = lonelyGirlScenario("wolf_alive", 6, locale),
-          root = await createTestTempDirectory("awa-lonely_girl-failure-"),
-          output = await createTestTempDirectory("awa-lonely_girl-failure-replay-");
+      test(`${transport}/${locale}/${failure}: real strict provider failure closes Ghost Bride without fallback or card swap, exact partial Tape`, async () => {
+        const scenario = ghostBrideScenario("pair"),
+          root = await createTestTempDirectory("awa-ghost_bride-failure-"),
+          output = await createTestTempDirectory("awa-ghost_bride-failure-replay-");
         const runtime = parseRuntimeConfig({
           providers: {
             default: "synthetic",
@@ -71,8 +70,8 @@ for (const transport of ["sdk", "acp"] as const)
                         name: "submit_action",
                         args: {
                           turn_id: "t1",
-                          action: "choose_admired_player",
-                          arguments: { target_id: scenario.actorId },
+                          action: "choose_bridegroom",
+                          arguments: { target_id: scenario.brideId },
                         },
                       });
                   return { finalAction: null, assistantText: "End" };
@@ -90,14 +89,14 @@ for (const transport of ["sdk", "acp"] as const)
                     sessionFactory: {
                       async createSession(input) {
                         return {
-                          sessionId: "lonely_girl-failure",
+                          sessionId: "ghost_bride-failure",
                           async prompt() {
                             if (failure === "invalid")
                               for (let i = 0; i < 3; i++)
-                                input.registry.submitAction("lonely_girl-failure", {
+                                input.registry.submitAction("ghost_bride-failure", {
                                   turn_id: "t1",
-                                  action: "choose_admired_player",
-                                  arguments: { target_id: scenario.actorId },
+                                  action: "choose_bridegroom",
+                                  arguments: { target_id: scenario.brideId },
                                 });
                           },
                           async cancel() {},
@@ -111,7 +110,7 @@ for (const transport of ["sdk", "acp"] as const)
               kind: transport === "sdk" ? "llm" : "acp",
               provider: {
                 getAction(r) {
-                  if (r.context.stage !== "lonely_girl") {
+                  if (r.context.stage !== "ghost_bride_groom") {
                     nativeCalls++;
                     throw new Error("native_before_failed_setup");
                   }
@@ -137,31 +136,34 @@ for (const transport of ["sdk", "acp"] as const)
               (await fs.readdir(root)).find((n) => n.startsWith("session_"))!,
             ),
             record = await readReproduction(path.join(directory, "reproduction.json")),
-            decision = record.decisions.find((d) => d.stage === "lonely_girl")!;
+            decision = record.decisions.find((d) => d.stage === "ghost_bride_groom")!;
           expect(decision.request.context.turn_constraints.min_valid_actions).toBe(1);
           expect(decision.request.context.allow_fallback).toBe(false);
           expect(decision.outcome).toMatchObject({ kind: "error", code: "decision_failed" });
           expect(record.checkpoints.at(-1)!.complete).toBe(false);
-          expect(record.checkpoints.at(-1)!.lonelyGirlSetup).toEqual({
-            policy: "awa_netease_lonely_girl_v1",
+          expect(record.checkpoints.at(-1)!.ghostBrideSetup).toEqual({
+            policy: "awa_melbourne_ghost_bride_v1",
             status: "failed",
-            actorId: scenario.actorId,
+            actorId: scenario.brideId,
+            groomId: null,
+            witnessId: null,
+            witnessVotes: [],
           });
           expect(
-            record.checkpoints.at(-1)!.players.find((p) => p.id === scenario.actorId)!.privateState
-              .lonelyGirl,
-          ).toEqual({ policy: "awa_netease_lonely_girl_v1", remaining: 0, choice: null });
+            record.checkpoints.at(-1)!.players.find((p) => p.id === scenario.brideId)!.privateState
+              .ghostBride,
+          ).toEqual({ policy: "awa_melbourne_ghost_bride_v1", remaining: 0, groomId: null });
           expect(
-            record.checkpoints.at(-1)!.players.find((p) => p.id === scenario.actorId)!.victory
+            record.checkpoints.at(-1)!.players.find((p) => p.id === scenario.brideId)!.victory
               .affiliations,
-          ).toEqual([]);
-          expect(record.events.some((e) => e.type === "lonely_girl_admired_chosen")).toBe(false);
+          ).toEqual([{ kind: "faction", faction: "third_party" }]);
+          expect(record.events.some((e) => e.type === "ghost_bride_pair_chosen")).toBe(false);
           expect((await replayReproduction(record, output)).snapshot).toEqual(
             record.checkpoints.at(-1)!.snapshot,
           );
           if (failure === "invalid") {
             const view = await fs.readFile(
-              path.join(directory, `players/player_${scenario.actorId}.json`),
+              path.join(directory, `players/player_${scenario.brideId}.json`),
               "utf8",
             );
             expect(view).toContain("turn_invalid_action_limit");

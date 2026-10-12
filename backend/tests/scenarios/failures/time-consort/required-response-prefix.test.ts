@@ -1,9 +1,14 @@
+/**
+ * Failure scenarios verify Time Consort lock and later night failures retain the exact already-paid history and trigger timing.
+ * Input: Original missing/late/invalid controlled transport responses and copied guard/reflection-prefix forgery.
+ * Output and oracle: Literal incomplete checkpoint, history and trigger values plus explicit forged-prefix rejection preserve causal payment; no production World is run to compute expected alive.
+ */
 import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
-import { parseReproductionRecord, type ReproductionRecord } from "../../src/recording/reproduction";
-import type { PlannedTurn } from "../support/foundation_transport_plan";
-import { timeConsortScenario } from "../support/time_consort_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
+import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { timeConsortScenario } from "../../../support/time_consort_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 for (const stage of [
   "time_consort_lock",
   "wolf_discussion",

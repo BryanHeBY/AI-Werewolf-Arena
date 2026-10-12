@@ -1,8 +1,13 @@
+/**
+ * Failure scenarios verify required Evil Knight game responses preserve the original incomplete recorded prefix across six stages.
+ * Input: The original missing/late LLM/ACP responses, both locales and deterministic night/death-shot plans.
+ * Output and oracle: Literal failed actor/stage, prior-night count and absent fallback assertions remain tied to the real execution; no full passing game is substituted for the failure prefix.
+ */
 import { expect, test } from "bun:test";
-import { Role } from "../../src/core";
-import { evilKnightScenario } from "../support/evil_knight_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
-import type { PlannedTurn } from "../support/foundation_transport_plan";
+import { Role } from "../../../../src/core";
+import { evilKnightScenario } from "../../../support/evil_knight_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
+import type { PlannedTurn } from "../../../support/foundation_transport_plan";
 
 const order = ["wolf_discussion", "guard", "wolf_vote", "witch", "seer", "hunter_shot"] as const;
 for (const stage of order)

@@ -1,7 +1,12 @@
+/**
+ * Failure scenarios verify missing or late required Magician exchange responses preserve the original partial recorded game.
+ * Input: Original controlled LLM/ACP transport plans, locale matrix and required-response failures.
+ * Output and oracle: Literal failed checkpoint/decision and absent exchange/night settlement assertions span the actual provider-to-recording prefix; no role action is invented as fallback.
+ */
 import { expect, test } from "bun:test";
-import { magicianScenario } from "../support/magician_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
-import type { PlannedTurn } from "../support/foundation_transport_plan";
+import { magicianScenario } from "../../../support/magician_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
+import type { PlannedTurn } from "../../../support/foundation_transport_plan";
 for (const failure of ["missing", "late"] as const)
   for (const transport of ["llm", "acp"] as const)
     test(`Magician required swap ${failure}/${transport} preserves partial Tape`, async () => {
