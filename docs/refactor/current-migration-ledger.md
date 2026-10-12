@@ -11,3 +11,5 @@
 首份交付子项只覆盖已提交 C17–C24 的状态、请求、查询和生命周期边界。C08 facts、C09 support 及其他阶段的具体迁移仍须逐项纳入；当前未登记部分保持 pending，不宣称台账已经包含所有交付。
 
 记录中的 candidate SHA、旧路径和测试结果是对应历史切片的输入身份。后续迁移可以改变当前源码，但必须新增真实证据，而不能悄悄将旧摘要改为当前摘要或将原失败日志改成成功。未提交候选不登记交付。
+
+Git `4e39548` 检查点新增 Witch 普通 payload 写权、Seer/Guard 既有目标政策入口、Noble 实际 night handoff 四个已提交子项。当前 43 格 partial、857 格 pending，仍零 complete/N/A；首次台账的统计是历史输入，不改为当前数字。Noble 的 expiry/damage/death/exile、完整原体失效等其他边界仍待闭合。

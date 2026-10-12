@@ -1,6 +1,6 @@
 {
   "schema": "awa-current-mechanism-migration-v1",
-  "observedCommit": "1c84001ac2f70375d682e2006c7ea3e8d8fdc46a",
+  "observedCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
   "baseline": {
     "path": "docs/refactor/generated/mechanism-matrix.json",
     "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
@@ -39,8 +39,12 @@
             {
               "part": "Existing local request alias propagation registered in common request metadata",
               "commit": "e8de6dc",
-              "owners": ["backend/src/core/domain/request_delivery.ts"],
-              "evidence": ["docs/refactor/request-alias-propagation.md"]
+              "owners": [
+                "backend/src/core/domain/request_delivery.ts"
+              ],
+              "evidence": [
+                "docs/refactor/request-alias-propagation.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -60,8 +64,12 @@
             {
               "part": "Actual per-execution open/publication/normal/abort flags moved from pipeline",
               "commit": "3c57028",
-              "owners": ["backend/src/game/mechanisms/roles/animal_dream/night-lifecycle.ts"],
-              "evidence": ["docs/refactor/animal-night-lifecycle.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/animal_dream/night-lifecycle.ts"
+              ],
+              "evidence": [
+                "docs/refactor/animal-night-lifecycle.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -202,8 +210,12 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/bear/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/bear/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -606,8 +618,12 @@
             {
               "part": "Existing local request alias propagation registered in common request metadata",
               "commit": "e8de6dc",
-              "owners": ["backend/src/core/domain/request_delivery.ts"],
-              "evidence": ["docs/refactor/request-alias-propagation.md"]
+              "owners": [
+                "backend/src/core/domain/request_delivery.ts"
+              ],
+              "evidence": [
+                "docs/refactor/request-alias-propagation.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -684,8 +700,12 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/dreamer/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/dreamer/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -705,8 +725,12 @@
             {
               "part": "Shared night actor query plus actual consumer/feature contribution boundary; exact applicable roles documented in evidence",
               "commit": "23415df",
-              "owners": ["backend/src/game/mechanisms/roles/night-ability-actors.ts"],
-              "evidence": ["docs/refactor/night-actor-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-actor-queries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -790,8 +814,12 @@
             {
               "part": "Ordinary wolf target composition with exact feature role/circle contribution and original short-circuit queries",
               "commit": "1c84001",
-              "owners": ["backend/src/game/mechanisms/roles/evil_knight/ports.ts"],
-              "evidence": ["docs/refactor/wolf-target-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/evil_knight/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/wolf-target-queries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -861,8 +889,12 @@
             {
               "part": "Native pair slot initialization and exact commit prefix",
               "commit": "dd86fd4",
-              "owners": ["backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts"],
-              "evidence": ["docs/refactor/fragrant-pair-state-owner.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts"
+              ],
+              "evidence": [
+                "docs/refactor/fragrant-pair-state-owner.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -875,8 +907,12 @@
             {
               "part": "Existing local request alias propagation registered in common request metadata",
               "commit": "e8de6dc",
-              "owners": ["backend/src/core/domain/request_delivery.ts"],
-              "evidence": ["docs/refactor/request-alias-propagation.md"]
+              "owners": [
+                "backend/src/core/domain/request_delivery.ts"
+              ],
+              "evidence": [
+                "docs/refactor/request-alias-propagation.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -896,8 +932,12 @@
             {
               "part": "Actual per-execution open/publication/normal/abort flags moved from pipeline",
               "commit": "792ad2b",
-              "owners": ["backend/src/game/mechanisms/roles/fragrant_pair_seer/night-lifecycle.ts"],
-              "evidence": ["docs/refactor/fragrant-night-lifecycle.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/fragrant_pair_seer/night-lifecycle.ts"
+              ],
+              "evidence": [
+                "docs/refactor/fragrant-night-lifecycle.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -960,14 +1000,22 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/gargoyle/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/gargoyle/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             },
             {
               "part": "Readonly persistent knife-inheritance fact; inspection/current permission remains distinct",
               "commit": "c8cb5fc",
-              "owners": ["backend/src/game/mechanisms/roles/gargoyle/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/gargoyle/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1058,8 +1106,12 @@
             {
               "part": "Existing local request alias propagation registered in common request metadata",
               "commit": "e8de6dc",
-              "owners": ["backend/src/core/domain/request_delivery.ts"],
-              "evidence": ["docs/refactor/request-alias-propagation.md"]
+              "owners": [
+                "backend/src/core/domain/request_delivery.ts"
+              ],
+              "evidence": [
+                "docs/refactor/request-alias-propagation.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1136,8 +1188,12 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/gravekeeper/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/gravekeeper/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1221,8 +1277,12 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/guard/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/guard/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             },
             {
               "part": "Ordinary native and recipient lastTarget writes owned; sealed Demon writer remains separate",
@@ -1231,7 +1291,9 @@
                 "backend/src/game/mechanisms/roles/guard/state.ts",
                 "backend/src/game/mechanisms/roles/guard/ports.ts"
               ],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1251,8 +1313,22 @@
             {
               "part": "Shared night actor query plus actual consumer/feature contribution boundary; exact applicable roles documented in evidence",
               "commit": "23415df",
-              "owners": ["backend/src/game/mechanisms/roles/night-ability-actors.ts"],
-              "evidence": ["docs/refactor/night-actor-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-actor-queries.md"
+              ]
+            },
+            {
+              "part": "Existing Guard repeat predicate and actual profile/hint consumers owned by the feature public port; no new final commit recheck",
+              "commit": "850e1b4",
+              "owners": [
+                "backend/src/game/mechanisms/roles/guard/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1322,14 +1398,22 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/hidden_wolf/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/hidden_wolf/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             },
             {
               "part": "Readonly persistent knife-inheritance fact and unique true write",
               "commit": "c8cb5fc",
-              "owners": ["backend/src/game/mechanisms/roles/hidden_wolf/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/hidden_wolf/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1413,8 +1497,12 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/hunter/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/hunter/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1576,8 +1664,12 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/idiot/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/idiot/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1668,8 +1760,12 @@
             {
               "part": "Existing local request alias propagation registered in common request metadata",
               "commit": "e8de6dc",
-              "owners": ["backend/src/core/domain/request_delivery.ts"],
-              "evidence": ["docs/refactor/request-alias-propagation.md"]
+              "owners": [
+                "backend/src/core/domain/request_delivery.ts"
+              ],
+              "evidence": [
+                "docs/refactor/request-alias-propagation.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1746,14 +1842,22 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/knight/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/knight/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             },
             {
               "part": "Readonly Knight resource and unique duel consumption",
               "commit": "a828601",
-              "owners": ["backend/src/game/mechanisms/roles/knight/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/knight/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1844,8 +1948,12 @@
             {
               "part": "Existing local request alias propagation registered in common request metadata",
               "commit": "e8de6dc",
-              "owners": ["backend/src/core/domain/request_delivery.ts"],
-              "evidence": ["docs/refactor/request-alias-propagation.md"]
+              "owners": [
+                "backend/src/core/domain/request_delivery.ts"
+              ],
+              "evidence": [
+                "docs/refactor/request-alias-propagation.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -2248,8 +2356,12 @@
             {
               "part": "Ordinary wolf target composition with exact feature role/circle contribution and original short-circuit queries",
               "commit": "1c84001",
-              "owners": ["backend/src/game/mechanisms/roles/mist_raven/ports.ts"],
-              "evidence": ["docs/refactor/wolf-target-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/mist_raven/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/wolf-target-queries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -2333,14 +2445,22 @@
             {
               "part": "Shared night actor query plus actual consumer/feature contribution boundary; exact applicable roles documented in evidence",
               "commit": "23415df",
-              "owners": ["backend/src/game/mechanisms/roles/night-ability-actors.ts"],
-              "evidence": ["docs/refactor/night-actor-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-actor-queries.md"
+              ]
             },
             {
               "part": "Ordinary wolf target composition with exact feature role/circle contribution and original short-circuit queries",
               "commit": "1c84001",
-              "owners": ["backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"],
-              "evidence": ["docs/refactor/wolf-target-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/wolf-target-queries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -2417,14 +2537,22 @@
             {
               "part": "Existing local request alias propagation registered in common request metadata",
               "commit": "e8de6dc",
-              "owners": ["backend/src/core/domain/request_delivery.ts"],
-              "evidence": ["docs/refactor/request-alias-propagation.md"]
+              "owners": [
+                "backend/src/core/domain/request_delivery.ts"
+              ],
+              "evidence": [
+                "docs/refactor/request-alias-propagation.md"
+              ]
             },
             {
               "part": "Observed currentness failure permanently closes original Noble turn",
               "commit": "84eaba5",
-              "owners": ["backend/src/game/mechanisms/roles/noble_secret_body/requests.ts"],
-              "evidence": ["docs/refactor/noble-request-revocation.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/noble_secret_body/requests.ts"
+              ],
+              "evidence": [
+                "docs/refactor/noble-request-revocation.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -2437,8 +2565,12 @@
             {
               "part": "Ordinary wolf target composition with exact feature role/circle contribution and original short-circuit queries",
               "commit": "1c84001",
-              "owners": ["backend/src/game/mechanisms/roles/noble_secret_body/ports.ts"],
-              "evidence": ["docs/refactor/wolf-target-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/wolf-target-queries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -2446,10 +2578,21 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Actual per-execution pipeline acquisition transfers at the original point to the manager receiver; all three manager cleanup sites retain authority-controlled post-normal abort",
+              "commit": "4e39548",
+              "owners": [
+                "backend/src/game/mechanisms/roles/noble_secret_body/night-lifecycle.ts"
+              ],
+              "evidence": [
+                "docs/refactor/noble-night-handoff.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Close remaining request/action, expiry/damage/death/exile and original-owner invalidation boundaries with complete mechanism-specific acceptance; the concrete handoff alone does not close this cell."
           ]
         },
         "effect": {
@@ -2678,8 +2821,12 @@
             {
               "part": "Shared night actor query plus actual consumer/feature contribution boundary; exact applicable roles documented in evidence",
               "commit": "23415df",
-              "owners": ["backend/src/game/mechanisms/roles/night-ability-actors.ts"],
-              "evidence": ["docs/refactor/night-actor-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-actor-queries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -2763,8 +2910,12 @@
             {
               "part": "Shared night actor query plus actual consumer/feature contribution boundary; exact applicable roles documented in evidence",
               "commit": "23415df",
-              "owners": ["backend/src/game/mechanisms/roles/night-ability-actors.ts"],
-              "evidence": ["docs/refactor/night-actor-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-actor-queries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -2912,8 +3063,12 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/role_inspection/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/role_inspection/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -2933,8 +3088,12 @@
             {
               "part": "Shared night actor query plus actual consumer/feature contribution boundary; exact applicable roles documented in evidence",
               "commit": "23415df",
-              "owners": ["backend/src/game/mechanisms/roles/night-ability-actors.ts"],
-              "evidence": ["docs/refactor/night-actor-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-actor-queries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -3018,8 +3177,12 @@
             {
               "part": "Shared night actor query plus actual consumer/feature contribution boundary; exact applicable roles documented in evidence",
               "commit": "23415df",
-              "owners": ["backend/src/game/mechanisms/roles/night-ability-actors.ts"],
-              "evidence": ["docs/refactor/night-actor-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-actor-queries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -3093,7 +3256,9 @@
                 "backend/src/game/mechanisms/roles/seer/state.ts",
                 "backend/src/game/mechanisms/roles/seer/state-contracts.ts"
               ],
-              "evidence": ["docs/refactor/seer-state-owner.md"]
+              "evidence": [
+                "docs/refactor/seer-state-owner.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -3113,8 +3278,22 @@
             {
               "part": "Shared night actor query plus actual consumer/feature contribution boundary; exact applicable roles documented in evidence",
               "commit": "23415df",
-              "owners": ["backend/src/game/mechanisms/roles/night-ability-actors.ts"],
-              "evidence": ["docs/refactor/night-actor-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-actor-queries.md"
+              ]
+            },
+            {
+              "part": "Existing Seer target predicate and its actual stage/profile/hint consumers owned by the feature public port",
+              "commit": "850e1b4",
+              "owners": [
+                "backend/src/game/mechanisms/roles/seer/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -3574,14 +3753,22 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/white_wolf_king/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/white_wolf_king/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             },
             {
               "part": "Readonly detonation stock and selected consumption",
               "commit": "0d1ecd1",
-              "owners": ["backend/src/game/mechanisms/roles/white_wolf_king/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/white_wolf_king/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -3672,8 +3859,12 @@
             {
               "part": "Existing local request alias propagation registered in common request metadata",
               "commit": "e8de6dc",
-              "owners": ["backend/src/core/domain/request_delivery.ts"],
-              "evidence": ["docs/refactor/request-alias-propagation.md"]
+              "owners": [
+                "backend/src/core/domain/request_delivery.ts"
+              ],
+              "evidence": [
+                "docs/refactor/request-alias-propagation.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -3750,8 +3941,22 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/witch/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/witch/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
+            },
+            {
+              "part": "Original reset, refresh, close and ordinary native/recipient potion payload writes owned by Witch commands; sealed Demon and verifier ledgers remain separate",
+              "commit": "8335315",
+              "owners": [
+                "backend/src/game/mechanisms/roles/witch/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -3771,8 +3976,12 @@
             {
               "part": "Shared night actor query plus actual consumer/feature contribution boundary; exact applicable roles documented in evidence",
               "commit": "23415df",
-              "owners": ["backend/src/game/mechanisms/roles/night-ability-actors.ts"],
-              "evidence": ["docs/refactor/night-actor-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-actor-queries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -3856,8 +4065,12 @@
             {
               "part": "Ordinary wolf target composition with exact feature role/circle contribution and original short-circuit queries",
               "commit": "1c84001",
-              "owners": ["backend/src/game/mechanisms/roles/wolf/ports.ts"],
-              "evidence": ["docs/refactor/wolf-target-queries.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/wolf/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/wolf-target-queries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -3927,8 +4140,12 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/wolf_beauty/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/wolf_beauty/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -4012,8 +4229,12 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
-              "owners": ["backend/src/game/mechanisms/roles/wolf_king/state.ts"],
-              "evidence": ["docs/refactor/role-state-owners.md"]
+              "owners": [
+                "backend/src/game/mechanisms/roles/wolf_king/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -4186,7 +4407,9 @@
                 "backend/src/game/mechanisms/events/wall_notes/authority.ts",
                 "backend/src/core/domain/request_delivery.ts"
               ],
-              "evidence": ["docs/refactor/request-alias-propagation.md"]
+              "evidence": [
+                "docs/refactor/request-alias-propagation.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -4671,7 +4894,9 @@
                 "backend/src/rulesets/night-stage-plan.ts",
                 "backend/src/rulesets/night-stage-registration.ts"
               ],
-              "evidence": ["docs/refactor/night-stage-compiler-owner.md"]
+              "evidence": [
+                "docs/refactor/night-stage-compiler-owner.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -7335,7 +7560,9 @@
                 "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
                 "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts"
               ],
-              "evidence": ["docs/refactor/night-actor-queries.md"]
+              "evidence": [
+                "docs/refactor/night-actor-queries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -7399,8 +7626,8 @@
     "currentOnlyRows": 1,
     "rows": 90,
     "cells": 900,
-    "pending": 858,
-    "partial": 42,
+    "pending": 857,
+    "partial": 43,
     "complete": 0,
     "not-applicable": 0
   },

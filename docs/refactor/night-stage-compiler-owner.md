@@ -47,3 +47,5 @@
 opaque 项只包装刚从原 iterator 拉取的 handler，下次 foreign pull 仍在本次 handler 执行之后。yield-throw 与 next 依赖前次提交的两个既有反例保留已付前缀。
 
 八项新增和六项既有注册测试共 14 项、71 次断言通过，原真实中途赠技场景一项、两次断言通过；一次有限类型检查通过。源码逆映射核对原 getStages、Ghost 操作、既有 helper 与流水线全正文，五个职责头通过。本批不冻结 BoardConfig，不新增 checkpoint revision，不声明完整 tool schema 或判胜检查点；完整 RulePlan 仍继续。
+
+独立审查另比较了 opaque 包装与原 for-of 的三种 IteratorClose/错误前缀：执行抛错、return 抛错和已提交后 next 抛错，调用轨迹及错误优先级保持。原/现 plan、pipeline、bootstrap、CLI 的八次 cold import 同成功、同出口；没有重复真实对局或作者的定向测试。

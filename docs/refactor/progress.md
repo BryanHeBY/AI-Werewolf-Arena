@@ -167,3 +167,5 @@
 - C21执行来源：实际pipeline遍历entries并以原handler receiver执行，来源只由一次foreignpack spread后own slots与原Ghost set clone观测；私有per-return WeakMap无World/actor/currentPlan，opaque next仍在前次execute后。独立7源码逆向/原helpers0、5heads/newdeps0；new8+原6registration14/0/71、原真实lateGift1/0/2，finite types实际exit0。原规则闭包/getter/loop/排序不变，完整参数/tool/revision/winner RulePlan仍pending。
 
 - Guard旧ActionReception fixture兼容：目标政策后续finite检查实际发现旧seed直接写readonly字段TS2540，明确test-only mutable cast保同stored-state赋值，production读视图不放宽/不改被测路径。整fixture原程序仅该类型映射逆向同，原权限/resource/constraints case通过；该编译红保留，Tool final有限检查继续。
+
+- 当前机制台账追加四已commit子项：Witch普通payload、Seer/Guard目标port、Noble真实handoff；独立delta四cell/source/docs/ancestor pointers0，89baseline+1current-only共900cells，43partial857pending，0complete/N/A。基线SHA60f1eb79原bytes不变；provenance补独立三IteratorClose前缀与cold8同exports证据，未重门禁。
