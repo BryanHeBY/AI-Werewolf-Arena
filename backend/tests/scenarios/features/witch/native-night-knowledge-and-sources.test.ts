@@ -1,39 +1,31 @@
-import { completedNight } from "../night_stage_fixture";
-import { PotionType } from "../../../src/core";
+/**
+ * Witch scenarios verify complete nights hide exhausted knife information and preserve compound Guard/heal/poison death sources.
+ * Input: Original locale plans, controlled NightPipeline actions and current marks/resources.
+ * Output and oracle: Exact request/prompt past knowledge, hidden events and poisoned Hunter gun refusal remain unchanged; no new expected output is computed.
+ */
+import { completedNight } from "../../../engine/night_stage_fixture";
+import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import {
-  COMPONENT,
-  Camp,
-  Phase,
-  Role,
-  StatusMark,
-  DeathCause,
-  WitchSelfHealRule,
-  type ActionRequest,
-  type GameEvent,
-  type RoleComponent,
-  type StatusMarksComponent,
-} from "../../../src/core";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { getWitchState, getHunterState } from "../../../src/game/mechanisms/roles/private_state";
-import { ActionReception, ActionTurn } from "../../../src/ai/agents/player/action_reception";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/ability_changes";
-import { hunterDeathHook } from "../../../src/game/mechanisms/roles/hunter/death_hook";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { COMPONENT, Role, DeathCause, WitchSelfHealRule, type ActionRequest, type GameEvent, type RoleComponent } from "../../../../src/core";
+import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
+import { getWitchState, getHunterState } from "../../../../src/game/mechanisms/roles/private_state";
+import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
+import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { hunterDeathHook } from "../../../../src/game/mechanisms/roles/hunter/death_hook";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
-} from "../../../src/game/mechanisms";
+} from "../../../../src/game/mechanisms";
 import { text } from "@ai-werewolf-arena/game-text";
 
 const roles12 = [
@@ -50,64 +42,12 @@ const roles12 = [
   Role.Villager,
   Role.Villager,
 ];
+
 const fixture = (locale: "zh-CN" | "en") =>
   bootstrapGame(twelvePlayerStandardConfig, { locale, fixedRoles: roles12 });
+
 const role = (world: ReturnType<typeof fixture>["world"], id: number) =>
   world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
-const marks = (world: ReturnType<typeof fixture>["world"], id: number) =>
-  world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!;
-const request: ActionRequest = {
-  actorId: 6,
-  phase: Phase.Night,
-  allowedTools: ["use_potion"],
-  context: {
-    day: 1,
-    stage: "witch",
-    ability_id: "native:potion",
-    wolf_target: 9,
-    visible_events: [],
-    turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },
-  },
-};
-
-for (const locale of ["zh-CN", "en"] as const)
-  test(`${locale}: only the living current marked wolf target is healable; rejected calls keep the turn and resources intact`, () => {
-    const { world } = fixture(locale),
-      potion = getWitchState(role(world, 6))!,
-      receive = new ActionReception(world),
-      turn = new ActionTurn(receive, request, "t1");
-    marks(world, 9).add(StatusMark.WolfKillMark);
-    const before = structuredClone(role(world, 6).privateState);
-    for (const target of [999, 10]) {
-      expect(
-        turn.submit("t1", "use_potion", { target_id: target, potion_type: PotionType.Heal }),
-      ).toMatchObject({ ok: false, error: "heal_target" });
-      expect(role(world, 6).privateState).toEqual(before);
-      expect(turn.action).toBeNull();
-    }
-    world.getComponent<{ alive: boolean }>(9, COMPONENT.Alive)!.alive = false;
-    expect(
-      turn.submit("t1", "use_potion", { target_id: 9, potion_type: PotionType.Heal }),
-    ).toMatchObject({ ok: false, error: "heal_target" });
-    world.getComponent<{ alive: boolean }>(9, COMPONENT.Alive)!.alive = true;
-    expect(turn.submit("t1", "use_potion", { target_id: 9, potion_type: PotionType.Heal })).toEqual(
-      { ok: true, accepted: true, applied: false, action: "use_potion" },
-    );
-    expect(potion.heal).toBe(1); // Reception never applies or spends.
-    marks(world, 9).remove(StatusMark.WolfKillMark);
-    expect(
-      new ToolGateway().validateAndSanitize(world, 6, turn.action!, {
-        phase: Phase.Night,
-        day: 1,
-        abilityId: "native:potion",
-      }),
-    ).toMatchObject({ ok: false, error: "heal_target" });
-    expect(role(world, 6).privateState).toEqual(before);
-    // A forged visible context cannot create a real knife.
-    expect(
-      receive.validate(request, "use_potion", { target_id: 9, potion_type: PotionType.Heal }),
-    ).toMatchObject({ ok: false, error: "heal_target" });
-  });
 
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: an exhausted antidote removes the knife from requests and prompts but preserves legitimate past knowledge`, async () => {
@@ -181,46 +121,6 @@ for (const locale of ["zh-CN", "en"] as const)
       ),
     ).toBe(false);
     expect(rejectionCodes).toEqual(["heal_unavailable", "heal_unavailable", "heal_unavailable"]);
-  });
-
-// Literal rule table, not computed by the tested resolution algorithm.
-const cases: Array<[StatusMark[], DeathCause[]]> = [
-  [[], []],
-  [[StatusMark.GuardMark], []],
-  [[StatusMark.HealMark], []],
-  [[StatusMark.WolfKillMark], [DeathCause.WolfKill]],
-  [[StatusMark.PoisonMark], [DeathCause.Poison]],
-  [[StatusMark.GuardMark, StatusMark.HealMark], []],
-  [[StatusMark.GuardMark, StatusMark.WolfKillMark], []],
-  [[StatusMark.HealMark, StatusMark.WolfKillMark], []],
-  [[StatusMark.GuardMark, StatusMark.PoisonMark], [DeathCause.Poison]],
-  [[StatusMark.HealMark, StatusMark.PoisonMark], [DeathCause.Poison]],
-  [
-    [StatusMark.WolfKillMark, StatusMark.PoisonMark],
-    [DeathCause.Poison, DeathCause.WolfKill],
-  ],
-  [[StatusMark.GuardMark, StatusMark.HealMark, StatusMark.WolfKillMark], [DeathCause.WolfKill]],
-  [[StatusMark.GuardMark, StatusMark.HealMark, StatusMark.PoisonMark], [DeathCause.Poison]],
-  [[StatusMark.GuardMark, StatusMark.WolfKillMark, StatusMark.PoisonMark], [DeathCause.Poison]],
-  [[StatusMark.HealMark, StatusMark.WolfKillMark, StatusMark.PoisonMark], [DeathCause.Poison]],
-  [
-    [StatusMark.GuardMark, StatusMark.HealMark, StatusMark.WolfKillMark, StatusMark.PoisonMark],
-    [DeathCause.Poison, DeathCause.WolfKill],
-  ],
-];
-for (const locale of ["zh-CN", "en"] as const)
-  test(`${locale}: all 16 knife/poison/guard/heal combinations retain the independent lethal sources and clear marks`, () => {
-    for (const [input, expected] of cases) {
-      const { world } = fixture(locale);
-      input.forEach((mark) => marks(world, 7).add(mark));
-      const result = new DamageResolutionSystem().resolve(world);
-      expect(result).toEqual({
-        deaths: expected.length ? [7] : [],
-        deathSources: expected.length ? { 7: expected } : {},
-      });
-      expect(marks(world, 7).values()).toEqual([]);
-      expect(world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive).toBe(true); // PhaseManager owns death settlement.
-    }
   });
 
 for (const locale of ["zh-CN", "en"] as const)
