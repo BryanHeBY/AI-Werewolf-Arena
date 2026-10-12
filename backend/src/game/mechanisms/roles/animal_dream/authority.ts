@@ -6,6 +6,12 @@ import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { bindCharm } from "../wolf_beauty/relation";
 import {
+  animalRequestEnvelopeHeader,
+  animalRequestEnvelopeCurrent,
+  animalRequestEnvelopeDeadline,
+  animalRequestEnvelopeMatchesWorld,
+} from "./request_envelope";
+import {
   installAnimalRoster,
   animalRosterCurrent,
   animalOriginalPlayer,
@@ -106,6 +112,7 @@ interface FoxRequest {
   readonly night: AnimalNight;
   readonly deadlineAtMs: number | null;
   revoked: boolean;
+  readonly envelope: object | null;
 }
 const foxRequests = new WeakMap<object, FoxRequest>();
 const pufferRequests = new WeakMap<
@@ -115,9 +122,21 @@ const pufferRequests = new WeakMap<
     unit: OwnedUnit;
     deadlineAtMs: number | null;
     revoked: boolean;
+    envelope: object | null;
   }
 >();
 const now = Date.now.bind(Date);
+function permitDeadlineCurrent(requests: ReadonlySet<object>, kind: "fox" | "puffer"): boolean {
+  let earliest = Infinity;
+  for (const token of requests) {
+    const r = kind === "fox" ? foxRequests.get(token) : pufferRequests.get(token);
+    if (!r || r.revoked) return false;
+    if (r.deadlineAtMs !== null) earliest = Math.min(earliest, r.deadlineAtMs);
+    const deadline = r.envelope === null ? null : animalRequestEnvelopeDeadline(r.envelope);
+    if (deadline !== null) earliest = Math.min(earliest, deadline);
+  }
+  return now() < earliest;
+}
 function descriptor(value: unknown, key: string): PropertyDescriptor | undefined {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const d = Object.getOwnPropertyDescriptor(value, key);
@@ -315,10 +334,12 @@ function foxCurrent(world: World, owner: Owner, night: AnimalNight): boolean {
         request.world !== world ||
         request.night !== night ||
         request.revoked ||
+        (request.envelope !== null && !animalRequestEnvelopeCurrent(request.envelope)) ||
         (request.deadlineAtMs !== null && request.deadlineAtMs <= checkedAt)
       )
         throw Error("animal_fox_lease_revoked");
     }
+    if (!permitDeadlineCurrent(lease.requests, "fox")) throw Error("animal_fox_lease_revoked");
     return true;
   } catch {
     lease.closed = true;
@@ -379,8 +400,12 @@ export function openAnimalFoxChoice(world: World, day: number, requestToken?: ob
         knifeBlocked: target.scope.campValue === Camp.Wolf,
         beautyBlocked: target.scope.roleId === "wolf_beauty",
       };
-      if (effect?.beautyBlocked) {
-        const beauty = animalOriginalRolePlayer(world, "wolf_beauty")!;
+      const beauty = effect?.beautyBlocked ? animalOriginalRolePlayer(world, "wolf_beauty") : null;
+      if ((effect?.beautyBlocked && !beauty) || !permitDeadlineCurrent(night.fox.requests, "fox")) {
+        night.fox.closed = true;
+        throw Error("animal_fox_choice_unavailable");
+      }
+      if (beauty) {
         (night.fox.beauty as { targetId: number | null }).targetId = null;
         bindCharm(world, beauty.scope.id, null);
       }
@@ -393,7 +418,12 @@ export function openAnimalFoxChoice(world: World, day: number, requestToken?: ob
 }
 /** Request-layer ownership: a fixed absolute deadline and terminal cancellation,
  * never arbitrary callbacks. The token is opaque and tied to this real night. */
-export function createAnimalFoxRequest(world: World, day: number, deadlineAtMs?: number) {
+export function createAnimalFoxRequest(
+  world: World,
+  day: number,
+  deadlineAtMs?: number,
+  envelope?: object,
+) {
   const owner = currentOwner(world),
     night = owner?.night;
   if (owner) rejectDeathReentry(owner);
@@ -411,12 +441,30 @@ export function createAnimalFoxRequest(world: World, day: number, deadlineAtMs?:
     (deadlineAtMs !== undefined && (!Number.isFinite(deadlineAtMs) || deadlineAtMs <= now()))
   )
     throw Error("animal_fox_request_unavailable");
+  if (envelope !== undefined) {
+    const h = animalRequestEnvelopeHeader(envelope),
+      candidates = world
+        .entityIds()
+        .filter((id) => animalOriginalPlayer(world, id))
+        .sort((a, b) => a - b);
+    if (
+      !h ||
+      !animalRequestEnvelopeMatchesWorld(envelope, world) ||
+      h.kind !== "fox" ||
+      h.actorId !== owner!.fox.actor.scope.id ||
+      h.day !== day ||
+      JSON.stringify(h.candidates) !== JSON.stringify(candidates) ||
+      !animalRequestEnvelopeCurrent(envelope)
+    )
+      throw Error("animal_fox_request_unavailable");
+  }
   const token = Object.freeze({}),
     request: FoxRequest = {
       world,
       night,
       deadlineAtMs: deadlineAtMs ?? null,
       revoked: false,
+      envelope: envelope ?? null,
     };
   foxRequests.set(token, request);
   return Object.freeze({
@@ -755,8 +803,7 @@ export function recordAnimalBallotRound(
       !voting?.canVote ||
       !expected.includes(v.actorId) ||
       typeof v.abstain !== "boolean" ||
-      (v.targetId !== null &&
-        (!Number.isSafeInteger(v.targetId) || v.targetId < 1 || v.targetId > 12)) ||
+      (v.targetId !== null && (!Number.isSafeInteger(v.targetId) || v.targetId < 1)) ||
       v.weight !== (v.abstain ? 0 : voting.weight) ||
       (!v.abstain && (!target || (round === 2 && !candidates.includes(v.targetId!))))
     )
@@ -842,20 +889,48 @@ function pufferCurrent(
       r.world !== world ||
       r.unit !== unit ||
       r.revoked ||
+      (r.envelope !== null && !animalRequestEnvelopeCurrent(r.envelope)) ||
       (r.deadlineAtMs !== null && r.deadlineAtMs <= checkedAt)
     ) {
       lease.closed = true;
       throw Error("animal_puffer_choice_unavailable");
     }
   }
+  if (!permitDeadlineCurrent(lease.requests, "puffer")) {
+    lease.closed = true;
+    throw Error("animal_puffer_choice_unavailable");
+  }
   return { owner, unit, lease };
 }
-export function createAnimalPufferRequest(world: World, token: object, deadlineAtMs?: number) {
-  const { unit, lease } = pufferCurrent(world, token);
+export function createAnimalPufferRequest(
+  world: World,
+  token: object,
+  deadlineAtMs?: number,
+  envelope?: object,
+) {
+  const { owner, unit, lease } = pufferCurrent(world, token);
   if (deadlineAtMs !== undefined && (!Number.isFinite(deadlineAtMs) || deadlineAtMs <= now()))
     throw Error("animal_puffer_request_unavailable");
+  if (envelope !== undefined) {
+    const h = animalRequestEnvelopeHeader(envelope);
+    if (
+      !h ||
+      !animalRequestEnvelopeMatchesWorld(envelope, world) ||
+      h.kind !== "puffer" ||
+      h.actorId !== owner.puffer.actor.scope.id ||
+      h.day !== unit.value.day ||
+      !animalRequestEnvelopeCurrent(envelope)
+    )
+      throw Error("animal_puffer_request_unavailable");
+  }
   const permit = Object.freeze({}),
-    r = { world, unit, deadlineAtMs: deadlineAtMs ?? null, revoked: false };
+    r = {
+      world,
+      unit,
+      deadlineAtMs: deadlineAtMs ?? null,
+      revoked: false,
+      envelope: envelope ?? null,
+    };
   pufferRequests.set(permit, r);
   return Object.freeze({
     token: permit,

@@ -704,3 +704,5 @@ Cat单位／致死过滤底座完成，opaque真实单位、默认skip不计实�
 河豚原票／主动与刀死owner底座完成：完整原选民、首末轮／PK、自票／1.5一体、mandatorybool及全目标付款；normalclose待目标真首死／猫实际延期，刀死需夜初原活人该夜正常handoff后首死。原票首次回调前快照、非法票权不漏选民、旧死亡不重领被动反例关闭，维护98／305、A独立16／38、R独立2／7及类型／lint通过，见[河豚基础](reviews/p9e-animal-puffer-authority-foundation.md)。trusted来源入口不冒称gateway或PM已运行；52/64不变，实际许可／知情与流程交付继续。
 
 熊显式dawn内部帧完成，省略仍旧Night取样；新路径公告重采当前活邻、pendingCat占位、原熊死quiet、原体/版本/seat完整复验与World/day单向发布槽。五类回调／半发布／重领反例闭环，维护90／399、旧默认独立5场景等价、R/T原样复验和A更强重入契约12／19及类型／lint通过，见[帧策略底座](reviews/p9e-bear-dawn-frame-foundation.md)。公开角色配置/PM尚未选新policy，52/64不变；真实请求与许可、运行/知情/交付继续。
+
+动物板request内容底座完成，原World／request／context／完整body和最早deadline的opaque签名、alias只缩预算／单向撤权、末phase后受信纯reader及清Beauty关系／付款前单一最终时钟贯通。维护77／267、A独立11／30、R独立4／16＋定向8／22及全类型／backend lint通过，见[请求内容底座](reviews/p9e-animal-request-envelope-foundation.md)。绑定内容不代替feed授权，Factory／gateway／SDK／ACP仍需真实接入；52/64不变，接续三角色实际运行批次。
